@@ -37,7 +37,7 @@ const props = withDefaults(
     form?: string
     htmlField?: string
     id?: string
-    modelValue?: Readonly<RadioValue>
+    modelValue?: RadioValue
     name?: string
     options?: readonly (string | number | Record<string, unknown>)[]
     plain?: Booleanish

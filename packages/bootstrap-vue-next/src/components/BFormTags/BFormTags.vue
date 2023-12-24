@@ -116,7 +116,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, toRef} from 'vue'
+import {computed, ref, toRef, watch} from 'vue'
 import BFormTag from './BFormTag.vue'
 import {useBooleanish, useId, useStateClass} from '../../composables'
 import type {
@@ -129,7 +129,7 @@ import type {
   Numberish,
   Size,
 } from '../../types'
-import {onKeyStroke, syncRef, useFocus, useToNumber, useVModel} from '@vueuse/core'
+import {onKeyStroke, useFocus, useToNumber, useVModel} from '@vueuse/core'
 import {escapeRegExpChars} from '../../utils'
 
 const props = withDefaults(
@@ -252,7 +252,7 @@ const {focused} = useFocus(input, {
 })
 
 const _inputId = toRef(() => props.inputId || `${computedId.value}input__`)
-const tags = ref<string[]>(modelValue.value)
+const tags = ref<string[]>([...modelValue.value])
 const inputValue = ref<string>('')
 const shouldRemoveOnDelete = ref<boolean>(modelValue.value.length > 0)
 const lastRemovedTag = ref<string>('')
@@ -260,9 +260,15 @@ const validTags = ref<string[]>([])
 const invalidTags = ref<string[]>([])
 const duplicateTags = ref<string[]>([])
 
-syncRef(modelValue, tags, {
-  direction: 'ltr',
+watch(modelValue, (newValue) => {
+  tags.value = [...newValue]
 })
+// Vueuse has a type issue with readonly values
+// syncRef(modelValue, tags, {
+//   direction: 'ltr',
+//   // "v" is technically readonly, so we make a shallow copy
+//   transform: (v: readonly string[]) => [...v],
+// })
 
 const computedClasses = computed(() => [
   stateClass.value,

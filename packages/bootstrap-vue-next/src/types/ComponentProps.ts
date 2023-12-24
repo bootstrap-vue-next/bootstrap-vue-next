@@ -36,7 +36,7 @@ export interface BLinkProps {
   routerComponentName?: string
   routerTag?: string
   target?: LinkTarget
-  to?: Readonly<RouteLocationRaw>
+  to?: RouteLocationRaw
   underlineOffset?: 1 | 2 | 3 | '1' | '2' | '3'
   underlineOffsetHover?: 1 | 2 | 3 | '1' | '2' | '3'
   underlineOpacity?: 0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'
@@ -171,8 +171,8 @@ export interface BFormFeedbackSharedProps {
 export interface BDropdownProps {
   ariaLabel?: string
   autoClose?: boolean | 'inside' | 'outside'
-  boundary?: Readonly<Boundary> | Readonly<RootBoundary>
-  boundaryPadding?: Readonly<Padding>
+  boundary?: Boundary | RootBoundary
+  boundaryPadding?: Padding
   center?: Booleanish
   container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
   disabled?: Booleanish
@@ -180,7 +180,7 @@ export interface BDropdownProps {
   dropstart?: Booleanish
   dropup?: Booleanish
   end?: Booleanish
-  floatingMiddleware?: readonly Middleware[]
+  floatingMiddleware?: Middleware[]
   id?: string
   isNav?: Booleanish
   lazy?: Booleanish
@@ -201,7 +201,7 @@ export interface BDropdownProps {
   splitClass?: ClassValue
   splitDisabled?: Booleanish
   splitHref?: string
-  splitTo?: Readonly<RouteLocationRaw>
+  splitTo?: RouteLocationRaw
   splitVariant?: ButtonVariant | null
   strategy?: Strategy
   text?: string
@@ -232,8 +232,8 @@ export interface BToastProps extends ColorExtendables, Omit<BLinkProps, 'routerT
 }
 
 export interface BPopoverProps {
-  boundary?: Readonly<Boundary> | Readonly<RootBoundary>
-  boundaryPadding?: Readonly<Padding>
+  boundary?: Boundary | RootBoundary
+  boundaryPadding?: Padding
   click?: Booleanish
   container?: string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | undefined
   content?: string
@@ -244,7 +244,7 @@ export interface BPopoverProps {
         show: number
         hide: number
       }>
-  floatingMiddleware?: readonly Middleware[]
+  floatingMiddleware?: Middleware[]
   hide?: Booleanish
   html?: Booleanish
   id?: string
@@ -259,7 +259,7 @@ export interface BPopoverProps {
   noSize?: Booleanish
   noninteractive?: Booleanish
   offset?: Numberish | null
-  placement?: Readonly<PopoverPlacement>
+  placement?: PopoverPlacement
   persistent?: Booleanish
   realtime?: Booleanish
   reference?: string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | null

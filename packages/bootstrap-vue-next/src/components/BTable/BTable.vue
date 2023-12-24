@@ -81,7 +81,7 @@ import type {
   BTableProvider,
   BTableSortCompare,
   ColorVariant,
-  LiteralUnion,
+  Numberish,
   TableField,
   TableFieldObject,
   TableItem,
@@ -134,8 +134,8 @@ const props = withDefaults(
       // noSortReset?: Booleanish
       // selectedVariant?: ColorVariant | null
       // showEmpty?: Booleanish
-      sortCompareLocale?: string | readonly string[]
-      sortCompareOptions?: Readonly<Intl.CollatorOptions>
+      sortCompareLocale?: string | string[]
+      sortCompareOptions?: Intl.CollatorOptions
       // sortDirection?: 'asc' | 'desc' | 'last'
       // sortIconLeft?: Booleanish
       // sortNullLast?: Booleanish
@@ -321,10 +321,10 @@ const computedFields = computed<TableField[]>(() =>
               isSortable.value === false
                 ? undefined
                 : sortByModel.value !== el.key
-                ? 'none'
-                : sortDescBoolean.value === true
-                ? 'descending'
-                : 'ascending',
+                  ? 'none'
+                  : sortDescBoolean.value === true
+                    ? 'descending'
+                    : 'ascending',
             ...el.thAttr,
           },
         }
@@ -367,7 +367,7 @@ const getRowClasses = (item: Readonly<TableItem> | null, type: string) => [
 const getIconStyle = (field: Readonly<TableFieldObject>): StyleValue =>
   sortByModel.value !== field.key ? {opacity: 0.5} : {}
 
-const computedItems = computed<TableItem[]>(() => {
+const computedItems = computed<readonly TableItem[]>(() => {
   const sortItems = (items: readonly TableItem[]) => {
     const sortKey = sortByModel.value
 
@@ -445,7 +445,7 @@ const computedItems = computed<TableItem[]>(() => {
 //     pageSize: () => perPageNumber.value || Infinity,
 //   })
 
-const computedDisplayItems = computed<TableItem[]>(() => {
+const computedDisplayItems = computed<readonly TableItem[]>(() => {
   if (Number.isNaN(perPageNumber.value) || (usesProvider.value && !noProviderPagingBoolean.value)) {
     return computedItems.value
   }
@@ -592,7 +592,7 @@ const providerPropsWatch = async (prop: string, val: unknown, oldVal: unknown) =
   }
 
   if (!(prop === 'currentPage' || prop === 'perPage')) {
-    emit('filtered', computedItems.value)
+    emit('filtered', [...computedItems.value])
   }
 }
 
@@ -603,7 +603,7 @@ watch(
 
     if (filter === oldFilter || usesProvider.value) return
     if (!filter) {
-      emit('filtered', computedItems.value)
+      emit('filtered', [...computedItems.value])
     }
   }
 )

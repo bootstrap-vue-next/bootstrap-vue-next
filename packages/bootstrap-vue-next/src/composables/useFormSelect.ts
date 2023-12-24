@@ -59,9 +59,7 @@ const normalizeOptions = (
       `[BootstrapVue warn]: ${componentName} - Setting prop "options" to an object is deprecated. Use the array format instead.`
     )
 
-    return Object.keys(options).map((key: string) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const el: any = options[key]
+    return Object.entries(options).map(([key, el]) => {
       switch (typeof el) {
         case 'object':
           return _normalizeOption(el.text, String(el.value), componentName, props)

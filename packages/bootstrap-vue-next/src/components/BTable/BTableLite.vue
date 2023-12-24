@@ -324,7 +324,7 @@ const headerClicked = (
   emit('head-clicked', fieldKey, field, event, isFooter)
 }
 
-const toggleRowDetails = (tr: Readonly<TableItem>) => {
+const toggleRowDetails = (tr: TableItem) => {
   tr._showDetails = !tr._showDetails
 }
 

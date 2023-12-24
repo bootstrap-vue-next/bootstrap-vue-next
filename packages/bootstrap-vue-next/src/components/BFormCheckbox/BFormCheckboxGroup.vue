@@ -124,9 +124,9 @@ provide(checkboxGroupKey, {
 })
 
 watch(modelValue, (newValue) => {
-  emit('input', newValue)
+  emit('input', [...newValue])
   nextTick(() => {
-    emit('change', newValue)
+    emit('change', [...newValue])
   })
 })
 

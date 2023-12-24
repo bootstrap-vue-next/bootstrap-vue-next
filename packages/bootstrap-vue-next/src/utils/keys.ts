@@ -71,7 +71,7 @@ export const accordionInjectionKey: InjectionKey<{
 
 // BFormCheckboxGroup
 export const checkboxGroupKey: InjectionKey<{
-  modelValue: Ref<CheckboxValue[]>
+  modelValue: Ref<readonly CheckboxValue[]>
   switch: Readonly<Ref<boolean>>
   buttonVariant: Readonly<Ref<ButtonVariant | null>>
   form: Readonly<Ref<string | undefined>>

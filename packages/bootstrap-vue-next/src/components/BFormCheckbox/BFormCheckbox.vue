@@ -52,15 +52,15 @@ const props = withDefaults(
     id?: string
     indeterminate?: Booleanish
     inline?: Booleanish
-    modelValue?: Readonly<CheckboxValue> | readonly CheckboxValue[]
+    modelValue?: CheckboxValue | readonly CheckboxValue[]
     name?: string
     plain?: Booleanish
     required?: Booleanish
     size?: Size
     state?: Booleanish | null
     switch?: Booleanish
-    uncheckedValue?: Readonly<CheckboxValue>
-    value?: Readonly<CheckboxValue>
+    uncheckedValue?: CheckboxValue
+    value?: CheckboxValue
   }>(),
   {
     ariaLabel: undefined,
