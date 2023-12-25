@@ -91,3 +91,5 @@ Temporary Items
 .apdisk
 
 TODO.md
+
+./packages/bootstrap-vue/src/App.vue
