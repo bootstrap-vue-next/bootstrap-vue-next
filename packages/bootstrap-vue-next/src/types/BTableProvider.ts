@@ -8,6 +8,6 @@ export type BTableProviderContext = {
   readonly sortDesc: Booleanish
 }
 
-export type BTableProvider = (
+export type BTableProvider<T = Record<string, unknown>> = (
   context: BTableProviderContext
-) => MaybePromise<TableItem[] | undefined>
+) => MaybePromise<TableItem<T>[] | undefined>
