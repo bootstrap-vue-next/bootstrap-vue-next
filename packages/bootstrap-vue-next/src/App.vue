@@ -141,7 +141,6 @@
           @filtered="onFiltered"
           @row-clicked="onRowClicked"
         >
-          <!-- TODO: is typing of dynamic slots possible? -->
           <template #cell(name)="row">
             {{ (row.value as PersonName).first }}
             {{ (row.value as PersonName).last }}
