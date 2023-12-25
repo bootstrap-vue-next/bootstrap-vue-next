@@ -82,7 +82,6 @@ const props = withDefaults(
     activeClass: undefined,
     append: undefined,
     disabled: undefined,
-    event: undefined,
     exactActiveClass: undefined,
     href: undefined,
     icon: undefined,
@@ -119,9 +118,8 @@ const loadingBoolean = useBooleanish(() => props.loading)
 const loadingFillBoolean = useBooleanish(() => props.loadingFill)
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props, [
-  'activeClass',
-  'exactActiveClass',
-  'event',
+  'active-class',
+  'exact-active-class',
   'replace',
   'routerComponentName',
   'routerTag',
@@ -149,7 +147,7 @@ const computedClasses = computed(() => [
 
 const computedTag = toRef(() => (isBLink.value ? BLink : props.href ? 'a' : props.tag))
 
-const clicked = (e: MouseEvent): void => {
+const clicked = (e: Readonly<MouseEvent>): void => {
   if (disabledBoolean.value) {
     e.preventDefault()
     e.stopPropagation()

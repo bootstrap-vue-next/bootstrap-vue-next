@@ -19,7 +19,7 @@ import BBreadcrumbItem from './BBreadcrumbItem.vue'
 
 const props = withDefaults(
   defineProps<{
-    items?: BreadcrumbItem[]
+    items?: readonly BreadcrumbItem[]
   }>(),
   {items: undefined}
 )

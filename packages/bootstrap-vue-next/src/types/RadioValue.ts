@@ -1,1 +1,7 @@
-export type RadioValue = string | boolean | unknown[] | Record<string, unknown> | number | null
+export type RadioValue =
+  | string
+  | boolean
+  | readonly unknown[]
+  | Readonly<Record<string, unknown>>
+  | number
+  | null

@@ -321,7 +321,11 @@ const formatItem = (
   return formatter && typeof formatter === 'function' ? formatter(val, fieldKey, item) : val
 }
 
-const headerClicked = (field: TableField<T>, event: MouseEvent, isFooter = false) => {
+const headerClicked = (
+  field: Readonly<TableField<T>>,
+  event: Readonly<MouseEvent>,
+  isFooter = false
+) => {
   const fieldKey = typeof field === 'string' ? field : field.key
   emit('head-clicked', fieldKey, field, event, isFooter)
 }
@@ -330,7 +334,7 @@ const toggleRowDetails = (tr: TableItem<T>) => {
   tr._showDetails = !tr._showDetails
 }
 
-const getFieldColumnClasses = (field: TableFieldObject<T>) => [
+const getFieldColumnClasses = (field: Readonly<TableFieldObject<T>>) => [
   field.class,
   field.thClass,
   {
@@ -343,7 +347,7 @@ const getFieldColumnClasses = (field: TableFieldObject<T>) => [
     : null,
 ]
 
-const getFieldRowClasses = (field: TableFieldObject<T>, tr: TableItem<T>) => [
+const getFieldRowClasses = (field: Readonly<TableFieldObject<T>>, tr: Readonly<TableItem<T>>) => [
   field.class,
   field.tdClass,
   tr._cellVariants?.[field.key as keyof T]
@@ -354,7 +358,7 @@ const getFieldRowClasses = (field: TableFieldObject<T>, tr: TableItem<T>) => [
   },
 ]
 
-const getRowClasses = (item: TableItem<T>, type: 'row-details' | 'row') =>
+const getRowClasses = (item: Readonly<TableItem<T>>, type: 'row-details' | 'row') =>
   props.tbodyTrClass
     ? typeof props.tbodyTrClass === 'function'
       ? props.tbodyTrClass(item, type)

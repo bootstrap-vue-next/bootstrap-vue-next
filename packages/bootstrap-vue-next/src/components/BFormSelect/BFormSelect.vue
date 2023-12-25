@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import type {AriaInvalid, Booleanish, Size} from '../../types'
+import type {AriaInvalid, Booleanish, Numberish, Size} from '../../types'
 import {computed, nextTick, ref, toRef} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
@@ -58,14 +58,20 @@ const props = withDefaults(
     htmlField?: string
     id?: string
     labelField?: string
-    modelValue?: string | unknown[] | Record<string, unknown> | number | boolean | null
+    modelValue?:
+      | string
+      | readonly unknown[]
+      | Readonly<Record<string, unknown>>
+      | number
+      | boolean
+      | null
     multiple?: Booleanish
     name?: string
-    options?: unknown[] | Record<string, unknown> // TODO It was declared deprecated in useFormSelect to use a Record. https://bootstrap-vue.org/docs/components/form-select#options-as-an-object
+    options?: readonly unknown[] | Readonly<Record<string, unknown>> // TODO It was declared deprecated in useFormSelect to use a Record. https://bootstrap-vue.org/docs/components/form-select#options-as-an-object
     optionsField?: string
     plain?: Booleanish
     required?: Booleanish
-    selectSize?: number | string
+    selectSize?: Numberish
     size?: Size
     state?: Booleanish | null
     textField?: string
@@ -83,6 +89,7 @@ const props = withDefaults(
     modelValue: '',
     multiple: false,
     name: undefined,
+    // eslint-disable-next-line vue/require-valid-default-prop
     options: () => [],
     optionsField: 'options',
     plain: false,
@@ -148,7 +155,7 @@ const computedAriaInvalid = useAriaInvalid(() => props.ariaInvalid, stateBoolean
 // It also doesn't work for array syntaxes. Review second example from https://bootstrap-vue.org/docs/components/form-select
 // For more info on how it should behave
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const formOptions = computed(() => normalizeOptions(props.options as any[], 'BFormSelect', props))
+const formOptions = computed(() => normalizeOptions(props.options as any, 'BFormSelect', props))
 const localValue = computed({
   get: () => modelValue.value,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

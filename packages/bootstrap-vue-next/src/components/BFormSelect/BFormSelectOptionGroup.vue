@@ -27,7 +27,7 @@ const props = withDefaults(
     disabledField?: string
     htmlField?: string
     label?: string
-    options?: unknown[] | Record<string, unknown>
+    options?: readonly unknown[] | Readonly<Record<string, unknown>>
     textField?: string
     valueField?: string
   }>(),

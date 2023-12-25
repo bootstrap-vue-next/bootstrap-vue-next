@@ -46,9 +46,9 @@ const _normalizeOption = (
 
 const normalizeOptions = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  options: any[],
+  options: readonly any[],
   componentName: string,
-  props: Record<string, unknown>
+  props: Readonly<Record<string, unknown>>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): any => {
   if (Array.isArray(options)) {
@@ -59,9 +59,7 @@ const normalizeOptions = (
       `[BootstrapVue warn]: ${componentName} - Setting prop "options" to an object is deprecated. Use the array format instead.`
     )
 
-    return Object.keys(options).map((key: string) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const el: any = options[key]
+    return Object.entries(options).map(([key, el]) => {
       switch (typeof el) {
         case 'object':
           return _normalizeOption(el.text, String(el.value), componentName, props)

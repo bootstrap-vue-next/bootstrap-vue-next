@@ -352,6 +352,35 @@ import {vBColorMode} from 'bootstrap-vue-next'
 
 </BCard>
 
+### Installation - CDN
+
+BootstrapVueNext is available through `jsdelivr`. You can add the package by using the following
+
+<BCard class="bg-body-tertiary">
+
+```html-vue
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-vue-next@{{data.latestVersion}}/dist/bootstrap-vue-next.umd.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-vue-next@{{data.latestVersion}}/dist/bootstrap-vue-next.min.css" rel="stylesheet">
+```
+
+</BCard>
+
+<BAlert :model-value="true" variant="info">
+Links should be loaded after Bootstrap and Vue
+</BAlert>
+
+Alternatively the ESM package is available as well
+
+<BCard class="bg-body-tertiary">
+
+```html-vue
+<script type="module">
+import bootstrapVueNext from 'https://cdn.jsdelivr.net/npm/bootstrap-vue-next@{{data.latestVersion}}/+esm'
+</script>
+```
+
+</BCard>
+
 ## Tree-shake CSS
 
 If you are using one of the preferred installation methods, JS will be tree-shaken by default. The one thing we are not able to do automatically is optimize CSS. Methods like PurgeCSS are not ideal because of a limitation with the dynamic nature of class renderings and Vue (Problematic code like: `[btn-${props.variant}]: props.variant !== undefined`). With that being said, BootstrapVueNext does not handle CSS imports from Bootstrap, we only add some additional CSS ourselves. So, using a method such as [Lean Sass Imports](https://getbootstrap.com/docs/5.3/customize/optimize/#lean-sass-imports) from the Bootstrap documentation is likely the best way to achieve the tiniest possible application size. Though it is not automatic, it should prove the safest bet for minifying your application.
@@ -363,6 +392,7 @@ BootstrapVue is the parent project for which this is based on. We consider Boots
 <script setup lang="ts">
 import {BCard, BCardBody, BAlert, BTab, BTabs} from 'bootstrap-vue-next'
 import {useLocalStorage} from '@vueuse/core'
+import {data} from './data/package.data'
 
 const codePreference = useLocalStorage('code-group-preference', 0)
 </script>

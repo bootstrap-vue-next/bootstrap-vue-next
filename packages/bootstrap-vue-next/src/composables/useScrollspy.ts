@@ -44,7 +44,7 @@ interface ScrollspyOptions {
 export default (
   content: MaybeRefOrGetter<string | ComponentPublicInstance | HTMLElement | null>,
   target: MaybeRefOrGetter<string | ComponentPublicInstance | HTMLElement | null>,
-  options: Partial<ScrollspyOptions> = {}
+  options: Readonly<Partial<ScrollspyOptions>> = {}
 ): ScrollspyReturn => {
   const cont = toRef(content)
   const tar = toRef(target)
@@ -206,7 +206,7 @@ export default (
           childList: true,
         }
       )
-  const scrollIntoView = (event: MouseEvent, smooth: boolean = false) => {
+  const scrollIntoView = (event: Readonly<MouseEvent>, smooth: boolean = false) => {
     event.preventDefault()
     const href = (event.target as HTMLElement)?.getAttribute?.('href')
     const el: HTMLElement | null = href ? document?.querySelector(href) : null

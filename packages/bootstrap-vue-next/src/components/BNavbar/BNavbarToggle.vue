@@ -24,7 +24,7 @@ const props = withDefaults(
   defineProps<{
     disabled?: Booleanish
     label?: string
-    target?: string | string[]
+    target?: string | readonly string[]
   }>(),
   {
     label: 'Toggle navigation',
@@ -49,7 +49,7 @@ const computedClasses = computed(() => ({
   disabled: disabledBoolean.value,
 }))
 
-const onClick = (e: MouseEvent): void => {
+const onClick = (e: Readonly<MouseEvent>): void => {
   if (!disabledBoolean.value) {
     emit('click', e)
   }

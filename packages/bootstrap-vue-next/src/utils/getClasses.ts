@@ -4,8 +4,8 @@ import type {ComponentProps} from './getBreakpointProps'
  * @deprecated
  */
 export default (
-  props: Record<PropertyKey, unknown>,
-  els: ComponentProps,
+  props: Readonly<Record<PropertyKey, unknown>>,
+  els: Readonly<ComponentProps>,
   propPrefix: string,
   classPrefix = propPrefix
 ): string[] =>

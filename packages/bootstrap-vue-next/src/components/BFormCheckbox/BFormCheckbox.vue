@@ -52,7 +52,7 @@ const props = withDefaults(
     id?: string
     indeterminate?: Booleanish
     inline?: Booleanish
-    modelValue?: CheckboxValue | CheckboxValue[]
+    modelValue?: CheckboxValue | readonly CheckboxValue[]
     name?: string
     plain?: Booleanish
     required?: Booleanish

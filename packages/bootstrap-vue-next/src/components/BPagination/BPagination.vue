@@ -6,39 +6,33 @@
     :aria-disabled="disabledBoolean"
     :aria-label="ariaLabel || undefined"
   >
-    <!-- First -->
-    <li v-if="!hideGotoEndButtonsBoolean && !firstNumberBoolean" v-bind="firstButtonProps.li">
-      <component
-        v-bind="firstButtonProps.button"
-        :is="firstButtonProps.button.is"
-        @click="pageClick($event, 1)"
-      >
-        <slot name="first-text">
-          {{ firstText }}
-        </slot>
-      </component>
-    </li>
-    <!-- Prev -->
-    <li v-bind="prevButtonProps.li">
-      <component
-        v-bind="prevButtonProps.button"
-        :is="prevButtonProps.button.is"
-        @click="pageClick($event, modelValueNumber - 1)"
-      >
-        <slot name="prev-text">
-          {{ prevText }}
-        </slot>
-      </component>
-    </li>
-    <!-- Ellipsis start -->
-    <li v-if="showFirstDots" v-bind="ellipsisProps.li">
-      <span v-bind="ellipsisProps.span">
-        <slot name="ellipsis-text">
-          {{ ellipsisText || '...' }}
-        </slot>
-      </span>
-    </li>
-    <!-- Main -->
+    <ReusableButtuon.define v-slot="{button, li, text, clickHandler}">
+      <li v-bind="li">
+        <component v-bind="button" :is="button.is" @click="clickHandler">
+          <slot :name="text.name">
+            {{ text.value }}
+          </slot>
+        </component>
+      </li>
+    </ReusableButtuon.define>
+    <ReusableEllipsis.define>
+      <li v-bind="ellipsisProps.li">
+        <span v-bind="ellipsisProps.span">
+          <slot name="ellipsis-text">
+            {{ ellipsisText || '...' }}
+          </slot>
+        </span>
+      </li>
+    </ReusableEllipsis.define>
+
+    <ReusableButtuon.reuse
+      v-if="!hideGotoEndButtonsBoolean && !firstNumberBoolean"
+      v-bind="firstButtonProps"
+    />
+    <ReusableButtuon.reuse v-bind="prevButtonProps" />
+
+    <ReusableEllipsis.reuse v-if="showFirstDots" />
+
     <li
       v-for="page in pages"
       :key="`page-${page.number}`"
@@ -83,47 +77,22 @@
       </component>
     </li>
 
-    <!-- Ellipsis end -->
-    <li v-if="showLastDots" v-bind="ellipsisProps.li">
-      <span v-bind="ellipsisProps.span">
-        <slot name="ellipsis-text">
-          {{ ellipsisText || '...' }}
-        </slot>
-      </span>
-    </li>
-    <!-- Next -->
-    <li v-bind="nextButtonProps.li">
-      <component
-        v-bind="nextButtonProps.button"
-        :is="nextButtonProps.button.is"
-        @click="pageClick($event, modelValueNumber + 1)"
-      >
-        <slot name="next-text">
-          {{ nextText }}
-        </slot>
-      </component>
-    </li>
-    <!-- Last -->
-    <li v-if="!lastNumberBoolean && !hideGotoEndButtonsBoolean" v-bind="lastEndButtonProps.li">
-      <component
-        v-bind="lastEndButtonProps.button"
-        :is="lastEndButtonProps.button.is"
-        @click="pageClick($event, numberOfPages)"
-      >
-        <slot name="last-text">
-          {{ lastText }}
-        </slot>
-      </component>
-    </li>
+    <ReusableEllipsis.reuse v-if="showLastDots" />
+
+    <ReusableButtuon.reuse v-bind="nextButtonProps" />
+    <ReusableButtuon.reuse
+      v-if="!lastNumberBoolean && !hideGotoEndButtonsBoolean"
+      v-bind="lastEndButtonProps"
+    />
   </ul>
 </template>
 
 <script setup lang="ts">
 import {BvEvent} from '../../utils'
 import {computed, toRef, watch} from 'vue'
-import type {AlignmentJustifyContent, Booleanish, ClassValue, Size} from '../../types'
+import type {AlignmentJustifyContent, Booleanish, ClassValue, Numberish, Size} from '../../types'
 import {useAlignment, useBooleanish} from '../../composables'
-import {useToNumber, useVModel} from '@vueuse/core'
+import {createReusableTemplate, useToNumber, useVModel} from '@vueuse/core'
 
 // Threshold of limit size when we start/stop showing ellipsis
 const ELLIPSIS_THRESHOLD = 3
@@ -150,16 +119,16 @@ const props = withDefaults(
     lastNumber?: Booleanish
     lastText?: string
     limit?: number
-    modelValue?: string | number
+    modelValue?: Numberish
     nextClass?: ClassValue
     nextText?: string
     pageClass?: ClassValue
-    perPage?: string | number
+    perPage?: Numberish
     pills?: Booleanish
     prevClass?: ClassValue
     prevText?: string
     size?: Size
-    totalRows?: string | number
+    totalRows?: Numberish
   }>(),
   {
     align: 'start',
@@ -239,7 +208,17 @@ const prevDisabled = computed(() => checkDisabled(modelValueNumber.value - 1))
 const lastDisabled = computed(() => checkDisabled(numberOfPages.value))
 const nextDisabled = computed(() => checkDisabled(modelValueNumber.value + 1))
 
-const getEndButtonProps = (dis: boolean, classVal: ClassValue) => ({
+const getEndButtonProps = ({
+  classVal,
+  clickHandler,
+  dis,
+  text,
+}: {
+  dis: boolean
+  classVal: ClassValue
+  text: Readonly<{name: string; value: string}>
+  clickHandler: (e: Readonly<MouseEvent>, val: number) => void
+}) => ({
   li: {
     class: [
       'page-item',
@@ -261,12 +240,48 @@ const getEndButtonProps = (dis: boolean, classVal: ClassValue) => ({
     'type': dis ? undefined : 'button',
     'tabindex': dis ? undefined : '-1',
   },
+  text,
+  clickHandler,
 })
 
-const firstButtonProps = computed(() => getEndButtonProps(firstDisabled.value, props.firstClass))
-const prevButtonProps = computed(() => getEndButtonProps(prevDisabled.value, props.prevClass))
-const nextButtonProps = computed(() => getEndButtonProps(nextDisabled.value, props.nextClass))
-const lastEndButtonProps = computed(() => getEndButtonProps(lastDisabled.value, props.lastClass))
+const firstButtonProps = computed(() =>
+  getEndButtonProps({
+    dis: firstDisabled.value,
+    classVal: props.firstClass,
+    text: {
+      name: 'first-text',
+      value: props.firstText,
+    },
+    clickHandler: (e: MouseEvent) => pageClick(e, 1),
+  })
+)
+const prevButtonProps = computed(() =>
+  getEndButtonProps({
+    dis: prevDisabled.value,
+    classVal: props.prevClass,
+    text: {name: 'prev-text', value: props.prevText},
+    clickHandler: (e: Readonly<MouseEvent>) => pageClick(e, modelValueNumber.value - 1),
+  })
+)
+const nextButtonProps = computed(() =>
+  getEndButtonProps({
+    dis: nextDisabled.value,
+    classVal: props.nextClass,
+    text: {name: 'next-text', value: props.nextText},
+    clickHandler: (e: Readonly<MouseEvent>) => pageClick(e, modelValueNumber.value + 1),
+  })
+)
+const lastEndButtonProps = computed(() =>
+  getEndButtonProps({
+    dis: lastDisabled.value,
+    classVal: props.lastClass,
+    text: {name: 'last-text', value: props.lastText},
+    clickHandler: (e: Readonly<MouseEvent>) => pageClick(e, numberOfPages.value),
+  })
+)
+
+const ReusableButtuon = createReusableTemplate<ReturnType<typeof getEndButtonProps>>()
+const ReusableEllipsis = createReusableTemplate()
 
 const ellipsisProps = computed(() => ({
   li: {
@@ -406,7 +421,7 @@ const pagination = computed(() => ({
   numberOfPages: numberOfPages.value,
 }))
 
-const pageClick = (event: MouseEvent, pageNumber: number) => {
+const pageClick = (event: Readonly<MouseEvent>, pageNumber: number) => {
   if (pageNumber === modelValueNumber.value) return
 
   const clickEvent = new BvEvent('page-click', {
