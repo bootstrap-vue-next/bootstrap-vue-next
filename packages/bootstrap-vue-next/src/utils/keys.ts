@@ -4,6 +4,7 @@ import type {
   CheckboxValue,
   ClassValue,
   ColorVariant,
+  LiteralUnion,
   Numberish,
   RadioValue,
   RadiusElement,
@@ -50,7 +51,7 @@ export const listGroupInjectionKey: InjectionKey<{
 // BAvatarGroup
 export const avatarGroupInjectionKey: InjectionKey<{
   overlapScale: Readonly<Ref<number>>
-  size: Readonly<Ref<Size | string | undefined>>
+  size: Readonly<Ref<LiteralUnion<Size, Numberish> | undefined>>
   square: Readonly<Ref<boolean>>
   rounded: Readonly<Ref<RadiusElement | boolean>>
   roundedTop: Readonly<Ref<RadiusElement | boolean | undefined>>

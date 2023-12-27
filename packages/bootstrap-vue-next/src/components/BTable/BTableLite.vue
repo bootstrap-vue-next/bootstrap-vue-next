@@ -195,8 +195,13 @@
 <script setup lang="ts" generic="T = Record<string, unknown>">
 import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
-import type {BTableLiteProps, TableField, TableFieldObject, TableItem} from '../../types'
-import type {TableFieldObjectFormatter} from '../../types/TableFieldObject'
+import type {
+  BTableLiteProps,
+  TableField,
+  TableFieldFormatter,
+  TableFieldRaw,
+  TableItem,
+} from '../../types'
 import {filterEvent, get, getTableFieldHeadLabel, startCase} from '../../utils'
 import BTableSimple from './BTableSimple.vue'
 import BTbody from './BTbody.vue'
@@ -256,8 +261,8 @@ const props = withDefaults(defineProps<BTableLiteProps<T>>(), {
 
 const emit = defineEmits<{
   'head-clicked': [
-    key: TableFieldObject<T>['key'],
-    field: TableField<T>,
+    key: TableField<T>['key'],
+    field: TableFieldRaw<T>,
     event: MouseEvent,
     isFooter: boolean,
   ]
@@ -279,7 +284,7 @@ const computedTableClasses = computed(() => [
   },
 ])
 
-const computedFields = computed<TableFieldObject<T>[]>(() => {
+const computedFields = computed<TableField<T>[]>(() => {
   if (!props.fields.length && props.items.length) {
     return Object.keys(props.items[0]).map((k) => {
       const label = startCase(k)
@@ -315,14 +320,14 @@ const computedFieldsTotal = toRef(() => computedFields.value.length)
 const formatItem = (
   item: TableItem<T>,
   fieldKey: string,
-  formatter?: TableFieldObjectFormatter<typeof item>
+  formatter?: TableFieldFormatter<typeof item>
 ) => {
   const val = get(item, fieldKey)
   return formatter && typeof formatter === 'function' ? formatter(val, fieldKey, item) : val
 }
 
 const headerClicked = (
-  field: Readonly<TableField<T>>,
+  field: Readonly<TableFieldRaw<T>>,
   event: Readonly<MouseEvent>,
   isFooter = false
 ) => {
@@ -334,7 +339,7 @@ const toggleRowDetails = (tr: TableItem<T>) => {
   tr._showDetails = !tr._showDetails
 }
 
-const getFieldColumnClasses = (field: Readonly<TableFieldObject<T>>) => [
+const getFieldColumnClasses = (field: Readonly<TableField<T>>) => [
   field.class,
   field.thClass,
   {
@@ -347,7 +352,7 @@ const getFieldColumnClasses = (field: Readonly<TableFieldObject<T>>) => [
     : null,
 ]
 
-const getFieldRowClasses = (field: Readonly<TableFieldObject<T>>, tr: Readonly<TableItem<T>>) => [
+const getFieldRowClasses = (field: Readonly<TableField<T>>, tr: Readonly<TableItem<T>>) => [
   field.class,
   field.tdClass,
   tr._cellVariants?.[field.key as keyof T]

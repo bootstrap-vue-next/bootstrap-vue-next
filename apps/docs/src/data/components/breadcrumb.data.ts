@@ -8,7 +8,7 @@ export default {
         {
           prop: 'items',
           description: '',
-          type: 'BreadcrumbItem[]',
+          type: 'BreadcrumbItemRaw[]',
           default: undefined,
         },
       ],

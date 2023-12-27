@@ -1,11 +1,10 @@
 import type {App, Plugin} from 'vue'
-import type {BootstrapVueOptions} from './types'
+import type {BootstrapVueOptions, ComponentType, DirectiveType} from './types'
 
 import './styles/styles.scss'
 
 import * as Components from './components'
 import * as Directives from './directives'
-import type {ComponentType, DirectiveType} from './types/BootstrapVueOptions'
 import parseActiveImports from './utils/parseActiveImports'
 
 declare module '@vue/runtime-core' {

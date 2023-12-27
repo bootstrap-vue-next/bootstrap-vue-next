@@ -11,20 +11,20 @@ import {computed, provide, type StyleValue, toRef} from 'vue'
 import type {
   Booleanish,
   ColorExtendables,
+  LiteralUnion,
   Numberish,
   RadiusElementExtendables,
   Size,
 } from '../../types'
 import {avatarGroupInjectionKey} from '../../utils'
-import {useBooleanish} from '../../composables'
-import {computeSize} from './BAvatar.vue'
+import {useAvatarSize, useBooleanish} from '../../composables'
 import {useToNumber} from '@vueuse/core'
 
 const props = withDefaults(
   defineProps<
     {
       overlap?: Numberish
-      size?: Size | string
+      size?: LiteralUnion<Size, Numberish>
       square?: Booleanish
       tag?: string
     } & ColorExtendables &
@@ -63,7 +63,7 @@ const roundedStartBoolean = useBooleanish(() => props.roundedStart)
 const roundedEndBoolean = useBooleanish(() => props.roundedEnd)
 const overlapNumber = useToNumber(() => props.overlap)
 
-const computedSize = computed(() => computeSize(props.size))
+const computedSize = useAvatarSize(() => props.size)
 const overlapScale = toRef(() => Math.min(Math.max(overlapNumber.value, 0), 1) / 2)
 
 const paddingStyle = computed<StyleValue>(() => {

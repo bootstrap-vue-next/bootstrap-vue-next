@@ -8,25 +8,6 @@ import {
 } from '../constants/regex'
 
 /**
- * Convert a value to a string that can be rendered `undefined`/`null` will be converted to `''` Plain objects and arrays will be JSON stringified
- *
- * @param val
- * @param spaces
- * @returns
- * @deprecated
- */
-export const toString = (val: Readonly<unknown>, spaces = 2): string =>
-  typeof val === 'string'
-    ? val
-    : val === undefined || val === null
-      ? ''
-      : Array.isArray(val) ||
-          (Object.prototype.toString.call(val) === '[object Object]' &&
-            val.toString === Object.prototype.toString)
-        ? JSON.stringify(val, null, spaces)
-        : String(val)
-
-/**
  * @param str
  * @returns
  */

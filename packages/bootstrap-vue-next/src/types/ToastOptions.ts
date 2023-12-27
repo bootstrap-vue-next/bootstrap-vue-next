@@ -1,5 +1,4 @@
-import type {ContainerPosition} from './ContainerPosition'
-import type {BToastProps} from './ComponentProps'
+import type {BToastProps, ContainerPosition} from '.'
 
 export type Toast = Omit<BToastProps, 'modelValue'> & {
   /**

@@ -1,5 +1,3 @@
-import {closest, getAttr, getById, matches, select} from './dom'
-
 const TABLE_TAG_NAMES = ['TD', 'TH', 'TR']
 
 // Filter CSS selector for click/dblclick/etc. events
@@ -32,22 +30,23 @@ export default (event: Readonly<Event>) => {
     return false
   }
   // Ignore the click when it was inside a dropdown menu
-  if (closest('.dropdown-menu', el)) {
-    return true
-  }
-  const label = el.tagName === 'LABEL' ? el : closest('label', el)
+  if (el.closest('.dropdown-menu')) return true
+
+  const label = el.tagName === 'LABEL' ? el : el.closest('label')
   // If the label's form control is not disabled then we don't propagate event
   // Modern browsers have `label.control` that references the associated input, but IE 11
   // does not have this property on the label element, so we resort to DOM lookups
   if (label) {
-    const labelFor = getAttr(label, 'for')
-    const input = labelFor ? getById(labelFor) : select('input, select, textarea', label)
-    if (input && !input.disabled) {
+    const labelFor = label.getAttribute('for')
+    const input = labelFor
+      ? document.getElementById(labelFor)
+      : label.querySelector('input, select, textarea')
+    if (input && !(input as HTMLInputElement).disabled) {
       return true
     }
   }
   // Otherwise check if the event target matches one of the selectors in the
   // event filter (i.e. anchors, non disabled inputs, etc.)
   // Return `true` if we should ignore the event
-  return matches(el, eventFilter)
+  return el.matches(eventFilter)
 }

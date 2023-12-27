@@ -1,6 +1,4 @@
-import type {Numberish} from './CommonTypes'
-import type {AriaInvalid} from './AriaInvalid'
-import type {Size} from './Size'
+import type {AriaInvalid, Numberish, Size} from '.'
 
 export interface FormCommonInputProps {
   ariaInvalid?: AriaInvalid

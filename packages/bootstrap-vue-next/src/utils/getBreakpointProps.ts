@@ -1,15 +1,5 @@
-type PropDefinition = {
-  type: unknown[]
-  default: unknown
-}
+import type {ComponentProps, PropDefinition} from '../types'
 
-export interface ComponentProps {
-  [key: string]: PropDefinition
-}
-
-/**
- * @deprecated
- */
 export default (
   prefix: string,
   breakpoints: readonly string[],
@@ -20,4 +10,4 @@ export default (
       !prefix ? breakpoint : `${prefix}${breakpoint.charAt(0).toUpperCase() + breakpoint.slice(1)}`
     ] = definition
     return props
-  }, Object.create(null))
+  }, {} as ComponentProps)

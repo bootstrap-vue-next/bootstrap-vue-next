@@ -1,7 +1,7 @@
 import {titleCase} from './stringUtils'
-import type {TableField} from '../types'
+import type {TableFieldRaw} from '../types'
 
-export default <T = Record<string, unknown>>(field: Readonly<TableField<T>>) =>
+export default <T = Record<string, unknown>>(field: Readonly<TableFieldRaw<T>>) =>
   typeof field === 'string'
     ? titleCase(field)
     : field.label !== undefined

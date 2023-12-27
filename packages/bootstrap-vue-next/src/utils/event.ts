@@ -1,5 +1,10 @@
-import {HAS_PASSIVE_EVENT_SUPPORT} from './env'
-import {isObject} from './inspect'
+/**
+ * @deprecated remove with parseEventOptions
+ */
+export const IS_BROWSER =
+  typeof window !== 'undefined' &&
+  typeof document !== 'undefined' &&
+  typeof navigator !== 'undefined'
 
 // Normalize event options based on support of passive option
 // Exported only for testing purposes
@@ -9,11 +14,37 @@ import {isObject} from './inspect'
 export const parseEventOptions = (
   options: boolean | Readonly<EventListenerOptions> | undefined
 ): boolean | EventListenerOptions | undefined => {
+  const HAS_PASSIVE_EVENT_SUPPORT = (() => {
+    let passiveEventSupported = false
+    if (IS_BROWSER) {
+      try {
+        const options = {
+          // This function will be called when the browser
+          // attempts to access the passive property
+          get passive() {
+            passiveEventSupported = true
+            // eslint-disable-next-line no-useless-return
+            return
+          },
+        }
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        WINDOW.addEventListener('test', options, options)
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        WINDOW.removeEventListener('test', options, options)
+      } catch {
+        passiveEventSupported = false
+      }
+    }
+    return passiveEventSupported
+  })()
+
   if (HAS_PASSIVE_EVENT_SUPPORT) {
-    return isObject(options) ? options : {capture: !!options || false}
+    return typeof options === 'object' ? options : {capture: !!options || false}
   }
   // Need to translate to actual Boolean value
-  return !!(isObject(options) ? options.capture : options)
+  return typeof options === 'object' ? options.capture : options
 }
 
 // Attach an event listener to an element
@@ -54,23 +85,4 @@ export const eventOff = (
 export const eventOnOff = (on: boolean, eventParams: Parameters<typeof eventOff>) => {
   const method = on ? eventOn : eventOff
   method(...eventParams)
-}
-
-// Utility method to prevent the default event handling and propagation
-/**
- * @deprecated
- */
-export const stopEvent = (
-  event: Readonly<Event>,
-  {preventDefault = true, propagation = true, immediatePropagation = false} = {}
-) => {
-  if (preventDefault) {
-    event.preventDefault()
-  }
-  if (propagation) {
-    event.stopPropagation()
-  }
-  if (immediatePropagation) {
-    event.stopImmediatePropagation()
-  }
 }
