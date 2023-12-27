@@ -9,17 +9,31 @@
     tabindex="-1"
   >
     <slot name="first" />
-    <BFormRadio v-for="item in normalizeOptions" :key="item.self" v-bind="item.props">
+    <BFormRadio
+      v-for="item in normalizeOptions"
+      :key="item.self"
+      :disabled="item.disabled"
+      :value="item.value"
+    >
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <span v-if="item.html" v-html="item.html" />
-      <span v-else v-text="item.text" />
+      <span v-if="!!item.html" v-html="item.html" />
+      <template v-else>
+        {{ item.text }}
+      </template>
     </BFormRadio>
     <slot />
   </div>
 </template>
 
 <script setup lang="ts">
-import type {AriaInvalid, Booleanish, ButtonVariant, RadioValue, Size} from '../../types'
+import type {
+  AriaInvalid,
+  Booleanish,
+  ButtonVariant,
+  RadioOptionRaw,
+  RadioValue,
+  Size,
+} from '../../types'
 import {computed, nextTick, provide, ref, toRef, watch} from 'vue'
 import {radioGroupKey} from '../../utils'
 import BFormRadio from './BFormRadio.vue'
@@ -39,7 +53,7 @@ const props = withDefaults(
     id?: string
     modelValue?: RadioValue
     name?: string
-    options?: readonly (string | number | Record<string, unknown>)[]
+    options?: readonly RadioOptionRaw[]
     plain?: Booleanish
     required?: Booleanish
     size?: Size
@@ -131,20 +145,16 @@ const normalizeOptions = computed(() =>
   props.options.map((el, ind) =>
     typeof el === 'string' || typeof el === 'number'
       ? {
-          props: {
-            value: el,
-            disabled: disabledBoolean.value,
-          },
+          value: el,
+          disabled: disabledBoolean.value,
           text: el.toString(),
           html: undefined,
           self: Symbol(`radioGroupOptionItem${ind}`),
         }
       : {
-          props: {
-            value: el[props.valueField] as string | undefined,
-            disabled: el[props.disabledField] as boolean | undefined,
-            ...(el.props ? el.props : {}),
-          },
+          value: el[props.valueField] as string | undefined,
+          disabled: el[props.disabledField] as boolean | undefined,
+          ...(el.props ? el.props : {}),
           text: el[props.textField] as string | undefined,
           html: el[props.htmlField] as string | undefined,
           self: Symbol(`radioGroupOptionItem${ind}`),

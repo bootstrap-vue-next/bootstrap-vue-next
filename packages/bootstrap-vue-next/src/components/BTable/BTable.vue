@@ -94,7 +94,7 @@ import type {
   LiteralUnion,
   Numberish,
   TableField,
-  TableFieldObject,
+  TableFieldRaw,
   TableItem,
 } from '../../types'
 import BSpinner from '../BSpinner.vue'
@@ -231,8 +231,8 @@ const props = withDefaults(
 const emit = defineEmits<{
   'filtered': [value: TableItem<T>[]]
   'head-clicked': [
-    key: TableFieldObject<T>['key'],
-    field: TableField<T>,
+    key: TableField<T>['key'],
+    field: TableFieldRaw<T>,
     event: MouseEvent,
     isFooter: boolean,
   ]
@@ -322,7 +322,7 @@ const isSortable = computed(
     props.fields.some((field) => (typeof field === 'string' ? false : field.sortable))
 )
 
-const computedFields = computed<TableField<T>[]>(() =>
+const computedFields = computed<TableFieldRaw<T>[]>(() =>
   props.fields.map((el) =>
     typeof el === 'string'
       ? el
@@ -356,7 +356,7 @@ const getBusyRowClasses = computed(() => [
       : props.tbodyTrClass
     : null,
 ])
-const getFieldColumnClasses = (field: Readonly<TableFieldObject<T>>) => [
+const getFieldColumnClasses = (field: Readonly<TableField<T>>) => [
   {
     'b-table-sortable-column': isSortable.value && field.sortable,
   },
@@ -376,7 +376,7 @@ const getRowClasses = (item: Readonly<TableItem<T>> | null, type: string) => [
       : props.tbodyTrClass
     : null,
 ]
-const getIconStyle = (field: Readonly<TableFieldObject<T>>): StyleValue =>
+const getIconStyle = (field: Readonly<TableField<T>>): StyleValue =>
   sortByModel.value !== field.key ? {opacity: 0.5} : {}
 
 const computedItems = computed<readonly TableItem<T>[]>(() => {
@@ -526,7 +526,7 @@ const onRowClick = (row: Readonly<TableItem<T>>, index: number, e: MouseEvent) =
   emit('row-clicked', row, index, e)
 }
 
-const handleFieldSorting = (field: Readonly<TableField<T>>) => {
+const handleFieldSorting = (field: Readonly<TableFieldRaw<T>>) => {
   if (!isSortable.value) return
 
   const fieldKey = (typeof field === 'string' ? field : field.key) as string
@@ -550,7 +550,7 @@ const handleFieldSorting = (field: Readonly<TableField<T>>) => {
 
 const onFieldHeadClick = (
   fieldKey: LiteralUnion<keyof T>,
-  field: Readonly<TableField<T>>,
+  field: Readonly<TableFieldRaw<T>>,
   event: Readonly<MouseEvent>,
   isFooter = false
 ) => {

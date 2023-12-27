@@ -94,7 +94,7 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import {BCol, BContainer, BLink, BRow, BTable, type TableField} from 'bootstrap-vue-next'
+import {BCol, BContainer, BLink, BRow, BTable, type TableFieldRaw} from 'bootstrap-vue-next'
 import type {
   ComponentItem,
   ComponentReference,
@@ -151,7 +151,7 @@ const buildCompReferenceLink = (str: string): string => `#comp-reference-${str}`
 const sectionToComponentItem = (el: ComponentSection): ComponentItem =>
   el === 'Properties' ? 'props' : el === 'Events' ? 'emits' : 'slots'
 
-const fields: {[P in ComponentItem]: TableField[]} = {
+const fields: {[P in ComponentItem]: TableFieldRaw[]} = {
   props: ['prop', 'type', 'default', 'description'],
   emits: ['event', 'args', 'description'],
   slots: ['name', 'scope', 'description'],

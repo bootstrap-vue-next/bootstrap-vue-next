@@ -14,38 +14,38 @@
     :aria-invalid="computedAriaInvalid"
   >
     <slot name="first" />
-    <template v-for="(option, index) in formOptions" :key="index">
+    <template v-for="(option, index) in normalizedOptsWrapper" :key="index">
       <BFormSelectOptionGroup
-        v-if="Array.isArray((option as any).options)"
-        :label="(option as any).label"
-        :options="(option as any).options"
+        v-if="isComplex(option)"
+        :label="option.label"
+        :options="option.options"
       />
-      <!-- eslint-disable vue/no-v-text-v-html-on-component -->
-      <!-- eslint-disable vue/no-v-html -->
-      <BFormSelectOption
-        v-else
-        :value="(option as any).value"
-        :disabled="(option as any).disabled"
-        v-html="(option as any).html || (option as any).text"
-      />
-      <!--eslint-enable-->
+      <BFormSelectOption v-else :value="option.value" :disabled="option.disabled">
+        <!-- eslint-disable-next-line vue/no-v-html -->
+        <span v-if="!!option.html" v-html="option.html" />
+        <template v-else>
+          {{ option.text }}
+        </template>
+      </BFormSelectOption>
     </template>
     <slot />
   </select>
 </template>
 
-<script setup lang="ts">
-import type {AriaInvalid, Booleanish, Numberish, Size} from '../../types'
+<script setup lang="ts" generic="T = unknown">
+import type {
+  AriaInvalid,
+  Booleanish,
+  ComplexSelectOptionRaw,
+  Numberish,
+  SelectOption,
+  SelectOptionRaw,
+  Size,
+} from '../../types'
 import {computed, nextTick, ref, toRef} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
-import {
-  normalizeOptions,
-  useAriaInvalid,
-  useBooleanish,
-  useId,
-  useStateClass,
-} from '../../composables'
+import {useAriaInvalid, useBooleanish, useFormSelect, useId, useStateClass} from '../../composables'
 import {useFocus, useToNumber, useVModel} from '@vueuse/core'
 
 const props = withDefaults(
@@ -53,11 +53,8 @@ const props = withDefaults(
     ariaInvalid?: AriaInvalid
     autofocus?: Booleanish
     disabled?: Booleanish
-    disabledField?: string
     form?: string
-    htmlField?: string
     id?: string
-    labelField?: string
     modelValue?:
       | string
       | readonly unknown[]
@@ -67,38 +64,29 @@ const props = withDefaults(
       | null
     multiple?: Booleanish
     name?: string
-    options?: readonly unknown[] | Readonly<Record<string, unknown>> // TODO It was declared deprecated in useFormSelect to use a Record. https://bootstrap-vue.org/docs/components/form-select#options-as-an-object
-    optionsField?: string
+    options?: readonly (ComplexSelectOptionRaw | SelectOptionRaw)[]
     plain?: Booleanish
     required?: Booleanish
     selectSize?: Numberish
     size?: Size
     state?: Booleanish | null
-    textField?: string
-    valueField?: string
   }>(),
   {
     ariaInvalid: undefined,
     autofocus: false,
     disabled: false,
-    disabledField: 'disabled',
     form: undefined,
-    htmlField: 'html',
     id: undefined,
-    labelField: 'label',
     modelValue: '',
     multiple: false,
     name: undefined,
     // eslint-disable-next-line vue/require-valid-default-prop
     options: () => [],
-    optionsField: 'options',
     plain: false,
     required: false,
     selectSize: 0,
     size: 'md',
     state: null,
-    textField: 'text',
-    valueField: 'value',
   }
 )
 
@@ -151,15 +139,15 @@ const computedSelectSize = toRef(() =>
 
 const computedAriaInvalid = useAriaInvalid(() => props.ariaInvalid, stateBoolean)
 
-// TODO this needs to be redone to fit the structure of BFormCheckboxGroup
-// It also doesn't work for array syntaxes. Review second example from https://bootstrap-vue.org/docs/components/form-select
-// For more info on how it should behave
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const formOptions = computed(() => normalizeOptions(props.options as any, 'BFormSelect', props))
+const {normalizedOptions, isComplex} = useFormSelect(() => props.options)
+
+const normalizedOptsWrapper = computed(
+  () => normalizedOptions.value as readonly (ComplexSelectOptionRaw<T> | SelectOption<T>)[]
+)
+
 const localValue = computed({
   get: () => modelValue.value,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  set: (newValue: any) => {
+  set: (newValue) => {
     emit('input', newValue)
     modelValue.value = newValue
     nextTick(() => {

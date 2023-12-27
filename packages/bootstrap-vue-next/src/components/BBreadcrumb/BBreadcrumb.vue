@@ -14,12 +14,12 @@
 <script setup lang="ts">
 import {computed} from 'vue'
 import {useBreadcrumb} from '../../composables'
-import type {BreadcrumbItem, BreadcrumbItemObject} from '../../types'
+import type {BreadcrumbItem, BreadcrumbItemRaw} from '../../types'
 import BBreadcrumbItem from './BBreadcrumbItem.vue'
 
 const props = withDefaults(
   defineProps<{
-    items?: readonly BreadcrumbItem[]
+    items?: readonly BreadcrumbItemRaw[]
   }>(),
   {items: undefined}
 )
@@ -35,7 +35,7 @@ defineSlots<{
 
 const breadcrumb = useBreadcrumb()
 
-const breadcrumbItemObjects = computed<BreadcrumbItemObject[]>(() => {
+const breadcrumbItemObjects = computed<BreadcrumbItem[]>(() => {
   const localItems = props.items || breadcrumb?.items || []
   let activeDefined = false
   const items = localItems.map((item, idx) => {

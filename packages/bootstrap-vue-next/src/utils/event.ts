@@ -1,5 +1,4 @@
 import {HAS_PASSIVE_EVENT_SUPPORT} from './env'
-import {isObject} from './inspect'
 
 // Normalize event options based on support of passive option
 // Exported only for testing purposes
@@ -10,10 +9,10 @@ export const parseEventOptions = (
   options: boolean | Readonly<EventListenerOptions> | undefined
 ): boolean | EventListenerOptions | undefined => {
   if (HAS_PASSIVE_EVENT_SUPPORT) {
-    return isObject(options) ? options : {capture: !!options || false}
+    return typeof options === 'object' ? options : {capture: !!options || false}
   }
   // Need to translate to actual Boolean value
-  return !!(isObject(options) ? options.capture : options)
+  return typeof options === 'object' ? options.capture : options
 }
 
 // Attach an event listener to an element
@@ -54,23 +53,4 @@ export const eventOff = (
 export const eventOnOff = (on: boolean, eventParams: Parameters<typeof eventOff>) => {
   const method = on ? eventOn : eventOff
   method(...eventParams)
-}
-
-// Utility method to prevent the default event handling and propagation
-/**
- * @deprecated
- */
-export const stopEvent = (
-  event: Readonly<Event>,
-  {preventDefault = true, propagation = true, immediatePropagation = false} = {}
-) => {
-  if (preventDefault) {
-    event.preventDefault()
-  }
-  if (propagation) {
-    event.stopPropagation()
-  }
-  if (immediatePropagation) {
-    event.stopImmediatePropagation()
-  }
 }

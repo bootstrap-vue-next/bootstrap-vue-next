@@ -34,7 +34,7 @@
       key="output"
       class="flex-grow-1"
       :class="computedSpinClasses"
-      :dir="computedRTL ? 'rtl' : 'ltr'"
+      :dir="isRtl ? 'rtl' : 'ltr'"
       :tabindex="disabledBoolean ? undefined : '0'"
       role="spinbutton"
       aria-live="off"
@@ -70,8 +70,7 @@
 <script setup lang="ts">
 import {computed, ref, toRef} from 'vue'
 import type {Booleanish, ButtonType, Numberish, Size} from '../../types'
-import {isLocaleRTL} from '../../utils/locale'
-import {eventOnOff, stopEvent} from '../../utils/event'
+import {eventOnOff} from '../../utils/event'
 import {
   CODE_DOWN,
   CODE_END,
@@ -81,7 +80,7 @@ import {
   CODE_UP,
 } from '../../constants/codes'
 import {onKeyStroke, useFocus, useToNumber, useVModel} from '@vueuse/core'
-import {useBooleanish, useId} from '../../composables'
+import {useBooleanish, useId, useRtl} from '../../composables'
 
 const KEY_CODES = [CODE_UP, CODE_DOWN, CODE_HOME, CODE_END, CODE_PAGEUP, CODE_PAGEDOWN]
 
@@ -124,7 +123,7 @@ const props = withDefaults(
     inline: false,
     labelDecrement: 'Decrement',
     labelIncrement: 'Increment',
-    locale: 'locale',
+    locale: undefined,
     max: defaultValues.max,
     min: defaultValues.min,
     modelValue: null,
@@ -273,17 +272,14 @@ const valueAsFixed = toRef(() =>
   modelValue.value === null ? '' : modelValue.value.toFixed(computedPrecision.value)
 )
 
+const {isRtl, locale: globalLocale} = useRtl()
+
 const computedLocale = computed(() => {
-  // TODO
-  const locales = [props.locale]
+  const loc = (props.locale ?? globalLocale.value) || 'locale'
+  const locales = [loc]
   const nf = new Intl.NumberFormat(locales)
   return nf.resolvedOptions().locale
 })
-
-const computedRTL = computed(() =>
-  // TODO
-  isLocaleRTL(computedLocale.value)
-)
 
 const defaultFormatter = () =>
   new Intl.NumberFormat(computedLocale.value, {
@@ -332,6 +328,11 @@ const stepDown = (multiplier = 1) => {
   stepValue(-1 * multiplier)
 }
 
+const stopEvent = (event: Readonly<Event>) => {
+  event.preventDefault()
+  event.stopImmediatePropagation()
+}
+
 onKeyStroke(
   KEY_CODES,
   (event) => {
@@ -340,7 +341,7 @@ onKeyStroke(
     if (disabledBoolean.value || readonlyBoolean.value || altKey || ctrlKey || metaKey) return
 
     // https://w3c.github.io/aria-practices/#spinbutton
-    stopEvent(event, {propagation: false})
+    stopEvent(event)
     if ($_keyIsDown) {
       // Keypress is already in progress
       return
@@ -389,7 +390,7 @@ onKeyStroke(
 
     if (disabledBoolean.value || readonlyBoolean.value || altKey || ctrlKey || metaKey) return
 
-    stopEvent(event, {propagation: false})
+    stopEvent(event)
     resetTimers()
     $_keyIsDown = false
     emit('change', modelValue.value)
@@ -442,7 +443,7 @@ const onMouseup: EventListener = (event: Readonly<Event>) => {
     }
   }
 
-  stopEvent(event, {propagation: false})
+  stopEvent(event)
   resetTimers()
   setMouseup(false)
   // Trigger the change event
@@ -509,7 +510,7 @@ const buttons = computed(() => {
 
   const handler = (event: Readonly<Event>, stepper: (multiplier?: number) => void) => {
     if (!disabledBoolean.value && !readonlyBoolean.value) {
-      stopEvent(event, {propagation: false})
+      stopEvent(event)
       setMouseup(true)
       // Since we `preventDefault()`, we must manually focus the button
       // Though it's likely captured from the element click focus

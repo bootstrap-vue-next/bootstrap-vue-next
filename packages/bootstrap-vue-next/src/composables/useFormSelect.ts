@@ -1,75 +1,39 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const _getNested = (obj: any, path: string): any => {
-  if (!obj) return obj
-  if (path in obj) return obj[path]
+import {computed, type MaybeRefOrGetter, toValue} from 'vue'
+import type {ComplexSelectOptionRaw, SelectOption, SelectOptionRaw} from '../types'
 
-  const paths = path.split('.')
-
-  return _getNested(obj[paths[0]], paths.splice(1).join('.'))
-}
-
-const _normalizeOption = (
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  option: any,
-  key: string | null = null,
-  componentName: string,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  props: any
+export default <
+  T extends readonly SelectOptionRaw[] | readonly (ComplexSelectOptionRaw | SelectOptionRaw)[],
+>(
+  options: MaybeRefOrGetter<T>
 ) => {
-  if (Object.prototype.toString.call(option) === '[object Object]') {
-    const value = _getNested(option, props.valueField)
-    const text = _getNested(option, props.textField)
-    const html = _getNested(option, props.htmlField)
-    const disabled = _getNested(option, props.disabledField)
+  const isComplex = (option: unknown): option is ComplexSelectOptionRaw =>
+    typeof option === 'object' && option !== null && 'label' in option
 
-    const options = option[props.optionsField] || null
-    if (options !== null) {
-      return {
-        label: String(_getNested(option, props.labelField) || text),
-        options: normalizeOptions(options, componentName, props),
-      }
+  const normalizeOption = (option: SelectOptionRaw): SelectOption => {
+    if (typeof option === 'string') {
+      return {value: option, text: option}
     }
 
     return {
-      value: typeof value === 'undefined' ? key || text : value,
-      text: String(typeof text === 'undefined' ? key : text),
-      html,
-      disabled: Boolean(disabled),
+      value: option.value,
+      text: option.text,
+      html: option.html,
+      disabled: option.disabled,
     }
   }
-  return {
-    value: key || option,
-    text: String(option),
-    disabled: false,
-  }
+
+  const normalizeOptions = (
+    options: T
+  ): T extends readonly SelectOptionRaw[]
+    ? SelectOption[]
+    : (SelectOption | ComplexSelectOptionRaw)[] =>
+    options.map((option) =>
+      isComplex(option) ? option : normalizeOption(option)
+    ) as T extends readonly SelectOptionRaw[]
+      ? SelectOption[]
+      : (SelectOption | ComplexSelectOptionRaw)[]
+
+  const normalizedOptions = computed(() => normalizeOptions(toValue(options)))
+
+  return {normalizedOptions, isComplex}
 }
-
-const normalizeOptions = (
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  options: readonly any[],
-  componentName: string,
-  props: Readonly<Record<string, unknown>>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): any => {
-  if (Array.isArray(options)) {
-    return options.map((option) => _normalizeOption(option, null, componentName, props))
-  } else if (Object.prototype.toString.call(options) === '[object Object]') {
-    // eslint-disable-next-line no-console
-    console.warn(
-      `[BootstrapVue warn]: ${componentName} - Setting prop "options" to an object is deprecated. Use the array format instead.`
-    )
-
-    return Object.entries(options).map(([key, el]) => {
-      switch (typeof el) {
-        case 'object':
-          return _normalizeOption(el.text, String(el.value), componentName, props)
-        default:
-          return _normalizeOption(el, String(key), componentName, props)
-      }
-    })
-  }
-
-  return []
-}
-
-export default normalizeOptions

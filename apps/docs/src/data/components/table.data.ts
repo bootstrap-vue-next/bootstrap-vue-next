@@ -112,7 +112,7 @@ export default {
             {
               arg: 'key',
               description: '',
-              type: 'TableFieldObject<Record<string, unknown>>.key: LiteralUnion<string, string>',
+              type: 'TableField<Record<string, unknown>>.key: LiteralUnion<string, string>',
             },
             {
               arg: 'field',
@@ -397,7 +397,7 @@ export default {
         },
         {
           prop: 'fieldColumnClass',
-          type: '(field: TableFieldObject) => Record<string, any>[]',
+          type: '(field: TableField) => Record<string, any>[]',
           default: undefined,
         },
         {

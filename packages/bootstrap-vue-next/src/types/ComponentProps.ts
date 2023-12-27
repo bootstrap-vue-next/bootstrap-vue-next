@@ -1,23 +1,26 @@
 import type {Boundary, Middleware, Padding, RootBoundary, Strategy} from '@floating-ui/vue'
 import type {ComponentPublicInstance, RendererElement, TransitionProps} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
-import type {PopoverPlacement} from './PopoverPlacement'
-import type {Booleanish, Numberish} from './CommonTypes'
-import type {Breakpoint} from './Breakpoint'
-import type {ButtonType} from './ButtonType'
-import type {ButtonVariant} from './ButtonVariant'
-import type {ClassValue} from './AnyValuedAttributes'
-import type {ColorExtendables} from './ColorExtendables'
-import type {ColorVariant} from './ColorVariant'
-import type {LinkTarget} from './LinkTarget'
-import type {Size} from './Size'
-import type {TableField} from './TableField'
-import type {TableFieldObject} from './TableFieldObject'
-import type {TableItem} from './TableItem'
-import type {VerticalAlign} from './VerticalAlign'
-import type {RadiusElementExtendables} from './RadiusElement'
-import type {TextColorVariant} from './TextColorVariant'
-import type {TransitionMode} from './TransitionMode'
+import type {
+  Booleanish,
+  Breakpoint,
+  ButtonType,
+  ButtonVariant,
+  ClassValue,
+  ColorExtendables,
+  ColorVariant,
+  LinkTarget,
+  Numberish,
+  PopoverPlacement,
+  RadiusElementExtendables,
+  Size,
+  TableField,
+  TableFieldRaw,
+  TableItem,
+  TextColorVariant,
+  TransitionMode,
+  VerticalAlign,
+} from '.'
 
 export interface BLinkProps {
   active?: Booleanish
@@ -106,13 +109,13 @@ export interface BTableLiteProps<T = Record<string, unknown>> extends BTableSimp
   emptyFilteredText?: string
   emptyText?: string
   fieldColumnClass?: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  | ((field: TableFieldObject<T>) => readonly Record<string, any>[])
+  | ((field: TableField<T>) => readonly Record<string, any>[])
     | string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     | Readonly<Record<PropertyKey, any>>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     | readonly any[]
-  fields?: TableField<T>[]
+  fields?: TableFieldRaw<T>[]
   footClone?: Booleanish
   footRowVariant?: ColorVariant | null
   footVariant?: ColorVariant | null

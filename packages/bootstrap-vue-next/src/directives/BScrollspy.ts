@@ -9,7 +9,7 @@ export interface ElementWithScrollspy extends HTMLElement {
 const bind = (el: ElementWithScrollspy, binding: Readonly<DirectiveBinding>) => {
   if (el.$__scrollspy) el.$__scrollspy.cleanup()
   const {arg, value} = binding
-  const isObject = typeof value === 'object'
+  const isObject = typeof value === 'object' && value !== null
   const content = arg
     ? arg
     : typeof value === 'string'

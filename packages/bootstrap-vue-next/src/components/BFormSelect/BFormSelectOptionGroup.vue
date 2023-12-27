@@ -1,43 +1,37 @@
 <template>
   <optgroup :label="label">
     <slot name="first" />
-    <!-- eslint-disable vue/no-v-text-v-html-on-component -->
-    <!-- eslint-disable vue/no-v-html -->
-    <!-- TODO these options don't seem right for the component -->
     <BFormSelectOption
-      v-for="(option, index) in formOptions"
+      v-for="(option, index) in normalizedOptsWrapper"
       :key="index"
-      :value="(option as any).value"
-      :disabled="(option as any).disabled"
+      :disabled="option.disabled"
+      :value="option.value"
       v-bind="$attrs"
-      v-html="(option as any).html || (option as any).text"
-    />
-    <!--eslint-enable-->
+    >
+      <!-- eslint-disable-next-line vue/no-v-html -->
+      <span v-if="!!option.html" v-html="option.html" />
+      <template v-else>
+        {{ option.text }}
+      </template>
+    </BFormSelectOption>
     <slot />
   </optgroup>
 </template>
 
-<script setup lang="ts">
-import {computed} from 'vue'
+<script setup lang="ts" generic="T = unknown">
 import BFormSelectOption from './BFormSelectOption.vue'
-import {normalizeOptions} from '../../composables'
+import {useFormSelect} from '../../composables'
+import type {SelectOption, SelectOptionRaw} from '../../types'
+import {computed} from 'vue'
 
 const props = withDefaults(
   defineProps<{
-    disabledField?: string
-    htmlField?: string
     label?: string
-    options?: readonly unknown[] | Readonly<Record<string, unknown>>
-    textField?: string
-    valueField?: string
+    options?: readonly SelectOptionRaw<T>[]
   }>(),
   {
-    disabledField: 'disabled',
-    htmlField: 'html',
     label: undefined,
     options: () => [],
-    textField: 'text',
-    valueField: 'value',
   }
 )
 
@@ -48,9 +42,7 @@ defineSlots<{
   first?: (props: Record<string, never>) => any
 }>()
 
-// TODO this needs to be redone to fit the structure of BFormCheckboxGroup
-const formOptions = computed(() =>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  normalizeOptions(props.options as any[], 'BFormSelectOptionGroup', props)
-)
+const {normalizedOptions} = useFormSelect(() => props.options)
+
+const normalizedOptsWrapper = computed(() => normalizedOptions.value as SelectOption<T>[])
 </script>

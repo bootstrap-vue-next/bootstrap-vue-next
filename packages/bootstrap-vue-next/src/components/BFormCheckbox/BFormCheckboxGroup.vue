@@ -11,8 +11,10 @@
     <slot name="first" />
     <BFormCheckbox v-for="item in normalizeOptions" :key="item.self" v-bind="item.props">
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <span v-if="item.html" v-html="item.html" />
-      <span v-else v-text="item.text" />
+      <span v-if="!!item.html" v-html="item.html" />
+      <template v-else>
+        {{ item.text }}
+      </template>
     </BFormCheckbox>
     <slot />
   </div>
@@ -21,7 +23,14 @@
 <script setup lang="ts">
 import {computed, nextTick, provide, ref, toRef, watch} from 'vue'
 import BFormCheckbox from './BFormCheckbox.vue'
-import type {AriaInvalid, Booleanish, ButtonVariant, CheckboxValue, Size} from '../../types'
+import type {
+  AriaInvalid,
+  Booleanish,
+  ButtonVariant,
+  CheckboxOptionRaw,
+  CheckboxValue,
+  Size,
+} from '../../types'
 import {getGroupAttr, getGroupClasses, useBooleanish, useId} from '../../composables'
 import {checkboxGroupKey} from '../../utils'
 import {useFocus, useVModel} from '@vueuse/core'
@@ -39,7 +48,7 @@ const props = withDefaults(
     id?: string
     modelValue?: readonly CheckboxValue[]
     name?: string
-    options?: readonly (string | number | Record<string, unknown>)[]
+    options?: readonly CheckboxOptionRaw[]
     plain?: Booleanish
     required?: Booleanish
     size?: Size

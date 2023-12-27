@@ -67,14 +67,14 @@ This type is only used for the Breadcrumb component.
 <BCard class="bg-body-tertiary">
 
 ```ts
-interface BreadcrumbItemObject {
+interface BreadcrumbItem {
   active?: boolean
   disabled?: boolean
   href?: string
   text: string
   to?: string | Record<string, any>
 }
-type BreadcrumbItem = BreadcrumbItemObject | string
+type BreadcrumbItemRaw = BreadcrumbItem | string
 ```
 
 </BCard>
@@ -224,13 +224,17 @@ type SpinnerType = 'border' | 'grow'
 <BCard class="bg-body-tertiary">
 
 ```ts
-interface TableFieldObject<T = Record<string, unknown>> {
+type TableFieldFormatter<T = any> =
+  | string
+  | ((value: unknown, key?: LiteralUnion<keyof T>, item?: T) => string)
+
+interface TableField<T = Record<string, unknown>> {
   key: LiteralUnion<keyof T>
   label?: string
   headerTitle?: string
   headerAbbr?: string
   class?: string | string[]
-  formatter?: string | ((value: string, key?: string, item?: T) => string)
+  formatter?: TableFieldFormatter
   sortable?: boolean
   sortKey?: string
   sortDirection?: string
@@ -245,7 +249,7 @@ interface TableFieldObject<T = Record<string, unknown>> {
   isRowHeader?: boolean
   stickyColumn?: boolean
 }
-type TableField<T = Record<string, unknown>> = string | TableFieldObject<T>
+type TableFieldRaw<T = Record<string, unknown>> = string | TableField<T>
 ```
 
 </BCard>

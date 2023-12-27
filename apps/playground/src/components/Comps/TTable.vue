@@ -349,12 +349,12 @@
 
 <script setup lang="ts">
 import {computed, reactive, ref} from 'vue'
-import type {BTable, ColorVariant, TableField, TableItem} from 'bootstrap-vue-next'
+import type {BTable, ColorVariant, TableFieldRaw, TableItem} from 'bootstrap-vue-next'
 
 type LiteralUnion<T, U = string> = T | (U & Record<never, never>)
 
 const stringTableDefinitions = ref(['last_name', 'first_name', 'age'])
-const objectTableDefinitions = ref<Exclude<TableField, string>[]>([
+const objectTableDefinitions = ref<Exclude<TableFieldRaw, string>[]>([
   {
     key: 'last_name',
     label: 'Family name',
@@ -386,7 +386,7 @@ const selectClick = (selected: TableItem[]) => {
 }
 
 const currentTimeTable = ref<typeof BTable | null>(null)
-const currentTimeTableDefinitions: TableField[] = [
+const currentTimeTableDefinitions: TableFieldRaw[] = [
   {key: 'hours', label: 'Hours'},
   {key: 'minutes', label: 'Minutes'},
   {key: 'seconds', label: 'Seconds'},
@@ -441,8 +441,7 @@ const itemsTyped: TableItem<Person>[] = [
   {isActive: false, age: 29, name: {first: 'Dick', last: 'Dunlap'}},
 ]
 
-// TODO: This would be cleaner if we export TableFieldObject
-const fieldsTyped: Exclude<TableField<Person>, string>[] = [
+const fieldsTyped: Exclude<TableFieldRaw<Person>, string>[] = [
   {
     key: 'name',
     label: 'Person full name',

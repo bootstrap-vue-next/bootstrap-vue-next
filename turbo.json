@@ -8,6 +8,9 @@
     "test": {
       "outputs": []
     },
+    "test:ci": {
+      "outputs": []
+    },
     "test:lint": {
       "outputs": []
     },

@@ -1,5 +1,4 @@
 import {RX_HASH, RX_HASH_ID, RX_SPACE_SPLIT} from '../constants/regex'
-import {getAttr, isTag} from '../utils'
 import type {Directive, DirectiveBinding} from 'vue'
 
 const getTargets = (
@@ -14,8 +13,8 @@ const getTargets = (
   const localValue = typeof value === 'string' ? value.split(RX_SPACE_SPLIT) : value
 
   // Support target Id as link href (`href="#id"`)
-  if (isTag(el.tagName, 'a')) {
-    const href = getAttr(el, 'href') || ''
+  if (el.tagName.toLowerCase() === 'a') {
+    const href = el.getAttribute('href') || ''
     if (RX_HASH_ID.test(href)) {
       targets.push(href.replace(RX_HASH, ''))
     }
