@@ -1,6 +1,6 @@
 export * from './classes'
 export * from './dom'
-export * from './env'
+export * from './event'
 export {default as filterEvent} from './filterEvent'
 export * from './floatingUi'
 export {default as getBreakpointProps} from './getBreakpointProps'

@@ -1,4 +1,10 @@
-import {HAS_PASSIVE_EVENT_SUPPORT} from './env'
+/**
+ * @deprecated remove with parseEventOptions
+ */
+export const IS_BROWSER =
+  typeof window !== 'undefined' &&
+  typeof document !== 'undefined' &&
+  typeof navigator !== 'undefined'
 
 // Normalize event options based on support of passive option
 // Exported only for testing purposes
@@ -8,6 +14,32 @@ import {HAS_PASSIVE_EVENT_SUPPORT} from './env'
 export const parseEventOptions = (
   options: boolean | Readonly<EventListenerOptions> | undefined
 ): boolean | EventListenerOptions | undefined => {
+  const HAS_PASSIVE_EVENT_SUPPORT = (() => {
+    let passiveEventSupported = false
+    if (IS_BROWSER) {
+      try {
+        const options = {
+          // This function will be called when the browser
+          // attempts to access the passive property
+          get passive() {
+            passiveEventSupported = true
+            // eslint-disable-next-line no-useless-return
+            return
+          },
+        }
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        WINDOW.addEventListener('test', options, options)
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        WINDOW.removeEventListener('test', options, options)
+      } catch {
+        passiveEventSupported = false
+      }
+    }
+    return passiveEventSupported
+  })()
+
   if (HAS_PASSIVE_EVENT_SUPPORT) {
     return typeof options === 'object' ? options : {capture: !!options || false}
   }

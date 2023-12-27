@@ -2,6 +2,7 @@
   "extends": ["@tsconfig/node20/tsconfig.json", "@vue/tsconfig/tsconfig.json"],
   "include": ["vite.config.*"],
   "compilerOptions": {
+    "noEmit": false,
     "composite": true,
     "module": "ESNext",
     "types": ["node"]
