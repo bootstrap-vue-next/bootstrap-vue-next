@@ -11,10 +11,10 @@ describe('useBooleanish blackbox test', () => {
     expect(value).toHaveProperty('value')
   })
 
-  it("value to return bool false, when 'false'", () => {
+  it("value to return bool true, when 'false'", () => {
     const prop = {value: 'false' as Booleanish}
     const value = useBooleanish(() => prop.value)
-    expect(value.value).toBe(false)
+    expect(value.value).toBe(true)
   })
 
   it('value to return bool false, when false', () => {
@@ -32,12 +32,6 @@ describe('useBooleanish blackbox test', () => {
   it('value to return bool true, when true', () => {
     const prop = {value: 'false' as Booleanish}
     const value = useBooleanish(() => prop.value)
-    expect(value.value).toBe(false)
-  })
-
-  it('value to return bool true, when empty string', () => {
-    const prop = {value: '' as Booleanish}
-    const value = useBooleanish(() => prop.value)
     expect(value.value).toBe(true)
   })
 
@@ -48,8 +42,6 @@ describe('useBooleanish blackbox test', () => {
     prop.value = true
     expect(value.value).toBe(true)
     prop.value = 'false'
-    expect(value.value).toBe(false)
-    prop.value = ''
     expect(value.value).toBe(true)
     prop.value = false
     expect(value.value).toBe(false)

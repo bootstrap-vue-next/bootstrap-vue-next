@@ -43,7 +43,6 @@ const props = withDefaults(defineProps<BLinkProps>(), {
   activeClass: 'router-link-active',
   append: false,
   disabled: false,
-  event: 'click',
   exactActiveClass: 'router-link-exact-active',
   href: undefined,
   icon: false,
@@ -154,7 +153,7 @@ const computedLinkClasses = computed(() => ({
   disabled: disabledBoolean.value,
 }))
 
-const clicked = (e: MouseEvent): void => {
+const clicked = (e: Readonly<MouseEvent>): void => {
   if (disabledBoolean.value) {
     e.preventDefault()
     e.stopImmediatePropagation()

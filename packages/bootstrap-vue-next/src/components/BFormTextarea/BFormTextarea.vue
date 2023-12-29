@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import type {Booleanish} from '../../types'
+import type {Booleanish, Numberish} from '../../types'
 import {computed, type CSSProperties} from 'vue'
 import {useBooleanish, useFormInput, useStateClass} from '../../composables'
 import type {CommonInputProps} from '../../composables/useFormInput'
@@ -32,7 +32,7 @@ const props = withDefaults(
   defineProps<
     {
       noResize?: Booleanish
-      rows?: string | number
+      rows?: Numberish
       wrap?: string
     } & CommonInputProps
   >(),
@@ -91,9 +91,8 @@ const stateClass = useStateClass(stateBoolean)
 
 const computedClasses = computed(() => [
   stateClass.value,
+  plaintextBoolean.value ? 'form-control-plaintext' : 'form-control',
   {
-    'form-control': !props.plaintext,
-    'form-control-plaintext': props.plaintext,
     [`form-control-${props.size}`]: !!props.size,
   },
 ])

@@ -101,7 +101,7 @@ defineSlots<{
 
 const buildTriggerableEvent = (
   type: string,
-  opts: Partial<BvTriggerableEvent> = {}
+  opts: Readonly<Partial<BvTriggerableEvent>> = {}
 ): BvTriggerableEvent =>
   new BvTriggerableEvent(type, {
     cancelable: false,

@@ -4,6 +4,8 @@ import type {
   CheckboxValue,
   ClassValue,
   ColorVariant,
+  LiteralUnion,
+  Numberish,
   RadioValue,
   RadiusElement,
   Size,
@@ -35,7 +37,7 @@ export const tabsInjectionKey: InjectionKey<{
 // BProgress
 export const progressInjectionKey: InjectionKey<{
   animated: Readonly<Ref<boolean | undefined>>
-  max: Readonly<Ref<number | string>>
+  max: Readonly<Ref<Numberish>>
   showProgress: Readonly<Ref<boolean | undefined>>
   showValue: Readonly<Ref<boolean | undefined>>
   striped: Readonly<Ref<boolean | undefined>>
@@ -49,7 +51,7 @@ export const listGroupInjectionKey: InjectionKey<{
 // BAvatarGroup
 export const avatarGroupInjectionKey: InjectionKey<{
   overlapScale: Readonly<Ref<number>>
-  size: Readonly<Ref<Size | string | undefined>>
+  size: Readonly<Ref<LiteralUnion<Size, Numberish> | undefined>>
   square: Readonly<Ref<boolean>>
   rounded: Readonly<Ref<RadiusElement | boolean>>
   roundedTop: Readonly<Ref<RadiusElement | boolean | undefined>>
@@ -70,7 +72,7 @@ export const accordionInjectionKey: InjectionKey<{
 
 // BFormCheckboxGroup
 export const checkboxGroupKey: InjectionKey<{
-  modelValue: Ref<CheckboxValue[]>
+  modelValue: Ref<readonly CheckboxValue[]>
   switch: Readonly<Ref<boolean>>
   buttonVariant: Readonly<Ref<ButtonVariant | null>>
   form: Readonly<Ref<string | undefined>>

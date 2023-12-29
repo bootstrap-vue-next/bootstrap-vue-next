@@ -1,9 +1,9 @@
 import {DOMWrapper, enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, beforeEach, describe, expect, it} from 'vitest'
 import BModal from './BModal.vue'
-import BCloseButton from './BButton/BCloseButton.vue'
-import BButton from './BButton/BButton.vue'
-import {BvTriggerableEvent} from '../utils'
+import BCloseButton from '../BButton/BCloseButton.vue'
+import BButton from '../BButton/BButton.vue'
+import {BvTriggerableEvent} from '../../utils'
 import {nextTick} from 'vue'
 
 describe('modal', () => {
@@ -159,11 +159,11 @@ describe('modal', () => {
   it('div child div has class modal-fullscreen-{type}-down when prop fullscreen is string', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
-      props: {fullscreen: 'string'},
+      props: {fullscreen: 'xl'},
     })
     const $div = wrapper.get('div')
     const $div2 = $div.get('div')
-    expect($div2.classes()).toContain('modal-fullscreen-string-down')
+    expect($div2.classes()).toContain('modal-fullscreen-xl-down')
   })
 
   it('div child div has class modal-{type} when prop size', () => {

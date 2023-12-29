@@ -1,5 +1,4 @@
-import type {AriaInvalid} from './AriaInvalid'
-import type {Size} from './Size'
+import type {AriaInvalid, Numberish, Size} from '.'
 
 export interface FormCommonInputProps {
   ariaInvalid?: AriaInvalid
@@ -12,7 +11,7 @@ export interface FormCommonInputProps {
   lazy?: boolean
   lazyFormatter?: boolean
   list?: string
-  modelValue?: string | number
+  modelValue?: Numberish
   name?: string
   number?: boolean
   placeholder?: string

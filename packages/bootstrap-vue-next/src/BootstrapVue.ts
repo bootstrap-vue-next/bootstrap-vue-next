@@ -1,11 +1,10 @@
 import type {App, Plugin} from 'vue'
-import type {BootstrapVueOptions} from './types'
+import type {BootstrapVueOptions, ComponentType, DirectiveType} from './types'
 
 import './styles/styles.scss'
 
 import * as Components from './components'
 import * as Directives from './directives'
-import type {ComponentType, DirectiveType} from './types/BootstrapVueOptions'
 import parseActiveImports from './utils/parseActiveImports'
 
 declare module '@vue/runtime-core' {
@@ -74,6 +73,7 @@ declare module '@vue/runtime-core' {
     BListGroup: typeof Components.BListGroup
     BListGroupItem: typeof Components.BListGroupItem
     BModal: typeof Components.BModal
+    BModalOrchestrator: typeof Components.BModalOrchestrator
     BNav: typeof Components.BNav
     BNavForm: typeof Components.BNavForm
     BNavText: typeof Components.BNavText
@@ -106,7 +106,7 @@ declare module '@vue/runtime-core' {
     BThead: typeof Components.BThead
     BTr: typeof Components.BTr
     BToast: typeof Components.BToast
-    BToaster: typeof Components.BToaster
+    BToastOrchestrator: typeof Components.BToastOrchestrator
     BTooltip: typeof Components.BTooltip
     BTabs: typeof Components.BTabs
     BTransition: typeof Components.BTransition

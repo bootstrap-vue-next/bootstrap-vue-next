@@ -49,7 +49,7 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const submitted = (e: Event) => {
+const submitted = (e: Readonly<Event>) => {
   emit('submit', e)
 }
 </script>

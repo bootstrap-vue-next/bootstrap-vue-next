@@ -1,11 +1,8 @@
-import type {ComponentProps} from './getBreakpointProps'
+import type {ComponentProps} from '../types'
 
-/**
- * @deprecated
- */
 export default (
-  props: Record<PropertyKey, unknown>,
-  els: ComponentProps,
+  props: Readonly<Record<PropertyKey, unknown>>,
+  els: Readonly<ComponentProps>,
   propPrefix: string,
   classPrefix = propPrefix
 ): string[] =>
@@ -20,4 +17,4 @@ export default (
     )
 
     return arr
-  }, [])
+  }, [] as string[])

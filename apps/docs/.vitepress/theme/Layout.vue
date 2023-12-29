@@ -1,8 +1,8 @@
 <template>
-  <BNavbar v-b-color-mode="'dark'" variant="primary" sticky="top" toggleable="xl" :container="true">
-    <BToaster />
+  <BNavbar variant="primary" sticky="top" toggleable="lg" :container="true" v-b-color-mode="'dark'">
+    <BToastOrchestrator />
     <div class="d-flex gap-2 align-items-center">
-      <BNavbarToggle @click="sidebar = !sidebar" />
+      <BNavbarToggle v-b-toggle.sidebar-menu />
       <BNavbarBrand :to="withBase('/')" class="p-0 me-0 me-lg-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -30,7 +30,6 @@
         <BNav>
           <BNavItem
             v-for="link in headerLinks"
-            :key="link.route"
             :to="link.route"
             :active="route.path === `${link.route}.html`"
             class="py-2"
@@ -46,7 +45,6 @@
         <BNav class="d-flex">
           <BNavItem
             v-for="link in headerExternalLinks"
-            :key="link.url"
             :href="link.url"
             :link-attrs="{'aria-label': link.label}"
             target="_blank"
@@ -76,52 +74,71 @@
       </div>
     </div>
   </BNavbar>
-  <div v-if="!isLargeScreen" class="py-4 px-3 text-end">
-    <BNavbarToggle style="font-size: small" @click="onThisPage = !onThisPage">
-      On this page
-      <ChevronRight aria-hidden />
-    </BNavbarToggle>
-  </div>
-  <BContainer fluid="lg" class="mt-3 my-md-4">
-    <BRow v-if="page.isNotFound">
-      <BCol>
-        <BContainer class="text-center my-auto p-5">
-          <BRow>
-            <BCol>
-              <h1>Oh No!</h1>
-            </BCol>
-          </BRow>
-          <BRow>
-            <BCol>
-              <h2>File Not Found</h2>
-            </BCol>
-          </BRow>
-        </BContainer>
-      </BCol>
-    </BRow>
-    <BRow v-else>
-      <BCol tag="aside" class="bd-sidebar shadow">
-        <BOffcanvas v-model="sidebar" title="Browse docs" class="h-100" responsive="xl">
+  <ClientOnly>
+    <div class="py-4 px-3 text-end" v-if="!isLargeScreen">
+      <BNavbarToggle v-b-toggle.otp-menu class="otp-menu-toggle">
+        On this page
+        <ChevronRight aria-hidden />
+      </BNavbarToggle>
+    </div>
+  </ClientOnly>
+  <BContainer fluid class="container-lg mt-3 my-md-4 bd-layout">
+    <aside class="bd-sidebar">
+      <ClientOnly>
+        <BOffcanvas
+          id="sidebar-menu"
+          v-model="sidebar"
+          teleport-disabled="true"
+          backdrop="false"
+          title="Browse docs"
+          class="h-100 border-0"
+          :body-scrolling="isLargeScreen"
+        >
           <TableOfContentsNav />
         </BOffcanvas>
-      </BCol>
-      <BCol cols="12" xl="8" tag="main">
-        <Content />
-      </BCol>
-      <BCol tag="aside" class="bd-sidebar shadow">
-        <BOffcanvas
-          v-model="onThisPage"
-          placement="end"
-          title="On this page"
-          class="h-100"
-          header-class="pb-0"
-          body-class="py-2"
-          responsive="xl"
-        >
-          <div class="bd-toc" />
-        </BOffcanvas>
-      </BCol>
-    </BRow>
+      </ClientOnly>
+    </aside>
+    <main class="bd-main">
+      <BRow v-if="page.isNotFound">
+        <BCol>
+          <BContainer class="text-center my-auto p-5">
+            <BRow>
+              <BCol>
+                <h1>Oh No!</h1>
+              </BCol>
+            </BRow>
+            <BRow>
+              <BCol>
+                <h2>File Not Found</h2>
+              </BCol>
+            </BRow>
+          </BContainer>
+        </BCol>
+      </BRow>
+      <BRow v-else>
+        <div class="bd-content">
+          <aside class="otp-sidebar">
+            <ClientOnly>
+              <BOffcanvas
+                id="otp-menu"
+                v-model="onThisPage"
+                teleport-disabled="true"
+                backdrop="false"
+                placement="end"
+                title="On this page"
+                class="h-100 border-0"
+                :body-scrolling="isLargeScreen"
+                header-class="pb-0"
+                body-class="py-2"
+              >
+                <div class="bd-toc" />
+              </BOffcanvas>
+            </ClientOnly>
+          </aside>
+          <Content class="doc-content" />
+        </div>
+      </BRow>
+    </main>
   </BContainer>
 </template>
 
@@ -130,6 +147,7 @@ import {
   BCol,
   BCollapse,
   BContainer,
+  BNavItemDropdown,
   BDropdownItem,
   BNav,
   BNavbar,
@@ -137,14 +155,14 @@ import {
   BNavbarNav,
   BNavbarToggle,
   BNavItem,
-  BNavItemDropdown,
   BOffcanvas,
   BRow,
-  BToaster,
   useColorMode,
+  vBToggle,
   vBColorMode,
+  BToastOrchestrator,
 } from 'bootstrap-vue-next'
-import {computed, inject, onMounted, ref, watch} from 'vue'
+import {inject, ref, computed, watch} from 'vue'
 import GithubIcon from '~icons/bi/github'
 import OpencollectiveIcon from '~icons/simple-icons/opencollective'
 import DiscordIcon from '~icons/bi/discord'
@@ -154,7 +172,7 @@ import ChevronRight from '~icons/bi/chevron-right'
 import CircleHalf from '~icons/bi/circle-half'
 import {useData, useRoute, withBase} from 'vitepress'
 import {appInfoKey} from './keys'
-import {breakpointsBootstrapV5, useBreakpoints} from '@vueuse/core'
+import {useMediaQuery} from '@vueuse/core'
 import TableOfContentsNav from '../../src/components/TableOfContentsNav.vue'
 // @ts-ignore
 import VPNavBarSearch from 'vitepress/dist/client/theme-default/components/VPNavBarSearch.vue'
@@ -169,22 +187,9 @@ const globalData = inject(appInfoKey, {
   opencollectiveUrl: '',
 })
 
-const {greaterOrEqual} = useBreakpoints(breakpointsBootstrapV5)
-
-const isLargeScreen = ref(true)
-
-onMounted(() => {
-  watch(
-    greaterOrEqual('xl'),
-    (newValue) => {
-      isLargeScreen.value = newValue
-    },
-    {immediate: true}
-  )
-})
-
-const sidebar = ref(false)
-const onThisPage = ref(false)
+const isLargeScreen = useMediaQuery('(min-width: 992px)')
+const sidebar = ref(isLargeScreen.value)
+const onThisPage = ref(isLargeScreen.value)
 
 const headerLinks = [
   {
@@ -253,11 +258,22 @@ const set = (newValue: keyof typeof map) => {
   dark.value = newValue
 }
 
+watch(isLargeScreen, (newValue) => {
+  if (newValue === true) {
+    sidebar.value = true
+    onThisPage.value = true
+    return
+  }
+  sidebar.value = false
+  onThisPage.value = false
+})
+
 watch(
   () => route.path,
   () => {
-    sidebar.value = false
-    onThisPage.value = false
+    if (isLargeScreen.value === false) {
+      sidebar.value = false
+    }
   }
 )
 </script>
@@ -475,6 +491,11 @@ watch(
     }
   }
 
+  .otp-menu-toggle {
+    border: none;
+    font-size: small;
+  }
+
   [class^='language-'] {
     position: relative;
 
@@ -543,19 +564,163 @@ watch(
       }
     }
   }
+
+  // Sidebar.
+  .offcanvas {
+    box-shadow:
+      0 0.5rem 1rem rgba(0, 0, 0, 0.15),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.15);
+    .list-group {
+      padding: 0 0 1.5rem 0;
+      font-size: 0.875em;
+
+      .bd-links-heading {
+        svg {
+          position: relative;
+          top: -1px;
+          margin-right: 0.3rem;
+        }
+
+        display: block;
+        margin: 0 0 0.5rem;
+        text-transform: uppercase;
+
+        a {
+          text-decoration: none;
+        }
+      }
+
+      .list-group-item {
+        border: none;
+        padding: 0;
+
+        a {
+          color: var(--bs-body-color);
+          display: block;
+          padding: 0.13rem 0.7rem 0.13rem 0;
+          margin: 0.125rem 0;
+          text-decoration: none;
+        }
+      }
+    }
+  }
 }
 
-@media (min-width: 1200px) {
-  .bd-sidebar {
-    grid-area: sidebar;
-    position: -webkit-sticky;
-    position: sticky;
-    top: 5rem;
-    display: block !important;
-    height: calc(100vh - 6rem);
-    padding-left: 0.25rem;
-    margin-left: -0.25rem;
-    overflow-y: auto;
+// Sidebar onscreen.
+@media (min-width: 992px) {
+  .bd-layout {
+    display: grid !important;
+    grid-template-areas: 'sidebar main';
+    grid-template-columns: 1fr 5fr;
+    gap: 1.5rem;
+
+    .bd-sidebar,
+    .otp-sidebar {
+      grid-area: sidebar;
+      position: -webkit-sticky;
+      position: sticky;
+      top: 5rem;
+      display: block !important;
+      height: calc(100vh - 6rem);
+      padding-left: 0.25rem;
+      margin-left: -0.25rem;
+      overflow-y: auto;
+
+      .offcanvas {
+        transition: none !important;
+        transform: 0;
+        position: relative !important;
+
+        .offcanvas-header {
+          .btn-close {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .bd-main {
+      .bd-content {
+        display: grid;
+        grid-area: main;
+        grid-template-areas: 'intro toc' 'content toc';
+        grid-template-rows: auto 1fr;
+        grid-template-columns: 4fr 1fr;
+        gap: inherit;
+
+        .doc-content {
+          grid-area: content;
+          min-width: 1px;
+        }
+
+        .otp-sidebar {
+          margin-left: 1.25rem;
+          grid-area: toc;
+        }
+      }
+    }
+  }
+}
+
+// Sidebar width.
+.bd-sidebar,
+.otp-sidebar {
+  @media (min-width: 992px) {
+    min-width: 12.5rem;
+  }
+
+  .offcanvas.offcanvas-start,
+  .offcanvas.offcanvas-end {
+    @media (min-width: 992px) {
+      width: 12.5rem !important;
+    }
+
+    @media (max-width: 991px) {
+      .bd-links-nav {
+        -moz-column-count: 2;
+        column-count: 2;
+        -moz-column-gap: 1.5rem;
+        column-gap: 1.5rem;
+      }
+    }
+
+    .table-of-contents {
+      font-size: 0.875rem;
+
+      ul {
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+
+        a {
+          display: block;
+          padding: 0.125rem 0 0.125rem 0.75rem;
+          color: inherit;
+          text-decoration: none;
+          border-left: 0.125rem solid transparent;
+
+          &.active {
+            color: var(--bd-toc-color);
+            border-left-color: var(--bd-toc-color);
+          }
+
+          &:hover {
+            color: var(--bd-toc-color);
+            border-left-color: var(--bd-toc-color);
+          }
+        }
+
+        ul {
+          padding-left: 1rem;
+        }
+      }
+    }
+  }
+
+  .offcanvas.offcanvas-end {
+    @media (max-width: 991px) {
+      max-width: 15rem;
+    }
   }
 }
 
@@ -581,23 +746,6 @@ watch(
 [data-bs-theme='light'] {
   .vp-code-dark {
     display: none;
-  }
-}
-
-// These classes should be kept in line iwth TableOfContententsNav.vue
-// The nav here is auto injected and can't use the same components
-nav.table-of-contents {
-  ul {
-    list-style: none;
-    li {
-      padding-top: 0.125rem;
-      padding-bottom: 0.125rem;
-      a {
-        color: var(--bs-body-color);
-        text-decoration: none;
-        font-size: 0.875rem !important;
-      }
-    }
   }
 }
 </style>

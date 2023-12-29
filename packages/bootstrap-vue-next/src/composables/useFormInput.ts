@@ -1,4 +1,4 @@
-import type {AriaInvalid, Booleanish, Size} from '../types'
+import type {AriaInvalid, Booleanish, Numberish, Size} from '../types'
 import {nextTick, onActivated, onMounted, ref} from 'vue'
 import useAriaInvalid from './useAriaInvalid'
 import useBooleanish from './useBooleanish'
@@ -11,14 +11,14 @@ export interface CommonInputProps {
   autofocus?: Booleanish
   disabled?: Booleanish
   form?: string
-  debounce?: string | number
-  debounceMaxWait?: string | number
+  debounce?: Numberish
+  debounceMaxWait?: Numberish
   formatter?: (val: string, evt: Event) => string
   id?: string
   lazy?: Booleanish
   lazyFormatter?: Booleanish
   list?: string
-  modelValue?: string | number | null
+  modelValue?: Numberish | null
   name?: string
   number?: Booleanish
   placeholder?: string
@@ -57,14 +57,14 @@ export default (
   const debounceMaxWaitNumber = useToNumber(() => props.debounceMaxWait ?? NaN)
 
   const internalUpdateModelValue = useDebounceFn(
-    (value: string | number | undefined) => {
+    (value: Numberish | undefined) => {
       modelValue.value = value
     },
     () => (lazyBoolean.value === true ? 0 : debounceNumber.value),
     {maxWait: () => (lazyBoolean.value === true ? NaN : debounceMaxWaitNumber.value)}
   )
 
-  const updateModelValue = (value: string | number | undefined, force = false) => {
+  const updateModelValue = (value: Numberish | undefined, force = false) => {
     if (lazyBoolean.value === true && force === false) return
     internalUpdateModelValue(value)
   }
@@ -73,7 +73,7 @@ export default (
     initialValue: autofocusBoolean.value,
   })
 
-  const _formatValue = (value: string, evt: Event, force = false) => {
+  const _formatValue = (value: string, evt: Readonly<Event>, force = false) => {
     if (props.formatter !== undefined && (!lazyFormatterBoolean.value || force)) {
       return props.formatter(value, evt)
     }
@@ -103,7 +103,7 @@ export default (
 
   const computedAriaInvalid = useAriaInvalid(() => props.ariaInvalid, stateBoolean)
 
-  const onInput = (evt: Event) => {
+  const onInput = (evt: Readonly<Event>) => {
     const {value} = evt.target as HTMLInputElement
     const formattedValue = _formatValue(value, evt)
     if (evt.defaultPrevented) {
@@ -118,7 +118,7 @@ export default (
     emit('input', formattedValue)
   }
 
-  const onChange = (evt: Event) => {
+  const onChange = (evt: Readonly<Event>) => {
     const {value} = evt.target as HTMLInputElement
     const formattedValue = _formatValue(value, evt)
     if (evt.defaultPrevented) {
@@ -134,7 +134,7 @@ export default (
     emit('change', formattedValue)
   }
 
-  const onBlur = (evt: FocusEvent) => {
+  const onBlur = (evt: Readonly<FocusEvent>) => {
     emit('blur', evt)
     if (!lazyBoolean.value && !lazyFormatterBoolean.value) return
 

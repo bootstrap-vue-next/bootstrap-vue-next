@@ -10,7 +10,9 @@ export default createGlobalState(() => {
   /**
    * @returns {symbol} A symbol that corresponds to its unique id. You can pass this id to the hide function to force a Toast to hide
    */
-  const show = (...[el, obj]: [el: string, obj?: Omit<Toast, 'body'>] | [el: Toast]): symbol => {
+  const show = (
+    ...[el, obj]: [el: string, obj?: Readonly<Omit<Toast, 'body'>>] | [el: Readonly<Toast>]
+  ): symbol => {
     const payload: Toast = {pos: posDefault}
     if (typeof el === 'string') {
       Object.assign(payload, obj, {

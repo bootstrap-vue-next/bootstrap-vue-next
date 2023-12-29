@@ -30,7 +30,13 @@
 
 <script setup lang="ts">
 import {computed, toRef} from 'vue'
-import type {Booleanish, ColorVariant, RadiusElementExtendables, SpinnerType} from '../../types'
+import type {
+  Booleanish,
+  ColorVariant,
+  Numberish,
+  RadiusElementExtendables,
+  SpinnerType,
+} from '../../types'
 import {useBooleanish, useRadiusElementClasses} from '../../composables'
 import BTransition from '../BTransition/BTransition.vue'
 import BSpinner from '../BSpinner.vue'
@@ -45,7 +51,7 @@ const props = withDefaults(
       noFade?: Booleanish
       noSpinner?: Booleanish
       noWrap?: Booleanish
-      opacity?: number | string
+      opacity?: Numberish
       overlayTag?: string
       show?: Booleanish
       spinnerSmall?: Booleanish
@@ -53,7 +59,7 @@ const props = withDefaults(
       spinnerVariant?: ColorVariant | null
       variant?: ColorVariant | 'white' | 'transparent' | null
       wrapTag?: string
-      zIndex?: number | string
+      zIndex?: Numberish
     } & RadiusElementExtendables
   >(),
   {

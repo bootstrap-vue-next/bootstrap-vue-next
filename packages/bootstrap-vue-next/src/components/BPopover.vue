@@ -335,7 +335,7 @@ const computedClasses = computed(() => {
 const {isOutside} = useMouseInElement(element)
 const {isOutside: triggerIsOutside} = useMouseInElement(trigger)
 
-const toggle = (e: Event) => {
+const toggle = (e?: Event) => {
   const event = e ?? new Event('click')
   showState.value ? hide(event) : show()
 }
@@ -377,7 +377,7 @@ const show = () => {
   })
 }
 
-const hide = (e: Event) => {
+const hide = (e: Readonly<Event>) => {
   const event = buildTriggerableEvent('hide', {cancelable: true})
   emit('hide', event)
   if (event.defaultPrevented) {

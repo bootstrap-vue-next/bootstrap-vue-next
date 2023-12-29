@@ -4,15 +4,14 @@
   </option>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T">
 import {useBooleanish} from '../../composables'
 import type {Booleanish} from '../../types'
 
 const props = withDefaults(
   defineProps<{
     disabled?: Booleanish
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    value?: any
+    value?: T
   }>(),
   {
     disabled: false,
