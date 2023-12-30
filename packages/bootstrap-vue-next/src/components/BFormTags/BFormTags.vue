@@ -116,7 +116,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, toRef, watch} from 'vue'
+import {computed, ref, toRef} from 'vue'
 import BFormTag from './BFormTag.vue'
 import {useBooleanish, useId, useStateClass} from '../../composables'
 import type {
@@ -129,7 +129,7 @@ import type {
   Numberish,
   Size,
 } from '../../types'
-import {onKeyStroke, useFocus, useToNumber, useVModel} from '@vueuse/core'
+import {onKeyStroke, syncRef, useFocus, useToNumber, useVModel} from '@vueuse/core'
 import {escapeRegExpChars} from '../../utils'
 
 const props = withDefaults(
@@ -260,15 +260,12 @@ const validTags = ref<string[]>([])
 const invalidTags = ref<string[]>([])
 const duplicateTags = ref<string[]>([])
 
-watch(modelValue, (newValue) => {
-  tags.value = [...newValue]
+syncRef(modelValue, tags, {
+  direction: 'ltr',
+  transform: {
+    ltr: (v) => [...v],
+  },
 })
-// Vueuse has a type issue with readonly values
-// syncRef(modelValue, tags, {
-//   direction: 'ltr',
-//   // "v" is technically readonly, so we make a shallow copy
-//   transform: (v: readonly string[]) => [...v],
-// })
 
 const computedClasses = computed(() => [
   stateClass.value,
