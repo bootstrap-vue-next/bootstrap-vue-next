@@ -1,5 +1,5 @@
 <template>
-  <BTransition :no-fade="noFadeBoolean" v-bind="transProps">
+  <BTransition :no-fade="noFadeBoolean" v-bind="transProps" :appear="animationBoolean">
     <div
       v-if="isToastVisible"
       :id="id"
@@ -50,6 +50,7 @@
 </template>
 
 <script setup lang="ts">
+import {useElementHover, useToNumber, useVModel} from '@vueuse/core'
 import {computed, onBeforeUnmount, ref, toRef, watch, watchEffect} from 'vue'
 import {
   useBLinkHelper,
@@ -58,11 +59,10 @@ import {
   useCountdown,
 } from '../../composables'
 import type {BToastProps} from '../../types'
-import BTransition from '../BTransition/BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BLink from '../BLink/BLink.vue'
-import {useElementHover, useToNumber, useVModel} from '@vueuse/core'
 import BProgress from '../BProgress/BProgress.vue'
+import BTransition from '../BTransition/BTransition.vue'
 
 // TODO scheduling issue -- when multiple are opened in quick succession, and closed in quick succession,
 // Find index can get lost, leading to one or multiple staying orphaned
@@ -129,8 +129,6 @@ const modelValue = useVModel(props, 'modelValue', emit)
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props)
 
-// TODO animation is never used
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const animationBoolean = useBooleanish(() => props.animation)
 const isStatusBoolean = useBooleanish(() => props.isStatus)
 const noCloseButtonBoolean = useBooleanish(() => props.noCloseButton)
