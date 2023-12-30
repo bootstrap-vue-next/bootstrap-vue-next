@@ -5,35 +5,39 @@
       <!-- I tried to use <Transition appear> to have the animation work, but it didn't -->
       <BModal
         v-for="modal in modals"
-        :key="modal.self"
-        v-model="modal._modelValue"
+        :key="modal.value._self"
+        v-model="modal.value._modelValue"
         teleport-disabled="true"
-        v-bind="pluckModalItem(modal)"
+        v-bind="pluckModalItem(modal.value)"
         @hide="
           (e) => {
             // These following are confirm rules, otherwise we always resolve true
-            if (modal._isConfirm === true) {
+            if (modal.value._isConfirm === true) {
               if (e.trigger === 'ok') {
-                modal._promise.resolve(true)
+                modal.value._promise.resolve(true)
                 return
               }
               if (e.trigger === 'cancel') {
-                modal._promise.resolve(false)
+                modal.value._promise.resolve(false)
                 return
               }
-              modal._promise.resolve(null)
+              modal.value._promise.resolve(null)
             }
-            modal._promise.resolve(true)
+            modal.value._promise.resolve(true)
           }
         "
         @hidden="
           () => {
-            const ind = modals.findIndex((el) => el.self === modal.self)
+            const ind = modals.findIndex((el) => el.value._self === modal.value._self)
             if (ind === -1) return
             modals.splice(ind, 1)
           }
         "
-      />
+      >
+        <!-- <template v-for="(_, name) in modal" #[name]="slotData">
+          <slot :name="name" v-bind="slotData" />
+        </template> -->
+      </BModal>
     </div>
   </Teleport>
 </template>
@@ -62,8 +66,8 @@ const teleportDisabledBoolean = useBooleanish(() => props.teleportDisabled)
 
 const {modals, show, confirm} = useModalController()
 
-const pluckModalItem = (payload: Readonly<(typeof modals)['value'][number]>) =>
-  omit(payload, ['_promise', 'self', '_isConfirm', '_modelValue'])
+const pluckModalItem = (payload: Readonly<(typeof modals)['value'][number]['value']>) =>
+  omit(payload, ['_promise', '_self', '_isConfirm', '_modelValue'])
 
 defineExpose({
   show,

@@ -1,26 +1,28 @@
 import {createGlobalState} from '@vueuse/core'
 import {ref} from 'vue'
-import type {Toast} from '../types'
+import type {OrchestratedToast} from '../types'
 
 const posDefault = 'top-right'
 
 export default createGlobalState(() => {
-  const toasts = ref<(Toast & {self: symbol})[]>([])
+  const toasts = ref<(OrchestratedToast & {self: symbol})[]>([])
 
   /**
    * @returns {symbol} A symbol that corresponds to its unique id. You can pass this id to the hide function to force a Toast to hide
    */
   const show = (
-    ...[el, obj]: [el: string, obj?: Readonly<Omit<Toast, 'body'>>] | [el: Readonly<Toast>]
+    ...[el, obj]:
+      | [el: string, obj?: Readonly<Omit<OrchestratedToast, 'body'>>]
+      | [el: Readonly<OrchestratedToast>]
   ): symbol => {
-    const payload: Toast = {pos: posDefault}
+    const payload: OrchestratedToast = {pos: posDefault}
     if (typeof el === 'string') {
       Object.assign(payload, obj, {
         body: el,
         value: obj?.value || 5000,
-      } satisfies Toast)
+      } satisfies OrchestratedToast)
     } else {
-      Object.assign(payload, el, {value: el.value || 5000} satisfies Toast)
+      Object.assign(payload, el, {value: el.value || 5000} satisfies OrchestratedToast)
     }
     const self = Symbol()
 
@@ -38,5 +40,9 @@ export default createGlobalState(() => {
     toasts.value.splice(ind, 1)
   }
 
-  return {toasts, show, hide}
+  return {
+    toasts,
+    show,
+    hide,
+  }
 })

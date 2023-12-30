@@ -1,24 +1,26 @@
-import {ref} from 'vue'
+import {computed, type ComputedRef, type MaybeRefOrGetter, ref, toValue} from 'vue'
 import {useSharedModalStack} from './useModalManager'
-import type {BModalProps} from '../types'
-
-type Modal = Omit<BModalProps, 'modelValue'>
+import type {BModalProps, OrchestratedModal} from '../types'
 
 export default () => {
   const {lastStack, stack} = useSharedModalStack()
   const modals = ref<
-    (Modal & {
-      self: symbol
-      _modelValue: BModalProps['modelValue']
-      _promise: {
-        value: Promise<boolean | null>
-        resolve: (value: boolean | null) => void
+    ComputedRef<
+      OrchestratedModal & {
+        _self: symbol
+        _modelValue: BModalProps['modelValue']
+        _promise: {
+          value: Promise<boolean | null>
+          resolve: (value: boolean | null) => void
+        }
+        _isConfirm: boolean
       }
-      _isConfirm: boolean
-    })[]
+    >[]
   >([])
 
-  const baseCreate = (el?: Readonly<Modal & {_isConfirm?: boolean}>) => {
+  const baseCreate = (
+    el?: MaybeRefOrGetter<Readonly<OrchestratedModal & {_isConfirm?: boolean}>>
+  ) => {
     let resolveFunc: (value: boolean | null) => void = () => {
       /* empty */
     }
@@ -27,27 +29,34 @@ export default () => {
       resolveFunc = resolve
     })
 
-    const self = Symbol()
+    const _self = Symbol()
 
     const _promise = {
       value: promise,
       resolve: resolveFunc,
     }
 
-    modals.value.push({
-      ...el,
-      _isConfirm: el?._isConfirm ?? false,
-      _promise,
-      _modelValue: true,
-      self,
-    })
+    modals.value.push(
+      computed(() => {
+        const elV = toValue(el)
+
+        return {
+          ...elV,
+          _isConfirm: elV?._isConfirm ?? false,
+          _promise,
+          _modelValue: true,
+          _self,
+        }
+      })
+    )
 
     return promise
   }
 
-  const show = (el?: Readonly<Modal>) => baseCreate(el)
+  const show = (el?: MaybeRefOrGetter<Readonly<OrchestratedModal>>) => baseCreate(el)
 
-  const confirm = (el?: Readonly<Modal>) => baseCreate({...el, _isConfirm: true})
+  const confirm = (el?: MaybeRefOrGetter<Readonly<OrchestratedModal>>) =>
+    baseCreate({...el, _isConfirm: true})
 
   const hide = (trigger = '') => {
     if (lastStack.value) {
