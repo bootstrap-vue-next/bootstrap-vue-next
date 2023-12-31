@@ -358,12 +358,17 @@ BootstrapVueNext is available through `jsdelivr`. You can add the package by usi
 
 <BCard class="bg-body-tertiary">
 
-```html-vue
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-vue-next@{{data.latestVersion}}/dist/bootstrap-vue-next.umd.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-vue-next@{{data.latestVersion}}/dist/bootstrap-vue-next.min.css" rel="stylesheet">
+```html
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-vue-next@{{version}}/dist/bootstrap-vue-next.umd.min.js"></script>
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap-vue-next@{{version}}/dist/bootstrap-vue-next.min.css"
+  rel="stylesheet"
+/>
 ```
 
 </BCard>
+
+- **NOTE** Do not forget to set the version!
 
 <BAlert :model-value="true" variant="info">
 Links should be loaded after Bootstrap and Vue
@@ -373,9 +378,9 @@ Alternatively the ESM package is available as well
 
 <BCard class="bg-body-tertiary">
 
-```html-vue
+```html
 <script type="module">
-import bootstrapVueNext from 'https://cdn.jsdelivr.net/npm/bootstrap-vue-next@{{data.latestVersion}}/+esm'
+import bootstrapVueNext from 'https://cdn.jsdelivr.net/npm/bootstrap-vue-next@{{version}}/+esm'
 </script>
 ```
 
@@ -392,7 +397,6 @@ BootstrapVue is the parent project for which this is based on. We consider Boots
 <script setup lang="ts">
 import {BCard, BCardBody, BAlert, BTab, BTabs} from 'bootstrap-vue-next'
 import {useLocalStorage} from '@vueuse/core'
-import {data} from './data/package.data'
 
 const codePreference = useLocalStorage('code-group-preference', 0)
 </script>

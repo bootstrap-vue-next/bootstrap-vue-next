@@ -49,11 +49,31 @@ const {show} = useToast()
   </template>
 </HighlightCard>
 
+- Note that if the usage of the useToast is inside the same parent component that `BToastOrchestrator` is in, it may not work correctly. Instead, what you will want to do is grab the template ref of the `BToastOrchestrator` and access the exposed functions of it
+
+<HighlightCard>
+
+```vue
+<template>
+  <BToastOrchestrator ref="orchestrator" />
+</template>
+
+<script setup lang="ts">
+const orchestrator = ref<null | InstanceType<typeof BToastOrchestrator>>(null)
+
+const showToast = () => {
+  orchestrator.value?.show()
+}
+</script>
+```
+
+</HighlightCard>
+
 ## Options
 
 ### String
 
-There are two acceptable options for the `show` function. The first set of options is a `string` followed by an `object`. The string corresponds to the body of the `Toast`. If only the string is passed, a simple `Toast` is made, and by default, it is made at the `top-right` and it will expire in `5000` ms. You can pass in an optional `object` for the second parameter where you have a list of options, such as `pos`, `value`, `variant`, etc. Many of the values correspond to props for the `BToast` component. However, some props are taken out as they are reserved
+There are three acceptable options for the `show` function. The first set of options is a `string` followed by an `object`. The string corresponds to the body of the `Toast`. If only the string is passed, a simple `Toast` is made, and by default, it is made at the `top-right` and it will expire in `5000` ms. You can pass in an optional `object` for the second parameter where you have a list of options, such as `pos`, `value`, `variant`, etc. Many of the values correspond to props for the `BToast` component. However, some props are taken out as they are reserved
 
 <HighlightCard>
   <BButton
@@ -134,6 +154,89 @@ The second option is to use a full object, this is similar to the string, howeve
 
 <script setup lang="ts">
 const {show} = useToast()
+</script>
+```
+
+  </template>
+
+</HighlightCard>
+
+### Reactivity within show
+
+All variations of the `show` method accept reactive inputs. Meaning that you can pass in `Ref`s
+
+<HighlightCard>
+  <BButton
+    @click="showReactive"
+  >
+    Show
+  </BButton>
+  <template #html>
+
+```vue
+<template>
+  <BButton @click="showReactive"> Show </BButton>
+</template>
+
+<script setup lang="ts">
+const {show} = useToast()
+
+const toastShowStr = ref('foo')
+
+setInterval(() => {
+  toastShowStr.value = toastShowStr.value === 'foo' ? 'bar' : 'foo'
+}, 1000)
+
+const showReactive = () => {
+  show(toastShowStr, () => ({
+    variant: toastShowStr.value === 'bar' ? 'danger' : 'info',
+  }))
+}
+</script>
+```
+
+  </template>
+
+</HighlightCard>
+
+The third and final variation is discussed next
+
+## Advanced Usage
+
+The third variation of `show` accepts a `component`. Meaning you are capable of manipulating slots directly for more advanced control. This can either be an SFC or direct render function. The following example will use a render function, but to use an SFC, simply import your variation. **NOTE** both SFC and render functions depend on the `destroyed` event being emitted. This is only an issue if your component is wrapped in another element. If it is, you must declare the `destroyed` event with it `symbol`. Similarly, the second, optional parameter is the same object described above
+
+<HighlightCard>
+  <BButton
+    @click="showAdvanced"
+  >
+    Show
+  </BButton>
+  <template #html>
+
+```vue
+<template>
+  <BButton @click="showAdvanced"> Show </BButton>
+</template>
+
+<script setup lang="ts">
+const {show} = useToast()
+
+const toastVariant = ref<ColorVariant>('danger')
+
+setInterval(() => {
+  toastVariant.value = toastVariant.value === 'danger' ? 'info' : 'danger'
+}, 1000)
+
+const showAdvanced = () => {
+  show(
+    h(BToast, null, {
+      default: () => 'title?',
+    }),
+    () => ({
+      variant: toastVariant.value,
+    })
+  )
+}
 </script>
 ```
 
@@ -358,7 +461,7 @@ import {data} from '../../data/components/toast.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {BButtonGroup, BButton, BToast, useToast} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
-import {ref} from 'vue'
+import {ref, h} from 'vue'
 
 const {show, hide, toasts} = useToast()
 
@@ -391,5 +494,34 @@ const hideMe = () => {
   if (showValue === undefined) return
   hide(showValue)
   showValue = undefined
+}
+
+const toastShowStr = ref('foo')
+
+setInterval(() => {
+  toastShowStr.value = toastShowStr.value === 'foo' ? 'bar' : 'foo'
+}, 1000)
+
+const showReactive = () => {
+  show(toastShowStr, () => ({
+    variant: toastShowStr.value === 'bar' ? 'danger' : 'info',
+  }))
+}
+
+const toastVariant = ref('danger')
+
+setInterval(() => {
+  toastVariant.value = toastVariant.value === 'danger' ? 'info' : 'danger'
+}, 1000)
+
+const showAdvanced = () => {
+  show(
+    h(BToast, null, {
+      default: () => 'title?',
+    }),
+    () => ({
+      variant: toastVariant.value,
+    })
+  )
 }
 </script>

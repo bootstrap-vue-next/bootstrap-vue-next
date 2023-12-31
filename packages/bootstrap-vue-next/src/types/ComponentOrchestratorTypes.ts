@@ -1,6 +1,6 @@
-import type {BToastProps, ContainerPosition} from '.'
+import type {BModalProps, BToastProps, ContainerPosition} from '.'
 
-export type Toast = Omit<BToastProps, 'modelValue'> & {
+export type OrchestratedToast = Omit<BToastProps, 'modelValue'> & {
   /**
    * Position
    * @default 'top-right'
@@ -15,3 +15,5 @@ export type Toast = Omit<BToastProps, 'modelValue'> & {
    */
   value?: boolean | number // show or hide
 }
+
+export type OrchestratedModal = Omit<BModalProps, 'modelValue'>
