@@ -214,6 +214,10 @@ const nestedModal3 = ref(false)
 
 To programmatically control your modals with global state, refer to our documentation at [useModal](/docs/composables/useModal) and [useModalController](/docs/composables/useModalController)
 
+### Programmatically Create Modals
+
+To programmatically create modals, refer to the documentation at [useModalController](/docs/composables/useModalController)
+
 <ComponentReference :data="data" />
 
 <script setup lang="ts">

@@ -1,12 +1,26 @@
-import {computed, type ComputedRef, type MaybeRefOrGetter, ref, toValue} from 'vue'
+import {
+  type Component,
+  computed,
+  type ComputedRef,
+  isVNode,
+  type MaybeRefOrGetter,
+  shallowRef,
+  toValue,
+} from 'vue'
 import {useSharedModalStack} from './useModalManager'
 import type {BModalProps, OrchestratedModal} from '../types'
+import BModal from '../components/BModal/BModal.vue'
+import {createGlobalState} from '@vueuse/core'
 
-export default () => {
+const isComponent = (val: unknown): val is Component => isVNode(val)
+
+export default createGlobalState(() => {
   const {lastStack, stack} = useSharedModalStack()
-  const modals = ref<
-    ComputedRef<
-      OrchestratedModal & {
+
+  const modals = shallowRef<
+    ComputedRef<{
+      component: unknown // TS bullshit here
+      props: OrchestratedModal & {
         _self: symbol
         _modelValue: BModalProps['modelValue']
         _promise: {
@@ -15,11 +29,13 @@ export default () => {
         }
         _isConfirm: boolean
       }
-    >[]
+    }>[]
   >([])
 
-  const baseCreate = (
-    el?: MaybeRefOrGetter<Readonly<OrchestratedModal & {_isConfirm?: boolean}>>
+  const show = <T>(
+    ...[comp, props]:
+      | [component: Readonly<Component<T>>, props?: MaybeRefOrGetter<Readonly<OrchestratedModal>>]
+      | [props: MaybeRefOrGetter<Readonly<OrchestratedModal>>]
   ) => {
     let resolveFunc: (value: boolean | null) => void = () => {
       /* empty */
@@ -36,27 +52,65 @@ export default () => {
       resolve: resolveFunc,
     }
 
-    modals.value.push(
+    modals.value = [
+      ...modals.value,
       computed(() => {
-        const elV = toValue(el)
+        const propValue = isComponent(comp)
+          ? toValue(props)
+          : toValue(comp as MaybeRefOrGetter<Readonly<OrchestratedModal>>)
+        const compValue = isComponent(comp) ? comp : BModal
 
         return {
-          ...elV,
-          _isConfirm: elV?._isConfirm ?? false,
-          _promise,
-          _modelValue: true,
-          _self,
+          component: compValue,
+          props: {...propValue, _isConfirm: false, _promise, _self, _modelValue: true},
         }
-      })
-    )
+      }),
+    ]
 
     return promise
   }
 
-  const show = (el?: MaybeRefOrGetter<Readonly<OrchestratedModal>>) => baseCreate(el)
+  const confirm = <T>(
+    ...[comp, props]:
+      | [component: Readonly<Component<T>>, props?: MaybeRefOrGetter<Readonly<OrchestratedModal>>]
+      | [props: MaybeRefOrGetter<Readonly<OrchestratedModal>>]
+  ) => {
+    let resolveFunc: (value: boolean | null) => void = () => {
+      /* empty */
+    }
 
-  const confirm = (el?: MaybeRefOrGetter<Readonly<OrchestratedModal>>) =>
-    baseCreate({...el, _isConfirm: true})
+    const promise = new Promise<boolean | null>((resolve) => {
+      resolveFunc = resolve
+    })
+
+    const _self = Symbol()
+
+    const _promise = {
+      value: promise,
+      resolve: resolveFunc,
+    }
+
+    modals.value = [
+      ...modals.value,
+      computed(() => {
+        const propValue = isComponent(comp)
+          ? toValue(props)
+          : toValue(comp as MaybeRefOrGetter<Readonly<OrchestratedModal>>)
+        const compValue = isComponent(comp) ? comp : BModal
+
+        return {
+          component: compValue,
+          props: {...propValue, _isConfirm: true, _promise, _self, _modelValue: true},
+        }
+      }),
+    ]
+
+    return promise
+  }
+
+  const remove = (self: symbol) => {
+    modals.value = modals.value.filter((el) => el.value.props._self !== self)
+  }
 
   const hide = (trigger = '') => {
     if (lastStack.value) {
@@ -72,10 +126,11 @@ export default () => {
 
   return {
     modals,
+    remove,
     show,
     confirm,
     hide,
     hideAll,
     // Todo: Supports listening events globally in the future
   }
-}
+})

@@ -7,13 +7,14 @@
         :class="value"
         class="toast-container position-fixed p-3"
       >
-        <BToast
-          v-for="toast in toasts.filter((el) => el.pos === key)"
-          :key="toast.self"
-          v-model="toast.value"
+        <component
+          :is="toast.value.component"
+          v-for="toast in toasts.filter((el) => el.value.props.pos === key)"
+          :key="toast.value.props._self"
+          v-model="toast.value.props.value"
           :transition-props="{appear: true}"
-          v-bind="pluckToastItem(toast)"
-          @destroyed="hide(toast.self)"
+          v-bind="pluckToastItem(toast.value.props)"
+          @destroyed="remove(toast.value.props._self)"
         />
       </div>
     </div>
@@ -23,8 +24,7 @@
 <script setup lang="ts">
 import type {RendererElement} from 'vue'
 import {useBooleanish, useToast} from '../../composables'
-import type {Booleanish, Toast} from '../../types'
-import BToast from './BToast.vue'
+import type {Booleanish} from '../../types'
 import {omit} from '../../utils'
 
 const props = withDefaults(
@@ -54,13 +54,14 @@ const toastPositions = {
   'bottom-right': 'bottom-0 end-0',
 } as const
 
-const {hide, toasts, show} = useToast()
+const {remove, toasts, show} = useToast()
 
-const pluckToastItem = (payload: Readonly<Toast & {self: symbol}>) =>
-  omit(payload, ['value', 'self', 'pos'])
+const pluckToastItem = (payload: Readonly<(typeof toasts)['value'][number]['value']['props']>) =>
+  omit(payload, ['value', '_self', 'pos'])
 
 defineExpose({
-  hide,
+  remove,
   show,
+  toasts,
 })
 </script>

@@ -3,58 +3,50 @@
     <div id="__BVID__modal-container">
       <!-- TODO the animation when entering doesn't work. -->
       <!-- I tried to use <Transition appear> to have the animation work, but it didn't -->
-      <BModal
-        v-for="modal in modals"
-        :key="modal.value._self"
-        v-model="modal.value._modelValue"
-        teleport-disabled="true"
-        v-bind="pluckModalItem(modal.value)"
+      <component
+        :is="modal.value.component"
+        v-for="(modal, index) in modals"
+        :key="index"
+        v-bind="pluckModalItem(modal.value.props)"
+        v-model="modal.value.props._modelValue"
+        :teleport-disabled="true"
         @hide="
-          (e) => {
+          (e: BvTriggerableEvent) => {
             // These following are confirm rules, otherwise we always resolve true
-            if (modal.value._isConfirm === true) {
+            if (modal.value.props._isConfirm === true) {
               if (e.trigger === 'ok') {
-                modal.value._promise.resolve(true)
+                modal.value.props._promise.resolve(true)
                 return
               }
               if (e.trigger === 'cancel') {
-                modal.value._promise.resolve(false)
+                modal.value.props._promise.resolve(false)
                 return
               }
-              modal.value._promise.resolve(null)
+              modal.value.props._promise.resolve(null)
             }
-            modal.value._promise.resolve(true)
+            modal.value.props._promise.resolve(true)
           }
         "
         @hidden="
           () => {
-            const ind = modals.findIndex((el) => el.value._self === modal.value._self)
-            if (ind === -1) return
-            modals.splice(ind, 1)
+            remove(modal.value.props._self)
           }
         "
-      >
-        <!-- <template v-for="(_, name) in modal" #[name]="slotData">
-          <slot :name="name" v-bind="slotData" />
-        </template> -->
-      </BModal>
+      />
     </div>
   </Teleport>
 </template>
 
 <script setup lang="ts">
-import {omit} from '../../utils'
+import {BvTriggerableEvent, omit} from '../../utils'
 import {useBooleanish, useModalController} from '../../composables'
 import type {Booleanish} from '../../types'
 import type {RendererElement} from 'vue'
-import BModal from './BModal.vue'
 
 const props = withDefaults(
   defineProps<{
     teleportDisabled?: Booleanish
     teleportTo?: string | Readonly<RendererElement> | null | undefined
-    // TODO this
-    // appendToast?: Booleanish
   }>(),
   {
     teleportDisabled: false,
@@ -64,12 +56,13 @@ const props = withDefaults(
 
 const teleportDisabledBoolean = useBooleanish(() => props.teleportDisabled)
 
-const {modals, show, confirm} = useModalController()
+const {modals, remove, show, confirm} = useModalController()
 
-const pluckModalItem = (payload: Readonly<(typeof modals)['value'][number]['value']>) =>
+const pluckModalItem = (payload: Readonly<(typeof modals)['value'][number]['value']['props']>) =>
   omit(payload, ['_promise', '_self', '_isConfirm', '_modelValue'])
 
 defineExpose({
+  modals,
   show,
   confirm,
 })
