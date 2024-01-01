@@ -1,11 +1,11 @@
 <template>
-  <BTransition :no-fade="noFadeBoolean" v-bind="transProps" :appear="animationBoolean">
+  <BTransition v-bind="transProps" :no-fade="noFadeBoolean" :appear="animationBoolean">
     <div
       v-if="isToastVisible"
       :id="id"
       ref="element"
       class="toast"
-      :class="[toastClass, computedClasses]"
+      :class="[toastClass, computedClasses, fadeClasses]"
       tabindex="0"
       :role="!isToastVisible ? undefined : isStatusBoolean ? 'status' : 'alert'"
       :aria-live="!isToastVisible ? undefined : isStatusBoolean ? 'polite' : 'assertive'"
@@ -180,6 +180,14 @@ const computedClasses = computed(() => [
   },
 ])
 
+const fadeClasses = computed(() => {
+  if (!noFadeBoolean.value) {
+    return 'fade-leave-active'
+  }
+
+  return ''
+})
+
 const hide = () => {
   emit('close')
 
@@ -187,7 +195,6 @@ const hide = () => {
     modelValue.value = false
   } else {
     modelValue.value = 0
-    stop()
   }
 
   emit('closed')
