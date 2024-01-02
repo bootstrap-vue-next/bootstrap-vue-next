@@ -176,7 +176,8 @@ watch(isActive, (newValue) => {
 const computedClasses = computed(() => [
   resolvedBackgroundClasses.value,
   {
-    show: isToastVisible.value,
+    'show': isToastVisible.value,
+    'fade-enter-active': !noFadeBoolean.value,
   },
 ])
 
