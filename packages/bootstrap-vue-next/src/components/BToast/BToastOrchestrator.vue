@@ -1,21 +1,23 @@
 <template>
   <Teleport :to="teleportTo" :disabled="teleportDisabledBoolean">
     <div id="__BVID__toaster-container">
-      <div
-        v-for="(value, key) in toastPositions"
-        :key="key"
-        :class="value"
-        class="toast-container position-fixed p-3"
-      >
-        <BToast
-          v-for="toast in toasts.filter((el) => el.pos === key)"
-          :key="toast.self"
-          v-model="toast.value"
-          :transition-props="{appear: true}"
-          v-bind="pluckToastItem(toast)"
-          @destroyed="hide(toast.self)"
-        />
-      </div>
+      <TransitionGroup name="list" tag="ul">
+        <div
+          v-for="(value, key) in toastPositions"
+          :key="key"
+          :class="value"
+          class="toast-container position-fixed p-3"
+        >
+          <BToast
+            v-for="toast in toasts.filter((el) => el.pos === key)"
+            :key="toast.self"
+            v-model="toast.value"
+            :transition-props="{appear: true}"
+            v-bind="pluckToastItem(toast)"
+            @destroyed="hide(toast.self)"
+          />
+        </div>
+      </TransitionGroup>
     </div>
   </Teleport>
 </template>
@@ -24,8 +26,8 @@
 import type {RendererElement} from 'vue'
 import {useBooleanish, useToast} from '../../composables'
 import type {Booleanish, Toast} from '../../types'
-import BToast from './BToast.vue'
 import {omit} from '../../utils'
+import BToast from './BToast.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -64,3 +66,23 @@ defineExpose({
   show,
 })
 </script>
+
+<style lang="scss" scoped>
+.list-move,
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: scaleY(0.01) translate(30px, 0);
+}
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.list-leave-active {
+  position: absolute;
+}
+</style>
