@@ -29,6 +29,8 @@ export type {
   ContainerVerticalAlign,
   InputType,
   LinkTarget,
+  OrchestratedModal,
+  OrchestratedToast,
   PaginationPage,
   PlaceholderAnimation,
   PlaceholderSize,
@@ -49,7 +51,6 @@ export type {
   TableFieldRaw,
   TableItem,
   TextColorVariant,
-  Toast,
   TransitionMode,
   VerticalAlign,
 } from '..'
