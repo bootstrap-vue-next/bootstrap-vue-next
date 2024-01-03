@@ -12,6 +12,7 @@
             v-for="toast in toasts.filter((el) => el.pos === key)"
             :key="toast.self"
             v-model="toast.value"
+            :append="appendToast"
             :transition-props="{appear: true}"
             v-bind="pluckToastItem(toast)"
             @destroyed="hide(toast.self)"
@@ -33,12 +34,12 @@ const props = withDefaults(
   defineProps<{
     teleportDisabled?: Booleanish
     teleportTo?: string | Readonly<RendererElement> | null | undefined
-    // TODO this
-    // appendToast?: Booleanish
+    appendToast?: Booleanish
   }>(),
   {
     teleportDisabled: false,
     teleportTo: 'body',
+    appendToast: true,
   }
 )
 

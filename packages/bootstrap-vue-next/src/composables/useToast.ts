@@ -24,7 +24,8 @@ export default createGlobalState(() => {
     }
     const self = Symbol()
 
-    toasts.value.push({...payload, self})
+    if (obj?.append) toasts.value.push({...payload, self})
+    else toasts.value.unshift({...payload, self})
 
     return self
   }

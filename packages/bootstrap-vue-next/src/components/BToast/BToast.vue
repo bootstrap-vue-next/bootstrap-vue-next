@@ -66,7 +66,6 @@ import BTransition from '../BTransition/BTransition.vue'
 
 // TODO scheduling issue -- when multiple are opened in quick succession, and closed in quick succession,
 // Find index can get lost, leading to one or multiple staying orphaned
-// TODO appendToast from BToaster
 
 const props = withDefaults(defineProps<BToastProps>(), {
   animation: true,

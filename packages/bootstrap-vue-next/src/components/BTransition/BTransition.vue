@@ -5,9 +5,9 @@
 </template>
 
 <script setup lang="ts">
-import type {BTransitionProps} from '../../types'
 import {computed} from 'vue'
 import {useBooleanish} from '../../composables'
+import type {BTransitionProps} from '../../types'
 
 const props = withDefaults(defineProps<BTransitionProps>(), {
   appear: false,
