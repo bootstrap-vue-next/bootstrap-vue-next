@@ -3,7 +3,6 @@ import {
   type Component,
   computed,
   type ComputedRef,
-  isVNode,
   type MaybeRefOrGetter,
   shallowRef,
   toValue,
@@ -13,13 +12,15 @@ import BToast from '../components/BToast/BToast.vue'
 
 const posDefault = 'top-right'
 
-const isComponent = (val: unknown): val is Component => isVNode(val)
-
 export default createGlobalState(() => {
   const toasts = shallowRef<
     ComputedRef<{
       component: unknown
-      props: OrchestratedToast & {_self: symbol}
+      props: Omit<OrchestratedToast, 'value'> & {
+        _self: symbol
+        _modelValue: OrchestratedToast['value'] // Convert it to be the same name as useModalController.
+        // The difference between the two is that unlike that one, this value can be defined (there's cannot be).
+      }
     }>[]
   >([])
 
@@ -27,29 +28,38 @@ export default createGlobalState(() => {
    * @returns {symbol} A symbol that corresponds to its unique id. You can pass this id to the hide function to force a Toast to hide
    */
   const show = <T>(
-    ...[comp, props]:
-      | [component: Readonly<Component<T>>, props?: MaybeRefOrGetter<Readonly<OrchestratedToast>>]
-      | [props: MaybeRefOrGetter<Readonly<OrchestratedToast>>]
-      | [component: MaybeRefOrGetter<string>, props?: MaybeRefOrGetter<Readonly<OrchestratedToast>>]
+    obj:
+      | MaybeRefOrGetter<{
+          component?: Readonly<Component<T>>
+          props?: Readonly<OrchestratedToast>
+        }>
+      | MaybeRefOrGetter<{
+          component?: Readonly<Component<T>>
+          props?: Readonly<Omit<OrchestratedToast, 'body'>>
+          title?: string
+        }>
   ): symbol => {
     const _self = Symbol()
     toasts.value = [
       ...toasts.value,
       computed(() => {
-        let propValue: Readonly<OrchestratedToast> | string | undefined = isComponent(comp)
-          ? toValue(props)
-          : toValue(comp as MaybeRefOrGetter<string>) // Not the true type
-        if (typeof propValue === 'string') {
-          propValue = {...toValue(props), body: propValue}
-        }
-        const compValue = isComponent(comp) ? comp : BToast
+        const unwrapped = toValue(obj)
+
+        // If title exists use it, otherwise check if body exists in props and use it, otherwise default to empty string
+        const body =
+          'title' in unwrapped
+            ? unwrapped.title
+            : unwrapped.props && 'body' in unwrapped.props
+              ? unwrapped.props.body
+              : ''
 
         return {
-          component: compValue,
+          component: unwrapped.component ?? BToast,
           props: {
-            ...propValue,
-            value: propValue?.value || 5000,
-            pos: propValue?.pos || posDefault,
+            ...unwrapped.props,
+            body,
+            _modelValue: unwrapped.props?.value || 5000,
+            pos: unwrapped.props?.pos || posDefault,
             _self,
           },
         }
