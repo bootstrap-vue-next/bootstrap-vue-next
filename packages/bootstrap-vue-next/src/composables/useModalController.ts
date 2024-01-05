@@ -2,7 +2,6 @@ import {
   type Component,
   computed,
   type ComputedRef,
-  isVNode,
   type MaybeRefOrGetter,
   shallowRef,
   toValue,
@@ -11,8 +10,6 @@ import {useSharedModalStack} from './useModalManager'
 import type {BModalProps, OrchestratedModal} from '../types'
 import BModal from '../components/BModal/BModal.vue'
 import {createGlobalState} from '@vueuse/core'
-
-const isComponent = (val: unknown): val is Component => isVNode(val)
 
 export default createGlobalState(() => {
   const {lastStack, stack} = useSharedModalStack()
@@ -33,9 +30,10 @@ export default createGlobalState(() => {
   >([])
 
   const show = <T>(
-    ...[comp, props]:
-      | [component: Readonly<Component<T>>, props?: MaybeRefOrGetter<Readonly<OrchestratedModal>>]
-      | [props: MaybeRefOrGetter<Readonly<OrchestratedModal>>]
+    obj: MaybeRefOrGetter<{
+      component?: Readonly<Component<T>>
+      props?: Readonly<OrchestratedModal>
+    }>
   ) => {
     let resolveFunc: (value: boolean | null) => void = () => {
       /* empty */
@@ -55,14 +53,11 @@ export default createGlobalState(() => {
     modals.value = [
       ...modals.value,
       computed(() => {
-        const propValue = isComponent(comp)
-          ? toValue(props)
-          : toValue(comp as MaybeRefOrGetter<Readonly<OrchestratedModal>>)
-        const compValue = isComponent(comp) ? comp : BModal
+        const unwrapped = toValue(obj)
 
         return {
-          component: compValue,
-          props: {...propValue, _isConfirm: false, _promise, _self, _modelValue: true},
+          component: unwrapped.component ?? BModal,
+          props: {...unwrapped.props, _isConfirm: false, _promise, _self, _modelValue: true},
         }
       }),
     ]
@@ -71,9 +66,10 @@ export default createGlobalState(() => {
   }
 
   const confirm = <T>(
-    ...[comp, props]:
-      | [component: Readonly<Component<T>>, props?: MaybeRefOrGetter<Readonly<OrchestratedModal>>]
-      | [props: MaybeRefOrGetter<Readonly<OrchestratedModal>>]
+    obj: MaybeRefOrGetter<{
+      component?: Readonly<Component<T>>
+      props?: Readonly<OrchestratedModal>
+    }>
   ) => {
     let resolveFunc: (value: boolean | null) => void = () => {
       /* empty */
@@ -93,14 +89,11 @@ export default createGlobalState(() => {
     modals.value = [
       ...modals.value,
       computed(() => {
-        const propValue = isComponent(comp)
-          ? toValue(props)
-          : toValue(comp as MaybeRefOrGetter<Readonly<OrchestratedModal>>)
-        const compValue = isComponent(comp) ? comp : BModal
+        const unwrapped = toValue(obj)
 
         return {
-          component: compValue,
-          props: {...propValue, _isConfirm: true, _promise, _self, _modelValue: true},
+          component: unwrapped.component ?? BModal,
+          props: {...unwrapped.props, _isConfirm: true, _promise, _self, _modelValue: true},
         }
       }),
     ]

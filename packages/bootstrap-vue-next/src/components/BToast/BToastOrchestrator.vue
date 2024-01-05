@@ -11,7 +11,7 @@
           :is="toast.value.component"
           v-for="toast in toasts.filter((el) => el.value.props.pos === key)"
           :key="toast.value.props._self"
-          v-model="toast.value.props.value"
+          v-model="toast.value.props._modelValue"
           :transition-props="{appear: true}"
           v-bind="pluckToastItem(toast.value.props)"
           @destroyed="remove(toast.value.props._self)"
@@ -57,7 +57,7 @@ const toastPositions = {
 const {remove, toasts, show} = useToast()
 
 const pluckToastItem = (payload: Readonly<(typeof toasts)['value'][number]['value']['props']>) =>
-  omit(payload, ['value', '_self', 'pos'])
+  omit(payload, ['_modelValue', '_self', 'pos'])
 
 defineExpose({
   remove,
