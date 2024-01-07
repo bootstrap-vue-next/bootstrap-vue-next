@@ -16,8 +16,6 @@ Push notifications to your visitors with `BToast` and `BToastOrchestrator`. Thes
 
 Toasts are lightweight notifications designed to mimic the push notifications that have been popularized by mobile and desktop operating systems. Toasts are intended to be small interruptions to your visitors or users and therefore should contain minimal, to-the-point, non-interactive content. Please refer to the Accessibility Tips section below for important usage information
 
-<!-- TODO move composable stuff to its own section. Everything else can stay here -->
-
 ## Overview
 
 This section only refers to using the raw component variation. Often times, `Toasts` are generated in a global context programatically, like showing a success message after saving a form. That functionality is covered under the composable docs [here](/docs/composables/useToast)
