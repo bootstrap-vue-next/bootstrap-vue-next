@@ -10,7 +10,7 @@
 
 <div class="lead mb-5">
 
-Push notifications to your visitors with `BToast` and `BToastOrchestrator`. These are lightweight components that are generally easily customizable for generating alert messages
+Push notifications to your visitors with `BToast` and `BToastOrchestrator`. These are components that are easily customizable for generating alert messages
 
 </div>
 
@@ -18,181 +18,107 @@ Toasts are lightweight notifications designed to mimic the push notifications th
 
 ## Overview
 
-Toasts are usually used in a global context with the `BToastOrchestrator` component. You should create this component **once** usually in your `app` root component. This component is not initialized by default
+This section only refers to using the raw component variation. Often times, `Toasts` are generated in a global context programatically, like showing a success message after saving a form. That functionality is covered under the composable docs [here](/docs/composables/useToast)
+
+The component variation is shown by using the `v-model` like so
 
 <HighlightCard>
-
-```vue
-<template>
-  <BToastOrchestrator />
-</template>
-```
-
-</HighlightCard>
-
-After you create `BToastOrchestrator` you can start using the provided composable. The main usage is the returned `show` function
-
-<HighlightCard>
-  <BButton @click="show('Hello World!')">Show</BButton>
+  <BToast v-model="active" variant="info">
+    <template #title>
+      Title
+    </template>
+      Body
+  </BToast>
   <template #html>
 
 ```vue
 <template>
-  <BButton @click="show('Hello World!')">Show</BButton>
+  <BToast v-model="active" variant="info">
+    <template #title> Title </template>
+    Body
+  </BToast>
 </template>
 
 <script setup lang="ts">
-const {show} = useToast()
+const isActive = ref(false)
 </script>
 ```
 
   </template>
 </HighlightCard>
 
-## Options
-
-### String
-
-There are two acceptable options for the `show` function. The first set of options is a `string` followed by an `object`. The string corresponds to the body of the `Toast`. If only the string is passed, a simple `Toast` is made, and by default, it is made at the `top-right` and it will expire in `5000` ms. You can pass in an optional `object` for the second parameter where you have a list of options, such as `pos`, `value`, `variant`, etc. Many of the values correspond to props for the `BToast` component. However, some props are taken out as they are reserved
-
-<HighlightCard>
-  <BButton
-    @click="
-      show('Bar (this Toast will not auto-expire)', {
-        title: 'Foo',
-        variant: 'danger',
-        pos: 'top-center',
-        value: true,
-      })
-    "
-  >
-    Show
-  </BButton>
-  <template #html>
-
-```vue
-<template>
-  <BButton
-    @click="
-      show('Bar (this Toast will not auto-expire)', {
-        title: 'Foo',
-        variant: 'danger',
-        pos: 'top-center',
-        value: true,
-      })
-    "
-  >
-    Show
-  </BButton>
-</template>
-
-<script setup lang="ts">
-const {show} = useToast()
-</script>
-```
-
-  </template>
-
-</HighlightCard>
-
-### Object
-
-The second option is to use a full object, this is similar to the string, however it includes the body parameter in the object itself. The only difference between the two is that this object includes a body property. There is no difference between these two beyond this property
-
-<HighlightCard>
-  <BButton
-    @click="
-      show({
-        body: 'Bar (this Toast will not auto-expire)',
-        title: 'Foo',
-        variant: 'danger',
-        pos: 'top-center',
-        value: true,
-      })
-    "
-  >
-    Show
-  </BButton>
-  <template #html>
-
-```vue
-<template>
-  <BButton
-    @click="
-      show({
-        body: 'Bar (this Toast will not auto-expire)',
-        title: 'Foo',
-        variant: 'danger',
-        pos: 'top-center',
-        value: true,
-      })
-    "
-  >
-    Show
-  </BButton>
-</template>
-
-<script setup lang="ts">
-const {show} = useToast()
-</script>
-```
-
-  </template>
-
-</HighlightCard>
+By default Toasts are rendered in place. You can use Vue's `Teleport` to change the location, commonly to `body`
 
 ## Positioning
 
-You can position toasts in all of the typical ways that one would expect from a notification system
+In combination with `Teleport`, you can render Toasts above the page, and in specific locations. You will need to create a wrapper component around said Toast to declare its location
 
 <HighlightCard>
-  <BButtonGroup v-for="(chunk, index) in chunks" :key="index" style="display: block;">
+  <template
+    v-for="(pos, index) in values"
+    :key="index"
+  >
     <BButton
-      v-for="position in chunk"
-      :key="position"
-      @click="show(position, {pos: position})"
+      @click="values[index] = !values[index]"
     >
-      {{ position }}
+      {{ locations[index] }}
     </BButton>
-  </BButtonGroup>
+    <Teleport to="body">
+      <div
+        :class="locations[index]"
+        class="toast-container position-fixed p-3"
+      >
+        <BToast v-model="values[index]">
+          <template #title>
+            Title
+          </template>
+          {{ locations[index] }}
+        </BToast>
+      </div>
+    </Teleport>
+  </template>
   <template #html>
 
 ```vue
 <template>
-  <BButtonGroup v-for="(chunk, index) in chunks" :key="index" style="display: block;">
-    <BButton v-for="position in chunk" :key="position" @click="show(position, {pos: position})">
-      {{ position }}
+  <template v-for="(pos, index) in values" :key="index">
+    <BButton @click="values[index] = !values[index]">
+      {{ locations[index] }}
     </BButton>
-  </BButtonGroup>
+    <Teleport to="body">
+      <div :class="locations[index]" class="toast-container position-fixed p-3">
+        <BToast v-model="values[index]">
+          <template #title> Title </template>
+          {{ locations[index] }}
+        </BToast>
+      </div>
+    </Teleport>
+  </template>
 </template>
 
 <script setup lang="ts">
-const {show} = useToast()
+const locations = [
+  'top-0 start-0',
+  'top-0 start-50 translate-middle-x',
+  'top-0 end-0',
+  'top-50 start-0 translate-middle-y',
+  'top-50 start-50 translate-middle',
+  'top-50 end-0 translate-middle-y',
+  'bottom-0 start-0',
+  'bottom-0 start-50 translate-middle-x',
+  'bottom-0 end-0',
+]
 
-const chunks = [
-  'top-left',
-  'top-center',
-  'top-right',
-  'middle-left',
-  'middle-center',
-  'middle-right',
-  'bottom-left',
-  'bottom-center',
-  'bottom-right',
-].reduce((all, one, i) => {
-  const ch = Math.floor(i / 3)
-  all[ch] = [].concat(all[ch] || [], one)
-  return all
-}, [])
+const values = ref(Array.from({length: locations.length}, () => false))
 </script>
 ```
 
-</template>
+  </template>
 </HighlightCard>
 
 ## Static placement
 
-You can place toasts in static static placements, and with more control by using them directly. Although, it is more uncommon
+You can place toasts in static placements, and with more control by using them directly. Although, it is more uncommon
 
 <HighlightCard>
   <BToast v-model="active" variant="info">
@@ -299,51 +225,9 @@ const {show} = useToast()
 
 </HighlightCard>
 
-## Programmatically Hiding a Toast
+## Programmatically Control
 
-Hiding a `Toast` programmatically is very simple. Simply use the return value from the show method, and pass it into the hide function
-
-<HighlightCard>
-  <BButtonGroup>
-    <BButton @click="showMe" variant="success">
-      Show the Toast
-    </BButton>
-    <BButton @click="hideMe" variant="danger">
-      Hide the Toast
-    </BButton>
-  </BButtonGroup>
-  <template #html>
-
-```vue
-<template>
-  <BButtonGroup>
-    <BButton @click="showMe" variant="success"> Show the Toast </BButton>
-    <BButton @click="hideMe" variant="danger"> Hide the Toast </BButton>
-  </BButtonGroup>
-</template>
-
-<script setup lang="ts">
-const {show, hide} = useToast()
-
-let showValue: undefined | symbol
-
-const showMe = () => {
-  if (typeof showValue === 'symbol') return
-  // `show` returns a symbol
-  showValue = show('Showing', {value: true, variant: 'success', pos: 'bottom-center'})
-}
-
-const hideMe = () => {
-  if (showValue === undefined) return
-  hide(showValue)
-  showValue = undefined
-}
-</script>
-```
-
-  </template>
-
-</HighlightCard>
+To programmatically control your modals with global state, refer to our documentation at [useToast](/docs/composables/useToast)
 
 ## Accessibility
 
@@ -358,27 +242,25 @@ import {data} from '../../data/components/toast.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {BButtonGroup, BButton, BToast, useToast} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
-import {ref} from 'vue'
+import {ref, h} from 'vue'
 
 const {show, hide, toasts} = useToast()
 
 const active = ref(true)
 
-const chunks = [
-  'top-left',
-  'top-center',
-  'top-right',
-  'middle-left',
-  'middle-center',
-  'middle-right',
-  'bottom-left',
-  'bottom-center',
-  'bottom-right',
-].reduce((all, one, i) => {
-  const ch = Math.floor(i / 3)
-  all[ch] = [].concat(all[ch] || [], one)
-  return all
-}, [])
+const locations = [
+  'top-0 start-0',
+  'top-0 start-50 translate-middle-x',
+  'top-0 end-0',
+  'top-50 start-0 translate-middle-y',
+  'top-50 start-50 translate-middle',
+  'top-50 end-0 translate-middle-y',
+  'bottom-0 start-0',
+  'bottom-0 start-50 translate-middle-x',
+  'bottom-0 end-0',
+]
+
+const values = ref(Array.from({length: locations.length}, () => false))
 
 let showValue: undefined | symbol
 
@@ -391,5 +273,34 @@ const hideMe = () => {
   if (showValue === undefined) return
   hide(showValue)
   showValue = undefined
+}
+
+const toastShowStr = ref('foo')
+
+setInterval(() => {
+  toastShowStr.value = toastShowStr.value === 'foo' ? 'bar' : 'foo'
+}, 1000)
+
+const showReactive = () => {
+  show(toastShowStr, () => ({
+    variant: toastShowStr.value === 'bar' ? 'danger' : 'info',
+  }))
+}
+
+const toastVariant = ref('danger')
+
+setInterval(() => {
+  toastVariant.value = toastVariant.value === 'danger' ? 'info' : 'danger'
+}, 1000)
+
+const showAdvanced = () => {
+  show(
+    h(BToast, null, {
+      default: () => 'title?',
+    }),
+    () => ({
+      variant: toastVariant.value,
+    })
+  )
 }
 </script>

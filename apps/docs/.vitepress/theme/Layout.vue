@@ -1,6 +1,7 @@
 <template>
   <BNavbar variant="primary" sticky="top" toggleable="lg" :container="true" v-b-color-mode="'dark'">
     <BToastOrchestrator />
+    <BModalOrchestrator />
     <div class="d-flex gap-2 align-items-center">
       <BNavbarToggle v-b-toggle.sidebar-menu />
       <BNavbarBrand :to="withBase('/')" class="p-0 me-0 me-lg-2">
@@ -161,6 +162,7 @@ import {
   vBToggle,
   vBColorMode,
   BToastOrchestrator,
+  BModalOrchestrator,
 } from 'bootstrap-vue-next'
 import {inject, ref, computed, watch} from 'vue'
 import GithubIcon from '~icons/bi/github'

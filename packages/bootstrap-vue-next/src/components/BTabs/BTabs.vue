@@ -239,15 +239,24 @@ const keynav = (direction: number) => {
 }
 
 const nextIndex = (start: number, direction: number) => {
-  if (tabs.value.length <= 0) return -1
   let index = start
-  const maxIdx = tabs.value.map((tab) => !tab.disabled).lastIndexOf(true)
-  const minIdx = tabs.value.map((tab) => !tab.disabled).indexOf(true)
+  let minIdx = -1
+  let maxIdx = -1
+
+  for (let i = 0; i < tabs.value.length; i++) {
+    if (!tabs.value[i].disabled) {
+      if (minIdx === -1) minIdx = i
+      maxIdx = i
+    }
+  }
+
   while (index >= minIdx && index <= maxIdx && tabs.value[index].disabled) {
     index += direction
   }
+
   if (index < minIdx) index = minIdx
-  if (index >= maxIdx) index = maxIdx
+  if (index > maxIdx) index = maxIdx
+
   return index
 }
 
@@ -291,12 +300,7 @@ const registerTab = (tab: Ref<TabType>) => {
   })
 }
 const unregisterTab = (id: string) => {
-  if (tabsInternal.value.find((t) => t.value.id === id)) {
-    tabsInternal.value.splice(
-      tabsInternal.value.findIndex((t) => t.value.id === id),
-      1
-    )
-  }
+  tabsInternal.value = tabsInternal.value.filter((t) => t.value.id !== id)
 }
 
 watch(

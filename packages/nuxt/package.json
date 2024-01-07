@@ -33,24 +33,24 @@
     "bootstrap-vue-next": "workspace:^"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.8.2"
+    "@nuxt/kit": "^3.9.1"
   },
   "devDependencies": {
     "@nuxt/devtools": "^1.0.6",
     "@nuxt/eslint-config": "^0.2.0",
-    "@nuxt/module-builder": "^0.5.4",
-    "@nuxt/schema": "^3.8.2",
+    "@nuxt/module-builder": "^0.5.5",
+    "@nuxt/schema": "^3.9.1",
     "@nuxt/test-utils": "^3.9.0",
     "@rushstack/eslint-patch": "^1.6.1",
-    "@types/node": "^20.10.5",
-    "@vue/eslint-config-prettier": "^8.0.0",
+    "@types/node": "^20.10.7",
+    "@vue/eslint-config-prettier": "^9.0.0",
     "bootstrap-vue-next": "workspace:^",
     "eslint": "^8.56.0",
-    "eslint-define-config": "^2.0.0",
-    "nuxt": "^3.8.2",
+    "eslint-define-config": "^2.1.0",
+    "nuxt": "^3.9.1",
     "prettier": "^3.1.1",
-    "unimport": "^3.7.0",
-    "vue": "^3.3.13"
+    "unimport": "^3.7.1",
+    "vue": "^3.4.5"
   },
   "repository": {
     "type": "git",
