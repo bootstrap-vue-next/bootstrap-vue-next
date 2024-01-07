@@ -1,5 +1,6 @@
 <template>
   <BContainer fluid>
+    <BModalOrchestrator />
     <BRow>
       <BCol>
         <BButton @click="showModal = !showModal">Toggle modal v-model</BButton>
@@ -48,11 +49,22 @@
         <BButton @click="noClose = false">Set noClose = false</BButton>
       </BCol>
     </BRow>
+    <BRow>
+      <BCol>
+        <BButton v-for="(fn, name) in showFns" :key="name" @click="fn">{{ name }}</BButton>
+      </BCol>
+    </BRow>
   </BContainer>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
+import {computed, h, ref} from 'vue'
+import {
+  BModal,
+  type ColorVariant,
+  type OrchestratedModal,
+  useModalController,
+} from 'bootstrap-vue-next'
 
 const showModal = ref(false)
 const showModal2 = ref(false)
@@ -60,4 +72,73 @@ const showModal3 = ref(false)
 
 const noClose = ref(true)
 const isModalVisible = ref(false)
+
+const firstRef = ref<OrchestratedModal>({
+  body: `${Math.random()}`,
+})
+
+setInterval(() => {
+  firstRef.value.body = `${Math.random()}`
+}, 1000)
+
+const {show} = useModalController()
+
+const showFns = {
+  basicNoReactive: () => {
+    show({
+      props: {
+        title: 'foobar',
+        okVariant: 'danger',
+      },
+    })
+  },
+  basicCustomComponent: () => {
+    show({
+      component: h(BModal, null, {default: () => 'foobar!'}),
+      props: {
+        okVariant: 'info',
+      },
+    })
+  },
+  simpleRefProps: () => {
+    show({
+      props: firstRef,
+    })
+  },
+  dynamicRefProps: () => {
+    show({
+      props: computed(() => ({
+        ...firstRef.value,
+        okVariant: (Number.parseInt(firstRef.value.body?.charAt(2) ?? '0') % 2 === 0
+          ? 'danger'
+          : 'info') as ColorVariant,
+      })),
+    })
+  },
+  dynamicComponent: () => {
+    show({
+      props: () => ({
+        title: firstRef.value.body,
+      }),
+      component: computed(() =>
+        Number.parseInt(firstRef.value.body?.charAt(2) ?? '0') % 2 === 0
+          ? BModal
+          : h(BModal, null, {default: () => `custom ${firstRef.value.body}`})
+      ),
+    })
+  },
+  getterFunction: () => {
+    show({
+      props: () => ({
+        title: firstRef.value.body,
+      }),
+    })
+  },
+  // Demonstration psuedocode, you can import a component and use it
+  // importedComponent: () => {
+  //   show({
+  //     component: import('./MyModalComponent.vue'),
+  //   })
+  // },
+}
 </script>

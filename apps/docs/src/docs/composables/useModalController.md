@@ -14,29 +14,74 @@
 
 </div>
 
-## Creating Modals
+## BModalOrchestrator
 
-It is possible to create modals. It is similar to the [useToast](/docs/composables/useToast) composable. To use this functionality, you must initialize a `BModalOrchestrator` component **once** in your app. There are two primary methods, `show` and `confirm`. Unlike `Toasts`, these two functions return a `promise`
-
-Both `show` and `confirm` may accept two variations
-
-### Basic creation
-
-The first variation, and simplest is to pass in a simple object. This corresponds mostly to the props of `BModal`. The object can be a `MaybeRefOrGetter` for reactivity
+As described, you must have initialized `BModalOrchestrator` once and only once (doing multiple may display multiple `Modals`). This is usually best placed at the App root.
 
 <HighlightCard>
-  <BButton @click="createBasic">Click me</BButton>
+
+<template #html>
+
+```vue-html
+<BModalOrchestrator />
+```
+
+  </template>
+</HighlightCard>
+
+The only props it access are `teleportDisabled` and `teleportTo` to modify the location that it is placed
+
+In addition, it contains a few exposed methods. These exposed methods on the `template ref` correspond to those in the `useToast` function, described below
+
+- confirm
+- show
+- modals
+
+## Creating Modals
+
+Showing a modal is done through the `show` or `confirm` method
+
+<HighlightCard>
+  <BButton @click="showExample">Click me</BButton>
 
 <template #html>
 
 ```vue
 <template>
-  <BButton @click="createBasic">Click me</BButton>
+  <BButton @click="showExample">Click me</BButton>
 </template>
 
 <script setup lang="ts">
 const {confirm} = useModalController()
 const toast = useToast()
+
+const showExample = async () => {
+  const value = await confirm({props: {title: 'Hello World!'}})
+
+  toast.show({props: {title: `Promise resolved to ${value}`, variant: 'info'}})
+}
+</script>
+```
+
+  </template>
+</HighlightCard>
+
+### Reactivity Within Show
+
+`show` and `confirm` can accept a `MaybeRefOrGetter`, meaning that all properties are reactive
+
+<HighlightCard>
+  <BButton @click="showReactiveExample">Click me</BButton>
+
+<template #html>
+
+```vue
+<template>
+  <BButton @click="showReactiveExample">Click me</BButton>
+</template>
+
+<script setup lang="ts">
+const {show} = useModalController()
 
 const title = ref('Hello')
 
@@ -44,10 +89,12 @@ setInterval(() => {
   title.value = title.value === 'Hello' ? 'World' : 'Hello'
 }, 2500)
 
-const createBasic = async () => {
-  const value = await confirm(computed(() => ({title: title.value})))
-
-  toast.show(`Promise resolved to ${value}`, {variant: 'info'})
+const showReactiveExample = () => {
+  show({
+    props: computed(() => ({
+      title: title.value,
+    })),
+  })
 }
 </script>
 ```
@@ -57,28 +104,47 @@ const createBasic = async () => {
 
 ### Advanced Creation
 
-Similar to `useToast`, it is also possible to input variation of components for fine grained control
+Using props can work for most situations, but it leaves some finer control to be desired. For instance, you can not add HTML to any slot value. This is where the `component` property comes into play. Using the `component` property, you can input the component to render. This can either be an imported SFC or an inline render function. Of course, it is also reactive
 
 <HighlightCard>
-  <BButton @click="createAdvanced">Click me</BButton>
+  <BButton @click="showMeAdvancedExample">Click me</BButton>
 
 <template #html>
 
 ```vue
 <template>
-  <BButton @click="createAdvanced">Click me</BButton>
+  <BButton @click="showMeAdvancedExample">Click me</BButton>
 </template>
 
 <script setup lang="ts">
 const {show} = useModalController()
 
-const createAdvanced = () => {
-  show(
-    h(BModal, null, {
-      default: () => 'Hello world',
-      cancel: () => h('button', null, {default: () => 'button!'}),
-    })
-  )
+const firstRef = ref<OrchestratedToast>({
+  body: `${Math.random()}`,
+})
+
+setInterval(() => {
+  firstRef.value.body = `${Math.random()}`
+}, 1000)
+
+const showMeAdvancedExample = () => {
+  show({
+    props: () => ({
+      body: firstRef.value.body,
+    }),
+    component: computed(() =>
+      Number.parseInt(firstRef.value.body?.charAt(2) ?? '0') % 2 === 0
+        ? BModal
+        : h(BModal, null, {default: () => `custom ${firstRef.value.body}`})
+    ),
+  })
+
+  // Demonstration psuedocode, you can import a component and use it
+  // const importedComponent = () => {
+  //   show({
+  //     component: import('./MyModalComponent.vue'),
+  //   })
+  // }
 }
 </script>
 ```
@@ -177,20 +243,32 @@ const title = ref('Hello')
 
 setInterval(() => {
   title.value = title.value === 'Hello' ? 'World' : 'Hello'
-}, 2500)
+}, 1000)
 
-const createBasic = async () => {
-  const value = await confirm(computed(() => ({title: title.value})))
+const showExample = async () => {
+  const value = await confirm({ props: { title: 'Hello World!' } })
 
-  toast.show(`Promise resolved to ${value}`, {variant: 'info'})
+  toast.show({ props: { title: `Promise resolved to ${value}`, variant: 'info' } })
 }
 
-const createAdvanced = () => {
-  show(
-    h(BModal, null, {
-      default: () => 'Hello world',
-      cancel: () => h('button', null, {default: () => 'button!'})
-    })
-  )
+const showReactiveExample = () => {
+  show({
+    props: computed(() => ({
+      title: title.value
+    }))
+  })
+}
+
+const showMeAdvancedExample = () => {
+  show({
+    props: () => ({
+      body: title.value,
+    }),
+    component: computed(() =>
+      title.value === 'Hello'
+        ? BModal
+        : h(BModal, null, {default: () => `custom ${title.value}`})
+    ),
+  })
 }
 </script>
