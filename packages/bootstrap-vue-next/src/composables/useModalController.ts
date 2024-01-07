@@ -16,7 +16,7 @@ export default createGlobalState(() => {
 
   const modals = shallowRef<
     ComputedRef<{
-      component: unknown // TS bullshit here
+      component: unknown // TS being weird here, just use unknown
       props: OrchestratedModal & {
         _self: symbol
         _modelValue: BModalProps['modelValue']
@@ -29,12 +29,10 @@ export default createGlobalState(() => {
     }>[]
   >([])
 
-  const show = <T>(
-    obj: MaybeRefOrGetter<{
-      component?: Readonly<Component<T>>
-      props?: Readonly<OrchestratedModal>
-    }>
-  ) => {
+  const buildPromise = (): {
+    value: Promise<boolean | null>
+    resolve: (value: boolean | null) => void
+  } => {
     let resolveFunc: (value: boolean | null) => void = () => {
       /* empty */
     }
@@ -43,62 +41,46 @@ export default createGlobalState(() => {
       resolveFunc = resolve
     })
 
-    const _self = Symbol()
-
-    const _promise = {
+    return {
       value: promise,
       resolve: resolveFunc,
     }
-
-    modals.value = [
-      ...modals.value,
-      computed(() => {
-        const unwrapped = toValue(obj)
-
-        return {
-          component: unwrapped.component ?? BModal,
-          props: {...unwrapped.props, _isConfirm: false, _promise, _self, _modelValue: true},
-        }
-      }),
-    ]
-
-    return promise
   }
 
-  const confirm = <T>(
-    obj: MaybeRefOrGetter<{
-      component?: Readonly<Component<T>>
-      props?: Readonly<OrchestratedModal>
-    }>
-  ) => {
-    let resolveFunc: (value: boolean | null) => void = () => {
-      /* empty */
-    }
-
-    const promise = new Promise<boolean | null>((resolve) => {
-      resolveFunc = resolve
-    })
-
+  const show = <T>(obj: {
+    component?: MaybeRefOrGetter<Readonly<Component<T>>>
+    props?: MaybeRefOrGetter<Readonly<OrchestratedModal>>
+  }) => {
+    const _promise = buildPromise()
     const _self = Symbol()
-
-    const _promise = {
-      value: promise,
-      resolve: resolveFunc,
-    }
 
     modals.value = [
       ...modals.value,
-      computed(() => {
-        const unwrapped = toValue(obj)
-
-        return {
-          component: unwrapped.component ?? BModal,
-          props: {...unwrapped.props, _isConfirm: true, _promise, _self, _modelValue: true},
-        }
-      }),
+      computed(() => ({
+        component: toValue(obj.component) ?? BModal,
+        props: {...toValue(obj.props), _isConfirm: false, _promise, _self, _modelValue: true},
+      })),
     ]
 
-    return promise
+    return _promise.value
+  }
+
+  const confirm = <T>(obj: {
+    component?: MaybeRefOrGetter<Readonly<Component<T>>>
+    props?: MaybeRefOrGetter<Readonly<OrchestratedModal>>
+  }) => {
+    const _promise = buildPromise()
+    const _self = Symbol()
+
+    modals.value = [
+      ...modals.value,
+      computed(() => ({
+        component: toValue(obj.component) ?? BModal,
+        props: {...toValue(obj.props), _isConfirm: true, _promise, _self, _modelValue: true},
+      })),
+    ]
+
+    return _promise.value
   }
 
   const remove = (self: symbol) => {

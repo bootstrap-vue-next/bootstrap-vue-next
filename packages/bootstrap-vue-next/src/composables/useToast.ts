@@ -27,39 +27,21 @@ export default createGlobalState(() => {
   /**
    * @returns {symbol} A symbol that corresponds to its unique id. You can pass this id to the hide function to force a Toast to hide
    */
-  const show = <T>(
-    obj:
-      | MaybeRefOrGetter<{
-          component?: Readonly<Component<T>>
-          props?: Readonly<OrchestratedToast>
-        }>
-      | MaybeRefOrGetter<{
-          component?: Readonly<Component<T>>
-          props?: Readonly<Omit<OrchestratedToast, 'body'>>
-          title?: string
-        }>
-  ): symbol => {
+  const show = <T>(obj: {
+    component?: MaybeRefOrGetter<Readonly<Component<T>>>
+    props?: MaybeRefOrGetter<Readonly<OrchestratedToast>>
+  }): symbol => {
     const _self = Symbol()
     toasts.value = [
       ...toasts.value,
       computed(() => {
-        const unwrapped = toValue(obj)
-
-        // If title exists use it, otherwise check if body exists in props and use it, otherwise default to empty string
-        const body =
-          'title' in unwrapped
-            ? unwrapped.title
-            : unwrapped.props && 'body' in unwrapped.props
-              ? unwrapped.props.body
-              : ''
-
+        const unwrappedProps = toValue(obj.props)
         return {
-          component: unwrapped.component ?? BToast,
+          component: toValue(obj.component) ?? BToast,
           props: {
-            ...unwrapped.props,
-            body,
-            _modelValue: unwrapped.props?.value || 5000,
-            pos: unwrapped.props?.pos || posDefault,
+            ...unwrappedProps,
+            pos: unwrappedProps?.pos || posDefault,
+            _modelValue: unwrappedProps?.value || 5000,
             _self,
           },
         }

@@ -12,11 +12,11 @@
     "test": "pnpm run test:lint"
   },
   "devDependencies": {
-    "@iconify-json/bi": "^1.1.22",
-    "@iconify-json/simple-icons": "^1.1.86",
+    "@iconify-json/bi": "^1.1.23",
+    "@iconify-json/simple-icons": "^1.1.87",
     "@rushstack/eslint-patch": "^1.6.1",
     "@tsconfig/node20": "^20.1.2",
-    "@types/node": "^20.10.6",
+    "@types/node": "^20.10.7",
     "@vue/eslint-config-prettier": "^9.0.0",
     "@vue/eslint-config-typescript": "^12.0.0",
     "@vue/tsconfig": "^0.5.1",
@@ -30,8 +30,8 @@
     "prettier": "^3.1.1",
     "typescript": "^5.3.3",
     "unplugin-icons": "^0.18.1",
-    "vitepress": "1.0.0-rc.33",
-    "vue": "^3.4.3"
+    "vitepress": "1.0.0-rc.35",
+    "vue": "^3.4.5"
   },
   "lint-staged": {
     "*.{js,ts,vue}": "eslint --cache --fix",
