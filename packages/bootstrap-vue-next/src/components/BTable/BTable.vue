@@ -141,7 +141,7 @@ const props = withDefaults(
       // labelSortDesc?: string
       // noFooterSorting?: Booleanish
       // noLocalSorting?: Booleanish
-      // noSelectOnClick?: Booleanish
+      noSelectOnClick?: Booleanish
       // noSortReset?: Booleanish
       // selectedVariant?: ColorVariant | null
       // showEmpty?: Booleanish
@@ -168,6 +168,7 @@ const props = withDefaults(
     noProviderPaging: false,
     noProviderSorting: false,
     noProviderFiltering: false,
+    noSelectOnClick: false,
     sortDesc: false,
     selectable: false,
     stickySelect: false,
@@ -522,7 +523,9 @@ const handleRowSelection = (
 }
 
 const onRowClick = (row: Readonly<TableItem<T>>, index: number, e: MouseEvent) => {
-  handleRowSelection(row, index, e.shiftKey, e.ctrlKey, e.metaKey)
+  if (!props.noSelectOnClick) {
+    handleRowSelection(row, index, e.shiftKey, e.ctrlKey, e.metaKey)
+  }
   emit('row-clicked', row, index, e)
 }
 
