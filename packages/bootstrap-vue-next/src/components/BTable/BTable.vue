@@ -309,6 +309,7 @@ const noProviderSortingBoolean = useBooleanish(() => props.noProviderSorting)
 const noProviderFilteringBoolean = useBooleanish(() => props.noProviderFiltering)
 const selectableBoolean = useBooleanish(() => props.selectable)
 const noSortableIconBoolean = useBooleanish(() => props.noSortableIcon)
+const noSelectOnClickBoolean = useBooleanish(() => props.noSelectOnClick)
 
 const perPageNumber = useToNumber(() => props.perPage, {method: 'parseInt'})
 const currentPageNumber = useToNumber(() => props.currentPage, {method: 'parseInt'})
@@ -523,7 +524,7 @@ const handleRowSelection = (
 }
 
 const onRowClick = (row: Readonly<TableItem<T>>, index: number, e: MouseEvent) => {
-  if (!props.noSelectOnClick) {
+  if (noSelectOnClickBoolean.value === false) {
     handleRowSelection(row, index, e.shiftKey, e.ctrlKey, e.metaKey)
   }
   emit('row-clicked', row, index, e)
