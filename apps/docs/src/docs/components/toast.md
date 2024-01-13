@@ -242,8 +242,7 @@ import {data} from '../../data/components/toast.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {BButtonGroup, BButton, BToast, useToast} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
-import {inBrowser} from 'vitepress'
-import {ref, h} from 'vue'
+import {ref, h, onMounted} from 'vue'
 
 const {show, hide, toasts} = useToast()
 
@@ -278,11 +277,11 @@ const hideMe = () => {
 
 const toastShowStr = ref('foo')
 
-if (inBrowser) {
+onMounted(() => {
   setInterval(() => {
     toastShowStr.value = toastShowStr.value === 'foo' ? 'bar' : 'foo'
   }, 1000)
-}
+})
 
 const showReactive = () => {
   show(toastShowStr, () => ({
@@ -292,11 +291,11 @@ const showReactive = () => {
 
 const toastVariant = ref('danger')
 
-if (inBrowser) {
+onMounted(() => {
   setInterval(() => {
     toastVariant.value = toastVariant.value === 'danger' ? 'info' : 'danger'
   }, 1000)
-}
+})
 
 const showAdvanced = () => {
   show(

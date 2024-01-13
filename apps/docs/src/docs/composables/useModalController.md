@@ -230,8 +230,7 @@ const {hide, hideAll} = useModalController()
 <script setup lang="ts">
 import {BButton, BModal, useModalController, BButtonGroup, useToast} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
-import {inBrowser} from 'vitepress'
-import {ref, computed, h} from 'vue'
+import {ref, computed, h, onMounted} from 'vue'
 
 const nestedModal1 = ref(false)
 const nestedModal2 = ref(false)
@@ -242,11 +241,11 @@ const toast = useToast()
 
 const title = ref('Hello')
 
-if (inBrowser) {
+onMounted(() => {
   setInterval(() => {
     title.value = title.value === 'Hello' ? 'World' : 'Hello'
   }, 1000)
-}
+})
 
 const showExample = async () => {
   const value = await confirm({ props: { title: 'Hello World!' } })
