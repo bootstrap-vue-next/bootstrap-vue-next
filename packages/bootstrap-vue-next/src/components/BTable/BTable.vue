@@ -141,7 +141,7 @@ const props = withDefaults(
       // labelSortDesc?: string
       // noFooterSorting?: Booleanish
       // noLocalSorting?: Booleanish
-      // noSelectOnClick?: Booleanish
+      noSelectOnClick?: Booleanish
       // noSortReset?: Booleanish
       // selectedVariant?: ColorVariant | null
       // showEmpty?: Booleanish
@@ -168,6 +168,7 @@ const props = withDefaults(
     noProviderPaging: false,
     noProviderSorting: false,
     noProviderFiltering: false,
+    noSelectOnClick: false,
     sortDesc: false,
     selectable: false,
     stickySelect: false,
@@ -308,6 +309,7 @@ const noProviderSortingBoolean = useBooleanish(() => props.noProviderSorting)
 const noProviderFilteringBoolean = useBooleanish(() => props.noProviderFiltering)
 const selectableBoolean = useBooleanish(() => props.selectable)
 const noSortableIconBoolean = useBooleanish(() => props.noSortableIcon)
+const noSelectOnClickBoolean = useBooleanish(() => props.noSelectOnClick)
 
 const perPageNumber = useToNumber(() => props.perPage, {method: 'parseInt'})
 const currentPageNumber = useToNumber(() => props.currentPage, {method: 'parseInt'})
@@ -522,7 +524,9 @@ const handleRowSelection = (
 }
 
 const onRowClick = (row: Readonly<TableItem<T>>, index: number, e: MouseEvent) => {
-  handleRowSelection(row, index, e.shiftKey, e.ctrlKey, e.metaKey)
+  if (noSelectOnClickBoolean.value === false) {
+    handleRowSelection(row, index, e.shiftKey, e.ctrlKey, e.metaKey)
+  }
   emit('row-clicked', row, index, e)
 }
 
