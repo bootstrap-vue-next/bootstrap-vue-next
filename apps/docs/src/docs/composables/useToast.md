@@ -212,7 +212,7 @@ const hideMe = () => {
 import {data} from '../../data/components/toast.data'
 import {BButton, useToast, BButtonGroup, BToast} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
-import {ref, computed, h} from 'vue'
+import {ref, computed, h, onMounted} from 'vue'
 
 const {show, remove, toasts} = useToast()
 
@@ -233,9 +233,11 @@ const firstRef = ref<OrchestratedToast>({
   body: `${Math.random()}`,
 })
 
-setInterval(() => {
-  firstRef.value.body = `${Math.random()}`
-}, 1000)
+onMounted(() => {
+  setInterval(() => {
+    firstRef.value.body = `${Math.random()}`
+  }, 1000)
+})
 
 const showReactiveExample = () => {
   show({
