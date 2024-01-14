@@ -24,7 +24,7 @@ const componentList: {name: string; description: string}[] = [
   {
     name: 'Color Variants',
     description:
-      'Color variants available when using the default Bootstrap v5 CSS and their mappings to CSS classes',
+      'Color variants are available when using the default Bootstrap v5 CSS and their mappings to CSS classes',
   },
   {
     name: 'Contributing',
