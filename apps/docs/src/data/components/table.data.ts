@@ -36,6 +36,12 @@ export default {
           default: false,
         },
         {
+          prop: 'noSelectOnClick',
+          type: 'Booleanish',
+          default: false,
+          description: 'Do not select row when clicked',
+        },
+        {
           prop: 'sortBy',
           type: 'string',
           default: undefined,

@@ -424,16 +424,16 @@ const hide = (trigger = '') => {
 // TODO: If a show is prevented, it will briefly show the animation. This is a bug
 // I'm not sure how to wait for the event to be determined. Before showing
 const showFn = () => {
-  if (!isActive.value) {
-    const event = buildTriggerableEvent('show', {cancelable: true})
-    emit('show', event)
-    if (event.defaultPrevented) {
-      if (modelValue.value) modelValue.value = false
-      emit('show-prevented')
-      return
-    }
-    if (!modelValue.value) modelValue.value = true
+  if (isActive.value) return
+
+  const event = buildTriggerableEvent('show', {cancelable: true})
+  emit('show', event)
+  if (event.defaultPrevented) {
+    if (modelValue.value) modelValue.value = false
+    emit('show-prevented')
+    return
   }
+  if (!modelValue.value) modelValue.value = true
 }
 
 const pickFocusItem = () => {

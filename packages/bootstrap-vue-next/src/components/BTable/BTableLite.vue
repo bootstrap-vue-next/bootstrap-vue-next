@@ -112,25 +112,24 @@
             </BTd>
           </BTr>
 
-          <BTr
-            v-if="item._showDetails === true && $slots['row-details']"
-            :class="getRowClasses(item, 'row-details')"
-            :variant="item._rowVariant"
-          >
-            <BTd :colspan="computedFieldsTotal">
-              <slot
-                name="row-details"
-                :item="item"
-                :toggle-details="
-                  () => {
-                    toggleRowDetails(item)
-                  }
-                "
-                :fields="fields"
-                :index="itemIndex"
-              />
-            </BTd>
-          </BTr>
+          <template v-if="item._showDetails === true && $slots['row-details']">
+            <BTr aria-hidden="true" role="presentation" class="d-none" />
+            <BTr :class="getRowClasses(item, 'row-details')" :variant="item._rowVariant">
+              <BTd :colspan="computedFieldsTotal">
+                <slot
+                  name="row-details"
+                  :item="item"
+                  :toggle-details="
+                    () => {
+                      toggleRowDetails(item)
+                    }
+                  "
+                  :fields="fields"
+                  :index="itemIndex"
+                />
+              </BTd>
+            </BTr>
+          </template>
         </template>
         <BTr v-if="showEmptyBoolean && items.length === 0" class="b-table-empty-slot">
           <BTd :colspan="computedFieldsTotal">
