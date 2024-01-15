@@ -12,10 +12,22 @@ export default (id: MaybeRefOrGetter<string | undefined> = undefined) => {
   const {registry} = useSharedModalStack()
   const instance = getCurrentInstance()
 
+  const findBModal = (component: ComponentInternalInstance): ComponentInternalInstance | null => {
+    if (!component.parent) {
+      return null
+    }
+
+    if (component.parent.type.__name === 'BModal') {
+      return component.parent
+    }
+
+    return findBModal(component.parent)
+  }
+
   const modalComponent = computed(() => {
     const resolvedId = toValue(id)
     if (resolvedId) {
-      return registry.value.find((modal) => modal.exposed?.id.value === resolvedId) || null
+      return registry?.value.find((modal) => modal.exposed?.id.value === resolvedId) || null
     }
 
     if (!instance) {
@@ -36,16 +48,4 @@ export default (id: MaybeRefOrGetter<string | undefined> = undefined) => {
     },
     modal,
   }
-}
-
-const findBModal = (component: ComponentInternalInstance): ComponentInternalInstance | null => {
-  if (!component.parent) {
-    return null
-  }
-
-  if (component.parent.type.__name === 'BModal') {
-    return component.parent
-  }
-
-  return findBModal(component.parent)
 }

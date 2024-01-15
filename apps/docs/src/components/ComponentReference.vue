@@ -109,7 +109,7 @@ const props = defineProps<{data: ComponentReference[]}>()
  * Sorts the items inside so they're uniform structure
  */
 const sortData = computed(() =>
-  [...props.data].map((el: ComponentReference): ComponentReference => {
+  props.data.map((el: ComponentReference): ComponentReference => {
     const data: ComponentReference = {
       component: el.component,
       props: el.props

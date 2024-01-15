@@ -9,12 +9,12 @@
       >
         <component
           :is="toast.value.component"
-          v-for="toast in toasts.filter((el) => el.value.props.pos === key)"
+          v-for="toast in toasts?.filter((el) => el.value.props.pos === key)"
           :key="toast.value.props._self"
           v-model="toast.value.props._modelValue"
           :transition-props="{appear: true}"
           v-bind="pluckToastItem(toast.value.props)"
-          @destroyed="remove(toast.value.props._self)"
+          @hidden="remove?.(toast.value.props._self)"
         />
       </div>
     </div>
@@ -56,8 +56,9 @@ const toastPositions = {
 
 const {remove, toasts, show} = useToast()
 
-const pluckToastItem = (payload: Readonly<(typeof toasts)['value'][number]['value']['props']>) =>
-  omit(payload, ['_modelValue', '_self', 'pos'])
+const pluckToastItem = (
+  payload: Readonly<Exclude<typeof toasts, undefined>['value'][number]['value']['props']>
+) => omit(payload, ['_modelValue', '_self', 'pos'])
 
 defineExpose({
   remove,

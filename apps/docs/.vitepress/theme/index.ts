@@ -5,6 +5,7 @@ import {appInfoKey} from './keys'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
+import { BootstrapVueNextPlugin } from 'bootstrap-vue-next'
 
 export default {
   Layout,
@@ -14,5 +15,6 @@ export default {
       discordUrl: 'https://discord.gg/j2Mtcny',
       opencollectiveUrl: 'https://opencollective.com/bootstrap-vue-next',
     })
+    ctx.app.use(BootstrapVueNextPlugin)
   },
 } satisfies Theme

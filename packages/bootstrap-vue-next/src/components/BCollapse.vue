@@ -1,12 +1,5 @@
 <template>
-  <slot
-    :id="computedId"
-    name="header"
-    :visible="modelValueBoolean"
-    :toggle="toggleFn"
-    :open="open"
-    :close="close"
-  />
+  <slot name="header" v-bind="sharedSlots" />
   <component
     :is="tag"
     :id="computedId"
@@ -16,16 +9,9 @@
     :is-nav="isNavBoolean"
     v-bind="$attrs"
   >
-    <slot :visible="modelValueBoolean" :toggle="toggleFn" :open="open" :close="close" />
+    <slot v-bind="sharedSlots" />
   </component>
-  <slot
-    :id="computedId"
-    name="footer"
-    :visible="modelValueBoolean"
-    :toggle="toggleFn"
-    :open="open"
-    :close="close"
-  />
+  <slot name="footer" v-bind="sharedSlots" />
 </template>
 
 <script setup lang="ts">
@@ -73,30 +59,21 @@ const emit = defineEmits<{
   'update:modelValue': [value: boolean]
 }>()
 
+type SharedSlotsData = {
+  close: () => void
+  id: string
+  open: () => void
+  toggle: () => void
+  visible: boolean
+}
+
 defineSlots<{
-  default?: (props: {
-    close: () => void
-    open: () => void
-    toggle: () => void
-    visible: boolean
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  footer?: (props: {
-    close: () => void
-    id: string
-    open: () => void
-    toggle: () => void
-    visible: boolean
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  header?: (props: {
-    close: () => void
-    id: string
-    open: () => void
-    toggle: () => void
-    visible: boolean
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: SharedSlotsData) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  footer?: (props: SharedSlotsData) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  header?: (props: SharedSlotsData) => any
 }>()
 
 const buildTriggerableEvent = (
@@ -144,6 +121,14 @@ const open = () => {
 const toggleFn = () => {
   modelValue.value = !modelValueBoolean.value
 }
+
+const sharedSlots = computed<SharedSlotsData>(() => ({
+  toggle: toggleFn,
+  open,
+  close,
+  id: computedId.value,
+  visible: modelValueBoolean.value,
+}))
 
 let revealTimeout: ReturnType<typeof setTimeout> | undefined
 let hideTimeout: ReturnType<typeof setTimeout> | undefined

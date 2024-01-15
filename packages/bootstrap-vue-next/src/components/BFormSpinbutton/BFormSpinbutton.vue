@@ -34,7 +34,7 @@
       key="output"
       class="flex-grow-1"
       :class="computedSpinClasses"
-      :dir="isRtl ? 'rtl' : 'ltr'"
+      :dir="isRtl ?? false ? 'rtl' : 'ltr'"
       :tabindex="disabledBoolean ? undefined : '0'"
       role="spinbutton"
       aria-live="off"
@@ -275,7 +275,7 @@ const valueAsFixed = toRef(() =>
 const {isRtl, locale: globalLocale} = useRtl()
 
 const computedLocale = computed(() => {
-  const loc = (props.locale ?? globalLocale.value) || 'locale'
+  const loc = (props.locale ?? globalLocale?.value) || 'locale'
   const locales = [loc]
   const nf = new Intl.NumberFormat(locales)
   return nf.resolvedOptions().locale

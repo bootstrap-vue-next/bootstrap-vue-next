@@ -7,8 +7,8 @@
         :is="modal.value.component"
         v-for="(modal, index) in modals"
         :key="index"
-        v-bind="pluckModalItem(modal.value.props)"
         v-model="modal.value.props._modelValue"
+        v-bind="pluckModalItem(modal.value.props)"
         :teleport-disabled="true"
         @hide="
           (e: BvTriggerableEvent) => {
@@ -27,11 +27,7 @@
             modal.value.props._promise.resolve(true)
           }
         "
-        @hidden="
-          () => {
-            remove(modal.value.props._self)
-          }
-        "
+        @hidden="remove?.(modal.value.props._self)"
       />
     </div>
   </Teleport>
@@ -58,8 +54,9 @@ const teleportDisabledBoolean = useBooleanish(() => props.teleportDisabled)
 
 const {modals, remove, show, confirm} = useModalController()
 
-const pluckModalItem = (payload: Readonly<(typeof modals)['value'][number]['value']['props']>) =>
-  omit(payload, ['_promise', '_self', '_isConfirm', '_modelValue'])
+const pluckModalItem = (
+  payload: Readonly<Exclude<typeof modals, undefined>['value'][number]['value']['props']>
+) => omit(payload, ['_promise', '_self', '_isConfirm', '_modelValue'])
 
 defineExpose({
   modals,

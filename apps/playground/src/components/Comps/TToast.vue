@@ -6,6 +6,11 @@
         <BButton v-for="(fn, name) in showFns" :key="name" @click="fn">{{ name }}</BButton>
       </BCol>
     </BRow>
+    <BRow>
+      <BCol>
+        {{ toasts }}
+      </BCol>
+    </BRow>
   </BContainer>
 </template>
 
@@ -15,7 +20,7 @@
 import {computed, h, ref} from 'vue'
 import {BToast, type ColorVariant, type OrchestratedToast, useToast} from 'bootstrap-vue-next'
 
-const {show} = useToast()
+const {show, toasts} = useToast()
 
 const firstRef = ref<OrchestratedToast>({
   body: `${Math.random()}`,
@@ -27,7 +32,7 @@ setInterval(() => {
 
 const showFns = {
   basicNoReactive: () => {
-    show({
+    show?.({
       props: {
         value: true,
         active: true,
@@ -36,7 +41,7 @@ const showFns = {
     })
   },
   basicCustomComponent: () => {
-    show({
+    show?.({
       component: h(BToast, null, {default: () => 'foobar!'}),
       props: {
         value: true,
@@ -46,12 +51,12 @@ const showFns = {
     })
   },
   simpleRefProps: () => {
-    show({
+    show?.({
       props: firstRef,
     })
   },
   dynamicRefProps: () => {
-    show({
+    show?.({
       props: computed(() => ({
         ...firstRef.value,
         variant: (Number.parseInt(firstRef.value.body?.charAt(2) ?? '0') % 2 === 0
@@ -60,20 +65,8 @@ const showFns = {
       })),
     })
   },
-  dynamicComponentWithDynamicTitle: () => {
-    show({
-      props: () => ({
-        title: firstRef.value.body,
-      }),
-      component: computed(() =>
-        Number.parseInt(firstRef.value.body?.charAt(2) ?? '0') % 2 === 0
-          ? BToast
-          : h(BToast, null, {default: () => `custom! ${firstRef.value.body}`})
-      ),
-    })
-  },
   getterFunction: () => {
-    show({
+    show?.({
       props: () => ({
         title: firstRef.value.body,
       }),

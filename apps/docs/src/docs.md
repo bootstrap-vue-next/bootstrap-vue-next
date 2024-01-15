@@ -39,65 +39,129 @@ Read our [Contribution Guide](https://github.com/bootstrap-vue-next/bootstrap-vu
 
 ### Installation - Vue.js
 
-#### Preferred Installation
-
-- BootstrapVueNext recommends using [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components) for automatic tree-shaking. The following installation method is recommended
-- `unplugin-vue-components` may have the side effect feature of also automatically importing _your_ components for ease of use. If you are uncomfortable with this, you can manually adjust the [dirs option](https://github.com/antfu/unplugin-vue-components#configuration) (set dirs to an empty array) or you may prefer the [**legacy**](#legacy-installation) installation without automatic tree-shaking entirely. It is preferred that you choose the unplugin-vue-components with an empty dirs option, that way your app can be as performant as possible
-
-Install the necessary packages for `BootstrapVueNext`:
+- First install the package
 
 <ClientOnly>
 <BTabs v-model="codePreference">
   <BTab title="PNPM">
 
-  <BCard class="bg-body-tertiary">
+  <HighlightCard>
 
 ```bash
 pnpm add bootstrap bootstrap-vue-next
-
-pnpm add unplugin-vue-components -D
 ```
 
-  </BCard>
+  </HighlightCard>
 
   </BTab>
   <BTab title="BUN">
 
-  <BCard class="bg-body-tertiary">
+  <HighlightCard>
 
 ```bash
 bun add bootstrap bootstrap-vue-next
-
-bun add unplugin-vue-components -D
 ```
 
-  </BCard>
+  </HighlightCard>
 
   </BTab>
   <BTab title="YARN">
 
-  <BCard class="bg-body-tertiary">
+  <HighlightCard>
 
 ```bash
 yarn add bootstrap bootstrap-vue-next
-
-yarn add unplugin-vue-components -D
 ```
 
-  </BCard>
+  </HighlightCard>
 
   </BTab>
   <BTab title="NPM">
 
-  <BCard class="bg-body-tertiary">
+  <HighlightCard>
 
 ```bash
 npm i bootstrap bootstrap-vue-next
+```
 
+  </HighlightCard>
+
+  </BTab>
+</BTabs>
+</ClientOnly>
+
+<HighlightCard>
+
+```typescript
+// main.js/ts
+import {createApp} from 'vue'
+import {BootstrapVueNextPlugin} from 'bootstrap-vue-next'
+
+// Add the necessary CSS
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
+
+const app = createApp(App)
+app.use(BootstrapVueNextPlugin) // Important
+app.mount('#app')
+```
+
+</HighlightCard>
+
+Now, you can begin importing and using components
+
+#### Automatic Registering of Components
+
+By default, the plugin does not globally register components. In order to accomplish this, there are two methods
+
+##### Tree-shaken Installation Method
+
+To have components automatically registered **and** tree-shaken, we recommend [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components). Read their docs for additional details. This is in addition to the above installation steps
+
+<ClientOnly>
+<BTabs v-model="codePreference">
+  <BTab title="PNPM">
+
+  <HighlightCard>
+
+```bash
+pnpm add unplugin-vue-components -D
+```
+
+  </HighlightCard>
+
+  </BTab>
+  <BTab title="BUN">
+
+  <HighlightCard>
+
+```bash
+bun add unplugin-vue-components -D
+```
+
+  </HighlightCard>
+
+  </BTab>
+  <BTab title="YARN">
+
+  <HighlightCard>
+
+```bash
+yarn add unplugin-vue-components -D
+```
+
+  </HighlightCard>
+
+  </BTab>
+  <BTab title="NPM">
+
+  <HighlightCard>
+
+```bash
 npm i unplugin-vue-components -D
 ```
 
-  </BCard>
+  </HighlightCard>
 
   </BTab>
 </BTabs>
@@ -105,7 +169,7 @@ npm i unplugin-vue-components -D
 
 The following is an example of a basic `vite.config.js/ts`. All you need to do is add **Components** to the Vite **plugins** option, with the additional imports:
 
-<BCard class="bg-body-tertiary">
+<HighlightCard>
 
 ```ts
 // vite.config.js/ts
@@ -124,114 +188,29 @@ export default defineConfig({
 })
 ```
 
-</BCard>
+</HighlightCard>
 
-Finally, in your `main.js/ts` import the CSS:
+##### Built-in Registry
 
-<BCard class="bg-body-tertiary">
+This method for globally registering components is usually not recommended. The reason is because all components are registered in Vue, and thus are not automatically tree-shaken if you do not use them, increasing the bundle size
 
-```ts
-// main.js/ts
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
-```
-
-</BCard>
-
-##### Typescript Features
-
-If using TypeScript you will want to add `components.d.ts` to the `include` array in your tsconfig.json:
-
-<BCard class="bg-body-tertiary">
-
-```json
-// tsconfig.json
-{
-  "include": ["components.d.ts"]
-}
-```
-
-</BCard>
-
-#### Legacy Installation
-
-- This is the old installation method. It is recommended to use the [**preferred**](#preferred-installation) installation as it will automatically remove unused components, resulting in a lower bundle size. You can, however, still use this installation method. Note, the preferred installation automatically tree-shakes all components, both installation methods should have the same final dist size.
-
-Install the necessary packages for `bootstrap-vue-next`:
-
-<ClientOnly>
-<BTabs v-model="codePreference">
-  <BTab title="PNPM">
-
-  <BCard class="bg-body-tertiary">
-
-```bash
-pnpm add bootstrap bootstrap-vue-next
-```
-
-  </BCard>
-
-  </BTab>
-  <BTab title="BUN">
-
-  <BCard class="bg-body-tertiary">
-
-```bash
-bun add bootstrap bootstrap-vue-next
-```
-
-  </BCard>
-
-  </BTab>
-  <BTab title="YARN">
-
-  <BCard class="bg-body-tertiary">
-
-```bash
-yarn add bootstrap bootstrap-vue-next
-```
-
-  </BCard>
-
-  </BTab>
-  <BTab title="NPM">
-
-  <BCard class="bg-body-tertiary">
-
-```bash
-npm i bootstrap bootstrap-vue-next
-```
-
-  </BCard>
-
-  </BTab>
-</BTabs>
-</ClientOnly>
-
-Then, add to your `main.js/ts`:
-
-<BCard class="bg-body-tertiary">
+<HighlightCard>
 
 ```typescript
 // main.js/ts
-import App from './App.vue' // Can be a different place
-
 import {createApp} from 'vue'
-import BootstrapVueNext from 'bootstrap-vue-next'
+import {BootstrapVueNextPlugin} from 'bootstrap-vue-next'
 
-// Optional, since every component imports their Bootstrap functionality
-// the following line is not necessary
-// import 'bootstrap'
-
+// Add the necessary CSS
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
 
 const app = createApp(App)
-app.use(BootstrapVueNext)
+app.use(BootstrapVueNextPlugin, {components: true, directives: true}) // Change this line
 app.mount('#app')
 ```
 
-</BCard>
+</HighlightCard>
 
 ### Installation - Nuxt.js 3
 
@@ -241,46 +220,46 @@ In your Nuxt3 application, install the necessary packages for `bootstrap-vue-nex
 <BTabs v-model="codePreference">
   <BTab title="PNPM">
 
-  <BCard class="bg-body-tertiary">
+  <HighlightCard>
 
 ```bash
 pnpm add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
 ```
 
-  </BCard>
+  </HighlightCard>
 
   </BTab>
   <BTab title="BUN">
 
-  <BCard class="bg-body-tertiary">
+  <HighlightCard>
 
 ```bash
 bun add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
 ```
 
-  </BCard>
+  </HighlightCard>
 
   </BTab>
   <BTab title="YARN">
 
-  <BCard class="bg-body-tertiary">
+  <HighlightCard>
 
 ```bash
 yarn add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
 ```
 
-  </BCard>
+  </HighlightCard>
 
   </BTab>
   <BTab title="NPM">
 
-  <BCard class="bg-body-tertiary">
+  <HighlightCard>
 
 ```bash
 npm i bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
 ```
 
-  </BCard>
+  </HighlightCard>
 
   </BTab>
 </BTabs>
@@ -288,7 +267,7 @@ npm i bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
 
 Open your `nuxt.config.js/ts` file and configure your application to use `bootstrap-vue-next`. The components will be imported automatically as needed.
 
-<BCard class="bg-body-tertiary">
+<HighlightCard>
 
 ```ts
 // nuxt.config.js/ts
@@ -298,11 +277,11 @@ export default defineNuxtConfig({
 })
 ```
 
-</BCard>
+</HighlightCard>
 
 Enjoy it in your app without manual imports, and automatic tree-shaking.
 
-<BCard class="bg-body-tertiary">
+<HighlightCard>
 
 ```vue
 <template>
@@ -317,11 +296,11 @@ const show = ref(false)
 </script>
 ```
 
-</BCard>
+</HighlightCard>
 
 You can customize the options with the bootstrapVueNext key in your nuxt.config.
 
-<BCard class="bg-body-tertiary">
+<HighlightCard>
 
 ```ts
 // nuxt.config.js/ts
@@ -336,7 +315,7 @@ export default defineNuxtConfig({
 })
 ```
 
-</BCard>
+</HighlightCard>
 
 The practical difference between manually including an item and not is null as Nuxt should tree-shake out anything that is not used in the final build.
 
@@ -344,19 +323,19 @@ The practical difference between manually including an item and not is null as N
 
 Directives should be imported directly from the `bootstrap-vue-next` package.
 
-<BCard class="bg-body-tertiary">
+<HighlightCard>
 
 ```ts
 import {vBColorMode} from 'bootstrap-vue-next'
 ```
 
-</BCard>
+</HighlightCard>
 
 ### Installation - CDN
 
 BootstrapVueNext is available through `jsdelivr`. You can add the package by using the following
 
-<BCard class="bg-body-tertiary">
+<HighlightCard>
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-vue-next@{{version}}/dist/bootstrap-vue-next.umd.min.js"></script>
@@ -366,7 +345,7 @@ BootstrapVueNext is available through `jsdelivr`. You can add the package by usi
 />
 ```
 
-</BCard>
+</HighlightCard>
 
 - **NOTE** Do not forget to set the version!
 
@@ -376,7 +355,7 @@ Links should be loaded after Bootstrap and Vue
 
 Alternatively the ESM package is available as well
 
-<BCard class="bg-body-tertiary">
+<HighlightCard>
 
 ```html
 <script type="module">
@@ -384,7 +363,7 @@ Alternatively the ESM package is available as well
 </script>
 ```
 
-</BCard>
+</HighlightCard>
 
 ## Tree-shake CSS
 
@@ -397,6 +376,7 @@ BootstrapVue is the parent project for which this is based on. We consider Boots
 <script setup lang="ts">
 import {BCard, BCardBody, BAlert, BTab, BTabs} from 'bootstrap-vue-next'
 import {useLocalStorage} from '@vueuse/core'
+import HighlightCard from './components/HighlightCard.vue'
 
 const codePreference = useLocalStorage('code-group-preference', 0)
 </script>

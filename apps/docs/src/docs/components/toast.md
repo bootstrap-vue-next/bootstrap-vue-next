@@ -150,7 +150,7 @@ As you may have noticed, `BToast` counts down similarly to `BAlert` it uses the 
 <HighlightCard>
   <BButton
     @click="
-      show('Watch me!', {
+      show?.('Watch me!', {
         title: 'Counting down!',
         variant: 'info',
         pos: 'middle-center',
@@ -170,7 +170,7 @@ As you may have noticed, `BToast` counts down similarly to `BAlert` it uses the 
 <template>
   <BButton
     @click="
-      show('Watch me!', {
+      show?.('Watch me!', {
         title: 'Counting down!',
         variant: 'info',
         pos: 'middle-center',
@@ -204,14 +204,14 @@ As you may have noticed in that example, there was a built-in progress bar. This
 `Toast` can accept `BLink` props which will modify its behavior
 
 <HighlightCard>
-  <BButton @click="show('I am a BLink', {href: 'https://getbootstrap.com/', target: '_blank'})">
+  <BButton @click="show?.('I am a BLink', {href: 'https://getbootstrap.com/', target: '_blank'})">
     Show
   </BButton>
   <template #html>
 
 ```vue
 <template>
-  <BButton @click="show('I am a BLink', {href: 'https://getbootstrap.com/', target: '_blank'})">
+  <BButton @click="show?.('I am a BLink', {href: 'https://getbootstrap.com/', target: '_blank'})">
     Show
   </BButton>
 </template>
@@ -266,12 +266,12 @@ let showValue: undefined | symbol
 
 const showMe = () => {
   if (typeof showValue === 'symbol') return
-  showValue = show('Showing', {value: true, variant: 'success', pos: 'bottom-center'})
+  showValue = show?.('Showing', {value: true, variant: 'success', pos: 'bottom-center'})
 }
 
 const hideMe = () => {
   if (showValue === undefined) return
-  hide(showValue)
+  hide?.(showValue)
   showValue = undefined
 }
 
@@ -284,7 +284,7 @@ onMounted(() => {
 })
 
 const showReactive = () => {
-  show(toastShowStr, () => ({
+  show?.(toastShowStr, () => ({
     variant: toastShowStr.value === 'bar' ? 'danger' : 'info',
   }))
 }
@@ -298,7 +298,7 @@ onMounted(() => {
 })
 
 const showAdvanced = () => {
-  show(
+  show?.(
     h(BToast, null, {
       default: () => 'title?',
     }),

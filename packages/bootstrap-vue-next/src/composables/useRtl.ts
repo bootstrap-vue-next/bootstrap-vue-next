@@ -1,28 +1,22 @@
-import {createGlobalState} from '@vueuse/core'
-import {onMounted, ref, watch} from 'vue'
+import {inject, onMounted, watch} from 'vue'
+import {rtlPluginKey} from '../utils'
 
-export default createGlobalState(
-  (rtlInitial: boolean = false, localeInitial: string | undefined = undefined) => {
-    const isRtl = ref(rtlInitial)
-    const locale = ref<string | undefined>(localeInitial)
+export default () => {
+  const rtlPlugin = inject(rtlPluginKey)
 
-    onMounted(() => {
-      watch(
-        [isRtl, locale],
-        ([rtlNew, localeNew]) => {
-          const html = document.documentElement
+  onMounted(() => {
+    watch(
+      [() => rtlPlugin?.isRtl.value, () => rtlPlugin?.locale.value],
+      ([rtlNew, localeNew]) => {
+        const html = document.documentElement
 
-          // I can't think of a reason why one might want to destroy these if unmounted...
-          html.setAttribute('dir', rtlNew ? 'rtl' : 'ltr')
-          html.setAttribute('lang', localeNew ?? '')
-        },
-        {immediate: true}
-      )
-    })
+        // I can't think of a reason why one might want to destroy these if unmounted...
+        html.setAttribute('dir', rtlNew ?? false ? 'rtl' : 'ltr')
+        html.setAttribute('lang', localeNew ?? '')
+      },
+      {immediate: true}
+    )
+  })
 
-    return {
-      isRtl,
-      locale,
-    }
-  }
-)
+  return {...rtlPlugin}
+}

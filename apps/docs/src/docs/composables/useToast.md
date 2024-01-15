@@ -14,9 +14,11 @@ Often times one may want to open a `Toast` in a global context, without the need
 
 </div>
 
+<UsePluginAlert />
+
 ## BToastOrchestrator
 
-As described, you must have initialized `BToastOrchestrator` once and only once (doing multiple may display multiple `Toasts`). This is usually best placed at the App root.
+You must have initialized `BToastOrchestrator` component once and only once (doing multiple may display multiple `Toasts`). This is usually best placed at the App root.
 
 <HighlightCard>
 
@@ -42,12 +44,12 @@ In addition, it contains a few exposed methods. These exposed methods on the `te
 Showing a toast is done through the show method
 
 <HighlightCard>
-  <BButton @click="show({ props: { title: 'Hello', body: 'World' } })">Show</BButton>
+  <BButton @click="show?.({ props: { title: 'Hello', body: 'World' } })">Show</BButton>
   <template #html>
 
 ```vue
 <template>
-  <BButton @click="show({props: {title: 'Hello', body: 'World'}})">Show</BButton>
+  <BButton @click="show?.({props: {title: 'Hello', body: 'World'}})">Show</BButton>
 </template>
 
 <script setup lang="ts">
@@ -70,7 +72,7 @@ The props property excludes `modelValue`, it is replaced with `value`. These wor
 
 ### Reactivity Within Show
 
-`show` can accept a `MaybeRefOrGetter`, meaning that all properties are reactive
+`show` props property can accept a `MaybeRefOrGetter`, meaning that you can make properties reactive
 
 <HighlightCard>
   <BButton @click="showReactiveExample">Show</BButton>
@@ -93,7 +95,7 @@ setInterval(() => {
 }, 1000)
 
 const showMe = () => {
-  show({
+  show?.({
     props: computed(() => ({
       ...firstRef.value,
       variant: (Number.parseInt(firstRef.value.body?.charAt(2) ?? '0') % 2 === 0
@@ -110,7 +112,7 @@ const showMe = () => {
 
 ### Advanced usage
 
-Using props can work for most situations, but it leaves some finer control to be desired. For instance, you can not add HTML to any slot value. This is where the `component` property comes into play. Using the `component` property, you can input the component to render. This can either be an imported SFC or an inline render function. Of course, it is also reactive
+Using props can work for most situations, but it leaves some finer control to be desired. For instance, you can not add HTML to any slot value. This is where the `component` property comes into play. Using the `component` property, you can input the component to render. This can either be an imported SFC or an inline render function
 
 <HighlightCard>
   <BButton @click="showMeAdvancedExample">Show</BButton>
@@ -135,15 +137,11 @@ setInterval(() => {
 }, 1000)
 
 const showMe = () => {
-  show({
+  show?.({
     props: () => ({
       body: firstRef.value.body,
     }),
-    component: computed(() =>
-      Number.parseInt(firstRef.value.body?.charAt(2) ?? '0') % 2 === 0
-        ? BToast
-        : h(BToast, null, {default: () => `custom! ${firstRef.value.body}`})
-    ),
+    component: h(BToast, null, {default: () => `custom! ${firstRef.value.body}`}),
   })
   // Demonstration psuedocode, you can also import a component and use it
   // const importedComponent () => {
@@ -191,14 +189,14 @@ let showValue: undefined | symbol
 const showMe = () => {
   if (typeof showValue === 'symbol') return
   // `show` returns a symbol
-  showValue = show({
+  showValue = show?.({
     props: {title: 'Showing', value: true, variant: 'success', pos: 'bottom-center'},
   })
 }
 
 const hideMe = () => {
   if (showValue === undefined) return
-  remove(showValue)
+  remove?.(showValue)
   showValue = undefined
 }
 </script>
@@ -212,6 +210,7 @@ const hideMe = () => {
 import {data} from '../../data/components/toast.data'
 import {BButton, useToast, BButtonGroup, BToast} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
+import UsePluginAlert from '../../components/UsePluginAlert.vue'
 import {ref, computed, h, onMounted} from 'vue'
 
 const {show, remove, toasts} = useToast()
@@ -220,12 +219,12 @@ let showValue: undefined | symbol
 
 const showMe = () => {
   if (typeof showValue === 'symbol') return
-  showValue = show({ props: { title: 'Showing', value: true, variant: 'success', pos: 'bottom-center' } })
+  showValue = show?.({ props: { title: 'Showing', value: true, variant: 'success', pos: 'bottom-center' } })
 }
 
 const hideMe = () => {
   if (showValue === undefined) return
-  remove(showValue)
+  remove?.(showValue)
   showValue = undefined
 }
 
@@ -240,7 +239,7 @@ onMounted(() => {
 })
 
 const showReactiveExample = () => {
-  show({
+  show?.({
     props: computed(() => ({
       ...firstRef.value,
       variant: (Number.parseInt(firstRef.value.body?.charAt(2) ?? '0') % 2 === 0
@@ -251,15 +250,11 @@ const showReactiveExample = () => {
 }
 
 const showMeAdvancedExample = () => {
-  show({
+  show?.({
     props: () => ({
       body: firstRef.value.body,
     }),
-    component: computed(() =>
-      Number.parseInt(firstRef.value.body?.charAt(2) ?? '0') % 2 === 0
-        ? BToast
-        : h(BToast, null, {default: () => `custom! ${firstRef.value.body}`})
-    ),
+    component: h(BToast, null, {default: () => `custom! ${firstRef.value.body}`}),
   })
 }
 
