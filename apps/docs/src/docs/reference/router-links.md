@@ -25,7 +25,7 @@ In the following sections, we are using the `BLink` component to render router l
 
 Denotes the target route of the link. When clicked, the value of the `to` prop will be passed to `router.push()` internally, so the value can be either a string or a location descriptor object.
 
-<BCard class="bg-body-tertiary">
+<HighlightCard>
 
 ```vue
 <!-- Literal string -->
@@ -53,7 +53,7 @@ Denotes the target route of the link. When clicked, the value of the `to` prop w
 <BLink href="/home">Home</BLink>
 ```
 
-</BCard>
+</HighlightCard>
 
 ### `replace`
 
@@ -62,13 +62,13 @@ Denotes the target route of the link. When clicked, the value of the `to` prop w
 
 Setting replace prop will call `router.replace()` instead of `router.push()` when clicked, so the navigation will not leave a history record.
 
-<BCard class="bg-body-tertiary">
+<HighlightCard>
 
 ```vue
 <BLink :to="{path: '/abc'}" replace />
 ```
 
-</BCard>
+</HighlightCard>
 
 ### `append`
 
@@ -77,13 +77,13 @@ Setting replace prop will call `router.replace()` instead of `router.push()` whe
 
 Setting `append` prop always appends the relative path to the current path. For example, assuming we are navigating from `/a` to a relative link `b`, without `append` we will end up at `/b`, but with `append` we will end up at `/a/b`.
 
-<BCard class="bg-body-tertiary">
+<HighlightCard>
 
 ```vue
 <BLink :to="{path: 'relative/path'}" append />
 ```
 
-</BCard>
+</HighlightCard>
 
 ### `router-tag`
 
@@ -92,7 +92,7 @@ Setting `append` prop always appends the relative path to the current path. For 
 
 Sometimes we want `RouterLink` to render as another tag, e.g `<li>`. Then we can use `router-tag` prop to specify which tag to render to, and it will still listen to click events for navigation. `router-tag` translates to the `tag` prop on the final rendered `RouterLink`.
 
-<BCard class="bg-body-tertiary">
+<HighlightCard>
 
 ```vue
 <BLink to="/foo" router-tag="li">foo</BLink>
@@ -101,7 +101,7 @@ Sometimes we want `RouterLink` to render as another tag, e.g `<li>`. Then we can
 <li>foo</li>
 ```
 
-</BCard>
+</HighlightCard>
 
 <BAlert variant="info" :model-value="true" class="my-5">
 
@@ -127,14 +127,14 @@ The default active class matching behavior is inclusive match. For example, `<BL
 
 One consequence of this is that `<BLink to="/">` will be active for every route! To force the link into "exact match mode", use the `exact` prop:
 
-<BCard class="bg-body-tertiary">
+<HighlightCard>
 
 ```vue
 <!-- This link will only be active at `/` -->
 <BLink to="/" exact />
 ```
 
-</BCard>
+</HighlightCard>
 
 ### `exact-active-class`
 
@@ -154,14 +154,14 @@ With components that support router links (have a `to` prop), you will want to s
 
 Allows matching only using the `path` section of the url, effectively ignoring the `query` and the `hash` sections.
 
-<BCard class="bg-body-tertiary">
+<HighlightCard>
 
 ```vue
 <!-- this link will also be active at `/search?page=2` or `/search#filters` -->
 <RouterLink to="/search" exact-path> </RouterLink>
 ```
 
-</BCard>
+</HighlightCard>
 
 ### `exact-path-active-class`
 
@@ -193,14 +193,15 @@ To improve the responsiveness of your Nuxt.js applications, when the link will b
 
 To improve the responsiveness of your Nuxt.js applications, when the link will be displayed within the viewport, Nuxt.js will automatically prefetch the code splitted page. Setting `no-prefetch` will disabled this feature for the specific link.
 
-<BCard class="bg-body-tertiary">
+<HighlightCard>
 
 ```vue
 router: { prefetchLinks: false }
 ```
 
-</BCard>
+</HighlightCard>
 
 <script setup lang="ts">
-import {BCard, BAlert} from 'bootstrap-vue-next'
+import HighlightCard from '../../components/HighlightCard.vue'
+import {BAlert} from 'bootstrap-vue-next'
 </script>

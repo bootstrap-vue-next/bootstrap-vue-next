@@ -27,9 +27,9 @@
       >
         <template v-if="lazyShowing">
           <div v-if="!noHeaderBoolean" class="offcanvas-header" :class="headerClass">
-            <slot name="header" :visible="modelValueBoolean" :placement="placement" :hide="hide">
+            <slot name="header" v-bind="sharedSlots">
               <h5 :id="`${computedId}-offcanvas-label`" class="offcanvas-title">
-                <slot name="title" :visible="modelValueBoolean" :placement="placement" :hide="hide">
+                <slot name="title" v-bind="sharedSlots">
                   {{ title }}
                 </slot>
               </h5>
@@ -47,10 +47,10 @@
             </slot>
           </div>
           <div class="offcanvas-body" :class="bodyClass">
-            <slot :visible="modelValueBoolean" :placement="placement" :hide="hide" />
+            <slot v-bind="sharedSlots" />
           </div>
           <div v-if="hasFooterSlot" :class="footerClass">
-            <slot name="footer" :visible="modelValueBoolean" :placement="placement" :hide="hide" />
+            <slot name="footer" v-bind="sharedSlots" />
           </div>
         </template>
       </div>
@@ -157,35 +157,25 @@ const emit = defineEmits<{
   'update:modelValue': [value: boolean]
 }>()
 
+type SharedSlotsData = {
+  visible: boolean
+  placement: 'top' | 'bottom' | 'start' | 'end'
+  hide: (trigger?: string) => void
+}
+
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'backdrop'?: (props: Record<string, never>) => any
-  'default'?: (props: {
-    visible: boolean
-    placement: 'top' | 'bottom' | 'start' | 'end'
-    hide: (trigger?: string) => void
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  'footer'?: (props: {
-    visible: boolean
-    placement: 'top' | 'bottom' | 'start' | 'end'
-    hide: (trigger?: string) => void
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  'header'?: (props: {
-    visible: boolean
-    placement: 'top' | 'bottom' | 'start' | 'end'
-    hide: (trigger?: string) => void
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'default'?: (props: SharedSlotsData) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'footer'?: (props: SharedSlotsData) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'header'?: (props: SharedSlotsData) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'header-close'?: (props: Record<string, never>) => any
-  'title'?: (props: {
-    visible: boolean
-    placement: 'top' | 'bottom' | 'start' | 'end'
-    hide: (trigger?: string) => void
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'title'?: (props: SharedSlotsData) => any
 }>()
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
@@ -249,6 +239,12 @@ const computedClasses = computed(() => [
     show: modelValueBoolean.value && isActive.value === true,
   },
 ])
+
+const sharedSlots = computed<SharedSlotsData>(() => ({
+  visible: modelValueBoolean.value,
+  placement: props.placement,
+  hide,
+}))
 
 const buildTriggerableEvent = (
   type: string,

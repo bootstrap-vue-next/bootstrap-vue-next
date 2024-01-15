@@ -36,7 +36,7 @@ defineSlots<{
 const breadcrumb = useBreadcrumb()
 
 const breadcrumbItemObjects = computed<BreadcrumbItem[]>(() => {
-  const localItems = props.items || breadcrumb?.items || []
+  const localItems = props.items || breadcrumb.items?.value || []
   let activeDefined = false
   const items = localItems.map((item, idx) => {
     if (typeof item === 'string') {

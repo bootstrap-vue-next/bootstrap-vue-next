@@ -10,9 +10,11 @@
 
 <div class="lead mb-5">
 
-`useBreadcrumb` is a helper utility for the `BBreadcrumb` component. It provides a **globally** changable context so you can modify a breadcrumb. It should be noted that the breacrumb component will automatically use the global context by default. `useBreadcrumb` is shared globally, one modification to the state will be recognized throughout the app. As noted in the BBreadcrumb documentation, the items prop for the component takes precedence over `useBreadcrumb`.
+`useBreadcrumb` is a helper utility for the `BBreadcrumb` component. It provides a **globally** changable context so you can modify a breadcrumb. It should be noted that the breacrumb component will automatically use the global context by default. `useBreadcrumb` is shared globally, one modification to the state will be recognized throughout the app. As noted in the BBreadcrumb documentation, the items prop for the component takes precedence over `useBreadcrumb`
 
 </div>
+
+<UsePluginAlert />
 
 ## Demo
 
@@ -41,7 +43,7 @@ const breadcrumb = useBreadcrumb()
 const inputValue = ref('')
 
 const addItem = () => {
-  breadcrumb.items.push(inputValue.value)
+  breadcrumb.items?.value.push(inputValue.value)
   inputValue.value = ''
 }
 </script>
@@ -53,6 +55,7 @@ const addItem = () => {
 <script setup lang="ts">
 import {ref} from 'vue'
 import HighlightCard from '../../components/HighlightCard.vue'
+import UsePluginAlert from '../../components/UsePluginAlert.vue'
 import {BBreadcrumb, BButton, BFormInput, BFormGroup, BCard, BCardBody, useBreadcrumb} from 'bootstrap-vue-next'
 
 const breadcrumb = useBreadcrumb()
@@ -60,7 +63,7 @@ const breadcrumb = useBreadcrumb()
 const inputValue = ref('')
 
 const addItem = () => {
-    breadcrumb.items.push(inputValue.value)
+    breadcrumb.items?.value.push(inputValue.value)
     inputValue.value = ''
 }
 </script>

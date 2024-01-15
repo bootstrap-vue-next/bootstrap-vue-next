@@ -54,6 +54,11 @@
         <BButton v-for="(fn, name) in showFns" :key="name" @click="fn">{{ name }}</BButton>
       </BCol>
     </BRow>
+    <BRow>
+      <BCol>
+        {{ modals }}
+      </BCol>
+    </BRow>
   </BContainer>
 </template>
 
@@ -81,11 +86,11 @@ setInterval(() => {
   firstRef.value.body = `${Math.random()}`
 }, 1000)
 
-const {show} = useModalController()
+const {show, modals} = useModalController()
 
 const showFns = {
   basicNoReactive: () => {
-    show({
+    show?.({
       props: {
         title: 'foobar',
         okVariant: 'danger',
@@ -93,7 +98,7 @@ const showFns = {
     })
   },
   basicCustomComponent: () => {
-    show({
+    show?.({
       component: h(BModal, null, {default: () => 'foobar!'}),
       props: {
         okVariant: 'info',
@@ -101,12 +106,12 @@ const showFns = {
     })
   },
   simpleRefProps: () => {
-    show({
+    show?.({
       props: firstRef,
     })
   },
   dynamicRefProps: () => {
-    show({
+    show?.({
       props: computed(() => ({
         ...firstRef.value,
         okVariant: (Number.parseInt(firstRef.value.body?.charAt(2) ?? '0') % 2 === 0
@@ -115,20 +120,8 @@ const showFns = {
       })),
     })
   },
-  dynamicComponent: () => {
-    show({
-      props: () => ({
-        title: firstRef.value.body,
-      }),
-      component: computed(() =>
-        Number.parseInt(firstRef.value.body?.charAt(2) ?? '0') % 2 === 0
-          ? BModal
-          : h(BModal, null, {default: () => `custom ${firstRef.value.body}`})
-      ),
-    })
-  },
   getterFunction: () => {
-    show({
+    show?.({
       props: () => ({
         title: firstRef.value.body,
       }),
@@ -136,7 +129,7 @@ const showFns = {
   },
   // Demonstration psuedocode, you can import a component and use it
   // importedComponent: () => {
-  //   show({
+  //   show?.({
   //     component: import('./MyModalComponent.vue'),
   //   })
   // },

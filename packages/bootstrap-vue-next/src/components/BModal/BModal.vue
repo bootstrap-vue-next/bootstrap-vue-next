@@ -40,7 +40,7 @@
                   <BButton
                     v-if="hasHeaderCloseSlot"
                     v-bind="headerCloseAttrs"
-                    @click="hide('close')"
+                    @click="hideFn('close')"
                   >
                     <slot name="header-close" />
                   </BButton>
@@ -48,7 +48,7 @@
                     v-else
                     :aria-label="headerCloseLabel"
                     v-bind="headerCloseAttrs"
-                    @click="hide('close')"
+                    @click="hideFn('close')"
                   />
                 </template>
               </slot>
@@ -67,7 +67,7 @@
                     :disabled="disableCancel"
                     :size="buttonSize"
                     :variant="cancelVariant"
-                    @click="hide('cancel')"
+                    @click="hideFn('cancel')"
                   >
                     {{ cancelTitle }}
                   </BButton>
@@ -78,7 +78,7 @@
                     :disabled="disableOk"
                     :size="buttonSize"
                     :variant="okVariant"
-                    @click="hide('ok')"
+                    @click="hideFn('ok')"
                   >
                     {{ okTitle }}
                   </BButton>
@@ -95,7 +95,7 @@
             fixed
             no-wrap
             :blur="null"
-            @click="hide('backdrop')"
+            @click="hideFn('backdrop')"
           />
         </slot>
       </div>
@@ -104,7 +104,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, type CSSProperties, reactive, ref, toRef, watch} from 'vue'
+import {computed, type CSSProperties, ref, toRef, watch} from 'vue'
 import {
   useBooleanish,
   useColorVariantClasses,
@@ -230,7 +230,8 @@ const slots = defineSlots<{
 }>()
 
 const computedId = useId(() => props.id, 'modal')
-
+// Note: passive: true will sync an internal ref... This is required for useModalManager to exit,
+// Since the modelValue that's passed from that composable is not reactive, this internal ref _is_ and thus it will trigger closing the modal
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const busyBoolean = useBooleanish(() => props.busy)
@@ -264,7 +265,7 @@ const lazyLoadCompleted = ref(false)
 onKeyStroke(
   'Escape',
   () => {
-    hide('esc')
+    hideFn('esc')
   },
   {target: element}
 )
@@ -387,11 +388,11 @@ watch(modelValueBoolean, (newValue, oldValue) => {
   if (newValue === true) {
     showFn()
   } else {
-    hide()
+    hideFn()
   }
 })
 
-const hide = (trigger = '') => {
+const hideFn = (trigger = '') => {
   if (
     (trigger === 'backdrop' && noCloseOnBackdropBoolean.value) ||
     (trigger === 'esc' && noCloseOnEscBoolean.value)
@@ -445,7 +446,9 @@ const pickFocusItem = () => {
         : (modalFocus.value = true)
 }
 
-const onBeforeEnter = () => showFn()
+const onBeforeEnter = () => {
+  showFn()
+}
 const onAfterEnter = () => {
   isActive.value = true
   pickFocusItem()
@@ -468,30 +471,30 @@ const computedZIndex = computed<CSSProperties>(() => ({
   //
   // This means inactive modals will already be higher than active ones when opened.
   'z-index': isActive.value
-    ? defaultModalDialogZIndex - (activeModalCount.value - activePosition.value)
+    ? defaultModalDialogZIndex - ((activeModalCount?.value ?? 0) - (activePosition?.value ?? 0))
     : defaultModalDialogZIndex,
 }))
 
 useEventListener(element, 'bv-toggle', () => {
-  modelValueBoolean.value ? hide() : showFn()
+  modelValueBoolean.value ? hideFn() : showFn()
 })
 
-const sharedSlots: SharedSlotsData = reactive({
+const sharedSlots = computed<SharedSlotsData>(() => ({
   cancel: () => {
-    hide('cancel')
+    hideFn('cancel')
   },
   close: () => {
-    hide('close')
+    hideFn('close')
   },
-  hide,
+  hide: hideFn,
   ok: () => {
-    hide('ok')
+    hideFn('ok')
   },
-  visible: modelValueBoolean,
-})
+  visible: modelValueBoolean.value,
+}))
 
 defineExpose({
-  hide,
+  hide: hideFn,
   id: computedId,
   show: showFn,
 })

@@ -14,9 +14,11 @@
 
 </div>
 
+<UsePluginAlert />
+
 ## BModalOrchestrator
 
-As described, you must have initialized `BModalOrchestrator` once and only once (doing multiple may display multiple `Modals`). This is usually best placed at the App root.
+You must have initialized `BModalOrchestrator` component once and only once (doing multiple may display multiple `Modals`). This is usually best placed at the App root.
 
 <HighlightCard>
 
@@ -56,9 +58,9 @@ const {confirm} = useModalController()
 const toast = useToast()
 
 const showExample = async () => {
-  const value = await confirm({props: {title: 'Hello World!'}})
+  const value = await confirm?.({props: {title: 'Hello World!'}})
 
-  toast.show({props: {title: `Promise resolved to ${value}`, variant: 'info'}})
+  toast.show?.({props: {title: `Promise resolved to ${value}`, variant: 'info'}})
 }
 </script>
 ```
@@ -68,7 +70,7 @@ const showExample = async () => {
 
 ### Reactivity Within Show
 
-`show` and `confirm` can accept a `MaybeRefOrGetter`, meaning that all properties are reactive
+`show` and `confirm` props property can accept a `MaybeRefOrGetter`, meaning that you can make properties reactive
 
 <HighlightCard>
   <BButton @click="showReactiveExample">Click me</BButton>
@@ -90,7 +92,7 @@ setInterval(() => {
 }, 2500)
 
 const showReactiveExample = () => {
-  show({
+  show?.({
     props: computed(() => ({
       title: title.value,
     })),
@@ -104,7 +106,7 @@ const showReactiveExample = () => {
 
 ### Advanced Creation
 
-Using props can work for most situations, but it leaves some finer control to be desired. For instance, you can not add HTML to any slot value. This is where the `component` property comes into play. Using the `component` property, you can input the component to render. This can either be an imported SFC or an inline render function. Of course, it is also reactive
+Using props can work for most situations, but it leaves some finer control to be desired. For instance, you can not add HTML to any slot value. This is where the `component` property comes into play. Using the `component` property, you can input the component to render. This can either be an imported SFC or an inline render function
 
 <HighlightCard>
   <BButton @click="showMeAdvancedExample">Click me</BButton>
@@ -128,20 +130,16 @@ setInterval(() => {
 }, 1000)
 
 const showMeAdvancedExample = () => {
-  show({
+  show?.({
     props: () => ({
       body: firstRef.value.body,
     }),
-    component: computed(() =>
-      Number.parseInt(firstRef.value.body?.charAt(2) ?? '0') % 2 === 0
-        ? BModal
-        : h(BModal, null, {default: () => `custom ${firstRef.value.body}`})
-    ),
+    component: h(BModal, null, {default: () => `custom ${firstRef.value.body}`}),
   })
 
   // Demonstration psuedocode, you can import a component and use it
   // const importedComponent = () => {
-  //   show({
+  //   show?.({
   //     component: import('./MyModalComponent.vue'),
   //   })
   // }
@@ -230,6 +228,7 @@ const {hide, hideAll} = useModalController()
 <script setup lang="ts">
 import {BButton, BModal, useModalController, BButtonGroup, useToast} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
+import UsePluginAlert from '../../components/UsePluginAlert.vue'
 import {ref, computed, h, onMounted} from 'vue'
 
 const nestedModal1 = ref(false)
@@ -248,13 +247,13 @@ onMounted(() => {
 })
 
 const showExample = async () => {
-  const value = await confirm({ props: { title: 'Hello World!' } })
+  const value = await confirm?.({ props: { title: 'Hello World!' } })
 
-  toast.show({ props: { title: `Promise resolved to ${value}`, variant: 'info' } })
+  toast.show?.({ props: { title: `Promise resolved to ${value}`, variant: 'info' } })
 }
 
 const showReactiveExample = () => {
-  show({
+  show?.({
     props: computed(() => ({
       title: title.value
     }))
@@ -262,7 +261,7 @@ const showReactiveExample = () => {
 }
 
 const showMeAdvancedExample = () => {
-  show({
+  show?.({
     props: () => ({
       body: title.value,
     }),

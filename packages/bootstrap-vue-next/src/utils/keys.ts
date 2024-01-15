@@ -1,11 +1,23 @@
-import type {InjectionKey, Ref} from 'vue'
 import type {
+  Component,
+  ComponentInternalInstance,
+  ComputedRef,
+  InjectionKey,
+  MaybeRefOrGetter,
+  Ref,
+  ShallowRef,
+} from 'vue'
+import type {
+  BModalProps,
+  BreadcrumbItemRaw,
   ButtonVariant,
   CheckboxValue,
   ClassValue,
   ColorVariant,
   LiteralUnion,
   Numberish,
+  OrchestratedModal,
+  OrchestratedToast,
   RadioValue,
   RadiusElement,
   Size,
@@ -123,3 +135,68 @@ export const navbarInjectionKey: InjectionKey<{
   tag?: Readonly<Ref<string>>
   autoClose?: Readonly<Ref<boolean>>
 }> = Symbol('navbar')
+
+export const toastPluginKey: InjectionKey<{
+  toasts: ShallowRef<
+    ComputedRef<{
+      component: unknown
+      props: Omit<OrchestratedToast, 'value'> & {
+        _self: symbol
+        _modelValue: OrchestratedToast['value'] // Convert it to be the same name as useModalController.
+        // The difference between the two is that unlike that one, this value can be defined (there's cannot be).
+      }
+    }>[]
+  >
+  show: (obj: {
+    component?: Readonly<Component>
+    props?: MaybeRefOrGetter<Readonly<OrchestratedToast>>
+  }) => symbol
+  remove: (self: symbol) => void
+}> = Symbol('toastPlugin')
+
+export const rtlPluginKey: InjectionKey<{
+  isRtl: Ref<boolean>
+  locale: Ref<string | undefined>
+}> = Symbol('rtlPlugin')
+
+export const breadcrumbPluginKey: InjectionKey<{
+  items: Ref<BreadcrumbItemRaw[]>
+  reset: () => void
+}> = Symbol('breadcrumbPlugin')
+
+export const modalControllerPluginKey: InjectionKey<{
+  modals: ShallowRef<
+    ComputedRef<{
+      component: unknown // TS being weird here, just use unknown
+      props: OrchestratedModal & {
+        _self: symbol
+        _modelValue: BModalProps['modelValue']
+        _promise: {
+          value: Promise<boolean | null>
+          resolve: (value: boolean | null) => void
+        }
+        _isConfirm: boolean
+      }
+    }>[]
+  >
+  show: (obj: {
+    component?: Readonly<Component>
+    props?: MaybeRefOrGetter<Readonly<OrchestratedModal>>
+  }) => Promise<boolean | null>
+  confirm: (obj: {
+    component?: Readonly<Component>
+    props?: MaybeRefOrGetter<Readonly<OrchestratedModal>>
+  }) => Promise<boolean | null>
+  remove: (self: symbol) => void
+}> = Symbol('modalControllerPlugin')
+
+export const modalManagerPluginKey: InjectionKey<{
+  stack: ShallowRef<Readonly<ComponentInternalInstance>[]>
+  countStack: Readonly<Ref<number>>
+  lastStack: Readonly<Ref<ComponentInternalInstance | undefined>>
+  pushStack: (modal: Readonly<ComponentInternalInstance>) => void
+  removeStack: (modal: Readonly<ComponentInternalInstance>) => void
+  registry: ShallowRef<Readonly<ComponentInternalInstance>[]>
+  pushRegistry: (modal: Readonly<ComponentInternalInstance>) => void
+  removeRegistry: (modal: Readonly<ComponentInternalInstance>) => void
+}> = Symbol('modalManagerPlugin')

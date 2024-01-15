@@ -1,52 +1,25 @@
-import {createSharedComposable, getSSRHandler, tryOnScopeDispose, unrefElement} from '@vueuse/core'
+import {getSSRHandler, tryOnScopeDispose, unrefElement} from '@vueuse/core'
 import {
   type ComponentInternalInstance,
   computed,
   getCurrentInstance,
+  inject,
   type Ref,
-  shallowRef,
-  toRef,
   watch,
 } from 'vue'
+import {modalManagerPluginKey} from '../utils'
 
 const modalOpenClassName = 'modal-open'
 
-export const useSharedModalStack = createSharedComposable(() => {
-  /**
-   * A collection of all currently active modals
-   */
-  const stack: Ref<ComponentInternalInstance[]> = shallowRef([])
-
-  const countStack = toRef(() => stack.value.length)
-  const lastStack = toRef(() => stack.value[stack.value.length - 1])
-
-  const pushStack = (modal: Readonly<ComponentInternalInstance>) => {
-    stack.value = [...stack.value, modal]
-  }
-  const removeStack = (modal: Readonly<ComponentInternalInstance>) => {
-    stack.value = stack.value.filter((item) => item.uid !== modal.uid)
-  }
-
-  /**
-   * A collection of all registered modals
-   */
-  const registry: Ref<ComponentInternalInstance[]> = shallowRef([])
-
-  // Utility getters not made, would not be used (count, last)
-
-  const pushRegistry = (modal: Readonly<ComponentInternalInstance>) => {
-    registry.value = [...registry.value, modal]
-  }
-  const removeRegistry = (modal: Readonly<ComponentInternalInstance>) => {
-    registry.value = registry.value.filter((item) => item.uid !== modal.uid)
-  }
+export const useSharedModalStack = () => {
+  const modalManagerPlugin = inject(modalManagerPluginKey)
 
   /**
    * Removes an item from both the stack and registry
    */
   const dispose = (modal: Readonly<ComponentInternalInstance>): void => {
-    removeStack(modal)
-    removeRegistry(modal)
+    modalManagerPlugin?.removeStack(modal)
+    modalManagerPlugin?.removeRegistry(modal)
   }
 
   const updateHTMLAttrs = getSSRHandler('updateHTMLAttrs', (selector, attribute, value) => {
@@ -67,22 +40,19 @@ export const useSharedModalStack = createSharedComposable(() => {
     updateHTMLAttrs('body', 'class', '')
   })
 
-  watch(countStack, (newValue) => {
-    updateHTMLAttrs('body', 'class', newValue > 0 ? modalOpenClassName : '')
-  })
+  watch(
+    () => modalManagerPlugin?.countStack.value,
+    (newValue) => {
+      if (newValue === undefined) return
+      updateHTMLAttrs('body', 'class', newValue > 0 ? modalOpenClassName : '')
+    }
+  )
 
   return {
-    registry,
-    stack,
-    lastStack,
-    countStack,
-    pushStack,
-    removeStack,
-    pushRegistry,
-    removeRegistry,
+    ...modalManagerPlugin,
     dispose,
   }
-})
+}
 
 export default (modalOpen: Readonly<Ref<boolean>>) => {
   const {pushRegistry, pushStack, removeStack, stack, dispose, countStack} = useSharedModalStack()
@@ -93,7 +63,7 @@ export default (modalOpen: Readonly<Ref<boolean>>) => {
     throw new Error('useModalManager must only use in BModal component')
   }
 
-  pushRegistry(currentModal)
+  pushRegistry?.(currentModal)
 
   tryOnScopeDispose(() => {
     dispose(currentModal)
@@ -103,17 +73,17 @@ export default (modalOpen: Readonly<Ref<boolean>>) => {
     modalOpen,
     (newValue, oldValue) => {
       if (newValue) {
-        pushStack(currentModal)
+        pushStack?.(currentModal)
       } else if (oldValue && !newValue) {
-        removeStack(currentModal)
+        removeStack?.(currentModal)
       }
     },
     {immediate: true}
   )
 
   return {
-    activePosition: computed(() =>
-      stack.value.findIndex((el) => el.exposed?.id === currentModal.exposed?.id)
+    activePosition: computed(
+      () => stack?.value.findIndex((el) => el.exposed?.id === currentModal.exposed?.id)
     ),
     activeModalCount: countStack,
   }

@@ -3,10 +3,12 @@
     <BCardBody>
       <slot />
     </BCardBody>
-    <div class="html">HTML</div>
-    <BCardBody class="bg-body-tertiary">
-      <slot name="html" />
-    </BCardBody>
+    <template v-if="$slots.html">
+      <div class="html">HTML</div>
+      <BCardBody class="bg-body-tertiary">
+        <slot name="html" />
+      </BCardBody>
+    </template>
   </BCard>
 </template>
 

@@ -1,5 +1,20 @@
 <template>
-  <Transition v-bind="{...baseProperties, ...transProps}" :appear="appearBoolean">
+  <Transition
+    v-bind="{...baseProperties, ...transProps}"
+    :appear="appearBoolean"
+    @after-appear="emit('after-appear', $event)"
+    @after-enter="emit('after-enter', $event)"
+    @after-leave="emit('after-leave', $event)"
+    @appear="emit('appear', $event)"
+    @before-appear="emit('before-appear', $event)"
+    @before-enter="emit('before-enter', $event)"
+    @before-leave="emit('before-leave', $event)"
+    @enter="emit('enter', $event)"
+    @appear-cancelled="emit('appear-cancelled', $event)"
+    @enter-cancelled="emit('enter-cancelled', $event)"
+    @leave="emit('leave', $event)"
+    @leave-cancelled="emit('leave-cancelled', $event)"
+  >
     <slot />
   </Transition>
 </template>
@@ -15,6 +30,21 @@ const props = withDefaults(defineProps<BTransitionProps>(), {
   noFade: false,
   transProps: undefined,
 })
+
+const emit = defineEmits<{
+  'after-appear': [value: Element]
+  'after-enter': [value: Element]
+  'after-leave': [value: Element]
+  'appear': [value: Element]
+  'before-appear': [value: Element]
+  'before-enter': [value: Element]
+  'before-leave': [value: Element]
+  'enter': [value: Element]
+  'appear-cancelled': [value: Element]
+  'enter-cancelled': [value: Element]
+  'leave': [value: Element]
+  'leave-cancelled': [value: Element]
+}>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

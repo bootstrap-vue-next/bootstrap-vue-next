@@ -1,12 +1,4 @@
-import {reactive} from 'vue'
-import type {BreadcrumbItemRaw} from '../types'
-import {createGlobalState} from '@vueuse/core'
+import {inject} from 'vue'
+import {breadcrumbPluginKey} from '../utils'
 
-export default createGlobalState(() => {
-  const items = reactive<BreadcrumbItemRaw[]>([])
-  const reset = (): void => {
-    items.splice(0, items.length)
-  }
-
-  return {items, reset}
-})
+export default () => ({...inject(breadcrumbPluginKey)})
