@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import {avatarGroupInjectionKey, isEmptySlot, isNumeric, toFloat} from '../../utils'
+import {avatarGroupInjectionKey, isEmptySlot} from '../../utils'
 import {computed, type CSSProperties, inject, type StyleValue, toRef} from 'vue'
 import type {
   BLinkProps,
@@ -35,11 +35,14 @@ import type {
   ButtonType,
   ColorExtendables,
   ColorVariant,
+  LiteralUnion,
+  Numberish,
   RadiusElementExtendables,
   Size,
   TextColorVariant,
 } from '../../types'
 import {
+  useAvatarSize,
   useBLinkHelper,
   useBooleanish,
   useColorVariantClasses,
@@ -61,11 +64,11 @@ const props = withDefaults(
       button?: Booleanish
       buttonType?: ButtonType
       icon?: string
-      size?: Size | string // TODO number --> compat
+      size?: LiteralUnion<Size, Numberish>
       square?: Booleanish
       src?: string
       text?: string
-    } & Omit<BLinkProps, 'event' | 'routerTag'> &
+    } & Omit<BLinkProps, 'routerTag'> &
       ColorExtendables &
       RadiusElementExtendables
   >(),
@@ -158,7 +161,11 @@ const hasBadgeSlot = toRef(() => !isEmptySlot(slots.badge))
 
 const showBadge = toRef(() => !!props.badge || props.badge === '' || hasBadgeSlot.value)
 const computedSquare = toRef(() => parentData?.size.value ?? squareBoolean.value)
-const computedSize = toRef(() => parentData?.size.value ?? computeSize(props.size))
+
+const computedPropSize = useAvatarSize(() => props.size)
+const computedParentSize = useAvatarSize(() => parentData?.size.value)
+const computedSize = computed(() => computedParentSize.value ?? computedPropSize.value)
+
 const computedVariant = toRef(() => parentData?.variant.value ?? props.variant)
 const computedRounded = toRef(() => parentData?.rounded.value ?? roundedBoolean.value)
 const computedRoundedTop = toRef(() => parentData?.roundedTop.value ?? roundedTopBoolean.value)
@@ -199,7 +206,8 @@ const computedClasses = computed(() => [
   // Square overwrites all else
   computedSquare.value === true ? undefined : radiusElementClasses.value,
   {
-    [`b-avatar-${props.size}`]: !!props.size && SIZES.indexOf(computeSize(props.size)) !== -1,
+    [`b-avatar-${props.size}`]:
+      !!props.size && SIZES.indexOf(computedPropSize.value as string) !== -1,
     [`btn-${computedVariant.value}`]: buttonBoolean.value ? computedVariant.value !== null : false,
     'badge': !buttonBoolean.value && computedVariant.value !== null && hasDefaultSlot.value,
     'btn': buttonBoolean.value,
@@ -211,7 +219,7 @@ const computedClasses = computed(() => [
 const badgeStyle = computed<StyleValue>(() => {
   const offset = props.badgeOffset || '0px'
   const fontSize =
-    SIZES.indexOf(computedSize.value || null) === -1
+    SIZES.indexOf((computedSize.value as string | undefined) || null) === -1
       ? `calc(${computedSize.value} * ${BADGE_FONT_SIZE_SCALE})`
       : ''
   return {
@@ -225,7 +233,7 @@ const badgeStyle = computed<StyleValue>(() => {
 
 const textFontStyle = computed<StyleValue>(() => {
   const fontSize =
-    SIZES.indexOf(computedSize.value || null) === -1
+    SIZES.indexOf((computedSize.value as string | undefined) || null) === -1
       ? `calc(${computedSize.value} * ${FONT_SIZE_SCALE})`
       : null
   return fontSize ? {fontSize} : {}
@@ -249,18 +257,11 @@ const computedStyle = computed<CSSProperties>(() => ({
   height: computedSize.value ?? undefined,
 }))
 
-const clicked = (e: MouseEvent): void => {
+const clicked = (e: Readonly<MouseEvent>): void => {
   if (!disabledBoolean.value && (computedLink.value || buttonBoolean.value)) emit('click', e)
 }
 
-const onImgError = (e: Event) => {
+const onImgError = (e: Readonly<Event>) => {
   emit('img-error', e)
-}
-</script>
-
-<script lang="ts">
-export const computeSize = (value: string | undefined): string | null => {
-  const calcValue = typeof value === 'string' && isNumeric(value) ? toFloat(value, 0) : value
-  return typeof calcValue === 'number' ? `${calcValue}px` : calcValue || null
 }
 </script>

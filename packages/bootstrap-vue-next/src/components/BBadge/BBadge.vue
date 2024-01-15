@@ -22,7 +22,7 @@ const props = withDefaults(
       pill?: Booleanish
       tag?: string
       textIndicator?: Booleanish
-    } & Omit<BLinkProps, 'event' | 'routerTag'> &
+    } & Omit<BLinkProps, 'routerTag'> &
       ColorExtendables
   >(),
   {

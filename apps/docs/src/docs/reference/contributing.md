@@ -34,14 +34,14 @@ This repository is where you will make your changes to. You can safely run `git 
 
 When opening your repository, it is usually best to open the **root** folder, not a subdirectory such as `./packages/bootstrap-vue-next`. Eslint rules can sometimes get lost when opening a subdirectory of a workspace. If you do not have the recommended IDE extensions, it will usually suggest that you install them, but this is technically optional. You can finally run at the root:
 
-<BCard class="bg-body-tertiary">
+<HighlightCard>
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-</BCard>
+</HighlightCard>
 
 Finally, after you have made sufficient changes and you are ready to publish your changes to the main repository, you will:
 
@@ -110,5 +110,6 @@ increase version in package.json, commit
 <https://github.com/bootstrap-vue-next/bootstrap-vue-next/releases/new> (create new tag)
 
 <script setup lang="ts">
-import {BCard, BAlert} from 'bootstrap-vue-next'
+import {BAlert} from 'bootstrap-vue-next'
+import HighlightCard from '../../components/HighlightCard.vue'
 </script>

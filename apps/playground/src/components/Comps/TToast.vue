@@ -1,46 +1,82 @@
 <template>
-  <BContainer fluid>
+  <BContainer>
     <BRow>
       <BCol>
-        <BButton class="mt-3" @click="createToast()">Show Toast</BButton>
-        <BButton class="mt-3" @click="createToast2()">Show Toast 2</BButton>
-        <BButton class="mt-3" @click="createToastError()">Show a danger Toast</BButton>
-        <BButton class="mt-3" @click="consoleLog('Button Click!')">Hide Toast</BButton>
-        <BToast v-model="showToast" title="Hello" body="cow" />
+        <BToastOrchestrator />
+        <BButton v-for="(fn, name) in showFns" :key="name" @click="fn">{{ name }}</BButton>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        {{ toasts }}
       </BCol>
     </BRow>
   </BContainer>
 </template>
 
 <script setup lang="ts">
-import {h, ref} from 'vue'
-import {useToast} from 'bootstrap-vue-next'
+// You can use this file as a development spot to test your changes
+// Please do not commit this file
+import {computed, h, ref} from 'vue'
+import {BToast, type ColorVariant, type OrchestratedToast, useToast} from 'bootstrap-vue-next'
 
-const showToast = ref(true)
+const {show, toasts} = useToast()
 
-const c = useToast()
+const firstRef = ref<OrchestratedToast>({
+  body: `${Math.random()}`,
+})
 
-const consoleLog = (...args: unknown[]) => console.log(...args)
+setInterval(() => {
+  firstRef.value.body = `${Math.random()}`
+}, 1000)
 
-const createToast = () => {
-  c?.show({title: 'example title', body: h('div', 'cool Dynamic')}, {pos: 'bottom-right'})
-}
-
-const createToast2 = () => {
-  c?.show(
-    {
-      body: 'This is a long content toast. Very looooooooooooong content toast. Should be centered.',
-    },
-    {pos: 'bottom-center'}
-  )
-}
-
-const createToastError = () => {
-  c?.show(
-    {
-      body: 'This is a danger toast!!',
-    },
-    {variant: 'danger'}
-  )
+const showFns = {
+  basicNoReactive: () => {
+    show?.({
+      props: {
+        value: true,
+        active: true,
+        title: 'foobar',
+      },
+    })
+  },
+  basicCustomComponent: () => {
+    show?.({
+      component: h(BToast, null, {default: () => 'foobar!'}),
+      props: {
+        value: true,
+        active: true,
+        variant: 'primary',
+      },
+    })
+  },
+  simpleRefProps: () => {
+    show?.({
+      props: firstRef,
+    })
+  },
+  dynamicRefProps: () => {
+    show?.({
+      props: computed(() => ({
+        ...firstRef.value,
+        variant: (Number.parseInt(firstRef.value.body?.charAt(2) ?? '0') % 2 === 0
+          ? 'danger'
+          : 'info') as ColorVariant,
+      })),
+    })
+  },
+  getterFunction: () => {
+    show?.({
+      props: () => ({
+        title: firstRef.value.body,
+      }),
+    })
+  },
+  // Demonstration psuedocode, you can import a component and use it
+  // importedComponent: () => {
+  //   show({
+  //     component: import('./MyToastComponent.vue'),
+  //   })
+  // },
 }
 </script>

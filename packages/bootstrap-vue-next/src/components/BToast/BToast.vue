@@ -1,5 +1,11 @@
 <template>
-  <BTransition :no-fade="noFadeBoolean">
+  <BTransition
+    :no-fade="noFadeBoolean"
+    v-bind="transProps"
+    @before-enter="onBeforeEnter"
+    @after-enter="onAfterEnter"
+    @after-leave="onAfterLeave"
+  >
     <div
       v-if="isToastVisible"
       :id="id"
@@ -12,12 +18,12 @@
       :aria-atomic="!isToastVisible ? undefined : true"
     >
       <component :is="headerTag" v-if="$slots.title || title" class="toast-header">
-        <slot name="title" :hide="hide">
+        <slot name="title" :hide="hideFn">
           <strong class="me-auto">
             {{ title }}
           </strong>
         </slot>
-        <BCloseButton v-if="!noCloseButtonBoolean" @click="hide" />
+        <BCloseButton v-if="!noCloseButtonBoolean" @click="hideFn('close')" />
       </component>
       <template v-if="$slots.default || body">
         <component
@@ -26,9 +32,9 @@
           style="display: block"
           :class="bodyClass"
           v-bind="computedLinkProps"
-          @click="computedLink ? hide : () => {}"
+          @click="computedLink ? hideFn() : () => {}"
         >
-          <slot :hide="hide">
+          <slot :hide="hideFn">
             {{ body }}
           </slot>
         </component>
@@ -63,10 +69,7 @@ import BCloseButton from '../BButton/BCloseButton.vue'
 import BLink from '../BLink/BLink.vue'
 import {useElementHover, useToNumber, useVModel} from '@vueuse/core'
 import BProgress from '../BProgress/BProgress.vue'
-
-// TODO scheduling issue -- when multiple are opened in quick succession, and closed in quick succession,
-// Find index can get lost, leading to one or multiple staying orphaned
-// TODO appendToast from BToaster
+import {BvTriggerableEvent} from '../../utils'
 
 const props = withDefaults(defineProps<BToastProps>(), {
   animation: true,
@@ -88,6 +91,7 @@ const props = withDefaults(defineProps<BToastProps>(), {
   textVariant: null,
   title: undefined,
   toastClass: undefined,
+  transProps: undefined,
   // Link props
   // All others use defaults
   active: undefined,
@@ -114,17 +118,23 @@ const props = withDefaults(defineProps<BToastProps>(), {
 })
 
 const emit = defineEmits<{
-  'close': []
+  'close': [value: BvTriggerableEvent]
   'close-countdown': [value: number]
-  'closed': []
-  'destroyed': []
+  'hide': [value: BvTriggerableEvent]
+  'hidden': [value: BvTriggerableEvent]
+  'show': [value: BvTriggerableEvent]
+  'shown': [value: BvTriggerableEvent]
+  'show-prevented': []
+  'hide-prevented': []
   'update:modelValue': [value: boolean | number]
 }>()
 
 const element = ref<HTMLElement | null>(null)
 
 const isHovering = useElementHover(element)
-const modelValue = useVModel(props, 'modelValue', emit)
+// Note: passive: true will sync an internal ref... This is required for useToast to exit,
+// Since the modelValue that's passed from that composable is not reactive, this internal ref _is_ and thus it will trigger closing the toast
+const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props)
 
@@ -167,32 +177,12 @@ const isToastVisible = toRef(() =>
     : isActive.value || (showOnPauseBoolean.value && isPaused.value)
 )
 
-// Unlike the Alert counterpart, we actually want to emit to fully destroy our Toast (handled by the toaster)
-watch(isActive, (newValue) => {
-  if (newValue === false && isPaused.value === false) {
-    emit('destroyed')
-  }
-})
-
 const computedClasses = computed(() => [
   resolvedBackgroundClasses.value,
   {
     show: isToastVisible.value,
   },
 ])
-
-const hide = () => {
-  emit('close')
-
-  if (typeof modelValue.value === 'boolean') {
-    modelValue.value = false
-  } else {
-    modelValue.value = 0
-    stop()
-  }
-
-  emit('closed')
-}
 
 const onMouseEnter = () => {
   if (noHoverPauseBoolean.value) return
@@ -205,6 +195,69 @@ watch(isHovering, (newValue) => {
     return
   }
   resume()
+})
+
+const buildTriggerableEvent = (
+  type: string,
+  opts: Readonly<Partial<BvTriggerableEvent>> = {}
+): BvTriggerableEvent =>
+  new BvTriggerableEvent(type, {
+    cancelable: false,
+    target: element.value || null,
+    relatedTarget: null,
+    trigger: null,
+    ...opts,
+    componentId: props.id,
+  })
+
+const showFn = () => {
+  const event = buildTriggerableEvent('show', {cancelable: true})
+  emit('show', event)
+  if (event.defaultPrevented) {
+    if (modelValue.value) modelValue.value = false
+    emit('show-prevented')
+    return
+  }
+  if (!modelValue.value) modelValue.value = true
+}
+const hideFn = (trigger = '') => {
+  const event = buildTriggerableEvent('hide', {cancelable: trigger !== '', trigger})
+
+  emit('hide', event)
+
+  if (trigger === 'close') {
+    emit('close', event)
+  }
+
+  if (event.defaultPrevented) {
+    emit('hide-prevented')
+    if (!modelValue.value) modelValue.value = true
+    return
+  }
+
+  if (typeof modelValue.value === 'boolean') {
+    modelValue.value = false
+  } else {
+    modelValue.value = 0
+    stop()
+  }
+}
+
+const onBeforeEnter = () => {
+  showFn()
+}
+const onAfterEnter = () => {
+  emit('shown', buildTriggerableEvent('shown'))
+}
+const onAfterLeave = () => {
+  emit('hidden', buildTriggerableEvent('hidden'))
+}
+
+// isActive in the composable will cause the toast to hide when the countdown is done
+watch(isActive, (newValue) => {
+  if (newValue === false && isPaused.value === false && !!modelValue.value) {
+    hideFn()
+  }
 })
 
 onBeforeUnmount(stop)

@@ -19,13 +19,13 @@ export const resolveFloatingPlacement = ({
   start,
   alignCenter,
   alignEnd,
-}: {
+}: Readonly<{
   top: boolean
   start: boolean
   end: boolean
   alignCenter: boolean
   alignEnd: boolean
-}): Placement => {
+}>): Placement => {
   const direction = top ? 'top' : start ? 'left' : end ? 'right' : 'bottom'
   const align = alignEnd ? 'end' : alignCenter ? null : 'start'
   return `${direction}${align ? `-${align}` : ''}` as Placement
@@ -79,7 +79,10 @@ export const resolveContent = (
   }
 }
 
-export const resolveDirectiveProps = (binding: DirectiveBinding, el: HTMLElement) => ({
+export const resolveDirectiveProps = (
+  binding: Readonly<DirectiveBinding>,
+  el: Readonly<HTMLElement>
+) => ({
   target: el,
   modelValue: binding.modifiers.show,
   inline: binding.modifiers.inline,
@@ -107,7 +110,7 @@ export interface ElementWithPopper extends HTMLElement {
   $__element?: HTMLElement
 }
 
-export const bind = (el: ElementWithPopper, binding: DirectiveBinding) => {
+export const bind = (el: ElementWithPopper, binding: Readonly<DirectiveBinding>) => {
   const div = document.createElement('span')
   if (binding.modifiers.body) document.body.appendChild(div)
   else if (binding.modifiers.child) el.appendChild(div)

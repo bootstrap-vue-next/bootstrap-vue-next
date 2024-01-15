@@ -159,7 +159,7 @@ const directivesList: {name: string}[] = [
 ]
 
 const componentsComputedList = computed(() =>
-  [...componentsList]
+  componentsList
     .map((el) => ({
       name: el.name,
       route: routeLocationComponents(el.name),
@@ -168,7 +168,7 @@ const componentsComputedList = computed(() =>
 )
 
 const composablesComputedList = computed(() =>
-  [...composablesList]
+  composablesList
     .map((el) => ({
       name: el.name,
       route: routeLocationComposables(el.name),
@@ -177,7 +177,7 @@ const composablesComputedList = computed(() =>
 )
 
 const directivesComputedList = computed(() =>
-  [...directivesList]
+  directivesList
     .map((el) => ({
       name: el.name,
       route: routeLocationDirectives(el.name),

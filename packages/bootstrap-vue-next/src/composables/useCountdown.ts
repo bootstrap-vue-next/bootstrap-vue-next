@@ -18,13 +18,13 @@ interface CountdownReturn {
  *
  * @param {MaybeRefOrGetter<number>} length the total amount of time to loop through in ms
  * @param {MaybeRefOrGetter<number>} interval how often the interval should refresh. Default 1000
- * @param {UseIntervalFnOptions} intervalOpts opts to pass to the interval fn. Default {}
+ * @param {Readonly<UseIntervalFnOptions>} intervalOpts opts to pass to the interval fn. Default {}
  * @important ensure that you call `stop()` before unmount in the component
  */
 export default (
   length: MaybeRefOrGetter<number>,
   interval: MaybeRefOrGetter<number> = ref(1000),
-  intervalOpts: UseIntervalFnOptions = {}
+  intervalOpts: Readonly<UseIntervalFnOptions> = {}
 ): CountdownReturn => {
   const resolvedLength = readonly(toRef(length))
 

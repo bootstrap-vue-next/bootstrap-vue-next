@@ -27,7 +27,7 @@ const props = withDefaults(
       action?: Booleanish
       button?: Booleanish
       tag?: string
-    } & Omit<BLinkProps, 'event' | 'routerTag'>
+    } & Omit<BLinkProps, 'routerTag'>
   >(),
   {
     action: false,

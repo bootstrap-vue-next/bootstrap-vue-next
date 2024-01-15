@@ -120,11 +120,13 @@ import {computed, ref, toRef} from 'vue'
 import BFormTag from './BFormTag.vue'
 import {useBooleanish, useId, useStateClass} from '../../composables'
 import type {
+  AttrsValue,
   Booleanish,
   ButtonVariant,
   ClassValue,
   ColorVariant,
   InputType,
+  Numberish,
   Size,
 } from '../../types'
 import {onKeyStroke, syncRef, useFocus, useToNumber, useVModel} from '@vueuse/core'
@@ -139,14 +141,14 @@ const props = withDefaults(
     disabled?: Booleanish
     duplicateTagText?: string
     form?: string
-    inputAttrs?: Record<string, unknown>
+    inputAttrs?: Readonly<AttrsValue>
     inputClass?: ClassValue
     inputId?: string
     inputType?: InputType
     invalidTagText?: string
-    limit?: number | string
+    limit?: Numberish
     limitTagsText?: string
-    modelValue?: string[]
+    modelValue?: readonly string[]
     name?: string
     noAddOnEnter?: Booleanish
     noOuterFocus?: Booleanish
@@ -154,7 +156,7 @@ const props = withDefaults(
     placeholder?: string
     removeOnDelete?: Booleanish
     required?: Booleanish
-    separator?: string | string[]
+    separator?: string | readonly string[]
     size?: Size
     state?: Booleanish | null
     tagClass?: ClassValue
@@ -250,7 +252,7 @@ const {focused} = useFocus(input, {
 })
 
 const _inputId = toRef(() => props.inputId || `${computedId.value}input__`)
-const tags = ref<string[]>(modelValue.value)
+const tags = ref<string[]>([...modelValue.value])
 const inputValue = ref<string>('')
 const shouldRemoveOnDelete = ref<boolean>(modelValue.value.length > 0)
 const lastRemovedTag = ref<string>('')
@@ -260,6 +262,9 @@ const duplicateTags = ref<string[]>([])
 
 syncRef(modelValue, tags, {
   direction: 'ltr',
+  transform: {
+    ltr: (v) => [...v],
+  },
 })
 
 const computedClasses = computed(() => [
@@ -322,7 +327,7 @@ const slotAttrs = computed(() => ({
   tags: tags.value,
 }))
 
-const onFocusin = (e: FocusEvent): void => {
+const onFocusin = (e: Readonly<FocusEvent>): void => {
   if (disabledBoolean.value) {
     const target = e.target as HTMLDivElement
     target.blur()
@@ -332,7 +337,7 @@ const onFocusin = (e: FocusEvent): void => {
   emit('focusin', e)
 }
 
-const onFocus = (e: FocusEvent): void => {
+const onFocus = (e: Readonly<FocusEvent>): void => {
   if (disabledBoolean.value || noOuterFocusBoolean.value) {
     return
   }
@@ -341,12 +346,12 @@ const onFocus = (e: FocusEvent): void => {
   emit('focus', e)
 }
 
-const onBlur = (e: FocusEvent): void => {
+const onBlur = (e: Readonly<FocusEvent>): void => {
   focused.value = false
   emit('blur', e)
 }
 
-const onInput = (e: Event | string): void => {
+const onInput = (e: Readonly<Event> | string): void => {
   const value = typeof e === 'string' ? e : (e.target as HTMLInputElement).value
 
   shouldRemoveOnDelete.value = false
@@ -372,7 +377,7 @@ const onInput = (e: Event | string): void => {
   emit('tag-state', validTags.value, invalidTags.value, duplicateTags.value)
 }
 
-const onChange = (e: Event): void => {
+const onChange = (e: Readonly<Event>): void => {
   if (addOnChangeBoolean.value) {
     onInput(e)
 
@@ -382,7 +387,7 @@ const onChange = (e: Event): void => {
   }
 }
 
-const onKeydown = (e: KeyboardEvent): void => {
+const onKeydown = (e: Readonly<KeyboardEvent>): void => {
   if (e.key === 'Enter' && !noAddOnEnterBoolean.value) {
     addTag(inputValue.value)
     return
@@ -449,7 +454,8 @@ const addTag = (tag?: string): void => {
 
 const removeTag = (tag?: string): void => {
   const tagIndex = tags.value.indexOf(tag?.toString() ?? '')
-  lastRemovedTag.value = tags.value.splice(tagIndex, 1).toString()
+  if (tagIndex === -1) return
+  lastRemovedTag.value = tags.value.splice(tagIndex, 1).toString() // TODO this seems strange, if index === -1 you'll remove the last el
   modelValue.value = tags.value
 }
 

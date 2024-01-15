@@ -1,6 +1,6 @@
 import {createApp, h} from 'vue'
 import App from './App.vue'
-import BootstrapVue from './BootstrapVue'
+import {BootstrapVueNextPlugin} from './BootstrapVue'
 
 import {createRouter, createWebHistory} from 'vue-router'
 
@@ -45,4 +45,7 @@ const router = createRouter({
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles/styles.scss'
 
-createApp(App).use(BootstrapVue).use(router).mount('#app')
+createApp(App)
+  .use(BootstrapVueNextPlugin, {components: true, directives: true})
+  .use(router)
+  .mount('#app')

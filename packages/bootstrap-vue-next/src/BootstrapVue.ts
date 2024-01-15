@@ -1,11 +1,15 @@
-import type {App, Plugin} from 'vue'
-import type {BootstrapVueOptions} from './types'
+import type {Plugin} from 'vue'
+import type {BootstrapVueOptions, ComponentType, DirectiveType} from './types'
+import toastPlugin from './plugins/toastPlugin'
+import breadcrumbPlugin from './plugins/breadcrumbPlugin'
+import modalControllerPlugin from './plugins/modalControllerPlugin'
+import modalManagerPlugin from './plugins/modalManagerPlugin'
+import rtlPlugin from './plugins/rtlPlugin'
 
 import './styles/styles.scss'
 
 import * as Components from './components'
 import * as Directives from './directives'
-import type {ComponentType, DirectiveType} from './types/BootstrapVueOptions'
 import parseActiveImports from './utils/parseActiveImports'
 
 declare module '@vue/runtime-core' {
@@ -74,6 +78,7 @@ declare module '@vue/runtime-core' {
     BListGroup: typeof Components.BListGroup
     BListGroupItem: typeof Components.BListGroupItem
     BModal: typeof Components.BModal
+    BModalOrchestrator: typeof Components.BModalOrchestrator
     BNav: typeof Components.BNav
     BNavForm: typeof Components.BNavForm
     BNavText: typeof Components.BNavText
@@ -106,7 +111,7 @@ declare module '@vue/runtime-core' {
     BThead: typeof Components.BThead
     BTr: typeof Components.BTr
     BToast: typeof Components.BToast
-    BToaster: typeof Components.BToaster
+    BToastOrchestrator: typeof Components.BToastOrchestrator
     BTooltip: typeof Components.BTooltip
     BTabs: typeof Components.BTabs
     BTransition: typeof Components.BTransition
@@ -115,11 +120,12 @@ declare module '@vue/runtime-core' {
 
 // Main app plugin
 const plugin: Plugin = {
-  install(app: App, options: BootstrapVueOptions = {components: true, directives: true}) {
-    const selectedComponents =
-      typeof options.components === 'boolean' || typeof options.components === 'undefined'
-        ? {all: true}
-        : options.components
+  install(app, opts?: BootstrapVueOptions) {
+    const components = opts?.components ?? false
+    const directives = opts?.directives ?? false
+    const plugins = opts?.plugins
+
+    const selectedComponents = typeof components === 'boolean' ? {all: components} : components
 
     const componentKeys = Object.keys(Components) as unknown as ComponentType[]
     parseActiveImports(selectedComponents, componentKeys).forEach((name) => {
@@ -127,10 +133,7 @@ const plugin: Plugin = {
       app.component(name, component)
     })
 
-    const selectedDirectives =
-      typeof options?.directives === 'boolean' || typeof options.directives === 'undefined'
-        ? {all: true}
-        : options?.directives
+    const selectedDirectives = typeof directives === 'boolean' ? {all: directives} : directives
 
     const directiveKeys = Object.keys(Directives) as unknown as DirectiveType[]
     parseActiveImports(selectedDirectives, directiveKeys).forEach((name) => {
@@ -138,6 +141,22 @@ const plugin: Plugin = {
       const directive = Directives[name]
       app.directive(parsedName, directive)
     })
+
+    if (plugins?.breadcrumb ?? true === true) {
+      app.use(breadcrumbPlugin)
+    }
+    if (plugins?.modalController ?? true === true) {
+      app.use(modalControllerPlugin)
+    }
+    if (plugins?.modalManager ?? true === true) {
+      app.use(modalManagerPlugin)
+    }
+    if (plugins?.rtl ?? true === true) {
+      app.use(rtlPlugin, plugins)
+    }
+    if (plugins?.toast ?? true === true) {
+      app.use(toastPlugin)
+    }
   },
 }
 
@@ -152,5 +171,5 @@ export * as Utils from './utils/exports'
 export * from './types/exports'
 export * as Types from './types/exports'
 
-export {plugin as BootstrapVueNext}
+export {plugin as BootstrapVueNextPlugin}
 export default plugin

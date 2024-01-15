@@ -1,4 +1,4 @@
-import {defineNuxtModule, createResolver, addImports} from '@nuxt/kit'
+import {defineNuxtModule, createResolver, addImports, addPlugin} from '@nuxt/kit'
 import useComponents from './composables/useComponents'
 import type {ModuleOptions} from './types/ModuleOptions'
 import parseActiveImports from './utils/parseActiveImports'
@@ -18,12 +18,13 @@ export default defineNuxtModule<ModuleOptions>({
   },
   setup(options, nuxt) {
     // @ts-ignore
-    const resolver = createResolver(import.meta.url)
+    const {resolve} = createResolver(import.meta.url)
+    addPlugin(resolve('./runtime/plugins/bootstrapVueNextPlugin'))
 
     const normalizedComposableOptions =
       typeof options.composables === 'boolean' ? {all: options.composables} : options.composables
 
-    nuxt.options.build.transpile.push(resolver.resolve('./runtime'))
+    nuxt.options.build.transpile.push(resolve('./runtime'))
 
     const transformAssetUrls = {
       BImg: ['src'],

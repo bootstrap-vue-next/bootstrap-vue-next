@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import type {Booleanish, Breakpoint} from '../types'
+import type {Booleanish, Breakpoint, Numberish} from '../types'
 import {computed} from 'vue'
 import {useToNumber} from '@vueuse/core'
 import {useBooleanish} from '..//composables'
@@ -13,8 +13,8 @@ import {useBooleanish} from '..//composables'
 const props = withDefaults(
   defineProps<{
     fluid?: Booleanish | Breakpoint
-    gutterX?: string | number
-    gutterY?: string | number
+    gutterX?: Numberish
+    gutterY?: Numberish
     tag?: string
   }>(),
   {

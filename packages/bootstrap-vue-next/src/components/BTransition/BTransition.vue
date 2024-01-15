@@ -1,28 +1,50 @@
 <template>
-  <Transition v-bind="computedAttrs">
+  <Transition
+    v-bind="{...baseProperties, ...transProps}"
+    :appear="appearBoolean"
+    @after-appear="emit('after-appear', $event)"
+    @after-enter="emit('after-enter', $event)"
+    @after-leave="emit('after-leave', $event)"
+    @appear="emit('appear', $event)"
+    @before-appear="emit('before-appear', $event)"
+    @before-enter="emit('before-enter', $event)"
+    @before-leave="emit('before-leave', $event)"
+    @enter="emit('enter', $event)"
+    @appear-cancelled="emit('appear-cancelled', $event)"
+    @enter-cancelled="emit('enter-cancelled', $event)"
+    @leave="emit('leave', $event)"
+    @leave-cancelled="emit('leave-cancelled', $event)"
+  >
     <slot />
   </Transition>
 </template>
 
 <script setup lang="ts">
-import type {Booleanish, TransitionMode} from '../../types'
-import {computed, type TransitionProps} from 'vue'
+import type {BTransitionProps} from '../../types'
+import {computed} from 'vue'
 import {useBooleanish} from '../../composables'
 
-const props = withDefaults(
-  defineProps<{
-    appear?: Booleanish
-    mode?: TransitionMode
-    noFade?: Booleanish
-    transProps?: TransitionProps
-  }>(),
-  {
-    appear: false,
-    mode: undefined,
-    noFade: false,
-    transProps: undefined,
-  }
-)
+const props = withDefaults(defineProps<BTransitionProps>(), {
+  appear: false,
+  mode: undefined,
+  noFade: false,
+  transProps: undefined,
+})
+
+const emit = defineEmits<{
+  'after-appear': [value: Element]
+  'after-enter': [value: Element]
+  'after-leave': [value: Element]
+  'appear': [value: Element]
+  'before-appear': [value: Element]
+  'before-enter': [value: Element]
+  'before-leave': [value: Element]
+  'enter': [value: Element]
+  'appear-cancelled': [value: Element]
+  'enter-cancelled': [value: Element]
+  'leave': [value: Element]
+  'leave-cancelled': [value: Element]
+}>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -51,24 +73,6 @@ const fadeProperties = computed(() => {
 })
 
 const baseProperties = computed(() => ({mode: props.mode, css: true, ...fadeProperties.value}))
-
-const computedAttrs = computed(() =>
-  props.transProps !== undefined
-    ? {
-        // Order matters here since the props.transProps would get overwritten if it came first
-        // But the goal of props.transProps is to overwrite base properties
-        ...baseProperties.value,
-        ...props.transProps,
-      }
-    : appearBoolean.value
-      ? {
-          ...baseProperties.value,
-          appear: true,
-          appearActiveClass: fadeProperties.value.enterActiveClass,
-          appearToClass: fadeProperties.value.enterToClass,
-        }
-      : baseProperties.value
-)
 </script>
 
 <style lang="scss">

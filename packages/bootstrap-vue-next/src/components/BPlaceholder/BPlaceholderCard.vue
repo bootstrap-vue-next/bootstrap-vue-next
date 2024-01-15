@@ -50,7 +50,13 @@ import BCard from '../BCard/BCard.vue'
 import BCardImg from '../BCard/BCardImg.vue'
 import BPlaceholder from './BPlaceholder.vue'
 import BPlaceholderButton from './BPlaceholderButton.vue'
-import type {Booleanish, ColorVariant, PlaceholderAnimation, PlaceholderSize} from '../../types'
+import type {
+  Booleanish,
+  ColorVariant,
+  Numberish,
+  PlaceholderAnimation,
+  PlaceholderSize,
+} from '../../types'
 import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
 
@@ -60,14 +66,14 @@ const props = withDefaults(
     footerAnimation?: PlaceholderAnimation
     footerSize?: PlaceholderSize
     footerVariant?: ColorVariant | null
-    footerWidth?: string | number
+    footerWidth?: Numberish
     headerAnimation?: PlaceholderAnimation
     headerSize?: PlaceholderSize
     headerVariant?: ColorVariant | null
-    headerWidth?: string | number
+    headerWidth?: Numberish
     imgBlankColor?: string
     imgBottom?: Booleanish
-    imgHeight?: string | number
+    imgHeight?: Numberish
     imgSrc?: string
     noButton?: Booleanish
     noFooter?: Booleanish

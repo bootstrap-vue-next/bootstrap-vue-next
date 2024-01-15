@@ -9,6 +9,16 @@
     :field-column-class="getFieldColumnClasses"
     @head-clicked="onFieldHeadClick"
     @row-clicked="onRowClick"
+    @row-hovered="
+      (row, index, e) => {
+        emit('row-hovered', row, index, e)
+      }
+    "
+    @row-unhovered="
+      (row, index, e) => {
+        emit('row-unhovered', row, index, e)
+      }
+    "
   >
     <template v-for="(_, name) in $slots" #[name]="slotData">
       <slot :name="name" v-bind="slotData" />
@@ -71,9 +81,9 @@
   </BTableLite>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T = Record<string, unknown>">
 import {useToNumber, useVModel} from '@vueuse/core'
-import {computed, onMounted, ref, type StyleValue, toRef, watch} from 'vue'
+import {computed, onMounted, ref, type Ref, type StyleValue, toRef, watch} from 'vue'
 import {useBooleanish} from '../../composables'
 import type {
   Booleanish,
@@ -82,8 +92,9 @@ import type {
   BTableSortCompare,
   ColorVariant,
   LiteralUnion,
+  Numberish,
   TableField,
-  TableFieldObject,
+  TableFieldRaw,
   TableItem,
 } from '../../types'
 import BSpinner from '../BSpinner.vue'
@@ -99,9 +110,9 @@ type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
 const props = withDefaults(
   defineProps<
     {
-      provider?: BTableProvider
-      sortCompare?: BTableSortCompare
-      noProvider?: NoProviderTypes[]
+      provider?: BTableProvider<T>
+      sortCompare?: BTableSortCompare<T>
+      noProvider?: readonly NoProviderTypes[]
       noProviderPaging?: Booleanish
       noProviderSorting?: Booleanish
       noProviderFiltering?: Booleanish
@@ -114,10 +125,10 @@ const props = withDefaults(
       selectionVariant?: ColorVariant | null
       busy?: Booleanish
       busyLoadingText?: string
-      perPage?: number | string
-      currentPage?: number | string
+      perPage?: Numberish
+      currentPage?: Numberish
       filter?: string
-      filterable?: string[]
+      filterable?: readonly string[]
       // TODO
       // apiUrl?: string
       // filterFunction?: () => any
@@ -130,7 +141,7 @@ const props = withDefaults(
       // labelSortDesc?: string
       // noFooterSorting?: Booleanish
       // noLocalSorting?: Booleanish
-      // noSelectOnClick?: Booleanish
+      noSelectOnClick?: Booleanish
       // noSortReset?: Booleanish
       // selectedVariant?: ColorVariant | null
       // showEmpty?: Booleanish
@@ -139,9 +150,9 @@ const props = withDefaults(
       // sortDirection?: 'asc' | 'desc' | 'last'
       // sortIconLeft?: Booleanish
       // sortNullLast?: Booleanish
-      selectedItems?: TableItem[]
+      selectedItems?: readonly TableItem<T>[]
       noSortableIcon?: Booleanish
-    } & Omit<BTableLiteProps, 'tableClass'>
+    } & Omit<BTableLiteProps<T>, 'tableClass'>
   >(),
   {
     sortCompareLocale: undefined,
@@ -157,6 +168,7 @@ const props = withDefaults(
     noProviderPaging: false,
     noProviderSorting: false,
     noProviderFiltering: false,
+    noSelectOnClick: false,
     sortDesc: false,
     selectable: false,
     stickySelect: false,
@@ -218,23 +230,23 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  'filtered': [value: TableItem[]]
+  'filtered': [value: TableItem<T>[]]
   'head-clicked': [
-    key: TableFieldObject['key'],
-    field: TableField,
+    key: TableField<T>['key'],
+    field: TableFieldRaw<T>,
     event: MouseEvent,
     isFooter: boolean,
   ]
-  'row-clicked': [item: TableItem, index: number, event: MouseEvent]
-  'row-dbl-clicked': [item: TableItem, index: number, event: MouseEvent]
-  'row-hovered': [item: TableItem, index: number, event: MouseEvent]
-  'row-selected': [value: TableItem]
-  'row-unhovered': [item: TableItem, index: number, event: MouseEvent]
-  'row-unselected': [value: TableItem]
-  'selection': [value: TableItem[]]
+  'row-clicked': [item: TableItem<T>, index: number, event: MouseEvent]
+  'row-dbl-clicked': [item: TableItem<T>, index: number, event: MouseEvent]
+  'row-hovered': [item: TableItem<T>, index: number, event: MouseEvent]
+  'row-selected': [value: TableItem<T>]
+  'row-unhovered': [item: TableItem<T>, index: number, event: MouseEvent]
+  'row-unselected': [value: TableItem<T>]
+  'selection': [value: TableItem<T>[]]
   'sorted': [sortBy: string, isDesc: boolean]
   'update:busy': [value: boolean]
-  'update:selectedItems': [value: TableItem[]]
+  'update:selectedItems': [value: TableItem<T>[]]
   'update:sortDesc': [value: boolean]
   'update:sortBy': [value: string]
 }>()
@@ -242,7 +254,9 @@ const emit = defineEmits<{
 const sortByModel = useVModel(props, 'sortBy', emit, {passive: true})
 const busyModel = useVModel(props, 'busy', emit, {passive: true})
 const sortDescModel = useVModel(props, 'sortDesc', emit, {passive: true})
-const selectedItemsModel = useVModel(props, 'selectedItems', emit, {passive: true})
+const selectedItemsModel = useVModel(props, 'selectedItems', emit, {
+  passive: true,
+}) as Ref<TableItem<T>[]>
 
 const selectedItemsToSet = computed({
   get: () => new Set([...selectedItemsModel.value]),
@@ -255,7 +269,7 @@ const selectedItemsToSet = computed({
  * The utils also conveniently emit the proper events after
  */
 const selectedItemsSetUtilities = {
-  add: (item: TableItem) => {
+  add: (item: Readonly<TableItem<T>>) => {
     const value = new Set(selectedItemsToSet.value)
     value.add(item)
     selectedItemsToSet.value = value
@@ -265,9 +279,8 @@ const selectedItemsSetUtilities = {
     selectedItemsToSet.value.forEach((item) => {
       emit('row-unselected', item)
     })
-    selectedItemsToSet.value = new Set()
   },
-  delete: (item: TableItem) => {
+  delete: (item: Readonly<TableItem<T>>) => {
     const value = new Set(selectedItemsToSet.value)
     value.delete(item)
     selectedItemsToSet.value = value
@@ -281,13 +294,13 @@ const selectedItemsSetUtilities = {
   For some reason, the reference of the object gets lost. However, when you use an actual ref(), it works just fine
   Getting the reference properly will fix all outstanding issues
   */
-  has: (item: TableItem) => selectedItemsToSet.value.has(item),
+  has: (item: Readonly<TableItem<T>>) => selectedItemsToSet.value.has(item),
 } as const
 
 /**
  * Only stores data that is fetched when using the provider
  */
-const internalItems = ref<TableItem[]>([])
+const internalItems = ref<TableItem<T>[]>([]) as Ref<TableItem<T>[]>
 
 const sortDescBoolean = useBooleanish(sortDescModel)
 const busyBoolean = useBooleanish(busyModel)
@@ -296,6 +309,7 @@ const noProviderSortingBoolean = useBooleanish(() => props.noProviderSorting)
 const noProviderFilteringBoolean = useBooleanish(() => props.noProviderFiltering)
 const selectableBoolean = useBooleanish(() => props.selectable)
 const noSortableIconBoolean = useBooleanish(() => props.noSortableIcon)
+const noSelectOnClickBoolean = useBooleanish(() => props.noSelectOnClick)
 
 const perPageNumber = useToNumber(() => props.perPage, {method: 'parseInt'})
 const currentPageNumber = useToNumber(() => props.currentPage, {method: 'parseInt'})
@@ -310,7 +324,7 @@ const isSortable = computed(
     props.fields.some((field) => (typeof field === 'string' ? false : field.sortable))
 )
 
-const computedFields = computed<TableField[]>(() =>
+const computedFields = computed<TableFieldRaw<T>[]>(() =>
   props.fields.map((el) =>
     typeof el === 'string'
       ? el
@@ -321,10 +335,10 @@ const computedFields = computed<TableField[]>(() =>
               isSortable.value === false
                 ? undefined
                 : sortByModel.value !== el.key
-                ? 'none'
-                : sortDescBoolean.value === true
-                ? 'descending'
-                : 'ascending',
+                  ? 'none'
+                  : sortDescBoolean.value === true
+                    ? 'descending'
+                    : 'ascending',
             ...el.thAttr,
           },
         }
@@ -344,7 +358,7 @@ const getBusyRowClasses = computed(() => [
       : props.tbodyTrClass
     : null,
 ])
-const getFieldColumnClasses = (field: TableFieldObject) => [
+const getFieldColumnClasses = (field: Readonly<TableField<T>>) => [
   {
     'b-table-sortable-column': isSortable.value && field.sortable,
   },
@@ -353,7 +367,7 @@ const getFieldColumnClasses = (field: TableFieldObject) => [
 // Also the row should technically have aria-selected . Both things could probably just use a function with tbodyTrAttrs
 // But functional tbodyTrAttrs are not supported yet
 // Also the stuff for resolving functions could probably be made a util
-const getRowClasses = (item: TableItem | null, type: string) => [
+const getRowClasses = (item: Readonly<TableItem<T>> | null, type: string) => [
   {
     [`selected table-${props.selectionVariant}`]:
       selectableBoolean.value && item && selectedItemsSetUtilities.has(item),
@@ -364,11 +378,11 @@ const getRowClasses = (item: TableItem | null, type: string) => [
       : props.tbodyTrClass
     : null,
 ]
-const getIconStyle = (field: TableFieldObject): StyleValue =>
+const getIconStyle = (field: Readonly<TableField<T>>): StyleValue =>
   sortByModel.value !== field.key ? {opacity: 0.5} : {}
 
-const computedItems = computed<TableItem[]>(() => {
-  const sortItems = (items: TableItem[]) => {
+const computedItems = computed<readonly TableItem<T>[]>(() => {
+  const sortItems = (items: readonly TableItem<T>[]) => {
     const sortKey = sortByModel.value
 
     if (sortKey === undefined) {
@@ -392,15 +406,15 @@ const computedItems = computed<TableItem[]>(() => {
       const realVal = (ob: unknown): string =>
         typeof ob === 'object' && ob !== null ? JSON.stringify(ob) : ob?.toString() ?? ''
 
-      return realVal(a[sortKey]).localeCompare(
-        realVal(b[sortKey]),
+      return realVal(a[sortKey as keyof T]).localeCompare(
+        realVal(b[sortKey as keyof T]),
         props.sortCompareLocale,
         props.sortCompareOptions
       )
     })
   }
 
-  const filterItems = (items: TableItem[]) =>
+  const filterItems = (items: readonly TableItem<T>[]) =>
     items.filter((item) =>
       Object.entries(item).some(([key, val]) => {
         if (
@@ -445,7 +459,7 @@ const computedItems = computed<TableItem[]>(() => {
 //     pageSize: () => perPageNumber.value || Infinity,
 //   })
 
-const computedDisplayItems = computed<TableItem[]>(() => {
+const computedDisplayItems = computed<readonly TableItem<T>[]>(() => {
   if (Number.isNaN(perPageNumber.value) || (usesProvider.value && !noProviderPagingBoolean.value)) {
     return computedItems.value
   }
@@ -457,7 +471,7 @@ const computedDisplayItems = computed<TableItem[]>(() => {
 })
 
 const handleRowSelection = (
-  row: TableItem,
+  row: Readonly<TableItem<T>>,
   index: number,
   shiftClicked = false,
   ctrlClicked = false,
@@ -509,15 +523,17 @@ const handleRowSelection = (
   notifySelectionEvent()
 }
 
-const onRowClick = (row: TableItem, index: number, e: MouseEvent) => {
-  handleRowSelection(row, index, e.shiftKey, e.ctrlKey, e.metaKey)
+const onRowClick = (row: Readonly<TableItem<T>>, index: number, e: MouseEvent) => {
+  if (noSelectOnClickBoolean.value === false) {
+    handleRowSelection(row, index, e.shiftKey, e.ctrlKey, e.metaKey)
+  }
   emit('row-clicked', row, index, e)
 }
 
-const handleFieldSorting = (field: TableField) => {
+const handleFieldSorting = (field: Readonly<TableFieldRaw<T>>) => {
   if (!isSortable.value) return
 
-  const fieldKey = typeof field === 'string' ? field : field.key
+  const fieldKey = (typeof field === 'string' ? field : field.key) as string
   const fieldSortable = typeof field === 'string' ? false : field.sortable
 
   if (!(isSortable.value === true && fieldSortable === true)) return
@@ -537,9 +553,9 @@ const handleFieldSorting = (field: TableField) => {
 }
 
 const onFieldHeadClick = (
-  fieldKey: LiteralUnion<string>,
-  field: TableField,
-  event: MouseEvent,
+  fieldKey: LiteralUnion<keyof T>,
+  field: Readonly<TableFieldRaw<T>>,
+  event: Readonly<MouseEvent>,
   isFooter = false
 ) => {
   emit('head-clicked', fieldKey, field, event, isFooter)
@@ -592,7 +608,7 @@ const providerPropsWatch = async (prop: string, val: unknown, oldVal: unknown) =
   }
 
   if (!(prop === 'currentPage' || prop === 'perPage')) {
-    emit('filtered', computedItems.value)
+    emit('filtered', [...computedItems.value])
   }
 }
 
@@ -603,7 +619,7 @@ watch(
 
     if (filter === oldFilter || usesProvider.value) return
     if (!filter) {
-      emit('filtered', computedItems.value)
+      emit('filtered', [...computedItems.value])
     }
   }
 )

@@ -8,7 +8,7 @@ export interface ColorModeOptions extends UseColorModeOptions {
   persist?: boolean
 }
 
-export default (opts: ColorModeOptions = {}) => {
+export default (opts: Readonly<ColorModeOptions> = {}) => {
   const persist = opts.persist ?? false
   const attribute = 'data-bs-theme'
   const selector = 'body'

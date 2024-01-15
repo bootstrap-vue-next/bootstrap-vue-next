@@ -3,17 +3,10 @@ import {useAriaInvalid, useBooleanish, useId, useStateClass} from '../../composa
 import {RX_SPACE_SPLIT} from '../../constants/regex'
 import {
   attemptFocus,
-  cssEscape,
-  getAttr,
   getId,
   IS_BROWSER,
   isVisible,
   normalizeSlot,
-  removeAttr,
-  select,
-  selectAll,
-  setAttr,
-  stringToInteger,
   suffixPropName,
 } from '../../utils'
 import {computed, defineComponent, h, nextTick, onMounted, type PropType, ref, watch} from 'vue'
@@ -109,7 +102,8 @@ export default defineComponent({
 
         if (!(typeof propValue === 'boolean') && propValue !== 'auto') {
           // Convert to column size to number
-          propValue = stringToInteger(propValue, 0)
+          const val = Number.parseInt(propValue)
+          propValue = Number.isNaN(val) ? 0 : val
           // Ensure column size is greater than `0`
           propValue = propValue > 0 ? propValue : false
         }
@@ -137,7 +131,7 @@ export default defineComponent({
     const updateAriaDescribedby = (newValue: string | null, oldValue: string | null = null) => {
       if (IS_BROWSER && props.labelFor && content.value !== null) {
         // We need to escape `labelFor` since it can be user-provided
-        const $input = select(`#${cssEscape(props.labelFor)}`, content.value)
+        const $input = content.value.querySelector(`#${CSS.escape(props.labelFor)}`)
         if ($input) {
           const attr = 'aria-describedby'
           const newIds = (newValue || '').split(RX_SPACE_SPLIT)
@@ -145,7 +139,7 @@ export default defineComponent({
 
           // Update Id list, preserving any original Ids
           // and ensuring the Id's are unique
-          const ids = (getAttr($input, attr) || '')
+          const ids = ($input.getAttribute(attr) || '')
             .split(RX_SPACE_SPLIT)
             .filter((id) => !oldIds.includes(id))
             .concat(newIds)
@@ -155,9 +149,9 @@ export default defineComponent({
             .trim()
 
           if (ids) {
-            setAttr($input, attr, ids)
+            $input.setAttribute(attr, ids)
           } else {
-            removeAttr($input, attr)
+            $input.removeAttribute(attr)
           }
         }
       }
@@ -194,7 +188,7 @@ export default defineComponent({
       })
     })
 
-    const onLegendClick = (event: MouseEvent) => {
+    const onLegendClick = (event: Readonly<MouseEvent>) => {
       // Don't do anything if `labelFor` is set
       if (props.labelFor || content.value === null) return
 
@@ -206,9 +200,10 @@ export default defineComponent({
       if (LEGEND_INTERACTIVE_ELEMENTS.indexOf(tagName) !== -1) return
 
       // If only a single input, focus it, emulating label behaviour
-      const inputs = selectAll(INPUT_SELECTOR, content.value).filter(isVisible)
-      if (inputs.length === 1) {
-        attemptFocus(inputs[0])
+      const inputs = [...content.value.querySelectorAll(INPUT_SELECTOR)].filter(isVisible)
+      const [inp] = inputs
+      if (inputs.length === 1 && inp instanceof HTMLElement) {
+        attemptFocus(inp)
       }
     }
 

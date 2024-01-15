@@ -1,42 +1,60 @@
 <template>
-  <Teleport :to="teleportTo" :disabled="teleportDisabledBoolean || responsive !== undefined">
-    <div
-      :id="computedId"
-      ref="element"
-      aria-modal="true"
-      role="dialog"
-      :class="computedClasses"
-      tabindex="-1"
-      :aria-labelledby="`${computedId}-offcanvas-label`"
-      v-bind="$attrs"
+  <Teleport :to="teleportTo" :disabled="teleportDisabledBoolean">
+    <BTransition
+      :no-fade="true"
+      :trans-props="{
+        enterToClass: 'showing',
+        enterFromClass: '',
+        leaveToClass: 'hiding show',
+        leaveFromClass: 'show',
+      }"
+      @before-enter="OnBeforeEnter"
+      @after-enter="OnAfterEnter"
+      @leave="onLeave"
+      @after-leave="OnAfterLeave"
     >
-      <div v-if="!noHeaderBoolean" class="offcanvas-header" :class="headerClass">
-        <slot name="header" :visible="isActive" :placement="placement" :hide="hide">
-          <h5 :id="`${computedId}-offcanvas-label`" class="offcanvas-title">
-            <slot name="title" :visible="isActive" :placement="placement" :hide="hide">
-              {{ title }}
+      <div
+        v-show="modelValue"
+        :id="computedId"
+        ref="element"
+        aria-modal="true"
+        role="dialog"
+        :class="computedClasses"
+        tabindex="-1"
+        :aria-labelledby="`${computedId}-offcanvas-label`"
+        data-bs-backdrop="false"
+        v-bind="$attrs"
+      >
+        <template v-if="lazyShowing">
+          <div v-if="!noHeaderBoolean" class="offcanvas-header" :class="headerClass">
+            <slot name="header" v-bind="sharedSlots">
+              <h5 :id="`${computedId}-offcanvas-label`" class="offcanvas-title">
+                <slot name="title" v-bind="sharedSlots">
+                  {{ title }}
+                </slot>
+              </h5>
+              <template v-if="!noHeaderCloseBoolean">
+                <BButton v-if="hasHeaderCloseSlot" v-bind="headerCloseAttrs" @click="hide('close')">
+                  <slot name="header-close" />
+                </BButton>
+                <BCloseButton
+                  v-else
+                  :aria-label="headerCloseLabel"
+                  v-bind="headerCloseAttrs"
+                  @click="hide('close')"
+                />
+              </template>
             </slot>
-          </h5>
-          <template v-if="!noHeaderCloseBoolean">
-            <BButton v-if="hasHeaderCloseSlot" v-bind="headerCloseAttrs" @click="hide('close')">
-              <slot name="header-close" />
-            </BButton>
-            <BCloseButton
-              v-else
-              :aria-label="headerCloseLabel"
-              v-bind="headerCloseAttrs"
-              @click="hide('close')"
-            />
-          </template>
-        </slot>
+          </div>
+          <div class="offcanvas-body" :class="bodyClass">
+            <slot v-bind="sharedSlots" />
+          </div>
+          <div v-if="hasFooterSlot" :class="footerClass">
+            <slot name="footer" v-bind="sharedSlots" />
+          </div>
+        </template>
       </div>
-      <div class="offcanvas-body" :class="bodyClass">
-        <slot :visible="isActive" :placement="placement" :hide="hide" />
-      </div>
-      <div v-if="hasFooterSlot" :class="footerClass">
-        <slot name="footer" :visible="isActive" :placement="placement" :hide="hide" />
-      </div>
-    </div>
+    </BTransition>
     <slot name="backdrop">
       <BOverlay
         :variant="backdropVariant"
@@ -51,21 +69,23 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, ref, type RendererElement, toRef, watch} from 'vue'
-import {
-  breakpointsBootstrapV5,
-  onKeyStroke,
-  useBreakpoints,
-  useEventListener,
-  useFocus,
-  useVModel,
-} from '@vueuse/core'
-import {useBooleanish, useId, useManualTransition, useSafeScrollLock} from '../../composables'
-import type {Booleanish, Breakpoint, ButtonVariant, ClassValue, ColorVariant} from '../../types'
+import {computed, nextTick, ref, type RendererElement, toRef} from 'vue'
+import {onKeyStroke, useEventListener, useFocus, useVModel} from '@vueuse/core'
+import {useBooleanish, useId, useSafeScrollLock} from '../../composables'
+import type {Booleanish, ButtonVariant, ClassValue, ColorVariant} from '../../types'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
 import BOverlay from '../BOverlay/BOverlay.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
+import BTransition from '../BTransition/BTransition.vue'
 import BButton from '../BButton/BButton.vue'
+
+// TODO once the responsive stuff may be implemented correctly,
+// What needs to occur is a fixing of the "body scrolling".
+// If the offcanvas is on the screen on a large screen, body scrolling is not disabled
+// Even though the modelValue is true
+// When it's a small screen and close, it works, as normal,
+// But then when it opens up on a small screen, it must disable again
+// This is implemented on Layout.vue, but is not officially supported.
 
 defineOptions({
   inheritAttrs: false,
@@ -83,6 +103,7 @@ const props = withDefaults(
     headerCloseLabel?: string
     headerCloseVariant?: ButtonVariant | null
     id?: string
+    lazy?: Booleanish
     modelValue?: Booleanish
     noCloseOnBackdrop?: Booleanish
     noCloseOnEsc?: Booleanish
@@ -96,7 +117,8 @@ const props = withDefaults(
     teleportDisabled?: Booleanish
     teleportTo?: string | RendererElement | null | undefined
     title?: string
-    responsive?: Breakpoint
+    // responsive?: Breakpoint
+    // TODO responsive doesn't work
   }>(),
   {
     backdrop: true,
@@ -109,6 +131,7 @@ const props = withDefaults(
     headerCloseLabel: 'Close',
     headerCloseVariant: 'secondary',
     id: undefined,
+    lazy: false,
     modelValue: false,
     noCloseOnBackdrop: false,
     noCloseOnEsc: false,
@@ -119,7 +142,6 @@ const props = withDefaults(
     teleportDisabled: false,
     teleportTo: 'body',
     title: undefined,
-    responsive: undefined,
   }
 )
 
@@ -135,35 +157,25 @@ const emit = defineEmits<{
   'update:modelValue': [value: boolean]
 }>()
 
+type SharedSlotsData = {
+  visible: boolean
+  placement: 'top' | 'bottom' | 'start' | 'end'
+  hide: (trigger?: string) => void
+}
+
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'backdrop'?: (props: Record<string, never>) => any
-  'default'?: (props: {
-    visible: boolean
-    placement: 'top' | 'bottom' | 'start' | 'end'
-    hide: (trigger?: string) => void
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  'footer'?: (props: {
-    visible: boolean
-    placement: 'top' | 'bottom' | 'start' | 'end'
-    hide: (trigger?: string) => void
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  'header'?: (props: {
-    visible: boolean
-    placement: 'top' | 'bottom' | 'start' | 'end'
-    hide: (trigger?: string) => void
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'default'?: (props: SharedSlotsData) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'footer'?: (props: SharedSlotsData) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'header'?: (props: SharedSlotsData) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'header-close'?: (props: Record<string, never>) => any
-  'title'?: (props: {
-    visible: boolean
-    placement: 'top' | 'bottom' | 'start' | 'end'
-    hide: (trigger?: string) => void
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'title'?: (props: SharedSlotsData) => any
 }>()
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
@@ -176,34 +188,13 @@ const noHeaderBoolean = useBooleanish(() => props.noHeader)
 const noFocusBoolean = useBooleanish(() => props.noFocus)
 const noCloseOnBackdropBoolean = useBooleanish(() => props.noCloseOnBackdrop)
 const noCloseOnEscBoolean = useBooleanish(() => props.noCloseOnEsc)
+const lazyBoolean = useBooleanish(() => props.lazy)
 const teleportDisabledBoolean = useBooleanish(() => props.teleportDisabled)
-
-const element = ref<HTMLElement | null>(null)
 
 const computedId = useId(() => props.id, 'offcanvas')
 useSafeScrollLock(modelValueBoolean, bodyScrollingBoolean)
-const {greaterOrEqual} = useBreakpoints(breakpointsBootstrapV5)
 
-// TODO changing responsive in real time will break it, this is NOT a getter function https://github.com/vueuse/vueuse/issues/3587
-// Make sure when you use this function that you check to see if props.responsive is undefined, otherwise things may work incorrectly
-const isGreaterThanBreakpoint = greaterOrEqual(props.responsive ?? 'sm')
-
-// We want to manually handle transitions because the actual showing of the element is handled by Bootstrap
-// If we were to use the built-in Transition, we'd have to do v-if/v-show, which conflicts with it being responsive
-const {endTransition, startTransition} = useManualTransition(element, 'show showing', 'show hiding')
-
-const isActive = ref(modelValueBoolean.value)
-const isTransitioning = ref(false)
-
-onMounted(() => {
-  watch(isGreaterThanBreakpoint, (newValue) => {
-    if (props.responsive === undefined || modelValueBoolean.value === false || newValue === false)
-      return
-    // We want to force the modelvalue to false to turn off the open offcanvas
-    modelValue.value = false
-    isActive.value = false
-  })
-})
+const element = ref<HTMLElement | null>(null)
 
 onKeyStroke(
   'Escape',
@@ -217,23 +208,17 @@ const {focused} = useFocus(element, {
   initialValue: modelValueBoolean.value && noFocusBoolean.value === false,
 })
 
-const focus = () => {
-  if (noFocusBoolean.value === false) {
-    focused.value = true
-  }
-}
-
-// TODO if a value is open while breakpoint is true the backdrop still opens -- as the modelValue is true, but the show() isn't triggered
-// Somehow the modelValue should be reset back to false during this phase. It would only occur if the downstream dev allows this
-// In reality, they should not allow you to open a offcanvas while the breakpoint is over
-// However, when trying to reset it back to false if the breakpoint is higher, it kind of breaks
-// TODO there also exists an issue when you're changing modelValue to quickly
-watch(modelValueBoolean, (newValue) => {
-  if (props.responsive !== undefined && isGreaterThanBreakpoint.value === true) return
-  !newValue ? hide() : show()
-})
+const isActive = ref(modelValueBoolean.value)
+const lazyLoadCompleted = ref(false)
 
 const showBackdrop = toRef(() => backdropBoolean.value === true && modelValueBoolean.value === true)
+
+const lazyShowing = toRef(
+  () =>
+    lazyBoolean.value === false ||
+    (lazyBoolean.value === true && lazyLoadCompleted.value === true) ||
+    (lazyBoolean.value === true && modelValueBoolean.value === true)
+)
 
 const hasHeaderCloseSlot = toRef(() => !isEmptySlot(slots['header-close']))
 const headerCloseClasses = computed(() => [
@@ -247,12 +232,19 @@ const headerCloseAttrs = computed(() => ({
 
 const hasFooterSlot = toRef(() => !isEmptySlot(slots.footer))
 const computedClasses = computed(() => [
-  props.responsive === undefined ? 'offcanvas' : `offcanvas-${props.responsive}`,
+  // props.responsive === undefined ? 'offcanvas' : `offcanvas-${props.responsive}`,
+  'offcanvas', // Remove when above check is fixed
   `offcanvas-${props.placement}`,
   {
-    show: isActive.value,
+    show: modelValueBoolean.value && isActive.value === true,
   },
 ])
+
+const sharedSlots = computed<SharedSlotsData>(() => ({
+  visible: modelValueBoolean.value,
+  placement: props.placement,
+  hide,
+}))
 
 const buildTriggerableEvent = (
   type: string,
@@ -268,7 +260,6 @@ const buildTriggerableEvent = (
   })
 
 const hide = (trigger = '') => {
-  isTransitioning.value = true
   if (
     (trigger === 'backdrop' && noCloseOnBackdropBoolean.value) ||
     (trigger === 'esc' && noCloseOnEscBoolean.value)
@@ -292,17 +283,10 @@ const hide = (trigger = '') => {
     return
   }
 
-  endTransition(() => {
-    // TODO When hidden by the v-model (modelValue.value = false, from above) the transition ends rather quickly. Not sure why
-    isTransitioning.value = false
-    isActive.value = false
-    if (modelValueBoolean.value === false) return
-    modelValue.value = false
-  })
+  modelValue.value = false
 }
 
 const show = () => {
-  isTransitioning.value = true
   const event = buildTriggerableEvent('show', {cancelable: true})
   emit('show', event)
   if (event.defaultPrevented) {
@@ -310,32 +294,37 @@ const show = () => {
     emit('show-prevented')
     return
   }
+  modelValue.value = true
+}
 
-  startTransition(() => {
-    isTransitioning.value = false
-    isActive.value = true
-    if (modelValueBoolean.value === true) return
-    focus()
-    modelValue.value = true
+const focus = () => {
+  nextTick(() => {
+    if (noFocusBoolean.value === false) {
+      focused.value = true
+    }
   })
 }
 
+const OnBeforeEnter = () => show()
+const OnAfterEnter = () => {
+  isActive.value = true
+  focus()
+  emit('shown', buildTriggerableEvent('shown'))
+  if (lazyBoolean.value === true) lazyLoadCompleted.value = true
+}
+const onLeave = () => {
+  isActive.value = false
+}
+const OnAfterLeave = () => {
+  emit('hidden', buildTriggerableEvent('hidden'))
+  if (lazyBoolean.value === true) lazyLoadCompleted.value = false
+}
 useEventListener(element, 'bv-toggle', () => {
-  if (modelValueBoolean.value === true) {
-    modelValue.value = false
-    return
-  }
-  modelValue.value = true
+  modelValueBoolean.value ? hide() : show()
 })
 
 defineExpose({
-  // These can't use the pure show/hide functions. Doing so would cause the method to be run twice with the watcher
-  // ^ possibly a TODO ? Is there a structural way to fix that?
-  hide: () => {
-    modelValue.value = false
-  },
-  show: () => {
-    modelValue.value = true
-  },
+  hide,
+  show,
 })
 </script>

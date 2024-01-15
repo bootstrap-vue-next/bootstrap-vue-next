@@ -30,7 +30,7 @@ const props = withDefaults(
     {
       ariaCurrent?: string
       text?: string
-    } & Omit<BLinkProps, 'event' | 'routerTag'>
+    } & Omit<BLinkProps, 'routerTag'>
   >(),
   {
     ariaCurrent: 'location',
@@ -41,7 +41,6 @@ const props = withDefaults(
     activeClass: undefined,
     append: undefined,
     disabled: undefined,
-    event: undefined,
     exactActiveClass: undefined,
     href: undefined,
     icon: undefined,
@@ -104,7 +103,7 @@ const computedLinkProps = computed(() =>
     : {}
 )
 
-const clicked = (e: MouseEvent): void => {
+const clicked = (e: Readonly<MouseEvent>): void => {
   if (disabledBoolean.value || activeBoolean.value) {
     e.preventDefault()
     e.stopImmediatePropagation()

@@ -36,6 +36,12 @@ export default {
           default: false,
         },
         {
+          prop: 'noSelectOnClick',
+          type: 'Booleanish',
+          default: false,
+          description: 'Do not select row when clicked',
+        },
+        {
           prop: 'sortBy',
           type: 'string',
           default: undefined,
@@ -112,7 +118,7 @@ export default {
             {
               arg: 'key',
               description: '',
-              type: 'TableFieldObject<Record<string, unknown>>.key: LiteralUnion<string, string>',
+              type: 'TableField<Record<string, unknown>>.key: LiteralUnion<string, string>',
             },
             {
               arg: 'field',
@@ -397,7 +403,7 @@ export default {
         },
         {
           prop: 'fieldColumnClass',
-          type: '(field: TableFieldObject) => Record<string, any>[]',
+          type: '(field: TableField) => Record<string, any>[]',
           default: undefined,
         },
         {
