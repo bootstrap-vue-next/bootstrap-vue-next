@@ -359,7 +359,7 @@ Alternatively the ESM package is available as well
 
 ```html
 <script type="module">
-import bootstrapVueNext from 'https://cdn.jsdelivr.net/npm/bootstrap-vue-next@{{version}}/+esm'
+  import bootstrapVueNext from 'https://cdn.jsdelivr.net/npm/bootstrap-vue-next@{{version}}/+esm'
 </script>
 ```
 

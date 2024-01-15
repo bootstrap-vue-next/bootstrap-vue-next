@@ -105,6 +105,7 @@
 
 <script setup lang="ts">
 import {computed, type CSSProperties, ref, toRef, watch} from 'vue'
+import {onKeyStroke, useEventListener, useFocus, useVModel} from '@vueuse/core'
 import {
   useBooleanish,
   useColorVariantClasses,
@@ -112,13 +113,12 @@ import {
   useModalManager,
   useSafeScrollLock,
 } from '../../composables'
-import {onKeyStroke, useEventListener, useFocus, useVModel} from '@vueuse/core'
 import type {BModalProps} from '../../types'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
-import BTransition from '../BTransition/BTransition.vue'
 import BOverlay from '../BOverlay/BOverlay.vue'
+import BTransition from '../BTransition/BTransition.vue'
 
 defineOptions({
   inheritAttrs: false,
@@ -425,6 +425,8 @@ const hideFn = (trigger = '') => {
 // TODO: If a show is prevented, it will briefly show the animation. This is a bug
 // I'm not sure how to wait for the event to be determined. Before showing
 const showFn = () => {
+  if (isActive.value) return
+
   const event = buildTriggerableEvent('show', {cancelable: true})
   emit('show', event)
   if (event.defaultPrevented) {
