@@ -9,9 +9,13 @@
     <ReusableButtuon.define v-slot="{button, li, text, clickHandler}">
       <li v-bind="li">
         <component v-bind="button" :is="button.is" @click="clickHandler">
-          <slot :name="text.name">
+          <!-- If "text.name" does not exist, it is not a slot value -->
+          <slot v-if="text.name !== undefined" :name="text.name">
             {{ text.value }}
           </slot>
+          <template v-else>
+            {{ text.value }}
+          </template>
         </component>
       </li>
     </ReusableButtuon.define>
@@ -30,6 +34,16 @@
       v-bind="firstButtonProps"
     />
     <ReusableButtuon.reuse v-bind="prevButtonProps" />
+
+    <!-- <ReusableButtuon.reuse
+      v-if="
+        !hideGotoEndButtonsBoolean &&
+        firstNumberBoolean &&
+        modelValue !== 1 &&
+        !firstpageIncludedInList
+      "
+      v-bind="firstTextButtonProps"
+    /> -->
 
     <ReusableEllipsis.reuse v-if="showFirstDots" />
 
@@ -79,6 +93,16 @@
 
     <ReusableEllipsis.reuse v-if="showLastDots" />
 
+    <!-- <ReusableButtuon.reuse
+      v-if="
+        !hideGotoEndButtonsBoolean &&
+        lastNumberBoolean &&
+        modelValue !== numberOfPages &&
+        !lastPageIncludedInList
+      "
+      v-bind="lastEndTextButtonProps"
+    /> -->
+
     <ReusableButtuon.reuse v-bind="nextButtonProps" />
     <ReusableButtuon.reuse
       v-if="!lastNumberBoolean && !hideGotoEndButtonsBoolean"
@@ -118,7 +142,7 @@ const props = withDefaults(
     lastClass?: ClassValue
     lastNumber?: Booleanish
     lastText?: string
-    limit?: number
+    limit?: Numberish
     modelValue?: Numberish
     nextClass?: ClassValue
     nextText?: string
@@ -178,6 +202,7 @@ const hideGotoEndButtonsBoolean = useBooleanish(() => props.hideGotoEndButtons)
 const lastNumberBoolean = useBooleanish(() => props.lastNumber)
 const pillsBoolean = useBooleanish(() => props.pills)
 
+const limitNumber = useToNumber(() => props.limit, {nanToZero: true, method: 'parseInt'})
 const perPageNumber = useToNumber(() => props.perPage, {nanToZero: true, method: 'parseInt'})
 const totalRowsNumber = useToNumber(() => props.totalRows, {nanToZero: true, method: 'parseInt'})
 const modelValueNumber = useToNumber(modelValue, {nanToZero: true, method: 'parseInt'})
@@ -216,7 +241,7 @@ const getEndButtonProps = ({
 }: {
   dis: boolean
   classVal: ClassValue
-  text: Readonly<{name: string; value: string}>
+  text: Readonly<{name?: string; value: string}>
   clickHandler: (e: Readonly<MouseEvent>, val: number) => void
 }) => ({
   li: {
@@ -249,7 +274,6 @@ const firstButtonProps = computed(() =>
     dis: firstDisabled.value,
     classVal: props.firstClass,
     text: {
-      name: 'first-text',
       value: props.firstText,
     },
     clickHandler: (e: MouseEvent) => pageClick(e, 1),
@@ -311,7 +335,7 @@ const startNumber = computed(() => {
   let lStartNumber: number
   const pagesLeft: number = numberOfPages.value - modelValueNumber.value
 
-  if (pagesLeft + 2 < props.limit && props.limit > ELLIPSIS_THRESHOLD) {
+  if (pagesLeft + 2 < limitNumber.value && limitNumber.value > ELLIPSIS_THRESHOLD) {
     lStartNumber = numberOfPages.value - numberOfLinks.value + 1
   } else {
     // Middle and beginning calculation.
@@ -329,7 +353,7 @@ const startNumber = computed(() => {
   // }
 
   // Special handling for lower limits (where ellipsis are never shown)
-  if (props.limit <= ELLIPSIS_THRESHOLD) {
+  if (limitNumber.value <= ELLIPSIS_THRESHOLD) {
     if (lastNumberBoolean.value && numberOfPages.value === lStartNumber + numberOfLinks.value - 1) {
       lStartNumber = Math.max(lStartNumber - 1, 1)
     }
@@ -341,12 +365,12 @@ const showFirstDots = computed(() => {
   const pagesLeft = numberOfPages.value - modelValueNumber.value
   let rShowDots = false
 
-  if (pagesLeft + 2 < props.limit && props.limit > ELLIPSIS_THRESHOLD) {
-    if (props.limit > ELLIPSIS_THRESHOLD) {
+  if (pagesLeft + 2 < limitNumber.value && limitNumber.value > ELLIPSIS_THRESHOLD) {
+    if (limitNumber.value > ELLIPSIS_THRESHOLD) {
       rShowDots = true
     }
   } else {
-    if (props.limit > ELLIPSIS_THRESHOLD) {
+    if (limitNumber.value > ELLIPSIS_THRESHOLD) {
       rShowDots = !!(!hideEllipsisBoolean.value || firstNumberBoolean.value)
     }
   }
@@ -363,26 +387,29 @@ const showFirstDots = computed(() => {
 
 //Calculate the number of links considering limit
 const numberOfLinks = computed(() => {
-  let n: number = props.limit
+  let n: number = limitNumber.value
 
-  if (numberOfPages.value <= props.limit) {
+  if (numberOfPages.value <= limitNumber.value) {
     n = numberOfPages.value
-  } else if (modelValueNumber.value < props.limit - 1 && props.limit > ELLIPSIS_THRESHOLD) {
-    if (!hideEllipsisBoolean.value || lastNumberBoolean.value) {
-      n = props.limit - (firstNumberBoolean.value ? 0 : 1)
-    }
-    n = Math.min(n, props.limit)
   } else if (
-    numberOfPages.value - modelValueNumber.value + 2 < props.limit &&
-    props.limit > ELLIPSIS_THRESHOLD
+    modelValueNumber.value < limitNumber.value - 1 &&
+    limitNumber.value > ELLIPSIS_THRESHOLD
+  ) {
+    if (!hideEllipsisBoolean.value || lastNumberBoolean.value) {
+      n = limitNumber.value - (firstNumberBoolean.value ? 0 : 1)
+    }
+    n = Math.min(n, limitNumber.value)
+  } else if (
+    numberOfPages.value - modelValueNumber.value + 2 < limitNumber.value &&
+    limitNumber.value > ELLIPSIS_THRESHOLD
   ) {
     if (!hideEllipsisBoolean.value || firstNumberBoolean.value) {
-      n = props.limit - (lastNumberBoolean.value ? 0 : 1)
+      n = limitNumber.value - (lastNumberBoolean.value ? 0 : 1)
     }
   } else {
     // We consider ellipsis tabs as their own page links
-    if (props.limit > ELLIPSIS_THRESHOLD) {
-      n = props.limit - (hideEllipsisBoolean.value ? 0 : 2)
+    if (limitNumber.value > ELLIPSIS_THRESHOLD) {
+      n = limitNumber.value - (hideEllipsisBoolean.value ? 0 : 2)
     }
   }
 
@@ -394,12 +421,12 @@ const showLastDots = computed(() => {
 
   let rShowDots = false
 
-  if (modelValueNumber.value < props.limit - 1 && props.limit > ELLIPSIS_THRESHOLD) {
+  if (modelValueNumber.value < limitNumber.value - 1 && limitNumber.value > ELLIPSIS_THRESHOLD) {
     if (!hideEllipsisBoolean.value || lastNumberBoolean.value) {
       rShowDots = true
     }
   } else {
-    if (props.limit > ELLIPSIS_THRESHOLD) {
+    if (limitNumber.value > ELLIPSIS_THRESHOLD) {
       rShowDots = !!(!hideEllipsisBoolean.value || lastNumberBoolean.value)
     }
   }
