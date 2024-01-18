@@ -12,7 +12,7 @@
       :name="name || parentData?.name.value"
       :form="form || parentData?.form.value"
       :aria-label="ariaLabel"
-      :aria-labelledby="ariaLabelledBy"
+      :aria-labelledby="ariaLabelledby"
       :aria-required="computedRequired || undefined"
       :value="value"
       :true-value="value"
@@ -42,7 +42,7 @@ defineOptions({
 const props = withDefaults(
   defineProps<{
     ariaLabel?: string
-    ariaLabelledBy?: string
+    ariaLabelledby?: string
     autofocus?: Booleanish
     button?: Booleanish
     buttonGroup?: Booleanish
@@ -64,7 +64,7 @@ const props = withDefaults(
   }>(),
   {
     ariaLabel: undefined,
-    ariaLabelledBy: undefined,
+    ariaLabelledby: undefined,
     autofocus: false,
     button: false,
     buttonGroup: false,
