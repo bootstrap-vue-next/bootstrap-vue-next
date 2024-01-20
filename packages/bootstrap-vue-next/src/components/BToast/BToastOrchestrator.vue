@@ -1,5 +1,7 @@
 <template>
   <Teleport :to="teleportTo" :disabled="teleportDisabledBoolean">
+    <!-- This is used for specific targetting for the user -->
+    <!-- Even though it serves no direct purpose itself -->
     <div id="__BVID__toaster-container">
       <div
         v-for="(value, key) in toastPositions"
@@ -7,22 +9,24 @@
         :class="value"
         class="toast-container position-fixed p-3"
       >
-        <component
-          :is="toast.value.component"
-          v-for="toast in toasts?.filter((el) => el.value.props.pos === key)"
-          :key="toast.value.props._self"
-          v-model="toast.value.props._modelValue"
-          :transition-props="{appear: true}"
-          v-bind="pluckToastItem(toast.value.props)"
-          @hidden="remove?.(toast.value.props._self)"
-        />
+        <TransitionGroup name="b-list">
+          <component
+            :is="toast.value.component"
+            v-for="toast in toasts?.filter((el) => el.value.props.pos === key)"
+            :key="toast.value.props._self"
+            v-bind="pluckToastItem(toast.value.props)"
+            v-model="toast.value.props._modelValue"
+            :trans-props="{...toast.value.props.transProps, appear: true}"
+            @hide.prevent="remove?.(toast.value.props._self)"
+          />
+        </TransitionGroup>
       </div>
     </div>
   </Teleport>
 </template>
 
 <script setup lang="ts">
-import type {RendererElement} from 'vue'
+import {type RendererElement, watch} from 'vue'
 import {useBooleanish, useToast} from '../../composables'
 import type {Booleanish} from '../../types'
 import {omit} from '../../utils'
@@ -31,16 +35,17 @@ const props = withDefaults(
   defineProps<{
     teleportDisabled?: Booleanish
     teleportTo?: string | Readonly<RendererElement> | null | undefined
-    // TODO this
-    // appendToast?: Booleanish
+    appendToast?: Booleanish
   }>(),
   {
     teleportDisabled: false,
     teleportTo: 'body',
+    appendToast: false,
   }
 )
 
 const teleportDisabledBoolean = useBooleanish(() => props.teleportDisabled)
+const appendToastBoolean = useBooleanish(() => props.appendToast)
 
 const toastPositions = {
   'top-left': 'top-0 start-0',
@@ -54,7 +59,15 @@ const toastPositions = {
   'bottom-right': 'bottom-0 end-0',
 } as const
 
-const {remove, toasts, show} = useToast()
+const {remove, toasts, show, _setIsAppend} = useToast()
+
+watch(
+  appendToastBoolean,
+  (value) => {
+    _setIsAppend?.(value)
+  },
+  {immediate: true}
+)
 
 const pluckToastItem = (
   payload: Readonly<Exclude<typeof toasts, undefined>['value'][number]['value']['props']>
@@ -66,3 +79,25 @@ defineExpose({
   toasts,
 })
 </script>
+
+<style lang="scss">
+/*
+If you remove the last element in the list, the animation goes farther to the right then normal.
+I don't know why
+I kind of like it though, and even if I didn't, I don't know how to get rid of it.
+Getting the transitions to work here was basically all trial and error.
+I think it's because it's "moving", but I don't know where it's moving to
+*/
+.b-list-move,
+.b-list-enter-active,
+.b-list-leave-active {
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+.b-list-enter-from,
+.b-list-leave-to {
+  opacity: 0; // TODO this should be the responsibility of the child
+}
+.b-list-leave-active {
+  position: fixed;
+}
+</style>

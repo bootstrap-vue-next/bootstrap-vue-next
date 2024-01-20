@@ -1,5 +1,7 @@
 <template>
   <Teleport :to="teleportTo" :disabled="teleportDisabledBoolean">
+    <!-- This is used for specific targetting for the user -->
+    <!-- Even though it serves no direct purpose itself -->
     <div id="__BVID__modal-container">
       <!-- TODO the animation when entering doesn't work. -->
       <!-- I tried to use <Transition appear> to have the animation work, but it didn't -->

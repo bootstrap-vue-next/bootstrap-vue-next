@@ -4,6 +4,7 @@ import {
   type ComputedRef,
   type MaybeRefOrGetter,
   type Plugin,
+  ref,
   shallowRef,
   toValue,
 } from 'vue'
@@ -26,6 +27,12 @@ export default {
       }>[]
     >([])
 
+    const _isAppend = ref(false)
+
+    const _setIsAppend = (value: boolean) => {
+      _isAppend.value = value
+    }
+
     /**
      * @returns {symbol} A symbol that corresponds to its unique id. You can pass this id to the hide function to force a Toast to hide
      */
@@ -34,21 +41,30 @@ export default {
       props?: MaybeRefOrGetter<Readonly<OrchestratedToast>>
     }): symbol => {
       const _self = Symbol()
-      toasts.value = [
-        ...toasts.value,
-        computed(() => {
-          const unwrappedProps = toValue(obj.props)
-          return {
-            component: toValue(obj.component) ?? BToast,
-            props: {
-              ...unwrappedProps,
-              pos: unwrappedProps?.pos || posDefault,
-              _modelValue: unwrappedProps?.value || 5000,
-              _self,
-            },
-          }
-        }),
-      ]
+
+      const toastToAdd = computed(() => {
+        const unwrappedProps = toValue(obj.props)
+        return {
+          component: toValue(obj.component) ?? BToast,
+          props: {
+            ...unwrappedProps,
+            pos: unwrappedProps?.pos || posDefault,
+            _modelValue: unwrappedProps?.value || 5000,
+            _self,
+          },
+        }
+      })
+
+      if (
+        toastToAdd.value.props.appendToast !== undefined
+          ? toastToAdd.value.props.appendToast
+          : _isAppend.value
+      ) {
+        toasts.value = [...toasts.value, toastToAdd]
+      } else {
+        toasts.value = [toastToAdd, ...toasts.value]
+      }
+
       return _self
     }
 
@@ -60,6 +76,7 @@ export default {
     }
 
     app.provide(toastPluginKey, {
+      _setIsAppend,
       toasts,
       show,
       remove,

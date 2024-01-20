@@ -72,7 +72,6 @@ import BProgress from '../BProgress/BProgress.vue'
 import {BvTriggerableEvent} from '../../utils'
 
 const props = withDefaults(defineProps<BToastProps>(), {
-  animation: true,
   bgVariant: null,
   body: undefined,
   bodyClass: undefined,
@@ -138,9 +137,6 @@ const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props)
 
-// TODO animation is never used
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const animationBoolean = useBooleanish(() => props.animation)
 const isStatusBoolean = useBooleanish(() => props.isStatus)
 const noCloseButtonBoolean = useBooleanish(() => props.noCloseButton)
 const noFadeBoolean = useBooleanish(() => props.noFade)
