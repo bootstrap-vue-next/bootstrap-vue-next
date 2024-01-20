@@ -17,7 +17,7 @@
       :value="value"
       :true-value="value"
       :false-value="uncheckedValue"
-      :indeterminate="indeterminateBoolean"
+      :indeterminate="indeterminate"
       @change="modelValue !== undefined && emit('change', modelValue)"
       @input="modelValue !== undefined && emit('input', modelValue)"
     />
@@ -50,7 +50,6 @@ const props = withDefaults(
     disabled?: Booleanish
     form?: string
     id?: string
-    indeterminate?: Booleanish
     inline?: Booleanish
     modelValue?: CheckboxValue | readonly CheckboxValue[]
     name?: string
@@ -72,7 +71,6 @@ const props = withDefaults(
     disabled: false,
     form: undefined,
     id: undefined,
-    indeterminate: undefined,
     inline: false,
     modelValue: undefined,
     name: undefined,
@@ -98,10 +96,10 @@ const slots = defineSlots<{
 }>()
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
+const indeterminate = defineModel('indeterminate', {default: false})
 
 const computedId = useId(() => props.id, 'form-check')
 
-const indeterminateBoolean = useBooleanish(() => props.indeterminate)
 const autofocusBoolean = useBooleanish(() => props.autofocus)
 const plainBoolean = useBooleanish(() => props.plain)
 const buttonBoolean = useBooleanish(() => props.button)
@@ -126,6 +124,10 @@ const localValue = computed({
   get: () => parentData?.modelValue.value ?? modelValue.value,
   set: (newVal) => {
     if (newVal === undefined) return
+    // Indeterminate is implicitly cleared when the checked state is changed to any value
+    //  by the user.  We reflect that here by setting our indetermiate model to false
+    //  which will emit the indeterminate event to the parent
+    indeterminate.value = false
     if (parentData !== null && Array.isArray(newVal)) {
       // The type cast isn't perfect. Array.isArray detects CheckboxValue.unknown[],
       // but since it's parentData, it should always be CheckboxValue[]
