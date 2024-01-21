@@ -23,8 +23,9 @@ export default {
         {
           prop: 'indeterminate',
           type: 'Booleanish',
-          default: undefined,
-          description: 'Set or clear the indeterminate state of the checkbox.',
+          default: false,
+          description:
+            'Set to true to show the checkbox as indeterminate, false to show its normal checked/unchecked.',
         },
         {
           prop: 'name',

@@ -72,7 +72,7 @@ const props = withDefaults(
     disabled: false,
     form: undefined,
     id: undefined,
-    indeterminate: undefined,
+    indeterminate: false,
     inline: false,
     modelValue: undefined,
     name: undefined,
@@ -99,7 +99,7 @@ const slots = defineSlots<{
 }>()
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
-const indeterminate = useVModel(props, 'indeterminate', emit, {passive: false})
+const indeterminate = useVModel(props, 'indeterminate', emit, {passive: true})
 
 const computedId = useId(() => props.id, 'form-check')
 
