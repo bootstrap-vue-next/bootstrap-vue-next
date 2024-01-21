@@ -647,7 +647,7 @@ describe('form-checkbox', () => {
       expect(wrapper.emitted('input')?.[0][0]).toBe('unchecked')
     })
 
-    it('custom value unchecked checkbox emits change==-"checked" event when clicked', async () => {
+    it('custom value unchecked checkbox emits change==="checked" event when clicked', async () => {
       const wrapper = mount(BFormCheckbox, {
         props: {value: 'checked', uncheckedValue: 'unchecked'},
         attachTo: document.body,
