@@ -24,6 +24,7 @@ export default {
           prop: 'indeterminate',
           type: 'Booleanish',
           default: undefined,
+          description: 'Set or clear the indeterminate state of the checkbox.',
         },
         {
           prop: 'name',
@@ -108,35 +109,38 @@ export default {
       ],
       emits: [
         {
+          event: 'update:modelValue',
+          description: 'Emitted when the checked value is changed',
           args: [
             {
-              arg: 'update:modelValue',
-              description: '',
-              type: 'unknown',
+              arg: 'checked',
+              description:
+                'Value of the checkbox.  Value will be an array for grouped checkboxes or a single value for standalone checkboxes.',
+              type: 'CheckboxValue | readonly CheckboxValue[]',
             },
           ],
-          description: '',
-          event: 'update:modelValue',
         },
         {
           event: 'input',
-          description: '',
+          description: 'Emitted before the checked value is changed',
           args: [
             {
-              arg: 'input',
-              description: '',
-              type: 'unknown',
+              arg: 'checked',
+              description:
+                'Value of the checkbox before the event. Value will be an array for grouped checkboxes or a single value for standalone checkboxes.',
+              type: 'CheckboxValue | readonly CheckboxValue[]',
             },
           ],
         },
         {
           event: 'change',
-          description: '',
+          description: 'Emitted when the checked value is changed',
           args: [
             {
-              arg: 'change',
-              description: '',
-              type: 'unknown',
+              arg: 'checked',
+              description:
+                'Value of the checkbox.  Value will be an array for grouped checkboxes or a single value for standalone checkboxes.',
+              type: 'CheckboxValue | readonly CheckboxValue[]',
             },
           ],
         },

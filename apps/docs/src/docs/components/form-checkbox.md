@@ -719,22 +719,35 @@ Visually, there are actually three states a checkbox can be in: checked, uncheck
 
 The indeterminate state is **visual only**. The checkbox is still either checked or unchecked as a value. That means the visual indeterminate state masks the real value of the checkbox, so that better make sense in your UI!.
 
-`BFormCheckbox` supports setting this visual indeterminate state via the indeterminate prop (defaults to false). Clicking the checkbox will clear its indeterminate state.
+`BFormCheckbox` supports setting this visual indeterminate state via a secondary named model called indeterminate (defaults to undefined). Clicking the checkbox will clear the indeterminate state and emit an `update:indeterminate=false` event. To reset the state set the indeterminate model value to true.
 
 <HighlightCard>
-  <BFormCheckbox v-model="intermChecked" :indeterminate="true">Click me to see what happens</BFormCheckbox>
+  <BFormCheckbox v-model="intermChecked" v-model:indeterminate="indeterminate">Click me to see what happens</BFormCheckbox>
+  <BButton class="mt-2" :disabled="indeterminate" @click="indeterminate = true">Reset Indeterminate</BButton>
   <div class="mt-2">
-    Checked: <strong>{{ intermChecked }}</strong>
+    Checked: <strong>{{ intermChecked }}</strong><br>
+    Indeterminate: <strong>{{ indeterminate }}</strong>
   </div>
   <template #html>
 
 ```vue
 <template>
-  <BFormCheckbox :indeterminate="true">Click me to see what happens</BFormCheckbox>
+  <BFormCheckbox v-model="intermChecked" v-model:indeterminate="indeterminate"
+    >Click me to see what happens</BFormCheckbox
+  >
+  <BButton class="mt-2" :disabled="indeterminate" @click="indeterminate = true"
+    >Reset Indeterminate</BButton
+  >
+  <div class="mt-2">
+    Checked: <strong>{{ intermChecked }}</strong
+    ><br />
+    Indeterminate: <strong>{{ indeterminate }}</strong>
+  </div>
 </template>
 
 <script setup lang="ts">
 const intermChecked = ref(true)
+const indeterminate = ref(true)
 </script>
 ```
 
@@ -749,12 +762,13 @@ import {ref, computed} from 'vue'
 import ComponentReference from '../../components/ComponentReference.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import CrossSiteScriptingWarning from '../../components/CrossSiteScriptingWarning.vue'
-import {BFormCheckboxGroup, BFormCheckbox, BCard, BCardBody, BAlert} from 'bootstrap-vue-next'
+import {BButton, BFormCheckboxGroup, BFormCheckbox, BCard, BCardBody, BAlert} from 'bootstrap-vue-next'
 
 const button1Checked = ref(false);
 const button2Checked = ref(false);
 const switchChecked = ref(false);
 const intermChecked = ref(true);
+const indeterminate = ref(true);
 
 const availableCars = ['BMW', 'Mercedes', 'Toyota'];
 const selectedCars = ref([]);
