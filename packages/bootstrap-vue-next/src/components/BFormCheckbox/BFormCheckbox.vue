@@ -17,7 +17,7 @@
       :value="value"
       :true-value="value"
       :false-value="uncheckedValue"
-      :indeterminate="indeterminate"
+      :indeterminate="indeterminateBoolean"
       @change="modelValue !== undefined && emit('change', modelValue)"
       @input="modelValue !== undefined && emit('input', modelValue)"
     />
@@ -50,6 +50,7 @@ const props = withDefaults(
     disabled?: Booleanish
     form?: string
     id?: string
+    indeterminate?: Booleanish
     inline?: Booleanish
     modelValue?: CheckboxValue | readonly CheckboxValue[]
     name?: string
@@ -71,6 +72,7 @@ const props = withDefaults(
     disabled: false,
     form: undefined,
     id: undefined,
+    indeterminate: undefined,
     inline: false,
     modelValue: undefined,
     name: undefined,
@@ -88,6 +90,7 @@ const emit = defineEmits<{
   'change': [value: CheckboxValue | CheckboxValue[]]
   'input': [value: CheckboxValue | CheckboxValue[]]
   'update:modelValue': [value: CheckboxValue | CheckboxValue[]]
+  'update:indeterminate': [value: boolean]
 }>()
 
 const slots = defineSlots<{
@@ -96,10 +99,11 @@ const slots = defineSlots<{
 }>()
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
-const indeterminate = defineModel('indeterminate', {default: false})
+const indeterminate = useVModel(props, 'indeterminate', emit, {passive: false})
 
 const computedId = useId(() => props.id, 'form-check')
 
+const indeterminateBoolean = useBooleanish(() => props.indeterminate)
 const autofocusBoolean = useBooleanish(() => props.autofocus)
 const plainBoolean = useBooleanish(() => props.plain)
 const buttonBoolean = useBooleanish(() => props.button)
