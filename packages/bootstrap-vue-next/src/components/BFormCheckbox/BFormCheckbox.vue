@@ -12,7 +12,7 @@
       :name="name || parentData?.name.value"
       :form="form || parentData?.form.value"
       :aria-label="ariaLabel"
-      :aria-labelledby="ariaLabelledBy"
+      :aria-labelledby="ariaLabelledby"
       :aria-required="computedRequired || undefined"
       :value="value"
       :true-value="value"
@@ -42,7 +42,7 @@ defineOptions({
 const props = withDefaults(
   defineProps<{
     ariaLabel?: string
-    ariaLabelledBy?: string
+    ariaLabelledby?: string
     autofocus?: Booleanish
     button?: Booleanish
     buttonGroup?: Booleanish
@@ -64,7 +64,7 @@ const props = withDefaults(
   }>(),
   {
     ariaLabel: undefined,
-    ariaLabelledBy: undefined,
+    ariaLabelledby: undefined,
     autofocus: false,
     button: false,
     buttonGroup: false,
@@ -72,7 +72,7 @@ const props = withDefaults(
     disabled: false,
     form: undefined,
     id: undefined,
-    indeterminate: undefined,
+    indeterminate: false,
     inline: false,
     modelValue: undefined,
     name: undefined,
@@ -90,6 +90,7 @@ const emit = defineEmits<{
   'change': [value: CheckboxValue | CheckboxValue[]]
   'input': [value: CheckboxValue | CheckboxValue[]]
   'update:modelValue': [value: CheckboxValue | CheckboxValue[]]
+  'update:indeterminate': [value: boolean]
 }>()
 
 const slots = defineSlots<{
@@ -98,6 +99,7 @@ const slots = defineSlots<{
 }>()
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
+const indeterminate = useVModel(props, 'indeterminate', emit)
 
 const computedId = useId(() => props.id, 'form-check')
 
@@ -126,6 +128,10 @@ const localValue = computed({
   get: () => parentData?.modelValue.value ?? modelValue.value,
   set: (newVal) => {
     if (newVal === undefined) return
+    // Indeterminate is implicitly cleared when the checked state is changed to any value
+    //  by the user.  We reflect that here by setting our indetermiate model to false
+    //  which will emit the indeterminate event to the parent
+    indeterminate.value = false
     if (parentData !== null && Array.isArray(newVal)) {
       // The type cast isn't perfect. Array.isArray detects CheckboxValue.unknown[],
       // but since it's parentData, it should always be CheckboxValue[]
