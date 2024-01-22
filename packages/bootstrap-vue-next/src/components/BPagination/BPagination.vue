@@ -6,32 +6,22 @@
     :aria-disabled="disabledBoolean"
     :aria-label="ariaLabel || undefined"
   >
-    <ReusableButtuon.define v-slot="{button, li, text, clickHandler}">
-      <li v-bind="li">
-        <component v-bind="button" :is="button.is" @click="clickHandler">
-          <slot :name="text.name" :disabled="text.disabled" :page="text.page" :index="text.index">
-            {{ text.value }}
-          </slot>
-        </component>
-      </li>
-    </ReusableButtuon.define>
-
-    <ReusablePageButton.define v-slot="{button, li, text, clickHandler}">
+    <ReusableButton.define v-slot="{button, li, text, clickHandler}">
       <li v-bind="li">
         <component v-bind="button" :is="button.is" @click="clickHandler">
           <slot
             :name="text.name"
-            :active="text.active"
             :disabled="text.disabled"
-            :page="text.value"
+            :page="text.page"
             :index="text.index"
+            :active="text.active"
             :content="text.value"
           >
             {{ text.value }}
           </slot>
         </component>
       </li>
-    </ReusablePageButton.define>
+    </ReusableButton.define>
 
     <ReusableEllipsis.define>
       <li v-bind="ellipsisProps.li">
@@ -43,20 +33,20 @@
       </li>
     </ReusableEllipsis.define>
 
-    <ReusableButtuon.reuse
+    <ReusableButton.reuse
       v-if="!hideGotoEndButtonsBoolean && !firstNumberBoolean"
       v-bind="firstButtonProps"
     />
-    <ReusableButtuon.reuse v-bind="prevButtonProps" />
+    <ReusableButton.reuse v-bind="prevButtonProps" />
 
-    <ReusablePageButton.reuse
+    <ReusableButton.reuse
       v-if="firstNumberBoolean && pages[0] && pages[0].number !== 1"
       v-bind="firstNumberButtonProps"
     />
 
     <ReusableEllipsis.reuse v-if="showFirstDots" />
 
-    <ReusablePageButton.reuse
+    <ReusableButton.reuse
       v-for="page in pages"
       :key="`page-${page.number}`"
       v-bind="getPageButtonProps({page: page.number, dis: disabledBoolean})"
@@ -64,7 +54,7 @@
 
     <ReusableEllipsis.reuse v-if="showLastDots" />
 
-    <ReusablePageButton.reuse
+    <ReusableButton.reuse
       v-if="
         lastNumberBoolean &&
         pages[pages.length - 1] &&
@@ -73,8 +63,8 @@
       v-bind="lastNumberButtonProps"
     />
 
-    <ReusableButtuon.reuse v-bind="nextButtonProps" />
-    <ReusableButtuon.reuse
+    <ReusableButton.reuse v-bind="nextButtonProps" />
+    <ReusableButton.reuse
       v-if="!lastNumberBoolean && !hideGotoEndButtonsBoolean"
       v-bind="lastButtonProps"
     />
@@ -203,96 +193,105 @@ const prevDisabled = computed(() => checkDisabled(modelValueNumber.value - 1))
 const lastDisabled = computed(() => checkDisabled(numberOfPages.value))
 const nextDisabled = computed(() => checkDisabled(modelValueNumber.value + 1))
 
-const getButtonProps = ({
+const getBaseButtonProps = ({
   page,
   classVal,
   dis,
-  text,
+  slotName,
+  textValue,
+  tabIndex,
+  label,
+  position,
+  isActive,
+  role,
+  hidden,
 }: {
   page: number
   dis: boolean
   classVal: ClassValue
-  text: Readonly<{name: string; value: string}>
+  slotName: string
+  textValue?: string
+  tabIndex?: string
+  label?: string
+  position?: number
+  isActive?: boolean
+  role?: string
+  hidden?: boolean
 }) => ({
   li: {
-    class: [
+    'class': [
       'page-item',
       {
+        'active': isActive,
         'disabled': dis,
         'flex-fill': computedFill.value,
         'd-flex': computedFill.value && !dis,
       },
       classVal,
     ],
+    role,
+    'aria-hidden': hidden,
   },
   button: {
     'is': dis ? 'span' : 'button',
     'class': ['page-link', {'flex-grow-1': !dis && computedFill.value}],
-    'aria-label': props.labelFirstPage,
+    'aria-label': label,
     'aria-controls': props.ariaControls || undefined,
     'aria-disabled': dis ? true : undefined,
+    'aria-posinset': position,
+    'aria-setsize': position ? numberOfPages.value : undefined,
     'role': 'menuitem',
     'type': dis ? undefined : 'button',
-    'tabindex': dis ? undefined : '-1',
+    'tabindex': dis ? undefined : tabIndex,
   },
   text: {
-    name: text.name,
-    value: text.value,
+    name: slotName,
+    active: isActive,
+    value: textValue ?? page,
+    page,
     disabled: dis,
     index: page - 1,
-    page,
+    content: textValue ? undefined : page,
   },
   clickHandler: (e: Readonly<MouseEvent>) => pageClick(e, page),
 })
 
-const getPageButtonProps = ({page, dis}: {page: number; dis: boolean}) => ({
+const getButtonProps = ({
   page,
-  li: {
-    'class': [
-      'page-item',
-      {
-        'disabled': dis,
-        'active': isActivePage(page),
-        'flex-fill': computedFill.value,
-        'd-flex': computedFill.value && !dis,
-      },
-      props.pageClass,
-    ],
-    'role': 'presentation',
-    'aria-hidden': dis,
-  },
-  button: {
-    'is': dis ? 'span' : 'button',
-    'class': ['page-link', {'flex-grow-1': !dis && computedFill.value}],
-    'aria-label': props.labelPage ? `${props.labelPage} ${page}` : undefined,
-    'aria-controls': props.ariaControls || undefined,
-    'aria-disabled': dis ? true : undefined,
-    'aria-posinset': page,
-    'aria-setsize': numberOfPages.value,
-    'role': 'menuitemradio',
-    'type': dis ? undefined : 'button',
-    'tabindex': dis ? undefined : getTabIndex(page),
-  },
-  text: {
-    name: 'page',
-    active: isActivePage(page),
-    disabled: dis,
-    value: page,
-    index: page - 1,
-    content: page,
-  },
-  clickHandler: (e: Readonly<MouseEvent>) => pageClick(e, page),
-})
+  classVal,
+  dis,
+  slotName,
+  textValue,
+  label,
+}: {
+  page: number
+  dis: boolean
+  classVal: ClassValue
+  slotName: string
+  textValue?: string
+  label: string
+}) => getBaseButtonProps({page, classVal, dis, slotName, textValue, label, tabIndex: '-1'})
+
+const getPageButtonProps = ({page, dis}: {page: number; dis: boolean}) =>
+  getBaseButtonProps({
+    page,
+    dis,
+    classVal: props.pageClass,
+    slotName: 'page',
+    label: props.labelPage ? `${props.labelPage} ${page}` : undefined,
+    tabIndex: getTabIndex(page) ?? undefined,
+    position: page,
+    isActive: isActivePage(page),
+  })
 
 const firstButtonProps = computed(() =>
   getButtonProps({
     page: 1,
     dis: firstDisabled.value,
     classVal: props.firstClass,
-    text: {
-      name: 'first-text',
-      value: props.firstText,
-    },
+    slotName: 'first-text',
+    textValue: props.firstText,
+    label: props.labelFirstPage,
   })
 )
 const prevButtonProps = computed(() =>
@@ -300,7 +299,9 @@ const prevButtonProps = computed(() =>
     page: Math.max(modelValueNumber.value - 1, 1),
     dis: prevDisabled.value,
     classVal: props.prevClass,
-    text: {name: 'prev-text', value: props.prevText},
+    slotName: 'prev-text',
+    textValue: props.prevText,
+    label: props.labelPrevPage,
   })
 )
 const nextButtonProps = computed(() =>
@@ -308,7 +309,9 @@ const nextButtonProps = computed(() =>
     page: Math.min(modelValueNumber.value + 1, numberOfPages.value),
     dis: nextDisabled.value,
     classVal: props.nextClass,
-    text: {name: 'next-text', value: props.nextText},
+    slotName: 'next-text',
+    textValue: props.nextText,
+    label: props.labelNextPage,
   })
 )
 const lastButtonProps = computed(() =>
@@ -316,7 +319,9 @@ const lastButtonProps = computed(() =>
     page: numberOfPages.value,
     dis: lastDisabled.value,
     classVal: props.lastClass,
-    text: {name: 'last-text', value: props.lastText},
+    slotName: 'last-text',
+    textValue: props.lastText,
+    label: props.labelLastPage,
   })
 )
 const firstNumberButtonProps = computed(() =>
@@ -332,8 +337,7 @@ const lastNumberButtonProps = computed(() =>
   })
 )
 
-const ReusableButtuon = createReusableTemplate<ReturnType<typeof getButtonProps>>()
-const ReusablePageButton = createReusableTemplate<ReturnType<typeof getPageButtonProps>>()
+const ReusableButton = createReusableTemplate<ReturnType<typeof getButtonProps>>()
 const ReusableEllipsis = createReusableTemplate()
 
 const ellipsisProps = computed(() => ({
