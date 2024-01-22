@@ -15,6 +15,24 @@
         </component>
       </li>
     </ReusableButtuon.define>
+
+    <ReusablePageButton.define v-slot="{page, button, li, clickHandler}">
+      <li v-bind="li">
+        <component v-bind="button" :is="button.is" @click="clickHandler">
+          <slot
+            name="page"
+            :active="isActivePage(page)"
+            :disabled="checkDisabled(page)"
+            :page="page"
+            :index="page - 1"
+            :content="page"
+          >
+            {{ page }}
+          </slot>
+        </component>
+      </li>
+    </ReusablePageButton.define>
+
     <ReusableEllipsis.define>
       <li v-bind="ellipsisProps.li">
         <span v-bind="ellipsisProps.span">
@@ -31,58 +49,34 @@
     />
     <ReusableButtuon.reuse v-bind="prevButtonProps" />
 
+    <ReusablePageButton.reuse
+      v-if="firstNumberBoolean && pages[0] && pages[0].number !== 1"
+      v-bind="firstNumberButtonProps"
+    />
+
     <ReusableEllipsis.reuse v-if="showFirstDots" />
 
-    <li
+    <ReusablePageButton.reuse
       v-for="page in pages"
       :key="`page-${page.number}`"
-      :class="[
-        'page-item',
-        {
-          'disabled': disabledBoolean,
-          'active': isActivePage(page.number),
-          'flex-fill': computedFill,
-          'd-flex': computedFill && !disabledBoolean,
-        },
-        pageClass,
-      ]"
-      role="presentation"
-      :aria-hidden="disabledBoolean || undefined"
-    >
-      <component
-        :is="disabledBoolean ? 'span' : 'button'"
-        :key="`page-${page.number}`"
-        :class="['page-link', {'flex-grow-1': !disabledBoolean && computedFill}]"
-        :aria-controls="ariaControls || undefined"
-        :aria-disabled="disabledBoolean ? true : undefined"
-        :aria-label="labelPage ? `${labelPage} ${page.number}` : undefined"
-        :aria-posinset="page.number"
-        :aria-checked="isActivePage(page.number)"
-        :aria-setsize="numberOfPages"
-        role="menuitemradio"
-        :type="disabledBoolean ? undefined : 'button'"
-        :tabindex="getTabIndex(page.number)"
-        @click="pageClick($event, page.number)"
-      >
-        <slot
-          name="page"
-          :active="isActivePage(page.number)"
-          :disabled="disabledBoolean"
-          :page="page.number"
-          :index="page.number - 1"
-          :content="page.number"
-        >
-          {{ page.number }}
-        </slot>
-      </component>
-    </li>
+      v-bind="getPageButtonProps({page: page.number, dis: disabledBoolean})"
+    />
 
     <ReusableEllipsis.reuse v-if="showLastDots" />
+
+    <ReusablePageButton.reuse
+      v-if="
+        lastNumberBoolean &&
+        pages[pages.length - 1] &&
+        pages[pages.length - 1].number !== numberOfPages
+      "
+      v-bind="lastNumberButtonProps"
+    />
 
     <ReusableButtuon.reuse v-bind="nextButtonProps" />
     <ReusableButtuon.reuse
       v-if="!lastNumberBoolean && !hideGotoEndButtonsBoolean"
-      v-bind="lastEndButtonProps"
+      v-bind="lastButtonProps"
     />
   </ul>
 </template>
@@ -209,7 +203,7 @@ const prevDisabled = computed(() => checkDisabled(modelValueNumber.value - 1))
 const lastDisabled = computed(() => checkDisabled(numberOfPages.value))
 const nextDisabled = computed(() => checkDisabled(modelValueNumber.value + 1))
 
-const getEndButtonProps = ({
+const getButtonProps = ({
   classVal,
   clickHandler,
   dis,
@@ -245,8 +239,39 @@ const getEndButtonProps = ({
   clickHandler,
 })
 
+const getPageButtonProps = ({page, dis}: {page: number; dis: boolean}) => ({
+  page,
+  li: {
+    'class': [
+      'page-item',
+      {
+        'disabled': dis,
+        'active': isActivePage(page),
+        'flex-fill': computedFill.value,
+        'd-flex': computedFill.value && !dis,
+      },
+      props.pageClass,
+    ],
+    'role': 'presentation',
+    'aria-hidden': dis,
+  },
+  button: {
+    'is': dis ? 'span' : 'button',
+    'class': ['page-link', {'flex-grow-1': !dis && computedFill.value}],
+    'aria-label': props.labelPage ? `${props.labelPage} ${page}` : undefined,
+    'aria-controls': props.ariaControls || undefined,
+    'aria-disabled': dis ? true : undefined,
+    'aria-posinset': page,
+    'aria-setsize': numberOfPages.value,
+    'role': 'menuitemradio',
+    'type': dis ? undefined : 'button',
+    'tabindex': dis ? undefined : getTabIndex(page),
+  },
+  clickHandler: (e: Readonly<MouseEvent>) => pageClick(e, page),
+})
+
 const firstButtonProps = computed(() =>
-  getEndButtonProps({
+  getButtonProps({
     dis: firstDisabled.value,
     classVal: props.firstClass,
     text: {
@@ -257,7 +282,7 @@ const firstButtonProps = computed(() =>
   })
 )
 const prevButtonProps = computed(() =>
-  getEndButtonProps({
+  getButtonProps({
     dis: prevDisabled.value,
     classVal: props.prevClass,
     text: {name: 'prev-text', value: props.prevText},
@@ -265,15 +290,15 @@ const prevButtonProps = computed(() =>
   })
 )
 const nextButtonProps = computed(() =>
-  getEndButtonProps({
+  getButtonProps({
     dis: nextDisabled.value,
     classVal: props.nextClass,
     text: {name: 'next-text', value: props.nextText},
     clickHandler: (e: Readonly<MouseEvent>) => pageClick(e, modelValueNumber.value + 1),
   })
 )
-const lastEndButtonProps = computed(() =>
-  getEndButtonProps({
+const lastButtonProps = computed(() =>
+  getButtonProps({
     dis: lastDisabled.value,
     classVal: props.lastClass,
     text: {name: 'last-text', value: props.lastText},
@@ -281,7 +306,22 @@ const lastEndButtonProps = computed(() =>
   })
 )
 
-const ReusableButtuon = createReusableTemplate<ReturnType<typeof getEndButtonProps>>()
+const firstNumberButtonProps = computed(() =>
+  getPageButtonProps({
+    dis: firstDisabled.value,
+    page: 1,
+  })
+)
+
+const lastNumberButtonProps = computed(() =>
+  getPageButtonProps({
+    dis: lastDisabled.value,
+    page: numberOfPages.value,
+  })
+)
+
+const ReusableButtuon = createReusableTemplate<ReturnType<typeof getButtonProps>>()
+const ReusablePageButton = createReusableTemplate<ReturnType<typeof getPageButtonProps>>()
 const ReusableEllipsis = createReusableTemplate()
 
 const ellipsisProps = computed(() => ({
