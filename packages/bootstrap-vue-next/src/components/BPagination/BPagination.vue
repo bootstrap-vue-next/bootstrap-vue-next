@@ -9,25 +9,25 @@
     <ReusableButtuon.define v-slot="{button, li, text, clickHandler}">
       <li v-bind="li">
         <component v-bind="button" :is="button.is" @click="clickHandler">
-          <slot :name="text.name">
+          <slot :name="text.name" :disabled="text.disabled" :page="text.page" :index="text.index">
             {{ text.value }}
           </slot>
         </component>
       </li>
     </ReusableButtuon.define>
 
-    <ReusablePageButton.define v-slot="{page, button, li, clickHandler}">
+    <ReusablePageButton.define v-slot="{button, li, text, clickHandler}">
       <li v-bind="li">
         <component v-bind="button" :is="button.is" @click="clickHandler">
           <slot
-            name="page"
-            :active="isActivePage(page)"
-            :disabled="checkDisabled(page)"
-            :page="page"
-            :index="page - 1"
-            :content="page"
+            :name="text.name"
+            :active="text.active"
+            :disabled="text.disabled"
+            :page="text.value"
+            :index="text.index"
+            :content="text.value"
           >
-            {{ page }}
+            {{ text.value }}
           </slot>
         </component>
       </li>
@@ -204,15 +204,15 @@ const lastDisabled = computed(() => checkDisabled(numberOfPages.value))
 const nextDisabled = computed(() => checkDisabled(modelValueNumber.value + 1))
 
 const getButtonProps = ({
+  page,
   classVal,
-  clickHandler,
   dis,
   text,
 }: {
+  page: number
   dis: boolean
   classVal: ClassValue
   text: Readonly<{name: string; value: string}>
-  clickHandler: (e: Readonly<MouseEvent>, val: number) => void
 }) => ({
   li: {
     class: [
@@ -235,8 +235,14 @@ const getButtonProps = ({
     'type': dis ? undefined : 'button',
     'tabindex': dis ? undefined : '-1',
   },
-  text,
-  clickHandler,
+  text: {
+    name: text.name,
+    value: text.value,
+    disabled: dis,
+    index: page - 1,
+    page,
+  },
+  clickHandler: (e: Readonly<MouseEvent>) => pageClick(e, page),
 })
 
 const getPageButtonProps = ({page, dis}: {page: number; dis: boolean}) => ({
@@ -267,52 +273,58 @@ const getPageButtonProps = ({page, dis}: {page: number; dis: boolean}) => ({
     'type': dis ? undefined : 'button',
     'tabindex': dis ? undefined : getTabIndex(page),
   },
+  text: {
+    name: 'page',
+    active: isActivePage(page),
+    disabled: dis,
+    value: page,
+    index: page - 1,
+    content: page,
+  },
   clickHandler: (e: Readonly<MouseEvent>) => pageClick(e, page),
 })
 
 const firstButtonProps = computed(() =>
   getButtonProps({
+    page: 1,
     dis: firstDisabled.value,
     classVal: props.firstClass,
     text: {
       name: 'first-text',
       value: props.firstText,
     },
-    clickHandler: (e: MouseEvent) => pageClick(e, 1),
   })
 )
 const prevButtonProps = computed(() =>
   getButtonProps({
+    page: Math.max(modelValueNumber.value - 1, 1),
     dis: prevDisabled.value,
     classVal: props.prevClass,
     text: {name: 'prev-text', value: props.prevText},
-    clickHandler: (e: Readonly<MouseEvent>) => pageClick(e, modelValueNumber.value - 1),
   })
 )
 const nextButtonProps = computed(() =>
   getButtonProps({
+    page: Math.min(modelValueNumber.value + 1, numberOfPages.value),
     dis: nextDisabled.value,
     classVal: props.nextClass,
     text: {name: 'next-text', value: props.nextText},
-    clickHandler: (e: Readonly<MouseEvent>) => pageClick(e, modelValueNumber.value + 1),
   })
 )
 const lastButtonProps = computed(() =>
   getButtonProps({
+    page: numberOfPages.value,
     dis: lastDisabled.value,
     classVal: props.lastClass,
     text: {name: 'last-text', value: props.lastText},
-    clickHandler: (e: Readonly<MouseEvent>) => pageClick(e, numberOfPages.value),
   })
 )
-
 const firstNumberButtonProps = computed(() =>
   getPageButtonProps({
     dis: firstDisabled.value,
     page: 1,
   })
 )
-
 const lastNumberButtonProps = computed(() =>
   getPageButtonProps({
     dis: lastDisabled.value,
