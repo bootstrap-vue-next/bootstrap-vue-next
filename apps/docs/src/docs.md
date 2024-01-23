@@ -95,14 +95,14 @@ npm i bootstrap bootstrap-vue-next
 ```typescript
 // main.js/ts
 import {createApp} from 'vue'
-import {BootstrapVueNextPlugin} from 'bootstrap-vue-next'
+import {createBoostrap} from 'bootstrap-vue-next'
 
 // Add the necessary CSS
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
 
 const app = createApp(App)
-app.use(BootstrapVueNextPlugin) // Important
+app.use(createBootstrap()) // Important
 app.mount('#app')
 ```
 
@@ -199,14 +199,14 @@ This method for globally registering components is usually not recommended. The 
 ```typescript
 // main.js/ts
 import {createApp} from 'vue'
-import {BootstrapVueNextPlugin} from 'bootstrap-vue-next'
+import {createBootstrap} from 'bootstrap-vue-next'
 
 // Add the necessary CSS
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
 
 const app = createApp(App)
-app.use(BootstrapVueNextPlugin, {components: true, directives: true}) // Change this line
+app.use(createBootstrap({components: true, directives: true})) // Change this line
 app.mount('#app')
 ```
 
