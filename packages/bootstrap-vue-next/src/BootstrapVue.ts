@@ -119,12 +119,12 @@ declare module '@vue/runtime-core' {
 }
 
 // Main app plugin
-const plugin: Plugin = {
-  install(app, opts?: BootstrapVueOptions) {
-    const components = opts?.components ?? false
-    const directives = opts?.directives ?? false
-    const plugins = opts?.plugins
-
+export const createBootstrap = ({
+  components = false,
+  directives = false,
+  plugins = {},
+}: BootstrapVueOptions = {}): Plugin => ({
+  install(app) {
     const selectedComponents = typeof components === 'boolean' ? {all: components} : components
 
     const componentKeys = Object.keys(Components) as unknown as ComponentType[]
@@ -151,14 +151,14 @@ const plugin: Plugin = {
     if (plugins?.modalManager ?? true === true) {
       app.use(modalManagerPlugin)
     }
-    if (plugins?.rtl ?? true === true) {
+    if ((plugins?.rtl ?? true === true) || typeof plugins.rtl === 'object') {
       app.use(rtlPlugin, plugins)
     }
     if (plugins?.toast ?? true === true) {
       app.use(toastPlugin)
     }
   },
-}
+})
 
 export * from './components'
 export * as Components from './components'
@@ -171,5 +171,4 @@ export * as Utils from './utils/exports'
 export * from './types/exports'
 export * as Types from './types/exports'
 
-export {plugin as BootstrapVueNextPlugin}
-export default plugin
+export default createBootstrap

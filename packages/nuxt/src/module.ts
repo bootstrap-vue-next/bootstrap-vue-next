@@ -19,7 +19,7 @@ export default defineNuxtModule<ModuleOptions>({
   setup(options, nuxt) {
     // @ts-ignore
     const {resolve} = createResolver(import.meta.url)
-    addPlugin(resolve('./runtime/plugins/bootstrapVueNextPlugin'))
+    addPlugin(resolve('./runtime/plugins/createBootstrap'))
 
     const normalizedComposableOptions =
       typeof options.composables === 'boolean' ? {all: options.composables} : options.composables
