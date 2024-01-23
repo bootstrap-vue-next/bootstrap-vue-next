@@ -10,17 +10,17 @@
   },
   "dependencies": {
     "bootstrap-vue-next": "workspace:^",
-    "vue": "^3.4.5",
+    "vue": "^3.4.14",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.2",
-    "@types/node": "^20.10.6",
-    "@vitejs/plugin-vue": "^5.0.2",
+    "@types/node": "^20.11.4",
+    "@vitejs/plugin-vue": "^5.0.3",
     "@vue/tsconfig": "^0.5.1",
     "bootstrap": "^5.3.2",
     "typescript": "^5.3.3",
-    "vite": "^5.0.10",
+    "vite": "^5.0.11",
     "vue-tsc": "^1.8.27"
   },
   "lint-staged": {

@@ -7,6 +7,11 @@ export type OrchestratedToast = Omit<BToastProps, 'modelValue'> & {
    */
   pos?: ContainerPosition
   /**
+   * Sets whether or not the toast should be appended to the container
+   * @default undefined Implicitly defualts to the BToastOrchestrator's appendToast value
+   */
+  appendToast?: boolean
+  /**
    * A proxy for the modelValue, essentially, you set this once, and it mimics the modelValue.
    *
    * Falsy values default to 5000

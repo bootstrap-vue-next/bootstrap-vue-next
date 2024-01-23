@@ -27,8 +27,7 @@
 <script setup lang="ts">
 import {computed, ref} from 'vue'
 import {useBooleanish, useFormInput, useStateClass} from '../../composables'
-import type {CommonInputProps} from '../../composables/useFormInput'
-import type {InputType, Numberish} from '../../types'
+import type {CommonInputProps, InputType, Numberish} from '../../types'
 
 const props = withDefaults(
   defineProps<

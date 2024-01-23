@@ -147,6 +147,7 @@ export const toastPluginKey: InjectionKey<{
       }
     }>[]
   >
+  _setIsAppend: (value: boolean) => void
   show: (obj: {
     component?: Readonly<Component>
     props?: MaybeRefOrGetter<Readonly<OrchestratedToast>>
