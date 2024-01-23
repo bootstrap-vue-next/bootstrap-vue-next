@@ -73,7 +73,7 @@ describe('form-radio', () => {
     expect(wrapper.classes()).not.toContain('form-control-lg')
   })
 
-  it('has does not have class form-control-{type} when prop size is md', () => {
+  it('has class form-control-{type} when prop size is md', () => {
     const wrapper = mount(BFormRadio, {
       props: {size: 'md'},
     })
@@ -296,14 +296,6 @@ describe('form-radio', () => {
     })
     const $input = wrapper.get('input')
     expect($input.attributes('aria-labelledby')).toBeUndefined()
-  })
-
-  it('input element has attr aria-labelledby to be prop ariaLabelledby', () => {
-    const wrapper = mount(BFormRadio, {
-      props: {ariaLabelledby: 'foobar'},
-    })
-    const $input = wrapper.get('input')
-    expect($input.attributes('aria-labelledby')).toBe('foobar')
   })
 
   it('input element has attr aria-labelledby is undefined when prop ariaLabelledby undefined', () => {

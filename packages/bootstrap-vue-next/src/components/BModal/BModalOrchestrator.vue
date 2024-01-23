@@ -1,6 +1,6 @@
 <template>
   <Teleport :to="teleportTo" :disabled="teleportDisabledBoolean">
-    <!-- This is used for specific targetting for the user -->
+    <!-- This wrapper div is used for specific targetting by the user -->
     <!-- Even though it serves no direct purpose itself -->
     <div id="__BVID__modal-container">
       <!-- TODO the animation when entering doesn't work. -->
