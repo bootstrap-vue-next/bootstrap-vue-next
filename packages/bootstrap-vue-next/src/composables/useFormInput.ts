@@ -1,34 +1,10 @@
-import type {AriaInvalid, Booleanish, Numberish, Size} from '../types'
+import type {Numberish} from '../types'
 import {nextTick, onActivated, onMounted, ref} from 'vue'
 import useAriaInvalid from './useAriaInvalid'
 import useBooleanish from './useBooleanish'
 import useId from './useId'
 import {useDebounceFn, useFocus, useToNumber, useVModel} from '@vueuse/core'
-
-export interface CommonInputProps {
-  ariaInvalid?: AriaInvalid
-  autocomplete?: string
-  autofocus?: Booleanish
-  disabled?: Booleanish
-  form?: string
-  debounce?: Numberish
-  debounceMaxWait?: Numberish
-  formatter?: (val: string, evt: Event) => string
-  id?: string
-  lazy?: Booleanish
-  lazyFormatter?: Booleanish
-  list?: string
-  modelValue?: Numberish | null
-  name?: string
-  number?: Booleanish
-  placeholder?: string
-  plaintext?: Booleanish
-  readonly?: Booleanish
-  required?: Booleanish
-  size?: Size
-  state?: Booleanish | null | undefined
-  trim?: Booleanish
-}
+import type {CommonInputProps} from '../types/FormCommonInputProps'
 
 export default (
   props: Readonly<CommonInputProps>,

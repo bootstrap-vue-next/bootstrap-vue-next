@@ -23,10 +23,9 @@
 </template>
 
 <script setup lang="ts">
-import type {Booleanish, Numberish} from '../../types'
+import type {Booleanish, CommonInputProps, Numberish} from '../../types'
 import {computed, type CSSProperties} from 'vue'
 import {useBooleanish, useFormInput, useStateClass} from '../../composables'
-import type {CommonInputProps} from '../../composables/useFormInput'
 
 const props = withDefaults(
   defineProps<
