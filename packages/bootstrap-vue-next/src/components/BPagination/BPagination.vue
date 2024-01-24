@@ -395,18 +395,13 @@ const startNumber = computed(() => {
 })
 
 const showFirstDots = computed(() => {
-  const pagesLeft = numberOfPages.value - modelValueNumber.value
-  let rShowDots = false
-
-  if (pagesLeft + 2 < limitNumber.value && limitNumber.value > ELLIPSIS_THRESHOLD) {
-    if (limitNumber.value > ELLIPSIS_THRESHOLD) {
-      rShowDots = true
-    }
-  } else {
-    if (limitNumber.value > ELLIPSIS_THRESHOLD) {
-      rShowDots = !!(!hideEllipsisBoolean.value || firstNumberBoolean.value)
-    }
+  if (hideEllipsisBoolean.value) {
+    return false
   }
+
+  const pagesLeft = numberOfPages.value - modelValueNumber.value
+  let rShowDots = limitNumber.value > ELLIPSIS_THRESHOLD
+
   if (startNumber.value <= 1) {
     rShowDots = false
   }
@@ -450,19 +445,14 @@ const numberOfLinks = computed(() => {
 })
 
 const showLastDots = computed(() => {
+  if (hideEllipsisBoolean.value) {
+    return false
+  }
+
   const paginationWindowEnd = numberOfPages.value - numberOfLinks.value // The start of the last window of page links
 
-  let rShowDots = false
+  let rShowDots = limitNumber.value > ELLIPSIS_THRESHOLD
 
-  if (modelValueNumber.value < limitNumber.value - 1 && limitNumber.value > ELLIPSIS_THRESHOLD) {
-    if (!hideEllipsisBoolean.value || lastNumberBoolean.value) {
-      rShowDots = true
-    }
-  } else {
-    if (limitNumber.value > ELLIPSIS_THRESHOLD) {
-      rShowDots = !!(!hideEllipsisBoolean.value || lastNumberBoolean.value)
-    }
-  }
   if (startNumber.value > paginationWindowEnd) {
     rShowDots = false
   }
@@ -527,11 +517,12 @@ watch(pagination, (oldValue, newValue) => {
   }
 })
 
-const pages = computed(() =>
-  Array.from({length: numberOfLinks.value}, (_, index) => ({
-    number: startNumber.value + index,
+const pages = computed(() => {
+  const start = startNumber.value
+  return Array.from({length: numberOfLinks.value}, (_, index) => ({
+    number: start + index,
   }))
-)
+})
 </script>
 
 <script lang="ts">
