@@ -49,7 +49,7 @@
     <ReusableButton.reuse
       v-for="page in pages"
       :key="`page-${page.number}`"
-      v-bind="getPageButtonProps({page: page.number, dis: disabledBoolean})"
+      v-bind="getPageButtonProps(page.number)"
     />
 
     <ReusableEllipsis.reuse v-if="showLastDots" />
@@ -272,10 +272,10 @@ const getButtonProps = ({
   label: string
 }) => getBaseButtonProps({page, classVal, dis, slotName, textValue, label, tabIndex: '-1'})
 
-const getPageButtonProps = ({page, dis}: {page: number; dis: boolean}) =>
+const getPageButtonProps = (page: number) =>
   getBaseButtonProps({
     page,
-    dis,
+    dis: disabledBoolean.value,
     classVal: props.pageClass,
     slotName: 'page',
     label: props.labelPage ? `${props.labelPage} ${page}` : undefined,
@@ -324,18 +324,8 @@ const lastButtonProps = computed(() =>
     label: props.labelLastPage,
   })
 )
-const firstNumberButtonProps = computed(() =>
-  getPageButtonProps({
-    dis: firstDisabled.value,
-    page: 1,
-  })
-)
-const lastNumberButtonProps = computed(() =>
-  getPageButtonProps({
-    dis: lastDisabled.value,
-    page: numberOfPages.value,
-  })
-)
+const firstNumberButtonProps = computed(() => getPageButtonProps(1))
+const lastNumberButtonProps = computed(() => getPageButtonProps(numberOfPages.value))
 
 const ReusableButton = createReusableTemplate<ReturnType<typeof getButtonProps>>()
 const ReusableEllipsis = createReusableTemplate()
