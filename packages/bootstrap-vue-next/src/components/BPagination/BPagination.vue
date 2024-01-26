@@ -364,16 +364,20 @@ const startNumber = computed(() => {
     // Middle and beginning calculation.
     lStartNumber = modelValueNumber.value - Math.floor(numberOfLinks.value / 2)
   }
+  // When first number is set and the first ellipsis is hidden, we replace the ellipsis with a
+  //  page number by starting one earlier
+  if (firstNumberBoolean.value && lStartNumber < 4) {
+    lStartNumber -= 1
+  }
+  if (lastNumberBoolean.value && modelValueNumber.value === numberOfPages.value - 3) {
+    lStartNumber += 1
+  }
   // Negative due at times
   if (lStartNumber < 1) {
     lStartNumber = 1
   } else if (lStartNumber > numberOfPages.value - numberOfLinks.value) {
     lStartNumber = numberOfPages.value - numberOfLinks.value + 1
   }
-  //why check for this?
-  // if (showFirstDots.value && cfirstNumber && lStartNumber < 4) {
-  //   lStartNumber = 1
-  // }
 
   // Special handling for lower limits (where ellipsis are never shown)
   if (limitNumber.value <= ELLIPSIS_THRESHOLD) {
@@ -389,7 +393,6 @@ const showFirstDots = computed(() => {
     return false
   }
 
-  const pagesLeft = numberOfPages.value - modelValueNumber.value
   let rShowDots = limitNumber.value > ELLIPSIS_THRESHOLD
 
   if (startNumber.value <= 1) {
@@ -409,25 +412,52 @@ const numberOfLinks = computed(() => {
 
   if (numberOfPages.value <= limitNumber.value) {
     n = numberOfPages.value
-  } else if (
-    modelValueNumber.value < limitNumber.value - 1 &&
-    limitNumber.value > ELLIPSIS_THRESHOLD
-  ) {
-    if (!hideEllipsisBoolean.value || lastNumberBoolean.value) {
-      n = limitNumber.value - (firstNumberBoolean.value ? 0 : 1)
+  } else if (limitNumber.value > ELLIPSIS_THRESHOLD && !hideEllipsisBoolean.value) {
+    // By default we show limit - 2, since we count the ellipsis
+    n -= 2
+
+    // Add back in a link if the first ellipsis is hidden
+    if (
+      modelValueNumber.value <
+      Math.floor((limitNumber.value - 1) / 2) + (firstNumberBoolean.value ? 3 : 2)
+    ) {
+      n += 1
     }
-    n = Math.min(n, limitNumber.value)
-  } else if (
-    numberOfPages.value - modelValueNumber.value + 2 < limitNumber.value &&
-    limitNumber.value > ELLIPSIS_THRESHOLD
-  ) {
-    if (!hideEllipsisBoolean.value || firstNumberBoolean.value) {
-      n = limitNumber.value - (lastNumberBoolean.value ? 0 : 1)
+
+    // Add a link for the first number
+    if (
+      firstNumberBoolean.value &&
+      modelValueNumber.value <= limitNumber.value - Math.ceil((limitNumber.value - 4) / 2)
+    ) {
+      n += 1
+    }
+
+    // Add back in a link if the last ellipsis is hidden
+    if (modelValueNumber.value > numberOfPages.value - limitNumber.value + 2) {
+      n += 1
+    }
+
+    // Add a link for the last number
+    if (
+      lastNumberBoolean.value &&
+      modelValueNumber.value > numberOfPages.value - limitNumber.value + 2
+    ) {
+      n += 1
+    }
+
+    // Handle corner case for last button with limits of 4 &  5
+    if (
+      lastNumberBoolean.value &&
+      ((limitNumber.value === 4 &&
+        (numberOfPages.value - modelValueNumber.value === 3 ||
+          numberOfPages.value - modelValueNumber.value === 2)) ||
+        (limitNumber.value === 5 && numberOfPages.value - modelValueNumber.value === 3))
+    ) {
+      n += 1
     }
   } else {
-    // We consider ellipsis tabs as their own page links
-    if (limitNumber.value > ELLIPSIS_THRESHOLD) {
-      n = limitNumber.value - (hideEllipsisBoolean.value ? 0 : 2)
+    if (firstNumberBoolean.value && modelValueNumber.value <= limitNumber.value) {
+      n += 1
     }
   }
 
