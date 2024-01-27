@@ -33,41 +33,14 @@
       </li>
     </ReusableEllipsis.define>
 
-    <ReusableButton.reuse
-      v-if="!hideGotoEndButtonsBoolean && !firstNumberBoolean"
-      v-bind="firstButtonProps"
-    />
-    <ReusableButton.reuse v-bind="prevButtonProps" />
-
-    <ReusableButton.reuse
-      v-if="firstNumberBoolean && pages[0] && pages[0].number !== 1"
-      v-bind="firstNumberButtonProps"
-    />
-
-    <ReusableEllipsis.reuse v-if="showFirstDots" />
-
-    <ReusableButton.reuse
-      v-for="page in pages"
-      :key="`page-${page.number}`"
-      v-bind="getPageButtonProps(page.number)"
-    />
-
-    <ReusableEllipsis.reuse v-if="showLastDots" />
-
-    <ReusableButton.reuse
-      v-if="
-        lastNumberBoolean &&
-        pages[pages.length - 1] &&
-        pages[pages.length - 1].number !== numberOfPages
-      "
-      v-bind="lastNumberButtonProps"
-    />
-
-    <ReusableButton.reuse v-bind="nextButtonProps" />
-    <ReusableButton.reuse
-      v-if="!lastNumberBoolean && !hideGotoEndButtonsBoolean"
-      v-bind="lastButtonProps"
-    />
+    <template v-for="button in buttons" :key="`page-${button.number}`">
+      <ReusableButton.reuse v-if="button === FIRST_BUTTON" v-bind="firstButtonProps" />
+      <ReusableButton.reuse v-else-if="button === PREV_BUTTON" v-bind="prevButtonProps" />
+      <ReusableButton.reuse v-else-if="button === NEXT_BUTTON" v-bind="nextButtonProps" />
+      <ReusableButton.reuse v-else-if="button === LAST_BUTTON" v-bind="lastButtonProps" />
+      <ReusableEllipsis.reuse v-else-if="button === ELLIPSIS_BUTTON" />
+      <ReusableButton.reuse v-else v-bind="getPageButtonProps(button!)" />
+    </template>
   </ul>
 </template>
 
@@ -80,6 +53,12 @@ import {createReusableTemplate, useToNumber, useVModel} from '@vueuse/core'
 
 // Threshold of limit size when we start/stop showing ellipsis
 const ELLIPSIS_THRESHOLD = 3
+
+const FIRST_BUTTON = -1
+const PREV_BUTTON = -2
+const NEXT_BUTTON = -3
+const LAST_BUTTON = -4
+const ELLIPSIS_BUTTON = -5
 
 const props = withDefaults(
   defineProps<{
@@ -324,8 +303,6 @@ const lastButtonProps = computed(() =>
     label: props.labelLastPage,
   })
 )
-const firstNumberButtonProps = computed(() => getPageButtonProps(1))
-const lastNumberButtonProps = computed(() => getPageButtonProps(numberOfPages.value))
 
 const ReusableButton = createReusableTemplate<ReturnType<typeof getButtonProps>>()
 const ReusableEllipsis = createReusableTemplate()
@@ -353,137 +330,6 @@ const computedWrapperClasses = computed(() => [
     'b-pagination-pills': pillsBoolean.value,
   },
 ])
-
-const startNumber = computed(() => {
-  let lStartNumber: number
-  const pagesLeft: number = numberOfPages.value - modelValueNumber.value
-
-  if (pagesLeft + 2 < limitNumber.value && limitNumber.value > ELLIPSIS_THRESHOLD) {
-    lStartNumber = numberOfPages.value - numberOfLinks.value + 1
-  } else {
-    // Middle and beginning calculation.
-    lStartNumber = modelValueNumber.value - Math.floor(numberOfLinks.value / 2)
-  }
-  // When first number is set and the first ellipsis is hidden, we replace the ellipsis with a
-  //  page number by starting one earlier
-  if (firstNumberBoolean.value && lStartNumber < 4) {
-    lStartNumber -= 1
-  }
-  if (lastNumberBoolean.value && modelValueNumber.value === numberOfPages.value - 3) {
-    lStartNumber += 1
-  }
-  // Negative due at times
-  if (lStartNumber < 1) {
-    lStartNumber = 1
-  } else if (lStartNumber > numberOfPages.value - numberOfLinks.value) {
-    lStartNumber = numberOfPages.value - numberOfLinks.value + 1
-  }
-
-  // Special handling for lower limits (where ellipsis are never shown)
-  if (limitNumber.value <= ELLIPSIS_THRESHOLD) {
-    if (lastNumberBoolean.value && numberOfPages.value === lStartNumber + numberOfLinks.value - 1) {
-      lStartNumber = Math.max(lStartNumber - 1, 1)
-    }
-  }
-  return lStartNumber
-})
-
-const showFirstDots = computed(() => {
-  if (hideEllipsisBoolean.value) {
-    return false
-  }
-
-  let rShowDots = limitNumber.value > ELLIPSIS_THRESHOLD
-
-  if (startNumber.value <= 1) {
-    rShowDots = false
-  }
-
-  if (rShowDots && firstNumberBoolean.value && startNumber.value < 4) {
-    rShowDots = false
-  }
-
-  return rShowDots
-})
-
-//Calculate the number of links considering limit
-const numberOfLinks = computed(() => {
-  let n: number = limitNumber.value
-
-  if (numberOfPages.value <= limitNumber.value) {
-    n = numberOfPages.value
-  } else if (limitNumber.value > ELLIPSIS_THRESHOLD && !hideEllipsisBoolean.value) {
-    // By default we show limit - 2, since we count the ellipsis
-    n -= 2
-
-    // Add back in a link if the first ellipsis is hidden
-    if (
-      modelValueNumber.value <
-      Math.floor((limitNumber.value - 1) / 2) + (firstNumberBoolean.value ? 3 : 2)
-    ) {
-      n += 1
-    }
-
-    // Add a link for the first number
-    if (
-      firstNumberBoolean.value &&
-      modelValueNumber.value <= limitNumber.value - Math.ceil((limitNumber.value - 4) / 2)
-    ) {
-      n += 1
-    }
-
-    // Add back in a link if the last ellipsis is hidden
-    if (modelValueNumber.value > numberOfPages.value - limitNumber.value + 2) {
-      n += 1
-    }
-
-    // Add a link for the last number
-    if (
-      lastNumberBoolean.value &&
-      modelValueNumber.value > numberOfPages.value - limitNumber.value + 2
-    ) {
-      n += 1
-    }
-
-    // Handle corner case for last button with limits of 4 &  5
-    if (
-      lastNumberBoolean.value &&
-      ((limitNumber.value === 4 &&
-        (numberOfPages.value - modelValueNumber.value === 3 ||
-          numberOfPages.value - modelValueNumber.value === 2)) ||
-        (limitNumber.value === 5 && numberOfPages.value - modelValueNumber.value === 3))
-    ) {
-      n += 1
-    }
-  } else {
-    if (firstNumberBoolean.value && modelValueNumber.value <= limitNumber.value) {
-      n += 1
-    }
-  }
-
-  return n
-})
-
-const showLastDots = computed(() => {
-  if (hideEllipsisBoolean.value) {
-    return false
-  }
-
-  const paginationWindowEnd = numberOfPages.value - numberOfLinks.value // The start of the last window of page links
-
-  let rShowDots = limitNumber.value > ELLIPSIS_THRESHOLD
-
-  if (startNumber.value > paginationWindowEnd) {
-    rShowDots = false
-  }
-  const lastPageNumber = startNumber.value + numberOfLinks.value - 1
-
-  if (rShowDots && lastNumberBoolean.value && lastPageNumber > numberOfPages.value - 3) {
-    rShowDots = false
-  }
-
-  return rShowDots
-})
 
 const pagination = computed(() => ({
   pageSize: perPageSanitized.value,
@@ -537,11 +383,110 @@ watch(pagination, (oldValue, newValue) => {
   }
 })
 
-const pages = computed(() => {
-  const start = startNumber.value
-  return Array.from({length: numberOfLinks.value}, (_, index) => ({
-    number: start + index,
-  }))
+const buttons = computed(() => {
+  // The idea here is to create an array of all the buttons on the page control.
+  // This was we can keep the invariants in one place and the template code just
+  // iterates over the array.
+
+  const pages = numberOfPages.value
+  const {value} = modelValueNumber
+  const limit = limitNumber.value
+  const firstPage = firstNumberBoolean.value ? 1 : 0
+  const lastPage = lastNumberBoolean.value ? 1 : 0
+  const hideEllipsis = hideEllipsisBoolean.value || limit <= ELLIPSIS_THRESHOLD
+  const hideEndButtons = hideGotoEndButtonsBoolean.value ? 1 : 0
+
+  // The first case is when all of the page buttons fit on the control, this is
+  //  the simplest case and the only one that will create an array smaller than
+  //  Limit + 4 - hideEndButtons *2 (the [first, last,] prev, next buttons)
+
+  if (pages < limit + firstPage + lastPage) {
+    return [
+      !firstPage && !hideEndButtons ? FIRST_BUTTON : null,
+      PREV_BUTTON,
+      ...Array.from({length: pages}, (_, index) => index + 1),
+      NEXT_BUTTON,
+      !lastPage && !hideEndButtons ? LAST_BUTTON : null,
+    ].filter((x) => x !== null)
+  }
+
+  // All of the remaining cases result in an array that is exactly limit + 4 - hideEndButtons * 2 in length, so create
+  //  the array upfront and set up the beginning and end buttons, then fill the rest for each case
+
+  const buttons = Array.from({length: limit + 4 - hideEndButtons * 2})
+  if (!hideEndButtons) {
+    if (!firstPage) {
+      buttons[0] = FIRST_BUTTON
+      buttons[1] = PREV_BUTTON
+    } else {
+      buttons[0] = PREV_BUTTON
+      buttons[1] = 1
+    }
+
+    if (!lastPage) {
+      buttons[buttons.length - 1] = LAST_BUTTON
+      buttons[buttons.length - 2] = NEXT_BUTTON
+    } else {
+      buttons[buttons.length - 1] = NEXT_BUTTON
+      buttons[buttons.length - 2] = pages
+    }
+  } else {
+    buttons[0] = PREV_BUTTON
+    buttons[buttons.length - 1] = NEXT_BUTTON
+  }
+
+  // The next case is where the buttons page buttons start at the begginning, with
+  //  no ellipsis at the beginning, but one at the end
+
+  const halfLimit = Math.floor(limit / 2)
+  if (value <= halfLimit + firstPage) {
+    for (let index = 1; index <= limit; index++) {
+      buttons[index + 1 - hideEndButtons] = index + firstPage
+    }
+
+    if (!hideEllipsis) {
+      buttons[buttons.length - 3] = ELLIPSIS_BUTTON
+    }
+  }
+
+  // And then we have the case where the page buttons go up to the end, with no
+  //  ellipsis at the end, but one at the beginning
+
+  if (value > pages - halfLimit - lastPage) {
+    const start = pages - (limit - 1) - lastPage
+    for (let index = 0; index < limit; index++) {
+      buttons[index + 2 - hideEndButtons] = start + index
+    }
+
+    if (!hideEllipsis) {
+      buttons[2] = ELLIPSIS_BUTTON
+    }
+  }
+
+  // Finally we have the case where we have ellipsis at both ends
+  if (!buttons[2]) {
+    // Is there a more elegant way to ceck that we're in the final case?
+    const start = value - Math.floor(limit / 2)
+    for (let index = 0; index < limit; index++) {
+      buttons[index + 2 - hideEndButtons] = start + index
+    }
+
+    if (!hideEllipsis) {
+      buttons[2] = ELLIPSIS_BUTTON
+      buttons[buttons.length - 3] = ELLIPSIS_BUTTON
+    }
+  }
+
+  // Enable sanity check for debugging purposes
+  // for (let i = 0; i < buttons.length; i++) {
+  //   if (!buttons[i]) {
+  //     console.log(
+  //       `Failed: button == ${i}, limit=${limit}, pages=${pages}, firstPage=${firstPage}, lastPage=${lastPage}, value=${value}`
+  //     )
+  //   }
+  // }
+
+  return buttons as number[]
 })
 </script>
 
