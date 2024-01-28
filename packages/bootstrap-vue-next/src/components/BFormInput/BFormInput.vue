@@ -72,13 +72,7 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  'blur': [val: FocusEvent]
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'change': [val: any]
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'input': [val: any]
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'update:modelValue': [val: any]
+  'update:modelValue': [val: Numberish | null]
 }>()
 
 const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =

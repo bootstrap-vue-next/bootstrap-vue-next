@@ -85,11 +85,10 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  'change': [value: Event]
   'update:modelValue': [value: File | File[] | null]
 }>()
 
-const modelValue = useVModel(props, 'modelValue', emit)
+const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 const computedId = useId(() => props.id)
 
 const autofocusBoolean = useBooleanish(() => props.autofocus)
@@ -122,11 +121,10 @@ const computedClasses = computed(() => [
   },
 ])
 
-const onChange = (e: Readonly<Event>) => {
+const onChange = () => {
   const value =
     input.value?.files === null || input.value?.files === undefined ? null : [...input.value.files]
   modelValue.value = value === null ? null : multipleBoolean.value === true ? value : value[0]
-  emit('change', e)
 }
 
 const onDrop = (e: Readonly<Event>) => {

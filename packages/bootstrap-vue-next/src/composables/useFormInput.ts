@@ -9,17 +9,11 @@ import type {CommonInputProps} from '../types/FormCommonInputProps'
 export default (
   props: Readonly<CommonInputProps>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  emit: ((evt: 'update:modelValue', val: any) => void) &
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ((evt: 'change', val: any) => void) &
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ((evt: 'blur', val: any) => void) &
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ((evt: 'input', val: any) => void)
+  emit: (evt: 'update:modelValue', val: any) => void
 ) => {
   const input = ref<HTMLInputElement | null>(null)
 
-  const modelValue = useVModel(props, 'modelValue', emit)
+  const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
   const computedId = useId(() => props.id, 'input')
   const autofocusBoolean = useBooleanish(() => props.autofocus)
@@ -90,8 +84,6 @@ export default (
     const nextModel = _getModelValue(formattedValue)
 
     updateModelValue(nextModel)
-
-    emit('input', formattedValue)
   }
 
   const onChange = (evt: Readonly<Event>) => {
@@ -106,12 +98,9 @@ export default (
     if (modelValue.value !== nextModel) {
       updateModelValue(formattedValue, true)
     }
-
-    emit('change', formattedValue)
   }
 
   const onBlur = (evt: Readonly<FocusEvent>) => {
-    emit('blur', evt)
     if (!lazyBoolean.value && !lazyFormatterBoolean.value) return
 
     const {value} = evt.target as HTMLInputElement
