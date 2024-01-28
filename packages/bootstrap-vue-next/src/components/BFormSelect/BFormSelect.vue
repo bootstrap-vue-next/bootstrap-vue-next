@@ -42,7 +42,7 @@ import type {
   SelectOptionRaw,
   Size,
 } from '../../types'
-import {computed, nextTick, ref, toRef} from 'vue'
+import {computed, ref, toRef} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
 import {useAriaInvalid, useBooleanish, useFormSelect, useId, useStateClass} from '../../composables'
@@ -91,8 +91,6 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  'change': [value: unknown]
-  'input': [value: unknown]
   'update:modelValue': [value: unknown]
 }>()
 
@@ -103,7 +101,7 @@ defineSlots<{
   first?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = useVModel(props, 'modelValue', emit)
+const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const computedId = useId(() => props.id, 'input')
 
@@ -148,11 +146,7 @@ const normalizedOptsWrapper = computed(
 const localValue = computed({
   get: () => modelValue.value,
   set: (newValue) => {
-    emit('input', newValue)
     modelValue.value = newValue
-    nextTick(() => {
-      emit('change', newValue)
-    })
   },
 })
 

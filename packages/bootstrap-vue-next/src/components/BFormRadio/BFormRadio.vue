@@ -15,8 +15,6 @@
       :aria-labelledby="ariaLabelledby"
       :value="value"
       :aria-required="computedRequired || undefined"
-      @change="modelValue !== undefined && emit('change', modelValue)"
-      @input="modelValue !== undefined && emit('input', modelValue)"
     />
     <label v-if="hasDefaultSlot || plainBoolean === false" :for="computedId" :class="labelClasses">
       <slot />
@@ -78,8 +76,6 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  'change': [value: RadioValue]
-  'input': [value: RadioValue]
   'update:modelValue': [value: RadioValue]
 }>()
 

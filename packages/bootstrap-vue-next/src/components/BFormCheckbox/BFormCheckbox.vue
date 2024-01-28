@@ -18,8 +18,6 @@
       :true-value="value"
       :false-value="uncheckedValue"
       :indeterminate="indeterminateBoolean"
-      @change="modelValue !== undefined && emit('change', modelValue)"
-      @input="modelValue !== undefined && emit('input', modelValue)"
     />
     <label v-if="hasDefaultSlot || plainBoolean === false" :for="computedId" :class="labelClasses">
       <slot />
@@ -87,8 +85,6 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  'change': [value: CheckboxValue | CheckboxValue[]]
-  'input': [value: CheckboxValue | CheckboxValue[]]
   'update:modelValue': [value: CheckboxValue | CheckboxValue[]]
   'update:indeterminate': [value: boolean]
 }>()
