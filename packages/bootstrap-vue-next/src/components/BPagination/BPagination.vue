@@ -6,15 +6,23 @@
     :aria-disabled="disabledBoolean"
     :aria-label="ariaLabel || undefined"
   >
-    <ReusableButtuon.define v-slot="{button, li, text, clickHandler}">
+    <ReusableButton.define v-slot="{button, li, text, clickHandler}">
       <li v-bind="li">
         <component v-bind="button" :is="button.is" @click="clickHandler">
-          <slot :name="text.name">
+          <slot
+            :name="text.name"
+            :disabled="text.disabled"
+            :page="text.page"
+            :index="text.index"
+            :active="text.active"
+            :content="text.value"
+          >
             {{ text.value }}
           </slot>
         </component>
       </li>
-    </ReusableButtuon.define>
+    </ReusableButton.define>
+
     <ReusableEllipsis.define>
       <li v-bind="ellipsisProps.li">
         <span v-bind="ellipsisProps.span">
@@ -25,65 +33,14 @@
       </li>
     </ReusableEllipsis.define>
 
-    <ReusableButtuon.reuse
-      v-if="!hideGotoEndButtonsBoolean && !firstNumberBoolean"
-      v-bind="firstButtonProps"
-    />
-    <ReusableButtuon.reuse v-bind="prevButtonProps" />
-
-    <ReusableEllipsis.reuse v-if="showFirstDots" />
-
-    <li
-      v-for="page in pages"
-      :key="`page-${page.number}`"
-      :class="[
-        'page-item',
-        {
-          'disabled': disabledBoolean,
-          'active': isActivePage(page.number),
-          'flex-fill': computedFill,
-          'd-flex': computedFill && !disabledBoolean,
-        },
-        pageClass,
-      ]"
-      role="presentation"
-      :aria-hidden="disabledBoolean || undefined"
-    >
-      <component
-        :is="disabledBoolean ? 'span' : 'button'"
-        :key="`page-${page.number}`"
-        :class="['page-link', {'flex-grow-1': !disabledBoolean && computedFill}]"
-        :aria-controls="ariaControls || undefined"
-        :aria-disabled="disabledBoolean ? true : undefined"
-        :aria-label="labelPage ? `${labelPage} ${page.number}` : undefined"
-        :aria-posinset="page.number"
-        :aria-checked="isActivePage(page.number)"
-        :aria-setsize="numberOfPages"
-        role="menuitemradio"
-        :type="disabledBoolean ? undefined : 'button'"
-        :tabindex="getTabIndex(page.number)"
-        @click="pageClick($event, page.number)"
-      >
-        <slot
-          name="page"
-          :active="isActivePage(page.number)"
-          :disabled="disabledBoolean"
-          :page="page.number"
-          :index="page.number - 1"
-          :content="page.number"
-        >
-          {{ page.number }}
-        </slot>
-      </component>
-    </li>
-
-    <ReusableEllipsis.reuse v-if="showLastDots" />
-
-    <ReusableButtuon.reuse v-bind="nextButtonProps" />
-    <ReusableButtuon.reuse
-      v-if="!lastNumberBoolean && !hideGotoEndButtonsBoolean"
-      v-bind="lastEndButtonProps"
-    />
+    <template v-for="button in buttons" :key="`page-${button.number}`">
+      <ReusableButton.reuse v-if="button === FIRST_BUTTON" v-bind="firstButtonProps" />
+      <ReusableButton.reuse v-else-if="button === PREV_BUTTON" v-bind="prevButtonProps" />
+      <ReusableButton.reuse v-else-if="button === NEXT_BUTTON" v-bind="nextButtonProps" />
+      <ReusableButton.reuse v-else-if="button === LAST_BUTTON" v-bind="lastButtonProps" />
+      <ReusableEllipsis.reuse v-else-if="button === ELLIPSIS_BUTTON" />
+      <ReusableButton.reuse v-else v-bind="getPageButtonProps(button!)" />
+    </template>
   </ul>
 </template>
 
@@ -96,6 +53,12 @@ import {createReusableTemplate, useToNumber, useVModel} from '@vueuse/core'
 
 // Threshold of limit size when we start/stop showing ellipsis
 const ELLIPSIS_THRESHOLD = 3
+
+const FIRST_BUTTON = -1
+const PREV_BUTTON = -2
+const NEXT_BUTTON = -3
+const LAST_BUTTON = -4
+const ELLIPSIS_BUTTON = -5
 
 const props = withDefaults(
   defineProps<{
@@ -118,7 +81,7 @@ const props = withDefaults(
     lastClass?: ClassValue
     lastNumber?: Booleanish
     lastText?: string
-    limit?: number
+    limit?: Numberish
     modelValue?: Numberish
     nextClass?: ClassValue
     nextText?: string
@@ -178,6 +141,7 @@ const hideGotoEndButtonsBoolean = useBooleanish(() => props.hideGotoEndButtons)
 const lastNumberBoolean = useBooleanish(() => props.lastNumber)
 const pillsBoolean = useBooleanish(() => props.pills)
 
+const limitNumber = useToNumber(() => props.limit, {nanToZero: true, method: 'parseInt'})
 const perPageNumber = useToNumber(() => props.perPage, {nanToZero: true, method: 'parseInt'})
 const totalRowsNumber = useToNumber(() => props.totalRows, {nanToZero: true, method: 'parseInt'})
 const modelValueNumber = useToNumber(modelValue, {nanToZero: true, method: 'parseInt'})
@@ -208,79 +172,139 @@ const prevDisabled = computed(() => checkDisabled(modelValueNumber.value - 1))
 const lastDisabled = computed(() => checkDisabled(numberOfPages.value))
 const nextDisabled = computed(() => checkDisabled(modelValueNumber.value + 1))
 
-const getEndButtonProps = ({
+const getBaseButtonProps = ({
+  page,
   classVal,
-  clickHandler,
   dis,
-  text,
+  slotName,
+  textValue,
+  tabIndex,
+  label,
+  position,
+  isActive,
+  role,
+  hidden,
 }: {
+  page: number
   dis: boolean
   classVal: ClassValue
-  text: Readonly<{name: string; value: string}>
-  clickHandler: (e: Readonly<MouseEvent>, val: number) => void
+  slotName: string
+  textValue?: string
+  tabIndex?: string
+  label?: string
+  position?: number
+  isActive?: boolean
+  role?: string
+  hidden?: boolean
 }) => ({
   li: {
-    class: [
+    'class': [
       'page-item',
       {
+        'active': isActive,
         'disabled': dis,
         'flex-fill': computedFill.value,
         'd-flex': computedFill.value && !dis,
       },
       classVal,
     ],
+    role,
+    'aria-hidden': hidden,
   },
   button: {
     'is': dis ? 'span' : 'button',
     'class': ['page-link', {'flex-grow-1': !dis && computedFill.value}],
-    'aria-label': props.labelFirstPage,
+    'aria-label': label,
     'aria-controls': props.ariaControls || undefined,
     'aria-disabled': dis ? true : undefined,
+    'aria-posinset': position,
+    'aria-setsize': position ? numberOfPages.value : undefined,
     'role': 'menuitem',
     'type': dis ? undefined : 'button',
-    'tabindex': dis ? undefined : '-1',
+    'tabindex': dis ? undefined : tabIndex,
   },
-  text,
-  clickHandler,
+  text: {
+    name: slotName,
+    active: isActive,
+    value: textValue ?? page,
+    page,
+    disabled: dis,
+    index: page - 1,
+    content: textValue ? undefined : page,
+  },
+  clickHandler: (e: Readonly<MouseEvent>) => pageClick(e, page),
 })
 
+const getButtonProps = ({
+  page,
+  classVal,
+  dis,
+  slotName,
+  textValue,
+  label,
+}: {
+  page: number
+  dis: boolean
+  classVal: ClassValue
+  slotName: string
+  textValue?: string
+  label: string
+}) => getBaseButtonProps({page, classVal, dis, slotName, textValue, label, tabIndex: '-1'})
+
+const getPageButtonProps = (page: number) =>
+  getBaseButtonProps({
+    page,
+    dis: disabledBoolean.value,
+    classVal: props.pageClass,
+    slotName: 'page',
+    label: props.labelPage ? `${props.labelPage} ${page}` : undefined,
+    tabIndex: getTabIndex(page) ?? undefined,
+    position: page,
+    isActive: isActivePage(page),
+  })
+
 const firstButtonProps = computed(() =>
-  getEndButtonProps({
+  getButtonProps({
+    page: 1,
     dis: firstDisabled.value,
     classVal: props.firstClass,
-    text: {
-      name: 'first-text',
-      value: props.firstText,
-    },
-    clickHandler: (e: MouseEvent) => pageClick(e, 1),
+    slotName: 'first-text',
+    textValue: props.firstText,
+    label: props.labelFirstPage,
   })
 )
 const prevButtonProps = computed(() =>
-  getEndButtonProps({
+  getButtonProps({
+    page: Math.max(modelValueNumber.value - 1, 1),
     dis: prevDisabled.value,
     classVal: props.prevClass,
-    text: {name: 'prev-text', value: props.prevText},
-    clickHandler: (e: Readonly<MouseEvent>) => pageClick(e, modelValueNumber.value - 1),
+    slotName: 'prev-text',
+    textValue: props.prevText,
+    label: props.labelPrevPage,
   })
 )
 const nextButtonProps = computed(() =>
-  getEndButtonProps({
+  getButtonProps({
+    page: Math.min(modelValueNumber.value + 1, numberOfPages.value),
     dis: nextDisabled.value,
     classVal: props.nextClass,
-    text: {name: 'next-text', value: props.nextText},
-    clickHandler: (e: Readonly<MouseEvent>) => pageClick(e, modelValueNumber.value + 1),
+    slotName: 'next-text',
+    textValue: props.nextText,
+    label: props.labelNextPage,
   })
 )
-const lastEndButtonProps = computed(() =>
-  getEndButtonProps({
+const lastButtonProps = computed(() =>
+  getButtonProps({
+    page: numberOfPages.value,
     dis: lastDisabled.value,
     classVal: props.lastClass,
-    text: {name: 'last-text', value: props.lastText},
-    clickHandler: (e: Readonly<MouseEvent>) => pageClick(e, numberOfPages.value),
+    slotName: 'last-text',
+    textValue: props.lastText,
+    label: props.labelLastPage,
   })
 )
 
-const ReusableButtuon = createReusableTemplate<ReturnType<typeof getEndButtonProps>>()
+const ReusableButton = createReusableTemplate<ReturnType<typeof getButtonProps>>()
 const ReusableEllipsis = createReusableTemplate()
 
 const ellipsisProps = computed(() => ({
@@ -306,114 +330,6 @@ const computedWrapperClasses = computed(() => [
     'b-pagination-pills': pillsBoolean.value,
   },
 ])
-
-const startNumber = computed(() => {
-  let lStartNumber: number
-  const pagesLeft: number = numberOfPages.value - modelValueNumber.value
-
-  if (pagesLeft + 2 < props.limit && props.limit > ELLIPSIS_THRESHOLD) {
-    lStartNumber = numberOfPages.value - numberOfLinks.value + 1
-  } else {
-    // Middle and beginning calculation.
-    lStartNumber = modelValueNumber.value - Math.floor(numberOfLinks.value / 2)
-  }
-  // Negative due at times
-  if (lStartNumber < 1) {
-    lStartNumber = 1
-  } else if (lStartNumber > numberOfPages.value - numberOfLinks.value) {
-    lStartNumber = numberOfPages.value - numberOfLinks.value + 1
-  }
-  //why check for this?
-  // if (showFirstDots.value && cfirstNumber && lStartNumber < 4) {
-  //   lStartNumber = 1
-  // }
-
-  // Special handling for lower limits (where ellipsis are never shown)
-  if (props.limit <= ELLIPSIS_THRESHOLD) {
-    if (lastNumberBoolean.value && numberOfPages.value === lStartNumber + numberOfLinks.value - 1) {
-      lStartNumber = Math.max(lStartNumber - 1, 1)
-    }
-  }
-  return lStartNumber
-})
-
-const showFirstDots = computed(() => {
-  const pagesLeft = numberOfPages.value - modelValueNumber.value
-  let rShowDots = false
-
-  if (pagesLeft + 2 < props.limit && props.limit > ELLIPSIS_THRESHOLD) {
-    if (props.limit > ELLIPSIS_THRESHOLD) {
-      rShowDots = true
-    }
-  } else {
-    if (props.limit > ELLIPSIS_THRESHOLD) {
-      rShowDots = !!(!hideEllipsisBoolean.value || firstNumberBoolean.value)
-    }
-  }
-  if (startNumber.value <= 1) {
-    rShowDots = false
-  }
-
-  if (rShowDots && firstNumberBoolean.value && startNumber.value < 4) {
-    rShowDots = false
-  }
-
-  return rShowDots
-})
-
-//Calculate the number of links considering limit
-const numberOfLinks = computed(() => {
-  let n: number = props.limit
-
-  if (numberOfPages.value <= props.limit) {
-    n = numberOfPages.value
-  } else if (modelValueNumber.value < props.limit - 1 && props.limit > ELLIPSIS_THRESHOLD) {
-    if (!hideEllipsisBoolean.value || lastNumberBoolean.value) {
-      n = props.limit - (firstNumberBoolean.value ? 0 : 1)
-    }
-    n = Math.min(n, props.limit)
-  } else if (
-    numberOfPages.value - modelValueNumber.value + 2 < props.limit &&
-    props.limit > ELLIPSIS_THRESHOLD
-  ) {
-    if (!hideEllipsisBoolean.value || firstNumberBoolean.value) {
-      n = props.limit - (lastNumberBoolean.value ? 0 : 1)
-    }
-  } else {
-    // We consider ellipsis tabs as their own page links
-    if (props.limit > ELLIPSIS_THRESHOLD) {
-      n = props.limit - (hideEllipsisBoolean.value ? 0 : 2)
-    }
-  }
-
-  return n
-})
-
-const showLastDots = computed(() => {
-  const paginationWindowEnd = numberOfPages.value - numberOfLinks.value // The start of the last window of page links
-
-  let rShowDots = false
-
-  if (modelValueNumber.value < props.limit - 1 && props.limit > ELLIPSIS_THRESHOLD) {
-    if (!hideEllipsisBoolean.value || lastNumberBoolean.value) {
-      rShowDots = true
-    }
-  } else {
-    if (props.limit > ELLIPSIS_THRESHOLD) {
-      rShowDots = !!(!hideEllipsisBoolean.value || lastNumberBoolean.value)
-    }
-  }
-  if (startNumber.value > paginationWindowEnd) {
-    rShowDots = false
-  }
-  const lastPageNumber = startNumber.value + numberOfLinks.value - 1
-
-  if (rShowDots && lastNumberBoolean.value && lastPageNumber > numberOfPages.value - 3) {
-    rShowDots = false
-  }
-
-  return rShowDots
-})
 
 const pagination = computed(() => ({
   pageSize: perPageSanitized.value,
@@ -467,11 +383,111 @@ watch(pagination, (oldValue, newValue) => {
   }
 })
 
-const pages = computed(() =>
-  Array.from({length: numberOfLinks.value}, (_, index) => ({
-    number: startNumber.value + index,
-  }))
-)
+const buttons = computed(() => {
+  // The idea here is to create an array of all the buttons on the page control.
+  // This was we can keep the invariants in one place and the template code just
+  // iterates over the array.
+
+  const pages = numberOfPages.value
+  const {value} = modelValueNumber
+  const limit = limitNumber.value
+  const firstPage = firstNumberBoolean.value ? 1 : 0
+  const lastPage = lastNumberBoolean.value ? 1 : 0
+  const hideEllipsis = hideEllipsisBoolean.value || limit <= ELLIPSIS_THRESHOLD
+  const hideEndButtons = hideGotoEndButtonsBoolean.value ? 1 : 0
+
+  // The first case is when all of the page buttons fit on the control, this is
+  //  the simplest case and the only one that will create an array smaller than
+  //  Limit + 4 - hideEndButtons *2 (the [first, last,] prev, next buttons)
+
+  if (pages < limit + firstPage + lastPage) {
+    return [
+      !firstPage && !hideEndButtons ? FIRST_BUTTON : null,
+      PREV_BUTTON,
+      ...Array.from({length: pages}, (_, index) => index + 1),
+      NEXT_BUTTON,
+      !lastPage && !hideEndButtons ? LAST_BUTTON : null,
+    ].filter((x) => x !== null)
+  }
+
+  // All of the remaining cases result in an array that is exactly limit + 4 - hideEndButtons * 2 in length, so create
+  //  the array upfront and set up the beginning and end buttons, then fill the rest for each case
+
+  const buttons = Array.from({length: limit + 4 - hideEndButtons * 2})
+  if (!hideEndButtons) {
+    if (!firstPage) {
+      buttons[0] = FIRST_BUTTON
+      buttons[1] = PREV_BUTTON
+    } else {
+      buttons[0] = PREV_BUTTON
+      buttons[1] = 1
+    }
+
+    if (!lastPage) {
+      buttons[buttons.length - 1] = LAST_BUTTON
+      buttons[buttons.length - 2] = NEXT_BUTTON
+    } else {
+      buttons[buttons.length - 1] = NEXT_BUTTON
+      buttons[buttons.length - 2] = pages
+    }
+  } else {
+    buttons[0] = PREV_BUTTON
+    buttons[buttons.length - 1] = NEXT_BUTTON
+  }
+
+  // The next case is where the buttons page buttons start at the begginning, with
+  //  no ellipsis at the beginning, but one at the end
+
+  const halfLimit = Math.floor(limit / 2)
+  if (value <= halfLimit + firstPage) {
+    for (let index = 1; index <= limit; index++) {
+      buttons[index + 1 - hideEndButtons] = index + firstPage
+    }
+
+    if (!hideEllipsis) {
+      buttons[buttons.length - 3] = ELLIPSIS_BUTTON
+    }
+  }
+
+  // And then we have the case where the page buttons go up to the end, with no
+  //  ellipsis at the end, but one at the beginning
+
+  if (value > pages - halfLimit - lastPage) {
+    const start = pages - (limit - 1) - lastPage
+    for (let index = 0; index < limit; index++) {
+      buttons[index + 2 - hideEndButtons] = start + index
+    }
+
+    if (!hideEllipsis) {
+      buttons[2] = ELLIPSIS_BUTTON
+    }
+  }
+
+  // Finally we have the case where we have ellipsis at both ends
+  if (!buttons[2]) {
+    // Is there a more elegant way to ceck that we're in the final case?
+    const start = value - Math.floor(limit / 2)
+    for (let index = 0; index < limit; index++) {
+      buttons[index + 2 - hideEndButtons] = start + index
+    }
+
+    if (!hideEllipsis) {
+      buttons[2] = ELLIPSIS_BUTTON
+      buttons[buttons.length - 3] = ELLIPSIS_BUTTON
+    }
+  }
+
+  // Enable sanity check for debugging purposes
+  // for (let i = 0; i < buttons.length; i++) {
+  //   if (!buttons[i]) {
+  //     console.log(
+  //       `Failed: button == ${i}, limit=${limit}, pages=${pages}, firstPage=${firstPage}, lastPage=${lastPage}, value=${value}`
+  //     )
+  //   }
+  // }
+
+  return buttons as number[]
+})
 </script>
 
 <script lang="ts">
