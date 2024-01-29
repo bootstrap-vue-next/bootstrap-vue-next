@@ -1,5 +1,123 @@
 # Changelog
 
+## [0.16.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.15.5...bootstrapvuenext-v0.16.0) (2024-01-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* use createBootstrap function for the plugin definition
+* **BFormCheckbox:** Correct casing of property ariaLabelledby , ariaLabelledBy => ariaLabelledby
+* **useBreadcrumb:** return a ref instead of reactive
+* **BToast:** rebuild events to match https://getbootstrap.com/docs/5.3/components/toasts/#events (hide, hidden, show, shown)
+* **BToast:** close event no longer is start of transition, use "hide" event. Close event now corresponds to when close button is clicked during the hide process
+* **BootstrapVuePlugin:** components default is now false. The plugin WILL NOT automatically load all components into global scope (perf) - use option "true" to change
+* **BootstrapVuePlugin:** directives default is now false. The plugin WILL NOT automatically load all directives into global scope (perf) - use option "true" to change
+* **BootstrapVueNextPlugin:** named export renamed from BootstrapVueNext to BootstrapVueNextPlugin
+* rebuild "global variable" system to use app-level provide inject. Review documentation installation guide ([#1719](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1719))
+* **useToast:** redefine the parameters of "show". Instead of many parameters, we simply use a single object
+* **useModalController:** redefine the parameters of "show" and "confirm" Instead of many parameters, we simply use a single object
+* **useToast:** redefine the parameters of "show". Instead of many p… ([#1712](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1712))
+* **useToast:** redefine the parameters of "show". Instead of many parameters, we simply use a single object
+* **useModalController:** redefine the parameters of "show" and "confirm" Instead of many parameters, we simply use a single object
+* **useToast:** redefine the parameters of "show" ([#1709](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1709))
+* required vue 3.4
+* rename "Toast" type to OrchestratedToast
+* **useToast:** rename "hide" to "remove" to be more in line with useModalController
+* rename types to be more in line with the standard in vue-router (copying example RouteLocationRaw applies to TableFieldRaw, for example)
+* rename TableFieldObject => TableField
+* rename TableField => TableFieldRaw
+* rename TableFieldObjectFormatter => TableFieldFormatter
+* rename SelectOptionObject => SelectOpttion
+* rename SelectOption => SelectOptionRaw
+* **FormSelect:** fully remove deprecated object options syntax fixes #1593
+* rename BreadcrumbItemObject => BreadcrumbItem
+* rename BreadcrumbItem => BreadcrumbItemRaw
+* rename types to be more in line with the standard in vue-route… ([#1699](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1699))
+* rename BToaster => BToastOrchestrator... This is to make a more generic name that conforms with the new BModalOrchestrator... If other orchestrating components are added, they should use this format as well
+* rename BToaster => BToastOrchestrator ([#1697](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1697))
+* **BOffcanvas:** add responsive prop
+* **BOffcanvas:** remove lazy prop
+
+### Features
+
+* add Scrollspy composable ([1add107](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1add107be0b8c045d00dc43a3c9e0443e1c180a2))
+* add v-b-scrollspy directive ([1add107](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1add107be0b8c045d00dc43a3c9e0443e1c180a2))
+* **BAvatar:** size type =&gt; LiteralUnion&lt;Size, Numberish> ([69a637a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69a637adb46cf9f570203407e019bd3e3821ae21))
+* **BFormCheckbox:** Implement indeterminate state fixes [#1611](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1611) ([0908731](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0908731135ef0f8207c0dd47b84c6494f771b193))
+* **BFormCheckBox:** Implements tri-state checkbox ([#1725](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1725)) ([0908731](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0908731135ef0f8207c0dd47b84c6494f771b193))
+* **BFormSelect:** accept generic value ([69a637a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69a637adb46cf9f570203407e019bd3e3821ae21))
+* **BFormSelectOption:** accept generic value ([69a637a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69a637adb46cf9f570203407e019bd3e3821ae21))
+* **BFormSelectOptionGroup:** accept generic value ([69a637a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69a637adb46cf9f570203407e019bd3e3821ae21))
+* **BFormSpinbutton:** modify locale resolution behavior to take into account global locale state from useRtl" ([69a637a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69a637adb46cf9f570203407e019bd3e3821ae21))
+* **BOffcanvas:** add responsive prop ([82ae5f3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/82ae5f3090378bc8058c94e6a8e2665795ecf921))
+* **BOffcanvas:** remove lazy prop ([82ae5f3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/82ae5f3090378bc8058c94e6a8e2665795ecf921))
+* **BootstrapVueNextPlugin:** named export renamed from BootstrapVueNext to BootstrapVueNextPlugin ([afd7e5f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/afd7e5fbd1e8d4decb626c726590225d67804ba1))
+* **BootstrapVuePlugin:** components default is now false. The plugin WILL NOT automatically load all components into global scope (perf) - use option "true" to change ([afd7e5f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/afd7e5fbd1e8d4decb626c726590225d67804ba1))
+* **BootstrapVuePlugin:** directives default is now false. The plugin WILL NOT automatically load all directives into global scope (perf) - use option "true" to change ([afd7e5f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/afd7e5fbd1e8d4decb626c726590225d67804ba1))
+* **BTable:** add noSelectOnClick fixes [#1714](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1714) ([79ad707](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/79ad707bc67c0a36288ff7386232cb154354199b))
+* **BTable:** add prop sortCompareLocale ([55f36d7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/55f36d7d6db6adb858361fef6de1d607e698203d))
+* **BTable:** add prop sortCompareOptions ([55f36d7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/55f36d7d6db6adb858361fef6de1d607e698203d))
+* **BTable:** Make BTable and BTableLite Generic components fixes [#1682](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1682) ([2b956ca](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2b956ca9b578b52afb7e53cdfb7ab975984c0712))
+* **BTabs:** add inactive classes, navItem and tab classes. ([22f3466](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/22f346648b7347af42865a740ddcb72cca2b2aed))
+* export more types fixes [#1585](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1585) fixes [#1340](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1340) ([69a637a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69a637adb46cf9f570203407e019bd3e3821ae21))
+* export TableFieldRaw, TableField, & TableFieldFormatter ([69a637a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69a637adb46cf9f570203407e019bd3e3821ae21))
+* **FormSelect:** fully remove deprecated object options syntax fixes [#1593](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1593) ([69a637a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69a637adb46cf9f570203407e019bd3e3821ae21))
+* rename "Toast" type to OrchestratedToast ([ca16a16](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ca16a168687dc0e17d6dc5c6210205c1911dd793))
+* rename BreadcrumbItem =&gt; BreadcrumbItemRaw ([69a637a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69a637adb46cf9f570203407e019bd3e3821ae21))
+* rename BreadcrumbItemObject =&gt; BreadcrumbItem ([69a637a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69a637adb46cf9f570203407e019bd3e3821ae21))
+* rename BToaster =&gt; BToastOrchestrator ([#1697](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1697)) ([289391a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/289391a00e4aa397149ee7c280368800147e9546))
+* rename BToaster =&gt; BToastOrchestrator... This is to make a more generic name that conforms with the new BModalOrchestrator... If other orchestrating components are added, they should use this format as well ([289391a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/289391a00e4aa397149ee7c280368800147e9546))
+* rename SelectOption =&gt; SelectOptionRaw ([69a637a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69a637adb46cf9f570203407e019bd3e3821ae21))
+* rename SelectOptionObject =&gt; SelectOpttion ([69a637a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69a637adb46cf9f570203407e019bd3e3821ae21))
+* rename TableField =&gt; TableFieldRaw ([69a637a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69a637adb46cf9f570203407e019bd3e3821ae21))
+* rename TableFieldObject =&gt; TableField ([69a637a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69a637adb46cf9f570203407e019bd3e3821ae21))
+* rename TableFieldObjectFormatter =&gt; TableFieldFormatter ([69a637a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69a637adb46cf9f570203407e019bd3e3821ae21))
+* rename types to be more in line with the standard in vue-route… ([#1699](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1699)) ([69a637a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69a637adb46cf9f570203407e019bd3e3821ae21))
+* rename types to be more in line with the standard in vue-router (copying example RouteLocationRaw applies to TableFieldRaw, for example) ([69a637a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69a637adb46cf9f570203407e019bd3e3821ae21))
+* required vue 3.4 ([ca16a16](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ca16a168687dc0e17d6dc5c6210205c1911dd793))
+* use createBootstrap function for the plugin definition ([f10fc5f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f10fc5f1c3e6305d7c109d92c2c6995178372649))
+* **useBreadcrumb:** return a ref instead of reactive ([afd7e5f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/afd7e5fbd1e8d4decb626c726590225d67804ba1))
+* **useModalController:** add confirm/show methods to globally create modals ([ca16a16](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ca16a168687dc0e17d6dc5c6210205c1911dd793))
+* **useModalController:** add confirm/show methods to globally create modals ([#1701](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1701)) ([ca16a16](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ca16a168687dc0e17d6dc5c6210205c1911dd793))
+* **useModalController:** redefine the parameters of "show" and "confirm" Instead of many parameters, we simply use a single object ([c542416](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c5424161be549cf11d73af4fca2ef1789ea2a201))
+* **useModalController:** redefine the parameters of "show" and "confirm" Instead of many parameters, we simply use a single object ([ef391c4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ef391c4e23d7bff92c5df90779279c6d3e917836))
+* **useModalController:** show/confirm accept reactive inputs ([ca16a16](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ca16a168687dc0e17d6dc5c6210205c1911dd793))
+* **useRtl:** implement useRtl composable https://getbootstrap.com/docs/5.3/getting-started/rtl/ ([69a637a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69a637adb46cf9f570203407e019bd3e3821ae21))
+* **useToast:** redefine the parameters of "show" ([#1709](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1709)) ([ef391c4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ef391c4e23d7bff92c5df90779279c6d3e917836))
+* **useToast:** redefine the parameters of "show". Instead of many p… ([#1712](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1712)) ([c542416](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c5424161be549cf11d73af4fca2ef1789ea2a201))
+* **useToast:** redefine the parameters of "show". Instead of many parameters, we simply use a single object ([c542416](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c5424161be549cf11d73af4fca2ef1789ea2a201))
+* **useToast:** redefine the parameters of "show". Instead of many parameters, we simply use a single object ([ef391c4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ef391c4e23d7bff92c5df90779279c6d3e917836))
+* **useToast:** rename "hide" to "remove" to be more in line with useModalController ([ca16a16](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ca16a168687dc0e17d6dc5c6210205c1911dd793))
+* **useToast:** show to accept reactive inputs ([ca16a16](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ca16a168687dc0e17d6dc5c6210205c1911dd793))
+
+
+### Bug Fixes
+
+* **BFormCheckbox:** Correct casing of property ariaLabelledby , ariaLabelledBy =&gt; ariaLabelledby ([0908731](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0908731135ef0f8207c0dd47b84c6494f771b193))
+* **BFormTags:** dark mode compatibility ([6b1dd1b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6b1dd1bcdd10df6afdc9ba2c5776d6839beca30e))
+* **BModal:** modal emits show and hide more than once fixes [#1655](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1655) ([937293f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/937293f427047afbf56f17884be48a580d26d681))
+* **BPagination:** re-implemented the missing first-page and last-page ([697fb7e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/697fb7ea769d4ffe7f26ab8b588faf55912b4571))
+* **BScrollspy:** "isObject" check rejects null value ([69a637a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69a637adb46cf9f570203407e019bd3e3821ae21))
+* **BTable:** do not run provider function when does not use provider ([51a729e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/51a729e4b36c58566a4f32dd1736b398fc51ca35))
+* **BTable:** double fetch of provider when using filter fixes [#1635](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1635) ([37180b3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/37180b378fbd092be8879026759e3495a77f5b04))
+* **BTable:** emitting and listening to hover events ([c5c98c1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c5c98c10230b3786b9a4fa6e3f8ba076d565d354))
+* **BTable:** emitting and listening to hover events ([#1689](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1689)) ([c5c98c1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c5c98c10230b3786b9a4fa6e3f8ba076d565d354))
+* **BToast:** close event no longer is start of transition, use "hide" event. Close event now corresponds to when close button is clicked during the hide process ([afd7e5f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/afd7e5fbd1e8d4decb626c726590225d67804ba1))
+* **BToast:** rebuild events to match https://getbootstrap.com/docs/5.3/components/toasts/#events (hide, hidden, show, shown) ([afd7e5f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/afd7e5fbd1e8d4decb626c726590225d67804ba1))
+* **BToast:** remove autohide property -- use modelValue ([7f6faa9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7f6faa929748e96361986a69c5dac47586f5461d))
+* **BToast:** remove delay prop fixes [#1638](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1638) ([b06c4fe](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b06c4fe25fc625fd9f7a45df9ad3f5bdb5984ce1))
+* **BToggle:** Passing ID as arg or href broken in v0.15 ([553c554](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/553c554b177f2ec013e24526609c725b623de030))
+* rebuild "global variable" system to use app-level provide inject. Review documentation installation guide ([#1719](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1719)) ([afd7e5f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/afd7e5fbd1e8d4decb626c726590225d67804ba1))
+* Remove [@input](https://github.com/input) in favor of [@update](https://github.com/update):modelValue fixes [#1657](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1657) ([aa8bf85](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/aa8bf85960eef92f8b9f7378c29c77b3bc3c3657))
+* **table:** table detail row color when striped fixes [#1716](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1716) ([8b20f3c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8b20f3c1da7887ff8e4d379f677437f95dd694c1))
+* use esm build of vite ([fb47e98](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/fb47e98317e29f7ef66d148c9bc5ad3451b00c7e))
+
+
+### Performance Improvements
+
+* **BTabs:** more efficient unregisterTab function ([ca16a16](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ca16a168687dc0e17d6dc5c6210205c1911dd793))
+* **useToast:** use shallowRef ([ca16a16](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ca16a168687dc0e17d6dc5c6210205c1911dd793))
+
 ## [0.15.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.15.4...bootstrapvuenext-v0.15.5) (2023-11-23)
 
 
