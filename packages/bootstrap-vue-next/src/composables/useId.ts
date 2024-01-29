@@ -17,7 +17,6 @@ export default (
 
   onMounted(() =>
     nextTick(() => {
-      debugger
       if (!localId.value) {
         localId.value = getId(suffix)
       }
