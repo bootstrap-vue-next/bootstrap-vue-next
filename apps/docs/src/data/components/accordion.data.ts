@@ -38,11 +38,6 @@ export default {
           name: 'default',
           description: 'Content to place in the Accordion',
         },
-        {
-          scope: [],
-          name: 'title',
-          description: 'Content to place in the header of the Accordion',
-        },
       ],
     },
     {
@@ -119,7 +114,18 @@ export default {
         },
       ],
       emits: [],
-      slots: [],
+      slots: [
+        {
+          scope: [],
+          name: 'default',
+          description: 'Content to place in the AccordionItem',
+        },
+        {
+          scope: [],
+          name: 'title',
+          description: 'Content to place in the header of the AccordionItem',
+        },
+      ],
     },
   ],
 }
