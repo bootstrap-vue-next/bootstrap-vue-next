@@ -14,6 +14,132 @@ For cross browser consistency, `BFormCheckboxGroup` and `BFormCheckbox` use Boot
 
 </div>
 
+**Example 1:** Single checkbox
+
+<HighlightCard>
+  <div>
+    <BFormCheckbox
+      id="checkbox-1"
+      v-model="status"
+      name="checkbox-1"
+      value="accepted"
+      unchecked-value="not_accepted"
+    >
+      I accept the terms and use
+    </BFormCheckbox>
+    <div>
+      State: <strong>{{ status }}</strong>
+    </div>
+  </div>
+  <template #html>
+
+```vue
+<template>
+  <div>
+    <BFormCheckbox
+      id="checkbox-1"
+      v-model="status"
+      name="checkbox-1"
+      value="accepted"
+      unchecked-value="not_accepted"
+    >
+      I accept the terms and use
+    </BFormCheckbox>
+
+    <div>
+      State: <strong>{{ status }}</strong>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import {ref} from 'vue'
+const status = ref(false)
+</script>
+```
+
+  </template>
+</HighlightCard>
+
+**Example 2:** Multiple choice checkboxes
+
+<HighlightCard>
+  <div>
+    <b-form-group label="Using options array:" v-slot="{ ariaDescribedby }">
+      <b-form-checkbox-group
+        id="checkbox-group-1"
+        v-model="selected"
+        :options="options"
+        :aria-describedby="ariaDescribedby"
+        name="flavour-1"
+      ></b-form-checkbox-group>
+    </b-form-group>
+    <b-form-group label="Using sub-components:" v-slot="{ ariaDescribedby }">
+      <b-form-checkbox-group
+        id="checkbox-group-2"
+        v-model="selected"
+        :aria-describedby="ariaDescribedby"
+        name="flavour-2"
+      >
+        <b-form-checkbox value="orange">Orange</b-form-checkbox>
+        <b-form-checkbox value="apple">Apple</b-form-checkbox>
+        <b-form-checkbox value="pineapple">Pineapple</b-form-checkbox>
+        <b-form-checkbox value="grape">Grape</b-form-checkbox>
+      </b-form-checkbox-group>
+    </b-form-group>
+    <div>Selected: <strong>{{ selected }}</strong></div>
+  </div>
+
+<template #html>
+
+```vue
+<template>
+  <div>
+    <b-form-group label="Using options array:" v-slot="{ariaDescribedby}">
+      <b-form-checkbox-group
+        id="checkbox-group-1"
+        v-model="selected"
+        :options="options"
+        :aria-describedby="ariaDescribedby"
+        name="flavour-1"
+      ></b-form-checkbox-group>
+    </b-form-group>
+
+    <b-form-group label="Using sub-components:" v-slot="{ariaDescribedby}">
+      <b-form-checkbox-group
+        id="checkbox-group-2"
+        v-model="selected"
+        :aria-describedby="ariaDescribedby"
+        name="flavour-2"
+      >
+        <b-form-checkbox value="orange">Orange</b-form-checkbox>
+        <b-form-checkbox value="apple">Apple</b-form-checkbox>
+        <b-form-checkbox value="pineapple">Pineapple</b-form-checkbox>
+        <b-form-checkbox value="grape">Grape</b-form-checkbox>
+      </b-form-checkbox-group>
+    </b-form-group>
+
+    <div>
+      Selected: <strong>{{ selected }}</strong>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+const selected = ref([])
+
+const options = [
+  {text: 'Orange', value: 'orange'},
+  {text: 'Apple', value: 'apple'},
+  {text: 'Pineapple', value: 'pineapple'},
+  {text: 'Grape', value: 'grape'},
+]
+</script>
+```
+
+  </template>
+</HighlightCard>
+
 ## Checkbox group options array
 
 `options` can be an array of strings or objects. Available fields:
@@ -130,6 +256,7 @@ If you want to customize the field property names (for example using `name` fiel
 </template>
 
 <script setup lang="ts">
+import {ref} from 'vue'
 const checkEx2Selected = ref(['A'])
 
 const checkEx2Options = [
@@ -186,6 +313,8 @@ Note: the unchecked-value prop does not affect the native `<input>`'s `value` at
 </template>
 
 <script setup lang="ts">
+import {ref} from 'vue'
+
 const availableCars = ['BMW', 'Mercedes', 'Toyota']
 const selectedCars = ref([])
 
@@ -256,56 +385,69 @@ or if using individual checkboxes not inside a `BFormCheckboxGroup`, set the `in
   </BFormCheckbox>
   <template #html>
 
-```vue-html
-<div class="my-2">
-  <label>Form-checkbox-group inline checkboxes (default)</label>
-</div>
+```vue
+<template>
+  <div class="my-2">
+    <label>Form-checkbox-group inline checkboxes (default)</label>
+  </div>
 
-<BFormCheckboxGroup
-  v-model="checkEx3Selected"
-  :options="checkEx3Options"
-  name="flavour-1a"
-/>
+  <BFormCheckboxGroup
+    v-model="checkEx3Selected"
+    :options="checkEx3Options"
+    name="flavour-1a"
+  />
 
-<div class="my-2">
-  <label>Form-checkbox-group stacked checkboxes</label>
-</div>
+  <div class="my-2">
+    <label>Form-checkbox-group stacked checkboxes</label>
+  </div>
 
-<BFormCheckboxGroup
-  v-model="checkEx3Selected"
-  :options="checkEx3Options"
-  name="flavour-2a"
-  stacked
-/>
+  <BFormCheckboxGroup
+    v-model="checkEx3Selected"
+    :options="checkEx3Options"
+    name="flavour-2a"
+    stacked
+  />
 
-<div class="my-2">
-  <label>Individual stacked checkboxes (default)</label>
-</div>
+  <div class="my-2">
+    <label>Individual stacked checkboxes (default)</label>
+  </div>
 
-<BFormCheckbox
-  v-for="option in checkEx3Options"
-  v-model="checkEx3Selected"
-  :key="option.value"
-  :value="option.value"
-  name="flavour-3a"
->
-  {{ option.text }}
-</BFormCheckbox>
+  <BFormCheckbox
+    v-for="option in checkEx3Options"
+    v-model="checkEx3Selected"
+    :key="option.value"
+    :value="option.value"
+    name="flavour-3a"
+  >
+    {{ option.text }}
+  </BFormCheckbox>
 
-<div class="my-2">
-  <label>Individual inline checkboxes</label>
-</div>
+  <div class="my-2">
+    <label>Individual inline checkboxes</label>
+  </div>
 
-<BFormCheckbox
-  v-for="option in checkEx3Options"
-  v-model="checkEx3Selected"
-  :key="option.value"
-  :value="option.value"
-  name="flavour-4a"
-  inline
->
-  {{ option.text }}
-</BFormCheckbox>
+  <BFormCheckbox
+    v-for="option in checkEx3Options"
+    v-model="checkEx3Selected"
+    :key="option.value"
+    :value="option.value"
+    name="flavour-4a"
+    inline
+  >
+    {{ option.text }}
+  </BFormCheckbox>
+</tempalte>
+<script setup lang='ts'>
+import {ref} from 'vue'
+const checkEx3Selected = ref(['A'])
+
+const checkEx3Options = [
+  { text: 'Orange', value: 'orange' },
+  { text: 'Apple', value: 'apple' },
+  { text: 'Pineapple', value: 'pineapple' },
+  { text: 'Grape', value: 'grape' }
+]
+</script>
 ```
 
   </template>
@@ -343,26 +485,32 @@ A single checkbox can be rendered with a button appearance by setting the prop b
 Change the button variant by setting the button-variant prop to one of the standard Bootstrap button variants (see `BButton` for supported variants). The default variant is secondary.
 
 <HighlightCard>
-  <BFormCheckbox v-model="button1Checked" class="m-2" button>
-    Button Checkbox (Checked: {{ button1Checked }})
-  </BFormCheckbox>
-  <BFormCheckbox v-model="button2Checked" class="m-2" button button-variant="danger">
-    Button Checkbox (Checked: {{ button2Checked }})
-  </BFormCheckbox>
+  <div class="hstack gap-3">
+    <BFormCheckbox v-model="button1Checked" button>
+      Button Checkbox (Checked: {{ button1Checked }})
+    </BFormCheckbox>
+    <BFormCheckbox v-model="button2Checked" button button-variant="danger">
+      Button Checkbox (Checked: {{ button2Checked }})
+    </BFormCheckbox>
+  </div>
   <template #html>
 
 ```vue
 <template>
-  <BFormCheckbox v-model="button1Checked" button>
-    Button Checkbox (Checked: {{ button1Checked }})
-  </BFormCheckbox>
+  <div class="hstack gap-3">
+    <BFormCheckbox v-model="button1Checked" button>
+      Button Checkbox (Checked: {{ button1Checked }})
+    </BFormCheckbox>
 
-  <BFormCheckbox v-model="button2Checked" button button-variant="danger">
-    Button Checkbox (Checked: {{ button2Checked }})
-  </BFormCheckbox>
+    <BFormCheckbox v-model="button2Checked" button button-variant="danger">
+      Button Checkbox (Checked: {{ button2Checked }})
+    </BFormCheckbox>
+  </div>
 </template>
 
 <script setup lang="ts">
+import {ref} from 'vue'
+
 const button1Checked = ref(false)
 const button2Checked = ref(false)
 </script>
@@ -444,13 +592,15 @@ variants). The default `button-variant` is `secondary`.
 </template>
 
 <script setup lang="ts">
+import {ref} from 'vue'
+
 const checkEx3Selected = ref(['A'])
 
 const checkEx3Options = [
-  {item: 'A', name: 'Option A'},
-  {item: 'B', name: 'Option B'},
-  {item: 'D', name: 'Option C', notEnabled: true},
-  {item: {d: 1}, name: 'Option D'},
+  {text: 'Orange', value: 'orange'},
+  {text: 'Apple', value: 'apple'},
+  {text: 'Pineapple', value: 'pineapple'},
+  {text: 'Grape', value: 'grape'},
 ]
 </script>
 ```
@@ -481,6 +631,8 @@ A single checkbox can be rendered with a switch appearance by setting the prop s
 </template>
 
 <script setup lang="ts">
+import {ref} from 'vue'
+
 const switchChecked = ref(false)
 </script>
 ```
@@ -534,6 +686,8 @@ Render groups of checkboxes with the look of a switches by setting the prop `swi
 </template>
 
 <script setup lang="ts">
+import {ref} from 'vue'
+
 const groupSwitchSelected = ref([])
 
 const groupSwitchOptions = [
@@ -599,27 +753,32 @@ by setting the `plain` prop.
   />
   <template #html>
 
-```vue-html
-<div class="my-2">
-  <label>Plain inline checkboxes</label>
-</div>
+```vue
+<template>
+  <div class="my-2">
+    <label>Plain inline checkboxes</label>
+  </div>
 
-<BFormCheckboxGroup
-  v-model="groupSwitchSelected"
-  :options="groupSwitchOptions"
-  plain
-/>
+  <BFormCheckboxGroup v-model="groupSwitchSelected" :options="groupSwitchOptions" plain />
 
-<div class="my-2">
-  <label>Plain stacked checkboxes</label>
-</div>
+  <div class="my-2">
+    <label>Plain stacked checkboxes</label>
+  </div>
 
-<BFormCheckboxGroup
-  v-model="groupSwitchSelected"
-  :options="groupSwitchOptions"
-  plain
-  stacked
-/>
+  <BFormCheckboxGroup v-model="groupSwitchSelected" :options="groupSwitchOptions" plain stacked />
+</template>
+
+<script setup lang="ts">
+import {ref} from 'vue'
+
+const groupSwitchSelected = ref([])
+const groupSwitchOptions = [
+  {text: 'Red', value: 'red'},
+  {text: 'Green', value: 'green'},
+  {text: 'Yellow (disabled)', value: 'yellow', disabled: true},
+  {text: 'Blue', value: 'blue'},
+]
+</script>
 ```
 
   </template>
@@ -676,6 +835,8 @@ To apply one of the contextual state icons on `BFormCheckbox`, set the `state` p
 </template>
 
 <script setup lang="ts">
+import {computed, ref} from 'vue'
+
 const contextualStateOptions = [
   {text: 'First Check', value: 'first'},
   {text: 'Second Check', value: 'second'},
@@ -746,8 +907,121 @@ The indeterminate state is **visual only**. The checkbox is still either checked
 </template>
 
 <script setup lang="ts">
+import {ref} from 'vue'
+
 const intermChecked = ref(true)
 const indeterminate = ref(true)
+</script>
+```
+
+  </template>
+</HighlightCard>
+
+**Indeterminate checkbox use-case example:**
+
+<HighlightCard>
+  <div>
+        <BFormGroup>
+          <template #label>
+            <b>Choose your flavors:</b><br />
+            <BFormCheckbox
+              v-model="allSelected"
+              v-model:indeterminate="asIndeterminate"
+              aria-describedby="flavors"
+              aria-controls="flavors"
+              @change="toggleAll"
+            >
+              {{ allSelected ? 'Un-select All' : 'Select All' }}
+            </BFormCheckbox>
+          </template>
+          <template #default="{ariaDescribedby}">
+            <BFormCheckboxGroup
+              id="flavors"
+              v-model="flavorSelected"
+              :options="flavors"
+              :aria-describedby="ariaDescribedby"
+              name="flavors"
+              class="ms-4"
+              aria-label="Individual flavors"
+              stacked
+            />
+          </template>
+        </BFormGroup>
+        <div>
+          Selected: <strong>{{ flavorSelected }}</strong
+          ><br />
+          All Selected: <strong>{{ allSelected }}</strong
+          ><br />
+          Indeterminate: <strong>{{ asIndeterminate }}</strong>
+        </div>
+  </div>
+  <template #html>
+
+```vue
+<template>
+  <BFormGroup>
+    <template #label>
+      <b>Choose your flavors:</b><br />
+      <BFormCheckbox
+        v-model="allSelected"
+        v-model:indeterminate="asIndeterminate"
+        aria-describedby="flavors"
+        aria-controls="flavors"
+        @change="toggleAll"
+      >
+        {{ allSelected ? 'Un-select All' : 'Select All' }}
+      </BFormCheckbox>
+    </template>
+
+    <template #default="{ariaDescribedby}">
+      <BFormCheckboxGroup
+        id="flavors"
+        v-model="flavorSelected"
+        :options="flavors"
+        :aria-describedby="ariaDescribedby"
+        name="flavors"
+        class="ms-4"
+        aria-label="Individual flavors"
+        stacked
+      />
+    </template>
+  </BFormGroup>
+
+  <div>
+    Selected: <strong>{{ flavorSelected }}</strong
+    ><br />
+    All Selected: <strong>{{ allSelected }}</strong
+    ><br />
+    Indeterminate: <strong>{{ asIndeterminate }}</strong>
+  </div>
+</template>
+
+<script setup lang="ts">
+import {ref, watch} from 'vue'
+import {type CheckboxValue} from 'bootstrap-vue-next'
+
+const flavors = ['Orange', 'Grape', 'Apple', 'Lime', 'Very Berry']
+const flavorSelected = ref<string[]>([])
+const allSelected = ref(false)
+const asIndeterminate = ref(false)
+
+const toggleAll = (checked: CheckboxValue | CheckboxValue[]) => {
+  flavorSelected.value = checked ? flavors.slice() : []
+}
+
+watch(flavorSelected, (newValue: string[]) => {
+  // Handle changes in individual flavor checkboxes
+  if (newValue.length === 0) {
+    asIndeterminate.value = false
+    allSelected.value = false
+  } else if (newValue.length === flavors.length) {
+    asIndeterminate.value = false
+    allSelected.value = true
+  } else {
+    asIndeterminate.value = true
+    allSelected.value = false
+  }
+})
 </script>
 ```
 
@@ -758,11 +1032,21 @@ const indeterminate = ref(true)
 
 <script setup lang="ts">
 import {data} from '../../data/components/formCheckbox.data'
-import {ref, computed} from 'vue'
+import {computed, ref, watch} from 'vue'
 import ComponentReference from '../../components/ComponentReference.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import CrossSiteScriptingWarning from '../../components/CrossSiteScriptingWarning.vue'
-import {BButton, BFormCheckboxGroup, BFormCheckbox, BCard, BCardBody, BAlert} from 'bootstrap-vue-next'
+import {BButton, BFormCheckboxGroup, BFormCheckbox, BFormGroup, BCard, BCardBody, BAlert} from 'bootstrap-vue-next'
+
+const status = ref(false);
+const selected = ref([]);
+
+const options = [
+  { text: 'Orange', value: 'orange' },
+  { text: 'Apple', value: 'apple' },
+  { text: 'Pineapple', value: 'pineapple' },
+  { text: 'Grape', value: 'grape' }
+]
 
 const button1Checked = ref(false);
 const button2Checked = ref(false);
@@ -806,4 +1090,27 @@ const contextualStateOptions = [
 
 const contextualSelected = ref([]);
 const contextualState = computed(() => contextualSelected.value.length === 2);
+
+const flavors = ['Orange', 'Grape', 'Apple', 'Lime', 'Very Berry']
+const flavorSelected = ref<string[]>([])
+const allSelected = ref(false)
+const asIndeterminate = ref(false)
+
+const toggleAll = (checked: CheckboxValue | CheckboxValue[]) => {
+  flavorSelected.value = checked ? flavors.slice() : []
+}
+
+watch(flavorSelected, (newValue: string[]) => {
+  // Handle changes in individual flavor checkboxes
+  if (newValue.length === 0) {
+    asIndeterminate.value = false
+    allSelected.value = false
+  } else if (newValue.length === flavors.length) {
+    asIndeterminate.value = false
+    allSelected.value = true
+  } else {
+    asIndeterminate.value = true
+    allSelected.value = false
+  }
+})
 </script>
