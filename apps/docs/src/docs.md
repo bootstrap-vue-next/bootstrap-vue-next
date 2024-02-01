@@ -95,7 +95,7 @@ npm i bootstrap bootstrap-vue-next
 ```typescript
 // main.js/ts
 import {createApp} from 'vue'
-import {createBoostrap} from 'bootstrap-vue-next'
+import {createBootstrap} from 'bootstrap-vue-next'
 
 // Add the necessary CSS
 import 'bootstrap/dist/css/bootstrap.css'
