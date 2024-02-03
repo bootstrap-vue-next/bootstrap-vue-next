@@ -8,6 +8,13 @@
     {{ f }}
     {{ toast }}
     <BButton @click="toast.show({props: {title: 'Hello World!'}})">Show Global Toast</BButton>
+    <BFormSelect v-model="formSelectMultipleSelected" class="mb-3" multiple>
+      <template #first>
+        <BFormSelectOption :value="null" disabled>-- Please select an option --</BFormSelectOption>
+      </template>
+      <BFormSelectOption value="C">Option C</BFormSelectOption>
+      <BFormSelectOption value="D">Option D</BFormSelectOption>
+    </BFormSelect>
   </div>
 </template>
 
@@ -19,4 +26,5 @@ useColorMode()
 useModal()
 useModalController()
 const toast = useToast()
+const formSelectMultipleSelected = ref([])
 </script>
