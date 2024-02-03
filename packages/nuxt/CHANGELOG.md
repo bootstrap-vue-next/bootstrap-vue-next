@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.16.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.16.0...nuxt-v0.16.1) (2024-02-03)
+
+
+### Bug Fixes
+
+* **nuxt:** defineNuxtPlugin is not defined fixes [#1741](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1741) ([a5e76d6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a5e76d6111d06d3555e6677f128ed9b84af1a66f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.16.1
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.16.1
+
 ## [0.16.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.15.5...nuxt-v0.16.0) (2024-01-28)
 
 
