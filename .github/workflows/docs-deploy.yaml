@@ -22,25 +22,20 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - name: Clone Repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Check if BVN Release
-        run: |
-          if [[ ${{ github.event.release.tag_name }} == bootstrapvuenext* ]]; then
-            echo "Running job for bootstrapvuenext release..."
-            # Put the rest of your job steps here
-          else
-            echo "Not a bootstrapvuenext release, skipping job..."
-            exit 0
-          fi
+      - name: Early Exit If Not BVN release
+        if: startsWith(github.event.release.tag_name, 'bootstrapvuenext') == false
+        run: exit 0
 
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20.x.x
+
+
+      - name: Clone Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Install PNPM
         uses: pnpm/action-setup@v2
@@ -75,5 +70,6 @@ jobs:
           path: ./apps/docs/.vitepress/dist
 
       - name: Deploy Pages
+        if: startsWith(github.event.release.tag_name, 'bootstrapvuenext')
         id: deployment
         uses: actions/deploy-pages@v1
