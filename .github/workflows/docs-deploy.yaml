@@ -3,13 +3,8 @@
 name: docs-github-pages-deploy
 
 on:
-  push:
-    paths:
-      - 'apps/docs/**'
-      - '.github/workflows/docs-deploy.yaml'
-    branches:
-      - main
-  workflow_dispatch: {}
+  release:
+    types: [published]
 
 jobs:
   build-and-deploy:
@@ -31,6 +26,16 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Check if BVN Release
+        run: |
+          if [[ ${{ github.event.release.tag_name }} == bootstrapvuenext* ]]; then
+            echo "Running job for bootstrapvuenext release..."
+            # Put the rest of your job steps here
+          else
+            echo "Not a bootstrapvuenext release, skipping job..."
+            exit 0
+          fi
 
       - name: Install Node.js
         uses: actions/setup-node@v3
