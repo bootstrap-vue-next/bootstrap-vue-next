@@ -3,13 +3,8 @@
 name: docs-github-pages-deploy
 
 on:
-  push:
-    paths:
-      - 'apps/docs/**'
-      - '.github/workflows/docs-deploy.yaml'
-    branches:
-      - main
-  workflow_dispatch: {}
+  release:
+    types: [published]
 
 jobs:
   build-and-deploy:
@@ -27,6 +22,10 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
+      - name: Early Exit If Not BVN release
+        if: startsWith(github.event.release.tag_name, 'bootstrapvuenext') == false
+        run: exit 0
+
       - name: Clone Repository
         uses: actions/checkout@v4
         with:
