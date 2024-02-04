@@ -1,36 +1,44 @@
 <template>
-  <label v-if="hasLabelSlot || label" :for="computedId" class="form-label" :class="labelClass">
+  <label v-if="hasLabelSlot || label" class="form-label" :class="labelClass">
     <slot name="label">
       {{ label }}
     </slot>
   </label>
-  <input
-    :id="computedId"
-    v-bind="$attrs"
-    ref="input"
-    type="file"
-    class="form-control"
-    :class="computedClasses"
-    :form="form"
-    :name="name"
-    :multiple="multipleBoolean"
-    :disabled="disabledBoolean"
-    :capture="computedCapture"
-    :accept="computedAccept || undefined"
-    :required="requiredBoolean || undefined"
-    :aria-required="requiredBoolean || undefined"
-    :directory="directoryBoolean"
-    :webkitdirectory="directoryBoolean"
-    @change="onChange"
-    @drop="onDrop"
-  />
+  <div class="input-group file-button">
+    <label v-if="placement === 'start'" class="input-group-text" :for="computedId">{{
+      browserText
+    }}</label>
+    <input
+      :id="computedId"
+      v-bind="$attrs"
+      ref="input"
+      type="file"
+      class="form-control"
+      :class="computedClasses"
+      :form="form"
+      :name="name"
+      :multiple="multipleBoolean"
+      :disabled="disabledBoolean"
+      :capture="computedCapture"
+      :accept="computedAccept || undefined"
+      :required="requiredBoolean || undefined"
+      :aria-required="requiredBoolean || undefined"
+      :directory="directoryBoolean"
+      :webkitdirectory="directoryBoolean"
+      @change="onChange"
+      @drop="onDrop"
+    />
+    <label v-if="placement === 'end'" class="input-group-text" :for="computedId">{{
+      browserText
+    }}</label>
+  </div>
 </template>
 
 <script setup lang="ts">
-import {computed, ref, toRef, watch} from 'vue'
 import {useFocus, useVModel} from '@vueuse/core'
-import type {Booleanish, ClassValue, Size} from '../../types'
+import {computed, ref, toRef, watch} from 'vue'
 import {useBooleanish, useId, useStateClass} from '../../composables'
+import type {Booleanish, ClassValue, Size} from '../../types'
 import {isEmptySlot} from '../../utils'
 
 defineOptions({
@@ -46,6 +54,7 @@ const props = withDefaults(
   defineProps<{
     accept?: string | readonly string[]
     autofocus?: Booleanish
+    browserText?: string
     capture?: Booleanish | 'user' | 'environment'
     directory?: Booleanish
     disabled?: Booleanish
@@ -58,6 +67,7 @@ const props = withDefaults(
     name?: string
     noDrop?: Booleanish
     noTraverse?: Booleanish
+    placement: 'start' | 'end'
     required?: Booleanish
     size?: Size
     state?: Booleanish | null
@@ -65,6 +75,7 @@ const props = withDefaults(
   {
     accept: '',
     autofocus: false,
+    browserText: 'Browse',
     // eslint-disable-next-line vue/require-valid-default-prop
     capture: false,
     directory: false,
@@ -78,6 +89,7 @@ const props = withDefaults(
     name: undefined,
     noDrop: false,
     noTraverse: false,
+    placement: 'start',
     required: false,
     size: undefined,
     state: null,
@@ -157,3 +169,25 @@ defineExpose({
   reset,
 })
 </script>
+
+<style scoped>
+.file-button {
+  input[type='file'] {
+    margin-left: -2px !important;
+
+    &::-webkit-file-upload-button {
+      display: none;
+    }
+    &::file-selector-button {
+      display: none;
+    }
+  }
+
+  &:hover {
+    label {
+      background-color: #dde0e3;
+      cursor: pointer;
+    }
+  }
+}
+</style>

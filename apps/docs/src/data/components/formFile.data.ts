@@ -9,103 +9,141 @@ export default {
           prop: 'accept',
           type: 'string | string[]',
           default: '',
+          description: "Value to set on the file input's `accept` attribute",
         },
         {
           prop: 'autofocus',
           type: 'Booleanish',
           default: false,
+          description:
+            'When set to `true`, attempts to auto-focus the control when it is mounted, or re-activated when in a keep-alive. Does not set the `autofocus` attribute on the control',
         },
         {
           prop: 'capture',
           type: "'Booleanish' | 'user' | 'environment'",
           default: false,
+          description:
+            'When set, will instruction the browser to use the devices camera (if supported)',
         },
         {
           prop: 'directory',
           type: 'Booleanish',
           default: false,
+          description: 'Enable `directory` mode (on browsers that support it)',
         },
         {
           prop: 'disabled',
           type: 'Booleanish',
           default: false,
+          description:
+            "When set to `true`, disables the component's functionality and places it in a disabled state",
         },
         {
           prop: 'form',
           type: 'string',
           default: undefined,
+          description:
+            'ID of the form that the form control belongs to. Sets the `form` attribute on the control',
         },
         {
           prop: 'id',
           type: 'string',
           default: undefined,
+          description:
+            'Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed',
         },
         {
           prop: 'multiple',
           type: 'Booleanish',
           default: false,
+          description:
+            'When set, will allow multiple files to be selected. `v-model` will be an array',
         },
         {
           prop: 'name',
           type: 'string',
           default: undefined,
+          description: 'Sets the value of the `name` attribute on the form control',
         },
         {
           prop: 'noDrop',
           type: 'Booleanish',
           default: false,
+          description: 'Disable drag and drop mode',
         },
         {
           prop: 'noTraverse',
           type: 'Booleanish',
           default: false,
+          description: 'Wether to returns files as a flat array when in `directory` mode',
         },
         {
           prop: 'required',
           type: 'Booleanish',
           default: false,
+          description: 'Adds the `required` attribute to the form control',
         },
         {
           prop: 'size',
           type: 'Size',
           default: undefined,
+          description: "Set the size of the component's appearance. 'sm', 'md' (default), or 'lg'",
         },
         {
           prop: 'state',
           type: 'Booleanish | null',
           default: undefined,
+          description:
+            'Controls the validation state appearance of the component. `true` for valid, `false` for invalid, or `null` for no validation state',
         },
         {
           prop: 'modelValue',
           type: 'File[] | File | null',
           default: undefined,
+          description:
+            'The current value of the file input. Will be a single `File` object or an array of `File` objects (if `multiple` or `directory` is set). Can be set to `null`, or an empty array to reset the file input',
         },
         {
           prop: 'label',
           type: 'string',
           default: '',
+          description: 'Sets the label for the form group which the file input is rendered',
         },
         {
           prop: 'labelClass',
           type: 'ClassValue',
           default: undefined,
+          description: 'Sets the styling for the label',
+        },
+        {
+          prop: 'placement',
+          type: `'start' | 'end'`,
+          default: `'start'`,
+          description: 'Sets the placement for the file button',
+        },
+        {
+          prop: 'browser',
+          type: 'String',
+          default: 'Browse',
+          description: 'Text content for the file browse button',
         },
       ],
       emits: [
         {
           event: 'update:modelValue',
-          description: '',
+          description: 'Updates the `v-model` value (see docs for more details)',
           args: [
             {
               arg: 'value',
               type: 'File | File[] | null',
-              description: '',
+              description:
+                'Will be a single File object in single mode or an array of File objects in multiple mode',
             },
           ],
         },
         {
           event: 'change',
-          description: '',
+          description: 'Original change event of the input',
           args: [
             {
               arg: 'value',
