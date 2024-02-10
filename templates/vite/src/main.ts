@@ -1,9 +1,15 @@
 import {createApp} from 'vue'
 import App from './App.vue'
-const app = createApp(App)
+import {createBootstrap} from 'bootstrap-vue-next'
 
-import {BootstrapVueNext} from 'bootstrap-vue-next'
 import 'bootstrap-styles/css/bootstrap.css'
 import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
-app.use(BootstrapVueNext)
-app.mount('#app')
+
+createApp(App)
+  .use(
+    createBootstrap({
+      components: true,
+      directives: true,
+    })
+  )
+  .mount('#app')

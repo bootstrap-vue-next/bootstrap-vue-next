@@ -15,6 +15,24 @@
       <BFormSelectOption value="C">Option C</BFormSelectOption>
       <BFormSelectOption value="D">Option D</BFormSelectOption>
     </BFormSelect>
+    <BCollapse id="collapse-1" class="mt-2">
+      <template #header="{visible, toggle, id}">
+        <h4>Custom Header</h4>
+        <p>Visible: {{ visible }}</p>
+        <BButton variant="primary" :aria-expanded="visible" :aria-controls="id" @click="toggle"
+          >Toggle</BButton
+        >
+      </template>
+      <BCard v-b-color-mode="'light'">
+        <p class="card-text">Collapse contents Here</p>
+        <BButton v-b-toggle.collapse-1-inner size="sm"
+          >Toggle Inner Collapse with directive</BButton
+        >
+        <BCollapse id="collapse-1-inner" class="mt-2">
+          <BCard>Hello!</BCard>
+        </BCollapse>
+      </BCard>
+    </BCollapse>
   </div>
 </template>
 
