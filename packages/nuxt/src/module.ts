@@ -56,6 +56,10 @@ export default defineNuxtModule<ModuleOptions>({
 
     nuxt.options.css.push('bootstrap-vue-next/dist/bootstrap-vue-next.css')
 
+    nuxt.options.vite.optimizeDeps = nuxt.options.vite.optimizeDeps || {}
+    nuxt.options.vite.optimizeDeps.include = nuxt.options.vite.optimizeDeps.include || []
+    nuxt.options.vite.optimizeDeps.include.push('bootstrap-vue-next')
+
     useComponents()
 
     if (Object.values(normalizedComposableOptions).some((el) => el === true)) {
