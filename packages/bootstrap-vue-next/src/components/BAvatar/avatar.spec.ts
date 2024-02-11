@@ -43,36 +43,43 @@ describe('avatar', () => {
     expect(wrapper.element.tagName).toBe('SPAN')
   })
 
-  it('`size` prop should work as expected', () => {
-    const wrapper1 = mount(BAvatar)
-    expect(wrapper1.attributes('style')).toEqual(undefined)
+  it('has class `b-avatar-sm` when prop size is `sm`', () => {
+    const wrapper = mount(BAvatar, {props: {size: 'sm'}})
+    expect(wrapper.attributes('style')).toEqual('')
+    expect(wrapper.classes()).toContain('b-avatar-sm')
+  })
 
-    const wrapper2 = mount(BAvatar, {props: {size: 'sm'}})
-    expect(wrapper2.attributes('style')).toEqual('')
-    expect(wrapper2.classes()).toContain('b-avatar-sm')
+  it('does not include default class `b-avatar-md` when prop size is `md`', () => {
+    const wrapper = mount(BAvatar, {props: {size: 'md'}})
+    expect(wrapper.attributes('style')).toEqual('')
+    expect(wrapper.classes()).not.toContain('b-avatar-md')
+  })
 
-    const wrapper3 = mount(BAvatar, {props: {size: 'md'}})
-    expect(wrapper3.attributes('style')).toEqual('')
-    expect(wrapper3.classes()).not.toContain('b-avatar-md')
+  it('has class `b-avatar-lg` when prop size is `lg`', () => {
+    const wrapper = mount(BAvatar, {props: {size: 'lg'}})
+    expect(wrapper.attributes('style')).toEqual('')
+    expect(wrapper.classes()).toContain('b-avatar-lg')
+  })
 
-    const wrapper4 = mount(BAvatar, {props: {size: 'lg'}})
-    expect(wrapper4.attributes('style')).toEqual('')
-    expect(wrapper4.classes()).toContain('b-avatar-lg')
+  it('converts to `px` when prop size is a numeric value', () => {
+    const wrapper1 = mount(BAvatar, {props: {size: 20}})
+    expect(wrapper1.attributes('style')).toEqual('width: 20px; height: 20px;')
+    const wrapper2 = mount(BAvatar, {props: {size: '24.5'}})
+    expect(wrapper2.attributes('style')).toEqual('width: 24.5px; height: 24.5px;')
+  })
 
-    const wrapper5 = mount(BAvatar, {props: {size: 20}})
-    expect(wrapper5.attributes('style')).toEqual('width: 20px; height: 20px;')
+  it('applies correct styles when prop size ends in `px`, `em` or `rem`', () => {
+    const wrapper1 = mount(BAvatar, {props: {size: '5px'}})
+    expect(wrapper1.attributes('style')).toEqual('width: 5px; height: 5px;')
+    const wrapper2 = mount(BAvatar, {props: {size: '5em'}})
+    expect(wrapper2.attributes('style')).toEqual('width: 5em; height: 5em;')
+    const wrapper3 = mount(BAvatar, {props: {size: '5rem'}})
+    expect(wrapper3.attributes('style')).toEqual('width: 5rem; height: 5rem;')
+  })
 
-    const wrapper6 = mount(BAvatar, {props: {size: '24.5'}})
-    expect(wrapper6.attributes('style')).toEqual('width: 24.5px; height: 24.5px;')
-
-    const wrapper7 = mount(BAvatar, {props: {size: '5em'}})
-    expect(wrapper7.attributes('style')).toEqual('width: 5em; height: 5em;')
-
-    const wrapper8 = mount(BAvatar, {props: {size: '36px'}})
-    expect(wrapper8.attributes('style')).toEqual('width: 36px; height: 36px;')
-
-    const wrapper9 = mount(BAvatar, {props: {size: '0x123'}})
-    expect(wrapper9.attributes('style')).toEqual('')
+  it('does not apply styles when prop size is a non-decimal numeric value', () => {
+    const wrapper = mount(BAvatar, {props: {size: '0x123'}})
+    expect(wrapper.attributes('style')).toEqual('')
   })
 
   // TODO not done
