@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.16.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.16.1...nuxt-v0.16.2) (2024-02-11)
+
+
+### Bug Fixes
+
+* **nuxt:** optimize `bootstrap-vue-next` fixes [#1758](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1758) ([1aba0d1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1aba0d1501f815dd7a1a15ed14e874a578d1db9f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.16.2
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.16.2
+
 ## [0.16.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.16.0...nuxt-v0.16.1) (2024-02-03)
 
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.16.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.16.1...bootstrapvuenext-v0.16.2) (2024-02-11)
+
+
+### Bug Fixes
+
+* **BAvatar:** replace useToNumber in useAvatarSize composable ([#1760](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1760)) ([a87c7d0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a87c7d091f2bfc6b10947aaa0def9c8e79bbb81c))
+
 ## [0.16.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.16.0...bootstrapvuenext-v0.16.1) (2024-02-03)
 
 
