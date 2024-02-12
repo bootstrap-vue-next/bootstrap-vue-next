@@ -406,10 +406,12 @@ const computedItems = computed<readonly TableItem<T>[]>(() => {
       const realVal = (ob: unknown): string =>
         typeof ob === 'object' && ob !== null ? JSON.stringify(ob) : ob?.toString() ?? ''
 
-      return realVal(a[sortKey as keyof T]).localeCompare(
-        realVal(b[sortKey as keyof T]),
-        props.sortCompareLocale,
-        props.sortCompareOptions
+      return (
+        realVal(a[sortKey as keyof T]).localeCompare(
+          realVal(b[sortKey as keyof T]),
+          props.sortCompareLocale,
+          props.sortCompareOptions
+        ) * (sortDescBoolean.value ? -1 : 1)
       )
     })
   }
