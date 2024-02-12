@@ -331,8 +331,8 @@ const itemAttributes = (
   fieldKey: string,
   attr?: TableFieldAttribute<typeof item>
 ) => {
-  const val = get(item, fieldKey) ?? {}
-  return attr && typeof attr === 'function' ? attr(val, fieldKey, item) : val
+  const val = get(item, fieldKey)
+  return attr && typeof attr === 'function' ? attr(val, fieldKey, item) : attr
 }
 
 const headerClicked = (
