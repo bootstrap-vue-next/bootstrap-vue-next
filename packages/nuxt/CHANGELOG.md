@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.16.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.16.2...nuxt-v0.16.3) (2024-02-13)
+
+
+### Features
+
+* **nuxt:** auto import directives ([#1770](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1770)) ([228e0f7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/228e0f7a61f92176f4aba78ddd2150dc4467d6cb))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.16.3
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.16.3
+
 ## [0.16.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.16.1...nuxt-v0.16.2) (2024-02-11)
 
 ### Bug Fixes

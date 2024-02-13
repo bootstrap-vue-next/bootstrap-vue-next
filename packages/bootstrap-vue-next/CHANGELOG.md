@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.16.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.16.2...bootstrapvuenext-v0.16.3) (2024-02-13)
+
+
+### Features
+
+* **nuxt:** auto import directives ([#1770](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1770)) ([228e0f7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/228e0f7a61f92176f4aba78ddd2150dc4467d6cb))
+
+
+### Bug Fixes
+
+* **BDropdown:** calculate size after displaying the dropdown. ([#1765](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1765)) ([9d6478b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9d6478b5bdc785c6767375d984fdb43ba42ea061))
+* **BFormSelect:** restored b-form-select prop fixes [#1739](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1739) ([2aaed19](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2aaed191511d8e219583c4fdc6a5af37c4113bac))
+
 ## [0.16.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.16.1...bootstrapvuenext-v0.16.2) (2024-02-11)
 
 ### Bug Fixes
