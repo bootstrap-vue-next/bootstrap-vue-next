@@ -21,42 +21,43 @@ export default defineNuxtModule<ModuleOptions>({
   setup(options, nuxt) {
     // @ts-ignore
     const {resolve} = createResolver(import.meta.url)
+    nuxt.options.build.transpile.push(resolve('./runtime'))
+    nuxt.options.css.push('bootstrap-vue-next/dist/bootstrap-vue-next.css')
+
     const normalizedComposableOptions = normalizeConfigurationValue(options.composables)
     const normalizedDirectiveOptions = normalizeConfigurationValue(options.directives)
 
-    // Add the base runtime plugin
-    addPlugin(resolve('./runtime/plugins/createBootstrap'))
+    nuxt.options.css.push('bootstrap-vue-next/dist/bootstrap-vue-next.css')
 
-    nuxt.options.build.transpile.push(resolve('./runtime'))
+    nuxt.options.vite.optimizeDeps = nuxt.options.vite.optimizeDeps || {}
+    nuxt.options.vite.optimizeDeps.include = nuxt.options.vite.optimizeDeps.include || []
+    nuxt.options.vite.optimizeDeps.include.push('bootstrap-vue-next')
+
+    // Add the base runtime plugin
+    addPlugin(resolve('./runtime/createBootstrap'))
 
     // Set transformAssetUrls
     const transformAssetUrls = Object.freeze({
       BImg: ['src'],
     })
-    if (nuxt.options.vite.vue === undefined) {
-      nuxt.options.vite.vue = {
-        template: {
-          transformAssetUrls,
-        },
-      }
-    } else if (nuxt.options.vite.vue.template === undefined) {
-      nuxt.options.vite.vue.template = {
-        transformAssetUrls,
-      }
-    } else if (nuxt.options.vite.vue.template.transformAssetUrls === undefined) {
-      nuxt.options.vite.vue.template.transformAssetUrls = transformAssetUrls
-    } else if (
-      // Do not overwrite user options
+
+    nuxt.options.vite.vue = nuxt.options.vite.vue || {}
+    nuxt.options.vite.vue.template = nuxt.options.vite.vue.template || {}
+    nuxt.options.vite.vue.template.transformAssetUrls =
+      nuxt.options.vite.vue.template.transformAssetUrls ?? {}
+
+    if (
+      typeof nuxt.options.vite.vue.template.transformAssetUrls !== 'boolean' &&
       !(
-        typeof nuxt.options.vite.vue.template.transformAssetUrls !== 'boolean' &&
-        ('BImg' in nuxt.options.vite.vue.template.transformAssetUrls ||
-          'b-img' in nuxt.options.vite.vue.template.transformAssetUrls)
+        'BImg' in nuxt.options.vite.vue.template.transformAssetUrls ||
+        'b-img' in nuxt.options.vite.vue.template.transformAssetUrls
       )
     ) {
-      Object.assign(nuxt.options.vite.vue.template.transformAssetUrls, transformAssetUrls)
+      nuxt.options.vite.vue.template.transformAssetUrls = {
+        ...nuxt.options.vite.vue.template.transformAssetUrls,
+        ...transformAssetUrls,
+      }
     }
-
-    nuxt.options.css.push('bootstrap-vue-next/dist/bootstrap-vue-next.css')
 
     // Add components
     useComponents()
@@ -73,7 +74,7 @@ export default defineNuxtModule<ModuleOptions>({
         directives: activeDirectives,
       }
 
-      addPlugin(resolve('./runtime/plugins/useDirectives'))
+      addPlugin(resolve('./runtime/useDirectives'))
     }
 
     // Add composables

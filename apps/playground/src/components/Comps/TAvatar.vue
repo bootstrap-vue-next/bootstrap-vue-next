@@ -1,6 +1,6 @@
 <template>
   <BContainer fluid>
-    <BRow>
+    <!-- <BRow>
       <BCol>
         <BAvatar button class="me-1" icon="person-fill" variant="secondary" />
       </BCol>
@@ -16,7 +16,7 @@
       <BCol>
         <BAvatar button class="me-5" src="https://placekitten.com/300/300" />
       </BCol>
-    </BRow>
+    </BRow> -->
 
     <BRow>
       <BCol>
