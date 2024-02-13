@@ -258,8 +258,9 @@ const floatingMiddleware = computed<Middleware[]>(() => {
         padding: props.boundaryPadding,
         apply({availableWidth, availableHeight}) {
           sizeStyles.value = {
-            maxHeight: availableHeight ? `${availableHeight}px` : undefined,
-            maxWidth: availableWidth ? `${availableWidth}px` : undefined,
+            maxHeight:
+              availableHeight && modelValueBoolean.value ? `${availableHeight}px` : undefined,
+            maxWidth: availableWidth && modelValueBoolean.value ? `${availableWidth}px` : undefined,
           }
         },
       })
