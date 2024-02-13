@@ -19,6 +19,10 @@
         v-if="isComplex(option)"
         :label="option.label"
         :options="option.options"
+        :value-field="valueField"
+        :text-field="textField"
+        :html-field="htmlField"
+        :disabled-field="disabledField"
       />
       <BFormSelectOption v-else :value="option.value" :disabled="option.disabled">
         <!-- eslint-disable-next-line vue/no-v-html -->
@@ -39,7 +43,6 @@ import type {
   ComplexSelectOptionRaw,
   Numberish,
   SelectOption,
-  SelectOptionRaw,
   Size,
 } from '../../types'
 import {computed, ref, toRef} from 'vue'
@@ -53,8 +56,11 @@ const props = withDefaults(
     ariaInvalid?: AriaInvalid
     autofocus?: Booleanish
     disabled?: Booleanish
+    disabledField?: string
     form?: string
+    htmlField?: string
     id?: string
+    labelField?: string
     modelValue?:
       | string
       | readonly unknown[]
@@ -64,29 +70,38 @@ const props = withDefaults(
       | null
     multiple?: Booleanish
     name?: string
-    options?: readonly (ComplexSelectOptionRaw | SelectOptionRaw)[]
+    options?: readonly (unknown | Record<string, unknown>)[]
+    optionsField?: string
     plain?: Booleanish
     required?: Booleanish
     selectSize?: Numberish
     size?: Size
     state?: Booleanish | null
+    textField?: string
+    valueField?: string
   }>(),
   {
     ariaInvalid: undefined,
     autofocus: false,
     disabled: false,
+    disabledField: 'disabled',
     form: undefined,
+    htmlField: 'html',
     id: undefined,
+    labelField: 'label',
     modelValue: '',
     multiple: false,
     name: undefined,
     // eslint-disable-next-line vue/require-valid-default-prop
     options: () => [],
+    optionsField: 'options',
     plain: false,
     required: false,
     selectSize: 0,
     size: 'md',
     state: null,
+    textField: 'text',
+    valueField: 'value',
   }
 )
 
@@ -137,7 +152,7 @@ const computedSelectSize = toRef(() =>
 
 const computedAriaInvalid = useAriaInvalid(() => props.ariaInvalid, stateBoolean)
 
-const {normalizedOptions, isComplex} = useFormSelect(() => props.options)
+const {normalizedOptions, isComplex} = useFormSelect(() => props.options, props)
 
 const normalizedOptsWrapper = computed(
   () => normalizedOptions.value as readonly (ComplexSelectOptionRaw<T> | SelectOption<T>)[]

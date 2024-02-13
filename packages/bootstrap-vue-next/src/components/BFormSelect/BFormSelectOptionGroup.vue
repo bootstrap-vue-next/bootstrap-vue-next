@@ -21,17 +21,25 @@
 <script setup lang="ts" generic="T = unknown">
 import BFormSelectOption from './BFormSelectOption.vue'
 import {useFormSelect} from '../../composables'
-import type {SelectOption, SelectOptionRaw} from '../../types'
+import type {SelectOption} from '../../types'
 import {computed} from 'vue'
 
 const props = withDefaults(
   defineProps<{
+    disabledField?: string
+    htmlField?: string
     label?: string
-    options?: readonly SelectOptionRaw<T>[]
+    options?: readonly (unknown | Record<string, unknown>)[]
+    textField?: string
+    valueField?: string
   }>(),
   {
+    disabledField: 'disabled',
+    htmlField: 'html',
     label: undefined,
     options: () => [],
+    textField: 'text',
+    valueField: 'value',
   }
 )
 
@@ -42,7 +50,7 @@ defineSlots<{
   first?: (props: Record<string, never>) => any
 }>()
 
-const {normalizedOptions} = useFormSelect(() => props.options)
+const {normalizedOptions} = useFormSelect(() => props.options, props)
 
 const normalizedOptsWrapper = computed(() => normalizedOptions.value as SelectOption<T>[])
 </script>
