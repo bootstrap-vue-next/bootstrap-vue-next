@@ -31,6 +31,11 @@ export type TableFieldFormatter<T = any> =
   | string
   | ((value: unknown, key?: LiteralUnion<keyof T>, item?: T) => string)
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type TableFieldAttribute<T = any> =
+  | Record<string, unknown>
+  | ((value: unknown, key?: LiteralUnion<keyof T>, item?: T) => Record<string, unknown>)
+
 export interface TableField<T = Record<string, unknown>> {
   key: LiteralUnion<keyof T>
   label?: string
@@ -47,8 +52,8 @@ export interface TableField<T = Record<string, unknown>> {
   thClass?: ClassValue
   thStyle?: StyleValue
   variant?: ColorVariant | null
-  tdAttr?: Record<string, unknown>
-  thAttr?: Record<string, unknown>
+  tdAttr?: TableFieldAttribute<T>
+  thAttr?: TableFieldAttribute<T>
   isRowHeader?: boolean
   stickyColumn?: boolean
 }

@@ -84,7 +84,7 @@
               :key="field.key"
               :variant="item._cellVariants?.[field.key as keyof T] ? null : field.variant"
               :class="getFieldRowClasses(field, item)"
-              v-bind="field.tdAttr"
+              v-bind="itemAttributes(item, String(field.key), field.tdAttr)"
             >
               <label v-if="computedStacked && labelStackedBoolean" class="b-table-stacked-label">
                 {{ getTableFieldHeadLabel(field) }}
@@ -197,6 +197,7 @@ import {useBooleanish} from '../../composables'
 import type {
   BTableLiteProps,
   TableField,
+  TableFieldAttribute,
   TableFieldFormatter,
   TableFieldRaw,
   TableItem,
@@ -323,6 +324,15 @@ const formatItem = (
 ) => {
   const val = get(item, fieldKey)
   return formatter && typeof formatter === 'function' ? formatter(val, fieldKey, item) : val
+}
+
+const itemAttributes = (
+  item: TableItem<T>,
+  fieldKey: string,
+  attr?: TableFieldAttribute<typeof item>
+) => {
+  const val = get(item, fieldKey)
+  return attr && typeof attr === 'function' ? attr(val, fieldKey, item) : attr
 }
 
 const headerClicked = (
