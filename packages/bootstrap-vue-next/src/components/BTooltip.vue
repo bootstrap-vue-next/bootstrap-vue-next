@@ -1,5 +1,5 @@
 <template>
-  <BPopover ref="popover" tooltip v-bind="$props">
+  <BPopover ref="popover" tooltip v-bind="computedProps">
     <template v-for="(_, name) in $slots" #[name]="slotData">
       <slot :name="name" v-bind="slotData" />
     </template>
@@ -7,11 +7,11 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
+import {computed, ref} from 'vue'
 import BPopover from './BPopover.vue'
-import type {BPopoverProps} from '../types'
+import type {BPopoverProps, BTooltipProps} from '../types'
 
-withDefaults(defineProps<Omit<BPopoverProps, 'tooltip'>>(), {
+const props = withDefaults(defineProps<BTooltipProps>(), {
   click: undefined,
   container: undefined,
   content: undefined,
@@ -22,6 +22,7 @@ withDefaults(defineProps<Omit<BPopoverProps, 'tooltip'>>(), {
   html: undefined,
   id: undefined,
   inline: undefined,
+  interactive: undefined,
   manual: undefined,
   modelValue: undefined,
   noAutoClose: undefined,
@@ -29,7 +30,7 @@ withDefaults(defineProps<Omit<BPopoverProps, 'tooltip'>>(), {
   noFlip: undefined,
   noHide: undefined,
   noShift: undefined,
-  noninteractive: true,
+  noninteractive: undefined,
   offset: undefined,
   placement: undefined,
   realtime: undefined,
@@ -38,6 +39,11 @@ withDefaults(defineProps<Omit<BPopoverProps, 'tooltip'>>(), {
   target: undefined,
   title: undefined,
   variant: undefined,
+})
+
+const computedProps = computed<BPopoverProps>(() => {
+  const {interactive, noninteractive, ...rest} = props
+  return {noninteractive: noninteractive !== undefined ? noninteractive : !interactive, ...rest}
 })
 
 const popover = ref<null | InstanceType<typeof BPopover>>(null)
