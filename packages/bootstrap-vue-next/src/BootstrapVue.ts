@@ -136,8 +136,9 @@ export const createBootstrap = ({
     const selectedDirectives = typeof directives === 'boolean' ? {all: directives} : directives
 
     const directiveKeys = Object.keys(Directives) as unknown as DirectiveType[]
+    const sliceName = (str: string) => (str.toLowerCase().startsWith('v') ? str.slice(1) : str)
     parseActiveImports(selectedDirectives, directiveKeys).forEach((name) => {
-      const parsedName = name.toLowerCase().startsWith('v') ? name.slice(1) : name
+      const parsedName = sliceName(name)
       const directive = Directives[name]
       app.directive(parsedName, directive)
     })

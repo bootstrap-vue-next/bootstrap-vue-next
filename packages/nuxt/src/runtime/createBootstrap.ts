@@ -1,5 +1,5 @@
 import {createBootstrap} from 'bootstrap-vue-next'
-import {defineNuxtPlugin} from 'nuxt/app'
+import {defineNuxtPlugin} from '#imports'
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.use(

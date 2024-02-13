@@ -310,6 +310,7 @@ export default defineNuxtConfig({
     composables: true, // Will include all composables
     // composables: {useBreadcrumb: true, useColorMode: true, all: false}, // Will include only useBreadcrumb & useColorMode
     // composables: {useBreadcrumb: false, useColorMode: false, all: true} // Will include everything except useBreadcrumb & useColorMode
+    directives: {all: true}, // Will include all directives
   },
   css: ['bootstrap/dist/css/bootstrap.min.css'],
 })
@@ -318,18 +319,6 @@ export default defineNuxtConfig({
 </HighlightCard>
 
 The practical difference between manually including an item and not is null as Nuxt should tree-shake out anything that is not used in the final build.
-
-#### Nuxt and Directives
-
-Directives should be imported directly from the `bootstrap-vue-next` package.
-
-<HighlightCard>
-
-```ts
-import {vBColorMode} from 'bootstrap-vue-next'
-```
-
-</HighlightCard>
 
 ### Installation - CDN
 
