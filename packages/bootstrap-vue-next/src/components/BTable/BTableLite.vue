@@ -198,11 +198,10 @@ import type {
   BTableLiteProps,
   TableField,
   TableFieldAttribute,
-  TableFieldFormatter,
   TableFieldRaw,
   TableItem,
 } from '../../types'
-import {filterEvent, get, getTableFieldHeadLabel, startCase} from '../../utils'
+import {filterEvent, formatItem, get, getTableFieldHeadLabel, startCase} from '../../utils'
 import BTableSimple from './BTableSimple.vue'
 import BTbody from './BTbody.vue'
 import BTd from './BTd.vue'
@@ -316,15 +315,6 @@ const computedFields = computed<TableField<T>[]>(() => {
   })
 })
 const computedFieldsTotal = toRef(() => computedFields.value.length)
-
-const formatItem = (
-  item: TableItem<T>,
-  fieldKey: string,
-  formatter?: TableFieldFormatter<typeof item>
-) => {
-  const val = get(item, fieldKey)
-  return formatter && typeof formatter === 'function' ? formatter(val, fieldKey, item) : val
-}
 
 const itemAttributes = (
   item: TableItem<T>,

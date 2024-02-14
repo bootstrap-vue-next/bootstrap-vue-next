@@ -102,7 +102,7 @@ import BOverlay from '../BOverlay/BOverlay.vue'
 import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
 import BTr from './BTr.vue'
-import {getTableFieldHeadLabel} from '../../utils'
+import {formatItem, getTableFieldHeadLabel} from '../../utils'
 
 type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
 
@@ -399,19 +399,26 @@ const computedItems = computed<readonly TableItem<T>[]>(() => {
       return items
     }
 
+    // TODONEXT: see if we can export formatitem form BTableLite
     return [...items].sort((a, b) => {
       if (props.sortCompare !== undefined)
         return props.sortCompare(a, b, sortKey, sortDescBoolean.value)
 
-      const realVal = (ob: unknown): string =>
-        typeof ob === 'object' && ob !== null ? JSON.stringify(ob) : ob?.toString() ?? ''
-
+      const realVal = (ob: TableItem<T>): string => {
+        const val = ob[sortKey as keyof T]
+        if (
+          sortField &&
+          typeof sortField !== 'string' &&
+          sortField.sortByFormatted &&
+          sortField.formatter !== undefined
+        ) {
+          return formatItem(ob, String(sortField.key), sortField.formatter) as string
+        }
+        return typeof val === 'object' && val !== null ? JSON.stringify(val) : val?.toString() ?? ''
+      }
       return (
-        realVal(a[sortKey as keyof T]).localeCompare(
-          realVal(b[sortKey as keyof T]),
-          props.sortCompareLocale,
-          props.sortCompareOptions
-        ) * (sortDescBoolean.value ? -1 : 1)
+        realVal(a).localeCompare(realVal(b), props.sortCompareLocale, props.sortCompareOptions) *
+        (sortDescBoolean.value ? -1 : 1)
       )
     })
   }
