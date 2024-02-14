@@ -400,7 +400,6 @@ const computedItems = computed<readonly TableItem<T>[]>(() => {
       return items
     }
 
-    // TODONEXT: see if we can export formatitem form BTableLite
     return [...items].sort((a, b) => {
       if (props.sortCompare !== undefined)
         return props.sortCompare(a, b, sortKey, sortDescBoolean.value)
