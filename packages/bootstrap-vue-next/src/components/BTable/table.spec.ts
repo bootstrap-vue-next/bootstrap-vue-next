@@ -176,4 +176,25 @@ describe('tbody', () => {
       .map((row) => row.find('td').text())
     expect(text).toStrictEqual(['Yes', 'Yes', 'No'])
   })
+
+  it('sorts by custom formatter when sortByFormatted === function', () => {
+    const customFormatterFields: Exclude<TableField<SimplePerson>, string>[] = [
+      {
+        key: 'first_name',
+        label: 'First Name',
+        sortable: true,
+        sortByFormatted: (value: unknown) => (value as string).slice(1),
+      },
+      {key: 'age', label: 'Age', sortable: true},
+    ]
+
+    const wrapper = mount(BTable, {
+      props: {items: simpleItems, fields: customFormatterFields, sortBy: 'first_name'},
+    })
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Havij', 'Robert', 'Cyndi'])
+  })
 })

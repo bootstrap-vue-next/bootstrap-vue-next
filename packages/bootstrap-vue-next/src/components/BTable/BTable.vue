@@ -94,6 +94,7 @@ import type {
   LiteralUnion,
   Numberish,
   TableField,
+  TableFieldFormatter,
   TableFieldRaw,
   TableItem,
 } from '../../types'
@@ -406,13 +407,14 @@ const computedItems = computed<readonly TableItem<T>[]>(() => {
 
       const realVal = (ob: TableItem<T>): string => {
         const val = ob[sortKey as keyof T]
-        if (
-          sortField &&
-          typeof sortField !== 'string' &&
-          sortField.sortByFormatted &&
-          sortField.formatter !== undefined
-        ) {
-          return formatItem(ob, String(sortField.key), sortField.formatter) as string
+        if (sortField && typeof sortField !== 'string' && sortField.sortByFormatted) {
+          const formatter =
+            typeof sortField.sortByFormatted === 'function'
+              ? (sortField.sortByFormatted as TableFieldFormatter<T>)
+              : sortField.formatter
+          if (formatter) {
+            return formatItem(ob, String(sortField.key), formatter) as string
+          }
         }
         return typeof val === 'object' && val !== null ? JSON.stringify(val) : val?.toString() ?? ''
       }
