@@ -4,8 +4,8 @@ import {computed, type ComputedRef, type MaybeRefOrGetter, onMounted, ref, toVal
 export default (
   id?: MaybeRefOrGetter<string | undefined>,
   suffix?: string
-): ComputedRef<string | null> => {
-  const localId = ref(toValue(id) || null)
+): ComputedRef<string> => {
+  const localId = ref(toValue(id) || '')
 
   onMounted(() => {
     if (!localId.value) {
