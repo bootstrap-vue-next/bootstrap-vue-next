@@ -76,6 +76,8 @@ export default defineComponent({
     const ariaDescribedby: string | null = null as string | null
     const breakPoints = ['xs', 'sm', 'md', 'lg', 'xl']
 
+    const computedId = useId(() => props.id, 'form-group')
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const getAlignClasses = (props: any, prefix: string) =>
       breakPoints.reduce((result: string[], breakpoint) => {
@@ -222,6 +224,7 @@ export default defineComponent({
       labelColProps,
       onLegendClick,
       stateClass,
+      computedId,
     }
   },
   render() {
@@ -382,7 +385,7 @@ export default defineComponent({
           'was-validated': this.validatedBoolean,
         },
       ],
-      'id': useId(() => props.id).value,
+      'id': this.computedId,
       'disabled': isFieldset ? this.disabledBoolean : null,
       'role': isFieldset ? null : 'group',
       'aria-invalid': this.computedAriaInvalid,

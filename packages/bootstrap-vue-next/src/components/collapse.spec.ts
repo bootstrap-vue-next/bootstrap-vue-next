@@ -1,5 +1,6 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
+import {nextTick} from 'vue'
 import BCollapse from './BCollapse.vue'
 
 describe('collapse', () => {
@@ -23,9 +24,12 @@ describe('collapse', () => {
     expect(wrapper.findAll('*')[0].element.tagName).toBe('SPAN')
   })
 
-  it('has default id', () => {
+  it('has default id', async () => {
     const wrapper = mount(BCollapse)
-    expect(wrapper.findAll('*')[0].attributes('id')).toBeDefined()
+    const [el] = wrapper.findAll('*')
+    expect(el.attributes('id')).not.toBeDefined()
+    await nextTick()
+    expect(el.attributes('id')).toBeDefined()
   })
 
   it('has id as prop id', () => {

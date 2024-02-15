@@ -1,5 +1,6 @@
 import {afterEach, describe, expect, it} from 'vitest'
 import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {nextTick} from 'vue'
 import BFormCheckbox from './BFormCheckbox.vue'
 
 describe('form-checkbox', () => {
@@ -89,9 +90,11 @@ describe('form-checkbox', () => {
       expect($input.exists()).toBe(true)
     })
 
-    it('input element has attr id', () => {
+    it('input element has attr id', async () => {
       const wrapper = mount(BFormCheckbox)
       const $input = wrapper.get('input')
+      expect($input.attributes('id')).not.toBeDefined()
+      await nextTick()
       expect($input.attributes('id')).toBeDefined()
     })
 
@@ -391,11 +394,13 @@ describe('form-checkbox', () => {
       expect($label.exists()).toBe(true)
     })
 
-    it('child label has attr for to be defined by default', () => {
+    it('child label has attr for to be defined by default', async () => {
       const wrapper = mount(BFormCheckbox, {
         props: {plain: false},
       })
       const $label = wrapper.get('label')
+      expect($label.attributes('for')).not.toBeDefined()
+      await nextTick()
       expect($label.attributes('for')).toBeDefined()
     })
 

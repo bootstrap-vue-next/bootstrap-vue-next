@@ -1,5 +1,6 @@
 import {afterEach, describe, expect, it} from 'vitest'
 import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {nextTick} from 'vue'
 import BFormRadioGroup from './BFormRadioGroup.vue'
 import BFormRadio from './BFormRadio.vue'
 
@@ -26,8 +27,10 @@ describe('form-radio-group', () => {
     expect(wrapper.attributes('tabindex')).toBe('-1')
   })
 
-  it('has attr id to be defined', () => {
+  it('has attr id to be defined', async () => {
     const wrapper = mount(BFormRadioGroup)
+    expect(wrapper.attributes('id')).not.toBeDefined()
+    await nextTick()
     expect(wrapper.attributes('id')).toBeDefined()
   })
 

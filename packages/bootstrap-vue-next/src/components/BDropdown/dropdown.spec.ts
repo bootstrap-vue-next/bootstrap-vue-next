@@ -1,5 +1,6 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
+import {nextTick} from 'vue'
 import BDropdown from './BDropdown.vue'
 import BButton from '../BButton/BButton.vue'
 
@@ -42,9 +43,11 @@ describe('dropdown', () => {
     expect($ul.attributes('role')).toBe('menu')
   })
 
-  it('child ul has attr aria-labelledby to be defined by default', () => {
+  it('child ul has attr aria-labelledby to be defined by default', async () => {
     const wrapper = mount(BDropdown)
     const $ul = wrapper.get('ul')
+    expect($ul.attributes('aria-labelledby')).not.toBeDefined()
+    await nextTick()
     expect($ul.attributes('aria-labelledby')).toBeDefined()
   })
 
@@ -89,9 +92,11 @@ describe('dropdown', () => {
     expect($bbutton.exists()).toBe(true)
   })
 
-  it('first child BButton has prop id', () => {
+  it('first child BButton has prop id', async () => {
     const wrapper = mount(BDropdown)
     const $bbutton = wrapper.getComponent(BButton)
+    expect($bbutton.attributes('id')).not.toBeDefined()
+    await nextTick()
     expect($bbutton.attributes('id')).toBeDefined()
   })
 

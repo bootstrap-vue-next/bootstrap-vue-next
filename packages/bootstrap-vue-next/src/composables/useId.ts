@@ -1,13 +1,5 @@
 import {getId} from '../utils'
-import {
-  computed,
-  type ComputedRef,
-  type MaybeRefOrGetter,
-  nextTick,
-  onMounted,
-  ref,
-  toValue,
-} from 'vue'
+import {computed, type ComputedRef, type MaybeRefOrGetter, onMounted, ref, toValue} from 'vue'
 
 export default (
   id?: MaybeRefOrGetter<string | undefined>,
@@ -15,13 +7,11 @@ export default (
 ): ComputedRef<string | null> => {
   const localId = ref(toValue(id) || null)
 
-  onMounted(() =>
-    nextTick(() => {
-      if (!localId.value) {
-        localId.value = getId(suffix)
-      }
-    })
-  )
+  onMounted(() => {
+    if (!localId.value) {
+      localId.value = getId(suffix)
+    }
+  })
 
   return computed(() => toValue(id) || localId.value)
 }

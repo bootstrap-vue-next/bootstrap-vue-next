@@ -1,10 +1,10 @@
 import {DOMWrapper, enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, beforeEach, describe, expect, it} from 'vitest'
+import {nextTick} from 'vue'
 import BModal from './BModal.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BButton from '../BButton/BButton.vue'
 import {BvTriggerableEvent} from '../../utils'
-import {nextTick} from 'vue'
 
 describe('modal', () => {
   enableAutoUnmount(afterEach)
@@ -57,11 +57,13 @@ describe('modal', () => {
     expect($div.attributes('id')).toBe('foo')
   })
 
-  it('div has attr id is defined by default', () => {
+  it('div has attr id is defined by default', async () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
     })
     const $div = wrapper.get('div')
+    expect($div.attributes('id')).not.toBeDefined()
+    await nextTick()
     expect($div.attributes('id')).toBeDefined()
   })
 

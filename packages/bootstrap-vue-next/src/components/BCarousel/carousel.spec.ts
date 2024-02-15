@@ -1,5 +1,6 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
+import {nextTick} from 'vue'
 import BCarousel from './BCarousel.vue'
 // TODO test for newest changes
 describe('carousel', () => {
@@ -20,13 +21,16 @@ describe('carousel', () => {
     expect(wrapper.element.tagName).toBe('DIV')
   })
 
-  it('has attr id', () => {
+  it('has attr id', async () => {
     const wrapper = mount(BCarousel)
+    expect(wrapper.attributes('id')).not.toBeDefined()
+    await nextTick()
     expect(wrapper.attributes('id')).toBeDefined()
   })
 
-  it('has attr id when prop id', () => {
+  it('has attr id when prop id', async () => {
     const wrapper = mount(BCarousel)
+    await nextTick()
     expect(wrapper.attributes('id')).toBeDefined()
     expect(wrapper.attributes('id')).toContain('carousel')
   })

@@ -1,5 +1,6 @@
 import {afterEach, describe, expect, it} from 'vitest'
 import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {nextTick} from 'vue'
 import BFormGroup from './BFormGroup.vue'
 
 describe('form-group', () => {
@@ -61,8 +62,10 @@ describe('form-group', () => {
     expect(wrapper.classes()).not.toContain('was-validated')
   })
 
-  it('attr id is defined by default', () => {
+  it('attr id is defined by default', async () => {
     const wrapper = mount(BFormGroup)
+    expect(wrapper.attributes('id')).not.toBeDefined()
+    await nextTick()
     expect(wrapper.attributes('id')).toBeDefined()
   })
 

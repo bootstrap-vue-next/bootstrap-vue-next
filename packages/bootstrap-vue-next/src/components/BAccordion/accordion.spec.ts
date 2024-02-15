@@ -1,5 +1,6 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
+import {nextTick} from 'vue'
 import BAccordion from './BAccordion.vue'
 
 describe('accordion', () => {
@@ -10,8 +11,10 @@ describe('accordion', () => {
     expect(wrapper.classes()).toContain('accordion')
   })
 
-  it('has computed id by default', () => {
+  it('has computed id by default', async () => {
     const wrapper = mount(BAccordion)
+    expect(wrapper.attributes('id')).not.toBeDefined()
+    await nextTick()
     expect(wrapper.attributes('id')).toBeDefined()
   })
 
