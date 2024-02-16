@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.16.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.16.3...bootstrapvuenext-v0.16.4) (2024-02-16)
+
+
+### Features
+
+* **BTable:** add no-local-sorting prop ([d5b3abb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d5b3abbf6a4d9341786c9836ff80da0a89441a72))
+
+
+### Bug Fixes
+
+* **btable:** local sort issue ([d5b3abb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d5b3abbf6a4d9341786c9836ff80da0a89441a72))
+
 ## [0.16.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.16.2...bootstrapvuenext-v0.16.3) (2024-02-13)
 
 
