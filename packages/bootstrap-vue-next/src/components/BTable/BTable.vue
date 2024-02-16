@@ -140,7 +140,7 @@ const props = withDefaults(
       // labelSortClear?: string
       // labelSortDesc?: string
       // noFooterSorting?: Booleanish
-      // noLocalSorting?: Booleanish
+      noLocalSorting?: Booleanish
       noSelectOnClick?: Booleanish
       // noSortReset?: Booleanish
       // selectedVariant?: ColorVariant | null
@@ -168,6 +168,7 @@ const props = withDefaults(
     noProviderPaging: false,
     noProviderSorting: false,
     noProviderFiltering: false,
+    noLocalSorting: false,
     noSelectOnClick: false,
     sortDesc: false,
     selectable: false,
@@ -310,6 +311,7 @@ const noProviderFilteringBoolean = useBooleanish(() => props.noProviderFiltering
 const selectableBoolean = useBooleanish(() => props.selectable)
 const noSortableIconBoolean = useBooleanish(() => props.noSortableIcon)
 const noSelectOnClickBoolean = useBooleanish(() => props.noSelectOnClick)
+const noLocalSortingBoolean = useBooleanish(() => props.noLocalSorting)
 
 const perPageNumber = useToNumber(() => props.perPage, {method: 'parseInt'})
 const currentPageNumber = useToNumber(() => props.currentPage, {method: 'parseInt'})
@@ -335,10 +337,10 @@ const computedFields = computed<TableFieldRaw<T>[]>(() =>
               isSortable.value === false
                 ? undefined
                 : sortByModel.value !== el.key
-                  ? 'none'
-                  : sortDescBoolean.value === true
-                    ? 'descending'
-                    : 'ascending',
+                ? 'none'
+                : sortDescBoolean.value === true
+                ? 'descending'
+                : 'ascending',
             ...el.thAttr,
           },
         }
@@ -399,7 +401,7 @@ const computedItems = computed<readonly TableItem<T>[]>(() => {
       return items
     }
 
-    return [...items].sort((a, b) => {
+    const sorted = [...items].sort((a, b) => {
       if (props.sortCompare !== undefined)
         return props.sortCompare(a, b, sortKey, sortDescBoolean.value)
 
@@ -412,6 +414,7 @@ const computedItems = computed<readonly TableItem<T>[]>(() => {
         props.sortCompareOptions
       )
     })
+    return sortDescBoolean.value && props.sortCompare === undefined ? sorted.reverse() : sorted
   }
 
   const filterItems = (items: readonly TableItem<T>[]) =>
@@ -440,7 +443,7 @@ const computedItems = computed<readonly TableItem<T>[]>(() => {
   }
 
   if (
-    (isSortable.value === true && !usesProvider.value) ||
+    (isSortable.value === true && !usesProvider.value && !noLocalSortingBoolean.value) ||
     (isSortable.value === true && usesProvider.value && noProviderSortingBoolean.value)
   ) {
     mappedItems = sortItems(mappedItems)
