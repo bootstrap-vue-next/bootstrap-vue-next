@@ -5,8 +5,8 @@
       :no-fade="noFade"
       :trans-props="{enterToClass: 'show'}"
       name="fade"
-      @on-after-enter="emit('shown')"
-      @on-after-leave="emit('hidden')"
+      @after-enter="emit('shown')"
+      @after-leave="emit('hidden')"
     >
       <component
         :is="overlayTag"
