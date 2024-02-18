@@ -284,6 +284,10 @@ watch(
 @import 'vitepress/dist/client/theme-default/styles/vars.css';
 @import 'vitepress/dist/client/theme-default/styles/base.css';
 @import 'vitepress/dist/client/theme-default/styles/utils.css';
+@import 'vitepress/dist/client/theme-default/styles/components/custom-block.css';
+@import 'vitepress/dist/client/theme-default/styles/components/vp-code.css';
+@import 'vitepress/dist/client/theme-default/styles/components/vp-code-group.css';
+@import 'vitepress/dist/client/theme-default/styles/components/vp-doc.css';
 
 :root {
   --vp-c-brand-1: hsla(237, 31%, 35%, 1);
