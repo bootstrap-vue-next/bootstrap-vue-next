@@ -4,7 +4,7 @@ name: docs-github-pages-deploy
 
 on:
   release:
-    types: [published]
+    types: [created]
 
 jobs:
   build-and-deploy:
