@@ -1,4 +1,4 @@
-import type {TableFieldFormatter, TableItem} from 'src/types'
+import type {TableFieldFormatter, TableItem} from '../types'
 import {get} from '.'
 
 export default <T = Record<string, unknown>>(
