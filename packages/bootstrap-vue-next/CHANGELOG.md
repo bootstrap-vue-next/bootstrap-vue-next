@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.16.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.16.4...bootstrapvuenext-v0.16.5) (2024-02-19)
+
+
+### Features
+
+* **BTooltip:** add prop interactive ([f683df2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f683df2422517d0da2ed2156f2e3608c2ed40d84))
+
+
+### Bug Fixes
+
+* **events:** update events for BTransition ([c1171d9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c1171d94bd1bf429826844aaed39fd360b1d1495))
+
 ## [0.16.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.16.3...bootstrapvuenext-v0.16.4) (2024-02-16)
 
 
