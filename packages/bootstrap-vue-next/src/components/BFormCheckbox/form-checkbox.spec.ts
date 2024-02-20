@@ -93,7 +93,7 @@ describe('form-checkbox', () => {
     it('input element has attr id', async () => {
       const wrapper = mount(BFormCheckbox)
       const $input = wrapper.get('input')
-      expect($input.attributes('id')).not.toBeDefined()
+      expect($input.attributes('id')).toBeUndefined()
       await nextTick()
       expect($input.attributes('id')).toBeDefined()
     })
@@ -399,7 +399,7 @@ describe('form-checkbox', () => {
         props: {plain: false},
       })
       const $label = wrapper.get('label')
-      expect($label.attributes('for')).not.toBeDefined()
+      expect($label.attributes('for')).toBeUndefined()
       await nextTick()
       expect($label.attributes('for')).toBeDefined()
     })

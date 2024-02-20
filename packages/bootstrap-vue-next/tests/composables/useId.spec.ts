@@ -11,11 +11,11 @@ describe('useId blackbox test', () => {
 
   it('returns null when id is undefined', () => {
     const value = useId()
-    expect(value.value).toBeNull()
+    expect(value.value).toBeUndefined()
   })
 
   it('something returned when undefined contains suffix when suffix', () => {
     const value = useId(undefined, 'foobar')
-    expect(value.value).toBeNull()
+    expect(value.value).toBeUndefined()
   })
 })

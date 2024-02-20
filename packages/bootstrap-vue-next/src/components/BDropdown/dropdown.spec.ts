@@ -46,7 +46,7 @@ describe('dropdown', () => {
   it('child ul has attr aria-labelledby to be defined by default', async () => {
     const wrapper = mount(BDropdown)
     const $ul = wrapper.get('ul')
-    expect($ul.attributes('aria-labelledby')).not.toBeDefined()
+    expect($ul.attributes('aria-labelledby')).toBeUndefined()
     await nextTick()
     expect($ul.attributes('aria-labelledby')).toBeDefined()
   })
@@ -95,7 +95,7 @@ describe('dropdown', () => {
   it('first child BButton has prop id', async () => {
     const wrapper = mount(BDropdown)
     const $bbutton = wrapper.getComponent(BButton)
-    expect($bbutton.attributes('id')).not.toBeDefined()
+    expect($bbutton.attributes('id')).toBeUndefined()
     await nextTick()
     expect($bbutton.attributes('id')).toBeDefined()
   })

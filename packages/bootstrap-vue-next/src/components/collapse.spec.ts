@@ -27,7 +27,7 @@ describe('collapse', () => {
   it('has default id', async () => {
     const wrapper = mount(BCollapse)
     const [el] = wrapper.findAll('*')
-    expect(el.attributes('id')).not.toBeDefined()
+    expect(el.attributes('id')).toBeUndefined()
     await nextTick()
     expect(el.attributes('id')).toBeDefined()
   })

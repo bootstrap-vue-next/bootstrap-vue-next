@@ -23,7 +23,7 @@ describe('carousel', () => {
 
   it('has attr id', async () => {
     const wrapper = mount(BCarousel)
-    expect(wrapper.attributes('id')).not.toBeDefined()
+    expect(wrapper.attributes('id')).toBeUndefined()
     await nextTick()
     expect(wrapper.attributes('id')).toBeDefined()
   })

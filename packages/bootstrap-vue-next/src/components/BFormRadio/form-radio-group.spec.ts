@@ -29,7 +29,7 @@ describe('form-radio-group', () => {
 
   it('has attr id to be defined', async () => {
     const wrapper = mount(BFormRadioGroup)
-    expect(wrapper.attributes('id')).not.toBeDefined()
+    expect(wrapper.attributes('id')).toBeUndefined()
     await nextTick()
     expect(wrapper.attributes('id')).toBeDefined()
   })

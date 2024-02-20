@@ -88,7 +88,7 @@ export const checkboxGroupKey: InjectionKey<{
   switch: Readonly<Ref<boolean>>
   buttonVariant: Readonly<Ref<ButtonVariant | null>>
   form: Readonly<Ref<string | undefined>>
-  name: Readonly<Ref<string>>
+  name: Readonly<Ref<string | undefined>>
   state: Readonly<Ref<boolean | undefined | null>>
   plain: Readonly<Ref<boolean>>
   size: Readonly<Ref<Size>>
@@ -102,7 +102,7 @@ export const radioGroupKey: InjectionKey<{
   modelValue: Ref<RadioValue>
   buttonVariant: Readonly<Ref<ButtonVariant | null>>
   form: Readonly<Ref<string | undefined>>
-  name: Readonly<Ref<string>>
+  name: Readonly<Ref<string | undefined>>
   buttons: Readonly<Ref<boolean>>
   state: Readonly<Ref<boolean | undefined | null>>
   plain: Readonly<Ref<boolean>>
@@ -114,7 +114,7 @@ export const radioGroupKey: InjectionKey<{
 
 // Collapse
 export const collapseInjectionKey: InjectionKey<{
-  id?: Readonly<Ref<string>>
+  id?: Readonly<Ref<string | undefined>>
   readonly close?: () => void
   readonly open?: () => void
   readonly toggle?: () => void
@@ -123,7 +123,7 @@ export const collapseInjectionKey: InjectionKey<{
 }> = Symbol('collapse')
 
 export const dropdownInjectionKey: InjectionKey<{
-  id?: Readonly<Ref<string>>
+  id?: Readonly<Ref<string | undefined>>
   readonly close?: () => void
   readonly open?: () => void
   readonly toggle?: () => void

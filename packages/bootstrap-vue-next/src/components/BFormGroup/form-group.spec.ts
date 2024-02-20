@@ -64,7 +64,7 @@ describe('form-group', () => {
 
   it('attr id is defined by default', async () => {
     const wrapper = mount(BFormGroup)
-    expect(wrapper.attributes('id')).not.toBeDefined()
+    expect(wrapper.attributes('id')).toBeUndefined()
     await nextTick()
     expect(wrapper.attributes('id')).toBeDefined()
   })

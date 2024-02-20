@@ -13,7 +13,7 @@ describe('accordion', () => {
 
   it('has computed id by default', async () => {
     const wrapper = mount(BAccordion)
-    expect(wrapper.attributes('id')).not.toBeDefined()
+    expect(wrapper.attributes('id')).toBeUndefined()
     await nextTick()
     expect(wrapper.attributes('id')).toBeDefined()
   })

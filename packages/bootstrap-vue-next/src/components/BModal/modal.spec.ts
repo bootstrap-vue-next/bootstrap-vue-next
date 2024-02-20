@@ -62,7 +62,7 @@ describe('modal', () => {
       global: {stubs: {teleport: true}},
     })
     const $div = wrapper.get('div')
-    expect($div.attributes('id')).not.toBeDefined()
+    expect($div.attributes('id')).toBeUndefined()
     await nextTick()
     expect($div.attributes('id')).toBeDefined()
   })
