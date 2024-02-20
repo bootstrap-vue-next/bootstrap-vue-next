@@ -272,6 +272,10 @@ export interface BPopoverProps {
   variant?: ColorVariant | null
 }
 
+export interface BTooltipProps extends Omit<BPopoverProps, 'tooltip'> {
+  interactive?: Booleanish
+}
+
 export interface BCardHeadFootProps extends ColorExtendables {
   borderVariant?: ColorVariant | null
   html?: string
