@@ -338,10 +338,10 @@ const computedFields = computed<TableFieldRaw<T>[]>(() =>
               isSortable.value === false
                 ? undefined
                 : sortByModel.value !== el.key
-                ? 'none'
-                : sortDescBoolean.value === true
-                ? 'descending'
-                : 'ascending',
+                  ? 'none'
+                  : sortDescBoolean.value === true
+                    ? 'descending'
+                    : 'ascending',
             ...el.thAttr,
           },
         }
@@ -402,7 +402,7 @@ const computedItems = computed<readonly TableItem<T>[]>(() => {
       return items
     }
 
-    const sorted = [...items].sort((a, b) => {
+    return [...items].sort((a, b) => {
       if (props.sortCompare !== undefined)
         return props.sortCompare(a, b, sortKey, sortDescBoolean.value)
 
@@ -424,7 +424,6 @@ const computedItems = computed<readonly TableItem<T>[]>(() => {
         (sortDescBoolean.value ? -1 : 1)
       )
     })
-    return sortDescBoolean.value && props.sortCompare === undefined ? sorted.reverse() : sorted
   }
 
   const filterItems = (items: readonly TableItem<T>[]) =>
