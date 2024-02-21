@@ -36,8 +36,6 @@
 </template>
 
 <script setup lang="ts">
-import {useBreadcrumb} from 'bootstrap-vue-next'
-
 const breadcrumb = useBreadcrumb()
 
 const inputValue = ref('')
