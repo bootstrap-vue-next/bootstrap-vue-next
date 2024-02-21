@@ -54,6 +54,7 @@ Showing a modal is done through the `show` or `confirm` method
 </template>
 
 <script setup lang="ts">
+import { useModalController, useToast } from 'bootstrap-vue-next'
 const {confirm} = useModalController()
 const toast = useToast()
 
@@ -83,6 +84,7 @@ const showExample = async () => {
 </template>
 
 <script setup lang="ts">
+import { useModalController } from 'bootstrap-vue-next'
 const {show} = useModalController()
 
 const title = ref('Hello')
@@ -119,6 +121,7 @@ Using props can work for most situations, but it leaves some finer control to be
 </template>
 
 <script setup lang="ts">
+import { useModalController } from 'bootstrap-vue-next'
 const {show} = useModalController()
 
 const firstRef = ref<OrchestratedToast>({
@@ -214,6 +217,7 @@ In addition to being able to create modals in a global context, you are also abl
 </template>
 
 <script setup lang="ts">
+import { useModalController } from 'bootstrap-vue-next'
 const nestedModal1 = ref(false)
 const nestedModal2 = ref(false)
 const nestedModal3 = ref(false)
