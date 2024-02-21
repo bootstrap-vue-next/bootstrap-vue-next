@@ -278,7 +278,7 @@ const selectedItemsSetUtilities = {
   },
   clear: () => {
     selectedItemsToSet.value.forEach((item) => {
-      emit('row-unselected', item)
+      selectedItemsSetUtilities.delete(item)
     })
   },
   delete: (item: Readonly<TableItem<T>>) => {
