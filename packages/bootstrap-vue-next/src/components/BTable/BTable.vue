@@ -296,19 +296,14 @@ const selectedItemsSetUtilities = {
   Getting the reference properly will fix all outstanding issues
   */
   has: (item: Readonly<TableItem<T>>) => {
-    if (props.primaryKey) {
-      let isSelected = false
-      const pkey = props.primaryKey as keyof TableItem<T>
-      for (const selected of selectedItemsToSet.value) {
-        if (selected[pkey] === item[pkey]) {
-          isSelected = true
-          break
-        }
-      }
-      return isSelected
-    }
+    if (!props.primaryKey) return selectedItemsToSet.value.has(item)
 
-    return selectedItemsToSet.value.has(item)
+    // Resolver for when we are using primary keys
+    const pkey = props.primaryKey as keyof TableItem<T>
+    for (const selected of selectedItemsToSet.value) {
+      if (selected[pkey] === item[pkey]) return true
+    }
+    return false
   },
 } as const
 
