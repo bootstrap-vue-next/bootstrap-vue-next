@@ -295,7 +295,20 @@ const selectedItemsSetUtilities = {
   For some reason, the reference of the object gets lost. However, when you use an actual ref(), it works just fine
   Getting the reference properly will fix all outstanding issues
   */
-  has: (item: Readonly<TableItem<T>>) => selectedItemsToSet.value.has(item),
+  has: (item: Readonly<TableItem<T>>) => {
+    if (props.primaryKey) {
+      let isSelected = false
+      const pkey = props.primaryKey as keyof TableItem<T>
+      selectedItemsToSet.value.forEach((selected: TableItem<T>) => {
+        if (selected[pkey] === item[pkey]) {
+          isSelected = true
+        }
+      })
+      return isSelected
+    }
+
+    return selectedItemsToSet.value.has(item)
+  },
 } as const
 
 /**
