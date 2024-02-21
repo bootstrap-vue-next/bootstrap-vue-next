@@ -94,6 +94,7 @@ import type {
   LiteralUnion,
   Numberish,
   TableField,
+  TableFieldFormatter,
   TableFieldRaw,
   TableItem,
 } from '../../types'
@@ -102,7 +103,7 @@ import BOverlay from '../BOverlay/BOverlay.vue'
 import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
 import BTr from './BTr.vue'
-import {getTableFieldHeadLabel} from '../../utils'
+import {formatItem, getTableFieldHeadLabel} from '../../utils'
 
 type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
 
@@ -337,10 +338,10 @@ const computedFields = computed<TableFieldRaw<T>[]>(() =>
               isSortable.value === false
                 ? undefined
                 : sortByModel.value !== el.key
-                ? 'none'
-                : sortDescBoolean.value === true
-                ? 'descending'
-                : 'ascending',
+                  ? 'none'
+                  : sortDescBoolean.value === true
+                    ? 'descending'
+                    : 'ascending',
             ...el.thAttr,
           },
         }
@@ -401,20 +402,28 @@ const computedItems = computed<readonly TableItem<T>[]>(() => {
       return items
     }
 
-    const sorted = [...items].sort((a, b) => {
+    return [...items].sort((a, b) => {
       if (props.sortCompare !== undefined)
         return props.sortCompare(a, b, sortKey, sortDescBoolean.value)
 
-      const realVal = (ob: unknown): string =>
-        typeof ob === 'object' && ob !== null ? JSON.stringify(ob) : ob?.toString() ?? ''
-
-      return realVal(a[sortKey as keyof T]).localeCompare(
-        realVal(b[sortKey as keyof T]),
-        props.sortCompareLocale,
-        props.sortCompareOptions
+      const realVal = (ob: TableItem<T>): string => {
+        const val = ob[sortKey as keyof T]
+        if (sortField && typeof sortField !== 'string' && sortField.sortByFormatted) {
+          const formatter =
+            typeof sortField.sortByFormatted === 'function'
+              ? (sortField.sortByFormatted as TableFieldFormatter<T>)
+              : sortField.formatter
+          if (formatter) {
+            return formatItem(ob, String(sortField.key), formatter) as string
+          }
+        }
+        return typeof val === 'object' && val !== null ? JSON.stringify(val) : val?.toString() ?? ''
+      }
+      return (
+        realVal(a).localeCompare(realVal(b), props.sortCompareLocale, props.sortCompareOptions) *
+        (sortDescBoolean.value ? -1 : 1)
       )
     })
-    return sortDescBoolean.value && props.sortCompare === undefined ? sorted.reverse() : sorted
   }
 
   const filterItems = (items: readonly TableItem<T>[]) =>

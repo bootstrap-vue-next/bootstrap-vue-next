@@ -46,7 +46,7 @@ export interface TableField<T = Record<string, unknown>> {
   sortable?: boolean
   sortKey?: string
   sortDirection?: string
-  sortByFormatted?: boolean
+  sortByFormatted?: boolean | TableFieldFormatter<T>
   filterByFormatted?: boolean
   tdClass?: ClassValue
   thClass?: ClassValue
