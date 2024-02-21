@@ -299,11 +299,12 @@ const selectedItemsSetUtilities = {
     if (props.primaryKey) {
       let isSelected = false
       const pkey = props.primaryKey as keyof TableItem<T>
-      selectedItemsToSet.value.forEach((selected: TableItem<T>) => {
+      for (const selected of selectedItemsToSet.value) {
         if (selected[pkey] === item[pkey]) {
           isSelected = true
+          break
         }
-      })
+      }
       return isSelected
     }
 
