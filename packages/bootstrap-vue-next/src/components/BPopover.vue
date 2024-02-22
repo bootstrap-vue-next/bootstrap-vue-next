@@ -87,7 +87,7 @@ import {
   watch,
   watchEffect,
 } from 'vue'
-import {useBooleanish, useId} from '../composables'
+import {useId} from '../composables'
 import type {BPopoverProps} from '../types'
 import {
   BvTriggerableEvent,
@@ -160,7 +160,7 @@ defineSlots<{
   title?: (props: Record<string, never>) => any
 }>()
 
-const modelValueBoolean = useBooleanish(() => props.modelValue)
+const modelValueBoolean = computed(() => props.modelValue)
 const showState = ref(modelValueBoolean.value)
 const showStateInternal = ref(modelValueBoolean.value)
 watchEffect(() => {
@@ -174,20 +174,20 @@ watch(modelValueBoolean, () => {
 
 const computedId = useId(() => props.id, 'popover')
 
-const clickBoolean = useBooleanish(() => props.click)
-const manualBoolean = useBooleanish(() => props.manual)
-const noShiftBoolean = useBooleanish(() => props.noShift)
-const noSizeBoolean = useBooleanish(() => props.noSize)
-const noFlipBoolean = useBooleanish(() => props.noFlip)
-const noFadeBoolean = useBooleanish(() => props.noFade)
-const noAutoCloseBoolean = useBooleanish(() => props.noAutoClose)
-const noHideBoolean = useBooleanish(() => props.noHide)
-const realtimeBoolean = useBooleanish(() => props.realtime)
-const inlineBoolean = useBooleanish(() => props.inline)
-const persistentBoolean = useBooleanish(() => props.persistent)
-const tooltipBoolean = useBooleanish(() => props.tooltip)
-const noninteractiveBoolean = useBooleanish(() => props.noninteractive)
-const isHtml = useBooleanish(() => props.html)
+const clickBoolean = computed(() => props.click)
+const manualBoolean = computed(() => props.manual)
+const noShiftBoolean = computed(() => props.noShift)
+const noSizeBoolean = computed(() => props.noSize)
+const noFlipBoolean = computed(() => props.noFlip)
+const noFadeBoolean = computed(() => props.noFade)
+const noAutoCloseBoolean = computed(() => props.noAutoClose)
+const noHideBoolean = computed(() => props.noHide)
+const realtimeBoolean = computed(() => props.realtime)
+const inlineBoolean = computed(() => props.inline)
+const persistentBoolean = computed(() => props.persistent)
+const tooltipBoolean = computed(() => props.tooltip)
+const noninteractiveBoolean = computed(() => props.noninteractive)
+const isHtml = computed(() => props.html)
 
 const hidden = ref(false)
 

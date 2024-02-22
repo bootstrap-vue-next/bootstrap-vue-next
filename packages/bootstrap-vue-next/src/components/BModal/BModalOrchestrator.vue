@@ -37,13 +37,12 @@
 
 <script setup lang="ts">
 import {BvTriggerableEvent, omit} from '../../utils'
-import {useBooleanish, useModalController} from '../../composables'
-import type {Booleanish} from '../../types'
-import type {RendererElement} from 'vue'
+import {useModalController} from '../../composables'
+import {computed, type RendererElement} from 'vue'
 
 const props = withDefaults(
   defineProps<{
-    teleportDisabled?: Booleanish
+    teleportDisabled?: boolean
     teleportTo?: string | Readonly<RendererElement> | null | undefined
   }>(),
   {
@@ -52,7 +51,7 @@ const props = withDefaults(
   }
 )
 
-const teleportDisabledBoolean = useBooleanish(() => props.teleportDisabled)
+const teleportDisabledBoolean = computed(() => props.teleportDisabled)
 
 const {modals, remove, show, confirm} = useModalController()
 

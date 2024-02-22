@@ -14,8 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import type {Booleanish, ColorVariant, Numberish} from '../../types'
-import {useBooleanish} from '../../composables'
+import type {ColorVariant, Numberish} from '../../types'
 import {computed, toRef} from 'vue'
 
 const props = withDefaults(
@@ -23,7 +22,7 @@ const props = withDefaults(
     colspan?: Numberish
     rowspan?: Numberish
     stackedHeading?: string
-    stickyColumn?: Booleanish
+    stickyColumn?: boolean
     variant?: ColorVariant | null
   }>(),
   {
@@ -40,7 +39,7 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const stickyColumnBoolean = useBooleanish(() => props.stickyColumn)
+const stickyColumnBoolean = computed(() => props.stickyColumn)
 
 const computedClasses = computed(() => ({
   [`table-${props.variant}`]: props.variant !== null,

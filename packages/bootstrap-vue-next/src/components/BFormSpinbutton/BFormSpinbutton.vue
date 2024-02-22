@@ -10,6 +10,7 @@
     @click="focused = true"
   >
     <!-- eslint-disable-next-line prettier/prettier -->
+    <!-- prettier-ignore -->
     <slot :name="(buttons.top.slot.name as 'increment' | 'decrement')" :has-focus="focused">
       <button
         v-bind="buttons.top.button"
@@ -53,6 +54,7 @@
       </bdi>
     </output>
     <!-- eslint-disable-next-line prettier/prettier -->
+    <!-- prettier-ignore -->
     <slot :name="(buttons.bottom.slot.name as 'increment' | 'decrement')" :has-focus="focused">
       <button
         v-bind="buttons.bottom.button"
@@ -69,7 +71,7 @@
 
 <script setup lang="ts">
 import {computed, ref, toRef} from 'vue'
-import type {Booleanish, ButtonType, Numberish, Size} from '../../types'
+import type {ButtonType, Numberish, Size} from '../../types'
 import {eventOnOff} from '../../utils/event'
 import {
   CODE_DOWN,
@@ -80,7 +82,7 @@ import {
   CODE_UP,
 } from '../../constants/codes'
 import {onKeyStroke, useFocus, useToNumber, useVModel} from '@vueuse/core'
-import {useBooleanish, useId, useRtl} from '../../composables'
+import {useId, useRtl} from '../../composables'
 
 const KEY_CODES = [CODE_UP, CODE_DOWN, CODE_HOME, CODE_END, CODE_PAGEUP, CODE_PAGEDOWN]
 
@@ -88,11 +90,11 @@ const props = withDefaults(
   defineProps<{
     ariaControls?: string
     ariaLabel?: string
-    disabled?: Booleanish
+    disabled?: boolean
     form?: string
     formatterFn?: (value: number) => string
     id?: string
-    inline?: Booleanish
+    inline?: boolean
     labelDecrement?: string
     labelIncrement?: string
     locale?: string
@@ -101,17 +103,17 @@ const props = withDefaults(
     modelValue?: number | null
     name?: string
     placeholder?: string
-    readonly?: Booleanish
+    readonly?: boolean
     repeatDelay?: Numberish
     repeatInterval?: Numberish
     repeatStepMultiplier?: Numberish
     repeatThreshold?: Numberish
-    required?: Booleanish
+    required?: boolean
     size?: Size
-    state?: Booleanish | null
+    state?: boolean | null
     step?: Numberish
-    vertical?: Booleanish
-    wrap?: Booleanish
+    vertical?: boolean
+    wrap?: boolean
   }>(),
   {
     ariaControls: undefined,
@@ -164,13 +166,13 @@ const {focused} = useFocus(element)
 
 const computedId = useId(() => props.id, 'spinbutton')
 
-const disabledBoolean = useBooleanish(() => props.disabled)
-const inlineBoolean = useBooleanish(() => props.inline)
-const readonlyBoolean = useBooleanish(() => props.readonly)
-const verticalBoolean = useBooleanish(() => props.vertical)
-const requiredBoolean = useBooleanish(() => props.required)
-const wrapBoolean = useBooleanish(() => props.wrap)
-const stateBoolean = useBooleanish(() => props.state)
+const disabledBoolean = computed(() => props.disabled)
+const inlineBoolean = computed(() => props.inline)
+const readonlyBoolean = computed(() => props.readonly)
+const verticalBoolean = computed(() => props.vertical)
+const requiredBoolean = computed(() => props.required)
+const wrapBoolean = computed(() => props.wrap)
+const stateBoolean = computed(() => props.state)
 
 const computedClasses = computed(() => ({
   'disabled': disabledBoolean.value,

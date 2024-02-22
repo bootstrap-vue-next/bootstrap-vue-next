@@ -1,5 +1,5 @@
 <script lang="ts">
-import {useAriaInvalid, useBooleanish, useId, useStateClass} from '../../composables'
+import {useAriaInvalid, useId, useStateClass} from '../../composables'
 import {RX_SPACE_SPLIT} from '../../constants/regex'
 import {
   attemptFocus,
@@ -15,7 +15,7 @@ import BFormInvalidFeedback from '../BForm/BFormInvalidFeedback.vue'
 import BFormRow from '../BForm/BFormRow.vue'
 import BFormText from '../BForm/BFormText.vue'
 import BFormValidFeedback from '../BForm/BFormValidFeedback.vue'
-import type {AriaInvalid, Booleanish} from '../../types'
+import type {AriaInvalid} from '../../types'
 
 const INPUTS = ['input', 'select', 'textarea']
 // Selector for finding first input in the form group
@@ -40,7 +40,7 @@ export default defineComponent({
     contentColsSm: {type: [Boolean, String, Number], default: undefined},
     contentColsXl: {type: [Boolean, String, Number], default: undefined},
     description: {type: [String], default: undefined},
-    disabled: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+    disabled: {type: [Boolean, String] as PropType<boolean>, default: false},
     feedbackAriaLive: {type: String, default: 'assertive'},
     id: {type: String, default: undefined},
     invalidFeedback: {type: String, default: undefined},
@@ -58,20 +58,20 @@ export default defineComponent({
     labelColsXl: {type: [Boolean, String, Number], default: undefined},
     labelFor: {type: String, default: undefined},
     labelSize: {type: String, default: undefined},
-    labelSrOnly: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    state: {type: [Boolean, String] as PropType<Booleanish | null>, default: null},
-    tooltip: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+    labelSrOnly: {type: [Boolean, String] as PropType<boolean>, default: false},
+    state: {type: [Boolean, String] as PropType<boolean | null>, default: null},
+    tooltip: {type: [Boolean, String] as PropType<boolean>, default: false},
     validFeedback: {type: String, default: undefined},
-    validated: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    floating: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+    validated: {type: [Boolean, String] as PropType<boolean>, default: false},
+    floating: {type: [Boolean, String] as PropType<boolean>, default: false},
   },
   setup(props) {
-    const disabledBoolean = useBooleanish(() => props.disabled)
-    const labelSrOnlyBoolean = useBooleanish(() => props.labelSrOnly)
-    const stateBoolean = useBooleanish(() => props.state)
-    const tooltipBoolean = useBooleanish(() => props.tooltip)
-    const validatedBoolean = useBooleanish(() => props.validated)
-    const floatingBoolean = useBooleanish(() => props.floating)
+    const disabledBoolean = computed(() => props.disabled)
+    const labelSrOnlyBoolean = computed(() => props.labelSrOnly)
+    const stateBoolean = computed(() => props.state)
+    const tooltipBoolean = computed(() => props.tooltip)
+    const validatedBoolean = computed(() => props.validated)
+    const floatingBoolean = computed(() => props.floating)
 
     const ariaDescribedby: string | null = null as string | null
     const breakPoints = ['xs', 'sm', 'md', 'lg', 'xl']

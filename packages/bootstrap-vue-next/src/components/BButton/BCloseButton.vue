@@ -9,13 +9,13 @@
 </template>
 
 <script setup lang="ts">
-import type {Booleanish, ButtonType} from '../../types'
-import {useBooleanish} from '../../composables'
+import type {ButtonType} from '../../types'
+import {computed} from 'vue'
 
 const props = withDefaults(
   defineProps<{
     ariaLabel?: string
-    disabled?: Booleanish
+    disabled?: boolean
     type?: ButtonType
   }>(),
   {
@@ -29,5 +29,5 @@ const emit = defineEmits<{
   click: [value: MouseEvent]
 }>()
 
-const disabledBoolean = useBooleanish(() => props.disabled)
+const disabledBoolean = computed(() => props.disabled)
 </script>

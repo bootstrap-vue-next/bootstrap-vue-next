@@ -50,15 +50,8 @@ import BCard from '../BCard/BCard.vue'
 import BCardImg from '../BCard/BCardImg.vue'
 import BPlaceholder from './BPlaceholder.vue'
 import BPlaceholderButton from './BPlaceholderButton.vue'
-import type {
-  Booleanish,
-  ColorVariant,
-  Numberish,
-  PlaceholderAnimation,
-  PlaceholderSize,
-} from '../../types'
+import type {ColorVariant, Numberish, PlaceholderAnimation, PlaceholderSize} from '../../types'
 import {computed, toRef} from 'vue'
-import {useBooleanish} from '../../composables'
 
 const props = withDefaults(
   defineProps<{
@@ -72,13 +65,13 @@ const props = withDefaults(
     headerVariant?: ColorVariant | null
     headerWidth?: Numberish
     imgBlankColor?: string
-    imgBottom?: Booleanish
+    imgBottom?: boolean
     imgHeight?: Numberish
     imgSrc?: string
-    noButton?: Booleanish
-    noFooter?: Booleanish
-    noHeader?: Booleanish
-    noImg?: Booleanish
+    noButton?: boolean
+    noFooter?: boolean
+    noHeader?: boolean
+    noImg?: boolean
     size?: PlaceholderSize
     variant?: ColorVariant | null
   }>(),
@@ -116,10 +109,10 @@ defineSlots<{
   img?: (props: Record<string, never>) => any
 }>()
 
-const noButtonBoolean = useBooleanish(() => props.noButton)
-const noHeaderBoolean = useBooleanish(() => props.noHeader)
-const noFooterBoolean = useBooleanish(() => props.noFooter)
-const noImgBoolean = useBooleanish(() => props.noImg)
+const noButtonBoolean = computed(() => props.noButton)
+const noHeaderBoolean = computed(() => props.noHeader)
+const noFooterBoolean = computed(() => props.noFooter)
+const noImgBoolean = computed(() => props.noImg)
 
 const defaultAttrs = computed(() => ({
   animation: props.animation,

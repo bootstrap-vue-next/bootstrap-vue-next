@@ -12,7 +12,6 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import {useBooleanish} from '../../composables'
 import type {BTableSimpleProps} from '../../types'
 
 // TODO alphabetize the lists for tables
@@ -45,17 +44,17 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const captionTopBoolean = useBooleanish(() => props.captionTop)
-const borderlessBoolean = useBooleanish(() => props.borderless)
-const borderedBoolean = useBooleanish(() => props.bordered)
-const darkBoolean = useBooleanish(() => props.dark)
-const hoverBoolean = useBooleanish(() => props.hover)
-const smallBoolean = useBooleanish(() => props.small)
-const stripedBoolean = useBooleanish(() => props.striped)
-const stickyHeaderBoolean = useBooleanish(() => props.stickyHeader)
-const stripedColumnsBoolean = useBooleanish(() => props.stripedColumns)
-const resolvedResponsive = useBooleanish(() => props.responsive)
-const resolvedStacked = useBooleanish(() => props.stacked)
+const captionTopBoolean = computed(() => props.captionTop)
+const borderlessBoolean = computed(() => props.borderless)
+const borderedBoolean = computed(() => props.bordered)
+const darkBoolean = computed(() => props.dark)
+const hoverBoolean = computed(() => props.hover)
+const smallBoolean = computed(() => props.small)
+const stripedBoolean = computed(() => props.striped)
+const stickyHeaderBoolean = computed(() => props.stickyHeader)
+const stripedColumnsBoolean = computed(() => props.stripedColumns)
+const resolvedResponsive = computed(() => props.responsive)
+const resolvedStacked = computed(() => props.stacked)
 
 const computedClasses = computed(() => [
   props.tableClass,

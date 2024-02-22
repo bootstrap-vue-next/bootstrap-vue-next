@@ -16,7 +16,6 @@
 <script setup lang="ts">
 import {computed} from 'vue'
 import BLink from '../BLink/BLink.vue'
-import {useBooleanish} from '../../composables'
 import type {AttrsValue, BLinkProps, ClassValue} from '../../types'
 import {pick} from '../../utils'
 
@@ -64,7 +63,7 @@ const emit = defineEmits<{
   click: [value: MouseEvent]
 }>()
 
-const disabledBoolean = useBooleanish(() => props.disabled)
+const disabledBoolean = computed(() => props.disabled)
 
 const computedLinkProps = computed(() =>
   pick(props, [

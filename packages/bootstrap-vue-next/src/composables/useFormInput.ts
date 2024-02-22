@@ -1,7 +1,6 @@
 import type {Numberish} from '../types'
-import {nextTick, onActivated, onMounted, ref} from 'vue'
+import {computed, nextTick, onActivated, onMounted, ref} from 'vue'
 import useAriaInvalid from './useAriaInvalid'
-import useBooleanish from './useBooleanish'
 import useId from './useId'
 import {useDebounceFn, useFocus, useToNumber, useVModel} from '@vueuse/core'
 import type {CommonInputProps} from '../types/FormCommonInputProps'
@@ -16,13 +15,13 @@ export default (
   const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
   const computedId = useId(() => props.id, 'input')
-  const autofocusBoolean = useBooleanish(() => props.autofocus)
-  const disabledBoolean = useBooleanish(() => props.disabled)
-  const lazyBoolean = useBooleanish(() => props.lazy)
-  const lazyFormatterBoolean = useBooleanish(() => props.lazyFormatter)
-  const numberBoolean = useBooleanish(() => props.number)
-  const stateBoolean = useBooleanish(() => props.state)
-  const trimBoolean = useBooleanish(() => props.trim)
+  const autofocusBoolean = computed(() => props.autofocus)
+  const disabledBoolean = computed(() => props.disabled)
+  const lazyBoolean = computed(() => props.lazy)
+  const lazyFormatterBoolean = computed(() => props.lazyFormatter)
+  const numberBoolean = computed(() => props.number)
+  const stateBoolean = computed(() => props.state)
+  const trimBoolean = computed(() => props.trim)
   const debounceNumber = useToNumber(() => props.debounce ?? 0)
   const debounceMaxWaitNumber = useToNumber(() => props.debounceMaxWait ?? NaN)
 

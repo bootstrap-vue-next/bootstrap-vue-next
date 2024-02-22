@@ -5,15 +5,13 @@
 </template>
 
 <script setup lang="ts">
-import type {Booleanish} from '../../types'
 import {computed} from 'vue'
-import {useBooleanish} from '../../composables'
 
 const props = withDefaults(
   defineProps<{
     ariaLabel?: string
-    // keyNav?: Booleanish
-    justify?: Booleanish
+    // keyNav?: boolean
+    justify?: boolean
     role?: string
   }>(),
   {
@@ -28,7 +26,7 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const justifyBoolean = useBooleanish(() => props.justify)
+const justifyBoolean = computed(() => props.justify)
 
 const computedClasses = computed(() => ({
   'justify-content-between': justifyBoolean.value,

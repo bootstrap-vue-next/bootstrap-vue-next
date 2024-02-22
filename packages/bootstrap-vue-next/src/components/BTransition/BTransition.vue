@@ -22,7 +22,6 @@
 <script setup lang="ts">
 import type {BTransitionProps} from '../../types'
 import {computed} from 'vue'
-import {useBooleanish} from '../../composables'
 
 const props = withDefaults(defineProps<BTransitionProps>(), {
   appear: false,
@@ -51,8 +50,8 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const appearBoolean = useBooleanish(() => props.appear)
-const noFadeBoolean = useBooleanish(() => props.noFade)
+const appearBoolean = computed(() => props.appear)
+const noFadeBoolean = computed(() => props.noFade)
 
 const fadeProperties = computed(() => {
   const NO_FADE_PROPS = {

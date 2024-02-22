@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import {useBooleanish} from '../../composables'
+import {computed} from 'vue'
 import type {BInputGroupAddonProps} from '../../types'
 import BInputGroupText from './BInputGroupText.vue'
 
@@ -19,5 +19,5 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const isTextBoolean = useBooleanish(() => props.isText)
+const isTextBoolean = computed(() => props.isText)
 </script>

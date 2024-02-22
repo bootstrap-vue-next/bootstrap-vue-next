@@ -17,12 +17,10 @@
 <script setup lang="ts">
 import {vBToggle} from '../../directives'
 import {computed} from 'vue'
-import type {Booleanish} from '../../types'
-import {useBooleanish} from '../../composables'
 
 const props = withDefaults(
   defineProps<{
-    disabled?: Booleanish
+    disabled?: boolean
     label?: string
     target?: string | readonly string[]
   }>(),
@@ -43,7 +41,7 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const disabledBoolean = useBooleanish(() => props.disabled)
+const disabledBoolean = computed(() => props.disabled)
 
 const computedClasses = computed(() => ({
   disabled: disabledBoolean.value,

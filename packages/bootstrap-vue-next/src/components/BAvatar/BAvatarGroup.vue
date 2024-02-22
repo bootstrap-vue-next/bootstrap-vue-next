@@ -9,7 +9,6 @@
 <script setup lang="ts">
 import {computed, provide, type StyleValue, toRef} from 'vue'
 import type {
-  Booleanish,
   ColorExtendables,
   LiteralUnion,
   Numberish,
@@ -17,7 +16,7 @@ import type {
   Size,
 } from '../../types'
 import {avatarGroupInjectionKey} from '../../utils'
-import {useAvatarSize, useBooleanish} from '../../composables'
+import {useAvatarSize} from '../../composables'
 import {useToNumber} from '@vueuse/core'
 
 const props = withDefaults(
@@ -25,7 +24,7 @@ const props = withDefaults(
     {
       overlap?: Numberish
       size?: LiteralUnion<Size, Numberish>
-      square?: Booleanish
+      square?: boolean
       tag?: string
     } & ColorExtendables &
       RadiusElementExtendables
@@ -55,12 +54,12 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const squareBoolean = useBooleanish(() => props.square)
-const roundedBoolean = useBooleanish(() => props.rounded)
-const roundedTopBoolean = useBooleanish(() => props.roundedTop)
-const roundedBottomBoolean = useBooleanish(() => props.roundedBottom)
-const roundedStartBoolean = useBooleanish(() => props.roundedStart)
-const roundedEndBoolean = useBooleanish(() => props.roundedEnd)
+const squareBoolean = computed(() => props.square)
+const roundedBoolean = computed(() => props.rounded)
+const roundedTopBoolean = computed(() => props.roundedTop)
+const roundedBottomBoolean = computed(() => props.roundedBottom)
+const roundedStartBoolean = computed(() => props.roundedStart)
+const roundedEndBoolean = computed(() => props.roundedEnd)
 const overlapNumber = useToNumber(() => props.overlap)
 
 const computedSize = useAvatarSize(() => props.size)

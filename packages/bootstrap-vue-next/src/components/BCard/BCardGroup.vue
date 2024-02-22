@@ -5,14 +5,12 @@
 </template>
 
 <script setup lang="ts">
-import {toRef} from 'vue'
-import type {Booleanish} from '../../types'
-import {useBooleanish} from '../../composables'
+import {computed, toRef} from 'vue'
 
 const props = withDefaults(
   defineProps<{
-    columns?: Booleanish
-    deck?: Booleanish
+    columns?: boolean
+    deck?: boolean
     tag?: string
   }>(),
   {
@@ -27,8 +25,8 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const columnsBoolean = useBooleanish(() => props.columns)
-const deckBoolean = useBooleanish(() => props.deck)
+const columnsBoolean = computed(() => props.columns)
+const deckBoolean = computed(() => props.deck)
 
 const cardTypeClass = toRef(() =>
   deckBoolean.value ? 'card-deck' : columnsBoolean.value ? 'card-columns' : 'card-group'

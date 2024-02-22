@@ -118,10 +118,9 @@
 <script setup lang="ts">
 import {computed, ref, toRef} from 'vue'
 import BFormTag from './BFormTag.vue'
-import {useBooleanish, useId, useStateClass} from '../../composables'
+import {useId, useStateClass} from '../../composables'
 import type {
   AttrsValue,
-  Booleanish,
   ButtonVariant,
   ClassValue,
   ColorVariant,
@@ -136,9 +135,9 @@ const props = withDefaults(
   defineProps<{
     addButtonText?: string
     addButtonVariant?: ButtonVariant | null
-    addOnChange?: Booleanish
-    autofocus?: Booleanish
-    disabled?: Booleanish
+    addOnChange?: boolean
+    autofocus?: boolean
+    disabled?: boolean
     duplicateTagText?: string
     form?: string
     inputAttrs?: Readonly<AttrsValue>
@@ -150,17 +149,17 @@ const props = withDefaults(
     limitTagsText?: string
     modelValue?: readonly string[]
     name?: string
-    noAddOnEnter?: Booleanish
-    noOuterFocus?: Booleanish
-    noTagRemove?: Booleanish
+    noAddOnEnter?: boolean
+    noOuterFocus?: boolean
+    noTagRemove?: boolean
     placeholder?: string
-    removeOnDelete?: Booleanish
-    required?: Booleanish
+    removeOnDelete?: boolean
+    required?: boolean
     separator?: string | readonly string[]
     size?: Size
-    state?: Booleanish | null
+    state?: boolean | null
     tagClass?: ClassValue
-    tagPills?: Booleanish
+    tagPills?: boolean
     tagRemoveLabel?: string
     tagRemovedLabel?: string
     tagValidator?: (t: string) => boolean
@@ -231,16 +230,16 @@ const modelValue = useVModel(props, 'modelValue', emit)
 
 const computedId = useId()
 
-const addOnChangeBoolean = useBooleanish(() => props.addOnChange)
-const autofocusBoolean = useBooleanish(() => props.autofocus)
-const disabledBoolean = useBooleanish(() => props.disabled)
-const noAddOnEnterBoolean = useBooleanish(() => props.noAddOnEnter)
-const noOuterFocusBoolean = useBooleanish(() => props.noOuterFocus)
-const noTagRemoveBoolean = useBooleanish(() => props.noTagRemove)
-const removeOnDeleteBoolean = useBooleanish(() => props.removeOnDelete)
-const requiredBoolean = useBooleanish(() => props.required)
-const stateBoolean = useBooleanish(() => props.state)
-const tagPillsBoolean = useBooleanish(() => props.tagPills)
+const addOnChangeBoolean = computed(() => props.addOnChange)
+const autofocusBoolean = computed(() => props.autofocus)
+const disabledBoolean = computed(() => props.disabled)
+const noAddOnEnterBoolean = computed(() => props.noAddOnEnter)
+const noOuterFocusBoolean = computed(() => props.noOuterFocus)
+const noTagRemoveBoolean = computed(() => props.noTagRemove)
+const removeOnDeleteBoolean = computed(() => props.removeOnDelete)
+const requiredBoolean = computed(() => props.required)
+const stateBoolean = computed(() => props.state)
+const tagPillsBoolean = computed(() => props.tagPills)
 const limitNumber = useToNumber(() => props.limit ?? NaN)
 
 const stateClass = useStateClass(stateBoolean)

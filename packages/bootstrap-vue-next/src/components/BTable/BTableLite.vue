@@ -193,7 +193,6 @@
 
 <script setup lang="ts" generic="T = Record<string, unknown>">
 import {computed, toRef} from 'vue'
-import {useBooleanish} from '../../composables'
 import type {
   BTableLiteProps,
   TableField,
@@ -271,10 +270,10 @@ const emit = defineEmits<{
   'row-unhovered': [item: TableItem<T>, index: number, event: MouseEvent]
 }>()
 
-const footCloneBoolean = useBooleanish(() => props.footClone)
-const labelStackedBoolean = useBooleanish(() => props.labelStacked)
-const showEmptyBoolean = useBooleanish(() => props.showEmpty)
-const computedStacked = useBooleanish(() => props.stacked)
+const footCloneBoolean = computed(() => props.footClone)
+const labelStackedBoolean = computed(() => props.labelStacked)
+const showEmptyBoolean = computed(() => props.showEmpty)
+const computedStacked = computed(() => props.stacked)
 
 const computedTableClasses = computed(() => [
   props.tableClass,

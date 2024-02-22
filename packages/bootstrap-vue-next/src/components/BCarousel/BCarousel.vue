@@ -52,8 +52,8 @@
 <script setup lang="ts">
 import {BvCarouselEvent, carouselInjectionKey, getSlotElements} from '../../utils'
 import {computed, provide, ref, toRef, watch} from 'vue'
-import {useBooleanish, useId} from '../../composables'
-import type {Booleanish, Numberish} from '../../types'
+import {useId} from '../../composables'
+import type {Numberish} from '../../types'
 import {
   onKeyStroke,
   useElementHover,
@@ -66,23 +66,23 @@ import {
 const props = withDefaults(
   defineProps<{
     background?: string
-    controls?: Booleanish
+    controls?: boolean
     controlsNextText?: string
     controlsPrevText?: string
-    fade?: Booleanish
+    fade?: boolean
     id?: string
     imgHeight?: string
     imgWidth?: string
-    indicators?: Booleanish
+    indicators?: boolean
     indicatorsButtonLabel?: string
     interval?: Numberish
-    keyboard?: Booleanish
+    keyboard?: boolean
     modelValue?: number
-    noHoverPause?: Booleanish
-    noTouch?: Booleanish
-    noWrap?: Booleanish
-    ride?: Booleanish | 'carousel'
-    rideReverse?: Booleanish
+    noHoverPause?: boolean
+    noTouch?: boolean
+    noWrap?: boolean
+    ride?: boolean | 'carousel'
+    rideReverse?: boolean
     touchThreshold?: Numberish
   }>(),
   {
@@ -124,17 +124,17 @@ const computedId = useId(() => props.id, 'carousel')
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
-const keyboardBoolean = useBooleanish(() => props.keyboard)
-const rideReverseBoolean = useBooleanish(() => props.rideReverse)
-const noHoverPauseBoolean = useBooleanish(() => props.noHoverPause)
-const fadeBoolean = useBooleanish(() => props.fade)
-const controlsBoolean = useBooleanish(() => props.controls)
-const indicatorsBoolean = useBooleanish(() => props.indicators)
-const noTouchBoolean = useBooleanish(() => props.noTouch)
-const noWrapBoolean = useBooleanish(() => props.noWrap)
+const keyboardBoolean = computed(() => props.keyboard)
+const rideReverseBoolean = computed(() => props.rideReverse)
+const noHoverPauseBoolean = computed(() => props.noHoverPause)
+const fadeBoolean = computed(() => props.fade)
+const controlsBoolean = computed(() => props.controls)
+const indicatorsBoolean = computed(() => props.indicators)
+const noTouchBoolean = computed(() => props.noTouch)
+const noWrapBoolean = computed(() => props.noWrap)
 const touchThresholdNumber = useToNumber(() => props.touchThreshold)
 const intervalNumber = useToNumber(() => props.interval)
-const rideResolved = useBooleanish(() => props.ride)
+const rideResolved = computed(() => props.ride)
 
 const isTransitioning = ref(false)
 const rideStarted = ref(false)

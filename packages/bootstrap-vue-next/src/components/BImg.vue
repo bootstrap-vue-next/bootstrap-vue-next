@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import type {BImgProps} from '../types'
-import {useBooleanish, useRadiusElementClasses} from '../composables'
+import {useRadiusElementClasses} from '../composables'
 import {computed, toRef} from 'vue'
 import {useToNumber} from '@vueuse/core'
 
@@ -41,22 +41,22 @@ const props = withDefaults(defineProps<BImgProps>(), {
   // End RadiusElementExtendables props
 })
 
-const lazyBoolean = useBooleanish(() => props.lazy)
-const blankBoolean = useBooleanish(() => props.blank)
-const blockBoolean = useBooleanish(() => props.block)
-const centerBoolean = useBooleanish(() => props.center)
-const fluidBoolean = useBooleanish(() => props.fluid)
-const fluidGrowBoolean = useBooleanish(() => props.fluidGrow)
-const startBoolean = useBooleanish(() => props.start)
-const endBoolean = useBooleanish(() => props.end)
-const thumbnailBoolean = useBooleanish(() => props.thumbnail)
+const lazyBoolean = computed(() => props.lazy)
+const blankBoolean = computed(() => props.blank)
+const blockBoolean = computed(() => props.block)
+const centerBoolean = computed(() => props.center)
+const fluidBoolean = computed(() => props.fluid)
+const fluidGrowBoolean = computed(() => props.fluidGrow)
+const startBoolean = computed(() => props.start)
+const endBoolean = computed(() => props.end)
+const thumbnailBoolean = computed(() => props.thumbnail)
 const heightNumber = useToNumber(() => props.height ?? NaN)
 const widthNumber = useToNumber(() => props.width ?? NaN)
-const roundedBoolean = useBooleanish(() => props.rounded)
-const roundedTopBoolean = useBooleanish(() => props.roundedTop)
-const roundedBottomBoolean = useBooleanish(() => props.roundedBottom)
-const roundedStartBoolean = useBooleanish(() => props.roundedStart)
-const roundedEndBoolean = useBooleanish(() => props.roundedEnd)
+const roundedBoolean = computed(() => props.rounded)
+const roundedTopBoolean = computed(() => props.roundedTop)
+const roundedBottomBoolean = computed(() => props.roundedBottom)
+const roundedStartBoolean = computed(() => props.roundedStart)
+const roundedEndBoolean = computed(() => props.roundedEnd)
 
 const radiusElementClasses = useRadiusElementClasses(() => ({
   rounded: roundedBoolean.value,

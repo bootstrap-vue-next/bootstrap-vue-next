@@ -16,16 +16,16 @@
 
 <script setup lang="ts">
 import {computed, inject, toRef, useAttrs} from 'vue'
-import type {BLinkProps, Booleanish} from '../../types'
-import {useBLinkHelper, useBooleanish} from '../../composables'
+import type {BLinkProps} from '../../types'
+import {useBLinkHelper} from '../../composables'
 import BLink from '../BLink/BLink.vue'
 import {listGroupInjectionKey} from '../../utils'
 
 const props = withDefaults(
   defineProps<
     {
-      action?: Booleanish
-      button?: Booleanish
+      action?: boolean
+      button?: boolean
       tag?: string
     } & Omit<BLinkProps, 'routerTag'>
   >(),
@@ -68,10 +68,10 @@ const attrs = useAttrs()
 
 const parentData = inject(listGroupInjectionKey, null)
 
-const actionBoolean = useBooleanish(() => props.action)
-const activeBoolean = useBooleanish(() => props.active)
-const buttonBoolean = useBooleanish(() => props.button)
-const disabledBoolean = useBooleanish(() => props.disabled)
+const actionBoolean = computed(() => props.action)
+const activeBoolean = computed(() => props.active)
+const buttonBoolean = computed(() => props.button)
+const disabledBoolean = computed(() => props.disabled)
 
 const {computedLink} = useBLinkHelper(props)
 

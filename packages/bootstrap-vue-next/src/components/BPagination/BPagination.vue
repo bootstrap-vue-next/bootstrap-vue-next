@@ -47,8 +47,8 @@
 <script setup lang="ts">
 import {BvEvent} from '../../utils'
 import {computed, toRef, watch} from 'vue'
-import type {AlignmentJustifyContent, Booleanish, ClassValue, Numberish, Size} from '../../types'
-import {useAlignment, useBooleanish} from '../../composables'
+import type {AlignmentJustifyContent, ClassValue, Numberish, Size} from '../../types'
+import {useAlignment} from '../../composables'
 import {createReusableTemplate, useToNumber, useVModel} from '@vueuse/core'
 
 // Threshold of limit size when we start/stop showing ellipsis
@@ -65,21 +65,21 @@ const props = withDefaults(
     align?: AlignmentJustifyContent | 'fill'
     ariaControls?: string
     ariaLabel?: string
-    disabled?: Booleanish
+    disabled?: boolean
     ellipsisClass?: ClassValue
     ellipsisText?: string
     firstClass?: ClassValue
-    firstNumber?: Booleanish
+    firstNumber?: boolean
     firstText?: string
-    hideEllipsis?: Booleanish
-    hideGotoEndButtons?: Booleanish
+    hideEllipsis?: boolean
+    hideGotoEndButtons?: boolean
     labelFirstPage?: string
     labelLastPage?: string
     labelNextPage?: string
     labelPage?: string
     labelPrevPage?: string
     lastClass?: ClassValue
-    lastNumber?: Booleanish
+    lastNumber?: boolean
     lastText?: string
     limit?: Numberish
     modelValue?: Numberish
@@ -87,7 +87,7 @@ const props = withDefaults(
     nextText?: string
     pageClass?: ClassValue
     perPage?: Numberish
-    pills?: Booleanish
+    pills?: boolean
     prevClass?: ClassValue
     prevText?: string
     size?: Size
@@ -134,12 +134,12 @@ const emit = defineEmits<{
 
 const modelValue = useVModel(props, 'modelValue', emit)
 
-const disabledBoolean = useBooleanish(() => props.disabled)
-const firstNumberBoolean = useBooleanish(() => props.firstNumber)
-const hideEllipsisBoolean = useBooleanish(() => props.hideEllipsis)
-const hideGotoEndButtonsBoolean = useBooleanish(() => props.hideGotoEndButtons)
-const lastNumberBoolean = useBooleanish(() => props.lastNumber)
-const pillsBoolean = useBooleanish(() => props.pills)
+const disabledBoolean = computed(() => props.disabled)
+const firstNumberBoolean = computed(() => props.firstNumber)
+const hideEllipsisBoolean = computed(() => props.hideEllipsis)
+const hideGotoEndButtonsBoolean = computed(() => props.hideGotoEndButtons)
+const lastNumberBoolean = computed(() => props.lastNumber)
+const pillsBoolean = computed(() => props.pills)
 
 const limitNumber = useToNumber(() => props.limit, {nanToZero: true, method: 'parseInt'})
 const perPageNumber = useToNumber(() => props.perPage, {nanToZero: true, method: 'parseInt'})

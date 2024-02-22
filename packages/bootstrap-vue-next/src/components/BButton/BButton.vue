@@ -36,8 +36,8 @@
 <script setup lang="ts">
 import {computed, toRef} from 'vue'
 import BSpinner from '../BSpinner.vue'
-import {useBLinkHelper, useBooleanish} from '../../composables'
-import type {BLinkProps, Booleanish, ButtonType, ButtonVariant, Size} from '../../types'
+import {useBLinkHelper} from '../../composables'
+import type {BLinkProps, ButtonType, ButtonVariant, Size} from '../../types'
 import BLink from '../BLink/BLink.vue'
 import {useVModel} from '@vueuse/core'
 
@@ -53,13 +53,13 @@ defineSlots<{
 const props = withDefaults(
   defineProps<
     {
-      loading?: Booleanish
-      loadingFill?: Booleanish
+      loading?: boolean
+      loadingFill?: boolean
       loadingText?: string
-      pill?: Booleanish
-      pressed?: Booleanish
+      pill?: boolean
+      pressed?: boolean
       size?: Size
-      squared?: Booleanish
+      squared?: boolean
       tag?: string
       type?: ButtonType
       variant?: ButtonVariant | null
@@ -109,13 +109,13 @@ const emit = defineEmits<{
 
 const pressedValue = useVModel(props, 'pressed', emit)
 
-const activeBoolean = useBooleanish(() => props.active)
-const disabledBoolean = useBooleanish(() => props.disabled)
-const pillBoolean = useBooleanish(() => props.pill)
-const pressedBoolean = useBooleanish(() => props.pressed)
-const squaredBoolean = useBooleanish(() => props.squared)
-const loadingBoolean = useBooleanish(() => props.loading)
-const loadingFillBoolean = useBooleanish(() => props.loadingFill)
+const activeBoolean = computed(() => props.active)
+const disabledBoolean = computed(() => props.disabled)
+const pillBoolean = computed(() => props.pill)
+const pressedBoolean = computed(() => props.pressed)
+const squaredBoolean = computed(() => props.squared)
+const loadingBoolean = computed(() => props.loading)
+const loadingFillBoolean = computed(() => props.loadingFill)
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'active-class',

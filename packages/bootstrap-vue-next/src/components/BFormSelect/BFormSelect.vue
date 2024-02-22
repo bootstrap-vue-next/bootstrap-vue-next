@@ -37,25 +37,18 @@
 </template>
 
 <script setup lang="ts" generic="T = unknown">
-import type {
-  AriaInvalid,
-  Booleanish,
-  ComplexSelectOptionRaw,
-  Numberish,
-  SelectOption,
-  Size,
-} from '../../types'
+import type {AriaInvalid, ComplexSelectOptionRaw, Numberish, SelectOption, Size} from '../../types'
 import {computed, ref, toRef} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
-import {useAriaInvalid, useBooleanish, useFormSelect, useId, useStateClass} from '../../composables'
+import {useAriaInvalid, useFormSelect, useId, useStateClass} from '../../composables'
 import {useFocus, useToNumber, useVModel} from '@vueuse/core'
 
 const props = withDefaults(
   defineProps<{
     ariaInvalid?: AriaInvalid
-    autofocus?: Booleanish
-    disabled?: Booleanish
+    autofocus?: boolean
+    disabled?: boolean
     disabledField?: string
     form?: string
     htmlField?: string
@@ -68,15 +61,15 @@ const props = withDefaults(
       | number
       | boolean
       | null
-    multiple?: Booleanish
+    multiple?: boolean
     name?: string
     options?: readonly (unknown | Record<string, unknown>)[]
     optionsField?: string
-    plain?: Booleanish
-    required?: Booleanish
+    plain?: boolean
+    required?: boolean
     selectSize?: Numberish
     size?: Size
-    state?: Booleanish | null
+    state?: boolean | null
     textField?: string
     valueField?: string
   }>(),
@@ -120,12 +113,12 @@ const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const computedId = useId(() => props.id, 'input')
 
-const autofocusBoolean = useBooleanish(() => props.autofocus)
-const disabledBoolean = useBooleanish(() => props.disabled)
-const multipleBoolean = useBooleanish(() => props.multiple)
-const plainBoolean = useBooleanish(() => props.plain)
-const requiredBoolean = useBooleanish(() => props.required)
-const stateBoolean = useBooleanish(() => props.state)
+const autofocusBoolean = computed(() => props.autofocus)
+const disabledBoolean = computed(() => props.disabled)
+const multipleBoolean = computed(() => props.multiple)
+const plainBoolean = computed(() => props.plain)
+const requiredBoolean = computed(() => props.required)
+const stateBoolean = computed(() => props.state)
 const selectSizeNumber = useToNumber(() => props.selectSize)
 
 const stateClass = useStateClass(stateBoolean)

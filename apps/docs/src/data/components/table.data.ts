@@ -22,22 +22,22 @@ export default {
         },
         {
           prop: 'noProviderPaging',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'noProviderSorting',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'noProviderFiltering',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'noSelectOnClick',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: 'Do not select row when clicked',
         },
@@ -48,22 +48,22 @@ export default {
         },
         {
           prop: 'sortDesc',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'sortInternal',
-          type: 'Booleanish',
+          type: 'boolean',
           default: true,
         },
         {
           prop: 'selectable',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'stickySelect',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -83,7 +83,7 @@ export default {
         },
         {
           prop: 'busy',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -368,7 +368,7 @@ export default {
         },
         {
           prop: 'footClone',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -388,7 +388,7 @@ export default {
         },
         {
           prop: 'showEmpty',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -425,12 +425,12 @@ export default {
       props: [
         {
           prop: 'bordered',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'borderless',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -440,17 +440,17 @@ export default {
         },
         {
           prop: 'captionTop',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'dark',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'hover',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -465,12 +465,12 @@ export default {
         },
         {
           prop: 'striped',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'small',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -485,7 +485,7 @@ export default {
         },
         {
           prop: 'stickyHeader',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
       ],
@@ -536,7 +536,7 @@ export default {
         },
         {
           prop: 'stickyColumn',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -592,7 +592,7 @@ export default {
         },
         {
           prop: 'stickyColumn',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {

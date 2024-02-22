@@ -20,8 +20,7 @@
 <script setup lang="ts">
 import BProgressBar from './BProgressBar.vue'
 import type {BProgressBarProps} from '../../types'
-import {useBooleanish} from '../../composables'
-import {provide, toRef} from 'vue'
+import {computed, provide, toRef} from 'vue'
 import {progressInjectionKey} from '../../utils'
 
 const props = withDefaults(
@@ -52,10 +51,10 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const animatedBoolean = useBooleanish(() => props.animated)
-const showProgressBoolean = useBooleanish(() => props.showProgress)
-const showValueBoolean = useBooleanish(() => props.showValue)
-const stripedBoolean = useBooleanish(() => props.striped)
+const animatedBoolean = computed(() => props.animated)
+const showProgressBoolean = computed(() => props.showProgress)
+const showValueBoolean = computed(() => props.showValue)
+const stripedBoolean = computed(() => props.striped)
 
 provide(progressInjectionKey, {
   animated: animatedBoolean,

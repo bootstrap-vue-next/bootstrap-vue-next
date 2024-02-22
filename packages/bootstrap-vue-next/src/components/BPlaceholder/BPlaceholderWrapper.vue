@@ -4,12 +4,11 @@
 </template>
 
 <script setup lang="ts">
-import type {Booleanish} from '../../types'
-import {useBooleanish} from '../../composables'
+import {computed} from 'vue'
 
 const props = withDefaults(
   defineProps<{
-    loading?: Booleanish
+    loading?: boolean
   }>(),
   {
     loading: false,
@@ -23,5 +22,5 @@ defineSlots<{
   loading?: (props: Record<string, never>) => any
 }>()
 
-const loadingBoolean = useBooleanish(() => props.loading)
+const loadingBoolean = computed(() => props.loading)
 </script>

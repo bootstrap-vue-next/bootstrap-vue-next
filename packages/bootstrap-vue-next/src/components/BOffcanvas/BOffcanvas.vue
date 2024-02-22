@@ -71,8 +71,8 @@
 <script setup lang="ts">
 import {computed, nextTick, ref, type RendererElement, toRef} from 'vue'
 import {onKeyStroke, useEventListener, useFocus, useVModel} from '@vueuse/core'
-import {useBooleanish, useId, useSafeScrollLock} from '../../composables'
-import type {Booleanish, ButtonVariant, ClassValue, ColorVariant} from '../../types'
+import {useId, useSafeScrollLock} from '../../composables'
+import type {ButtonVariant, ClassValue, ColorVariant} from '../../types'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
 import BOverlay from '../BOverlay/BOverlay.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
@@ -93,28 +93,28 @@ defineOptions({
 
 const props = withDefaults(
   defineProps<{
-    backdrop?: Booleanish
+    backdrop?: boolean
     backdropVariant?: ColorVariant | null
     bodyClass?: string
-    bodyScrolling?: Booleanish
+    bodyScrolling?: boolean
     footerClass?: string
     headerClass?: string
     headerCloseClass?: ClassValue
     headerCloseLabel?: string
     headerCloseVariant?: ButtonVariant | null
     id?: string
-    lazy?: Booleanish
-    modelValue?: Booleanish
-    noCloseOnBackdrop?: Booleanish
-    noCloseOnEsc?: Booleanish
-    noFocus?: Booleanish
-    noHeader?: Booleanish
-    noHeaderClose?: Booleanish
+    lazy?: boolean
+    modelValue?: boolean
+    noCloseOnBackdrop?: boolean
+    noCloseOnEsc?: boolean
+    noFocus?: boolean
+    noHeader?: boolean
+    noHeaderClose?: boolean
     // TODO standardize this. Create a dedicated type
     // Then in components that use individual props (BImg)
     // Make them just use prop placement
     placement?: 'top' | 'bottom' | 'start' | 'end'
-    teleportDisabled?: Booleanish
+    teleportDisabled?: boolean
     teleportTo?: string | RendererElement | null | undefined
     title?: string
     // responsive?: Breakpoint
@@ -180,16 +180,16 @@ const slots = defineSlots<{
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
-const modelValueBoolean = useBooleanish(modelValue)
-const bodyScrollingBoolean = useBooleanish(() => props.bodyScrolling)
-const backdropBoolean = useBooleanish(() => props.backdrop)
-const noHeaderCloseBoolean = useBooleanish(() => props.noHeaderClose)
-const noHeaderBoolean = useBooleanish(() => props.noHeader)
-const noFocusBoolean = useBooleanish(() => props.noFocus)
-const noCloseOnBackdropBoolean = useBooleanish(() => props.noCloseOnBackdrop)
-const noCloseOnEscBoolean = useBooleanish(() => props.noCloseOnEsc)
-const lazyBoolean = useBooleanish(() => props.lazy)
-const teleportDisabledBoolean = useBooleanish(() => props.teleportDisabled)
+const modelValueBoolean = computed(() => modelValue.value)
+const bodyScrollingBoolean = computed(() => props.bodyScrolling)
+const backdropBoolean = computed(() => props.backdrop)
+const noHeaderCloseBoolean = computed(() => props.noHeaderClose)
+const noHeaderBoolean = computed(() => props.noHeader)
+const noFocusBoolean = computed(() => props.noFocus)
+const noCloseOnBackdropBoolean = computed(() => props.noCloseOnBackdrop)
+const noCloseOnEscBoolean = computed(() => props.noCloseOnEsc)
+const lazyBoolean = computed(() => props.lazy)
+const teleportDisabledBoolean = computed(() => props.teleportDisabled)
 
 const computedId = useId(() => props.id, 'offcanvas')
 useSafeScrollLock(modelValueBoolean, bodyScrollingBoolean)

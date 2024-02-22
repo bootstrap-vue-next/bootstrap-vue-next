@@ -7,7 +7,7 @@ export default {
       props: [
         {
           prop: 'pill',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: "When set to 'true', renders the badge in pill style",
         },
@@ -19,13 +19,13 @@ export default {
         },
         {
           prop: 'textIndicator',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: 'Indication position applied',
         },
         {
           prop: 'dotIndicator',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: 'Indication position and dot styling applied',
         },

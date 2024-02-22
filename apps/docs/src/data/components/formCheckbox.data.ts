@@ -20,20 +20,20 @@ export default {
         },
         {
           prop: 'autofocus',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description:
             'When set to `true`, attempts to auto-focus the control when it is mounted, or re-activated when in a keep-alive. Does not set the `autofocus` attribute on the control',
         },
         {
           prop: 'button',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: 'When set, renders the checkbox with the appearance of a button',
         },
         {
           prop: 'buttonGroup',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: '',
         },
@@ -45,7 +45,7 @@ export default {
         },
         {
           prop: 'disabled',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description:
             "When set to `true`, disables the component's functionality and places it in a disabled state",
@@ -66,14 +66,14 @@ export default {
         },
         {
           prop: 'indeterminate',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description:
             'Set to true to show the checkbox as indeterminate, false to show its normal checked/unchecked.',
         },
         {
           prop: 'inline',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description:
             'When set, renders the checkbox as an inline element rather than as a 100% width block',
@@ -93,13 +93,13 @@ export default {
         },
         {
           prop: 'plain',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: 'Render the form control in plain mode, rather than custom styled mode',
         },
         {
           prop: 'required',
-          type: 'Booleanish',
+          type: 'boolean',
           default: undefined,
           description: 'Adds the `required` attribute to the form control',
         },
@@ -111,14 +111,14 @@ export default {
         },
         {
           prop: 'state',
-          type: 'Booleanish | null',
+          type: 'boolean | null',
           default: undefined,
           description:
             'Controls the validation state appearance of the component. `true` for valid, `false` for invalid, or `null` for no validation state',
         },
         {
           prop: 'switch',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: 'When set, renders the checkbox with the appearance of a switch',
         },
@@ -205,7 +205,7 @@ export default {
         },
         {
           prop: 'autofocus',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description:
             'When set to `true`, attempts to auto-focus the control when it is mounted, or re-activated when in a keep-alive. Does not set the `autofocus` attribute on the control',
@@ -219,13 +219,13 @@ export default {
         },
         {
           prop: 'buttons',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: 'When set, renderes the checkboxes in this group with button styling',
         },
         {
           prop: 'disabled',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description:
             "When set to `true`, disables the component's functionality and places it in a disabled state",
@@ -279,13 +279,13 @@ export default {
         },
         {
           prop: 'plain',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: 'Render the form control in plain mode, rather than custom styled mode',
         },
         {
           prop: 'required',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: 'Adds the `required` attribute to the form control',
         },
@@ -297,20 +297,20 @@ export default {
         },
         {
           prop: 'stacked',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: 'When set, renders the checkbox group in stacked mode',
         },
         {
           prop: 'state',
-          type: 'Booleanish | null',
+          type: 'boolean | null',
           default: null,
           description:
             'Controls the validation state appearance of the component. `true` for valid, `false` for invalid, or `null` for no validation state',
         },
         {
           prop: 'switches',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: 'When set, renders the checkboxes in the group with switch styling',
         },
@@ -322,7 +322,7 @@ export default {
         },
         {
           prop: 'validated',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: 'When set, adds the Bootstrap class `was-validated` to the group wrapper',
         },

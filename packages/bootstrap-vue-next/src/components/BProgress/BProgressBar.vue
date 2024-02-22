@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import type {BProgressBarProps} from '../../types'
-import {useBooleanish, useColorVariantClasses} from '../../composables'
+import {useColorVariantClasses} from '../../composables'
 import {computed, inject} from 'vue'
 import {progressInjectionKey} from '../../utils'
 import {useToNumber} from '@vueuse/core'
@@ -43,10 +43,10 @@ defineSlots<{
 
 const parentData = inject(progressInjectionKey, null)
 
-const animatedBoolean = useBooleanish(() => props.animated)
-const showProgressBoolean = useBooleanish(() => props.showProgress)
-const showValueBoolean = useBooleanish(() => props.showValue)
-const stripedBoolean = useBooleanish(() => props.striped)
+const animatedBoolean = computed(() => props.animated)
+const showProgressBoolean = computed(() => props.showProgress)
+const showValueBoolean = computed(() => props.showValue)
+const stripedBoolean = computed(() => props.striped)
 const resolvedBackgroundClasses = useColorVariantClasses(props)
 
 const computedClasses = computed(() => [

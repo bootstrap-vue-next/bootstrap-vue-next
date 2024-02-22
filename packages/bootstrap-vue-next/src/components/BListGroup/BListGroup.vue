@@ -7,14 +7,13 @@
 <script setup lang="ts">
 import {computed, provide, toRef} from 'vue'
 import {listGroupInjectionKey} from '../../utils'
-import type {Booleanish, Breakpoint} from '../../types'
-import {useBooleanish} from '../../composables'
+import type {Breakpoint} from '../../types'
 
 const props = withDefaults(
   defineProps<{
-    flush?: Booleanish
-    horizontal?: Booleanish | Breakpoint
-    numbered?: Booleanish
+    flush?: boolean
+    horizontal?: boolean | Breakpoint
+    numbered?: boolean
     tag?: string
   }>(),
   {
@@ -30,9 +29,9 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const flushBoolean = useBooleanish(() => props.flush)
-const numberedBoolean = useBooleanish(() => props.numbered)
-const computedHorizontal = useBooleanish(() => props.horizontal)
+const flushBoolean = computed(() => props.flush)
+const numberedBoolean = computed(() => props.numbered)
+const computedHorizontal = computed(() => props.horizontal)
 
 const computedClasses = computed(() => {
   const horizontal = flushBoolean.value ? false : computedHorizontal.value

@@ -16,9 +16,8 @@
 
 <script setup lang="ts">
 import {computed, nextTick, onMounted, provide, readonly, ref, watch} from 'vue'
-import {useBooleanish, useId} from '../composables'
+import {useId} from '../composables'
 import {useEventListener, useVModel} from '@vueuse/core'
-import type {Booleanish} from '../types'
 import {BvTriggerableEvent, collapseInjectionKey, getTransitionDelay} from '../utils'
 
 defineOptions({
@@ -27,15 +26,15 @@ defineOptions({
 
 const props = withDefaults(
   defineProps<{
-    // appear?: Booleanish
-    horizontal?: Booleanish
+    // appear?: boolean
+    horizontal?: boolean
     id?: string
-    isNav?: Booleanish
-    modelValue?: Booleanish
-    skipAnimation?: Booleanish
+    isNav?: boolean
+    modelValue?: boolean
+    skipAnimation?: boolean
     tag?: string
-    toggle?: Booleanish
-    visible?: Booleanish
+    toggle?: boolean
+    visible?: boolean
   }>(),
   {
     horizontal: false,
@@ -91,12 +90,12 @@ const buildTriggerableEvent = (
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
-const modelValueBoolean = useBooleanish(modelValue)
-const toggleBoolean = useBooleanish(() => props.toggle)
-const horizontalBoolean = useBooleanish(() => props.horizontal)
-const isNavBoolean = useBooleanish(() => props.isNav)
-const visibleBoolean = useBooleanish(() => props.visible)
-const skipAnimationBoolean = useBooleanish(() => props.skipAnimation)
+const modelValueBoolean = computed(() => modelValue.value)
+const toggleBoolean = computed(() => props.toggle)
+const horizontalBoolean = computed(() => props.horizontal)
+const isNavBoolean = computed(() => props.isNav)
+const visibleBoolean = computed(() => props.visible)
+const skipAnimationBoolean = computed(() => props.skipAnimation)
 
 const computedId = useId(() => props.id, 'collapse')
 

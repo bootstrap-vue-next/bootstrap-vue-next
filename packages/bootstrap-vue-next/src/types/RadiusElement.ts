@@ -1,5 +1,3 @@
-import type {Booleanish} from '.'
-
 export type RadiusElement =
   | 'circle'
   | 'pill'
@@ -20,9 +18,9 @@ export type RadiusElement =
   | 5
 
 export type RadiusElementExtendables = {
-  rounded?: RadiusElement | Booleanish
-  roundedTop?: RadiusElement | Booleanish
-  roundedBottom?: RadiusElement | Booleanish
-  roundedStart?: RadiusElement | Booleanish
-  roundedEnd?: RadiusElement | Booleanish
+  rounded?: RadiusElement | boolean
+  roundedTop?: RadiusElement | boolean
+  roundedBottom?: RadiusElement | boolean
+  roundedStart?: RadiusElement | boolean
+  roundedEnd?: RadiusElement | boolean
 }

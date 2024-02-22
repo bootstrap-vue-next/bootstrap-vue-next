@@ -57,12 +57,7 @@
 
 <script setup lang="ts">
 import {computed, onBeforeUnmount, ref, toRef, watch, watchEffect} from 'vue'
-import {
-  useBLinkHelper,
-  useBooleanish,
-  useColorVariantClasses,
-  useCountdown,
-} from '../../composables'
+import {useBLinkHelper, useColorVariantClasses, useCountdown} from '../../composables'
 import type {BToastProps} from '../../types'
 import BTransition from '../BTransition/BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
@@ -137,15 +132,15 @@ const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props)
 
-const isStatusBoolean = useBooleanish(() => props.isStatus)
-const noCloseButtonBoolean = useBooleanish(() => props.noCloseButton)
-const noFadeBoolean = useBooleanish(() => props.noFade)
-const noHoverPauseBoolean = useBooleanish(() => props.noHoverPause)
-const showOnPauseBoolean = useBooleanish(() => props.showOnPause)
+const isStatusBoolean = computed(() => props.isStatus)
+const noCloseButtonBoolean = computed(() => props.noCloseButton)
+const noFadeBoolean = computed(() => props.noFade)
+const noHoverPauseBoolean = computed(() => props.noHoverPause)
+const showOnPauseBoolean = computed(() => props.showOnPause)
 const intervalNumber = useToNumber(() => props.interval)
 // TODO solid is never used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const solidBoolean = useBooleanish(() => props.solid)
+const solidBoolean = computed(() => props.solid)
 const resolvedBackgroundClasses = useColorVariantClasses(props)
 const countdownLength = toRef(() => (typeof modelValue.value === 'boolean' ? 0 : modelValue.value))
 

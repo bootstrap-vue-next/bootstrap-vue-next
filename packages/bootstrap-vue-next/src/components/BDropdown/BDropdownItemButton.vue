@@ -14,9 +14,8 @@
 </template>
 
 <script setup lang="ts">
-import type {Booleanish, ClassValue, ColorVariant} from '../../types'
+import type {ClassValue, ColorVariant} from '../../types'
 import {computed} from 'vue'
-import {useBooleanish} from '../../composables'
 
 defineOptions({
   inheritAttrs: false,
@@ -24,10 +23,10 @@ defineOptions({
 
 const props = withDefaults(
   defineProps<{
-    active?: Booleanish
+    active?: boolean
     activeClass?: ClassValue
     buttonClass?: ClassValue
-    disabled?: Booleanish
+    disabled?: boolean
     variant?: ColorVariant | null
   }>(),
   {
@@ -43,8 +42,8 @@ const emit = defineEmits<{
   click: [value: MouseEvent]
 }>()
 
-const activeBoolean = useBooleanish(() => props.active)
-const disabledBoolean = useBooleanish(() => props.disabled)
+const activeBoolean = computed(() => props.active)
+const disabledBoolean = computed(() => props.disabled)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

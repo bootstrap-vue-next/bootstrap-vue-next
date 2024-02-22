@@ -24,7 +24,7 @@
 import BLink from '../BLink/BLink.vue'
 import {computed, inject, toRef, useAttrs} from 'vue'
 import type {AttrsValue, BLinkProps, ClassValue} from '../../types'
-import {useBLinkHelper, useBooleanish} from '../../composables'
+import {useBLinkHelper} from '../../composables'
 import {collapseInjectionKey, dropdownInjectionKey, navbarInjectionKey} from '../../utils'
 
 defineOptions({
@@ -73,8 +73,8 @@ const emit = defineEmits<{
 
 const {class: wrapperClass, ...attrs} = useAttrs()
 
-const activeBoolean = useBooleanish(() => props.active)
-const disabledBoolean = useBooleanish(() => props.disabled)
+const activeBoolean = computed(() => props.active)
+const disabledBoolean = computed(() => props.disabled)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

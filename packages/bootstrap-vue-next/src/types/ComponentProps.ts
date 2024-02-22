@@ -2,7 +2,6 @@ import type {Boundary, Middleware, Padding, RootBoundary, Strategy} from '@float
 import type {ComponentPublicInstance, RendererElement, TransitionProps} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {
-  Booleanish,
   Breakpoint,
   ButtonType,
   ButtonVariant,
@@ -23,19 +22,19 @@ import type {
 } from '.'
 
 export interface BLinkProps {
-  active?: Booleanish
+  active?: boolean
   activeClass?: string
-  append?: Booleanish
-  disabled?: Booleanish
+  append?: boolean
+  disabled?: boolean
   exactActiveClass?: string
   href?: string
-  icon?: Booleanish
-  // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+  icon?: boolean
+  // noPrefetch: {type: [Boolean, String] as PropType<boolean>, default: false},
   opacity?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
   opacityHover?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
-  // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
+  // prefetch: {type: [Boolean, String] as PropType<boolean>, default: null},
   rel?: string
-  replace?: Booleanish
+  replace?: boolean
   routerComponentName?: string
   routerTag?: string
   target?: LinkTarget
@@ -49,54 +48,54 @@ export interface BLinkProps {
 }
 
 export interface BTransitionProps {
-  appear?: Booleanish
+  appear?: boolean
   mode?: TransitionMode
-  noFade?: Booleanish
+  noFade?: boolean
   transProps?: Readonly<TransitionProps>
 }
 
 export interface BImgProps extends RadiusElementExtendables {
-  blank?: Booleanish
+  blank?: boolean
   blankColor?: string
-  block?: Booleanish
-  center?: Booleanish
-  end?: Booleanish
-  fluid?: Booleanish
-  fluidGrow?: Booleanish
+  block?: boolean
+  center?: boolean
+  end?: boolean
+  fluid?: boolean
+  fluidGrow?: boolean
   height?: Numberish
-  lazy?: Booleanish
+  lazy?: boolean
   sizes?: string | readonly string[]
   src?: string
   srcset?: string | readonly string[]
-  start?: Booleanish
-  thumbnail?: Booleanish
+  start?: boolean
+  thumbnail?: boolean
   width?: Numberish
 }
 
 export interface BFormProps {
-  floating?: Booleanish
+  floating?: boolean
   id?: string
-  novalidate?: Booleanish
-  validated?: Booleanish
+  novalidate?: boolean
+  validated?: boolean
 }
 
 export interface BTableSimpleProps {
-  bordered?: Booleanish
-  borderless?: Booleanish
+  bordered?: boolean
+  borderless?: boolean
   borderVariant?: ColorVariant | null
-  captionTop?: Booleanish
-  dark?: Booleanish
-  fixed?: Booleanish
-  hover?: Booleanish
+  captionTop?: boolean
+  dark?: boolean
+  fixed?: boolean
+  hover?: boolean
   id?: string
-  noBorderCollapse?: Booleanish
-  outlined?: Booleanish
-  responsive?: Booleanish | Breakpoint
-  small?: Booleanish
-  stacked?: Booleanish | Breakpoint
-  stickyHeader?: Booleanish
-  striped?: Booleanish
-  stripedColumns?: Booleanish
+  noBorderCollapse?: boolean
+  outlined?: boolean
+  responsive?: boolean | Breakpoint
+  small?: boolean
+  stacked?: boolean | Breakpoint
+  stickyHeader?: boolean
+  striped?: boolean
+  stripedColumns?: boolean
   tableClass?: ClassValue
   variant?: ColorVariant | null
 }
@@ -116,17 +115,17 @@ export interface BTableLiteProps<T = Record<string, unknown>> extends BTableSimp
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     | readonly any[]
   fields?: TableFieldRaw<T>[]
-  footClone?: Booleanish
+  footClone?: boolean
   footRowVariant?: ColorVariant | null
   footVariant?: ColorVariant | null
   headRowVariant?: ColorVariant | null
   headVariant?: ColorVariant | null
   items?: readonly TableItem<T>[]
-  labelStacked?: Booleanish
+  labelStacked?: boolean
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   modelValue?: any
   primaryKey?: string
-  showEmpty?: Booleanish
+  showEmpty?: boolean
   tbodyClass?: ClassValue
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   tbodyTrAttr?: any
@@ -145,30 +144,30 @@ export interface BTableLiteProps<T = Record<string, unknown>> extends BTableSimp
   theadTrClass?: ClassValue
 }
 export interface BProgressBarProps extends ColorExtendables {
-  animated?: Booleanish
+  animated?: boolean
   label?: string
   labelHtml?: string
   max?: Numberish
   precision?: Numberish
-  showProgress?: Booleanish
-  showValue?: Booleanish
-  striped?: Booleanish
+  showProgress?: boolean
+  showValue?: boolean
+  striped?: boolean
   value?: Numberish
 }
 
 export interface BInputGroupAddonProps {
-  isText?: Booleanish
+  isText?: boolean
 }
 
 export interface BFormFeedbackSharedProps {
   ariaLive?: string
-  forceShow?: Booleanish
+  forceShow?: boolean
   id?: string
   role?: string
-  state?: Booleanish | null
+  state?: boolean | null
   tag?: string
   text?: string
-  tooltip?: Booleanish
+  tooltip?: boolean
 }
 
 export interface BDropdownProps {
@@ -176,33 +175,33 @@ export interface BDropdownProps {
   autoClose?: boolean | 'inside' | 'outside'
   boundary?: Boundary | RootBoundary
   boundaryPadding?: Padding
-  center?: Booleanish
+  center?: boolean
   container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
-  disabled?: Booleanish
-  dropend?: Booleanish
-  dropstart?: Booleanish
-  dropup?: Booleanish
-  end?: Booleanish
+  disabled?: boolean
+  dropend?: boolean
+  dropstart?: boolean
+  dropup?: boolean
+  end?: boolean
   floatingMiddleware?: Middleware[]
   id?: string
-  isNav?: Booleanish
-  lazy?: Booleanish
+  isNav?: boolean
+  lazy?: boolean
   menuClass?: ClassValue
-  modelValue?: Booleanish
-  noCaret?: Booleanish
-  noFlip?: Booleanish
-  noShift?: Booleanish
-  noSize?: Booleanish
+  modelValue?: boolean
+  noCaret?: boolean
+  noFlip?: boolean
+  noShift?: boolean
+  noSize?: boolean
   offset?:
     | number
     | string
     | Readonly<{mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null}>
   role?: string
   size?: Size
-  split?: Booleanish
+  split?: boolean
   splitButtonType?: ButtonType
   splitClass?: ClassValue
-  splitDisabled?: Booleanish
+  splitDisabled?: boolean
   splitHref?: string
   splitTo?: RouteLocationRaw
   splitVariant?: ButtonVariant | null
@@ -220,14 +219,14 @@ export interface BToastProps extends ColorExtendables, Omit<BLinkProps, 'routerT
   headerTag?: string
   id?: string
   interval?: Numberish
-  isStatus?: Booleanish
+  isStatus?: boolean
   modelValue?: boolean | number
-  noCloseButton?: Booleanish
-  noFade?: Booleanish
-  noHoverPause?: Booleanish
+  noCloseButton?: boolean
+  noFade?: boolean
+  noHoverPause?: boolean
   progressProps?: Omit<BProgressBarProps, 'label' | 'labelHtml' | 'max' | 'value'>
-  showOnPause?: Booleanish
-  solid?: Booleanish
+  showOnPause?: boolean
+  solid?: boolean
   title?: string
   toastClass?: ClassValue
   transProps?: Readonly<BTransitionProps>
@@ -236,7 +235,7 @@ export interface BToastProps extends ColorExtendables, Omit<BLinkProps, 'routerT
 export interface BPopoverProps {
   boundary?: Boundary | RootBoundary
   boundaryPadding?: Padding
-  click?: Booleanish
+  click?: boolean
   container?: string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | undefined
   content?: string
   customClass?: ClassValue
@@ -247,33 +246,33 @@ export interface BPopoverProps {
         hide: number
       }>
   floatingMiddleware?: Middleware[]
-  hide?: Booleanish
-  html?: Booleanish
+  hide?: boolean
+  html?: boolean
   id?: string
-  inline?: Booleanish
-  manual?: Booleanish
-  modelValue?: Booleanish
-  noAutoClose?: Booleanish
-  noFade?: Booleanish
-  noFlip?: Booleanish
-  noHide?: Booleanish
-  noShift?: Booleanish
-  noSize?: Booleanish
-  noninteractive?: Booleanish
+  inline?: boolean
+  manual?: boolean
+  modelValue?: boolean
+  noAutoClose?: boolean
+  noFade?: boolean
+  noFlip?: boolean
+  noHide?: boolean
+  noShift?: boolean
+  noSize?: boolean
+  noninteractive?: boolean
   offset?: Numberish | null
   placement?: PopoverPlacement
-  persistent?: Booleanish
-  realtime?: Booleanish
+  persistent?: boolean
+  realtime?: boolean
   reference?: string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | null
   strategy?: Strategy
   target?: string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | null
   title?: string
-  tooltip?: Booleanish
+  tooltip?: boolean
   variant?: ColorVariant | null
 }
 
 export interface BTooltipProps extends Omit<BPopoverProps, 'tooltip'> {
-  interactive?: Booleanish
+  interactive?: boolean
 }
 
 export interface BCardHeadFootProps extends ColorExtendables {
@@ -284,21 +283,21 @@ export interface BCardHeadFootProps extends ColorExtendables {
 }
 
 export interface BModalProps {
-  autoFocus?: Booleanish
+  autoFocus?: boolean
   autoFocusButton?: 'ok' | 'cancel' | 'close'
   body?: string
   backdropVariant?: ColorVariant | null
   bodyBgVariant?: ColorVariant | null
   bodyClass?: ClassValue
-  bodyScrolling?: Booleanish
+  bodyScrolling?: boolean
   bodyTextVariant?: TextColorVariant | null
   bodyVariant?: ColorVariant | null
-  busy?: Booleanish
+  busy?: boolean
   buttonSize?: Size
-  cancelDisabled?: Booleanish
+  cancelDisabled?: boolean
   cancelTitle?: string
   cancelVariant?: ButtonVariant | null
-  centered?: Booleanish
+  centered?: boolean
   contentClass?: ClassValue
   dialogClass?: ClassValue
   footerBgVariant?: ColorVariant | null
@@ -306,7 +305,7 @@ export interface BModalProps {
   footerClass?: ClassValue
   footerTextVariant?: TextColorVariant | null
   footerVariant?: ColorVariant | null
-  fullscreen?: Booleanish | Breakpoint
+  fullscreen?: boolean | Breakpoint
   headerBgVariant?: ColorVariant | null
   headerBorderVariant?: ColorVariant | null
   headerClass?: ClassValue
@@ -315,28 +314,28 @@ export interface BModalProps {
   headerCloseVariant?: ButtonVariant | null
   headerTextVariant?: TextColorVariant | null
   headerVariant?: ColorVariant | null
-  hideBackdrop?: Booleanish
-  hideFooter?: Booleanish
-  hideHeader?: Booleanish
-  hideHeaderClose?: Booleanish
+  hideBackdrop?: boolean
+  hideFooter?: boolean
+  hideHeader?: boolean
+  hideHeaderClose?: boolean
   id?: string
-  lazy?: Booleanish
+  lazy?: boolean
   modalClass?: ClassValue
-  modelValue?: Booleanish
-  noCloseOnBackdrop?: Booleanish
-  noCloseOnEsc?: Booleanish
-  noFade?: Booleanish
-  okDisabled?: Booleanish
-  okOnly?: Booleanish
+  modelValue?: boolean
+  noCloseOnBackdrop?: boolean
+  noCloseOnEsc?: boolean
+  noFade?: boolean
+  okDisabled?: boolean
+  okOnly?: boolean
   okTitle?: string
   okVariant?: ButtonVariant | null
-  scrollable?: Booleanish
+  scrollable?: boolean
   size?: Size | 'xl'
-  teleportDisabled?: Booleanish
+  teleportDisabled?: boolean
   teleportTo?: string | Readonly<RendererElement> | null | undefined
   title?: string
   titleClass?: ClassValue
-  titleSrOnly?: Booleanish
+  titleSrOnly?: boolean
   titleTag?: string
   transProps?: Readonly<BTransitionProps>
 }

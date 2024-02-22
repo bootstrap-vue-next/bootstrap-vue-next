@@ -7,13 +7,8 @@
 <script lang="ts">
 import {computed, defineComponent, type PropType, type SlotsType} from 'vue'
 import {getBreakpointProps, getClasses} from '../utils'
-import type {
-  AlignmentContent,
-  AlignmentJustifyContent,
-  AlignmentVertical,
-  Booleanish,
-} from '../types'
-import {useAlignment, useBooleanish} from '../composables'
+import type {AlignmentContent, AlignmentJustifyContent, AlignmentVertical} from '../types'
+import {useAlignment} from '../composables'
 
 const rowColsProps = getBreakpointProps('cols', [''], {type: [String, Number], default: null})
 
@@ -26,14 +21,14 @@ export default defineComponent({
     tag: {type: String, default: 'div'},
     gutterX: {type: String, default: null},
     gutterY: {type: String, default: null},
-    noGutters: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+    noGutters: {type: [Boolean, String] as PropType<boolean>, default: false},
     alignV: {type: String as PropType<AlignmentVertical>, default: null},
     alignH: {type: String as PropType<AlignmentJustifyContent>, default: null},
     alignContent: {type: String as PropType<AlignmentContent>, default: null},
     ...rowColsProps,
   },
   setup(props) {
-    const noGuttersBoolean = useBooleanish(() => props.noGutters)
+    const noGuttersBoolean = computed(() => props.noGutters)
     const alignment = useAlignment(() => props.alignH)
 
     const rowColsClasses = computed(() => getClasses(props, rowColsProps, 'cols', 'row-cols'))

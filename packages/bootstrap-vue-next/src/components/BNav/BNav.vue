@@ -5,22 +5,22 @@
 </template>
 
 <script setup lang="ts">
-import type {AlignmentJustifyContent, Booleanish} from '../../types'
-import {useAlignment, useBooleanish} from '../../composables'
+import type {AlignmentJustifyContent} from '../../types'
+import {useAlignment} from '../../composables'
 import {computed} from 'vue'
 
 const props = withDefaults(
   defineProps<{
     align?: AlignmentJustifyContent
-    cardHeader?: Booleanish
-    fill?: Booleanish
-    justified?: Booleanish
-    pills?: Booleanish
-    small?: Booleanish
-    tabs?: Booleanish
+    cardHeader?: boolean
+    fill?: boolean
+    justified?: boolean
+    pills?: boolean
+    small?: boolean
+    tabs?: boolean
     tag?: string
-    underline?: Booleanish
-    vertical?: Booleanish
+    underline?: boolean
+    vertical?: boolean
   }>(),
   {
     align: undefined,
@@ -41,15 +41,15 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const cardHeaderBoolean = useBooleanish(() => props.cardHeader)
-const fillBoolean = useBooleanish(() => props.fill)
-const justifiedBoolean = useBooleanish(() => props.justified)
-const pillsBoolean = useBooleanish(() => props.pills)
-const smallBoolean = useBooleanish(() => props.small)
-const tabsBoolean = useBooleanish(() => props.tabs)
-const verticalBoolean = useBooleanish(() => props.vertical)
+const cardHeaderBoolean = computed(() => props.cardHeader)
+const fillBoolean = computed(() => props.fill)
+const justifiedBoolean = computed(() => props.justified)
+const pillsBoolean = computed(() => props.pills)
+const smallBoolean = computed(() => props.small)
+const tabsBoolean = computed(() => props.tabs)
+const verticalBoolean = computed(() => props.vertical)
 const alignment = useAlignment(() => props.align)
-const underlineBoolean = useBooleanish(() => props.underline)
+const underlineBoolean = computed(() => props.underline)
 
 const computedClasses = computed(() => ({
   'nav-tabs': tabsBoolean.value,

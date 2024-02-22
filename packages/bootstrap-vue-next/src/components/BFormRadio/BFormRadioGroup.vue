@@ -26,27 +26,20 @@
 </template>
 
 <script setup lang="ts">
-import type {
-  AriaInvalid,
-  Booleanish,
-  ButtonVariant,
-  RadioOptionRaw,
-  RadioValue,
-  Size,
-} from '../../types'
+import type {AriaInvalid, ButtonVariant, RadioOptionRaw, RadioValue, Size} from '../../types'
 import {computed, nextTick, provide, ref, toRef, watch} from 'vue'
 import {radioGroupKey} from '../../utils'
 import BFormRadio from './BFormRadio.vue'
-import {getGroupAttr, getGroupClasses, useBooleanish, useId} from '../../composables'
+import {getGroupAttr, getGroupClasses, useId} from '../../composables'
 import {useFocus, useVModel} from '@vueuse/core'
 
 const props = withDefaults(
   defineProps<{
     ariaInvalid?: AriaInvalid
-    autofocus?: Booleanish
+    autofocus?: boolean
     buttonVariant?: ButtonVariant | null
-    buttons?: Booleanish
-    disabled?: Booleanish
+    buttons?: boolean
+    disabled?: boolean
     disabledField?: string
     form?: string
     htmlField?: string
@@ -54,13 +47,13 @@ const props = withDefaults(
     modelValue?: RadioValue
     name?: string
     options?: readonly RadioOptionRaw[]
-    plain?: Booleanish
-    required?: Booleanish
+    plain?: boolean
+    required?: boolean
     size?: Size
-    stacked?: Booleanish
-    state?: Booleanish | null
+    stacked?: boolean
+    state?: boolean | null
     textField?: string
-    validated?: Booleanish
+    validated?: boolean
     valueField?: string
   }>(),
   {
@@ -105,14 +98,14 @@ const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 const computedId = useId(() => props.id, 'radio')
 const computedName = useId(() => props.name, 'checkbox')
 
-const autofocusBoolean = useBooleanish(() => props.autofocus)
-const buttonsBoolean = useBooleanish(() => props.buttons)
-const disabledBoolean = useBooleanish(() => props.disabled)
-const plainBoolean = useBooleanish(() => props.plain)
-const requiredBoolean = useBooleanish(() => props.required)
-const stackedBoolean = useBooleanish(() => props.stacked)
-const stateBoolean = useBooleanish(() => props.state)
-const validatedBoolean = useBooleanish(() => props.validated)
+const autofocusBoolean = computed(() => props.autofocus)
+const buttonsBoolean = computed(() => props.buttons)
+const disabledBoolean = computed(() => props.disabled)
+const plainBoolean = computed(() => props.plain)
+const requiredBoolean = computed(() => props.required)
+const stackedBoolean = computed(() => props.stacked)
+const stateBoolean = computed(() => props.state)
+const validatedBoolean = computed(() => props.validated)
 
 const element = ref<HTMLElement | null>(null)
 

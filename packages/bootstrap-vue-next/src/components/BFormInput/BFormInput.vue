@@ -26,7 +26,7 @@
 
 <script setup lang="ts">
 import {computed, ref} from 'vue'
-import {useBooleanish, useFormInput, useStateClass} from '../../composables'
+import {useFormInput, useStateClass} from '../../composables'
 import type {CommonInputProps, InputType, Numberish} from '../../types'
 
 const props = withDefaults(
@@ -34,7 +34,7 @@ const props = withDefaults(
     {
       max?: Numberish
       min?: Numberish
-      // noWheel: {type: [Boolean, String] as PropType<Booleanish>, default: false}, TODO: not implemented yet
+      // noWheel: {type: [Boolean, String] as PropType<boolean>, default: false}, TODO: not implemented yet
       step?: Numberish
       type?: InputType
     } & CommonInputProps
@@ -78,11 +78,11 @@ const emit = defineEmits<{
 const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
   useFormInput(props, emit)
 
-const disabledBoolean = useBooleanish(() => props.disabled)
-const requiredBoolean = useBooleanish(() => props.required)
-const readonlyBoolean = useBooleanish(() => props.readonly)
-const plaintextBoolean = useBooleanish(() => props.plaintext)
-const stateBoolean = useBooleanish(() => props.state)
+const disabledBoolean = computed(() => props.disabled)
+const requiredBoolean = computed(() => props.required)
+const readonlyBoolean = computed(() => props.readonly)
+const plaintextBoolean = computed(() => props.plaintext)
+const stateBoolean = computed(() => props.state)
 
 const stateClass = useStateClass(stateBoolean)
 

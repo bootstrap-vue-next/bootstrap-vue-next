@@ -84,9 +84,7 @@
 <script setup lang="ts" generic="T = Record<string, unknown>">
 import {useToNumber, useVModel} from '@vueuse/core'
 import {computed, onMounted, ref, type Ref, type StyleValue, toRef, watch} from 'vue'
-import {useBooleanish} from '../../composables'
 import type {
-  Booleanish,
   BTableLiteProps,
   BTableProvider,
   BTableSortCompare,
@@ -114,17 +112,17 @@ const props = withDefaults(
       provider?: BTableProvider<T>
       sortCompare?: BTableSortCompare<T>
       noProvider?: readonly NoProviderTypes[]
-      noProviderPaging?: Booleanish
-      noProviderSorting?: Booleanish
-      noProviderFiltering?: Booleanish
+      noProviderPaging?: boolean
+      noProviderSorting?: boolean
+      noProviderFiltering?: boolean
       sortBy?: string
-      sortDesc?: Booleanish
-      selectable?: Booleanish
-      stickySelect?: Booleanish
+      sortDesc?: boolean
+      selectable?: boolean
+      stickySelect?: boolean
       selectHead?: boolean | string
       selectMode?: 'multi' | 'single' | 'range'
       selectionVariant?: ColorVariant | null
-      busy?: Booleanish
+      busy?: boolean
       busyLoadingText?: string
       perPage?: Numberish
       currentPage?: Numberish
@@ -140,19 +138,19 @@ const props = withDefaults(
       // labelSortAsc?: string
       // labelSortClear?: string
       // labelSortDesc?: string
-      // noFooterSorting?: Booleanish
-      noLocalSorting?: Booleanish
-      noSelectOnClick?: Booleanish
-      // noSortReset?: Booleanish
+      // noFooterSorting?: boolean
+      noLocalSorting?: boolean
+      noSelectOnClick?: boolean
+      // noSortReset?: boolean
       // selectedVariant?: ColorVariant | null
-      // showEmpty?: Booleanish
+      // showEmpty?: boolean
       sortCompareLocale?: string | string[]
       sortCompareOptions?: Intl.CollatorOptions
       // sortDirection?: 'asc' | 'desc' | 'last'
-      // sortIconLeft?: Booleanish
-      // sortNullLast?: Booleanish
+      // sortIconLeft?: boolean
+      // sortNullLast?: boolean
       selectedItems?: readonly TableItem<T>[]
-      noSortableIcon?: Booleanish
+      noSortableIcon?: boolean
     } & Omit<BTableLiteProps<T>, 'tableClass'>
   >(),
   {
@@ -316,15 +314,15 @@ const selectedItemsSetUtilities = {
  */
 const internalItems = ref<TableItem<T>[]>([]) as Ref<TableItem<T>[]>
 
-const sortDescBoolean = useBooleanish(sortDescModel)
-const busyBoolean = useBooleanish(busyModel)
-const noProviderPagingBoolean = useBooleanish(() => props.noProviderPaging)
-const noProviderSortingBoolean = useBooleanish(() => props.noProviderSorting)
-const noProviderFilteringBoolean = useBooleanish(() => props.noProviderFiltering)
-const selectableBoolean = useBooleanish(() => props.selectable)
-const noSortableIconBoolean = useBooleanish(() => props.noSortableIcon)
-const noSelectOnClickBoolean = useBooleanish(() => props.noSelectOnClick)
-const noLocalSortingBoolean = useBooleanish(() => props.noLocalSorting)
+const sortDescBoolean = computed(() => sortDescModel.value)
+const busyBoolean = computed(() => busyModel.value)
+const noProviderPagingBoolean = computed(() => props.noProviderPaging)
+const noProviderSortingBoolean = computed(() => props.noProviderSorting)
+const noProviderFilteringBoolean = computed(() => props.noProviderFiltering)
+const selectableBoolean = computed(() => props.selectable)
+const noSortableIconBoolean = computed(() => props.noSortableIcon)
+const noSelectOnClickBoolean = computed(() => props.noSelectOnClick)
+const noLocalSortingBoolean = computed(() => props.noLocalSorting)
 
 const perPageNumber = useToNumber(() => props.perPage, {method: 'parseInt'})
 const currentPageNumber = useToNumber(() => props.currentPage, {method: 'parseInt'})

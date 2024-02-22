@@ -12,7 +12,6 @@
 
 <script setup lang="ts">
 import type {BFormProps} from '../../types'
-import {useBooleanish} from '../../composables'
 import {computed, ref} from 'vue'
 
 const props = withDefaults(defineProps<BFormProps>(), {
@@ -28,9 +27,9 @@ const emit = defineEmits<{
 
 const element = ref<HTMLFormElement | null>(null)
 
-const floatingBoolean = useBooleanish(() => props.floating)
-const novalidateBoolean = useBooleanish(() => props.novalidate)
-const validatedBoolean = useBooleanish(() => props.validated)
+const floatingBoolean = computed(() => props.floating)
+const novalidateBoolean = computed(() => props.novalidate)
+const validatedBoolean = computed(() => props.validated)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

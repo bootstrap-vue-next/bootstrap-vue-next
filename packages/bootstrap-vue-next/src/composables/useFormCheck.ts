@@ -74,17 +74,18 @@ interface GroupAttrItemsInput {
   state?: boolean | null
 }
 
-const getGroupAttr = (items: MaybeRefOrGetter<GroupAttrItemsInput>) => {
-  const resolvedItems = toRef(items)
-  const computedAriaInvalid = useAriaInvalid(
-    () => resolvedItems.value.ariaInvalid,
-    () => resolvedItems.value.state
-  )
-  return computed(() => ({
-    'aria-invalid': computedAriaInvalid.value as Exclude<AriaInvalid, ''> | undefined,
-    'aria-required': resolvedItems.value.required === true ? true : undefined,
-  }))
-}
+const getGroupAttr = (items: MaybeRefOrGetter<GroupAttrItemsInput>) =>
+  computed(() => {
+    const resolvedItems = toRef(items)
+    const computedAriaInvalid = useAriaInvalid(
+      () => resolvedItems.value.ariaInvalid,
+      () => resolvedItems.value.state
+    )
+    return {
+      'aria-invalid': computedAriaInvalid.value as Exclude<AriaInvalid, ''> | undefined,
+      'aria-required': resolvedItems.value.required === true ? true : undefined,
+    }
+  })
 
 interface GroupClassesItemsInput {
   validated?: boolean

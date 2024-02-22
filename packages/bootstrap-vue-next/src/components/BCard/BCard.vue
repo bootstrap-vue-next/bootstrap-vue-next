@@ -62,7 +62,6 @@
 <script setup lang="ts">
 import type {
   AlignmentTextHorizontal,
-  Booleanish,
   ClassValue,
   ColorExtendables,
   ColorVariant,
@@ -71,7 +70,7 @@ import type {
 } from '../../types'
 import {isEmptySlot} from '../../utils'
 import {computed, toRef} from 'vue'
-import {useBooleanish, useColorVariantClasses} from '../../composables'
+import {useColorVariantClasses} from '../../composables'
 import BCardImg from './BCardImg.vue'
 import BCardHeader from './BCardHeader.vue'
 import BCardBody from './BCardBody.vue'
@@ -105,15 +104,15 @@ const props = withDefaults(
       headerTextVariant?: TextColorVariant | null
       headerVariant?: ColorVariant | null
       imgAlt?: string
-      imgBottom?: Booleanish
-      imgEnd?: Booleanish
+      imgBottom?: boolean
+      imgEnd?: boolean
       imgHeight?: Numberish
       imgSrc?: string
-      imgStart?: Booleanish
-      imgTop?: Booleanish
+      imgStart?: boolean
+      imgTop?: boolean
       imgWidth?: Numberish
-      noBody?: Booleanish
-      overlay?: Booleanish
+      noBody?: boolean
+      overlay?: boolean
       subtitle?: string
       subtitleTag?: string
       subtitleTextVariant?: TextColorVariant | null
@@ -181,10 +180,10 @@ const slots = defineSlots<{
   img?: (props: Record<string, never>) => any
 }>()
 
-const imgBottomBoolean = useBooleanish(() => props.imgBottom)
-const imgEndBoolean = useBooleanish(() => props.imgEnd)
-const imgStartBoolean = useBooleanish(() => props.imgStart)
-const noBodyBoolean = useBooleanish(() => props.noBody)
+const imgBottomBoolean = computed(() => props.imgBottom)
+const imgEndBoolean = computed(() => props.imgEnd)
+const imgStartBoolean = computed(() => props.imgStart)
+const noBodyBoolean = computed(() => props.noBody)
 
 const hasHeaderSlot = toRef(() => !isEmptySlot(slots.header))
 const hasFooterSlot = toRef(() => !isEmptySlot(slots.footer))

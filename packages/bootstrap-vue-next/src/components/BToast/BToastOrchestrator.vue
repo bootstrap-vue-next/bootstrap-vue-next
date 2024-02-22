@@ -26,16 +26,15 @@
 </template>
 
 <script setup lang="ts">
-import {type RendererElement, watch} from 'vue'
-import {useBooleanish, useToast} from '../../composables'
-import type {Booleanish} from '../../types'
+import {computed, type RendererElement, watch} from 'vue'
+import {useToast} from '../../composables'
 import {omit} from '../../utils'
 
 const props = withDefaults(
   defineProps<{
-    teleportDisabled?: Booleanish
+    teleportDisabled?: boolean
     teleportTo?: string | Readonly<RendererElement> | null | undefined
-    appendToast?: Booleanish
+    appendToast?: boolean
   }>(),
   {
     teleportDisabled: false,
@@ -44,8 +43,8 @@ const props = withDefaults(
   }
 )
 
-const teleportDisabledBoolean = useBooleanish(() => props.teleportDisabled)
-const appendToastBoolean = useBooleanish(() => props.appendToast)
+const teleportDisabledBoolean = computed(() => props.teleportDisabled)
+const appendToastBoolean = computed(() => props.appendToast)
 
 const toastPositions = {
   'top-left': 'top-0 start-0',

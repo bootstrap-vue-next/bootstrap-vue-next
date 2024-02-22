@@ -5,12 +5,11 @@
 </template>
 
 <script setup lang="ts" generic="T">
-import {useBooleanish} from '../../composables'
-import type {Booleanish} from '../../types'
+import {computed} from 'vue'
 
 const props = withDefaults(
   defineProps<{
-    disabled?: Booleanish
+    disabled?: boolean
     value?: T
   }>(),
   {
@@ -24,5 +23,5 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const disabledBoolean = useBooleanish(() => props.disabled)
+const disabledBoolean = computed(() => props.disabled)
 </script>

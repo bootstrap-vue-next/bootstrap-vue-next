@@ -31,7 +31,6 @@ import {avatarGroupInjectionKey, isEmptySlot} from '../../utils'
 import {computed, type CSSProperties, inject, type StyleValue, toRef} from 'vue'
 import type {
   BLinkProps,
-  Booleanish,
   ButtonType,
   ColorExtendables,
   ColorVariant,
@@ -44,7 +43,6 @@ import type {
 import {
   useAvatarSize,
   useBLinkHelper,
-  useBooleanish,
   useColorVariantClasses,
   useRadiusElementClasses,
 } from '../../composables'
@@ -54,18 +52,18 @@ const props = withDefaults(
   defineProps<
     {
       alt?: string
-      badge?: boolean | string // Can't make this Booleanish. string is valid text
+      badge?: boolean | string
       badgeBgVariant?: ColorVariant | null
       badgeOffset?: string
-      badgeStart?: Booleanish
+      badgeStart?: boolean
       badgeTextVariant?: TextColorVariant | null
-      badgeTop?: Booleanish
+      badgeTop?: boolean
       badgeVariant?: ColorVariant | null
-      button?: Booleanish
+      button?: boolean
       buttonType?: ButtonType
       icon?: string
       size?: LiteralUnion<Size, Numberish>
-      square?: Booleanish
+      square?: boolean
       src?: string
       text?: string
     } & Omit<BLinkProps, 'routerTag'> &
@@ -145,16 +143,16 @@ const SIZES = ['sm', null, 'lg']
 const FONT_SIZE_SCALE = 0.4
 const BADGE_FONT_SIZE_SCALE = FONT_SIZE_SCALE * 0.7
 
-const badgeStartBoolean = useBooleanish(() => props.badgeStart)
-const badgeTopBoolean = useBooleanish(() => props.badgeTop)
-const buttonBoolean = useBooleanish(() => props.button)
-const disabledBoolean = useBooleanish(() => props.disabled)
-const squareBoolean = useBooleanish(() => props.square)
-const roundedBoolean = useBooleanish(() => props.rounded)
-const roundedTopBoolean = useBooleanish(() => props.roundedTop)
-const roundedBottomBoolean = useBooleanish(() => props.roundedBottom)
-const roundedStartBoolean = useBooleanish(() => props.roundedStart)
-const roundedEndBoolean = useBooleanish(() => props.roundedEnd)
+const badgeStartBoolean = computed(() => props.badgeStart)
+const badgeTopBoolean = computed(() => props.badgeTop)
+const buttonBoolean = computed(() => props.button)
+const disabledBoolean = computed(() => props.disabled)
+const squareBoolean = computed(() => props.square)
+const roundedBoolean = computed(() => props.rounded)
+const roundedTopBoolean = computed(() => props.roundedTop)
+const roundedBottomBoolean = computed(() => props.roundedBottom)
+const roundedStartBoolean = computed(() => props.roundedStart)
+const roundedEndBoolean = computed(() => props.roundedEnd)
 
 const hasDefaultSlot = toRef(() => !isEmptySlot(slots.default))
 const hasBadgeSlot = toRef(() => !isEmptySlot(slots.badge))

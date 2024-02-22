@@ -1,4 +1,4 @@
-import type {Booleanish, LiteralUnion, Numberish} from '.'
+import type {LiteralUnion, Numberish} from '.'
 
 export type Breakpoint = 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
 
@@ -19,11 +19,11 @@ export interface OrderBreakpointProps {
 }
 
 export interface ColBreakpointProps {
-  sm?: LiteralUnion<Booleanish, Numberish>
-  md?: LiteralUnion<Booleanish, Numberish>
-  lg?: LiteralUnion<Booleanish, Numberish>
-  xl?: LiteralUnion<Booleanish, Numberish>
-  xxl?: LiteralUnion<Booleanish, Numberish>
+  sm?: LiteralUnion<boolean, Numberish>
+  md?: LiteralUnion<boolean, Numberish>
+  lg?: LiteralUnion<boolean, Numberish>
+  xl?: LiteralUnion<boolean, Numberish>
+  xxl?: LiteralUnion<boolean, Numberish>
 }
 
 export interface RowColsBreakpointProps {

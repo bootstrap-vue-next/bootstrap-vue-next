@@ -28,8 +28,8 @@
 <script setup lang="ts">
 import {useFocus, useVModel} from '@vueuse/core'
 import {computed, inject, ref, toRef} from 'vue'
-import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
-import type {Booleanish, ButtonVariant, CheckboxValue, Size} from '../../types'
+import {getClasses, getInputClasses, getLabelClasses, useId} from '../../composables'
+import type {ButtonVariant, CheckboxValue, Size} from '../../types'
 import {checkboxGroupKey, isEmptySlot} from '../../utils'
 import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
 
@@ -41,22 +41,22 @@ const props = withDefaults(
   defineProps<{
     ariaLabel?: string
     ariaLabelledby?: string
-    autofocus?: Booleanish
-    button?: Booleanish
-    buttonGroup?: Booleanish
+    autofocus?: boolean
+    button?: boolean
+    buttonGroup?: boolean
     buttonVariant?: ButtonVariant | null
-    disabled?: Booleanish
+    disabled?: boolean
     form?: string
     id?: string
-    indeterminate?: Booleanish
-    inline?: Booleanish
+    indeterminate?: boolean
+    inline?: boolean
     modelValue?: CheckboxValue | readonly CheckboxValue[]
     name?: string
-    plain?: Booleanish
-    required?: Booleanish
+    plain?: boolean
+    required?: boolean
     size?: Size
-    state?: Booleanish | null
-    switch?: Booleanish
+    state?: boolean | null
+    switch?: boolean
     uncheckedValue?: CheckboxValue
     value?: CheckboxValue
   }>(),
@@ -99,16 +99,16 @@ const indeterminate = useVModel(props, 'indeterminate', emit)
 
 const computedId = useId(() => props.id, 'form-check')
 
-const indeterminateBoolean = useBooleanish(() => props.indeterminate)
-const autofocusBoolean = useBooleanish(() => props.autofocus)
-const plainBoolean = useBooleanish(() => props.plain)
-const buttonBoolean = useBooleanish(() => props.button)
-const buttonGroupBoolean = useBooleanish(() => props.buttonGroup)
-const switchBoolean = useBooleanish(() => props.switch)
-const disabledBoolean = useBooleanish(() => props.disabled)
-const inlineBoolean = useBooleanish(() => props.inline)
-const requiredBoolean = useBooleanish(() => props.required)
-const stateBoolean = useBooleanish(() => props.state)
+const indeterminateBoolean = computed(() => props.indeterminate)
+const autofocusBoolean = computed(() => props.autofocus)
+const plainBoolean = computed(() => props.plain)
+const buttonBoolean = computed(() => props.button)
+const buttonGroupBoolean = computed(() => props.buttonGroup)
+const switchBoolean = computed(() => props.switch)
+const disabledBoolean = computed(() => props.disabled)
+const inlineBoolean = computed(() => props.inline)
+const requiredBoolean = computed(() => props.required)
+const stateBoolean = computed(() => props.state)
 
 const parentData = inject(checkboxGroupKey, null)
 

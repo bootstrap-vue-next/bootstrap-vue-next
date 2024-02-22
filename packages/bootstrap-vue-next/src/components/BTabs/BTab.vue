@@ -15,19 +15,19 @@
 
 <script setup lang="ts">
 import {computed, inject, onMounted, onUnmounted, ref, toRef, useAttrs, watch} from 'vue'
-import {useBooleanish, useId} from '../../composables'
-import type {AttrsValue, Booleanish, ClassValue, TabType} from '../../types'
+import {useId} from '../../composables'
+import type {AttrsValue, ClassValue, TabType} from '../../types'
 import {tabsInjectionKey} from '../../utils'
 
 const props = withDefaults(
   defineProps<{
-    active?: Booleanish
+    active?: boolean
     buttonId?: string
-    disabled?: Booleanish
+    disabled?: boolean
     id?: string
-    lazy?: Booleanish
-    lazyOnce?: Booleanish
-    noBody?: Booleanish
+    lazy?: boolean
+    lazyOnce?: boolean
+    noBody?: boolean
     tag?: string
     title?: string
     titleItemClass?: ClassValue
@@ -69,10 +69,10 @@ const parentData = inject(tabsInjectionKey, null)
 const computedId = useId(() => props.id, 'tabpane')
 const buttonId = useId(() => props.buttonId, 'tab')
 
-const activeBoolean = useBooleanish(() => props.active)
-const disabledBoolean = useBooleanish(() => props.disabled)
-const lazyBoolean = useBooleanish(() => props.lazyOnce ?? props.lazy)
-const noBodyBoolean = useBooleanish(() => props.noBody)
+const activeBoolean = computed(() => props.active)
+const disabledBoolean = computed(() => props.disabled)
+const lazyBoolean = computed(() => props.lazyOnce ?? props.lazy)
+const noBodyBoolean = computed(() => props.noBody)
 
 const lazyRenderCompleted = ref(false)
 const el = ref<HTMLElement | null>(null)

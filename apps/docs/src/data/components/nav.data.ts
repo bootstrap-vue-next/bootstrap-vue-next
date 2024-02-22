@@ -12,32 +12,32 @@ export default {
         },
         {
           prop: 'cardHeader',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'fill',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'justified',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'pills',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'small',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'tabs',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -47,12 +47,12 @@ export default {
         },
         {
           prop: 'vertical',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'underline',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
       ],
@@ -158,7 +158,7 @@ export default {
         },
         {
           prop: 'noCaret',
-          type: 'Booleanish',
+          type: 'boolean',
           default: undefined,
         },
         {
@@ -168,12 +168,12 @@ export default {
         },
         {
           prop: 'modelValue',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'lazy',
-          type: 'Booleanish',
+          type: 'boolean',
           default: undefined,
         },
         {
@@ -188,37 +188,37 @@ export default {
         },
         {
           prop: 'noFlip',
-          type: 'Booleanish',
+          type: 'boolean',
           default: undefined,
         },
         {
           prop: 'noShift',
-          type: 'Booleanish',
+          type: 'boolean',
           default: undefined,
         },
         {
           prop: 'dropup',
-          type: 'Booleanish',
+          type: 'boolean',
           default: undefined,
         },
         {
           prop: 'dropend',
-          type: 'Booleanish',
+          type: 'boolean',
           default: undefined,
         },
         {
           prop: 'dropstart',
-          type: 'Booleanish',
+          type: 'boolean',
           default: undefined,
         },
         {
           prop: 'center',
-          type: 'Booleanish',
+          type: 'boolean',
           default: undefined,
         },
         {
           prop: 'end',
-          type: 'Booleanish',
+          type: 'boolean',
           default: undefined,
         },
         {

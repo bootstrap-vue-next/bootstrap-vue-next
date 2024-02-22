@@ -16,7 +16,6 @@
 <script setup lang="ts">
 import {computed, toRef} from 'vue'
 import type {BFormFeedbackSharedProps} from '../../types'
-import {useBooleanish} from '../../composables'
 
 const props = withDefaults(defineProps<BFormFeedbackSharedProps>(), {
   ariaLive: undefined,
@@ -34,9 +33,9 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const forceShowBoolean = useBooleanish(() => props.forceShow)
-const stateBoolean = useBooleanish(() => props.state)
-const tooltipBoolean = useBooleanish(() => props.tooltip)
+const forceShowBoolean = computed(() => props.forceShow)
+const stateBoolean = computed(() => props.state)
+const tooltipBoolean = computed(() => props.tooltip)
 
 const computedShow = toRef(() => forceShowBoolean.value === true || stateBoolean.value === false)
 

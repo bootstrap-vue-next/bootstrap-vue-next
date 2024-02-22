@@ -29,8 +29,8 @@
 <script setup lang="ts">
 import {computed, ref, toRef, watch} from 'vue'
 import {useFocus, useVModel} from '@vueuse/core'
-import type {Booleanish, ClassValue, Size} from '../../types'
-import {useBooleanish, useId, useStateClass} from '../../composables'
+import type {ClassValue, Size} from '../../types'
+import {useId, useStateClass} from '../../composables'
 import {isEmptySlot} from '../../utils'
 
 defineOptions({
@@ -45,22 +45,22 @@ const slots = defineSlots<{
 const props = withDefaults(
   defineProps<{
     accept?: string | readonly string[]
-    autofocus?: Booleanish
-    capture?: Booleanish | 'user' | 'environment'
-    directory?: Booleanish
-    disabled?: Booleanish
+    autofocus?: boolean
+    capture?: boolean | 'user' | 'environment'
+    directory?: boolean
+    disabled?: boolean
     form?: string
     id?: string
     label?: string
     labelClass?: ClassValue
     modelValue?: readonly File[] | File | null
-    multiple?: Booleanish
+    multiple?: boolean
     name?: string
-    noDrop?: Booleanish
-    noTraverse?: Booleanish
-    required?: Booleanish
+    noDrop?: boolean
+    noTraverse?: boolean
+    required?: boolean
     size?: Size
-    state?: Booleanish | null
+    state?: boolean | null
   }>(),
   {
     accept: '',
@@ -91,17 +91,17 @@ const emit = defineEmits<{
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 const computedId = useId(() => props.id)
 
-const autofocusBoolean = useBooleanish(() => props.autofocus)
-const directoryBoolean = useBooleanish(() => props.directory)
-const disabledBoolean = useBooleanish(() => props.disabled)
-const multipleBoolean = useBooleanish(() => props.multiple)
-const noDropBoolean = useBooleanish(() => props.noDrop)
+const autofocusBoolean = computed(() => props.autofocus)
+const directoryBoolean = computed(() => props.directory)
+const disabledBoolean = computed(() => props.disabled)
+const multipleBoolean = computed(() => props.multiple)
+const noDropBoolean = computed(() => props.noDrop)
 // TODO not implemented yet
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const noTraverseBoolean = useBooleanish(() => props.noTraverse)
-const requiredBoolean = useBooleanish(() => props.required)
-const stateBoolean = useBooleanish(() => props.state)
-const computedCapture = useBooleanish(() => props.capture)
+const noTraverseBoolean = computed(() => props.noTraverse)
+const requiredBoolean = computed(() => props.required)
+const stateBoolean = computed(() => props.state)
+const computedCapture = computed(() => props.capture)
 
 const stateClass = useStateClass(stateBoolean)
 

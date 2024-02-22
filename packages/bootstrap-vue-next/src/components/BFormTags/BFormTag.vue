@@ -24,16 +24,16 @@
 
 <script setup lang="ts">
 import {computed, toRef} from 'vue'
-import {useBooleanish, useId} from '../../composables'
-import type {Booleanish, ColorVariant} from '../../types'
+import {useId} from '../../composables'
+import type {ColorVariant} from '../../types'
 import BCloseButton from '../BButton/BCloseButton.vue'
 
 const props = withDefaults(
   defineProps<{
-    disabled?: Booleanish
+    disabled?: boolean
     id?: string
-    noRemove?: Booleanish
-    pill?: Booleanish
+    noRemove?: boolean
+    pill?: boolean
     removeLabel?: string
     tag?: string
     title?: string
@@ -62,9 +62,9 @@ const slots = defineSlots<{
 
 const computedId = useId(() => props.id)
 
-const disabledBoolean = useBooleanish(() => props.disabled)
-const noRemoveBoolean = useBooleanish(() => props.noRemove)
-const pillBoolean = useBooleanish(() => props.pill)
+const disabledBoolean = computed(() => props.disabled)
+const noRemoveBoolean = computed(() => props.noRemove)
+const pillBoolean = computed(() => props.pill)
 
 const tagText = computed(
   () => ((slots.default?.({})[0].children ?? '').toString() || props.title) ?? ''

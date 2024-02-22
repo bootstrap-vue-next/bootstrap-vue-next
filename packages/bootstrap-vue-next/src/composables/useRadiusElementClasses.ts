@@ -1,6 +1,5 @@
 import {computed, type MaybeRefOrGetter, readonly, toRef} from 'vue'
 import type {RadiusElement, RadiusElementExtendables} from '../types'
-import useBooleanish from './useBooleanish'
 
 export default (obj: MaybeRefOrGetter<RadiusElementExtendables>) => {
   const resolveRadiusElement = (
@@ -31,11 +30,11 @@ export default (obj: MaybeRefOrGetter<RadiusElementExtendables>) => {
   }
 
   const props = readonly(toRef(obj))
-  const roundedBoolean = useBooleanish(() => props.value.rounded)
-  const roundedTopBoolean = useBooleanish(() => props.value.roundedTop)
-  const roundedBottomBoolean = useBooleanish(() => props.value.roundedBottom)
-  const roundedStartBoolean = useBooleanish(() => props.value.roundedStart)
-  const roundedEndBoolean = useBooleanish(() => props.value.roundedEnd)
+  const roundedBoolean = computed(() => props.value.rounded)
+  const roundedTopBoolean = computed(() => props.value.roundedTop)
+  const roundedBottomBoolean = computed(() => props.value.roundedBottom)
+  const roundedStartBoolean = computed(() => props.value.roundedStart)
+  const roundedEndBoolean = computed(() => props.value.roundedEnd)
   return computed(() => ({
     [`${resolveRadiusElement(roundedBoolean.value as boolean | RadiusElement, null)}`]:
       !!roundedBoolean.value,

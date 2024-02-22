@@ -28,7 +28,6 @@
 
 <script setup lang="ts">
 import type {BLinkProps} from '../../types'
-import {useBooleanish} from '../../composables'
 import {collapseInjectionKey, navbarInjectionKey} from '../../utils'
 import {computed, getCurrentInstance, inject, useAttrs} from 'vue'
 
@@ -48,8 +47,8 @@ const props = withDefaults(defineProps<BLinkProps>(), {
   icon: false,
   opacity: undefined,
   opacityHover: undefined,
-  // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-  // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
+  // noPrefetch: {type: [Boolean, String] as PropType<boolean>, default: false},
+  // prefetch: {type: [Boolean, String] as PropType<boolean>, default: null},
   rel: undefined,
   replace: false,
   routerComponentName: 'router-link',
@@ -70,15 +69,15 @@ const emit = defineEmits<{
 
 const attrs = useAttrs()
 
-const activeBoolean = useBooleanish(() => props.active)
-const iconBoolean = useBooleanish(() => props.icon)
+const activeBoolean = computed(() => props.active)
+const iconBoolean = computed(() => props.icon)
 // TODO
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const appendBoolean = useBooleanish(() => props.append)
-const disabledBoolean = useBooleanish(() => props.disabled)
+const appendBoolean = computed(() => props.append)
+const disabledBoolean = computed(() => props.disabled)
 // TODO
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const replaceBoolean = useBooleanish(() => props.replace)
+const replaceBoolean = computed(() => props.replace)
 const collapseData = inject(collapseInjectionKey, null)
 const navbarData = inject(navbarInjectionKey, null)
 

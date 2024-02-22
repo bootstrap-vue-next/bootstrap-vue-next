@@ -106,13 +106,7 @@
 <script setup lang="ts">
 import {computed, type CSSProperties, ref, toRef, watch} from 'vue'
 import {onKeyStroke, useEventListener, useFocus, useVModel} from '@vueuse/core'
-import {
-  useBooleanish,
-  useColorVariantClasses,
-  useId,
-  useModalManager,
-  useSafeScrollLock,
-} from '../../composables'
+import {useColorVariantClasses, useId, useModalManager, useSafeScrollLock} from '../../composables'
 import type {BModalProps} from '../../types'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
 import BButton from '../BButton/BButton.vue'
@@ -234,26 +228,26 @@ const computedId = useId(() => props.id, 'modal')
 // Since the modelValue that's passed from that composable is not reactive, this internal ref _is_ and thus it will trigger closing the modal
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
-const busyBoolean = useBooleanish(() => props.busy)
-const lazyBoolean = useBooleanish(() => props.lazy)
-const cancelDisabledBoolean = useBooleanish(() => props.cancelDisabled)
-const centeredBoolean = useBooleanish(() => props.centered)
-const hideBackdropBoolean = useBooleanish(() => props.hideBackdrop)
-const hideFooterBoolean = useBooleanish(() => props.hideFooter)
-const hideHeaderBoolean = useBooleanish(() => props.hideHeader)
-const hideHeaderCloseBoolean = useBooleanish(() => props.hideHeaderClose)
-const modelValueBoolean = useBooleanish(modelValue)
-const noCloseOnBackdropBoolean = useBooleanish(() => props.noCloseOnBackdrop)
-const noCloseOnEscBoolean = useBooleanish(() => props.noCloseOnEsc)
-const noFadeBoolean = useBooleanish(() => props.noFade)
-const autoFocusBoolean = useBooleanish(() => props.autoFocus)
-const okDisabledBoolean = useBooleanish(() => props.okDisabled)
-const okOnlyBoolean = useBooleanish(() => props.okOnly)
-const scrollableBoolean = useBooleanish(() => props.scrollable)
-const titleSrOnlyBoolean = useBooleanish(() => props.titleSrOnly)
-const teleportDisabledBoolean = useBooleanish(() => props.teleportDisabled)
-const bodyScrollingBoolean = useBooleanish(() => props.bodyScrolling)
-const computedFullScreen = useBooleanish(() => props.fullscreen)
+const busyBoolean = computed(() => props.busy)
+const lazyBoolean = computed(() => props.lazy)
+const cancelDisabledBoolean = computed(() => props.cancelDisabled)
+const centeredBoolean = computed(() => props.centered)
+const hideBackdropBoolean = computed(() => props.hideBackdrop)
+const hideFooterBoolean = computed(() => props.hideFooter)
+const hideHeaderBoolean = computed(() => props.hideHeader)
+const hideHeaderCloseBoolean = computed(() => props.hideHeaderClose)
+const modelValueBoolean = computed(() => modelValue.value)
+const noCloseOnBackdropBoolean = computed(() => props.noCloseOnBackdrop)
+const noCloseOnEscBoolean = computed(() => props.noCloseOnEsc)
+const noFadeBoolean = computed(() => props.noFade)
+const autoFocusBoolean = computed(() => props.autoFocus)
+const okDisabledBoolean = computed(() => props.okDisabled)
+const okOnlyBoolean = computed(() => props.okOnly)
+const scrollableBoolean = computed(() => props.scrollable)
+const titleSrOnlyBoolean = computed(() => props.titleSrOnly)
+const teleportDisabledBoolean = computed(() => props.teleportDisabled)
+const bodyScrollingBoolean = computed(() => props.bodyScrolling)
+const computedFullScreen = computed(() => props.fullscreen)
 
 const element = ref<HTMLElement | null>(null)
 const okButton = ref<HTMLElement | null>(null)

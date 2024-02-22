@@ -30,14 +30,8 @@
 
 <script setup lang="ts">
 import {computed, toRef} from 'vue'
-import type {
-  Booleanish,
-  ColorVariant,
-  Numberish,
-  RadiusElementExtendables,
-  SpinnerType,
-} from '../../types'
-import {useBooleanish, useRadiusElementClasses} from '../../composables'
+import type {ColorVariant, Numberish, RadiusElementExtendables, SpinnerType} from '../../types'
+import {useRadiusElementClasses} from '../../composables'
 import BTransition from '../BTransition/BTransition.vue'
 import BSpinner from '../BSpinner.vue'
 
@@ -46,15 +40,15 @@ const props = withDefaults(
     {
       bgColor?: string
       blur?: string | null
-      fixed?: Booleanish
-      noCenter?: Booleanish
-      noFade?: Booleanish
-      noSpinner?: Booleanish
-      noWrap?: Booleanish
+      fixed?: boolean
+      noCenter?: boolean
+      noFade?: boolean
+      noSpinner?: boolean
+      noWrap?: boolean
       opacity?: Numberish
       overlayTag?: string
-      show?: Booleanish
-      spinnerSmall?: Booleanish
+      show?: boolean
+      spinnerSmall?: boolean
       spinnerType?: SpinnerType
       spinnerVariant?: ColorVariant | null
       variant?: ColorVariant | 'white' | 'transparent' | null
@@ -104,17 +98,17 @@ defineSlots<{
 
 const positionStyles = {top: 0, left: 0, bottom: 0, right: 0} as const
 
-const fixedBoolean = useBooleanish(() => props.fixed)
-const noSpinnerBoolean = useBooleanish(() => props.noSpinner)
-const noCenterBoolean = useBooleanish(() => props.noCenter)
-const noWrapBoolean = useBooleanish(() => props.noWrap)
-const showBoolean = useBooleanish(() => props.show)
-const spinnerSmallBoolean = useBooleanish(() => props.spinnerSmall)
-const roundedBoolean = useBooleanish(() => props.rounded)
-const roundedTopBoolean = useBooleanish(() => props.roundedTop)
-const roundedBottomBoolean = useBooleanish(() => props.roundedBottom)
-const roundedStartBoolean = useBooleanish(() => props.roundedStart)
-const roundedEndBoolean = useBooleanish(() => props.roundedEnd)
+const fixedBoolean = computed(() => props.fixed)
+const noSpinnerBoolean = computed(() => props.noSpinner)
+const noCenterBoolean = computed(() => props.noCenter)
+const noWrapBoolean = computed(() => props.noWrap)
+const showBoolean = computed(() => props.show)
+const spinnerSmallBoolean = computed(() => props.spinnerSmall)
+const roundedBoolean = computed(() => props.rounded)
+const roundedTopBoolean = computed(() => props.roundedTop)
+const roundedBottomBoolean = computed(() => props.roundedBottom)
+const roundedStartBoolean = computed(() => props.roundedStart)
+const roundedEndBoolean = computed(() => props.roundedEnd)
 
 const radiusElementClasses = useRadiusElementClasses(() => ({
   rounded: roundedBoolean.value,

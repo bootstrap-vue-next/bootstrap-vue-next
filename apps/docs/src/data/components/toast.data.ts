@@ -32,7 +32,7 @@ export default {
         },
         {
           prop: 'animation',
-          type: 'Booleanish',
+          type: 'boolean',
           default: true,
         },
         {
@@ -42,32 +42,32 @@ export default {
         },
         {
           prop: 'isStatus',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'autoHide',
-          type: 'Booleanish',
+          type: 'boolean',
           default: true,
         },
         {
           prop: 'noCloseButton',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'noFade',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'noHoverPause',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'solid',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -87,7 +87,7 @@ export default {
         },
         {
           prop: 'showOnPause',
-          type: 'Booleanish',
+          type: 'boolean',
           default: true,
         },
         {
@@ -141,7 +141,7 @@ export default {
         {
           description: 'Renders the Toaster in the exact place it was defined',
           prop: 'teleportDisabled',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
       ],

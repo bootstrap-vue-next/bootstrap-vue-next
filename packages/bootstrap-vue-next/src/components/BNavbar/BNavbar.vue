@@ -9,19 +9,19 @@
 
 <script setup lang="ts">
 import {computed, provide, toRef} from 'vue'
-import type {Booleanish, Breakpoint, ColorVariant} from '../../types'
-import {useBooleanish, useContainerClasses} from '../../composables'
+import type {Breakpoint, ColorVariant} from '../../types'
+import {useContainerClasses} from '../../composables'
 import {navbarInjectionKey} from '../../utils'
 
 const props = withDefaults(
   defineProps<{
-    autoClose?: Booleanish
-    container?: 'fluid' | Booleanish | Breakpoint
+    autoClose?: boolean
+    container?: 'fluid' | boolean | Breakpoint
     fixed?: 'top' | 'bottom'
-    print?: Booleanish
+    print?: boolean
     sticky?: 'top' | 'bottom'
     tag?: string
-    toggleable?: Booleanish | Breakpoint
+    toggleable?: boolean | Breakpoint
     variant?: ColorVariant | null
   }>(),
   {
@@ -41,10 +41,10 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const containerBoolean = useBooleanish(() => props.container)
-const autoCloseBoolean = useBooleanish(() => props.autoClose)
-const printBoolean = useBooleanish(() => props.print)
-const computedNavbarExpand = useBooleanish(() => props.toggleable)
+const containerBoolean = computed(() => props.container)
+const autoCloseBoolean = computed(() => props.autoClose)
+const printBoolean = computed(() => props.print)
+const computedNavbarExpand = computed(() => props.toggleable)
 
 const computedRole = toRef(() => (props.tag === 'nav' ? undefined : 'navigation'))
 

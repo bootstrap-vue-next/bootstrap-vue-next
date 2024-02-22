@@ -26,9 +26,9 @@
 import BTransition from '../BTransition/BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BButton from '../BButton/BButton.vue'
-import type {Booleanish, ButtonVariant, ClassValue, ColorVariant, Numberish} from '../../types'
+import type {ButtonVariant, ClassValue, ColorVariant, Numberish} from '../../types'
 import {computed, onBeforeUnmount, ref, toRef, watch, watchEffect} from 'vue'
-import {useBooleanish, useCountdown} from '../../composables'
+import {useCountdown} from '../../composables'
 import {isEmptySlot} from '../../utils'
 import {useElementHover, useToNumber, useVModel} from '@vueuse/core'
 
@@ -38,13 +38,13 @@ const props = withDefaults(
     closeContent?: string
     closeLabel?: string
     closeVariant?: ButtonVariant | null
-    dismissible?: Booleanish
-    fade?: Booleanish
-    immediate?: Booleanish
+    dismissible?: boolean
+    fade?: boolean
+    immediate?: boolean
     interval?: Numberish
     modelValue?: boolean | number
-    noHoverPause?: Booleanish
-    showOnPause?: Booleanish
+    noHoverPause?: boolean
+    showOnPause?: boolean
     variant?: ColorVariant | null
   }>(),
   {
@@ -82,11 +82,11 @@ const element = ref<HTMLElement | null>(null)
 const modelValue = useVModel(props, 'modelValue', emit)
 const isHovering = useElementHover(element)
 
-const dismissibleBoolean = useBooleanish(() => props.dismissible)
-const fadeBoolean = useBooleanish(() => props.fade)
-const immediateBoolean = useBooleanish(() => props.immediate)
-const showOnPauseBoolean = useBooleanish(() => props.showOnPause)
-const noHoverPauseBoolean = useBooleanish(() => props.noHoverPause)
+const dismissibleBoolean = computed(() => props.dismissible)
+const fadeBoolean = computed(() => props.fade)
+const immediateBoolean = computed(() => props.immediate)
+const showOnPauseBoolean = computed(() => props.showOnPause)
+const noHoverPauseBoolean = computed(() => props.noHoverPause)
 const intervalNumber = useToNumber(() => props.interval)
 
 const hasCloseSlot = toRef(() => !isEmptySlot(slots.close))

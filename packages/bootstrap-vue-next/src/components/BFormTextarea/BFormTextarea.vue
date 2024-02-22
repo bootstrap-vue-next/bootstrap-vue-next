@@ -23,14 +23,14 @@
 </template>
 
 <script setup lang="ts">
-import type {Booleanish, CommonInputProps, Numberish} from '../../types'
+import type {CommonInputProps, Numberish} from '../../types'
 import {computed, type CSSProperties} from 'vue'
-import {useBooleanish, useFormInput, useStateClass} from '../../composables'
+import {useFormInput, useStateClass} from '../../composables'
 
 const props = withDefaults(
   defineProps<
     {
-      noResize?: Booleanish
+      noResize?: boolean
       rows?: Numberish
       wrap?: string
     } & CommonInputProps
@@ -73,12 +73,12 @@ const emit = defineEmits<{
 const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
   useFormInput(props, emit)
 
-const disabledBoolean = useBooleanish(() => props.disabled)
-const requiredBoolean = useBooleanish(() => props.required)
-const readonlyBoolean = useBooleanish(() => props.readonly)
-const plaintextBoolean = useBooleanish(() => props.plaintext)
-const noResizeBoolean = useBooleanish(() => props.noResize)
-const stateBoolean = useBooleanish(() => props.state)
+const disabledBoolean = computed(() => props.disabled)
+const requiredBoolean = computed(() => props.required)
+const readonlyBoolean = computed(() => props.readonly)
+const plaintextBoolean = computed(() => props.plaintext)
+const noResizeBoolean = computed(() => props.noResize)
+const stateBoolean = computed(() => props.state)
 
 const stateClass = useStateClass(stateBoolean)
 

@@ -69,7 +69,7 @@ import {
 } from '@floating-ui/vue'
 import {onClickOutside, onKeyStroke, useToNumber, useVModel} from '@vueuse/core'
 import {computed, type CSSProperties, nextTick, provide, ref, toRef, watch} from 'vue'
-import {useBooleanish, useId} from '../../composables'
+import {useId} from '../../composables'
 import type {BDropdownProps} from '../../types'
 import {BvTriggerableEvent, dropdownInjectionKey, resolveFloatingPlacement} from '../../utils'
 import BButton from '../BButton/BButton.vue'
@@ -141,20 +141,20 @@ const computedId = useId(() => props.id, 'dropdown')
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
-const modelValueBoolean = useBooleanish(modelValue)
-const dropupBoolean = useBooleanish(() => props.dropup)
-const dropendBoolean = useBooleanish(() => props.dropend)
-const isNavBoolean = useBooleanish(() => props.isNav)
-const dropstartBoolean = useBooleanish(() => props.dropstart)
-const centerBoolean = useBooleanish(() => props.center)
-const endBoolean = useBooleanish(() => props.end)
-const splitBoolean = useBooleanish(() => props.split)
-const noCaretBoolean = useBooleanish(() => props.noCaret)
-const noFlipBoolean = useBooleanish(() => props.noFlip)
-const noShiftBoolean = useBooleanish(() => props.noShift)
-const noSizeBoolean = useBooleanish(() => props.noSize)
-const lazyBoolean = useBooleanish(() => props.lazy)
-const splitDisabledBoolean = useBooleanish(() => props.splitDisabled)
+const modelValueBoolean = computed(() => modelValue.value)
+const dropupBoolean = computed(() => props.dropup)
+const dropendBoolean = computed(() => props.dropend)
+const isNavBoolean = computed(() => props.isNav)
+const dropstartBoolean = computed(() => props.dropstart)
+const centerBoolean = computed(() => props.center)
+const endBoolean = computed(() => props.end)
+const splitBoolean = computed(() => props.split)
+const noCaretBoolean = computed(() => props.noCaret)
+const noFlipBoolean = computed(() => props.noFlip)
+const noShiftBoolean = computed(() => props.noShift)
+const noSizeBoolean = computed(() => props.noSize)
+const lazyBoolean = computed(() => props.lazy)
+const splitDisabledBoolean = computed(() => props.splitDisabled)
 
 const computedOffset = toRef(() =>
   typeof props.offset === 'string' || typeof props.offset === 'number' ? props.offset : NaN
@@ -178,14 +178,14 @@ const referencePlacement = toRef(() => (!splitBoolean.value ? splitButton.value 
 onKeyStroke(
   'Escape',
   () => {
-    modelValue.value = !modelValueBoolean
+    modelValue.value = !modelValueBoolean.value
   },
   {target: referencePlacement}
 )
 onKeyStroke(
   'Escape',
   () => {
-    modelValue.value = !modelValueBoolean
+    modelValue.value = !modelValueBoolean.value
   },
   {target: floating}
 )
