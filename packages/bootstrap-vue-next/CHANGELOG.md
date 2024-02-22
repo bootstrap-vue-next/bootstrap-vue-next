@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.16.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.16.5...bootstrapvuenext-v0.16.6) (2024-02-22)
+
+
+### Features
+
+* **BTable:** allow primaryKey dot notation for attribute path ([78b1b32](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/78b1b32c32b773e6f3a786a089c8daf8ac1068dd))
+* **BTable:** check selection also using primaryKey attribute ([c540889](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c540889c65b074ac9651a2d39ea519c1cb41dfff))
+* **BTable:** Enable more sorting options to get closer to BSV parity ([#1771](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1771)) ([cafb4c4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cafb4c4a59fb376fb77c06fa84f5b512e952d891))
+* **BTable:** Enable using fromatter function for sortByFormatted ([cafb4c4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cafb4c4a59fb376fb77c06fa84f5b512e952d891))
+* **BTable:** Implement sortByFormatted ([cafb4c4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cafb4c4a59fb376fb77c06fa84f5b512e952d891))
+
+
+### Bug Fixes
+
+* **BTable:** fix sort descending and add tests ([cafb4c4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cafb4c4a59fb376fb77c06fa84f5b512e952d891))
+
 ## [0.16.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.16.4...bootstrapvuenext-v0.16.5) (2024-02-19)
 
 
