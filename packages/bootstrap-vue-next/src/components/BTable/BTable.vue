@@ -103,7 +103,7 @@ import BOverlay from '../BOverlay/BOverlay.vue'
 import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
 import BTr from './BTr.vue'
-import {formatItem, getTableFieldHeadLabel} from '../../utils'
+import {formatItem, get, getTableFieldHeadLabel} from '../../utils'
 
 type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
 
@@ -300,9 +300,12 @@ const selectedItemsSetUtilities = {
     if (!props.primaryKey) return selectedItemsToSet.value.has(item)
 
     // Resolver for when we are using primary keys
-    const pkey = props.primaryKey as keyof TableItem<T>
+    const pkey: string = props.primaryKey
     for (const selected of selectedItemsToSet.value) {
-      if (selected[pkey] === item[pkey]) return true
+      const selectedKey = get(selected, pkey)
+      const itemKey = get(item, pkey)
+
+      if (!!selectedKey && !!itemKey && selectedKey === itemKey) return true
     }
     return false
   },
@@ -347,10 +350,10 @@ const computedFields = computed<TableFieldRaw<T>[]>(() =>
               isSortable.value === false
                 ? undefined
                 : sortByModel.value !== el.key
-                  ? 'none'
-                  : sortDescBoolean.value === true
-                    ? 'descending'
-                    : 'ascending',
+                ? 'none'
+                : sortDescBoolean.value === true
+                ? 'descending'
+                : 'ascending',
             ...el.thAttr,
           },
         }
