@@ -1,5 +1,5 @@
 <template>
-  <Teleport :to="teleportTo" :disabled="teleportDisabledBoolean">
+  <Teleport :to="teleportTo" :disabled="props.teleportDisabled">
     <!-- This wrapper div is used for specific targetting by the user -->
     <!-- Even though it serves no direct purpose itself -->
     <div id="__BVID__modal-container">
@@ -38,7 +38,7 @@
 <script setup lang="ts">
 import {BvTriggerableEvent, omit} from '../../utils'
 import {useModalController} from '../../composables'
-import {computed, type RendererElement} from 'vue'
+import {type RendererElement} from 'vue'
 
 const props = withDefaults(
   defineProps<{
@@ -50,8 +50,6 @@ const props = withDefaults(
     teleportTo: 'body',
   }
 )
-
-const teleportDisabledBoolean = computed(() => props.teleportDisabled)
 
 const {modals, remove, show, confirm} = useModalController()
 
