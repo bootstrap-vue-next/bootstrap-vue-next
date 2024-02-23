@@ -19,7 +19,7 @@ export default defineComponent({
     default?: Record<string, never>
   }>,
   props: {
-    col: {type: [Boolean, String] as PropType<boolean>, default: false}, // Generic flexbox .col (xs)
+    col: {type: Boolean, default: false}, // Generic flexbox .col (xs)
     cols: {type: [String, Number], default: null}, // .col-[1-12]|auto (xs)
     ...breakpointCol,
     offset: {type: [String, Number], default: null},

@@ -21,7 +21,7 @@ export default defineComponent({
     tag: {type: String, default: 'div'},
     gutterX: {type: String, default: null},
     gutterY: {type: String, default: null},
-    noGutters: {type: [Boolean, String] as PropType<boolean>, default: false},
+    noGutters: {type: Boolean, default: false},
     alignV: {type: String as PropType<AlignmentVertical>, default: null},
     alignH: {type: String as PropType<AlignmentJustifyContent>, default: null},
     alignContent: {type: String as PropType<AlignmentContent>, default: null},

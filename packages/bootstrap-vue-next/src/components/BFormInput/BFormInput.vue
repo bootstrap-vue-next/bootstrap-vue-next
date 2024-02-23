@@ -34,7 +34,7 @@ const props = withDefaults(
     {
       max?: Numberish
       min?: Numberish
-      // noWheel: {type: [Boolean, String] as PropType<boolean>, default: false}, TODO: not implemented yet
+      // noWheel: {type: Boolean, default: false}, TODO: not implemented yet
       step?: Numberish
       type?: InputType
     } & CommonInputProps
