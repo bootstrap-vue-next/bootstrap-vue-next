@@ -1,4 +1,4 @@
-import {computed, type MaybeRefOrGetter, readonly, toRef} from 'vue'
+import {computed, type MaybeRefOrGetter, toValue} from 'vue'
 import type {RadiusElement, RadiusElementExtendables} from '../types'
 
 export default (obj: MaybeRefOrGetter<RadiusElementExtendables>) => {
@@ -29,22 +29,19 @@ export default (obj: MaybeRefOrGetter<RadiusElementExtendables>) => {
                 : `${strValue}rounded` // true is last
   }
 
-  const props = readonly(toRef(obj))
-  const roundedBoolean = computed(() => props.value.rounded)
-  const roundedTopBoolean = computed(() => props.value.roundedTop)
-  const roundedBottomBoolean = computed(() => props.value.roundedBottom)
-  const roundedStartBoolean = computed(() => props.value.roundedStart)
-  const roundedEndBoolean = computed(() => props.value.roundedEnd)
-  return computed(() => ({
-    [`${resolveRadiusElement(roundedBoolean.value as boolean | RadiusElement, null)}`]:
-      !!roundedBoolean.value,
-    [`${resolveRadiusElement(roundedTopBoolean.value as boolean | RadiusElement, 'top')}`]:
-      !!roundedTopBoolean.value,
-    [`${resolveRadiusElement(roundedBottomBoolean.value as boolean | RadiusElement, 'bottom')}`]:
-      !!roundedBottomBoolean.value,
-    [`${resolveRadiusElement(roundedStartBoolean.value as boolean | RadiusElement, 'start')}`]:
-      !!roundedStartBoolean.value,
-    [`${resolveRadiusElement(roundedEndBoolean.value as boolean | RadiusElement, 'end')}`]:
-      !!roundedEndBoolean.value,
-  }))
+  return computed(() => {
+    const props = toValue(obj)
+
+    return {
+      [`${resolveRadiusElement(props.rounded as boolean | RadiusElement, null)}`]: !!props.rounded,
+      [`${resolveRadiusElement(props.roundedTop as boolean | RadiusElement, 'top')}`]:
+        !!props.roundedTop,
+      [`${resolveRadiusElement(props.roundedBottom as boolean | RadiusElement, 'bottom')}`]:
+        !!props.roundedBottom,
+      [`${resolveRadiusElement(props.roundedStart as boolean | RadiusElement, 'start')}`]:
+        !!props.roundedStart,
+      [`${resolveRadiusElement(props.roundedEnd as boolean | RadiusElement, 'end')}`]:
+        !!props.roundedEnd,
+    }
+  })
 }
