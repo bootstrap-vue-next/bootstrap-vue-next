@@ -43,19 +43,14 @@ const props = withDefaults(
   }
 )
 
-const bottomBoolean = computed(() => props.bottom)
-const endBoolean = computed(() => props.end)
-const startBoolean = computed(() => props.start)
-const topBoolean = computed(() => props.top)
-
 const baseClass = toRef(() =>
-  topBoolean.value
+  props.top
     ? 'card-img-top'
-    : endBoolean.value
+    : props.end
       ? 'card-img-right'
-      : bottomBoolean.value
+      : props.bottom
         ? 'card-img-bottom'
-        : startBoolean.value
+        : props.start
           ? 'card-img-left'
           : 'card-img'
 )
