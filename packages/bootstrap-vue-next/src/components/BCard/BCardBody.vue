@@ -69,7 +69,6 @@ const slots = defineSlots<{
   title?: (props: Record<string, never>) => any
 }>()
 
-const overlayBoolean = computed(() => props.overlay)
 const resolvedBackgroundClasses = useColorVariantClasses(props)
 
 const hasTitleSlot = toRef(() => !isEmptySlot(slots.title))
@@ -78,7 +77,7 @@ const hasSubtitleSlot = toRef(() => !isEmptySlot(slots.subtitle))
 const computedClasses = computed(() => [
   resolvedBackgroundClasses.value,
   {
-    'card-img-overlay': overlayBoolean.value,
+    'card-img-overlay': props.overlay,
   },
 ])
 </script>
