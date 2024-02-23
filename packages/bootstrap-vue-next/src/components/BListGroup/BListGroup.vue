@@ -29,10 +29,8 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const computedHorizontal = computed(() => props.horizontal)
-
 const computedClasses = computed(() => {
-  const horizontal = props.flush ? false : computedHorizontal.value
+  const horizontal = props.flush ? false : props.horizontal
   return {
     'list-group-flush': props.flush,
     'list-group-horizontal': horizontal === true,
