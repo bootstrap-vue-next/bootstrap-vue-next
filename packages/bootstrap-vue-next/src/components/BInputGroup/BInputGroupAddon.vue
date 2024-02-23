@@ -1,12 +1,11 @@
 <template>
-  <BInputGroupText v-if="isTextBoolean">
+  <BInputGroupText v-if="props.isText">
     <slot />
   </BInputGroupText>
   <slot v-else />
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue'
 import type {BInputGroupAddonProps} from '../../types'
 import BInputGroupText from './BInputGroupText.vue'
 
@@ -18,6 +17,4 @@ defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
 }>()
-
-const isTextBoolean = computed(() => props.isText)
 </script>
