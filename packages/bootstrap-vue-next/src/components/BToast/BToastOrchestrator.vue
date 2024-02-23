@@ -1,5 +1,5 @@
 <template>
-  <Teleport :to="teleportTo" :disabled="teleportDisabledBoolean">
+  <Teleport :to="teleportTo" :disabled="props.teleportDisabled">
     <!-- This wrapper div is used for specific targetting by the user -->
     <!-- Even though it serves no direct purpose itself -->
     <div id="__BVID__toaster-container">
@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, type RendererElement, watch} from 'vue'
+import {type RendererElement, watch} from 'vue'
 import {useToast} from '../../composables'
 import {omit} from '../../utils'
 
@@ -43,9 +43,6 @@ const props = withDefaults(
   }
 )
 
-const teleportDisabledBoolean = computed(() => props.teleportDisabled)
-const appendToastBoolean = computed(() => props.appendToast)
-
 const toastPositions = {
   'top-left': 'top-0 start-0',
   'top-center': 'top-0 start-50 translate-middle-x',
@@ -61,7 +58,7 @@ const toastPositions = {
 const {remove, toasts, show, _setIsAppend} = useToast()
 
 watch(
-  appendToastBoolean,
+  () => props.appendToast,
   (value) => {
     _setIsAppend?.(value)
   },
