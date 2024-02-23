@@ -7,7 +7,7 @@
       v-model="localValue"
       :class="inputClasses"
       type="checkbox"
-      :disabled="disabledBoolean || parentData?.disabled.value"
+      :disabled="props.disabled || parentData?.disabled.value"
       :required="computedRequired || undefined"
       :name="name || parentData?.name.value"
       :form="form || parentData?.form.value"
@@ -17,9 +17,9 @@
       :value="value"
       :true-value="value"
       :false-value="uncheckedValue"
-      :indeterminate="indeterminateBoolean"
+      :indeterminate="props.indeterminate"
     />
-    <label v-if="hasDefaultSlot || plainBoolean === false" :for="computedId" :class="labelClasses">
+    <label v-if="hasDefaultSlot || props.plain === false" :for="computedId" :class="labelClasses">
       <slot />
     </label>
   </RenderComponentOrSkip>
@@ -99,23 +99,12 @@ const indeterminate = useVModel(props, 'indeterminate', emit)
 
 const computedId = useId(() => props.id, 'form-check')
 
-const indeterminateBoolean = computed(() => props.indeterminate)
-const autofocusBoolean = computed(() => props.autofocus)
-const plainBoolean = computed(() => props.plain)
-const buttonBoolean = computed(() => props.button)
-const buttonGroupBoolean = computed(() => props.buttonGroup)
-const switchBoolean = computed(() => props.switch)
-const disabledBoolean = computed(() => props.disabled)
-const inlineBoolean = computed(() => props.inline)
-const requiredBoolean = computed(() => props.required)
-const stateBoolean = computed(() => props.state)
-
 const parentData = inject(checkboxGroupKey, null)
 
 const input = ref<HTMLElement | null>(null)
 
 const {focused} = useFocus(input, {
-  initialValue: autofocusBoolean.value,
+  initialValue: props.autofocus,
 })
 
 const hasDefaultSlot = toRef(() => !isEmptySlot(slots.default))
@@ -140,19 +129,17 @@ const localValue = computed({
 })
 
 const computedRequired = toRef(
-  () =>
-    !!(props.name ?? parentData?.name.value) &&
-    (requiredBoolean.value || parentData?.required.value)
+  () => !!(props.name ?? parentData?.name.value) && (props.required || parentData?.required.value)
 )
 
-const isButtonGroup = toRef(() => buttonGroupBoolean.value || (parentData?.buttons.value ?? false))
+const isButtonGroup = toRef(() => props.buttonGroup || (parentData?.buttons.value ?? false))
 
 const classesObject = computed(() => ({
-  plain: plainBoolean.value || (parentData?.plain.value ?? false),
-  button: buttonBoolean.value || (parentData?.buttons.value ?? false),
-  inline: inlineBoolean.value || (parentData?.inline.value ?? false),
-  switch: switchBoolean.value || (parentData?.switch.value ?? false),
-  state: stateBoolean.value || parentData?.state.value,
+  plain: props.plain || (parentData?.plain.value ?? false),
+  button: props.button || (parentData?.buttons.value ?? false),
+  inline: props.inline || (parentData?.inline.value ?? false),
+  switch: props.switch || (parentData?.switch.value ?? false),
+  state: props.state || parentData?.state.value,
   size: props.size ?? parentData?.size.value ?? 'md', // This is where the true default is made
   buttonVariant: props.buttonVariant ?? parentData?.buttonVariant.value ?? 'secondary', // This is where the true default is made
 }))
