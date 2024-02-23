@@ -5,7 +5,7 @@
       type="button"
       class="dropdown-item"
       :class="computedClasses"
-      :disabled="disabledBoolean"
+      :disabled="props.disabled"
       @click="clicked"
     >
       <slot />
@@ -42,9 +42,6 @@ const emit = defineEmits<{
   click: [value: MouseEvent]
 }>()
 
-const activeBoolean = computed(() => props.active)
-const disabledBoolean = computed(() => props.disabled)
-
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
@@ -53,8 +50,8 @@ defineSlots<{
 const computedClasses = computed(() => [
   props.buttonClass,
   {
-    [props.activeClass]: activeBoolean.value,
-    disabled: disabledBoolean.value,
+    [props.activeClass]: props.active,
+    disabled: props.disabled,
     [`text-${props.variant}`]: props.variant !== null,
   },
 ])
