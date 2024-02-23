@@ -28,7 +28,6 @@ export default defineComponent({
     ...rowColsProps,
   },
   setup(props) {
-    const noGuttersBoolean = computed(() => props.noGutters)
     const alignment = useAlignment(() => props.alignH)
 
     const rowColsClasses = computed(() => getClasses(props, rowColsProps, 'cols', 'row-cols'))
@@ -38,7 +37,7 @@ export default defineComponent({
       {
         [`gx-${props.gutterX}`]: props.gutterX !== null,
         [`gy-${props.gutterY}`]: props.gutterY !== null,
-        'g-0': noGuttersBoolean.value,
+        'g-0': props.noGutters,
         [`align-items-${props.alignV}`]: props.alignV !== null,
         [alignment.value]: props.alignH !== null,
         [`align-content-${props.alignContent}`]: props.alignContent !== null,
