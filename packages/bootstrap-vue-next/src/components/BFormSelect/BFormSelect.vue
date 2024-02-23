@@ -9,8 +9,8 @@
     :multiple="props.multiple || undefined"
     :size="computedSelectSize"
     :disabled="props.disabled"
-    :required="requiredBoolean || undefined"
-    :aria-required="requiredBoolean || undefined"
+    :required="props.required || undefined"
+    :aria-required="props.required || undefined"
     :aria-invalid="computedAriaInvalid"
   >
     <slot name="first" />
@@ -113,11 +113,9 @@ const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const computedId = useId(() => props.id, 'input')
 
-const requiredBoolean = computed(() => props.required)
-const stateBoolean = computed(() => props.state)
 const selectSizeNumber = useToNumber(() => props.selectSize)
 
-const stateClass = useStateClass(stateBoolean)
+const stateClass = useStateClass(() => props.state)
 
 const input = ref<HTMLElement | null>(null)
 
@@ -139,7 +137,10 @@ const computedSelectSize = toRef(() =>
   selectSizeNumber.value || props.plain ? selectSizeNumber.value : undefined
 )
 
-const computedAriaInvalid = useAriaInvalid(() => props.ariaInvalid, stateBoolean)
+const computedAriaInvalid = useAriaInvalid(
+  () => props.ariaInvalid,
+  () => props.state
+)
 
 const {normalizedOptions, isComplex} = useFormSelect(() => props.options, props)
 
