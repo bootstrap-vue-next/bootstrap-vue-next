@@ -11,7 +11,7 @@
       :is="routerTag"
       :href="localHref"
       :class="{
-        [defaultActiveClass]: activeBoolean,
+        [defaultActiveClass]: props.active,
         [activeClass]: isActive,
         [exactActiveClass]: isExactActive,
       }"
@@ -69,15 +69,9 @@ const emit = defineEmits<{
 
 const attrs = useAttrs()
 
-const activeBoolean = computed(() => props.active)
-const iconBoolean = computed(() => props.icon)
-// TODO
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const appendBoolean = computed(() => props.append)
-const disabledBoolean = computed(() => props.disabled)
-// TODO
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const replaceBoolean = computed(() => props.replace)
+// TODO append not yet implemented
+
+// TODO replace not yet implemented
 const collapseData = inject(collapseInjectionKey, null)
 const navbarData = inject(navbarInjectionKey, null)
 
@@ -91,7 +85,7 @@ const tag = computed(() => {
     .map((e) => e.charAt(0).toUpperCase() + e.slice(1))
     .join('')
   const hasRouter = instance?.appContext.app.component(routerName) !== undefined
-  if (!hasRouter || disabledBoolean.value || !props.to) {
+  if (!hasRouter || props.disabled || !props.to) {
     return 'a'
   }
   return props.routerComponentName
@@ -130,7 +124,7 @@ const computedClasses = computed(() => ({
   [`link-underline-opacity-${props.underlineOpacity}`]: props.underlineOpacity !== undefined,
   [`link-underline-opacity-${props.underlineOpacityHover}-hover`]:
     props.underlineOpacityHover !== undefined,
-  'icon-link': iconBoolean.value === true,
+  'icon-link': props.icon === true,
 }))
 
 const routerAttr = computed(() => ({
@@ -139,21 +133,17 @@ const routerAttr = computed(() => ({
   'href': computedHref.value,
   'target': props.target,
   'rel': props.target === '_blank' ? props.rel ?? 'noopener' : undefined,
-  'tabindex': disabledBoolean.value
-    ? '-1'
-    : typeof attrs.tabindex === 'undefined'
-      ? null
-      : attrs.tabindex,
-  'aria-disabled': disabledBoolean.value ? true : null,
+  'tabindex': props.disabled ? '-1' : typeof attrs.tabindex === 'undefined' ? null : attrs.tabindex,
+  'aria-disabled': props.disabled ? true : null,
 }))
 
 const computedLinkClasses = computed(() => ({
-  [defaultActiveClass]: activeBoolean.value,
-  disabled: disabledBoolean.value,
+  [defaultActiveClass]: props.active,
+  disabled: props.disabled,
 }))
 
 const clicked = (e: Readonly<MouseEvent>): void => {
-  if (disabledBoolean.value) {
+  if (props.disabled) {
     e.preventDefault()
     e.stopImmediatePropagation()
     return
