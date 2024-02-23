@@ -4,9 +4,9 @@
       :is="computedTag"
       class="dropdown-item"
       :class="computedClasses"
-      :disabled="disabledBoolean"
-      :aria-disabled="disabledBoolean ? true : null"
-      :aria-current="activeBoolean ? true : null"
+      :disabled="props.disabled"
+      :aria-disabled="props.disabled ? true : null"
+      :aria-current="props.active ? true : null"
       :href="computedTag === 'a' ? href : null"
       :rel="rel"
       role="menuitem"
@@ -73,9 +73,6 @@ const emit = defineEmits<{
 
 const {class: wrapperClass, ...attrs} = useAttrs()
 
-const activeBoolean = computed(() => props.active)
-const disabledBoolean = computed(() => props.disabled)
-
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
@@ -86,8 +83,8 @@ const {computedLink, computedLinkProps} = useBLinkHelper(props)
 const computedClasses = computed(() => [
   props.linkClass,
   {
-    active: activeBoolean.value,
-    disabled: disabledBoolean.value,
+    active: props.active,
+    disabled: props.disabled,
     [`text-${props.variant}`]: props.variant !== null,
   },
 ])
