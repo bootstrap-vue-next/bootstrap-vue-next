@@ -55,11 +55,11 @@ const props = withDefaults(
     id?: string
     labelField?: string
     modelValue?:
+      | boolean
       | string
       | readonly unknown[]
       | Readonly<Record<string, unknown>>
       | number
-      | boolean
       | null
     multiple?: boolean
     name?: string
