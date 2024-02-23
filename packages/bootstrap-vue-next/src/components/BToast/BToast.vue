@@ -1,6 +1,6 @@
 <template>
   <BTransition
-    :no-fade="noFadeBoolean"
+    :no-fade="props.noFade"
     v-bind="transProps"
     @before-enter="onBeforeEnter"
     @after-enter="onAfterEnter"
@@ -13,8 +13,8 @@
       class="toast"
       :class="[toastClass, computedClasses]"
       tabindex="0"
-      :role="!isToastVisible ? undefined : isStatusBoolean ? 'status' : 'alert'"
-      :aria-live="!isToastVisible ? undefined : isStatusBoolean ? 'polite' : 'assertive'"
+      :role="!isToastVisible ? undefined : props.isStatus ? 'status' : 'alert'"
+      :aria-live="!isToastVisible ? undefined : props.isStatus ? 'polite' : 'assertive'"
       :aria-atomic="!isToastVisible ? undefined : true"
     >
       <component :is="headerTag" v-if="$slots.title || title" class="toast-header">
@@ -23,7 +23,7 @@
             {{ title }}
           </strong>
         </slot>
-        <BCloseButton v-if="!noCloseButtonBoolean" @click="hideFn('close')" />
+        <BCloseButton v-if="!props.noCloseButton" @click="hideFn('close')" />
       </component>
       <template v-if="$slots.default || body">
         <component
@@ -132,15 +132,8 @@ const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props)
 
-const isStatusBoolean = computed(() => props.isStatus)
-const noCloseButtonBoolean = computed(() => props.noCloseButton)
-const noFadeBoolean = computed(() => props.noFade)
-const noHoverPauseBoolean = computed(() => props.noHoverPause)
-const showOnPauseBoolean = computed(() => props.showOnPause)
 const intervalNumber = useToNumber(() => props.interval)
 // TODO solid is never used
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const solidBoolean = computed(() => props.solid)
 const resolvedBackgroundClasses = useColorVariantClasses(props)
 const countdownLength = toRef(() => (typeof modelValue.value === 'boolean' ? 0 : modelValue.value))
 
@@ -165,7 +158,7 @@ const computedTag = toRef(() => (computedLink.value ? BLink : 'div'))
 const isToastVisible = toRef(() =>
   typeof modelValue.value === 'boolean'
     ? modelValue.value
-    : isActive.value || (showOnPauseBoolean.value && isPaused.value)
+    : isActive.value || (props.showOnPause && isPaused.value)
 )
 
 const computedClasses = computed(() => [
@@ -176,7 +169,7 @@ const computedClasses = computed(() => [
 ])
 
 const onMouseEnter = () => {
-  if (noHoverPauseBoolean.value) return
+  if (props.noHoverPause) return
   pause()
 }
 
