@@ -1,10 +1,10 @@
 <template>
   <button
-    v-b-toggle="!disabledBoolean ? target : undefined"
+    v-b-toggle="!props.disabled ? target : undefined"
     class="navbar-toggler"
     type="button"
     :class="computedClasses"
-    :disabled="disabledBoolean"
+    :disabled="props.disabled"
     :aria-label="label"
     @click="onClick"
   >
@@ -41,14 +41,12 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const disabledBoolean = computed(() => props.disabled)
-
 const computedClasses = computed(() => ({
-  disabled: disabledBoolean.value,
+  disabled: props.disabled,
 }))
 
 const onClick = (e: Readonly<MouseEvent>): void => {
-  if (!disabledBoolean.value) {
+  if (!props.disabled) {
     emit('click', e)
   }
 }
