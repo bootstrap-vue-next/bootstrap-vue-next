@@ -54,12 +54,6 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const squareBoolean = computed(() => props.square)
-const roundedBoolean = computed(() => props.rounded)
-const roundedTopBoolean = computed(() => props.roundedTop)
-const roundedBottomBoolean = computed(() => props.roundedBottom)
-const roundedStartBoolean = computed(() => props.roundedStart)
-const roundedEndBoolean = computed(() => props.roundedEnd)
 const overlapNumber = useToNumber(() => props.overlap)
 
 const computedSize = useAvatarSize(() => props.size)
@@ -73,12 +67,12 @@ const paddingStyle = computed<StyleValue>(() => {
 provide(avatarGroupInjectionKey, {
   overlapScale,
   size: toRef(() => props.size),
-  square: squareBoolean,
-  rounded: roundedBoolean,
-  roundedTop: roundedTopBoolean,
-  roundedBottom: roundedBottomBoolean,
-  roundedStart: roundedStartBoolean,
-  roundedEnd: roundedEndBoolean,
+  square: toRef(() => props.square),
+  rounded: toRef(() => props.rounded),
+  roundedTop: toRef(() => props.roundedTop),
+  roundedBottom: toRef(() => props.roundedBottom),
+  roundedStart: toRef(() => props.roundedStart),
+  roundedEnd: toRef(() => props.roundedEnd),
   variant: toRef(() => props.variant),
   bgVariant: toRef(() => props.bgVariant),
   textVariant: toRef(() => props.textVariant),
