@@ -3,7 +3,7 @@
   <slot name="target" :show="show" :hide="hide" :toggle="toggle" :show-state="showState" />
   <Teleport :to="container || 'body'" :disabled="!container">
     <div
-      v-if="showStateInternal || persistentBoolean"
+      v-if="showStateInternal || props.persistent"
       :id="id"
       v-bind="$attrs"
       ref="element"
@@ -14,16 +14,16 @@
     >
       <div
         ref="arrow"
-        :class="`${tooltipBoolean ? 'tooltip' : 'popover'}-arrow`"
+        :class="`${props.tooltip ? 'tooltip' : 'popover'}-arrow`"
         :style="arrowStyle"
         data-popper-arrow
       />
       <div class="overflow-auto" :style="sizeStyles">
         <template v-if="title || $slots.title">
           <div
-            v-if="!isHtml"
+            v-if="!props.html"
             class="position-sticky top-0"
-            :class="tooltipBoolean ? 'tooltip-inner' : 'popover-header'"
+            :class="props.tooltip ? 'tooltip-inner' : 'popover-header'"
           >
             <slot name="title">
               {{ title }}
@@ -33,13 +33,13 @@
           <div
             v-else
             class="position-sticky top-0"
-            :class="tooltipBoolean ? 'tooltip-inner' : 'popover-header'"
+            :class="props.tooltip ? 'tooltip-inner' : 'popover-header'"
             v-html="sanitizedTitle"
           />
           <!-- eslint-enable vue/no-v-html -->
         </template>
-        <template v-if="(tooltipBoolean && !$slots.title && !title) || !tooltipBoolean">
-          <div v-if="!isHtml" :class="tooltipBoolean ? 'tooltip-inner' : 'popover-body'">
+        <template v-if="(props.tooltip && !$slots.title && !title) || !props.tooltip">
+          <div v-if="!props.html" :class="props.tooltip ? 'tooltip-inner' : 'popover-body'">
             <slot>
               {{ content }}
             </slot>
@@ -47,7 +47,7 @@
           <!-- eslint-disable vue/no-v-html -->
           <div
             v-else
-            :class="tooltipBoolean ? 'tooltip-inner' : 'popover-body'"
+            :class="props.tooltip ? 'tooltip-inner' : 'popover-body'"
             v-html="sanitizedContent"
           />
           <!-- eslint-enable vue/no-v-html -->
@@ -160,34 +160,21 @@ defineSlots<{
   title?: (props: Record<string, never>) => any
 }>()
 
-const modelValueBoolean = computed(() => props.modelValue)
-const showState = ref(modelValueBoolean.value)
-const showStateInternal = ref(modelValueBoolean.value)
+const showState = ref(props.modelValue)
+const showStateInternal = ref(props.modelValue)
 watchEffect(() => {
   emit('update:modelValue', showState.value)
 })
 
-watch(modelValueBoolean, () => {
-  if (modelValueBoolean.value === showState.value) return
-  modelValueBoolean.value ? show() : hide(new Event('update:modelValue'))
-})
+watch(
+  () => props.modelValue,
+  () => {
+    if (props.modelValue === showState.value) return
+    props.modelValue ? show() : hide(new Event('update:modelValue'))
+  }
+)
 
 const computedId = useId(() => props.id, 'popover')
-
-const clickBoolean = computed(() => props.click)
-const manualBoolean = computed(() => props.manual)
-const noShiftBoolean = computed(() => props.noShift)
-const noSizeBoolean = computed(() => props.noSize)
-const noFlipBoolean = computed(() => props.noFlip)
-const noFadeBoolean = computed(() => props.noFade)
-const noAutoCloseBoolean = computed(() => props.noAutoClose)
-const noHideBoolean = computed(() => props.noHide)
-const realtimeBoolean = computed(() => props.realtime)
-const inlineBoolean = computed(() => props.inline)
-const persistentBoolean = computed(() => props.persistent)
-const tooltipBoolean = computed(() => props.tooltip)
-const noninteractiveBoolean = computed(() => props.noninteractive)
-const isHtml = computed(() => props.html)
 
 const hidden = ref(false)
 
@@ -219,9 +206,9 @@ const floatingMiddleware = computed<Middleware[]>(() => {
   if (props.floatingMiddleware !== undefined) {
     return props.floatingMiddleware
   }
-  const off = props.offset !== null ? offsetNumber.value : tooltipBoolean.value ? 6 : 8
+  const off = props.offset !== null ? offsetNumber.value : props.tooltip ? 6 : 8
   const arr: Middleware[] = [offsetMiddleware(off)]
-  if (noFlipBoolean.value === false && !isAutoPlacement.value) {
+  if (props.noFlip === false && !isAutoPlacement.value) {
     arr.push(
       flip({
         boundary: boundary.value,
@@ -240,7 +227,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
       })
     )
   }
-  if (noShiftBoolean.value === false) {
+  if (props.noShift === false) {
     arr.push(
       shift({
         boundary: boundary.value,
@@ -249,7 +236,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
       })
     )
   }
-  if (noHideBoolean.value === false) {
+  if (props.noHide === false) {
     arr.push(
       hideMiddleware({
         boundary: boundary.value,
@@ -258,11 +245,11 @@ const floatingMiddleware = computed<Middleware[]>(() => {
       })
     )
   }
-  if (inlineBoolean.value === true) {
+  if (props.inline === true) {
     arr.push(inlineMiddleware())
   }
   arr.push(arrowMiddleware({element: arrow, padding: 10}))
-  if (noSizeBoolean.value === false) {
+  if (props.noSize === false) {
     arr.push(
       sizeMiddleware({
         boundary: boundary.value,
@@ -289,7 +276,7 @@ const {floatingStyles, middlewareData, placement, update} = useFloating(targetTr
   middleware: floatingMiddleware,
   strategy: toRef(() => props.strategy),
   whileElementsMounted: (...args) => {
-    const cleanup = autoUpdate(...args, {animationFrame: realtimeBoolean.value})
+    const cleanup = autoUpdate(...args, {animationFrame: props.realtime})
     // Important! Always return the cleanup function.
     return cleanup
   },
@@ -298,7 +285,7 @@ const {floatingStyles, middlewareData, placement, update} = useFloating(targetTr
 const arrowStyle = ref<CSSProperties>({position: 'absolute'})
 
 watch(middlewareData, () => {
-  if (noHideBoolean.value === false) {
+  if (props.noHide === false) {
     if (middlewareData.value.hide?.referenceHidden) {
       hidden.value = true
     } else {
@@ -316,7 +303,7 @@ watch(middlewareData, () => {
 })
 
 const computedClasses = computed(() => {
-  const type = tooltipBoolean.value ? 'tooltip' : 'popover'
+  const type = props.tooltip ? 'tooltip' : 'popover'
   return [
     type,
     `b-${type}`,
@@ -324,8 +311,8 @@ const computedClasses = computed(() => {
       [`b-${type}-${props.variant}`]: props.variant !== null,
       show: showState.value && !hidden.value,
       ['pe-none']: !showState.value,
-      fade: !noFadeBoolean.value,
-      ['d-none']: !showState.value && noFadeBoolean.value,
+      fade: !props.noFade,
+      ['d-none']: !showState.value && props.noFade,
       [`${props.customClass}`]: props.customClass !== undefined,
       [`bs-${type}-${resolveBootstrapPlacement(placement.value)}`]: placement.value !== undefined,
     },
@@ -393,13 +380,13 @@ const hide = (e: Readonly<Event>) => {
     if (
       e?.type === 'click' ||
       e?.type === 'forceHide' ||
-      (e?.type === 'update:modelValue' && manualBoolean.value) ||
-      (!noninteractiveBoolean.value &&
+      (e?.type === 'update:modelValue' && props.manual) ||
+      (!props.noninteractive &&
         isOutside.value &&
         triggerIsOutside.value &&
         !element.value?.contains(document?.activeElement) &&
         !trigger.value?.contains(document?.activeElement)) ||
-      (noninteractiveBoolean.value && triggerIsOutside.value)
+      (props.noninteractive && triggerIsOutside.value)
     ) {
       showState.value = false
       nextTick(() => {
@@ -453,12 +440,12 @@ const bind = () => {
   } else {
     targetTrigger.value = trigger.value
   }
-  if (!trigger.value || manualBoolean.value) {
+  if (!trigger.value || props.manual) {
     return
   }
   if (!IS_BROWSER) return
   trigger.value.addEventListener('forceHide', hide)
-  if (clickBoolean.value) {
+  if (props.click) {
     trigger.value.addEventListener('click', toggle)
     return
   }
@@ -482,7 +469,7 @@ const unbind = () => {
 onClickOutside(
   element,
   () => {
-    if (showState.value && clickBoolean.value && !noAutoCloseBoolean.value && !manualBoolean.value)
+    if (showState.value && props.click && !props.noAutoClose && !props.manual)
       hide(new Event('clickOutside'))
   },
   {ignore: [trigger]}
