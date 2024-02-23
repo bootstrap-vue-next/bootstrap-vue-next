@@ -26,9 +26,7 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const justifyBoolean = computed(() => props.justify)
-
 const computedClasses = computed(() => ({
-  'justify-content-between': justifyBoolean.value,
+  'justify-content-between': props.justify,
 }))
 </script>
