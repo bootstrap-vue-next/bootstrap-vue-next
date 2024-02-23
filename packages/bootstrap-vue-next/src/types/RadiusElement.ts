@@ -18,9 +18,9 @@ export type RadiusElement =
   | 5
 
 export type RadiusElementExtendables = {
-  rounded?: RadiusElement | boolean
-  roundedTop?: RadiusElement | boolean
-  roundedBottom?: RadiusElement | boolean
-  roundedStart?: RadiusElement | boolean
-  roundedEnd?: RadiusElement | boolean
+  rounded?: boolean | RadiusElement
+  roundedTop?: boolean | RadiusElement
+  roundedBottom?: boolean | RadiusElement
+  roundedStart?: boolean | RadiusElement
+  roundedEnd?: boolean | RadiusElement
 }
