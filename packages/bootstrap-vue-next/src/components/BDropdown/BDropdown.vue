@@ -6,7 +6,7 @@
       :variant="splitVariant || variant"
       :size="size"
       :class="buttonClasses"
-      :disabled="splitDisabledBoolean || disabled"
+      :disabled="props.splitDisabled || disabled"
       :type="splitButtonType"
       :aria-label="ariaLabel"
       :aria-expanded="props.split ? undefined : modelValue"
@@ -39,8 +39,8 @@
     </BButton>
     <Teleport :to="container || 'body'" :disabled="!container">
       <ul
-        v-if="!lazyBoolean || modelValue"
-        v-show="lazyBoolean || modelValue"
+        v-if="!props.lazy || modelValue"
+        v-show="props.lazy || modelValue"
         ref="floating"
         :style="[floatingStyles, sizeStyles]"
         class="dropdown-menu overflow-auto"
@@ -141,13 +141,6 @@ const computedId = useId(() => props.id, 'dropdown')
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
-const noCaretBoolean = computed(() => props.noCaret)
-const noFlipBoolean = computed(() => props.noFlip)
-const noShiftBoolean = computed(() => props.noShift)
-const noSizeBoolean = computed(() => props.noSize)
-const lazyBoolean = computed(() => props.lazy)
-const splitDisabledBoolean = computed(() => props.splitDisabled)
-
 const computedOffset = toRef(() =>
   typeof props.offset === 'string' || typeof props.offset === 'number' ? props.offset : NaN
 )
@@ -224,7 +217,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
       ? offsetToNumber.value
       : props.offset
   const arr: Middleware[] = [offsetMiddleware(localOffset)]
-  if (noFlipBoolean.value === false) {
+  if (props.noFlip === false) {
     arr.push(
       flip({
         boundary: boundary.value,
@@ -233,7 +226,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
       })
     )
   }
-  if (noShiftBoolean.value === false) {
+  if (props.noShift === false) {
     arr.push(
       shift({
         boundary: boundary.value,
@@ -242,7 +235,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
       })
     )
   }
-  if (noSizeBoolean.value === false) {
+  if (props.noSize === false) {
     arr.push(
       sizeMiddleware({
         boundary: boundary.value,
@@ -278,7 +271,7 @@ const buttonClasses = computed(() => [
   {
     'nav-link': props.isNav,
     'dropdown-toggle': !props.split,
-    'dropdown-toggle-no-caret': noCaretBoolean.value && !props.split,
+    'dropdown-toggle-no-caret': props.noCaret && !props.split,
     'show': props.split ? undefined : modelValue.value,
   },
 ])
