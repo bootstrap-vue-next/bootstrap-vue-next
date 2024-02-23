@@ -13,14 +13,14 @@
     :class="computedClasses"
     :form="form"
     :name="name"
-    :multiple="multipleBoolean"
-    :disabled="disabledBoolean"
-    :capture="computedCapture"
+    :multiple="props.multiple"
+    :disabled="props.disabled"
+    :capture="props.capture"
     :accept="computedAccept || undefined"
-    :required="requiredBoolean || undefined"
-    :aria-required="requiredBoolean || undefined"
-    :directory="directoryBoolean"
-    :webkitdirectory="directoryBoolean"
+    :required="props.required || undefined"
+    :aria-required="props.required || undefined"
+    :directory="props.directory"
+    :webkitdirectory="props.directory"
     @change="onChange"
     @drop="onDrop"
   />
@@ -91,23 +91,13 @@ const emit = defineEmits<{
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 const computedId = useId(() => props.id)
 
-const autofocusBoolean = computed(() => props.autofocus)
-const directoryBoolean = computed(() => props.directory)
-const disabledBoolean = computed(() => props.disabled)
-const multipleBoolean = computed(() => props.multiple)
-const noDropBoolean = computed(() => props.noDrop)
-// TODO not implemented yet
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const noTraverseBoolean = computed(() => props.noTraverse)
-const requiredBoolean = computed(() => props.required)
-const stateBoolean = computed(() => props.state)
-const computedCapture = computed(() => props.capture)
+// TODO noTraverse is not implemented yet
 
-const stateClass = useStateClass(stateBoolean)
+const stateClass = useStateClass(props.state)
 
 const input = ref<HTMLInputElement | null>(null)
 
-const {focused} = useFocus(input, {initialValue: autofocusBoolean.value})
+const {focused} = useFocus(input, {initialValue: props.autofocus})
 
 const hasLabelSlot = toRef(() => !isEmptySlot(slots['label']))
 const computedAccept = toRef(() =>
@@ -124,11 +114,11 @@ const computedClasses = computed(() => [
 const onChange = () => {
   const value =
     input.value?.files === null || input.value?.files === undefined ? null : [...input.value.files]
-  modelValue.value = value === null ? null : multipleBoolean.value === true ? value : value[0]
+  modelValue.value = value === null ? null : props.multiple === true ? value : value[0]
 }
 
 const onDrop = (e: Readonly<Event>) => {
-  if (noDropBoolean.value === true) {
+  if (props.noDrop === true) {
     e.preventDefault()
   }
 }
