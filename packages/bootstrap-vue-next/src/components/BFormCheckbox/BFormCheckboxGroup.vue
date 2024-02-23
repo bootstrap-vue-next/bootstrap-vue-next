@@ -94,35 +94,26 @@ const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const computedId = useId(() => props.id, 'checkbox')
 const computedName = useId(() => props.name, 'checkbox')
-const autofocusBoolean = computed(() => props.autofocus)
-const buttonsBoolean = computed(() => props.buttons)
-const disabledBoolean = computed(() => props.disabled)
-const plainBoolean = computed(() => props.plain)
-const requiredBoolean = computed(() => props.required)
-const stackedBoolean = computed(() => props.stacked)
-const stateBoolean = computed(() => props.state)
-const switchesBoolean = computed(() => props.switches)
-const validatedBoolean = computed(() => props.validated)
 
 const element = ref<HTMLElement | null>(null)
 
 const {focused} = useFocus(element, {
-  initialValue: autofocusBoolean.value,
+  initialValue: props.autofocus,
 })
 
 provide(checkboxGroupKey, {
   modelValue,
-  switch: switchesBoolean,
+  switch: toRef(() => props.switches),
   buttonVariant: toRef(() => props.buttonVariant),
   form: toRef(() => props.form),
   name: computedName,
-  state: stateBoolean,
-  plain: plainBoolean,
+  state: toRef(() => props.state),
+  plain: toRef(() => props.plain),
   size: toRef(() => props.size),
-  inline: toRef(() => !stackedBoolean.value),
-  required: requiredBoolean,
-  buttons: buttonsBoolean,
-  disabled: disabledBoolean,
+  inline: toRef(() => !props.stacked),
+  required: toRef(() => props.required),
+  buttons: toRef(() => props.buttons),
+  disabled: toRef(() => props.disabled),
 })
 
 watch(modelValue, (newValue) => {
@@ -138,7 +129,7 @@ const normalizeOptions = computed(() =>
       ? {
           props: {
             value: el,
-            disabled: disabledBoolean.value,
+            disabled: props.disabled,
           },
           text: el.toString(),
           html: undefined,
@@ -158,12 +149,12 @@ const normalizeOptions = computed(() =>
 )
 
 const classesObject = computed(() => ({
-  required: requiredBoolean.value,
+  required: props.required,
   ariaInvalid: props.ariaInvalid,
-  state: stateBoolean.value,
-  validated: validatedBoolean.value,
-  buttons: buttonsBoolean.value,
-  stacked: stackedBoolean.value,
+  state: props.state,
+  validated: props.validated,
+  buttons: props.buttons,
+  stacked: props.stacked,
   size: props.size,
 }))
 const computedAttrs = getGroupAttr(classesObject)
