@@ -39,12 +39,10 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const stickyColumnBoolean = computed(() => props.stickyColumn)
-
 const computedClasses = computed(() => ({
   [`table-${props.variant}`]: props.variant !== null,
-  'b-table-sticky-column': stickyColumnBoolean.value,
-  'table-b-table-default': stickyColumnBoolean.value && props.variant === null,
+  'b-table-sticky-column': props.stickyColumn,
+  'table-b-table-default': props.stickyColumn && props.variant === null,
 }))
 
 const scope = toRef(() => (props.colspan ? 'colspan' : props.rowspan ? 'rowspan' : 'col'))
