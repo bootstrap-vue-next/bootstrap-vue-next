@@ -9,10 +9,10 @@
       :disabled="splitDisabledBoolean || disabled"
       :type="splitButtonType"
       :aria-label="ariaLabel"
-      :aria-expanded="splitBoolean ? undefined : modelValueBoolean"
-      :aria-haspopup="splitBoolean ? undefined : 'menu'"
-      :href="splitBoolean ? splitHref : undefined"
-      :to="splitBoolean && splitTo ? splitTo : undefined"
+      :aria-expanded="props.split ? undefined : modelValue"
+      :aria-haspopup="props.split ? undefined : 'menu'"
+      :href="props.split ? splitHref : undefined"
+      :to="props.split && splitTo ? splitTo : undefined"
       @click="onSplitClick"
     >
       <slot name="button-content">
@@ -20,14 +20,14 @@
       </slot>
     </BButton>
     <BButton
-      v-if="splitBoolean"
+      v-if="props.split"
       ref="button"
       :variant="variant"
       :size="size"
       :disabled="disabled"
-      :class="[toggleClass, {show: modelValueBoolean}]"
+      :class="[toggleClass, {show: modelValue}]"
       class="dropdown-toggle-split dropdown-toggle"
-      :aria-expanded="modelValueBoolean"
+      :aria-expanded="modelValue"
       aria-haspopup="menu"
       @click="onButtonClick"
     >
@@ -39,12 +39,12 @@
     </BButton>
     <Teleport :to="container || 'body'" :disabled="!container">
       <ul
-        v-if="!lazyBoolean || modelValueBoolean"
-        v-show="lazyBoolean || modelValueBoolean"
+        v-if="!lazyBoolean || modelValue"
+        v-show="lazyBoolean || modelValue"
         ref="floating"
         :style="[floatingStyles, sizeStyles]"
         class="dropdown-menu overflow-auto"
-        :class="[menuClass, {show: modelValueBoolean}]"
+        :class="[menuClass, {show: modelValue}]"
         :aria-labelledby="computedId"
         :role="role"
         @click="onClickInside"
@@ -141,14 +141,6 @@ const computedId = useId(() => props.id, 'dropdown')
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
-const modelValueBoolean = computed(() => modelValue.value)
-const dropupBoolean = computed(() => props.dropup)
-const dropendBoolean = computed(() => props.dropend)
-const isNavBoolean = computed(() => props.isNav)
-const dropstartBoolean = computed(() => props.dropstart)
-const centerBoolean = computed(() => props.center)
-const endBoolean = computed(() => props.end)
-const splitBoolean = computed(() => props.split)
 const noCaretBoolean = computed(() => props.noCaret)
 const noFlipBoolean = computed(() => props.noFlip)
 const noShiftBoolean = computed(() => props.noShift)
@@ -173,26 +165,26 @@ const rootBoundary = computed<RootBoundary | undefined>(() =>
   props.boundary === 'document' || props.boundary === 'viewport' ? props.boundary : undefined
 )
 
-const referencePlacement = toRef(() => (!splitBoolean.value ? splitButton.value : button.value))
+const referencePlacement = toRef(() => (!props.split ? splitButton.value : button.value))
 
 onKeyStroke(
   'Escape',
   () => {
-    modelValue.value = !modelValueBoolean.value
+    modelValue.value = !modelValue.value
   },
   {target: referencePlacement}
 )
 onKeyStroke(
   'Escape',
   () => {
-    modelValue.value = !modelValueBoolean.value
+    modelValue.value = !modelValue.value
   },
   {target: floating}
 )
 
 const keynav = (e: Readonly<Event>, v: number) => {
   e.preventDefault()
-  if (!modelValueBoolean.value) {
+  if (!modelValue.value) {
     open()
     nextTick(() => keynav(e, v))
     return
@@ -215,11 +207,11 @@ onKeyStroke('ArrowDown', (e) => keynav(e, 1), {target: floating})
 
 const floatingPlacement = computed(() =>
   resolveFloatingPlacement({
-    top: dropupBoolean.value,
-    start: dropstartBoolean.value,
-    end: dropendBoolean.value,
-    alignCenter: centerBoolean.value,
-    alignEnd: endBoolean.value,
+    top: props.dropup,
+    start: props.dropstart,
+    end: props.dropend,
+    alignCenter: props.center,
+    alignEnd: props.end,
   })
 )
 const sizeStyles = ref<CSSProperties>({})
@@ -258,9 +250,8 @@ const floatingMiddleware = computed<Middleware[]>(() => {
         padding: props.boundaryPadding,
         apply({availableWidth, availableHeight}) {
           sizeStyles.value = {
-            maxHeight:
-              availableHeight && modelValueBoolean.value ? `${availableHeight}px` : undefined,
-            maxWidth: availableWidth && modelValueBoolean.value ? `${availableWidth}px` : undefined,
+            maxHeight: availableHeight && modelValue.value ? `${availableHeight}px` : undefined,
+            maxWidth: availableWidth && modelValue.value ? `${availableWidth}px` : undefined,
           }
         },
       })
@@ -276,19 +267,19 @@ const {update, floatingStyles} = useFloating(referencePlacement, floating, {
 })
 
 const computedClasses = computed(() => ({
-  'dropup': dropupBoolean.value,
-  'dropend': dropendBoolean.value,
-  'dropstart': dropstartBoolean.value,
-  'position-static': props.boundary !== 'clippingAncestors' && !isNavBoolean.value,
+  'dropup': props.dropup,
+  'dropend': props.dropend,
+  'dropstart': props.dropstart,
+  'position-static': props.boundary !== 'clippingAncestors' && !props.isNav,
 }))
 
 const buttonClasses = computed(() => [
-  splitBoolean.value ? props.splitClass : props.toggleClass,
+  props.split ? props.splitClass : props.toggleClass,
   {
-    'nav-link': isNavBoolean.value,
-    'dropdown-toggle': !splitBoolean.value,
-    'dropdown-toggle-no-caret': noCaretBoolean.value && !splitBoolean.value,
-    'show': splitBoolean.value ? undefined : modelValueBoolean.value,
+    'nav-link': props.isNav,
+    'dropdown-toggle': !props.split,
+    'dropdown-toggle-no-caret': noCaretBoolean.value && !props.split,
+    'show': props.split ? undefined : modelValue.value,
   },
 ])
 
@@ -297,20 +288,20 @@ const onButtonClick = () => {
 }
 
 const onSplitClick = (event: Readonly<MouseEvent>) => {
-  splitBoolean.value ? emit('click', event) : onButtonClick()
+  props.split ? emit('click', event) : onButtonClick()
 }
 
 onClickOutside(
   floating,
   () => {
-    if (modelValueBoolean.value && (props.autoClose === true || props.autoClose === 'outside')) {
+    if (modelValue.value && (props.autoClose === true || props.autoClose === 'outside')) {
       toggle()
     }
   },
   {ignore: [button, splitButton]}
 )
 const onClickInside = () => {
-  if (modelValueBoolean.value && (props.autoClose === true || props.autoClose === 'inside')) {
+  if (modelValue.value && (props.autoClose === true || props.autoClose === 'inside')) {
     toggle()
   }
 }
@@ -323,7 +314,7 @@ const open = () => {
 }
 const toggle = () => {
   emit('toggle')
-  const currentModelValue = modelValueBoolean.value
+  const currentModelValue = modelValue.value
   const e = new BvTriggerableEvent(currentModelValue ? 'hide' : 'show')
   currentModelValue ? emit('hide', e) : emit('show', e)
   if (e.defaultPrevented) {
@@ -335,9 +326,12 @@ const toggle = () => {
   wrapper.value?.dispatchEvent(new Event('forceHide'))
 }
 
-watch(modelValueBoolean, () => {
-  update()
-})
+watch(
+  () => modelValue.value,
+  () => {
+    update()
+  }
+)
 
 defineExpose({
   close,
@@ -350,7 +344,7 @@ provide(dropdownInjectionKey, {
   open,
   close,
   toggle,
-  visible: modelValueBoolean,
-  isNav: isNavBoolean,
+  visible: toRef(() => modelValue.value),
+  isNav: toRef(() => props.isNav),
 })
 </script>
