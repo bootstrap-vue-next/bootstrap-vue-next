@@ -1,5 +1,5 @@
 import type {AriaInvalid} from '../types'
-import {computed, type MaybeRefOrGetter, toRef, toValue} from 'vue'
+import {computed, type MaybeRefOrGetter, toValue} from 'vue'
 
 export default (
   ariaInvalid: MaybeRefOrGetter<AriaInvalid | undefined>,
@@ -7,14 +7,14 @@ export default (
 ) =>
   computed(() => {
     const resolvedAriaInvalid = toValue(ariaInvalid)
-    const resolvedState = toRef(state)
+    const resolvedState = toValue(state)
 
     const resolvedAriaInvalidValue =
       resolvedAriaInvalid === true
         ? 'true'
         : typeof resolvedAriaInvalid === 'string'
           ? resolvedAriaInvalid
-          : resolvedState.value === false
+          : resolvedState === false
             ? 'true'
             : resolvedAriaInvalid === false
               ? 'false'
