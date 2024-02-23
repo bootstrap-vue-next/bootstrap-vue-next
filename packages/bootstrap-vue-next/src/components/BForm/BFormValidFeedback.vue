@@ -33,15 +33,11 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const forceShowBoolean = computed(() => props.forceShow)
-const stateBoolean = computed(() => props.state)
-const tooltipBoolean = computed(() => props.tooltip)
-
-const computedShow = toRef(() => forceShowBoolean.value === true || stateBoolean.value === true)
+const computedShow = toRef(() => props.forceShow === true || props.state === true)
 
 const computedClasses = computed(() => ({
   'd-block': computedShow.value,
-  'valid-feedback': !tooltipBoolean.value,
-  'valid-tooltip': tooltipBoolean.value,
+  'valid-feedback': !props.tooltip,
+  'valid-tooltip': props.tooltip,
 }))
 </script>
