@@ -12,7 +12,7 @@
     :outlined="outlined"
     :responsive="responsive"
     :small="small"
-    :stacked="computedStacked"
+    :stacked="props.stacked"
     :sticky-header="stickyHeader"
     :striped="striped"
     :table-class="computedTableClasses"
@@ -66,7 +66,7 @@
         :items="items"
         :columns="computedFields.length"
       >
-        <BTr v-if="!computedStacked && $slots['top-row']">
+        <BTr v-if="!props.stacked && $slots['top-row']">
           <slot name="top-row" />
         </BTr>
 
@@ -86,7 +86,7 @@
               :class="getFieldRowClasses(field, item)"
               v-bind="itemAttributes(item, String(field.key), field.tdAttr)"
             >
-              <label v-if="computedStacked && labelStackedBoolean" class="b-table-stacked-label">
+              <label v-if="props.stacked && props.labelStacked" class="b-table-stacked-label">
                 {{ getTableFieldHeadLabel(field) }}
               </label>
               <slot
@@ -131,19 +131,19 @@
             </BTr>
           </template>
         </template>
-        <BTr v-if="showEmptyBoolean && items.length === 0" class="b-table-empty-slot">
+        <BTr v-if="props.showEmpty && items.length === 0" class="b-table-empty-slot">
           <BTd :colspan="computedFieldsTotal">
             <slot name="empty" :items="items">
               {{ emptyText }}
             </slot>
           </BTd>
         </BTr>
-        <BTr v-if="!computedStacked && $slots['bottom-row']">
+        <BTr v-if="!props.stacked && $slots['bottom-row']">
           <slot name="bottom-row" />
         </BTr>
       </slot>
     </BTbody>
-    <BTfoot v-if="footCloneBoolean" :variant="footVariant" :class="tfootClass">
+    <BTfoot v-if="props.footClone" :variant="footVariant" :class="tfootClass">
       <BTr :variant="footRowVariant" :class="tfootTrClass">
         <BTh
           v-for="field in computedFields"
@@ -270,11 +270,6 @@ const emit = defineEmits<{
   'row-unhovered': [item: TableItem<T>, index: number, event: MouseEvent]
 }>()
 
-const footCloneBoolean = computed(() => props.footClone)
-const labelStackedBoolean = computed(() => props.labelStacked)
-const showEmptyBoolean = computed(() => props.showEmpty)
-const computedStacked = computed(() => props.stacked)
-
 const computedTableClasses = computed(() => [
   props.tableClass,
   {
@@ -289,7 +284,7 @@ const computedFields = computed<TableField<T>[]>(() => {
       return {
         key: k,
         label,
-        tdAttr: computedStacked.value === true ? {'data-label': label} : undefined,
+        tdAttr: props.stacked === true ? {'data-label': label} : undefined,
       }
     })
   }
@@ -300,15 +295,13 @@ const computedFields = computed<TableField<T>[]>(() => {
       return {
         key: f,
         label,
-        tdAttr: computedStacked.value === true ? {'data-label': label} : undefined,
+        tdAttr: props.stacked === true ? {'data-label': label} : undefined,
       }
     }
     return {
       ...f,
       tdAttr:
-        computedStacked.value === true
-          ? {'data-label': startCase(f.key as string), ...f.tdAttr}
-          : f.tdAttr,
+        props.stacked === true ? {'data-label': startCase(f.key as string), ...f.tdAttr} : f.tdAttr,
     }
     // TODO handle Shortcut object (i.e. { 'foo_bar': 'This is Foo Bar' }
   })
