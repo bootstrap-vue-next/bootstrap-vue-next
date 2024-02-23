@@ -6,11 +6,11 @@
     :name="name || undefined"
     :form="form || undefined"
     :value="modelValue ?? undefined"
-    :disabled="disabledBoolean"
+    :disabled="props.disabled"
     :placeholder="placeholder"
-    :required="requiredBoolean || undefined"
+    :required="props.required || undefined"
     :autocomplete="autocomplete || undefined"
-    :readonly="readonlyBoolean || plaintextBoolean"
+    :readonly="props.readonly || props.plaintext"
     :aria-required="required || undefined"
     :aria-invalid="computedAriaInvalid"
     :rows="rows"
@@ -73,25 +73,18 @@ const emit = defineEmits<{
 const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
   useFormInput(props, emit)
 
-const disabledBoolean = computed(() => props.disabled)
-const requiredBoolean = computed(() => props.required)
-const readonlyBoolean = computed(() => props.readonly)
-const plaintextBoolean = computed(() => props.plaintext)
-const noResizeBoolean = computed(() => props.noResize)
-const stateBoolean = computed(() => props.state)
-
-const stateClass = useStateClass(stateBoolean)
+const stateClass = useStateClass(() => props.state)
 
 const computedClasses = computed(() => [
   stateClass.value,
-  plaintextBoolean.value ? 'form-control-plaintext' : 'form-control',
+  props.plaintext ? 'form-control-plaintext' : 'form-control',
   {
     [`form-control-${props.size}`]: !!props.size,
   },
 ])
 
 const computedStyles = computed<CSSProperties>(() => ({
-  resize: noResizeBoolean.value ? 'none' : undefined,
+  resize: props.noResize ? 'none' : undefined,
 }))
 
 defineExpose({
