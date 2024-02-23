@@ -2,7 +2,7 @@
   <button
     :type="type"
     class="btn-close"
-    :disabled="disabledBoolean"
+    :disabled="props.disabled"
     :aria-label="ariaLabel"
     @click="emit('click', $event)"
   />
@@ -10,7 +10,6 @@
 
 <script setup lang="ts">
 import type {ButtonType} from '../../types'
-import {computed} from 'vue'
 
 const props = withDefaults(
   defineProps<{
@@ -28,6 +27,4 @@ const props = withDefaults(
 const emit = defineEmits<{
   click: [value: MouseEvent]
 }>()
-
-const disabledBoolean = computed(() => props.disabled)
 </script>
