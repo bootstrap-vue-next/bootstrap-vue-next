@@ -2,7 +2,7 @@
   <form
     :id="id"
     ref="element"
-    :novalidate="novalidateBoolean"
+    :novalidate="props.novalidate"
     :class="computedClasses"
     @submit.prevent="submitted"
   >
@@ -27,18 +27,14 @@ const emit = defineEmits<{
 
 const element = ref<HTMLFormElement | null>(null)
 
-const floatingBoolean = computed(() => props.floating)
-const novalidateBoolean = computed(() => props.novalidate)
-const validatedBoolean = computed(() => props.validated)
-
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
 }>()
 
 const computedClasses = computed(() => ({
-  'form-floating': floatingBoolean.value,
-  'was-validated': validatedBoolean.value,
+  'form-floating': props.floating,
+  'was-validated': props.validated,
 }))
 
 const submitted = (e: Readonly<Event>) => {
