@@ -11,7 +11,7 @@
       <slot>{{ tagText }}</slot>
     </span>
     <BCloseButton
-      v-if="!disabledBoolean && !noRemoveBoolean"
+      v-if="!props.disabled && !props.noRemove"
       aria-keyshortcuts="Delete"
       :aria-label="removeLabel"
       class="b-form-tag-remove"
@@ -62,10 +62,6 @@ const slots = defineSlots<{
 
 const computedId = useId(() => props.id)
 
-const disabledBoolean = computed(() => props.disabled)
-const noRemoveBoolean = computed(() => props.noRemove)
-const pillBoolean = computed(() => props.pill)
-
 const tagText = computed(
   () => ((slots.default?.({})[0].children ?? '').toString() || props.title) ?? ''
 )
@@ -73,7 +69,7 @@ const taglabelId = toRef(() => `${computedId.value}taglabel__`)
 
 const computedClasses = computed(() => ({
   [`text-bg-${props.variant}`]: props.variant !== null,
-  'rounded-pill': pillBoolean.value,
-  'disabled': disabledBoolean.value,
+  'rounded-pill': props.pill,
+  'disabled': props.disabled,
 }))
 </script>
