@@ -69,11 +69,6 @@ const parentData = inject(tabsInjectionKey, null)
 const computedId = useId(() => props.id, 'tabpane')
 const buttonId = useId(() => props.buttonId, 'tab')
 
-const activeBoolean = computed(() => props.active)
-const disabledBoolean = computed(() => props.disabled)
-const lazyBoolean = computed(() => props.lazyOnce ?? props.lazy)
-const noBodyBoolean = computed(() => props.noBody)
-
 const lazyRenderCompleted = ref(false)
 const el = ref<HTMLElement | null>(null)
 
@@ -84,7 +79,7 @@ const tab = computed(
     ({
       id: computedId.value,
       buttonId: buttonId.value,
-      disabled: disabledBoolean.value,
+      disabled: props.disabled,
       title: props.title,
       titleComponent: slots.title,
       titleItemClass: props.titleItemClass,
@@ -98,7 +93,7 @@ const tab = computed(
 onMounted(() => {
   if (!parentData) return
   parentData.registerTab(tab)
-  if (activeBoolean.value) {
+  if (props.active) {
     parentData.activateTab(computedId.value)
   }
 })
@@ -111,10 +106,10 @@ onUnmounted(() => {
 const isActive = toRef(() => parentData?.activeId.value === computedId.value)
 const show = ref(isActive.value)
 
-const computedLazy = toRef(() => !!(parentData?.lazy.value || lazyBoolean.value))
+const computedLazy = toRef(() => !!(parentData?.lazy.value || (props.lazyOnce ?? props.lazy)))
 const computedLazyOnce = toRef(() => props.lazyOnce !== undefined)
 
-const computedActive = toRef(() => isActive.value && !disabledBoolean.value)
+const computedActive = toRef(() => isActive.value && !props.disabled)
 const showSlot = toRef(
   () =>
     computedActive.value ||
@@ -133,22 +128,25 @@ watch(isActive, (active) => {
   show.value = false
   emit('update:active', false)
 })
-watch(activeBoolean, (active) => {
-  if (!parentData) return
-  if (!active) {
-    if (isActive.value) {
-      parentData.activateTab(undefined)
+watch(
+  () => props.active,
+  (active) => {
+    if (!parentData) return
+    if (!active) {
+      if (isActive.value) {
+        parentData.activateTab(undefined)
+      }
+      return
     }
-    return
+    parentData.activateTab(computedId.value)
   }
-  parentData.activateTab(computedId.value)
-})
+)
 
 const computedClasses = computed(() => [
   {
     'active': isActive.value,
     'show': show.value,
-    'card-body': parentData?.card.value && noBodyBoolean.value === false,
+    'card-body': parentData?.card.value && props.noBody === false,
     'fade': !parentData?.noFade.value,
   },
   show.value ? parentData?.activeTabClass : parentData?.inactiveTabClass,
