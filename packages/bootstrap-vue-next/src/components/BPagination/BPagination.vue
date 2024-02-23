@@ -3,7 +3,7 @@
     class="pagination"
     :class="computedWrapperClasses"
     role="menubar"
-    :aria-disabled="disabledBoolean"
+    :aria-disabled="props.disabled"
     :aria-label="ariaLabel || undefined"
   >
     <ReusableButton.define v-slot="{button, li, text, clickHandler}">
@@ -134,13 +134,6 @@ const emit = defineEmits<{
 
 const modelValue = useVModel(props, 'modelValue', emit)
 
-const disabledBoolean = computed(() => props.disabled)
-const firstNumberBoolean = computed(() => props.firstNumber)
-const hideEllipsisBoolean = computed(() => props.hideEllipsis)
-const hideGotoEndButtonsBoolean = computed(() => props.hideGotoEndButtons)
-const lastNumberBoolean = computed(() => props.lastNumber)
-const pillsBoolean = computed(() => props.pills)
-
 const limitNumber = useToNumber(() => props.limit, {nanToZero: true, method: 'parseInt'})
 const perPageNumber = useToNumber(() => props.perPage, {nanToZero: true, method: 'parseInt'})
 const totalRowsNumber = useToNumber(() => props.totalRows, {nanToZero: true, method: 'parseInt'})
@@ -157,10 +150,10 @@ const justifyAlign = toRef(() => (props.align === 'fill' ? 'start' : props.align
 const alignment = useAlignment(justifyAlign)
 
 const isActivePage = (pageNumber: number) => pageNumber === modelValueNumber.value
-const getTabIndex = (num: number) => (disabledBoolean.value ? null : isActivePage(num) ? '0' : '-1')
+const getTabIndex = (num: number) => (props.disabled ? null : isActivePage(num) ? '0' : '-1')
 
 const checkDisabled = (num: number) =>
-  disabledBoolean.value ||
+  props.disabled ||
   isActivePage(num) ||
   modelValueNumber.value < 1 ||
   // Check if the number is out of bounds
@@ -254,7 +247,7 @@ const getButtonProps = ({
 const getPageButtonProps = (page: number) =>
   getBaseButtonProps({
     page,
-    dis: disabledBoolean.value,
+    dis: props.disabled,
     classVal: props.pageClass,
     slotName: 'page',
     label: props.labelPage ? `${props.labelPage} ${page}` : undefined,
@@ -327,7 +320,7 @@ const computedWrapperClasses = computed(() => [
   alignment.value,
   {
     [`pagination-${props.size}`]: props.size !== undefined,
-    'b-pagination-pills': pillsBoolean.value,
+    'b-pagination-pills': props.pills,
   },
 ])
 
@@ -391,10 +384,10 @@ const buttons = computed(() => {
   const pages = numberOfPages.value
   const {value} = modelValueNumber
   const limit = limitNumber.value
-  const firstPage = firstNumberBoolean.value ? 1 : 0
-  const lastPage = lastNumberBoolean.value ? 1 : 0
-  const hideEllipsis = hideEllipsisBoolean.value || limit <= ELLIPSIS_THRESHOLD
-  const hideEndButtons = hideGotoEndButtonsBoolean.value ? 1 : 0
+  const firstPage = props.firstNumber ? 1 : 0
+  const lastPage = props.lastNumber ? 1 : 0
+  const hideEllipsis = props.hideEllipsis || limit <= ELLIPSIS_THRESHOLD
+  const hideEndButtons = props.hideGotoEndButtons ? 1 : 0
 
   // The first case is when all of the page buttons fit on the control, this is
   //  the simplest case and the only one that will create an array smaller than
