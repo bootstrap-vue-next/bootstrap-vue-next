@@ -2,7 +2,8 @@ import {defineNuxtModule, createResolver, addImports, addPlugin} from '@nuxt/kit
 import useComponents from './composables/useComponents'
 import type {ModuleOptions} from './types/ModuleOptions'
 import parseActiveImports from './utils/parseActiveImports'
-import {Composables} from 'bootstrap-vue-next'
+import {Composables, Directives} from 'bootstrap-vue-next'
+import normalizeConfigurationValue from './utils/normalizeConfigurationValue'
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -15,51 +16,70 @@ export default defineNuxtModule<ModuleOptions>({
   },
   defaults: {
     composables: true,
+    directives: true,
   },
   setup(options, nuxt) {
     // @ts-ignore
     const {resolve} = createResolver(import.meta.url)
-    addPlugin(resolve('./runtime/plugins/createBootstrap'))
-
-    const normalizedComposableOptions =
-      typeof options.composables === 'boolean' ? {all: options.composables} : options.composables
-
     nuxt.options.build.transpile.push(resolve('./runtime'))
+    nuxt.options.css.push('bootstrap-vue-next/dist/bootstrap-vue-next.css')
 
-    const transformAssetUrls = {
-      BImg: ['src'],
-    }
-
-    // Set transformAssetUrls
-    if (nuxt.options.vite.vue === undefined) {
-      nuxt.options.vite.vue = {
-        template: {
-          transformAssetUrls,
-        },
-      }
-    } else if (nuxt.options.vite.vue.template === undefined) {
-      nuxt.options.vite.vue.template = {
-        transformAssetUrls,
-      }
-    } else if (nuxt.options.vite.vue.template.transformAssetUrls === undefined) {
-      nuxt.options.vite.vue.template.transformAssetUrls = transformAssetUrls
-    } else if (
-      // Do not overwrite user options
-      !(
-        typeof nuxt.options.vite.vue.template.transformAssetUrls !== 'boolean' &&
-        ('BImg' in nuxt.options.vite.vue.template.transformAssetUrls ||
-          'b-img' in nuxt.options.vite.vue.template.transformAssetUrls)
-      )
-    ) {
-      Object.assign(nuxt.options.vite.vue.template.transformAssetUrls, transformAssetUrls)
-    }
+    const normalizedComposableOptions = normalizeConfigurationValue(options.composables)
+    const normalizedDirectiveOptions = normalizeConfigurationValue(options.directives)
 
     nuxt.options.css.push('bootstrap-vue-next/dist/bootstrap-vue-next.css')
 
+    nuxt.options.vite.optimizeDeps = nuxt.options.vite.optimizeDeps || {}
+    nuxt.options.vite.optimizeDeps.include = nuxt.options.vite.optimizeDeps.include || []
+    nuxt.options.vite.optimizeDeps.include.push('bootstrap-vue-next')
+
+    // Add the base runtime plugin
+    addPlugin(resolve('./runtime/createBootstrap'))
+
+    // Set transformAssetUrls
+    const transformAssetUrls = Object.freeze({
+      BImg: ['src'],
+    })
+
+    nuxt.options.vite.vue = nuxt.options.vite.vue || {}
+    nuxt.options.vite.vue.template = nuxt.options.vite.vue.template || {}
+    nuxt.options.vite.vue.template.transformAssetUrls =
+      nuxt.options.vite.vue.template.transformAssetUrls ?? {}
+
+    if (
+      typeof nuxt.options.vite.vue.template.transformAssetUrls !== 'boolean' &&
+      !(
+        'BImg' in nuxt.options.vite.vue.template.transformAssetUrls ||
+        'b-img' in nuxt.options.vite.vue.template.transformAssetUrls
+      )
+    ) {
+      nuxt.options.vite.vue.template.transformAssetUrls = {
+        ...nuxt.options.vite.vue.template.transformAssetUrls,
+        ...transformAssetUrls,
+      }
+    }
+
+    // Add components
     useComponents()
 
+    // Add directives
+    if (Object.values(normalizedDirectiveOptions).some((el) => el === true)) {
+      const activeDirectives = parseActiveImports(
+        normalizedDirectiveOptions,
+        Object.keys(Directives)
+      )
+
+      // Expose the values for the runtime to use in useDirectives
+      nuxt.options.runtimeConfig.public.bootstrapVueNext = {
+        directives: activeDirectives,
+      }
+
+      addPlugin(resolve('./runtime/useDirectives'))
+    }
+
+    // Add composables
     if (Object.values(normalizedComposableOptions).some((el) => el === true)) {
-      parseActiveImports(normalizedComposableOptions, Object.keys(Composables)).map((name) =>
+      parseActiveImports(normalizedComposableOptions, Object.keys(Composables)).forEach((name) =>
         addImports({
           from: 'bootstrap-vue-next',
           name,

@@ -1,6 +1,7 @@
-import type {Composables} from 'bootstrap-vue-next'
+import type {Composables, Directives} from 'bootstrap-vue-next'
 
 export type ConfigurationOption<T extends string> = Partial<Record<T, boolean>> & {all: boolean}
+export type ConfigurationValue<T extends string> = boolean | ConfigurationOption<T>
 
 export interface ModuleOptions {
   /**
@@ -8,5 +9,11 @@ export interface ModuleOptions {
    *
    * @default true
    */
-  composables: ConfigurationOption<keyof typeof Composables> | boolean
+  composables: ConfigurationValue<keyof typeof Composables>
+  /**
+   * There would be no reason to disable this, beyond conflicting auto imports. This should probably be left true
+   *
+   * @default true
+   */
+  directives: ConfigurationValue<keyof typeof Directives>
 }

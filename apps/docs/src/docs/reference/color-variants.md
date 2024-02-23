@@ -10,7 +10,8 @@
 
 <div class="lead mb-5">
 
-Below are the variants available when using the default Bootstrap v5 CSS. When using BootstrapVueNext components, the variants are referred to by their variant name, rather than by the underlying CSS classname.
+<p>Color variants are available when using the default Bootstrap v5 CSS and their mappings to CSS classes</p>
+<p>Below are the variants available when using the default Bootstrap v5 CSS. When using BootstrapVueNext components, the variants are referred to by their variant name, rather than by the underlying CSS classname.</p>
 
 </div>
 

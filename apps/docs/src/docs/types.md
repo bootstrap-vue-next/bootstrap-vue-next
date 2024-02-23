@@ -228,24 +228,28 @@ type TableFieldFormatter<T = any> =
   | string
   | ((value: unknown, key?: LiteralUnion<keyof T>, item?: T) => string)
 
+type TableFieldAttribute<T = any> =
+  | Record<string, unknown>
+  | ((value: unknown, key?: LiteralUnion<keyof T>, item?: T) => Record<string, unknown>)
+
 interface TableField<T = Record<string, unknown>> {
   key: LiteralUnion<keyof T>
   label?: string
   headerTitle?: string
   headerAbbr?: string
-  class?: string | string[]
-  formatter?: TableFieldFormatter
+  class?: ClassValue
+  formatter?: TableFieldFormatter<T>
   sortable?: boolean
   sortKey?: string
   sortDirection?: string
-  sortByFormatted?: boolean
+  sortByFormatted?: boolean | TableFieldFormatter<T>
   filterByFormatted?: boolean
-  tdClass?: string | string[]
-  thClass?: string | string[]
+  tdClass?: ClassValue
+  thClass?: ClassValue
   thStyle?: StyleValue
-  variant?: ColorVariant
-  tdAttr?: TdHTMLAttributes
-  thAttr?: ThHTMLAttributes
+  variant?: ColorVariant | null
+  tdAttr?: TableFieldAttribute<T>
+  thAttr?: TableFieldAttribute<T>
   isRowHeader?: boolean
   stickyColumn?: boolean
 }

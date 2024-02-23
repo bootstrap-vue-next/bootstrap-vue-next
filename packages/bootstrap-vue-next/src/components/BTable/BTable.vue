@@ -94,6 +94,7 @@ import type {
   LiteralUnion,
   Numberish,
   TableField,
+  TableFieldFormatter,
   TableFieldRaw,
   TableItem,
 } from '../../types'
@@ -102,7 +103,7 @@ import BOverlay from '../BOverlay/BOverlay.vue'
 import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
 import BTr from './BTr.vue'
-import {getTableFieldHeadLabel} from '../../utils'
+import {formatItem, get, getTableFieldHeadLabel} from '../../utils'
 
 type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
 
@@ -140,7 +141,7 @@ const props = withDefaults(
       // labelSortClear?: string
       // labelSortDesc?: string
       // noFooterSorting?: Booleanish
-      // noLocalSorting?: Booleanish
+      noLocalSorting?: Booleanish
       noSelectOnClick?: Booleanish
       // noSortReset?: Booleanish
       // selectedVariant?: ColorVariant | null
@@ -168,6 +169,7 @@ const props = withDefaults(
     noProviderPaging: false,
     noProviderSorting: false,
     noProviderFiltering: false,
+    noLocalSorting: false,
     noSelectOnClick: false,
     sortDesc: false,
     selectable: false,
@@ -277,7 +279,7 @@ const selectedItemsSetUtilities = {
   },
   clear: () => {
     selectedItemsToSet.value.forEach((item) => {
-      emit('row-unselected', item)
+      selectedItemsSetUtilities.delete(item)
     })
   },
   delete: (item: Readonly<TableItem<T>>) => {
@@ -294,7 +296,19 @@ const selectedItemsSetUtilities = {
   For some reason, the reference of the object gets lost. However, when you use an actual ref(), it works just fine
   Getting the reference properly will fix all outstanding issues
   */
-  has: (item: Readonly<TableItem<T>>) => selectedItemsToSet.value.has(item),
+  has: (item: Readonly<TableItem<T>>) => {
+    if (!props.primaryKey) return selectedItemsToSet.value.has(item)
+
+    // Resolver for when we are using primary keys
+    const pkey: string = props.primaryKey
+    for (const selected of selectedItemsToSet.value) {
+      const selectedKey = get(selected, pkey)
+      const itemKey = get(item, pkey)
+
+      if (!!selectedKey && !!itemKey && selectedKey === itemKey) return true
+    }
+    return false
+  },
 } as const
 
 /**
@@ -310,6 +324,7 @@ const noProviderFilteringBoolean = useBooleanish(() => props.noProviderFiltering
 const selectableBoolean = useBooleanish(() => props.selectable)
 const noSortableIconBoolean = useBooleanish(() => props.noSortableIcon)
 const noSelectOnClickBoolean = useBooleanish(() => props.noSelectOnClick)
+const noLocalSortingBoolean = useBooleanish(() => props.noLocalSorting)
 
 const perPageNumber = useToNumber(() => props.perPage, {method: 'parseInt'})
 const currentPageNumber = useToNumber(() => props.currentPage, {method: 'parseInt'})
@@ -335,10 +350,10 @@ const computedFields = computed<TableFieldRaw<T>[]>(() =>
               isSortable.value === false
                 ? undefined
                 : sortByModel.value !== el.key
-                  ? 'none'
-                  : sortDescBoolean.value === true
-                    ? 'descending'
-                    : 'ascending',
+                ? 'none'
+                : sortDescBoolean.value === true
+                ? 'descending'
+                : 'ascending',
             ...el.thAttr,
           },
         }
@@ -403,13 +418,22 @@ const computedItems = computed<readonly TableItem<T>[]>(() => {
       if (props.sortCompare !== undefined)
         return props.sortCompare(a, b, sortKey, sortDescBoolean.value)
 
-      const realVal = (ob: unknown): string =>
-        typeof ob === 'object' && ob !== null ? JSON.stringify(ob) : ob?.toString() ?? ''
-
-      return realVal(a[sortKey as keyof T]).localeCompare(
-        realVal(b[sortKey as keyof T]),
-        props.sortCompareLocale,
-        props.sortCompareOptions
+      const realVal = (ob: TableItem<T>): string => {
+        const val = ob[sortKey as keyof T]
+        if (sortField && typeof sortField !== 'string' && sortField.sortByFormatted) {
+          const formatter =
+            typeof sortField.sortByFormatted === 'function'
+              ? (sortField.sortByFormatted as TableFieldFormatter<T>)
+              : sortField.formatter
+          if (formatter) {
+            return formatItem(ob, String(sortField.key), formatter) as string
+          }
+        }
+        return typeof val === 'object' && val !== null ? JSON.stringify(val) : val?.toString() ?? ''
+      }
+      return (
+        realVal(a).localeCompare(realVal(b), props.sortCompareLocale, props.sortCompareOptions) *
+        (sortDescBoolean.value ? -1 : 1)
       )
     })
   }
@@ -440,7 +464,7 @@ const computedItems = computed<readonly TableItem<T>[]>(() => {
   }
 
   if (
-    (isSortable.value === true && !usesProvider.value) ||
+    (isSortable.value === true && !usesProvider.value && !noLocalSortingBoolean.value) ||
     (isSortable.value === true && usesProvider.value && noProviderSortingBoolean.value)
   ) {
     mappedItems = sortItems(mappedItems)

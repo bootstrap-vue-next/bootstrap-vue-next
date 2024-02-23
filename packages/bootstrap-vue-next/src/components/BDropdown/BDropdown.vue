@@ -25,7 +25,7 @@
       :variant="variant"
       :size="size"
       :disabled="disabled"
-      :class="[toggleClass, ...[modelValueBoolean ? 'show' : undefined]]"
+      :class="[toggleClass, {show: modelValueBoolean}]"
       class="dropdown-toggle-split dropdown-toggle"
       :aria-expanded="modelValueBoolean"
       aria-haspopup="menu"
@@ -43,8 +43,8 @@
         v-show="lazyBoolean || modelValueBoolean"
         ref="floating"
         :style="[floatingStyles, sizeStyles]"
-        class="dropdown-menu show overflow-auto"
-        :class="menuClass"
+        class="dropdown-menu overflow-auto"
+        :class="[menuClass, {show: modelValueBoolean}]"
         :aria-labelledby="computedId"
         :role="role"
         @click="onClickInside"
@@ -258,8 +258,9 @@ const floatingMiddleware = computed<Middleware[]>(() => {
         padding: props.boundaryPadding,
         apply({availableWidth, availableHeight}) {
           sizeStyles.value = {
-            maxHeight: availableHeight ? `${availableHeight}px` : undefined,
-            maxWidth: availableWidth ? `${availableWidth}px` : undefined,
+            maxHeight:
+              availableHeight && modelValueBoolean.value ? `${availableHeight}px` : undefined,
+            maxWidth: availableWidth && modelValueBoolean.value ? `${availableWidth}px` : undefined,
           }
         },
       })

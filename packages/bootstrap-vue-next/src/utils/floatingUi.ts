@@ -100,6 +100,7 @@ export const resolveDirectiveProps = (
           : undefined,
   html: true,
   ...(typeof binding.value === 'object' ? binding.value : {}),
+  ...(binding.modifiers.interactive ? {noninteractive: false} : {}),
   title: null,
   content: null,
 })

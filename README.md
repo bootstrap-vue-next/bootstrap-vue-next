@@ -18,11 +18,11 @@
     <img src="https://flat.badgen.net/badge/bootstrap/5.3.x/563d7c" alt="Bootstrap version">
   </a>
   <a href="https://v3.vuejs.org/">
-    <img src="https://flat.badgen.net/badge/vue.js/3.3.x/4fc08d" alt="Vue.js version">
+    <img src="https://flat.badgen.net/badge/vue.js/3.4.x/4fc08d" alt="Vue.js version">
   </a>
 
-  <a href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/actions?workflow=Tests">
-    <img src="https://flat.badgen.net/github/status/bootstrap-vue-next/bootstrap-vue-next" alt="Build status">
+  <a href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/main">
+    <img src="https://flat.badgen.net/github/last-commit/bootstrap-vue-next/bootstrap-vue-next" alt="Last commit">
   </a>
 
   <br>
