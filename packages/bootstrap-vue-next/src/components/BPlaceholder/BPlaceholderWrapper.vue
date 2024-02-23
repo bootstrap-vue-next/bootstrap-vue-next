@@ -1,11 +1,9 @@
 <template>
-  <slot v-if="loadingBoolean" name="loading" />
+  <slot v-if="props.loading" name="loading" />
   <slot v-else />
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue'
-
 const props = withDefaults(
   defineProps<{
     loading?: boolean
@@ -21,6 +19,4 @@ defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   loading?: (props: Record<string, never>) => any
 }>()
-
-const loadingBoolean = computed(() => props.loading)
 </script>
