@@ -1,6 +1,6 @@
 <template>
   <!-- tables definitions are shared. Can't use createReusableTemplate cause it becomes a non-root node -->
-  <table v-if="!resolvedResponsive" :id="id" :class="computedClasses">
+  <table v-if="!props.responsive" :id="id" :class="computedClasses">
     <slot />
   </table>
   <div v-else :class="responsiveClasses">
@@ -44,41 +44,29 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const captionTopBoolean = computed(() => props.captionTop)
-const borderlessBoolean = computed(() => props.borderless)
-const borderedBoolean = computed(() => props.bordered)
-const darkBoolean = computed(() => props.dark)
-const hoverBoolean = computed(() => props.hover)
-const smallBoolean = computed(() => props.small)
-const stripedBoolean = computed(() => props.striped)
-const stickyHeaderBoolean = computed(() => props.stickyHeader)
-const stripedColumnsBoolean = computed(() => props.stripedColumns)
-const resolvedResponsive = computed(() => props.responsive)
-const resolvedStacked = computed(() => props.stacked)
-
 const computedClasses = computed(() => [
   props.tableClass,
   'table',
   'b-table',
   {
-    'table-bordered': borderedBoolean.value,
-    'table-borderless': borderlessBoolean.value,
+    'table-bordered': props.bordered,
+    'table-borderless': props.borderless,
     [`border-${props.borderVariant}`]: props.borderVariant !== null,
-    'caption-top': captionTopBoolean.value,
-    'table-dark': darkBoolean.value,
-    'table-hover': hoverBoolean.value,
-    'b-table-stacked': resolvedStacked.value === true,
-    [`b-table-stacked-${resolvedStacked.value}`]: typeof resolvedStacked.value === 'string',
-    'table-striped': stripedBoolean.value,
-    'table-sm': smallBoolean.value,
+    'caption-top': props.captionTop,
+    'table-dark': props.dark,
+    'table-hover': props.hover,
+    'b-table-stacked': props.stacked === true,
+    [`b-table-stacked-${props.stacked}`]: typeof props.stacked === 'string',
+    'table-striped': props.striped,
+    'table-sm': props.small,
     [`table-${props.variant}`]: props.variant !== null,
-    'table-striped-columns': stripedColumnsBoolean.value,
+    'table-striped-columns': props.stripedColumns,
   },
 ])
 
 const responsiveClasses = computed(() => ({
-  'table-responsive': resolvedResponsive.value === true,
-  [`table-responsive-${resolvedResponsive.value}`]: typeof resolvedResponsive.value === 'string',
-  'b-table-sticky-header': stickyHeaderBoolean.value,
+  'table-responsive': props.responsive === true,
+  [`table-responsive-${props.responsive}`]: typeof props.responsive === 'string',
+  'b-table-sticky-header': props.stickyHeader,
 }))
 </script>
