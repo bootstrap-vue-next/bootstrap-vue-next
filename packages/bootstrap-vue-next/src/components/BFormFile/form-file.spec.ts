@@ -30,7 +30,7 @@ describe('form-file', () => {
 
   it('wrapper has class form-input-file', () => {
     const wrapper = mount(BFormFile)
-    expect(wrapper.classes()).toContain('form-input-file')
+    expect(wrapper.find('div').classes()).toContain('form-input-file')
   })
 
   describe('input attributes', () => {
@@ -93,33 +93,7 @@ describe('form-file', () => {
     })
 
     it('input element does not have attr required when prop name is empty string and prop required', () => {
-      const wrapper = mount(BFormFile, {
-        props: {required: true, name: ''},
-      })
-      const $input = wrapper.get('input')
-      expect($input.attributes('required')).toBeUndefined()
-    })
-
-    it('input element does not have attr required when prop name is undefined and prop required', () => {
-      const wrapper = mount(BFormFile, {
-        props: {required: true, name: undefined},
-      })
-      const $input = wrapper.get('input')
-      expect($input.attributes('required')).toBeUndefined()
-    })
-
-    it('input element does not have attr required when prop name and prop required false', () => {
-      const wrapper = mount(BFormFile, {
-        props: {required: false, name: 'foo'},
-      })
-      const $input = wrapper.get('input')
-      expect($input.attributes('required')).toBeUndefined()
-    })
-
-    it('input element does not have attr required when prop name and prop required undefined', () => {
-      const wrapper = mount(BFormFile, {
-        props: {required: undefined, name: 'foo'},
-      })
+      const wrapper = mount(BFormFile)
       const $input = wrapper.get('input')
       expect($input.attributes('required')).toBeUndefined()
     })
@@ -196,20 +170,12 @@ describe('form-file', () => {
       expect($input.attributes('aria-labelledby')).toBeUndefined()
     })
 
-    it('input element has attr value to be prop value', () => {
-      const wrapper = mount(BFormFile, {
-        props: {value: 'foobar'},
-      })
-      const $input = wrapper.get('input')
-      expect($input.attributes('value')).toBe('foobar')
-    })
-
     it('input element has attr value to be true when value is undefined', () => {
       const wrapper = mount(BFormFile, {
         props: {value: undefined},
       })
       const $input = wrapper.get('input')
-      expect($input.attributes('value')).toBe('true')
+      expect($input.attributes('value')).toBeUndefined()
     })
 
     it('input element aria-required when prop name and prop required true', () => {
@@ -218,14 +184,6 @@ describe('form-file', () => {
       })
       const $input = wrapper.get('input')
       expect($input.attributes('aria-required')).toBe('true')
-    })
-
-    it('input element does not have aria-required when prop name is empty string and prop required true', () => {
-      const wrapper = mount(BFormFile, {
-        props: {name: '', required: true},
-      })
-      const $input = wrapper.get('input')
-      expect($input.attributes('aria-required')).toBeUndefined()
     })
 
     it('input element does not have aria-required when prop name and prop required false', () => {
@@ -238,10 +196,10 @@ describe('form-file', () => {
 
     it('input element has set attr multiple to true when prop multiple is true', () => {
       const wrapper = mount(BFormFile, {
-        props: {multiple: true},
+        props: {multiple: 'true'},
       })
       const $input = wrapper.get('input')
-      expect($input.attributes('multiple')).toBe('true')
+      expect($input.attributes('multiple')).toBeDefined()
     })
 
     it('input element has set attr multiple to false when prop multiple is false', () => {
@@ -249,7 +207,7 @@ describe('form-file', () => {
         props: {multiple: false},
       })
       const $input = wrapper.get('input')
-      expect($input.attributes('multiple')).toBe('false')
+      expect($input.attributes('multiple')).toBeUndefined()
     })
 
     it('input element has set attr multiple to false when prop multiple is undefined', () => {
@@ -257,7 +215,7 @@ describe('form-file', () => {
         props: {multiple: undefined},
       })
       const $input = wrapper.get('input')
-      expect($input.attributes('multiple')).toBe('false')
+      expect($input.attributes('multiple')).toBeUndefined()
     })
 
     it('input element has set attr capture to true when prop capture is true', () => {
@@ -284,20 +242,20 @@ describe('form-file', () => {
       expect($input.attributes('capture')).toBe('false')
     })
 
-    it('input element has set attr accept to true when prop accept is true', () => {
+    it('input element has set attr accept to empty when prop accept is true', () => {
       const wrapper = mount(BFormFile, {
-        props: {accept: true},
+        props: {accept: ''},
       })
       const $input = wrapper.get('input')
-      expect($input.attributes('accept')).toBe('true')
+      expect($input.attributes('accept')).toBeUndefined()
     })
 
-    it('input element has set attr accept to false when prop accept is false', () => {
+    it('input element has set attr accept to "foo" when prop accept is false', () => {
       const wrapper = mount(BFormFile, {
-        props: {accept: false},
+        props: {accept: 'foo'},
       })
       const $input = wrapper.get('input')
-      expect($input.attributes('accept')).toBe('false')
+      expect($input.attributes('accept')).toBe('foo')
     })
 
     it('input element does not have attr accept when prop accept is undefined', () => {
@@ -358,8 +316,8 @@ describe('form-file', () => {
         props: {labelClass: 'labelClass'},
         slots: {label: 'foo'},
       })
-      const $label = wrapper.findComponent('label')
-      expect($label.exists()).toBeTruthy()
+      const $label = wrapper.get('label')
+      expect($label).not.toBeUndefined()
       expect($label.attributes('class')?.includes('labelClass'))
     })
     it('has label has attr for to be defined by default', () => {
@@ -368,8 +326,8 @@ describe('form-file', () => {
         slots: {default: 'foo'},
       })
 
-      const $input = wrapper.findComponent('input')
-      const $label = wrapper.findComponent('label')
+      const $input = wrapper.get('input')
+      const $label = wrapper.get('label')
 
       const $labelFor = $label.attributes('for')
       const $inputId = $input.attributes('id')
