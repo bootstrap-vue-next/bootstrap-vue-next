@@ -1,10 +1,23 @@
-import type {ComponentReference} from './ComponentReference'
+import type { ComponentReference } from './ComponentReference'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormFile',
       props: [
+        {
+          prop: 'ariaLabel',
+          type: 'string',
+          default: undefined,
+          description: 'Sets the value of `aria-label` attribute on the rendered element',
+        },
+        {
+          prop: 'ariaLabelledBy',
+          type: 'string',
+          default: undefined,
+          description:
+            'The ID of the element that provides a label for this component. Used as the value for the `aria-labelledby` attribute',
+        },
         {
           prop: 'accept',
           type: 'string | string[]',

@@ -4,10 +4,11 @@
       {{ label }}
     </slot>
   </label>
-  <div class="input-group file-button">
-    <label v-if="placement === 'start'" class="input-group-text" :for="computedId">{{
-      browserText
-    }}</label>
+
+  <div class="input-group form-input-file">
+    <label v-if="placement === 'start'" class="input-group-text" :for="computedId">
+      {{ browserText }}
+    </label>
     <input
       :id="computedId"
       v-bind="$attrs"
@@ -22,6 +23,8 @@
       :capture="computedCapture"
       :accept="computedAccept || undefined"
       :required="requiredBoolean || undefined"
+      :aria-label="ariaLabel"
+      :aria-labelledby="ariaLabelledby"
       :aria-required="requiredBoolean || undefined"
       :directory="directoryBoolean"
       :webkitdirectory="directoryBoolean"
@@ -35,11 +38,11 @@
 </template>
 
 <script setup lang="ts">
-import {useFocus, useVModel} from '@vueuse/core'
-import {computed, ref, toRef, watch} from 'vue'
-import {useBooleanish, useId, useStateClass} from '../../composables'
-import type {Booleanish, ClassValue, Size} from '../../types'
-import {isEmptySlot} from '../../utils'
+import { useFocus, useVModel } from '@vueuse/core'
+import { computed, ref, toRef, watch } from 'vue'
+import { useBooleanish, useId, useStateClass } from '../../composables'
+import type { Booleanish, ClassValue, Size } from '../../types'
+import { isEmptySlot } from '../../utils'
 
 defineOptions({
   inheritAttrs: false,
@@ -52,6 +55,8 @@ const slots = defineSlots<{
 
 const props = withDefaults(
   defineProps<{
+    ariaLabel?: string
+    ariaLabelledby?: string
     accept?: string | readonly string[]
     autofocus?: Booleanish
     browserText?: string
@@ -67,12 +72,14 @@ const props = withDefaults(
     name?: string
     noDrop?: Booleanish
     noTraverse?: Booleanish
-    placement: 'start' | 'end'
+    placement?: 'start' | 'end'
     required?: Booleanish
     size?: Size
     state?: Booleanish | null
   }>(),
   {
+    ariaLabel: undefined,
+    ariaLabelledby: undefined,
     accept: '',
     autofocus: false,
     browserText: 'Browse',
@@ -122,6 +129,7 @@ const input = ref<HTMLInputElement | null>(null)
 const {focused} = useFocus(input, {initialValue: autofocusBoolean.value})
 
 const hasLabelSlot = toRef(() => !isEmptySlot(slots['label']))
+
 const computedAccept = toRef(() =>
   typeof props.accept === 'string' ? props.accept : props.accept.join(',')
 )
@@ -171,13 +179,14 @@ defineExpose({
 </script>
 
 <style scoped>
-.file-button {
+.form-input-file {
   input[type='file'] {
     margin-left: -2px !important;
 
     &::-webkit-file-upload-button {
       display: none;
     }
+
     &::file-selector-button {
       display: none;
     }
