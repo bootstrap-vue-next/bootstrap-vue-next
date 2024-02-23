@@ -41,27 +41,18 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const cardHeaderBoolean = computed(() => props.cardHeader)
-const fillBoolean = computed(() => props.fill)
-const justifiedBoolean = computed(() => props.justified)
-const pillsBoolean = computed(() => props.pills)
-const smallBoolean = computed(() => props.small)
-const tabsBoolean = computed(() => props.tabs)
-const verticalBoolean = computed(() => props.vertical)
 const alignment = useAlignment(() => props.align)
-const underlineBoolean = computed(() => props.underline)
 
 const computedClasses = computed(() => ({
-  'nav-tabs': tabsBoolean.value,
-  'nav-pills': pillsBoolean.value && !tabsBoolean.value,
-  'card-header-tabs': !verticalBoolean.value && cardHeaderBoolean.value && tabsBoolean.value,
-  'card-header-pills':
-    !verticalBoolean.value && cardHeaderBoolean.value && pillsBoolean.value && !tabsBoolean.value,
-  'flex-column': verticalBoolean.value,
-  'nav-fill': !verticalBoolean.value && fillBoolean.value,
-  'nav-justified': !verticalBoolean.value && justifiedBoolean.value,
-  [alignment.value]: !verticalBoolean.value && props.align !== undefined,
-  'small': smallBoolean.value,
-  'nav-underline': underlineBoolean.value,
+  'nav-tabs': props.tabs,
+  'nav-pills': props.pills && !props.tabs,
+  'card-header-tabs': !props.vertical && props.cardHeader && props.tabs,
+  'card-header-pills': !props.vertical && props.cardHeader && props.pills && !props.tabs,
+  'flex-column': props.vertical,
+  'nav-fill': !props.vertical && props.fill,
+  'nav-justified': !props.vertical && props.justified,
+  [alignment.value]: !props.vertical && props.align !== undefined,
+  'small': props.small,
+  'nav-underline': props.underline,
 }))
 </script>
