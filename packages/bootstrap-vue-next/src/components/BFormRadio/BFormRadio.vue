@@ -7,7 +7,7 @@
       v-model="localValue"
       :class="inputClasses"
       type="radio"
-      :disabled="disabledBoolean || parentData?.disabled.value"
+      :disabled="props.disabled || parentData?.disabled.value"
       :required="computedRequired || undefined"
       :name="name || parentData?.name.value"
       :form="form || parentData?.form.value"
@@ -16,7 +16,7 @@
       :value="value"
       :aria-required="computedRequired || undefined"
     />
-    <label v-if="hasDefaultSlot || plainBoolean === false" :for="computedId" :class="labelClasses">
+    <label v-if="hasDefaultSlot || props.plain === false" :for="computedId" :class="labelClasses">
       <slot />
     </label>
   </RenderComponentOrSkip>
@@ -88,21 +88,12 @@ const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const computedId = useId(() => props.id, 'form-check')
 
-const autofocusBoolean = computed(() => props.autofocus)
-const plainBoolean = computed(() => props.plain)
-const buttonBoolean = computed(() => props.button)
-const buttonGroupBoolean = computed(() => props.buttonGroup)
-const disabledBoolean = computed(() => props.disabled)
-const inlineBoolean = computed(() => props.inline)
-const requiredBoolean = computed(() => props.required)
-const stateBoolean = computed(() => props.state)
-
 const parentData = inject(radioGroupKey, null)
 
 const input = ref<HTMLElement | null>(null)
 
 const {focused} = useFocus(input, {
-  initialValue: autofocusBoolean.value,
+  initialValue: props.autofocus,
 })
 
 const hasDefaultSlot = toRef(() => !isEmptySlot(slots.default))
@@ -120,18 +111,16 @@ const localValue = computed({
 })
 
 const computedRequired = toRef(
-  () =>
-    !!(props.name ?? parentData?.name.value) &&
-    (requiredBoolean.value || parentData?.required.value)
+  () => !!(props.name ?? parentData?.name.value) && (props.required || parentData?.required.value)
 )
 
-const isButtonGroup = toRef(() => buttonGroupBoolean.value || (parentData?.buttons.value ?? false))
+const isButtonGroup = toRef(() => props.buttonGroup || (parentData?.buttons.value ?? false))
 
 const classesObject = computed(() => ({
-  plain: plainBoolean.value || (parentData?.plain.value ?? false),
-  button: buttonBoolean.value || (parentData?.buttons.value ?? false),
-  inline: inlineBoolean.value || (parentData?.inline.value ?? false),
-  state: stateBoolean.value || parentData?.state.value,
+  plain: props.plain || (parentData?.plain.value ?? false),
+  button: props.button || (parentData?.buttons.value ?? false),
+  inline: props.inline || (parentData?.inline.value ?? false),
+  state: props.state || parentData?.state.value,
   size: props.size ?? parentData?.size.value ?? 'md', // This is where the true default is made
   buttonVariant: props.buttonVariant ?? parentData?.buttonVariant.value ?? 'secondary', // This is where the true default is made
 }))
