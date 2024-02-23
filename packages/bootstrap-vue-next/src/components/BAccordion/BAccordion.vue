@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, provide, readonly} from 'vue'
+import {computed, provide, readonly, toRef} from 'vue'
 import {accordionInjectionKey} from '../../utils'
 import {useId} from '../../composables'
 import {useVModel} from '@vueuse/core'
@@ -38,16 +38,13 @@ const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const computedId = useId(() => props.id, 'accordion')
 
-const flushBoolean = computed(() => props.flush)
-const freeBoolean = computed(() => props.free)
-
 const computedClasses = computed(() => ({
-  'accordion-flush': flushBoolean.value,
+  'accordion-flush': props.flush,
 }))
 
 provide(accordionInjectionKey, {
   openItem: readonly(modelValue),
-  free: freeBoolean,
+  free: toRef(() => props.free),
   setOpenItem: (id: string) => {
     modelValue.value = id
   },
