@@ -32,10 +32,8 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const inlineBoolean = computed(() => props.inline)
-
 const computedClasses = computed(() => ({
   [`text-${props.textVariant}`]: props.textVariant !== null,
-  'form-text': !inlineBoolean.value,
+  'form-text': !props.inline,
 }))
 </script>
