@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, toRef} from 'vue'
+import {toRef} from 'vue'
 
 const props = withDefaults(
   defineProps<{
@@ -25,10 +25,7 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const columnsBoolean = computed(() => props.columns)
-const deckBoolean = computed(() => props.deck)
-
 const cardTypeClass = toRef(() =>
-  deckBoolean.value ? 'card-deck' : columnsBoolean.value ? 'card-columns' : 'card-group'
+  props.deck ? 'card-deck' : props.columns ? 'card-columns' : 'card-group'
 )
 </script>
