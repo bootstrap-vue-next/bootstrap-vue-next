@@ -5,8 +5,8 @@
     :class="computedClasses"
     :style="computedStyle"
     v-bind="computedLinkProps"
-    :type="buttonBoolean && !computedLink ? props.buttonType : undefined"
-    :disabled="disabledBoolean || null"
+    :type="props.button && !computedLink ? props.buttonType : undefined"
+    :disabled="props.disabled || null"
     @click="clicked"
   >
     <span v-if="hasDefaultSlot" class="b-avatar-custom">
@@ -143,37 +143,22 @@ const SIZES = ['sm', null, 'lg']
 const FONT_SIZE_SCALE = 0.4
 const BADGE_FONT_SIZE_SCALE = FONT_SIZE_SCALE * 0.7
 
-const badgeStartBoolean = computed(() => props.badgeStart)
-const badgeTopBoolean = computed(() => props.badgeTop)
-const buttonBoolean = computed(() => props.button)
-const disabledBoolean = computed(() => props.disabled)
-const squareBoolean = computed(() => props.square)
-const roundedBoolean = computed(() => props.rounded)
-const roundedTopBoolean = computed(() => props.roundedTop)
-const roundedBottomBoolean = computed(() => props.roundedBottom)
-const roundedStartBoolean = computed(() => props.roundedStart)
-const roundedEndBoolean = computed(() => props.roundedEnd)
-
 const hasDefaultSlot = toRef(() => !isEmptySlot(slots.default))
 const hasBadgeSlot = toRef(() => !isEmptySlot(slots.badge))
 
 const showBadge = toRef(() => !!props.badge || props.badge === '' || hasBadgeSlot.value)
-const computedSquare = toRef(() => parentData?.size.value ?? squareBoolean.value)
+const computedSquare = toRef(() => parentData?.size.value ?? props.square)
 
 const computedPropSize = useAvatarSize(() => props.size)
 const computedParentSize = useAvatarSize(() => parentData?.size.value)
 const computedSize = computed(() => computedParentSize.value ?? computedPropSize.value)
 
 const computedVariant = toRef(() => parentData?.variant.value ?? props.variant)
-const computedRounded = toRef(() => parentData?.rounded.value ?? roundedBoolean.value)
-const computedRoundedTop = toRef(() => parentData?.roundedTop.value ?? roundedTopBoolean.value)
-const computedRoundedBottom = toRef(
-  () => parentData?.roundedBottom.value ?? roundedBottomBoolean.value
-)
-const computedRoundedStart = toRef(
-  () => parentData?.roundedStart.value ?? roundedStartBoolean.value
-)
-const computedRoundedEnd = toRef(() => parentData?.roundedEnd.value ?? roundedEndBoolean.value)
+const computedRounded = toRef(() => parentData?.rounded.value ?? props.rounded)
+const computedRoundedTop = toRef(() => parentData?.roundedTop.value ?? props.roundedTop)
+const computedRoundedBottom = toRef(() => parentData?.roundedBottom.value ?? props.roundedBottom)
+const computedRoundedStart = toRef(() => parentData?.roundedStart.value ?? props.roundedStart)
+const computedRoundedEnd = toRef(() => parentData?.roundedEnd.value ?? props.roundedEnd)
 
 const radiusElementClasses = useRadiusElementClasses(() => ({
   rounded: computedRounded.value,
@@ -206,9 +191,9 @@ const computedClasses = computed(() => [
   {
     [`b-avatar-${props.size}`]:
       !!props.size && SIZES.indexOf(computedPropSize.value as string) !== -1,
-    [`btn-${computedVariant.value}`]: buttonBoolean.value ? computedVariant.value !== null : false,
-    'badge': !buttonBoolean.value && computedVariant.value !== null && hasDefaultSlot.value,
-    'btn': buttonBoolean.value,
+    [`btn-${computedVariant.value}`]: props.button ? computedVariant.value !== null : false,
+    'badge': !props.button && computedVariant.value !== null && hasDefaultSlot.value,
+    'btn': props.button,
     // Square is the same as rounded-0 class
     'rounded-0': computedSquare.value === true,
   },
@@ -222,10 +207,10 @@ const badgeStyle = computed<StyleValue>(() => {
       : ''
   return {
     fontSize: fontSize || '',
-    top: badgeTopBoolean.value ? offset : '',
-    bottom: badgeTopBoolean.value ? '' : offset,
-    left: badgeStartBoolean.value ? offset : '',
-    right: badgeStartBoolean.value ? '' : offset,
+    top: props.badgeTop ? offset : '',
+    bottom: props.badgeTop ? '' : offset,
+    left: props.badgeStart ? offset : '',
+    right: props.badgeStart ? '' : offset,
   }
 })
 
@@ -245,9 +230,7 @@ const marginStyle = computed(() => {
   return value ? {marginLeft: value, marginRight: value} : {}
 })
 
-const computedTag = toRef(() =>
-  computedLink.value ? BLink : buttonBoolean.value ? 'button' : 'span'
-)
+const computedTag = toRef(() => (computedLink.value ? BLink : props.button ? 'button' : 'span'))
 
 const computedStyle = computed<CSSProperties>(() => ({
   ...marginStyle.value,
@@ -256,7 +239,7 @@ const computedStyle = computed<CSSProperties>(() => ({
 }))
 
 const clicked = (e: Readonly<MouseEvent>): void => {
-  if (!disabledBoolean.value && (computedLink.value || buttonBoolean.value)) emit('click', e)
+  if (!props.disabled && (computedLink.value || props.button)) emit('click', e)
 }
 
 const onImgError = (e: Readonly<Event>) => {
