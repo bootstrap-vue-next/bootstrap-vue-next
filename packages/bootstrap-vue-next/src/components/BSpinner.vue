@@ -40,12 +40,10 @@ const slots = defineSlots<{
   label?: (props: Record<string, never>) => any
 }>()
 
-const smallBoolean = computed(() => props.small)
-
 const computedClasses = computed(() => [
   `spinner-${props.type}`,
   {
-    [`spinner-${props.type}-sm`]: smallBoolean.value,
+    [`spinner-${props.type}-sm`]: props.small,
     [`text-${props.variant}`]: props.variant !== null,
   },
 ])
