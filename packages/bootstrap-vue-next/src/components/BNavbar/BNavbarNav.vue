@@ -31,15 +31,12 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const fillBoolean = computed(() => props.fill)
-const justifiedBoolean = computed(() => props.justified)
-const smallBoolean = computed(() => props.small)
 const alignment = useAlignment(() => props.align)
 
 const computedClasses = computed(() => ({
-  'nav-fill': fillBoolean.value,
-  'nav-justified': justifiedBoolean.value,
+  'nav-fill': props.fill,
+  'nav-justified': props.justified,
   [alignment.value]: props.align !== undefined,
-  'small': smallBoolean.value,
+  'small': props.small,
 }))
 </script>

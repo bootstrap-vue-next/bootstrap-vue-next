@@ -41,26 +41,21 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const containerBoolean = computed(() => props.container)
-const autoCloseBoolean = computed(() => props.autoClose)
-const printBoolean = computed(() => props.print)
-const computedNavbarExpand = computed(() => props.toggleable)
-
 const computedRole = toRef(() => (props.tag === 'nav' ? undefined : 'navigation'))
 
-const containerClass = useContainerClasses(containerBoolean)
+const containerClass = useContainerClasses(() => props.container)
 
 const computedClasses = computed(() => ({
-  'd-print': printBoolean.value,
+  'd-print': props.print,
   [`sticky-${props.sticky}`]: props.sticky !== undefined,
   [`bg-${props.variant}`]: props.variant !== null,
   [`fixed-${props.fixed}`]: props.fixed !== undefined,
-  'navbar-expand': computedNavbarExpand.value === false,
-  [`navbar-expand-${computedNavbarExpand.value}`]: typeof computedNavbarExpand.value === 'string',
+  'navbar-expand': props.toggleable === false,
+  [`navbar-expand-${props.toggleable}`]: typeof props.toggleable === 'string',
 }))
 
 provide(navbarInjectionKey, {
   tag: toRef(() => props.tag),
-  autoClose: autoCloseBoolean,
+  autoClose: toRef(() => props.autoClose),
 })
 </script>
