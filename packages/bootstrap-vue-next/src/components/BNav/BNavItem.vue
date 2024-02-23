@@ -3,8 +3,8 @@
     <BLink
       class="nav-link"
       :class="linkClass"
-      :tabindex="disabledBoolean ? -1 : undefined"
-      :aria-disabled="disabledBoolean ? true : undefined"
+      :tabindex="props.disabled ? -1 : undefined"
+      :aria-disabled="props.disabled ? true : undefined"
       v-bind="{...computedLinkProps, ...linkAttrs}"
       @click="emit('click', $event)"
     >
@@ -62,8 +62,6 @@ const props = withDefaults(
 const emit = defineEmits<{
   click: [value: MouseEvent]
 }>()
-
-const disabledBoolean = computed(() => props.disabled)
 
 const computedLinkProps = computed(() =>
   pick(props, [
