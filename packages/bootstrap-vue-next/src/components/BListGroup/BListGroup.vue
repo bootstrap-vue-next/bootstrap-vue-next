@@ -29,22 +29,20 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const flushBoolean = computed(() => props.flush)
-const numberedBoolean = computed(() => props.numbered)
 const computedHorizontal = computed(() => props.horizontal)
 
 const computedClasses = computed(() => {
-  const horizontal = flushBoolean.value ? false : computedHorizontal.value
+  const horizontal = props.flush ? false : computedHorizontal.value
   return {
-    'list-group-flush': flushBoolean.value,
+    'list-group-flush': props.flush,
     'list-group-horizontal': horizontal === true,
     [`list-group-horizontal-${horizontal}`]: typeof horizontal === 'string',
-    'list-group-numbered': numberedBoolean.value,
+    'list-group-numbered': props.numbered,
   }
 })
-const computedTag = toRef(() => (numberedBoolean.value === true ? 'ol' : props.tag))
+const computedTag = toRef(() => (props.numbered === true ? 'ol' : props.tag))
 
 provide(listGroupInjectionKey, {
-  numbered: numberedBoolean,
+  numbered: toRef(() => props.numbered),
 })
 </script>
