@@ -1,7 +1,7 @@
 <template>
   <Transition
     v-bind="{...baseProperties, ...transProps}"
-    :appear="appearBoolean"
+    :appear="props.appear"
     @after-appear="emit('after-appear', $event)"
     @after-enter="emit('after-enter', $event)"
     @after-leave="emit('after-leave', $event)"
@@ -50,9 +50,6 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const appearBoolean = computed(() => props.appear)
-const noFadeBoolean = computed(() => props.noFade)
-
 const fadeProperties = computed(() => {
   const NO_FADE_PROPS = {
     name: '',
@@ -68,7 +65,7 @@ const fadeProperties = computed(() => {
     enterActiveClass: 'fade showing',
     leaveActiveClass: 'fade showing',
   }
-  return noFadeBoolean.value ? NO_FADE_PROPS : FADE_PROPS
+  return props.noFade ? NO_FADE_PROPS : FADE_PROPS
 })
 
 const baseProperties = computed(() => ({mode: props.mode, css: true, ...fadeProperties.value}))
