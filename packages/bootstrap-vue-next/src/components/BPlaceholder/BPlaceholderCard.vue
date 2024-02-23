@@ -1,6 +1,6 @@
 <template>
   <BCard :img-bottom="imgBottom">
-    <template v-if="!noImgBoolean" #img>
+    <template v-if="!props.noImg" #img>
       <slot name="img">
         <BCardImg
           :blank="!imgSrc ? true : false"
@@ -14,7 +14,7 @@
       </slot>
     </template>
 
-    <template v-if="!noHeaderBoolean" #header>
+    <template v-if="!props.noHeader" #header>
       <slot name="header">
         <BPlaceholder
           :width="headerWidth"
@@ -31,13 +31,13 @@
       <BPlaceholder cols="6" v-bind="defaultAttrs" />
       <BPlaceholder cols="8" v-bind="defaultAttrs" />
     </slot>
-    <template v-if="!noFooterBoolean" #footer>
+    <template v-if="!props.noFooter" #footer>
       <slot name="footer">
         <component
           :is="footerComponent"
           :width="footerWidth"
           :animation="footerAnimation"
-          :size="noButtonBoolean ? footerSize : undefined"
+          :size="props.noButton ? footerSize : undefined"
           :variant="footerVariant"
         />
       </slot>
@@ -109,16 +109,11 @@ defineSlots<{
   img?: (props: Record<string, never>) => any
 }>()
 
-const noButtonBoolean = computed(() => props.noButton)
-const noHeaderBoolean = computed(() => props.noHeader)
-const noFooterBoolean = computed(() => props.noFooter)
-const noImgBoolean = computed(() => props.noImg)
-
 const defaultAttrs = computed(() => ({
   animation: props.animation,
   size: props.size,
   variant: props.variant,
 }))
 
-const footerComponent = toRef(() => (!noButtonBoolean.value ? BPlaceholderButton : BPlaceholder))
+const footerComponent = toRef(() => (!props.noButton ? BPlaceholderButton : BPlaceholder))
 </script>
