@@ -7,17 +7,15 @@
           v-if="showEmpty"
           key="bv-empty-tab"
           class="tab-pane active"
-          :class="{'card-body': cardBoolean}"
+          :class="{'card-body': props.card}"
         >
           <slot name="empty" />
         </div>
       </div>
     </ReusableEmptyTab.define>
 
-    <ReusableEmptyTab.reuse v-if="endBoolean" />
-    <div
-      :class="[navWrapperClass, {'card-header': cardBoolean, 'ms-auto': vertical && endBoolean}]"
-    >
+    <ReusableEmptyTab.reuse v-if="props.end" />
+    <div :class="[navWrapperClass, {'card-header': props.card, 'ms-auto': vertical && props.end}]">
       <ul
         class="nav"
         :class="[navTabsClasses, navClass]"
@@ -55,7 +53,7 @@
         <slot name="tabs-end" />
       </ul>
     </div>
-    <ReusableEmptyTab.reuse v-if="!endBoolean" />
+    <ReusableEmptyTab.reuse v-if="!props.end" />
   </component>
 </template>
 
@@ -145,17 +143,6 @@ defineSlots<{
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 const activeId = useVModel(props, 'activeId', emit, {passive: true})
 
-const cardBoolean = computed(() => props.card)
-const endBoolean = computed(() => props.end)
-const fillBoolean = computed(() => props.fill)
-const justifiedBoolean = computed(() => props.justified)
-const lazyBoolean = computed(() => props.lazy)
-const noFadeBoolean = computed(() => props.noFade)
-const noNavStyleBoolean = computed(() => props.noNavStyle)
-const pillsBoolean = computed(() => props.pills)
-const smallBoolean = computed(() => props.small)
-const verticalBoolean = computed(() => props.vertical)
-
 const ReusableEmptyTab = createReusableTemplate()
 
 const tabsInternal = ref<Ref<TabType>[]>([])
@@ -184,21 +171,21 @@ const tabs = computed(() =>
 const showEmpty = toRef(() => !(tabs?.value && tabs.value.length > 0))
 
 const computedClasses = computed(() => ({
-  'd-flex': verticalBoolean.value,
-  'align-items-start': verticalBoolean.value,
+  'd-flex': props.vertical,
+  'align-items-start': props.vertical,
 }))
 
 const alignment = useAlignment(() => props.align)
 
 const navTabsClasses = computed(() => ({
-  'nav-pills': pillsBoolean.value,
-  'flex-column me-3': verticalBoolean.value,
+  'nav-pills': props.pills,
+  'flex-column me-3': props.vertical,
   [alignment.value]: props.align !== undefined,
-  'nav-fill': fillBoolean.value,
-  'card-header-tabs': cardBoolean.value,
-  'nav-justified': justifiedBoolean.value,
-  'nav-tabs': !noNavStyleBoolean.value && !pillsBoolean.value,
-  'small': smallBoolean.value,
+  'nav-fill': props.fill,
+  'card-header-tabs': props.card,
+  'nav-justified': props.justified,
+  'nav-tabs': !props.noNavStyle && !props.pills,
+  'small': props.small,
 }))
 
 const activateTab = (index: number): void => {
@@ -328,9 +315,9 @@ const findActive = () => {
 }
 
 provide(tabsInjectionKey, {
-  lazy: lazyBoolean,
-  card: cardBoolean,
-  noFade: noFadeBoolean,
+  lazy: toRef(() => props.lazy),
+  card: toRef(() => props.card),
+  noFade: toRef(() => props.noFade),
   activeTabClass: toRef(() => props.activeTabClass),
   inactiveTabClass: toRef(() => props.inactiveTabClass),
   tabClass: toRef(() => props.tabClass),
