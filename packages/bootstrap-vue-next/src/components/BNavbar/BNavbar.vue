@@ -16,7 +16,7 @@ import {navbarInjectionKey} from '../../utils'
 const props = withDefaults(
   defineProps<{
     autoClose?: boolean
-    container?: 'fluid' | boolean | Breakpoint
+    container?: boolean | 'fluid' | Breakpoint
     fixed?: 'top' | 'bottom'
     print?: boolean
     sticky?: 'top' | 'bottom'
