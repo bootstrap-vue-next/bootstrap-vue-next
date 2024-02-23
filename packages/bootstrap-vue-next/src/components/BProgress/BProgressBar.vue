@@ -43,21 +43,14 @@ defineSlots<{
 
 const parentData = inject(progressInjectionKey, null)
 
-const animatedBoolean = computed(() => props.animated)
-const showProgressBoolean = computed(() => props.showProgress)
-const showValueBoolean = computed(() => props.showValue)
-const stripedBoolean = computed(() => props.striped)
 const resolvedBackgroundClasses = useColorVariantClasses(props)
 
 const computedClasses = computed(() => [
   resolvedBackgroundClasses.value,
   {
-    'progress-bar-animated': animatedBoolean.value || parentData?.animated.value,
+    'progress-bar-animated': props.animated || parentData?.animated.value,
     'progress-bar-striped':
-      stripedBoolean.value ||
-      parentData?.striped.value ||
-      animatedBoolean.value ||
-      parentData?.animated.value,
+      props.striped || parentData?.striped.value || props.animated || parentData?.animated.value,
   },
 ])
 
@@ -69,9 +62,9 @@ const parentMaxNumber = useToNumber(() => parentData?.max.value ?? NaN)
 const computedLabel = computed(() =>
   props.labelHtml !== undefined
     ? props.labelHtml
-    : showValueBoolean.value || parentData?.showValue.value
+    : props.showValue || parentData?.showValue.value
       ? numberValue.value.toFixed(numberPrecision.value)
-      : showProgressBoolean.value || parentData?.showProgress.value
+      : props.showProgress || parentData?.showProgress.value
         ? ((numberValue.value * 100) / (numberMax.value || 100)).toFixed(numberPrecision.value)
         : props.label !== undefined
           ? props.label
