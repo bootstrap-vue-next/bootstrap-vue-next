@@ -6,7 +6,7 @@
       </slot>
     </ReusableImg.define>
 
-    <ReusableImg.reuse v-if="!imgBottomBoolean" />
+    <ReusableImg.reuse v-if="!props.imgBottom" />
     <BCardHeader
       v-if="header || hasHeaderSlot || headerHtml"
       :bg-variant="headerBgVariant"
@@ -22,7 +22,7 @@
       </slot>
     </BCardHeader>
     <BCardBody
-      v-if="!noBodyBoolean"
+      v-if="!props.noBody"
       :overlay="overlay"
       :bg-variant="bodyBgVariant"
       :tag="bodyTag"
@@ -55,7 +55,7 @@
         {{ footer }}
       </slot>
     </BCardFooter>
-    <ReusableImg.reuse v-if="imgBottomBoolean" />
+    <ReusableImg.reuse v-if="props.imgBottom" />
   </component>
 </template>
 
@@ -180,11 +180,6 @@ const slots = defineSlots<{
   img?: (props: Record<string, never>) => any
 }>()
 
-const imgBottomBoolean = computed(() => props.imgBottom)
-const imgEndBoolean = computed(() => props.imgEnd)
-const imgStartBoolean = computed(() => props.imgStart)
-const noBodyBoolean = computed(() => props.noBody)
-
 const hasHeaderSlot = toRef(() => !isEmptySlot(slots.header))
 const hasFooterSlot = toRef(() => !isEmptySlot(slots.footer))
 
@@ -195,8 +190,8 @@ const computedClasses = computed(() => [
   {
     [`text-${props.align}`]: props.align !== undefined,
     [`border-${props.borderVariant}`]: props.borderVariant !== null,
-    'flex-row': imgStartBoolean.value,
-    'flex-row-reverse': imgEndBoolean.value,
+    'flex-row': props.imgStart,
+    'flex-row-reverse': props.imgEnd,
   },
 ])
 
