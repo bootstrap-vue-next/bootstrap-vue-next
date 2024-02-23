@@ -1,6 +1,6 @@
 <template>
   <BTableSimple>
-    <slot v-if="!hideHeaderBoolean" name="thead">
+    <slot v-if="!props.hideHeader" name="thead">
       <thead>
         <tr>
           <th v-for="(_, i) in computedHeaderColumnsLength" :key="i">
@@ -28,7 +28,7 @@
         </tr>
       </tbody>
     </slot>
-    <slot v-if="showFooterBoolean" name="tfoot">
+    <slot v-if="props.showFooter" name="tfoot">
       <tfoot>
         <tr>
           <th v-for="(_, l) in computedFooterColumnsLength" :key="l">
@@ -46,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, toRef} from 'vue'
+import {toRef} from 'vue'
 import type {ColorVariant, Numberish, PlaceholderAnimation, PlaceholderSize} from '../../types'
 import BTableSimple from '../BTable/BTableSimple.vue'
 import BPlaceholder from './BPlaceholder.vue'
@@ -120,7 +120,4 @@ const computedHeaderColumnsLength = toRef(() =>
 const computedFooterColumnsLength = toRef(() =>
   props.footerColumns === undefined ? columnsNumber.value : footerColumnsNumber.value
 )
-
-const hideHeaderBoolean = computed(() => props.hideHeader)
-const showFooterBoolean = computed(() => props.showFooter)
 </script>
