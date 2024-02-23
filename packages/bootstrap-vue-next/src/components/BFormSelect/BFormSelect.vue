@@ -6,9 +6,9 @@
     :class="computedClasses"
     :name="name"
     :form="form || undefined"
-    :multiple="multipleBoolean || undefined"
+    :multiple="props.multiple || undefined"
     :size="computedSelectSize"
-    :disabled="disabledBoolean"
+    :disabled="props.disabled"
     :required="requiredBoolean || undefined"
     :aria-required="requiredBoolean || undefined"
     :aria-invalid="computedAriaInvalid"
@@ -113,10 +113,6 @@ const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const computedId = useId(() => props.id, 'input')
 
-const autofocusBoolean = computed(() => props.autofocus)
-const disabledBoolean = computed(() => props.disabled)
-const multipleBoolean = computed(() => props.multiple)
-const plainBoolean = computed(() => props.plain)
 const requiredBoolean = computed(() => props.required)
 const stateBoolean = computed(() => props.state)
 const selectSizeNumber = useToNumber(() => props.selectSize)
@@ -126,21 +122,21 @@ const stateClass = useStateClass(stateBoolean)
 const input = ref<HTMLElement | null>(null)
 
 const {focused} = useFocus(input, {
-  initialValue: autofocusBoolean.value,
+  initialValue: props.autofocus,
 })
 
 const computedClasses = computed(() => [
   stateClass.value,
   {
-    'form-control': plainBoolean.value,
-    [`form-control-${props.size}`]: props.size !== 'md' && plainBoolean.value,
-    'form-select': !plainBoolean.value,
-    [`form-select-${props.size}`]: props.size !== 'md' && !plainBoolean.value,
+    'form-control': props.plain,
+    [`form-control-${props.size}`]: props.size !== 'md' && props.plain,
+    'form-select': !props.plain,
+    [`form-select-${props.size}`]: props.size !== 'md' && !props.plain,
   },
 ])
 
 const computedSelectSize = toRef(() =>
-  selectSizeNumber.value || plainBoolean.value ? selectSizeNumber.value : undefined
+  selectSizeNumber.value || props.plain ? selectSizeNumber.value : undefined
 )
 
 const computedAriaInvalid = useAriaInvalid(() => props.ariaInvalid, stateBoolean)
