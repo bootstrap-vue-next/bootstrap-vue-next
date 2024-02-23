@@ -28,11 +28,9 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const verticalBoolean = computed(() => props.vertical)
-
 const computedClasses = computed(() => ({
-  'btn-group': !verticalBoolean.value,
+  'btn-group': !props.vertical,
   [`btn-group-${props.size}`]: props.size !== 'md',
-  'btn-group-vertical': verticalBoolean.value,
+  'btn-group-vertical': props.vertical,
 }))
 </script>
