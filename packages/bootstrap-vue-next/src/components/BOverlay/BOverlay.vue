@@ -10,7 +10,7 @@
     >
       <component
         :is="overlayTag"
-        v-if="showBoolean"
+        v-if="props.show"
         class="b-overlay"
         :class="overlayClasses"
         :style="overlayStyles"
@@ -20,7 +20,7 @@
 
         <div class="position-absolute" :style="spinWrapperStyles">
           <slot name="overlay" v-bind="spinnerAttrs">
-            <BSpinner v-if="!noSpinnerBoolean" v-bind="spinnerAttrs" />
+            <BSpinner v-if="!props.noSpinner" v-bind="spinnerAttrs" />
           </slot>
         </div>
       </component>
@@ -98,36 +98,24 @@ defineSlots<{
 
 const positionStyles = {top: 0, left: 0, bottom: 0, right: 0} as const
 
-const fixedBoolean = computed(() => props.fixed)
-const noSpinnerBoolean = computed(() => props.noSpinner)
-const noCenterBoolean = computed(() => props.noCenter)
-const noWrapBoolean = computed(() => props.noWrap)
-const showBoolean = computed(() => props.show)
-const spinnerSmallBoolean = computed(() => props.spinnerSmall)
-const roundedBoolean = computed(() => props.rounded)
-const roundedTopBoolean = computed(() => props.roundedTop)
-const roundedBottomBoolean = computed(() => props.roundedBottom)
-const roundedStartBoolean = computed(() => props.roundedStart)
-const roundedEndBoolean = computed(() => props.roundedEnd)
-
 const radiusElementClasses = useRadiusElementClasses(() => ({
-  rounded: roundedBoolean.value,
-  roundedTop: roundedTopBoolean.value,
-  roundedBottom: roundedBottomBoolean.value,
-  roundedStart: roundedStartBoolean.value,
-  roundedEnd: roundedEndBoolean.value,
+  rounded: props.rounded,
+  roundedTop: props.roundedTop,
+  roundedBottom: props.roundedBottom,
+  roundedStart: props.roundedStart,
+  roundedEnd: props.roundedEnd,
 }))
 
 const computedVariant = toRef(() =>
   props.variant !== null && !props.bgColor ? `bg-${props.variant}` : ''
 )
 
-const computedAriaBusy = toRef(() => (showBoolean.value ? true : null))
+const computedAriaBusy = toRef(() => (props.show ? true : null))
 
 const spinnerAttrs = computed(() => ({
   type: props.spinnerType,
   variant: props.spinnerVariant,
-  small: spinnerSmallBoolean.value,
+  small: props.spinnerSmall,
 }))
 
 const overlayStyles = computed(() => ({
@@ -136,8 +124,8 @@ const overlayStyles = computed(() => ({
 }))
 
 const overlayClasses = computed(() => ({
-  'position-absolute': !noWrapBoolean.value || !fixedBoolean.value,
-  'position-fixed': noWrapBoolean.value && fixedBoolean.value,
+  'position-absolute': !props.noWrap || !props.fixed,
+  'position-fixed': props.noWrap && props.fixed,
 }))
 
 const blurClasses = computed(() => [computedVariant.value, radiusElementClasses.value])
@@ -150,7 +138,7 @@ const blurStyles = computed(() => ({
 }))
 
 const spinWrapperStyles = computed(() =>
-  noCenterBoolean.value
+  props.noCenter
     ? positionStyles
     : {
         top: '50%',
