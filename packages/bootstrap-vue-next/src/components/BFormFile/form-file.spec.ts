@@ -337,277 +337,171 @@ describe('form-file', () => {
   })
 
   describe('file button', () => {
-    it('the button is placed on the start when prop placement is start', () => {})
-    it('the button is placed on the end when prop placement is end', () => {})
-    it('the button is placed on the start when prop placement is undefined', () => {})
+    it('the button is placed on the start when prop placement is start', () => {
+      const wrapper = mount(BFormFile, {
+        props: {id: 'fooFile', placement: 'start'},
+      })
 
-    it('the button has value text when prop browser text is defined', () => {})
-    it('the button has `Choose` when prop browser text is undefined', () => {})
+      const $label = wrapper.get('label')
+      expect($label.classes()).toContain('input-group-text')
+
+      const childElements = wrapper.get('div').findAll('*')
+
+      expect(childElements[0].exists())
+      expect(childElements[0].element.tagName).toBe('LABEL')
+
+      expect(childElements[1].exists())
+      expect(childElements[1].element.tagName).toBe('INPUT')
+    })
+    it('the button is placed on the end when prop placement is end', () => {
+      const wrapper = mount(BFormFile, {
+        props: {id: 'fooFile', placement: 'end'},
+      })
+
+      const $label = wrapper.get('label')
+      expect($label.classes()).not.toContain('form-label')
+      expect($label.classes()).toContain('input-group-text')
+
+      const childElements = wrapper.get('div').findAll('*')
+
+      expect(childElements[0].exists())
+      expect(childElements[0].element.tagName).toBe('INPUT')
+
+      expect(childElements[1].exists())
+      expect(childElements[1].element.tagName).toBe('LABEL')
+    })
+    it('the button is placed on the start when prop placement is undefined', () => {
+      const wrapper = mount(BFormFile, {
+        props: {id: 'fooFile'},
+      })
+
+      const $label = wrapper.get('label')
+      expect($label.classes()).not.toContain('form-label')
+      expect($label.classes()).toContain('input-group-text')
+
+      const childElements = wrapper.get('div').findAll('*')
+
+      expect(childElements[0].exists())
+      expect(childElements[0].element.tagName).toBe('LABEL')
+
+      expect(childElements[1].exists())
+      expect(childElements[1].element.tagName).toBe('INPUT')
+    })
+
+    it('the button has value text when prop browser text is defined', () => {
+      const wrapper = mount(BFormFile, {
+        props: {browserText: 'Browse'},
+      })
+
+      const $label = wrapper.get('label')
+      expect($label.classes()).not.toContain('form-label')
+      expect($label.classes()).toContain('input-group-text')
+      expect($label.text()).toBe('Browse')
+    })
+    it('the button has `Choose` when prop browser text is undefined', () => {
+      const wrapper = mount(BFormFile)
+
+      const $label = wrapper.get('label')
+      expect($label.classes()).not.toContain('form-label')
+      expect($label.classes()).toContain('input-group-text')
+      expect($label.text()).toBe('Choose')
+    })
   })
 
   describe('model behavior', () => {
-    //   it('emits input event when file changed', async () => {
-    //     const wrapper = mount(BFormFile, {
-    //       propsData: {
-    //         id: 'foo'
-    //       }
-    //     })
-    //     const file = new File(['foo'], 'foo.txt', {
-    //       type: 'text/plain',
-    //       lastModified: Date.now()
-    //     })
-    //     // Emulate the files array
-    //     wrapper.vm.setFiles([file])
-    //     await waitNT(wrapper.vm)
-    //     expect(wrapper.emitted('input')).toBeDefined()
-    //     expect(wrapper.emitted('input').length).toEqual(1)
-    //     expect(wrapper.emitted('input')[0][0]).toEqual(file)
-    //     // Setting to same array of files should not emit event
-    //     wrapper.vm.setFiles([file])
-    //     await waitNT(wrapper.vm)
-    //     expect(wrapper.emitted('input')).toBeDefined()
-    //     expect(wrapper.emitted('input').length).toEqual(1)
-    //     wrapper.destroy()
-    //   })
-    //   it('emits input event when files changed in multiple mode', async () => {
-    //     const wrapper = mount(BFormFile, {
-    //       propsData: {
-    //         id: 'foo',
-    //         multiple: true
-    //       }
-    //     })
-    //     const file1 = new File(['foo'], 'foo.txt', {
-    //       type: 'text/plain',
-    //       lastModified: Date.now()
-    //     })
-    //     const file2 = new File(['foobar'], 'foobar.txt', {
-    //       type: 'text/plain',
-    //       lastModified: Date.now() - 1000
-    //     })
-    //     const files = [file1, file2]
-    //     // Emulate the files array
-    //     wrapper.vm.setFiles(files)
-    //     await waitNT(wrapper.vm)
-    //     expect(wrapper.emitted('input')).toBeDefined()
-    //     expect(wrapper.emitted('input').length).toEqual(1)
-    //     expect(wrapper.emitted('input')[0][0]).toEqual(files)
-    //     // Setting to same array of files should not emit event
-    //     wrapper.vm.setFiles(files)
-    //     await waitNT(wrapper.vm)
-    //     expect(wrapper.emitted('input')).toBeDefined()
-    //     expect(wrapper.emitted('input').length).toEqual(1)
-    //     // Setting to new array of same files should not emit event
-    //     wrapper.vm.setFiles([file1, file2])
-    //     await waitNT(wrapper.vm)
-    //     expect(wrapper.emitted('input').length).toEqual(1)
-    //     // Setting to array of new files should emit event
-    //     wrapper.vm.setFiles(files.slice().reverse())
-    //     await waitNT(wrapper.vm)
-    //     expect(wrapper.emitted('input').length).toEqual(2)
-    //     expect(wrapper.emitted('input')[1][0]).toEqual(files.slice().reverse())
-    //     wrapper.destroy()
-    //   })
-    //   it('emits input event when files changed in directory mode', async () => {
-    //     const wrapper = mount(BFormFile, {
-    //       propsData: {
-    //         id: 'foo',
-    //         multiple: true,
-    //         directory: true
-    //       }
-    //     })
-    //     const file1 = new File(['foo'], 'foo.txt', {
-    //       type: 'text/plain',
-    //       lastModified: Date.now()
-    //     })
-    //     const file2 = new File(['bar'], 'bar.txt', {
-    //       type: 'text/plain',
-    //       lastModified: Date.now() - 1000
-    //     })
-    //     const file3 = new File(['baz'], 'baz.txt', {
-    //       type: 'text/plain',
-    //       lastModified: Date.now() - 2000
-    //     })
-    //     const files = [[file1, file2], file3]
-    //     // Emulate the files array
-    //     wrapper.vm.setFiles(files)
-    //     await waitNT(wrapper.vm)
-    //     expect(wrapper.emitted('input')).toBeDefined()
-    //     expect(wrapper.emitted('input').length).toEqual(1)
-    //     expect(wrapper.emitted('input')[0][0]).toEqual(files)
-    //     // Setting to same array of files should not emit event
-    //     wrapper.vm.setFiles(files)
-    //     await waitNT(wrapper.vm)
-    //     expect(wrapper.emitted('input')).toBeDefined()
-    //     expect(wrapper.emitted('input').length).toEqual(1)
-    //     // Setting to new array of same files should not emit event
-    //     wrapper.vm.setFiles([[file1, file2], file3])
-    //     await waitNT(wrapper.vm)
-    //     expect(wrapper.emitted('input').length).toEqual(1)
-    //     // Setting to array of new files should emit event
-    //     wrapper.vm.setFiles(files.slice().reverse())
-    //     await waitNT(wrapper.vm)
-    //     expect(wrapper.emitted('input').length).toEqual(2)
-    //     expect(wrapper.emitted('input')[1][0]).toEqual(files.slice().reverse())
-    //     wrapper.destroy()
-    //   })
-    //   it('reset() method works in single mode', async () => {
-    //     const wrapper = mount(BFormFile, {
-    //       propsData: {
-    //         id: 'foo',
-    //         multiple: false
-    //       }
-    //     })
-    //     const file1 = new File(['foo'], 'foo.txt', {
-    //       type: 'text/plain',
-    //       lastModified: Date.now()
-    //     })
-    //     const files = [file1]
-    //     // Emulate the files array
-    //     wrapper.vm.setFiles(files)
-    //     await waitNT(wrapper.vm)
-    //     expect(wrapper.emitted('input')).toBeDefined()
-    //     expect(wrapper.emitted('input').length).toEqual(1)
-    //     expect(wrapper.emitted('input')[0][0]).toEqual(file1)
-    //     wrapper.vm.reset()
-    //     await waitNT(wrapper.vm)
-    //     expect(wrapper.emitted('input').length).toEqual(2)
-    //     expect(wrapper.emitted('input')[1][0]).toEqual(null)
-    //     wrapper.destroy()
-    //   })
-    //   it('reset() method works in multiple mode', async () => {
-    //     const wrapper = mount(BFormFile, {
-    //       propsData: {
-    //         id: 'foo',
-    //         multiple: true
-    //       }
-    //     })
-    //     const file1 = new File(['foo'], 'foo.txt', {
-    //       type: 'text/plain',
-    //       lastModified: Date.now()
-    //     })
-    //     const file2 = new File(['<html><body></body></html>'], 'bar.html', {
-    //       type: 'text/html',
-    //       lastModified: Date.now() - 500
-    //     })
-    //     const files = [file1, file2]
-    //     // Emulate the files array
-    //     wrapper.vm.setFiles(files)
-    //     await waitNT(wrapper.vm)
-    //     expect(wrapper.emitted('input')).toBeDefined()
-    //     expect(wrapper.emitted('input').length).toEqual(1)
-    //     expect(wrapper.emitted('input')[0][0]).toEqual(files)
-    //     wrapper.vm.reset()
-    //     await waitNT(wrapper.vm)
-    //     expect(wrapper.emitted('input').length).toEqual(2)
-    //     expect(wrapper.emitted('input')[1][0]).toEqual([])
-    //     wrapper.destroy()
-    //   })
-    //   it('reset works in single mode by setting value', async () => {
-    //     const wrapper = mount(BFormFile, {
-    //       propsData: {
-    //         id: 'foo',
-    //         value: null
-    //       }
-    //     })
-    //     const file1 = new File(['foo'], 'foo.txt', {
-    //       type: 'text/plain',
-    //       lastModified: Date.now()
-    //     })
-    //     // Emulate the files array
-    //     wrapper.vm.setFiles([file1])
-    //     await waitNT(wrapper.vm)
-    //     expect(wrapper.emitted('input')).toBeDefined()
-    //     expect(wrapper.emitted('input').length).toEqual(1)
-    //     expect(wrapper.emitted('input')[0][0]).toEqual(file1)
-    //     await wrapper.setProps({ value: null })
-    //     expect(wrapper.emitted('input').length).toEqual(1)
-    //     wrapper.destroy()
-    //   })
-    //   it('reset works in multiple mode by setting value', async () => {
-    //     const wrapper = mount(BFormFile, {
-    //       propsData: {
-    //         id: 'foo',
-    //         value: [],
-    //         multiple: true
-    //       }
-    //     })
-    //     const file1 = new File(['foo'], 'foo.txt', {
-    //       type: 'text/plain',
-    //       lastModified: Date.now()
-    //     })
-    //     const file2 = new File(['foo bar'], 'foobar.txt', {
-    //       type: 'text/plain',
-    //       lastModified: Date.now()
-    //     })
-    //     const files = [file1, file2]
-    //     // Emulate the files array
-    //     wrapper.vm.setFiles(files)
-    //     await waitNT(wrapper.vm)
-    //     expect(wrapper.emitted('input')).toBeDefined()
-    //     expect(wrapper.emitted('input').length).toEqual(1)
-    //     expect(wrapper.emitted('input')[0][0]).toEqual(files)
-    //     await wrapper.setProps({ value: null })
-    //     expect(wrapper.emitted('input').length).toEqual(2)
-    //     expect(wrapper.emitted('input')[1][0]).toEqual([])
-    //     wrapper.vm.setFiles(files)
-    //     await waitNT(wrapper.vm)
-    //     expect(wrapper.emitted('input').length).toEqual(3)
-    //     expect(wrapper.emitted('input')[2][0]).toEqual(files)
-    //     await wrapper.setProps({ value: [] })
-    //     expect(wrapper.emitted('input').length).toEqual(4)
-    //     expect(wrapper.emitted('input')[3][0]).toEqual([])
-    //     wrapper.destroy()
-    //   })
-    //   it('native reset event works', async () => {
-    //     const wrapper = mount(BFormFile, {
-    //       propsData: {
-    //         id: 'foo',
-    //         value: null
-    //       }
-    //     })
-    //     const file1 = new File(['foo'], 'foo.txt', {
-    //       type: 'text/plain',
-    //       lastModified: Date.now()
-    //     })
-    //     // Emulate the files array
-    //     wrapper.vm.setFiles([file1])
-    //     await waitNT(wrapper.vm)
-    //     expect(wrapper.emitted('input')).toBeDefined()
-    //     expect(wrapper.emitted('input').length).toEqual(1)
-    //     expect(wrapper.emitted('input')[0][0]).toEqual(file1)
-    //     await wrapper.find('input').trigger('reset')
-    //     expect(wrapper.emitted('input').length).toEqual(2)
-    //     expect(wrapper.emitted('input')[1][0]).toEqual(null)
-    //     wrapper.destroy()
-    //   })
-    //   it('form native reset event triggers BFormFile reset', async () => {
-    //     const App = {
-    //       render(h) {
-    //         return h('form', {}, [h(BFormFile, { id: 'foo' })])
-    //       }
-    //     }
-    //     const wrapper = mount(App, {
-    //       attachTo: document.body
-    //     })
-    //     const file = new File(['foo'], 'foo.txt', {
-    //       type: 'text/plain',
-    //       lastModified: Date.now()
-    //     })
-    //     expect(wrapper.element.tagName).toBe('FORM')
-    //     const formFile = wrapper.findComponent(BFormFile)
-    //     expect(formFile.exists()).toBe(true)
-    //     // Emulate the files array
-    //     formFile.vm.setFiles([file])
-    //     await waitNT(wrapper.vm)
-    //     expect(formFile.emitted('input')).toBeDefined()
-    //     expect(formFile.emitted('input').length).toEqual(1)
-    //     expect(formFile.emitted('input')[0][0]).toEqual(file)
-    //     // Trigger form's native reset event
-    //     wrapper.find('form').trigger('reset')
-    //     await waitNT(wrapper.vm)
-    //     expect(formFile.emitted('input').length).toEqual(2)
-    //     expect(formFile.emitted('input')[1][0]).toEqual(null)
-    //     wrapper.destroy()
-    //   })
+    it('emits input even when file changed', async () => {
+      const file = new File(['foo'], 'foo.txt', {
+        type: 'text/plain',
+        lastModified: Date.now(),
+      })
+
+      const wrapper = mount(BFormFile, {props: {id: 'foo', modelValue: file}})
+
+      const $input = wrapper.get('input')
+      await $input.trigger('change')
+
+      expect(wrapper.emitted('change')).toBeDefined()
+      expect(wrapper.emitted('change')).toHaveLength(1)
+      expect(wrapper.emitted('change')?.[0][0]).toBeInstanceOf(Event)
+    })
+
+    it('emits update:modelValue===file event when file changed', async () => {
+      const file = new File(['foo'], 'foo.txt', {
+        type: 'text/plain',
+        lastModified: Date.now(),
+      })
+
+      const dataTransfer = new ClipboardEvent('').clipboardData ?? new DataTransfer()
+      dataTransfer.items.add(file)
+
+      const wrapper = mount(BFormFile, {props: {id: 'foo', modelValue: undefined}})
+
+      const $input = wrapper.get('input')
+      $input.element.files = dataTransfer.files
+      await $input.trigger('change')
+
+      expect(wrapper.emitted('update:modelValue')).toBeDefined()
+      expect(wrapper.emitted('update:modelValue')).toHaveLength(1)
+      expect(wrapper.emitted('update:modelValue')?.[0][0]).toStrictEqual(file)
+    })
+
+    it('emits update:modelValue===file event when file changed in multiple mode', async () => {
+      const file1 = new File(['foo'], 'foo.txt', {
+        type: 'text/plain',
+        lastModified: Date.now(),
+      })
+
+      const file2 = new File(['foo2'], 'foo2.txt', {
+        type: 'text/plain',
+        lastModified: Date.now(),
+      })
+
+      const dataTransfer = new ClipboardEvent('').clipboardData ?? new DataTransfer()
+      dataTransfer.items.add(file1)
+      dataTransfer.items.add(file2)
+
+      const wrapper = mount(BFormFile, {props: {id: 'foo', modelValue: undefined, multiple: true}})
+
+      const $input = wrapper.get('input')
+      $input.element.files = dataTransfer.files
+      await $input.trigger('change')
+
+      expect(wrapper.emitted('update:modelValue')).toBeDefined()
+      expect(wrapper.emitted('update:modelValue')).toHaveLength(1)
+      expect((wrapper.emitted('update:modelValue')?.[0][0] as File[])[0]).toStrictEqual(file1)
+      expect((wrapper.emitted('update:modelValue')?.[0][0] as File[])[1]).toStrictEqual(file2)
+    })
+
+    it('emits update:modelValue===file event when file changed in directory mode', async () => {
+      const file1 = new File(['foo'], 'foo.txt', {
+        type: 'text/plain',
+        lastModified: Date.now(),
+      })
+
+      const file2 = new File(['foo2'], 'foo2.txt', {
+        type: 'text/plain',
+        lastModified: Date.now(),
+      })
+
+      const dataTransfer = new ClipboardEvent('').clipboardData ?? new DataTransfer()
+      dataTransfer.items.add(file1)
+      dataTransfer.items.add(file2)
+
+      const wrapper = mount(BFormFile, {
+        props: {id: 'foo', modelValue: undefined, multiple: true, directory: true},
+      })
+
+      const $input = wrapper.get('input')
+      $input.element.files = dataTransfer.files
+      await $input.trigger('change')
+
+      expect(wrapper.emitted('update:modelValue')).toBeDefined()
+      expect(wrapper.emitted('update:modelValue')).toHaveLength(1)
+      expect((wrapper.emitted('update:modelValue')?.[0][0] as File[])[0]).toStrictEqual(file1)
+      expect((wrapper.emitted('update:modelValue')?.[0][0] as File[])[1]).toStrictEqual(file2)
+    })
+
+    it('reset() method works in single mode', async () => {})
+    it('reset() method works in multiple mode', async () => {})
   })
 })

@@ -82,7 +82,7 @@ const props = withDefaults(
     ariaLabelledby: undefined,
     accept: '',
     autofocus: false,
-    browserText: 'Browse',
+    browserText: 'Choose',
     // eslint-disable-next-line vue/require-valid-default-prop
     capture: false,
     directory: false,
