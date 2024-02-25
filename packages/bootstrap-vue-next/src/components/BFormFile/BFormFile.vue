@@ -31,18 +31,18 @@
       @change="onChange"
       @drop="onDrop"
     />
-    <label v-if="placement === 'end'" class="input-group-text" :for="computedId">{{
-      browserText
-    }}</label>
+    <label v-if="placement === 'end'" class="input-group-text" :for="computedId">
+      {{ browserText }}
+    </label>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useFocus, useVModel } from '@vueuse/core'
-import { computed, ref, toRef, watch } from 'vue'
-import { useBooleanish, useId, useStateClass } from '../../composables'
-import type { Booleanish, ClassValue, Size } from '../../types'
-import { isEmptySlot } from '../../utils'
+import {useFocus, useVModel} from '@vueuse/core'
+import {computed, ref, toRef, watch} from 'vue'
+import {useBooleanish, useId, useStateClass} from '../../composables'
+import type {Booleanish, ClassValue, Size} from '../../types'
+import {isEmptySlot} from '../../utils'
 
 defineOptions({
   inheritAttrs: false,
