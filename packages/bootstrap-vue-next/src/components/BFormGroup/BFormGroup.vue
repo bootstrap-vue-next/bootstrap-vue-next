@@ -162,7 +162,7 @@ export default defineComponent({
 
     const stateClass = useStateClass(() => props.state)
 
-    const computedAriaInvalid = useAriaInvalid(() => props.ariaInvalid, props.state)
+    const computedAriaInvalid = useAriaInvalid(() => props.ariaInvalid, () => props.state)
 
     watch(
       () => ariaDescribedby,
