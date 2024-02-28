@@ -1,2 +1,6 @@
-export default (suffix = ''): string =>
-  `__BVID__${Math.random().toString().slice(2, 8)}___BV_${suffix}__`
+let uniqueId = 0
+
+export default (suffix = ''): string => {
+  uniqueId++
+  return `__BVID__${uniqueId}___BV_${suffix}__`
+}

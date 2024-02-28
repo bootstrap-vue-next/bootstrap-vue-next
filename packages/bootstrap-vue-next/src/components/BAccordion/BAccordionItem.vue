@@ -48,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import {inject, onMounted, useAttrs, watch} from 'vue'
+import {inject, nextTick, onMounted, useAttrs, watch} from 'vue'
 import {useVModel} from '@vueuse/core'
 import BCollapse from '../BCollapse.vue'
 import {accordionInjectionKey, BvTriggerableEvent} from '../../utils'
@@ -124,12 +124,13 @@ const parentData = inject(accordionInjectionKey, null)
 
 const computedId = useId(() => props.id, 'accordion_item')
 
-onMounted(() => {
-  if (modelValue.value && !parentData?.free.value) {
-    parentData?.setOpenItem(computedId.value)
-  }
+onMounted(async () => {
   if (!modelValue.value && parentData?.openItem.value === computedId.value) {
     modelValue.value = true
+  }
+  await nextTick()
+  if (modelValue.value && !parentData?.free.value && computedId.value) {
+    parentData?.setOpenItem(computedId.value)
   }
 })
 
@@ -139,6 +140,7 @@ watch(
     (modelValue.value = parentData?.openItem.value === computedId.value && !parentData?.free.value)
 )
 watch(modelValue, () => {
-  if (modelValue.value && !parentData?.free.value) parentData?.setOpenItem(computedId.value)
+  if (modelValue.value && !parentData?.free.value && computedId.value)
+    parentData?.setOpenItem(computedId.value)
 })
 </script>

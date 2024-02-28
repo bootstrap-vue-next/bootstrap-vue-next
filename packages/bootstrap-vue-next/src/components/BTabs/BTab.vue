@@ -104,7 +104,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  if (!parentData) return
+  if (!parentData || !computedId.value) return
   parentData.unregisterTab(computedId.value)
 })
 

@@ -61,7 +61,7 @@ const emit = defineEmits<{
 
 type SharedSlotsData = {
   close: () => void
-  id: string
+  id: string | undefined
   open: () => void
   toggle: () => void
   visible: boolean
