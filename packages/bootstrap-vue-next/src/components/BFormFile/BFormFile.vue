@@ -93,7 +93,7 @@ const computedId = useId(() => props.id)
 
 // TODO noTraverse is not implemented yet
 
-const stateClass = useStateClass(props.state)
+const stateClass = useStateClass(() => props.state)
 
 const input = ref<HTMLInputElement | null>(null)
 
