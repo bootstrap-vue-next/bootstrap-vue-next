@@ -53,7 +53,7 @@ import {useVModel} from '@vueuse/core'
 import BCollapse from '../BCollapse.vue'
 import {accordionInjectionKey, BvTriggerableEvent} from '../../utils'
 import {useId} from '../../composables'
-import type {AttrsValue, ClassValue} from '../../types'
+import type {AttrsValue, Booleanish, ClassValue} from '../../types'
 
 defineOptions({
   inheritAttrs: false,
@@ -70,14 +70,14 @@ const props = withDefaults(
     headerAttrs?: Readonly<AttrsValue>
     headerClass?: ClassValue
     headerTag?: string
-    horizontal?: boolean
+    horizontal?: Booleanish
     id?: string
-    isNav?: boolean
+    isNav?: Booleanish
     modelValue?: boolean
     tag?: string
     title?: string
-    toggle?: boolean
-    visible?: boolean
+    toggle?: Booleanish
+    visible?: Booleanish
     wrapperAttrs?: Readonly<AttrsValue>
   }>(),
   {

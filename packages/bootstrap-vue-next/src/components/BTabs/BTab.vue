@@ -15,19 +15,19 @@
 
 <script setup lang="ts">
 import {computed, inject, onMounted, onUnmounted, ref, toRef, useAttrs, watch} from 'vue'
-import {useId} from '../../composables'
-import type {AttrsValue, ClassValue, TabType} from '../../types'
+import {useBooleanish, useId} from '../../composables'
+import type {AttrsValue, Booleanish, ClassValue, TabType} from '../../types'
 import {tabsInjectionKey} from '../../utils'
 
 const props = withDefaults(
   defineProps<{
-    active?: boolean
+    active?: Booleanish
     buttonId?: string
-    disabled?: boolean
+    disabled?: Booleanish
     id?: string
-    lazy?: boolean
-    lazyOnce?: boolean
-    noBody?: boolean
+    lazy?: Booleanish
+    lazyOnce?: Booleanish
+    noBody?: Booleanish
     tag?: string
     title?: string
     titleItemClass?: ClassValue
@@ -69,6 +69,11 @@ const parentData = inject(tabsInjectionKey, null)
 const computedId = useId(() => props.id, 'tabpane')
 const buttonId = useId(() => props.buttonId, 'tab')
 
+const activeBoolean = useBooleanish(() => props.active)
+const disabledBoolean = useBooleanish(() => props.disabled)
+const lazyBoolean = useBooleanish(() => props.lazyOnce ?? props.lazy)
+const noBodyBoolean = useBooleanish(() => props.noBody)
+
 const lazyRenderCompleted = ref(false)
 const el = ref<HTMLElement | null>(null)
 
@@ -79,7 +84,7 @@ const tab = computed(
     ({
       id: computedId.value,
       buttonId: buttonId.value,
-      disabled: props.disabled,
+      disabled: disabledBoolean.value,
       title: props.title,
       titleComponent: slots.title,
       titleItemClass: props.titleItemClass,
@@ -93,7 +98,7 @@ const tab = computed(
 onMounted(() => {
   if (!parentData) return
   parentData.registerTab(tab)
-  if (props.active) {
+  if (activeBoolean.value) {
     parentData.activateTab(computedId.value)
   }
 })
@@ -106,10 +111,10 @@ onUnmounted(() => {
 const isActive = toRef(() => parentData?.activeId.value === computedId.value)
 const show = ref(isActive.value)
 
-const computedLazy = toRef(() => !!(parentData?.lazy.value || (props.lazyOnce ?? props.lazy)))
+const computedLazy = toRef(() => !!(parentData?.lazy.value || lazyBoolean.value))
 const computedLazyOnce = toRef(() => props.lazyOnce !== undefined)
 
-const computedActive = toRef(() => isActive.value && !props.disabled)
+const computedActive = toRef(() => isActive.value && !disabledBoolean.value)
 const showSlot = toRef(
   () =>
     computedActive.value ||
@@ -128,25 +133,22 @@ watch(isActive, (active) => {
   show.value = false
   emit('update:active', false)
 })
-watch(
-  () => props.active,
-  (active) => {
-    if (!parentData) return
-    if (!active) {
-      if (isActive.value) {
-        parentData.activateTab(undefined)
-      }
-      return
+watch(activeBoolean, (active) => {
+  if (!parentData) return
+  if (!active) {
+    if (isActive.value) {
+      parentData.activateTab(undefined)
     }
-    parentData.activateTab(computedId.value)
+    return
   }
-)
+  parentData.activateTab(computedId.value)
+})
 
 const computedClasses = computed(() => [
   {
     'active': isActive.value,
     'show': show.value,
-    'card-body': parentData?.card.value && props.noBody === false,
+    'card-body': parentData?.card.value && noBodyBoolean.value === false,
     'fade': !parentData?.noFade.value,
   },
   show.value ? parentData?.activeTabClass : parentData?.inactiveTabClass,

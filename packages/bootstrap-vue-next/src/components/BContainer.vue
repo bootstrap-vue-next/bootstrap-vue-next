@@ -5,13 +5,14 @@
 </template>
 
 <script setup lang="ts">
-import type {Breakpoint, Numberish} from '../types'
+import type {Booleanish, Breakpoint, Numberish} from '../types'
 import {computed} from 'vue'
 import {useToNumber} from '@vueuse/core'
+import {useBooleanish} from '..//composables'
 
 const props = withDefaults(
   defineProps<{
-    fluid?: boolean | Breakpoint
+    fluid?: Booleanish | Breakpoint
     gutterX?: Numberish
     gutterY?: Numberish
     tag?: string
@@ -26,11 +27,12 @@ const props = withDefaults(
 
 const gutterXToNumber = useToNumber(() => props.gutterX ?? NaN, {method: 'parseInt'})
 const gutterYToNumber = useToNumber(() => props.gutterY ?? NaN, {method: 'parseInt'})
+const resolvedFluid = useBooleanish(() => props.fluid)
 
 const computedClasses = computed(() => ({
-  container: props.fluid === false,
-  [`container-fluid`]: props.fluid === true,
-  [`container-${props.fluid}`]: typeof props.fluid === 'string',
+  container: resolvedFluid.value === false,
+  [`container-fluid`]: resolvedFluid.value === true,
+  [`container-${resolvedFluid.value}`]: typeof resolvedFluid.value === 'string',
   [`gx-${gutterXToNumber.value}`]: !Number.isNaN(gutterXToNumber.value),
   [`gy-${gutterYToNumber.value}`]: !Number.isNaN(gutterYToNumber.value),
 }))

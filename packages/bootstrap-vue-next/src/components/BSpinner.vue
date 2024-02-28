@@ -13,14 +13,15 @@
 
 <script setup lang="ts">
 import {computed, toRef} from 'vue'
-import type {ColorVariant, SpinnerType} from '../types'
+import type {Booleanish, ColorVariant, SpinnerType} from '../types'
+import {useBooleanish} from '../composables'
 import {isEmptySlot} from '../utils'
 
 const props = withDefaults(
   defineProps<{
     label?: string
     role?: string
-    small?: boolean
+    small?: Booleanish
     tag?: string
     type?: SpinnerType
     variant?: ColorVariant | null
@@ -40,10 +41,12 @@ const slots = defineSlots<{
   label?: (props: Record<string, never>) => any
 }>()
 
+const smallBoolean = useBooleanish(() => props.small)
+
 const computedClasses = computed(() => [
   `spinner-${props.type}`,
   {
-    [`spinner-${props.type}-sm`]: props.small,
+    [`spinner-${props.type}-sm`]: smallBoolean.value,
     [`text-${props.variant}`]: props.variant !== null,
   },
 ])

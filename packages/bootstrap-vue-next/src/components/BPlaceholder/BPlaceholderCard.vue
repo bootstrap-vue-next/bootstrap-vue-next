@@ -1,6 +1,6 @@
 <template>
   <BCard :img-bottom="imgBottom">
-    <template v-if="!props.noImg" #img>
+    <template v-if="!noImgBoolean" #img>
       <slot name="img">
         <BCardImg
           :blank="!imgSrc ? true : false"
@@ -14,7 +14,7 @@
       </slot>
     </template>
 
-    <template v-if="!props.noHeader" #header>
+    <template v-if="!noHeaderBoolean" #header>
       <slot name="header">
         <BPlaceholder
           :width="headerWidth"
@@ -31,13 +31,13 @@
       <BPlaceholder cols="6" v-bind="defaultAttrs" />
       <BPlaceholder cols="8" v-bind="defaultAttrs" />
     </slot>
-    <template v-if="!props.noFooter" #footer>
+    <template v-if="!noFooterBoolean" #footer>
       <slot name="footer">
         <component
           :is="footerComponent"
           :width="footerWidth"
           :animation="footerAnimation"
-          :size="props.noButton ? footerSize : undefined"
+          :size="noButtonBoolean ? footerSize : undefined"
           :variant="footerVariant"
         />
       </slot>
@@ -50,8 +50,15 @@ import BCard from '../BCard/BCard.vue'
 import BCardImg from '../BCard/BCardImg.vue'
 import BPlaceholder from './BPlaceholder.vue'
 import BPlaceholderButton from './BPlaceholderButton.vue'
-import type {ColorVariant, Numberish, PlaceholderAnimation, PlaceholderSize} from '../../types'
+import type {
+  Booleanish,
+  ColorVariant,
+  Numberish,
+  PlaceholderAnimation,
+  PlaceholderSize,
+} from '../../types'
 import {computed, toRef} from 'vue'
+import {useBooleanish} from '../../composables'
 
 const props = withDefaults(
   defineProps<{
@@ -65,13 +72,13 @@ const props = withDefaults(
     headerVariant?: ColorVariant | null
     headerWidth?: Numberish
     imgBlankColor?: string
-    imgBottom?: boolean
+    imgBottom?: Booleanish
     imgHeight?: Numberish
     imgSrc?: string
-    noButton?: boolean
-    noFooter?: boolean
-    noHeader?: boolean
-    noImg?: boolean
+    noButton?: Booleanish
+    noFooter?: Booleanish
+    noHeader?: Booleanish
+    noImg?: Booleanish
     size?: PlaceholderSize
     variant?: ColorVariant | null
   }>(),
@@ -109,11 +116,16 @@ defineSlots<{
   img?: (props: Record<string, never>) => any
 }>()
 
+const noButtonBoolean = useBooleanish(() => props.noButton)
+const noHeaderBoolean = useBooleanish(() => props.noHeader)
+const noFooterBoolean = useBooleanish(() => props.noFooter)
+const noImgBoolean = useBooleanish(() => props.noImg)
+
 const defaultAttrs = computed(() => ({
   animation: props.animation,
   size: props.size,
   variant: props.variant,
 }))
 
-const footerComponent = toRef(() => (!props.noButton ? BPlaceholderButton : BPlaceholder))
+const footerComponent = toRef(() => (!noButtonBoolean.value ? BPlaceholderButton : BPlaceholder))
 </script>

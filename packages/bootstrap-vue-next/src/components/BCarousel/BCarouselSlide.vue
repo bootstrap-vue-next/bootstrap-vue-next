@@ -39,7 +39,7 @@
 
 <script setup lang="ts">
 import {computed, type CSSProperties, inject, toRef} from 'vue'
-import type {Numberish} from '../../types'
+import type {Booleanish, Numberish} from '../../types'
 import {carouselInjectionKey, isEmptySlot} from '../../utils'
 import BImg from '../BImg.vue'
 
@@ -57,7 +57,7 @@ const props = withDefaults(
     contentVisibleUp?: string
     id?: string
     imgAlt?: string
-    imgBlank?: boolean
+    imgBlank?: Booleanish
     imgBlankColor?: string
     imgHeight?: Numberish
     imgSrc?: string

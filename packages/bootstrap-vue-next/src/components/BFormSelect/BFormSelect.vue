@@ -6,11 +6,11 @@
     :class="computedClasses"
     :name="name"
     :form="form || undefined"
-    :multiple="props.multiple || undefined"
+    :multiple="multipleBoolean || undefined"
     :size="computedSelectSize"
-    :disabled="props.disabled"
-    :required="props.required || undefined"
-    :aria-required="props.required || undefined"
+    :disabled="disabledBoolean"
+    :required="requiredBoolean || undefined"
+    :aria-required="requiredBoolean || undefined"
     :aria-invalid="computedAriaInvalid"
   >
     <slot name="first" />
@@ -37,39 +37,46 @@
 </template>
 
 <script setup lang="ts" generic="T = unknown">
-import type {AriaInvalid, ComplexSelectOptionRaw, Numberish, SelectOption, Size} from '../../types'
+import type {
+  AriaInvalid,
+  Booleanish,
+  ComplexSelectOptionRaw,
+  Numberish,
+  SelectOption,
+  Size,
+} from '../../types'
 import {computed, ref, toRef} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
-import {useAriaInvalid, useFormSelect, useId, useStateClass} from '../../composables'
+import {useAriaInvalid, useBooleanish, useFormSelect, useId, useStateClass} from '../../composables'
 import {useFocus, useToNumber, useVModel} from '@vueuse/core'
 
 const props = withDefaults(
   defineProps<{
     ariaInvalid?: AriaInvalid
-    autofocus?: boolean
-    disabled?: boolean
+    autofocus?: Booleanish
+    disabled?: Booleanish
     disabledField?: string
     form?: string
     htmlField?: string
     id?: string
     labelField?: string
     modelValue?:
-      | boolean
       | string
       | readonly unknown[]
       | Readonly<Record<string, unknown>>
       | number
+      | boolean
       | null
-    multiple?: boolean
+    multiple?: Booleanish
     name?: string
     options?: readonly (unknown | Record<string, unknown>)[]
     optionsField?: string
-    plain?: boolean
-    required?: boolean
+    plain?: Booleanish
+    required?: Booleanish
     selectSize?: Numberish
     size?: Size
-    state?: boolean | null
+    state?: Booleanish | null
     textField?: string
     valueField?: string
   }>(),
@@ -113,34 +120,37 @@ const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const computedId = useId(() => props.id, 'input')
 
+const autofocusBoolean = useBooleanish(() => props.autofocus)
+const disabledBoolean = useBooleanish(() => props.disabled)
+const multipleBoolean = useBooleanish(() => props.multiple)
+const plainBoolean = useBooleanish(() => props.plain)
+const requiredBoolean = useBooleanish(() => props.required)
+const stateBoolean = useBooleanish(() => props.state)
 const selectSizeNumber = useToNumber(() => props.selectSize)
 
-const stateClass = useStateClass(() => props.state)
+const stateClass = useStateClass(stateBoolean)
 
 const input = ref<HTMLElement | null>(null)
 
 const {focused} = useFocus(input, {
-  initialValue: props.autofocus,
+  initialValue: autofocusBoolean.value,
 })
 
 const computedClasses = computed(() => [
   stateClass.value,
   {
-    'form-control': props.plain,
-    [`form-control-${props.size}`]: props.size !== 'md' && props.plain,
-    'form-select': !props.plain,
-    [`form-select-${props.size}`]: props.size !== 'md' && !props.plain,
+    'form-control': plainBoolean.value,
+    [`form-control-${props.size}`]: props.size !== 'md' && plainBoolean.value,
+    'form-select': !plainBoolean.value,
+    [`form-select-${props.size}`]: props.size !== 'md' && !plainBoolean.value,
   },
 ])
 
 const computedSelectSize = toRef(() =>
-  selectSizeNumber.value || props.plain ? selectSizeNumber.value : undefined
+  selectSizeNumber.value || plainBoolean.value ? selectSizeNumber.value : undefined
 )
 
-const computedAriaInvalid = useAriaInvalid(
-  () => props.ariaInvalid,
-  () => props.state
-)
+const computedAriaInvalid = useAriaInvalid(() => props.ariaInvalid, stateBoolean)
 
 const {normalizedOptions, isComplex} = useFormSelect(() => props.options, props)
 

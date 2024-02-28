@@ -1,7 +1,7 @@
 <template>
   <Transition
     v-bind="{...baseProperties, ...transProps}"
-    :appear="props.appear"
+    :appear="appearBoolean"
     @after-appear="emit('after-appear', $event)"
     @after-enter="emit('after-enter', $event)"
     @after-leave="emit('after-leave', $event)"
@@ -22,6 +22,7 @@
 <script setup lang="ts">
 import type {BTransitionProps} from '../../types'
 import {computed} from 'vue'
+import {useBooleanish} from '../../composables'
 
 const props = withDefaults(defineProps<BTransitionProps>(), {
   appear: false,
@@ -50,6 +51,9 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
+const appearBoolean = useBooleanish(() => props.appear)
+const noFadeBoolean = useBooleanish(() => props.noFade)
+
 const fadeProperties = computed(() => {
   const NO_FADE_PROPS = {
     name: '',
@@ -65,7 +69,7 @@ const fadeProperties = computed(() => {
     enterActiveClass: 'fade showing',
     leaveActiveClass: 'fade showing',
   }
-  return props.noFade ? NO_FADE_PROPS : FADE_PROPS
+  return noFadeBoolean.value ? NO_FADE_PROPS : FADE_PROPS
 })
 
 const baseProperties = computed(() => ({mode: props.mode, css: true, ...fadeProperties.value}))

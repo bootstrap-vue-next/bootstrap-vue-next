@@ -16,6 +16,7 @@
 <script setup lang="ts">
 import {computed, toRef} from 'vue'
 import type {BFormFeedbackSharedProps} from '../../types'
+import {useBooleanish} from '../../composables'
 
 const props = withDefaults(defineProps<BFormFeedbackSharedProps>(), {
   ariaLive: undefined,
@@ -33,11 +34,15 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const computedShow = toRef(() => props.forceShow === true || props.state === true)
+const forceShowBoolean = useBooleanish(() => props.forceShow)
+const stateBoolean = useBooleanish(() => props.state)
+const tooltipBoolean = useBooleanish(() => props.tooltip)
+
+const computedShow = toRef(() => forceShowBoolean.value === true || stateBoolean.value === true)
 
 const computedClasses = computed(() => ({
   'd-block': computedShow.value,
-  'valid-feedback': !props.tooltip,
-  'valid-tooltip': props.tooltip,
+  'valid-feedback': !tooltipBoolean.value,
+  'valid-tooltip': tooltipBoolean.value,
 }))
 </script>

@@ -1,10 +1,10 @@
 <template>
   <button
-    v-b-toggle="!props.disabled ? target : undefined"
+    v-b-toggle="!disabledBoolean ? target : undefined"
     class="navbar-toggler"
     type="button"
     :class="computedClasses"
-    :disabled="props.disabled"
+    :disabled="disabledBoolean"
     :aria-label="label"
     @click="onClick"
   >
@@ -17,10 +17,12 @@
 <script setup lang="ts">
 import {vBToggle} from '../../directives'
 import {computed} from 'vue'
+import type {Booleanish} from '../../types'
+import {useBooleanish} from '../../composables'
 
 const props = withDefaults(
   defineProps<{
-    disabled?: boolean
+    disabled?: Booleanish
     label?: string
     target?: string | readonly string[]
   }>(),
@@ -41,12 +43,14 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
+const disabledBoolean = useBooleanish(() => props.disabled)
+
 const computedClasses = computed(() => ({
-  disabled: props.disabled,
+  disabled: disabledBoolean.value,
 }))
 
 const onClick = (e: Readonly<MouseEvent>): void => {
-  if (!props.disabled) {
+  if (!disabledBoolean.value) {
     emit('click', e)
   }
 }

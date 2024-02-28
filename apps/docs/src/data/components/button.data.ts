@@ -7,12 +7,12 @@ export default {
       props: [
         {
           prop: 'pill',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'pressed',
-          type: 'boolean',
+          type: 'Booleanish',
           default: undefined,
         },
         {
@@ -22,7 +22,7 @@ export default {
         },
         {
           prop: 'squared',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -42,17 +42,17 @@ export default {
         },
         {
           prop: 'loading',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'loadingFill',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'block',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -110,7 +110,7 @@ export default {
         {
           description: '',
           prop: 'disabled',
-          type: 'boolean',
+          type: 'Booleanish',
         },
         {
           prop: 'type',

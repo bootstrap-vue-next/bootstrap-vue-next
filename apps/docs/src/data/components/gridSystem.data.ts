@@ -17,7 +17,7 @@ export default {
         },
         {
           prop: 'fluid',
-          type: 'boolean | Breakpoint',
+          type: 'Booleanish | Breakpoint',
           default: false,
           description:
             'When set to true, makes the row 100% wide all the time, or set to one of the Bootstrap breakpoint names for 100% width up to the breakpoint',
@@ -55,7 +55,7 @@ export default {
         },
         {
           prop: 'noGutters',
-          type: 'boolean',
+          type: 'Booleanish',
         },
         {
           prop: 'alignV',
@@ -85,7 +85,7 @@ export default {
         {
           description: '',
           prop: 'col',
-          type: 'boolean',
+          type: 'Booleanish',
         },
         {
           description: '',

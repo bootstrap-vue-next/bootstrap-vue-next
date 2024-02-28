@@ -117,12 +117,12 @@ export default {
         },
         {
           prop: 'imgBottom',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'imgEnd',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -137,12 +137,12 @@ export default {
         },
         {
           prop: 'imgStart',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'imgTop',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -152,12 +152,12 @@ export default {
         },
         {
           prop: 'noBody',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'overlay',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -246,7 +246,7 @@ export default {
         },
         {
           prop: 'overlay',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -342,12 +342,12 @@ export default {
       props: [
         {
           prop: 'columns',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'deck',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -413,12 +413,12 @@ export default {
       props: [
         {
           prop: 'bottom',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'top',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
       ],

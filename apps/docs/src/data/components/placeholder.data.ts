@@ -50,7 +50,7 @@ export default {
       props: [
         {
           prop: 'noHeader',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -75,7 +75,7 @@ export default {
         },
         {
           prop: 'noFooter',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -115,12 +115,12 @@ export default {
         },
         {
           prop: 'noButton',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'imgBottom',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -140,7 +140,7 @@ export default {
         },
         {
           prop: 'noImg',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
       ],
@@ -174,7 +174,7 @@ export default {
         {
           description: 'Determines whether the loading slot should be displayed',
           prop: 'loading',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
       ],
@@ -232,7 +232,7 @@ export default {
         },
         {
           prop: 'hideHeader',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -262,7 +262,7 @@ export default {
         },
         {
           prop: 'showFooter',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {

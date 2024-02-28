@@ -12,7 +12,7 @@
     :outlined="outlined"
     :responsive="responsive"
     :small="small"
-    :stacked="props.stacked"
+    :stacked="computedStacked"
     :sticky-header="stickyHeader"
     :striped="striped"
     :table-class="computedTableClasses"
@@ -66,7 +66,7 @@
         :items="items"
         :columns="computedFields.length"
       >
-        <BTr v-if="!props.stacked && $slots['top-row']">
+        <BTr v-if="!computedStacked && $slots['top-row']">
           <slot name="top-row" />
         </BTr>
 
@@ -86,7 +86,7 @@
               :class="getFieldRowClasses(field, item)"
               v-bind="itemAttributes(item, String(field.key), field.tdAttr)"
             >
-              <label v-if="props.stacked && props.labelStacked" class="b-table-stacked-label">
+              <label v-if="computedStacked && labelStackedBoolean" class="b-table-stacked-label">
                 {{ getTableFieldHeadLabel(field) }}
               </label>
               <slot
@@ -131,19 +131,19 @@
             </BTr>
           </template>
         </template>
-        <BTr v-if="props.showEmpty && items.length === 0" class="b-table-empty-slot">
+        <BTr v-if="showEmptyBoolean && items.length === 0" class="b-table-empty-slot">
           <BTd :colspan="computedFieldsTotal">
             <slot name="empty" :items="items">
               {{ emptyText }}
             </slot>
           </BTd>
         </BTr>
-        <BTr v-if="!props.stacked && $slots['bottom-row']">
+        <BTr v-if="!computedStacked && $slots['bottom-row']">
           <slot name="bottom-row" />
         </BTr>
       </slot>
     </BTbody>
-    <BTfoot v-if="props.footClone" :variant="footVariant" :class="tfootClass">
+    <BTfoot v-if="footCloneBoolean" :variant="footVariant" :class="tfootClass">
       <BTr :variant="footRowVariant" :class="tfootTrClass">
         <BTh
           v-for="field in computedFields"
@@ -193,6 +193,7 @@
 
 <script setup lang="ts" generic="T = Record<string, unknown>">
 import {computed, toRef} from 'vue'
+import {useBooleanish} from '../../composables'
 import type {
   BTableLiteProps,
   TableField,
@@ -270,6 +271,11 @@ const emit = defineEmits<{
   'row-unhovered': [item: TableItem<T>, index: number, event: MouseEvent]
 }>()
 
+const footCloneBoolean = useBooleanish(() => props.footClone)
+const labelStackedBoolean = useBooleanish(() => props.labelStacked)
+const showEmptyBoolean = useBooleanish(() => props.showEmpty)
+const computedStacked = useBooleanish(() => props.stacked)
+
 const computedTableClasses = computed(() => [
   props.tableClass,
   {
@@ -284,7 +290,7 @@ const computedFields = computed<TableField<T>[]>(() => {
       return {
         key: k,
         label,
-        tdAttr: props.stacked === true ? {'data-label': label} : undefined,
+        tdAttr: computedStacked.value === true ? {'data-label': label} : undefined,
       }
     })
   }
@@ -295,13 +301,15 @@ const computedFields = computed<TableField<T>[]>(() => {
       return {
         key: f,
         label,
-        tdAttr: props.stacked === true ? {'data-label': label} : undefined,
+        tdAttr: computedStacked.value === true ? {'data-label': label} : undefined,
       }
     }
     return {
       ...f,
       tdAttr:
-        props.stacked === true ? {'data-label': startCase(f.key as string), ...f.tdAttr} : f.tdAttr,
+        computedStacked.value === true
+          ? {'data-label': startCase(f.key as string), ...f.tdAttr}
+          : f.tdAttr,
     }
     // TODO handle Shortcut object (i.e. { 'foo_bar': 'This is Foo Bar' }
   })

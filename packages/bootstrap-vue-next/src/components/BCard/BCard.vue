@@ -6,7 +6,7 @@
       </slot>
     </ReusableImg.define>
 
-    <ReusableImg.reuse v-if="!props.imgBottom" />
+    <ReusableImg.reuse v-if="!imgBottomBoolean" />
     <BCardHeader
       v-if="header || hasHeaderSlot || headerHtml"
       :bg-variant="headerBgVariant"
@@ -22,7 +22,7 @@
       </slot>
     </BCardHeader>
     <BCardBody
-      v-if="!props.noBody"
+      v-if="!noBodyBoolean"
       :overlay="overlay"
       :bg-variant="bodyBgVariant"
       :tag="bodyTag"
@@ -55,13 +55,14 @@
         {{ footer }}
       </slot>
     </BCardFooter>
-    <ReusableImg.reuse v-if="props.imgBottom" />
+    <ReusableImg.reuse v-if="imgBottomBoolean" />
   </component>
 </template>
 
 <script setup lang="ts">
 import type {
   AlignmentTextHorizontal,
+  Booleanish,
   ClassValue,
   ColorExtendables,
   ColorVariant,
@@ -70,7 +71,7 @@ import type {
 } from '../../types'
 import {isEmptySlot} from '../../utils'
 import {computed, toRef} from 'vue'
-import {useColorVariantClasses} from '../../composables'
+import {useBooleanish, useColorVariantClasses} from '../../composables'
 import BCardImg from './BCardImg.vue'
 import BCardHeader from './BCardHeader.vue'
 import BCardBody from './BCardBody.vue'
@@ -104,15 +105,15 @@ const props = withDefaults(
       headerTextVariant?: TextColorVariant | null
       headerVariant?: ColorVariant | null
       imgAlt?: string
-      imgBottom?: boolean
-      imgEnd?: boolean
+      imgBottom?: Booleanish
+      imgEnd?: Booleanish
       imgHeight?: Numberish
       imgSrc?: string
-      imgStart?: boolean
-      imgTop?: boolean
+      imgStart?: Booleanish
+      imgTop?: Booleanish
       imgWidth?: Numberish
-      noBody?: boolean
-      overlay?: boolean
+      noBody?: Booleanish
+      overlay?: Booleanish
       subtitle?: string
       subtitleTag?: string
       subtitleTextVariant?: TextColorVariant | null
@@ -180,6 +181,11 @@ const slots = defineSlots<{
   img?: (props: Record<string, never>) => any
 }>()
 
+const imgBottomBoolean = useBooleanish(() => props.imgBottom)
+const imgEndBoolean = useBooleanish(() => props.imgEnd)
+const imgStartBoolean = useBooleanish(() => props.imgStart)
+const noBodyBoolean = useBooleanish(() => props.noBody)
+
 const hasHeaderSlot = toRef(() => !isEmptySlot(slots.header))
 const hasFooterSlot = toRef(() => !isEmptySlot(slots.footer))
 
@@ -190,8 +196,8 @@ const computedClasses = computed(() => [
   {
     [`text-${props.align}`]: props.align !== undefined,
     [`border-${props.borderVariant}`]: props.borderVariant !== null,
-    'flex-row': props.imgStart,
-    'flex-row-reverse': props.imgEnd,
+    'flex-row': imgStartBoolean.value,
+    'flex-row-reverse': imgEndBoolean.value,
   },
 ])
 

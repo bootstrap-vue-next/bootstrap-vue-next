@@ -7,7 +7,7 @@ export default {
       props: [
         {
           prop: 'blank',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -17,27 +17,27 @@ export default {
         },
         {
           prop: 'block',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'center',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'fluid',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'lazy',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'fluidGrow',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -47,12 +47,12 @@ export default {
         },
         {
           prop: 'start',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'end',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -77,7 +77,7 @@ export default {
         },
         {
           prop: 'thumbnail',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {

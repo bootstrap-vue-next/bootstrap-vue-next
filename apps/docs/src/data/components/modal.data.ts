@@ -27,7 +27,7 @@ const sharedSlots: SlotScopeReference[] = [
   },
   {
     prop: 'visible',
-    type: 'boolean',
+    type: 'Booleanish',
     description:
       "The visibility state of the modal. 'true' if the modal is visible and 'false' if not visible",
   },
@@ -40,7 +40,7 @@ export default {
       props: [
         {
           prop: 'autoFocus',
-          type: 'boolean',
+          type: 'Booleanish',
           default: true,
           description: "When set to 'false', disables auto focusing the modal when opened",
         },
@@ -71,7 +71,7 @@ export default {
         },
         {
           prop: 'bodyScrolling',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
           description: 'Enables/disables scrolling the body while modal is open',
         },
@@ -90,14 +90,14 @@ export default {
         },
         {
           prop: 'busy',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
           description:
             'Places the built in default footer OK and Cancel buttons in the disabled state',
         },
         {
           prop: 'cancelDisabled',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
           description: 'Places the built in default footer Cancel button in the disabled state',
         },
@@ -115,7 +115,7 @@ export default {
         },
         {
           prop: 'centered',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
           description: 'Vertically centers the modal in the viewport',
         },
@@ -164,10 +164,10 @@ export default {
         },
         {
           prop: 'fullscreen',
-          type: 'boolean | Breakpoint',
+          type: 'Booleanish | Breakpoint',
           default: false,
           description:
-            "A boolean value will enable/disable full screen mode. A Breakpoint value will set the breakpoint to enable full screen mode below the value of the breakpoint. Breakpoint values are: 'sm', 'md', 'lg', 'xl', 'xxl'",
+            "A Booleanish value will enable/disable full screen mode. A Breakpoint value will set the breakpoint to enable full screen mode below the value of the breakpoint. Breakpoint values are: 'sm', 'md', 'lg', 'xl', 'xxl'",
         },
         {
           prop: 'headerBgVariant',
@@ -221,25 +221,25 @@ export default {
         },
         {
           prop: 'hideBackdrop',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
           description: 'Disables rendering of the modal backdrop',
         },
         {
           prop: 'hideFooter',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
           description: 'Disables rendering of the modal footer',
         },
         {
           prop: 'hideHeader',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
           description: 'Disables rendering of the modal header',
         },
         {
           prop: 'hideHeaderClose',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
           description: 'Disables rendering of the modal header close button',
         },
@@ -252,7 +252,7 @@ export default {
         },
         {
           prop: 'lazy',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
           description: 'Renders the modal content lazily',
         },
@@ -264,39 +264,39 @@ export default {
         },
         {
           prop: 'modelValue',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
           description: 'Controls the visibility state of the modal',
         },
         {
           prop: 'noCloseOnBackdrop',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
           description:
             'Disables closing the modal when clicking on the modal backdrop (outside the modal window)',
         },
         {
           prop: 'noCloseOnEsc',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
           description: 'Disables the ability to close the modal by pressing the ESC key',
         },
         {
           prop: 'noFade',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
           description:
             "When set to 'true', disables the fade animation/transition on the component",
         },
         {
           prop: 'okDisabled',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
           description: 'Places the built in default footer OK button in the disabled state',
         },
         {
           prop: 'okOnly',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
           description: 'Disables rendering of the default footer Cancel button',
         },
@@ -314,7 +314,7 @@ export default {
         },
         {
           prop: 'scrollable',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
           description: 'Enables scrolling of the modal body',
         },
@@ -326,7 +326,7 @@ export default {
         },
         {
           prop: 'teleportDisabled',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
           description: 'Renders the modal in the exact place it was defined',
         },
@@ -350,7 +350,7 @@ export default {
         },
         {
           prop: 'titleSrOnly',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
           description: "Wraps the title in an '.sr-only' wrapper",
         },

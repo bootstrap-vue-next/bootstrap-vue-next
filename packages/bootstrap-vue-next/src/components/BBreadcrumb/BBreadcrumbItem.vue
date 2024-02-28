@@ -15,6 +15,7 @@
 
 <script setup lang="ts">
 import {pick} from '../../utils'
+import {useBooleanish} from '../../composables'
 import {computed, toRef} from 'vue'
 import BLink from '../BLink/BLink.vue'
 import type {BLinkProps} from '../../types'
@@ -65,13 +66,16 @@ const emit = defineEmits<{
   click: [value: MouseEvent]
 }>()
 
+const activeBoolean = useBooleanish(() => props.active)
+const disabledBoolean = useBooleanish(() => props.disabled)
+
 const computedClasses = computed(() => ({
-  active: props.active,
+  active: activeBoolean.value,
 }))
 
-const computedTag = toRef(() => (props.active ? 'span' : BLink))
+const computedTag = toRef(() => (activeBoolean.value ? 'span' : BLink))
 
-const computedAriaCurrent = toRef(() => (props.active ? props.ariaCurrent : undefined))
+const computedAriaCurrent = toRef(() => (activeBoolean.value ? props.ariaCurrent : undefined))
 
 const computedLinkProps = computed(() =>
   computedTag.value !== 'span'
@@ -100,11 +104,11 @@ const computedLinkProps = computed(() =>
 )
 
 const clicked = (e: Readonly<MouseEvent>): void => {
-  if (props.disabled || props.active) {
+  if (disabledBoolean.value || activeBoolean.value) {
     e.preventDefault()
     e.stopImmediatePropagation()
     return
   }
-  if (!props.disabled) emit('click', e)
+  if (!disabledBoolean.value) emit('click', e)
 }
 </script>

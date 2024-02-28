@@ -10,7 +10,7 @@
     >
       <component
         :is="overlayTag"
-        v-if="props.show"
+        v-if="showBoolean"
         class="b-overlay"
         :class="overlayClasses"
         :style="overlayStyles"
@@ -20,7 +20,7 @@
 
         <div class="position-absolute" :style="spinWrapperStyles">
           <slot name="overlay" v-bind="spinnerAttrs">
-            <BSpinner v-if="!props.noSpinner" v-bind="spinnerAttrs" />
+            <BSpinner v-if="!noSpinnerBoolean" v-bind="spinnerAttrs" />
           </slot>
         </div>
       </component>
@@ -30,8 +30,14 @@
 
 <script setup lang="ts">
 import {computed, toRef} from 'vue'
-import type {ColorVariant, Numberish, RadiusElementExtendables, SpinnerType} from '../../types'
-import {useRadiusElementClasses} from '../../composables'
+import type {
+  Booleanish,
+  ColorVariant,
+  Numberish,
+  RadiusElementExtendables,
+  SpinnerType,
+} from '../../types'
+import {useBooleanish, useRadiusElementClasses} from '../../composables'
 import BTransition from '../BTransition/BTransition.vue'
 import BSpinner from '../BSpinner.vue'
 
@@ -40,15 +46,15 @@ const props = withDefaults(
     {
       bgColor?: string
       blur?: string | null
-      fixed?: boolean
-      noCenter?: boolean
-      noFade?: boolean
-      noSpinner?: boolean
-      noWrap?: boolean
+      fixed?: Booleanish
+      noCenter?: Booleanish
+      noFade?: Booleanish
+      noSpinner?: Booleanish
+      noWrap?: Booleanish
       opacity?: Numberish
       overlayTag?: string
-      show?: boolean
-      spinnerSmall?: boolean
+      show?: Booleanish
+      spinnerSmall?: Booleanish
       spinnerType?: SpinnerType
       spinnerVariant?: ColorVariant | null
       variant?: ColorVariant | 'white' | 'transparent' | null
@@ -98,24 +104,36 @@ defineSlots<{
 
 const positionStyles = {top: 0, left: 0, bottom: 0, right: 0} as const
 
+const fixedBoolean = useBooleanish(() => props.fixed)
+const noSpinnerBoolean = useBooleanish(() => props.noSpinner)
+const noCenterBoolean = useBooleanish(() => props.noCenter)
+const noWrapBoolean = useBooleanish(() => props.noWrap)
+const showBoolean = useBooleanish(() => props.show)
+const spinnerSmallBoolean = useBooleanish(() => props.spinnerSmall)
+const roundedBoolean = useBooleanish(() => props.rounded)
+const roundedTopBoolean = useBooleanish(() => props.roundedTop)
+const roundedBottomBoolean = useBooleanish(() => props.roundedBottom)
+const roundedStartBoolean = useBooleanish(() => props.roundedStart)
+const roundedEndBoolean = useBooleanish(() => props.roundedEnd)
+
 const radiusElementClasses = useRadiusElementClasses(() => ({
-  rounded: props.rounded,
-  roundedTop: props.roundedTop,
-  roundedBottom: props.roundedBottom,
-  roundedStart: props.roundedStart,
-  roundedEnd: props.roundedEnd,
+  rounded: roundedBoolean.value,
+  roundedTop: roundedTopBoolean.value,
+  roundedBottom: roundedBottomBoolean.value,
+  roundedStart: roundedStartBoolean.value,
+  roundedEnd: roundedEndBoolean.value,
 }))
 
 const computedVariant = toRef(() =>
   props.variant !== null && !props.bgColor ? `bg-${props.variant}` : ''
 )
 
-const computedAriaBusy = toRef(() => (props.show ? true : null))
+const computedAriaBusy = toRef(() => (showBoolean.value ? true : null))
 
 const spinnerAttrs = computed(() => ({
   type: props.spinnerType,
   variant: props.spinnerVariant,
-  small: props.spinnerSmall,
+  small: spinnerSmallBoolean.value,
 }))
 
 const overlayStyles = computed(() => ({
@@ -124,8 +142,8 @@ const overlayStyles = computed(() => ({
 }))
 
 const overlayClasses = computed(() => ({
-  'position-absolute': !props.noWrap || !props.fixed,
-  'position-fixed': props.noWrap && props.fixed,
+  'position-absolute': !noWrapBoolean.value || !fixedBoolean.value,
+  'position-fixed': noWrapBoolean.value && fixedBoolean.value,
 }))
 
 const blurClasses = computed(() => [computedVariant.value, radiusElementClasses.value])
@@ -138,7 +156,7 @@ const blurStyles = computed(() => ({
 }))
 
 const spinWrapperStyles = computed(() =>
-  props.noCenter
+  noCenterBoolean.value
     ? positionStyles
     : {
         top: '50%',

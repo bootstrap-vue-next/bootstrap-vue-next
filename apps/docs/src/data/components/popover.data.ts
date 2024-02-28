@@ -7,7 +7,7 @@ export default {
       props: [
         {
           prop: 'modelValue',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -42,12 +42,12 @@ export default {
         },
         {
           prop: 'click',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'manual',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -82,47 +82,47 @@ export default {
         },
         {
           prop: 'noFlip',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'noShift',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'noFade',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'noAutoClose',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'hide',
-          type: 'boolean',
+          type: 'Booleanish',
           default: true,
         },
         {
           prop: 'realtime',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'inline',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'tooltip',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'html',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {

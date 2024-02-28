@@ -45,7 +45,7 @@ export default {
         },
         {
           prop: 'firstNumber',
-          type: 'boolean',
+          type: 'Booleanish',
           description: 'Display first page number instead of Goto First button',
         },
         {
@@ -55,12 +55,12 @@ export default {
         },
         {
           prop: 'hideEllipsis',
-          type: 'boolean',
+          type: 'Booleanish',
           description: 'Do not show ellipsis buttons',
         },
         {
           prop: 'hideGotoEndButtons',
-          type: 'boolean',
+          type: 'Booleanish',
           description: 'Hides the goto first and goto last page buttons',
         },
         {
@@ -97,7 +97,7 @@ export default {
         },
         {
           prop: 'lastNumber',
-          type: 'boolean',
+          type: 'Booleanish',
           description: 'Display last page number instead of Goto Last button',
         },
         {
@@ -133,7 +133,7 @@ export default {
         },
         {
           prop: 'pills',
-          type: 'boolean',
+          type: 'Booleanish',
           description: 'Applies pill styling to the pagination buttons',
         },
         {

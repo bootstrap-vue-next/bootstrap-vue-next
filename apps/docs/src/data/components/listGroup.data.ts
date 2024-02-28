@@ -7,7 +7,7 @@ export default {
       props: [
         {
           prop: 'flush',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -17,7 +17,7 @@ export default {
         },
         {
           prop: 'numbered',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -40,12 +40,12 @@ export default {
       props: [
         {
           prop: 'action',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'button',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {

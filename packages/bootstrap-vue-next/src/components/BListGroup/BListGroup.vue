@@ -7,13 +7,14 @@
 <script setup lang="ts">
 import {computed, provide, toRef} from 'vue'
 import {listGroupInjectionKey} from '../../utils'
-import type {Breakpoint} from '../../types'
+import type {Booleanish, Breakpoint} from '../../types'
+import {useBooleanish} from '../../composables'
 
 const props = withDefaults(
   defineProps<{
-    flush?: boolean
-    horizontal?: boolean | Breakpoint
-    numbered?: boolean
+    flush?: Booleanish
+    horizontal?: Booleanish | Breakpoint
+    numbered?: Booleanish
     tag?: string
   }>(),
   {
@@ -29,18 +30,22 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
+const flushBoolean = useBooleanish(() => props.flush)
+const numberedBoolean = useBooleanish(() => props.numbered)
+const computedHorizontal = useBooleanish(() => props.horizontal)
+
 const computedClasses = computed(() => {
-  const horizontal = props.flush ? false : props.horizontal
+  const horizontal = flushBoolean.value ? false : computedHorizontal.value
   return {
-    'list-group-flush': props.flush,
+    'list-group-flush': flushBoolean.value,
     'list-group-horizontal': horizontal === true,
     [`list-group-horizontal-${horizontal}`]: typeof horizontal === 'string',
-    'list-group-numbered': props.numbered,
+    'list-group-numbered': numberedBoolean.value,
   }
 })
-const computedTag = toRef(() => (props.numbered === true ? 'ol' : props.tag))
+const computedTag = toRef(() => (numberedBoolean.value === true ? 'ol' : props.tag))
 
 provide(listGroupInjectionKey, {
-  numbered: toRef(() => props.numbered),
+  numbered: numberedBoolean,
 })
 </script>

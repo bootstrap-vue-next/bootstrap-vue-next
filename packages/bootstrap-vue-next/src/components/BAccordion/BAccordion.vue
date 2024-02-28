@@ -5,15 +5,16 @@
 </template>
 
 <script setup lang="ts">
-import {computed, provide, readonly, toRef} from 'vue'
+import type {Booleanish} from '../../types'
+import {computed, provide, readonly} from 'vue'
 import {accordionInjectionKey} from '../../utils'
-import {useId} from '../../composables'
+import {useBooleanish, useId} from '../../composables'
 import {useVModel} from '@vueuse/core'
 
 const props = withDefaults(
   defineProps<{
-    flush?: boolean
-    free?: boolean
+    flush?: Booleanish
+    free?: Booleanish
     id?: string
     modelValue?: string
   }>(),
@@ -38,13 +39,16 @@ const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const computedId = useId(() => props.id, 'accordion')
 
+const flushBoolean = useBooleanish(() => props.flush)
+const freeBoolean = useBooleanish(() => props.free)
+
 const computedClasses = computed(() => ({
-  'accordion-flush': props.flush,
+  'accordion-flush': flushBoolean.value,
 }))
 
 provide(accordionInjectionKey, {
   openItem: readonly(modelValue),
-  free: toRef(() => props.free),
+  free: freeBoolean,
   setOpenItem: (id: string) => {
     modelValue.value = id
   },

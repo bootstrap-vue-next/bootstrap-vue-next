@@ -11,7 +11,7 @@
       <slot>{{ tagText }}</slot>
     </span>
     <BCloseButton
-      v-if="!props.disabled && !props.noRemove"
+      v-if="!disabledBoolean && !noRemoveBoolean"
       aria-keyshortcuts="Delete"
       :aria-label="removeLabel"
       class="b-form-tag-remove"
@@ -24,16 +24,16 @@
 
 <script setup lang="ts">
 import {computed, toRef} from 'vue'
-import {useId} from '../../composables'
-import type {ColorVariant} from '../../types'
+import {useBooleanish, useId} from '../../composables'
+import type {Booleanish, ColorVariant} from '../../types'
 import BCloseButton from '../BButton/BCloseButton.vue'
 
 const props = withDefaults(
   defineProps<{
-    disabled?: boolean
+    disabled?: Booleanish
     id?: string
-    noRemove?: boolean
-    pill?: boolean
+    noRemove?: Booleanish
+    pill?: Booleanish
     removeLabel?: string
     tag?: string
     title?: string
@@ -62,6 +62,10 @@ const slots = defineSlots<{
 
 const computedId = useId(() => props.id)
 
+const disabledBoolean = useBooleanish(() => props.disabled)
+const noRemoveBoolean = useBooleanish(() => props.noRemove)
+const pillBoolean = useBooleanish(() => props.pill)
+
 const tagText = computed(
   () => ((slots.default?.({})[0].children ?? '').toString() || props.title) ?? ''
 )
@@ -69,7 +73,7 @@ const taglabelId = toRef(() => `${computedId.value}taglabel__`)
 
 const computedClasses = computed(() => ({
   [`text-bg-${props.variant}`]: props.variant !== null,
-  'rounded-pill': props.pill,
-  'disabled': props.disabled,
+  'rounded-pill': pillBoolean.value,
+  'disabled': disabledBoolean.value,
 }))
 </script>

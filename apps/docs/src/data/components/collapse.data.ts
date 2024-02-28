@@ -12,7 +12,7 @@ export default {
         },
         {
           prop: 'modelValue',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -22,22 +22,22 @@ export default {
         },
         {
           prop: 'toggle',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'horizontal',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'visible',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'isNav',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
       ],

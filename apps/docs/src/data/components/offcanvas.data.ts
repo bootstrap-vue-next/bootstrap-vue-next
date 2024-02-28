@@ -7,27 +7,27 @@ export default {
       props: [
         {
           prop: 'modelValue',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'bodyScrolling',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'backdrop',
-          type: 'boolean',
+          type: 'Booleanish',
           default: true,
         },
         {
           prop: 'noCloseOnBackdrop',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'noCloseOnEsc',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -42,17 +42,17 @@ export default {
         },
         {
           prop: 'noHeaderClose',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'noHeader',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'lazy',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -62,7 +62,7 @@ export default {
         },
         {
           prop: 'noFocus',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -102,7 +102,7 @@ export default {
         },
         {
           prop: 'teleportDisabled',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {

@@ -1,6 +1,6 @@
 <template>
   <!-- tables definitions are shared. Can't use createReusableTemplate cause it becomes a non-root node -->
-  <table v-if="!props.responsive" :id="id" :class="computedClasses">
+  <table v-if="!resolvedResponsive" :id="id" :class="computedClasses">
     <slot />
   </table>
   <div v-else :class="responsiveClasses">
@@ -12,6 +12,7 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
+import {useBooleanish} from '../../composables'
 import type {BTableSimpleProps} from '../../types'
 
 // TODO alphabetize the lists for tables
@@ -44,29 +45,41 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
+const captionTopBoolean = useBooleanish(() => props.captionTop)
+const borderlessBoolean = useBooleanish(() => props.borderless)
+const borderedBoolean = useBooleanish(() => props.bordered)
+const darkBoolean = useBooleanish(() => props.dark)
+const hoverBoolean = useBooleanish(() => props.hover)
+const smallBoolean = useBooleanish(() => props.small)
+const stripedBoolean = useBooleanish(() => props.striped)
+const stickyHeaderBoolean = useBooleanish(() => props.stickyHeader)
+const stripedColumnsBoolean = useBooleanish(() => props.stripedColumns)
+const resolvedResponsive = useBooleanish(() => props.responsive)
+const resolvedStacked = useBooleanish(() => props.stacked)
+
 const computedClasses = computed(() => [
   props.tableClass,
   'table',
   'b-table',
   {
-    'table-bordered': props.bordered,
-    'table-borderless': props.borderless,
+    'table-bordered': borderedBoolean.value,
+    'table-borderless': borderlessBoolean.value,
     [`border-${props.borderVariant}`]: props.borderVariant !== null,
-    'caption-top': props.captionTop,
-    'table-dark': props.dark,
-    'table-hover': props.hover,
-    'b-table-stacked': props.stacked === true,
-    [`b-table-stacked-${props.stacked}`]: typeof props.stacked === 'string',
-    'table-striped': props.striped,
-    'table-sm': props.small,
+    'caption-top': captionTopBoolean.value,
+    'table-dark': darkBoolean.value,
+    'table-hover': hoverBoolean.value,
+    'b-table-stacked': resolvedStacked.value === true,
+    [`b-table-stacked-${resolvedStacked.value}`]: typeof resolvedStacked.value === 'string',
+    'table-striped': stripedBoolean.value,
+    'table-sm': smallBoolean.value,
     [`table-${props.variant}`]: props.variant !== null,
-    'table-striped-columns': props.stripedColumns,
+    'table-striped-columns': stripedColumnsBoolean.value,
   },
 ])
 
 const responsiveClasses = computed(() => ({
-  'table-responsive': props.responsive === true,
-  [`table-responsive-${props.responsive}`]: typeof props.responsive === 'string',
-  'b-table-sticky-header': props.stickyHeader,
+  'table-responsive': resolvedResponsive.value === true,
+  [`table-responsive-${resolvedResponsive.value}`]: typeof resolvedResponsive.value === 'string',
+  'b-table-sticky-header': stickyHeaderBoolean.value,
 }))
 </script>

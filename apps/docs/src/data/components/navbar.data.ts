@@ -12,7 +12,7 @@ export default {
         },
         {
           prop: 'print',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -72,17 +72,17 @@ export default {
         },
         {
           prop: 'fill',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'justified',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'small',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -105,7 +105,7 @@ export default {
       props: [
         {
           prop: 'disabled',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {

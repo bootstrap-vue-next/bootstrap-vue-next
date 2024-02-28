@@ -12,7 +12,7 @@ export default {
         },
         {
           prop: 'justify',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {

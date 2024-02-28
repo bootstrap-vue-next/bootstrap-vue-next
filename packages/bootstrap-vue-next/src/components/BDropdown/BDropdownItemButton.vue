@@ -5,7 +5,7 @@
       type="button"
       class="dropdown-item"
       :class="computedClasses"
-      :disabled="props.disabled"
+      :disabled="disabledBoolean"
       @click="clicked"
     >
       <slot />
@@ -14,8 +14,9 @@
 </template>
 
 <script setup lang="ts">
-import type {ClassValue, ColorVariant} from '../../types'
+import type {Booleanish, ClassValue, ColorVariant} from '../../types'
 import {computed} from 'vue'
+import {useBooleanish} from '../../composables'
 
 defineOptions({
   inheritAttrs: false,
@@ -23,10 +24,10 @@ defineOptions({
 
 const props = withDefaults(
   defineProps<{
-    active?: boolean
+    active?: Booleanish
     activeClass?: ClassValue
     buttonClass?: ClassValue
-    disabled?: boolean
+    disabled?: Booleanish
     variant?: ColorVariant | null
   }>(),
   {
@@ -42,6 +43,9 @@ const emit = defineEmits<{
   click: [value: MouseEvent]
 }>()
 
+const activeBoolean = useBooleanish(() => props.active)
+const disabledBoolean = useBooleanish(() => props.disabled)
+
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
@@ -50,8 +54,8 @@ defineSlots<{
 const computedClasses = computed(() => [
   props.buttonClass,
   {
-    [props.activeClass]: props.active,
-    disabled: props.disabled,
+    [props.activeClass]: activeBoolean.value,
+    disabled: disabledBoolean.value,
     [`text-${props.variant}`]: props.variant !== null,
   },
 ])

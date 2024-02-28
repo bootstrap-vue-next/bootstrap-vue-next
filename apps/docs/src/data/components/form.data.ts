@@ -12,17 +12,17 @@ export default {
         },
         {
           prop: 'floating',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'novalidate',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'validated',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
       ],
@@ -90,7 +90,7 @@ export default {
         },
         {
           prop: 'forceShow',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -110,7 +110,7 @@ export default {
         },
         {
           prop: 'state',
-          type: 'boolean',
+          type: 'Booleanish',
           default: null,
         },
         {
@@ -120,7 +120,7 @@ export default {
         },
         {
           prop: 'tooltip',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
       ],
@@ -162,7 +162,7 @@ export default {
         },
         {
           prop: 'inline',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -200,7 +200,7 @@ export default {
         },
         {
           prop: 'forceShow',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -220,7 +220,7 @@ export default {
         },
         {
           prop: 'state',
-          type: 'boolean',
+          type: 'Booleanish',
           default: null,
         },
         {
@@ -230,7 +230,7 @@ export default {
         },
         {
           prop: 'tooltip',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
       ],

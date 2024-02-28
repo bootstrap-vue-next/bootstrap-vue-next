@@ -6,7 +6,7 @@
     ref="element"
     class="collapse"
     :class="computedClasses"
-    :is-nav="props.isNav"
+    :is-nav="isNavBoolean"
     v-bind="$attrs"
   >
     <slot v-bind="sharedSlots" />
@@ -15,9 +15,10 @@
 </template>
 
 <script setup lang="ts">
-import {computed, nextTick, onMounted, provide, readonly, ref, toRef, watch} from 'vue'
-import {useId} from '../composables'
+import {computed, nextTick, onMounted, provide, readonly, ref, watch} from 'vue'
+import {useBooleanish, useId} from '../composables'
 import {useEventListener, useVModel} from '@vueuse/core'
+import type {Booleanish} from '../types'
 import {BvTriggerableEvent, collapseInjectionKey, getTransitionDelay} from '../utils'
 
 defineOptions({
@@ -26,15 +27,15 @@ defineOptions({
 
 const props = withDefaults(
   defineProps<{
-    // appear?: boolean
-    horizontal?: boolean
+    // appear?: Booleanish
+    horizontal?: Booleanish
     id?: string
-    isNav?: boolean
-    modelValue?: boolean
-    skipAnimation?: boolean
+    isNav?: Booleanish
+    modelValue?: Booleanish
+    skipAnimation?: Booleanish
     tag?: string
-    toggle?: boolean
-    visible?: boolean
+    toggle?: Booleanish
+    visible?: Booleanish
   }>(),
   {
     horizontal: false,
@@ -90,18 +91,25 @@ const buildTriggerableEvent = (
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
+const modelValueBoolean = useBooleanish(modelValue)
+const toggleBoolean = useBooleanish(() => props.toggle)
+const horizontalBoolean = useBooleanish(() => props.horizontal)
+const isNavBoolean = useBooleanish(() => props.isNav)
+const visibleBoolean = useBooleanish(() => props.visible)
+const skipAnimationBoolean = useBooleanish(() => props.skipAnimation)
+
 const computedId = useId(() => props.id, 'collapse')
 
 const element = ref<HTMLElement | null>(null)
 const isCollapsing = ref(false)
-const show = ref(modelValue.value)
+const show = ref(modelValueBoolean.value)
 
 const computedClasses = computed(() => ({
   'show': show.value,
-  'navbar-collapse': props.isNav,
+  'navbar-collapse': isNavBoolean.value,
   'collapsing': isCollapsing.value,
-  'closing': show.value && !modelValue.value,
-  'collapse-horizontal': props.horizontal,
+  'closing': show.value && !modelValueBoolean.value,
+  'collapse-horizontal': horizontalBoolean.value,
 }))
 
 const close = () => {
@@ -111,7 +119,7 @@ const open = () => {
   modelValue.value = true
 }
 const toggleFn = () => {
-  modelValue.value = !modelValue.value
+  modelValue.value = !modelValueBoolean.value
 }
 
 const sharedSlots = computed<SharedSlotsData>(() => ({
@@ -119,12 +127,12 @@ const sharedSlots = computed<SharedSlotsData>(() => ({
   open,
   close,
   id: computedId.value,
-  visible: modelValue.value,
+  visible: modelValueBoolean.value,
 }))
 
 let revealTimeout: ReturnType<typeof setTimeout> | undefined
 let hideTimeout: ReturnType<typeof setTimeout> | undefined
-let _skipAnimation = props.skipAnimation
+let _skipAnimation = skipAnimationBoolean.value
 
 const reveal = () => {
   const event = buildTriggerableEvent('show', {cancelable: true})
@@ -140,7 +148,7 @@ const reveal = () => {
   isCollapsing.value = true
   nextTick(() => {
     if (element.value === null) return
-    if (props.horizontal) {
+    if (horizontalBoolean.value) {
       element.value.style.width = `${element.value.scrollWidth}px`
     } else {
       element.value.style.height = `${element.value.scrollHeight}px`
@@ -174,7 +182,7 @@ const hide = () => {
     element.value.style.width = ``
     // return
   } else {
-    if (props.horizontal) {
+    if (horizontalBoolean.value) {
       element.value.style.width = `${element.value.scrollWidth}px`
     } else {
       element.value.style.height = `${element.value.scrollHeight}px`
@@ -196,51 +204,45 @@ const hide = () => {
 }
 
 watch(modelValue, () => {
-  modelValue.value ? reveal() : hide()
+  modelValueBoolean.value ? reveal() : hide()
 })
 
 onMounted(() => {
   if (element.value === null) return
-  if (!modelValue.value && props.toggle) {
+  if (!modelValueBoolean.value && toggleBoolean.value) {
     nextTick(() => {
       modelValue.value = true
     })
   }
 })
 
-watch(
-  () => props.skipAnimation,
-  (newval) => {
-    _skipAnimation = newval
-  }
-)
+watch(skipAnimationBoolean, (newval) => {
+  _skipAnimation = newval
+})
 
-if (props.visible) {
+if (visibleBoolean.value) {
   _skipAnimation = true
   modelValue.value = true
   nextTick(() => {
-    _skipAnimation = props.skipAnimation
+    _skipAnimation = skipAnimationBoolean.value
   })
 }
 
-watch(
-  () => props.visible,
-  (newval) => {
-    _skipAnimation = true
-    newval ? open() : close()
-    nextTick(() => {
-      _skipAnimation = props.skipAnimation
-    })
-  }
-)
+watch(visibleBoolean, (newval) => {
+  _skipAnimation = true
+  newval ? open() : close()
+  nextTick(() => {
+    _skipAnimation = skipAnimationBoolean.value
+  })
+})
 
 useEventListener(element, 'bv-toggle', () => {
-  modelValue.value = !modelValue.value
+  modelValue.value = !modelValueBoolean.value
 })
 
 defineExpose({
   close,
-  isNav: props.isNav,
+  isNav: isNavBoolean,
   open,
   toggle: toggleFn,
   visible: readonly(show),
@@ -252,6 +254,6 @@ provide(collapseInjectionKey, {
   open,
   toggle: toggleFn,
   visible: readonly(show),
-  isNav: toRef(() => props.isNav),
+  isNav: isNavBoolean,
 })
 </script>

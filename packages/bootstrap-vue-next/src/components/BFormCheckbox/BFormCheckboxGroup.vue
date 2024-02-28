@@ -23,18 +23,25 @@
 <script setup lang="ts">
 import {computed, nextTick, provide, ref, toRef, watch} from 'vue'
 import BFormCheckbox from './BFormCheckbox.vue'
-import type {AriaInvalid, ButtonVariant, CheckboxOptionRaw, CheckboxValue, Size} from '../../types'
-import {getGroupAttr, getGroupClasses, useId} from '../../composables'
+import type {
+  AriaInvalid,
+  Booleanish,
+  ButtonVariant,
+  CheckboxOptionRaw,
+  CheckboxValue,
+  Size,
+} from '../../types'
+import {getGroupAttr, getGroupClasses, useBooleanish, useId} from '../../composables'
 import {checkboxGroupKey} from '../../utils'
 import {useFocus, useVModel} from '@vueuse/core'
 
 const props = withDefaults(
   defineProps<{
     ariaInvalid?: AriaInvalid
-    autofocus?: boolean
+    autofocus?: Booleanish
     buttonVariant?: ButtonVariant | null
-    buttons?: boolean
-    disabled?: boolean
+    buttons?: Booleanish
+    disabled?: Booleanish
     disabledField?: string
     form?: string
     htmlField?: string
@@ -42,14 +49,14 @@ const props = withDefaults(
     modelValue?: readonly CheckboxValue[]
     name?: string
     options?: readonly CheckboxOptionRaw[]
-    plain?: boolean
-    required?: boolean
+    plain?: Booleanish
+    required?: Booleanish
     size?: Size
-    stacked?: boolean
-    state?: boolean | null
-    switches?: boolean
+    stacked?: Booleanish
+    state?: Booleanish | null
+    switches?: Booleanish
     textField?: string
-    validated?: boolean
+    validated?: Booleanish
     valueField?: string
   }>(),
   {
@@ -94,26 +101,35 @@ const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const computedId = useId(() => props.id, 'checkbox')
 const computedName = useId(() => props.name, 'checkbox')
+const autofocusBoolean = useBooleanish(() => props.autofocus)
+const buttonsBoolean = useBooleanish(() => props.buttons)
+const disabledBoolean = useBooleanish(() => props.disabled)
+const plainBoolean = useBooleanish(() => props.plain)
+const requiredBoolean = useBooleanish(() => props.required)
+const stackedBoolean = useBooleanish(() => props.stacked)
+const stateBoolean = useBooleanish(() => props.state)
+const switchesBoolean = useBooleanish(() => props.switches)
+const validatedBoolean = useBooleanish(() => props.validated)
 
 const element = ref<HTMLElement | null>(null)
 
 const {focused} = useFocus(element, {
-  initialValue: props.autofocus,
+  initialValue: autofocusBoolean.value,
 })
 
 provide(checkboxGroupKey, {
   modelValue,
-  switch: toRef(() => props.switches),
+  switch: switchesBoolean,
   buttonVariant: toRef(() => props.buttonVariant),
   form: toRef(() => props.form),
   name: computedName,
-  state: toRef(() => props.state),
-  plain: toRef(() => props.plain),
+  state: stateBoolean,
+  plain: plainBoolean,
   size: toRef(() => props.size),
-  inline: toRef(() => !props.stacked),
-  required: toRef(() => props.required),
-  buttons: toRef(() => props.buttons),
-  disabled: toRef(() => props.disabled),
+  inline: toRef(() => !stackedBoolean.value),
+  required: requiredBoolean,
+  buttons: buttonsBoolean,
+  disabled: disabledBoolean,
 })
 
 watch(modelValue, (newValue) => {
@@ -129,7 +145,7 @@ const normalizeOptions = computed(() =>
       ? {
           props: {
             value: el,
-            disabled: props.disabled,
+            disabled: disabledBoolean.value,
           },
           text: el.toString(),
           html: undefined,
@@ -149,12 +165,12 @@ const normalizeOptions = computed(() =>
 )
 
 const classesObject = computed(() => ({
-  required: props.required,
+  required: requiredBoolean.value,
   ariaInvalid: props.ariaInvalid,
-  state: props.state,
-  validated: props.validated,
-  buttons: props.buttons,
-  stacked: props.stacked,
+  state: stateBoolean.value,
+  validated: validatedBoolean.value,
+  buttons: buttonsBoolean.value,
+  stacked: stackedBoolean.value,
   size: props.size,
 }))
 const computedAttrs = getGroupAttr(classesObject)

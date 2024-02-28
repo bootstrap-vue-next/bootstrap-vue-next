@@ -7,7 +7,7 @@ export default {
       props: [
         {
           prop: 'noResize',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {

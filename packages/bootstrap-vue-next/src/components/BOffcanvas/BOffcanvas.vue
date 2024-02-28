@@ -1,5 +1,5 @@
 <template>
-  <Teleport :to="teleportTo" :disabled="props.teleportDisabled">
+  <Teleport :to="teleportTo" :disabled="teleportDisabledBoolean">
     <BTransition
       :no-fade="true"
       :trans-props="{
@@ -26,14 +26,14 @@
         v-bind="$attrs"
       >
         <template v-if="lazyShowing">
-          <div v-if="!props.noHeader" class="offcanvas-header" :class="headerClass">
+          <div v-if="!noHeaderBoolean" class="offcanvas-header" :class="headerClass">
             <slot name="header" v-bind="sharedSlots">
               <h5 :id="`${computedId}-offcanvas-label`" class="offcanvas-title">
                 <slot name="title" v-bind="sharedSlots">
                   {{ title }}
                 </slot>
               </h5>
-              <template v-if="!props.noHeaderClose">
+              <template v-if="!noHeaderCloseBoolean">
                 <BButton v-if="hasHeaderCloseSlot" v-bind="headerCloseAttrs" @click="hide('close')">
                   <slot name="header-close" />
                 </BButton>
@@ -71,8 +71,8 @@
 <script setup lang="ts">
 import {computed, nextTick, ref, type RendererElement, toRef} from 'vue'
 import {onKeyStroke, useEventListener, useFocus, useVModel} from '@vueuse/core'
-import {useId, useSafeScrollLock} from '../../composables'
-import type {ButtonVariant, ClassValue, ColorVariant} from '../../types'
+import {useBooleanish, useId, useSafeScrollLock} from '../../composables'
+import type {Booleanish, ButtonVariant, ClassValue, ColorVariant} from '../../types'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
 import BOverlay from '../BOverlay/BOverlay.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
@@ -93,28 +93,28 @@ defineOptions({
 
 const props = withDefaults(
   defineProps<{
-    backdrop?: boolean
+    backdrop?: Booleanish
     backdropVariant?: ColorVariant | null
     bodyClass?: string
-    bodyScrolling?: boolean
+    bodyScrolling?: Booleanish
     footerClass?: string
     headerClass?: string
     headerCloseClass?: ClassValue
     headerCloseLabel?: string
     headerCloseVariant?: ButtonVariant | null
     id?: string
-    lazy?: boolean
-    modelValue?: boolean
-    noCloseOnBackdrop?: boolean
-    noCloseOnEsc?: boolean
-    noFocus?: boolean
-    noHeader?: boolean
-    noHeaderClose?: boolean
+    lazy?: Booleanish
+    modelValue?: Booleanish
+    noCloseOnBackdrop?: Booleanish
+    noCloseOnEsc?: Booleanish
+    noFocus?: Booleanish
+    noHeader?: Booleanish
+    noHeaderClose?: Booleanish
     // TODO standardize this. Create a dedicated type
     // Then in components that use individual props (BImg)
     // Make them just use prop placement
     placement?: 'top' | 'bottom' | 'start' | 'end'
-    teleportDisabled?: boolean
+    teleportDisabled?: Booleanish
     teleportTo?: string | RendererElement | null | undefined
     title?: string
     // responsive?: Breakpoint
@@ -180,8 +180,19 @@ const slots = defineSlots<{
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
+const modelValueBoolean = useBooleanish(modelValue)
+const bodyScrollingBoolean = useBooleanish(() => props.bodyScrolling)
+const backdropBoolean = useBooleanish(() => props.backdrop)
+const noHeaderCloseBoolean = useBooleanish(() => props.noHeaderClose)
+const noHeaderBoolean = useBooleanish(() => props.noHeader)
+const noFocusBoolean = useBooleanish(() => props.noFocus)
+const noCloseOnBackdropBoolean = useBooleanish(() => props.noCloseOnBackdrop)
+const noCloseOnEscBoolean = useBooleanish(() => props.noCloseOnEsc)
+const lazyBoolean = useBooleanish(() => props.lazy)
+const teleportDisabledBoolean = useBooleanish(() => props.teleportDisabled)
+
 const computedId = useId(() => props.id, 'offcanvas')
-useSafeScrollLock(modelValue, () => props.bodyScrolling)
+useSafeScrollLock(modelValueBoolean, bodyScrollingBoolean)
 
 const element = ref<HTMLElement | null>(null)
 
@@ -194,19 +205,19 @@ onKeyStroke(
 )
 
 const {focused} = useFocus(element, {
-  initialValue: modelValue.value && props.noFocus === false,
+  initialValue: modelValueBoolean.value && noFocusBoolean.value === false,
 })
 
-const isActive = ref(modelValue.value)
+const isActive = ref(modelValueBoolean.value)
 const lazyLoadCompleted = ref(false)
 
-const showBackdrop = toRef(() => props.backdrop === true && modelValue.value === true)
+const showBackdrop = toRef(() => backdropBoolean.value === true && modelValueBoolean.value === true)
 
 const lazyShowing = toRef(
   () =>
-    props.lazy === false ||
-    (props.lazy === true && lazyLoadCompleted.value === true) ||
-    (props.lazy === true && modelValue.value === true)
+    lazyBoolean.value === false ||
+    (lazyBoolean.value === true && lazyLoadCompleted.value === true) ||
+    (lazyBoolean.value === true && modelValueBoolean.value === true)
 )
 
 const hasHeaderCloseSlot = toRef(() => !isEmptySlot(slots['header-close']))
@@ -225,12 +236,12 @@ const computedClasses = computed(() => [
   'offcanvas', // Remove when above check is fixed
   `offcanvas-${props.placement}`,
   {
-    show: modelValue.value && isActive.value === true,
+    show: modelValueBoolean.value && isActive.value === true,
   },
 ])
 
 const sharedSlots = computed<SharedSlotsData>(() => ({
-  visible: modelValue.value,
+  visible: modelValueBoolean.value,
   placement: props.placement,
   hide,
 }))
@@ -250,8 +261,8 @@ const buildTriggerableEvent = (
 
 const hide = (trigger = '') => {
   if (
-    (trigger === 'backdrop' && props.noCloseOnBackdrop) ||
-    (trigger === 'esc' && props.noCloseOnEsc)
+    (trigger === 'backdrop' && noCloseOnBackdropBoolean.value) ||
+    (trigger === 'esc' && noCloseOnEscBoolean.value)
   ) {
     emit('hide-prevented')
     return
@@ -288,7 +299,7 @@ const show = () => {
 
 const focus = () => {
   nextTick(() => {
-    if (props.noFocus === false) {
+    if (noFocusBoolean.value === false) {
       focused.value = true
     }
   })
@@ -299,17 +310,17 @@ const OnAfterEnter = () => {
   isActive.value = true
   focus()
   emit('shown', buildTriggerableEvent('shown'))
-  if (props.lazy === true) lazyLoadCompleted.value = true
+  if (lazyBoolean.value === true) lazyLoadCompleted.value = true
 }
 const onLeave = () => {
   isActive.value = false
 }
 const OnAfterLeave = () => {
   emit('hidden', buildTriggerableEvent('hidden'))
-  if (props.lazy === true) lazyLoadCompleted.value = false
+  if (lazyBoolean.value === true) lazyLoadCompleted.value = false
 }
 useEventListener(element, 'bv-toggle', () => {
-  modelValue.value ? hide() : show()
+  modelValueBoolean.value ? hide() : show()
 })
 
 defineExpose({

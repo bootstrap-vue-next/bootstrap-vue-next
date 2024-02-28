@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import type {BProgressBarProps} from '../../types'
-import {useColorVariantClasses} from '../../composables'
+import {useBooleanish, useColorVariantClasses} from '../../composables'
 import {computed, inject} from 'vue'
 import {progressInjectionKey} from '../../utils'
 import {useToNumber} from '@vueuse/core'
@@ -43,14 +43,21 @@ defineSlots<{
 
 const parentData = inject(progressInjectionKey, null)
 
+const animatedBoolean = useBooleanish(() => props.animated)
+const showProgressBoolean = useBooleanish(() => props.showProgress)
+const showValueBoolean = useBooleanish(() => props.showValue)
+const stripedBoolean = useBooleanish(() => props.striped)
 const resolvedBackgroundClasses = useColorVariantClasses(props)
 
 const computedClasses = computed(() => [
   resolvedBackgroundClasses.value,
   {
-    'progress-bar-animated': props.animated || parentData?.animated.value,
+    'progress-bar-animated': animatedBoolean.value || parentData?.animated.value,
     'progress-bar-striped':
-      props.striped || parentData?.striped.value || props.animated || parentData?.animated.value,
+      stripedBoolean.value ||
+      parentData?.striped.value ||
+      animatedBoolean.value ||
+      parentData?.animated.value,
   },
 ])
 
@@ -62,9 +69,9 @@ const parentMaxNumber = useToNumber(() => parentData?.max.value ?? NaN)
 const computedLabel = computed(() =>
   props.labelHtml !== undefined
     ? props.labelHtml
-    : props.showValue || parentData?.showValue.value
+    : showValueBoolean.value || parentData?.showValue.value
       ? numberValue.value.toFixed(numberPrecision.value)
-      : props.showProgress || parentData?.showProgress.value
+      : showProgressBoolean.value || parentData?.showProgress.value
         ? ((numberValue.value * 100) / (numberMax.value || 100)).toFixed(numberPrecision.value)
         : props.label !== undefined
           ? props.label

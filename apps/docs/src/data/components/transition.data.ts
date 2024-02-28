@@ -7,7 +7,7 @@ export default {
       props: [
         {
           prop: 'appear',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -17,7 +17,7 @@ export default {
         },
         {
           prop: 'noFade',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {

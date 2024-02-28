@@ -52,52 +52,52 @@ export default {
         },
         {
           prop: 'block',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'disabled',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'isNav',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'dropup',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'dropend',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'dropstart',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'center',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'end',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'noFlip',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'noShift',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -300,7 +300,7 @@ export default {
         },
         {
           prop: 'active',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -310,7 +310,7 @@ export default {
         },
         {
           prop: 'disabled',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {

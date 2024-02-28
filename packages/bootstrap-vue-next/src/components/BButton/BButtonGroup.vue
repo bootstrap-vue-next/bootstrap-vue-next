@@ -5,15 +5,16 @@
 </template>
 
 <script setup lang="ts">
-import type {Size} from '../../types'
+import type {Booleanish, Size} from '../../types'
 import {computed} from 'vue'
+import {useBooleanish} from '../../composables'
 
 const props = withDefaults(
   defineProps<{
     ariaLabel?: string
     size?: Size
     tag?: string
-    vertical?: boolean
+    vertical?: Booleanish
   }>(),
   {
     ariaLabel: 'Group',
@@ -28,9 +29,11 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
+const verticalBoolean = useBooleanish(() => props.vertical)
+
 const computedClasses = computed(() => ({
-  'btn-group': !props.vertical,
+  'btn-group': !verticalBoolean.value,
   [`btn-group-${props.size}`]: props.size !== 'md',
-  'btn-group-vertical': props.vertical,
+  'btn-group-vertical': verticalBoolean.value,
 }))
 </script>

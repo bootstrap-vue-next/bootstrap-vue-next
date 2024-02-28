@@ -17,7 +17,7 @@ export default {
         },
         {
           prop: 'badgeLeft',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -27,7 +27,7 @@ export default {
         },
         {
           prop: 'badgeTop',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -37,7 +37,7 @@ export default {
         },
         {
           prop: 'button',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -62,7 +62,7 @@ export default {
         },
         {
           prop: 'square',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -138,7 +138,7 @@ export default {
         },
         {
           prop: 'square',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {

@@ -25,7 +25,7 @@ export default {
       props: [
         {
           prop: 'animated',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -50,17 +50,17 @@ export default {
         },
         {
           prop: 'showProgress',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'showValue',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'striped',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {

@@ -17,7 +17,7 @@ export default {
         },
         {
           prop: 'small',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {

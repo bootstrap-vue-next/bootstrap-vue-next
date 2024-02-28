@@ -8,12 +8,13 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import type {TextColorVariant} from '../../types'
+import type {Booleanish, TextColorVariant} from '../../types'
+import {useBooleanish} from '../../composables'
 
 const props = withDefaults(
   defineProps<{
     id?: string
-    inline?: boolean
+    inline?: Booleanish
     tag?: string
     text?: string
     textVariant?: TextColorVariant | null
@@ -32,8 +33,10 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
+const inlineBoolean = useBooleanish(() => props.inline)
+
 const computedClasses = computed(() => ({
   [`text-${props.textVariant}`]: props.textVariant !== null,
-  'form-text': !props.inline,
+  'form-text': !inlineBoolean.value,
 }))
 </script>

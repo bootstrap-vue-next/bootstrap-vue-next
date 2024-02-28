@@ -7,14 +7,14 @@ export default {
       props: [
         {
           prop: 'flush',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
           description:
             'Remove the default background-color, some borders, and some rounded corners to render accordions edge-to-edge with their parent container',
         },
         {
           prop: 'free',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
           description: 'Accordion items will stay open when another item is opened',
         },
@@ -55,7 +55,7 @@ export default {
         },
         {
           prop: 'modelValue',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
@@ -70,22 +70,22 @@ export default {
         },
         {
           prop: 'toggle',
-          type: 'boolean',
+          type: 'Booleanish',
           default: undefined,
         },
         {
           prop: 'horizontal',
-          type: 'boolean',
+          type: 'Booleanish',
           default: undefined,
         },
         {
           prop: 'visible',
-          type: 'boolean',
+          type: 'Booleanish',
           default: false,
         },
         {
           prop: 'isNav',
-          type: 'boolean',
+          type: 'Booleanish',
           default: undefined,
         },
         {

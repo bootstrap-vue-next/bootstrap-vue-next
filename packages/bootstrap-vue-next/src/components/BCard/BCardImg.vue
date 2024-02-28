@@ -4,15 +4,16 @@
 
 <script setup lang="ts">
 import BImg from '../BImg.vue'
-import type {BImgProps} from '../../types'
+import type {BImgProps, Booleanish} from '../../types'
+import {useBooleanish} from '../../composables'
 import {omit} from '../../utils'
 import {computed, toRef} from 'vue'
 
 const props = withDefaults(
   defineProps<
     {
-      bottom?: boolean
-      top?: boolean
+      bottom?: Booleanish
+      top?: Booleanish
     } & BImgProps
   >(),
   {
@@ -43,14 +44,19 @@ const props = withDefaults(
   }
 )
 
+const bottomBoolean = useBooleanish(() => props.bottom)
+const endBoolean = useBooleanish(() => props.end)
+const startBoolean = useBooleanish(() => props.start)
+const topBoolean = useBooleanish(() => props.top)
+
 const baseClass = toRef(() =>
-  props.top
+  topBoolean.value
     ? 'card-img-top'
-    : props.end
+    : endBoolean.value
       ? 'card-img-right'
-      : props.bottom
+      : bottomBoolean.value
         ? 'card-img-bottom'
-        : props.start
+        : startBoolean.value
           ? 'card-img-left'
           : 'card-img'
 )
