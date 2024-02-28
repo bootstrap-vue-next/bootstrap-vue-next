@@ -105,24 +105,24 @@ export default {
         {
           args: [
             {
-              arg: 'sliding-start',
+              arg: 'event',
               description: '',
-              type: 'Event',
+              type: 'BvCarouselEvent',
             },
           ],
-          description: '',
-          event: 'sliding-start',
+          description: 'Fires immediately when the carousel starts its slide transition.',
+          event: 'slide',
         },
         {
           args: [
             {
-              arg: 'sliding-end',
+              arg: 'event',
               description: '',
-              type: 'Event',
+              type: 'BvCarouselEvent',
             },
           ],
-          description: '',
-          event: 'sliding-end',
+          description: 'Fired when the carousel has completed its slide transition.',
+          event: 'slid',
         },
       ],
       slots: [
