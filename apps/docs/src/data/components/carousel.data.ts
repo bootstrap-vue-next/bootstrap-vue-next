@@ -12,17 +12,17 @@ export default {
         },
         {
           prop: 'noHoverPause',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'rideReverse',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'fade',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -52,12 +52,12 @@ export default {
         },
         {
           prop: 'controls',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'indicators',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -67,12 +67,12 @@ export default {
         },
         {
           prop: 'noTouch',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'noWrap',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -92,7 +92,7 @@ export default {
         },
         {
           prop: 'keyboard',
-          type: 'Booleanish',
+          type: 'boolean',
           default: true,
         },
         {
@@ -204,7 +204,7 @@ export default {
         },
         {
           prop: 'imgBlank',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {

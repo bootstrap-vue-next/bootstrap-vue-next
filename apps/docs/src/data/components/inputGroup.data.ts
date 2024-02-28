@@ -65,7 +65,7 @@ export default {
       props: [
         {
           prop: 'isText',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
       ],
@@ -83,7 +83,7 @@ export default {
       props: [
         {
           prop: 'isText',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
       ],

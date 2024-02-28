@@ -5,16 +5,16 @@
 </template>
 
 <script setup lang="ts">
-import type {AlignmentJustifyContent, Booleanish} from '../../types'
+import type {AlignmentJustifyContent} from '../../types'
 import {computed} from 'vue'
-import {useAlignment, useBooleanish} from '../../composables'
+import {useAlignment} from '../../composables'
 
 const props = withDefaults(
   defineProps<{
     align?: AlignmentJustifyContent
-    fill?: Booleanish
-    justified?: Booleanish
-    small?: Booleanish
+    fill?: boolean
+    justified?: boolean
+    small?: boolean
     tag?: string
   }>(),
   {
@@ -31,15 +31,12 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const fillBoolean = useBooleanish(() => props.fill)
-const justifiedBoolean = useBooleanish(() => props.justified)
-const smallBoolean = useBooleanish(() => props.small)
 const alignment = useAlignment(() => props.align)
 
 const computedClasses = computed(() => ({
-  'nav-fill': fillBoolean.value,
-  'nav-justified': justifiedBoolean.value,
+  'nav-fill': props.fill,
+  'nav-justified': props.justified,
   [alignment.value]: props.align !== undefined,
-  'small': smallBoolean.value,
+  'small': props.small,
 }))
 </script>

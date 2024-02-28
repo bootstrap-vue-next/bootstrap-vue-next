@@ -7,16 +7,16 @@
     :name="name || undefined"
     :form="form || undefined"
     :type="type"
-    :disabled="disabledBoolean"
+    :disabled="props.disabled"
     :placeholder="placeholder"
-    :required="requiredBoolean || undefined"
+    :required="props.required || undefined"
     :autocomplete="autocomplete || undefined"
-    :readonly="readonlyBoolean || plaintextBoolean"
+    :readonly="props.readonly || props.plaintext"
     :min="min"
     :max="max"
     :step="step"
     :list="type !== 'password' ? list : undefined"
-    :aria-required="requiredBoolean || undefined"
+    :aria-required="props.required || undefined"
     :aria-invalid="computedAriaInvalid"
     @input="onInput($event)"
     @change="onChange($event)"
@@ -26,7 +26,7 @@
 
 <script setup lang="ts">
 import {computed, ref} from 'vue'
-import {useBooleanish, useFormInput, useStateClass} from '../../composables'
+import {useFormInput, useStateClass} from '../../composables'
 import type {CommonInputProps, InputType, Numberish} from '../../types'
 
 const props = withDefaults(
@@ -34,7 +34,7 @@ const props = withDefaults(
     {
       max?: Numberish
       min?: Numberish
-      // noWheel: {type: [Boolean, String] as PropType<Booleanish>, default: false}, TODO: not implemented yet
+      // noWheel: {type: Boolean, default: false}, TODO: not implemented yet
       step?: Numberish
       type?: InputType
     } & CommonInputProps
@@ -78,13 +78,7 @@ const emit = defineEmits<{
 const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
   useFormInput(props, emit)
 
-const disabledBoolean = useBooleanish(() => props.disabled)
-const requiredBoolean = useBooleanish(() => props.required)
-const readonlyBoolean = useBooleanish(() => props.readonly)
-const plaintextBoolean = useBooleanish(() => props.plaintext)
-const stateBoolean = useBooleanish(() => props.state)
-
-const stateClass = useStateClass(stateBoolean)
+const stateClass = useStateClass(() => props.state)
 
 const isHighlighted = ref(false)
 
@@ -96,9 +90,9 @@ const computedClasses = computed(() => {
     {
       'form-control-highlighted': isHighlighted.value,
       'form-range': isRange,
-      'form-control': isColor || (!plaintextBoolean.value && !isRange),
+      'form-control': isColor || (!props.plaintext && !isRange),
       'form-control-color': isColor,
-      'form-control-plaintext': plaintextBoolean.value && !isRange && !isColor,
+      'form-control-plaintext': props.plaintext && !isRange && !isColor,
       [`form-control-${props.size}`]: !!props.size,
     },
   ]

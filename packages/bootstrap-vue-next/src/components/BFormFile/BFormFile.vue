@@ -13,14 +13,14 @@
     :class="computedClasses"
     :form="form"
     :name="name"
-    :multiple="multipleBoolean"
-    :disabled="disabledBoolean"
-    :capture="computedCapture"
+    :multiple="props.multiple"
+    :disabled="props.disabled"
+    :capture="props.capture"
     :accept="computedAccept || undefined"
-    :required="requiredBoolean || undefined"
-    :aria-required="requiredBoolean || undefined"
-    :directory="directoryBoolean"
-    :webkitdirectory="directoryBoolean"
+    :required="props.required || undefined"
+    :aria-required="props.required || undefined"
+    :directory="props.directory"
+    :webkitdirectory="props.directory"
     @change="onChange"
     @drop="onDrop"
   />
@@ -29,8 +29,8 @@
 <script setup lang="ts">
 import {computed, ref, toRef, watch} from 'vue'
 import {useFocus, useVModel} from '@vueuse/core'
-import type {Booleanish, ClassValue, Size} from '../../types'
-import {useBooleanish, useId, useStateClass} from '../../composables'
+import type {ClassValue, Size} from '../../types'
+import {useId, useStateClass} from '../../composables'
 import {isEmptySlot} from '../../utils'
 
 defineOptions({
@@ -45,22 +45,22 @@ const slots = defineSlots<{
 const props = withDefaults(
   defineProps<{
     accept?: string | readonly string[]
-    autofocus?: Booleanish
-    capture?: Booleanish | 'user' | 'environment'
-    directory?: Booleanish
-    disabled?: Booleanish
+    autofocus?: boolean
+    capture?: boolean | 'user' | 'environment'
+    directory?: boolean
+    disabled?: boolean
     form?: string
     id?: string
     label?: string
     labelClass?: ClassValue
     modelValue?: readonly File[] | File | null
-    multiple?: Booleanish
+    multiple?: boolean
     name?: string
-    noDrop?: Booleanish
-    noTraverse?: Booleanish
-    required?: Booleanish
+    noDrop?: boolean
+    noTraverse?: boolean
+    required?: boolean
     size?: Size
-    state?: Booleanish | null
+    state?: boolean | null
   }>(),
   {
     accept: '',
@@ -91,23 +91,13 @@ const emit = defineEmits<{
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 const computedId = useId(() => props.id)
 
-const autofocusBoolean = useBooleanish(() => props.autofocus)
-const directoryBoolean = useBooleanish(() => props.directory)
-const disabledBoolean = useBooleanish(() => props.disabled)
-const multipleBoolean = useBooleanish(() => props.multiple)
-const noDropBoolean = useBooleanish(() => props.noDrop)
-// TODO not implemented yet
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const noTraverseBoolean = useBooleanish(() => props.noTraverse)
-const requiredBoolean = useBooleanish(() => props.required)
-const stateBoolean = useBooleanish(() => props.state)
-const computedCapture = useBooleanish(() => props.capture)
+// TODO noTraverse is not implemented yet
 
-const stateClass = useStateClass(stateBoolean)
+const stateClass = useStateClass(() => props.state)
 
 const input = ref<HTMLInputElement | null>(null)
 
-const {focused} = useFocus(input, {initialValue: autofocusBoolean.value})
+const {focused} = useFocus(input, {initialValue: props.autofocus})
 
 const hasLabelSlot = toRef(() => !isEmptySlot(slots['label']))
 const computedAccept = toRef(() =>
@@ -124,11 +114,11 @@ const computedClasses = computed(() => [
 const onChange = () => {
   const value =
     input.value?.files === null || input.value?.files === undefined ? null : [...input.value.files]
-  modelValue.value = value === null ? null : multipleBoolean.value === true ? value : value[0]
+  modelValue.value = value === null ? null : props.multiple === true ? value : value[0]
 }
 
 const onDrop = (e: Readonly<Event>) => {
-  if (noDropBoolean.value === true) {
+  if (props.noDrop === true) {
     e.preventDefault()
   }
 }

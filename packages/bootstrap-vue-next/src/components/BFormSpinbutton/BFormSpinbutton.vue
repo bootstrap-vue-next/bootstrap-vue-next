@@ -5,11 +5,12 @@
     :class="computedClasses"
     role="group"
     :lang="computedLocale"
-    :tabindex="disabledBoolean ? undefined : '-1'"
+    :tabindex="props.disabled ? undefined : '-1'"
     :title="ariaLabel"
     @click="focused = true"
   >
     <!-- eslint-disable-next-line prettier/prettier -->
+    <!-- prettier-ignore -->
     <slot :name="(buttons.top.slot.name as 'increment' | 'decrement')" :has-focus="focused">
       <button
         v-bind="buttons.top.button"
@@ -22,7 +23,7 @@
       </button>
     </slot>
     <input
-      v-if="name && !disabledBoolean"
+      v-if="name && !props.disabled"
       key="hidden"
       type="hidden"
       :name="name"
@@ -35,14 +36,14 @@
       class="flex-grow-1"
       :class="computedSpinClasses"
       :dir="isRtl ?? false ? 'rtl' : 'ltr'"
-      :tabindex="disabledBoolean ? undefined : '0'"
+      :tabindex="props.disabled ? undefined : '0'"
       role="spinbutton"
       aria-live="off"
       :aria-label="ariaLabel || undefined"
       :aria-invalid="
-        stateBoolean === false || (!modelValue !== null && requiredBoolean) ? true : undefined
+        props.state === false || (!modelValue !== null && props.required) ? true : undefined
       "
-      :aria-required="requiredBoolean ? true : undefined"
+      :aria-required="props.required ? true : undefined"
       :aria-valuemin="computedMin"
       :aria-valuemax="computedMax"
       :aria-valuenow="modelValue !== null ? modelValue : undefined"
@@ -53,6 +54,7 @@
       </bdi>
     </output>
     <!-- eslint-disable-next-line prettier/prettier -->
+    <!-- prettier-ignore -->
     <slot :name="(buttons.bottom.slot.name as 'increment' | 'decrement')" :has-focus="focused">
       <button
         v-bind="buttons.bottom.button"
@@ -69,7 +71,7 @@
 
 <script setup lang="ts">
 import {computed, ref, toRef} from 'vue'
-import type {Booleanish, ButtonType, Numberish, Size} from '../../types'
+import type {ButtonType, Numberish, Size} from '../../types'
 import {eventOnOff} from '../../utils/event'
 import {
   CODE_DOWN,
@@ -80,7 +82,7 @@ import {
   CODE_UP,
 } from '../../constants/codes'
 import {onKeyStroke, useFocus, useToNumber, useVModel} from '@vueuse/core'
-import {useBooleanish, useId, useRtl} from '../../composables'
+import {useId, useRtl} from '../../composables'
 
 const KEY_CODES = [CODE_UP, CODE_DOWN, CODE_HOME, CODE_END, CODE_PAGEUP, CODE_PAGEDOWN]
 
@@ -88,11 +90,11 @@ const props = withDefaults(
   defineProps<{
     ariaControls?: string
     ariaLabel?: string
-    disabled?: Booleanish
+    disabled?: boolean
     form?: string
     formatterFn?: (value: number) => string
     id?: string
-    inline?: Booleanish
+    inline?: boolean
     labelDecrement?: string
     labelIncrement?: string
     locale?: string
@@ -101,17 +103,17 @@ const props = withDefaults(
     modelValue?: number | null
     name?: string
     placeholder?: string
-    readonly?: Booleanish
+    readonly?: boolean
     repeatDelay?: Numberish
     repeatInterval?: Numberish
     repeatStepMultiplier?: Numberish
     repeatThreshold?: Numberish
-    required?: Booleanish
+    required?: boolean
     size?: Size
-    state?: Booleanish | null
+    state?: boolean | null
     step?: Numberish
-    vertical?: Booleanish
-    wrap?: Booleanish
+    vertical?: boolean
+    wrap?: boolean
   }>(),
   {
     ariaControls: undefined,
@@ -164,33 +166,25 @@ const {focused} = useFocus(element)
 
 const computedId = useId(() => props.id, 'spinbutton')
 
-const disabledBoolean = useBooleanish(() => props.disabled)
-const inlineBoolean = useBooleanish(() => props.inline)
-const readonlyBoolean = useBooleanish(() => props.readonly)
-const verticalBoolean = useBooleanish(() => props.vertical)
-const requiredBoolean = useBooleanish(() => props.required)
-const wrapBoolean = useBooleanish(() => props.wrap)
-const stateBoolean = useBooleanish(() => props.state)
-
 const computedClasses = computed(() => ({
-  'disabled': disabledBoolean.value,
-  'readonly': readonlyBoolean.value,
+  'disabled': props.disabled,
+  'readonly': props.readonly,
   'focus': focused.value,
-  'd-inline-flex': inlineBoolean.value || verticalBoolean.value,
-  'd-flex': !inlineBoolean.value && !verticalBoolean.value,
-  'align-items-stretch': !verticalBoolean.value,
-  'flex-column': verticalBoolean.value,
+  'd-inline-flex': props.inline || props.vertical,
+  'd-flex': !props.inline && !props.vertical,
+  'align-items-stretch': !props.vertical,
+  'flex-column': props.vertical,
   [`form-control-${props.size}`]: props.size !== undefined,
 }))
 
 const computedSpinClasses = computed(() => ({
-  'd-flex': verticalBoolean.value,
-  'align-self-center': !verticalBoolean.value,
-  'align-items-center': verticalBoolean.value,
-  'border-top': verticalBoolean.value,
-  'border-bottom': verticalBoolean.value,
-  'border-start': !verticalBoolean.value,
-  'border-end': !verticalBoolean.value,
+  'd-flex': props.vertical,
+  'align-self-center': !props.vertical,
+  'align-items-center': props.vertical,
+  'border-top': props.vertical,
+  'border-bottom': props.vertical,
+  'border-start': !props.vertical,
+  'border-end': !props.vertical,
 }))
 
 //non reactive properties
@@ -297,7 +291,7 @@ const stepValue = (direction: number) => {
   // Sets a new incremented or decremented value, supporting optional wrapping
   // Direction is either +1 or -1 (or a multiple thereof)
   let {value} = modelValue
-  if (!disabledBoolean.value && value !== null) {
+  if (!props.disabled && value !== null) {
     const step = computedStep.value * direction
     const min = computedMin.value
     const max = computedMax.value
@@ -322,7 +316,7 @@ const stepUp = (multiplier = 1) => {
 
 const stepDown = (multiplier = 1) => {
   if (modelValue.value === null) {
-    modelValue.value = wrapBoolean.value ? computedMax.value : computedMin.value
+    modelValue.value = props.wrap ? computedMax.value : computedMin.value
     return
   }
   stepValue(-1 * multiplier)
@@ -338,7 +332,7 @@ onKeyStroke(
   (event) => {
     const {code, altKey, ctrlKey, metaKey} = event
 
-    if (disabledBoolean.value || readonlyBoolean.value || altKey || ctrlKey || metaKey) return
+    if (props.disabled || props.readonly || altKey || ctrlKey || metaKey) return
 
     // https://w3c.github.io/aria-practices/#spinbutton
     stopEvent(event)
@@ -388,7 +382,7 @@ onKeyStroke(
 
     const {altKey, ctrlKey, metaKey} = event
 
-    if (disabledBoolean.value || readonlyBoolean.value || altKey || ctrlKey || metaKey) return
+    if (props.disabled || props.readonly || altKey || ctrlKey || metaKey) return
 
     stopEvent(event)
     resetTimers()
@@ -402,7 +396,7 @@ onKeyStroke(
 const handleStepRepeat = (event: Readonly<Event>, stepper: (step: number) => void) => {
   const {type} = event || {}
 
-  if (!disabledBoolean.value && !readonlyBoolean.value) {
+  if (!props.disabled && !props.readonly) {
     if (isMouseEvent(event)) {
       // We only respond to left (main === 0) button clicks
       if (type === 'mousedown' && event.button) return
@@ -495,11 +489,11 @@ const buttons = computed(() => {
   } as const
 
   const sharedButtonAttrs = {
-    'class': [{'py-0': !verticalBoolean.value}, 'btn', 'btn-sm', 'border-0', 'rounded-0'],
+    'class': [{'py-0': !props.vertical}, 'btn', 'btn-sm', 'border-0', 'rounded-0'],
     'tabindex': '-1',
     'type': 'button' as ButtonType,
-    'disabled': disabledBoolean.value || readonlyBoolean.value,
-    'aria-disabled': disabledBoolean.value || readonlyBoolean.value ? true : undefined,
+    'disabled': props.disabled || props.readonly,
+    'aria-disabled': props.disabled || props.readonly ? true : undefined,
     'aria-controls': computedId.value,
   }
 
@@ -509,7 +503,7 @@ const buttons = computed(() => {
   }
 
   const handler = (event: Readonly<Event>, stepper: (multiplier?: number) => void) => {
-    if (!disabledBoolean.value && !readonlyBoolean.value) {
+    if (!props.disabled && !props.readonly) {
       stopEvent(event)
       setMouseup(true)
       // Since we `preventDefault()`, we must manually focus the button
@@ -559,10 +553,10 @@ const buttons = computed(() => {
 
   return {
     top: {
-      ...(verticalBoolean.value ? incrementAttrs : decrementAttrs),
+      ...(props.vertical ? incrementAttrs : decrementAttrs),
     },
     bottom: {
-      ...(!verticalBoolean.value ? incrementAttrs : decrementAttrs),
+      ...(!props.vertical ? incrementAttrs : decrementAttrs),
     },
   }
 })

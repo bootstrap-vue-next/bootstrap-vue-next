@@ -1,18 +1,18 @@
 <template>
   <img
     :class="computedClasses"
-    :src="!blankBoolean ? src : computedBlankImgSrc"
+    :src="!props.blank ? src : computedBlankImgSrc"
     :width="computedDimentions.width || undefined"
     :height="computedDimentions.height || undefined"
-    :srcset="!blankBoolean ? computedSrcset : undefined"
-    :sizes="!blankBoolean ? computedSizes : undefined"
-    :loading="lazyBoolean ? 'lazy' : 'eager'"
+    :srcset="!props.blank ? computedSrcset : undefined"
+    :sizes="!props.blank ? computedSizes : undefined"
+    :loading="props.lazy ? 'lazy' : 'eager'"
   />
 </template>
 
 <script setup lang="ts">
 import type {BImgProps} from '../types'
-import {useBooleanish, useRadiusElementClasses} from '../composables'
+import {useRadiusElementClasses} from '../composables'
 import {computed, toRef} from 'vue'
 import {useToNumber} from '@vueuse/core'
 
@@ -41,29 +41,15 @@ const props = withDefaults(defineProps<BImgProps>(), {
   // End RadiusElementExtendables props
 })
 
-const lazyBoolean = useBooleanish(() => props.lazy)
-const blankBoolean = useBooleanish(() => props.blank)
-const blockBoolean = useBooleanish(() => props.block)
-const centerBoolean = useBooleanish(() => props.center)
-const fluidBoolean = useBooleanish(() => props.fluid)
-const fluidGrowBoolean = useBooleanish(() => props.fluidGrow)
-const startBoolean = useBooleanish(() => props.start)
-const endBoolean = useBooleanish(() => props.end)
-const thumbnailBoolean = useBooleanish(() => props.thumbnail)
 const heightNumber = useToNumber(() => props.height ?? NaN)
 const widthNumber = useToNumber(() => props.width ?? NaN)
-const roundedBoolean = useBooleanish(() => props.rounded)
-const roundedTopBoolean = useBooleanish(() => props.roundedTop)
-const roundedBottomBoolean = useBooleanish(() => props.roundedBottom)
-const roundedStartBoolean = useBooleanish(() => props.roundedStart)
-const roundedEndBoolean = useBooleanish(() => props.roundedEnd)
 
 const radiusElementClasses = useRadiusElementClasses(() => ({
-  rounded: roundedBoolean.value,
-  roundedTop: roundedTopBoolean.value,
-  roundedBottom: roundedBottomBoolean.value,
-  roundedStart: roundedStartBoolean.value,
-  roundedEnd: roundedEndBoolean.value,
+  rounded: props.rounded,
+  roundedTop: props.roundedTop,
+  roundedBottom: props.roundedBottom,
+  roundedStart: props.roundedStart,
+  roundedEnd: props.roundedEnd,
 }))
 
 const computedSrcset = computed(() =>
@@ -91,7 +77,7 @@ const computedSizes = computed(() =>
 const computedDimentions = computed<{height: number | undefined; width: number | undefined}>(() => {
   const width = Number.isNaN(widthNumber.value) ? undefined : widthNumber.value
   const height = Number.isNaN(heightNumber.value) ? undefined : heightNumber.value
-  if (blankBoolean.value) {
+  if (props.blank) {
     if (width !== undefined && height === undefined) {
       return {height: width, width}
     }
@@ -111,23 +97,17 @@ const computedBlankImgSrc = toRef(() =>
 )
 
 const alignment = toRef(() =>
-  startBoolean.value
-    ? 'float-start'
-    : endBoolean.value
-      ? 'float-end'
-      : centerBoolean.value
-        ? 'mx-auto'
-        : undefined
+  props.start ? 'float-start' : props.end ? 'float-end' : props.center ? 'mx-auto' : undefined
 )
 
 const computedClasses = computed(() => [
   radiusElementClasses.value,
   {
-    'img-thumbnail': thumbnailBoolean.value,
-    'img-fluid': fluidBoolean.value || fluidGrowBoolean.value,
-    'w-100': fluidGrowBoolean.value,
+    'img-thumbnail': props.thumbnail,
+    'img-fluid': props.fluid || props.fluidGrow,
+    'w-100': props.fluidGrow,
     [`${alignment.value}`]: alignment.value !== undefined,
-    'd-block': blockBoolean.value || centerBoolean.value,
+    'd-block': props.block || props.center,
   },
 ])
 

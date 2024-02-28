@@ -17,7 +17,7 @@ export default {
         },
         {
           prop: 'active',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -27,17 +27,17 @@ export default {
         },
         {
           prop: 'disabled',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'lazy',
-          type: 'Booleanish',
+          type: 'boolean',
           default: undefined,
         },
         {
           prop: 'lazyOnce',
-          type: 'Booleanish',
+          type: 'boolean',
           default: undefined,
         },
         {
@@ -100,17 +100,17 @@ export default {
         },
         {
           prop: 'card',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'end',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'fill',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -130,12 +130,12 @@ export default {
         },
         {
           prop: 'justified',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'lazy',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -155,22 +155,22 @@ export default {
         },
         {
           prop: 'noFade',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'noNavStyle',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'pills',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'small',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -180,7 +180,7 @@ export default {
         },
         {
           prop: 'vertical',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {

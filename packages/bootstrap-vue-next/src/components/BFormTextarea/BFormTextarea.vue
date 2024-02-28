@@ -6,11 +6,11 @@
     :name="name || undefined"
     :form="form || undefined"
     :value="modelValue ?? undefined"
-    :disabled="disabledBoolean"
+    :disabled="props.disabled"
     :placeholder="placeholder"
-    :required="requiredBoolean || undefined"
+    :required="props.required || undefined"
     :autocomplete="autocomplete || undefined"
-    :readonly="readonlyBoolean || plaintextBoolean"
+    :readonly="props.readonly || props.plaintext"
     :aria-required="required || undefined"
     :aria-invalid="computedAriaInvalid"
     :rows="rows"
@@ -23,14 +23,14 @@
 </template>
 
 <script setup lang="ts">
-import type {Booleanish, CommonInputProps, Numberish} from '../../types'
+import type {CommonInputProps, Numberish} from '../../types'
 import {computed, type CSSProperties} from 'vue'
-import {useBooleanish, useFormInput, useStateClass} from '../../composables'
+import {useFormInput, useStateClass} from '../../composables'
 
 const props = withDefaults(
   defineProps<
     {
-      noResize?: Booleanish
+      noResize?: boolean
       rows?: Numberish
       wrap?: string
     } & CommonInputProps
@@ -73,25 +73,18 @@ const emit = defineEmits<{
 const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
   useFormInput(props, emit)
 
-const disabledBoolean = useBooleanish(() => props.disabled)
-const requiredBoolean = useBooleanish(() => props.required)
-const readonlyBoolean = useBooleanish(() => props.readonly)
-const plaintextBoolean = useBooleanish(() => props.plaintext)
-const noResizeBoolean = useBooleanish(() => props.noResize)
-const stateBoolean = useBooleanish(() => props.state)
-
-const stateClass = useStateClass(stateBoolean)
+const stateClass = useStateClass(() => props.state)
 
 const computedClasses = computed(() => [
   stateClass.value,
-  plaintextBoolean.value ? 'form-control-plaintext' : 'form-control',
+  props.plaintext ? 'form-control-plaintext' : 'form-control',
   {
     [`form-control-${props.size}`]: !!props.size,
   },
 ])
 
 const computedStyles = computed<CSSProperties>(() => ({
-  resize: noResizeBoolean.value ? 'none' : undefined,
+  resize: props.noResize ? 'none' : undefined,
 }))
 
 defineExpose({

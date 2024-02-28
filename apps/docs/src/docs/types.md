@@ -29,16 +29,6 @@ type TextHorizontal = 'start' | 'end' | 'center'
 
 </BCard>
 
-## Booleanish
-
-<BCard class="bg-body-tertiary">
-
-```ts
-type Booleanish = 'true' | 'false' | '' | boolean
-```
-
-</BCard>
-
 ## BodyProp
 
 This type is only used for the Toast component.

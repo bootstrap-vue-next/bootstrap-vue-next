@@ -7,7 +7,7 @@ export default {
       props: [
         {
           prop: 'active',
-          type: 'Booleanish',
+          type: 'boolean',
           default: undefined,
         },
         {
@@ -17,12 +17,12 @@ export default {
         },
         {
           prop: 'append',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'disabled',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -42,7 +42,7 @@ export default {
         },
         {
           prop: 'replace',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -107,7 +107,7 @@ export default {
         },
         {
           prop: 'icon',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
       ],

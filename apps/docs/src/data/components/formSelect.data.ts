@@ -12,12 +12,12 @@ export default {
         },
         {
           prop: 'autofocus',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'disabled',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -47,7 +47,7 @@ export default {
         },
         {
           prop: 'multiple',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -67,12 +67,12 @@ export default {
         },
         {
           prop: 'plain',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'required',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -87,7 +87,7 @@ export default {
         },
         {
           prop: 'state',
-          type: 'Booleanish | null',
+          type: 'boolean | null',
           default: undefined,
         },
         {
@@ -165,7 +165,7 @@ export default {
         },
         {
           prop: 'disabled',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
       ],

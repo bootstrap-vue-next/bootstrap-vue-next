@@ -31,7 +31,7 @@ export default {
         },
         {
           prop: 'disabled',
-          type: 'Booleanish',
+          type: 'boolean',
         },
         {
           prop: 'feedbackAriaLive',
@@ -103,15 +103,15 @@ export default {
         },
         {
           prop: 'labelSrOnly',
-          type: 'Booleanish',
+          type: 'boolean',
         },
         {
           prop: 'state',
-          type: 'Booleanish',
+          type: 'boolean',
         },
         {
           prop: 'tooltip',
-          type: 'Booleanish',
+          type: 'boolean',
         },
         {
           prop: 'validFeedback',
@@ -119,11 +119,11 @@ export default {
         },
         {
           prop: 'validated',
-          type: 'Booleanish',
+          type: 'boolean',
         },
         {
           prop: 'floating',
-          type: 'Booleanish',
+          type: 'boolean',
         },
       ],
       emits: [],

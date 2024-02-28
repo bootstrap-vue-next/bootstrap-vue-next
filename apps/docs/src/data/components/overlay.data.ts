@@ -17,22 +17,22 @@ export default {
         },
         {
           prop: 'fixed',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'noCenter',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'noFade',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'noWrap',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -52,12 +52,12 @@ export default {
         },
         {
           prop: 'show',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'spinnerSmall',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -72,7 +72,7 @@ export default {
         },
         {
           prop: 'noSpinner',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {

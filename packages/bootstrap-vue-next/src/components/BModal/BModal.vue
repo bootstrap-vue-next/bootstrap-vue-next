@@ -1,5 +1,5 @@
 <template>
-  <Teleport :to="teleportTo" :disabled="teleportDisabledBoolean">
+  <Teleport :to="teleportTo" :disabled="props.teleportDisabled">
     <BTransition
       :no-fade="true"
       v-bind="transProps"
@@ -10,13 +10,13 @@
       @after-leave="onAfterLeave"
     >
       <div
-        v-show="modelValueBoolean"
+        v-show="modelValue"
         :id="computedId"
         ref="element"
         class="modal"
         :class="modalClasses"
         role="dialog"
-        :aria-labelledby="!hideHeaderBoolean ? `${computedId}-label` : undefined"
+        :aria-labelledby="!props.hideHeader ? `${computedId}-label` : undefined"
         :aria-describedby="`${computedId}-body`"
         tabindex="-1"
         v-bind="$attrs"
@@ -24,7 +24,7 @@
       >
         <div class="modal-dialog" :class="modalDialogClasses">
           <div v-if="lazyShowing" class="modal-content" :class="contentClass">
-            <div v-if="!hideHeaderBoolean" class="modal-header" :class="headerClasses">
+            <div v-if="!props.hideHeader" class="modal-header" :class="headerClasses">
               <slot name="header" v-bind="sharedSlots">
                 <component
                   :is="titleTag"
@@ -36,7 +36,7 @@
                     {{ title }}
                   </slot>
                 </component>
-                <template v-if="!hideHeaderCloseBoolean">
+                <template v-if="!props.hideHeaderClose">
                   <BButton
                     v-if="hasHeaderCloseSlot"
                     v-bind="headerCloseAttrs"
@@ -58,11 +58,11 @@
                 {{ body }}
               </slot>
             </div>
-            <div v-if="!hideFooterBoolean" class="modal-footer" :class="footerClasses">
+            <div v-if="!props.hideFooter" class="modal-footer" :class="footerClasses">
               <slot name="footer" v-bind="sharedSlots">
                 <slot name="cancel" v-bind="sharedSlots">
                   <BButton
-                    v-if="!okOnlyBoolean"
+                    v-if="!props.okOnly"
                     ref="cancelButton"
                     :disabled="disableCancel"
                     :size="buttonSize"
@@ -90,7 +90,7 @@
         <slot name="backdrop">
           <BOverlay
             :variant="computedBackdropVariant"
-            :show="modelValueBoolean"
+            :show="modelValue"
             no-spinner
             fixed
             no-wrap
@@ -106,13 +106,7 @@
 <script setup lang="ts">
 import {computed, type CSSProperties, ref, toRef, watch} from 'vue'
 import {onKeyStroke, useEventListener, useFocus, useVModel} from '@vueuse/core'
-import {
-  useBooleanish,
-  useColorVariantClasses,
-  useId,
-  useModalManager,
-  useSafeScrollLock,
-} from '../../composables'
+import {useColorVariantClasses, useId, useModalManager, useSafeScrollLock} from '../../composables'
 import type {BModalProps} from '../../types'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
 import BButton from '../BButton/BButton.vue'
@@ -234,32 +228,11 @@ const computedId = useId(() => props.id, 'modal')
 // Since the modelValue that's passed from that composable is not reactive, this internal ref _is_ and thus it will trigger closing the modal
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
-const busyBoolean = useBooleanish(() => props.busy)
-const lazyBoolean = useBooleanish(() => props.lazy)
-const cancelDisabledBoolean = useBooleanish(() => props.cancelDisabled)
-const centeredBoolean = useBooleanish(() => props.centered)
-const hideBackdropBoolean = useBooleanish(() => props.hideBackdrop)
-const hideFooterBoolean = useBooleanish(() => props.hideFooter)
-const hideHeaderBoolean = useBooleanish(() => props.hideHeader)
-const hideHeaderCloseBoolean = useBooleanish(() => props.hideHeaderClose)
-const modelValueBoolean = useBooleanish(modelValue)
-const noCloseOnBackdropBoolean = useBooleanish(() => props.noCloseOnBackdrop)
-const noCloseOnEscBoolean = useBooleanish(() => props.noCloseOnEsc)
-const noFadeBoolean = useBooleanish(() => props.noFade)
-const autoFocusBoolean = useBooleanish(() => props.autoFocus)
-const okDisabledBoolean = useBooleanish(() => props.okDisabled)
-const okOnlyBoolean = useBooleanish(() => props.okOnly)
-const scrollableBoolean = useBooleanish(() => props.scrollable)
-const titleSrOnlyBoolean = useBooleanish(() => props.titleSrOnly)
-const teleportDisabledBoolean = useBooleanish(() => props.teleportDisabled)
-const bodyScrollingBoolean = useBooleanish(() => props.bodyScrolling)
-const computedFullScreen = useBooleanish(() => props.fullscreen)
-
 const element = ref<HTMLElement | null>(null)
 const okButton = ref<HTMLElement | null>(null)
 const cancelButton = ref<HTMLElement | null>(null)
 const closeButton = ref<HTMLElement | null>(null)
-const isActive = ref(modelValueBoolean.value)
+const isActive = ref(modelValue.value)
 const lazyLoadCompleted = ref(false)
 
 onKeyStroke(
@@ -269,39 +242,39 @@ onKeyStroke(
   },
   {target: element}
 )
-useSafeScrollLock(modelValueBoolean, bodyScrollingBoolean)
+useSafeScrollLock(modelValue, () => props.bodyScrolling)
 const {focused: modalFocus} = useFocus(element, {
-  initialValue: modelValueBoolean.value && props.autoFocusButton === undefined,
+  initialValue: modelValue.value && props.autoFocusButton === undefined,
 })
 const {focused: okButtonFocus} = useFocus(okButton, {
-  initialValue: modelValueBoolean.value && props.autoFocusButton === 'ok',
+  initialValue: modelValue.value && props.autoFocusButton === 'ok',
 })
 const {focused: cancelButtonFocus} = useFocus(cancelButton, {
-  initialValue: modelValueBoolean.value && props.autoFocusButton === 'cancel',
+  initialValue: modelValue.value && props.autoFocusButton === 'cancel',
 })
 const {focused: closeButtonFocus} = useFocus(closeButton, {
-  initialValue: modelValueBoolean.value && props.autoFocusButton === 'close',
+  initialValue: modelValue.value && props.autoFocusButton === 'close',
 })
 
 const modalClasses = computed(() => [
   props.modalClass,
   {
-    fade: !noFadeBoolean.value,
+    fade: !props.noFade,
     show: isActive.value,
   },
 ])
 
 const lazyShowing = toRef(
   () =>
-    lazyBoolean.value === false ||
-    (lazyBoolean.value === true && lazyLoadCompleted.value === true) ||
-    (lazyBoolean.value === true && modelValueBoolean.value === true)
+    props.lazy === false ||
+    (props.lazy === true && lazyLoadCompleted.value === true) ||
+    (props.lazy === true && modelValue.value === true)
 )
 
 const computedBackdropVariant = toRef(() =>
   props.backdropVariant !== undefined
     ? props.backdropVariant
-    : hideBackdropBoolean.value
+    : props.hideBackdrop
       ? 'transparent'
       : 'dark'
 )
@@ -311,12 +284,11 @@ const hasHeaderCloseSlot = toRef(() => !isEmptySlot(slots['header-close']))
 const modalDialogClasses = computed(() => [
   props.dialogClass,
   {
-    'modal-fullscreen': computedFullScreen.value === true,
-    [`modal-fullscreen-${computedFullScreen.value}-down`]:
-      typeof computedFullScreen.value === 'string',
+    'modal-fullscreen': props.fullscreen === true,
+    [`modal-fullscreen-${props.fullscreen}-down`]: typeof props.fullscreen === 'string',
     [`modal-${props.size}`]: props.size !== 'md',
-    'modal-dialog-centered': centeredBoolean.value,
-    'modal-dialog-scrollable': scrollableBoolean.value,
+    'modal-dialog-centered': props.centered,
+    'modal-dialog-scrollable': props.scrollable,
   },
 ])
 
@@ -364,11 +336,11 @@ const footerClasses = computed(() => [
 const titleClasses = computed(() => [
   props.titleClass,
   {
-    ['visually-hidden']: titleSrOnlyBoolean.value,
+    ['visually-hidden']: props.titleSrOnly,
   },
 ])
-const disableCancel = toRef(() => cancelDisabledBoolean.value || busyBoolean.value)
-const disableOk = toRef(() => okDisabledBoolean.value || busyBoolean.value)
+const disableCancel = toRef(() => props.cancelDisabled || props.busy)
+const disableOk = toRef(() => props.okDisabled || props.busy)
 
 const buildTriggerableEvent = (
   type: string,
@@ -383,7 +355,7 @@ const buildTriggerableEvent = (
     componentId: computedId.value,
   })
 
-watch(modelValueBoolean, (newValue, oldValue) => {
+watch(modelValue, (newValue, oldValue) => {
   if (newValue === oldValue) return
   if (newValue === true) {
     showFn()
@@ -394,8 +366,8 @@ watch(modelValueBoolean, (newValue, oldValue) => {
 
 const hideFn = (trigger = '') => {
   if (
-    (trigger === 'backdrop' && noCloseOnBackdropBoolean.value) ||
-    (trigger === 'esc' && noCloseOnEscBoolean.value)
+    (trigger === 'backdrop' && props.noCloseOnBackdrop) ||
+    (trigger === 'esc' && props.noCloseOnEsc)
   ) {
     emit('hide-prevented')
     return
@@ -438,7 +410,7 @@ const showFn = () => {
 }
 
 const pickFocusItem = () => {
-  if (autoFocusBoolean.value === false) return
+  if (props.autoFocus === false) return
   props.autoFocusButton === 'ok'
     ? (okButtonFocus.value = true)
     : props.autoFocusButton === 'close'
@@ -455,14 +427,14 @@ const onAfterEnter = () => {
   isActive.value = true
   pickFocusItem()
   emit('shown', buildTriggerableEvent('shown'))
-  if (lazyBoolean.value === true) lazyLoadCompleted.value = true
+  if (props.lazy === true) lazyLoadCompleted.value = true
 }
 const onLeave = () => {
   isActive.value = false
 }
 const onAfterLeave = () => {
   emit('hidden', buildTriggerableEvent('hidden'))
-  if (lazyBoolean.value === true) lazyLoadCompleted.value = false
+  if (props.lazy === true) lazyLoadCompleted.value = false
 }
 
 const {activePosition, activeModalCount} = useModalManager(isActive)
@@ -478,7 +450,7 @@ const computedZIndex = computed<CSSProperties>(() => ({
 }))
 
 useEventListener(element, 'bv-toggle', () => {
-  modelValueBoolean.value ? hideFn() : showFn()
+  modelValue.value ? hideFn() : showFn()
 })
 
 const sharedSlots = computed<SharedSlotsData>(() => ({
@@ -492,7 +464,7 @@ const sharedSlots = computed<SharedSlotsData>(() => ({
   ok: () => {
     hideFn('ok')
   },
-  visible: modelValueBoolean.value,
+  visible: modelValue.value,
 }))
 
 defineExpose({

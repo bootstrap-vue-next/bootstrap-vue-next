@@ -27,18 +27,18 @@ export default {
         },
         {
           prop: 'noHoverPause',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'dismissible',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: 'When set, enables the dismiss close button',
         },
         {
           prop: 'fade',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: 'When set to true, enables the fade animation/transition on the component',
         },
@@ -55,7 +55,7 @@ export default {
         },
         {
           prop: 'immediate',
-          type: 'Booleanish',
+          type: 'boolean',
           default: true,
         },
         {
@@ -65,7 +65,7 @@ export default {
         },
         {
           prop: 'showOnPause',
-          type: 'Booleanish',
+          type: 'boolean',
           default: true,
         },
       ],

@@ -19,18 +19,18 @@ export default {
         },
         {
           prop: 'disabled',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'noRemove',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: 'When set, the tag will not have a remove button',
         },
         {
           prop: 'pill',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: 'Makes the tag have a pill appearance',
         },
@@ -91,18 +91,18 @@ export default {
         },
         {
           prop: 'addOnChange',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: "When set, enables adding the tag on the input's 'change' event",
         },
         {
           prop: 'autofocus',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'disabled',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -179,19 +179,19 @@ export default {
         },
         {
           prop: 'noAddOnEnter',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: "When set, disables adding the tag on the input's 'keydown.enter' event",
         },
         {
           prop: 'noOuterFocus',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: 'When set, disables the focus styling of the component root element',
         },
         {
           prop: 'noTagRemove',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: 'When set, the tags will not have a remove button',
         },
@@ -203,14 +203,14 @@ export default {
         },
         {
           prop: 'removeOnDelete',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description:
             'When set, enables removal of last tag in tags when user presses delete or backspace and the input is empty',
         },
         {
           prop: 'required',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -221,7 +221,7 @@ export default {
         },
         {
           prop: 'state',
-          type: 'Booleanish | null',
+          type: 'boolean | null',
           default: null,
         },
         {
@@ -237,7 +237,7 @@ export default {
         },
         {
           prop: 'tagPills',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: 'Makes the built in tags have a pill appearance',
         },
@@ -382,7 +382,7 @@ export default {
             },
             {
               prop: 'disabled',
-              type: 'Booleanish',
+              type: 'boolean',
               description:
                 "If the component is in the disabled state. Value of the 'disabled' prop",
             },
@@ -487,7 +487,7 @@ export default {
             },
             {
               prop: 'required',
-              type: 'Booleanish',
+              type: 'boolean',
               description: "Value of the 'required' prop",
             },
             {
@@ -502,7 +502,7 @@ export default {
             },
             {
               prop: 'state',
-              type: 'Booleanish',
+              type: 'boolean',
               description:
                 "The contextual state of the component. Value of the 'state' prop. Possible values are true, false or null",
             },
@@ -514,7 +514,7 @@ export default {
             },
             {
               prop: 'tagPills',
-              type: 'Booleanish',
+              type: 'boolean',
               description: 'Value of the `tag-pills` prop',
             },
             {

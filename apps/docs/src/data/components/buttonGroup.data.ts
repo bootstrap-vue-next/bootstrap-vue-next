@@ -22,7 +22,7 @@ export default {
         },
         {
           prop: 'vertical',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
       ],

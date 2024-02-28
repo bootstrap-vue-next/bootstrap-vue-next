@@ -1,4 +1,4 @@
-import type {AriaInvalid, Booleanish, Numberish, Size} from '.'
+import type {AriaInvalid, Numberish, Size} from '.'
 
 export interface FormDebounceOptions {
   debounce?: Numberish
@@ -8,22 +8,22 @@ export interface FormDebounceOptions {
 export interface CommonInputProps extends FormDebounceOptions {
   ariaInvalid?: AriaInvalid
   autocomplete?: string
-  autofocus?: Booleanish
-  disabled?: Booleanish
+  autofocus?: boolean
+  disabled?: boolean
   form?: string
   formatter?: (val: string, evt: Event) => string
   id?: string
-  lazy?: Booleanish
-  lazyFormatter?: Booleanish
+  lazy?: boolean
+  lazyFormatter?: boolean
   list?: string
   modelValue?: Numberish | null
   name?: string
-  number?: Booleanish
+  number?: boolean
   placeholder?: string
-  plaintext?: Booleanish
-  readonly?: Booleanish
-  required?: Booleanish
+  plaintext?: boolean
+  readonly?: boolean
+  required?: boolean
   size?: Size
-  state?: Booleanish | null | undefined
-  trim?: Booleanish
+  state?: boolean | null | undefined
+  trim?: boolean
 }

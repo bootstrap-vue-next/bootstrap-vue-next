@@ -1,7 +1,6 @@
 import type {Numberish} from '../types'
 import {nextTick, onActivated, onMounted, ref} from 'vue'
 import useAriaInvalid from './useAriaInvalid'
-import useBooleanish from './useBooleanish'
 import useId from './useId'
 import {useDebounceFn, useFocus, useToNumber, useVModel} from '@vueuse/core'
 import type {CommonInputProps} from '../types/FormCommonInputProps'
@@ -16,13 +15,6 @@ export default (
   const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
   const computedId = useId(() => props.id, 'input')
-  const autofocusBoolean = useBooleanish(() => props.autofocus)
-  const disabledBoolean = useBooleanish(() => props.disabled)
-  const lazyBoolean = useBooleanish(() => props.lazy)
-  const lazyFormatterBoolean = useBooleanish(() => props.lazyFormatter)
-  const numberBoolean = useBooleanish(() => props.number)
-  const stateBoolean = useBooleanish(() => props.state)
-  const trimBoolean = useBooleanish(() => props.trim)
   const debounceNumber = useToNumber(() => props.debounce ?? 0)
   const debounceMaxWaitNumber = useToNumber(() => props.debounceMaxWait ?? NaN)
 
@@ -30,29 +22,29 @@ export default (
     (value: Numberish | undefined) => {
       modelValue.value = value
     },
-    () => (lazyBoolean.value === true ? 0 : debounceNumber.value),
-    {maxWait: () => (lazyBoolean.value === true ? NaN : debounceMaxWaitNumber.value)}
+    () => (props.lazy === true ? 0 : debounceNumber.value),
+    {maxWait: () => (props.lazy === true ? NaN : debounceMaxWaitNumber.value)}
   )
 
   const updateModelValue = (value: Numberish | undefined, force = false) => {
-    if (lazyBoolean.value === true && force === false) return
+    if (props.lazy === true && force === false) return
     internalUpdateModelValue(value)
   }
 
   const {focused} = useFocus(input, {
-    initialValue: autofocusBoolean.value,
+    initialValue: props.autofocus,
   })
 
   const _formatValue = (value: string, evt: Readonly<Event>, force = false) => {
-    if (props.formatter !== undefined && (!lazyFormatterBoolean.value || force)) {
+    if (props.formatter !== undefined && (!props.lazyFormatter || force)) {
       return props.formatter(value, evt)
     }
     return value
   }
 
   const _getModelValue = (value: string) => {
-    if (trimBoolean.value) return value.trim()
-    if (numberBoolean.value) return Number.parseFloat(value)
+    if (props.trim) return value.trim()
+    if (props.number) return Number.parseFloat(value)
 
     return value
   }
@@ -65,13 +57,16 @@ export default (
 
   onActivated(() => {
     nextTick(() => {
-      if (autofocusBoolean.value) {
+      if (props.autofocus) {
         focused.value = true
       }
     })
   })
 
-  const computedAriaInvalid = useAriaInvalid(() => props.ariaInvalid, stateBoolean)
+  const computedAriaInvalid = useAriaInvalid(
+    () => props.ariaInvalid,
+    () => props.state
+  )
 
   const onInput = (evt: Readonly<Event>) => {
     const {value} = evt.target as HTMLInputElement
@@ -101,7 +96,7 @@ export default (
   }
 
   const onBlur = (evt: Readonly<FocusEvent>) => {
-    if (!lazyBoolean.value && !lazyFormatterBoolean.value) return
+    if (!props.lazy && !props.lazyFormatter) return
 
     const {value} = evt.target as HTMLInputElement
     const formattedValue = _formatValue(value, evt, true)
@@ -113,13 +108,13 @@ export default (
   }
 
   const focus = () => {
-    if (!disabledBoolean.value) {
+    if (!props.disabled) {
       focused.value = true
     }
   }
 
   const blur = () => {
-    if (!disabledBoolean.value) {
+    if (!props.disabled) {
       focused.value = false
     }
   }

@@ -3,8 +3,8 @@
     <BLink
       class="nav-link"
       :class="linkClass"
-      :tabindex="disabledBoolean ? -1 : undefined"
-      :aria-disabled="disabledBoolean ? true : undefined"
+      :tabindex="props.disabled ? -1 : undefined"
+      :aria-disabled="props.disabled ? true : undefined"
       v-bind="{...computedLinkProps, ...linkAttrs}"
       @click="emit('click', $event)"
     >
@@ -16,7 +16,6 @@
 <script setup lang="ts">
 import {computed} from 'vue'
 import BLink from '../BLink/BLink.vue'
-import {useBooleanish} from '../../composables'
 import type {AttrsValue, BLinkProps, ClassValue} from '../../types'
 import {pick} from '../../utils'
 
@@ -63,8 +62,6 @@ const props = withDefaults(
 const emit = defineEmits<{
   click: [value: MouseEvent]
 }>()
-
-const disabledBoolean = useBooleanish(() => props.disabled)
 
 const computedLinkProps = computed(() =>
   pick(props, [

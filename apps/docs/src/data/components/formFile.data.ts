@@ -12,22 +12,22 @@ export default {
         },
         {
           prop: 'autofocus',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'capture',
-          type: "'Booleanish' | 'user' | 'environment'",
+          type: "'boolean' | 'user' | 'environment'",
           default: false,
         },
         {
           prop: 'directory',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'disabled',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -42,7 +42,7 @@ export default {
         },
         {
           prop: 'multiple',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -52,17 +52,17 @@ export default {
         },
         {
           prop: 'noDrop',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'noTraverse',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'required',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -72,7 +72,7 @@ export default {
         },
         {
           prop: 'state',
-          type: 'Booleanish | null',
+          type: 'boolean | null',
           default: undefined,
         },
         {
