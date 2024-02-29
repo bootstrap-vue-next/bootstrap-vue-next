@@ -146,7 +146,7 @@ const options = [
 
 - `value` The selected value which will be set on `v-model`
 - `disabled` Disables item for selection
-- `text` Display text, or html Display basic inline html
+- `text` Display text, or `html` Display basic inline html
 
 `value` can be a string, number, or simple object. Avoid using complex types in values.
 
@@ -270,66 +270,6 @@ const checkEx2Options = [
 
   </template>
 </HighlightCard>
-
-## Checkbox values and `v-model`
-
-By default, `BFormCheckbox` value will be true when checked and false when unchecked. You can customize the checked and unchecked values by specifying the value and unchecked-value properties, respectively.
-
-When you have multiple checkboxes that bind to a single data state variable, you must provide an array reference (`[ ]`) to your v-model.
-
-Note that when v-model is bound to multiple checkboxes (i.e an array ref), the unchecked-value is **not used**. Only the value(s) of the checked checkboxes will be returned in the v-model bound array. You should provide a unique value for each checkbox's value prop (the default of true will not work when bound to an array).
-
-To pre-check any checkboxes, set the v-model to the value(s) of the checks that you would like pre-selected.
-
-When placing individual `BFormCheckbox` components within a `BFormCheckboxGroup`, most
-props and the `v-model` are inherited from the `BFormCheckboxGroup`.
-
-Note: the unchecked-value prop does not affect the native `<input>`'s `value` attribute, because browsers do not include unchecked boxes in form submissions. To guarantee that one of two values is submitted in a native `<form>` submit (e.g. 'yes' or 'no'), use radio inputs instead. This is the same limitation that Vue has with native checkbox inputs.
-
-<HighlightCard>
-  <BFormCheckbox
-    v-for="(car, index) in availableCars"
-    :key="index"
-    v-model="selectedCars"
-    :value="car"
-  >
-    {{ car }}
-  </BFormCheckbox>
-  <div class="mt-2">Selected: <strong>{{ concatSelectedCars}}</strong></div>
-  <template #html>
-
-```vue
-<template>
-  <BFormCheckbox
-    v-for="(car, index) in availableCars"
-    :key="index"
-    v-model="selectedCars"
-    :value="car"
-  >
-    {{ car }}
-  </BFormCheckbox>
-
-  Selected: <strong>{{ concatSelectedCars }}</strong>
-</template>
-
-<script setup lang="ts">
-import {ref} from 'vue'
-
-const availableCars = ['BMW', 'Mercedes', 'Toyota']
-const selectedCars = ref([])
-
-const concatSelectedCars = computed(() => {
-  return selectedCars.value.join(', ')
-})
-</script>
-```
-
-  </template>
-</HighlightCard>
-
-### Multiple checkboxes and accessibility
-
-When binding multiple checkboxes together, you must set the name prop to the same value for all `BFormCheckbox`s in the group individually. This will inform users of assistive technologies that the checkboxes are related and enables native browser keyboard navigation.
 
 ## Inline and stacked checkboxes
 
@@ -472,17 +412,78 @@ Use the `size` prop to control the size of the checkbox. The default size is med
   </template>
 </HighlightCard>
 
+## Checkbox values and `v-model`
+
+By default, `BFormCheckbox` value will be true when checked and false when unchecked. You can customize the checked and unchecked values by specifying the `value` and `unchecked-value` properties, respectively.
+
+When you have multiple checkboxes that bind to a single data state variable, you must provide an array reference (`[ ]`) to your v-model.
+
+Note that when `v-model` is bound to multiple checkboxes (i.e an array ref), the `unchecked-value` is **not used**. Only the value(s) of the checked checkboxes will be returned in the `v-model` bound array. You should provide a unique `value` for each checkbox's `value` prop (the default of `true` will not work when bound to an array).
+
+To pre-check any checkboxes, set the `v-model` to the value(s) of the checks that you would like pre-selected.
+
+When placing individual `BFormCheckbox` components within a `BFormCheckboxGroup`, most
+props and the `v-model` are inherited from the `BFormCheckboxGroup`.
+
+**Note:** the `unchecked-value` prop does not affect the native `<input>`'s `value` attribute, because browsers do not include unchecked boxes in form submissions. To guarantee that one of two values is submitted in a native `<form>` submit (e.g. `'yes'` or `'no'`), use radio inputs instead. This is the same limitation that [Vue has with native checkbox inputs](https://vuejs.org/guide/essentials/forms.html#checkbox-1).
+
+<HighlightCard>
+  <BFormCheckbox
+    v-for="(car, index) in availableCars"
+    :key="index"
+    v-model="selectedCars"
+    :value="car"
+  >
+    {{ car }}
+  </BFormCheckbox>
+  <div class="mt-2">Selected: <strong>{{ concatSelectedCars}}</strong></div>
+  <template #html>
+
+```vue
+<template>
+  <BFormCheckbox
+    v-for="(car, index) in availableCars"
+    :key="index"
+    v-model="selectedCars"
+    :value="car"
+  >
+    {{ car }}
+  </BFormCheckbox>
+
+  Selected: <strong>{{ concatSelectedCars }}</strong>
+</template>
+
+<script setup lang="ts">
+import {ref} from 'vue'
+
+const availableCars = ['BMW', 'Mercedes', 'Toyota']
+const selectedCars = ref([])
+
+const concatSelectedCars = computed(() => {
+  return selectedCars.value.join(', ')
+})
+</script>
+```
+
+  </template>
+</HighlightCard>
+
+### Multiple checkboxes and accessibility
+
+When binding multiple checkboxes together, you must set the `name` prop to the same value for all `BFormCheckbox`s in the group individually. This will inform users of assistive technologies that the checkboxes are related and enables native browser keyboard navigation.
+
 ## Button style checkboxes
 
 You can optionally render checkboxes to appear as buttons, either individually, or in a group.
 
-Button style checkboxes will have the class .active automatically applied to the label when they are in the checked state.
+Button style checkboxes will have the class `.active` automatically applied to the label when they are in the checked state.
 
 ### Individual checkbox button style
 
-A single checkbox can be rendered with a button appearance by setting the prop button to true.
+A single checkbox can be rendered with a button appearance by setting the prop `button` to `true`.
 
-Change the button variant by setting the button-variant prop to one of the standard Bootstrap button variants (see `BButton` for supported variants). The default variant is secondary.
+Change the button variant by setting the `button-variant` prop to one of the standard Bootstrap button variants
+(see [`BButton`](/docs/components/button) for supported variants). The default variant is `secondary`.
 
 <HighlightCard>
   <div class="hstack gap-3">
@@ -617,7 +618,7 @@ effect.
 
 ### Individual checkbox switch style
 
-A single checkbox can be rendered with a switch appearance by setting the prop switch to true.
+A single checkbox can be rendered with a switch appearance by setting the prop `switch` to `true`.
 
 <HighlightCard>
   <BFormCheckbox v-model="switchChecked" switch>Switch Checkbox <strong>(Checked: {{ switchChecked }})</strong></BFormCheckbox>
@@ -784,6 +785,8 @@ const groupSwitchOptions = [
   </template>
 </HighlightCard>
 
+**Note:** The `plain` prop has no effect when `button` or `buttons` is set.
+
 ## Contextual states
 
 Bootstrap includes validation styles for valid and invalid states on most form controls.
@@ -876,11 +879,11 @@ tell when the input becomes visible.
 
 Normally a checkbox input can only have two states: checked or unchecked. They can have any value, but they either submit that value (checked) or do not (unchecked) with a form submission (although BootstrapVueNext allows a value for the unchecked state on a single checkbox).
 
-Visually, there are actually three states a checkbox can be in: checked, unchecked, or **indeterminate**.
+Visually, there are actually three states a checkbox can be in: _checked_, _unchecked_, or **_indeterminate_**.
 
-The indeterminate state is **visual only**. The checkbox is still either checked or unchecked as a value. That means the visual indeterminate state masks the real value of the checkbox, so that better make sense in your UI!.
+The _indeterminate_ state is **visual only**. The checkbox is still either checked or unchecked as a value. That means the visual indeterminate state masks the real value of the checkbox, so that better make sense in your UI!.
 
-`BFormCheckbox` supports setting this visual indeterminate state via a secondary named model called indeterminate (defaults to undefined). Clicking the checkbox will clear the indeterminate state and emit an `update:indeterminate=false` event. To reset the state set the indeterminate model value to true.
+`BFormCheckbox` supports setting this visual indeterminate state via a secondary named model called `indeterminate` (defaults to `undefined`). Clicking the checkbox will clear the `indeterminate` state and emit an `update:indeterminate=false` event. To reset the state set `v-model:indeterminate` value to `true`.
 
 <HighlightCard>
   <BFormCheckbox v-model="intermChecked" v-model:indeterminate="indeterminate">Click me to see what happens</BFormCheckbox>
