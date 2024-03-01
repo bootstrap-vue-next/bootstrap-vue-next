@@ -472,6 +472,8 @@ const concatSelectedCars = computed(() => {
 
 When binding multiple checkboxes together, you must set the `name` prop to the same value for all `BFormCheckbox`s in the group individually. This will inform users of assistive technologies that the checkboxes are related and enables native browser keyboard navigation.
 
+Whenever using multiple checkboxes, it is recommended that the checkboxes be placed in a [`BFormGroup`](/docs/components/form-group) component to associate a label with the entire group of checkboxes. See examples above.
+
 ## Button style checkboxes
 
 You can optionally render checkboxes to appear as buttons, either individually, or in a group.
