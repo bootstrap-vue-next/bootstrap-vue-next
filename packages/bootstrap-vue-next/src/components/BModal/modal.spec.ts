@@ -1,10 +1,10 @@
 import {DOMWrapper, enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, beforeEach, describe, expect, it} from 'vitest'
-import BModal from './BModal.vue'
-import BCloseButton from '../BButton/BCloseButton.vue'
-import BButton from '../BButton/BButton.vue'
-import {BvTriggerableEvent} from '../../utils'
 import {nextTick} from 'vue'
+import {BvTriggerableEvent} from '../../utils'
+import BButton from '../BButton/BButton.vue'
+import BCloseButton from '../BButton/BCloseButton.vue'
+import BModal from './BModal.vue'
 
 describe('modal', () => {
   enableAutoUnmount(afterEach)
@@ -496,6 +496,45 @@ describe('modal', () => {
 
       wrapper.unmount()
     })
+  })
+
+  it('modal body div is given prop bodyClass', () => {
+    const wrapper = mount(BModal, {
+      attachTo: document.body,
+      global: {stubs: {teleport: true}},
+      props: {
+        bodyClass: 'foobar',
+      },
+    })
+
+    expect(wrapper.vm).toBeDefined()
+
+    const $modal = wrapper.find('div.modal')
+    expect($modal.exists()).toBe(true)
+
+    const $modalBody = $modal.element.querySelector('.modal-body')
+    expect($modalBody?.classList).toContain('foobar')
+  })
+
+  it('modal body div is given prop bodyAttrs', () => {
+    const wrapper = mount(BModal, {
+      attachTo: document.body,
+      global: {stubs: {teleport: true}},
+      props: {
+        bodyAttrs: {
+          role: 'foo',
+        },
+      },
+    })
+
+    expect(wrapper.vm).toBeDefined()
+
+    const $modal = wrapper.find('div.modal')
+    expect($modal.exists()).toBe(true)
+
+    const $modalBody = $modal.element.querySelector('.modal-body')
+    expect($modalBody?.hasAttribute('role')).toBeTruthy()
+    expect($modalBody?.getAttribute('role')).toBe('foo')
   })
 
   // Test isActive states
