@@ -46,7 +46,7 @@
               </template>
             </slot>
           </div>
-          <div class="offcanvas-body" :class="bodyClass">
+          <div class="offcanvas-body" :class="bodyClass" v-bind="bodyAttrs">
             <slot v-bind="sharedSlots" />
           </div>
           <div v-if="hasFooterSlot" :class="footerClass">
@@ -69,15 +69,15 @@
 </template>
 
 <script setup lang="ts">
-import {computed, nextTick, ref, type RendererElement, toRef} from 'vue'
 import {onKeyStroke, useEventListener, useFocus, useVModel} from '@vueuse/core'
+import {computed, nextTick, ref, type RendererElement, toRef} from 'vue'
 import {useId, useSafeScrollLock} from '../../composables'
-import type {ButtonVariant, ClassValue, ColorVariant} from '../../types'
+import type {AttrsValue, ButtonVariant, ClassValue, ColorVariant} from '../../types'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
-import BOverlay from '../BOverlay/BOverlay.vue'
-import BCloseButton from '../BButton/BCloseButton.vue'
-import BTransition from '../BTransition/BTransition.vue'
 import BButton from '../BButton/BButton.vue'
+import BCloseButton from '../BButton/BCloseButton.vue'
+import BOverlay from '../BOverlay/BOverlay.vue'
+import BTransition from '../BTransition/BTransition.vue'
 
 // TODO once the responsive stuff may be implemented correctly,
 // What needs to occur is a fixing of the "body scrolling".
@@ -95,7 +95,8 @@ const props = withDefaults(
   defineProps<{
     backdrop?: boolean
     backdropVariant?: ColorVariant | null
-    bodyClass?: string
+    bodyAttrs?: Readonly<AttrsValue>
+    bodyClass?: ClassValue
     bodyScrolling?: boolean
     footerClass?: string
     headerClass?: string
@@ -123,6 +124,7 @@ const props = withDefaults(
   {
     backdrop: true,
     backdropVariant: 'dark',
+    bodyAttrs: undefined,
     bodyClass: undefined,
     bodyScrolling: false,
     footerClass: undefined,
