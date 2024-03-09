@@ -9,96 +9,115 @@ export default {
           prop: 'delay',
           type: 'string | number',
           default: 5000,
+          description: 'The number of milliseconds before the toast auto dismisses itself',
         },
         {
           prop: 'bodyClass',
           type: 'ClassValue',
           default: undefined,
+          description: 'CSS class (or classes) to add to the toast body element',
         },
         {
           prop: 'body',
           type: 'string',
           default: undefined,
+          description: 'The text content of the body',
         },
         {
           prop: 'headerClass',
           type: 'ClassValue',
           default: undefined,
+          description: 'CSS class (or classes) to add to the toast header element',
         },
         {
           prop: 'headerTag',
           type: 'string',
           default: 'div',
-        },
-        {
-          prop: 'animation',
-          type: 'boolean',
-          default: true,
+          description: 'Specify the HTML tag to render instead of the default tag for the footer',
         },
         {
           prop: 'id',
           type: 'string',
           default: undefined,
+          description:
+            'Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed',
         },
         {
           prop: 'isStatus',
           type: 'boolean',
           default: false,
+          description:
+            "When set to 'true', makes the toast have attributes aria-live=polite and role=status. When 'false' aria-live will be 'assertive' and role will be 'alert'",
         },
         {
           prop: 'autoHide',
           type: 'boolean',
           default: true,
+          description: 'Used to set if the toast will be dismissed automatically',
         },
         {
           prop: 'noCloseButton',
           type: 'boolean',
           default: false,
+          description: 'When set, hides the close button in the toast header',
         },
         {
           prop: 'noFade',
           type: 'boolean',
           default: false,
+          description:
+            'When set to `true`, disables the fade animation/transition on the component',
         },
         {
           prop: 'noHoverPause',
           type: 'boolean',
           default: false,
+          description:
+            'When set, disables the pausing of the auto hide delay when the mouse hovers the toast',
         },
         {
           prop: 'solid',
           type: 'boolean',
           default: false,
+          description:
+            'When set, renders the toast with a solid background rather than translucent',
         },
         {
           prop: 'title',
           type: 'string',
           default: undefined,
+          description: "The toast's title text",
         },
         {
           prop: 'modelValue',
           type: 'boolean | number',
           default: false,
+          description:
+            'Sets if the toast is visible or the number of milliseconds that the toast will be dismissed',
         },
         {
           prop: 'toastClass',
           type: 'ClassValue',
           default: undefined,
+          description: 'CSS class (or classes) to add to the toast wrapper element',
         },
         {
           prop: 'showOnPause',
           type: 'boolean',
           default: true,
+          description: "When set, keeps the toast visible when it's paused",
         },
         {
           prop: 'interval',
           type: 'number | string',
           default: '1000',
+          description: 'The number of milliseconds that the toast will be dismissed',
         },
         {
           prop: 'progressProps',
           type: "Omit<BProgressBarProps, 'label' | 'labelHtml' | 'max' | 'value'>",
           default: undefined,
+          description: 'The properties to define the progress bar in the toast',
         },
       ],
       slots: [],
