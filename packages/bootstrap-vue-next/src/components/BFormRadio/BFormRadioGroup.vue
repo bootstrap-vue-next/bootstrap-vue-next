@@ -67,7 +67,7 @@ defineSlots<{
   first?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = defineModel<RadioValue>({
+const modelValue = defineModel<RadioValue | null>({
   default: null,
 })
 
