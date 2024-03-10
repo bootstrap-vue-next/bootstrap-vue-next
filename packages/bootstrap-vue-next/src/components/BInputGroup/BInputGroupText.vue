@@ -7,16 +7,12 @@
 </template>
 
 <script setup lang="ts">
-withDefaults(
-  defineProps<{
-    tag?: string
-    text?: string
-  }>(),
-  {
-    tag: 'div',
-    text: undefined,
-  }
-)
+import type {BInputGroupTextProps} from '../../types'
+
+withDefaults(defineProps<BInputGroupTextProps>(), {
+  tag: 'div',
+  text: undefined,
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

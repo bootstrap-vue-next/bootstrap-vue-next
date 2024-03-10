@@ -1,7 +1,7 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BTable from './BTable.vue'
-import type {LiteralUnion, TableField, TableItem} from 'src/types'
+import type {LiteralUnion, TableField, TableItem} from '../../types'
 
 interface SimplePerson {
   first_name: string

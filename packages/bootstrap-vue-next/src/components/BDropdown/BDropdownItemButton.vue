@@ -14,29 +14,20 @@
 </template>
 
 <script setup lang="ts">
-import type {ClassValue, ColorVariant} from '../../types'
+import type {BDropdownItemButtonProps} from '../../types'
 import {computed} from 'vue'
 
 defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(
-  defineProps<{
-    active?: boolean
-    activeClass?: ClassValue
-    buttonClass?: ClassValue
-    disabled?: boolean
-    variant?: ColorVariant | null
-  }>(),
-  {
-    active: false,
-    activeClass: 'active',
-    buttonClass: undefined,
-    disabled: false,
-    variant: null,
-  }
-)
+const props = withDefaults(defineProps<BDropdownItemButtonProps>(), {
+  active: false,
+  activeClass: 'active',
+  buttonClass: undefined,
+  disabled: false,
+  variant: null,
+})
 
 const emit = defineEmits<{
   click: [value: MouseEvent]

@@ -16,7 +16,7 @@
 <script setup lang="ts">
 import {computed} from 'vue'
 import BLink from '../BLink/BLink.vue'
-import type {AttrsValue, BLinkProps, ClassValue} from '../../types'
+import type {BNavItemProps} from '../../types'
 import {pick} from '../../utils'
 
 defineSlots<{
@@ -24,40 +24,32 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const props = withDefaults(
-  defineProps<
-    {
-      linkAttrs?: Readonly<AttrsValue>
-      linkClass?: ClassValue
-    } & Omit<BLinkProps, 'routerTag'>
-  >(),
-  {
-    // Link props
-    active: undefined,
-    activeClass: undefined,
-    append: undefined,
-    disabled: undefined,
-    exactActiveClass: undefined,
-    href: undefined,
-    icon: undefined,
-    linkAttrs: undefined,
-    linkClass: undefined,
-    opacity: undefined,
-    opacityHover: undefined,
-    rel: undefined,
-    replace: undefined,
-    routerComponentName: undefined,
-    target: undefined,
-    to: undefined,
-    underlineOffset: undefined,
-    underlineOffsetHover: undefined,
-    underlineOpacity: undefined,
-    underlineOpacityHover: undefined,
-    underlineVariant: undefined,
-    variant: undefined,
-    // End link props
-  }
-)
+const props = withDefaults(defineProps<BNavItemProps>(), {
+  // Link props
+  active: undefined,
+  activeClass: undefined,
+  append: undefined,
+  disabled: undefined,
+  exactActiveClass: undefined,
+  href: undefined,
+  icon: undefined,
+  linkAttrs: undefined,
+  linkClass: undefined,
+  opacity: undefined,
+  opacityHover: undefined,
+  rel: undefined,
+  replace: undefined,
+  routerComponentName: undefined,
+  target: undefined,
+  to: undefined,
+  underlineOffset: undefined,
+  underlineOffsetHover: undefined,
+  underlineOpacity: undefined,
+  underlineOpacityHover: undefined,
+  underlineVariant: undefined,
+  variant: undefined,
+  // End link props
+})
 
 const emit = defineEmits<{
   click: [value: MouseEvent]

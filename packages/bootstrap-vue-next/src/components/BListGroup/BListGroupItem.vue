@@ -16,48 +16,39 @@
 
 <script setup lang="ts">
 import {computed, inject, toRef, useAttrs} from 'vue'
-import type {BLinkProps} from '../../types'
+import type {BListGroupItemProps} from '../../types'
 import {useBLinkHelper} from '../../composables'
 import BLink from '../BLink/BLink.vue'
 import {listGroupInjectionKey} from '../../utils'
 
-const props = withDefaults(
-  defineProps<
-    {
-      action?: boolean
-      button?: boolean
-      tag?: string
-    } & Omit<BLinkProps, 'routerTag'>
-  >(),
-  {
-    action: false,
-    button: false,
-    tag: 'div',
-    // Link props
-    active: false, // Why is this active: false?
-    // All others use defaults
-    activeClass: undefined,
-    append: undefined,
-    disabled: undefined,
-    exactActiveClass: undefined,
-    href: undefined,
-    icon: undefined,
-    opacity: undefined,
-    opacityHover: undefined,
-    rel: undefined,
-    replace: undefined,
-    routerComponentName: undefined,
-    target: undefined,
-    to: undefined,
-    underlineOffset: undefined,
-    underlineOffsetHover: undefined,
-    underlineOpacity: undefined,
-    underlineOpacityHover: undefined,
-    underlineVariant: undefined,
-    variant: undefined,
-    // End link props
-  }
-)
+const props = withDefaults(defineProps<BListGroupItemProps>(), {
+  action: false,
+  button: false,
+  tag: 'div',
+  // Link props
+  active: false, // Why is this active: false?
+  // All others use defaults
+  activeClass: undefined,
+  append: undefined,
+  disabled: undefined,
+  exactActiveClass: undefined,
+  href: undefined,
+  icon: undefined,
+  opacity: undefined,
+  opacityHover: undefined,
+  rel: undefined,
+  replace: undefined,
+  routerComponentName: undefined,
+  target: undefined,
+  to: undefined,
+  underlineOffset: undefined,
+  underlineOffsetHover: undefined,
+  underlineOpacity: undefined,
+  underlineOpacityHover: undefined,
+  underlineVariant: undefined,
+  variant: undefined,
+  // End link props
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -27,38 +27,24 @@ import {computed, toRef} from 'vue'
 import BCardTitle from './BCardTitle.vue'
 import {isEmptySlot} from '../../utils'
 import BCardSubtitle from './BCardSubtitle.vue'
-import type {ColorExtendables, TextColorVariant} from '../../types'
+import type {BCardBodyProps} from '../../types'
 import {useColorVariantClasses} from '../../composables'
 
-const props = withDefaults(
-  defineProps<
-    {
-      overlay?: boolean
-      subtitle?: string
-      subtitleTag?: string
-      subtitleTextVariant?: TextColorVariant | null
-      tag?: string
-      text?: string
-      title?: string
-      titleTag?: string
-    } & ColorExtendables
-  >(),
-  {
-    overlay: false,
-    subtitle: undefined,
-    subtitleTag: 'h4',
-    subtitleTextVariant: undefined,
-    tag: 'div',
-    text: undefined,
-    title: undefined,
-    titleTag: 'h4',
-    // ColorExtendables props
-    bgVariant: null,
-    textVariant: null,
-    variant: null,
-    // End ColorExtendables props
-  }
-)
+const props = withDefaults(defineProps<BCardBodyProps>(), {
+  overlay: false,
+  subtitle: undefined,
+  subtitleTag: 'h4',
+  subtitleTextVariant: undefined,
+  tag: 'div',
+  text: undefined,
+  title: undefined,
+  titleTag: 'h4',
+  // ColorExtendables props
+  bgVariant: null,
+  textVariant: null,
+  variant: null,
+  // End ColorExtendables props
+})
 
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

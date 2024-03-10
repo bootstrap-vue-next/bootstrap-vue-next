@@ -28,8 +28,8 @@
 
 <script setup lang="ts">
 import {computed, ref, toRef, watch} from 'vue'
-import {useFocus, useVModel} from '@vueuse/core'
-import type {ClassValue, Size} from '../../types'
+import {useFocus} from '@vueuse/core'
+import type {BFormFileProps} from '../../types'
 import {useId, useStateClass} from '../../composables'
 import {isEmptySlot} from '../../utils'
 
@@ -42,53 +42,29 @@ const slots = defineSlots<{
   label?: (props: Record<string, never>) => any
 }>()
 
-const props = withDefaults(
-  defineProps<{
-    accept?: string | readonly string[]
-    autofocus?: boolean
-    capture?: boolean | 'user' | 'environment'
-    directory?: boolean
-    disabled?: boolean
-    form?: string
-    id?: string
-    label?: string
-    labelClass?: ClassValue
-    modelValue?: readonly File[] | File | null
-    multiple?: boolean
-    name?: string
-    noDrop?: boolean
-    noTraverse?: boolean
-    required?: boolean
-    size?: Size
-    state?: boolean | null
-  }>(),
-  {
-    accept: '',
-    autofocus: false,
-    // eslint-disable-next-line vue/require-valid-default-prop
-    capture: false,
-    directory: false,
-    disabled: false,
-    form: undefined,
-    id: undefined,
-    label: '',
-    labelClass: undefined,
-    modelValue: null,
-    multiple: false,
-    name: undefined,
-    noDrop: false,
-    noTraverse: false,
-    required: false,
-    size: undefined,
-    state: null,
-  }
-)
+const props = withDefaults(defineProps<BFormFileProps>(), {
+  accept: '',
+  autofocus: false,
+  // eslint-disable-next-line vue/require-valid-default-prop
+  capture: false,
+  directory: false,
+  disabled: false,
+  form: undefined,
+  id: undefined,
+  label: '',
+  labelClass: undefined,
+  multiple: false,
+  name: undefined,
+  noDrop: false,
+  noTraverse: false,
+  required: false,
+  size: undefined,
+  state: null,
+})
 
-const emit = defineEmits<{
-  'update:modelValue': [value: File | File[] | null]
-}>()
-
-const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
+const modelValue = defineModel<File | File[] | null>({
+  default: null,
+})
 const computedId = useId(() => props.id)
 
 // TODO noTraverse is not implemented yet

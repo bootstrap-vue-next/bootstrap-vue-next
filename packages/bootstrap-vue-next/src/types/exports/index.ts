@@ -54,3 +54,5 @@ export type {
   TransitionMode,
   VerticalAlign,
 } from '..'
+
+export * from '../ComponentProps'

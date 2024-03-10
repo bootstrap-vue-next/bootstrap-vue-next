@@ -61,72 +61,39 @@
 import {computed, nextTick, provide, type Ref, ref, toRef, unref, watch} from 'vue'
 import {BvEvent, tabsInjectionKey} from '../../utils'
 import {useAlignment} from '../../composables'
-import type {AlignmentJustifyContent, ClassValue, TabType} from '../../types'
-import {createReusableTemplate, useVModel} from '@vueuse/core'
+import type {BTabsProps, TabType} from '../../types'
+import {createReusableTemplate} from '@vueuse/core'
 // TODO this component needs a desperate refactoring to use provide/inject and not the complicated slot manipulation logic it's doing now
 
-const props = withDefaults(
-  defineProps<{
-    activeId?: string
-    activeNavItemClass?: ClassValue
-    activeTabClass?: ClassValue
-    align?: AlignmentJustifyContent
-    card?: boolean
-    contentClass?: ClassValue
-    end?: boolean
-    fill?: boolean
-    id?: string
-    inactiveNavItemClass?: ClassValue
-    inactiveTabClass?: ClassValue
-    justified?: boolean
-    lazy?: boolean
-    modelValue?: number
-    navClass?: ClassValue
-    navItemClass?: ClassValue
-    navWrapperClass?: ClassValue
-    noFade?: boolean
-    // noKeyNav?: boolean,
-    noNavStyle?: boolean
-    pills?: boolean
-    small?: boolean
-    tag?: string
-    tabClass?: ClassValue
-    vertical?: boolean
-  }>(),
-  {
-    activeId: undefined,
-    activeNavItemClass: undefined,
-    activeTabClass: undefined,
-    align: undefined,
-    card: false,
-    contentClass: undefined,
-    end: false,
-    fill: false,
-    id: undefined,
-    inactiveNavItemClass: undefined,
-    inactiveTabClass: undefined,
-    justified: false,
-    lazy: false,
-    modelValue: -1,
-    navClass: undefined,
-    navItemClass: undefined,
-    navWrapperClass: undefined,
-    noFade: false,
-    // noKeyNav: false,
-    noNavStyle: false,
-    pills: false,
-    small: false,
-    tag: 'div',
-    tabClass: undefined,
-    vertical: false,
-  }
-)
+const props = withDefaults(defineProps<BTabsProps>(), {
+  activeNavItemClass: undefined,
+  activeTabClass: undefined,
+  align: undefined,
+  card: false,
+  contentClass: undefined,
+  end: false,
+  fill: false,
+  id: undefined,
+  inactiveNavItemClass: undefined,
+  inactiveTabClass: undefined,
+  justified: false,
+  lazy: false,
+  navClass: undefined,
+  navItemClass: undefined,
+  navWrapperClass: undefined,
+  noFade: false,
+  // noKeyNav: false,
+  noNavStyle: false,
+  pills: false,
+  small: false,
+  tag: 'div',
+  tabClass: undefined,
+  vertical: false,
+})
 
 const emit = defineEmits<{
   'activate-tab': [v1: number, v2: number, v3: BvEvent]
   'click': [] // TODO click event is never used
-  'update:activeId': [value: string]
-  'update:modelValue': [value: number]
 }>()
 
 defineSlots<{
@@ -140,8 +107,12 @@ defineSlots<{
   'tabs-start'?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
-const activeId = useVModel(props, 'activeId', emit, {passive: true})
+const modelValue = defineModel<number>({
+  default: -1,
+})
+const activeId = defineModel<string | undefined>('activeId', {
+  default: undefined,
+})
 
 const ReusableEmptyTab = createReusableTemplate()
 

@@ -12,25 +12,16 @@
 
 <script setup lang="ts">
 import BPlaceholder from './BPlaceholder.vue'
-import type {ColorVariant, Numberish, PlaceholderAnimation} from '../../types'
+import type {BPlaceholderButtonProps} from '../../types'
 import {computed} from 'vue'
 
-const props = withDefaults(
-  defineProps<{
-    animation?: PlaceholderAnimation
-    cols?: Numberish
-    tag?: string
-    variant?: ColorVariant | null
-    width?: Numberish
-  }>(),
-  {
-    animation: undefined,
-    cols: undefined,
-    tag: 'div',
-    variant: 'primary',
-    width: undefined,
-  }
-)
+const props = withDefaults(defineProps<BPlaceholderButtonProps>(), {
+  animation: undefined,
+  cols: undefined,
+  tag: 'div',
+  variant: 'primary',
+  width: undefined,
+})
 
 const computedClasses = computed(() => ({
   [`btn-${props.variant}`]: props.variant !== null,

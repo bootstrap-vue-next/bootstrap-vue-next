@@ -109,7 +109,7 @@
 </template>
 
 <script setup lang="ts">
-import {onKeyStroke, useEventListener, useFocus, useVModel} from '@vueuse/core'
+import {onKeyStroke, useEventListener, useFocus} from '@vueuse/core'
 import {computed, type CSSProperties, ref, toRef, watch} from 'vue'
 import {useColorVariantClasses, useId, useModalManager, useSafeScrollLock} from '../../composables'
 import type {BModalProps} from '../../types'
@@ -170,7 +170,6 @@ const props = withDefaults(defineProps<BModalProps>(), {
   id: undefined,
   lazy: false,
   modalClass: undefined,
-  modelValue: false,
   noCloseOnBackdrop: false,
   noCloseOnEsc: false,
   noFade: false,
@@ -199,7 +198,6 @@ const emit = defineEmits<{
   'show': [value: BvTriggerableEvent]
   'show-prevented': []
   'shown': [value: BvTriggerableEvent]
-  'update:modelValue': [value: boolean]
 }>()
 
 type SharedSlotsData = {
@@ -232,7 +230,7 @@ const slots = defineSlots<{
 const computedId = useId(() => props.id, 'modal')
 // Note: passive: true will sync an internal ref... This is required for useModalManager to exit,
 // Since the modelValue that's passed from that composable is not reactive, this internal ref _is_ and thus it will trigger closing the modal
-const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
+const modelValue = defineModel<boolean>({default: false})
 
 const element = ref<HTMLElement | null>(null)
 const okButton = ref<HTMLElement | null>(null)

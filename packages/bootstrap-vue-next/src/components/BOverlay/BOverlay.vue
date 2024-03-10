@@ -30,58 +30,36 @@
 
 <script setup lang="ts">
 import {computed, toRef} from 'vue'
-import type {ColorVariant, Numberish, RadiusElementExtendables, SpinnerType} from '../../types'
+import type {BOverlayProps} from '../../types'
 import {useRadiusElementClasses} from '../../composables'
 import BTransition from '../BTransition/BTransition.vue'
 import BSpinner from '../BSpinner.vue'
 
-const props = withDefaults(
-  defineProps<
-    {
-      bgColor?: string
-      blur?: string | null
-      fixed?: boolean
-      noCenter?: boolean
-      noFade?: boolean
-      noSpinner?: boolean
-      noWrap?: boolean
-      opacity?: Numberish
-      overlayTag?: string
-      show?: boolean
-      spinnerSmall?: boolean
-      spinnerType?: SpinnerType
-      spinnerVariant?: ColorVariant | null
-      variant?: ColorVariant | 'white' | 'transparent' | null
-      wrapTag?: string
-      zIndex?: Numberish
-    } & RadiusElementExtendables
-  >(),
-  {
-    blur: '2px',
-    bgColor: undefined,
-    fixed: false,
-    noCenter: false,
-    noFade: false,
-    noSpinner: false,
-    noWrap: false,
-    opacity: 0.85,
-    overlayTag: 'div',
-    show: false,
-    spinnerSmall: false,
-    spinnerType: 'border',
-    spinnerVariant: undefined,
-    variant: 'light',
-    wrapTag: 'div',
-    zIndex: 10,
-    // RadiusElementExtendables props
-    rounded: false,
-    roundedBottom: undefined,
-    roundedEnd: undefined,
-    roundedStart: undefined,
-    roundedTop: undefined,
-    // End RadiusElementExtendables props
-  }
-)
+const props = withDefaults(defineProps<BOverlayProps>(), {
+  blur: '2px',
+  bgColor: undefined,
+  fixed: false,
+  noCenter: false,
+  noFade: false,
+  noSpinner: false,
+  noWrap: false,
+  opacity: 0.85,
+  overlayTag: 'div',
+  show: false,
+  spinnerSmall: false,
+  spinnerType: 'border',
+  spinnerVariant: undefined,
+  variant: 'light',
+  wrapTag: 'div',
+  zIndex: 10,
+  // RadiusElementExtendables props
+  rounded: false,
+  roundedBottom: undefined,
+  roundedEnd: undefined,
+  roundedStart: undefined,
+  roundedTop: undefined,
+  // End RadiusElementExtendables props
+})
 
 const emit = defineEmits<{
   click: [value: MouseEvent]

@@ -81,16 +81,13 @@
   </BTableLite>
 </template>
 
-<script setup lang="ts" generic="T = Record<string, unknown>">
-import {useToNumber, useVModel} from '@vueuse/core'
+<script setup lang="ts" generic="T extends Record<string, unknown>">
+import {useToNumber} from '@vueuse/core'
 import {computed, onMounted, ref, type Ref, type StyleValue, toRef, watch} from 'vue'
 import type {
-  BTableLiteProps,
-  BTableProvider,
-  BTableSortCompare,
-  ColorVariant,
+  BTableProps,
   LiteralUnion,
-  Numberish,
+  NoProviderTypes,
   TableField,
   TableFieldFormatter,
   TableFieldRaw,
@@ -103,131 +100,77 @@ import BTd from './BTd.vue'
 import BTr from './BTr.vue'
 import {formatItem, get, getTableFieldHeadLabel} from '../../utils'
 
-type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
-
 // TODO sort props list alphabetically when everything is done
-const props = withDefaults(
-  defineProps<
-    {
-      provider?: BTableProvider<T>
-      sortCompare?: BTableSortCompare<T>
-      noProvider?: readonly NoProviderTypes[]
-      noProviderPaging?: boolean
-      noProviderSorting?: boolean
-      noProviderFiltering?: boolean
-      sortBy?: string
-      sortDesc?: boolean
-      selectable?: boolean
-      stickySelect?: boolean
-      selectHead?: boolean | string
-      selectMode?: 'multi' | 'single' | 'range'
-      selectionVariant?: ColorVariant | null
-      busy?: boolean
-      busyLoadingText?: string
-      perPage?: Numberish
-      currentPage?: Numberish
-      filter?: string
-      filterable?: readonly string[]
-      // TODO
-      // apiUrl?: string
-      // filterFunction?: () => any
-      // filterIgnoredFields?: any[]
-      // filterIncludedFields?: any[]
-      // headRowVariant?: ColorVariant | null
-      // headVariant?: ColorVariant | null
-      // labelSortAsc?: string
-      // labelSortClear?: string
-      // labelSortDesc?: string
-      // noFooterSorting?: boolean
-      noLocalSorting?: boolean
-      noSelectOnClick?: boolean
-      // noSortReset?: boolean
-      // selectedVariant?: ColorVariant | null
-      // showEmpty?: boolean
-      sortCompareLocale?: string | string[]
-      sortCompareOptions?: Intl.CollatorOptions
-      // sortDirection?: 'asc' | 'desc' | 'last'
-      // sortIconLeft?: boolean
-      // sortNullLast?: boolean
-      selectedItems?: readonly TableItem<T>[]
-      noSortableIcon?: boolean
-    } & Omit<BTableLiteProps<T>, 'tableClass'>
-  >(),
-  {
-    sortCompareLocale: undefined,
-    sortCompareOptions: () => ({numeric: true}),
-    noSortableIcon: false,
-    perPage: Infinity,
-    sortBy: undefined,
-    filter: undefined,
-    filterable: undefined,
-    provider: undefined,
-    sortCompare: undefined,
-    noProvider: undefined,
-    noProviderPaging: false,
-    noProviderSorting: false,
-    noProviderFiltering: false,
-    noLocalSorting: false,
-    noSelectOnClick: false,
-    sortDesc: false,
-    selectable: false,
-    stickySelect: false,
-    selectHead: true,
-    selectMode: 'multi',
-    selectionVariant: 'primary',
-    busy: false,
-    busyLoadingText: 'Loading...',
-    currentPage: 1,
-    selectedItems: () => [],
-    // BTableLite props
-    items: () => [],
-    fields: () => [],
-    // All others use defaults
-    caption: undefined,
-    align: undefined,
-    footClone: undefined,
-    labelStacked: undefined,
-    showEmpty: undefined,
-    emptyText: undefined,
-    emptyFilteredText: undefined,
-    fieldColumnClass: undefined,
-    tbodyTrClass: undefined,
-    captionHtml: undefined,
-    detailsTdClass: undefined,
-    headVariant: undefined,
-    headRowVariant: undefined,
-    footRowVariant: undefined,
-    footVariant: undefined,
-    modelValue: undefined,
-    primaryKey: undefined,
-    tbodyClass: undefined,
-    tbodyTrAttr: undefined,
-    tfootClass: undefined,
-    tfootTrClass: undefined,
-    theadClass: undefined,
-    theadTrClass: undefined,
-    // End BTableLite props
-    // BTableSimple props
-    borderVariant: undefined,
-    variant: undefined,
-    bordered: undefined,
-    borderless: undefined,
-    captionTop: undefined,
-    dark: undefined,
-    hover: undefined,
-    id: undefined,
-    noBorderCollapse: undefined,
-    outlined: undefined,
-    fixed: undefined,
-    responsive: undefined,
-    stacked: undefined,
-    striped: undefined,
-    stripedColumns: undefined,
-    small: undefined,
-    stickyHeader: undefined,
-    // End BTableSimple props
-  }
-)
+const props = withDefaults(defineProps<BTableProps<T>>(), {
+  sortCompareLocale: undefined,
+  sortCompareOptions: () => ({numeric: true}),
+  noSortableIcon: false,
+  perPage: Infinity,
+  filter: undefined,
+  filterable: undefined,
+  provider: undefined,
+  sortCompare: undefined,
+  noProvider: undefined,
+  noProviderPaging: false,
+  noProviderSorting: false,
+  noProviderFiltering: false,
+  noLocalSorting: false,
+  noSelectOnClick: false,
+  selectable: false,
+  stickySelect: false,
+  selectHead: true,
+  selectMode: 'multi',
+  selectionVariant: 'primary',
+  busyLoadingText: 'Loading...',
+  currentPage: 1,
+  // BTableLite props
+  items: () => [],
+  fields: () => [],
+  // All others use defaults
+  caption: undefined,
+  align: undefined,
+  footClone: undefined,
+  labelStacked: undefined,
+  showEmpty: undefined,
+  emptyText: undefined,
+  emptyFilteredText: undefined,
+  fieldColumnClass: undefined,
+  tbodyTrClass: undefined,
+  captionHtml: undefined,
+  detailsTdClass: undefined,
+  headVariant: undefined,
+  headRowVariant: undefined,
+  footRowVariant: undefined,
+  footVariant: undefined,
+  modelValue: undefined,
+  primaryKey: undefined,
+  tbodyClass: undefined,
+  tbodyTrAttr: undefined,
+  tfootClass: undefined,
+  tfootTrClass: undefined,
+  theadClass: undefined,
+  theadTrClass: undefined,
+  // End BTableLite props
+  // BTableSimple props
+  borderVariant: undefined,
+  variant: undefined,
+  bordered: undefined,
+  borderless: undefined,
+  captionTop: undefined,
+  dark: undefined,
+  hover: undefined,
+  id: undefined,
+  noBorderCollapse: undefined,
+  outlined: undefined,
+  fixed: undefined,
+  responsive: undefined,
+  stacked: undefined,
+  striped: undefined,
+  stripedColumns: undefined,
+  small: undefined,
+  stickyHeader: undefined,
+  // End BTableSimple props
+})
 
 const emit = defineEmits<{
   'filtered': [value: TableItem<T>[]]
@@ -245,18 +188,20 @@ const emit = defineEmits<{
   'row-unselected': [value: TableItem<T>]
   'selection': [value: TableItem<T>[]]
   'sorted': [sortBy: string, isDesc: boolean]
-  'update:busy': [value: boolean]
-  'update:selectedItems': [value: TableItem<T>[]]
-  'update:sortDesc': [value: boolean]
-  'update:sortBy': [value: string]
 }>()
 
-const sortByModel = useVModel(props, 'sortBy', emit, {passive: true})
-const busyModel = useVModel(props, 'busy', emit, {passive: true})
-const sortDescModel = useVModel(props, 'sortDesc', emit, {passive: true})
-const selectedItemsModel = useVModel(props, 'selectedItems', emit, {
-  passive: true,
-}) as Ref<TableItem<T>[]>
+const sortByModel = defineModel<string | undefined>('sortBy', {
+  default: undefined,
+})
+const busyModel = defineModel<boolean>('busy', {
+  default: false,
+})
+const sortDescModel = defineModel<boolean>('sortDesc', {
+  default: false,
+})
+const selectedItemsModel = defineModel<TableItem<T>[]>('selectedItems', {
+  default: () => [],
+})
 
 const selectedItemsToSet = computed({
   get: () => new Set([...selectedItemsModel.value]),

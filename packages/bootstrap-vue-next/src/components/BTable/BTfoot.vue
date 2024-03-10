@@ -5,17 +5,12 @@
 </template>
 
 <script setup lang="ts">
-import type {ColorVariant} from '../../types'
+import type {BTfootProps} from '../../types'
 import {computed} from 'vue'
 
-const props = withDefaults(
-  defineProps<{
-    variant?: ColorVariant | null
-  }>(),
-  {
-    variant: null,
-  }
-)
+const props = withDefaults(defineProps<BTfootProps>(), {
+  variant: null,
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

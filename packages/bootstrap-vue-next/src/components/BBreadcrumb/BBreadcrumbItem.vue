@@ -17,49 +17,41 @@
 import {pick} from '../../utils'
 import {computed, toRef} from 'vue'
 import BLink from '../BLink/BLink.vue'
-import type {BLinkProps} from '../../types'
+import type {BBreadcrumbItemProps} from '../../types'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
 }>()
 
-const props = withDefaults(
-  defineProps<
-    {
-      ariaCurrent?: string
-      text?: string
-    } & Omit<BLinkProps, 'routerTag'>
-  >(),
-  {
-    ariaCurrent: 'location',
-    text: undefined,
-    // Link props
-    active: false, // Why is this active: false?
-    // All others use defaults
-    activeClass: undefined,
-    append: undefined,
-    disabled: undefined,
-    exactActiveClass: undefined,
-    href: undefined,
-    icon: undefined,
-    opacity: undefined,
-    opacityHover: undefined,
-    rel: undefined,
-    replace: undefined,
-    routerComponentName: undefined,
-    routerTag: undefined,
-    target: undefined,
-    to: undefined,
-    underlineOffset: undefined,
-    underlineOffsetHover: undefined,
-    underlineOpacity: undefined,
-    underlineOpacityHover: undefined,
-    underlineVariant: undefined,
-    variant: undefined,
-    // End link props
-  }
-)
+const props = withDefaults(defineProps<BBreadcrumbItemProps>(), {
+  ariaCurrent: 'location',
+  text: undefined,
+  // Link props
+  active: false, // Why is this active: false?
+  // All others use defaults
+  activeClass: undefined,
+  append: undefined,
+  disabled: undefined,
+  exactActiveClass: undefined,
+  href: undefined,
+  icon: undefined,
+  opacity: undefined,
+  opacityHover: undefined,
+  rel: undefined,
+  replace: undefined,
+  routerComponentName: undefined,
+  routerTag: undefined,
+  target: undefined,
+  to: undefined,
+  underlineOffset: undefined,
+  underlineOffsetHover: undefined,
+  underlineOpacity: undefined,
+  underlineOpacityHover: undefined,
+  underlineVariant: undefined,
+  variant: undefined,
+  // End link props
+})
 
 const emit = defineEmits<{
   click: [value: MouseEvent]

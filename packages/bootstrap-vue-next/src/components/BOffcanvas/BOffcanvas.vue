@@ -69,10 +69,10 @@
 </template>
 
 <script setup lang="ts">
-import {onKeyStroke, useEventListener, useFocus, useVModel} from '@vueuse/core'
-import {computed, nextTick, ref, type RendererElement, toRef} from 'vue'
+import {onKeyStroke, useEventListener, useFocus} from '@vueuse/core'
+import {computed, nextTick, ref, toRef} from 'vue'
 import {useId, useSafeScrollLock} from '../../composables'
-import type {AttrsValue, ButtonVariant, ClassValue, ColorVariant} from '../../types'
+import type {BOffcanvasProps} from '../../types'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
@@ -91,61 +91,29 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(
-  defineProps<{
-    backdrop?: boolean
-    backdropVariant?: ColorVariant | null
-    bodyAttrs?: Readonly<AttrsValue>
-    bodyClass?: ClassValue
-    bodyScrolling?: boolean
-    footerClass?: string
-    headerClass?: string
-    headerCloseClass?: ClassValue
-    headerCloseLabel?: string
-    headerCloseVariant?: ButtonVariant | null
-    id?: string
-    lazy?: boolean
-    modelValue?: boolean
-    noCloseOnBackdrop?: boolean
-    noCloseOnEsc?: boolean
-    noFocus?: boolean
-    noHeader?: boolean
-    noHeaderClose?: boolean
-    // TODO standardize this. Create a dedicated type
-    // Then in components that use individual props (BImg)
-    // Make them just use prop placement
-    placement?: 'top' | 'bottom' | 'start' | 'end'
-    teleportDisabled?: boolean
-    teleportTo?: string | RendererElement | null | undefined
-    title?: string
-    // responsive?: Breakpoint
-    // TODO responsive doesn't work
-  }>(),
-  {
-    backdrop: true,
-    backdropVariant: 'dark',
-    bodyAttrs: undefined,
-    bodyClass: undefined,
-    bodyScrolling: false,
-    footerClass: undefined,
-    headerClass: undefined,
-    headerCloseClass: undefined,
-    headerCloseLabel: 'Close',
-    headerCloseVariant: 'secondary',
-    id: undefined,
-    lazy: false,
-    modelValue: false,
-    noCloseOnBackdrop: false,
-    noCloseOnEsc: false,
-    noFocus: false,
-    noHeader: false,
-    noHeaderClose: false,
-    placement: 'start',
-    teleportDisabled: false,
-    teleportTo: 'body',
-    title: undefined,
-  }
-)
+const props = withDefaults(defineProps<BOffcanvasProps>(), {
+  backdrop: true,
+  backdropVariant: 'dark',
+  bodyAttrs: undefined,
+  bodyClass: undefined,
+  bodyScrolling: false,
+  footerClass: undefined,
+  headerClass: undefined,
+  headerCloseClass: undefined,
+  headerCloseLabel: 'Close',
+  headerCloseVariant: 'secondary',
+  id: undefined,
+  lazy: false,
+  noCloseOnBackdrop: false,
+  noCloseOnEsc: false,
+  noFocus: false,
+  noHeader: false,
+  noHeaderClose: false,
+  placement: 'start',
+  teleportDisabled: false,
+  teleportTo: 'body',
+  title: undefined,
+})
 
 const emit = defineEmits<{
   'close': [value: BvTriggerableEvent]
@@ -156,7 +124,6 @@ const emit = defineEmits<{
   'show': [value: BvTriggerableEvent]
   'show-prevented': []
   'shown': [value: BvTriggerableEvent]
-  'update:modelValue': [value: boolean]
 }>()
 
 type SharedSlotsData = {
@@ -180,7 +147,9 @@ const slots = defineSlots<{
   'title'?: (props: SharedSlotsData) => any
 }>()
 
-const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
+const modelValue = defineModel<boolean>({
+  default: false,
+})
 
 const computedId = useId(() => props.id, 'offcanvas')
 useSafeScrollLock(modelValue, () => props.bodyScrolling)

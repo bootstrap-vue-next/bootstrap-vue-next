@@ -47,9 +47,9 @@
 <script setup lang="ts">
 import {BvEvent} from '../../utils'
 import {computed, toRef, watch} from 'vue'
-import type {AlignmentJustifyContent, ClassValue, Numberish, Size} from '../../types'
+import type {BPaginationProps, ClassValue} from '../../types'
 import {useAlignment} from '../../composables'
-import {createReusableTemplate, useToNumber, useVModel} from '@vueuse/core'
+import {createReusableTemplate, useToNumber} from '@vueuse/core'
 
 // Threshold of limit size when we start/stop showing ellipsis
 const ELLIPSIS_THRESHOLD = 3
@@ -60,79 +60,43 @@ const NEXT_BUTTON = -3
 const LAST_BUTTON = -4
 const ELLIPSIS_BUTTON = -5
 
-const props = withDefaults(
-  defineProps<{
-    align?: AlignmentJustifyContent | 'fill'
-    ariaControls?: string
-    ariaLabel?: string
-    disabled?: boolean
-    ellipsisClass?: ClassValue
-    ellipsisText?: string
-    firstClass?: ClassValue
-    firstNumber?: boolean
-    firstText?: string
-    hideEllipsis?: boolean
-    hideGotoEndButtons?: boolean
-    labelFirstPage?: string
-    labelLastPage?: string
-    labelNextPage?: string
-    labelPage?: string
-    labelPrevPage?: string
-    lastClass?: ClassValue
-    lastNumber?: boolean
-    lastText?: string
-    limit?: Numberish
-    modelValue?: Numberish
-    nextClass?: ClassValue
-    nextText?: string
-    pageClass?: ClassValue
-    perPage?: Numberish
-    pills?: boolean
-    prevClass?: ClassValue
-    prevText?: string
-    size?: Size
-    totalRows?: Numberish
-  }>(),
-  {
-    align: 'start',
-    ariaControls: undefined,
-    ariaLabel: 'Pagination',
-    disabled: false,
-    ellipsisClass: undefined,
-    ellipsisText: '\u2026',
-    firstClass: undefined,
-    firstNumber: false,
-    firstText: '\u00AB',
-    hideEllipsis: false,
-    hideGotoEndButtons: false,
-    labelFirstPage: 'Go to first page',
-    labelLastPage: 'Go to last page',
-    labelNextPage: 'Go to next page',
-    labelPage: 'Go to page',
-    labelPrevPage: 'Go to previous page',
-    lastClass: undefined,
-    lastNumber: false,
-    lastText: '\u00BB',
-    limit: 5,
-    modelValue: 1,
-    nextClass: undefined,
-    nextText: '\u203A',
-    pageClass: undefined,
-    perPage: DEFAULT_PER_PAGE,
-    pills: false,
-    prevClass: undefined,
-    prevText: '\u2039',
-    size: undefined,
-    totalRows: DEFAULT_TOTAL_ROWS,
-  }
-)
+const props = withDefaults(defineProps<BPaginationProps>(), {
+  align: 'start',
+  ariaControls: undefined,
+  ariaLabel: 'Pagination',
+  disabled: false,
+  ellipsisClass: undefined,
+  ellipsisText: '\u2026',
+  firstClass: undefined,
+  firstNumber: false,
+  firstText: '\u00AB',
+  hideEllipsis: false,
+  hideGotoEndButtons: false,
+  labelFirstPage: 'Go to first page',
+  labelLastPage: 'Go to last page',
+  labelNextPage: 'Go to next page',
+  labelPage: 'Go to page',
+  labelPrevPage: 'Go to previous page',
+  lastClass: undefined,
+  lastNumber: false,
+  lastText: '\u00BB',
+  limit: 5,
+  nextClass: undefined,
+  nextText: '\u203A',
+  pageClass: undefined,
+  perPage: DEFAULT_PER_PAGE,
+  pills: false,
+  prevClass: undefined,
+  prevText: '\u2039',
+  size: undefined,
+  totalRows: DEFAULT_TOTAL_ROWS,
+})
 
 const emit = defineEmits<{
-  'update:modelValue': [value: number]
   'page-click': [event: BvEvent, pageNumber: number]
 }>()
 
-const modelValue = useVModel(props, 'modelValue', emit)
+const modelValue = defineModel<number>({default: 1})
 
 const limitNumber = useToNumber(() => props.limit, {nanToZero: true, method: 'parseInt'})
 const perPageNumber = useToNumber(() => props.perPage, {nanToZero: true, method: 'parseInt'})

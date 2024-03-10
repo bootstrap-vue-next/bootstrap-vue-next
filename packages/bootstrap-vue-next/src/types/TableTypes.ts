@@ -59,3 +59,5 @@ export interface TableField<T = Record<string, unknown>> {
 }
 
 export type TableFieldRaw<T = Record<string, unknown>> = string | TableField<T>
+
+export type NoProviderTypes = 'paging' | 'sorting' | 'filtering'

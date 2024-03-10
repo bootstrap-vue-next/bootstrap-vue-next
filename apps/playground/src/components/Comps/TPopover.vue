@@ -206,7 +206,7 @@
     </BRow>
     <BRow>
       <BCol>
-        <BPopover click placement="bottom" container="body">
+        <BPopover click placement="bottom" teleport-to="body">
           <template #title> Title </template>
           <template #target>
             <span class="border rounded m-3 p-2">move to body.</span>

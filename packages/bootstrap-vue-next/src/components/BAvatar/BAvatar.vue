@@ -29,17 +29,7 @@
 <script setup lang="ts">
 import {avatarGroupInjectionKey, isEmptySlot} from '../../utils'
 import {computed, type CSSProperties, inject, type StyleValue, toRef} from 'vue'
-import type {
-  BLinkProps,
-  ButtonType,
-  ColorExtendables,
-  ColorVariant,
-  LiteralUnion,
-  Numberish,
-  RadiusElementExtendables,
-  Size,
-  TextColorVariant,
-} from '../../types'
+import type {BAvatarProps} from '../../types'
 import {
   useAvatarSize,
   useBLinkHelper,
@@ -48,80 +38,57 @@ import {
 } from '../../composables'
 import BLink from '../BLink/BLink.vue'
 
-const props = withDefaults(
-  defineProps<
-    {
-      alt?: string
-      badge?: boolean | string
-      badgeBgVariant?: ColorVariant | null
-      badgeOffset?: string
-      badgeStart?: boolean
-      badgeTextVariant?: TextColorVariant | null
-      badgeTop?: boolean
-      badgeVariant?: ColorVariant | null
-      button?: boolean
-      buttonType?: ButtonType
-      icon?: string
-      size?: LiteralUnion<Size, Numberish>
-      square?: boolean
-      src?: string
-      text?: string
-    } & Omit<BLinkProps, 'routerTag'> &
-      ColorExtendables &
-      RadiusElementExtendables
-  >(),
-  {
-    alt: 'avatar',
-    badge: false,
-    badgeBgVariant: null,
-    badgeOffset: undefined,
-    badgeStart: false,
-    badgeTextVariant: null,
-    badgeTop: false,
-    badgeVariant: 'primary',
-    button: false,
-    buttonType: 'button',
-    size: undefined,
-    square: false,
-    src: undefined,
-    text: undefined,
-    // Link props
-    variant: 'secondary',
-    // All others use defaults
-    active: undefined,
-    activeClass: undefined,
-    append: undefined,
-    disabled: undefined,
-    exactActiveClass: undefined,
-    href: undefined,
-    icon: undefined,
-    opacity: undefined,
-    opacityHover: undefined,
-    rel: undefined,
-    replace: undefined,
-    routerComponentName: undefined,
-    target: undefined,
-    to: undefined,
-    underlineOffset: undefined,
-    underlineOffsetHover: undefined,
-    underlineOpacity: undefined,
-    underlineOpacityHover: undefined,
-    underlineVariant: undefined,
-    // End link props
-    // ColorExtendables props
-    // Variant is here as well
-    bgVariant: null,
-    textVariant: null,
-    // End ColorExtendables props
-    // RadiusElementExtendables props
-    rounded: false,
-    roundedBottom: undefined,
-    roundedEnd: undefined,
-    roundedStart: undefined,
-    roundedTop: undefined,
-    // End RadiusElementExtendables props
-  }
-)
+const props = withDefaults(defineProps<BAvatarProps>(), {
+  alt: 'avatar',
+  badge: false,
+  badgeBgVariant: null,
+  badgeOffset: undefined,
+  badgeStart: false,
+  badgeTextVariant: null,
+  badgeTop: false,
+  badgeVariant: 'primary',
+  button: false,
+  buttonType: 'button',
+  size: undefined,
+  square: false,
+  src: undefined,
+  text: undefined,
+  // Link props
+  variant: 'secondary',
+  // All others use defaults
+  active: undefined,
+  activeClass: undefined,
+  append: undefined,
+  disabled: undefined,
+  exactActiveClass: undefined,
+  href: undefined,
+  icon: undefined,
+  opacity: undefined,
+  opacityHover: undefined,
+  rel: undefined,
+  replace: undefined,
+  routerComponentName: undefined,
+  target: undefined,
+  to: undefined,
+  underlineOffset: undefined,
+  underlineOffsetHover: undefined,
+  underlineOpacity: undefined,
+  underlineOpacityHover: undefined,
+  underlineVariant: undefined,
+  // End link props
+  // ColorExtendables props
+  // Variant is here as well
+  bgVariant: null,
+  textVariant: null,
+  // End ColorExtendables props
+  // RadiusElementExtendables props
+  rounded: false,
+  roundedBottom: undefined,
+  roundedEnd: undefined,
+  roundedStart: undefined,
+  roundedTop: undefined,
+  // End RadiusElementExtendables props
+})
 
 const emit = defineEmits<{
   'click': [value: MouseEvent]

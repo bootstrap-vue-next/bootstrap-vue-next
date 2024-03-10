@@ -4,14 +4,11 @@
 </template>
 
 <script setup lang="ts">
-const props = withDefaults(
-  defineProps<{
-    loading?: boolean
-  }>(),
-  {
-    loading: false,
-  }
-)
+import type {BPlaceholderWrapperProps} from '../../types'
+
+const props = withDefaults(defineProps<BPlaceholderWrapperProps>(), {
+  loading: false,
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import BLink from '../BLink/BLink.vue'
 import {computed, inject, toRef, useAttrs} from 'vue'
-import type {AttrsValue, BLinkProps, ClassValue} from '../../types'
+import type {BDropdownItemProps} from '../../types'
 import {useBLinkHelper} from '../../composables'
 import {collapseInjectionKey, dropdownInjectionKey, navbarInjectionKey} from '../../utils'
 
@@ -31,41 +31,33 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(
-  defineProps<
-    {
-      linkClass?: ClassValue
-      wrapperAttrs?: Readonly<AttrsValue>
-    } & Omit<BLinkProps, 'routerTag'>
-  >(),
-  {
-    wrapperAttrs: undefined,
-    // Link props
-    linkClass: undefined,
-    variant: null,
-    // All others use defaults
-    active: undefined,
-    activeClass: undefined,
-    append: undefined,
-    disabled: undefined,
-    exactActiveClass: undefined,
-    href: undefined,
-    icon: undefined,
-    opacity: undefined,
-    opacityHover: undefined,
-    rel: undefined,
-    replace: undefined,
-    routerComponentName: undefined,
-    target: undefined,
-    to: undefined,
-    underlineOffset: undefined,
-    underlineOffsetHover: undefined,
-    underlineOpacity: undefined,
-    underlineOpacityHover: undefined,
-    underlineVariant: undefined,
-    // End link props
-  }
-)
+const props = withDefaults(defineProps<BDropdownItemProps>(), {
+  wrapperAttrs: undefined,
+  // Link props
+  linkClass: undefined,
+  variant: null,
+  // All others use defaults
+  active: undefined,
+  activeClass: undefined,
+  append: undefined,
+  disabled: undefined,
+  exactActiveClass: undefined,
+  href: undefined,
+  icon: undefined,
+  opacity: undefined,
+  opacityHover: undefined,
+  rel: undefined,
+  replace: undefined,
+  routerComponentName: undefined,
+  target: undefined,
+  to: undefined,
+  underlineOffset: undefined,
+  underlineOffsetHover: undefined,
+  underlineOpacity: undefined,
+  underlineOpacityHover: undefined,
+  underlineVariant: undefined,
+  // End link props
+})
 
 const emit = defineEmits<{
   click: [value: MouseEvent]

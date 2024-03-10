@@ -8,46 +8,29 @@
 
 <script setup lang="ts">
 import {computed, provide, type StyleValue, toRef} from 'vue'
-import type {
-  ColorExtendables,
-  LiteralUnion,
-  Numberish,
-  RadiusElementExtendables,
-  Size,
-} from '../../types'
+import type {BAvatarGroupProps} from '../../types'
 import {avatarGroupInjectionKey} from '../../utils'
 import {useAvatarSize} from '../../composables'
 import {useToNumber} from '@vueuse/core'
 
-const props = withDefaults(
-  defineProps<
-    {
-      overlap?: Numberish
-      size?: LiteralUnion<Size, Numberish>
-      square?: boolean
-      tag?: string
-    } & ColorExtendables &
-      RadiusElementExtendables
-  >(),
-  {
-    overlap: 0.3,
-    size: undefined,
-    square: false,
-    tag: 'div',
-    // RadiusElementExtendables props
-    rounded: false,
-    roundedBottom: undefined,
-    roundedEnd: undefined,
-    roundedStart: undefined,
-    roundedTop: undefined,
-    // End RadiusElementExtendables props
-    // ColorExtendables props
-    bgVariant: null,
-    textVariant: null,
-    variant: null,
-    // End ColorExtendables props
-  }
-)
+const props = withDefaults(defineProps<BAvatarGroupProps>(), {
+  overlap: 0.3,
+  size: undefined,
+  square: false,
+  tag: 'div',
+  // RadiusElementExtendables props
+  rounded: false,
+  roundedBottom: undefined,
+  roundedEnd: undefined,
+  roundedStart: undefined,
+  roundedTop: undefined,
+  // End RadiusElementExtendables props
+  // ColorExtendables props
+  bgVariant: null,
+  textVariant: null,
+  variant: null,
+  // End ColorExtendables props
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

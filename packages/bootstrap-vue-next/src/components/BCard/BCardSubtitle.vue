@@ -7,21 +7,14 @@
 </template>
 
 <script setup lang="ts">
-import type {TextColorVariant} from '../../types'
+import type {BCardSubtitleProps} from '../../types'
 import {computed} from 'vue'
 
-const props = withDefaults(
-  defineProps<{
-    text?: string
-    tag?: string
-    textVariant?: TextColorVariant | null
-  }>(),
-  {
-    tag: 'h6',
-    text: undefined,
-    textVariant: 'body-secondary',
-  }
-)
+const props = withDefaults(defineProps<BCardSubtitleProps>(), {
+  tag: 'h6',
+  text: undefined,
+  textVariant: 'body-secondary',
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

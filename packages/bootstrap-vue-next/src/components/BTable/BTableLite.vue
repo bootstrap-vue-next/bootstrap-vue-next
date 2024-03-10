@@ -191,7 +191,7 @@
   </BTableSimple>
 </template>
 
-<script setup lang="ts" generic="T = Record<string, unknown>">
+<script setup lang="ts" generic="T extends Record<string, unknown>">
 import {computed, toRef} from 'vue'
 import type {
   BTableLiteProps,

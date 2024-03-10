@@ -53,66 +53,34 @@
 import {BvCarouselEvent, carouselInjectionKey, getSlotElements} from '../../utils'
 import {computed, provide, ref, toRef, watch} from 'vue'
 import {useId} from '../../composables'
-import type {Numberish} from '../../types'
-import {
-  onKeyStroke,
-  useElementHover,
-  useIntervalFn,
-  useSwipe,
-  useToNumber,
-  useVModel,
-} from '@vueuse/core'
+import type {BCarouselProps} from '../../types'
+import {onKeyStroke, useElementHover, useIntervalFn, useSwipe, useToNumber} from '@vueuse/core'
 
-const props = withDefaults(
-  defineProps<{
-    background?: string
-    controls?: boolean
-    controlsNextText?: string
-    controlsPrevText?: string
-    fade?: boolean
-    id?: string
-    imgHeight?: string
-    imgWidth?: string
-    indicators?: boolean
-    indicatorsButtonLabel?: string
-    interval?: Numberish
-    keyboard?: boolean
-    modelValue?: number
-    noHoverPause?: boolean
-    noTouch?: boolean
-    noWrap?: boolean
-    ride?: boolean | 'carousel'
-    rideReverse?: boolean
-    touchThreshold?: Numberish
-  }>(),
-  {
-    background: undefined,
-    controls: false,
-    controlsNextText: 'Next',
-    controlsPrevText: 'Previous',
-    fade: false,
-    id: undefined,
-    imgHeight: undefined,
-    imgWidth: undefined,
-    indicators: false,
-    indicatorsButtonLabel: 'Slide',
-    interval: 5000,
-    keyboard: true,
-    modelValue: 0,
-    noHoverPause: false,
-    noTouch: false,
-    noWrap: false,
-    // eslint-disable-next-line vue/require-valid-default-prop
-    ride: false,
-    rideReverse: false,
-    touchThreshold: 50,
-  }
-)
+const props = withDefaults(defineProps<BCarouselProps>(), {
+  background: undefined,
+  controls: false,
+  controlsNextText: 'Next',
+  controlsPrevText: 'Previous',
+  fade: false,
+  id: undefined,
+  imgHeight: undefined,
+  imgWidth: undefined,
+  indicators: false,
+  indicatorsButtonLabel: 'Slide',
+  interval: 5000,
+  keyboard: true,
+  noHoverPause: false,
+  noTouch: false,
+  noWrap: false,
+  // eslint-disable-next-line vue/require-valid-default-prop
+  ride: false,
+  rideReverse: false,
+  touchThreshold: 50,
+})
 
 const emit = defineEmits<{
-  'slide': [value: BvCarouselEvent]
-  'slid': [value: BvCarouselEvent]
-  'update:modelValue': [value: number]
+  slide: [value: BvCarouselEvent]
+  slid: [value: BvCarouselEvent]
 }>()
 
 const slots = defineSlots<{
@@ -122,7 +90,7 @@ const slots = defineSlots<{
 
 const computedId = useId(() => props.id, 'carousel')
 
-const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
+const modelValue = defineModel<number>({default: 0})
 
 const touchThresholdNumber = useToNumber(() => props.touchThreshold)
 const intervalNumber = useToNumber(() => props.interval)

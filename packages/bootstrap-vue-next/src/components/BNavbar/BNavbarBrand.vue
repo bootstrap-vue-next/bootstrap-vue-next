@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import {toRef} from 'vue'
 import BLink from '../BLink/BLink.vue'
-import type {BLinkProps} from '../../types'
+import type {BNavbarBrandProps} from '../../types'
 import {useBLinkHelper} from '../../composables'
 
 defineSlots<{
@@ -15,38 +15,31 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const props = withDefaults(
-  defineProps<
-    {
-      tag?: string
-    } & Omit<BLinkProps, 'routerTag'>
-  >(),
-  {
-    tag: 'div',
-    // Link props
-    active: undefined,
-    activeClass: undefined,
-    append: undefined,
-    disabled: undefined,
-    exactActiveClass: undefined,
-    href: undefined,
-    icon: undefined,
-    opacity: undefined,
-    opacityHover: undefined,
-    rel: undefined,
-    replace: undefined,
-    routerComponentName: undefined,
-    target: undefined,
-    to: undefined,
-    underlineOffset: undefined,
-    underlineOffsetHover: undefined,
-    underlineOpacity: undefined,
-    underlineOpacityHover: undefined,
-    underlineVariant: undefined,
-    variant: undefined,
-    // End link props
-  }
-)
+const props = withDefaults(defineProps<BNavbarBrandProps>(), {
+  tag: 'div',
+  // Link props
+  active: undefined,
+  activeClass: undefined,
+  append: undefined,
+  disabled: undefined,
+  exactActiveClass: undefined,
+  href: undefined,
+  icon: undefined,
+  opacity: undefined,
+  opacityHover: undefined,
+  rel: undefined,
+  replace: undefined,
+  routerComponentName: undefined,
+  target: undefined,
+  to: undefined,
+  underlineOffset: undefined,
+  underlineOffsetHover: undefined,
+  underlineOpacity: undefined,
+  underlineOpacityHover: undefined,
+  underlineVariant: undefined,
+  variant: undefined,
+  // End link props
+})
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'active',

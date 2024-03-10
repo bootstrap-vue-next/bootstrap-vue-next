@@ -71,7 +71,7 @@
 
 <script setup lang="ts">
 import {computed, ref, toRef} from 'vue'
-import type {ButtonType, Numberish, Size} from '../../types'
+import type {BFormSpinbuttonProps, ButtonType} from '../../types'
 import {eventOnOff} from '../../utils/event'
 import {
   CODE_DOWN,
@@ -81,73 +81,41 @@ import {
   CODE_PAGEUP,
   CODE_UP,
 } from '../../constants/codes'
-import {onKeyStroke, useFocus, useToNumber, useVModel} from '@vueuse/core'
+import {onKeyStroke, useFocus, useToNumber} from '@vueuse/core'
 import {useId, useRtl} from '../../composables'
 
 const KEY_CODES = [CODE_UP, CODE_DOWN, CODE_HOME, CODE_END, CODE_PAGEUP, CODE_PAGEDOWN]
 
-const props = withDefaults(
-  defineProps<{
-    ariaControls?: string
-    ariaLabel?: string
-    disabled?: boolean
-    form?: string
-    formatterFn?: (value: number) => string
-    id?: string
-    inline?: boolean
-    labelDecrement?: string
-    labelIncrement?: string
-    locale?: string
-    max?: Numberish
-    min?: Numberish
-    modelValue?: number | null
-    name?: string
-    placeholder?: string
-    readonly?: boolean
-    repeatDelay?: Numberish
-    repeatInterval?: Numberish
-    repeatStepMultiplier?: Numberish
-    repeatThreshold?: Numberish
-    required?: boolean
-    size?: Size
-    state?: boolean | null
-    step?: Numberish
-    vertical?: boolean
-    wrap?: boolean
-  }>(),
-  {
-    ariaControls: undefined,
-    ariaLabel: undefined,
-    disabled: false,
-    form: undefined,
-    formatterFn: undefined,
-    id: undefined,
-    inline: false,
-    labelDecrement: 'Decrement',
-    labelIncrement: 'Increment',
-    locale: undefined,
-    max: defaultValues.max,
-    min: defaultValues.min,
-    modelValue: null,
-    name: undefined,
-    placeholder: undefined,
-    readonly: false,
-    repeatDelay: defaultValues.repeatDelay,
-    repeatInterval: defaultValues.repeatInterval,
-    repeatStepMultiplier: defaultValues.repeatMultiplier,
-    repeatThreshold: defaultValues.repeatThreshold,
-    required: false,
-    size: undefined,
-    state: null,
-    step: defaultValues.step,
-    vertical: false,
-    wrap: false,
-  }
-)
+const props = withDefaults(defineProps<BFormSpinbuttonProps>(), {
+  ariaControls: undefined,
+  ariaLabel: undefined,
+  disabled: false,
+  form: undefined,
+  formatterFn: undefined,
+  id: undefined,
+  inline: false,
+  labelDecrement: 'Decrement',
+  labelIncrement: 'Increment',
+  locale: undefined,
+  max: defaultValues.max,
+  min: defaultValues.min,
+  name: undefined,
+  placeholder: undefined,
+  readonly: false,
+  repeatDelay: defaultValues.repeatDelay,
+  repeatInterval: defaultValues.repeatInterval,
+  repeatStepMultiplier: defaultValues.repeatMultiplier,
+  repeatThreshold: defaultValues.repeatThreshold,
+  required: false,
+  size: undefined,
+  state: null,
+  step: defaultValues.step,
+  vertical: false,
+  wrap: false,
+})
 
 const emit = defineEmits<{
-  'change': [value: number | null]
-  'update:modelValue': [value: number | null]
+  change: [value: number | null]
 }>()
 
 defineSlots<{
@@ -157,7 +125,9 @@ defineSlots<{
   increment?: (props: {hasFocus: boolean}) => any
 }>()
 
-const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
+const modelValue = defineModel<number | null>({
+  default: null,
+})
 
 // TODO focus system
 const element = ref<HTMLElement | null>(null)

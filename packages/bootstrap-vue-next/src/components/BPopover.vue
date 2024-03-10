@@ -116,7 +116,6 @@ const props = withDefaults(defineProps<BPopoverProps>(), {
   id: undefined,
   inline: false,
   manual: false,
-  modelValue: false,
   noAutoClose: false,
   noFade: false,
   noFlip: false,
@@ -143,7 +142,6 @@ const emit = defineEmits<{
   'show': [value: BvTriggerableEvent]
   'show-prevented': []
   'shown': [value: BvTriggerableEvent]
-  'update:modelValue': [value: boolean]
 }>()
 
 defineSlots<{
@@ -160,10 +158,14 @@ defineSlots<{
   title?: (props: Record<string, never>) => any
 }>()
 
+const modelValue = defineModel<boolean>({
+  default: false,
+})
+
 const showState = ref(props.modelValue)
 const showStateInternal = ref(props.modelValue)
 watchEffect(() => {
-  emit('update:modelValue', showState.value)
+  modelValue.value = showState.value
 })
 
 watch(
