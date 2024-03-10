@@ -21,7 +21,7 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = defineModel<string>({
+const modelValue = defineModel<string | undefined>({
   default: undefined,
 })
 
