@@ -88,7 +88,7 @@ const emit = defineEmits<{
   click: [value: MouseEvent]
 }>()
 
-const pressedValue = defineModel<boolean>('pressed', {default: undefined})
+const pressedValue = defineModel<boolean | undefined>('pressed', {default: undefined})
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'active-class',
