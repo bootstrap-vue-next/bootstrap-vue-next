@@ -2,6 +2,7 @@ import type {Boundary, Middleware, Padding, RootBoundary, Strategy} from '@float
 import type {ComponentPublicInstance, RendererElement, TransitionProps} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {
+  AttrsValue,
   Breakpoint,
   ButtonType,
   ButtonVariant,
@@ -287,6 +288,7 @@ export interface BModalProps {
   autoFocusButton?: 'ok' | 'cancel' | 'close'
   body?: string
   backdropVariant?: ColorVariant | null
+  bodyAttrs?: Readonly<AttrsValue>
   bodyBgVariant?: ColorVariant | null
   bodyClass?: ClassValue
   bodyScrolling?: boolean
