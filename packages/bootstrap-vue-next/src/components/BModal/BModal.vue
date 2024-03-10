@@ -53,7 +53,12 @@
                 </template>
               </slot>
             </div>
-            <div :id="`${computedId}-body`" class="modal-body" :class="bodyClasses">
+            <div
+              :id="`${computedId}-body`"
+              class="modal-body"
+              :class="bodyClasses"
+              v-bind="bodyAttrs"
+            >
               <slot v-bind="sharedSlots">
                 {{ body }}
               </slot>
@@ -104,8 +109,8 @@
 </template>
 
 <script setup lang="ts">
-import {computed, type CSSProperties, ref, toRef, watch} from 'vue'
 import {onKeyStroke, useEventListener, useFocus, useVModel} from '@vueuse/core'
+import {computed, type CSSProperties, ref, toRef, watch} from 'vue'
 import {useColorVariantClasses, useId, useModalManager, useSafeScrollLock} from '../../composables'
 import type {BModalProps} from '../../types'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
@@ -131,7 +136,8 @@ const props = withDefaults(defineProps<BModalProps>(), {
   backdropVariant: undefined,
   body: undefined,
   bodyBgVariant: null,
-  bodyClass: undefined,
+  bodyAttrs: undefined,
+  bodyClass: null,
   bodyScrolling: false,
   bodyTextVariant: null,
   bodyVariant: null,
