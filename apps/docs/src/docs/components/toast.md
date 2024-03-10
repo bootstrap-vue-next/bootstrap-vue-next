@@ -150,15 +150,18 @@ As you may have noticed, `BToast` counts down similarly to `BAlert` it uses the 
 <HighlightCard>
   <BButton
     @click="
-      show?.('Watch me!', {
-        title: 'Counting down!',
-        variant: 'info',
-        pos: 'middle-center',
-        value: 10000,
-        interval: 100,
-        progressProps: {
-          variant: 'danger',
-        },
+      show?.({
+        props: {
+          title: 'Counting down!',
+          variant: 'info',
+          pos: 'middle-center',
+          value: 10000,
+          interval: 100,
+          progressProps: {
+            variant: 'danger',
+          },
+          body: 'Watch me!'
+        }
       })
     "
   >
@@ -170,14 +173,17 @@ As you may have noticed, `BToast` counts down similarly to `BAlert` it uses the 
 <template>
   <BButton
     @click="
-      show?.('Watch me!', {
-        title: 'Counting down!',
-        variant: 'info',
-        pos: 'middle-center',
-        value: 10000,
-        interval: 100,
-        progressProps: {
-          variant: 'danger',
+      show?.({
+        props: {
+          title: 'Counting down!',
+          variant: 'info',
+          pos: 'middle-center',
+          value: 10000,
+          interval: 100,
+          progressProps: {
+            variant: 'danger',
+          },
+          body: 'Watch me!',
         },
       })
     "
@@ -204,14 +210,18 @@ As you may have noticed in that example, there was a built-in progress bar. This
 `Toast` can accept `BLink` props which will modify its behavior
 
 <HighlightCard>
-  <BButton @click="show?.('I am a BLink', {href: 'https://getbootstrap.com/', target: '_blank'})">
+  <BButton @click="show?.({ props: {href: 'https://getbootstrap.com/', target: '_blank', body: 'I am a BLink'}})">
     Show
   </BButton>
   <template #html>
 
 ```vue
 <template>
-  <BButton @click="show?.('I am a BLink', {href: 'https://getbootstrap.com/', target: '_blank'})">
+  <BButton
+    @click="
+      show?.({props: {href: 'https://getbootstrap.com/', target: '_blank', body: 'I am a BLink'}})
+    "
+  >
     Show
   </BButton>
 </template>
@@ -266,7 +276,11 @@ let showValue: undefined | symbol
 
 const showMe = () => {
   if (typeof showValue === 'symbol') return
-  showValue = show?.('Showing', {value: true, variant: 'success', pos: 'bottom-center'})
+  showValue = show?.({
+    props: {
+      value: true, variant: 'success', pos: 'bottom-center', body: 'Showing'
+    }
+  })
 }
 
 const hideMe = () => {
