@@ -58,7 +58,7 @@ const slots = defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = defineModel<RadioValue>({
+const modelValue = defineModel<RadioValue | undefined>({
   default: undefined,
 })
 
