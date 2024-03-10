@@ -1112,7 +1112,6 @@ export type BDropdownProps = {
   boundary?: Boundary | RootBoundary
   boundaryPadding?: Padding
   center?: boolean
-  container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
   disabled?: boolean
   dropend?: boolean
   dropstart?: boolean
@@ -1173,7 +1172,6 @@ export type BPopoverProps = {
   boundary?: Boundary | RootBoundary
   boundaryPadding?: Padding
   click?: boolean
-  container?: string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | undefined
   content?: string
   customClass?: ClassValue
   delay?:
@@ -1206,7 +1204,7 @@ export type BPopoverProps = {
   title?: string
   tooltip?: boolean
   variant?: ColorVariant | null
-}
+} & TeleporterProps
 
 export type BTooltipProps = {
   interactive?: boolean

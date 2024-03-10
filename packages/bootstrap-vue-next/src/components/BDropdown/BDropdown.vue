@@ -37,7 +37,7 @@
         </slot>
       </span>
     </BButton>
-    <Teleport :to="teleportTo" :disabled="teleportDisabled && !teleportTo">
+    <Teleport :to="teleportTo" :disabled="teleportDisabled">
       <ul
         v-if="!props.lazy || modelValue"
         v-show="props.lazy || modelValue"

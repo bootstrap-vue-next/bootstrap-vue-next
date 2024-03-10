@@ -13,7 +13,8 @@ import type {BPopoverProps, BTooltipProps} from '../types'
 
 const props = withDefaults(defineProps<BTooltipProps>(), {
   click: undefined,
-  container: undefined,
+  teleportDisabled: undefined,
+  teleportTo: undefined,
   content: undefined,
   customClass: undefined,
   delay: undefined,

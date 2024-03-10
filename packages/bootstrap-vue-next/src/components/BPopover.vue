@@ -1,7 +1,7 @@
 <template>
   <span ref="placeholder" />
   <slot name="target" :show="show" :hide="hide" :toggle="toggle" :show-state="showState" />
-  <Teleport :to="container || 'body'" :disabled="!container">
+  <Teleport :to="teleportTo" :disabled="teleportDisabled">
     <div
       v-if="showStateInternal || props.persistent"
       :id="id"
@@ -106,7 +106,8 @@ const props = withDefaults(defineProps<BPopoverProps>(), {
   boundary: 'clippingAncestors',
   boundaryPadding: undefined,
   click: false,
-  container: undefined,
+  teleportTo: 'body',
+  teleportDisabled: false,
   content: undefined,
   customClass: '',
   delay: () => ({show: 100, hide: 300}),
