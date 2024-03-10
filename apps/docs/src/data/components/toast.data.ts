@@ -6,12 +6,6 @@ export default {
       component: 'BToast',
       props: [
         {
-          prop: 'delay',
-          type: 'string | number',
-          default: 5000,
-          description: 'The number of milliseconds before the toast auto dismisses itself',
-        },
-        {
           prop: 'bodyClass',
           type: 'ClassValue',
           default: undefined,
@@ -111,13 +105,14 @@ export default {
           prop: 'interval',
           type: 'number | string',
           default: '1000',
-          description: 'The number of milliseconds that the toast will be dismissed',
+          description: 'The interval of which the countdown timer will refresh itself',
         },
         {
           prop: 'progressProps',
           type: "Omit<BProgressBarProps, 'label' | 'labelHtml' | 'max' | 'value'>",
           default: undefined,
-          description: 'The properties to define the progress bar in the toast',
+          description:
+            'The properties to define the progress bar in the toast. No toast will be shown if left undefined',
         },
       ],
       slots: [],
