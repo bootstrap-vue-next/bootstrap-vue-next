@@ -59,9 +59,9 @@ const emit = defineEmits<{
 }>()
 
 type SharedSlotsData = {
-  close: () => void
+  hide: () => void
   id: string
-  open: () => void
+  show: () => void
   toggle: () => void
   visible: boolean
 }
@@ -94,20 +94,20 @@ const computedId = useId(() => props.id, 'collapse')
 
 const element = ref<HTMLElement | null>(null)
 const isCollapsing = ref(false)
-const show = ref(modelValue.value)
+const showRef = ref(modelValue.value)
 
 const computedClasses = computed(() => ({
-  'show': show.value,
+  'show': showRef.value,
   'navbar-collapse': props.isNav,
   'collapsing': isCollapsing.value,
-  'closing': show.value && !modelValue.value,
+  'closing': showRef.value && !modelValue.value,
   'collapse-horizontal': props.horizontal,
 }))
 
-const close = () => {
+const hide = () => {
   modelValue.value = false
 }
-const open = () => {
+const show = () => {
   modelValue.value = true
 }
 const toggleFn = () => {
@@ -116,8 +116,8 @@ const toggleFn = () => {
 
 const sharedSlots = computed<SharedSlotsData>(() => ({
   toggle: toggleFn,
-  open,
-  close,
+  show,
+  hide,
   id: computedId.value,
   visible: modelValue.value,
 }))
@@ -135,7 +135,7 @@ const reveal = () => {
   }
   clearTimeout(hideTimeout)
   clearTimeout(revealTimeout)
-  show.value = true
+  showRef.value = true
   if (_skipAnimation) return
   isCollapsing.value = true
   nextTick(() => {
@@ -155,7 +155,7 @@ const reveal = () => {
   })
 }
 
-const hide = () => {
+const hideFn = () => {
   const event = buildTriggerableEvent('hide', {cancelable: true})
   emit('hide', event)
   if (event.defaultPrevented) {
@@ -166,7 +166,7 @@ const hide = () => {
   clearTimeout(hideTimeout)
   if (element.value === null) return
   if (_skipAnimation) {
-    show.value = false
+    showRef.value = false
     return
   }
   if (isCollapsing.value) {
@@ -188,7 +188,7 @@ const hide = () => {
     element.value.style.height = ``
     element.value.style.width = ``
     hideTimeout = setTimeout(() => {
-      show.value = false
+      showRef.value = false
       isCollapsing.value = false
       emit('hidden')
     }, getTransitionDelay(element.value))
@@ -196,7 +196,7 @@ const hide = () => {
 }
 
 watch(modelValue, () => {
-  modelValue.value ? reveal() : hide()
+  modelValue.value ? reveal() : hideFn()
 })
 
 onMounted(() => {
@@ -227,7 +227,7 @@ watch(
   () => props.visible,
   (newval) => {
     _skipAnimation = true
-    newval ? open() : close()
+    newval ? show() : hide()
     nextTick(() => {
       _skipAnimation = props.skipAnimation
     })
@@ -239,19 +239,19 @@ useEventListener(element, 'bv-toggle', () => {
 })
 
 defineExpose({
-  close,
+  hide,
   isNav: props.isNav,
-  open,
+  show,
   toggle: toggleFn,
-  visible: readonly(show),
+  visible: readonly(showRef),
 })
 
 provide(collapseInjectionKey, {
   id: computedId,
-  close,
-  open,
+  hide,
+  show,
   toggle: toggleFn,
-  visible: readonly(show),
+  visible: readonly(showRef),
   isNav: toRef(() => props.isNav),
 })
 </script>

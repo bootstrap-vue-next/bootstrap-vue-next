@@ -99,8 +99,8 @@ const navbarData = inject(navbarInjectionKey, null)
 const clicked = (e: Readonly<MouseEvent>): void => {
   emit('click', e)
   if (navbarData !== null && navbarData?.autoClose?.value === true) {
-    collapseData?.close?.()
+    collapseData?.hide?.()
   }
-  dropdownData?.close?.()
+  dropdownData?.hide?.()
 }
 </script>

@@ -153,7 +153,7 @@ const clicked = (e: Readonly<MouseEvent>): void => {
     (collapseData?.isNav?.value === true && navbarData === null) ||
     (navbarData !== null && navbarData.autoClose?.value === true)
   ) {
-    collapseData?.close?.()
+    collapseData?.hide?.()
   }
 
   emit('click', e)
