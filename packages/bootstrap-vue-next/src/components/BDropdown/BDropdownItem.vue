@@ -101,6 +101,6 @@ const clicked = (e: Readonly<MouseEvent>): void => {
   if (navbarData !== null && navbarData?.autoClose?.value === true) {
     collapseData?.close?.()
   }
-  dropdownData?.close?.()
+  dropdownData?.hide?.()
 }
 </script>

@@ -124,8 +124,8 @@ export const collapseInjectionKey: InjectionKey<{
 
 export const dropdownInjectionKey: InjectionKey<{
   id?: Readonly<Ref<string>>
-  readonly close?: () => void
-  readonly open?: () => void
+  readonly hide?: () => void
+  readonly show?: () => void
   readonly toggle?: () => void
   visible?: Readonly<Ref<boolean>>
   isNav?: Readonly<Ref<boolean>>
