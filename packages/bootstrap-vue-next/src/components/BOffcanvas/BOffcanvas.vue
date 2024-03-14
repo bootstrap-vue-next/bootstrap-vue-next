@@ -57,6 +57,7 @@
     </BTransition>
     <slot name="backdrop">
       <BOverlay
+        :blur="backdropBlur"
         :variant="backdropVariant"
         :show="showBackdrop"
         fixed
@@ -72,7 +73,7 @@
 import {onKeyStroke, useEventListener, useFocus, useVModel} from '@vueuse/core'
 import {computed, nextTick, ref, type RendererElement, toRef} from 'vue'
 import {useId, useSafeScrollLock} from '../../composables'
-import type {AttrsValue, ButtonVariant, ClassValue, ColorVariant} from '../../types'
+import type {AttrsValue, ButtonVariant, ClassValue, ColorVariant, Size} from '../../types'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
@@ -94,7 +95,8 @@ defineOptions({
 const props = withDefaults(
   defineProps<{
     backdrop?: boolean
-    backdropVariant?: ColorVariant | null
+    backdropBlur?: string
+    backdropVariant?: ColorVariant | 'white' | 'transparent' | null
     bodyAttrs?: Readonly<AttrsValue>
     bodyClass?: ClassValue
     bodyScrolling?: boolean
@@ -115,6 +117,7 @@ const props = withDefaults(
     // Then in components that use individual props (BImg)
     // Make them just use prop placement
     placement?: 'top' | 'bottom' | 'start' | 'end'
+    shadow?: Size | boolean
     teleportDisabled?: boolean
     teleportTo?: string | RendererElement | null | undefined
     title?: string
@@ -123,6 +126,7 @@ const props = withDefaults(
   }>(),
   {
     backdrop: true,
+    backdropBlur: undefined,
     backdropVariant: 'dark',
     bodyAttrs: undefined,
     bodyClass: undefined,
@@ -141,6 +145,7 @@ const props = withDefaults(
     noHeader: false,
     noHeaderClose: false,
     placement: 'start',
+    shadow: false,
     teleportDisabled: false,
     teleportTo: 'body',
     title: undefined,
@@ -228,6 +233,7 @@ const computedClasses = computed(() => [
   `offcanvas-${props.placement}`,
   {
     show: modelValue.value && isActive.value === true,
+    [`shadow-${props.shadow}`]: !!props.shadow,
   },
 ])
 
