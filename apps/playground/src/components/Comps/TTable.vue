@@ -314,7 +314,7 @@
           </template>
 
           <template #cell(actions)="row">
-            <BButton size="sm" class="mr-1" @click="info(row.item, row.index)">
+            <BButton size="sm" class="me-1" @click="info(row.item, row.index)">
               Info modal
             </BButton>
             <BButton size="sm" @click="row.toggleDetails">

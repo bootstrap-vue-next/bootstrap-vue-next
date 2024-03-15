@@ -280,7 +280,7 @@ Custom form controls and selects are also supported.
 ### Alternatives to hidden labels
 
 Assistive technologies such as screen readers will have trouble with your forms if you do not include
-a label for every input. For these inline forms, you can hide the labels using the `.sr-only` class.
+a label for every input. For these inline forms, you can hide the labels using the `.visibility-hidden` class.
 There are further alternative methods of providing a label for assistive technologies, such as the
 `aria-label`, `aria-labelledby` or `title` attributes. If none of these are present, assistive
 technologies may resort to using the `placeholder` attribute, if present, but note that use of

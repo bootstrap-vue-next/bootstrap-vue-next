@@ -184,7 +184,7 @@ const props = withDefaults(defineProps<BModalProps>(), {
   teleportTo: 'body',
   title: undefined,
   titleClass: undefined,
-  titleSrOnly: false,
+  titleVisibilityHiddenOnly: false,
   titleTag: 'h5',
   transProps: undefined,
 })
