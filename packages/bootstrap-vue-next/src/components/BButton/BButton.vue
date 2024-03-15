@@ -4,10 +4,10 @@
     class="btn"
     v-bind="linkProps"
     :class="computedClasses"
-    :aria-disabled="nonStandardTag ? disabledBoolean : null"
-    :aria-pressed="isToggle ? pressedBoolean : null"
+    :aria-disabled="nonStandardTag ? props.disabled : null"
+    :aria-pressed="isToggle ? props.pressed : null"
     :autocomplete="isToggle ? 'off' : null"
-    :disabled="isButton ? disabledBoolean : null"
+    :disabled="isButton ? props.disabled : null"
     :href="href"
     :rel="computedLink ? rel : null"
     :role="nonStandardTag || computedLink ? 'button' : null"
@@ -17,13 +17,13 @@
     :append="computedLink ? append : null"
     @click="clicked"
   >
-    <template v-if="loadingBoolean">
+    <template v-if="props.loading">
       <slot name="loading">
-        <template v-if="!loadingFillBoolean">
+        <template v-if="!props.loadingFill">
           {{ loadingText }}
         </template>
         <slot name="loading-spinner">
-          <BSpinner :small="size !== 'lg'" :label="loadingFillBoolean ? loadingText : undefined" />
+          <BSpinner :small="size !== 'lg'" :label="props.loadingFill ? loadingText : undefined" />
         </slot>
       </slot>
     </template>
@@ -36,8 +36,8 @@
 <script setup lang="ts">
 import {computed, toRef} from 'vue'
 import BSpinner from '../BSpinner.vue'
-import {useBLinkHelper, useBooleanish} from '../../composables'
-import type {BLinkProps, Booleanish, ButtonType, ButtonVariant, Size} from '../../types'
+import {useBLinkHelper} from '../../composables'
+import type {BLinkProps, ButtonType, ButtonVariant, Size} from '../../types'
 import BLink from '../BLink/BLink.vue'
 import {useVModel} from '@vueuse/core'
 
@@ -53,13 +53,13 @@ defineSlots<{
 const props = withDefaults(
   defineProps<
     {
-      loading?: Booleanish
-      loadingFill?: Booleanish
+      loading?: boolean
+      loadingFill?: boolean
       loadingText?: string
-      pill?: Booleanish
-      pressed?: Booleanish
+      pill?: boolean
+      pressed?: boolean
       size?: Size
-      squared?: Booleanish
+      squared?: boolean
       tag?: string
       type?: ButtonType
       variant?: ButtonVariant | null
@@ -109,14 +109,6 @@ const emit = defineEmits<{
 
 const pressedValue = useVModel(props, 'pressed', emit)
 
-const activeBoolean = useBooleanish(() => props.active)
-const disabledBoolean = useBooleanish(() => props.disabled)
-const pillBoolean = useBooleanish(() => props.pill)
-const pressedBoolean = useBooleanish(() => props.pressed)
-const squaredBoolean = useBooleanish(() => props.squared)
-const loadingBoolean = useBooleanish(() => props.loading)
-const loadingFillBoolean = useBooleanish(() => props.loadingFill)
-
 const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'active-class',
   'exact-active-class',
@@ -125,7 +117,7 @@ const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'routerTag',
 ])
 
-const isToggle = toRef(() => typeof pressedBoolean.value === 'boolean')
+const isToggle = toRef(() => typeof props.pressed === 'boolean')
 const isButton = toRef(
   () => props.tag === 'button' && props.href === undefined && props.to === undefined
 )
@@ -138,24 +130,24 @@ const computedClasses = computed(() => [
   [`btn-${props.size}`],
   {
     [`btn-${props.variant}`]: props.variant !== null,
-    'active': activeBoolean.value || pressedBoolean.value,
-    'rounded-pill': pillBoolean.value,
-    'rounded-0': squaredBoolean.value,
-    'disabled': disabledBoolean.value,
+    'active': props.active || props.pressed,
+    'rounded-pill': props.pill,
+    'rounded-0': props.squared,
+    'disabled': props.disabled,
   },
 ])
 
 const computedTag = toRef(() => (isBLink.value ? BLink : props.href ? 'a' : props.tag))
 
 const clicked = (e: Readonly<MouseEvent>): void => {
-  if (disabledBoolean.value) {
+  if (props.disabled) {
     e.preventDefault()
     e.stopPropagation()
     return
   }
   emit('click', e)
   if (isToggle.value) {
-    pressedValue.value = !pressedBoolean.value
+    pressedValue.value = !props.pressed
   }
 }
 </script>

@@ -215,8 +215,8 @@ The following properties are available for the `header` and `footer` slots:
 | --------- | -------- | ------------------------------------- |
 | `visible` | Boolean  | Visible state of the collapse         |
 | `toggle`  | Function | When called, will toggle the collapse |
-| `open`    | Function | When called, will open the collapse   |
-| `close`   | Function | When called, will close the collapse  |
+| `show`    | Function | When called, will open the collapse   |
+| `hide`    | Function | When called, will close the collapse  |
 | `id`      | String   | The ID of the collapsible element     |
 
 <HighlightCard>
@@ -245,17 +245,6 @@ The following properties are available for the `header` and `footer` slots:
 
   </template>
 </HighlightCard>
-
-## Optionally scoped default slot
-
-<span class="badge badge-info small">New in v2.2.0</span>
-
-The default slot can be optionally scoped. The following scope properties are available:
-
-| Property  | Type     | Description                          |
-| --------- | -------- | ------------------------------------ |
-| `visible` | Boolean  | Visible state of the collapse        |
-| `close`   | Function | When called, will close the collapse |
 
 ## Accessibility
 

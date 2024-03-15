@@ -37,7 +37,7 @@ export default {
         },
         {
           prop: 'autofocus',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -47,22 +47,22 @@ export default {
         },
         {
           prop: 'plain',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'button',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'buttonGroup',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'disabled',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -72,17 +72,17 @@ export default {
         },
         {
           prop: 'inline',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'required',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'state',
-          type: 'Booleanish | null',
+          type: 'boolean | null',
           default: undefined,
         },
         {
@@ -169,7 +169,7 @@ export default {
         },
         {
           prop: 'autofocus',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -179,12 +179,12 @@ export default {
         },
         {
           prop: 'buttons',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'disabled',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -204,22 +204,22 @@ export default {
         },
         {
           prop: 'plain',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'required',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'stacked',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'state',
-          type: 'Booleanish | null',
+          type: 'boolean | null',
           default: undefined,
         },
         {
@@ -229,7 +229,7 @@ export default {
         },
         {
           prop: 'validated',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {

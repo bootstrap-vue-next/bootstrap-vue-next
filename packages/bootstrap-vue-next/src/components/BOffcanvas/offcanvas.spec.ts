@@ -1,9 +1,9 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, beforeEach, describe, expect, it} from 'vitest'
-import BOffcanvas from './BOffcanvas.vue'
-import BCloseButton from '../BButton/BCloseButton.vue'
 import BButton from '../BButton/BButton.vue'
+import BCloseButton from '../BButton/BCloseButton.vue'
 import BOverlay from '../BOverlay/BOverlay.vue'
+import BOffcanvas from './BOffcanvas.vue'
 describe.skip('offcanvas', () => {
   enableAutoUnmount(afterEach)
 
@@ -231,5 +231,25 @@ describe.skip('offcanvas', () => {
     const offcanvas = wrapper.find('.offcanvas')
     const [, $body] = offcanvas.findAll('div')
     expect($body.text()).toBe('foobar')
+  })
+
+  it('child body div is given prop bodyClass', () => {
+    const wrapper = mount(BOffcanvas, {
+      props: {bodyClass: 'foobar'},
+    })
+    const $body = wrapper.getComponent(BOffcanvas)
+    expect($body.classes()).toContain('foobar')
+  })
+
+  it('child body div is given prop bodyAttrs', () => {
+    const wrapper = mount(BOffcanvas, {
+      props: {
+        bodyAttrs: {
+          role: 'foo',
+        },
+      },
+    })
+    const $body = wrapper.getComponent(BOffcanvas)
+    expect($body.attributes()).toContain('role: "foo"')
   })
 })

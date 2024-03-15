@@ -6,9 +6,8 @@
 
 <script lang="ts">
 import {computed, defineComponent, type PropType, type SlotsType} from 'vue'
-import type {AlignmentVertical, Booleanish} from '../types'
+import type {AlignmentVertical} from '../types'
 import {getBreakpointProps, getClasses} from '../utils'
-import {useBooleanish} from '../composables'
 
 const breakpointCol = getBreakpointProps('', [], {type: [Boolean, String, Number], default: false})
 const breakpointOffset = getBreakpointProps('offset', [''], {type: [String, Number], default: null})
@@ -20,7 +19,7 @@ export default defineComponent({
     default?: Record<string, never>
   }>,
   props: {
-    col: {type: [Boolean, String] as PropType<Booleanish>, default: false}, // Generic flexbox .col (xs)
+    col: {type: Boolean, default: false}, // Generic flexbox .col (xs)
     cols: {type: [String, Number], default: null}, // .col-[1-12]|auto (xs)
     ...breakpointCol,
     offset: {type: [String, Number], default: null},
@@ -37,8 +36,6 @@ export default defineComponent({
       {content: breakpointOrder, propPrefix: 'order'},
     ]
 
-    const colBoolean = useBooleanish(() => props.col)
-
     const classList = computed(() =>
       properties.flatMap((el) => getClasses(props, el.content, el.propPrefix, el.classPrefix))
     )
@@ -46,7 +43,7 @@ export default defineComponent({
     const computedClasses = computed(() => [
       classList.value,
       {
-        col: colBoolean.value || (!classList.value.some((e) => /^col-/.test(e)) && !props.cols),
+        col: props.col || (!classList.value.some((e) => /^col-/.test(e)) && !props.cols),
         [`col-${props.cols}`]: !!props.cols,
         [`offset-${props.offset}`]: !!props.offset,
         [`order-${props.order}`]: !!props.order,

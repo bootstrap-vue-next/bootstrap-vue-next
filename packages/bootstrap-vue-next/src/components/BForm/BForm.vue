@@ -2,7 +2,7 @@
   <form
     :id="id"
     ref="element"
-    :novalidate="novalidateBoolean"
+    :novalidate="props.novalidate"
     :class="computedClasses"
     @submit.prevent="submitted"
   >
@@ -12,7 +12,6 @@
 
 <script setup lang="ts">
 import type {BFormProps} from '../../types'
-import {useBooleanish} from '../../composables'
 import {computed, ref} from 'vue'
 
 const props = withDefaults(defineProps<BFormProps>(), {
@@ -28,18 +27,14 @@ const emit = defineEmits<{
 
 const element = ref<HTMLFormElement | null>(null)
 
-const floatingBoolean = useBooleanish(() => props.floating)
-const novalidateBoolean = useBooleanish(() => props.novalidate)
-const validatedBoolean = useBooleanish(() => props.validated)
-
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
 }>()
 
 const computedClasses = computed(() => ({
-  'form-floating': floatingBoolean.value,
-  'was-validated': validatedBoolean.value,
+  'form-floating': props.floating,
+  'was-validated': props.validated,
 }))
 
 const submitted = (e: Readonly<Event>) => {

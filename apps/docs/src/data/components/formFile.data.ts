@@ -1,4 +1,4 @@
-import type { ComponentReference } from './ComponentReference'
+import type {ComponentReference} from './ComponentReference'
 
 export default {
   load: (): ComponentReference[] => [
@@ -26,27 +26,27 @@ export default {
         },
         {
           prop: 'autofocus',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description:
             'When set to `true`, attempts to auto-focus the control when it is mounted, or re-activated when in a keep-alive. Does not set the `autofocus` attribute on the control',
         },
         {
           prop: 'capture',
-          type: "'Booleanish' | 'user' | 'environment'",
+          type: "'boolean' | 'user' | 'environment'",
           default: false,
           description:
             'When set, will instruction the browser to use the devices camera (if supported)',
         },
         {
           prop: 'directory',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: 'Enable `directory` mode (on browsers that support it)',
         },
         {
           prop: 'disabled',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description:
             "When set to `true`, disables the component's functionality and places it in a disabled state",
@@ -67,7 +67,7 @@ export default {
         },
         {
           prop: 'multiple',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description:
             'When set, will allow multiple files to be selected. `v-model` will be an array',
@@ -80,19 +80,19 @@ export default {
         },
         {
           prop: 'noDrop',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: 'Disable drag and drop mode',
         },
         {
           prop: 'noTraverse',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: 'Wether to returns files as a flat array when in `directory` mode',
         },
         {
           prop: 'required',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
           description: 'Adds the `required` attribute to the form control',
         },
@@ -104,7 +104,7 @@ export default {
         },
         {
           prop: 'state',
-          type: 'Booleanish | null',
+          type: 'boolean | null',
           default: undefined,
           description:
             'Controls the validation state appearance of the component. `true` for valid, `false` for invalid, or `null` for no validation state',

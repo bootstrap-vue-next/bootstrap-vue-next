@@ -9,19 +9,19 @@
 
 <script setup lang="ts">
 import {computed, provide, toRef} from 'vue'
-import type {Booleanish, Breakpoint, ColorVariant} from '../../types'
-import {useBooleanish, useContainerClasses} from '../../composables'
+import type {Breakpoint, ColorVariant} from '../../types'
+import {useContainerClasses} from '../../composables'
 import {navbarInjectionKey} from '../../utils'
 
 const props = withDefaults(
   defineProps<{
-    autoClose?: Booleanish
-    container?: 'fluid' | Booleanish | Breakpoint
+    autoClose?: boolean
+    container?: boolean | 'fluid' | Breakpoint
     fixed?: 'top' | 'bottom'
-    print?: Booleanish
+    print?: boolean
     sticky?: 'top' | 'bottom'
     tag?: string
-    toggleable?: Booleanish | Breakpoint
+    toggleable?: boolean | Breakpoint
     variant?: ColorVariant | null
   }>(),
   {
@@ -41,26 +41,21 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const containerBoolean = useBooleanish(() => props.container)
-const autoCloseBoolean = useBooleanish(() => props.autoClose)
-const printBoolean = useBooleanish(() => props.print)
-const computedNavbarExpand = useBooleanish(() => props.toggleable)
-
 const computedRole = toRef(() => (props.tag === 'nav' ? undefined : 'navigation'))
 
-const containerClass = useContainerClasses(containerBoolean)
+const containerClass = useContainerClasses(() => props.container)
 
 const computedClasses = computed(() => ({
-  'd-print': printBoolean.value,
+  'd-print': props.print,
   [`sticky-${props.sticky}`]: props.sticky !== undefined,
   [`bg-${props.variant}`]: props.variant !== null,
   [`fixed-${props.fixed}`]: props.fixed !== undefined,
-  'navbar-expand': computedNavbarExpand.value === false,
-  [`navbar-expand-${computedNavbarExpand.value}`]: typeof computedNavbarExpand.value === 'string',
+  'navbar-expand': props.toggleable === false,
+  [`navbar-expand-${props.toggleable}`]: typeof props.toggleable === 'string',
 }))
 
 provide(navbarInjectionKey, {
   tag: toRef(() => props.tag),
-  autoClose: autoCloseBoolean,
+  autoClose: toRef(() => props.autoClose),
 })
 </script>

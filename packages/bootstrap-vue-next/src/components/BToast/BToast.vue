@@ -1,6 +1,6 @@
 <template>
   <BTransition
-    :no-fade="noFadeBoolean"
+    :no-fade="props.noFade"
     v-bind="transProps"
     @before-enter="onBeforeEnter"
     @after-enter="onAfterEnter"
@@ -13,8 +13,8 @@
       class="toast"
       :class="[toastClass, computedClasses]"
       tabindex="0"
-      :role="!isToastVisible ? undefined : isStatusBoolean ? 'status' : 'alert'"
-      :aria-live="!isToastVisible ? undefined : isStatusBoolean ? 'polite' : 'assertive'"
+      :role="!isToastVisible ? undefined : props.isStatus ? 'status' : 'alert'"
+      :aria-live="!isToastVisible ? undefined : props.isStatus ? 'polite' : 'assertive'"
       :aria-atomic="!isToastVisible ? undefined : true"
     >
       <component :is="headerTag" v-if="$slots.title || title" class="toast-header">
@@ -23,7 +23,7 @@
             {{ title }}
           </strong>
         </slot>
-        <BCloseButton v-if="!noCloseButtonBoolean" @click="hideFn('close')" />
+        <BCloseButton v-if="!props.noCloseButton" @click="hideFn('close')" />
       </component>
       <template v-if="$slots.default || body">
         <component
@@ -57,12 +57,7 @@
 
 <script setup lang="ts">
 import {computed, onBeforeUnmount, ref, toRef, watch, watchEffect} from 'vue'
-import {
-  useBLinkHelper,
-  useBooleanish,
-  useColorVariantClasses,
-  useCountdown,
-} from '../../composables'
+import {useBLinkHelper, useColorVariantClasses, useCountdown} from '../../composables'
 import type {BToastProps} from '../../types'
 import BTransition from '../BTransition/BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
@@ -137,15 +132,8 @@ const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props)
 
-const isStatusBoolean = useBooleanish(() => props.isStatus)
-const noCloseButtonBoolean = useBooleanish(() => props.noCloseButton)
-const noFadeBoolean = useBooleanish(() => props.noFade)
-const noHoverPauseBoolean = useBooleanish(() => props.noHoverPause)
-const showOnPauseBoolean = useBooleanish(() => props.showOnPause)
 const intervalNumber = useToNumber(() => props.interval)
 // TODO solid is never used
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const solidBoolean = useBooleanish(() => props.solid)
 const resolvedBackgroundClasses = useColorVariantClasses(props)
 const countdownLength = toRef(() => (typeof modelValue.value === 'boolean' ? 0 : modelValue.value))
 
@@ -170,7 +158,7 @@ const computedTag = toRef(() => (computedLink.value ? BLink : 'div'))
 const isToastVisible = toRef(() =>
   typeof modelValue.value === 'boolean'
     ? modelValue.value
-    : isActive.value || (showOnPauseBoolean.value && isPaused.value)
+    : isActive.value || (props.showOnPause && isPaused.value)
 )
 
 const computedClasses = computed(() => [
@@ -181,7 +169,7 @@ const computedClasses = computed(() => [
 ])
 
 const onMouseEnter = () => {
-  if (noHoverPauseBoolean.value) return
+  if (props.noHoverPause) return
   pause()
 }
 

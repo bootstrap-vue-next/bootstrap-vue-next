@@ -3,7 +3,7 @@
     class="pagination"
     :class="computedWrapperClasses"
     role="menubar"
-    :aria-disabled="disabledBoolean"
+    :aria-disabled="props.disabled"
     :aria-label="ariaLabel || undefined"
   >
     <ReusableButton.define v-slot="{button, li, text, clickHandler}">
@@ -47,8 +47,8 @@
 <script setup lang="ts">
 import {BvEvent} from '../../utils'
 import {computed, toRef, watch} from 'vue'
-import type {AlignmentJustifyContent, Booleanish, ClassValue, Numberish, Size} from '../../types'
-import {useAlignment, useBooleanish} from '../../composables'
+import type {AlignmentJustifyContent, ClassValue, Numberish, Size} from '../../types'
+import {useAlignment} from '../../composables'
 import {createReusableTemplate, useToNumber, useVModel} from '@vueuse/core'
 
 // Threshold of limit size when we start/stop showing ellipsis
@@ -65,21 +65,21 @@ const props = withDefaults(
     align?: AlignmentJustifyContent | 'fill'
     ariaControls?: string
     ariaLabel?: string
-    disabled?: Booleanish
+    disabled?: boolean
     ellipsisClass?: ClassValue
     ellipsisText?: string
     firstClass?: ClassValue
-    firstNumber?: Booleanish
+    firstNumber?: boolean
     firstText?: string
-    hideEllipsis?: Booleanish
-    hideGotoEndButtons?: Booleanish
+    hideEllipsis?: boolean
+    hideGotoEndButtons?: boolean
     labelFirstPage?: string
     labelLastPage?: string
     labelNextPage?: string
     labelPage?: string
     labelPrevPage?: string
     lastClass?: ClassValue
-    lastNumber?: Booleanish
+    lastNumber?: boolean
     lastText?: string
     limit?: Numberish
     modelValue?: Numberish
@@ -87,7 +87,7 @@ const props = withDefaults(
     nextText?: string
     pageClass?: ClassValue
     perPage?: Numberish
-    pills?: Booleanish
+    pills?: boolean
     prevClass?: ClassValue
     prevText?: string
     size?: Size
@@ -134,13 +134,6 @@ const emit = defineEmits<{
 
 const modelValue = useVModel(props, 'modelValue', emit)
 
-const disabledBoolean = useBooleanish(() => props.disabled)
-const firstNumberBoolean = useBooleanish(() => props.firstNumber)
-const hideEllipsisBoolean = useBooleanish(() => props.hideEllipsis)
-const hideGotoEndButtonsBoolean = useBooleanish(() => props.hideGotoEndButtons)
-const lastNumberBoolean = useBooleanish(() => props.lastNumber)
-const pillsBoolean = useBooleanish(() => props.pills)
-
 const limitNumber = useToNumber(() => props.limit, {nanToZero: true, method: 'parseInt'})
 const perPageNumber = useToNumber(() => props.perPage, {nanToZero: true, method: 'parseInt'})
 const totalRowsNumber = useToNumber(() => props.totalRows, {nanToZero: true, method: 'parseInt'})
@@ -157,10 +150,10 @@ const justifyAlign = toRef(() => (props.align === 'fill' ? 'start' : props.align
 const alignment = useAlignment(justifyAlign)
 
 const isActivePage = (pageNumber: number) => pageNumber === modelValueNumber.value
-const getTabIndex = (num: number) => (disabledBoolean.value ? null : isActivePage(num) ? '0' : '-1')
+const getTabIndex = (num: number) => (props.disabled ? null : isActivePage(num) ? '0' : '-1')
 
 const checkDisabled = (num: number) =>
-  disabledBoolean.value ||
+  props.disabled ||
   isActivePage(num) ||
   modelValueNumber.value < 1 ||
   // Check if the number is out of bounds
@@ -254,7 +247,7 @@ const getButtonProps = ({
 const getPageButtonProps = (page: number) =>
   getBaseButtonProps({
     page,
-    dis: disabledBoolean.value,
+    dis: props.disabled,
     classVal: props.pageClass,
     slotName: 'page',
     label: props.labelPage ? `${props.labelPage} ${page}` : undefined,
@@ -327,7 +320,7 @@ const computedWrapperClasses = computed(() => [
   alignment.value,
   {
     [`pagination-${props.size}`]: props.size !== undefined,
-    'b-pagination-pills': pillsBoolean.value,
+    'b-pagination-pills': props.pills,
   },
 ])
 
@@ -391,10 +384,10 @@ const buttons = computed(() => {
   const pages = numberOfPages.value
   const {value} = modelValueNumber
   const limit = limitNumber.value
-  const firstPage = firstNumberBoolean.value ? 1 : 0
-  const lastPage = lastNumberBoolean.value ? 1 : 0
-  const hideEllipsis = hideEllipsisBoolean.value || limit <= ELLIPSIS_THRESHOLD
-  const hideEndButtons = hideGotoEndButtonsBoolean.value ? 1 : 0
+  const firstPage = props.firstNumber ? 1 : 0
+  const lastPage = props.lastNumber ? 1 : 0
+  const hideEllipsis = props.hideEllipsis || limit <= ELLIPSIS_THRESHOLD
+  const hideEndButtons = props.hideGotoEndButtons ? 1 : 0
 
   // The first case is when all of the page buttons fit on the control, this is
   //  the simplest case and the only one that will create an array smaller than

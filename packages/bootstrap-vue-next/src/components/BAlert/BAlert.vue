@@ -1,5 +1,5 @@
 <template>
-  <BTransition :no-fade="!fadeBoolean" :trans-props="{enterToClass: 'show'}">
+  <BTransition :no-fade="!props.fade" :trans-props="{enterToClass: 'show'}">
     <div
       v-if="isAlertVisible"
       ref="element"
@@ -10,7 +10,7 @@
       :class="computedClasses"
     >
       <slot />
-      <template v-if="dismissibleBoolean">
+      <template v-if="props.dismissible">
         <BButton v-if="hasCloseSlot || closeContent" v-bind="closeAttrs" @click="hide">
           <slot name="close">
             {{ closeContent }}
@@ -26,9 +26,9 @@
 import BTransition from '../BTransition/BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BButton from '../BButton/BButton.vue'
-import type {Booleanish, ButtonVariant, ClassValue, ColorVariant, Numberish} from '../../types'
+import type {ButtonVariant, ClassValue, ColorVariant, Numberish} from '../../types'
 import {computed, onBeforeUnmount, ref, toRef, watch, watchEffect} from 'vue'
-import {useBooleanish, useCountdown} from '../../composables'
+import {useCountdown} from '../../composables'
 import {isEmptySlot} from '../../utils'
 import {useElementHover, useToNumber, useVModel} from '@vueuse/core'
 
@@ -38,13 +38,13 @@ const props = withDefaults(
     closeContent?: string
     closeLabel?: string
     closeVariant?: ButtonVariant | null
-    dismissible?: Booleanish
-    fade?: Booleanish
-    immediate?: Booleanish
+    dismissible?: boolean
+    fade?: boolean
+    immediate?: boolean
     interval?: Numberish
     modelValue?: boolean | number
-    noHoverPause?: Booleanish
-    showOnPause?: Booleanish
+    noHoverPause?: boolean
+    showOnPause?: boolean
     variant?: ColorVariant | null
   }>(),
   {
@@ -82,11 +82,6 @@ const element = ref<HTMLElement | null>(null)
 const modelValue = useVModel(props, 'modelValue', emit)
 const isHovering = useElementHover(element)
 
-const dismissibleBoolean = useBooleanish(() => props.dismissible)
-const fadeBoolean = useBooleanish(() => props.fade)
-const immediateBoolean = useBooleanish(() => props.immediate)
-const showOnPauseBoolean = useBooleanish(() => props.showOnPause)
-const noHoverPauseBoolean = useBooleanish(() => props.noHoverPause)
 const intervalNumber = useToNumber(() => props.interval)
 
 const hasCloseSlot = toRef(() => !isEmptySlot(slots.close))
@@ -95,7 +90,7 @@ const countdownLength = toRef(() => (typeof modelValue.value === 'boolean' ? 0 :
 
 const computedClasses = computed(() => ({
   [`alert-${props.variant}`]: props.variant !== null,
-  'alert-dismissible': dismissibleBoolean.value,
+  'alert-dismissible': props.dismissible,
 }))
 
 const closeClasses = computed(() => [props.closeClass, {'btn-close-custom': hasCloseSlot.value}])
@@ -109,13 +104,13 @@ const {
   isPaused,
   value: remainingMs,
 } = useCountdown(countdownLength, intervalNumber, {
-  immediate: typeof modelValue.value === 'number' && immediateBoolean.value,
+  immediate: typeof modelValue.value === 'number' && props.immediate,
 })
 
 const isAlertVisible = toRef(() =>
   typeof modelValue.value === 'boolean'
     ? modelValue.value
-    : isActive.value || (showOnPauseBoolean.value && isPaused.value)
+    : isActive.value || (props.showOnPause && isPaused.value)
 )
 
 const closeAttrs = computed(() => ({
@@ -141,7 +136,7 @@ const hide = () => {
 }
 
 const onMouseEnter = () => {
-  if (noHoverPauseBoolean.value) return
+  if (props.noHoverPause) return
   pause()
 }
 

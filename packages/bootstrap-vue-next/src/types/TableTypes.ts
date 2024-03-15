@@ -1,13 +1,13 @@
-import type {Booleanish, ClassValue, ColorVariant, LiteralUnion, MaybePromise} from '.'
+import type {ClassValue, ColorVariant, LiteralUnion, MaybePromise} from '.'
 import type {StyleValue} from 'vue'
 
-export type BTableProviderContext = {
-  readonly filter: string | undefined
-  readonly sortBy: string | undefined
-  readonly currentPage: number
-  readonly perPage: number
-  readonly sortDesc: Booleanish
-}
+export type BTableProviderContext = Readonly<{
+  filter: string | undefined
+  sortBy: string | undefined
+  currentPage: number
+  perPage: number
+  sortDesc: boolean
+}>
 
 export type TableItem<T = Record<string, unknown>> = T & {
   _rowVariant?: ColorVariant | null

@@ -1,6 +1,6 @@
 <template>
   <div :id="computedId" ref="element" class="carousel slide pointer-event" :class="computedClasses">
-    <div v-if="indicatorsBoolean" class="carousel-indicators">
+    <div v-if="props.indicators" class="carousel-indicators">
       <!-- :data-bs-target="`#${computedId}`" is required since the classes target elems with that attr -->
       <button
         v-for="(_, i) in slides.length"
@@ -36,7 +36,7 @@
       </TransitionGroup>
     </div>
 
-    <template v-if="controlsBoolean">
+    <template v-if="props.controls">
       <button class="carousel-control-prev" type="button" @click="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true" />
         <span class="visually-hidden">{{ controlsPrevText }}</span>
@@ -52,8 +52,8 @@
 <script setup lang="ts">
 import {BvCarouselEvent, carouselInjectionKey, getSlotElements} from '../../utils'
 import {computed, provide, ref, toRef, watch} from 'vue'
-import {useBooleanish, useId} from '../../composables'
-import type {Booleanish, Numberish} from '../../types'
+import {useId} from '../../composables'
+import type {Numberish} from '../../types'
 import {
   onKeyStroke,
   useElementHover,
@@ -66,23 +66,23 @@ import {
 const props = withDefaults(
   defineProps<{
     background?: string
-    controls?: Booleanish
+    controls?: boolean
     controlsNextText?: string
     controlsPrevText?: string
-    fade?: Booleanish
+    fade?: boolean
     id?: string
     imgHeight?: string
     imgWidth?: string
-    indicators?: Booleanish
+    indicators?: boolean
     indicatorsButtonLabel?: string
     interval?: Numberish
-    keyboard?: Booleanish
+    keyboard?: boolean
     modelValue?: number
-    noHoverPause?: Booleanish
-    noTouch?: Booleanish
-    noWrap?: Booleanish
-    ride?: Booleanish | 'carousel'
-    rideReverse?: Booleanish
+    noHoverPause?: boolean
+    noTouch?: boolean
+    noWrap?: boolean
+    ride?: boolean | 'carousel'
+    rideReverse?: boolean
     touchThreshold?: Numberish
   }>(),
   {
@@ -124,17 +124,8 @@ const computedId = useId(() => props.id, 'carousel')
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
-const keyboardBoolean = useBooleanish(() => props.keyboard)
-const rideReverseBoolean = useBooleanish(() => props.rideReverse)
-const noHoverPauseBoolean = useBooleanish(() => props.noHoverPause)
-const fadeBoolean = useBooleanish(() => props.fade)
-const controlsBoolean = useBooleanish(() => props.controls)
-const indicatorsBoolean = useBooleanish(() => props.indicators)
-const noTouchBoolean = useBooleanish(() => props.noTouch)
-const noWrapBoolean = useBooleanish(() => props.noWrap)
 const touchThresholdNumber = useToNumber(() => props.touchThreshold)
 const intervalNumber = useToNumber(() => props.interval)
-const rideResolved = useBooleanish(() => props.ride)
 
 const isTransitioning = ref(false)
 const rideStarted = ref(false)
@@ -162,18 +153,17 @@ const leaveClasses = toRef(
 
 const {pause, resume} = useIntervalFn(
   () => {
-    rideReverseBoolean.value ? prev() : next()
+    props.rideReverse ? prev() : next()
   },
   intervalNumber,
-  {immediate: rideResolved.value === 'carousel'}
+  {immediate: props.ride === 'carousel'}
 )
 
 const isRiding = toRef(
-  () =>
-    (rideResolved.value === true && rideStarted.value === true) || rideResolved.value === 'carousel'
+  () => (props.ride === true && rideStarted.value === true) || props.ride === 'carousel'
 )
 const slides = computed(() => getSlotElements(slots.default, 'BCarouselSlide'))
-const computedClasses = computed(() => ({'carousel-fade': fadeBoolean.value}))
+const computedClasses = computed(() => ({'carousel-fade': props.fade}))
 // TODO a general idea of showing only slides that are in bounds
 // const localValue = computed(() =>
 //   props.modelValue >= slides.value.length
@@ -197,7 +187,7 @@ const buildBvCarouselEvent = (event: 'slid' | 'slide') =>
 const goToValue = (value: number): void => {
   if (isTransitioning.value === true) return
 
-  if (rideResolved.value === true) {
+  if (props.ride === true) {
     rideStarted.value = true
   }
   if (isRiding.value === true) {
@@ -205,12 +195,12 @@ const goToValue = (value: number): void => {
   }
   direction.value = value < modelValue.value ? false : true
   if (value >= slides.value.length) {
-    if (noWrapBoolean.value) return
+    if (props.noWrap) return
     modelValue.value = 0
     return
   }
   if (value < 0) {
-    if (noWrapBoolean.value) return
+    if (props.noWrap) return
     modelValue.value = slides.value.length - 1
     return
   }
@@ -226,12 +216,12 @@ const next = (): void => {
 }
 
 const onKeydown = (fn: () => void) => {
-  if (keyboardBoolean.value === false) return
+  if (props.keyboard === false) return
   fn()
 }
 
 const onMouseEnter = () => {
-  if (noHoverPauseBoolean.value) return
+  if (props.noHoverPause) return
   pause()
 }
 const onMouseLeave = () => {
@@ -242,11 +232,11 @@ const onMouseLeave = () => {
 const {lengthX} = useSwipe(element, {
   passive: true,
   onSwipeStart() {
-    if (noTouchBoolean.value === true) return
+    if (props.noTouch === true) return
     pause()
   },
   onSwipeEnd() {
-    if (noTouchBoolean.value === true) return
+    if (props.noTouch === true) return
     const resumeRiding = () => {
       if (isRiding.value === false) return
       resume()
@@ -295,9 +285,12 @@ onKeyStroke(
   {target: element}
 )
 
-watch(rideResolved, () => {
-  rideStarted.value = false
-})
+watch(
+  () => props.ride,
+  () => {
+    rideStarted.value = false
+  }
+)
 
 watch(isHovering, (newValue) => {
   if (newValue) {

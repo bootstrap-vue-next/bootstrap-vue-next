@@ -5,9 +5,9 @@
 </template>
 
 <script setup lang="ts">
-import {useBLinkHelper, useBooleanish, useColorVariantClasses} from '../../composables'
+import {useBLinkHelper, useColorVariantClasses} from '../../composables'
 import {computed, toRef} from 'vue'
-import type {BLinkProps, Booleanish, ColorExtendables} from '../../types'
+import type {BLinkProps, ColorExtendables} from '../../types'
 import BLink from '../BLink/BLink.vue'
 
 defineSlots<{
@@ -18,10 +18,10 @@ defineSlots<{
 const props = withDefaults(
   defineProps<
     {
-      dotIndicator?: Booleanish
-      pill?: Booleanish
+      dotIndicator?: boolean
+      pill?: boolean
       tag?: string
-      textIndicator?: Booleanish
+      textIndicator?: boolean
     } & Omit<BLinkProps, 'routerTag'> &
       ColorExtendables
   >(),
@@ -61,11 +61,6 @@ const props = withDefaults(
   }
 )
 
-const pillBoolean = useBooleanish(() => props.pill)
-const textIndicatorBoolean = useBooleanish(() => props.textIndicator)
-const dotIndicatorBoolean = useBooleanish(() => props.dotIndicator)
-const activeBoolean = useBooleanish(() => props.active)
-const disabledBoolean = useBooleanish(() => props.disabled)
 const resolvedBackgroundClasses = useColorVariantClasses(props)
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props, [
@@ -94,12 +89,11 @@ const computedTag = toRef(() => (computedLink.value ? BLink : props.tag))
 const computedClasses = computed(() => [
   resolvedBackgroundClasses.value,
   {
-    'active': activeBoolean.value,
-    'disabled': disabledBoolean.value,
-    'rounded-pill': pillBoolean.value,
-    'position-absolute top-0 start-100 translate-middle':
-      textIndicatorBoolean.value || dotIndicatorBoolean.value,
-    'p-2 border border-light rounded-circle': dotIndicatorBoolean.value,
+    'active': props.active,
+    'disabled': props.disabled,
+    'rounded-pill': props.pill,
+    'position-absolute top-0 start-100 translate-middle': props.textIndicator || props.dotIndicator,
+    'p-2 border border-light rounded-circle': props.dotIndicator,
     'text-decoration-none': computedLink.value,
   },
 ])

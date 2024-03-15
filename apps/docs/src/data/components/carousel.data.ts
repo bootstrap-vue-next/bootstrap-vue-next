@@ -12,17 +12,17 @@ export default {
         },
         {
           prop: 'noHoverPause',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'rideReverse',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'fade',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -52,12 +52,12 @@ export default {
         },
         {
           prop: 'controls',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'indicators',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -67,12 +67,12 @@ export default {
         },
         {
           prop: 'noTouch',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
           prop: 'noWrap',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {
@@ -92,7 +92,7 @@ export default {
         },
         {
           prop: 'keyboard',
-          type: 'Booleanish',
+          type: 'boolean',
           default: true,
         },
         {
@@ -105,24 +105,24 @@ export default {
         {
           args: [
             {
-              arg: 'sliding-start',
+              arg: 'event',
               description: '',
-              type: 'Event',
+              type: 'BvCarouselEvent',
             },
           ],
-          description: '',
-          event: 'sliding-start',
+          description: 'Fires immediately when the carousel starts its slide transition.',
+          event: 'slide',
         },
         {
           args: [
             {
-              arg: 'sliding-end',
+              arg: 'event',
               description: '',
-              type: 'Event',
+              type: 'BvCarouselEvent',
             },
           ],
-          description: '',
-          event: 'sliding-end',
+          description: 'Fired when the carousel has completed its slide transition.',
+          event: 'slid',
         },
       ],
       slots: [
@@ -204,7 +204,7 @@ export default {
         },
         {
           prop: 'imgBlank',
-          type: 'Booleanish',
+          type: 'boolean',
           default: false,
         },
         {

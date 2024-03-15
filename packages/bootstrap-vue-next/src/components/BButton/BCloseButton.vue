@@ -2,20 +2,19 @@
   <button
     :type="type"
     class="btn-close"
-    :disabled="disabledBoolean"
+    :disabled="props.disabled"
     :aria-label="ariaLabel"
     @click="emit('click', $event)"
   />
 </template>
 
 <script setup lang="ts">
-import type {Booleanish, ButtonType} from '../../types'
-import {useBooleanish} from '../../composables'
+import type {ButtonType} from '../../types'
 
 const props = withDefaults(
   defineProps<{
     ariaLabel?: string
-    disabled?: Booleanish
+    disabled?: boolean
     type?: ButtonType
   }>(),
   {
@@ -28,6 +27,4 @@ const props = withDefaults(
 const emit = defineEmits<{
   click: [value: MouseEvent]
 }>()
-
-const disabledBoolean = useBooleanish(() => props.disabled)
 </script>

@@ -9,7 +9,6 @@
 <script setup lang="ts">
 import {computed, provide, type StyleValue, toRef} from 'vue'
 import type {
-  Booleanish,
   ColorExtendables,
   LiteralUnion,
   Numberish,
@@ -17,7 +16,7 @@ import type {
   Size,
 } from '../../types'
 import {avatarGroupInjectionKey} from '../../utils'
-import {useAvatarSize, useBooleanish} from '../../composables'
+import {useAvatarSize} from '../../composables'
 import {useToNumber} from '@vueuse/core'
 
 const props = withDefaults(
@@ -25,7 +24,7 @@ const props = withDefaults(
     {
       overlap?: Numberish
       size?: LiteralUnion<Size, Numberish>
-      square?: Booleanish
+      square?: boolean
       tag?: string
     } & ColorExtendables &
       RadiusElementExtendables
@@ -55,12 +54,6 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const squareBoolean = useBooleanish(() => props.square)
-const roundedBoolean = useBooleanish(() => props.rounded)
-const roundedTopBoolean = useBooleanish(() => props.roundedTop)
-const roundedBottomBoolean = useBooleanish(() => props.roundedBottom)
-const roundedStartBoolean = useBooleanish(() => props.roundedStart)
-const roundedEndBoolean = useBooleanish(() => props.roundedEnd)
 const overlapNumber = useToNumber(() => props.overlap)
 
 const computedSize = useAvatarSize(() => props.size)
@@ -74,12 +67,12 @@ const paddingStyle = computed<StyleValue>(() => {
 provide(avatarGroupInjectionKey, {
   overlapScale,
   size: toRef(() => props.size),
-  square: squareBoolean,
-  rounded: roundedBoolean,
-  roundedTop: roundedTopBoolean,
-  roundedBottom: roundedBottomBoolean,
-  roundedStart: roundedStartBoolean,
-  roundedEnd: roundedEndBoolean,
+  square: toRef(() => props.square),
+  rounded: toRef(() => props.rounded),
+  roundedTop: toRef(() => props.roundedTop),
+  roundedBottom: toRef(() => props.roundedBottom),
+  roundedStart: toRef(() => props.roundedStart),
+  roundedEnd: toRef(() => props.roundedEnd),
   variant: toRef(() => props.variant),
   bgVariant: toRef(() => props.bgVariant),
   textVariant: toRef(() => props.textVariant),
