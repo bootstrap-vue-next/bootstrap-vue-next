@@ -337,7 +337,7 @@ export interface BModalProps {
   teleportTo?: string | Readonly<RendererElement> | null | undefined
   title?: string
   titleClass?: ClassValue
-  titleSrOnly?: boolean
+  titleVisibilityHiddenOnly?: boolean
   titleTag?: string
   transProps?: Readonly<BTransitionProps>
 }

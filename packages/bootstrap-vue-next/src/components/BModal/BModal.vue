@@ -342,7 +342,7 @@ const footerClasses = computed(() => [
 const titleClasses = computed(() => [
   props.titleClass,
   {
-    ['visually-hidden']: props.titleSrOnly,
+    ['visually-hidden']: props.titleVisibilityHiddenOnly,
   },
 ])
 const disableCancel = toRef(() => props.cancelDisabled || props.busy)
