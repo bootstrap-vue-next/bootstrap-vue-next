@@ -39,8 +39,9 @@
 
 <script setup lang="ts">
 import {useFocus, useVModel} from '@vueuse/core'
-import type {ClassValue, Size} from '../../types'
+import {computed, ref, toRef, watch} from 'vue'
 import {useId, useStateClass} from '../../composables'
+import type {ClassValue, Size} from '../../types'
 import {isEmptySlot} from '../../utils'
 
 defineOptions({
