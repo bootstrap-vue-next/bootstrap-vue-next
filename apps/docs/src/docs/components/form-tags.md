@@ -109,7 +109,7 @@ remove-on-delete
 no-add-on-enter
 
 > </BFormTags>
->   <BFormText id="tags-remove-on-delete-help" class="mt-2">
+> <BFormText id="tags-remove-on-delete-help" class="mt-2">
 
     Press <kbd>Backspace</kbd> to remove the last tag entered
 
