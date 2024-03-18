@@ -99,18 +99,56 @@ columns does not exceed `12`.
 
 See the [Layout and Grid System](/docs/components/layout#how-it-works) docs for further information.
 
-| Prop              | Description                       |
-| ----------------- | --------------------------------- |
-| `label-cols`      | Applies to breakpoint `xs` up     |
-| `label-cols-sm`   | Applies to breakpoint `sm` and up |
-| `label-cols-md`   | Applies to breakpoint `md` and up |
-| `label-cols-lg`   | Applies to breakpoint `lg` and up |
-| `label-cols-xl`   | Applies to breakpoint `xl` and up |
-| `content-cols`    | Applies to breakpoint `xs` up     |
-| `content-cols-sm` | Applies to breakpoint `sm` and up |
-| `content-cols-md` | Applies to breakpoint `md` and up |
-| `content-cols-lg` | Applies to breakpoint `lg` and up |
-| `content-cols-xl` | Applies to breakpoint `xl` and up |
+<table class="b-table table table-bordered table-striped bv-docs-table">
+  <thead>
+    <tr>
+      <th>Prop</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>label-cols</code></td>
+      <td>Applies to breakpoint <code>xs</code> up</td>
+    </tr>
+    <tr>
+      <td><code>label-cols-sm</code></td>
+      <td>Applies to breakpoint <code>sm</code> and up</td>
+    </tr>
+    <tr>
+      <td><code>label-cols-md</code></td>
+      <td>Applies to breakpoint <code>md</code> and up</td>
+    </tr>
+    <tr>
+      <td><code>label-cols-lg</code></td>
+      <td>Applies to breakpoint <code>xl</code> and up</td>
+    </tr>
+    <tr>
+      <td><code>label-cols-xl</code></td>
+      <td>Applies to breakpoint <code>xl</code> and up</td>
+    </tr>
+    <tr>
+      <td><code>content-cols</code></td>
+      <td>Applies to breakpoint <code>xs</code> up</td>
+    </tr>
+    <tr>
+      <td><code>content-cols-sm</code></td>
+      <td>Applies to breakpoint <code>sm</code> and up</td>
+    </tr>
+    <tr>
+      <td><code>content-cols-md</code></td>
+      <td>Applies to breakpoint <code>md</code> and up</td>
+    </tr>
+    <tr>
+      <td><code>content-cols-lg</code></td>
+      <td>Applies to breakpoint <code>xl</code> and up</td>
+    </tr>
+    <tr>
+      <td><code>content-cols-xl</code></td>
+      <td>Applies to breakpoint <code>xl</code> and up</td>
+    </tr>
+  </tbody>
+</table>
 
 <HighlightCard>
   <BFormGroup
