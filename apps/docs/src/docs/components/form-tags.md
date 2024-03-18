@@ -23,13 +23,10 @@ Tags will have any leading and tailing whitespace removed, and duplicate tags ar
 Tags are added by clicking the Add button, pressing the <kbd>Enter</kbd> key or optionally when the change event fires on the new tag input (i.e. when focus moves from the input). The Add button will only appear when the user has entered a new tag value.
 
 <HighlightCard>
-
-<label for="tags-basic">Type a new tag and press enter</label>
-<BFormTags input-id="tags-basic" v-model="basicUsageTags" />
-
+  <label for="tags-basic">Type a new tag and press enter</label>
+  <BFormTags input-id="tags-basic" v-model="basicUsageTags" />
   <p class="mt-2">Value: {{ basicUsageTags }}</p>
-
-<template #html>
+  <template #html>
 
 ```vue
 <template>
@@ -53,20 +50,15 @@ To auto create tags when a separator character is typed (i.e. <kbd>Space</kbd>, 
 The following example will auto create a tag when <kbd>Space</kbd>, <kbd>,</kbd>, or <kbd>;</kbd> are typed:
 
 <HighlightCard>
-
-<label for="tags-separators">Enter tags separated by space, comma or semicolon</label>
-<BFormTags
-input-id="tags-separators"
-v-model="usingSeparators"
-separator=" ,;"
-placeholder="Enter new tags separated by space, comma or semicolon"
-no-add-on-enter
-
-> </BFormTags>
-
+  <label for="tags-separators">Enter tags separated by space, comma or semicolon</label>
+  <BFormTags
+  input-id="tags-separators"
+  v-model="usingSeparators"
+  separator=" ,;"
+  placeholder="Enter new tags separated by space, comma or semicolon"
+  no-add-on-enter></BFormTags>
   <p class="mt-2">Value: {{ usingSeparators }}</p>
-
-<template #html>
+  <template #html>
 
 ```vue
 <template>
@@ -96,27 +88,22 @@ const value = ref<string[]>(['apple', 'orange'])
 When the prop `remove-on-delete` is set, and the user presses <kbd>Backspace</kbd> (or <kbd>Del</kbd>) and the input value is empty, the last tag in the tag list will be removed.
 
 <HighlightCard>
-
-<label for="tags-separators">Enter tags separated by space, comma or semicolon</label>
-<label for="tags-remove-on-delete">Enter new tags separated by space</label>
-<BFormTags
-input-id="tags-remove-on-delete"
-:input-attrs="{ 'aria-describedby': 'tags-remove-on-delete-help' }"
-v-model="tagRemoval"
-separator=" "
-placeholder="Enter new tags separated by space"
-remove-on-delete
-no-add-on-enter
-
-> </BFormTags>
-> <BFormText id="tags-remove-on-delete-help" class="mt-2">
-
+  <label for="tags-separators">Enter tags separated by space, comma or semicolon</label>
+  <label for="tags-remove-on-delete">Enter new tags separated by space</label>
+  <BFormTags
+    input-id="tags-remove-on-delete"
+    :input-attrs="{ 'aria-describedby': 'tags-remove-on-delete-help' }"
+    v-model="tagRemoval"
+    separator=" "
+    placeholder="Enter new tags separated by space"
+    remove-on-delete
+    no-add-on-enter
+  ></BFormTags>
+  <BFormText id="tags-remove-on-delete-help" class="mt-2">
     Press <kbd>Backspace</kbd> to remove the last tag entered
-
   </BFormText>
   <p>Value: {{ tagRemoval }}</p>
-
-<template #html>
+  <template #html>
 
 ```vue
 <template>
@@ -192,9 +179,8 @@ For additional props, see the component reference section at the bottom of this 
 The focus and validation state styling of the component relies upon BootstrapVue's custom CSS.
 
 <HighlightCard>
-
-<label for="tags-pills">Enter tags</label>
-<BFormTags
+  <label for="tags-pills">Enter tags</label>
+  <BFormTags
     input-id="tags-pills"
     v-model="stylingOptions"
     tag-variant="primary"
@@ -202,10 +188,8 @@ The focus and validation state styling of the component relies upon BootstrapVue
     size="lg"
     separator=" "
     placeholder="Enter new tags separated by space"></BFormTags>
-
   <p class="mt-2">Value: {{ stylingOptions }}</p>
-
-<template #html>
+  <template #html>
 
 ```vue
 <template>
@@ -247,24 +231,22 @@ You can optionally provide a tag validator method via the `tag-validator` prop. 
 Tag validation occurs only for tags added via user input. Changes to the tags via the `v-model` are not validated.
 
 <HighlightCard>
-
-<BFormGroup
+  <BFormGroup
     label="Tags validation example"
     label-for="tags-validation"
     :state="stateTagValidator"
     invalid-feedback="You must provide at least 3 tags and no more than 8"
     description="Tags must be 3 to 5 characters in length and all lower case. Enter tags separated by spaces or press enter.">
-<BFormTags
-      input-id="tags-validation"
-      v-model="tagsValidator"
-      :input-attrs="{ 'aria-describedby': 'tags-validation-help' }"
-      :tag-validator="tagValidator"
-      :state="stateTagValidator"
-      separator=" "
-    />
-</BFormGroup>
-
-<template #html>
+    <BFormTags
+        input-id="tags-validation"
+        v-model="tagsValidator"
+        :input-attrs="{ 'aria-describedby': 'tags-validation-help' }"
+        :tag-validator="tagValidator"
+        :state="stateTagValidator"
+        separator=" "
+      />
+  </BFormGroup>
+  <template #html>
 
 ```vue
 <template>
@@ -331,25 +313,22 @@ The event will be emitted only when the new tag input changes (characters are en
 If you are providing your own feedback for duplicate and invalid tags (via the use of the tag-state event) outside of the `<BFormTags>` component, you can disable the built in duplicate and invalid messages by setting the props duplicate-tag-text and invalid-tag-text (respectively) to either an empty string ('') or null.
 
 <HighlightCard>
-
-<label for="tags-state-event">Enter tags</label>
-<BFormTags
-input-id="tags-state-event"
-v-model="detectingTags"
-:tag-validator="detectTagValidator"
-placeholder="Enter tags (3-5 characters) separated by space"
-separator=" "
-@tag-state="onTagState"></BFormTags>
-
-<p class="mt-2">Tags: {{ detectingTags }}</p>
-<p>Event values:</p>
-<ul>
-  <li>validTags: {{ validTags }}</li>
-  <li>invalidTags: {{ invalidTags }}</li>
-  <li>duplicateTags: {{ duplicateTags }}</li>
-</ul>
-
-<template #html>
+  <label for="tags-state-event">Enter tags</label>
+  <BFormTags
+    input-id="tags-state-event"
+    v-model="detectingTags"
+    :tag-validator="detectTagValidator"
+    placeholder="Enter tags (3-5 characters) separated by space"
+    separator=" "
+    @tag-state="onTagState"></BFormTags>
+  <p class="mt-2">Tags: {{ detectingTags }}</p>
+  <p>Event values:</p>
+  <ul>
+    <li>validTags: {{ validTags }}</li>
+    <li>invalidTags: {{ invalidTags }}</li>
+    <li>duplicateTags: {{ duplicateTags }}</li>
+  </ul>
+  <template #html>
 
 ```vue
 <template>
@@ -401,12 +380,10 @@ When the limit of tags is reached, the user is still able to type but adding mor
 Removing tags is unaffected by the `limit` prop.
 
 <HighlightCard>
-  
   <label for="tags-limit">Enter tags</label>
   <BFormTags input-id="tags-limit" v-model="limitTagsModel" :limit="limitTag" remove-on-delete></BFormTags>
   <p class="mt-2">Value: {{ limitTagsModel }}</p>
-
-<template #html>
+  <template #html>
 
 ```vue
 <template>
@@ -686,7 +663,6 @@ The scope contains attributes and event handlers that can be directly bound to n
 The following example includes the suggested ARIA attributes and roles needed for screen-reader support.
 
 <HighlightCard>
-
   <BFormTags v-model="nativeTags" no-outer-focus class="mb-2">
     <template v-slot="{ tags, inputAttrs, inputHandlers, addTag, removeTag }">
       <BInputGroup aria-controls="my-custom-tags-list">
@@ -705,8 +681,6 @@ The following example includes the suggested ARIA attributes and roles needed fo
         aria-atomic="false"
         aria-relevant="additions removals"
       >
-        <!-- Always use the tag value as the :key, not the index! -->
-        <!-- Otherwise screen readers will not read the tag additions and removals correctly -->
         <BCard
           v-for="tag in tags"
           :key="tag"
@@ -726,8 +700,7 @@ The following example includes the suggested ARIA attributes and roles needed fo
       </ul>
     </template>
   </BFormTags>
-
-<template #html>
+  <template #html>
 
 ```vue
 <template>
@@ -792,7 +765,6 @@ The scope contains attributes and event handlers that can be directly bound to m
 In this example, we are using the [`<BFormTag>` helper component](#bformtag-helper-component), but feel free to render tags using standard HTML or components.
 
 <HighlightCard>
-
   <BFormTags v-model="customComponentTags" no-outer-focus class="mb-2">
     <template v-slot="{ tags, inputAttrs, inputHandlers, tagVariant, addTag, removeTag }">
       <BInputGroup class="mb-2">
@@ -818,8 +790,7 @@ In this example, we are using the [`<BFormTag>` helper component](#bformtag-help
       </div>
     </template>
   </BFormTags>
-
-<template #html>
+  <template #html>
 
 ```vue
 <template>
@@ -864,9 +835,7 @@ const value = ref<string[]>(['apple', 'orange', 'banana'])
 The following is an example of using a custom select component for choosing from a pre-defined set of tags:
 
 <HighlightCard>
-
   <BFormGroup label="Tagged input using select" label-for="tags-component-select">
-    <!-- Prop `add-on-change` is needed to enable adding tags vie the `change` event -->
     <BFormTags
       id="tags-component-select"
       v-model="customPredefinedTags"
@@ -896,8 +865,7 @@ The following is an example of using a custom select component for choosing from
       </template>
     </BFormTags>
   </BFormGroup>
-
-<template #html>
+  <template #html>
 
 ```vue
 <template>
@@ -985,58 +953,52 @@ The `inputHandlers.input` handler must be bound to an event that updates with ea
 In situations where the `inputHandlers` will not work with your custom input, or if you need greater control over tag creation, you can take advantage of the additional properties provided via the default slot's scope.
 
 <HighlightCard>
-
-<BFormCheckbox switch size="lg" v-model="advancedDisabled">Disable</BFormCheckbox>
-<BFormTags
-v-model="advancedTags"
-@input="resetInputValue()"
-tag-variant="success"
-class="mb-2 mt-2"
-:disabled="advancedDisabled"
-no-outer-focus
-placeholder="Enter a new tag value and click Add"
-:state="advancedState" >
-<template v-slot="{tags, inputId, placeholder, disabled, addTag, removeTag }">
-<BInputGroup>
-
-<!-- Always bind the id to the input so that it can be focused when needed -->
-
-<BFormInput
+  <BFormCheckbox switch size="lg" v-model="advancedDisabled">Disable</BFormCheckbox>
+  <BFormTags
+    v-model="advancedTags"
+    @input="resetInputValue()"
+    tag-variant="success"
+    class="mb-2 mt-2"
+    :disabled="advancedDisabled"
+    no-outer-focus
+    placeholder="Enter a new tag value and click Add"
+    :state="advancedState">
+    <template v-slot="{tags, inputId, placeholder, disabled, addTag, removeTag }">
+      <BInputGroup>
+        <BFormInput
           v-model="newTag"
           :id="inputId"
           :placeholder="placeholder"
           :disabled="disabled"
           :formatter="formatter"
         ></BFormInput>
-<BInputGroupAppend>
-<BButton @click="addTag(newTag)" :disabled="disabled" variant="primary">Add</BButton>
-</BInputGroupAppend>
-</BInputGroup>
-<BFormInvalidFeedback :state="advancedState">
-Duplicate tag value cannot be added again!
-</BFormInvalidFeedback>
-
-<ul v-if="tags.length > 0" class="mb-0">
-<li v-for="tag in tags" :key="tag" :title="`Tag: ${tag}`" class="mt-2">
-<span  class="d-flex align-items-center">
-<span class="me-2">{{ tag }}</span>
-<BButton
-:disabled="disabled"
-size="sm"
-variant="outline-danger"
-@click="removeTag(tag)" >
-remove tag
-</BButton>
-</span>
-</li>
-</ul>
-<BFormText v-else>
-There are no tags specified. Add a new tag above.
-</BFormText>
-</template>
-</BFormTags>
-
-<template #html>
+        <BInputGroupAppend>
+          <BButton @click="addTag(newTag)" :disabled="disabled" variant="primary">Add</BButton>
+        </BInputGroupAppend>
+      </BInputGroup>
+      <BFormInvalidFeedback :state="advancedState">
+        Duplicate tag value cannot be added again!
+      </BFormInvalidFeedback>
+      <ul v-if="tags.length > 0" class="mb-0">
+        <li v-for="tag in tags" :key="tag" :title="`Tag: ${tag}`" class="mt-2">
+          <span  class="d-flex align-items-center">
+            <span class="me-2">{{ tag }}</span>
+            <BButton
+              :disabled="disabled"
+              size="sm"
+              variant="outline-danger"
+              @click="removeTag(tag)" >
+              remove tag
+            </BButton>
+          </span>
+        </li>
+      </ul>
+      <BFormText v-else>
+        There are no tags specified. Add a new tag above.
+      </BFormText>
+    </template>
+  </BFormTags>
+  <template #html>
 
 ```vue
 <template>
@@ -1113,7 +1075,6 @@ const formatter = (value) => {
 The following is an example of using the `<BDropdown>` component for choosing or searching from a pre-defined set of tags:
 
 <HighlightCard>
-
   <BFormGroup label="Tagged input using dropdown" label-for="tags-with-dropdown">
     <BFormTags id="tags-with-dropdown" v-model="customDropdownTags" no-outer-focus class="mb-2">
       <template v-slot="{ tags, disabled, addTag, removeTag }">
@@ -1165,8 +1126,7 @@ The following is an example of using the `<BDropdown>` component for choosing or
       </template>
     </BFormTags>
   </BFormGroup>
-
-<template #html>
+  <template #html>
 
 ```vue
 <template>
