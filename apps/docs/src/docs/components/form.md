@@ -295,18 +295,18 @@ See also:
 - [`BFormSelect`](/docs/components/form-select) Select input
 - [`BFormRadio`](/docs/components/form-radio) Radio Inputs
 - [`BFormCheckbox`](/docs/components/form-checkbox) Checkbox Inputs
-- ~~[`BFormFile`](/docs/components/form-file) File Input~~
-- ~~[`BFormDatepicker`](/docs/components/form-datepicker) Date picker input~~
-- ~~[`BFormSpinbutton`](/docs/components/form-spinbutton) Numerical range spinbutton input~~
-- ~~[`BFormTags`](/docs/components/form-tags) Customizable tag input~~
-- ~~[`BFormTimepicker`](/docs/components/form-timepicker) Time picker custom form input~~
-- ~~[`BFormRating`](/docs/components/form-rating) Star rating custom form input and display~~
+- [`BFormFile`](/docs/components/form-file) File Input
+- [`BFormDatepicker`](/docs/components/form-datepicker) Date picker input
+- [`BFormSpinbutton`](/docs/components/form-spinbutton) Numerical range spinbutton input
+- [`BFormTags`](/docs/components/form-tags) Customizable tag input~~
+- [`BFormTimepicker`](/docs/components/form-timepicker) Time picker custom form input
+- [`BFormRating`](/docs/components/form-rating) Star rating custom form input and display
 - [`BButton`](/docs/components/button) Buttons
 - [`BFormGroup`](/docs/components/form-group) Form Input wrapper to generate form-groups that
   support labels, help text and feedback
 - [`BInputGroup`](/docs/components/input) Form Inputs with add-ons
-- ~~[`BFormRow`](/docs/components/layout) Create grid rows and columns with tighter margins
-  (available via the [Layout and grid components](/docs/components/layout))~~
+- [`BFormRow`](/docs/components/layout) Create grid rows and columns with tighter margins
+  (available via the [Layout and grid components](/docs/components/layout))
 
 ## Form helper components
 
@@ -315,7 +315,7 @@ The following helper components are available with the `Form` plugin:
 - `BFormText` Help text blocks for inputs
 - `BFormInvalidFeedback` Invalid feedback text blocks for input `invalid` states
 - `BFormValidFeedback` Valid feedback text blocks for input `valid` states
-- ~~`BFormDatalist` Easily create a `<datalist>` for use with `BFormInput` or plain `<input>`~~
+- `BFormDatalist` Easily create a `<datalist>` for use with `BFormInput` or plain `<input>`
 
 ### Form text helper
 
