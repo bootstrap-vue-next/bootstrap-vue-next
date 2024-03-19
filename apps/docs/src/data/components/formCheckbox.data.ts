@@ -161,30 +161,6 @@ export default {
             },
           ],
         },
-        {
-          event: 'input',
-          description: 'Emitted before the checked value is changed',
-          args: [
-            {
-              arg: 'checked',
-              type: 'CheckboxValue | readonly CheckboxValue[]',
-              description:
-                'Value of the checkbox before the event. Value will be an array for grouped checkboxes or a single value for standalone checkboxes.',
-            },
-          ],
-        },
-        {
-          event: 'change',
-          description: 'Emitted when the checked value is changed',
-          args: [
-            {
-              arg: 'checked',
-              type: 'CheckboxValue | readonly CheckboxValue[]',
-              description:
-                'Value of the checkbox.  Value will be an array for grouped checkboxes or a single value for standalone checkboxes.',
-            },
-          ],
-        },
       ],
       slots: [
         {
@@ -340,28 +316,6 @@ export default {
           args: [
             {
               arg: 'update:modelValue',
-              type: 'CheckboxValue[]',
-              description: 'Value of the checkboxes. Value will be an array.',
-            },
-          ],
-        },
-        {
-          event: 'input',
-          description: 'Emitted before the selected value(s) are changed',
-          args: [
-            {
-              arg: 'input',
-              type: 'CheckboxValue[]',
-              description: 'Value of the checkboxes before the event. Value will be an array.',
-            },
-          ],
-        },
-        {
-          event: 'change',
-          description: 'Emitted when the selected value(s) are changed',
-          args: [
-            {
-              arg: 'change',
               type: 'CheckboxValue[]',
               description: 'Value of the checkboxes. Value will be an array.',
             },
