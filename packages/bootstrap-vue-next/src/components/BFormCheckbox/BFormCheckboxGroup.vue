@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, nextTick, provide, ref, toRef, watch} from 'vue'
+import {computed, provide, ref, toRef} from 'vue'
 import BFormCheckbox from './BFormCheckbox.vue'
 import type {AriaInvalid, ButtonVariant, CheckboxOptionRaw, CheckboxValue, Size} from '../../types'
 import {getGroupAttr, getGroupClasses, useId} from '../../composables'
@@ -78,8 +78,6 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  'change': [value: CheckboxValue[]]
-  'input': [value: CheckboxValue[]]
   'update:modelValue': [value: CheckboxValue[]]
 }>()
 
@@ -114,13 +112,6 @@ provide(checkboxGroupKey, {
   required: toRef(() => props.required),
   buttons: toRef(() => props.buttons),
   disabled: toRef(() => props.disabled),
-})
-
-watch(modelValue, (newValue) => {
-  emit('input', [...newValue])
-  nextTick(() => {
-    emit('change', [...newValue])
-  })
 })
 
 const normalizeOptions = computed(() =>
