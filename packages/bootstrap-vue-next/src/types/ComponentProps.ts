@@ -1332,6 +1332,7 @@ export interface BModalProps extends TeleporterProps {
   titleClass?: ClassValue
   titleVisuallyHidden?: boolean
   titleTag?: string
+  toggle?: boolean
   transProps?: Readonly<BTransitionProps>
 }
 

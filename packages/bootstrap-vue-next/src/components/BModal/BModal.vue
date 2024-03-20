@@ -9,7 +9,7 @@
       @after-leave="onAfterLeave"
     >
       <div
-        v-show="modelValue"
+        v-show="showRef"
         :id="computedId"
         ref="element"
         class="modal"
@@ -104,7 +104,7 @@
     <slot v-if="!props.hideBackdrop" name="backdrop" v-bind="sharedSlots">
       <Transition :appear="modelValue" @after-enter="fadeIn" @before-leave="fadeOut">
         <div
-          v-if="modelValue"
+          v-if="showRef"
           class="modal-backdrop"
           :style="computedZIndexBackdrop"
           :class="{
@@ -121,7 +121,7 @@
 <script setup lang="ts">
 import {onKeyStroke, useEventListener, useFocus} from '@vueuse/core'
 import {useActivatedFocusTrap} from '../../composables/useActivatedFocusTrap'
-import {computed, type CSSProperties, ref, useTemplateRef, watch} from 'vue'
+import {computed, type CSSProperties, nextTick, onMounted, ref, useTemplateRef, watch} from 'vue'
 import type {BModalProps} from '../../types/ComponentProps'
 import {BvTriggerableEvent} from '../../utils'
 import BButton from '../BButton/BButton.vue'
@@ -200,6 +200,7 @@ const _props = withDefaults(defineProps<Omit<BModalProps, 'modelValue'>>(), {
   titleClass: undefined,
   titleVisuallyHidden: false,
   titleTag: 'h5',
+  toggle: false,
   transProps: undefined,
 })
 const props = useDefaults(_props, 'BModal')
@@ -211,10 +212,10 @@ const emit = defineEmits<{
   'esc': [value: BvTriggerableEvent]
   'hidden': [value: BvTriggerableEvent]
   'hide': [value: BvTriggerableEvent]
-  'hide-prevented': []
+  'hide-prevented': [value: BvTriggerableEvent]
   'ok': [value: BvTriggerableEvent]
   'show': [value: BvTriggerableEvent]
-  'show-prevented': []
+  'show-prevented': [value: BvTriggerableEvent]
   'shown': [value: BvTriggerableEvent]
 }>()
 
@@ -258,6 +259,7 @@ const cancelButton = useTemplateRef<HTMLElement | null>('cancelButton')
 const closeButton = useTemplateRef<HTMLElement | null>('closeButton')
 const isActive = ref(false)
 const lazyLoadCompleted = ref(false)
+const showRef = ref(modelValue.value && !props.toggle)
 
 const fallbackClassSelector = 'modal-fallback-focus'
 const {needsFallback} = useActivatedFocusTrap({
@@ -277,7 +279,7 @@ onKeyStroke(
   },
   {target: element}
 )
-useSafeScrollLock(modelValue, () => props.bodyScrolling)
+useSafeScrollLock(showRef, () => props.bodyScrolling)
 const {focused: modalFocus} = useFocus(element, {
   initialValue: modelValue.value && props.autofocusButton === undefined && props.autofocus === true,
 })
@@ -295,7 +297,7 @@ const modalClasses = computed(() => [
   props.modalClass,
   {
     fade: !props.noFade,
-    show: isActive.value,
+    show: showRef.value,
   },
 ])
 
@@ -380,13 +382,19 @@ const fadeOut = (el: Element) => {
   }
 }
 
-watch(modelValue, (newValue, oldValue) => {
-  if (newValue === oldValue) return
-  if (newValue === true) {
+onMounted(() => {
+  if (props.toggle) {
     showFn()
-  } else {
-    hideFn()
   }
+})
+let noAction = false
+
+watch(modelValue, () => {
+  if (noAction) {
+    noAction = false
+    return
+  }
+  modelValue.value ? showFn() : hideFn()
 })
 
 const hideFn = (trigger = '') => {
@@ -394,10 +402,10 @@ const hideFn = (trigger = '') => {
     (trigger === 'backdrop' && props.noCloseOnBackdrop) ||
     (trigger === 'esc' && props.noCloseOnEsc)
   ) {
-    emit('hide-prevented')
+    emit('hide-prevented', buildTriggerableEvent('hide-prevented'))
     return
   }
-
+  // inAction = true
   const event = buildTriggerableEvent('hide', {cancelable: trigger !== '', trigger})
 
   if (trigger === 'ok') {
@@ -418,26 +426,46 @@ const hideFn = (trigger = '') => {
   emit('hide', event)
 
   if (event.defaultPrevented) {
-    emit('hide-prevented')
-    if (!modelValue.value) modelValue.value = true
+    emit('hide-prevented', buildTriggerableEvent('hide-prevented'))
+    noAction = true
+    nextTick(() => {
+      modelValue.value = true
+    })
     return
   }
-  if (modelValue.value) modelValue.value = false
+  showRef.value = false
+  if (modelValue.value && !props.toggle) {
+    noAction = true
+    modelValue.value = false
+  }
 }
 
 // TODO: If a show is prevented, it will briefly show the animation. This is a bug
 // I'm not sure how to wait for the event to be determined. Before showing
 const showFn = () => {
-  if (isActive.value) return
-
   const event = buildTriggerableEvent('show', {cancelable: true})
   emit('show', event)
+  // debugger
+
+  // console.trace()
   if (event.defaultPrevented) {
     if (modelValue.value) modelValue.value = false
-    emit('show-prevented')
+    emit('show-prevented', buildTriggerableEvent('show-prevented'))
+    noAction = true
+    nextTick(() => {
+      modelValue.value = false
+    })
+
     return
   }
-  if (!modelValue.value) modelValue.value = true
+  // inAction = true
+  showRef.value = true
+  if (!modelValue.value) {
+    noAction = true
+    nextTick(() => {
+      modelValue.value = true
+    })
+  }
 }
 
 const pickFocusItem = () => {
@@ -451,24 +479,28 @@ const pickFocusItem = () => {
         : (modalFocus.value = true)
 }
 
-const onBeforeEnter = () => {
-  showFn()
-}
+const onBeforeEnter = () => {} //showFn()
 const onAfterEnter = (el: Element) => {
   fadeIn(el)
-  isActive.value = true
   pickFocusItem()
   emit('shown', buildTriggerableEvent('shown'))
   if (props.lazy === true) lazyLoadCompleted.value = true
 }
 const isLeaving = ref(false)
 const onLeave = () => {
-  isActive.value = false
+  // isActive.value = false
   isLeaving.value = true
 }
 const onAfterLeave = (el: Element) => {
   emit('hidden', buildTriggerableEvent('hidden'))
-  if (props.lazy === true) lazyLoadCompleted.value = false
+
+  if (modelValue.value && props.toggle) {
+    noAction = true
+    nextTick(() => {
+      modelValue.value = false
+    })
+  }
+  // if (props.lazy === true) lazyLoadCompleted.value = false
   isLeaving.value = false
   fadeOut(el)
 }
@@ -490,7 +522,7 @@ const computedZIndexNumber = computed<number>(() =>
   //
   // This means inactive modals will already be higher than active ones when opened.
 
-  isActive.value || isLeaving.value
+  showRef.value || isLeaving.value
     ? // Just for reference there is a single frame in which the modal is not active but still has a higher z-index than the active ones due to _when_ it calculates its position. It's a small visual effect
       defaultModalDialogZIndex -
       ((activeModalCount?.value ?? 0) * 2 - (activePosition?.value ?? 0) * 2)
@@ -526,6 +558,9 @@ defineExpose({
   hide: hideFn,
   id: computedId,
   show: showFn,
+  toggle: () => {
+    modelValue.value ? hideFn() : showFn()
+  },
 })
 </script>
 

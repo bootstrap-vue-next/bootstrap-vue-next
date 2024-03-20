@@ -53,12 +53,12 @@ const _props = withDefaults(defineProps<Omit<BCollapseProps, 'modelValue'>>(), {
 const props = useDefaults(_props, 'BCollapse')
 
 const emit = defineEmits<{
-  'hidden': []
+  'hidden': [value: BvTriggerableEvent]
   'hide': [value: BvTriggerableEvent]
-  'hide-prevented': []
+  'hide-prevented': [value: BvTriggerableEvent]
   'show': [value: BvTriggerableEvent]
-  'show-prevented': []
-  'shown': []
+  'show-prevented': [value: BvTriggerableEvent]
+  'shown': [value: BvTriggerableEvent]
 }>()
 
 type SharedSlotsData = {
@@ -136,7 +136,7 @@ const reveal = () => {
   const event = buildTriggerableEvent('show', {cancelable: true})
   emit('show', event)
   if (event.defaultPrevented) {
-    emit('show-prevented')
+    emit('show-prevented', buildTriggerableEvent('show-prevented'))
     noAction = true
     nextTick(() => {
       modelValue.value = false
@@ -157,7 +157,7 @@ const reveal = () => {
     }
     revealTimeout = setTimeout(() => {
       isCollapsing.value = false
-      emit('shown')
+      emit('shown', buildTriggerableEvent('shown'))
       if (element.value === null) return
       element.value.style.height = ''
       element.value.style.width = ''
@@ -169,7 +169,7 @@ const hideFn = () => {
   const event = buildTriggerableEvent('hide', {cancelable: true})
   emit('hide', event)
   if (event.defaultPrevented) {
-    emit('hide-prevented')
+    emit('hide-prevented', buildTriggerableEvent('hide-prevented'))
     noAction = true
     nextTick(() => {
       modelValue.value = true
@@ -204,7 +204,7 @@ const hideFn = () => {
     hideTimeout = setTimeout(() => {
       showRef.value = false
       isCollapsing.value = false
-      emit('hidden')
+      emit('hidden', buildTriggerableEvent('hidden'))
     }, getTransitionDelay(element.value))
   })
 }
