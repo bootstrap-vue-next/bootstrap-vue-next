@@ -1313,6 +1313,7 @@ export interface BModalProps extends TeleporterProps {
   titleClass?: ClassValue
   titleSrOnly?: boolean
   titleTag?: string
+  toggle?: boolean
   transProps?: Readonly<BTransitionProps>
 }
 
