@@ -482,13 +482,14 @@ const pickFocusItem = () => {
 const onBeforeEnter = () => {} //showFn()
 const onAfterEnter = (el: Element) => {
   fadeIn(el)
+  isActive.value = true
   pickFocusItem()
   emit('shown', buildTriggerableEvent('shown'))
   if (props.lazy === true) lazyLoadCompleted.value = true
 }
 const isLeaving = ref(false)
 const onLeave = () => {
-  // isActive.value = false
+  isActive.value = false
   isLeaving.value = true
 }
 const onAfterLeave = (el: Element) => {
@@ -506,12 +507,12 @@ const onAfterLeave = (el: Element) => {
 }
 
 const {activePosition, activeModalCount, stackWithoutSelf} = useModalManager(
-  isActive,
+  showRef,
   modelValue.value
 )
 
 watch(stackWithoutSelf, (newValue, oldValue) => {
-  if (newValue.length > oldValue.length && isActive.value === true && props.noStacking === true)
+  if (newValue.length > oldValue.length && showRef.value === true && props.noStacking === true)
     hideFn()
 })
 
@@ -551,7 +552,7 @@ const sharedSlots = computed<SharedSlotsData>(() => ({
     hideFn('ok')
   },
   active: isActive.value,
-  visible: modelValue.value,
+  visible: showRef.value,
 }))
 
 defineExpose({
