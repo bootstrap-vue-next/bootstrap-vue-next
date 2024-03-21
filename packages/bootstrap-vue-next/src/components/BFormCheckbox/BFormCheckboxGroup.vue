@@ -44,6 +44,7 @@ const props = withDefaults(
     options?: readonly CheckboxOptionRaw[]
     plain?: boolean
     required?: boolean
+    reverse?: boolean
     size?: Size
     stacked?: boolean
     state?: boolean | null
@@ -67,6 +68,7 @@ const props = withDefaults(
     options: () => [],
     plain: false,
     required: false,
+    reverse: false,
     size: 'md',
     stacked: false,
     state: null,
@@ -109,6 +111,7 @@ provide(checkboxGroupKey, {
   plain: toRef(() => props.plain),
   size: toRef(() => props.size),
   inline: toRef(() => !props.stacked),
+  reverse: toRef(() => props.reverse),
   required: toRef(() => props.required),
   buttons: toRef(() => props.buttons),
   disabled: toRef(() => props.disabled),

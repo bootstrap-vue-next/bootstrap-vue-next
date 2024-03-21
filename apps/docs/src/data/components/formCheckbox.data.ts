@@ -117,6 +117,12 @@ export default {
             'Controls the validation state appearance of the component. `true` for valid, `false` for invalid, or `null` for no validation state',
         },
         {
+          prop: 'reverse',
+          type: 'boolean',
+          default: false,
+          description: 'When set, renders the checkboxe or switch on the opposite side',
+        },
+        {
           prop: 'switch',
           type: 'boolean',
           default: false,
@@ -264,6 +270,12 @@ export default {
           type: 'boolean',
           default: false,
           description: 'Adds the `required` attribute to the form control',
+        },
+        {
+          prop: 'reverse',
+          type: 'boolean',
+          default: false,
+          description: 'When set, renders the checkboxes and switches on the opposite side',
         },
         {
           prop: 'size',
