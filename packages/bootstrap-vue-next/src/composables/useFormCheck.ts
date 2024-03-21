@@ -7,6 +7,7 @@ interface ClassesItemsInput {
   plain?: boolean
   button?: boolean
   inline?: boolean
+  reverse?: boolean
   switch?: boolean
   size?: Size
 }
@@ -16,6 +17,7 @@ const getClasses = (items: MaybeRefOrGetter<ClassesItemsInput>) =>
     const resolvedItems = toValue(items)
     return {
       'form-check': resolvedItems.plain === false && resolvedItems.button === false,
+      'form-check-reverse': resolvedItems.reverse === true,
       'form-check-inline': resolvedItems.inline === true,
       'form-switch': resolvedItems.switch === true,
       [`form-control-${resolvedItems.size}`]:

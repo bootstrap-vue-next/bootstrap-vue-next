@@ -54,6 +54,7 @@ const props = withDefaults(
     name?: string
     plain?: boolean
     required?: boolean
+    reverse?: boolean
     size?: Size
     state?: boolean | null
     switch?: boolean
@@ -76,6 +77,7 @@ const props = withDefaults(
     name: undefined,
     plain: false,
     required: undefined,
+    reverse: false,
     size: undefined,
     state: null,
     switch: false,
@@ -138,6 +140,7 @@ const classesObject = computed(() => ({
   plain: props.plain || (parentData?.plain.value ?? false),
   button: props.button || (parentData?.buttons.value ?? false),
   inline: props.inline || (parentData?.inline.value ?? false),
+  reverse: props.reverse || (parentData?.reverse.value ?? false),
   switch: props.switch || (parentData?.switch.value ?? false),
   state: props.state || parentData?.state.value,
   size: props.size ?? parentData?.size.value ?? 'md', // This is where the true default is made

@@ -93,6 +93,7 @@ export const checkboxGroupKey: InjectionKey<{
   plain: Readonly<Ref<boolean>>
   size: Readonly<Ref<Size>>
   inline: Readonly<Ref<boolean>>
+  reverse: Readonly<Ref<boolean>>
   required: Readonly<Ref<boolean>>
   buttons: Readonly<Ref<boolean>>
   disabled: Readonly<Ref<boolean>>
