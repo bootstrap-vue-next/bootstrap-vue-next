@@ -145,6 +145,7 @@ const classesObject = computed(() => ({
   state: props.state || parentData?.state.value,
   size: props.size ?? parentData?.size.value ?? 'md', // This is where the true default is made
   buttonVariant: props.buttonVariant ?? parentData?.buttonVariant.value ?? 'secondary', // This is where the true default is made
+  hasDefaultSlot: hasDefaultSlot.value,
 }))
 const computedClasses = getClasses(classesObject)
 const inputClasses = getInputClasses(classesObject)

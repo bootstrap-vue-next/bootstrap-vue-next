@@ -14,6 +14,9 @@ describe('form-checkbox', () => {
     it('has class form-check if prop plain and prop button are false', () => {
       const wrapper = mount(BFormCheckbox, {
         props: {plain: false, button: false},
+        slots: {
+          default: 'checkbox',
+        },
       })
       expect(wrapper.classes()).toContain('form-check')
     })
@@ -22,6 +25,11 @@ describe('form-checkbox', () => {
       const wrapper = mount(BFormCheckbox, {
         props: {plain: true, button: true},
       })
+      expect(wrapper.classes()).not.toContain('form-check')
+    })
+
+    it('does not have class form-check if default slot is empty', () => {
+      const wrapper = mount(BFormCheckbox, {})
       expect(wrapper.classes()).not.toContain('form-check')
     })
 
@@ -53,14 +61,14 @@ describe('form-checkbox', () => {
       expect(wrapper.classes()).not.toContain('form-check-inline')
     })
 
-    it('has class form-check-reverse when prop inline', () => {
+    it('has class form-check-reverse when prop reverse', () => {
       const wrapper = mount(BFormCheckbox, {
         props: {reverse: true},
       })
       expect(wrapper.classes()).toContain('form-check-reverse')
     })
 
-    it('does not have class form-check-reverse when prop inline', () => {
+    it('does not have class form-check-reverse when prop reverse', () => {
       const wrapper = mount(BFormCheckbox, {
         props: {reverse: false},
       })

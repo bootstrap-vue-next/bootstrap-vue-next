@@ -49,6 +49,7 @@ const props = withDefaults(
     options?: readonly RadioOptionRaw[]
     plain?: boolean
     required?: boolean
+    reverse?: boolean
     size?: Size
     stacked?: boolean
     state?: boolean | null
@@ -71,6 +72,7 @@ const props = withDefaults(
     options: () => [],
     plain: false,
     required: false,
+    reverse: false,
     size: 'md',
     stacked: false,
     state: null,
@@ -114,6 +116,7 @@ provide(radioGroupKey, {
   plain: toRef(() => props.plain),
   size: toRef(() => props.size),
   inline: toRef(() => !props.stacked),
+  reverse: toRef(() => !props.reverse),
   required: toRef(() => props.required),
   disabled: toRef(() => props.disabled),
 })

@@ -81,6 +81,12 @@ export default {
           default: false,
         },
         {
+          prop: 'reverse',
+          type: 'boolean',
+          default: false,
+          description: 'When set, renders the radio button on the opposite side',
+        },
+        {
           prop: 'state',
           type: 'boolean | null',
           default: undefined,
