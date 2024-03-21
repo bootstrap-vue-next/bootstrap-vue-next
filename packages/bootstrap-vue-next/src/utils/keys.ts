@@ -109,6 +109,7 @@ export const radioGroupKey: InjectionKey<{
   plain: Readonly<Ref<boolean>>
   size: Readonly<Ref<Size>>
   inline: Readonly<Ref<boolean>>
+  reverse: Readonly<Ref<boolean>>
   required: Readonly<Ref<boolean>>
   disabled: Readonly<Ref<boolean>>
 }> = Symbol('radioGroup')

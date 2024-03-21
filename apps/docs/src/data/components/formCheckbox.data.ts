@@ -120,7 +120,7 @@ export default {
           prop: 'reverse',
           type: 'boolean',
           default: false,
-          description: 'When set, renders the checkboxe or switch on the opposite side',
+          description: 'When set, renders the checkbox or switch on the opposite side',
         },
         {
           prop: 'switch',
