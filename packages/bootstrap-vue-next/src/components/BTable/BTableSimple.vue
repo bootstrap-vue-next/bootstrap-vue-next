@@ -1,18 +1,20 @@
 <template>
   <!-- tables definitions are shared. Can't use createReusableTemplate cause it becomes a non-root node -->
-  <table v-if="!props.responsive" :id="id" :class="computedClasses">
-    <slot />
-  </table>
-  <div v-else :class="responsiveClasses">
-    <table :id="id" :class="computedClasses">
+  <div v-if="isResponsive" :class="responsiveClasses" :style="responsiveStyles">
+    <table v-bind="tableAttrs">
       <slot />
     </table>
   </div>
+  <table v-else v-bind="tableAttrs">
+    <slot />
+  </table>
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue'
+import {computed, type StyleValue} from 'vue'
 import type {BTableSimpleProps} from '../../types'
+
+const defaultStickyHeaderHeight = '300px'
 
 // TODO alphabetize the lists for tables
 // TODO all table things do not declare their props
@@ -63,10 +65,33 @@ const computedClasses = computed(() => [
     'table-striped-columns': props.stripedColumns,
   },
 ])
+const tableAttrs = computed(() => ({
+  id: props.id,
+  class: computedClasses.value,
+}))
 
+const computedSticky = computed(() =>
+  // String used as is
+  typeof props.stickyHeader === 'string'
+    ? props.stickyHeader
+    : // Number is converted to px
+      typeof props.stickyHeader === 'number'
+      ? `${props.stickyHeader}px`
+      : // Boolean true defaults to the above defined default height
+        props.stickyHeader === true
+        ? defaultStickyHeaderHeight
+        : // NaN is ignored
+          NaN
+)
+const stickyIsValid = computed(() => !Number.isNaN(computedSticky.value))
+
+const isResponsive = computed(() => props.responsive !== false || stickyIsValid.value)
+const responsiveStyles = computed<StyleValue>(() => ({
+  ...(stickyIsValid.value ? {maxHeight: computedSticky.value} : {}),
+}))
 const responsiveClasses = computed(() => ({
   'table-responsive': props.responsive === true,
   [`table-responsive-${props.responsive}`]: typeof props.responsive === 'string',
-  'b-table-sticky-header': props.stickyHeader,
+  'b-table-sticky-header': stickyIsValid.value,
 }))
 </script>

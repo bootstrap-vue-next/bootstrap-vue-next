@@ -951,7 +951,7 @@ export type BTableSimpleProps = {
   responsive?: boolean | Breakpoint
   small?: boolean
   stacked?: boolean | Breakpoint
-  stickyHeader?: boolean
+  stickyHeader?: boolean | Numberish
   striped?: boolean
   stripedColumns?: boolean
   tableClass?: ClassValue

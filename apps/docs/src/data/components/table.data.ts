@@ -485,8 +485,10 @@ export default {
         },
         {
           prop: 'stickyHeader',
-          type: 'boolean',
+          type: 'boolean | Numberish',
           default: false,
+          description:
+            'Makes the table header sticky. Set to true for a maximum height 300px tall table, or set to any valid CSS height (including units). Inputting a number type is converted to px height',
         },
       ],
       emits: [],
