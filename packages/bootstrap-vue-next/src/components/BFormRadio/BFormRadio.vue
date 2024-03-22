@@ -50,6 +50,7 @@ const props = withDefaults(
     name?: string
     plain?: boolean
     required?: boolean
+    reverse?: boolean
     size?: Size
     state?: boolean | null
     value?: RadioValue
@@ -69,6 +70,7 @@ const props = withDefaults(
     name: undefined,
     plain: false,
     required: false,
+    reverse: false,
     size: undefined,
     state: null,
     value: true,
@@ -121,8 +123,10 @@ const classesObject = computed(() => ({
   button: props.button || (parentData?.buttons.value ?? false),
   inline: props.inline || (parentData?.inline.value ?? false),
   state: props.state || parentData?.state.value,
+  reverse: props.reverse || (parentData?.reverse.value ?? false),
   size: props.size ?? parentData?.size.value ?? 'md', // This is where the true default is made
   buttonVariant: props.buttonVariant ?? parentData?.buttonVariant.value ?? 'secondary', // This is where the true default is made
+  hasDefaultSlot: hasDefaultSlot.value,
 }))
 const computedClasses = getClasses(classesObject)
 const inputClasses = getInputClasses(classesObject)

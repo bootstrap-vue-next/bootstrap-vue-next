@@ -13,6 +13,9 @@ describe('form-radio', () => {
   it('has class form-check if prop plain and prop button are false', () => {
     const wrapper = mount(BFormRadio, {
       props: {plain: false, button: false},
+      slots: {
+        default: 'checkbox',
+      },
     })
     expect(wrapper.classes()).toContain('form-check')
   })
@@ -38,6 +41,13 @@ describe('form-radio', () => {
     expect(wrapper.classes()).not.toContain('form-check')
   })
 
+  it('does not have class form-check if default slot is empty', () => {
+    const wrapper = mount(BFormRadio, {
+      props: {plain: true, button: false},
+    })
+    expect(wrapper.classes()).not.toContain('form-check')
+  })
+
   it('has class form-check-inline when prop inline', () => {
     const wrapper = mount(BFormRadio, {
       props: {inline: true},
@@ -50,6 +60,20 @@ describe('form-radio', () => {
       props: {inline: false},
     })
     expect(wrapper.classes()).not.toContain('form-check-inline')
+  })
+
+  it('has class form-check-reverse when prop reverse', () => {
+    const wrapper = mount(BFormRadio, {
+      props: {reverse: true},
+    })
+    expect(wrapper.classes()).toContain('form-check-reverse')
+  })
+
+  it('does not have class form-check-reverse when prop reverse', () => {
+    const wrapper = mount(BFormRadio, {
+      props: {reverse: false},
+    })
+    expect(wrapper.classes()).not.toContain('form-check-reverse')
   })
 
   it('does not have class form-switch when prop switch is false', () => {

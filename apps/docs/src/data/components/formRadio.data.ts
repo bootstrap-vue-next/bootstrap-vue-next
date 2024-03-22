@@ -81,6 +81,12 @@ export default {
           default: false,
         },
         {
+          prop: 'reverse',
+          type: 'boolean',
+          default: false,
+          description: 'When set, renders the radio button on the opposite side',
+        },
+        {
           prop: 'state',
           type: 'boolean | null',
           default: undefined,
@@ -92,28 +98,6 @@ export default {
         },
       ],
       emits: [
-        {
-          event: 'input',
-          description: '',
-          args: [
-            {
-              arg: 'input',
-              description: '',
-              type: 'boolean | string | unknown[] | Record<string, unknown> | number',
-            },
-          ],
-        },
-        {
-          event: 'change',
-          description: '',
-          args: [
-            {
-              arg: 'change',
-              description: '',
-              type: 'boolean | string | unknown[] | Record<string, unknown> | number',
-            },
-          ],
-        },
         {
           event: 'update:modelValue',
           description: '',
@@ -242,17 +226,6 @@ export default {
         {
           args: [
             {
-              arg: 'input',
-              description: '',
-              type: 'unknown',
-            },
-          ],
-          description: '',
-          event: 'input',
-        },
-        {
-          args: [
-            {
               arg: 'update:modelValue',
               description: '',
               type: 'unknown',
@@ -260,17 +233,6 @@ export default {
           ],
           description: '',
           event: 'update:modelValue',
-        },
-        {
-          args: [
-            {
-              arg: 'change',
-              description: '',
-              type: 'unknown',
-            },
-          ],
-          description: '',
-          event: 'change',
         },
       ],
       slots: [],
