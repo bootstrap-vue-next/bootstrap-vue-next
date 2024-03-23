@@ -20,7 +20,6 @@ $bv-input-group-dropdown-patched: false !default;
   // Workaround for https://github.com/bootstrap-vue/bootstrap-vue/issues/2114 */
   // Based on: `~bootstrap/scss/_input-group.scss`
   .input-group {
-    > .input-group-text > .btn-group,
     > .input-group-text:not(:last-child) > .btn-group,
     > .input-group-text:last-child > .btn-group:not(:last-child):not(.dropdown-toggle) {
       > .btn {
@@ -42,7 +41,6 @@ $bv-input-group-dropdown-patched: false !default;
 
 .input-group-lg .input-group-text > .form-control,
 .input-group-lg .input-group-text > .form-select,
-.input-group-lg .input-group-text > .input-group-text,
 .input-group-lg .input-group-text > .btn {
   padding: $input-padding-y-lg $input-padding-x-lg;
   font-size: $font-size-lg;
