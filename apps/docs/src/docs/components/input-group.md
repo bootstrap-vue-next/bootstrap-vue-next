@@ -67,7 +67,7 @@ Easily extend form controls by adding text, buttons, or button groups on either 
 
 You can attach addons using either props, named slots and/or sub-components.
 
-**Note** Bootstrap 5 dropped `.input-group-append` and `.input-group-prepend`. You can now just add buttons and `.input-group-text` as direct children of the input groups. The sub-components are added for compatibility reasons.
+**Note** Bootstrap 5 dropped `.input-group-text` and `.input-group-text`. You can now just add buttons and `.input-group-text` as direct children of the input groups. The sub-components are added for compatibility reasons.
 
 ### Using `prepend` and `append` props
 
@@ -334,23 +334,42 @@ the control and the hidden label.
 Multiple add-ons are supported and can be mixed with checkbox and radio input versions.
 
 <HighlightCard>
+  <div class="mb-2">
+    <BInputGroup prepend="Item">
+      <BInputGroupPrepend is-text>
+        <input type="checkbox" aria-label="Checkbox for following text input">
+      </BInputGroupPrepend>
+      <BInputGroupPrepend is-text><b>$</b></BInputGroupPrepend>
+      <BFormInput type="number" aria-label="Text input with checkbox" />
+    </BInputGroup>
+  </div>
+  <div>
+    <BInputGroup append="Item">
+      <BFormInput type="number" aria-label="Text input with checkbox" />
+      <BInputGroupAppend is-text>
+        <input type="checkbox" aria-label="Checkbox for following text input">
+      </BInputGroupAppend>
+      <BInputGroupAppend is-text><b>$</b></BInputGroupAppend>
+    </BInputGroup>
+  </div>
+  <template #html>
+
+```vue-html
   <BInputGroup prepend="Item">
     <BInputGroupPrepend is-text>
-      <input type="checkbox" aria-label="Checkbox for following text input">
+      <input type="checkbox" aria-label="Checkbox for following text input" />
     </BInputGroupPrepend>
     <BInputGroupPrepend is-text><b>$</b></BInputGroupPrepend>
     <BFormInput type="number" aria-label="Text input with checkbox" />
   </BInputGroup>
-  <template #html>
 
-```vue-html
-<BInputGroup prepend="Item">
-  <BInputGroupPrepend is-text>
-    <input type="checkbox" aria-label="Checkbox for following text input" />
-  </BInputGroupPrepend>
-  <BInputGroupPrepend is-text><b>$</b></BInputGroupPrepend>
-  <BFormInput type="number" aria-label="Text input with checkbox" />
-</BInputGroup>
+  <BInputGroup append="Item">
+    <BFormInput type="number" aria-label="Text input with checkbox" />
+    <BInputGroupAppend is-text>
+      <input type="checkbox" aria-label="Checkbox for following text input">
+    </BInputGroupAppend>
+    <BInputGroupAppend is-text><b>$</b></BInputGroupAppend>
+  </BInputGroup>
 ```
 
   </template>

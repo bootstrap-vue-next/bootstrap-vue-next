@@ -397,7 +397,7 @@ Note that the expanded scope property only works when supplying the target prop 
       </template>
     </BNavbarToggle>
     <BCollapse id="navbar-toggle-collapse" is-nav>
-      <BNavbarNav class="ml-auto">
+      <BNavbarNav class="ms-auto">
         <BNavItem href="#">Link 1</BNavItem>
         <BNavItem href="#">Link 2</BNavItem>
         <BNavItem href="#" disabled>Disabled</BNavItem>
@@ -418,7 +418,7 @@ Note that the expanded scope property only works when supplying the target prop 
   </BNavbarToggle>
 
   <BCollapse id="navbar-toggle-collapse" is-nav>
-    <BNavbarNav class="ml-auto">
+    <BNavbarNav class="ms-auto">
       <BNavItem href="#">Link 1</BNavItem>
       <BNavItem href="#">Link 2</BNavItem>
       <BNavItem href="#" disabled>Disabled</BNavItem>
