@@ -1,4 +1,10 @@
 <template>
+  <DefineTemplate>
+    <label class="input-group-text" :for="computedId">
+      {{ browserText }}
+    </label>
+  </DefineTemplate>
+
   <label v-if="hasLabelSlot || label" class="form-label" :class="labelClass" :for="computedId">
     <slot name="label">
       {{ label }}
@@ -6,11 +12,7 @@
   </label>
 
   <div class="input-group form-input-file">
-    <ReusablePlacementTemplate.define v-if="placement === 'start'">
-      <label class="input-group-text" :for="computedId">
-        {{ browserText }}
-      </label>
-    </ReusablePlacementTemplate.define>
+    <ReusableTemplate v-if="placement === 'start'" />
     <input
       :id="computedId"
       v-bind="$attrs"
@@ -33,7 +35,7 @@
       @change="onChange"
       @drop="onDrop"
     />
-    <ReusablePlacementTemplate.reuse v-if="placement === 'end'" />
+    <ReusableTemplate v-if="placement === 'end'" />
   </div>
 </template>
 
@@ -167,7 +169,7 @@ defineExpose({
   reset,
 })
 
-const ReusablePlacementTemplate = createReusableTemplate()
+const [DefineTemplate, ReusableTemplate] = createReusableTemplate()
 </script>
 
 <style scoped>
