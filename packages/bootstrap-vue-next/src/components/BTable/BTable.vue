@@ -8,6 +8,11 @@
     :tbody-tr-class="getRowClasses"
     :field-column-class="getFieldColumnClasses"
     @head-clicked="onFieldHeadClick"
+    @row-dbl-clicked="
+      (row, index, e) => {
+        emit('row-dbl-clicked', row, index, e)
+      }
+    "
     @row-clicked="onRowClick"
     @row-hovered="
       (row, index, e) => {
@@ -83,7 +88,7 @@
 
 <script setup lang="ts" generic="T = Record<string, unknown>">
 import {useToNumber, useVModel} from '@vueuse/core'
-import {computed, onMounted, ref, type Ref, type StyleValue, toRef, watch} from 'vue'
+import {computed, onMounted, type Ref, ref, type StyleValue, toRef, watch} from 'vue'
 import type {
   BTableLiteProps,
   BTableProvider,
@@ -96,12 +101,12 @@ import type {
   TableFieldRaw,
   TableItem,
 } from '../../types'
-import BSpinner from '../BSpinner.vue'
+import {formatItem, get, getTableFieldHeadLabel} from '../../utils'
 import BOverlay from '../BOverlay/BOverlay.vue'
+import BSpinner from '../BSpinner.vue'
 import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
 import BTr from './BTr.vue'
-import {formatItem, get, getTableFieldHeadLabel} from '../../utils'
 
 type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
 

@@ -6,9 +6,11 @@
   </label>
 
   <div class="input-group form-input-file">
-    <label v-if="placement === 'start'" class="input-group-text" :for="computedId">
-      {{ browserText }}
-    </label>
+    <ReusablePlacementTemplate.define v-if="placement === 'start'">
+      <label class="input-group-text" :for="computedId">
+        {{ browserText }}
+      </label>
+    </ReusablePlacementTemplate.define>
     <input
       :id="computedId"
       v-bind="$attrs"
@@ -31,14 +33,12 @@
       @change="onChange"
       @drop="onDrop"
     />
-    <label v-if="placement === 'end'" class="input-group-text" :for="computedId">
-      {{ browserText }}
-    </label>
+    <ReusablePlacementTemplate.reuse v-if="placement === 'end'" />
   </div>
 </template>
 
 <script setup lang="ts">
-import {useFocus, useVModel} from '@vueuse/core'
+import {createReusableTemplate, useFocus, useVModel} from '@vueuse/core'
 import {computed, ref, toRef, watch} from 'vue'
 import {useId, useStateClass} from '../../composables'
 import type {ClassValue, Size} from '../../types'
@@ -166,6 +166,8 @@ defineExpose({
   },
   reset,
 })
+
+const ReusablePlacementTemplate = createReusableTemplate()
 </script>
 
 <style scoped>

@@ -104,8 +104,8 @@
         <small v-if="isDuplicate" class="form-text text-body-secondary"
           >{{ duplicateTagText }}: {{ inputValue }}</small
         >
-        <small v-if="tags.length === limit" class="form-text text-body-secondary"
-          >Tag limit reached</small
+        <small v-if="tags.length === limit" class="form-text text-body-secondary">
+          {{ limitTagsText }}</small
         >
       </div>
     </slot>
@@ -116,8 +116,8 @@
 </template>
 
 <script setup lang="ts">
+import {onKeyStroke, syncRef, useFocus, useToNumber, useVModel} from '@vueuse/core'
 import {computed, ref, toRef} from 'vue'
-import BFormTag from './BFormTag.vue'
 import {useId, useStateClass} from '../../composables'
 import type {
   AttrsValue,
@@ -128,8 +128,8 @@ import type {
   Numberish,
   Size,
 } from '../../types'
-import {onKeyStroke, syncRef, useFocus, useToNumber, useVModel} from '@vueuse/core'
 import {escapeRegExpChars} from '../../utils'
+import BFormTag from './BFormTag.vue'
 
 const props = withDefaults(
   defineProps<{
