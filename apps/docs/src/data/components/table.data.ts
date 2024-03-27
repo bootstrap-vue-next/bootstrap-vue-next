@@ -42,6 +42,12 @@ export default {
           description: 'Do not select row when clicked',
         },
         {
+          prop: 'noSortReset',
+          type: 'boolean',
+          default: false,
+          description: 'Do not reset sort',
+        },
+        {
           prop: 'sortBy',
           type: 'string',
           default: undefined,

@@ -197,4 +197,34 @@ describe('tbody', () => {
       .map((row) => row.find('td').text())
     expect(text).toStrictEqual(['Havij', 'Robert', 'Cyndi'])
   })
+
+  it('resets sort when noSortReset === false', async () => {
+    const wrapper = mount(BTable, {
+      props: {items: simpleItems, fields: simpleFields, sortDesc: true, noSortReset: false},
+    })
+    const [names] = wrapper.get('table').findAll('th')
+    await names.trigger('click')
+    await names.trigger('click')
+    await names.trigger('click')
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Havij', 'Cyndi', 'Robert'])
+  })
+
+  it('does not reset sort when noSortReset === true', async () => {
+    const wrapper = mount(BTable, {
+      props: {items: simpleItems, fields: simpleFields, sortDesc: true, noSortReset: true},
+    })
+    const [names] = wrapper.get('table').findAll('th')
+    await names.trigger('click')
+    await names.trigger('click')
+    await names.trigger('click')
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Cyndi', 'Havij', 'Robert'])
+  })
 })
