@@ -1,5 +1,30 @@
 # Changelog
 
+## [0.17.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.16.6...bootstrapvuenext-v0.17.0) (2024-03-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BCollapse:** change open/close to show/hide in expose and slots
+* **BDropdown:** change open/close to show/hide in expose and slots
+* remove Booleanish type and useBooleanish composable, replace plain boolean type fixes #1774
+
+### Features
+
+* **BModal:** add bodyClass and bodyAttrs props ([3809a6b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3809a6b17ce42588e67cb5443bdcf8285096b30b))
+* **BOffcanvas:** add props backdropBlur and shadow to customize the BOverlay instance ([b90e340](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b90e340fee56798c7315c3b2091ae8e0bc7e6a79))
+* **BOffcanvas:** adding attrs and class props ([d259701](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d259701bafcaaa94797683cb15118fd977bff67d))
+* remove Booleanish type and useBooleanish composable, replace plain boolean type fixes [#1774](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1774) ([d3a51d3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d3a51d36266a2c6315c4e117f988dd7746fe8722))
+
+
+### Bug Fixes
+
+* **BCollapse:** change open/close to show/hide in expose and slots ([cd7aaf2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cd7aaf2eff4da6d57bba487572c9998c5492fd93))
+* **BDropdown:** change open/close to show/hide in expose and slots ([cd7aaf2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cd7aaf2eff4da6d57bba487572c9998c5492fd93))
+* **BDropdown:** ignore keynav inside form ([#1812](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1812)) ([584a986](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/584a98676686fad736baae39ea1082d601b90ed6)), closes [#1742](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1742)
+* **BFormTags:** limitTagsText props is not used fixes [#1804](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1804) ([0ce4174](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0ce4174061b2bad2935d505641ccf9c02206545e))
+* **BTable:** BTable rowDblClicked event not working fixes [#1795](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1795) ([bf9c8c4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bf9c8c4ec2f4a5e4553b13643e928e3183df4051))
+
 ## [0.16.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.16.5...bootstrapvuenext-v0.16.6) (2024-02-22)
 
 
