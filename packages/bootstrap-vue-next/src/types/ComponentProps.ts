@@ -339,5 +339,6 @@ export interface BModalProps {
   titleClass?: ClassValue
   titleSrOnly?: boolean
   titleTag?: string
+  toggle?: boolean
   transProps?: Readonly<BTransitionProps>
 }
