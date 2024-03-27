@@ -58,7 +58,11 @@ const props = withDefaults(
     state?: boolean | null
     switch?: boolean
     uncheckedValue?: CheckboxValue
-    value?: CheckboxValue
+    // Since the compiler-sfc doesn't crawl external filed, the redundant string/boolean union is
+    //   necessary to tell it that we don't want it to follow Boolean casting rules
+    //  https://vuejs.org/guide/components/props.html#boolean-casting which would cast the empty
+    //  string to true
+    value?: string | boolean | CheckboxValue
   }>(),
   {
     ariaLabel: undefined,
