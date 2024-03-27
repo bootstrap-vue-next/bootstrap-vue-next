@@ -146,7 +146,7 @@ const props = withDefaults(
       // noFooterSorting?: boolean
       noLocalSorting?: boolean
       noSelectOnClick?: boolean
-      // noSortReset?: boolean
+      noSortReset?: boolean
       // selectedVariant?: ColorVariant | null
       // showEmpty?: boolean
       sortCompareLocale?: string | string[]
@@ -174,6 +174,7 @@ const props = withDefaults(
     noProviderFiltering: false,
     noLocalSorting: false,
     noSelectOnClick: false,
+    noSortReset: false,
     sortDesc: false,
     selectable: false,
     stickySelect: false,
@@ -562,8 +563,10 @@ const handleFieldSorting = (field: Readonly<TableFieldRaw<T>>) => {
     if (sortDescModel.value === false) {
       sortDescModel.value = true
     } else {
-      sortByModel.value = undefined
       sortDescModel.value = false
+      if (props.noSortReset === false) {
+        sortByModel.value = undefined
+      }
     }
   }
   emit('sorted', fieldKey, sortByModel.value === undefined ? false : !sortDescModel.value)
