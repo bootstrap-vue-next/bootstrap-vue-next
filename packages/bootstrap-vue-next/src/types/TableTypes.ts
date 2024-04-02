@@ -30,11 +30,11 @@ export type BTableProvider<T> = (
   context: Readonly<BTableProviderContext>
 ) => MaybePromise<T[] | undefined>
 
-export type TableFieldFormatter = (value: unknown, key: string, item: any) => string
+export type TableFieldFormatter<T> = (value: unknown, key: string, item: T) => string
 
-export type TableFieldAttribute =
+export type TableFieldAttribute<T> =
   | Record<string, unknown>
-  | ((value: unknown, key: string, item: any) => Record<string, unknown>)
+  | ((value: unknown, key: string, item: T) => Record<string, unknown>)
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TableField<T = any> = {
@@ -43,18 +43,18 @@ export type TableField<T = any> = {
   headerTitle?: string
   headerAbbr?: string
   class?: ClassValue
-  formatter?: TableFieldFormatter
+  formatter?: TableFieldFormatter<T>
   sortable?: boolean
   sortKey?: string
   sortDirection?: string
-  sortByFormatted?: boolean | TableFieldFormatter
+  sortByFormatted?: boolean | TableFieldFormatter<T>
   filterByFormatted?: boolean
   tdClass?: ClassValue
   thClass?: ClassValue
   thStyle?: StyleValue
   variant?: ColorVariant | null
-  tdAttr?: TableFieldAttribute
-  thAttr?: TableFieldAttribute
+  tdAttr?: TableFieldAttribute<T>
+  thAttr?: TableFieldAttribute<T>
   isRowHeader?: boolean
   stickyColumn?: boolean
 }
