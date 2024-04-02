@@ -57,6 +57,7 @@
     </BTransition>
     <slot name="backdrop">
       <BOverlay
+        :blur="backdropBlur"
         :variant="backdropVariant"
         :show="showBackdrop"
         fixed
@@ -93,6 +94,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<BOffcanvasProps>(), {
   backdrop: true,
+  backdropBlur: undefined,
   backdropVariant: 'dark',
   bodyAttrs: undefined,
   bodyClass: undefined,
@@ -104,12 +106,14 @@ const props = withDefaults(defineProps<BOffcanvasProps>(), {
   headerCloseVariant: 'secondary',
   id: undefined,
   lazy: false,
+  modelValue: false,
   noCloseOnBackdrop: false,
   noCloseOnEsc: false,
   noFocus: false,
   noHeader: false,
   noHeaderClose: false,
   placement: 'start',
+  shadow: false,
   teleportDisabled: false,
   teleportTo: 'body',
   title: undefined,
@@ -197,6 +201,7 @@ const computedClasses = computed(() => [
   `offcanvas-${props.placement}`,
   {
     show: modelValue.value && isActive.value === true,
+    [`shadow-${props.shadow}`]: !!props.shadow,
   },
 ])
 

@@ -9,7 +9,7 @@ import type {
   BreadcrumbItemRaw,
   Breakpoint,
   BTableProvider,
-  BTableSortCompare,
+  BTableSortBy,
   ButtonType,
   ButtonVariant,
   CheckboxOptionRaw,
@@ -33,7 +33,6 @@ import type {
   SpinnerType,
   TableField,
   TableFieldRaw,
-  TableItem,
   TeleporterProps,
   TextColorVariant,
   TransitionMode,
@@ -449,7 +448,8 @@ export type BNavbarToggleProps = {
 
 export type BOffcanvasProps = {
   backdrop?: boolean
-  backdropVariant?: ColorVariant | null
+  backdropBlur?: string
+  backdropVariant?: ColorVariant | 'white' | 'transparent' | null
   bodyAttrs?: Readonly<AttrsValue>
   bodyClass?: ClassValue
   bodyScrolling?: boolean
@@ -470,6 +470,7 @@ export type BOffcanvasProps = {
   // Then in components that use individual props (BImg)
   // Make them just use prop placement
   placement?: 'top' | 'bottom' | 'start' | 'end'
+  shadow?: Size | boolean
   title?: string
   // responsive?: Breakpoint
   // TODO responsive doesn't work
@@ -958,7 +959,7 @@ export type BTableSimpleProps = {
   variant?: ColorVariant | null
 }
 
-export type BTableLiteProps<T extends Record<string, unknown>> = {
+export type BTableLiteProps = {
   align?: VerticalAlign
   caption?: string
   captionHtml?: string
@@ -966,19 +967,19 @@ export type BTableLiteProps<T extends Record<string, unknown>> = {
   emptyFilteredText?: string
   emptyText?: string
   fieldColumnClass?: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  | ((field: TableField<T>) => readonly Record<string, any>[])
+  | ((field: TableField) => readonly Record<string, any>[])
     | string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     | Readonly<Record<PropertyKey, any>>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     | readonly any[]
-  fields?: TableFieldRaw<T>[]
+  fields?: TableFieldRaw[]
   footClone?: boolean
   footRowVariant?: ColorVariant | null
   footVariant?: ColorVariant | null
   headRowVariant?: ColorVariant | null
   headVariant?: ColorVariant | null
-  items?: readonly TableItem<T>[]
+  items?: readonly any[]
   labelStacked?: boolean
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   modelValue?: any
@@ -989,8 +990,12 @@ export type BTableLiteProps<T extends Record<string, unknown>> = {
   tbodyTrAttr?: any
   // tbodyTransitionHandlers
   // tbodyTransitionProps
-  tbodyTrClass?: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  | ((item: TableItem | null, type: string) => string | readonly any[] | null | undefined)
+  tbodyTrClass?:
+    | ((
+        item: any,
+        type: string
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ) => string | readonly any[] | null | undefined)
     | string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     | Readonly<Record<PropertyKey, any>>
@@ -1002,39 +1007,15 @@ export type BTableLiteProps<T extends Record<string, unknown>> = {
   theadTrClass?: ClassValue
 } & BTableSimpleProps
 
-export type BTrProps = {
-  variant?: ColorVariant | null
-}
-
-export type BTheadProps = {
-  variant?: ColorVariant | null
-}
-
-export type BTfootProps = {
-  variant?: ColorVariant | null
-}
-
-export type BTdProps = {
-  colspan?: Numberish
-  rowspan?: Numberish
-  stackedHeading?: string
-  stickyColumn?: boolean
-  variant?: ColorVariant | null
-}
-
-export type BTbodyProps = {
-  variant?: ColorVariant | null
-}
-
-export type BTableProps<T extends Record<string, unknown>> = {
-  provider?: BTableProvider<T>
-  sortCompare?: BTableSortCompare<T>
+export type BTableProps<Provider> = {
+  provider?: BTableProvider<Provider>
   noProvider?: readonly NoProviderTypes[]
   noProviderPaging?: boolean
   noProviderSorting?: boolean
   noProviderFiltering?: boolean
-  sortBy?: string
-  sortDesc?: boolean
+  sortBy?: BTableSortBy[]
+  noSortReset?: boolean
+  mustSort?: boolean
   selectable?: boolean
   stickySelect?: boolean
   selectHead?: boolean | string
@@ -1059,17 +1040,38 @@ export type BTableProps<T extends Record<string, unknown>> = {
   // noFooterSorting?: boolean
   noLocalSorting?: boolean
   noSelectOnClick?: boolean
-  // noSortReset?: boolean
   // selectedVariant?: ColorVariant | null
   // showEmpty?: boolean
-  sortCompareLocale?: string | string[]
-  sortCompareOptions?: Intl.CollatorOptions
   // sortDirection?: 'asc' | 'desc' | 'last'
   // sortIconLeft?: boolean
   // sortNullLast?: boolean
-  selectedItems?: readonly TableItem<T>[]
+  selectedItems?: readonly any[]
   noSortableIcon?: boolean
-} & Omit<BTableLiteProps<T>, 'tableClass'>
+} & Omit<BTableLiteProps, 'tableClass'>
+
+export type BTrProps = {
+  variant?: ColorVariant | null
+}
+
+export type BTheadProps = {
+  variant?: ColorVariant | null
+}
+
+export type BTfootProps = {
+  variant?: ColorVariant | null
+}
+
+export type BTdProps = {
+  colspan?: Numberish
+  rowspan?: Numberish
+  stackedHeading?: string
+  stickyColumn?: boolean
+  variant?: ColorVariant | null
+}
+
+export type BTbodyProps = {
+  variant?: ColorVariant | null
+}
 
 export type BThProps = {
   colspan?: Numberish

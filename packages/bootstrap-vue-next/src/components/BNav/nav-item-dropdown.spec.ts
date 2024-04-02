@@ -26,15 +26,15 @@ describe('nav-item-dropdown', () => {
   it('is opened if open called', async () => {
     const wrapper = mount(BNavItemDropdown)
     const $bbutton = wrapper.findComponent(BButton)
-    await wrapper.vm.open()
+    await wrapper.vm.show()
     expect($bbutton.classes()).toContain('show')
   })
 
   it('is closed if close called', async () => {
     const wrapper = mount(BNavItemDropdown)
     const $bbutton = wrapper.findComponent(BButton)
-    await wrapper.vm.open()
-    await wrapper.vm.close()
+    await wrapper.vm.show()
+    await wrapper.vm.hide()
     expect($bbutton.classes()).not.toContain('show')
   })
 

@@ -21,7 +21,7 @@
         <slot name="toggle-text" />
       </template>
       <template #default>
-        <slot :hide="close" :show="open" />
+        <slot :hide="hide" :show="show" />
       </template>
     </BDropdown>
   </li>
@@ -96,19 +96,19 @@ defineSlots<{
 }>()
 const dropdown = ref<InstanceType<typeof BDropdown> | null>(null)
 
-const close = () => {
-  dropdown.value?.close()
+const hide = () => {
+  dropdown.value?.hide()
 }
-const open = () => {
-  dropdown.value?.open()
+const show = () => {
+  dropdown.value?.show()
 }
 const toggle = () => {
   dropdown.value?.toggle()
 }
 
 defineExpose({
-  close,
-  open,
+  hide,
+  show,
   toggle,
 })
 </script>

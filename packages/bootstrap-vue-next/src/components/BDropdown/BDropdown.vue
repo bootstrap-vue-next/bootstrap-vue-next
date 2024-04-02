@@ -49,7 +49,7 @@
         :role="role"
         @click="onClickInside"
       >
-        <slot :hide="close" :show="open" />
+        <slot :hide="hide" :show="show" />
       </ul>
     </Teleport>
   </div>
@@ -175,6 +175,8 @@ onKeyStroke(
 )
 
 const keynav = (e: Readonly<Event>, v: number) => {
+  if (floating.value?.contains((e.target as HTMLElement)?.closest('form'))) return
+  if (/input|select|option|textarea|form/i.test((e.target as HTMLElement)?.tagName)) return
   e.preventDefault()
   if (!modelValue.value) {
     open()
@@ -298,10 +300,10 @@ const onClickInside = () => {
   }
 }
 
-const close = () => {
+const hide = () => {
   modelValue.value && toggle()
 }
-const open = () => {
+const show = () => {
   modelValue.value || toggle()
 }
 const toggle = () => {
@@ -326,15 +328,15 @@ watch(
 )
 
 defineExpose({
-  close,
-  open,
+  hide,
+  show,
   toggle,
 })
 
 provide(dropdownInjectionKey, {
   id: computedId,
-  open,
-  close,
+  show,
+  hide,
   toggle,
   visible: toRef(() => modelValue.value),
   isNav: toRef(() => props.isNav),
