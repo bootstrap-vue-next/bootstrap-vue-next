@@ -80,6 +80,8 @@ To contribute:
 - Once you're satisfied that you understand the process, request access top the [read/write version of the spreadsheet](https://1drv.ms/x/s!AiUqzkjNYGL6ieBPJZV0b2mgOVgnYw) on the [Bootstrap Vue 3 discord server](https://discord.gg/8VjEkneh).
 - Evaluate a component (or two) and get us one step closer to v1!
 
+More context is available in the comments for [this issue](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1775).
+
 ## Registering New Components
 
 For adding a new component, there are some notes...
