@@ -42,10 +42,9 @@
           name="sortAsc"
         >
           <svg
-            :style="getIconStyle(scope.field)"
             xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
+            width="24"
+            height="24"
             fill="currentColor"
             class="bi bi-arrow-up-short"
             viewBox="0 0 16 16"
@@ -63,10 +62,9 @@
           name="sortDesc"
         >
           <svg
-            :style="getIconStyle(scope.field)"
             xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
+            width="24"
+            height="24"
             fill="currentColor"
             class="bi bi-arrow-down-short"
             viewBox="0 0 16 16"
@@ -75,6 +73,23 @@
             <path
               fill-rule="evenodd"
               d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"
+            />
+          </svg>
+        </slot>
+        <slot v-else v-bind="{...scope}" name="sortDefault">
+          <svg
+            :style="{opacity: 0.4}"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="currentColor"
+            class="bi bi-arrow-up-short"
+            viewBox="0 0 16 16"
+            aria-hidden
+          >
+            <path
+              fill-rule="evenodd"
+              d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"
             />
           </svg>
         </slot>
@@ -101,7 +116,7 @@
 
 <script setup lang="ts" generic="Provider">
 import {useToNumber} from '@vueuse/core'
-import {computed, onMounted, ref, type StyleValue, toRef, watch} from 'vue'
+import {computed, onMounted, ref, toRef, watch} from 'vue'
 import type {
   BTableProps,
   BTableSortBy,
@@ -122,13 +137,13 @@ const props = withDefaults(defineProps<BTableProps<Provider>>(), {
   noSortableIcon: false,
   perPage: Number.POSITIVE_INFINITY,
   filter: undefined,
-  noSortReset: false,
-  filterable: undefined,
   mustSort: false,
+  filterable: undefined,
   provider: undefined,
   noProvider: undefined,
   noProviderPaging: false,
   noProviderSorting: false,
+  multisort: false,
   noProviderFiltering: false,
   noLocalSorting: false,
   noSelectOnClick: false,
@@ -342,8 +357,6 @@ const getRowClasses = (item: any | null, type: string) => [
       : props.tbodyTrClass
     : null,
 ]
-const getIconStyle = (field: Readonly<TableField>): StyleValue =>
-  sortByModel.value?.some((el) => el.key === field.key) ? {} : {opacity: 0.5}
 
 const computedItems = computed<readonly any[]>(() => {
   const sortItems = (items: readonly any[]) => {
@@ -351,8 +364,11 @@ const computedItems = computed<readonly any[]>(() => {
 
     // Multi-sort
     return [...items].sort((a, b) => {
-      for (let i = 0; i < (sortByModel.value?.length ?? 0); i++) {
-        const sortOption = sortByModel.value?.[i]
+      // cb shenanigans
+      if (!sortByModel.value || sortByModel.value.length === 0) return 0
+      //
+      for (let i = 0; i < (sortByModel.value.length ?? 0); i++) {
+        const sortOption = sortByModel.value[i]
         const realVal = (ob: any): string => {
           if (!(typeof ob === 'object' && ob !== null)) return ob
 
@@ -423,16 +439,6 @@ const computedItems = computed<readonly any[]>(() => {
 
   return mappedItems
 })
-
-// The benefit of this is that it doesn't allow you a page out of bounds even if the user does it manually
-// This does not work due to https://github.com/vueuse/vueuse/issues/3542
-// const {currentPage: resolvedCurrentPage, currentPageSize: resolvedCurrentPageSize} =
-//   useOffsetPagination({
-//     total: () => computedItems.value.length,
-//     page: currentPageNumber,
-//     // If its zero, it does all
-//     pageSize: () => perPageNumber.value || Number.POSITIVE_INFINITY,
-//   })
 
 const computedDisplayItems = computed<readonly any[]>(() => {
   if (Number.isNaN(perPageNumber.value) || (usesProvider.value && !props.noProviderPaging)) {
@@ -512,45 +518,71 @@ const handleFieldSorting = (field: Readonly<TableFieldRaw>) => {
   const fieldSortable = typeof field === 'object' && field !== null ? field.sortable : false
 
   // TODO implement rules for noSortReset
-  // TODO implement rules for mustsort
-  // TODO since the default changed to () => [],
 
   if (!(isSortable.value === true && fieldSortable === true)) return
 
-  const index = sortByModel.value?.findIndex((el) => el.key === fieldKey) ?? -1
-  const originalValue: BTableSortBy =
-    // If value is new, we default to ascending
-    // Otherwise we make a temp copy of the value
-    index === -1 ? {key: fieldKey, order: 'asc'} : {...sortByModel.value?.[index]}
-
-  // The type safety on this is a bit weird. Make sure you're not pushing "null" into the array
-  const updatedValue = {
-    ...originalValue,
-    order:
-      originalValue.order === 'asc'
-        ? 'desc'
-        : originalValue.order === 'desc' && props.mustSort === true
-          ? 'asc'
-          : // Use null as a "flag" to remove the value
-            null,
-  } as Omit<BTableSortBy, 'order'> & {order: BTableSortByOrder | null} as any
-
-  if (props.noSortReset === true) {
-    // Null flag to remove
-    if (updatedValue.order === null) {
-      sortByModel.value = sortByModel.value.filter((el) => el.key !== fieldKey)
-      // field doesn't exist, add it
-    } else if (index === -1) {
-      sortByModel.value.push(updatedValue)
-    } else {
-      // Update the value
-      sortByModel.value.splice(index, 1, updatedValue)
-    }
-  } else {
-    sortByModel.value = updatedValue.order === null ? [] : [updatedValue]
+  const resolveOrder = (val: BTableSortByOrder): BTableSortByOrder | null => {
+    if (val === 'asc') return 'desc'
+    if (
+      props.mustSort === true ||
+      (Array.isArray(props.mustSort) && props.mustSort.includes(fieldKey))
+    )
+      return 'asc'
+    return null
   }
 
-  emit('sorted', updatedValue.order === null ? null : updatedValue)
+  const index = sortByModel.value?.findIndex((el) => el.key === fieldKey) ?? -1
+  const originalValue = sortByModel.value?.[index]
+  const updatedValue: BTableSortBy =
+    // If value is new, we default to ascending
+    // Otherwise we make a temp copy of the value
+    index === -1 || !originalValue ? {key: fieldKey, order: 'asc'} : {...originalValue}
+
+  /**
+   * @returns the updated value to emit for sorted
+   */
+  const handleMultiSort = (): null | BTableSortBy => {
+    if (index === -1) {
+      // If is not in the array, we push it
+      sortByModel.value?.push(updatedValue)
+      return updatedValue
+    }
+    // resolveOrder will return null if the value is to be removed
+    const order = resolveOrder(updatedValue.order)
+    // If it exists, but marked to delete (null), we remove it
+    if (order === null) {
+      sortByModel.value?.splice(index, 1)
+      return null
+      // Otherwise we update the value
+    }
+    const val = {...updatedValue, order}
+    sortByModel.value?.splice(index, 1, val)
+    return val
+  }
+
+  /**
+   * @returns the updated value to emit for sorted
+   */
+  const handleSingleSort = (): null | BTableSortBy => {
+    // If there is nothing in the array, we just push it
+    if (index === -1) {
+      sortByModel.value = [updatedValue]
+      return updatedValue
+    }
+    const order = resolveOrder(updatedValue.order)
+    // If it exists, but marked to delete (null), we remove it
+    if (order === null) {
+      sortByModel.value = []
+      return null
+      // Otherwise we update the value
+    }
+    const val = {...updatedValue, order}
+    sortByModel.value = [val]
+    return val
+  }
+
+  // Then emit the returned updated value
+  emit('sorted', props.multisort === true ? handleMultiSort() : handleSingleSort())
 }
 
 const onFieldHeadClick = (

@@ -1022,9 +1022,10 @@ export type BTableProps<Provider> = {
   noProviderSorting?: boolean
   noProviderFiltering?: boolean
   sortBy?: BTableSortBy[]
+  mustSort?: boolean | string[] // TODO this is a string of fields, possibly generic
   noSortReset?: boolean
-  mustSort?: boolean
   selectable?: boolean
+  multisort?: boolean
   stickySelect?: boolean
   selectHead?: boolean | string
   selectMode?: 'multi' | 'single' | 'range'
