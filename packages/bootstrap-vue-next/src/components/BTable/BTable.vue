@@ -28,18 +28,17 @@
     <template v-for="(_, name) in $slots" #[name]="slotData">
       <slot :name="name" v-bind="slotData" />
     </template>
-    <!-- TODO this is likely wrong -->
-    <!-- TODO add: -->
-    <!-- TODO `name=sortAsc(${String(field.key)})`) -->
-    <!-- TODO name="sortDefault" -->
-    <!-- TODO remove LIteralUnion temporarily then patch up the issues it causes -->
     <template #head()="scope">
       {{ getTableFieldHeadLabel(scope.field) }}
       <template v-if="isSortable && !!scope.field.sortable && props.noSortableIcon === false">
         <slot
           v-if="sortByModel?.find((el) => el.key === scope.field.key)?.order === 'asc'"
           v-bind="{...scope}"
-          name="sortAsc"
+          :name="
+            $slots[`sortAsc(${String(scope.field.key)})`]
+              ? `sortAsc(${String(scope.field.key)})`
+              : 'sortAsc()'
+          "
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -59,7 +58,11 @@
         <slot
           v-else-if="sortByModel?.find((el) => el.key === scope.field.key)?.order === 'desc'"
           v-bind="{...scope}"
-          name="sortDesc"
+          :name="
+            $slots[`sortDesc(${String(scope.field.key)})`]
+              ? `sortDesc(${String(scope.field.key)})`
+              : 'sortDesc()'
+          "
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -76,7 +79,15 @@
             />
           </svg>
         </slot>
-        <slot v-else v-bind="{...scope}" name="sortDefault">
+        <slot
+          v-else
+          v-bind="{...scope}"
+          :name="
+            $slots[`sortDefault(${String(scope.field.key)})`]
+              ? `sortDefault(${String(scope.field.key)})`
+              : 'sortDefault()'
+          "
+        >
           <svg
             :style="{opacity: 0.4}"
             xmlns="http://www.w3.org/2000/svg"
