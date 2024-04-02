@@ -317,7 +317,7 @@ const showComputedHeaders = computed(() => {
   return true
 })
 
-const itemAttributes = (item: T, fieldKey: string, attr?: TableFieldAttribute) => {
+const itemAttributes = (item: T, fieldKey: string, attr?: TableFieldAttribute<unknown>) => {
   const val = get(item, fieldKey)
   return attr && typeof attr === 'function' ? attr(val, fieldKey, item) : attr
 }

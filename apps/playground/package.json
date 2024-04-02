@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port 5173",
-    "type-check": "vue-tsc --build --force",
+    "type-check": "vue-tsc --noEmit -p tsconfig.app.json",
     "build-only": "vite build",
     "build": "pnpm run type-check && pnpm run build-only",
     "preview": "vite preview"

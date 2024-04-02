@@ -30,7 +30,7 @@
   "scripts": {
     "dev": "vite --port 5174",
     "build-only": "vite build",
-    "type-check": "vue-tsc --build --force",
+    "type-check": "vue-tsc --noEmit -p tsconfig.app.json",
     "preview": "vite preview",
     "build": "pnpm run type-check && pnpm run build-only",
     "lint": "eslint --ext .js,.ts,.vue --ignore-path ../../.gitignore --fix src",
