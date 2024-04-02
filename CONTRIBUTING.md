@@ -86,7 +86,7 @@ For adding a new component, there are some notes...
 
 - They should only exist in the `./packages/bootstrap-vue-next/src/components` directory
 - You should first review the `./packages/bootstrap-vue-next/src/types` directory and get familiar with the internal types that you can use
-- They should follow `<script setup lang="ts">` syntax, to ensure uniformity, there are _some_ exceptions to this rule regarding Vue SFC being unable to import or extend types
+- They should follow `<script setup lang="ts">` syntax, to ensure uniformity, there are *some* exceptions to this rule regarding Vue SFC being unable to import or extend types
 - If the component is a native [Bootstrap](https://getbootstrap.com/) component, you will need to read about that component and have a thorough understanding of how it works and appears
 - If the component is custom, or taken from [Bootstrap-vue](https://bootstrap-vue.org/) you will need to read the component documentation, then attempt to recreate that component using `<template>` and `<script setup lang="ts">` syntax. If a Bootstrap-vue component is based on a native Bootstrap component, then you should read Bootstrap's implementation first, and ensure any changes are made to correct for the v5 release of Bootstrap
 - All Props and Emits should be fully written as TypeScript interfaces, the more strongly typed, the better
@@ -94,7 +94,7 @@ For adding a new component, there are some notes...
 After the implementation of the component, based on Bootstrap's details, you can finally begin introducing the component to be exported by the main package, and usable by users of the library. To do that you will need to:
 
 1. Add the component to the import/export list, located in `./packages/bootstrap-vue-next/src/components/index.ts`
-2. Next, it must be imported into `./packages/bootstrap-vue-next/BootstrapVue.ts` _please ensure that your import is made directly to the component, and not to the previous index.ts file_
+2. Next, it must be imported into `./packages/bootstrap-vue-next/BootstrapVue.ts` *please ensure that your import is made directly to the component, and not to the previous index.ts file*
 3. After that, export it in the `export {}` list that contains the other components to be exported
 4. Finally, it must be included in the exported interface of **GlobalComponents**, following the pattern of `BComponent: typeof BComponent`
 
