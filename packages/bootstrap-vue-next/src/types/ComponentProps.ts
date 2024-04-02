@@ -967,7 +967,7 @@ export type BTableSimpleProps = {
   variant?: ColorVariant | null
 }
 
-export type BTableLiteProps = {
+export type BTableLiteProps<T> = {
   align?: VerticalAlign
   caption?: string
   captionHtml?: string
@@ -975,19 +975,19 @@ export type BTableLiteProps = {
   emptyFilteredText?: string
   emptyText?: string
   fieldColumnClass?: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  | ((field: TableField) => readonly Record<string, any>[])
+  | ((field: TableField<T>) => readonly Record<string, any>[])
     | string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     | Readonly<Record<PropertyKey, any>>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     | readonly any[]
-  fields?: TableFieldRaw[]
+  fields?: TableFieldRaw<T>[]
   footClone?: boolean
   footRowVariant?: ColorVariant | null
   footVariant?: ColorVariant | null
   headRowVariant?: ColorVariant | null
   headVariant?: ColorVariant | null
-  items?: readonly any[]
+  items?: readonly T[]
   labelStacked?: boolean
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   modelValue?: any
@@ -1000,7 +1000,7 @@ export type BTableLiteProps = {
   // tbodyTransitionProps
   tbodyTrClass?:
     | ((
-        item: any,
+        item: T | null,
         type: string
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ) => string | readonly any[] | null | undefined)
@@ -1015,8 +1015,8 @@ export type BTableLiteProps = {
   theadTrClass?: ClassValue
 } & BTableSimpleProps
 
-export type BTableProps<Provider> = {
-  provider?: BTableProvider<Provider>
+export type BTableProps<T> = {
+  provider?: BTableProvider<T>
   noProvider?: readonly NoProviderTypes[]
   noProviderPaging?: boolean
   noProviderSorting?: boolean
@@ -1054,9 +1054,9 @@ export type BTableProps<Provider> = {
   // sortDirection?: 'asc' | 'desc' | 'last'
   // sortIconLeft?: boolean
   // sortNullLast?: boolean
-  selectedItems?: readonly any[]
+  selectedItems?: readonly T[]
   noSortableIcon?: boolean
-} & Omit<BTableLiteProps, 'tableClass'>
+} & Omit<BTableLiteProps<T>, 'tableClass'>
 
 export type BTrProps = {
   variant?: ColorVariant | null

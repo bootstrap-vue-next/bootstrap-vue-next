@@ -73,7 +73,7 @@
         <template v-for="(item, itemIndex) in items" :key="itemIndex">
           <BTr
             :class="getRowClasses(item, 'row')"
-            :variant="item._rowVariant"
+            :variant="isTableItem(item) ? item._rowVariant : undefined"
             @click="!filterEvent($event) && emit('row-clicked', item, itemIndex, $event)"
             @dblclick="!filterEvent($event) && emit('row-dbl-clicked', item, itemIndex, $event)"
             @mouseenter="!filterEvent($event) && emit('row-hovered', item, itemIndex, $event)"
@@ -82,7 +82,11 @@
             <BTd
               v-for="field in computedFields"
               :key="field.key"
-              :variant="item._cellVariants?.[field.key] ? null : field.variant"
+              :variant="
+                (isTableItem(item) ? item._cellVariants?.[field.key as string] : false)
+                  ? null
+                  : field.variant
+              "
               :class="getFieldRowClasses(field, item)"
               v-bind="itemAttributes(item, String(field.key), field.tdAttr)"
             >
@@ -103,7 +107,7 @@
                     toggleRowDetails(item)
                   }
                 "
-                :details-showing="item._showDetails ?? false"
+                :details-showing="isTableItem(item) ? item._showDetails ?? false : false"
               >
                 <template v-if="!$slots[`cell(${String(field.key)})`] && !$slots['cell()']">
                   {{ formatItem(item, String(field.key), field.formatter) }}
@@ -112,7 +116,7 @@
             </BTd>
           </BTr>
 
-          <template v-if="item._showDetails === true && $slots['row-details']">
+          <template v-if="isTableItem(item) && item._showDetails === true && $slots['row-details']">
             <BTr aria-hidden="true" role="presentation" class="d-none" />
             <BTr :class="getRowClasses(item, 'row-details')" :variant="item._rowVariant">
               <BTd :colspan="computedFieldsTotal">
@@ -193,13 +197,8 @@
 
 <script setup lang="ts" generic="T">
 import {computed, toRef} from 'vue'
-import type {
-  BTableLiteProps,
-  TableField,
-  TableFieldAttribute,
-  TableFieldRaw,
-  TableItem,
-} from '../../types'
+import type {BTableLiteProps, TableField, TableFieldAttribute, TableItem} from '../../types'
+import {isTableField, isTableItem} from '../../types/TableTypes'
 import {filterEvent, formatItem, get, getTableFieldHeadLabel, startCase} from '../../utils'
 import BTableSimple from './BTableSimple.vue'
 import BTbody from './BTbody.vue'
@@ -209,7 +208,7 @@ import BTh from './BTh.vue'
 import BThead from './BThead.vue'
 import BTr from './BTr.vue'
 
-const props = withDefaults(defineProps<BTableLiteProps>(), {
+const props = withDefaults(defineProps<BTableLiteProps<T>>(), {
   caption: undefined,
   align: undefined,
   fields: () => [],
@@ -258,11 +257,11 @@ const props = withDefaults(defineProps<BTableLiteProps>(), {
 })
 
 const emit = defineEmits<{
-  'head-clicked': [key: string, field: TableFieldRaw, event: MouseEvent, isFooter: boolean]
-  'row-clicked': [item: TableItem, index: number, event: MouseEvent]
-  'row-dbl-clicked': [item: TableItem, index: number, event: MouseEvent]
-  'row-hovered': [item: TableItem, index: number, event: MouseEvent]
-  'row-unhovered': [item: TableItem, index: number, event: MouseEvent]
+  'head-clicked': [key: string, field: TableField<T>, event: MouseEvent, isFooter: boolean]
+  'row-clicked': [item: T, index: number, event: MouseEvent]
+  'row-dbl-clicked': [item: T, index: number, event: MouseEvent]
+  'row-hovered': [item: T, index: number, event: MouseEvent]
+  'row-unhovered': [item: T, index: number, event: MouseEvent]
 }>()
 
 const computedTableClasses = computed(() => [
@@ -275,7 +274,7 @@ const computedTableClasses = computed(() => [
 const computedFields = computed<(TableField & {_noHeader?: true})[]>(() => {
   if (!props.fields.length && props.items.length) {
     const [firstItem] = props.items
-    if ((typeof firstItem === 'object' && firstItem !== null) || Array.isArray(firstItem)) {
+    if (isTableItem(firstItem) || Array.isArray(firstItem)) {
       return Object.keys(firstItem).map((k) => {
         const label = startCase(k)
         return {
@@ -291,17 +290,20 @@ const computedFields = computed<(TableField & {_noHeader?: true})[]>(() => {
   }
 
   return props.fields.map((f) => {
-    if (typeof f === 'string') {
-      const label = startCase(f)
+    if (isTableField(f)) {
       return {
-        key: f,
-        label,
-        tdAttr: props.stacked === true ? {'data-label': label} : undefined,
+        ...(f as TableField),
+        tdAttr:
+          props.stacked === true
+            ? {'data-label': startCase(f.key as string), ...f.tdAttr}
+            : f.tdAttr,
       }
     }
+    const label = startCase(f as string)
     return {
-      ...f,
-      tdAttr: props.stacked === true ? {'data-label': startCase(f.key), ...f.tdAttr} : f.tdAttr,
+      key: f as string,
+      label,
+      tdAttr: props.stacked === true ? {'data-label': label} : undefined,
     }
   })
 })
@@ -320,20 +322,17 @@ const itemAttributes = (item: T, fieldKey: string, attr?: TableFieldAttribute) =
   return attr && typeof attr === 'function' ? attr(val, fieldKey, item) : attr
 }
 
-const headerClicked = (
-  field: Readonly<TableFieldRaw>,
-  event: Readonly<MouseEvent>,
-  isFooter = false
-) => {
-  const fieldKey = typeof field === 'string' ? field : field.key
-  emit('head-clicked', fieldKey, field, event, isFooter)
+const headerClicked = (field: TableField<T>, event: Readonly<MouseEvent>, isFooter = false) => {
+  emit('head-clicked', field.key as string, field, event, isFooter)
 }
 
-const toggleRowDetails = (tr: TableItem) => {
-  tr._showDetails = !tr._showDetails
+const toggleRowDetails = (tr: T) => {
+  if (isTableItem(tr)) {
+    tr._showDetails = !tr._showDetails
+  }
 }
 
-const getFieldColumnClasses = (field: Readonly<TableField>) => [
+const getFieldColumnClasses = (field: TableField) => [
   field.class,
   field.thClass,
   {
@@ -346,16 +345,18 @@ const getFieldColumnClasses = (field: Readonly<TableField>) => [
     : null,
 ]
 
-const getFieldRowClasses = (field: Readonly<TableField>, tr: Readonly<TableItem>) => [
+const getFieldRowClasses = (field: Readonly<TableField>, tr: T) => [
   field.class,
   field.tdClass,
-  tr._cellVariants?.[field.key] ? `table-${tr._cellVariants[field.key]}` : null,
+  (isTableItem(tr) ? tr._cellVariants?.[field.key as string] : false)
+    ? `table-${(tr as TableItem)._cellVariants?.[field.key as string]}`
+    : null,
   {
     'b-table-sticky-column': field.stickyColumn,
   },
 ]
 
-const getRowClasses = (item: Readonly<T>, type: 'row-details' | 'row') =>
+const getRowClasses = (item: T, type: 'row-details' | 'row') =>
   props.tbodyTrClass
     ? typeof props.tbodyTrClass === 'function'
       ? props.tbodyTrClass(item, type)

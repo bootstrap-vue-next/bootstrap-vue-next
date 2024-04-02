@@ -125,9 +125,9 @@
   </BTableLite>
 </template>
 
-<script setup lang="ts" generic="Provider">
+<script setup lang="ts" generic="T">
 import {useToNumber} from '@vueuse/core'
-import {computed, onMounted, ref, toRef, watch} from 'vue'
+import {computed, onMounted, ref, type Ref, toRef, watch} from 'vue'
 import type {
   BTableProps,
   BTableSortBy,
@@ -143,8 +143,9 @@ import BSpinner from '../BSpinner.vue'
 import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
 import BTr from './BTr.vue'
+import {isTableField, isTableItem} from '../../types/TableTypes'
 
-const props = withDefaults(defineProps<BTableProps<Provider>>(), {
+const props = withDefaults(defineProps<BTableProps<T>>(), {
   noSortableIcon: false,
   perPage: Number.POSITIVE_INFINITY,
   filter: undefined,
@@ -215,20 +216,15 @@ const props = withDefaults(defineProps<BTableProps<Provider>>(), {
 })
 
 const emit = defineEmits<{
-  'filtered': [value: any[]]
-  'head-clicked': [
-    key: TableField['key'],
-    field: TableFieldRaw,
-    event: MouseEvent,
-    isFooter: boolean,
-  ]
-  'row-clicked': [item: any, index: number, event: MouseEvent]
-  'row-dbl-clicked': [item: any, index: number, event: MouseEvent]
-  'row-hovered': [item: any, index: number, event: MouseEvent]
-  'row-selected': [value: any]
-  'row-unhovered': [item: any, index: number, event: MouseEvent]
-  'row-unselected': [value: any]
-  'selection': [value: any[]]
+  'filtered': [value: T[]]
+  'head-clicked': [key: string, field: TableField<T>, event: MouseEvent, isFooter: boolean]
+  'row-clicked': [item: T, index: number, event: MouseEvent]
+  'row-dbl-clicked': [item: T, index: number, event: MouseEvent]
+  'row-hovered': [item: T, index: number, event: MouseEvent]
+  'row-unhovered': [item: T, index: number, event: MouseEvent]
+  'row-selected': [value: T]
+  'row-unselected': [value: T]
+  'selection': [value: T[]]
   'sorted': [value: BTableSortBy | null]
 }>()
 
@@ -238,7 +234,7 @@ const sortByModel = defineModel<BTableSortBy[] | undefined>('sortBy', {
 const busyModel = defineModel<boolean>('busy', {
   default: false,
 })
-const selectedItemsModel = defineModel<any[]>('selectedItems', {
+const selectedItemsModel = defineModel<T[]>('selectedItems', {
   default: () => [],
 })
 
@@ -253,7 +249,7 @@ const selectedItemsToSet = computed({
  * The utils also conveniently emit the proper events after
  */
 const selectedItemsSetUtilities = {
-  add: (item: any) => {
+  add: (item: T) => {
     const value = new Set(selectedItemsToSet.value)
     value.add(item)
     selectedItemsToSet.value = value
@@ -264,7 +260,7 @@ const selectedItemsSetUtilities = {
       selectedItemsSetUtilities.delete(item)
     })
   },
-  delete: (item: any) => {
+  delete: (item: T) => {
     const value = new Set(selectedItemsToSet.value)
     value.delete(item)
     selectedItemsToSet.value = value
@@ -278,7 +274,7 @@ const selectedItemsSetUtilities = {
   For some reason, the reference of the object gets lost. However, when you use an actual ref(), it works just fine
   Getting the reference properly will fix all outstanding issues
   */
-  has: (item: any) => {
+  has: (item: T) => {
     if (!props.primaryKey) return selectedItemsToSet.value.has(item)
 
     // Resolver for when we are using primary keys
@@ -296,7 +292,7 @@ const selectedItemsSetUtilities = {
 /**
  * Only stores data that is fetched when using the provider
  */
-const internalItems = ref<any[]>([])
+const internalItems: Ref<T[]> = ref([])
 
 const perPageNumber = useToNumber(() => props.perPage, {method: 'parseInt'})
 const currentPageNumber = useToNumber(() => props.currentPage, {method: 'parseInt'})
@@ -313,7 +309,7 @@ const isSortable = computed(
     )
 )
 
-const computedFields = computed<TableFieldRaw[]>(() =>
+const computedFields = computed<TableFieldRaw<T>[]>(() =>
   props.fields.map((el) => {
     if (!(typeof el === 'object' && el !== null)) return el
 
@@ -348,7 +344,7 @@ const getBusyRowClasses = computed(() => [
       : props.tbodyTrClass
     : null,
 ])
-const getFieldColumnClasses = (field: Readonly<TableField>) => [
+const getFieldColumnClasses = (field: TableField) => [
   {
     'b-table-sortable-column': isSortable.value && field.sortable,
   },
@@ -357,7 +353,7 @@ const getFieldColumnClasses = (field: Readonly<TableField>) => [
 // Also the row should technically have aria-selected . Both things could probably just use a function with tbodyTrAttrs
 // But functional tbodyTrAttrs are not supported yet
 // Also the stuff for resolving functions could probably be made a util
-const getRowClasses = (item: any | null, type: string) => [
+const getRowClasses = (item: T, type: string) => [
   {
     [`selected table-${props.selectionVariant}`]:
       props.selectable && item && selectedItemsSetUtilities.has(item),
@@ -369,8 +365,8 @@ const getRowClasses = (item: any | null, type: string) => [
     : null,
 ]
 
-const computedItems = computed<readonly any[]>(() => {
-  const sortItems = (items: readonly any[]) => {
+const computedItems = computed<T[]>(() => {
+  const sortItems = (items: T[]) => {
     // "undefined" values are set by us, we do this so we dont wipe out the comparer
     const sortByItems = sortByModel.value?.filter((el) => !!el.order)
 
@@ -380,15 +376,16 @@ const computedItems = computed<readonly any[]>(() => {
     return [...items].sort((a, b) => {
       for (let i = 0; i < (sortByItems.length ?? 0); i++) {
         const sortOption = sortByItems[i]
-        const realVal = (ob: any): string => {
-          if (!(typeof ob === 'object' && ob !== null)) return ob
+        const realVal = (ob: T): string => {
+          if (!isTableItem(ob)) return String(ob)
 
           const sortField = computedFields.value.find((el) => {
-            if (typeof el === 'string') return false
-            return el.key === sortOption.key
+            if (isTableField(el)) return el.key === sortOption.key
+
+            return false
           })
-          const val = ob[sortOption.key]
-          if (sortField && typeof sortField !== 'string' && sortField.sortByFormatted) {
+          const val = ob[sortOption.key as keyof TableItem]
+          if (isTableField(sortField) && !!sortField.sortByFormatted) {
             const formatter =
               typeof sortField.sortByFormatted === 'function'
                 ? sortField.sortByFormatted
@@ -416,23 +413,25 @@ const computedItems = computed<readonly any[]>(() => {
     })
   }
 
-  const filterItems = (items: readonly TableItem[]) =>
+  const filterItems = (items: T[]) =>
     items.filter((item) =>
-      Object.entries(item).some(([key, val]) => {
-        if (
-          val === null ||
-          val === undefined ||
-          key[0] === '_' ||
-          (!props.filterable?.includes(key) && !!props.filterable?.length)
-        )
-          return false
-        const itemValue: string =
-          typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
-        return itemValue.toLowerCase().includes(props.filter?.toLowerCase() ?? '')
-      })
+      isTableItem(item)
+        ? Object.entries(item).some(([key, val]) => {
+            if (
+              val === null ||
+              val === undefined ||
+              key[0] === '_' ||
+              (!props.filterable?.includes(key) && !!props.filterable?.length)
+            )
+              return false
+            const itemValue: string =
+              typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
+            return itemValue.toLowerCase().includes(props.filter?.toLowerCase() ?? '')
+          })
+        : true
     )
 
-  let mappedItems = usesProvider.value ? internalItems.value : props.items
+  let mappedItems = usesProvider.value ? internalItems.value : (props.items as T[])
 
   if (
     (isFilterableTable.value === true && !usesProvider.value) ||
@@ -451,7 +450,7 @@ const computedItems = computed<readonly any[]>(() => {
   return mappedItems
 })
 
-const computedDisplayItems = computed<readonly any[]>(() => {
+const computedDisplayItems = computed<T[]>(() => {
   if (Number.isNaN(perPageNumber.value) || (usesProvider.value && !props.noProviderPaging)) {
     return computedItems.value
   }
@@ -463,7 +462,7 @@ const computedDisplayItems = computed<readonly any[]>(() => {
 })
 
 const handleRowSelection = (
-  row: any,
+  row: T,
   index: number,
   shiftClicked = false,
   ctrlClicked = false,
@@ -515,14 +514,14 @@ const handleRowSelection = (
   notifySelectionEvent()
 }
 
-const onRowClick = (row: any, index: number, e: MouseEvent) => {
+const onRowClick = (row: T, index: number, e: MouseEvent) => {
   if (props.noSelectOnClick === false) {
     handleRowSelection(row, index, e.shiftKey, e.ctrlKey, e.metaKey)
   }
   emit('row-clicked', row, index, e)
 }
 
-const handleFieldSorting = (field: Readonly<TableFieldRaw>) => {
+const handleFieldSorting = (field: TableField<T>) => {
   if (!isSortable.value) return
 
   const fieldKey = typeof field === 'object' && field !== null ? field.key : field
@@ -537,7 +536,7 @@ const handleFieldSorting = (field: Readonly<TableFieldRaw>) => {
     if (val === undefined) return 'asc'
     if (
       props.mustSort === true ||
-      (Array.isArray(props.mustSort) && props.mustSort.includes(fieldKey))
+      (Array.isArray(props.mustSort) && props.mustSort.includes(fieldKey as string))
     )
       return 'asc'
     return undefined
@@ -548,7 +547,7 @@ const handleFieldSorting = (field: Readonly<TableFieldRaw>) => {
   const updatedValue: BTableSortBy =
     // If value is new, we default to ascending
     // Otherwise we make a temp copy of the value
-    index === -1 || !originalValue ? {key: fieldKey, order: 'asc'} : {...originalValue}
+    index === -1 || !originalValue ? {key: fieldKey as string, order: 'asc'} : {...originalValue}
 
   /**
    * @returns the updated value to emit for sorted
@@ -581,7 +580,7 @@ const handleFieldSorting = (field: Readonly<TableFieldRaw>) => {
 
 const onFieldHeadClick = (
   fieldKey: string,
-  field: Readonly<TableFieldRaw>,
+  field: TableField<T>,
   event: Readonly<MouseEvent>,
   isFooter = false
 ) => {

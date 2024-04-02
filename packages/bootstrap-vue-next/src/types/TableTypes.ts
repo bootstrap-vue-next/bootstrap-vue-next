@@ -1,4 +1,4 @@
-import type {ClassValue, ColorVariant, MaybePromise} from '.'
+import type {ClassValue, ColorVariant, LiteralUnion, MaybePromise} from '.'
 import type {StyleValue} from 'vue'
 
 export type TableItem = {
@@ -6,6 +6,9 @@ export type TableItem = {
   _cellVariants?: Partial<Record<string, ColorVariant>>
   _showDetails?: boolean
 }
+
+export const isTableItem = (value: unknown): value is TableItem =>
+  typeof value === 'object' && value !== null
 
 // undefined means no sorting
 export type BTableSortByOrder = 'desc' | 'asc' | undefined
@@ -33,8 +36,9 @@ export type TableFieldAttribute =
   | Record<string, unknown>
   | ((value: unknown, key: string, item: any) => Record<string, unknown>)
 
-export type TableField = {
-  key: string
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type TableField<T = any> = {
+  key: LiteralUnion<keyof T>
   label?: string
   headerTitle?: string
   headerAbbr?: string
@@ -55,6 +59,14 @@ export type TableField = {
   stickyColumn?: boolean
 }
 
-export type TableFieldRaw = string | TableField
+export type TableFieldRaw<T> = T extends object
+  ? LiteralUnion<keyof T> | TableField<T>
+  : string | TableField
+
+export const isTableField = <T>(value: unknown): value is TableField<T> =>
+  typeof value === 'object' && value !== null && 'key' in value
+
+export const isTableFieldRaw = <T>(value: unknown): value is TableFieldRaw<T> =>
+  typeof value === 'string' || isTableField(value)
 
 export type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
