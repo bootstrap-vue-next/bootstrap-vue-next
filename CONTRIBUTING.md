@@ -51,11 +51,34 @@ This will begin the process to merge your changes into the upstream repository's
 
 ## Developing
 
-The project uses a monorepo architecture. The main source files for the package exist in `./packages/bootstrap-vue-next`, this is primarily where developing is done. You can then run `pnpm dev` and it will start all possible development environments. When developing the main package, you will want to open the **bootstrap-vue-next:dev** host. This has hot-reloading to make developing easier. You can use the `./packages/bootstrap-vue-next/src/app.vue` file as a test area for any changes that you make
+The project uses a monorepo architecture. The main source files for the package exist in `./packages/bootstrap-vue-next`, this is primarily where developing is done. You can then run `pnpm dev` and it will start all possible development environments. When developing the main package, you will want to open the **bootstrap-vue-next:dev** host. This has hot-reloading to make developing easier. You can use the `./packages/bootstrap-vue-next/src/app.vue` file as a test area for any changes that you make.
 
-You can also make use of the `./apps/playground` directory. The `./apps/playground` directory mimics a user's library and can demonstrate some bugs that may not be visible in the main package. However, it does not contain native hot-reloading and makes for a poor development experience since it requires a built dist copy of the main package (simply run `pnpm build`). The playground is not typically used for development. It is more of a place to view the full behavior of a component
+You can also make use of the `./apps/playground` directory. The `./apps/playground` directory mimics a user's library and can demonstrate some bugs that may not be visible in the main package. However, it does not contain native hot-reloading and makes for a poor development experience since it requires a built dist copy of the main package (simply run `pnpm build`). The playground is not typically used for development. It is more of a place to view the full behavior of a component.
 
-You can also use `pnpm dev --filter bootstrap-vue-next` to only open the main host
+You can also use `pnpm dev --filter bootstrap-vue-next` to only open the main host.
+
+## Improving the documentation
+
+Improving the documentation is a great way to contribute to this project, especially if you're not quite ready to dive into the code.
+
+We use [vitepress](https://vitepress.dev/) to build our documentation in the `./apps/docs` directory. In order to test the docs, first make sure that you follow the steps in [Setting up your workspace](#setting-up-your-workspace). Then you can run `pnpm dev` from the root and then open the **docs:dev** host. This will hot-reload the documentation to let you easily see your edits. The `*.md` files under `./apps/docs/src/docs` contains the core documentation and the `*.data.ts` files under `./apps/docs/src/data/components` contains JSON files that contains the data to build the component definitions in the documentation.
+
+## Help Verify BootstrapVue and Bootstrap v5 Parity
+
+As we close in on a v1 of bootstrap-vue-next, we would like to verify our feature parity with both
+[boostrap-vue](https://bootstrap-vue.org/) and [Boottrap v5](https://getbootstrap.com/).
+
+This verification requires that someone take a close look at the documention for both of the parity
+systems and the code and documentation for bootstrap-vue-next to evaluate feature parity. We're using a
+spreadsheet to track the fine grained assement, and anyone who consumes bootstrap-vue(-next) should
+be able to do the first pass evaluation of a component.
+
+To contribute:
+
+- Take a look at the read-only version of the spreadsheet, available [here](https://1drv.ms/x/s!AiUqzkjNYGL6ieBPpQpcR41wo1laZQ). You can filter on `BFormCheckbox` and `BFormCheckboxGroup` in the `Component` column to see an example of components that are being evaludated and just about anything else to see the initial state.
+- Read through the `Instructions` tab of the spreadsheet, which provides a suggested process to verify a component.
+- Once you're satisfied that you understand the process, request access top the [read/write version of the spreadsheet](https://1drv.ms/x/s!AiUqzkjNYGL6ieBPJZV0b2mgOVgnYw) on the [Bootstrap Vue 3 discord server](https://discord.gg/8VjEkneh).
+- Evaluate a component (or two) and get us one step closer to v1!
 
 ## Registering New Components
 
@@ -63,7 +86,7 @@ For adding a new component, there are some notes...
 
 - They should only exist in the `./packages/bootstrap-vue-next/src/components` directory
 - You should first review the `./packages/bootstrap-vue-next/src/types` directory and get familiar with the internal types that you can use
-- They should follow `<script setup lang="ts">` syntax, to ensure uniformity, there are *some* exceptions to this rule regarding Vue SFC being unable to import or extend types
+- They should follow `<script setup lang="ts">` syntax, to ensure uniformity, there are _some_ exceptions to this rule regarding Vue SFC being unable to import or extend types
 - If the component is a native [Bootstrap](https://getbootstrap.com/) component, you will need to read about that component and have a thorough understanding of how it works and appears
 - If the component is custom, or taken from [Bootstrap-vue](https://bootstrap-vue.org/) you will need to read the component documentation, then attempt to recreate that component using `<template>` and `<script setup lang="ts">` syntax. If a Bootstrap-vue component is based on a native Bootstrap component, then you should read Bootstrap's implementation first, and ensure any changes are made to correct for the v5 release of Bootstrap
 - All Props and Emits should be fully written as TypeScript interfaces, the more strongly typed, the better
@@ -71,7 +94,7 @@ For adding a new component, there are some notes...
 After the implementation of the component, based on Bootstrap's details, you can finally begin introducing the component to be exported by the main package, and usable by users of the library. To do that you will need to:
 
 1. Add the component to the import/export list, located in `./packages/bootstrap-vue-next/src/components/index.ts`
-2. Next, it must be imported into `./packages/bootstrap-vue-next/BootstrapVue.ts` *please ensure that your import is made directly to the component, and not to the previous index.ts file*
+2. Next, it must be imported into `./packages/bootstrap-vue-next/BootstrapVue.ts` _please ensure that your import is made directly to the component, and not to the previous index.ts file_
 3. After that, export it in the `export {}` list that contains the other components to be exported
 4. Finally, it must be included in the exported interface of **GlobalComponents**, following the pattern of `BComponent: typeof BComponent`
 
