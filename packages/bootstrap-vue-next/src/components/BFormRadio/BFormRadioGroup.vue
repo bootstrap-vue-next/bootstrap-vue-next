@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 import type {AriaInvalid, ButtonVariant, RadioOptionRaw, RadioValue, Size} from '../../types'
-import {computed, nextTick, provide, ref, toRef, watch} from 'vue'
+import {computed, provide, ref, toRef} from 'vue'
 import {radioGroupKey} from '../../utils'
 import BFormRadio from './BFormRadio.vue'
 import {getGroupAttr, getGroupClasses, useId} from '../../composables'
@@ -49,6 +49,7 @@ const props = withDefaults(
     options?: readonly RadioOptionRaw[]
     plain?: boolean
     required?: boolean
+    reverse?: boolean
     size?: Size
     stacked?: boolean
     state?: boolean | null
@@ -71,6 +72,7 @@ const props = withDefaults(
     options: () => [],
     plain: false,
     required: false,
+    reverse: false,
     size: 'md',
     stacked: false,
     state: null,
@@ -81,8 +83,6 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  'change': [value: RadioValue]
-  'input': [value: RadioValue]
   'update:modelValue': [value: RadioValue]
 }>()
 
@@ -114,15 +114,9 @@ provide(radioGroupKey, {
   plain: toRef(() => props.plain),
   size: toRef(() => props.size),
   inline: toRef(() => !props.stacked),
+  reverse: toRef(() => !props.reverse),
   required: toRef(() => props.required),
   disabled: toRef(() => props.disabled),
-})
-
-watch(modelValue, (newValue) => {
-  emit('input', newValue)
-  nextTick(() => {
-    emit('change', newValue)
-  })
 })
 
 const normalizeOptions = computed(() =>
