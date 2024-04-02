@@ -371,15 +371,15 @@ const getRowClasses = (item: any | null, type: string) => [
 
 const computedItems = computed<readonly any[]>(() => {
   const sortItems = (items: readonly any[]) => {
-    if (!sortByModel.value || sortByModel.value.length === 0) return items
+    // "undefined" values are set by us, we do this so we dont wipe out the comparer
+    const sortByItems = sortByModel.value?.filter((el) => !!el.order)
+
+    if (!sortByItems || sortByItems.length === 0) return items
 
     // Multi-sort
     return [...items].sort((a, b) => {
-      // cb shenanigans
-      if (!sortByModel.value || sortByModel.value.length === 0) return 0
-      //
-      for (let i = 0; i < (sortByModel.value.length ?? 0); i++) {
-        const sortOption = sortByModel.value[i]
+      for (let i = 0; i < (sortByItems.length ?? 0); i++) {
+        const sortOption = sortByItems[i]
         const realVal = (ob: any): string => {
           if (!(typeof ob === 'object' && ob !== null)) return ob
 
@@ -532,14 +532,15 @@ const handleFieldSorting = (field: Readonly<TableFieldRaw>) => {
 
   if (!(isSortable.value === true && fieldSortable === true)) return
 
-  const resolveOrder = (val: BTableSortByOrder): BTableSortByOrder | null => {
+  const resolveOrder = (val: BTableSortByOrder): BTableSortByOrder | undefined => {
     if (val === 'asc') return 'desc'
+    if (val === undefined) return 'asc'
     if (
       props.mustSort === true ||
       (Array.isArray(props.mustSort) && props.mustSort.includes(fieldKey))
     )
       return 'asc'
-    return null
+    return undefined
   }
 
   const index = sortByModel.value?.findIndex((el) => el.key === fieldKey) ?? -1
@@ -554,19 +555,10 @@ const handleFieldSorting = (field: Readonly<TableFieldRaw>) => {
    */
   const handleMultiSort = (): null | BTableSortBy => {
     if (index === -1) {
-      // If is not in the array, we push it
-      sortByModel.value?.push(updatedValue)
+      sortByModel.value = [...(sortByModel.value ?? []), updatedValue]
       return updatedValue
     }
-    // resolveOrder will return null if the value is to be removed
-    const order = resolveOrder(updatedValue.order)
-    // If it exists, but marked to delete (null), we remove it
-    if (order === null) {
-      sortByModel.value?.splice(index, 1)
-      return null
-      // Otherwise we update the value
-    }
-    const val = {...updatedValue, order}
+    const val = {...updatedValue, order: resolveOrder(updatedValue.order)}
     sortByModel.value?.splice(index, 1, val)
     return val
   }
@@ -575,19 +567,10 @@ const handleFieldSorting = (field: Readonly<TableFieldRaw>) => {
    * @returns the updated value to emit for sorted
    */
   const handleSingleSort = (): null | BTableSortBy => {
-    // If there is nothing in the array, we just push it
-    if (index === -1) {
-      sortByModel.value = [updatedValue]
-      return updatedValue
+    const val = {
+      ...updatedValue,
+      order: index === -1 ? updatedValue.order : resolveOrder(updatedValue.order),
     }
-    const order = resolveOrder(updatedValue.order)
-    // If it exists, but marked to delete (null), we remove it
-    if (order === null) {
-      sortByModel.value = []
-      return null
-      // Otherwise we update the value
-    }
-    const val = {...updatedValue, order}
     sortByModel.value = [val]
     return val
   }

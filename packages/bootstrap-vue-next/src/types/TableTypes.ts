@@ -7,7 +7,8 @@ export type TableItem = {
   _showDetails?: boolean
 }
 
-export type BTableSortByOrder = 'desc' | 'asc'
+// undefined means no sorting
+export type BTableSortByOrder = 'desc' | 'asc' | undefined
 
 export type BTableSortBy = {
   order: BTableSortByOrder
