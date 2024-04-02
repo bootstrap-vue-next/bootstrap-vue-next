@@ -10,7 +10,7 @@
 import {computed, provide, type StyleValue, toRef} from 'vue'
 import type {BAvatarGroupProps} from '../../types'
 import {avatarGroupInjectionKey} from '../../utils'
-import {useAvatarSize} from '../../composables'
+import {useNumberishToStyle} from '../../composables'
 import {useToNumber} from '@vueuse/core'
 
 const props = withDefaults(defineProps<BAvatarGroupProps>(), {
@@ -39,7 +39,7 @@ defineSlots<{
 
 const overlapNumber = useToNumber(() => props.overlap)
 
-const computedSize = useAvatarSize(() => props.size)
+const computedSize = useNumberishToStyle(() => props.size)
 const overlapScale = toRef(() => Math.min(Math.max(overlapNumber.value, 0), 1) / 2)
 
 const paddingStyle = computed<StyleValue>(() => {

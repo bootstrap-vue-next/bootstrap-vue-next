@@ -31,9 +31,9 @@ import {avatarGroupInjectionKey, isEmptySlot} from '../../utils'
 import {computed, type CSSProperties, inject, type StyleValue, toRef} from 'vue'
 import type {BAvatarProps} from '../../types'
 import {
-  useAvatarSize,
   useBLinkHelper,
   useColorVariantClasses,
+  useNumberishToStyle,
   useRadiusElementClasses,
 } from '../../composables'
 import BLink from '../BLink/BLink.vue'
@@ -116,8 +116,8 @@ const hasBadgeSlot = toRef(() => !isEmptySlot(slots.badge))
 const showBadge = toRef(() => !!props.badge || props.badge === '' || hasBadgeSlot.value)
 const computedSquare = toRef(() => parentData?.size.value ?? props.square)
 
-const computedPropSize = useAvatarSize(() => props.size)
-const computedParentSize = useAvatarSize(() => parentData?.size.value)
+const computedPropSize = useNumberishToStyle(() => props.size)
+const computedParentSize = useNumberishToStyle(() => parentData?.size.value)
 const computedSize = computed(() => computedParentSize.value ?? computedPropSize.value)
 
 const computedVariant = toRef(() => parentData?.variant.value ?? props.variant)

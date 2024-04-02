@@ -13,6 +13,7 @@
 <script setup lang="ts">
 import {computed, type StyleValue} from 'vue'
 import type {BTableSimpleProps} from '../../types'
+import {useNumberishToStyle} from '../../composables'
 
 const defaultStickyHeaderHeight = '300px'
 
@@ -70,25 +71,17 @@ const tableAttrs = computed(() => ({
   class: computedClasses.value,
 }))
 
-const computedSticky = computed(() =>
-  // String used as is
-  typeof props.stickyHeader === 'string'
-    ? props.stickyHeader
-    : // Number is converted to px
-      typeof props.stickyHeader === 'number'
-      ? `${props.stickyHeader}px`
-      : // Boolean true defaults to the above defined default height
-        props.stickyHeader === true
-        ? defaultStickyHeaderHeight
-        : // NaN is ignored
-          NaN
+const computedSticky = useNumberishToStyle(
+  computed(
+    () => (props.stickyHeader === true ? defaultStickyHeaderHeight : props.stickyHeader) || NaN
+  )
 )
-const stickyIsValid = computed(() => !Number.isNaN(computedSticky.value))
+const stickyIsValid = computed(() => props.stickyHeader !== false)
 
 const isResponsive = computed(() => props.responsive !== false || stickyIsValid.value)
-const responsiveStyles = computed<StyleValue>(() => ({
-  ...(stickyIsValid.value ? {maxHeight: computedSticky.value} : {}),
-}))
+const responsiveStyles = computed<StyleValue | undefined>(() =>
+  stickyIsValid.value ? {maxHeight: computedSticky.value} : undefined
+)
 const responsiveClasses = computed(() => ({
   'table-responsive': props.responsive === true,
   [`table-responsive-${props.responsive}`]: typeof props.responsive === 'string',
