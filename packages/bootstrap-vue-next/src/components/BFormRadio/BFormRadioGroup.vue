@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 import type {BFormRadioGroupProps, RadioValue} from '../../types'
-import {computed, nextTick, provide, ref, toRef, watch} from 'vue'
+import {computed, provide, ref, toRef} from 'vue'
 import {radioGroupKey} from '../../utils'
 import BFormRadio from './BFormRadio.vue'
 import {getGroupAttr, getGroupClasses, useId} from '../../composables'
@@ -43,10 +43,12 @@ const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
   form: undefined,
   htmlField: 'html',
   id: undefined,
+  modelValue: null,
   name: undefined,
   options: () => [],
   plain: false,
   required: false,
+  reverse: false,
   size: 'md',
   stacked: false,
   state: null,
@@ -54,11 +56,6 @@ const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
   validated: false,
   valueField: 'value',
 })
-
-const emit = defineEmits<{
-  change: [value: RadioValue]
-  input: [value: RadioValue]
-}>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -90,15 +87,9 @@ provide(radioGroupKey, {
   plain: toRef(() => props.plain),
   size: toRef(() => props.size),
   inline: toRef(() => !props.stacked),
+  reverse: toRef(() => !props.reverse),
   required: toRef(() => props.required),
   disabled: toRef(() => props.disabled),
-})
-
-watch(modelValue, (newValue) => {
-  emit('input', newValue)
-  nextTick(() => {
-    emit('change', newValue)
-  })
 })
 
 const normalizeOptions = computed(() =>

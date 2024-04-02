@@ -1,34 +1,47 @@
 <template>
-  <label v-if="hasLabelSlot || label" :for="computedId" class="form-label" :class="labelClass">
+  <DefineTemplate>
+    <label class="input-group-text" :for="computedId">
+      {{ browserText }}
+    </label>
+  </DefineTemplate>
+
+  <label v-if="hasLabelSlot || label" class="form-label" :class="labelClass" :for="computedId">
     <slot name="label">
       {{ label }}
     </slot>
   </label>
-  <input
-    :id="computedId"
-    v-bind="$attrs"
-    ref="input"
-    type="file"
-    class="form-control"
-    :class="computedClasses"
-    :form="form"
-    :name="name"
-    :multiple="props.multiple"
-    :disabled="props.disabled"
-    :capture="props.capture"
-    :accept="computedAccept || undefined"
-    :required="props.required || undefined"
-    :aria-required="props.required || undefined"
-    :directory="props.directory"
-    :webkitdirectory="props.directory"
-    @change="onChange"
-    @drop="onDrop"
-  />
+
+  <div class="input-group form-input-file">
+    <ReusableTemplate v-if="placement === 'start'" />
+    <input
+      :id="computedId"
+      v-bind="$attrs"
+      ref="input"
+      type="file"
+      class="form-control"
+      :class="computedClasses"
+      :form="form"
+      :name="name"
+      :multiple="props.multiple"
+      :disabled="props.disabled"
+      :capture="props.capture"
+      :accept="computedAccept || undefined"
+      :required="props.required || undefined"
+      :aria-label="ariaLabel"
+      :aria-labelledby="ariaLabelledby"
+      :aria-required="props.required || undefined"
+      :directory="props.directory"
+      :webkitdirectory="props.directory"
+      @change="onChange"
+      @drop="onDrop"
+    />
+    <ReusableTemplate v-if="placement === 'end'" />
+  </div>
 </template>
 
 <script setup lang="ts">
+import {createReusableTemplate, useFocus} from '@vueuse/core'
 import {computed, ref, toRef, watch} from 'vue'
-import {useFocus} from '@vueuse/core'
 import type {BFormFileProps} from '../../types'
 import {useId, useStateClass} from '../../composables'
 import {isEmptySlot} from '../../utils'
@@ -43,8 +56,11 @@ const slots = defineSlots<{
 }>()
 
 const props = withDefaults(defineProps<BFormFileProps>(), {
+  ariaLabel: undefined,
+  ariaLabelledby: undefined,
   accept: '',
   autofocus: false,
+  browserText: 'Choose',
   // eslint-disable-next-line vue/require-valid-default-prop
   capture: false,
   directory: false,
@@ -53,10 +69,12 @@ const props = withDefaults(defineProps<BFormFileProps>(), {
   id: undefined,
   label: '',
   labelClass: undefined,
+  modelValue: null,
   multiple: false,
   name: undefined,
   noDrop: false,
   noTraverse: false,
+  placement: 'start',
   required: false,
   size: undefined,
   state: null,
@@ -76,6 +94,7 @@ const input = ref<HTMLInputElement | null>(null)
 const {focused} = useFocus(input, {initialValue: props.autofocus})
 
 const hasLabelSlot = toRef(() => !isEmptySlot(slots['label']))
+
 const computedAccept = toRef(() =>
   typeof props.accept === 'string' ? props.accept : props.accept.join(',')
 )
@@ -122,4 +141,29 @@ defineExpose({
   },
   reset,
 })
+
+const [DefineTemplate, ReusableTemplate] = createReusableTemplate()
 </script>
+
+<style scoped>
+.form-input-file {
+  input[type='file'] {
+    margin-left: -2px !important;
+
+    &::-webkit-file-upload-button {
+      display: none;
+    }
+
+    &::file-selector-button {
+      display: none;
+    }
+  }
+
+  &:hover {
+    label {
+      background-color: #dde0e3;
+      cursor: pointer;
+    }
+  }
+}
+</style>

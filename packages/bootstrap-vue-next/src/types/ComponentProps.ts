@@ -136,6 +136,7 @@ export type BFormCheckboxProps = {
   name?: string
   plain?: boolean
   required?: boolean
+  reverse?: boolean
   size?: Size
   state?: boolean | null
   switch?: boolean
@@ -158,6 +159,7 @@ export type BFormCheckboxGroupProps = {
   options?: readonly CheckboxOptionRaw[]
   plain?: boolean
   required?: boolean
+  reverse?: boolean
   size?: Size
   stacked?: boolean
   state?: boolean | null
@@ -168,8 +170,11 @@ export type BFormCheckboxGroupProps = {
 }
 
 export type BFormFileProps = {
+  ariaLabel?: string
+  ariaLabelledby?: string
   accept?: string | readonly string[]
   autofocus?: boolean
+  browserText?: string
   capture?: boolean | 'user' | 'environment'
   directory?: boolean
   disabled?: boolean
@@ -182,6 +187,7 @@ export type BFormFileProps = {
   name?: string
   noDrop?: boolean
   noTraverse?: boolean
+  placement?: 'start' | 'end'
   required?: boolean
   size?: Size
   state?: boolean | null
@@ -210,6 +216,7 @@ export type BFormRadioProps = {
   name?: string
   plain?: boolean
   required?: boolean
+  reverse?: boolean
   size?: Size
   state?: boolean | null
   value?: RadioValue
@@ -230,6 +237,7 @@ export type BFormRadioGroupProps = {
   options?: readonly RadioOptionRaw[]
   plain?: boolean
   required?: boolean
+  reverse?: boolean
   size?: Size
   stacked?: boolean
   state?: boolean | null

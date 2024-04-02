@@ -82,8 +82,8 @@ export default (modalOpen: Readonly<Ref<boolean>>) => {
   )
 
   return {
-    activePosition: computed(() =>
-      stack?.value.findIndex((el) => el.exposed?.id === currentModal.exposed?.id)
+    activePosition: computed(
+      () => stack?.value.findIndex((el) => el.exposed?.id === currentModal.exposed?.id)
     ),
     activeModalCount: countStack,
   }

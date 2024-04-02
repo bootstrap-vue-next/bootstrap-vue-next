@@ -7,15 +7,21 @@ interface ClassesItemsInput {
   plain?: boolean
   button?: boolean
   inline?: boolean
+  reverse?: boolean
   switch?: boolean
   size?: Size
+  hasDefaultSlot?: boolean
 }
 
 const getClasses = (items: MaybeRefOrGetter<ClassesItemsInput>) =>
   computed(() => {
     const resolvedItems = toValue(items)
     return {
-      'form-check': resolvedItems.plain === false && resolvedItems.button === false,
+      'form-check':
+        resolvedItems.plain === false &&
+        resolvedItems.button === false &&
+        resolvedItems.hasDefaultSlot,
+      'form-check-reverse': resolvedItems.reverse === true,
       'form-check-inline': resolvedItems.inline === true,
       'form-switch': resolvedItems.switch === true,
       [`form-control-${resolvedItems.size}`]:

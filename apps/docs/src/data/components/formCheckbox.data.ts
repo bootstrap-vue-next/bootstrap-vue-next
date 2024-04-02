@@ -117,6 +117,12 @@ export default {
             'Controls the validation state appearance of the component. `true` for valid, `false` for invalid, or `null` for no validation state',
         },
         {
+          prop: 'reverse',
+          type: 'boolean',
+          default: false,
+          description: 'When set, renders the checkbox or switch on the opposite side',
+        },
+        {
           prop: 'switch',
           type: 'boolean',
           default: false,
@@ -158,30 +164,6 @@ export default {
               description:
                 'Value of the indeterminate state - true for indeterminate, false for determinstic state.',
               type: 'boolean',
-            },
-          ],
-        },
-        {
-          event: 'input',
-          description: 'Emitted before the checked value is changed',
-          args: [
-            {
-              arg: 'checked',
-              type: 'CheckboxValue | readonly CheckboxValue[]',
-              description:
-                'Value of the checkbox before the event. Value will be an array for grouped checkboxes or a single value for standalone checkboxes.',
-            },
-          ],
-        },
-        {
-          event: 'change',
-          description: 'Emitted when the checked value is changed',
-          args: [
-            {
-              arg: 'checked',
-              type: 'CheckboxValue | readonly CheckboxValue[]',
-              description:
-                'Value of the checkbox.  Value will be an array for grouped checkboxes or a single value for standalone checkboxes.',
             },
           ],
         },
@@ -290,6 +272,12 @@ export default {
           description: 'Adds the `required` attribute to the form control',
         },
         {
+          prop: 'reverse',
+          type: 'boolean',
+          default: false,
+          description: 'When set, renders the checkboxes and switches on the opposite side',
+        },
+        {
           prop: 'size',
           type: 'Size',
           default: 'md',
@@ -340,28 +328,6 @@ export default {
           args: [
             {
               arg: 'update:modelValue',
-              type: 'CheckboxValue[]',
-              description: 'Value of the checkboxes. Value will be an array.',
-            },
-          ],
-        },
-        {
-          event: 'input',
-          description: 'Emitted before the selected value(s) are changed',
-          args: [
-            {
-              arg: 'input',
-              type: 'CheckboxValue[]',
-              description: 'Value of the checkboxes before the event. Value will be an array.',
-            },
-          ],
-        },
-        {
-          event: 'change',
-          description: 'Emitted when the selected value(s) are changed',
-          args: [
-            {
-              arg: 'change',
               type: 'CheckboxValue[]',
               description: 'Value of the checkboxes. Value will be an array.',
             },

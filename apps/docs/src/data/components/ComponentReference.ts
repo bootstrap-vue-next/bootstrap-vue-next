@@ -17,7 +17,7 @@ export interface ComponentReference {
     description?: string
   }[]
   slots: {
-    scope: SlotScopeReference[]
+    scope?: SlotScopeReference[]
     name: string
     description?: string
   }[]

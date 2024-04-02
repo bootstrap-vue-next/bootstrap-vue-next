@@ -412,6 +412,25 @@ Use the `size` prop to control the size of the checkbox. The default size is med
   </template>
 </HighlightCard>
 
+## Reverse
+
+Use the `reverse` prop to put your checkboxes and switches on the opposite side of the label.
+
+<HighlightCard>
+  <BFormCheckbox reverse>Reverse checkbox</BFormCheckbox>
+  <BFormCheckbox reverse disabled>Disabled reverse checkbox</BFormCheckbox>
+  <BFormCheckbox reverse switch>Reverse switch ceckbox input</BFormCheckbox>
+  <template #html>
+
+```vue-html
+<BFormCheckbox reverse>Reverse checkbox</BFormCheckbox>
+<BFormCheckbox reverse disabled>Disabled reverse checkbox</BFormCheckbox>
+<BFormCheckbox reverse switch>Reverse switch ceckbox input</BFormCheckbox>
+```
+
+  </template>
+</HighlightCard>
+
 ## Checkbox values and `v-model`
 
 By default, `BFormCheckbox` value will be true when checked and false when unchecked. You can customize the checked and unchecked values by specifying the `value` and `unchecked-value` properties, respectively.
@@ -934,7 +953,7 @@ const indeterminate = ref(true)
               v-model:indeterminate="asIndeterminate"
               aria-describedby="flavors"
               aria-controls="flavors"
-              @change="toggleAll"
+              @update:modelValue="toggleAll"
             >
               {{ allSelected ? 'Un-select All' : 'Select All' }}
             </BFormCheckbox>
@@ -972,7 +991,7 @@ const indeterminate = ref(true)
         v-model:indeterminate="asIndeterminate"
         aria-describedby="flavors"
         aria-controls="flavors"
-        @change="toggleAll"
+        @update:modelValue="toggleAll"
       >
         {{ allSelected ? 'Un-select All' : 'Select All' }}
       </BFormCheckbox>
