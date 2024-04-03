@@ -31,21 +31,12 @@ export default {
 
     if (!text.content && !text.title) return
 
-    if (!el.$__state) {
-      // Same binding as above
-      // This happens when mounting occurs, but binding does not happen ie (if (!text.content && !text.title) return)
-      // So mounting occurs without a title or content set
-      el.$__state = ref({
-        ...resolveDirectiveProps(binding, el),
-        ...text,
-      })
-      bind(el, binding)
-      return
-    }
-    el.$__state.value = {
+    unbind(el)
+    el.$__state = ref({
       ...resolveDirectiveProps(binding, el),
       ...text,
-    }
+    })
+    bind(el, binding)
   },
   beforeUnmount(el) {
     unbind(el)

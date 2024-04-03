@@ -1,7 +1,7 @@
 import type {Placement} from '@floating-ui/vue'
 export {autoUpdate} from '@floating-ui/vue'
 
-import {type App, createApp, type DirectiveBinding, h, type Ref} from 'vue'
+import {type App, type DirectiveBinding, h, type Ref, render} from 'vue'
 import {DefaultAllowlist, sanitizeHtml} from './sanitizer'
 import BPopover from '../components/BPopover.vue'
 
@@ -116,15 +116,13 @@ export const bind = (el: ElementWithPopper, binding: Readonly<DirectiveBinding>)
   if (binding.modifiers.body) document.body.appendChild(div)
   else if (binding.modifiers.child) el.appendChild(div)
   else el.parentNode?.insertBefore(div, el.nextSibling)
-  el.$__app = createApp({render: () => h(BPopover, {...el.$__state?.value})})
-  el.$__app.mount(div)
+  render(h(BPopover, el.$__state?.value), div)
   el.$__element = div
 }
 
 export const unbind = (el: ElementWithPopper) => {
   const div = el.$__element
-  el.$__app?.unmount()
-  delete el.$__app
+  if (div) render(null, div)
   delete el.$__state
   setTimeout(() => {
     div?.remove()
