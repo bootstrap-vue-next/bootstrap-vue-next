@@ -1,7 +1,7 @@
 import type {Placement} from '@floating-ui/vue'
 export {autoUpdate} from '@floating-ui/vue'
 
-import {type App, type DirectiveBinding, h, type Ref, render} from 'vue'
+import {type DirectiveBinding, h, render} from 'vue'
 import {DefaultAllowlist, sanitizeHtml} from './sanitizer'
 import BPopover from '../components/BPopover.vue'
 import type {BPopoverProps} from '../types'
