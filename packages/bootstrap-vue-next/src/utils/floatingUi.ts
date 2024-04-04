@@ -1,9 +1,10 @@
 import type {Placement} from '@floating-ui/vue'
 export {autoUpdate} from '@floating-ui/vue'
 
-import {type App, createApp, type DirectiveBinding, h, type Ref} from 'vue'
+import {type DirectiveBinding, h, render} from 'vue'
 import {DefaultAllowlist, sanitizeHtml} from './sanitizer'
 import BPopover from '../components/BPopover.vue'
+import type {BPopoverProps} from '../types'
 
 // TODO this function doesn't currently resolve with RTL in mind. Once Bootstrap finalizes their RTL, we should make this change here
 /**
@@ -106,26 +107,21 @@ export const resolveDirectiveProps = (
 })
 
 export interface ElementWithPopper extends HTMLElement {
-  $__state?: Ref<{title: string; target: HTMLElement}>
-  $__app?: App
   $__element?: HTMLElement
 }
 
-export const bind = (el: ElementWithPopper, binding: Readonly<DirectiveBinding>) => {
+export const bind = (el: ElementWithPopper, binding: Readonly<DirectiveBinding>, props: BPopoverProps) => {
   const div = document.createElement('span')
   if (binding.modifiers.body) document.body.appendChild(div)
   else if (binding.modifiers.child) el.appendChild(div)
   else el.parentNode?.insertBefore(div, el.nextSibling)
-  el.$__app = createApp({render: () => h(BPopover, {...el.$__state?.value})})
-  el.$__app.mount(div)
+  render(h(BPopover, props), div)
   el.$__element = div
 }
 
 export const unbind = (el: ElementWithPopper) => {
   const div = el.$__element
-  el.$__app?.unmount()
-  delete el.$__app
-  delete el.$__state
+  if (div) render(null, div)
   setTimeout(() => {
     div?.remove()
   }, 0)
