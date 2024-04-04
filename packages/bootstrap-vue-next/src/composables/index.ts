@@ -16,7 +16,7 @@ export {
 } from './useFormCheck'
 export {default as useFormInput} from './useFormInput'
 export {default as useFormSelect} from './useFormSelect'
-export {default as useId, getId, provideGetId} from './useId'
+export {default as useId, getId} from './useId'
 export {default as useManualTransition} from './useManualTransition'
 export {default as useModal} from './useModal'
 export {default as useModalController} from './useModalController'
