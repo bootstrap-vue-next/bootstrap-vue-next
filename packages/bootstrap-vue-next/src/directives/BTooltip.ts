@@ -1,4 +1,4 @@
-import {type Directive, ref} from 'vue'
+import {type Directive} from 'vue'
 import {
   bind,
   type ElementWithPopper,
@@ -16,14 +16,13 @@ export default {
     const text = resolveContent(binding.value, el)
 
     if (!text.content && !text.title) return
-
-    el.$__state = ref({
+    
+    bind(el, binding, {
       noninteractive: true,
       ...resolveDirectiveProps(binding, el),
       title: text.title ?? text.content ?? '',
       tooltip: isActive,
     })
-    bind(el, binding)
   },
   updated(el, binding) {
     const isActive = resolveActiveStatus(binding.value)
@@ -34,13 +33,12 @@ export default {
     if (!text.content && !text.title) return
     unbind(el)
 
-    el.$__state = ref({
+    bind(el, binding, {
       noninteractive: true,
       ...resolveDirectiveProps(binding, el),
       title: text.title ?? text.content ?? '',
       tooltip: isActive,
     })
-    bind(el, binding)
   },
   beforeUnmount(el) {
     unbind(el)
