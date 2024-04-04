@@ -86,11 +86,5 @@ export default defineNuxtModule<ModuleOptions>({
         })
       )
     }
-
-    // Add workaround for the lack of stable SSR IDs in Vue 3.x
-    addImports({
-      from: 'bootstrap-vue-next',
-      name: 'provideGetId',
-    })
   },
 })

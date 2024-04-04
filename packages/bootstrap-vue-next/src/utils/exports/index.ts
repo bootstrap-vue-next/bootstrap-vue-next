@@ -1,1 +1,1 @@
-export {BvEvent, BvTriggerableEvent, BvCarouselEvent, provideGetId} from '..'
+export {BvEvent, BvTriggerableEvent, BvCarouselEvent} from '..'

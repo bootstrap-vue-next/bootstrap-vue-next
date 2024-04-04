@@ -1,8 +1,47 @@
 /* eslint-disable vue/one-component-per-file */
 import {mount} from '@vue/test-utils'
-import getId, {provideGetId} from '../../src/utils/getId'
+import {getId} from '../../src/composables'
 import {describe, expect, it} from 'vitest'
-import {defineComponent, h} from 'vue'
+import {defineComponent, h, provide} from 'vue'
+import {useSetup} from '../utils'
+import {idPluginKey} from '../../src/utils'
+
+describe('getId', () => {
+  it('returns something', () => {
+    useSetup(() => {
+      const value = getId()
+      expect(value).toBeDefined()
+    })
+  })
+
+  it('returns a string', () => {
+    useSetup(() => {
+      const value = getId()
+      expect(typeof value === 'string').toBe(true)
+    })
+  })
+
+  it('string contains __BVID__', () => {
+    useSetup(() => {
+      const value = getId()
+      expect(value).toContain('__BVID__')
+    })
+  })
+
+  it('string contains ___BV_{suffix}__ when suffix is defined', () => {
+    useSetup(() => {
+      const value = getId('foobar')
+      expect(value).toContain('___BV_foobar__')
+    })
+  })
+
+  it('string contains ___BV___ when not suffix', () => {
+    useSetup(() => {
+      const value = getId()
+      expect(value).toContain('___BV___')
+    })
+  })
+})
 
 export function useSetupWithProvideGetId<V>(setup: () => V) {
   const Comp = defineComponent({
@@ -15,7 +54,7 @@ export function useSetupWithProvideGetId<V>(setup: () => V) {
   const Provider = defineComponent({
     components: {Comp},
     setup() {
-      provideGetId(() => `${Math.random().toString().slice(2, 8)}__PROVIDED__`)
+      provide(idPluginKey, () => `${Math.random().toString().slice(2, 8)}__PROVIDED__`)
     },
     template: '<Comp />',
   })
