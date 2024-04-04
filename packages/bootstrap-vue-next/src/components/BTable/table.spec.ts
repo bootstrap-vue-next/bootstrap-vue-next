@@ -113,7 +113,11 @@ describe('tbody', () => {
 
   it('sorts text ascending', () => {
     const wrapper = mount(BTable, {
-      props: {items: simpleItems, fields: simpleFields, sortBy: 'first_name'},
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        sortBy: [{order: 'asc', key: 'first_name'}],
+      },
     })
     const text = wrapper
       .get('tbody')
@@ -124,7 +128,11 @@ describe('tbody', () => {
 
   it('sorts text descending', () => {
     const wrapper = mount(BTable, {
-      props: {items: simpleItems, fields: simpleFields, sortBy: 'first_name', sortDesc: true},
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        sortBy: [{order: 'desc', key: 'first_name'}],
+      },
     })
     const text = wrapper
       .get('tbody')
@@ -135,7 +143,7 @@ describe('tbody', () => {
 
   it('sorts numbers ascending', () => {
     const wrapper = mount(BTable, {
-      props: {items: simpleItems, fields: simpleFields, sortBy: 'age'},
+      props: {items: simpleItems, fields: simpleFields, sortBy: [{order: 'asc', key: 'age'}]},
     })
     const text = wrapper
       .get('tbody')
@@ -146,7 +154,11 @@ describe('tbody', () => {
 
   it('sorts numbers descending', () => {
     const wrapper = mount(BTable, {
-      props: {items: simpleItems, fields: simpleFields, sortBy: 'age', sortDesc: true},
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        sortBy: [{order: 'desc', key: 'age'}],
+      },
     })
     const text = wrapper
       .get('tbody')
@@ -157,7 +169,11 @@ describe('tbody', () => {
 
   it('sorts by formatted when sortByFormatted === true && formatter exists', () => {
     const wrapper = mount(BTable, {
-      props: {items: simpleItems, fields: formattedFields, sortBy: 'is_adult'},
+      props: {
+        items: simpleItems,
+        fields: formattedFields,
+        sortBy: [{order: 'asc', key: 'is_adult'}],
+      },
     })
     const text = wrapper
       .get('tbody')
@@ -168,7 +184,11 @@ describe('tbody', () => {
 
   it('sorts by formatted when sortByFormatted === true && formatter exists and respects sorDesc', () => {
     const wrapper = mount(BTable, {
-      props: {items: simpleItems, fields: formattedFields, sortBy: 'is_adult', sortDesc: true},
+      props: {
+        items: simpleItems,
+        fields: formattedFields,
+        sortBy: [{order: 'desc', key: 'is_adult'}],
+      },
     })
     const text = wrapper
       .get('tbody')
@@ -189,7 +209,11 @@ describe('tbody', () => {
     ]
 
     const wrapper = mount(BTable, {
-      props: {items: simpleItems, fields: customFormatterFields, sortBy: 'first_name'},
+      props: {
+        items: simpleItems,
+        fields: customFormatterFields,
+        sortBy: [{order: 'asc', key: 'first_name'}],
+      },
     })
     const text = wrapper
       .get('tbody')

@@ -1,9 +1,9 @@
 import type {ClassValue, ColorVariant, LiteralUnion, MaybePromise} from '.'
 import type {StyleValue} from 'vue'
 
-export type TableItem = {
+export type TableItem<T = Record<string, unknown>> = T & {
   _rowVariant?: ColorVariant | null
-  _cellVariants?: Partial<Record<string, ColorVariant>>
+  _cellVariants?: Partial<Record<keyof T, ColorVariant>>
   _showDetails?: boolean
 }
 
