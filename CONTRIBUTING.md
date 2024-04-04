@@ -51,11 +51,36 @@ This will begin the process to merge your changes into the upstream repository's
 
 ## Developing
 
-The project uses a monorepo architecture. The main source files for the package exist in `./packages/bootstrap-vue-next`, this is primarily where developing is done. You can then run `pnpm dev` and it will start all possible development environments. When developing the main package, you will want to open the **bootstrap-vue-next:dev** host. This has hot-reloading to make developing easier. You can use the `./packages/bootstrap-vue-next/src/app.vue` file as a test area for any changes that you make
+The project uses a monorepo architecture. The main source files for the package exist in `./packages/bootstrap-vue-next`, this is primarily where developing is done. You can then run `pnpm dev` and it will start all possible development environments. When developing the main package, you will want to open the **bootstrap-vue-next:dev** host. This has hot-reloading to make developing easier. You can use the `./packages/bootstrap-vue-next/src/app.vue` file as a test area for any changes that you make.
 
-You can also make use of the `./apps/playground` directory. The `./apps/playground` directory mimics a user's library and can demonstrate some bugs that may not be visible in the main package. However, it does not contain native hot-reloading and makes for a poor development experience since it requires a built dist copy of the main package (simply run `pnpm build`). The playground is not typically used for development. It is more of a place to view the full behavior of a component
+You can also make use of the `./apps/playground` directory. The `./apps/playground` directory mimics a user's library and can demonstrate some bugs that may not be visible in the main package. However, it does not contain native hot-reloading and makes for a poor development experience since it requires a built dist copy of the main package (simply run `pnpm build`). The playground is not typically used for development. It is more of a place to view the full behavior of a component.
 
-You can also use `pnpm dev --filter bootstrap-vue-next` to only open the main host
+You can also use `pnpm dev --filter bootstrap-vue-next` to only open the main host.
+
+## Improving the documentation
+
+Improving the documentation is a great way to contribute to this project, especially if you're not quite ready to dive into the code.
+
+We use [vitepress](https://vitepress.dev/) to build our documentation in the `./apps/docs` directory. In order to test the docs, first make sure that you follow the steps in [Setting up your workspace](#setting-up-your-workspace). Then you can run `pnpm dev` from the root and then open the **docs:dev** host. This will hot-reload the documentation to let you easily see your edits. The `*.md` files under `./apps/docs/src/docs` contains the core documentation and the `*.data.ts` files under `./apps/docs/src/data/components` contains JSON files that contains the data to build the component definitions in the documentation.
+
+## Help Verify BootstrapVue and Bootstrap v5 Parity
+
+As we close in on a v1 of bootstrap-vue-next, we would like to verify our feature parity with both
+[boostrap-vue](https://bootstrap-vue.org/) and [Boottrap v5](https://getbootstrap.com/).
+
+This verification requires that someone take a close look at the documention for both of the parity
+systems and the code and documentation for bootstrap-vue-next to evaluate feature parity. We're using a
+spreadsheet to track the fine grained assement, and anyone who consumes bootstrap-vue(-next) should
+be able to do the first pass evaluation of a component.
+
+To contribute:
+
+- Take a look at the read-only version of the spreadsheet, available [here](https://1drv.ms/x/s!AiUqzkjNYGL6ieBPpQpcR41wo1laZQ). You can filter on `BFormCheckbox` and `BFormCheckboxGroup` in the `Component` column to see an example of components that are being evaludated and just about anything else to see the initial state.
+- Read through the `Instructions` tab of the spreadsheet, which provides a suggested process to verify a component.
+- Once you're satisfied that you understand the process, request access top the [read/write version of the spreadsheet](https://1drv.ms/x/s!AiUqzkjNYGL6ieBPJZV0b2mgOVgnYw) on the [Bootstrap Vue 3 discord server](https://discord.gg/8VjEkneh).
+- Evaluate a component (or two) and get us one step closer to v1!
+
+More context is available in the comments for [this issue](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1775).
 
 ## Registering New Components
 

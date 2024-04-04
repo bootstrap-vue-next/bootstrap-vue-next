@@ -93,6 +93,7 @@ export const checkboxGroupKey: InjectionKey<{
   plain: Readonly<Ref<boolean>>
   size: Readonly<Ref<Size>>
   inline: Readonly<Ref<boolean>>
+  reverse: Readonly<Ref<boolean>>
   required: Readonly<Ref<boolean>>
   buttons: Readonly<Ref<boolean>>
   disabled: Readonly<Ref<boolean>>
@@ -108,6 +109,7 @@ export const radioGroupKey: InjectionKey<{
   plain: Readonly<Ref<boolean>>
   size: Readonly<Ref<Size>>
   inline: Readonly<Ref<boolean>>
+  reverse: Readonly<Ref<boolean>>
   required: Readonly<Ref<boolean>>
   disabled: Readonly<Ref<boolean>>
 }> = Symbol('radioGroup')
@@ -115,8 +117,8 @@ export const radioGroupKey: InjectionKey<{
 // Collapse
 export const collapseInjectionKey: InjectionKey<{
   id?: Readonly<Ref<string>>
-  readonly close?: () => void
-  readonly open?: () => void
+  readonly hide?: () => void
+  readonly show?: () => void
   readonly toggle?: () => void
   visible?: Readonly<Ref<boolean>>
   isNav?: Readonly<Ref<boolean>>
@@ -124,8 +126,8 @@ export const collapseInjectionKey: InjectionKey<{
 
 export const dropdownInjectionKey: InjectionKey<{
   id?: Readonly<Ref<string>>
-  readonly close?: () => void
-  readonly open?: () => void
+  readonly hide?: () => void
+  readonly show?: () => void
   readonly toggle?: () => void
   visible?: Readonly<Ref<boolean>>
   isNav?: Readonly<Ref<boolean>>

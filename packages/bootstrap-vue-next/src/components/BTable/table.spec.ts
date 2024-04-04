@@ -1,7 +1,7 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
+import type {LiteralUnion, TableField, TableItem} from 'src/types'
 import {afterEach, describe, expect, it} from 'vitest'
 import BTable from './BTable.vue'
-import type {LiteralUnion, TableField, TableItem} from 'src/types'
 
 interface SimplePerson {
   first_name: string
@@ -66,7 +66,7 @@ describe('tbody', () => {
     expect(heads[1].text()).toBe('Age')
   })
 
-  it('shows sortable columns when sortalbe === true', () => {
+  it('shows sortable columns when sortable === true', () => {
     const wrapper = mount(BTable, {
       props: {items: simpleItems, fields: simpleFields},
     })
@@ -75,7 +75,7 @@ describe('tbody', () => {
     expect(heads[1].classes()).toContain('b-table-sortable-column')
   })
 
-  it('does not show sortable columns when sortalbe undefined', () => {
+  it('does not show sortable columns when sortable undefined', () => {
     const wrapper = mount(BTable, {
       props: {items: simpleItems},
     })
