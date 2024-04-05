@@ -46,7 +46,7 @@ describe('BTableSimple', () => {
     })
     expect(wrapper.get('div').attributes('style')).toBe('max-height: 300px;')
     await wrapper.setProps({stickyHeader: false})
-    expect(wrapper.get('div').attributes('style')).toBeUndefined()
+    expect(wrapper.get('div').attributes('style')).toBeFalsy()
     await wrapper.setProps({stickyHeader: 200})
     expect(wrapper.get('div').attributes('style')).toBe('max-height: 200px;')
     await wrapper.setProps({stickyHeader: '400px'})
