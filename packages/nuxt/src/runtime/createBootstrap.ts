@@ -8,7 +8,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       directives: false,
       plugins: {
         id: {
-          getId: () => useId().replace(':', '_'),
+          getId: () => useId(),
         },
       },
     })
