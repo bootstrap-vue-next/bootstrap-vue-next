@@ -77,13 +77,7 @@
       </BCol>
       <BCol>
         <p>Selection mode</p>
-        <BFormRadio
-          v-for="(car, index) in ['single', 'multi', 'range']"
-          :key="index"
-          v-model="selectionMode"
-          :value="car"
-          >{{ car }}</BFormRadio
-        >
+        <BFormRadioGroup v-model="selectionMode" :options="['single', 'multi', 'range']" />
       </BCol>
     </BRow>
     <BRow>
@@ -131,14 +125,18 @@
               </th>
             </tr>
           </template>
-          <template #thead-sub="{key, label}">
+          <!-- <template #thead-sub="{field}">
             <tr class="my">
               <th variant="danger" />
               <th variant="danger">
-                <BFormSelect :placeholder="label" :options="[label, key]" label-field="label" />
+                <BFormSelect
+                  :placeholder="field.label"
+                  :options="[field.label, field.key]"
+                  label-field="label"
+                />
               </th>
             </tr>
-          </template>
+          </template> -->
           <template #cell(first_name)="data">
             <a href="#">{{ data.value }}</a>
           </template>
@@ -148,7 +146,7 @@
     <BRow>
       <BCol>
         <h4 class="my-3">Refreshable table (displays current time)</h4>
-        <BButton @click="currentTimeTable?.refresh()">Refresh</BButton>
+        <BButton @click="refreshTime">Refresh</BButton>
       </BCol>
     </BRow>
     <BRow>
@@ -292,8 +290,8 @@
         </BRow>
 
         <!-- Main table element for typed table-->
+        <!-- TODO: Re-enable sortby with multi-sort v-model:sort-by="sortBy"-->
         <BTable
-          v-model:sort-by="sortBy"
           v-model:sort-desc="sortDesc"
           :sort-internal="true"
           :items="itemsTyped"
@@ -353,8 +351,8 @@ import type {BTable, ColorVariant, TableFieldRaw, TableItem} from 'bootstrap-vue
 
 type LiteralUnion<T, U = string> = T | (U & Record<never, never>)
 
-const stringTableDefinitions = ref(['last_name', 'first_name', 'age'])
-const objectTableDefinitions = ref<Exclude<TableFieldRaw, string>[]>([
+const stringTableDefinitions = ['last_name', 'first_name', 'age']
+const objectTableDefinitions: TableFieldRaw[] = [
   {
     key: 'last_name',
     label: 'Family name',
@@ -362,7 +360,7 @@ const objectTableDefinitions = ref<Exclude<TableFieldRaw, string>[]>([
   },
   {key: 'first_name', label: 'Given name'},
   {key: 'age', label: 'Age', formatter: (value: unknown) => `${value} years`},
-])
+]
 const items: TableItem[] = [
   {age: 40, first_name: 'Dickerson', last_name: 'Macdonald'},
   {age: 21, first_name: 'Larsen', last_name: 'Shaw'},
@@ -403,6 +401,12 @@ const currentTimeProvider = (): TableItem[] => {
       milliseconds: now.getMilliseconds(),
     },
   ]
+}
+
+// TODO: We're exposing refresh in BTable - why is typescript griping?
+const refreshTime = () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ;(currentTimeTable.value as any)?.refresh()
 }
 
 interface PersonName {

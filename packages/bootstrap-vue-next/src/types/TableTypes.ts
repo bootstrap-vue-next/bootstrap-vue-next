@@ -59,7 +59,7 @@ export type TableField<T = any> = {
   stickyColumn?: boolean
 }
 
-export type TableFieldRaw<T> = T extends object
+export type TableFieldRaw<T = unknown> = T extends object
   ? LiteralUnion<keyof T> | TableField<T>
   : string | TableField
 
