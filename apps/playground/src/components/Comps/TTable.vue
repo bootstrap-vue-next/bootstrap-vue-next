@@ -125,18 +125,22 @@
               </th>
             </tr>
           </template>
-          <!-- <template #thead-sub="{field}">
+          <!-- TODO: We shouldn't have to cast the slot properties, bug in BTable definition? -->
+          <template #thead-sub="data">
             <tr class="my">
               <th variant="danger" />
               <th variant="danger">
                 <BFormSelect
-                  :placeholder="field.label"
-                  :options="[field.label, field.key]"
+                  :model-value="(data as unknown as TableField<any>).label"
+                  :options="[
+                    (data as unknown as TableField<any>).label,
+                    (data as unknown as TableField<any>).key,
+                  ]"
                   label-field="label"
                 />
               </th>
             </tr>
-          </template> -->
+          </template>
           <template #cell(first_name)="data">
             <a href="#">{{ data.value }}</a>
           </template>
@@ -178,10 +182,11 @@
               label-size="sm"
               class="mb-0"
             >
-              <BInputGroup size="sm">
+              <BButton size="sm" @click="onAddSort">Add Sort...</BButton>
+              <BInputGroup v-for="sort in sortBy" :key="sort.key" size="sm">
                 <BFormSelect
                   id="sort-by-select"
-                  v-model="sortBy"
+                  v-model="sort.key"
                   :options="sortOptions"
                   :aria-describedby="ariaDescribedby"
                   class="w-75"
@@ -192,14 +197,14 @@
                 </BFormSelect>
 
                 <BFormSelect
-                  v-model="sortDesc"
+                  v-model="sort.order"
                   :disabled="!sortBy"
                   :aria-describedby="ariaDescribedby"
                   size="sm"
                   class="w-25"
                 >
-                  <option :value="false">Asc</option>
-                  <option :value="true">Desc</option>
+                  <option value="asc">Asc</option>
+                  <option value="desc">Desc</option>
                 </BFormSelect>
               </BInputGroup>
             </BFormGroup>
@@ -290,9 +295,8 @@
         </BRow>
 
         <!-- Main table element for typed table-->
-        <!-- TODO: Re-enable sortby with multi-sort v-model:sort-by="sortBy"-->
         <BTable
-          v-model:sort-desc="sortDesc"
+          v-model:sort-by="sortBy"
           :sort-internal="true"
           :items="itemsTyped"
           :fields="fieldsTyped"
@@ -302,8 +306,11 @@
           :responsive="false"
           :filterable="filterOn"
           :small="true"
+          :multisort="true"
           @filtered="onFiltered"
           @row-clicked="onRowClicked"
+          @sorted="onSorted"
+          @update:sort-by="onSortUpdate"
         >
           <!-- TODO: is typing of dynamic slots possible? -->
           <template #cell(name)="row">
@@ -347,7 +354,14 @@
 
 <script setup lang="ts">
 import {computed, reactive, ref} from 'vue'
-import type {BTable, ColorVariant, TableFieldRaw, TableItem} from 'bootstrap-vue-next'
+import type {
+  BTable,
+  BTableSortBy,
+  ColorVariant,
+  TableField,
+  TableFieldRaw,
+  TableItem,
+} from 'bootstrap-vue-next'
 
 type LiteralUnion<T, U = string> = T | (U & Record<never, never>)
 
@@ -403,7 +417,7 @@ const currentTimeProvider = (): TableItem[] => {
   ]
 }
 
-// TODO: We're exposing refresh in BTable - why is typescript griping?
+// TODO: We're exposing refresh in BTable - why is typescript griping? The refresh works fine
 const refreshTime = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ;(currentTimeTable.value as any)?.refresh()
@@ -474,14 +488,21 @@ const fieldsTyped: Exclude<TableFieldRaw<Person>, string>[] = [
   {key: 'actions', label: 'Actions'},
 ]
 
-const pageOptions = [5, 10, 15, {value: 100, text: 'Show a lot'}]
+// TODO: looks like mixed value/object options are broken in BSelect??/
+//const pageOptions = [5, 10, 15, {value: 100, text: 'Show a lot'}]
+
+const pageOptions = [
+  {value: 5, text: '5'},
+  {value: 10, text: '10'},
+  {value: 15, text: '15'},
+  {value: 100, text: 'Show a lot'},
+]
 
 const totalRows = ref(itemsTyped.length)
 const currentPage = ref(1)
 const perPage = ref(5)
-const sortBy = ref('')
+const sortBy = ref<BTableSortBy[]>([])
 const sortDirection = ref('asc')
-const sortDesc = ref(false)
 const filter = ref('')
 const filterOn = ref([])
 const infoModal = reactive({
@@ -512,17 +533,32 @@ function onFiltered(filteredItems: TableItem<Person>[]) {
   totalRows.value = filteredItems.length
   currentPage.value = 1
 
-  // The following logging is just to prove that typing is working
-  filteredItems.forEach((item) => {
-    // eslint-disable-next-line no-console
-    console.log(
-      `${item.name.first} ${item.name.last} is ${item.age} years old and is active = ${item.isActive}`
-    )
-  })
+  // The following lines are just to prove that typing is working
+  false &&
+    filteredItems.forEach((item) => {
+      // eslint-disable-next-line no-console
+      console.log(
+        `${item.name.first} ${item.name.last} is ${item.age} years old and is active = ${item.isActive}`
+      )
+    })
 }
 
 function onRowClicked(row: TableItem<Person>, index: number) {
   // eslint-disable-next-line no-console
   console.log(`clicked on row ${index}: ${row.name.first} ${row.name.last}`)
+}
+
+function onSorted(sortby: BTableSortBy) {
+  // eslint-disable-next-line no-console
+  console.log(`sorted: ${JSON.stringify(sortby)}`)
+}
+
+function onSortUpdate(sortby: BTableSortBy | BTableSortBy[] | null) {
+  // eslint-disable-next-line no-console
+  console.log(`sort-by:update: ${JSON.stringify(sortby)}`)
+}
+
+function onAddSort() {
+  sortBy.value.push({key: '', order: 'asc'})
 }
 </script>

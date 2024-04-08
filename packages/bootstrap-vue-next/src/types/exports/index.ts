@@ -15,6 +15,7 @@ export type {
   BreadcrumbItem,
   BreadcrumbItemRaw,
   Breakpoint,
+  BTableSortBy,
   ButtonType,
   ButtonVariant,
   CheckboxOption,

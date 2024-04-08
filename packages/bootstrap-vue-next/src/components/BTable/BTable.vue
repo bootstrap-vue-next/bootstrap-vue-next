@@ -225,7 +225,7 @@ const emit = defineEmits<{
   'row-selected': [value: T]
   'row-unselected': [value: T]
   'selection': [value: T[]]
-  'sorted': [value: BTableSortBy | null]
+  'sorted': [value: BTableSortBy]
 }>()
 
 const sortByModel = defineModel<BTableSortBy[] | undefined>('sortBy', {
@@ -313,18 +313,19 @@ const computedFields = computed<TableFieldRaw<T>[]>(() =>
   props.fields.map((el) => {
     if (!(typeof el === 'object' && el !== null)) return el
 
-    const value = sortByModel.value?.find((el) => el.key === el.key)
+    const value = sortByModel.value?.find((sb) => el.key === sb.key)
+    const sortValue =
+      isSortable.value === false
+        ? undefined
+        : value === undefined
+          ? 'none'
+          : value.order === 'desc'
+            ? 'descending'
+            : 'ascending'
     return {
       ...el,
       thAttr: {
-        'aria-sort':
-          isSortable.value === false
-            ? undefined
-            : value === undefined
-              ? 'none'
-              : value.order === 'desc'
-                ? 'descending'
-                : 'ascending',
+        'aria-sort': sortValue,
         ...el.thAttr,
       },
     }
@@ -552,20 +553,24 @@ const handleFieldSorting = (field: TableField<T>) => {
   /**
    * @returns the updated value to emit for sorted
    */
-  const handleMultiSort = (): null | BTableSortBy => {
+  const handleMultiSort = (): BTableSortBy => {
+    let val = updatedValue
     if (index === -1) {
       sortByModel.value = [...(sortByModel.value ?? []), updatedValue]
-      return updatedValue
+    } else {
+      const order = resolveOrder(updatedValue.order)
+      val = {...updatedValue, order}
+      sortByModel.value = order
+        ? sortByModel.value?.map((el) => (el.key === val.key ? val : el))
+        : sortByModel.value?.filter((el) => el.key !== val.key)
     }
-    const val = {...updatedValue, order: resolveOrder(updatedValue.order)}
-    sortByModel.value?.splice(index, 1, val)
     return val
   }
 
   /**
    * @returns the updated value to emit for sorted
    */
-  const handleSingleSort = (): null | BTableSortBy => {
+  const handleSingleSort = (): BTableSortBy => {
     const val = {
       ...updatedValue,
       order: index === -1 ? updatedValue.order : resolveOrder(updatedValue.order),

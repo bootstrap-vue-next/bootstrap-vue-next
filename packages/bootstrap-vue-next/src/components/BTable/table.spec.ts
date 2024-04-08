@@ -14,6 +14,14 @@ const simpleItems: TableItem<SimplePerson>[] = [
   {age: 42, first_name: 'Robert'},
 ]
 
+const multiSort: TableItem<SimplePerson>[] = [
+  {age: 27, first_name: 'Havij'},
+  {age: 9, first_name: 'Cyndi'},
+  {age: 42, first_name: 'Robert'},
+  {age: 35, first_name: 'Robert'},
+  {age: 101, first_name: 'Cyndi'},
+]
+
 const simpleFields: Exclude<TableField<SimplePerson>, string>[] = [
   {key: 'first_name', label: 'First Name', sortable: true},
   {key: 'age', label: 'Age', sortable: true},
@@ -74,7 +82,8 @@ describe('tbody', () => {
     expect(heads[0].classes()).toContain('b-table-sortable-column')
     expect(heads[1].classes()).toContain('b-table-sortable-column')
   })
-
+})
+describe('single-sort', () => {
   it('does not show sortable columns when sortable undefined', () => {
     const wrapper = mount(BTable, {
       props: {items: simpleItems},
@@ -220,5 +229,43 @@ describe('tbody', () => {
       .findAll('tr')
       .map((row) => row.find('td').text())
     expect(text).toStrictEqual(['Havij', 'Robert', 'Cyndi'])
+  })
+
+  describe('multi-sort', () => {
+    it('has aria-sort labels reflecting sortBy prop', () => {
+      const wrapper = mount(BTable, {
+        props: {
+          multisort: true,
+          items: multiSort,
+          fields: simpleFields,
+          sortBy: [
+            {key: 'age', order: 'asc'},
+            {key: 'first_name', order: 'desc'},
+          ],
+        },
+      })
+      const heads = wrapper.get('table').findAll('th')
+      expect(heads[0].attributes('aria-sort')).toBe('descending')
+      expect(heads[1].attributes('aria-sort')).toBe('ascending')
+    })
+
+    it('correctly sorts on two columns', () => {
+      const wrapper = mount(BTable, {
+        props: {
+          multisort: true,
+          items: multiSort,
+          fields: simpleFields,
+          sortBy: [
+            {key: 'first_name', order: 'desc'},
+            {key: 'age', order: 'asc'},
+          ],
+        },
+      })
+      const text = wrapper
+        .get('tbody')
+        .findAll('tr')
+        .map((row) => row.findAll('td')[1].text())
+      expect(text).toStrictEqual(['35', '42', '27', '9', '101'])
+    })
   })
 })
