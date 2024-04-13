@@ -1231,7 +1231,7 @@ You can easily create a custom wrapper component with your preferred rendering s
 
 ```vue
 <template>
-  <BFormTags :value="modelValue" @input="$emit('input', $event)">
+  <BFormTags :value="modelValue">
     <template v-slot="{tags, addTag, removeTag, inputAttrs, inputHandlers}">
       <!-- Place your custom rendering here -->
     </template>
@@ -1357,5 +1357,5 @@ Note `<BFormTag>` requires BootstrapVue's custom CSS/SCSS for proper styling.
     addTag(option)
     searchCriteria.value = ''
   }
- 
+
 </script>

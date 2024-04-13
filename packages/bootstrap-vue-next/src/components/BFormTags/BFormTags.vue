@@ -161,7 +161,6 @@ const emit = defineEmits<{
   'focus': [value: FocusEvent]
   'focusin': [value: FocusEvent]
   'focusout': [value: FocusEvent]
-  'input': [value: string[]]
   'tag-state': [...args: string[][]]
 }>()
 
@@ -394,7 +393,6 @@ const addTag = (tag?: string): void => {
   inputValue.value = ''
   shouldRemoveOnDelete.value = true
   modelValue.value = newValue
-  emit('input', newValue)
   focused.value = true
 }
 

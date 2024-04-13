@@ -635,7 +635,7 @@ describe('form-checkbox', () => {
         attachTo: document.body,
       })
 
-      await wrapper.find('input').trigger('click')
+      await wrapper.get('input').trigger('click')
 
       expect(wrapper.emitted('update:modelValue')).toBeDefined()
       expect(wrapper.emitted('update:modelValue')?.length).toBe(1)
