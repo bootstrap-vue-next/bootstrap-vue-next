@@ -62,7 +62,7 @@ import type {BToastProps} from '../../types'
 import BTransition from '../BTransition/BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BLink from '../BLink/BLink.vue'
-import {useElementHover, useToNumber, useVModel} from '@vueuse/core'
+import {useElementHover, useToNumber} from '@vueuse/core'
 import BProgress from '../BProgress/BProgress.vue'
 import {BvTriggerableEvent} from '../../utils'
 
@@ -75,7 +75,6 @@ const props = withDefaults(defineProps<BToastProps>(), {
   id: undefined,
   interval: 1000,
   isStatus: false,
-  modelValue: false,
   noCloseButton: false,
   noFade: false,
   noHoverPause: false,
@@ -120,7 +119,6 @@ const emit = defineEmits<{
   'shown': [value: BvTriggerableEvent]
   'show-prevented': []
   'hide-prevented': []
-  'update:modelValue': [value: boolean | number]
 }>()
 
 const element = ref<HTMLElement | null>(null)
@@ -128,7 +126,7 @@ const element = ref<HTMLElement | null>(null)
 const isHovering = useElementHover(element)
 // Note: passive: true will sync an internal ref... This is required for useToast to exit,
 // Since the modelValue that's passed from that composable is not reactive, this internal ref _is_ and thus it will trigger closing the toast
-const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
+const modelValue = defineModel<boolean | number>({default: false})
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props)
 

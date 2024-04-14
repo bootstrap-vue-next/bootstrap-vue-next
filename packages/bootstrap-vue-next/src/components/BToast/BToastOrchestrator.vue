@@ -26,22 +26,16 @@
 </template>
 
 <script setup lang="ts">
-import {type RendererElement, watch} from 'vue'
+import {watch} from 'vue'
 import {useToast} from '../../composables'
 import {omit} from '../../utils'
+import type {BToastOrchestratorProps} from '../../types'
 
-const props = withDefaults(
-  defineProps<{
-    teleportDisabled?: boolean
-    teleportTo?: string | Readonly<RendererElement> | null | undefined
-    appendToast?: boolean
-  }>(),
-  {
-    teleportDisabled: false,
-    teleportTo: 'body',
-    appendToast: false,
-  }
-)
+const props = withDefaults(defineProps<BToastOrchestratorProps>(), {
+  teleportDisabled: false,
+  teleportTo: 'body',
+  appendToast: false,
+})
 
 const toastPositions = {
   'top-left': 'top-0 start-0',

@@ -37,9 +37,8 @@
 import {computed, toRef} from 'vue'
 import BSpinner from '../BSpinner.vue'
 import {useBLinkHelper} from '../../composables'
-import type {BLinkProps, ButtonType, ButtonVariant, Size} from '../../types'
+import type {BButtonProps} from '../../types'
 import BLink from '../BLink/BLink.vue'
-import {useVModel} from '@vueuse/core'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -50,64 +49,46 @@ defineSlots<{
   'loading-spinner'?: (props: Record<string, never>) => any
 }>()
 
-const props = withDefaults(
-  defineProps<
-    {
-      loading?: boolean
-      loadingFill?: boolean
-      loadingText?: string
-      pill?: boolean
-      pressed?: boolean
-      size?: Size
-      squared?: boolean
-      tag?: string
-      type?: ButtonType
-      variant?: ButtonVariant | null
-    } & Omit<BLinkProps, 'variant'>
-  >(),
-  {
-    loading: false,
-    loadingFill: false,
-    loadingText: 'Loading...',
-    pill: false,
-    pressed: undefined,
-    size: 'md',
-    squared: false,
-    tag: 'button',
-    type: 'button',
-    // Link props
-    active: false, // Why is this active: false?
-    variant: 'secondary',
-    // All others use defaults
-    activeClass: undefined,
-    append: undefined,
-    disabled: undefined,
-    exactActiveClass: undefined,
-    href: undefined,
-    icon: undefined,
-    opacity: undefined,
-    opacityHover: undefined,
-    rel: undefined,
-    replace: undefined,
-    routerComponentName: undefined,
-    routerTag: undefined,
-    target: undefined,
-    to: undefined,
-    underlineOffset: undefined,
-    underlineOffsetHover: undefined,
-    underlineOpacity: undefined,
-    underlineOpacityHover: undefined,
-    underlineVariant: undefined,
-    // End link props
-  }
-)
+const props = withDefaults(defineProps<BButtonProps>(), {
+  loading: false,
+  loadingFill: false,
+  loadingText: 'Loading...',
+  pill: false,
+  size: 'md',
+  squared: false,
+  tag: 'button',
+  type: 'button',
+  // Link props
+  active: false, // Why is this active: false?
+  variant: 'secondary',
+  // All others use defaults
+  activeClass: undefined,
+  append: undefined,
+  disabled: undefined,
+  exactActiveClass: undefined,
+  href: undefined,
+  icon: undefined,
+  opacity: undefined,
+  opacityHover: undefined,
+  rel: undefined,
+  replace: undefined,
+  routerComponentName: undefined,
+  routerTag: undefined,
+  target: undefined,
+  to: undefined,
+  underlineOffset: undefined,
+  underlineOffsetHover: undefined,
+  underlineOpacity: undefined,
+  underlineOpacityHover: undefined,
+  underlineVariant: undefined,
+  // End link props
+})
 
 const emit = defineEmits<{
-  'click': [value: MouseEvent]
-  'update:pressed': [value: boolean]
+  click: [value: MouseEvent]
 }>()
 
-const pressedValue = useVModel(props, 'pressed', emit)
+const pressedValue = defineModel<boolean | undefined>('pressed', {default: undefined})
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'active-class',

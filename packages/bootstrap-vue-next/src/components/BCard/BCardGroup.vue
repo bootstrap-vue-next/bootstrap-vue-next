@@ -5,20 +5,14 @@
 </template>
 
 <script setup lang="ts">
+import type {BCardGroupProps} from '../../types'
 import {toRef} from 'vue'
 
-const props = withDefaults(
-  defineProps<{
-    columns?: boolean
-    deck?: boolean
-    tag?: string
-  }>(),
-  {
-    columns: false,
-    deck: false,
-    tag: 'div',
-  }
-)
+const props = withDefaults(defineProps<BCardGroupProps>(), {
+  columns: false,
+  deck: false,
+  tag: 'div',
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

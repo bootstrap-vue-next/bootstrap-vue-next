@@ -36,71 +36,36 @@
   </select>
 </template>
 
-<script setup lang="ts" generic="T = unknown">
-import type {AriaInvalid, ComplexSelectOptionRaw, Numberish, SelectOption, Size} from '../../types'
+<script setup lang="ts" generic="T">
+import type {BFormSelectProps, ComplexSelectOptionRaw, SelectOption} from '../../types'
 import {computed, ref, toRef} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
 import {useAriaInvalid, useFormSelect, useId, useStateClass} from '../../composables'
-import {useFocus, useToNumber, useVModel} from '@vueuse/core'
+import {useFocus, useToNumber} from '@vueuse/core'
 
-const props = withDefaults(
-  defineProps<{
-    ariaInvalid?: AriaInvalid
-    autofocus?: boolean
-    disabled?: boolean
-    disabledField?: string
-    form?: string
-    htmlField?: string
-    id?: string
-    labelField?: string
-    modelValue?:
-      | boolean
-      | string
-      | readonly unknown[]
-      | Readonly<Record<string, unknown>>
-      | number
-      | null
-    multiple?: boolean
-    name?: string
-    options?: readonly (unknown | Record<string, unknown>)[]
-    optionsField?: string
-    plain?: boolean
-    required?: boolean
-    selectSize?: Numberish
-    size?: Size
-    state?: boolean | null
-    textField?: string
-    valueField?: string
-  }>(),
-  {
-    ariaInvalid: undefined,
-    autofocus: false,
-    disabled: false,
-    disabledField: 'disabled',
-    form: undefined,
-    htmlField: 'html',
-    id: undefined,
-    labelField: 'label',
-    modelValue: '',
-    multiple: false,
-    name: undefined,
-    // eslint-disable-next-line vue/require-valid-default-prop
-    options: () => [],
-    optionsField: 'options',
-    plain: false,
-    required: false,
-    selectSize: 0,
-    size: 'md',
-    state: null,
-    textField: 'text',
-    valueField: 'value',
-  }
-)
-
-const emit = defineEmits<{
-  'update:modelValue': [value: unknown]
-}>()
+const props = withDefaults(defineProps<BFormSelectProps>(), {
+  ariaInvalid: undefined,
+  autofocus: false,
+  disabled: false,
+  disabledField: 'disabled',
+  form: undefined,
+  htmlField: 'html',
+  id: undefined,
+  labelField: 'label',
+  multiple: false,
+  name: undefined,
+  // eslint-disable-next-line vue/require-valid-default-prop
+  options: () => [],
+  optionsField: 'options',
+  plain: false,
+  required: false,
+  selectSize: 0,
+  size: 'md',
+  state: null,
+  textField: 'text',
+  valueField: 'value',
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -109,7 +74,10 @@ defineSlots<{
   first?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
+const modelValue = defineModel<T>({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default: '' as any,
+})
 
 const computedId = useId(() => props.id, 'input')
 

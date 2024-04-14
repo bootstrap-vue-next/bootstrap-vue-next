@@ -18,30 +18,20 @@
   </optgroup>
 </template>
 
-<script setup lang="ts" generic="T = unknown">
+<script setup lang="ts" generic="T">
 import BFormSelectOption from './BFormSelectOption.vue'
 import {useFormSelect} from '../../composables'
-import type {SelectOption} from '../../types'
+import type {BFormSelectOptionGroupProps, SelectOption} from '../../types'
 import {computed} from 'vue'
 
-const props = withDefaults(
-  defineProps<{
-    disabledField?: string
-    htmlField?: string
-    label?: string
-    options?: readonly (unknown | Record<string, unknown>)[]
-    textField?: string
-    valueField?: string
-  }>(),
-  {
-    disabledField: 'disabled',
-    htmlField: 'html',
-    label: undefined,
-    options: () => [],
-    textField: 'text',
-    valueField: 'value',
-  }
-)
+const props = withDefaults(defineProps<BFormSelectOptionGroupProps>(), {
+  disabledField: 'disabled',
+  htmlField: 'html',
+  label: undefined,
+  options: () => [],
+  textField: 'text',
+  valueField: 'value',
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

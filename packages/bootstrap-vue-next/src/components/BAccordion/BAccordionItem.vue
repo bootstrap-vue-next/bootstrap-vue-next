@@ -49,57 +49,34 @@
 
 <script setup lang="ts">
 import {inject, onMounted, useAttrs, watch} from 'vue'
-import {useVModel} from '@vueuse/core'
 import BCollapse from '../BCollapse.vue'
 import {accordionInjectionKey, BvTriggerableEvent} from '../../utils'
 import {useId} from '../../composables'
-import type {AttrsValue, ClassValue} from '../../types'
+import type {BAccordionItemProps} from '../../types'
 
 defineOptions({
   inheritAttrs: false,
 })
 const {class: wrapperClass, ...collapseAttrs} = useAttrs()
 
-const props = withDefaults(
-  defineProps<{
-    bodyAttrs?: Readonly<AttrsValue>
-    bodyClass?: ClassValue
-    buttonAttrs?: Readonly<AttrsValue>
-    buttonClass?: ClassValue
-    collapseClass?: ClassValue
-    headerAttrs?: Readonly<AttrsValue>
-    headerClass?: ClassValue
-    headerTag?: string
-    horizontal?: boolean
-    id?: string
-    isNav?: boolean
-    modelValue?: boolean
-    tag?: string
-    title?: string
-    toggle?: boolean
-    visible?: boolean
-    wrapperAttrs?: Readonly<AttrsValue>
-  }>(),
-  {
-    bodyAttrs: undefined,
-    bodyClass: undefined,
-    buttonAttrs: undefined,
-    buttonClass: undefined,
-    collapseClass: undefined,
-    headerAttrs: undefined,
-    headerClass: undefined,
-    headerTag: 'h2',
-    horizontal: undefined,
-    id: undefined,
-    isNav: undefined,
-    modelValue: false,
-    tag: undefined,
-    title: undefined,
-    toggle: undefined,
-    visible: false,
-    wrapperAttrs: undefined,
-  }
-)
+const props = withDefaults(defineProps<BAccordionItemProps>(), {
+  bodyAttrs: undefined,
+  bodyClass: undefined,
+  buttonAttrs: undefined,
+  buttonClass: undefined,
+  collapseClass: undefined,
+  headerAttrs: undefined,
+  headerClass: undefined,
+  headerTag: 'h2',
+  horizontal: undefined,
+  id: undefined,
+  isNav: undefined,
+  tag: undefined,
+  title: undefined,
+  toggle: undefined,
+  visible: false,
+  wrapperAttrs: undefined,
+})
 
 const emit = defineEmits<{
   'hidden': []
@@ -108,7 +85,6 @@ const emit = defineEmits<{
   'show': [value: BvTriggerableEvent]
   'show-prevented': []
   'shown': []
-  'update:modelValue': [value: boolean]
 }>()
 
 defineSlots<{
@@ -118,7 +94,7 @@ defineSlots<{
   title?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
+const modelValue = defineModel<boolean>({default: false})
 
 const parentData = inject(accordionInjectionKey, null)
 

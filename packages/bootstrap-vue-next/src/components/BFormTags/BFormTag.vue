@@ -25,31 +25,19 @@
 <script setup lang="ts">
 import {computed, toRef} from 'vue'
 import {useId} from '../../composables'
-import type {ColorVariant} from '../../types'
+import type {BFormTagProps} from '../../types'
 import BCloseButton from '../BButton/BCloseButton.vue'
 
-const props = withDefaults(
-  defineProps<{
-    disabled?: boolean
-    id?: string
-    noRemove?: boolean
-    pill?: boolean
-    removeLabel?: string
-    tag?: string
-    title?: string
-    variant?: ColorVariant | null
-  }>(),
-  {
-    disabled: false,
-    id: undefined,
-    noRemove: false,
-    pill: false,
-    removeLabel: 'Remove tag',
-    tag: 'span',
-    title: undefined,
-    variant: 'secondary',
-  }
-)
+const props = withDefaults(defineProps<BFormTagProps>(), {
+  disabled: false,
+  id: undefined,
+  noRemove: false,
+  pill: false,
+  removeLabel: 'Remove tag',
+  tag: 'span',
+  title: undefined,
+  variant: 'secondary',
+})
 
 const emit = defineEmits<{
   remove: [value: string]

@@ -36,7 +36,7 @@
     "test:ci": "turbo run test:ci"
   },
   "devDependencies": {
-    "husky": "^9.0.10",
+    "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
     "turbo": "latest"
   },

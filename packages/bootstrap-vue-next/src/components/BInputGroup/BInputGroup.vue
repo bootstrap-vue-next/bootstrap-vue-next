@@ -19,29 +19,18 @@
 </template>
 
 <script setup lang="ts">
-import type {Size} from '../../types'
+import type {BInputGroupProps} from '../../types'
 import {computed, toRef} from 'vue'
 
-const props = withDefaults(
-  defineProps<{
-    append?: string
-    appendHtml?: string
-    id?: string
-    prepend?: string
-    prependHtml?: string
-    size?: Size
-    tag?: string
-  }>(),
-  {
-    append: undefined,
-    appendHtml: undefined,
-    id: undefined,
-    prepend: undefined,
-    prependHtml: undefined,
-    size: 'md',
-    tag: 'div',
-  }
-)
+const props = withDefaults(defineProps<BInputGroupProps>(), {
+  append: undefined,
+  appendHtml: undefined,
+  id: undefined,
+  prepend: undefined,
+  prependHtml: undefined,
+  size: 'md',
+  tag: 'div',
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

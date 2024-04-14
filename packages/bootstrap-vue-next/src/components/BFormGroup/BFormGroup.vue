@@ -1,14 +1,7 @@
 <script lang="ts">
 import {useAriaInvalid, useId, useStateClass} from '../../composables'
 import {RX_SPACE_SPLIT} from '../../constants/regex'
-import {
-  attemptFocus,
-  getId,
-  IS_BROWSER,
-  isVisible,
-  normalizeSlot,
-  suffixPropName,
-} from '../../utils'
+import {attemptFocus, IS_BROWSER, isVisible, normalizeSlot, suffixPropName} from '../../utils'
 import {computed, defineComponent, h, nextTick, onMounted, type PropType, ref, watch} from 'vue'
 import BCol from '../BCol.vue'
 import BFormInvalidFeedback from '../BForm/BFormInvalidFeedback.vue'
@@ -162,7 +155,10 @@ export default defineComponent({
 
     const stateClass = useStateClass(() => props.state)
 
-    const computedAriaInvalid = useAriaInvalid(() => props.ariaInvalid, () => props.state)
+    const computedAriaInvalid = useAriaInvalid(
+      () => props.ariaInvalid,
+      () => props.state
+    )
 
     watch(
       () => ariaDescribedby,
@@ -221,7 +217,7 @@ export default defineComponent({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let $label: any = null
     const labelContent = normalizeSlot(SLOT_NAME_LABEL, {}, slots) || props.label
-    const labelId = labelContent ? getId('_BV_label_') : null
+    const labelId = labelContent ? useId(undefined, '_BV_label_').value : null
 
     if (labelContent || this.isHorizontal) {
       const labelTag: 'legend' | 'label' = isFieldset ? 'legend' : 'label'
@@ -274,7 +270,9 @@ export default defineComponent({
     let $invalidFeedback = null
     const invalidFeedbackContent =
       normalizeSlot(SLOT_NAME_INVALID_FEEDBACK, {}, slots) || this.invalidFeedback
-    const invalidFeedbackId = invalidFeedbackContent ? getId('_BV_feedback_invalid_') : undefined
+    const invalidFeedbackId = invalidFeedbackContent
+      ? useId(undefined, '_BV_feedback_invalid_').value
+      : undefined
 
     if (invalidFeedbackContent) {
       $invalidFeedback = h(
@@ -292,7 +290,9 @@ export default defineComponent({
     let $validFeedback = null
     const validFeedbackContent =
       normalizeSlot(SLOT_NAME_VALID_FEEDBACK, {}, slots) || this.validFeedback
-    const validFeedbackId = validFeedbackContent ? getId('_BV_feedback_valid_') : undefined
+    const validFeedbackId = validFeedbackContent
+      ? useId(undefined, '_BV_feedback_valid_').value
+      : undefined
 
     if (validFeedbackContent) {
       $validFeedback = h(
@@ -310,7 +310,9 @@ export default defineComponent({
 
     let $description = null
     const descriptionContent = normalizeSlot(SLOT_NAME_DESCRIPTION, {}, slots) || this.description
-    const descriptionId = descriptionContent ? getId('_BV_description_') : undefined
+    const descriptionId = descriptionContent
+      ? useId(undefined, '_BV_description_').value
+      : undefined
     if (descriptionContent) {
       $description = h(
         BFormText,

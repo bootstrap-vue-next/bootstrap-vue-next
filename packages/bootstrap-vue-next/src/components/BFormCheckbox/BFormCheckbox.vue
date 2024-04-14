@@ -26,10 +26,10 @@
 </template>
 
 <script setup lang="ts">
-import {useFocus, useVModel} from '@vueuse/core'
+import {useFocus} from '@vueuse/core'
 import {computed, inject, ref, toRef} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useId} from '../../composables'
-import type {ButtonVariant, CheckboxValue, Size} from '../../types'
+import type {BFormCheckboxProps, CheckboxValue} from '../../types'
 import {checkboxGroupKey, isEmptySlot} from '../../utils'
 import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
 
@@ -37,69 +37,39 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(
-  defineProps<{
-    ariaLabel?: string
-    ariaLabelledby?: string
-    autofocus?: boolean
-    button?: boolean
-    buttonGroup?: boolean
-    buttonVariant?: ButtonVariant | null
-    disabled?: boolean
-    form?: string
-    id?: string
-    indeterminate?: boolean
-    inline?: boolean
-    modelValue?: CheckboxValue | readonly CheckboxValue[]
-    name?: string
-    plain?: boolean
-    required?: boolean
-    size?: Size
-    state?: boolean | null
-    switch?: boolean
-    uncheckedValue?: CheckboxValue
-    // Since the compiler-sfc doesn't crawl external filed, the redundant string/boolean union is
-    //   necessary to tell it that we don't want it to follow Boolean casting rules
-    //  https://vuejs.org/guide/components/props.html#boolean-casting which would cast the empty
-    //  string to true
-    value?: string | boolean | CheckboxValue
-  }>(),
-  {
-    ariaLabel: undefined,
-    ariaLabelledby: undefined,
-    autofocus: false,
-    button: false,
-    buttonGroup: false,
-    buttonVariant: null,
-    disabled: false,
-    form: undefined,
-    id: undefined,
-    indeterminate: false,
-    inline: false,
-    modelValue: undefined,
-    name: undefined,
-    plain: false,
-    required: undefined,
-    size: undefined,
-    state: null,
-    switch: false,
-    uncheckedValue: false,
-    value: true,
-  }
-)
-
-const emit = defineEmits<{
-  'update:modelValue': [value: CheckboxValue | CheckboxValue[]]
-  'update:indeterminate': [value: boolean]
-}>()
+const props = withDefaults(defineProps<BFormCheckboxProps>(), {
+  ariaLabel: undefined,
+  ariaLabelledby: undefined,
+  autofocus: false,
+  button: false,
+  buttonGroup: false,
+  buttonVariant: null,
+  disabled: false,
+  form: undefined,
+  id: undefined,
+  inline: false,
+  name: undefined,
+  plain: false,
+  required: undefined,
+  reverse: false,
+  size: undefined,
+  state: null,
+  switch: false,
+  uncheckedValue: false,
+  value: true,
+})
 
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
-const indeterminate = useVModel(props, 'indeterminate', emit)
+const modelValue = defineModel<CheckboxValue | CheckboxValue[]>({
+  default: undefined,
+})
+const indeterminate = defineModel<boolean>('indeterminate', {
+  default: false,
+})
 
 const computedId = useId(() => props.id, 'form-check')
 
@@ -142,10 +112,12 @@ const classesObject = computed(() => ({
   plain: props.plain || (parentData?.plain.value ?? false),
   button: props.button || (parentData?.buttons.value ?? false),
   inline: props.inline || (parentData?.inline.value ?? false),
+  reverse: props.reverse || (parentData?.reverse.value ?? false),
   switch: props.switch || (parentData?.switch.value ?? false),
   state: props.state || parentData?.state.value,
   size: props.size ?? parentData?.size.value ?? 'md', // This is where the true default is made
   buttonVariant: props.buttonVariant ?? parentData?.buttonVariant.value ?? 'secondary', // This is where the true default is made
+  hasDefaultSlot: hasDefaultSlot.value,
 }))
 const computedClasses = getClasses(classesObject)
 const inputClasses = getInputClasses(classesObject)

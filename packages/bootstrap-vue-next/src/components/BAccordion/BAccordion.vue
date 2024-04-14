@@ -8,33 +8,22 @@
 import {computed, provide, readonly, toRef} from 'vue'
 import {accordionInjectionKey} from '../../utils'
 import {useId} from '../../composables'
-import {useVModel} from '@vueuse/core'
+import type {BAccordionProps} from '../../types'
 
-const props = withDefaults(
-  defineProps<{
-    flush?: boolean
-    free?: boolean
-    id?: string
-    modelValue?: string
-  }>(),
-  {
-    flush: false,
-    free: false,
-    id: undefined,
-    modelValue: undefined,
-  }
-)
-
-const emit = defineEmits<{
-  'update:modelValue': [value: string]
-}>()
+const props = withDefaults(defineProps<BAccordionProps>(), {
+  flush: false,
+  free: false,
+  id: undefined,
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
+const modelValue = defineModel<string | undefined>({
+  default: undefined,
+})
 
 const computedId = useId(() => props.id, 'accordion')
 

@@ -50,14 +50,12 @@
       <BCol>
         <BImg
           v-bind="{blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1'}"
-          rounded="top"
           alt="Top-rounded image"
         />
       </BCol>
       <BCol>
         <BImg
           v-bind="{blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1'}"
-          rounded="end"
           alt="Right-rounded image"
         />
       </BCol>
@@ -65,14 +63,12 @@
       <BCol>
         <BImg
           v-bind="{blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1'}"
-          rounded="bottom"
           alt="Bottom-rounded image"
         />
       </BCol>
       <BCol>
         <BImg
           v-bind="{blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1'}"
-          rounded="start"
           alt="Left-rounded image"
         />
       </BCol>

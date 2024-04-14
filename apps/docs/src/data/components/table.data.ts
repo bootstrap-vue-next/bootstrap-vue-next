@@ -43,8 +43,9 @@ export default {
         },
         {
           prop: 'sortBy',
-          type: 'string',
+          type: 'BTableSortBy[]',
           default: undefined,
+          description: 'Model representing the current sort state',
         },
         {
           prop: 'sortDesc',
@@ -259,40 +260,26 @@ export default {
         {
           args: [
             {
-              arg: 'update:sortBy',
-              description: '',
+              arg: 'value',
+              description: 'BTableSortBy[] | undefined',
               type: 'string',
             },
           ],
           event: 'update:sortBy',
-          description: '',
+          description:
+            'Emitted when the `sortBy` model is changed and represents the current sort state',
         },
         {
           args: [
             {
-              arg: 'update:sortDesc',
-              description: 'boolean',
-              type: 'boolean',
-            },
-          ],
-          event: 'update:sortDesc',
-          description: '',
-        },
-        {
-          args: [
-            {
-              arg: 'sortBy',
+              arg: 'value',
               description: '',
-              type: 'string',
-            },
-            {
-              arg: 'isDesc',
-              description: '',
-              type: 'boolean',
+              type: 'BTableSortBy',
             },
           ],
           event: 'sorted',
-          description: '',
+          description:
+            'Updated when the user clicks a sortable column heading and represents the column click and the sort state (`asc`, `desc`, or undefined)',
         },
       ],
       slots: [
@@ -485,8 +472,10 @@ export default {
         },
         {
           prop: 'stickyHeader',
-          type: 'boolean',
+          type: 'boolean | Numberish',
           default: false,
+          description:
+            'Makes the table header sticky. Set to true for a maximum height 300px tall table, or set to any valid CSS height (including units). Inputting a number type is converted to px height',
         },
       ],
       emits: [],

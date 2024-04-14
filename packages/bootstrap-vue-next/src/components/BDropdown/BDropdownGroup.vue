@@ -24,31 +24,21 @@
 </template>
 
 <script setup lang="ts">
-import type {ClassValue, ColorVariant} from '../../types'
+import type {BDropdownGroupProps} from '../../types'
 import {computed, toRef} from 'vue'
 
 defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(
-  defineProps<{
-    ariaDescribedby?: string
-    header?: string
-    headerClass?: ClassValue
-    headerTag?: string
-    headerVariant?: ColorVariant | null
-    id?: string
-  }>(),
-  {
-    ariaDescribedby: undefined,
-    header: undefined,
-    headerClass: undefined,
-    headerTag: 'header',
-    headerVariant: null,
-    id: undefined,
-  }
-)
+const props = withDefaults(defineProps<BDropdownGroupProps>(), {
+  ariaDescribedby: undefined,
+  header: undefined,
+  headerClass: undefined,
+  headerTag: 'header',
+  headerVariant: null,
+  id: undefined,
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

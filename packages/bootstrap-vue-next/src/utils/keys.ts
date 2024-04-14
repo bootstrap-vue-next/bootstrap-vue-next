@@ -93,6 +93,7 @@ export const checkboxGroupKey: InjectionKey<{
   plain: Readonly<Ref<boolean>>
   size: Readonly<Ref<Size>>
   inline: Readonly<Ref<boolean>>
+  reverse: Readonly<Ref<boolean>>
   required: Readonly<Ref<boolean>>
   buttons: Readonly<Ref<boolean>>
   disabled: Readonly<Ref<boolean>>
@@ -108,6 +109,7 @@ export const radioGroupKey: InjectionKey<{
   plain: Readonly<Ref<boolean>>
   size: Readonly<Ref<Size>>
   inline: Readonly<Ref<boolean>>
+  reverse: Readonly<Ref<boolean>>
   required: Readonly<Ref<boolean>>
   disabled: Readonly<Ref<boolean>>
 }> = Symbol('radioGroup')
@@ -201,3 +203,5 @@ export const modalManagerPluginKey: InjectionKey<{
   pushRegistry: (modal: Readonly<ComponentInternalInstance>) => void
   removeRegistry: (modal: Readonly<ComponentInternalInstance>) => void
 }> = Symbol('modalManagerPlugin')
+
+export const idPluginKey: InjectionKey<() => string> = Symbol('idPluginKey')

@@ -23,48 +23,39 @@
 </template>
 
 <script setup lang="ts">
-import type {CommonInputProps, Numberish} from '../../types'
+import type {BFormTextareaProps, Numberish} from '../../types'
 import {computed, type CSSProperties} from 'vue'
 import {useFormInput, useStateClass} from '../../composables'
 
-const props = withDefaults(
-  defineProps<
-    {
-      noResize?: boolean
-      rows?: Numberish
-      wrap?: string
-    } & CommonInputProps
-  >(),
-  {
-    // CommonInputProps
-    ariaInvalid: undefined,
-    autocomplete: undefined,
-    autofocus: false,
-    debounce: 0,
-    debounceMaxWait: NaN,
-    disabled: false,
-    form: undefined,
-    formatter: undefined,
-    id: undefined,
-    lazy: false,
-    lazyFormatter: false,
-    list: undefined,
-    modelValue: '',
-    name: undefined,
-    number: false,
-    placeholder: undefined,
-    plaintext: false,
-    readonly: false,
-    required: false,
-    size: undefined,
-    state: null,
-    trim: false,
-    // End CommonInputProps
-    noResize: false,
-    rows: 2,
-    wrap: 'soft',
-  }
-)
+const props = withDefaults(defineProps<BFormTextareaProps>(), {
+  // CommonInputProps
+  ariaInvalid: undefined,
+  autocomplete: undefined,
+  autofocus: false,
+  debounce: 0,
+  debounceMaxWait: NaN,
+  disabled: false,
+  form: undefined,
+  formatter: undefined,
+  id: undefined,
+  lazy: false,
+  lazyFormatter: false,
+  list: undefined,
+  modelValue: '',
+  name: undefined,
+  number: false,
+  placeholder: undefined,
+  plaintext: false,
+  readonly: false,
+  required: false,
+  size: undefined,
+  state: null,
+  trim: false,
+  // End CommonInputProps
+  noResize: false,
+  rows: 2,
+  wrap: 'soft',
+})
 
 const emit = defineEmits<{
   'update:modelValue': [val: Numberish | null]

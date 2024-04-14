@@ -38,18 +38,12 @@
 <script setup lang="ts">
 import {BvTriggerableEvent, omit} from '../../utils'
 import {useModalController} from '../../composables'
-import {type RendererElement} from 'vue'
+import type {BModalOrchestratorProps} from '../../types'
 
-const props = withDefaults(
-  defineProps<{
-    teleportDisabled?: boolean
-    teleportTo?: string | Readonly<RendererElement> | null | undefined
-  }>(),
-  {
-    teleportDisabled: false,
-    teleportTo: 'body',
-  }
-)
+const props = withDefaults(defineProps<BModalOrchestratorProps>(), {
+  teleportDisabled: false,
+  teleportTo: 'body',
+})
 
 const {modals, remove, show, confirm} = useModalController()
 

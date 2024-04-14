@@ -11,7 +11,7 @@ export default {
           default: false,
         },
         {
-          prop: 'container',
+          prop: 'teleportTo',
           type: 'string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined',
           default: undefined,
         },

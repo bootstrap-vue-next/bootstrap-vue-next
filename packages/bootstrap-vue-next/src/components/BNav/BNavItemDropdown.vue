@@ -3,6 +3,7 @@
     <BDropdown
       ref="dropdown"
       v-bind="props"
+      v-model="modelValue"
       is-nav
       @show="emit('show', $event)"
       @shown="emit('shown')"
@@ -12,7 +13,6 @@
       @show-prevented="emit('show-prevented')"
       @click="emit('click', $event)"
       @toggle="emit('toggle')"
-      @update:model-value="emit('update:modelValue', $event)"
     >
       <template #button-content>
         <slot name="button-content" />
@@ -40,7 +40,8 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   boundary: 'clippingAncestors',
   boundaryPadding: undefined,
   center: false,
-  container: undefined,
+  teleportTo: undefined,
+  teleportDisabled: false,
   disabled: false,
   dropend: false,
   dropstart: false,
@@ -51,7 +52,6 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   isNav: true,
   lazy: false,
   menuClass: undefined,
-  modelValue: false,
   noCaret: false,
   noFlip: false,
   noShift: false,
@@ -82,8 +82,9 @@ const emit = defineEmits<{
   'show-prevented': []
   'shown': []
   'toggle': []
-  'update:modelValue': [value: boolean]
 }>()
+
+const modelValue = defineModel<boolean>({default: false})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

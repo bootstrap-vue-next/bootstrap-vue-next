@@ -13,6 +13,12 @@ export default (options: MaybeRefOrGetter, props: Record<string, unknown>) => {
     if (typeof option === 'string') {
       return {value: option, text: option}
     }
+    if (typeof option === 'number') {
+      return {value: option, text: `${option}`}
+    }
+    if (option instanceof Date) {
+      return {value: option, text: option.toLocaleString()}
+    }
 
     const value: unknown = get(option, props.valueField as string)
     const text: string = get(option, props.textField as string)

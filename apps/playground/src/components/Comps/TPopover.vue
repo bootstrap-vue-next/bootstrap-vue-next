@@ -150,14 +150,7 @@
     </BRow>
     <BRow class="my-5 position-relative">
       <BCol>
-        <BPopover
-          v-model="value"
-          :placement="popoverPlacemet"
-          strategy="absolute"
-          no-fade
-          no-auto-close
-          manual
-        >
+        <BPopover v-model="value" strategy="absolute" no-fade no-auto-close manual>
           <template #title>
             <h3>Popover title</h3>
           </template>
@@ -206,7 +199,7 @@
     </BRow>
     <BRow>
       <BCol>
-        <BPopover click placement="bottom" container="body">
+        <BPopover click placement="bottom" teleport-to="body">
           <template #title> Title </template>
           <template #target>
             <span class="border rounded m-3 p-2">move to body.</span>
@@ -258,7 +251,7 @@ const popoverPlacement = ref<PopoverPlacement>('left')
 
 const vari = ref({
   title: 'foo',
-  container: 'body',
+  teleportTo: 'body',
   delay: {
     show: 0,
     hide: 0,

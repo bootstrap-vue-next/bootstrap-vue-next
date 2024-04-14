@@ -15,6 +15,7 @@ export type {
   BreadcrumbItem,
   BreadcrumbItemRaw,
   Breakpoint,
+  BTableSortBy,
   ButtonType,
   ButtonVariant,
   CheckboxOption,
@@ -54,3 +55,5 @@ export type {
   TransitionMode,
   VerticalAlign,
 } from '..'
+
+export * from '../ComponentProps'
