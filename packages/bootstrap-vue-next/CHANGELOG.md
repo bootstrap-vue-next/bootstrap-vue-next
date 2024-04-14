@@ -1,5 +1,65 @@
 # Changelog
 
+## [0.17.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.16.6...bootstrapvuenext-v0.17.0) (2024-04-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BDropdown:** replace "container" prop with "teleportTo"
+* **BPopover:** replace "container" prop with "teleportTo"
+* **BTable:** deprecate noSortReset, use `mustSort`
+* **BFormTags:** remove input event -- use https://github.com/update:modelValue
+* **BFormCheckboxGroup:** BFormCheckboxGroup no longer emits 'change' and 'input' events, listen for 'update:modelValue' instead
+* **BRadioGroup:** BRadioGroup no longer emits 'change' and 'input' events, listen for 'update:modelValue' instead
+* **BCheckbox:** Implement reverse and without label ([#1825](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1825))
+* **BCollapse:** change open/close to show/hide in expose and slots
+* **BDropdown:** change open/close to show/hide in expose and slots
+* remove Booleanish type and useBooleanish composable, replace plain boolean type fixes #1774
+
+### Features
+
+* **BCheckbox:** Implement reverse and without label ([#1825](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1825)) ([6c69ff9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6c69ff9eea76d6661ca344262231610106170487))
+* **BDropdown:** add teleportDisabled prop ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+* **BDropdown:** replace "container" prop with "teleportTo" ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+* **BFormCheckbox:** Add 'reverse' property to checkbox and checkboxgroup ([6c69ff9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6c69ff9eea76d6661ca344262231610106170487))
+* **BFormCheckboxGroup:** BFormCheckboxGroup no longer emits 'change' and 'input' events, listen for 'update:modelValue' instead ([6c69ff9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6c69ff9eea76d6661ca344262231610106170487))
+* **BFormCheckbox:** Handle no-label case ([6c69ff9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6c69ff9eea76d6661ca344262231610106170487))
+* **BFormFile:** add properties placement and browser as in BootstrapVue ([2fe4e69](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2fe4e69747c0c4b7a8f518d9d8c09fe673d56c72))
+* **BFormTags:** remove input event -- use https://github.com/update:modelValue ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+* **BModal:** add bodyClass and bodyAttrs props ([3809a6b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3809a6b17ce42588e67cb5443bdcf8285096b30b))
+* **BOffcanvas:** add props backdropBlur and shadow to customize the BOverlay instance ([b90e340](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b90e340fee56798c7315c3b2091ae8e0bc7e6a79))
+* **BOffcanvas:** adding attrs and class props ([d259701](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d259701bafcaaa94797683cb15118fd977bff67d))
+* **BPopover:** add teleportDisabled prop ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+* **BPopover:** replace "container" prop with "teleportTo" ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+* **BRadioGroup:** BRadioGroup no longer emits 'change' and 'input' events, listen for 'update:modelValue' instead ([6c69ff9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6c69ff9eea76d6661ca344262231610106170487))
+* **BTable:** add functional syntax for sortAsc/sortDesc/sortDefault `sortAsc(fieldKey)` to specify the sort content for that specific field ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+* **BTable:** add prop multisort ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+* **BTable:** allow Numberish values =&gt; string is interpreted as is with maxHeight, numbers are converted to ${number}px maxHeight ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+* **BTable:** deprecate noSortReset, use `mustSort` ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+* export component prop types ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+* remove Booleanish type and useBooleanish composable, replace plain boolean type fixes [#1774](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1774) ([d3a51d3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d3a51d36266a2c6315c4e117f988dd7746fe8722))
+* **utils:** inject getId to allow for custom id generation ([#1836](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1836)) ([c9e60f5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c9e60f57da5ab703a75433a521ebd55eb26ac569))
+
+
+### Bug Fixes
+
+* **BCollapse:** change open/close to show/hide in expose and slots ([cd7aaf2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cd7aaf2eff4da6d57bba487572c9998c5492fd93))
+* **BDropdown:** change open/close to show/hide in expose and slots ([cd7aaf2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cd7aaf2eff4da6d57bba487572c9998c5492fd93))
+* **BDropdown:** ignore keynav inside form ([#1812](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1812)) ([584a986](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/584a98676686fad736baae39ea1082d601b90ed6)), closes [#1742](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1742)
+* **BFormCheckbox:** Prevent empty string being cast to true fixes [#1822](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1822) ([51d7c01](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/51d7c01c71ac8feae76ae934017384d2de27d3f5))
+* **BFormFile:** add properties placement and browser as in BootstrapVue ([#1797](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1797)) ([2fe4e69](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2fe4e69747c0c4b7a8f518d9d8c09fe673d56c72))
+* **BFormSelect:** array of numbers or dates ([#1839](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1839)) ([6ea7598](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6ea759874fd41d3da08ae3cafee052e19b3e51e1))
+* **BFormTags:** limitTagsText props is not used fixes [#1804](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1804) ([0ce4174](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0ce4174061b2bad2935d505641ccf9c02206545e))
+* **BPopover and Btooltip:** Fixes bootstrap-vue-next[#1232](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1232) - do not create a new app fro each tooltip or popover ([#1837](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1837)) ([259a5af](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/259a5af283148a754f71468d35bd9e9c2b196f49))
+* **BTable:** BTable rowDblClicked event not working fixes [#1795](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1795) ([bf9c8c4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bf9c8c4ec2f4a5e4553b13643e928e3183df4051))
+* **BTable:** fix handleFieldSorting algorithm to properly handle multisort with mustSort ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+* **BTable:** generic types ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+* **BTable:** set sort values to undefined so we dont accidentally wipe user defined comparer functions ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+* **BTable:** stickyHeader true causes maxHeight 300px ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+* **generics:** use generic constraints for BTable & BTableLite ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+* some migration issues with defineModel ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+* types generation -- use interfaces for componentprops ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+
 ## [0.16.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.16.5...bootstrapvuenext-v0.16.6) (2024-02-22)
 
 
