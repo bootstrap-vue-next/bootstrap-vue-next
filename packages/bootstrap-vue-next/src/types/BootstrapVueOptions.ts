@@ -22,6 +22,23 @@ export interface BootstrapVueOptions {
     /**
      * @default true
      */
+    id?:
+      | boolean
+      /**
+       * This function is allows users to provide a custom id generator
+       * as a workaround for the lack of stable SSR IDs in Vue 3.x
+       *
+       * This lets the Nuxt module swap in the Nuxt `useId` function
+       * which is stable across SSR and client.
+       *
+       * @default undefined
+       */
+      | {
+          getId?: () => string
+        }
+    /**
+     * @default true
+     */
     modalController?: boolean
     /**
      * @default true
