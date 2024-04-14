@@ -1,8 +1,8 @@
 export type CheckboxValue =
   | readonly unknown[]
   | ReadonlySet<unknown>
-  | boolean
   | string
+  | boolean
   | Readonly<Record<string, unknown>>
   | number
   | null

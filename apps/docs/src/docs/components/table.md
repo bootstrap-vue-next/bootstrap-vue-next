@@ -483,7 +483,7 @@ pre-specify the column to be sorted use the `sortBy` model. For single column so
 - **Descending**: Items are sorted highest to lowest (i.e. `Z` to `A`) and will be displayed with
   the highest value in the first row with progressively lower values in the following rows.
 
-By default the comparer function does a `numeric localeCompare`. If one wishes to change this, use a custom comparer function with that `BTableSortBy` element. 
+By default the comparer function does a `numeric localeCompare`. If one wishes to change this, use a custom comparer function with that `BTableSortBy` element.
 
 To prevent the table from wiping out the comparer function, internally it will set the `order` key to `undefined`, instead of just removing the element from the `sortBy` array. i.e. `:sort-by="[]"` & `:sort-by="[key: 'someKey', order: undefined]"` behave identically. Naturally if this value is given to a server, orders of undefined should be handled.
 
