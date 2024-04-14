@@ -176,7 +176,7 @@
             :options="[
               {text: 'toc', value: 'root-element'},
               {text: 'basic', value: 'nav-scroller'},
-              {text: 'nested', value: contentNested},
+              // {text: 'nested', value: contentNested},
               {text: 'list', value: 'listgroup-ex'},
               {text: 'directive', value: 'directive-list'},
             ]"
