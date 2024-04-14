@@ -26,10 +26,10 @@
 </template>
 
 <script setup lang="ts">
-import {useFocus, useVModel} from '@vueuse/core'
+import {useFocus} from '@vueuse/core'
 import {computed, inject, ref, toRef} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useId} from '../../composables'
-import type {ButtonVariant, CheckboxValue, Size} from '../../types'
+import type {BFormCheckboxProps, CheckboxValue} from '../../types'
 import {checkboxGroupKey, isEmptySlot} from '../../utils'
 import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
 
@@ -37,67 +37,39 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(
-  defineProps<{
-    ariaLabel?: string
-    ariaLabelledby?: string
-    autofocus?: boolean
-    button?: boolean
-    buttonGroup?: boolean
-    buttonVariant?: ButtonVariant | null
-    disabled?: boolean
-    form?: string
-    id?: string
-    indeterminate?: boolean
-    inline?: boolean
-    modelValue?: CheckboxValue | readonly CheckboxValue[]
-    name?: string
-    plain?: boolean
-    required?: boolean
-    reverse?: boolean
-    size?: Size
-    state?: boolean | null
-    switch?: boolean
-    uncheckedValue?: CheckboxValue
-    value?: CheckboxValue
-  }>(),
-  {
-    ariaLabel: undefined,
-    ariaLabelledby: undefined,
-    autofocus: false,
-    button: false,
-    buttonGroup: false,
-    buttonVariant: null,
-    disabled: false,
-    form: undefined,
-    id: undefined,
-    indeterminate: false,
-    inline: false,
-    modelValue: undefined,
-    name: undefined,
-    plain: false,
-    required: undefined,
-    reverse: false,
-    size: undefined,
-    state: null,
-    switch: false,
-    uncheckedValue: false,
-    value: true,
-  }
-)
-
-const emit = defineEmits<{
-  'update:modelValue': [value: CheckboxValue | CheckboxValue[]]
-  'update:indeterminate': [value: boolean]
-}>()
+const props = withDefaults(defineProps<BFormCheckboxProps>(), {
+  ariaLabel: undefined,
+  ariaLabelledby: undefined,
+  autofocus: false,
+  button: false,
+  buttonGroup: false,
+  buttonVariant: null,
+  disabled: false,
+  form: undefined,
+  id: undefined,
+  inline: false,
+  name: undefined,
+  plain: false,
+  required: undefined,
+  reverse: false,
+  size: undefined,
+  state: null,
+  switch: false,
+  uncheckedValue: false,
+  value: true,
+})
 
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
-const indeterminate = useVModel(props, 'indeterminate', emit)
+const modelValue = defineModel<CheckboxValue | CheckboxValue[]>({
+  default: undefined,
+})
+const indeterminate = defineModel<boolean>('indeterminate', {
+  default: false,
+})
 
 const computedId = useId(() => props.id, 'form-check')
 

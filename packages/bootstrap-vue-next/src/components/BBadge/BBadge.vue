@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import {useBLinkHelper, useColorVariantClasses} from '../../composables'
 import {computed, toRef} from 'vue'
-import type {BLinkProps, ColorExtendables} from '../../types'
+import type {BBadgeProps} from '../../types'
 import BLink from '../BLink/BLink.vue'
 
 defineSlots<{
@@ -15,51 +15,40 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const props = withDefaults(
-  defineProps<
-    {
-      dotIndicator?: boolean
-      pill?: boolean
-      tag?: string
-      textIndicator?: boolean
-    } & Omit<BLinkProps, 'routerTag'> &
-      ColorExtendables
-  >(),
-  {
-    dotIndicator: false,
-    pill: false,
-    tag: 'span',
-    textIndicator: false,
-    // Link props
-    variant: 'secondary',
-    // All others use defaults
-    active: undefined,
-    activeClass: undefined,
-    append: undefined,
-    disabled: undefined,
-    exactActiveClass: undefined,
-    href: undefined,
-    icon: undefined,
-    opacity: undefined,
-    opacityHover: undefined,
-    rel: undefined,
-    replace: undefined,
-    routerComponentName: undefined,
-    target: undefined,
-    to: undefined,
-    underlineOffset: undefined,
-    underlineOffsetHover: undefined,
-    underlineOpacity: undefined,
-    underlineOpacityHover: undefined,
-    underlineVariant: undefined,
-    // End link props
-    // ColorExtendables props
-    // Variant is here as well
-    textVariant: null,
-    bgVariant: null,
-    // End ColorExtendables props
-  }
-)
+const props = withDefaults(defineProps<BBadgeProps>(), {
+  dotIndicator: false,
+  pill: false,
+  tag: 'span',
+  textIndicator: false,
+  // Link props
+  variant: 'secondary',
+  // All others use defaults
+  active: undefined,
+  activeClass: undefined,
+  append: undefined,
+  disabled: undefined,
+  exactActiveClass: undefined,
+  href: undefined,
+  icon: undefined,
+  opacity: undefined,
+  opacityHover: undefined,
+  rel: undefined,
+  replace: undefined,
+  routerComponentName: undefined,
+  target: undefined,
+  to: undefined,
+  underlineOffset: undefined,
+  underlineOffsetHover: undefined,
+  underlineOpacity: undefined,
+  underlineOpacityHover: undefined,
+  underlineVariant: undefined,
+  // End link props
+  // ColorExtendables props
+  // Variant is here as well
+  textVariant: null,
+  bgVariant: null,
+  // End ColorExtendables props
+})
 
 const resolvedBackgroundClasses = useColorVariantClasses(props)
 

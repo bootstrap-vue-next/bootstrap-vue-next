@@ -16,29 +16,22 @@
 </template>
 
 <script setup lang="ts">
-import type {BFormProps} from '../../types'
+import type {BNavFormProps} from '../../types'
 import BForm from '../BForm/BForm.vue'
 
 defineOptions({
   inheritAttrs: false,
 })
 
-withDefaults(
-  defineProps<
-    {
-      role?: string
-    } & BFormProps
-  >(),
-  {
-    role: undefined,
-    // BForm props
-    floating: undefined,
-    id: undefined,
-    novalidate: undefined,
-    validated: undefined,
-    // End BForm props
-  }
-)
+withDefaults(defineProps<BNavFormProps>(), {
+  role: undefined,
+  // BForm props
+  floating: undefined,
+  id: undefined,
+  novalidate: undefined,
+  validated: undefined,
+  // End BForm props
+})
 
 const emit = defineEmits<{
   submit: [value: Event]

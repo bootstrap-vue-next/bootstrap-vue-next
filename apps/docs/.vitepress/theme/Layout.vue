@@ -89,7 +89,7 @@
         <BOffcanvas
           id="sidebar-menu"
           v-model="sidebar"
-          teleport-disabled="true"
+          :teleport-disabled="true"
           :backdrop="false"
           title="Browse docs"
           class="h-100 border-0"
@@ -123,7 +123,7 @@
               <BOffcanvas
                 id="otp-menu"
                 v-model="onThisPage"
-                teleport-disabled="true"
+                :teleport-disabled="true"
                 :backdrop="false"
                 placement="end"
                 title="On this page"

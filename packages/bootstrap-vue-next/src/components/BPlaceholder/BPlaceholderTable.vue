@@ -47,53 +47,31 @@
 
 <script setup lang="ts">
 import {toRef} from 'vue'
-import type {ColorVariant, Numberish, PlaceholderAnimation, PlaceholderSize} from '../../types'
+import type {BPlaceholderTableProps} from '../../types'
 import BTableSimple from '../BTable/BTableSimple.vue'
 import BPlaceholder from './BPlaceholder.vue'
 import {useToNumber} from '@vueuse/core'
 
-const props = withDefaults(
-  defineProps<{
-    animation?: PlaceholderAnimation
-    cellWidth?: Numberish
-    columns?: Numberish
-    footerAnimation?: PlaceholderAnimation
-    footerCellWidth?: Numberish
-    footerColumns?: Numberish
-    footerSize?: PlaceholderSize
-    footerVariant?: ColorVariant | null
-    headerAnimation?: PlaceholderAnimation
-    headerCellWidth?: Numberish
-    headerColumns?: Numberish
-    headerSize?: PlaceholderSize
-    headerVariant?: ColorVariant | null
-    hideHeader?: boolean
-    rows?: Numberish
-    showFooter?: boolean
-    size?: PlaceholderSize
-    variant?: ColorVariant | null
-  }>(),
-  {
-    animation: undefined,
-    cellWidth: 100,
-    columns: 5,
-    footerAnimation: undefined,
-    footerCellWidth: 100,
-    footerColumns: undefined,
-    footerSize: 'md',
-    footerVariant: undefined,
-    headerAnimation: undefined,
-    headerCellWidth: 100,
-    headerColumns: undefined,
-    headerSize: 'md',
-    headerVariant: undefined,
-    hideHeader: false,
-    rows: 3,
-    showFooter: false,
-    size: 'md',
-    variant: undefined,
-  }
-)
+const props = withDefaults(defineProps<BPlaceholderTableProps>(), {
+  animation: undefined,
+  cellWidth: 100,
+  columns: 5,
+  footerAnimation: undefined,
+  footerCellWidth: 100,
+  footerColumns: undefined,
+  footerSize: 'md',
+  footerVariant: undefined,
+  headerAnimation: undefined,
+  headerCellWidth: 100,
+  headerColumns: undefined,
+  headerSize: 'md',
+  headerVariant: undefined,
+  hideHeader: false,
+  rows: 3,
+  showFooter: false,
+  size: 'md',
+  variant: undefined,
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

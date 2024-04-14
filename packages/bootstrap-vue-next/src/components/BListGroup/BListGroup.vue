@@ -7,22 +7,14 @@
 <script setup lang="ts">
 import {computed, provide, toRef} from 'vue'
 import {listGroupInjectionKey} from '../../utils'
-import type {Breakpoint} from '../../types'
+import type {BListGroupProps} from '../../types'
 
-const props = withDefaults(
-  defineProps<{
-    flush?: boolean
-    horizontal?: boolean | Breakpoint
-    numbered?: boolean
-    tag?: string
-  }>(),
-  {
-    flush: false,
-    horizontal: false,
-    numbered: false,
-    tag: 'div',
-  }
-)
+const props = withDefaults(defineProps<BListGroupProps>(), {
+  flush: false,
+  horizontal: false,
+  numbered: false,
+  tag: 'div',
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -26,48 +26,30 @@
 import BTransition from '../BTransition/BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BButton from '../BButton/BButton.vue'
-import type {ButtonVariant, ClassValue, ColorVariant, Numberish} from '../../types'
+import type {BAlertProps} from '../../types'
 import {computed, onBeforeUnmount, ref, toRef, watch, watchEffect} from 'vue'
 import {useCountdown} from '../../composables'
 import {isEmptySlot} from '../../utils'
-import {useElementHover, useToNumber, useVModel} from '@vueuse/core'
+import {useElementHover, useToNumber} from '@vueuse/core'
 
-const props = withDefaults(
-  defineProps<{
-    closeClass?: ClassValue
-    closeContent?: string
-    closeLabel?: string
-    closeVariant?: ButtonVariant | null
-    dismissible?: boolean
-    fade?: boolean
-    immediate?: boolean
-    interval?: Numberish
-    modelValue?: boolean | number
-    noHoverPause?: boolean
-    showOnPause?: boolean
-    variant?: ColorVariant | null
-  }>(),
-  {
-    closeClass: undefined,
-    closeContent: undefined,
-    closeLabel: 'Close',
-    closeVariant: 'secondary',
-    dismissible: false,
-    fade: false,
-    immediate: true,
-    interval: 1000,
-    modelValue: false,
-    noHoverPause: false,
-    showOnPause: true,
-    variant: 'info',
-  }
-)
+const props = withDefaults(defineProps<BAlertProps>(), {
+  closeClass: undefined,
+  closeContent: undefined,
+  closeLabel: 'Close',
+  closeVariant: 'secondary',
+  dismissible: false,
+  fade: false,
+  immediate: true,
+  interval: 1000,
+  noHoverPause: false,
+  showOnPause: true,
+  variant: 'info',
+})
 
 const emit = defineEmits<{
   'close': []
   'close-countdown': [value: number]
   'closed': []
-  'update:modelValue': [value: boolean | number]
 }>()
 
 const slots = defineSlots<{
@@ -79,7 +61,8 @@ const slots = defineSlots<{
 
 const element = ref<HTMLElement | null>(null)
 
-const modelValue = useVModel(props, 'modelValue', emit)
+const modelValue = defineModel<boolean | number>({default: false})
+
 const isHovering = useElementHover(element)
 
 const intervalNumber = useToNumber(() => props.interval)

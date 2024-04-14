@@ -4,6 +4,8 @@
   "exclude": ["**/*.spec.*", "**/*.test.*"],
   "compilerOptions": {
     "composite": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+
     "baseUrl": ".",
     "types": ["vitest/globals", "vite/client"],
     "paths": {

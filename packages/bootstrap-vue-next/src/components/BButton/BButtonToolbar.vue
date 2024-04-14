@@ -5,21 +5,14 @@
 </template>
 
 <script setup lang="ts">
+import type {BButtonToolbarProps} from '../../types'
 import {computed} from 'vue'
 
-const props = withDefaults(
-  defineProps<{
-    ariaLabel?: string
-    // keyNav?: boolean
-    justify?: boolean
-    role?: string
-  }>(),
-  {
-    ariaLabel: 'Group',
-    justify: false,
-    role: 'toolbar',
-  }
-)
+const props = withDefaults(defineProps<BButtonToolbarProps>(), {
+  ariaLabel: 'Group',
+  justify: false,
+  role: 'toolbar',
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

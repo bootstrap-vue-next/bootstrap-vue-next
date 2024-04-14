@@ -5,23 +5,15 @@
 </template>
 
 <script setup lang="ts">
-import type {Size} from '../../types'
+import type {BButtonGroupProps} from '../../types'
 import {computed} from 'vue'
 
-const props = withDefaults(
-  defineProps<{
-    ariaLabel?: string
-    size?: Size
-    tag?: string
-    vertical?: boolean
-  }>(),
-  {
-    ariaLabel: 'Group',
-    size: 'md',
-    tag: 'div',
-    vertical: false,
-  }
-)
+const props = withDefaults(defineProps<BButtonGroupProps>(), {
+  ariaLabel: 'Group',
+  size: 'md',
+  tag: 'div',
+  vertical: false,
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

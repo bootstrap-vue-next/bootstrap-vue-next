@@ -5,26 +5,17 @@
 </template>
 
 <script setup lang="ts">
-import type {AlignmentJustifyContent} from '../../types'
+import type {BNavbarNavProps} from '../../types'
 import {computed} from 'vue'
 import {useAlignment} from '../../composables'
 
-const props = withDefaults(
-  defineProps<{
-    align?: AlignmentJustifyContent
-    fill?: boolean
-    justified?: boolean
-    small?: boolean
-    tag?: string
-  }>(),
-  {
-    align: undefined,
-    fill: false,
-    justified: false,
-    small: false,
-    tag: 'ul',
-  }
-)
+const props = withDefaults(defineProps<BNavbarNavProps>(), {
+  align: undefined,
+  fill: false,
+  justified: false,
+  small: false,
+  tag: 'ul',
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

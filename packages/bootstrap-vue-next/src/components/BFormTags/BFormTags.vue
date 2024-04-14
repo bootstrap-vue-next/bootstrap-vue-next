@@ -116,98 +116,52 @@
 </template>
 
 <script setup lang="ts">
-import {onKeyStroke, syncRef, useFocus, useToNumber, useVModel} from '@vueuse/core'
+import {onKeyStroke, syncRef, useFocus, useToNumber} from '@vueuse/core'
 import {computed, ref, toRef} from 'vue'
 import {useId, useStateClass} from '../../composables'
-import type {
-  AttrsValue,
-  ButtonVariant,
-  ClassValue,
-  ColorVariant,
-  InputType,
-  Numberish,
-  Size,
-} from '../../types'
+import type {BFormTagsProps, ClassValue, ColorVariant} from '../../types'
 import {escapeRegExpChars} from '../../utils'
 import BFormTag from './BFormTag.vue'
 
-const props = withDefaults(
-  defineProps<{
-    addButtonText?: string
-    addButtonVariant?: ButtonVariant | null
-    addOnChange?: boolean
-    autofocus?: boolean
-    disabled?: boolean
-    duplicateTagText?: string
-    form?: string
-    inputAttrs?: Readonly<AttrsValue>
-    inputClass?: ClassValue
-    inputId?: string
-    inputType?: InputType
-    invalidTagText?: string
-    limit?: Numberish
-    limitTagsText?: string
-    modelValue?: readonly string[]
-    name?: string
-    noAddOnEnter?: boolean
-    noOuterFocus?: boolean
-    noTagRemove?: boolean
-    placeholder?: string
-    removeOnDelete?: boolean
-    required?: boolean
-    separator?: string | readonly string[]
-    size?: Size
-    state?: boolean | null
-    tagClass?: ClassValue
-    tagPills?: boolean
-    tagRemoveLabel?: string
-    tagRemovedLabel?: string
-    tagValidator?: (t: string) => boolean
-    tagVariant?: ColorVariant | null
-  }>(),
-  {
-    addButtonText: 'Add',
-    addButtonVariant: 'outline-secondary',
-    addOnChange: false,
-    autofocus: false,
-    disabled: false,
-    duplicateTagText: 'Duplicate tag(s)',
-    form: undefined,
-    inputAttrs: undefined,
-    inputClass: undefined,
-    inputId: undefined,
-    inputType: 'text',
-    invalidTagText: 'Invalid tag(s)',
-    limit: undefined,
-    limitTagsText: 'Tag limit reached',
-    modelValue: () => [],
-    name: undefined,
-    noAddOnEnter: false,
-    noOuterFocus: false,
-    noTagRemove: false,
-    placeholder: 'Add tag...',
-    removeOnDelete: false,
-    required: false,
-    separator: undefined,
-    size: 'md',
-    state: null,
-    tagClass: undefined,
-    tagPills: false,
-    tagRemoveLabel: undefined,
-    tagRemovedLabel: 'Tag removed',
-    tagValidator: () => true,
-    tagVariant: 'secondary',
-  }
-)
+const props = withDefaults(defineProps<BFormTagsProps>(), {
+  addButtonText: 'Add',
+  addButtonVariant: 'outline-secondary',
+  addOnChange: false,
+  autofocus: false,
+  disabled: false,
+  duplicateTagText: 'Duplicate tag(s)',
+  form: undefined,
+  inputAttrs: undefined,
+  inputClass: undefined,
+  inputId: undefined,
+  inputType: 'text',
+  invalidTagText: 'Invalid tag(s)',
+  limit: undefined,
+  limitTagsText: 'Tag limit reached',
+  name: undefined,
+  noAddOnEnter: false,
+  noOuterFocus: false,
+  noTagRemove: false,
+  placeholder: 'Add tag...',
+  removeOnDelete: false,
+  required: false,
+  separator: undefined,
+  size: 'md',
+  state: null,
+  tagClass: undefined,
+  tagPills: false,
+  tagRemoveLabel: undefined,
+  tagRemovedLabel: 'Tag removed',
+  tagValidator: () => true,
+  tagVariant: 'secondary',
+})
 
 const emit = defineEmits<{
   'blur': [value: FocusEvent]
   'focus': [value: FocusEvent]
   'focusin': [value: FocusEvent]
   'focusout': [value: FocusEvent]
-  'input': [value: string[]]
   'tag-state': [...args: string[][]]
-  'update:modelValue': [value: string[]]
 }>()
 
 defineSlots<{
@@ -226,7 +180,9 @@ defineSlots<{
   }) => any
 }>()
 
-const modelValue = useVModel(props, 'modelValue', emit)
+const modelValue = defineModel<string[]>({
+  default: () => [],
+})
 
 const computedId = useId()
 
@@ -437,7 +393,6 @@ const addTag = (tag?: string): void => {
   inputValue.value = ''
   shouldRemoveOnDelete.value = true
   modelValue.value = newValue
-  emit('input', newValue)
   focused.value = true
 }
 

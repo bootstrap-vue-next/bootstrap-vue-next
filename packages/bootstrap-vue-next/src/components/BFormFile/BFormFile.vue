@@ -40,10 +40,10 @@
 </template>
 
 <script setup lang="ts">
-import {createReusableTemplate, useFocus, useVModel} from '@vueuse/core'
+import {createReusableTemplate, useFocus} from '@vueuse/core'
 import {computed, ref, toRef, watch} from 'vue'
+import type {BFormFileProps} from '../../types'
 import {useId, useStateClass} from '../../composables'
-import type {ClassValue, Size} from '../../types'
 import {isEmptySlot} from '../../utils'
 
 defineOptions({
@@ -55,61 +55,33 @@ const slots = defineSlots<{
   label?: (props: Record<string, never>) => any
 }>()
 
-const props = withDefaults(
-  defineProps<{
-    ariaLabel?: string
-    ariaLabelledby?: string
-    accept?: string | readonly string[]
-    autofocus?: boolean
-    browserText?: string
-    capture?: boolean | 'user' | 'environment'
-    directory?: boolean
-    disabled?: boolean
-    form?: string
-    id?: string
-    label?: string
-    labelClass?: ClassValue
-    modelValue?: readonly File[] | File | null
-    multiple?: boolean
-    name?: string
-    noDrop?: boolean
-    noTraverse?: boolean
-    placement?: 'start' | 'end'
-    required?: boolean
-    size?: Size
-    state?: boolean | null
-  }>(),
-  {
-    ariaLabel: undefined,
-    ariaLabelledby: undefined,
-    accept: '',
-    autofocus: false,
-    browserText: 'Choose',
-    // eslint-disable-next-line vue/require-valid-default-prop
-    capture: false,
-    directory: false,
-    disabled: false,
-    form: undefined,
-    id: undefined,
-    label: '',
-    labelClass: undefined,
-    modelValue: null,
-    multiple: false,
-    name: undefined,
-    noDrop: false,
-    noTraverse: false,
-    placement: 'start',
-    required: false,
-    size: undefined,
-    state: null,
-  }
-)
+const props = withDefaults(defineProps<BFormFileProps>(), {
+  ariaLabel: undefined,
+  ariaLabelledby: undefined,
+  accept: '',
+  autofocus: false,
+  browserText: 'Choose',
+  // eslint-disable-next-line vue/require-valid-default-prop
+  capture: false,
+  directory: false,
+  disabled: false,
+  form: undefined,
+  id: undefined,
+  label: '',
+  labelClass: undefined,
+  multiple: false,
+  name: undefined,
+  noDrop: false,
+  noTraverse: false,
+  placement: 'start',
+  required: false,
+  size: undefined,
+  state: null,
+})
 
-const emit = defineEmits<{
-  'update:modelValue': [value: File | File[] | null]
-}>()
-
-const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
+const modelValue = defineModel<File | File[] | null>({
+  default: null,
+})
 const computedId = useId(() => props.id)
 
 // TODO noTraverse is not implemented yet

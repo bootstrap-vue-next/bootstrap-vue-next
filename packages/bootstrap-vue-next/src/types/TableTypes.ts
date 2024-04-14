@@ -1,42 +1,43 @@
 import type {ClassValue, ColorVariant, LiteralUnion, MaybePromise} from '.'
 import type {StyleValue} from 'vue'
 
-export type BTableProviderContext = Readonly<{
-  filter: string | undefined
-  sortBy: string | undefined
-  currentPage: number
-  perPage: number
-  sortDesc: boolean
-}>
-
 export type TableItem<T = Record<string, unknown>> = T & {
   _rowVariant?: ColorVariant | null
   _cellVariants?: Partial<Record<keyof T, ColorVariant>>
   _showDetails?: boolean
 }
 
-export type BTableProvider<T = Record<string, unknown>> = (
-  context: BTableProviderContext
-) => MaybePromise<TableItem<T>[] | undefined>
+export const isTableItem = (value: unknown): value is TableItem =>
+  typeof value === 'object' && value !== null
 
-export type BTableSortCompare<T> = (
-  aRow: TableItem<T>,
-  bRow: TableItem<T>,
-  fieldKey: string,
-  sortDesc: boolean
-) => number
+// undefined means no sorting
+export type BTableSortByOrder = 'desc' | 'asc' | undefined
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type TableFieldFormatter<T = any> =
-  | string
-  | ((value: unknown, key?: LiteralUnion<keyof T>, item?: T) => string)
+export type BTableSortBy = {
+  order: BTableSortByOrder
+  key: string
+  comparer?: (a: string, b: string) => number
+}
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type TableFieldAttribute<T = any> =
+export type BTableProviderContext = {
+  sortBy: BTableSortBy[] | undefined
+  filter: string | undefined
+  currentPage: number
+  perPage: number
+}
+
+export type BTableProvider<T> = (
+  context: Readonly<BTableProviderContext>
+) => MaybePromise<T[] | undefined>
+
+export type TableFieldFormatter<T> = (value: unknown, key: string, item: T) => string
+
+export type TableFieldAttribute<T> =
   | Record<string, unknown>
-  | ((value: unknown, key?: LiteralUnion<keyof T>, item?: T) => Record<string, unknown>)
+  | ((value: unknown, key: string, item: T) => Record<string, unknown>)
 
-export interface TableField<T = Record<string, unknown>> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type TableField<T = any> = {
   key: LiteralUnion<keyof T>
   label?: string
   headerTitle?: string
@@ -58,4 +59,14 @@ export interface TableField<T = Record<string, unknown>> {
   stickyColumn?: boolean
 }
 
-export type TableFieldRaw<T = Record<string, unknown>> = string | TableField<T>
+export type TableFieldRaw<T = unknown> = T extends object
+  ? LiteralUnion<keyof T> | TableField<T>
+  : string | TableField
+
+export const isTableField = <T>(value: unknown): value is TableField<T> =>
+  typeof value === 'object' && value !== null && 'key' in value
+
+export const isTableFieldRaw = <T>(value: unknown): value is TableFieldRaw<T> =>
+  typeof value === 'string' || isTableField(value)
+
+export type NoProviderTypes = 'paging' | 'sorting' | 'filtering'

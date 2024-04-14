@@ -26,65 +26,35 @@
 </template>
 
 <script setup lang="ts">
-import type {AriaInvalid, ButtonVariant, RadioOptionRaw, RadioValue, Size} from '../../types'
+import type {BFormRadioGroupProps, RadioValue} from '../../types'
 import {computed, provide, ref, toRef} from 'vue'
 import {radioGroupKey} from '../../utils'
 import BFormRadio from './BFormRadio.vue'
 import {getGroupAttr, getGroupClasses, useId} from '../../composables'
-import {useFocus, useVModel} from '@vueuse/core'
+import {useFocus} from '@vueuse/core'
 
-const props = withDefaults(
-  defineProps<{
-    ariaInvalid?: AriaInvalid
-    autofocus?: boolean
-    buttonVariant?: ButtonVariant | null
-    buttons?: boolean
-    disabled?: boolean
-    disabledField?: string
-    form?: string
-    htmlField?: string
-    id?: string
-    modelValue?: RadioValue
-    name?: string
-    options?: readonly RadioOptionRaw[]
-    plain?: boolean
-    required?: boolean
-    reverse?: boolean
-    size?: Size
-    stacked?: boolean
-    state?: boolean | null
-    textField?: string
-    validated?: boolean
-    valueField?: string
-  }>(),
-  {
-    ariaInvalid: undefined,
-    autofocus: false,
-    buttonVariant: 'secondary',
-    buttons: false,
-    disabled: false,
-    disabledField: 'disabled',
-    form: undefined,
-    htmlField: 'html',
-    id: undefined,
-    modelValue: null,
-    name: undefined,
-    options: () => [],
-    plain: false,
-    required: false,
-    reverse: false,
-    size: 'md',
-    stacked: false,
-    state: null,
-    textField: 'text',
-    validated: false,
-    valueField: 'value',
-  }
-)
-
-const emit = defineEmits<{
-  'update:modelValue': [value: RadioValue]
-}>()
+const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
+  ariaInvalid: undefined,
+  autofocus: false,
+  buttonVariant: 'secondary',
+  buttons: false,
+  disabled: false,
+  disabledField: 'disabled',
+  form: undefined,
+  htmlField: 'html',
+  id: undefined,
+  name: undefined,
+  options: () => [],
+  plain: false,
+  required: false,
+  reverse: false,
+  size: 'md',
+  stacked: false,
+  state: null,
+  textField: 'text',
+  validated: false,
+  valueField: 'value',
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -93,7 +63,9 @@ defineSlots<{
   first?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
+const modelValue = defineModel<RadioValue | null>({
+  default: null,
+})
 
 const computedId = useId(() => props.id, 'radio')
 const computedName = useId(() => props.name, 'checkbox')

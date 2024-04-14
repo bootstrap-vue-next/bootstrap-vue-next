@@ -5,23 +5,25 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port 5173",
-    "build": "vue-tsc --noEmit && vite build",
+    "type-check": "vue-tsc --noEmit -p tsconfig.app.json",
+    "build-only": "vite build",
+    "build": "pnpm run type-check && pnpm run build-only",
     "preview": "vite preview"
   },
   "dependencies": {
     "bootstrap-vue-next": "workspace:^",
-    "vue": "^3.4.18",
-    "vue-router": "^4.2.5"
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0"
   },
   "devDependencies": {
-    "@tsconfig/node20": "^20.1.2",
-    "@types/node": "^20.11.17",
+    "@tsconfig/node20": "^20.1.4",
+    "@types/node": "^20.12.7",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/tsconfig": "^0.5.1",
-    "bootstrap": "^5.3.2",
-    "typescript": "^5.3.3",
-    "vite": "^5.1.1",
-    "vue-tsc": "^1.8.27"
+    "bootstrap": "^5.3.3",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.8",
+    "vue-tsc": "^2.0.13"
   },
   "lint-staged": {
     "*.{js,ts,vue}": "eslint --cache --fix",

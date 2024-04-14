@@ -17,36 +17,23 @@
 <script setup lang="ts">
 import {computed, nextTick, onMounted, provide, readonly, ref, toRef, watch} from 'vue'
 import {useId} from '../composables'
-import {useEventListener, useVModel} from '@vueuse/core'
+import {useEventListener} from '@vueuse/core'
 import {BvTriggerableEvent, collapseInjectionKey, getTransitionDelay} from '../utils'
+import type {BCollapseProps} from '../types'
 
 defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(
-  defineProps<{
-    // appear?: boolean
-    horizontal?: boolean
-    id?: string
-    isNav?: boolean
-    modelValue?: boolean
-    skipAnimation?: boolean
-    tag?: string
-    toggle?: boolean
-    visible?: boolean
-  }>(),
-  {
-    horizontal: false,
-    id: undefined,
-    isNav: false,
-    modelValue: false,
-    skipAnimation: false,
-    tag: 'div',
-    toggle: false,
-    visible: false,
-  }
-)
+const props = withDefaults(defineProps<BCollapseProps>(), {
+  horizontal: false,
+  id: undefined,
+  isNav: false,
+  skipAnimation: false,
+  tag: 'div',
+  toggle: false,
+  visible: false,
+})
 
 const emit = defineEmits<{
   'hidden': []
@@ -55,7 +42,6 @@ const emit = defineEmits<{
   'show': [value: BvTriggerableEvent]
   'show-prevented': []
   'shown': []
-  'update:modelValue': [value: boolean]
 }>()
 
 type SharedSlotsData = {
@@ -88,7 +74,9 @@ const buildTriggerableEvent = (
     componentId: computedId.value,
   })
 
-const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
+const modelValue = defineModel<boolean>({
+  default: false,
+})
 
 const computedId = useId(() => props.id, 'collapse')
 

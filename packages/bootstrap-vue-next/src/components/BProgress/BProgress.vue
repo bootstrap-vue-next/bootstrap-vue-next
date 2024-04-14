@@ -19,32 +19,25 @@
 
 <script setup lang="ts">
 import BProgressBar from './BProgressBar.vue'
-import type {BProgressBarProps} from '../../types'
+import type {BProgressProps} from '../../types'
 import {provide, toRef} from 'vue'
 import {progressInjectionKey} from '../../utils'
 
-const props = withDefaults(
-  defineProps<
-    {
-      height?: string
-    } & Omit<BProgressBarProps, 'label' | 'labelHtml'>
-  >(),
-  {
-    height: undefined,
-    // BProgressBar props
-    animated: undefined,
-    bgVariant: undefined,
-    max: 100,
-    precision: undefined,
-    showProgress: undefined,
-    showValue: undefined,
-    striped: undefined,
-    textVariant: undefined,
-    value: undefined,
-    variant: undefined,
-    // End BProgressBar props
-  }
-)
+const props = withDefaults(defineProps<BProgressProps>(), {
+  height: undefined,
+  // BProgressBar props
+  animated: undefined,
+  bgVariant: undefined,
+  max: 100,
+  precision: undefined,
+  showProgress: undefined,
+  showValue: undefined,
+  striped: undefined,
+  textVariant: undefined,
+  value: undefined,
+  variant: undefined,
+  // End BProgressBar props
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -12,32 +12,21 @@
 
 <script setup lang="ts">
 import {computed, type CSSProperties, toRef} from 'vue'
-import type {ColorVariant, Numberish, PlaceholderAnimation, PlaceholderSize} from '../../types'
+import type {BPlaceholderProps} from '../../types'
 
 defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(
-  defineProps<{
-    animation?: PlaceholderAnimation
-    cols?: Numberish
-    size?: PlaceholderSize
-    tag?: string
-    variant?: ColorVariant | null
-    width?: Numberish
-    wrapperTag?: string
-  }>(),
-  {
-    animation: undefined,
-    cols: 12,
-    size: 'md',
-    tag: 'span',
-    variant: null,
-    width: undefined,
-    wrapperTag: 'span',
-  }
-)
+const props = withDefaults(defineProps<BPlaceholderProps>(), {
+  animation: undefined,
+  cols: 12,
+  size: 'md',
+  tag: 'span',
+  variant: null,
+  width: undefined,
+  wrapperTag: 'span',
+})
 
 const widthString = toRef(() =>
   props.width === undefined

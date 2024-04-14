@@ -1,7 +1,7 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BTransition from './BTransition.vue'
-import {type Component, Transition} from 'vue'
+import {Transition} from 'vue'
 
 describe('transition', () => {
   enableAutoUnmount(afterEach)
@@ -28,7 +28,7 @@ describe('transition', () => {
     const wrapper = mount(BTransition, {
       props: {transProps: {enterActiveClass: 'foo'}},
     })
-    const $transition = wrapper.getComponent(Transition as Component)
+    const $transition = wrapper.getComponent(Transition)
     expect($transition.props('css')).toBe(true)
   })
 
@@ -36,7 +36,7 @@ describe('transition', () => {
     const wrapper = mount(BTransition, {
       props: {transProps: {enterActiveClass: 'foo'}},
     })
-    const $transition = wrapper.getComponent(Transition as Component)
+    const $transition = wrapper.getComponent(Transition)
     expect($transition.props('mode')).toBeUndefined()
   })
 
@@ -44,7 +44,7 @@ describe('transition', () => {
     const wrapper = mount(BTransition, {
       props: {transProps: {enterActiveClass: 'foo', mode: 'in-out'}},
     })
-    const $transition = wrapper.getComponent(Transition as Component)
+    const $transition = wrapper.getComponent(Transition)
     expect($transition.props('mode')).toBe('in-out')
   })
 
@@ -52,7 +52,7 @@ describe('transition', () => {
     const wrapper = mount(BTransition, {
       props: {transProps: {enterActiveClass: 'foo'}},
     })
-    const $transition = wrapper.getComponent(Transition as Component)
+    const $transition = wrapper.getComponent(Transition)
     expect($transition.props('enterActiveClass')).toBe('foo')
   })
 

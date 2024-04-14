@@ -9,20 +9,13 @@
 </template>
 
 <script setup lang="ts">
-import type {ButtonType} from '../../types'
+import type {BCloseButtonProps} from '../../types'
 
-const props = withDefaults(
-  defineProps<{
-    ariaLabel?: string
-    disabled?: boolean
-    type?: ButtonType
-  }>(),
-  {
-    ariaLabel: 'Close',
-    disabled: false,
-    type: 'button',
-  }
-)
+const props = withDefaults(defineProps<BCloseButtonProps>(), {
+  ariaLabel: 'Close',
+  disabled: false,
+  type: 'button',
+})
 
 const emit = defineEmits<{
   click: [value: MouseEvent]
