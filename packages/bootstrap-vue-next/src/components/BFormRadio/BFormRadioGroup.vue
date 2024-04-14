@@ -43,7 +43,6 @@ const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
   form: undefined,
   htmlField: 'html',
   id: undefined,
-  modelValue: null,
   name: undefined,
   options: () => [],
   plain: false,

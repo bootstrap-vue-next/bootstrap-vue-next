@@ -251,7 +251,7 @@ const popoverPlacement = ref<PopoverPlacement>('left')
 
 const vari = ref({
   title: 'foo',
-  container: 'body',
+  teleportTo: 'body',
   delay: {
     show: 0,
     hide: 0,

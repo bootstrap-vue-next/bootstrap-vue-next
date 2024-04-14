@@ -37,7 +37,7 @@
         </slot>
       </span>
     </BButton>
-    <Teleport :to="teleportTo" :disabled="teleportDisabled">
+    <Teleport :to="teleportTo" :disabled="!teleportTo || teleportDisabled">
       <ul
         v-if="!props.lazy || modelValue"
         v-show="props.lazy || modelValue"
@@ -83,7 +83,7 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   boundary: 'clippingAncestors',
   boundaryPadding: undefined,
   center: false,
-  teleportTo: 'body',
+  teleportTo: undefined,
   teleportDisabled: false,
   disabled: false,
   dropend: false,
@@ -320,12 +320,9 @@ const toggle = () => {
   wrapper.value?.dispatchEvent(new Event('forceHide'))
 }
 
-watch(
-  () => modelValue.value,
-  () => {
-    update()
-  }
-)
+watch(modelValue, () => {
+  update()
+})
 
 defineExpose({
   hide,

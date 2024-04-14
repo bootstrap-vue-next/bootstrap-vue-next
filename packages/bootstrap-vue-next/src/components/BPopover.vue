@@ -1,7 +1,7 @@
 <template>
   <span ref="placeholder" />
   <slot name="target" :show="show" :hide="hide" :toggle="toggle" :show-state="showState" />
-  <Teleport :to="teleportTo" :disabled="teleportDisabled">
+  <Teleport :to="teleportTo" :disabled="!teleportTo || teleportDisabled">
     <div
       v-if="showStateInternal || props.persistent"
       :id="id"
@@ -106,7 +106,7 @@ const props = withDefaults(defineProps<BPopoverProps>(), {
   boundary: 'clippingAncestors',
   boundaryPadding: undefined,
   click: false,
-  teleportTo: 'body',
+  teleportTo: undefined,
   teleportDisabled: false,
   content: undefined,
   customClass: '',
@@ -163,19 +163,16 @@ const modelValue = defineModel<boolean>({
   default: false,
 })
 
-const showState = ref(props.modelValue)
-const showStateInternal = ref(props.modelValue)
+const showState = ref(modelValue.value)
+const showStateInternal = ref(modelValue.value)
 watchEffect(() => {
   modelValue.value = showState.value
 })
 
-watch(
-  () => props.modelValue,
-  () => {
-    if (props.modelValue === showState.value) return
-    props.modelValue ? show() : hide(new Event('update:modelValue'))
-  }
-)
+watch(modelValue, (newValue) => {
+  if (newValue === showState.value) return
+  newValue ? show() : hide(new Event('update:modelValue'))
+})
 
 const computedId = useId(() => props.id, 'popover')
 

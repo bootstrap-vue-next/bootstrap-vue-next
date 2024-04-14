@@ -16,7 +16,7 @@ export default {
     const text = resolveContent(binding.value, el)
 
     if (!text.content && !text.title) return
-    
+
     bind(el, binding, {
       noninteractive: true,
       ...resolveDirectiveProps(binding, el),

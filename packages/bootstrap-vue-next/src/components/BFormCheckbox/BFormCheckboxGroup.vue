@@ -38,7 +38,6 @@ const props = withDefaults(defineProps<BFormCheckboxGroupProps>(), {
   form: undefined,
   htmlField: 'html',
   id: undefined,
-  modelValue: () => [],
   name: undefined,
   options: () => [],
   plain: false,

@@ -106,7 +106,6 @@ const props = withDefaults(defineProps<BOffcanvasProps>(), {
   headerCloseVariant: 'secondary',
   id: undefined,
   lazy: false,
-  modelValue: false,
   noCloseOnBackdrop: false,
   noCloseOnEsc: false,
   noFocus: false,

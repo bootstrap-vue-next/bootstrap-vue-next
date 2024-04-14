@@ -3,6 +3,7 @@
     <BDropdown
       ref="dropdown"
       v-bind="props"
+      v-model="modelValue"
       is-nav
       @show="emit('show', $event)"
       @shown="emit('shown')"
@@ -12,7 +13,6 @@
       @show-prevented="emit('show-prevented')"
       @click="emit('click', $event)"
       @toggle="emit('toggle')"
-      @update:model-value="modelValue = $event"
     >
       <template #button-content>
         <slot name="button-content" />

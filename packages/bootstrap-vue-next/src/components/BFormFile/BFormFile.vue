@@ -69,7 +69,6 @@ const props = withDefaults(defineProps<BFormFileProps>(), {
   id: undefined,
   label: '',
   labelClass: undefined,
-  modelValue: null,
   multiple: false,
   name: undefined,
   noDrop: false,

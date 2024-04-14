@@ -13,10 +13,10 @@
   },
   "devDependencies": {
     "@iconify-json/bi": "^1.1.23",
-    "@iconify-json/simple-icons": "^1.1.97",
-    "@rushstack/eslint-patch": "^1.10.1",
+    "@iconify-json/simple-icons": "^1.1.99",
+    "@rushstack/eslint-patch": "^1.10.2",
     "@tsconfig/node20": "^20.1.4",
-    "@types/node": "^20.11.30",
+    "@types/node": "^20.12.7",
     "@vue/eslint-config-prettier": "^9.0.0",
     "@vue/eslint-config-typescript": "^13.0.0",
     "@vue/tsconfig": "^0.5.1",
@@ -26,11 +26,11 @@
     "cross-env": "^7.0.3",
     "eslint": "^8.57.0",
     "eslint-define-config": "^2.1.0",
-    "eslint-plugin-vue": "^9.24.0",
+    "eslint-plugin-vue": "^9.25.0",
     "prettier": "^3.2.5",
-    "typescript": "^5.4.3",
+    "typescript": "^5.4.5",
     "unplugin-icons": "^0.18.5",
-    "vitepress": "1.0.2",
+    "vitepress": "1.1.0",
     "vue": "^3.4.21"
   },
   "lint-staged": {

@@ -1,5 +1,5 @@
 <template>
-  <BPopover ref="popover" tooltip v-bind="computedProps">
+  <BPopover ref="popover" v-bind="computedProps" v-model="modelValue" tooltip>
     <template v-for="(_, name) in $slots" #[name]="slotData">
       <slot :name="name" v-bind="slotData" />
     </template>
@@ -25,7 +25,6 @@ const props = withDefaults(defineProps<BTooltipProps>(), {
   inline: undefined,
   interactive: undefined,
   manual: undefined,
-  modelValue: undefined,
   noAutoClose: undefined,
   noFade: undefined,
   noFlip: undefined,
@@ -41,6 +40,8 @@ const props = withDefaults(defineProps<BTooltipProps>(), {
   title: undefined,
   variant: undefined,
 })
+
+const modelValue = defineModel<boolean | undefined>({default: undefined})
 
 const computedProps = computed<BPopoverProps>(() => {
   const {interactive, noninteractive, ...rest} = props

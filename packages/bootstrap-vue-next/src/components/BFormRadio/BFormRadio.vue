@@ -45,7 +45,6 @@ const props = withDefaults(defineProps<BFormRadioProps>(), {
   form: undefined,
   id: undefined,
   inline: false,
-  modelValue: undefined,
   name: undefined,
   plain: false,
   required: false,

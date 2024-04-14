@@ -110,7 +110,11 @@ export interface ElementWithPopper extends HTMLElement {
   $__element?: HTMLElement
 }
 
-export const bind = (el: ElementWithPopper, binding: Readonly<DirectiveBinding>, props: BPopoverProps) => {
+export const bind = (
+  el: ElementWithPopper,
+  binding: Readonly<DirectiveBinding>,
+  props: BPopoverProps
+) => {
   const div = document.createElement('span')
   if (binding.modifiers.body) document.body.appendChild(div)
   else if (binding.modifiers.child) el.appendChild(div)
