@@ -585,7 +585,7 @@ to the `sortBy` array. From the user inteface, multi-sort works as follows:
 
 - Clicking on a sortable header that isn't currently sorted adds it as `ascending` to the end of the sortBy list
 - Clicking on a sortable header that is currently sorted as ascending makes it **descending**, but leaves it in the same order in the `sortBy` list
-- Clicking on a sortable header that is currently sorted as descending removes it from the list
+- Clicking on a sortable header that is currently sorted as descending will set the order to undefined. If `must-sort` is `true` OR if `mustSort` is an array that contains that columns `key`, it will skip to be `ascending`
 
 <HighlightCard>
   <BTable
