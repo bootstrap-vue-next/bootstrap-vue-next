@@ -486,6 +486,7 @@ pre-specify the column to be sorted use the `sortBy` model. For single column so
 By default the comparer function does a `numeric localeCompare`. If one wishes to change this, use a custom comparer function with that `BTableSortBy` element. 
 
 To prevent the table from wiping out the comparer function, internally it will set the `order` key to `undefined`, instead of just removing the element from the `sortBy` array. i.e. `:sort-by="[]"` & `:sort-by="[key: 'someKey', order: undefined]"` behave identically. Naturally if this value is given to a server, orders of undefined should be handled.
+
 <HighlightCard>
   <BTable
     :sort-by="[{key: 'first_name', order: 'desc'}]"
