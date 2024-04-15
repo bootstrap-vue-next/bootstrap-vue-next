@@ -23,34 +23,65 @@
 <script setup lang="ts">
 import {computed, provide, ref, toRef} from 'vue'
 import BFormCheckbox from './BFormCheckbox.vue'
-import type {BFormCheckboxGroupProps, CheckboxValue} from '../../types'
+import type {AriaInvalid, ButtonVariant, CheckboxOptionRaw, CheckboxValue, Size} from '../../types'
 import {getGroupAttr, getGroupClasses, useId} from '../../composables'
 import {checkboxGroupKey} from '../../utils'
-import {useFocus} from '@vueuse/core'
+import {useFocus, useVModel} from '@vueuse/core'
 
-const props = withDefaults(defineProps<BFormCheckboxGroupProps>(), {
-  ariaInvalid: undefined,
-  autofocus: false,
-  buttonVariant: 'secondary',
-  buttons: false,
-  disabled: false,
-  disabledField: 'disabled',
-  form: undefined,
-  htmlField: 'html',
-  id: undefined,
-  name: undefined,
-  options: () => [],
-  plain: false,
-  required: false,
-  reverse: false,
-  size: 'md',
-  stacked: false,
-  state: null,
-  switches: false,
-  textField: 'text',
-  validated: false,
-  valueField: 'value',
-})
+const props = withDefaults(
+  defineProps<{
+    ariaInvalid?: AriaInvalid
+    autofocus?: boolean
+    buttonVariant?: ButtonVariant | null
+    buttons?: boolean
+    disabled?: boolean
+    disabledField?: string
+    form?: string
+    htmlField?: string
+    id?: string
+    modelValue?: readonly CheckboxValue[]
+    name?: string
+    options?: readonly CheckboxOptionRaw[]
+    plain?: boolean
+    required?: boolean
+    reverse?: boolean
+    size?: Size
+    stacked?: boolean
+    state?: boolean | null
+    switches?: boolean
+    textField?: string
+    validated?: boolean
+    valueField?: string
+  }>(),
+  {
+    ariaInvalid: undefined,
+    autofocus: false,
+    buttonVariant: 'secondary',
+    buttons: false,
+    disabled: false,
+    disabledField: 'disabled',
+    form: undefined,
+    htmlField: 'html',
+    id: undefined,
+    modelValue: () => [],
+    name: undefined,
+    options: () => [],
+    plain: false,
+    required: false,
+    reverse: false,
+    size: 'md',
+    stacked: false,
+    state: null,
+    switches: false,
+    textField: 'text',
+    validated: false,
+    valueField: 'value',
+  }
+)
+
+const emit = defineEmits<{
+  'update:modelValue': [value: CheckboxValue[]]
+}>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -59,9 +90,7 @@ defineSlots<{
   first?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = defineModel<CheckboxValue[]>({
-  default: () => [],
-})
+const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const computedId = useId(() => props.id, 'checkbox')
 const computedName = useId(() => props.name, 'checkbox')

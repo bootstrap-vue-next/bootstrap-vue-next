@@ -23,10 +23,10 @@
 </template>
 
 <script setup lang="ts">
-import {useFocus} from '@vueuse/core'
+import {useFocus, useVModel} from '@vueuse/core'
 import {computed, inject, ref, toRef} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useId} from '../../composables'
-import type {BFormRadioProps, RadioValue} from '../../types'
+import type {ButtonVariant, RadioValue, Size} from '../../types'
 import {isEmptySlot, radioGroupKey} from '../../utils'
 import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
 
@@ -34,34 +34,59 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<BFormRadioProps>(), {
-  ariaLabel: undefined,
-  ariaLabelledby: undefined,
-  autofocus: false,
-  button: false,
-  buttonGroup: false,
-  buttonVariant: null,
-  disabled: false,
-  form: undefined,
-  id: undefined,
-  inline: false,
-  name: undefined,
-  plain: false,
-  required: false,
-  reverse: false,
-  size: undefined,
-  state: null,
-  value: true,
-})
+const props = withDefaults(
+  defineProps<{
+    ariaLabel?: string
+    ariaLabelledby?: string
+    autofocus?: boolean
+    button?: boolean
+    buttonGroup?: boolean
+    buttonVariant?: ButtonVariant | null
+    disabled?: boolean
+    form?: string
+    id?: string
+    inline?: boolean
+    modelValue?: RadioValue
+    name?: string
+    plain?: boolean
+    required?: boolean
+    reverse?: boolean
+    size?: Size
+    state?: boolean | null
+    value?: RadioValue
+  }>(),
+  {
+    ariaLabel: undefined,
+    ariaLabelledby: undefined,
+    autofocus: false,
+    button: false,
+    buttonGroup: false,
+    buttonVariant: null,
+    disabled: false,
+    form: undefined,
+    id: undefined,
+    inline: false,
+    modelValue: undefined,
+    name: undefined,
+    plain: false,
+    required: false,
+    reverse: false,
+    size: undefined,
+    state: null,
+    value: true,
+  }
+)
+
+const emit = defineEmits<{
+  'update:modelValue': [value: RadioValue]
+}>()
 
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = defineModel<RadioValue | undefined>({
-  default: undefined,
-})
+const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const computedId = useId(() => props.id, 'form-check')
 
