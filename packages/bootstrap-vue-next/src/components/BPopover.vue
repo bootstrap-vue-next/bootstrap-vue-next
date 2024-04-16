@@ -1,10 +1,10 @@
 <template>
-  <span ref="placeholder" />
+  <span :id="computedId + '_placeholder'" ref="placeholder" />
   <slot name="target" :show="show" :hide="hide" :toggle="toggle" :show-state="showState" />
   <Teleport :to="teleportTo" :disabled="!teleportTo || teleportDisabled">
     <div
       v-if="showStateInternal || props.persistent"
-      :id="id"
+      :id="computedId"
       v-bind="$attrs"
       ref="element"
       :class="computedClasses"

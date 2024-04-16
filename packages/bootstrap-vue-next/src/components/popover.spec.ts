@@ -51,7 +51,7 @@ describe('popover', () => {
 
     expect($div.attributes('id')).toBe('abc')
     await wrapper.setProps({id: undefined})
-    expect($div.attributes('id')).toBeUndefined()
+    expect($div.attributes('id')).toBeDefined()
   })
 
   it('first child contains slot title', () => {
