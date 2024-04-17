@@ -9,32 +9,20 @@
 
 <script setup lang="ts">
 import {computed, provide, toRef} from 'vue'
-import type {Breakpoint, ColorVariant} from '../../types'
+import type {BNavbarProps} from '../../types'
 import {useContainerClasses} from '../../composables'
 import {navbarInjectionKey} from '../../utils'
 
-const props = withDefaults(
-  defineProps<{
-    autoClose?: boolean
-    container?: boolean | 'fluid' | Breakpoint
-    fixed?: 'top' | 'bottom'
-    print?: boolean
-    sticky?: 'top' | 'bottom'
-    tag?: string
-    toggleable?: boolean | Breakpoint
-    variant?: ColorVariant | null
-  }>(),
-  {
-    autoClose: true,
-    container: 'fluid',
-    fixed: undefined,
-    print: false,
-    sticky: undefined,
-    tag: 'nav',
-    toggleable: false,
-    variant: null,
-  }
-)
+const props = withDefaults(defineProps<BNavbarProps>(), {
+  autoClose: true,
+  container: 'fluid',
+  fixed: undefined,
+  print: false,
+  sticky: undefined,
+  tag: 'nav',
+  toggleable: false,
+  variant: null,
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

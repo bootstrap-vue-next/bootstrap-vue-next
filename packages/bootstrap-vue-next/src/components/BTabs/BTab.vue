@@ -16,39 +16,22 @@
 <script setup lang="ts">
 import {computed, inject, onMounted, onUnmounted, ref, toRef, useAttrs, watch} from 'vue'
 import {useId} from '../../composables'
-import type {AttrsValue, ClassValue, TabType} from '../../types'
+import type {BTabProps, TabType} from '../../types'
 import {tabsInjectionKey} from '../../utils'
 
-const props = withDefaults(
-  defineProps<{
-    active?: boolean
-    buttonId?: string
-    disabled?: boolean
-    id?: string
-    lazy?: boolean
-    lazyOnce?: boolean
-    noBody?: boolean
-    tag?: string
-    title?: string
-    titleItemClass?: ClassValue
-    titleLinkAttrs?: Readonly<AttrsValue>
-    titleLinkClass?: ClassValue
-  }>(),
-  {
-    active: false,
-    buttonId: undefined,
-    disabled: false,
-    id: undefined,
-    lazy: undefined,
-    lazyOnce: undefined,
-    noBody: false,
-    tag: 'div',
-    title: undefined,
-    titleItemClass: undefined,
-    titleLinkAttrs: undefined,
-    titleLinkClass: undefined,
-  }
-)
+const props = withDefaults(defineProps<BTabProps>(), {
+  buttonId: undefined,
+  disabled: false,
+  id: undefined,
+  lazy: undefined,
+  lazyOnce: undefined,
+  noBody: false,
+  tag: 'div',
+  title: undefined,
+  titleItemClass: undefined,
+  titleLinkAttrs: undefined,
+  titleLinkClass: undefined,
+})
 
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -57,12 +40,12 @@ const slots = defineSlots<{
   title?: (props: Record<string, never>) => any
 }>()
 
-const emit = defineEmits<{
-  'update:active': [value: boolean]
-}>()
-
 defineOptions({
   inheritAttrs: false,
+})
+
+const activeModel = defineModel<boolean>('active', {
+  default: false,
 })
 
 const parentData = inject(tabsInjectionKey, null)
@@ -119,14 +102,14 @@ const showSlot = toRef(
 
 watch(isActive, (active) => {
   if (active) {
-    emit('update:active', true)
+    activeModel.value = true
     setTimeout(() => {
       show.value = true
     }, 0)
     return
   }
   show.value = false
-  emit('update:active', false)
+  activeModel.value = false
 })
 watch(
   () => props.active,

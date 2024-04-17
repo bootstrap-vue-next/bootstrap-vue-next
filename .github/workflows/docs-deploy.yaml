@@ -5,6 +5,7 @@ name: docs-github-pages-deploy
 on:
   release:
     types: [created]
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:

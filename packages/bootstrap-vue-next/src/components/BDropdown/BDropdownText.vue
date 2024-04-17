@@ -9,14 +9,11 @@
 </template>
 
 <script setup lang="ts">
-withDefaults(
-  defineProps<{
-    text?: string
-  }>(),
-  {
-    text: '',
-  }
-)
+import type {BDropdownTextProps} from '../../types'
+
+withDefaults(defineProps<BDropdownTextProps>(), {
+  text: '',
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

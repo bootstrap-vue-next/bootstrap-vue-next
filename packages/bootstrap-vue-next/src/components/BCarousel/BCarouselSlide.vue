@@ -39,7 +39,7 @@
 
 <script setup lang="ts">
 import {computed, type CSSProperties, inject, toRef} from 'vue'
-import type {Numberish} from '../../types'
+import type {BCarouselSlideProps} from '../../types'
 import {carouselInjectionKey, isEmptySlot} from '../../utils'
 import BImg from '../BImg.vue'
 
@@ -47,48 +47,26 @@ import BImg from '../BImg.vue'
 // Need to add https://getbootstrap.com/docs/5.3/components/carousel/#individual-carousel-item-interval
 // Perhaps a provide/inject with next/prev values where the component can call those would work.
 
-const props = withDefaults(
-  defineProps<{
-    background?: string
-    caption?: string
-    captionHtml?: string
-    captionTag?: string
-    contentTag?: string
-    contentVisibleUp?: string
-    id?: string
-    imgAlt?: string
-    imgBlank?: boolean
-    imgBlankColor?: string
-    imgHeight?: Numberish
-    imgSrc?: string
-    imgSrcset?: string | readonly string[]
-    imgWidth?: Numberish
-    interval?: Numberish
-    text?: string
-    textHtml?: string
-    textTag?: string
-  }>(),
-  {
-    background: undefined,
-    caption: undefined,
-    captionHtml: undefined,
-    captionTag: 'h3',
-    contentTag: 'div',
-    contentVisibleUp: undefined,
-    id: undefined,
-    imgAlt: undefined,
-    imgBlank: false,
-    imgBlankColor: 'transparent',
-    imgHeight: undefined,
-    imgSrc: undefined,
-    imgSrcset: undefined,
-    imgWidth: undefined,
-    interval: undefined,
-    text: undefined,
-    textHtml: undefined,
-    textTag: 'p',
-  }
-)
+const props = withDefaults(defineProps<BCarouselSlideProps>(), {
+  background: undefined,
+  caption: undefined,
+  captionHtml: undefined,
+  captionTag: 'h3',
+  contentTag: 'div',
+  contentVisibleUp: undefined,
+  id: undefined,
+  imgAlt: undefined,
+  imgBlank: false,
+  imgBlankColor: 'transparent',
+  imgHeight: undefined,
+  imgSrc: undefined,
+  imgSrcset: undefined,
+  imgWidth: undefined,
+  interval: undefined,
+  text: undefined,
+  textHtml: undefined,
+  textTag: 'p',
+})
 
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

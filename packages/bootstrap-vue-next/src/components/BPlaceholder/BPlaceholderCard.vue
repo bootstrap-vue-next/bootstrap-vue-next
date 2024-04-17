@@ -50,53 +50,30 @@ import BCard from '../BCard/BCard.vue'
 import BCardImg from '../BCard/BCardImg.vue'
 import BPlaceholder from './BPlaceholder.vue'
 import BPlaceholderButton from './BPlaceholderButton.vue'
-import type {ColorVariant, Numberish, PlaceholderAnimation, PlaceholderSize} from '../../types'
+import type {BPlaceholderCardProps} from '../../types'
 import {computed, toRef} from 'vue'
 
-const props = withDefaults(
-  defineProps<{
-    animation?: PlaceholderAnimation
-    footerAnimation?: PlaceholderAnimation
-    footerSize?: PlaceholderSize
-    footerVariant?: ColorVariant | null
-    footerWidth?: Numberish
-    headerAnimation?: PlaceholderAnimation
-    headerSize?: PlaceholderSize
-    headerVariant?: ColorVariant | null
-    headerWidth?: Numberish
-    imgBlankColor?: string
-    imgBottom?: boolean
-    imgHeight?: Numberish
-    imgSrc?: string
-    noButton?: boolean
-    noFooter?: boolean
-    noHeader?: boolean
-    noImg?: boolean
-    size?: PlaceholderSize
-    variant?: ColorVariant | null
-  }>(),
-  {
-    animation: undefined,
-    footerAnimation: undefined,
-    footerSize: 'md',
-    footerVariant: undefined,
-    footerWidth: 100,
-    headerAnimation: undefined,
-    headerSize: 'md',
-    headerVariant: undefined,
-    headerWidth: 100,
-    imgBlankColor: '#868e96',
-    imgBottom: false,
-    imgHeight: 100,
-    imgSrc: undefined,
-    noButton: false,
-    noFooter: false,
-    noHeader: false,
-    noImg: false,
-    size: 'md',
-    variant: undefined,
-  }
-)
+const props = withDefaults(defineProps<BPlaceholderCardProps>(), {
+  animation: undefined,
+  footerAnimation: undefined,
+  footerSize: 'md',
+  footerVariant: undefined,
+  footerWidth: 100,
+  headerAnimation: undefined,
+  headerSize: 'md',
+  headerVariant: undefined,
+  headerWidth: 100,
+  imgBlankColor: '#868e96',
+  imgBottom: false,
+  imgHeight: 100,
+  imgSrc: undefined,
+  noButton: false,
+  noFooter: false,
+  noHeader: false,
+  noImg: false,
+  size: 'md',
+  variant: undefined,
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

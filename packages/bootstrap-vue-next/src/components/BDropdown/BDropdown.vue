@@ -37,7 +37,7 @@
         </slot>
       </span>
     </BButton>
-    <Teleport :to="container || 'body'" :disabled="!container">
+    <Teleport :to="teleportTo" :disabled="!teleportTo || teleportDisabled">
       <ul
         v-if="!props.lazy || modelValue"
         v-show="props.lazy || modelValue"
@@ -67,7 +67,7 @@ import {
   size as sizeMiddleware,
   useFloating,
 } from '@floating-ui/vue'
-import {onClickOutside, onKeyStroke, useToNumber, useVModel} from '@vueuse/core'
+import {onClickOutside, onKeyStroke, useToNumber} from '@vueuse/core'
 import {computed, type CSSProperties, nextTick, provide, ref, toRef, watch} from 'vue'
 import {useId} from '../../composables'
 import type {BDropdownProps} from '../../types'
@@ -83,7 +83,8 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   boundary: 'clippingAncestors',
   boundaryPadding: undefined,
   center: false,
-  container: undefined,
+  teleportTo: undefined,
+  teleportDisabled: false,
   disabled: false,
   dropend: false,
   dropstart: false,
@@ -94,7 +95,6 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   isNav: false,
   lazy: false,
   menuClass: undefined,
-  modelValue: false,
   noCaret: false,
   noFlip: false,
   noShift: false,
@@ -125,7 +125,6 @@ const emit = defineEmits<{
   'show-prevented': []
   'shown': []
   'toggle': []
-  'update:modelValue': [value: boolean]
 }>()
 
 defineSlots<{
@@ -139,7 +138,7 @@ defineSlots<{
 
 const computedId = useId(() => props.id, 'dropdown')
 
-const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
+const modelValue = defineModel<boolean>({default: false})
 
 const computedOffset = toRef(() =>
   typeof props.offset === 'string' || typeof props.offset === 'number' ? props.offset : NaN
@@ -321,12 +320,9 @@ const toggle = () => {
   wrapper.value?.dispatchEvent(new Event('forceHide'))
 }
 
-watch(
-  () => modelValue.value,
-  () => {
-    update()
-  }
-)
+watch(modelValue, () => {
+  update()
+})
 
 defineExpose({
   hide,

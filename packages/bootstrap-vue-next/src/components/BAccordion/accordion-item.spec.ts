@@ -2,6 +2,7 @@ import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BAccordionItem from './BAccordionItem.vue'
 import BCollapse from '../BCollapse.vue'
+import {nextTick} from 'vue'
 
 describe('accordion-item', () => {
   enableAutoUnmount(afterEach)
@@ -145,12 +146,12 @@ describe('accordion-item', () => {
     expect($button.attributes('aria-expanded')).toBe('false')
   })
 
-  it('h2 child button child has aria-expanded true when visible true', () => {
+  it('h2 child button child has aria-expanded true when visible true', async () => {
     const wrapper = mount(BAccordionItem, {
       props: {visible: true},
     })
-    const $h2 = wrapper.get('h2')
-    const $button = $h2.get('button')
+    const $button = wrapper.get('.accordion-button')
+    await nextTick()
     expect($button.attributes('aria-expanded')).toBe('true')
   })
 

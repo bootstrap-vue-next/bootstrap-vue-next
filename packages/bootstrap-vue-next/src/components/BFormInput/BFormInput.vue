@@ -27,49 +27,38 @@
 <script setup lang="ts">
 import {computed, ref} from 'vue'
 import {useFormInput, useStateClass} from '../../composables'
-import type {CommonInputProps, InputType, Numberish} from '../../types'
+import type {BFormInputProps, Numberish} from '../../types'
 
-const props = withDefaults(
-  defineProps<
-    {
-      max?: Numberish
-      min?: Numberish
-      // noWheel: {type: Boolean, default: false}, TODO: not implemented yet
-      step?: Numberish
-      type?: InputType
-    } & CommonInputProps
-  >(),
-  {
-    max: undefined,
-    min: undefined,
-    step: undefined,
-    type: 'text',
-    // CommonInputProps
-    ariaInvalid: undefined,
-    autocomplete: undefined,
-    autofocus: false,
-    debounce: 0,
-    debounceMaxWait: NaN,
-    disabled: false,
-    form: undefined,
-    formatter: undefined,
-    id: undefined,
-    lazy: false,
-    lazyFormatter: false,
-    list: undefined,
-    modelValue: '',
-    name: undefined,
-    number: false,
-    placeholder: undefined,
-    plaintext: false,
-    readonly: false,
-    required: false,
-    size: undefined,
-    state: null,
-    trim: false,
-    // End CommonInputProps
-  }
-)
+const props = withDefaults(defineProps<BFormInputProps>(), {
+  max: undefined,
+  min: undefined,
+  step: undefined,
+  type: 'text',
+  // CommonInputProps
+  ariaInvalid: undefined,
+  autocomplete: undefined,
+  autofocus: false,
+  debounce: 0,
+  debounceMaxWait: NaN,
+  disabled: false,
+  form: undefined,
+  formatter: undefined,
+  id: undefined,
+  lazy: false,
+  lazyFormatter: false,
+  list: undefined,
+  modelValue: '',
+  name: undefined,
+  number: false,
+  placeholder: undefined,
+  plaintext: false,
+  readonly: false,
+  required: false,
+  size: undefined,
+  state: null,
+  trim: false,
+  // End CommonInputProps
+})
 
 const emit = defineEmits<{
   'update:modelValue': [val: Numberish | null]

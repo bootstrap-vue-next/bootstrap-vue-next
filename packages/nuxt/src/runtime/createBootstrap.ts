@@ -1,11 +1,16 @@
 import {createBootstrap} from 'bootstrap-vue-next'
-import {defineNuxtPlugin} from '#imports'
+import {defineNuxtPlugin, useId} from '#imports'
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.use(
     createBootstrap({
       components: false,
       directives: false,
+      plugins: {
+        id: {
+          getId: () => useId(),
+        },
+      },
     })
   )
 })

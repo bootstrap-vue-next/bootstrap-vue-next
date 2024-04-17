@@ -169,7 +169,7 @@ const ChildComp = defineComponent({
 const ParentComp = defineComponent({
   name: 'ParentComp',
   render() {
-    return h(BTabs, {}, () => this.$slots.default())
+    return h(BTabs, {}, () => (this.$slots.default ? this.$slots.default() : null))
   },
 })
 
@@ -178,10 +178,13 @@ const LoggerComp = defineComponent({
   name: 'ParentComp',
   components: {},
   mounted() {
+    // eslint-disable-next-line no-console
     console.log('logger component mounted')
   },
   render() {
-    return h(BTabs, {class: 'border m-3 p-3'}, () => this.$slots.default())
+    return h(BTabs, {class: 'border m-3 p-3'}, () =>
+      this.$slots.default ? this.$slots.default() : null
+    )
   },
 })
 
@@ -202,7 +205,9 @@ const tab3 = ref([
   {title: 't3', content: 't3'},
   {title: 't4', content: 't4'},
 ])
-function log(e) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function log(e: any) {
+  // eslint-disable-next-line no-console
   console.log('click', e)
 }
 

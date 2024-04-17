@@ -12,18 +12,13 @@
 </template>
 
 <script setup lang="ts">
-withDefaults(
-  defineProps<{
-    label?: string
-    labelFor?: string
-    text?: string
-  }>(),
-  {
-    label: undefined,
-    labelFor: undefined,
-    text: undefined,
-  }
-)
+import type {BFormFloatingLabelProps} from '../../types'
+
+withDefaults(defineProps<BFormFloatingLabelProps>(), {
+  label: undefined,
+  labelFor: undefined,
+  text: undefined,
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

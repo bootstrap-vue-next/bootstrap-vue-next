@@ -5,14 +5,11 @@
 </template>
 
 <script setup lang="ts">
-withDefaults(
-  defineProps<{
-    tag?: string
-  }>(),
-  {
-    tag: 'div',
-  }
-)
+import type {BFormRowProps} from '../../types'
+
+withDefaults(defineProps<BFormRowProps>(), {
+  tag: 'div',
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

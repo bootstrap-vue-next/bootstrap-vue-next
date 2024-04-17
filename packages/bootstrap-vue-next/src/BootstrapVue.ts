@@ -2,6 +2,7 @@ import type {Plugin} from 'vue'
 import type {BootstrapVueOptions, ComponentType, DirectiveType} from './types'
 import toastPlugin from './plugins/toastPlugin'
 import breadcrumbPlugin from './plugins/breadcrumbPlugin'
+import idPlugin from './plugins/idPlugin'
 import modalControllerPlugin from './plugins/modalControllerPlugin'
 import modalManagerPlugin from './plugins/modalManagerPlugin'
 import rtlPlugin from './plugins/rtlPlugin'
@@ -145,6 +146,9 @@ export const createBootstrap = ({
 
     if (plugins?.breadcrumb ?? true === true) {
       app.use(breadcrumbPlugin)
+    }
+    if ((plugins?.id ?? true === true) || typeof plugins.id === 'object') {
+      app.use(idPlugin, plugins)
     }
     if (plugins?.modalController ?? true === true) {
       app.use(modalControllerPlugin)

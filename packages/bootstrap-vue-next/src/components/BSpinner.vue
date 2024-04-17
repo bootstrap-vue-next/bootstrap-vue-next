@@ -13,27 +13,17 @@
 
 <script setup lang="ts">
 import {computed, toRef} from 'vue'
-import type {ColorVariant, SpinnerType} from '../types'
+import type {BSpinnerProps} from '../types'
 import {isEmptySlot} from '../utils'
 
-const props = withDefaults(
-  defineProps<{
-    label?: string
-    role?: string
-    small?: boolean
-    tag?: string
-    type?: SpinnerType
-    variant?: ColorVariant | null
-  }>(),
-  {
-    label: undefined,
-    role: 'status',
-    small: false,
-    tag: 'span',
-    type: 'border',
-    variant: null,
-  }
-)
+const props = withDefaults(defineProps<BSpinnerProps>(), {
+  label: undefined,
+  role: 'status',
+  small: false,
+  tag: 'span',
+  type: 'border',
+  variant: null,
+})
 
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -4,44 +4,36 @@
 
 <script setup lang="ts">
 import BImg from '../BImg.vue'
-import type {BImgProps} from '../../types'
+import type {BCardImageProps} from '../../types'
 import {omit} from '../../utils'
 import {computed, toRef} from 'vue'
 
-const props = withDefaults(
-  defineProps<
-    {
-      bottom?: boolean
-      top?: boolean
-    } & BImgProps
-  >(),
-  {
-    bottom: false,
-    top: false,
-    // BImg props
-    blank: undefined,
-    blankColor: undefined,
-    block: undefined,
-    center: undefined,
-    end: undefined,
-    fluid: undefined,
-    fluidGrow: undefined,
-    height: undefined,
-    lazy: undefined,
-    rounded: undefined,
-    roundedBottom: undefined,
-    roundedEnd: undefined,
-    roundedStart: undefined,
-    roundedTop: undefined,
-    sizes: undefined,
-    src: undefined,
-    srcset: undefined,
-    start: undefined,
-    thumbnail: undefined,
-    width: undefined,
-    // End BImg props
-  }
-)
+const props = withDefaults(defineProps<BCardImageProps>(), {
+  bottom: false,
+  top: false,
+  // BImg props
+  blank: undefined,
+  blankColor: undefined,
+  block: undefined,
+  center: undefined,
+  end: undefined,
+  fluid: undefined,
+  fluidGrow: undefined,
+  height: undefined,
+  lazy: undefined,
+  rounded: undefined,
+  roundedBottom: undefined,
+  roundedEnd: undefined,
+  roundedStart: undefined,
+  roundedTop: undefined,
+  sizes: undefined,
+  src: undefined,
+  srcset: undefined,
+  start: undefined,
+  thumbnail: undefined,
+  width: undefined,
+  // End BImg props
+})
 
 const baseClass = toRef(() =>
   props.top

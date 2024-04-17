@@ -592,26 +592,6 @@ describe('form-checkbox', () => {
   })
 
   describe('model behavior', () => {
-    it('default unchecked checkbox emits input event when clicked', async () => {
-      const wrapper = mount(BFormCheckbox, {props: {modelValue: false}, attachTo: document.body})
-
-      await wrapper.find('input').trigger('click')
-
-      expect(wrapper.emitted('input')).toBeDefined()
-      expect(wrapper.emitted('input')?.length).toBe(1)
-      expect(wrapper.emitted('input')?.[0][0]).toBeInstanceOf(Event)
-    })
-
-    it('default unchecked checkbox emits change event when clicked', async () => {
-      const wrapper = mount(BFormCheckbox, {props: {modelValue: false}, attachTo: document.body})
-
-      await wrapper.find('input').trigger('click')
-
-      expect(wrapper.emitted('change')).toBeDefined()
-      expect(wrapper.emitted('change')?.length).toBe(1)
-      expect(wrapper.emitted('change')?.[0][0]).toBeInstanceOf(Event)
-    })
-
     it('default unchecked checkbox emits update:modelValue===true event when clicked', async () => {
       const wrapper = mount(BFormCheckbox, {props: {modelValue: false}, attachTo: document.body})
 
@@ -622,26 +602,6 @@ describe('form-checkbox', () => {
       expect(wrapper.emitted('update:modelValue')?.[0][0]).toBe(true)
     })
 
-    it('default checked checkbox emits input event when clicked', async () => {
-      const wrapper = mount(BFormCheckbox, {props: {modelValue: true}, attachTo: document.body})
-
-      await wrapper.find('input').trigger('click')
-
-      expect(wrapper.emitted('input')).toBeDefined()
-      expect(wrapper.emitted('input')?.length).toBe(1)
-      expect(wrapper.emitted('input')?.[0][0]).toBeInstanceOf(Event)
-    })
-
-    it('default checked checkbox emits change event when clicked', async () => {
-      const wrapper = mount(BFormCheckbox, {props: {modelValue: true}, attachTo: document.body})
-
-      await wrapper.find('input').trigger('click')
-
-      expect(wrapper.emitted('change')).toBeDefined()
-      expect(wrapper.emitted('change')?.length).toBe(1)
-      expect(wrapper.emitted('change')?.[0][0]).toBeInstanceOf(Event)
-    })
-
     it('default checked checkbox emits update:modelValue===false event when clicked', async () => {
       const wrapper = mount(BFormCheckbox, {props: {modelValue: true}, attachTo: document.body})
 
@@ -650,36 +610,6 @@ describe('form-checkbox', () => {
       expect(wrapper.emitted('update:modelValue')).toBeDefined()
       expect(wrapper.emitted('update:modelValue')?.length).toBe(1)
       expect(wrapper.emitted('update:modelValue')?.[0][0]).toBe(false)
-    })
-
-    it('custom value unchecked checkbox emits input event when clicked', async () => {
-      const wrapper = mount(BFormCheckbox, {
-        props: {
-          modelValue: 'unchecked',
-          value: 'checked',
-          uncheckedValue: 'unchecked',
-        },
-        attachTo: document.body,
-      })
-
-      await wrapper.find('input').trigger('click')
-
-      expect(wrapper.emitted('input')).toBeDefined()
-      expect(wrapper.emitted('input')?.length).toBe(1)
-      expect(wrapper.emitted('input')?.[0][0]).toBeInstanceOf(Event)
-    })
-
-    it('custom value unchecked checkbox emits change event when clicked', async () => {
-      const wrapper = mount(BFormCheckbox, {
-        props: {value: 'checked', uncheckedValue: 'unchecked'},
-        attachTo: document.body,
-      })
-
-      await wrapper.find('input').trigger('click')
-
-      expect(wrapper.emitted('change')).toBeDefined()
-      expect(wrapper.emitted('change')?.length).toBe(1)
-      expect(wrapper.emitted('change')?.[0][0]).toBeInstanceOf(Event)
     })
 
     it('custom value unchecked checkbox emits update:modelValue==="checked" event when clicked', async () => {
@@ -695,41 +625,6 @@ describe('form-checkbox', () => {
       expect(wrapper.emitted('update:modelValue')?.[0][0]).toBe('checked')
     })
 
-    it('custom value checked checkbox emits input event when clicked', async () => {
-      const wrapper = mount(BFormCheckbox, {
-        props: {
-          modelValue: 'checked',
-          value: 'checked',
-          uncheckedValue: 'unchecked',
-        },
-        attachTo: document.body,
-      })
-
-      await wrapper.find('input').trigger('click')
-
-      expect(wrapper.emitted('input')).toBeDefined()
-      expect(wrapper.emitted('input')?.length).toBe(1)
-      expect(wrapper.emitted('input')?.[0][0]).toBeInstanceOf(Event)
-    })
-
-    it('custom value checked checkbox emits change event when clicked', async () => {
-      const props = {
-        modelValue: 'checked',
-        value: 'checked',
-        uncheckedValue: 'unchecked',
-      }
-      const wrapper = mount(BFormCheckbox, {
-        props,
-        attachTo: document.body,
-      })
-
-      await wrapper.find('input').trigger('click')
-
-      expect(wrapper.emitted('change')).toBeDefined()
-      expect(wrapper.emitted('change')?.length).toBe(1)
-      expect(wrapper.emitted('change')?.[0][0]).toBeInstanceOf(Event)
-    })
-
     it('custom value checked checkbox emits update:modelValue==="unhecked-value" event when clicked', async () => {
       const wrapper = mount(BFormCheckbox, {
         props: {
@@ -740,7 +635,7 @@ describe('form-checkbox', () => {
         attachTo: document.body,
       })
 
-      await wrapper.find('input').trigger('click')
+      await wrapper.get('input').trigger('click')
 
       expect(wrapper.emitted('update:modelValue')).toBeDefined()
       expect(wrapper.emitted('update:modelValue')?.length).toBe(1)

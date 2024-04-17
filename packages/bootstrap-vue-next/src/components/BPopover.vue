@@ -1,10 +1,10 @@
 <template>
-  <span ref="placeholder" />
+  <span :id="computedId + '_placeholder'" ref="placeholder" />
   <slot name="target" :show="show" :hide="hide" :toggle="toggle" :show-state="showState" />
-  <Teleport :to="container || 'body'" :disabled="!container">
+  <Teleport :to="teleportTo" :disabled="!teleportTo || teleportDisabled">
     <div
       v-if="showStateInternal || props.persistent"
-      :id="id"
+      :id="computedId"
       v-bind="$attrs"
       ref="element"
       :class="computedClasses"
@@ -106,7 +106,8 @@ const props = withDefaults(defineProps<BPopoverProps>(), {
   boundary: 'clippingAncestors',
   boundaryPadding: undefined,
   click: false,
-  container: undefined,
+  teleportTo: undefined,
+  teleportDisabled: false,
   content: undefined,
   customClass: '',
   delay: () => ({show: 100, hide: 300}),
@@ -116,7 +117,6 @@ const props = withDefaults(defineProps<BPopoverProps>(), {
   id: undefined,
   inline: false,
   manual: false,
-  modelValue: false,
   noAutoClose: false,
   noFade: false,
   noFlip: false,
@@ -143,7 +143,6 @@ const emit = defineEmits<{
   'show': [value: BvTriggerableEvent]
   'show-prevented': []
   'shown': [value: BvTriggerableEvent]
-  'update:modelValue': [value: boolean]
 }>()
 
 defineSlots<{
@@ -160,19 +159,20 @@ defineSlots<{
   title?: (props: Record<string, never>) => any
 }>()
 
-const showState = ref(props.modelValue)
-const showStateInternal = ref(props.modelValue)
-watchEffect(() => {
-  emit('update:modelValue', showState.value)
+const modelValue = defineModel<boolean>({
+  default: false,
 })
 
-watch(
-  () => props.modelValue,
-  () => {
-    if (props.modelValue === showState.value) return
-    props.modelValue ? show() : hide(new Event('update:modelValue'))
-  }
-)
+const showState = ref(modelValue.value)
+const showStateInternal = ref(modelValue.value)
+watchEffect(() => {
+  modelValue.value = showState.value
+})
+
+watch(modelValue, (newValue) => {
+  if (newValue === showState.value) return
+  newValue ? show() : hide(new Event('update:modelValue'))
+})
 
 const computedId = useId(() => props.id, 'popover')
 

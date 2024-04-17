@@ -14,25 +14,16 @@
 </template>
 
 <script setup lang="ts">
-import type {ColorVariant, Numberish} from '../../types'
+import type {BThProps} from '../../types'
 import {computed, toRef} from 'vue'
 
-const props = withDefaults(
-  defineProps<{
-    colspan?: Numberish
-    rowspan?: Numberish
-    stackedHeading?: string
-    stickyColumn?: boolean
-    variant?: ColorVariant | null
-  }>(),
-  {
-    colspan: undefined,
-    rowspan: undefined,
-    stackedHeading: undefined,
-    stickyColumn: false,
-    variant: null,
-  }
-)
+const props = withDefaults(defineProps<BThProps>(), {
+  colspan: undefined,
+  rowspan: undefined,
+  stackedHeading: undefined,
+  stickyColumn: false,
+  variant: null,
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

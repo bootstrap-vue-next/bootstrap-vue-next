@@ -15,21 +15,15 @@
 </template>
 
 <script setup lang="ts">
+import type {BNavbarToggleProps} from '../../types'
 import {vBToggle} from '../../directives'
 import {computed} from 'vue'
 
-const props = withDefaults(
-  defineProps<{
-    disabled?: boolean
-    label?: string
-    target?: string | readonly string[]
-  }>(),
-  {
-    label: 'Toggle navigation',
-    disabled: false,
-    target: undefined,
-  }
-)
+const props = withDefaults(defineProps<BNavbarToggleProps>(), {
+  label: 'Toggle navigation',
+  disabled: false,
+  target: undefined,
+})
 
 const emit = defineEmits<{
   click: [value: MouseEvent]

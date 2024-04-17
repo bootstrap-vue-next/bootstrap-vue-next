@@ -60,14 +60,7 @@
 </template>
 
 <script setup lang="ts">
-import type {
-  AlignmentTextHorizontal,
-  ClassValue,
-  ColorExtendables,
-  ColorVariant,
-  Numberish,
-  TextColorVariant,
-} from '../../types'
+import type {BCardProps} from '../../types'
 import {isEmptySlot} from '../../utils'
 import {computed, toRef} from 'vue'
 import {useColorVariantClasses} from '../../composables'
@@ -77,97 +70,52 @@ import BCardBody from './BCardBody.vue'
 import BCardFooter from './BCardFooter.vue'
 import {createReusableTemplate} from '@vueuse/core'
 
-const props = withDefaults(
-  defineProps<
-    {
-      align?: AlignmentTextHorizontal
-      bodyBgVariant?: ColorVariant | null
-      bodyClass?: ClassValue
-      bodyTag?: string
-      bodyText?: string
-      bodyTextVariant?: TextColorVariant | null
-      borderVariant?: ColorVariant | null
-      footer?: string
-      footerBgVariant?: ColorVariant | null
-      footerBorderVariant?: ColorVariant | null
-      footerClass?: ClassValue
-      footerHtml?: string
-      footerTag?: string
-      footerTextVariant?: TextColorVariant | null
-      footerVariant?: ColorVariant | null
-      header?: string
-      headerBgVariant?: ColorVariant | null
-      headerBorderVariant?: ColorVariant | null
-      headerClass?: ClassValue
-      headerHtml?: string
-      headerTag?: string
-      headerTextVariant?: TextColorVariant | null
-      headerVariant?: ColorVariant | null
-      imgAlt?: string
-      imgBottom?: boolean
-      imgEnd?: boolean
-      imgHeight?: Numberish
-      imgSrc?: string
-      imgStart?: boolean
-      imgTop?: boolean
-      imgWidth?: Numberish
-      noBody?: boolean
-      overlay?: boolean
-      subtitle?: string
-      subtitleTag?: string
-      subtitleTextVariant?: TextColorVariant | null
-      tag?: string
-      title?: string
-      titleTag?: string
-    } & ColorExtendables
-  >(),
-  {
-    align: undefined,
-    bodyBgVariant: undefined,
-    bodyClass: undefined,
-    bodyTag: 'div',
-    bodyText: '',
-    bodyTextVariant: undefined,
-    borderVariant: null,
-    footer: undefined,
-    footerBgVariant: undefined,
-    footerBorderVariant: undefined,
-    footerClass: undefined,
-    footerHtml: '',
-    footerTag: 'div',
-    footerTextVariant: undefined,
-    footerVariant: null,
-    header: undefined,
-    headerBgVariant: undefined,
-    headerBorderVariant: undefined,
-    headerClass: undefined,
-    headerHtml: '',
-    headerTag: 'div',
-    headerTextVariant: undefined,
-    headerVariant: null,
-    imgAlt: undefined,
-    imgBottom: false,
-    imgEnd: false,
-    imgHeight: undefined,
-    imgSrc: undefined,
-    imgStart: false,
-    imgTop: false,
-    imgWidth: undefined,
-    noBody: false,
-    overlay: false,
-    subtitle: undefined,
-    subtitleTag: 'h6',
-    subtitleTextVariant: 'body-secondary',
-    tag: 'div',
-    title: undefined,
-    titleTag: 'h4',
-    // ColorExtendables props
-    bgVariant: null,
-    textVariant: null,
-    variant: null,
-    // End ColorExtendables props
-  }
-)
+const props = withDefaults(defineProps<BCardProps>(), {
+  align: undefined,
+  bodyBgVariant: undefined,
+  bodyClass: undefined,
+  bodyTag: 'div',
+  bodyText: '',
+  bodyTextVariant: undefined,
+  borderVariant: null,
+  footer: undefined,
+  footerBgVariant: undefined,
+  footerBorderVariant: undefined,
+  footerClass: undefined,
+  footerHtml: '',
+  footerTag: 'div',
+  footerTextVariant: undefined,
+  footerVariant: null,
+  header: undefined,
+  headerBgVariant: undefined,
+  headerBorderVariant: undefined,
+  headerClass: undefined,
+  headerHtml: '',
+  headerTag: 'div',
+  headerTextVariant: undefined,
+  headerVariant: null,
+  imgAlt: undefined,
+  imgBottom: false,
+  imgEnd: false,
+  imgHeight: undefined,
+  imgSrc: undefined,
+  imgStart: false,
+  imgTop: false,
+  imgWidth: undefined,
+  noBody: false,
+  overlay: false,
+  subtitle: undefined,
+  subtitleTag: 'h6',
+  subtitleTextVariant: 'body-secondary',
+  tag: 'div',
+  title: undefined,
+  titleTag: 'h4',
+  // ColorExtendables props
+  bgVariant: null,
+  textVariant: null,
+  variant: null,
+  // End ColorExtendables props
+})
 
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -203,3 +203,5 @@ export const modalManagerPluginKey: InjectionKey<{
   pushRegistry: (modal: Readonly<ComponentInternalInstance>) => void
   removeRegistry: (modal: Readonly<ComponentInternalInstance>) => void
 }> = Symbol('modalManagerPlugin')
+
+export const idPluginKey: InjectionKey<() => string> = Symbol('idPluginKey')
