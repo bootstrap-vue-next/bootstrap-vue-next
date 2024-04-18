@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.17.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.17.0...bootstrapvuenext-v0.17.1) (2024-04-18)
+
+
+### Bug Fixes
+
+* **BPopover:** fix injection out of setup context. ([#1848](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1848)) ([fe9b46e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/fe9b46e379d1fc507906bae8692451fb92b9586d))
+* Some prop types were build wrong because of vue bug ([3459a54](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3459a54f4242509a6a23e9a48430de5f3d190157))
+
 ## [0.17.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.16.6...bootstrapvuenext-v0.17.0) (2024-04-14)
 
 

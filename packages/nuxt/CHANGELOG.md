@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.17.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.17.0...nuxt-v0.17.1) (2024-04-18)
+
+
+### Bug Fixes
+
+* Some prop types were build wrong because of vue bug ([3459a54](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3459a54f4242509a6a23e9a48430de5f3d190157))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.17.1
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.17.1
+
 ## [0.17.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.16.6...nuxt-v0.17.0) (2024-04-14)
 
 
