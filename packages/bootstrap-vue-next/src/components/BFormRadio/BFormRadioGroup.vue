@@ -86,7 +86,7 @@ provide(radioGroupKey, {
   plain: toRef(() => props.plain),
   size: toRef(() => props.size),
   inline: toRef(() => !props.stacked),
-  reverse: toRef(() => !props.reverse),
+  reverse: toRef(() => props.reverse),
   required: toRef(() => props.required),
   disabled: toRef(() => props.disabled),
 })
