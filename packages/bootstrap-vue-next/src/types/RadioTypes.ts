@@ -1,7 +1,7 @@
 export type RadioValue =
   | boolean
   | string
-  | readonly unknown[]
+  | Readonly<unknown[]>
   | Readonly<Record<string, unknown>>
   | number
   | null
