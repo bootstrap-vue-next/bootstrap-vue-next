@@ -105,8 +105,8 @@ export const set = <T extends object, K>(initial: T, path: string, value: K): T 
     if (value === null || value === undefined) {
       return def
     }
-    const result = parseInt(value)
-    return isNaN(result) ? def : result
+    const result = Number.parseInt(value)
+    return Number.isNaN(result) ? def : result
   }
 
   if (!initial) return {} as T
