@@ -433,19 +433,6 @@ const computedItems = computed<T[]>(() => {
     )
 
   let mappedItems = usesProvider.value ? internalItems.value : (props.items as T[])
-  /*
-  [
-  {
-    "yoo.1": 123,
-    "yoo.2": 321
-  },
-  {
-    "yoo.1": 789,
-    "yoo.2": 987
-  }
-]
-*/
-
   mappedItems = mappedItems.map((item) => {
     if (typeof item === 'object' && item !== null) {
       // We use any here because the TS doesn't isn't certain that "item" is the same type as our newItem.
