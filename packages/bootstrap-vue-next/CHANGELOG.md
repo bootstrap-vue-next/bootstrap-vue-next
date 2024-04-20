@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.17.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.17.1...bootstrapvuenext-v0.17.2) (2024-04-20)
+
+
+### Bug Fixes
+
+* **BTable:** allow for inferred nested objects for items fixes [#1851](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1851) ([b7a4520](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b7a4520b32a8054ae43b74a750d1dfd6864f6c84))
+* **BTableLite:** create clone of items thats used internally to fix toggleDetails flipping -- immutable object does not work with the mutation fixes [#1852](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1852) ([b7a4520](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b7a4520b32a8054ae43b74a750d1dfd6864f6c84))
+
 ## [0.17.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.17.0...bootstrapvuenext-v0.17.1) (2024-04-18)
 
 
