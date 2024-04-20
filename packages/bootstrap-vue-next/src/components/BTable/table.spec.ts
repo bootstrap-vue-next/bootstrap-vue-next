@@ -40,6 +40,17 @@ const formattedFields: Exclude<TableField<SimplePerson>, string>[] = [
   {key: 'age', label: 'Age', sortable: true},
 ]
 
+const nestableItemsTest = {
+  items: [
+    {yoo1: 123, yoo2: 321},
+    {yoo1: 789, yoo2: 987},
+  ] satisfies TableItem[],
+  fields: [
+    {key: 'yoo1', label: 'YOO1'},
+    {key: 'yoo2', label: 'YOO2'},
+  ] satisfies TableField[],
+}
+
 describe('tbody', () => {
   enableAutoUnmount(afterEach)
 
@@ -267,5 +278,19 @@ describe('single-sort', () => {
         .map((row) => row.findAll('td')[1].text())
       expect(text).toStrictEqual(['35', '42', '27', '9', '101'])
     })
+  })
+
+  it('will display data when using a inferred nested object [item: { "yoo.1": 123, "yoo.2": 321 }]', () => {
+    const wrapper = mount(BTable, {
+      props: nestableItemsTest,
+    })
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.findAll('td').map((td) => td.text()))
+    expect(text).toStrictEqual([
+      ['123', '321'],
+      ['789', '987'],
+    ])
   })
 })
