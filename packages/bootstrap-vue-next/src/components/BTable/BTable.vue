@@ -137,7 +137,7 @@ import type {
   TableFieldRaw,
   TableItem,
 } from '../../types'
-import {formatItem, get, getTableFieldHeadLabel} from '../../utils'
+import {formatItem, get, getTableFieldHeadLabel, set} from '../../utils'
 import BOverlay from '../BOverlay/BOverlay.vue'
 import BSpinner from '../BSpinner.vue'
 import BTableLite from './BTableLite.vue'
@@ -433,6 +433,24 @@ const computedItems = computed<T[]>(() => {
     )
 
   let mappedItems = usesProvider.value ? internalItems.value : (props.items as T[])
+  mappedItems = mappedItems.map((item) => {
+    if (typeof item === 'object' && item !== null) {
+      // We use any here because the TS doesn't isn't certain that "item" is the same type as our newItem.
+      // But we've determined that it's an object, so we can ignore it since they will always be the same "object"
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let newItem: any = {}
+      for (const key in item) {
+        if (key.includes('.')) {
+          newItem = set(newItem, key, item[key])
+        } else {
+          newItem[key] = item[key]
+        }
+      }
+      return newItem
+      // return
+    }
+    return item
+  })
 
   if (
     (isFilterableTable.value === true && !usesProvider.value) ||

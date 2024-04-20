@@ -63,14 +63,14 @@
       <slot
         name="custom-body"
         :fields="computedFields"
-        :items="items"
+        :items="internalItems"
         :columns="computedFields.length"
       >
         <BTr v-if="!props.stacked && $slots['top-row']">
           <slot name="top-row" />
         </BTr>
 
-        <template v-for="(item, itemIndex) in items" :key="itemIndex">
+        <template v-for="(item, itemIndex) in internalItems" :key="itemIndex">
           <BTr
             :class="getRowClasses(item, 'row')"
             :variant="isTableItem(item) ? item._rowVariant : undefined"
@@ -101,7 +101,7 @@
                 :index="itemIndex"
                 :item="item"
                 :field="field"
-                :items="items"
+                :items="internalItems"
                 :toggle-details="
                   () => {
                     toggleRowDetails(item)
@@ -135,9 +135,9 @@
             </BTr>
           </template>
         </template>
-        <BTr v-if="props.showEmpty && items.length === 0" class="b-table-empty-slot">
+        <BTr v-if="props.showEmpty && internalItems.length === 0" class="b-table-empty-slot">
           <BTd :colspan="computedFieldsTotal">
-            <slot name="empty" :items="items">
+            <slot name="empty" :items="internalItems">
               {{ emptyText }}
             </slot>
           </BTd>
@@ -183,7 +183,7 @@
       <slot
         name="custom-foot"
         :fields="computedFields"
-        :items="items"
+        :items="internalItems"
         :columns="computedFields.length"
       />
     </BTfoot>
@@ -196,7 +196,7 @@
 </template>
 
 <script setup lang="ts" generic="T">
-import {computed, toRef} from 'vue'
+import {computed, ref, type Ref, toRef, watch} from 'vue'
 import type {BTableLiteProps, TableField, TableFieldAttribute, TableItem} from '../../types'
 import {isTableField, isTableItem} from '../../types/TableTypes'
 import {filterEvent, formatItem, get, getTableFieldHeadLabel, startCase} from '../../utils'
@@ -264,6 +264,15 @@ const emit = defineEmits<{
   'row-unhovered': [item: T, index: number, event: MouseEvent]
 }>()
 
+const internalItems: Ref<T[]> = ref(JSON.parse(JSON.stringify(props.items)))
+
+watch(
+  () => props.items,
+  (newItems) => {
+    internalItems.value = JSON.parse(JSON.stringify(newItems))
+  }
+)
+
 const computedTableClasses = computed(() => [
   props.tableClass,
   {
@@ -272,8 +281,8 @@ const computedTableClasses = computed(() => [
 ])
 
 const computedFields = computed<(TableField & {_noHeader?: true})[]>(() => {
-  if (!props.fields.length && props.items.length) {
-    const [firstItem] = props.items
+  if (!props.fields.length && internalItems.value.length) {
+    const [firstItem] = internalItems.value
     if (isTableItem(firstItem) || Array.isArray(firstItem)) {
       return Object.keys(firstItem).map((k) => {
         const label = startCase(k)

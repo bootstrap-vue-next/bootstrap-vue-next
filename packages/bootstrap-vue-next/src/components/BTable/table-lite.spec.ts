@@ -172,4 +172,26 @@ describe('btablelite', () => {
       })
     })
   })
+
+  it('Will properly display row details when toggleDetails is actived', async () => {
+    const items = [
+      [1, 2],
+      [1, 2],
+    ]
+    const wrapper = mount(BTableLite, {
+      props: {
+        items,
+      },
+      slots: {
+        'cell()': `<template #cell()="row"><button id="foobar" size="sm" @click="row.toggleDetails">{{ row.detailsShowing ? 'Hide' : 'Show' }} notes</button></template>`,
+        'row-details': `<template #row-details="row">THE ROW!</template>`,
+      },
+    })
+    const [$first, , $third] = wrapper.findAll('#foobar')
+
+    await $first.trigger('click')
+    await $third.trigger('click')
+
+    expect((wrapper.html().match(/THE ROW!/g) || []).length).toBe(2)
+  })
 })
