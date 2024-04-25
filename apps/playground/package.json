@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "bootstrap-vue-next": "workspace:^",
-    "vue": "^3.4.23",
+    "vue": "^3.4.25",
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
@@ -22,8 +22,8 @@
     "@vue/tsconfig": "^0.5.1",
     "bootstrap": "^5.3.3",
     "typescript": "^5.4.5",
-    "vite": "^5.2.9",
-    "vue-tsc": "^2.0.13"
+    "vite": "^5.2.10",
+    "vue-tsc": "^2.0.14"
   },
   "lint-staged": {
     "*.{js,ts,vue}": "eslint --cache --fix",
