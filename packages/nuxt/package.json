@@ -50,7 +50,7 @@
     "nuxt": "^3.11.2",
     "prettier": "^3.2.5",
     "unimport": "^3.7.1",
-    "vue": "^3.4.23"
+    "vue": "^3.4.25"
   },
   "repository": {
     "type": "git",
