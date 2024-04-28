@@ -385,7 +385,7 @@ const computedItems = computed<T[]>(() => {
 
             return false
           })
-          const val = ob[sortOption.key as keyof TableItem]
+          const val = get(ob, sortOption.key as keyof TableItem)
           if (isTableField(sortField) && !!sortField.sortByFormatted) {
             const formatter =
               typeof sortField.sortByFormatted === 'function'
