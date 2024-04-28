@@ -40,6 +40,20 @@ const formattedFields: Exclude<TableField<SimplePerson>, string>[] = [
   {key: 'age', label: 'Age', sortable: true},
 ]
 
+class Person {
+  constructor(
+    public id: number,
+    public firstName: string,
+    public lastName: string,
+    public age: number
+  ) {
+    this.id = id
+    this.firstName = firstName
+    this.lastName = lastName
+    this.age = age
+  }
+}
+
 const nestableItemsTest = {
   items: [
     {yoo1: 123, yoo2: 321},
@@ -51,9 +65,9 @@ const nestableItemsTest = {
   ] satisfies TableField[],
 }
 
-describe('tbody', () => {
-  enableAutoUnmount(afterEach)
+enableAutoUnmount(afterEach)
 
+describe('tbody', () => {
   it('has table class by default', () => {
     const wrapper = mount(BTable, {
       props: {items: simpleItems},
@@ -94,6 +108,7 @@ describe('tbody', () => {
     expect(heads[1].classes()).toContain('b-table-sortable-column')
   })
 })
+
 describe('single-sort', () => {
   it('does not show sortable columns when sortable undefined', () => {
     const wrapper = mount(BTable, {
@@ -241,56 +256,80 @@ describe('single-sort', () => {
       .map((row) => row.find('td').text())
     expect(text).toStrictEqual(['Havij', 'Robert', 'Cyndi'])
   })
+})
 
-  describe('multi-sort', () => {
-    it('has aria-sort labels reflecting sortBy prop', () => {
-      const wrapper = mount(BTable, {
-        props: {
-          multisort: true,
-          items: multiSort,
-          fields: simpleFields,
-          sortBy: [
-            {key: 'age', order: 'asc'},
-            {key: 'first_name', order: 'desc'},
-          ],
-        },
-      })
-      const heads = wrapper.get('table').findAll('th')
-      expect(heads[0].attributes('aria-sort')).toBe('descending')
-      expect(heads[1].attributes('aria-sort')).toBe('ascending')
+describe('multi-sort', () => {
+  it('has aria-sort labels reflecting sortBy prop', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        multisort: true,
+        items: multiSort,
+        fields: simpleFields,
+        sortBy: [
+          {key: 'age', order: 'asc'},
+          {key: 'first_name', order: 'desc'},
+        ],
+      },
     })
-
-    it('correctly sorts on two columns', () => {
-      const wrapper = mount(BTable, {
-        props: {
-          multisort: true,
-          items: multiSort,
-          fields: simpleFields,
-          sortBy: [
-            {key: 'first_name', order: 'desc'},
-            {key: 'age', order: 'asc'},
-          ],
-        },
-      })
-      const text = wrapper
-        .get('tbody')
-        .findAll('tr')
-        .map((row) => row.findAll('td')[1].text())
-      expect(text).toStrictEqual(['35', '42', '27', '9', '101'])
-    })
+    const heads = wrapper.get('table').findAll('th')
+    expect(heads[0].attributes('aria-sort')).toBe('descending')
+    expect(heads[1].attributes('aria-sort')).toBe('ascending')
   })
 
-  it('will display data when using a inferred nested object [item: { "yoo.1": 123, "yoo.2": 321 }]', () => {
+  it('correctly sorts on two columns', () => {
     const wrapper = mount(BTable, {
-      props: nestableItemsTest,
+      props: {
+        multisort: true,
+        items: multiSort,
+        fields: simpleFields,
+        sortBy: [
+          {key: 'first_name', order: 'desc'},
+          {key: 'age', order: 'asc'},
+        ],
+      },
     })
     const text = wrapper
       .get('tbody')
       .findAll('tr')
-      .map((row) => row.findAll('td').map((td) => td.text()))
-    expect(text).toStrictEqual([
-      ['123', '321'],
-      ['789', '987'],
-    ])
+      .map((row) => row.findAll('td')[1].text())
+    expect(text).toStrictEqual(['35', '42', '27', '9', '101'])
+  })
+})
+
+it('will display data when using a inferred nested object [item: { "yoo.1": 123, "yoo.2": 321 }]', () => {
+  const wrapper = mount(BTable, {
+    props: nestableItemsTest,
+  })
+  const text = wrapper
+    .get('tbody')
+    .findAll('tr')
+    .map((row) => row.findAll('td').map((td) => td.text()))
+  expect(text).toStrictEqual([
+    ['123', '321'],
+    ['789', '987'],
+  ])
+})
+
+describe('object-persistence', () => {
+  it('Passes the original object for scoped cell slot item', () => {
+    const items = [new Person(1, 'John', 'Doe', 30), new Person(2, 'Jane', 'Smith', 25)]
+    const wrapper = mount(BTable, {
+      props: {
+        primaryKey: 'id',
+        items,
+      },
+      slots: {
+        'cell()': `<template #cell()="row">{{ row.item.constructor.name }}</template>`,
+      },
+    })
+    const $tbody = wrapper.get('tbody')
+    const $tr = $tbody.findAll('tr')
+    $tr.forEach((el) => {
+      const $tds = el.findAll('td')
+      expect($tds.length).toBe(4)
+      $tds.forEach(($td) => {
+        expect($td.text()).toBe('Person')
+      })
+    })
   })
 })

@@ -434,7 +434,11 @@ const computedItems = computed<T[]>(() => {
 
   let mappedItems = usesProvider.value ? internalItems.value : (props.items as T[])
   mappedItems = mappedItems.map((item) => {
-    if (typeof item === 'object' && item !== null) {
+    if (
+      typeof item === 'object' &&
+      item !== null &&
+      Object.keys(item).some((key) => key.includes('.'))
+    ) {
       // We use any here because the TS doesn't isn't certain that "item" is the same type as our newItem.
       // But we've determined that it's an object, so we can ignore it since they will always be the same "object"
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
