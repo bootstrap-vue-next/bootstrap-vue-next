@@ -2,6 +2,20 @@ import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BTableLite from './BTableLite.vue'
 
+class Person {
+  constructor(
+    public id: number,
+    public firstName: string,
+    public lastName: string,
+    public age: number
+  ) {
+    this.id = id
+    this.firstName = firstName
+    this.lastName = lastName
+    this.age = age
+  }
+}
+
 describe('btablelite', () => {
   enableAutoUnmount(afterEach)
 
@@ -193,5 +207,64 @@ describe('btablelite', () => {
     await $third.trigger('click')
 
     expect((wrapper.html().match(/THE ROW!/g) || []).length).toBe(2)
+  })
+
+  it('Passes the original object for scoped cell slot item', () => {
+    const items = [new Person(1, 'John', 'Doe', 30), new Person(2, 'Jane', 'Smith', 25)]
+    const wrapper = mount(BTableLite, {
+      props: {
+        primaryKey: 'id',
+        items,
+      },
+      slots: {
+        'cell()': `<template #cell()="row">{{ row.item.constructor.name }}</template>`,
+      },
+    })
+    const $tbody = wrapper.get('tbody')
+    const $tr = $tbody.findAll('tr')
+    $tr.forEach((el) => {
+      const $tds = el.findAll('td')
+      expect($tds.length).toBe(4)
+      $tds.forEach(($td) => {
+        expect($td.text()).toBe('Person')
+      })
+    })
+  })
+
+  it('Passes the original objects for scoped cell slot items', () => {
+    const items = [new Person(1, 'John', 'Doe', 30), new Person(2, 'Jane', 'Smith', 25)]
+    const wrapper = mount(BTableLite, {
+      props: {
+        primaryKey: 'id',
+        items,
+      },
+      slots: {
+        'cell()': `<template #cell()="row">{{ row.items[0].constructor.name }}</template>`,
+      },
+    })
+    const $tbody = wrapper.get('tbody')
+    const $tr = $tbody.findAll('tr')
+    $tr.forEach((el) => {
+      const $tds = el.findAll('td')
+      expect($tds.length).toBe(4)
+      $tds.forEach(($td) => {
+        expect($td.text()).toBe('Person')
+      })
+    })
+  })
+
+  it('Passes the original objects for scoped custom table body', () => {
+    const items = [new Person(1, 'John', 'Doe', 30), new Person(2, 'Jane', 'Smith', 25)]
+    const wrapper = mount(BTableLite, {
+      props: {
+        primaryKey: 'id',
+        items,
+      },
+      slots: {
+        'custom-body': `<template #custom-body="table">{{ table.items[0].constructor.name }}</template>`,
+      },
+    })
+    const $tbody = wrapper.get('tbody')
+    expect($tbody.text()).toBe('Person')
   })
 })

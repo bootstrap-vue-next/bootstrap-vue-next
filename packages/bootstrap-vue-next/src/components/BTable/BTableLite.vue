@@ -63,7 +63,7 @@
       <slot
         name="custom-body"
         :fields="computedFields"
-        :items="internalItems"
+        :items="items"
         :columns="computedFields.length"
       >
         <BTr v-if="!props.stacked && $slots['top-row']">
@@ -99,9 +99,9 @@
                 "
                 :value="get(item, String(field.key))"
                 :index="itemIndex"
-                :item="item"
+                :item="original(item)"
                 :field="field"
-                :items="internalItems"
+                :items="items"
                 :toggle-details="
                   () => {
                     toggleRowDetails(item)
@@ -122,7 +122,7 @@
               <BTd :colspan="computedFieldsTotal">
                 <slot
                   name="row-details"
-                  :item="item"
+                  :item="original(item)"
                   :toggle-details="
                     () => {
                       toggleRowDetails(item)
@@ -137,7 +137,7 @@
         </template>
         <BTr v-if="props.showEmpty && internalItems.length === 0" class="b-table-empty-slot">
           <BTd :colspan="computedFieldsTotal">
-            <slot name="empty" :items="internalItems">
+            <slot name="empty" :items="items">
               {{ emptyText }}
             </slot>
           </BTd>
@@ -183,7 +183,7 @@
       <slot
         name="custom-foot"
         :fields="computedFields"
-        :items="internalItems"
+        :items="items"
         :columns="computedFields.length"
       />
     </BTfoot>
@@ -272,6 +272,26 @@ watch(
     internalItems.value = JSON.parse(JSON.stringify(newItems))
   }
 )
+
+const itemMap = computed(() => {
+  const map = new Map<string | number, T>()
+  const key = props.primaryKey
+  if (key) {
+    props.items.forEach((item) => {
+      if (isTableItem(item)) {
+        map.set(item[key] as string | number, item)
+      }
+    })
+  }
+  return map
+})
+
+const original = (item: T) => {
+  const key = props.primaryKey
+  return key
+    ? itemMap.value.get((item as Record<string, unknown>)[key] as string | number) ?? item
+    : item
+}
 
 const computedTableClasses = computed(() => [
   props.tableClass,
