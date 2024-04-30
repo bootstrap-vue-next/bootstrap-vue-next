@@ -431,6 +431,28 @@ Use the `reverse` prop to put your checkboxes and switches on the opposite side 
   </template>
 </HighlightCard>
 
+## Without Labels
+
+In order to ommit labels as described in the
+[bootstrap documentation](https://getbootstrap.com/docs/5.3/forms/checks-radios/#without-labels)
+just leave the default slot empty. Remember to still provide some form of accessible name for
+assistive technologies (for instance, using aria-label).
+
+<HighlightCard>
+  <BFormCheckbox></BFormCheckbox>
+  <BFormCheckbox disabled></BFormCheckbox>
+  <BFormCheckbox switch></BFormCheckbox>
+  <template #html>
+
+```vue-html
+  <BFormCheckbox></BFormCheckbox>
+  <BFormCheckbox disabled></BFormCheckbox>
+  <BFormCheckbox switch></BFormCheckbox>
+```
+
+  </template>
+</HighlightCard>
+
 ## Checkbox values and `v-model`
 
 By default, `BFormCheckbox` value will be true when checked and false when unchecked. You can customize the checked and unchecked values by specifying the `value` and `unchecked-value` properties, respectively.
