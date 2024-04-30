@@ -6,6 +6,7 @@ export type {
   AlignmentTextHorizontal,
   AlignmentVertical,
   Animation,
+  AriaInvalid,
   BTableProvider,
   BTableProviderContext,
   BaseButtonVariant,

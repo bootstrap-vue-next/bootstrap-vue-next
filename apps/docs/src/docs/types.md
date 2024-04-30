@@ -19,6 +19,16 @@
 <BCard class="bg-body-tertiary">
 
 ```ts
+type AriaInvalid = boolean | 'grammar' | 'spelling'
+```
+
+</BCard>
+
+## AriaInvalid
+
+<BCard class="bg-body-tertiary">
+
+```ts
 type CommonAlignment = 'start' | 'end' | 'center' | 'fill'
 type Vertical = CommonAlignment | 'baseline' | 'stretch'
 type Horizontal = CommonAlignment | 'between' | 'around'
@@ -105,6 +115,47 @@ type ButtonVariant =
   | 'outline-info'
   | 'outline-light'
   | 'outline-dark'
+```
+
+</BCard>
+
+## CheckboxOption
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type CheckboxOption = {
+  text: string
+  value: CheckboxValue
+  disabled?: boolean
+}
+```
+
+</BCard>
+
+## CheckboxOptionRaw
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type CheckboxOptionRaw = string | number | (Partial<CheckboxOption> & Record<string, unknown>)
+```
+
+</BCard>
+
+## CheckboxValue
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type CheckboxValue =
+  | readonly unknown[]
+  | ReadonlySet<unknown>
+  | string
+  | boolean
+  | Readonly<Record<string, unknown>>
+  | number
+  | null
 ```
 
 </BCard>
