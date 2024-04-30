@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.17.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.17.2...nuxt-v0.17.3) (2024-04-29)
+
+
+### Bug Fixes
+
+* update dependencies to fix a bug in vue compiler ([#1866](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1866)) ([b2c56bf](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b2c56bff644177d5653b628a9cbb30ffa5c7055a))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.17.3
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.17.3
+
 ## [0.17.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.17.1...nuxt-v0.17.2) (2024-04-20)
 
 

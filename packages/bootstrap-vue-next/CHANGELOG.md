@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.17.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.17.2...bootstrapvuenext-v0.17.3) (2024-04-29)
+
+
+### Features
+
+* **BTable:** Allow dot in sortby key ([08d30ef](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/08d30eff3c1e4f47c1d47d0dbe57ac7a8af63d31))
+
+
+### Bug Fixes
+
+* update dependencies to fix a bug in vue compiler ([#1866](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1866)) ([b2c56bf](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b2c56bff644177d5653b628a9cbb30ffa5c7055a))
+
 ## [0.17.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.17.1...bootstrapvuenext-v0.17.2) (2024-04-20)
 
 
