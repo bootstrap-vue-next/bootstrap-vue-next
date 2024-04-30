@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.17.3...bootstrapvuenext-v0.17.4) (2024-04-30)
+
+
+### Bug Fixes
+
+* **BTable:** Pass through original records to slots in most circumstances ([#1869](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1869)) ([bd5541f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bd5541f096e6240c26715d8833561710316f3b69))
+
 ## [0.17.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.17.2...bootstrapvuenext-v0.17.3) (2024-04-29)
 
 
