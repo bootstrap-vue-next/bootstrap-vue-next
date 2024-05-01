@@ -433,7 +433,7 @@ Use the `reverse` prop to put your checkboxes and switches on the opposite side 
 
 ## Without Labels
 
-In order to ommit labels as described in the
+In order to omit labels as described in the
 [bootstrap documentation](https://getbootstrap.com/docs/5.3/forms/checks-radios/#without-labels)
 just leave the default slot empty. Remember to still provide some form of accessible name for
 assistive technologies (for instance, using aria-label).
