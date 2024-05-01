@@ -35,9 +35,9 @@ named `indeterminate` rather than adding the sync modifier to the `indeterminate
   <template #html>
 
 ```vue-html
-    <b-form-checkbox v-model="checked" :indeterminate.sync="indeterminate">
+    <BFormCheckbox v-model="checked" :indeterminate.sync="indeterminate">
       Click me to see what happens
-    </b-form-checkbox>
+    </BFormCheckbox>
 ```
 
   </template>
