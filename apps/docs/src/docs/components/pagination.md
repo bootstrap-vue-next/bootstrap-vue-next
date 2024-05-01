@@ -1,12 +1,10 @@
 # Pagination
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -408,6 +406,7 @@ recommended unless the content of the button textually conveys its purpose.
 <script setup lang="ts">
 import {data} from '../../data/components/pagination.data'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BProgress, BSpinner, BCard, BCardBody, BPagination} from 'bootstrap-vue-next'
 import {ref, computed} from 'vue'

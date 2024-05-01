@@ -1,12 +1,10 @@
 # Spinners
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -296,6 +294,7 @@ As well, when no label is provided, the spinner will automatically have the attr
 <script setup lang="ts">
 import {data} from '../../data/components/spinner.data'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BCard, BCardBody, BButton, BSpinner} from 'bootstrap-vue-next'
 </script>

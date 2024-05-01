@@ -1,12 +1,10 @@
 # Form Checkbox
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -1058,6 +1056,7 @@ watch(flavorSelected, (newValue: string[]) => {
 import {data} from '../../data/components/formCheckbox.data'
 import {computed, ref, watch} from 'vue'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import CrossSiteScriptingWarning from '../../components/CrossSiteScriptingWarning.vue'
 import {BButton, BFormCheckboxGroup, BFormCheckbox, BFormGroup, BCard, BCardBody, BAlert} from 'bootstrap-vue-next'

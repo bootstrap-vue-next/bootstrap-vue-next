@@ -1,12 +1,10 @@
 # Avatar
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -763,6 +761,7 @@ Avatars are based upon `BBadge` and `BButton` components, and as such, rely upon
 import {data} from '../../data/components/avatar.data'
 import {BAvatar, BAvatarGroup, BListGroup, BBadge, BListGroupItem} from 'bootstrap-vue-next'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 
 const alertEvent = (event: PointerEvent) => {

@@ -1,12 +1,10 @@
 # Form Group
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -515,6 +513,7 @@ scoped `default` slot.
 <script setup lang="ts">
 import {data} from '../../data/components/formGroup.data'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BCard, BCardBody, BFormRadioGroup, BFormGroup, BFormInput} from 'bootstrap-vue-next'
 import {computed, ref} from 'vue'

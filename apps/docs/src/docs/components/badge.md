@@ -1,12 +1,10 @@
 # Badge
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -215,5 +213,6 @@ Quickly provide actionable badges with ~~hover~~ and ~~focus~~ states by specify
 import {data} from '../../data/components/badge.data'
 import {BButton, BBadge} from 'bootstrap-vue-next'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 </script>

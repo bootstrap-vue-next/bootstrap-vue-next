@@ -1,13 +1,10 @@
 # useModalController
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ContentsSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
-
+</ContentsSidebar>
 <div class="lead mb-5">
 
 `useModalController` can hide modals everywhere in the app, as well as creating modals on the fly
@@ -228,6 +225,7 @@ const {hide, hideAll} = useModalController()
 <script setup lang="ts">
 import {BButton, BModal, useModalController, BButtonGroup, useToast} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
+import ContentsSidebar from '../../components/ContentsSidebar.vue'
 import UsePluginAlert from '../../components/UsePluginAlert.vue'
 import {ref, computed, h, onMounted} from 'vue'
 
