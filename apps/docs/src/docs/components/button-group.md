@@ -1,12 +1,10 @@
 # Button Group
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -188,5 +186,6 @@ toolbars containing button groups and input groups.
 import {data} from '../../data/components/buttonGroup.data'
 import {BDropdownItem, BDropdownDivider, BButton, BButtonGroup, BDropdown} from 'bootstrap-vue-next'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 </script>

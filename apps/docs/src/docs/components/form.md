@@ -1,12 +1,10 @@
 # Form
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -442,6 +440,7 @@ for details on the Bootstrap v5 validation states.
 <script setup lang="ts">
 import {data} from '../../data/components/form.data'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {
   BFormValidFeedback,

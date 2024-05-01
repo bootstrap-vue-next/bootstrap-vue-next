@@ -1,13 +1,10 @@
 # Types
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ContentsSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
-
+</ContentsSidebar>
 <div class="lead mb-5">
 
 `BootstrapVueNext` is a complete rewrite that strives for full TypeScript compatibility. This is a list of types we use in this library and that you can use too.
@@ -357,4 +354,5 @@ New values can be used now and the type check will be successful:
 
 <script setup lang="ts">
 import {BCard, BCardBody} from 'bootstrap-vue-next'
+import ContentsSidebar from '../components/ContentsSidebar.vue'
 </script>

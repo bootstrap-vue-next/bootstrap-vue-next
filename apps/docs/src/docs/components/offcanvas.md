@@ -1,12 +1,10 @@
 # Offcanvas
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -84,6 +82,7 @@ const click = (place = 'start') => {
 <script setup lang="ts">
 import {data} from '../../data/components/offcanvas.data'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BCard, BCardBody, BOffcanvas, BButton} from 'bootstrap-vue-next'
 import {ref, computed} from 'vue'

@@ -1,13 +1,10 @@
 # Contributing
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ContentsSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
-
+</ContentsSidebar>
 <div class="lead mb-5">
 
 👍🎉 First off, thanks for taking the time to contribute! 🎉👍
@@ -112,4 +109,5 @@ increase version in package.json, commit
 <script setup lang="ts">
 import {BAlert} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
+import ContentsSidebar from '../../components/ContentsSidebar.vue'
 </script>
