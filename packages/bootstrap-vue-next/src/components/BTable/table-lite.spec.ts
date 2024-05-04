@@ -267,4 +267,73 @@ describe('btablelite', () => {
     const $tbody = wrapper.get('tbody')
     expect($tbody.text()).toBe('Person')
   })
+
+  describe('toggle details', () => {
+    it('works internally', async () => {
+      const items = [{isActive: true, age: 40, name: {first: 'Dickerson', last: 'Macdonald'}}]
+      const fields = [{key: 'actions', label: 'Actions', sortable: false}]
+      const wrapper = mount(BTableLite, {
+        props: {
+          items,
+          fields,
+        },
+        slots: {
+          'cell(actions)':
+            '<template #cell(actions)="row"><button @click="row.toggleDetails"></button></template>',
+          'row-details': 'foobar!',
+        },
+      })
+      await wrapper.get('button').trigger('click')
+      expect(wrapper.text()).toContain('foobar!')
+      await wrapper.get('button').trigger('click')
+      expect(wrapper.text()).not.toContain('foobar!')
+    })
+
+    it('works externally', async () => {
+      const fields = [{key: 'actions', label: 'Actions', sortable: false}]
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [
+            {
+              isActive: true,
+              age: 40,
+              name: {first: 'Dickerson', last: 'Macdonald'},
+              _showDetails: true,
+            },
+          ],
+          fields,
+        },
+        slots: {
+          'cell(actions)':
+            '<template #cell(actions)="row"><button @click="row.toggleDetails"></button></template>',
+          'row-details': 'foobar!',
+        },
+      })
+      expect(wrapper.text()).toContain('foobar!')
+      await wrapper.setProps({
+        items: [
+          {
+            isActive: true,
+            age: 40,
+            name: {first: 'Dickerson', last: 'Macdonald'},
+            _showDetails: false,
+          },
+        ],
+      })
+      expect(wrapper.text()).not.toContain('foobar!')
+      await wrapper.get('button').trigger('click')
+      expect(wrapper.text()).toContain('foobar!')
+      await wrapper.setProps({
+        items: [
+          {
+            isActive: true,
+            age: 40,
+            name: {first: 'Dickerson', last: 'Macdonald'},
+            _showDetails: false,
+          },
+        ],
+      })
+      expect(wrapper.text()).not.toContain('foobar!')
+    })
+  })
 })

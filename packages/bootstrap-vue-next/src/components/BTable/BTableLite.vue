@@ -70,7 +70,7 @@
           <slot name="top-row" />
         </BTr>
 
-        <template v-for="(item, itemIndex) in internalItems" :key="itemIndex">
+        <template v-for="(item, itemIndex) in items" :key="itemIndex">
           <BTr
             :class="getRowClasses(item, 'row')"
             :variant="isTableItem(item) ? item._rowVariant : undefined"
@@ -99,7 +99,7 @@
                 "
                 :value="get(item, String(field.key))"
                 :index="itemIndex"
-                :item="original(item)"
+                :item="item"
                 :field="field"
                 :items="items"
                 :toggle-details="
@@ -107,7 +107,7 @@
                     toggleRowDetails(item)
                   }
                 "
-                :details-showing="isTableItem(item) ? item._showDetails ?? false : false"
+                :details-showing="isTableItem(item) ? detailsMap.get(item) ?? false : false"
               >
                 <template v-if="!$slots[`cell(${String(field.key)})`] && !$slots['cell()']">
                   {{ formatItem(item, String(field.key), field.formatter) }}
@@ -116,13 +116,15 @@
             </BTd>
           </BTr>
 
-          <template v-if="isTableItem(item) && item._showDetails === true && $slots['row-details']">
+          <template
+            v-if="isTableItem(item) && detailsMap.get(item) === true && $slots['row-details']"
+          >
             <BTr aria-hidden="true" role="presentation" class="d-none" />
             <BTr :class="getRowClasses(item, 'row-details')" :variant="item._rowVariant">
               <BTd :colspan="computedFieldsTotal">
                 <slot
                   name="row-details"
-                  :item="original(item)"
+                  :item="item"
                   :toggle-details="
                     () => {
                       toggleRowDetails(item)
@@ -135,7 +137,7 @@
             </BTr>
           </template>
         </template>
-        <BTr v-if="props.showEmpty && internalItems.length === 0" class="b-table-empty-slot">
+        <BTr v-if="props.showEmpty && items.length === 0" class="b-table-empty-slot">
           <BTd :colspan="computedFieldsTotal">
             <slot name="empty" :items="items">
               {{ emptyText }}
@@ -196,7 +198,7 @@
 </template>
 
 <script setup lang="ts" generic="T">
-import {computed, ref, type Ref, toRef, watch} from 'vue'
+import {computed, ref, toRef, watch} from 'vue'
 import type {BTableLiteProps, TableField, TableFieldAttribute, TableItem} from '../../types'
 import {isTableField, isTableItem} from '../../types/TableTypes'
 import {filterEvent, formatItem, get, getTableFieldHeadLabel, startCase} from '../../utils'
@@ -264,34 +266,34 @@ const emit = defineEmits<{
   'row-unhovered': [item: T, index: number, event: MouseEvent]
 }>()
 
-const internalItems: Ref<T[]> = ref(JSON.parse(JSON.stringify(props.items)))
-
+const generateDetailsItem = (item: TableItem): [object, boolean | undefined] => [
+  item,
+  item._showDetails,
+]
+const detailsMap = ref(
+  new WeakMap(
+    props.items.reduce(
+      (acc, el) => {
+        if (isTableItem(el)) {
+          acc.push(generateDetailsItem(el))
+        }
+        return acc
+      },
+      [] as [object, boolean | undefined][]
+    )
+  )
+)
 watch(
   () => props.items,
-  (newItems) => {
-    internalItems.value = JSON.parse(JSON.stringify(newItems))
-  }
-)
-
-const itemMap = computed(() => {
-  const map = new Map<string | number, T>()
-  const key = props.primaryKey
-  if (key) {
-    props.items.forEach((item) => {
-      if (isTableItem(item)) {
-        map.set(item[key] as string | number, item)
-      }
+  (items) => {
+    items.forEach((item) => {
+      if (!isTableItem(item)) return
+      const detailsItem = generateDetailsItem(item)
+      detailsMap.value.set(detailsItem[0], detailsItem[1])
     })
-  }
-  return map
-})
-
-const original = (item: T) => {
-  const key = props.primaryKey
-  return key
-    ? itemMap.value.get((item as Record<string, unknown>)[key] as string | number) ?? item
-    : item
-}
+  },
+  {deep: true}
+)
 
 const computedTableClasses = computed(() => [
   props.tableClass,
@@ -301,8 +303,8 @@ const computedTableClasses = computed(() => [
 ])
 
 const computedFields = computed<(TableField & {_noHeader?: true})[]>(() => {
-  if (!props.fields.length && internalItems.value.length) {
-    const [firstItem] = internalItems.value
+  if (!props.fields.length && props.items.length) {
+    const [firstItem] = props.items
     if (isTableItem(firstItem) || Array.isArray(firstItem)) {
       return Object.keys(firstItem).map((k) => {
         const label = startCase(k)
@@ -357,7 +359,8 @@ const headerClicked = (field: TableField<T>, event: Readonly<MouseEvent>, isFoot
 
 const toggleRowDetails = (tr: T) => {
   if (isTableItem(tr)) {
-    tr._showDetails = !tr._showDetails
+    const prevValue = detailsMap.value.get(tr)
+    detailsMap.value.set(tr, !prevValue)
   }
 }
 
