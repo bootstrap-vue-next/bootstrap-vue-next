@@ -273,7 +273,12 @@ const generateDetailsItem = (item: TableItem): [object, boolean | undefined] => 
 const detailsMap = ref(
   new WeakMap(
     props.items.reduce(
-      (acc, el) => (isTableItem(el) ? [...acc, generateDetailsItem(el)] : acc),
+      (acc, el) => {
+        if (isTableItem(el)) {
+          acc.push(generateDetailsItem(el))
+        }
+        return acc
+      },
       [] as [object, boolean | undefined][]
     )
   )
