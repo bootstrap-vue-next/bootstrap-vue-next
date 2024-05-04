@@ -2,6 +2,7 @@ import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BTable from './BTable.vue'
 import type {LiteralUnion, TableField, TableItem} from '../../types'
+import {nextTick} from 'vue'
 
 interface SimplePerson {
   first_name: string
@@ -329,6 +330,151 @@ describe('object-persistence', () => {
       expect($tds.length).toBe(4)
       $tds.forEach(($td) => {
         expect($td.text()).toBe('Person')
+      })
+    })
+  })
+
+  describe('selectedItems system', () => {
+    it('gives the correct row a class when selected', async () => {
+      const items = [new Person(1, 'John', 'Doe', 30), new Person(2, 'Jane', 'Smith', 25)]
+
+      const wrapper = mount(BTable, {
+        props: {
+          'selectMode': 'multi',
+          'selectable': true,
+          items,
+          'selectedItems': [],
+          'onUpdate:selectedItems': (value: Person[]) => wrapper.setProps({selectedItems: value}),
+        },
+      })
+      const $trs = wrapper.findAll('tr')
+      await $trs[1].trigger('click')
+      await $trs[2].trigger('click')
+      expect($trs[1].classes()).toContain('selected')
+      expect($trs[2].classes()).toContain('selected')
+      await $trs[1].trigger('click')
+      await $trs[2].trigger('click')
+      expect($trs[1].classes()).not.toContain('selected')
+      expect($trs[2].classes()).not.toContain('selected')
+    })
+
+    it('single mode', async () => {
+      const items = [new Person(1, 'John', 'Doe', 30), new Person(2, 'Jane', 'Smith', 25)]
+
+      const wrapper = mount(BTable, {
+        props: {
+          'selectMode': 'single',
+          'selectable': true,
+          items,
+          'selectedItems': [],
+          'onUpdate:selectedItems': (value: Person[]) => wrapper.setProps({selectedItems: value}),
+        },
+      })
+      const $trs = wrapper.findAll('tr')
+      await $trs[1].trigger('click')
+      expect($trs[1].classes()).toContain('selected')
+      await nextTick()
+      await $trs[2].trigger('click')
+      expect($trs[1].classes()).not.toContain('selected')
+      expect($trs[2].classes()).toContain('selected')
+    })
+
+    it('multi mode', async () => {
+      const items = [new Person(1, 'John', 'Doe', 30), new Person(2, 'Jane', 'Smith', 25)]
+      const wrapper = mount(BTable, {
+        props: {
+          'selectMode': 'multi',
+          'selectable': true,
+          items,
+          'selectedItems': [],
+          'onUpdate:selectedItems': (value: Person[]) => wrapper.setProps({selectedItems: value}),
+        },
+      })
+      const $trs = wrapper.findAll('tr')
+      await $trs[1].trigger('click')
+      await $trs[2].trigger('click')
+      expect($trs[1].classes()).toContain('selected')
+      expect($trs[2].classes()).toContain('selected')
+    })
+
+    describe('ranged mode', () => {
+      it('no modifiers', async () => {
+        const items = [
+          new Person(1, 'John', 'Doe', 30),
+          new Person(2, 'Jane', 'Smith', 25),
+          new Person(3, 'John', 'Doe', 30),
+          new Person(4, 'Jane', 'Smith', 25),
+        ]
+
+        const wrapper = mount(BTable, {
+          props: {
+            'selectMode': 'single',
+            'selectable': true,
+            items,
+            'selectedItems': [],
+            'onUpdate:selectedItems': (value: Person[]) => wrapper.setProps({selectedItems: value}),
+          },
+        })
+        const $trs = wrapper.findAll('tr')
+        await $trs[1].trigger('click')
+        expect($trs[1].classes()).toContain('selected')
+        await nextTick()
+        await $trs[2].trigger('click')
+        expect($trs[1].classes()).not.toContain('selected')
+        expect($trs[2].classes()).toContain('selected')
+      })
+      it('ctrl click', async () => {
+        const items = [
+          new Person(1, 'John', 'Doe', 30),
+          new Person(2, 'Jane', 'Smith', 25),
+          new Person(3, 'John', 'Doe', 30),
+          new Person(4, 'Jane', 'Smith', 25),
+        ]
+
+        const wrapper = mount(BTable, {
+          props: {
+            'selectMode': 'range',
+            'selectable': true,
+            items,
+            'selectedItems': [],
+            'onUpdate:selectedItems': (value: Person[]) => wrapper.setProps({selectedItems: value}),
+          },
+        })
+        const $trs = wrapper.findAll('tr')
+        await $trs[1].trigger('click')
+        expect($trs[1].classes()).toContain('selected')
+        const event = new MouseEvent('click', {ctrlKey: true})
+        $trs[3].element.dispatchEvent(event)
+        await nextTick()
+        expect($trs[1].classes()).toContain('selected')
+        expect($trs[3].classes()).toContain('selected')
+      })
+      it('shift click', async () => {
+        const items = [
+          new Person(1, 'John', 'Doe', 30),
+          new Person(2, 'Jane', 'Smith', 25),
+          new Person(3, 'John', 'Doe', 30),
+          new Person(4, 'Jane', 'Smith', 25),
+        ]
+
+        const wrapper = mount(BTable, {
+          props: {
+            'selectMode': 'range',
+            'selectable': true,
+            items,
+            'selectedItems': [],
+            'onUpdate:selectedItems': (value: Person[]) => wrapper.setProps({selectedItems: value}),
+          },
+        })
+        const $trs = wrapper.findAll('tr')
+        await $trs[1].trigger('click')
+        expect($trs[1].classes()).toContain('selected')
+        const event = new MouseEvent('click', {shiftKey: true})
+        $trs[3].element.dispatchEvent(event)
+        await nextTick()
+        expect($trs[1].classes()).toContain('selected')
+        expect($trs[2].classes()).toContain('selected')
+        expect($trs[3].classes()).toContain('selected')
       })
     })
   })

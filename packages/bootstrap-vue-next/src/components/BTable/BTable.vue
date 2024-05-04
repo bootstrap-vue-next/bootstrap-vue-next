@@ -127,7 +127,7 @@
 
 <script setup lang="ts" generic="T">
 import {useToNumber} from '@vueuse/core'
-import {computed, onMounted, ref, type Ref, toRef, watch} from 'vue'
+import {computed, onMounted, type Ref, ref, toRef, watch} from 'vue'
 import type {
   BTableProps,
   BTableSortBy,
@@ -265,6 +265,12 @@ const selectedItemsSetUtilities = {
     value.delete(item)
     selectedItemsToSet.value = value
     emit('row-unselected', item)
+  },
+  set: (items: T[]) => {
+    selectedItemsToSet.value = new Set(items)
+    selectedItemsToSet.value.forEach((item) => {
+      emit('row-unselected', item)
+    })
   },
   /* TODO
   This has method and the delete method suffer from an error when using a non-reactive source as the items prop
@@ -500,12 +506,11 @@ const handleRowSelection = (
     if (selectedItemsSetUtilities.has(row)) {
       selectedItemsSetUtilities.delete(row)
     } else {
-      // If it is single, we clear out everything first
       if (props.selectMode === 'single') {
-        selectedItemsSetUtilities.clear()
+        selectedItemsSetUtilities.set([row])
+      } else {
+        selectedItemsSetUtilities.add(row)
       }
-      // Then set the item
-      selectedItemsSetUtilities.add(row)
     }
   } else {
     if (ctrlClicked || metaClicked) {
@@ -522,15 +527,11 @@ const handleRowSelection = (
       const lastSelectedIndex = props.items.findIndex((i) => i === lastSelectedItem)
       const selectStartIndex = Math.min(lastSelectedIndex, index)
       const selectEndIndex = Math.max(lastSelectedIndex, index)
-      props.items.slice(selectStartIndex, selectEndIndex + 1).forEach((item) => {
-        if (!selectedItemsSetUtilities.has(item)) {
-          selectedItemsSetUtilities.add(item)
-        }
-      })
+      const items = props.items.slice(selectStartIndex, selectEndIndex + 1)
+      selectedItemsSetUtilities.set(items)
       // If nothing is being held, then we just behave like it's single mode
     } else {
-      selectedItemsSetUtilities.clear()
-      selectedItemsSetUtilities.add(row)
+      selectedItemsSetUtilities.set([row])
     }
   }
   // Notify
