@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.17.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.17.4...bootstrapvuenext-v0.17.5) (2024-05-04)
+
+
+### Bug Fixes
+
+* **BTable:** selectedItems not clearing values properly fixes [#1878](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1878) ([#1879](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1879)) ([3b57599](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3b5759910e640a8f93792b4187082a32cf433015))
+* **BTable:** selectedItems with range not displaying class ([3b57599](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3b5759910e640a8f93792b4187082a32cf433015))
+
 ## [0.17.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.17.3...bootstrapvuenext-v0.17.4) (2024-04-30)
 
 
