@@ -226,11 +226,8 @@ const emit = defineEmits<{
   'row-unselected': [value: T]
   'selection': [value: T[]]
   'sorted': [value: BTableSortBy]
+  'change': [value: T[]]
 }>()
-
-const modelValue = defineModel<T[]>({
-  default: () => [],
-})
 
 const sortByModel = defineModel<BTableSortBy[] | undefined>('sortBy', {
   default: undefined,
@@ -495,7 +492,7 @@ const computedDisplayItems = computed<T[]>(() => {
 })
 
 watch(computedDisplayItems, (v) => {
-  modelValue.value = v
+  emit('change', v)
 })
 
 const handleRowSelection = (
