@@ -228,6 +228,10 @@ const emit = defineEmits<{
   'sorted': [value: BTableSortBy]
 }>()
 
+const modelValue = defineModel<T[]>({
+  default: () => [],
+})
+
 const sortByModel = defineModel<BTableSortBy[] | undefined>('sortBy', {
   default: undefined,
 })
@@ -488,6 +492,10 @@ const computedDisplayItems = computed<T[]>(() => {
     (currentPageNumber.value - 1) * (perPageNumber.value || Number.POSITIVE_INFINITY),
     currentPageNumber.value * (perPageNumber.value || Number.POSITIVE_INFINITY)
   )
+})
+
+watch(computedDisplayItems, (v) => {
+  modelValue.value = v
 })
 
 const handleRowSelection = (
