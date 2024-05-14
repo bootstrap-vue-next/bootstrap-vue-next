@@ -4,11 +4,11 @@
 
 <script setup lang="ts">
 import BImg from '../BImg.vue'
-import type {BCardImageProps} from '../../types'
+import type {BCardImgProps} from '../../types'
 import {omit} from '../../utils'
 import {computed, toRef} from 'vue'
 
-const props = withDefaults(defineProps<BCardImageProps>(), {
+const props = withDefaults(defineProps<BCardImgProps>(), {
   bottom: false,
   top: false,
   // BImg props

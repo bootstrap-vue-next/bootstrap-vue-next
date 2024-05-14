@@ -50,6 +50,9 @@ createApp(App)
     createBootstrap({
       components: true,
       directives: true,
+      aliases: {
+        BInput: 'BFormInput',
+      },
     })
   )
   .use(router)

@@ -14,6 +14,7 @@ import type {
   CheckboxValue,
   ClassValue,
   ColorVariant,
+  ComponentProps,
   LiteralUnion,
   Numberish,
   OrchestratedModal,
@@ -30,7 +31,7 @@ export const carouselInjectionKey: InjectionKey<{
   background: Readonly<Ref<string | undefined>>
   width: Readonly<Ref<string | undefined>>
   height: Readonly<Ref<string | undefined>>
-}> = Symbol('carousel')
+}> = Symbol('bvn::carousel')
 
 // BTabs
 export const tabsInjectionKey: InjectionKey<{
@@ -44,7 +45,7 @@ export const tabsInjectionKey: InjectionKey<{
   inactiveTabClass: Readonly<Ref<ClassValue>>
   tabClass: Readonly<Ref<ClassValue>>
   activeId: Readonly<Ref<string | undefined>>
-}> = Symbol('tabs')
+}> = Symbol('bvn::tabs')
 
 // BProgress
 export const progressInjectionKey: InjectionKey<{
@@ -53,12 +54,12 @@ export const progressInjectionKey: InjectionKey<{
   showProgress: Readonly<Ref<boolean | undefined>>
   showValue: Readonly<Ref<boolean | undefined>>
   striped: Readonly<Ref<boolean | undefined>>
-}> = Symbol('progress')
+}> = Symbol('bvn::progress')
 
 // BListGroup
 export const listGroupInjectionKey: InjectionKey<{
   numbered: Readonly<Ref<boolean>>
-}> = Symbol('listGroup')
+}> = Symbol('bvn::listGroup')
 
 // BAvatarGroup
 export const avatarGroupInjectionKey: InjectionKey<{
@@ -73,14 +74,14 @@ export const avatarGroupInjectionKey: InjectionKey<{
   variant: Readonly<Ref<ColorVariant | null>>
   bgVariant: Readonly<Ref<ColorVariant | null>>
   textVariant: Readonly<Ref<TextColorVariant | null>>
-}> = Symbol('avatarGroup')
+}> = Symbol('bvn::avatarGroup')
 
 // BAccordion
 export const accordionInjectionKey: InjectionKey<{
   openItem: Readonly<Ref<string | undefined>>
   free: Readonly<Ref<boolean>>
   setOpenItem: (id: string) => void
-}> = Symbol('accordion')
+}> = Symbol('bvn::accordion')
 
 // BFormCheckboxGroup
 export const checkboxGroupKey: InjectionKey<{
@@ -97,7 +98,7 @@ export const checkboxGroupKey: InjectionKey<{
   required: Readonly<Ref<boolean>>
   buttons: Readonly<Ref<boolean>>
   disabled: Readonly<Ref<boolean>>
-}> = Symbol('checkboxGroup')
+}> = Symbol('bvn::checkboxGroup')
 
 export const radioGroupKey: InjectionKey<{
   modelValue: Ref<RadioValue>
@@ -112,7 +113,7 @@ export const radioGroupKey: InjectionKey<{
   reverse: Readonly<Ref<boolean>>
   required: Readonly<Ref<boolean>>
   disabled: Readonly<Ref<boolean>>
-}> = Symbol('radioGroup')
+}> = Symbol('bvn::radioGroup')
 
 // Collapse
 export const collapseInjectionKey: InjectionKey<{
@@ -122,7 +123,7 @@ export const collapseInjectionKey: InjectionKey<{
   readonly toggle?: () => void
   visible?: Readonly<Ref<boolean>>
   isNav?: Readonly<Ref<boolean>>
-}> = Symbol('collapse')
+}> = Symbol('bvn::collapse')
 
 export const dropdownInjectionKey: InjectionKey<{
   id?: Readonly<Ref<string>>
@@ -131,12 +132,12 @@ export const dropdownInjectionKey: InjectionKey<{
   readonly toggle?: () => void
   visible?: Readonly<Ref<boolean>>
   isNav?: Readonly<Ref<boolean>>
-}> = Symbol('collapse')
+}> = Symbol('bvn::collapse')
 
 export const navbarInjectionKey: InjectionKey<{
   tag?: Readonly<Ref<string>>
   autoClose?: Readonly<Ref<boolean>>
-}> = Symbol('navbar')
+}> = Symbol('bvn::navbar')
 
 export const toastPluginKey: InjectionKey<{
   toasts: ShallowRef<
@@ -155,17 +156,17 @@ export const toastPluginKey: InjectionKey<{
     props?: MaybeRefOrGetter<Readonly<OrchestratedToast>>
   }) => symbol
   remove: (self: symbol) => void
-}> = Symbol('toastPlugin')
+}> = Symbol('bvn::toastPlugin')
 
 export const rtlPluginKey: InjectionKey<{
   isRtl: Ref<boolean>
   locale: Ref<string | undefined>
-}> = Symbol('rtlPlugin')
+}> = Symbol('bvn::rtlPlugin')
 
 export const breadcrumbPluginKey: InjectionKey<{
   items: Ref<BreadcrumbItemRaw[]>
   reset: () => void
-}> = Symbol('breadcrumbPlugin')
+}> = Symbol('bvn::breadcrumbPlugin')
 
 export const modalControllerPluginKey: InjectionKey<{
   modals: ShallowRef<
@@ -191,7 +192,7 @@ export const modalControllerPluginKey: InjectionKey<{
     props?: MaybeRefOrGetter<Readonly<OrchestratedModal>>
   }) => Promise<boolean | null>
   remove: (self: symbol) => void
-}> = Symbol('modalControllerPlugin')
+}> = Symbol('bvn::modalControllerPlugin')
 
 export const modalManagerPluginKey: InjectionKey<{
   stack: ShallowRef<Readonly<ComponentInternalInstance>[]>
@@ -202,6 +203,8 @@ export const modalManagerPluginKey: InjectionKey<{
   registry: ShallowRef<Readonly<ComponentInternalInstance>[]>
   pushRegistry: (modal: Readonly<ComponentInternalInstance>) => void
   removeRegistry: (modal: Readonly<ComponentInternalInstance>) => void
-}> = Symbol('modalManagerPlugin')
+}> = Symbol('bvn::modalManagerPlugin')
 
-export const idPluginKey: InjectionKey<() => string> = Symbol('idPluginKey')
+export const idPluginKey: InjectionKey<() => string> = Symbol('bvn::idPluginKey')
+
+export const defaultsKey: InjectionKey<Partial<ComponentProps>> = Symbol('bvn::defaults')

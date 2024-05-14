@@ -38,6 +38,7 @@ import type {
   TransitionMode,
   VerticalAlign,
 } from '.'
+import type * as Components from '../components'
 
 export interface BLinkProps {
   active?: boolean
@@ -855,7 +856,7 @@ export interface BCardGroupProps {
   tag?: string
 }
 
-export interface BCardImageProps extends BImgProps {
+export interface BCardImgProps extends BImgProps {
   bottom?: boolean
   top?: boolean
 }
@@ -1287,4 +1288,117 @@ export interface BModalProps extends TeleporterProps {
   titleSrOnly?: boolean
   titleTag?: string
   transProps?: Readonly<BTransitionProps>
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = any> = {
+  BLink: BLinkProps
+  BAccordion: BAccordionProps
+  BDropdownDivider: BDropdownDividerProps
+  BDropdownGroup: BDropdownGroupProps
+  BDropdownItem: BDropdownItemProps
+  BDropdownItemButton: BDropdownItemButtonProps
+  BDropdownText: BDropdownTextProps
+  BFormFloatingLabel: BFormFloatingLabelProps
+  BFormRow: BFormRowProps
+  BFormText: BFormTextProps
+  BFormCheckbox: BFormCheckboxProps
+  BFormCheckboxGroup: BFormCheckboxGroupProps
+  BFormFile: BFormFileProps
+  BFormInput: BFormInputProps
+  BFormRadio: BFormRadioProps
+  BFormRadioGroup: BFormRadioGroupProps
+  BFormSelect: BFormSelectProps
+  BFormSelectOption: BFormSelectOptionProps<BFormSelectOption>
+  BFormSelectOptionGroup: BFormSelectOptionGroupProps
+  BFormSpinbutton: BFormSpinbuttonProps
+  BFormTag: BFormTagProps
+  BFormTags: BFormTagsProps
+  BFormTextarea: BFormTextareaProps
+  BInputGroup: BInputGroupProps
+  BInputGroupText: BInputGroupTextProps
+  BListGroup: BListGroupProps
+  BListGroupItem: BListGroupItemProps
+  BModalOrchestrator: BModalOrchestratorProps
+  BNav: BNavProps
+  BNavForm: BNavFormProps
+  BNavItem: BNavItemProps
+  BNavText: BNavTextProps
+  BNavbar: BNavbarProps
+  BNavbarBrand: BNavbarBrandProps
+  BNavbarNav: BNavbarNavProps
+  BNavbarToggle: BNavbarToggleProps
+  BOffcanvas: BOffcanvasProps
+  BOverlay: BOverlayProps
+  BPagination: BPaginationProps
+  BPlaceholder: BPlaceholderProps
+  BPlaceholderButton: BPlaceholderButtonProps
+  BPlaceholderCard: BPlaceholderCardProps
+  BPlaceholderTable: BPlaceholderTableProps
+  BPlaceholderWrapper: BPlaceholderWrapperProps
+  BProgress: BProgressProps
+  BTab: BTabProps
+  BTabs: BTabsProps
+  BToastOrchestrator: BToastOrchestratorProps
+  BCollapse: BCollapseProps
+  BContainer: BContainerProps
+  BSpinner: BSpinnerProps
+  BAccordionItem: BAccordionItemProps
+  BAlert: BAlertProps
+  BAvatar: BAvatarProps
+  BAvatarGroup: BAvatarGroupProps
+  BBadge: BBadgeProps
+  BBreadcrumb: BBreadcrumbProps
+  BBreadcrumbItem: BBreadcrumbItemProps
+  BButton: BButtonProps
+  BButtonGroup: BButtonGroupProps
+  BButtonToolbar: BButtonToolbarProps
+  BCloseButton: BCloseButtonProps
+  BCard: BCardProps
+  BCardBody: BCardBodyProps
+  BCardGroup: BCardGroupProps
+  BCardSubtitle: BCardSubtitleProps
+  BCardText: BCardTextProps
+  BCardTitle: BCardTitleProps
+  BCarousel: BCarouselProps
+  BCarouselSlide: BCarouselSlideProps
+  BTransition: BTransitionProps
+  BImg: BImgProps
+  BForm: BFormProps
+  BTableSimple: BTableSimpleProps
+  BTableLite: BTableLiteProps<BTableLite>
+  BTable: BTableProps<BTable>
+  BTr: BTrProps
+  BThead: BTheadProps
+  BTfoot: BTfootProps
+  BTd: BTdProps
+  BTbody: BTbodyProps
+  BTh: BThProps
+  BProgressBar: BProgressBarProps
+  BInputGroupAddon: BInputGroupAddonProps
+  BDropdown: BDropdownProps
+  BToast: BToastProps
+  BPopover: BPopoverProps
+  BTooltip: BTooltipProps
+  BModal: BModalProps
+  BCardFooter: BCardHeadFootProps
+  BCardHeader: BCardHeadFootProps
+  BCardImg: BCardImgProps
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  BCol: any
+  BDropdownForm: never
+  BDropdownHeader: never
+  BFormInvalidFeedback: BFormFeedbackSharedProps
+  BFormValidFeedback: BFormFeedbackSharedProps
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  BFormGroup: any
+  BInputGroupAppend: BInputGroupAddonProps
+  BInputGroupPrepend: BInputGroupAddonProps
+  BNavItemDropdown: BDropdownProps
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  BRow: any
+}
+
+export type ComponentProps = {
+  [K in keyof typeof Components]: UnmappedComponentProps[K]
 }
