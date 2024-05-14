@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.17.5...bootstrapvuenext-v0.17.6) (2024-05-08)
+
+
+### Features
+
+* **BTable:** add change event -- replaces bv `modelValue` see https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1775#issuecomment-2100837299 ([00b5e95](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/00b5e9594f66d9f99355af9e3a5a21636b2fde83))
+
 ## [0.17.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.17.4...bootstrapvuenext-v0.17.5) (2024-05-04)
 
 

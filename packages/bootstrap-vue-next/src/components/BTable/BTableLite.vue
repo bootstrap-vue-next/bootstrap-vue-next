@@ -361,6 +361,7 @@ const toggleRowDetails = (tr: T) => {
   if (isTableItem(tr)) {
     const prevValue = detailsMap.value.get(tr)
     detailsMap.value.set(tr, !prevValue)
+    tr._showDetails = !prevValue
   }
 }
 

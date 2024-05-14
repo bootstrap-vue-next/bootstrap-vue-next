@@ -1,12 +1,10 @@
 # Form Radio
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -702,6 +700,7 @@ Supported `aria-invalid` values are:
 <script setup lang="ts">
 import {data} from '../../data/components/formRadio.data'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import CrossSiteScriptingWarning from '../../components/CrossSiteScriptingWarning.vue'
 import {BFormRadioGroup, BCard, BCardBody, BFormRadio, BAlert} from 'bootstrap-vue-next'

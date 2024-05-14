@@ -1,12 +1,10 @@
 # Link
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -131,6 +129,7 @@ You can use the `variant` prop to colorize links. Some of the link styles use a 
 <script setup lang="ts">
 import {data} from '../../data/components/link.data'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BLink, BCard, BCardBody} from 'bootstrap-vue-next'
 </script>

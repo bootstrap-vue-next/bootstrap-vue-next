@@ -1,13 +1,10 @@
 # Types
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ContentsSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
-
+</ContentsSidebar>
 <div class="lead mb-5">
 
 `BootstrapVueNext` is a complete rewrite that strives for full TypeScript compatibility. This is a list of types we use in this library and that you can use too.
@@ -15,6 +12,16 @@
 </div>
 
 ## Alignment
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type AriaInvalid = boolean | 'grammar' | 'spelling'
+```
+
+</BCard>
+
+## AriaInvalid
 
 <BCard class="bg-body-tertiary">
 
@@ -105,6 +112,47 @@ type ButtonVariant =
   | 'outline-info'
   | 'outline-light'
   | 'outline-dark'
+```
+
+</BCard>
+
+## CheckboxOption
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type CheckboxOption = {
+  text: string
+  value: CheckboxValue
+  disabled?: boolean
+}
+```
+
+</BCard>
+
+## CheckboxOptionRaw
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type CheckboxOptionRaw = string | number | (Partial<CheckboxOption> & Record<string, unknown>)
+```
+
+</BCard>
+
+## CheckboxValue
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type CheckboxValue =
+  | readonly unknown[]
+  | ReadonlySet<unknown>
+  | string
+  | boolean
+  | Readonly<Record<string, unknown>>
+  | number
+  | null
 ```
 
 </BCard>
@@ -357,4 +405,5 @@ New values can be used now and the type check will be successful:
 
 <script setup lang="ts">
 import {BCard, BCardBody} from 'bootstrap-vue-next'
+import ContentsSidebar from '../components/ContentsSidebar.vue'
 </script>

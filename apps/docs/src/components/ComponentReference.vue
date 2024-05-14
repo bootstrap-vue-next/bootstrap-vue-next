@@ -2,7 +2,7 @@
   <BContainer fluid class="p-0 component-reference">
     <BRow>
       <BCol>
-        <h2>Component Reference</h2>
+        <h2 id="component-reference">Component Reference</h2>
       </BCol>
     </BRow>
     <BRow>

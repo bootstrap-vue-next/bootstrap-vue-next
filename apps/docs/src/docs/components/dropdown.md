@@ -1,12 +1,10 @@
 # Dropdown
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -1182,6 +1180,7 @@ The dropdown menu is rendered with semantic `<ul>` and `<li>` elements for acces
 <script setup lang="ts">
 import {data} from '../../data/components/dropdown.data'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {
   BDropdownGroup,

@@ -263,7 +263,19 @@ const selectedItemsSetUtilities = {
   },
   delete: (item: T) => {
     const value = new Set(selectedItemsToSet.value)
-    value.delete(item)
+    if (props.primaryKey) {
+      const pkey: string = props.primaryKey
+      selectedItemsModel.value.forEach((v, i) => {
+        const selectedKey = get(v, pkey)
+        const itemKey = get(item, pkey)
+
+        if (!!selectedKey && !!itemKey && selectedKey === itemKey) {
+          value.delete(selectedItemsModel.value[i])
+        }
+      })
+    } else {
+      value.delete(item)
+    }
     selectedItemsToSet.value = value
     emit('row-unselected', item)
   },

@@ -1,12 +1,10 @@
 # Form Checkbox
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -426,6 +424,28 @@ Use the `reverse` prop to put your checkboxes and switches on the opposite side 
 <BFormCheckbox reverse>Reverse checkbox</BFormCheckbox>
 <BFormCheckbox reverse disabled>Disabled reverse checkbox</BFormCheckbox>
 <BFormCheckbox reverse switch>Reverse switch ceckbox input</BFormCheckbox>
+```
+
+  </template>
+</HighlightCard>
+
+## Without Labels
+
+In order to omit labels as described in the
+[bootstrap documentation](https://getbootstrap.com/docs/5.3/forms/checks-radios/#without-labels)
+just leave the default slot empty. Remember to still provide some form of accessible name for
+assistive technologies (for instance, using aria-label).
+
+<HighlightCard>
+  <BFormCheckbox></BFormCheckbox>
+  <BFormCheckbox disabled></BFormCheckbox>
+  <BFormCheckbox switch></BFormCheckbox>
+  <template #html>
+
+```vue-html
+  <BFormCheckbox></BFormCheckbox>
+  <BFormCheckbox disabled></BFormCheckbox>
+  <BFormCheckbox switch></BFormCheckbox>
 ```
 
   </template>
@@ -1058,6 +1078,7 @@ watch(flavorSelected, (newValue: string[]) => {
 import {data} from '../../data/components/formCheckbox.data'
 import {computed, ref, watch} from 'vue'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import CrossSiteScriptingWarning from '../../components/CrossSiteScriptingWarning.vue'
 import {BButton, BFormCheckboxGroup, BFormCheckbox, BFormGroup, BCard, BCardBody, BAlert} from 'bootstrap-vue-next'

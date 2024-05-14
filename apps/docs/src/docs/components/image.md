@@ -1,12 +1,10 @@
 # Image
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -287,6 +285,7 @@ Lazy loaded images are actived through the `lazy` prop. Eventually, the componen
 <script setup lang="ts">
 import {data} from '../../data/components/image.data'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BRow, BCol, BCard, BCardBody, BImg} from 'bootstrap-vue-next'
 import {ref, computed} from 'vue'

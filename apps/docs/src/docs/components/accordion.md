@@ -1,12 +1,10 @@
 # Accordion
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -171,5 +169,6 @@ Add `free` property to make accordion items stay open when another item is opene
 import {data} from '../../data/components/accordion.data'
 import {BAccordion, BAccordionItem, BAlert} from 'bootstrap-vue-next'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 </script>

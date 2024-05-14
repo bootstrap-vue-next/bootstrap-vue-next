@@ -1,12 +1,10 @@
 # Collapse
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -274,6 +272,7 @@ apply those roles for you automatically, as it depends on your final document ma
 <script setup lang="ts">
 import {data} from '../../data/components/collapse.data'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {
   BCard,

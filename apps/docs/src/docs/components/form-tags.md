@@ -1,12 +1,10 @@
 # Form Tags
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -1267,6 +1265,7 @@ Note `<BFormTag>` requires BootstrapVue's custom CSS/SCSS for proper styling.
 <script setup lang="ts">
   import {data} from '../../data/components/formTags.data'
   import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
   import HighlightCard from '../../components/HighlightCard.vue'
   import {BFormTags, BFormText, BFormGroup, BInputGroupAppend, BButton, BCard, BInputGroup, BFormTag, BFormInput, BFormSelect, BFormCheckbox, BFormInvalidFeedback, BDropdownForm, BDropdownDivider, BDropdownItemButton, BDropdownText, BDropdown} from 'bootstrap-vue-next'
   import {ref, computed, watch} from 'vue'
