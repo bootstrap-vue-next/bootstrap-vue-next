@@ -101,6 +101,7 @@ declare module '@vue/runtime-core' {
     BProgress: typeof Components.BProgress
     BProgressBar: typeof Components.BProgressBar
     BRow: typeof Components.BRow
+    BSidebar: typeof Components.BSidebar
     BSpinner: typeof Components.BSpinner
     BTab: typeof Components.BTab
     BTable: typeof Components.BTable

@@ -1,5 +1,10 @@
 import type {Slot} from 'vue'
 
+export const getActiveElement = (excludes: readonly HTMLElement[] = []): Element | null => {
+  const {activeElement} = document
+  return activeElement && !excludes.some((el) => el === activeElement) ? activeElement : null
+}
+
 /**
  * @deprecated only used in BFormGroup, which is not an SFC... Function could probably be replaced with pure Vue
  */
@@ -7,11 +12,6 @@ export const attemptFocus = (
   el: Readonly<HTMLElement>,
   options: Readonly<FocusOptions> = {}
 ): boolean => {
-  const getActiveElement = (excludes: readonly HTMLElement[] = []): Element | null => {
-    const {activeElement} = document
-    return activeElement && !excludes.some((el) => el === activeElement) ? activeElement : null
-  }
-
   const isActiveElement = (el: Readonly<HTMLElement>): boolean => el === getActiveElement()
 
   try {
@@ -54,3 +54,20 @@ export const getTransitionDelay = (element: Readonly<HTMLElement>) => {
   const transitionDurationMs = Number(transitionDuration.slice(0, -1)) * 1000
   return transitionDelayMs + transitionDurationMs
 }
+
+const TABABLE_SELECTOR = [
+  'button',
+  '[href]:not(.disabled)',
+  'input',
+  'select',
+  'textarea',
+  '[tabindex]',
+  '[contenteditable]',
+]
+  .map((s) => `${s}:not(:disabled):not([disabled])`)
+  .join(', ')
+
+export const getTabables = (element: Readonly<HTMLElement | Document | null>) =>
+  (Array.from((element || document).querySelectorAll(TABABLE_SELECTOR)) as HTMLElement[])
+    .filter(isVisible)
+    .filter((el) => el.tabIndex > -1 && (!('disabled' in el) || !el.disabled))

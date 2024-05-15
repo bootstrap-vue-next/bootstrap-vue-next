@@ -675,6 +675,49 @@ export interface BContainerProps {
   tag?: string
 }
 
+export interface BSidebarProps extends Omit<ColorExtendables, 'variant'> {
+  id?: string
+  visible?: boolean
+  ariaLabel?: string
+  ariaLabelledby?: string
+  backdrop?: boolean // If `true`, shows a basic backdrop
+  backdropVariant?: string
+  bodyClass?: ClassValue
+  closeLabel?: string // `aria-label` for close button
+  footerClass?: ClassValue
+  footerTag?: string
+  headerClass?: ClassValue
+  headerTag?: string
+  lazy?: boolean
+  noCloseOnBackdrop?: boolean
+  noCloseOnEsc?: boolean
+  noCloseOnRouteChange?: boolean
+  noEnforceFocus?: boolean
+  noHeader?: boolean
+  noHeaderClose?: boolean
+  noSlide?: boolean
+  right?: boolean
+  shadow?: string | boolean
+  sidebarClass?: ClassValue
+  tag?: string
+  title?: string
+  width?: string
+  zIndex?: number | string
+}
+
+export interface BSidebarHeaderProps extends ColorExtendables {
+  tag?: string
+  class?: ClassValue
+  title?: string
+  noClose?: boolean
+  closeLabel?: string
+}
+
+export interface BSidebarFooterProps extends ColorExtendables {
+  tag?: string
+  class?: ClassValue
+}
+
 export interface BSpinnerProps {
   label?: string
   role?: string
