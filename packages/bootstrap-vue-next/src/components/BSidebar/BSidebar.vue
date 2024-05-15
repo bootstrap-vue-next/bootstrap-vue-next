@@ -84,6 +84,8 @@ import {getActiveElement, getTabables, IS_BROWSER, isEmptySlot} from '../../util
 import {useColorVariantClasses} from '../../composables'
 import BSidebarHeader from './BSidebarHeader.vue'
 
+import './_sidebar.scss'
+
 const props = withDefaults(defineProps<BSidebarProps>(), {
   id: undefined,
   visible: undefined,

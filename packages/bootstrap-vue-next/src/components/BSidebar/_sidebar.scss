@@ -1,0 +1,107 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+
+$b-sidebar-width: 320px !default;
+$b-sidebar-transition-duration: 0.3s !default;
+$b-sidebar-zindex: calc(#{$zindex-fixed} + 5) !default;
+$b-sidebar-header-font-size: 1.5rem !default;
+$b-sidebar-header-padding-y: $navbar-padding-y !default;
+$b-sidebar-header-padding-x: $navbar-padding-x !default;
+
+.sidebar-outer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  overflow: visible;
+  z-index: $b-sidebar-zindex;
+}
+
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.6;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  width: $b-sidebar-width;
+  max-width: 100%;
+  height: 100vh;
+  max-height: 100%;
+  margin: 0;
+  outline: 0;
+  transform: translateX(0);
+
+  &.slide {
+    transition: transform $b-sidebar-transition-duration ease-in-out;
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  &:not(.sidebar-right) {
+    left: 0;
+    right: auto;
+
+    &.slide:not(.show) {
+      transform: translateX(-100%);
+    }
+
+    > .sidebar-header .close {
+      margin-left: auto;
+    }
+  }
+
+  &.sidebar-right {
+    left: auto;
+    right: 0;
+
+    &.slide:not(.show) {
+      transform: translateX(100%);
+    }
+
+    > .sidebar-header .close {
+      margin-right: auto;
+    }
+  }
+
+  > .sidebar-header {
+    font-size: $b-sidebar-header-font-size;
+    padding: $b-sidebar-header-padding-y $b-sidebar-header-padding-x;
+    display: flex;
+    flex-direction: row;
+    flex-grow: 0;
+    align-items: center;
+
+    @at-root {
+      // Keep the buttons on the correct end when in RTL mode
+      [dir="rtl"] & {
+        flex-direction: row-reverse;
+      }
+    }
+
+    .close {
+      float: none;
+      font-size: $b-sidebar-header-font-size;
+    }
+  }
+
+  > .sidebar-body {
+    flex-grow: 1;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  > .sidebar-footer {
+    flex-grow: 0;
+  }
+}
