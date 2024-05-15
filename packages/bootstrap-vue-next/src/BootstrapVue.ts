@@ -70,6 +70,7 @@ declare module '@vue/runtime-core' {
     BFormSpinbutton: typeof Components.BFormSpinbutton
     BFormValidFeedback: typeof Components.BFormValidFeedback
     BImg: typeof Components.BImg
+    BInput: typeof Components.BInput
     BInputGroup: typeof Components.BInputGroup
     BInputGroupAddon: typeof Components.BInputGroupAddon
     BInputGroupAppend: typeof Components.BInputGroupAppend
