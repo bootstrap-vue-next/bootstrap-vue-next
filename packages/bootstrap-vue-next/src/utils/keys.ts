@@ -11,10 +11,10 @@ import type {
   BModalProps,
   BreadcrumbItemRaw,
   ButtonVariant,
+  BvnComponentProps,
   CheckboxValue,
   ClassValue,
   ColorVariant,
-  ComponentProps,
   LiteralUnion,
   Numberish,
   OrchestratedModal,
@@ -207,4 +207,4 @@ export const modalManagerPluginKey: InjectionKey<{
 
 export const idPluginKey: InjectionKey<() => string> = Symbol('bvn::idPluginKey')
 
-export const defaultsKey: InjectionKey<Partial<ComponentProps>> = Symbol('bvn::defaults')
+export const defaultsKey: InjectionKey<Ref<Partial<BvnComponentProps>>> = Symbol('bvn::defaults')

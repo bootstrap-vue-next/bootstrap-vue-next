@@ -53,6 +53,19 @@ createApp(App)
       aliases: {
         BInput: 'BFormInput',
       },
+      plugins: {
+        components: {
+          BAccordion: {
+            flush: true,
+          },
+          BFormText: {
+            text: 'foobar!',
+          },
+          BAccordionItem: {
+            // modelValue: true,
+          },
+        },
+      },
     })
   )
   .use(router)

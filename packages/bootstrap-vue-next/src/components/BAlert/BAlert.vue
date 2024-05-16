@@ -11,12 +11,12 @@
     >
       <slot />
       <template v-if="props.dismissible">
-        <BButton v-if="hasCloseSlot || closeContent" v-bind="closeAttrs" @click="hide">
+        <BButton v-if="hasCloseSlot || props.closeContent" v-bind="closeAttrs" @click="hide">
           <slot name="close">
-            {{ closeContent }}
+            {{ props.closeContent }}
           </slot>
         </BButton>
-        <BCloseButton v-else :aria-label="closeLabel" v-bind="closeAttrs" @click="hide" />
+        <BCloseButton v-else :aria-label="props.closeLabel" v-bind="closeAttrs" @click="hide" />
       </template>
     </div>
   </BTransition>
@@ -28,11 +28,11 @@ import BCloseButton from '../BButton/BCloseButton.vue'
 import BButton from '../BButton/BButton.vue'
 import type {BAlertProps} from '../../types'
 import {computed, onBeforeUnmount, ref, toRef, watch, watchEffect} from 'vue'
-import {useCountdown} from '../../composables'
+import {useCountdown, useDefaults} from '../../composables'
 import {isEmptySlot} from '../../utils'
 import {useElementHover, useToNumber} from '@vueuse/core'
 
-const props = withDefaults(defineProps<BAlertProps>(), {
+const _props = withDefaults(defineProps<BAlertProps>(), {
   closeClass: undefined,
   closeContent: undefined,
   closeLabel: 'Close',
@@ -45,6 +45,8 @@ const props = withDefaults(defineProps<BAlertProps>(), {
   showOnPause: true,
   variant: 'info',
 })
+
+const props = useDefaults(_props, 'BAlert')
 
 const emit = defineEmits<{
   'close': []
@@ -61,7 +63,13 @@ const slots = defineSlots<{
 
 const element = ref<HTMLElement | null>(null)
 
-const modelValue = defineModel<boolean | number>({default: false})
+const _modelValue = defineModel<boolean | number>({default: false})
+const modelValue = computed({
+  get: () => props.modelValue as (typeof _modelValue)['value'],
+  set: (v) => {
+    _modelValue.value = v
+  },
+})
 
 const isHovering = useElementHover(element)
 

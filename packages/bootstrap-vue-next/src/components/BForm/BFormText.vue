@@ -1,7 +1,7 @@
 <template>
-  <component :is="tag" :id="id" :class="computedClasses">
+  <component :is="props.tag" :id="props.id" :class="computedClasses">
     <slot>
-      {{ text }}
+      {{ props.text }}
     </slot>
   </component>
 </template>
@@ -9,8 +9,9 @@
 <script setup lang="ts">
 import {computed} from 'vue'
 import type {BFormTextProps} from '../../types'
+import {useDefaults} from '../../composables'
 
-const props = withDefaults(defineProps<BFormTextProps>(), {
+const _props = withDefaults(defineProps<BFormTextProps>(), {
   id: undefined,
   inline: false,
   tag: 'small',
@@ -22,6 +23,8 @@ defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
 }>()
+
+const props = useDefaults(_props, 'BFormText')
 
 const computedClasses = computed(() => ({
   [`text-${props.textVariant}`]: props.textVariant !== null,

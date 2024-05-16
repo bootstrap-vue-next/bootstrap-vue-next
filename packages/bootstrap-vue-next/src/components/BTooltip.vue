@@ -10,8 +10,9 @@
 import {computed, ref} from 'vue'
 import BPopover from './BPopover.vue'
 import type {BPopoverProps, BTooltipProps} from '../types'
+import {useDefaults} from '../composables'
 
-const props = withDefaults(defineProps<BTooltipProps>(), {
+const _props = withDefaults(defineProps<BTooltipProps>(), {
   click: undefined,
   teleportDisabled: undefined,
   teleportTo: undefined,
@@ -41,7 +42,15 @@ const props = withDefaults(defineProps<BTooltipProps>(), {
   variant: undefined,
 })
 
-const modelValue = defineModel<boolean | undefined>({default: undefined})
+const props = useDefaults(_props, 'BTooltip')
+
+const _modelValue = defineModel<boolean | undefined>({default: undefined})
+const modelValue = computed({
+  get: () => props.modelValue,
+  set: (v) => {
+    _modelValue.value = v
+  },
+})
 
 const computedProps = computed<BPopoverProps>(() => {
   const {interactive, noninteractive, ...rest} = props

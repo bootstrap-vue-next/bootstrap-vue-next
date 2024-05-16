@@ -1,7 +1,7 @@
 import type {Component} from 'vue'
 import * as Components from '../components'
 import * as Directives from '../directives'
-import type {ComponentProps} from './ComponentProps'
+import type {BvnComponentProps} from './ComponentProps'
 
 export type ComponentType = keyof typeof Components
 export type DirectiveType = keyof typeof Directives
@@ -71,6 +71,6 @@ export interface BootstrapVueOptions {
      * @default true
      */
     toast?: boolean
-    components?: Partial<ComponentProps>
+    components?: Partial<BvnComponentProps>
   }
 }

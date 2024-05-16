@@ -2,29 +2,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // Utilities
 import {
+  getCurrentInstance as _getCurrentInstance,
   type ComponentInternalInstance,
   computed,
-  type ComputedRef,
-  getCurrentInstance,
   inject,
   type InjectionKey,
-  type MaybeRef,
   provide,
   ref,
-  type Ref,
   shallowRef,
-  unref,
   type VNode,
   watchEffect,
 } from 'vue'
-// import type { ComponentProps } from '../types'
-// import {getCurrentInstance, injectSelf, mergeDeep, toKebabCase} from '@/util'
+import {defaultsKey} from '../utils'
+import type {BvnComponentProps} from '../types'
 
-export function injectSelf<T>(
-  key: InjectionKey<T> | string,
-  vm?: ComponentInternalInstance
-): T | undefined
-export function injectSelf(key: InjectionKey<any> | string, vm = getCurrentInstance()) {
+// Code here was taken from
+// https://github.com/vuetifyjs/vuetify/blob/8ed87310890e2b6c8ad2a626a02c17f9467cbb60/packages/vuetify/src/composables/defaults.ts#L138
+// Thanks to the Vuetify team. Vue does not make this easy
+
+function injectSelf<T>(key: InjectionKey<T> | string, vm?: ComponentInternalInstance): T | undefined
+function injectSelf(key: InjectionKey<any> | string, vm = getCurrentInstance('injectSelf')) {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const {provides} = vm
 
   if (provides && (key as string | symbol) in provides) {
@@ -34,43 +33,29 @@ export function injectSelf(key: InjectionKey<any> | string, vm = getCurrentInsta
   return undefined
 }
 
-export type DefaultsInstance =
-  | undefined
-  | {
-      [key: string]: undefined | Record<string, unknown>
-      global?: Record<string, unknown>
-    }
+function getCurrentInstance(name: string, message?: string) {
+  const vm = _getCurrentInstance()
 
-export type DefaultsOptions = Partial<DefaultsInstance>
+  if (!vm) {
+    throw new Error(`[Bvn] ${name} ${message || 'must be called from inside a setup function'}`)
+  }
 
-export const DefaultsSymbol: InjectionKey<Ref<DefaultsInstance>> = Symbol.for('vuetify:defaults')
-
-export function createDefaults(options?: DefaultsInstance): Ref<DefaultsInstance> {
-  return ref(options)
+  return vm
 }
 
-export function injectDefaults() {
-  const defaults = inject(DefaultsSymbol)
-
-  if (!defaults) throw new Error('[Vuetify] Could not find defaults instance')
-
-  return defaults
-}
-
-const toKebabCase = (str: string) =>
+const toKebabCase = (str = '') =>
   str
     .replace(/[^a-z]/gi, '-')
     .replace(/\B([A-Z])/g, '-$1')
     .toLowerCase()
+const isObject = (obj: any): obj is Record<string, any> =>
+  obj !== null && typeof obj === 'object' && !Array.isArray(obj)
 
-const mergeDeep = (
+function mergeDeep(
   source: Record<string, any> = {},
   target: Record<string, any> = {},
   arrayFn?: (a: unknown[], b: unknown[]) => unknown[]
-) => {
-  const isObject = (obj: any): obj is Record<string, any> =>
-    obj !== null && typeof obj === 'object' && !Array.isArray(obj)
-
+) {
   const out: Record<string, any> = {}
 
   for (const key in source) {
@@ -101,86 +86,30 @@ const mergeDeep = (
   return out
 }
 
-export function provideDefaults(
-  defaults?: MaybeRef<DefaultsInstance | undefined>,
-  options?: {
-    disabled?: MaybeRef<boolean | undefined>
-    reset?: MaybeRef<number | string | undefined>
-    root?: MaybeRef<boolean | string | undefined>
-    scoped?: MaybeRef<boolean | undefined>
+const propIsDefined = (vnode: VNode, prop: string) =>
+  typeof vnode.props?.[prop] !== 'undefined' ||
+  typeof vnode.props?.[toKebabCase(prop)] !== 'undefined'
+
+function internalUseDefaults(props: Record<string, any> = {}, name?: string) {
+  const defaults = inject(defaultsKey, ref({}))
+  const vm = getCurrentInstance('useDefaults')
+
+  name = name ?? vm.type.name ?? vm.type.__name
+  if (!name) {
+    // Should never happen
+    throw new Error('[Bvn] Could not determine component name')
   }
-) {
-  const injectedDefaults = injectDefaults()
-  const providedDefaults = ref(defaults)
 
-  const newDefaults = computed(() => {
-    const disabled = unref(options?.disabled)
-
-    if (disabled) return injectedDefaults.value
-
-    const scoped = unref(options?.scoped)
-    const reset = unref(options?.reset)
-    const root = unref(options?.root)
-
-    if (
-      (providedDefaults.value === null || providedDefaults.value === undefined) &&
-      !(scoped || reset || root)
-    )
-      return injectedDefaults.value
-
-    let properties = mergeDeep(providedDefaults.value, {prev: injectedDefaults.value})
-
-    if (scoped) return properties
-
-    if (reset || root) {
-      const len = Number(reset || Infinity)
-
-      for (let i = 0; i <= len; i++) {
-        if (!properties || !('prev' in properties)) {
-          break
-        }
-
-        properties = properties.prev
-      }
-
-      if (properties && typeof root === 'string' && root in properties) {
-        properties = mergeDeep(mergeDeep(properties, {prev: properties}), properties[root])
-      }
-
-      return properties
-    }
-
-    return properties.prev ? mergeDeep(properties.prev, properties) : properties
-  }) as ComputedRef<DefaultsInstance>
-
-  provide(DefaultsSymbol, newDefaults)
-
-  return newDefaults
-}
-
-export function internalUseDefaults(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  props: Record<string, any> = {},
-  name?: string,
-  defaults = injectDefaults()
-) {
-  const propIsDefined = (vnode: VNode, prop: string) =>
-    typeof vnode.props?.[prop] !== 'undefined' ||
-    typeof vnode.props?.[toKebabCase(prop)] !== 'undefined'
-
-  const vm = getCurrentInstance()
-
-  name = name ?? vm?.type.name ?? vm?.type.__name
-  if (!name) throw new Error('Could not determine component name')
-
-  const componentDefaults = computed(() => defaults.value?.[props._as ?? name])
+  const componentDefaults = computed(() => (defaults.value as any)?.[props._as ?? name])
   const _props = new Proxy(props, {
     get(target, prop) {
       const propValue = Reflect.get(target, prop)
       if (prop === 'class' || prop === 'style') {
         return [componentDefaults.value?.[prop], propValue].filter((v) => v != null)
       } else if (typeof prop === 'string' && !propIsDefined(vm.vnode, prop)) {
-        return componentDefaults.value?.[prop] ?? defaults.value?.global?.[prop] ?? propValue
+        return (
+          componentDefaults.value?.[prop] ?? (defaults.value as any)?.global?.[prop] ?? propValue
+        )
       }
       return propValue
     },
@@ -201,23 +130,26 @@ export function internalUseDefaults(
   })
 
   function provideSubDefaults() {
-    const injected = injectSelf(DefaultsSymbol, vm)
+    const injected = injectSelf(defaultsKey, vm)
     provide(
-      DefaultsSymbol,
+      defaultsKey,
       computed(() =>
         _subcomponentDefaults.value
           ? mergeDeep(injected?.value ?? {}, _subcomponentDefaults.value)
           : injected?.value
-      )
+      ) as any
     )
   }
 
   return {props: _props, provideSubDefaults}
 }
 
-export function useDefaults<T extends Record<string, any>>(props: T, name?: string): T
-export function useDefaults(props?: undefined, name?: string): Record<string, any>
-export function useDefaults(props: Record<string, any> = {}, name?: string) {
+export function useDefaults<T extends Record<string, any>>(
+  props: T,
+  name?: keyof BvnComponentProps
+): T
+export function useDefaults(props?: undefined, name?: keyof BvnComponentProps): Record<string, any>
+export function useDefaults(props: Record<string, any> = {}, name?: keyof BvnComponentProps) {
   const {props: _props, provideSubDefaults} = internalUseDefaults(props, name)
   provideSubDefaults()
   return _props

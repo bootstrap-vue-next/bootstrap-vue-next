@@ -2,8 +2,10 @@ import type {Boundary, Middleware, Padding, RootBoundary, Strategy} from '@float
 import type {ComponentPublicInstance, TransitionProps} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {
+  AlignmentContent,
   AlignmentJustifyContent,
   AlignmentTextHorizontal,
+  AlignmentVertical,
   AriaInvalid,
   AttrsValue,
   BreadcrumbItemRaw,
@@ -15,20 +17,25 @@ import type {
   CheckboxOptionRaw,
   CheckboxValue,
   ClassValue,
+  ColBreakpointProps,
   ColorExtendables,
   ColorVariant,
+  ColsNumbers,
   CommonInputProps,
   InputType,
   LinkTarget,
   LiteralUnion,
   NoProviderTypes,
   Numberish,
+  OffsetBreakpointProps,
+  OrderBreakpointProps,
   PlaceholderAnimation,
   PlaceholderSize,
   PopoverPlacement,
   RadioOptionRaw,
   RadioValue,
   RadiusElementExtendables,
+  RowColsBreakpointProps,
   Size,
   SpinnerType,
   TableField,
@@ -671,8 +678,8 @@ export interface BCollapseProps {
 
 export interface BContainerProps {
   fluid?: boolean | Breakpoint
-  gutterX?: Numberish
-  gutterY?: Numberish
+  gutterX?: ColsNumbers
+  gutterY?: ColsNumbers
   tag?: string
 }
 
@@ -1197,7 +1204,6 @@ export interface BPopoverProps extends TeleporterProps {
         hide: number
       }>
   floatingMiddleware?: Middleware[]
-  hide?: boolean
   html?: boolean
   id?: string
   inline?: boolean
@@ -1288,6 +1294,26 @@ export interface BModalProps extends TeleporterProps {
   titleSrOnly?: boolean
   titleTag?: string
   transProps?: Readonly<BTransitionProps>
+}
+
+export interface BRowProps extends RowColsBreakpointProps {
+  tag?: string
+  gutterX?: ColsNumbers
+  gutterY?: ColsNumbers
+  noGutters?: boolean
+  alignV?: AlignmentVertical
+  alignH?: AlignmentJustifyContent
+  alignContent?: AlignmentContent
+  cols?: ColsNumbers
+}
+
+export interface BColProps extends OffsetBreakpointProps, OrderBreakpointProps, ColBreakpointProps {
+  alignSelf?: AlignmentVertical | 'auto'
+  tag?: string
+  order?: ColsNumbers
+  offset?: ColsNumbers
+  cols?: ColsNumbers
+  col?: boolean
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -1396,9 +1422,9 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
   BInputGroupPrepend: BInputGroupAddonProps
   BNavItemDropdown: BDropdownProps
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  BRow: any
+  BRow: BRowProps
 }
 
-export type ComponentProps = {
+export type BvnComponentProps = {
   [K in keyof typeof Components]: UnmappedComponentProps[K]
 }
