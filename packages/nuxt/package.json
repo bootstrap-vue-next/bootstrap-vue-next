@@ -45,7 +45,7 @@
     "@types/node": "^20.12.12",
     "@vue/eslint-config-prettier": "^9.0.0",
     "bootstrap-vue-next": "workspace:^",
-    "eslint": "^9.3.0",
+    "eslint": "^8.57.0",
     "eslint-define-config": "^2.1.0",
     "nuxt": "^3.11.2",
     "prettier": "^3.2.5",

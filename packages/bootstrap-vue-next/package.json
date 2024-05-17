@@ -63,7 +63,7 @@
     "@vue/tsconfig": "^0.5.1",
     "@vueuse/shared": "^10.9.0",
     "bootstrap": "^5.3.3",
-    "eslint": "^9.3.0",
+    "eslint": "^8.57.0",
     "eslint-define-config": "^2.1.0",
     "eslint-plugin-vue": "^9.26.0",
     "happy-dom": "^14.11.0",

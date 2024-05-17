@@ -24,7 +24,7 @@
     "bootstrap": "^5.3.3",
     "bootstrap-vue-next": "workspace:^",
     "cross-env": "^7.0.3",
-    "eslint": "^9.3.0",
+    "eslint": "^8.57.0",
     "eslint-define-config": "^2.1.0",
     "eslint-plugin-vue": "^9.26.0",
     "prettier": "^3.2.5",
