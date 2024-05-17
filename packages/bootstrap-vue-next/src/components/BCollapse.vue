@@ -76,14 +76,8 @@ const buildTriggerableEvent = (
     componentId: computedId.value,
   })
 
-const _modelValue = defineModel<boolean>({
+const modelValue = defineModel<boolean>({
   default: false,
-})
-const modelValue = computed({
-  get: () => props.modelValue,
-  set: (v) => {
-    _modelValue.value = v
-  },
 })
 
 const computedId = useId(() => props.id, 'collapse')

@@ -1,27 +1,27 @@
 <template>
   <BTableSimple
-    :id="id"
-    :bordered="bordered"
-    :borderless="borderless"
-    :border-variant="borderVariant"
-    :caption-top="captionTop"
-    :dark="dark"
-    :fixed="fixed"
-    :hover="hover"
-    :no-border-collapse="noBorderCollapse"
-    :outlined="outlined"
-    :responsive="responsive"
-    :small="small"
+    :id="props.id"
+    :bordered="props.bordered"
+    :borderless="props.borderless"
+    :border-variant="props.borderVariant"
+    :caption-top="props.captionTop"
+    :dark="props.dark"
+    :fixed="props.fixed"
+    :hover="props.hover"
+    :no-border-collapse="props.noBorderCollapse"
+    :outlined="props.outlined"
+    :responsive="props.responsive"
+    :small="props.small"
     :stacked="props.stacked"
-    :sticky-header="stickyHeader"
-    :striped="striped"
+    :sticky-header="props.stickyHeader"
+    :striped="props.striped"
     :table-class="computedTableClasses"
-    :variant="variant"
-    :striped-columns="stripedColumns"
+    :variant="props.variant"
+    :striped-columns="props.stripedColumns"
   >
-    <BThead v-show="showComputedHeaders" :variant="headVariant" :class="theadClass">
+    <BThead v-show="showComputedHeaders" :variant="props.headVariant" :class="props.theadClass">
       <slot v-if="$slots['thead-top']" name="thead-top" />
-      <BTr :variant="headRowVariant" :class="theadTrClass">
+      <BTr :variant="props.headRowVariant" :class="props.theadTrClass">
         <BTh
           v-for="field in computedFields"
           :key="field.key"
@@ -59,18 +59,18 @@
         </BTd>
       </BTr>
     </BThead>
-    <BTbody :class="tbodyClass">
+    <BTbody :class="props.tbodyClass">
       <slot
         name="custom-body"
         :fields="computedFields"
-        :items="items"
+        :items="props.items"
         :columns="computedFields.length"
       >
         <BTr v-if="!props.stacked && $slots['top-row']">
           <slot name="top-row" />
         </BTr>
 
-        <template v-for="(item, itemIndex) in items" :key="itemIndex">
+        <template v-for="(item, itemIndex) in props.items" :key="itemIndex">
           <BTr
             :class="getRowClasses(item, 'row')"
             :variant="isTableItem(item) ? item._rowVariant : undefined"
@@ -130,17 +130,17 @@
                       toggleRowDetails(item)
                     }
                   "
-                  :fields="fields"
+                  :fields="props.fields"
                   :index="itemIndex"
                 />
               </BTd>
             </BTr>
           </template>
         </template>
-        <BTr v-if="props.showEmpty && items.length === 0" class="b-table-empty-slot">
+        <BTr v-if="props.showEmpty && props.items.length === 0" class="b-table-empty-slot">
           <BTd :colspan="computedFieldsTotal">
-            <slot name="empty" :items="items">
-              {{ emptyText }}
+            <slot name="empty" :items="props.items">
+              {{ props.emptyText }}
             </slot>
           </BTd>
         </BTr>
@@ -149,8 +149,8 @@
         </BTr>
       </slot>
     </BTbody>
-    <BTfoot v-if="props.footClone" :variant="footVariant" :class="tfootClass">
-      <BTr :variant="footRowVariant" :class="tfootTrClass">
+    <BTfoot v-if="props.footClone" :variant="props.footVariant" :class="props.tfootClass">
+      <BTr :variant="props.footRowVariant" :class="props.tfootTrClass">
         <BTh
           v-for="field in computedFields"
           :key="field.key"
@@ -185,13 +185,13 @@
       <slot
         name="custom-foot"
         :fields="computedFields"
-        :items="items"
+        :items="props.items"
         :columns="computedFields.length"
       />
     </BTfoot>
-    <caption v-if="$slots['table-caption'] || caption">
+    <caption v-if="$slots['table-caption'] || props.caption">
       <slot name="table-caption">
-        {{ caption }}
+        {{ props.caption }}
       </slot>
     </caption>
   </BTableSimple>
@@ -209,8 +209,9 @@ import BTfoot from './BTfoot.vue'
 import BTh from './BTh.vue'
 import BThead from './BThead.vue'
 import BTr from './BTr.vue'
+import {useDefaults} from '../../composables'
 
-const props = withDefaults(defineProps<BTableLiteProps<T>>(), {
+const _props = withDefaults(defineProps<BTableLiteProps<T>>(), {
   caption: undefined,
   align: undefined,
   fields: () => [],
@@ -257,6 +258,7 @@ const props = withDefaults(defineProps<BTableLiteProps<T>>(), {
   stickyHeader: undefined,
   // End BTableSimpleProps props
 })
+const props = useDefaults(_props, 'BTableLite')
 
 const emit = defineEmits<{
   'head-clicked': [key: string, field: TableField<T>, event: MouseEvent, isFooter: boolean]

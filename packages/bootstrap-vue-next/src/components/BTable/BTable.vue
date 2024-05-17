@@ -114,7 +114,7 @@
               <template #overlay>
                 <div class="d-flex align-items-center gap-2 mt-5">
                   <BSpinner />
-                  <strong>{{ busyLoadingText }}</strong>
+                  <strong>{{ props.busyLoadingText }}</strong>
                 </div>
               </template>
             </BOverlay>
@@ -144,8 +144,9 @@ import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
 import BTr from './BTr.vue'
 import {isTableField, isTableItem} from '../../types/TableTypes'
+import {useDefaults} from '../../composables'
 
-const props = withDefaults(defineProps<BTableProps<T>>(), {
+const _props = withDefaults(defineProps<BTableProps<T>>(), {
   noSortableIcon: false,
   perPage: Number.POSITIVE_INFINITY,
   filter: undefined,
@@ -214,6 +215,7 @@ const props = withDefaults(defineProps<BTableProps<T>>(), {
   stickyHeader: undefined,
   // End BTableSimple props
 })
+const props = useDefaults(_props, 'BTable')
 
 const emit = defineEmits<{
   'filtered': [value: T[]]

@@ -1,6 +1,6 @@
 <template>
   <form
-    :id="id"
+    :id="props.id"
     ref="element"
     :novalidate="props.novalidate"
     :class="computedClasses"
@@ -11,15 +11,17 @@
 </template>
 
 <script setup lang="ts">
+import {useDefaults} from '../../composables'
 import type {BFormProps} from '../../types'
 import {computed, ref} from 'vue'
 
-const props = withDefaults(defineProps<BFormProps>(), {
+const _props = withDefaults(defineProps<BFormProps>(), {
   floating: false,
   id: undefined,
   novalidate: false,
   validated: false,
 })
+const props = useDefaults(_props, 'BForm')
 
 const emit = defineEmits<{
   submit: [value: Event]

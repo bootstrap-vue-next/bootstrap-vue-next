@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import {computed, type StyleValue} from 'vue'
 import type {BTableSimpleProps} from '../../types'
-import {useNumberishToStyle} from '../../composables'
+import {useDefaults, useNumberishToStyle} from '../../composables'
 
 const defaultStickyHeaderHeight = '300px'
 
@@ -21,7 +21,7 @@ const defaultStickyHeaderHeight = '300px'
 // TODO all table things do not declare their props
 // TODO some props are not used. ex id, fixed, etc
 // TODO Attrs fallthrough will attach to either responsive or table, but you can't assign attrs to table if it is responsive. So we will need an attrs & class
-const props = withDefaults(defineProps<BTableSimpleProps>(), {
+const _props = withDefaults(defineProps<BTableSimpleProps>(), {
   borderVariant: null,
   tableClass: undefined,
   variant: null,
@@ -41,6 +41,7 @@ const props = withDefaults(defineProps<BTableSimpleProps>(), {
   small: false,
   stickyHeader: false,
 })
+const props = useDefaults(_props, 'BTableSimple')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

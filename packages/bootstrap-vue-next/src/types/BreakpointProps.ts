@@ -55,11 +55,11 @@ export interface OrderBreakpointProps {
 }
 
 export interface ColBreakpointProps {
-  sm?: boolean | ColsNumbers
-  md?: boolean | ColsNumbers
-  lg?: boolean | ColsNumbers
-  xl?: boolean | ColsNumbers
-  xxl?: boolean | ColsNumbers
+  sm?: boolean | ColsNumbers | 'auto'
+  md?: boolean | ColsNumbers | 'auto'
+  lg?: boolean | ColsNumbers | 'auto'
+  xl?: boolean | ColsNumbers | 'auto'
+  xxl?: boolean | ColsNumbers | 'auto'
 }
 
 export interface RowColsBreakpointProps {

@@ -4,7 +4,7 @@
     :class="computedWrapperClasses"
     role="menubar"
     :aria-disabled="props.disabled"
-    :aria-label="ariaLabel || undefined"
+    :aria-label="props.ariaLabel || undefined"
   >
     <ReusableButton.define v-slot="{button, li, text, clickHandler}">
       <li v-bind="li">
@@ -27,19 +27,19 @@
       <li v-bind="ellipsisProps.li">
         <span v-bind="ellipsisProps.span">
           <slot name="ellipsis-text">
-            {{ ellipsisText || '...' }}
+            {{ props.ellipsisText || '...' }}
           </slot>
         </span>
       </li>
     </ReusableEllipsis.define>
 
-    <template v-for="button in buttons" :key="`page-${button.number}`">
+    <template v-for="button in buttons" :key="`page-${button}`">
       <ReusableButton.reuse v-if="button === FIRST_BUTTON" v-bind="firstButtonProps" />
       <ReusableButton.reuse v-else-if="button === PREV_BUTTON" v-bind="prevButtonProps" />
       <ReusableButton.reuse v-else-if="button === NEXT_BUTTON" v-bind="nextButtonProps" />
       <ReusableButton.reuse v-else-if="button === LAST_BUTTON" v-bind="lastButtonProps" />
       <ReusableEllipsis.reuse v-else-if="button === ELLIPSIS_BUTTON" />
-      <ReusableButton.reuse v-else v-bind="getPageButtonProps(button!)" />
+      <ReusableButton.reuse v-else-if="button !== null" v-bind="getPageButtonProps(button)" />
     </template>
   </ul>
 </template>
@@ -48,7 +48,7 @@
 import {BvEvent} from '../../utils'
 import {computed, toRef, watch} from 'vue'
 import type {BPaginationProps, ClassValue} from '../../types'
-import {useAlignment} from '../../composables'
+import {useAlignment, useDefaults} from '../../composables'
 import {createReusableTemplate, useToNumber} from '@vueuse/core'
 
 // Threshold of limit size when we start/stop showing ellipsis
@@ -60,7 +60,7 @@ const NEXT_BUTTON = -3
 const LAST_BUTTON = -4
 const ELLIPSIS_BUTTON = -5
 
-const props = withDefaults(defineProps<BPaginationProps>(), {
+const _props = withDefaults(defineProps<BPaginationProps>(), {
   align: 'start',
   ariaControls: undefined,
   ariaLabel: 'Pagination',
@@ -91,6 +91,7 @@ const props = withDefaults(defineProps<BPaginationProps>(), {
   size: undefined,
   totalRows: DEFAULT_TOTAL_ROWS,
 })
+const props = useDefaults(_props, 'BPagination')
 
 const emit = defineEmits<{
   'page-click': [event: BvEvent, pageNumber: number]

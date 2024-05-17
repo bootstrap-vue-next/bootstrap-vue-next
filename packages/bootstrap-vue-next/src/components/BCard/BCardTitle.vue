@@ -1,18 +1,20 @@
 <template>
-  <component :is="tag" class="card-title">
+  <component :is="props.tag" class="card-title">
     <slot>
-      {{ text }}
+      {{ props.text }}
     </slot>
   </component>
 </template>
 
 <script setup lang="ts">
+import {useDefaults} from '../../composables'
 import type {BCardTitleProps} from '../../types'
 
-withDefaults(defineProps<BCardTitleProps>(), {
+const _props = withDefaults(defineProps<BCardTitleProps>(), {
   tag: 'h4',
   text: undefined,
 })
+const props = useDefaults(_props, 'BCardTitle')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

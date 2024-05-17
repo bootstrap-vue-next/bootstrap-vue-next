@@ -4,18 +4,18 @@
     ref="input"
     :value="modelValue"
     :class="computedClasses"
-    :name="name || undefined"
-    :form="form || undefined"
-    :type="type"
+    :name="props.name || undefined"
+    :form="props.form || undefined"
+    :type="props.type"
     :disabled="props.disabled"
-    :placeholder="placeholder"
+    :placeholder="props.placeholder"
     :required="props.required || undefined"
-    :autocomplete="autocomplete || undefined"
+    :autocomplete="props.autocomplete || undefined"
     :readonly="props.readonly || props.plaintext"
-    :min="min"
-    :max="max"
-    :step="step"
-    :list="type !== 'password' ? list : undefined"
+    :min="props.min"
+    :max="props.max"
+    :step="props.step"
+    :list="props.type !== 'password' ? props.list : undefined"
     :aria-required="props.required || undefined"
     :aria-invalid="computedAriaInvalid"
     @input="onInput($event)"
@@ -26,10 +26,10 @@
 
 <script setup lang="ts">
 import {computed, ref} from 'vue'
-import {useFormInput, useStateClass} from '../../composables'
+import {useDefaults, useFormInput, useStateClass} from '../../composables'
 import type {BFormInputProps, Numberish} from '../../types'
 
-const props = withDefaults(defineProps<BFormInputProps>(), {
+const _props = withDefaults(defineProps<BFormInputProps>(), {
   max: undefined,
   min: undefined,
   step: undefined,
@@ -59,13 +59,28 @@ const props = withDefaults(defineProps<BFormInputProps>(), {
   trim: false,
   // End CommonInputProps
 })
+const props = useDefaults(_props, 'BFormInput')
 
-const emit = defineEmits<{
-  'update:modelValue': [val: Numberish | null]
-}>()
+const [modelValue, modelModifiers] = defineModel<Numberish | null, 'trim' | 'lazy' | 'number'>({
+  default: '',
+  set: (v) => {
+    if (v === null) return
+    let update = v
+    if (modelModifiers.trim) update = update.toString().trim()
+    if (
+      (modelModifiers.number || props.type === 'number') &&
+      typeof update === 'string' &&
+      update !== ''
+    ) {
+      const parsed = Number.parseFloat(update)
+      update = Number.isNaN(parsed) ? update : parsed
+    }
+    return update
+  },
+})
 
 const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
-  useFormInput(props, emit)
+  useFormInput(props, modelValue, modelModifiers)
 
 const stateClass = useStateClass(() => props.state)
 

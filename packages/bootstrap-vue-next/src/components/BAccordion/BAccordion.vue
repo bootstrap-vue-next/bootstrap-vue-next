@@ -23,14 +23,8 @@ defineSlots<{
 
 const props = useDefaults<typeof _props>(_props, 'BAccordion')
 
-const _modelValue = defineModel<string | undefined>({
+const modelValue = defineModel<string | undefined>({
   default: undefined,
-})
-const modelValue = computed({
-  get: () => props.modelValue,
-  set: (v) => {
-    _modelValue.value = v
-  },
 })
 
 const computedId = useId(() => props.id, 'accordion')

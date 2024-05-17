@@ -146,11 +146,9 @@ function internalUseDefaults(props: Record<string, any> = {}, name?: string) {
 
 export function useDefaults<T extends Record<string, any>>(
   props: T,
-  name?: keyof BvnComponentProps
-): T
-export function useDefaults(props?: undefined, name?: keyof BvnComponentProps): Record<string, any>
-export function useDefaults(props: Record<string, any> = {}, name?: keyof BvnComponentProps) {
+  name: keyof BvnComponentProps
+): T {
   const {props: _props, provideSubDefaults} = internalUseDefaults(props, name)
   provideSubDefaults()
-  return _props
+  return _props as T
 }

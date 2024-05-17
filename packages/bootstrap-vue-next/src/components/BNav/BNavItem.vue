@@ -18,13 +18,14 @@ import {computed} from 'vue'
 import BLink from '../BLink/BLink.vue'
 import type {BNavItemProps} from '../../types'
 import {pick} from '../../utils'
+import {useDefaults} from '../../composables'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
 }>()
 
-const props = withDefaults(defineProps<BNavItemProps>(), {
+const _props = withDefaults(defineProps<BNavItemProps>(), {
   // Link props
   active: undefined,
   activeClass: undefined,
@@ -50,6 +51,7 @@ const props = withDefaults(defineProps<BNavItemProps>(), {
   variant: undefined,
   // End link props
 })
+const props = useDefaults(_props, 'BNavItem')
 
 const emit = defineEmits<{
   click: [value: MouseEvent]

@@ -160,14 +160,8 @@ defineSlots<{
   title?: (props: Record<string, never>) => any
 }>()
 
-const _modelValue = defineModel<boolean>({
+const modelValue = defineModel<boolean>({
   default: false,
-})
-const modelValue = computed({
-  get: () => props.modelValue,
-  set: (v) => {
-    _modelValue.value = v
-  },
 })
 
 const showState = ref(modelValue.value)

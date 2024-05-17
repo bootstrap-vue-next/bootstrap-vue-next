@@ -1,10 +1,7 @@
 <template>
   <BContainer>
-    <BRow :cols="1" :cols-sm="2">
-      <BCol>
-        <!-- <BFormText /> -->
-        <!-- <BAccordionItem /> -->
-      </BCol>
+    <BRow>
+      <BCol> Hello World! </BCol>
     </BRow>
   </BContainer>
 </template>

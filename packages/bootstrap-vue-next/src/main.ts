@@ -54,17 +54,20 @@ createApp(App)
         BInput: 'BFormInput',
       },
       plugins: {
-        components: {
-          BAccordion: {
-            flush: true,
-          },
-          BFormText: {
-            text: 'foobar!',
-          },
-          BAccordionItem: {
-            // modelValue: true,
-          },
-        },
+        // components: {
+        //   global: {
+        //     type: 'grow',
+        //   },
+        //   BAccordion: {
+        //     flush: true,
+        //   },
+        //   BFormText: {
+        //     text: 'foobar!',
+        //   },
+        //   BSpinner: {
+        //     type: 'grow',
+        //   },
+        // },
       },
     })
   )

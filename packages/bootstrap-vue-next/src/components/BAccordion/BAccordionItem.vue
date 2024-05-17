@@ -48,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject, onMounted, useAttrs, watch} from 'vue'
+import {inject, onMounted, useAttrs, watch} from 'vue'
 import BCollapse from '../BCollapse.vue'
 import {accordionInjectionKey, BvTriggerableEvent} from '../../utils'
 import {useDefaults, useId} from '../../composables'
@@ -77,7 +77,6 @@ const _props = withDefaults(defineProps<BAccordionItemProps>(), {
   visible: false,
   wrapperAttrs: undefined,
 })
-
 const props = useDefaults(_props, 'BAccordionItem')
 
 const emit = defineEmits<{
@@ -96,13 +95,7 @@ defineSlots<{
   title?: (props: Record<string, never>) => any
 }>()
 
-const _modelValue = defineModel<boolean>({default: false})
-const modelValue = computed({
-  get: () => props.modelValue,
-  set: (v) => {
-    _modelValue.value = v
-  },
-})
+const modelValue = defineModel<boolean>({default: false})
 
 const parentData = inject(accordionInjectionKey, null)
 

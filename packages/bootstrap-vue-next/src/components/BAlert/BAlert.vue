@@ -63,13 +63,7 @@ const slots = defineSlots<{
 
 const element = ref<HTMLElement | null>(null)
 
-const _modelValue = defineModel<boolean | number>({default: false})
-const modelValue = computed({
-  get: () => props.modelValue as (typeof _modelValue)['value'],
-  set: (v) => {
-    _modelValue.value = v
-  },
-})
+const modelValue = defineModel<boolean | number>({default: false})
 
 const isHovering = useElementHover(element)
 

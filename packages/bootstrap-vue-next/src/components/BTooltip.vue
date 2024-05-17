@@ -44,13 +44,7 @@ const _props = withDefaults(defineProps<BTooltipProps>(), {
 
 const props = useDefaults(_props, 'BTooltip')
 
-const _modelValue = defineModel<boolean | undefined>({default: undefined})
-const modelValue = computed({
-  get: () => props.modelValue,
-  set: (v) => {
-    _modelValue.value = v
-  },
-})
+const modelValue = defineModel<boolean | undefined>({default: undefined})
 
 const computedProps = computed<BPopoverProps>(() => {
   const {interactive, noninteractive, ...rest} = props

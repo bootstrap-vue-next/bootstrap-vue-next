@@ -9,7 +9,7 @@
         data-bs-target=""
         :class="i === modelValue ? 'active' : ''"
         :aria-current="i === modelValue ? true : undefined"
-        :aria-label="`${indicatorsButtonLabel} ${i}`"
+        :aria-label="`${props.indicatorsButtonLabel} ${i}`"
         @click="goToValue(i)"
       />
     </div>
@@ -25,12 +25,14 @@
         @before-leave="onBeforeLeave"
         @after-leave="onAfterLeave"
         @after-enter="onAfterEnter"
+        @enter="onEnter"
       >
         <component
           :is="slide"
           v-for="(slide, i) in slides"
           v-show="i === modelValue"
           :key="i"
+          ref="slideValues"
           :class="{active: i === modelValue && isTransitioning === false}"
         />
       </TransitionGroup>
@@ -39,11 +41,11 @@
     <template v-if="props.controls">
       <button class="carousel-control-prev" type="button" @click="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true" />
-        <span class="visually-hidden">{{ controlsPrevText }}</span>
+        <span class="visually-hidden">{{ props.controlsPrevText }}</span>
       </button>
       <button class="carousel-control-next" type="button" @click="next">
         <span class="carousel-control-next-icon" aria-hidden="true" />
-        <span class="visually-hidden">{{ controlsNextText }}</span>
+        <span class="visually-hidden">{{ props.controlsNextText }}</span>
       </button>
     </template>
   </div>
@@ -51,12 +53,13 @@
 
 <script setup lang="ts">
 import {BvCarouselEvent, carouselInjectionKey, getSlotElements} from '../../utils'
-import {computed, provide, ref, toRef, watch} from 'vue'
-import {useId} from '../../composables'
-import type {BCarouselProps} from '../../types'
+import {computed, onMounted, provide, ref, toRef, watch} from 'vue'
+import {useDefaults, useId} from '../../composables'
+import type {BCarouselProps, Numberish} from '../../types'
 import {onKeyStroke, useElementHover, useIntervalFn, useSwipe, useToNumber} from '@vueuse/core'
+import type BCarouselSlide from './BCarouselSlide.vue'
 
-const props = withDefaults(defineProps<BCarouselProps>(), {
+const _props = withDefaults(defineProps<BCarouselProps>(), {
   background: undefined,
   controls: false,
   controlsNextText: 'Next',
@@ -77,6 +80,7 @@ const props = withDefaults(defineProps<BCarouselProps>(), {
   rideReverse: false,
   touchThreshold: 50,
 })
+const props = useDefaults(_props, 'BCarousel')
 
 const emit = defineEmits<{
   slide: [value: BvCarouselEvent]
@@ -92,8 +96,15 @@ const computedId = useId(() => props.id, 'carousel')
 
 const modelValue = defineModel<number>({default: 0})
 
+const slideValues = ref<null | InstanceType<typeof BCarouselSlide>[]>(null)
+
 const touchThresholdNumber = useToNumber(() => props.touchThreshold)
-const intervalNumber = useToNumber(() => props.interval)
+const slideInterval = ref<Numberish | null>(null)
+onMounted(() => {
+  slideInterval.value =
+    slideValues.value?.find((slid) => slid.$el.style.display !== 'none')?.$props.interval ?? null
+})
+const intervalNumber = useToNumber(() => slideInterval.value ?? props.interval)
 
 const isTransitioning = ref(false)
 const rideStarted = ref(false)
@@ -132,14 +143,6 @@ const isRiding = toRef(
 )
 const slides = computed(() => getSlotElements(slots.default, 'BCarouselSlide'))
 const computedClasses = computed(() => ({'carousel-fade': props.fade}))
-// TODO a general idea of showing only slides that are in bounds
-// const localValue = computed(() =>
-//   props.modelValue >= slides.value.length
-//     ? slides.value.length - 1
-//     : props.modelValue < 0
-//     ? 0
-//     : props.modelValue
-// )
 
 const buildBvCarouselEvent = (event: 'slid' | 'slide') =>
   new BvCarouselEvent(event, {
@@ -236,6 +239,9 @@ const onAfterEnter = (el: Readonly<Element>) => {
   if (modelValue.value !== 0) {
     el.classList.add('carousel-item')
   }
+}
+const onEnter = (el: Readonly<Element>) => {
+  slideInterval.value = slideValues.value?.find((slid) => slid.$el === el)?.$props.interval ?? null
 }
 
 onKeyStroke(

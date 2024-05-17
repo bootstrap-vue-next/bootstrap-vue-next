@@ -1,5 +1,5 @@
 <template>
-  <li role="presentation" :class="wrapperClass" v-bind="wrapperAttrs">
+  <li role="presentation" :class="wrapperClass" v-bind="props.wrapperAttrs">
     <component
       :is="computedTag"
       class="dropdown-item"
@@ -7,11 +7,11 @@
       :disabled="props.disabled"
       :aria-disabled="props.disabled ? true : null"
       :aria-current="props.active ? true : null"
-      :href="computedTag === 'a' ? href : null"
-      :rel="rel"
+      :href="computedTag === 'a' ? props.href : null"
+      :rel="props.rel"
       role="menuitem"
       :type="computedTag === 'button' ? 'button' : null"
-      :target="target"
+      :target="props.target"
       v-bind="{...computedLinkProps, ...attrs}"
       @click="clicked"
     >
@@ -24,14 +24,14 @@
 import BLink from '../BLink/BLink.vue'
 import {computed, inject, toRef, useAttrs} from 'vue'
 import type {BDropdownItemProps} from '../../types'
-import {useBLinkHelper} from '../../composables'
+import {useBLinkHelper, useDefaults} from '../../composables'
 import {collapseInjectionKey, dropdownInjectionKey, navbarInjectionKey} from '../../utils'
 
 defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<BDropdownItemProps>(), {
+const _props = withDefaults(defineProps<BDropdownItemProps>(), {
   wrapperAttrs: undefined,
   // Link props
   linkClass: undefined,
@@ -58,6 +58,7 @@ const props = withDefaults(defineProps<BDropdownItemProps>(), {
   underlineVariant: undefined,
   // End link props
 })
+const props = useDefaults(_props, 'BDropdownItem')
 
 const emit = defineEmits<{
   click: [value: MouseEvent]

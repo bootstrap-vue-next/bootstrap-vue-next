@@ -1,5 +1,5 @@
 <template>
-  <component :is="wrapperTag" :class="wrapperClasses">
+  <component :is="props.wrapperTag" :class="wrapperClasses">
     <component
       v-bind="$attrs"
       :is="tag"
@@ -13,12 +13,13 @@
 <script setup lang="ts">
 import {computed, type CSSProperties, toRef} from 'vue'
 import type {BPlaceholderProps} from '../../types'
+import {useDefaults} from '../../composables'
 
 defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<BPlaceholderProps>(), {
+const _props = withDefaults(defineProps<BPlaceholderProps>(), {
   animation: undefined,
   cols: 12,
   size: 'md',
@@ -27,6 +28,7 @@ const props = withDefaults(defineProps<BPlaceholderProps>(), {
   width: undefined,
   wrapperTag: 'span',
 })
+const props = useDefaults(_props, 'BPlaceholder')
 
 const widthString = toRef(() =>
   props.width === undefined

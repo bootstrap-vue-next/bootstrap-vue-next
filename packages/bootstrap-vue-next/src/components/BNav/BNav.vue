@@ -1,15 +1,15 @@
 <template>
-  <component :is="tag" class="nav" :class="computedClasses">
+  <component :is="props.tag" class="nav" :class="computedClasses">
     <slot />
   </component>
 </template>
 
 <script setup lang="ts">
 import type {BNavProps} from '../../types'
-import {useAlignment} from '../../composables'
+import {useAlignment, useDefaults} from '../../composables'
 import {computed} from 'vue'
 
-const props = withDefaults(defineProps<BNavProps>(), {
+const _props = withDefaults(defineProps<BNavProps>(), {
   align: undefined,
   cardHeader: false,
   fill: false,
@@ -21,6 +21,7 @@ const props = withDefaults(defineProps<BNavProps>(), {
   underline: false,
   vertical: false,
 })
+const props = useDefaults(_props, 'BNav')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

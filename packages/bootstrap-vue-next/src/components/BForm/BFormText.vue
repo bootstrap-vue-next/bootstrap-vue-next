@@ -18,13 +18,12 @@ const _props = withDefaults(defineProps<BFormTextProps>(), {
   text: undefined,
   textVariant: 'body-secondary',
 })
+const props = useDefaults(_props, 'BFormText')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
 }>()
-
-const props = useDefaults(_props, 'BFormText')
 
 const computedClasses = computed(() => ({
   [`text-${props.textVariant}`]: props.textVariant !== null,

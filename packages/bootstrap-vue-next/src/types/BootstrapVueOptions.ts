@@ -71,6 +71,14 @@ export interface BootstrapVueOptions {
      * @default true
      */
     toast?: boolean
-    components?: Partial<BvnComponentProps>
+    components?: Partial<
+      BvnComponentProps & {
+        /**
+         * @hint Globally sets all props with the matching name
+         */
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        global: Record<string, any>
+      }
+    >
   }
 }

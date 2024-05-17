@@ -1,9 +1,9 @@
 <template>
-  <Teleport :to="teleportTo" :disabled="props.teleportDisabled">
+  <Teleport :to="props.teleportTo" :disabled="props.teleportDisabled">
     <BTransition
       :no-fade="true"
-      v-bind="transProps"
-      :trans-props="{enterToClass: 'show', ...transProps?.transProps}"
+      v-bind="props.transProps"
+      :trans-props="{enterToClass: 'show', ...props.transProps?.transProps}"
       @before-enter="onBeforeEnter"
       @after-enter="onAfterEnter"
       @leave="onLeave"
@@ -23,17 +23,17 @@
         :style="computedZIndex"
       >
         <div class="modal-dialog" :class="modalDialogClasses">
-          <div v-if="lazyShowing" class="modal-content" :class="contentClass">
+          <div v-if="lazyShowing" class="modal-content" :class="props.contentClass">
             <div v-if="!props.hideHeader" class="modal-header" :class="headerClasses">
               <slot name="header" v-bind="sharedSlots">
                 <component
-                  :is="titleTag"
+                  :is="props.titleTag"
                   :id="`${computedId}-label`"
                   class="modal-title"
                   :class="titleClasses"
                 >
                   <slot name="title" v-bind="sharedSlots">
-                    {{ title }}
+                    {{ props.title }}
                   </slot>
                 </component>
                 <template v-if="!props.hideHeaderClose">
@@ -46,7 +46,7 @@
                   </BButton>
                   <BCloseButton
                     v-else
-                    :aria-label="headerCloseLabel"
+                    :aria-label="props.headerCloseLabel"
                     v-bind="headerCloseAttrs"
                     @click="hideFn('close')"
                   />
@@ -57,10 +57,10 @@
               :id="`${computedId}-body`"
               class="modal-body"
               :class="bodyClasses"
-              v-bind="bodyAttrs"
+              v-bind="props.bodyAttrs"
             >
               <slot v-bind="sharedSlots">
-                {{ body }}
+                {{ props.body }}
               </slot>
             </div>
             <div v-if="!props.hideFooter" class="modal-footer" :class="footerClasses">
@@ -70,22 +70,22 @@
                     v-if="!props.okOnly"
                     ref="cancelButton"
                     :disabled="disableCancel"
-                    :size="buttonSize"
-                    :variant="cancelVariant"
+                    :size="props.buttonSize"
+                    :variant="props.cancelVariant"
                     @click="hideFn('cancel')"
                   >
-                    {{ cancelTitle }}
+                    {{ props.cancelTitle }}
                   </BButton>
                 </slot>
                 <slot name="ok" v-bind="sharedSlots">
                   <BButton
                     ref="okButton"
                     :disabled="disableOk"
-                    :size="buttonSize"
-                    :variant="okVariant"
+                    :size="props.buttonSize"
+                    :variant="props.okVariant"
                     @click="hideFn('ok')"
                   >
-                    {{ okTitle }}
+                    {{ props.okTitle }}
                   </BButton>
                 </slot>
               </slot>
@@ -111,7 +111,13 @@
 <script setup lang="ts">
 import {onKeyStroke, useEventListener, useFocus} from '@vueuse/core'
 import {computed, type CSSProperties, ref, toRef, watch} from 'vue'
-import {useColorVariantClasses, useId, useModalManager, useSafeScrollLock} from '../../composables'
+import {
+  useColorVariantClasses,
+  useDefaults,
+  useId,
+  useModalManager,
+  useSafeScrollLock,
+} from '../../composables'
 import type {BModalProps} from '../../types'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
 import BButton from '../BButton/BButton.vue'
@@ -130,7 +136,7 @@ defineOptions({
 // Note, attempt to return focus to item that openned the modal after close
 // Implement auto focus props like autoFocusButton
 
-const props = withDefaults(defineProps<BModalProps>(), {
+const _props = withDefaults(defineProps<BModalProps>(), {
   autoFocus: true,
   autoFocusButton: undefined,
   backdropVariant: undefined,
@@ -187,6 +193,7 @@ const props = withDefaults(defineProps<BModalProps>(), {
   titleTag: 'h5',
   transProps: undefined,
 })
+const props = useDefaults(_props, 'BModal')
 
 const emit = defineEmits<{
   'cancel': [value: BvTriggerableEvent]

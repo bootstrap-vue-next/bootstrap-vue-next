@@ -1312,7 +1312,7 @@ export interface BColProps extends OffsetBreakpointProps, OrderBreakpointProps, 
   tag?: string
   order?: ColsNumbers
   offset?: ColsNumbers
-  cols?: ColsNumbers
+  cols?: ColsNumbers | 'auto'
   col?: boolean
 }
 
@@ -1410,8 +1410,7 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
   BCardFooter: BCardHeadFootProps
   BCardHeader: BCardHeadFootProps
   BCardImg: BCardImgProps
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  BCol: any
+  BCol: BColProps
   BDropdownForm: never
   BDropdownHeader: never
   BFormInvalidFeedback: BFormFeedbackSharedProps
@@ -1421,7 +1420,6 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
   BInputGroupAppend: BInputGroupAddonProps
   BInputGroupPrepend: BInputGroupAddonProps
   BNavItemDropdown: BDropdownProps
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   BRow: BRowProps
 }
 

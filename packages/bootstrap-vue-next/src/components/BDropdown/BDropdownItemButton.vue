@@ -14,6 +14,7 @@
 </template>
 
 <script setup lang="ts">
+import {useDefaults} from '../../composables'
 import type {BDropdownItemButtonProps} from '../../types'
 import {computed} from 'vue'
 
@@ -21,13 +22,14 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<BDropdownItemButtonProps>(), {
+const _props = withDefaults(defineProps<BDropdownItemButtonProps>(), {
   active: false,
   activeClass: 'active',
   buttonClass: undefined,
   disabled: false,
   variant: null,
 })
+const props = useDefaults(_props, 'BDropdownItemButton')
 
 const emit = defineEmits<{
   click: [value: MouseEvent]

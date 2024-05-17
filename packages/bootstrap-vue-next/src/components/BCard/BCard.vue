@@ -1,58 +1,58 @@
 <template>
-  <component :is="tag" class="card" :class="computedClasses">
+  <component :is="props.tag" class="card" :class="computedClasses">
     <ReusableImg.define>
       <slot name="img">
-        <BCardImg v-if="imgSrc" v-bind="imgAttr" />
+        <BCardImg v-if="props.imgSrc" v-bind="imgAttr" />
       </slot>
     </ReusableImg.define>
 
     <ReusableImg.reuse v-if="!props.imgBottom" />
     <BCardHeader
-      v-if="header || hasHeaderSlot || headerHtml"
-      :bg-variant="headerBgVariant"
-      :variant="headerVariant"
-      :border-variant="headerBorderVariant"
-      :html="headerHtml"
-      :tag="headerTag"
-      :text-variant="headerTextVariant"
-      :class="headerClass"
+      v-if="props.header || hasHeaderSlot || props.headerHtml"
+      :bg-variant="props.headerBgVariant"
+      :variant="props.headerVariant"
+      :border-variant="props.headerBorderVariant"
+      :html="props.headerHtml"
+      :tag="props.headerTag"
+      :text-variant="props.headerTextVariant"
+      :class="props.headerClass"
     >
       <slot name="header">
-        {{ header }}
+        {{ props.header }}
       </slot>
     </BCardHeader>
     <BCardBody
       v-if="!props.noBody"
-      :overlay="overlay"
-      :bg-variant="bodyBgVariant"
-      :tag="bodyTag"
-      :text-variant="bodyTextVariant"
-      :subtitle="subtitle"
-      :subtitle-tag="subtitleTag"
-      :subtitle-text-variant="subtitleTextVariant"
-      :title="title"
-      :title-tag="titleTag"
-      :class="bodyClass"
+      :overlay="props.overlay"
+      :bg-variant="props.bodyBgVariant"
+      :tag="props.bodyTag"
+      :text-variant="props.bodyTextVariant"
+      :subtitle="props.subtitle"
+      :subtitle-tag="props.subtitleTag"
+      :subtitle-text-variant="props.subtitleTextVariant"
+      :title="props.title"
+      :title-tag="props.titleTag"
+      :class="props.bodyClass"
     >
       <slot>
-        {{ bodyText }}
+        {{ props.bodyText }}
       </slot>
     </BCardBody>
     <slot v-else>
-      {{ bodyText }}
+      {{ props.bodyText }}
     </slot>
     <BCardFooter
-      v-if="footer || hasFooterSlot || footerHtml"
-      :bg-variant="footerBgVariant"
-      :border-variant="footerBorderVariant"
-      :variant="footerVariant"
-      :html="footerHtml"
-      :tag="footerTag"
-      :text-variant="footerTextVariant"
-      :class="footerClass"
+      v-if="props.footer || hasFooterSlot || props.footerHtml"
+      :bg-variant="props.footerBgVariant"
+      :border-variant="props.footerBorderVariant"
+      :variant="props.footerVariant"
+      :html="props.footerHtml"
+      :tag="props.footerTag"
+      :text-variant="props.footerTextVariant"
+      :class="props.footerClass"
     >
       <slot name="footer">
-        {{ footer }}
+        {{ props.footer }}
       </slot>
     </BCardFooter>
     <ReusableImg.reuse v-if="props.imgBottom" />
@@ -63,14 +63,14 @@
 import type {BCardProps} from '../../types'
 import {isEmptySlot} from '../../utils'
 import {computed, toRef} from 'vue'
-import {useColorVariantClasses} from '../../composables'
+import {useColorVariantClasses, useDefaults} from '../../composables'
 import BCardImg from './BCardImg.vue'
 import BCardHeader from './BCardHeader.vue'
 import BCardBody from './BCardBody.vue'
 import BCardFooter from './BCardFooter.vue'
 import {createReusableTemplate} from '@vueuse/core'
 
-const props = withDefaults(defineProps<BCardProps>(), {
+const _props = withDefaults(defineProps<BCardProps>(), {
   align: undefined,
   bodyBgVariant: undefined,
   bodyClass: undefined,
@@ -116,6 +116,7 @@ const props = withDefaults(defineProps<BCardProps>(), {
   variant: null,
   // End ColorExtendables props
 })
+const props = useDefaults(_props, 'BCard')
 
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

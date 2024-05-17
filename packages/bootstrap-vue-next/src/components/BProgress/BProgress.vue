@@ -1,17 +1,17 @@
 <template>
-  <div class="progress" :style="{height}">
+  <div class="progress" :style="{height: props.height}">
     <slot>
       <BProgressBar
-        :animated="animated"
-        :max="max"
-        :precision="precision"
-        :show-progress="showProgress"
-        :show-value="showValue"
-        :striped="striped"
-        :value="value"
-        :variant="variant"
-        :text-variant="textVariant"
-        :bg-variant="bgVariant"
+        :animated="props.animated"
+        :max="props.max"
+        :precision="props.precision"
+        :show-progress="props.showProgress"
+        :show-value="props.showValue"
+        :striped="props.striped"
+        :value="props.value"
+        :variant="props.variant"
+        :text-variant="props.textVariant"
+        :bg-variant="props.bgVariant"
       />
     </slot>
   </div>
@@ -22,8 +22,9 @@ import BProgressBar from './BProgressBar.vue'
 import type {BProgressProps} from '../../types'
 import {provide, toRef} from 'vue'
 import {progressInjectionKey} from '../../utils'
+import {useDefaults} from '../../composables'
 
-const props = withDefaults(defineProps<BProgressProps>(), {
+const _props = withDefaults(defineProps<BProgressProps>(), {
   height: undefined,
   // BProgressBar props
   animated: undefined,
@@ -38,6 +39,7 @@ const props = withDefaults(defineProps<BProgressProps>(), {
   variant: undefined,
   // End BProgressBar props
 })
+const props = useDefaults(_props, 'BProgress')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -7,8 +7,9 @@ import BImg from '../BImg.vue'
 import type {BCardImgProps} from '../../types'
 import {omit} from '../../utils'
 import {computed, toRef} from 'vue'
+import {useDefaults} from '../../composables'
 
-const props = withDefaults(defineProps<BCardImgProps>(), {
+const _props = withDefaults(defineProps<BCardImgProps>(), {
   bottom: false,
   top: false,
   // BImg props
@@ -34,6 +35,7 @@ const props = withDefaults(defineProps<BCardImgProps>(), {
   width: undefined,
   // End BImg props
 })
+const props = useDefaults(_props, 'BCardImg')
 
 const baseClass = toRef(() =>
   props.top
