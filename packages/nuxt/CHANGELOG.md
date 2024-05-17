@@ -1,5 +1,33 @@
 # Changelog
 
+## [0.18.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.17.6...nuxt-v0.18.0) (2024-05-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BFormInput:** move props lazy, trim & number to v-model modifier. Modifiers should behave more like native Vue modifiers (number modifier with unparseable value returns value as is)
+* **BreakpointProps:** strongly type breakpoints. Instead of weak string | number => 1,2,3...'1','2','3'...
+
+### Features
+
+* **BCarouselSlide:** allow individual interval for slides ([8e73b17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8e73b177051d4403ca7a159e7c11707de15e638c))
+* **BFormInput:** move props lazy, trim & number to v-model modifier. Modifiers should behave more like native Vue modifiers (number modifier with unparseable value returns value as is) ([8e73b17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8e73b177051d4403ca7a159e7c11707de15e638c))
+* **BFormInput:** type number performs the same as modifier ([8e73b17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8e73b177051d4403ca7a159e7c11707de15e638c))
+* **BreakpointProps:** strongly type breakpoints. Instead of weak string | number =&gt; 1,2,3...'1','2','3'... ([8e73b17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8e73b177051d4403ca7a159e7c11707de15e638c))
+* implement a use defaults system fixes [#1607](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1607) ([8e73b17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8e73b177051d4403ca7a159e7c11707de15e638c))
+* implement global alias system fixes [#1753](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1753) ([8e73b17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8e73b177051d4403ca7a159e7c11707de15e638c))
+* implmenet a use defaults system WIP fixes [#1607](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1607)  ([#1889](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1889)) ([8e73b17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8e73b177051d4403ca7a159e7c11707de15e638c))
+* **nuxt:** automatically globally set teleportTo to `#teleports` ([8e73b17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8e73b177051d4403ca7a159e7c11707de15e638c))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.18.0
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.18.0
+
 ## [0.17.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.17.5...nuxt-v0.17.6) (2024-05-08)
 
 
