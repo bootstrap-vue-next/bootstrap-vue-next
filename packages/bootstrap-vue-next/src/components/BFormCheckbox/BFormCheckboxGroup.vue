@@ -24,11 +24,11 @@
 import {computed, provide, ref, toRef} from 'vue'
 import BFormCheckbox from './BFormCheckbox.vue'
 import type {BFormCheckboxGroupProps, CheckboxValue} from '../../types'
-import {getGroupAttr, getGroupClasses, useId} from '../../composables'
+import {getGroupAttr, getGroupClasses, useDefaults, useId} from '../../composables'
 import {checkboxGroupKey} from '../../utils'
 import {useFocus} from '@vueuse/core'
 
-const props = withDefaults(defineProps<BFormCheckboxGroupProps>(), {
+const _props = withDefaults(defineProps<BFormCheckboxGroupProps>(), {
   ariaInvalid: undefined,
   autofocus: false,
   buttonVariant: 'secondary',
@@ -51,6 +51,7 @@ const props = withDefaults(defineProps<BFormCheckboxGroupProps>(), {
   validated: false,
   valueField: 'value',
 })
+const props = useDefaults(_props, 'BFormCheckboxGroup')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

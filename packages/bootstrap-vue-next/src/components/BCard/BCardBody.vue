@@ -1,23 +1,23 @@
 <template>
-  <component :is="tag" class="card-body" :class="computedClasses">
-    <BCardTitle v-if="!!title || hasTitleSlot" :tag="titleTag">
+  <component :is="props.tag" class="card-body" :class="computedClasses">
+    <BCardTitle v-if="!!props.title || hasTitleSlot" :tag="props.titleTag">
       <slot name="title">
-        {{ title }}
+        {{ props.title }}
       </slot>
     </BCardTitle>
 
     <BCardSubtitle
-      v-if="!!subtitle || hasSubtitleSlot"
-      :tag="subtitleTag"
-      :text-variant="subtitleTextVariant"
+      v-if="!!props.subtitle || hasSubtitleSlot"
+      :tag="props.subtitleTag"
+      :text-variant="props.subtitleTextVariant"
     >
       <slot name="subtitle">
-        {{ subtitle }}
+        {{ props.subtitle }}
       </slot>
     </BCardSubtitle>
 
     <slot>
-      {{ text }}
+      {{ props.text }}
     </slot>
   </component>
 </template>
@@ -28,9 +28,9 @@ import BCardTitle from './BCardTitle.vue'
 import {isEmptySlot} from '../../utils'
 import BCardSubtitle from './BCardSubtitle.vue'
 import type {BCardBodyProps} from '../../types'
-import {useColorVariantClasses} from '../../composables'
+import {useColorVariantClasses, useDefaults} from '../../composables'
 
-const props = withDefaults(defineProps<BCardBodyProps>(), {
+const _props = withDefaults(defineProps<BCardBodyProps>(), {
   overlay: false,
   subtitle: undefined,
   subtitleTag: 'h4',
@@ -45,6 +45,7 @@ const props = withDefaults(defineProps<BCardBodyProps>(), {
   variant: null,
   // End ColorExtendables props
 })
+const props = useDefaults(_props, 'BCardBody')
 
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

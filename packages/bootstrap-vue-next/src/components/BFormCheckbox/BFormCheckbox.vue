@@ -9,14 +9,14 @@
       type="checkbox"
       :disabled="props.disabled || parentData?.disabled.value"
       :required="computedRequired || undefined"
-      :name="name || parentData?.name.value"
-      :form="form || parentData?.form.value"
-      :aria-label="ariaLabel"
-      :aria-labelledby="ariaLabelledby"
+      :name="props.name || parentData?.name.value"
+      :form="props.form || parentData?.form.value"
+      :aria-label="props.ariaLabel"
+      :aria-labelledby="props.ariaLabelledby"
       :aria-required="computedRequired || undefined"
-      :value="value"
-      :true-value="value"
-      :false-value="uncheckedValue"
+      :value="props.value"
+      :true-value="props.value"
+      :false-value="props.uncheckedValue"
       :indeterminate="props.indeterminate"
     />
     <label v-if="hasDefaultSlot || props.plain === false" :for="computedId" :class="labelClasses">
@@ -28,7 +28,7 @@
 <script setup lang="ts">
 import {useFocus} from '@vueuse/core'
 import {computed, inject, ref, toRef} from 'vue'
-import {getClasses, getInputClasses, getLabelClasses, useId} from '../../composables'
+import {getClasses, getInputClasses, getLabelClasses, useDefaults, useId} from '../../composables'
 import type {BFormCheckboxProps, CheckboxValue} from '../../types'
 import {checkboxGroupKey, isEmptySlot} from '../../utils'
 import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
@@ -37,7 +37,7 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<BFormCheckboxProps>(), {
+const _props = withDefaults(defineProps<BFormCheckboxProps>(), {
   ariaLabel: undefined,
   ariaLabelledby: undefined,
   autofocus: false,
@@ -58,6 +58,7 @@ const props = withDefaults(defineProps<BFormCheckboxProps>(), {
   uncheckedValue: false,
   value: true,
 })
+const props = useDefaults(_props, 'BFormCheckbox')
 
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

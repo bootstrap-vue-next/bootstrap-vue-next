@@ -1,5 +1,5 @@
 <template>
-  <Teleport :to="teleportTo" :disabled="props.teleportDisabled">
+  <Teleport :to="props.teleportTo" :disabled="props.teleportDisabled">
     <!-- This wrapper div is used for specific targetting by the user -->
     <!-- Even though it serves no direct purpose itself -->
     <div id="__BVID__toaster-container">
@@ -27,15 +27,16 @@
 
 <script setup lang="ts">
 import {watch} from 'vue'
-import {useToast} from '../../composables'
+import {useDefaults, useToast} from '../../composables'
 import {omit} from '../../utils'
 import type {BToastOrchestratorProps} from '../../types'
 
-const props = withDefaults(defineProps<BToastOrchestratorProps>(), {
+const _props = withDefaults(defineProps<BToastOrchestratorProps>(), {
   teleportDisabled: false,
   teleportTo: 'body',
   appendToast: false,
 })
+const props = useDefaults(_props, 'BToastOrchestrator')
 
 const toastPositions = {
   'top-left': 'top-0 start-0',

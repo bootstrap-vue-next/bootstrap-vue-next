@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import {useBLinkHelper, useColorVariantClasses} from '../../composables'
+import {useBLinkHelper, useColorVariantClasses, useDefaults} from '../../composables'
 import {computed, toRef} from 'vue'
 import type {BBadgeProps} from '../../types'
 import BLink from '../BLink/BLink.vue'
@@ -15,7 +15,7 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const props = withDefaults(defineProps<BBadgeProps>(), {
+const _props = withDefaults(defineProps<BBadgeProps>(), {
   dotIndicator: false,
   pill: false,
   tag: 'span',
@@ -49,6 +49,7 @@ const props = withDefaults(defineProps<BBadgeProps>(), {
   bgVariant: null,
   // End ColorExtendables props
 })
+const props = useDefaults(_props, 'BBadge')
 
 const resolvedBackgroundClasses = useColorVariantClasses(props)
 

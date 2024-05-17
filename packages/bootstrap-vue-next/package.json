@@ -43,39 +43,39 @@
     "test:ci": "pnpm run test:lint:ci && pnpm run test:unit:ci"
   },
   "peerDependencies": {
-    "vue": "^3.4.21"
+    "vue": "^3.4.27"
   },
   "dependencies": {
     "@floating-ui/vue": "^1.0.6",
     "@vueuse/core": "^10.9.0"
   },
   "devDependencies": {
-    "@floating-ui/core": "^1.6.0",
-    "@rushstack/eslint-patch": "^1.10.2",
+    "@floating-ui/core": "^1.6.2",
+    "@rushstack/eslint-patch": "^1.10.3",
     "@tsconfig/node20": "^20.1.4",
-    "@types/node": "^20.12.7",
+    "@types/node": "^20.12.12",
     "@vitejs/plugin-vue": "^5.0.4",
-    "@vitest/coverage-v8": "^1.5.2",
+    "@vitest/coverage-v8": "^1.6.0",
     "@vue/eslint-config-prettier": "^9.0.0",
     "@vue/eslint-config-typescript": "^13.0.0",
-    "@vue/runtime-core": "^3.4.25",
-    "@vue/test-utils": "^2.4.5",
+    "@vue/runtime-core": "^3.4.27",
+    "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.5.1",
     "@vueuse/shared": "^10.9.0",
     "bootstrap": "^5.3.3",
     "eslint": "^8.57.0",
     "eslint-define-config": "^2.1.0",
-    "eslint-plugin-vue": "^9.25.0",
-    "happy-dom": "13.6.2",
+    "eslint-plugin-vue": "^9.26.0",
+    "happy-dom": "^14.11.0",
     "prettier": "^3.2.5",
-    "sass": "^1.75.0",
+    "sass": "^1.77.2",
     "typescript": "^5.4.5",
-    "vite": "^5.2.10",
-    "vite-plugin-dts": "^3.9.0",
-    "vitest": "^1.5.2",
-    "vue": "^3.4.25",
-    "vue-router": "^4.3.0",
-    "vue-tsc": "^2.0.14"
+    "vite": "^5.2.11",
+    "vite-plugin-dts": "^3.9.1",
+    "vitest": "^1.6.0",
+    "vue": "^3.4.27",
+    "vue-router": "^4.3.2",
+    "vue-tsc": "^2.0.19"
   },
   "repository": {
     "type": "git",

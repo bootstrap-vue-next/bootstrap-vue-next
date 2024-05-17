@@ -1,15 +1,19 @@
 <template>
-  <component :is="wrapTag" class="b-overlay-wrap position-relative" :aria-busy="computedAriaBusy">
+  <component
+    :is="props.wrapTag"
+    class="b-overlay-wrap position-relative"
+    :aria-busy="computedAriaBusy"
+  >
     <slot />
     <BTransition
-      :no-fade="noFade"
+      :no-fade="props.noFade"
       :trans-props="{enterToClass: 'show'}"
       name="fade"
       @after-enter="emit('shown')"
       @after-leave="emit('hidden')"
     >
       <component
-        :is="overlayTag"
+        :is="props.overlayTag"
         v-if="props.show"
         class="b-overlay"
         :class="overlayClasses"
@@ -31,11 +35,11 @@
 <script setup lang="ts">
 import {computed, toRef} from 'vue'
 import type {BOverlayProps} from '../../types'
-import {useRadiusElementClasses} from '../../composables'
+import {useDefaults, useRadiusElementClasses} from '../../composables'
 import BTransition from '../BTransition/BTransition.vue'
 import BSpinner from '../BSpinner.vue'
 
-const props = withDefaults(defineProps<BOverlayProps>(), {
+const _props = withDefaults(defineProps<BOverlayProps>(), {
   blur: '2px',
   bgColor: undefined,
   fixed: false,
@@ -60,6 +64,7 @@ const props = withDefaults(defineProps<BOverlayProps>(), {
   roundedTop: undefined,
   // End RadiusElementExtendables props
 })
+const props = useDefaults(_props, 'BOverlay')
 
 const emit = defineEmits<{
   click: [value: MouseEvent]

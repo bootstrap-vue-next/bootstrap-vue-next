@@ -1,5 +1,5 @@
 <template>
-  <Teleport :to="teleportTo" :disabled="props.teleportDisabled">
+  <Teleport :to="props.teleportTo" :disabled="props.teleportDisabled">
     <BTransition
       :no-fade="true"
       :trans-props="{
@@ -26,11 +26,11 @@
         v-bind="$attrs"
       >
         <template v-if="lazyShowing">
-          <div v-if="!props.noHeader" class="offcanvas-header" :class="headerClass">
+          <div v-if="!props.noHeader" class="offcanvas-header" :class="props.headerClass">
             <slot name="header" v-bind="sharedSlots">
               <h5 :id="`${computedId}-offcanvas-label`" class="offcanvas-title">
                 <slot name="title" v-bind="sharedSlots">
-                  {{ title }}
+                  {{ props.title }}
                 </slot>
               </h5>
               <template v-if="!props.noHeaderClose">
@@ -39,17 +39,17 @@
                 </BButton>
                 <BCloseButton
                   v-else
-                  :aria-label="headerCloseLabel"
+                  :aria-label="props.headerCloseLabel"
                   v-bind="headerCloseAttrs"
                   @click="hide('close')"
                 />
               </template>
             </slot>
           </div>
-          <div class="offcanvas-body" :class="bodyClass" v-bind="bodyAttrs">
+          <div class="offcanvas-body" :class="props.bodyClass" v-bind="props.bodyAttrs">
             <slot v-bind="sharedSlots" />
           </div>
-          <div v-if="hasFooterSlot" :class="footerClass">
+          <div v-if="hasFooterSlot" :class="props.footerClass">
             <slot name="footer" v-bind="sharedSlots" />
           </div>
         </template>
@@ -57,8 +57,8 @@
     </BTransition>
     <slot name="backdrop">
       <BOverlay
-        :blur="backdropBlur"
-        :variant="backdropVariant"
+        :blur="props.backdropBlur"
+        :variant="props.backdropVariant"
         :show="showBackdrop"
         fixed
         no-wrap
@@ -72,7 +72,7 @@
 <script setup lang="ts">
 import {onKeyStroke, useEventListener, useFocus} from '@vueuse/core'
 import {computed, nextTick, ref, toRef} from 'vue'
-import {useId, useSafeScrollLock} from '../../composables'
+import {useDefaults, useId, useSafeScrollLock} from '../../composables'
 import type {BOffcanvasProps} from '../../types'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
 import BButton from '../BButton/BButton.vue'
@@ -92,7 +92,7 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<BOffcanvasProps>(), {
+const _props = withDefaults(defineProps<BOffcanvasProps>(), {
   backdrop: true,
   backdropBlur: undefined,
   backdropVariant: 'dark',
@@ -117,6 +117,7 @@ const props = withDefaults(defineProps<BOffcanvasProps>(), {
   teleportTo: 'body',
   title: undefined,
 })
+const props = useDefaults(_props, 'BOffcanvas')
 
 const emit = defineEmits<{
   'close': [value: BvTriggerableEvent]

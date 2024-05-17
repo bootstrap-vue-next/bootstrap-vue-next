@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" class="b-avatar-group" role="group">
+  <component :is="props.tag" class="b-avatar-group" role="group">
     <div class="b-avatar-group-inner" :style="paddingStyle">
       <slot />
     </div>
@@ -10,10 +10,10 @@
 import {computed, provide, type StyleValue, toRef} from 'vue'
 import type {BAvatarGroupProps} from '../../types'
 import {avatarGroupInjectionKey} from '../../utils'
-import {useNumberishToStyle} from '../../composables'
+import {useDefaults, useNumberishToStyle} from '../../composables'
 import {useToNumber} from '@vueuse/core'
 
-const props = withDefaults(defineProps<BAvatarGroupProps>(), {
+const _props = withDefaults(defineProps<BAvatarGroupProps>(), {
   overlap: 0.3,
   size: undefined,
   square: false,
@@ -31,6 +31,7 @@ const props = withDefaults(defineProps<BAvatarGroupProps>(), {
   variant: null,
   // End ColorExtendables props
 })
+const props = useDefaults(_props, 'BAvatarGroup')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -1,5 +1,5 @@
 <template>
-  <Teleport :to="teleportTo" :disabled="props.teleportDisabled">
+  <Teleport :to="props.teleportTo" :disabled="props.teleportDisabled">
     <!-- This wrapper div is used for specific targetting by the user -->
     <!-- Even though it serves no direct purpose itself -->
     <div id="__BVID__modal-container">
@@ -37,13 +37,14 @@
 
 <script setup lang="ts">
 import {BvTriggerableEvent, omit} from '../../utils'
-import {useModalController} from '../../composables'
+import {useDefaults, useModalController} from '../../composables'
 import type {BModalOrchestratorProps} from '../../types'
 
-const props = withDefaults(defineProps<BModalOrchestratorProps>(), {
+const _props = withDefaults(defineProps<BModalOrchestratorProps>(), {
   teleportDisabled: false,
   teleportTo: 'body',
 })
+const props = useDefaults(_props, 'BModalOrchestrator')
 
 const {modals, remove, show, confirm} = useModalController()
 

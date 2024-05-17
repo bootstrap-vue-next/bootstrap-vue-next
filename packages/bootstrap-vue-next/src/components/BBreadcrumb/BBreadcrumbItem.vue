@@ -7,7 +7,7 @@
       @click="clicked"
     >
       <slot>
-        {{ text }}
+        {{ props.text }}
       </slot>
     </component>
   </li>
@@ -18,13 +18,14 @@ import {pick} from '../../utils'
 import {computed, toRef} from 'vue'
 import BLink from '../BLink/BLink.vue'
 import type {BBreadcrumbItemProps} from '../../types'
+import {useDefaults} from '../../composables'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
 }>()
 
-const props = withDefaults(defineProps<BBreadcrumbItemProps>(), {
+const _props = withDefaults(defineProps<BBreadcrumbItemProps>(), {
   ariaCurrent: 'location',
   text: undefined,
   // Link props
@@ -52,6 +53,7 @@ const props = withDefaults(defineProps<BBreadcrumbItemProps>(), {
   variant: undefined,
   // End link props
 })
+const props = useDefaults(_props, 'BBreadcrumbItem')
 
 const emit = defineEmits<{
   click: [value: MouseEvent]

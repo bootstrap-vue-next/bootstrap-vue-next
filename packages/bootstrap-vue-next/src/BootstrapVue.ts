@@ -1,11 +1,6 @@
 import type {Plugin} from 'vue'
 import type {BootstrapVueOptions, ComponentType, DirectiveType} from './types'
-import toastPlugin from './plugins/toastPlugin'
-import breadcrumbPlugin from './plugins/breadcrumbPlugin'
-import idPlugin from './plugins/idPlugin'
-import modalControllerPlugin from './plugins/modalControllerPlugin'
-import modalManagerPlugin from './plugins/modalManagerPlugin'
-import rtlPlugin from './plugins/rtlPlugin'
+import * as Plugins from './plugins'
 
 import './styles/styles.scss'
 
@@ -123,7 +118,8 @@ declare module '@vue/runtime-core' {
 export const createBootstrap = ({
   components = false,
   directives = false,
-  plugins = {},
+  plugins: pluginData = {},
+  aliases = {},
 }: BootstrapVueOptions = {}): Plugin => ({
   install(app) {
     const selectedComponents = typeof components === 'boolean' ? {all: components} : components
@@ -144,24 +140,30 @@ export const createBootstrap = ({
       app.directive(parsedName, directive)
     })
 
-    if (plugins?.breadcrumb ?? true === true) {
-      app.use(breadcrumbPlugin)
+    Object.entries(aliases).forEach(([alias, name]) => {
+      const component = typeof name === 'string' ? Components[name] : name
+      app.component(alias, component)
+    })
+
+    if (pluginData?.breadcrumb ?? true === true) {
+      app.use(Plugins.breadcrumb)
     }
-    if ((plugins?.id ?? true === true) || typeof plugins.id === 'object') {
-      app.use(idPlugin, plugins)
+    if ((pluginData?.id ?? true === true) || typeof pluginData.id === 'object') {
+      app.use(Plugins.id, pluginData)
     }
-    if (plugins?.modalController ?? true === true) {
-      app.use(modalControllerPlugin)
+    if (pluginData?.modalController ?? true === true) {
+      app.use(Plugins.modalController)
     }
-    if (plugins?.modalManager ?? true === true) {
-      app.use(modalManagerPlugin)
+    if (pluginData?.modalManager ?? true === true) {
+      app.use(Plugins.modalManager)
     }
-    if ((plugins?.rtl ?? true === true) || typeof plugins.rtl === 'object') {
-      app.use(rtlPlugin, plugins)
+    if ((pluginData?.rtl ?? true === true) || typeof pluginData.rtl === 'object') {
+      app.use(Plugins.rtl, pluginData)
     }
-    if (plugins?.toast ?? true === true) {
-      app.use(toastPlugin)
+    if (pluginData?.toast ?? true === true) {
+      app.use(Plugins.toast)
     }
+    app.use(Plugins.defaults, pluginData)
   },
 })
 

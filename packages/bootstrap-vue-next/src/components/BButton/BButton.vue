@@ -8,22 +8,25 @@
     :aria-pressed="isToggle ? props.pressed : null"
     :autocomplete="isToggle ? 'off' : null"
     :disabled="isButton ? props.disabled : null"
-    :href="href"
-    :rel="computedLink ? rel : null"
+    :href="props.href"
+    :rel="computedLink ? props.rel : null"
     :role="nonStandardTag || computedLink ? 'button' : null"
-    :target="computedLink ? target : null"
-    :type="isButton ? type : null"
-    :to="!isButton ? to : null"
-    :append="computedLink ? append : null"
+    :target="computedLink ? props.target : null"
+    :type="isButton ? props.type : null"
+    :to="!isButton ? props.to : null"
+    :append="computedLink ? props.append : null"
     @click="clicked"
   >
     <template v-if="props.loading">
       <slot name="loading">
         <template v-if="!props.loadingFill">
-          {{ loadingText }}
+          {{ props.loadingText }}
         </template>
         <slot name="loading-spinner">
-          <BSpinner :small="size !== 'lg'" :label="props.loadingFill ? loadingText : undefined" />
+          <BSpinner
+            :small="props.size !== 'lg'"
+            :label="props.loadingFill ? props.loadingText : undefined"
+          />
         </slot>
       </slot>
     </template>
@@ -36,7 +39,7 @@
 <script setup lang="ts">
 import {computed, toRef} from 'vue'
 import BSpinner from '../BSpinner.vue'
-import {useBLinkHelper} from '../../composables'
+import {useBLinkHelper, useDefaults} from '../../composables'
 import type {BButtonProps} from '../../types'
 import BLink from '../BLink/BLink.vue'
 
@@ -49,7 +52,7 @@ defineSlots<{
   'loading-spinner'?: (props: Record<string, never>) => any
 }>()
 
-const props = withDefaults(defineProps<BButtonProps>(), {
+const _props = withDefaults(defineProps<BButtonProps>(), {
   loading: false,
   loadingFill: false,
   loadingText: 'Loading...',
@@ -83,6 +86,8 @@ const props = withDefaults(defineProps<BButtonProps>(), {
   underlineVariant: undefined,
   // End link props
 })
+
+const props = useDefaults(_props, 'BButton')
 
 const emit = defineEmits<{
   click: [value: MouseEvent]

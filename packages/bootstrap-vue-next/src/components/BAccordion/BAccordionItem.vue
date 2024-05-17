@@ -1,17 +1,17 @@
 <template>
-  <div class="accordion-item" v-bind="wrapperAttrs" :class="wrapperClass">
+  <div class="accordion-item" v-bind="props.wrapperAttrs" :class="wrapperClass">
     <BCollapse
       :id="computedId"
       v-model="modelValue"
       class="accordion-collapse"
-      :class="collapseClass"
+      :class="props.collapseClass"
       :aria-labelledby="`${computedId}-heading`"
       v-bind="collapseAttrs"
-      :tag="tag"
-      :toggle="toggle"
-      :horizontal="horizontal"
-      :visible="visible"
-      :is-nav="isNav"
+      :tag="props.tag"
+      :toggle="props.toggle"
+      :horizontal="props.horizontal"
+      :visible="props.visible"
+      :is-nav="props.isNav"
       @show="emit('show', $event)"
       @shown="emit('shown')"
       @hide="emit('hide', $event)"
@@ -21,26 +21,26 @@
     >
       <template #header="{visible: toggleVisible, toggle: slotToggle}">
         <component
-          :is="headerTag"
+          :is="props.headerTag"
           :id="`${computedId}-heading`"
           class="accordion-header"
-          :class="headerClass"
-          v-bind="headerAttrs"
+          :class="props.headerClass"
+          v-bind="props.headerAttrs"
         >
           <button
             class="accordion-button"
-            v-bind="buttonAttrs"
-            :class="[{collapsed: !toggleVisible}, buttonClass]"
+            v-bind="props.buttonAttrs"
+            :class="[{collapsed: !toggleVisible}, props.buttonClass]"
             type="button"
             :aria-expanded="toggleVisible ? 'true' : 'false'"
             :aria-controls="computedId"
             @click="slotToggle"
           >
-            <slot name="title"> {{ title }} </slot>
+            <slot name="title"> {{ props.title }} </slot>
           </button>
         </component>
       </template>
-      <div class="accordion-body" v-bind="bodyAttrs" :class="bodyClass">
+      <div class="accordion-body" v-bind="props.bodyAttrs" :class="props.bodyClass">
         <slot />
       </div>
     </BCollapse>
@@ -51,7 +51,7 @@
 import {inject, onMounted, useAttrs, watch} from 'vue'
 import BCollapse from '../BCollapse.vue'
 import {accordionInjectionKey, BvTriggerableEvent} from '../../utils'
-import {useId} from '../../composables'
+import {useDefaults, useId} from '../../composables'
 import type {BAccordionItemProps} from '../../types'
 
 defineOptions({
@@ -59,7 +59,7 @@ defineOptions({
 })
 const {class: wrapperClass, ...collapseAttrs} = useAttrs()
 
-const props = withDefaults(defineProps<BAccordionItemProps>(), {
+const _props = withDefaults(defineProps<BAccordionItemProps>(), {
   bodyAttrs: undefined,
   bodyClass: undefined,
   buttonAttrs: undefined,
@@ -77,6 +77,7 @@ const props = withDefaults(defineProps<BAccordionItemProps>(), {
   visible: false,
   wrapperAttrs: undefined,
 })
+const props = useDefaults(_props, 'BAccordionItem')
 
 const emit = defineEmits<{
   'hidden': []

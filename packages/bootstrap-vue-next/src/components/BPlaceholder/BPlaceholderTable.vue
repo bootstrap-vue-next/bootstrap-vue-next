@@ -5,10 +5,10 @@
         <tr>
           <th v-for="(_, i) in computedHeaderColumnsLength" :key="i">
             <BPlaceholder
-              :size="headerSize"
-              :variant="headerVariant"
-              :animation="headerAnimation"
-              :width="headerCellWidth"
+              :size="props.headerSize"
+              :variant="props.headerVariant"
+              :animation="props.headerAnimation"
+              :width="props.headerCellWidth"
             />
           </th>
         </tr>
@@ -19,10 +19,10 @@
         <tr v-for="(_, j) in rowsNumber" :key="j">
           <td v-for="(__, k) in columnsNumber" :key="k">
             <BPlaceholder
-              :size="size"
-              :variant="variant"
-              :animation="animation"
-              :width="cellWidth"
+              :size="props.size"
+              :variant="props.variant"
+              :animation="props.animation"
+              :width="props.cellWidth"
             />
           </td>
         </tr>
@@ -33,10 +33,10 @@
         <tr>
           <th v-for="(_, l) in computedFooterColumnsLength" :key="l">
             <BPlaceholder
-              :size="footerSize"
-              :variant="footerVariant"
-              :animation="footerAnimation"
-              :width="footerCellWidth"
+              :size="props.footerSize"
+              :variant="props.footerVariant"
+              :animation="props.footerAnimation"
+              :width="props.footerCellWidth"
             />
           </th>
         </tr>
@@ -51,8 +51,9 @@ import type {BPlaceholderTableProps} from '../../types'
 import BTableSimple from '../BTable/BTableSimple.vue'
 import BPlaceholder from './BPlaceholder.vue'
 import {useToNumber} from '@vueuse/core'
+import {useDefaults} from '../../composables'
 
-const props = withDefaults(defineProps<BPlaceholderTableProps>(), {
+const _props = withDefaults(defineProps<BPlaceholderTableProps>(), {
   animation: undefined,
   cellWidth: 100,
   columns: 5,
@@ -72,6 +73,7 @@ const props = withDefaults(defineProps<BPlaceholderTableProps>(), {
   size: 'md',
   variant: undefined,
 })
+const props = useDefaults(_props, 'BPlaceholderTable')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -1,33 +1,31 @@
 import type {Numberish} from '../types'
-import {nextTick, onActivated, onMounted, ref} from 'vue'
+import {nextTick, onActivated, onMounted, ref, type Ref} from 'vue'
 import useAriaInvalid from './useAriaInvalid'
 import useId from './useId'
-import {useDebounceFn, useFocus, useToNumber, useVModel} from '@vueuse/core'
+import {useDebounceFn, useFocus, useToNumber} from '@vueuse/core'
 import type {CommonInputProps} from '../types/FormCommonInputProps'
 
 export default (
   props: Readonly<CommonInputProps>,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  emit: (evt: 'update:modelValue', val: any) => void
+  modelValue: Ref<Numberish | null>,
+  modelModifiers: Record<'number' | 'lazy' | 'trim', true | undefined>
 ) => {
   const input = ref<HTMLInputElement | null>(null)
-
-  const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
   const computedId = useId(() => props.id, 'input')
   const debounceNumber = useToNumber(() => props.debounce ?? 0)
   const debounceMaxWaitNumber = useToNumber(() => props.debounceMaxWait ?? NaN)
 
   const internalUpdateModelValue = useDebounceFn(
-    (value: Numberish | undefined) => {
+    (value: Numberish) => {
       modelValue.value = value
     },
-    () => (props.lazy === true ? 0 : debounceNumber.value),
-    {maxWait: () => (props.lazy === true ? NaN : debounceMaxWaitNumber.value)}
+    () => (modelModifiers.lazy === true ? 0 : debounceNumber.value),
+    {maxWait: () => (modelModifiers.lazy === true ? NaN : debounceMaxWaitNumber.value)}
   )
 
-  const updateModelValue = (value: Numberish | undefined, force = false) => {
-    if (props.lazy === true && force === false) return
+  const updateModelValue = (value: Numberish, force = false) => {
+    if (modelModifiers.lazy === true && force === false) return
     internalUpdateModelValue(value)
   }
 
@@ -41,14 +39,6 @@ export default (
     }
     return value
   }
-
-  const _getModelValue = (value: string) => {
-    if (props.trim) return value.trim()
-    if (props.number) return Number.parseFloat(value)
-
-    return value
-  }
-
   onMounted(() => {
     if (input.value) {
       input.value.value = modelValue.value?.toString() ?? ''
@@ -76,7 +66,7 @@ export default (
       return
     }
 
-    const nextModel = _getModelValue(formattedValue)
+    const nextModel = formattedValue
 
     updateModelValue(nextModel)
   }
@@ -89,19 +79,19 @@ export default (
       return
     }
 
-    const nextModel = _getModelValue(formattedValue)
+    const nextModel = formattedValue
     if (modelValue.value !== nextModel) {
       updateModelValue(formattedValue, true)
     }
   }
 
   const onBlur = (evt: Readonly<FocusEvent>) => {
-    if (!props.lazy && !props.lazyFormatter) return
+    if (!modelModifiers.lazy && !props.lazyFormatter) return
 
     const {value} = evt.target as HTMLInputElement
     const formattedValue = _formatValue(value, evt, true)
 
-    const nextModel = _getModelValue(formattedValue)
+    const nextModel = formattedValue
     if (modelValue.value !== nextModel) {
       updateModelValue(formattedValue, true)
     }

@@ -1,59 +1,92 @@
 <template>
-  <component :is="tag" :class="computedClasses">
+  <component :is="props.tag" :class="computedClasses">
     <slot />
   </component>
 </template>
 
-<script lang="ts">
-import {computed, defineComponent, type PropType, type SlotsType} from 'vue'
-import type {AlignmentVertical} from '../types'
-import {getBreakpointProps, getClasses} from '../utils'
+<script setup lang="ts">
+import {computed} from 'vue'
+import type {BColProps} from '../types'
+import {getClasses} from '../utils'
+import {useDefaults} from '../composables'
 
-const breakpointCol = getBreakpointProps('', [], {type: [Boolean, String, Number], default: false})
-const breakpointOffset = getBreakpointProps('offset', [''], {type: [String, Number], default: null})
-const breakpointOrder = getBreakpointProps('order', [''], {type: [String, Number], default: null})
-
-export default defineComponent({
-  name: 'BCol',
-  slots: Object as SlotsType<{
-    default?: Record<string, never>
-  }>,
-  props: {
-    col: {type: Boolean, default: false}, // Generic flexbox .col (xs)
-    cols: {type: [String, Number], default: null}, // .col-[1-12]|auto (xs)
-    ...breakpointCol,
-    offset: {type: [String, Number], default: null},
-    ...breakpointOffset,
-    order: {type: [String, Number], default: null},
-    ...breakpointOrder,
-    alignSelf: {type: String as PropType<AlignmentVertical | 'auto'>, default: null},
-    tag: {type: String, default: 'div'},
-  },
-  setup(props) {
-    const properties = [
-      {content: breakpointCol, propPrefix: 'cols', classPrefix: 'col'},
-      {content: breakpointOffset, propPrefix: 'offset'},
-      {content: breakpointOrder, propPrefix: 'order'},
-    ]
-
-    const classList = computed(() =>
-      properties.flatMap((el) => getClasses(props, el.content, el.propPrefix, el.classPrefix))
-    )
-
-    const computedClasses = computed(() => [
-      classList.value,
-      {
-        col: props.col || (!classList.value.some((e) => /^col-/.test(e)) && !props.cols),
-        [`col-${props.cols}`]: !!props.cols,
-        [`offset-${props.offset}`]: !!props.offset,
-        [`order-${props.order}`]: !!props.order,
-        [`align-self-${props.alignSelf}`]: !!props.alignSelf,
-      },
-    ])
-
-    return {
-      computedClasses,
-    }
-  },
+const _props = withDefaults(defineProps<BColProps>(), {
+  alignSelf: undefined,
+  col: false,
+  cols: undefined,
+  offset: undefined,
+  order: undefined,
+  tag: 'div',
+  lg: false,
+  md: false,
+  sm: false,
+  xl: false,
+  xxl: false,
+  offsetLg: undefined,
+  offsetMd: undefined,
+  offsetSm: undefined,
+  offsetXl: undefined,
+  offsetXxl: undefined,
+  orderLg: undefined,
+  orderMd: undefined,
+  orderSm: undefined,
+  orderXl: undefined,
+  orderXxl: undefined,
 })
+
+const props = useDefaults(_props, 'BCol')
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
+
+const classList = computed(() => [
+  ...getClasses(
+    {
+      sm: props.sm,
+      md: props.md,
+      lg: props.lg,
+      xl: props.xl,
+      xxl: props.xxl,
+    },
+    ['sm', 'md', 'lg', 'xl', 'xxl'],
+    'col'
+  ),
+  ...getClasses(
+    {
+      order: props.order,
+      orderLg: props.orderLg,
+      orderMd: props.orderMd,
+      orderSm: props.orderSm,
+      orderXl: props.orderXl,
+      orderXxl: props.orderXxl,
+    },
+    ['order', 'orderLg', 'orderMd', 'orderSm', 'orderXl', 'orderXxl'],
+    'order'
+  ),
+  ...getClasses(
+    {
+      offset: props.offset,
+      offsetLg: props.offsetLg,
+      offsetMd: props.offsetMd,
+      offsetSm: props.offsetSm,
+      offsetXl: props.offsetXl,
+      offsetXxl: props.offsetXxl,
+    },
+    ['offset', 'offsetLg', 'offsetMd', 'offsetSm', 'offsetXl', 'offsetXxl'],
+    'offset'
+  ),
+])
+
+const computedClasses = computed(() => [
+  classList.value,
+  {
+    col: props.col || (!classList.value.some((v) => v.startsWith('col-')) && !props.cols),
+    [`col-${props.cols}`]: props.cols !== undefined,
+    [`offset-${props.offset}`]: props.offset !== undefined,
+    [`order-${props.order}`]: props.order !== undefined,
+    [`align-self-${props.alignSelf}`]: props.alignSelf !== undefined,
+  },
+])
 </script>

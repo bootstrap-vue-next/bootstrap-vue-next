@@ -14,21 +14,13 @@ Get started with BootstrapVueNext and Bootstrap `v5`, the world’s most popular
 
 </div>
 
-<BAlert variant="danger" :model-value="true" class="my-5">
-
-NOT PRODUCTION READY
-
-This project is still in **alpha version**. There is a lot of work to do and the documentation may be out of date, if you want to contribute you can use it and submit an [issue](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues) or even better, a [pull request](https://github.com/bootstrap-vue-next/bootstrap-vue-next/pulls) 😄
-
-</BAlert>
-
 ## Why BootstrapVueNext?
 
 BootstrapVueNext is an attempt to have the [BootstrapVue](https://bootstrap-vue.org/) components in Vue3, Bootstrap 5, and typescript. Another goal is to have the components written in a simple and readable way for a better developer experience.
 
 ## Contribute and Support 🙌
 
-This project is still in **alpha version** so there is a lot of work to do. If you want to contribute you can:
+This project is in the **late stages of alpha version**. While most features are functioning as expected, you may still encounter some issues. Your contributions at this stage can be particularly impactful in shaping the final product. If you're interested in contributing, here's how you can help:
 
 - submit an [issue](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues)
 - or better, a [pull request](https://github.com/bootstrap-vue-next/bootstrap-vue-next/pulls)

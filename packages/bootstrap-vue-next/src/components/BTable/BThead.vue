@@ -5,12 +5,14 @@
 </template>
 
 <script setup lang="ts">
+import {useDefaults} from '../../composables'
 import type {BTheadProps} from '../../types'
 import {computed} from 'vue'
 
-const props = withDefaults(defineProps<BTheadProps>(), {
+const _props = withDefaults(defineProps<BTheadProps>(), {
   variant: null,
 })
+const props = useDefaults(_props, 'BThead')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

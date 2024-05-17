@@ -166,13 +166,13 @@ When the `ride` prop is set to `true`, rather than `carousel`, the Carousel will
 
 ### Interval
 
-You can adjust the speed at which the Carousel is moving by adjusting the interval in real time. The default is `5000ms`.
+You can adjust the speed at which the Carousel is moving by adjusting the interval in real time. The default is `5000ms`. You can also set intervals per slide by setting the `interval` prop on the slide
 
 <HighlightCard>
   <BCarousel :interval="slideInterval" controls indicators ride="carousel">
     <BCarouselSlide img-src="https://picsum.photos/1024/480/?image=19" />
     <BCarouselSlide img-src="https://picsum.photos/1024/480/?image=20" />
-    <BCarouselSlide img-src="https://picsum.photos/1024/480/?image=21" />
+    <BCarouselSlide interval="1000" img-src="https://picsum.photos/1024/480/?image=21" />
   </BCarousel>
   <BButtonGroup class="my-4">
     <BButton variant="danger" @click="slideInterval = slideInterval - 1000">

@@ -8,12 +8,12 @@
     custom
   >
     <component
-      :is="routerTag"
+      :is="props.routerTag"
       :href="localHref"
       :class="{
         [defaultActiveClass]: props.active,
-        [activeClass]: isActive,
-        [exactActiveClass]: isExactActive,
+        [props.activeClass]: isActive,
+        [props.exactActiveClass]: isExactActive,
       }"
       v-bind="$attrs"
       @click=";[navigate($event), clicked($event)]"
@@ -27,6 +27,7 @@
 </template>
 
 <script setup lang="ts">
+import {useDefaults} from '../../composables'
 import type {BLinkProps} from '../../types'
 import {collapseInjectionKey, navbarInjectionKey} from '../../utils'
 import {computed, getCurrentInstance, inject, useAttrs} from 'vue'
@@ -37,7 +38,7 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const props = withDefaults(defineProps<BLinkProps>(), {
+const _props = withDefaults(defineProps<BLinkProps>(), {
   active: undefined,
   activeClass: 'router-link-active',
   append: false,
@@ -62,6 +63,7 @@ const props = withDefaults(defineProps<BLinkProps>(), {
   underlineVariant: null,
   variant: null,
 })
+const props = useDefaults(_props, 'BLink')
 
 const emit = defineEmits<{
   click: [value: MouseEvent]

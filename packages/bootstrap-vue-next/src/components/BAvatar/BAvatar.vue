@@ -12,11 +12,11 @@
     <span v-if="hasDefaultSlot" class="b-avatar-custom">
       <slot />
     </span>
-    <span v-else-if="!!src" class="b-avatar-img">
-      <img :src="src" :alt="alt" @error="onImgError" />
+    <span v-else-if="!!props.src" class="b-avatar-img">
+      <img :src="props.src" :alt="props.alt" @error="onImgError" />
     </span>
-    <span v-else-if="!!text" class="b-avatar-text" :style="textFontStyle">
-      {{ text }}
+    <span v-else-if="!!props.text" class="b-avatar-text" :style="textFontStyle">
+      {{ props.text }}
     </span>
     <span v-if="showBadge" class="b-avatar-badge" :class="badgeClasses" :style="badgeStyle">
       <slot name="badge">

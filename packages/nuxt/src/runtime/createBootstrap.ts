@@ -10,6 +10,11 @@ export default defineNuxtPlugin((nuxtApp) => {
         id: {
           getId: () => useId(),
         },
+        components: {
+          global: {
+            teleportTo: '#teleports',
+          },
+        },
       },
     })
   )

@@ -32,8 +32,9 @@ import {ref} from 'vue'
 import {BvTriggerableEvent} from '../../utils'
 import BDropdown from '../BDropdown/BDropdown.vue'
 import type {BDropdownProps} from '../../types'
+import {useDefaults} from '../../composables'
 
-const props = withDefaults(defineProps<BDropdownProps>(), {
+const _props = withDefaults(defineProps<BDropdownProps>(), {
   ariaLabel: undefined,
   autoClose: true,
   block: false,
@@ -72,6 +73,7 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   toggleText: 'Toggle dropdown',
   variant: 'link',
 })
+const props = useDefaults(_props, 'BNavItemDropdown')
 
 const emit = defineEmits<{
   'click': [event: MouseEvent]

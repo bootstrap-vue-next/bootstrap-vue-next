@@ -1,7 +1,7 @@
 <template>
   <img
     :class="computedClasses"
-    :src="!props.blank ? src : computedBlankImgSrc"
+    :src="!props.blank ? props.src : computedBlankImgSrc"
     :width="computedDimentions.width || undefined"
     :height="computedDimentions.height || undefined"
     :srcset="!props.blank ? computedSrcset : undefined"
@@ -12,11 +12,11 @@
 
 <script setup lang="ts">
 import type {BImgProps} from '../types'
-import {useRadiusElementClasses} from '../composables'
+import {useDefaults, useRadiusElementClasses} from '../composables'
 import {computed, toRef} from 'vue'
 import {useToNumber} from '@vueuse/core'
 
-const props = withDefaults(defineProps<BImgProps>(), {
+const _props = withDefaults(defineProps<BImgProps>(), {
   blank: false,
   blankColor: 'transparent',
   block: false,
@@ -40,6 +40,7 @@ const props = withDefaults(defineProps<BImgProps>(), {
   roundedTop: undefined,
   // End RadiusElementExtendables props
 })
+const props = useDefaults(_props, 'BImg')
 
 const heightNumber = useToNumber(() => props.height ?? NaN)
 const widthNumber = useToNumber(() => props.width ?? NaN)

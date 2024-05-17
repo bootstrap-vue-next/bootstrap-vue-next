@@ -6,6 +6,7 @@ export {default as useColorMode} from './useColorMode'
 export {default as useColorVariantClasses} from './useColorVariantClasses'
 export {default as useContainerClasses} from './useContainerClasses'
 export {default as useCountdown} from './useCountdown'
+export {useDefaults} from './useDefaults'
 export {
   getClasses,
   getGroupAttr,
@@ -15,7 +16,7 @@ export {
 } from './useFormCheck'
 export {default as useFormInput} from './useFormInput'
 export {default as useFormSelect} from './useFormSelect'
-export {default as useId, getId} from './useId'
+export {getId, default as useId} from './useId'
 export {default as useManualTransition} from './useManualTransition'
 export {default as useModal} from './useModal'
 export {default as useModalController} from './useModalController'
