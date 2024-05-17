@@ -21,7 +21,7 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const props = useDefaults<typeof _props>(_props, 'BAccordion')
+const props = useDefaults(_props, 'BAccordion')
 
 const modelValue = defineModel<string | undefined>({
   default: undefined,
