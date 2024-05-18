@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.18.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.18.0...nuxt-v0.18.1) (2024-05-18)
+
+
+### Features
+
+* **nuxt:** allow passthrough options to createBootstrap plugin ([5458a5a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5458a5afd8bb46d3951f3fdee048f85030bc32de))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.18.1
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.18.1
+
 ## [0.18.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.17.6...nuxt-v0.18.0) (2024-05-17)
 
 

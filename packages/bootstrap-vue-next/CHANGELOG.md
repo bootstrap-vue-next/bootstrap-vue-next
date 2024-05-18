@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.18.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.18.0...bootstrapvuenext-v0.18.1) (2024-05-18)
+
+
+### Features
+
+* **nuxt:** allow passthrough options to createBootstrap plugin ([5458a5a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5458a5afd8bb46d3951f3fdee048f85030bc32de))
+
 ## [0.18.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.17.6...bootstrapvuenext-v0.18.0) (2024-05-17)
 
 
