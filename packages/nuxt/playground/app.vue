@@ -1,5 +1,6 @@
 <template>
   <div style="min-height: 1000vh">
+    <BAlert :model-value="true">Hello World</BAlert>
     <BToastOrchestrator />
     <BModal v-model="show"> Nuxt module playground! </BModal>
     <BButton @click="show = !show"> Click me </BButton>
@@ -33,6 +34,7 @@
         </BCollapse>
       </BCard>
     </BCollapse>
+    <BCard title="foobar"> bar foo</BCard>
   </div>
 </template>
 

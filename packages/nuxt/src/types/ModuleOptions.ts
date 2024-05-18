@@ -1,4 +1,5 @@
 import type {Composables, Directives} from 'bootstrap-vue-next'
+import type {BootstrapVueOptions} from 'bootstrap-vue-next'
 
 export type ConfigurationOption<T extends string> = Partial<Record<T, boolean>> & {all: boolean}
 export type ConfigurationValue<T extends string> = boolean | ConfigurationOption<T>
@@ -16,4 +17,8 @@ export interface ModuleOptions {
    * @default true
    */
   directives: ConfigurationValue<keyof typeof Directives>
+  /**
+   * @default {}
+   */
+  plugin: Omit<Exclude<BootstrapVueOptions['plugins'], undefined>, 'id'>
 }
