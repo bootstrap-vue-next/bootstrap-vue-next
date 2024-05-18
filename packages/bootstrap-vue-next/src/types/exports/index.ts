@@ -12,6 +12,7 @@ export type {
   BaseButtonVariant,
   BaseColorVariant,
   BaseSize,
+  BootstrapVueOptions,
   BaseTextColorVariant,
   BreadcrumbItem,
   BreadcrumbItemRaw,

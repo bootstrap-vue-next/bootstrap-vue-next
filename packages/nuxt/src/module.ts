@@ -17,6 +17,7 @@ export default defineNuxtModule<ModuleOptions>({
   defaults: {
     composables: true,
     directives: true,
+    plugin: {},
   },
   setup(options, nuxt) {
     // @ts-ignore
@@ -72,6 +73,7 @@ export default defineNuxtModule<ModuleOptions>({
       // Expose the values for the runtime to use in useDirectives
       nuxt.options.runtimeConfig.public.bootstrapVueNext = {
         directives: activeDirectives,
+        plugin: options.plugin,
       }
 
       addPlugin(resolve('./runtime/useDirectives'))
