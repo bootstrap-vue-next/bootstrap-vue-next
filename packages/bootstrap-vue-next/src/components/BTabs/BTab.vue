@@ -76,7 +76,9 @@ const tab = computed(
 
 onMounted(() => {
   if (!parentData) return
-  parentData.registerTab(tab)
+  // tab.value // this line is enough to fix single tab error, but next one is more "readable"
+  const thisTab = toRef(tab.value) // workaround fix single tab error!! WHY?!?
+  parentData.registerTab(thisTab)
   if (props.active) {
     parentData.activateTab(computedId.value)
   }
