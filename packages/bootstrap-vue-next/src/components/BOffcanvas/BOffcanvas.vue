@@ -20,6 +20,7 @@
         aria-modal="true"
         role="dialog"
         :class="computedClasses"
+        :style="computedStyles"
         tabindex="-1"
         :aria-labelledby="`${computedId}-offcanvas-label`"
         data-bs-backdrop="false"
@@ -116,6 +117,7 @@ const _props = withDefaults(defineProps<BOffcanvasProps>(), {
   teleportDisabled: false,
   teleportTo: 'body',
   title: undefined,
+  width: undefined,
 })
 const props = useDefaults(_props, 'BOffcanvas')
 
@@ -204,6 +206,10 @@ const computedClasses = computed(() => [
     [`shadow-${props.shadow}`]: !!props.shadow,
   },
 ])
+
+const computedStyles = computed(() => ({
+  width: props.width,
+}))
 
 const sharedSlots = computed<SharedSlotsData>(() => ({
   visible: modelValue.value,

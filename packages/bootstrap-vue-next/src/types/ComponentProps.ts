@@ -494,6 +494,7 @@ export interface BOffcanvasProps extends TeleporterProps {
   title?: string
   // responsive?: Breakpoint
   // TODO responsive doesn't work
+  width: string
 }
 
 export interface BOverlayProps extends RadiusElementExtendables {
