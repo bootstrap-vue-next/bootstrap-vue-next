@@ -15,9 +15,21 @@ export default defineNuxtPlugin((nuxtApp) => {
         },
         components: {
           ...opts?.components,
-          global: {
+          BModal: {
             teleportTo: '#teleports',
-            ...opts?.components?.global,
+            ...opts?.components?.BModal,
+          },
+          BModalOrchestrator: {
+            teleportTo: '#teleports',
+            ...opts?.components?.BModalOrchestrator,
+          },
+          BOffcanvas: {
+            teleportTo: '#teleports',
+            ...opts?.components?.BOffcanvas,
+          },
+          BToastOrchestrator: {
+            teleportTo: '#teleports',
+            ...opts?.components?.BToastOrchestrator,
           },
         },
       },
