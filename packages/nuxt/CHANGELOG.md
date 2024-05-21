@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.18.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.18.1...nuxt-v0.18.2) (2024-05-21)
+
+
+### Bug Fixes
+
+* **nuxt:** dont teleport everything to #teleports -- selectively teleport based on body fixes [#1898](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1898) ([e986e94](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e986e94a7a3db64334ecac6927a7d384cbe5882f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.18.2
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.18.2
+
 ## [0.18.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.18.0...nuxt-v0.18.1) (2024-05-18)
 
 
