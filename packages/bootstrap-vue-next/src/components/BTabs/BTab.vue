@@ -6,7 +6,7 @@
     class="tab-pane"
     :class="computedClasses"
     role="tabpanel"
-    :aria-labelledby="buttonId"
+    :aria-labelledby="computedButtonId"
     v-bind="attrs"
   >
     <slot v-if="showSlot" />
@@ -51,7 +51,7 @@ const activeModel = defineModel<boolean>('active', {
 
 const parentData = inject(tabsInjectionKey, null)
 const computedId = useId(() => props.id, 'tabpane')
-const buttonId = useId(() => props.buttonId, 'tab')
+const computedButtonId = useId(() => props.buttonId, 'tab')
 
 const lazyRenderCompleted = ref(false)
 const el = ref<HTMLElement | null>(null)
@@ -62,7 +62,7 @@ const tab = computed(
   () =>
     ({
       id: computedId.value,
-      buttonId: buttonId.value,
+      buttonId: computedButtonId.value,
       disabled: props.disabled,
       title: props.title,
       titleComponent: slots.title,
