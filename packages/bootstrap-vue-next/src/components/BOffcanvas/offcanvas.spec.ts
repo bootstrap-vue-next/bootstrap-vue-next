@@ -7,8 +7,6 @@ import BOffcanvas from './BOffcanvas.vue'
 describe.skip('offcanvas', () => {
   enableAutoUnmount(afterEach)
 
-  // TODO afaik these tests are not finished
-
   beforeEach(() => {
     const el = document.createElement('div')
     el.id = 'body-teleports'

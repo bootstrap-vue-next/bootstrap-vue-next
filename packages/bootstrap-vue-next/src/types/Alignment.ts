@@ -17,3 +17,5 @@ export type ContainerVerticalAlign = Exclude<VerticalAlign, 'baseline' | 'text-t
 export type ContainerHorizontalAlign = 'left' | 'center' | 'right'
 
 export type ContainerPosition = `${ContainerVerticalAlign}-${ContainerHorizontalAlign}`
+
+export type Placement = 'top' | 'bottom' | 'start' | 'end'

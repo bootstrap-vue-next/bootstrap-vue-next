@@ -74,9 +74,6 @@ import type {BDropdownProps} from '../../types'
 import {BvTriggerableEvent, dropdownInjectionKey, resolveFloatingPlacement} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 
-// TODO add navigation through keyboard events
-// TODO standardize keydown vs keyup events globally
-
 const _props = withDefaults(defineProps<BDropdownProps>(), {
   ariaLabel: undefined,
   autoClose: true,

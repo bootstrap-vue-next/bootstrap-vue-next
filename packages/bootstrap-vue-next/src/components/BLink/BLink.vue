@@ -32,7 +32,6 @@ import type {BLinkProps} from '../../types'
 import {collapseInjectionKey, navbarInjectionKey} from '../../utils'
 import {computed, getCurrentInstance, inject, useAttrs} from 'vue'
 
-// TODO this component will likely have an issue with inheritAttrs
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
@@ -41,7 +40,6 @@ defineSlots<{
 const _props = withDefaults(defineProps<BLinkProps>(), {
   active: undefined,
   activeClass: 'router-link-active',
-  append: false,
   disabled: false,
   exactActiveClass: 'router-link-exact-active',
   href: undefined,
@@ -71,9 +69,6 @@ const emit = defineEmits<{
 
 const attrs = useAttrs()
 
-// TODO append not yet implemented
-
-// TODO replace not yet implemented
 const collapseData = inject(collapseInjectionKey, null)
 const navbarData = inject(navbarInjectionKey, null)
 
@@ -132,6 +127,7 @@ const computedClasses = computed(() => ({
 const routerAttr = computed(() => ({
   'class': computedClasses.value,
   'to': props.to,
+  'replace': props.replace,
   'href': computedHref.value,
   'target': props.target,
   'rel': props.target === '_blank' ? props.rel ?? 'noopener' : undefined,

@@ -467,8 +467,4 @@ describe('form-group', () => {
     })
     expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
   })
-
-  // Finish of rowProps branch
-
-  // TODO Need to test to get the expected structure. Which is difficult
 })

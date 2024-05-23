@@ -31,6 +31,7 @@ import type {
   OrderBreakpointProps,
   PlaceholderAnimation,
   PlaceholderSize,
+  Placement,
   PopoverPlacement,
   RadioOptionRaw,
   RadioValue,
@@ -199,7 +200,7 @@ export interface BFormFileProps {
   name?: string
   noDrop?: boolean
   noTraverse?: boolean
-  placement?: 'start' | 'end'
+  placement?: Extract<Placement, 'start' | 'end'>
   required?: boolean
   size?: Size
   state?: boolean | null
@@ -486,10 +487,7 @@ export interface BOffcanvasProps extends TeleporterProps {
   noFocus?: boolean
   noHeader?: boolean
   noHeaderClose?: boolean
-  // TODO standardize this. Create a dedicated type
-  // Then in components that use individual props (BImg)
-  // Make them just use prop placement
-  placement?: 'top' | 'bottom' | 'start' | 'end'
+  placement?: Placement
   shadow?: Size | boolean
   title?: string
   // responsive?: Breakpoint
@@ -863,9 +861,8 @@ export interface BCardGroupProps {
   tag?: string
 }
 
-export interface BCardImgProps extends BImgProps {
-  bottom?: boolean
-  top?: boolean
+export interface BCardImgProps extends Omit<BImgProps, 'placement'> {
+  placement?: BCardPlacementWithCenter
 }
 
 export interface BCardSubtitleProps {
@@ -934,12 +931,14 @@ export interface BTransitionProps {
   transProps?: Readonly<TransitionProps>
 }
 
+type BCardPlacementWithCenter = Placement | 'center'
+
 export interface BImgProps extends RadiusElementExtendables {
   blank?: boolean
   blankColor?: string
   block?: boolean
-  center?: boolean
-  end?: boolean
+  // center?: boolean
+  // end?: boolean
   fluid?: boolean
   fluidGrow?: boolean
   height?: Numberish
@@ -947,9 +946,10 @@ export interface BImgProps extends RadiusElementExtendables {
   sizes?: string | readonly string[]
   src?: string
   srcset?: string | readonly string[]
-  start?: boolean
+  // start?: boolean
   thumbnail?: boolean
   width?: Numberish
+  placement?: Extract<BCardPlacementWithCenter, 'start' | 'end' | 'center'>
 }
 
 export interface BFormProps {
@@ -978,6 +978,8 @@ export interface BTableSimpleProps {
   stripedColumns?: boolean
   tableClass?: ClassValue
   variant?: ColorVariant | null
+  tableAttrs?: Readonly<AttrsValue>
+  tableClasses?: ClassValue
 }
 
 export interface BTableLiteProps<T> extends BTableSimpleProps {
@@ -1036,7 +1038,6 @@ export interface BTableProps<T> extends Omit<BTableLiteProps<T>, 'tableClass'> {
   noProviderFiltering?: boolean
   sortBy?: BTableSortBy[]
   mustSort?: boolean | string[] // TODO this is a string of fields, possibly generic
-  noSortReset?: boolean
   selectable?: boolean
   multisort?: boolean
   stickySelect?: boolean

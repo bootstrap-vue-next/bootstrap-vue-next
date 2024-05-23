@@ -287,14 +287,6 @@ const selectedItemsSetUtilities = {
       emit('row-unselected', item)
     })
   },
-  /* TODO
-  This has method and the delete method suffer from an error when using a non-reactive source as the items prop
-  ```ts
-  const items = [{first_name: 'Geneva', last_name: 'Wilson', age: 89},{first_name: 'Jami', last_name: 'Carney', age: 38}]
-  ```
-  For some reason, the reference of the object gets lost. However, when you use an actual ref(), it works just fine
-  Getting the reference properly will fix all outstanding issues
-  */
   has: (item: T) => {
     if (!props.primaryKey) return selectedItemsToSet.value.has(item)
 
@@ -569,8 +561,6 @@ const handleFieldSorting = (field: TableField<T>) => {
 
   const fieldKey = typeof field === 'object' && field !== null ? field.key : field
   const fieldSortable = typeof field === 'object' && field !== null ? field.sortable : false
-
-  // TODO implement rules for noSortReset
 
   if (!(isSortable.value === true && fieldSortable === true)) return
 

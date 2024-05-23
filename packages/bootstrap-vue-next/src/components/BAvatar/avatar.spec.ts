@@ -81,6 +81,4 @@ describe('avatar', () => {
     const wrapper = mount(BAvatar, {props: {size: '0x123'}})
     expect(wrapper.attributes('style')).toEqual('')
   })
-
-  // TODO not done
 })

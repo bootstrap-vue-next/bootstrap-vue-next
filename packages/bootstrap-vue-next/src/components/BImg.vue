@@ -20,8 +20,6 @@ const _props = withDefaults(defineProps<BImgProps>(), {
   blank: false,
   blankColor: 'transparent',
   block: false,
-  center: false,
-  end: false,
   fluid: false,
   fluidGrow: false,
   height: undefined,
@@ -29,7 +27,7 @@ const _props = withDefaults(defineProps<BImgProps>(), {
   sizes: undefined,
   src: undefined,
   srcset: undefined,
-  start: false,
+  placement: undefined,
   thumbnail: false,
   width: undefined,
   // RadiusElementExtendables props
@@ -97,18 +95,20 @@ const computedBlankImgSrc = toRef(() =>
   makeBlankImgSrc(computedDimentions.value.width, computedDimentions.value.height, props.blankColor)
 )
 
-const alignment = toRef(() =>
-  props.start ? 'float-start' : props.end ? 'float-end' : props.center ? 'mx-auto' : undefined
-)
+const computedAlignment = computed(() => ({
+  'float-start': props.placement === 'start',
+  'float-end': props.placement === 'end',
+  'mx-auto': props.placement === 'center',
+}))
 
 const computedClasses = computed(() => [
   radiusElementClasses.value,
+  computedAlignment.value,
   {
     'img-thumbnail': props.thumbnail,
     'img-fluid': props.fluid || props.fluidGrow,
     'w-100': props.fluidGrow,
-    [`${alignment.value}`]: alignment.value !== undefined,
-    'd-block': props.block || props.center,
+    'd-block': props.block || props.placement === 'center',
   },
 ])
 
