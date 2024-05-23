@@ -937,8 +937,6 @@ export interface BImgProps extends RadiusElementExtendables {
   blank?: boolean
   blankColor?: string
   block?: boolean
-  // center?: boolean
-  // end?: boolean
   fluid?: boolean
   fluidGrow?: boolean
   height?: Numberish
@@ -946,7 +944,6 @@ export interface BImgProps extends RadiusElementExtendables {
   sizes?: string | readonly string[]
   src?: string
   srcset?: string | readonly string[]
-  // start?: boolean
   thumbnail?: boolean
   width?: Numberish
   placement?: Extract<BCardPlacementWithCenter, 'start' | 'end' | 'center'>
