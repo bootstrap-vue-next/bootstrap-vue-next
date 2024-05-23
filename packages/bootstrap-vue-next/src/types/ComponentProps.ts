@@ -1421,6 +1421,7 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
   BInputGroupPrepend: BInputGroupAddonProps
   BNavItemDropdown: BDropdownProps
   BRow: BRowProps
+  BInput: BFormInputProps
 }
 
 export type BvnComponentProps = {
