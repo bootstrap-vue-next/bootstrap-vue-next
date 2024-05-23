@@ -972,10 +972,9 @@ export interface BTableSimpleProps {
   stickyHeader?: boolean | Numberish
   striped?: boolean
   stripedColumns?: boolean
-  tableClass?: ClassValue
   variant?: ColorVariant | null
   tableAttrs?: Readonly<AttrsValue>
-  tableClasses?: ClassValue
+  tableClass?: ClassValue
 }
 
 export interface BTableLiteProps<T> extends BTableSimpleProps {
@@ -1005,8 +1004,7 @@ export interface BTableLiteProps<T> extends BTableSimpleProps {
   primaryKey?: string
   showEmpty?: boolean
   tbodyClass?: ClassValue
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  tbodyTrAttr?: any
+  tbodyTrAttrs?: ClassValue
   // tbodyTransitionHandlers
   // tbodyTransitionProps
   tbodyTrClass?:

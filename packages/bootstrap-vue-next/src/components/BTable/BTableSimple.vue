@@ -37,7 +37,6 @@ const _props = withDefaults(defineProps<BTableSimpleProps>(), {
   small: false,
   stickyHeader: false,
   tableAttrs: undefined,
-  tableClasses: undefined,
 })
 const props = useDefaults(_props, 'BTableSimple')
 
@@ -67,7 +66,7 @@ const computedClasses = computed(() => [
 ])
 const computedTableAttrs = computed(() => ({
   id: props.id,
-  class: [computedClasses.value, props.tableClasses],
+  class: computedClasses.value,
   ...props.tableAttrs,
 }))
 
