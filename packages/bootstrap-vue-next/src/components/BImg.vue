@@ -77,13 +77,9 @@ const computedDimentions = computed<{height: number | undefined; width: number |
   const width = Number.isNaN(widthNumber.value) ? undefined : widthNumber.value
   const height = Number.isNaN(heightNumber.value) ? undefined : heightNumber.value
   if (props.blank) {
-    if (width !== undefined && height === undefined) {
-      return {height: width, width}
-    }
-    if (width === undefined && height !== undefined) {
-      return {height, width: height}
-    }
-    return {height: 1, width: 1}
+    if (width !== undefined && height === undefined) return {height: width, width}
+    if (width === undefined && height !== undefined) return {height, width: height}
+    if (width === undefined && height === undefined) return {height: 1, width: 1}
   }
   return {
     width,
