@@ -46,6 +46,7 @@ const _props = withDefaults(defineProps<BLinkProps>(), {
   icon: false,
   opacity: undefined,
   opacityHover: undefined,
+  stretched: false,
   // noPrefetch: {type: Boolean, default: false},
   // prefetch: {type: Boolean, default: null},
   rel: undefined,
@@ -122,6 +123,7 @@ const computedClasses = computed(() => ({
   [`link-underline-opacity-${props.underlineOpacityHover}-hover`]:
     props.underlineOpacityHover !== undefined,
   'icon-link': props.icon === true,
+  'stretched-link': props.stretched === true,
 }))
 
 const routerAttr = computed(() => ({

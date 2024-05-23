@@ -50,25 +50,6 @@ createApp(App)
     createBootstrap({
       components: true,
       directives: true,
-      aliases: {
-        BInput: 'BFormInput',
-      },
-      plugins: {
-        // components: {
-        //   global: {
-        //     type: 'grow',
-        //   },
-        //   BAccordion: {
-        //     flush: true,
-        //   },
-        //   BFormText: {
-        //     text: 'foobar!',
-        //   },
-        //   BSpinner: {
-        //     type: 'grow',
-        //   },
-        // },
-      },
     })
   )
   .use(router)

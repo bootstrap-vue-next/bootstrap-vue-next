@@ -14,7 +14,6 @@
     :target="computedLink ? props.target : null"
     :type="isButton ? props.type : null"
     :to="!isButton ? props.to : null"
-    :append="computedLink ? props.append : null"
     @click="clicked"
   >
     <template v-if="props.loading">
@@ -66,9 +65,9 @@ const _props = withDefaults(defineProps<BButtonProps>(), {
   variant: 'secondary',
   // All others use defaults
   activeClass: undefined,
-  append: undefined,
   disabled: undefined,
   exactActiveClass: undefined,
+  stretched: false,
   href: undefined,
   icon: undefined,
   opacity: undefined,

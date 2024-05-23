@@ -29,7 +29,6 @@ const _props = withDefaults(defineProps<BNavItemProps>(), {
   // Link props
   active: undefined,
   activeClass: undefined,
-  append: undefined,
   disabled: undefined,
   exactActiveClass: undefined,
   href: undefined,
@@ -37,6 +36,7 @@ const _props = withDefaults(defineProps<BNavItemProps>(), {
   linkAttrs: undefined,
   linkClass: undefined,
   opacity: undefined,
+  stretched: false,
   opacityHover: undefined,
   rel: undefined,
   replace: undefined,

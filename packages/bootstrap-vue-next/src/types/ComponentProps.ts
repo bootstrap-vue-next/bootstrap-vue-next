@@ -51,11 +51,11 @@ import type * as Components from '../components'
 export interface BLinkProps {
   active?: boolean
   activeClass?: string
-  append?: boolean
   disabled?: boolean
   exactActiveClass?: string
   href?: string
   icon?: boolean
+  stretched?: boolean
   // noPrefetch: {type: [Boolean, String] as PropType<boolean>, default: false},
   opacity?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
   opacityHover?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
@@ -739,7 +739,6 @@ export interface BAvatarProps
   badgeVariant?: ColorVariant | null
   button?: boolean
   buttonType?: ButtonType
-  icon?: string
   size?: LiteralUnion<Size, Numberish>
   square?: boolean
   src?: string

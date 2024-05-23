@@ -25,7 +25,6 @@ const _props = withDefaults(defineProps<BBadgeProps>(), {
   // All others use defaults
   active: undefined,
   activeClass: undefined,
-  append: undefined,
   disabled: undefined,
   exactActiveClass: undefined,
   href: undefined,
@@ -35,6 +34,7 @@ const _props = withDefaults(defineProps<BBadgeProps>(), {
   rel: undefined,
   replace: undefined,
   routerComponentName: undefined,
+  stretched: false,
   target: undefined,
   to: undefined,
   underlineOffset: undefined,

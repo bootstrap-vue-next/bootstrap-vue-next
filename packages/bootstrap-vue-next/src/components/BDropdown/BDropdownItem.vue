@@ -39,12 +39,12 @@ const _props = withDefaults(defineProps<BDropdownItemProps>(), {
   // All others use defaults
   active: undefined,
   activeClass: undefined,
-  append: undefined,
   disabled: undefined,
   exactActiveClass: undefined,
   href: undefined,
   icon: undefined,
   opacity: undefined,
+  stretched: false,
   opacityHover: undefined,
   rel: undefined,
   replace: undefined,

@@ -32,13 +32,13 @@ const _props = withDefaults(defineProps<BBreadcrumbItemProps>(), {
   active: false, // Why is this active: false?
   // All others use defaults
   activeClass: undefined,
-  append: undefined,
   disabled: undefined,
   exactActiveClass: undefined,
   href: undefined,
   icon: undefined,
   opacity: undefined,
   opacityHover: undefined,
+  stretched: false,
   rel: undefined,
   replace: undefined,
   routerComponentName: undefined,
