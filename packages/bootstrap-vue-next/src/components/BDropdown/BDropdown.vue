@@ -1,5 +1,9 @@
 <template>
-  <div ref="wrapper" :class="computedClasses" class="btn-group">
+  <RenderComponentOrSkip
+    ref="wrapper"
+    :skip="inInputGroup || props.skipWrapper"
+    :class="computedClasses"
+  >
     <BButton
       :id="computedId"
       ref="splitButton"
@@ -52,7 +56,7 @@
         <slot :hide="hide" :show="show" />
       </ul>
     </Teleport>
-  </div>
+  </RenderComponentOrSkip>
 </template>
 
 <script setup lang="ts">
@@ -68,11 +72,17 @@ import {
   useFloating,
 } from '@floating-ui/vue'
 import {onClickOutside, onKeyStroke, useToNumber} from '@vueuse/core'
-import {computed, type CSSProperties, nextTick, provide, ref, toRef, watch} from 'vue'
+import {computed, type CSSProperties, inject, nextTick, provide, ref, toRef, watch} from 'vue'
 import {useDefaults, useId} from '../../composables'
 import type {BDropdownProps} from '../../types'
-import {BvTriggerableEvent, dropdownInjectionKey, resolveFloatingPlacement} from '../../utils'
+import {
+  BvTriggerableEvent,
+  dropdownInjectionKey,
+  inputGroupKey,
+  resolveFloatingPlacement,
+} from '../../utils'
 import BButton from '../BButton/BButton.vue'
+import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
 
 // TODO add navigation through keyboard events
 // TODO standardize keydown vs keyup events globally
@@ -102,6 +112,7 @@ const _props = withDefaults(defineProps<BDropdownProps>(), {
   offset: 0,
   role: 'menu',
   size: 'md',
+  skipWrapper: false,
   split: false,
   splitButtonType: 'button',
   splitClass: undefined,
@@ -114,6 +125,7 @@ const _props = withDefaults(defineProps<BDropdownProps>(), {
   toggleClass: undefined,
   toggleText: 'Toggle dropdown',
   variant: 'secondary',
+  wrapperClass: undefined,
 })
 const props = useDefaults(_props, 'BDropdown')
 
@@ -140,6 +152,8 @@ defineSlots<{
 const computedId = useId(() => props.id, 'dropdown')
 
 const modelValue = defineModel<boolean>({default: false})
+
+const inInputGroup = inject(inputGroupKey, ref(false))
 
 const computedOffset = toRef(() =>
   typeof props.offset === 'string' || typeof props.offset === 'number' ? props.offset : NaN
@@ -262,10 +276,13 @@ const {update, floatingStyles} = useFloating(referencePlacement, floating, {
 })
 
 const computedClasses = computed(() => ({
+  'btn-group': !props.wrapperClass && props.split,
+  'dropdown': !props.wrapperClass && !props.split,
   'dropup': props.dropup,
   'dropend': props.dropend,
   'dropstart': props.dropstart,
   'position-static': props.boundary !== 'clippingAncestors' && !props.isNav,
+  [props.wrapperClass]: props.wrapperClass,
 }))
 
 const buttonClasses = computed(() => [
@@ -318,7 +335,7 @@ const toggle = () => {
   }
   modelValue.value = !currentModelValue
   currentModelValue ? emit('hidden') : emit('shown')
-  wrapper.value?.dispatchEvent(new Event('forceHide'))
+  wrapper.value?.dispatchEvent?.(new Event('forceHide'))
 }
 
 watch(modelValue, () => {
