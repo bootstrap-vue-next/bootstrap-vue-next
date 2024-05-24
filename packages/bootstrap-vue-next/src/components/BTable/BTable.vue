@@ -446,8 +446,24 @@ const computedItems = computed<T[]>(() => {
               (!props.filterable?.includes(key) && !!props.filterable?.length)
             )
               return false
-            const itemValue: string =
-              typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
+            const realVal = (): string => {
+              const filterField = computedFields.value.find((el) => {
+                if (isTableField(el)) return el.key === key
+
+                return false
+              })
+              if (isTableField(filterField) && !!filterField.filterByFormatted) {
+                const formatter =
+                  typeof filterField.filterByFormatted === 'function'
+                    ? filterField.filterByFormatted
+                    : filterField.formatter
+                if (formatter) {
+                  return formatter(val, String(filterField.key), item) as string
+                }
+              }
+              return typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
+            }
+            const itemValue: string = realVal()
             return itemValue.toLowerCase().includes(props.filter?.toLowerCase() ?? '')
           })
         : true
