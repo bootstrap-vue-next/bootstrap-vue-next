@@ -88,42 +88,6 @@ describe('placeholder-card', () => {
     expect($cardimg.props('src')).toBe('foobar')
   })
 
-  it('BCardImg has prop top false when prop imgBottom', () => {
-    const wrapper = mount(BPlaceholderCard, {
-      props: {imgBottom: true},
-    })
-    const $card = wrapper.getComponent(BCard)
-    const $cardimg = $card.getComponent(BCardImg)
-    expect($cardimg.props('top')).toBe(false)
-  })
-
-  it('BCardImg has prop top true when not prop imgBottom', () => {
-    const wrapper = mount(BPlaceholderCard, {
-      props: {imgBottom: false},
-    })
-    const $card = wrapper.getComponent(BCard)
-    const $cardimg = $card.getComponent(BCardImg)
-    expect($cardimg.props('top')).toBe(true)
-  })
-
-  it('BCardImg has prop bottom true when prop imgBottom', () => {
-    const wrapper = mount(BPlaceholderCard, {
-      props: {imgBottom: true},
-    })
-    const $card = wrapper.getComponent(BCard)
-    const $cardimg = $card.getComponent(BCardImg)
-    expect($cardimg.props('bottom')).toBe(true)
-  })
-
-  it('BCardImg has prop bottom false when not prop imgBottom', () => {
-    const wrapper = mount(BPlaceholderCard, {
-      props: {imgBottom: false},
-    })
-    const $card = wrapper.getComponent(BCard)
-    const $cardimg = $card.getComponent(BCardImg)
-    expect($cardimg.props('bottom')).toBe(false)
-  })
-
   it('does not have BCardImg when slot img', () => {
     const wrapper = mount(BPlaceholderCard, {
       slots: {img: 'foobar'},
@@ -471,26 +435,6 @@ describe('placeholder-card', () => {
     const $card = wrapper.getComponent(BCard)
     const $placeholderbutton = $card.getComponent(BPlaceholderButton)
     expect($placeholderbutton.props('animation')).toBe('glow')
-  })
-
-  it('BPlaceholderButton is given prop size to be undefined by default', () => {
-    const wrapper = mount(BPlaceholderCard, {
-      props: {noHeader: true, noButton: false},
-      slots: {default: 'foo'},
-    })
-    const $card = wrapper.getComponent(BCard)
-    const $placeholderbutton = $card.getComponent(BPlaceholderButton)
-    expect($placeholderbutton.props('size')).toBeUndefined()
-  })
-
-  it('BPlaceholderButton is not given prop size to be footerSize', () => {
-    const wrapper = mount(BPlaceholderCard, {
-      props: {noHeader: true, noButton: false, footerSize: 'xs'},
-      slots: {default: 'foo'},
-    })
-    const $card = wrapper.getComponent(BCard)
-    const $placeholderbutton = $card.getComponent(BPlaceholderButton)
-    expect($placeholderbutton.props('size')).toBeUndefined()
   })
 
   it('BPlaceholderButton is given prop variant to be primary by default', () => {

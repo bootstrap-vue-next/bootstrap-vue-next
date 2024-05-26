@@ -105,7 +105,7 @@ describe('card', () => {
 
   it('renders img in correct order when prop imgBottom', () => {
     const wrapper = mount(BCard, {
-      props: {header: 'header', bodyText: 'bodyText', footer: 'footer', imgBottom: true},
+      props: {header: 'header', bodyText: 'bodyText', footer: 'footer', imgPlacement: 'bottom'},
       slots: {img: 'img'},
     })
     expect(wrapper.text()).toBe('headerbodyTextfooterimg')
@@ -512,8 +512,6 @@ describe('card', () => {
     expect(wrapper.text()).toBe('headerbodyTextfooter')
   })
 
-  // Since it's a bit difficult to check what the order is without just checking html
-  // Workaround to just make both items imgs, then test the order by checking which img has src attr
   it('renders img in correct order', () => {
     const wrapper = mount(BCard, {
       props: {header: 'header', headerTag: 'img', imgSrc: '/abc'},
@@ -524,9 +522,9 @@ describe('card', () => {
     expect($first.attributes('src')).toBe('/abc')
   })
 
-  it('renders img in correct order when imgBottom', () => {
+  it('renders img in correct order when imgPlacement', () => {
     const wrapper = mount(BCard, {
-      props: {header: 'header', headerTag: 'img', imgSrc: '/abc', imgBottom: true},
+      props: {header: 'header', headerTag: 'img', imgSrc: '/abc', imgPlacement: 'bottom'},
     })
     const [$first, $second] = wrapper.findAll('img')
     expect($first.exists()).toBe(true)

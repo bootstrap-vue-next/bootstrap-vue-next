@@ -6,7 +6,7 @@
       </slot>
     </ReusableImg.define>
 
-    <ReusableImg.reuse v-if="!props.imgBottom" />
+    <ReusableImg.reuse v-if="props.imgPlacement === 'top'" />
     <BCardHeader
       v-if="props.header || hasHeaderSlot || props.headerHtml"
       :bg-variant="props.headerBgVariant"
@@ -55,7 +55,7 @@
         {{ props.footer }}
       </slot>
     </BCardFooter>
-    <ReusableImg.reuse v-if="props.imgBottom" />
+    <ReusableImg.reuse v-if="props.imgPlacement === 'bottom'" />
   </component>
 </template>
 
@@ -95,7 +95,7 @@ const _props = withDefaults(defineProps<BCardProps>(), {
   headerTextVariant: undefined,
   headerVariant: null,
   imgAlt: undefined,
-  imgBottom: false,
+  imgPlacement: 'top',
   imgEnd: false,
   imgHeight: undefined,
   imgSrc: undefined,
@@ -149,7 +149,6 @@ const imgAttr = computed(() => ({
   alt: props.imgAlt,
   height: props.imgHeight,
   width: props.imgWidth,
-  bottom: props.imgBottom,
   end: props.imgEnd,
   start: props.imgStart,
   top: props.imgTop,

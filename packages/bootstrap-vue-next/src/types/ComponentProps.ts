@@ -576,7 +576,7 @@ export interface BPlaceholderCardProps {
   headerVariant?: ColorVariant | null
   headerWidth?: Numberish
   imgBlankColor?: string
-  imgBottom?: boolean
+  imgPlacement?: Extract<Placement, 'top' | 'bottom'>
   imgHeight?: Numberish
   imgSrc?: string
   noButton?: boolean
@@ -827,7 +827,7 @@ export interface BCardProps extends ColorExtendables {
   headerTextVariant?: TextColorVariant | null
   headerVariant?: ColorVariant | null
   imgAlt?: string
-  imgBottom?: boolean
+  imgPlacement?: Extract<Placement, 'top' | 'bottom'>
   imgEnd?: boolean
   imgHeight?: Numberish
   imgSrc?: string
@@ -862,7 +862,7 @@ export interface BCardGroupProps {
 }
 
 export interface BCardImgProps extends Omit<BImgProps, 'placement'> {
-  placement?: BCardPlacementWithCenter
+  placement?: Extract<BCardPlacementWithCenter, 'center' | 'top' | 'bottom'>
 }
 
 export interface BCardSubtitleProps {

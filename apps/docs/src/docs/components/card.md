@@ -238,7 +238,7 @@ Alternatively you can manually place images inside `BCard` using the sub-compone
 </HighlightCard>
 
 **Note:** For left and right images, you may need to apply additional styles to classes
-`.card-img-left` and `.card-img-right`, as images will "stretch" in height if you have content that
+`.card-img-start` and `.card-img-end`, as images will "stretch" in height if you have content that
 is taller than your image. Note headers and footers are not supported when images are left or right
 aligned. You may find the [Horizontal Card Layout](#horizontal-card-layout) example to be more
 flexible when creating a responsive horizontal card.
