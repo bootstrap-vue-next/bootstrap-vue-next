@@ -281,7 +281,7 @@ interface TableField<T = Record<string, unknown>> {
   sortKey?: string
   sortDirection?: string
   sortByFormatted?: boolean | TableFieldFormatter<T>
-  filterByFormatted?: boolean
+  filterByFormatted?: boolean | TableFieldFormatter<T>
   tdClass?: ClassValue
   thClass?: ClassValue
   thStyle?: StyleValue
