@@ -17,6 +17,7 @@
 </BCard>
 
 As shown above, the BoostrapVueNext directive named `b-tooltip` should have a value, and optionally one or more modifiers. The general format for directives is is: 
+
 ```vue-html
 v-{name}.{modifier1}.{modifier2}.{etc.}={value}.
 ```vue-html
