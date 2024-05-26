@@ -18,11 +18,20 @@
     <span v-else-if="!!props.text" class="b-avatar-text" :style="textFontStyle">
       {{ props.text }}
     </span>
-    <span v-if="showBadge" class="b-avatar-badge" :class="badgeClasses" :style="badgeStyle">
+    <BBadge
+      v-if="showBadge"
+      :pill="props.badgePill"
+      :dot-indicator="props.badgeDotIndicator || badgeImplicitlyDot"
+      :variant="props.badgeVariant"
+      :bg-variant="props.badgeBgVariant"
+      :text-variant="props.badgeTextVariant"
+      :style="badgeStyle"
+      :placement="props.badgePlacement"
+    >
       <slot name="badge">
         {{ badgeText }}
       </slot>
-    </span>
+    </BBadge>
   </component>
 </template>
 
@@ -37,16 +46,17 @@ import {
   useRadiusElementClasses,
 } from '../../composables'
 import BLink from '../BLink/BLink.vue'
+import BBadge from '../BBadge/BBadge.vue'
 
 const props = withDefaults(defineProps<BAvatarProps>(), {
   alt: 'avatar',
   badge: false,
   badgeBgVariant: null,
-  badgeOffset: undefined,
-  badgeStart: false,
   badgeTextVariant: null,
-  badgeTop: false,
   badgeVariant: 'primary',
+  badgePlacement: 'top-end',
+  badgeDotIndicator: false,
+  badgePill: false,
   button: false,
   buttonType: 'button',
   size: undefined,
@@ -58,15 +68,14 @@ const props = withDefaults(defineProps<BAvatarProps>(), {
   // All others use defaults
   active: undefined,
   activeClass: undefined,
-  append: undefined,
   disabled: undefined,
   exactActiveClass: undefined,
   href: undefined,
-  icon: undefined,
   opacity: undefined,
   opacityHover: undefined,
   rel: undefined,
   replace: undefined,
+  stretched: false,
   routerComponentName: undefined,
   target: undefined,
   to: undefined,
@@ -134,13 +143,9 @@ const radiusElementClasses = useRadiusElementClasses(() => ({
   roundedStart: computedRoundedStart.value,
   roundedEnd: computedRoundedEnd.value,
 }))
-const badgeClasses = useColorVariantClasses(() => ({
-  variant: props.badgeVariant,
-  bgVariant: props.badgeBgVariant,
-  textVariant: props.badgeTextVariant,
-}))
 
 const badgeText = toRef(() => (props.badge === true ? '' : props.badge))
+const badgeImplicitlyDot = computed(() => !badgeText.value && !hasBadgeSlot.value)
 
 const computedTextVariant = toRef(() => parentData?.textVariant.value ?? props.textVariant)
 const computedBgVariant = toRef(() => parentData?.bgVariant.value ?? props.bgVariant)
@@ -166,20 +171,12 @@ const computedClasses = computed(() => [
   },
 ])
 
-const badgeStyle = computed<StyleValue>(() => {
-  const offset = props.badgeOffset || '0px'
-  const fontSize =
+const badgeStyle = computed<StyleValue>(() => ({
+  fontSize:
     SIZES.indexOf((computedSize.value as string | undefined) || null) === -1
       ? `calc(${computedSize.value} * ${BADGE_FONT_SIZE_SCALE})`
-      : ''
-  return {
-    fontSize: fontSize || '',
-    top: props.badgeTop ? offset : '',
-    bottom: props.badgeTop ? '' : offset,
-    left: props.badgeStart ? offset : '',
-    right: props.badgeStart ? '' : offset,
-  }
-})
+      : '' || '',
+}))
 
 const textFontStyle = computed<StyleValue>(() => {
   const fontSize =

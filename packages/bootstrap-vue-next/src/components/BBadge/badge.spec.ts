@@ -138,19 +138,4 @@ describe('badge', () => {
     expect(wrapper.classes()).not.toContain('start-100')
     expect(wrapper.classes()).not.toContain('translate-middle')
   })
-
-  it('contains position-absolute top-0 start-100 translate-middle when prop textIndicator', async () => {
-    const wrapper = mount(BBadge, {
-      props: {textIndicator: true},
-    })
-    expect(wrapper.classes()).toContain('position-absolute')
-    expect(wrapper.classes()).toContain('top-0')
-    expect(wrapper.classes()).toContain('start-100')
-    expect(wrapper.classes()).toContain('translate-middle')
-    await wrapper.setProps({textIndicator: false})
-    expect(wrapper.classes()).not.toContain('position-absolute')
-    expect(wrapper.classes()).not.toContain('top-0')
-    expect(wrapper.classes()).not.toContain('start-100')
-    expect(wrapper.classes()).not.toContain('translate-middle')
-  })
 })

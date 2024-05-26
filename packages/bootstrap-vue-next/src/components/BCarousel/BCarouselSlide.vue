@@ -44,10 +44,6 @@ import {carouselInjectionKey, isEmptySlot} from '../../utils'
 import BImg from '../BImg.vue'
 import {useDefaults} from '../../composables'
 
-// TODO interval is unused
-// Need to add https://getbootstrap.com/docs/5.3/components/carousel/#individual-carousel-item-interval
-// Perhaps a provide/inject with next/prev values where the component can call those would work.
-
 const _props = withDefaults(defineProps<BCarouselSlideProps>(), {
   background: undefined,
   caption: undefined,

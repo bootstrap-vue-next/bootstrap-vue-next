@@ -68,7 +68,6 @@ import {BvEvent, tabsInjectionKey} from '../../utils'
 import {useAlignment, useDefaults} from '../../composables'
 import type {BTabsProps, TabType} from '../../types'
 import {createReusableTemplate} from '@vueuse/core'
-// TODO this component needs a desperate refactoring to use provide/inject and not the complicated slot manipulation logic it's doing now
 
 const _props = withDefaults(defineProps<BTabsProps>(), {
   activeNavItemClass: undefined,

@@ -20,7 +20,7 @@ As shown above, the BoostrapVueNext directive named `b-tooltip` should have a va
 
 ```vue-html
 v-{name}.{modifier1}.{modifier2}.{etc.}={value}.
-```vue-html
+```
 
 ## Triggers modifiers
 
@@ -51,12 +51,13 @@ The tooltip text is specified in the value, but remember that what is inside the
 
 ```vue-html
 <BCard v-b-tooltip="'My title'" />
-```vue-html
+```
 
 If you want to refer to the reactive variable `userSurname`, you would do this:
+
 ```vue-html
 <BCard v-b-tooltip="userSurname" />
-```vue-html
+```
 
 In general, the value can be an object, a string, a function, or an element.
 

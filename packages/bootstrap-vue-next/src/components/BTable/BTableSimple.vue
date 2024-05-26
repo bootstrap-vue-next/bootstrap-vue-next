@@ -1,11 +1,11 @@
 <template>
   <!-- tables definitions are shared. Can't use createReusableTemplate cause it becomes a non-root node -->
   <div v-if="isResponsive" :class="responsiveClasses" :style="responsiveStyles">
-    <table v-bind="tableAttrs">
+    <table v-bind="computedTableAttrs">
       <slot />
     </table>
   </div>
-  <table v-else v-bind="tableAttrs">
+  <table v-else v-bind="computedTableAttrs">
     <slot />
   </table>
 </template>
@@ -17,10 +17,6 @@ import {useDefaults, useNumberishToStyle} from '../../composables'
 
 const defaultStickyHeaderHeight = '300px'
 
-// TODO alphabetize the lists for tables
-// TODO all table things do not declare their props
-// TODO some props are not used. ex id, fixed, etc
-// TODO Attrs fallthrough will attach to either responsive or table, but you can't assign attrs to table if it is responsive. So we will need an attrs & class
 const _props = withDefaults(defineProps<BTableSimpleProps>(), {
   borderVariant: null,
   tableClass: undefined,
@@ -40,6 +36,7 @@ const _props = withDefaults(defineProps<BTableSimpleProps>(), {
   stripedColumns: false,
   small: false,
   stickyHeader: false,
+  tableAttrs: undefined,
 })
 const props = useDefaults(_props, 'BTableSimple')
 
@@ -67,9 +64,10 @@ const computedClasses = computed(() => [
     'table-striped-columns': props.stripedColumns,
   },
 ])
-const tableAttrs = computed(() => ({
+const computedTableAttrs = computed(() => ({
   id: props.id,
   class: computedClasses.value,
+  ...props.tableAttrs,
 }))
 
 const computedSticky = useNumberishToStyle(

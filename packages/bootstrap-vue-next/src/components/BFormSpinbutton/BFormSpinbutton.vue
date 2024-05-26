@@ -130,7 +130,6 @@ const modelValue = defineModel<number | null>({
   default: null,
 })
 
-// TODO focus system
 const element = ref<HTMLElement | null>(null)
 
 const {focused} = useFocus(element)

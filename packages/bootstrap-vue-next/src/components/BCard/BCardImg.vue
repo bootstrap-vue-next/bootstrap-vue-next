@@ -1,23 +1,20 @@
 <template>
-  <BImg v-bind="computedImgProps" :class="baseClass" />
+  <BImg v-bind="computedImgProps" :class="baseAlignmentClasses" />
 </template>
 
 <script setup lang="ts">
 import BImg from '../BImg.vue'
 import type {BCardImgProps} from '../../types'
 import {omit} from '../../utils'
-import {computed, toRef} from 'vue'
+import {computed} from 'vue'
 import {useDefaults} from '../../composables'
 
 const _props = withDefaults(defineProps<BCardImgProps>(), {
-  bottom: false,
-  top: false,
+  placement: 'top',
   // BImg props
   blank: undefined,
   blankColor: undefined,
   block: undefined,
-  center: undefined,
-  end: undefined,
   fluid: undefined,
   fluidGrow: undefined,
   height: undefined,
@@ -30,24 +27,21 @@ const _props = withDefaults(defineProps<BCardImgProps>(), {
   sizes: undefined,
   src: undefined,
   srcset: undefined,
-  start: undefined,
   thumbnail: undefined,
   width: undefined,
   // End BImg props
 })
 const props = useDefaults(_props, 'BCardImg')
 
-const baseClass = toRef(() =>
-  props.top
-    ? 'card-img-top'
-    : props.end
-      ? 'card-img-right'
-      : props.bottom
-        ? 'card-img-bottom'
-        : props.start
-          ? 'card-img-left'
-          : 'card-img'
-)
+const baseAlignmentClasses = computed(() => ({
+  'card-img-top': props.placement === 'top',
+  // TODO implement this class
+  'card-img-end': props.placement === 'end',
+  'card-img-bottom': props.placement === 'bottom',
+  // TODO implement this class
+  'card-img-start': props.placement === 'start',
+  'card-img': props.placement === 'overlay',
+}))
 
-const computedImgProps = computed(() => omit(props, ['bottom', 'top', 'end', 'start']))
+const computedImgProps = computed(() => omit(props, ['placement']))
 </script>

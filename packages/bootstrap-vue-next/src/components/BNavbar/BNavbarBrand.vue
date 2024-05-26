@@ -20,10 +20,10 @@ const _props = withDefaults(defineProps<BNavbarBrandProps>(), {
   // Link props
   active: undefined,
   activeClass: undefined,
-  append: undefined,
   disabled: undefined,
   exactActiveClass: undefined,
   href: undefined,
+  stretched: false,
   icon: undefined,
   opacity: undefined,
   opacityHover: undefined,

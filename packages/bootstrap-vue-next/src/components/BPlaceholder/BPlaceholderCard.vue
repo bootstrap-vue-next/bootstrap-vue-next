@@ -1,5 +1,5 @@
 <template>
-  <BCard :img-bottom="props.imgBottom">
+  <BCard :img-placement="props.imgPlacement">
     <template v-if="!props.noImg" #img>
       <slot name="img">
         <BCardImg
@@ -7,8 +7,7 @@
           :blank-color="props.imgBlankColor"
           :height="!props.imgSrc ? props.imgHeight : undefined"
           :src="props.imgSrc"
-          :top="!props.imgBottom"
-          :bottom="props.imgBottom"
+          :img-placement="props.imgPlacement"
           :style="{cursor: 'wait'}"
         />
       </slot>
@@ -65,7 +64,7 @@ const _props = withDefaults(defineProps<BPlaceholderCardProps>(), {
   headerVariant: undefined,
   headerWidth: 100,
   imgBlankColor: '#868e96',
-  imgBottom: false,
+  imgPlacement: 'top',
   imgHeight: 100,
   imgSrc: undefined,
   noButton: false,

@@ -21,6 +21,7 @@ import type {
   ColorExtendables,
   ColorVariant,
   ColsNumbers,
+  CombinedPlacement,
   CommonInputProps,
   InputType,
   LinkTarget,
@@ -31,6 +32,7 @@ import type {
   OrderBreakpointProps,
   PlaceholderAnimation,
   PlaceholderSize,
+  Placement,
   PopoverPlacement,
   RadioOptionRaw,
   RadioValue,
@@ -50,11 +52,11 @@ import type * as Components from '../components'
 export interface BLinkProps {
   active?: boolean
   activeClass?: string
-  append?: boolean
   disabled?: boolean
   exactActiveClass?: string
   href?: string
   icon?: boolean
+  stretched?: boolean
   // noPrefetch: {type: [Boolean, String] as PropType<boolean>, default: false},
   opacity?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
   opacityHover?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
@@ -199,7 +201,7 @@ export interface BFormFileProps {
   name?: string
   noDrop?: boolean
   noTraverse?: boolean
-  placement?: 'start' | 'end'
+  placement?: Extract<Placement, 'start' | 'end'>
   required?: boolean
   size?: Size
   state?: boolean | null
@@ -440,9 +442,9 @@ export interface BNavTextProps {
 export interface BNavbarProps {
   autoClose?: boolean
   container?: boolean | 'fluid' | Breakpoint
-  fixed?: 'top' | 'bottom'
+  fixed?: Extract<Placement, 'top' | 'bottom'>
   print?: boolean
-  sticky?: 'top' | 'bottom'
+  sticky?: Extract<Placement, 'top' | 'bottom'>
   tag?: string
   toggleable?: boolean | Breakpoint
   variant?: ColorVariant | null
@@ -486,10 +488,7 @@ export interface BOffcanvasProps extends TeleporterProps {
   noFocus?: boolean
   noHeader?: boolean
   noHeaderClose?: boolean
-  // TODO standardize this. Create a dedicated type
-  // Then in components that use individual props (BImg)
-  // Make them just use prop placement
-  placement?: 'top' | 'bottom' | 'start' | 'end'
+  placement?: Placement
   shadow?: Size | boolean
   title?: string
   // responsive?: Breakpoint
@@ -578,7 +577,7 @@ export interface BPlaceholderCardProps {
   headerVariant?: ColorVariant | null
   headerWidth?: Numberish
   imgBlankColor?: string
-  imgBottom?: boolean
+  imgPlacement?: Extract<Placement, 'top' | 'bottom'>
   imgHeight?: Numberish
   imgSrc?: string
   noButton?: boolean
@@ -735,14 +734,13 @@ export interface BAvatarProps
   alt?: string
   badge?: boolean | string
   badgeBgVariant?: ColorVariant | null
-  badgeOffset?: string
-  badgeStart?: boolean
+  badgePlacement?: CombinedPlacement
   badgeTextVariant?: TextColorVariant | null
-  badgeTop?: boolean
   badgeVariant?: ColorVariant | null
+  badgePill?: boolean
+  badgeDotIndicator?: boolean
   button?: boolean
   buttonType?: ButtonType
-  icon?: string
   size?: LiteralUnion<Size, Numberish>
   square?: boolean
   src?: string
@@ -761,6 +759,7 @@ export interface BBadgeProps extends Omit<BLinkProps, 'routerTag'>, ColorExtenda
   pill?: boolean
   tag?: string
   textIndicator?: boolean
+  placement?: CombinedPlacement
 }
 
 export interface BBreadcrumbProps {
@@ -830,15 +829,11 @@ export interface BCardProps extends ColorExtendables {
   headerTextVariant?: TextColorVariant | null
   headerVariant?: ColorVariant | null
   imgAlt?: string
-  imgBottom?: boolean
-  imgEnd?: boolean
+  imgPlacement?: Placement | 'overlay'
   imgHeight?: Numberish
   imgSrc?: string
-  imgStart?: boolean
-  imgTop?: boolean
   imgWidth?: Numberish
   noBody?: boolean
-  overlay?: boolean
   subtitle?: string
   subtitleTag?: string
   subtitleTextVariant?: TextColorVariant | null
@@ -864,9 +859,8 @@ export interface BCardGroupProps {
   tag?: string
 }
 
-export interface BCardImgProps extends BImgProps {
-  bottom?: boolean
-  top?: boolean
+export interface BCardImgProps extends Omit<BImgProps, 'placement'> {
+  placement?: Placement | 'overlay'
 }
 
 export interface BCardSubtitleProps {
@@ -939,8 +933,6 @@ export interface BImgProps extends RadiusElementExtendables {
   blank?: boolean
   blankColor?: string
   block?: boolean
-  center?: boolean
-  end?: boolean
   fluid?: boolean
   fluidGrow?: boolean
   height?: Numberish
@@ -948,9 +940,9 @@ export interface BImgProps extends RadiusElementExtendables {
   sizes?: string | readonly string[]
   src?: string
   srcset?: string | readonly string[]
-  start?: boolean
   thumbnail?: boolean
   width?: Numberish
+  placement?: Extract<Placement, 'start' | 'end'> | 'center'
 }
 
 export interface BFormProps {
@@ -977,8 +969,9 @@ export interface BTableSimpleProps {
   stickyHeader?: boolean | Numberish
   striped?: boolean
   stripedColumns?: boolean
-  tableClass?: ClassValue
   variant?: ColorVariant | null
+  tableAttrs?: Readonly<AttrsValue>
+  tableClass?: ClassValue
 }
 
 export interface BTableLiteProps<T> extends BTableSimpleProps {
@@ -1008,8 +1001,7 @@ export interface BTableLiteProps<T> extends BTableSimpleProps {
   primaryKey?: string
   showEmpty?: boolean
   tbodyClass?: ClassValue
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  tbodyTrAttr?: any
+  tbodyTrAttrs?: ClassValue
   // tbodyTransitionHandlers
   // tbodyTransitionProps
   tbodyTrClass?:
@@ -1037,7 +1029,6 @@ export interface BTableProps<T> extends Omit<BTableLiteProps<T>, 'tableClass'> {
   noProviderFiltering?: boolean
   sortBy?: BTableSortBy[]
   mustSort?: boolean | string[] // TODO this is a string of fields, possibly generic
-  noSortReset?: boolean
   selectable?: boolean
   multisort?: boolean
   stickySelect?: boolean
