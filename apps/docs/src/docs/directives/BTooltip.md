@@ -16,10 +16,11 @@
 
 </BCard>
 
-A directive is composed by modifiers and a value, like the examples above.
-The anatomy of directive is: v-{name}.{modifier1}.{modifier2}.{etc.}={value}.
+As shown above, the BoostrapVueNext directive named `b-tooltip` should have a value, and optionally one or more modifiers. The general format for directives is is:
 
-So, here we are defining to use the directive `b-tooltip`, with different optional modifiers, and an optional value.
+```vue-html
+v-{name}.{modifier1}.{modifier2}.{etc.}={value}.
+```vue-html
 
 ## Triggers modifiers
 
@@ -31,23 +32,33 @@ We can define when we want to trigger a tooltip with the following modifiers.
 - manual
 - click
 
-If we do not define any modifier by default is enabled "hover" and "focus".
+If we do not specify any modifiers, the tooltip is by default enabled for "hover" and "focus".
 
 ## Placement modifiers
 
-We can define when we want to placement a tooltip with the following modifiers.
+We can specify where to place the tooltip with the following modifiers.
 
 - left
 - right
 - bottom
 - top
 
-If we do not define any modifier by default is enabled "top".
+If we do not define any modifier, the placement will be "top".
 
 ## Value
 
-A tooltip text could be defined using the value. If we remember the anatomy of a custom directive, we can define at a value.
-With a value we can use an object, a string, a function, or an element.
+The tooltip text is specified in the value, but remember that what is inside the "" is interpreted in Javascript, not as a string literal. So if you want have your tooltip say "My title", then you must use an extra pair of quotes, e.g. '', inside the "":
+
+```vue-html
+<BCard v-b-tooltip="'My title'" />
+```vue-html
+
+If you want to refer to the reactive variable `userSurname`, you would do this:
+```vue-html
+<BCard v-b-tooltip="userSurname" />
+```vue-html
+
+In general, the value can be an object, a string, a function, or an element.
 
 <BCard class="bg-body-tertiary">
 
@@ -65,7 +76,7 @@ title: string | Element | JQuery | ((this: HTMLElement) => string | Element | JQ
 
 </BCard>
 
-If we want to use an object, we should use the following interface:
+The object interface is the most flexible, alllowing these options:
 
 <BCard class="bg-body-tertiary">
 
@@ -90,7 +101,7 @@ interface ValueObject {
 
 ## Delay
 
-We can define a delay to display the tooltip, in that case we need to use the object value format, if not by default it is used 0.
+The delay to displaying (and hiding) the tooltip, in millisceonds. The default is 0.
 
 ## Pitfalls
 
