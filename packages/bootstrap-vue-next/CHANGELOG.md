@@ -1,5 +1,57 @@
 # Changelog
 
+## [0.19.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.18.1...bootstrapvuenext-v0.19.0) (2024-05-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* **Bimg:** converge props start, end, & center into single "placement" prop
+* **BCardImg:** converge placment props into single "placement" prop. top, bottom, start,end, center => placement
+* **BLink:** remove prop append -- vue router deprecation
+* **BTable:** remove prop noSortReset, use mustSort ... by default sortability can be reset by clicking (3) times [asc => desc => undefined => asc...]
+* **BAvatar:** remove icon prop - use svg in slot if needed
+* **BBadge:** revamp, remove prop textIndicator -- use prop placement (bootstrap also says parent elements should have position-relative class... Not sure how much this affects things)
+* **BCard:** remove prop overlay, add it into the imgPlacement prop (imgPlacement="overlay")
+* **BAvatar:** remove props badgeTop, badgeStart -- use badgePlacement instead
+* **BAvatar:** remove prop badgeOffset, no alternative added
+
+### Features
+
+* **BAvatar:** add prop badgeDotIndicator ([cf9b942](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cf9b94214d704e7462ed8ebadf3891e495fbf1f7))
+* **BAvatar:** add prop badgePill ([cf9b942](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cf9b94214d704e7462ed8ebadf3891e495fbf1f7))
+* **BAvatar:** remove icon prop - use svg in slot if needed ([cf9b942](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cf9b94214d704e7462ed8ebadf3891e495fbf1f7))
+* **BAvatar:** remove prop badgeOffset, no alternative added ([cf9b942](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cf9b94214d704e7462ed8ebadf3891e495fbf1f7))
+* **BAvatar:** remove props badgeTop, badgeStart -- use badgePlacement instead ([cf9b942](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cf9b94214d704e7462ed8ebadf3891e495fbf1f7))
+* **BBadge:** add prop placement with directions to place on element ([cf9b942](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cf9b94214d704e7462ed8ebadf3891e495fbf1f7))
+* **BBadge:** dotindicator follows placement of prop placement ([cf9b942](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cf9b94214d704e7462ed8ebadf3891e495fbf1f7))
+* **BBadge:** revamp, remove prop textIndicator -- use prop placement (bootstrap also says parent elements should have position-relative class... Not sure how much this affects things) ([cf9b942](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cf9b94214d704e7462ed8ebadf3891e495fbf1f7))
+* **BBadge:** when dotIndicator is true, use class visually-hidden on text ([cf9b942](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cf9b94214d704e7462ed8ebadf3891e495fbf1f7))
+* **BCardImg:** converge placment props into single "placement" prop. top, bottom, start,end, center =&gt; placement ([cf9b942](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cf9b94214d704e7462ed8ebadf3891e495fbf1f7))
+* **BCard:** remove prop overlay, add it into the imgPlacement prop (imgPlacement="overlay") ([cf9b942](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cf9b94214d704e7462ed8ebadf3891e495fbf1f7))
+* **Bimg:** converge props start, end, & center into single "placement" prop ([cf9b942](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cf9b94214d704e7462ed8ebadf3891e495fbf1f7))
+* **BInput:** Alias BFormInput to BInput ([6ceeac5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6ceeac5ce479ca758308ccf23f5e5df8673fd89b))
+* **BLink:** add prop stretched to add class "stretched-link" ([cf9b942](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cf9b94214d704e7462ed8ebadf3891e495fbf1f7))
+* **BLink:** remove prop append -- vue router deprecation ([cf9b942](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cf9b94214d704e7462ed8ebadf3891e495fbf1f7))
+* **BLink:** use prop replace ([cf9b942](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cf9b94214d704e7462ed8ebadf3891e495fbf1f7))
+* **BOffcanvas:** allow specifying a width ([#1903](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1903)) ([01f87b8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/01f87b8cecab1c66632d64b1d04c9b36f32dbe67))
+* **BTable:** adds the ability to filter by formatter Solves [#1413](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1413) ([e7130aa](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e7130aae51adfd108a9d3843bd974513c298ad39))
+* **BTable:** remove prop noSortReset, use mustSort ... by default sortability can be reset by clicking (3) times [asc =&gt; desc => undefined => asc...] ([cf9b942](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cf9b94214d704e7462ed8ebadf3891e495fbf1f7))
+* **BTableSImple:** add prop tableAttrs & tableClasses -- previously could not modify table attributes when isResponsive === true ([cf9b942](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cf9b94214d704e7462ed8ebadf3891e495fbf1f7))
+* move unplugin-vue-components component resolver to main package ([cf9b942](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cf9b94214d704e7462ed8ebadf3891e495fbf1f7))
+* move unplugin-vue-components component resolver to main package ([#1918](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1918)) ([cf9b942](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cf9b94214d704e7462ed8ebadf3891e495fbf1f7))
+
+
+### Bug Fixes
+
+* **BCardBody:** unnecessary "card-body" class when props.overlay is true ([cf9b942](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cf9b94214d704e7462ed8ebadf3891e495fbf1f7))
+* **BTab:** use correct buttonId ([#1906](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1906)) ([2e20c94](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2e20c94cc7b210fc62126294839b0253b0adfe14))
+* incorrect classes and placements on bcardimg and bcard ([cf9b942](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cf9b94214d704e7462ed8ebadf3891e495fbf1f7))
+
+
+### Reverts
+
+* 84ce349 bad update ([cf9b942](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cf9b94214d704e7462ed8ebadf3891e495fbf1f7))
+
 ## [0.18.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.18.0...bootstrapvuenext-v0.18.1) (2024-05-18)
 
 
