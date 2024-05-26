@@ -75,7 +75,7 @@ const navbarData = inject(navbarInjectionKey, null)
 
 const instance = getCurrentInstance()
 
-const defaultActiveClass = 'active' as const
+const defaultActiveClass = 'active'
 
 const tag = computed(() => {
   const routerName = props.routerComponentName
