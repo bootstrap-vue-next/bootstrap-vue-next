@@ -111,9 +111,6 @@ importers:
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
-      unplugin-vue-components:
-        specifier: ^0.27.0
-        version: 0.27.0(vue@3.4.27)
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@20.12.12)(sass@1.77.2)
