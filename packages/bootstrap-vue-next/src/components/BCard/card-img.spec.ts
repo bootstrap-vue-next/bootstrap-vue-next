@@ -12,24 +12,19 @@ describe('card-img', () => {
     expect($img.exists()).toBe(true)
   })
 
-  it('has class card-img by default', () => {
-    const wrapper = mount(BCardImg)
-    expect(wrapper.classes()).toContain('card-img')
-  })
-
-  it('BImg has class card-img by default', () => {
-    const wrapper = mount(BCardImg)
-    const $img = wrapper.getComponent(BImg)
-    expect($img.classes()).toContain('card-img')
-  })
-
   it('has classes when prop placement', async () => {
     const wrapper = mount(BCardImg, {
       props: {placement: 'top'},
     })
     expect(wrapper.classes()).toContain('card-img-top')
+    await wrapper.setProps({placement: 'end'})
+    expect(wrapper.classes()).toContain('card-img-end')
     await wrapper.setProps({placement: 'bottom'})
     expect(wrapper.classes()).toContain('card-img-bottom')
+    await wrapper.setProps({placement: 'start'})
+    expect(wrapper.classes()).toContain('card-img-start')
+    await wrapper.setProps({placement: 'overlay'})
+    expect(wrapper.classes()).toContain('card-img')
   })
 
   it('BImg is given prop height', async () => {

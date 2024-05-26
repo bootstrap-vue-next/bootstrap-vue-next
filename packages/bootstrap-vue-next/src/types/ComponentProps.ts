@@ -21,6 +21,7 @@ import type {
   ColorExtendables,
   ColorVariant,
   ColsNumbers,
+  CombinedPlacement,
   CommonInputProps,
   InputType,
   LinkTarget,
@@ -441,9 +442,9 @@ export interface BNavTextProps {
 export interface BNavbarProps {
   autoClose?: boolean
   container?: boolean | 'fluid' | Breakpoint
-  fixed?: 'top' | 'bottom'
+  fixed?: Extract<Placement, 'top' | 'bottom'>
   print?: boolean
-  sticky?: 'top' | 'bottom'
+  sticky?: Extract<Placement, 'top' | 'bottom'>
   tag?: string
   toggleable?: boolean | Breakpoint
   variant?: ColorVariant | null
@@ -733,11 +734,11 @@ export interface BAvatarProps
   alt?: string
   badge?: boolean | string
   badgeBgVariant?: ColorVariant | null
-  badgeOffset?: string
-  badgeStart?: boolean
+  badgePlacement?: CombinedPlacement
   badgeTextVariant?: TextColorVariant | null
-  badgeTop?: boolean
   badgeVariant?: ColorVariant | null
+  badgePill?: boolean
+  badgeDotIndicator?: boolean
   button?: boolean
   buttonType?: ButtonType
   size?: LiteralUnion<Size, Numberish>
@@ -758,6 +759,7 @@ export interface BBadgeProps extends Omit<BLinkProps, 'routerTag'>, ColorExtenda
   pill?: boolean
   tag?: string
   textIndicator?: boolean
+  placement?: CombinedPlacement
 }
 
 export interface BBreadcrumbProps {
@@ -827,15 +829,11 @@ export interface BCardProps extends ColorExtendables {
   headerTextVariant?: TextColorVariant | null
   headerVariant?: ColorVariant | null
   imgAlt?: string
-  imgPlacement?: Extract<Placement, 'top' | 'bottom'>
-  imgEnd?: boolean
+  imgPlacement?: Placement | 'overlay'
   imgHeight?: Numberish
   imgSrc?: string
-  imgStart?: boolean
-  imgTop?: boolean
   imgWidth?: Numberish
   noBody?: boolean
-  overlay?: boolean
   subtitle?: string
   subtitleTag?: string
   subtitleTextVariant?: TextColorVariant | null
@@ -862,7 +860,7 @@ export interface BCardGroupProps {
 }
 
 export interface BCardImgProps extends Omit<BImgProps, 'placement'> {
-  placement?: Extract<BCardPlacementWithCenter, 'center' | 'top' | 'bottom'>
+  placement?: Placement | 'overlay'
 }
 
 export interface BCardSubtitleProps {
@@ -931,8 +929,6 @@ export interface BTransitionProps {
   transProps?: Readonly<TransitionProps>
 }
 
-type BCardPlacementWithCenter = Placement | 'center'
-
 export interface BImgProps extends RadiusElementExtendables {
   blank?: boolean
   blankColor?: string
@@ -946,7 +942,7 @@ export interface BImgProps extends RadiusElementExtendables {
   srcset?: string | readonly string[]
   thumbnail?: boolean
   width?: Numberish
-  placement?: Extract<BCardPlacementWithCenter, 'start' | 'end' | 'center'>
+  placement?: Extract<Placement, 'start' | 'end'> | 'center'
 }
 
 export interface BFormProps {

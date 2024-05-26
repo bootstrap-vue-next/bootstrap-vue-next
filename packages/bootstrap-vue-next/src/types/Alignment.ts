@@ -19,3 +19,4 @@ export type ContainerHorizontalAlign = 'left' | 'center' | 'right'
 export type ContainerPosition = `${ContainerVerticalAlign}-${ContainerHorizontalAlign}`
 
 export type Placement = 'top' | 'bottom' | 'start' | 'end'
+export type CombinedPlacement = Placement | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end'

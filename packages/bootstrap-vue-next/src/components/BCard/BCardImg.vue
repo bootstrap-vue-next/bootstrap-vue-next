@@ -10,7 +10,7 @@ import {computed} from 'vue'
 import {useDefaults} from '../../composables'
 
 const _props = withDefaults(defineProps<BCardImgProps>(), {
-  placement: 'center',
+  placement: 'top',
   // BImg props
   blank: undefined,
   blankColor: undefined,
@@ -35,8 +35,12 @@ const props = useDefaults(_props, 'BCardImg')
 
 const baseAlignmentClasses = computed(() => ({
   'card-img-top': props.placement === 'top',
+  // TODO implement this class
+  'card-img-end': props.placement === 'end',
   'card-img-bottom': props.placement === 'bottom',
-  'card-img': props.placement === 'center',
+  // TODO implement this class
+  'card-img-start': props.placement === 'start',
+  'card-img': props.placement === 'overlay',
 }))
 
 const computedImgProps = computed(() => omit(props, ['placement']))

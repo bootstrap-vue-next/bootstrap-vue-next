@@ -64,20 +64,16 @@ describe('card', () => {
 
   it('has class flex-row when prop imgStart', async () => {
     const wrapper = mount(BCard, {
-      props: {imgStart: true},
+      props: {imgPlacement: 'start'},
     })
     expect(wrapper.classes()).toContain('flex-row')
-    await wrapper.setProps({imgStart: undefined})
-    expect(wrapper.classes()).not.toContain('flex-row')
   })
 
   it('has class flex-row-reverse when prop imgEnd', async () => {
     const wrapper = mount(BCard, {
-      props: {imgEnd: true},
+      props: {imgPlacement: 'end'},
     })
     expect(wrapper.classes()).toContain('flex-row-reverse')
-    await wrapper.setProps({imgEnd: undefined})
-    expect(wrapper.classes()).not.toContain('flex-row-reverse')
   })
 
   it('renders img slot', () => {
@@ -328,14 +324,6 @@ describe('card', () => {
     })
     const $body = wrapper.getComponent(BCardBody)
     expect($body.classes()).toContain('foobar')
-  })
-
-  it('child BCardHeader has internal prop overlay as prop overlay', () => {
-    const wrapper = mount(BCard, {
-      props: {overlay: true},
-    })
-    const $body = wrapper.getComponent(BCardBody)
-    expect($body.props('overlay')).toBe(true)
   })
 
   it('child BCardHeader has internal prop bodyBgVariant as prop bodyBgVariant', () => {

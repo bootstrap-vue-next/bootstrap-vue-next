@@ -6,7 +6,7 @@
       </slot>
     </ReusableImg.define>
 
-    <ReusableImg.reuse v-if="props.imgPlacement === 'top'" />
+    <ReusableImg.reuse v-if="props.imgPlacement !== 'bottom'" />
     <BCardHeader
       v-if="props.header || hasHeaderSlot || props.headerHtml"
       :bg-variant="props.headerBgVariant"
@@ -23,7 +23,7 @@
     </BCardHeader>
     <BCardBody
       v-if="!props.noBody"
-      :overlay="props.overlay"
+      :overlay="props.imgPlacement === 'overlay'"
       :bg-variant="props.bodyBgVariant"
       :tag="props.bodyTag"
       :text-variant="props.bodyTextVariant"
@@ -96,14 +96,10 @@ const _props = withDefaults(defineProps<BCardProps>(), {
   headerVariant: null,
   imgAlt: undefined,
   imgPlacement: 'top',
-  imgEnd: false,
   imgHeight: undefined,
   imgSrc: undefined,
-  imgStart: false,
-  imgTop: false,
   imgWidth: undefined,
   noBody: false,
-  overlay: false,
   subtitle: undefined,
   subtitleTag: 'h6',
   subtitleTextVariant: 'body-secondary',
@@ -139,8 +135,8 @@ const computedClasses = computed(() => [
   {
     [`text-${props.align}`]: props.align !== undefined,
     [`border-${props.borderVariant}`]: props.borderVariant !== null,
-    'flex-row': props.imgStart,
-    'flex-row-reverse': props.imgEnd,
+    'flex-row': props.imgPlacement === 'start',
+    'flex-row-reverse': props.imgPlacement === 'end',
   },
 ])
 
@@ -149,9 +145,7 @@ const imgAttr = computed(() => ({
   alt: props.imgAlt,
   height: props.imgHeight,
   width: props.imgWidth,
-  end: props.imgEnd,
-  start: props.imgStart,
-  top: props.imgTop,
+  placement: props.imgPlacement,
 }))
 
 const ReusableImg = createReusableTemplate()

@@ -1,5 +1,5 @@
 <template>
-  <component :is="props.tag" class="card-body" :class="computedClasses">
+  <component :is="props.tag" :class="computedClasses">
     <BCardTitle v-if="!!props.title || hasTitleSlot" :tag="props.titleTag">
       <slot name="title">
         {{ props.title }}
@@ -63,8 +63,6 @@ const hasSubtitleSlot = toRef(() => !isEmptySlot(slots.subtitle))
 
 const computedClasses = computed(() => [
   resolvedBackgroundClasses.value,
-  {
-    'card-img-overlay': props.overlay,
-  },
+  props.overlay ? 'card-img-overlay' : 'card-body',
 ])
 </script>
