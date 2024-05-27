@@ -169,7 +169,7 @@ export const breadcrumbPluginKey: InjectionKey<{
 
 export const modalControllerPluginKey: InjectionKey<{
   modals: ShallowRef<
-    ComputedRef<{
+    Ref<{
       component: unknown // TS being weird here, just use unknown
       props: OrchestratedModal & {
         _self: symbol

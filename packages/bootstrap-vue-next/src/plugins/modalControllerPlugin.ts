@@ -1,9 +1,9 @@
 import {
   type Component,
-  computed,
-  type ComputedRef,
   type MaybeRefOrGetter,
   type Plugin,
+  type Ref,
+  ref,
   shallowRef,
   toValue,
 } from 'vue'
@@ -14,7 +14,7 @@ import BModal from '../components/BModal/BModal.vue'
 export default {
   install(app) {
     const modals = shallowRef<
-      ComputedRef<{
+      Ref<{
         component: unknown // TS being weird here, just use unknown
         props: OrchestratedModal & {
           _self: symbol
@@ -55,10 +55,10 @@ export default {
 
       modals.value = [
         ...modals.value,
-        computed(() => ({
+        ref({
           component: toValue(obj.component) ?? BModal,
           props: {...toValue(obj.props), _isConfirm: false, _promise, _self, _modelValue: true},
-        })),
+        }),
       ]
 
       return _promise.value
@@ -73,10 +73,10 @@ export default {
 
       modals.value = [
         ...modals.value,
-        computed(() => ({
+        ref({
           component: toValue(obj.component) ?? BModal,
           props: {...toValue(obj.props), _isConfirm: true, _promise, _self, _modelValue: true},
-        })),
+        }),
       ]
 
       return _promise.value
