@@ -1,12 +1,10 @@
 # Button Toolbar
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -265,5 +263,6 @@ input groups and dropdowns, by setting the prop `justify`.
 import {data} from '../../data/components/buttonToolbar.data'
 import {BButtonGroup, BDropdown, BInputGroup, BDropdownItem, BButton, BButtonToolbar, BFormInput} from 'bootstrap-vue-next'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 </script>

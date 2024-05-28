@@ -4,8 +4,8 @@ import {idPluginKey} from '../utils'
 
 export default {
   install(app, options: BootstrapVueOptions['plugins']) {
-    if (options?.id instanceof Object && typeof options.id.getId === 'function') {
-      app.provide(idPluginKey, options.id.getId)
-    }
+    if (!(options?.id instanceof Object && typeof options.id.getId === 'function')) return
+
+    app.provide(idPluginKey, options.id.getId)
   },
 } satisfies Plugin

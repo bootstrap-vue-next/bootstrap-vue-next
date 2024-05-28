@@ -1,31 +1,37 @@
 <template>
   <component :is="computedTag" class="badge" :class="computedClasses" v-bind="computedLinkProps">
-    <slot />
+    <RenderComponentOrSkip
+      :skip="props.dotIndicator !== true"
+      tag="span"
+      v-bind="props.dotIndicator ? {class: 'visually-hidden'} : {}"
+    >
+      <slot />
+    </RenderComponentOrSkip>
   </component>
 </template>
 
 <script setup lang="ts">
-import {useBLinkHelper, useColorVariantClasses} from '../../composables'
+import {useBLinkHelper, useColorVariantClasses, useDefaults} from '../../composables'
 import {computed, toRef} from 'vue'
 import type {BBadgeProps} from '../../types'
 import BLink from '../BLink/BLink.vue'
+import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
 }>()
 
-const props = withDefaults(defineProps<BBadgeProps>(), {
+const _props = withDefaults(defineProps<BBadgeProps>(), {
   dotIndicator: false,
   pill: false,
   tag: 'span',
-  textIndicator: false,
+  placement: undefined,
   // Link props
   variant: 'secondary',
   // All others use defaults
   active: undefined,
   activeClass: undefined,
-  append: undefined,
   disabled: undefined,
   exactActiveClass: undefined,
   href: undefined,
@@ -35,6 +41,7 @@ const props = withDefaults(defineProps<BBadgeProps>(), {
   rel: undefined,
   replace: undefined,
   routerComponentName: undefined,
+  stretched: false,
   target: undefined,
   to: undefined,
   underlineOffset: undefined,
@@ -49,6 +56,7 @@ const props = withDefaults(defineProps<BBadgeProps>(), {
   bgVariant: null,
   // End ColorExtendables props
 })
+const props = useDefaults(_props, 'BBadge')
 
 const resolvedBackgroundClasses = useColorVariantClasses(props)
 
@@ -75,13 +83,32 @@ const {computedLink, computedLinkProps} = useBLinkHelper(props, [
 
 const computedTag = toRef(() => (computedLink.value ? BLink : props.tag))
 
+const placementClasses = computed(() => {
+  // dotindicator is implicitly top-end if no placement is set
+  const pos = props.placement ?? (props.dotIndicator ? 'top-end' : undefined)
+  return [
+    'position-absolute',
+    'translate-middle',
+    {
+      'start-0 top-0': pos === 'top-start',
+      'start-0 top-50': pos === 'start',
+      'start-0 top-100': pos === 'bottom-start',
+      'start-50 top-0': pos === 'top',
+      'start-50 top-100': pos === 'bottom',
+      'start-100 top-0': pos === 'top-end',
+      'start-100 top-50': pos === 'end',
+      'start-100 top-100': pos === 'bottom-end',
+    },
+  ]
+})
+
 const computedClasses = computed(() => [
   resolvedBackgroundClasses.value,
+  props.placement !== undefined || props.dotIndicator === true ? placementClasses.value : undefined,
   {
     'active': props.active,
     'disabled': props.disabled,
     'rounded-pill': props.pill,
-    'position-absolute top-0 start-100 translate-middle': props.textIndicator || props.dotIndicator,
     'p-2 border border-light rounded-circle': props.dotIndicator,
     'text-decoration-none': computedLink.value,
   },

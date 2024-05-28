@@ -1,7 +1,7 @@
 <template>
   <span :id="computedId + '_placeholder'" ref="placeholder" />
   <slot name="target" :show="show" :hide="hide" :toggle="toggle" :show-state="showState" />
-  <Teleport :to="teleportTo" :disabled="!teleportTo || teleportDisabled">
+  <Teleport :to="props.teleportTo" :disabled="!props.teleportTo || props.teleportDisabled">
     <div
       v-if="showStateInternal || props.persistent"
       :id="computedId"
@@ -19,14 +19,14 @@
         data-popper-arrow
       />
       <div class="overflow-auto" :style="sizeStyles">
-        <template v-if="title || $slots.title">
+        <template v-if="props.title || $slots.title">
           <div
             v-if="!props.html"
             class="position-sticky top-0"
             :class="props.tooltip ? 'tooltip-inner' : 'popover-header'"
           >
             <slot name="title">
-              {{ title }}
+              {{ props.title }}
             </slot>
           </div>
           <!-- eslint-disable vue/no-v-html -->
@@ -38,10 +38,10 @@
           />
           <!-- eslint-enable vue/no-v-html -->
         </template>
-        <template v-if="(props.tooltip && !$slots.title && !title) || !props.tooltip">
+        <template v-if="(props.tooltip && !$slots.title && !props.title) || !props.tooltip">
           <div v-if="!props.html" :class="props.tooltip ? 'tooltip-inner' : 'popover-body'">
             <slot>
-              {{ content }}
+              {{ props.content }}
             </slot>
           </div>
           <!-- eslint-disable vue/no-v-html -->
@@ -87,7 +87,7 @@ import {
   watch,
   watchEffect,
 } from 'vue'
-import {useId} from '../composables'
+import {useDefaults, useId} from '../composables'
 import type {BPopoverProps} from '../types'
 import {
   BvTriggerableEvent,
@@ -102,7 +102,7 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<BPopoverProps>(), {
+const _props = withDefaults(defineProps<BPopoverProps>(), {
   boundary: 'clippingAncestors',
   boundaryPadding: undefined,
   click: false,
@@ -112,7 +112,6 @@ const props = withDefaults(defineProps<BPopoverProps>(), {
   customClass: '',
   delay: () => ({show: 100, hide: 300}),
   floatingMiddleware: undefined,
-  hide: undefined,
   html: false,
   id: undefined,
   inline: false,
@@ -135,6 +134,8 @@ const props = withDefaults(defineProps<BPopoverProps>(), {
   tooltip: false,
   variant: null,
 })
+
+const props = useDefaults(_props, 'BPopover')
 
 const emit = defineEmits<{
   'hidden': [value: BvTriggerableEvent]

@@ -1,12 +1,10 @@
 # Form Input
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -105,9 +103,6 @@ If the `type` prop is set to an input type that is not supported (see above), a 
 - Regardless of input type, the value is **always** returned as a string representation
 - `v-model.lazy` is not supported by `BFormInput` (nor any custom Vue component). Use the `lazy`
   prop instead
-- `v-model` modifiers `.number` and `.trim` can cause unexpected cursor jumps when the user is
-  typing (this is a Vue issue with `v-model` on custom components). _Avoid using these modifiers_.
-  Use the `number` or `trim` props instead
 - Older version of Firefox may not support `readonly` for `range` type inputs
 - Input types that do not support `min`, `max` and `step` (i.e. `text`, `password`, `tel`, `email`,
   `url`, etc.) will silently ignore these values (although they will still be rendered on the input
@@ -341,11 +336,10 @@ invalid), `true` (for valid), or `null` (no validation state).
     <label for="input-live">Name:</label>
     <BFormInput
       id="input-live"
-      v-model="lifeName"
+      v-model.trim="lifeName"
       :state="lifeNameState"
       aria-describedby="input-live-help input-live-feedback"
       placeholder="Enter your name"
-      trim
     />
     <!-- This will only be shown if the preceding input has an invalid state -->
     <BFormInvalidFeedback id="input-live-feedback">
@@ -362,11 +356,10 @@ invalid), `true` (for valid), or `null` (no validation state).
     <label for="input-live">Name:</label>
     <BFormInput
       id="input-live"
-      v-model="lifeName"
+      v-model.trim="lifeName"
       :state="lifeNameState"
       aria-describedby="input-live-help input-live-feedback"
       placeholder="Enter your name"
-      trim
     />
     <!-- This will only be shown if the preceding input has an invalid state -->
     <BFormInvalidFeedback id="input-live-feedback"> Enter at least 3 letters </BFormInvalidFeedback>
@@ -514,26 +507,9 @@ The `plaintext` option is not supported by input types `color` or `range`.
 
 ## `v-model` modifiers
 
-Vue does not officially support `.lazy`, `.trim`, and `.number` modifiers on the `v-model` of custom
-component based inputs, and may generate a bad user experience. Avoid using Vue's native modifiers.
+We support the native modifiers `trim`, `lazy`, and `number`. They should all work out of the box
 
-To get around this, `BFormInput` has three boolean props `trim`, `number`, and `lazy` which
-emulate the native Vue `v-model` modifiers `.trim` and `.number` and `.lazy` respectively. The
-`lazy` prop will update the v-model on `change`/`blur`events.
-
-**Notes:**
-
-- The `number` prop takes precedence over the `trim` prop (i.e. `trim` will have no effect when
-  `number` is set)
-- When using the `number` prop, and if the value can be parsed as a number (via `parseFloat`) it
-  will return a value of type `Number` to the `v-model`, otherwise the original input value is
-  returned as type `String`. This is the same behaviour as the native `.number` modifier
-- The `trim` and `number` modifier props do not affect the value returned by the `input` or `change`
-  events. These events will always return the string value of the content of `<textarea>` after
-  optional formatting (which may not match the value returned via the `v-model` `update` event,
-  which handles the modifiers)
-
-## ~~Debounce support~~
+## Debounce support
 
 ## Autofocus
 
@@ -630,6 +606,7 @@ const selectAllText = () => inputRef.value.input.select()
 <script setup lang="ts">
 import {data} from '../../data/components/formInput.data'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BButton, BFormText, BFormInvalidFeedback, BRow, BCol, BContainer, BCard, BCardBody, BFormInput} from 'bootstrap-vue-next'
 import {ref, computed} from 'vue'

@@ -1,12 +1,10 @@
 # Placeholder
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -342,6 +340,7 @@ Optionally, you can manually adjust any scope of the table using slots. The foll
 <script setup lang="ts">
 import {data} from '../../data/components/placeholder.data'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {
   BPlaceholderButton,

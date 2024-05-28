@@ -1,12 +1,10 @@
-import type {ComponentProps} from '../types'
-
 export default (
   props: Readonly<Record<PropertyKey, unknown>>,
-  els: Readonly<ComponentProps>,
+  els: string[],
   propPrefix: string,
   classPrefix = propPrefix
 ): string[] =>
-  Object.keys(els).reduce((arr: string[], prop) => {
+  els.reduce((arr: string[], prop) => {
     if (!props[prop]) return arr
 
     arr.push(

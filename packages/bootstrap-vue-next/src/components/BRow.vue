@@ -1,52 +1,65 @@
 <template>
-  <component :is="tag" class="row" :class="computedClasses">
+  <component :is="props.tag" class="row" :class="computedClasses">
     <slot />
   </component>
 </template>
 
-<script lang="ts">
-import {computed, defineComponent, type PropType, type SlotsType} from 'vue'
-import {getBreakpointProps, getClasses} from '../utils'
-import type {AlignmentContent, AlignmentJustifyContent, AlignmentVertical} from '../types'
-import {useAlignment} from '../composables'
+<script setup lang="ts">
+import {computed} from 'vue'
+import {getClasses} from '../utils'
+import {useAlignment, useDefaults} from '../composables'
+import type {BRowProps} from '../types'
 
-const rowColsProps = getBreakpointProps('cols', [''], {type: [String, Number], default: null})
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 
-export default defineComponent({
-  name: 'BRow',
-  slots: Object as SlotsType<{
-    default?: Record<string, never>
-  }>,
-  props: {
-    tag: {type: String, default: 'div'},
-    gutterX: {type: String, default: null},
-    gutterY: {type: String, default: null},
-    noGutters: {type: Boolean, default: false},
-    alignV: {type: String as PropType<AlignmentVertical>, default: null},
-    alignH: {type: String as PropType<AlignmentJustifyContent>, default: null},
-    alignContent: {type: String as PropType<AlignmentContent>, default: null},
-    ...rowColsProps,
-  },
-  setup(props) {
-    const alignment = useAlignment(() => props.alignH)
-
-    const rowColsClasses = computed(() => getClasses(props, rowColsProps, 'cols', 'row-cols'))
-
-    const computedClasses = computed(() => [
-      rowColsClasses.value,
-      {
-        [`gx-${props.gutterX}`]: props.gutterX !== null,
-        [`gy-${props.gutterY}`]: props.gutterY !== null,
-        'g-0': props.noGutters,
-        [`align-items-${props.alignV}`]: props.alignV !== null,
-        [alignment.value]: props.alignH !== null,
-        [`align-content-${props.alignContent}`]: props.alignContent !== null,
-      },
-    ])
-
-    return {
-      computedClasses,
-    }
-  },
+const _props = withDefaults(defineProps<BRowProps>(), {
+  tag: 'div',
+  gutterX: undefined,
+  gutterY: undefined,
+  noGutters: false,
+  alignV: undefined,
+  alignH: undefined,
+  alignContent: undefined,
+  cols: undefined,
+  colsLg: undefined,
+  colsMd: undefined,
+  colsSm: undefined,
+  colsXl: undefined,
+  colsXxl: undefined,
 })
+
+const props = useDefaults(_props, 'BRow')
+
+const alignment = useAlignment(() => props.alignH)
+
+const rowColsClasses = computed(() =>
+  getClasses(
+    {
+      cols: props.cols,
+      colsLg: props.colsLg,
+      colsMd: props.colsMd,
+      colsSm: props.colsSm,
+      colsXl: props.colsXl,
+      colsXxl: props.colsXxl,
+    },
+    ['cols', 'colsLg', 'colsMd', 'colsSm', 'colsXl', 'colsXxl'],
+    'cols',
+    'row-cols'
+  )
+)
+
+const computedClasses = computed(() => [
+  rowColsClasses.value,
+  {
+    [`gx-${props.gutterX}`]: props.gutterX !== undefined,
+    [`gy-${props.gutterY}`]: props.gutterY !== undefined,
+    'g-0': props.noGutters,
+    [`align-items-${props.alignV}`]: props.alignV !== undefined,
+    [alignment.value]: props.alignH !== undefined,
+    [`align-content-${props.alignContent}`]: props.alignContent !== undefined,
+  },
+])
 </script>

@@ -387,6 +387,4 @@ describe('alert', () => {
     const $bbutton = $div.getComponent(BButton)
     expect($bbutton.classes()).toContain('btn-warning')
   })
-
-  // TODO try to test countdown items
 })

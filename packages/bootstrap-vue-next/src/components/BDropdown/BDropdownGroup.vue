@@ -1,22 +1,22 @@
 <template>
   <li role="presentation">
     <component
-      :is="headerTag"
+      :is="props.headerTag"
       :id="headerId"
       class="dropdown-header"
       :class="computedClasses"
       :role="headerRole"
     >
       <slot name="header">
-        {{ header }}
+        {{ props.header }}
       </slot>
     </component>
     <ul
-      :id="id"
+      :id="props.id"
       role="group"
       class="list-unstyled"
       v-bind="$attrs"
-      :aria-describedby="ariaDescribedby || headerId"
+      :aria-describedby="props.ariaDescribedby || headerId"
     >
       <slot />
     </ul>
@@ -24,6 +24,7 @@
 </template>
 
 <script setup lang="ts">
+import {useDefaults} from '../../composables'
 import type {BDropdownGroupProps} from '../../types'
 import {computed, toRef} from 'vue'
 
@@ -31,7 +32,7 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<BDropdownGroupProps>(), {
+const _props = withDefaults(defineProps<BDropdownGroupProps>(), {
   ariaDescribedby: undefined,
   header: undefined,
   headerClass: undefined,
@@ -39,6 +40,7 @@ const props = withDefaults(defineProps<BDropdownGroupProps>(), {
   headerVariant: null,
   id: undefined,
 })
+const props = useDefaults(_props, 'BDropdownGroup')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

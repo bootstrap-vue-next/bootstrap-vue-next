@@ -8,13 +8,15 @@
 import {computed, provide, toRef} from 'vue'
 import {listGroupInjectionKey} from '../../utils'
 import type {BListGroupProps} from '../../types'
+import {useDefaults} from '../../composables'
 
-const props = withDefaults(defineProps<BListGroupProps>(), {
+const _props = withDefaults(defineProps<BListGroupProps>(), {
   flush: false,
   horizontal: false,
   numbered: false,
   tag: 'div',
 })
+const props = useDefaults(_props, 'BListGroup')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

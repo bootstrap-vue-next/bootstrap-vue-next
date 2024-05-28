@@ -1,6 +1,6 @@
 <template>
-  <component :is="tag" class="navbar" :class="computedClasses" :role="computedRole">
-    <div v-if="container !== false" :class="containerClass">
+  <component :is="props.tag" class="navbar" :class="computedClasses" :role="computedRole">
+    <div v-if="props.container !== false" :class="containerClass">
       <slot />
     </div>
     <slot v-else />
@@ -10,10 +10,10 @@
 <script setup lang="ts">
 import {computed, provide, toRef} from 'vue'
 import type {BNavbarProps} from '../../types'
-import {useContainerClasses} from '../../composables'
+import {useContainerClasses, useDefaults} from '../../composables'
 import {navbarInjectionKey} from '../../utils'
 
-const props = withDefaults(defineProps<BNavbarProps>(), {
+const _props = withDefaults(defineProps<BNavbarProps>(), {
   autoClose: true,
   container: 'fluid',
   fixed: undefined,
@@ -23,6 +23,7 @@ const props = withDefaults(defineProps<BNavbarProps>(), {
   toggleable: false,
   variant: null,
 })
+const props = useDefaults(_props, 'BNavbar')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

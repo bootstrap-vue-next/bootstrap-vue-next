@@ -1,12 +1,10 @@
 # Form Textarea
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -467,6 +465,7 @@ these methods and properties. Support will vary based on input type.
 import {data} from '../../data/components/formTextarea.data'
 import {ref, computed} from 'vue'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BFormGroup, BRow, BCol, BFormTextarea, BCard, BCardBody} from 'bootstrap-vue-next'
 

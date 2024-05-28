@@ -1,7 +1,7 @@
 <template>
   <slot name="header" v-bind="sharedSlots" />
   <component
-    :is="tag"
+    :is="props.tag"
     :id="computedId"
     ref="element"
     class="collapse"
@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import {computed, nextTick, onMounted, provide, readonly, ref, toRef, watch} from 'vue'
-import {useId} from '../composables'
+import {useDefaults, useId} from '../composables'
 import {useEventListener} from '@vueuse/core'
 import {BvTriggerableEvent, collapseInjectionKey, getTransitionDelay} from '../utils'
 import type {BCollapseProps} from '../types'
@@ -25,7 +25,7 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<BCollapseProps>(), {
+const _props = withDefaults(defineProps<BCollapseProps>(), {
   horizontal: false,
   id: undefined,
   isNav: false,
@@ -34,6 +34,8 @@ const props = withDefaults(defineProps<BCollapseProps>(), {
   toggle: false,
   visible: false,
 })
+
+const props = useDefaults(_props, 'BCollapse')
 
 const emit = defineEmits<{
   'hidden': []

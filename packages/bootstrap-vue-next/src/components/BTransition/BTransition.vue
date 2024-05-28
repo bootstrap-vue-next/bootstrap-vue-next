@@ -1,6 +1,6 @@
 <template>
   <Transition
-    v-bind="{...baseProperties, ...transProps}"
+    v-bind="{...baseProperties, ...props.transProps}"
     :appear="props.appear"
     @after-appear="emit('after-appear', $event)"
     @after-enter="emit('after-enter', $event)"
@@ -20,15 +20,17 @@
 </template>
 
 <script setup lang="ts">
+import {useDefaults} from '../../composables'
 import type {BTransitionProps} from '../../types'
 import {computed} from 'vue'
 
-const props = withDefaults(defineProps<BTransitionProps>(), {
+const _props = withDefaults(defineProps<BTransitionProps>(), {
   appear: false,
   mode: undefined,
   noFade: false,
   transProps: undefined,
 })
+const props = useDefaults(_props, 'BTransition')
 
 const emit = defineEmits<{
   'after-appear': [value: Element]

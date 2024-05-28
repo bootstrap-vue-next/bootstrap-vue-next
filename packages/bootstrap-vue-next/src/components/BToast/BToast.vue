@@ -1,52 +1,52 @@
 <template>
   <BTransition
     :no-fade="props.noFade"
-    v-bind="transProps"
+    v-bind="props.transProps"
     @before-enter="onBeforeEnter"
     @after-enter="onAfterEnter"
     @after-leave="onAfterLeave"
   >
     <div
       v-if="isToastVisible"
-      :id="id"
+      :id="props.id"
       ref="element"
       class="toast"
-      :class="[toastClass, computedClasses]"
+      :class="[props.toastClass, computedClasses]"
       tabindex="0"
       :role="!isToastVisible ? undefined : props.isStatus ? 'status' : 'alert'"
       :aria-live="!isToastVisible ? undefined : props.isStatus ? 'polite' : 'assertive'"
       :aria-atomic="!isToastVisible ? undefined : true"
     >
-      <component :is="headerTag" v-if="$slots.title || title" class="toast-header">
+      <component :is="props.headerTag" v-if="$slots.title || props.title" class="toast-header">
         <slot name="title" :hide="hideFn">
           <strong class="me-auto">
-            {{ title }}
+            {{ props.title }}
           </strong>
         </slot>
         <BCloseButton v-if="!props.noCloseButton" @click="hideFn('close')" />
       </component>
-      <template v-if="$slots.default || body">
+      <template v-if="$slots.default || props.body">
         <component
           :is="computedTag"
           class="toast-body"
           style="display: block"
-          :class="bodyClass"
+          :class="props.bodyClass"
           v-bind="computedLinkProps"
           @click="computedLink ? hideFn() : () => {}"
         >
           <slot :hide="hideFn">
-            {{ body }}
+            {{ props.body }}
           </slot>
         </component>
       </template>
       <BProgress
-        v-if="typeof modelValue === 'number' && progressProps !== undefined"
-        :animated="progressProps.animated"
-        :precision="progressProps.precision"
-        :show-progress="progressProps.showProgress"
-        :show-value="progressProps.showValue"
-        :striped="progressProps.striped"
-        :variant="progressProps.variant"
+        v-if="typeof modelValue === 'number' && props.progressProps !== undefined"
+        :animated="props.progressProps.animated"
+        :precision="props.progressProps.precision"
+        :show-progress="props.progressProps.showProgress"
+        :show-value="props.progressProps.showValue"
+        :striped="props.progressProps.striped"
+        :variant="props.progressProps.variant"
         :max="modelValue"
         :value="remainingMs"
         height="4px"
@@ -57,7 +57,7 @@
 
 <script setup lang="ts">
 import {computed, onBeforeUnmount, ref, toRef, watch, watchEffect} from 'vue'
-import {useBLinkHelper, useColorVariantClasses, useCountdown} from '../../composables'
+import {useBLinkHelper, useColorVariantClasses, useCountdown, useDefaults} from '../../composables'
 import type {BToastProps} from '../../types'
 import BTransition from '../BTransition/BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
@@ -66,7 +66,7 @@ import {useElementHover, useToNumber} from '@vueuse/core'
 import BProgress from '../BProgress/BProgress.vue'
 import {BvTriggerableEvent} from '../../utils'
 
-const props = withDefaults(defineProps<BToastProps>(), {
+const _props = withDefaults(defineProps<BToastProps>(), {
   bgVariant: null,
   body: undefined,
   bodyClass: undefined,
@@ -89,13 +89,13 @@ const props = withDefaults(defineProps<BToastProps>(), {
   // All others use defaults
   active: undefined,
   activeClass: undefined,
-  append: undefined,
   disabled: undefined,
   exactActiveClass: undefined,
   href: undefined,
   icon: undefined,
   opacity: undefined,
   opacityHover: undefined,
+  stretched: false,
   rel: undefined,
   replace: undefined,
   routerComponentName: undefined,
@@ -109,6 +109,7 @@ const props = withDefaults(defineProps<BToastProps>(), {
   variant: undefined,
   // End link props
 })
+const props = useDefaults(_props, 'BToast')
 
 const emit = defineEmits<{
   'close': [value: BvTriggerableEvent]

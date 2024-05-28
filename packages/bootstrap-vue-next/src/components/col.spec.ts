@@ -22,7 +22,7 @@ describe('col', () => {
       props: {cols: '6'},
     })
     expect(wrapper.classes()).toContain('col-6')
-    await wrapper.setProps({cols: null})
+    await wrapper.setProps({cols: undefined})
     expect(wrapper.classes()).not.toContain('col-6')
   })
 
@@ -31,7 +31,7 @@ describe('col', () => {
       props: {offset: '6'},
     })
     expect(wrapper.classes()).toContain('offset-6')
-    await wrapper.setProps({offset: null})
+    await wrapper.setProps({offset: undefined})
     expect(wrapper.classes()).not.toContain('offset-6')
   })
 
@@ -40,7 +40,7 @@ describe('col', () => {
       props: {order: '6'},
     })
     expect(wrapper.classes()).toContain('order-6')
-    await wrapper.setProps({order: null})
+    await wrapper.setProps({order: undefined})
     expect(wrapper.classes()).not.toContain('order-6')
   })
 
@@ -49,7 +49,7 @@ describe('col', () => {
       props: {alignSelf: 'baseline'},
     })
     expect(wrapper.classes()).toContain('align-self-baseline')
-    await wrapper.setProps({alignSelf: null})
+    await wrapper.setProps({alignSelf: undefined})
     expect(wrapper.classes()).not.toContain('align-self-baseline')
   })
 

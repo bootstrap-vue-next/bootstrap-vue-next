@@ -1,12 +1,12 @@
 <template>
   <component
-    :is="tag"
+    :is="props.tag"
     :class="computedClasses"
-    :role="label || hasLabelSlot ? role : null"
-    :aria-hidden="label || hasLabelSlot ? null : true"
+    :role="props.label || hasLabelSlot ? props.role : null"
+    :aria-hidden="props.label || hasLabelSlot ? null : true"
   >
-    <span v-if="label || hasLabelSlot" class="visually-hidden">
-      <slot name="label">{{ label }}</slot>
+    <span v-if="props.label || hasLabelSlot" class="visually-hidden">
+      <slot name="label">{{ props.label }}</slot>
     </span>
   </component>
 </template>
@@ -15,8 +15,9 @@
 import {computed, toRef} from 'vue'
 import type {BSpinnerProps} from '../types'
 import {isEmptySlot} from '../utils'
+import {useDefaults} from '../composables'
 
-const props = withDefaults(defineProps<BSpinnerProps>(), {
+const _props = withDefaults(defineProps<BSpinnerProps>(), {
   label: undefined,
   role: 'status',
   small: false,
@@ -24,6 +25,8 @@ const props = withDefaults(defineProps<BSpinnerProps>(), {
   type: 'border',
   variant: null,
 })
+
+const props = useDefaults(_props, 'BSpinner')
 
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

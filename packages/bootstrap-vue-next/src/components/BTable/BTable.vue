@@ -114,7 +114,7 @@
               <template #overlay>
                 <div class="d-flex align-items-center gap-2 mt-5">
                   <BSpinner />
-                  <strong>{{ busyLoadingText }}</strong>
+                  <strong>{{ props.busyLoadingText }}</strong>
                 </div>
               </template>
             </BOverlay>
@@ -127,7 +127,7 @@
 
 <script setup lang="ts" generic="T">
 import {useToNumber} from '@vueuse/core'
-import {computed, onMounted, ref, type Ref, toRef, watch} from 'vue'
+import {computed, onMounted, type Ref, ref, toRef, watch} from 'vue'
 import type {
   BTableProps,
   BTableSortBy,
@@ -144,8 +144,9 @@ import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
 import BTr from './BTr.vue'
 import {isTableField, isTableItem} from '../../types/TableTypes'
+import {useDefaults} from '../../composables'
 
-const props = withDefaults(defineProps<BTableProps<T>>(), {
+const _props = withDefaults(defineProps<BTableProps<T>>(), {
   noSortableIcon: false,
   perPage: Number.POSITIVE_INFINITY,
   filter: undefined,
@@ -214,6 +215,7 @@ const props = withDefaults(defineProps<BTableProps<T>>(), {
   stickyHeader: undefined,
   // End BTableSimple props
 })
+const props = useDefaults(_props, 'BTable')
 
 const emit = defineEmits<{
   'filtered': [value: T[]]
@@ -226,6 +228,7 @@ const emit = defineEmits<{
   'row-unselected': [value: T]
   'selection': [value: T[]]
   'sorted': [value: BTableSortBy]
+  'change': [value: T[]]
 }>()
 
 const sortByModel = defineModel<BTableSortBy[] | undefined>('sortBy', {
@@ -262,18 +265,28 @@ const selectedItemsSetUtilities = {
   },
   delete: (item: T) => {
     const value = new Set(selectedItemsToSet.value)
-    value.delete(item)
+    if (props.primaryKey) {
+      const pkey: string = props.primaryKey
+      selectedItemsModel.value.forEach((v, i) => {
+        const selectedKey = get(v, pkey)
+        const itemKey = get(item, pkey)
+
+        if (!!selectedKey && !!itemKey && selectedKey === itemKey) {
+          value.delete(selectedItemsModel.value[i])
+        }
+      })
+    } else {
+      value.delete(item)
+    }
     selectedItemsToSet.value = value
     emit('row-unselected', item)
   },
-  /* TODO
-  This has method and the delete method suffer from an error when using a non-reactive source as the items prop
-  ```ts
-  const items = [{first_name: 'Geneva', last_name: 'Wilson', age: 89},{first_name: 'Jami', last_name: 'Carney', age: 38}]
-  ```
-  For some reason, the reference of the object gets lost. However, when you use an actual ref(), it works just fine
-  Getting the reference properly will fix all outstanding issues
-  */
+  set: (items: T[]) => {
+    selectedItemsToSet.value = new Set(items)
+    selectedItemsToSet.value.forEach((item) => {
+      emit('row-unselected', item)
+    })
+  },
   has: (item: T) => {
     if (!props.primaryKey) return selectedItemsToSet.value.has(item)
 
@@ -425,8 +438,24 @@ const computedItems = computed<T[]>(() => {
               (!props.filterable?.includes(key) && !!props.filterable?.length)
             )
               return false
-            const itemValue: string =
-              typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
+            const realVal = (): string => {
+              const filterField = computedFields.value.find((el) => {
+                if (isTableField(el)) return el.key === key
+
+                return false
+              })
+              if (isTableField(filterField) && !!filterField.filterByFormatted) {
+                const formatter =
+                  typeof filterField.filterByFormatted === 'function'
+                    ? filterField.filterByFormatted
+                    : filterField.formatter
+                if (formatter) {
+                  return formatter(val, String(filterField.key), item) as string
+                }
+              }
+              return typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
+            }
+            const itemValue: string = realVal()
             return itemValue.toLowerCase().includes(props.filter?.toLowerCase() ?? '')
           })
         : true
@@ -484,6 +513,10 @@ const computedDisplayItems = computed<T[]>(() => {
   )
 })
 
+watch(computedDisplayItems, (v) => {
+  emit('change', v)
+})
+
 const handleRowSelection = (
   row: T,
   index: number,
@@ -500,12 +533,11 @@ const handleRowSelection = (
     if (selectedItemsSetUtilities.has(row)) {
       selectedItemsSetUtilities.delete(row)
     } else {
-      // If it is single, we clear out everything first
       if (props.selectMode === 'single') {
-        selectedItemsSetUtilities.clear()
+        selectedItemsSetUtilities.set([row])
+      } else {
+        selectedItemsSetUtilities.add(row)
       }
-      // Then set the item
-      selectedItemsSetUtilities.add(row)
     }
   } else {
     if (ctrlClicked || metaClicked) {
@@ -522,15 +554,11 @@ const handleRowSelection = (
       const lastSelectedIndex = props.items.findIndex((i) => i === lastSelectedItem)
       const selectStartIndex = Math.min(lastSelectedIndex, index)
       const selectEndIndex = Math.max(lastSelectedIndex, index)
-      props.items.slice(selectStartIndex, selectEndIndex + 1).forEach((item) => {
-        if (!selectedItemsSetUtilities.has(item)) {
-          selectedItemsSetUtilities.add(item)
-        }
-      })
+      const items = props.items.slice(selectStartIndex, selectEndIndex + 1)
+      selectedItemsSetUtilities.set(items)
       // If nothing is being held, then we just behave like it's single mode
     } else {
-      selectedItemsSetUtilities.clear()
-      selectedItemsSetUtilities.add(row)
+      selectedItemsSetUtilities.set([row])
     }
   }
   // Notify
@@ -549,8 +577,6 @@ const handleFieldSorting = (field: TableField<T>) => {
 
   const fieldKey = typeof field === 'object' && field !== null ? field.key : field
   const fieldSortable = typeof field === 'object' && field !== null ? field.sortable : false
-
-  // TODO implement rules for noSortReset
 
   if (!(isSortable.value === true && fieldSortable === true)) return
 

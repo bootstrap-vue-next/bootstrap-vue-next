@@ -30,10 +30,10 @@ import type {BFormRadioGroupProps, RadioValue} from '../../types'
 import {computed, provide, ref, toRef} from 'vue'
 import {radioGroupKey} from '../../utils'
 import BFormRadio from './BFormRadio.vue'
-import {getGroupAttr, getGroupClasses, useId} from '../../composables'
+import {getGroupAttr, getGroupClasses, useDefaults, useId} from '../../composables'
 import {useFocus} from '@vueuse/core'
 
-const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
+const _props = withDefaults(defineProps<BFormRadioGroupProps>(), {
   ariaInvalid: undefined,
   autofocus: false,
   buttonVariant: 'secondary',
@@ -55,6 +55,7 @@ const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
   validated: false,
   valueField: 'value',
 })
+const props = useDefaults(_props, 'BFormRadioGroup')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

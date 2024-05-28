@@ -1,7 +1,7 @@
 <template>
   <img
     :class="computedClasses"
-    :src="!props.blank ? src : computedBlankImgSrc"
+    :src="!props.blank ? props.src : computedBlankImgSrc"
     :width="computedDimentions.width || undefined"
     :height="computedDimentions.height || undefined"
     :srcset="!props.blank ? computedSrcset : undefined"
@@ -12,16 +12,14 @@
 
 <script setup lang="ts">
 import type {BImgProps} from '../types'
-import {useRadiusElementClasses} from '../composables'
+import {useDefaults, useRadiusElementClasses} from '../composables'
 import {computed, toRef} from 'vue'
 import {useToNumber} from '@vueuse/core'
 
-const props = withDefaults(defineProps<BImgProps>(), {
+const _props = withDefaults(defineProps<BImgProps>(), {
   blank: false,
   blankColor: 'transparent',
   block: false,
-  center: false,
-  end: false,
   fluid: false,
   fluidGrow: false,
   height: undefined,
@@ -29,7 +27,7 @@ const props = withDefaults(defineProps<BImgProps>(), {
   sizes: undefined,
   src: undefined,
   srcset: undefined,
-  start: false,
+  placement: undefined,
   thumbnail: false,
   width: undefined,
   // RadiusElementExtendables props
@@ -40,6 +38,7 @@ const props = withDefaults(defineProps<BImgProps>(), {
   roundedTop: undefined,
   // End RadiusElementExtendables props
 })
+const props = useDefaults(_props, 'BImg')
 
 const heightNumber = useToNumber(() => props.height ?? NaN)
 const widthNumber = useToNumber(() => props.width ?? NaN)
@@ -78,13 +77,9 @@ const computedDimentions = computed<{height: number | undefined; width: number |
   const width = Number.isNaN(widthNumber.value) ? undefined : widthNumber.value
   const height = Number.isNaN(heightNumber.value) ? undefined : heightNumber.value
   if (props.blank) {
-    if (width !== undefined && height === undefined) {
-      return {height: width, width}
-    }
-    if (width === undefined && height !== undefined) {
-      return {height, width: height}
-    }
-    return {height: 1, width: 1}
+    if (width !== undefined && height === undefined) return {height: width, width}
+    if (width === undefined && height !== undefined) return {height, width: height}
+    if (width === undefined && height === undefined) return {height: 1, width: 1}
   }
   return {
     width,
@@ -96,18 +91,20 @@ const computedBlankImgSrc = toRef(() =>
   makeBlankImgSrc(computedDimentions.value.width, computedDimentions.value.height, props.blankColor)
 )
 
-const alignment = toRef(() =>
-  props.start ? 'float-start' : props.end ? 'float-end' : props.center ? 'mx-auto' : undefined
-)
+const computedAlignment = computed(() => ({
+  'float-start': props.placement === 'start',
+  'float-end': props.placement === 'end',
+  'mx-auto': props.placement === 'center',
+}))
 
 const computedClasses = computed(() => [
   radiusElementClasses.value,
+  computedAlignment.value,
   {
     'img-thumbnail': props.thumbnail,
     'img-fluid': props.fluid || props.fluidGrow,
     'w-100': props.fluidGrow,
-    [`${alignment.value}`]: alignment.value !== undefined,
-    'd-block': props.block || props.center,
+    'd-block': props.block || props.placement === 'center',
   },
 ])
 

@@ -64,7 +64,6 @@ describe('dropdown', () => {
     expect($ul.classes()).toContain('foobar')
   })
 
-  // TODO replace this with style pos items
   it.skip('child ul has class dropdown-menu-end when prop right', async () => {
     const wrapper = mount(BDropdown, {
       props: {right: true},

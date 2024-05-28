@@ -1,12 +1,10 @@
 # Form Spinbutton
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -195,14 +193,7 @@ By default `BFormSpinbutton` will format the displayed number in the users brows
   <label for="sb-locales">Locale</label>
   <BFormSelect id="sb-locales" v-model="locale" :options="locales" />
   <label for="sb-local" class="mt-2">Spin button with locale</label>
-  <BFormSpinbutton
-    id="sb-locale"
-    v-model="value"
-    :locale="locale"
-    min="0"
-    max="10"
-    step="0.125"
-  />
+  <BFormSpinbutton id="sb-locale" v-model="value" :locale="locale" min="0" max="10" step="0.125" />
   <p>Value: {{ value }}</p>
 </template>
 
@@ -211,11 +202,11 @@ const value = ref(0)
 
 const locale = ref('fr-CA')
 const locales = [
-  { value: 'en', text: 'English' },
-  { value: 'de', text: 'German' },
-  { value: 'fr-CA', text: 'French (Canadian)' },
-  { value: 'fa', text: 'Persian' },
-  { value: 'ar-EG', text: 'Arabic (Egyptian)' }
+  {value: 'en', text: 'English'},
+  {value: 'de', text: 'German'},
+  {value: 'fr-CA', text: 'French (Canadian)'},
+  {value: 'fa', text: 'Persian'},
+  {value: 'ar-EG', text: 'Arabic (Egyptian)'},
 ] as const
 </script>
 ```
@@ -242,13 +233,7 @@ To provide a formatter function, set the prop `formatter-fn` to a method referen
 
 ```vue
 <template>
-  <BFormSpinbutton
-    v-model="value"
-    :formatter-fn="dayFormatter"
-    min="0"
-    max="6"
-    wrap
-  />
+  <BFormSpinbutton v-model="value" :formatter-fn="dayFormatter" min="0" max="6" wrap />
   <p>Value: {{ value }}</p>
 </template>
 
@@ -330,12 +315,7 @@ The following example illustrates the difference between the `update:modelValue`
 ```vue
 <template>
   <label for="sb-input">Spin button - input and change events</label>
-  <BFormSpinbutton
-    id="sb-input"
-    v-model="value1"
-    @change="value2 = $event"
-    wrap
-  />
+  <BFormSpinbutton id="sb-input" v-model="value1" @change="value2 = $event" wrap />
   <p>Input event: {{ value1 }}</p>
   <p>Change event: {{ value2 }}</p>
 </template>
@@ -367,6 +347,7 @@ Note the the `repeat-delay`, `repeat-threshold` and `repeat-interval` only appli
 <script setup lang="ts">
 import {data} from '../../data/components/formSpinbutton.data'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BButton, BProgressBar, BCard, BCardBody, BProgress, BFormSpinbutton, BFormSelect, BRow, BCol} from 'bootstrap-vue-next'
 import {ref} from 'vue'

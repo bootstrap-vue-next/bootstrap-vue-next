@@ -1,7 +1,7 @@
 <template>
-  <component :is="tag" :id="id" class="tabs" :class="computedClasses">
+  <component :is="props.tag" :id="props.id" class="tabs" :class="computedClasses">
     <ReusableEmptyTab.define>
-      <div class="tab-content" :class="contentClass">
+      <div class="tab-content" :class="props.contentClass">
         <slot />
         <div
           v-if="showEmpty"
@@ -15,12 +15,17 @@
     </ReusableEmptyTab.define>
 
     <ReusableEmptyTab.reuse v-if="props.end" />
-    <div :class="[navWrapperClass, {'card-header': props.card, 'ms-auto': vertical && props.end}]">
+    <div
+      :class="[
+        props.navWrapperClass,
+        {'card-header': props.card, 'ms-auto': vertical && props.end},
+      ]"
+    >
       <ul
         class="nav"
-        :class="[navTabsClasses, navClass]"
+        :class="[navTabsClasses, props.navClass]"
         role="tablist"
-        :aria-orientation="vertical ? 'vertical' : 'horizontal'"
+        :aria-orientation="props.vertical ? 'vertical' : 'horizontal'"
       >
         <slot name="tabs-start" />
         <li
@@ -60,12 +65,11 @@
 <script setup lang="ts">
 import {computed, nextTick, provide, type Ref, ref, toRef, unref, watch} from 'vue'
 import {BvEvent, tabsInjectionKey} from '../../utils'
-import {useAlignment} from '../../composables'
+import {useAlignment, useDefaults} from '../../composables'
 import type {BTabsProps, TabType} from '../../types'
 import {createReusableTemplate} from '@vueuse/core'
-// TODO this component needs a desperate refactoring to use provide/inject and not the complicated slot manipulation logic it's doing now
 
-const props = withDefaults(defineProps<BTabsProps>(), {
+const _props = withDefaults(defineProps<BTabsProps>(), {
   activeNavItemClass: undefined,
   activeTabClass: undefined,
   align: undefined,
@@ -90,6 +94,7 @@ const props = withDefaults(defineProps<BTabsProps>(), {
   tabClass: undefined,
   vertical: false,
 })
+const props = useDefaults(_props, 'BTabs')
 
 const emit = defineEmits<{
   'activate-tab': [v1: number, v2: number, v3: BvEvent]

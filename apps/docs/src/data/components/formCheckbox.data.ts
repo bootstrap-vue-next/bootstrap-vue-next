@@ -40,7 +40,7 @@ export default {
         {
           prop: 'buttonVariant',
           type: 'ButtonVariant | null',
-          default: null,
+          default: 'secondary',
           description: "Applies one of Bootstrap's theme colors when in `button` mode",
         },
         {
@@ -83,7 +83,7 @@ export default {
           type: 'CheckboxValue | readonly CheckboxValue[]',
           default: undefined,
           description:
-            'The current value of the checkbox(es). Must be an array when there are multiple checkboxes bound to the same v-model',
+            'The current value of the checkbox(es). Must be an array when there are multiple checkboxes bound to the same v-model. Looking for `value` - use `modelValue` instead.',
         },
         {
           prop: 'name',
@@ -150,7 +150,7 @@ export default {
             {
               arg: 'checked',
               description:
-                'Value of the checkbox.  Value will be an array for grouped checkboxes or a single value for standalone checkboxes.',
+                'Value of the checkbox. Value will be an array for grouped checkboxes or a single value for standalone checkboxes. Looking for the `input` or `change` event - use `update:modelValue` instead.',
               type: 'CheckboxValue | readonly CheckboxValue[]',
             },
           ],
@@ -245,7 +245,7 @@ export default {
           type: 'readonly CheckboxValue[]',
           default: '() => []',
           description:
-            'The current value of the checked checkboxes in the group. Must be an array when there are multiple checkboxes',
+            'The current value of the checked checkboxes in the group. Must be an array when there are multiple checkboxes. . Looking for `value` - use `modelValue` instead.',
         },
         {
           prop: 'name',
@@ -324,7 +324,8 @@ export default {
       emits: [
         {
           event: 'update:modelValue',
-          description: 'Emitted when the selected value(s) are changed',
+          description:
+            'Emitted when the selected value(s) are changed. . Looking for the `input` or `change` event - use `update:modelValue` instead.',
           args: [
             {
               arg: 'update:modelValue',

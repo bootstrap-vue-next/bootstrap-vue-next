@@ -4,8 +4,8 @@
     ref="input"
     v-model="localValue"
     :class="computedClasses"
-    :name="name"
-    :form="form || undefined"
+    :name="props.name"
+    :form="props.form || undefined"
     :multiple="props.multiple || undefined"
     :size="computedSelectSize"
     :disabled="props.disabled"
@@ -19,10 +19,10 @@
         v-if="isComplex(option)"
         :label="option.label"
         :options="option.options"
-        :value-field="valueField"
-        :text-field="textField"
-        :html-field="htmlField"
-        :disabled-field="disabledField"
+        :value-field="props.valueField"
+        :text-field="props.textField"
+        :html-field="props.htmlField"
+        :disabled-field="props.disabledField"
       />
       <BFormSelectOption v-else :value="option.value" :disabled="option.disabled">
         <!-- eslint-disable-next-line vue/no-v-html -->
@@ -41,10 +41,10 @@ import type {BFormSelectProps, ComplexSelectOptionRaw, SelectOption} from '../..
 import {computed, ref, toRef} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
-import {useAriaInvalid, useFormSelect, useId, useStateClass} from '../../composables'
+import {useAriaInvalid, useDefaults, useFormSelect, useId, useStateClass} from '../../composables'
 import {useFocus, useToNumber} from '@vueuse/core'
 
-const props = withDefaults(defineProps<BFormSelectProps>(), {
+const _props = withDefaults(defineProps<BFormSelectProps>(), {
   ariaInvalid: undefined,
   autofocus: false,
   disabled: false,
@@ -66,6 +66,7 @@ const props = withDefaults(defineProps<BFormSelectProps>(), {
   textField: 'text',
   valueField: 'value',
 })
+const props = useDefaults(_props, 'BFormSelect')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -71,6 +71,16 @@ describe('row', () => {
     await wrapper.setProps({noGutters: false})
     expect(wrapper.classes()).not.toContain('g-0')
   })
-  // Did not test has rowColClasses existing or getClasses existing
-  // Is that up to a unit test? Or a component test? Or Both?
+
+  it('cols classes', () => {
+    const wrapper = mount(BRow, {
+      props: {cols: 1, colsSm: 2, colsMd: 3, colsLg: 4, colsXl: 5, colsXxl: 6},
+    })
+    expect(wrapper.classes()).toContain('row-cols-1')
+    expect(wrapper.classes()).toContain('row-cols-sm-2')
+    expect(wrapper.classes()).toContain('row-cols-md-3')
+    expect(wrapper.classes()).toContain('row-cols-lg-4')
+    expect(wrapper.classes()).toContain('row-cols-xl-5')
+    expect(wrapper.classes()).toContain('row-cols-xxl-6')
+  })
 })

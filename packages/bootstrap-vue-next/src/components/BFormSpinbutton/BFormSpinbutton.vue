@@ -6,7 +6,7 @@
     role="group"
     :lang="computedLocale"
     :tabindex="props.disabled ? undefined : '-1'"
-    :title="ariaLabel"
+    :title="props.ariaLabel"
     @click="focused = true"
   >
     <!-- eslint-disable-next-line prettier/prettier -->
@@ -23,11 +23,11 @@
       </button>
     </slot>
     <input
-      v-if="name && !props.disabled"
+      v-if="props.name && !props.disabled"
       key="hidden"
       type="hidden"
-      :name="name"
-      :form="form"
+      :name="props.name"
+      :form="props.form"
       :value="valueAsFixed"
     />
     <output
@@ -39,7 +39,7 @@
       :tabindex="props.disabled ? undefined : '0'"
       role="spinbutton"
       aria-live="off"
-      :aria-label="ariaLabel || undefined"
+      :aria-label="props.ariaLabel || undefined"
       :aria-invalid="
         props.state === false || (!modelValue !== null && props.required) ? true : undefined
       "
@@ -50,7 +50,7 @@
       :aria-valuetext="modelValue !== null ? computedFormatter(modelValue) : undefined"
     >
       <bdi>
-        {{ (modelValue !== null ? computedFormatter(modelValue) : placeholder) || '' }}
+        {{ (modelValue !== null ? computedFormatter(modelValue) : props.placeholder) || '' }}
       </bdi>
     </output>
     <!-- eslint-disable-next-line prettier/prettier -->
@@ -82,11 +82,11 @@ import {
   CODE_UP,
 } from '../../constants/codes'
 import {onKeyStroke, useFocus, useToNumber} from '@vueuse/core'
-import {useId, useRtl} from '../../composables'
+import {useDefaults, useId, useRtl} from '../../composables'
 
 const KEY_CODES = [CODE_UP, CODE_DOWN, CODE_HOME, CODE_END, CODE_PAGEUP, CODE_PAGEDOWN]
 
-const props = withDefaults(defineProps<BFormSpinbuttonProps>(), {
+const _props = withDefaults(defineProps<BFormSpinbuttonProps>(), {
   ariaControls: undefined,
   ariaLabel: undefined,
   disabled: false,
@@ -113,6 +113,7 @@ const props = withDefaults(defineProps<BFormSpinbuttonProps>(), {
   vertical: false,
   wrap: false,
 })
+const props = useDefaults(_props, 'BFormSpinbutton')
 
 const emit = defineEmits<{
   change: [value: number | null]
@@ -129,7 +130,6 @@ const modelValue = defineModel<number | null>({
   default: null,
 })
 
-// TODO focus system
 const element = ref<HTMLElement | null>(null)
 
 const {focused} = useFocus(element)

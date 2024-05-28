@@ -1,18 +1,23 @@
 <template>
   <DefineTemplate>
     <label class="input-group-text" :for="computedId">
-      {{ browserText }}
+      {{ props.browserText }}
     </label>
   </DefineTemplate>
 
-  <label v-if="hasLabelSlot || label" class="form-label" :class="labelClass" :for="computedId">
+  <label
+    v-if="hasLabelSlot || props.label"
+    class="form-label"
+    :class="props.labelClass"
+    :for="computedId"
+  >
     <slot name="label">
-      {{ label }}
+      {{ props.label }}
     </slot>
   </label>
 
   <div class="input-group form-input-file">
-    <ReusableTemplate v-if="placement === 'start'" />
+    <ReusableTemplate v-if="props.placement === 'start'" />
     <input
       :id="computedId"
       v-bind="$attrs"
@@ -20,22 +25,22 @@
       type="file"
       class="form-control"
       :class="computedClasses"
-      :form="form"
-      :name="name"
+      :form="props.form"
+      :name="props.name"
       :multiple="props.multiple"
       :disabled="props.disabled"
       :capture="props.capture"
       :accept="computedAccept || undefined"
       :required="props.required || undefined"
-      :aria-label="ariaLabel"
-      :aria-labelledby="ariaLabelledby"
+      :aria-label="props.ariaLabel"
+      :aria-labelledby="props.ariaLabelledby"
       :aria-required="props.required || undefined"
       :directory="props.directory"
       :webkitdirectory="props.directory"
       @change="onChange"
       @drop="onDrop"
     />
-    <ReusableTemplate v-if="placement === 'end'" />
+    <ReusableTemplate v-if="props.placement === 'end'" />
   </div>
 </template>
 
@@ -43,7 +48,7 @@
 import {createReusableTemplate, useFocus} from '@vueuse/core'
 import {computed, ref, toRef, watch} from 'vue'
 import type {BFormFileProps} from '../../types'
-import {useId, useStateClass} from '../../composables'
+import {useDefaults, useId, useStateClass} from '../../composables'
 import {isEmptySlot} from '../../utils'
 
 defineOptions({
@@ -55,7 +60,7 @@ const slots = defineSlots<{
   label?: (props: Record<string, never>) => any
 }>()
 
-const props = withDefaults(defineProps<BFormFileProps>(), {
+const _props = withDefaults(defineProps<BFormFileProps>(), {
   ariaLabel: undefined,
   ariaLabelledby: undefined,
   accept: '',
@@ -78,10 +83,12 @@ const props = withDefaults(defineProps<BFormFileProps>(), {
   size: undefined,
   state: null,
 })
+const props = useDefaults(_props, 'BFormFile')
 
 const modelValue = defineModel<File | File[] | null>({
   default: null,
 })
+
 const computedId = useId(() => props.id)
 
 // TODO noTraverse is not implemented yet

@@ -1,5 +1,5 @@
 <template>
-  <optgroup :label="label">
+  <optgroup :label="props.label">
     <slot name="first" />
     <BFormSelectOption
       v-for="(option, index) in normalizedOptsWrapper"
@@ -20,11 +20,11 @@
 
 <script setup lang="ts" generic="T">
 import BFormSelectOption from './BFormSelectOption.vue'
-import {useFormSelect} from '../../composables'
+import {useDefaults, useFormSelect} from '../../composables'
 import type {BFormSelectOptionGroupProps, SelectOption} from '../../types'
 import {computed} from 'vue'
 
-const props = withDefaults(defineProps<BFormSelectOptionGroupProps>(), {
+const _props = withDefaults(defineProps<BFormSelectOptionGroupProps>(), {
   disabledField: 'disabled',
   htmlField: 'html',
   label: undefined,
@@ -32,6 +32,7 @@ const props = withDefaults(defineProps<BFormSelectOptionGroupProps>(), {
   textField: 'text',
   valueField: 'value',
 })
+const props = useDefaults(_props, 'BFormSelectOptionGroup')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

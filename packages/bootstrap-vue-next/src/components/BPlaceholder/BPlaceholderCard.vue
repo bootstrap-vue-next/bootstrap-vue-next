@@ -1,14 +1,13 @@
 <template>
-  <BCard :img-bottom="imgBottom">
+  <BCard :img-placement="props.imgPlacement">
     <template v-if="!props.noImg" #img>
       <slot name="img">
         <BCardImg
-          :blank="!imgSrc ? true : false"
-          :blank-color="imgBlankColor"
-          :height="!imgSrc ? imgHeight : undefined"
-          :src="imgSrc"
-          :top="!imgBottom"
-          :bottom="imgBottom"
+          :blank="!props.imgSrc ? true : false"
+          :blank-color="props.imgBlankColor"
+          :height="!props.imgSrc ? props.imgHeight : undefined"
+          :src="props.imgSrc"
+          :img-placement="props.imgPlacement"
           :style="{cursor: 'wait'}"
         />
       </slot>
@@ -17,10 +16,10 @@
     <template v-if="!props.noHeader" #header>
       <slot name="header">
         <BPlaceholder
-          :width="headerWidth"
-          :variant="headerVariant"
-          :animation="headerAnimation"
-          :size="headerSize"
+          :width="props.headerWidth"
+          :variant="props.headerVariant"
+          :animation="props.headerAnimation"
+          :size="props.headerSize"
         />
       </slot>
     </template>
@@ -35,10 +34,10 @@
       <slot name="footer">
         <component
           :is="footerComponent"
-          :width="footerWidth"
-          :animation="footerAnimation"
-          :size="props.noButton ? footerSize : undefined"
-          :variant="footerVariant"
+          :width="props.footerWidth"
+          :animation="props.footerAnimation"
+          :size="props.noButton ? props.footerSize : undefined"
+          :variant="props.footerVariant"
         />
       </slot>
     </template>
@@ -52,8 +51,9 @@ import BPlaceholder from './BPlaceholder.vue'
 import BPlaceholderButton from './BPlaceholderButton.vue'
 import type {BPlaceholderCardProps} from '../../types'
 import {computed, toRef} from 'vue'
+import {useDefaults} from '../../composables'
 
-const props = withDefaults(defineProps<BPlaceholderCardProps>(), {
+const _props = withDefaults(defineProps<BPlaceholderCardProps>(), {
   animation: undefined,
   footerAnimation: undefined,
   footerSize: 'md',
@@ -64,7 +64,7 @@ const props = withDefaults(defineProps<BPlaceholderCardProps>(), {
   headerVariant: undefined,
   headerWidth: 100,
   imgBlankColor: '#868e96',
-  imgBottom: false,
+  imgPlacement: 'top',
   imgHeight: 100,
   imgSrc: undefined,
   noButton: false,
@@ -74,6 +74,7 @@ const props = withDefaults(defineProps<BPlaceholderCardProps>(), {
   size: 'md',
   variant: undefined,
 })
+const props = useDefaults(_props, 'BPlaceholderCard')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

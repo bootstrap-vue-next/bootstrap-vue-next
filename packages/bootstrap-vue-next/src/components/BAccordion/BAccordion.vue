@@ -7,10 +7,10 @@
 <script setup lang="ts">
 import {computed, provide, readonly, toRef} from 'vue'
 import {accordionInjectionKey} from '../../utils'
-import {useId} from '../../composables'
+import {useDefaults, useId} from '../../composables'
 import type {BAccordionProps} from '../../types'
 
-const props = withDefaults(defineProps<BAccordionProps>(), {
+const _props = withDefaults(defineProps<BAccordionProps>(), {
   flush: false,
   free: false,
   id: undefined,
@@ -20,6 +20,8 @@ defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
 }>()
+
+const props = useDefaults(_props, 'BAccordion')
 
 const modelValue = defineModel<string | undefined>({
   default: undefined,

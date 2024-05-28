@@ -1,5 +1,7 @@
+import type {Component} from 'vue'
 import * as Components from '../components'
 import * as Directives from '../directives'
+import type {BvnComponentProps} from './ComponentProps'
 
 export type ComponentType = keyof typeof Components
 export type DirectiveType = keyof typeof Directives
@@ -10,6 +12,12 @@ export interface BootstrapVueOptions {
    * @default false
    */
   components?: boolean | ConfigurationOption<ComponentType>
+  /**
+   * Aliases for components where the key is the alias name and the value is the component name
+   *
+   * @default {}
+   */
+  aliases?: Record<string, ComponentType | Component>
   /**
    * @default false
    */
@@ -63,5 +71,14 @@ export interface BootstrapVueOptions {
      * @default true
      */
     toast?: boolean
+    components?: Partial<
+      BvnComponentProps & {
+        /**
+         * @hint Globally sets all props with the matching name
+         */
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        global: Record<string, any>
+      }
+    >
   }
 }

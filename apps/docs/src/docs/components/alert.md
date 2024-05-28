@@ -1,12 +1,10 @@
 # Alert
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -345,6 +343,7 @@ const stop = () => myAlert.value?.stop()
 import {data} from '../../data/components/alert.data'
 import {BAlert, BProgress, BButton, BButtonGroup} from 'bootstrap-vue-next'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {ref, computed} from 'vue'
 

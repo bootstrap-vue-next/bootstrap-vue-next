@@ -12,18 +12,18 @@
   },
   "dependencies": {
     "bootstrap-vue-next": "workspace:^",
-    "vue": "^3.4.25",
-    "vue-router": "^4.3.0"
+    "vue": "^3.4.27",
+    "vue-router": "^4.3.2"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
-    "@types/node": "^20.12.7",
+    "@types/node": "^20.12.12",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/tsconfig": "^0.5.1",
     "bootstrap": "^5.3.3",
     "typescript": "^5.4.5",
-    "vite": "^5.2.10",
-    "vue-tsc": "^2.0.14"
+    "vite": "^5.2.11",
+    "vue-tsc": "^2.0.19"
   },
   "lint-staged": {
     "*.{js,ts,vue}": "eslint --cache --fix",

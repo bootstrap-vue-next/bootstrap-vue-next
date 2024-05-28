@@ -1,12 +1,12 @@
 <template>
   <component
-    :is="tag"
+    :is="props.tag"
     :id="computedId"
     ref="el"
     class="tab-pane"
     :class="computedClasses"
     role="tabpanel"
-    :aria-labelledby="buttonId"
+    :aria-labelledby="computedButtonId"
     v-bind="attrs"
   >
     <slot v-if="showSlot" />
@@ -15,11 +15,11 @@
 
 <script setup lang="ts">
 import {computed, inject, onMounted, onUnmounted, ref, toRef, useAttrs, watch} from 'vue'
-import {useId} from '../../composables'
+import {useDefaults, useId} from '../../composables'
 import type {BTabProps, TabType} from '../../types'
 import {tabsInjectionKey} from '../../utils'
 
-const props = withDefaults(defineProps<BTabProps>(), {
+const _props = withDefaults(defineProps<BTabProps>(), {
   buttonId: undefined,
   disabled: false,
   id: undefined,
@@ -32,6 +32,7 @@ const props = withDefaults(defineProps<BTabProps>(), {
   titleLinkAttrs: undefined,
   titleLinkClass: undefined,
 })
+const props = useDefaults(_props, 'BTab')
 
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -50,7 +51,7 @@ const activeModel = defineModel<boolean>('active', {
 
 const parentData = inject(tabsInjectionKey, null)
 const computedId = useId(() => props.id, 'tabpane')
-const buttonId = useId(() => props.buttonId, 'tab')
+const computedButtonId = useId(() => props.buttonId, 'tab')
 
 const lazyRenderCompleted = ref(false)
 const el = ref<HTMLElement | null>(null)
@@ -61,7 +62,7 @@ const tab = computed(
   () =>
     ({
       id: computedId.value,
-      buttonId: buttonId.value,
+      buttonId: computedButtonId.value,
       disabled: props.disabled,
       title: props.title,
       titleComponent: slots.title,

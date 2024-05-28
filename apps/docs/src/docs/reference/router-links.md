@@ -1,13 +1,10 @@
 # Router link support
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ContentsSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
-
+</ContentsSidebar>
 <div class="lead mb-5">
 
 Several BootstrapVue components support rendering `RouterLink` components compatible with Vue Router and Nuxt.js. For more information, see the official [Vue Router docs](https://router.vuejs.org) and official [Nuxt.js docs](https://nuxt.com/docs/api/components/nuxt-link#props).
@@ -203,5 +200,6 @@ router: { prefetchLinks: false }
 
 <script setup lang="ts">
 import HighlightCard from '../../components/HighlightCard.vue'
+import ContentsSidebar from '../../components/ContentsSidebar.vue'
 import {BAlert} from 'bootstrap-vue-next'
 </script>

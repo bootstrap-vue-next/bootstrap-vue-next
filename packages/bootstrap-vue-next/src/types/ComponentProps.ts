@@ -2,8 +2,10 @@ import type {Boundary, Middleware, Padding, RootBoundary, Strategy} from '@float
 import type {ComponentPublicInstance, TransitionProps} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {
+  AlignmentContent,
   AlignmentJustifyContent,
   AlignmentTextHorizontal,
+  AlignmentVertical,
   AriaInvalid,
   AttrsValue,
   BreadcrumbItemRaw,
@@ -15,20 +17,27 @@ import type {
   CheckboxOptionRaw,
   CheckboxValue,
   ClassValue,
+  ColBreakpointProps,
   ColorExtendables,
   ColorVariant,
+  ColsNumbers,
+  CombinedPlacement,
   CommonInputProps,
   InputType,
   LinkTarget,
   LiteralUnion,
   NoProviderTypes,
   Numberish,
+  OffsetBreakpointProps,
+  OrderBreakpointProps,
   PlaceholderAnimation,
   PlaceholderSize,
+  Placement,
   PopoverPlacement,
   RadioOptionRaw,
   RadioValue,
   RadiusElementExtendables,
+  RowColsBreakpointProps,
   Size,
   SpinnerType,
   TableField,
@@ -38,15 +47,16 @@ import type {
   TransitionMode,
   VerticalAlign,
 } from '.'
+import type * as Components from '../components'
 
 export interface BLinkProps {
   active?: boolean
   activeClass?: string
-  append?: boolean
   disabled?: boolean
   exactActiveClass?: string
   href?: string
   icon?: boolean
+  stretched?: boolean
   // noPrefetch: {type: [Boolean, String] as PropType<boolean>, default: false},
   opacity?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
   opacityHover?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
@@ -191,7 +201,7 @@ export interface BFormFileProps {
   name?: string
   noDrop?: boolean
   noTraverse?: boolean
-  placement?: 'start' | 'end'
+  placement?: Extract<Placement, 'start' | 'end'>
   required?: boolean
   size?: Size
   state?: boolean | null
@@ -432,9 +442,9 @@ export interface BNavTextProps {
 export interface BNavbarProps {
   autoClose?: boolean
   container?: boolean | 'fluid' | Breakpoint
-  fixed?: 'top' | 'bottom'
+  fixed?: Extract<Placement, 'top' | 'bottom'>
   print?: boolean
-  sticky?: 'top' | 'bottom'
+  sticky?: Extract<Placement, 'top' | 'bottom'>
   tag?: string
   toggleable?: boolean | Breakpoint
   variant?: ColorVariant | null
@@ -478,14 +488,12 @@ export interface BOffcanvasProps extends TeleporterProps {
   noFocus?: boolean
   noHeader?: boolean
   noHeaderClose?: boolean
-  // TODO standardize this. Create a dedicated type
-  // Then in components that use individual props (BImg)
-  // Make them just use prop placement
-  placement?: 'top' | 'bottom' | 'start' | 'end'
+  placement?: Placement
   shadow?: Size | boolean
   title?: string
   // responsive?: Breakpoint
   // TODO responsive doesn't work
+  width?: string
 }
 
 export interface BOverlayProps extends RadiusElementExtendables {
@@ -569,7 +577,7 @@ export interface BPlaceholderCardProps {
   headerVariant?: ColorVariant | null
   headerWidth?: Numberish
   imgBlankColor?: string
-  imgBottom?: boolean
+  imgPlacement?: Extract<Placement, 'top' | 'bottom'>
   imgHeight?: Numberish
   imgSrc?: string
   noButton?: boolean
@@ -670,8 +678,8 @@ export interface BCollapseProps {
 
 export interface BContainerProps {
   fluid?: boolean | Breakpoint
-  gutterX?: Numberish
-  gutterY?: Numberish
+  gutterX?: ColsNumbers
+  gutterY?: ColsNumbers
   tag?: string
 }
 
@@ -726,14 +734,13 @@ export interface BAvatarProps
   alt?: string
   badge?: boolean | string
   badgeBgVariant?: ColorVariant | null
-  badgeOffset?: string
-  badgeStart?: boolean
+  badgePlacement?: CombinedPlacement
   badgeTextVariant?: TextColorVariant | null
-  badgeTop?: boolean
   badgeVariant?: ColorVariant | null
+  badgePill?: boolean
+  badgeDotIndicator?: boolean
   button?: boolean
   buttonType?: ButtonType
-  icon?: string
   size?: LiteralUnion<Size, Numberish>
   square?: boolean
   src?: string
@@ -752,6 +759,7 @@ export interface BBadgeProps extends Omit<BLinkProps, 'routerTag'>, ColorExtenda
   pill?: boolean
   tag?: string
   textIndicator?: boolean
+  placement?: CombinedPlacement
 }
 
 export interface BBreadcrumbProps {
@@ -821,15 +829,11 @@ export interface BCardProps extends ColorExtendables {
   headerTextVariant?: TextColorVariant | null
   headerVariant?: ColorVariant | null
   imgAlt?: string
-  imgBottom?: boolean
-  imgEnd?: boolean
+  imgPlacement?: Placement | 'overlay'
   imgHeight?: Numberish
   imgSrc?: string
-  imgStart?: boolean
-  imgTop?: boolean
   imgWidth?: Numberish
   noBody?: boolean
-  overlay?: boolean
   subtitle?: string
   subtitleTag?: string
   subtitleTextVariant?: TextColorVariant | null
@@ -855,9 +859,8 @@ export interface BCardGroupProps {
   tag?: string
 }
 
-export interface BCardImageProps extends BImgProps {
-  bottom?: boolean
-  top?: boolean
+export interface BCardImgProps extends Omit<BImgProps, 'placement'> {
+  placement?: Placement | 'overlay'
 }
 
 export interface BCardSubtitleProps {
@@ -930,8 +933,6 @@ export interface BImgProps extends RadiusElementExtendables {
   blank?: boolean
   blankColor?: string
   block?: boolean
-  center?: boolean
-  end?: boolean
   fluid?: boolean
   fluidGrow?: boolean
   height?: Numberish
@@ -939,9 +940,9 @@ export interface BImgProps extends RadiusElementExtendables {
   sizes?: string | readonly string[]
   src?: string
   srcset?: string | readonly string[]
-  start?: boolean
   thumbnail?: boolean
   width?: Numberish
+  placement?: Extract<Placement, 'start' | 'end'> | 'center'
 }
 
 export interface BFormProps {
@@ -968,8 +969,9 @@ export interface BTableSimpleProps {
   stickyHeader?: boolean | Numberish
   striped?: boolean
   stripedColumns?: boolean
-  tableClass?: ClassValue
   variant?: ColorVariant | null
+  tableAttrs?: Readonly<AttrsValue>
+  tableClass?: ClassValue
 }
 
 export interface BTableLiteProps<T> extends BTableSimpleProps {
@@ -999,8 +1001,7 @@ export interface BTableLiteProps<T> extends BTableSimpleProps {
   primaryKey?: string
   showEmpty?: boolean
   tbodyClass?: ClassValue
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  tbodyTrAttr?: any
+  tbodyTrAttrs?: ClassValue
   // tbodyTransitionHandlers
   // tbodyTransitionProps
   tbodyTrClass?:
@@ -1028,7 +1029,6 @@ export interface BTableProps<T> extends Omit<BTableLiteProps<T>, 'tableClass'> {
   noProviderFiltering?: boolean
   sortBy?: BTableSortBy[]
   mustSort?: boolean | string[] // TODO this is a string of fields, possibly generic
-  noSortReset?: boolean
   selectable?: boolean
   multisort?: boolean
   stickySelect?: boolean
@@ -1196,7 +1196,6 @@ export interface BPopoverProps extends TeleporterProps {
         hide: number
       }>
   floatingMiddleware?: Middleware[]
-  hide?: boolean
   html?: boolean
   id?: string
   inline?: boolean
@@ -1287,4 +1286,136 @@ export interface BModalProps extends TeleporterProps {
   titleSrOnly?: boolean
   titleTag?: string
   transProps?: Readonly<BTransitionProps>
+}
+
+export interface BRowProps extends RowColsBreakpointProps {
+  tag?: string
+  gutterX?: ColsNumbers
+  gutterY?: ColsNumbers
+  noGutters?: boolean
+  alignV?: AlignmentVertical
+  alignH?: AlignmentJustifyContent
+  alignContent?: AlignmentContent
+  cols?: ColsNumbers
+}
+
+export interface BColProps extends OffsetBreakpointProps, OrderBreakpointProps, ColBreakpointProps {
+  alignSelf?: AlignmentVertical | 'auto'
+  tag?: string
+  order?: ColsNumbers
+  offset?: ColsNumbers
+  cols?: ColsNumbers | 'auto'
+  col?: boolean
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = any> = {
+  BLink: BLinkProps
+  BAccordion: BAccordionProps
+  BDropdownDivider: BDropdownDividerProps
+  BDropdownGroup: BDropdownGroupProps
+  BDropdownItem: BDropdownItemProps
+  BDropdownItemButton: BDropdownItemButtonProps
+  BDropdownText: BDropdownTextProps
+  BFormFloatingLabel: BFormFloatingLabelProps
+  BFormRow: BFormRowProps
+  BFormText: BFormTextProps
+  BFormCheckbox: BFormCheckboxProps
+  BFormCheckboxGroup: BFormCheckboxGroupProps
+  BFormFile: BFormFileProps
+  BFormInput: BFormInputProps
+  BFormRadio: BFormRadioProps
+  BFormRadioGroup: BFormRadioGroupProps
+  BFormSelect: BFormSelectProps
+  BFormSelectOption: BFormSelectOptionProps<BFormSelectOption>
+  BFormSelectOptionGroup: BFormSelectOptionGroupProps
+  BFormSpinbutton: BFormSpinbuttonProps
+  BFormTag: BFormTagProps
+  BFormTags: BFormTagsProps
+  BFormTextarea: BFormTextareaProps
+  BInputGroup: BInputGroupProps
+  BInputGroupText: BInputGroupTextProps
+  BListGroup: BListGroupProps
+  BListGroupItem: BListGroupItemProps
+  BModalOrchestrator: BModalOrchestratorProps
+  BNav: BNavProps
+  BNavForm: BNavFormProps
+  BNavItem: BNavItemProps
+  BNavText: BNavTextProps
+  BNavbar: BNavbarProps
+  BNavbarBrand: BNavbarBrandProps
+  BNavbarNav: BNavbarNavProps
+  BNavbarToggle: BNavbarToggleProps
+  BOffcanvas: BOffcanvasProps
+  BOverlay: BOverlayProps
+  BPagination: BPaginationProps
+  BPlaceholder: BPlaceholderProps
+  BPlaceholderButton: BPlaceholderButtonProps
+  BPlaceholderCard: BPlaceholderCardProps
+  BPlaceholderTable: BPlaceholderTableProps
+  BPlaceholderWrapper: BPlaceholderWrapperProps
+  BProgress: BProgressProps
+  BTab: BTabProps
+  BTabs: BTabsProps
+  BToastOrchestrator: BToastOrchestratorProps
+  BCollapse: BCollapseProps
+  BContainer: BContainerProps
+  BSpinner: BSpinnerProps
+  BAccordionItem: BAccordionItemProps
+  BAlert: BAlertProps
+  BAvatar: BAvatarProps
+  BAvatarGroup: BAvatarGroupProps
+  BBadge: BBadgeProps
+  BBreadcrumb: BBreadcrumbProps
+  BBreadcrumbItem: BBreadcrumbItemProps
+  BButton: BButtonProps
+  BButtonGroup: BButtonGroupProps
+  BButtonToolbar: BButtonToolbarProps
+  BCloseButton: BCloseButtonProps
+  BCard: BCardProps
+  BCardBody: BCardBodyProps
+  BCardGroup: BCardGroupProps
+  BCardSubtitle: BCardSubtitleProps
+  BCardText: BCardTextProps
+  BCardTitle: BCardTitleProps
+  BCarousel: BCarouselProps
+  BCarouselSlide: BCarouselSlideProps
+  BTransition: BTransitionProps
+  BImg: BImgProps
+  BForm: BFormProps
+  BTableSimple: BTableSimpleProps
+  BTableLite: BTableLiteProps<BTableLite>
+  BTable: BTableProps<BTable>
+  BTr: BTrProps
+  BThead: BTheadProps
+  BTfoot: BTfootProps
+  BTd: BTdProps
+  BTbody: BTbodyProps
+  BTh: BThProps
+  BProgressBar: BProgressBarProps
+  BInputGroupAddon: BInputGroupAddonProps
+  BDropdown: BDropdownProps
+  BToast: BToastProps
+  BPopover: BPopoverProps
+  BTooltip: BTooltipProps
+  BModal: BModalProps
+  BCardFooter: BCardHeadFootProps
+  BCardHeader: BCardHeadFootProps
+  BCardImg: BCardImgProps
+  BCol: BColProps
+  BDropdownForm: never
+  BDropdownHeader: never
+  BFormInvalidFeedback: BFormFeedbackSharedProps
+  BFormValidFeedback: BFormFeedbackSharedProps
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  BFormGroup: any
+  BInputGroupAppend: BInputGroupAddonProps
+  BInputGroupPrepend: BInputGroupAddonProps
+  BNavItemDropdown: BDropdownProps
+  BRow: BRowProps
+  BInput: BFormInputProps
+}
+
+export type BvnComponentProps = {
+  [K in keyof typeof Components]: UnmappedComponentProps[K]
 }
