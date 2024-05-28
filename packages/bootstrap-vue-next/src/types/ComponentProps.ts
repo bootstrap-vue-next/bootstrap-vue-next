@@ -1137,6 +1137,8 @@ export interface BDropdownProps extends TeleporterProps {
   id?: string
   isNav?: boolean
   lazy?: boolean
+  maxHeight?: number
+  maxWidth?: number
   menuClass?: ClassValue
   modelValue?: boolean
   noCaret?: boolean

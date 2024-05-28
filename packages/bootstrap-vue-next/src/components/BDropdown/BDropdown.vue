@@ -91,6 +91,8 @@ const _props = withDefaults(defineProps<BDropdownProps>(), {
   id: undefined,
   isNav: false,
   lazy: false,
+  maxHeight: undefined,
+  maxWidth: undefined,
   menuClass: undefined,
   noCaret: false,
   noFlip: false,
@@ -207,6 +209,8 @@ const floatingPlacement = computed(() =>
   })
 )
 const sizeStyles = ref<CSSProperties>({})
+const maxHeightToNumber = useToNumber(props.maxHeight)
+const maxWidthToNumber = useToNumber(props.maxWidth)
 const floatingMiddleware = computed<Middleware[]>(() => {
   if (props.floatingMiddleware !== undefined) {
     return props.floatingMiddleware
@@ -242,8 +246,14 @@ const floatingMiddleware = computed<Middleware[]>(() => {
         padding: props.boundaryPadding,
         apply({availableWidth, availableHeight}) {
           sizeStyles.value = {
-            maxHeight: availableHeight && modelValue.value ? `${availableHeight}px` : undefined,
-            maxWidth: availableWidth && modelValue.value ? `${availableWidth}px` : undefined,
+            maxHeight:
+              availableHeight && modelValue.value
+                ? maxHeightToNumber.value ?? `${availableHeight}px`
+                : undefined,
+            maxWidth:
+              availableWidth && modelValue.value
+                ? maxWidthToNumber.value ?? `${availableWidth}px`
+                : undefined,
           }
         },
       })
