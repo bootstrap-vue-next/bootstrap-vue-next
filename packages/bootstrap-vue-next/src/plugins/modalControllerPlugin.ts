@@ -4,6 +4,7 @@ import {
   type ComputedRef,
   type MaybeRefOrGetter,
   type Plugin,
+  ref,
   shallowRef,
   toValue,
 } from 'vue'
@@ -57,7 +58,8 @@ export default {
         ...modals.value,
         computed(() => ({
           component: toValue(obj.component) ?? BModal,
-          props: {...toValue(obj.props), _isConfirm: false, _promise, _self, _modelValue: true},
+          props: ref({...toValue(obj.props), _isConfirm: false, _promise, _self, _modelValue: true})
+            .value,
         })),
       ]
 
@@ -75,7 +77,8 @@ export default {
         ...modals.value,
         computed(() => ({
           component: toValue(obj.component) ?? BModal,
-          props: {...toValue(obj.props), _isConfirm: true, _promise, _self, _modelValue: true},
+          props: ref({...toValue(obj.props), _isConfirm: true, _promise, _self, _modelValue: true})
+            .value,
         })),
       ]
 
