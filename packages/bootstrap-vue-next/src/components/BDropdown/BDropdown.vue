@@ -275,15 +275,14 @@ const {update, floatingStyles} = useFloating(referencePlacement, floating, {
   whileElementsMounted: autoUpdate,
 })
 
-const computedClasses = computed(() => ({
+const computedClasses = computed(() => [ props.wrapperClass, {
   'btn-group': !props.wrapperClass && props.split,
   'dropdown': !props.wrapperClass && !props.split,
   'dropup': props.dropup,
   'dropend': props.dropend,
   'dropstart': props.dropstart,
   'position-static': props.boundary !== 'clippingAncestors' && !props.isNav,
-  [props.wrapperClass]: props.wrapperClass,
-}))
+}])
 
 const buttonClasses = computed(() => [
   props.split ? props.splitClass : props.toggleClass,
