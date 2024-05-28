@@ -209,4 +209,4 @@ export const idPluginKey: InjectionKey<() => string> = Symbol('bvn::idPluginKey'
 
 export const defaultsKey: InjectionKey<Ref<Partial<BvnComponentProps>>> = Symbol('bvn::defaults')
 
-export const inputGroupKey: InjectionKey<Ref<boolean>> = Symbol('bvn::inputGroup')
+export const inputGroupKey: InjectionKey<boolean> = Symbol('bvn::inputGroup')

@@ -153,7 +153,7 @@ const computedId = useId(() => props.id, 'dropdown')
 
 const modelValue = defineModel<boolean>({default: false})
 
-const inInputGroup = inject(inputGroupKey, ref(false))
+const inInputGroup = inject(inputGroupKey, false)
 
 const computedOffset = toRef(() =>
   typeof props.offset === 'string' || typeof props.offset === 'number' ? props.offset : NaN
@@ -275,14 +275,17 @@ const {update, floatingStyles} = useFloating(referencePlacement, floating, {
   whileElementsMounted: autoUpdate,
 })
 
-const computedClasses = computed(() => [ props.wrapperClass, {
-  'btn-group': !props.wrapperClass && props.split,
-  'dropdown': !props.wrapperClass && !props.split,
-  'dropup': props.dropup,
-  'dropend': props.dropend,
-  'dropstart': props.dropstart,
-  'position-static': props.boundary !== 'clippingAncestors' && !props.isNav,
-}])
+const computedClasses = computed(() => [
+  props.wrapperClass,
+  {
+    'btn-group': !props.wrapperClass && props.split,
+    'dropdown': !props.wrapperClass && !props.split,
+    'dropup': props.dropup,
+    'dropend': props.dropend,
+    'dropstart': props.dropstart,
+    'position-static': props.boundary !== 'clippingAncestors' && !props.isNav,
+  },
+])
 
 const buttonClasses = computed(() => [
   props.split ? props.splitClass : props.toggleClass,
