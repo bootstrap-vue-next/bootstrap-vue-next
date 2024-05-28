@@ -105,6 +105,18 @@ export default {
           type: 'number | string | {mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null',
           default: 0,
         },
+        {
+          prop: 'maxHeight',
+          type: 'number | string',
+          default: undefined,
+          description: 'The max-height to use for the dropdown menu',
+        },
+        {
+          prop: 'maxWidth',
+          type: 'number | string',
+          default: undefined,
+          description: 'The max-width to use for the dropdown menu',
+        },
       ],
       emits: [
         {

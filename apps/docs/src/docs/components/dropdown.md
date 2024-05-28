@@ -548,6 +548,60 @@ const show4 = ref(false)
 
 **Note:** _changing the size of the button(s) does not affect the size of the menu items!_
 
+### Menu sizing
+
+The `max-height` and `max-width` of the menu element can be controlled indirectly by using the `boundary` prop, or directly with the `max-height` and `max-width` props.
+
+<HighlightCard>
+  <BDropdown v-model="show41" text="No max height" class="me-2">
+    <BDropdownItem href="#" v-for="i in Array.from({length: 20}, (_, i) => i + 1)" :key="i">{{ i }}</BDropdownItem>
+  </BDropdown>
+  <BDropdown v-model="show42" text="Max height" class="me-2" max-height="10em">
+    <BDropdownItem href="#" v-for="i in Array.from({length: 20}, (_, i) => i + 1)" :key="i">{{ i }}</BDropdownItem>
+  </BDropdown>
+  <BDropdown v-model="show43" text="No max width" class="me-2">
+    <BDropdownItem href="#" v-for="i in Array.from({length: 5}, (_, i) => i + 1)" :key="i">Really, really long text {{ i }}</BDropdownItem>
+  </BDropdown>
+  <BDropdown v-model="show44" text="Max width" class="me-2" max-width="2em">
+    <BDropdownItem href="#" v-for="i in Array.from({length: 5}, (_, i) => i + 1)" :key="i">Really, really long text {{ i }}</BDropdownItem>
+  </BDropdown>
+  <template #html>
+
+```vue
+<template>
+  <BDropdown v-model="show1" text="No max height or width">
+    <BDropdownItem href="#" v-for="i in Array.from({length: 20}, (_, i) => i + 1)" :key="i">{{
+      i
+    }}</BDropdownItem>
+  </BDropdown>
+  <BDropdown v-model="show2" text="Max height" max-height="10em">
+    <BDropdownItem href="#" v-for="i in Array.from({length: 20}, (_, i) => i + 1)" :key="i">{{
+      i
+    }}</BDropdownItem>
+  </BDropdown>
+  <BDropdown v-model="show3" text="No max width">
+    <BDropdownItem href="#" v-for="i in Array.from({length: 5}, (_, i) => i + 1)" :key="i"
+      >Really, really long text {{ i }}</BDropdownItem
+    >
+  </BDropdown>
+  <BDropdown v-model="show4" text="Max width" max-width="2em">
+    <BDropdownItem href="#" v-for="i in Array.from({length: 5}, (_, i) => i + 1)" :key="i"
+      >Really, really long text {{ i }}</BDropdownItem
+    >
+  </BDropdown>
+</template>
+
+<script setup lang="ts">
+const show1 = ref(false)
+const show2 = ref(false)
+const show3 = ref(false)
+const show4 = ref(false)
+</script>
+```
+
+  </template>
+</HighlightCard>
+
 ### Dropdown color variants
 
 The dropdown toggle button can have one of the standard Bootstrap contextual variants applied by setting the prop `variant` to `success`, `primary`, `info`, `danger`, `link`, `outline-dark`, etc. (or custom variants, if defined). The default variant is `secondary`.
@@ -1255,4 +1309,9 @@ const show38 = ref(false)
 const show39 = ref(false)
 
 const show40 = ref(false)
+
+const show41 = ref(false)
+const show42 = ref(false)
+const show43 = ref(false)
+const show44 = ref(false)
 </script>
