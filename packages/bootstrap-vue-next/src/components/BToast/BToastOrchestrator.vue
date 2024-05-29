@@ -4,7 +4,7 @@
     <!-- Even though it serves no direct purpose itself -->
     <div id="__BVID__toaster-container">
       <div
-        v-for="(value, key) in toastPositions"
+        v-for="(value, key) in positionClasses"
         :key="key"
         :class="value"
         class="toast-container position-fixed p-3"
@@ -28,7 +28,14 @@
 <script setup lang="ts">
 import {watch} from 'vue'
 import {useDefaults, useToast} from '../../composables'
-import {omit} from '../../utils'
+import {omit, positionClasses} from '../../utils'
+
+bavatar seem to use these classes too
+.. Combine them
+CombinedPlacement removed
+Then implement the new features from BImg
+Then overhaul BLink
+
 import type {BToastOrchestratorProps} from '../../types'
 
 const _props = withDefaults(defineProps<BToastOrchestratorProps>(), {
@@ -38,17 +45,6 @@ const _props = withDefaults(defineProps<BToastOrchestratorProps>(), {
 })
 const props = useDefaults(_props, 'BToastOrchestrator')
 
-const toastPositions = {
-  'top-left': 'top-0 start-0',
-  'top-center': 'top-0 start-50 translate-middle-x',
-  'top-right': 'top-0 end-0',
-  'middle-left': 'top-50 start-0 translate-middle-y',
-  'middle-center': 'top-50 start-50 translate-middle',
-  'middle-right': 'top-50 end-0 translate-middle-y',
-  'bottom-left': 'bottom-0 start-0',
-  'bottom-center': 'bottom-0 start-50 translate-middle-x',
-  'bottom-right': 'bottom-0 end-0',
-} as const
 
 const {remove, toasts, show, _setIsAppend} = useToast()
 

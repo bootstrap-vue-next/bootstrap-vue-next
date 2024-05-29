@@ -1,5 +1,6 @@
 <template>
-  <img
+  <component
+    :is="props.tag"
     :class="computedClasses"
     :src="!props.blank ? props.src : computedBlankImgSrc"
     :width="computedDimentions.width || undefined"
@@ -25,6 +26,7 @@ const _props = withDefaults(defineProps<BImgProps>(), {
   height: undefined,
   lazy: false,
   sizes: undefined,
+  tag: 'img',
   src: undefined,
   srcset: undefined,
   placement: undefined,

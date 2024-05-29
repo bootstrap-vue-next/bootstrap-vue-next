@@ -31,6 +31,14 @@ export default defineNuxtPlugin((nuxtApp) => {
             teleportTo: '#teleports',
             ...opts?.components?.BToastOrchestrator,
           },
+          BImg: {
+            tag: 'NuxtLink',
+            ...opts?.components?.BImg,
+          },
+          BLink: {
+            routerTag: 'NuxtLink',
+            ...opts?.components?.BLink,
+          },
         },
       },
     })
