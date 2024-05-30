@@ -11,9 +11,25 @@ describe('dropdown', () => {
     expect(wrapper.element.tagName).toBe('DIV')
   })
 
-  it('has static class btn-group', () => {
+  it('has static class dropdown', () => {
     const wrapper = mount(BDropdown)
+    expect(wrapper.find('div').classes()).toContain('dropdown')
+  })
+
+  it('has class btn-group when split', () => {
+    const wrapper = mount(BDropdown, {
+      props: {split: true},
+    })
     expect(wrapper.find('div').classes()).toContain('btn-group')
+  })
+
+  it('has wrapperClass', () => {
+    const wrapper = mount(BDropdown, {
+      props: {wrapperClass: 'foobar'},
+    })
+    expect(wrapper.find('div').classes()).toContain('foobar')
+    expect(wrapper.find('div').classes()).not.toContain('btn-group')
+    expect(wrapper.find('div').classes()).not.toContain('dropdown')
   })
 
   it('has child ul', () => {

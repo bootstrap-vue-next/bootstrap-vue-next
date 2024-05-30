@@ -1149,6 +1149,7 @@ export interface BDropdownProps extends TeleporterProps {
     | Readonly<{mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null}>
   role?: string
   size?: Size
+  skipWrapper?: boolean
   split?: boolean
   splitButtonType?: ButtonType
   splitClass?: ClassValue
@@ -1161,6 +1162,7 @@ export interface BDropdownProps extends TeleporterProps {
   toggleClass?: ClassValue
   toggleText?: string
   variant?: ButtonVariant | null
+  wrapperClass?: ClassValue
 }
 
 export interface BToastProps extends ColorExtendables, Omit<BLinkProps, 'routerTag'> {

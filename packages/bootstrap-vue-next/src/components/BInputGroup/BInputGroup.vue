@@ -27,7 +27,10 @@
 <script setup lang="ts">
 import {useDefaults} from '../../composables'
 import type {BInputGroupProps} from '../../types'
-import {computed, toRef} from 'vue'
+import {computed, provide, toRef} from 'vue'
+import {inputGroupKey} from '../../utils/keys'
+
+provide(inputGroupKey, true)
 
 const _props = withDefaults(defineProps<BInputGroupProps>(), {
   append: undefined,
