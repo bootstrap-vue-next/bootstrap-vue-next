@@ -188,7 +188,6 @@ export interface BFormFileProps {
   ariaLabelledby?: string
   accept?: string | readonly string[]
   autofocus?: boolean
-  browserText?: string
   capture?: boolean | 'user' | 'environment'
   directory?: boolean
   disabled?: boolean
@@ -199,9 +198,10 @@ export interface BFormFileProps {
   modelValue?: readonly File[] | File | null
   multiple?: boolean
   name?: string
+  noButton?: boolean
   noDrop?: boolean
   noTraverse?: boolean
-  placement?: Extract<Placement, 'start' | 'end'>
+  plain?: boolean
   required?: boolean
   size?: Size
   state?: boolean | null
