@@ -5,11 +5,6 @@ import BFormFile from './BFormFile.vue'
 describe('form-file', () => {
   enableAutoUnmount(afterEach)
 
-  it('tag is default div', () => {
-    const wrapper = mount(BFormFile)
-    expect(wrapper.element.tagName).toBe('DIV')
-  })
-
   it('has class form-control-{type} when prop size', () => {
     const wrapper = mount(BFormFile, {
       props: {size: 'lg'},
@@ -26,11 +21,6 @@ describe('form-file', () => {
 
     const $input = wrapper.find('input')
     expect($input.classes()).not.toContain('form-control-lg')
-  })
-
-  it('wrapper has class form-input-file', () => {
-    const wrapper = mount(BFormFile)
-    expect(wrapper.find('div').classes()).toContain('form-input-file')
   })
 
   describe('input attributes', () => {
@@ -196,7 +186,7 @@ describe('form-file', () => {
 
     it('input element has set attr multiple to true when prop multiple is true', () => {
       const wrapper = mount(BFormFile, {
-        props: {multiple: 'true'},
+        props: {multiple: true},
       })
       const $input = wrapper.get('input')
       expect($input.attributes('multiple')).toBeDefined()
@@ -305,10 +295,10 @@ describe('form-file', () => {
   })
 
   describe('label attributes', () => {
-    it('has label by default', () => {
+    it('has no label by default', () => {
       const wrapper = mount(BFormFile)
       const $label = wrapper.find('label')
-      expect($label.exists()).toBe(true)
+      expect($label.exists()).toBe(false)
     })
 
     it('has label when has label slot defined', () => {
@@ -322,7 +312,7 @@ describe('form-file', () => {
     })
     it('has label has attr for to be defined by default', () => {
       const wrapper = mount(BFormFile, {
-        props: {id: 'fooFile'},
+        props: {id: 'fooFile', label: 'foo'},
         slots: {default: 'foo'},
       })
 
@@ -333,78 +323,6 @@ describe('form-file', () => {
       const $inputId = $input.attributes('id')
 
       expect($labelFor).toBe($inputId)
-    })
-  })
-
-  describe('file button', () => {
-    it('the button is placed on the start when prop placement is start', () => {
-      const wrapper = mount(BFormFile, {
-        props: {id: 'fooFile', placement: 'start'},
-      })
-
-      const $label = wrapper.get('label')
-      expect($label.classes()).toContain('input-group-text')
-
-      const childElements = wrapper.get('div').findAll('*')
-
-      expect(childElements[0].exists())
-      expect(childElements[0].element.tagName).toBe('LABEL')
-
-      expect(childElements[1].exists())
-      expect(childElements[1].element.tagName).toBe('INPUT')
-    })
-    it('the button is placed on the end when prop placement is end', () => {
-      const wrapper = mount(BFormFile, {
-        props: {id: 'fooFile', placement: 'end'},
-      })
-
-      const $label = wrapper.get('label')
-      expect($label.classes()).not.toContain('form-label')
-      expect($label.classes()).toContain('input-group-text')
-
-      const childElements = wrapper.get('div').findAll('*')
-
-      expect(childElements[0].exists())
-      expect(childElements[0].element.tagName).toBe('INPUT')
-
-      expect(childElements[1].exists())
-      expect(childElements[1].element.tagName).toBe('LABEL')
-    })
-    it('the button is placed on the start when prop placement is undefined', () => {
-      const wrapper = mount(BFormFile, {
-        props: {id: 'fooFile'},
-      })
-
-      const $label = wrapper.get('label')
-      expect($label.classes()).not.toContain('form-label')
-      expect($label.classes()).toContain('input-group-text')
-
-      const childElements = wrapper.get('div').findAll('*')
-
-      expect(childElements[0].exists())
-      expect(childElements[0].element.tagName).toBe('LABEL')
-
-      expect(childElements[1].exists())
-      expect(childElements[1].element.tagName).toBe('INPUT')
-    })
-
-    it('the button has value text when prop browser text is defined', () => {
-      const wrapper = mount(BFormFile, {
-        props: {browserText: 'Browse'},
-      })
-
-      const $label = wrapper.get('label')
-      expect($label.classes()).not.toContain('form-label')
-      expect($label.classes()).toContain('input-group-text')
-      expect($label.text()).toBe('Browse')
-    })
-    it('the button has `Choose` when prop browser text is undefined', () => {
-      const wrapper = mount(BFormFile)
-
-      const $label = wrapper.get('label')
-      expect($label.classes()).not.toContain('form-label')
-      expect($label.classes()).toContain('input-group-text')
-      expect($label.text()).toBe('Choose')
     })
   })
 
