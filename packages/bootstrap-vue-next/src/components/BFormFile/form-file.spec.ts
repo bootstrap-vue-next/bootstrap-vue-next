@@ -186,7 +186,7 @@ describe('form-file', () => {
 
     it('input element has set attr multiple to true when prop multiple is true', () => {
       const wrapper = mount(BFormFile, {
-        props: {multiple: 'true'},
+        props: {multiple: true},
       })
       const $input = wrapper.get('input')
       expect($input.attributes('multiple')).toBeDefined()
@@ -295,10 +295,10 @@ describe('form-file', () => {
   })
 
   describe('label attributes', () => {
-    it('has label by default', () => {
+    it('has no label by default', () => {
       const wrapper = mount(BFormFile)
       const $label = wrapper.find('label')
-      expect($label.exists()).toBe(true)
+      expect($label.exists()).toBe(false)
     })
 
     it('has label when has label slot defined', () => {
@@ -312,7 +312,7 @@ describe('form-file', () => {
     })
     it('has label has attr for to be defined by default', () => {
       const wrapper = mount(BFormFile, {
-        props: {id: 'fooFile'},
+        props: {id: 'fooFile', label: 'foo'},
         slots: {default: 'foo'},
       })
 
