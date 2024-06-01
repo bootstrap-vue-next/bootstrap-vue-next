@@ -334,7 +334,9 @@ const computedFields = computed<TableFieldRaw<T>[]>(() =>
           ? 'none'
           : value.order === 'desc'
             ? 'descending'
-            : 'ascending'
+            : value.order === 'asc'
+              ? 'ascending'
+              : 'none'
     return {
       ...el,
       thAttr: {
