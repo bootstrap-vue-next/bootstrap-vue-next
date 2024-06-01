@@ -1,8 +1,9 @@
 <template>
-  <component
-    :is="props.wrapTag"
+  <RenderComponentOrSkip
+    :tag="props.wrapTag"
     class="b-overlay-wrap position-relative"
     :aria-busy="computedAriaBusy"
+    :skip="props.noWrap"
   >
     <slot />
     <BTransition
@@ -29,7 +30,7 @@
         </div>
       </component>
     </BTransition>
-  </component>
+  </RenderComponentOrSkip>
 </template>
 
 <script setup lang="ts">
@@ -38,6 +39,7 @@ import type {BOverlayProps} from '../../types'
 import {useDefaults, useRadiusElementClasses} from '../../composables'
 import BTransition from '../BTransition/BTransition.vue'
 import BSpinner from '../BSpinner.vue'
+import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
 
 const _props = withDefaults(defineProps<BOverlayProps>(), {
   blur: '2px',
