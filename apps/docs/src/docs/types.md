@@ -237,6 +237,46 @@ type Position =
 
 </BCard>
 
+## RadioOption
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type RadioOption = {
+  text: string
+  value: RadioValue
+  disabled?: boolean
+}
+```
+
+</BCard>
+
+## RadioOptionRaw
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type RadioOptionRaw = string | number | (Partial<RadioOption> & Record<string, unknown>)
+```
+
+</BCard>
+
+## RadioValue
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type RadioValue =
+  | boolean
+  | string
+  | readonly unknown[]
+  | Readonly<Record<string, unknown>>
+  | number
+  | null
+```
+
+</BCard>
+
 ## Size
 
 <BCard class="bg-body-tertiary">
