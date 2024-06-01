@@ -314,14 +314,6 @@ watch(
     color: var(--white);
   }
 
-  @mixin hover-focus-active() {
-    &:hover,
-    &:focus,
-    &:active {
-      @content;
-    }
-  }
-
   .doc-content > div > {
     h2,
     h3,

@@ -349,10 +349,10 @@ export default {
           description: 'CSS class (or classes) to apply to the title',
         },
         {
-          prop: 'titleSrOnly',
+          prop: 'titleVisibilityHiddenOnly',
           type: 'boolean',
           default: false,
-          description: "Wraps the title in an '.sr-only' wrapper",
+          description: "Wraps the title in an '.visually-hidden' wrapper",
         },
         {
           prop: 'titleTag',
