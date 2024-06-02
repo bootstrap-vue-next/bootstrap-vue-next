@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.20.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.19.0...bootstrapvuenext-v0.20.0) (2024-06-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BFormFile:** remove props placement and browser
+* **BFormFile:** remove unneeded input-group div
+
+### Features
+
+* **BDropdown:** add skipWrapper and wrapperClass props ([bb5cdc5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bb5cdc5b04a6167a757dccd48fa8d29bcd190468))
+* **BFormFile:** add option to remove the default button and/or styles ([14534d1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/14534d1e5529483294dcd3f313866d8fb0d17df0))
+
+
+### Bug Fixes
+
+* **BDropdown:** fix wrapper class, skip wrapper in input-group ([bb5cdc5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bb5cdc5b04a6167a757dccd48fa8d29bcd190468))
+* **BFormFile:** remove props placement and browser ([14534d1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/14534d1e5529483294dcd3f313866d8fb0d17df0))
+* **BFormFile:** remove unneeded input-group div ([14534d1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/14534d1e5529483294dcd3f313866d8fb0d17df0))
+* **BOverlay:** fix noWrap ([#1933](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1933)) ([55672ff](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/55672ff35f1e5e3cb6b046449d9317206943af7f))
+* **BTable:** fixed aria-sort for th gets changed back to 'none' when no longer sorting ([379b838](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/379b8385fca820ea7c8063867b17a71d44789c5d))
+
 ## [0.19.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.18.1...bootstrapvuenext-v0.19.0) (2024-05-26)
 
 
