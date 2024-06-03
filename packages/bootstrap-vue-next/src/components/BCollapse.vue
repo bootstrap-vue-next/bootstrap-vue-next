@@ -38,12 +38,12 @@ const _props = withDefaults(defineProps<BCollapseProps>(), {
 const props = useDefaults(_props, 'BCollapse')
 
 const emit = defineEmits<{
-  'hidden': []
+  'hidden': [value: BvTriggerableEvent]
   'hide': [value: BvTriggerableEvent]
-  'hide-prevented': []
+  'hide-prevented': [value: BvTriggerableEvent]
   'show': [value: BvTriggerableEvent]
-  'show-prevented': []
-  'shown': []
+  'show-prevented': [value: BvTriggerableEvent]
+  'shown': [value: BvTriggerableEvent]
 }>()
 
 type SharedSlotsData = {
@@ -84,7 +84,7 @@ const computedId = useId(() => props.id, 'collapse')
 
 const element = ref<HTMLElement | null>(null)
 const isCollapsing = ref(false)
-const showRef = ref(modelValue.value)
+const showRef = ref(modelValue.value && !props.toggle)
 
 const computedClasses = computed(() => ({
   'show': showRef.value,
@@ -109,18 +109,23 @@ const sharedSlots = computed<SharedSlotsData>(() => ({
   show,
   hide,
   id: computedId.value,
-  visible: modelValue.value,
+  visible: showRef.value,
 }))
 
 let revealTimeout: ReturnType<typeof setTimeout> | undefined
 let hideTimeout: ReturnType<typeof setTimeout> | undefined
 let _skipAnimation = props.skipAnimation
 
+let noAction = false
 const reveal = () => {
   const event = buildTriggerableEvent('show', {cancelable: true})
   emit('show', event)
   if (event.defaultPrevented) {
-    emit('show-prevented')
+    emit('show-prevented', buildTriggerableEvent('show-prevented'))
+    noAction = true
+    nextTick(() => {
+      modelValue.value = false
+    })
     return
   }
   clearTimeout(hideTimeout)
@@ -137,7 +142,7 @@ const reveal = () => {
     }
     revealTimeout = setTimeout(() => {
       isCollapsing.value = false
-      emit('shown')
+      emit('shown', buildTriggerableEvent('shown'))
       if (element.value === null) return
       element.value.style.height = ''
       element.value.style.width = ''
@@ -149,7 +154,11 @@ const hideFn = () => {
   const event = buildTriggerableEvent('hide', {cancelable: true})
   emit('hide', event)
   if (event.defaultPrevented) {
-    emit('hide-prevented')
+    emit('hide-prevented', buildTriggerableEvent('hide-prevented'))
+    noAction = true
+    nextTick(() => {
+      modelValue.value = true
+    })
     return
   }
   clearTimeout(revealTimeout)
@@ -180,21 +189,29 @@ const hideFn = () => {
     hideTimeout = setTimeout(() => {
       showRef.value = false
       isCollapsing.value = false
-      emit('hidden')
+      emit('hidden', buildTriggerableEvent('hidden'))
     }, getTransitionDelay(element.value))
   })
 }
 
 watch(modelValue, () => {
+  if (noAction) {
+    noAction = false
+    return
+  }
   modelValue.value ? reveal() : hideFn()
 })
 
 onMounted(() => {
   if (element.value === null) return
-  if (!modelValue.value && props.toggle) {
-    nextTick(() => {
-      modelValue.value = true
-    })
+  if (props.toggle) {
+    if (!modelValue.value) {
+      nextTick(() => {
+        modelValue.value = true
+      })
+    } else {
+      reveal()
+    }
   }
 })
 
