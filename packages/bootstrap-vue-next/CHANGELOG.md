@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.21.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.20.0...bootstrapvuenext-v0.21.0) (2024-06-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove binputgroupappend binputgroupprepend => use component binputgrouptext
+
+### Features
+
+* bimg prop tag ([5e511a6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5e511a6a83b2193aa240e1839f1c7a3a3545cae8))
+* remove binputgroupappend binputgroupprepend =&gt; use component binputgrouptext ([5e511a6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5e511a6a83b2193aa240e1839f1c7a3a3545cae8))
+
+
+### Bug Fixes
+
+* modal transitions fixes  [#1861](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1861) ([5e511a6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5e511a6a83b2193aa240e1839f1c7a3a3545cae8))
+
 ## [0.20.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.19.0...bootstrapvuenext-v0.20.0) (2024-06-02)
 
 
