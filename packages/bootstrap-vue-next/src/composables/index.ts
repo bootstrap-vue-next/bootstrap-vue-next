@@ -1,6 +1,6 @@
 export {default as useAlignment} from './useAlignment'
 export {default as useAriaInvalid} from './useAriaInvalid'
-export {useBLinkHelper, useLink} from './useBLinkHelper'
+export {default as useBLinkHelper} from './useBLinkHelper'
 export {default as useBreadcrumb} from './useBreadcrumb'
 export {default as useColorMode} from './useColorMode'
 export {default as useColorVariantClasses} from './useColorVariantClasses'

@@ -64,6 +64,7 @@ export interface BLinkProps {
   rel?: string
   replace?: boolean
   routerComponentName?: string
+  routerTag?: string
   target?: LinkTarget
   to?: RouteLocationRaw
   underlineOffset?: 1 | 2 | 3 | '1' | '2' | '3'
