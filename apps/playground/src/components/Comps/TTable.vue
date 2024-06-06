@@ -227,9 +227,9 @@
                   placeholder="Type to Search"
                 />
 
-                <BInputGroupAppend>
+                <BInputGroupText>
                   <BButton :disabled="!filter" @click="filter = ''">Clear</BButton>
-                </BInputGroupAppend>
+                </BInputGroupText>
               </BInputGroup>
             </BFormGroup>
           </BCol>

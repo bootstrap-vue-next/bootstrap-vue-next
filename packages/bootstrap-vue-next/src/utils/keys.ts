@@ -1,11 +1,11 @@
 import type {
   Component,
   ComponentInternalInstance,
-  ComputedRef,
   InjectionKey,
   MaybeRefOrGetter,
   Ref,
   ShallowRef,
+  WritableComputedRef,
 } from 'vue'
 import type {
   BModalProps,
@@ -140,8 +140,8 @@ export const navbarInjectionKey: InjectionKey<{
 }> = Symbol('bvn::navbar')
 
 export const toastPluginKey: InjectionKey<{
-  toasts: ShallowRef<
-    ComputedRef<{
+  toasts: Ref<
+    WritableComputedRef<{
       component: unknown
       props: Omit<OrchestratedToast, 'value'> & {
         _self: symbol
@@ -156,6 +156,7 @@ export const toastPluginKey: InjectionKey<{
     props?: MaybeRefOrGetter<Readonly<OrchestratedToast>>
   }) => symbol
   remove: (self: symbol) => void
+  leave: (self: symbol) => void
 }> = Symbol('bvn::toastPlugin')
 
 export const rtlPluginKey: InjectionKey<{
@@ -169,8 +170,8 @@ export const breadcrumbPluginKey: InjectionKey<{
 }> = Symbol('bvn::breadcrumbPlugin')
 
 export const modalControllerPluginKey: InjectionKey<{
-  modals: ShallowRef<
-    ComputedRef<{
+  modals: Ref<
+    WritableComputedRef<{
       component: unknown // TS being weird here, just use unknown
       props: OrchestratedModal & {
         _self: symbol
@@ -192,6 +193,7 @@ export const modalControllerPluginKey: InjectionKey<{
     props?: MaybeRefOrGetter<Readonly<OrchestratedModal>>
   }) => Promise<boolean | null>
   remove: (self: symbol) => void
+  leave: (self: symbol) => void
 }> = Symbol('bvn::modalControllerPlugin')
 
 export const modalManagerPluginKey: InjectionKey<{

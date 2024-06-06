@@ -3,7 +3,7 @@ import type {BModalProps, BToastProps, ContainerPosition} from '.'
 export type OrchestratedToast = Omit<BToastProps, 'modelValue'> & {
   /**
    * Position
-   * @default 'top-right'
+   * @default 'top-end'
    */
   pos?: ContainerPosition
   /**

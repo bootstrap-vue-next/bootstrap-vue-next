@@ -61,42 +61,6 @@ export default {
       ],
     },
     {
-      component: 'BInputGroupAppend',
-      props: [
-        {
-          prop: 'isText',
-          type: 'boolean',
-          default: false,
-        },
-      ],
-      emits: [],
-      slots: [
-        {
-          description: '',
-          name: 'default',
-          scope: [],
-        },
-      ],
-    },
-    {
-      component: 'BInputGroupPrepend',
-      props: [
-        {
-          prop: 'isText',
-          type: 'boolean',
-          default: false,
-        },
-      ],
-      emits: [],
-      slots: [
-        {
-          description: '',
-          name: 'default',
-          scope: [],
-        },
-      ],
-    },
-    {
       component: 'BInputGroupText',
       props: [
         {

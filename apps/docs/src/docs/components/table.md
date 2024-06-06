@@ -690,9 +690,9 @@ const sortFields: Exclude<TableFieldRaw<SortPerson>, string>[] = [
               type="search"
               placeholder="Type to Search"
             />
-            <BInputGroupAppend>
+            <BInputGroupText>
               <BButton :disabled="!filter" @click="filter = ''">Clear</BButton>
-            </BInputGroupAppend>
+            </BInputGroupText>
           </BInputGroup>
         </BFormGroup>
       </BCol>
@@ -849,9 +849,9 @@ const sortFields: Exclude<TableFieldRaw<SortPerson>, string>[] = [
               type="search"
               placeholder="Type to Search"
             />
-            <BInputGroupAppend>
+            <BInputGroupText>
               <BButton :disabled="!filter" @click="filter = ''">Clear</BButton>
-            </BInputGroupAppend>
+            </BInputGroupText>
           </BInputGroup>
         </BFormGroup>
       </BCol>
@@ -960,7 +960,7 @@ import {
   BFormGroup,
   BCol,
   BFormInput,
-  BInputGroupAppend,
+  BInputGroupText,
   BFormCHeckbox,
   BPagination,
   BRow,
@@ -1110,7 +1110,7 @@ import {
   BFormInput,
   BFormSelect,
   BInputGroup,
-  BInputGroupAppend,
+  BInputGroupText,
   BModal,
   BPagination,
   BRow,

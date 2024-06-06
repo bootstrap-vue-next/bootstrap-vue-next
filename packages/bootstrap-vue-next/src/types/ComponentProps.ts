@@ -73,6 +73,10 @@ export interface BLinkProps {
   underlineOpacityHover?: 0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'
   underlineVariant?: ColorVariant | null
   variant?: ColorVariant | null
+  prefetch?: boolean
+  noPrefetch?: boolean
+  prefetchedClass?: ClassValue
+  noRel?: boolean
 }
 
 export interface BAccordionProps {
@@ -936,6 +940,7 @@ export interface BImgProps extends RadiusElementExtendables {
   fluid?: boolean
   fluidGrow?: boolean
   height?: Numberish
+  tag?: string
   lazy?: boolean
   sizes?: string | readonly string[]
   src?: string
@@ -1411,8 +1416,6 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
   BFormValidFeedback: BFormFeedbackSharedProps
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   BFormGroup: any
-  BInputGroupAppend: BInputGroupAddonProps
-  BInputGroupPrepend: BInputGroupAddonProps
   BNavItemDropdown: BDropdownProps
   BRow: BRowProps
   BInput: BFormInputProps

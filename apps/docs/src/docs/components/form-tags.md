@@ -668,9 +668,9 @@ The following example includes the suggested ARIA attributes and roles needed fo
           v-on="inputHandlers"
           placeholder="New tag - Press enter to add"
           class="form-control">
-        <BInputGroupAppend>
+        <BInputGroupText>
           <BButton @click="addTag()" variant="primary">Add</BButton>
-        </BInputGroupAppend>
+        </BInputGroupText>
       </BInputGroup>
       <ul
         id="my-custom-tags-list"
@@ -712,9 +712,9 @@ The following example includes the suggested ARIA attributes and roles needed fo
             placeholder="New tag - Press enter to add"
             class="form-control"
           />
-          <BInputGroupAppend>
+          <BInputGroupText>
             <BButton @click="addTag()" variant="primary">Add</BButton>
-          </BInputGroupAppend>
+          </BInputGroupText>
         </BInputGroup>
         <ul
           id="my-custom-tags-list"
@@ -772,9 +772,9 @@ In this example, we are using the [`<BFormTag>` helper component](#bformtag-help
           placeholder="New tag - Press enter to add"
           class="form-control"
         ></BFormInput>
-        <BInputGroupAppend>
+        <BInputGroupText>
           <BButton @click="addTag()" variant="primary">Add</BButton>
-        </BInputGroupAppend>
+        </BInputGroupText>
       </BInputGroup>
       <div class="d-inline-block" style="font-size: 1.5rem;">
         <BFormTag
@@ -802,9 +802,9 @@ In this example, we are using the [`<BFormTag>` helper component](#bformtag-help
             placeholder="New tag - Press enter to add"
             class="form-control"
           ></BFormInput>
-          <BInputGroupAppend>
+          <BInputGroupText>
             <BButton @click="addTag()" variant="primary">Add</BButton>
-          </BInputGroupAppend>
+          </BInputGroupText>
         </BInputGroup>
         <div class="d-inline-block" style="font-size: 1.5rem;">
           <BFormTag
@@ -970,9 +970,9 @@ In situations where the `inputHandlers` will not work with your custom input, or
           :disabled="disabled"
           :formatter="formatter"
         ></BFormInput>
-        <BInputGroupAppend>
+        <BInputGroupText>
           <BButton @click="addTag(newTag)" :disabled="disabled" variant="primary">Add</BButton>
-        </BInputGroupAppend>
+        </BInputGroupText>
       </BInputGroup>
       <BFormInvalidFeedback :state="advancedState">
         Duplicate tag value cannot be added again!
@@ -1022,9 +1022,9 @@ In situations where the `inputHandlers` will not work with your custom input, or
             :disabled="disabled"
             :formatter="formatter"
           ></BFormInput>
-          <BInputGroupAppend>
+          <BInputGroupText>
             <BButton @click="addTag(newTag)" :disabled="disabled" variant="primary">Add</BButton>
-          </BInputGroupAppend>
+          </BInputGroupText>
         </BInputGroup>
         <BFormInvalidFeedback :state="advancedState">
           Duplicate tag value cannot be added again!
@@ -1267,7 +1267,7 @@ Note `<BFormTag>` requires BootstrapVue's custom CSS/SCSS for proper styling.
   import ComponentReference from '../../components/ComponentReference.vue'
 import ComponentSidebar from '../../components/ComponentSidebar.vue'
   import HighlightCard from '../../components/HighlightCard.vue'
-  import {BFormTags, BFormText, BFormGroup, BInputGroupAppend, BButton, BCard, BInputGroup, BFormTag, BFormInput, BFormSelect, BFormCheckbox, BFormInvalidFeedback, BDropdownForm, BDropdownDivider, BDropdownItemButton, BDropdownText, BDropdown} from 'bootstrap-vue-next'
+  import {BFormTags, BFormText, BFormGroup, BInputGroupText, BButton, BCard, BInputGroup, BFormTag, BFormInput, BFormSelect, BFormCheckbox, BFormInvalidFeedback, BDropdownForm, BDropdownDivider, BDropdownItemButton, BDropdownText, BDropdown} from 'bootstrap-vue-next'
   import {ref, computed, watch} from 'vue'
 
   const basicUsageTags = ref<string[]>([])

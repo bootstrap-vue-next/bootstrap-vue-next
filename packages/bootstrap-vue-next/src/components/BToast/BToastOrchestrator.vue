@@ -1,10 +1,8 @@
 <template>
   <Teleport :to="props.teleportTo" :disabled="props.teleportDisabled">
-    <!-- This wrapper div is used for specific targetting by the user -->
-    <!-- Even though it serves no direct purpose itself -->
     <div id="__BVID__toaster-container">
       <div
-        v-for="(value, key) in toastPositions"
+        v-for="(value, key) in positionClasses"
         :key="key"
         :class="value"
         class="toast-container position-fixed p-3"
@@ -15,10 +13,14 @@
             v-for="toast in toasts?.filter((el) => el.value.props.pos === key)"
             :key="toast.value.props._self"
             v-bind="pluckToastItem(toast.value.props)"
-            v-model="toast.value.props._modelValue"
+            :model-value="toast.value.props._modelValue"
             :trans-props="{...toast.value.props.transProps, appear: true}"
-            @hide.prevent="remove?.(toast.value.props._self)"
+            @update:model-value="leave?.(toast.value.props._self)"
+            @hide="remove?.(toast.value.props._self)"
           />
+          <!-- I think it's only coincidence that hide works, It's not tied to the lifecycle of a transition -->
+          <!-- I think actually removes the el before the transition ends, But it's just not noticeable as it's "fading" -->
+          <!-- It _should_ be @hidden -- as hidden is when the transition has ended. But transition in transition groups isn't "okay" -->
         </TransitionGroup>
       </div>
     </div>
@@ -28,7 +30,8 @@
 <script setup lang="ts">
 import {watch} from 'vue'
 import {useDefaults, useToast} from '../../composables'
-import {omit} from '../../utils'
+import {omit, positionClasses} from '../../utils'
+
 import type {BToastOrchestratorProps} from '../../types'
 
 const _props = withDefaults(defineProps<BToastOrchestratorProps>(), {
@@ -38,19 +41,7 @@ const _props = withDefaults(defineProps<BToastOrchestratorProps>(), {
 })
 const props = useDefaults(_props, 'BToastOrchestrator')
 
-const toastPositions = {
-  'top-left': 'top-0 start-0',
-  'top-center': 'top-0 start-50 translate-middle-x',
-  'top-right': 'top-0 end-0',
-  'middle-left': 'top-50 start-0 translate-middle-y',
-  'middle-center': 'top-50 start-50 translate-middle',
-  'middle-right': 'top-50 end-0 translate-middle-y',
-  'bottom-left': 'bottom-0 start-0',
-  'bottom-center': 'bottom-0 start-50 translate-middle-x',
-  'bottom-right': 'bottom-0 end-0',
-} as const
-
-const {remove, toasts, show, _setIsAppend} = useToast()
+const {remove, toasts, show, _setIsAppend, leave} = useToast()
 
 watch(
   () => props.appendToast,

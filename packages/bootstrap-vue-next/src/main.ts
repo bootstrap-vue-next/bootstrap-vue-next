@@ -2,7 +2,7 @@ import {createApp, h} from 'vue'
 import App from './App.vue'
 import {createBootstrap} from './BootstrapVue'
 
-import {createRouter, createWebHistory} from 'vue-router'
+import {createRouter, createWebHistory, useRoute} from 'vue-router'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -34,7 +34,8 @@ const router = createRouter({
         name: 'About',
         props: {id: [Number, String]},
         render() {
-          return h('h1', {}, `About page ${this.props.id}`)
+          const route = useRoute()
+          return h('h1', {}, `About page ${route.params.id}`)
         },
       },
       props: true,

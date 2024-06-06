@@ -1,23 +1,22 @@
 import {
   type Component,
   computed,
-  type ComputedRef,
   type MaybeRefOrGetter,
   type Plugin,
   ref,
-  shallowRef,
   toValue,
+  type WritableComputedRef,
 } from 'vue'
 import BToast from '../components/BToast/BToast.vue'
-import type {OrchestratedToast} from '../types'
+import type {ContainerPosition, OrchestratedToast} from '../types'
 import {toastPluginKey} from '../utils'
 
-const posDefault = 'top-right'
+const posDefault: ContainerPosition = 'top-end'
 
 export default {
   install(app) {
-    const toasts = shallowRef<
-      ComputedRef<{
+    const toasts = ref<
+      WritableComputedRef<{
         component: unknown
         props: Omit<OrchestratedToast, 'value'> & {
           _self: symbol
@@ -42,17 +41,24 @@ export default {
     }): symbol => {
       const _self = Symbol()
 
-      const toastToAdd = computed(() => {
-        const unwrappedProps = toValue(obj.props)
-        return {
-          component: toValue(obj.component) ?? BToast,
-          props: {
-            ...unwrappedProps,
-            pos: unwrappedProps?.pos || posDefault,
-            _modelValue: unwrappedProps?.value || 5000,
-            _self,
-          },
-        }
+      const _modelValue = ref<boolean | number>(toValue(obj.props)?.value || 5000)
+
+      const toastToAdd = computed({
+        get: () => {
+          const unwrappedProps = toValue(obj.props)
+          return {
+            component: toValue(obj.component) ?? BToast,
+            props: {
+              ...unwrappedProps,
+              pos: unwrappedProps?.pos || posDefault,
+              _modelValue: _modelValue.value,
+              _self,
+            },
+          }
+        },
+        set: (v) => {
+          _modelValue.value = v.props._modelValue
+        },
       })
 
       if (
@@ -60,9 +66,9 @@ export default {
           ? toastToAdd.value.props.appendToast
           : _isAppend.value
       ) {
-        toasts.value = [...toasts.value, toastToAdd]
+        toasts.value.push(toastToAdd)
       } else {
-        toasts.value = [toastToAdd, ...toasts.value]
+        toasts.value.unshift(toastToAdd)
       }
 
       return _self
@@ -75,11 +81,25 @@ export default {
       toasts.value = toasts.value.filter((el) => el.value.props._self !== self)
     }
 
+    const leave = (self: symbol) => {
+      const toast = toasts.value.find((el) => el.value.props._self === self)
+      if (toast !== undefined) {
+        toast.value = {
+          ...toast.value,
+          props: {
+            ...toast.value.props,
+            _modelValue: false,
+          },
+        }
+      }
+    }
+
     app.provide(toastPluginKey, {
       _setIsAppend,
       toasts,
       show,
       remove,
+      leave,
     })
   },
 } satisfies Plugin

@@ -68,9 +68,6 @@ declare module '@vue/runtime-core' {
     BImg: typeof Components.BImg
     BInput: typeof Components.BInput
     BInputGroup: typeof Components.BInputGroup
-    BInputGroupAddon: typeof Components.BInputGroupAddon
-    BInputGroupAppend: typeof Components.BInputGroupAppend
-    BInputGroupPrepend: typeof Components.BInputGroupPrepend
     BInputGroupText: typeof Components.BInputGroupText
     BLink: typeof Components.BLink
     BListGroup: typeof Components.BListGroup
@@ -182,12 +179,17 @@ export const BootstrapVueNextResolver = ({
 > = {}): ComponentResolver[] => {
   const selectedComponents = typeof components === 'boolean' ? {all: components} : components
   const componentKeys = Object.keys(Components) as unknown as ComponentType[]
-  const compImports = parseActiveImports(selectedComponents, componentKeys) as string[]
+  const compImports = new Set(parseActiveImports(selectedComponents, componentKeys) as string[])
+
+  const selectedDirectives = typeof directives === 'boolean' ? {all: directives} : directives
+  const directiveKeys = Object.keys(Directives) as unknown as DirectiveType[]
+  const dirImports = new Set(parseActiveImports(selectedDirectives, directiveKeys).map(sliceName))
   const resolvers: ComponentResolver[] = [
     {
       type: 'component',
       resolve: (name) => {
-        if (compImports.includes(name) || aliases[name]) {
+        if (compImports.has(name) || aliases[name]) {
+          // TODO using this list of components we may be able to tree shake off CSS imports for the user :eyes:
           return {
             name: aliases[name] || name,
             from: 'bootstrap-vue-next',
@@ -195,25 +197,18 @@ export const BootstrapVueNextResolver = ({
         }
       },
     },
-  ]
-
-  const selectedDirectives = typeof directives === 'boolean' ? {all: directives} : directives
-  const directiveKeys = Object.keys(Directives) as unknown as DirectiveType[]
-  const dirImports = parseActiveImports(selectedDirectives, directiveKeys).map(sliceName)
-  if (dirImports.length > 0) {
-    resolvers.push({
+    {
       type: 'directive',
       resolve: (name) => {
-        if (dirImports.includes(name)) {
+        if (dirImports.has(name)) {
           return {
             name: `v${name}`,
             from: 'bootstrap-vue-next',
           }
         }
       },
-    })
-  }
-
+    },
+  ]
   return resolvers
 }
 
