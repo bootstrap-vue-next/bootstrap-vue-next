@@ -32,12 +32,6 @@ import {watch} from 'vue'
 import {useDefaults, useToast} from '../../composables'
 import {omit, positionClasses} from '../../utils'
 
-// bavatar seem to use these classes too
-// .. Combine them
-// CombinedPlacement removed
-// Then implement the new features from BImg
-// Then overhaul BLink
-
 import type {BToastOrchestratorProps} from '../../types'
 
 const _props = withDefaults(defineProps<BToastOrchestratorProps>(), {
