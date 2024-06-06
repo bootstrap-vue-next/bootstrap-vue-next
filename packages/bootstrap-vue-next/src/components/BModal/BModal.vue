@@ -1,9 +1,8 @@
 <template>
   <Teleport :to="props.teleportTo" :disabled="props.teleportDisabled">
-    <BTransition
-      :no-fade="true"
-      v-bind="props.transProps"
-      :trans-props="{enterToClass: 'show', ...props.transProps?.transProps}"
+    <Transition
+      v-bind="{...fadeTransitionProps, ...props.transProps, enterToClass: 'show'}"
+      :appear="true"
       @before-enter="onBeforeEnter"
       @after-enter="onAfterEnter"
       @leave="onLeave"
@@ -104,7 +103,7 @@
           />
         </slot>
       </div>
-    </BTransition>
+    </Transition>
   </Teleport>
 </template>
 
@@ -114,6 +113,7 @@ import {computed, type CSSProperties, ref, toRef, watch} from 'vue'
 import {
   useColorVariantClasses,
   useDefaults,
+  useFadeTransition,
   useId,
   useModalManager,
   useSafeScrollLock,
@@ -123,7 +123,6 @@ import {BvTriggerableEvent, isEmptySlot} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BOverlay from '../BOverlay/BOverlay.vue'
-import BTransition from '../BTransition/BTransition.vue'
 
 defineOptions({
   inheritAttrs: false,
@@ -243,8 +242,10 @@ const element = ref<HTMLElement | null>(null)
 const okButton = ref<HTMLElement | null>(null)
 const cancelButton = ref<HTMLElement | null>(null)
 const closeButton = ref<HTMLElement | null>(null)
-const isActive = ref(modelValue.value)
+const isActive = ref(false)
 const lazyLoadCompleted = ref(false)
+
+const fadeTransitionProps = useFadeTransition(true)
 
 onKeyStroke(
   'Escape',

@@ -168,7 +168,7 @@ The following is an example of a basic `vite.config.js/ts`. All you need to do i
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
-import {BootstrapVueNextResolver} from 'unplugin-vue-components/resolvers'
+import {BootstrapVueNextResolver} from 'bootstrap-vue-next'
 
 export default defineConfig({
   plugins: [
@@ -181,6 +181,10 @@ export default defineConfig({
 ```
 
 </HighlightCard>
+
+<NoteAlert>
+The resolver import is from `bootstrap-vue-next`, not `unplugin-vue-components
+</NoteAlert>
 
 ##### Built-in Registry
 
@@ -358,6 +362,7 @@ BootstrapVue is the parent project for which this is based on. We consider Boots
 import {BCard, BCardBody, BAlert, BTab, BTabs} from 'bootstrap-vue-next'
 import {useLocalStorage} from '@vueuse/core'
 import HighlightCard from './components/HighlightCard.vue'
+import NoteAlert from './components/NoteAlert.vue'
 
 const codePreference = useLocalStorage('code-group-preference', 0)
 </script>

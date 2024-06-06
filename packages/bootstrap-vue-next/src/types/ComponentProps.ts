@@ -64,7 +64,6 @@ export interface BLinkProps {
   rel?: string
   replace?: boolean
   routerComponentName?: string
-  routerTag?: string
   target?: LinkTarget
   to?: RouteLocationRaw
   underlineOffset?: 1 | 2 | 3 | '1' | '2' | '3'
@@ -1414,8 +1413,6 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
   BFormValidFeedback: BFormFeedbackSharedProps
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   BFormGroup: any
-  BInputGroupAppend: BInputGroupAddonProps
-  BInputGroupPrepend: BInputGroupAddonProps
   BNavItemDropdown: BDropdownProps
   BRow: BRowProps
   BInput: BFormInputProps

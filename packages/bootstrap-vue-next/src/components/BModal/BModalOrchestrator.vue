@@ -1,10 +1,6 @@
 <template>
   <Teleport :to="props.teleportTo" :disabled="props.teleportDisabled">
-    <!-- This wrapper div is used for specific targetting by the user -->
-    <!-- Even though it serves no direct purpose itself -->
     <div id="__BVID__modal-container">
-      <!-- TODO the animation when entering doesn't work. -->
-      <!-- I tried to use <Transition appear> to have the animation work, but it didn't -->
       <component
         :is="modal.value.component"
         v-for="(modal, index) in modals"
@@ -12,6 +8,7 @@
         v-model="modal.value.props._modelValue"
         v-bind="pluckModalItem(modal.value.props)"
         :teleport-disabled="true"
+        @update:model-value="leave?.(modal.value.props._self)"
         @hide="
           (e: BvTriggerableEvent) => {
             // These following are confirm rules, otherwise we always resolve true
@@ -46,7 +43,7 @@ const _props = withDefaults(defineProps<BModalOrchestratorProps>(), {
 })
 const props = useDefaults(_props, 'BModalOrchestrator')
 
-const {modals, remove, show, confirm} = useModalController()
+const {modals, remove, show, confirm, leave} = useModalController()
 
 const pluckModalItem = (
   payload: Readonly<Exclude<typeof modals, undefined>['value'][number]['value']['props']>

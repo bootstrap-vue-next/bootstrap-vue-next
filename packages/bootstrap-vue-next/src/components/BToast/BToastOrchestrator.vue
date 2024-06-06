@@ -1,7 +1,5 @@
 <template>
   <Teleport :to="props.teleportTo" :disabled="props.teleportDisabled">
-    <!-- This wrapper div is used for specific targetting by the user -->
-    <!-- Even though it serves no direct purpose itself -->
     <div id="__BVID__toaster-container">
       <div
         v-for="(value, key) in positionClasses"
@@ -15,10 +13,14 @@
             v-for="toast in toasts?.filter((el) => el.value.props.pos === key)"
             :key="toast.value.props._self"
             v-bind="pluckToastItem(toast.value.props)"
-            v-model="toast.value.props._modelValue"
+            :model-value="toast.value.props._modelValue"
             :trans-props="{...toast.value.props.transProps, appear: true}"
-            @hide.prevent="remove?.(toast.value.props._self)"
+            @update:model-value="leave?.(toast.value.props._self)"
+            @hide="remove?.(toast.value.props._self)"
           />
+          <!-- I think it's only coincidence that hide works, It's not tied to the lifecycle of a transition -->
+          <!-- I think actually removes the el before the transition ends, But it's just not noticeable as it's "fading" -->
+          <!-- It _should_ be @hidden -- as hidden is when the transition has ended. But transition in transition groups isn't "okay" -->
         </TransitionGroup>
       </div>
     </div>
@@ -30,11 +32,11 @@ import {watch} from 'vue'
 import {useDefaults, useToast} from '../../composables'
 import {omit, positionClasses} from '../../utils'
 
-bavatar seem to use these classes too
-.. Combine them
-CombinedPlacement removed
-Then implement the new features from BImg
-Then overhaul BLink
+// bavatar seem to use these classes too
+// .. Combine them
+// CombinedPlacement removed
+// Then implement the new features from BImg
+// Then overhaul BLink
 
 import type {BToastOrchestratorProps} from '../../types'
 
@@ -45,8 +47,7 @@ const _props = withDefaults(defineProps<BToastOrchestratorProps>(), {
 })
 const props = useDefaults(_props, 'BToastOrchestrator')
 
-
-const {remove, toasts, show, _setIsAppend} = useToast()
+const {remove, toasts, show, _setIsAppend, leave} = useToast()
 
 watch(
   () => props.appendToast,

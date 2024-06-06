@@ -1,11 +1,11 @@
 import {
   type Component,
   computed,
-  type ComputedRef,
   type MaybeRefOrGetter,
   type Plugin,
-  shallowRef,
+  ref,
   toValue,
+  type WritableComputedRef,
 } from 'vue'
 import {modalControllerPluginKey} from '../utils'
 import type {BModalProps, OrchestratedModal} from '../types'
@@ -13,8 +13,8 @@ import BModal from '../components/BModal/BModal.vue'
 
 export default {
   install(app) {
-    const modals = shallowRef<
-      ComputedRef<{
+    const modals = ref<
+      WritableComputedRef<{
         component: unknown // TS being weird here, just use unknown
         props: OrchestratedModal & {
           _self: symbol
@@ -46,20 +46,31 @@ export default {
       }
     }
 
+    const buildPrereqs = () => [buildPromise(), Symbol(), ref(true)] as const
+
     const show = (obj: {
       component?: MaybeRefOrGetter<Readonly<Component>>
       props?: MaybeRefOrGetter<Readonly<OrchestratedModal>>
     }) => {
-      const _promise = buildPromise()
-      const _self = Symbol()
+      const [_promise, _self, _modelValue] = buildPrereqs()
 
-      modals.value = [
-        ...modals.value,
-        computed(() => ({
-          component: toValue(obj.component) ?? BModal,
-          props: {...toValue(obj.props), _isConfirm: false, _promise, _self, _modelValue: true},
-        })),
-      ]
+      modals.value.push(
+        computed({
+          get: () => ({
+            component: toValue(obj.component) ?? BModal,
+            props: {
+              ...toValue(obj.props),
+              _isConfirm: false,
+              _promise,
+              _self,
+              _modelValue: _modelValue.value,
+            },
+          }),
+          set: (v) => {
+            _modelValue.value = v.props._modelValue
+          },
+        })
+      )
 
       return _promise.value
     }
@@ -68,18 +79,40 @@ export default {
       component?: MaybeRefOrGetter<Readonly<Component>>
       props?: MaybeRefOrGetter<Readonly<OrchestratedModal>>
     }) => {
-      const _promise = buildPromise()
-      const _self = Symbol()
+      const [_promise, _self, _modelValue] = buildPrereqs()
 
-      modals.value = [
-        ...modals.value,
-        computed(() => ({
-          component: toValue(obj.component) ?? BModal,
-          props: {...toValue(obj.props), _isConfirm: true, _promise, _self, _modelValue: true},
-        })),
-      ]
+      modals.value.push(
+        computed({
+          get: () => ({
+            component: toValue(obj.component) ?? BModal,
+            props: {
+              ...toValue(obj.props),
+              _isConfirm: true,
+              _promise,
+              _self,
+              _modelValue: _modelValue.value,
+            },
+          }),
+          set: (v) => {
+            _modelValue.value = v.props._modelValue
+          },
+        })
+      )
 
       return _promise.value
+    }
+
+    const leave = (self: symbol) => {
+      const modal = modals.value.find((el) => el.value.props._self === self)
+      if (modal !== undefined) {
+        modal.value = {
+          ...modal.value,
+          props: {
+            ...modal.value.props,
+            _modelValue: false,
+          },
+        }
+      }
     }
 
     const remove = (self: symbol) => {
@@ -91,6 +124,7 @@ export default {
       remove,
       show,
       confirm,
+      leave,
     })
   },
 } satisfies Plugin

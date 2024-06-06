@@ -68,9 +68,6 @@ declare module '@vue/runtime-core' {
     BImg: typeof Components.BImg
     BInput: typeof Components.BInput
     BInputGroup: typeof Components.BInputGroup
-    BInputGroupAddon: typeof Components.BInputGroupAddon
-    BInputGroupAppend: typeof Components.BInputGroupAppend
-    BInputGroupPrepend: typeof Components.BInputGroupPrepend
     BInputGroupText: typeof Components.BInputGroupText
     BLink: typeof Components.BLink
     BListGroup: typeof Components.BListGroup
