@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.21.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.21.0...bootstrapvuenext-v0.21.1) (2024-06-10)
+
+
+### Bug Fixes
+
+* **BMOdal:** append transition behavior fixes [#1943](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1943) ([#1947](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1947)) ([e10f742](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e10f7429fee2c59824933469efe3c66747df3be0))
+
 ## [0.21.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.20.0...bootstrapvuenext-v0.21.0) (2024-06-06)
 
 
