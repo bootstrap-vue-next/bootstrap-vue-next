@@ -73,9 +73,13 @@ export default {
       emits: [
         {
           args: [],
-          event: 'dismissed',
-          description:
-            'Alert dismissed either via the dismiss close button or when the dismiss countdown has expired',
+          event: 'close',
+          description: 'Emitted when the alert begins its transition to close',
+        },
+        {
+          args: [],
+          event: 'closed',
+          description: 'Emitted after the alert ends its transition to close',
         },
         {
           event: 'close-countdown',
