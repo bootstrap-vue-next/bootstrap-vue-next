@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "@floating-ui/vue": "^1.0.6",
-    "@vueuse/core": "^10.9.0"
+    "@vueuse/core": "^10.10.0"
   },
   "devDependencies": {
     "@floating-ui/core": "^1.6.2",
