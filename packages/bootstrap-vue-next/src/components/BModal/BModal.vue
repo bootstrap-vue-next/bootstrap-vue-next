@@ -2,7 +2,7 @@
   <Teleport :to="props.teleportTo" :disabled="props.teleportDisabled">
     <Transition
       v-bind="{...fadeTransitionProps, ...props.transProps, enterToClass: 'show'}"
-      :appear="true"
+      :appear="modelValue"
       @before-enter="onBeforeEnter"
       @after-enter="onAfterEnter"
       @leave="onLeave"
