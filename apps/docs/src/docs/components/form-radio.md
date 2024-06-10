@@ -118,7 +118,7 @@ const groupedOptions = [
   {text: 'This is the 4th radio', value: {fourth: 4}},
 ]
 
-const groupedSelected = ref()
+const groupedSelected = ref('first')
 </script>
 ```
 
@@ -178,7 +178,7 @@ const mixedGroupedOptions = [
   {text: 'Third radio', value: 'third'},
 ]
 
-const mixedGroupedSelected = ref()
+const mixedGroupedSelected = ref('first')
 </script>
 ```
 
@@ -302,12 +302,14 @@ If you want to customize the field property names (for example using `name` fiel
 </template>
 
 <script setup lang="ts">
-const mixedGroupedOptions = [
-  {text: 'Or toggle this other custom radio', value: 'second'},
-  {text: 'Third radio', value: 'third'},
-]
+const customFieldNameSelected = ref('A')
 
-const mixedGroupedSelected = ref()
+const customFieldNameOptions = [
+  {item: 'A', name: 'Option A'},
+  {item: 'B', name: 'Option B'},
+  {item: 'D', name: 'Option C', notEnabled: true},
+  {item: {d: 1}, name: 'Option D'},
+]
 </script>
 ```
 
@@ -388,7 +390,7 @@ const inlineStackedOptions = [
   {text: 'Third radio', value: 'third'},
 ]
 
-const inlineStackedSelected = ref()
+const inlineStackedSelected = ref('first')
 </script>
 ```
 
@@ -526,8 +528,45 @@ const buttonsOptions = [
   {text: 'Radio 4', value: 'radio4'},
 ]
 
-const buttonsSelected = ref()
+const buttonsSelected = ref('radio1')
 </script>
+```
+
+  </template>
+</HighlightCard>
+
+## Reverse
+
+Use the `reverse` prop to put your radio buttons on the opposite side of the label.
+
+<HighlightCard>
+  <BFormRadio reverse>Reverse checkbox</BFormRadio>
+  <BFormRadio reverse disabled>Disabled reverse checkbox</BFormRadio>
+  <template #html>
+
+```vue-html
+<BFormRadio reverse>Reverse checkbox</BFormRadio>
+<BFormRadio reverse disabled>Disabled reverse checkbox</BFormRadio>
+```
+
+  </template>
+</HighlightCard>
+
+## Without Labels
+
+In order to omit labels as described in the
+[bootstrap documentation](https://getbootstrap.com/docs/5.3/forms/checks-radios/#without-labels)
+just leave the default slot empty. Remember to still provide some form of accessible name for
+assistive technologies (for instance, using aria-label).
+
+<HighlightCard>
+  <BFormRadio></BFormRadio>
+  <BFormRadio disabled></BFormRadio>
+  <template #html>
+
+```vue-html
+  <BFormRadio></BFormRadio>
+  <BFormRadio disabled></BFormRadio>
 ```
 
   </template>
@@ -584,7 +623,7 @@ const plainOptions = [
   {text: 'Third radio', value: 'third'},
 ]
 
-const plainSelected = ref()
+const plainSelected = ref('first')
 </script>
 ```
 
@@ -665,7 +704,7 @@ const contextualOptions = [
 
 const contextualSelected = ref()
 
-const contextualState = computed(() => contextualSelected.value)
+const contextualState = computed(() => !!contextualSelected.value)
 </script>
 ```
 
@@ -707,45 +746,45 @@ import {BFormRadioGroup, BCard, BCardBody, BFormRadio, BAlert} from 'bootstrap-v
 import {ref, computed} from 'vue'
 
 const individualSelected = ref()
-const groupedSelected = ref()
+const groupedSelected = ref('first')
 const groupedOptions = [
   {text: 'Toggle this custom radio', value: 'first'},
   {text: 'Or toggle this other custom radio', value: 'second'},
   {text: 'This one is Disabled', value: 'third', disabled: true},
   {text: 'This is the 4th radio', value: {fourth: 4}},
 ]
-const mixedGroupedSelected = ref()
+const mixedGroupedSelected = ref('first')
 const mixedGroupedOptions = [
   {text: 'Or toggle this other custom radio', value: 'second'},
   {text: 'Third radio', value: 'third'},
 ]
-const customFieldNameSelected = ref()
+const customFieldNameSelected = ref('A')
 const customFieldNameOptions = [
   {item: 'A', name: 'Option A'},
   {item: 'B', name: 'Option B'},
   {item: 'D', name: 'Option C', notEnabled: true},
   {item: {d: 1}, name: 'Option D'},
 ]
-const inlineStackedSelected = ref()
+const inlineStackedSelected = ref('first')
 const inlineStackedOptions = [
   {text: 'First radio', value: 'first'},
   {text: 'Second radio', value: 'second'},
   {text: 'Third radio', value: 'third'},
 ]
-const buttonsSelected = ref()
+const buttonsSelected = ref('radio1')
 const buttonsOptions = [
   { text: 'Radio 1', value: 'radio1' },
   { text: 'Radio 3', value: 'radio2' },
   { text: 'Radio 3 (disabled)', value: 'radio3', disabled: true },
   { text: 'Radio 4', value: 'radio4' }
 ]
-const plainSelected = ref()
+const plainSelected = ref('first')
 const plainOptions = [
   { text: 'First radio', value: 'first' },
   { text: 'Second radio', value: 'second' },
   { text: 'Third radio', value: 'third' }
 ]
-const contextualState = computed(() => contextualSelected.value)
+const contextualState = computed(() => !!contextualSelected.value)
 const contextualSelected = ref()
 const contextualOptions = [
   { text: 'First radio', value: 'first' },

@@ -35,7 +35,8 @@ export default {
           prop: 'buttonGroup',
           type: 'boolean',
           default: false,
-          description: '',
+          description:
+            "When set, renders the checkbox as part of a button group (it doesn't enclose the checkbox and label with a div). It is not necessary to set this to true if this is part of a RadioGroup as it is handled internally",
         },
         {
           prop: 'buttonVariant',
@@ -148,7 +149,7 @@ export default {
           description: 'Emitted when the checked value is changed',
           args: [
             {
-              arg: 'checked',
+              arg: 'value',
               description:
                 'Value of the checkbox. Value will be an array for grouped checkboxes or a single value for standalone checkboxes. Looking for the `input` or `change` event - use `update:modelValue` instead.',
               type: 'CheckboxValue | readonly CheckboxValue[]',
@@ -160,7 +161,7 @@ export default {
           description: 'Emitted when the indeterminaate state of the checkbox is changed',
           args: [
             {
-              arg: 'checked',
+              arg: 'value',
               description:
                 'Value of the indeterminate state - true for indeterminate, false for determinstic state.',
               type: 'boolean',
@@ -197,7 +198,7 @@ export default {
           type: 'ButtonVariant | null',
           default: 'secondary',
           description:
-            'Specifies the Bootstrap contextual color theme variant the apply to the button style checkboxes',
+            'Specifies the Bootstrap contextual color theme variant to apply to the button style checkboxes',
         },
         {
           prop: 'buttons',
@@ -328,7 +329,7 @@ export default {
             'Emitted when the selected value(s) are changed. . Looking for the `input` or `change` event - use `update:modelValue` instead.',
           args: [
             {
-              arg: 'update:modelValue',
+              arg: 'value',
               type: 'CheckboxValue[]',
               description: 'Value of the checkboxes. Value will be an array.',
             },
