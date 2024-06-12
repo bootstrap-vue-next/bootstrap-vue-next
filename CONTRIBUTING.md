@@ -83,8 +83,8 @@ To contribute:
 
 - Take a look at the read-only version of the spreadsheet, available [here](https://1drv.ms/x/s!AiUqzkjNYGL6ieBPpQpcR41wo1laZQ). You can filter on `BFormCheckbox` and `BFormCheckboxGroup` in the `Component` column to see an example of components that are being evaludated and just about anything else to see the initial state.
 - Read through the `Instructions` tab of the spreadsheet, which provides a suggested process to verify a component.
-- Once you're satisfied that you understand the process, request access top the [read/write version of the spreadsheet](https://1drv.ms/x/s!AiUqzkjNYGL6ieBPJZV0b2mgOVgnYw) on the [bootstrap-vue-next channel of the BootstrapVue discord server](https://discord.gg/pE875sZP).
-- Evaluate a component (or two) and get us one step closer to v1!
+- Once you're satisfied that you understand the process, request access to the [read/write version of the spreadsheet](https://1drv.ms/x/s!AiUqzkjNYGL6ieBPJZV0b2mgOVgnYw) on the [bootstrap-vue-next channel of the BootstrapVue discord server](https://discord.gg/pE875sZP).
+- Evaluate a component (or two), update the spreadshet, and get us one step closer to v1!
 
 More context is available in the comments for [this issue](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1775).
 
