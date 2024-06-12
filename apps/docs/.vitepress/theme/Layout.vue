@@ -41,7 +41,7 @@
       </BNavbarNav>
     </BCollapse>
     <div class="d-flex align-items-center gap-2">
-      <VPNavBarSearch />
+      <VPNavBarSearch :class="{dark: colorMode === 'dark'}" />
       <div class="d-flex gap-2 flex-wrap socials">
         <BNav class="d-flex">
           <BNavItem
@@ -62,11 +62,16 @@
                 <component
                   :is="currentIcon"
                   height="1.1rem"
-                  :aria-label="`Toggle theme (${dark})`"
+                  :aria-label="`Toggle theme (${colorMode})`"
                   class="d-inline-block"
                 />
               </template>
-              <BDropdownItem v-for="el in options" :key="el" :active="dark === el" @click="set(el)">
+              <BDropdownItem
+                v-for="el in options"
+                :key="el"
+                :active="colorMode === el"
+                @click="set(el)"
+              >
                 <component :is="map[el]" /> {{ el }}
               </BDropdownItem>
             </BNavItemDropdown>
@@ -234,16 +239,8 @@ const headerExternalLinks = [
   },
 ]
 
-const dark = useColorMode({
+const colorMode = useColorMode({
   persist: true,
-  onChanged(mode, defaultHandler) {
-    defaultHandler(mode)
-    if (mode === 'dark') {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-  },
 })
 
 const map = {
@@ -254,10 +251,10 @@ const map = {
 
 const options = Object.keys(map) as (keyof typeof map)[]
 
-const currentIcon = computed(() => map[dark.value])
+const currentIcon = computed(() => map[colorMode.value])
 
 const set = (newValue: keyof typeof map) => {
-  dark.value = newValue
+  colorMode.value = newValue
 }
 
 watch(isLargeScreen, (newValue) => {
