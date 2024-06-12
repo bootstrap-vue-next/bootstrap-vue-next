@@ -65,6 +65,8 @@ We use [vitepress](https://vitepress.dev/) to build our documentation in the `./
 
 ## Help Verify BootstrapVue and Bootstrap v5 Parity
 
+Evaluating parity is a another great way to contribute to this project, especially if you're not quite ready to dive into the code.
+
 As we close in on a v1 of bootstrap-vue-next, we would like to verify our feature parity with both
 [boostrap-vue](https://bootstrap-vue.org/) and [Boottrap v5](https://getbootstrap.com/).
 
@@ -73,11 +75,15 @@ systems and the code and documentation for bootstrap-vue-next to evaluate featur
 spreadsheet to track the fine grained assement, and anyone who consumes bootstrap-vue(-next) should
 be able to do the first pass evaluation of a component.
 
+Note: The parity report is a work in progress and is lagging well behind the actual state of bootstrap-vue-next.
+Please don't use it as a measure of the current status of the project yet. When the parity report is at parity with the project,
+we'll remove this note.
+
 To contribute:
 
 - Take a look at the read-only version of the spreadsheet, available [here](https://1drv.ms/x/s!AiUqzkjNYGL6ieBPpQpcR41wo1laZQ). You can filter on `BFormCheckbox` and `BFormCheckboxGroup` in the `Component` column to see an example of components that are being evaludated and just about anything else to see the initial state.
 - Read through the `Instructions` tab of the spreadsheet, which provides a suggested process to verify a component.
-- Once you're satisfied that you understand the process, request access top the [read/write version of the spreadsheet](https://1drv.ms/x/s!AiUqzkjNYGL6ieBPJZV0b2mgOVgnYw) on the [Bootstrap Vue 3 discord server](https://discord.gg/8VjEkneh).
+- Once you're satisfied that you understand the process, request access top the [read/write version of the spreadsheet](https://1drv.ms/x/s!AiUqzkjNYGL6ieBPJZV0b2mgOVgnYw) on the [bootstrap-vue-next channel of the BootstrapVue discord server](https://discord.gg/pE875sZP).
 - Evaluate a component (or two) and get us one step closer to v1!
 
 More context is available in the comments for [this issue](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1775).
@@ -88,7 +94,7 @@ For adding a new component, there are some notes...
 
 - They should only exist in the `./packages/bootstrap-vue-next/src/components` directory
 - You should first review the `./packages/bootstrap-vue-next/src/types` directory and get familiar with the internal types that you can use
-- They should follow `<script setup lang="ts">` syntax, to ensure uniformity, there are *some* exceptions to this rule regarding Vue SFC being unable to import or extend types
+- They should follow `<script setup lang="ts">` syntax, to ensure uniformity, there are _some_ exceptions to this rule regarding Vue SFC being unable to import or extend types
 - If the component is a native [Bootstrap](https://getbootstrap.com/) component, you will need to read about that component and have a thorough understanding of how it works and appears
 - If the component is custom, or taken from [Bootstrap-vue](https://bootstrap-vue.org/) you will need to read the component documentation, then attempt to recreate that component using `<template>` and `<script setup lang="ts">` syntax. If a Bootstrap-vue component is based on a native Bootstrap component, then you should read Bootstrap's implementation first, and ensure any changes are made to correct for the v5 release of Bootstrap
 - All Props and Emits should be fully written as TypeScript interfaces, the more strongly typed, the better
@@ -96,7 +102,7 @@ For adding a new component, there are some notes...
 After the implementation of the component, based on Bootstrap's details, you can finally begin introducing the component to be exported by the main package, and usable by users of the library. To do that you will need to:
 
 1. Add the component to the import/export list, located in `./packages/bootstrap-vue-next/src/components/index.ts`
-2. Next, it must be imported into `./packages/bootstrap-vue-next/BootstrapVue.ts` *please ensure that your import is made directly to the component, and not to the previous index.ts file*
+2. Next, it must be imported into `./packages/bootstrap-vue-next/BootstrapVue.ts` _please ensure that your import is made directly to the component, and not to the previous index.ts file_
 3. After that, export it in the `export {}` list that contains the other components to be exported
 4. Finally, it must be included in the exported interface of **GlobalComponents**, following the pattern of `BComponent: typeof BComponent`
 
