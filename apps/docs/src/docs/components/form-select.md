@@ -40,7 +40,7 @@ const ex1Options = [
   {value: 'd', text: 'This one is disabled', disabled: true},
 ]
 
-const ex1Selected = ref()
+const ex1Selected = ref(null)
 </script>
 ```
 
@@ -258,46 +258,6 @@ const options = [
 
 </BCard>
 
-### Options as an object
-
-<BBadge variant="warning">Deprecated</BBadge>
-
-Keys are mapped to `value` and values are mapped to option `text`.
-
-<BCard class="bg-body-tertiary mb-4">
-
-```ts
-const options = {
-  a: 'Item A',
-  b: 'Item B',
-  c: {html: 'Item C', disabled: true},
-  d: {text: 'Item D', value: 'overridden_value'},
-  e: {text: 'Item E', value: {foo: 'bar', baz: true}},
-}
-```
-
-</BCard>
-
-Internally, BootstrapVueNext will convert the above object to the following array (the
-[array of objects](#options-as-an-array-of-objects)) format:
-
-<BCard class="bg-body-tertiary mb-4">
-
-```ts
-const options = [
-  {text: 'Item A', value: 'a', disabled: false},
-  {text: 'Item B', value: 'b', disabled: false},
-  {html: 'Item C', value: 'c', disabled: false},
-  {text: 'Item D', value: 'overridden_value', disabled: true},
-  {text: 'Item E', value: {foo: 'bar', baz: true}, disabled: false},
-]
-```
-
-</BCard>
-
-**Note:** When using the Object format, the order of the final array is **not** guaranteed. For this
-reason, it is recommended to use either of the previously mentioned array formats.
-
 ### Changing the option field names
 
 If you want to customize the field property names (for example using `name` field for display
@@ -306,20 +266,20 @@ If you want to customize the field property names (for example using `name` fiel
 
 <HighlightCard>
   <BFormSelect
-    v-model="exFirstSlotSelected"
+    v-model="exFieldNamesSelected"
     :options="exFieldNamesOptions"
     class="mb-3"
     value-field="item"
     text-field="name"
     disabled-field="notEnabled"
   />
-  <div class="mt-3">Selected: <strong>{{ exFirstSlotSelected }}</strong></div>
+  <div class="mt-3">Selected: <strong>{{ exFieldNamesSelected }}</strong></div>
   <template #html>
 
 ```vue
 <template>
   <BFormSelect
-    v-model="exFirstSlotSelected"
+    v-model="exFieldNamesSelected"
     :options="exFieldNamesOptions"
     class="mb-3"
     value-field="item"
@@ -328,7 +288,7 @@ If you want to customize the field property names (for example using `name` fiel
   />
 
   <div class="mt-3">
-    Selected: <strong>{{ exFirstSlotSelected }}</strong>
+    Selected: <strong>{{ exFieldNamesSelected }}</strong>
   </div>
 </template>
 
@@ -531,7 +491,7 @@ screen readers - or to colorblind users.
 
 Ensure that an alternative indication of state is also provided. For instance, you could include a
 hint about state in the form control's `<label>` text itself, or by providing an additional help
-text block (via `BFormGroup` or `<BForm*Feedback>`). Specifically for assistive technologies,
+text block (via `BFormGroup` or `BForm*Feedback`). Specifically for assistive technologies,
 invalid form controls can also be assigned an `aria-invalid="true"` attribute (see below).
 
 ### ARIA `aria-invalid` attribute
@@ -546,6 +506,14 @@ Supported `invalid` values are:
 
 When `state` is set to `false`, aria-invalid will also be set to true.
 
+## Non custom style select
+
+Set the prop `plain` to have a native browser `<select>` rendered (although the class
+`.form-control` will always be placed on the select).
+
+A `plain` select will always be rendered for non `multiple` selects which have the `select-size`
+prop set to a value greater than 1.
+
 <ComponentReference :data="data" />
 
 <script setup lang="ts">
@@ -557,7 +525,7 @@ import CrossSiteScriptingWarning from '../../components/CrossSiteScriptingWarnin
 import {BFormSelectOptionGroup, BFormSelectOption, BCard, BCardBody, BFormSelect, BAlert, BBadge} from 'bootstrap-vue-next'
 import {ref, computed} from 'vue'
 
-const ex1Selected = ref()
+const ex1Selected = ref(null)
 const ex1Options = [
   {value: null, text: 'Please select an option'},
   {value: 'a', text: 'This is First option'},
