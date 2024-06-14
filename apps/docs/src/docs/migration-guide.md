@@ -71,6 +71,10 @@ property and `update:modelValue` events.
 See the [Vue 3 migration guide](https://v3-migration.vuejs.org/breaking-changes/v-model.html)
 for more info.
 
+## BFormSelect
+
+[Options as an object](https://bootstrap-vue.org/docs/components/form-select#options-as-an-object) was deprecated in BootstrapVue and never implemented in BootstrapVueNext
+
 <MigrationWrapper v-for="(item, i) in changes" :key="i" v-bind="item" />
 
 <script setup lang="ts">
