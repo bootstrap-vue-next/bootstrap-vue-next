@@ -226,7 +226,6 @@ const emit = defineEmits<{
   'row-unhovered': [item: T, index: number, event: MouseEvent]
   'row-selected': [value: T]
   'row-unselected': [value: T]
-  'selection': [value: T[]]
   'sorted': [value: BTableSortBy]
   'change': [value: T[]]
 }>()
@@ -246,11 +245,6 @@ const selectedItemsToSet = computed({
   set: (val) => {
     selectedItemsModel.value = [...val]
   },
-})
-
-watch(selectedItemsToSet, () => {
-  if (!props.selectable) return
-  emit('selection', [...selectedItemsToSet.value])
 })
 
 /**
