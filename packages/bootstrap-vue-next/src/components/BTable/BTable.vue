@@ -247,6 +247,12 @@ const selectedItemsToSet = computed({
     selectedItemsModel.value = [...val]
   },
 })
+
+watch(selectedItemsToSet, () => {
+  if (!props.selectable) return
+  emit('selection', [...selectedItemsToSet.value])
+})
+
 /**
  * This is to avoid the issue of directly mutating the array structure and to properly trigger the computed setter.
  * The utils also conveniently emit the proper events after
@@ -563,8 +569,6 @@ const handleRowSelection = (
       selectedItemsSetUtilities.set([row])
     }
   }
-  // Notify
-  notifySelectionEvent()
 }
 
 const onRowClick = (row: T, index: number, e: MouseEvent) => {
@@ -665,11 +669,6 @@ const callItemsProvider = async () => {
   }
 }
 
-const notifySelectionEvent = () => {
-  if (!props.selectable) return
-  emit('selection', [...selectedItemsToSet.value])
-}
-
 const providerPropsWatch = async (prop: string, val: unknown, oldVal: unknown) => {
   if (val === oldVal) return
 
@@ -740,7 +739,6 @@ defineExpose({
   clearSelected: () => {
     if (!props.selectable) return
     selectedItemsSetUtilities.clear()
-    notifySelectionEvent()
   },
   refresh: callItemsProvider,
   selectAllRows: () => {
@@ -751,26 +749,23 @@ defineExpose({
       if (unselectableItems.includes(item)) return
       emit('row-selected', item)
     })
-    notifySelectionEvent()
   },
   selectRow: (index: number) => {
     if (!props.selectable) return
     const item = computedItems.value[index]
     if (!item || selectedItemsSetUtilities.has(item)) return
     selectedItemsSetUtilities.add(item)
-    notifySelectionEvent()
   },
   unselectRow: (index: number) => {
     if (!props.selectable) return
     const item = computedItems.value[index]
     if (!item || !selectedItemsSetUtilities.has(item)) return
     selectedItemsSetUtilities.delete(item)
-    notifySelectionEvent()
   },
   isRowSelected: (index: number) => {
     if (!props.selectable) return false
     const item = computedItems.value[index]
-    return !!item && selectedItemsSetUtilities.has(item)
+    return selectedItemsSetUtilities.has(item)
   },
 })
 </script>
