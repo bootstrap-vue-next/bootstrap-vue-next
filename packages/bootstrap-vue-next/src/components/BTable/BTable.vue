@@ -767,5 +767,10 @@ defineExpose({
     selectedItemsSetUtilities.delete(item)
     notifySelectionEvent()
   },
+  isRowSelected: (index: number) => {
+    if (!props.selectable) return false
+    const item = computedItems.value[index]
+    return selectedItemsSetUtilities.has(item)
+  },
 })
 </script>
