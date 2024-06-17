@@ -760,10 +760,5 @@ defineExpose({
     const item = computedItems.value[index]
     return selectedItemsSetUtilities.has(item)
   },
-  isRowSelected: (index: number) => {
-    if (!props.selectable) return false
-    const item = computedItems.value[index]
-    return selectedItemsSetUtilities.has(item)
-  },
 })
 </script>
