@@ -246,7 +246,6 @@ const selectedItemsToSet = computed({
     selectedItemsModel.value = [...val]
   },
 })
-
 /**
  * This is to avoid the issue of directly mutating the array structure and to properly trigger the computed setter.
  * The utils also conveniently emit the proper events after
