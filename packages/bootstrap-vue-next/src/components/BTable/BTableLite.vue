@@ -97,7 +97,8 @@
                 :name="
                   $slots[`cell(${String(field.key)})`] ? `cell(${String(field.key)})` : 'cell()'
                 "
-                :value="get(item, String(field.key))"
+                :value="formatItem(item, String(field.key), field.formatter)"
+                :unformatted="get(item, String(field.key))"
                 :index="itemIndex"
                 :item="item"
                 :field="field"
