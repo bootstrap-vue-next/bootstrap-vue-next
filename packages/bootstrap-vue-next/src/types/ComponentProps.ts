@@ -38,6 +38,7 @@ import type {
   RadioValue,
   RadiusElementExtendables,
   RowColsBreakpointProps,
+  SelectValue,
   Size,
   SpinnerType,
   TableField,
@@ -273,13 +274,7 @@ export interface BFormSelectProps {
   htmlField?: string
   id?: string
   labelField?: string
-  modelValue?:
-    | boolean
-    | string
-    | readonly unknown[]
-    | Readonly<Record<string, unknown>>
-    | number
-    | null
+  modelValue?: SelectValue
   multiple?: boolean
   name?: string
   options?: readonly (unknown | Record<string, unknown>)[]

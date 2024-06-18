@@ -130,7 +130,7 @@ export default {
         },
         {
           prop: 'modelValue',
-          type: `boolean| string | readonly unknown[] | Readonly<Record<string, unknown>> | number | null`,
+          type: `SelectValue`,
           default: '',
           description: 'The value of the select control',
         },
@@ -142,7 +142,7 @@ export default {
             {
               arg: 'value',
               description: 'Currently selected value of the select control.',
-              type: 'boolean| string | readonly unknown[] | Readonly<Record<string, unknown>> | number | null',
+              type: 'SelectValue',
             },
           ],
           description:
