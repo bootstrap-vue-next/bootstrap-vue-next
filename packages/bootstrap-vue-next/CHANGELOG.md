@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.22.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.21.2...bootstrapvuenext-v0.22.0) (2024-06-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BTable:** remove selected event -- use @update:selectedItems ([#1962](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1962))
+
+### Features
+
+* **BTable:** add isrowselected method fixes [#1233](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1233) ([#1960](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1960)) ([3f86900](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3f86900897b5868060f0826c92594afd6fb86505))
+* **BTable:** remove selected event -- use [@update](https://github.com/update):selectedItems ([#1962](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1962)) ([9350b3d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9350b3dc61aa5d1a2b55c3fbe6cc5d64abfadeee))
+
+
+### Bug Fixes
+
+* **BFormSelect:** Create a SelectValue type for consistency ([993599e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/993599e862461a94124b47a9daa899a7466f52b4))
+* **BTableLite:** value slot scope not using formatItem fixes [#1805](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1805) ([22039e5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/22039e52c7300f83f7b30ec7a9f9801df575fe79))
+
 ## [0.21.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.21.1...bootstrapvuenext-v0.21.2) (2024-06-10)
 
 
