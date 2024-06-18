@@ -44,6 +44,7 @@ export type {
   RadioValue,
   RadiusElement,
   RadiusElementExtendables,
+  SelectValue,
   SelectOption,
   SelectOptionRaw,
   Size,

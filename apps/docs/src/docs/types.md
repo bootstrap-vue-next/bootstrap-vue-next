@@ -277,6 +277,22 @@ type RadioValue =
 
 </BCard>
 
+## SelectValue
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type SelectValue =
+  | boolean
+  | string
+  | readonly unknown[]
+  | Readonly<Record<string, unknown>>
+  | number
+  | null
+```
+
+</BCard>
+
 ## Size
 
 <BCard class="bg-body-tertiary">
