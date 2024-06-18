@@ -1072,9 +1072,10 @@ watch(flavorSelected, (newValue: string[]) => {
   </template>
 </HighlightCard>
 
-<ComponentReference :data="data" />
+<ComponentReference :data="data" :common-props="commonProps" />
 
 <script setup lang="ts">
+import {data as commonProps} from '../../data/components/commonProps.data'
 import {data} from '../../data/components/formCheckbox.data'
 import {computed, ref, watch} from 'vue'
 import ComponentReference from '../../components/ComponentReference.vue'

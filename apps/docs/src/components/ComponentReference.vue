@@ -100,10 +100,11 @@ import type {
   ComponentReference,
   ComponentSection,
   EmitArgReference,
+  PropertyReference,
   SlotScopeReference,
 } from '../data/components/ComponentReference'
 
-const props = defineProps<{data: ComponentReference[]}>()
+const props = defineProps<{data: ComponentReference[]; commonProps?: PropertyReference[]}>()
 
 /**
  * Sorts the items inside so they're uniform structure
@@ -113,12 +114,7 @@ const sortData = computed(() =>
     const data: ComponentReference = {
       component: el.component,
       props: el.props
-        .map((inner) => ({
-          prop: inner.prop,
-          type: inner.type,
-          default: inner.default,
-          description: inner.description,
-        }))
+        .map((inner) => hydrateProp(inner))
         .sort((a, b) => a.prop.localeCompare(b.prop)),
       emits: el.emits
         .map((inner) => ({
@@ -159,4 +155,14 @@ const fields: {[P in ComponentItem]: TableFieldRaw[]} = {
 
 const normalizeDefault = (val: unknown) =>
   val === undefined || val === null ? `${val}` : typeof val === 'string' ? `'${val}'` : val
+
+const hydrateProp = (prop: PropertyReference): PropertyReference => {
+  const common = props.commonProps?.find((el) => el.prop === prop.prop)
+  return {
+    prop: prop.prop,
+    type: prop.type ?? common?.type,
+    default: prop.default ?? common?.default,
+    description: prop.description ?? common?.description,
+  }
+}
 </script>
