@@ -514,10 +514,9 @@ Set the prop `plain` to have a native browser `<select>` rendered (although the 
 A `plain` select will always be rendered for non `multiple` selects which have the `select-size`
 prop set to a value greater than 1.
 
-<ComponentReference :data="data" :common-props="commonProps" />
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
-import {data as commonProps} from '../../data/components/commonProps.data'
 import {data} from '../../data/components/formSelect.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import ComponentSidebar from '../../components/ComponentSidebar.vue'

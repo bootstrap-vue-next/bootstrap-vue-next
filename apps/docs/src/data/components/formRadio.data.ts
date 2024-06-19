@@ -1,4 +1,5 @@
-import type {ComponentReference} from './ComponentReference'
+import {type ComponentReference, hydrateProps} from './ComponentReference'
+import {commonProps} from './commonProps'
 
 export default {
   load: (): ComponentReference[] => [
@@ -84,64 +85,67 @@ export default {
     },
     {
       component: 'BFormRadioGroup',
-      props: [
-        {prop: 'ariaInvalid'},
-        {prop: 'autofocus'},
-        {
-          prop: 'buttonVariant',
-          type: 'ButtonVariant | null',
-          default: 'secondary',
-          description:
-            'Specifies the Bootstrap contextual color theme variant to apply to the button style radio buttons',
-        },
-        {
-          prop: 'buttons',
-          type: 'boolean',
-          default: false,
-          description: 'When set, renderes the radio buttons in this group with button styling',
-        },
-        {prop: 'disabled'},
-        {prop: 'disabledField'},
-        {prop: 'form'},
-        {prop: 'htmlField'},
-        {prop: 'id'},
-        {
-          prop: 'modelValue',
-          type: 'RadioValue | undefined',
-          default: undefined,
-          description:
-            'The current value of the checked radio in the group. Looking for `checked` - use `modelValue` instead.',
-        },
-        {prop: 'name'},
-        {
-          prop: 'options',
-          type: 'readonly RadioOptionRaw[] | undefined',
-        },
-        {prop: 'plain'},
-        {prop: 'required'},
-        {
-          prop: 'reverse',
-          type: 'boolean',
-          default: false,
-          description: 'When set, renders the radio buttons on the opposite side',
-        },
-        {prop: 'size'},
-        {
-          prop: 'stacked',
-          type: 'boolean',
-          default: false,
-          description: 'When set, renders the radio button group in stacked mode',
-        },
-        {prop: 'state'},
-        {prop: 'textField'},
-        {
-          prop: 'validated',
-          type: 'boolean',
-          default: false,
-          description: 'When set, adds the Bootstrap class `was-validated` to the group wrapper',
-        },
-        {prop: 'valueField'},
-      ],
+      props: hydrateProps(
+        [
+          {prop: 'ariaInvalid'},
+          {prop: 'autofocus'},
+          {
+            prop: 'buttonVariant',
+            type: 'ButtonVariant | null',
+            default: 'secondary',
+            description:
+              'Specifies the Bootstrap contextual color theme variant to apply to the button style radio buttons',
+          },
+          {
+            prop: 'buttons',
+            type: 'boolean',
+            default: false,
+            description: 'When set, renderes the radio buttons in this group with button styling',
+          },
+          {prop: 'disabled'},
+          {prop: 'disabledField'},
+          {prop: 'form'},
+          {prop: 'htmlField'},
+          {prop: 'id'},
+          {
+            prop: 'modelValue',
+            type: 'RadioValue | undefined',
+            default: undefined,
+            description:
+              'The current value of the checked radio in the group. Looking for `checked` - use `modelValue` instead.',
+          },
+          {prop: 'name'},
+          {
+            prop: 'options',
+            type: 'readonly RadioOptionRaw[] | undefined',
+          },
+          {prop: 'plain'},
+          {prop: 'required'},
+          {
+            prop: 'reverse',
+            type: 'boolean',
+            default: false,
+            description: 'When set, renders the radio buttons on the opposite side',
+          },
+          {prop: 'size'},
+          {
+            prop: 'stacked',
+            type: 'boolean',
+            default: false,
+            description: 'When set, renders the radio button group in stacked mode',
+          },
+          {prop: 'state'},
+          {prop: 'textField'},
+          {
+            prop: 'validated',
+            type: 'boolean',
+            default: false,
+            description: 'When set, adds the Bootstrap class `was-validated` to the group wrapper',
+          },
+          {prop: 'valueField'},
+        ],
+        commonProps
+      ),
       emits: [
         {
           event: 'update:modelValue',

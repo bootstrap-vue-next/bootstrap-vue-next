@@ -1,60 +1,64 @@
-import type {ComponentReference} from './ComponentReference'
+import {type ComponentReference, hydrateProps} from './ComponentReference'
+import {commonProps} from './commonProps'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormSelect',
-      props: [
-        {prop: 'ariaInvalid'},
-        {prop: 'autofocus'},
-        {prop: 'disabled'},
-        {prop: 'disabledField'},
-        {prop: 'form'},
-        {prop: 'htmlField'},
-        {prop: 'id'},
-        {
-          prop: 'labelField',
-          type: 'string',
-          default: 'label',
-          description: 'The key to use from the option object to get the label',
-        },
-        {
-          prop: 'multiple',
-          type: 'boolean',
-          default: false,
-          description: 'When set, allows multiple options to be selected (multi-select)',
-        },
-        {prop: 'name'},
-        {
-          prop: 'options',
-          type: 'unknown[] | Record<string, unknown>',
-        },
-        {
-          prop: 'optionsField',
-          type: 'string',
-          default: 'options',
-          description: 'The key to use from the option object to get the options',
-        },
-        {prop: 'plain'},
-        {prop: 'required'},
-        {
-          prop: 'selectSize',
-          type: 'Numberish',
-          default: 0,
-          description:
-            'When set to a number larger than 0, will set the number of display option rows. Note not all browser will respect this setting',
-        },
-        {prop: 'size'},
-        {prop: 'state'},
-        {prop: 'textField'},
-        {prop: 'valueField'},
-        {
-          prop: 'modelValue',
-          type: `SelectValue`,
-          default: '',
-          description: 'The value of the select control',
-        },
-      ],
+      props: hydrateProps(
+        [
+          {prop: 'ariaInvalid'},
+          {prop: 'autofocus'},
+          {prop: 'disabled'},
+          {prop: 'disabledField'},
+          {prop: 'form'},
+          {prop: 'htmlField'},
+          {prop: 'id'},
+          {
+            prop: 'labelField',
+            type: 'string',
+            default: 'label',
+            description: 'The key to use from the option object to get the label',
+          },
+          {
+            prop: 'multiple',
+            type: 'boolean',
+            default: false,
+            description: 'When set, allows multiple options to be selected (multi-select)',
+          },
+          {prop: 'name'},
+          {
+            prop: 'options',
+            type: 'unknown[] | Record<string, unknown>',
+          },
+          {
+            prop: 'optionsField',
+            type: 'string',
+            default: 'options',
+            description: 'The key to use from the option object to get the options',
+          },
+          {prop: 'plain'},
+          {prop: 'required'},
+          {
+            prop: 'selectSize',
+            type: 'Numberish',
+            default: 0,
+            description:
+              'When set to a number larger than 0, will set the number of display option rows. Note not all browser will respect this setting',
+          },
+          {prop: 'size'},
+          {prop: 'state'},
+          {prop: 'textField'},
+          {prop: 'valueField'},
+          {
+            prop: 'modelValue',
+            type: `SelectValue`,
+            default: '',
+            description: 'The value of the select control',
+          },
+        ],
+        commonProps
+      ),
       emits: [
         {
           event: 'update:modelValue',

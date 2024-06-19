@@ -734,10 +734,9 @@ Supported `aria-invalid` values are:
 
 `aria-invalid` is automatically set to `true` if the `state` prop is `false`.
 
-<ComponentReference :data="data" :common-props="commonProps" />
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
-import {data as commonProps} from '../../data/components/commonProps.data'
 import {data} from '../../data/components/formRadio.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import ComponentSidebar from '../../components/ComponentSidebar.vue'
