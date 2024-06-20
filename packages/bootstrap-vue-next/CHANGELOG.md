@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.22.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.22.0...bootstrapvuenext-v0.22.1) (2024-06-20)
+
+
+### Bug Fixes
+
+* **BAvatar:** use parentData.square for computedSquare fixes [#1923](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1923) ([2662758](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2662758ae9665f70db1bb8ef07e9d4fd4f2c47ba))
+
 ## [0.22.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.21.2...bootstrapvuenext-v0.22.0) (2024-06-18)
 
 
