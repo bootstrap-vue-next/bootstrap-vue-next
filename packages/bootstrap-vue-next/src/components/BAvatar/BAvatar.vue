@@ -123,7 +123,7 @@ const hasDefaultSlot = toRef(() => !isEmptySlot(slots.default))
 const hasBadgeSlot = toRef(() => !isEmptySlot(slots.badge))
 
 const showBadge = toRef(() => !!props.badge || props.badge === '' || hasBadgeSlot.value)
-const computedSquare = toRef(() => parentData?.size.value ?? props.square)
+const computedSquare = toRef(() => parentData?.square.value || props.square)
 
 const computedPropSize = useNumberishToStyle(() => props.size)
 const computedParentSize = useNumberishToStyle(() => parentData?.size.value)
