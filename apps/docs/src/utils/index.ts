@@ -15,13 +15,17 @@ const commonProps = () =>
     },
   }) satisfies Record<string, PropertyReference>
 
+type CommonPropsKeys = keyof ReturnType<typeof commonProps>
+
 export const buildCommonProps = (
-  obj: Partial<Record<keyof ReturnType<typeof commonProps>, Partial<PropertyReference>>> = {}
+  obj: Partial<Record<CommonPropsKeys, Partial<PropertyReference>>> = {}
 ) => {
   const myObject = commonProps()
 
   Object.entries(obj).forEach(([key, value]) => {
-    myObject[key] = {
+    myObject[key as CommonPropsKeys] = {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       ...myObject[key],
       ...value,
     }
@@ -44,3 +48,14 @@ export const pick = <
     },
     {} as Record<PropertyKey, unknown>
   ) as Pick<A, B[number]>
+
+export const omit = <
+  A extends Record<PropertyKey, unknown>,
+  const B extends ReadonlyArray<PropertyKey>,
+>(
+  objToPluck: Readonly<A>,
+  keysToPluck: Readonly<B> | readonly (keyof A)[]
+): Omit<A, B[number]> =>
+  Object.keys(objToPluck)
+    .filter((key) => !keysToPluck.map((el) => el.toString()).includes(key))
+    .reduce((result, key) => ({...result, [key]: objToPluck[key]}), {} as Omit<A, B[number]>)

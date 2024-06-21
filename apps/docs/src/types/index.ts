@@ -11,7 +11,7 @@ export interface PropertyReference {
 
 export interface ComponentReference {
   component: string
-  props: Record<string, PropertyReference>
+  props: Record<string, Record<string, PropertyReference>>
   emits: {
     event: string
     args: EmitArgReference[]

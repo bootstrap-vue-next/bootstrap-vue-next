@@ -6,30 +6,32 @@ export default {
     {
       component: 'BAccordion',
       props: {
-        flush: {
-          type: 'boolean',
-          default: false,
-          description:
-            'Remove the default background-color, some borders, and some rounded corners to render accordions edge-to-edge with their parent container',
+        '': {
+          flush: {
+            type: 'boolean',
+            default: false,
+            description:
+              'Remove the default background-color, some borders, and some rounded corners to render accordions edge-to-edge with their parent container',
+          },
+          free: {
+            type: 'boolean',
+            default: false,
+            description: 'Accordion items will stay open when another item is opened',
+          },
+          modelValue: {
+            type: 'string',
+            default: undefined,
+          },
+          ...pick(
+            buildCommonProps({
+              id: {
+                description:
+                  'The Id to be injected to accordion items and used to in BCollapse for state managment',
+              },
+            }),
+            ['id']
+          ),
         },
-        free: {
-          type: 'boolean',
-          default: false,
-          description: 'Accordion items will stay open when another item is opened',
-        },
-        modelValue: {
-          type: 'string',
-          default: undefined,
-        },
-        ...pick(
-          buildCommonProps({
-            id: {
-              description:
-                'The Id to be injected to accordion items and used to in BCollapse for state managment',
-            },
-          }),
-          ['id']
-        ),
       },
       emits: [],
       slots: [
