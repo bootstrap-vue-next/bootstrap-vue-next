@@ -100,8 +100,9 @@ import type {
   ComponentReference,
   ComponentSection,
   EmitArgReference,
+  MappedComponentReference,
   SlotScopeReference,
-} from '../data/components/ComponentReference'
+} from '../types'
 
 const props = defineProps<{data: ComponentReference[]}>()
 
@@ -109,33 +110,17 @@ const props = defineProps<{data: ComponentReference[]}>()
  * Sorts the items inside so they're uniform structure
  */
 const sortData = computed(() =>
-  props.data.map((el: ComponentReference): ComponentReference => {
-    const data: ComponentReference = {
+  props.data.map((el: ComponentReference): MappedComponentReference => {
+    const data: MappedComponentReference = {
       component: el.component,
-      props: el.props
-        .map((inner) => ({
-          prop: inner.prop,
-          type: inner.type,
-          default: inner.default,
-          description: inner.description,
+      props: Object.entries(el.props)
+        .map(([key, value]) => ({
+          prop: key,
+          ...value,
         }))
         .sort((a, b) => a.prop.localeCompare(b.prop)),
-      emits: el.emits
-        .map((inner) => ({
-          event: inner.event,
-          description: inner.description,
-          // Does not render inner object correctly
-          args: inner.args,
-        }))
-        .sort((a, b) => a.event.localeCompare(b.event)),
-      slots: el.slots
-        .map((inner) => ({
-          name: inner.name,
-          description: inner.description,
-          // Does not render inner object correctly
-          scope: inner.scope,
-        }))
-        .sort((a, b) => a.name.localeCompare(b.name)),
+      emits: el.emits.sort((a, b) => a.event.localeCompare(b.event)),
+      slots: el.slots.sort((a, b) => a.name.localeCompare(b.name)),
     }
 
     data.sections = (['Properties', 'Events', 'Slots'] as ComponentSection[]).filter(

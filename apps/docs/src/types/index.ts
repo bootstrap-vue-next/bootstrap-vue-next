@@ -4,7 +4,6 @@ export type EmitArgReference = {arg: string; type: string; description?: string}
 export type SlotScopeReference = {prop: string; type: string | string[]; description?: string}
 
 export interface PropertyReference {
-  prop: string
   type?: string
   description?: string
   default?: unknown
@@ -12,7 +11,7 @@ export interface PropertyReference {
 
 export interface ComponentReference {
   component: string
-  props: PropertyReference[]
+  props: Record<string, PropertyReference>
   emits: {
     event: string
     args: EmitArgReference[]
@@ -26,18 +25,21 @@ export interface ComponentReference {
   sections?: ComponentSection[]
 }
 
-export const hydrateProp = (
-  prop: PropertyReference,
-  commonProps: PropertyReference[]
-): PropertyReference => {
-  const common = commonProps?.find((el) => el.prop === prop.prop)
-  return {
-    prop: prop.prop,
-    type: prop.type ?? common?.type,
-    default: prop.default ?? common?.default,
-    description: prop.description ?? common?.description,
-  }
+export type MappedComponentReference = Omit<ComponentReference, 'props'> & {
+  props: (PropertyReference & {prop: string})[]
 }
 
-export const hydrateProps = (props: PropertyReference[], commonProps: PropertyReference[]) =>
-  props.map((prop) => hydrateProp(prop, commonProps))
+// export const hydrateProp = (
+//   prop: PropertyReference,
+//   commonProps: PropertyReference[]
+// ): PropertyReference => {
+//   const common = commonProps?.find((el) => el.prop === prop.prop)
+//   return {
+//     type: prop.type ?? common?.type,
+//     default: prop.default ?? common?.default,
+//     description: prop.description ?? common?.description,
+//   }
+// }
+
+// export const hydrateProps = (props: PropertyReference[], commonProps: PropertyReference[]) =>
+//   props.map((prop) => hydrateProp(prop, commonProps))
