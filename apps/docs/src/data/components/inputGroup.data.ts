@@ -4,43 +4,38 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BInputGroup',
-      props: [
-        {
-          prop: 'append',
-          type: 'string',
-          default: undefined,
+      props: {
+        '': {
+          append: {
+            type: 'string',
+            default: undefined,
+          },
+          appendHtml: {
+            type: 'string',
+            default: undefined,
+          },
+          id: {
+            type: 'string',
+            default: undefined,
+          },
+          prepend: {
+            type: 'string',
+            default: undefined,
+          },
+          prependHtml: {
+            type: 'string',
+            default: undefined,
+          },
+          size: {
+            type: 'Size',
+            default: 'md',
+          },
+          tag: {
+            type: 'string',
+            default: 'div',
+          },
         },
-        {
-          prop: 'appendHtml',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'id',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'prepend',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'prependHtml',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'size',
-          type: 'Size',
-          default: 'md',
-        },
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'div',
-        },
-      ],
+      },
       emits: [],
       slots: [
         {
@@ -62,18 +57,18 @@ export default {
     },
     {
       component: 'BInputGroupText',
-      props: [
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'div',
+      props: {
+        '': {
+          tag: {
+            type: 'string',
+            default: 'div',
+          },
+          text: {
+            type: 'string',
+            default: undefined,
+          },
         },
-        {
-          prop: 'text',
-          type: 'string',
-          default: undefined,
-        },
-      ],
+      },
       emits: [],
       slots: [
         {

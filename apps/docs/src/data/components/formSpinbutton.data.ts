@@ -4,7 +4,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormSpinbutton',
-      props: [],
+      props: {},
       emits: [],
       slots: [],
     },

@@ -24,7 +24,99 @@
               </ul>
             </BCol>
           </BRow>
-          <BRow v-for="section in component.sections" :key="section" class="my-3">
+          <BRow class="my-3">
+            <BCol>
+              <BContainer fluid>
+                <BRow>
+                  <BCol>
+                    <h5>
+                      <BLink
+                        :id="buildCompReferenceLink(`${component.component}-Properties`).slice(1)"
+                        variant="info"
+                        :to="buildCompReferenceLink(`${component.component}-Properties`)"
+                      >
+                        Properties
+                      </BLink>
+                    </h5>
+                  </BCol>
+                </BRow>
+                <BRow>
+                  <BCol>
+                    <BTable
+                      :items="component.props.find((el) => el[0].trim() === '')?.[1]"
+                      :fields="fields.props"
+                      hover
+                      small
+                      responsive
+                      bordered
+                      striped
+                    >
+                      <template #cell(type)="d">
+                        <code>
+                          {{ d.item.type }}
+                        </code>
+                      </template>
+                      <template #cell(default)="d">
+                        <code>
+                          {{ normalizeDefault(d.item.default) }}
+                        </code>
+                      </template>
+                    </BTable>
+                    <template v-if="component.props.some((el) => el[0].trim() !== '')">
+                      <span
+                        v-b-tooltip="
+                          'Extensions are selected properties from another component, integrated here. It does not need to include all original properties'
+                        "
+                        :style="{cursor: 'help'}"
+                        class="text-decoration-underline text-info cursor-help"
+                      >
+                        Extensions:
+                      </span>
+                      <BAccordion free>
+                        <BAccordionItem
+                          v-for="(table, index) in component.props.filter(
+                            (el) => el[0].trim() !== ''
+                          )"
+                          :key="index"
+                          header-tag="span"
+                          body-class="p-0 m-0"
+                          :title="table[0]"
+                        >
+                          <BTable
+                            :items="table[1]"
+                            :fields="fields.props"
+                            table-class="m-0 p-0"
+                            class="m-0 p-0"
+                            hover
+                            small
+                            responsive
+                            bordered
+                            striped
+                          >
+                            <template #cell(type)="d">
+                              <code>
+                                {{ d.item.type }}
+                              </code>
+                            </template>
+                            <template #cell(default)="d">
+                              <code>
+                                {{ normalizeDefault(d.item.default) }}
+                              </code>
+                            </template>
+                          </BTable>
+                        </BAccordionItem>
+                      </BAccordion>
+                    </template>
+                  </BCol>
+                </BRow>
+              </BContainer>
+            </BCol>
+          </BRow>
+          <BRow
+            v-for="section in component.sections?.filter((el) => el !== 'Properties')"
+            :key="section"
+            class="my-3"
+          >
             <BCol>
               <BContainer fluid>
                 <BRow>
@@ -94,7 +186,17 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import {BCol, BContainer, BLink, BRow, BTable, type TableFieldRaw} from 'bootstrap-vue-next'
+import {
+  BAccordion,
+  BAccordionItem,
+  BCol,
+  BContainer,
+  BLink,
+  BRow,
+  BTable,
+  type TableFieldRaw,
+  vBTooltip,
+} from 'bootstrap-vue-next'
 import type {
   ComponentItem,
   ComponentReference,
@@ -113,12 +215,12 @@ const sortData = computed(() =>
   props.data.map((el: ComponentReference): MappedComponentReference => {
     const data: MappedComponentReference = {
       component: el.component,
-      props: Object.entries(el.props)
-        .map(([key, value]) => ({
-          prop: key,
-          ...value,
-        }))
-        .sort((a, b) => a.prop.localeCompare(b.prop)),
+      props: Object.entries(el.props).map((el) => [
+        el[0],
+        Object.entries(el[1])
+          .map(([key, value]) => ({prop: key, ...value}))
+          .sort((a, b) => a.prop.localeCompare(b.prop)),
+      ]),
       emits: el.emits.sort((a, b) => a.event.localeCompare(b.event)),
       slots: el.slots.sort((a, b) => a.name.localeCompare(b.name)),
     }

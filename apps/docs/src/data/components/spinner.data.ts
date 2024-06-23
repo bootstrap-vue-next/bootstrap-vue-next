@@ -4,38 +4,34 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BSpinner',
-      props: [
-        {
-          prop: 'label',
-          type: 'string',
-          default: undefined,
+      props: {
+        '': {
+          label: {
+            type: 'string',
+            default: undefined,
+          },
+          role: {
+            type: 'string',
+            default: 'status',
+          },
+          small: {
+            type: 'boolean',
+            default: false,
+          },
+          tag: {
+            type: 'string',
+            default: 'span',
+          },
+          type: {
+            type: 'SpinnerType',
+            default: 'border',
+          },
+          variant: {
+            type: 'ColorVariant | null',
+            default: null,
+          },
         },
-        {
-          prop: 'role',
-          type: 'string',
-          default: 'status',
-        },
-        {
-          prop: 'small',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'span',
-        },
-        {
-          prop: 'type',
-          type: 'SpinnerType',
-          default: 'border',
-        },
-        {
-          prop: 'variant',
-          type: 'ColorVariant | null',
-          default: null,
-        },
-      ],
+      },
       emits: [],
       slots: [
         {

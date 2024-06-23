@@ -26,7 +26,7 @@ export interface ComponentReference {
 }
 
 export type MappedComponentReference = Omit<ComponentReference, 'props'> & {
-  props: (PropertyReference & {prop: string})[]
+  props: [string, (PropertyReference & {prop: string})[]][]
 }
 
 // export const hydrateProp = (

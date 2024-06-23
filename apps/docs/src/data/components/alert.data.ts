@@ -4,71 +4,61 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BAlert',
-      props: [
-        {
-          prop: 'closeVariant',
-          type: 'ButtonVariant | null',
-          default: 'secondary',
+      props: {
+        '': {
+          closeVariant: {
+            type: 'ButtonVariant | null',
+            default: 'secondary',
+          },
+          closeClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          closeLabel: {
+            type: 'string',
+            default: 'Close',
+          },
+          closeContent: {
+            type: 'string',
+            default: undefined,
+          },
+          noHoverPause: {
+            type: 'boolean',
+            default: false,
+          },
+          dismissible: {
+            type: 'boolean',
+            default: false,
+            description: 'When set, enables the dismiss close button',
+          },
+          fade: {
+            type: 'boolean',
+            default: false,
+            description: 'When set to true, enables the fade animation/transition on the component',
+          },
+          modelValue: {
+            type: 'boolean | number',
+            default: false,
+          },
+          variant: {
+            type: 'ColorVariant | null',
+            default: 'info',
+            description: 'Applies one of the Bootstrap theme color variants to the component',
+          },
+          immediate: {
+            type: 'boolean',
+            default: true,
+          },
+          interval: {
+            type: 'number | string',
+            default: 1000,
+          },
+          showOnPause: {
+            type: 'boolean',
+            default: true,
+          },
         },
-        {
-          prop: 'closeClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'closeLabel',
-          type: 'string',
-          default: 'Close',
-        },
-        {
-          prop: 'closeContent',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'noHoverPause',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'dismissible',
-          type: 'boolean',
-          default: false,
-          description: 'When set, enables the dismiss close button',
-        },
-        {
-          prop: 'fade',
-          type: 'boolean',
-          default: false,
-          description: 'When set to true, enables the fade animation/transition on the component',
-        },
-        {
-          prop: 'modelValue',
-          type: 'boolean | number',
-          default: false,
-        },
-        {
-          prop: 'variant',
-          type: 'ColorVariant | null',
-          default: 'info',
-          description: 'Applies one of the Bootstrap theme color variants to the component',
-        },
-        {
-          prop: 'immediate',
-          type: 'boolean',
-          default: true,
-        },
-        {
-          prop: 'interval',
-          type: 'number | string',
-          default: 1000,
-        },
-        {
-          prop: 'showOnPause',
-          type: 'boolean',
-          default: true,
-        },
-      ],
+      },
       slots: [],
       emits: [
         {

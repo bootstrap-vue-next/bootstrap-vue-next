@@ -4,58 +4,50 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BNav',
-      props: [
-        {
-          prop: 'align',
-          type: 'AlignmentJustifyContent',
-          default: undefined,
+      props: {
+        '': {
+          align: {
+            type: 'AlignmentJustifyContent',
+            default: undefined,
+          },
+          cardHeader: {
+            type: 'boolean',
+            default: false,
+          },
+          fill: {
+            type: 'boolean',
+            default: false,
+          },
+          justified: {
+            type: 'boolean',
+            default: false,
+          },
+          pills: {
+            type: 'boolean',
+            default: false,
+          },
+          small: {
+            type: 'boolean',
+            default: false,
+          },
+          tabs: {
+            type: 'boolean',
+            default: false,
+          },
+          tag: {
+            type: 'string',
+            default: 'ul',
+          },
+          vertical: {
+            type: 'boolean',
+            default: false,
+          },
+          underline: {
+            type: 'boolean',
+            default: false,
+          },
         },
-        {
-          prop: 'cardHeader',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'fill',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'justified',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'pills',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'small',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'tabs',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'ul',
-        },
-        {
-          prop: 'vertical',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'underline',
-          type: 'boolean',
-          default: false,
-        },
-      ],
+      },
       emits: [],
       slots: [
         {
@@ -67,13 +59,14 @@ export default {
     },
     {
       component: 'BNavForm',
-      props: [
-        {
-          prop: 'role',
-          type: 'string',
-          default: undefined,
+      props: {
+        '': {
+          role: {
+            type: 'string',
+            default: undefined,
+          },
         },
-      ],
+      },
       emits: [
         {
           args: [
@@ -97,18 +90,18 @@ export default {
     },
     {
       component: 'BNavItem',
-      props: [
-        {
-          prop: 'linkClass',
-          type: 'ClassValue',
-          default: undefined,
+      props: {
+        '': {
+          linkClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          linkAttrs: {
+            type: 'Record<string, unknown>',
+            default: undefined,
+          },
         },
-        {
-          prop: 'linkAttrs',
-          type: 'Record<string, unknown>',
-          default: undefined,
-        },
-      ],
+      },
       emits: [],
       slots: [
         {
@@ -120,113 +113,94 @@ export default {
     },
     {
       component: 'BNavItemDropdown',
-      props: [
-        {
-          prop: 'id',
-          type: 'string',
-          default: undefined,
+      props: {
+        '': {
+          id: {
+            type: 'string',
+            default: undefined,
+          },
+          text: {
+            type: 'string',
+            default: undefined,
+          },
+          toggleClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          size: {
+            type: 'Size',
+            default: 'md',
+          },
+          offset: {
+            type: 'string',
+            default: undefined,
+          },
+          autoClose: {
+            type: "boolean | 'inside' | 'outside'",
+            default: undefined,
+          },
+          splitVariant: {
+            type: 'ButtonVariant | null',
+            default: undefined,
+          },
+          noCaret: {
+            type: 'boolean',
+            default: undefined,
+          },
+          variant: {
+            type: 'ButtonVariant | null',
+            default: 'link',
+          },
+          modelValue: {
+            type: 'boolean',
+            default: false,
+          },
+          lazy: {
+            type: 'boolean',
+            default: undefined,
+          },
+          strategy: {
+            type: 'Strategy',
+            default: undefined,
+          },
+          floatingMiddleware: {
+            type: 'Middleware[]',
+            default: undefined,
+          },
+          noFlip: {
+            type: 'boolean',
+            default: undefined,
+          },
+          noShift: {
+            type: 'boolean',
+            default: undefined,
+          },
+          dropup: {
+            type: 'boolean',
+            default: undefined,
+          },
+          dropend: {
+            type: 'boolean',
+            default: undefined,
+          },
+          dropstart: {
+            type: 'boolean',
+            default: undefined,
+          },
+          center: {
+            type: 'boolean',
+            default: undefined,
+          },
+          end: {
+            type: 'boolean',
+            default: undefined,
+          },
+          menuClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
         },
-        {
-          prop: 'text',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'toggleClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'size',
-          type: 'Size',
-          default: 'md',
-        },
-        {
-          prop: 'offset',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'autoClose',
-          type: "boolean | 'inside' | 'outside'",
-          default: undefined,
-        },
-        {
-          prop: 'splitVariant',
-          type: 'ButtonVariant | null',
-          default: undefined,
-        },
-        {
-          prop: 'noCaret',
-          type: 'boolean',
-          default: undefined,
-        },
-        {
-          prop: 'variant',
-          type: 'ButtonVariant | null',
-          default: 'link',
-        },
-        {
-          prop: 'modelValue',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'lazy',
-          type: 'boolean',
-          default: undefined,
-        },
-        {
-          prop: 'strategy',
-          type: 'Strategy',
-          default: undefined,
-        },
-        {
-          prop: 'floatingMiddleware',
-          type: 'Middleware[]',
-          default: undefined,
-        },
-        {
-          prop: 'noFlip',
-          type: 'boolean',
-          default: undefined,
-        },
-        {
-          prop: 'noShift',
-          type: 'boolean',
-          default: undefined,
-        },
-        {
-          prop: 'dropup',
-          type: 'boolean',
-          default: undefined,
-        },
-        {
-          prop: 'dropend',
-          type: 'boolean',
-          default: undefined,
-        },
-        {
-          prop: 'dropstart',
-          type: 'boolean',
-          default: undefined,
-        },
-        {
-          prop: 'center',
-          type: 'boolean',
-          default: undefined,
-        },
-        {
-          prop: 'end',
-          type: 'boolean',
-          default: undefined,
-        },
-        {
-          prop: 'menuClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-      ],
+      },
       emits: [],
       slots: [
         {
@@ -238,14 +212,15 @@ export default {
     },
     {
       component: 'BNavText',
-      props: [
-        {
-          description: '',
-          prop: 'text',
-          type: 'string',
-          default: undefined,
+      props: {
+        '': {
+          text: {
+            description: '',
+            type: 'string',
+            default: undefined,
+          },
         },
-      ],
+      },
       emits: [],
       slots: [
         {

@@ -4,28 +4,26 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BButtonGroup',
-      props: [
-        {
-          prop: 'ariaLabel',
-          type: 'string',
-          default: 'Group',
+      props: {
+        '': {
+          ariaLabel: {
+            type: 'string',
+            default: 'Group',
+          },
+          size: {
+            type: 'Size',
+            default: 'md',
+          },
+          tag: {
+            type: 'string',
+            default: 'div',
+          },
+          vertical: {
+            type: 'boolean',
+            default: false,
+          },
         },
-        {
-          prop: 'size',
-          type: 'Size',
-          default: 'md',
-        },
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'div',
-        },
-        {
-          prop: 'vertical',
-          type: 'boolean',
-          default: false,
-        },
-      ],
+      },
       slots: [
         {
           description: '',

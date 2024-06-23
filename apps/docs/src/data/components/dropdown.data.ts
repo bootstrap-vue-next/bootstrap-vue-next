@@ -4,108 +4,90 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BDropdown',
-      props: [
-        {
-          prop: 'ariaLabel',
-          type: 'string',
-          default: undefined,
+      props: {
+        '': {
+          ariaLabel: {
+            type: 'string',
+            default: undefined,
+          },
+          id: {
+            type: 'string',
+            default: undefined,
+          },
+          menuClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          size: {
+            type: 'Size',
+            default: 'md',
+          },
+          splitClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          splitVariant: {
+            type: 'ButtonVariant | null',
+            default: undefined,
+          },
+          text: {
+            type: 'string',
+            default: undefined,
+          },
+          toggleClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          autoClose: {
+            type: "boolean | 'inside' | 'outside'",
+            default: true,
+          },
+          block: {
+            type: 'boolean',
+            default: false,
+          },
+          disabled: {
+            type: 'boolean',
+            default: false,
+          },
+          isNav: {
+            type: 'boolean',
+            default: false,
+          },
+          dropup: {
+            type: 'boolean',
+            default: false,
+          },
+          dropend: {
+            type: 'boolean',
+            default: false,
+          },
+          dropstart: {
+            type: 'boolean',
+            default: false,
+          },
+          center: {
+            type: 'boolean',
+            default: false,
+          },
+          end: {
+            type: 'boolean',
+            default: false,
+          },
+          noFlip: {
+            type: 'boolean',
+            default: false,
+          },
+          noShift: {
+            type: 'boolean',
+            default: false,
+          },
+          offset: {
+            type: 'number | string | {mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null',
+            default: 0,
+          },
         },
-        {
-          prop: 'id',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'menuClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'size',
-          type: 'Size',
-          default: 'md',
-        },
-        {
-          prop: 'splitClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'splitVariant',
-          type: 'ButtonVariant | null',
-          default: undefined,
-        },
-        {
-          prop: 'text',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'toggleClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'autoClose',
-          type: "boolean | 'inside' | 'outside'",
-          default: true,
-        },
-        {
-          prop: 'block',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'disabled',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'isNav',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'dropup',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'dropend',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'dropstart',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'center',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'end',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'noFlip',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'noShift',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'offset',
-          type: 'number | string | {mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null',
-          default: 0,
-        },
-      ],
+      },
       emits: [
         {
           args: [],
@@ -166,19 +148,20 @@ export default {
       component: 'BDropdownDivider',
       emits: [],
       slots: [],
-      props: [
-        {
-          description: '',
-          prop: 'tag',
-          type: 'string',
-          default: 'hr',
+      props: {
+        '': {
+          tag: {
+            description: '',
+            type: 'string',
+            default: 'hr',
+          },
         },
-      ],
+      },
     },
     {
       component: 'BDropdownForm',
       emits: [],
-      props: [],
+      props: {},
       slots: [
         {
           scope: [],
@@ -190,38 +173,34 @@ export default {
     {
       component: 'BDropdownGroup',
       emits: [],
-      props: [
-        {
-          prop: 'id',
-          type: 'string',
-          default: undefined,
+      props: {
+        '': {
+          id: {
+            type: 'string',
+            default: undefined,
+          },
+          ariaDescribedby: {
+            type: 'string',
+            default: undefined,
+          },
+          header: {
+            type: 'string',
+            default: 'header',
+          },
+          headerClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          headerTag: {
+            type: 'string',
+            default: 'header',
+          },
+          headerVariant: {
+            type: 'ColorVariant | null',
+            default: undefined,
+          },
         },
-        {
-          prop: 'ariaDescribedby',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'header',
-          type: 'string',
-          default: 'header',
-        },
-        {
-          prop: 'headerClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'headerTag',
-          type: 'string',
-          default: 'header',
-        },
-        {
-          prop: 'headerVariant',
-          type: 'ColorVariant | null',
-          default: undefined,
-        },
-      ],
+      },
       slots: [
         {
           description: '',
@@ -238,7 +217,7 @@ export default {
     {
       component: 'BDropdownHeader',
       emits: [],
-      props: [],
+      props: {},
       slots: [
         {
           scope: [],
@@ -262,13 +241,14 @@ export default {
           description: '',
         },
       ],
-      props: [
-        {
-          prop: 'linkClass',
-          type: 'ClassValue',
-          default: undefined,
+      props: {
+        '': {
+          linkClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
         },
-      ],
+      },
       slots: [
         {
           description: '',
@@ -292,33 +272,30 @@ export default {
           event: 'click',
         },
       ],
-      props: [
-        {
-          prop: 'buttonClass',
-          type: 'ClassValue',
-          default: undefined,
+      props: {
+        '': {
+          buttonClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          active: {
+            type: 'boolean',
+            default: false,
+          },
+          activeClass: {
+            type: 'ClassValue',
+            default: 'active',
+          },
+          disabled: {
+            type: 'boolean',
+            default: false,
+          },
+          variant: {
+            type: 'ColorVariant | null',
+            default: undefined,
+          },
         },
-        {
-          prop: 'active',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'activeClass',
-          type: 'ClassValue',
-          default: 'active',
-        },
-        {
-          prop: 'disabled',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'variant',
-          type: 'ColorVariant | null',
-          default: undefined,
-        },
-      ],
+      },
       slots: [
         {
           description: '',
@@ -330,14 +307,15 @@ export default {
     {
       component: 'BDropdownText',
       emits: [],
-      props: [
-        {
-          description: '',
-          prop: 'text',
-          type: 'string',
-          default: '',
+      props: {
+        '': {
+          text: {
+            description: '',
+            type: 'string',
+            default: '',
+          },
         },
-      ],
+      },
       slots: [
         {
           description: '',

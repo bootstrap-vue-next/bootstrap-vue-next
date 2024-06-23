@@ -44,77 +44,66 @@ export default {
     },
     {
       component: 'BAccordionItem',
-      props: [
-        {
-          prop: 'id',
-          type: 'string',
-          default: undefined,
+      props: {
+        '': {
+          id: {
+            type: 'string',
+            default: undefined,
+          },
+          title: {
+            type: 'string',
+            default: undefined,
+          },
+          modelValue: {
+            type: 'boolean',
+            default: false,
+          },
+          headerTag: {
+            type: 'string',
+            default: 'h2',
+          },
+          tag: {
+            type: 'string',
+            default: undefined,
+          },
+          toggle: {
+            type: 'boolean',
+            default: undefined,
+          },
+          horizontal: {
+            type: 'boolean',
+            default: undefined,
+          },
+          visible: {
+            type: 'boolean',
+            default: false,
+          },
+          isNav: {
+            type: 'boolean',
+            default: undefined,
+          },
+          headerClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: 'Class to be applied to the header element',
+          },
+          buttonClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: 'Class to be applied to the button in header',
+          },
+          collapseClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: 'Class to be applied to the collapse',
+          },
+          bodyClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: 'Class to be applied to the body of the accordion item',
+          },
         },
-        {
-          prop: 'title',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'modelValue',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'headerTag',
-          type: 'string',
-          default: 'h2',
-        },
-        {
-          prop: 'tag',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'toggle',
-          type: 'boolean',
-          default: undefined,
-        },
-        {
-          prop: 'horizontal',
-          type: 'boolean',
-          default: undefined,
-        },
-        {
-          prop: 'visible',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'isNav',
-          type: 'boolean',
-          default: undefined,
-        },
-        {
-          prop: 'headerClass',
-          type: 'ClassValue',
-          default: undefined,
-          description: 'Class to be applied to the header element',
-        },
-        {
-          prop: 'buttonClass',
-          type: 'ClassValue',
-          default: undefined,
-          description: 'Class to be applied to the button in header',
-        },
-        {
-          prop: 'collapseClass',
-          type: 'ClassValue',
-          default: undefined,
-          description: 'Class to be applied to the collapse',
-        },
-        {
-          prop: 'bodyClass',
-          type: 'ClassValue',
-          default: undefined,
-          description: 'Class to be applied to the body of the accordion item',
-        },
-      ],
+      },
       emits: [],
       slots: [
         {

@@ -4,43 +4,38 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BCollapse',
-      props: [
-        {
-          prop: 'id',
-          type: 'string',
-          default: undefined,
+      props: {
+        '': {
+          id: {
+            type: 'string',
+            default: undefined,
+          },
+          modelValue: {
+            type: 'boolean',
+            default: false,
+          },
+          tag: {
+            type: 'string',
+            default: 'div',
+          },
+          toggle: {
+            type: 'boolean',
+            default: false,
+          },
+          horizontal: {
+            type: 'boolean',
+            default: false,
+          },
+          visible: {
+            type: 'boolean',
+            default: false,
+          },
+          isNav: {
+            type: 'boolean',
+            default: false,
+          },
         },
-        {
-          prop: 'modelValue',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'div',
-        },
-        {
-          prop: 'toggle',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'horizontal',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'visible',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'isNav',
-          type: 'boolean',
-          default: false,
-        },
-      ],
+      },
       emits: [
         {
           args: [

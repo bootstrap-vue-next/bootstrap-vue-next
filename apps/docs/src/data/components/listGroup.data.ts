@@ -4,28 +4,26 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BListGroup',
-      props: [
-        {
-          prop: 'flush',
-          type: 'boolean',
-          default: false,
+      props: {
+        '': {
+          flush: {
+            type: 'boolean',
+            default: false,
+          },
+          horizontal: {
+            type: 'boolean | Breakpoint',
+            default: false,
+          },
+          numbered: {
+            type: 'boolean',
+            default: false,
+          },
+          tag: {
+            type: 'string',
+            default: 'div',
+          },
         },
-        {
-          prop: 'horizontal',
-          type: 'boolean | Breakpoint',
-          default: false,
-        },
-        {
-          prop: 'numbered',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'div',
-        },
-      ],
+      },
       emits: [],
       slots: [
         {
@@ -37,23 +35,22 @@ export default {
     },
     {
       component: 'BListGroupItem',
-      props: [
-        {
-          prop: 'action',
-          type: 'boolean',
-          default: false,
+      props: {
+        '': {
+          action: {
+            type: 'boolean',
+            default: false,
+          },
+          button: {
+            type: 'boolean',
+            default: false,
+          },
+          tag: {
+            type: 'string',
+            default: 'div',
+          },
         },
-        {
-          prop: 'button',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'div',
-        },
-      ],
+      },
       emits: [],
       slots: [
         {

@@ -4,133 +4,110 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BPopover',
-      props: [
-        {
-          prop: 'modelValue',
-          type: 'boolean',
-          default: false,
+      props: {
+        '': {
+          modelValue: {
+            type: 'boolean',
+            default: false,
+          },
+          teleportTo: {
+            type: 'string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined',
+            default: undefined,
+          },
+          target: {
+            type: '(() => HTMLElement | VNode) | string | ComponentPublicInstance<HTMLElement> | HTMLSpanElement | HTMLElement | null ',
+            default: null,
+          },
+          reference: {
+            type: '(() => HTMLElement | VNode) | string | ComponentPublicInstance<HTMLElement> | HTMLSpanElement | HTMLElement | null',
+            default: null,
+          },
+          content: {
+            type: 'string',
+            default: undefined,
+          },
+          id: {
+            type: 'string',
+            default: undefined,
+          },
+          title: {
+            type: 'string',
+            default: undefined,
+          },
+          click: {
+            type: 'boolean',
+            default: false,
+          },
+          manual: {
+            type: 'boolean',
+            default: false,
+          },
+          variant: {
+            type: 'ColorVariant | null',
+            default: null,
+          },
+          offset: {
+            type: 'number | string | null',
+            default: null,
+          },
+          customClass: {
+            type: 'ClassValue',
+            default: '',
+          },
+          placement: {
+            type: 'PopoverPlacement',
+            default: 'top',
+          },
+          strategy: {
+            type: 'Strategy',
+            default: 'absolute',
+          },
+          floatingMiddleware: {
+            type: 'Middleware[]',
+            default: undefined,
+          },
+          noFlip: {
+            type: 'boolean',
+            default: false,
+          },
+          noShift: {
+            type: 'boolean',
+            default: false,
+          },
+          noFade: {
+            type: 'boolean',
+            default: false,
+          },
+          noAutoClose: {
+            type: 'boolean',
+            default: false,
+          },
+          hide: {
+            type: 'boolean',
+            default: true,
+          },
+          realtime: {
+            type: 'boolean',
+            default: false,
+          },
+          inline: {
+            type: 'boolean',
+            default: false,
+          },
+          tooltip: {
+            type: 'boolean',
+            default: false,
+          },
+          html: {
+            type: 'boolean',
+            default: false,
+          },
+          delay: {
+            type: 'number | { show: number; hide: number }',
+            default: '() => {show: 100, hide: 300})',
+          },
         },
-        {
-          prop: 'teleportTo',
-          type: 'string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined',
-          default: undefined,
-        },
-        {
-          prop: 'target',
-          type: '(() => HTMLElement | VNode) | string | ComponentPublicInstance<HTMLElement> | HTMLSpanElement | HTMLElement | null ',
-          default: null,
-        },
-        {
-          prop: 'reference',
-          type: '(() => HTMLElement | VNode) | string | ComponentPublicInstance<HTMLElement> | HTMLSpanElement | HTMLElement | null',
-          default: null,
-        },
-        {
-          prop: 'content',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'id',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'title',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'click',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'manual',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'variant',
-          type: 'ColorVariant | null',
-          default: null,
-        },
-        {
-          prop: 'offset',
-          type: 'number | string | null',
-          default: null,
-        },
-        {
-          prop: 'customClass',
-          type: 'ClassValue',
-          default: '',
-        },
-        {
-          prop: 'placement',
-          type: 'PopoverPlacement',
-          default: 'top',
-        },
-        {
-          prop: 'strategy',
-          type: 'Strategy',
-          default: 'absolute',
-        },
-        {
-          prop: 'floatingMiddleware',
-          type: 'Middleware[]',
-          default: undefined,
-        },
-        {
-          prop: 'noFlip',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'noShift',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'noFade',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'noAutoClose',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'hide',
-          type: 'boolean',
-          default: true,
-        },
-        {
-          prop: 'realtime',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'inline',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'tooltip',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'html',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'delay',
-          type: 'number | { show: number; hide: number }',
-          default: '() => {show: 100, hide: 300})',
-        },
-      ],
+      },
       emits: [
         {
           args: [],

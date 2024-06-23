@@ -4,88 +4,74 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BImg',
-      props: [
-        {
-          prop: 'blank',
-          type: 'boolean',
-          default: false,
+      props: {
+        '': {
+          blank: {
+            type: 'boolean',
+            default: false,
+          },
+          blankColor: {
+            type: 'string',
+            default: 'transparent',
+          },
+          block: {
+            type: 'boolean',
+            default: false,
+          },
+          center: {
+            type: 'boolean',
+            default: false,
+          },
+          fluid: {
+            type: 'boolean',
+            default: false,
+          },
+          lazy: {
+            type: 'boolean',
+            default: false,
+          },
+          fluidGrow: {
+            type: 'boolean',
+            default: false,
+          },
+          height: {
+            type: 'number | string',
+            default: undefined,
+          },
+          start: {
+            type: 'boolean',
+            default: false,
+          },
+          end: {
+            type: 'boolean',
+            default: false,
+          },
+          rounded: {
+            type: 'boolean | string',
+            default: false,
+          },
+          sizes: {
+            type: 'string | string[]',
+            default: undefined,
+          },
+          src: {
+            type: 'string',
+            default: undefined,
+          },
+          srcset: {
+            type: 'string | string[]',
+            default: undefined,
+          },
+          thumbnail: {
+            type: 'boolean',
+            default: false,
+          },
+          width: {
+            type: 'number | string',
+            default: undefined,
+          },
         },
-        {
-          prop: 'blankColor',
-          type: 'string',
-          default: 'transparent',
-        },
-        {
-          prop: 'block',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'center',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'fluid',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'lazy',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'fluidGrow',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'height',
-          type: 'number | string',
-          default: undefined,
-        },
-        {
-          prop: 'start',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'end',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'rounded',
-          type: 'boolean | string',
-          default: false,
-        },
-        {
-          prop: 'sizes',
-          type: 'string | string[]',
-          default: undefined,
-        },
-        {
-          prop: 'src',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'srcset',
-          type: 'string | string[]',
-          default: undefined,
-        },
-        {
-          prop: 'thumbnail',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'width',
-          type: 'number | string',
-          default: undefined,
-        },
-      ],
+      },
       emits: [
         {
           args: [

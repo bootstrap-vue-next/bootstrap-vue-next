@@ -4,23 +4,22 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormTextarea',
-      props: [
-        {
-          prop: 'noResize',
-          type: 'boolean',
-          default: false,
+      props: {
+        '': {
+          noResize: {
+            type: 'boolean',
+            default: false,
+          },
+          rows: {
+            type: 'string | number',
+            default: 2,
+          },
+          wrap: {
+            type: 'string',
+            default: 'soft',
+          },
         },
-        {
-          prop: 'rows',
-          type: 'string | number',
-          default: 2,
-        },
-        {
-          prop: 'wrap',
-          type: 'string',
-          default: 'soft',
-        },
-      ],
+      },
       emits: [
         {
           event: 'update:modelValue',
