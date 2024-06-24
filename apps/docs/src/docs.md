@@ -183,7 +183,7 @@ export default defineConfig({
 </HighlightCard>
 
 <NoteAlert>
-The resolver import is from `bootstrap-vue-next`, not `unplugin-vue-components
+The resolver import is from `bootstrap-vue-next`, not `unplugin-vue-components`
 </NoteAlert>
 
 ##### Built-in Registry
