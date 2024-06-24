@@ -65,7 +65,7 @@
                     <template v-if="component.props.some((el) => el[0].trim() !== '')">
                       <span
                         v-b-tooltip="
-                          'Extensions are selected properties from another component, integrated here. It does not need to include all original properties'
+                          'Extensions are selected properties from another component, integrated here. It may not include all original properties'
                         "
                         :style="{cursor: 'help'}"
                         class="text-decoration-underline text-info cursor-help"

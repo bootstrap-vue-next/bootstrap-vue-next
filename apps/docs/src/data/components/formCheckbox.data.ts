@@ -1,91 +1,82 @@
-import {type ComponentReference, hydrateProps} from './ComponentReference'
-import {commonProps} from './commonProps'
+import type {ComponentReference} from '../../types'
+import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormCheckbox',
-      props: hydrateProps(
-        [
-          {prop: 'ariaLabel'},
-          {prop: 'ariaLabelledBy'},
-          {prop: 'autofocus'},
-          {
-            prop: 'button',
+      props: {
+        '': {
+          button: {
             type: 'boolean',
             default: false,
             description: 'When set, renders the checkbox with the appearance of a button',
           },
-          {
-            prop: 'buttonGroup',
+          buttonGroup: {
             type: 'boolean',
             default: false,
             description:
               "When set, renders the checkbox as part of a button group (it doesn't enclose the checkbox and label with a div). It is not necessary to set this to true if this is part of a RadioGroup as it is handled internally",
           },
-          {
-            prop: 'buttonVariant',
+          buttonVariant: {
             type: 'ButtonVariant | null',
             default: 'secondary',
             description: "Applies one of Bootstrap's theme colors when in `button` mode",
           },
-          {prop: 'disabled'},
-          {prop: 'form'},
-          {prop: 'id'},
-          {
-            prop: 'indeterminate',
+          indeterminate: {
             type: 'boolean',
             default: false,
             description:
               'Set to true to show the checkbox as indeterminate, false to show its normal checked/unchecked.',
           },
-          {
-            prop: 'inline',
+          inline: {
             type: 'boolean',
             default: false,
             description:
               'When set, renders the checkbox as an inline element rather than as a 100% width block',
           },
-          {
-            prop: 'modelValue',
+          modelValue: {
             type: 'CheckboxValue | readonly CheckboxValue[]',
             default: undefined,
             description:
               'The current value of the checkbox(es). Must be an array when there are multiple checkboxes bound to the same v-model. Looking for `value` - use `modelValue` instead.',
           },
-          {prop: 'name'},
-          {prop: 'plain'},
-          {prop: 'required'},
-          {prop: 'size'},
-          {prop: 'state'},
-          {
-            prop: 'reverse',
+          reverse: {
             type: 'boolean',
             default: false,
             description: 'When set, renders the checkbox or switch on the opposite side',
           },
-          {
-            prop: 'switch',
+          switch: {
             type: 'boolean',
             default: false,
             description: 'When set, renders the checkbox with the appearance of a switch',
           },
-          {
-            prop: 'uncheckedValue',
+          uncheckedValue: {
             type: 'CheckboxValue',
             default: false,
             description:
               'Value returned when this checkbox is unchecked. Note not applicable when multiple checkboxes bound to the same v-model array',
           },
-          {
-            prop: 'value',
+          value: {
             type: 'CheckboxValue',
             default: true,
             description: 'Value returned when this checkbox is checked',
           },
-        ],
-        commonProps
-      ),
+          ...pick(buildCommonProps(), [
+            'ariaLabel',
+            'ariaLabelledBy',
+            'autofocus',
+            'disabled',
+            'form',
+            'id',
+            'name',
+            'plain',
+            'required',
+            'size',
+            'state',
+          ]),
+        },
+      },
       emits: [
         {
           event: 'update:modelValue',
@@ -121,75 +112,66 @@ export default {
     },
     {
       component: 'BFormCheckboxGroup',
-      props: [
-        {prop: 'ariaInvalid'},
-        {prop: 'autofocus'},
-        {
-          prop: 'buttonVariant',
-          type: 'ButtonVariant | null',
-          default: 'secondary',
-          description:
-            'Specifies the Bootstrap contextual color theme variant to apply to the button style checkboxes',
+      props: {
+        '': {
+          buttonVariant: {
+            type: 'ButtonVariant | null',
+            default: 'secondary',
+            description:
+              'Specifies the Bootstrap contextual color theme variant to apply to the button style checkboxes',
+          },
+          buttons: {
+            type: 'boolean',
+            default: false,
+            description: 'When set, renderes the checkboxes in this group with button styling',
+          },
+          modelValue: {
+            type: 'readonly CheckboxValue[]',
+            default: '() => []',
+            description:
+              'The current value of the checked checkboxes in the group. Must be an array when there are multiple checkboxes. . Looking for `value` - use `modelValue` instead.',
+          },
+          options: {
+            type: 'readonly CheckboxOptionRaw[]',
+          },
+          reverse: {
+            type: 'boolean',
+            default: false,
+            description: 'When set, renders the checkboxes and switches on the opposite side',
+          },
+          stacked: {
+            type: 'boolean',
+            default: false,
+            description: 'When set, renders the checkbox group in stacked mode',
+          },
+          switches: {
+            type: 'boolean',
+            default: false,
+            description: 'When set, renders the checkboxes in the group with switch styling',
+          },
+          validated: {
+            type: 'boolean',
+            default: false,
+            description: 'When set, adds the Bootstrap class `was-validated` to the group wrapper',
+          },
+          ...pick(buildCommonProps(), [
+            'ariaInvalid',
+            'autofocus',
+            'disabled',
+            'disabledField',
+            'form',
+            'htmlField',
+            'id',
+            'name',
+            'plain',
+            'required',
+            'size',
+            'state',
+            'textField',
+            'valueField',
+          ]),
         },
-        {
-          prop: 'buttons',
-          type: 'boolean',
-          default: false,
-          description: 'When set, renderes the checkboxes in this group with button styling',
-        },
-        {prop: 'disabled'},
-        {prop: 'disabledField'},
-        {prop: 'form'},
-        {prop: 'htmlField'},
-        {prop: 'id'},
-        {
-          prop: 'modelValue',
-          type: 'readonly CheckboxValue[]',
-          default: '() => []',
-          description:
-            'The current value of the checked checkboxes in the group. Must be an array when there are multiple checkboxes. . Looking for `value` - use `modelValue` instead.',
-        },
-        {prop: 'name'},
-        {
-          prop: 'options',
-          type: 'readonly CheckboxOptionRaw[]',
-        },
-        {
-          prop: 'plain',
-          type: 'boolean',
-          default: false,
-          description: 'Render the form control in plain mode, rather than custom styled mode',
-        },
-        {prop: 'required'},
-        {
-          prop: 'reverse',
-          type: 'boolean',
-          default: false,
-          description: 'When set, renders the checkboxes and switches on the opposite side',
-        },
-        {prop: 'size'},
-        {
-          prop: 'stacked',
-          type: 'boolean',
-          default: false,
-          description: 'When set, renders the checkbox group in stacked mode',
-        },
-        {prop: 'state'},
-        {
-          prop: 'switches',
-          type: 'boolean',
-          default: false,
-          description: 'When set, renders the checkboxes in the group with switch styling',
-        },
-        {prop: 'textField'},
-        {
-          prop: 'validated',
-          type: 'boolean',
-          default: false,
-          description: 'When set, adds the Bootstrap class `was-validated` to the group wrapper',
-        },
-        {prop: 'valueField'},
-      ],
+      },
       emits: [
         {
           event: 'update:modelValue',

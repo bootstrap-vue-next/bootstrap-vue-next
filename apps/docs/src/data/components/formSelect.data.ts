@@ -1,64 +1,62 @@
-import {type ComponentReference, hydrateProps} from './ComponentReference'
-import {commonProps} from './commonProps'
+import type {ComponentReference} from '../../types'
+import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormSelect',
-      props: hydrateProps(
-        [
-          {prop: 'ariaInvalid'},
-          {prop: 'autofocus'},
-          {prop: 'disabled'},
-          {prop: 'disabledField'},
-          {prop: 'form'},
-          {prop: 'htmlField'},
-          {prop: 'id'},
-          {
-            prop: 'labelField',
+      props: {
+        '': {
+          labelField: {
             type: 'string',
             default: 'label',
             description: 'The key to use from the option object to get the label',
           },
-          {
-            prop: 'multiple',
+          multiple: {
             type: 'boolean',
             default: false,
             description: 'When set, allows multiple options to be selected (multi-select)',
           },
-          {prop: 'name'},
-          {
-            prop: 'options',
-            type: 'unknown[] | Record<string, unknown>',
-          },
-          {
-            prop: 'optionsField',
+          optionsField: {
             type: 'string',
             default: 'options',
             description: 'The key to use from the option object to get the options',
           },
-          {prop: 'plain'},
-          {prop: 'required'},
-          {
-            prop: 'selectSize',
+          selectSize: {
             type: 'Numberish',
             default: 0,
             description:
               'When set to a number larger than 0, will set the number of display option rows. Note not all browser will respect this setting',
           },
-          {prop: 'size'},
-          {prop: 'state'},
-          {prop: 'textField'},
-          {prop: 'valueField'},
-          {
-            prop: 'modelValue',
+          modelValue: {
             type: `SelectValue`,
             default: '',
             description: 'The value of the select control',
           },
-        ],
-        commonProps
-      ),
+          ...pick(
+            buildCommonProps({
+              options: {type: 'unknown[] | Record<string, unknown>'},
+            }),
+            [
+              'ariaInvalid',
+              'autofocus',
+              'disabled',
+              'disabledField',
+              'form',
+              'htmlField',
+              'id',
+              'name',
+              'options',
+              'plain',
+              'required',
+              'size',
+              'state',
+              'textField',
+              'valueField',
+            ]
+          ),
+        },
+      },
       emits: [
         {
           event: 'update:modelValue',
@@ -88,20 +86,20 @@ export default {
     {
       component: 'BFormSelectOption',
       emits: [],
-      props: [
-        {
-          prop: 'value',
-          type: 'any',
-          default: undefined,
-          description: 'The value of the option',
+      props: {
+        '': {
+          value: {
+            type: 'any',
+            default: undefined,
+            description: 'The value of the option',
+          },
+          disabled: {
+            type: 'boolean',
+            default: false,
+            description: 'The disabled state of the option',
+          },
         },
-        {
-          prop: 'disabled',
-          type: 'boolean',
-          default: false,
-          description: 'The disabled state of the option',
-        },
-      ],
+      },
       slots: [
         {
           name: 'default',
@@ -111,22 +109,21 @@ export default {
     },
     {
       component: 'BFormSelectOptionGroup',
-      props: [
-        {
-          prop: 'label',
-          type: 'string',
-          default: undefined,
-          description: 'The label for the option group',
+      props: {
+        '': {
+          label: {
+            type: 'string',
+            default: undefined,
+            description: 'The label for the option group',
+          },
+          ...pick(
+            buildCommonProps({
+              options: {type: 'unknown[] | Record<string, unknown>'},
+            }),
+            ['disabledField', 'htmlField', 'options', 'textField', 'valueField']
+          ),
         },
-        {prop: 'disabledField'},
-        {prop: 'htmlField'},
-        {
-          prop: 'options',
-          type: 'readonly (unknown | Record<string, unknown>)[]',
-        },
-        {prop: 'textField'},
-        {prop: 'valueField'},
-      ],
+      },
       emits: [],
       slots: [
         {

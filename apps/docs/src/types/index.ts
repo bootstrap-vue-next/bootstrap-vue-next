@@ -28,18 +28,3 @@ export interface ComponentReference {
 export type MappedComponentReference = Omit<ComponentReference, 'props'> & {
   props: [string, (PropertyReference & {prop: string})[]][]
 }
-
-// export const hydrateProp = (
-//   prop: PropertyReference,
-//   commonProps: PropertyReference[]
-// ): PropertyReference => {
-//   const common = commonProps?.find((el) => el.prop === prop.prop)
-//   return {
-//     type: prop.type ?? common?.type,
-//     default: prop.default ?? common?.default,
-//     description: prop.description ?? common?.description,
-//   }
-// }
-
-// export const hydrateProps = (props: PropertyReference[], commonProps: PropertyReference[]) =>
-//   props.map((prop) => hydrateProp(prop, commonProps))
