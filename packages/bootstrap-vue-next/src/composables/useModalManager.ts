@@ -54,7 +54,7 @@ export const useSharedModalStack = () => {
   }
 }
 
-export default (modalOpen: Readonly<Ref<boolean>>) => {
+export default (modalOpen: Readonly<Ref<boolean>>, initialValue: boolean) => {
   const {pushRegistry, pushStack, removeStack, stack, dispose, countStack} = useSharedModalStack()
 
   const currentModal = getCurrentInstance()
@@ -69,22 +69,26 @@ export default (modalOpen: Readonly<Ref<boolean>>) => {
     dispose(currentModal)
   })
 
-  watch(
-    modalOpen,
-    (newValue, oldValue) => {
-      if (newValue) {
-        pushStack?.(currentModal)
-      } else if (oldValue && !newValue) {
-        removeStack?.(currentModal)
-      }
-    },
-    {immediate: true}
-  )
+  const setInStack = (newValue: boolean, oldValue: boolean) => {
+    if (newValue) {
+      pushStack?.(currentModal)
+    } else if (oldValue && !newValue) {
+      removeStack?.(currentModal)
+    }
+  }
+
+  // (initialValue, initialValue) is meant to always only ever trigger the first `if (newValue) {` block. The other block is skipped _always_
+  setInStack(initialValue, initialValue)
+
+  watch(modalOpen, setInStack)
 
   return {
     activePosition: computed(() =>
       stack?.value.findIndex((el) => el.exposed?.id === currentModal.exposed?.id)
     ),
     activeModalCount: countStack,
+    stackWithoutSelf: computed(
+      () => stack?.value.filter((el) => el.exposed?.id !== currentModal.exposed?.id) ?? []
+    ),
   }
 }
