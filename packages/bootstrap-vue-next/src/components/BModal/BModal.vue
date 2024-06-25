@@ -479,7 +479,7 @@ const computedZIndex = computed<CSSProperties>(() => ({
   // This means inactive modals will already be higher than active ones when opened.
   'z-index':
     isActive.value || isLeaving.value
-      ? // Just for reference there is actually a single frame in which the modal is not active but still has a higher z-index than the active ones due to _when_ it calculates its position
+      ? // Just for reference there is a single frame in which the modal is not active but still has a higher z-index than the active ones due to _when_ it calculates its position. It's a small visual effect
         defaultModalDialogZIndex - ((activeModalCount?.value ?? 0) - (activePosition?.value ?? 0))
       : defaultModalDialogZIndex,
 }))
