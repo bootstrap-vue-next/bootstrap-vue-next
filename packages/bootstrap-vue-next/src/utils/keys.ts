@@ -1,10 +1,10 @@
 import type {
   Component,
   ComponentInternalInstance,
+  ComputedRef,
   InjectionKey,
   MaybeRefOrGetter,
   Ref,
-  ShallowRef,
   WritableComputedRef,
 } from 'vue'
 import type {
@@ -197,12 +197,12 @@ export const modalControllerPluginKey: InjectionKey<{
 }> = Symbol('bvn::modalControllerPlugin')
 
 export const modalManagerPluginKey: InjectionKey<{
-  stack: ShallowRef<Readonly<ComponentInternalInstance>[]>
-  countStack: Readonly<Ref<number>>
-  lastStack: Readonly<Ref<ComponentInternalInstance | undefined>>
+  stack: ComputedRef<ComponentInternalInstance[]>
+  countStack: ComputedRef<number>
+  lastStack: ComputedRef<ComponentInternalInstance | undefined>
   pushStack: (modal: Readonly<ComponentInternalInstance>) => void
   removeStack: (modal: Readonly<ComponentInternalInstance>) => void
-  registry: ShallowRef<Readonly<ComponentInternalInstance>[]>
+  registry: ComputedRef<ComponentInternalInstance[]>
   pushRegistry: (modal: Readonly<ComponentInternalInstance>) => void
   removeRegistry: (modal: Readonly<ComponentInternalInstance>) => void
 }> = Symbol('bvn::modalManagerPlugin')
