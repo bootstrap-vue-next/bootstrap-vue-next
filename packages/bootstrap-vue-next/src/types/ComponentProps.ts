@@ -1277,6 +1277,7 @@ export interface BModalProps extends TeleporterProps {
   noCloseOnBackdrop?: boolean
   noCloseOnEsc?: boolean
   noFade?: boolean
+  noStacking?: boolean
   okDisabled?: boolean
   okOnly?: boolean
   okTitle?: string

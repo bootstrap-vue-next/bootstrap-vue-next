@@ -109,6 +109,7 @@
 
 <script setup lang="ts">
 import {onKeyStroke, useEventListener, useFocus} from '@vueuse/core'
+import {useFocusTrap} from '@vueuse/integrations/useFocusTrap'
 import {computed, type CSSProperties, ref, toRef, watch} from 'vue'
 import {
   useColorVariantClasses,
@@ -245,6 +246,14 @@ const closeButton = ref<HTMLElement | null>(null)
 const isActive = ref(false)
 const lazyLoadCompleted = ref(false)
 
+const {activate: activateTrap, deactivate: deactivateTrap} = useFocusTrap(element)
+watch(isActive, (newValue) => {
+  if (newValue) {
+    activateTrap()
+  } else {
+    deactivateTrap()
+  }
+})
 const fadeTransitionProps = useFadeTransition(true)
 
 onKeyStroke(
@@ -441,24 +450,38 @@ const onAfterEnter = () => {
   emit('shown', buildTriggerableEvent('shown'))
   if (props.lazy === true) lazyLoadCompleted.value = true
 }
+const isLeaving = ref(false)
 const onLeave = () => {
   isActive.value = false
+  isLeaving.value = true
 }
 const onAfterLeave = () => {
   emit('hidden', buildTriggerableEvent('hidden'))
   if (props.lazy === true) lazyLoadCompleted.value = false
+  isLeaving.value = false
 }
 
-const {activePosition, activeModalCount} = useModalManager(isActive)
+const {activePosition, activeModalCount, stackWithoutSelf} = useModalManager(
+  isActive,
+  modelValue.value
+)
+
+watch(stackWithoutSelf, (newValue, oldValue) => {
+  if (newValue.length > oldValue.length && isActive.value === true && props.noStacking === true)
+    hideFn()
+})
+
 const defaultModalDialogZIndex = 1056
 const computedZIndex = computed<CSSProperties>(() => ({
   // Make sure that newly opened modals have a higher z-index than currently active ones.
   // All active modals have a z-index of ('defaultZIndex' - 'stackSize' - 'positionInStack').
   //
   // This means inactive modals will already be higher than active ones when opened.
-  'z-index': isActive.value
-    ? defaultModalDialogZIndex - ((activeModalCount?.value ?? 0) - (activePosition?.value ?? 0))
-    : defaultModalDialogZIndex,
+  'z-index':
+    isActive.value || isLeaving.value
+      ? // Just for reference there is a single frame in which the modal is not active but still has a higher z-index than the active ones due to _when_ it calculates its position. It's a small visual effect
+        defaultModalDialogZIndex - ((activeModalCount?.value ?? 0) - (activePosition?.value ?? 0))
+      : defaultModalDialogZIndex,
 }))
 
 useEventListener(element, 'bv-toggle', () => {
