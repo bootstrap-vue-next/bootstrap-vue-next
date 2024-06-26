@@ -1,149 +1,127 @@
-import type {ComponentReference} from './ComponentReference'
+import type {ComponentReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BPlaceholder',
-      props: [
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'span',
+      props: {
+        '': {
+          tag: {
+            type: 'string',
+            default: 'span',
+          },
+          wrapperTag: {
+            type: 'string',
+            default: 'span',
+          },
+          width: {
+            type: 'string | number',
+            default: undefined,
+          },
+          cols: {
+            type: 'string | number',
+            default: 12,
+          },
+          variant: {
+            type: 'ColorVariant | null',
+            default: null,
+          },
+          size: {
+            type: 'PlaceholderSize',
+            default: 'md',
+          },
+          animation: {
+            type: 'PlaceholderAnimation',
+            default: undefined,
+          },
         },
-        {
-          prop: 'wrapperTag',
-          type: 'string',
-          default: 'span',
-        },
-        {
-          prop: 'width',
-          type: 'string | number',
-          default: undefined,
-        },
-        {
-          prop: 'cols',
-          type: 'string | number',
-          default: 12,
-        },
-        {
-          prop: 'variant',
-          type: 'ColorVariant | null',
-          default: null,
-        },
-        {
-          prop: 'size',
-          type: 'PlaceholderSize',
-          default: 'md',
-        },
-        {
-          prop: 'animation',
-          type: 'PlaceholderAnimation',
-          default: undefined,
-        },
-      ],
+      },
       emits: [],
       slots: [],
     },
     {
       component: 'BPlaceholderCard',
       emits: [],
-      props: [
-        {
-          prop: 'noHeader',
-          type: 'boolean',
-          default: false,
+      props: {
+        '': {
+          noHeader: {
+            type: 'boolean',
+            default: false,
+          },
+          headerWidth: {
+            type: 'string | number',
+            default: 100,
+          },
+          headerVariant: {
+            type: 'ColorVariant | null',
+            default: undefined,
+          },
+          headerAnimation: {
+            type: 'PlaceholderAnimation',
+            default: undefined,
+          },
+          headerSize: {
+            type: 'PlaceholderSize',
+            default: 'md',
+          },
+          noFooter: {
+            type: 'boolean',
+            default: false,
+          },
+          footerWidth: {
+            type: 'string | number',
+            default: 100,
+          },
+          footerVariant: {
+            type: 'ColorVariant | null',
+            default: undefined,
+          },
+          footerAnimation: {
+            type: 'PlaceholderAnimation',
+            default: undefined,
+          },
+          footerSize: {
+            type: 'PlaceholderSize',
+            default: 'md',
+          },
+          animation: {
+            type: 'PlaceholderAnimation',
+            default: undefined,
+          },
+          size: {
+            type: 'PlaceholderSize',
+            default: 'md',
+          },
+          variant: {
+            type: 'ColorVariant | null',
+            default: undefined,
+          },
+          noButton: {
+            type: 'boolean',
+            default: false,
+          },
+          imgBottom: {
+            type: 'boolean',
+            default: false,
+          },
+          imgSrc: {
+            type: 'string',
+            default: undefined,
+          },
+          imgBlankColor: {
+            type: 'string',
+            default: '#868e96',
+          },
+          imgHeight: {
+            type: 'string | number',
+            default: 100,
+          },
+          noImg: {
+            type: 'boolean',
+            default: false,
+          },
         },
-        {
-          prop: 'headerWidth',
-          type: 'string | number',
-          default: 100,
-        },
-        {
-          prop: 'headerVariant',
-          type: 'ColorVariant | null',
-          default: undefined,
-        },
-        {
-          prop: 'headerAnimation',
-          type: 'PlaceholderAnimation',
-          default: undefined,
-        },
-        {
-          prop: 'headerSize',
-          type: 'PlaceholderSize',
-          default: 'md',
-        },
-        {
-          prop: 'noFooter',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'footerWidth',
-          type: 'string | number',
-          default: 100,
-        },
-        {
-          prop: 'footerVariant',
-          type: 'ColorVariant | null',
-          default: undefined,
-        },
-        {
-          prop: 'footerAnimation',
-          type: 'PlaceholderAnimation',
-          default: undefined,
-        },
-        {
-          prop: 'footerSize',
-          type: 'PlaceholderSize',
-          default: 'md',
-        },
-        {
-          prop: 'animation',
-          type: 'PlaceholderAnimation',
-          default: undefined,
-        },
-        {
-          prop: 'size',
-          type: 'PlaceholderSize',
-          default: 'md',
-        },
-        {
-          prop: 'variant',
-          type: 'ColorVariant | null',
-          default: undefined,
-        },
-        {
-          prop: 'noButton',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'imgBottom',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'imgSrc',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'imgBlankColor',
-          type: 'string',
-          default: '#868e96',
-        },
-        {
-          prop: 'imgHeight',
-          type: 'string | number',
-          default: 100,
-        },
-        {
-          prop: 'noImg',
-          type: 'boolean',
-          default: false,
-        },
-      ],
+      },
       slots: [
         {
           description: 'Overrides the img default',
@@ -170,14 +148,15 @@ export default {
     {
       component: 'BPlaceholderWrapper',
       emits: [],
-      props: [
-        {
-          description: 'Determines whether the loading slot should be displayed',
-          prop: 'loading',
-          type: 'boolean',
-          default: false,
+      props: {
+        '': {
+          loading: {
+            description: 'Determines whether the loading slot should be displayed',
+            type: 'boolean',
+            default: false,
+          },
         },
-      ],
+      },
       slots: [
         {
           description: 'Content to show when the `loading` prop is `false`',
@@ -194,98 +173,82 @@ export default {
     {
       component: 'BPlaceholderTable',
       emits: [],
-      props: [
-        {
-          prop: 'rows',
-          type: 'string | number',
-          default: 3,
+      props: {
+        '': {
+          rows: {
+            type: 'string | number',
+            default: 3,
+          },
+          columns: {
+            type: 'string | number',
+            default: 5,
+          },
+          cellWidth: {
+            type: 'string | number',
+            default: 100,
+          },
+          size: {
+            type: 'PlaceholderSize',
+            default: 'md',
+          },
+          animation: {
+            type: 'PlaceholderAnimation',
+            default: undefined,
+          },
+          variant: {
+            type: 'ColorVariant | null',
+            default: undefined,
+          },
+          headerColumns: {
+            type: 'string | number',
+            default: undefined,
+          },
+          hideHeader: {
+            type: 'boolean',
+            default: false,
+          },
+          headerCellWidth: {
+            type: 'string | number',
+            default: 100,
+          },
+          headerSize: {
+            type: 'PlaceholderSize',
+            default: 'md',
+          },
+          headerAnimation: {
+            type: 'PlaceholderAnimation',
+            default: undefined,
+          },
+          headerVariant: {
+            type: 'ColorVariant | null',
+            default: undefined,
+          },
+          footerColumns: {
+            type: 'string | number',
+            default: undefined,
+          },
+          showFooter: {
+            type: 'boolean',
+            default: false,
+          },
+          footerCellWidth: {
+            type: 'string | number',
+            default: 100,
+          },
+          footerSize: {
+            type: 'PlaceholderSize',
+            default: 'md',
+          },
+          footerAnimation: {
+            type: 'PlaceholderAnimation',
+            default: undefined,
+          },
+          footerVariant: {
+            type: 'ColorVariant | null',
+            default: undefined,
+          },
         },
-        {
-          prop: 'columns',
-          type: 'string | number',
-          default: 5,
-        },
-        {
-          prop: 'cellWidth',
-          type: 'string | number',
-          default: 100,
-        },
-        {
-          prop: 'size',
-          type: 'PlaceholderSize',
-          default: 'md',
-        },
-        {
-          prop: 'animation',
-          type: 'PlaceholderAnimation',
-          default: undefined,
-        },
-        {
-          prop: 'variant',
-          type: 'ColorVariant | null',
-          default: undefined,
-        },
-        {
-          prop: 'headerColumns',
-          type: 'string | number',
-          default: undefined,
-        },
-        {
-          prop: 'hideHeader',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'headerCellWidth',
-          type: 'string | number',
-          default: 100,
-        },
-        {
-          prop: 'headerSize',
-          type: 'PlaceholderSize',
-          default: 'md',
-        },
-        {
-          prop: 'headerAnimation',
-          type: 'PlaceholderAnimation',
-          default: undefined,
-        },
-        {
-          prop: 'headerVariant',
-          type: 'ColorVariant | null',
-          default: undefined,
-        },
-        {
-          prop: 'footerColumns',
-          type: 'string | number',
-          default: undefined,
-        },
-        {
-          prop: 'showFooter',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'footerCellWidth',
-          type: 'string | number',
-          default: 100,
-        },
-        {
-          prop: 'footerSize',
-          type: 'PlaceholderSize',
-          default: 'md',
-        },
-        {
-          prop: 'footerAnimation',
-          type: 'PlaceholderAnimation',
-          default: undefined,
-        },
-        {
-          prop: 'footerVariant',
-          type: 'ColorVariant | null',
-          default: undefined,
-        },
-      ],
+      },
       slots: [
         {
           description: 'Overwrites the thead of the table',
@@ -308,33 +271,30 @@ export default {
       component: 'BPlaceholderButton',
       emits: [],
       slots: [],
-      props: [
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'div',
+      props: {
+        '': {
+          tag: {
+            type: 'string',
+            default: 'div',
+          },
+          width: {
+            type: 'string | number',
+            default: undefined,
+          },
+          cols: {
+            type: 'string | number',
+            default: undefined,
+          },
+          variant: {
+            type: 'ColorVariant | null',
+            default: 'primary',
+          },
+          animation: {
+            type: 'PlaceholderAnimation',
+            default: undefined,
+          },
         },
-        {
-          prop: 'width',
-          type: 'string | number',
-          default: undefined,
-        },
-        {
-          prop: 'cols',
-          type: 'string | number',
-          default: undefined,
-        },
-        {
-          prop: 'variant',
-          type: 'ColorVariant | null',
-          default: 'primary',
-        },
-        {
-          prop: 'animation',
-          type: 'PlaceholderAnimation',
-          default: undefined,
-        },
-      ],
+      },
     },
   ],
 }

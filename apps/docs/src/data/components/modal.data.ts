@@ -1,4 +1,4 @@
-import type {ComponentReference, SlotScopeReference} from './ComponentReference'
+import type {ComponentReference, SlotScopeReference} from '../../types'
 
 const sharedSlots: SlotScopeReference[] = [
   {
@@ -37,336 +37,287 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BModal',
-      props: [
-        {
-          prop: 'autoFocus',
-          type: 'boolean',
-          default: true,
-          description: "When set to 'false', disables auto focusing the modal when opened",
+      props: {
+        '': {
+          autoFocus: {
+            type: 'boolean',
+            default: true,
+            description: "When set to 'false', disables auto focusing the modal when opened",
+          },
+          autoFocusButton: {
+            type: "'ok' | 'cancel' | 'close'",
+            default: undefined,
+            description:
+              "Specify which built-in button to focus once the modal opens: 'ok', 'cancel', or 'close'",
+          },
+          backdropVariant: {
+            type: 'ColorVariant | null',
+            default: undefined,
+            description: 'Applies one of the Bootstrap theme color variants to the backdrop',
+          },
+          bodyBgVariant: {
+            type: 'ColorVariant | null',
+            default: null,
+            description: 'Applies one of the Bootstrap theme color variants to the body background',
+          },
+          bodyClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: "CSS class (or classes) to apply to the '.modal-body' wrapper element",
+          },
+          bodyScrolling: {
+            type: 'boolean',
+            default: false,
+            description: 'Enables/disables scrolling the body while modal is open',
+          },
+          bodyTextVariant: {
+            type: 'ColorVariant | null',
+            default: undefined,
+            description: 'Applies one of the Bootstrap theme color variants to the body text',
+          },
+          bodyVariant: {
+            type: 'ColorVariant | null',
+            default: null,
+            description:
+              'Applies one of the Bootstrap theme color variants to the body (this takes priority over bodyBgVariant and bodyTextVariant)',
+          },
+          busy: {
+            type: 'boolean',
+            default: false,
+            description:
+              'Places the built in default footer OK and Cancel buttons in the disabled state',
+          },
+          cancelDisabled: {
+            type: 'boolean',
+            default: false,
+            description: 'Places the built in default footer Cancel button in the disabled state',
+          },
+          cancelTitle: {
+            type: 'string',
+            default: 'Cancel',
+            description: 'Text string to place in the default footer Cancel button',
+          },
+          cancelVariant: {
+            type: 'ButtonVariant | null',
+            default: 'secondary',
+            description: 'Variant to use for the default footer Cancel button',
+          },
+          centered: {
+            type: 'boolean',
+            default: false,
+            description: 'Vertically centers the modal in the viewport',
+          },
+          contentClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: "CSS class (or classes) to apply to the '.modal-content' wrapper element",
+          },
+          dialogClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: "CSS class (or classes) to apply to the '.modal-dialog' wrapper element",
+          },
+          footerBgVariant: {
+            type: 'ColorVariant | null',
+            default: null,
+            description:
+              'Applies one of the Bootstrap theme color variants to the footer background',
+          },
+          footerBorderVariant: {
+            type: 'ColorVariant | null',
+            default: null,
+            description: 'Applies one of the Bootstrap theme color variants to the footer border',
+          },
+          footerClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: "CSS class (or classes) to apply to the '.modal-footer' wrapper element",
+          },
+          footerTextVariant: {
+            type: 'ColorVariant | null',
+            default: null,
+            description: 'Applies one of the Bootstrap theme color variants to the footer text',
+          },
+          footerVariant: {
+            type: 'ColorVariant | null',
+            default: null,
+            description:
+              'Applies one of the Bootstrap theme color variants to the footer (this takes priority over footerBgVariant and footerTextVariant)',
+          },
+          fullscreen: {
+            type: 'boolean | Breakpoint',
+            default: false,
+            description:
+              "A boolean value will enable/disable full screen mode. A Breakpoint value will set the breakpoint to enable full screen mode below the value of the breakpoint. Breakpoint values are: 'sm', 'md', 'lg', 'xl', 'xxl'",
+          },
+          headerBgVariant: {
+            type: 'ColorVariant | null',
+            default: null,
+            description:
+              'Applies one of the Bootstrap theme color variants to the header background',
+          },
+          headerBorderVariant: {
+            type: 'ColorVariant | null',
+            default: null,
+            description: 'Applies one of the Bootstrap theme color variants to the header border',
+          },
+          headerClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: "CSS class (or classes) to apply to the '.modal-header' wrapper element",
+          },
+          headerCloseClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: 'CSS class (or classes) to apply to the header close button',
+          },
+          headerCloseLabel: {
+            type: 'string',
+            default: 'Close',
+            description: 'Accessibility label for the header close button',
+          },
+          headerCloseVariant: {
+            type: 'ButtonVariant | null',
+            default: 'secondary',
+            description:
+              'Applies a variant to the header close button when the header close button uses the header-close slot',
+          },
+          headerTextVariant: {
+            type: 'ColorVariant | null',
+            default: null,
+            description: 'Applies one of the Bootstrap theme color variants to the header text',
+          },
+          headerVariant: {
+            type: 'ColorVariant | null',
+            default: null,
+            description:
+              'Applies one of the Bootstrap theme color variants to the header (this takes priority over headerBgVariant and headerTextVariant)',
+          },
+          hideBackdrop: {
+            type: 'boolean',
+            default: false,
+            description: 'Disables rendering of the modal backdrop',
+          },
+          hideFooter: {
+            type: 'boolean',
+            default: false,
+            description: 'Disables rendering of the modal footer',
+          },
+          hideHeader: {
+            type: 'boolean',
+            default: false,
+            description: 'Disables rendering of the modal header',
+          },
+          hideHeaderClose: {
+            type: 'boolean',
+            default: false,
+            description: 'Disables rendering of the modal header close button',
+          },
+          id: {
+            type: 'string',
+            default: undefined,
+            description:
+              "Used to set the 'id' attribute on the rendered content, and used as the base to generate any additional element IDs as needed",
+          },
+          lazy: {
+            type: 'boolean',
+            default: false,
+            description: 'Renders the modal content lazily',
+          },
+          modalClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: "CSS class (or classes) to apply to the '.modal' wrapper element",
+          },
+          modelValue: {
+            type: 'boolean',
+            default: false,
+            description: 'Controls the visibility state of the modal',
+          },
+          noCloseOnBackdrop: {
+            type: 'boolean',
+            default: false,
+            description:
+              'Disables closing the modal when clicking on the modal backdrop (outside the modal window)',
+          },
+          noCloseOnEsc: {
+            type: 'boolean',
+            default: false,
+            description: 'Disables the ability to close the modal by pressing the ESC key',
+          },
+          noFade: {
+            type: 'boolean',
+            default: false,
+            description:
+              "When set to 'true', disables the fade animation/transition on the component",
+          },
+          okDisabled: {
+            type: 'boolean',
+            default: false,
+            description: 'Places the built in default footer OK button in the disabled state',
+          },
+          okOnly: {
+            type: 'boolean',
+            default: false,
+            description: 'Disables rendering of the default footer Cancel button',
+          },
+          okTitle: {
+            type: 'string',
+            default: 'Ok',
+            description: 'Text string to place in the default footer OK button',
+          },
+          okVariant: {
+            type: 'ButtonVariant | null',
+            default: 'primary',
+            description: 'Button color theme variant to apply to the default footer OK button',
+          },
+          scrollable: {
+            type: 'boolean',
+            default: false,
+            description: 'Enables scrolling of the modal body',
+          },
+          size: {
+            type: "Size | 'xl'",
+            default: 'md',
+            description: "Set the size of the modal's width. 'sm', 'md' (default), 'lg', or 'xl'",
+          },
+          teleportDisabled: {
+            type: 'boolean',
+            default: false,
+            description: 'Renders the modal in the exact place it was defined',
+          },
+          teleportTo: {
+            type: 'string | RendererElement | null | undefined',
+            default: 'body',
+            description: 'Overrides the default teleport location',
+          },
+          title: {
+            type: 'string',
+            default: undefined,
+            description: 'Text content to place in the title',
+          },
+          titleClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: 'CSS class (or classes) to apply to the title',
+          },
+          titleSrOnly: {
+            type: 'boolean',
+            default: false,
+            description: "Wraps the title in an '.sr-only' wrapper",
+          },
+          titleTag: {
+            type: 'string',
+            default: 'h5',
+            description: 'Specify the HTML tag to render instead of the default tag for the title',
+          },
+          type: {
+            type: 'string',
+            default: undefined,
+            description: 'Type of the component',
+          },
         },
-        {
-          prop: 'autoFocusButton',
-          type: "'ok' | 'cancel' | 'close'",
-          default: undefined,
-          description:
-            "Specify which built-in button to focus once the modal opens: 'ok', 'cancel', or 'close'",
-        },
-        {
-          prop: 'backdropVariant',
-          type: 'ColorVariant | null',
-          default: undefined,
-          description: 'Applies one of the Bootstrap theme color variants to the backdrop',
-        },
-        {
-          prop: 'bodyBgVariant',
-          type: 'ColorVariant | null',
-          default: null,
-          description: 'Applies one of the Bootstrap theme color variants to the body background',
-        },
-        {
-          prop: 'bodyClass',
-          type: 'ClassValue',
-          default: undefined,
-          description: "CSS class (or classes) to apply to the '.modal-body' wrapper element",
-        },
-        {
-          prop: 'bodyScrolling',
-          type: 'boolean',
-          default: false,
-          description: 'Enables/disables scrolling the body while modal is open',
-        },
-        {
-          prop: 'bodyTextVariant',
-          type: 'ColorVariant | null',
-          default: undefined,
-          description: 'Applies one of the Bootstrap theme color variants to the body text',
-        },
-        {
-          prop: 'bodyVariant',
-          type: 'ColorVariant | null',
-          default: null,
-          description:
-            'Applies one of the Bootstrap theme color variants to the body (this takes priority over bodyBgVariant and bodyTextVariant)',
-        },
-        {
-          prop: 'busy',
-          type: 'boolean',
-          default: false,
-          description:
-            'Places the built in default footer OK and Cancel buttons in the disabled state',
-        },
-        {
-          prop: 'cancelDisabled',
-          type: 'boolean',
-          default: false,
-          description: 'Places the built in default footer Cancel button in the disabled state',
-        },
-        {
-          prop: 'cancelTitle',
-          type: 'string',
-          default: 'Cancel',
-          description: 'Text string to place in the default footer Cancel button',
-        },
-        {
-          prop: 'cancelVariant',
-          type: 'ButtonVariant | null',
-          default: 'secondary',
-          description: 'Variant to use for the default footer Cancel button',
-        },
-        {
-          prop: 'centered',
-          type: 'boolean',
-          default: false,
-          description: 'Vertically centers the modal in the viewport',
-        },
-        {
-          prop: 'contentClass',
-          type: 'ClassValue',
-          default: undefined,
-          description: "CSS class (or classes) to apply to the '.modal-content' wrapper element",
-        },
-        {
-          prop: 'dialogClass',
-          type: 'ClassValue',
-          default: undefined,
-          description: "CSS class (or classes) to apply to the '.modal-dialog' wrapper element",
-        },
-        {
-          prop: 'footerBgVariant',
-          type: 'ColorVariant | null',
-          default: null,
-          description: 'Applies one of the Bootstrap theme color variants to the footer background',
-        },
-        {
-          prop: 'footerBorderVariant',
-          type: 'ColorVariant | null',
-          default: null,
-          description: 'Applies one of the Bootstrap theme color variants to the footer border',
-        },
-        {
-          prop: 'footerClass',
-          type: 'ClassValue',
-          default: undefined,
-          description: "CSS class (or classes) to apply to the '.modal-footer' wrapper element",
-        },
-        {
-          prop: 'footerTextVariant',
-          type: 'ColorVariant | null',
-          default: null,
-          description: 'Applies one of the Bootstrap theme color variants to the footer text',
-        },
-        {
-          prop: 'footerVariant',
-          type: 'ColorVariant | null',
-          default: null,
-          description:
-            'Applies one of the Bootstrap theme color variants to the footer (this takes priority over footerBgVariant and footerTextVariant)',
-        },
-        {
-          prop: 'fullscreen',
-          type: 'boolean | Breakpoint',
-          default: false,
-          description:
-            "A boolean value will enable/disable full screen mode. A Breakpoint value will set the breakpoint to enable full screen mode below the value of the breakpoint. Breakpoint values are: 'sm', 'md', 'lg', 'xl', 'xxl'",
-        },
-        {
-          prop: 'headerBgVariant',
-          type: 'ColorVariant | null',
-          default: null,
-          description: 'Applies one of the Bootstrap theme color variants to the header background',
-        },
-        {
-          prop: 'headerBorderVariant',
-          type: 'ColorVariant | null',
-          default: null,
-          description: 'Applies one of the Bootstrap theme color variants to the header border',
-        },
-        {
-          prop: 'headerClass',
-          type: 'ClassValue',
-          default: undefined,
-          description: "CSS class (or classes) to apply to the '.modal-header' wrapper element",
-        },
-        {
-          prop: 'headerCloseClass',
-          type: 'ClassValue',
-          default: undefined,
-          description: 'CSS class (or classes) to apply to the header close button',
-        },
-        {
-          prop: 'headerCloseLabel',
-          type: 'string',
-          default: 'Close',
-          description: 'Accessibility label for the header close button',
-        },
-        {
-          prop: 'headerCloseVariant',
-          type: 'ButtonVariant | null',
-          default: 'secondary',
-          description:
-            'Applies a variant to the header close button when the header close button uses the header-close slot',
-        },
-        {
-          prop: 'headerTextVariant',
-          type: 'ColorVariant | null',
-          default: null,
-          description: 'Applies one of the Bootstrap theme color variants to the header text',
-        },
-        {
-          prop: 'headerVariant',
-          type: 'ColorVariant | null',
-          default: null,
-          description:
-            'Applies one of the Bootstrap theme color variants to the header (this takes priority over headerBgVariant and headerTextVariant)',
-        },
-        {
-          prop: 'hideBackdrop',
-          type: 'boolean',
-          default: false,
-          description: 'Disables rendering of the modal backdrop',
-        },
-        {
-          prop: 'hideFooter',
-          type: 'boolean',
-          default: false,
-          description: 'Disables rendering of the modal footer',
-        },
-        {
-          prop: 'hideHeader',
-          type: 'boolean',
-          default: false,
-          description: 'Disables rendering of the modal header',
-        },
-        {
-          prop: 'hideHeaderClose',
-          type: 'boolean',
-          default: false,
-          description: 'Disables rendering of the modal header close button',
-        },
-        {
-          prop: 'id',
-          type: 'string',
-          default: undefined,
-          description:
-            "Used to set the 'id' attribute on the rendered content, and used as the base to generate any additional element IDs as needed",
-        },
-        {
-          prop: 'lazy',
-          type: 'boolean',
-          default: false,
-          description: 'Renders the modal content lazily',
-        },
-        {
-          prop: 'modalClass',
-          type: 'ClassValue',
-          default: undefined,
-          description: "CSS class (or classes) to apply to the '.modal' wrapper element",
-        },
-        {
-          prop: 'modelValue',
-          type: 'boolean',
-          default: false,
-          description: 'Controls the visibility state of the modal',
-        },
-        {
-          prop: 'noCloseOnBackdrop',
-          type: 'boolean',
-          default: false,
-          description:
-            'Disables closing the modal when clicking on the modal backdrop (outside the modal window)',
-        },
-        {
-          prop: 'noCloseOnEsc',
-          type: 'boolean',
-          default: false,
-          description: 'Disables the ability to close the modal by pressing the ESC key',
-        },
-        {
-          prop: 'noFade',
-          type: 'boolean',
-          default: false,
-          description:
-            "When set to 'true', disables the fade animation/transition on the component",
-        },
-        {
-          prop: 'okDisabled',
-          type: 'boolean',
-          default: false,
-          description: 'Places the built in default footer OK button in the disabled state',
-        },
-        {
-          prop: 'okOnly',
-          type: 'boolean',
-          default: false,
-          description: 'Disables rendering of the default footer Cancel button',
-        },
-        {
-          prop: 'okTitle',
-          type: 'string',
-          default: 'Ok',
-          description: 'Text string to place in the default footer OK button',
-        },
-        {
-          prop: 'okVariant',
-          type: 'ButtonVariant | null',
-          default: 'primary',
-          description: 'Button color theme variant to apply to the default footer OK button',
-        },
-        {
-          prop: 'scrollable',
-          type: 'boolean',
-          default: false,
-          description: 'Enables scrolling of the modal body',
-        },
-        {
-          prop: 'size',
-          type: "Size | 'xl'",
-          default: 'md',
-          description: "Set the size of the modal's width. 'sm', 'md' (default), 'lg', or 'xl'",
-        },
-        {
-          prop: 'teleportDisabled',
-          type: 'boolean',
-          default: false,
-          description: 'Renders the modal in the exact place it was defined',
-        },
-        {
-          prop: 'teleportTo',
-          type: 'string | RendererElement | null | undefined',
-          default: 'body',
-          description: 'Overrides the default teleport location',
-        },
-        {
-          prop: 'title',
-          type: 'string',
-          default: undefined,
-          description: 'Text content to place in the title',
-        },
-        {
-          prop: 'titleClass',
-          type: 'ClassValue',
-          default: undefined,
-          description: 'CSS class (or classes) to apply to the title',
-        },
-        {
-          prop: 'titleSrOnly',
-          type: 'boolean',
-          default: false,
-          description: "Wraps the title in an '.sr-only' wrapper",
-        },
-        {
-          prop: 'titleTag',
-          type: 'string',
-          default: 'h5',
-          description: 'Specify the HTML tag to render instead of the default tag for the title',
-        },
-        {
-          prop: 'type',
-          type: 'string',
-          default: undefined,
-          description: 'Type of the component',
-        },
-      ],
+      },
       emits: [
         {
           event: 'update:modelValue',

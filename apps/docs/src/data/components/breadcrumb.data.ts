@@ -1,17 +1,18 @@
-import type {ComponentReference} from './ComponentReference'
+import type {ComponentReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BBreadcrumb',
-      props: [
-        {
-          prop: 'items',
-          description: '',
-          type: 'BreadcrumbItemRaw[]',
-          default: undefined,
+      props: {
+        '': {
+          items: {
+            description: '',
+            type: 'BreadcrumbItemRaw[]',
+            default: undefined,
+          },
         },
-      ],
+      },
       emits: [],
       slots: [
         {
@@ -45,18 +46,18 @@ export default {
           ],
         },
       ],
-      props: [
-        {
-          prop: 'ariaCurrent',
-          type: 'string',
-          default: 'location',
+      props: {
+        '': {
+          ariaCurrent: {
+            type: 'string',
+            default: 'location',
+          },
+          text: {
+            type: 'string',
+            default: undefined,
+          },
         },
-        {
-          prop: 'text',
-          type: 'string',
-          default: undefined,
-        },
-      ],
+      },
       slots: [
         {
           description: '',

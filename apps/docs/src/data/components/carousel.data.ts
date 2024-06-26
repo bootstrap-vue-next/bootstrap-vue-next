@@ -1,106 +1,89 @@
-import type {ComponentReference} from './ComponentReference'
+import type {ComponentReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BCarousel',
-      props: [
-        {
-          prop: 'ride',
-          type: "true | false | 'true' | 'false' | '' | 'carousel'",
-          default: false,
+      props: {
+        '': {
+          ride: {
+            type: "true | false | 'true' | 'false' | '' | 'carousel'",
+            default: false,
+          },
+          noHoverPause: {
+            type: 'boolean',
+            default: false,
+          },
+          rideReverse: {
+            type: 'boolean',
+            default: false,
+          },
+          fade: {
+            type: 'boolean',
+            default: false,
+          },
+          id: {
+            type: 'string',
+            default: undefined,
+          },
+          imgHeight: {
+            type: 'string',
+            default: undefined,
+          },
+          imgWidth: {
+            type: 'string',
+            default: undefined,
+          },
+          background: {
+            type: 'string',
+            default: undefined,
+          },
+          modelValue: {
+            type: 'number',
+            default: 0,
+          },
+          controls: {
+            type: 'boolean',
+            default: false,
+          },
+          indicators: {
+            type: 'boolean',
+            default: false,
+          },
+          interval: {
+            type: 'number | string',
+            default: 5000,
+          },
+          noTouch: {
+            type: 'boolean',
+            default: false,
+          },
+          noWrap: {
+            type: 'boolean',
+            default: false,
+          },
+          controlsPrevText: {
+            type: 'string',
+            default: 'Previous',
+          },
+          controlsNextText: {
+            type: 'string',
+            default: 'Next',
+          },
+          indicatorsButtonLabel: {
+            type: 'string',
+            default: 'Slide',
+          },
+          keyboard: {
+            type: 'boolean',
+            default: true,
+          },
+          touchThreshold: {
+            type: 'number | string',
+            default: 50,
+          },
         },
-        {
-          prop: 'noHoverPause',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'rideReverse',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'fade',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'id',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'imgHeight',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'imgWidth',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'background',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'modelValue',
-          type: 'number',
-          default: 0,
-        },
-        {
-          prop: 'controls',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'indicators',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'interval',
-          type: 'number | string',
-          default: 5000,
-        },
-        {
-          prop: 'noTouch',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'noWrap',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'controlsPrevText',
-          type: 'string',
-          default: 'Previous',
-        },
-        {
-          prop: 'controlsNextText',
-          type: 'string',
-          default: 'Next',
-        },
-        {
-          prop: 'indicatorsButtonLabel',
-          type: 'string',
-          default: 'Slide',
-        },
-        {
-          prop: 'keyboard',
-          type: 'boolean',
-          default: true,
-        },
-        {
-          prop: 'touchThreshold',
-          type: 'number | string',
-          default: 50,
-        },
-      ],
+      },
       emits: [
         {
           args: [
@@ -136,98 +119,82 @@ export default {
     {
       component: 'BCarouselSlide',
       emits: [],
-      props: [
-        {
-          prop: 'imgSrc',
-          type: 'string',
-          default: undefined,
+      props: {
+        '': {
+          imgSrc: {
+            type: 'string',
+            default: undefined,
+          },
+          imgHeight: {
+            type: 'string | number',
+            default: undefined,
+          },
+          imgWidth: {
+            type: 'string | number',
+            default: undefined,
+          },
+          interval: {
+            type: 'string | number',
+            default: undefined,
+          },
+          background: {
+            type: 'string',
+            default: undefined,
+          },
+          caption: {
+            type: 'string',
+            default: undefined,
+          },
+          captionHtml: {
+            type: 'string',
+            default: undefined,
+          },
+          captionTag: {
+            type: 'string',
+            default: 'h3',
+          },
+          contentTag: {
+            type: 'string',
+            default: 'div',
+          },
+          contentVisibleUp: {
+            type: 'string',
+            default: undefined,
+          },
+          id: {
+            type: 'string',
+            default: undefined,
+          },
+          imgSrcset: {
+            type: 'string | string[]',
+            default: undefined,
+          },
+          imgAlt: {
+            type: 'string',
+            default: undefined,
+          },
+          imgBlank: {
+            type: 'boolean',
+            default: false,
+          },
+          imgBlankColor: {
+            type: 'string',
+            default: 'transparent',
+          },
+          text: {
+            type: 'string',
+            default: undefined,
+          },
+          textHtml: {
+            type: 'string',
+            default: undefined,
+          },
+          textTag: {
+            type: 'string',
+            default: 'p',
+          },
         },
-        {
-          prop: 'imgHeight',
-          type: 'string | number',
-          default: undefined,
-        },
-        {
-          prop: 'imgWidth',
-          type: 'string | number',
-          default: undefined,
-        },
-        {
-          prop: 'interval',
-          type: 'string | number',
-          default: undefined,
-        },
-        {
-          prop: 'background',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'caption',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'captionHtml',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'captionTag',
-          type: 'string',
-          default: 'h3',
-        },
-        {
-          prop: 'contentTag',
-          type: 'string',
-          default: 'div',
-        },
-        {
-          prop: 'contentVisibleUp',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'id',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'imgSrcset',
-          type: 'string | string[]',
-          default: undefined,
-        },
-        {
-          prop: 'imgAlt',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'imgBlank',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'imgBlankColor',
-          type: 'string',
-          default: 'transparent',
-        },
-        {
-          prop: 'text',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'textHtml',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'textTag',
-          type: 'string',
-          default: 'p',
-        },
-      ],
+      },
       slots: [
         {
           description: '',

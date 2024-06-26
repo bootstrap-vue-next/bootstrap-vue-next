@@ -1,131 +1,103 @@
-import type {ComponentReference} from './ComponentReference'
+import type {ComponentReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormGroup',
-      props: [
-        {
-          prop: 'contentCols',
-          type: 'boolean | string | number',
+      props: {
+        '': {
+          contentCols: {
+            type: 'boolean | string | number',
+          },
+          contentColsLg: {
+            type: 'boolean | string | number',
+          },
+          contentColsMd: {
+            type: 'boolean | string | number',
+          },
+          contentColsSm: {
+            type: 'boolean | string | number',
+          },
+          contentColsXl: {
+            type: 'boolean | string | number',
+          },
+          description: {
+            type: 'string',
+          },
+          disabled: {
+            type: 'boolean',
+          },
+          feedbackAriaLive: {
+            type: 'string',
+          },
+          id: {
+            type: 'string',
+          },
+          invalidFeedback: {
+            type: 'string',
+          },
+          label: {
+            type: 'string',
+          },
+          labelAlign: {
+            type: 'boolean | string | number',
+          },
+          labelAlignLg: {
+            type: 'boolean | string | number',
+          },
+          labelAlignMd: {
+            type: 'boolean | string | number',
+          },
+          labelAlignSm: {
+            type: 'boolean | string | number',
+          },
+          labelAlignXl: {
+            type: 'boolean | string | number',
+          },
+          labelClass: {
+            type: 'string[] | Record<string, unknown> | string',
+          },
+          labelCols: {
+            type: 'boolean | string | number',
+          },
+          labelColsLg: {
+            type: 'boolean | string | number',
+          },
+          labelColsMd: {
+            type: 'boolean | string | number',
+          },
+          labelColsSm: {
+            type: 'boolean | string | number',
+          },
+          labelColsXl: {
+            type: 'boolean | string | number',
+          },
+          labelFor: {
+            type: 'string',
+          },
+          labelSize: {
+            type: 'string',
+          },
+          labelSrOnly: {
+            type: 'boolean',
+          },
+          state: {
+            type: 'boolean',
+          },
+          tooltip: {
+            type: 'boolean',
+          },
+          validFeedback: {
+            type: 'string',
+          },
+          validated: {
+            type: 'boolean',
+          },
+          floating: {
+            type: 'boolean',
+          },
         },
-        {
-          prop: 'contentColsLg',
-          type: 'boolean | string | number',
-        },
-        {
-          prop: 'contentColsMd',
-          type: 'boolean | string | number',
-        },
-        {
-          prop: 'contentColsSm',
-          type: 'boolean | string | number',
-        },
-        {
-          prop: 'contentColsXl',
-          type: 'boolean | string | number',
-        },
-        {
-          prop: 'description',
-          type: 'string',
-        },
-        {
-          prop: 'disabled',
-          type: 'boolean',
-        },
-        {
-          prop: 'feedbackAriaLive',
-          type: 'string',
-        },
-        {
-          prop: 'id',
-          type: 'string',
-        },
-        {
-          prop: 'invalidFeedback',
-          type: 'string',
-        },
-        {
-          prop: 'label',
-          type: 'string',
-        },
-        {
-          prop: 'labelAlign',
-          type: 'boolean | string | number',
-        },
-        {
-          prop: 'labelAlignLg',
-          type: 'boolean | string | number',
-        },
-        {
-          prop: 'labelAlignMd',
-          type: 'boolean | string | number',
-        },
-        {
-          prop: 'labelAlignSm',
-          type: 'boolean | string | number',
-        },
-        {
-          prop: 'labelAlignXl',
-          type: 'boolean | string | number',
-        },
-        {
-          prop: 'labelClass',
-          type: 'string[] | Record<string, unknown> | string',
-        },
-        {
-          prop: 'labelCols',
-          type: 'boolean | string | number',
-        },
-        {
-          prop: 'labelColsLg',
-          type: 'boolean | string | number',
-        },
-        {
-          prop: 'labelColsMd',
-          type: 'boolean | string | number',
-        },
-        {
-          prop: 'labelColsSm',
-          type: 'boolean | string | number',
-        },
-        {
-          prop: 'labelColsXl',
-          type: 'boolean | string | number',
-        },
-        {
-          prop: 'labelFor',
-          type: 'string',
-        },
-        {
-          prop: 'labelSize',
-          type: 'string',
-        },
-        {
-          prop: 'labelSrOnly',
-          type: 'boolean',
-        },
-        {
-          prop: 'state',
-          type: 'boolean',
-        },
-        {
-          prop: 'tooltip',
-          type: 'boolean',
-        },
-        {
-          prop: 'validFeedback',
-          type: 'string',
-        },
-        {
-          prop: 'validated',
-          type: 'boolean',
-        },
-        {
-          prop: 'floating',
-          type: 'boolean',
-        },
-      ],
+      },
       emits: [],
       slots: [],
     },

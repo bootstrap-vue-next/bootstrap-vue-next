@@ -1,86 +1,73 @@
-import type {ComponentReference} from './ComponentReference'
+import type {ComponentReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BAvatar',
-      props: [
-        {
-          prop: 'alt',
-          type: 'string',
-          default: 'avatar',
+      props: {
+        '': {
+          alt: {
+            type: 'string',
+            default: 'avatar',
+          },
+          badge: {
+            type: 'boolean | string',
+            default: false,
+          },
+          badgeLeft: {
+            type: 'boolean',
+            default: false,
+          },
+          badgeOffset: {
+            type: 'string',
+            default: undefined,
+          },
+          badgeTop: {
+            type: 'boolean',
+            default: false,
+          },
+          badgeVariant: {
+            type: 'ColorVariant | null',
+            default: 'primary',
+          },
+          button: {
+            type: 'boolean',
+            default: false,
+          },
+          buttonType: {
+            type: 'ButtonType',
+            default: 'button',
+          },
+          icon: {
+            type: 'string',
+            default: undefined,
+          },
+          rounded: {
+            type: 'boolean | string',
+            default: 'circle',
+          },
+          size: {
+            type: 'Size | string',
+            default: undefined,
+          },
+          square: {
+            type: 'boolean',
+            default: false,
+          },
+          src: {
+            type: 'string',
+            default: undefined,
+          },
+          text: {
+            type: 'string',
+            default: undefined,
+          },
+          textVariant: {
+            type: 'TextColorVariant | null',
+            default: null,
+          },
         },
-        {
-          prop: 'badge',
-          type: 'boolean | string',
-          default: false,
-        },
-        {
-          prop: 'badgeLeft',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'badgeOffset',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'badgeTop',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'badgeVariant',
-          type: 'ColorVariant | null',
-          default: 'primary',
-        },
-        {
-          prop: 'button',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'buttonType',
-          type: 'ButtonType',
-          default: 'button',
-        },
-        {
-          prop: 'icon',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'rounded',
-          type: 'boolean | string',
-          default: 'circle',
-        },
-        {
-          prop: 'size',
-          type: 'Size | string',
-          default: undefined,
-        },
-        {
-          prop: 'square',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'src',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'text',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'textVariant',
-          type: 'TextColorVariant | null',
-          default: null,
-        },
-      ],
+      },
       emits: [
         {
           event: 'click',
@@ -120,38 +107,34 @@ export default {
     },
     {
       component: 'BAvatarGroup',
-      props: [
-        {
-          prop: 'overlap',
-          type: 'number | string',
-          default: 0.3,
+      props: {
+        '': {
+          overlap: {
+            type: 'number | string',
+            default: 0.3,
+          },
+          rounded: {
+            type: 'boolean | string',
+            default: false,
+          },
+          size: {
+            type: 'Size | string',
+            default: undefined,
+          },
+          square: {
+            type: 'boolean',
+            default: false,
+          },
+          tag: {
+            type: 'string',
+            default: 'div',
+          },
+          variant: {
+            type: 'ColorVariant | null',
+            default: null,
+          },
         },
-        {
-          prop: 'rounded',
-          type: 'boolean | string',
-          default: false,
-        },
-        {
-          prop: 'size',
-          type: 'Size | string',
-          default: undefined,
-        },
-        {
-          prop: 'square',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'div',
-        },
-        {
-          prop: 'variant',
-          type: 'ColorVariant | null',
-          default: null,
-        },
-      ],
+      },
       slots: [
         {
           name: 'default',

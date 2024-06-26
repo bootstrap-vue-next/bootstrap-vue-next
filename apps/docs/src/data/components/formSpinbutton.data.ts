@@ -1,10 +1,10 @@
-import type {ComponentReference} from './ComponentReference'
+import type {ComponentReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormSpinbutton',
-      props: [],
+      props: {},
       emits: [],
       slots: [],
     },

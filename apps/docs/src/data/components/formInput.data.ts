@@ -1,31 +1,29 @@
-import type {ComponentReference} from './ComponentReference'
+import type {ComponentReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormInput',
-      props: [
-        {
-          prop: 'max',
-          type: 'string | number',
-          default: undefined,
+      props: {
+        '': {
+          max: {
+            type: 'string | number',
+            default: undefined,
+          },
+          min: {
+            type: 'string | number',
+            default: undefined,
+          },
+          step: {
+            type: 'string | number',
+            default: undefined,
+          },
+          type: {
+            type: 'InputType',
+            default: 'text',
+          },
         },
-        {
-          prop: 'min',
-          type: 'string | number',
-          default: undefined,
-        },
-        {
-          prop: 'step',
-          type: 'string | number',
-          default: undefined,
-        },
-        {
-          prop: 'type',
-          type: 'InputType',
-          default: 'text',
-        },
-      ],
+      },
       emits: [
         {
           args: [],

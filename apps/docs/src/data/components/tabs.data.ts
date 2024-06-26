@@ -1,71 +1,61 @@
-import type {ComponentReference} from './ComponentReference'
+import type {ComponentReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BTab',
-      props: [
-        {
-          prop: 'id',
-          type: 'string',
-          default: undefined,
+      props: {
+        '': {
+          id: {
+            type: 'string',
+            default: undefined,
+          },
+          title: {
+            type: 'string',
+            default: undefined,
+          },
+          active: {
+            type: 'boolean',
+            default: false,
+          },
+          buttonId: {
+            type: 'string',
+            default: undefined,
+          },
+          disabled: {
+            type: 'boolean',
+            default: false,
+          },
+          lazy: {
+            type: 'boolean',
+            default: undefined,
+          },
+          lazyOnce: {
+            type: 'boolean',
+            default: undefined,
+          },
+          noBody: {
+            type: 'boolean | string',
+            default: false,
+          },
+          tag: {
+            type: 'string',
+            default: 'div',
+          },
+          titleItemClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          titleLinkAttributes: {
+            type: 'Record<string, unknown>',
+            default: undefined,
+          },
+          titleLinkClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
         },
-        {
-          prop: 'title',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'active',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'buttonId',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'disabled',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'lazy',
-          type: 'boolean',
-          default: undefined,
-        },
-        {
-          prop: 'lazyOnce',
-          type: 'boolean',
-          default: undefined,
-        },
-        {
-          prop: 'noBody',
-          type: 'boolean | string',
-          default: false,
-        },
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'div',
-        },
-        {
-          prop: 'titleItemClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'titleLinkAttributes',
-          type: 'Record<string, unknown>',
-          default: undefined,
-        },
-        {
-          prop: 'titleLinkClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-      ],
+      },
       emits: [],
       slots: [
         {
@@ -77,118 +67,98 @@ export default {
     },
     {
       component: 'BTabs',
-      props: [
-        {
-          prop: 'activeNavItemClass',
-          type: 'ClassValue',
-          default: undefined,
+      props: {
+        '': {
+          activeNavItemClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          activeTabClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          align: {
+            type: 'AlignmentJustifyContent',
+            default: undefined,
+          },
+          contentClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          card: {
+            type: 'boolean',
+            default: false,
+          },
+          end: {
+            type: 'boolean',
+            default: false,
+          },
+          fill: {
+            type: 'boolean',
+            default: false,
+          },
+          id: {
+            type: 'string',
+            default: undefined,
+          },
+          inactiveNavItemClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          inactiveTabClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          justified: {
+            type: 'boolean',
+            default: false,
+          },
+          lazy: {
+            type: 'boolean',
+            default: false,
+          },
+          navClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          navItemClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          navWrapperClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          noFade: {
+            type: 'boolean',
+            default: false,
+          },
+          noNavStyle: {
+            type: 'boolean',
+            default: false,
+          },
+          pills: {
+            type: 'boolean',
+            default: false,
+          },
+          small: {
+            type: 'boolean',
+            default: false,
+          },
+          tag: {
+            type: 'string',
+            default: 'div',
+          },
+          vertical: {
+            type: 'boolean',
+            default: false,
+          },
+          modelValue: {
+            type: 'number',
+            default: -1,
+          },
         },
-        {
-          prop: 'activeTabClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'align',
-          type: 'AlignmentJustifyContent',
-          default: undefined,
-        },
-        {
-          prop: 'contentClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'card',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'end',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'fill',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'id',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'inactiveNavItemClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'inactiveTabClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'justified',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'lazy',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'navClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'navItemClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'navWrapperClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'noFade',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'noNavStyle',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'pills',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'small',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'div',
-        },
-        {
-          prop: 'vertical',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'modelValue',
-          type: 'number',
-          default: -1,
-        },
-      ],
+      },
       emits: [
         {
           args: [

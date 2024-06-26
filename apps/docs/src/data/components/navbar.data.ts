@@ -1,46 +1,41 @@
-import type {ComponentReference} from './ComponentReference'
+import type {ComponentReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BNavbar',
-      props: [
-        {
-          prop: 'fixed',
-          type: "'top' | 'bottom'",
-          default: undefined,
+      props: {
+        '': {
+          fixed: {
+            type: "'top' | 'bottom'",
+            default: undefined,
+          },
+          print: {
+            type: 'boolean',
+            default: false,
+          },
+          sticky: {
+            type: "'top' | 'bottom'",
+            default: undefined,
+          },
+          tag: {
+            type: 'string',
+            default: 'nav',
+          },
+          toggleable: {
+            type: 'boolean | Breakpoint',
+            default: false,
+          },
+          variant: {
+            type: 'ColorVariant | null',
+            default: null,
+          },
+          container: {
+            type: "'fluid' | boolean",
+            default: 'fluid',
+          },
         },
-        {
-          prop: 'print',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'sticky',
-          type: "'top' | 'bottom'",
-          default: undefined,
-        },
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'nav',
-        },
-        {
-          prop: 'toggleable',
-          type: 'boolean | Breakpoint',
-          default: false,
-        },
-        {
-          prop: 'variant',
-          type: 'ColorVariant | null',
-          default: null,
-        },
-        {
-          prop: 'container',
-          type: "'fluid' | boolean",
-          default: 'fluid',
-        },
-      ],
+      },
       emits: [],
       slots: [
         {
@@ -52,45 +47,43 @@ export default {
     },
     {
       component: 'BNavbarBrand',
-      props: [
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'div',
+      props: {
+        '': {
+          tag: {
+            type: 'string',
+            default: 'div',
+          },
         },
-      ],
+      },
       emits: [],
       slots: [],
     },
     {
       component: 'BNavbarNav',
-      props: [
-        {
-          prop: 'align',
-          type: 'AlignmentJustifyContent',
-          default: undefined,
+      props: {
+        '': {
+          align: {
+            type: 'AlignmentJustifyContent',
+            default: undefined,
+          },
+          fill: {
+            type: 'boolean',
+            default: false,
+          },
+          justified: {
+            type: 'boolean',
+            default: false,
+          },
+          small: {
+            type: 'boolean',
+            default: false,
+          },
+          tag: {
+            type: 'string',
+            default: 'ul',
+          },
         },
-        {
-          prop: 'fill',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'justified',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'small',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'ul',
-        },
-      ],
+      },
       emits: [],
       slots: [
         {
@@ -102,23 +95,22 @@ export default {
     },
     {
       component: 'BNavbarToggle',
-      props: [
-        {
-          prop: 'disabled',
-          type: 'boolean',
-          default: false,
+      props: {
+        '': {
+          disabled: {
+            type: 'boolean',
+            default: false,
+          },
+          label: {
+            type: 'string',
+            default: 'Toggle navigation',
+          },
+          target: {
+            type: 'string | string[]',
+            default: undefined,
+          },
         },
-        {
-          prop: 'label',
-          type: 'string',
-          default: 'Toggle navigation',
-        },
-        {
-          prop: 'target',
-          type: 'string | string[]',
-          default: undefined,
-        },
-      ],
+      },
       emits: [
         {
           args: [

@@ -1,66 +1,57 @@
-import type {ComponentReference} from './ComponentReference'
+import type {ComponentReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BButton',
-      props: [
-        {
-          prop: 'pill',
-          type: 'boolean',
-          default: false,
+      props: {
+        '': {
+          pill: {
+            type: 'boolean',
+            default: false,
+          },
+          pressed: {
+            type: 'boolean',
+            default: undefined,
+          },
+          size: {
+            type: 'Size',
+            default: 'md',
+          },
+          squared: {
+            type: 'boolean',
+            default: false,
+          },
+          tag: {
+            type: 'string',
+            default: 'button',
+          },
+          type: {
+            type: 'ButtonType',
+            default: 'button',
+          },
+          variant: {
+            type: 'ButtonVariant | null',
+            default: 'secondary',
+          },
+          loading: {
+            type: 'boolean',
+            default: false,
+          },
+          loadingFill: {
+            type: 'boolean',
+            default: false,
+          },
+          block: {
+            type: 'boolean',
+            default: false,
+          },
+          loadingText: {
+            type: 'string',
+            default: 'Loading...',
+          },
         },
-        {
-          prop: 'pressed',
-          type: 'boolean',
-          default: undefined,
-        },
-        {
-          prop: 'size',
-          type: 'Size',
-          default: 'md',
-        },
-        {
-          prop: 'squared',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'button',
-        },
-        {
-          prop: 'type',
-          type: 'ButtonType',
-          default: 'button',
-        },
-        {
-          prop: 'variant',
-          type: 'ButtonVariant | null',
-          default: 'secondary',
-        },
-        {
-          prop: 'loading',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'loadingFill',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'block',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'loadingText',
-          type: 'string',
-          default: 'Loading...',
-        },
-      ],
+      },
       emits: [
         {
           args: [
@@ -100,25 +91,24 @@ export default {
     },
     {
       component: 'BCloseButton',
-      props: [
-        {
-          description: '',
-          prop: 'ariaLabel',
-          type: 'string',
-          default: 'Close',
+      props: {
+        '': {
+          ariaLabel: {
+            description: '',
+            type: 'string',
+            default: 'Close',
+          },
+          disabled: {
+            description: '',
+            type: 'boolean',
+          },
+          type: {
+            default: 'button',
+            type: 'ButtonType',
+            description: '',
+          },
         },
-        {
-          description: '',
-          prop: 'disabled',
-          type: 'boolean',
-        },
-        {
-          prop: 'type',
-          default: 'button',
-          type: 'ButtonType',
-          description: '',
-        },
-      ],
+      },
       emits: [],
       slots: [],
     },
