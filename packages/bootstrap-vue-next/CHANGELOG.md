@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.22.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.22.1...bootstrapvuenext-v0.22.2) (2024-06-26)
+
+
+### Features
+
+* **BModal:** add focus trapping to modal fixes https://github.com/bootstrap-vue-next/bootstrap-vue-next/ ([ab8b9a0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ab8b9a019d14b9db263cfde00ad7efae13dffbe3))
+* **BModal:** add prop noStacking fixes https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1182 ([ab8b9a0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ab8b9a019d14b9db263cfde00ad7efae13dffbe3))
+* export plugins from main module ([#1973](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1973)) ([f79c516](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f79c5168b7d43df989546fee78e998a0074c0f99))
+
+
+### Bug Fixes
+
+* **BModal:** add component to the internal stack during the execution of the setup function if modelValue is true fixes https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1919 ([ab8b9a0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ab8b9a019d14b9db263cfde00ad7efae13dffbe3))
+
 ## [0.22.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.22.0...bootstrapvuenext-v0.22.1) (2024-06-20)
 
 
