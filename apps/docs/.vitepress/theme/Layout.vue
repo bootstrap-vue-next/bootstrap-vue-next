@@ -241,6 +241,14 @@ const headerExternalLinks = [
 
 const colorMode = useColorMode({
   persist: true,
+  onChanged(mode, defaultHandler) {
+    defaultHandler(mode)
+    if (mode === 'dark') {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  },
 })
 
 const map = {
