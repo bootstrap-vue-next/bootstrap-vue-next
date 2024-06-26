@@ -222,5 +222,7 @@ export * from './utils/exports'
 export * as Utils from './utils/exports'
 export * from './types/exports'
 export * as Types from './types/exports'
+export * from './plugins'
+export * as Plugins from './plugins'
 
 export default createBootstrap
