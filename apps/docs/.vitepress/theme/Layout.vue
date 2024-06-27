@@ -239,20 +239,22 @@ const headerExternalLinks = [
   },
 ]
 
-let colorMode: UseColorModeReturn<BasicColorMode> | null = null
+const colorMode = useColorMode({
+  persist: true,
+})
 
 onMounted(() => {
-  colorMode = useColorMode({
-    persist: true,
-    onChanged(mode, defaultHandler) {
-      defaultHandler(mode)
-      if (mode === 'dark') {
+  watch(
+    colorMode,
+    (newValue) => {
+      if (newValue === 'dark') {
         document.documentElement.classList.add('dark')
       } else {
         document.documentElement.classList.remove('dark')
       }
     },
-  })
+    {immediate: true}
+  )
 })
 
 const map = {
