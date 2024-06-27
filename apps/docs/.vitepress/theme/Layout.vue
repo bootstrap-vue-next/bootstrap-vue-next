@@ -169,7 +169,7 @@ import {
   BToastOrchestrator,
   BModalOrchestrator,
 } from 'bootstrap-vue-next'
-import {inject, ref, computed, watch} from 'vue'
+import {inject, ref, computed, onMounted, watch} from 'vue'
 import GithubIcon from '~icons/bi/github'
 import OpencollectiveIcon from '~icons/simple-icons/opencollective'
 import DiscordIcon from '~icons/bi/discord'
@@ -179,7 +179,7 @@ import ChevronRight from '~icons/bi/chevron-right'
 import CircleHalf from '~icons/bi/circle-half'
 import {useData, useRoute, withBase} from 'vitepress'
 import {appInfoKey} from './keys'
-import {useMediaQuery} from '@vueuse/core'
+import {useMediaQuery, type BasicColorMode, type UseColorModeReturn} from '@vueuse/core'
 import TableOfContentsNav from '../../src/components/TableOfContentsNav.vue'
 // @ts-ignore
 import VPNavBarSearch from 'vitepress/dist/client/theme-default/components/VPNavBarSearch.vue'
@@ -241,6 +241,20 @@ const headerExternalLinks = [
 
 const colorMode = useColorMode({
   persist: true,
+})
+
+onMounted(() => {
+  watch(
+    colorMode,
+    (newValue) => {
+      if (newValue === 'dark') {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
+    },
+    {immediate: true}
+  )
 })
 
 const map = {
