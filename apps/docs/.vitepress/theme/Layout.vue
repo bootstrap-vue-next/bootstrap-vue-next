@@ -265,12 +265,10 @@ const map = {
 
 const options = Object.keys(map) as (keyof typeof map)[]
 
-const currentIcon = computed(() => map[colorMode?.value ?? 'light'])
+const currentIcon = computed(() => map[colorMode.value])
 
 const set = (newValue: keyof typeof map) => {
-  if (colorMode) {
-    colorMode.value = newValue
-  }
+  colorMode.value = newValue
 }
 
 watch(isLargeScreen, (newValue) => {
