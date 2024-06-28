@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.22.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.22.2...bootstrapvuenext-v0.22.3) (2024-06-28)
+
+
+### Bug Fixes
+
+* **BToast:** use headerClass fixes [#1977](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1977) ([#1978](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1978)) ([b55583c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b55583cee54b1740020ec6cadbe68236cb6dc970))
+
 ## [0.22.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.22.1...bootstrapvuenext-v0.22.2) (2024-06-26)
 
 
