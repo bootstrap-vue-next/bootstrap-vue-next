@@ -17,7 +17,12 @@
       :aria-live="!isToastVisible ? undefined : props.isStatus ? 'polite' : 'assertive'"
       :aria-atomic="!isToastVisible ? undefined : true"
     >
-      <component :is="props.headerTag" v-if="$slots.title || props.title" class="toast-header">
+      <component
+        :is="props.headerTag"
+        v-if="$slots.title || props.title"
+        class="toast-header"
+        :class="props.headerClass"
+      >
         <slot name="title" :hide="hideFn">
           <strong class="me-auto">
             {{ props.title }}
