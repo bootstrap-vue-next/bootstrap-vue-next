@@ -104,7 +104,7 @@ import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BCard, BCardBody, BOffcanvas, BButton} from 'bootstrap-vue-next'
 import {ref, computed} from 'vue'
-import NoteAlert from './components/NoteAlert.vue'
+import NoteAlert from '../../components/NoteAlert.vue'
 
 const show = ref(false)
 const show2 = ref(false)
