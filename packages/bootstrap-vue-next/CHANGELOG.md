@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.22.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.22.3...bootstrapvuenext-v0.22.4) (2024-06-30)
+
+
+### Features
+
+* **BOffcanvas:** add prop responsive ([bfe7e85](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bfe7e85c2afd6dab714099be3a988c27800cc970))
+* **dist:** dont include src files ([bfe7e85](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bfe7e85c2afd6dab714099be3a988c27800cc970))
+* **package:** move vueuse integrations and focus trap to dev dependencies ([bfe7e85](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bfe7e85c2afd6dab714099be3a988c27800cc970))
+
+
+### Bug Fixes
+
+* **types:** mjs masquerading as cjs -- export mts copy ([#1980](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1980)) ([bfe7e85](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bfe7e85c2afd6dab714099be3a988c27800cc970))
+
 ## [0.22.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.22.2...bootstrapvuenext-v0.22.3) (2024-06-28)
 
 
