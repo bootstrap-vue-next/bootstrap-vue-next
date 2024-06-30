@@ -5,6 +5,8 @@ import vue from '@vitejs/plugin-vue'
 import {resolve} from 'path'
 import dts from 'vite-plugin-dts'
 
+import {copyFileSync} from 'node:fs'
+
 export default defineConfig({
   build: {
     sourcemap: true,
@@ -39,6 +41,9 @@ export default defineConfig({
     dts({
       tsconfigPath: './tsconfig.app.json',
       outDir: './dist',
+      afterBuild: () => {
+        copyFileSync('./dist/src/BootstrapVue.d.ts', './dist/src/BootstrapVue.d.mts')
+      },
     }),
   ],
 
