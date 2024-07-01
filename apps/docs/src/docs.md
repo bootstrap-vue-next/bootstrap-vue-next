@@ -310,8 +310,7 @@ export default defineNuxtConfig({
     css: true, // Will include the module's CSS. If set to false, you can add the CSS manually in the 'css' property below
   },
   css: [
-    'bootstrap/dist/css/bootstrap.min.css'
-        // 'bootstrap-vue-next/dist/bootstrap-vue-next.css' // Uncomment to include BootstrapVueNext's CSS
+    // 'bootstrap/dist/css/bootstrap.min.css' // Not necessary if `css: true`
     ],
 })
 ```
