@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.22.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.22.4...bootstrapvuenext-v0.22.5) (2024-07-01)
+
+
+### Bug Fixes
+
+* **b-tab:** broken computed classes ([#1985](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1985)) ([4de1325](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4de1325eefc915794c30eff0f5d9e706b46e1bd5))
+
 ## [0.22.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.22.3...bootstrapvuenext-v0.22.4) (2024-06-30)
 
 
