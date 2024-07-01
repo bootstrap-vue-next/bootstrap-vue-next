@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.22.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.22.5...bootstrapvuenext-v0.22.6) (2024-07-01)
+
+
+### Features
+
+* **BTableLite:** add class to bottom row tr fixes [#1908](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1908) ([#1987](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1987)) ([1d745d1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1d745d1923c6f2164e2883093d75ca675f65bc3a))
+
 ## [0.22.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.22.4...bootstrapvuenext-v0.22.5) (2024-07-01)
 
 
