@@ -18,6 +18,12 @@ export interface ModuleOptions {
    */
   directives: ConfigurationValue<keyof typeof Directives>
   /**
+   * Manages the inclusion of the module's CSS. It is recommended to leave this enabled unless there are conflicts with other styles.
+   *
+   * @default true
+   */
+  css: boolean
+  /**
    * @default {}
    */
   plugin: Omit<Exclude<BootstrapVueOptions['plugins'], undefined>, 'id'>

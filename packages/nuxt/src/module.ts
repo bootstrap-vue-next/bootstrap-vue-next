@@ -17,12 +17,17 @@ export default defineNuxtModule<ModuleOptions>({
   defaults: {
     composables: true,
     directives: true,
+    css: true,
     plugin: {},
   },
   setup(options, nuxt) {
     // @ts-ignore
     const {resolve} = createResolver(import.meta.url)
     nuxt.options.build.transpile.push(resolve('./runtime'))
+    
+    if (options.css === true) {
+      nuxt.options.css.push('bootstrap-vue-next/dist/bootstrap-vue-next.css')
+    }
 
     const normalizedComposableOptions = normalizeConfigurationValue(options.composables)
     const normalizedDirectiveOptions = normalizeConfigurationValue(options.directives)
