@@ -23,12 +23,9 @@ export default defineNuxtModule<ModuleOptions>({
     // @ts-ignore
     const {resolve} = createResolver(import.meta.url)
     nuxt.options.build.transpile.push(resolve('./runtime'))
-    nuxt.options.css.push('bootstrap-vue-next/dist/bootstrap-vue-next.css')
 
     const normalizedComposableOptions = normalizeConfigurationValue(options.composables)
     const normalizedDirectiveOptions = normalizeConfigurationValue(options.directives)
-
-    nuxt.options.css.push('bootstrap-vue-next/dist/bootstrap-vue-next.css')
 
     nuxt.options.vite.optimizeDeps = nuxt.options.vite.optimizeDeps || {}
     nuxt.options.vite.optimizeDeps.include = nuxt.options.vite.optimizeDeps.include || []
