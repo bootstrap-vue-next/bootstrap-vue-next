@@ -149,9 +149,12 @@ const onReset = (event) => {
 
 ## Inline form
 
-Bootstrap 5 has dropped form-specific layout classes for the grid system. See [this](https://getbootstrap.com/docs/5.3/migration/#forms).
+Bootstrap 5 has dropped form-specific layout classes for the grid system. See the
+[Bootstrap 5 Changelog](https://getbootstrap.com/docs/5.3/migration/#forms).
 
-To create horizontal forms with the grid by add the `.row` class to form groups and use the `.col-_-_` classes to specify the width of your labels and controls. Be sure to add `.col-form-label` to your `<label>`s as well, so they’re vertically centered with their associated form controls.
+To create horizontal forms with the grid add the `.row` class to form groups and use the `.col-_-_` classes
+to specify the width of your labels and controls. Be sure to add `.col-form-label` to your `<label>`s as well,
+so they’re vertically centered with their associated form controls.
 
 You may need to manually address the width and alignment of individual form controls with
 [spacing utilities](/docs/reference/spacing-classes) (as shown below). Lastly, be sure to always
@@ -275,14 +278,60 @@ Custom form controls and selects are also supported.
   </template>
 </HighlightCard>
 
-### Alternatives to hidden labels
+## Floating Labels
 
-Assistive technologies such as screen readers will have trouble with your forms if you do not include
-a label for every input. For these inline forms, you can hide the labels using the `.sr-only` class.
-There are further alternative methods of providing a label for assistive technologies, such as the
-`aria-label`, `aria-labelledby` or `title` attributes. If none of these are present, assistive
-technologies may resort to using the `placeholder` attribute, if present, but note that use of
-`placeholder` as a replacement for other labelling methods is not advised.
+Wrap a `BFormInput`, `BFormTextarea`, or `BFormSelect` in a `BFormFloatingLable` to enable floating labesl. A `placeholder`
+is required on each input in order to make the Bootstrap 5 `css` work correctly.
+
+<HighlightCard>
+    <BForm>
+      <BFormFloatingLabel label="Email address" label-for="floatingEmail" class="my-2">
+        <input id="floatingEmail" type="email" class="form-control" placeholder="Email address" />
+      </BFormFloatingLabel>
+      <BFormFloatingLabel label="Password" label-for="floatingPassword" class="my-2">
+        <input id="floatingPassword" type="password" class="form-control" placeholder="Password" />
+      </BFormFloatingLabel>
+    </BForm>
+  <template #html>
+
+```vue-html
+<BForm>
+  <BFormFloatingLabel label="Email address" label-for="floatingEmail" class="my-2">
+    <input id="floatingEmail" type="email" class="form-control" placeholder="Email address" />
+  </BFormFloatingLabel>
+  <BFormFloatingLabel label="Password" label-for="floatingPassword" class="my-2">
+    <input id="floatingPassword" type="password" class="form-control" placeholder="Password" />
+  </BFormFloatingLabel>
+</BForm>
+```
+
+  </template>
+</HighlightCard>
+
+Floating labels work correclty for the disable state, readonly plaintext and input groups.
+See the [Bootstrap 5 documentation](https://getbootstrap.com/docs/5.3/forms/floating-labels) for more details.
+
+## Accessibility
+
+Ensure that all form controls have an appropriate accessible name so that their purpose can be conveyed to users of
+assistive technologies. The simplest way to achieve this is to use a `<label>` element, or—in the case of buttons—to
+include sufficiently descriptive text as part of the `<button>...</button>` content.
+
+For situations where it’s not possible to include a visible `<label>` or appropriate text content, there are
+alternative ways of still providing an accessible name, such as:
+
+- `<label>` elements hidden using the `.visually-hidden` class
+- Pointing to an existing element that can act as a label using `aria-labelledby`
+- Providing a title attribute
+- Explicitly setting the accessible name on an element using aria-label
+
+If none of these are present, assistive technologies may resort to using the placeholder attribute as a fallback for
+the accessible name on `<input>` and `<textarea>` elements. The examples in this section provide a few suggested, case-specific approaches.
+
+While using visually hidden content (`.visually-hidden`, `aria-label`, and even placeholder content, which
+disappears once a form field has content) will benefit assistive technology users, a lack of visible label text may
+still be problematic for certain users. Some form of visible label is generally the best approach,
+both for accessibility and usability.
 
 ## Related form control and layout components
 
@@ -294,17 +343,15 @@ See also:
 - [`BFormRadio`](/docs/components/form-radio) Radio Inputs
 - [`BFormCheckbox`](/docs/components/form-checkbox) Checkbox Inputs
 - [`BFormFile`](/docs/components/form-file) File Input
-- [`BFormDatepicker`](/docs/components/form-datepicker) Date picker input
 - [`BFormSpinbutton`](/docs/components/form-spinbutton) Numerical range spinbutton input
-- [`BFormTags`](/docs/components/form-tags) Customizable tag input~~
-- [`BFormTimepicker`](/docs/components/form-timepicker) Time picker custom form input
-- [`BFormRating`](/docs/components/form-rating) Star rating custom form input and display
+- [`BFormTags`](/docs/components/form-tags) Customizable tag input
+- `BFormRating` Star rating custom form input and display (<NotYetImplemented/>)
 - [`BButton`](/docs/components/button) Buttons
 - [`BFormGroup`](/docs/components/form-group) Form Input wrapper to generate form-groups that
   support labels, help text and feedback
-- [`BInputGroup`](/docs/components/input) Form Inputs with add-ons
-- [`BFormRow`](/docs/components/layout) Create grid rows and columns with tighter margins
-  (available via the [Layout and grid components](/docs/components/layout))
+- [`BInputGroup`](/docs/components/input-group) Form Inputs with add-ons
+- [`BFormRow`](/docs/components/grid-system) Create grid rows and columns with tighter margins
+  (available via the [Layout and grid components](/docs/components/grid-system))
 
 ## Form helper components
 
@@ -313,7 +360,7 @@ The following helper components are available with the `Form` plugin:
 - `BFormText` Help text blocks for inputs
 - `BFormInvalidFeedback` Invalid feedback text blocks for input `invalid` states
 - `BFormValidFeedback` Valid feedback text blocks for input `valid` states
-- `BFormDatalist` Easily create a `<datalist>` for use with `BFormInput` or plain `<input>`
+- `BFormDatalist` Easily create a `<datalist>` for use with `BFormInput` or plain `<input>` (<NotYetImplemented/>)
 
 ### Form text helper
 
@@ -373,10 +420,9 @@ class). Note that tooltip style feedback may, since its positioning is static, o
 labels, etc.
 
 **Note:** Some form controls, such as
-[`BFormRadio`](/docs/components/form-radio#contextual-states),
-[`BFormCheckbox`](/docs/components/form-checkbox#contextual-states), and
-~~[`BFormFile`](/docs/components/form-file)~~ have wrapper elements which will prevent the feedback
-text from automatically showing (as the feedback component is not a direct sibling of the form
+[`BFormRadio`](/docs/components/form-radio#contextual-states) and
+[`BFormCheckbox`](/docs/components/form-checkbox#contextual-states) have wrapper elements which will prevent
+the feedback text from automatically showing (as the feedback component is not a direct sibling of the form
 control's input). Use the feedback component's `state` prop (bound to the state of the form control)
 or the `force-show` prop to display the feedback.
 
@@ -442,6 +488,7 @@ import {data} from '../../data/components/form.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
+import NotYetImplemented from '../../components/NotYetImplemented.vue'
 import {
   BFormValidFeedback,
   BFormInvalidFeedback,
@@ -453,6 +500,7 @@ import {
   BForm,
   BFormCheckboxGroup,
   BFormCheckbox,
+  BFormFloatingLabel,
   BFormGroup,
   BFormInput,
   BFormSelect
