@@ -1,8 +1,6 @@
 <template>
   <div class="form-floating">
-    <slot>
-      {{ props.text }}
-    </slot>
+    <slot />
     <label :for="props.labelFor">
       <slot name="label">
         {{ props.label }}
@@ -24,7 +22,7 @@ const props = useDefaults(_props, 'BFormFloatingLabel')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
+  default: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   label?: (props: Record<string, never>) => any
 }>()

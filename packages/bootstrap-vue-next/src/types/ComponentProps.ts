@@ -120,7 +120,6 @@ export interface BDropdownTextProps {
 export interface BFormFloatingLabelProps {
   label?: string
   labelFor?: string
-  text?: string
 }
 
 export interface BFormRowProps {
@@ -945,7 +944,6 @@ export interface BImgProps extends RadiusElementExtendables {
 }
 
 export interface BFormProps {
-  floating?: boolean
   id?: string
   novalidate?: boolean
   validated?: boolean
