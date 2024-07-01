@@ -2,28 +2,28 @@
   "name": "bootstrap-vue-next",
   "displayName": "BootstrapVueNext",
   "description": "BootstrapVueNext is an early and lovely component library for Vue 3 & Nuxt 3 based on Bootstrap 5 and Typescript.",
-  "version": "0.22.3",
+  "version": "0.22.4",
   "license": "MIT",
   "main": "./dist/bootstrap-vue-next.umd.js",
   "module": "./dist/bootstrap-vue-next.mjs",
   "style": "./dist/bootstrap-vue-next.css",
   "exports": {
     ".": {
-      "types": "./dist/src/BootstrapVue.d.ts",
-      "import": "./dist/bootstrap-vue-next.mjs",
-      "require": "./dist/bootstrap-vue-next.umd.js"
+      "import": {
+        "types": "./dist/src/BootstrapVue.d.mts",
+        "default": "./dist/bootstrap-vue-next.mjs"
+      },
+      "require": {
+        "types": "./dist/src/BootstrapVue.d.ts",
+        "default": "./dist/bootstrap-vue-next.umd.js"
+      }
     },
     "./dist/bootstrap-vue-next.css": "./dist/bootstrap-vue-next.css",
-    "./src/*": "./src/*",
     "./src/styles/styles.scss": "./src/styles/styles.scss"
   },
   "files": [
     "dist",
-    "src",
-    "!src/**/*.spec.ts",
-    "!src/**/*.spec.js",
-    "!src/App.vue",
-    "!src/main.ts"
+    "src/**/*.scss"
   ],
   "types": "./dist/src/BootstrapVue.d.ts",
   "private": false,
@@ -47,9 +47,7 @@
   },
   "dependencies": {
     "@floating-ui/vue": "^1.0.6",
-    "@vueuse/core": "^10.10.0",
-    "@vueuse/integrations": "^10.11.0",
-    "focus-trap": "^7.5.4"
+    "@vueuse/core": "^10.10.0"
   },
   "devDependencies": {
     "@floating-ui/core": "^1.6.2",
@@ -63,11 +61,13 @@
     "@vue/runtime-core": "^3.4.27",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.5.1",
+    "@vueuse/integrations": "^10.11.0",
     "@vueuse/shared": "^10.9.0",
     "bootstrap": "^5.3.3",
     "eslint": "^8.57.0",
     "eslint-define-config": "^2.1.0",
     "eslint-plugin-vue": "^9.26.0",
+    "focus-trap": "^7.5.4",
     "happy-dom": "^14.12.0",
     "prettier": "^3.2.5",
     "sass": "^1.77.2",

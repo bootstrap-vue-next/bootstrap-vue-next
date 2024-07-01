@@ -77,6 +77,24 @@ const click = (place = 'start') => {
   </template>
 </HighlightCard>
 
+## Responsive
+
+The `responsive` prop in the BOffcanvas component enables adaptive display behavior based on the viewport size. When set, the offcanvas content displays inline for viewports wider than the specified breakpoint, and as a traditional offcanvas for narrower viewports
+
+<NoteAlert>
+In SSR environments, the BOffcanvas component must be rendered client-side due to its dependency on browser context for responsive behavior. Use client-only directives or components to ensure proper functionality
+</NoteAlert>
+
+<HighlightCard>
+  <template #html>
+
+```vue-html
+<BOffcanvas responsive="md" />
+```
+
+  </template>
+</HighlightCard>
+
 <ComponentReference :data="data" />
 
 <script setup lang="ts">
@@ -86,6 +104,7 @@ import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BCard, BCardBody, BOffcanvas, BButton} from 'bootstrap-vue-next'
 import {ref, computed} from 'vue'
+import NoteAlert from '../../components/NoteAlert.vue'
 
 const show = ref(false)
 const show2 = ref(false)

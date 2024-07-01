@@ -490,8 +490,7 @@ export interface BOffcanvasProps extends TeleporterProps {
   placement?: Placement
   shadow?: Size | boolean
   title?: string
-  // responsive?: Breakpoint
-  // TODO responsive doesn't work
+  responsive?: Breakpoint
   width?: string
 }
 
