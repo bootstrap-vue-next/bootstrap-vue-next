@@ -16,7 +16,6 @@ import type {BFormProps} from '../../types'
 import {computed, ref} from 'vue'
 
 const _props = withDefaults(defineProps<BFormProps>(), {
-  floating: false,
   id: undefined,
   novalidate: false,
   validated: false,
@@ -35,7 +34,6 @@ defineSlots<{
 }>()
 
 const computedClasses = computed(() => ({
-  'form-floating': props.floating,
   'was-validated': props.validated,
 }))
 
