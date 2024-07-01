@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.22.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.22.6...bootstrapvuenext-v0.22.7) (2024-07-01)
+
+
+### Miscellaneous Chores
+
+* **bootstrapvuenext:** Synchronize main group versions
+
 ## [0.22.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.22.5...bootstrapvuenext-v0.22.6) (2024-07-01)
 
 
