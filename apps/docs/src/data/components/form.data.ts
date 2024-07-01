@@ -1,4 +1,5 @@
 import type {ComponentReference} from '../../types'
+import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
@@ -6,42 +7,38 @@ export default {
       component: 'BForm',
       props: {
         '': {
-          id: {
-            type: 'string',
-            default: undefined,
-          },
-          floating: {
-            type: 'boolean',
-            default: false,
-          },
           novalidate: {
             type: 'boolean',
             default: false,
+            description:
+              'When set, disables browser native HTML5 validation on controls in the form',
           },
           validated: {
             type: 'boolean',
             default: false,
+            description:
+              "When set, adds the Bootstrap class 'was-validated' on the form, triggering the native browser validation states",
           },
+          ...pick(buildCommonProps(), ['id']),
         },
       },
       emits: [
         {
+          event: 'submit',
+          description: 'Emitted when the form is submitted',
           args: [
             {
               arg: 'submit',
-              description: '',
               type: 'Event',
+              description: 'Native submit event',
             },
           ],
-          description: '',
-          event: 'submit',
         },
       ],
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Contet to place in the form',
         },
       ],
     },
@@ -49,31 +46,27 @@ export default {
       component: 'BFormFloatingLabel',
       props: {
         '': {
-          labelFor: {
-            type: 'string',
-            default: undefined,
-          },
           label: {
             type: 'string',
             default: undefined,
+            description: 'The text of the floating label',
           },
-          text: {
+          labelFor: {
             type: 'string',
             default: undefined,
+            description: 'The id of the input control that the floating label is for',
           },
         },
       },
       emits: [],
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'The input control that contains the floating label',
         },
         {
-          description: '',
           name: 'label',
-          scope: [],
+          description: 'The content to display in the floating label',
         },
       ],
     },
@@ -81,46 +74,29 @@ export default {
       component: 'BFormInvalidFeedback',
       props: {
         '': {
-          ariaLive: {
-            type: 'string',
-            default: undefined,
-          },
           forceShow: {
             type: 'boolean',
             default: false,
-          },
-          id: {
-            type: 'string',
-            default: undefined,
+            description: "Shows the feedback text, regardless of the value of the 'state' prop",
           },
           text: {
             type: 'string',
             default: undefined,
-          },
-          role: {
-            type: 'string',
-            default: undefined,
-          },
-          state: {
-            type: 'boolean',
-            default: null,
-          },
-          tag: {
-            type: 'string',
-            default: 'div',
+            description: 'The feedback text to display',
           },
           tooltip: {
             type: 'boolean',
             default: false,
+            description: 'Renders the feedback text in a rudimentary tooltip style',
           },
+          ...pick(buildCommonProps(), ['ariaLive', 'id', 'role', 'state', 'tag']),
         },
       },
       emits: [],
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the form invalid feedback',
         },
       ],
     },
@@ -128,19 +104,14 @@ export default {
       component: 'BFormRow',
       props: {
         '': {
-          tag: {
-            description: '',
-            type: 'string',
-            default: 'div',
-          },
+          ...pick(buildCommonProps(), ['tag']),
         },
       },
       emits: [],
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the form row',
         },
       ],
     },
@@ -148,34 +119,25 @@ export default {
       component: 'BFormText',
       props: {
         '': {
-          id: {
-            type: 'string',
-            default: undefined,
-          },
           inline: {
             type: 'boolean',
             default: false,
-          },
-          tag: {
-            type: 'string',
-            default: 'small',
+            description:
+              'When set, renders the help text as an inline element, rather than a block element',
           },
           text: {
             type: 'string',
             default: undefined,
+            description: 'The text to display',
           },
-          textVariant: {
-            type: 'TextColorVariant | null',
-            default: 'body-secondary',
-          },
+          ...pick(buildCommonProps(), ['id', 'tag', 'textVariant']),
         },
       },
       emits: [],
       slots: [
         {
           description: '',
-          name: 'default',
-          scope: [],
+          name: 'Content to place in the form text',
         },
       ],
     },
@@ -183,46 +145,29 @@ export default {
       component: 'BFormValidFeedback',
       props: {
         '': {
-          ariaLive: {
-            type: 'string',
-            default: undefined,
-          },
           forceShow: {
             type: 'boolean',
             default: false,
-          },
-          id: {
-            type: 'string',
-            default: undefined,
-          },
-          role: {
-            type: 'string',
-            default: undefined,
+            description: "Shows the feedback text, regardless of the value of the 'state' prop",
           },
           text: {
             type: 'string',
             default: undefined,
-          },
-          state: {
-            type: 'boolean',
-            default: null,
-          },
-          tag: {
-            type: 'string',
-            default: 'div',
+            description: 'The feedback text to display',
           },
           tooltip: {
             type: 'boolean',
             default: false,
+            description: 'Renders the feedback text in a rudimentary tooltip style',
           },
+          ...pick(buildCommonProps(), ['ariaLive', 'id', 'role', 'state', 'tag']),
         },
       },
       emits: [],
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the form invalid feedback',
         },
       ],
     },

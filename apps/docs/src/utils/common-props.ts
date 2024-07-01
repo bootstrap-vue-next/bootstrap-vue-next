@@ -13,6 +13,12 @@ export const commonProps = () =>
       default: undefined,
       description: 'Sets the value of `aria-label` attribute on the rendered element',
     },
+    ariaLive: {
+      type: 'string',
+      default: undefined,
+      description:
+        "When the rendered element is an `aria-live` region (for screen reader users), set to either 'polite' or 'assertive'",
+    },
     ariaLabelledBy: {
       type: 'string',
       default: undefined,
@@ -73,6 +79,11 @@ export const commonProps = () =>
       default: undefined,
       description: 'Adds the `required` attribute to the form control',
     },
+    role: {
+      type: 'string',
+      default: undefined,
+      description: 'Sets the ARIA attribute `role` to a specific value',
+    },
     size: {
       type: 'Size',
       default: 'md',
@@ -84,10 +95,20 @@ export const commonProps = () =>
       description:
         'Controls the validation state appearance of the component. `true` for valid, `false` for invalid, or `null` for no validation state',
     },
+    tag: {
+      type: 'string',
+      default: 'div',
+      description: 'Specify the HTML tag to render instead of the default tag',
+    },
     textField: {
       type: 'string',
       default: 'text',
       description: 'Field name in the `options` array that should be used for the text label',
+    },
+    textVariant: {
+      type: 'TextColorVariant | null',
+      default: null,
+      description: 'Applies one of the Bootstrap theme color variants to the text',
     },
     valueField: {
       type: 'string',
