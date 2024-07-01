@@ -145,7 +145,8 @@
             </slot>
           </BTd>
         </BTr>
-        <BTr v-if="!props.stacked && $slots['bottom-row']">
+        <!-- This class is for specific targetting of this slot element -->
+        <BTr v-if="!props.stacked && $slots['bottom-row']" class="bottom-row">
           <slot name="bottom-row" />
         </BTr>
       </slot>
