@@ -468,9 +468,7 @@ export interface BNavbarToggleProps {
 }
 
 export interface BOffcanvasProps extends TeleporterProps {
-  backdrop?: boolean
-  backdropBlur?: string
-  backdropVariant?: ColorVariant | 'white' | 'transparent' | null
+  hideBackdrop?: boolean
   bodyAttrs?: Readonly<AttrsValue>
   bodyClass?: ClassValue
   bodyScrolling?: boolean
@@ -1236,7 +1234,6 @@ export interface BModalProps extends TeleporterProps {
   autoFocus?: boolean
   autoFocusButton?: 'ok' | 'cancel' | 'close'
   body?: string
-  backdropVariant?: ColorVariant | null
   bodyAttrs?: Readonly<AttrsValue>
   bodyBgVariant?: ColorVariant | null
   bodyClass?: ClassValue
