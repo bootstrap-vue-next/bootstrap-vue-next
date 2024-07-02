@@ -3,7 +3,7 @@ import {rtlPluginKey} from '../utils'
 import type {BootstrapVueOptions} from '../types'
 
 export default {
-  install(app, options: BootstrapVueOptions['plugins']) {
+  install(app, options: BootstrapVueOptions) {
     const rtlDefault = false
     const localeDefault = undefined
 

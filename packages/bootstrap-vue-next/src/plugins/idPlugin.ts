@@ -3,7 +3,7 @@ import type {BootstrapVueOptions} from '../types'
 import {idPluginKey} from '../utils'
 
 export default {
-  install(app, options: BootstrapVueOptions['plugins']) {
+  install(app, options: BootstrapVueOptions) {
     if (!(options?.id instanceof Object && typeof options.id.getId === 'function')) return
 
     app.provide(idPluginKey, options.id.getId)
