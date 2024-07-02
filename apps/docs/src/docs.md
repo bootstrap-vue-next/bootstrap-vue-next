@@ -104,11 +104,7 @@ Now, you can begin importing and using components
 
 #### Automatic Registering of Components
 
-By default, the plugin does not globally register components. In order to accomplish this, there are two methods
-
-##### Tree-shaken Installation Method
-
-To have components automatically registered **and** tree-shaken, we recommend [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components). Read their docs for additional details. This is in addition to the above installation steps
+To have components automatically registered **and** tree-shaken, we recommend [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components). Read their docs for additional details. This is in addition to the above installation steps. We supply a resolver
 
 <ClientOnly>
 <BTabs v-model="codePreference">
@@ -186,27 +182,24 @@ export default defineConfig({
 The resolver import is from `bootstrap-vue-next`, not `unplugin-vue-components`
 </NoteAlert>
 
-##### Built-in Registry
+##### Aliasing
 
-This method for globally registering components is usually not recommended. The reason is because all components are registered in Vue, and thus are not automatically tree-shaken if you do not use them, increasing the bundle size
+With the `BootstrapVueNextResolver` we also have an option for aliasing components like so:
 
-<HighlightCard>
+```ts
+import {Components} from 'unplugin-vue-components'
+import {BootstrapVueNextResolver} from 'bootstrap-vue-next'
 
-```typescript
-// main.js/ts
-import {createApp} from 'vue'
-import {createBootstrap} from 'bootstrap-vue-next'
-
-// Add the necessary CSS
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
-
-const app = createApp(App)
-app.use(createBootstrap({components: true, directives: true})) // Change this line
-app.mount('#app')
+Components({
+  resolvers: [
+    BootstrapVueNextResolver({
+      aliases: {
+        BInput: 'BFormInput',
+      },
+    }),
+  ],
+})
 ```
-
-</HighlightCard>
 
 ### Installation - Nuxt.js 3
 

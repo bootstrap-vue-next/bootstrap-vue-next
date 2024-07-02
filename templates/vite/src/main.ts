@@ -7,9 +7,6 @@ import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
 
 createApp(App)
   .use(
-    createBootstrap({
-      components: true,
-      directives: true,
-    })
+    createBootstrap()
   )
   .mount('#app')

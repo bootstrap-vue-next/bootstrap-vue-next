@@ -1,12 +1,13 @@
 import type {Plugin} from 'vue'
-import type {BootstrapVueOptions, ComponentType, DirectiveType} from './types'
+import type {BootstrapVueOptions, ComponentType, ConfigurationOption, DirectiveType} from './types'
 import type {ComponentResolver} from 'unplugin-vue-components'
+import type * as Components from './components'
+
 import * as Plugins from './plugins'
+import {ComponentNames, DirectiveNames} from './types/ComponentProps'
 
 import './styles/styles.scss'
 
-import * as Components from './components'
-import * as Directives from './directives'
 import parseActiveImports from './utils/parseActiveImports'
 
 declare module '@vue/runtime-core' {
@@ -116,51 +117,24 @@ declare module '@vue/runtime-core' {
 const sliceName = (str: string) => (str.toLowerCase().startsWith('v') ? str.slice(1) : str)
 
 // Main app plugin
-export const createBootstrap = ({
-  components = false,
-  directives = false,
-  plugins: pluginData = {},
-  aliases = {},
-}: Readonly<BootstrapVueOptions> = {}): Plugin => ({
+export const createBootstrap = (pluginData: Readonly<BootstrapVueOptions> = {}): Plugin => ({
   install(app) {
-    const selectedComponents = typeof components === 'boolean' ? {all: components} : components
-
-    const componentKeys = Object.keys(Components) as unknown as ComponentType[]
-    parseActiveImports(selectedComponents, componentKeys).forEach((name) => {
-      const component = Components[name]
-      app.component(name, component)
-    })
-
-    const selectedDirectives = typeof directives === 'boolean' ? {all: directives} : directives
-
-    const directiveKeys = Object.keys(Directives) as unknown as DirectiveType[]
-    parseActiveImports(selectedDirectives, directiveKeys).forEach((name) => {
-      const parsedName = sliceName(name)
-      const directive = Directives[name]
-      app.directive(parsedName, directive)
-    })
-
-    Object.entries(aliases).forEach(([alias, name]) => {
-      const component = typeof name === 'string' ? Components[name] : name
-      app.component(alias, component)
-    })
-
-    if (pluginData?.breadcrumb ?? true === true) {
+    if (pluginData.breadcrumb ?? true === true) {
       app.use(Plugins.breadcrumb)
     }
-    if ((pluginData?.id ?? true === true) || typeof pluginData.id === 'object') {
+    if ((pluginData.id ?? true === true) || typeof pluginData.id === 'object') {
       app.use(Plugins.id, pluginData)
     }
-    if (pluginData?.modalController ?? true === true) {
+    if (pluginData.modalController ?? true === true) {
       app.use(Plugins.modalController)
     }
-    if (pluginData?.modalManager ?? true === true) {
+    if (pluginData.modalManager ?? true === true) {
       app.use(Plugins.modalManager)
     }
-    if ((pluginData?.rtl ?? true === true) || typeof pluginData.rtl === 'object') {
+    if ((pluginData.rtl ?? true === true) || typeof pluginData.rtl === 'object') {
       app.use(Plugins.rtl, pluginData)
     }
-    if (pluginData?.toast ?? true === true) {
+    if (pluginData.toast ?? true === true) {
       app.use(Plugins.toast)
     }
     app.use(Plugins.defaults, pluginData)
@@ -174,22 +148,23 @@ export const BootstrapVueNextResolver = ({
   aliases = {},
   directives = true,
   components = true,
-}: Readonly<
-  Pick<BootstrapVueOptions, 'directives' | 'components'> & {aliases?: Record<string, ComponentType>}
-> = {}): ComponentResolver[] => {
+}: Readonly<{
+  components?: boolean | ConfigurationOption<ComponentType>
+  directives?: boolean | ConfigurationOption<DirectiveType>
+  aliases?: Record<string, ComponentType>
+}> = {}): ComponentResolver[] => {
   const selectedComponents = typeof components === 'boolean' ? {all: components} : components
-  const componentKeys = Object.keys(Components) as unknown as ComponentType[]
-  const compImports = new Set(parseActiveImports(selectedComponents, componentKeys) as string[])
+  const compImports = new Set<string>(parseActiveImports(selectedComponents, ComponentNames))
 
   const selectedDirectives = typeof directives === 'boolean' ? {all: directives} : directives
-  const directiveKeys = Object.keys(Directives) as unknown as DirectiveType[]
-  const dirImports = new Set(parseActiveImports(selectedDirectives, directiveKeys).map(sliceName))
+  const dirImports = new Set<string>(
+    parseActiveImports(selectedDirectives, DirectiveNames).map(sliceName)
+  )
   const resolvers: ComponentResolver[] = [
     {
       type: 'component',
       resolve: (name) => {
         if (compImports.has(name) || aliases[name]) {
-          // TODO using this list of components we may be able to tree shake off CSS imports for the user :eyes:
           return {
             name: aliases[name] || name,
             from: 'bootstrap-vue-next',
@@ -224,5 +199,3 @@ export * from './types/exports'
 export * as Types from './types/exports'
 export * from './plugins'
 export * as Plugins from './plugins'
-
-export default createBootstrap

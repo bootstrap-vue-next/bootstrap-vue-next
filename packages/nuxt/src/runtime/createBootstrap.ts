@@ -6,31 +6,27 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   nuxtApp.vueApp.use(
     createBootstrap({
-      components: false,
-      directives: false,
-      plugins: {
-        ...opts,
-        id: {
-          getId: () => useId(),
+      ...opts,
+      id: {
+        getId: () => useId(),
+      },
+      components: {
+        ...opts?.components,
+        BModal: {
+          teleportTo: '#teleports',
+          ...opts?.components?.BModal,
         },
-        components: {
-          ...opts?.components,
-          BModal: {
-            teleportTo: '#teleports',
-            ...opts?.components?.BModal,
-          },
-          BModalOrchestrator: {
-            teleportTo: '#teleports',
-            ...opts?.components?.BModalOrchestrator,
-          },
-          BOffcanvas: {
-            teleportTo: '#teleports',
-            ...opts?.components?.BOffcanvas,
-          },
-          BToastOrchestrator: {
-            teleportTo: '#teleports',
-            ...opts?.components?.BToastOrchestrator,
-          },
+        BModalOrchestrator: {
+          teleportTo: '#teleports',
+          ...opts?.components?.BModalOrchestrator,
+        },
+        BOffcanvas: {
+          teleportTo: '#teleports',
+          ...opts?.components?.BOffcanvas,
+        },
+        BToastOrchestrator: {
+          teleportTo: '#teleports',
+          ...opts?.components?.BToastOrchestrator,
         },
       },
     })

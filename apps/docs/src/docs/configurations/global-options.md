@@ -4,22 +4,20 @@ Global configurations allow you to set default prop values for all Vue component
 
 ```ts
 createBootstrap({
-  plugins: {
-    components: {
-      global: {
-        type: 'grow', // Caution: This impacts BFormInput, which does not support this value!
-      },
-      BAccordion: {
-        flush: true,
-      },
-      BFormText: {
-        text: 'foobar!',
-      },
-      BSpinner: {
-        type: 'grow',
-      },
+  components: {
+    global: {
+      type: 'grow', // Caution: This impacts BFormInput, which does not support this value!
     },
-  }
+    BAccordion: {
+      flush: true,
+    },
+    BFormText: {
+      text: 'foobar!',
+    },
+    BSpinner: {
+      type: 'grow',
+    },
+  },
 })
 ```
 

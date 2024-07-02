@@ -16,16 +16,11 @@ import TableOfContentsCard from '../components/TableOfContentsCard.vue'
 const routeLocation = (name: string): string => withBase(`/docs/configurations/${name}`).trim()
 
 const configurationsList: {name: string; route: string}[] = [
-{
+  {
     name: 'Global Options',
     route: routeLocation('global-options'),
     description: 'Set default prop values for all Vue components.',
-  },
-  {
-    name: 'Component Aliasing',
-    route: routeLocation('component-aliasing'),
-    description: 'Create aliases for components.'
-  },
+  }
 ]
 
 const computedConfigurationsList = computed(() =>
