@@ -40,7 +40,7 @@ export default defineConfig({
       include: [/\.vue$/, /\.md$/],
     }),
     Components({
-      dts: true,
+      dts: false,
     }),
     dts({
       tsconfigPath: './tsconfig.app.json',
