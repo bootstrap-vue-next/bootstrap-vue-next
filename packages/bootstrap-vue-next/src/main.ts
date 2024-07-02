@@ -46,12 +46,4 @@ const router = createRouter({
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles/styles.scss'
 
-createApp(App)
-  .use(
-    createBootstrap({
-      components: true,
-      directives: true,
-    })
-  )
-  .use(router)
-  .mount('#app')
+createApp(App).use(createBootstrap()).use(router).mount('#app')
