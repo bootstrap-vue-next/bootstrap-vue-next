@@ -23,6 +23,8 @@ import type {
   ColsNumbers,
   CombinedPlacement,
   CommonInputProps,
+  ComponentType,
+  DirectiveType,
   InputType,
   LinkTarget,
   LiteralUnion,
@@ -48,7 +50,6 @@ import type {
   TransitionMode,
   VerticalAlign,
 } from '.'
-import type * as Components from '../components'
 
 export interface BLinkProps {
   active?: boolean
@@ -468,9 +469,7 @@ export interface BNavbarToggleProps {
 }
 
 export interface BOffcanvasProps extends TeleporterProps {
-  backdrop?: boolean
-  backdropBlur?: string
-  backdropVariant?: ColorVariant | 'white' | 'transparent' | null
+  hideBackdrop?: boolean
   bodyAttrs?: Readonly<AttrsValue>
   bodyClass?: ClassValue
   bodyScrolling?: boolean
@@ -1236,7 +1235,6 @@ export interface BModalProps extends TeleporterProps {
   autoFocus?: boolean
   autoFocusButton?: 'ok' | 'cancel' | 'close'
   body?: string
-  backdropVariant?: ColorVariant | null
   bodyAttrs?: Readonly<AttrsValue>
   bodyBgVariant?: ColorVariant | null
   bodyClass?: ClassValue
@@ -1417,5 +1415,121 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
 }
 
 export type BvnComponentProps = {
-  [K in keyof typeof Components]: UnmappedComponentProps[K]
+  [K in ComponentType]: UnmappedComponentProps[K]
 }
+
+export const ComponentNames = Object.freeze(
+  Object.keys({
+    BAccordion: 'BAccordion',
+    BAccordionItem: 'BAccordionItem',
+    BAlert: 'BAlert',
+    BAvatar: 'BAvatar',
+    BAvatarGroup: 'BAvatarGroup',
+    BBadge: 'BBadge',
+    BBreadcrumb: 'BBreadcrumb',
+    BBreadcrumbItem: 'BBreadcrumbItem',
+    BButton: 'BButton',
+    BButtonGroup: 'BButtonGroup',
+    BButtonToolbar: 'BButtonToolbar',
+    BCard: 'BCard',
+    BCardBody: 'BCardBody',
+    BCardFooter: 'BCardFooter',
+    BCardGroup: 'BCardGroup',
+    BCardHeader: 'BCardHeader',
+    BCardImg: 'BCardImg',
+    BCardSubtitle: 'BCardSubtitle',
+    BCardText: 'BCardText',
+    BCardTitle: 'BCardTitle',
+    BCarousel: 'BCarousel',
+    BCarouselSlide: 'BCarouselSlide',
+    BCloseButton: 'BCloseButton',
+    BCol: 'BCol',
+    BCollapse: 'BCollapse',
+    BContainer: 'BContainer',
+    BDropdown: 'BDropdown',
+    BDropdownDivider: 'BDropdownDivider',
+    BDropdownForm: 'BDropdownForm',
+    BDropdownGroup: 'BDropdownGroup',
+    BDropdownHeader: 'BDropdownHeader',
+    BDropdownItem: 'BDropdownItem',
+    BDropdownItemButton: 'BDropdownItemButton',
+    BDropdownText: 'BDropdownText',
+    BForm: 'BForm',
+    BFormCheckbox: 'BFormCheckbox',
+    BFormCheckboxGroup: 'BFormCheckboxGroup',
+    BFormFile: 'BFormFile',
+    BFormFloatingLabel: 'BFormFloatingLabel',
+    BFormGroup: 'BFormGroup',
+    BFormInput: 'BFormInput',
+    BFormInvalidFeedback: 'BFormInvalidFeedback',
+    BFormRadio: 'BFormRadio',
+    BFormRadioGroup: 'BFormRadioGroup',
+    BFormRow: 'BFormRow',
+    BFormSelect: 'BFormSelect',
+    BFormSelectOption: 'BFormSelectOption',
+    BFormSelectOptionGroup: 'BFormSelectOptionGroup',
+    BFormSpinbutton: 'BFormSpinbutton',
+    BFormTag: 'BFormTag',
+    BFormTags: 'BFormTags',
+    BFormText: 'BFormText',
+    BFormTextarea: 'BFormTextarea',
+    BFormValidFeedback: 'BFormValidFeedback',
+    BImg: 'BImg',
+    BInput: 'BInput',
+    BInputGroup: 'BInputGroup',
+    BInputGroupText: 'BInputGroupText',
+    BListGroup: 'BListGroup',
+    BListGroupItem: 'BListGroupItem',
+    BModal: 'BModal',
+    BModalOrchestrator: 'BModalOrchestrator',
+    BNav: 'BNav',
+    BNavForm: 'BNavForm',
+    BNavItem: 'BNavItem',
+    BNavItemDropdown: 'BNavItemDropdown',
+    BNavText: 'BNavText',
+    BNavbar: 'BNavbar',
+    BNavbarBrand: 'BNavbarBrand',
+    BNavbarNav: 'BNavbarNav',
+    BNavbarToggle: 'BNavbarToggle',
+    BOffcanvas: 'BOffcanvas',
+    BOverlay: 'BOverlay',
+    BPagination: 'BPagination',
+    BPlaceholder: 'BPlaceholder',
+    BPlaceholderButton: 'BPlaceholderButton',
+    BPlaceholderCard: 'BPlaceholderCard',
+    BPlaceholderTable: 'BPlaceholderTable',
+    BPlaceholderWrapper: 'BPlaceholderWrapper',
+    BPopover: 'BPopover',
+    BProgress: 'BProgress',
+    BRow: 'BRow',
+    BSpinner: 'BSpinner',
+    BTab: 'BTab',
+    BTabs: 'BTabs',
+    BToast: 'BToast',
+    BToastOrchestrator: 'BToastOrchestrator',
+    BTooltip: 'BTooltip',
+    BLink: 'BLink',
+    BProgressBar: 'BProgressBar',
+    BTableSimple: 'BTableSimple',
+    BTableLite: 'BTableLite',
+    BTable: 'BTable',
+    BTbody: 'BTbody',
+    BTd: 'BTd',
+    BTh: 'BTh',
+    BThead: 'BThead',
+    BTfoot: 'BTfoot',
+    BTr: 'BTr',
+    BTransition: 'BTransition',
+  } satisfies Record<ComponentType, string>) as ComponentType[]
+)
+
+export const DirectiveNames = Object.freeze(
+  Object.keys({
+    vBColorMode: 'vBColorMode',
+    vBModal: 'vBModal',
+    vBPopover: 'vBPopover',
+    vBScrollspy: 'vBScrollspy',
+    vBToggle: 'vBToggle',
+    vBTooltip: 'vBTooltip',
+  } satisfies Record<DirectiveType, string>) as DirectiveType[]
+)

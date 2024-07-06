@@ -3,7 +3,7 @@ import type {BootstrapVueOptions, BvnComponentProps} from '../types'
 import {defaultsKey} from '../utils'
 
 export default {
-  install(app, options: BootstrapVueOptions['plugins']) {
+  install(app, options: BootstrapVueOptions) {
     const val = options?.components ?? {}
     app.provide(defaultsKey, ref(val) as Ref<Partial<BvnComponentProps>>)
   },

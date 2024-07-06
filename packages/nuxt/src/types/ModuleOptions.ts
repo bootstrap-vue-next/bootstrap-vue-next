@@ -26,5 +26,5 @@ export interface ModuleOptions {
   /**
    * @default {}
    */
-  plugin: Omit<Exclude<BootstrapVueOptions['plugins'], undefined>, 'id'>
+  plugin: Omit<Exclude<BootstrapVueOptions, undefined>, 'id'>
 }

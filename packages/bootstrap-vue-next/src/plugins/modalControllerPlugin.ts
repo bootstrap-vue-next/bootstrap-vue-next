@@ -48,10 +48,12 @@ export default {
 
     const buildPrereqs = () => [buildPromise(), Symbol(), ref(true)] as const
 
-    const show = (obj: {
-      component?: MaybeRefOrGetter<Readonly<Component>>
-      props?: MaybeRefOrGetter<Readonly<OrchestratedModal>>
-    }) => {
+    const show = (
+      obj: {
+        component?: MaybeRefOrGetter<Readonly<Component>>
+        props?: MaybeRefOrGetter<Readonly<OrchestratedModal>>
+      } = {}
+    ) => {
       const [_promise, _self, _modelValue] = buildPrereqs()
 
       modals.value.push(
@@ -75,10 +77,12 @@ export default {
       return _promise.value
     }
 
-    const confirm = (obj: {
-      component?: MaybeRefOrGetter<Readonly<Component>>
-      props?: MaybeRefOrGetter<Readonly<OrchestratedModal>>
-    }) => {
+    const confirm = (
+      obj: {
+        component?: MaybeRefOrGetter<Readonly<Component>>
+        props?: MaybeRefOrGetter<Readonly<OrchestratedModal>>
+      } = {}
+    ) => {
       const [_promise, _self, _modelValue] = buildPrereqs()
 
       modals.value.push(

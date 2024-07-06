@@ -50,16 +50,8 @@
         </template>
       </div>
     </Transition>
-    <slot v-if="props.responsive === undefined || !isOpenByBreakpoint" name="backdrop">
-      <BOverlay
-        :blur="props.backdropBlur"
-        :variant="props.backdropVariant"
-        :show="showBackdrop"
-        fixed
-        no-wrap
-        no-spinner
-        @click="hide('backdrop')"
-      />
+    <slot v-if="showBackdrop" name="backdrop">
+      <div class="offcanvas-backdrop fade show" @click="hide('backdrop')" />
     </slot>
   </Teleport>
 </template>
@@ -78,7 +70,6 @@ import type {BOffcanvasProps} from '../../types'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
-import BOverlay from '../BOverlay/BOverlay.vue'
 
 // TODO once the responsive stuff may be implemented correctly,
 // What needs to occur is a fixing of the "body scrolling".
@@ -93,9 +84,7 @@ defineOptions({
 })
 
 const _props = withDefaults(defineProps<BOffcanvasProps>(), {
-  backdrop: true,
-  backdropBlur: undefined,
-  backdropVariant: 'dark',
+  hideBackdrop: false,
   bodyAttrs: undefined,
   bodyClass: undefined,
   bodyScrolling: false,
@@ -185,9 +174,14 @@ const isActive = ref(modelValue.value)
 const lazyLoadCompleted = ref(false)
 const wasClosedByBreakpointChange = ref(false)
 
-const showBackdrop = toRef(() => props.backdrop === true && modelValue.value === true)
+const showBackdrop = computed(
+  () =>
+    (props.responsive === undefined || !isOpenByBreakpoint.value) &&
+    props.hideBackdrop === false &&
+    modelValue.value === true
+)
 
-const lazyShowing = toRef(
+const lazyShowing = computed(
   () =>
     props.lazy === false ||
     (props.lazy === true && lazyLoadCompleted.value === true) ||

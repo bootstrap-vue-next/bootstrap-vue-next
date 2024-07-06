@@ -213,10 +213,6 @@ const groupComputedList = computed(() => [
         name: 'Global Options',
         route: withBase('/docs/configurations/global-options'),
       },
-      {
-        name: 'Component Aliasing',
-        route: withBase('/docs/configurations/component-aliasing'),
-      },
     ],
   },
 ])
