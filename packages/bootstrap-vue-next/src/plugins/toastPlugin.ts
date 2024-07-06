@@ -35,10 +35,12 @@ export default {
     /**
      * @returns {symbol} A symbol that corresponds to its unique id. You can pass this id to the hide function to force a Toast to hide
      */
-    const show = (obj: {
-      component?: MaybeRefOrGetter<Readonly<Component>>
-      props?: MaybeRefOrGetter<Readonly<OrchestratedToast>>
-    }): symbol => {
+    const show = (
+      obj: {
+        component?: MaybeRefOrGetter<Readonly<Component>>
+        props?: MaybeRefOrGetter<Readonly<OrchestratedToast>>
+      } = {}
+    ): symbol => {
       const _self = Symbol()
 
       const _modelValue = ref<boolean | number>(toValue(obj.props)?.value || 5000)
