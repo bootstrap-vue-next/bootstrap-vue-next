@@ -16,8 +16,8 @@ import type {BFormProps} from '../../types'
 import {computed, ref} from 'vue'
 
 const _props = withDefaults(defineProps<BFormProps>(), {
-  floating: false,
   id: undefined,
+  floating: false,
   novalidate: false,
   validated: false,
 })
