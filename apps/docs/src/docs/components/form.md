@@ -162,62 +162,47 @@ include a `<label>` with each form control, even if you need to hide it from non
 visitors with class `.visually-hidden`.
 
 <HighlightCard>
-  <BForm>
-    <div class="row">
-      <label class="col-form-label visually-hidden" for="inline-form-input-name">Name</label>
-      <div class="col-lg-3">
-        <BFormInput
-          id="inline-form-input-name"
-          class="mb-2 me-sm-2 mb-sm-0"
-          placeholder="Jane Doe"
-        />
-      </div>
-      <label class="col-form-label visually-hidden" for="inline-form-input-username"
-        >Username</label
-      >
-      <div class="col-lg-3">
-        <BInputGroup prepend="@" class="col-lg-4 mb-2 me-sm-2 mb-sm-0">
-          <BFormInput id="inline-form-input-username" placeholder="Username" />
-        </BInputGroup>
-      </div>
-      <BFormCheckbox class="col-form-label col-lg-2 mb-2 me-sm-2 mb-sm-0"
-        >Remember me</BFormCheckbox
-      >
-      <div class="col-lg-1">
-        <BButton variant="primary">Save</BButton>
-      </div>
+  <BForm class="d-flex flex-row align-items-center flex-wrap">
+    <label class="col-form-label visually-hidden" for="inline-form-input-name">Name</label>
+    <div class="col-lg-3 me-2 my-2">
+      <BFormInput id="inline-form-input-name" placeholder="Jane Doe" />
+    </div>
+    <label class="col-form-label visually-hidden" for="inline-form-input-username"
+      >Username</label
+    >
+    <div class="col-lg-3 me-2 my-2">
+      <BInputGroup prepend="@" class="col-lg-4">
+        <BFormInput id="inline-form-input-username" placeholder="Username" />
+      </BInputGroup>
+    </div>
+    <div class="col-lg-3 me-2 my-2">
+      <BFormCheckbox>Remember me</BFormCheckbox>
+    </div>
+    <div class="col-lg-1 my-2">
+      <BButton variant="primary">Save</BButton>
     </div>
   </BForm>
   <template #html>
 
 ```vue-html
-<BForm>
-  <div class="row">
-    <label class="col-form-label visually-hidden" for="inline-form-input-name">Name</label>
-    <div class="col-lg-3">
-      <BFormInput
-        id="inline-form-input-name"
-        class="mb-2 me-sm-2 mb-sm-0"
-        placeholder="Jane Doe"
-      />
-    </div>
-
-    <label class="col-form-label visually-hidden" for="inline-form-input-username"
-      >Username</label
-    >
-    <div class="col-lg-3">
-      <BInputGroup prepend="@" class="col-lg-4 mb-2 me-sm-2 mb-sm-0">
-        <BFormInput id="inline-form-input-username" placeholder="Username" />
-      </BInputGroup>
-    </div>
-
-    <BFormCheckbox class="col-form-label col-lg-2 mb-2 me-sm-2 mb-sm-0"
-      >Remember me</BFormCheckbox
-    >
-
-    <div class="col-lg-1">
-      <BButton variant="primary">Save</BButton>
-    </div>
+<BForm class="d-flex flex-row align-items-center flex-wrap">
+  <label class="col-form-label visually-hidden" for="inline-form-input-name">Name</label>
+  <div class="col-lg-3 me-2 my-2">
+    <BFormInput id="inline-form-input-name" placeholder="Jane Doe" />
+  </div>
+  <label class="col-form-label visually-hidden" for="inline-form-input-username"
+    >Username</label
+  >
+  <div class="col-lg-3 me-2 my-2">
+    <BInputGroup prepend="@" class="col-lg-4">
+      <BFormInput id="inline-form-input-username" placeholder="Username" />
+    </BInputGroup>
+  </div>
+  <div class="col-lg-3 me-2 my-2">
+    <BFormCheckbox>Remember me</BFormCheckbox>
+  </div>
+  <div class="col-lg-1 my-2">
+    <BButton variant="primary">Save</BButton>
   </div>
 </BForm>
 ```
@@ -228,6 +213,31 @@ visitors with class `.visually-hidden`.
 Custom form controls and selects are also supported.
 
 <HighlightCard>
+    <BForm>
+      <div class="row">
+        <label class="col-form-label col-lg-2 me-sm-2" for="inline-form-custom-select-pref"
+          >Preference</label
+        >
+        <div class="col-lg-2">
+          <BFormSelect
+            id="inline-form-custom-select-pref"
+            v-model="customSelect"
+            class="mb-2 me-sm-2 mb-sm-0"
+            :options="[{text: 'Choose...', value: null}, 'One', 'Two', 'Three']"
+          />
+        </div>
+        <BFormCheckbox class="col-form-label col-lg-3 mb-2 me-sm-2 mb-sm-0"
+          >Remember my preference</BFormCheckbox
+        >
+        <div class="col-lg-2 col-form-label">
+          <BButton variant="primary">Save</BButton>
+        </div>
+      </div>
+    </BForm>
+  <template #html>
+
+```vue
+<template>
   <BForm>
     <div class="row">
       <label class="col-form-label col-lg-2 me-sm-2" for="inline-form-custom-select-pref"
@@ -236,9 +246,9 @@ Custom form controls and selects are also supported.
       <div class="col-lg-2">
         <BFormSelect
           id="inline-form-custom-select-pref"
+          v-model="customSelect"
           class="mb-2 me-sm-2 mb-sm-0"
-          :options="[{ text: 'Choose...', value: null }, 'One', 'Two', 'Three']"
-          :value="null"
+          :options="[{text: 'Choose...', value: null}, 'One', 'Two', 'Three']"
         />
       </div>
       <BFormCheckbox class="col-form-label col-lg-3 mb-2 me-sm-2 mb-sm-0"
@@ -249,30 +259,13 @@ Custom form controls and selects are also supported.
       </div>
     </div>
   </BForm>
-  <template #html>
+</template>
 
-```vue-html
-<BForm>
-  <div class="row">
-    <label class="col-form-label col-lg-2 me-sm-2" for="inline-form-custom-select-pref"
-      >Preference</label
-    >
-    <div class="col-lg-2">
-      <BFormSelect
-        id="inline-form-custom-select-pref"
-        class="mb-2 me-sm-2 mb-sm-0"
-        :options="[{ text: 'Choose...', value: null }, 'One', 'Two', 'Three']"
-        :value="null"
-      />
-    </div>
-    <BFormCheckbox class="col-form-label col-lg-3 mb-2 me-sm-2 mb-sm-0"
-      >Remember my preference</BFormCheckbox
-    >
-    <div class="col-lg-2 col-form-label">
-      <BButton variant="primary">Save</BButton>
-    </div>
-  </div>
-</BForm>
+<script setup lang="ts">
+import {ref} from 'vue'
+
+const customSelect = ref(null)
+</script>
 ```
 
   </template>
@@ -284,23 +277,23 @@ Wrap a `BFormInput`, `BFormTextarea`, or `BFormSelect` in a `BFormFloatingLable`
 is required on each input in order to make the Bootstrap 5 `css` work correctly.
 
 <HighlightCard>
-    <BForm>
-      <BFormFloatingLabel label="Email address" label-for="floatingEmail" class="my-2">
-        <input id="floatingEmail" type="email" class="form-control" placeholder="Email address" />
-      </BFormFloatingLabel>
-      <BFormFloatingLabel label="Password" label-for="floatingPassword" class="my-2">
-        <input id="floatingPassword" type="password" class="form-control" placeholder="Password" />
-      </BFormFloatingLabel>
-    </BForm>
+  <BForm>
+    <BFormFloatingLabel label="Email address" label-for="floatingEmail" class="my-2">
+      <BFormInput id="floatingEmail" type="email" placeholder="Email address" />
+    </BFormFloatingLabel>
+    <BFormFloatingLabel label="Password" label-for="floatingPassword" class="my-2">
+      <BFormInput id="floatingPassword" type="password" placeholder="Password" />
+    </BFormFloatingLabel>
+  </BForm>
   <template #html>
 
 ```vue-html
 <BForm>
   <BFormFloatingLabel label="Email address" label-for="floatingEmail" class="my-2">
-    <input id="floatingEmail" type="email" class="form-control" placeholder="Email address" />
+    <BFormInput id="floatingEmail" type="email" placeholder="Email address" />
   </BFormFloatingLabel>
   <BFormFloatingLabel label="Password" label-for="floatingPassword" class="my-2">
-    <input id="floatingPassword" type="password" class="form-control" placeholder="Password" />
+    <BFormInput id="floatingPassword" type="password" placeholder="Password" />
   </BFormFloatingLabel>
 </BForm>
 ```
@@ -308,8 +301,36 @@ is required on each input in order to make the Bootstrap 5 `css` work correctly.
   </template>
 </HighlightCard>
 
-Floating labels work correclty for the disable state, readonly plaintext and input groups.
+Floating labels work correclty for disable state and readonly states. In addition to styled textual inputs, floating labels
+also work for plaintext inputs, textareas, input groups and selects.
 See the [Bootstrap 5 documentation](https://getbootstrap.com/docs/5.3/forms/floating-labels) for more details.
+
+The `floating` attribute on the `BForm` component only applies to single form controls like this:
+
+<HighlightCard>
+  <BForm floating>
+    <BFormInput
+      id="floatingFormInputValue"
+      type="email"
+      placeholder="name@example.com"
+    />
+    <label for="floatingFormInputValue">Input with value</label>
+  </BForm>
+  <template #html>
+
+```vue-html
+<BForm floating>
+  <BFormInput
+    id="floatingFormInputValue"
+    type="email"
+    placeholder="name@example.com"
+  />
+  <label for="floatingFormInputValue">Input with value</label>
+</BForm>
+```
+
+  </template>
+</HighlightCard>
 
 ## Accessibility
 
@@ -538,4 +559,7 @@ const onReset = (event) => {
 
 const userId = ref('')
 const validation = computed(()=> userId.value.length > 4 && userId.value.length < 13)
+
+const customSelect = ref(null)
+
 </script>

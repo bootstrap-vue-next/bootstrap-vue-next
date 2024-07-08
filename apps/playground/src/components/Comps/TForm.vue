@@ -17,5 +17,24 @@
         </BForm>
       </BCol>
     </BRow>
+    <BRow>
+      <BCol>
+        <BForm floating>
+          <BFormInput id="floatingFormInputValue" type="email" placeholder="name@example.com" />
+          <label for="floatingFormInputValue">Input with value</label>
+        </BForm>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <!-- floating counterexample - only the first control in the form shows the floating label -->
+        <BForm floating>
+          <BFormInput id="floatingFormInputValue" type="email" placeholder="name@example.com" />
+          <label for="floatingFormInputValue">Input with value</label>
+          <BFormInput id="floatingFormPasswordValue" type="password" />
+          <label for="floatingFormPasswordValue">Input with value</label>
+        </BForm>
+      </BCol>
+    </BRow>
   </BContainer>
 </template>
