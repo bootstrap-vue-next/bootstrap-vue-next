@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.23.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.23.0...bootstrapvuenext-v0.23.1) (2024-07-08)
+
+
+### Features
+
+* rename plugins to namespace out named imports, export 'toast' could be confusing ([c7defef](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c7defef7240f87c1b39f5827d5521d06cc994d24))
+
 ## [0.23.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.22.7...bootstrapvuenext-v0.23.0) (2024-07-08)
 
 
