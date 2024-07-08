@@ -16,7 +16,12 @@
 <BCard class="bg-body-tertiary">
 
 ```ts
-type AriaInvalid = boolean | 'grammar' | 'spelling'
+type CommonAlignment = 'start' | 'end' | 'center' | 'fill'
+type Vertical = CommonAlignment | 'baseline' | 'stretch'
+type Horizontal = CommonAlignment | 'between' | 'around'
+type Content = CommonAlignment | 'between' | 'around' | 'stretch'
+type JustifyContent = 'start' | 'end' | 'center' | 'between' | 'around' | 'evenly'
+type TextHorizontal = 'start' | 'end' | 'center'
 ```
 
 </BCard>
@@ -26,12 +31,7 @@ type AriaInvalid = boolean | 'grammar' | 'spelling'
 <BCard class="bg-body-tertiary">
 
 ```ts
-type CommonAlignment = 'start' | 'end' | 'center' | 'fill'
-type Vertical = CommonAlignment | 'baseline' | 'stretch'
-type Horizontal = CommonAlignment | 'between' | 'around'
-type Content = CommonAlignment | 'between' | 'around' | 'stretch'
-type JustifyContent = 'start' | 'end' | 'center' | 'between' | 'around' | 'evenly'
-type TextHorizontal = 'start' | 'end' | 'center'
+type AriaInvalid = boolean | 'grammar' | 'spelling'
 ```
 
 </BCard>
