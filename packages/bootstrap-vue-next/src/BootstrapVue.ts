@@ -3,7 +3,15 @@ import type {BootstrapVueOptions, ComponentType, ConfigurationOption, DirectiveT
 import type {ComponentResolver} from 'unplugin-vue-components'
 import type * as Components from './components'
 
-import * as Plugins from './plugins'
+import {
+  breadcrumbPlugin,
+  defaultsPlugin,
+  idPlugin,
+  modalControllerPlugin,
+  modalManagerPlugin,
+  rtlPlugin,
+  toastPlugin,
+} from './plugins'
 import {ComponentNames, DirectiveNames} from './types/ComponentProps'
 
 import './styles/styles.scss'
@@ -120,24 +128,24 @@ const sliceName = (str: string) => (str.toLowerCase().startsWith('v') ? str.slic
 export const createBootstrap = (pluginData: Readonly<BootstrapVueOptions> = {}): Plugin => ({
   install(app) {
     if (pluginData.breadcrumb ?? true === true) {
-      app.use(Plugins.breadcrumb)
+      app.use(breadcrumbPlugin)
     }
     if ((pluginData.id ?? true === true) || typeof pluginData.id === 'object') {
-      app.use(Plugins.id, pluginData)
+      app.use(idPlugin, pluginData)
     }
     if (pluginData.modalController ?? true === true) {
-      app.use(Plugins.modalController)
+      app.use(modalControllerPlugin)
     }
     if (pluginData.modalManager ?? true === true) {
-      app.use(Plugins.modalManager)
+      app.use(modalManagerPlugin)
     }
     if ((pluginData.rtl ?? true === true) || typeof pluginData.rtl === 'object') {
-      app.use(Plugins.rtl, pluginData)
+      app.use(rtlPlugin, pluginData)
     }
     if (pluginData.toast ?? true === true) {
-      app.use(Plugins.toast)
+      app.use(toastPlugin)
     }
-    app.use(Plugins.defaults, pluginData)
+    app.use(defaultsPlugin, pluginData)
   },
 })
 
