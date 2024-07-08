@@ -102,6 +102,26 @@ export default {
             default: undefined,
             description: 'Class to be applied to the body of the accordion item',
           },
+          bodyAttrs: {
+            type: 'Readonly<AttrsValue>',
+            default: undefined,
+            description: 'Attributes to be applied to the body of the accordion item',
+          },
+          buttonAttrs: {
+            type: 'Readonly<AttrsValue>',
+            default: undefined,
+            description: 'Attributes to be applied to the button in header',
+          },
+          headerAttrs: {
+            type: 'Readonly<AttrsValue>',
+            default: undefined,
+            description: 'Attributes to be applied to the header element',
+          },
+          wrapperAttrs: {
+            type: 'Readonly<AttrsValue>',
+            default: undefined,
+            description: 'Attributes to be applied to the wrapper element',
+          },
         },
       },
       emits: [],
