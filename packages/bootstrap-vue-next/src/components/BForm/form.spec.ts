@@ -28,7 +28,7 @@ describe('form', () => {
     expect(wrapper.attributes('novalidate')).toBeUndefined()
   })
 
-it('has class form-floating when prop floating', async () => {
+  it('has class form-floating when prop floating', async () => {
     const wrapper = mount(BForm, {
       props: {floating: true},
     })
