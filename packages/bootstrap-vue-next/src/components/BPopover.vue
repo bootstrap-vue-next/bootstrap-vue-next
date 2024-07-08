@@ -89,14 +89,9 @@ import {
 } from 'vue'
 import {useDefaults, useId} from '../composables'
 import type {BPopoverProps} from '../types'
-import {
-  BvTriggerableEvent,
-  getElement,
-  getTransitionDelay,
-  IS_BROWSER,
-  resolveBootstrapPlacement,
-} from '../utils'
+import {BvTriggerableEvent, getElement, getTransitionDelay, IS_BROWSER} from '../utils'
 import {DefaultAllowlist, sanitizeHtml} from '../utils/sanitizer'
+import {isBoundary, isRootBoundary, resolveBootstrapPlacement} from '../utils/floatingUi'
 
 defineOptions({
   inheritAttrs: false,
@@ -196,10 +191,10 @@ const isAutoPlacement = toRef(() => props.placement.startsWith('auto'))
 const offsetNumber = useToNumber(() => props.offset ?? NaN)
 
 const boundary = computed<Boundary | undefined>(() =>
-  props.boundary === 'document' || props.boundary === 'viewport' ? undefined : props.boundary
+  isBoundary(props.boundary) ? props.boundary : undefined
 )
 const rootBoundary = computed<RootBoundary | undefined>(() =>
-  props.boundary === 'document' || props.boundary === 'viewport' ? props.boundary : undefined
+  isRootBoundary(props.boundary) ? props.boundary : undefined
 )
 
 const sizeStyles = ref<CSSProperties>({})
