@@ -28,8 +28,17 @@
     <template v-for="(_, name) in $slots" #[name]="slotData">
       <slot :name="name" v-bind="slotData" />
     </template>
-    <template #head()="scope">
-      {{ getTableFieldHeadLabel(scope.field) }}
+    <template
+      v-for="field in computedFields"
+      :key="field.key"
+      #[`head(${String(field.key)})`]="scope"
+    >
+      <slot
+        :name="$slots[`head(${String(field.key)})`] ? `head(${String(field.key)})` : 'head()'"
+        v-bind="scope"
+      >
+        {{ getTableFieldHeadLabel(field) }}
+      </slot>
       <template v-if="isSortable && !!scope.field.sortable && props.noSortableIcon === false">
         <slot
           v-if="sortByModel?.find((el) => el.key === scope.field.key)?.order === 'asc'"
@@ -134,10 +143,9 @@ import type {
   BTableSortByOrder,
   NoProviderTypes,
   TableField,
-  TableFieldRaw,
   TableItem,
 } from '../../types'
-import {formatItem, get, getTableFieldHeadLabel, set} from '../../utils'
+import {formatItem, get, getTableFieldHeadLabel, set, startCase} from '../../utils'
 import BOverlay from '../BOverlay/BOverlay.vue'
 import BSpinner from '../BSpinner.vue'
 import BTableLite from './BTableLite.vue'
@@ -321,9 +329,16 @@ const isSortable = computed(
     )
 )
 
-const computedFields = computed<TableFieldRaw<T>[]>(() =>
+const computedFields = computed<TableField[]>(() =>
   props.fields.map((el) => {
-    if (!(typeof el === 'object' && el !== null)) return el
+    if (!isTableField(el)) {
+      const label = startCase(el as string)
+      return {
+        key: el as string,
+        label,
+        tdAttr: props.stacked === true ? {'data-label': label} : undefined,
+      }
+    }
 
     const value = sortByModel.value?.find((sb) => el.key === sb.key)
     const sortValue =
@@ -336,8 +351,9 @@ const computedFields = computed<TableFieldRaw<T>[]>(() =>
             : value.order === 'asc'
               ? 'ascending'
               : 'none'
+
     return {
-      ...el,
+      ...(el as TableField),
       thAttr: {
         'aria-sort': sortValue,
         ...el.thAttr,
