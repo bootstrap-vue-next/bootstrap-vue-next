@@ -7,6 +7,12 @@ export default {
       component: 'BForm',
       props: {
         '': {
+          floating: {
+            type: 'boolean',
+            default: false,
+            description:
+              'When set, renders a single control form with a floating label. This only works for forms where the immediate children are a label and one of the supported controls. See above for details.',
+          },
           novalidate: {
             type: 'boolean',
             default: false,

@@ -60,6 +60,14 @@ becomes
 See the [Vue 3 migration guide](https://v3-migration.vuejs.org/breaking-changes/v-model.html)
 for more info.
 
+## BForm
+
+Bootstrap 5 has dropped form-specific layout classes for the grid system. See the
+[Bootstrap 5 Changelog](https://getbootstrap.com/docs/5.3/migration/#forms), so we no longer
+explicitly implemnt and `inline` property on the `BForm` component. Inline forms are still
+supported through use of bootstrap classes. See the [inline form](/docs/components/form#inline-form)
+documentation for more info.
+
 ## BForm Components
 
 `Vue 3` changed the the way that `v-model` binding works and in the process changed the guidance
