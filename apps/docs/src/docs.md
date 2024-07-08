@@ -330,9 +330,9 @@ BootstrapVueNext is available through `jsdelivr`. You can add the package by usi
 
 - **NOTE** Do not forget to set the version!
 
-<BAlert :model-value="true" variant="info">
+<NoteAlert>
 Links should be loaded after Bootstrap and Vue
-</BAlert>
+</NoteAlert>
 
 Alternatively the ESM package is available as well
 
@@ -350,12 +350,22 @@ Alternatively the ESM package is available as well
 
 If you are using one of the preferred installation methods, JS will be tree-shaken by default. The one thing we are not able to do automatically is optimize CSS. Methods like PurgeCSS are not ideal because of a limitation with the dynamic nature of class renderings and Vue (Problematic code like: `[btn-${props.variant}]: props.variant !== undefined`). With that being said, BootstrapVueNext does not handle CSS imports from Bootstrap, we only add some additional CSS ourselves. So, using a method such as [Lean Sass Imports](https://getbootstrap.com/docs/5.3/customize/optimize/#lean-sass-imports) from the Bootstrap documentation is likely the best way to achieve the tiniest possible application size. Though it is not automatic, it should prove the safest bet for minifying your application.
 
+### Tree-shake JS plugins
+
+`createBootstrap` is a simple utility that provides everything that is required for the library to work. However, some plugins may not be needed.
+One could individually import each needed plugin, they are all appended with `Plugin` (`toastPlugin`, `idPlugin`, etc). So, one could pick and choose what is needed
+Practically the `createBootstrap` plugin is ~20kb gzipped with `toast` and `modalController` accounting for the majority. Use this if you really want the tiniest possible size.
+
+<NoteAlert>
+The `defaultsPlugin` is required by all components if one chooses to use this
+</NoteAlert>
+
 ## Comparison with BootstrapVue
 
 BootstrapVue is the parent project for which this is based on. We consider BootstrapVue as the best implementation of Bootstrap `v4`. We strive for a full compatibility list for BootstrapVue. However, due to the nature of the rewrite, some features may be missing or changed. If anyone has spotted a missing compatibility feature, we request that you submit a GitHub issue or contribute to the [parity report](https://github.com/bootstrap-vue-next/bootstrap-vue-next/blob/main/CONTRIBUTING.md#help-verify-bootstrapvue-and-bootstrap-v5-parity).
 
 <script setup lang="ts">
-import {BCard, BCardBody, BAlert, BTab, BTabs} from 'bootstrap-vue-next'
+import {BCard, BCardBody, BTab, BTabs} from 'bootstrap-vue-next'
 import {useLocalStorage} from '@vueuse/core'
 import HighlightCard from './components/HighlightCard.vue'
 import NoteAlert from './components/NoteAlert.vue'
