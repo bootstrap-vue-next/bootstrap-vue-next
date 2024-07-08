@@ -28,6 +28,15 @@ describe('form', () => {
     expect(wrapper.attributes('novalidate')).toBeUndefined()
   })
 
+it('has class form-floating when prop floating', async () => {
+    const wrapper = mount(BForm, {
+      props: {floating: true},
+    })
+    expect(wrapper.classes()).toContain('form-floating')
+    await wrapper.setProps({floating: false})
+    expect(wrapper.classes()).not.toContain('form-floating')
+  })
+
   it('has class was-validated when prop validated', async () => {
     const wrapper = mount(BForm, {
       props: {validated: true},
