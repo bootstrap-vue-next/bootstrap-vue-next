@@ -1,5 +1,37 @@
 # Changelog
 
+## [0.22.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.22.6...nuxt-v0.22.7) (2024-07-01)
+
+
+### Features
+
+* **nuxt:** add css option to not automatically include css ([f6adcee](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f6adceeb2ce4d994215f7864c1adaf39deaa9160))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.22.7
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.22.7
+
+## [0.22.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.22.5...nuxt-v0.22.6) (2024-07-01)
+
+
+### Miscellaneous Chores
+
+* **nuxt:** Synchronize main group versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.22.6
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.22.6
+
 ## [0.22.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.22.4...nuxt-v0.22.5) (2024-07-01)
 
 
