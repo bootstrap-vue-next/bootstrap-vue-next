@@ -944,6 +944,7 @@ export interface BImgProps extends RadiusElementExtendables {
 }
 
 export interface BFormProps {
+  floating?: boolean
   id?: string
   novalidate?: boolean
   validated?: boolean
