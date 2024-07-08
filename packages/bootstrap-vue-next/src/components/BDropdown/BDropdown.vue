@@ -75,14 +75,10 @@ import {onClickOutside, onKeyStroke, useToNumber} from '@vueuse/core'
 import {computed, type CSSProperties, inject, nextTick, provide, ref, toRef, watch} from 'vue'
 import {useDefaults, useId} from '../../composables'
 import type {BDropdownProps} from '../../types'
-import {
-  BvTriggerableEvent,
-  dropdownInjectionKey,
-  inputGroupKey,
-  resolveFloatingPlacement,
-} from '../../utils'
+import {BvTriggerableEvent, dropdownInjectionKey, inputGroupKey} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
+import {isBoundary, isRootBoundary, resolveFloatingPlacement} from '../../utils/floatingUi'
 
 const _props = withDefaults(defineProps<BDropdownProps>(), {
   ariaLabel: undefined,
@@ -163,10 +159,10 @@ const splitButton = ref<HTMLElement | null>(null)
 const wrapper = ref<HTMLElement | null>(null)
 
 const boundary = computed<Boundary | undefined>(() =>
-  props.boundary === 'document' || props.boundary === 'viewport' ? undefined : props.boundary
+  isBoundary(props.boundary) ? props.boundary : undefined
 )
 const rootBoundary = computed<RootBoundary | undefined>(() =>
-  props.boundary === 'document' || props.boundary === 'viewport' ? props.boundary : undefined
+  isRootBoundary(props.boundary) ? props.boundary : undefined
 )
 
 const referencePlacement = toRef(() => (!props.split ? splitButton.value : button.value))

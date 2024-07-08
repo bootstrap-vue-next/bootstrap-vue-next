@@ -45,12 +45,9 @@
   "peerDependencies": {
     "vue": "^3.4.27"
   },
-  "dependencies": {
-    "@floating-ui/vue": "^1.0.6",
-    "@vueuse/core": "^10.10.0"
-  },
   "devDependencies": {
     "@floating-ui/core": "^1.6.2",
+    "@floating-ui/vue": "^1.1.1",
     "@rushstack/eslint-patch": "^1.10.3",
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^20.12.12",
@@ -61,6 +58,7 @@
     "@vue/runtime-core": "^3.4.27",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.5.1",
+    "@vueuse/core": "^10.10.0",
     "@vueuse/integrations": "^10.11.0",
     "@vueuse/shared": "^10.9.0",
     "bootstrap": "^5.3.3",

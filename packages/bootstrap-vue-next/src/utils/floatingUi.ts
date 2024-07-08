@@ -1,4 +1,4 @@
-import type {Placement} from '@floating-ui/vue'
+import type {Boundary, Placement, RootBoundary} from '@floating-ui/vue'
 export {autoUpdate} from '@floating-ui/vue'
 
 import {type DirectiveBinding, h, render} from 'vue'
@@ -131,3 +131,9 @@ export const unbind = (el: ElementWithPopper) => {
   }, 0)
   delete el.$__element
 }
+
+export const isBoundary = (input: unknown): input is Boundary =>
+  input === 'clippingAncestors' || input instanceof Element || Array.isArray(input)
+
+export const isRootBoundary = (input: Boundary | RootBoundary): input is RootBoundary =>
+  !isBoundary(input)
