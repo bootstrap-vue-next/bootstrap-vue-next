@@ -1,5 +1,43 @@
 # Changelog
 
+## [0.23.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.22.7...nuxt-v0.23.0) (2024-07-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BModal:** remove prop backdropVariant
+* **BModal:** revert back to using the native `div.modal-backdrop`
+* **BOffcanvas:** revert back to native `div.offcanvas-backdrop`
+* **BOffcanvas:** remove prop backdropBlur and backdropVariant
+* **createBootstrap:** remove automatic import of components and directives fixing an issue with createBootstrap bloating the project size. When components were unused, it bloated the project size -- ie not tree shaking when you only used the plugins
+* **createBootstrap:** flatten the params object. The previous "plugins" key is now the top most level object => `{ plugins: { id: {} }` => `{ id: {} }` and so on
+* **createBootstrap:** remove alias in createBootstrap, use alias in unplugin-vue-components resolver instead
+* remove the default export. Use named export `createBootstrap` instead
+* **BOffcanvas:** rename prop backdrop to hideBackdrop to be more in line with standard of bmodal
+
+### Features
+
+* **BModal:** remove prop backdropVariant ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
+* **BModal:** revert back to using the native `div.modal-backdrop` ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
+* **BOffcanvas:** remove prop backdropBlur and backdropVariant ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
+* **BOffcanvas:** rename prop backdrop to hideBackdrop to be more in line with standard of bmodal ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
+* **BOffcanvas:** revert back to native `div.offcanvas-backdrop` ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
+* **createBootstrap:** flatten the params object. The previous "plugins" key is now the top most level object =&gt; `{ plugins: { id: {} }` => `{ id: {} }` and so on ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
+* **createBootstrap:** remove alias in createBootstrap, use alias in unplugin-vue-components resolver instead ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
+* **createBootstrap:** remove automatic import of components and directives fixing an issue with createBootstrap bloating the project size. When components were unused, it bloated the project size -- ie not tree shaking when you only used the plugins ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
+* **modalController:** make {} default for show/confirm -- param not required ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
+* remove the default export. Use named export `createBootstrap` instead ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
+* **toast:** make {} default for show -- param not required ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.23.0
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.23.0
+
 ## [0.22.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.22.6...nuxt-v0.22.7) (2024-07-01)
 
 
