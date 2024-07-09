@@ -263,7 +263,7 @@ export default {
           },
           okTitle: {
             type: 'string',
-            default: 'Ok',
+            default: 'OK',
             description: 'Text string to place in the default footer OK button',
           },
           okVariant: {
