@@ -674,7 +674,9 @@ watch(
   }
 
   .offcanvas.offcanvas-start,
-  .offcanvas.offcanvas-end {
+  .offcanvas-lg.offcanvas-start,
+  .offcanvas.offcanvas-end,
+  .offcanvas-lg.offcanvas-end {
     @media (min-width: 992px) {
       width: 12.5rem !important;
     }
