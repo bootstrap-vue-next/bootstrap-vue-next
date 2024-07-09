@@ -51,7 +51,7 @@
       </div>
     </Transition>
     <slot v-if="showBackdrop" name="backdrop">
-      <BOverlay fixed no-wrap no-spinner @click="hide('backdrop')" />
+      <div class="offcanvas-backdrop fade show" @click="hide('backdrop')" />
     </slot>
   </Teleport>
 </template>
@@ -70,7 +70,6 @@ import type {BOffcanvasProps} from '../../types'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
-import BOverlay from '../BOverlay/BOverlay.vue'
 
 // TODO once the responsive stuff may be implemented correctly,
 // What needs to occur is a fixing of the "body scrolling".

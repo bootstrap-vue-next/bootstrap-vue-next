@@ -94,11 +94,10 @@
         <BOffcanvas
           id="sidebar-menu"
           v-model="sidebar"
-          :teleport-disabled="true"
-          :backdrop="false"
+          responsive="lg"
           title="Browse docs"
+          header-class="d-flex"
           class="h-100 border-0"
-          :body-scrolling="isLargeScreen"
         >
           <TableOfContentsNav />
         </BOffcanvas>
@@ -128,13 +127,11 @@
               <BOffcanvas
                 id="otp-menu"
                 v-model="onThisPage"
-                :teleport-disabled="true"
-                :backdrop="false"
+                responsive="lg"
                 placement="end"
                 title="On this page"
                 class="h-100 border-0"
-                :body-scrolling="isLargeScreen"
-                header-class="pb-0"
+                header-class="pb-0 d-flex"
                 body-class="py-2"
               >
                 <div class="bd-toc" />
@@ -195,8 +192,8 @@ const globalData = inject(appInfoKey, {
 })
 
 const isLargeScreen = useMediaQuery('(min-width: 992px)')
-const sidebar = ref(isLargeScreen.value)
-const onThisPage = ref(isLargeScreen.value)
+const sidebar = ref(false)
+const onThisPage = ref(false)
 
 const headerLinks = [
   {
@@ -270,16 +267,6 @@ const currentIcon = computed(() => map[colorMode.value])
 const set = (newValue: keyof typeof map) => {
   colorMode.value = newValue
 }
-
-watch(isLargeScreen, (newValue) => {
-  if (newValue === true) {
-    sidebar.value = true
-    onThisPage.value = true
-    return
-  }
-  sidebar.value = false
-  onThisPage.value = false
-})
 
 watch(
   () => route.path,
@@ -763,6 +750,12 @@ watch(
 [data-bs-theme='light'] {
   .vp-code-dark {
     display: none;
+  }
+}
+
+@media (min-width: 992px) {
+  .offcanvas-header button {
+    display: none !important;
   }
 }
 </style>
