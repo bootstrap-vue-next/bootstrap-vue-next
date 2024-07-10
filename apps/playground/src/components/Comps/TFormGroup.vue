@@ -35,6 +35,18 @@
         <p class="mt-2">Value: {{ value }}</p>
       </BCol>
     </BRow>
+    <BRow>
+      <BCol>
+        <BFormGroup
+          label="Enter your name"
+          label-for="input-1"
+          valid-feedback="Thank you!"
+          label-visually-hidden
+        >
+          <BFormInput id="input-1" v-model="name" :state="state" trim />
+        </BFormGroup>
+      </BCol>
+    </BRow>
   </BContainer>
 </template>
 
@@ -54,4 +66,6 @@ const onTagState = (valid: string[], invalid: string[], duplicate: string[]) => 
     duplicate,
   })
 }
+
+const name = ref('')
 </script>
