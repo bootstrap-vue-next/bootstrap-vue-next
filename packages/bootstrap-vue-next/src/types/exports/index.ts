@@ -59,4 +59,6 @@ export type {
   VerticalAlign,
 } from '..'
 
-export * from '../ComponentProps'
+export type * from '../ComponentProps'
+
+export {ComponentNames, ComposableNames, DirectiveNames} from '../BootstrapVueOptions'
