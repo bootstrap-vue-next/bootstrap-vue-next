@@ -68,7 +68,7 @@ explicitly implemnt and `inline` property on the `BForm` component. Inline forms
 supported through use of bootstrap classes. See the [inline form](/docs/components/form#inline-form)
 documentation for more info.
 
-## BForm Components
+### BForm Components
 
 `Vue 3` changed the the way that `v-model` binding works and in the process changed the guidance
 when naming the main model property and events for the primary model. `bootstrap-vue-next` follows
@@ -78,6 +78,11 @@ property and `update:modelValue` events.
 
 See the [Vue 3 migration guide](https://v3-migration.vuejs.org/breaking-changes/v-model.html)
 for more info.
+
+## BFormGroup
+
+Use `label-visually-hidden` instead of `label-sronly` per
+[Bootstrap Migration Guide](https://getbootstrap.com/docs/5.3/migration/#helpers-2)
 
 ## BFormSelect
 
