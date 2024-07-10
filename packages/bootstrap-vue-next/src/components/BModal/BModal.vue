@@ -171,7 +171,7 @@ const _props = withDefaults(defineProps<BModalProps>(), {
   noFade: false,
   okDisabled: false,
   okOnly: false,
-  okTitle: 'Ok',
+  okTitle: 'OK',
   okVariant: 'primary',
   scrollable: false,
   size: 'md',
