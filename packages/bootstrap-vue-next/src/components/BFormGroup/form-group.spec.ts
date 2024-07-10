@@ -31,6 +31,13 @@ describe('form-group', () => {
     expect(wrapper.classes()).toContain('is-invalid')
   })
 
+  it('legend has class visually-hidden when prop label-visually-hidden is true', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {label: 'foo', labelVisuallyHidden: true},
+    })
+    expect(wrapper.get('legend').classes()).toContain('visually-hidden')
+  })
+
   it('does not contain a valid class when prop state is null', () => {
     const wrapper = mount(BFormGroup, {
       props: {state: null},

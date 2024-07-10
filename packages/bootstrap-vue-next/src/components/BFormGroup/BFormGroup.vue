@@ -35,14 +35,15 @@ export default defineComponent({
     description: {type: [String], default: undefined},
     disabled: {type: Boolean, default: false},
     feedbackAriaLive: {type: String, default: 'assertive'},
+    floating: {type: Boolean, default: false},
     id: {type: String, default: undefined},
     invalidFeedback: {type: String, default: undefined},
     label: {type: String, default: undefined},
-    labelAlign: {type: [Boolean, String, Number], default: undefined},
-    labelAlignLg: {type: [Boolean, String, Number], default: undefined},
-    labelAlignMd: {type: [Boolean, String, Number], default: undefined},
-    labelAlignSm: {type: [Boolean, String, Number], default: undefined},
-    labelAlignXl: {type: [Boolean, String, Number], default: undefined},
+    labelAlign: {type: [String], default: undefined},
+    labelAlignLg: {type: [String], default: undefined},
+    labelAlignMd: {type: [String], default: undefined},
+    labelAlignSm: {type: [String], default: undefined},
+    labelAlignXl: {type: [String], default: undefined},
     labelClass: {type: [Array, Object, String], default: undefined},
     labelCols: {type: [Boolean, String, Number], default: undefined},
     labelColsLg: {type: [Boolean, String, Number], default: undefined},
@@ -51,12 +52,11 @@ export default defineComponent({
     labelColsXl: {type: [Boolean, String, Number], default: undefined},
     labelFor: {type: String, default: undefined},
     labelSize: {type: String, default: undefined},
-    labelSrOnly: {type: Boolean, default: false},
+    labelVisuallyHidden: {type: Boolean, default: false},
     state: {type: Boolean as PropType<boolean | null>, default: null},
     tooltip: {type: Boolean, default: false},
     validFeedback: {type: String, default: undefined},
     validated: {type: Boolean, default: false},
-    floating: {type: Boolean, default: false},
   },
   setup(props) {
     const ariaDescribedby: string | null = null as string | null
@@ -221,7 +221,7 @@ export default defineComponent({
 
     if (labelContent || this.isHorizontal) {
       const labelTag: 'legend' | 'label' = isFieldset ? 'legend' : 'label'
-      if (props.labelSrOnly) {
+      if (props.labelVisuallyHidden) {
         if (labelContent) {
           $label = h(
             labelTag,
