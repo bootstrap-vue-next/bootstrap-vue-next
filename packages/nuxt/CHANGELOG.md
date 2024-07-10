@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.23.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.23.1...nuxt-v0.23.2) (2024-07-10)
+
+
+### Performance Improvements
+
+* **nuxt:** smaller package ([#2012](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2012)) ([cc1e609](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cc1e60973b76575fa2cd3ef12ea919fabf152085))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.23.2
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.23.2
+
 ## [0.23.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.23.0...nuxt-v0.23.1) (2024-07-08)
 
 

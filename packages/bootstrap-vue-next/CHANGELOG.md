@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.23.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.23.1...bootstrapvuenext-v0.23.2) (2024-07-10)
+
+
+### Bug Fixes
+
+* **BModal:** okTitle default to OK ([61c64c2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/61c64c2085b3e94aa9c02661fbff706000c86b1f))
+
+
+### Performance Improvements
+
+* **nuxt:** smaller package ([#2012](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2012)) ([cc1e609](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cc1e60973b76575fa2cd3ef12ea919fabf152085))
+
 ## [0.23.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.23.0...bootstrapvuenext-v0.23.1) (2024-07-08)
 
 
