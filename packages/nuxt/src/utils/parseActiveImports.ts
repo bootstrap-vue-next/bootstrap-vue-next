@@ -1,8 +1,8 @@
 import type {ConfigurationOption} from '../types/ModuleOptions'
 
 export default <Type extends string, Base extends ConfigurationOption<Type>>(
-  options: Base,
-  values: Type[]
+  options: Readonly<Base>,
+  values: readonly Type[]
 ): Type[] => {
   const {all, ...others} = options
   const valuesCopy: Partial<Record<keyof Base, boolean>> = {}

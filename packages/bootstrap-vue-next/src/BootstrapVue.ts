@@ -12,7 +12,7 @@ import {
   rtlPlugin,
   toastPlugin,
 } from './plugins'
-import {ComponentNames, DirectiveNames} from './types/ComponentProps'
+import {ComponentNames, DirectiveNames} from './types/BootstrapVueOptions'
 
 import './styles/styles.scss'
 
