@@ -60,7 +60,7 @@ const invalidFeedback = computed(() =>
 
 Use the prop `label` to set the content of the generated `<legend>` or `<label>` element, or by
 using the named slot `label`, You may optionally visually hide the label text while still making it
-available to screen readers by setting the prop `label-sr-only`.
+available to screen readers by setting the prop `label-visually-hidden`.
 
 `BFormGroup` will render a `<fieldset>` with `<legend>` if the `label-for` prop is not set. If
 an input Id is provided to the `label-for` prop, then a `<div>` with `<label>` will be rendered.
@@ -97,56 +97,18 @@ columns does not exceed `12`.
 
 See the [Layout and Grid System](/docs/components/layout#how-it-works) docs for further information.
 
-<table class="b-table table table-bordered table-striped bv-docs-table">
-  <thead>
-    <tr>
-      <th>Prop</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>label-cols</code></td>
-      <td>Applies to breakpoint <code>xs</code> up</td>
-    </tr>
-    <tr>
-      <td><code>label-cols-sm</code></td>
-      <td>Applies to breakpoint <code>sm</code> and up</td>
-    </tr>
-    <tr>
-      <td><code>label-cols-md</code></td>
-      <td>Applies to breakpoint <code>md</code> and up</td>
-    </tr>
-    <tr>
-      <td><code>label-cols-lg</code></td>
-      <td>Applies to breakpoint <code>xl</code> and up</td>
-    </tr>
-    <tr>
-      <td><code>label-cols-xl</code></td>
-      <td>Applies to breakpoint <code>xl</code> and up</td>
-    </tr>
-    <tr>
-      <td><code>content-cols</code></td>
-      <td>Applies to breakpoint <code>xs</code> up</td>
-    </tr>
-    <tr>
-      <td><code>content-cols-sm</code></td>
-      <td>Applies to breakpoint <code>sm</code> and up</td>
-    </tr>
-    <tr>
-      <td><code>content-cols-md</code></td>
-      <td>Applies to breakpoint <code>md</code> and up</td>
-    </tr>
-    <tr>
-      <td><code>content-cols-lg</code></td>
-      <td>Applies to breakpoint <code>xl</code> and up</td>
-    </tr>
-    <tr>
-      <td><code>content-cols-xl</code></td>
-      <td>Applies to breakpoint <code>xl</code> and up</td>
-    </tr>
-  </tbody>
-</table>
+| Prop              | Description                       |
+| ----------------- | --------------------------------- |
+| `label-cols`      | Applies to breakpoint `xs` up     |
+| `label-cols-sm`   | Applies to breakpoint `sm` and up |
+| `label-cols-md`   | Applies to breakpoint `md` and up |
+| `label-cols-lg`   | Applies to breakpoint `lg` and up |
+| `label-cols-xl`   | Applies to breakpoint `xl` and up |
+| `content-cols`    | Applies to breakpoint `xs` up     |
+| `content-cols-sm` | Applies to breakpoint `sm` and up |
+| `content-cols-md` | Applies to breakpoint `md` and up |
+| `content-cols-lg` | Applies to breakpoint `lg` and up |
+| `content-cols-xl` | Applies to breakpoint `xl` and up |
 
 <HighlightCard>
   <BFormGroup
@@ -377,8 +339,8 @@ the `BFormGroup` _as well as_ the input.
 
 Feedback will be shown if the parent `BForm` component does _not_ have the `novalidate` prop set
 (or set to `false`) along with the `validated` prop set (and the input fails or passes native
-browser validation constraints such as `required`). Refer to Bootstrap v4's
-[Form component](https://getbootstrap.com/docs/4.5/components/forms/#validation) documentation for
+browser validation constraints such as `required`). Refer to Bootstrap 5's
+[Forms Validation](https://getbootstrap.com/docs/5.3/forms/validation) documentation for
 details on validation methods.
 
 You should always provide content via the `invalid-feedback` prop (or slot) to aid users using
@@ -411,13 +373,13 @@ the feedback so that it shows as a static tooltip when visible, by setting the p
 **Note:** When using `BInputGroup`, `BFormFile`, `BFormRadioGroup`, `BFormRadio`,
 `BFormCheckboxGroup` or `BFormCheckbox` inside a `BFormGroup`, setting an invalid (or
 valid) `state` on the `input` alone will **not** trigger the invalid (or valid) feedback to show
-(due to limitations with the new Bootstrap v4 validation CSS). To get around this, **you must also**
+(due to limitations with the Bootstrap 5 validation CSS). To get around this, **you must also**
 set the invalid/valid `state` on `BFormGroup`. Native browser validation will **not** trigger
 the invalid feedback to show when using one of the above-mentioned form controls.
 
 ## Floating labels
 
-BFormGroup supports the new and fancy [Floating labels](https://getbootstrap.com/docs/5.3/forms/floating-labels/) feature of Bootstrap 5.
+BFormGroup supports the new [Floating labels](https://getbootstrap.com/docs/5.3/forms/floating-labels/) feature of Bootstrap 5.
 
 You can make a floating label by setting the property `floating` to true and specify a placeholder on the `BFormInput`.
 
@@ -477,8 +439,8 @@ const floatingInvalidFeedback = computed(() =>
 
 There are restrictions on the use of floating labels.
 
-- floating labels do not work in horizontal layout. Horizontal layout precedes the `floating` property. Do not set any of the `content-cols-` or `label-cols-` properties if you want floating labels
-- the `BFormInput` must have a placeholder property set
+- Floating labels do not work in horizontal layout. Horizontal layout precedes the `floating` property. Do not set any of the `content-cols-` or `label-cols-` properties if you want floating labels.
+- The `BFormInput` must have a placeholder property set.
 
 ## Accessibility
 

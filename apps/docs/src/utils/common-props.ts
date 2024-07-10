@@ -110,6 +110,11 @@ export const commonProps = () =>
       default: null,
       description: 'Applies one of the Bootstrap theme color variants to the text',
     },
+    tooltip: {
+      type: 'boolean',
+      default: false,
+      description: 'Renders the feedback text in a rudimentary tooltip style',
+    },
     valueField: {
       type: 'string',
       default: 'value',
