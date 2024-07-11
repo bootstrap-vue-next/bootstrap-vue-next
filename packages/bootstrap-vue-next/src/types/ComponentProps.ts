@@ -483,6 +483,7 @@ export interface BOffcanvasProps extends TeleporterProps {
   noCloseOnEsc?: boolean
   noFocus?: boolean
   noHeader?: boolean
+  noTrap?: boolean
   noHeaderClose?: boolean
   placement?: Placement
   shadow?: Size | boolean
@@ -1272,6 +1273,7 @@ export interface BModalProps extends TeleporterProps {
   noCloseOnBackdrop?: boolean
   noCloseOnEsc?: boolean
   noFade?: boolean
+  noTrap?: boolean
   noStacking?: boolean
   okDisabled?: boolean
   okOnly?: boolean

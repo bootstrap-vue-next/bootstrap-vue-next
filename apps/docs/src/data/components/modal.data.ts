@@ -251,6 +251,10 @@ export default {
             description:
               "When set to 'true', disables the fade animation/transition on the component",
           },
+          noTrap: {
+            type: 'boolean',
+            description: 'Disables the focus trap feature',
+          },
           okDisabled: {
             type: 'boolean',
             default: false,
