@@ -115,7 +115,8 @@ const classesObject = computed(() => ({
   inline: props.inline || (parentData?.inline.value ?? false),
   reverse: props.reverse || (parentData?.reverse.value ?? false),
   switch: props.switch || (parentData?.switch.value ?? false),
-  state: props.state || parentData?.state.value,
+  state:
+    props.state === true || props.state === false ? props.state : parentData?.state.value ?? null,
   size: props.size ?? parentData?.size.value ?? 'md', // This is where the true default is made
   buttonVariant: props.buttonVariant ?? parentData?.buttonVariant.value ?? 'secondary', // This is where the true default is made
   hasDefaultSlot: hasDefaultSlot.value,
