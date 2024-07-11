@@ -101,7 +101,7 @@
 
 <script setup lang="ts">
 import {onKeyStroke, useEventListener, useFocus} from '@vueuse/core'
-import {useFocusTrap} from '@vueuse/integrations/useFocusTrap'
+import {useActivatedFocusTrap} from '../../composables/useActivatedFocusTrap'
 import {computed, type CSSProperties, ref, toRef, watch} from 'vue'
 import {
   useColorVariantClasses,
@@ -169,6 +169,7 @@ const _props = withDefaults(defineProps<BModalProps>(), {
   noCloseOnBackdrop: false,
   noCloseOnEsc: false,
   noFade: false,
+  noTrap: false,
   okDisabled: false,
   okOnly: false,
   okTitle: 'OK',
@@ -236,14 +237,8 @@ const closeButton = ref<HTMLElement | null>(null)
 const isActive = ref(false)
 const lazyLoadCompleted = ref(false)
 
-const {activate: activateTrap, deactivate: deactivateTrap} = useFocusTrap(element)
-watch(isActive, (newValue) => {
-  if (newValue) {
-    activateTrap()
-  } else {
-    deactivateTrap()
-  }
-})
+useActivatedFocusTrap({element, isActive, noTrap: () => props.noTrap})
+
 const fadeTransitionProps = useFadeTransition(true)
 
 onKeyStroke(

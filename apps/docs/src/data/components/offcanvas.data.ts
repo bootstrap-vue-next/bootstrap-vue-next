@@ -86,6 +86,10 @@ export default {
             type: 'boolean',
             default: false,
           },
+          noTrap: {
+            type: 'boolean',
+            description: 'Disables the focus trap feature',
+          },
           teleportTo: {
             type: 'string | RendererElement | null | undefined',
             default: 'body',

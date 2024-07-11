@@ -64,6 +64,7 @@ import {
   useEventListener,
   useFocus,
 } from '@vueuse/core'
+import {useActivatedFocusTrap} from '../../composables/useActivatedFocusTrap'
 import {computed, nextTick, ref, toRef, watch} from 'vue'
 import {useDefaults, useId, useSafeScrollLock} from '../../composables'
 import type {BOffcanvasProps} from '../../types'
@@ -97,6 +98,7 @@ const _props = withDefaults(defineProps<BOffcanvasProps>(), {
   lazy: false,
   noCloseOnBackdrop: false,
   noCloseOnEsc: false,
+  noTrap: false,
   noFocus: false,
   noHeader: false,
   noHeaderClose: false,
@@ -157,6 +159,12 @@ const isOpenByBreakpoint = computed(
 useSafeScrollLock(modelValue, () => props.bodyScrolling || isOpenByBreakpoint.value)
 
 const element = ref<HTMLElement | null>(null)
+
+useActivatedFocusTrap({
+  element,
+  isActive: modelValue,
+  noTrap: () => props.noTrap || isOpenByBreakpoint.value,
+})
 
 onKeyStroke(
   'Escape',
