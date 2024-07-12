@@ -10,51 +10,23 @@ export default {
             type: 'string',
             default: undefined,
           },
-          id: {
-            type: 'string',
-            default: undefined,
-          },
-          menuClass: {
-            type: 'ClassValue',
-            default: undefined,
-          },
-          size: {
-            type: 'Size',
-            default: 'md',
-          },
-          splitClass: {
-            type: 'ClassValue',
-            default: undefined,
-          },
-          splitVariant: {
-            type: 'ButtonVariant | null',
-            default: undefined,
-          },
-          text: {
-            type: 'string',
-            default: undefined,
-          },
-          toggleClass: {
-            type: 'ClassValue',
-            default: undefined,
-          },
           autoClose: {
             type: "boolean | 'inside' | 'outside'",
             default: true,
           },
-          block: {
+          boundary: {
+            type: 'Boundary | RootBoundary',
+            default: 'clippingAncestors',
+          },
+          boundaryPadding: {
+            type: 'Padding',
+            default: undefined,
+          },
+          center: {
             type: 'boolean',
             default: false,
           },
           disabled: {
-            type: 'boolean',
-            default: false,
-          },
-          isNav: {
-            type: 'boolean',
-            default: false,
-          },
-          dropup: {
             type: 'boolean',
             default: false,
           },
@@ -66,11 +38,39 @@ export default {
             type: 'boolean',
             default: false,
           },
-          center: {
+          dropup: {
             type: 'boolean',
             default: false,
           },
           end: {
+            type: 'boolean',
+            default: false,
+          },
+          floatingMiddleware: {
+            type: 'Middleware[]',
+            default: undefined,
+          },
+          id: {
+            type: 'string',
+            default: undefined,
+          },
+          isNav: {
+            type: 'boolean',
+            default: false,
+          },
+          lazy: {
+            type: 'boolean',
+            default: false,
+          },
+          menuClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          modelValue: {
+            type: 'boolean',
+            default: false,
+          },
+          noCaret: {
             type: 'boolean',
             default: false,
           },
@@ -82,9 +82,77 @@ export default {
             type: 'boolean',
             default: false,
           },
+          noSize: {
+            type: 'boolean',
+            default: false,
+          },
           offset: {
             type: 'number | string | {mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null',
             default: 0,
+          },
+          role: {
+            type: 'string',
+            default: 'menu',
+          },
+          size: {
+            type: 'Size',
+            default: 'md',
+          },
+          skipWrapper: {
+            type: 'boolean',
+            default: false,
+          },
+          split: {
+            type: 'boolean',
+            default: false,
+          },
+          splitButtonType: {
+            type: 'ButtonType',
+            default: 'button',
+          },
+          splitClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          splitDisabled: {
+            type: 'boolean',
+            default: undefined,
+          },
+          splitHref: {
+            type: 'string',
+            default: undefined,
+          },
+          splitTo: {
+            type: 'RouteLocationRaw',
+            default: undefined,
+          },
+          splitVariant: {
+            type: 'ButtonVariant | null',
+            default: undefined,
+          },
+          strategy: {
+            type: 'Strategy',
+            default: 'absolute',
+          },
+          text: {
+            type: 'string',
+            default: undefined,
+          },
+          toggleClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          toggleText: {
+            type: 'string',
+            default: 'Toggle dropdown',
+          },
+          variant: {
+            type: 'ButtonVariant | null',
+            default: 'secondary',
+          },
+          wrapperClass: {
+            type: 'ClassValue',
+            default: undefined,
           },
         },
       },
@@ -101,12 +169,22 @@ export default {
         },
         {
           args: [],
+          event: 'show-prevented',
+          description: '',
+        },
+        {
+          args: [],
           event: 'hide',
           description: '',
         },
         {
           args: [],
           event: 'hidden',
+          description: '',
+        },
+        {
+          args: [],
+          event: 'hide-prevented',
           description: '',
         },
         {
@@ -175,17 +253,13 @@ export default {
       emits: [],
       props: {
         '': {
-          id: {
-            type: 'string',
-            default: undefined,
-          },
           ariaDescribedby: {
             type: 'string',
             default: undefined,
           },
           header: {
             type: 'string',
-            default: 'header',
+            default: undefined,
           },
           headerClass: {
             type: 'ClassValue',
@@ -197,6 +271,10 @@ export default {
           },
           headerVariant: {
             type: 'ColorVariant | null',
+            default: null,
+          },
+          id: {
+            type: 'string',
             default: undefined,
           },
         },
@@ -243,8 +321,104 @@ export default {
       ],
       props: {
         '': {
+          active: {
+            type: 'boolean',
+            default: undefined,
+          },
+          activeClass: {
+            type: 'string',
+            default: undefined,
+          },
+          disabled: {
+            type: 'boolean',
+            default: undefined,
+          },
+          exactActiveClass: {
+            type: 'string',
+            default: undefined,
+          },
+          href: {
+            type: 'string',
+            default: undefined,
+          },
+          icon: {
+            type: 'boolean',
+            default: undefined,
+          },
           linkClass: {
             type: 'ClassValue',
+            default: undefined,
+          },
+          noPrefetch: {
+            type: 'boolean',
+          },
+          noRel: {
+            type: 'boolean',
+          },
+          opacity: {
+            type: '10 | 25 | 50 | 75 | 100 | "10" | "25" | "50" | "75" | "100"',
+            default: undefined,
+          },
+          opacityHover: {
+            type: '10 | 25 | 50 | 75 | 100 | "10" | "25" | "50" | "75" | "100"',
+            default: undefined,
+          },
+          prefetch: {
+            type: 'boolean',
+          },
+          prefetchedClass: {
+            type: 'ClassValue',
+          },
+          rel: {
+            type: 'string',
+            default: undefined,
+          },
+          replace: {
+            type: 'boolean',
+            default: undefined,
+          },
+          routerComponentName: {
+            type: 'string',
+            default: undefined,
+          },
+          stretched: {
+            type: 'boolean',
+            default: false,
+          },
+          target: {
+            type: 'LinkTarget',
+            default: undefined,
+          },
+          to: {
+            type: 'RouteLocationRaw',
+            default: undefined,
+          },
+          underlineOffset: {
+            type: '1 | 2 | 3 | "1" | "2" | "3"',
+            default: undefined,
+          },
+          underlineOffsetHover: {
+            type: '1 | 2 | 3 | "1" | "2" | "3"',
+            default: undefined,
+          },
+          underlineOpacity: {
+            type: '0 | 10 | 25 | 50 | 75 | 100 | "0" | "10" | "25" | "50" | "75" | "100"',
+            default: undefined,
+          },
+          underlineOpacityHover: {
+            type: '0 | 10 | 25 | 50 | 75 | 100 | "0" | "10" | "25" | "50" | "75" | "100"',
+            default: undefined,
+          },
+          underlineVariant: {
+            type: 'ColorVariant | null',
+            default: undefined,
+          },
+          variant: {
+            type: 'ColorVariant | null',
+            default: null,
+          },
+          wrapperAttrs: {
+            type: 'Readonly<AttrsValue>',
             default: undefined,
           },
         },
@@ -274,10 +448,6 @@ export default {
       ],
       props: {
         '': {
-          buttonClass: {
-            type: 'ClassValue',
-            default: undefined,
-          },
           active: {
             type: 'boolean',
             default: false,
@@ -286,13 +456,17 @@ export default {
             type: 'ClassValue',
             default: 'active',
           },
+          buttonClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
           disabled: {
             type: 'boolean',
             default: false,
           },
           variant: {
             type: 'ColorVariant | null',
-            default: undefined,
+            default: null,
           },
         },
       },
