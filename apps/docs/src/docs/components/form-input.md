@@ -118,7 +118,7 @@ If the `type` prop is set to an input type that is not supported (see above), a 
 
 ### Range type input
 
-Inputs with type `range` render using Bootstrap v5's `.custom-range` class. The track (the
+Inputs with type `range` render using Bootstrap v5's `.form-range` class. The track (the
 background) and thumb (the value) are both styled to appear the same across browsers.
 
 Range inputs have implicit values for `min` and `max` of `0` and `100` respectively. You may specify
