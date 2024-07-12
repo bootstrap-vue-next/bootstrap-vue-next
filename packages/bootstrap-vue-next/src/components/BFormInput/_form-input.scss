@@ -23,3 +23,53 @@
     box-shadow: 0 0 0 0 transparent;
   }
 }
+
+// Thumb styles
+input[type="range"].is-valid::-webkit-slider-thumb {
+  background-color: $success; /* Using Bootstrap's success color variable */
+}
+
+input[type="range"].is-valid::-moz-range-thumb {
+  background-color: $success; /* Using Bootstrap's success color variable */
+}
+
+input[type="range"].is-valid::-ms-thumb {
+  background-color: $success; /* Using Bootstrap's success color variable */
+}
+
+input[type="range"].is-invalid::-webkit-slider-thumb {
+  background-color: $danger; /* Using Bootstrap's danger color variable */
+}
+
+input[type="range"].is-invalid::-moz-range-thumb {
+  background-color: $danger; /* Using Bootstrap's danger color variable */
+}
+
+input[type="range"].is-invalid::-ms-thumb {
+  background-color: $danger; /* Using Bootstrap's danger color variable */
+}
+
+// Track styles
+input[type="range"].is-valid::-webkit-slider-runnable-track {
+  background-color: lighten($success, 40%); /* Lighter shade of success */
+}
+
+input[type="range"].is-valid::-moz-range-track {
+  background-color: lighten($success, 40%);
+}
+
+input[type="range"].is-valid::-ms-track {
+  background-color: lighten($success, 40%);
+}
+
+input[type="range"].is-invalid::-webkit-slider-runnable-track {
+  background-color: lighten($danger, 40%); /* Lighter shade of danger */
+}
+
+input[type="range"].is-invalid::-moz-range-track {
+  background-color: lighten($danger, 40%);
+}
+
+input[type="range"].is-invalid::-ms-track {
+  background-color: lighten($danger, 40%);
+}
