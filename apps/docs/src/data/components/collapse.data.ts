@@ -6,11 +6,23 @@ export default {
       component: 'BCollapse',
       props: {
         '': {
+          horizontal: {
+            type: 'boolean',
+            default: false,
+          },
           id: {
             type: 'string',
             default: undefined,
           },
+          isNav: {
+            type: 'boolean',
+            default: false,
+          },
           modelValue: {
+            type: 'boolean',
+            default: false,
+          },
+          skipAnimation: {
             type: 'boolean',
             default: false,
           },
@@ -22,15 +34,7 @@ export default {
             type: 'boolean',
             default: false,
           },
-          horizontal: {
-            type: 'boolean',
-            default: false,
-          },
           visible: {
-            type: 'boolean',
-            default: false,
-          },
-          isNav: {
             type: 'boolean',
             default: false,
           },
@@ -61,6 +65,11 @@ export default {
         {
           args: [],
           description: '',
+          event: 'show-prevented',
+        },
+        {
+          args: [],
+          description: '',
           event: 'hide',
         },
         {
@@ -68,11 +77,26 @@ export default {
           description: '',
           event: 'hidden',
         },
+        {
+          args: [],
+          description: '',
+          event: 'hide-prevented',
+        },
       ],
       slots: [
         {
           description: '',
           name: 'default',
+          scope: [],
+        },
+        {
+          description: '',
+          name: 'footer',
+          scope: [],
+        },
+        {
+          description: '',
+          name: 'header',
           scope: [],
         },
       ],

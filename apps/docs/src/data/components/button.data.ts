@@ -42,13 +42,85 @@ export default {
             type: 'boolean',
             default: false,
           },
-          block: {
+          active: {
+            type: 'boolean',
+            default: undefined,
+          },
+          activeClass: {
+            type: 'string',
+            default: undefined,
+          },
+          disabled: {
+            type: 'boolean',
+            default: undefined,
+          },
+          exactActiveClass: {
+            type: 'string',
+            default: undefined,
+          },
+          href: {
+            type: 'string',
+            default: undefined,
+          },
+          icon: {
+            type: 'boolean',
+            default: undefined,
+          },
+          opacity: {
+            type: '10 | 25 | 50 | 75 | 100 | "10" | "25" | "50" | "75" | "100"',
+            default: undefined,
+          },
+          opacityHover: {
+            type: '10 | 25 | 50 | 75 | 100 | "10" | "25" | "50" | "75" | "100"',
+            default: undefined,
+          },
+          rel: {
+            type: 'string',
+            default: undefined,
+          },
+          replace: {
+            type: 'boolean',
+            default: undefined,
+          },
+          routerComponentName: {
+            type: 'string',
+            default: undefined,
+          },
+          routerTag: {
+            type: 'string',
+            default: undefined,
+          },
+          stretched: {
             type: 'boolean',
             default: false,
           },
-          loadingText: {
-            type: 'string',
-            default: 'Loading...',
+          target: {
+            type: 'LinkTarget',
+            default: undefined,
+          },
+          to: {
+            type: 'RouteLocationRaw',
+            default: undefined,
+          },
+          underlineOffset: {
+            type: '1 | 2 | 3 | "1" | "2" | "3"',
+            default: undefined,
+          },
+          underlineOffsetHover: {
+            type: '1 | 2 | 3 | "1" | "2" | "3"',
+            default: undefined,
+          },
+          underlineOpacity: {
+            type: '0 | 10 | 25 | 50 | 75 | 100 | "0" | "10" | "25" | "50" | "75" | "100"',
+            default: undefined,
+          },
+          underlineOpacityHover: {
+            type: '0 | 10 | 25 | 50 | 75 | 100 | "0" | "10" | "25" | "50" | "75" | "100"',
+            default: undefined,
+          },
+          underlineVariant: {
+            type: 'ColorVariant | null',
+            default: undefined,
           },
         },
       },
@@ -87,6 +159,11 @@ export default {
           description: 'The content to replace the default loader',
           scope: [],
         },
+        {
+          name: 'loading-spinner',
+          description: 'The content to replace the default loading spinner',
+          scope: [],
+        },
       ],
     },
     {
@@ -101,6 +178,7 @@ export default {
           disabled: {
             description: '',
             type: 'boolean',
+            default: false,
           },
           type: {
             default: 'button',
@@ -109,7 +187,19 @@ export default {
           },
         },
       },
-      emits: [],
+      emits: [
+        {
+          args: [
+            {
+              arg: 'click',
+              description: '',
+              type: 'MouseEvent',
+            },
+          ],
+          description: 'On click event',
+          event: 'click',
+        },
+      ],
       slots: [],
     },
   ],
