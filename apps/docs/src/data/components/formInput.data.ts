@@ -26,7 +26,7 @@ export default {
           },
           debounceMaxWait: {
             type: 'Numberish',
-            default: NaN,
+            default: 'NaN',
             description:
               "The maximum time in milliseconds allowed to be delayed before it''s invoked",
           },
@@ -93,30 +93,20 @@ export default {
             default: 'text',
             description: 'The type of input to render. See the docs for supported types',
           },
-          ...pick(
-            buildCommonProps(
-              buildCommonProps({
-                disabled: {
-                  description:
-                    'Disables the fieldset element, which in turn disables the form controls (on browsers that support disabled fieldsets). Has no effect if `label-for` is set',
-                },
-              })
-            ),
-            [
-              'ariaInvalid',
-              'disabled',
-              'form',
-              'id',
-              'name',
-              'placeholder',
-              'plaintext',
-              'readonly',
-              'required',
-              'size',
-              'state',
-              'tooltip',
-            ]
-          ),
+          ...pick(buildCommonProps(buildCommonProps()), [
+            'ariaInvalid',
+            'disabled',
+            'form',
+            'id',
+            'name',
+            'placeholder',
+            'plaintext',
+            'readonly',
+            'required',
+            'size',
+            'state',
+            'tooltip',
+          ]),
         },
       },
       emits: [
