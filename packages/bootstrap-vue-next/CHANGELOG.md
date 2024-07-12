@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.23.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.23.2...bootstrapvuenext-v0.23.3) (2024-07-11)
+
+
+### Bug Fixes
+
+* **BFormCheckbox:** Handle contextual state == false correctly ([5574745](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5574745c55b98777ab9b8eaf487364f7fd70b692))
+* **BFormGroup:** change labelSrOnly to labelVisuallyHidden as per BS5 ([b4af72f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b4af72febfe8d7cd2350530785a16a93dc914810))
+* **BModal:** in coordination with prop noTrap and adding no focus trapping to opened offcanvas, fixes [#1996](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1996) -&gt; as trap has moved to offcanvas ([28c64c9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/28c64c9a3df563c95956fa871acd5556d62a2336))
+* **BModal:** use focus trap default of 'window.document.body' fixes 2016 ([28c64c9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/28c64c9a3df563c95956fa871acd5556d62a2336))
+* **BOffcanvas:** add focus trapping to offcanvas ([28c64c9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/28c64c9a3df563c95956fa871acd5556d62a2336))
+
 ## [0.23.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.23.1...bootstrapvuenext-v0.23.2) (2024-07-10)
 
 

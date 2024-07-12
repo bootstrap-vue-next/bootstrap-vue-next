@@ -82,9 +82,7 @@
     </BRow>
     <BRow>
       <BCol>
-        <BFormCheckbox v-model="checkedIndeterminate" indeterminate
-          >Indeterminate</BFormCheckbox
-        >
+        <BFormCheckbox v-model="checkedIndeterminate" indeterminate>Indeterminate</BFormCheckbox>
       </BCol>
       <BCol> Checked: {{ checkedIndeterminate }} </BCol>
     </BRow>
@@ -132,11 +130,33 @@
         </button>
       </BCol>
     </BRow>
+    <BRow>
+      <BCol>
+        <h4 class="m-2">Contextual</h4>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormCheckbox :state="false">Checkbox state false</BFormCheckbox>
+        <BFormCheckbox :state="true">Checkbox state true</BFormCheckbox>
+        <BFormCheckbox>Checkbox state null</BFormCheckbox>
+
+        <BFormCheckboxGroup
+          v-model="contextualSelected"
+          :options="contextualStateOptions"
+          :state="contextualState"
+          name="checkbox-validation"
+        />
+
+        <div v-if="!contextualState">Please select two</div>
+        <div v-if="contextualState">Thank you</div>
+      </BCol>
+    </BRow>
   </BContainer>
 </template>
 
 <script setup lang="ts">
-import {reactive, ref} from 'vue'
+import {computed, reactive, ref} from 'vue'
 
 const checkboxes = reactive({
   status: true,
@@ -163,4 +183,14 @@ const checkedAvailableCars = ['BMW', 'Mercedes', 'Toyota']
 const setCheckedSelectedCars = () => {
   checkedSelectedCars.value = ['Mercedes', 'Toyota']
 }
+
+const contextualStateOptions = [
+  {text: 'First Check', value: 'first'},
+  {text: 'Second Check', value: 'second'},
+  {text: 'Third Check', value: 'third'},
+]
+
+const contextualSelected = ref([])
+
+const contextualState = computed(() => contextualSelected.value.length === 2)
 </script>
