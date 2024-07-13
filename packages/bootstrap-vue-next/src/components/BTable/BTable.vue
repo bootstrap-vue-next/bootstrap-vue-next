@@ -3,7 +3,7 @@
     v-bind="props"
     :aria-busy="busyModel"
     :items="computedDisplayItems"
-    :fields="computedFields"
+    :fields="computedFields as TableFieldRaw<T>[]"
     :table-class="tableClasses"
     :tbody-tr-class="getRowClasses"
     :field-column-class="getFieldColumnClasses"
@@ -143,6 +143,7 @@ import type {
   BTableSortByOrder,
   NoProviderTypes,
   TableField,
+  TableFieldRaw,
   TableItem,
 } from '../../types'
 import {formatItem, get, getTableFieldHeadLabel, set, startCase} from '../../utils'
