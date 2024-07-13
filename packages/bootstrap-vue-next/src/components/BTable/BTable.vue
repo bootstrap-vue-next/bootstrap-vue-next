@@ -329,7 +329,7 @@ const isSortable = computed(
     )
 )
 
-const computedFields = computed<TableField[]>(() =>
+const computedFields = computed<TableField<T>[]>(() =>
   props.fields.map((el) => {
     if (!isTableField(el)) {
       const label = startCase(el as string)
@@ -353,7 +353,7 @@ const computedFields = computed<TableField[]>(() =>
               : 'none'
 
     return {
-      ...(el as TableField),
+      ...(el as TableField<T>),
       thAttr: {
         'aria-sort': sortValue,
         ...el.thAttr,
