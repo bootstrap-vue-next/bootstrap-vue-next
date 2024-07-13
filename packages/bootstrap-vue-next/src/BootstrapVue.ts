@@ -58,6 +58,7 @@ declare module '@vue/runtime-core' {
     BForm: typeof Components.BForm
     BFormCheckbox: typeof Components.BFormCheckbox
     BFormCheckboxGroup: typeof Components.BFormCheckboxGroup
+    BFormDatalist: typeof Components.BFormDatalist
     BFormFloatingLabel: typeof Components.BFormFloatingLabel
     BFormGroup: typeof Components.BFormGroup
     BFormInput: typeof Components.BFormInput

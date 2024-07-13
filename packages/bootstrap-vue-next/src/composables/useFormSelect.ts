@@ -25,13 +25,14 @@ export default (options: MaybeRefOrGetter, props: Record<string, unknown>) => {
     const html: string = get(option, props.htmlField as string)
     const disabled: boolean = get(option, props.disabledField as string)
 
-    const opts: undefined | (unknown | Record<string, unknown>)[] = props.optionsField
-      ? get(option, props.optionsField as string)
-      : undefined
+    const opts: undefined | (unknown | Record<string, unknown>)[] = get(
+      option,
+      (props.optionsField as string) ?? 'options'
+    )
 
     if (opts !== undefined) {
       return {
-        label: get(option, props.labelField as string) || text,
+        label: get(option, (props.labelField as string) ?? 'label') || text,
         options: opts,
       } as ComplexSelectOptionRaw
     }
