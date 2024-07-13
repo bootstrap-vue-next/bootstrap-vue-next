@@ -6,17 +6,21 @@ export default {
       component: 'BCarousel',
       props: {
         '': {
-          ride: {
-            type: "true | false | 'true' | 'false' | '' | 'carousel'",
-            default: false,
+          background: {
+            type: 'string',
+            default: undefined,
           },
-          noHoverPause: {
+          controls: {
             type: 'boolean',
             default: false,
           },
-          rideReverse: {
-            type: 'boolean',
-            default: false,
+          controlsNextText: {
+            type: 'string',
+            default: 'Next',
+          },
+          controlsPrevText: {
+            type: 'string',
+            default: 'Previous',
           },
           fade: {
             type: 'boolean',
@@ -34,25 +38,29 @@ export default {
             type: 'string',
             default: undefined,
           },
-          background: {
+          indicators: {
+            type: 'boolean',
+            default: false,
+          },
+          indicatorsButtonLabel: {
             type: 'string',
-            default: undefined,
+            default: 'Slide',
+          },
+          interval: {
+            type: 'Numberish',
+            default: 5000,
+          },
+          keyboard: {
+            type: 'boolean',
+            default: true,
           },
           modelValue: {
             type: 'number',
             default: 0,
           },
-          controls: {
+          noHoverPause: {
             type: 'boolean',
             default: false,
-          },
-          indicators: {
-            type: 'boolean',
-            default: false,
-          },
-          interval: {
-            type: 'number | string',
-            default: 5000,
           },
           noTouch: {
             type: 'boolean',
@@ -62,24 +70,16 @@ export default {
             type: 'boolean',
             default: false,
           },
-          controlsPrevText: {
-            type: 'string',
-            default: 'Previous',
+          ride: {
+            type: "boolean | 'carousel'",
+            default: false,
           },
-          controlsNextText: {
-            type: 'string',
-            default: 'Next',
-          },
-          indicatorsButtonLabel: {
-            type: 'string',
-            default: 'Slide',
-          },
-          keyboard: {
+          rideReverse: {
             type: 'boolean',
-            default: true,
+            default: false,
           },
           touchThreshold: {
-            type: 'number | string',
+            type: 'Numberish',
             default: 50,
           },
         },
@@ -107,6 +107,17 @@ export default {
           description: 'Fired when the carousel has completed its slide transition.',
           event: 'slid',
         },
+        {
+          event: 'update:modelValue',
+          description: 'Standard event to update the v-model',
+          args: [
+            {
+              arg: 'update:modelValue',
+              description: 'modelValue',
+              type: 'number',
+            },
+          ],
+        },
       ],
       slots: [
         {
@@ -121,22 +132,6 @@ export default {
       emits: [],
       props: {
         '': {
-          imgSrc: {
-            type: 'string',
-            default: undefined,
-          },
-          imgHeight: {
-            type: 'string | number',
-            default: undefined,
-          },
-          imgWidth: {
-            type: 'string | number',
-            default: undefined,
-          },
-          interval: {
-            type: 'string | number',
-            default: undefined,
-          },
           background: {
             type: 'string',
             default: undefined,
@@ -165,10 +160,6 @@ export default {
             type: 'string',
             default: undefined,
           },
-          imgSrcset: {
-            type: 'string | string[]',
-            default: undefined,
-          },
           imgAlt: {
             type: 'string',
             default: undefined,
@@ -180,6 +171,26 @@ export default {
           imgBlankColor: {
             type: 'string',
             default: 'transparent',
+          },
+          imgHeight: {
+            type: 'Numberish',
+            default: undefined,
+          },
+          imgSrc: {
+            type: 'string',
+            default: undefined,
+          },
+          imgSrcset: {
+            type: 'string | string[]',
+            default: undefined,
+          },
+          imgWidth: {
+            type: 'Numberish',
+            default: undefined,
+          },
+          interval: {
+            type: 'Numberish',
+            default: undefined,
           },
           text: {
             type: 'string',
@@ -204,6 +215,16 @@ export default {
         {
           description: '',
           name: 'default',
+          scope: [],
+        },
+        {
+          description: '',
+          name: 'caption',
+          scope: [],
+        },
+        {
+          description: '',
+          name: 'text',
           scope: [],
         },
       ],

@@ -74,10 +74,26 @@ export const commonProps = () =>
       default: false,
       description: 'Render the form control in plain mode, rather than custom styled mode',
     },
+    placeholder: {
+      type: 'string',
+      default: "''",
+      description: 'Sets the `placeholder` attribute value on the form control',
+    },
+    plaintext: {
+      type: 'boolean',
+      default: 'false',
+      description:
+        'Set the form control as readonly and renders the control to look like plain text (no borders)',
+    },
     required: {
       type: 'boolean',
       default: undefined,
       description: 'Adds the `required` attribute to the form control',
+    },
+    readonly: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Sets the `readonly` attribute on the form control',
     },
     role: {
       type: 'string',
