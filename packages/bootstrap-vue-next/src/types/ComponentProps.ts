@@ -1186,6 +1186,7 @@ export interface BPopoverProps extends TeleporterProps {
   boundary?: Boundary | RootBoundary
   boundaryPadding?: Padding
   click?: boolean
+  closeOnHide?: boolean
   content?: string
   customClass?: ClassValue
   delay?:
