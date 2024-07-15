@@ -2,6 +2,12 @@ import {type PropertyReference} from '../types'
 
 export const commonProps = () =>
   ({
+    ariaControls: {
+      type: 'AriaInvalid',
+      default: undefined,
+      description:
+        'If this component controls another component or element, set this to the ID of the controlled component or element',
+    },
     ariaInvalid: {
       type: 'AriaInvalid',
       default: undefined,
