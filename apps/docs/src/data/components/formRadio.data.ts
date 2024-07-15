@@ -20,7 +20,7 @@ export default {
           },
           buttonVariant: {
             type: 'ButtonVariant | null',
-            default: 'secondary',
+            default: null,
             description: "Applies one of Bootstrap's theme colors when in `button` mode",
           },
           inline: {
@@ -102,9 +102,6 @@ export default {
             description:
               'The current value of the checked radio in the group. Looking for `checked` - use `modelValue` instead.',
           },
-          options: {
-            type: 'readonly RadioOptionRaw[] | undefined',
-          },
           reverse: {
             type: 'boolean',
             default: false,
@@ -129,6 +126,7 @@ export default {
             'htmlField',
             'id',
             'name',
+            'options',
             'plain',
             'required',
             'size',
