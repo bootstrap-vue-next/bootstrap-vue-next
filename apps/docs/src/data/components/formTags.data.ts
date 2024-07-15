@@ -311,16 +311,16 @@ export default {
                 'Method to add a new tag. Assumes the tag is the value of the input, but optionally accepts one argument which is the tag value to be added',
             },
             {
-              prop: 'disabled',
-              type: 'boolean',
-              description:
-                "If the component is in the disabled state. Value of the 'disabled' prop",
-            },
-            {
               prop: 'disableAddButton',
               type: 'boolean',
               description:
                 'Will be `true` if the tag(s) in the input cannot be added (all invalid and/or duplicates)',
+            },
+            {
+              prop: 'disabled',
+              type: 'boolean',
+              description:
+                "If the component is in the disabled state. Value of the 'disabled' prop",
             },
             {
               prop: 'duplicateTagText',
