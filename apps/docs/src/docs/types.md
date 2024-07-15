@@ -34,6 +34,8 @@ type TextHorizontal = 'start' | 'end' | 'center'
 type AriaInvalid = boolean | 'grammar' | 'spelling'
 ```
 
+</BCard>
+
 ## AttrsValue
 
 <BCard class="bg-body-tertiary">
