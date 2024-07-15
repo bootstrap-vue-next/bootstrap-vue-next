@@ -370,6 +370,7 @@ export default defineComponent({
         {
           'was-validated': props.validated,
         },
+        'form-group',
       ],
       'id': useId(() => props.id).value,
       'disabled': isFieldset ? props.disabled : null,
@@ -396,3 +397,9 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss">
+.form-group {
+  margin-bottom: 1rem;
+}
+</style>
