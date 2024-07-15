@@ -74,7 +74,8 @@ documentation for more info.
 when naming the main model property and events for the primary model. `bootstrap-vue-next` follows
 this guidance, which affects all of the wrappers for form input. If you're looking for the `value`
 property or the `change` and `input` events, you'll find that functionality in the `modelValue`
-property and `update:modelValue` events.
+property and `update:modelValue` events. Bootstrap-vue-next no longer provides custom `change` and
+`input` events, so the native versions of those events are now exposed.
 
 See the [Vue 3 migration guide](https://v3-migration.vuejs.org/breaking-changes/v-model.html)
 for more info.
@@ -83,6 +84,13 @@ for more info.
 
 Use `label-visually-hidden` instead of `label-sronly` per
 [Bootstrap Migration Guide](https://getbootstrap.com/docs/5.3/migration/#helpers-2)
+
+## BFormInput
+
+Access to the native `input` element is implemented differently due to changes in how Vue 3
+handles references. See the [BFormInput documentation](/docs/components/form-input#exposed-input-element) for more details.
+
+Datalist and disabling mousewheel events are not yet implemented.
 
 ## BFormSelect
 

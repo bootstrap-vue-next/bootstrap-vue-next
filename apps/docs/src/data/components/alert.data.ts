@@ -50,7 +50,7 @@ export default {
             default: true,
           },
           interval: {
-            type: 'number | string',
+            type: 'Numberish',
             default: 1000,
           },
           showOnPause: {
@@ -59,7 +59,18 @@ export default {
           },
         },
       },
-      slots: [],
+      slots: [
+        {
+          scope: [],
+          name: 'default',
+          description: 'Content to place in the Alert',
+        },
+        {
+          scope: [],
+          name: 'close',
+          description: 'Content to place in the close button',
+        },
+      ],
       emits: [
         {
           args: [],

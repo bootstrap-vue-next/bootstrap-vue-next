@@ -14,21 +14,29 @@ export default {
             type: 'boolean | string',
             default: false,
           },
-          badgeLeft: {
-            type: 'boolean',
-            default: false,
+          badgeBgVariant: {
+            type: 'ColorVariant | null',
+            default: null,
           },
-          badgeOffset: {
-            type: 'string',
-            default: undefined,
-          },
-          badgeTop: {
-            type: 'boolean',
-            default: false,
+          badgeTextVariant: {
+            type: 'TextColorVariant | null',
+            default: null,
           },
           badgeVariant: {
             type: 'ColorVariant | null',
             default: 'primary',
+          },
+          badgePlacement: {
+            type: 'CombinedPlacement',
+            default: 'top-end',
+          },
+          badgeDotIndicator: {
+            type: 'boolean',
+            default: false,
+          },
+          badgePill: {
+            type: 'boolean',
+            default: false,
           },
           button: {
             type: 'boolean',
@@ -37,14 +45,6 @@ export default {
           buttonType: {
             type: 'ButtonType',
             default: 'button',
-          },
-          icon: {
-            type: 'string',
-            default: undefined,
-          },
-          rounded: {
-            type: 'boolean | string',
-            default: 'circle',
           },
           size: {
             type: 'Size | string',
@@ -62,9 +62,109 @@ export default {
             type: 'string',
             default: undefined,
           },
+          variant: {
+            type: 'ColorVariant | null',
+            default: 'secondary',
+          },
+          active: {
+            type: 'boolean',
+            default: undefined,
+          },
+          activeClass: {
+            type: 'string',
+            default: undefined,
+          },
+          disabled: {
+            type: 'boolean',
+            default: undefined,
+          },
+          exactActiveClass: {
+            type: 'string',
+            default: undefined,
+          },
+          href: {
+            type: 'string',
+            default: undefined,
+          },
+          opacity: {
+            type: '10 | 25 | 50 | 75 | 100 | "10" | "25" | "50" | "75" | "100"',
+            default: undefined,
+          },
+          opacityHover: {
+            type: '10 | 25 | 50 | 75 | 100 | "10" | "25" | "50" | "75" | "100"',
+            default: undefined,
+          },
+          rel: {
+            type: 'string',
+            default: undefined,
+          },
+          replace: {
+            type: 'boolean',
+            default: undefined,
+          },
+          routerComponentName: {
+            type: 'string',
+            default: undefined,
+          },
+          stretched: {
+            type: 'boolean',
+            default: false,
+          },
+          target: {
+            type: 'LinkTarget',
+            default: undefined,
+          },
+          to: {
+            type: 'RouteLocationRaw',
+            default: undefined,
+          },
+          underlineOffset: {
+            type: '1 | 2 | 3 | "1" | "2" | "3"',
+            default: undefined,
+          },
+          underlineOffsetHover: {
+            type: '1 | 2 | 3 | "1" | "2" | "3"',
+            default: undefined,
+          },
+          underlineOpacity: {
+            type: '0 | 10 | 25 | 50 | 75 | 100 | "0" | "10" | "25" | "50" | "75" | "100"',
+            default: undefined,
+          },
+          underlineOpacityHover: {
+            type: '0 | 10 | 25 | 50 | 75 | 100 | "0" | "10" | "25" | "50" | "75" | "100"',
+            default: undefined,
+          },
+          underlineVariant: {
+            type: 'ColorVariant | null',
+            default: undefined,
+          },
+          bgVariant: {
+            type: 'ColorVariant | null',
+            default: null,
+          },
           textVariant: {
             type: 'TextColorVariant | null',
             default: null,
+          },
+          rounded: {
+            type: 'boolean | RadiusElement',
+            default: 'false',
+          },
+          roundedBottom: {
+            type: 'boolean | RadiusElement',
+            default: undefined,
+          },
+          roundedEnd: {
+            type: 'boolean | RadiusElement',
+            default: undefined,
+          },
+          roundedStart: {
+            type: 'boolean | RadiusElement',
+            default: undefined,
+          },
+          roundedTop: {
+            type: 'boolean | RadiusElement',
+            default: undefined,
           },
         },
       },
@@ -110,15 +210,11 @@ export default {
       props: {
         '': {
           overlap: {
-            type: 'number | string',
+            type: 'Numberish',
             default: 0.3,
           },
-          rounded: {
-            type: 'boolean | string',
-            default: false,
-          },
           size: {
-            type: 'Size | string',
+            type: 'LiteralUnion<Size, Numberish>',
             default: undefined,
           },
           square: {
@@ -132,6 +228,34 @@ export default {
           variant: {
             type: 'ColorVariant | null',
             default: null,
+          },
+          bgVariant: {
+            type: 'ColorVariant | null',
+            default: null,
+          },
+          textVariant: {
+            type: 'TextColorVariant | null',
+            default: null,
+          },
+          rounded: {
+            type: 'boolean | RadiusElement',
+            default: false,
+          },
+          roundedTop: {
+            type: 'boolean | RadiusElement',
+            default: undefined,
+          },
+          roundedBottom: {
+            type: 'boolean | RadiusElement',
+            default: undefined,
+          },
+          roundedStart: {
+            type: 'boolean | RadiusElement',
+            default: undefined,
+          },
+          roundedEnd: {
+            type: 'boolean | RadiusElement',
+            default: undefined,
           },
         },
       },

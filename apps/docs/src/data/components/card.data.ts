@@ -26,6 +26,10 @@ export default {
             type: 'string',
             default: 'div',
           },
+          bodyText: {
+            type: 'string',
+            default: undefined,
+          },
           bodyTextVariant: {
             type: 'TextColorVariant | null',
             default: undefined,
@@ -62,6 +66,10 @@ export default {
             type: 'TextColorVariant | null',
             default: undefined,
           },
+          footerVariant: {
+            type: 'ColorVariant | null',
+            default: null,
+          },
           header: {
             type: 'string',
             default: undefined,
@@ -90,43 +98,31 @@ export default {
             type: 'TextColorVariant | null',
             default: undefined,
           },
+          headerVariant: {
+            type: 'ColorVariant | null',
+            default: null,
+          },
           imgAlt: {
             type: 'string',
             default: undefined,
           },
-          imgBottom: {
-            type: 'boolean',
-            default: false,
-          },
-          imgEnd: {
-            type: 'boolean',
-            default: false,
+          imgPlacement: {
+            type: 'Placement | "overlay"',
+            default: 'top',
           },
           imgHeight: {
-            type: 'string | number',
+            type: 'Numberish',
             default: undefined,
           },
           imgSrc: {
             type: 'string',
             default: undefined,
           },
-          imgStart: {
-            type: 'boolean',
-            default: false,
-          },
-          imgTop: {
-            type: 'boolean',
-            default: false,
-          },
           imgWidth: {
-            type: 'string | number',
+            type: 'Numberish',
             default: undefined,
           },
           noBody: {
-            type: 'boolean',
-            default: false,
-          },
-          overlay: {
             type: 'boolean',
             default: false,
           },
@@ -158,9 +154,9 @@ export default {
             type: 'string',
             default: 'h6',
           },
-          bodyText: {
-            type: 'string',
-            default: undefined,
+          variant: {
+            type: 'ColorVariant | null',
+            default: null,
           },
         },
       },
@@ -193,17 +189,9 @@ export default {
       emits: [],
       props: {
         '': {
-          bodyBgVariant: {
+          bgVariant: {
             type: 'ColorVariant | null',
-            default: undefined,
-          },
-          bodyTag: {
-            type: 'string',
-            default: 'div',
-          },
-          bodyTextVariant: {
-            type: 'TextColorVariant | null',
-            default: undefined,
+            default: null,
           },
           overlay: {
             type: 'boolean',
@@ -211,7 +199,7 @@ export default {
           },
           subtitle: {
             type: 'string',
-            default: 'h4',
+            default: undefined,
           },
           subtitleTag: {
             type: 'string',
@@ -221,17 +209,29 @@ export default {
             type: 'TextColorVariant | null',
             default: undefined,
           },
+          tag: {
+            type: 'string',
+            default: 'div',
+          },
+          text: {
+            type: 'string',
+            default: undefined,
+          },
           title: {
             type: 'string',
-            default: 'h4',
+            default: undefined,
           },
           titleTag: {
             type: 'string',
             default: 'h4',
           },
-          text: {
-            type: 'string',
-            default: undefined,
+          textVariant: {
+            type: 'TextColorVariant | null',
+            default: null,
+          },
+          variant: {
+            type: 'ColorVariant | null',
+            default: null,
           },
         },
       },
@@ -246,6 +246,11 @@ export default {
           name: 'subtitle',
           scope: [],
         },
+        {
+          name: 'default',
+          description: '',
+          scope: [],
+        },
       ],
     },
     {
@@ -253,10 +258,6 @@ export default {
       emits: [],
       props: {
         '': {
-          text: {
-            type: 'string',
-            default: undefined,
-          },
           bgVariant: {
             type: 'ColorVariant | null',
             default: undefined,
@@ -273,8 +274,16 @@ export default {
             type: 'string',
             default: 'div',
           },
+          text: {
+            type: 'string',
+            default: undefined,
+          },
           textVariant: {
             type: 'TextColorVariant | null',
+            default: undefined,
+          },
+          variant: {
+            type: 'ColorVariant | null',
             default: undefined,
           },
         },
@@ -319,10 +328,6 @@ export default {
       emits: [],
       props: {
         '': {
-          text: {
-            type: 'string',
-            default: undefined,
-          },
           bgVariant: {
             type: 'ColorVariant | null',
             default: undefined,
@@ -339,8 +344,16 @@ export default {
             type: 'string',
             default: 'div',
           },
+          text: {
+            type: 'string',
+            default: undefined,
+          },
           textVariant: {
             type: 'TextColorVariant | null',
+            default: undefined,
+          },
+          variant: {
+            type: 'ColorVariant | null',
             default: undefined,
           },
         },
@@ -358,13 +371,77 @@ export default {
       emits: [],
       props: {
         '': {
-          bottom: {
+          blank: {
             type: 'boolean',
-            default: false,
+            default: undefined,
           },
-          top: {
+          blankColor: {
+            type: 'string',
+            default: undefined,
+          },
+          block: {
             type: 'boolean',
-            default: false,
+            default: undefined,
+          },
+          fluid: {
+            type: 'boolean',
+            default: undefined,
+          },
+          fluidGrow: {
+            type: 'boolean',
+            default: undefined,
+          },
+          height: {
+            type: 'Numberish',
+            default: undefined,
+          },
+          lazy: {
+            type: 'boolean',
+            default: undefined,
+          },
+          placement: {
+            type: 'Placement | "overlay"',
+            default: 'top',
+          },
+          rounded: {
+            type: 'boolean | RadiusElement',
+            default: undefined,
+          },
+          roundedTop: {
+            type: 'boolean | RadiusElement',
+            default: undefined,
+          },
+          roundedBottom: {
+            type: 'boolean | RadiusElement',
+            default: undefined,
+          },
+          roundedStart: {
+            type: 'boolean | RadiusElement',
+            default: undefined,
+          },
+          roundedEnd: {
+            type: 'boolean | RadiusElement',
+            default: undefined,
+          },
+          sizes: {
+            type: 'string | string[]',
+            default: undefined,
+          },
+          src: {
+            type: 'string',
+            default: undefined,
+          },
+          srcset: {
+            type: 'string | string[]',
+            default: undefined,
+          },
+          thumbnail: {
+            type: 'boolean',
+            default: undefined,
+          },
+          width: {
+            type: 'Numberish',
+            default: undefined,
           },
         },
       },
@@ -377,7 +454,7 @@ export default {
         '': {
           text: {
             type: 'string',
-            default: 'body-secondary',
+            default: undefined,
           },
           tag: {
             type: 'string',
@@ -389,20 +466,26 @@ export default {
           },
         },
       },
-      slots: [],
+      slots: [
+        {
+          description: '',
+          name: 'default',
+          scope: [],
+        },
+      ],
     },
     {
       component: 'BCardText',
       emits: [],
       props: {
         '': {
-          text: {
-            type: 'string',
-            default: undefined,
-          },
           tag: {
             type: 'string',
             default: 'p',
+          },
+          text: {
+            type: 'string',
+            default: undefined,
           },
         },
       },
@@ -419,13 +502,13 @@ export default {
       emits: [],
       props: {
         '': {
-          text: {
-            type: 'string',
-            default: undefined,
-          },
           tag: {
             type: 'string',
             default: 'h4',
+          },
+          text: {
+            type: 'string',
+            default: undefined,
           },
         },
       },
