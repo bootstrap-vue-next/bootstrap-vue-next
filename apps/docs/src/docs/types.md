@@ -34,6 +34,14 @@ type TextHorizontal = 'start' | 'end' | 'center'
 type AriaInvalid = boolean | 'grammar' | 'spelling'
 ```
 
+## AttrsValue
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type AttrsValue = Record<string, any>
+```
+
 </BCard>
 
 ## BodyProp
@@ -153,6 +161,16 @@ type CheckboxValue =
   | Readonly<Record<string, unknown>>
   | number
   | null
+```
+
+</BCard>
+
+## ClassValue
+
+<BCard class="bg-body-tertiary">
+
+```ts
+export type ClassValue = any
 ```
 
 </BCard>

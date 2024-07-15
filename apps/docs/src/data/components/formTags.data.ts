@@ -1,4 +1,5 @@
 import type {ComponentReference} from '../../types'
+import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
@@ -6,20 +7,6 @@ export default {
       component: 'BFormTag',
       props: {
         '': {
-          id: {
-            type: 'string',
-            default: undefined,
-          },
-          title: {
-            type: 'string',
-            default: undefined,
-            description:
-              "Value to place in the 'title' attribute of the tag. Will also be used for the tag content if no default slot provided",
-          },
-          disabled: {
-            type: 'boolean',
-            default: false,
-          },
           noRemove: {
             type: 'boolean',
             default: false,
@@ -35,15 +22,21 @@ export default {
             default: 'Remove tag',
             description: "The value of the 'aria-label' attribute on the remove button in the tag",
           },
-          tag: {
-            type: 'string',
-            default: 'span',
-          },
-          variant: {
-            type: 'ColorVariant | null',
-            default: 'secondary',
-            description: 'Applies one of the Bootstrap theme color variants to the component',
-          },
+          ...pick(
+            buildCommonProps({
+              title: {
+                description:
+                  "Value to place in the 'title' attribute of the tag. Will also be used for the tag content if no default slot provided",
+              },
+              tag: {
+                default: '<span>',
+              },
+              variant: {
+                default: 'secondary',
+              },
+            }),
+            ['disabled', 'id', 'tag', 'title', 'variant']
+          ),
         },
       },
       emits: [
@@ -52,8 +45,8 @@ export default {
           args: [
             {
               arg: 'remove',
-              description: '',
-              type: 'VNodeNormalizedChildren',
+              type: 'string',
+              description: 'text of the tag to remove',
             },
           ],
           description: 'Emitted when the remove button is clicked',
@@ -61,7 +54,6 @@ export default {
       ],
       slots: [
         {
-          scope: [],
           name: 'default',
           description: 'Content to place in the tag. Overrides the `title` prop',
         },
@@ -86,14 +78,6 @@ export default {
             type: 'boolean',
             default: false,
             description: "When set, enables adding the tag on the input's 'change' event",
-          },
-          autofocus: {
-            type: 'boolean',
-            default: false,
-          },
-          disabled: {
-            type: 'boolean',
-            default: false,
           },
           duplicateTagText: {
             type: 'string',
@@ -129,13 +113,8 @@ export default {
             description:
               'The error message when invalid tags are detected. Set to an empty string to disable the message',
           },
-          form: {
-            type: 'string',
-            default: undefined,
-            description: 'The value of the form prop',
-          },
           limit: {
-            type: 'number | string',
+            type: 'Numberish',
             default: undefined,
             description:
               'The maximum amount of tags that can be added. The limit can still be exceeded if manipulated outside of the component',
@@ -149,12 +128,6 @@ export default {
           modelValue: {
             type: 'string[]',
             default: '() => []',
-          },
-          name: {
-            type: 'string',
-            default: undefined,
-            description:
-              "Sets the value of the 'name' attribute on the form control. When set, creates a hidden input for each tag",
           },
           noAddOnEnter: {
             type: 'boolean',
@@ -171,29 +144,16 @@ export default {
             default: false,
             description: 'When set, the tags will not have a remove button',
           },
-          placeholder: {
-            type: 'string',
-            default: 'Add tag...',
-            description: "Sets the 'placeholder' attribute value on the form control",
-          },
           removeOnDelete: {
             type: 'boolean',
             default: false,
             description:
               'When set, enables removal of last tag in tags when user presses delete or backspace and the input is empty',
           },
-          required: {
-            type: 'boolean',
-            default: false,
-          },
           separator: {
-            type: 'string | string[]',
+            type: 'string | readonly string[]',
             default: undefined,
             description: 'Separator character(s) that will trigger a tag to be created',
-          },
-          state: {
-            type: 'boolean | null',
-            default: null,
           },
           size: {
             type: 'Size',
@@ -229,6 +189,18 @@ export default {
             default: 'secondary',
             description: 'Applies one of the Bootstrap theme color variants to the tags',
           },
+          ...pick(
+            buildCommonProps({
+              name: {
+                description:
+                  "Sets the value of the 'name' attribute on the form control. When set, creates a hidden input for each tag",
+              },
+              placeholder: {
+                default: 'Add tag...',
+              },
+            }),
+            ['autofocus', 'disabled', 'form', 'id', 'name', 'placeholder', 'required', 'state']
+          ),
         },
       },
       emits: [
@@ -277,17 +249,6 @@ export default {
           ],
         },
         {
-          event: 'input',
-          description: 'Emitted when the tags changes. Updates the v-model',
-          args: [
-            {
-              arg: 'value',
-              type: 'Array',
-              description: 'Array of current tags',
-            },
-          ],
-        },
-        {
           event: 'tag-state',
           description: 'Emitted when tags in the user input are parsed',
           args: [
@@ -311,9 +272,27 @@ export default {
             },
           ],
         },
+        {
+          event: 'update:modelValue',
+          description: 'Emitted when the tags changes. Updates the v-model',
+          args: [
+            {
+              arg: 'value',
+              type: 'Array',
+              description: 'Array of current tags',
+            },
+          ],
+        },
       ],
       slots: [
         {
+          name: 'addButtonText',
+          description:
+            "Content to place in the built in 'Add' button. Takes precedence over the 'add-button-text' prop. Not used when the default scoped slot is provided",
+        },
+        {
+          name: 'default',
+          description: 'Slot to override the default rendering of the tags component',
           scope: [
             {
               prop: 'addButtonText',
@@ -327,21 +306,21 @@ export default {
             },
             {
               prop: 'addTag',
-              type: 'Function',
+              type: '(tag?: string) => void',
               description:
                 'Method to add a new tag. Assumes the tag is the value of the input, but optionally accepts one argument which is the tag value to be added',
-            },
-            {
-              prop: 'disableAddButton',
-              type: 'boolean',
-              description:
-                'Will be `true` if the tag(s) in the input cannot be added (all invalid and/or duplicates)',
             },
             {
               prop: 'disabled',
               type: 'boolean',
               description:
                 "If the component is in the disabled state. Value of the 'disabled' prop",
+            },
+            {
+              prop: 'disableAddButton',
+              type: 'boolean',
+              description:
+                'Will be `true` if the tag(s) in the input cannot be added (all invalid and/or duplicates)',
             },
             {
               prop: 'duplicateTagText',
@@ -433,12 +412,12 @@ export default {
             },
             {
               prop: 'remove',
-              type: 'Function',
-              description: 'Method to fully reset the tags input',
+              type: '() => void',
+              description: 'Method to fully reset the tags input [Not yet implemented]',
             },
             {
               prop: 'removeTag',
-              type: 'Function',
+              type: '(tag?: string) => void',
               description:
                 'Method to remove a tag. Accepts one argument which is the tag value to remove',
             },
@@ -449,7 +428,7 @@ export default {
             },
             {
               prop: 'separator',
-              type: 'string | unknown[]',
+              type: 'string | readonly string[]',
               description: "The value of the 'separator' prop",
             },
             {
@@ -459,7 +438,7 @@ export default {
             },
             {
               prop: 'state',
-              type: 'boolean',
+              type: 'boolean | null',
               description:
                 "The contextual state of the component. Value of the 'state' prop. Possible values are true, false or null",
             },
@@ -490,9 +469,49 @@ export default {
               type: 'ColorVariant',
               description: "Value of the 'tag-variant' prop",
             },
+            {
+              prop: 'tagValidator',
+              type: '(t: string) => boolean',
+              description: "Value of the 'tag-variant' prop",
+            },
+            {
+              prop: 'tagVariant',
+              type: 'ColorVariant | null',
+              description: "Value of the 'tag-variant' prop",
+            },
           ],
-          name: 'default',
-          description: 'Slot to override the default rendering of the tags component',
+        },
+        {
+          name: 'tag',
+          description: 'Slot to override the default rendering an individual tag',
+          scope: [
+            {
+              prop: 'tag',
+              type: 'string',
+              description: 'Value of the tag',
+            },
+            {
+              prop: 'tagClass',
+              type: 'ClassValue',
+              description: 'Class (or classes) to apply to the tag element',
+            },
+            {
+              prop: 'tagVariant',
+              type: 'ColorVariant | null',
+              description: 'Color variant to apply to the tag',
+            },
+            {
+              prop: 'tagPills',
+              type: 'boolean',
+              description: 'Render the tag as a pill',
+            },
+            {
+              prop: 'removeTag',
+              type: '(tag?: string) => void',
+              description:
+                'Method to remove a tag. Accepts one argument which is the tag value to remove',
+            },
+          ],
         },
       ],
     },

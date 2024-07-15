@@ -239,8 +239,8 @@ const slotAttrs = computed(() => ({
   addButtonText: props.addButtonText,
   addButtonVariant: props.addButtonVariant,
   addTag,
-  disableAddButton: disableAddButton.value,
   disabled: props.disabled,
+  disableAddButton: disableAddButton.value,
   duplicateTagText: props.duplicateTagText,
   duplicateTags: duplicateTags.value,
   form: props.form,
@@ -251,6 +251,7 @@ const slotAttrs = computed(() => ({
     id: _inputId,
     value: inputValue,
   },
+  inputClass: props.inputClass,
   inputHandlers: {
     input: onInput,
     keydown: onKeydown,
