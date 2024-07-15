@@ -86,7 +86,7 @@ export default {
               'The message when duplicate tags are detected. Set to an empty string to disable the message',
           },
           inputAttrs: {
-            type: 'Record<string, unknown>',
+            type: 'Readonly<AttrsValue>',
             default: undefined,
             description: 'Additional attributes to apply to the new tag input element',
           },
@@ -155,10 +155,6 @@ export default {
             default: undefined,
             description: 'Separator character(s) that will trigger a tag to be created',
           },
-          size: {
-            type: 'Size',
-            default: 'md',
-          },
           tagClass: {
             type: 'ClassValue',
             default: undefined,
@@ -199,7 +195,7 @@ export default {
                 default: 'Add tag...',
               },
             }),
-            ['autofocus', 'disabled', 'form', 'id', 'name', 'placeholder', 'required', 'state']
+            ['autofocus', 'disabled', 'form', 'name', 'placeholder', 'required', 'size', 'state']
           ),
         },
       },
