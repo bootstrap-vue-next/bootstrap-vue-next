@@ -490,7 +490,8 @@ For browsers that support
 `<option>` elements via an array passed to the `options` prop.
 
 You may also manually provide `<option>` elements inside `<BFormDatalist>`. They will appear below
-any `<option>` elements generated from the `options` prop.
+any `<option>` elements generated from the `options` prop. Or use the `first` slot to place options
+above the generated options.
 
 <HighlightCard>
     <div>

@@ -540,7 +540,7 @@ const datalistSizes = ['Small', 'Medium', 'Large', 'Extra Large']
   </template>
 </HighlightCard>
 
-The above is a 'native' implementation of `datalist`. BootstrapVue provides the form helper component
+The above is a 'native' implementation of `datalist`. BootstrapVueNext provides the form helper component
 [`<BFormDatalist>`](/docs/components/form/#datalist-helper) for quickly creating a `<datalist>`
 from an array of options using the same options object as [`<BFormSelect>`](/docs/components/form-select#options-property).
 
