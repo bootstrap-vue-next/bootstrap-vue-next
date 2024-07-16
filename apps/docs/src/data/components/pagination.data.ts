@@ -1,167 +1,161 @@
 import type {ComponentReference} from '../../types'
+import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BPagination',
-      props: [
-        {
-          prop: 'align',
-          type: 'AlignmentJustifyContent | fill',
-          description:
-            "Alignment of the page buttons: 'start' (or 'left'), 'center', 'end' (or 'right'), or 'fill'",
+      props: {
+        '': {
+          align: {
+            type: 'AlignmentJustifyContent | fill',
+            description:
+              "Alignment of the page buttons: 'start' (or 'left'), 'center', 'end' (or 'right'), or 'fill'",
+          },
+          ellipsisClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: "Class(es) to apply to the 'ellipsis' placeholders",
+          },
+          ellipsisText: {
+            type: 'string',
+            default: '\u2026',
+            description: 'Content to place in the ellipsis placeholder',
+          },
+          firstClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: "Class(es) to apply to the 'Go to first page' button",
+          },
+          firstNumber: {
+            type: 'boolean',
+            default: false,
+            description: 'Display first page number instead of Goto First button',
+          },
+          firstText: {
+            type: 'string',
+            default: '\u00AB',
+            description: 'Content to place in the goto first page button',
+          },
+          hideEllipsis: {
+            type: 'boolean',
+            default: false,
+            description: 'Do not show ellipsis buttons',
+          },
+          hideGotoEndButtons: {
+            type: 'boolean',
+            default: false,
+            description: 'Hides the goto first and goto last page buttons',
+          },
+          labelFirstPage: {
+            type: 'string',
+            default: 'Go to first page',
+            description:
+              "Value to place in the 'aria-label' attribute of the goto first page button",
+          },
+          labelLastPage: {
+            type: 'string',
+            default: 'Go to last page',
+            description:
+              "Value to place in the 'aria-label' attribute of the goto last page button",
+          },
+          labelNextPage: {
+            type: 'string',
+            default: 'Go to next page',
+            description:
+              "Value to place in the 'aria-label' attribute of the goto next page button",
+          },
+          labelPage: {
+            type: 'string',
+            default: 'Go to page',
+            description:
+              "Value to place in the 'aria-label' attribute of the goto page button. Page number will be prepended automatically",
+          },
+          labelPrevPage: {
+            type: 'string',
+            default: 'Go to previous page',
+            description:
+              "Value to place in the 'aria-label' attribute of the goto previous page button",
+          },
+          lastClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: "Class(es) to apply to the 'Go to last page' button",
+          },
+          lastNumber: {
+            type: 'boolean',
+            default: false,
+            description: 'Display last page number instead of Goto Last button',
+          },
+          lastText: {
+            type: 'string',
+            default: '\u00BB',
+            description: 'Content to place in the goto last page button',
+          },
+          limit: {
+            type: 'Numberish',
+            default: 5,
+            description:
+              'Maximum number of buttons to show (including ellipsis if shown, but excluding the bookend buttons)',
+          },
+          modelValue: {
+            type: 'Numberish',
+            default: 1,
+            description: 'Current page number, starting from 1',
+          },
+          nextClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: "Class(es) to apply to the 'Go to next page' button",
+          },
+          nextText: {
+            type: 'string',
+            default: '\u203A',
+            description: 'Content to place in the goto next page button',
+          },
+          pageClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: "Class(es) to apply to the 'Go to page #' buttons",
+          },
+          perPage: {
+            type: 'Numberish',
+            default: 20,
+            description: 'Number of rows per page',
+          },
+          pills: {
+            type: 'boolean',
+            default: false,
+            description: 'Applies pill styling to the pagination buttons',
+          },
+          prevClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: "Class(es) to apply to the 'Go to previous page' button",
+          },
+          prevText: {
+            type: 'string',
+            default: '\u2039',
+            description: 'Content to place in the goto previous page button',
+          },
+          totalRows: {
+            type: 'Numberish',
+            default: 0,
+            description: 'Total number of rows in the dataset',
+          },
+          ...pick(
+            buildCommonProps({
+              ariaLabel: {
+                default: 'Pagination',
+              },
+              size: {
+                default: undefined,
+              },
+            }),
+            ['ariaControls', 'ariaLabel', 'disabled', 'size']
+          ),
         },
-        {
-          prop: 'ariaLabel',
-          type: 'string',
-          description: "Value to place in the 'aria-label' attribute of the pagination control",
-        },
-        {
-          prop: 'ariaControls',
-          type: 'string',
-          description:
-            'If this component controls another component or element, set this to the Id of the controlled component or element',
-        },
-        {
-          prop: 'disabled',
-          type: 'Boooleanish',
-          description:
-            "When set to true, disables the component's functionality and places it in a disabled state",
-        },
-        {
-          prop: 'ellipsisClass',
-          type: 'string[] | string',
-          description: "Class(es) to apply to the 'ellipsis' placeholders",
-        },
-        {
-          prop: 'ellipsisText',
-          type: 'string',
-          description: 'Content to place in the ellipsis placeholder',
-        },
-        {
-          prop: 'firstClass',
-          type: 'string[] | string',
-          description: "Class(es) to apply to the 'Go to first page' button",
-        },
-        {
-          prop: 'firstNumber',
-          type: 'boolean',
-          description: 'Display first page number instead of Goto First button',
-        },
-        {
-          prop: 'firstText',
-          type: 'string',
-          description: 'Content to place in the goto first page button',
-        },
-        {
-          prop: 'hideEllipsis',
-          type: 'boolean',
-          description: 'Do not show ellipsis buttons',
-        },
-        {
-          prop: 'hideGotoEndButtons',
-          type: 'boolean',
-          description: 'Hides the goto first and goto last page buttons',
-        },
-        {
-          prop: 'labelFirstPage',
-          type: 'string',
-          description: "Value to place in the 'aria-label' attribute of the goto first page button",
-        },
-        {
-          prop: 'labelLastPage',
-          type: 'string',
-          description: "Value to place in the 'aria-label' attribute of the goto last page button",
-        },
-        {
-          prop: 'labelNextPage',
-          type: 'string',
-          description: "Value to place in the 'aria-label' attribute of the goto next page button",
-        },
-        {
-          prop: 'labelPage',
-          type: 'string',
-          description:
-            "Value to place in the 'aria-label' attribute of the goto page button. Page number will be prepended automatically",
-        },
-        {
-          prop: 'labelPrevPage',
-          type: 'string',
-          description:
-            "Value to place in the 'aria-label' attribute of the goto previous page button",
-        },
-        {
-          prop: 'lastClass',
-          type: 'string[] | string',
-          description: "Class(es) to apply to the 'Go to last page' button",
-        },
-        {
-          prop: 'lastNumber',
-          type: 'boolean',
-          description: 'Display last page number instead of Goto Last button',
-        },
-        {
-          prop: 'lastText',
-          type: 'string',
-          description: 'Content to place in the goto last page button',
-        },
-        {
-          prop: 'limit',
-          type: 'number',
-          description:
-            'Maximum number of buttons to show (including ellipsis if shown, but excluding the bookend buttons)',
-        },
-        {
-          prop: 'nextClass',
-          type: 'string[] | string',
-          description: "Class(es) to apply to the 'Go to next page' button",
-        },
-        {
-          prop: 'nextText',
-          type: 'string',
-          description: 'Content to place in the goto next page button',
-        },
-        {
-          prop: 'pageClass',
-          type: 'string[] | string',
-          description: "Class(es) to apply to the 'Go to page #' buttons",
-        },
-        {
-          prop: 'perPage',
-          type: 'number',
-          description: 'Number of rows per page',
-        },
-        {
-          prop: 'pills',
-          type: 'boolean',
-          description: 'Applies pill styling to the pagination buttons',
-        },
-        {
-          prop: 'prevClass',
-          type: 'string[] | string',
-          description: "Class(es) to apply to the 'Go to previous page' button",
-        },
-        {
-          prop: 'prevText',
-          type: 'string',
-          description: 'Content to place in the goto previous page button',
-        },
-        {
-          prop: 'size',
-          type: 'Size',
-          description: "Size of the rendered buttons: 'sm', 'md' (default), or 'lg'",
-        },
-        {
-          prop: 'totalRows',
-          type: 'number',
-          description: 'Total number of rows in the dataset',
-        },
-        {
-          prop: 'modelValue',
-          type: 'number',
-          description: 'Current page number, starting from 1',
-        },
-      ],
+      },
       emits: [
         {
           event: 'update:modelValue',
