@@ -49,6 +49,35 @@ export default {
       ],
     },
     {
+      component: 'BFormDatalist',
+      props: {
+        '': {
+          ...pick(
+            buildCommonProps({
+              options: {
+                type: 'readonly (unknown | Record<string, unknown>)[]',
+                description:
+                  'Array of items to render in the component. Note that BFormDatalist only supports Options, not OptionsGroups',
+              },
+            }),
+            ['disabledField', 'htmlField', 'id', 'options', 'textField', 'valueField']
+          ),
+        },
+      },
+      emits: [],
+      slots: [
+        {
+          name: 'default',
+          description: 'Content to place in the from datalist',
+        },
+        {
+          name: 'first',
+          description: "Slot to place options above options provided via the 'options' prop",
+        },
+      ],
+    },
+
+    {
       component: 'BFormFloatingLabel',
       props: {
         '': {
