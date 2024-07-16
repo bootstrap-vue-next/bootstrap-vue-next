@@ -18,15 +18,7 @@ export default {
             type: 'boolean',
             default: false,
           },
-          center: {
-            type: 'boolean',
-            default: false,
-          },
           fluid: {
-            type: 'boolean',
-            default: false,
-          },
-          lazy: {
             type: 'boolean',
             default: false,
           },
@@ -35,20 +27,32 @@ export default {
             default: false,
           },
           height: {
-            type: 'number | string',
+            type: 'Numberish',
             default: undefined,
           },
-          start: {
+          lazy: {
             type: 'boolean',
             default: false,
           },
-          end: {
-            type: 'boolean',
-            default: false,
+          placement: {
+            type: "'start' | 'end' | 'center'",
+            default: undefined,
           },
           rounded: {
-            type: 'boolean | string',
+            type: 'boolean | RadiusElement',
             default: false,
+          },
+          roundedTop: {
+            type: 'boolean | RadiusElement',
+            default: undefined,
+          },
+          roundedBottom: {
+            type: 'boolean | RadiusElement',
+            default: undefined,
+          },
+          roundedStart: {
+            type: 'boolean | RadiusElement',
+            default: undefined,
           },
           sizes: {
             type: 'string | string[]',
@@ -62,12 +66,16 @@ export default {
             type: 'string | string[]',
             default: undefined,
           },
+          tag: {
+            type: 'string',
+            default: 'img',
+          },
           thumbnail: {
             type: 'boolean',
             default: false,
           },
           width: {
-            type: 'number | string',
+            type: 'Numberish',
             default: undefined,
           },
         },
