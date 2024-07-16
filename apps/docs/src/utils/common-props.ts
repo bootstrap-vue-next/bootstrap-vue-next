@@ -2,6 +2,12 @@ import {type PropertyReference} from '../types'
 
 export const commonProps = () =>
   ({
+    ariaControls: {
+      type: 'AriaInvalid',
+      default: undefined,
+      description:
+        'If this component controls another component or element, set this to the ID of the controlled component or element',
+    },
     ariaInvalid: {
       type: 'AriaInvalid',
       default: undefined,
@@ -126,6 +132,11 @@ export const commonProps = () =>
       default: null,
       description: 'Applies one of the Bootstrap theme color variants to the text',
     },
+    title: {
+      type: 'string',
+      default: undefined,
+      description: 'Text content to place in the title',
+    },
     tooltip: {
       type: 'boolean',
       default: false,
@@ -135,5 +146,10 @@ export const commonProps = () =>
       type: 'string',
       default: 'value',
       description: 'Field name in the `options` array that should be used for the value',
+    },
+    variant: {
+      type: 'ColorVariant | null',
+      default: null,
+      description: 'Applies one of the Bootstrap theme color variants to the component',
     },
   }) satisfies Record<string, PropertyReference>

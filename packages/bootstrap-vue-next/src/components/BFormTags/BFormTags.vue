@@ -251,6 +251,7 @@ const slotAttrs = computed(() => ({
     id: _inputId,
     value: inputValue,
   },
+  inputClass: props.inputClass,
   inputHandlers: {
     input: onInput,
     keydown: onKeydown,

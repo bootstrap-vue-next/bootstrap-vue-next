@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.23.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.23.4...bootstrapvuenext-v0.23.5) (2024-07-15)
+
+
+### Bug Fixes
+
+* useFocusTrap only to run when mounted fixes [#2041](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2041) ([b72b164](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b72b164d9a39684bccf33ae4ac489c79d343107c))
+
+## [0.23.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.23.3...bootstrapvuenext-v0.23.4) (2024-07-13)
+
+
+### Features
+
+* **form-input:** add invalid/valid background styles to type='range' fixes [#2026](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2026) ([cbb41fa](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cbb41fae2394895ed7f2b088797bab104dfcef99))
+
+
+### Bug Fixes
+
+* **BTable:** tablefield&lt;T&gt; fixes [#2023](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2023)  ([#2035](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2035)) ([a5e5cff](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a5e5cffc12010ca72163491fc49c7f3a31fa788e))
+
 ## [0.23.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.23.2...bootstrapvuenext-v0.23.3) (2024-07-11)
 
 

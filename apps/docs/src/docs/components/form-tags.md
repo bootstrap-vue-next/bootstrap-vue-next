@@ -18,7 +18,7 @@ Tags are arrays of short strings, used in various ways such as assigning categor
 
 Tags will have any leading and tailing whitespace removed, and duplicate tags are not permitted. Tags that contain spaces are permitted by default.
 
-Tags are added by clicking the Add button, pressing the <kbd>Enter</kbd> key or optionally when the change event fires on the new tag input (i.e. when focus moves from the input). The Add button will only appear when the user has entered a new tag value.
+Tags are added by clicking the Add button, pressing the <kbd>Enter</kbd> key or optionally when the `change` event fires on the new tag input (i.e. when focus moves from the input). The _Add_ button will only appear when the user has entered a new tag value.
 
 <HighlightCard>
   <label for="tags-basic">Type a new tag and press enter</label>
@@ -135,46 +135,18 @@ const value = ref<string[]>(['apple', 'orange', 'grape'])
 
 Several props are available to alter the basic styling of the default tagged interface:
 
-<table class="b-table table table-bordered table-striped bv-docs-table">
-  <thead>
-    <tr>
-      <th>Prop</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>tag-pills</code></td>
-      <td>Renders the tags with the appearance of pills</td>
-    </tr>
-    <tr>
-      <td><code>tag-variant</code></td>
-      <td>Applies one of the Bootstrap contextual variant theme colors to the tags</td>
-    </tr>
-    <tr>
-      <td><code>size</code></td>
-      <td>Set the size of the component's appearance. <code>sm</code>, <code>md</code> (default), or <code>lg</code></td>
-    </tr>
-    <tr>
-      <td><code>placeholder</code></td>
-      <td>The placeholder text for the new tag input element</td>
-    </tr>
-    <tr>
-      <td><code>state</code></td>
-      <td>
-        Sets the contextual state of the control. Set to <code>true</code> (for valid), <code>false</code> (for invalid), or <code>null</code>
-      </td>
-    </tr>
-    <tr>
-      <td><code>disabled</code></td>
-      <td>Places the component in a disabled state</td>
-    </tr>
-  </tbody>
-</table>
+| Prop          | Description                                                                                           |
+| ------------- | ----------------------------------------------------------------------------------------------------- |
+| `tag-pills`   | Renders the tags with the appearance of pills                                                         |
+| `tag-variant` | Applies one of the Bootstrap contextual variant theme colors to the tags                              |
+| `size`        | Set the size of the component's appearance. `sm`, `md` (default), or `lg`                             |
+| `placeholder` | The placeholder text for the new tag input element                                                    |
+| `state`       | Sets the contextual state of the control. Set to `true` (for valid), `false` (for invalid), or `null` |
+| `disabled`    | Places the component in a disabled state                                                              |
 
 For additional props, see the component reference section at the bottom of this page.
 
-The focus and validation state styling of the component relies upon BootstrapVue's custom CSS.
+The focus and validation state styling of the component relies upon BootstrapVueNext's custom CSS.
 
 <HighlightCard>
   <label for="tags-pills">Enter tags</label>
@@ -280,13 +252,10 @@ const state = computed(() => {
   return dirty.value ? tags.value.length > 2 && tags.value.length < 9 : null
 })
 
-watch(
-  () => tags.value,
-  (newValue, oldValue) => {
-    // Set the dirty flag on first change to the tags array
-    dirty.value = false
-  }
-)
+watch(tags, () => {
+  // Set the dirty flag on first change to the tags array
+  dirty.value = true
+})
 
 const tagValidator = (tag) => {
   // Individual tag validator function
@@ -306,7 +275,7 @@ The event `tag-state` will be emitted whenever new tags are entered into the new
 - `invalidTags` (tags that do not pass validation)
 - `duplicateTags` (tags that would be a duplicate of existing or validTags)
 
-The event will be emitted only when the new tag input changes (characters are entered that would be considered part of a tag), or when the user attempts to add a tag (i.e. via Enter, clicking the Add button, or entering a separator). The three arrays will be empty when the user clears the new tag input element (or contains just spaces).
+The event will be emitted only when the new tag input changes (characters are entered that would be considered part of a tag), or when the user attempts to add a tag (i.e. via <kbd>Enter</kbd>, clicking the **Add** button, or entering a separator). The three arrays will be empty when the user clears the new tag input element (or contains just spaces).
 
 If you are providing your own feedback for duplicate and invalid tags (via the use of the tag-state event) outside of the `<BFormTags>` component, you can disable the built in duplicate and invalid messages by setting the props duplicate-tag-text and invalid-tag-text (respectively) to either an empty string ('') or null.
 
@@ -411,213 +380,50 @@ The default scoped slot provides numerous properties and methods for use in rend
 
 The default slot scope properties are as follows:
 
-<table class="b-table table table-bordered table-striped bv-docs-table">
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>addButtonText</code></td>
-      <td>String</td>
-      <td>The value of the <code>add-button-text</code> prop</td>
-    </tr>
-    <tr>
-      <td><code>addButtonVariant</code></td>
-      <td>String</td>
-      <td>The value of the <code>add-button-variant</code> prop</td>
-    </tr>
-    <tr>
-      <td><code>addTag</code></td>
-      <td>Function</td>
-      <td>Method to add a new tag. Assumes the tag is the value of the input, but optionally accepts one argument which is the tag value to be added</td>
-    </tr>
-    <tr>
-      <td><code>disableAddButton</code></td>
-      <td>Boolean</td>
-      <td>Will be <code>true</code> if the tag(s) in the input cannot be added (all invalid and/or duplicates)</td>
-    </tr>
-    <tr>
-      <td><code>disabled</code></td>
-      <td>Boolean</td>
-      <td><code>true</code> if the component is in the disabled state. Value of the <code>disabled</code> prop</td>
-    </tr>
-    <tr>
-      <td><code>duplicateTagText</code></td>
-      <td>String</td>
-      <td>The value of the <code>duplicate-tag-text</code> prop</td>
-    </tr>
-    <tr>
-      <td><code>duplicateTags</code></td>
-      <td>Array</td>
-      <td>Array of the duplicate tag(s) the user has entered</td>
-    </tr>
-    <tr>
-      <td><code>form</code></td>
-      <td>String</td>
-      <td>The value of the <code>form</code> prop</td>
-    </tr>
-    <tr>
-      <td><code>inputAttrs</code></td>
-      <td>Object</td>
-      <td>Object of attributes to apply to the new tag input element via <code>v-bind="inputAttrs"</code>. See below for details</td>
-    </tr>
-    <tr>
-      <td><code>inputHandlers</code></td>
-      <td>Object</td>
-      <td>Object of event handlers to apply to the new tag input element via <code>v-on="inputHandlers"</code>. See below for details</td>
-    </tr>
-    <tr>
-      <td><code>inputId</code></td>
-      <td>String</td>
-      <td>ID to add to the new tag input element. Defaults to prop <code>input-id</code>. If not provided a unique ID is auto-generated. Also available via 'inputAttrs.id'</td>
-    </tr>
-    <tr>
-      <td><code>inputType</code></td>
-      <td>String</td>
-      <td>Type of input to render (normalized version of prop <code>input-type</code>)</td>
-    </tr>
-    <tr>
-      <td><code>invalidTagText</code></td>
-      <td>String</td>
-      <td>The value of the <code>invalid-tag-text</code> prop</td>
-    </tr>
-    <tr>
-      <td><code>invalidTags</code></td>
-      <td>Array</td>
-      <td>Array of the invalid tag(s) the user has entered</td>
-    </tr>
-    <tr>
-      <td><code>isDuplicate</code></td>
-      <td>Boolean</td>
-      <td><code>true</code> if the user input contains duplicate tag(s)</td>
-    </tr>
-    <tr>
-      <td><code>isInvalid</code></td>
-      <td>Boolean</td>
-      <td><code>true</code> if the user input contains invalid tag(s)</td>
-    </tr>
-    <tr>
-      <td><code>isLimitReached</code></td>
-      <td>Boolean</td>
-      <td><code>true</code> if a <code>limit</code> is configured and the amount of tags has reached the limit</td>
-    </tr>
-    <tr>
-      <td><code>limitTagsText</code></td>
-      <td>String</td>
-      <td>The value of the <code>limit-tags-text</code> prop</td>
-    </tr>
-    <tr>
-      <td><code>limitTagsText</code></td>
-      <td>String</td>
-      <td>The value of the <code>limit-tags-text</code> prop</td>
-    </tr>
-    <tr>
-      <td><code>limit</code></td>
-      <td>String</td>
-      <td>The value of the <code>limit</code> prop</td>
-    </tr>
-    <tr>
-      <td><code>noTagRemove</code></td>
-      <td>Boolean</td>
-      <td>The value of the <code>no-tag-remove</code> prop</td>
-    </tr>
-    <tr>
-      <td><code>placeholder</code></td>
-      <td>String</td>
-      <td>The value of the <code>placeholder</code> prop</td>
-    </tr>
-    <tr>
-      <td><code>removeTag</code></td>
-      <td>Function</td>
-      <td>Method to remove a tag. Accepts one argument which is the tag value to remove</td>
-    </tr>
-    <tr>
-      <td><code>required</code></td>
-      <td>Boolean</td>
-      <td>The value of the <code>required</code> prop</td>
-    </tr>
-    <tr>
-      <td><code>separator</code></td>
-      <td>String</td>
-      <td>The value of the <code>separator</code> prop</td>
-    </tr>
-    <tr>
-      <td><code>size</code></td>
-      <td>String</td>
-      <td>The value of the <code>size</code> prop</td>
-    </tr>
-    <tr>
-      <td><code>state</code></td>
-      <td>Boolean</td>
-      <td>The contextual state of the component. Value of the <code>state</code> prop. Possible values are <code>true</code>, <code>false</code> or <code>null</code></td>
-    </tr>
-    <tr>
-      <td><code>tagClass</code></td>
-      <td>String, Array, or Object</td>
-      <td>The value of the <code>tag-variant</code> prop. Class (or classes) to apply to the tag elements</td>
-    </tr>
-    <tr>
-      <td><code>tagPills</code></td>
-      <td>Boolean</td>
-      <td>The value of the <code>tag-pills</code> prop.</td>
-    </tr>
-    <tr>
-      <td><code>tagRemoveLabel</code></td>
-      <td>String</td>
-      <td>Value of the <code>tag-remove-label</code> prop. Used as the <code>aria-label</code> attribute on the remove button of tags</td>
-    </tr>
-    <tr>
-      <td><code>tagVariant</code></td>
-      <td>String</td>
-      <td>Value of the <code>tag-variant</code> prop.</td>
-    </tr>
-    <tr>
-      <td><code>tags</code></td>
-      <td>Array</td>
-      <td>Array of current tag strings</td>
-    </tr>
-  </tbody>
-</table>
+| Property           | Type                     | Description                                                                                                                                            |
+| ------------------ | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `addButtonText`    | String                   | The value of the `add-button-text` prop                                                                                                                |
+| `addButtonVariant` | String                   | The value of the `add-button-variant` prop                                                                                                             |
+| `addTag`           | Function                 | Method to add a new tag. Assumes the tag is the value of the input, but optionally accepts one argument which is the tag value to be added             |
+| `disableAddButton` | Boolean                  | Will be `true` if the tag(s) in the input cannot be added (all invalid and/or duplicates)                                                              |
+| `disabled`         | Boolean                  | `true` if the component is in the disabled state. Value of the `disabled` prop                                                                         |
+| `duplicateTagText` | String                   | The value of the `duplicate-tag-text` prop                                                                                                             |
+| `duplicateTags`    | Array                    | Array of the duplicate tag(s) the user has entered                                                                                                     |
+| `form`             | String                   | The value of the `form` prop                                                                                                                           |
+| `inputAttrs`       | Object                   | Object of attributes to apply to the new tag input element via `v-bind="inputAttrs"`. See below for details                                            |
+| `inputHandlers`    | Object                   | Object of event handlers to apply to the new tag input element via `v-on="inputHandlers"`. See below for details                                       |
+| `inputId`          | String                   | ID to add to the new tag input element. Defaults to prop `input-id`. If not provided a unique ID is auto-generated. Also available via 'inputAttrs.id' |
+| `inputType`        | String                   | Type of input to render (normalized version of prop `input-type`)                                                                                      |
+| `invalidTagText`   | String                   | The value of the `invalid-tag-text` prop                                                                                                               |
+| `invalidTags`      | Array                    | Array of the invalid tag(s) the user has entered                                                                                                       |
+| `isDuplicate`      | Boolean                  | `true` if the user input contains duplicate tag(s)                                                                                                     |
+| `isInvalid`        | Boolean                  | `true` if the user input contains invalid tag(s)                                                                                                       |
+| `isLimitReached`   | Boolean                  | `true` if a `limit` is configured and the amount of tags has reached the limit                                                                         |
+| `limitTagsText`    | String                   | The value of the `limit-tags-text` prop                                                                                                                |
+| `limit`            | String                   | The value of the `limit` prop                                                                                                                          |
+| `noTagRemove`      | Boolean                  | The value of the `no-tag-remove` prop                                                                                                                  |
+| `placeholder`      | String                   | The value of the `placeholder` prop                                                                                                                    |
+| `removeTag`        | Function                 | Method to remove a tag. Accepts one argument which is the tag value to remove                                                                          |
+| `required`         | Boolean                  | The value of the `required` prop                                                                                                                       |
+| `separator`        | String                   | The value of the `separator` prop                                                                                                                      |
+| `size`             | String                   | The value of the `size` prop                                                                                                                           |
+| `state`            | Boolean                  | The contextual state of the component. Value of the `state` prop. Possible values are `true`, `false`, or `null`                                       |
+| `tagClass`         | String, Array, or Object | The value of the `tag-variant` prop. Class (or classes) to apply to the tag elements                                                                   |
+| `tagPills`         | Boolean                  | The value of the `tag-pills` prop                                                                                                                      |
+| `tagRemoveLabel`   | String                   | Value of the `tag-remove-label` prop. Used as the `aria-label` attribute on the remove button of tags                                                  |
+| `tagVariant`       | String                   | Value of the `tag-variant` prop                                                                                                                        |
+| `tags`             | Array                    | Array of current tag strings                                                                                                                           |
 
 #### `inputAttrs` object properties
 
 The `inputAttrs` object contains attributes to bind (`v-bind`) to the new tag input element.
 
-<table class="b-table table table-bordered table-striped bv-docs-table">
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>disabled</code></td>
-      <td>Boolean</td>
-      <td>The <code>disabled</code> attribute for the new tag input. Value of the <code>disabled</code> prop</td>
-    </tr>
-    <tr>
-      <td><code>form</code></td>
-      <td>String</td>
-      <td>The value of the <code>form</code> prop</td>
-    </tr>
-    <tr>
-      <td><code>id</code></td>
-      <td>String</td>
-      <td>The <code>id</code> attribute for the new tag input</td>
-    </tr>
-    <tr>
-      <td><code>value</code></td>
-      <td>String</td>
-      <td>The <code>value</code> attribute for the new tag input</td>
-    </tr>
-  </tbody>
-</table>
+| Property | Type    | Description                                                                  |
+| -------- | ------- | ---------------------------------------------------------------------------- |
+| disabled | Boolean | The `disabled` attribute for the new tag input. Value of the `disabled` prop |
+| form     | String  | The value of the `form` prop                                                 |
+| id       | String  | The `id` attribute for the new tag input                                     |
+| value    | String  | The `value` attribute for the new tag input                                  |
 
 The `inputAttrs` object will also include any attributes set via the `input-attrs` prop. Note that the above attributes take precedence over any of the same attributes specified in the `input-attrs` prop.
 
@@ -625,32 +431,11 @@ The `inputAttrs` object will also include any attributes set via the `input-attr
 
 The `inputHandlers` object contains event handlers to bind (`v-on`) to the new tag input element.
 
-<table class="b-table table table-bordered table-striped bv-docs-table">
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>change</code></td>
-      <td>Function</td>
-      <td>Event handler for the input element <code>change</code> event. Accepts a single argument of either an event object or a string. Change will trigger adding the tag.</td>
-    </tr>
-    <tr>
-      <td><code>input</code></td>
-      <td>Function</td>
-      <td>Event handler for the input element <code>input</code> event. Accepts a single argument of either an event object or a string. Updates the internal v-model for the new tag input element</td>
-    </tr>
-    <tr>
-      <td><code>keydown</code></td>
-      <td>Function</td>
-      <td>Event handler for the input element keydown <kbd>Enter</kbd> and <kbd>Del</kbd> events. Accepts a single argument which is the native keydown event object</td>
-    </tr>
-  </tbody>
-</table>
+| Property  | Type     | Description                                                                                                                                                                    |
+| --------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `change`  | Function | Event handler for the input element `change` event. Accepts a single argument of either an event object or a string. Change will trigger adding the tag.                       |
+| `input`   | Function | Event handler for the input element `input` event. Accepts a single argument of either an event object or a string. Updates the internal v-model for the new tag input element |
+| `keydown` | Function | Event handler for the input element keydown `Enter` and `Del` events. Accepts a single argument which is the native keydown event object                                       |
 
 The `change` handler, when needed, must be enabled via the `add-on-change` prop, otherwise it is a noop method.
 
@@ -1250,7 +1035,7 @@ const value = ref<string[]>([])
 
 ## `<BFormTag>` helper component
 
-BootstrapVue provides the helper component `<BFormTag>`, for use with the default scoped slot of `<BFormTags>`. The component is based upon [`<BBadge>`](/docs/components/badge) and [`<BButton>`](/docs/components/button).
+BootstrapVueNext provides the helper component `<BFormTag>`, for use with the default scoped slot of `<BFormTags>`. The component is based upon [`<BBadge>`](/docs/components/badge) and [`<BButton>`](/docs/components/button).
 
 `<BFormTag>` supports the same variants as `<BBadge>` and also supports pill styling. Sizing is based on the containing element's font-size.
 
@@ -1258,7 +1043,7 @@ The remove event is emitted when the `<BFormTag>` remove button is clicked.
 
 Tags that are too wide for their parent container will automatically have their text content truncated with an ellipsis. For this reason, it is always good practice to supply a title via the title prop when using the default slot of `<BFormTag>` for the tag content.
 
-Note `<BFormTag>` requires BootstrapVue's custom CSS/SCSS for proper styling.
+Note `<BFormTag>` requires BootstrapVueNext's custom CSS/SCSS for proper styling.
 
 <ComponentReference :data="data" />
 
@@ -1282,11 +1067,10 @@ import ComponentSidebar from '../../components/ComponentSidebar.vue'
     return dirty.value ? (tagsValidator.value.length > 2 && tagsValidator.value.length < 9) : null
   })
 
-  watch(() => tagsValidator.value, (newValue, oldValue) => {
+  watch(tagsValidator, () => {
     // Set the dirty flag on first change to the tags array
-    dirty.value = false
+    dirty.value = true
   })
-
   const tagValidator = (tag) => {
     // Individual tag validator function
     return tag === tag.toLowerCase() && tag.length > 2 && tag.length < 6

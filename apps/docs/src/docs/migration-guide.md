@@ -96,6 +96,11 @@ Datalist and disabling mousewheel events are not yet implemented.
 
 [Options as an object](https://bootstrap-vue.org/docs/components/form-select#options-as-an-object) was deprecated in BootstrapVue and never implemented in BootstrapVueNext
 
+## BFormSpinbutton
+
+The locale property in BSVN only allows a for a single locale, while BSV allows for an array of locales. If this is
+a limitation that affect your scenario, please [file an issue](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues) with an explanation of the expected behavior.
+
 <MigrationWrapper v-for="(item, i) in changes" :key="i" v-bind="item" />
 
 <script setup lang="ts">

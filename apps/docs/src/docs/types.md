@@ -36,6 +36,16 @@ type AriaInvalid = boolean | 'grammar' | 'spelling'
 
 </BCard>
 
+## AttrsValue
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type AttrsValue = Record<string, any>
+```
+
+</BCard>
+
 ## BodyProp
 
 This type is only used for the Toast component.
@@ -153,6 +163,16 @@ type CheckboxValue =
   | Readonly<Record<string, unknown>>
   | number
   | null
+```
+
+</BCard>
+
+## ClassValue
+
+<BCard class="bg-body-tertiary">
+
+```ts
+export type ClassValue = any
 ```
 
 </BCard>
