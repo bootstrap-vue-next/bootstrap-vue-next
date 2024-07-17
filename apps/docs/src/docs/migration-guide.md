@@ -101,10 +101,122 @@ Datalist and disabling mousewheel events are not yet implemented.
 The locale property in BSVN only allows a for a single locale, while BSV allows for an array of locales. If this is
 a limitation that affect your scenario, please [file an issue](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues) with an explanation of the expected behavior.
 
+## BModal
+
+### Replacement for Modal Message boxes
+
+[BootstrapVue](https://bootstrap-vue.org/docs/components/modal#modal-message-boxes) provided two methods on the `this.$bvModal` object called `msgBoxOk` and `msgBoxConfirm`.
+In holding with the Vue3 first philosophy, BootstrapVueNext provides a composible called [`useModalController`](/docs/composables/useModalController) that
+fills the same needs (and more).
+
+Please read the [`useModalController`](/docs/composables/useModalController) documentation and then come back here for examples of replacements
+for `msgBoxOk` and `msgBoxConfirm`.
+
+Example using `useModalController.show` to replace `msgBoxOk` (Remember to include `<BModalOrchestrator />` in your App Root):
+
+<HighlightCard>
+  <div>
+    <BButton @click="okBox">Show Message</BButton>
+    <div>Result: {{ okResult }}</div>
+  </div>
+
+<template #html>
+
+```vue
+<template>
+  <div>
+    <BButton @click="okBox">Show Message</BButton>
+    <div>Result: {{ okResult }}</div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import {BButton} from './components'
+import {useModalController} from './composables'
+import {ref} from 'vue'
+
+const {confirm, show} = useModalController()
+
+const confirmResult = ref<boolean | null | undefined>(null)
+
+const confirmBox = async () => {
+  confirmResult.value = await confirm?.({
+    props: {
+      body: 'Are you sure you want to do this?',
+      title: 'Confirm',
+      okTitle: 'Yes',
+      cancelTitle: 'No',
+    },
+  })
+}
+
+const okResult = ref<boolean | null | undefined>(undefined)
+
+const okBox = async () => {
+  okResult.value = await show?.({
+    props: {
+      body: 'This is an informational message',
+      title: 'Message',
+      okOnly: true,
+    },
+  })
+}
+</script>
+```
+
+  </template>
+</HighlightCard>
+
+Example using `useModalController.confirm` to replace `msgBoxConfirm` (Remember to include `<BModalOrchestrator />` in your App Root):
+
+<HighlightCard>
+  <div>
+    <BButton @click="confirmBox">Show Confirm</BButton>
+    <div>Result: {{ confirmResult ?? 'null' }}</div>
+  </div>
+
+<template #html>
+
+```vue
+<template>
+  <div>
+    <BButton @click="confirmBox">Show Confirm</BButton>
+    <div>Result: {{ confirmResult ?? 'null' }}</div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import {BButton} from './components'
+import {useModalController} from './composables'
+import {ref} from 'vue'
+
+const {confirm} = useModalController()
+const confirmResult = ref<boolean | null | undefined>(null)
+
+const confirmBox = async () => {
+  confirmResult.value = await confirm?.({
+    props: {
+      body: 'Are you sure you want to do this?',
+      title: 'Confirm',
+      okTitle: 'Yes',
+      cancelTitle: 'No',
+    },
+  })
+}
+</script>
+```
+
+  </template>
+</HighlightCard>
+
+The `show` and `confirm` `props` object accespts all of the properties that are defined on
+[BModal](/docs/components/modal#component-reference) excpet for `modelValue`.
+
 <MigrationWrapper v-for="(item, i) in changes" :key="i" v-bind="item" />
 
 <script setup lang="ts">
-import {computed} from 'vue'
+import {computed, ref} from 'vue'
+import {BButton, BModalOrchestrator, useModalController} from 'bootstrap-vue-next'
 import MigrationWrapper from '../components/MigrationWrapper.vue'
 import HighlightCard from '../components/HighlightCard.vue'
 
@@ -129,4 +241,31 @@ const changes = computed<{
     component: 'BCard',
   },
 ].sort((a, b) => a.component.localeCompare(b.component)))
+
+const {confirm, show} = useModalController()
+
+const okResult = ref<boolean | null | undefined>(undefined)
+
+const okBox = async () => {
+  okResult.value = await show?.({
+    props: {
+      body: 'This is an informational message',
+      title: 'Message',
+      okOnly: true,
+    },
+  })
+}
+
+const confirmResult = ref<boolean | null | undefined>(null)
+
+const confirmBox = async () => {
+  confirmResult.value = await confirm?.({
+    props: {
+      body: 'Are you sure you want to do this?',
+      title: 'Confirm',
+      okTitle: 'Yes',
+      cancelTitle: 'No',
+    },
+  })
+}
 </script>
