@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.23.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.23.4...bootstrapvuenext-v0.23.5) (2024-07-15)
+
+
+### Bug Fixes
+
+* useFocusTrap only to run when mounted fixes [#2041](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2041) ([b72b164](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b72b164d9a39684bccf33ae4ac489c79d343107c))
+
 ## [0.23.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.23.3...bootstrapvuenext-v0.23.4) (2024-07-13)
 
 
