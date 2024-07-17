@@ -424,6 +424,28 @@ export default {
           ],
           description: 'Emitted when the default header close button is clicked. Cancelable',
         },
+        {
+          event: 'backdrop',
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
+          description: 'Emitted when the backdrop is clicked. Cancelable',
+        },
+        {
+          event: 'esc',
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
+          description: 'Emitted when the esc keyboard button is clicked. Cancelable',
+        },
       ],
       slots: [
         {

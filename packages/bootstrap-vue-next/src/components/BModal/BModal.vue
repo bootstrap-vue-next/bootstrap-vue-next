@@ -187,8 +187,10 @@ const _props = withDefaults(defineProps<BModalProps>(), {
 const props = useDefaults(_props, 'BModal')
 
 const emit = defineEmits<{
+  'backdrop': [value: BvTriggerableEvent]
   'cancel': [value: BvTriggerableEvent]
   'close': [value: BvTriggerableEvent]
+  'esc': [value: BvTriggerableEvent]
   'hidden': [value: BvTriggerableEvent]
   'hide': [value: BvTriggerableEvent]
   'hide-prevented': []
@@ -380,6 +382,12 @@ const hideFn = (trigger = '') => {
     emit(trigger, event)
   }
   if (trigger === 'close') {
+    emit(trigger, event)
+  }
+  if (trigger === 'backdrop') {
+    emit(trigger, event)
+  }
+  if (trigger === 'esc') {
     emit(trigger, event)
   }
   emit('hide', event)
