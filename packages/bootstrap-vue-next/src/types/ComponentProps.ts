@@ -1231,8 +1231,8 @@ export interface BCardHeadFootProps extends ColorExtendables {
 }
 
 export interface BModalProps extends TeleporterProps {
-  autoFocus?: boolean
-  autoFocusButton?: 'ok' | 'cancel' | 'close'
+  autofocus?: boolean
+  autofocusButton?: 'ok' | 'cancel' | 'close'
   body?: string
   bodyAttrs?: Readonly<AttrsValue>
   bodyBgVariant?: ColorVariant | null
