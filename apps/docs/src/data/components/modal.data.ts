@@ -39,12 +39,12 @@ export default {
       component: 'BModal',
       props: {
         '': {
-          autoFocus: {
+          autofocus: {
             type: 'boolean',
             default: true,
             description: "When set to 'false', disables auto focusing the modal when opened",
           },
-          autoFocusButton: {
+          autofocusButton: {
             type: "'ok' | 'cancel' | 'close'",
             default: undefined,
             description:

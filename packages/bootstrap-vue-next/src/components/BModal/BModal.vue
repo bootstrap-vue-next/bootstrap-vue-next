@@ -128,8 +128,8 @@ defineOptions({
 // Implement auto focus props like autoFocusButton
 
 const _props = withDefaults(defineProps<BModalProps>(), {
-  autoFocus: true,
-  autoFocusButton: undefined,
+  autofocus: true,
+  autofocusButton: undefined,
   body: undefined,
   bodyBgVariant: null,
   bodyAttrs: undefined,
@@ -252,16 +252,16 @@ onKeyStroke(
 )
 useSafeScrollLock(modelValue, () => props.bodyScrolling)
 const {focused: modalFocus} = useFocus(element, {
-  initialValue: modelValue.value && props.autoFocusButton === undefined,
+  initialValue: modelValue.value && props.autofocusButton === undefined && props.autofocus === true,
 })
 const {focused: okButtonFocus} = useFocus(okButton, {
-  initialValue: modelValue.value && props.autoFocusButton === 'ok',
+  initialValue: modelValue.value && props.autofocusButton === 'ok' && props.autofocus === true,
 })
 const {focused: cancelButtonFocus} = useFocus(cancelButton, {
-  initialValue: modelValue.value && props.autoFocusButton === 'cancel',
+  initialValue: modelValue.value && props.autofocusButton === 'cancel' && props.autofocus === true,
 })
 const {focused: closeButtonFocus} = useFocus(closeButton, {
-  initialValue: modelValue.value && props.autoFocusButton === 'close',
+  initialValue: modelValue.value && props.autofocusButton === 'close' && props.autofocus === true,
 })
 
 const modalClasses = computed(() => [
@@ -416,12 +416,12 @@ const showFn = () => {
 }
 
 const pickFocusItem = () => {
-  if (props.autoFocus === false) return
-  props.autoFocusButton === 'ok'
+  if (props.autofocus === false) return
+  props.autofocusButton === 'ok'
     ? (okButtonFocus.value = true)
-    : props.autoFocusButton === 'close'
+    : props.autofocusButton === 'close'
       ? (closeButtonFocus.value = true)
-      : props.autoFocusButton === 'cancel'
+      : props.autofocusButton === 'cancel'
         ? (cancelButtonFocus.value = true)
         : (modalFocus.value = true)
 }
