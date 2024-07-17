@@ -6,14 +6,6 @@ export default {
       component: 'BTab',
       props: {
         '': {
-          id: {
-            type: 'string',
-            default: undefined,
-          },
-          title: {
-            type: 'string',
-            default: undefined,
-          },
           active: {
             type: 'boolean',
             default: false,
@@ -26,6 +18,10 @@ export default {
             type: 'boolean',
             default: false,
           },
+          id: {
+            type: 'string',
+            default: undefined,
+          },
           lazy: {
             type: 'boolean',
             default: undefined,
@@ -35,19 +31,23 @@ export default {
             default: undefined,
           },
           noBody: {
-            type: 'boolean | string',
+            type: 'boolean',
             default: false,
           },
           tag: {
             type: 'string',
             default: 'div',
           },
+          title: {
+            type: 'string',
+            default: undefined,
+          },
           titleItemClass: {
             type: 'ClassValue',
             default: undefined,
           },
           titleLinkAttributes: {
-            type: 'Record<string, unknown>',
+            type: 'AttrsValue',
             default: undefined,
           },
           titleLinkClass: {
@@ -63,12 +63,21 @@ export default {
           name: 'default',
           scope: [],
         },
+        {
+          name: 'title',
+          description: '',
+          scope: [],
+        },
       ],
     },
     {
       component: 'BTabs',
       props: {
         '': {
+          activeId: {
+            type: 'string',
+            default: undefined,
+          },
           activeNavItemClass: {
             type: 'ClassValue',
             default: undefined,
@@ -81,13 +90,13 @@ export default {
             type: 'AlignmentJustifyContent',
             default: undefined,
           },
-          contentClass: {
-            type: 'ClassValue',
-            default: undefined,
-          },
           card: {
             type: 'boolean',
             default: false,
+          },
+          contentClass: {
+            type: 'ClassValue',
+            default: undefined,
           },
           end: {
             type: 'boolean',
@@ -116,6 +125,10 @@ export default {
           lazy: {
             type: 'boolean',
             default: false,
+          },
+          modelValue: {
+            type: 'number',
+            default: -1,
           },
           navClass: {
             type: 'ClassValue',
@@ -149,13 +162,13 @@ export default {
             type: 'string',
             default: 'div',
           },
+          tabClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
           vertical: {
             type: 'boolean',
             default: false,
-          },
-          modelValue: {
-            type: 'number',
-            default: -1,
           },
         },
       },
