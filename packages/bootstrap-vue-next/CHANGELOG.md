@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.24.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.23.5...bootstrapvuenext-v0.24.0) (2024-07-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BModal:** autoFocus prop renamed to autofocus to align with Input elements
+
+### Features
+
+* BModal - add `backdrop` and `esc` events [#2054](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2054) ([ffda9b6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ffda9b6c3447add72f0ce426c10411f128cc3971))
+
+
+### Bug Fixes
+
+* **BFormTags:** remove CSS declaration. CSS declaration for text colour property making input text unreadable on dark mode when the input is focused ([4ffe220](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4ffe220e7595c830bb20600fd668b6a64d908e38))
+* **BFormTags:** resolve issue with input value when using default slot ([#2061](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2061)) ([4ffe220](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4ffe220e7595c830bb20600fd668b6a64d908e38))
+* **BFormTags:** use ref value in slotAttrs object. Switch inputId and inputValue to use .value to resolve issues causing a console error regarding [object Object] id and causing input value to be set to the same when using the default slot. ([4ffe220](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4ffe220e7595c830bb20600fd668b6a64d908e38))
+* **BModal:** autoFocus prop renamed to autofocus to align with Input elements ([cdb49ac](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cdb49ac9504eca5c7f9e3794a1f5fe8e3ea3a082))
+* **BModal:** respect prop autofocus when using autofocusButton ([cdb49ac](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cdb49ac9504eca5c7f9e3794a1f5fe8e3ea3a082))
+
 ## [0.23.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.23.4...bootstrapvuenext-v0.23.5) (2024-07-15)
 
 
