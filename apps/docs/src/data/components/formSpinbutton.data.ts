@@ -7,6 +7,10 @@ export default {
       component: 'BFormSpinbutton',
       props: {
         '': {
+          formatterFn: {
+            type: '(value: number) => string',
+            default: undefined,
+          },
           inline: {
             type: 'boolean',
             default: 'false',

@@ -133,6 +133,7 @@ export default {
           },
           options: {
             type: 'readonly CheckboxOptionRaw[]',
+            default: '() => []',
           },
           reverse: {
             type: 'boolean',

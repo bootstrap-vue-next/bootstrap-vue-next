@@ -6,15 +6,35 @@ export default {
       component: 'BToast',
       props: {
         '': {
-          bodyClass: {
-            type: 'ClassValue',
+          active: {
+            type: 'boolean',
             default: undefined,
-            description: 'CSS class (or classes) to add to the toast body element',
+          },
+          activeClass: {
+            type: 'string',
+            default: undefined,
+          },
+          bgVariant: {
+            type: 'ColorVariant | null',
+            default: null,
           },
           body: {
             type: 'string',
             default: undefined,
             description: 'The text content of the body',
+          },
+          bodyClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: 'CSS class (or classes) to add to the toast body element',
+          },
+          disabled: {
+            type: 'boolean',
+            default: undefined,
+          },
+          exactActiveClass: {
+            type: 'string',
+            default: undefined,
           },
           headerClass: {
             type: 'ClassValue',
@@ -26,11 +46,24 @@ export default {
             default: 'div',
             description: 'Specify the HTML tag to render instead of the default tag for the footer',
           },
+          href: {
+            type: 'string',
+            default: undefined,
+          },
+          icon: {
+            type: 'boolean',
+            default: undefined,
+          },
           id: {
             type: 'string',
             default: undefined,
             description:
               'Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed',
+          },
+          interval: {
+            type: 'Numberish',
+            default: '1000',
+            description: 'The interval of which the countdown timer will refresh itself',
           },
           isStatus: {
             type: 'boolean',
@@ -38,10 +71,11 @@ export default {
             description:
               "When set to 'true', makes the toast have attributes aria-live=polite and role=status. When 'false' aria-live will be 'assertive' and role will be 'alert'",
           },
-          autoHide: {
-            type: 'boolean',
-            default: true,
-            description: 'Used to set if the toast will be dismissed automatically',
+          modelValue: {
+            type: 'boolean | number',
+            default: false,
+            description:
+              'Sets if the toast is visible or the number of milliseconds that the toast will be dismissed',
           },
           noCloseButton: {
             type: 'boolean',
@@ -60,43 +94,97 @@ export default {
             description:
               'When set, disables the pausing of the auto hide delay when the mouse hovers the toast',
           },
-          solid: {
-            type: 'boolean',
-            default: false,
-            description:
-              'When set, renders the toast with a solid background rather than translucent',
-          },
-          title: {
-            type: 'string',
+          opacity: {
+            type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
             default: undefined,
-            description: "The toast's title text",
           },
-          modelValue: {
-            type: 'boolean | number',
-            default: false,
-            description:
-              'Sets if the toast is visible or the number of milliseconds that the toast will be dismissed',
-          },
-          toastClass: {
-            type: 'ClassValue',
+          opacityHover: {
+            type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
             default: undefined,
-            description: 'CSS class (or classes) to add to the toast wrapper element',
+          },
+          progressProps: {
+            type: "Omit<BProgressBarProps, 'label' | 'labelHtml' | 'max' | 'value'>",
+            default: undefined,
+            description:
+              'The properties to define the progress bar in the toast. No progress will be shown if left undefined',
           },
           showOnPause: {
             type: 'boolean',
             default: true,
             description: "When set, keeps the toast visible when it's paused",
           },
-          interval: {
-            type: 'number | string',
-            default: '1000',
-            description: 'The interval of which the countdown timer will refresh itself',
-          },
-          progressProps: {
-            type: "Omit<BProgressBarProps, 'label' | 'labelHtml' | 'max' | 'value'>",
+          rel: {
+            type: 'string',
             default: undefined,
+          },
+          replace: {
+            type: 'boolean',
+            default: undefined,
+          },
+          routerComponentName: {
+            type: 'string',
+            default: undefined,
+          },
+          solid: {
+            type: 'boolean',
+            default: false,
             description:
-              'The properties to define the progress bar in the toast. No toast will be shown if left undefined',
+              'When set, renders the toast with a solid background rather than translucent',
+          },
+          stretched: {
+            type: 'boolean',
+            default: false,
+          },
+          target: {
+            type: 'LinkTarget',
+            default: undefined,
+          },
+          textVariant: {
+            type: 'TextColorVariant | null',
+            default: null,
+          },
+          title: {
+            type: 'string',
+            default: undefined,
+            description: "The toast's title text",
+          },
+          to: {
+            type: 'RouteLocationRaw',
+            default: undefined,
+          },
+          toastClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: 'CSS class (or classes) to add to the toast wrapper element',
+          },
+          transProps: {
+            type: 'BTransitionProps',
+            default: undefined,
+            description: 'Props to pass to the BTransition wrapper',
+          },
+          underlineOffset: {
+            type: "1 | 2 | 3 | '1' | '2' | '3'",
+            default: undefined,
+          },
+          underlineOffsetHover: {
+            type: "1 | 2 | 3 | '1' | '2' | '3'",
+            default: undefined,
+          },
+          underlineOpacity: {
+            type: "0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'",
+            default: undefined,
+          },
+          underlineOpacityHover: {
+            type: "0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'",
+            default: undefined,
+          },
+          underlineVariant: {
+            type: 'ColorVariant | null',
+            default: undefined,
+          },
+          variant: {
+            type: 'ColorVariant | null',
+            default: undefined,
           },
         },
       },
@@ -123,6 +211,74 @@ export default {
           ],
           description: '',
           event: 'destroyed',
+        },
+        {
+          event: 'close',
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
+        },
+        {
+          event: 'close-countdown',
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'number',
+            },
+          ],
+        },
+        {
+          event: 'hide',
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
+        },
+        {
+          event: 'hide-prevented',
+          args: [],
+        },
+        {
+          event: 'hidden',
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
+        },
+        {
+          event: 'show',
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
+        },
+        {
+          event: 'show-prevented',
+          args: [],
+        },
+        {
+          event: 'shown',
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
         },
       ],
     },

@@ -6,8 +6,48 @@ export default {
       component: 'BProgress',
       props: {
         '': {
+          animated: {
+            type: 'boolean',
+            default: undefined,
+          },
+          bgVariant: {
+            type: 'ColorVariant | null',
+            default: undefined,
+          },
           height: {
             type: 'string',
+            default: undefined,
+          },
+          max: {
+            type: 'Numberish',
+            default: 100,
+          },
+          precision: {
+            type: 'Numberish',
+            default: undefined,
+          },
+          showProgress: {
+            type: 'boolean',
+            default: undefined,
+          },
+          showValue: {
+            type: 'boolean',
+            default: undefined,
+          },
+          striped: {
+            type: 'boolean',
+            default: undefined,
+          },
+          textVariant: {
+            type: 'TextColorVariant | null',
+            default: undefined,
+          },
+          value: {
+            type: 'Numberish',
+            default: undefined,
+          },
+          variant: {
+            type: 'ColorVariant | null',
             default: undefined,
           },
         },
@@ -29,6 +69,10 @@ export default {
             type: 'boolean',
             default: false,
           },
+          bgVariant: {
+            type: 'ColorVariant | null',
+            default: null,
+          },
           label: {
             type: 'string',
             default: undefined,
@@ -38,11 +82,11 @@ export default {
             default: undefined,
           },
           max: {
-            type: 'string | number',
+            type: 'Numberish',
             default: undefined,
           },
           precision: {
-            type: 'string | number',
+            type: 'Numberish',
             default: 0,
           },
           showProgress: {
@@ -57,8 +101,12 @@ export default {
             type: 'boolean',
             default: false,
           },
+          textVariant: {
+            type: 'TextColorVariant | null',
+            default: null,
+          },
           value: {
-            type: 'string | number',
+            type: 'Numberish',
             default: 0,
           },
           variant: {

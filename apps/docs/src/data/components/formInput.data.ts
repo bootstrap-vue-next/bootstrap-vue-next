@@ -12,12 +12,6 @@ export default {
             default: 'false',
             description: "Sets the 'autocomplete' attribute value on the form control",
           },
-          autofocus: {
-            type: 'boolean',
-            default: 'false',
-            description:
-              'When set to `true`, attempts to auto-focus the control when it is mounted, or re-activated when in a keep-alive. Does not set the `autofocus` attribute on the control',
-          },
           debounce: {
             type: 'Numberish',
             default: '0',
@@ -95,6 +89,7 @@ export default {
           },
           ...pick(buildCommonProps(buildCommonProps()), [
             'ariaInvalid',
+            'autofocus',
             'disabled',
             'form',
             'id',

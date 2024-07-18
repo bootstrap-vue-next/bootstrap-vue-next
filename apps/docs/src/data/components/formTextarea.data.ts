@@ -1,4 +1,5 @@
 import type {ComponentReference} from '../../types'
+import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
@@ -6,18 +7,60 @@ export default {
       component: 'BFormTextarea',
       props: {
         '': {
+          autoComplete: {
+            type: 'string',
+            default: undefined,
+          },
+          debounce: {
+            type: 'Numberish',
+            default: 0,
+          },
+          debounceMaxWait: {
+            type: 'Numberish',
+            default: 'NaN',
+          },
+          formatter: {
+            type: '(val: string, evt: Event) => string',
+            default: undefined,
+          },
+          lazyFormatter: {
+            type: 'boolean',
+            default: false,
+          },
+          list: {
+            type: 'string',
+            default: undefined,
+          },
+          modelValue: {
+            type: 'Numberish | null',
+            default: '""',
+          },
           noResize: {
             type: 'boolean',
             default: false,
           },
           rows: {
-            type: 'string | number',
+            type: 'Numberish',
             default: 2,
           },
           wrap: {
             type: 'string',
             default: 'soft',
           },
+          ...pick(buildCommonProps(), [
+            'ariaInvalid',
+            'autofocus',
+            'disabled',
+            'form',
+            'id',
+            'name',
+            'placeholder',
+            'plaintext',
+            'readonly',
+            'required',
+            'size',
+            'state',
+          ]),
         },
       },
       emits: [
