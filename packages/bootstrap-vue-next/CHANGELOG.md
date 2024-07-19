@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.24.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.0...bootstrapvuenext-v0.24.1) (2024-07-19)
+
+
+### Features
+
+* **BPopover:** Add close-on-hide prop to close the popover when it hides by clipping out of view ([#2040](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2040)) ([0102097](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/010209730e35464f1c3c612d738fdd08c73b2d5a))
+
 ## [0.24.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.23.5...bootstrapvuenext-v0.24.0) (2024-07-18)
 
 
