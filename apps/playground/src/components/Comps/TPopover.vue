@@ -149,6 +149,14 @@
       </BCol>
     </BRow>
     <BRow class="my-5 position-relative">
+      <BPopover :click="true" :close-on-hide="true" :delay="{show: 0, hide: 0}">
+        <template #title>Scroll me out of view</template>
+        <template #target>
+          <BButton>Click me. Popover closes when clipped</BButton>
+        </template>
+      </BPopover>
+    </BRow>
+    <BRow class="my-5 position-relative">
       <BCol>
         <BPopover v-model="value" strategy="absolute" no-fade no-auto-close manual>
           <template #title>
