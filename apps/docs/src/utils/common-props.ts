@@ -14,6 +14,11 @@ export const commonProps = () =>
       description:
         'Sets the `aria-invalid` attribute value on the wrapper element. When not provided, the `state` prop will control the attribute',
     },
+    autocomplete: {
+      type: 'string',
+      default: 'false',
+      description: "Sets the 'autocomplete' attribute value on the form control",
+    },
     ariaLabel: {
       type: 'string',
       default: undefined,
@@ -36,6 +41,17 @@ export const commonProps = () =>
       description:
         'When set to `true`, attempts to auto-focus the control when it is mounted, or re-activated when in a keep-alive. Does not set the `autofocus` attribute on the control',
     },
+    debounce: {
+      type: 'Numberish',
+      default: '0',
+      description:
+        "When set to a number of milliseconds greater than zero, will debounce the user input. Has no effect if prop 'lazy' is set",
+    },
+    debounceMaxWait: {
+      type: 'Numberish',
+      default: 'NaN',
+      description: "The maximum time in milliseconds allowed to be delayed before it''s invoked",
+    },
     disabled: {
       type: 'boolean',
       default: false,
@@ -53,6 +69,11 @@ export const commonProps = () =>
       description:
         'ID of the form that the form control belongs to. Sets the `form` attribute on the control',
     },
+    formatter: {
+      type: '(val: string, evt: Event) => string',
+      default: 'undefined',
+      description: 'Reference to a function for formatting the input',
+    },
     htmlField: {
       type: 'string',
       default: 'html',
@@ -65,10 +86,28 @@ export const commonProps = () =>
       description:
         'Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed',
     },
+    lazy: {
+      type: 'boolean',
+      default: 'false',
+      description:
+        "When set, updates the v-model on 'change'/'blur' events instead of 'input'. Emulates the Vue '.lazy' v-model modifier",
+    },
+    lazyFormatter: {
+      type: 'boolean',
+      default: 'false',
+      description:
+        'When set, the input is formatted on blur instead of each keystroke (if there is a formatter specified)',
+    },
     name: {
       type: 'string',
       default: undefined,
       description: 'Sets the value of the `name` attribute on the form control',
+    },
+    number: {
+      type: 'boolean',
+      default: 'false',
+      description:
+        "When set attempts to convert the input value to a native number. Emulates the Vue '.number' v-model modifier",
     },
     options: {
       type: 'readonly CheckboxOptionRaw[]',

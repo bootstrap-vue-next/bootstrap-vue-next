@@ -7,40 +7,6 @@ export default {
       component: 'BFormInput',
       props: {
         '': {
-          autocomplete: {
-            type: 'string',
-            default: 'false',
-            description: "Sets the 'autocomplete' attribute value on the form control",
-          },
-          debounce: {
-            type: 'Numberish',
-            default: '0',
-            description:
-              "When set to a number of milliseconds greater than zero, will debounce the user input. Has no effect if prop 'lazy' is set",
-          },
-          debounceMaxWait: {
-            type: 'Numberish',
-            default: 'NaN',
-            description:
-              "The maximum time in milliseconds allowed to be delayed before it''s invoked",
-          },
-          formatter: {
-            type: '(val: string, evt: Event) => string',
-            default: 'undefined',
-            description: 'Reference to a function for formatting the input',
-          },
-          lazy: {
-            type: 'boolean',
-            default: 'false',
-            description:
-              "When set, updates the v-model on 'change'/'blur' events instead of 'input'. Emulates the Vue '.lazy' v-model modifier",
-          },
-          lazyFormatter: {
-            type: 'boolean',
-            default: 'false',
-            description:
-              'When set, the input is formatted on blur instead of each keystroke (if there is a formatter specified)',
-          },
           list: {
             type: 'string',
             default: 'undefined',
@@ -64,12 +30,6 @@ export default {
             default: "''",
             description: 'The current value of the input',
           },
-          number: {
-            type: 'boolean',
-            default: 'false',
-            description:
-              "When set attempts to convert the input value to a native number. Emulates the Vue '.number' v-model modifier",
-          },
           step: {
             type: 'Numberish',
             default: 'undefined',
@@ -89,11 +49,18 @@ export default {
           },
           ...pick(buildCommonProps(buildCommonProps()), [
             'ariaInvalid',
+            'autocomplete',
             'autofocus',
+            'debounce',
+            'debounceMaxWait',
             'disabled',
             'form',
+            'formatter',
             'id',
+            'lazy',
+            'lazyFormatter',
             'name',
+            'number',
             'placeholder',
             'plaintext',
             'readonly',
