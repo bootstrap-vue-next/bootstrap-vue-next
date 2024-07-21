@@ -21,7 +21,7 @@
         v-bind="$attrs"
         :style="computedZIndex"
       >
-        <div class="modal-dialog" :class="modalDialogClasses">
+        <div class="modal-dialog" :class="modalDialogClasses" tabindex="0">
           <div v-if="lazyShowing" class="modal-content" :class="props.contentClass">
             <div v-if="!props.hideHeader" class="modal-header" :class="headerClasses">
               <slot name="header" v-bind="sharedSlots">

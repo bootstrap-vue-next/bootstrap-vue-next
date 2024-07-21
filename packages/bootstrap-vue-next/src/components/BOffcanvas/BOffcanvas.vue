@@ -41,7 +41,12 @@
               </template>
             </slot>
           </div>
-          <div class="offcanvas-body" :class="props.bodyClass" v-bind="props.bodyAttrs">
+          <div
+            class="offcanvas-body"
+            tabindex="0"
+            :class="props.bodyClass"
+            v-bind="props.bodyAttrs"
+          >
             <slot v-bind="sharedSlots" />
           </div>
           <div v-if="hasFooterSlot" :class="props.footerClass">
@@ -160,12 +165,6 @@ useSafeScrollLock(modelValue, () => props.bodyScrolling || isOpenByBreakpoint.va
 
 const element = ref<HTMLElement | null>(null)
 
-useActivatedFocusTrap({
-  element,
-  isActive: modelValue,
-  noTrap: () => props.noTrap || isOpenByBreakpoint.value,
-})
-
 onKeyStroke(
   'Escape',
   () => {
@@ -179,6 +178,13 @@ const {focused} = useFocus(element, {
 })
 
 const isActive = ref(modelValue.value)
+
+useActivatedFocusTrap({
+  element,
+  isActive,
+  noTrap: () => props.noTrap || isOpenByBreakpoint.value,
+})
+
 const lazyLoadCompleted = ref(false)
 const wasClosedByBreakpointChange = ref(false)
 
