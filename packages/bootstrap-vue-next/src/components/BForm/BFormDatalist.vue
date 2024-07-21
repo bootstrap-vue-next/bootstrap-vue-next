@@ -30,7 +30,7 @@ const _props = withDefaults(defineProps<BFormDatalistProps>(), {
   textField: 'text',
   valueField: 'value',
 })
-const props = useDefaults(_props, 'BFormSelect')
+const props = useDefaults(_props, 'BFormDatalist')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -41,16 +41,14 @@ defineSlots<{
 
 const computedId = useId(() => props.id, 'datalist')
 
-const {normalizedOptions, isComplex} = useFormSelect(() => props.options, props)
+const {normalizedOptions, isComplex} = useFormSelect(
+  () => props.options,
+  computed(() => ({...props, optionsField: 'options', labelField: 'label'})).value
+)
 
-const normalizedOptsWrapper = computed(() => {
-  let opts = normalizedOptions.value
-  if (opts.find((opt) => isComplex(opt))) {
-    // eslint-disable-next-line no-console
-    console.warn('Datalist may not contain complex options', computedId.value)
-
-    opts = opts.filter((opt) => !isComplex(opt))
-  }
-  return opts as readonly SelectOption<T>[]
-})
+const normalizedOptsWrapper = computed(
+  () =>
+    // Datalist doesn't support complex options
+    normalizedOptions.value.filter((opt) => !isComplex(opt)) as readonly SelectOption<T>[]
+)
 </script>

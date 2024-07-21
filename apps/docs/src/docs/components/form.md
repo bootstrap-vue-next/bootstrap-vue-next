@@ -522,7 +522,9 @@ See also:
 
 - [`<BFormInput> datalist`](/docs/components/form-input#datalist-support) for datalist usage.
 - [`<BFormSelect>` `options` prop](/docs/components/form-select#options-property) docs for details
-  on the formats and helper props associated with `options`.
+  on the formats and helper props associated with `options`. Note that `<BFormDatalist>` only support
+  a flat list of `BFormSelectOptions`, unlike `<BFormSelect>` which support a heirarchy of
+  `BFormSelectOption` and `BFormSelectOptionGroup`.
 
 ## Validation
 
