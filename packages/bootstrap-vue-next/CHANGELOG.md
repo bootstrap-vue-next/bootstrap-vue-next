@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.24.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.1...bootstrapvuenext-v0.24.2) (2024-07-21)
+
+
+### Bug Fixes
+
+* **focus-trap:** focus trap issues with modal and offcanvas fixes [#2064](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2064) ([91e7d04](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/91e7d041c80acd4988b79a3bd924d00a854107fb))
+
 ## [0.24.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.0...bootstrapvuenext-v0.24.1) (2024-07-19)
 
 
