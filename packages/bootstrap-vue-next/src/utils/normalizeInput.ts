@@ -1,4 +1,4 @@
-import type {Numberish} from 'src/types'
+import type {Numberish} from '../types'
 
 export default (
   v: Numberish | null,
