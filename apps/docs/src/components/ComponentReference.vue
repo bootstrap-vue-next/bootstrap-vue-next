@@ -154,7 +154,7 @@
                           v-for="scope in d.item.scope as SlotScopeReference[]"
                           :key="scope.prop"
                         >
-                          <code>{{ scope.prop }}</code>
+                          <code>{{ kebabCase(scope.prop) }}</code>
                           <code>: {{ scope.type }}</code>
                           <span v-if="!!scope.description"> - {{ scope.description }}</span>
                         </div>
@@ -162,7 +162,7 @@
                       <template #cell(args)="d">
                         <!-- eslint-disable-next-line prettier/prettier -->
                         <div v-for="arg in d.item.args as EmitArgReference[]" :key="arg.arg">
-                          <code>{{ arg.arg }}</code>
+                          <code>{{ kebabCase(arg.arg) }}</code>
                           <code>: {{ arg.type }}</code>
                           <span v-if="!!arg.description"> - {{ arg.description }}</span>
                         </div>
@@ -205,6 +205,7 @@ import type {
   MappedComponentReference,
   SlotScopeReference,
 } from '../types'
+import {kebabCase} from '../utils'
 
 const props = defineProps<{data: ComponentReference[]}>()
 
@@ -218,7 +219,7 @@ const sortData = computed(() =>
       props: Object.entries(el.props).map((el) => [
         el[0],
         Object.entries(el[1])
-          .map(([key, value]) => ({prop: key, ...value}))
+          .map(([key, value]) => ({prop: kebabCase(key), ...value}))
           .sort((a, b) => a.prop.localeCompare(b.prop)),
       ]),
       emits: el.emits.sort((a, b) => a.event.localeCompare(b.event)),
