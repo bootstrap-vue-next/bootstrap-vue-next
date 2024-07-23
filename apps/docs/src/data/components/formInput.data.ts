@@ -7,12 +7,6 @@ export default {
       component: 'BFormInput',
       props: {
         '': {
-          list: {
-            type: 'string',
-            default: 'undefined',
-            description:
-              'The ID of the associated datalist element or component (Not Yet Implemented)',
-          },
           max: {
             type: 'Numberish',
             default: 'undefined',
@@ -36,12 +30,6 @@ export default {
             description:
               "Value to set in the 'step' attribute on the input. Used by number-like inputs",
           },
-          trim: {
-            type: 'boolean',
-            default: 'false',
-            description:
-              "When set, trims any leading and trailing white space from the input value. Emulates the Vue '.trim' v-model modifier",
-          },
           type: {
             type: 'InputType',
             default: 'text',
@@ -57,10 +45,9 @@ export default {
             'form',
             'formatter',
             'id',
-            'lazy',
             'lazyFormatter',
+            'list',
             'name',
-            'number',
             'placeholder',
             'plaintext',
             'readonly',

@@ -92,6 +92,10 @@ handles references. See the [BFormInput documentation](/docs/components/form-inp
 
 Datalist and disabling mousewheel events are not yet implemented.
 
+`trim`, `lazy`, or `number` properties have been deprecated. We support the native modifiers
+[`trim`, `lazy`, and `number`](https://vuejs.org/guide/essentials/forms.html#modifiers).
+They work as documented in vue.js, so there is no longer a need for the properties.
+
 ## BFormSelect
 
 [Options as an object](https://bootstrap-vue.org/docs/components/form-select#options-as-an-object) was deprecated in BootstrapVue and never implemented in BootstrapVueNext
@@ -100,6 +104,12 @@ Datalist and disabling mousewheel events are not yet implemented.
 
 The locale property in BSVN only allows a for a single locale, while BSV allows for an array of locales. If this is
 a limitation that affect your scenario, please [file an issue](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues) with an explanation of the expected behavior.
+
+## BFormTextbox
+
+`trim`, `lazy`, or `number` properties have been deprecated. We support the native modifiers
+[`trim`, `lazy`, and `number`](https://vuejs.org/guide/essentials/forms.html#modifiers).
+They work as documented in vue.js, so there is no longer a need for the properties.
 
 ## BModal
 

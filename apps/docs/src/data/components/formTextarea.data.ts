@@ -38,10 +38,10 @@ export default {
             'disabled',
             'form',
             'formatter',
-            'lazyFormatter',
             'id',
+            'lazyFormatter',
+            'list',
             'name',
-            'number',
             'placeholder',
             'plaintext',
             'readonly',
@@ -54,39 +54,14 @@ export default {
       emits: [
         {
           event: 'update:modelValue',
-          args: [],
-          description: '',
-        },
-        {
-          event: 'change',
+          description:
+            'Emitted when the selected value(s) are changed. Looking for the `input` or `change` event - use `update:modelValue` instead.',
           args: [
             {
-              arg: 'change',
-              description: '',
-              type: 'Event',
-            },
-          ],
-          description: '',
-        },
-        {
-          event: 'blur',
-          args: [
-            {
-              arg: 'blur',
-              description: '',
-              type: 'FocusEvent',
-            },
-          ],
-          description: '',
-        },
-        {
-          event: 'input',
-          description: '',
-          args: [
-            {
-              arg: 'input',
-              description: '',
-              type: 'Event',
+              arg: 'value',
+              type: 'string',
+              description:
+                'Value of textarea, after any formatting. Not emitted if the value does not change',
             },
           ],
         },

@@ -377,24 +377,8 @@ const textFloatingLabel = ref()
 
 ## `v-model` modifiers
 
-Vue does not officially support `.lazy`, `.trim`, and `.number` modifiers on the `v-model` of custom
-component based inputs, and may generate a bad user experience. Avoid using Vue's native modifiers.
-
-To get around this, `BFormTextarea` has three boolean props `trim`, `number`, and `lazy` which
-emulate the native Vue `v-model` modifiers `.trim` and `.number` and `.lazy` respectively. The
-`lazy` prop will update the v-model on `change`/`blur`events.
-
-**Notes:**
-
-- The `number` prop takes precedence over the `trim` prop (i.e. `trim` will have no effect when
-  `number` is set)
-- When using the `number` prop, and if the value can be parsed as a number (via `parseFloat`) it
-  will return a value of type `Number` to the `v-model`, otherwise the original input value is
-  returned as type `String`. This is the same behaviour as the native `.number` modifier
-- The `trim` and `number` modifier props do not affect the value returned by the `input` or `change`
-  events. These events will always return the string value of the content of `<textarea>` after
-  optional formatting (which may not match the value returned via the `v-model` `update` event,
-  which handles the modifiers)
+We support the native modifiers [`trim`, `lazy`, and `number`](https://vuejs.org/guide/essentials/forms.html#modifiers).
+They workas documented in vue.js, so there is no longer a need for `trim`, `lazy`, or `number` properties as in BSV.
 
 ## Debounce support
 

@@ -86,28 +86,22 @@ export const commonProps = () =>
       description:
         'Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed',
     },
-    lazy: {
-      type: 'boolean',
-      default: 'false',
-      description:
-        "When set, updates the v-model on 'change'/'blur' events instead of 'input'. Emulates the Vue '.lazy' v-model modifier",
-    },
     lazyFormatter: {
       type: 'boolean',
       default: 'false',
       description:
         'When set, the input is formatted on blur instead of each keystroke (if there is a formatter specified)',
     },
+    list: {
+      type: 'string',
+      default: 'undefined',
+      description:
+        'The ID of the associated datalist element or component (Datalist is Not Yet Implemented)',
+    },
     name: {
       type: 'string',
       default: undefined,
       description: 'Sets the value of the `name` attribute on the form control',
-    },
-    number: {
-      type: 'boolean',
-      default: 'false',
-      description:
-        "When set attempts to convert the input value to a native number. Emulates the Vue '.number' v-model modifier",
     },
     options: {
       type: 'readonly CheckboxOptionRaw[]',
