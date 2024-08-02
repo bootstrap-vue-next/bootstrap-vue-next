@@ -368,7 +368,7 @@ const tableClasses = computed(() => ({
   'b-table-selectable': props.selectable,
   'user-select-none': props.selectable && isSelecting.value,
 }))
-// All three of these are similar, even though the two following are not computeds
+
 const getBusyRowClasses = computed(() => [
   props.tbodyTrClass
     ? typeof props.tbodyTrClass === 'function'

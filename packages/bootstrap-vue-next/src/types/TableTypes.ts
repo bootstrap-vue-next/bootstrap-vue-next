@@ -36,6 +36,10 @@ export type TableFieldAttribute<T> =
   | Record<string, unknown>
   | ((value: unknown, key: string, item: T) => Record<string, unknown>)
 
+export type TableRowType = 'row' | 'row-details' | 'row-top' | 'row-bottom' | 'table-busy'
+
+export type TableStrictClassValue = string | Record<string, boolean> | string[]
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TableField<T = any> = {
   key: LiteralUnion<keyof T>
@@ -49,7 +53,9 @@ export type TableField<T = any> = {
   sortDirection?: string
   sortByFormatted?: boolean | TableFieldFormatter<T>
   filterByFormatted?: boolean | TableFieldFormatter<T>
-  tdClass?: ClassValue
+  tdClass?:
+    | TableStrictClassValue
+    | ((value: unknown, key: string, item: T) => TableStrictClassValue)
   thClass?: ClassValue
   thStyle?: StyleValue
   variant?: ColorVariant | null

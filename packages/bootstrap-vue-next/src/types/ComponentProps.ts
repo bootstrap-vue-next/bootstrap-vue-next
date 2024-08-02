@@ -44,6 +44,8 @@ import type {
   SpinnerType,
   TableField,
   TableFieldRaw,
+  TableRowType,
+  TableStrictClassValue,
   TeleporterProps,
   TextColorVariant,
   TransitionMode,
@@ -998,20 +1000,12 @@ export interface BTableLiteProps<T> extends BTableSimpleProps {
   primaryKey?: string
   showEmpty?: boolean
   tbodyClass?: ClassValue
-  tbodyTrAttrs?: ClassValue
+  tbodyTrAttrs?: ((item: T | null, type: TableRowType) => AttrsValue) | AttrsValue
   // tbodyTransitionHandlers
   // tbodyTransitionProps
   tbodyTrClass?:
-    | ((
-        item: T | null,
-        type: string
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ) => string | readonly any[] | null | undefined)
-    | string
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    | Readonly<Record<PropertyKey, any>>
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    | readonly any[]
+    | ((item: T | null, type: TableRowType) => TableStrictClassValue)
+    | TableStrictClassValue
   tfootClass?: ClassValue
   tfootTrClass?: ClassValue
   theadClass?: ClassValue
