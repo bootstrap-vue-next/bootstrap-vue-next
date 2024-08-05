@@ -195,6 +195,16 @@ type ColorVariant =
 
 </BCard>
 
+## CombinedPlacement
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type CombinedPlacement = Placement | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end'
+```
+
+</BCard>
+
 ## ContainerPosition
 
 <BCard class="bg-body-tertiary">
@@ -238,6 +248,16 @@ type InputType =
 
 ```ts
 type LinkTarget = '_self' | '_blank' | '_parent' | '_top'
+```
+
+</BCard>
+
+## Placement
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type Placement = 'top' | 'bottom' | 'start' | 'end'
 ```
 
 </BCard>
