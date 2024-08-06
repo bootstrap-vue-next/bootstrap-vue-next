@@ -26,6 +26,7 @@
 import type {BFormTextareaProps, Numberish} from '../../types'
 import {computed, type CSSProperties} from 'vue'
 import {useDefaults, useFormInput, useStateClass} from '../../composables'
+import {normalizeInput} from '../../utils'
 
 const _props = withDefaults(defineProps<BFormTextareaProps>(), {
   // CommonInputProps
@@ -38,19 +39,16 @@ const _props = withDefaults(defineProps<BFormTextareaProps>(), {
   form: undefined,
   formatter: undefined,
   id: undefined,
-  lazy: false,
   lazyFormatter: false,
   list: undefined,
   modelValue: '',
   name: undefined,
-  number: false,
   placeholder: undefined,
   plaintext: false,
   readonly: false,
   required: false,
   size: undefined,
   state: null,
-  trim: false,
   // End CommonInputProps
   noResize: false,
   rows: 2,
@@ -60,16 +58,7 @@ const props = useDefaults(_props, 'BFormTextarea')
 
 const [modelValue, modelModifiers] = defineModel<Numberish | null, 'trim' | 'lazy' | 'number'>({
   default: '',
-  set: (v) => {
-    if (v === null) return
-    let update = v
-    if (modelModifiers.trim) update = update.toString().trim()
-    if (modelModifiers.number && typeof update === 'string' && update !== '') {
-      const parsed = Number.parseFloat(update)
-      update = Number.isNaN(parsed) ? update : parsed
-    }
-    return update
-  },
+  set: (v) => normalizeInput(v, modelModifiers),
 })
 
 const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =

@@ -6,33 +6,33 @@ export default {
       component: 'BPlaceholder',
       props: {
         '': {
-          tag: {
-            type: 'string',
-            default: 'span',
-          },
-          wrapperTag: {
-            type: 'string',
-            default: 'span',
-          },
-          width: {
-            type: 'string | number',
+          animation: {
+            type: 'PlaceholderAnimation',
             default: undefined,
           },
           cols: {
-            type: 'string | number',
+            type: 'Numberish',
             default: 12,
-          },
-          variant: {
-            type: 'ColorVariant | null',
-            default: null,
           },
           size: {
             type: 'PlaceholderSize',
             default: 'md',
           },
-          animation: {
-            type: 'PlaceholderAnimation',
+          tag: {
+            type: 'string',
+            default: 'span',
+          },
+          variant: {
+            type: 'ColorVariant | null',
+            default: null,
+          },
+          width: {
+            type: 'Numberish',
             default: undefined,
+          },
+          wrapperTag: {
+            type: 'string',
+            default: 'span',
           },
         },
       },
@@ -44,36 +44,8 @@ export default {
       emits: [],
       props: {
         '': {
-          noHeader: {
-            type: 'boolean',
-            default: false,
-          },
-          headerWidth: {
-            type: 'string | number',
-            default: 100,
-          },
-          headerVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-          headerAnimation: {
+          animation: {
             type: 'PlaceholderAnimation',
-            default: undefined,
-          },
-          headerSize: {
-            type: 'PlaceholderSize',
-            default: 'md',
-          },
-          noFooter: {
-            type: 'boolean',
-            default: false,
-          },
-          footerWidth: {
-            type: 'string | number',
-            default: 100,
-          },
-          footerVariant: {
-            type: 'ColorVariant | null',
             default: undefined,
           },
           footerAnimation: {
@@ -84,9 +56,61 @@ export default {
             type: 'PlaceholderSize',
             default: 'md',
           },
-          animation: {
+          footerVariant: {
+            type: 'ColorVariant | null',
+            default: undefined,
+          },
+          footerWidth: {
+            type: 'Numberish',
+            default: 100,
+          },
+          headerAnimation: {
             type: 'PlaceholderAnimation',
             default: undefined,
+          },
+          headerSize: {
+            type: 'PlaceholderSize',
+            default: 'md',
+          },
+          headerVariant: {
+            type: 'ColorVariant | null',
+            default: undefined,
+          },
+          headerWidth: {
+            type: 'Numberish',
+            default: 100,
+          },
+          imgBlankColor: {
+            type: 'string',
+            default: '#868e96',
+          },
+          imgPlacement: {
+            type: "'top' | 'bottom'",
+            default: 'top',
+          },
+          imgHeight: {
+            type: 'Numberish',
+            default: 100,
+          },
+          imgSrc: {
+            type: 'string',
+            default: undefined,
+          },
+          noButton: {
+            type: 'boolean',
+            default: false,
+          },
+          noFooter: {
+            type: 'boolean',
+            default: false,
+          },
+          noHeader: {
+            type: 'boolean',
+            default: false,
+          },
+          noImg: {
+            type: 'boolean',
+            default: false,
           },
           size: {
             type: 'PlaceholderSize',
@@ -95,30 +119,6 @@ export default {
           variant: {
             type: 'ColorVariant | null',
             default: undefined,
-          },
-          noButton: {
-            type: 'boolean',
-            default: false,
-          },
-          imgBottom: {
-            type: 'boolean',
-            default: false,
-          },
-          imgSrc: {
-            type: 'string',
-            default: undefined,
-          },
-          imgBlankColor: {
-            type: 'string',
-            default: '#868e96',
-          },
-          imgHeight: {
-            type: 'string | number',
-            default: 100,
-          },
-          noImg: {
-            type: 'boolean',
-            default: false,
           },
         },
       },
@@ -175,75 +175,75 @@ export default {
       emits: [],
       props: {
         '': {
-          rows: {
-            type: 'string | number',
-            default: 3,
-          },
-          columns: {
-            type: 'string | number',
-            default: 5,
-          },
-          cellWidth: {
-            type: 'string | number',
-            default: 100,
-          },
-          size: {
-            type: 'PlaceholderSize',
-            default: 'md',
-          },
           animation: {
             type: 'PlaceholderAnimation',
             default: undefined,
           },
-          variant: {
+          cellWidth: {
+            type: 'Numberish',
+            default: 100,
+          },
+          columns: {
+            type: 'Numberish',
+            default: 5,
+          },
+          footerAnimation: {
+            type: 'PlaceholderAnimation',
+            default: undefined,
+          },
+          footerCellWidth: {
+            type: 'Numberish',
+            default: 100,
+          },
+          footerColumns: {
+            type: 'Numberish',
+            default: undefined,
+          },
+          footerSize: {
+            type: 'PlaceholderSize',
+            default: 'md',
+          },
+          footerVariant: {
             type: 'ColorVariant | null',
             default: undefined,
           },
+          headerAnimation: {
+            type: 'PlaceholderAnimation',
+            default: undefined,
+          },
+          headerCellWidth: {
+            type: 'Numberish',
+            default: 100,
+          },
           headerColumns: {
-            type: 'string | number',
+            type: 'Numberish',
+            default: undefined,
+          },
+          headerSize: {
+            type: 'PlaceholderSize',
+            default: 'md',
+          },
+          headerVariant: {
+            type: 'ColorVariant | null',
             default: undefined,
           },
           hideHeader: {
             type: 'boolean',
             default: false,
           },
-          headerCellWidth: {
-            type: 'string | number',
-            default: 100,
-          },
-          headerSize: {
-            type: 'PlaceholderSize',
-            default: 'md',
-          },
-          headerAnimation: {
-            type: 'PlaceholderAnimation',
-            default: undefined,
-          },
-          headerVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-          footerColumns: {
-            type: 'string | number',
-            default: undefined,
+          rows: {
+            type: 'Numberish',
+            default: 3,
           },
           showFooter: {
             type: 'boolean',
             default: false,
           },
-          footerCellWidth: {
-            type: 'string | number',
-            default: 100,
-          },
-          footerSize: {
+          size: {
             type: 'PlaceholderSize',
             default: 'md',
           },
-          footerAnimation: {
-            type: 'PlaceholderAnimation',
-            default: undefined,
-          },
-          footerVariant: {
+          variant: {
             type: 'ColorVariant | null',
             default: undefined,
           },
@@ -273,24 +273,24 @@ export default {
       slots: [],
       props: {
         '': {
-          tag: {
-            type: 'string',
-            default: 'div',
-          },
-          width: {
-            type: 'string | number',
+          animation: {
+            type: 'PlaceholderAnimation',
             default: undefined,
           },
           cols: {
-            type: 'string | number',
+            type: 'Numberish',
             default: undefined,
+          },
+          tag: {
+            type: 'string',
+            default: 'div',
           },
           variant: {
             type: 'ColorVariant | null',
             default: 'primary',
           },
-          animation: {
-            type: 'PlaceholderAnimation',
+          width: {
+            type: 'Numberish',
             default: undefined,
           },
         },

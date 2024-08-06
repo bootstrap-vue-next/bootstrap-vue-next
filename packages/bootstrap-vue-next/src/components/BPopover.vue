@@ -101,6 +101,7 @@ const _props = withDefaults(defineProps<BPopoverProps>(), {
   boundary: 'clippingAncestors',
   boundaryPadding: undefined,
   click: false,
+  closeOnHide: false,
   teleportTo: undefined,
   teleportDisabled: false,
   content: undefined,
@@ -280,16 +281,15 @@ const {floatingStyles, middlewareData, placement, update} = useFloating(targetTr
 
 const arrowStyle = ref<CSSProperties>({position: 'absolute'})
 
-watch(middlewareData, () => {
+watch(middlewareData, (newValue) => {
   if (props.noHide === false) {
-    if (middlewareData.value.hide?.referenceHidden) {
-      hidden.value = true
-    } else {
-      hidden.value = false
+    hidden.value = !!newValue.hide?.referenceHidden
+    if (props.closeOnHide && hidden.value && !props.noAutoClose && !props.manual) {
+      hide(new Event('closeOnHide'))
     }
   }
-  if (middlewareData.value.arrow) {
-    const {x, y} = middlewareData.value.arrow
+  if (newValue.arrow) {
+    const {x, y} = newValue.arrow
     arrowStyle.value = {
       position: 'absolute',
       top: y ? `${y}px` : '',
@@ -376,6 +376,7 @@ const hide = (e: Readonly<Event>) => {
     if (
       e?.type === 'click' ||
       e?.type === 'forceHide' ||
+      e?.type === 'closeOnHide' ||
       (e?.type === 'update:modelValue' && props.manual) ||
       (!props.noninteractive &&
         isOutside.value &&

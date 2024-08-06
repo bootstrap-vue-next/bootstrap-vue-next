@@ -44,6 +44,8 @@ import type {
   SpinnerType,
   TableField,
   TableFieldRaw,
+  TableRowType,
+  TableStrictClassValue,
   TeleporterProps,
   TextColorVariant,
   TransitionMode,
@@ -1007,20 +1009,12 @@ export interface BTableLiteProps<T> extends BTableSimpleProps {
   primaryKey?: string
   showEmpty?: boolean
   tbodyClass?: ClassValue
-  tbodyTrAttrs?: ClassValue
+  tbodyTrAttrs?: ((item: T | null, type: TableRowType) => AttrsValue) | AttrsValue
   // tbodyTransitionHandlers
   // tbodyTransitionProps
   tbodyTrClass?:
-    | ((
-        item: T | null,
-        type: string
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ) => string | readonly any[] | null | undefined)
-    | string
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    | Readonly<Record<PropertyKey, any>>
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    | readonly any[]
+    | ((item: T | null, type: TableRowType) => TableStrictClassValue)
+    | TableStrictClassValue
   tfootClass?: ClassValue
   tfootTrClass?: ClassValue
   theadClass?: ClassValue
@@ -1195,6 +1189,7 @@ export interface BPopoverProps extends TeleporterProps {
   boundary?: Boundary | RootBoundary
   boundaryPadding?: Padding
   click?: boolean
+  closeOnHide?: boolean
   content?: string
   customClass?: ClassValue
   delay?:
@@ -1240,8 +1235,8 @@ export interface BCardHeadFootProps extends ColorExtendables {
 }
 
 export interface BModalProps extends TeleporterProps {
-  autoFocus?: boolean
-  autoFocusButton?: 'ok' | 'cancel' | 'close'
+  autofocus?: boolean
+  autofocusButton?: 'ok' | 'cancel' | 'close'
   body?: string
   bodyAttrs?: Readonly<AttrsValue>
   bodyBgVariant?: ColorVariant | null

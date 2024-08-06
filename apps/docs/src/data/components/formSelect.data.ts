@@ -12,6 +12,11 @@ export default {
             default: 'label',
             description: 'The key to use from the option object to get the label',
           },
+          modelValue: {
+            type: `SelectValue`,
+            default: '',
+            description: 'The value of the select control',
+          },
           multiple: {
             type: 'boolean',
             default: false,
@@ -27,11 +32,6 @@ export default {
             default: 0,
             description:
               'When set to a number larger than 0, will set the number of display option rows. Note not all browser will respect this setting',
-          },
-          modelValue: {
-            type: `SelectValue`,
-            default: '',
-            description: 'The value of the select control',
           },
           ...pick(
             buildCommonProps({
@@ -118,7 +118,7 @@ export default {
           },
           ...pick(
             buildCommonProps({
-              options: {type: 'unknown[] | Record<string, unknown>'},
+              options: {type: 'readonly (unknown | Record<string, unknown>)[]'},
             }),
             ['disabledField', 'htmlField', 'options', 'textField', 'valueField']
           ),

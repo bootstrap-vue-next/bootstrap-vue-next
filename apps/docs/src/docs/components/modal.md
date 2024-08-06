@@ -216,6 +216,11 @@ To programmatically control your modals with global state, refer to our document
 
 To programmatically create modals, refer to the documentation at [useModalController](/docs/composables/useModalController)
 
+### Modal message boxes
+
+If you're looking for replacements for `$bvModal.msgBoxOk` and `$bvModal.msgBoxConfirm` please see the
+[migration guide](/docs/migration-guide#replacement-for-modal-message-boxes)
+
 <ComponentReference :data="data" />
 
 <script setup lang="ts">

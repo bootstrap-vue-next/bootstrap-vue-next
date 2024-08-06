@@ -26,12 +26,16 @@ export default {
             type: 'boolean',
             default: false,
           },
+          noSpinner: {
+            type: 'boolean',
+            default: false,
+          },
           noWrap: {
             type: 'boolean',
             default: false,
           },
           opacity: {
-            type: 'number | string',
+            type: 'Numberish',
             default: 0.85,
           },
           overlayTag: {
@@ -39,8 +43,24 @@ export default {
             default: 'div',
           },
           rounded: {
-            type: 'boolean | string',
+            type: 'boolean | RadiusElement',
             default: false,
+          },
+          roundedTop: {
+            type: 'boolean | RadiusElement',
+            default: undefined,
+          },
+          roundedBottom: {
+            type: 'boolean | RadiusElement',
+            default: undefined,
+          },
+          roundedStart: {
+            type: 'boolean | RadiusElement',
+            default: undefined,
+          },
+          roundedEnd: {
+            type: 'boolean | RadiusElement',
+            default: undefined,
           },
           show: {
             type: 'boolean',
@@ -58,10 +78,6 @@ export default {
             type: 'ColorVariant | null',
             default: undefined,
           },
-          noSpinner: {
-            type: 'boolean',
-            default: false,
-          },
           variant: {
             type: "ColorVariant | 'white' | 'transparent' | null",
             default: 'light',
@@ -71,7 +87,7 @@ export default {
             default: 'div',
           },
           zIndex: {
-            type: 'number | string',
+            type: 'Numberish',
             default: 10,
           },
         },
@@ -104,6 +120,24 @@ export default {
           description: '',
           name: 'default',
           scope: [],
+        },
+        {
+          name: 'overlay',
+          description: '',
+          scope: [
+            {
+              prop: 'type',
+              type: 'SpinnerType',
+            },
+            {
+              prop: 'variant',
+              type: 'ColorVariant | null',
+            },
+            {
+              prop: 'small',
+              type: 'boolean',
+            },
+          ],
         },
       ],
     },

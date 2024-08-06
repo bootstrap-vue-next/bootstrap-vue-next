@@ -39,21 +39,24 @@ export default {
       component: 'BModal',
       props: {
         '': {
-          autoFocus: {
+          autofocus: {
             type: 'boolean',
             default: true,
             description: "When set to 'false', disables auto focusing the modal when opened",
           },
-          autoFocusButton: {
+          autofocusButton: {
             type: "'ok' | 'cancel' | 'close'",
             default: undefined,
             description:
               "Specify which built-in button to focus once the modal opens: 'ok', 'cancel', or 'close'",
           },
-          backdropVariant: {
-            type: 'ColorVariant | null',
+          body: {
+            type: 'string',
             default: undefined,
-            description: 'Applies one of the Bootstrap theme color variants to the backdrop',
+          },
+          bodyAttrs: {
+            type: 'Readonly<AttrsValue>',
+            default: undefined,
           },
           bodyBgVariant: {
             type: 'ColorVariant | null',
@@ -62,7 +65,7 @@ export default {
           },
           bodyClass: {
             type: 'ClassValue',
-            default: undefined,
+            default: null,
             description: "CSS class (or classes) to apply to the '.modal-body' wrapper element",
           },
           bodyScrolling: {
@@ -71,8 +74,8 @@ export default {
             description: 'Enables/disables scrolling the body while modal is open',
           },
           bodyTextVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
+            type: 'TextColorVariant | null',
+            default: null,
             description: 'Applies one of the Bootstrap theme color variants to the body text',
           },
           bodyVariant: {
@@ -86,6 +89,10 @@ export default {
             default: false,
             description:
               'Places the built in default footer OK and Cancel buttons in the disabled state',
+          },
+          buttonSize: {
+            type: 'Size',
+            default: 'md',
           },
           cancelDisabled: {
             type: 'boolean',
@@ -183,7 +190,7 @@ export default {
               'Applies a variant to the header close button when the header close button uses the header-close slot',
           },
           headerTextVariant: {
-            type: 'ColorVariant | null',
+            type: 'TextColorVariant | null',
             default: null,
             description: 'Applies one of the Bootstrap theme color variants to the header text',
           },
@@ -251,8 +258,13 @@ export default {
             description:
               "When set to 'true', disables the fade animation/transition on the component",
           },
+          noStacking: {
+            type: 'boolean',
+            default: false,
+          },
           noTrap: {
             type: 'boolean',
+            default: false,
             description: 'Disables the focus trap feature',
           },
           okDisabled: {
@@ -315,10 +327,9 @@ export default {
             default: 'h5',
             description: 'Specify the HTML tag to render instead of the default tag for the title',
           },
-          type: {
-            type: 'string',
+          transProps: {
+            type: 'Readonly<BTransitionProps>',
             default: undefined,
-            description: 'Type of the component',
           },
         },
       },
@@ -423,6 +434,28 @@ export default {
             },
           ],
           description: 'Emitted when the default header close button is clicked. Cancelable',
+        },
+        {
+          event: 'backdrop',
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
+          description: 'Emitted when the backdrop is clicked. Cancelable',
+        },
+        {
+          event: 'esc',
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
+          description: 'Emitted when the esc keyboard button is clicked. Cancelable',
         },
       ],
       slots: [

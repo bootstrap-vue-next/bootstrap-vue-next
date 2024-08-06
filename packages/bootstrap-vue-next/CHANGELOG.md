@@ -1,5 +1,47 @@
 # Changelog
 
+## [0.24.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.2...bootstrapvuenext-v0.24.3) (2024-08-06)
+
+
+### Bug Fixes
+
+* **BFormInput,BFormTextArea:** Deprecate trim, lazy, number props in favor of modifiers ([#2066](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2066)) ([f5be607](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f5be6074782b31c3db00b9c46fce0424dd021164))
+* **Table:** various functional syntaxes in attrs & classes fixes [#2083](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2083) ([#2087](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2087)) ([d8a9782](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d8a9782e2d9bf5910773afc409732d80870e75fc))
+
+## [0.24.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.1...bootstrapvuenext-v0.24.2) (2024-07-21)
+
+
+### Bug Fixes
+
+* **focus-trap:** focus trap issues with modal and offcanvas fixes [#2064](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2064) ([91e7d04](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/91e7d041c80acd4988b79a3bd924d00a854107fb))
+
+## [0.24.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.0...bootstrapvuenext-v0.24.1) (2024-07-19)
+
+
+### Features
+
+* **BPopover:** Add close-on-hide prop to close the popover when it hides by clipping out of view ([#2040](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2040)) ([0102097](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/010209730e35464f1c3c612d738fdd08c73b2d5a))
+
+## [0.24.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.23.5...bootstrapvuenext-v0.24.0) (2024-07-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BModal:** autoFocus prop renamed to autofocus to align with Input elements
+
+### Features
+
+* BModal - add `backdrop` and `esc` events [#2054](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2054) ([ffda9b6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ffda9b6c3447add72f0ce426c10411f128cc3971))
+
+
+### Bug Fixes
+
+* **BFormTags:** remove CSS declaration. CSS declaration for text colour property making input text unreadable on dark mode when the input is focused ([4ffe220](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4ffe220e7595c830bb20600fd668b6a64d908e38))
+* **BFormTags:** resolve issue with input value when using default slot ([#2061](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2061)) ([4ffe220](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4ffe220e7595c830bb20600fd668b6a64d908e38))
+* **BFormTags:** use ref value in slotAttrs object. Switch inputId and inputValue to use .value to resolve issues causing a console error regarding [object Object] id and causing input value to be set to the same when using the default slot. ([4ffe220](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4ffe220e7595c830bb20600fd668b6a64d908e38))
+* **BModal:** autoFocus prop renamed to autofocus to align with Input elements ([cdb49ac](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cdb49ac9504eca5c7f9e3794a1f5fe8e3ea3a082))
+* **BModal:** respect prop autofocus when using autofocusButton ([cdb49ac](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cdb49ac9504eca5c7f9e3794a1f5fe8e3ea3a082))
+
 ## [0.23.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.23.4...bootstrapvuenext-v0.23.5) (2024-07-15)
 
 

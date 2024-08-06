@@ -6,19 +6,21 @@ export default {
       component: 'BContainer',
       props: {
         '': {
-          gutterX: {
-            type: 'string',
-            description: 'Horizontal gutter',
-          },
-          gutterY: {
-            type: 'string',
-            description: 'Vertical gutter',
-          },
           fluid: {
             type: 'boolean | Breakpoint',
             default: false,
             description:
               'When set to true, makes the row 100% wide all the time, or set to one of the Bootstrap breakpoint names for 100% width up to the breakpoint',
+          },
+          gutterX: {
+            type: 'ColsNumbers',
+            default: undefined,
+            description: 'Horizontal gutter',
+          },
+          gutterY: {
+            type: 'ColNumbers',
+            default: undefined,
+            description: 'Vertical gutter',
           },
           tag: {
             type: 'string',
@@ -40,26 +42,57 @@ export default {
       component: 'BRow',
       props: {
         '': {
-          tag: {
-            type: 'string',
+          alignContent: {
+            type: 'AlignmentContent',
+            default: undefined,
           },
-          gutterX: {
-            type: 'string',
-          },
-          gutterY: {
-            type: 'string',
-          },
-          noGutters: {
-            type: 'boolean',
+          alignH: {
+            type: 'AlignmentJustifyContent',
+            default: undefined,
           },
           alignV: {
             type: 'AlignmentVertical',
+            default: undefined,
           },
-          alignH: {
-            type: 'AlignmentHorizontal',
+          cols: {
+            type: 'ColsNumbers',
+            default: undefined,
           },
-          alignContent: {
-            type: 'AlignmentContent',
+          colsLg: {
+            type: 'ColsNumbers',
+            default: undefined,
+          },
+          colsMd: {
+            type: 'ColsNumbers',
+            default: undefined,
+          },
+          colsSm: {
+            type: 'ColsNumbers',
+            default: undefined,
+          },
+          colsXl: {
+            type: 'ColsNumbers',
+            default: undefined,
+          },
+          colsXxl: {
+            type: 'ColsNumbers',
+            default: undefined,
+          },
+          gutterX: {
+            type: 'ColsNumbers',
+            default: undefined,
+          },
+          gutterY: {
+            type: 'ColsNumbers',
+            default: undefined,
+          },
+          noGutters: {
+            type: 'boolean',
+            default: false,
+          },
+          tag: {
+            type: 'string',
+            default: 'div',
           },
         },
       },
@@ -76,29 +109,89 @@ export default {
       component: 'BCol',
       props: {
         '': {
+          alignSelf: {
+            type: "AlignmentVertical | 'auto'",
+            default: undefined,
+          },
           col: {
-            description: '',
             type: 'boolean',
+            default: false,
           },
           cols: {
-            description: '',
-            type: 'string | number',
+            type: "ColsNumbers | 'auto'",
+            default: undefined,
           },
           offset: {
-            description: '',
-            type: 'string | number',
+            type: 'ColsNumbers',
+            default: undefined,
           },
           order: {
-            description: '',
-            type: 'string | number',
-          },
-          alignSelf: {
-            description: '',
-            type: "AlignmentVertical | 'auto'",
+            type: 'ColsNumbers',
+            default: undefined,
           },
           tag: {
-            description: '',
             type: 'string',
+            default: 'div',
+          },
+          lg: {
+            type: "boolean | ColsNumbers | 'auto'",
+            default: false,
+          },
+          md: {
+            type: "boolean | ColsNumbers | 'auto'",
+            default: false,
+          },
+          sm: {
+            type: "boolean | ColsNumbers | 'auto'",
+            default: false,
+          },
+          xl: {
+            type: "boolean | ColsNumbers | 'auto'",
+            default: false,
+          },
+          xxl: {
+            type: "boolean | ColsNumbers | 'auto'",
+            default: false,
+          },
+          offsetLg: {
+            type: 'ColsNumbers',
+            default: undefined,
+          },
+          offsetMd: {
+            type: 'ColsNumbers',
+            default: undefined,
+          },
+          offsetSm: {
+            type: 'ColsNumbers',
+            default: undefined,
+          },
+          offsetXl: {
+            type: 'ColsNumbers',
+            default: undefined,
+          },
+          offsetXxl: {
+            type: 'ColsNumbers',
+            default: undefined,
+          },
+          orderLg: {
+            type: 'ColsNumbers',
+            default: undefined,
+          },
+          orderMd: {
+            type: 'ColsNumbers',
+            default: undefined,
+          },
+          orderSm: {
+            type: 'ColsNumbers',
+            default: undefined,
+          },
+          orderXL: {
+            type: 'ColsNumbers',
+            default: undefined,
+          },
+          orderXxl: {
+            type: 'ColsNumbers',
+            default: undefined,
           },
         },
       },

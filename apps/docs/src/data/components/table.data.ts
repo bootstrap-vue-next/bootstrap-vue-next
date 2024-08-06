@@ -24,7 +24,23 @@ export default {
         type: 'boolean',
         default: false,
       },
+      fixed: {
+        type: 'boolean',
+        default: false,
+      },
       hover: {
+        type: 'boolean',
+        default: false,
+      },
+      id: {
+        type: 'string',
+        default: undefined,
+      },
+      noBorderCollapse: {
+        type: 'boolean',
+        default: false,
+      },
+      outlined: {
         type: 'boolean',
         default: false,
       },
@@ -32,17 +48,31 @@ export default {
         type: 'boolean | Breakpoint',
         default: false,
       },
+      small: {
+        type: 'boolean',
+        default: false,
+      },
       stacked: {
         type: 'boolean | Breakpoint',
         default: false,
+      },
+      stickyHeader: {
+        type: 'boolean | Numberish',
+        default: false,
+        description:
+          'Makes the table header sticky. Set to true for a maximum height 300px tall table, or set to any valid CSS height (including units). Inputting a number type is converted to px height',
       },
       striped: {
         type: 'boolean',
         default: false,
       },
-      small: {
+      stripedColumns: {
         type: 'boolean',
         default: false,
+      },
+      tableAttrs: {
+        type: 'AttrsValue',
+        default: undefined,
       },
       tableClass: {
         type: 'ClassValue',
@@ -51,12 +81,6 @@ export default {
       variant: {
         type: 'ColorVariant | null',
         default: null,
-      },
-      stickyHeader: {
-        type: 'boolean | Numberish',
-        default: false,
-        description:
-          'Makes the table header sticky. Set to true for a maximum height 300px tall table, or set to any valid CSS height (including units). Inputting a number type is converted to px height',
       },
     } as const
 
@@ -69,13 +93,49 @@ export default {
         type: 'string',
         default: undefined,
       },
+      captionHtml: {
+        type: 'string',
+        default: undefined,
+      },
+      detailsTdClass: {
+        type: 'ClassValue',
+        default: undefined,
+      },
+      emptyFilteredText: {
+        type: 'string',
+        default: 'There are no records matching your request',
+      },
+      emptyText: {
+        type: 'string',
+        default: 'There are no records to show',
+      },
+      fieldColumnClass: {
+        type: '(field: TableField) => Record<string, any>[] | string | Record<PropertyKey, any> | any[]',
+        default: undefined,
+      },
       fields: {
-        type: 'TableField[]',
+        type: 'TableFieldRaw[]',
         default: '() => []',
       },
       footClone: {
         type: 'boolean',
         default: false,
+      },
+      footRowVariant: {
+        type: 'ColorVariant | null',
+        default: undefined,
+      },
+      footVariant: {
+        type: 'ColorVariant | null',
+        default: undefined,
+      },
+      headRowVariant: {
+        type: 'ColorVariant | null',
+        default: undefined,
+      },
+      headVariant: {
+        type: 'ColorVariant | null',
+        default: undefined,
       },
       items: {
         type: 'TableItem[]',
@@ -85,33 +145,45 @@ export default {
         type: 'boolean',
         default: false,
       },
-      variant: {
-        type: 'ColorVariant | null',
+      modelValue: {
+        type: 'any',
+        default: undefined,
+      },
+      primaryKey: {
+        type: 'string',
         default: undefined,
       },
       showEmpty: {
         type: 'boolean',
         default: false,
       },
-      emptyText: {
-        type: 'string',
-        default: 'There are no records to show',
+      tbodyClass: {
+        type: 'ClassValue',
+        default: undefined,
       },
-      emptyFilteredText: {
-        type: 'string',
-        default: 'There are no records matching your request',
-      },
-      fieldColumnClass: {
-        type: '(field: TableField) => Record<string, any>[]',
+      tbodyTrAttrs: {
+        type: 'ClassValue',
         default: undefined,
       },
       tbodyTrClass: {
-        type: '(item: TableItem | null, type: string) => string | Array<any> | null | undefined',
+        type: '((item: TableItem | null, type: string) => string | any[] | null | undefined) | string | Record<PropertyKey, any> | any[]',
         default: undefined,
       },
-      virtualFields: {
-        type: 'number | string',
-        default: 0,
+      tfootClass: {
+        type: 'ClassValue',
+        default: undefined,
+      },
+      tfootTrClass: {
+        type: 'ClassValue',
+        default: undefined,
+      },
+      theadClass: {
+        type: 'ClassValue',
+        default: undefined,
+      },
+      theadTrClass: {
+        type: 'ClassValue',
+        default: undefined,
       },
     } as const
 
@@ -131,68 +203,6 @@ export default {
         component: 'BTable',
         props: {
           '': {
-            provider: {
-              type: 'BTableProvider',
-              default: undefined,
-            },
-            sortCompare: {
-              type: 'BTableSortCompare',
-              default: undefined,
-            },
-            noProvider: {
-              type: 'NoProviderTypes[]',
-              default: undefined,
-            },
-            noProviderPaging: {
-              type: 'boolean',
-              default: false,
-            },
-            noProviderSorting: {
-              type: 'boolean',
-              default: false,
-            },
-            noProviderFiltering: {
-              type: 'boolean',
-              default: false,
-            },
-            noSelectOnClick: {
-              type: 'boolean',
-              default: false,
-              description: 'Do not select row when clicked',
-            },
-            sortBy: {
-              type: 'BTableSortBy[]',
-              default: undefined,
-              description: 'Model representing the current sort state',
-            },
-            sortDesc: {
-              type: 'boolean',
-              default: false,
-            },
-            sortInternal: {
-              type: 'boolean',
-              default: true,
-            },
-            selectable: {
-              type: 'boolean',
-              default: false,
-            },
-            stickySelect: {
-              type: 'boolean',
-              default: false,
-            },
-            selectHead: {
-              type: 'boolean | string',
-              default: true,
-            },
-            selectMode: {
-              type: "'multi' | 'single' | 'range'",
-              default: 'single',
-            },
-            selectionVariant: {
-              type: 'ColorVariant | null',
-              default: 'primary',
-            },
             busy: {
               type: 'boolean',
               default: false,
@@ -201,12 +211,8 @@ export default {
               type: 'string',
               default: 'Loading...',
             },
-            perPage: {
-              type: 'number',
-              default: undefined,
-            },
             currentPage: {
-              type: 'number',
+              type: 'Numberish',
               default: 1,
             },
             filter: {
@@ -216,6 +222,79 @@ export default {
             filterable: {
               type: 'string[]',
               default: undefined,
+            },
+            multiSort: {
+              type: 'boolean',
+              default: false,
+            },
+            mustSort: {
+              type: 'boolean | string[]',
+              default: false,
+            },
+            noLocalSorting: {
+              type: 'boolean',
+              default: false,
+            },
+            noProvider: {
+              type: 'NoProviderTypes[]',
+              default: undefined,
+            },
+            noProviderFiltering: {
+              type: 'boolean',
+              default: false,
+            },
+            noProviderPaging: {
+              type: 'boolean',
+              default: false,
+            },
+            noProviderSorting: {
+              type: 'boolean',
+              default: false,
+            },
+            noSelectOnClick: {
+              type: 'boolean',
+              default: false,
+              description: 'Do not select row when clicked',
+            },
+            noSortableIcon: {
+              type: 'boolean',
+              default: false,
+            },
+            perPage: {
+              type: 'Numberish',
+              default: Number.POSITIVE_INFINITY,
+            },
+            provider: {
+              type: 'BTableProvider',
+              default: undefined,
+            },
+            selectable: {
+              type: 'boolean',
+              default: false,
+            },
+            selectedItems: {
+              type: 'TableItem[]',
+            },
+            selectHead: {
+              type: 'boolean | string',
+              default: true,
+            },
+            selectionVariant: {
+              type: 'ColorVariant | null',
+              default: 'primary',
+            },
+            selectMode: {
+              type: "'multi' | 'single' | 'range'",
+              default: 'multi',
+            },
+            sortBy: {
+              type: 'BTableSortBy[]',
+              default: undefined,
+              description: 'Model representing the current sort state',
+            },
+            stickySelect: {
+              type: 'boolean',
+              default: false,
             },
           },
           ...BTableLitePropsDefinition({

@@ -557,7 +557,8 @@ from an array of options using the same options object as [`<BFormSelect>`](/doc
 
 ## `v-model` modifiers
 
-We support the native modifiers `trim`, `lazy`, and `number`. They should all work out of the box
+We support the native modifiers [`trim`, `lazy`, and `number`](https://vuejs.org/guide/essentials/forms.html#modifiers).
+They work as documented in vue.js, so there is no longer a need for `trim`, `lazy`, or `number` properties as in BSV.
 
 ## Debounce support
 

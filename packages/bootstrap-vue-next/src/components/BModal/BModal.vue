@@ -21,7 +21,7 @@
         v-bind="$attrs"
         :style="computedZIndex"
       >
-        <div class="modal-dialog" :class="modalDialogClasses">
+        <div class="modal-dialog" :class="modalDialogClasses" tabindex="0">
           <div v-if="lazyShowing" class="modal-content" :class="props.contentClass">
             <div v-if="!props.hideHeader" class="modal-header" :class="headerClasses">
               <slot name="header" v-bind="sharedSlots">
@@ -128,8 +128,8 @@ defineOptions({
 // Implement auto focus props like autoFocusButton
 
 const _props = withDefaults(defineProps<BModalProps>(), {
-  autoFocus: true,
-  autoFocusButton: undefined,
+  autofocus: true,
+  autofocusButton: undefined,
   body: undefined,
   bodyBgVariant: null,
   bodyAttrs: undefined,
@@ -187,8 +187,10 @@ const _props = withDefaults(defineProps<BModalProps>(), {
 const props = useDefaults(_props, 'BModal')
 
 const emit = defineEmits<{
+  'backdrop': [value: BvTriggerableEvent]
   'cancel': [value: BvTriggerableEvent]
   'close': [value: BvTriggerableEvent]
+  'esc': [value: BvTriggerableEvent]
   'hidden': [value: BvTriggerableEvent]
   'hide': [value: BvTriggerableEvent]
   'hide-prevented': []
@@ -250,16 +252,16 @@ onKeyStroke(
 )
 useSafeScrollLock(modelValue, () => props.bodyScrolling)
 const {focused: modalFocus} = useFocus(element, {
-  initialValue: modelValue.value && props.autoFocusButton === undefined,
+  initialValue: modelValue.value && props.autofocusButton === undefined && props.autofocus === true,
 })
 const {focused: okButtonFocus} = useFocus(okButton, {
-  initialValue: modelValue.value && props.autoFocusButton === 'ok',
+  initialValue: modelValue.value && props.autofocusButton === 'ok' && props.autofocus === true,
 })
 const {focused: cancelButtonFocus} = useFocus(cancelButton, {
-  initialValue: modelValue.value && props.autoFocusButton === 'cancel',
+  initialValue: modelValue.value && props.autofocusButton === 'cancel' && props.autofocus === true,
 })
 const {focused: closeButtonFocus} = useFocus(closeButton, {
-  initialValue: modelValue.value && props.autoFocusButton === 'close',
+  initialValue: modelValue.value && props.autofocusButton === 'close' && props.autofocus === true,
 })
 
 const modalClasses = computed(() => [
@@ -382,6 +384,12 @@ const hideFn = (trigger = '') => {
   if (trigger === 'close') {
     emit(trigger, event)
   }
+  if (trigger === 'backdrop') {
+    emit(trigger, event)
+  }
+  if (trigger === 'esc') {
+    emit(trigger, event)
+  }
   emit('hide', event)
 
   if (event.defaultPrevented) {
@@ -408,12 +416,12 @@ const showFn = () => {
 }
 
 const pickFocusItem = () => {
-  if (props.autoFocus === false) return
-  props.autoFocusButton === 'ok'
+  if (props.autofocus === false) return
+  props.autofocusButton === 'ok'
     ? (okButtonFocus.value = true)
-    : props.autoFocusButton === 'close'
+    : props.autofocusButton === 'close'
       ? (closeButtonFocus.value = true)
-      : props.autoFocusButton === 'cancel'
+      : props.autofocusButton === 'cancel'
         ? (cancelButtonFocus.value = true)
         : (modalFocus.value = true)
 }

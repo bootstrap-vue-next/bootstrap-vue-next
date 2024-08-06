@@ -6,35 +6,43 @@ export default {
       component: 'BPopover',
       props: {
         '': {
-          modelValue: {
-            type: 'boolean',
-            default: false,
+          boundary: {
+            type: 'Boundary | RootBoundary',
+            default: 'clippingAncestors',
           },
-          teleportTo: {
-            type: 'string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined',
+          boundaryPadding: {
+            type: 'Padding',
             default: undefined,
           },
-          target: {
-            type: '(() => HTMLElement | VNode) | string | ComponentPublicInstance<HTMLElement> | HTMLSpanElement | HTMLElement | null ',
-            default: null,
-          },
-          reference: {
-            type: '(() => HTMLElement | VNode) | string | ComponentPublicInstance<HTMLElement> | HTMLSpanElement | HTMLElement | null',
-            default: null,
+          click: {
+            type: 'boolean',
+            default: false,
           },
           content: {
             type: 'string',
             default: undefined,
           },
+          customClass: {
+            type: 'ClassValue',
+            default: '',
+          },
+          delay: {
+            type: 'number | { show: number; hide: number }',
+            default: '() => {show: 100, hide: 300})',
+          },
+          floatingMiddleware: {
+            type: 'Middleware[]',
+            default: undefined,
+          },
+          html: {
+            type: 'boolean',
+            default: false,
+          },
           id: {
             type: 'string',
             default: undefined,
           },
-          title: {
-            type: 'string',
-            default: undefined,
-          },
-          click: {
+          inline: {
             type: 'boolean',
             default: false,
           },
@@ -42,39 +50,7 @@ export default {
             type: 'boolean',
             default: false,
           },
-          variant: {
-            type: 'ColorVariant | null',
-            default: null,
-          },
-          offset: {
-            type: 'number | string | null',
-            default: null,
-          },
-          customClass: {
-            type: 'ClassValue',
-            default: '',
-          },
-          placement: {
-            type: 'PopoverPlacement',
-            default: 'top',
-          },
-          strategy: {
-            type: 'Strategy',
-            default: 'absolute',
-          },
-          floatingMiddleware: {
-            type: 'Middleware[]',
-            default: undefined,
-          },
-          noFlip: {
-            type: 'boolean',
-            default: false,
-          },
-          noShift: {
-            type: 'boolean',
-            default: false,
-          },
-          noFade: {
+          modelValue: {
             type: 'boolean',
             default: false,
           },
@@ -82,57 +58,134 @@ export default {
             type: 'boolean',
             default: false,
           },
-          hide: {
+          noFade: {
             type: 'boolean',
-            default: true,
+            default: false,
+          },
+          noFlip: {
+            type: 'boolean',
+            default: false,
+          },
+          noHide: {
+            type: 'boolean',
+            default: false,
+          },
+          noShift: {
+            type: 'boolean',
+            default: false,
+          },
+          noSize: {
+            type: 'boolean',
+            default: false,
+          },
+          noninteractive: {
+            type: 'boolean',
+            default: false,
+          },
+          offset: {
+            type: 'Numberish | null',
+            default: null,
+          },
+          persistent: {
+            type: 'boolean',
+            default: false,
+          },
+          placement: {
+            type: 'PopoverPlacement',
+            default: 'top',
           },
           realtime: {
             type: 'boolean',
             default: false,
           },
-          inline: {
+          reference: {
+            type: 'string | ComponentPublicInstance | HTMLElement | null',
+            default: null,
+          },
+          strategy: {
+            type: 'Strategy',
+            default: 'absolute',
+          },
+          target: {
+            type: 'string | ComponentPublicInstance | HTMLElement | null ',
+            default: null,
+          },
+          teleportDisabled: {
             type: 'boolean',
             default: false,
+          },
+          teleportTo: {
+            type: 'string | RendererElement | null | undefined',
+            default: undefined,
+          },
+          title: {
+            type: 'string',
+            default: undefined,
           },
           tooltip: {
             type: 'boolean',
             default: false,
           },
-          html: {
-            type: 'boolean',
-            default: false,
-          },
-          delay: {
-            type: 'number | { show: number; hide: number }',
-            default: '() => {show: 100, hide: 300})',
+          variant: {
+            type: 'ColorVariant | null',
+            default: null,
           },
         },
       },
       emits: [
         {
-          args: [],
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
           description: '',
           event: 'show',
         },
         {
+          event: 'show-prevented',
+          description: '',
           args: [],
+        },
+        {
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
           description: '',
           event: 'shown',
         },
         {
-          args: [],
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
           description: '',
           event: 'hide',
         },
         {
-          args: [],
+          event: 'hide-prevented',
           description: '',
-          event: 'hidden',
+          args: [],
         },
         {
-          args: [],
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
           description: '',
-          event: 'inserted',
+          event: 'hidden',
         },
       ],
       slots: [
@@ -145,6 +198,28 @@ export default {
           description: '',
           name: 'default',
           scope: [],
+        },
+        {
+          name: 'target',
+          description: '',
+          scope: [
+            {
+              prop: 'show',
+              type: '() => void',
+            },
+            {
+              prop: 'hide',
+              type: '(e: Event) => void',
+            },
+            {
+              prop: 'toggle',
+              type: '(e: Event) => void',
+            },
+            {
+              prop: 'showState',
+              type: 'boolean',
+            },
+          ],
         },
       ],
     },
