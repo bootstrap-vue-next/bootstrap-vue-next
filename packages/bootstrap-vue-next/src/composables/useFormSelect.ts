@@ -51,7 +51,7 @@ export default (
   }
 
   const normalizeOptions = (
-    opts: Readonly<unknown[]>
+    opts: ReadonlyArray<unknown>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): (ComplexSelectOptionRaw | SelectOption)[] => opts.map((option) => normalizeOption(option))
 
