@@ -3,7 +3,7 @@ import {get} from '../utils'
 import type {ComplexSelectOptionRaw, SelectOption} from '../types'
 
 export default (
-  options: MaybeRefOrGetter<Readonly<unknown[]>>,
+  options: MaybeRefOrGetter<ReadonlyArray<unknown>>,
   props: MaybeRefOrGetter<Record<string, unknown>>
 ) => {
   const propsValue = readonly(toRef(props)) // as Readonly<Record<string, unknown>>
