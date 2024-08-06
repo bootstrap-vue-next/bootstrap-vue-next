@@ -127,6 +127,31 @@ Datalist and disabling mousewheel events are not yet implemented.
 
 [Options as an object](https://bootstrap-vue.org/docs/components/form-select#options-as-an-object) was deprecated in BootstrapVue and never implemented in BootstrapVueNext
 
+## BInputGroup
+
+Bootstrap 5 [no longer requires](https://getbootstrap.com/docs/5.3/migration/#forms-1) `input-group-append` or `input-group-prepend`
+on elements to append or prepend them to the control, they can just be added as direct children of the input group.
+Due to this change `<BInputGroupAppend>`, `<BInputGroupPrepend>`, and `<BInputGroupAddon>` are no longer necessary and have been deprecated.
+This also has implications on the use of `<BInputGroupText>` - in BootstrapVue, this component was used form grouping
+sub-components. In BootstrapVueNext, `<BInputGroupText>` should only be used to apply styles to textual elements
+appended or prepended to a group. Using it to group components breaks the automatic append and prepend stylings.
+
+## BInputGroupAddon
+
+Deprectated - See [BInputGroup]
+
+## BInputGroupAppend
+
+Deprectated - See [BInputGroup]
+
+## BInputGroupText
+
+Deprectated - See [BInputGroup]
+
+## BInputGroupPrepend
+
+Deprectated - See [BInputGroup]
+
 ## BFormSpinbutton
 
 The locale property in BSVN only allows a for a single locale, while BSV allows for an array of locales. If this is
