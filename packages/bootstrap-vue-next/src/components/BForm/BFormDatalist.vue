@@ -43,7 +43,7 @@ const computedId = useId(() => props.id, 'datalist')
 
 const {normalizedOptions, isComplex} = useFormSelect(
   () => props.options,
-  computed(() => ({...props, optionsField: 'options', labelField: 'label'})).value
+  computed(() => ({...props, optionsField: 'options', labelField: 'label'}))
 )
 
 const normalizedOptsWrapper = computed(
