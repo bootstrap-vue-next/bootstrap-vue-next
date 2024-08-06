@@ -6,6 +6,9 @@ export default (
   options: MaybeRefOrGetter<Readonly<unknown[]>>,
   props: MaybeRefOrGetter<Record<string, unknown>>
 ) => {
+  const propsValue = readonly(toRef(props)) // as Readonly<Record<string, unknown>>
+  const optionsValue = readonly(toRef(options))
+
   const isComplex = (option: unknown): option is ComplexSelectOptionRaw =>
     typeof option === 'object' && option !== null && 'label' in option
 
@@ -13,8 +16,6 @@ export default (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     option: any
   ): ComplexSelectOptionRaw | SelectOption => {
-    const propsValue = readonly(toRef(props)) // as Readonly<Record<string, unknown>>
-
     if (typeof option === 'string') {
       return {value: option, text: option}
     }
@@ -54,7 +55,6 @@ export default (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): (ComplexSelectOptionRaw | SelectOption)[] => opts.map((option) => normalizeOption(option))
 
-  const optionsValue = readonly(toRef(options))
   const normalizedOptions = computed(() => normalizeOptions(optionsValue.value))
 
   return {normalizedOptions, isComplex}
