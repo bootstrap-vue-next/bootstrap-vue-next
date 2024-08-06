@@ -44,6 +44,8 @@ import type {
   SpinnerType,
   TableField,
   TableFieldRaw,
+  TableRowType,
+  TableStrictClassValue,
   TeleporterProps,
   TextColorVariant,
   TransitionMode,
@@ -184,6 +186,15 @@ export interface BFormCheckboxGroupProps {
   switches?: boolean
   textField?: string
   validated?: boolean
+  valueField?: string
+}
+
+export interface BFormDatalistProps {
+  disabledField?: string
+  htmlField?: string
+  id?: string
+  options?: readonly (unknown | Record<string, unknown>)[]
+  textField?: string
   valueField?: string
 }
 
@@ -998,20 +1009,12 @@ export interface BTableLiteProps<T> extends BTableSimpleProps {
   primaryKey?: string
   showEmpty?: boolean
   tbodyClass?: ClassValue
-  tbodyTrAttrs?: ClassValue
+  tbodyTrAttrs?: ((item: T | null, type: TableRowType) => AttrsValue) | AttrsValue
   // tbodyTransitionHandlers
   // tbodyTransitionProps
   tbodyTrClass?:
-    | ((
-        item: T | null,
-        type: string
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ) => string | readonly any[] | null | undefined)
-    | string
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    | Readonly<Record<PropertyKey, any>>
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    | readonly any[]
+    | ((item: T | null, type: TableRowType) => TableStrictClassValue)
+    | TableStrictClassValue
   tfootClass?: ClassValue
   tfootTrClass?: ClassValue
   theadClass?: ClassValue
@@ -1323,6 +1326,7 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
   BFormText: BFormTextProps
   BFormCheckbox: BFormCheckboxProps
   BFormCheckboxGroup: BFormCheckboxGroupProps
+  BFormDatalist: BFormDatalistProps
   BFormFile: BFormFileProps
   BFormInput: BFormInputProps
   BFormRadio: BFormRadioProps

@@ -46,6 +46,7 @@ export const ComponentNames = Object.freeze(
     BForm: 'BForm',
     BFormCheckbox: 'BFormCheckbox',
     BFormCheckboxGroup: 'BFormCheckboxGroup',
+    BFormDatalist: 'BFormDatalist',
     BFormFile: 'BFormFile',
     BFormFloatingLabel: 'BFormFloatingLabel',
     BFormGroup: 'BFormGroup',

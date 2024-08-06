@@ -1,636 +1,578 @@
 # Changelog
 
-## [0.24.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.24.1...nuxt-v0.24.2) (2024-07-21)
-
+## [0.24.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.24.2...nuxt-v0.24.3) (2024-08-06)
 
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.24.2
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.24.2
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.24.3
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.24.3
+
+## [0.24.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.24.1...nuxt-v0.24.2) (2024-07-21)
+
+### Miscellaneous Chores
+
+- **nuxt:** Synchronize main group versions
+
+### Dependencies
+
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.24.2
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.24.2
 
 ## [0.24.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.24.0...nuxt-v0.24.1) (2024-07-19)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.24.1
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.24.1
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.24.1
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.24.1
 
 ## [0.24.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.23.5...nuxt-v0.24.0) (2024-07-18)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.24.0
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.24.0
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.24.0
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.24.0
 
 ## [0.23.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.23.4...nuxt-v0.23.5) (2024-07-15)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.23.5
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.23.5
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.23.5
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.23.5
 
 ## [0.23.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.23.3...nuxt-v0.23.4) (2024-07-13)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.23.4
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.23.4
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.23.4
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.23.4
 
 ## [0.23.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.23.2...nuxt-v0.23.3) (2024-07-11)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.23.3
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.23.3
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.23.3
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.23.3
 
 ## [0.23.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.23.1...nuxt-v0.23.2) (2024-07-10)
 
-
 ### Performance Improvements
 
-* **nuxt:** smaller package ([#2012](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2012)) ([cc1e609](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cc1e60973b76575fa2cd3ef12ea919fabf152085))
-
+- **nuxt:** smaller package ([#2012](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2012)) ([cc1e609](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cc1e60973b76575fa2cd3ef12ea919fabf152085))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.23.2
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.23.2
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.23.2
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.23.2
 
 ## [0.23.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.23.0...nuxt-v0.23.1) (2024-07-08)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.23.1
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.23.1
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.23.1
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.23.1
 
 ## [0.23.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.22.7...nuxt-v0.23.0) (2024-07-08)
 
-
 ### ⚠ BREAKING CHANGES
 
-* **BModal:** remove prop backdropVariant
-* **BModal:** revert back to using the native `div.modal-backdrop`
-* **BOffcanvas:** revert back to native `div.offcanvas-backdrop`
-* **BOffcanvas:** remove prop backdropBlur and backdropVariant
-* **createBootstrap:** remove automatic import of components and directives fixing an issue with createBootstrap bloating the project size. When components were unused, it bloated the project size -- ie not tree shaking when you only used the plugins
-* **createBootstrap:** flatten the params object. The previous "plugins" key is now the top most level object => `{ plugins: { id: {} }` => `{ id: {} }` and so on
-* **createBootstrap:** remove alias in createBootstrap, use alias in unplugin-vue-components resolver instead
-* remove the default export. Use named export `createBootstrap` instead
-* **BOffcanvas:** rename prop backdrop to hideBackdrop to be more in line with standard of bmodal
+- **BModal:** remove prop backdropVariant
+- **BModal:** revert back to using the native `div.modal-backdrop`
+- **BOffcanvas:** revert back to native `div.offcanvas-backdrop`
+- **BOffcanvas:** remove prop backdropBlur and backdropVariant
+- **createBootstrap:** remove automatic import of components and directives fixing an issue with createBootstrap bloating the project size. When components were unused, it bloated the project size -- ie not tree shaking when you only used the plugins
+- **createBootstrap:** flatten the params object. The previous "plugins" key is now the top most level object => `{ plugins: { id: {} }` => `{ id: {} }` and so on
+- **createBootstrap:** remove alias in createBootstrap, use alias in unplugin-vue-components resolver instead
+- remove the default export. Use named export `createBootstrap` instead
+- **BOffcanvas:** rename prop backdrop to hideBackdrop to be more in line with standard of bmodal
 
 ### Features
 
-* **BModal:** remove prop backdropVariant ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
-* **BModal:** revert back to using the native `div.modal-backdrop` ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
-* **BOffcanvas:** remove prop backdropBlur and backdropVariant ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
-* **BOffcanvas:** rename prop backdrop to hideBackdrop to be more in line with standard of bmodal ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
-* **BOffcanvas:** revert back to native `div.offcanvas-backdrop` ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
-* **createBootstrap:** flatten the params object. The previous "plugins" key is now the top most level object =&gt; `{ plugins: { id: {} }` => `{ id: {} }` and so on ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
-* **createBootstrap:** remove alias in createBootstrap, use alias in unplugin-vue-components resolver instead ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
-* **createBootstrap:** remove automatic import of components and directives fixing an issue with createBootstrap bloating the project size. When components were unused, it bloated the project size -- ie not tree shaking when you only used the plugins ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
-* **modalController:** make {} default for show/confirm -- param not required ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
-* remove the default export. Use named export `createBootstrap` instead ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
-* **toast:** make {} default for show -- param not required ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
-
+- **BModal:** remove prop backdropVariant ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
+- **BModal:** revert back to using the native `div.modal-backdrop` ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
+- **BOffcanvas:** remove prop backdropBlur and backdropVariant ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
+- **BOffcanvas:** rename prop backdrop to hideBackdrop to be more in line with standard of bmodal ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
+- **BOffcanvas:** revert back to native `div.offcanvas-backdrop` ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
+- **createBootstrap:** flatten the params object. The previous "plugins" key is now the top most level object =&gt; `{ plugins: { id: {} }` => `{ id: {} }` and so on ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
+- **createBootstrap:** remove alias in createBootstrap, use alias in unplugin-vue-components resolver instead ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
+- **createBootstrap:** remove automatic import of components and directives fixing an issue with createBootstrap bloating the project size. When components were unused, it bloated the project size -- ie not tree shaking when you only used the plugins ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
+- **modalController:** make {} default for show/confirm -- param not required ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
+- remove the default export. Use named export `createBootstrap` instead ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
+- **toast:** make {} default for show -- param not required ([1e88b09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e88b09d8992e13948e6f94278c7c51cf4960ec8))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.23.0
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.23.0
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.23.0
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.23.0
 
 ## [0.22.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.22.6...nuxt-v0.22.7) (2024-07-01)
 
-
 ### Features
 
-* **nuxt:** add css option to not automatically include css ([f6adcee](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f6adceeb2ce4d994215f7864c1adaf39deaa9160))
-
+- **nuxt:** add css option to not automatically include css ([f6adcee](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f6adceeb2ce4d994215f7864c1adaf39deaa9160))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.22.7
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.22.7
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.22.7
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.22.7
 
 ## [0.22.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.22.5...nuxt-v0.22.6) (2024-07-01)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.22.6
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.22.6
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.22.6
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.22.6
 
 ## [0.22.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.22.4...nuxt-v0.22.5) (2024-07-01)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.22.5
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.22.5
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.22.5
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.22.5
 
 ## [0.22.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.22.3...nuxt-v0.22.4) (2024-06-30)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.22.4
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.22.4
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.22.4
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.22.4
 
 ## [0.22.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.22.2...nuxt-v0.22.3) (2024-06-28)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.22.3
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.22.3
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.22.3
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.22.3
 
 ## [0.22.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.22.1...nuxt-v0.22.2) (2024-06-26)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.22.2
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.22.2
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.22.2
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.22.2
 
 ## [0.22.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.22.0...nuxt-v0.22.1) (2024-06-20)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.22.1
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.22.1
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.22.1
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.22.1
 
 ## [0.22.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.21.2...nuxt-v0.22.0) (2024-06-18)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.22.0
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.22.0
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.22.0
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.22.0
 
 ## [0.21.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.21.1...nuxt-v0.21.2) (2024-06-10)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.21.2
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.21.2
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.21.2
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.21.2
 
 ## [0.21.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.21.0...nuxt-v0.21.1) (2024-06-10)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.21.1
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.21.1
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.21.1
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.21.1
 
 ## [0.21.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.20.0...nuxt-v0.21.0) (2024-06-06)
 
-
 ### ⚠ BREAKING CHANGES
 
-* remove binputgroupappend binputgroupprepend => use component binputgrouptext
+- remove binputgroupappend binputgroupprepend => use component binputgrouptext
 
 ### Features
 
-* bimg prop tag ([5e511a6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5e511a6a83b2193aa240e1839f1c7a3a3545cae8))
-* remove binputgroupappend binputgroupprepend =&gt; use component binputgrouptext ([5e511a6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5e511a6a83b2193aa240e1839f1c7a3a3545cae8))
-
+- bimg prop tag ([5e511a6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5e511a6a83b2193aa240e1839f1c7a3a3545cae8))
+- remove binputgroupappend binputgroupprepend =&gt; use component binputgrouptext ([5e511a6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5e511a6a83b2193aa240e1839f1c7a3a3545cae8))
 
 ### Bug Fixes
 
-* modal transitions fixes  [#1861](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1861) ([5e511a6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5e511a6a83b2193aa240e1839f1c7a3a3545cae8))
-
+- modal transitions fixes [#1861](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1861) ([5e511a6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5e511a6a83b2193aa240e1839f1c7a3a3545cae8))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.21.0
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.21.0
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.21.0
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.21.0
 
 ## [0.20.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.19.0...nuxt-v0.20.0) (2024-06-02)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.20.0
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.20.0
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.20.0
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.20.0
 
 ## [0.19.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.18.1...nuxt-v0.19.0) (2024-05-26)
 
-
 ### Bug Fixes
 
-* **nuxt:** dont teleport everything to #teleports -- selectively teleport based on body fixes [#1898](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1898) ([e986e94](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e986e94a7a3db64334ecac6927a7d384cbe5882f))
-
+- **nuxt:** dont teleport everything to #teleports -- selectively teleport based on body fixes [#1898](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1898) ([e986e94](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e986e94a7a3db64334ecac6927a7d384cbe5882f))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.19.0
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.19.0
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.19.0
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.19.0
 
 ## [0.18.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.18.0...nuxt-v0.18.1) (2024-05-18)
 
-
 ### Features
 
-* **nuxt:** allow passthrough options to createBootstrap plugin ([5458a5a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5458a5afd8bb46d3951f3fdee048f85030bc32de))
-
+- **nuxt:** allow passthrough options to createBootstrap plugin ([5458a5a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5458a5afd8bb46d3951f3fdee048f85030bc32de))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.18.1
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.18.1
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.18.1
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.18.1
 
 ## [0.18.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.17.6...nuxt-v0.18.0) (2024-05-17)
 
-
 ### ⚠ BREAKING CHANGES
 
-* **BFormInput:** move props lazy, trim & number to v-model modifier. Modifiers should behave more like native Vue modifiers (number modifier with unparseable value returns value as is)
-* **BreakpointProps:** strongly type breakpoints. Instead of weak string | number => 1,2,3...'1','2','3'...
+- **BFormInput:** move props lazy, trim & number to v-model modifier. Modifiers should behave more like native Vue modifiers (number modifier with unparseable value returns value as is)
+- **BreakpointProps:** strongly type breakpoints. Instead of weak string | number => 1,2,3...'1','2','3'...
 
 ### Features
 
-* **BCarouselSlide:** allow individual interval for slides ([8e73b17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8e73b177051d4403ca7a159e7c11707de15e638c))
-* **BFormInput:** move props lazy, trim & number to v-model modifier. Modifiers should behave more like native Vue modifiers (number modifier with unparseable value returns value as is) ([8e73b17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8e73b177051d4403ca7a159e7c11707de15e638c))
-* **BFormInput:** type number performs the same as modifier ([8e73b17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8e73b177051d4403ca7a159e7c11707de15e638c))
-* **BreakpointProps:** strongly type breakpoints. Instead of weak string | number =&gt; 1,2,3...'1','2','3'... ([8e73b17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8e73b177051d4403ca7a159e7c11707de15e638c))
-* implement a use defaults system fixes [#1607](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1607) ([8e73b17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8e73b177051d4403ca7a159e7c11707de15e638c))
-* implement global alias system fixes [#1753](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1753) ([8e73b17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8e73b177051d4403ca7a159e7c11707de15e638c))
-* implmenet a use defaults system WIP fixes [#1607](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1607)  ([#1889](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1889)) ([8e73b17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8e73b177051d4403ca7a159e7c11707de15e638c))
-* **nuxt:** automatically globally set teleportTo to `#teleports` ([8e73b17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8e73b177051d4403ca7a159e7c11707de15e638c))
-
+- **BCarouselSlide:** allow individual interval for slides ([8e73b17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8e73b177051d4403ca7a159e7c11707de15e638c))
+- **BFormInput:** move props lazy, trim & number to v-model modifier. Modifiers should behave more like native Vue modifiers (number modifier with unparseable value returns value as is) ([8e73b17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8e73b177051d4403ca7a159e7c11707de15e638c))
+- **BFormInput:** type number performs the same as modifier ([8e73b17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8e73b177051d4403ca7a159e7c11707de15e638c))
+- **BreakpointProps:** strongly type breakpoints. Instead of weak string | number =&gt; 1,2,3...'1','2','3'... ([8e73b17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8e73b177051d4403ca7a159e7c11707de15e638c))
+- implement a use defaults system fixes [#1607](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1607) ([8e73b17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8e73b177051d4403ca7a159e7c11707de15e638c))
+- implement global alias system fixes [#1753](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1753) ([8e73b17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8e73b177051d4403ca7a159e7c11707de15e638c))
+- implmenet a use defaults system WIP fixes [#1607](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1607) ([#1889](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1889)) ([8e73b17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8e73b177051d4403ca7a159e7c11707de15e638c))
+- **nuxt:** automatically globally set teleportTo to `#teleports` ([8e73b17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8e73b177051d4403ca7a159e7c11707de15e638c))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.18.0
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.18.0
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.18.0
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.18.0
 
 ## [0.17.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.17.5...nuxt-v0.17.6) (2024-05-08)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.17.6
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.17.6
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.17.6
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.17.6
 
 ## [0.17.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.17.4...nuxt-v0.17.5) (2024-05-04)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.17.5
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.17.5
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.17.5
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.17.5
 
 ## [0.17.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.17.3...nuxt-v0.17.4) (2024-04-30)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.17.4
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.17.4
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.17.4
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.17.4
 
 ## [0.17.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.17.2...nuxt-v0.17.3) (2024-04-29)
 
-
 ### Bug Fixes
 
-* update dependencies to fix a bug in vue compiler ([#1866](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1866)) ([b2c56bf](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b2c56bff644177d5653b628a9cbb30ffa5c7055a))
-
+- update dependencies to fix a bug in vue compiler ([#1866](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1866)) ([b2c56bf](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b2c56bff644177d5653b628a9cbb30ffa5c7055a))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.17.3
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.17.3
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.17.3
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.17.3
 
 ## [0.17.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.17.1...nuxt-v0.17.2) (2024-04-20)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.17.2
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.17.2
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.17.2
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.17.2
 
 ## [0.17.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.17.0...nuxt-v0.17.1) (2024-04-18)
 
-
 ### Bug Fixes
 
-* Some prop types were build wrong because of vue bug ([3459a54](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3459a54f4242509a6a23e9a48430de5f3d190157))
-
+- Some prop types were build wrong because of vue bug ([3459a54](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3459a54f4242509a6a23e9a48430de5f3d190157))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.17.1
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.17.1
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.17.1
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.17.1
 
 ## [0.17.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.16.6...nuxt-v0.17.0) (2024-04-14)
 
-
 ### ⚠ BREAKING CHANGES
 
-* **BDropdown:** replace "container" prop with "teleportTo"
-* **BPopover:** replace "container" prop with "teleportTo"
-* **BTable:** deprecate noSortReset, use `mustSort`
-* **BFormTags:** remove input event -- use https://github.com/update:modelValue
+- **BDropdown:** replace "container" prop with "teleportTo"
+- **BPopover:** replace "container" prop with "teleportTo"
+- **BTable:** deprecate noSortReset, use `mustSort`
+- **BFormTags:** remove input event -- use https://github.com/update:modelValue
 
 ### Features
 
-* **BDropdown:** add teleportDisabled prop ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
-* **BDropdown:** replace "container" prop with "teleportTo" ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
-* **BFormTags:** remove input event -- use https://github.com/update:modelValue ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
-* **BPopover:** add teleportDisabled prop ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
-* **BPopover:** replace "container" prop with "teleportTo" ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
-* **BTable:** add functional syntax for sortAsc/sortDesc/sortDefault `sortAsc(fieldKey)` to specify the sort content for that specific field ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
-* **BTable:** add prop multisort ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
-* **BTable:** allow Numberish values =&gt; string is interpreted as is with maxHeight, numbers are converted to ${number}px maxHeight ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
-* **BTable:** deprecate noSortReset, use `mustSort` ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
-* export component prop types ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
-* **utils:** inject getId to allow for custom id generation ([#1836](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1836)) ([c9e60f5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c9e60f57da5ab703a75433a521ebd55eb26ac569))
-
+- **BDropdown:** add teleportDisabled prop ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+- **BDropdown:** replace "container" prop with "teleportTo" ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+- **BFormTags:** remove input event -- use https://github.com/update:modelValue ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+- **BPopover:** add teleportDisabled prop ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+- **BPopover:** replace "container" prop with "teleportTo" ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+- **BTable:** add functional syntax for sortAsc/sortDesc/sortDefault `sortAsc(fieldKey)` to specify the sort content for that specific field ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+- **BTable:** add prop multisort ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+- **BTable:** allow Numberish values =&gt; string is interpreted as is with maxHeight, numbers are converted to ${number}px maxHeight ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+- **BTable:** deprecate noSortReset, use `mustSort` ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+- export component prop types ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+- **utils:** inject getId to allow for custom id generation ([#1836](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1836)) ([c9e60f5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c9e60f57da5ab703a75433a521ebd55eb26ac569))
 
 ### Bug Fixes
 
-* **BTable:** fix handleFieldSorting algorithm to properly handle multisort with mustSort ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
-* **BTable:** generic types ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
-* **BTable:** set sort values to undefined so we dont accidentally wipe user defined comparer functions ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
-* **BTable:** stickyHeader true causes maxHeight 300px ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
-* **generics:** use generic constraints for BTable & BTableLite ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
-* some migration issues with defineModel ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
-* types generation -- use interfaces for componentprops ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
-
+- **BTable:** fix handleFieldSorting algorithm to properly handle multisort with mustSort ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+- **BTable:** generic types ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+- **BTable:** set sort values to undefined so we dont accidentally wipe user defined comparer functions ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+- **BTable:** stickyHeader true causes maxHeight 300px ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+- **generics:** use generic constraints for BTable & BTableLite ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+- some migration issues with defineModel ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
+- types generation -- use interfaces for componentprops ([de60ce3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/de60ce3cd2bc3ee8768331ae8ce69b2c5f3eed73))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.17.0
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.17.0
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.17.0
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.17.0
 
 ## [0.16.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.16.5...nuxt-v0.16.6) (2024-02-22)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.16.6
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.16.6
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.16.6
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.16.6
 
 ## [0.16.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.16.4...nuxt-v0.16.5) (2024-02-19)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.16.5
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.16.5
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.16.5
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.16.5
 
 ## [0.16.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.16.3...nuxt-v0.16.4) (2024-02-16)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.16.4
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.16.4
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.16.4
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.16.4
 
 ## [0.16.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.16.2...nuxt-v0.16.3) (2024-02-13)
 
-
 ### Features
 
-* **nuxt:** auto import directives ([#1770](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1770)) ([228e0f7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/228e0f7a61f92176f4aba78ddd2150dc4467d6cb))
-
+- **nuxt:** auto import directives ([#1770](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1770)) ([228e0f7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/228e0f7a61f92176f4aba78ddd2150dc4467d6cb))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.16.3
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.16.3
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.16.3
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.16.3
 
 ## [0.16.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.16.1...nuxt-v0.16.2) (2024-02-11)
 

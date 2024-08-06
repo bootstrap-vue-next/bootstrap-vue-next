@@ -503,11 +503,62 @@ The `plaintext` option is not supported by input types `color` or `range`.
 
 ## Datalist support
 
-<NotYetImplemented/>
+Datalists are a native HTML tag `<datalist>` that contains a list of `<option>` tags. By assigning
+an ID to the datalist tag, the list can be references from a text input by adding a `list`
+attribute.
+
+This gives the input the behavior of a combo box or auto-complete, allowing existing values to be
+chosen, or new values to be entered.
+
+<HighlightCard>
+  <div>
+    <BFormInput list="my-list-id" />
+    <datalist id="my-list-id">
+      <option>Manual Option</option>
+      <option v-for="size in datalistSizes" :key="size">{{ size }}</option>
+    </datalist>
+  </div>
+  <template #html>
+
+```vue
+<template>
+  <div>
+    <BFormInput list="my-list-id" />
+
+    <datalist id="my-list-id">
+      <option>Manual Option</option>
+      <option v-for="size in datalistSizes" :key="size">{{ size }}</option>
+    </datalist>
+  </div>
+</template>
+
+<script setup lang="ts">
+const datalistSizes = ['Small', 'Medium', 'Large', 'Extra Large']
+</script>
+```
+
+  </template>
+</HighlightCard>
+
+The above is a 'native' implementation of `datalist`. BootstrapVueNext provides the form helper component
+[`<BFormDatalist>`](/docs/components/form/#datalist-helper) for quickly creating a `<datalist>`
+from an array of options using the same options object as [`<BFormSelect>`](/docs/components/form-select#options-property).
+
+**Notes:**
+
+- Datalists work in conjunction with the browser's built in auto-complete, displaying datalist
+  options first, followed by auto-complete options. To only display datalist options, set
+  `autocomplete="off"` on `<BFormInput>`.
+- Datalists **cannot** be applied to input fields with type `password`, `range` or `color`.
+- Not all browsers fully support `<datalist>` and implementations can be buggy. It is recommended
+  that datalists be treated as an enhancement and not be relied upon at this time. Check
+  [Can I use](https://caniuse.com/datalist) for full support details on all browsers. In particular
+  chromium based browsers display both the text and value of object in the options list.
 
 ## `v-model` modifiers
 
-We support the native modifiers `trim`, `lazy`, and `number`. They should all work out of the box
+We support the native modifiers [`trim`, `lazy`, and `number`](https://vuejs.org/guide/essentials/forms.html#modifiers).
+They work as documented in vue.js, so there is no longer a need for `trim`, `lazy`, or `number` properties as in BSV.
 
 ## Debounce support
 
@@ -685,4 +736,6 @@ const debounceValue = ref('')
 const inputRef = ref<InstanceType<typeof BFormInput> | null>(null)
 const sampleInputText = ref('sample text')
 const selectAllText = () => inputRef?.value?.element?.select()
+
+const datalistSizes = ['Small', 'Medium', 'Large', 'Extra Large']
 </script>

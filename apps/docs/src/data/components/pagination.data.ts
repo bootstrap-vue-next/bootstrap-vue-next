@@ -158,7 +158,7 @@ export default {
       },
       emits: [
         {
-          event: 'update:modelValue',
+          event: 'update:model-value',
           description: 'Emitted when page changes via user interaction',
           args: [
             {
