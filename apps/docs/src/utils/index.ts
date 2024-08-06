@@ -45,3 +45,6 @@ export const omit = <
   Object.keys(objToPluck)
     .filter((key) => !keysToPluck.map((el) => el.toString()).includes(key))
     .reduce((result, key) => ({...result, [key]: objToPluck[key]}), {} as Omit<A, B[number]>)
+
+// Converts PascalCase or camelCase to kebab-case
+export const kebabCase = (str: string) => str.replace(/\B([A-Z])/g, '-$1').toLowerCase()

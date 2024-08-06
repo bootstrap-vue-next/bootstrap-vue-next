@@ -105,7 +105,7 @@ documentation for more info.
 when naming the main model property and events for the primary model. `bootstrap-vue-next` follows
 this guidance, which affects all of the wrappers for form input. If you're looking for the `value`
 property or the `change` and `input` events, you'll find that functionality in the `modelValue`
-property and `update:modelValue` events. Bootstrap-vue-next no longer provides custom `change` and
+property and `update:model-value` events. Bootstrap-vue-next no longer provides custom `change` and
 `input` events, so the native versions of those events are now exposed.
 
 See the [Vue 3 migration guide](https://v3-migration.vuejs.org/breaking-changes/v-model.html)

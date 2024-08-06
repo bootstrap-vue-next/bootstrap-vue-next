@@ -60,9 +60,9 @@ export default {
       },
       emits: [
         {
-          event: 'update:modelValue',
+          event: 'update:model-value',
           description:
-            'Emitted when the selected value(s) are changed. Looking for the `input` or `change` event - use `update:modelValue` instead.',
+            'Emitted when the selected value(s) are changed. Looking for the `input` or `change` event - use `update:model-value` instead.',
           args: [
             {
               arg: 'value',

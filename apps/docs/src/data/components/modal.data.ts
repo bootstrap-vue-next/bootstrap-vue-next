@@ -335,7 +335,7 @@ export default {
       },
       emits: [
         {
-          event: 'update:modelValue',
+          event: 'update:model-value',
           args: [
             {
               arg: 'value',
