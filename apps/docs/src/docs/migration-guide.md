@@ -60,6 +60,37 @@ becomes
 See the [Vue 3 migration guide](https://v3-migration.vuejs.org/breaking-changes/v-model.html)
 for more info.
 
+## BAlert
+
+As in `bootstrap-vue`, a simple `BAlert` is not visible by default. However, the means of showing the alert are different.
+The `bootstrap-vue` `show` prop is deprecated, use `model-value` instead.
+
+<HighlightCard>
+  <template #html>
+
+```vue-html
+  <BAlert variant="primary" show>A simple primary alert—check it out!</BAlert>
+```
+
+  </template>
+</HighlightCard>
+
+becomes
+
+<HighlightCard>
+  <template #html>
+
+```vue-html
+  <BAlert :model-value="true" variant="primary">A simple primary alert—check it out!</BAlert>
+```
+
+  </template>
+</HighlightCard>
+
+For consistency with other components properties, slots and events that use the term `dismissible` in `bootstrap-vue`
+now use the term `close`. For example the `dismissed` event is now the `closed` event and the `dsimiss` slot is
+now the `close` slot.
+
 ## BForm
 
 Bootstrap 5 has dropped form-specific layout classes for the grid system. See the
