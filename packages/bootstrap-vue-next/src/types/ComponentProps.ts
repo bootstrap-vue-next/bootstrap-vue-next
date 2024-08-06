@@ -189,6 +189,15 @@ export interface BFormCheckboxGroupProps {
   valueField?: string
 }
 
+export interface BFormDatalistProps {
+  disabledField?: string
+  htmlField?: string
+  id?: string
+  options?: readonly (unknown | Record<string, unknown>)[]
+  textField?: string
+  valueField?: string
+}
+
 export interface BFormFileProps {
   ariaLabel?: string
   ariaLabelledby?: string
@@ -1317,6 +1326,7 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
   BFormText: BFormTextProps
   BFormCheckbox: BFormCheckboxProps
   BFormCheckboxGroup: BFormCheckboxGroupProps
+  BFormDatalist: BFormDatalistProps
   BFormFile: BFormFileProps
   BFormInput: BFormInputProps
   BFormRadio: BFormRadioProps
