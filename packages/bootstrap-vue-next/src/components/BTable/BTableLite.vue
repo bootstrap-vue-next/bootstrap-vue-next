@@ -174,6 +174,7 @@
           :class="getFieldColumnClasses(field)"
           :title="field.headerTitle"
           :abbr="field.headerAbbr"
+          :style="field.thStyle"
           :variant="field.variant"
           v-bind="callThAttr(null, field, 'bottom')"
           @click="headerClicked(field, $event, true)"
