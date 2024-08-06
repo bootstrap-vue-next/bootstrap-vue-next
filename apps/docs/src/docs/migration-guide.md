@@ -60,6 +60,37 @@ becomes
 See the [Vue 3 migration guide](https://v3-migration.vuejs.org/breaking-changes/v-model.html)
 for more info.
 
+## BAlert
+
+As in `bootstrap-vue`, a simple `BAlert` is not visible by default. However, the means of showing the alert are different.
+The `bootstrap-vue` `show` prop is deprecated, use `model-value` instead.
+
+<HighlightCard>
+  <template #html>
+
+```vue-html
+  <BAlert variant="primary" show>A simple primary alert—check it out!</BAlert>
+```
+
+  </template>
+</HighlightCard>
+
+becomes
+
+<HighlightCard>
+  <template #html>
+
+```vue-html
+  <BAlert :model-value="true" variant="primary">A simple primary alert—check it out!</BAlert>
+```
+
+  </template>
+</HighlightCard>
+
+For consistency with other components properties, slots and events that use the term `dismissible` in `bootstrap-vue`
+now use the term `close`. For example the `dismissed` event is now the `closed` event and the `dsimiss` slot is
+now the `close` slot.
+
 ## BForm
 
 Bootstrap 5 has dropped form-specific layout classes for the grid system. See the
@@ -92,14 +123,49 @@ handles references. See the [BFormInput documentation](/docs/components/form-inp
 
 Datalist and disabling mousewheel events are not yet implemented.
 
+`trim`, `lazy`, or `number` properties have been deprecated. We support the native modifiers
+[`trim`, `lazy`, and `number`](https://vuejs.org/guide/essentials/forms.html#modifiers).
+They work as documented in vue.js, so there is no longer a need for the properties.
+
 ## BFormSelect
 
 [Options as an object](https://bootstrap-vue.org/docs/components/form-select#options-as-an-object) was deprecated in BootstrapVue and never implemented in BootstrapVueNext
+
+## BInputGroup
+
+Bootstrap 5 [no longer requires](https://getbootstrap.com/docs/5.3/migration/#forms-1) `input-group-append` or `input-group-prepend`
+on elements to append or prepend them to the control, they can just be added as direct children of the input group.
+Due to this change `<BInputGroupAppend>`, `<BInputGroupPrepend>`, and `<BInputGroupAddon>` are no longer necessary and have been deprecated.
+This also has implications on the use of `<BInputGroupText>` - in BootstrapVue, this component was used form grouping
+sub-components. In BootstrapVueNext, `<BInputGroupText>` should only be used to apply styles to textual elements
+appended or prepended to a group. Using it to group components breaks the automatic append and prepend stylings.
+
+## BInputGroupAddon
+
+Deprectated - See [BInputGroup]
+
+## BInputGroupAppend
+
+Deprectated - See [BInputGroup]
+
+## BInputGroupText
+
+Deprectated - See [BInputGroup]
+
+## BInputGroupPrepend
+
+Deprectated - See [BInputGroup]
 
 ## BFormSpinbutton
 
 The locale property in BSVN only allows a for a single locale, while BSV allows for an array of locales. If this is
 a limitation that affect your scenario, please [file an issue](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues) with an explanation of the expected behavior.
+
+## BFormTextbox
+
+`trim`, `lazy`, or `number` properties have been deprecated. We support the native modifiers
+[`trim`, `lazy`, and `number`](https://vuejs.org/guide/essentials/forms.html#modifiers).
+They work as documented in vue.js, so there is no longer a need for the properties.
 
 ## BModal
 
