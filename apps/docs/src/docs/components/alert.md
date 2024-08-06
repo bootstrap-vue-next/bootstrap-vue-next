@@ -18,33 +18,29 @@ Alerts are available for any length of text, as well as an optional dismiss butt
 
 <HighlightCard>
   <BAlert :model-value="true">Default Alert</BAlert>
-  <BAlert variant="success" :model-value="true">Success Alert</BAlert>
-  <BAlert v-model="showDismissibleAlert" variant="danger" dismissible>
-    Dismissible Alert!
-  </BAlert>
-  <BAlert
-    v-model="dismissCountDown"
-    dismissible
-    variant="warning"
-    @close-countdown="countdown = $event"
-  >
-    <p>This alert will dismiss after {{ countdown / 1000 }} seconds...</p>
-    <BProgress
-      variant="warning"
-      :max="dismissCountDown"
-      :value="countdown"
-      height="4px"
-    />
-  </BAlert>
-  <BButtonGroup>
-    <BButton @click="dismissCountDown = dismissCountDown + 1000" variant="info">
-      Add a second to the alert with countdown timer
-    </BButton>
-    <BButton @click="showDismissibleAlert = !showDismissibleAlert" variant="info">
-      {{ !showDismissibleAlert ? 'show' : 'hide' }} dismissible alert
-    </BButton>
-  </BButtonGroup>
-  <template #html>
+
+<BAlert variant="success" :model-value="true">Success Alert</BAlert>
+
+<BAlert v-model="showDismissibleAlert" variant="danger" dismissible> Dismissible Alert! </BAlert>
+
+<BAlert
+v-model="dismissCountDown"
+dismissible
+variant="warning"
+@close-countdown="countdown = $event">
+
+<p>This alert will dismiss after {{ countdown / 1000 }} seconds...</p>
+<BProgress variant="warning" :max="dismissCountDown" :value="countdown" height="4px" />
+</BAlert>
+
+<BButton variant="info" class="m-1" @click="dismissCountDown = dismissCountDown + 5000">
+Add a five seconds to the alert with countdown timer
+</BButton>
+
+<BButton variant="info" class="m-1" @click="showDismissibleAlert = !showDismissibleAlert">
+{{ !showDismissibleAlert ? 'Show' : 'Hide' }} dismissible alert
+</BButton>
+<template #html>
 
 ```vue
 <template>
@@ -64,16 +60,18 @@ Alerts are available for any length of text, as well as an optional dismiss butt
     <BProgress variant="warning" :max="dismissCountDown" :value="countdown" height="4px" />
   </BAlert>
 
-  <BButton @click="dismissCountDown = dismissCountDown + 1000" variant="info" class="m-1">
-    Add a second to the alert with countdown timer
+  <BButton variant="info" class="m-1" @click="dismissCountDown = dismissCountDown + 5000">
+    Add a five seconds to the alert with countdown timer
   </BButton>
 
-  <BButton @click="showDismissibleAlert = !showDismissibleAlert" variant="info" class="m-1">
-    {{ !showDismissibleAlert ? 'show' : 'hide' }} dismissible alert
+  <BButton variant="info" class="m-1" @click="showDismissibleAlert = !showDismissibleAlert">
+    {{ !showDismissibleAlert ? 'Show' : 'Hide' }} dismissible alert
   </BButton>
 </template>
 
 <script setup lang="ts">
+import {ref} from 'vue'
+
 const showDismissibleAlert = ref(false)
 
 const dismissCountDown = ref(10000)
@@ -86,7 +84,8 @@ const countdown = ref(0)
 
 ### `v-model` Support
 
-You can use the `v-model` directive to create two-way data bindings as in `v-model="showDismissibleAlert"`. Useful when you use dismissible because when the user closes the alert, your variable will be updated. The v-model prop accepts boolean `true` or `false` to show and hide the alert respectively. It can also be set to a positive integer (representing seconds) to create a self-dismissing alert. See the [Auto Dismissing Alerts](#auto-dismissing-alerts) section below for details.
+You can use the `v-model` directive to create two-way data bindings as in `v-model="showDismissibleAlert"`. This is useful when you use dismissible because when the user closes the alert, your variable will be updated. The v-model prop accepts boolean `true` or `false` to show and hide the alert respectively. It can also be set to a positive integer (representing seconds) to create a self-dismissing alert. See the [Auto Dismissing Alerts](#auto-dismissing-alerts) section below for details. `:model-value="true"` can be used to unconditionally show the alert, as the `show` prop did in `bootstrap-vue`. See the
+[migration guide](/docs/migration-guide#balert) for details.
 
 ## Contextual Variants
 
@@ -271,7 +270,83 @@ const autoDismissingAlertCountdown = ref(0)
   </template>
 </HighlightCard>
 
-### Exposed functions
+## Fading alerts
+
+Use the `fade` prop to enable animation. By default alerts are not animated.
+
+Note that `bootstrap-vue-next` uses Vue's transitions for this animation rather than bootstrap's `.fade` class.
+
+<HighlightCard>
+  <BAlert :model-value="true" fade>Default Alert</BAlert>
+
+<BAlert variant="success" :model-value="true" fade>Success Alert</BAlert>
+
+<BAlert v-model="showDismissibleAlert" variant="danger" dismissible fade> Dismissible Alert! </BAlert>
+
+<BAlert
+v-model="dismissCountDown"
+dismissible
+variant="warning"
+fade
+@close-countdown="countdown = $event">
+
+  <p>This alert will dismiss after {{ countdown / 1000 }} seconds...</p>
+  <BProgress variant="warning" :max="dismissCountDown" :value="countdown" height="4px" />
+</BAlert>
+
+<BButton variant="info" class="m-1" @click="dismissCountDown = dismissCountDown + 5000">
+Add a five seconds to the alert with countdown timer
+</BButton>
+
+<BButton variant="info" class="m-1" @click="showDismissibleAlert = !showDismissibleAlert">
+{{ !showDismissibleAlert ? 'Show' : 'Hide' }} dismissible alert
+</BButton>
+<template #html>
+
+```vue
+<template>
+  <BAlert :model-value="true" fade>Default Alert</BAlert>
+
+  <BAlert variant="success" :model-value="true" fade>Success Alert</BAlert>
+
+  <BAlert v-model="showDismissibleAlert" variant="danger" dismissible fade>
+    Dismissible Alert!
+  </BAlert>
+
+  <BAlert
+    v-model="dismissCountDown"
+    dismissible
+    variant="warning"
+    fade
+    @close-countdown="countdown = $event"
+  >
+    <p>This alert will dismiss after {{ countdown / 1000 }} seconds...</p>
+    <BProgress variant="warning" :max="dismissCountDown" :value="countdown" height="4px" />
+  </BAlert>
+
+  <BButton variant="info" class="m-1" @click="dismissCountDown = dismissCountDown + 5000">
+    Add a five seconds to the alert with countdown timer
+  </BButton>
+
+  <BButton variant="info" class="m-1" @click="showDismissibleAlert = !showDismissibleAlert">
+    {{ !showDismissibleAlert ? 'Show' : 'Hide' }} dismissible alert
+  </BButton>
+</template>
+
+<script setup lang="ts">
+import {ref} from 'vue'
+
+const showDismissibleAlert = ref(false)
+
+const dismissCountDown = ref(10000)
+const countdown = ref(0)
+</script>
+```
+
+  </template>
+</HighlightCard>
+
+## Exposed functions
 
 The BAlert exposes four functions to manipulate the state of an active timer: `pause(), resume(), restart() & stop()`. These are accessed through the [template ref](https://vuejs.org/guide/essentials/template-refs.html#template-refs).
 
@@ -332,10 +407,10 @@ const stop = () => myAlert.value?.stop()
   </template>
 </HighlightCard>
 
-### Timer Props
+## Timer Props
 
-- `Immediate`: Will cause a timer to not start immediately upon render. A timer that is not started is not rendered. It must manually be started with `resume()` or `restart()`
-- `showOnPause`: Overwrites the behavior of showing an Alert when the timer is paused
+- `Immediate`: Setting this property to `false` will cause a timer to not start immediately upon render. A timer that is not started is not rendered. It must manually be started with `resume()` or `restart()`. Default is `true`.
+- `showOnPause`: Setting this property to `false` will override the behavior of showing the Alert when the timer is paused. Default is `true`.
 
 <ComponentReference :data="data" />
 
