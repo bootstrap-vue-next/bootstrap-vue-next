@@ -31,7 +31,7 @@
           :variant="field.variant"
           :abbr="field.headerAbbr"
           :style="field.thStyle"
-          v-bind="callThAttr(item, field)"
+          v-bind="callThAttr(null, field, 'top')"
           @click="headerClicked(field, $event)"
         >
           <slot
@@ -53,7 +53,6 @@
           :variant="field.variant"
           :class="[field.class, field.thClass]"
         >
-          <!-- TODO thClass!^ -->
           <slot name="thead-sub" :items="computedFields" v-bind="field">
             {{ field.label }}
           </slot>
@@ -70,11 +69,7 @@
         <BTr
           v-if="!props.stacked && $slots['top-row']"
           :class="getRowClasses(null, 'row-top')"
-          v-bind="
-            typeof props.tbodyTrAttrs === 'function'
-              ? props.tbodyTrAttrs(null, 'row-top')
-              : props.tbodyTrAttrs
-          "
+          v-bind="callTbodyTrAttrs(null, 'row-top')"
         >
           <slot name="top-row" />
         </BTr>
@@ -83,11 +78,7 @@
           <BTr
             :class="getRowClasses(item, 'row')"
             :variant="isTableItem(item) ? item._rowVariant : undefined"
-            v-bind="
-              typeof props.tbodyTrAttrs === 'function'
-                ? props.tbodyTrAttrs(item, 'row')
-                : props.tbodyTrAttrs
-            "
+            v-bind="callTbodyTrAttrs(item, 'row')"
             @click="!filterEvent($event) && emit('row-clicked', item, itemIndex, $event)"
             @dblclick="!filterEvent($event) && emit('row-dbl-clicked', item, itemIndex, $event)"
             @mouseenter="!filterEvent($event) && emit('row-hovered', item, itemIndex, $event)"
@@ -138,11 +129,7 @@
             <BTr
               :class="getRowClasses(item, 'row-details')"
               :variant="item._rowVariant"
-              v-bind="
-                typeof props.tbodyTrAttrs === 'function'
-                  ? props.tbodyTrAttrs(item, 'row-details')
-                  : props.tbodyTrAttrs
-              "
+              v-bind="callTbodyTrAttrs(item, 'row-details')"
             >
               <BTd :colspan="computedFieldsTotal">
                 <slot
@@ -172,11 +159,7 @@
           v-if="!props.stacked && $slots['bottom-row']"
           class="bottom-row"
           :class="getRowClasses(null, 'row-bottom')"
-          v-bind="
-            typeof props.tbodyTrAttrs === 'function'
-              ? props.tbodyTrAttrs(null, 'row-bottom')
-              : props.tbodyTrAttrs
-          "
+          v-bind="callTbodyTrAttrs(null, 'row-bottom')"
         >
           <slot name="bottom-row" />
         </BTr>
@@ -191,9 +174,8 @@
           :class="getFieldColumnClasses(field)"
           :title="field.headerTitle"
           :abbr="field.headerAbbr"
-          :style="field.thStyle"
           :variant="field.variant"
-          v-bind="field.thAttr"
+          v-bind="callThAttr(null, field, 'bottom')"
           @click="headerClicked(field, $event, true)"
         >
           <div class="d-inline-flex flex-nowrap align-items-center gap-1">
@@ -232,13 +214,7 @@
 
 <script setup lang="ts" generic="T">
 import {computed, ref, toRef, watch} from 'vue'
-import type {
-  BTableLiteProps,
-  TableField,
-  TableFieldAttribute,
-  TableItem,
-  TableRowType,
-} from '../../types'
+import type {BTableLiteProps, TableField, TableItem, TableRowThead, TableRowType} from '../../types'
 import {isTableField, isTableItem} from '../../types/TableTypes'
 import {filterEvent, formatItem, get, getTableFieldHeadLabel, startCase} from '../../utils'
 import BTableSimple from './BTableSimple.vue'
@@ -389,16 +365,16 @@ const showComputedHeaders = computed(() => {
   return true
 })
 
-const itemAttributes = (item: T, fieldKey: string, attr?: TableFieldAttribute<unknown>) => {
+const itemAttributes = (item: T, fieldKey: string, attr?: unknown) => {
   const val = get(item, fieldKey)
   return attr && typeof attr === 'function' ? attr(val, fieldKey, item) : attr
 }
 
-const callThAttr = (item: T, field: TableField<T>) => {
+const callThAttr = (item: T | null, field: TableField<T>, type: TableRowThead) => {
   const fieldKey = String(field.key)
   const val = get(item, fieldKey)
   return field.thAttr && typeof field.thAttr === 'function'
-    ? field.thAttr(val, fieldKey, item, 'foo')
+    ? field.thAttr(val, fieldKey, item, type)
     : field.thAttr
 }
 
@@ -440,6 +416,13 @@ const getFieldRowClasses = (field: Readonly<TableField>, tr: T) => {
     },
   ]
 }
+
+const callTbodyTrAttrs = (item: T | null, type: TableRowType) =>
+  props.tbodyTrAttrs
+    ? typeof props.tbodyTrAttrs === 'function'
+      ? props.tbodyTrAttrs(item, type)
+      : props.tbodyTrAttrs
+    : null
 
 const getRowClasses = (item: T | null, type: TableRowType) =>
   props.tbodyTrClass

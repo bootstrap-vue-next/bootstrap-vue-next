@@ -9,18 +9,18 @@
     :field-column-class="getFieldColumnClasses"
     @head-clicked="onFieldHeadClick"
     @row-dbl-clicked="
-      (row, index, e) => {
+      (row: T, index: number, e: MouseEvent) => {
         emit('row-dbl-clicked', row, index, e)
       }
     "
     @row-clicked="onRowClick"
     @row-hovered="
-      (row, index, e) => {
+      (row: T, index: number, e: MouseEvent) => {
         emit('row-hovered', row, index, e)
       }
     "
     @row-unhovered="
-      (row, index, e) => {
+      (row: T, index: number, e: MouseEvent) => {
         emit('row-unhovered', row, index, e)
       }
     "
@@ -145,6 +145,8 @@ import type {
   TableField,
   TableFieldRaw,
   TableItem,
+  TableRowType,
+  TableStrictClassValue,
 } from '../../types'
 import {formatItem, get, getTableFieldHeadLabel, set, startCase} from '../../utils'
 import BOverlay from '../BOverlay/BOverlay.vue'
@@ -198,7 +200,6 @@ const _props = withDefaults(defineProps<BTableProps<T>>(), {
   modelValue: undefined,
   primaryKey: undefined,
   tbodyClass: undefined,
-  tbodyTrAttr: undefined,
   tfootClass: undefined,
   tfootTrClass: undefined,
   theadClass: undefined,
@@ -385,10 +386,10 @@ const getFieldColumnClasses = (field: TableField) => [
 // Also the row should technically have aria-selected . Both things could probably just use a function with tbodyTrAttrs
 // But functional tbodyTrAttrs are not supported yet
 // Also the stuff for resolving functions could probably be made a util
-const getRowClasses = (item: T, type: string) => [
+const getRowClasses = (item: T | null, type: TableRowType): TableStrictClassValue => [
   {
     [`selected table-${props.selectionVariant}`]:
-      props.selectable && item && selectedItemsSetUtilities.has(item),
+      props.selectable && !!item && selectedItemsSetUtilities.has(item),
   },
   props.tbodyTrClass
     ? typeof props.tbodyTrClass === 'function'
