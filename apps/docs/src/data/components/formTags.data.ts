@@ -269,7 +269,7 @@ export default {
           ],
         },
         {
-          event: 'update:modelValue',
+          event: 'update:model-value',
           description: 'Emitted when the tags changes. Updates the v-model',
           args: [
             {

@@ -84,7 +84,7 @@ export default {
       },
       emits: [
         {
-          event: 'update:modelValue',
+          event: 'update:model-value',
           description: 'Updates the `v-model` value (see docs for more details)',
           args: [
             {

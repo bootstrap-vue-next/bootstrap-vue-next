@@ -37,7 +37,7 @@ export default {
       },
       emits: [
         {
-          event: 'update:modelValue',
+          event: 'update:model-value',
           description: 'Update the currently opened accordion item',
           args: [
             {
@@ -195,7 +195,7 @@ export default {
           args: [],
         },
         {
-          event: 'update:modelValue',
+          event: 'update:model-value',
           description: 'Emitted when the visibility of the AccordionItem is changed',
           args: [
             {

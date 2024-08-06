@@ -44,13 +44,13 @@ export default {
         {
           args: [
             {
-              arg: 'update:modelValue',
+              arg: 'update:model-value',
               description: '',
               type: 'boolean',
             },
           ],
           description: '',
-          event: 'update:modelValue',
+          event: 'update:model-value',
         },
         {
           args: [],

@@ -109,11 +109,11 @@ export default {
           ],
         },
         {
-          event: 'update:modelValue',
+          event: 'update:model-value',
           description: 'Standard event to update the v-model',
           args: [
             {
-              arg: 'update:modelValue',
+              arg: 'update:model-value',
               description: 'modelValue',
               type: 'boolean | number',
             },
