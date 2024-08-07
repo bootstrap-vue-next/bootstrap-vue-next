@@ -150,8 +150,8 @@ For instance, use `badge-placement='top'` in place of `badge-top` or `badge-plac
 ### Rounding Sides
 
 Rounding a specific side of the avatar is now accomplished using the boolean props `rounded-top`,
-`rounded-bottom`, `rounded-start`, and `rounded-end` rather than the `top`, `bottom` rather than
-the `top`, `bottom`, `left`, and `right` values for the `rounded` prop.
+`rounded-bottom`, `rounded-start`, and `rounded-end` rather than the `top`, `bottom`, `left`, and `right`
+values for the `rounded` prop.
 
 ## BForm
 

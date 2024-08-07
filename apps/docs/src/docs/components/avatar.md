@@ -25,7 +25,7 @@ centered beside any adjoining plain text. They also can be used as children of o
     <BAvatar />
     <BAvatar variant="primary" text="BV" />
     <BAvatar variant="info" src="https://placekitten.com/300/300" />
-    <BAvatar variant="success" icon="people-fill" />
+    <BAvatar variant="success" />
   </div>
   <p>Using in components (list group) example:</p>
   <BListGroup style="max-width: 300px;">
@@ -45,7 +45,7 @@ centered beside any adjoining plain text. They also can be used as children of o
       <BBadge>9</BBadge>
     </BListGroupItem>
     <BListGroupItem class="d-flex align-items-center">
-      <BAvatar variant="success" icon="people-fill" class="mx-3" />
+      <BAvatar variant="success" class="mx-3" />
       <span class="me-auto">ACME group</span>
       <BBadge>7</BBadge>
     </BListGroupItem>
@@ -57,7 +57,7 @@ centered beside any adjoining plain text. They also can be used as children of o
 <BAvatar />
 <BAvatar variant="primary" text="BV" />
 <BAvatar variant="info" src="https://placekitten.com/300/300" />
-<BAvatar variant="success" icon="people-fill" />
+<BAvatar variant="success" />
 <p>Using in components (list group) example:</p>
 <BListGroup style="max-width: 300px;">
   <BListGroupItem class="d-flex align-items-center">
@@ -76,7 +76,7 @@ centered beside any adjoining plain text. They also can be used as children of o
     <BBadge>9</BBadge>
   </BListGroupItem>
   <BListGroupItem class="d-flex align-items-center">
-    <BAvatar variant="success" icon="people-fill" class="mx-3" />
+    <BAvatar variant="success" class="mx-3" />
     <span class="me-auto">ACME group</span>
     <BBadge>7</BBadge>
   </BListGroupItem>
@@ -88,7 +88,7 @@ centered beside any adjoining plain text. They also can be used as children of o
 
 ## Avatar types
 
-The avatar content can be either an image, an icon, or short text string. Avatar content defaults
+The avatar content can be either an image or short text string. Avatar content defaults
 to the [`'person-fill'` icon](<[/docs/icons](https://icons.getbootstrap.com/icons/person-fill/)>)
 when no other content is specified.
 
@@ -231,36 +231,7 @@ Use the `variant` prop to specify one of Bootstrap theme variant colors. The def
   </template>
 </HighlightCard>
 
-When displaying an icon as avatar, icon colors are calculated based on the `variant` property. The result is either `light` or `dark`. You can override the calculated icon color by specifying the `icon-variant` property.
-
-<HighlightCard>
-  <div class="d-flex" style="column-gap: 1%;">
-    <BAvatar variant="secondary" icon-variant="info" />
-    <BAvatar variant="primary" icon-variant="dark" />
-    <BAvatar variant="dark" icon-variant="warning" />
-    <BAvatar variant="light" icon-variant="success" />
-    <BAvatar variant="success" icon-variant="dark" />
-    <BAvatar variant="danger" icon-variant="warning" />
-    <BAvatar variant="warning" icon-variant="primary" />
-    <BAvatar variant="info" icon-variant="secondary" />
-  </div>
-  <template #html>
-
-```vue-html
-<BAvatar variant="secondary" icon-variant="info" />
-<BAvatar variant="primary" icon-variant="dark" />
-<BAvatar variant="dark" icon-variant="warning" />
-<BAvatar variant="light" icon-variant="success" />
-<BAvatar variant="success" icon-variant="dark" />
-<BAvatar variant="danger" icon-variant="warning" />
-<BAvatar variant="warning" icon-variant="primary" />
-<BAvatar variant="info" icon-variant="secondary" />
-```
-
-  </template>
-</HighlightCard>
-
-When displaying text inside the avatar, text colors are calculated based on the `variant` property. The result is either `light` or `dark`. You can override the calculated icon color by specifying the `icon-variant` property.
+When displaying text inside the avatar, text colors are calculated based on the `variant` property. The result is either `light` or `dark`. You can override the calculated text color by specifying the `text-variant` property.
 
 <HighlightCard>
   <div class="d-flex" style="column-gap: 1%;">
@@ -347,11 +318,12 @@ from `bootstrap-vue`
     <BAvatar rounded="sm" />
     <BAvatar rounded />
     <BAvatar rounded="lg" />
-    <BAvatar rounded="md" rounded-top />
-    <BAvatar rounded="md" rounded-start />
-    <BAvatar rounded="md" rounded-end />
-    <BAvatar rounded="md" rounded-bottom />
+    <BAvatar rounded-bottom="sm" />
+    <BAvatar rounded-start="md" />
+    <BAvatar rounded-top="lg" />
+    <BAvatar rounded-end="md" />
     <BAvatar rounded="circle" />
+    <BAvatar rounded="circle" rounded-top="0" />
     <BAvatar rounded="0" />
   </div>
   <template #html>
@@ -360,12 +332,14 @@ from `bootstrap-vue`
 <BAvatar rounded="sm" />
 <BAvatar rounded />
 <BAvatar rounded="lg" />
-<BAvatar rounded="md" rounded-top />
-<BAvatar rounded="md" rounded-start />
-<BAvatar rounded="md" rounded-end />
-<BAvatar rounded="md" rounded-bottom />
+<BAvatar rounded-bottom="sm" />
+<BAvatar rounded-start="md" />
+<BAvatar rounded-top="lg" />
+<BAvatar rounded-end="md" />
 <BAvatar rounded="circle" />
+<BAvatar rounded="circle" rounded-top="0" />
 <BAvatar rounded="0" />
+
 ```
 
   </template>
@@ -482,7 +456,7 @@ be set via the `badge-variant` prop. The badge will scale with the size of the a
   <div class="d-flex" style="column-gap: 1%;">
     <BAvatar badge />
     <BAvatar badge badge-variant="danger" src="https://placekitten.com/300/300" />
-    <BAvatar badge badge-variant="warning" icon="people-fill" />
+    <BAvatar badge badge-variant="warning" />
     <BAvatar badge badge-variant="success" src="https://placekitten.com/300/300" />
     <BAvatar badge badge-variant="dark" text="BV" />
     <BAvatar square badge badge-variant="dark" text="BV" />
@@ -492,7 +466,7 @@ be set via the `badge-variant` prop. The badge will scale with the size of the a
 ```vue-html
 <BAvatar badge />
 <BAvatar badge badge-variant="danger" src="https://placekitten.com/300/300" />
-<BAvatar badge badge-variant="warning" icon="people-fill" />
+<BAvatar badge badge-variant="warning" />
 <BAvatar badge badge-variant="success" src="https://placekitten.com/300/300" />
 <BAvatar badge badge-variant="dark" text="BV" />
 <BAvatar square badge badge-variant="dark" text="BV" />
@@ -590,7 +564,7 @@ Group multiple avatars together by wrapping them in a `BAvatarGroup` component:
     <BAvatar text="OK" variant="danger" />
     <BAvatar variant="warning" />
     <BAvatar src="https://placekitten.com/320/320" variant="dark" />
-    <BAvatar icon="music-note" variant="success" />
+    <BAvatar variant="success" />
   </BAvatarGroup>
   <template #html>
 
@@ -602,7 +576,7 @@ Group multiple avatars together by wrapping them in a `BAvatarGroup` component:
   <BAvatar text="OK" variant="danger" />
   <BAvatar variant="warning" />
   <BAvatar src="https://placekitten.com/320/320" variant="dark" />
-  <BAvatar icon="music-note" variant="success" />
+  <BAvatar variant="success" />
 </BAvatarGroup>
 ```
 
