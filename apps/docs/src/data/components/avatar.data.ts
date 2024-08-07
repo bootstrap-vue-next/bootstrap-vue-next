@@ -149,7 +149,7 @@ export default {
               rounded: {
                 default: 'circle',
                 description:
-                  'Specifies the type of rounding to apply to the component or its children. The `square` prop takes precedence. Refer to the documentation for details. The `circle` default is applied only if none of the `rounded-*` properties are set',
+                  'Specifies the type of rounding to apply to the component or its children. The `square` prop takes precedence',
               },
               variant: {
                 default: 'secondary',
@@ -232,7 +232,7 @@ export default {
               rounded: {
                 default: 'circle',
                 description:
-                  'Specifies the type of rounding to apply to the component or its children. The `square` prop takes precedence. Refer to the documentation for details. The `circle` default is applied only if none of the `rounded-*` properties are set',
+                  'Specifies the type of rounding to apply to the component or its children. The `square` prop takes precedence. Refer to the documentation for details.',
               },
               variant: {
                 default: 'secondary',
