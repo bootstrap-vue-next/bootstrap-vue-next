@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.24.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.3...bootstrapvuenext-v0.24.4) (2024-08-07)
+
+
+### Features
+
+* add BFormDatalist ([b5b4390](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b5b43905162bda2cdabaf2fad38bb542d6e90fb4))
+
+
+### Bug Fixes
+
+* add class to row details ([#2091](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2091)) ([41bbe11](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/41bbe11ffbdb3410e4ae2f1dba54dd4a38cc3aca))
+
 ## [0.24.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.2...bootstrapvuenext-v0.24.3) (2024-08-06)
 
 
