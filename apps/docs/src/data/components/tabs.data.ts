@@ -176,13 +176,13 @@ export default {
         {
           args: [
             {
-              arg: 'update:modelValue',
+              arg: 'update:model-value',
               description: '',
               type: 'number',
             },
           ],
           description: '',
-          event: 'update:modelValue',
+          event: 'update:model-value',
         },
         {
           args: [

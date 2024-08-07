@@ -191,7 +191,7 @@ export default {
       slots: [],
       emits: [
         {
-          event: 'update:modelValue',
+          event: 'update:model-value',
           description: 'Emitted when toast visibility changes',
           args: [
             {

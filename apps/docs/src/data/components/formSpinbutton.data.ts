@@ -116,7 +116,7 @@ export default {
         },
 
         {
-          event: 'update:modelValue',
+          event: 'update:model-value',
           args: [
             {
               arg: 'value',

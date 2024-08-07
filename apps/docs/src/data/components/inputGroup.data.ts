@@ -1,4 +1,5 @@
 import type {ComponentReference} from '../../types'
+import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
@@ -9,49 +10,41 @@ export default {
           append: {
             type: 'string',
             default: undefined,
+            description: 'Text to append to the input group',
           },
           appendHtml: {
             type: 'string',
             default: undefined,
-          },
-          id: {
-            type: 'string',
-            default: undefined,
+            description:
+              "HTML string to append to the input group. Has precedence over 'append' prop",
           },
           prepend: {
             type: 'string',
             default: undefined,
+            description: 'Text to prepend to the input group',
           },
           prependHtml: {
             type: 'string',
             default: undefined,
+            description:
+              "HTML string to prepend to the input group. Has precedence over 'prepend' prop",
           },
-          size: {
-            type: 'Size',
-            default: 'md',
-          },
-          tag: {
-            type: 'string',
-            default: 'div',
-          },
+          ...pick(buildCommonProps(buildCommonProps()), ['id', 'size', 'tag']),
         },
       },
       emits: [],
       slots: [
         {
-          description: '',
-          name: 'prepend',
-          scope: [],
-        },
-        {
-          description: '',
-          name: 'default',
-          scope: [],
-        },
-        {
-          description: '',
           name: 'append',
-          scope: [],
+          description: 'Content to append to the input group',
+        },
+        {
+          name: 'default',
+          description: 'Content to place in the input group',
+        },
+        {
+          name: 'prepend',
+          description: 'Content to prepend to the input group',
         },
       ],
     },
@@ -59,22 +52,19 @@ export default {
       component: 'BInputGroupText',
       props: {
         '': {
-          tag: {
-            type: 'string',
-            default: 'div',
-          },
           text: {
             type: 'string',
             default: undefined,
+            description: 'Content to place in the input group text',
           },
+          ...pick(buildCommonProps(buildCommonProps()), ['tag']),
         },
       },
       emits: [],
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the input group text',
         },
       ],
     },

@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.24.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.2...bootstrapvuenext-v0.24.3) (2024-08-06)
+
+
+### Bug Fixes
+
+* **BFormInput,BFormTextArea:** Deprecate trim, lazy, number props in favor of modifiers ([#2066](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2066)) ([f5be607](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f5be6074782b31c3db00b9c46fce0424dd021164))
+* **Table:** various functional syntaxes in attrs & classes fixes [#2083](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2083) ([#2087](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2087)) ([d8a9782](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d8a9782e2d9bf5910773afc409732d80870e75fc))
+
 ## [0.24.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.1...bootstrapvuenext-v0.24.2) (2024-07-21)
 
 

@@ -21,22 +21,35 @@ export default {
           modelValue: {
             type: 'string',
             default: undefined,
+            description:
+              'The Id of the accordion item that is currently open (not compatible with the `free===true`)',
           },
           ...pick(
             buildCommonProps({
               id: {
                 description:
-                  'The Id to be injected to accordion items and used to in BCollapse for state managment',
+                  'The Id to be injected to accordion items and used in BCollapse for state managment',
               },
             }),
             ['id']
           ),
         },
       },
-      emits: [],
+      emits: [
+        {
+          event: 'update:model-value',
+          description: 'Update the currently opened accordion item',
+          args: [
+            {
+              arg: 'value',
+              description: 'Id of the accordion item that is open',
+              type: 'string',
+            },
+          ],
+        },
+      ],
       slots: [
         {
-          scope: [],
           name: 'default',
           description: 'Content to place in the Accordion',
         },
@@ -46,46 +59,20 @@ export default {
       component: 'BAccordionItem',
       props: {
         '': {
-          id: {
-            type: 'string',
+          bodyAttrs: {
+            type: 'Readonly<AttrsValue>',
             default: undefined,
+            description: 'Attributes to be applied to the body of the accordion item',
           },
-          title: {
-            type: 'string',
-            default: undefined,
-          },
-          modelValue: {
-            type: 'boolean',
-            default: false,
-          },
-          headerTag: {
-            type: 'string',
-            default: 'h2',
-          },
-          tag: {
-            type: 'string',
-            default: undefined,
-          },
-          toggle: {
-            type: 'boolean',
-            default: undefined,
-          },
-          horizontal: {
-            type: 'boolean',
-            default: undefined,
-          },
-          visible: {
-            type: 'boolean',
-            default: false,
-          },
-          isNav: {
-            type: 'boolean',
-            default: undefined,
-          },
-          headerClass: {
+          bodyClass: {
             type: 'ClassValue',
             default: undefined,
-            description: 'Class to be applied to the header element',
+            description: 'Class to be applied to the body of the accordion item',
+          },
+          buttonAttrs: {
+            type: 'Readonly<AttrsValue>',
+            default: undefined,
+            description: 'Attributes to be applied to the button in header',
           },
           buttonClass: {
             type: 'ClassValue',
@@ -97,34 +84,128 @@ export default {
             default: undefined,
             description: 'Class to be applied to the collapse',
           },
-          bodyClass: {
-            type: 'ClassValue',
-            default: undefined,
-            description: 'Class to be applied to the body of the accordion item',
-          },
-          bodyAttrs: {
-            type: 'Readonly<AttrsValue>',
-            default: undefined,
-            description: 'Attributes to be applied to the body of the accordion item',
-          },
-          buttonAttrs: {
-            type: 'Readonly<AttrsValue>',
-            default: undefined,
-            description: 'Attributes to be applied to the button in header',
-          },
           headerAttrs: {
             type: 'Readonly<AttrsValue>',
             default: undefined,
             description: 'Attributes to be applied to the header element',
+          },
+          headerClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: 'Class to be applied to the header element',
+          },
+          headerTag: {
+            type: 'string',
+            default: 'h2',
+            description: 'Tag to be used for the header element',
+          },
+          horizontal: {
+            type: 'boolean',
+            default: undefined,
+            description:
+              'Transition the `width` instead of `height` and set a `width` on the immediate child element',
+          },
+          isNav: {
+            type: 'boolean',
+            default: undefined,
+            description:
+              'When set, signifies that the accordion is part of a navbar, enabling certain features for navbar support',
+          },
+          modelValue: {
+            type: 'boolean',
+            default: false,
+            description: 'Controls the visibility of the AccordionItem',
+          },
+          title: {
+            type: 'string',
+            default: undefined,
+            description:
+              'Text to place in the header of the AccordionItem (title slot takes precedence)',
+          },
+          toggle: {
+            type: 'boolean',
+            default: undefined,
+            description:
+              'When true, will toggle the visibility of the AccordionItem (including animation) when the component is mounted',
+          },
+          visible: {
+            type: 'boolean',
+            default: false,
+            description: 'When true, the AccordionItem will be visible',
           },
           wrapperAttrs: {
             type: 'Readonly<AttrsValue>',
             default: undefined,
             description: 'Attributes to be applied to the wrapper element',
           },
+          ...pick(
+            buildCommonProps({
+              id: {
+                description:
+                  'The Id to be injected to accordion items and used to in BCollapse for state managment',
+              },
+            }),
+            ['id', 'tag']
+          ),
         },
       },
-      emits: [],
+      emits: [
+        {
+          event: 'hidden',
+          description: 'Emitted when AccordionItem has finished closing',
+          args: [],
+        },
+        {
+          event: 'hide',
+          description: 'Emitted when AccordionItem has started to close',
+          args: [
+            {
+              arg: 'value',
+              type: 'BvTriggerableEvent',
+              description: 'Native triggerable event',
+            },
+          ],
+        },
+        {
+          event: 'hide-prevented',
+          description:
+            'Emitted when the AccordionItem tried to close, but was prevented from doing so.',
+          args: [],
+        },
+        {
+          event: 'show',
+          description: 'Emitted when AccordionItem has started to show',
+          args: [
+            {
+              arg: 'value',
+              type: 'BvTriggerableEvent',
+              description: 'Native triggerable event',
+            },
+          ],
+        },
+        {
+          event: 'shown',
+          description: 'Emitted when AccordionItem has finished showing',
+          args: [],
+        },
+        {
+          event: 'show-prevented',
+          description:
+            'Emitted when the AccordionItem tried to open, but was prevented from doing so.',
+          args: [],
+        },
+        {
+          event: 'update:model-value',
+          description: 'Emitted when the visibility of the AccordionItem is changed',
+          args: [
+            {
+              arg: 'value',
+              type: 'boolean',
+              description: 'Current visibility state of the AccordionItem',
+            },
+          ],
+        },
+      ],
       slots: [
         {
           scope: [],
