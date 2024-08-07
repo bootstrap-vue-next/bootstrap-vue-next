@@ -317,6 +317,33 @@ type RadioValue =
 
 </BCard>
 
+## RadiusElement
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type RadiusElement =
+  | 'circle'
+  | 'pill'
+  | 'none'
+  | 'sm'
+  | 'lg'
+  | '0'
+  | '1'
+  | '2'
+  | '3'
+  | '4'
+  | '5'
+  | 0
+  | 1
+  | 2
+  | 3
+  | 4
+  | 5
+```
+
+</BCard>
+
 ## SelectValue
 
 <BCard class="bg-body-tertiary">
