@@ -131,7 +131,7 @@
               :variant="item._rowVariant"
               v-bind="callTbodyTrAttrs(item, 'row-details')"
             >
-              <BTd :colspan="computedFieldsTotal">
+              <BTd :colspan="computedFieldsTotal" :class="detailsTdClass">
                 <slot
                   name="row-details"
                   :item="item"
