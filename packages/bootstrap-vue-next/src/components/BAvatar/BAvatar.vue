@@ -101,7 +101,7 @@ const props = withDefaults(defineProps<BAvatarProps>(), {
   textVariant: null,
   // End ColorExtendables props
   // RadiusElementExtendables props
-  rounded: undefined,
+  rounded: 'circle',
   roundedBottom: undefined,
   roundedEnd: undefined,
   roundedStart: undefined,
@@ -140,21 +140,11 @@ const computedParentSize = useNumberishToStyle(() => parentData?.size.value)
 const computedSize = computed(() => computedParentSize.value ?? computedPropSize.value)
 
 const computedVariant = toRef(() => parentData?.variant.value ?? props.variant)
+const computedRounded = toRef(() => parentData?.rounded.value ?? props.rounded)
 const computedRoundedTop = toRef(() => parentData?.roundedTop.value ?? props.roundedTop)
 const computedRoundedBottom = toRef(() => parentData?.roundedBottom.value ?? props.roundedBottom)
 const computedRoundedStart = toRef(() => parentData?.roundedStart.value ?? props.roundedStart)
 const computedRoundedEnd = toRef(() => parentData?.roundedEnd.value ?? props.roundedEnd)
-const computedDefaultRounded = toRef(() =>
-  computedRoundedTop.value ||
-  computedRoundedBottom.value ||
-  computedRoundedStart.value ||
-  computedRoundedEnd.value
-    ? undefined
-    : 'circle'
-)
-const computedRounded = toRef(
-  () => parentData?.rounded.value ?? props.rounded ?? computedDefaultRounded.value
-)
 
 const radiusElementClasses = useRadiusElementClasses(() => ({
   rounded: computedRounded.value,

@@ -19,7 +19,7 @@ const _props = withDefaults(defineProps<BAvatarGroupProps>(), {
   square: false,
   tag: 'div',
   // RadiusElementExtendables props
-  rounded: undefined,
+  rounded: 'circle',
   roundedBottom: undefined,
   roundedEnd: undefined,
   roundedStart: undefined,
