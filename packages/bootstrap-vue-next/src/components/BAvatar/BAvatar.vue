@@ -18,6 +18,17 @@
     <span v-else-if="!!props.text" class="b-avatar-text" :style="textFontStyle">
       {{ props.text }}
     </span>
+    <span v-else class="b-avatar-img"
+      ><svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="80%"
+        height="80%"
+        fill="currentColor"
+        class="bi bi-person-fill"
+        viewBox="0 0 16 16"
+      >
+        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" /></svg
+    ></span>
     <BBadge
       v-if="showBadge"
       :pill="props.badgePill"
@@ -54,7 +65,7 @@ const props = withDefaults(defineProps<BAvatarProps>(), {
   badgeBgVariant: null,
   badgeTextVariant: null,
   badgeVariant: 'primary',
-  badgePlacement: 'top-end',
+  badgePlacement: 'bottom-end',
   badgeDotIndicator: false,
   badgePill: false,
   button: false,
@@ -78,7 +89,6 @@ const props = withDefaults(defineProps<BAvatarProps>(), {
   stretched: false,
   routerComponentName: undefined,
   target: undefined,
-  to: undefined,
   underlineOffset: undefined,
   underlineOffsetHover: undefined,
   underlineOpacity: undefined,
@@ -91,7 +101,7 @@ const props = withDefaults(defineProps<BAvatarProps>(), {
   textVariant: null,
   // End ColorExtendables props
   // RadiusElementExtendables props
-  rounded: false,
+  rounded: undefined,
   roundedBottom: undefined,
   roundedEnd: undefined,
   roundedStart: undefined,
@@ -130,11 +140,21 @@ const computedParentSize = useNumberishToStyle(() => parentData?.size.value)
 const computedSize = computed(() => computedParentSize.value ?? computedPropSize.value)
 
 const computedVariant = toRef(() => parentData?.variant.value ?? props.variant)
-const computedRounded = toRef(() => parentData?.rounded.value ?? props.rounded)
 const computedRoundedTop = toRef(() => parentData?.roundedTop.value ?? props.roundedTop)
 const computedRoundedBottom = toRef(() => parentData?.roundedBottom.value ?? props.roundedBottom)
 const computedRoundedStart = toRef(() => parentData?.roundedStart.value ?? props.roundedStart)
 const computedRoundedEnd = toRef(() => parentData?.roundedEnd.value ?? props.roundedEnd)
+const computedDefaultRounded = toRef(() =>
+  computedRoundedTop.value ||
+  computedRoundedBottom.value ||
+  computedRoundedStart.value ||
+  computedRoundedEnd.value
+    ? undefined
+    : 'circle'
+)
+const computedRounded = toRef(
+  () => parentData?.rounded.value ?? props.rounded ?? computedDefaultRounded.value
+)
 
 const radiusElementClasses = useRadiusElementClasses(() => ({
   rounded: computedRounded.value,

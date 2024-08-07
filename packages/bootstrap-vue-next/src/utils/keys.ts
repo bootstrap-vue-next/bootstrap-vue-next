@@ -66,7 +66,7 @@ export const avatarGroupInjectionKey: InjectionKey<{
   overlapScale: Readonly<Ref<number>>
   size: Readonly<Ref<LiteralUnion<Size, Numberish> | undefined>>
   square: Readonly<Ref<boolean>>
-  rounded: Readonly<Ref<RadiusElement | boolean>>
+  rounded: Readonly<Ref<RadiusElement | boolean | undefined>>
   roundedTop: Readonly<Ref<RadiusElement | boolean | undefined>>
   roundedBottom: Readonly<Ref<RadiusElement | boolean | undefined>>
   roundedStart: Readonly<Ref<RadiusElement | boolean | undefined>>
