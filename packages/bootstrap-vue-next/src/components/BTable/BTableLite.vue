@@ -74,7 +74,10 @@
           <slot name="top-row" />
         </BTr>
 
-        <template v-for="(item, itemIndex) in props.items" :key="itemIndex">
+        <template
+          v-for="(item, itemIndex) in props.items"
+          :key="props.primaryKey ? get(item, props.primaryKey) : itemIndex"
+        >
           <BTr
             :class="getRowClasses(item, 'row')"
             :variant="isTableItem(item) ? item._rowVariant : undefined"
@@ -131,7 +134,7 @@
               :variant="item._rowVariant"
               v-bind="callTbodyTrAttrs(item, 'row-details')"
             >
-              <BTd :colspan="computedFieldsTotal">
+              <BTd :colspan="computedFieldsTotal" :class="detailsTdClass">
                 <slot
                   name="row-details"
                   :item="item"
