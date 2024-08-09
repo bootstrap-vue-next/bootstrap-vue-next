@@ -2,6 +2,11 @@ import {type PropertyReference} from '../types'
 
 export const commonProps = () =>
   ({
+    alt: {
+      type: 'string',
+      default: 'undefined',
+      description: 'Value to set for the `alt` attribute',
+    },
     ariaControls: {
       type: 'AriaInvalid',
       default: undefined,
@@ -40,6 +45,12 @@ export const commonProps = () =>
       default: false,
       description:
         'When set to `true`, attempts to auto-focus the control when it is mounted, or re-activated when in a keep-alive. Does not set the `autofocus` attribute on the control',
+    },
+    bgVariant: {
+      type: 'TextColorVariant | null',
+      default: null,
+      description:
+        'Applies one of the Bootstrap theme color variants to background of the component',
     },
     debounce: {
       type: 'Numberish',
@@ -138,6 +149,36 @@ export const commonProps = () =>
       type: 'string',
       default: undefined,
       description: 'Sets the ARIA attribute `role` to a specific value',
+    },
+    rounded: {
+      type: 'boolean | RadiusElement',
+      default: 'false',
+      description:
+        'Specifies the type of rounding to apply to the component or its children. The `square` prop takes precedence. Refer to the documentation for details',
+    },
+    roundedBottom: {
+      type: 'boolean | RadiusElement',
+      default: undefined,
+      description:
+        'Specifies the type of rounding to apply to the `bottom` corners of the component or its children',
+    },
+    roundedEnd: {
+      type: 'boolean | RadiusElement',
+      default: undefined,
+      description:
+        'Specifies the type of rounding to apply to the `end` corners of the component or its children',
+    },
+    roundedStart: {
+      type: 'boolean | RadiusElement',
+      default: undefined,
+      description:
+        'Specifies the type of rounding to apply to the `start` corners of the component or its children',
+    },
+    roundedTop: {
+      type: 'boolean | RadiusElement',
+      default: undefined,
+      description:
+        'Specifies the type of rounding to apply to the `top` corners of the component or its children',
     },
     size: {
       type: 'Size',
