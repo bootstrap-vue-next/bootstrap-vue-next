@@ -21,13 +21,6 @@
         v-bind="$attrs"
         :style="computedZIndex"
       >
-        <div
-          v-if="needsFallback"
-          ref="fallbackFocusElement"
-          :class="fallbackClassSelector"
-          tabindex="0"
-          style="width: 0; height: 0; overflow: hidden"
-        />
         <div class="modal-dialog" :class="modalDialogClasses">
           <div v-if="lazyShowing" class="modal-content" :class="props.contentClass">
             <div v-if="!props.hideHeader" class="modal-header" :class="headerClasses">
@@ -101,6 +94,13 @@
         <slot v-if="!props.hideBackdrop" name="backdrop">
           <div class="modal-backdrop fade show" @click="hideFn('backdrop')" />
         </slot>
+        <div
+          v-if="needsFallback"
+          ref="fallbackFocusElement"
+          :class="fallbackClassSelector"
+          tabindex="0"
+          style="width: 0; height: 0; overflow: hidden"
+        />
       </div>
     </Transition>
   </Teleport>

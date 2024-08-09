@@ -20,13 +20,6 @@
         data-bs-backdrop="false"
         v-bind="$attrs"
       >
-        <div
-          v-if="needsFallback"
-          ref="fallbackFocusElement"
-          :class="fallbackClassSelector"
-          tabindex="0"
-          style="width: 0; height: 0; overflow: hidden"
-        />
         <template v-if="lazyShowing">
           <div v-if="!props.noHeader" class="offcanvas-header" :class="props.headerClass">
             <slot name="header" v-bind="sharedSlots">
@@ -55,6 +48,13 @@
             <slot name="footer" v-bind="sharedSlots" />
           </div>
         </template>
+        <div
+          v-if="needsFallback"
+          ref="fallbackFocusElement"
+          :class="fallbackClassSelector"
+          tabindex="0"
+          style="width: 0; height: 0; overflow: hidden"
+        />
       </div>
     </Transition>
     <slot v-if="showBackdrop" name="backdrop">
