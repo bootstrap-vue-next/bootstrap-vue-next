@@ -21,7 +21,7 @@
         v-bind="$attrs"
         :style="computedZIndex"
       >
-        <div class="modal-dialog" :class="modalDialogClasses" tabindex="0">
+        <div class="modal-dialog" :class="modalDialogClasses">
           <div v-if="lazyShowing" class="modal-content" :class="props.contentClass">
             <div v-if="!props.hideHeader" class="modal-header" :class="headerClasses">
               <slot name="header" v-bind="sharedSlots">
@@ -94,6 +94,13 @@
         <slot v-if="!props.hideBackdrop" name="backdrop">
           <div class="modal-backdrop fade show" @click="hideFn('backdrop')" />
         </slot>
+        <div
+          v-if="needsFallback"
+          ref="fallbackFocusElement"
+          :class="fallbackClassSelector"
+          tabindex="0"
+          style="width: 0; height: 0; overflow: hidden"
+        />
       </div>
     </Transition>
   </Teleport>
@@ -233,13 +240,23 @@ const computedId = useId(() => props.id, 'modal')
 const modelValue = defineModel<boolean>({default: false})
 
 const element = ref<HTMLElement | null>(null)
+const fallbackFocusElement = ref<HTMLElement | null>(null)
 const okButton = ref<HTMLElement | null>(null)
 const cancelButton = ref<HTMLElement | null>(null)
 const closeButton = ref<HTMLElement | null>(null)
 const isActive = ref(false)
 const lazyLoadCompleted = ref(false)
 
-useActivatedFocusTrap({element, isActive, noTrap: () => props.noTrap})
+const fallbackClassSelector = 'modal-fallback-focus'
+const {needsFallback} = useActivatedFocusTrap({
+  element,
+  isActive,
+  noTrap: () => props.noTrap,
+  fallbackFocus: {
+    ref: fallbackFocusElement,
+    classSelector: fallbackClassSelector,
+  },
+})
 
 const fadeTransitionProps = useFadeTransition(true)
 

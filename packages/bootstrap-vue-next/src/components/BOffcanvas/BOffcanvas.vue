@@ -41,18 +41,20 @@
               </template>
             </slot>
           </div>
-          <div
-            class="offcanvas-body"
-            tabindex="0"
-            :class="props.bodyClass"
-            v-bind="props.bodyAttrs"
-          >
+          <div class="offcanvas-body" :class="props.bodyClass" v-bind="props.bodyAttrs">
             <slot v-bind="sharedSlots" />
           </div>
           <div v-if="hasFooterSlot" :class="props.footerClass">
             <slot name="footer" v-bind="sharedSlots" />
           </div>
         </template>
+        <div
+          v-if="needsFallback"
+          ref="fallbackFocusElement"
+          :class="fallbackClassSelector"
+          tabindex="0"
+          style="width: 0; height: 0; overflow: hidden"
+        />
       </div>
     </Transition>
     <slot v-if="showBackdrop" name="backdrop">
@@ -164,6 +166,7 @@ const isOpenByBreakpoint = computed(
 useSafeScrollLock(modelValue, () => props.bodyScrolling || isOpenByBreakpoint.value)
 
 const element = ref<HTMLElement | null>(null)
+const fallbackFocusElement = ref<HTMLElement | null>(null)
 
 onKeyStroke(
   'Escape',
@@ -179,10 +182,15 @@ const {focused} = useFocus(element, {
 
 const isActive = ref(modelValue.value)
 
-useActivatedFocusTrap({
+const fallbackClassSelector = 'offcanvas-fallback-focus'
+const {needsFallback} = useActivatedFocusTrap({
   element,
   isActive,
   noTrap: () => props.noTrap || isOpenByBreakpoint.value,
+  fallbackFocus: {
+    classSelector: fallbackClassSelector,
+    ref: fallbackFocusElement,
+  },
 })
 
 const lazyLoadCompleted = ref(false)
