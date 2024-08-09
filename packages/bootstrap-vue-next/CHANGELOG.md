@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.24.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.4...bootstrapvuenext-v0.24.5) (2024-08-09)
+
+
+### Features
+
+* **BTableLite:** use primary key for v-for loop to prevent rerendering fixes [#2096](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2096) ([#2097](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2097)) ([677bddf](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/677bddf4899921262e446a3d6535bfffc424add0))
+
+
+### Bug Fixes
+
+* **BAvatar:** Several fixes from parity pass ([31ac9e6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/31ac9e69008304c57b5bbf3f7c995a2ebda6577b))
+* **BAvatar:** Several fixes from parity pass ([#2094](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2094)) ([31ac9e6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/31ac9e69008304c57b5bbf3f7c995a2ebda6577b))
+
 ## [0.24.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.3...bootstrapvuenext-v0.24.4) (2024-08-07)
 
 
