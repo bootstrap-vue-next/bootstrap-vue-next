@@ -93,10 +93,8 @@ now the `close` slot.
 
 ## BAvatar
 
-Routing and Icon support have been deprecated.
-
-Icons support can be implemented using the default slot including either [unplug icons](/docs/icons) or by
-embedding an svg.
+Icon support has been deprecated. Icons support can be implemented using the default slot including
+either [unplug icons](/docs/icons) or by embedding an `.svg`.
 
 <HighlightCard>
   <BAvatar>

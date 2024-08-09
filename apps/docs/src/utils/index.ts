@@ -1,6 +1,8 @@
 import type {PropertyReference} from '../types'
 import {commonProps} from './common-props'
 
+export {linkProps} from './link-props'
+
 type CommonPropsKeys = keyof ReturnType<typeof commonProps>
 
 export const buildCommonProps = (

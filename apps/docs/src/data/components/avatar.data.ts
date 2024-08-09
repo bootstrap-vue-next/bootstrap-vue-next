@@ -1,5 +1,5 @@
 import type {ComponentReference} from '../../types'
-import {buildCommonProps, pick} from '../../utils'
+import {buildCommonProps, linkProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
@@ -75,72 +75,6 @@ export default {
             default: undefined,
             description: 'Text to place in the avatar',
           },
-          // Begin Link props: TODO: handle these when document BLink
-          active: {
-            type: 'boolean',
-            default: undefined,
-          },
-          activeClass: {
-            type: 'string',
-            default: undefined,
-          },
-          disabled: {
-            type: 'boolean',
-            default: undefined,
-          },
-          exactActiveClass: {
-            type: 'string',
-            default: undefined,
-          },
-          href: {
-            type: 'string',
-            default: undefined,
-          },
-          opacity: {
-            type: '10 | 25 | 50 | 75 | 100 | "10" | "25" | "50" | "75" | "100"',
-            default: undefined,
-          },
-          opacityHover: {
-            type: '10 | 25 | 50 | 75 | 100 | "10" | "25" | "50" | "75" | "100"',
-            default: undefined,
-          },
-          rel: {
-            type: 'string',
-            default: undefined,
-          },
-          replace: {
-            type: 'boolean',
-            default: undefined,
-          },
-          stretched: {
-            type: 'boolean',
-            default: false,
-          },
-          target: {
-            type: 'LinkTarget',
-            default: undefined,
-          },
-          underlineOffset: {
-            type: '1 | 2 | 3 | "1" | "2" | "3"',
-            default: undefined,
-          },
-          underlineOffsetHover: {
-            type: '1 | 2 | 3 | "1" | "2" | "3"',
-            default: undefined,
-          },
-          underlineOpacity: {
-            type: '0 | 10 | 25 | 50 | 75 | 100 | "0" | "10" | "25" | "50" | "75" | "100"',
-            default: undefined,
-          },
-          underlineOpacityHover: {
-            type: '0 | 10 | 25 | 50 | 75 | 100 | "0" | "10" | "25" | "50" | "75" | "100"',
-            default: undefined,
-          },
-          underlineVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-          // End Link props
           ...pick(
             buildCommonProps({
               alt: {
@@ -169,6 +103,7 @@ export default {
             ]
           ),
         },
+        'BLink props': linkProps,
       },
       emits: [
         {

@@ -10,7 +10,8 @@
 
 Avatars are a custom component, and are typically used to display a user profile as a
 picture or short text. `BAvatar` provides several props for customizing its
-appearance such as color variant and roundness, and optionally supports acting as a button or a link.
+appearance such as color variant and roundness, and optionally supports acting as a button, link,
+or a [router link](/docs/reference/router-links).
 
 </div>
 
@@ -412,7 +413,8 @@ The prop `button-type` can be used to control the type of button to render. Supp
 
 ### Link
 
-Fancy an avatar as a link? Simply set the `href`.
+Fancy an avatar as a link or router link? Simply set either the `href` or `to` prop (respectively).
+The `to` prop required that the [Vue Router](https://router.vuejs.org/) is installed.
 
 <HighlightCard>
   <BListGroup>
@@ -445,7 +447,9 @@ Fancy an avatar as a link? Simply set the `href`.
 
 **Note:**
 
-- The `button` prop takes precedence over the `href` prop.
+The `button` prop takes precedence over the `href` and ~~`to`~~ props.
+For additional details on the `RouterLink` compatible props, please refer to the
+[Router support reference section](/docs/reference/router-links).
 
 ## Badge avatars
 
