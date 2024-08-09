@@ -9,9 +9,9 @@
 <div class="lead mb-5">
 
 Avatars are a custom component, and are typically used to display a user profile as a
-picture, an icon, or short text. `BAvatar` provides several props for customizing its
-appearance such as color variant and roundness, and optionally supports acting as a button, link
-or ~~[router link](/docs/reference/router-links)~~.
+picture or short text. `BAvatar` provides several props for customizing its
+appearance such as color variant and roundness, and optionally supports acting as a button, link,
+or a [router link](/docs/reference/router-links).
 
 </div>
 
@@ -26,7 +26,7 @@ centered beside any adjoining plain text. They also can be used as children of o
     <BAvatar />
     <BAvatar variant="primary" text="BV" />
     <BAvatar variant="info" src="https://placekitten.com/300/300" />
-    <BAvatar variant="success" icon="people-fill" />
+    <BAvatar variant="success" />
   </div>
   <p>Using in components (list group) example:</p>
   <BListGroup style="max-width: 300px;">
@@ -46,7 +46,7 @@ centered beside any adjoining plain text. They also can be used as children of o
       <BBadge>9</BBadge>
     </BListGroupItem>
     <BListGroupItem class="d-flex align-items-center">
-      <BAvatar variant="success" icon="people-fill" class="mx-3" />
+      <BAvatar variant="success" class="mx-3" />
       <span class="me-auto">ACME group</span>
       <BBadge>7</BBadge>
     </BListGroupItem>
@@ -58,7 +58,7 @@ centered beside any adjoining plain text. They also can be used as children of o
 <BAvatar />
 <BAvatar variant="primary" text="BV" />
 <BAvatar variant="info" src="https://placekitten.com/300/300" />
-<BAvatar variant="success" icon="people-fill" />
+<BAvatar variant="success" />
 <p>Using in components (list group) example:</p>
 <BListGroup style="max-width: 300px;">
   <BListGroupItem class="d-flex align-items-center">
@@ -77,7 +77,7 @@ centered beside any adjoining plain text. They also can be used as children of o
     <BBadge>9</BBadge>
   </BListGroupItem>
   <BListGroupItem class="d-flex align-items-center">
-    <BAvatar variant="success" icon="people-fill" class="mx-3" />
+    <BAvatar variant="success" class="mx-3" />
     <span class="me-auto">ACME group</span>
     <BBadge>7</BBadge>
   </BListGroupItem>
@@ -89,8 +89,9 @@ centered beside any adjoining plain text. They also can be used as children of o
 
 ## Avatar types
 
-The avatar content can be either an image, an icon, or short text string. Avatar content defaults
-to the [`'person-fill'` icon](/docs/icons) when no other content is specified.
+The avatar content can be either an image or short text string. Avatar content defaults
+to the [`'person-fill'` icon](<[/docs/icons](https://icons.getbootstrap.com/icons/person-fill/)>)
+when no other content is specified.
 
 You can also supply custom content via the default slot, although you may need to apply additional
 styling on the content.
@@ -119,21 +120,17 @@ distortion will occur. The image will be scaled up or down to fit within the ava
 **Notes:**
 
 - When using a module bundler and project relative image URLs, please refer to the
-  [Component img src resolving](/docs/reference/images) reference section for additional details
-- The `src` prop takes precedence over the `icon` and `text` props
-- <span class="badge badge-secondary">2.11.0+</span> If the image fails to load, the avatar will
-  fall back to the value of the `icon` or `text` props. If neither the `icon` or `text` props are
-  provided, then the default avatar icon will be shown. Also, when the image fails to load, the
+  [Image Support](/docs/reference/images) reference section for additional details
+- The `src` prop takes precedence over the `text` prop
+- If the image fails to load, the avatar will
+  fall back to the value of the `text` prop. If the `text` props is not
+  provided, then the default avatar image will be shown. Also, when the image fails to load, the
   `img-error` event will be emitted
 - [Variant colors](#variants) when using images not normally visible, unless the image fails load.
   The variant will affect the focus styling when the image avatar is also an
   [actionable avatar](#actionable-avatars)
-
-**Notes:**
-
-- The `icon` prop takes precedence over the `text` prop
-- If the `text`, `src`, or `icon` props are not provided _and_ the [default slot](#custom-content)
-  has no content, then the `person-fill` icon will be used
+- If neither the `text` or `src` prop is provided _and_ the [default slot](#custom-content)
+  has no content, then the `person-fill` image will be used
 
 ### Text content
 
@@ -169,6 +166,20 @@ appearance, or if using custom icons or SVGs e.g.:
   <div class="d-flex" style="column-gap: 1%;">
     <BAvatar size="4em">Hello<br>World</BAvatar>
     <BAvatar size="4em">你好<br>世界</BAvatar>
+    <BAvatar size="4em"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="80%"
+            height="80%"
+            fill="currentColor"
+            class="bi bi-person-hearts"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M11.5 1.246c.832-.855 2.913.642 0 2.566-2.913-1.924-.832-3.421 0-2.566M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4m13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276ZM15 2.165c.555-.57 1.942.428 0 1.711-1.942-1.283-.555-2.281 0-1.71Z"
+            /></svg
+        ></BAvatar>
   </div>
   <template #html>
 
@@ -182,7 +193,7 @@ appearance, or if using custom icons or SVGs e.g.:
 
 **Notes:**
 
-- The default slot takes precedence over the `text`, `src` and `icon` props.
+- The default slot takes precedence over the `text` or `src` props.
 - The default slot content will be wrapped in a `<span>` element to ensure proper centering.
 - You may need additional styling applied to the custom content to compensate for the
   [shape of avatar component](#rounding).
@@ -221,36 +232,7 @@ Use the `variant` prop to specify one of Bootstrap theme variant colors. The def
   </template>
 </HighlightCard>
 
-When displaying an icon as avatar, icon colors are calculated based on the `variant` property. The result is either `light` or `dark`. You can override the calculated icon color by specifying the `icon-variant` property.
-
-<HighlightCard>
-  <div class="d-flex" style="column-gap: 1%;">
-    <BAvatar variant="secondary" icon-variant="info" />
-    <BAvatar variant="primary" icon-variant="dark" />
-    <BAvatar variant="dark" icon-variant="warning" />
-    <BAvatar variant="light" icon-variant="success" />
-    <BAvatar variant="success" icon-variant="dark" />
-    <BAvatar variant="danger" icon-variant="warning" />
-    <BAvatar variant="warning" icon-variant="primary" />
-    <BAvatar variant="info" icon-variant="secondary" />
-  </div>
-  <template #html>
-
-```vue-html
-<BAvatar variant="secondary" icon-variant="info" />
-<BAvatar variant="primary" icon-variant="dark" />
-<BAvatar variant="dark" icon-variant="warning" />
-<BAvatar variant="light" icon-variant="success" />
-<BAvatar variant="success" icon-variant="dark" />
-<BAvatar variant="danger" icon-variant="warning" />
-<BAvatar variant="warning" icon-variant="primary" />
-<BAvatar variant="info" icon-variant="secondary" />
-```
-
-  </template>
-</HighlightCard>
-
-When displaying text inside the avatar, text colors are calculated based on the `variant` property. The result is either `light` or `dark`. You can override the calculated icon color by specifying the `icon-variant` property.
+When displaying text inside the avatar, text colors are calculated based on the `variant` property. The result is either `light` or `dark`. You can override the calculated text color by specifying the `text-variant` property.
 
 <HighlightCard>
   <div class="d-flex" style="column-gap: 1%;">
@@ -325,20 +307,24 @@ Prefer a square avatar? simply set the `square` prop to `true`.
 ### Rounding
 
 `BAvatar` renders with a circular border radius. You can change the rounding by setting the prop
-`rounded` to one of the values `true`, `'circle'`, `'sm'`, `'lg'`, `'top'`, `'left'`, `'right'`, or `'bottom'`.
+`rounded` to one of the values `true`, `'circle'`, `'sm'`, or `'lg'`.
 When set to `true` (or the empty string `''`), it uses the Bootstrap default of medium rounding.
 When set to `circle`, it uses a border radius of 50%, resulting in a circle.
+Rounding specific edges is accomplished via the `rounded-top`, `rounded-bottom`, `rounded-start` and
+`rounded-end` props. See the [migration guide](/docs/migration-guide#BAvatar) for differences
+from `bootstrap-vue`
 
 <HighlightCard>
   <div class="d-flex" style="column-gap: 1%;">
     <BAvatar rounded="sm" />
     <BAvatar rounded />
     <BAvatar rounded="lg" />
-    <BAvatar rounded="top" />
-    <BAvatar rounded="left" />
-    <BAvatar rounded="right" />
-    <BAvatar rounded="bottom" />
+    <BAvatar rounded-bottom="sm" />
+    <BAvatar rounded-start="md" />
+    <BAvatar rounded-top="lg" />
+    <BAvatar rounded-end="md" />
     <BAvatar rounded="circle" />
+    <BAvatar rounded="circle" rounded-top="0" />
     <BAvatar rounded="0" />
   </div>
   <template #html>
@@ -347,12 +333,14 @@ When set to `circle`, it uses a border radius of 50%, resulting in a circle.
 <BAvatar rounded="sm" />
 <BAvatar rounded />
 <BAvatar rounded="lg" />
-<BAvatar rounded="top" />
-<BAvatar rounded="left" />
-<BAvatar rounded="right" />
-<BAvatar rounded="bottom" />
+<BAvatar rounded-bottom="sm" />
+<BAvatar rounded-start="md" />
+<BAvatar rounded-top="lg" />
+<BAvatar rounded-end="md" />
 <BAvatar rounded="circle" />
+<BAvatar rounded="circle" rounded-top="0" />
 <BAvatar rounded="0" />
+
 ```
 
   </template>
@@ -361,7 +349,7 @@ When set to `circle`, it uses a border radius of 50%, resulting in a circle.
 **Notes:**
 
 - The `square` prop takes precedence over the `rounded` prop
-- Alternatively to the `square` prop, you can set the `rounded` prop to the string `'0'` to
+- Rather than `square` prop, you can set the `rounded` prop to the string `'0'` to
   achieve a square avatar
 
 ### Alignment
@@ -374,9 +362,8 @@ the component, such as `<BAvatar class="align-baseline" ...>` or
 
 ## Actionable avatars
 
-Easily create avatars that respond to clicks, ~~or avatars that change the URL/route when clicked~~.
-Actionable avatars will appear in the document tab sequence, and are accessible for both screen
-reader and keyboard-only users.
+Easily create avatars that respond to clicks. Actionable avatars will appear in the document tab sequence,
+and are accessible for both screen reader and keyboard-only users.
 
 Image avatars, when actionable, employ a basic scale transform on the image when hovered.
 
@@ -395,10 +382,6 @@ the `click` event whenever clicked.
     <BListGroupItem>
       <BAvatar button @click="alertEvent" src="https://placekitten.com/300/300" />
       Button Image Avatar
-    </BListGroupItem>
-    <BListGroupItem>
-      <BAvatar button @click="alertEvent" icon="star-fill" class="align-center" />
-      Button Icon Avatar
     </BListGroupItem>
   </BListGroup>
   <template #html>
@@ -419,10 +402,6 @@ the `click` event whenever clicked.
     <BAvatar button @click="alertEvent" src="https://placekitten.com/300/300" />
     Button Image Avatar
   </BListGroupItem>
-  <BListGroupItem>
-    <BAvatar button @click="alertEvent" icon="star-fill" class="align-center" />
-    Button Icon Avatar
-  </BListGroupItem>
 </BListGroup>
 ```
 
@@ -434,9 +413,8 @@ The prop `button-type` can be used to control the type of button to render. Supp
 
 ### Link
 
-Fancy an avatar as a link or router link? Simply set either the `href` or ~~`to`~~ props (respectively).
-~~The `to` prop can either be a string path, or a `Location` object. The `to` prop requires that
-`Vue router` (or equivalent) be installed~~.
+Fancy an avatar as a link or router link? Simply set either the `href` or `to` prop (respectively).
+The `to` prop required that the [Vue Router](https://router.vuejs.org/) is installed.
 
 <HighlightCard>
   <BListGroup>
@@ -447,10 +425,6 @@ Fancy an avatar as a link or router link? Simply set either the `href` or ~~`to`
     <BListGroupItem>
       <BAvatar href="#bar" src="https://placekitten.com/300/300" />
       Link Image Avatar
-    </BListGroupItem>
-    <BListGroupItem>
-      <BAvatar href="#baz" icon="star-fill" class="align-center" />
-      Link Icon Avatar
     </BListGroupItem>
   </BListGroup>
   <template #html>
@@ -465,10 +439,6 @@ Fancy an avatar as a link or router link? Simply set either the `href` or ~~`to`
     <BAvatar href="#bar" src="https://placekitten.com/300/300" />
     Link Image Avatar
   </BListGroupItem>
-  <BListGroupItem>
-    <BAvatar href="#baz" icon="star-fill" class="align-center" />
-    Link Icon Avatar
-  </BListGroupItem>
 </BListGroup>
 ```
 
@@ -477,9 +447,9 @@ Fancy an avatar as a link or router link? Simply set either the `href` or ~~`to`
 
 **Note:**
 
-- The `button` prop takes precedence over the `href` and ~~`to`~~ props.
-- ~~For additional details on the `RouterLink` compatible props, please refer to the
-  [Router support reference section](/docs/reference/router-links).~~
+The `button` prop takes precedence over the `href` and ~~`to`~~ props.
+For additional details on the `RouterLink` compatible props, please refer to the
+[Router support reference section](/docs/reference/router-links).
 
 ## Badge avatars
 
@@ -490,7 +460,7 @@ be set via the `badge-variant` prop. The badge will scale with the size of the a
   <div class="d-flex" style="column-gap: 1%;">
     <BAvatar badge />
     <BAvatar badge badge-variant="danger" src="https://placekitten.com/300/300" />
-    <BAvatar badge badge-variant="warning" icon="people-fill" />
+    <BAvatar badge badge-variant="warning" />
     <BAvatar badge badge-variant="success" src="https://placekitten.com/300/300" />
     <BAvatar badge badge-variant="dark" text="BV" />
     <BAvatar square badge badge-variant="dark" text="BV" />
@@ -500,7 +470,7 @@ be set via the `badge-variant` prop. The badge will scale with the size of the a
 ```vue-html
 <BAvatar badge />
 <BAvatar badge badge-variant="danger" src="https://placekitten.com/300/300" />
-<BAvatar badge badge-variant="warning" icon="people-fill" />
+<BAvatar badge badge-variant="warning" />
 <BAvatar badge badge-variant="success" src="https://placekitten.com/300/300" />
 <BAvatar badge badge-variant="dark" text="BV" />
 <BAvatar square badge badge-variant="dark" text="BV" />
@@ -531,28 +501,29 @@ Add textual content to the badge by supplying a string to the `badge` prop, or u
 
 ### Badge positioning
 
-By default, the badge appears on the bottom right of the avatar. You can use the `badge-top` and
-`badge-right` boolean props to switch the sides. Combine both props to move the badge to the top
-right of the avatar.
+By default, the badge appears on the bottom right of the avatar. You can use the `badge-placement` props to change the position.
+Badge positioning properties have changed from `bootstrap-vue`. See the [migration guide](/docs/migration-guide#bavatar) for details.
 
 <HighlightCard>
   <div class="d-flex" style="column-gap: 1%;">
     <BAvatar badge />
-    <BAvatar badge badge-left />
-    <BAvatar badge badge-top />
-    <BAvatar badge badge-left badge-top />
+    <BAvatar badge badge-placement="start" />
+    <BAvatar badge badge-placement="top" />
+    <BAvatar badge badge-placement="top-start" />
   </div>
   <template #html>
 
 ```vue-html
 <BAvatar badge />
-<BAvatar badge badge-left />
-<BAvatar badge badge-top />
-<BAvatar badge badge-left badge-top />
+<BAvatar badge badge-placement="start" />
+<BAvatar badge badge-placement="top" />
+<BAvatar badge badge-placement="top-start" />
 ```
 
   </template>
 </HighlightCard>
+
+<NotYetImplemented />
 
 Use the `badge-offset` prop to control the offset of the badge. The `badge-offset` must be a valid
 CSS length string (i.e. `'2px'`, `'-2px'`, `'0.5em'`, etc.). Positive values will move the badge
@@ -597,7 +568,7 @@ Group multiple avatars together by wrapping them in a `BAvatarGroup` component:
     <BAvatar text="OK" variant="danger" />
     <BAvatar variant="warning" />
     <BAvatar src="https://placekitten.com/320/320" variant="dark" />
-    <BAvatar icon="music-note" variant="success" />
+    <BAvatar variant="success" />
   </BAvatarGroup>
   <template #html>
 
@@ -609,7 +580,7 @@ Group multiple avatars together by wrapping them in a `BAvatarGroup` component:
   <BAvatar text="OK" variant="danger" />
   <BAvatar variant="warning" />
   <BAvatar src="https://placekitten.com/320/320" variant="dark" />
-  <BAvatar icon="music-note" variant="success" />
+  <BAvatar variant="success" />
 </BAvatarGroup>
 ```
 
@@ -684,7 +655,7 @@ Similar to the `variant` prop, the `BAvatarGroup` props `square` and `rounded` t
 over the respective props on individual child avatars.
 
 <HighlightCard>
-  <BAvatarGroup rounded="lg">
+  <BAvatarGroup rounded>
     <BAvatar />
     <BAvatar />
     <BAvatar />
@@ -694,7 +665,7 @@ over the respective props on individual child avatars.
   <template #html>
 
 ```vue-html
-<BAvatarGroup rounded="lg">
+<BAvatarGroup rounded>
   <BAvatar />
   <BAvatar />
   <BAvatar />
@@ -760,6 +731,7 @@ Avatars are based upon `BBadge` and `BButton` components, and as such, rely upon
 <script setup lang="ts">
 import {data} from '../../data/components/avatar.data'
 import {BAvatar, BAvatarGroup, BListGroup, BBadge, BListGroupItem} from 'bootstrap-vue-next'
+import NotYetImplemented from '../../components/NotYetImplemented.vue'
 import ComponentReference from '../../components/ComponentReference.vue'
 import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
