@@ -195,6 +195,16 @@ type ColorVariant =
 
 </BCard>
 
+## CombinedPlacement
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type CombinedPlacement = Placement | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end'
+```
+
+</BCard>
+
 ## ContainerPosition
 
 <BCard class="bg-body-tertiary">
@@ -238,6 +248,16 @@ type InputType =
 
 ```ts
 type LinkTarget = '_self' | '_blank' | '_parent' | '_top'
+```
+
+</BCard>
+
+## Placement
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type Placement = 'top' | 'bottom' | 'start' | 'end'
 ```
 
 </BCard>
@@ -293,6 +313,33 @@ type RadioValue =
   | Readonly<Record<string, unknown>>
   | number
   | null
+```
+
+</BCard>
+
+## RadiusElement
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type RadiusElement =
+  | 'circle'
+  | 'pill'
+  | 'none'
+  | 'sm'
+  | 'lg'
+  | '0'
+  | '1'
+  | '2'
+  | '3'
+  | '4'
+  | '5'
+  | 0
+  | 1
+  | 2
+  | 3
+  | 4
+  | 5
 ```
 
 </BCard>

@@ -91,6 +91,66 @@ For consistency with other components properties, slots and events that use the 
 now use the term `close`. For example the `dismissed` event is now the `closed` event and the `dsimiss` slot is
 now the `close` slot.
 
+## BAvatar
+
+Icon support has been deprecated. Icons support can be implemented using the default slot including
+either [unplug icons](/docs/icons) or by embedding an `.svg`.
+
+<HighlightCard>
+  <BAvatar>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="80%"
+      height="80%"
+      fill="currentColor"
+      class="bi bi-person-hearts"
+      viewBox="0 0 16 16"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M11.5 1.246c.832-.855 2.913.642 0 2.566-2.913-1.924-.832-3.421 0-2.566M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4m13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276ZM15 2.165c.555-.57 1.942.428 0 1.711-1.942-1.283-.555-2.281 0-1.71Z"
+      /></svg
+  ></BAvatar>
+
+<template #html>
+
+```vue
+<template>
+  <BAvatar>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="80%"
+      height="80%"
+      fill="currentColor"
+      class="bi bi-person-hearts"
+      viewBox="0 0 16 16"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M11.5 1.246c.832-.855 2.913.642 0 2.566-2.913-1.924-.832-3.421 0-2.566M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4m13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276ZM15 2.165c.555-.57 1.942.428 0 1.711-1.942-1.283-.555-2.281 0-1.71Z"
+      /></svg
+  ></BAvatar>
+</template>
+```
+
+  </template>
+</HighlightCard>
+
+### Badge Positioning
+
+Badge positioning has changed to using a single property `badge-placement` and our
+[`CombinedPlacement` utility](/docs/types/combined-placement) rather than individual properties.
+
+For instance, use `badge-placement='top'` in place of `badge-top` or `badge-placement='end'` in place of
+`badge-right`. For combined props, rather than using `badge-top` and `badge-right`, use
+`badge-placement='top-end'.
+
+### Rounding Sides
+
+Rounding a specific side of the avatar is now accomplished using the boolean props `rounded-top`,
+`rounded-bottom`, `rounded-start`, and `rounded-end` rather than the `top`, `bottom`, `left`, and `right`
+values for the `rounded` prop.
+
 ## BForm
 
 Bootstrap 5 has dropped form-specific layout classes for the grid system. See the
@@ -252,8 +312,7 @@ Example using `useModalController.confirm` to replace `msgBoxConfirm` (Remember 
 </template>
 
 <script setup lang="ts">
-import {BButton} from './components'
-import {useModalController} from './composables'
+import {BButton, useModalController} from 'bootstrap-vue-next'
 import {ref} from 'vue'
 
 const {confirm} = useModalController()
@@ -282,7 +341,7 @@ The `show` and `confirm` `props` object accespts all of the properties that are 
 
 <script setup lang="ts">
 import {computed, ref} from 'vue'
-import {BButton, BModalOrchestrator, useModalController} from 'bootstrap-vue-next'
+import {BAvatar, BButton, BModalOrchestrator, useModalController} from 'bootstrap-vue-next'
 import MigrationWrapper from '../components/MigrationWrapper.vue'
 import HighlightCard from '../components/HighlightCard.vue'
 

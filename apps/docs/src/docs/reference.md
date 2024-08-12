@@ -32,6 +32,11 @@ const componentList: {name: string; description: string}[] = [
       'Information on contributing to the BootstrapVueNext project',
   },
   {
+    name: 'Images',
+    description:
+      'Information on including images in your components',
+  },
+  {
     name: 'Router Links',
     description: 'Several BootstrapVueNext components support rendering `RouterLink` components compatible with Vue Router and Nuxt.js',
   },

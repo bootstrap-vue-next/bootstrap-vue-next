@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.24.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.5...bootstrapvuenext-v0.24.6) (2024-08-09)
+
+
+### Features
+
+* **useActivatedFocusTrap:** set better fallback options fixes [#2095](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2095)  ([#2099](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2099)) ([873e716](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/873e716dc3bc5dbf4f78ae3335a2751dbd539df4))
+
 ## [0.24.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.4...bootstrapvuenext-v0.24.5) (2024-08-09)
 
 
