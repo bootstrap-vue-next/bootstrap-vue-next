@@ -68,7 +68,7 @@ export default {
             }),
             [
               'ariaLabel',
-              'ariaLabelledBy',
+              'ariaLabelledby',
               'autofocus',
               'disabled',
               'form',
