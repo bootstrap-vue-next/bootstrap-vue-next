@@ -239,6 +239,16 @@ Bootstrap Vue used `Vue Router 3`, BSVN uses [`Vue Router 4`](https://router.vue
 Vue router deprecated the `append` prop in `<router-link>`, BSVN has followed suit and deprecated the `append`
 prop on `BLink`. See the [`Vue Router` migration guide](https://router.vuejs.org/guide/migration/#Removal-of-append-prop-in-router-link-) for details.
 
+### event
+
+Vue router deprecated the `event` prop in `<router-link>`, BSVN has followed suit and deprecated the `event`
+prop on `BLink`. See the [`Vue Router` migration guide](https://router.vuejs.org/guide/migration/#Removal-of-event-and-tag-props-in-router-link-) for details.
+
+### exact
+
+Vue router deprecated the `exact` prop in `<router-link>`, BSVN has followed suit and deprecated the `exact`, `exact-path`
+and `exact-path-active-class` props on `BLink`. See the [`Vue Router` migration guide](https://router.vuejs.org/guide/migration/#Removal-of-the-exact-prop-in-router-link-) for details.
+
 ### $root events
 
 BSVN no longer emits the `bv::link::clicked` event on `$root`.

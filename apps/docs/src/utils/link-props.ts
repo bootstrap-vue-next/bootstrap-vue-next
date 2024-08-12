@@ -30,6 +30,12 @@ export const linkProps = {
     default: false,
     description: 'When set to `true`, styles an icon at the beginning or end of the link text',
   },
+  noprefetch: {
+    type: 'boolean',
+    default: false,
+    description:
+      'To improve the responsiveness of your Nuxt.js applications, when the link will be displayed within the viewport, Nuxt.js will automatically prefetch the code splitted page. Setting `no-prefetch` will disabled this feature for the specific link',
+  },
   opacity: {
     type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
     default: undefined,
@@ -39,6 +45,12 @@ export const linkProps = {
     type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
     default: undefined,
     description: 'Change the alpha opacity of the link `rgba()` color value on hover',
+  },
+  prefetch: {
+    type: 'boolean',
+    default: undefined,
+    description:
+      'To improve the responsiveness of your Nuxt.js applications, when the link will be displayed within the viewport, Nuxt.js will automatically prefetch the code splitted page. Setting `prefetch` to `true` or `false` will overwrite the default value of `router.prefetchLinks`',
   },
   rel: {
     type: 'string',
