@@ -93,4 +93,8 @@ const computedContentClasses = computed(() => ({
   'd-none': props.contentVisibleUp !== undefined,
   [`d-${props.contentVisibleUp}-block`]: props.contentVisibleUp !== undefined,
 }))
+
+defineExpose({
+  _interval: toRef(() => props.interval),
+})
 </script>
