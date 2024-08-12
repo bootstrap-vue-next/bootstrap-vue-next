@@ -102,7 +102,7 @@ const touchThresholdNumber = useToNumber(() => props.touchThreshold)
 const slideInterval = ref<Numberish | null>(null)
 onMounted(() => {
   slideInterval.value =
-    slideValues.value?.find((slid) => slid.$el.style.display !== 'none')?.$props.interval ?? null
+    slideValues.value?.find((slid) => slid.$el.style.display !== 'none')?._interval ?? null
 })
 const intervalNumber = useToNumber(() => slideInterval.value ?? props.interval)
 
@@ -241,7 +241,7 @@ const onAfterEnter = (el: Readonly<Element>) => {
   }
 }
 const onEnter = (el: Readonly<Element>) => {
-  slideInterval.value = slideValues.value?.find((slid) => slid.$el === el)?.$props.interval ?? null
+  slideInterval.value = slideValues.value?.find((slid) => slid.$el === el)?._interval ?? null
 }
 
 onKeyStroke(
