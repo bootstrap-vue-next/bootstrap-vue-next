@@ -35,7 +35,7 @@ export const commonProps = () =>
       description:
         "When the rendered element is an `aria-live` region (for screen reader users), set to either 'polite' or 'assertive'",
     },
-    ariaLabelledBy: {
+    ariaLabelledby: {
       type: 'string',
       default: undefined,
       description:

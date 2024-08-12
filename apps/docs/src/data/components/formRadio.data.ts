@@ -48,7 +48,7 @@ export default {
 
           ...pick(buildCommonProps(), [
             'ariaLabel',
-            'ariaLabelledBy',
+            'ariaLabelledby',
             'autofocus',
             'disabled',
             'form',

@@ -1,3 +1,5 @@
+import type {PropertyReference} from '../types'
+
 export const linkTo = '/docs/components/link'
 
 export const linkProps = {
@@ -128,4 +130,4 @@ export const linkProps = {
     default: null,
     description: 'Set the color variant for the link',
   },
-} as const
+} as const satisfies Record<string, PropertyReference>

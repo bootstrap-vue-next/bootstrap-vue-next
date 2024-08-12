@@ -1,4 +1,5 @@
-import type {ComponentReference} from '../../types'
+import type {BAlertProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 export default {
@@ -74,7 +75,7 @@ export default {
             }),
             ['variant']
           ),
-        },
+        } satisfies Record<keyof BAlertProps, PropertyReference>,
       },
       slots: [
         {

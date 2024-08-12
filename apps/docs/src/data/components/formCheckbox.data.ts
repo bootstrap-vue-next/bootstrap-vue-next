@@ -1,5 +1,6 @@
-import type {ComponentReference} from '../../types'
+import type {ComponentReference, PropertyReference} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
+import type {BFormCheckboxProps} from 'bootstrap-vue-next'
 
 export default {
   load: (): ComponentReference[] => [
@@ -62,9 +63,19 @@ export default {
             default: true,
             description: 'Value returned when this checkbox is checked',
           },
+          wrapperAttrs: {
+            type: 'Readonly<AttrsValue>',
+            default: undefined,
+            description: 'Attributes to be applied to the wrapper element',
+          },
+          inputClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: 'Class to be applied to the body of the accordion item',
+          },
           ...pick(buildCommonProps(), [
             'ariaLabel',
-            'ariaLabelledBy',
+            'ariaLabelledby',
             'autofocus',
             'disabled',
             'form',
@@ -75,7 +86,7 @@ export default {
             'size',
             'state',
           ]),
-        },
+        } satisfies Record<keyof BFormCheckboxProps, PropertyReference>,
       },
       emits: [
         {

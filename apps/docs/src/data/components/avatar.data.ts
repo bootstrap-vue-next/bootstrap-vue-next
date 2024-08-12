@@ -1,4 +1,5 @@
-import type {ComponentReference} from '../../types'
+import type {BAvatarProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 import {linkProps, linkTo} from '../../utils/link-props'
 
@@ -103,7 +104,10 @@ export default {
               'variant',
             ]
           ),
-        },
+          noPrefetch: {},
+          noRel: {},
+          prefetchedClass: {},
+        } satisfies Record<Exclude<keyof BAvatarProps, keyof typeof linkProps>, PropertyReference>,
         'BLink props': {
           _linkTo: {
             type: linkTo,
