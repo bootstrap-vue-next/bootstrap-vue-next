@@ -34,7 +34,7 @@ export const linkProps = {
     type: 'boolean',
     default: false,
     description:
-      'To improve the responsiveness of your Nuxt.js applications, when the link will be displayed within the viewport, Nuxt.js will automatically prefetch the code splitted page. Setting `no-prefetch` will disabled this feature for the specific link',
+      'Not Yet Implemented: To improve the responsiveness of your Nuxt.js applications, when the link will be displayed within the viewport, Nuxt.js will automatically prefetch the code splitted page. Setting `no-prefetch` will disabled this feature for the specific link',
   },
   opacity: {
     type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
@@ -50,7 +50,12 @@ export const linkProps = {
     type: 'boolean',
     default: undefined,
     description:
-      'To improve the responsiveness of your Nuxt.js applications, when the link will be displayed within the viewport, Nuxt.js will automatically prefetch the code splitted page. Setting `prefetch` to `true` or `false` will overwrite the default value of `router.prefetchLinks`',
+      'Not Yet Implemented: To improve the responsiveness of your Nuxt.js applications, when the link will be displayed within the viewport, Nuxt.js will automatically prefetch the code splitted page. Setting `prefetch` to `true` or `false` will overwrite the default value of `router.prefetchLinks`',
+  },
+  prefetchClass: {
+    type: 'string',
+    default: undefined,
+    description: 'Not Yet Implmented: A class to apply to links that have been prefetched.',
   },
   rel: {
     type: 'string',
