@@ -6,7 +6,6 @@
   >
     <input
       :id="computedId"
-      v-bind="inputAttrs"
       ref="input"
       v-model="localValue"
       :class="computedInputClasses"
@@ -22,6 +21,7 @@
       :true-value="props.value"
       :false-value="props.uncheckedValue"
       :indeterminate="props.indeterminate"
+      v-bind="inputAttrs"
     />
     <label v-if="hasDefaultSlot || props.plain === false" :for="computedId" :class="labelClasses">
       <slot />
