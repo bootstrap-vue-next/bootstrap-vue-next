@@ -1,3 +1,5 @@
+export const linkTo = '/docs/components/link'
+
 export const linkProps = {
   active: {
     type: 'boolean',
