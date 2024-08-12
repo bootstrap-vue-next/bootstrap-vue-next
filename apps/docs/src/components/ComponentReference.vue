@@ -83,7 +83,7 @@
                         >
                           <template #title>
                             <!-- using :to was causing a full page refresh. Don't know why. Super odd -->
-                            <BLink v-if="table.linkTo" @click.prevent="goToLink(table.linkTo)">
+                            <BLink v-if="table.linkTo" @click.stop="goToLink(table.linkTo)">
                               {{ table.name }}
                             </BLink>
                             <template v-else>
