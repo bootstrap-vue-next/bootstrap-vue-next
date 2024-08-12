@@ -59,15 +59,17 @@ export interface BLinkProps {
   exactActiveClass?: string
   href?: string
   icon?: boolean
-  stretched?: boolean
-  // noPrefetch: {type: [Boolean, String] as PropType<boolean>, default: false},
+  noRel?: boolean
+  // noPrefetch?: boolean
   opacity?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
   opacityHover?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
-  // prefetch: {type: [Boolean, String] as PropType<boolean>, default: null},
+  // prefetch?: boolean
+  // prefetchedClass?: ClassValue
   rel?: string
   replace?: boolean
   routerComponentName?: string
   routerTag?: string
+  stretched?: boolean
   target?: LinkTarget
   to?: RouteLocationRaw
   underlineOffset?: 1 | 2 | 3 | '1' | '2' | '3'
@@ -76,10 +78,6 @@ export interface BLinkProps {
   underlineOpacityHover?: 0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'
   underlineVariant?: ColorVariant | null
   variant?: ColorVariant | null
-  prefetch?: boolean
-  noPrefetch?: boolean
-  prefetchedClass?: ClassValue
-  noRel?: boolean
 }
 
 export interface BAccordionProps {
