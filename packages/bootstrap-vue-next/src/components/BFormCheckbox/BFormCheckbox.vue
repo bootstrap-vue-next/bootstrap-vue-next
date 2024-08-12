@@ -1,11 +1,15 @@
 <template>
-  <RenderComponentOrSkip :skip="isButtonGroup" :class="computedClasses">
+  <RenderComponentOrSkip
+    :skip="isButtonGroup"
+    v-bind="props.wrapperAttrs"
+    :class="computedWrapperClasses"
+  >
     <input
       :id="computedId"
-      v-bind="$attrs"
+      v-bind="inputAttrs"
       ref="input"
       v-model="localValue"
-      :class="inputClasses"
+      :class="computedInputClasses"
       type="checkbox"
       :disabled="props.disabled || parentData?.disabled.value"
       :required="computedRequired || undefined"
@@ -27,7 +31,7 @@
 
 <script setup lang="ts">
 import {useFocus} from '@vueuse/core'
-import {computed, inject, ref, toRef} from 'vue'
+import {computed, inject, ref, toRef, useAttrs} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useDefaults, useId} from '../../composables'
 import type {BFormCheckboxProps, CheckboxValue} from '../../types'
 import {checkboxGroupKey, isEmptySlot} from '../../utils'
@@ -37,7 +41,11 @@ defineOptions({
   inheritAttrs: false,
 })
 
+const {class: wrapperClass, ...inputAttrs} = useAttrs()
+
 const _props = withDefaults(defineProps<BFormCheckboxProps>(), {
+  wrapperAttrs: undefined,
+  inputClass: undefined,
   ariaLabel: undefined,
   ariaLabelledby: undefined,
   autofocus: false,
@@ -121,8 +129,10 @@ const classesObject = computed(() => ({
   buttonVariant: props.buttonVariant ?? parentData?.buttonVariant.value ?? 'secondary', // This is where the true default is made
   hasDefaultSlot: hasDefaultSlot.value,
 }))
-const computedClasses = getClasses(classesObject)
+const wrapperClasses = getClasses(classesObject)
+const computedWrapperClasses = computed(() => [wrapperClasses.value, wrapperClass])
 const inputClasses = getInputClasses(classesObject)
+const computedInputClasses = computed(() => [inputClasses.value, props.inputClass])
 const labelClasses = getLabelClasses(classesObject)
 
 defineExpose({

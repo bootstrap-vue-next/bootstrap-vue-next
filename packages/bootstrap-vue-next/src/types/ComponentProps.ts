@@ -157,6 +157,8 @@ export interface BFormCheckboxProps {
   state?: boolean | null
   switch?: boolean
   uncheckedValue?: CheckboxValue
+  wrapperAttrs?: Readonly<AttrsValue>
+  inputClass?: ClassValue
   // Since the compiler-sfc doesn't crawl external filed, the redundant string/boolean union is
   // necessary to tell it that we don't want it to follow Boolean casting rules
   // https://vuejs.org/guide/components/props.html#boolean-casting which would cast the empty
