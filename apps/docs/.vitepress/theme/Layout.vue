@@ -347,6 +347,14 @@ watch(
     hr {
       margin: 3rem 0;
     }
+
+    ol {
+      list-style-type: decimal;
+    }
+
+    ul {
+      list-style-type: disc;
+    }
   }
 
   .alert {
