@@ -97,7 +97,7 @@ External Links can be specified with the `href` prop.
 
 ## Link opacity
 
-Change the alpha opacity of the link `rgba()` color value with utilities. Please be aware that changes to a color’s opacity can lead to links with [insufficient contrast](https://getbootstrap.com/docs/5.3/getting-started/accessibility/#color-contrast).
+Change the alpha opacity of the link `rgba()` color value. Please be aware that changes to a color’s opacity can lead to links with [insufficient contrast](https://getbootstrap.com/docs/5.3/getting-started/accessibility/#color-contrast).
 
 <HighlightCard>
   <p v-for="opacity in [10, 25, 50, 75, 100]" :key="opacity">
@@ -223,7 +223,7 @@ Just like the setting `opacity` has a matching `opacity-hover` prop, `underline-
 <HighlightCard>
   <BLink
     :underline-offset="3"
-    underline-opacity="0"
+    underline-opacity="25"
     underline-offset-hover="1"
     underline-opacity-hover="100"
   >

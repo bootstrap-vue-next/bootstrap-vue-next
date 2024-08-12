@@ -9,22 +9,21 @@ export default {
       },
       emits: [
         {
+          event: 'click',
+          description: 'Emitted when link was clicked',
           args: [
             {
-              arg: 'click',
-              description: '',
+              arg: 'value',
               type: 'MouseEvent',
+              description: 'Native click event',
             },
           ],
-          description: '',
-          event: 'click',
         },
       ],
       slots: [
         {
           name: 'default',
-          description: '',
-          scope: [],
+          description: 'Content to place in the link',
         },
       ],
     },

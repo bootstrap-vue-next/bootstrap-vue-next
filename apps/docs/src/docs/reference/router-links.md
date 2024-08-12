@@ -67,21 +67,6 @@ Setting replace prop will call `router.replace()` instead of `router.push()` whe
 
 </HighlightCard>
 
-### `append`
-
-- type: `boolean`
-- default: `false`
-
-Setting `append` prop always appends the relative path to the current path. For example, assuming we are navigating from `/a` to a relative link `b`, without `append` we will end up at `/b`, but with `append` we will end up at `/a/b`.
-
-<HighlightCard>
-
-```vue
-<BLink :to="{path: 'relative/path'}" append />
-```
-
-</HighlightCard>
-
 ### `router-tag`
 
 - type: `string`

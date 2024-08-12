@@ -227,6 +227,22 @@ a limitation that affect your scenario, please [file an issue](https://github.co
 [`trim`, `lazy`, and `number`](https://vuejs.org/guide/essentials/forms.html#modifiers).
 They work as documented in vue.js, so there is no longer a need for the properties.
 
+## BLink
+
+Bootstrap Vue used `Vue Router 3`, BSVN uses [`Vue Router 4`](https://router.vuejs.org/) please read the
+[Vue Router migration guide](https://router.vuejs.org/guide/migration/) if using the router features of `BLink`.
+
+`BLink` no longer supresses the scroll to top default behavior when `href='#'`.
+
+### append
+
+Vue router deprecated the `append` prop in `<router-link>`, BSVN has followed suit and deprecated the `append`
+prop on `BLink`. See the [`Vue Router` migration guide](https://router.vuejs.org/guide/migration/#Removal-of-append-prop-in-router-link-) for details.
+
+### $root events
+
+BSVN no longer emits the `bv::link::clicked` event on `$root`.
+
 ## BModal
 
 ### Replacement for Modal Message boxes
