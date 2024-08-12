@@ -1,5 +1,6 @@
 import type {ComponentReference} from '../../types'
-import {buildCommonProps, linkProps, pick} from '../../utils'
+import {buildCommonProps, pick} from '../../utils'
+import {linkProps, linkTo} from '../../utils/link-props'
 
 export default {
   load: (): ComponentReference[] => [
@@ -103,7 +104,12 @@ export default {
             ]
           ),
         },
-        'BLink props': linkProps,
+        'BLink props': {
+          _linkTo: {
+            type: linkTo,
+          },
+          ...linkProps,
+        },
       },
       emits: [
         {

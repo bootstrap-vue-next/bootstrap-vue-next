@@ -9,9 +9,23 @@ export interface PropertyReference {
   default?: unknown
 }
 
+/**
+ * _linkTo is a special key that is used to link to another component's props
+ * It is used in the docs to link to another component's props
+ * It uses the 'type' key as a link to the component
+ * omit `withBase` from the path. It will be added automatically
+ *
+ * (I'd use a symbol for this but it's not supported in JSON)
+ * (I'd use a number for this but that's a string in JS objects, and causes a TS error)
+ * (I'd use _linkTo?: string but that causes a TS error)
+ *
+ * ~magic~
+ */
+type PropsRecord = Record<string, Record<string, PropertyReference> & {_linkTo?: PropertyReference}>
+
 export interface ComponentReference {
   component: string
-  props: Record<string, Record<string, PropertyReference>>
+  props: PropsRecord
   emits: {
     event: string
     args: EmitArgReference[]
@@ -26,5 +40,5 @@ export interface ComponentReference {
 }
 
 export type MappedComponentReference = Omit<ComponentReference, 'props'> & {
-  props: [string, (PropertyReference & {prop: string})[]][]
+  props: {name: string; linkTo?: string; ref: (PropertyReference & {prop: string})[]}[]
 }
