@@ -158,6 +158,7 @@ With components that support router links (have a `to` prop), you will want to s
 ## Nuxt.js specific router link props
 
 <NotYetImplemented/>
+
 When BootstrapVue detects that your app is running under [Nuxt.js](https://nuxt.com), it will render a [`NuxtLink`](https://nuxt.com/docs/api/components/nuxt-link#nuxtlink) sub component instead of a `RouterLink`. `NuxtLink` supports all of the above router link props, plus the following additional Nuxt.js specific props.
 
 ### `prefetch`
