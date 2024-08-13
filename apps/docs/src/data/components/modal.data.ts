@@ -1,4 +1,5 @@
-import type {ComponentReference, SlotScopeReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference, SlotScopeReference} from '../../types'
 
 const sharedSlots: SlotScopeReference[] = [
   {
@@ -331,7 +332,7 @@ export default {
             type: 'Readonly<BTransitionProps>',
             default: undefined,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BModal'], PropertyReference>,
       },
       emits: [
         {

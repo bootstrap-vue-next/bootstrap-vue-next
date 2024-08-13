@@ -1,4 +1,4 @@
-import type {BAccordionItemProps, BAccordionProps} from 'bootstrap-vue-next'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {ComponentReference, PropertyReference} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
@@ -34,7 +34,7 @@ export default {
             }),
             ['id']
           ),
-        } satisfies Record<keyof BAccordionProps, PropertyReference>,
+        } satisfies Record<keyof BvnComponentProps['BAccordion'], PropertyReference>,
       },
       emits: [
         {
@@ -148,7 +148,7 @@ export default {
             }),
             ['id', 'tag']
           ),
-        } satisfies Record<keyof BAccordionItemProps, PropertyReference>,
+        } satisfies Record<keyof BvnComponentProps['BAccordionItem'], PropertyReference>,
       },
       emits: [
         {

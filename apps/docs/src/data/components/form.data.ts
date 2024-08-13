@@ -1,4 +1,5 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 export default {
@@ -26,7 +27,7 @@ export default {
               "When set, adds the Bootstrap class 'was-validated' on the form, triggering the native browser validation states",
           },
           ...pick(buildCommonProps(), ['id']),
-        },
+        } satisfies Record<keyof BvnComponentProps['BForm'], PropertyReference>,
       },
       emits: [
         {
@@ -62,7 +63,7 @@ export default {
             }),
             ['disabledField', 'htmlField', 'id', 'options', 'textField', 'valueField']
           ),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormDatalist'], PropertyReference>,
       },
       emits: [],
       slots: [
@@ -91,7 +92,7 @@ export default {
             default: undefined,
             description: 'The id of the input control that the floating label is for',
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormFloatingLabel'], PropertyReference>,
       },
       emits: [],
       slots: [
@@ -120,7 +121,7 @@ export default {
             description: 'The feedback text to display',
           },
           ...pick(buildCommonProps(), ['ariaLive', 'id', 'role', 'state', 'tag', 'tooltip']),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormInvalidFeedback'], PropertyReference>,
       },
       emits: [],
       slots: [
@@ -135,7 +136,7 @@ export default {
       props: {
         '': {
           ...pick(buildCommonProps(), ['tag']),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormRow'], PropertyReference>,
       },
       emits: [],
       slots: [
@@ -161,7 +162,7 @@ export default {
             description: 'The text to display',
           },
           ...pick(buildCommonProps(), ['id', 'tag', 'textVariant']),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormText'], PropertyReference>,
       },
       emits: [],
       slots: [
@@ -186,7 +187,7 @@ export default {
             description: 'The feedback text to display',
           },
           ...pick(buildCommonProps(), ['ariaLive', 'id', 'role', 'state', 'tag', 'tooltip']),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormValidFeedback'], PropertyReference>,
       },
       emits: [],
       slots: [

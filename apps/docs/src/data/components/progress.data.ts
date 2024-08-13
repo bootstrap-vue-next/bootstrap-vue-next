@@ -1,4 +1,5 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
@@ -50,7 +51,7 @@ export default {
             type: 'ColorVariant | null',
             default: undefined,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BProgress'], PropertyReference>,
       },
       emits: [],
       slots: [
@@ -113,7 +114,7 @@ export default {
             type: 'ColorVariant | null',
             default: null,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BProgressBar'], PropertyReference>,
       },
       emits: [],
       slots: [

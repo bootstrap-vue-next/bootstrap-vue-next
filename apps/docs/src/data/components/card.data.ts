@@ -1,4 +1,5 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
@@ -158,7 +159,7 @@ export default {
             type: 'ColorVariant | null',
             default: null,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BCard'], PropertyReference>,
       },
       emits: [],
       slots: [
@@ -233,7 +234,7 @@ export default {
             type: 'ColorVariant | null',
             default: null,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BCardBody'], PropertyReference>,
       },
       slots: [
         {
@@ -286,7 +287,7 @@ export default {
             type: 'ColorVariant | null',
             default: undefined,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BCardFooter'], PropertyReference>,
       },
       slots: [
         {
@@ -313,7 +314,7 @@ export default {
             type: 'string',
             default: 'div',
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BCardGroup'], PropertyReference>,
       },
       slots: [
         {
@@ -356,7 +357,7 @@ export default {
             type: 'ColorVariant | null',
             default: undefined,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BCardHeader'], PropertyReference>,
       },
       slots: [
         {
@@ -443,7 +444,8 @@ export default {
             type: 'Numberish',
             default: undefined,
           },
-        },
+          tag: {},
+        } satisfies Record<keyof BvnComponentProps['BCardImg'], PropertyReference>,
       },
       slots: [],
     },
@@ -464,7 +466,7 @@ export default {
             type: 'TextColorVariant | null',
             default: 'body-secondary',
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BCardSubtitle'], PropertyReference>,
       },
       slots: [
         {
@@ -487,7 +489,7 @@ export default {
             type: 'string',
             default: undefined,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BCardText'], PropertyReference>,
       },
       slots: [
         {
@@ -510,7 +512,7 @@ export default {
             type: 'string',
             default: undefined,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BCardTitle'], PropertyReference>,
       },
       slots: [
         {

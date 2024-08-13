@@ -1,4 +1,5 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
@@ -18,7 +19,7 @@ export default {
             type: 'string',
             default: 'toolbar',
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BButtonToolbar'], PropertyReference>,
       },
       slots: [
         {

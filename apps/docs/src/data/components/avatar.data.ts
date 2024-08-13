@@ -1,4 +1,4 @@
-import type {BAvatarProps} from 'bootstrap-vue-next'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {ComponentReference, PropertyReference} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 import {linkProps, linkTo} from '../../utils/link-props'
@@ -104,10 +104,10 @@ export default {
               'variant',
             ]
           ),
-          noPrefetch: {},
-          noRel: {},
-          prefetchedClass: {},
-        } satisfies Record<Exclude<keyof BAvatarProps, keyof typeof linkProps>, PropertyReference>,
+        } satisfies Record<
+          Exclude<keyof BvnComponentProps['BAvatar'], keyof typeof linkProps>,
+          PropertyReference
+        >,
         'BLink props': {
           _linkTo: {
             type: linkTo,
@@ -195,7 +195,7 @@ export default {
               'variant',
             ]
           ),
-        },
+        } satisfies Record<keyof BvnComponentProps['BAvatarGroup'], PropertyReference>,
       },
       slots: [
         {

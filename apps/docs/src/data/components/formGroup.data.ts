@@ -1,4 +1,5 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 export default {
@@ -157,7 +158,7 @@ export default {
             ),
             ['ariaInvalid', 'disabled', 'id', 'state', 'tooltip']
           ),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormGroup'], PropertyReference>,
       },
       emits: [],
       slots: [

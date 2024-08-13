@@ -1,4 +1,5 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 export default {
@@ -30,7 +31,7 @@ export default {
               "HTML string to prepend to the input group. Has precedence over 'prepend' prop",
           },
           ...pick(buildCommonProps(buildCommonProps()), ['id', 'size', 'tag']),
-        },
+        } satisfies Record<keyof BvnComponentProps['BInputGroup'], PropertyReference>,
       },
       emits: [],
       slots: [
@@ -58,7 +59,7 @@ export default {
             description: 'Content to place in the input group text',
           },
           ...pick(buildCommonProps(buildCommonProps()), ['tag']),
-        },
+        } satisfies Record<keyof BvnComponentProps['BInputGroupText'], PropertyReference>,
       },
       emits: [],
       slots: [

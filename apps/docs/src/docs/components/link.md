@@ -316,7 +316,7 @@ changes):
 
 <template #html>
 
-```vue-css
+```css
 a.disabled {
   pointer-events: none;
 }

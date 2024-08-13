@@ -1,4 +1,5 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
@@ -38,7 +39,7 @@ export default {
             type: 'ColorVariant | null',
             default: null,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BNavbar'], PropertyReference>,
       },
       emits: [],
       slots: [
@@ -137,7 +138,11 @@ export default {
             type: 'ColorVariant | null',
             default: undefined,
           },
-        },
+          noPrefetch: {},
+          noRel: {},
+          prefetch: {},
+          prefetchedClass: {},
+        } satisfies Record<keyof BvnComponentProps['BNavbarBrand'], PropertyReference>,
       },
       emits: [],
       slots: [
@@ -172,7 +177,7 @@ export default {
             type: 'string',
             default: 'ul',
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BNavbarNav'], PropertyReference>,
       },
       emits: [],
       slots: [
@@ -199,7 +204,7 @@ export default {
             type: 'string | string[]',
             default: undefined,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BNavbarToggle'], PropertyReference>,
       },
       emits: [
         {
