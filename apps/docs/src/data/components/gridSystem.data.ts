@@ -1,4 +1,5 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
@@ -27,7 +28,7 @@ export default {
             default: 'div',
             description: 'Specify the HTML tag to render instead of the default tag',
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BContainer'], PropertyReference>,
       },
       emits: [],
       slots: [
@@ -94,7 +95,7 @@ export default {
             type: 'string',
             default: 'div',
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BRow'], PropertyReference>,
       },
       emits: [],
       slots: [
@@ -185,7 +186,7 @@ export default {
             type: 'ColsNumbers',
             default: undefined,
           },
-          orderXL: {
+          orderXl: {
             type: 'ColsNumbers',
             default: undefined,
           },
@@ -193,7 +194,7 @@ export default {
             type: 'ColsNumbers',
             default: undefined,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BCol'], PropertyReference>,
       },
       emits: [],
       slots: [

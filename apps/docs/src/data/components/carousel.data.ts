@@ -1,4 +1,5 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
@@ -82,7 +83,7 @@ export default {
             type: 'Numberish',
             default: 50,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BCarousel'], PropertyReference>,
       },
       emits: [
         {
@@ -204,7 +205,7 @@ export default {
             type: 'string',
             default: 'p',
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BCarouselSlide'], PropertyReference>,
       },
       slots: [
         {

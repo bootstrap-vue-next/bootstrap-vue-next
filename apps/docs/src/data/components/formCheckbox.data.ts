@@ -1,6 +1,6 @@
 import type {ComponentReference, PropertyReference} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
-import type {BFormCheckboxProps} from 'bootstrap-vue-next'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
 
 export default {
   load: (): ComponentReference[] => [
@@ -86,7 +86,7 @@ export default {
             'size',
             'state',
           ]),
-        } satisfies Record<keyof BFormCheckboxProps, PropertyReference>,
+        } satisfies Record<keyof BvnComponentProps['BFormCheckbox'], PropertyReference>,
       },
       emits: [
         {
@@ -182,7 +182,7 @@ export default {
             'textField',
             'valueField',
           ]),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormCheckboxGroup'], PropertyReference>,
       },
       emits: [
         {

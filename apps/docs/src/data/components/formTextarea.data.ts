@@ -1,4 +1,5 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 export default {
@@ -49,7 +50,7 @@ export default {
             'size',
             'state',
           ]),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormTextarea'], PropertyReference>,
       },
       emits: [
         {

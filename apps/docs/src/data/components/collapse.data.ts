@@ -1,4 +1,5 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
@@ -38,7 +39,7 @@ export default {
             type: 'boolean',
             default: false,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BCollapse'], PropertyReference>,
       },
       emits: [
         {

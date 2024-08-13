@@ -1,3 +1,4 @@
+import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {PropertyReference} from '../types'
 
 export const linkTo = '/docs/components/link'
@@ -34,7 +35,7 @@ export const linkProps = {
     default: false,
     description: 'When set to `true`, styles an icon at the beginning or end of the link text',
   },
-  noprefetch: {
+  noPrefetch: {
     type: 'boolean',
     default: false,
     description:
@@ -56,7 +57,7 @@ export const linkProps = {
     description:
       'Not Yet Implemented: To improve the responsiveness of your Nuxt.js applications, when the link will be displayed within the viewport, Nuxt.js will automatically prefetch the code splitted page. Setting `prefetch` to `true` or `false` will overwrite the default value of `router.prefetchLinks`',
   },
-  prefetchClass: {
+  prefetchedClass: {
     type: 'string',
     default: undefined,
     description: 'Not Yet Implmented: A class to apply to links that have been prefetched.',
@@ -130,4 +131,5 @@ export const linkProps = {
     default: null,
     description: 'Set the color variant for the link',
   },
-} as const satisfies Record<string, PropertyReference>
+  noRel: {},
+} as const satisfies Record<keyof BvnComponentProps['BLink'], PropertyReference>

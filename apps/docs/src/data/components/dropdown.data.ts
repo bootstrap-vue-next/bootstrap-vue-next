@@ -1,4 +1,5 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
@@ -154,7 +155,9 @@ export default {
             type: 'ClassValue',
             default: undefined,
           },
-        },
+          teleportDisabled: {},
+          teleportTo: {},
+        } satisfies Record<keyof BvnComponentProps['BDropdown'], PropertyReference>,
       },
       emits: [
         {
@@ -233,13 +236,13 @@ export default {
             type: 'string',
             default: 'hr',
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BDropdownDivider'], PropertyReference>,
       },
     },
     {
       component: 'BDropdownForm',
       emits: [],
-      props: {},
+      props: {} satisfies Record<keyof BvnComponentProps['BDropdownForm'], PropertyReference>,
       slots: [
         {
           scope: [],
@@ -277,7 +280,7 @@ export default {
             type: 'string',
             default: undefined,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BDropdownGroup'], PropertyReference>,
       },
       slots: [
         {
@@ -295,7 +298,7 @@ export default {
     {
       component: 'BDropdownHeader',
       emits: [],
-      props: {},
+      props: {} satisfies Record<keyof BvnComponentProps['BDropdownHeader'], PropertyReference>,
       slots: [
         {
           scope: [],
@@ -421,7 +424,7 @@ export default {
             type: 'Readonly<AttrsValue>',
             default: undefined,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BDropdownItem'], PropertyReference>,
       },
       slots: [
         {
@@ -468,7 +471,7 @@ export default {
             type: 'ColorVariant | null',
             default: null,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BDropdownItemButton'], PropertyReference>,
       },
       slots: [
         {
@@ -488,7 +491,7 @@ export default {
             type: 'string',
             default: '',
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BDropdownText'], PropertyReference>,
       },
       slots: [
         {
