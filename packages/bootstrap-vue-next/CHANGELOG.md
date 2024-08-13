@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.24.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.6...bootstrapvuenext-v0.24.7) (2024-08-13)
+
+
+### Bug Fixes
+
+* **BFormCheckbox:** class attribute should be set on wrapper component (input classes use new prop.inputClass). Use props.wrapperAttrs for attrs to the wrapper element fixes [#2108](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2108) ([a75b5c8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a75b5c80a686cc846b30dbf28f68933c55c27d4d))
+* **BLink:** fix link-opacity when no underline variant specified ([fed1e13](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/fed1e13b40d7b8289883061cbffbce12c4318d87))
+* **BLink:** Fixe stretch/stretched property issue ([fed1e13](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/fed1e13b40d7b8289883061cbffbce12c4318d87))
+
 ## [0.24.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.5...bootstrapvuenext-v0.24.6) (2024-08-09)
 
 
