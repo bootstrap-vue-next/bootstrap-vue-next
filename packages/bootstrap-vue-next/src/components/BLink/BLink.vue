@@ -119,7 +119,9 @@ const computedClasses = computed(() => ({
   [`link-underline-${props.underlineVariant}`]: props.underlineVariant !== null,
   [`link-offset-${props.underlineOffset}`]: props.underlineOffset !== undefined,
   [`link-offset-${props.underlineOffsetHover}-hover`]: props.underlineOffsetHover !== undefined,
-  ['link-underline']: props.underlineVariant === null && props.underlineOpacity,
+  ['link-underline']:
+    props.underlineVariant === null &&
+    (props.underlineOpacity !== undefined || props.underlineOpacityHover !== undefined),
   [`link-underline-opacity-${props.underlineOpacity}`]: props.underlineOpacity !== undefined,
   [`link-underline-opacity-${props.underlineOpacityHover}-hover`]:
     props.underlineOpacityHover !== undefined,
