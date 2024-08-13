@@ -295,10 +295,8 @@ export default {
             >,
             PropertyReference
           >,
-          ...{
-            'BTableLite Props': BTableLiteProps,
-            'BTableSimple Props': BTableSimpleProps,
-          },
+          'BTableLite Props': BTableLiteProps,
+          'BTableSimple Props': BTableSimpleProps,
         },
         emits: [
           {
