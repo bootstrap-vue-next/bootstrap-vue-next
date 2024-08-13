@@ -207,7 +207,7 @@ Change the underline’s opacity.
   <template #html>
 
 ```vue-html
-<p v-for="opacity in [10, 25, 50, 75, 100]" :key="opacity">
+<p v-for="opacity in [0, 10, 25, 50, 75, 100]" :key="opacity">
   <BLink :underline-opacity="opacity"> {{ opacity }} link </BLink>
 </p>
 ```
@@ -218,7 +218,7 @@ Change the underline’s opacity.
 ### Hover variants
 
 Just like the setting `opacity` has a matching `opacity-hover` prop, `underline-offset` and `underline-opacity` have matching
-`underline-offset-hover` and `underline-offset-opacity` props. Mix and match to create unique link styles.
+`underline-offset-hover` and `underline-opacity-hover` props. Mix and match to create unique link styles.
 
 <HighlightCard>
   <BLink
@@ -234,7 +234,7 @@ Just like the setting `opacity` has a matching `opacity-hover` prop, `underline-
 ```vue-html
 <BLink
   :underline-offset="3"
-  underline-opacity="0"
+  underline-opacity="25"
   underline-offset-hover="1"
   underline-opacity-hover="100"
 >

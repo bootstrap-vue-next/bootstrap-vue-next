@@ -46,13 +46,13 @@ const _props = withDefaults(defineProps<BLinkProps>(), {
   icon: false,
   opacity: undefined,
   opacityHover: undefined,
-  stretched: false,
   // noPrefetch: {type: Boolean, default: false},
   // prefetch: {type: Boolean, default: null},
   rel: undefined,
   replace: false,
   routerComponentName: 'router-link',
   routerTag: 'a',
+  stretched: false,
   target: undefined,
   to: undefined,
   underlineOffset: undefined,
@@ -119,6 +119,9 @@ const computedClasses = computed(() => ({
   [`link-underline-${props.underlineVariant}`]: props.underlineVariant !== null,
   [`link-offset-${props.underlineOffset}`]: props.underlineOffset !== undefined,
   [`link-offset-${props.underlineOffsetHover}-hover`]: props.underlineOffsetHover !== undefined,
+  ['link-underline']:
+    props.underlineVariant === null &&
+    (props.underlineOpacity !== undefined || props.underlineOpacityHover !== undefined),
   [`link-underline-opacity-${props.underlineOpacity}`]: props.underlineOpacity !== undefined,
   [`link-underline-opacity-${props.underlineOpacityHover}-hover`]:
     props.underlineOpacityHover !== undefined,
