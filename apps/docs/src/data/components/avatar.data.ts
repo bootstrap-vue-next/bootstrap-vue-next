@@ -40,6 +40,8 @@ export default {
           badgePlacement: {
             type: 'CombinedPlacement',
             default: 'bottom-end',
+            description:
+              'Placement of the badge relative to the avatar. One of the values of `CombinedPlacement`',
           },
           badgePill: {
             type: 'boolean',

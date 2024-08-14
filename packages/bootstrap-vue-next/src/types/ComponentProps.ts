@@ -764,9 +764,8 @@ export interface BAvatarGroupProps extends ColorExtendables, RadiusElementExtend
 export interface BBadgeProps extends Omit<BLinkProps, 'routerTag'>, ColorExtendables {
   dotIndicator?: boolean
   pill?: boolean
-  tag?: string
-  textIndicator?: boolean
   placement?: CombinedPlacement
+  tag?: string
 }
 
 export interface BBreadcrumbProps {
