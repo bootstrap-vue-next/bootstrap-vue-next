@@ -1,5 +1,7 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {ComponentReference, PropertyReference} from '../../types'
+import {linkProps, linkTo} from '../../utils/link-props'
+import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
@@ -7,6 +9,11 @@ export default {
       component: 'BBadge',
       props: {
         '': {
+          dotIndicator: {
+            type: 'boolean',
+            default: false,
+            description: 'Indication position and dot styling applied',
+          },
           pill: {
             type: 'boolean',
             default: false,
@@ -17,113 +24,30 @@ export default {
             default: 'span',
             description: 'Specify the HTML tag to render instead of the default tag',
           },
-          textIndicator: {
-            type: 'boolean',
-            default: false,
-            description: 'Indication position applied',
-          },
-          dotIndicator: {
-            type: 'boolean',
-            default: false,
-            description: 'Indication position and dot styling applied',
-          },
           placement: {
             type: 'CombinedPlacement',
             default: undefined,
+            description:
+              'Placement of the badge relative to the its parent. One of the values of `CombinedPlacement`',
           },
-          active: {
-            type: 'boolean',
-            default: undefined,
+          ...pick(
+            buildCommonProps({
+              variant: {
+                default: 'secondary',
+              },
+            }),
+            ['bgVariant', 'variant', 'textVariant']
+          ),
+        } satisfies Record<
+          Exclude<keyof BvnComponentProps['BBadge'], keyof typeof linkProps>,
+          PropertyReference
+        >,
+        'BLink props': {
+          _linkTo: {
+            type: linkTo,
           },
-          activeClass: {
-            type: 'string',
-            default: undefined,
-          },
-          disabled: {
-            type: 'boolean',
-            default: undefined,
-          },
-          exactActiveClass: {
-            type: 'string',
-            default: undefined,
-          },
-          href: {
-            type: 'string',
-            default: undefined,
-          },
-          icon: {
-            type: 'boolean',
-            default: undefined,
-          },
-          opacity: {
-            type: '10 | 25 | 50 | 75 | 100 | "10" | "25" | "50" | "75" | "100"',
-            default: undefined,
-          },
-          opacityHover: {
-            type: '10 | 25 | 50 | 75 | 100 | "10" | "25" | "50" | "75" | "100"',
-            default: undefined,
-          },
-          rel: {
-            type: 'string',
-            default: undefined,
-          },
-          replace: {
-            type: 'boolean',
-            default: undefined,
-          },
-          routerComponentName: {
-            type: 'string',
-            default: undefined,
-          },
-          stretched: {
-            type: 'boolean',
-            default: false,
-          },
-          target: {
-            type: 'LinkTarget',
-            default: undefined,
-          },
-          to: {
-            type: 'RouteLocationRaw',
-            default: undefined,
-          },
-          underlineOffset: {
-            type: '1 | 2 | 3 | "1" | "2" | "3"',
-            default: undefined,
-          },
-          underlineOffsetHover: {
-            type: '1 | 2 | 3 | "1" | "2" | "3"',
-            default: undefined,
-          },
-          underlineOpacity: {
-            type: '0 | 10 | 25 | 50 | 75 | 100 | "0" | "10" | "25" | "50" | "75" | "100"',
-            default: undefined,
-          },
-          underlineOpacityHover: {
-            type: '0 | 10 | 25 | 50 | 75 | 100 | "0" | "10" | "25" | "50" | "75" | "100"',
-            default: undefined,
-          },
-          underlineVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-          variant: {
-            type: 'ColorVariant | null',
-            default: 'secondary',
-          },
-          bgVariant: {
-            type: 'ColorVariant | null',
-            default: null,
-          },
-          textVariant: {
-            type: 'TextColorVariant | null',
-            default: null,
-          },
-          noPrefetch: {},
-          noRel: {},
-          prefetchedClass: {},
-          prefetch: {},
-        } satisfies Record<keyof BvnComponentProps['BBadge'], PropertyReference>,
+          ...linkProps,
+        },
       },
       emits: [],
       slots: [
