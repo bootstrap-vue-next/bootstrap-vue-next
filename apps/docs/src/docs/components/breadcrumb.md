@@ -8,7 +8,7 @@
 
 <div class="lead mb-5">
 
-Indicate the current page's location within a navigational hierarchy. Separators are automatically added in CSS through `::before` and `content`.
+Indicate the current page’s location within a navigational hierarchy that automatically adds separators via CSS.
 
 </div>
 
@@ -38,8 +38,8 @@ const breadcrumbItems = ref<BreadcrumbItem[]>([
 ## Breadcrumb items
 
 Items are rendered using `:items` prop. It can be an array of objects to provide link and active
-state or an array of strings. Links can be `href`'s for anchor tags, or `to`'s for router-links. Active state of last
-element is automatically set if it is `undefined`.
+state or an array of strings. Links can be `href`'s for anchor tags, or `to`'s for router-links.
+The active state of last element is automatically set if it is `undefined`.
 
 ### Breadcrumb items as array of strings
 
@@ -95,7 +95,8 @@ const alertEvent = (event: PointerEvent) => {
 
 Remember to set the `active` prop on the last item.
 
-`BBreadcrumbItem` also supports the various `RouterLink` props such as `to`, etc.
+`BBreadcrumbItem` also supports the various `RouterLink` props such as `to`, etc. See the
+[Router Links](/docs/reference/router-links) refererence page for more information.
 
 ## Slots
 
@@ -138,7 +139,6 @@ import {BBreadcrumbItem, BBreadcrumb} from 'bootstrap-vue-next'
 import ComponentReference from '../../components/ComponentReference.vue'
 import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
-import type {BreadcrumbItem} from 'bootstrap-vue-next'
 
 const breadcrumbItems = ref<BreadcrumbItem[]>([
   { text: 'Admin', href:'https://getbootstrap.com/'},
@@ -146,7 +146,7 @@ const breadcrumbItems = ref<BreadcrumbItem[]>([
   { text: 'Library'},
 ]);
 
-const breadcrumbStringArray = ['Admin','Manage', 'Library'];
+const breadcrumbStringArray = ['Admin', 'Manage', 'Library'];
 
 const alertEvent = (event: PointerEvent) => {
   alert(`Event ${event.target}`);
