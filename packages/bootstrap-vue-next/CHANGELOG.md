@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.24.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.7...bootstrapvuenext-v0.24.8) (2024-08-16)
+
+
+### Bug Fixes
+
+* **BForm:** Remove confusing prevent default on form submit ([1a1105a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1a1105a58751d760127ed50f1f233c1a6821163c))
+
 ## [0.24.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.6...bootstrapvuenext-v0.24.7) (2024-08-13)
 
 
