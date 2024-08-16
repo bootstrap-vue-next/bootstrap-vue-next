@@ -62,12 +62,14 @@ Unless the context is clear (as with the “Notifications” example, where it i
 
 ### Positioned
 
-Use utilities to modify a `.badge` and position it in the corner of a link or button.
+Use the `placement` property to position it relative to a parent [link](/docs/components/link) or [button](/docs/components/link).
+Note that for links of buttons, you haveto manually apply the `postition-relative` class to the badge's parent,
+unlike with [`Avatars`](<(/docs/components/avatar)>) where that is hanlded automatically.
 
 <HighlightCard>
   <BButton variant="primary" class="position-relative">
     Inbox
-    <BBadge variant="danger" text-indicator>
+    <BBadge variant="danger" placement="top-end">
       99+
       <span class="visually-hidden">unread messages</span>
     </BBadge>
@@ -77,7 +79,7 @@ Use utilities to modify a `.badge` and position it in the corner of a link or bu
 ```vue-html
 <BButton variant="primary" class="position-relative">
   Inbox
-  <BBadge variant="danger" text-indicator>
+  <BBadge variant="danger" placement="top-end">
     99+
     <span class="visually-hidden">unread messages</span>
   </BBadge>
@@ -87,7 +89,9 @@ Use utilities to modify a `.badge` and position it in the corner of a link or bu
   </template>
 </HighlightCard>
 
-You can also replace the `.badge` class with a few more utilities without a count for a more generic indicator.
+The `Badge` component also implements a `dot-indicator` property to transform the badge into
+a more generic indicator. Please note that you have to manually apply the `position-relative`
+class to the parent button.
 
 <HighlightCard>
   <BButton variant="primary" class="position-relative">
@@ -178,7 +182,7 @@ Use the `pill` prop to make badges more rounded with a larger border-radius.
 
 ## Actionable badges
 
-Quickly provide actionable badges with ~~hover~~ and ~~focus~~ states by specifying either the `href` prop (links) or `to` prop (router-links):
+Quickly provide actionable badges by specifying either the `href` prop (links) or `to` prop (router-links):
 
 <HighlightCard>
   <div class="d-flex mb-4" style="column-gap: 1%;">
