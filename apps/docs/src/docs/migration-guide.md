@@ -151,6 +151,10 @@ Rounding a specific side of the avatar is now accomplished using the boolean pro
 `rounded-bottom`, `rounded-start`, and `rounded-end` rather than the `top`, `bottom`, `left`, and `right`
 values for the `rounded` prop.
 
+## BBreadcrumb
+
+The `html` prop on `BBreadcrumbItem` is deprecated. Use the default slot instead.
+
 ## BForm
 
 Bootstrap 5 has dropped form-specific layout classes for the grid system. See the

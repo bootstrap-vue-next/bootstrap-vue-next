@@ -1,5 +1,6 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {ComponentReference, PropertyReference} from '../../types'
+import {linkProps, linkTo} from '../../utils/link-props'
 
 export default {
   load: (): ComponentReference[] => [
@@ -8,9 +9,9 @@ export default {
       props: {
         '': {
           items: {
-            description: '',
             type: 'BreadcrumbItemRaw[]',
             default: undefined,
+            description: 'Array of `BreadCrumbItem`s or string to render. See above for details.',
           },
         } satisfies Record<keyof BvnComponentProps['BBreadcrumb'], PropertyReference>,
       },
@@ -18,133 +19,61 @@ export default {
       slots: [
         {
           name: 'default',
-          description: '',
-          scope: [],
+          description: 'Content (breadcrumb items) to place in the breadcrumb',
         },
         {
           name: 'append',
-          description: '',
-          scope: [],
+          description: 'Content to append to the breadcrumb',
         },
         {
           name: 'prepend',
-          description: '',
-          scope: [],
+          description: 'Content to prepend to the breadcrumb',
         },
       ],
     },
     {
       component: 'BBreadcrumbItem',
-      emits: [
-        {
-          event: 'click',
-          args: [
-            {
-              type: 'MouseEvent',
-              arg: 'click',
-              description: 'On click',
-            },
-          ],
-        },
-      ],
       props: {
         '': {
           ariaCurrent: {
             type: 'string',
             default: 'location',
+            description:
+              "Sets the value of the 'aria-current' attribute (when the item is the active item). Supported string values are 'location', 'page', or 'true'",
           },
           text: {
             type: 'string',
             default: undefined,
+            description: 'Text to render in the breadcrumb item',
           },
-          active: {
-            type: 'boolean',
-            default: false,
+        } satisfies Record<
+          Exclude<keyof BvnComponentProps['BBreadcrumbItem'], keyof typeof linkProps>,
+          PropertyReference
+        >,
+        'BLink props': {
+          _linkTo: {
+            type: linkTo,
           },
-          activeClass: {
-            type: 'string',
-            default: undefined,
-          },
-          disabled: {
-            type: 'boolean',
-            default: undefined,
-          },
-          exactActiveClass: {
-            type: 'string',
-            default: undefined,
-          },
-          href: {
-            type: 'string',
-            default: undefined,
-          },
-          icon: {
-            type: 'boolean',
-            default: undefined,
-          },
-          opacity: {
-            type: '10 | 25 | 50 | 75 | 100 | "10" | "25" | "50" | "75" | "100"',
-            default: undefined,
-          },
-          opacityHover: {
-            type: '10 | 25 | 50 | 75 | 100 | "10" | "25" | "50" | "75" | "100"',
-            default: undefined,
-          },
-          rel: {
-            type: 'string',
-            default: undefined,
-          },
-          replace: {
-            type: 'boolean',
-            default: undefined,
-          },
-          routerComponentName: {
-            type: 'string',
-            default: undefined,
-          },
-          stretched: {
-            type: 'boolean',
-            default: false,
-          },
-          target: {
-            type: 'LinkTarget',
-            default: undefined,
-          },
-          to: {
-            type: 'RouteLocationRaw',
-            default: undefined,
-          },
-          underlineOffset: {
-            type: '1 | 2 | 3 | "1" | "2" | "3"',
-            default: undefined,
-          },
-          underlineOffsetHover: {
-            type: '1 | 2 | 3 | "1" | "2" | "3"',
-            default: undefined,
-          },
-          underlineOpacity: {
-            type: '0 | 10 | 25 | 50 | 75 | 100 | "0" | "10" | "25" | "50" | "75" | "100"',
-            default: undefined,
-          },
-          underlineOpacityHover: {
-            type: '0 | 10 | 25 | 50 | 75 | 100 | "0" | "10" | "25" | "50" | "75" | "100"',
-            default: undefined,
-          },
-          underlineVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-          noPrefetch: {},
-          noRel: {},
-          prefetch: {},
-          prefetchedClass: {},
-          variant: {},
-        } satisfies Record<keyof BvnComponentProps['BBreadcrumbItem'], PropertyReference>,
+          ...linkProps,
+        },
       },
+      emits: [
+        {
+          event: 'click',
+          description: 'Emitted when the breadcrumb item is clicked',
+          args: [
+            {
+              type: 'MouseEvent',
+              arg: 'click',
+              description: 'Native click event object',
+            },
+          ],
+        },
+      ],
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the breadcrumb item',
         },
       ],
     },
