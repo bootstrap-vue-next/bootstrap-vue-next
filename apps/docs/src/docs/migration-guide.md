@@ -151,6 +151,11 @@ Rounding a specific side of the avatar is now accomplished using the boolean pro
 `rounded-bottom`, `rounded-start`, and `rounded-end` rather than the `top`, `bottom`, `left`, and `right`
 values for the `rounded` prop.
 
+## BBadge
+
+Badges no longer have focus or hover styles for links. See the
+[Bootstrap migration guide](https://getbootstrap.com/docs/5.3/migration/#badges) for more information.
+
 ## BBreadcrumb
 
 The `html` prop on `BBreadcrumbItem` is deprecated. Use the default slot instead.

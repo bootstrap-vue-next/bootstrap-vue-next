@@ -11,7 +11,7 @@ export default {
           items: {
             type: 'BreadcrumbItemRaw[]',
             default: undefined,
-            description: 'Array of `BreadCrumbItem`s or string to render. See above for details.',
+            description: 'Array of `BreadCrumbItem`s or strings to render. See above for details.',
           },
         } satisfies Record<keyof BvnComponentProps['BBreadcrumb'], PropertyReference>,
       },
