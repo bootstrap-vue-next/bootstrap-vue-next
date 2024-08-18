@@ -93,7 +93,7 @@ const {focused} = useFocus(input, {
 const hasDefaultSlot = toRef(() => !isEmptySlot(slots.default))
 
 const localValue = computed({
-  get: () => parentData?.modelValue.value ?? modelValue.value,
+  get: () => (parentData ? parentData.modelValue.value : modelValue.value),
   set: (newVal) => {
     if (newVal === undefined) return
     // Indeterminate is implicitly cleared when the checked state is changed to any value
