@@ -156,6 +156,10 @@ values for the `rounded` prop.
 Badges no longer have focus or hover styles for links. See the
 [Bootstrap migration guide](https://getbootstrap.com/docs/5.3/migration/#badges) for more information.
 
+## BBreadcrumb
+
+The `html` prop on `BBreadcrumbItem` is deprecated. Use the default slot instead.
+
 ## BForm
 
 Bootstrap 5 has dropped form-specific layout classes for the grid system. See the
