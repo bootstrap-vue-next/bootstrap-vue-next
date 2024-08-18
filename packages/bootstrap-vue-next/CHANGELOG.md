@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.24.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.8...bootstrapvuenext-v0.24.9) (2024-08-18)
+
+
+### Bug Fixes
+
+* **BFOrmRadio:** radio in group not able to select null value fixes [#2106](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2106) ([#2129](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2129)) ([8de1b97](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8de1b978bd0d4b008015cd777fa0104b8ef8eb55))
+
 ## [0.24.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.7...bootstrapvuenext-v0.24.8) (2024-08-16)
 
 
