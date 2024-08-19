@@ -15,22 +15,10 @@ Indicate the current page’s location within a navigational hierarchy that auto
 ## Overview
 
 <HighlightCard>
-  <BBreadcrumb :items="breadcrumbItems" />
+  <BreadcrumbOverview />
   <template #html>
 
-```vue
-<BBreadcrumb :items="breadcrumbItems" />
-
-<script setup lang="ts">
-import type {BreadcrumbItem} from 'bootstrap-vue-next'
-
-const breadcrumbItems = ref<BreadcrumbItem[]>([
-  {text: 'Admin', href: 'https://getbootstrap.com/'},
-  {text: 'Manage', href: '#'},
-  {text: 'Library'},
-])
-</script>
-```
+<<< ./demo/BreadcrumbOverview.vue#snippet
 
   </template>
 </HighlightCard>
@@ -139,6 +127,7 @@ import {BBreadcrumbItem, BBreadcrumb} from 'bootstrap-vue-next'
 import ComponentReference from '../../components/ComponentReference.vue'
 import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
+import BreadcrumbOverview from "./demo/BreadcrumbOverview.vue"
 
 const breadcrumbItems = ref<BreadcrumbItem[]>([
   { text: 'Admin', href:'https://getbootstrap.com/'},
