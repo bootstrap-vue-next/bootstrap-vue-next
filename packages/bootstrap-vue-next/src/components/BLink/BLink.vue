@@ -10,7 +10,7 @@
     <component
       :is="props.routerTag"
       :href="localHref"
-      :target="target"
+      :target="props.target"
       :class="{
         [defaultActiveClass]: props.active,
         [props.activeClass]: isActive,
