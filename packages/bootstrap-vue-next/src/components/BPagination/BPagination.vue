@@ -171,7 +171,7 @@ const getBaseButtonProps = ({
   },
   button: {
     'is': dis ? 'span' : 'button',
-    'class': ['page-link', {'flex-grow-1': !dis && computedFill.value}],
+    'class': ['page-link', 'text-center', {'flex-grow-1': !dis && computedFill.value}],
     'aria-label': label,
     'aria-controls': props.ariaControls || undefined,
     'aria-disabled': dis ? true : undefined,
@@ -270,6 +270,7 @@ const ellipsisProps = computed(() => ({
     class: [
       'page-item',
       'disabled',
+      'text-center',
       'bv-d-xs-down-none',
       computedFill.value ? 'flex-fill' : '',
       props.ellipsisClass,

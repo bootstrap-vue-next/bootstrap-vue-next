@@ -80,6 +80,18 @@ export interface BLinkProps {
   variant?: ColorVariant | null
 }
 
+export type LinkUnderlineProps = Pick<
+  BLinkProps,
+  | 'underlineOffset'
+  | 'underlineOffsetHover'
+  | 'underlineOpacity'
+  | 'underlineOpacityHover'
+  | 'underlineVariant'
+>
+export type LinkOpacityProps = Pick<BLinkProps, 'opacity' | 'opacityHover'>
+export type LinkIconProps = Pick<BLinkProps, 'icon'>
+export type LinkVariantProps = Pick<BLinkProps, 'variant'>
+
 export interface BAccordionProps {
   flush?: boolean
   free?: boolean
@@ -777,6 +789,10 @@ export interface BBreadcrumbItemProps extends Omit<BLinkProps, 'routerTag'> {
   text?: string
 }
 
+type CustomLinkVariant = {
+  [K in ColorVariant as `link-${K}`]: unknown
+}
+
 export interface BButtonProps extends Omit<BLinkProps, 'variant'> {
   loading?: boolean
   loadingFill?: boolean
@@ -787,7 +803,7 @@ export interface BButtonProps extends Omit<BLinkProps, 'variant'> {
   squared?: boolean
   tag?: string
   type?: ButtonType
-  variant?: ButtonVariant | null
+  variant?: (ButtonVariant | keyof CustomLinkVariant) | null
 }
 
 export interface BButtonGroupProps {
