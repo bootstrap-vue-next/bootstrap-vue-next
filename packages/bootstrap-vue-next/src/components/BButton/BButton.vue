@@ -41,6 +41,7 @@ import BSpinner from '../BSpinner.vue'
 import {useBLinkHelper, useDefaults} from '../../composables'
 import type {BButtonProps} from '../../types'
 import BLink from '../BLink/BLink.vue'
+import {useLinkClasses} from '../../composables/useLinkClasses'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -69,7 +70,7 @@ const _props = withDefaults(defineProps<BButtonProps>(), {
   exactActiveClass: undefined,
   stretched: false,
   href: undefined,
-  icon: undefined,
+  icon: false,
   opacity: undefined,
   opacityHover: undefined,
   rel: undefined,
@@ -82,7 +83,7 @@ const _props = withDefaults(defineProps<BButtonProps>(), {
   underlineOffsetHover: undefined,
   underlineOpacity: undefined,
   underlineOpacityHover: undefined,
-  underlineVariant: undefined,
+  underlineVariant: null,
   // End link props
 })
 
@@ -111,7 +112,23 @@ const nonStandardTag = toRef(() => (props.href !== undefined ? false : !isButton
 
 const linkProps = computed(() => (isBLink.value ? computedLinkProps.value : []))
 
+const linkValueClasses = useLinkClasses(
+  computed(() => ({
+    ...(props.variant === 'link' && {
+      icon: props.icon,
+      opacity: props.opacity,
+      opacityHover: props.opacityHover,
+      underlineOffset: props.underlineOffset,
+      underlineOffsetHover: props.underlineOffsetHover,
+      underlineOpacity: props.underlineOpacity,
+      underlineOpacityHover: props.underlineOpacityHover,
+      underlineVariant: props.underlineVariant,
+    }),
+    variant: null,
+  }))
+)
 const computedClasses = computed(() => [
+  linkValueClasses.value,
   [`btn-${props.size}`],
   {
     [`btn-${props.variant}`]: props.variant !== null,

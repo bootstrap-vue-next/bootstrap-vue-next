@@ -80,6 +80,18 @@ export interface BLinkProps {
   variant?: ColorVariant | null
 }
 
+export type LinkUnderlineProps = Pick<
+  BLinkProps,
+  | 'underlineOffset'
+  | 'underlineOffsetHover'
+  | 'underlineOpacity'
+  | 'underlineOpacityHover'
+  | 'underlineVariant'
+>
+export type LinkOpacityProps = Pick<BLinkProps, 'opacity' | 'opacityHover'>
+export type LinkIconProps = Pick<BLinkProps, 'icon'>
+export type LinkVariantProps = Pick<BLinkProps, 'variant'>
+
 export interface BAccordionProps {
   flush?: boolean
   free?: boolean
