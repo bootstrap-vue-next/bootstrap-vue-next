@@ -1,5 +1,4 @@
 import type {TeleportProps} from 'vue'
-import type {ColorVariant} from './ColorTypes'
 
 export type Numberish = string | number
 
