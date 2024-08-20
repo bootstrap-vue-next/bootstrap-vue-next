@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.24.10](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.9...bootstrapvuenext-v0.24.10) (2024-08-20)
+
+
+### Bug Fixes
+
+* add target to BLink RouterLink component ([#2131](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2131)) ([23c38e0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/23c38e0491828246514117a22da215461bbf0693))
+* **BButton:** implement link classes for when btn-link fixes [#2134](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2134) ([d23fdd8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d23fdd8574b80cc5282a8c17b920eae49e5053f4))
+* **BButton:** prevent default and click when href is # fixes [#2133](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2133) ([d23fdd8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d23fdd8574b80cc5282a8c17b920eae49e5053f4))
+* **BPagination:** centering of arrows when using span fixes [#2135](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2135) ([d23fdd8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d23fdd8574b80cc5282a8c17b920eae49e5053f4))
+
 ## [0.24.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.8...bootstrapvuenext-v0.24.9) (2024-08-18)
 
 
