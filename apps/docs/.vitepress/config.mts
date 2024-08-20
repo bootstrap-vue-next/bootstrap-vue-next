@@ -1,6 +1,6 @@
 import {defineConfig} from 'vitepress'
 import Icons from 'unplugin-icons/vite'
-import markdonnwItClass from '@toycode/markdown-it-class'
+import markdownItClass from '@toycode/markdown-it-class'
 
 const title = 'BootstrapVueNext'
 const description = 'Quickly and Easily Integrate Bootstrap V5 Components With Vue 3'
@@ -42,7 +42,7 @@ export default defineConfig({
   },
   markdown: {
     config: (md) => {
-      md.use(markdonnwItClass, {table: ['table', 'table-striped']})
+      md.use(markdownItClass, {table: ['table', 'table-striped']})
     },
   },
 })
