@@ -180,7 +180,7 @@ padding and size of a button.
 ## Block level buttons
 
 Create responsive stacks of full-width, “block buttons” by wrapping the button(s) in a div and specifying
-`d-grid` and `gap-*`. By using css utilities instead a boolean property on the button, we have much greater
+`d-grid` and `gap-*`. By using CSS utilities instead a boolean property on the button, we have much greater
 control over spacing, alignment, and responsive behaviors. See the
 [Bootstrap 5](https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons)
 documentation for details
@@ -364,7 +364,7 @@ If using toggle button style for a radio or checkbox style interface, it is best
 
 `BButton` supports several properties to indicate a loading state. When `loading` is true, the
 loading state is active, otherwise the normal button is displayed. When loading is active, `loading-text`
-is show along with a spinner. If `loading-fill` is true, the button shows only the spinner and the
+is shown along with a spinner. If `loading-fill` is true, the button shows only the spinner and the
 `loading-text` is ignored. You can also override the spinner with an arbitrary component by
 using the `loading-spinner` slot or the entire content of the button with the `loading` slot.
 
