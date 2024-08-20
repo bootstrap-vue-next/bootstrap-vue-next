@@ -68,7 +68,7 @@ Note the `type` prop has no effect when either `href` or `to` props are set.
 Fancy larger or smaller buttons? Specify `lg` or `sm` via the `size` prop.
 
 <HighlightCard>
-  <div class="d-flex gap-2">
+  <div>
     <BButton size="sm" class="mx-1">Small Button</BButton>
     <BButton class="mx-1">Default Button</BButton>
     <BButton size="lg" class="mx-1">Large Button</BButton>
@@ -76,9 +76,9 @@ Fancy larger or smaller buttons? Specify `lg` or `sm` via the `size` prop.
   <template #html>
 
 ```vue-html
-<BButton size="sm">Small Button</BButton>
-<BButton>Default Button</BButton>
-<BButton size="lg">Large Button</BButton>
+<BButton size="sm" class="mx-1">Small Button</BButton>
+<BButton class="mx-1">Default Button</BButton>
+<BButton size="lg" class="mx-1">Large Button</BButton>
 ```
 
   </template>
@@ -90,7 +90,8 @@ Use the `variant` prop to generate the various Bootstrap contextual button varia
 
 By default, `BButton` will render with the `secondary` variant.
 
-The `variant` prop adds the Bootstrap v4.3 class `.btn-<variant>` on the rendered button.
+The `variant` prop adds the Bootstrap class `.btn-<variant>` on the rendered button.
+See the [Color Variants](/docs/reference/color-variants) page for details.
 
 ### Solid color variants
 
@@ -174,29 +175,32 @@ padding and size of a button.
   </template>
 </HighlightCard>
 
-**Tip:** remove the hover underline from a link variant button by adding the Bootstrap v4.3 utility
-class `text-decoration-none` to `BButton`.
+**Tip:** remove the hover underline from a link variant button by setting `underline-opacity="0"`.
 
 ## Block level buttons
 
-Create responsive stacks of full-width, “block buttons” like those in Bootstrap 4 with a mix of our display and gap utilities. By using utilities instead of button specific classes, we have much greater control over spacing, alignment, and responsive behaviors.
+Create responsive stacks of full-width, “block buttons” by wrapping the button(s) in a div and specifying
+`d-grid` and `gap-*`. By using CSS utilities instead a boolean property on the button, we have much greater
+control over spacing, alignment, and responsive behaviors. See the
+[Bootstrap 5](https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons)
+documentation for details
 
 <HighlightCard>
   <div class="d-grid gap-2">
     <BButton block variant="primary">Block Level Button</BButton>
-    <BButton block variant="primary">Block Level Button</BButton>
+    <BButton block variant="primary">Another Block Level Button</BButton>
   </div>
   <template #html>
 
 ```vue-html
-<BButton block variant="primary">Block Level Button</BButton>
-<BButton block variant="primary">Block Level Button</BButton>
+<div class="d-grid gap-2">
+  <BButton block variant="primary">Block Level Button</BButton>
+  <BButton block variant="primary">Another Block Level Button</BButton>
+</div>
 ```
 
   </template>
 </HighlightCard>
-
-**Note:** Bootstrap 5 no long supports the `.btn-block` class, so it is removed. Use bootstrap 5's utility classes to get the same effect. [See](https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons).
 
 ## Pill style
 
@@ -356,6 +360,33 @@ If using toggle button style for a radio or checkbox style interface, it is best
 `button` style support of [`BFormRadioGroup`](/docs/components/form-radio) and
 [`BFormCheckboxGroup`](/docs/components/form-checkbox).
 
+## Loading
+
+`BButton` supports several properties to indicate a loading state. When `loading` is true, the
+loading state is active, otherwise the normal button is displayed. When loading is active, `loading-text`
+is shown along with a spinner. If `loading-fill` is true, the button shows only the spinner and the
+`loading-text` is ignored. You can also override the spinner with an arbitrary component by
+using the `loading-spinner` slot or the entire content of the button with the `loading` slot.
+
+<HighlightCard>
+  <div class="d-flex gap-2">
+    <BButton :loading="true">Button</BButton>
+    <BButton :loading="true" loading-fill>Button</BButton>
+    <BButton :loading="true" loading-text="Please Wait...">Button</BButton>
+    <BButton :loading="false" loading-text="Please Wait...">Button</BButton>
+  </div>
+  <template #html>
+
+```vue-html
+<BButton :loading="true">Button</BButton>
+<BButton :loading="true" loading-fill>Button</BButton>
+<BButton :loading="true" loading-text="Please Wait...">Button</BButton>
+<BButton :loading="false" loading-text="Please Wait...">Button</BButton>
+```
+
+  </template>
+</HighlightCard>
+
 ## Router link support
 
 Refer to the [`Router support`](/docs/reference/router-links) reference docs for the various
@@ -371,6 +402,8 @@ disabled, the `aria-disabled="true"` attribute will be set on the `<a>` element.
 When the `href` is set to any other value (~~or the `to` prop is used~~), `role="button"` will not be
 added, nor will the keyboard event listeners be enabled.
 
+<NotYetImplemented>The `role="button"` behavior is partially implemented, but the keyboard listen are not</NotYetImplemented>
+
 <ComponentReference :data="data" />
 
 <script setup lang="ts">
@@ -380,6 +413,7 @@ import {BButtonGroup, BButton} from 'bootstrap-vue-next'
 import ComponentReference from '../../components/ComponentReference.vue'
 import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
+import NotYetImplemented from '../../components/NotYetImplemented.vue'
 
 const buttonToggle = ref(false);
 const buttons = ref([

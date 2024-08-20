@@ -160,6 +160,19 @@ Badges no longer have focus or hover styles for links. See the
 
 The `html` prop on `BBreadcrumbItem` is deprecated. Use the default slot instead.
 
+## BButton
+
+The `block` prop is deprecated. See our [`BButton` documentation](/docs/components/button#block-level-buttons)
+and [Bootstrap's documentation](https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons) for
+details.
+
+## BButtonClose
+
+`BButtonClose` has been renamed to `BCloseButton` for consistency with [Bootstrap](https://getbootstrap.com/docs/5.3/components/close-button/)
+
+The `content` and `text-variant` props have been deprecated since Bootstrap 5 moved to using an
+embedded svg for the close icon. See [their migration guide](https://getbootstrap.com/docs/5.3/migration/#close-button-1) for details.
+
 ## BForm
 
 Bootstrap 5 has dropped form-specific layout classes for the grid system. See the

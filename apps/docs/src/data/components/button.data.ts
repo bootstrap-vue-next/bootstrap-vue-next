@@ -1,5 +1,7 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {ComponentReference, PropertyReference} from '../../types'
+import {buildCommonProps, pick} from '../../utils'
+import {linkProps, linkTo} from '../../utils/link-props'
 
 export default {
   load: (): ComponentReference[] => [
@@ -7,128 +9,68 @@ export default {
       component: 'BButton',
       props: {
         '': {
-          pill: {
-            type: 'boolean',
-            default: false,
-          },
-          pressed: {
-            type: 'boolean',
-            default: undefined,
-          },
-          size: {
-            type: 'Size',
-            default: 'md',
-          },
-          squared: {
-            type: 'boolean',
-            default: false,
-          },
-          tag: {
-            type: 'string',
-            default: 'button',
-          },
-          type: {
-            type: 'ButtonType',
-            default: 'button',
-          },
-          variant: {
-            type: 'ButtonVariant | null',
-            default: 'secondary',
-          },
           loading: {
             type: 'boolean',
             default: false,
+            description: 'When set to `true`, renders the button in loading state',
           },
           loadingFill: {
             type: 'boolean',
             default: false,
+            description:
+              'When set to `true`, fills the button with the loading spinner and ignores `loading-text`',
           },
-          active: {
-            type: 'boolean',
-            default: undefined,
-          },
-          activeClass: {
+          loadingText: {
             type: 'string',
-            default: undefined,
+            default: 'Loading...',
+            description: 'The text to display when the button is in a loading state',
           },
-          disabled: {
-            type: 'boolean',
-            default: undefined,
-          },
-          exactActiveClass: {
-            type: 'string',
-            default: undefined,
-          },
-          href: {
-            type: 'string',
-            default: undefined,
-          },
-          icon: {
-            type: 'boolean',
-            default: undefined,
-          },
-          opacity: {
-            type: '10 | 25 | 50 | 75 | 100 | "10" | "25" | "50" | "75" | "100"',
-            default: undefined,
-          },
-          opacityHover: {
-            type: '10 | 25 | 50 | 75 | 100 | "10" | "25" | "50" | "75" | "100"',
-            default: undefined,
-          },
-          rel: {
-            type: 'string',
-            default: undefined,
-          },
-          replace: {
-            type: 'boolean',
-            default: undefined,
-          },
-          routerComponentName: {
-            type: 'string',
-            default: undefined,
-          },
-          routerTag: {
-            type: 'string',
-            default: undefined,
-          },
-          stretched: {
+          pill: {
             type: 'boolean',
             default: false,
+            description: "Renders the button with the pill style appearance when set to 'true'",
           },
-          target: {
-            type: 'LinkTarget',
+          pressed: {
+            type: 'boolean',
             default: undefined,
+            description:
+              "When set to 'true', gives the button the appearance of being pressed and adds attribute 'aria-pressed=\"true\"'. When set to `false` adds attribute 'aria-pressed=\"false\"'. Tri-state prop. Syncable with the .sync modifier",
           },
-          to: {
-            type: 'RouteLocationRaw',
-            default: undefined,
+          squared: {
+            type: 'boolean',
+            default: false,
+            description: "Renders the button with non-rounded corners when set to 'true'",
           },
-          underlineOffset: {
-            type: '1 | 2 | 3 | "1" | "2" | "3"',
-            default: undefined,
+          type: {
+            type: 'ButtonType',
+            default: 'button',
+            description:
+              "The value to set the button's 'type' attribute to. Can be one of 'button', 'submit', or 'reset'",
           },
-          underlineOffsetHover: {
-            type: '1 | 2 | 3 | "1" | "2" | "3"',
-            default: undefined,
+          ...pick(
+            buildCommonProps({
+              variant: {
+                default: 'secondary',
+              },
+            }),
+            ['size', 'tag', 'variant']
+          ),
+        } satisfies Record<
+          Exclude<keyof BvnComponentProps['BButton'], keyof typeof linkProps>,
+          PropertyReference
+        >,
+        'BLink props': {
+          _linkTo: {
+            type: linkTo,
           },
-          underlineOpacity: {
-            type: '0 | 10 | 25 | 50 | 75 | 100 | "0" | "10" | "25" | "50" | "75" | "100"',
-            default: undefined,
-          },
-          underlineOpacityHover: {
-            type: '0 | 10 | 25 | 50 | 75 | 100 | "0" | "10" | "25" | "50" | "75" | "100"',
-            default: undefined,
-          },
-          underlineVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-          loadingText: {},
-          noPrefetch: {},
-          noRel: {},
-          prefetch: {},
-          prefetchedClass: {},
-        } satisfies Record<keyof BvnComponentProps['BButton'], PropertyReference>,
+          ...pick(linkProps, [
+            'activeClass',
+            'exactActiveClass',
+            'replace',
+            'routerComponentName',
+            'routerTag',
+          ]),
+        },
       },
       emits: [
         {
@@ -143,32 +85,29 @@ export default {
           event: 'click',
         },
         {
+          event: 'update:pressed',
+          description: 'Emitted when the `pressed` prop is changed',
           args: [
             {
-              arg: 'update:pressed',
-              description: '',
+              arg: 'value',
               type: 'boolean',
+              description: 'The new value of the `pressed` prop',
             },
           ],
-          description: '',
-          event: 'update:pressed',
         },
       ],
       slots: [
         {
           name: 'default',
-          description: '',
-          scope: [],
+          description: 'Content to place in the button',
         },
         {
           name: 'loading',
           description: 'The content to replace the default loader',
-          scope: [],
         },
         {
           name: 'loading-spinner',
           description: 'The content to replace the default loading spinner',
-          scope: [],
         },
       ],
     },
@@ -176,34 +115,33 @@ export default {
       component: 'BCloseButton',
       props: {
         '': {
-          ariaLabel: {
-            description: '',
-            type: 'string',
-            default: 'Close',
-          },
-          disabled: {
-            description: '',
-            type: 'boolean',
-            default: false,
-          },
           type: {
-            default: 'button',
             type: 'ButtonType',
-            description: '',
+            default: 'button',
+            description:
+              "The value to set the button's 'type' attribute to. Can be one of 'button', 'submit', or 'reset'",
           },
+          ...pick(
+            buildCommonProps({
+              ariaLabel: {
+                default: 'Close',
+              },
+            }),
+            ['ariaLabel', 'disabled']
+          ),
         } satisfies Record<keyof BvnComponentProps['BCloseButton'], PropertyReference>,
       },
       emits: [
         {
+          event: 'click',
+          description: 'Emitted when non-disabled button clicked',
           args: [
             {
               arg: 'click',
-              description: '',
               type: 'MouseEvent',
+              description: 'Native click event object',
             },
           ],
-          description: 'On click event',
-          event: 'click',
         },
       ],
       slots: [],
