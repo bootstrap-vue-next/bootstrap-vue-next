@@ -280,7 +280,7 @@ BSVN no longer emits the `bv::link::clicked` event on `$root`.
 ### Replacement for Modal Message boxes
 
 [BootstrapVue](https://bootstrap-vue.org/docs/components/modal#modal-message-boxes) provided two methods on the `this.$bvModal` object called `msgBoxOk` and `msgBoxConfirm`.
-In holding with the Vue3 first philosophy, BootstrapVueNext provides a composible called [`useModalController`](/docs/composables/useModalController) that
+In holding with the Vue3 first philosophy, BootstrapVueNext provides a composable called [`useModalController`](/docs/composables/useModalController) that
 fills the same needs (and more).
 
 Please read the [`useModalController`](/docs/composables/useModalController) documentation and then come back here for examples of replacements
