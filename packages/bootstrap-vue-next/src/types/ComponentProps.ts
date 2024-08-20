@@ -789,6 +789,10 @@ export interface BBreadcrumbItemProps extends Omit<BLinkProps, 'routerTag'> {
   text?: string
 }
 
+type CustomLinkVariant = {
+  [K in ColorVariant as `link-${K}`]: unknown
+}
+
 export interface BButtonProps extends Omit<BLinkProps, 'variant'> {
   loading?: boolean
   loadingFill?: boolean
@@ -799,7 +803,7 @@ export interface BButtonProps extends Omit<BLinkProps, 'variant'> {
   squared?: boolean
   tag?: string
   type?: ButtonType
-  variant?: ButtonVariant | null
+  variant?: (ButtonVariant | keyof CustomLinkVariant) | null
 }
 
 export interface BButtonGroupProps {

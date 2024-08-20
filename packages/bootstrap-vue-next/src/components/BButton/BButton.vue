@@ -39,7 +39,7 @@
 import {computed, toRef} from 'vue'
 import BSpinner from '../BSpinner.vue'
 import {useBLinkHelper, useDefaults} from '../../composables'
-import type {BButtonProps} from '../../types'
+import type {BButtonProps, ColorVariant} from '../../types'
 import BLink from '../BLink/BLink.vue'
 import {useLinkClasses} from '../../composables/useLinkClasses'
 
@@ -112,26 +112,31 @@ const nonStandardTag = toRef(() => (props.href !== undefined ? false : !isButton
 
 const linkProps = computed(() => (isBLink.value ? computedLinkProps.value : []))
 
+const variantIsLinkSubset = computed(
+  () => (computedLink.value === false && props.variant?.startsWith('link-')) || false
+)
 const linkValueClasses = useLinkClasses(
   computed(() => ({
-    ...(props.variant === 'link' && {
-      icon: props.icon,
-      opacity: props.opacity,
-      opacityHover: props.opacityHover,
-      underlineOffset: props.underlineOffset,
-      underlineOffsetHover: props.underlineOffsetHover,
-      underlineOpacity: props.underlineOpacity,
-      underlineOpacityHover: props.underlineOpacityHover,
-      underlineVariant: props.underlineVariant,
-    }),
-    variant: null,
+    ...(props.variant &&
+      props.variant.startsWith('link') && {
+        icon: props.icon,
+        opacity: props.opacity,
+        opacityHover: props.opacityHover,
+        underlineOffset: props.underlineOffset,
+        underlineOffsetHover: props.underlineOffsetHover,
+        underlineOpacity: props.underlineOpacity,
+        underlineOpacityHover: props.underlineOpacityHover,
+        underlineVariant: props.underlineVariant,
+        variant:
+          variantIsLinkSubset.value === true ? (props.variant.slice(5) as ColorVariant) : null,
+      }),
   }))
 )
 const computedClasses = computed(() => [
-  linkValueClasses.value,
+  computedLink.value === true ? undefined : linkValueClasses.value,
   [`btn-${props.size}`],
   {
-    [`btn-${props.variant}`]: props.variant !== null,
+    [`btn-${props.variant}`]: props.variant !== null && variantIsLinkSubset.value === false,
     'active': props.active || props.pressed,
     'rounded-pill': props.pill,
     'rounded-0': props.squared,
