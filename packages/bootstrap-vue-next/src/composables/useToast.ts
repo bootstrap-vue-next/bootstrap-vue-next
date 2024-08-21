@@ -1,4 +1,4 @@
 import {inject} from 'vue'
-import {toastPluginKey} from '../utils'
+import {toastPluginKey} from '../utils/keys'
 
-export default () => ({...inject(toastPluginKey)})
+export const useToast = () => ({...inject(toastPluginKey)})

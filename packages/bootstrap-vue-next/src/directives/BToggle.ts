@@ -1,4 +1,4 @@
-import {RX_HASH, RX_HASH_ID, RX_SPACE_SPLIT} from '../constants/regex'
+import {RX_HASH, RX_HASH_ID, RX_SPACE_SPLIT} from '../utils/constants'
 import type {Directive, DirectiveBinding} from 'vue'
 
 const getTargets = (
@@ -83,7 +83,7 @@ export interface WithToggle extends HTMLElement {
   __toggle: () => void
 }
 
-export default {
+export const vBToggle: Directive<WithToggle> = {
   mounted: handleUpdate,
   updated: handleUpdate,
   unmounted(el: WithToggle): void {
@@ -91,4 +91,4 @@ export default {
     el.removeAttribute('aria-controls')
     el.removeAttribute('aria-expanded')
   },
-} satisfies Directive<WithToggle>
+}

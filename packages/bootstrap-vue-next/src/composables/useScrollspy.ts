@@ -41,7 +41,7 @@ interface ScrollspyOptions {
   watchChanges: boolean
 }
 
-export default (
+export const useScrollspy = (
   content: MaybeRefOrGetter<string | ComponentPublicInstance | HTMLElement | null>,
   target: MaybeRefOrGetter<string | ComponentPublicInstance | HTMLElement | null>,
   options: Readonly<Partial<ScrollspyOptions>> = {}

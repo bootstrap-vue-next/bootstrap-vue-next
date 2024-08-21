@@ -2,7 +2,7 @@ import {computed, type MaybeRefOrGetter, toValue} from 'vue'
 import type {Numberish} from '../types'
 import {RX_NUMBER} from '../constants/regex'
 
-export default (
+export const useNumberishToStyle = (
   el: MaybeRefOrGetter<Numberish | undefined>,
   /**
    * The unit to use when converting a numeric value to a string

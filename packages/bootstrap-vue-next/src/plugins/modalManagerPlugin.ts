@@ -1,7 +1,7 @@
 import {type ComponentInternalInstance, computed, type Plugin, type Ref, ref} from 'vue'
-import {modalManagerPluginKey} from '../utils'
+import {modalManagerPluginKey} from '../utils/keys'
 
-export default {
+export const modalManagerPlugin: Plugin = {
   install(app) {
     /**
      * A collection of all currently active modals
@@ -47,4 +47,4 @@ export default {
       removeRegistry,
     })
   },
-} satisfies Plugin
+}

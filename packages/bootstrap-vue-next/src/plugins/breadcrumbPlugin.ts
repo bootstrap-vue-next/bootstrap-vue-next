@@ -1,8 +1,8 @@
 import {type Plugin, ref} from 'vue'
-import type {BreadcrumbItemRaw} from '../types'
-import {breadcrumbPluginKey} from '../utils'
+import type {BreadcrumbItemRaw} from '../types/BreadcrumbTypes'
+import {breadcrumbPluginKey} from '../utils/keys'
 
-export default {
+export const breadcrumbPlugin: Plugin = {
   install(app) {
     const items = ref<BreadcrumbItemRaw[]>([])
     const reset = () => {
@@ -11,4 +11,4 @@ export default {
 
     app.provide(breadcrumbPluginKey, {items, reset})
   },
-} satisfies Plugin
+}

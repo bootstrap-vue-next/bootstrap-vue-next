@@ -1,32 +1,13 @@
-import {
-  type Component,
-  computed,
-  type MaybeRefOrGetter,
-  type Plugin,
-  ref,
-  toValue,
-  type WritableComputedRef,
-} from 'vue'
-import {modalControllerPluginKey} from '../utils'
-import type {BModalProps, OrchestratedModal} from '../types'
-import BModal from '../components/BModal/BModal.vue'
+import {markRaw, type Plugin, ref, toRef, watch} from 'vue'
+import {modalControllerPluginKey} from '../utils/keys'
+import type {
+  ModalOrchestratorMapValue,
+  ModalOrchestratorShowParam,
+} from '../types/ComponentOrchestratorTypes'
 
-export default {
+export const modalControllerPlugin: Plugin = {
   install(app) {
-    const modals = ref<
-      WritableComputedRef<{
-        component: unknown // TS being weird here, just use unknown
-        props: OrchestratedModal & {
-          _self: symbol
-          _modelValue: BModalProps['modelValue']
-          _promise: {
-            value: Promise<boolean | null>
-            resolve: (value: boolean | null) => void
-          }
-          _isConfirm: boolean
-        }
-      }>[]
-    >([])
+    const modals = ref(new Map<symbol, ModalOrchestratorMapValue>())
 
     const buildPromise = (): {
       value: Promise<boolean | null>
@@ -46,81 +27,63 @@ export default {
       }
     }
 
-    const buildPrereqs = () => [buildPromise(), Symbol(), ref(true)] as const
+    const buildPrereqs = () => [buildPromise(), Symbol(), true] as const
 
-    const show = (
-      obj: {
-        component?: MaybeRefOrGetter<Readonly<Component>>
-        props?: MaybeRefOrGetter<Readonly<OrchestratedModal>>
-      } = {}
-    ) => {
+    const show = (obj: ModalOrchestratorShowParam = {}) => {
+      const resolvedProps = toRef(obj.props)
+
       const [_promise, _self, _modelValue] = buildPrereqs()
 
-      modals.value.push(
-        computed({
-          get: () => ({
-            component: toValue(obj.component) ?? BModal,
-            props: {
-              ...toValue(obj.props),
-              _isConfirm: false,
-              _promise,
-              _self,
-              _modelValue: _modelValue.value,
-            },
-          }),
-          set: (v) => {
-            _modelValue.value = v.props._modelValue
-          },
+      modals.value.set(_self, {
+        component: !obj.component ? undefined : markRaw(obj.component),
+        props: {...resolvedProps.value, _isConfirm: false, _promise, _modelValue},
+      })
+
+      watch(resolvedProps, (newValue) => {
+        const previous = modals.value.get(_self)
+        if (!previous) return
+        modals.value.set(_self, {
+          component: !obj.component ? undefined : markRaw(obj.component),
+          props: {...previous.props, ...newValue},
         })
-      )
+      })
 
       return _promise.value
     }
 
-    const confirm = (
-      obj: {
-        component?: MaybeRefOrGetter<Readonly<Component>>
-        props?: MaybeRefOrGetter<Readonly<OrchestratedModal>>
-      } = {}
-    ) => {
+    const confirm = (obj: ModalOrchestratorShowParam = {}) => {
+      const resolvedProps = toRef(obj.props)
+
       const [_promise, _self, _modelValue] = buildPrereqs()
 
-      modals.value.push(
-        computed({
-          get: () => ({
-            component: toValue(obj.component) ?? BModal,
-            props: {
-              ...toValue(obj.props),
-              _isConfirm: true,
-              _promise,
-              _self,
-              _modelValue: _modelValue.value,
-            },
-          }),
-          set: (v) => {
-            _modelValue.value = v.props._modelValue
-          },
+      modals.value.set(_self, {
+        component: !obj.component ? undefined : markRaw(obj.component),
+        props: {...resolvedProps.value, _isConfirm: true, _promise, _modelValue},
+      })
+
+      watch(resolvedProps, (newValue) => {
+        const previous = modals.value.get(_self)
+        if (!previous) return
+        modals.value.set(_self, {
+          component: !obj.component ? undefined : markRaw(obj.component),
+          props: {...previous.props, ...newValue},
         })
-      )
+      })
 
       return _promise.value
     }
 
     const leave = (self: symbol) => {
-      const modal = modals.value.find((el) => el.value.props._self === self)
-      if (modal !== undefined) {
-        modal.value = {
-          ...modal.value,
-          props: {
-            ...modal.value.props,
-            _modelValue: false,
-          },
-        }
+      const modal = modals.value.get(self)
+      if (!modal?.props) return
+      modal.props = {
+        ...modal.props,
+        _modelValue: false,
       }
     }
 
     const remove = (self: symbol) => {
-      modals.value = modals.value.filter((el) => el.value.props._self !== self)
+      modals.value.delete(self)
     }
 
     app.provide(modalControllerPluginKey, {
@@ -131,4 +94,4 @@ export default {
       leave,
     })
   },
-} satisfies Plugin
+}

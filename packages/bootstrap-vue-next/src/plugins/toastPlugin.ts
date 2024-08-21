@@ -1,30 +1,16 @@
-import {
-  type Component,
-  computed,
-  type MaybeRefOrGetter,
-  type Plugin,
-  ref,
-  toValue,
-  type WritableComputedRef,
-} from 'vue'
-import BToast from '../components/BToast/BToast.vue'
-import type {ContainerPosition, OrchestratedToast} from '../types'
-import {toastPluginKey} from '../utils'
+import {markRaw, type Plugin, ref, toRef, watch} from 'vue'
+import {toastPluginKey} from '../utils/keys'
+import type {ContainerPosition} from '../types/Alignment'
+import type {
+  ToastOrchestratorArrayValue,
+  ToastOrchestratorShowParam,
+} from '../types/ComponentOrchestratorTypes'
 
 const posDefault: ContainerPosition = 'top-end'
 
-export default {
+export const toastPlugin: Plugin = {
   install(app) {
-    const toasts = ref<
-      WritableComputedRef<{
-        component: unknown
-        props: Omit<OrchestratedToast, 'value'> & {
-          _self: symbol
-          _modelValue: OrchestratedToast['value'] // Convert it to be the same name as useModalController.
-          // The difference between the two is that unlike that one, this value can be defined (there's cannot be).
-        }
-      }>[]
-    >([])
+    const toasts = ref<ToastOrchestratorArrayValue[]>([])
 
     const _isAppend = ref(false)
 
@@ -35,43 +21,43 @@ export default {
     /**
      * @returns {symbol} A symbol that corresponds to its unique id. You can pass this id to the hide function to force a Toast to hide
      */
-    const show = (
-      obj: {
-        component?: MaybeRefOrGetter<Readonly<Component>>
-        props?: MaybeRefOrGetter<Readonly<OrchestratedToast>>
-      } = {}
-    ): symbol => {
+    const show = (obj: ToastOrchestratorShowParam = {}): symbol => {
+      const resolvedProps = toRef(obj.props)
+
       const _self = Symbol()
 
-      const _modelValue = ref<boolean | number>(toValue(obj.props)?.value || 5000)
-
-      const toastToAdd = computed({
-        get: () => {
-          const unwrappedProps = toValue(obj.props)
-          return {
-            component: toValue(obj.component) ?? BToast,
-            props: {
-              ...unwrappedProps,
-              pos: unwrappedProps?.pos || posDefault,
-              _modelValue: _modelValue.value,
-              _self,
-            },
-          }
+      const toastToAdd: ToastOrchestratorArrayValue = {
+        component: !obj.component ? undefined : markRaw(obj.component),
+        props: {
+          ...resolvedProps.value,
+          pos: resolvedProps.value?.pos || posDefault,
+          _modelValue: resolvedProps.value?.value || 5000,
+          _self,
         },
-        set: (v) => {
-          _modelValue.value = v.props._modelValue
-        },
-      })
+      }
 
       if (
-        toastToAdd.value.props.appendToast !== undefined
-          ? toastToAdd.value.props.appendToast
+        resolvedProps.value?.appendToast !== undefined
+          ? resolvedProps.value.appendToast
           : _isAppend.value
       ) {
         toasts.value.push(toastToAdd)
       } else {
         toasts.value.unshift(toastToAdd)
       }
+
+      watch(resolvedProps, (newValue) => {
+        const previousIndex = toasts.value.findIndex((el) => el.props._self === _self)
+        if (previousIndex === -1) return
+        toasts.value.splice(previousIndex, 1, {
+          component: !obj.component ? undefined : markRaw(obj.component),
+          props: {
+            ...toasts.value[previousIndex].props,
+            ...newValue,
+            _modelValue: newValue?.value || toasts.value[previousIndex].props._modelValue || 5000,
+          },
+        })
+      })
 
       return _self
     }
@@ -80,20 +66,21 @@ export default {
      * You can get the symbol param from the return value from the show method
      */
     const remove = (self: symbol) => {
-      toasts.value = toasts.value.filter((el) => el.value.props._self !== self)
+      toasts.value = toasts.value.filter((el) => el.props._self !== self)
     }
 
     const leave = (self: symbol) => {
-      const toast = toasts.value.find((el) => el.value.props._self === self)
-      if (toast !== undefined) {
-        toast.value = {
-          ...toast.value,
-          props: {
-            ...toast.value.props,
-            _modelValue: false,
-          },
-        }
-      }
+      const toastIndex = toasts.value.findIndex((el) => el.props._self === self)
+      if (toastIndex === -1) return
+      toasts.value.splice(toastIndex, 1, {
+        component: !toasts.value[toastIndex].component
+          ? undefined
+          : markRaw(toasts.value[toastIndex].component),
+        props: {
+          ...toasts.value[toastIndex].props,
+          _modelValue: false,
+        },
+      })
     }
 
     app.provide(toastPluginKey, {
@@ -104,4 +91,4 @@ export default {
       leave,
     })
   },
-} satisfies Plugin
+}

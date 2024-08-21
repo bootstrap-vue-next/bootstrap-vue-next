@@ -1,7 +1,10 @@
 import {type MaybeRefOrGetter, onMounted, readonly, toRef, watch} from 'vue'
 import {useScrollLock} from '@vueuse/core'
 
-export default (isOpen: MaybeRefOrGetter<boolean>, bodyScroll: MaybeRefOrGetter<boolean>) => {
+export const useSafeScrollLock = (
+  isOpen: MaybeRefOrGetter<boolean>,
+  bodyScroll: MaybeRefOrGetter<boolean>
+) => {
   const resolvedIsOpen = readonly(toRef(isOpen))
   const resolvedBodyScrolling = readonly(toRef(bodyScroll))
 

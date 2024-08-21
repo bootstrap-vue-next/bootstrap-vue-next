@@ -1,7 +1,7 @@
 import {computed, type MaybeRefOrGetter, toValue} from 'vue'
 import type {ColorExtendables} from '../types'
 
-export default (obj: MaybeRefOrGetter<ColorExtendables>) =>
+export const useColorVariantClasses = (obj: MaybeRefOrGetter<ColorExtendables>) =>
   computed(() => {
     let props = toValue(obj)
     props = {

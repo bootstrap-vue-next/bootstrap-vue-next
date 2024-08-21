@@ -8,7 +8,7 @@ import {
   unbind,
 } from '../utils/floatingUi'
 
-export default {
+export const vBPopover: Directive<ElementWithPopper> = {
   mounted(el, binding) {
     const isActive = resolveActiveStatus(binding.value)
     if (!isActive) return
@@ -38,4 +38,4 @@ export default {
   beforeUnmount(el) {
     unbind(el)
   },
-} satisfies Directive<ElementWithPopper>
+}

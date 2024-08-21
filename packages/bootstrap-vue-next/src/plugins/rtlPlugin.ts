@@ -1,8 +1,8 @@
 import {type Plugin, ref} from 'vue'
-import {rtlPluginKey} from '../utils'
-import type {BootstrapVueOptions} from '../types'
+import {rtlPluginKey} from '../utils/keys'
+import type {BootstrapVueOptions} from '../types/BootstrapVueOptions'
 
-export default {
+export const rtlPlugin: Plugin = {
   install(app, options: BootstrapVueOptions) {
     const rtlDefault = false
     const localeDefault = undefined
@@ -20,4 +20,4 @@ export default {
 
     app.provide(rtlPluginKey, {isRtl, locale})
   },
-} satisfies Plugin
+}

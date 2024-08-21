@@ -121,31 +121,31 @@ const computedAriaDisabled = computed(() => {
   return nonStandardTag.value ? props.disabled : null
 })
 
-const variantIsLinkSubset = computed(
-  () => (computedLink.value === false && props.variant?.startsWith('link-')) || false
-)
+const variantIsLinkType = computed(() => props.variant?.startsWith('link') || false)
+const variantIsLinkTypeSubset = computed(() => props.variant?.startsWith('link-') || false)
 const linkValueClasses = useLinkClasses(
   computed(() => ({
-    ...(props.variant &&
-      props.variant.startsWith('link') && {
-        icon: props.icon,
-        opacity: props.opacity,
-        opacityHover: props.opacityHover,
-        underlineOffset: props.underlineOffset,
-        underlineOffsetHover: props.underlineOffsetHover,
-        underlineOpacity: props.underlineOpacity,
-        underlineOpacityHover: props.underlineOpacityHover,
-        underlineVariant: props.underlineVariant,
-        variant:
-          variantIsLinkSubset.value === true ? (props.variant.slice(5) as ColorVariant) : null,
-      }),
+    ...(variantIsLinkType.value && {
+      icon: props.icon,
+      opacity: props.opacity,
+      opacityHover: props.opacityHover,
+      underlineOffset: props.underlineOffset,
+      underlineOffsetHover: props.underlineOffsetHover,
+      underlineOpacity: props.underlineOpacity,
+      underlineOpacityHover: props.underlineOpacityHover,
+      underlineVariant: props.underlineVariant,
+      variant:
+        variantIsLinkTypeSubset.value === true ? (props.variant?.slice(5) as ColorVariant) : null,
+    }),
   }))
 )
 const computedClasses = computed(() => [
-  computedLink.value === true ? undefined : linkValueClasses.value,
+  variantIsLinkType.value === true && computedLink.value === false
+    ? linkValueClasses.value
+    : undefined,
   [`btn-${props.size}`],
   {
-    [`btn-${props.variant}`]: props.variant !== null && variantIsLinkSubset.value === false,
+    [`btn-${props.variant}`]: props.variant !== null && variantIsLinkTypeSubset.value === false,
     'active': props.active || pressedValue.value,
     'rounded-pill': props.pill,
     'rounded-0': props.squared,

@@ -1,4 +1,4 @@
-import {useColorMode, type UseColorModeOptions} from '@vueuse/core'
+import {type UseColorModeOptions, useColorMode as useVueuseColorMode} from '@vueuse/core'
 
 export interface ColorModeOptions extends UseColorModeOptions {
   /**
@@ -8,11 +8,11 @@ export interface ColorModeOptions extends UseColorModeOptions {
   persist?: boolean
 }
 
-export default (opts: Readonly<ColorModeOptions> = {}) => {
+export const useColorMode = (opts: Readonly<ColorModeOptions> = {}) => {
   const persist = opts.persist ?? false
   const attribute = 'data-bs-theme'
   const selector = 'body'
-  return useColorMode({
+  return useVueuseColorMode({
     attribute,
     selector,
     storageKey:

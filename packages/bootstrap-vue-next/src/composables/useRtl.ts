@@ -1,7 +1,7 @@
 import {inject, onMounted, watch} from 'vue'
 import {rtlPluginKey} from '../utils'
 
-export default () => {
+export const useRtl = () => {
   const rtlPlugin = inject(rtlPluginKey)
 
   onMounted(() => {

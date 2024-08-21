@@ -1,7 +1,7 @@
 import {type MaybeRef, type MaybeRefOrGetter, onUnmounted, ref, toRef} from 'vue'
 
 // I've made something wild here
-export default (
+export const useManualTransition = (
   el: MaybeRef<HTMLElement | null>,
   classEnter: MaybeRefOrGetter<string | string[]>,
   classLeave: MaybeRefOrGetter<string | string[]>

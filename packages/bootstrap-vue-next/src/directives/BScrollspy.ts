@@ -1,6 +1,6 @@
 import {type Directive, type DirectiveBinding} from 'vue'
-import {useScrollspy} from '../composables'
-import {omit} from '../utils'
+import {useScrollspy} from '../composables/useScrollspy'
+import {omit} from '../utils/object'
 
 export interface ElementWithScrollspy extends HTMLElement {
   $__scrollspy?: ReturnType<typeof useScrollspy>
@@ -20,10 +20,10 @@ const bind = (el: ElementWithScrollspy, binding: Readonly<DirectiveBinding>) => 
   el.$__scrollspy = useScrollspy(content, el, isObject ? omit(value, ['content', 'element']) : {})
 }
 
-export default {
+export const vBScrollspy: Directive<ElementWithScrollspy> = {
   mounted: bind,
   updated: bind,
   beforeUnmount(el) {
     if (el.$__scrollspy) el.$__scrollspy.cleanup()
   },
-} satisfies Directive<ElementWithScrollspy>
+}

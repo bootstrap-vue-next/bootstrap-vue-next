@@ -54,7 +54,7 @@ export const useSharedModalStack = () => {
   }
 }
 
-export default (modalOpen: Readonly<Ref<boolean>>, initialValue: boolean) => {
+export const useModalManager = (modalOpen: Readonly<Ref<boolean>>, initialValue: boolean) => {
   const {pushRegistry, pushStack, removeStack, stack, dispose, countStack} = useSharedModalStack()
 
   const currentModal = getCurrentInstance()

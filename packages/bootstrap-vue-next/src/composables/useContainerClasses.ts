@@ -1,7 +1,7 @@
 import type {Breakpoint} from '../types'
 import {computed, type MaybeRefOrGetter, toValue} from 'vue'
 
-export default (value: MaybeRefOrGetter<boolean | Breakpoint | 'fluid'>) =>
+export const useContainerClasses = (value: MaybeRefOrGetter<boolean | Breakpoint | 'fluid'>) =>
   computed(() => {
     const resolvedValue = toValue(value)
     return {

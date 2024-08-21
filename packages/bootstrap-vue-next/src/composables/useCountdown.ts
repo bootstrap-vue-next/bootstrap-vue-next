@@ -21,7 +21,7 @@ interface CountdownReturn {
  * @param {Readonly<UseIntervalFnOptions>} intervalOpts opts to pass to the interval fn. Default {}
  * @important ensure that you call `stop()` before unmount in the component
  */
-export default (
+export const useCountdown = (
   length: MaybeRefOrGetter<number>,
   interval: MaybeRefOrGetter<number> = ref(1000),
   intervalOpts: Readonly<UseIntervalFnOptions> = {}

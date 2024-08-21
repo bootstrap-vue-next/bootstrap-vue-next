@@ -8,7 +8,7 @@ import {
 } from 'vue'
 import {useSharedModalStack} from './useModalManager'
 
-export default (id: MaybeRefOrGetter<string | undefined> = undefined) => {
+export const useModal = (id: MaybeRefOrGetter<string | undefined> = undefined) => {
   const {registry} = useSharedModalStack()
   const instance = getCurrentInstance()
 

@@ -1,2 +1,1 @@
-import BToggle from './BToggle'
-export default BToggle
+export {vBToggle as vBModal} from './BToggle'

@@ -1,7 +1,10 @@
 import {computed, type MaybeRefOrGetter, toRef} from 'vue'
 import {isLink, pick} from '../utils'
 
-export default <T extends Record<string, unknown>, const B extends ReadonlyArray<PropertyKey>>(
+export const useBLinkHelper = <
+  T extends Record<string, unknown>,
+  const B extends ReadonlyArray<PropertyKey>,
+>(
   props: MaybeRefOrGetter<T>,
   pickProps?: MaybeRefOrGetter<B | (keyof T)[]>
 ) => {
