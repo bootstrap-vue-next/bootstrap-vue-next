@@ -173,6 +173,11 @@ details.
 The `content` and `text-variant` props have been deprecated since Bootstrap 5 moved to using an
 embedded svg for the close icon. See [their migration guide](https://getbootstrap.com/docs/5.3/migration/#close-button-1) for details.
 
+## BButtonToolbar
+
+[Keyboard navigation](https://bootstrap-vue.org/docs/components/button-toolbar#keyboard-navigation) is
+not implemented.
+
 ## BForm
 
 Bootstrap 5 has dropped form-specific layout classes for the grid system. See the
