@@ -1,6 +1,7 @@
 import {defineConfig} from 'vitepress'
 import Icons from 'unplugin-icons/vite'
 import markdownItClass from '@toycode/markdown-it-class'
+import {demoContainer} from './plugins/demo-container'
 
 const title = 'BootstrapVueNext'
 const description = 'Quickly and Easily Integrate Bootstrap V5 Components With Vue 3'
@@ -43,6 +44,7 @@ export default defineConfig({
   markdown: {
     config: (md) => {
       md.use(markdownItClass, {table: ['table', 'table-striped']})
+      md.use(demoContainer, 'src')
     },
   },
 })

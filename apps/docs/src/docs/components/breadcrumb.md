@@ -18,7 +18,7 @@ Indicate the current page’s location within a navigational hierarchy that auto
   <BreadcrumbOverview />
   <template #html>
 
-<<< ./demo/BreadcrumbOverview.vue#snippet
+<<< ./demo/BreadcrumbOverview.vue
 
   </template>
 </HighlightCard>
@@ -31,20 +31,7 @@ The active state of last element is automatically set if it is `undefined`.
 
 ### Breadcrumb items as array of strings
 
-<HighlightCard>
-  <BBreadcrumb :items="breadcrumbStringArray" />
-  <template #html>
-
-```vue
-<BBreadcrumb :items="breadcrumbStringArray" />
-
-<script setup lang="ts">
-const breadcrumbStringArray = ['Admin', 'Manage', 'Library']
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/BreadcrumbAsArray.vue
 
 ## Manually placed items
 
@@ -128,6 +115,7 @@ import ComponentReference from '../../components/ComponentReference.vue'
 import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import BreadcrumbOverview from "./demo/BreadcrumbOverview.vue"
+import BreadcrumbAsArray from "./demo/BreadcrumbAsArray.vue"
 
 const breadcrumbItems = ref<BreadcrumbItem[]>([
   { text: 'Admin', href:'https://getbootstrap.com/'},
