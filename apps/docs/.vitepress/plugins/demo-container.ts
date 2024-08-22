@@ -5,9 +5,6 @@ import path from 'path'
 // This plugin is inspired by vitepress' snippet plugin and must run before it to work
 //  It accepts all of the same syntax as the snippet plugin, but will render the demo
 //  _and_ display the example code inside of a HighlightCard component
-//
-// TODO: This currently requires an extra step of manually importing the demo component
-//  in the <script setup> block of the markdown file. Next step is to automate this process
 
 export const demoContainer = (md: MarkdownRenderer, srcDir: string) => {
   const blockParser: RuleBlock = (state, startLine, endLine, silent) => {
