@@ -6,9 +6,9 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import type {BColProps} from '../types'
-import {getClasses} from '../utils'
-import {useDefaults} from '../composables'
+import type {BColProps} from '../../types/ComponentProps'
+import {getClasses} from '../../utils/getClasses'
+import {useDefaults} from '../../composables/useDefaults'
 
 const _props = withDefaults(defineProps<BColProps>(), {
   alignSelf: undefined,

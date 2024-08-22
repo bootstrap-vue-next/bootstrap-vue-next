@@ -1,4 +1,4 @@
-import {idPluginKey} from '../utils'
+import {idPluginKey} from '../utils/keys'
 import {computed, type ComputedRef, inject, type MaybeRefOrGetter, toValue} from 'vue'
 
 export const useId = (

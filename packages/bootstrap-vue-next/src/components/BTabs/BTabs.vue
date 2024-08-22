@@ -64,10 +64,13 @@
 
 <script setup lang="ts">
 import {computed, nextTick, provide, type Ref, ref, toRef, unref, watch} from 'vue'
-import {BvEvent, tabsInjectionKey} from '../../utils'
-import {useAlignment, useDefaults} from '../../composables'
-import type {BTabsProps, TabType} from '../../types'
+import {BvEvent} from '../../utils/classes'
+import {useAlignment} from '../../composables/useAlignment'
 import {createReusableTemplate} from '@vueuse/core'
+import type {TabType} from '../../types/Tab'
+import type {BTabsProps} from '../../types/ComponentProps'
+import {tabsInjectionKey} from '../../utils/keys'
+import {useDefaults} from '../../composables/useDefaults'
 
 const _props = withDefaults(defineProps<BTabsProps>(), {
   activeNavItemClass: undefined,

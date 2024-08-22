@@ -75,7 +75,7 @@ export const toastPlugin: Plugin = {
       toasts.value.splice(toastIndex, 1, {
         component: !toasts.value[toastIndex].component
           ? undefined
-          : markRaw(toasts.value[toastIndex].component),
+          : markRaw(toasts.value[toastIndex].component as object),
         props: {
           ...toasts.value[toastIndex].props,
           _modelValue: false,

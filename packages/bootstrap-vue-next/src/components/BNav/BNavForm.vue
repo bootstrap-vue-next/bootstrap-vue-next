@@ -16,8 +16,8 @@
 </template>
 
 <script setup lang="ts">
-import {useDefaults} from '../../composables'
-import type {BNavFormProps} from '../../types'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BNavFormProps} from '../../types/ComponentProps'
 import BForm from '../BForm/BForm.vue'
 
 defineOptions({

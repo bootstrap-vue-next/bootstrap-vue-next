@@ -137,25 +137,29 @@
 <script setup lang="ts" generic="T">
 import {useToNumber} from '@vueuse/core'
 import {computed, onMounted, type Ref, ref, toRef, watch} from 'vue'
-import type {
-  BTableProps,
-  BTableSortBy,
-  BTableSortByOrder,
-  NoProviderTypes,
-  TableField,
-  TableFieldRaw,
-  TableItem,
-  TableRowType,
-  TableStrictClassValue,
-} from '../../types'
-import {formatItem, get, getTableFieldHeadLabel, set, startCase} from '../../utils'
+import {formatItem} from '../../utils/formatItem'
 import BOverlay from '../BOverlay/BOverlay.vue'
-import BSpinner from '../BSpinner.vue'
+import BSpinner from '../BSpinner/BSpinner.vue'
 import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
 import BTr from './BTr.vue'
-import {isTableField, isTableItem} from '../../types/TableTypes'
-import {useDefaults} from '../../composables'
+import {
+  type BTableSortBy,
+  type BTableSortByOrder,
+  isTableField,
+  isTableItem,
+  type NoProviderTypes,
+  type TableField,
+  type TableFieldRaw,
+  type TableItem,
+  type TableRowType,
+  type TableStrictClassValue,
+} from '../../types/TableTypes'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BTableProps} from '../../types/ComponentProps'
+import {get, set} from '../../utils/object'
+import {startCase} from '../../utils/stringUtils'
+import {getTableFieldHeadLabel} from '../../utils/getTableFieldHeadLabel'
 
 const _props = withDefaults(defineProps<BTableProps<T>>(), {
   noSortableIcon: false,

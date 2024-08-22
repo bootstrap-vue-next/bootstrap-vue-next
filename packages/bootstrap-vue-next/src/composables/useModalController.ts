@@ -1,6 +1,6 @@
 import {inject} from 'vue'
 import {useSharedModalStack} from './useModalManager'
-import {modalControllerPluginKey} from '../utils'
+import {modalControllerPluginKey} from '../utils/keys'
 
 export const useModalController = () => {
   const {lastStack, stack} = useSharedModalStack()

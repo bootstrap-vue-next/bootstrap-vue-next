@@ -6,9 +6,10 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import {getClasses} from '../utils'
-import {useAlignment, useDefaults} from '../composables'
-import type {BRowProps} from '../types'
+import {getClasses} from '../../utils/getClasses'
+import {useAlignment} from '../../composables/useAlignment'
+import type {BRowProps} from '../../types/ComponentProps'
+import {useDefaults} from '../../composables/useDefaults'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

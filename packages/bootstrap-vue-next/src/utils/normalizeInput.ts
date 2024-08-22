@@ -1,6 +1,6 @@
 import type {Numberish} from '../types/CommonTypes'
 
-export const noramlizeInput = (
+export const normalizeInput = (
   v: Numberish | null,
   modelModifiers: Record<'number' | 'lazy' | 'trim', true | undefined>
 ) => {

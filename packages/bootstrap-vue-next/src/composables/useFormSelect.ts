@@ -1,6 +1,6 @@
 import {computed, type MaybeRefOrGetter, readonly, toRef} from 'vue'
-import {get} from '../utils'
-import type {ComplexSelectOptionRaw, SelectOption} from '../types'
+import {get} from '../utils/object'
+import type {ComplexSelectOptionRaw, SelectOption} from '../types/SelectTypes'
 
 export const useFormSelect = (
   options: MaybeRefOrGetter<ReadonlyArray<unknown>>,

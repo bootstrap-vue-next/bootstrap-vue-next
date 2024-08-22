@@ -1,5 +1,5 @@
 import {computed, type MaybeRefOrGetter, toValue} from 'vue'
-import type {AlignmentJustifyContent} from '../types'
+import type {AlignmentJustifyContent} from '../types/Alignment'
 
 export const useAlignment = (align: MaybeRefOrGetter<AlignmentJustifyContent | undefined>) =>
   computed(() => {

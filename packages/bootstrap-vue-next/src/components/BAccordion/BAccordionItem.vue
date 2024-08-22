@@ -49,10 +49,12 @@
 
 <script setup lang="ts">
 import {inject, onMounted, useAttrs, watch} from 'vue'
-import BCollapse from '../BCollapse.vue'
-import {accordionInjectionKey, BvTriggerableEvent} from '../../utils'
-import {useDefaults, useId} from '../../composables'
-import type {BAccordionItemProps} from '../../types'
+import BCollapse from '../BCollapse/BCollapse.vue'
+import {accordionInjectionKey} from '../../utils/keys'
+import {useDefaults} from '../../composables/useDefaults'
+import {useId} from '../../composables/useId'
+import type {BAccordionItemProps} from '../../types/ComponentProps'
+import type {BvTriggerableEvent} from '../../utils'
 
 defineOptions({
   inheritAttrs: false,

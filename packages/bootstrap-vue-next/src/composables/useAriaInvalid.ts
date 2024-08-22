@@ -1,4 +1,4 @@
-import type {AriaInvalid} from '../types'
+import type {AriaInvalid} from '../types/AriaInvalid'
 import {computed, type MaybeRefOrGetter, toValue} from 'vue'
 
 export const useAriaInvalid = (

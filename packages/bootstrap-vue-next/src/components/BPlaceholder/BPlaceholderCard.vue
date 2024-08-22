@@ -49,9 +49,9 @@ import BCard from '../BCard/BCard.vue'
 import BCardImg from '../BCard/BCardImg.vue'
 import BPlaceholder from './BPlaceholder.vue'
 import BPlaceholderButton from './BPlaceholderButton.vue'
-import type {BPlaceholderCardProps} from '../../types'
+import type {BPlaceholderCardProps} from '../../types/ComponentProps'
 import {computed, toRef} from 'vue'
-import {useDefaults} from '../../composables'
+import {useDefaults} from '../../composables/useDefaults'
 
 const _props = withDefaults(defineProps<BPlaceholderCardProps>(), {
   animation: undefined,

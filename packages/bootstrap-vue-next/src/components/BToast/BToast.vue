@@ -62,14 +62,17 @@
 
 <script setup lang="ts">
 import {computed, onBeforeUnmount, ref, toRef, watch, watchEffect} from 'vue'
-import {useBLinkHelper, useColorVariantClasses, useCountdown, useDefaults} from '../../composables'
-import type {BToastProps} from '../../types'
-import BTransition from '../BTransition/BTransition.vue'
+import {useBLinkHelper} from '../../composables/useBLinkHelper'
+import type {BToastProps} from '../../types/ComponentProps'
+import BTransition from '../BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BLink from '../BLink/BLink.vue'
 import {useElementHover, useToNumber} from '@vueuse/core'
 import BProgress from '../BProgress/BProgress.vue'
 import {BvTriggerableEvent} from '../../utils'
+import {useCountdown} from '../../composables/useCountdown'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import {useDefaults} from '../../composables/useDefaults'
 
 const _props = withDefaults(defineProps<BToastProps>(), {
   bgVariant: null,

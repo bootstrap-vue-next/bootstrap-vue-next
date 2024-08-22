@@ -16,10 +16,13 @@
 
 <script setup lang="ts">
 import {computed, nextTick, onMounted, provide, readonly, ref, toRef, watch} from 'vue'
-import {useDefaults, useId} from '../composables'
+import {useDefaults} from '../../composables/useDefaults'
+import {useId} from '../../composables/useId'
 import {useEventListener} from '@vueuse/core'
-import {BvTriggerableEvent, collapseInjectionKey, getTransitionDelay} from '../utils'
-import type {BCollapseProps} from '../types'
+import {collapseInjectionKey} from '../../utils/keys'
+import type {BCollapseProps} from '../../types/ComponentProps'
+import {BvTriggerableEvent} from '../../utils'
+import {getTransitionDelay} from '../../utils/dom'
 
 defineOptions({
   inheritAttrs: false,

@@ -47,11 +47,11 @@
 
 <script setup lang="ts">
 import {toRef} from 'vue'
-import type {BPlaceholderTableProps} from '../../types'
+import type {BPlaceholderTableProps} from '../../types/ComponentProps'
 import BTableSimple from '../BTable/BTableSimple.vue'
 import BPlaceholder from './BPlaceholder.vue'
 import {useToNumber} from '@vueuse/core'
-import {useDefaults} from '../../composables'
+import {useDefaults} from '../../composables/useDefaults'
 
 const _props = withDefaults(defineProps<BPlaceholderTableProps>(), {
   animation: undefined,

@@ -5,8 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import {useDefaults} from '../../composables'
-import type {BFormRowProps} from '../../types'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BFormRowProps} from '../../types/ComponentProps'
 
 const _props = withDefaults(defineProps<BFormRowProps>(), {
   tag: 'div',

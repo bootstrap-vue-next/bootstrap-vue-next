@@ -28,10 +28,10 @@
 </template>
 
 <script setup lang="ts">
-import {useDefaults} from '../../composables'
+import {useDefaults} from '../../composables/useDefaults'
 import {useLinkClasses} from '../../composables/useLinkClasses'
-import type {BLinkProps} from '../../types'
-import {collapseInjectionKey, navbarInjectionKey} from '../../utils'
+import type {BLinkProps} from '../../types/ComponentProps'
+import {collapseInjectionKey, navbarInjectionKey} from '../../utils/keys'
 import {computed, getCurrentInstance, inject, useAttrs} from 'vue'
 
 defineSlots<{

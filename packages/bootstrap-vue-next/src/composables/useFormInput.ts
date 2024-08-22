@@ -1,7 +1,7 @@
-import type {Numberish} from '../types'
+import type {Numberish} from '../types/CommonTypes'
 import {nextTick, onActivated, onMounted, ref, type Ref} from 'vue'
-import useAriaInvalid from './useAriaInvalid'
-import useId from './useId'
+import {useAriaInvalid} from './useAriaInvalid'
+import {useId} from './useId'
 import {useDebounceFn, useFocus, useToNumber} from '@vueuse/core'
 import type {CommonInputProps} from '../types/FormCommonInputProps'
 

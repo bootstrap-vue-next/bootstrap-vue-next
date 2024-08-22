@@ -26,9 +26,12 @@
 
 <script setup lang="ts">
 import {computed, ref} from 'vue'
-import {useDefaults, useFormInput, useStateClass} from '../../composables'
-import {normalizeInput} from '../../utils'
-import type {BFormInputProps, Numberish} from '../../types'
+import {useDefaults} from '../../composables/useDefaults'
+import {normalizeInput} from '../../utils/normalizeInput'
+import type {BFormInputProps} from '../../types/ComponentProps'
+import type {Numberish} from '../../types/CommonTypes'
+import {useFormInput} from '../../composables/useFormInput'
+import {useStateClass} from '../../composables/useStateClass'
 
 const _props = withDefaults(defineProps<BFormInputProps>(), {
   max: undefined,

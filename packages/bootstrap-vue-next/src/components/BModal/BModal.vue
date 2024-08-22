@@ -110,18 +110,17 @@
 import {onKeyStroke, useEventListener, useFocus} from '@vueuse/core'
 import {useActivatedFocusTrap} from '../../composables/useActivatedFocusTrap'
 import {computed, type CSSProperties, ref, toRef, watch} from 'vue'
-import {
-  useColorVariantClasses,
-  useDefaults,
-  useFadeTransition,
-  useId,
-  useModalManager,
-  useSafeScrollLock,
-} from '../../composables'
-import type {BModalProps} from '../../types'
-import {BvTriggerableEvent, isEmptySlot} from '../../utils'
+import type {BModalProps} from '../../types/ComponentProps'
+import {BvTriggerableEvent} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
+import {useDefaults} from '../../composables/useDefaults'
+import {useId} from '../../composables/useId'
+import {useFadeTransition} from '../../composables/useTransitions'
+import {useSafeScrollLock} from '../../composables/useSafeScrollLock'
+import {isEmptySlot} from '../../utils/dom'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import {useModalManager} from '../../composables/useModalManager'
 
 defineOptions({
   inheritAttrs: false,

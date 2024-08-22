@@ -35,11 +35,12 @@
 
 <script setup lang="ts">
 import {computed, toRef} from 'vue'
-import type {BOverlayProps} from '../../types'
-import {useDefaults, useRadiusElementClasses} from '../../composables'
-import BTransition from '../BTransition/BTransition.vue'
-import BSpinner from '../BSpinner.vue'
+import type {BOverlayProps} from '../../types/ComponentProps'
+import {useDefaults} from '../../composables/useDefaults'
+import BTransition from '../BTransition.vue'
+import BSpinner from '../BSpinner/BSpinner.vue'
 import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
+import {useRadiusElementClasses} from '../../composables/useRadiusElementClasses'
 
 const _props = withDefaults(defineProps<BOverlayProps>(), {
   blur: '2px',

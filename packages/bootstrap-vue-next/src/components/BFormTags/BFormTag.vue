@@ -24,8 +24,9 @@
 
 <script setup lang="ts">
 import {computed, toRef} from 'vue'
-import {useDefaults, useId} from '../../composables'
-import type {BFormTagProps} from '../../types'
+import {useDefaults} from '../../composables/useDefaults'
+import {useId} from '../../composables/useId'
+import type {BFormTagProps} from '../../types/ComponentProps'
 import BCloseButton from '../BButton/BCloseButton.vue'
 
 const _props = withDefaults(defineProps<BFormTagProps>(), {

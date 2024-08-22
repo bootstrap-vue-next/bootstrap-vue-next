@@ -25,10 +25,14 @@
 <script setup lang="ts">
 import {useFocus} from '@vueuse/core'
 import {computed, inject, ref, toRef} from 'vue'
-import {getClasses, getInputClasses, getLabelClasses, useDefaults, useId} from '../../composables'
-import type {BFormRadioProps, RadioValue} from '../../types'
-import {isEmptySlot, radioGroupKey} from '../../utils'
+import {getClasses, getInputClasses, getLabelClasses} from '../../composables/useFormCheck'
+import type {BFormRadioProps} from '../../types/ComponentProps'
+import {isEmptySlot} from '../../utils/dom'
 import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
+import {useDefaults} from '../../composables/useDefaults'
+import type {RadioValue} from '../../types/RadioTypes'
+import {useId} from '../../composables/useId'
+import {radioGroupKey} from '../../utils/keys'
 
 defineOptions({
   inheritAttrs: false,

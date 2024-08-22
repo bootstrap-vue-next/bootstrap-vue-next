@@ -14,11 +14,11 @@
 </template>
 
 <script setup lang="ts">
-import {pick} from '../../utils'
+import {pick} from '../../utils/object'
 import {computed, toRef} from 'vue'
 import BLink from '../BLink/BLink.vue'
-import type {BBreadcrumbItemProps} from '../../types'
-import {useDefaults} from '../../composables'
+import type {BBreadcrumbItemProps} from '../../types/ComponentProps'
+import {useDefaults} from '../../composables/useDefaults'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

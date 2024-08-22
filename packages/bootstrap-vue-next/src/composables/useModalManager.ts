@@ -7,7 +7,7 @@ import {
   type Ref,
   watch,
 } from 'vue'
-import {modalManagerPluginKey} from '../utils'
+import {modalManagerPluginKey} from '../utils/keys'
 
 const modalOpenClassName = 'modal-open'
 

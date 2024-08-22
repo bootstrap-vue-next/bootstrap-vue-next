@@ -1,6 +1,6 @@
 import {computed, type MaybeRefOrGetter, toValue} from 'vue'
-import type {Numberish} from '../types'
-import {RX_NUMBER} from '../constants/regex'
+import type {Numberish} from '../types/CommonTypes'
+import {RX_NUMBER} from '../utils/constants'
 
 export const useNumberishToStyle = (
   el: MaybeRefOrGetter<Numberish | undefined>,

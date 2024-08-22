@@ -5,8 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import {useDefaults} from '../../composables'
-import type {BCardHeadFootProps} from '../../types'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BCardHeadFootProps} from '../../types/ComponentProps'
 import BCardHeadFoot from './BCardHeadFoot.vue'
 
 const _props = withDefaults(defineProps<BCardHeadFootProps>(), {

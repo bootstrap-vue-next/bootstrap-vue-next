@@ -218,9 +218,15 @@
 
 <script setup lang="ts" generic="T">
 import {computed, ref, toRef, watch} from 'vue'
-import type {BTableLiteProps, TableField, TableItem, TableRowThead, TableRowType} from '../../types'
-import {isTableField, isTableItem} from '../../types/TableTypes'
-import {filterEvent, formatItem, get, getTableFieldHeadLabel, startCase} from '../../utils'
+import type {BTableLiteProps} from '../../types/ComponentProps'
+import {
+  isTableField,
+  isTableItem,
+  type TableField,
+  type TableItem,
+  type TableRowThead,
+  type TableRowType,
+} from '../../types/TableTypes'
 import BTableSimple from './BTableSimple.vue'
 import BTbody from './BTbody.vue'
 import BTd from './BTd.vue'
@@ -228,7 +234,12 @@ import BTfoot from './BTfoot.vue'
 import BTh from './BTh.vue'
 import BThead from './BThead.vue'
 import BTr from './BTr.vue'
-import {useDefaults} from '../../composables'
+import {useDefaults} from '../../composables/useDefaults'
+import {get} from '../../utils/object'
+import {getTableFieldHeadLabel} from '../../utils/getTableFieldHeadLabel'
+import {formatItem} from '../../utils/formatItem'
+import {filterEvent} from '../../utils/filterEvent'
+import {startCase} from '../../utils/stringUtils'
 
 const _props = withDefaults(defineProps<BTableLiteProps<T>>(), {
   caption: undefined,

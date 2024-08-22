@@ -36,10 +36,11 @@
 <script setup lang="ts">
 import {useFocus} from '@vueuse/core'
 import {computed, ref, toRef, watch} from 'vue'
-import type {BFormFileProps} from '../../types'
-import {useDefaults, useId, useStateClass} from '../../composables'
-import {isEmptySlot} from '../../utils'
-
+import type {BFormFileProps} from '../../types/ComponentProps'
+import {useDefaults} from '../../composables/useDefaults'
+import {useId} from '../../composables/useId'
+import {useStateClass} from '../../composables/useStateClass'
+import {isEmptySlot} from '../../utils/dom'
 defineOptions({
   inheritAttrs: false,
 })

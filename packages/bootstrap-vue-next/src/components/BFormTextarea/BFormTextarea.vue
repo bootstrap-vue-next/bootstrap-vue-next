@@ -23,10 +23,13 @@
 </template>
 
 <script setup lang="ts">
-import type {BFormTextareaProps, Numberish} from '../../types'
+import type {BFormTextareaProps} from '../../types/ComponentProps'
 import {computed, type CSSProperties} from 'vue'
-import {useDefaults, useFormInput, useStateClass} from '../../composables'
-import {normalizeInput} from '../../utils'
+import {useDefaults} from '../../composables/useDefaults'
+import {normalizeInput} from '../../utils/normalizeInput'
+import type {Numberish} from '../../types/CommonTypes'
+import {useFormInput} from '../../composables/useFormInput'
+import {useStateClass} from '../../composables/useStateClass'
 
 const _props = withDefaults(defineProps<BFormTextareaProps>(), {
   // CommonInputProps

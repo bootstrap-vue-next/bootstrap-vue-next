@@ -15,10 +15,13 @@
 </template>
 
 <script setup lang="ts" generic="T">
-import type {BFormDatalistProps, SelectOption} from '../../types'
+import type {BFormDatalistProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
 import BFormSelectOption from '../BFormSelect/BFormSelectOption.vue'
-import {useDefaults, useFormSelect, useId} from '../../composables'
+import {useDefaults} from '../../composables/useDefaults'
+import {useId} from '../../composables/useId'
+import {useFormSelect} from '../../composables/useFormSelect'
+import type {SelectOption} from '../../types/SelectTypes'
 
 const _props = withDefaults(defineProps<BFormDatalistProps>(), {
   disabled: false,

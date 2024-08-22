@@ -32,10 +32,14 @@
 <script setup lang="ts">
 import {useFocus} from '@vueuse/core'
 import {computed, inject, ref, toRef, useAttrs} from 'vue'
-import {getClasses, getInputClasses, getLabelClasses, useDefaults, useId} from '../../composables'
-import type {BFormCheckboxProps, CheckboxValue} from '../../types'
-import {checkboxGroupKey, isEmptySlot} from '../../utils'
+import {getClasses, getInputClasses, getLabelClasses} from '../../composables/useFormCheck'
+import type {BFormCheckboxProps} from '../../types/ComponentProps'
+import {checkboxGroupKey} from '../../utils/keys'
 import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
+import {isEmptySlot} from '../../utils/dom'
+import {useDefaults} from '../../composables/useDefaults'
+import type {CheckboxValue} from '../../types/CheckboxTypes'
+import {useId} from '../../composables/useId'
 
 defineOptions({
   inheritAttrs: false,

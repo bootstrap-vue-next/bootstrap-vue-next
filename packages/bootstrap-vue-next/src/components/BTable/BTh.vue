@@ -14,8 +14,8 @@
 </template>
 
 <script setup lang="ts">
-import {useDefaults} from '../../composables'
-import type {BThProps} from '../../types'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BThProps} from '../../types/ComponentProps'
 import {computed, toRef} from 'vue'
 
 const _props = withDefaults(defineProps<BThProps>(), {

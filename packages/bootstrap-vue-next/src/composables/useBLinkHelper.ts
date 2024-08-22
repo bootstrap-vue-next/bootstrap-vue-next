@@ -1,5 +1,6 @@
 import {computed, type MaybeRefOrGetter, toRef} from 'vue'
-import {isLink, pick} from '../utils'
+import {isLink} from '../utils/isLink'
+import {pick} from '../utils/object'
 
 export const useBLinkHelper = <
   T extends Record<string, unknown>,

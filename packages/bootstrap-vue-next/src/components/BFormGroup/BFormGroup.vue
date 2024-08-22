@@ -1,14 +1,19 @@
 <script lang="ts">
-import {useAriaInvalid, useId, useStateClass} from '../../composables'
-import {RX_SPACE_SPLIT} from '../../constants/regex'
-import {attemptFocus, IS_BROWSER, isVisible, normalizeSlot, suffixPropName} from '../../utils'
+import {useAriaInvalid} from '../../composables/useAriaInvalid'
+import {RX_SPACE_SPLIT} from '../../utils/constants'
+import {attemptFocus, isVisible} from '../../utils/dom'
 import {computed, defineComponent, h, nextTick, onMounted, type PropType, ref, watch} from 'vue'
-import BCol from '../BCol.vue'
+import BCol from '../BContainer/BCol.vue'
 import BFormInvalidFeedback from '../BForm/BFormInvalidFeedback.vue'
 import BFormRow from '../BForm/BFormRow.vue'
 import BFormText from '../BForm/BFormText.vue'
 import BFormValidFeedback from '../BForm/BFormValidFeedback.vue'
-import type {AriaInvalid} from '../../types'
+import type {AriaInvalid} from '../../types/AriaInvalid'
+import {suffixPropName} from '../../utils/props'
+import {IS_BROWSER} from '../../utils/event'
+import {useStateClass} from '../../composables/useStateClass'
+import {useId} from '../../composables/useId'
+import {normalizeSlot} from '../../utils/normalizeSlot'
 
 const INPUTS = ['input', 'select', 'textarea']
 // Selector for finding first input in the form group

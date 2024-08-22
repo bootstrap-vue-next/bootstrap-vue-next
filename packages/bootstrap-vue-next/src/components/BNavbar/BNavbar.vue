@@ -9,9 +9,10 @@
 
 <script setup lang="ts">
 import {computed, provide, toRef} from 'vue'
-import type {BNavbarProps} from '../../types'
-import {useContainerClasses, useDefaults} from '../../composables'
-import {navbarInjectionKey} from '../../utils'
+import type {BNavbarProps} from '../../types/ComponentProps'
+import {useDefaults} from '../../composables/useDefaults'
+import {useContainerClasses} from '../../composables/useContainerClasses'
+import {navbarInjectionKey} from '../../utils/keys'
 
 const _props = withDefaults(defineProps<BNavbarProps>(), {
   autoClose: true,

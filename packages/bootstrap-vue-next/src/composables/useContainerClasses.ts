@@ -1,4 +1,4 @@
-import type {Breakpoint} from '../types'
+import type {Breakpoint} from '../types/BreakpointProps'
 import {computed, type MaybeRefOrGetter, toValue} from 'vue'
 
 export const useContainerClasses = (value: MaybeRefOrGetter<boolean | Breakpoint | 'fluid'>) =>

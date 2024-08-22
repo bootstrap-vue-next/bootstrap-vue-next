@@ -73,11 +73,14 @@ import {
 } from '@vueuse/core'
 import {useActivatedFocusTrap} from '../../composables/useActivatedFocusTrap'
 import {computed, nextTick, ref, toRef, watch} from 'vue'
-import {useDefaults, useId, useSafeScrollLock} from '../../composables'
-import type {BOffcanvasProps} from '../../types'
-import {BvTriggerableEvent, isEmptySlot} from '../../utils'
+import {useDefaults} from '../../composables/useDefaults'
+import {useId} from '../../composables/useId'
+import type {BOffcanvasProps} from '../../types/ComponentProps'
+import {BvTriggerableEvent} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
+import {useSafeScrollLock} from '../../composables/useSafeScrollLock'
+import {isEmptySlot} from '../../utils/dom'
 
 // TODO once the responsive stuff may be implemented correctly,
 // What needs to occur is a fixing of the "body scrolling".

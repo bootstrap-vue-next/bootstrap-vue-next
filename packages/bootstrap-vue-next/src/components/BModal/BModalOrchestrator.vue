@@ -34,9 +34,10 @@
 
 <script setup lang="ts">
 import type {BvTriggerableEvent} from '../../utils'
-import {useDefaults, useModalController} from '../../composables'
-import type {BModalOrchestratorProps} from '../../types'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BModalOrchestratorProps} from '../../types/ComponentProps'
 import BModal from './BModal.vue'
+import {useModalController} from '../../composables/useModalController'
 
 const _props = withDefaults(defineProps<BModalOrchestratorProps>(), {
   teleportDisabled: false,

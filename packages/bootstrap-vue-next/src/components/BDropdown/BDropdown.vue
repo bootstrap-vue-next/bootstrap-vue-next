@@ -73,12 +73,14 @@ import {
 } from '@floating-ui/vue'
 import {onClickOutside, onKeyStroke, useToNumber} from '@vueuse/core'
 import {computed, type CSSProperties, inject, nextTick, provide, ref, toRef, watch} from 'vue'
-import {useDefaults, useId} from '../../composables'
-import type {BDropdownProps} from '../../types'
-import {BvTriggerableEvent, dropdownInjectionKey, inputGroupKey} from '../../utils'
+import {useDefaults} from '../../composables/useDefaults'
+import {useId} from '../../composables/useId'
+import type {BDropdownProps} from '../../types/ComponentProps'
+import {BvTriggerableEvent} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
 import {isBoundary, isRootBoundary, resolveFloatingPlacement} from '../../utils/floatingUi'
+import {dropdownInjectionKey, inputGroupKey} from '../../utils/keys'
 
 const _props = withDefaults(defineProps<BDropdownProps>(), {
   ariaLabel: undefined,

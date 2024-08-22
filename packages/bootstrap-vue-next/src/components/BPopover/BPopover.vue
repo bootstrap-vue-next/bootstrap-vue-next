@@ -87,11 +87,15 @@ import {
   watch,
   watchEffect,
 } from 'vue'
-import {useDefaults, useId} from '../../composables'
-import type {BPopoverProps} from '../../types'
-import {BvTriggerableEvent, getElement, getTransitionDelay, IS_BROWSER} from '../../utils'
+import {useDefaults} from '../../composables/useDefaults'
+import {useId} from '../../composables/useId'
+import type {BPopoverProps} from '../../types/ComponentProps'
+import {BvTriggerableEvent} from '../../utils'
 import {DefaultAllowlist, sanitizeHtml} from '../../utils/sanitizer'
 import {isBoundary, isRootBoundary, resolveBootstrapPlacement} from '../../utils/floatingUi'
+import {getTransitionDelay} from '../../utils/dom'
+import {getElement} from '../../utils/getElement'
+import {IS_BROWSER} from '../../utils/event'
 
 defineOptions({
   inheritAttrs: false,

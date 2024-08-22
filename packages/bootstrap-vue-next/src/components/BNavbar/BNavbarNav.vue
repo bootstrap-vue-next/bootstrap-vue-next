@@ -5,9 +5,10 @@
 </template>
 
 <script setup lang="ts">
-import type {BNavbarNavProps} from '../../types'
+import type {BNavbarNavProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
-import {useAlignment, useDefaults} from '../../composables'
+import {useAlignment} from '../../composables/useAlignment'
+import {useDefaults} from '../../composables/useDefaults'
 
 const _props = withDefaults(defineProps<BNavbarNavProps>(), {
   align: undefined,

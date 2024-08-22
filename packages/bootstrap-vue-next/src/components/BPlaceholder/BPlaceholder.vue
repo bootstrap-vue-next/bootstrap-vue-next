@@ -12,8 +12,8 @@
 
 <script setup lang="ts">
 import {computed, type CSSProperties, toRef} from 'vue'
-import type {BPlaceholderProps} from '../../types'
-import {useDefaults} from '../../composables'
+import type {BPlaceholderProps} from '../../types/ComponentProps'
+import {useDefaults} from '../../composables/useDefaults'
 
 defineOptions({
   inheritAttrs: false,

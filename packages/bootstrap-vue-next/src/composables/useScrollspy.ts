@@ -12,7 +12,7 @@ import {
   toRef,
   watch,
 } from 'vue'
-import {getElement} from '../utils'
+import {getElement} from '../utils/getElement'
 
 type ScrollspyList = {
   id: string | null

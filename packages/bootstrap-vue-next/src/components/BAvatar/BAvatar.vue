@@ -47,17 +47,16 @@
 </template>
 
 <script setup lang="ts">
-import {avatarGroupInjectionKey, isEmptySlot} from '../../utils'
+import {avatarGroupInjectionKey} from '../../utils/keys'
 import {computed, type CSSProperties, inject, type StyleValue, toRef} from 'vue'
-import type {BAvatarProps} from '../../types'
-import {
-  useBLinkHelper,
-  useColorVariantClasses,
-  useNumberishToStyle,
-  useRadiusElementClasses,
-} from '../../composables'
+import type {BAvatarProps} from '../../types/ComponentProps'
 import BLink from '../BLink/BLink.vue'
 import BBadge from '../BBadge/BBadge.vue'
+import {useBLinkHelper} from '../../composables/useBLinkHelper'
+import {isEmptySlot} from '../../utils/dom'
+import {useNumberishToStyle} from '../../composables/useNumberishToStyle'
+import {useRadiusElementClasses} from '../../composables/useRadiusElementClasses'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 
 const props = withDefaults(defineProps<BAvatarProps>(), {
   alt: 'avatar',

@@ -13,9 +13,9 @@
 
 <script setup lang="ts">
 import {computed, toRef} from 'vue'
-import type {BSpinnerProps} from '../types'
-import {isEmptySlot} from '../utils'
-import {useDefaults} from '../composables'
+import type {BSpinnerProps} from '../../types/ComponentProps'
+import {isEmptySlot} from '../../utils/dom'
+import {useDefaults} from '../../composables/useDefaults'
 
 const _props = withDefaults(defineProps<BSpinnerProps>(), {
   label: undefined,

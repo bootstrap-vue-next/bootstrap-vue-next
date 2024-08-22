@@ -71,7 +71,7 @@
 
 <script setup lang="ts">
 import {computed, ref, toRef} from 'vue'
-import type {BFormSpinbuttonProps, ButtonType} from '../../types'
+import type {BFormSpinbuttonProps} from '../../types/ComponentProps'
 import {eventOnOff} from '../../utils/event'
 import {
   CODE_DOWN,
@@ -80,9 +80,12 @@ import {
   CODE_PAGEDOWN,
   CODE_PAGEUP,
   CODE_UP,
-} from '../../constants/codes'
+} from '../../utils/constants'
 import {onKeyStroke, useFocus, useToNumber} from '@vueuse/core'
-import {useDefaults, useId, useRtl} from '../../composables'
+import {useDefaults} from '../../composables/useDefaults'
+import {useId} from '../../composables/useId'
+import {useRtl} from '../../composables/useRtl'
+import type {ButtonType} from '../../types/ButtonType'
 
 const KEY_CODES = [CODE_UP, CODE_DOWN, CODE_HOME, CODE_END, CODE_PAGEUP, CODE_PAGEDOWN]
 

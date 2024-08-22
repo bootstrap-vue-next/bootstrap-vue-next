@@ -5,8 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import {useDefaults} from '../../composables'
-import type {BCardGroupProps} from '../../types'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BCardGroupProps} from '../../types/ComponentProps'
 import {toRef} from 'vue'
 
 const _props = withDefaults(defineProps<BCardGroupProps>(), {

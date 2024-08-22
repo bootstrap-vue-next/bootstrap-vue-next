@@ -47,9 +47,11 @@
 <script setup lang="ts">
 import {BvEvent} from '../../utils'
 import {computed, toRef, watch} from 'vue'
-import type {BPaginationProps, ClassValue} from '../../types'
-import {useAlignment, useDefaults} from '../../composables'
+import type {BPaginationProps} from '../../types/ComponentProps'
+import {useAlignment} from '../../composables/useAlignment'
 import {createReusableTemplate, useToNumber} from '@vueuse/core'
+import {useDefaults} from '../../composables/useDefaults'
+import type {ClassValue} from '../../types/AnyValuedAttributes'
 
 // Threshold of limit size when we start/stop showing ellipsis
 const ELLIPSIS_THRESHOLD = 3

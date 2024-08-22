@@ -8,10 +8,11 @@
 
 <script setup lang="ts">
 import {computed, provide, type StyleValue, toRef} from 'vue'
-import type {BAvatarGroupProps} from '../../types'
-import {avatarGroupInjectionKey} from '../../utils'
-import {useDefaults, useNumberishToStyle} from '../../composables'
+import type {BAvatarGroupProps} from '../../types/ComponentProps'
+import {avatarGroupInjectionKey} from '../../utils/keys'
+import {useDefaults} from '../../composables/useDefaults'
 import {useToNumber} from '@vueuse/core'
+import {useNumberishToStyle} from '../../composables/useNumberishToStyle'
 
 const _props = withDefaults(defineProps<BAvatarGroupProps>(), {
   overlap: 0.3,

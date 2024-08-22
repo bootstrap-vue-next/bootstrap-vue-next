@@ -1,7 +1,9 @@
-import type {AriaInvalid, ButtonVariant, Size} from '../types'
+import type {AriaInvalid} from '../types/AriaInvalid'
 import {computed, type MaybeRefOrGetter, toRef, toValue} from 'vue'
-import useAriaInvalid from './useAriaInvalid'
-import useStateClass from './useStateClass'
+import {useAriaInvalid} from './useAriaInvalid'
+import {useStateClass} from './useStateClass'
+import type {Size} from '../types/Size'
+import type {ButtonVariant} from '../types/ColorTypes'
 
 interface ClassesItemsInput {
   plain?: boolean

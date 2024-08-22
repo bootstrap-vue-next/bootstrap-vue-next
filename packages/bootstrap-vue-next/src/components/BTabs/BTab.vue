@@ -15,9 +15,11 @@
 
 <script setup lang="ts">
 import {computed, inject, onMounted, onUnmounted, ref, toRef, useAttrs, watch} from 'vue'
-import {useDefaults, useId} from '../../composables'
-import type {BTabProps, TabType} from '../../types'
-import {tabsInjectionKey} from '../../utils'
+import {useId} from '../../composables/useId'
+import {useDefaults} from '../../composables/useDefaults'
+import type {TabType} from '../../types/Tab'
+import type {BTabProps} from '../../types/ComponentProps'
+import {tabsInjectionKey} from '../../utils/keys'
 
 const _props = withDefaults(defineProps<BTabProps>(), {
   buttonId: undefined,

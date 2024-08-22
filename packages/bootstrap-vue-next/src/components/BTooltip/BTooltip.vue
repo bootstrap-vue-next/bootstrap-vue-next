@@ -9,8 +9,8 @@
 <script setup lang="ts">
 import {computed, ref} from 'vue'
 import BPopover from '../BPopover/BPopover.vue'
-import type {BPopoverProps, BTooltipProps} from '../../types'
-import {useDefaults} from '../../composables'
+import type {BPopoverProps, BTooltipProps} from '../../types/ComponentProps'
+import {useDefaults} from '../../composables/useDefaults'
 
 const _props = withDefaults(defineProps<BTooltipProps>(), {
   click: undefined,

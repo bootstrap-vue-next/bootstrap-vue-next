@@ -11,9 +11,11 @@
 </template>
 
 <script setup lang="ts">
-import {useBLinkHelper, useColorVariantClasses, useDefaults} from '../../composables'
+import {useBLinkHelper} from '../../composables/useBLinkHelper'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import {useDefaults} from '../../composables/useDefaults'
 import {computed, toRef} from 'vue'
-import type {BBadgeProps} from '../../types'
+import type {BBadgeProps} from '../../types/ComponentProps'
 import BLink from '../BLink/BLink.vue'
 import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
 

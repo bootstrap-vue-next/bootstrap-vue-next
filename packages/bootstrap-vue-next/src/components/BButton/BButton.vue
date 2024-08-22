@@ -38,12 +38,14 @@
 
 <script setup lang="ts">
 import {computed, ref, toRef} from 'vue'
-import BSpinner from '../BSpinner.vue'
-import {useBLinkHelper, useDefaults} from '../../composables'
-import type {BButtonProps, ColorVariant} from '../../types'
+import BSpinner from '../BSpinner/BSpinner.vue'
+import {useBLinkHelper} from '../../composables/useBLinkHelper'
 import BLink from '../BLink/BLink.vue'
 import {useLinkClasses} from '../../composables/useLinkClasses'
 import {onKeyStroke} from '@vueuse/core'
+import type {BButtonProps} from '../../types/ComponentProps'
+import {useDefaults} from '../../composables/useDefaults'
+import type {ColorVariant} from '../../types/ColorTypes'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

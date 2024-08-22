@@ -52,12 +52,16 @@
 </template>
 
 <script setup lang="ts">
-import {BvCarouselEvent, carouselInjectionKey, getSlotElements} from '../../utils'
+import {BvCarouselEvent} from '../../utils'
 import {computed, onMounted, provide, ref, toRef, watch} from 'vue'
-import {useDefaults, useId} from '../../composables'
-import type {BCarouselProps, Numberish} from '../../types'
+import {useId} from '../../composables/useId'
+import type {BCarouselProps} from '../../types/ComponentProps'
 import {onKeyStroke, useElementHover, useIntervalFn, useSwipe, useToNumber} from '@vueuse/core'
 import type BCarouselSlide from './BCarouselSlide.vue'
+import {useDefaults} from '../../composables/useDefaults'
+import type {Numberish} from '../../types/CommonTypes'
+import {getSlotElements} from '../../utils/getSlotElements'
+import {carouselInjectionKey} from '../../utils/keys'
 
 const _props = withDefaults(defineProps<BCarouselProps>(), {
   background: undefined,

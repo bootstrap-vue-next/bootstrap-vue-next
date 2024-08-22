@@ -7,8 +7,9 @@
 <script setup lang="ts">
 import {toRef} from 'vue'
 import BLink from '../BLink/BLink.vue'
-import type {BNavbarBrandProps} from '../../types'
-import {useBLinkHelper, useDefaults} from '../../composables'
+import type {BNavbarBrandProps} from '../../types/ComponentProps'
+import {useBLinkHelper} from '../../composables/useBLinkHelper'
+import {useDefaults} from '../../composables/useDefaults'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

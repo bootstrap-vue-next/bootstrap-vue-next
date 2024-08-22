@@ -24,8 +24,8 @@
 </template>
 
 <script setup lang="ts">
-import {useDefaults} from '../../composables'
-import type {BDropdownGroupProps} from '../../types'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BDropdownGroupProps} from '../../types/ComponentProps'
 import {computed, toRef} from 'vue'
 
 defineOptions({

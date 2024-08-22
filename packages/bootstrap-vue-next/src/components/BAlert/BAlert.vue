@@ -23,13 +23,14 @@
 </template>
 
 <script setup lang="ts">
-import BTransition from '../BTransition/BTransition.vue'
+import BTransition from '../BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BButton from '../BButton/BButton.vue'
-import type {BAlertProps} from '../../types'
+import type {BAlertProps} from '../../types/ComponentProps'
 import {computed, onBeforeUnmount, ref, toRef, watch, watchEffect} from 'vue'
-import {useCountdown, useDefaults} from '../../composables'
-import {isEmptySlot} from '../../utils'
+import {useCountdown} from '../../composables/useCountdown'
+import {useDefaults} from '../../composables/useDefaults'
+import {isEmptySlot} from '../../utils/dom'
 import {useElementHover, useToNumber} from '@vueuse/core'
 
 const _props = withDefaults(defineProps<BAlertProps>(), {

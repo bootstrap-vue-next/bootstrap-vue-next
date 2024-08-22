@@ -25,8 +25,8 @@
 </template>
 
 <script setup lang="ts">
-import {useDefaults} from '../../composables'
-import type {BInputGroupProps} from '../../types'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BInputGroupProps} from '../../types/ComponentProps'
 import {computed, provide, toRef} from 'vue'
 import {inputGroupKey} from '../../utils/keys'
 

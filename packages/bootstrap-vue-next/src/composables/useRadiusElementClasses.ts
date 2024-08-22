@@ -1,5 +1,5 @@
 import {computed, type MaybeRefOrGetter, toValue} from 'vue'
-import type {RadiusElement, RadiusElementExtendables} from '../types'
+import type {RadiusElement, RadiusElementExtendables} from '../types/RadiusElement'
 
 export const useRadiusElementClasses = (obj: MaybeRefOrGetter<RadiusElementExtendables>) => {
   const resolveRadiusElement = (

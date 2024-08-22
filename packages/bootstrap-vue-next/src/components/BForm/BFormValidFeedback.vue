@@ -15,8 +15,8 @@
 
 <script setup lang="ts">
 import {computed, toRef} from 'vue'
-import type {BFormFeedbackSharedProps} from '../../types'
-import {useDefaults} from '../../composables'
+import type {BFormFeedbackSharedProps} from '../../types/ComponentProps'
+import {useDefaults} from '../../composables/useDefaults'
 
 const _props = withDefaults(defineProps<BFormFeedbackSharedProps>(), {
   ariaLive: undefined,

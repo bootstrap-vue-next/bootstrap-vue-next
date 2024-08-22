@@ -23,9 +23,10 @@
 <script setup lang="ts">
 import BLink from '../BLink/BLink.vue'
 import {computed, inject, toRef, useAttrs} from 'vue'
-import type {BDropdownItemProps} from '../../types'
-import {useBLinkHelper, useDefaults} from '../../composables'
-import {collapseInjectionKey, dropdownInjectionKey, navbarInjectionKey} from '../../utils'
+import type {BDropdownItemProps} from '../../types/ComponentProps'
+import {useBLinkHelper} from '../../composables/useBLinkHelper'
+import {collapseInjectionKey, dropdownInjectionKey, navbarInjectionKey} from '../../utils/keys'
+import {useDefaults} from '../../composables/useDefaults'
 
 defineOptions({
   inheritAttrs: false,

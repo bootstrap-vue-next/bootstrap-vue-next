@@ -60,10 +60,11 @@
 </template>
 
 <script setup lang="ts">
-import type {BCardProps} from '../../types'
-import {isEmptySlot} from '../../utils'
+import type {BCardProps} from '../../types/ComponentProps'
+import {isEmptySlot} from '../../utils/dom'
 import {computed, toRef} from 'vue'
-import {useColorVariantClasses, useDefaults} from '../../composables'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import {useDefaults} from '../../composables/useDefaults'
 import BCardImg from './BCardImg.vue'
 import BCardHeader from './BCardHeader.vue'
 import BCardBody from './BCardBody.vue'

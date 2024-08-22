@@ -124,10 +124,14 @@
 <script setup lang="ts">
 import {onKeyStroke, syncRef, useFocus, useToNumber} from '@vueuse/core'
 import {computed, ref, toRef} from 'vue'
-import {useDefaults, useId, useStateClass} from '../../composables'
-import type {BFormTagsProps, ClassValue, ColorVariant} from '../../types'
-import {escapeRegExpChars} from '../../utils'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BFormTagsProps} from '../../types/ComponentProps'
+import {escapeRegExpChars} from '../../utils/stringUtils'
 import BFormTag from './BFormTag.vue'
+import type {ClassValue} from '../../types/AnyValuedAttributes'
+import type {ColorVariant} from '../../types/ColorTypes'
+import {useId} from '../../composables/useId'
+import {useStateClass} from '../../composables/useStateClass'
 
 const _props = withDefaults(defineProps<BFormTagsProps>(), {
   addButtonText: 'Add',

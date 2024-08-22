@@ -12,10 +12,11 @@
 </template>
 
 <script setup lang="ts">
-import type {BImgProps} from '../types'
-import {useDefaults, useRadiusElementClasses} from '../composables'
+import type {BImgProps} from '../../types/ComponentProps'
+import {useDefaults} from '../../composables/useDefaults'
 import {computed, toRef} from 'vue'
 import {useToNumber} from '@vueuse/core'
+import {useRadiusElementClasses} from '../../composables/useRadiusElementClasses'
 
 const _props = withDefaults(defineProps<BImgProps>(), {
   blank: false,

@@ -1,5 +1,10 @@
 import {computed, type MaybeRefOrGetter, toValue} from 'vue'
-import type {LinkIconProps, LinkOpacityProps, LinkUnderlineProps, LinkVariantProps} from '../types'
+import type {
+  LinkIconProps,
+  LinkOpacityProps,
+  LinkUnderlineProps,
+  LinkVariantProps,
+} from '../types/ComponentProps'
 
 export const useLinkClasses = (
   linkProps: MaybeRefOrGetter<

@@ -20,17 +20,15 @@
 </template>
 
 <script setup lang="ts">
-import {useDefaults} from '../../composables'
-import type {BTransitionProps} from '../../types'
+import type {BTransitionProps} from '../types/ComponentProps'
 import {computed} from 'vue'
 
-const _props = withDefaults(defineProps<BTransitionProps>(), {
+const props = withDefaults(defineProps<BTransitionProps>(), {
   appear: false,
   mode: undefined,
   noFade: false,
   transProps: undefined,
 })
-const props = useDefaults(_props, 'BTransition')
 
 const emit = defineEmits<{
   'after-appear': [value: Element]

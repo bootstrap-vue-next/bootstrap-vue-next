@@ -25,10 +25,11 @@
 <script setup lang="ts">
 import {computed, toRef} from 'vue'
 import BCardTitle from './BCardTitle.vue'
-import {isEmptySlot} from '../../utils'
+import {isEmptySlot} from '../../utils/dom'
 import BCardSubtitle from './BCardSubtitle.vue'
-import type {BCardBodyProps} from '../../types'
-import {useColorVariantClasses, useDefaults} from '../../composables'
+import type {BCardBodyProps} from '../../types/ComponentProps'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import {useDefaults} from '../../composables/useDefaults'
 
 const _props = withDefaults(defineProps<BCardBodyProps>(), {
   overlay: false,
