@@ -31,8 +31,6 @@ export const demoContainer = (md: MarkdownRenderer, srcDir: string) => {
     const start = pos + sentinal.length
     const end = state.skipSpacesBack(max, pos)
 
-    console.log('demo tag found:', state.line, state.src.substring(start, end))
-
     const rawPath = state.src.slice(start, end).trim().replace(/^@/, srcDir).trim()
 
     const {filepath, extension, region, lines, lang, title} = rawPathToToken(rawPath)
