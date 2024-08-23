@@ -18,10 +18,6 @@ import {useDefaults} from '../../composables'
 import type {BDropdownItemButtonProps} from '../../types'
 import {computed} from 'vue'
 
-defineOptions({
-  inheritAttrs: false,
-})
-
 const _props = withDefaults(defineProps<BDropdownItemButtonProps>(), {
   active: false,
   activeClass: 'active',
