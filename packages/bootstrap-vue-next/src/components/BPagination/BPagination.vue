@@ -344,7 +344,7 @@ watch(pagination, (oldValue, newValue) => {
 
 const buttons = computed(() => {
   // The idea here is to create an array of all the buttons on the page control.
-  // This was we can keep the invariants in one place and the template code just
+  // This way we can keep the invariants in one place and the template code just
   // iterates over the array.
 
   const pages = numberOfPages.value
@@ -354,10 +354,11 @@ const buttons = computed(() => {
   const lastPage = props.lastNumber ? 1 : 0
   const hideEllipsis = props.hideEllipsis || limit <= ELLIPSIS_THRESHOLD
   const hideEndButtons = props.hideGotoEndButtons ? 1 : 0
+  const showEndButtons = props.hideGotoEndButtons ? 0 : 1
 
   // The first case is when all of the page buttons fit on the control, this is
   //  the simplest case and the only one that will create an array smaller than
-  //  Limit + 4 - hideEndButtons *2 (the [first, last,] prev, next buttons)
+  //  Limit + 4 - hideEndButtons * 2 (the [first, last,] prev, next buttons)
 
   if (pages < limit + firstPage + lastPage) {
     return [
@@ -394,7 +395,7 @@ const buttons = computed(() => {
     buttons[buttons.length - 1] = NEXT_BUTTON
   }
 
-  // The next case is where the buttons page buttons start at the begginning, with
+  // The next case is where the page buttons start at the begginning, with
   //  no ellipsis at the beginning, but one at the end
 
   const halfLimit = Math.floor(limit / 2)
@@ -404,7 +405,7 @@ const buttons = computed(() => {
     }
 
     if (!hideEllipsis) {
-      buttons[buttons.length - 3] = ELLIPSIS_BUTTON
+      buttons[buttons.length - (2 + showEndButtons)] = ELLIPSIS_BUTTON
     }
   }
 
@@ -418,7 +419,7 @@ const buttons = computed(() => {
     }
 
     if (!hideEllipsis) {
-      buttons[2] = ELLIPSIS_BUTTON
+      buttons[1 + showEndButtons] = ELLIPSIS_BUTTON
     }
   }
 
@@ -431,14 +432,15 @@ const buttons = computed(() => {
     }
 
     if (!hideEllipsis) {
-      buttons[2] = ELLIPSIS_BUTTON
-      buttons[buttons.length - 3] = ELLIPSIS_BUTTON
+      buttons[1 + showEndButtons] = ELLIPSIS_BUTTON
+      buttons[buttons.length - (2 + showEndButtons)] = ELLIPSIS_BUTTON
     }
   }
 
   // Enable sanity check for debugging purposes
   // for (let i = 0; i < buttons.length; i++) {
   //   if (!buttons[i]) {
+  //     // eslint-disable-next-line no-console
   //     console.log(
   //       `Failed: button == ${i}, limit=${limit}, pages=${pages}, firstPage=${firstPage}, lastPage=${lastPage}, value=${value}`
   //     )
