@@ -6,40 +6,26 @@
     :aria-disabled="props.disabled"
     :aria-label="props.ariaLabel || undefined"
   >
-    <ReusableButton.define v-slot="{button, li, text, clickHandler}">
-      <li v-bind="li">
-        <component v-bind="button" :is="button.is" @click="clickHandler">
-          <slot
-            :name="text.name"
-            :disabled="text.disabled"
-            :page="text.page"
-            :index="text.index"
-            :active="text.active"
-            :content="text.value"
-          >
-            {{ text.value }}
-          </slot>
-        </component>
-      </li>
-    </ReusableButton.define>
-
-    <ReusableEllipsis.define>
-      <li v-bind="ellipsisProps.li">
-        <span v-bind="ellipsisProps.span">
+    <template v-for="page in pages" :key="`page-${page.id}`">
+      <li v-bind="page.li">
+        <span v-if="page.id === ELLIPSIS_BUTTON" v-bind="ellipsisProps.span">
           <slot name="ellipsis-text">
             {{ props.ellipsisText || '...' }}
           </slot>
         </span>
+        <component v-bind="page.button" :is="page.button.is" v-else @click="page.clickHandler">
+          <slot
+            :name="page.text.name"
+            :disabled="page.text.disabled"
+            :page="page.text.page"
+            :index="page.text.index"
+            :active="page.text.active"
+            :content="page.text.value"
+          >
+            {{ page.text.value }}
+          </slot>
+        </component>
       </li>
-    </ReusableEllipsis.define>
-
-    <template v-for="button in buttons" :key="`page-${button}`">
-      <ReusableButton.reuse v-if="button === FIRST_BUTTON" v-bind="firstButtonProps" />
-      <ReusableButton.reuse v-else-if="button === PREV_BUTTON" v-bind="prevButtonProps" />
-      <ReusableButton.reuse v-else-if="button === NEXT_BUTTON" v-bind="nextButtonProps" />
-      <ReusableButton.reuse v-else-if="button === LAST_BUTTON" v-bind="lastButtonProps" />
-      <ReusableEllipsis.reuse v-else-if="button === ELLIPSIS_BUTTON" />
-      <ReusableButton.reuse v-else-if="button !== null" v-bind="getPageButtonProps(button)" />
     </template>
   </ul>
 </template>
@@ -49,7 +35,7 @@ import {BvEvent} from '../../utils'
 import {computed, toRef, watch} from 'vue'
 import type {BPaginationProps, ClassValue} from '../../types'
 import {useAlignment, useDefaults} from '../../composables'
-import {createReusableTemplate, useToNumber} from '@vueuse/core'
+import {useToNumber} from '@vueuse/core'
 
 // Threshold of limit size when we start/stop showing ellipsis
 const ELLIPSIS_THRESHOLD = 3
@@ -59,6 +45,15 @@ const PREV_BUTTON = -2
 const NEXT_BUTTON = -3
 const LAST_BUTTON = -4
 const ELLIPSIS_BUTTON = -5
+
+// This is necessary because type inference isn't succeeding for the pages computed
+interface PageButton {
+  id: number
+  li: Record<string, unknown>
+  button: Record<string, unknown>
+  text: Record<string, unknown>
+  clickHandler: (e: Readonly<MouseEvent>) => void
+}
 
 const _props = withDefaults(defineProps<BPaginationProps>(), {
   align: 'start',
@@ -262,9 +257,6 @@ const lastButtonProps = computed(() =>
   })
 )
 
-const ReusableButton = createReusableTemplate<ReturnType<typeof getButtonProps>>()
-const ReusableEllipsis = createReusableTemplate()
-
 const ellipsisProps = computed(() => ({
   li: {
     class: [
@@ -342,7 +334,27 @@ watch(pagination, (oldValue, newValue) => {
   }
 })
 
-const buttons = computed(() => {
+const pages = computed(
+  () =>
+    elements.value.map((p) => {
+      switch (p) {
+        case FIRST_BUTTON:
+          return {id: FIRST_BUTTON, ...firstButtonProps.value}
+        case PREV_BUTTON:
+          return {id: PREV_BUTTON, ...prevButtonProps.value}
+        case NEXT_BUTTON:
+          return {id: NEXT_BUTTON, ...nextButtonProps.value}
+        case LAST_BUTTON:
+          return {id: LAST_BUTTON, ...lastButtonProps.value}
+        case ELLIPSIS_BUTTON:
+          return {id: ELLIPSIS_BUTTON, ...ellipsisProps.value}
+        default:
+          return {id: p, ...getPageButtonProps(p)}
+      }
+    }) as PageButton[]
+)
+
+const elements = computed(() => {
   // The idea here is to create an array of all the buttons on the page control.
   // This way we can keep the invariants in one place and the template code just
   // iterates over the array.
