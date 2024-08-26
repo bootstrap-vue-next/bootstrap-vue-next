@@ -5,6 +5,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BToast',
+      sourcePath: '/BToast/BToast.vue',
       props: {
         '': {
           active: {
@@ -62,8 +63,8 @@ export default {
               'Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed',
           },
           interval: {
-            type: 'Numberish',
-            default: '1000',
+            type: 'number | requestAnimationFrame',
+            default: 'requestAnimationFrame',
             description: 'The interval of which the countdown timer will refresh itself',
           },
           isStatus: {
@@ -289,6 +290,7 @@ export default {
     },
     {
       component: 'BToastOrchestrator',
+      sourcePath: '/BToast/BToastOrchestrator.vue',
       emits: [],
       slots: [],
       props: {

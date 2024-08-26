@@ -48,7 +48,7 @@
 
 <script setup lang="ts">
 import {avatarGroupInjectionKey} from '../../utils/keys'
-import {computed, type CSSProperties, inject, type StyleValue, toRef} from 'vue'
+import {computed, type CSSProperties, inject, type StyleValue} from 'vue'
 import type {BAvatarProps} from '../../types/ComponentProps'
 import BLink from '../BLink/BLink.vue'
 import BBadge from '../BBadge/BBadge.vue'
@@ -128,22 +128,22 @@ const SIZES = ['sm', null, 'lg']
 const FONT_SIZE_SCALE = 0.4
 const BADGE_FONT_SIZE_SCALE = FONT_SIZE_SCALE * 0.7
 
-const hasDefaultSlot = toRef(() => !isEmptySlot(slots.default))
-const hasBadgeSlot = toRef(() => !isEmptySlot(slots.badge))
+const hasDefaultSlot = computed(() => !isEmptySlot(slots.default))
+const hasBadgeSlot = computed(() => !isEmptySlot(slots.badge))
 
-const showBadge = toRef(() => !!props.badge || props.badge === '' || hasBadgeSlot.value)
-const computedSquare = toRef(() => parentData?.square.value || props.square)
+const showBadge = computed(() => !!props.badge || props.badge === '' || hasBadgeSlot.value)
+const computedSquare = computed(() => parentData?.square.value || props.square)
 
 const computedPropSize = useNumberishToStyle(() => props.size)
 const computedParentSize = useNumberishToStyle(() => parentData?.size.value)
 const computedSize = computed(() => computedParentSize.value ?? computedPropSize.value)
 
-const computedVariant = toRef(() => parentData?.variant.value ?? props.variant)
-const computedRounded = toRef(() => parentData?.rounded.value ?? props.rounded)
-const computedRoundedTop = toRef(() => parentData?.roundedTop.value ?? props.roundedTop)
-const computedRoundedBottom = toRef(() => parentData?.roundedBottom.value ?? props.roundedBottom)
-const computedRoundedStart = toRef(() => parentData?.roundedStart.value ?? props.roundedStart)
-const computedRoundedEnd = toRef(() => parentData?.roundedEnd.value ?? props.roundedEnd)
+const computedVariant = computed(() => parentData?.variant.value ?? props.variant)
+const computedRounded = computed(() => parentData?.rounded.value ?? props.rounded)
+const computedRoundedTop = computed(() => parentData?.roundedTop.value ?? props.roundedTop)
+const computedRoundedBottom = computed(() => parentData?.roundedBottom.value ?? props.roundedBottom)
+const computedRoundedStart = computed(() => parentData?.roundedStart.value ?? props.roundedStart)
+const computedRoundedEnd = computed(() => parentData?.roundedEnd.value ?? props.roundedEnd)
 
 const radiusElementClasses = useRadiusElementClasses(() => ({
   rounded: computedRounded.value,
@@ -153,11 +153,11 @@ const radiusElementClasses = useRadiusElementClasses(() => ({
   roundedEnd: computedRoundedEnd.value,
 }))
 
-const badgeText = toRef(() => (props.badge === true ? '' : props.badge))
+const badgeText = computed(() => (props.badge === true ? '' : props.badge))
 const badgeImplicitlyDot = computed(() => !badgeText.value && !hasBadgeSlot.value)
 
-const computedTextVariant = toRef(() => parentData?.textVariant.value ?? props.textVariant)
-const computedBgVariant = toRef(() => parentData?.bgVariant.value ?? props.bgVariant)
+const computedTextVariant = computed(() => parentData?.textVariant.value ?? props.textVariant)
+const computedBgVariant = computed(() => parentData?.bgVariant.value ?? props.bgVariant)
 
 const resolvedBackgroundClasses = useColorVariantClasses(() => ({
   bgVariant: computedBgVariant.value,
@@ -203,7 +203,7 @@ const marginStyle = computed(() => {
   return value ? {marginLeft: value, marginRight: value} : {}
 })
 
-const computedTag = toRef(() => (computedLink.value ? BLink : props.button ? 'button' : 'span'))
+const computedTag = computed(() => (computedLink.value ? BLink : props.button ? 'button' : 'span'))
 
 const computedStyle = computed<CSSProperties>(() => ({
   ...marginStyle.value,

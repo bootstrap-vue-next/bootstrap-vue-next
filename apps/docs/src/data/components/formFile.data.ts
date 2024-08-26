@@ -6,6 +6,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormFile',
+      sourcePath: '/BForm/BFormFile.vue',
       props: {
         '': {
           accept: {

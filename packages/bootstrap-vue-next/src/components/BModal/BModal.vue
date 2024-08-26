@@ -109,7 +109,7 @@
 <script setup lang="ts">
 import {onKeyStroke, useEventListener, useFocus} from '@vueuse/core'
 import {useActivatedFocusTrap} from '../../composables/useActivatedFocusTrap'
-import {computed, type CSSProperties, ref, toRef, watch} from 'vue'
+import {computed, type CSSProperties, ref, watch} from 'vue'
 import type {BModalProps} from '../../types/ComponentProps'
 import {BvTriggerableEvent} from '../../utils'
 import BButton from '../BButton/BButton.vue'
@@ -288,14 +288,14 @@ const modalClasses = computed(() => [
   },
 ])
 
-const lazyShowing = toRef(
+const lazyShowing = computed(
   () =>
     props.lazy === false ||
     (props.lazy === true && lazyLoadCompleted.value === true) ||
     (props.lazy === true && modelValue.value === true)
 )
 
-const hasHeaderCloseSlot = toRef(() => !isEmptySlot(slots['header-close']))
+const hasHeaderCloseSlot = computed(() => !isEmptySlot(slots['header-close']))
 
 const modalDialogClasses = computed(() => [
   props.dialogClass,
@@ -355,8 +355,8 @@ const titleClasses = computed(() => [
     ['visually-hidden']: props.titleSrOnly,
   },
 ])
-const disableCancel = toRef(() => props.cancelDisabled || props.busy)
-const disableOk = toRef(() => props.okDisabled || props.busy)
+const disableCancel = computed(() => props.cancelDisabled || props.busy)
+const disableOk = computed(() => props.okDisabled || props.busy)
 
 const buildTriggerableEvent = (
   type: string,

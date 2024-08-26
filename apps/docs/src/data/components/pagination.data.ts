@@ -6,6 +6,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BPagination',
+      sourcePath: '/BPagination/BPagination.vue',
       props: {
         '': {
           align: {

@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import type {BImgProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
-import {computed, toRef} from 'vue'
+import {computed} from 'vue'
 import {useToNumber} from '@vueuse/core'
 import {useRadiusElementClasses} from '../../composables/useRadiusElementClasses'
 
@@ -90,7 +90,7 @@ const computedDimentions = computed<{height: number | undefined; width: number |
   }
 })
 
-const computedBlankImgSrc = toRef(() =>
+const computedBlankImgSrc = computed(() =>
   makeBlankImgSrc(computedDimentions.value.width, computedDimentions.value.height, props.blankColor)
 )
 

@@ -61,13 +61,13 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onBeforeUnmount, ref, toRef, watch, watchEffect} from 'vue'
+import {computed, ref, watch, watchEffect} from 'vue'
 import {useBLinkHelper} from '../../composables/useBLinkHelper'
 import type {BToastProps} from '../../types/ComponentProps'
 import BTransition from '../BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BLink from '../BLink/BLink.vue'
-import {useElementHover, useToNumber} from '@vueuse/core'
+import {useElementHover} from '@vueuse/core'
 import BProgress from '../BProgress/BProgress.vue'
 import {BvTriggerableEvent} from '../../utils'
 import {useCountdown} from '../../composables/useCountdown'
@@ -81,7 +81,7 @@ const _props = withDefaults(defineProps<BToastProps>(), {
   headerClass: undefined,
   headerTag: 'div',
   id: undefined,
-  interval: 1000,
+  interval: 'requestAnimationFrame',
   isStatus: false,
   noCloseButton: false,
   noFade: false,
@@ -139,10 +139,11 @@ const modelValue = defineModel<boolean | number>({default: false})
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props)
 
-const intervalNumber = useToNumber(() => props.interval)
 // TODO solid is never used
 const resolvedBackgroundClasses = useColorVariantClasses(props)
-const countdownLength = toRef(() => (typeof modelValue.value === 'boolean' ? 0 : modelValue.value))
+const countdownLength = computed(() =>
+  typeof modelValue.value === 'boolean' ? 0 : modelValue.value
+)
 
 const {
   isActive,
@@ -152,7 +153,7 @@ const {
   stop,
   isPaused,
   value: remainingMs,
-} = useCountdown(countdownLength, intervalNumber, {
+} = useCountdown(countdownLength, props.interval, {
   immediate: typeof modelValue.value === 'number',
 })
 
@@ -160,9 +161,9 @@ watchEffect(() => {
   emit('close-countdown', remainingMs.value)
 })
 
-const computedTag = toRef(() => (computedLink.value ? BLink : 'div'))
+const computedTag = computed(() => (computedLink.value ? BLink : 'div'))
 
-const isToastVisible = toRef(() =>
+const isToastVisible = computed(() =>
   typeof modelValue.value === 'boolean'
     ? modelValue.value
     : isActive.value || (props.showOnPause && isPaused.value)
@@ -250,8 +251,6 @@ watch(isActive, (newValue) => {
     hideFn()
   }
 })
-
-onBeforeUnmount(stop)
 
 defineExpose({
   pause,

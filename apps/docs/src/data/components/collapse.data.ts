@@ -5,6 +5,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BCollapse',
+      sourcePath: '/BCollapse/BCollapse.vue',
       props: {
         '': {
           horizontal: {

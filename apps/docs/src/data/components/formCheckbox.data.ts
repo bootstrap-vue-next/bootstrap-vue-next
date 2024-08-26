@@ -6,6 +6,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormCheckbox',
+      sourcePath: '/BFormCheckbox/BFormCheckbox.vue',
       props: {
         '': {
           button: {
@@ -123,6 +124,7 @@ export default {
     },
     {
       component: 'BFormCheckboxGroup',
+      sourcePath: '/BFormCheckbox/BFormCheckboxGroup.vue',
       props: {
         '': {
           buttonVariant: {

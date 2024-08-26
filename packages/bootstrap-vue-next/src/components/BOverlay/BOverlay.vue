@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, toRef} from 'vue'
+import {computed} from 'vue'
 import type {BOverlayProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import BTransition from '../BTransition.vue'
@@ -92,11 +92,11 @@ const radiusElementClasses = useRadiusElementClasses(() => ({
   roundedEnd: props.roundedEnd,
 }))
 
-const computedVariant = toRef(() =>
+const computedVariant = computed(() =>
   props.variant !== null && !props.bgColor ? `bg-${props.variant}` : ''
 )
 
-const computedAriaBusy = toRef(() => (props.show ? true : null))
+const computedAriaBusy = computed(() => (props.show ? true : null))
 
 const spinnerAttrs = computed(() => ({
   type: props.spinnerType,

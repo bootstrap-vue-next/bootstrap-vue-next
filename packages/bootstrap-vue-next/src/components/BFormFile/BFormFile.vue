@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import {useFocus} from '@vueuse/core'
-import {computed, ref, toRef, watch} from 'vue'
+import {computed, ref, watch} from 'vue'
 import type {BFormFileProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
@@ -89,7 +89,7 @@ const input = ref<HTMLInputElement | null>(null)
 
 const {focused} = useFocus(input, {initialValue: props.autofocus})
 
-const hasLabelSlot = toRef(() => !isEmptySlot(slots['label']))
+const hasLabelSlot = computed(() => !isEmptySlot(slots['label']))
 
 const computedAccept = computed(() =>
   typeof props.accept === 'string' ? props.accept : props.accept.join(',')

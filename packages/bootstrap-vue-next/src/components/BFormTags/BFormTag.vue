@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, toRef} from 'vue'
+import {computed} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import type {BFormTagProps} from '../../types/ComponentProps'
@@ -55,7 +55,7 @@ const computedId = useId(() => props.id)
 const tagText = computed(
   () => ((slots.default?.({})[0].children ?? '').toString() || props.title) ?? ''
 )
-const taglabelId = toRef(() => `${computedId.value}taglabel__`)
+const taglabelId = computed(() => `${computedId.value}taglabel__`)
 
 const computedClasses = computed(() => ({
   [`text-bg-${props.variant}`]: props.variant !== null,

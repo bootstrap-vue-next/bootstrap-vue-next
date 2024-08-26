@@ -6,6 +6,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BForm',
+      sourcePath: '/BForm/BForm.vue',
       props: {
         '': {
           floating: {
@@ -51,6 +52,7 @@ export default {
     },
     {
       component: 'BFormDatalist',
+      sourcePath: '/BForm/BFormDatalist.vue',
       props: {
         '': {
           ...pick(
@@ -80,6 +82,7 @@ export default {
 
     {
       component: 'BFormFloatingLabel',
+      sourcePath: '/BForm/BFormFloatingLabel.vue',
       props: {
         '': {
           label: {
@@ -108,6 +111,7 @@ export default {
     },
     {
       component: 'BFormInvalidFeedback',
+      sourcePath: '/BForm/BFormInvalidFeedback.vue',
       props: {
         '': {
           forceShow: {
@@ -133,6 +137,7 @@ export default {
     },
     {
       component: 'BFormRow',
+      sourcePath: '/BForm/BFormRow.vue',
       props: {
         '': {
           ...pick(buildCommonProps(), ['tag']),
@@ -148,6 +153,7 @@ export default {
     },
     {
       component: 'BFormText',
+      sourcePath: '/BForm/BFormText.vue',
       props: {
         '': {
           inline: {
@@ -174,6 +180,7 @@ export default {
     },
     {
       component: 'BFormValidFeedback',
+      sourcePath: '/BForm/BFormValidFeedback.vue',
       props: {
         '': {
           forceShow: {

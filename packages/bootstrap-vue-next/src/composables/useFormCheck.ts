@@ -1,5 +1,5 @@
 import type {AriaInvalid} from '../types/AriaInvalid'
-import {computed, type MaybeRefOrGetter, toRef, toValue} from 'vue'
+import {computed, type MaybeRefOrGetter, readonly, toRef, toValue} from 'vue'
 import {useAriaInvalid} from './useAriaInvalid'
 import {useStateClass} from './useStateClass'
 import type {Size} from '../types/Size'
@@ -40,7 +40,7 @@ interface InputClassesItemsInput {
 }
 
 const getInputClasses = (items: MaybeRefOrGetter<InputClassesItemsInput>) => {
-  const resolvedItems = toRef(items)
+  const resolvedItems = readonly(toRef(items))
 
   const stateClass = useStateClass(() => resolvedItems.value.state ?? null)
 
@@ -83,7 +83,7 @@ interface GroupAttrItemsInput {
 }
 
 const getGroupAttr = (items: MaybeRefOrGetter<GroupAttrItemsInput>) => {
-  const resolvedItems = toRef(items)
+  const resolvedItems = readonly(toRef(items))
   const computedAriaInvalid = useAriaInvalid(
     () => resolvedItems.value.ariaInvalid,
     () => resolvedItems.value.state

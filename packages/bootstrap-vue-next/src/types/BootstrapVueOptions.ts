@@ -1,4 +1,11 @@
+import type * as ExportedComponents from '../components'
+import type * as ExportedDirectives from '../directives'
+import type * as ExportedComposables from '../composables'
 import type * as ComponentProps from './ComponentProps'
+
+export type ComponentType = keyof typeof ExportedComponents
+export type DirectiveType = keyof typeof ExportedDirectives
+export type ComposableType = keyof typeof ExportedComposables
 
 export const componentsWithExternalPath = {
   BAccordion: '/components/BAccordion',
@@ -103,8 +110,7 @@ export const componentsWithExternalPath = {
   BTr: '/components/BTable',
   BPopoverOrchestrator: '/components/BPopover',
   BTooltipOrchestrator: '/components/BTooltip',
-} as const
-export type ComponentType = keyof typeof componentsWithExternalPath
+} as const satisfies Record<ComponentType, string>
 export const componentNames = Object.freeze(
   Object.keys(componentsWithExternalPath) as ComponentType[]
 )
@@ -116,8 +122,7 @@ export const directivesWithExternalPath = {
   vBScrollspy: '/directives',
   vBToggle: '/directives',
   vBTooltip: '/directives',
-} as const
-export type DirectiveType = keyof typeof directivesWithExternalPath
+} as const satisfies Record<DirectiveType, string>
 export const directiveNames = Object.freeze(
   Object.keys(directivesWithExternalPath) as DirectiveType[]
 )
@@ -127,10 +132,11 @@ export const composablesWithExternalPath = {
   useColorMode: '/composables/useColorMode',
   useModal: '/composables/useModal',
   useModalController: '/composables/useModalController',
-  useScrollspy: '/composables/useScrollspy',
+  useScrollspy: '/composables/useScrollspy/useScrollspy',
   useToast: '/composables/useToast',
-} as const
-export type ComposableType = keyof typeof composablesWithExternalPath
+  usePopover: '/composables/usePopover',
+  useTooltip: '/composables/useTooltip',
+} as const satisfies Record<ComposableType, string>
 export const composableNames = Object.freeze(
   Object.keys(composablesWithExternalPath) as ComposableType[]
 )

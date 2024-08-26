@@ -5,6 +5,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BProgress',
+      sourcePath: '/BProgress/BProgress.vue',
       props: {
         '': {
           animated: {
@@ -64,6 +65,7 @@ export default {
     },
     {
       component: 'BProgressBar',
+      sourcePath: '/BProgress/BProgressBar.vue',
       props: {
         '': {
           animated: {

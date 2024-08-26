@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, toRef} from 'vue'
+import {computed} from 'vue'
 import BCardTitle from './BCardTitle.vue'
 import {isEmptySlot} from '../../utils/dom'
 import BCardSubtitle from './BCardSubtitle.vue'
@@ -59,8 +59,8 @@ const slots = defineSlots<{
 
 const resolvedBackgroundClasses = useColorVariantClasses(props)
 
-const hasTitleSlot = toRef(() => !isEmptySlot(slots.title))
-const hasSubtitleSlot = toRef(() => !isEmptySlot(slots.subtitle))
+const hasTitleSlot = computed(() => !isEmptySlot(slots.title))
+const hasSubtitleSlot = computed(() => !isEmptySlot(slots.subtitle))
 
 const computedClasses = computed(() => [
   resolvedBackgroundClasses.value,

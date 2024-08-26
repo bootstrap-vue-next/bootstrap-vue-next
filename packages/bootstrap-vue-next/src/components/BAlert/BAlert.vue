@@ -27,11 +27,11 @@ import BTransition from '../BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BButton from '../BButton/BButton.vue'
 import type {BAlertProps} from '../../types/ComponentProps'
-import {computed, onBeforeUnmount, ref, toRef, watch, watchEffect} from 'vue'
+import {computed, ref, watch, watchEffect} from 'vue'
 import {useCountdown} from '../../composables/useCountdown'
 import {useDefaults} from '../../composables/useDefaults'
 import {isEmptySlot} from '../../utils/dom'
-import {useElementHover, useToNumber} from '@vueuse/core'
+import {useElementHover} from '@vueuse/core'
 
 const _props = withDefaults(defineProps<BAlertProps>(), {
   closeClass: undefined,
@@ -41,7 +41,7 @@ const _props = withDefaults(defineProps<BAlertProps>(), {
   dismissible: false,
   fade: false,
   immediate: true,
-  interval: 1000,
+  interval: 'requestAnimationFrame',
   noHoverPause: false,
   showOnPause: true,
   variant: 'info',
@@ -68,11 +68,10 @@ const modelValue = defineModel<boolean | number>({default: false})
 
 const isHovering = useElementHover(element)
 
-const intervalNumber = useToNumber(() => props.interval)
-
-const hasCloseSlot = toRef(() => !isEmptySlot(slots.close))
-
-const countdownLength = toRef(() => (typeof modelValue.value === 'boolean' ? 0 : modelValue.value))
+const hasCloseSlot = computed(() => !isEmptySlot(slots.close))
+const countdownLength = computed(() =>
+  typeof modelValue.value === 'boolean' ? 0 : modelValue.value
+)
 
 const computedClasses = computed(() => ({
   [`alert-${props.variant}`]: props.variant !== null,
@@ -84,16 +83,16 @@ const closeClasses = computed(() => [props.closeClass, {'btn-close-custom': hasC
 const {
   isActive,
   pause,
-  restart,
   resume,
   stop,
   isPaused,
+  restart,
   value: remainingMs,
-} = useCountdown(countdownLength, intervalNumber, {
+} = useCountdown(countdownLength, props.interval, {
   immediate: typeof modelValue.value === 'number' && props.immediate,
 })
 
-const isAlertVisible = toRef(() =>
+const isAlertVisible = computed(() =>
   typeof modelValue.value === 'boolean'
     ? modelValue.value
     : isActive.value || (props.showOnPause && isPaused.value)
@@ -134,13 +133,11 @@ watch(isHovering, (newValue) => {
   resume()
 })
 
-onBeforeUnmount(stop)
-
 defineExpose({
   pause,
-  restart,
   resume,
   stop,
+  restart,
 })
 </script>
 

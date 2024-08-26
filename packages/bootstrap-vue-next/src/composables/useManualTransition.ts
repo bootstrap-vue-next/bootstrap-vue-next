@@ -1,4 +1,4 @@
-import {type MaybeRef, type MaybeRefOrGetter, onUnmounted, ref, toRef} from 'vue'
+import {type MaybeRef, type MaybeRefOrGetter, onUnmounted, ref, toValue} from 'vue'
 
 // I've made something wild here
 export const useManualTransition = (
@@ -7,8 +7,6 @@ export const useManualTransition = (
   classLeave: MaybeRefOrGetter<string | string[]>
 ) => {
   const element = ref(el)
-  const classEnterResolved = toRef(classEnter)
-  const classLeaveResolved = toRef(classLeave)
 
   const transitionListener = ref<() => void>()
 
@@ -25,7 +23,7 @@ export const useManualTransition = (
     // Ensure any previous ones are closed before starting a new one
     closeActiveListener()
 
-    const currentClasses = resolveClassList(classEnterResolved.value)
+    const currentClasses = resolveClassList(toValue(classEnter))
 
     element.value?.classList.add(...currentClasses)
 
@@ -41,7 +39,7 @@ export const useManualTransition = (
     // Ensure any previous ones are closed before starting a new one
     closeActiveListener()
 
-    const currentClasses = resolveClassList(classLeaveResolved.value)
+    const currentClasses = resolveClassList(toValue(classLeave))
 
     element.value?.classList.add(...currentClasses)
 

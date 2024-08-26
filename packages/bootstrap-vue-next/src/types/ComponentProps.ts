@@ -1,11 +1,4 @@
-import type {
-  Boundary,
-  Middleware,
-  Padding,
-  Placement,
-  RootBoundary,
-  Strategy,
-} from '@floating-ui/vue'
+import type {Boundary, Middleware, Padding, RootBoundary, Strategy} from '@floating-ui/vue'
 import type {ComponentPublicInstance, TransitionProps} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {LinkTarget} from './LinkTarget'
@@ -16,7 +9,6 @@ import type {Size} from './Size'
 import type {AriaInvalid} from './AriaInvalid'
 import type {Numberish, TeleporterProps} from './CommonTypes'
 import type {CommonInputProps} from './FormCommonInputProps'
-import type {InputType} from 'zlib'
 import type {RadioOptionRaw, RadioValue} from './RadioTypes'
 import type {SelectValue} from './SelectTypes'
 import type {
@@ -33,6 +25,7 @@ import type {
   AlignmentTextHorizontal,
   AlignmentVertical,
   CombinedPlacement,
+  Placement,
   VerticalAlign,
 } from './Alignment'
 import type {RadiusElementExtendables} from './RadiusElement'
@@ -52,6 +45,7 @@ import type {
   TableStrictClassValue,
 } from './TableTypes'
 import type {PopoverPlacement} from './PopoverPlacement'
+import type {InputType} from './InputType'
 
 export interface BLinkProps {
   active?: boolean
@@ -740,7 +734,7 @@ export interface BAlertProps {
   dismissible?: boolean
   fade?: boolean
   immediate?: boolean
-  interval?: Numberish
+  interval?: number | 'requestAnimationFrame'
   modelValue?: boolean | number
   noHoverPause?: boolean
   showOnPause?: boolean
@@ -913,7 +907,7 @@ export interface BCarouselProps {
   imgWidth?: string
   indicators?: boolean
   indicatorsButtonLabel?: string
-  interval?: Numberish
+  interval?: number
   keyboard?: boolean
   modelValue?: number
   noHoverPause?: boolean
@@ -939,7 +933,7 @@ export interface BCarouselSlideProps {
   imgSrc?: string
   imgSrcset?: string | readonly string[]
   imgWidth?: Numberish
-  interval?: Numberish
+  interval?: number | 'requestAnimationFrame'
   text?: string
   textHtml?: string
   textTag?: string
@@ -1187,7 +1181,7 @@ export interface BToastProps extends ColorExtendables, Omit<BLinkProps, 'routerT
   headerClass?: ClassValue
   headerTag?: string
   id?: string
-  interval?: Numberish
+  interval?: number | 'requestAnimationFrame'
   isStatus?: boolean
   modelValue?: boolean | number
   noCloseButton?: boolean

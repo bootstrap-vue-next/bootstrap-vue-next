@@ -147,7 +147,7 @@ const tabs = computed(() =>
   })
 )
 
-const showEmpty = toRef(() => !(tabs?.value && tabs.value.length > 0))
+const showEmpty = computed(() => !(tabs?.value && tabs.value.length > 0))
 
 const computedClasses = computed(() => ({
   'd-flex': props.vertical,

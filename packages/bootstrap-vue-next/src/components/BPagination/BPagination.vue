@@ -46,7 +46,7 @@
 
 <script setup lang="ts">
 import {BvEvent} from '../../utils'
-import {computed, toRef, watch} from 'vue'
+import {computed, watch} from 'vue'
 import type {BPaginationProps} from '../../types/ComponentProps'
 import {useAlignment} from '../../composables/useAlignment'
 import {createReusableTemplate, useToNumber} from '@vueuse/core'
@@ -106,13 +106,13 @@ const perPageNumber = useToNumber(() => props.perPage, {nanToZero: true, method:
 const totalRowsNumber = useToNumber(() => props.totalRows, {nanToZero: true, method: 'parseInt'})
 const modelValueNumber = useToNumber(modelValue, {nanToZero: true, method: 'parseInt'})
 
-const perPageSanitized = toRef(() => Math.max(perPageNumber.value || DEFAULT_PER_PAGE, 1))
-const totalRowsSanitized = toRef(() => Math.max(totalRowsNumber.value || DEFAULT_TOTAL_ROWS, 0))
+const perPageSanitized = computed(() => Math.max(perPageNumber.value || DEFAULT_PER_PAGE, 1))
+const totalRowsSanitized = computed(() => Math.max(totalRowsNumber.value || DEFAULT_TOTAL_ROWS, 0))
 // Use Active to on page-item to denote active tab
-const numberOfPages = toRef(() => Math.ceil(totalRowsSanitized.value / perPageSanitized.value))
-const computedFill = toRef(() => props.align === 'fill')
+const numberOfPages = computed(() => Math.ceil(totalRowsSanitized.value / perPageSanitized.value))
+const computedFill = computed(() => props.align === 'fill')
 // This doesn't use the computedFill util because TS cannot infer that it would never be 'fill'
-const justifyAlign = toRef(() => (props.align === 'fill' ? 'start' : props.align))
+const justifyAlign = computed(() => (props.align === 'fill' ? 'start' : props.align))
 
 const alignment = useAlignment(justifyAlign)
 

@@ -1,4 +1,4 @@
-# useColorMode
+<ComposableHeader path="useColorMode.ts" title="useColorMode" />
 
 <ContentsSidebar>
 
@@ -49,9 +49,11 @@ const changeColor = () => {
 </HighlightCard>
 
 <script setup lang="ts">
+import ComposableHeader from './ComposableHeader.vue'
 import {ref} from 'vue'
 import {useColorMode, BCard, BCardBody, BButton} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
+import ContentsSidebar from '../../components/ContentsSidebar.vue'
 
 const target = ref<HTMLElement | null>(null)
 

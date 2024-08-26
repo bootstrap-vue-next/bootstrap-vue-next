@@ -32,7 +32,7 @@ const computedClasses = computed(() => {
     'list-group-numbered': props.numbered,
   }
 })
-const computedTag = toRef(() => (props.numbered === true ? 'ol' : props.tag))
+const computedTag = computed(() => (props.numbered === true ? 'ol' : props.tag))
 
 provide(listGroupInjectionKey, {
   numbered: toRef(() => props.numbered),

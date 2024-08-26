@@ -150,7 +150,7 @@ const modelValue = defineModel<boolean>({default: false})
 
 const inInputGroup = inject(inputGroupKey, false)
 
-const computedOffset = toRef(() =>
+const computedOffset = computed(() =>
   typeof props.offset === 'string' || typeof props.offset === 'number' ? props.offset : NaN
 )
 const offsetToNumber = useToNumber(computedOffset)
@@ -167,7 +167,7 @@ const rootBoundary = computed<RootBoundary | undefined>(() =>
   isRootBoundary(props.boundary) ? props.boundary : undefined
 )
 
-const referencePlacement = toRef(() => (!props.split ? splitButton.value : button.value))
+const referencePlacement = computed(() => (!props.split ? splitButton.value : button.value))
 
 onKeyStroke(
   'Escape',

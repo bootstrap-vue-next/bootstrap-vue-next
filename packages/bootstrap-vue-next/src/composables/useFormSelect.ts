@@ -1,4 +1,4 @@
-import {computed, type MaybeRefOrGetter, readonly, toRef} from 'vue'
+import {computed, type MaybeRefOrGetter, toValue} from 'vue'
 import {get} from '../utils/object'
 import type {ComplexSelectOptionRaw, SelectOption} from '../types/SelectTypes'
 
@@ -6,9 +6,6 @@ export const useFormSelect = (
   options: MaybeRefOrGetter<ReadonlyArray<unknown>>,
   props: MaybeRefOrGetter<Record<string, unknown>>
 ) => {
-  const propsValue = readonly(toRef(props)) // as Readonly<Record<string, unknown>>
-  const optionsValue = readonly(toRef(options))
-
   const isComplex = (option: unknown): option is ComplexSelectOptionRaw =>
     typeof option === 'object' && option !== null && 'label' in option
 
@@ -16,6 +13,8 @@ export const useFormSelect = (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     option: any
   ): ComplexSelectOptionRaw | SelectOption => {
+    const propsValue = toValue(props)
+
     if (typeof option === 'string') {
       return {value: option, text: option}
     }
@@ -26,18 +25,18 @@ export const useFormSelect = (
       return {value: option, text: option.toLocaleString()}
     }
 
-    const value: unknown = get(option, propsValue.value.valueField as string)
-    const text: string = get(option, propsValue.value.textField as string)
-    const html: string = get(option, propsValue.value.htmlField as string)
-    const disabled: boolean = get(option, propsValue.value.disabledField as string)
+    const value: unknown = get(option, propsValue.valueField as string)
+    const text: string = get(option, propsValue.textField as string)
+    const html: string = get(option, propsValue.htmlField as string)
+    const disabled: boolean = get(option, propsValue.disabledField as string)
 
-    const opts: undefined | unknown[] = propsValue.value.optionsField
-      ? get(option, propsValue.value.optionsField as string)
+    const opts: undefined | unknown[] = propsValue.optionsField
+      ? get(option, propsValue.optionsField as string)
       : undefined
 
     if (opts !== undefined) {
       return {
-        label: get(option, propsValue.value.labelField as string) || text,
+        label: get(option, propsValue.labelField as string) || text,
         options: opts,
       } as ComplexSelectOptionRaw
     }
@@ -55,7 +54,7 @@ export const useFormSelect = (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): (ComplexSelectOptionRaw | SelectOption)[] => opts.map((option) => normalizeOption(option))
 
-  const normalizedOptions = computed(() => normalizeOptions(optionsValue.value))
+  const normalizedOptions = computed(() => normalizeOptions(toValue(options)))
 
   return {normalizedOptions, isComplex}
 }

@@ -6,6 +6,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BBreadcrumb',
+      sourcePath: '/BBreadcrumb/BBreadcrumb.vue',
       props: {
         '': {
           items: {
@@ -33,6 +34,7 @@ export default {
     },
     {
       component: 'BBreadcrumbItem',
+      sourcePath: '/BBreadcrumb/BBreadcrumbItem.vue',
       props: {
         '': {
           ariaCurrent: {

@@ -51,11 +51,11 @@
 </template>
 
 <script setup lang="ts">
-import {ref, toRef} from 'vue'
+import {computed, ref} from 'vue'
 
 const value = ref(['apple', 'orange'])
 
-const state = toRef(() => value.value.length > 2 && value.value.length < 9)
+const state = computed(() => value.value.length > 2 && value.value.length < 9)
 
 const tagValidator = (tag: string) => tag === tag.toLowerCase() && tag.length > 2 && tag.length < 6
 const onTagState = (valid: string[], invalid: string[], duplicate: string[]) => {

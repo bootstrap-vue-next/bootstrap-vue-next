@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, toRef} from 'vue'
+import {computed} from 'vue'
 import type {BSpinnerProps} from '../../types/ComponentProps'
 import {isEmptySlot} from '../../utils/dom'
 import {useDefaults} from '../../composables/useDefaults'
@@ -41,5 +41,5 @@ const computedClasses = computed(() => [
   },
 ])
 
-const hasLabelSlot = toRef(() => !isEmptySlot(slots.label))
+const hasLabelSlot = computed(() => !isEmptySlot(slots.label))
 </script>

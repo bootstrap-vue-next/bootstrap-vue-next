@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject, onMounted, onUnmounted, ref, toRef, useAttrs, watch} from 'vue'
+import {computed, inject, onMounted, onUnmounted, ref, useAttrs, watch} from 'vue'
 import {useId} from '../../composables/useId'
 import {useDefaults} from '../../composables/useDefaults'
 import type {TabType} from '../../types/Tab'
@@ -89,14 +89,14 @@ onUnmounted(() => {
   parentData.unregisterTab(computedId.value)
 })
 
-const isActive = toRef(() => parentData?.activeId.value === computedId.value)
+const isActive = computed(() => parentData?.activeId.value === computedId.value)
 const show = ref(isActive.value)
 
-const computedLazy = toRef(() => !!(parentData?.lazy.value || (props.lazyOnce ?? props.lazy)))
-const computedLazyOnce = toRef(() => props.lazyOnce !== undefined)
+const computedLazy = computed(() => !!(parentData?.lazy.value || (props.lazyOnce ?? props.lazy)))
+const computedLazyOnce = computed(() => props.lazyOnce !== undefined)
 
-const computedActive = toRef(() => isActive.value && !props.disabled)
-const showSlot = toRef(
+const computedActive = computed(() => isActive.value && !props.disabled)
+const showSlot = computed(
   () =>
     computedActive.value ||
     !computedLazy.value ||

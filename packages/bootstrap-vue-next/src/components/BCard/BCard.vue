@@ -62,7 +62,7 @@
 <script setup lang="ts">
 import type {BCardProps} from '../../types/ComponentProps'
 import {isEmptySlot} from '../../utils/dom'
-import {computed, toRef} from 'vue'
+import {computed} from 'vue'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useDefaults} from '../../composables/useDefaults'
 import BCardImg from './BCardImg.vue'
@@ -126,8 +126,8 @@ const slots = defineSlots<{
   img?: (props: Record<string, never>) => any
 }>()
 
-const hasHeaderSlot = toRef(() => !isEmptySlot(slots.header))
-const hasFooterSlot = toRef(() => !isEmptySlot(slots.footer))
+const hasHeaderSlot = computed(() => !isEmptySlot(slots.header))
+const hasFooterSlot = computed(() => !isEmptySlot(slots.footer))
 
 const resolvedBackgroundClasses = useColorVariantClasses(props)
 

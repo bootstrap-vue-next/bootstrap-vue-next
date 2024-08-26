@@ -70,7 +70,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, toRef} from 'vue'
+import {computed, ref} from 'vue'
 import type {BFormSpinbuttonProps} from '../../types/ComponentProps'
 import {eventOnOff} from '../../utils/event'
 import {
@@ -170,17 +170,17 @@ let $_keyIsDown = false
 // const computedReadonly = computed(() => props.readonly && !props.disabled)
 
 const stepNumber = useToNumber(() => props.step)
-const computedStep = toRef(() =>
+const computedStep = computed(() =>
   Number.isNaN(stepNumber.value) ? defaultValues.step : stepNumber.value
 )
 
 const minNumber = useToNumber(() => props.min)
-const computedMin = toRef(() =>
+const computedMin = computed(() =>
   Number.isNaN(minNumber.value) ? defaultValues.min : minNumber.value
 )
 
 const maxNumber = useToNumber(() => props.max)
-const computedMax = toRef(() => {
+const computedMax = computed(() => {
   const step = computedStep.value
   const min = computedMin.value
   return Math.floor((maxNumber.value - min) / step) * step + min
@@ -190,7 +190,7 @@ const repeatDelayNumber = useToNumber(() => props.repeatDelay, {
   nanToZero: true,
   method: 'parseInt',
 })
-const computedDelay = toRef(() =>
+const computedDelay = computed(() =>
   repeatDelayNumber.value > 0 ? repeatDelayNumber.value : defaultValues.repeatDelay
 )
 
@@ -198,7 +198,7 @@ const repeatIntervalNumber = useToNumber(() => props.repeatInterval, {
   nanToZero: true,
   method: 'parseInt',
 })
-const computedInterval = toRef(() =>
+const computedInterval = computed(() =>
   repeatIntervalNumber.value > 0 ? repeatIntervalNumber.value : defaultValues.repeatInterval
 )
 
@@ -206,7 +206,7 @@ const repeatThresholdNumber = useToNumber(() => props.repeatThreshold, {
   nanToZero: true,
   method: 'parseInt',
 })
-const computedThreshold = toRef(() =>
+const computedThreshold = computed(() =>
   Math.max(
     Number.isNaN(repeatThresholdNumber.value)
       ? defaultValues.repeatThreshold
@@ -219,7 +219,7 @@ const repeatStepMultiplierNumber = useToNumber(() => props.repeatStepMultiplier,
   nanToZero: true,
   method: 'parseInt',
 })
-const computedStepMultiplier = toRef(() =>
+const computedStepMultiplier = computed(() =>
   Math.max(
     Number.isNaN(repeatStepMultiplierNumber.value)
       ? defaultValues.repeatMultiplier
@@ -228,14 +228,14 @@ const computedStepMultiplier = toRef(() =>
   )
 )
 
-const computedPrecision = toRef(() => {
+const computedPrecision = computed(() => {
   const step = computedStep.value
   return Math.floor(step) === step ? 0 : (step.toString().split('.')[1] || '').length
 })
 
-const computedMultiplier = toRef(() => Math.pow(10, computedPrecision.value || 0))
+const computedMultiplier = computed(() => Math.pow(10, computedPrecision.value || 0))
 
-const valueAsFixed = toRef(() =>
+const valueAsFixed = computed(() =>
   modelValue.value === null ? '' : modelValue.value.toFixed(computedPrecision.value)
 )
 
@@ -258,7 +258,7 @@ const defaultFormatter = () =>
     notation: 'standard',
   }).format
 
-const computedFormatter = toRef(() => props.formatterFn ?? defaultFormatter())
+const computedFormatter = computed(() => props.formatterFn ?? defaultFormatter())
 
 const stepValue = (direction: number) => {
   // Sets a new incremented or decremented value, supporting optional wrapping

@@ -50,7 +50,7 @@ import BCardImg from '../BCard/BCardImg.vue'
 import BPlaceholder from './BPlaceholder.vue'
 import BPlaceholderButton from './BPlaceholderButton.vue'
 import type {BPlaceholderCardProps} from '../../types/ComponentProps'
-import {computed, toRef} from 'vue'
+import {computed} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 
 const _props = withDefaults(defineProps<BPlaceholderCardProps>(), {
@@ -93,5 +93,5 @@ const defaultAttrs = computed(() => ({
   variant: props.variant,
 }))
 
-const footerComponent = toRef(() => (!props.noButton ? BPlaceholderButton : BPlaceholder))
+const footerComponent = computed(() => (!props.noButton ? BPlaceholderButton : BPlaceholder))
 </script>

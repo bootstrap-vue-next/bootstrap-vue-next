@@ -193,6 +193,7 @@ export default {
     return [
       {
         component: 'BTable',
+        sourcePath: '/BTable/BTable.vue',
         props: {
           '': {
             busy: {
@@ -522,6 +523,7 @@ export default {
       },
       {
         component: 'BTableLite',
+        sourcePath: '/BTable/BTableLite.vue',
         props: {
           '': BTableLiteProps,
           'BTableSimple Props': BTableSimpleProps,
@@ -531,6 +533,7 @@ export default {
       },
       {
         component: 'BTableSimple',
+        sourcePath: '/BTable/BTableSimple.vue',
         props: {
           '': BTableSimpleProps,
         },
@@ -545,6 +548,7 @@ export default {
       },
       {
         component: 'BTbody',
+        sourcePath: '/BTable/BTbody.vue',
         props: {
           '': {
             variant: {
@@ -564,6 +568,7 @@ export default {
       },
       {
         component: 'BTd',
+        sourcePath: '/BTable/BTd.vue',
         props: {
           '': {
             colspan: {
@@ -599,6 +604,7 @@ export default {
       },
       {
         component: 'BTfoot',
+        sourcePath: '/BTable/BTfoot.vue',
         props: {
           '': {
             variant: {
@@ -618,6 +624,7 @@ export default {
       },
       {
         component: 'BTh',
+        sourcePath: '/BTable/BTh.vue',
         props: {
           '': {
             colspan: {
@@ -653,6 +660,7 @@ export default {
       },
       {
         component: 'BThead',
+        sourcePath: '/BTable/BThead.vue',
         props: {
           '': {
             variant: {
@@ -672,6 +680,7 @@ export default {
       },
       {
         component: 'BTr',
+        sourcePath: '/BTable/BTr.vue',
         props: {
           '': {
             variant: {

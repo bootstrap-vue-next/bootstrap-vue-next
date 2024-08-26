@@ -6,6 +6,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BAccordion',
+      sourcePath: '/BAccordion/BAccordion.vue',
       props: {
         '': {
           flush: {
@@ -58,6 +59,7 @@ export default {
     },
     {
       component: 'BAccordionItem',
+      sourcePath: '/BAccordionItem/BAccordionItem.vue',
       props: {
         '': {
           bodyAttrs: {

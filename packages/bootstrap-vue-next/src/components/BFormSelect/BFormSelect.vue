@@ -38,7 +38,7 @@
 
 <script setup lang="ts" generic="T">
 import type {BFormSelectProps} from '../../types/ComponentProps'
-import {computed, ref, toRef} from 'vue'
+import {computed, ref} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
 import {useAriaInvalid} from '../../composables/useAriaInvalid'
@@ -107,7 +107,7 @@ const computedClasses = computed(() => [
   },
 ])
 
-const computedSelectSize = toRef(() =>
+const computedSelectSize = computed(() =>
   selectSizeNumber.value || props.plain ? selectSizeNumber.value : undefined
 )
 

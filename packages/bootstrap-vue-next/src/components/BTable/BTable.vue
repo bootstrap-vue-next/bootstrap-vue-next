@@ -136,7 +136,7 @@
 
 <script setup lang="ts" generic="T">
 import {useToNumber} from '@vueuse/core'
-import {computed, onMounted, type Ref, ref, toRef, watch} from 'vue'
+import {computed, onMounted, type Ref, ref, watch} from 'vue'
 import {formatItem} from '../../utils/formatItem'
 import BOverlay from '../BOverlay/BOverlay.vue'
 import BSpinner from '../BSpinner/BSpinner.vue'
@@ -323,9 +323,9 @@ const internalItems: Ref<T[]> = ref([])
 const perPageNumber = useToNumber(() => props.perPage, {method: 'parseInt'})
 const currentPageNumber = useToNumber(() => props.currentPage, {method: 'parseInt'})
 
-const isFilterableTable = toRef(() => !!props.filter)
-const usesProvider = toRef(() => props.provider !== undefined)
-const isSelecting = toRef(() => selectedItemsToSet.value.size > 0)
+const isFilterableTable = computed(() => !!props.filter)
+const usesProvider = computed(() => props.provider !== undefined)
+const isSelecting = computed(() => selectedItemsToSet.value.size > 0)
 
 const isSortable = computed(
   () =>

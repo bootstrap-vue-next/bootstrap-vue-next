@@ -1,6 +1,6 @@
 import {createApp, h} from 'vue'
 import App from './App.vue'
-import {createBootstrap} from './BootstrapVue'
+import {createBootstrap} from './plugins/createBootstrap/createBootstrap'
 
 import {createRouter, createWebHistory, useRoute} from 'vue-router'
 

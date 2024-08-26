@@ -5,6 +5,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BTab',
+      sourcePath: '/BTabs/BTab.vue',
       props: {
         '': {
           active: {
@@ -73,6 +74,7 @@ export default {
     },
     {
       component: 'BTabs',
+      sourcePath: '/BTabs/BTabs.vue',
       props: {
         '': {
           activeId: {

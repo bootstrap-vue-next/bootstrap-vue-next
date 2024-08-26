@@ -80,9 +80,9 @@ const slots = defineSlots<{
 
 const parentData = inject(carouselInjectionKey, null)
 
-const hasText = toRef(() => props.text || props.textHtml || !isEmptySlot(slots.text))
-const hasCaption = toRef(() => props.caption || props.captionHtml || !isEmptySlot(slots.caption))
-const hasContent = toRef(() => hasText.value || hasCaption.value || !isEmptySlot(slots.default))
+const hasText = computed(() => props.text || props.textHtml || !isEmptySlot(slots.text))
+const hasCaption = computed(() => props.caption || props.captionHtml || !isEmptySlot(slots.caption))
+const hasContent = computed(() => hasText.value || hasCaption.value || !isEmptySlot(slots.default))
 
 const computedStyle = computed<CSSProperties>(() => ({
   background: `${

@@ -27,7 +27,7 @@
 <script setup lang="ts">
 import {useDefaults} from '../../composables/useDefaults'
 import type {BInputGroupProps} from '../../types/ComponentProps'
-import {computed, provide, toRef} from 'vue'
+import {computed, provide} from 'vue'
 import {inputGroupKey} from '../../utils/keys'
 
 provide(inputGroupKey, true)
@@ -55,6 +55,6 @@ defineSlots<{
 const computedClasses = computed(() => ({
   [`input-group-${props.size}`]: props.size !== 'md',
 }))
-const hasAppend = toRef(() => !!props.append || !!props.appendHtml)
-const hasPrepend = toRef(() => !!props.prepend || !!props.prependHtml)
+const hasAppend = computed(() => !!props.append || !!props.appendHtml)
+const hasPrepend = computed(() => !!props.prepend || !!props.prependHtml)
 </script>

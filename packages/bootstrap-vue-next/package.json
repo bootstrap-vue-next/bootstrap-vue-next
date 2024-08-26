@@ -18,6 +18,16 @@
         "default": "./dist/bootstrap-vue-next.umd.js"
       }
     },
+    "./components/*": {
+      "import": {
+        "default": "./dist/components/*/*.mjs",
+        "types": "./dist/src/components/*/*.mts"
+      },
+      "require": {
+        "default": "./dist/components/*/*.js",
+        "types": "./dist/src/components/*/*.d.ts"
+      }
+    },
     "./dist/bootstrap-vue-next.css": "./dist/bootstrap-vue-next.css",
     "./src/styles/styles.scss": "./src/styles/styles.scss"
   },

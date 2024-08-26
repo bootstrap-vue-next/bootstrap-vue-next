@@ -217,7 +217,7 @@
 </template>
 
 <script setup lang="ts" generic="T">
-import {computed, ref, toRef, watch} from 'vue'
+import {computed, ref, watch} from 'vue'
 import type {BTableLiteProps} from '../../types/ComponentProps'
 import {
   isTableField,
@@ -370,7 +370,7 @@ const computedFields = computed<(TableField & {_noHeader?: true})[]>(() => {
     }
   })
 })
-const computedFieldsTotal = toRef(() => computedFields.value.length)
+const computedFieldsTotal = computed(() => computedFields.value.length)
 const showComputedHeaders = computed(() => {
   // We only hide the header if all fields have _noHeader set to true. Which would be our doing
   // This usually happens under a circumstance of displaying an array of primitives

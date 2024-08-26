@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import {useTooltip} from '../../composables/useTooltip'
+import {useTooltip} from '../../composables/useTooltip/useTooltip'
 import BTooltip from './BTooltip.vue'
 
 const tools = useTooltip()
@@ -20,3 +20,4 @@ defineExpose({
   ...tools,
 })
 </script>
+../../composables/useTooltip/useTooltip

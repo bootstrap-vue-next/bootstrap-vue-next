@@ -33,7 +33,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import {positionClasses} from '../../utils/positionClasses'
 import type {BToastOrchestratorProps} from '../../types/ComponentProps'
 import BToast from './BToast.vue'
-import {useToast} from '../../composables/useToast'
+import {useToast} from '../../composables/useToast/useToast'
 
 const _props = withDefaults(defineProps<BToastOrchestratorProps>(), {
   teleportDisabled: false,

@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 import {useFocus} from '@vueuse/core'
-import {computed, inject, ref, toRef, useAttrs} from 'vue'
+import {computed, inject, ref, useAttrs} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses} from '../../composables/useFormCheck'
 import type {BFormCheckboxProps} from '../../types/ComponentProps'
 import {checkboxGroupKey} from '../../utils/keys'
@@ -94,7 +94,7 @@ const {focused} = useFocus(input, {
   initialValue: props.autofocus,
 })
 
-const hasDefaultSlot = toRef(() => !isEmptySlot(slots.default))
+const hasDefaultSlot = computed(() => !isEmptySlot(slots.default))
 
 const localValue = computed({
   get: () => (parentData ? parentData.modelValue.value : modelValue.value),
@@ -115,11 +115,11 @@ const localValue = computed({
   },
 })
 
-const computedRequired = toRef(
+const computedRequired = computed(
   () => !!(props.name ?? parentData?.name.value) && (props.required || parentData?.required.value)
 )
 
-const isButtonGroup = toRef(() => props.buttonGroup || (parentData?.buttons.value ?? false))
+const isButtonGroup = computed(() => props.buttonGroup || (parentData?.buttons.value ?? false))
 
 const classesObject = computed(() => ({
   plain: props.plain || (parentData?.plain.value ?? false),

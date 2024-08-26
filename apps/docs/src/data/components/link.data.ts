@@ -4,6 +4,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BLink',
+      sourcePath: '/BLink/BLink.vue',
       props: {
         '': linkProps,
       },

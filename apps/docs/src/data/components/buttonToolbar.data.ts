@@ -5,6 +5,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BButtonToolbar',
+      sourcePath: '/BButton/BButtonToolbar.vue',
       props: {
         '': {
           ariaLabel: {

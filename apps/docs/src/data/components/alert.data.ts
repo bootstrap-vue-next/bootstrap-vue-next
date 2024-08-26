@@ -6,6 +6,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BAlert',
+      sourcePath: '/BAlert/BAlert.vue',
       props: {
         '': {
           closeVariant: {
@@ -56,8 +57,8 @@ export default {
               'Setting this property to `false` will cause a timer to not start immediately upon render. A timer that is not started is not rendered. It must manually be started with `resume()` or `restart()`',
           },
           interval: {
-            type: 'Numberish',
-            default: 1000,
+            type: 'number | requestAnimationFrame',
+            default: 'requestAnimationFrame',
             description: 'The interval in milliseconds to update the countdown timer',
           },
           showOnPause: {

@@ -38,6 +38,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BModal',
+      sourcePath: '/BModal/BModal.vue',
       props: {
         '': {
           autofocus: {

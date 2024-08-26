@@ -72,7 +72,7 @@ import {
   useFocus,
 } from '@vueuse/core'
 import {useActivatedFocusTrap} from '../../composables/useActivatedFocusTrap'
-import {computed, nextTick, ref, toRef, watch} from 'vue'
+import {computed, nextTick, ref, watch} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import type {BOffcanvasProps} from '../../types/ComponentProps'
@@ -81,6 +81,7 @@ import BButton from '../BButton/BButton.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import {useSafeScrollLock} from '../../composables/useSafeScrollLock'
 import {isEmptySlot} from '../../utils/dom'
+import type {Placement} from '../../types/Alignment'
 
 // TODO once the responsive stuff may be implemented correctly,
 // What needs to occur is a fixing of the "body scrolling".
@@ -134,7 +135,7 @@ const emit = defineEmits<{
 
 type SharedSlotsData = {
   visible: boolean
-  placement: 'top' | 'bottom' | 'start' | 'end'
+  placement: Placement
   hide: (trigger?: string) => void
 }
 
@@ -213,7 +214,7 @@ const lazyShowing = computed(
     (props.lazy === true && modelValue.value === true)
 )
 
-const hasHeaderCloseSlot = toRef(() => !isEmptySlot(slots['header-close']))
+const hasHeaderCloseSlot = computed(() => !isEmptySlot(slots['header-close']))
 const headerCloseClasses = computed(() => [
   {'text-reset': !hasHeaderCloseSlot.value},
   props.headerCloseClass,
@@ -233,7 +234,7 @@ const transitionProps = computed(() =>
       }
 )
 
-const hasFooterSlot = toRef(() => !isEmptySlot(slots.footer))
+const hasFooterSlot = computed(() => !isEmptySlot(slots.footer))
 const computedClasses = computed(() => [
   props.responsive === undefined ? 'offcanvas' : `offcanvas-${props.responsive}`,
   `offcanvas-${props.placement}`,

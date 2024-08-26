@@ -152,7 +152,7 @@ export const modalManagerPluginKey: InjectionKey<{
   lastStack: ComputedRef<ComponentInternalInstance | undefined>
   pushStack: (modal: Readonly<ComponentInternalInstance>) => void
   removeStack: (modal: Readonly<ComponentInternalInstance>) => void
-  registry: ComputedRef<ComponentInternalInstance[]>
+  registry: Readonly<Ref<Map<number, ComponentInternalInstance>>>
   pushRegistry: (modal: Readonly<ComponentInternalInstance>) => void
   removeRegistry: (modal: Readonly<ComponentInternalInstance>) => void
 }> = Symbol('bvn::modalManagerPlugin')

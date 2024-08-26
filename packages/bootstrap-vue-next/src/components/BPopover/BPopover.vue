@@ -192,7 +192,7 @@ const sanitizedTitle = computed(() =>
 const sanitizedContent = computed(() =>
   props.content ? sanitizeHtml(props.content, DefaultAllowlist) : ''
 )
-const isAutoPlacement = toRef(() => props.placement.startsWith('auto'))
+const isAutoPlacement = computed(() => props.placement.startsWith('auto'))
 const offsetNumber = useToNumber(() => props.offset ?? NaN)
 
 const boundary = computed<Boundary | undefined>(() =>
@@ -268,7 +268,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
   return arr
 })
 
-const placementRef = toRef(() =>
+const placementRef = computed(() =>
   isAutoPlacement.value ? undefined : (props.placement as OriginalPlacement)
 )
 

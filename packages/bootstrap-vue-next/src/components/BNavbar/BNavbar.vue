@@ -31,7 +31,7 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const computedRole = toRef(() => (props.tag === 'nav' ? undefined : 'navigation'))
+const computedRole = computed(() => (props.tag === 'nav' ? undefined : 'navigation'))
 
 const containerClass = useContainerClasses(() => props.container)
 

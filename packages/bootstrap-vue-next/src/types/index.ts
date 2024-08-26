@@ -1,63 +1,70 @@
-// export type {
-//   AlignmentCommon,
-//   AlignmentContent,
-//   AlignmentHorizontal,
-//   AlignmentJustifyContent,
-//   AlignmentTextHorizontal,
-//   AlignmentVertical,
-//   Animation,
-//   AriaInvalid,
-//   BTableProvider,
-//   BTableProviderContext,
-//   BaseButtonVariant,
-//   BaseColorVariant,
-//   BaseSize,
-//   BootstrapVueOptions,
-//   BaseTextColorVariant,
-//   BreadcrumbItem,
-//   BreadcrumbItemRaw,
-//   Breakpoint,
-//   BTableSortBy,
-//   ButtonType,
-//   ButtonVariant,
-//   CheckboxOption,
-//   CheckboxOptionRaw,
-//   CheckboxValue,
-//   ColorExtendables,
-//   ColorVariant,
-//   ComplexSelectOption,
-//   ComplexSelectOptionRaw,
-//   ContainerHorizontalAlign,
-//   ContainerPosition,
-//   ContainerVerticalAlign,
-//   InputType,
-//   LinkTarget,
-//   OrchestratedModal,
-//   OrchestratedToast,
-//   PaginationPage,
-//   PlaceholderAnimation,
-//   PlaceholderSize,
-//   PopoverPlacement,
-//   Position,
-//   RadioOption,
-//   RadioOptionRaw,
-//   RadioValue,
-//   RadiusElement,
-//   RadiusElementExtendables,
-//   SelectValue,
-//   SelectOption,
-//   SelectOptionRaw,
-//   Size,
-//   SpinnerType,
-//   TabType,
-//   TableField,
-//   TableFieldFormatter,
-//   TableFieldRaw,
-//   TableItem,
-//   TextColorVariant,
-//   TransitionMode,
-//   VerticalAlign,
+export type {
+  AlignmentCommon,
+  AlignmentContent,
+  AlignmentHorizontal,
+  AlignmentJustifyContent,
+  AlignmentTextHorizontal,
+  AlignmentVertical,
+  ContainerHorizontalAlign,
+  ContainerPosition,
+  ContainerVerticalAlign,
+  VerticalAlign,
+} from './Alignment'
+export type {Animation} from './Animation'
+export type {AriaInvalid} from './AriaInvalid'
+export type {
+  BTableProvider,
+  BTableProviderContext,
+  BTableSortBy,
+  TableField,
+  TableFieldFormatter,
+  TableFieldRaw,
+  TableItem,
+} from './TableTypes'
+export type {
+  BaseButtonVariant,
+  BaseColorVariant,
+  BaseTextColorVariant,
+  ButtonVariant,
+  ColorExtendables,
+  ColorVariant,
+  TextColorVariant,
+} from './ColorTypes'
+export type {BaseSize, Size} from './Size'
+export type {BootstrapVueOptions} from './BootstrapVueOptions'
+export type {BreadcrumbItem, BreadcrumbItemRaw} from './BreadcrumbTypes'
+export type {Breakpoint} from './BreakpointProps'
+export type {ButtonType} from './ButtonType'
+export type {CheckboxOption, CheckboxOptionRaw, CheckboxValue} from './CheckboxTypes'
+export type {
+  ComplexSelectOption,
+  ComplexSelectOptionRaw,
+  SelectValue,
+  SelectOption,
+  SelectOptionRaw,
+} from './SelectTypes'
+export type {InputType} from './InputType'
+export type {LinkTarget} from './LinkTarget'
+export type {PublicOrchestratedModal, PublicOrchestratedToast} from './ComponentOrchestratorTypes'
+export type {PaginationPage} from './PaginationPage'
+export type {PlaceholderAnimation, PlaceholderSize} from './PlaceholderTypes'
+export type {PopoverPlacement} from './PopoverPlacement'
+export type {Position} from './Position'
+export type {RadioOption, RadioOptionRaw, RadioValue} from './RadioTypes'
+export type {RadiusElement, RadiusElementExtendables} from './RadiusElement'
+export type {SpinnerType} from './SpinnerType'
+export type {TabType} from './Tab'
+export type {TransitionMode} from './TransitionMode'
+export type * from './ComponentProps'
 
-// export type * from '../ComponentProps'
-
-// export {ComponentNames, ComposableNames, DirectiveNames} from '../BootstrapVueOptions'
+export {
+  // Real
+  composableNames,
+  // Real
+  directiveNames,
+  // Real
+  componentNames,
+  type ComponentType,
+  type ComposableType,
+  type DirectiveType,
+} from './BootstrapVueOptions'

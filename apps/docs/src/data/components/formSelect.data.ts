@@ -6,6 +6,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormSelect',
+      sourcePath: '/BFormSelect/BFormSelect.vue',
       props: {
         '': {
           labelField: {
@@ -86,6 +87,7 @@ export default {
     },
     {
       component: 'BFormSelectOption',
+      sourcePath: '/BFormSelect/BFormSelectOption.vue',
       emits: [],
       props: {
         '': {
@@ -110,6 +112,7 @@ export default {
     },
     {
       component: 'BFormSelectOptionGroup',
+      sourcePath: '/BFormSelect/BFormSelectOptionGroup.vue',
       props: {
         '': {
           label: {

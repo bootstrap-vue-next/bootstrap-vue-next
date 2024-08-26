@@ -5,9 +5,9 @@
 </template>
 
 <script setup lang="ts">
+import {computed} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BCardGroupProps} from '../../types/ComponentProps'
-import {toRef} from 'vue'
 
 const _props = withDefaults(defineProps<BCardGroupProps>(), {
   columns: false,
@@ -21,7 +21,7 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const cardTypeClass = toRef(() =>
+const cardTypeClass = computed(() =>
   props.deck ? 'card-deck' : props.columns ? 'card-columns' : 'card-group'
 )
 </script>
