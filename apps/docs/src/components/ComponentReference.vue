@@ -268,7 +268,7 @@ const buildCompReferenceLink = (str: string): string => `#comp-reference-${str}`
 const sectionToComponentItem = (el: ComponentSection): ComponentItemFree =>
   el === 'Properties' ? 'props' : el === 'Events' ? 'emits' : 'slots'
 
-const fields: {[P in Exclude<ComponentItemFree, 'sourcePath'>]: TableFieldRaw[]} = {
+const fields: {[P in ComponentItemFree]: TableFieldRaw[]} = {
   props: ['prop', 'type', 'default', 'description'],
   emits: ['event', 'args', 'description'],
   slots: ['name', 'scope', 'description'],
