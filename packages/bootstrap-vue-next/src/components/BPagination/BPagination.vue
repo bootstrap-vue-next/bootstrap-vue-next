@@ -438,14 +438,14 @@ const buttons = computed(() => {
   }
 
   // Enable sanity check for debugging purposes
-  for (let i = 0; i < buttons.length; i++) {
-    if (!buttons[i]) {
-      // eslint-disable-next-line no-console
-      console.log(
-        `Failed: button == ${i}, limit=${limit}, pages=${pages}, firstPage=${firstPage}, lastPage=${lastPage}, value=${value}`
-      )
-    }
-  }
+  // for (let i = 0; i < buttons.length; i++) {
+  //   if (!buttons[i]) {
+  //     // eslint-disable-next-line no-console
+  //     console.log(
+  //       `Failed: button == ${i}, limit=${limit}, pages=${pages}, firstPage=${firstPage}, lastPage=${lastPage}, value=${value}`
+  //     )
+  //   }
+  // }
 
   return buttons as number[]
 })
