@@ -349,7 +349,8 @@ const pages = computed(
         case ELLIPSIS_BUTTON:
           return {id: ELLIPSIS_BUTTON, ...ellipsisProps.value}
         default:
-          return {id: p, ...getPageButtonProps(p)}
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          return {id: p, ...getPageButtonProps(p!)}
       }
     }) as PageButton[]
 )
