@@ -350,7 +350,7 @@ const pages = computed(
           return {id: ELLIPSIS_BUTTON, ...ellipsisProps.value}
         default:
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          return {id: p, ...getPageButtonProps(p!)}
+          return {id: p, ...getPageButtonProps(p)}
       }
     }) as PageButton[]
 )
@@ -380,7 +380,7 @@ const elements = computed(() => {
       ...Array.from({length: pages}, (_, index) => index + 1),
       NEXT_BUTTON,
       !lastPage && !hideEndButtons ? LAST_BUTTON : null,
-    ].filter((x) => x !== null)
+    ].filter((x) => x !== null) as number[]
   }
 
   // All of the remaining cases result in an array that is exactly limit + 4 - hideEndButtons * 2 in length, so create
@@ -460,7 +460,7 @@ const elements = computed(() => {
   //   }
   // }
 
-  return buttons as number[]
+  return buttons.filter((x) => x !== null) as number[]
 })
 </script>
 
