@@ -165,26 +165,4 @@ recommended unless the content of the button textually conveys its purpose.
 
 <script setup lang="ts">
 import {data} from '../../data/components/pagination.data'
-import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
-import HighlightCard from '../../components/HighlightCard.vue'
-import {BProgress, BSpinner, BCard, BCardBody, BPagination} from 'bootstrap-vue-next'
-import {ref, computed} from 'vue'
-
-const ex1CurrentPage = ref(1);
-const ex1PerPage = ref(10);
-const ex1Rows = ref(100);
-
-const ex2CurrentPage = ref(5);
-const ex2PerPage = ref(1);
-const ex2Rows = ref(100);
-
-const ex3CurrentPage = ref(1);
-const ex3Rows = ref(100);
-
-const ex4CurrentPage = ref(1);
-const ex4Rows = ref(100);
-
-const ex5CurrentPage = ref(3);
-const ex5Rows = ref(100);
 </script>
