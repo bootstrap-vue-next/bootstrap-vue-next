@@ -392,7 +392,7 @@ The `show` and `confirm` `props` object accespts all of the properties that are 
 
 ## BPagination
 
-Keyboard Navigation, Small Screen Support and Aria Labels are not yet implemented.
+Keyboard Navigation and Small Screen Support.
 
 ## BPaginationNav
 

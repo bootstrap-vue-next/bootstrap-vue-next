@@ -138,9 +138,9 @@ know what component is being updated/controlled.
 
 <NotYetImplemented />
 
-`BPagination` provides various `*-label-*` props which are used to set the `aria-label`
-attributes on the various elements within the component, which will help users of assistive
-technology.
+`BPagination` provides various `label-*` props which are used to set the `aria-label`
+attributes on the various elements within the component as well as the common `aria-label` prop
+on the outer container, which will help users of assistive technology.
 
 | Prop               | `aria-label` content default                            |
 | ------------------ | ------------------------------------------------------- |
