@@ -29,6 +29,7 @@ const _props = withDefaults(defineProps<BDropdownItemButtonProps>(), {
   buttonClass: undefined,
   disabled: false,
   variant: null,
+  wrapperAttrs: undefined,
 })
 const props = useDefaults(_props, 'BDropdownItemButton')
 
