@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.24.11](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.24.10...nuxt-v0.24.11) (2024-08-27)
+
+
+### Miscellaneous Chores
+
+* **nuxt:** Synchronize main group versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.24.11
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.24.11
+
 ## [0.24.10](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.24.9...nuxt-v0.24.10) (2024-08-20)
 
 
