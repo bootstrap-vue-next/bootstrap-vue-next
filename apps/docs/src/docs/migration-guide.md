@@ -390,6 +390,14 @@ const confirmBox = async () => {
 The `show` and `confirm` `props` object accespts all of the properties that are defined on
 [BModal](/docs/components/modal#component-reference) excpet for `modelValue`.
 
+## BPagination
+
+Keyboard Navigation, Small Screen Support and Aria Labels are not yet implemented.
+
+## BPaginationNav
+
+This component is not yet implemented
+
 <MigrationWrapper v-for="(item, i) in changes" :key="i" v-bind="item" />
 
 <script setup lang="ts">
