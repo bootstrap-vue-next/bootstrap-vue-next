@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.24.11](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.10...bootstrapvuenext-v0.24.11) (2024-08-27)
+
+
+### Bug Fixes
+
+* **BPagination:** Correctly position ellipses when hideGotoEndButtons=true. ([#2148](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2148)) ([d708aa4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d708aa484200128799f40b69c0e66973d2e0f5f2))
+* **BPagination:** Get rid of bad binding on li ([#2150](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2150)) ([182dbc7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/182dbc7971456e80cdbf257d9700d61d43b106ba))
+* pass attributes through in BDropdownItemButton ([#2143](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2143)) ([951bbf0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/951bbf07bf7f4d99616da965b723014594cd6d41))
+
 ## [0.24.10](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.9...bootstrapvuenext-v0.24.10) (2024-08-20)
 
 
