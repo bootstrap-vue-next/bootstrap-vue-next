@@ -88,7 +88,7 @@ export default {
             type: 'string',
             default: 'Go to page',
             description:
-              "Value to place in the 'aria-label' attribute of the go to page button. Page number will be prepended automatically",
+              "Value to place in the 'aria-label' attribute of the go to page button. Page number will be appended automatically",
           },
           labelPrevPage: {
             type: 'string',
