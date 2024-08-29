@@ -55,10 +55,6 @@ export default {
                 description:
                   'Applies one of the Bootstrap theme color variants to the body border (NYI?)',
               },
-              bodyTextVariant: {
-                description:
-                  'Applies one of the Bootstrap theme color variants to the body text (NYI?)',
-              },
             }),
             [
               'bgVariant',
