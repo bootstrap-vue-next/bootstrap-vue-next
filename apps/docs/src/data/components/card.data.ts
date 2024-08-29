@@ -1,5 +1,6 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {ComponentReference, PropertyReference} from '../../types'
+import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
@@ -10,178 +11,118 @@ export default {
           align: {
             type: 'AlignmentTextHorizontal',
             default: undefined,
-          },
-          bgVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-          bodyBgVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-          bodyClass: {
-            type: 'ClassValue',
-            default: undefined,
-          },
-          bodyTag: {
-            type: 'string',
-            default: 'div',
+            description: "Text alignment for the card's content: 'start', 'center' or 'end'",
           },
           bodyText: {
             type: 'string',
-            default: undefined,
-          },
-          bodyTextVariant: {
-            type: 'TextColorVariant | null',
-            default: undefined,
-          },
-          borderVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-          footer: {
-            type: 'string',
-            default: undefined,
-          },
-          footerBgVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-          footerBorderVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-          footerClass: {
-            type: 'ClassValue',
-            default: undefined,
-          },
-          footerHtml: {
-            type: 'string',
-            default: '',
-          },
-          footerTag: {
-            type: 'string',
-            default: 'div',
-          },
-          footerTextVariant: {
-            type: 'TextColorVariant | null',
-            default: undefined,
-          },
-          footerVariant: {
-            type: 'ColorVariant | null',
-            default: null,
-          },
-          header: {
-            type: 'string',
-            default: undefined,
-          },
-          headerBgVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-          headerBorderVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-          headerClass: {
-            type: 'ClassValue',
-            default: undefined,
-          },
-          headerHtml: {
-            type: 'string',
-            default: '',
-          },
-          headerTag: {
-            type: 'string',
-            default: 'div',
-          },
-          headerTextVariant: {
-            type: 'TextColorVariant | null',
-            default: undefined,
-          },
-          headerVariant: {
-            type: 'ColorVariant | null',
-            default: null,
+            default: "''",
+            description: 'Text content to place in the card body, default slot takes precedence',
           },
           imgAlt: {
             type: 'string',
             default: undefined,
-          },
-          imgPlacement: {
-            type: 'Placement | "overlay"',
-            default: 'top',
+            description: 'URL for the optional image',
           },
           imgHeight: {
             type: 'Numberish',
             default: undefined,
+            description: "The value to set on the image's 'height' attribute",
+          },
+          imgPlacement: {
+            type: 'Placement | "overlay"',
+            default: 'top',
+            description:
+              "Placement for the optional image ('top', 'bottom', 'start', 'end', or 'overlay')",
           },
           imgSrc: {
             type: 'string',
             default: undefined,
+            description: 'URL for the optional image',
           },
           imgWidth: {
             type: 'Numberish',
             default: undefined,
+            description: "The value to set on the image's 'width' attribute",
           },
           noBody: {
             type: 'boolean',
             default: false,
-          },
-          subtitle: {
-            type: 'string',
-            default: undefined,
-          },
-          subtitleTag: {
-            type: 'string',
-            default: 'h6',
-          },
-          subtitleTextVariant: {
-            type: 'TextColorVariant | null',
-            default: 'body-secondary',
-          },
-          tag: {
-            type: 'string',
-            default: 'div',
-          },
-          textVariant: {
-            type: 'TextColorVariant | null',
-            default: undefined,
-          },
-          title: {
-            type: 'string',
-            default: undefined,
-          },
-          titleTag: {
-            type: 'string',
-            default: 'h6',
+            description: 'Disable rendering of the default inner card-body element',
           },
           variant: {
             type: 'ColorVariant | null',
             default: null,
           },
+          ...pick(
+            buildCommonProps({
+              bodyBorderVariant: {
+                description:
+                  'Applies one of the Bootstrap theme color variants to the body border (NYI?)',
+              },
+              bodyTextVariant: {
+                description:
+                  'Applies one of the Bootstrap theme color variants to the body text (NYI?)',
+              },
+              bodyVariant: {
+                description: 'Applies one of the Bootstrap theme color variants to the body (NYI?)',
+              },
+              variant: {
+                default: 'secondary',
+              },
+            }),
+            [
+              'bgVariant',
+              'bodyBgVariant',
+              'bodyBorderVariant',
+              'bodyClass',
+              'bodyTag',
+              'bodyTextVariant',
+              'bodyVariant',
+              'borderVariant',
+              'footer',
+              'footerBgVariant',
+              'footerBorderVariant',
+              'footerClass',
+              'footerHtml',
+              'footerTag',
+              'footerTextVariant',
+              'footerVariant',
+              'header',
+              'headerBgVariant',
+              'headerBorderVariant',
+              'headerClass',
+              'headerHtml',
+              'headerTag',
+              'headerTextVariant',
+              'headerVariant',
+              'subtitle',
+              'subtitleTag',
+              'subtitleTextVariant',
+              'tag',
+              'textVariant',
+              'title',
+              'titleTag',
+            ]
+          ),
         } satisfies Record<keyof BvnComponentProps['BCard'], PropertyReference>,
       },
       emits: [],
       slots: [
         {
           name: 'default',
-          description: '',
-          scope: [],
-        },
-        {
-          name: 'header',
-          description: '',
-          scope: [],
+          description: 'Content to place in the card',
         },
         {
           name: 'footer',
-          description: '',
-          scope: [],
+          description: 'For custom rendering of footer content',
+        },
+        {
+          name: 'header',
+          description: 'For custom rendering of header content',
         },
         {
           description: '',
-          name: 'img',
-          scope: [],
+          name: 'For custom rendering of image content',
         },
       ],
     },
@@ -260,10 +201,6 @@ export default {
       props: {
         '': {
           bgVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-          borderVariant: {
             type: 'ColorVariant | null',
             default: undefined,
           },

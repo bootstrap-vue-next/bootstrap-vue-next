@@ -280,6 +280,15 @@ and `exact-path-active-class` props on `BLink`. See the [`Vue Router` migration 
 
 BSVN no longer emits the `bv::link::clicked` event on `$root`.
 
+## BCard
+
+Image placement is accomplished by the single `img-placement` prop, which takes the values
+`top`, `bottom`, `start`, `end`, or `overlay`. This allows us to deprecate the `imgBottom`,
+`imgEnd`, `imgLeft`, `imgRight`, `imgStart`, and `imgTop` props from `BCard`.
+
+The `sub-title`, `sub-title-tag` and `sub-title-text-variant` props have been renamed to
+`subtitle`, `subtitle-tag` and `subtitle-text-variant`, respectively.
+
 ## BModal
 
 ### Replacement for Modal Message boxes
@@ -390,35 +399,9 @@ const confirmBox = async () => {
 The `show` and `confirm` `props` object accespts all of the properties that are defined on
 [BModal](/docs/components/modal#component-reference) excpet for `modelValue`.
 
-<MigrationWrapper v-for="(item, i) in changes" :key="i" v-bind="item" />
-
 <script setup lang="ts">
 import {computed, ref} from 'vue'
-import {BAvatar, BButton, BModalOrchestrator, useModalController} from 'bootstrap-vue-next'
-import MigrationWrapper from '../components/MigrationWrapper.vue'
-import HighlightCard from '../components/HighlightCard.vue'
-
-const changes = computed<{
-  component: string
-  change: string
-  fix: string
-}[]>(() => [
-  {
-    change: 'subTitle prop renamed to subtitle',
-    fix: "Any instances of using prop 'subTitle' on BCard should be replaced with 'subtitle'",
-    component: 'BCard',
-  },
-  {
-    change: 'subTitleTag prop renamed to subtitleTag',
-    fix: "Any instances of using prop 'subTitleTag' on BCard should be replaced with 'subtitleTag'",
-    component: 'BCard',
-  },
-  {
-    change: 'subTitleTextVariant prop renamed to subtitleTextVariant',
-    fix: "Any instances of using prop 'subTitleTextVariant' on BCard should be replaced with 'subtitleTextVariant'",
-    component: 'BCard',
-  },
-].sort((a, b) => a.component.localeCompare(b.component)))
+import {useModalController} from 'bootstrap-vue-next'
 
 const {confirm, show} = useModalController()
 
