@@ -49,10 +49,6 @@ export default {
             default: false,
             description: 'Disable rendering of the default inner card-body element',
           },
-          variant: {
-            type: 'ColorVariant | null',
-            default: null,
-          },
           ...pick(
             buildCommonProps({
               bodyBorderVariant: {
@@ -63,12 +59,6 @@ export default {
                 description:
                   'Applies one of the Bootstrap theme color variants to the body text (NYI?)',
               },
-              bodyVariant: {
-                description: 'Applies one of the Bootstrap theme color variants to the body (NYI?)',
-              },
-              variant: {
-                default: 'secondary',
-              },
             }),
             [
               'bgVariant',
@@ -77,7 +67,6 @@ export default {
               'bodyClass',
               'bodyTag',
               'bodyTextVariant',
-              'bodyVariant',
               'borderVariant',
               'footer',
               'footerBgVariant',
@@ -102,6 +91,7 @@ export default {
               'textVariant',
               'title',
               'titleTag',
+              'variant',
             ]
           ),
         } satisfies Record<keyof BvnComponentProps['BCard'], PropertyReference>,
@@ -121,8 +111,8 @@ export default {
           description: 'For custom rendering of header content',
         },
         {
-          description: '',
-          name: 'For custom rendering of image content',
+          name: 'img',
+          description: 'For custom rendering of image content',
         },
       ],
     },
@@ -131,67 +121,40 @@ export default {
       emits: [],
       props: {
         '': {
-          bgVariant: {
-            type: 'ColorVariant | null',
-            default: null,
-          },
           overlay: {
             type: 'boolean',
             default: false,
           },
-          subtitle: {
-            type: 'string',
-            default: undefined,
-          },
-          subtitleTag: {
-            type: 'string',
-            default: 'h4',
-          },
-          subtitleTextVariant: {
-            type: 'TextColorVariant | null',
-            default: undefined,
-          },
-          tag: {
-            type: 'string',
-            default: 'div',
-          },
           text: {
             type: 'string',
             default: undefined,
+            description: 'Text content to place in the card body, default slot takes precedence',
           },
-          title: {
-            type: 'string',
-            default: undefined,
-          },
-          titleTag: {
-            type: 'string',
-            default: 'h4',
-          },
-          textVariant: {
-            type: 'TextColorVariant | null',
-            default: null,
-          },
-          variant: {
-            type: 'ColorVariant | null',
-            default: null,
-          },
+          ...pick(buildCommonProps(), [
+            'bgVariant',
+            'subtitle',
+            'subtitleTag',
+            'subtitleTextVariant',
+            'tag',
+            'textVariant',
+            'title',
+            'titleTag',
+            'variant',
+          ]),
         } satisfies Record<keyof BvnComponentProps['BCardBody'], PropertyReference>,
       },
       slots: [
         {
-          name: 'title',
-          description: '',
-          scope: [],
-        },
-        {
-          description: '',
-          name: 'subtitle',
-          scope: [],
-        },
-        {
           name: 'default',
-          description: '',
-          scope: [],
+          description: 'Content to place in the card body',
+        },
+        {
+          name: 'title',
+          description: 'Content to place in the card title',
+        },
+        {
+          name: 'subtitle',
+          description: 'Content to place in the card subtitle',
         },
       ],
     },
@@ -200,37 +163,30 @@ export default {
       emits: [],
       props: {
         '': {
-          bgVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
           html: {
             type: 'string',
             default: undefined,
-          },
-          tag: {
-            type: 'string',
-            default: 'div',
+            description:
+              'HTML content to place in the card footer, takes precednce over text prop and default slot',
           },
           text: {
             type: 'string',
             default: undefined,
+            description: 'Text content to place in the card footer, default slot takes precedence',
           },
-          textVariant: {
-            type: 'TextColorVariant | null',
-            default: undefined,
-          },
-          variant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
+          ...pick(buildCommonProps(), [
+            'bgVariant',
+            'borderVariant',
+            'tag',
+            'textVariant',
+            'variant',
+          ]),
         } satisfies Record<keyof BvnComponentProps['BCardFooter'], PropertyReference>,
       },
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the card footer',
         },
       ],
     },
@@ -242,22 +198,20 @@ export default {
           columns: {
             type: 'boolean',
             default: false,
+            description: 'When set, renders the card group in a masonry-like columnar style',
           },
           deck: {
             type: 'boolean',
             default: false,
+            description: 'When set renders the card group with gutters between cards',
           },
-          tag: {
-            type: 'string',
-            default: 'div',
-          },
+          ...pick(buildCommonProps(), ['tag']),
         } satisfies Record<keyof BvnComponentProps['BCardGroup'], PropertyReference>,
       },
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content (cards) to place in the card group',
         },
       ],
     },
@@ -266,41 +220,30 @@ export default {
       emits: [],
       props: {
         '': {
-          bgVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-          borderVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
           html: {
             type: 'string',
             default: undefined,
-          },
-          tag: {
-            type: 'string',
-            default: 'div',
+            description:
+              'HTML content to place in the card header, takes precednce over text prop and default slot',
           },
           text: {
             type: 'string',
             default: undefined,
+            description: 'Text content to place in the card header, default slot takes precedence',
           },
-          textVariant: {
-            type: 'TextColorVariant | null',
-            default: undefined,
-          },
-          variant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
+          ...pick(buildCommonProps(), [
+            'bgVariant',
+            'borderVariant',
+            'tag',
+            'textVariant',
+            'variant',
+          ]),
         } satisfies Record<keyof BvnComponentProps['BCardHeader'], PropertyReference>,
       },
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the card header',
         },
       ],
     },
@@ -394,22 +337,25 @@ export default {
           text: {
             type: 'string',
             default: undefined,
+            description: 'Text content to place in the card body, default slot takes precedence',
           },
-          tag: {
-            type: 'string',
-            default: 'h6',
-          },
-          textVariant: {
-            type: 'TextColorVariant | null',
-            default: 'body-secondary',
-          },
+          ...pick(
+            buildCommonProps({
+              tag: {
+                default: 'h6',
+              },
+              textVariant: {
+                default: 'body-secondary',
+              },
+            }),
+            ['tag', 'textVariant']
+          ),
         } satisfies Record<keyof BvnComponentProps['BCardSubtitle'], PropertyReference>,
       },
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the card subtitle',
         },
       ],
     },
@@ -418,21 +364,25 @@ export default {
       emits: [],
       props: {
         '': {
-          tag: {
-            type: 'string',
-            default: 'p',
-          },
           text: {
             type: 'string',
             default: undefined,
+            description: 'Text content to place in the card text, default slot takes precedence',
           },
+          ...pick(
+            buildCommonProps({
+              tag: {
+                default: 'p',
+              },
+            }),
+            ['tag']
+          ),
         } satisfies Record<keyof BvnComponentProps['BCardText'], PropertyReference>,
       },
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the card text',
         },
       ],
     },
@@ -441,21 +391,25 @@ export default {
       emits: [],
       props: {
         '': {
-          tag: {
-            type: 'string',
-            default: 'h4',
-          },
           text: {
             type: 'string',
             default: undefined,
+            description: 'Text content to place in the card title, default slot takes precedence',
           },
+          ...pick(
+            buildCommonProps({
+              tag: {
+                default: 'h4',
+              },
+            }),
+            ['tag']
+          ),
         } satisfies Record<keyof BvnComponentProps['BCardTitle'], PropertyReference>,
       },
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the card title',
         },
       ],
     },

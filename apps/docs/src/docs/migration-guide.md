@@ -289,6 +289,17 @@ Image placement is accomplished by the single `img-placement` prop, which takes 
 The `sub-title`, `sub-title-tag` and `sub-title-text-variant` props have been renamed to
 `subtitle`, `subtitle-tag` and `subtitle-text-variant`, respectively.
 
+For `BCardBody`, `BCardHeader`, `BCardFooter`, `BCardTitle`, and `BCardText` components the component name specific
+props are deprecated and replaced by the generalized props. For example `footer-bg-variant` is replaced by `bg-variant`.
+This is true for all of the `body-*`, `header-*`, and `footer-*` props on these components. Note
+that the specific props are still retained on the main `BCard` component.
+
+Similarly the `text-tag` and `title-tag` props have been replaced by `tag` on the `BCardText`
+and `BCardTitle` components.
+
+`body-border-variant` and `body-variant` are not implemented on `BCard` and `border-variant` is not
+implemented on `BCardBody`.
+
 ## BModal
 
 ### Replacement for Modal Message boxes

@@ -47,7 +47,7 @@ export const commonProps = () =>
         'When set to `true`, attempts to auto-focus the control when it is mounted, or re-activated when in a keep-alive. Does not set the `autofocus` attribute on the control',
     },
     bgVariant: {
-      type: 'TextColorVariant | null',
+      type: 'ColorVariant | null',
       default: null,
       description:
         'Applies one of the Bootstrap theme color variants to background of the component',
@@ -343,7 +343,7 @@ export const commonProps = () =>
     },
     titleTag: {
       type: 'string',
-      default: 'h6',
+      default: 'h4',
       description: 'Specify the HTML tag to render instead of the default tag for the title',
     },
     tooltip: {
