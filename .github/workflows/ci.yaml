@@ -49,6 +49,8 @@ jobs:
       - name: Build Library
         run: pnpm run build
 
+      - run: pnpx pkg-pr-new publish './packages/bootstrap-vue-next' './packages/nuxt'
+
   test-lint:
     runs-on: ubuntu-latest
 
