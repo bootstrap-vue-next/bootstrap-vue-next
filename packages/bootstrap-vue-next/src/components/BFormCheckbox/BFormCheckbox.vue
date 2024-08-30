@@ -1,9 +1,5 @@
 <template>
-  <BWrapper 
-    :skip="isButtonGroup"
-    v-bind="props.wrapperAttrs"
-    :class="computedClasses"
-   >
+  <BWrapper :skip="isButtonGroup" v-bind="props.wrapperAttrs" :class="computedWrapperClasses">
     <input
       :id="computedId"
       ref="input"
