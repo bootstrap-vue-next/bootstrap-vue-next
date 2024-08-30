@@ -1,4 +1,5 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
@@ -22,7 +23,7 @@ export default {
             type: 'string',
             default: 'div',
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BListGroup'], PropertyReference>,
       },
       emits: [],
       slots: [
@@ -129,7 +130,11 @@ export default {
             type: 'ColorVariant | null',
             default: undefined,
           },
-        },
+          noPrefetch: {},
+          noRel: {},
+          prefetch: {},
+          prefetchedClass: {},
+        } satisfies Record<keyof BvnComponentProps['BListGroupItem'], PropertyReference>,
       },
       emits: [],
       slots: [

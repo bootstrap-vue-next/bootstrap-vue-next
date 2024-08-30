@@ -1,5 +1,6 @@
-import type {ComponentReference} from '../../types'
+import type {ComponentReference, PropertyReference} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
 
 export default {
   load: (): ComponentReference[] => [
@@ -62,9 +63,19 @@ export default {
             default: true,
             description: 'Value returned when this checkbox is checked',
           },
+          wrapperAttrs: {
+            type: 'Readonly<AttrsValue>',
+            default: undefined,
+            description: 'Attributes to be applied to the wrapper element',
+          },
+          inputClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: 'Class to be applied to the body of the accordion item',
+          },
           ...pick(buildCommonProps(), [
             'ariaLabel',
-            'ariaLabelledBy',
+            'ariaLabelledby',
             'autofocus',
             'disabled',
             'form',
@@ -75,17 +86,17 @@ export default {
             'size',
             'state',
           ]),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormCheckbox'], PropertyReference>,
       },
       emits: [
         {
-          event: 'update:modelValue',
+          event: 'update:model-value',
           description: 'Emitted when the checked value is changed',
           args: [
             {
               arg: 'value',
               description:
-                'Value of the checkbox. Value will be an array for grouped checkboxes or a single value for standalone checkboxes. Looking for the `input` or `change` event - use `update:modelValue` instead.',
+                'Value of the checkbox. Value will be an array for grouped checkboxes or a single value for standalone checkboxes. Looking for the `input` or `change` event - use `update:model-value` instead.',
               type: 'CheckboxValue | readonly CheckboxValue[]',
             },
           ],
@@ -171,13 +182,13 @@ export default {
             'textField',
             'valueField',
           ]),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormCheckboxGroup'], PropertyReference>,
       },
       emits: [
         {
-          event: 'update:modelValue',
+          event: 'update:model-value',
           description:
-            'Emitted when the selected value(s) are changed. Looking for the `input` or `change` event - use `update:modelValue` instead.',
+            'Emitted when the selected value(s) are changed. Looking for the `input` or `change` event - use `update:model-value` instead.',
           args: [
             {
               arg: 'value',

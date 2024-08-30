@@ -1,4 +1,5 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 export default {
@@ -68,7 +69,7 @@ export default {
             }),
             [
               'ariaLabel',
-              'ariaLabelledBy',
+              'ariaLabelledby',
               'autofocus',
               'disabled',
               'form',
@@ -80,11 +81,11 @@ export default {
               'state',
             ]
           ),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormFile'], PropertyReference>,
       },
       emits: [
         {
-          event: 'update:modelValue',
+          event: 'update:model-value',
           description: 'Updates the `v-model` value (see docs for more details)',
           args: [
             {

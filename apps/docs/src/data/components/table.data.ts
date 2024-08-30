@@ -1,5 +1,5 @@
+import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {ComponentReference, PropertyReference} from '../../types'
-import {omit} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => {
@@ -82,7 +82,7 @@ export default {
         type: 'ColorVariant | null',
         default: null,
       },
-    } as const
+    } as const satisfies Record<keyof BvnComponentProps['BTableSimple'], PropertyReference>
 
     const BTableLiteProps = {
       align: {
@@ -185,18 +185,10 @@ export default {
         type: 'ClassValue',
         default: undefined,
       },
-    } as const
-
-    const BTableLitePropsDefinition = (
-      obj: {header: string; val: Record<string, PropertyReference>} = {
-        header: '',
-        val: BTableLiteProps,
-      }
-    ): Record<string, Record<string, PropertyReference>> =>
-      ({
-        [obj.header]: obj.val,
-        'BTableSimple Props': BTableSimpleProps,
-      }) as const
+    } as const satisfies Record<
+      Exclude<keyof BvnComponentProps['BTableLite'], keyof BvnComponentProps['BTableSimple']>,
+      PropertyReference
+    >
 
     return [
       {
@@ -223,7 +215,7 @@ export default {
               type: 'string[]',
               default: undefined,
             },
-            multiSort: {
+            multisort: {
               type: 'boolean',
               default: false,
             },
@@ -296,11 +288,15 @@ export default {
               type: 'boolean',
               default: false,
             },
-          },
-          ...BTableLitePropsDefinition({
-            header: 'BTableLite Props',
-            val: omit(BTableLiteProps, ['tableClass']),
-          }),
+          } satisfies Record<
+            Exclude<
+              keyof BvnComponentProps['BTable'],
+              keyof BvnComponentProps['BTableSimple'] | keyof BvnComponentProps['BTableLite']
+            >,
+            PropertyReference
+          >,
+          'BTableLite Props': BTableLiteProps,
+          'BTableSimple Props': BTableSimpleProps,
         },
         emits: [
           {
@@ -526,7 +522,10 @@ export default {
       },
       {
         component: 'BTableLite',
-        props: BTableLitePropsDefinition(),
+        props: {
+          '': BTableLiteProps,
+          'BTableSimple Props': BTableSimpleProps,
+        },
         emits: [],
         slots: [],
       },
@@ -552,7 +551,7 @@ export default {
               type: 'ColorVariant',
               default: null,
             },
-          },
+          } satisfies Record<keyof BvnComponentProps['BTbody'], PropertyReference>,
         },
         emits: [],
         slots: [
@@ -587,7 +586,7 @@ export default {
               type: 'ColorVariant | null',
               default: null,
             },
-          },
+          } satisfies Record<keyof BvnComponentProps['BTd'], PropertyReference>,
         },
         emits: [],
         slots: [
@@ -606,7 +605,7 @@ export default {
               type: 'ColorVariant | null',
               default: null,
             },
-          },
+          } satisfies Record<keyof BvnComponentProps['BTfoot'], PropertyReference>,
         },
         emits: [],
         slots: [
@@ -641,7 +640,7 @@ export default {
               type: 'ColorVariant | null',
               default: null,
             },
-          },
+          } satisfies Record<keyof BvnComponentProps['BTh'], PropertyReference>,
         },
         emits: [],
         slots: [
@@ -660,7 +659,7 @@ export default {
               type: 'ColorVariant',
               default: null,
             },
-          },
+          } satisfies Record<keyof BvnComponentProps['BThead'], PropertyReference>,
         },
         emits: [],
         slots: [
@@ -679,7 +678,7 @@ export default {
               type: 'ColorVariant',
               default: null,
             },
-          },
+          } satisfies Record<keyof BvnComponentProps['BTr'], PropertyReference>,
         },
         emits: [],
         slots: [

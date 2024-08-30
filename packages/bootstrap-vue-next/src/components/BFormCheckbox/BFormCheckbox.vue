@@ -1,11 +1,14 @@
 <template>
-  <BWrapper :skip="isButtonGroup" :class="computedClasses">
+  <BWrapper 
+    :skip="isButtonGroup"
+    v-bind="props.wrapperAttrs"
+    :class="computedClasses"
+   >
     <input
       :id="computedId"
-      v-bind="$attrs"
       ref="input"
       v-model="localValue"
-      :class="inputClasses"
+      :class="computedInputClasses"
       type="checkbox"
       :disabled="props.disabled || parentData?.disabled.value"
       :required="computedRequired || undefined"
@@ -18,6 +21,7 @@
       :true-value="props.value"
       :false-value="props.uncheckedValue"
       :indeterminate="props.indeterminate"
+      v-bind="inputAttrs"
     />
     <label v-if="hasDefaultSlot || props.plain === false" :for="computedId" :class="labelClasses">
       <slot />
@@ -27,7 +31,7 @@
 
 <script setup lang="ts">
 import {useFocus} from '@vueuse/core'
-import {computed, inject, ref, toRef} from 'vue'
+import {computed, inject, ref, toRef, useAttrs} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useDefaults, useId} from '../../composables'
 import type {BFormCheckboxProps, CheckboxValue} from '../../types'
 import {checkboxGroupKey, isEmptySlot} from '../../utils'
@@ -37,7 +41,11 @@ defineOptions({
   inheritAttrs: false,
 })
 
+const {class: wrapperClass, ...inputAttrs} = useAttrs()
+
 const _props = withDefaults(defineProps<BFormCheckboxProps>(), {
+  wrapperAttrs: undefined,
+  inputClass: undefined,
   ariaLabel: undefined,
   ariaLabelledby: undefined,
   autofocus: false,
@@ -85,7 +93,7 @@ const {focused} = useFocus(input, {
 const hasDefaultSlot = toRef(() => !isEmptySlot(slots.default))
 
 const localValue = computed({
-  get: () => parentData?.modelValue.value ?? modelValue.value,
+  get: () => (parentData ? parentData.modelValue.value : modelValue.value),
   set: (newVal) => {
     if (newVal === undefined) return
     // Indeterminate is implicitly cleared when the checked state is changed to any value
@@ -121,8 +129,10 @@ const classesObject = computed(() => ({
   buttonVariant: props.buttonVariant ?? parentData?.buttonVariant.value ?? 'secondary', // This is where the true default is made
   hasDefaultSlot: hasDefaultSlot.value,
 }))
-const computedClasses = getClasses(classesObject)
+const wrapperClasses = getClasses(classesObject)
+const computedWrapperClasses = computed(() => [wrapperClasses.value, wrapperClass])
 const inputClasses = getInputClasses(classesObject)
+const computedInputClasses = computed(() => [inputClasses.value, props.inputClass])
 const labelClasses = getLabelClasses(classesObject)
 
 defineExpose({

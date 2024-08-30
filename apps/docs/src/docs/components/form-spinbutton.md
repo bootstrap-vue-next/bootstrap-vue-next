@@ -294,11 +294,11 @@ Note that if the prop `required` is set, and the `v-model` is `null`, the attrib
 
 ## Events
 
-The `update:modelValue` event is used to update the `v-model` and is emitted any time the value changes
+The `update:model-value` event is used to update the `v-model` and is emitted any time the value changes
 
 The `change` event is emitted once the user releases the mouse button (when pressing the increment or decrement buttons) or when the user releases the <kbd>ArrowDown</kbd> or <kbd>ArrowUp</kbd> key. This can be handy when you need to debounce the input
 
-The following example illustrates the difference between the `update:modelValue` and `change` events. Click and hold the increment or decrement button (or use the up/down arrow keys)
+The following example illustrates the difference between the `update:model-value` and `change` events. Click and hold the increment or decrement button (or use the up/down arrow keys)
 
 <HighlightCard>
   <label for="sb-input">Spin button - input and change events</label>

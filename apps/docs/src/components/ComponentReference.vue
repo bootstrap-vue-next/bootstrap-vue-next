@@ -43,7 +43,7 @@
                 <BRow>
                   <BCol>
                     <BTable
-                      :items="component.props.find((el) => el[0].trim() === '')?.[1]"
+                      :items="component.props.find((el) => el.name.trim() === '')?.ref"
                       :fields="fields.props"
                       hover
                       small
@@ -62,7 +62,7 @@
                         </code>
                       </template>
                     </BTable>
-                    <template v-if="component.props.some((el) => el[0].trim() !== '')">
+                    <template v-if="component.props.some((el) => el.name.trim() !== '')">
                       <span
                         v-b-tooltip="
                           'Extensions are selected properties from another component, integrated here. It may not include all original properties'
@@ -75,15 +75,23 @@
                       <BAccordion free>
                         <BAccordionItem
                           v-for="(table, index) in component.props.filter(
-                            (el) => el[0].trim() !== ''
+                            (el) => el.name.trim() !== ''
                           )"
                           :key="index"
                           header-tag="span"
                           body-class="p-0 m-0"
-                          :title="table[0]"
                         >
+                          <template #title>
+                            <!-- using :to was causing a full page refresh. Don't know why. Super odd -->
+                            <BLink v-if="table.linkTo" @click.stop="goToLink(table.linkTo)">
+                              {{ table.name }}
+                            </BLink>
+                            <template v-else>
+                              {{ table.name }}
+                            </template>
+                          </template>
                           <BTable
-                            :items="table[1]"
+                            :items="table.ref"
                             :fields="fields.props"
                             table-class="m-0 p-0"
                             class="m-0 p-0"
@@ -154,7 +162,7 @@
                           v-for="scope in d.item.scope as SlotScopeReference[]"
                           :key="scope.prop"
                         >
-                          <code>{{ scope.prop }}</code>
+                          <code>{{ kebabCase(scope.prop) }}</code>
                           <code>: {{ scope.type }}</code>
                           <span v-if="!!scope.description"> - {{ scope.description }}</span>
                         </div>
@@ -162,7 +170,7 @@
                       <template #cell(args)="d">
                         <!-- eslint-disable-next-line prettier/prettier -->
                         <div v-for="arg in d.item.args as EmitArgReference[]" :key="arg.arg">
-                          <code>{{ arg.arg }}</code>
+                          <code>{{ kebabCase(arg.arg) }}</code>
                           <code>: {{ arg.type }}</code>
                           <span v-if="!!arg.description"> - {{ arg.description }}</span>
                         </div>
@@ -205,8 +213,14 @@ import type {
   MappedComponentReference,
   SlotScopeReference,
 } from '../types'
+import {kebabCase} from '../utils'
+import {useRouter, withBase} from 'vitepress'
+
+const router = useRouter()
 
 const props = defineProps<{data: ComponentReference[]}>()
+
+const goToLink = (link: string) => router.go(withBase(link))
 
 /**
  * Sorts the items inside so they're uniform structure
@@ -215,12 +229,13 @@ const sortData = computed(() =>
   props.data.map((el: ComponentReference): MappedComponentReference => {
     const data: MappedComponentReference = {
       component: el.component,
-      props: Object.entries(el.props).map((el) => [
-        el[0],
-        Object.entries(el[1])
-          .map(([key, value]) => ({prop: key, ...value}))
+      props: Object.entries(el.props).map(([name, {_linkTo, ...rest}]) => ({
+        name,
+        linkTo: _linkTo?.type || undefined,
+        ref: Object.entries(rest)
+          .map(([key, value]) => ({prop: kebabCase(key), ...value}))
           .sort((a, b) => a.prop.localeCompare(b.prop)),
-      ]),
+      })),
       emits: el.emits.sort((a, b) => a.event.localeCompare(b.event)),
       slots: el.slots.sort((a, b) => a.name.localeCompare(b.name)),
     }

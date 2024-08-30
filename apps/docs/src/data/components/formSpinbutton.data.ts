@@ -1,4 +1,5 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 export default {
@@ -100,7 +101,8 @@ export default {
             'size',
             'state',
           ]),
-        },
+          modelValue: {},
+        } satisfies Record<keyof BvnComponentProps['BFormSpinbutton'], PropertyReference>,
       },
       emits: [
         {
@@ -116,7 +118,7 @@ export default {
         },
 
         {
-          event: 'update:modelValue',
+          event: 'update:model-value',
           args: [
             {
               arg: 'value',

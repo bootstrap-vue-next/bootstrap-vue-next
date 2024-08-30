@@ -1,4 +1,5 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 export default {
@@ -55,11 +56,11 @@ export default {
               'valueField',
             ]
           ),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormSelect'], PropertyReference>,
       },
       emits: [
         {
-          event: 'update:modelValue',
+          event: 'update:model-value',
           args: [
             {
               arg: 'value',
@@ -68,7 +69,7 @@ export default {
             },
           ],
           description:
-            'Emitted when the selected value(s) are changed. Looking for the `input` or `change` event - use `update:modelValue` instead.',
+            'Emitted when the selected value(s) are changed. Looking for the `input` or `change` event - use `update:model-value` instead.',
         },
       ],
       slots: [
@@ -98,7 +99,7 @@ export default {
             default: false,
             description: 'The disabled state of the option',
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormSelectOption'], PropertyReference>,
       },
       slots: [
         {
@@ -122,7 +123,7 @@ export default {
             }),
             ['disabledField', 'htmlField', 'options', 'textField', 'valueField']
           ),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormSelectOptionGroup'], PropertyReference>,
       },
       emits: [],
       slots: [

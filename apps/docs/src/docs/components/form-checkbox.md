@@ -973,7 +973,7 @@ const indeterminate = ref(true)
               v-model:indeterminate="asIndeterminate"
               aria-describedby="flavors"
               aria-controls="flavors"
-              @update:modelValue="toggleAll"
+              @update:model-value="toggleAll"
             >
               {{ allSelected ? 'Un-select All' : 'Select All' }}
             </BFormCheckbox>
@@ -1011,7 +1011,7 @@ const indeterminate = ref(true)
         v-model:indeterminate="asIndeterminate"
         aria-describedby="flavors"
         aria-controls="flavors"
-        @update:modelValue="toggleAll"
+        @update:model-value="toggleAll"
       >
         {{ allSelected ? 'Un-select All' : 'Select All' }}
       </BFormCheckbox>

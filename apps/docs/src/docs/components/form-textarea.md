@@ -18,20 +18,13 @@ Create multi-line text inputs with support for auto height sizing, minimum and m
     v-model="textEx1"
     placeholder="Enter something..."
     rows="3"
-    max-rows="6"
   />
   <pre class="mt-3 mb-0">{{ textEx1 }}</pre>
   <template #html>
 
 ```vue
 <template>
-  <BFormTextarea
-    id="textarea"
-    v-model="textEx1"
-    placeholder="Enter something..."
-    rows="3"
-    max-rows="6"
-  />
+  <BFormTextarea id="textarea" v-model="textEx1" placeholder="Enter something..." rows="3" />
 
   <pre class="mt-3 mb-0">{{ textEx1 }}</pre>
 </template>
@@ -149,7 +142,7 @@ feature, set the `no-resize` prop to `true`.
 
 ### Auto height
 
-Not yet implemented
+<NotYetImplemented />
 
 ## Contextual states
 
@@ -217,10 +210,6 @@ to set the prop `aria-invalid` to `true`, or one of the supported values:
 
 If the `state` prop is set to `false`, and the `aria-invalid` prop is not explicitly set,
 `BFormTextarea` will automatically set the `aria-invalid` attribute to `'true'`.
-
-## Debounce support
-
-Not yet implemented
 
 ## Formatter support
 
@@ -344,26 +333,88 @@ const textReadOnly = 'This is some text.\nIt is read only and does not look like
   </template>
 </HighlightCard>
 
+## Floating labels
+
+When using [floating labels](/docs/components/form#floating-labels) in `BFormTextsArea` controls, don't use the `rows` property to set a custom
+height. Instead set an explicit `height` (either inline or via custom CSS) as per the
+[Bootstrap 5 documentation](https://getbootstrap.com/docs/5.3/forms/floating-labels/#textareas).
+
+<HighlightCard>
+  <BFormFloatingLabel label="type something" label-for="textarea-floatinglabel">
+    <BFormTextarea
+      id="textarea-floatinglabel"
+      v-model="textFloatingLabel"
+      placeholder="Enter something..."
+      style="height: 6rem"
+    />
+  </BFormFloatingLabel>
+
+  <pre class="mt-3 mb-0">{{ textFloatingLabel }}</pre>
+
+<template #html>
+
+```vue
+<template>
+  <BFormFloatingLabel label="type something" label-for="textarea-floatinglabel">
+    <BFormTextarea
+      id="textarea-floatinglabel"
+      v-model="textFloatingLabel"
+      placeholder="Enter something..."
+      style="height: 6rem"
+    />
+  </BFormFloatingLabel>
+
+  <pre class="mt-3 mb-0">{{ textFloatingLabel }}</pre>
+</template>
+
+<script setup lang="ts">
+const textFloatingLabel = ref()
+</script>
+```
+
+  </template>
+</HighlightCard>
+
 ## `v-model` modifiers
 
-Vue does not officially support `.lazy`, `.trim`, and `.number` modifiers on the `v-model` of custom
-component based inputs, and may generate a bad user experience. Avoid using Vue's native modifiers.
+We support the native modifiers [`trim`, `lazy`, and `number`](https://vuejs.org/guide/essentials/forms.html#modifiers).
+They work as documented in vue.js, so there is no longer a need for `trim`, `lazy`, or `number` properties as in BSV.
 
-To get around this, `BFormTextarea` has three boolean props `trim`, `number`, and `lazy` which
-emulate the native Vue `v-model` modifiers `.trim` and `.number` and `.lazy` respectively. The
-`lazy` prop will update the v-model on `change`/`blur`events.
+## Debounce support
 
-**Notes:**
+As an alternative to the `lazy` modifier prop, `<b-form-textarea>` optionally supports debouncing
+user input, updating the `v-model` after a period of idle time from when the last character was
+entered by the user (or a `change` event occurs). If the user enters a new character (or deletes
+characters) before the idle timeout expires, the timeout is re-started.
 
-- The `number` prop takes precedence over the `trim` prop (i.e. `trim` will have no effect when
-  `number` is set)
-- When using the `number` prop, and if the value can be parsed as a number (via `parseFloat`) it
-  will return a value of type `Number` to the `v-model`, otherwise the original input value is
-  returned as type `String`. This is the same behaviour as the native `.number` modifier
-- The `trim` and `number` modifier props do not affect the value returned by the `input` or `change`
-  events. These events will always return the string value of the content of `<textarea>` after
-  optional formatting (which may not match the value returned via the `v-model` `update` event,
-  which handles the modifiers)
+To enable debouncing, set the prop `debounce` to any integer greater than zero. The value is
+specified in milliseconds. Setting `debounce` to `0` will disable debouncing.
+
+Note: debouncing will _not_ occur if the `lazy` prop is set.
+
+<HighlightCard>
+  <BFormTextarea id="textarea-debounce" v-model="textDebounce" rows="3" debounce="500" />
+
+  <pre class="mt-3 mb-0">{{ textDebounce }}</pre>
+
+<template #html>
+
+```vue
+<template>
+  <BFormTextarea id="textarea-debounce" v-model="textDebounce" rows="3" debounce="500" />
+
+  <pre class="mt-3 mb-0">{{ textDebounce }}</pre>
+</template>
+
+<script setup lang="ts">
+import {ref} from 'vue'
+import {BFormTextarea} from './components'
+const textDebounce = ref()
+</script>
+```
+
+  </template>
+</HighlightCard>
 
 ## Autofocus
 
@@ -374,24 +425,18 @@ it tell when the textarea becomes visible.
 
 ## Native and custom events
 
-All native events (other than the custom `input` and `change` events) are supported, without the
-need for the `.native` modifier.
+All native events are supported, without the need for the `.native` modifier.
 
-The custom `input` and `change` events receive a single argument of the current `value` (after any
-formatting has been applied), and are triggered by user interaction.
-
-The custom `update` event is passed the input value, and is emitted whenever the `v-model` needs
-updating (it is emitted before `input`, `change`. and `blur` as needed).
-
-You can always access the native `input` and `change` events by using the `.native` modifier.
+See the [migration guide](/docs/migration-guide#bform-components) for changes handling of the `change` and `input` events from bootstrap-vue.
 
 ## Exposed input properties and methods
 
-`BFormTextarea` exposes several of the native input element's properties and methods on the
-component reference (i.e. assign a `ref` to your `<BFormTextarea ref="foo" ...>`, capture the ref in a variable and use
-`input.propertyName` or `input.methodName(...)`).
+`BFormInput` exposes the native input element
+(of type [HTMLInputElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement))
+on the component as a reference with name `element`. You can use that reference to access the native properties and methods.
 
-### example
+e.g. `<BFormInput ref="foo" ... />`, `const foo = ref<InstanceType<typeof BFormInput> | null>(null)`, and then
+`foo?.value?.element?.methodName` or `foo?.value?.element?.propertyName`
 
 <HighlightCard>
   <BFormTextarea
@@ -400,10 +445,10 @@ component reference (i.e. assign a `ref` to your `<BFormTextarea ref="foo" ...>`
     v-model="textSelectEx"
     placeholder="Enter something..."
     rows="3"
-    max-rows="6"
   />
-  <button class="btn btn-primary mt-1" @click="selectText">Select text</button>
-  <template #html>
+
+<button class="btn btn-primary mt-1" @click="selectText">Select text</button>
+<template #html>
 
 ```vue
 <template>
@@ -413,7 +458,6 @@ component reference (i.e. assign a `ref` to your `<BFormTextarea ref="foo" ...>`
     v-model="textSelectEx"
     placeholder="Enter something..."
     rows="3"
-    max-rows="6"
   />
 
   <button class="btn btn-primary mt-1" @click="selectText">Select text</button>
@@ -421,10 +465,10 @@ component reference (i.e. assign a `ref` to your `<BFormTextarea ref="foo" ...>`
 
 <script setup lang="ts">
 const textSelectEx = ref('')
-const textArea = ref<HTMLElement | null>(null)
+const textArea = ref<InstanceType<typeof BFormTextarea> | null>(null)
 
 const selectText = () => {
-  textArea.value.input.select()
+  textArea?.value?.element?.select()
 }
 </script>
 ```
@@ -467,7 +511,8 @@ import {ref, computed} from 'vue'
 import ComponentReference from '../../components/ComponentReference.vue'
 import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
-import {BFormGroup, BRow, BCol, BFormTextarea, BCard, BCardBody} from 'bootstrap-vue-next'
+import NotYetImplemented from '../../components/NotYetImplemented.vue'
+import {BFormFloatingLabel, BFormGroup, BRow, BCol, BFormTextarea, BCard, BCardBody} from 'bootstrap-vue-next'
 
 const textEx1 = ref()
 const textStates = ref('')
@@ -479,9 +524,11 @@ const formatter = (value) => value.toLowerCase()
 
 const textReadOnly = "This is some text.\nIt is read only and does not look like an input."
 
+const textFloatingLabel = ref()
+const textDebounce = ref()
 const textSelectEx = ref('')
-const textArea = ref<HTMLElement | null>(null)
+const textArea = ref<InstanceType<typeof BFormTextarea> | null>(null)
 const selectText = () => {
-  textArea.value.input.select()
+  textArea?.value?.element?.select()
 }
 </script>

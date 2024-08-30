@@ -10,6 +10,7 @@
     <component
       :is="props.routerTag"
       :href="localHref"
+      :target="props.target"
       :class="{
         [defaultActiveClass]: props.active,
         [props.activeClass]: isActive,
@@ -28,6 +29,7 @@
 
 <script setup lang="ts">
 import {useDefaults} from '../../composables'
+import {useLinkClasses} from '../../composables/useLinkClasses'
 import type {BLinkProps} from '../../types'
 import {collapseInjectionKey, navbarInjectionKey} from '../../utils'
 import {computed, getCurrentInstance, inject, useAttrs} from 'vue'
@@ -46,13 +48,13 @@ const _props = withDefaults(defineProps<BLinkProps>(), {
   icon: false,
   opacity: undefined,
   opacityHover: undefined,
-  stretched: false,
   // noPrefetch: {type: Boolean, default: false},
   // prefetch: {type: Boolean, default: null},
   rel: undefined,
   replace: false,
   routerComponentName: 'router-link',
   routerTag: 'a',
+  stretched: false,
   target: undefined,
   to: undefined,
   underlineOffset: undefined,
@@ -112,19 +114,16 @@ const computedHref = computed(() => {
   return toFallback
 })
 
-const computedClasses = computed(() => ({
-  [`link-${props.variant}`]: props.variant !== null,
-  [`link-opacity-${props.opacity}`]: props.opacity !== undefined,
-  [`link-opacity-${props.opacityHover}-hover`]: props.opacityHover !== undefined,
-  [`link-underline-${props.underlineVariant}`]: props.underlineVariant !== null,
-  [`link-offset-${props.underlineOffset}`]: props.underlineOffset !== undefined,
-  [`link-offset-${props.underlineOffsetHover}-hover`]: props.underlineOffsetHover !== undefined,
-  [`link-underline-opacity-${props.underlineOpacity}`]: props.underlineOpacity !== undefined,
-  [`link-underline-opacity-${props.underlineOpacityHover}-hover`]:
-    props.underlineOpacityHover !== undefined,
-  'icon-link': props.icon === true,
-  'stretched-link': props.stretched === true,
-}))
+/**
+ * Not to be confused with computedLinkClasses
+ */
+const linkValueClasses = useLinkClasses(props)
+const computedClasses = computed(() => [
+  linkValueClasses.value,
+  {
+    'stretched-link': props.stretched === true,
+  },
+])
 
 const routerAttr = computed(() => ({
   'class': computedClasses.value,

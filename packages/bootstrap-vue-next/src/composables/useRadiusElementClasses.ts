@@ -6,12 +6,12 @@ export default (obj: MaybeRefOrGetter<RadiusElementExtendables>) => {
     value: boolean | RadiusElement,
     str: 'top' | 'bottom' | 'start' | 'end' | null
   ): string => {
-    const strValue = str === null ? '' : `${str}-`
+    const strValue = str === null ? '' : `-${str}`
 
     return value === 'circle'
-      ? `${strValue}rounded-circle`
+      ? `rounded${strValue}-circle`
       : value === 'pill'
-        ? `${strValue}rounded-pill`
+        ? `rounded${strValue}-pill`
         : typeof value === 'number' ||
             value === '0' ||
             value === '1' ||
@@ -19,14 +19,14 @@ export default (obj: MaybeRefOrGetter<RadiusElementExtendables>) => {
             value === '3' ||
             value === '4' ||
             value === '5'
-          ? `${strValue}rounded-${value}`
+          ? `rounded${strValue}-${value}`
           : value === 'none'
-            ? `${strValue}rounded-0`
+            ? `rounded${strValue}-0`
             : value === 'sm'
-              ? `${strValue}rounded-1`
+              ? `rounded${strValue}-1`
               : value === 'lg'
-                ? `${strValue}rounded-5`
-                : `${strValue}rounded` // true is last
+                ? `rounded${strValue}-5`
+                : `rounded${strValue}` // true is last
   }
 
   return computed(() => {

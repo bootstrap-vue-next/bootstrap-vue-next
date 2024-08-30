@@ -96,7 +96,7 @@
           v-model="sidebar"
           responsive="lg"
           title="Browse docs"
-          header-class="d-flex"
+          header-class="d-flex offcanvas-hidden-width"
           class="h-100 border-0"
         >
           <TableOfContentsNav />
@@ -131,7 +131,7 @@
                 placement="end"
                 title="On this page"
                 class="h-100 border-0"
-                header-class="pb-0 d-flex"
+                header-class="pb-0 d-flex offcanvas-hidden-width"
                 body-class="py-2"
               >
                 <div class="bd-toc" />
@@ -346,6 +346,14 @@ watch(
 
     hr {
       margin: 3rem 0;
+    }
+
+    ol {
+      list-style-type: decimal;
+    }
+
+    ul {
+      list-style-type: disc;
     }
   }
 
@@ -756,7 +764,7 @@ watch(
 }
 
 @media (min-width: 992px) {
-  .offcanvas-header button {
+  .offcanvas-header.offcanvas-hidden-width .btn-close {
     display: none !important;
   }
 }

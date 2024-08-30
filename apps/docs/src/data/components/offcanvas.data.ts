@@ -1,4 +1,5 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
@@ -106,14 +107,14 @@ export default {
             type: 'string',
             default: undefined,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BOffcanvas'], PropertyReference>,
       },
       emits: [
         {
-          event: 'update:modelValue',
+          event: 'update:model-value',
           args: [
             {
-              arg: 'update:modelValue',
+              arg: 'update:model-value',
               description: '',
               type: 'boolean',
             },

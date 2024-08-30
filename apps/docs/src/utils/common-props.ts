@@ -2,6 +2,11 @@ import {type PropertyReference} from '../types'
 
 export const commonProps = () =>
   ({
+    alt: {
+      type: 'string',
+      default: 'undefined',
+      description: 'Value to set for the `alt` attribute',
+    },
     ariaControls: {
       type: 'AriaInvalid',
       default: undefined,
@@ -14,6 +19,11 @@ export const commonProps = () =>
       description:
         'Sets the `aria-invalid` attribute value on the wrapper element. When not provided, the `state` prop will control the attribute',
     },
+    autocomplete: {
+      type: 'string',
+      default: 'false',
+      description: "Sets the 'autocomplete' attribute value on the form control",
+    },
     ariaLabel: {
       type: 'string',
       default: undefined,
@@ -25,7 +35,7 @@ export const commonProps = () =>
       description:
         "When the rendered element is an `aria-live` region (for screen reader users), set to either 'polite' or 'assertive'",
     },
-    ariaLabelledBy: {
+    ariaLabelledby: {
       type: 'string',
       default: undefined,
       description:
@@ -35,6 +45,23 @@ export const commonProps = () =>
       default: false,
       description:
         'When set to `true`, attempts to auto-focus the control when it is mounted, or re-activated when in a keep-alive. Does not set the `autofocus` attribute on the control',
+    },
+    bgVariant: {
+      type: 'TextColorVariant | null',
+      default: null,
+      description:
+        'Applies one of the Bootstrap theme color variants to background of the component',
+    },
+    debounce: {
+      type: 'Numberish',
+      default: '0',
+      description:
+        "When set to a number of milliseconds greater than zero, will debounce the user input. Has no effect if prop 'lazy' is set",
+    },
+    debounceMaxWait: {
+      type: 'Numberish',
+      default: 'NaN',
+      description: "The maximum time in milliseconds allowed to be delayed before it''s invoked",
     },
     disabled: {
       type: 'boolean',
@@ -53,6 +80,11 @@ export const commonProps = () =>
       description:
         'ID of the form that the form control belongs to. Sets the `form` attribute on the control',
     },
+    formatter: {
+      type: '(val: string, evt: Event) => string',
+      default: 'undefined',
+      description: 'Reference to a function for formatting the input',
+    },
     htmlField: {
       type: 'string',
       default: 'html',
@@ -64,6 +96,18 @@ export const commonProps = () =>
       default: undefined,
       description:
         'Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed',
+    },
+    lazyFormatter: {
+      type: 'boolean',
+      default: 'false',
+      description:
+        'When set, the input is formatted on blur instead of each keystroke (if there is a formatter specified)',
+    },
+    list: {
+      type: 'string',
+      default: 'undefined',
+      description:
+        'The ID of the associated datalist element or component (Datalist is Not Yet Implemented)',
     },
     name: {
       type: 'string',
@@ -105,6 +149,36 @@ export const commonProps = () =>
       type: 'string',
       default: undefined,
       description: 'Sets the ARIA attribute `role` to a specific value',
+    },
+    rounded: {
+      type: 'boolean | RadiusElement',
+      default: 'false',
+      description:
+        'Specifies the type of rounding to apply to the component or its children. The `square` prop takes precedence. Refer to the documentation for details',
+    },
+    roundedBottom: {
+      type: 'boolean | RadiusElement',
+      default: undefined,
+      description:
+        'Specifies the type of rounding to apply to the `bottom` corners of the component or its children',
+    },
+    roundedEnd: {
+      type: 'boolean | RadiusElement',
+      default: undefined,
+      description:
+        'Specifies the type of rounding to apply to the `end` corners of the component or its children',
+    },
+    roundedStart: {
+      type: 'boolean | RadiusElement',
+      default: undefined,
+      description:
+        'Specifies the type of rounding to apply to the `start` corners of the component or its children',
+    },
+    roundedTop: {
+      type: 'boolean | RadiusElement',
+      default: undefined,
+      description:
+        'Specifies the type of rounding to apply to the `top` corners of the component or its children',
     },
     size: {
       type: 'Size',

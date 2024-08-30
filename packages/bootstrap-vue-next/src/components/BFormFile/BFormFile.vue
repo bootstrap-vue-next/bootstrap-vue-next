@@ -90,7 +90,7 @@ const {focused} = useFocus(input, {initialValue: props.autofocus})
 
 const hasLabelSlot = toRef(() => !isEmptySlot(slots['label']))
 
-const computedAccept = toRef(() =>
+const computedAccept = computed(() =>
   typeof props.accept === 'string' ? props.accept : props.accept.join(',')
 )
 

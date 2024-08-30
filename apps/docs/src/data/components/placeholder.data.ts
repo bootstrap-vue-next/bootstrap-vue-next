@@ -1,4 +1,5 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
@@ -34,7 +35,7 @@ export default {
             type: 'string',
             default: 'span',
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BPlaceholder'], PropertyReference>,
       },
       emits: [],
       slots: [],
@@ -120,7 +121,7 @@ export default {
             type: 'ColorVariant | null',
             default: undefined,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BPlaceholderCard'], PropertyReference>,
       },
       slots: [
         {
@@ -155,7 +156,7 @@ export default {
             type: 'boolean',
             default: false,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BPlaceholderWrapper'], PropertyReference>,
       },
       slots: [
         {
@@ -247,7 +248,7 @@ export default {
             type: 'ColorVariant | null',
             default: undefined,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BPlaceholderTable'], PropertyReference>,
       },
       slots: [
         {
@@ -293,7 +294,7 @@ export default {
             type: 'Numberish',
             default: undefined,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BPlaceholderButton'], PropertyReference>,
       },
     },
   ],

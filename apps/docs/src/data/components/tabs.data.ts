@@ -1,4 +1,5 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
@@ -46,7 +47,7 @@ export default {
             type: 'ClassValue',
             default: undefined,
           },
-          titleLinkAttributes: {
+          titleLinkAttrs: {
             type: 'AttrsValue',
             default: undefined,
           },
@@ -54,7 +55,7 @@ export default {
             type: 'ClassValue',
             default: undefined,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BTab'], PropertyReference>,
       },
       emits: [],
       slots: [
@@ -170,19 +171,19 @@ export default {
             type: 'boolean',
             default: false,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BTabs'], PropertyReference>,
       },
       emits: [
         {
           args: [
             {
-              arg: 'update:modelValue',
+              arg: 'update:model-value',
               description: '',
               type: 'number',
             },
           ],
           description: '',
-          event: 'update:modelValue',
+          event: 'update:model-value',
         },
         {
           args: [

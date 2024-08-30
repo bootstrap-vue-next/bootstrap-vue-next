@@ -1,4 +1,5 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 export default {
@@ -48,7 +49,7 @@ export default {
 
           ...pick(buildCommonProps(), [
             'ariaLabel',
-            'ariaLabelledBy',
+            'ariaLabelledby',
             'autofocus',
             'disabled',
             'form',
@@ -59,11 +60,11 @@ export default {
             'size',
             'state',
           ]),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormRadio'], PropertyReference>,
       },
       emits: [
         {
-          event: 'update:modelValue',
+          event: 'update:model-value',
           description: 'Emitted when the radio button value is changed',
           args: [
             {
@@ -134,11 +135,11 @@ export default {
             'textField',
             'valueField',
           ]),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormRadioGroup'], PropertyReference>,
       },
       emits: [
         {
-          event: 'update:modelValue',
+          event: 'update:model-value',
           args: [
             {
               arg: 'value',
@@ -147,7 +148,7 @@ export default {
             },
           ],
           description:
-            'Emitted when the selected value(s) are changed. Looking for the `input` or `change` event - use `update:modelValue` instead.',
+            'Emitted when the selected value(s) are changed. Looking for the `input` or `change` event - use `update:model-value` instead.',
         },
       ],
       slots: [

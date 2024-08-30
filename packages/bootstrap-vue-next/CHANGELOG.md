@@ -1,5 +1,87 @@
 # Changelog
 
+## [0.24.11](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.10...bootstrapvuenext-v0.24.11) (2024-08-27)
+
+
+### Bug Fixes
+
+* **BPagination:** Correctly position ellipses when hideGotoEndButtons=true. ([#2148](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2148)) ([d708aa4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d708aa484200128799f40b69c0e66973d2e0f5f2))
+* **BPagination:** Get rid of bad binding on li ([#2150](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2150)) ([182dbc7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/182dbc7971456e80cdbf257d9700d61d43b106ba))
+* pass attributes through in BDropdownItemButton ([#2143](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2143)) ([951bbf0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/951bbf07bf7f4d99616da965b723014594cd6d41))
+
+## [0.24.10](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.9...bootstrapvuenext-v0.24.10) (2024-08-20)
+
+
+### Bug Fixes
+
+* add target to BLink RouterLink component ([#2131](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2131)) ([23c38e0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/23c38e0491828246514117a22da215461bbf0693))
+* **BButton:** implement link classes for when btn-link fixes [#2134](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2134) ([d23fdd8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d23fdd8574b80cc5282a8c17b920eae49e5053f4))
+* **BButton:** prevent default and click when href is # fixes [#2133](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2133) ([d23fdd8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d23fdd8574b80cc5282a8c17b920eae49e5053f4))
+* **BPagination:** centering of arrows when using span fixes [#2135](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2135) ([d23fdd8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d23fdd8574b80cc5282a8c17b920eae49e5053f4))
+
+## [0.24.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.8...bootstrapvuenext-v0.24.9) (2024-08-18)
+
+
+### Bug Fixes
+
+* **BFOrmRadio:** radio in group not able to select null value fixes [#2106](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2106) ([#2129](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2129)) ([8de1b97](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8de1b978bd0d4b008015cd777fa0104b8ef8eb55))
+
+## [0.24.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.7...bootstrapvuenext-v0.24.8) (2024-08-16)
+
+
+### Bug Fixes
+
+* **BForm:** Remove confusing prevent default on form submit ([1a1105a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1a1105a58751d760127ed50f1f233c1a6821163c))
+
+## [0.24.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.6...bootstrapvuenext-v0.24.7) (2024-08-13)
+
+
+### Bug Fixes
+
+* **BFormCheckbox:** class attribute should be set on wrapper component (input classes use new prop.inputClass). Use props.wrapperAttrs for attrs to the wrapper element fixes [#2108](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2108) ([a75b5c8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a75b5c80a686cc846b30dbf28f68933c55c27d4d))
+* **BLink:** fix link-opacity when no underline variant specified ([fed1e13](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/fed1e13b40d7b8289883061cbffbce12c4318d87))
+* **BLink:** Fixe stretch/stretched property issue ([fed1e13](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/fed1e13b40d7b8289883061cbffbce12c4318d87))
+
+## [0.24.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.5...bootstrapvuenext-v0.24.6) (2024-08-09)
+
+
+### Features
+
+* **useActivatedFocusTrap:** set better fallback options fixes [#2095](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2095)  ([#2099](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2099)) ([873e716](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/873e716dc3bc5dbf4f78ae3335a2751dbd539df4))
+
+## [0.24.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.4...bootstrapvuenext-v0.24.5) (2024-08-09)
+
+
+### Features
+
+* **BTableLite:** use primary key for v-for loop to prevent rerendering fixes [#2096](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2096) ([#2097](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2097)) ([677bddf](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/677bddf4899921262e446a3d6535bfffc424add0))
+
+
+### Bug Fixes
+
+* **BAvatar:** Several fixes from parity pass ([31ac9e6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/31ac9e69008304c57b5bbf3f7c995a2ebda6577b))
+* **BAvatar:** Several fixes from parity pass ([#2094](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2094)) ([31ac9e6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/31ac9e69008304c57b5bbf3f7c995a2ebda6577b))
+
+## [0.24.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.3...bootstrapvuenext-v0.24.4) (2024-08-07)
+
+
+### Features
+
+* add BFormDatalist ([b5b4390](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b5b43905162bda2cdabaf2fad38bb542d6e90fb4))
+
+
+### Bug Fixes
+
+* add class to row details ([#2091](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2091)) ([41bbe11](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/41bbe11ffbdb3410e4ae2f1dba54dd4a38cc3aca))
+
+## [0.24.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.2...bootstrapvuenext-v0.24.3) (2024-08-06)
+
+
+### Bug Fixes
+
+* **BFormInput,BFormTextArea:** Deprecate trim, lazy, number props in favor of modifiers ([#2066](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2066)) ([f5be607](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f5be6074782b31c3db00b9c46fce0424dd021164))
+* **Table:** various functional syntaxes in attrs & classes fixes [#2083](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2083) ([#2087](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2087)) ([d8a9782](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d8a9782e2d9bf5910773afc409732d80870e75fc))
+
 ## [0.24.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.1...bootstrapvuenext-v0.24.2) (2024-07-21)
 
 

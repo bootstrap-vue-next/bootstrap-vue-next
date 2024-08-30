@@ -1,4 +1,5 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 export default {
@@ -47,7 +48,7 @@ export default {
             type: 'boolean',
             default: false,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BNav'], PropertyReference>,
       },
       emits: [],
       slots: [
@@ -70,7 +71,7 @@ export default {
             type: 'string',
             default: undefined,
           },
-          noValidate: {
+          novalidate: {
             type: 'boolean',
             default: undefined,
           },
@@ -82,7 +83,7 @@ export default {
             type: 'boolean',
             default: undefined,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BNavForm'], PropertyReference>,
       },
       emits: [
         {
@@ -197,7 +198,11 @@ export default {
             type: 'ColorVariant | null',
             default: undefined,
           },
-        },
+          noPrefetch: {},
+          noRel: {},
+          prefetch: {},
+          prefetchedClass: {},
+        } satisfies Record<keyof BvnComponentProps['BNavItem'], PropertyReference>,
       },
       emits: [
         {
@@ -359,11 +364,11 @@ export default {
             type: 'ClassValue',
           },
           ...pick(buildCommonProps(), ['ariaLabel', 'disabled', 'id', 'size', 'role']),
-        },
+        } satisfies Record<keyof BvnComponentProps['BNavItemDropdown'], PropertyReference>,
       },
       emits: [
         {
-          event: 'update:modelValue',
+          event: 'update:model-value',
           args: [
             {
               arg: 'value',
@@ -468,7 +473,7 @@ export default {
             type: 'string',
             default: undefined,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BNavText'], PropertyReference>,
       },
       emits: [],
       slots: [

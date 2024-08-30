@@ -18,6 +18,8 @@ import './styles/styles.scss'
 
 import parseActiveImports from './utils/parseActiveImports'
 
+const bvKey = 'bootstrap-vue-next'
+
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     BFormFile: typeof Components.BFormFile
@@ -58,6 +60,7 @@ declare module '@vue/runtime-core' {
     BForm: typeof Components.BForm
     BFormCheckbox: typeof Components.BFormCheckbox
     BFormCheckboxGroup: typeof Components.BFormCheckboxGroup
+    BFormDatalist: typeof Components.BFormDatalist
     BFormFloatingLabel: typeof Components.BFormFloatingLabel
     BFormGroup: typeof Components.BFormGroup
     BFormInput: typeof Components.BFormInput
@@ -175,7 +178,7 @@ export const BootstrapVueNextResolver = ({
         if (compImports.has(name) || aliases[name]) {
           return {
             name: aliases[name] || name,
-            from: 'bootstrap-vue-next',
+            from: bvKey,
           }
         }
       },
@@ -186,7 +189,7 @@ export const BootstrapVueNextResolver = ({
         if (dirImports.has(name)) {
           return {
             name: `v${name}`,
-            from: 'bootstrap-vue-next',
+            from: bvKey,
           }
         }
       },

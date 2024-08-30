@@ -44,6 +44,8 @@ import type {
   SpinnerType,
   TableField,
   TableFieldRaw,
+  TableRowType,
+  TableStrictClassValue,
   TeleporterProps,
   TextColorVariant,
   TransitionMode,
@@ -57,15 +59,17 @@ export interface BLinkProps {
   exactActiveClass?: string
   href?: string
   icon?: boolean
-  stretched?: boolean
-  // noPrefetch: {type: [Boolean, String] as PropType<boolean>, default: false},
+  noRel?: boolean
+  // noPrefetch?: boolean
   opacity?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
   opacityHover?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
-  // prefetch: {type: [Boolean, String] as PropType<boolean>, default: null},
+  // prefetch?: boolean
+  // prefetchedClass?: ClassValue
   rel?: string
   replace?: boolean
   routerComponentName?: string
   routerTag?: string
+  stretched?: boolean
   target?: LinkTarget
   to?: RouteLocationRaw
   underlineOffset?: 1 | 2 | 3 | '1' | '2' | '3'
@@ -74,11 +78,19 @@ export interface BLinkProps {
   underlineOpacityHover?: 0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'
   underlineVariant?: ColorVariant | null
   variant?: ColorVariant | null
-  prefetch?: boolean
-  noPrefetch?: boolean
-  prefetchedClass?: ClassValue
-  noRel?: boolean
 }
+
+export type LinkUnderlineProps = Pick<
+  BLinkProps,
+  | 'underlineOffset'
+  | 'underlineOffsetHover'
+  | 'underlineOpacity'
+  | 'underlineOpacityHover'
+  | 'underlineVariant'
+>
+export type LinkOpacityProps = Pick<BLinkProps, 'opacity' | 'opacityHover'>
+export type LinkIconProps = Pick<BLinkProps, 'icon'>
+export type LinkVariantProps = Pick<BLinkProps, 'variant'>
 
 export interface BAccordionProps {
   flush?: boolean
@@ -109,6 +121,7 @@ export interface BDropdownItemButtonProps {
   active?: boolean
   activeClass?: ClassValue
   buttonClass?: ClassValue
+  wrapperAttrs?: Readonly<AttrsValue>
   disabled?: boolean
   variant?: ColorVariant | null
 }
@@ -155,6 +168,8 @@ export interface BFormCheckboxProps {
   state?: boolean | null
   switch?: boolean
   uncheckedValue?: CheckboxValue
+  wrapperAttrs?: Readonly<AttrsValue>
+  inputClass?: ClassValue
   // Since the compiler-sfc doesn't crawl external filed, the redundant string/boolean union is
   // necessary to tell it that we don't want it to follow Boolean casting rules
   // https://vuejs.org/guide/components/props.html#boolean-casting which would cast the empty
@@ -184,6 +199,15 @@ export interface BFormCheckboxGroupProps {
   switches?: boolean
   textField?: string
   validated?: boolean
+  valueField?: string
+}
+
+export interface BFormDatalistProps {
+  disabledField?: string
+  htmlField?: string
+  id?: string
+  options?: readonly (unknown | Record<string, unknown>)[]
+  textField?: string
   valueField?: string
 }
 
@@ -753,9 +777,8 @@ export interface BAvatarGroupProps extends ColorExtendables, RadiusElementExtend
 export interface BBadgeProps extends Omit<BLinkProps, 'routerTag'>, ColorExtendables {
   dotIndicator?: boolean
   pill?: boolean
-  tag?: string
-  textIndicator?: boolean
   placement?: CombinedPlacement
+  tag?: string
 }
 
 export interface BBreadcrumbProps {
@@ -765,6 +788,10 @@ export interface BBreadcrumbProps {
 export interface BBreadcrumbItemProps extends Omit<BLinkProps, 'routerTag'> {
   ariaCurrent?: string
   text?: string
+}
+
+type CustomLinkVariant = {
+  [K in ColorVariant as `link-${K}`]: unknown
 }
 
 export interface BButtonProps extends Omit<BLinkProps, 'variant'> {
@@ -777,7 +804,7 @@ export interface BButtonProps extends Omit<BLinkProps, 'variant'> {
   squared?: boolean
   tag?: string
   type?: ButtonType
-  variant?: ButtonVariant | null
+  variant?: (ButtonVariant | keyof CustomLinkVariant) | null
 }
 
 export interface BButtonGroupProps {
@@ -998,20 +1025,12 @@ export interface BTableLiteProps<T> extends BTableSimpleProps {
   primaryKey?: string
   showEmpty?: boolean
   tbodyClass?: ClassValue
-  tbodyTrAttrs?: ClassValue
+  tbodyTrAttrs?: ((item: T | null, type: TableRowType) => AttrsValue) | AttrsValue
   // tbodyTransitionHandlers
   // tbodyTransitionProps
   tbodyTrClass?:
-    | ((
-        item: T | null,
-        type: string
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ) => string | readonly any[] | null | undefined)
-    | string
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    | Readonly<Record<PropertyKey, any>>
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    | readonly any[]
+    | ((item: T | null, type: TableRowType) => TableStrictClassValue)
+    | TableStrictClassValue
   tfootClass?: ClassValue
   tfootTrClass?: ClassValue
   theadClass?: ClassValue
@@ -1323,6 +1342,7 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
   BFormText: BFormTextProps
   BFormCheckbox: BFormCheckboxProps
   BFormCheckboxGroup: BFormCheckboxGroupProps
+  BFormDatalist: BFormDatalistProps
   BFormFile: BFormFileProps
   BFormInput: BFormInputProps
   BFormRadio: BFormRadioProps

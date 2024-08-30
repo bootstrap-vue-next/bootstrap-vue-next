@@ -1,4 +1,5 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 export default {
@@ -37,7 +38,7 @@ export default {
             }),
             ['disabled', 'id', 'tag', 'title', 'variant']
           ),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormTag'], PropertyReference>,
       },
       emits: [
         {
@@ -197,7 +198,7 @@ export default {
             }),
             ['autofocus', 'disabled', 'form', 'name', 'placeholder', 'required', 'size', 'state']
           ),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormTags'], PropertyReference>,
       },
       emits: [
         {
@@ -269,7 +270,7 @@ export default {
           ],
         },
         {
-          event: 'update:modelValue',
+          event: 'update:model-value',
           description: 'Emitted when the tags changes. Updates the v-model',
           args: [
             {

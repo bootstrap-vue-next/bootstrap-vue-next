@@ -1,11 +1,5 @@
 <template>
-  <form
-    :id="props.id"
-    ref="element"
-    :novalidate="props.novalidate"
-    :class="computedClasses"
-    @submit.prevent="submitted"
-  >
+  <form :id="props.id" ref="element" :novalidate="props.novalidate" :class="computedClasses">
     <slot />
   </form>
 </template>
@@ -23,10 +17,6 @@ const _props = withDefaults(defineProps<BFormProps>(), {
 })
 const props = useDefaults(_props, 'BForm')
 
-const emit = defineEmits<{
-  submit: [value: Event]
-}>()
-
 const element = ref<HTMLFormElement | null>(null)
 
 defineSlots<{
@@ -38,10 +28,6 @@ const computedClasses = computed(() => ({
   'form-floating': props.floating,
   'was-validated': props.validated,
 }))
-
-const submitted = (e: Readonly<Event>) => {
-  emit('submit', e)
-}
 
 defineExpose({
   element,

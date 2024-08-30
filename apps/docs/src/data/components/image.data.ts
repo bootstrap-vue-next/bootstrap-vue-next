@@ -1,4 +1,5 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
@@ -78,7 +79,8 @@ export default {
             type: 'Numberish',
             default: undefined,
           },
-        },
+          roundedEnd: {},
+        } satisfies Record<keyof BvnComponentProps['BImg'], PropertyReference>,
       },
       emits: [
         {
