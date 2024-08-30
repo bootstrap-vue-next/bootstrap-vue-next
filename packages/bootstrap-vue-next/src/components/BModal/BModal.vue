@@ -1,5 +1,5 @@
 <template>
-  <Teleport :to="props.teleportTo" :disabled="props.teleportDisabled">
+  <BTeleport :to="props.teleportTo" :disabled="props.teleportDisabled">
     <Transition
       v-bind="{...fadeTransitionProps, ...props.transProps, enterToClass: 'show'}"
       :appear="modelValue"
@@ -91,12 +91,12 @@
             </div>
           </div>
         </div>
-        <slot v-if="!props.hideBackdrop" name="backdrop">
+        <slot v-if="!props.hideBackdrop" name="backdrop" v-bind="sharedSlots">
           <div class="modal-backdrop fade show" @click="hideFn('backdrop')" />
         </slot>
       </div>
     </Transition>
-  </Teleport>
+  </BTeleport>
 </template>
 
 <script setup lang="ts">
@@ -115,6 +115,7 @@ import type {BModalProps} from '../../types'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
+import BTeleport from '../BTeleport.vue'
 
 defineOptions({
   inheritAttrs: false,
@@ -205,12 +206,13 @@ type SharedSlotsData = {
   close: () => void
   hide: (trigger?: string) => void
   ok: () => void
+  active: boolean
   visible: boolean
 }
 
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'backdrop'?: (props: Record<string, never>) => any
+  'backdrop'?: (props: SharedSlotsData) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'cancel'?: (props: SharedSlotsData) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -484,6 +486,7 @@ const sharedSlots = computed<SharedSlotsData>(() => ({
   ok: () => {
     hideFn('ok')
   },
+  active: isActive.value,
   visible: modelValue.value,
 }))
 

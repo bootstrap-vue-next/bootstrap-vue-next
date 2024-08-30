@@ -1,5 +1,5 @@
 <template>
-  <Teleport :to="props.teleportTo" :disabled="props.teleportDisabled || isOpenByBreakpoint">
+  <BTeleport :to="props.teleportTo" :disabled="props.teleportDisabled || isOpenByBreakpoint">
     <Transition
       v-bind="transitionProps"
       @before-enter="OnBeforeEnter"
@@ -58,7 +58,7 @@
     <slot v-if="showBackdrop" name="backdrop">
       <div class="offcanvas-backdrop fade show" @click="hide('backdrop')" />
     </slot>
-  </Teleport>
+  </BTeleport>
 </template>
 
 <script setup lang="ts">
@@ -76,6 +76,7 @@ import type {BOffcanvasProps} from '../../types'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
+import BTeleport from '../BTeleport.vue'
 
 // TODO once the responsive stuff may be implemented correctly,
 // What needs to occur is a fixing of the "body scrolling".

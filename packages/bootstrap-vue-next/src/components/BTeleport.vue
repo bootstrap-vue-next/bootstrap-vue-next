@@ -2,32 +2,27 @@
 import {defineComponent, h, type PropType, type SlotsType, Teleport, type TeleportProps} from 'vue'
 
 export default defineComponent({
-  name: 'RenderComponentOrSkip',
+  name: 'BTeleport',
   inheritAttrs: false,
   slots: Object as SlotsType<{
     default?: Record<string, never>
   }>,
   props: {
-    tag: {
-      type: String,
-      default: 'div',
-    },
     to: {
       type: [String, Object] as PropType<TeleportProps['to']>,
       default: null,
     },
-    skip: {
+    disabled: {
       type: Boolean,
       default: false,
     },
   },
-  setup(props, {slots, attrs}) {
+  setup(props, {slots}) {
+    // use this untill https://github.com/vuejs/core/issues/9782 is resolved
     return () =>
-      props.skip
-        ? slots.default?.()
-        : props.tag === 'Teleport'
-          ? h(Teleport, {to: props.to}, [slots.default?.()])
-          : h(props.tag, {...attrs}, [slots.default?.()])
+      props.disabled || !props.to
+        ? slots.default?.({})
+        : h(Teleport, {to: props.to}, [slots.default?.({})])
   },
 })
 </script>

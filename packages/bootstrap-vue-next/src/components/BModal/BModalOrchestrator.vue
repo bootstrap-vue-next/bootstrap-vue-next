@@ -1,5 +1,5 @@
 <template>
-  <Teleport :to="props.teleportTo" :disabled="props.teleportDisabled">
+  <BTeleport :to="props.teleportTo" :disabled="props.teleportDisabled">
     <div id="__BVID__modal-container">
       <component
         :is="modal.value.component"
@@ -29,13 +29,14 @@
         @hidden="remove?.(modal.value.props._self)"
       />
     </div>
-  </Teleport>
+  </BTeleport>
 </template>
 
 <script setup lang="ts">
 import {BvTriggerableEvent, omit} from '../../utils'
 import {useDefaults, useModalController} from '../../composables'
 import type {BModalOrchestratorProps} from '../../types'
+import BTeleport from '../BTeleport.vue'
 
 const _props = withDefaults(defineProps<BModalOrchestratorProps>(), {
   teleportDisabled: false,

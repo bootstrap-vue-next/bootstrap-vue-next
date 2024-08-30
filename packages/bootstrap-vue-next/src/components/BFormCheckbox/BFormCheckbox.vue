@@ -1,5 +1,5 @@
 <template>
-  <RenderComponentOrSkip :skip="isButtonGroup" :class="computedClasses">
+  <BWrapper :skip="isButtonGroup" :class="computedClasses">
     <input
       :id="computedId"
       v-bind="$attrs"
@@ -22,7 +22,7 @@
     <label v-if="hasDefaultSlot || props.plain === false" :for="computedId" :class="labelClasses">
       <slot />
     </label>
-  </RenderComponentOrSkip>
+  </BWrapper>
 </template>
 
 <script setup lang="ts">
@@ -31,7 +31,7 @@ import {computed, inject, ref, toRef} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useDefaults, useId} from '../../composables'
 import type {BFormCheckboxProps, CheckboxValue} from '../../types'
 import {checkboxGroupKey, isEmptySlot} from '../../utils'
-import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
+import BWrapper from '../BWrapper.vue'
 
 defineOptions({
   inheritAttrs: false,
@@ -135,3 +135,4 @@ defineExpose({
   },
 })
 </script>
+../BWrapper.vue

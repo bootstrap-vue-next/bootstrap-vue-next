@@ -1,7 +1,7 @@
 <template>
   <span :id="computedId + '_placeholder'" ref="placeholder" />
   <slot name="target" :show="show" :hide="hide" :toggle="toggle" :show-state="showState" />
-  <Teleport :to="props.teleportTo" :disabled="!props.teleportTo || props.teleportDisabled">
+  <BTeleport :to="props.teleportTo" :disabled="!props.teleportTo || props.teleportDisabled">
     <div
       v-if="showStateInternal || props.persistent"
       :id="computedId"
@@ -54,7 +54,7 @@
         </template>
       </div>
     </div>
-  </Teleport>
+  </BTeleport>
 </template>
 
 <script setup lang="ts">
@@ -92,6 +92,7 @@ import type {BPopoverProps} from '../types'
 import {BvTriggerableEvent, getElement, getTransitionDelay, IS_BROWSER} from '../utils'
 import {DefaultAllowlist, sanitizeHtml} from '../utils/sanitizer'
 import {isBoundary, isRootBoundary, resolveBootstrapPlacement} from '../utils/floatingUi'
+import BTeleport from './BTeleport.vue'
 
 defineOptions({
   inheritAttrs: false,

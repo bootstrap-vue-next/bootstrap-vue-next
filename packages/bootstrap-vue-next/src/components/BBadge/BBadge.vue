@@ -1,12 +1,12 @@
 <template>
   <component :is="computedTag" class="badge" :class="computedClasses" v-bind="computedLinkProps">
-    <RenderComponentOrSkip
+    <BWrapper
       :skip="props.dotIndicator !== true"
       tag="span"
       v-bind="props.dotIndicator ? {class: 'visually-hidden'} : {}"
     >
       <slot />
-    </RenderComponentOrSkip>
+    </BWrapper>
   </component>
 </template>
 
@@ -15,7 +15,7 @@ import {useBLinkHelper, useColorVariantClasses, useDefaults} from '../../composa
 import {computed, toRef} from 'vue'
 import type {BBadgeProps} from '../../types'
 import BLink from '../BLink/BLink.vue'
-import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
+import BWrapper from '../BWrapper.vue'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
