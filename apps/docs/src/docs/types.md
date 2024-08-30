@@ -16,12 +16,16 @@
 <BCard class="bg-body-tertiary">
 
 ```ts
-type CommonAlignment = 'start' | 'end' | 'center' | 'fill'
-type Vertical = CommonAlignment | 'baseline' | 'stretch'
-type Horizontal = CommonAlignment | 'between' | 'around'
-type Content = CommonAlignment | 'between' | 'around' | 'stretch'
-type JustifyContent = 'start' | 'end' | 'center' | 'between' | 'around' | 'evenly'
-type TextHorizontal = 'start' | 'end' | 'center'
+type AlignmentCommon = 'start' | 'end' | 'center' | 'fill'
+type AlignmentContent = AlignmentCommon | 'between' | 'around' | 'stretch'
+type AlignmentHorizontal = AlignmentCommon | 'between' | 'around'
+type AlignmentJustifyContent = 'start' | 'end' | 'center' | 'between' | 'around' | 'evenly'
+type AlignmentTextHorizontal = 'start' | 'end' | 'center'
+type AlignmentVertical = AlignmentCommon | 'baseline' | 'stretch'
+type VerticalAlign = 'baseline' | 'top' | 'middle' | 'bottom' | 'text-top' | 'text-bottom'
+type ContainerVerticalAlign = Exclude<VerticalAlign, 'baseline' | 'text-top' | 'text-bottom'>
+type ContainerHorizontalAlign = 'start' | 'center' | 'end'
+type ContainerPosition = `${ContainerVerticalAlign}-${ContainerHorizontalAlign}`
 ```
 
 </BCard>
