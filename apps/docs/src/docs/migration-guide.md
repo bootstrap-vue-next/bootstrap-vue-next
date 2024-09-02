@@ -410,34 +410,15 @@ const confirmBox = async () => {
 The `show` and `confirm` `props` object accespts all of the properties that are defined on
 [BModal](/docs/components/modal#component-reference) excpet for `modelValue`.
 
+## BPagination
+
+Keyboard Navigation and Small Screen Support.
+
+## BPaginationNav
+
+This component is not yet implemented
+
 <script setup lang="ts">
 import {computed, ref} from 'vue'
 import {useModalController} from 'bootstrap-vue-next'
-
-const {confirm, show} = useModalController()
-
-const okResult = ref<boolean | null | undefined>(undefined)
-
-const okBox = async () => {
-  okResult.value = await show?.({
-    props: {
-      body: 'This is an informational message',
-      title: 'Message',
-      okOnly: true,
-    },
-  })
-}
-
-const confirmResult = ref<boolean | null | undefined>(null)
-
-const confirmBox = async () => {
-  confirmResult.value = await confirm?.({
-    props: {
-      body: 'Are you sure you want to do this?',
-      title: 'Confirm',
-      okTitle: 'Yes',
-      cancelTitle: 'No',
-    },
-  })
-}
 </script>
