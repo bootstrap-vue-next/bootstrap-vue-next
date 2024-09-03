@@ -8,7 +8,10 @@
   >
     <template v-for="page in pages" :key="`page-${page.id}`">
       <li v-bind="page.li">
-        <span v-if="page.id === ELLIPSIS_BUTTON" v-bind="ellipsisProps.span">
+        <span
+          v-if="page.id === FIRST_ELLIPSIS || page.id === LAST_ELLIPSIS"
+          v-bind="ellipsisProps.span"
+        >
           <slot name="ellipsis-text">
             {{ props.ellipsisText || '...' }}
           </slot>
@@ -44,7 +47,8 @@ const FIRST_BUTTON = -1
 const PREV_BUTTON = -2
 const NEXT_BUTTON = -3
 const LAST_BUTTON = -4
-const ELLIPSIS_BUTTON = -5
+const FIRST_ELLIPSIS = -5
+const LAST_ELLIPSIS = -6
 
 // This is necessary because type inference isn't succeeding for the pages computed
 interface PageButton {
@@ -339,15 +343,16 @@ const pages = computed(
     elements.value.map((p) => {
       switch (p) {
         case FIRST_BUTTON:
-          return {id: FIRST_BUTTON, ...firstButtonProps.value}
+          return {id: p, ...firstButtonProps.value}
         case PREV_BUTTON:
-          return {id: PREV_BUTTON, ...prevButtonProps.value}
+          return {id: p, ...prevButtonProps.value}
         case NEXT_BUTTON:
-          return {id: NEXT_BUTTON, ...nextButtonProps.value}
+          return {id: p, ...nextButtonProps.value}
         case LAST_BUTTON:
-          return {id: LAST_BUTTON, ...lastButtonProps.value}
-        case ELLIPSIS_BUTTON:
-          return {id: ELLIPSIS_BUTTON, ...ellipsisProps.value}
+          return {id: p, ...lastButtonProps.value}
+        case FIRST_ELLIPSIS:
+        case LAST_ELLIPSIS:
+          return {id: p, ...ellipsisProps.value}
         default:
           return {id: p, ...getPageButtonProps(p)}
       }
@@ -365,8 +370,10 @@ const elements = computed(() => {
   const firstPage = props.firstNumber ? 1 : 0
   const lastPage = props.lastNumber ? 1 : 0
   const hideEllipsis = props.hideEllipsis || limit <= ELLIPSIS_THRESHOLD
-  const hideEndButtons = props.hideGotoEndButtons ? 1 : 0
-  const showEndButtons = props.hideGotoEndButtons ? 0 : 1
+  const hideFirstButton = props.hideGotoEndButtons && !props.firstNumber ? 1 : 0
+  const hideLastButton = props.hideGotoEndButtons && !props.lastNumber ? 1 : 0
+  const showFirstButton = hideFirstButton ? 0 : 1
+  const showLastButton = hideLastButton ? 0 : 1
 
   // The first case is when all of the page buttons fit on the control, this is
   //  the simplest case and the only one that will create an array smaller than
@@ -374,19 +381,19 @@ const elements = computed(() => {
 
   if (pages < limit + firstPage + lastPage) {
     return [
-      !firstPage && !hideEndButtons ? FIRST_BUTTON : null,
+      !firstPage && !hideFirstButton ? FIRST_BUTTON : null,
       PREV_BUTTON,
       ...Array.from({length: pages}, (_, index) => index + 1),
       NEXT_BUTTON,
-      !lastPage && !hideEndButtons ? LAST_BUTTON : null,
+      !lastPage && !hideLastButton ? LAST_BUTTON : null,
     ].filter((x) => x !== null) as number[]
   }
 
   // All of the remaining cases result in an array that is exactly limit + 4 - hideEndButtons * 2 in length, so create
   //  the array upfront and set up the beginning and end buttons, then fill the rest for each case
 
-  const buttons = Array.from({length: limit + 4 - hideEndButtons * 2})
-  if (!hideEndButtons) {
+  const buttons = Array.from({length: limit + 4 - (hideFirstButton + hideLastButton)})
+  if (!hideFirstButton) {
     if (!firstPage) {
       buttons[0] = FIRST_BUTTON
       buttons[1] = PREV_BUTTON
@@ -394,7 +401,11 @@ const elements = computed(() => {
       buttons[0] = PREV_BUTTON
       buttons[1] = 1
     }
+  } else {
+    buttons[0] = PREV_BUTTON
+  }
 
+  if (!hideLastButton) {
     if (!lastPage) {
       buttons[buttons.length - 1] = LAST_BUTTON
       buttons[buttons.length - 2] = NEXT_BUTTON
@@ -403,7 +414,6 @@ const elements = computed(() => {
       buttons[buttons.length - 2] = pages
     }
   } else {
-    buttons[0] = PREV_BUTTON
     buttons[buttons.length - 1] = NEXT_BUTTON
   }
 
@@ -413,11 +423,11 @@ const elements = computed(() => {
   const halfLimit = Math.floor(limit / 2)
   if (value <= halfLimit + firstPage) {
     for (let index = 1; index <= limit; index++) {
-      buttons[index + 1 - hideEndButtons] = index + firstPage
+      buttons[index + 1 - hideFirstButton] = index + firstPage
     }
 
     if (!hideEllipsis) {
-      buttons[buttons.length - (2 + showEndButtons)] = ELLIPSIS_BUTTON
+      buttons[buttons.length - (2 + showLastButton)] = LAST_ELLIPSIS
     }
   }
 
@@ -427,11 +437,11 @@ const elements = computed(() => {
   if (value > pages - halfLimit - lastPage) {
     const start = pages - (limit - 1) - lastPage
     for (let index = 0; index < limit; index++) {
-      buttons[index + 2 - hideEndButtons] = start + index
+      buttons[index + 2 - hideFirstButton] = start + index
     }
 
     if (!hideEllipsis) {
-      buttons[1 + showEndButtons] = ELLIPSIS_BUTTON
+      buttons[1 + showFirstButton] = FIRST_ELLIPSIS
     }
   }
 
@@ -440,16 +450,16 @@ const elements = computed(() => {
     // Is there a more elegant way to ceck that we're in the final case?
     const start = value - Math.floor(limit / 2)
     for (let index = 0; index < limit; index++) {
-      buttons[index + 2 - hideEndButtons] = start + index
+      buttons[index + 2 - hideFirstButton] = start + index
     }
 
     if (!hideEllipsis) {
-      buttons[1 + showEndButtons] = ELLIPSIS_BUTTON
-      buttons[buttons.length - (2 + showEndButtons)] = ELLIPSIS_BUTTON
+      buttons[1 + showFirstButton] = FIRST_ELLIPSIS
+      buttons[buttons.length - (2 + showLastButton)] = LAST_ELLIPSIS
     }
   }
 
-  // Enable sanity check for debugging purposes
+  //Enable sanity check for debugging purposes
   // for (let i = 0; i < buttons.length; i++) {
   //   if (!buttons[i]) {
   //     // eslint-disable-next-line no-console
