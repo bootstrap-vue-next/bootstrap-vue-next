@@ -1,4 +1,4 @@
-import type {Slot} from 'vue'
+import type {Ref, Slot} from 'vue'
 import type {ClassValue} from '.'
 
 export interface TabType {
@@ -9,7 +9,7 @@ export interface TabType {
   disabled: boolean
   titleComponent?: Slot
   titleItemClass?: ClassValue
-  titleLinkAttrs?: Record<string, unknown>
+  titleLinkAttrs?: Ref<Record<string, unknown>>
   titleLinkClass?: ClassValue
   onClick?: (event: Event) => void
   el: HTMLElement | null

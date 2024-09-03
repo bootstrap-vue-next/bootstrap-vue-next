@@ -42,7 +42,7 @@
             role="tab"
             :aria-controls="tab.id"
             :aria-selected="tab.active"
-            v-bind="tab.titleLinkAttrs"
+            v-bind="tab.titleLinkAttrs?.value"
             @keydown.left.stop.prevent="keynav(-1)"
             @keydown.right.stop.prevent="keynav(1)"
             @keydown.page-up.stop.prevent="keynav(-999)"

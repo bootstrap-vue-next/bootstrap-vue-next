@@ -67,7 +67,7 @@ const tab = computed(
       title: props.title,
       titleComponent: slots.title,
       titleItemClass: props.titleItemClass,
-      titleLinkAttrs: props.titleLinkAttrs,
+      titleLinkAttrs: toRef(() => props.titleLinkAttrs),
       titleLinkClass: props.titleLinkClass,
       onClick,
       el: el.value,
