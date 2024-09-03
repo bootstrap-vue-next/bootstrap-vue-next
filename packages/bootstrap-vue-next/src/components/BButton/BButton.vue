@@ -56,7 +56,7 @@ defineSlots<{
   'loading-spinner'?: (props: Record<string, never>) => any
 }>()
 
-const _props = withDefaults(defineProps<BButtonProps>(), {
+const _props = withDefaults(defineProps<Omit<BButtonProps, 'pressed'>>(), {
   loading: false,
   loadingFill: false,
   loadingText: 'Loading...',
@@ -99,7 +99,7 @@ const emit = defineEmits<{
 
 const element = ref<HTMLElement | null>(null)
 
-const pressedValue = defineModel<boolean | undefined>('pressed', {default: undefined})
+const pressedValue = defineModel<BButtonProps['pressed']>('pressed', {default: undefined})
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'active-class',

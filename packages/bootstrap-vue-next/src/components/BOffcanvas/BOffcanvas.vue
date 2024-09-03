@@ -95,7 +95,7 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const _props = withDefaults(defineProps<BOffcanvasProps>(), {
+const _props = withDefaults(defineProps<Omit<BOffcanvasProps, 'modelValue'>>(), {
   hideBackdrop: false,
   bodyAttrs: undefined,
   bodyClass: undefined,
@@ -154,7 +154,7 @@ const slots = defineSlots<{
   'title'?: (props: SharedSlotsData) => any
 }>()
 
-const modelValue = defineModel<boolean>({
+const modelValue = defineModel<Exclude<BOffcanvasProps['modelValue'], undefined>>({
   default: false,
 })
 

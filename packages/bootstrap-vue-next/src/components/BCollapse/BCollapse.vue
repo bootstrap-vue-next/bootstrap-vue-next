@@ -28,7 +28,7 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const _props = withDefaults(defineProps<BCollapseProps>(), {
+const _props = withDefaults(defineProps<Omit<BCollapseProps, 'modelValue'>>(), {
   horizontal: false,
   id: undefined,
   isNav: false,
@@ -79,7 +79,7 @@ const buildTriggerableEvent = (
     componentId: computedId.value,
   })
 
-const modelValue = defineModel<boolean>({
+const modelValue = defineModel<Exclude<BCollapseProps['modelValue'], undefined>>({
   default: false,
 })
 

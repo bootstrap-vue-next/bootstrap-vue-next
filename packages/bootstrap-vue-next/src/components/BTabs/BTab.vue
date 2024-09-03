@@ -21,7 +21,7 @@ import type {TabType} from '../../types/Tab'
 import type {BTabProps} from '../../types/ComponentProps'
 import {tabsInjectionKey} from '../../utils/keys'
 
-const _props = withDefaults(defineProps<BTabProps>(), {
+const _props = withDefaults(defineProps<Omit<BTabProps, 'active'>>(), {
   buttonId: undefined,
   disabled: false,
   id: undefined,
@@ -47,7 +47,7 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const activeModel = defineModel<boolean>('active', {
+const activeModel = defineModel<Exclude<BTabProps['active'], undefined>>('active', {
   default: false,
 })
 
@@ -79,7 +79,7 @@ const tab = computed(
 onMounted(() => {
   if (!parentData) return
   parentData.registerTab(tab)
-  if (props.active) {
+  if (activeModel.value) {
     parentData.activateTab(computedId.value)
   }
 })
@@ -114,19 +114,16 @@ watch(isActive, (active) => {
   show.value = false
   activeModel.value = false
 })
-watch(
-  () => props.active,
-  (active) => {
-    if (!parentData) return
-    if (!active) {
-      if (isActive.value) {
-        parentData.activateTab(undefined)
-      }
-      return
+watch(activeModel, (active) => {
+  if (!parentData) return
+  if (!active) {
+    if (isActive.value) {
+      parentData.activateTab(undefined)
     }
-    parentData.activateTab(computedId.value)
+    return
   }
-)
+  parentData.activateTab(computedId.value)
+})
 
 const computedClasses = computed(() => [
   {

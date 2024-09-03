@@ -62,7 +62,7 @@ const NEXT_BUTTON = -3
 const LAST_BUTTON = -4
 const ELLIPSIS_BUTTON = -5
 
-const _props = withDefaults(defineProps<BPaginationProps>(), {
+const _props = withDefaults(defineProps<Omit<BPaginationProps, 'modelValue'>>(), {
   align: 'start',
   ariaControls: undefined,
   ariaLabel: 'Pagination',
@@ -99,7 +99,7 @@ const emit = defineEmits<{
   'page-click': [event: BvEvent, pageNumber: number]
 }>()
 
-const modelValue = defineModel<number>({default: 1})
+const modelValue = defineModel<Exclude<BPaginationProps['modelValue'], undefined>>({default: 1})
 
 const limitNumber = useToNumber(() => props.limit, {nanToZero: true, method: 'parseInt'})
 const perPageNumber = useToNumber(() => props.perPage, {nanToZero: true, method: 'parseInt'})

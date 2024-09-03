@@ -38,7 +38,7 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const _props = withDefaults(defineProps<BFormRadioProps>(), {
+const _props = withDefaults(defineProps<Omit<BFormRadioProps, 'modelValue'>>(), {
   ariaLabel: undefined,
   ariaLabelledby: undefined,
   autofocus: false,
@@ -64,7 +64,7 @@ const slots = defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = defineModel<RadioValue | undefined>({
+const modelValue = defineModel<BFormRadioProps['modelValue']>({
   default: undefined,
 })
 

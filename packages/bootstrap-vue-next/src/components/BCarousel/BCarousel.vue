@@ -63,7 +63,7 @@ import type {Numberish} from '../../types/CommonTypes'
 import {getSlotElements} from '../../utils/getSlotElements'
 import {carouselInjectionKey} from '../../utils/keys'
 
-const _props = withDefaults(defineProps<BCarouselProps>(), {
+const _props = withDefaults(defineProps<Omit<BCarouselProps, 'modelValue'>>(), {
   background: undefined,
   controls: false,
   controlsNextText: 'Next',
@@ -98,7 +98,7 @@ const slots = defineSlots<{
 
 const computedId = useId(() => props.id, 'carousel')
 
-const modelValue = defineModel<number>({default: 0})
+const modelValue = defineModel<Exclude<BCarouselProps['modelValue'], undefined>>({default: 0})
 
 const slideValues = ref<null | InstanceType<typeof BCarouselSlide>[]>(null)
 

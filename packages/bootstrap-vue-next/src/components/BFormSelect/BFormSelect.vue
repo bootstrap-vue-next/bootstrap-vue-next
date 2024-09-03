@@ -49,7 +49,7 @@ import {useStateClass} from '../../composables/useStateClass'
 import {useFormSelect} from '../../composables/useFormSelect'
 import type {ComplexSelectOptionRaw, SelectOption} from '../../types/SelectTypes'
 
-const _props = withDefaults(defineProps<BFormSelectProps>(), {
+const _props = withDefaults(defineProps<Omit<BFormSelectProps, 'modelValue'>>(), {
   ariaInvalid: undefined,
   autofocus: false,
   disabled: false,

@@ -161,74 +161,77 @@ import {get, set} from '../../utils/object'
 import {startCase} from '../../utils/stringUtils'
 import {getTableFieldHeadLabel} from '../../utils/getTableFieldHeadLabel'
 
-const _props = withDefaults(defineProps<BTableProps<T>>(), {
-  noSortableIcon: false,
-  perPage: Number.POSITIVE_INFINITY,
-  filter: undefined,
-  mustSort: false,
-  filterable: undefined,
-  provider: undefined,
-  noProvider: undefined,
-  noProviderPaging: false,
-  noProviderSorting: false,
-  multisort: false,
-  noProviderFiltering: false,
-  noLocalSorting: false,
-  noSelectOnClick: false,
-  selectable: false,
-  stickySelect: false,
-  selectHead: true,
-  selectMode: 'multi',
-  selectionVariant: 'primary',
-  busyLoadingText: 'Loading...',
-  currentPage: 1,
-  // BTableLite props
-  items: () => [],
-  fields: () => [],
-  // All others use defaults
-  caption: undefined,
-  align: undefined,
-  footClone: undefined,
-  labelStacked: undefined,
-  showEmpty: undefined,
-  emptyText: undefined,
-  emptyFilteredText: undefined,
-  fieldColumnClass: undefined,
-  tbodyTrClass: undefined,
-  captionHtml: undefined,
-  detailsTdClass: undefined,
-  headVariant: undefined,
-  headRowVariant: undefined,
-  footRowVariant: undefined,
-  footVariant: undefined,
-  modelValue: undefined,
-  primaryKey: undefined,
-  tbodyClass: undefined,
-  tfootClass: undefined,
-  tfootTrClass: undefined,
-  theadClass: undefined,
-  theadTrClass: undefined,
-  // End BTableLite props
-  // BTableSimple props
-  borderVariant: undefined,
-  variant: undefined,
-  bordered: undefined,
-  borderless: undefined,
-  captionTop: undefined,
-  dark: undefined,
-  hover: undefined,
-  id: undefined,
-  noBorderCollapse: undefined,
-  outlined: undefined,
-  fixed: undefined,
-  responsive: undefined,
-  stacked: undefined,
-  striped: undefined,
-  stripedColumns: undefined,
-  small: undefined,
-  stickyHeader: undefined,
-  // End BTableSimple props
-})
+const _props = withDefaults(
+  defineProps<Omit<BTableProps<T>, 'sortBy' | 'busy' | 'selectedItems'>>(),
+  {
+    noSortableIcon: false,
+    perPage: Number.POSITIVE_INFINITY,
+    filter: undefined,
+    mustSort: false,
+    filterable: undefined,
+    provider: undefined,
+    noProvider: undefined,
+    noProviderPaging: false,
+    noProviderSorting: false,
+    multisort: false,
+    noProviderFiltering: false,
+    noLocalSorting: false,
+    noSelectOnClick: false,
+    selectable: false,
+    stickySelect: false,
+    selectHead: true,
+    selectMode: 'multi',
+    selectionVariant: 'primary',
+    busyLoadingText: 'Loading...',
+    currentPage: 1,
+    // BTableLite props
+    items: () => [],
+    fields: () => [],
+    // All others use defaults
+    caption: undefined,
+    align: undefined,
+    footClone: undefined,
+    labelStacked: undefined,
+    showEmpty: undefined,
+    emptyText: undefined,
+    emptyFilteredText: undefined,
+    fieldColumnClass: undefined,
+    tbodyTrClass: undefined,
+    captionHtml: undefined,
+    detailsTdClass: undefined,
+    headVariant: undefined,
+    headRowVariant: undefined,
+    footRowVariant: undefined,
+    footVariant: undefined,
+    modelValue: undefined,
+    primaryKey: undefined,
+    tbodyClass: undefined,
+    tfootClass: undefined,
+    tfootTrClass: undefined,
+    theadClass: undefined,
+    theadTrClass: undefined,
+    // End BTableLite props
+    // BTableSimple props
+    borderVariant: undefined,
+    variant: undefined,
+    bordered: undefined,
+    borderless: undefined,
+    captionTop: undefined,
+    dark: undefined,
+    hover: undefined,
+    id: undefined,
+    noBorderCollapse: undefined,
+    outlined: undefined,
+    fixed: undefined,
+    responsive: undefined,
+    stacked: undefined,
+    striped: undefined,
+    stripedColumns: undefined,
+    small: undefined,
+    stickyHeader: undefined,
+    // End BTableSimple props
+  }
+)
 const props = useDefaults(_props, 'BTable')
 
 const emit = defineEmits<{
@@ -244,15 +247,18 @@ const emit = defineEmits<{
   'change': [value: T[]]
 }>()
 
-const sortByModel = defineModel<BTableSortBy[] | undefined>('sortBy', {
+const sortByModel = defineModel<BTableProps<T>['sortBy']>('sortBy', {
   default: undefined,
 })
-const busyModel = defineModel<boolean>('busy', {
+const busyModel = defineModel<Exclude<BTableProps<T>['busy'], undefined>>('busy', {
   default: false,
 })
-const selectedItemsModel = defineModel<T[]>('selectedItems', {
-  default: () => [],
-})
+const selectedItemsModel = defineModel<Exclude<BTableProps<T>['selectedItems'], undefined>>(
+  'selectedItems',
+  {
+    default: () => [],
+  }
+)
 
 const selectedItemsToSet = computed({
   get: () => new Set([...selectedItemsModel.value]),

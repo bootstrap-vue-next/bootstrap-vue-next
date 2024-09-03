@@ -33,10 +33,9 @@ import BFormRadio from './BFormRadio.vue'
 import {getGroupAttr, getGroupClasses} from '../../composables/useFormCheck'
 import {useFocus} from '@vueuse/core'
 import {useDefaults} from '../../composables/useDefaults'
-import type {RadioValue} from '../../types/RadioTypes'
 import {useId} from '../../composables/useId'
 
-const _props = withDefaults(defineProps<BFormRadioGroupProps>(), {
+const _props = withDefaults(defineProps<Omit<BFormRadioGroupProps, 'modelValue'>>(), {
   ariaInvalid: undefined,
   autofocus: false,
   buttonVariant: 'secondary',
@@ -67,7 +66,7 @@ defineSlots<{
   first?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = defineModel<RadioValue | null>({
+const modelValue = defineModel<Exclude<BFormRadioGroupProps['modelValue'], undefined>>({
   default: null,
 })
 

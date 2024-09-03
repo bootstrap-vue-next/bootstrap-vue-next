@@ -82,7 +82,7 @@ import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
 import {isBoundary, isRootBoundary, resolveFloatingPlacement} from '../../utils/floatingUi'
 import {dropdownInjectionKey, inputGroupKey} from '../../utils/keys'
 
-const _props = withDefaults(defineProps<BDropdownProps>(), {
+const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   ariaLabel: undefined,
   autoClose: true,
   boundary: 'clippingAncestors',
@@ -146,7 +146,7 @@ defineSlots<{
 
 const computedId = useId(() => props.id, 'dropdown')
 
-const modelValue = defineModel<boolean>({default: false})
+const modelValue = defineModel<Exclude<BDropdownProps['modelValue'], undefined>>({default: false})
 
 const inInputGroup = inject(inputGroupKey, false)
 

@@ -34,7 +34,7 @@ import BDropdown from '../BDropdown/BDropdown.vue'
 import type {BDropdownProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 
-const _props = withDefaults(defineProps<BDropdownProps>(), {
+const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   ariaLabel: undefined,
   autoClose: true,
   block: false,
@@ -86,7 +86,7 @@ const emit = defineEmits<{
   'toggle': []
 }>()
 
-const modelValue = defineModel<boolean>({default: false})
+const modelValue = defineModel<Exclude<BDropdownProps['modelValue'], undefined>>({default: false})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

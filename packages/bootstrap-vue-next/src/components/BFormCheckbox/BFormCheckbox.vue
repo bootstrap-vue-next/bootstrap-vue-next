@@ -20,7 +20,7 @@
       :value="props.value"
       :true-value="props.value"
       :false-value="props.uncheckedValue"
-      :indeterminate="props.indeterminate"
+      :indeterminate="indeterminate"
       v-bind="inputAttrs"
     />
     <label v-if="hasDefaultSlot || props.plain === false" :for="computedId" :class="labelClasses">
@@ -47,29 +47,32 @@ defineOptions({
 
 const {class: wrapperClass, ...inputAttrs} = useAttrs()
 
-const _props = withDefaults(defineProps<BFormCheckboxProps>(), {
-  wrapperAttrs: undefined,
-  inputClass: undefined,
-  ariaLabel: undefined,
-  ariaLabelledby: undefined,
-  autofocus: false,
-  button: false,
-  buttonGroup: false,
-  buttonVariant: null,
-  disabled: false,
-  form: undefined,
-  id: undefined,
-  inline: false,
-  name: undefined,
-  plain: false,
-  required: undefined,
-  reverse: false,
-  size: undefined,
-  state: null,
-  switch: false,
-  uncheckedValue: false,
-  value: true,
-})
+const _props = withDefaults(
+  defineProps<Omit<BFormCheckboxProps, 'modelValue' | 'indeterminate'>>(),
+  {
+    wrapperAttrs: undefined,
+    inputClass: undefined,
+    ariaLabel: undefined,
+    ariaLabelledby: undefined,
+    autofocus: false,
+    button: false,
+    buttonGroup: false,
+    buttonVariant: null,
+    disabled: false,
+    form: undefined,
+    id: undefined,
+    inline: false,
+    name: undefined,
+    plain: false,
+    required: undefined,
+    reverse: false,
+    size: undefined,
+    state: null,
+    switch: false,
+    uncheckedValue: false,
+    value: true,
+  }
+)
 const props = useDefaults(_props, 'BFormCheckbox')
 
 const slots = defineSlots<{
@@ -77,12 +80,15 @@ const slots = defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = defineModel<CheckboxValue | CheckboxValue[]>({
+const modelValue = defineModel<BFormCheckboxProps['modelValue']>({
   default: undefined,
 })
-const indeterminate = defineModel<boolean>('indeterminate', {
-  default: false,
-})
+const indeterminate = defineModel<Exclude<BFormCheckboxProps['indeterminate'], undefined>>(
+  'indeterminate',
+  {
+    default: false,
+  }
+)
 
 const computedId = useId(() => props.id, 'form-check')
 

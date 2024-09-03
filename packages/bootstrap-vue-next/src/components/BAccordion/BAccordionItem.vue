@@ -61,7 +61,7 @@ defineOptions({
 })
 const {class: wrapperClass, ...collapseAttrs} = useAttrs()
 
-const _props = withDefaults(defineProps<BAccordionItemProps>(), {
+const _props = withDefaults(defineProps<Omit<BAccordionItemProps, 'modelValue'>>(), {
   bodyAttrs: undefined,
   bodyClass: undefined,
   buttonAttrs: undefined,
@@ -97,7 +97,9 @@ defineSlots<{
   title?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = defineModel<boolean>({default: false})
+const modelValue = defineModel<Exclude<BAccordionItemProps['modelValue'], undefined>>({
+  default: false,
+})
 
 const parentData = inject(accordionInjectionKey, null)
 

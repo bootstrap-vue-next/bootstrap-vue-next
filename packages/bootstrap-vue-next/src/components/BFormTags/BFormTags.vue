@@ -133,7 +133,7 @@ import type {ColorVariant} from '../../types/ColorTypes'
 import {useId} from '../../composables/useId'
 import {useStateClass} from '../../composables/useStateClass'
 
-const _props = withDefaults(defineProps<BFormTagsProps>(), {
+const _props = withDefaults(defineProps<Omit<BFormTagsProps, 'modelValue'>>(), {
   addButtonText: 'Add',
   addButtonVariant: 'outline-secondary',
   addOnChange: false,
@@ -191,7 +191,7 @@ defineSlots<{
   }) => any
 }>()
 
-const modelValue = defineModel<string[]>({
+const modelValue = defineModel<Exclude<BFormTagsProps['modelValue'], undefined>>({
   default: () => [],
 })
 

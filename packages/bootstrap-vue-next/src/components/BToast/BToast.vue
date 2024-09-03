@@ -74,7 +74,7 @@ import {useCountdown} from '../../composables/useCountdown'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useDefaults} from '../../composables/useDefaults'
 
-const _props = withDefaults(defineProps<BToastProps>(), {
+const _props = withDefaults(defineProps<Omit<BToastProps, 'modelValue'>>(), {
   bgVariant: null,
   body: undefined,
   bodyClass: undefined,
@@ -135,7 +135,7 @@ const element = ref<HTMLElement | null>(null)
 const isHovering = useElementHover(element)
 // Note: passive: true will sync an internal ref... This is required for useToast to exit,
 // Since the modelValue that's passed from that composable is not reactive, this internal ref _is_ and thus it will trigger closing the toast
-const modelValue = defineModel<boolean | number>({default: false})
+const modelValue = defineModel<Exclude<BToastProps['modelValue'], undefined>>({default: false})
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props)
 

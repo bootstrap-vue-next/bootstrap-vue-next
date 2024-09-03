@@ -133,7 +133,7 @@ defineOptions({
 // Note, attempt to return focus to item that openned the modal after close
 // Implement auto focus props like autoFocusButton
 
-const _props = withDefaults(defineProps<BModalProps>(), {
+const _props = withDefaults(defineProps<Omit<BModalProps, 'modelValue'>>(), {
   autofocus: true,
   autofocusButton: undefined,
   body: undefined,
@@ -236,7 +236,7 @@ const slots = defineSlots<{
 const computedId = useId(() => props.id, 'modal')
 // Note: passive: true will sync an internal ref... This is required for useModalManager to exit,
 // Since the modelValue that's passed from that composable is not reactive, this internal ref _is_ and thus it will trigger closing the modal
-const modelValue = defineModel<boolean>({default: false})
+const modelValue = defineModel<Exclude<BModalProps['modelValue'], undefined>>({default: false})
 
 const element = ref<HTMLElement | null>(null)
 const fallbackFocusElement = ref<HTMLElement | null>(null)

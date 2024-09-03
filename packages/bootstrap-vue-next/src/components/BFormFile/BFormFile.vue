@@ -50,7 +50,7 @@ const slots = defineSlots<{
   label?: (props: Record<string, never>) => any
 }>()
 
-const _props = withDefaults(defineProps<BFormFileProps>(), {
+const _props = withDefaults(defineProps<Omit<BFormFileProps, 'modelValue'>>(), {
   ariaLabel: undefined,
   ariaLabelledby: undefined,
   accept: '',
@@ -75,7 +75,7 @@ const _props = withDefaults(defineProps<BFormFileProps>(), {
 })
 const props = useDefaults(_props, 'BFormFile')
 
-const modelValue = defineModel<File | File[] | null>({
+const modelValue = defineModel<Exclude<BFormFileProps['modelValue'], undefined>>({
   default: null,
 })
 

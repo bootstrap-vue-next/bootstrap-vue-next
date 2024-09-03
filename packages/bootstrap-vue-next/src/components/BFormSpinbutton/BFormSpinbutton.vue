@@ -89,7 +89,7 @@ import type {ButtonType} from '../../types/ButtonType'
 
 const KEY_CODES = [CODE_UP, CODE_DOWN, CODE_HOME, CODE_END, CODE_PAGEUP, CODE_PAGEDOWN]
 
-const _props = withDefaults(defineProps<BFormSpinbuttonProps>(), {
+const _props = withDefaults(defineProps<Omit<BFormSpinbuttonProps, 'modelValue'>>(), {
   ariaControls: undefined,
   ariaLabel: undefined,
   disabled: false,
@@ -129,7 +129,7 @@ defineSlots<{
   increment?: (props: {hasFocus: boolean}) => any
 }>()
 
-const modelValue = defineModel<number | null>({
+const modelValue = defineModel<Exclude<BFormSpinbuttonProps['modelValue'], undefined>>({
   default: null,
 })
 

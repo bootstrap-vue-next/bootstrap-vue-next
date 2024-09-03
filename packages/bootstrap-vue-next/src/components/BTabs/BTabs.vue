@@ -72,7 +72,7 @@ import type {BTabsProps} from '../../types/ComponentProps'
 import {tabsInjectionKey} from '../../utils/keys'
 import {useDefaults} from '../../composables/useDefaults'
 
-const _props = withDefaults(defineProps<BTabsProps>(), {
+const _props = withDefaults(defineProps<Omit<BTabsProps, 'modelValue' | 'activeId'>>(), {
   activeNavItemClass: undefined,
   activeTabClass: undefined,
   align: undefined,
@@ -115,10 +115,10 @@ defineSlots<{
   'tabs-start'?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = defineModel<number>({
+const modelValue = defineModel<Exclude<BTabsProps['modelValue'], undefined>>({
   default: -1,
 })
-const activeId = defineModel<string | undefined>('activeId', {
+const activeId = defineModel<BTabsProps['activeId']>('activeId', {
   default: undefined,
 })
 

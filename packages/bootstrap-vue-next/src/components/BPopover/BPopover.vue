@@ -101,7 +101,7 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const _props = withDefaults(defineProps<BPopoverProps>(), {
+const _props = withDefaults(defineProps<Omit<BPopoverProps, 'modelValue'>>(), {
   boundary: 'clippingAncestors',
   boundaryPadding: undefined,
   click: false,
@@ -160,7 +160,7 @@ defineSlots<{
   title?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = defineModel<boolean>({
+const modelValue = defineModel<Exclude<BPopoverProps['modelValue'], undefined>>({
   default: false,
 })
 

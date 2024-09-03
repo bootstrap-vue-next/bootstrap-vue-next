@@ -27,11 +27,10 @@ import {checkboxGroupKey} from '../../utils/keys'
 import {useFocus} from '@vueuse/core'
 import type {BFormCheckboxGroupProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
-import type {CheckboxValue} from '../../types/CheckboxTypes'
 import {useId} from '../../composables/useId'
 import {getGroupAttr, getGroupClasses} from '../../composables/useFormCheck'
 
-const _props = withDefaults(defineProps<BFormCheckboxGroupProps>(), {
+const _props = withDefaults(defineProps<Omit<BFormCheckboxGroupProps, 'modelValue'>>(), {
   ariaInvalid: undefined,
   autofocus: false,
   buttonVariant: 'secondary',
@@ -63,7 +62,7 @@ defineSlots<{
   first?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = defineModel<CheckboxValue[]>({
+const modelValue = defineModel<Exclude<BFormCheckboxGroupProps['modelValue'], undefined>>({
   default: () => [],
 })
 

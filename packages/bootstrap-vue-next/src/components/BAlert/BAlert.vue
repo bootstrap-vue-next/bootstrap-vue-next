@@ -33,7 +33,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import {isEmptySlot} from '../../utils/dom'
 import {useElementHover} from '@vueuse/core'
 
-const _props = withDefaults(defineProps<BAlertProps>(), {
+const _props = withDefaults(defineProps<Omit<BAlertProps, 'modelValue'>>(), {
   closeClass: undefined,
   closeContent: undefined,
   closeLabel: 'Close',
@@ -64,7 +64,7 @@ const slots = defineSlots<{
 
 const element = ref<HTMLElement | null>(null)
 
-const modelValue = defineModel<boolean | number>({default: false})
+const modelValue = defineModel<Exclude<BAlertProps['modelValue'], undefined>>({default: false})
 
 const isHovering = useElementHover(element)
 
