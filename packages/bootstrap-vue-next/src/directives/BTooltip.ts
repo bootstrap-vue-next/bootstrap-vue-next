@@ -7,9 +7,12 @@ import {
   resolveDirectiveProps,
   unbind,
 } from '../utils/floatingUi'
+import {defaultsKey} from '../utils'
 
 export default {
-  mounted(el, binding) {
+  mounted(el, binding, vnode) {
+    const defaults = vnode.ctx?.appContext?.provides?.[defaultsKey]?.value
+
     const isActive = resolveActiveStatus(binding.value)
     if (!isActive) return
 
@@ -19,12 +22,15 @@ export default {
     el.$__binding = JSON.stringify(binding)
     bind(el, binding, {
       noninteractive: true,
+      ...(defaults['BTooltip'] || {}),
       ...resolveDirectiveProps(binding, el),
       title: text.title ?? text.content ?? '',
       tooltip: isActive,
     })
   },
-  updated(el, binding) {
+  updated(el, binding, vnode) {
+    const defaults = vnode.ctx?.appContext?.provides?.[defaultsKey]?.value
+
     const isActive = resolveActiveStatus(binding.value)
     if (!isActive) return
 
@@ -36,6 +42,7 @@ export default {
     unbind(el)
     bind(el, binding, {
       noninteractive: true,
+      ...(defaults['BTooltip'] || {}),
       ...resolveDirectiveProps(binding, el),
       title: text.title ?? text.content ?? '',
       tooltip: isActive,
