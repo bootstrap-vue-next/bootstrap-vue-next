@@ -32,17 +32,17 @@
           v-for="(tab, idx) in tabs"
           :key="tab.id"
           class="nav-item"
-          :class="tab.titleItemClass"
+          :class="tab.titleItemClass?.()"
           role="presentation"
         >
           <button
             :id="tab.buttonId"
             class="nav-link"
-            :class="tab.navItemClasses"
+            :class="[tab.navItemClasses, tab.titleLinkClass?.()]"
             role="tab"
             :aria-controls="tab.id"
             :aria-selected="tab.active"
-            v-bind="tab.titleLinkAttrs?.value"
+            v-bind="tab.titleLinkAttrs?.()"
             @keydown.left.stop.prevent="keynav(-1)"
             @keydown.right.stop.prevent="keynav(1)"
             @keydown.page-up.stop.prevent="keynav(-999)"
@@ -138,7 +138,6 @@ const tabs = computed(() =>
         },
         active ? props.activeNavItemClass : props.inactiveNavItemClass,
         props.navItemClass,
-        tab.titleLinkClass,
       ],
     }
   })
