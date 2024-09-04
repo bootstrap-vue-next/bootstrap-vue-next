@@ -11,7 +11,7 @@ import {defaultsKey} from '../utils'
 
 export default {
   mounted(el, binding, vnode) {
-    const defaults = vnode.ctx?.appContext?.provides?.[defaultsKey]?.value
+    const defaults = vnode.ctx?.appContext?.provides?.[defaultsKey as symbol]?.value
     const isActive = resolveActiveStatus(binding.value)
     if (!isActive) return
 
@@ -26,7 +26,7 @@ export default {
     })
   },
   updated(el, binding, vnode) {
-    const defaults = vnode.ctx?.appContext?.provides?.[defaultsKey]?.value
+    const defaults = vnode.ctx?.appContext?.provides?.[defaultsKey as symbol]?.value
 
     const isActive = resolveActiveStatus(binding.value)
     if (!isActive) return
