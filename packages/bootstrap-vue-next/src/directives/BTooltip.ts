@@ -11,6 +11,7 @@ import {defaultsKey} from '../utils'
 
 export default {
   mounted(el, binding, vnode) {
+    // @ts-expect-error type doesn't have runtime ctx
     const defaults = vnode.ctx?.appContext?.provides?.[defaultsKey as symbol]?.value
 
     const isActive = resolveActiveStatus(binding.value)
@@ -29,6 +30,7 @@ export default {
     })
   },
   updated(el, binding, vnode) {
+    // @ts-expect-error type doesn't have runtime ctx
     const defaults = vnode.ctx?.appContext?.provides?.[defaultsKey as symbol]?.value
 
     const isActive = resolveActiveStatus(binding.value)
