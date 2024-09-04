@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.24.12](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.11...bootstrapvuenext-v0.24.12) (2024-09-04)
+
+
+### Bug Fixes
+
+* **BPagination:** hide-goto-end doesn't hide firstPage or lastPage ([#2171](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2171)) ([a86ec41](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a86ec415ff8cffd5aa71bec58f02983655015c5d))
+
 ## [0.24.11](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.10...bootstrapvuenext-v0.24.11) (2024-08-27)
 
 
