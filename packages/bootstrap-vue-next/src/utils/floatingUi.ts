@@ -108,6 +108,7 @@ export const resolveDirectiveProps = (
 
 export interface ElementWithPopper extends HTMLElement {
   $__element?: HTMLElement
+  $__binding?: string
 }
 
 export const bind = (
