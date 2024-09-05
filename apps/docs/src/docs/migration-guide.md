@@ -194,6 +194,10 @@ Image placement is accomplished by the single `img-placement` prop, which takes 
 `top`, `bottom`, `start`, `end`, or `overlay`. This allows us to deprecate the `imgBottom`,
 `imgEnd`, `imgLeft`, `imgRight`, `imgStart`, and `imgTop` props from `BCard`.
 
+Similarly, the `top`, `bottom`, `left`, and `right` props on `BCardImg` are deprecated in favor
+of a single `placement` prop that take the values `top`, `bottom`, `start`, and `end`. Note that
+`end` and `start` are not yet imnplemented.
+
 The `sub-title`, `sub-title-tag` and `sub-title-text-variant` props have been renamed to
 `subtitle`, `subtitle-tag` and `subtitle-text-variant`, respectively.
 
