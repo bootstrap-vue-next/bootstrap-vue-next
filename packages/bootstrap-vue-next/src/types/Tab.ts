@@ -8,9 +8,9 @@ export interface TabType {
   buttonId: string
   disabled: boolean
   titleComponent?: Slot
-  titleItemClass?: ClassValue
-  titleLinkAttrs?: Record<string, unknown>
-  titleLinkClass?: ClassValue
+  titleItemClass?: () => ClassValue
+  titleLinkAttrs?: () => Record<string, unknown>
+  titleLinkClass?: () => ClassValue
   onClick?: (event: Event) => void
   el: HTMLElement | null
 }
