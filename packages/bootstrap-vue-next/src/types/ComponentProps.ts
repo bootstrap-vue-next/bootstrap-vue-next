@@ -116,6 +116,7 @@ export interface BDropdownItemButtonProps {
   active?: boolean
   activeClass?: ClassValue
   buttonClass?: ClassValue
+  wrapperAttrs?: Readonly<AttrsValue>
   disabled?: boolean
   variant?: ColorVariant | null
 }

@@ -173,6 +173,11 @@ details.
 The `content` and `text-variant` props have been deprecated since Bootstrap 5 moved to using an
 embedded svg for the close icon. See [their migration guide](https://getbootstrap.com/docs/5.3/migration/#close-button-1) for details.
 
+## BButtonToolbar
+
+[Keyboard navigation](https://bootstrap-vue.org/docs/components/button-toolbar#keyboard-navigation) is
+not implemented.
+
 ## BForm
 
 Bootstrap 5 has dropped form-specific layout classes for the grid system. See the
@@ -274,6 +279,26 @@ and `exact-path-active-class` props on `BLink`. See the [`Vue Router` migration 
 ### $root events
 
 BSVN no longer emits the `bv::link::clicked` event on `$root`.
+
+## BCard
+
+Image placement is accomplished by the single `img-placement` prop, which takes the values
+`top`, `bottom`, `start`, `end`, or `overlay`. This allows us to deprecate the `imgBottom`,
+`imgEnd`, `imgLeft`, `imgRight`, `imgStart`, and `imgTop` props from `BCard`.
+
+The `sub-title`, `sub-title-tag` and `sub-title-text-variant` props have been renamed to
+`subtitle`, `subtitle-tag` and `subtitle-text-variant`, respectively.
+
+For `BCardBody`, `BCardHeader`, `BCardFooter`, `BCardTitle`, and `BCardText` components the component name specific
+props are deprecated and replaced by the generalized props. For example `footer-bg-variant` is replaced by `bg-variant`.
+This is true for all of the `body-*`, `header-*`, and `footer-*` props on these components. Note
+that the specific props are still retained on the main `BCard` component.
+
+Similarly the `text-tag` and `title-tag` props have been replaced by `tag` on the `BCardText`
+and `BCardTitle` components.
+
+`body-border-variant` and `body-variant` are not implemented on `BCard` and `border-variant` is not
+implemented on `BCardBody`.
 
 ## BModal
 
@@ -385,60 +410,15 @@ const confirmBox = async () => {
 The `show` and `confirm` `props` object accespts all of the properties that are defined on
 [BModal](/docs/components/modal#component-reference) excpet for `modelValue`.
 
-<MigrationWrapper v-for="(item, i) in changes" :key="i" v-bind="item" />
+## BPagination
+
+Keyboard Navigation and Small Screen Support.
+
+## BPaginationNav
+
+This component is not yet implemented
 
 <script setup lang="ts">
 import {computed, ref} from 'vue'
-import {BAvatar, BButton, BModalOrchestrator, useModalController} from 'bootstrap-vue-next'
-import MigrationWrapper from '../components/MigrationWrapper.vue'
-import HighlightCard from '../components/HighlightCard.vue'
-
-const changes = computed<{
-  component: string
-  change: string
-  fix: string
-}[]>(() => [
-  {
-    change: 'subTitle prop renamed to subtitle',
-    fix: "Any instances of using prop 'subTitle' on BCard should be replaced with 'subtitle'",
-    component: 'BCard',
-  },
-  {
-    change: 'subTitleTag prop renamed to subtitleTag',
-    fix: "Any instances of using prop 'subTitleTag' on BCard should be replaced with 'subtitleTag'",
-    component: 'BCard',
-  },
-  {
-    change: 'subTitleTextVariant prop renamed to subtitleTextVariant',
-    fix: "Any instances of using prop 'subTitleTextVariant' on BCard should be replaced with 'subtitleTextVariant'",
-    component: 'BCard',
-  },
-].sort((a, b) => a.component.localeCompare(b.component)))
-
-const {confirm, show} = useModalController()
-
-const okResult = ref<boolean | null | undefined>(undefined)
-
-const okBox = async () => {
-  okResult.value = await show?.({
-    props: {
-      body: 'This is an informational message',
-      title: 'Message',
-      okOnly: true,
-    },
-  })
-}
-
-const confirmResult = ref<boolean | null | undefined>(null)
-
-const confirmBox = async () => {
-  confirmResult.value = await confirm?.({
-    props: {
-      body: 'Are you sure you want to do this?',
-      title: 'Confirm',
-      okTitle: 'Yes',
-      cancelTitle: 'No',
-    },
-  })
-}
+import {useModalController} from 'bootstrap-vue-next'
 </script>

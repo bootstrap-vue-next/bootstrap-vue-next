@@ -6,40 +6,29 @@
     :aria-disabled="props.disabled"
     :aria-label="props.ariaLabel || undefined"
   >
-    <ReusableButton.define v-slot="{button, li, text, clickHandler}">
-      <li v-bind="li">
-        <component v-bind="button" :is="button.is" @click="clickHandler">
-          <slot
-            :name="text.name"
-            :disabled="text.disabled"
-            :page="text.page"
-            :index="text.index"
-            :active="text.active"
-            :content="text.value"
-          >
-            {{ text.value }}
-          </slot>
-        </component>
-      </li>
-    </ReusableButton.define>
-
-    <ReusableEllipsis.define>
-      <li v-bind="ellipsisProps.li">
-        <span v-bind="ellipsisProps.span">
+    <template v-for="page in pages" :key="`page-${page.id}`">
+      <li v-bind="page.li">
+        <span
+          v-if="page.id === FIRST_ELLIPSIS || page.id === LAST_ELLIPSIS"
+          v-bind="ellipsisProps.span"
+        >
           <slot name="ellipsis-text">
             {{ props.ellipsisText || '...' }}
           </slot>
         </span>
+        <component v-bind="page.button" :is="page.button.is" v-else @click="page.clickHandler">
+          <slot
+            :name="page.text.name"
+            :disabled="page.text.disabled"
+            :page="page.text.page"
+            :index="page.text.index"
+            :active="page.text.active"
+            :content="page.text.value"
+          >
+            {{ page.text.value }}
+          </slot>
+        </component>
       </li>
-    </ReusableEllipsis.define>
-
-    <template v-for="button in buttons" :key="`page-${button}`">
-      <ReusableButton.reuse v-if="button === FIRST_BUTTON" v-bind="firstButtonProps" />
-      <ReusableButton.reuse v-else-if="button === PREV_BUTTON" v-bind="prevButtonProps" />
-      <ReusableButton.reuse v-else-if="button === NEXT_BUTTON" v-bind="nextButtonProps" />
-      <ReusableButton.reuse v-else-if="button === LAST_BUTTON" v-bind="lastButtonProps" />
-      <ReusableEllipsis.reuse v-else-if="button === ELLIPSIS_BUTTON" />
-      <ReusableButton.reuse v-else-if="button !== null" v-bind="getPageButtonProps(button)" />
     </template>
   </ul>
 </template>
@@ -49,7 +38,7 @@ import {BvEvent} from '../../utils'
 import {computed, watch} from 'vue'
 import type {BPaginationProps} from '../../types/ComponentProps'
 import {useAlignment} from '../../composables/useAlignment'
-import {createReusableTemplate, useToNumber} from '@vueuse/core'
+import {useToNumber} from '@vueuse/core'
 import {useDefaults} from '../../composables/useDefaults'
 import type {ClassValue} from '../../types/AnyValuedAttributes'
 
@@ -60,7 +49,17 @@ const FIRST_BUTTON = -1
 const PREV_BUTTON = -2
 const NEXT_BUTTON = -3
 const LAST_BUTTON = -4
-const ELLIPSIS_BUTTON = -5
+const FIRST_ELLIPSIS = -5
+const LAST_ELLIPSIS = -6
+
+// This is necessary because type inference isn't succeeding for the pages computed
+interface PageButton {
+  id: number
+  li: Record<string, unknown>
+  button: Record<string, unknown>
+  text: Record<string, unknown>
+  clickHandler: (e: Readonly<MouseEvent>) => void
+}
 
 const _props = withDefaults(defineProps<Omit<BPaginationProps, 'modelValue'>>(), {
   align: 'start',
@@ -264,9 +263,6 @@ const lastButtonProps = computed(() =>
   })
 )
 
-const ReusableButton = createReusableTemplate<ReturnType<typeof getButtonProps>>()
-const ReusableEllipsis = createReusableTemplate()
-
 const ellipsisProps = computed(() => ({
   li: {
     class: [
@@ -344,9 +340,30 @@ watch(pagination, (oldValue, newValue) => {
   }
 })
 
-const buttons = computed(() => {
+const pages = computed(
+  () =>
+    elements.value.map((p) => {
+      switch (p) {
+        case FIRST_BUTTON:
+          return {id: p, ...firstButtonProps.value}
+        case PREV_BUTTON:
+          return {id: p, ...prevButtonProps.value}
+        case NEXT_BUTTON:
+          return {id: p, ...nextButtonProps.value}
+        case LAST_BUTTON:
+          return {id: p, ...lastButtonProps.value}
+        case FIRST_ELLIPSIS:
+        case LAST_ELLIPSIS:
+          return {id: p, ...ellipsisProps.value}
+        default:
+          return {id: p, ...getPageButtonProps(p)}
+      }
+    }) as PageButton[]
+)
+
+const elements = computed(() => {
   // The idea here is to create an array of all the buttons on the page control.
-  // This was we can keep the invariants in one place and the template code just
+  // This way we can keep the invariants in one place and the template code just
   // iterates over the array.
 
   const pages = numberOfPages.value
@@ -355,27 +372,30 @@ const buttons = computed(() => {
   const firstPage = props.firstNumber ? 1 : 0
   const lastPage = props.lastNumber ? 1 : 0
   const hideEllipsis = props.hideEllipsis || limit <= ELLIPSIS_THRESHOLD
-  const hideEndButtons = props.hideGotoEndButtons ? 1 : 0
+  const hideFirstButton = props.hideGotoEndButtons && !props.firstNumber ? 1 : 0
+  const hideLastButton = props.hideGotoEndButtons && !props.lastNumber ? 1 : 0
+  const showFirstButton = hideFirstButton ? 0 : 1
+  const showLastButton = hideLastButton ? 0 : 1
 
   // The first case is when all of the page buttons fit on the control, this is
   //  the simplest case and the only one that will create an array smaller than
-  //  Limit + 4 - hideEndButtons *2 (the [first, last,] prev, next buttons)
+  //  Limit + 4 - hideEndButtons * 2 (the [first, last,] prev, next buttons)
 
   if (pages < limit + firstPage + lastPage) {
     return [
-      !firstPage && !hideEndButtons ? FIRST_BUTTON : null,
+      !firstPage && !hideFirstButton ? FIRST_BUTTON : null,
       PREV_BUTTON,
       ...Array.from({length: pages}, (_, index) => index + 1),
       NEXT_BUTTON,
-      !lastPage && !hideEndButtons ? LAST_BUTTON : null,
-    ].filter((x) => x !== null)
+      !lastPage && !hideLastButton ? LAST_BUTTON : null,
+    ].filter((x) => x !== null) as number[]
   }
 
   // All of the remaining cases result in an array that is exactly limit + 4 - hideEndButtons * 2 in length, so create
   //  the array upfront and set up the beginning and end buttons, then fill the rest for each case
 
-  const buttons = Array.from({length: limit + 4 - hideEndButtons * 2})
-  if (!hideEndButtons) {
+  const buttons = Array.from({length: limit + 4 - (hideFirstButton + hideLastButton)})
+  if (!hideFirstButton) {
     if (!firstPage) {
       buttons[0] = FIRST_BUTTON
       buttons[1] = PREV_BUTTON
@@ -383,7 +403,11 @@ const buttons = computed(() => {
       buttons[0] = PREV_BUTTON
       buttons[1] = 1
     }
+  } else {
+    buttons[0] = PREV_BUTTON
+  }
 
+  if (!hideLastButton) {
     if (!lastPage) {
       buttons[buttons.length - 1] = LAST_BUTTON
       buttons[buttons.length - 2] = NEXT_BUTTON
@@ -392,21 +416,20 @@ const buttons = computed(() => {
       buttons[buttons.length - 2] = pages
     }
   } else {
-    buttons[0] = PREV_BUTTON
     buttons[buttons.length - 1] = NEXT_BUTTON
   }
 
-  // The next case is where the buttons page buttons start at the begginning, with
+  // The next case is where the page buttons start at the begginning, with
   //  no ellipsis at the beginning, but one at the end
 
   const halfLimit = Math.floor(limit / 2)
   if (value <= halfLimit + firstPage) {
     for (let index = 1; index <= limit; index++) {
-      buttons[index + 1 - hideEndButtons] = index + firstPage
+      buttons[index + 1 - hideFirstButton] = index + firstPage
     }
 
     if (!hideEllipsis) {
-      buttons[buttons.length - 3] = ELLIPSIS_BUTTON
+      buttons[buttons.length - (2 + showLastButton)] = LAST_ELLIPSIS
     }
   }
 
@@ -416,11 +439,11 @@ const buttons = computed(() => {
   if (value > pages - halfLimit - lastPage) {
     const start = pages - (limit - 1) - lastPage
     for (let index = 0; index < limit; index++) {
-      buttons[index + 2 - hideEndButtons] = start + index
+      buttons[index + 2 - hideFirstButton] = start + index
     }
 
     if (!hideEllipsis) {
-      buttons[2] = ELLIPSIS_BUTTON
+      buttons[1 + showFirstButton] = FIRST_ELLIPSIS
     }
   }
 
@@ -429,25 +452,26 @@ const buttons = computed(() => {
     // Is there a more elegant way to ceck that we're in the final case?
     const start = value - Math.floor(limit / 2)
     for (let index = 0; index < limit; index++) {
-      buttons[index + 2 - hideEndButtons] = start + index
+      buttons[index + 2 - hideFirstButton] = start + index
     }
 
     if (!hideEllipsis) {
-      buttons[2] = ELLIPSIS_BUTTON
-      buttons[buttons.length - 3] = ELLIPSIS_BUTTON
+      buttons[1 + showFirstButton] = FIRST_ELLIPSIS
+      buttons[buttons.length - (2 + showLastButton)] = LAST_ELLIPSIS
     }
   }
 
-  // Enable sanity check for debugging purposes
+  //Enable sanity check for debugging purposes
   // for (let i = 0; i < buttons.length; i++) {
   //   if (!buttons[i]) {
+  //     // eslint-disable-next-line no-console
   //     console.log(
   //       `Failed: button == ${i}, limit=${limit}, pages=${pages}, firstPage=${firstPage}, lastPage=${lastPage}, value=${value}`
   //     )
   //   }
   // }
 
-  return buttons as number[]
+  return buttons.filter((x) => x !== null) as number[]
 })
 </script>
 

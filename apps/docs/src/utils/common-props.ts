@@ -47,10 +47,45 @@ export const commonProps = () =>
         'When set to `true`, attempts to auto-focus the control when it is mounted, or re-activated when in a keep-alive. Does not set the `autofocus` attribute on the control',
     },
     bgVariant: {
-      type: 'TextColorVariant | null',
+      type: 'ColorVariant | null',
       default: null,
       description:
         'Applies one of the Bootstrap theme color variants to background of the component',
+    },
+    bodyBgVariant: {
+      type: 'ColorVariant | null',
+      default: undefined,
+      description: 'Applies one of the Bootstrap theme color variants to the body background',
+    },
+    bodyBorderVariant: {
+      type: 'ColorVariant | null',
+      default: undefined,
+      description: 'Applies one of the Bootstrap theme color variants to the body border',
+    },
+    bodyClass: {
+      type: 'ClassValue',
+      default: undefined,
+      description: 'CSS class (or classes) to apply to the body',
+    },
+    bodyTag: {
+      type: 'string',
+      default: 'div',
+      description: 'Specify the HTML tag to render instead of the default tag for the body',
+    },
+    bodyTextVariant: {
+      type: 'TextColorVariant | null',
+      default: undefined,
+      description: 'Applies one of the Bootstrap theme color variants to the body text',
+    },
+    bodyVariant: {
+      type: 'ColorVariant | null',
+      default: undefined,
+      description: 'Applies one of the Bootstrap theme color variants to the body',
+    },
+    borderVariant: {
+      type: 'ColorVariant | null',
+      default: undefined,
+      description: 'Applies one of the Bootstrap theme color variants to the border',
     },
     debounce: {
       type: 'Numberish',
@@ -74,6 +109,46 @@ export const commonProps = () =>
       default: 'disabled',
       description: 'Field name in the `options` array that should be used for the disabled state',
     },
+    footer: {
+      type: 'string',
+      default: undefined,
+      description: 'Text content to place in the footer',
+    },
+    footerBgVariant: {
+      type: 'ColorVariant | null',
+      default: undefined,
+      description: 'Applies one of the Bootstrap theme color variants to the footer background',
+    },
+    footerBorderVariant: {
+      type: 'ColorVariant | null',
+      default: undefined,
+      description: 'Applies one of the Bootstrap theme color variants to the footer border',
+    },
+    footerClass: {
+      type: 'ClassValue',
+      default: undefined,
+      description: 'CSS class (or classes) to apply to the footer',
+    },
+    footerHtml: {
+      type: 'string',
+      default: "''",
+      description: 'HTML string content to place in the footer',
+    },
+    footerTag: {
+      type: 'string',
+      default: 'div',
+      description: 'Specify the HTML tag to render instead of the default tag for the footer',
+    },
+    footerTextVariant: {
+      type: 'TextColorVariant | null',
+      default: undefined,
+      description: 'Applies one of the Bootstrap theme color variants to the footer text',
+    },
+    footerVariant: {
+      type: 'ColorVariant | null',
+      default: undefined,
+      description: 'Applies one of the Bootstrap theme color variants to the footer',
+    },
     form: {
       type: 'string',
       default: undefined,
@@ -84,6 +159,46 @@ export const commonProps = () =>
       type: '(val: string, evt: Event) => string',
       default: 'undefined',
       description: 'Reference to a function for formatting the input',
+    },
+    header: {
+      type: 'string',
+      default: undefined,
+      description: 'Text content to place in the header',
+    },
+    headerBgVariant: {
+      type: 'ColorVariant | null',
+      default: undefined,
+      description: 'Applies one of the Bootstrap theme color variants to the header background',
+    },
+    headerBorderVariant: {
+      type: 'ColorVariant | null',
+      default: undefined,
+      description: 'Applies one of the Bootstrap theme color variants to the header border',
+    },
+    headerClass: {
+      type: 'ClassValue',
+      default: undefined,
+      description: 'CSS class (or classes) to apply to the header',
+    },
+    headerHtml: {
+      type: 'string',
+      default: "''",
+      description: 'HTML string content to place in the header',
+    },
+    headerTag: {
+      type: 'string',
+      default: 'div',
+      description: 'Specify the HTML tag to render instead of the default tag for the header',
+    },
+    headerTextVariant: {
+      type: 'TextColorVariant | null',
+      default: undefined,
+      description: 'Applies one of the Bootstrap theme color variants to the header text',
+    },
+    headerVariant: {
+      type: 'ColorVariant | null',
+      default: undefined,
+      description: 'Applies one of the Bootstrap theme color variants to the header',
     },
     htmlField: {
       type: 'string',
@@ -191,6 +306,21 @@ export const commonProps = () =>
       description:
         'Controls the validation state appearance of the component. `true` for valid, `false` for invalid, or `null` for no validation state',
     },
+    subtitle: {
+      type: 'string',
+      default: undefined,
+      description: 'Text content to place in the subtitle',
+    },
+    subtitleTag: {
+      type: 'string',
+      default: 'h6',
+      description: 'Specify the HTML tag to render instead of the default tag for the subtitle',
+    },
+    subtitleTextVariant: {
+      type: 'TextColorVariant | null',
+      default: 'body-secondary',
+      description: 'Applies one of the Bootstrap theme color variants to the subtitle text',
+    },
     tag: {
       type: 'string',
       default: 'div',
@@ -210,6 +340,11 @@ export const commonProps = () =>
       type: 'string',
       default: undefined,
       description: 'Text content to place in the title',
+    },
+    titleTag: {
+      type: 'string',
+      default: 'h4',
+      description: 'Specify the HTML tag to render instead of the default tag for the title',
     },
     tooltip: {
       type: 'boolean',

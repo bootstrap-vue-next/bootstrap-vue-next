@@ -69,10 +69,15 @@ const handleUpdate = (
 
   // Set up click handler
   if (el.__toggle) {
-    el.removeEventListener('click', el.__toggle)
+    setTimeout(() => {
+      el.removeEventListener('click', el.__toggle)
+      el.__toggle = () => toggle(targets, el)
+      el.addEventListener('click', el.__toggle)
+    }, 0)
+  } else {
+    el.__toggle = () => toggle(targets, el)
+    el.addEventListener('click', el.__toggle)
   }
-  el.__toggle = () => toggle(targets, el)
-  el.addEventListener('click', el.__toggle)
 
   // Update attributes
   el.setAttribute('aria-controls', targets.join(' '))
