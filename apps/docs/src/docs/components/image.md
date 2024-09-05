@@ -130,7 +130,9 @@ guide.
 
 ## Lazy loaded images
 
-Lazy loaded images are actived through the `lazy` prop. Eventually, the component will be expanded to include placeholder slots, but are not available at this time.
+Lazy loaded images are actived through the `lazy` prop. Eventually, the component will be expanded to include placeholder slots, but are not available at this time. See the [migration guide](/docs/migration-guide#bimg) for details.
+
+We implement this `lazy` prop using the native `loading` attribute. See the [MDN docs](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/loading) for details including how this effect how the native [`load` event](https://developer.mozilla.org/en-US/docs/Web/API/Window/load_event) works.
 
 <ComponentReference :data="data" />
 

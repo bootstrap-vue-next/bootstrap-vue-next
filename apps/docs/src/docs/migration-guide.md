@@ -252,6 +252,9 @@ They work as documented in vue.js, so there is no longer a need for the properti
 
 See the [Rounding](#rounding) section.
 
+Lazy loading is now achieved through the native `loading` attribute rather than a seperate component. Thus
+`BImgLazy` and `BCardImgLazy` are deprecated.
+
 ## BInputGroup
 
 Bootstrap 5 [no longer requires](https://getbootstrap.com/docs/5.3/migration/#forms-1) `input-group-append` or `input-group-prepend`

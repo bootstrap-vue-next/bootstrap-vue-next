@@ -1,5 +1,6 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {ComponentReference, PropertyReference} from '../../types'
+import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
@@ -10,91 +11,90 @@ export default {
           blank: {
             type: 'boolean',
             default: false,
+            description: 'Creates a blank/transparent image via an SVG data URI',
           },
           blankColor: {
             type: 'string',
             default: 'transparent',
+            description: 'Sets the color of the blank image to the CSS color value specified',
           },
           block: {
             type: 'boolean',
             default: false,
+            description:
+              'Forces the image to display as a block element rather than the browser default of inline-block element',
           },
           fluid: {
             type: 'boolean',
             default: false,
+            description:
+              "Makes the image responsive. The image will shrink as needed or grow up the the image's native width",
           },
           fluidGrow: {
             type: 'boolean',
             default: false,
+            description:
+              "Similar to the 'fluid' prop, but allows the image to scale up past its native width",
           },
           height: {
             type: 'Numberish',
             default: undefined,
+            description: "The value to set on the image's 'height' attribute",
           },
           lazy: {
             type: 'boolean',
             default: false,
+            description:
+              'Enables lazy loading of the image via the `loading` attribute on the underlying image.',
           },
           placement: {
-            type: "'start' | 'end' | 'center'",
+            type: "Extract<Placement, 'start' | 'end'> | 'center'",
             default: undefined,
-          },
-          rounded: {
-            type: 'boolean | RadiusElement',
-            default: false,
-          },
-          roundedTop: {
-            type: 'boolean | RadiusElement',
-            default: undefined,
-          },
-          roundedBottom: {
-            type: 'boolean | RadiusElement',
-            default: undefined,
-          },
-          roundedStart: {
-            type: 'boolean | RadiusElement',
-            default: undefined,
+            description:
+              'Sets the alignment of the image to the start, end, or center, see above for details',
           },
           sizes: {
             type: 'string | string[]',
             default: undefined,
-          },
-          src: {
-            type: 'string',
-            default: undefined,
+            description:
+              'One or more strings separated by commas (or an array of strings), indicating a set of source sizes. Optionally used in combination with the srcset prop',
           },
           srcset: {
             type: 'string | string[]',
             default: undefined,
-          },
-          tag: {
-            type: 'string',
-            default: 'img',
+            description:
+              'One or more strings separated by commas (or an array of strings), indicating possible image sources for the user agent to use',
           },
           thumbnail: {
             type: 'boolean',
             default: false,
+            description: 'Adds a thumbnail border around the image',
           },
           width: {
             type: 'Numberish',
             default: undefined,
+            description: "The value to set on the image's 'width' attribute",
           },
-          roundedEnd: {},
+          ...pick(
+            buildCommonProps({
+              tag: {
+                default: 'img',
+              },
+            }),
+            [
+              'alt',
+              'rounded',
+              'roundedBottom',
+              'roundedEnd',
+              'roundedStart',
+              'roundedTop',
+              'src',
+              'tag',
+            ]
+          ),
         } satisfies Record<keyof BvnComponentProps['BImg'], PropertyReference>,
       },
-      emits: [
-        {
-          args: [
-            {
-              arg: 'load',
-              description: '',
-              type: 'Event',
-            },
-          ],
-          description: '',
-          event: 'load',
-        },
-      ],
+      emits: [],
       slots: [],
     },
   ],
