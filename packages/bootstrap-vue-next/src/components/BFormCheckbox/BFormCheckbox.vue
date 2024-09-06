@@ -141,4 +141,3 @@ defineExpose({
   },
 })
 </script>
-../BWrapper.vue
