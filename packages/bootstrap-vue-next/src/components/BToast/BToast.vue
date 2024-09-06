@@ -67,12 +67,12 @@ import type {BToastProps} from '../../types/ComponentProps'
 import BTransition from '../BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BLink from '../BLink/BLink.vue'
-import {useElementHover} from '@vueuse/core'
 import BProgress from '../BProgress/BProgress.vue'
 import {BvTriggerableEvent} from '../../utils'
 import {useCountdown} from '../../composables/useCountdown'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useDefaults} from '../../composables/useDefaults'
+import {useCountdownHover} from '../../composables/useCountdownHover'
 
 const _props = withDefaults(defineProps<Omit<BToastProps, 'modelValue'>>(), {
   bgVariant: null,
@@ -86,6 +86,7 @@ const _props = withDefaults(defineProps<Omit<BToastProps, 'modelValue'>>(), {
   noCloseButton: false,
   noFade: false,
   noHoverPause: false,
+  noResumeOnHoverLeave: false,
   progressProps: undefined,
   showOnPause: true,
   solid: false,
@@ -95,6 +96,7 @@ const _props = withDefaults(defineProps<Omit<BToastProps, 'modelValue'>>(), {
   transProps: undefined,
   // Link props
   // All others use defaults
+  noRel: undefined,
   active: undefined,
   activeClass: undefined,
   disabled: undefined,
@@ -132,9 +134,6 @@ const emit = defineEmits<{
 
 const element = ref<HTMLElement | null>(null)
 
-const isHovering = useElementHover(element)
-// Note: passive: true will sync an internal ref... This is required for useToast to exit,
-// Since the modelValue that's passed from that composable is not reactive, this internal ref _is_ and thus it will trigger closing the toast
 const modelValue = defineModel<Exclude<BToastProps['modelValue'], undefined>>({default: false})
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props)
@@ -156,6 +155,14 @@ const {
 } = useCountdown(countdownLength, props.interval, {
   immediate: typeof modelValue.value === 'number',
 })
+useCountdownHover(
+  element,
+  computed(() => ({
+    noHoverPause: props.noHoverPause,
+    noResumeOnHoverLeave: props.noResumeOnHoverLeave,
+  })),
+  {pause, resume}
+)
 
 watchEffect(() => {
   emit('close-countdown', remainingMs.value)
@@ -175,19 +182,6 @@ const computedClasses = computed(() => [
     show: isToastVisible.value,
   },
 ])
-
-const onMouseEnter = () => {
-  if (props.noHoverPause) return
-  pause()
-}
-
-watch(isHovering, (newValue) => {
-  if (newValue) {
-    onMouseEnter()
-    return
-  }
-  resume()
-})
 
 const buildTriggerableEvent = (
   type: string,

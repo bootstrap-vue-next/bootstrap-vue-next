@@ -29,11 +29,6 @@ export default {
             default: undefined,
             description: 'Sets the text of the close button. The `close` slot takes precedence',
           },
-          noHoverPause: {
-            type: 'boolean',
-            default: false,
-            description: 'When set to true, disables pausing the timer on hover behavior',
-          },
           dismissible: {
             type: 'boolean',
             default: false,
@@ -67,15 +62,7 @@ export default {
             description:
               'Setting this property to `false` will override the behavior of showing the Alert when the timer is paused',
           },
-          ...pick(
-            buildCommonProps({
-              id: {
-                description:
-                  'The Id to be injected to accordion items and used to in BCollapse for state managment',
-              },
-            }),
-            ['variant']
-          ),
+          ...pick(buildCommonProps(), ['variant', 'noHoverPause', 'noResumeOnHoverLeave']),
         } satisfies Record<keyof BvnComponentProps['BAlert'], PropertyReference>,
       },
       slots: [

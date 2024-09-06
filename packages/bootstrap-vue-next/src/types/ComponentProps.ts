@@ -738,6 +738,7 @@ export interface BAlertProps {
   interval?: number | 'requestAnimationFrame'
   modelValue?: boolean | number
   noHoverPause?: boolean
+  noResumeOnHoverLeave?: boolean
   showOnPause?: boolean
   variant?: ColorVariant | null
 }
@@ -1188,6 +1189,7 @@ export interface BToastProps extends ColorExtendables, Omit<BLinkProps, 'routerT
   noCloseButton?: boolean
   noFade?: boolean
   noHoverPause?: boolean
+  noResumeOnHoverLeave?: boolean
   progressProps?: Omit<BProgressBarProps, 'label' | 'labelHtml' | 'max' | 'value'>
   showOnPause?: boolean
   solid?: boolean

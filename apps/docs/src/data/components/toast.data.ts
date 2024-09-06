@@ -1,5 +1,6 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {ComponentReference, PropertyReference} from '../../types'
+import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
@@ -89,12 +90,6 @@ export default {
             default: false,
             description:
               'When set to `true`, disables the fade animation/transition on the component',
-          },
-          noHoverPause: {
-            type: 'boolean',
-            default: false,
-            description:
-              'When set, disables the pausing of the auto hide delay when the mouse hovers the toast',
           },
           opacity: {
             type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
@@ -192,6 +187,7 @@ export default {
           noRel: {},
           prefetch: {},
           prefetchedClass: {},
+          ...pick(buildCommonProps(), ['noHoverPause', 'noResumeOnHoverLeave']),
         } satisfies Record<keyof BvnComponentProps['BToast'], PropertyReference>,
       },
       slots: [],

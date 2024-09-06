@@ -27,11 +27,11 @@ import BTransition from '../BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BButton from '../BButton/BButton.vue'
 import type {BAlertProps} from '../../types/ComponentProps'
-import {computed, ref, watch, watchEffect} from 'vue'
+import {computed, ref, watchEffect} from 'vue'
 import {useCountdown} from '../../composables/useCountdown'
 import {useDefaults} from '../../composables/useDefaults'
 import {isEmptySlot} from '../../utils/dom'
-import {useElementHover} from '@vueuse/core'
+import {useCountdownHover} from '../../composables/useCountdownHover'
 
 const _props = withDefaults(defineProps<Omit<BAlertProps, 'modelValue'>>(), {
   closeClass: undefined,
@@ -43,6 +43,7 @@ const _props = withDefaults(defineProps<Omit<BAlertProps, 'modelValue'>>(), {
   immediate: true,
   interval: 'requestAnimationFrame',
   noHoverPause: false,
+  noResumeOnHoverLeave: false,
   showOnPause: true,
   variant: 'info',
 })
@@ -65,8 +66,6 @@ const slots = defineSlots<{
 const element = ref<HTMLElement | null>(null)
 
 const modelValue = defineModel<Exclude<BAlertProps['modelValue'], undefined>>({default: false})
-
-const isHovering = useElementHover(element)
 
 const hasCloseSlot = computed(() => !isEmptySlot(slots.close))
 const countdownLength = computed(() =>
@@ -91,6 +90,14 @@ const {
 } = useCountdown(countdownLength, props.interval, {
   immediate: typeof modelValue.value === 'number' && props.immediate,
 })
+useCountdownHover(
+  element,
+  computed(() => ({
+    noHoverPause: props.noHoverPause,
+    noResumeOnHoverLeave: props.noResumeOnHoverLeave,
+  })),
+  {pause, resume}
+)
 
 const isAlertVisible = computed(() =>
   typeof modelValue.value === 'boolean'
@@ -119,19 +126,6 @@ const hide = () => {
 
   emit('closed')
 }
-
-const onMouseEnter = () => {
-  if (props.noHoverPause) return
-  pause()
-}
-
-watch(isHovering, (newValue) => {
-  if (newValue) {
-    onMouseEnter()
-    return
-  }
-  resume()
-})
 
 defineExpose({
   pause,
