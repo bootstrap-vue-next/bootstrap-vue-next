@@ -73,7 +73,7 @@ const processDirectory = (dirPath: string, baseDir: string): Record<string, stri
 
 export default defineConfig({
   build: {
-    sourcemap: false,
+    sourcemap: true,
     minify: 'terser',
     lib: {
       entry: {
