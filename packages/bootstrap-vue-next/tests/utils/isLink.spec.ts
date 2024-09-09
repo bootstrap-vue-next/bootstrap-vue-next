@@ -1,5 +1,5 @@
 import {describe, expect, it} from 'vitest'
-import {isLink} from '../../src/utils'
+import {isLink} from '../../src/utils/isLink'
 
 describe('isLink', () => {
   it('returns false when href undefined', () => {

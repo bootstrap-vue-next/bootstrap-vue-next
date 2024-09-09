@@ -1,4 +1,4 @@
-# Tooltip
+<DirectiveHeader path="BTooltip.ts" title="BTooltip" />
 
 <ContentsSidebar>
 
@@ -187,4 +187,5 @@ We should use the value type when the component is not setting to the root compo
 <script setup lang="ts">
 import {BCard, BCardBody} from 'bootstrap-vue-next'
 import ContentsSidebar from '../../components/ContentsSidebar.vue'
+import DirectiveHeader from './DirectiveHeader.vue'
 </script>

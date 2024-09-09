@@ -1,6 +1,6 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
-import BSpinner from '../BSpinner.vue'
+import BSpinner from '../BSpinner/BSpinner.vue'
 import BButton from './BButton.vue'
 import BLink from '../BLink/BLink.vue'
 

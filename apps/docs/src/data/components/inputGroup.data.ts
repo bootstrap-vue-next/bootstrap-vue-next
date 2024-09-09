@@ -6,6 +6,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BInputGroup',
+      sourcePath: '/BInputGroup/BInputGroup.vue',
       props: {
         '': {
           append: {
@@ -51,6 +52,7 @@ export default {
     },
     {
       component: 'BInputGroupText',
+      sourcePath: '/BInputGroup/BInputGroupText.vue',
       props: {
         '': {
           text: {

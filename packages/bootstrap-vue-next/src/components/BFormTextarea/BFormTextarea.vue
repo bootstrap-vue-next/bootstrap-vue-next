@@ -23,12 +23,14 @@
 </template>
 
 <script setup lang="ts">
-import type {BFormTextareaProps, Numberish} from '../../types'
+import type {BFormTextareaProps} from '../../types/ComponentProps'
 import {computed, type CSSProperties} from 'vue'
-import {useDefaults, useFormInput, useStateClass} from '../../composables'
-import {normalizeInput} from '../../utils'
+import {useDefaults} from '../../composables/useDefaults'
+import {normalizeInput} from '../../utils/normalizeInput'
+import {useFormInput} from '../../composables/useFormInput'
+import {useStateClass} from '../../composables/useStateClass'
 
-const _props = withDefaults(defineProps<BFormTextareaProps>(), {
+const _props = withDefaults(defineProps<Omit<BFormTextareaProps, 'modelValue'>>(), {
   // CommonInputProps
   ariaInvalid: undefined,
   autocomplete: undefined,
@@ -56,7 +58,10 @@ const _props = withDefaults(defineProps<BFormTextareaProps>(), {
 })
 const props = useDefaults(_props, 'BFormTextarea')
 
-const [modelValue, modelModifiers] = defineModel<Numberish | null, 'trim' | 'lazy' | 'number'>({
+const [modelValue, modelModifiers] = defineModel<
+  Exclude<BFormTextareaProps['modelValue'], undefined>,
+  'trim' | 'lazy' | 'number'
+>({
   default: '',
   set: (v) => normalizeInput(v, modelModifiers),
 })

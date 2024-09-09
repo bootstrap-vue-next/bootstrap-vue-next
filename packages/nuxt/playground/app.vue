@@ -2,6 +2,7 @@
   <div style="min-height: 1000vh">
     <BAlert :model-value="true">Hello World</BAlert>
     <BToastOrchestrator />
+    <BModalOrchestrator />
     <BModal v-model="show"> Nuxt module playground! </BModal>
     <BButton @click="show = !show"> Click me </BButton>
     <img src="@/assets/logo.png" width="50" alt="Bootstrap logo" />

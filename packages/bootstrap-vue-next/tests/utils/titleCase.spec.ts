@@ -1,4 +1,4 @@
-import {titleCase} from '../../src/utils'
+import {titleCase} from '../../src/utils/stringUtils'
 import {describe, expect, it} from 'vitest'
 
 describe('titleCase', () => {

@@ -1,4 +1,4 @@
-# useModal
+<ComposableHeader path="useModal.ts" title="useModal" />
 
 <ContentsSidebar>
 
@@ -69,6 +69,7 @@ import {BButton, BModal, useModal} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
 import ContentsSidebar from '../../components/ContentsSidebar.vue'
 import {ref, onMounted} from 'vue'
+import ComposableHeader from './ComposableHeader.vue'
 
 const someConditions = ref(false)
 const programmaticModal = ref(false)

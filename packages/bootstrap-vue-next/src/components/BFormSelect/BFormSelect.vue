@@ -37,14 +37,19 @@
 </template>
 
 <script setup lang="ts" generic="T">
-import type {BFormSelectProps, ComplexSelectOptionRaw, SelectOption} from '../../types'
-import {computed, ref, toRef} from 'vue'
+import type {BFormSelectProps} from '../../types/ComponentProps'
+import {computed, ref} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
-import {useAriaInvalid, useDefaults, useFormSelect, useId, useStateClass} from '../../composables'
+import {useAriaInvalid} from '../../composables/useAriaInvalid'
 import {useFocus, useToNumber} from '@vueuse/core'
+import {useDefaults} from '../../composables/useDefaults'
+import {useId} from '../../composables/useId'
+import {useStateClass} from '../../composables/useStateClass'
+import {useFormSelect} from '../../composables/useFormSelect'
+import type {ComplexSelectOptionRaw, SelectOption} from '../../types/SelectTypes'
 
-const _props = withDefaults(defineProps<BFormSelectProps>(), {
+const _props = withDefaults(defineProps<Omit<BFormSelectProps, 'modelValue'>>(), {
   ariaInvalid: undefined,
   autofocus: false,
   disabled: false,
@@ -102,7 +107,7 @@ const computedClasses = computed(() => [
   },
 ])
 
-const computedSelectSize = toRef(() =>
+const computedSelectSize = computed(() =>
   selectSizeNumber.value || props.plain ? selectSizeNumber.value : undefined
 )
 

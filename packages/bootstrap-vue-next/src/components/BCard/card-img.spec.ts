@@ -1,7 +1,7 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BCardImg from './BCardImg.vue'
-import BImg from '../BImg.vue'
+import BImg from '../BImg/BImg.vue'
 
 describe('card-img', () => {
   enableAutoUnmount(afterEach)

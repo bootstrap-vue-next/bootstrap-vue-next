@@ -5,6 +5,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BContainer',
+      sourcePath: '/BContainer/BContainer.vue',
       props: {
         '': {
           fluid: {
@@ -41,6 +42,7 @@ export default {
     },
     {
       component: 'BRow',
+      sourcePath: '/BContainer/BRow.vue',
       props: {
         '': {
           alignContent: {
@@ -108,6 +110,7 @@ export default {
     },
     {
       component: 'BCol',
+      sourcePath: '/BContainer/BCol.vue',
       props: {
         '': {
           alignSelf: {

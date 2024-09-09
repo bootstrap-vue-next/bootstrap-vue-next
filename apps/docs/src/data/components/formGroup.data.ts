@@ -6,6 +6,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormGroup',
+      sourcePath: '/BFormGroup/BFormGroup.vue',
       props: {
         '': {
           contentCols: {

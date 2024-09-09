@@ -1,6 +1,6 @@
 import type {ComponentPublicInstance} from 'vue'
 
-export default (
+export const getElement = (
   element: string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | null
 ): HTMLElement | undefined => {
   if (!element) return undefined

@@ -5,6 +5,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BOverlay',
+      sourcePath: '/BOverlay/BOverlay.vue',
       props: {
         '': {
           bgColor: {

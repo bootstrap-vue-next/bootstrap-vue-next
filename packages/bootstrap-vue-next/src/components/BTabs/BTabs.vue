@@ -64,12 +64,15 @@
 
 <script setup lang="ts">
 import {computed, nextTick, provide, type Ref, ref, toRef, unref, watch} from 'vue'
-import {BvEvent, tabsInjectionKey} from '../../utils'
-import {useAlignment, useDefaults} from '../../composables'
-import type {BTabsProps, TabType} from '../../types'
+import {BvEvent} from '../../utils/classes'
+import {useAlignment} from '../../composables/useAlignment'
 import {createReusableTemplate} from '@vueuse/core'
+import type {TabType} from '../../types/Tab'
+import type {BTabsProps} from '../../types/ComponentProps'
+import {tabsInjectionKey} from '../../utils/keys'
+import {useDefaults} from '../../composables/useDefaults'
 
-const _props = withDefaults(defineProps<BTabsProps>(), {
+const _props = withDefaults(defineProps<Omit<BTabsProps, 'modelValue' | 'activeId'>>(), {
   activeNavItemClass: undefined,
   activeTabClass: undefined,
   align: undefined,
@@ -112,10 +115,10 @@ defineSlots<{
   'tabs-start'?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = defineModel<number>({
+const modelValue = defineModel<Exclude<BTabsProps['modelValue'], undefined>>({
   default: -1,
 })
-const activeId = defineModel<string | undefined>('activeId', {
+const activeId = defineModel<BTabsProps['activeId']>('activeId', {
   default: undefined,
 })
 
@@ -143,7 +146,7 @@ const tabs = computed(() =>
   })
 )
 
-const showEmpty = toRef(() => !(tabs?.value && tabs.value.length > 0))
+const showEmpty = computed(() => !(tabs?.value && tabs.value.length > 0))
 
 const computedClasses = computed(() => ({
   'd-flex': props.vertical,

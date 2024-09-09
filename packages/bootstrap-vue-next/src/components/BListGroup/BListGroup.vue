@@ -6,9 +6,9 @@
 
 <script setup lang="ts">
 import {computed, provide, toRef} from 'vue'
-import {listGroupInjectionKey} from '../../utils'
-import type {BListGroupProps} from '../../types'
-import {useDefaults} from '../../composables'
+import {listGroupInjectionKey} from '../../utils/keys'
+import type {BListGroupProps} from '../../types/ComponentProps'
+import {useDefaults} from '../../composables/useDefaults'
 
 const _props = withDefaults(defineProps<BListGroupProps>(), {
   flush: false,
@@ -32,7 +32,7 @@ const computedClasses = computed(() => {
     'list-group-numbered': props.numbered,
   }
 })
-const computedTag = toRef(() => (props.numbered === true ? 'ol' : props.tag))
+const computedTag = computed(() => (props.numbered === true ? 'ol' : props.tag))
 
 provide(listGroupInjectionKey, {
   numbered: toRef(() => props.numbered),

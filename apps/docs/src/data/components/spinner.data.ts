@@ -5,6 +5,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BSpinner',
+      sourcePath: '/BSpinner/BSpinner.vue',
       props: {
         '': {
           label: {

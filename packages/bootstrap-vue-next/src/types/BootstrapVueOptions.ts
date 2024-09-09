@@ -1,164 +1,152 @@
-import type * as Components from '../components'
-import type * as Directives from '../directives'
-import type * as Composables from '../composables/exports'
-import type {BvnComponentProps} from './ComponentProps'
+import type * as ExportedComponents from '../components'
+import type * as ExportedDirectives from '../directives'
+import type * as ExportedComposables from '../composables'
+import type * as ComponentProps from './ComponentProps'
 
-export type ComponentType = keyof typeof Components
-export type DirectiveType = keyof typeof Directives
-export type ComposableType = keyof typeof Composables
+export type ComponentType = keyof typeof ExportedComponents
+export type DirectiveType = keyof typeof ExportedDirectives
+export type ComposableType = keyof typeof ExportedComposables
 
-export const ComponentNames = Object.freeze(
-  Object.keys({
-    BAccordion: null,
-    BAccordionItem: null,
-    BAlert: null,
-    BAvatar: null,
-    BAvatarGroup: null,
-    BBadge: null,
-    BBreadcrumb: null,
-    BBreadcrumbItem: null,
-    BButton: null,
-    BButtonGroup: null,
-    BButtonToolbar: null,
-    BCard: null,
-    BCardBody: null,
-    BCardFooter: null,
-    BCardGroup: null,
-    BCardHeader: null,
-    BCardImg: null,
-    BCardSubtitle: null,
-    BCardText: null,
-    BCardTitle: null,
-    BCarousel: null,
-    BCarouselSlide: null,
-    BCloseButton: null,
-    BCol: null,
-    BCollapse: null,
-    BContainer: null,
-    BDropdown: null,
-    BDropdownDivider: null,
-    BDropdownForm: null,
-    BDropdownGroup: null,
-    BDropdownHeader: null,
-    BDropdownItem: null,
-    BDropdownItemButton: null,
-    BDropdownText: null,
-    BForm: null,
-    BFormCheckbox: null,
-    BFormCheckboxGroup: null,
-    BFormDatalist: null,
-    BFormFile: null,
-    BFormFloatingLabel: null,
-    BFormGroup: null,
-    BFormInput: null,
-    BFormInvalidFeedback: null,
-    BFormRadio: null,
-    BFormRadioGroup: null,
-    BFormRow: null,
-    BFormSelect: null,
-    BFormSelectOption: null,
-    BFormSelectOptionGroup: null,
-    BFormSpinbutton: null,
-    BFormTag: null,
-    BFormTags: null,
-    BFormText: null,
-    BFormTextarea: null,
-    BFormValidFeedback: null,
-    BImg: null,
-    BInput: null,
-    BInputGroup: null,
-    BInputGroupText: null,
-    BListGroup: null,
-    BListGroupItem: null,
-    BModal: null,
-    BModalOrchestrator: null,
-    BNav: null,
-    BNavForm: null,
-    BNavItem: null,
-    BNavItemDropdown: null,
-    BNavText: null,
-    BNavbar: null,
-    BNavbarBrand: null,
-    BNavbarNav: null,
-    BNavbarToggle: null,
-    BOffcanvas: null,
-    BOverlay: null,
-    BPagination: null,
-    BPlaceholder: null,
-    BPlaceholderButton: null,
-    BPlaceholderCard: null,
-    BPlaceholderTable: null,
-    BPlaceholderWrapper: null,
-    BPopover: null,
-    BProgress: null,
-    BRow: null,
-    BSpinner: null,
-    BTab: null,
-    BTabs: null,
-    BToast: null,
-    BToastOrchestrator: null,
-    BTooltip: null,
-    BLink: null,
-    BProgressBar: null,
-    BTableSimple: null,
-    BTableLite: null,
-    BTable: null,
-    BTbody: null,
-    BTd: null,
-    BTh: null,
-    BThead: null,
-    BTfoot: null,
-    BTr: null,
-    BTransition: null,
-  } satisfies Record<ComponentType, null>) as ComponentType[]
+export const componentsWithExternalPath = {
+  BAccordion: '/components/BAccordion',
+  BAccordionItem: '/components/BAccordion',
+  BAlert: '/components/BAlert',
+  BAvatar: '/components/BAvatar',
+  BAvatarGroup: '/components/BAvatar',
+  BBadge: '/components/BBadge',
+  BBreadcrumb: '/components/BBreadcrumb',
+  BBreadcrumbItem: '/components/BBreadcrumb',
+  BButton: '/components/BButton',
+  BButtonGroup: '/components/BButton',
+  BButtonToolbar: '/components/BButton',
+  BCloseButton: '/components/BCloseButton',
+  BCard: '/components/BCard',
+  BCardBody: '/components/BCard',
+  BCardFooter: '/components/BCard',
+  BCardGroup: '/components/BCard',
+  BCardHeader: '/components/BCard',
+  BCardImg: '/components/BCard',
+  BCardSubtitle: '/components/BCard',
+  BCardText: '/components/BCard',
+  BCardTitle: '/components/BCard',
+  BCarousel: '/components/BCarousel',
+  BCarouselSlide: '/components/BCarousel',
+  BCol: '/components/BContainer',
+  BCollapse: '/components/BCollapse',
+  BContainer: '/components/BContainer',
+  BDropdown: '/components/BDropdown',
+  BDropdownDivider: '/components/BDropdown',
+  BDropdownForm: '/components/BDropdown',
+  BDropdownGroup: '/components/BDropdown',
+  BDropdownHeader: '/components/BDropdown',
+  BDropdownItem: '/components/BDropdown',
+  BDropdownItemButton: '/components/BDropdown',
+  BDropdownText: '/components/BDropdown',
+  BForm: '/components/BForm',
+  BFormCheckbox: '/components/BFormCheckbox',
+  BFormCheckboxGroup: '/components/BFormCheckbox',
+  BFormDatalist: '/components/BForm',
+  BFormFile: '/components/BFormFile',
+  BFormFloatingLabel: '/components/BForm',
+  BFormGroup: '/components/BFormGroup',
+  BFormInput: '/components/BFormInput',
+  BFormInvalidFeedback: '/components/BForm',
+  BFormRadio: '/components/BFormRadio',
+  BFormRadioGroup: '/components/BFormRadio',
+  BFormRow: '/components/BForm',
+  BFormSelect: '/components/BFormSelect',
+  BFormSelectOption: '/components/BFormSelect',
+  BFormSelectOptionGroup: '/components/BFormSelect',
+  BFormSpinbutton: '/components/BFormSpinbutton',
+  BFormTag: '/components/BFormTags',
+  BFormTags: '/components/BFormTags',
+  BFormText: '/components/BForm',
+  BFormTextarea: '/components/BFormTextarea',
+  BFormValidFeedback: '/components/BForm',
+  BImg: '/components/BImg',
+  BInput: '/components/BFormInput',
+  BInputGroup: '/components/BInputGroup',
+  BInputGroupText: '/components/BInputGroup',
+  BListGroup: '/components/BListGroup',
+  BListGroupItem: '/components/BListGroup',
+  BModal: '/components/BModal',
+  BModalOrchestrator: '/components/BModal',
+  BNav: '/components/BNav',
+  BNavForm: '/components/BNav',
+  BNavItem: '/components/BNav',
+  BNavItemDropdown: '/components/BNav',
+  BNavText: '/components/BNav',
+  BNavbar: '/components/BNavbar',
+  BNavbarBrand: '/components/BNavbar',
+  BNavbarNav: '/components/BNavbar',
+  BNavbarToggle: '/components/BNavbar',
+  BOffcanvas: '/components/BOffcanvas',
+  BOverlay: '/components/BOverlay',
+  BPagination: '/components/BPagination',
+  BPlaceholder: '/components/BPlaceholder',
+  BPlaceholderButton: '/components/BPlaceholder',
+  BPlaceholderCard: '/components/BPlaceholder',
+  BPlaceholderTable: '/components/BPlaceholder',
+  BPlaceholderWrapper: '/components/BPlaceholder',
+  BPopover: '/components/BPopover',
+  BProgress: '/components/BProgress',
+  BRow: '/components/BContainer',
+  BSpinner: '/components/BSpinner',
+  BTab: '/components/BTab',
+  BTabs: '/components/BTab',
+  BToast: '/components/BToast',
+  BToastOrchestrator: '/components/BToast',
+  BTooltip: '/components/BTooltip',
+  BLink: '/components/BLink',
+  BProgressBar: '/components/BProgress',
+  BTableSimple: '/components/BTable',
+  BTableLite: '/components/BTable',
+  BTable: '/components/BTable',
+  BTbody: '/components/BTable',
+  BTd: '/components/BTable',
+  BTh: '/components/BTable',
+  BThead: '/components/BTable',
+  BTfoot: '/components/BTable',
+  BTr: '/components/BTable',
+  BPopoverOrchestrator: '/components/BPopover',
+  BTooltipOrchestrator: '/components/BTooltip',
+} as const satisfies Record<ComponentType, string>
+export const componentNames = Object.freeze(
+  Object.keys(componentsWithExternalPath) as ComponentType[]
 )
 
-export const DirectiveNames = Object.freeze(
-  Object.keys({
-    vBColorMode: null,
-    vBModal: null,
-    vBPopover: null,
-    vBScrollspy: null,
-    vBToggle: null,
-    vBTooltip: null,
-  } satisfies Record<DirectiveType, null>) as DirectiveType[]
+export const directivesWithExternalPath = {
+  vBColorMode: '/directives',
+  vBModal: '/directives',
+  vBPopover: '/directives',
+  vBScrollspy: '/directives',
+  vBToggle: '/directives',
+  vBTooltip: '/directives',
+} as const satisfies Record<DirectiveType, string>
+export const directiveNames = Object.freeze(
+  Object.keys(directivesWithExternalPath) as DirectiveType[]
 )
 
-export const ComposableNames = Object.freeze(
-  Object.keys({
-    useBreadcrumb: null,
-    useColorMode: null,
-    useModal: null,
-    useModalController: null,
-    useScrollspy: null,
-    useToast: null,
-  } satisfies Record<ComposableType, null>) as ComposableType[]
+export const composablesWithExternalPath = {
+  useBreadcrumb: '/composables',
+  useColorMode: '/composables',
+  useModal: '/composables',
+  useModalController: '/composables',
+  useScrollspy: '/composables',
+  useToast: '/composables',
+  usePopover: '/composables',
+  useTooltip: '/composables',
+} as const satisfies Record<ComposableType, string>
+export const composableNames = Object.freeze(
+  Object.keys(composablesWithExternalPath) as ComposableType[]
 )
 
 export type ConfigurationOption<T extends string> = Partial<Record<T, boolean>> & {all: boolean}
-
 export interface BootstrapVueOptions {
   /**
    * @default true
    */
   breadcrumb?: boolean
-  /**
-   * @default true
-   */
-  id?:
-    | boolean
-    /**
-     * This function is allows users to provide a custom id generator
-     * as a workaround for the lack of stable SSR IDs in Vue 3.x
-     *
-     * This lets the Nuxt module swap in the Nuxt `useId` function
-     * which is stable across SSR and client.
-     *
-     * @default undefined
-     */
-    | {
-        getId?: () => string
-      }
   /**
    * @default true
    */
@@ -195,4 +183,119 @@ export interface BootstrapVueOptions {
       global: Record<string, any>
     }
   >
+  tooltip?: boolean
+  popover?: boolean
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = any> = {
+  BLink: ComponentProps.BLinkProps
+  BAccordion: ComponentProps.BAccordionProps
+  BDropdownDivider: ComponentProps.BDropdownDividerProps
+  BDropdownGroup: ComponentProps.BDropdownGroupProps
+  BDropdownItem: ComponentProps.BDropdownItemProps
+  BDropdownItemButton: ComponentProps.BDropdownItemButtonProps
+  BDropdownText: ComponentProps.BDropdownTextProps
+  BFormFloatingLabel: ComponentProps.BFormFloatingLabelProps
+  BFormRow: ComponentProps.BFormRowProps
+  BFormText: ComponentProps.BFormTextProps
+  BFormCheckbox: ComponentProps.BFormCheckboxProps
+  BFormCheckboxGroup: ComponentProps.BFormCheckboxGroupProps
+  BFormDatalist: ComponentProps.BFormDatalistProps
+  BFormFile: ComponentProps.BFormFileProps
+  BFormInput: ComponentProps.BFormInputProps
+  BFormRadio: ComponentProps.BFormRadioProps
+  BFormRadioGroup: ComponentProps.BFormRadioGroupProps
+  BFormSelect: ComponentProps.BFormSelectProps
+  BFormSelectOption: ComponentProps.BFormSelectOptionProps<BFormSelectOption>
+  BFormSelectOptionGroup: ComponentProps.BFormSelectOptionGroupProps
+  BFormSpinbutton: ComponentProps.BFormSpinbuttonProps
+  BFormTag: ComponentProps.BFormTagProps
+  BFormTags: ComponentProps.BFormTagsProps
+  BFormTextarea: ComponentProps.BFormTextareaProps
+  BInputGroup: ComponentProps.BInputGroupProps
+  BInputGroupText: ComponentProps.BInputGroupTextProps
+  BListGroup: ComponentProps.BListGroupProps
+  BListGroupItem: ComponentProps.BListGroupItemProps
+  BModalOrchestrator: ComponentProps.BModalOrchestratorProps
+  BNav: ComponentProps.BNavProps
+  BNavForm: ComponentProps.BNavFormProps
+  BNavItem: ComponentProps.BNavItemProps
+  BNavText: ComponentProps.BNavTextProps
+  BNavbar: ComponentProps.BNavbarProps
+  BNavbarBrand: ComponentProps.BNavbarBrandProps
+  BNavbarNav: ComponentProps.BNavbarNavProps
+  BNavbarToggle: ComponentProps.BNavbarToggleProps
+  BOffcanvas: ComponentProps.BOffcanvasProps
+  BOverlay: ComponentProps.BOverlayProps
+  BPagination: ComponentProps.BPaginationProps
+  BPlaceholder: ComponentProps.BPlaceholderProps
+  BPlaceholderButton: ComponentProps.BPlaceholderButtonProps
+  BPlaceholderCard: ComponentProps.BPlaceholderCardProps
+  BPlaceholderTable: ComponentProps.BPlaceholderTableProps
+  BPlaceholderWrapper: ComponentProps.BPlaceholderWrapperProps
+  BProgress: ComponentProps.BProgressProps
+  BTab: ComponentProps.BTabProps
+  BTabs: ComponentProps.BTabsProps
+  BToastOrchestrator: ComponentProps.BToastOrchestratorProps
+  BCollapse: ComponentProps.BCollapseProps
+  BContainer: ComponentProps.BContainerProps
+  BSpinner: ComponentProps.BSpinnerProps
+  BAccordionItem: ComponentProps.BAccordionItemProps
+  BAlert: ComponentProps.BAlertProps
+  BAvatar: ComponentProps.BAvatarProps
+  BAvatarGroup: ComponentProps.BAvatarGroupProps
+  BBadge: ComponentProps.BBadgeProps
+  BBreadcrumb: ComponentProps.BBreadcrumbProps
+  BBreadcrumbItem: ComponentProps.BBreadcrumbItemProps
+  BButton: ComponentProps.BButtonProps
+  BButtonGroup: ComponentProps.BButtonGroupProps
+  BButtonToolbar: ComponentProps.BButtonToolbarProps
+  BCloseButton: ComponentProps.BCloseButtonProps
+  BCard: ComponentProps.BCardProps
+  BCardBody: ComponentProps.BCardBodyProps
+  BCardGroup: ComponentProps.BCardGroupProps
+  BCardSubtitle: ComponentProps.BCardSubtitleProps
+  BCardText: ComponentProps.BCardTextProps
+  BCardTitle: ComponentProps.BCardTitleProps
+  BCarousel: ComponentProps.BCarouselProps
+  BCarouselSlide: ComponentProps.BCarouselSlideProps
+  BTransition: ComponentProps.BTransitionProps
+  BImg: ComponentProps.BImgProps
+  BForm: ComponentProps.BFormProps
+  BTableSimple: ComponentProps.BTableSimpleProps
+  BTableLite: ComponentProps.BTableLiteProps<BTableLite>
+  BTable: ComponentProps.BTableProps<BTable>
+  BTr: ComponentProps.BTrProps
+  BThead: ComponentProps.BTheadProps
+  BTfoot: ComponentProps.BTfootProps
+  BTd: ComponentProps.BTdProps
+  BTbody: ComponentProps.BTbodyProps
+  BTh: ComponentProps.BThProps
+  BProgressBar: ComponentProps.BProgressBarProps
+  BInputGroupAddon: ComponentProps.BInputGroupAddonProps
+  BDropdown: ComponentProps.BDropdownProps
+  BToast: ComponentProps.BToastProps
+  BPopover: ComponentProps.BPopoverProps
+  BTooltip: ComponentProps.BTooltipProps
+  BModal: ComponentProps.BModalProps
+  BCardFooter: ComponentProps.BCardHeadFootProps
+  BCardHeader: ComponentProps.BCardHeadFootProps
+  BCardImg: ComponentProps.BCardImgProps
+  BCol: ComponentProps.BColProps
+  BDropdownForm: never
+  BDropdownHeader: never
+  BFormInvalidFeedback: ComponentProps.BFormFeedbackSharedProps
+  BFormValidFeedback: ComponentProps.BFormFeedbackSharedProps
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  BFormGroup: any
+  BNavItemDropdown: ComponentProps.BDropdownProps
+  BRow: ComponentProps.BRowProps
+  BInput: ComponentProps.BFormInputProps
+  BTooltipOrchestrator: never
+  BPopoverOrchestrator: never
+}
+
+export type BvnComponentProps = {
+  [K in ComponentType]: UnmappedComponentProps[K]
 }

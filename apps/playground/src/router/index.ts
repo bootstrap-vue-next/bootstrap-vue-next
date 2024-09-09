@@ -16,5 +16,15 @@ export default createRouter({
         },
       },
     },
+    {
+      path: '/test',
+      name: 'test',
+      component: {
+        name: 'Test',
+        render() {
+          return h('h1', {}, 'Test page')
+        },
+      },
+    },
   ],
 })

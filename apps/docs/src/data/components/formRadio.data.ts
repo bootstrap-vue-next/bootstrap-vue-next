@@ -6,6 +6,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormRadio',
+      sourcePath: '/BFormRadio/BFormRadio.vue',
       props: {
         '': {
           button: {
@@ -84,6 +85,7 @@ export default {
     },
     {
       component: 'BFormRadioGroup',
+      sourcePath: '/BFormRadio/BFormRadioGroup.vue',
       props: {
         '': {
           buttonVariant: {

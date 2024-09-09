@@ -15,11 +15,12 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject, toRef, useAttrs} from 'vue'
-import type {BListGroupItemProps} from '../../types'
-import {useBLinkHelper, useDefaults} from '../../composables'
+import {computed, inject, useAttrs} from 'vue'
+import type {BListGroupItemProps} from '../../types/ComponentProps'
+import {useDefaults} from '../../composables/useDefaults'
 import BLink from '../BLink/BLink.vue'
-import {listGroupInjectionKey} from '../../utils'
+import {listGroupInjectionKey} from '../../utils/keys'
+import {useBLinkHelper} from '../../composables/useBLinkHelper'
 
 const _props = withDefaults(defineProps<BListGroupItemProps>(), {
   action: false,
@@ -62,8 +63,8 @@ const parentData = inject(listGroupInjectionKey, null)
 
 const {computedLink} = useBLinkHelper(props)
 
-const isLink = toRef(() => !props.button && computedLink.value)
-const tagComputed = toRef(() =>
+const isLink = computed(() => !props.button && computedLink.value)
+const tagComputed = computed(() =>
   parentData?.numbered.value ? 'li' : props.button ? 'button' : !isLink.value ? props.tag : BLink
 )
 

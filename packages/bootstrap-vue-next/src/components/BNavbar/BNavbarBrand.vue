@@ -5,10 +5,11 @@
 </template>
 
 <script setup lang="ts">
-import {toRef} from 'vue'
 import BLink from '../BLink/BLink.vue'
-import type {BNavbarBrandProps} from '../../types'
-import {useBLinkHelper, useDefaults} from '../../composables'
+import type {BNavbarBrandProps} from '../../types/ComponentProps'
+import {useBLinkHelper} from '../../composables/useBLinkHelper'
+import {useDefaults} from '../../composables/useDefaults'
+import {computed} from 'vue'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -64,5 +65,5 @@ const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'icon',
 ])
 
-const computedTag = toRef(() => (computedLink.value ? BLink : props.tag))
+const computedTag = computed(() => (computedLink.value ? BLink : props.tag))
 </script>

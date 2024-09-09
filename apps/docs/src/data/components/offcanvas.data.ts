@@ -5,6 +5,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BOffcanvas',
+      sourcePath: '/BOffcanvas/BOffcanvas.vue',
       props: {
         '': {
           bodyAttrs: {

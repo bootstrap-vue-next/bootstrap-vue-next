@@ -361,4 +361,15 @@ export const commonProps = () =>
       default: null,
       description: 'Applies one of the Bootstrap theme color variants to the component',
     },
+    noHoverPause: {
+      type: 'boolean',
+      default: false,
+      description: 'When set to true, disables pausing the timer on hover behavior',
+    },
+    noResumeOnHoverLeave: {
+      type: 'boolean',
+      default: false,
+      description:
+        'When set to true, the timer will not resume when the mouse leaves the element. It will need to be manually resumed',
+    },
   }) satisfies Record<string, PropertyReference>

@@ -73,14 +73,16 @@ import {
 } from '@floating-ui/vue'
 import {onClickOutside, onKeyStroke, useToNumber} from '@vueuse/core'
 import {computed, type CSSProperties, inject, nextTick, provide, ref, toRef, watch} from 'vue'
-import {useDefaults, useId} from '../../composables'
-import type {BDropdownProps} from '../../types'
-import {BvTriggerableEvent, dropdownInjectionKey, inputGroupKey} from '../../utils'
+import {useDefaults} from '../../composables/useDefaults'
+import {useId} from '../../composables/useId'
+import type {BDropdownProps} from '../../types/ComponentProps'
+import {BvTriggerableEvent} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
 import {isBoundary, isRootBoundary, resolveFloatingPlacement} from '../../utils/floatingUi'
+import {dropdownInjectionKey, inputGroupKey} from '../../utils/keys'
 
-const _props = withDefaults(defineProps<BDropdownProps>(), {
+const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   ariaLabel: undefined,
   autoClose: true,
   boundary: 'clippingAncestors',
@@ -144,11 +146,11 @@ defineSlots<{
 
 const computedId = useId(() => props.id, 'dropdown')
 
-const modelValue = defineModel<boolean>({default: false})
+const modelValue = defineModel<Exclude<BDropdownProps['modelValue'], undefined>>({default: false})
 
 const inInputGroup = inject(inputGroupKey, false)
 
-const computedOffset = toRef(() =>
+const computedOffset = computed(() =>
   typeof props.offset === 'string' || typeof props.offset === 'number' ? props.offset : NaN
 )
 const offsetToNumber = useToNumber(computedOffset)
@@ -165,7 +167,7 @@ const rootBoundary = computed<RootBoundary | undefined>(() =>
   isRootBoundary(props.boundary) ? props.boundary : undefined
 )
 
-const referencePlacement = toRef(() => (!props.split ? splitButton.value : button.value))
+const referencePlacement = computed(() => (!props.split ? splitButton.value : button.value))
 
 onKeyStroke(
   'Escape',

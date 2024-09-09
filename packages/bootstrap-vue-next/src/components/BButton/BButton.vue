@@ -37,13 +37,15 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, toRef} from 'vue'
-import BSpinner from '../BSpinner.vue'
-import {useBLinkHelper, useDefaults} from '../../composables'
-import type {BButtonProps, ColorVariant} from '../../types'
+import {computed, ref} from 'vue'
+import BSpinner from '../BSpinner/BSpinner.vue'
+import {useBLinkHelper} from '../../composables/useBLinkHelper'
 import BLink from '../BLink/BLink.vue'
 import {useLinkClasses} from '../../composables/useLinkClasses'
 import {onKeyStroke} from '@vueuse/core'
+import type {BButtonProps} from '../../types/ComponentProps'
+import {useDefaults} from '../../composables/useDefaults'
+import type {ColorVariant} from '../../types/ColorTypes'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -54,7 +56,7 @@ defineSlots<{
   'loading-spinner'?: (props: Record<string, never>) => any
 }>()
 
-const _props = withDefaults(defineProps<BButtonProps>(), {
+const _props = withDefaults(defineProps<Omit<BButtonProps, 'pressed'>>(), {
   loading: false,
   loadingFill: false,
   loadingText: 'Loading...',
@@ -97,7 +99,7 @@ const emit = defineEmits<{
 
 const element = ref<HTMLElement | null>(null)
 
-const pressedValue = defineModel<boolean | undefined>('pressed', {default: undefined})
+const pressedValue = defineModel<BButtonProps['pressed']>('pressed', {default: undefined})
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'active-class',
@@ -107,12 +109,12 @@ const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'routerTag',
 ])
 
-const isToggle = toRef(() => typeof pressedValue.value === 'boolean')
-const isButton = toRef(
+const isToggle = computed(() => typeof pressedValue.value === 'boolean')
+const isButton = computed(
   () => props.tag === 'button' && props.href === undefined && props.to === undefined
 )
-const isBLink = toRef(() => props.to !== undefined)
-const nonStandardTag = toRef(() => (props.href !== undefined ? false : !isButton.value))
+const isBLink = computed(() => props.to !== undefined)
+const nonStandardTag = computed(() => (props.href !== undefined ? false : !isButton.value))
 
 const linkProps = computed(() => (isBLink.value ? computedLinkProps.value : []))
 const computedAriaDisabled = computed(() => {
@@ -121,31 +123,31 @@ const computedAriaDisabled = computed(() => {
   return nonStandardTag.value ? props.disabled : null
 })
 
-const variantIsLinkSubset = computed(
-  () => (computedLink.value === false && props.variant?.startsWith('link-')) || false
-)
+const variantIsLinkType = computed(() => props.variant?.startsWith('link') || false)
+const variantIsLinkTypeSubset = computed(() => props.variant?.startsWith('link-') || false)
 const linkValueClasses = useLinkClasses(
   computed(() => ({
-    ...(props.variant &&
-      props.variant.startsWith('link') && {
-        icon: props.icon,
-        opacity: props.opacity,
-        opacityHover: props.opacityHover,
-        underlineOffset: props.underlineOffset,
-        underlineOffsetHover: props.underlineOffsetHover,
-        underlineOpacity: props.underlineOpacity,
-        underlineOpacityHover: props.underlineOpacityHover,
-        underlineVariant: props.underlineVariant,
-        variant:
-          variantIsLinkSubset.value === true ? (props.variant.slice(5) as ColorVariant) : null,
-      }),
+    ...(variantIsLinkType.value && {
+      icon: props.icon,
+      opacity: props.opacity,
+      opacityHover: props.opacityHover,
+      underlineOffset: props.underlineOffset,
+      underlineOffsetHover: props.underlineOffsetHover,
+      underlineOpacity: props.underlineOpacity,
+      underlineOpacityHover: props.underlineOpacityHover,
+      underlineVariant: props.underlineVariant,
+      variant:
+        variantIsLinkTypeSubset.value === true ? (props.variant?.slice(5) as ColorVariant) : null,
+    }),
   }))
 )
 const computedClasses = computed(() => [
-  computedLink.value === true ? undefined : linkValueClasses.value,
+  variantIsLinkType.value === true && computedLink.value === false
+    ? linkValueClasses.value
+    : undefined,
   [`btn-${props.size}`],
   {
-    [`btn-${props.variant}`]: props.variant !== null && variantIsLinkSubset.value === false,
+    [`btn-${props.variant}`]: props.variant !== null && variantIsLinkTypeSubset.value === false,
     'active': props.active || pressedValue.value,
     'rounded-pill': props.pill,
     'rounded-0': props.squared,
@@ -153,7 +155,7 @@ const computedClasses = computed(() => [
   },
 ])
 
-const computedTag = toRef(() => (isBLink.value ? BLink : props.href ? 'a' : props.tag))
+const computedTag = computed(() => (isBLink.value ? BLink : props.href ? 'a' : props.tag))
 
 const clicked = (e: Readonly<MouseEvent>): void => {
   if (props.disabled) {
