@@ -20,4 +20,3 @@ defineExpose({
   ...tools,
 })
 </script>
-../../composables/useTooltip/useTooltip
