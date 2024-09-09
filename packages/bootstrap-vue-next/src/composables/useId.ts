@@ -5,5 +5,5 @@ export const useId = (
   suffix?: string
 ): ComputedRef<string> => {
   const genId = vueUseId()
-  return computed(() => toValue(id) || `${genId}-${suffix}`)
+  return computed(() => toValue(id) || `__BVID__${genId}___BV_${suffix}__`)
 }
