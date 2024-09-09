@@ -61,11 +61,8 @@ const processDirectory = (dirPath: string, baseDir: string): Record<string, stri
       if (ext === '.ts' && !file.endsWith('.spec.ts') && !file.includes('/node_modules/')) {
         let key = dirPart ? `${baseDir}/${dirPart}/${baseName}` : `${baseDir}/${baseName}`
         if (baseName === 'index') {
-          key = dirPart ? `${baseDir}/${dirPart}` : `${baseDir}`
+          key = dirPart ? `${baseDir}/${dirPart}/index` : `${baseDir}/index`
         }
-        acc[key] = resolve(__dirname, relativePath)
-      } else if (ext === '.vue') {
-        const key = dirPart ? `${baseDir}/${dirPart}/${baseName}` : `${baseDir}/${baseName}`
         acc[key] = resolve(__dirname, relativePath)
       }
 
@@ -74,24 +71,19 @@ const processDirectory = (dirPath: string, baseDir: string): Record<string, stri
     {} as Record<string, string>
   )
 
-const components = processDirectory(resolve(__dirname, 'src/components'), 'src/components')
-const directives = processDirectory(resolve(__dirname, 'src/directives'), 'src/directives')
-const composables = processDirectory(resolve(__dirname, 'src/composables'), 'src/composables')
-const plugins = processDirectory(resolve(__dirname, 'src/plugins'), 'src/plugins')
-
 export default defineConfig({
   build: {
     sourcemap: false,
-    minify: true,
+    minify: 'terser',
     lib: {
       entry: {
         'bootstrap-vue-next': resolve(__dirname, 'src/index.ts'),
-        'resolvers': resolve(__dirname, 'src/resolvers/index.ts'),
-        'utils': resolve(__dirname, 'src/utils/index.ts'),
-        ...components,
-        ...directives,
-        ...composables,
-        ...plugins,
+        'src/resolvers/index': resolve(__dirname, 'src/resolvers/index.ts'),
+        'src/utils/index': resolve(__dirname, 'src/utils/index.ts'),
+        'src/composables/index': resolve(__dirname, 'src/composables/index.ts'),
+        'src/directives/index': resolve(__dirname, 'src/directives/index.ts'),
+        'src/plugins/index': resolve(__dirname, 'src/plugins/index.ts'),
+        ...processDirectory(resolve(__dirname, 'src/components'), 'src/components'),
       },
       name: 'bootstrap-vue-next',
       fileName: (format, entryName) => {

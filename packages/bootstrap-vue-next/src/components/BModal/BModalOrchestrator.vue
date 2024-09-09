@@ -1,6 +1,6 @@
 <template>
   <Teleport :to="props.teleportTo" :disabled="props.teleportDisabled">
-    <div id="__BVID__modal-container">
+    <div id="__BVID__modal-container" v-bind="$attrs">
       <component
         :is="modal.component ?? BModal"
         v-for="[self, modal] in tools.modals?.value"
@@ -38,6 +38,10 @@ import {useDefaults} from '../../composables/useDefaults'
 import type {BModalOrchestratorProps} from '../../types/ComponentProps'
 import BModal from './BModal.vue'
 import {useModalController} from '../../composables/useModalController/useModalController'
+
+defineOptions({
+  inheritAttrs: false,
+})
 
 const _props = withDefaults(defineProps<BModalOrchestratorProps>(), {
   teleportDisabled: false,

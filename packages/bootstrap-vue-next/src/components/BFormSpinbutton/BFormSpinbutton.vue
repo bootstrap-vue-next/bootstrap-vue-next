@@ -35,7 +35,7 @@
       key="output"
       class="flex-grow-1"
       :class="computedSpinClasses"
-      :dir="isRtl ?? false ? 'rtl' : 'ltr'"
+      :dir="(isRtl ?? false) ? 'rtl' : 'ltr'"
       :tabindex="props.disabled ? undefined : '0'"
       role="spinbutton"
       aria-live="off"

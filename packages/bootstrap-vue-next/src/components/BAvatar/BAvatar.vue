@@ -182,9 +182,9 @@ const computedClasses = computed(() => [
 
 const badgeStyle = computed<StyleValue>(() => ({
   fontSize:
-    SIZES.indexOf((computedSize.value as string | undefined) || null) === -1
+    (SIZES.indexOf((computedSize.value as string | undefined) || null) === -1
       ? `calc(${computedSize.value} * ${BADGE_FONT_SIZE_SCALE})`
-      : '' || '',
+      : '') || '',
 }))
 
 const textFontStyle = computed<StyleValue>(() => {

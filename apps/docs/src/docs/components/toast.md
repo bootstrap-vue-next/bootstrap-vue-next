@@ -192,6 +192,8 @@ The **interval** prop determines how frequently the timer updates. While the def
 </template>
 ```
 
+  </template>
+
 </HighlightCard>
 
 ### ProgressBar Integration
@@ -206,7 +208,8 @@ As you may have noticed in that example, there was a built-in progress bar. This
   <BButton @click="show?.({ props: {href: 'https://getbootstrap.com/', target: '_blank', body: 'I am a BLink'}})">
     Show
   </BButton>
-  <template #html>
+
+<template #html>
 
 ```vue
 <template>

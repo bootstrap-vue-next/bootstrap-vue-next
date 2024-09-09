@@ -1,7 +1,6 @@
 export {breadcrumbPlugin} from './breadcrumb/breadcrumbPlugin'
 export {createBootstrap} from './createBootstrap/createBootstrap'
 export {defaultsPlugin} from './defaults/defaultsPlugin'
-export {idPlugin} from './id/idPlugin'
 export {modalControllerPlugin} from './modalController/modalControllerPlugin'
 export {modalManagerPlugin} from './modalManager/modalManagerPlugin'
 export {popoverPlugin} from './popover/popoverPlugin'

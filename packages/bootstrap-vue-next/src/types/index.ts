@@ -45,7 +45,6 @@ export type {
 } from './SelectTypes'
 export type {InputType} from './InputType'
 export type {LinkTarget} from './LinkTarget'
-export type {PublicOrchestratedModal, PublicOrchestratedToast} from './ComponentOrchestratorTypes'
 export type {PaginationPage} from './PaginationPage'
 export type {PlaceholderAnimation, PlaceholderSize} from './PlaceholderTypes'
 export type {PopoverPlacement} from './PopoverPlacement'
@@ -56,6 +55,13 @@ export type {SpinnerType} from './SpinnerType'
 export type {TabType} from './Tab'
 export type {TransitionMode} from './TransitionMode'
 export type * from './ComponentProps'
+export type {
+  PublicOrchestratedTooltip as OrchestratedTooltip,
+  PublicOrchestratedToast as OrchestratedToast,
+  PublicOrchestratedPopover as OrchestratedPopover,
+  PublicOrchestratedModal as OrchestratedModal,
+} from './ComponentOrchestratorTypes'
+export type * from './ComponentOrchestratorTypes'
 
 export {
   // Real
@@ -64,6 +70,9 @@ export {
   directiveNames,
   // Real
   componentNames,
+  componentsWithExternalPath,
+  composablesWithExternalPath,
+  directivesWithExternalPath,
   type ComponentType,
   type ComposableType,
   type DirectiveType,

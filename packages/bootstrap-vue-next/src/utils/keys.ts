@@ -157,8 +157,6 @@ export const modalManagerPluginKey: InjectionKey<{
   removeRegistry: (modal: Readonly<ComponentInternalInstance>) => void
 }> = Symbol('bvn::modalManagerPlugin')
 
-export const idPluginKey: InjectionKey<() => string> = Symbol('bvn::idPluginKey')
-
 export const defaultsKey: InjectionKey<Ref<Partial<BvnComponentProps>>> = Symbol('bvn::defaults')
 
 export const inputGroupKey: InjectionKey<boolean> = Symbol('bvn::inputGroup')

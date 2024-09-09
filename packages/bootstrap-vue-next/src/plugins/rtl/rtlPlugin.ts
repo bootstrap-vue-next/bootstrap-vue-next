@@ -8,12 +8,12 @@ export const rtlPlugin: Plugin = {
     const localeDefault = undefined
 
     const rtlInitial =
-      typeof options?.rtl === 'boolean' ? rtlDefault : options?.rtl?.rtlInitial ?? rtlDefault
+      typeof options?.rtl === 'boolean' ? rtlDefault : (options?.rtl?.rtlInitial ?? rtlDefault)
 
     const localeInitial =
       typeof options?.rtl === 'boolean'
         ? localeDefault
-        : options?.rtl?.localeInitial ?? localeDefault
+        : (options?.rtl?.localeInitial ?? localeDefault)
 
     const isRtl = ref(rtlInitial)
     const locale = ref(localeInitial)

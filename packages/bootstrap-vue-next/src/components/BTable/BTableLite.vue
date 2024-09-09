@@ -116,7 +116,7 @@
                     toggleRowDetails(item)
                   }
                 "
-                :details-showing="isTableItem(item) ? detailsMap.get(item) ?? false : false"
+                :details-showing="isTableItem(item) ? (detailsMap.get(item) ?? false) : false"
               >
                 <template v-if="!$slots[`cell(${String(field.key)})`] && !$slots['cell()']">
                   {{ formatItem(item, String(field.key), field.formatter) }}

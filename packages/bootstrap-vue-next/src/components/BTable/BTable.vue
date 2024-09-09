@@ -439,7 +439,7 @@ const computedItems = computed<T[]>(() => {
           }
           return typeof val === 'object' && val !== null
             ? JSON.stringify(val)
-            : val?.toString() ?? ''
+            : (val?.toString() ?? '')
         }
 
         const aValue = realVal(a)

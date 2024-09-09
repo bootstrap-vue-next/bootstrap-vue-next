@@ -43,16 +43,16 @@ export const componentsWithExternalPath = {
   BDropdownItemButton: '/components/BDropdown',
   BDropdownText: '/components/BDropdown',
   BForm: '/components/BForm',
-  BFormCheckbox: '/components/BForm',
-  BFormCheckboxGroup: '/components/BForm',
+  BFormCheckbox: '/components/BFormCheckbox',
+  BFormCheckboxGroup: '/components/BFormCheckbox',
   BFormDatalist: '/components/BForm',
-  BFormFile: '/components/BForm',
+  BFormFile: '/components/BFormFile',
   BFormFloatingLabel: '/components/BForm',
-  BFormGroup: '/components/BForm',
-  BFormInput: '/components/BForm',
+  BFormGroup: '/components/BFormGroup',
+  BFormInput: '/components/BFormInput',
   BFormInvalidFeedback: '/components/BForm',
-  BFormRadio: '/components/BForm',
-  BFormRadioGroup: '/components/BForm',
+  BFormRadio: '/components/BFormRadio',
+  BFormRadioGroup: '/components/BFormRadio',
   BFormRow: '/components/BForm',
   BFormSelect: '/components/BFormSelect',
   BFormSelectOption: '/components/BFormSelect',
@@ -128,14 +128,14 @@ export const directiveNames = Object.freeze(
 )
 
 export const composablesWithExternalPath = {
-  useBreadcrumb: '/composables/useBreadcrumb',
-  useColorMode: '/composables/useColorMode',
-  useModal: '/composables/useModal',
-  useModalController: '/composables/useModalController',
-  useScrollspy: '/composables/useScrollspy/useScrollspy',
-  useToast: '/composables/useToast',
-  usePopover: '/composables/usePopover',
-  useTooltip: '/composables/useTooltip',
+  useBreadcrumb: '/composables',
+  useColorMode: '/composables',
+  useModal: '/composables',
+  useModalController: '/composables',
+  useScrollspy: '/composables',
+  useToast: '/composables',
+  usePopover: '/composables',
+  useTooltip: '/composables',
 } as const satisfies Record<ComposableType, string>
 export const composableNames = Object.freeze(
   Object.keys(composablesWithExternalPath) as ComposableType[]
@@ -147,23 +147,6 @@ export interface BootstrapVueOptions {
    * @default true
    */
   breadcrumb?: boolean
-  /**
-   * @default true
-   */
-  id?:
-    | boolean
-    /**
-     * This function is allows users to provide a custom id generator
-     * as a workaround for the lack of stable SSR IDs in Vue 3.x
-     *
-     * This lets the Nuxt module swap in the Nuxt `useId` function
-     * which is stable across SSR and client.
-     *
-     * @default undefined
-     */
-    | {
-        getId?: () => string
-      }
   /**
    * @default true
    */

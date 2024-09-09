@@ -19,7 +19,7 @@ export const useRtl = () => {
       () => rtlPlugin?.isRtl.value,
       (newValue) => {
         const html = document.documentElement
-        html.setAttribute('dir', newValue ?? false ? 'rtl' : 'ltr')
+        html.setAttribute('dir', (newValue ?? false) ? 'rtl' : 'ltr')
       },
       {immediate: true}
     )

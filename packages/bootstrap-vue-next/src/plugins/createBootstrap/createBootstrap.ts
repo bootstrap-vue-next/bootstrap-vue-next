@@ -5,7 +5,6 @@ import '../../styles/styles.scss'
 
 import {breadcrumbPlugin} from '../breadcrumb/breadcrumbPlugin'
 import {defaultsPlugin} from '../defaults/defaultsPlugin'
-import {idPlugin} from '../id/idPlugin'
 import {modalControllerPlugin} from '../modalController/modalControllerPlugin'
 import {modalManagerPlugin} from '../modalManager/modalManagerPlugin'
 import {popoverPlugin} from '../popover/popoverPlugin'
@@ -18,9 +17,6 @@ export const createBootstrap = (pluginData: Readonly<BootstrapVueOptions> = {}):
   install(app) {
     if (pluginData.breadcrumb ?? true === true) {
       app.use(breadcrumbPlugin)
-    }
-    if ((pluginData.id ?? true === true) || typeof pluginData.id === 'object') {
-      app.use(idPlugin, pluginData)
     }
     if (pluginData.modalController ?? true === true) {
       app.use(modalControllerPlugin)

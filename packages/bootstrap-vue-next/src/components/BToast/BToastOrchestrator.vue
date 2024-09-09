@@ -1,6 +1,6 @@
 <template>
   <Teleport :to="props.teleportTo" :disabled="props.teleportDisabled">
-    <div id="__BVID__toaster-container">
+    <div id="__BVID__toaster-container" v-bind="$attrs">
       <div
         v-for="(value, key) in positionClasses"
         :key="key"
@@ -34,6 +34,10 @@ import {positionClasses} from '../../utils/positionClasses'
 import type {BToastOrchestratorProps} from '../../types/ComponentProps'
 import BToast from './BToast.vue'
 import {useToast} from '../../composables/useToast/useToast'
+
+defineOptions({
+  inheritAttrs: false,
+})
 
 const _props = withDefaults(defineProps<BToastOrchestratorProps>(), {
   teleportDisabled: false,

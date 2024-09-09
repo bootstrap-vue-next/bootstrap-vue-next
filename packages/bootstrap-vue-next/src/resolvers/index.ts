@@ -55,7 +55,7 @@ export const BootstrapVueNextResolver = ({
   const dirImports = parseActiveImports(selectedDirectives, directiveNames).reduce(
     (map, directive) => {
       const key = (
-        directive.toLowerCase().startsWith('v') ? directive.slice(1) : directive
+        directive.toLowerCase().startsWith('v') ? directive : `v${directive}`
       ) as DirectiveType
       map.set(key, `${bvKey}${directivesWithExternalPath[key]}`)
       return map
@@ -85,10 +85,11 @@ export const BootstrapVueNextResolver = ({
     {
       type: 'directive',
       resolve: (name) => {
-        const destination = dirImports.get(name)
+        const prefixedName = `v${name}`
+        const destination = dirImports.get(prefixedName)
         if (destination)
           return {
-            name: `v${name}`,
+            name: prefixedName,
             from: destination,
           }
       },
