@@ -1,4 +1,4 @@
-import {startCase} from '../../src/utils'
+import {startCase} from '../../src/utils/stringUtils'
 import {describe, expect, it} from 'vitest'
 
 describe('startCase', () => {

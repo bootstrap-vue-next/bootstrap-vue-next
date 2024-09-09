@@ -1,5 +1,5 @@
 import type {ColorVariant, TextColorVariant} from '../../src/types'
-import {useColorVariantClasses} from '../../src/composables'
+import {useColorVariantClasses} from '../../src/composables/useColorVariantClasses'
 import {describe, expect, it} from 'vitest'
 import {reactive} from 'vue'
 
