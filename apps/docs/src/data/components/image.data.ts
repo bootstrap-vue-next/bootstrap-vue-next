@@ -8,7 +8,19 @@ export default {
       props: {
         '': imageProps,
       },
-      emits: [],
+      emits: [
+        {
+          event: 'load',
+          description: 'Fired when the image has finished loading',
+          args: [
+            {
+              arg: 'load',
+              type: 'Event',
+              description: 'The native load event',
+            },
+          ],
+        },
+      ],
       slots: [],
     },
   ],
