@@ -64,12 +64,29 @@ const processDirectory = (dirPath: string, baseDir: string): Record<string, stri
           key = dirPart ? `${baseDir}/${dirPart}/index` : `${baseDir}/index`
         }
         acc[key] = resolve(__dirname, relativePath)
+      } else if (ext === '.vue') {
+        const key = dirPart ? `${baseDir}/${dirPart}/${baseName}` : `${baseDir}/${baseName}`
+        acc[key] = resolve(__dirname, relativePath)
       }
 
       return acc
     },
     {} as Record<string, string>
   )
+
+const components = processDirectory(resolve(__dirname, 'src/components'), 'src/components')
+const plugins = {
+  ...processDirectory(resolve(__dirname, 'src/plugins'), 'src/plugins'),
+  'src/plugins/index': resolve(__dirname, 'src/plugins/index.ts'),
+}
+const directives = {
+  ...processDirectory(resolve(__dirname, 'src/directives'), 'src/directives'),
+  'src/directives/index': resolve(__dirname, 'src/directives/index.ts'),
+}
+const composables = {
+  ...processDirectory(resolve(__dirname, 'src/composables'), 'src/composables'),
+  'src/composables/index': resolve(__dirname, 'src/composables/index.ts'),
+}
 
 export default defineConfig({
   build: {
@@ -80,10 +97,10 @@ export default defineConfig({
         'bootstrap-vue-next': resolve(__dirname, 'src/index.ts'),
         'src/resolvers/index': resolve(__dirname, 'src/resolvers/index.ts'),
         'src/utils/index': resolve(__dirname, 'src/utils/index.ts'),
-        'src/composables/index': resolve(__dirname, 'src/composables/index.ts'),
-        'src/directives/index': resolve(__dirname, 'src/directives/index.ts'),
-        'src/plugins/index': resolve(__dirname, 'src/plugins/index.ts'),
-        ...processDirectory(resolve(__dirname, 'src/components'), 'src/components'),
+        ...components,
+        ...plugins,
+        ...directives,
+        ...composables,
       },
       name: 'bootstrap-vue-next',
       fileName: (format, entryName) => {
@@ -123,6 +140,7 @@ export default defineConfig({
     dts({
       tsconfigPath: './tsconfig.app.json',
       outDir: './dist',
+      cleanVueFileName: true,
       afterBuild: async () => {
         await Promise.all(
           readFilesInDirectory('./dist/src/')
