@@ -6,6 +6,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormInput',
+      sourcePath: '/BFormInput/BFormInput.vue',
       props: {
         '': {
           max: {

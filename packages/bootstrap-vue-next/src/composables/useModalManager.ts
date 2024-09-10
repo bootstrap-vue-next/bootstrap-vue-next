@@ -7,7 +7,7 @@ import {
   type Ref,
   watch,
 } from 'vue'
-import {modalManagerPluginKey} from '../utils'
+import {modalManagerPluginKey} from '../utils/keys'
 
 const modalOpenClassName = 'modal-open'
 
@@ -54,7 +54,7 @@ export const useSharedModalStack = () => {
   }
 }
 
-export default (modalOpen: Readonly<Ref<boolean>>, initialValue: boolean) => {
+export const useModalManager = (modalOpen: Readonly<Ref<boolean>>, initialValue: boolean) => {
   const {pushRegistry, pushStack, removeStack, stack, dispose, countStack} = useSharedModalStack()
 
   const currentModal = getCurrentInstance()

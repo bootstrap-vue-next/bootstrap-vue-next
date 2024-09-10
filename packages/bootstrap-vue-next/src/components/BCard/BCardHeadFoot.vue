@@ -10,8 +10,8 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import type {BCardHeadFootProps} from '../../types'
-import {useColorVariantClasses} from '../../composables'
+import type {BCardHeadFootProps} from '../../types/ComponentProps'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 
 const props = withDefaults(defineProps<BCardHeadFootProps>(), {
   borderVariant: null,

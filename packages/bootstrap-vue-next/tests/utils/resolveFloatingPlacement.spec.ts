@@ -1,5 +1,5 @@
 import {describe, expect, it} from 'vitest'
-import {resolveFloatingPlacement} from '../../src/utils'
+import {resolveFloatingPlacement} from '../../src/utils/floatingUi'
 
 describe('resolveFloatingPlacement', () => {
   it('is top-end when everything enabled', () => {

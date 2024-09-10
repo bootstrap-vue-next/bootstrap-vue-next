@@ -1,6 +1,9 @@
-import type {BModalProps, BToastProps, ContainerPosition} from '.'
+import type {Component, MaybeRefOrGetter, Ref} from 'vue'
+import type {BModalProps, BPopoverProps, BToastProps, BTooltipProps} from './ComponentProps'
+import type {ContainerPosition} from './Alignment'
 
-export type OrchestratedToast = Omit<BToastProps, 'modelValue'> & {
+export type OrchestratedToastModelValue = boolean | number
+export type PrivateOrchestratedToast = Omit<BToastProps, 'modelValue'> & {
   /**
    * Position
    * @default 'top-end'
@@ -18,7 +21,74 @@ export type OrchestratedToast = Omit<BToastProps, 'modelValue'> & {
    *
    * @default 5000
    */
-  value?: boolean | number // show or hide
+  value?: OrchestratedToastModelValue // show or hide
+  _self: symbol
+  _modelValue: OrchestratedToastModelValue // Convert it to be the same name as useModalController.
+  // The difference between the two is that unlike that one, this value can be defined (there's cannot be).
+}
+export type PublicOrchestratedToast = Omit<PrivateOrchestratedToast, '_modelValue' | '_self'>
+export type ToastOrchestratorArrayValue = {
+  component: unknown
+  props: PrivateOrchestratedToast
+}
+export type ToastOrchestratorShowParam = {
+  component?: Readonly<Component>
+  props?: MaybeRefOrGetter<PublicOrchestratedToast>
 }
 
-export type OrchestratedModal = Omit<BModalProps, 'modelValue'>
+export type PrivateOrchestratedTooltip = Omit<BTooltipProps, 'modelValue' | 'reference'> & {
+  _reference: Exclude<BTooltipProps['reference'], undefined>
+  _modelValue: BTooltipProps['modelValue']
+}
+export type PublicOrchestratedTooltip = Omit<
+  PrivateOrchestratedTooltip,
+  '_reference' | '_modelValue'
+>
+export type TooltipOrchestratorMapValue = {
+  component: unknown
+  props: PrivateOrchestratedTooltip
+}
+export type TooltipOrchestratorShowParam = {
+  ref: Readonly<Ref<PrivateOrchestratedTooltip['_reference']>>
+  component?: Readonly<Component>
+  props?: MaybeRefOrGetter<PublicOrchestratedTooltip>
+}
+
+export type PrivateOrchestratedPopover = Omit<BPopoverProps, 'modelValue' | 'reference'> & {
+  _reference: Exclude<BPopoverProps['reference'], undefined>
+  _modelValue: BPopoverProps['modelValue']
+}
+export type PublicOrchestratedPopover = Omit<
+  PrivateOrchestratedPopover,
+  '_reference' | '_modelValue'
+>
+export type PopoverOrchestratorMapValue = {
+  component: unknown
+  props: PrivateOrchestratedPopover
+}
+export type PopoverOrchestratorShowParam = {
+  ref: Readonly<Ref<PrivateOrchestratedPopover['_reference']>>
+  component?: Readonly<Component>
+  props?: MaybeRefOrGetter<PublicOrchestratedPopover>
+}
+
+export type PrivateOrchestratedModal = Omit<BModalProps, 'modelValue'> & {
+  _modelValue: BModalProps['modelValue']
+  _promise: {
+    value: Promise<boolean | null>
+    resolve: (value: boolean | null) => void
+  }
+  _isConfirm: boolean
+}
+export type PublicOrchestratedModal = Omit<
+  PrivateOrchestratedModal,
+  '_modelValue' | '_promise' | '_isConfirm'
+>
+export type ModalOrchestratorShowParam = {
+  component?: Readonly<Component>
+  props?: MaybeRefOrGetter<PublicOrchestratedModal>
+}
+export type ModalOrchestratorMapValue = {
+  component: unknown
+  props: PrivateOrchestratedModal
+}

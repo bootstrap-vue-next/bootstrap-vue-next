@@ -116,7 +116,7 @@
                     toggleRowDetails(item)
                   }
                 "
-                :details-showing="isTableItem(item) ? detailsMap.get(item) ?? false : false"
+                :details-showing="isTableItem(item) ? (detailsMap.get(item) ?? false) : false"
               >
                 <template v-if="!$slots[`cell(${String(field.key)})`] && !$slots['cell()']">
                   {{ formatItem(item, String(field.key), field.formatter) }}
@@ -217,10 +217,16 @@
 </template>
 
 <script setup lang="ts" generic="T">
-import {computed, ref, toRef, watch} from 'vue'
-import type {BTableLiteProps, TableField, TableItem, TableRowThead, TableRowType} from '../../types'
-import {isTableField, isTableItem} from '../../types/TableTypes'
-import {filterEvent, formatItem, get, getTableFieldHeadLabel, startCase} from '../../utils'
+import {computed, ref, watch} from 'vue'
+import type {BTableLiteProps} from '../../types/ComponentProps'
+import {
+  isTableField,
+  isTableItem,
+  type TableField,
+  type TableItem,
+  type TableRowThead,
+  type TableRowType,
+} from '../../types/TableTypes'
 import BTableSimple from './BTableSimple.vue'
 import BTbody from './BTbody.vue'
 import BTd from './BTd.vue'
@@ -228,7 +234,12 @@ import BTfoot from './BTfoot.vue'
 import BTh from './BTh.vue'
 import BThead from './BThead.vue'
 import BTr from './BTr.vue'
-import {useDefaults} from '../../composables'
+import {useDefaults} from '../../composables/useDefaults'
+import {get} from '../../utils/object'
+import {getTableFieldHeadLabel} from '../../utils/getTableFieldHeadLabel'
+import {formatItem} from '../../utils/formatItem'
+import {filterEvent} from '../../utils/filterEvent'
+import {startCase} from '../../utils/stringUtils'
 
 const _props = withDefaults(defineProps<BTableLiteProps<T>>(), {
   caption: undefined,
@@ -359,7 +370,7 @@ const computedFields = computed<(TableField & {_noHeader?: true})[]>(() => {
     }
   })
 })
-const computedFieldsTotal = toRef(() => computedFields.value.length)
+const computedFieldsTotal = computed(() => computedFields.value.length)
 const showComputedHeaders = computed(() => {
   // We only hide the header if all fields have _noHeader set to true. Which would be our doing
   // This usually happens under a circumstance of displaying an array of primitives

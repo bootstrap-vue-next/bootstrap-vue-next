@@ -6,6 +6,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BCarousel',
+      sourcePath: '/BCarousel/BCarousel.vue',
       props: {
         '': {
           background: {
@@ -55,7 +56,7 @@ export default {
             description: 'Set the aria-label for the indicator buttons',
           },
           interval: {
-            type: 'Numberish',
+            type: 'number',
             default: 5000,
             description: 'Set the delay time (in milliseconds) between slides',
           },
@@ -139,6 +140,28 @@ export default {
             },
           ],
         },
+        {
+          event: 'click:prev',
+          description: '',
+          args: [
+            {
+              arg: 'click',
+              description: 'Native click event',
+              type: 'MouseEvent',
+            },
+          ],
+        },
+        {
+          event: 'click:next',
+          description: '',
+          args: [
+            {
+              arg: 'click',
+              description: 'Native click event',
+              type: 'MouseEvent',
+            },
+          ],
+        },
       ],
       slots: [
         {
@@ -149,6 +172,7 @@ export default {
     },
     {
       component: 'BCarouselSlide',
+      sourcePath: '/BCarousel/BCarouselSlide.vue',
       emits: [],
       props: {
         '': {
@@ -220,7 +244,7 @@ export default {
             description: "Set the default image 'width' attribute for all b-tab children",
           },
           interval: {
-            type: 'Numberish',
+            type: 'number',
             default: undefined,
             description: 'Set the delay time (in milliseconds) before the slide is shown',
           },

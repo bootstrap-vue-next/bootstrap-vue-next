@@ -1,5 +1,5 @@
 import type {Slot} from 'vue'
-import type {ClassValue} from '.'
+import type {ClassValue} from './AnyValuedAttributes'
 
 export interface TabType {
   id: string

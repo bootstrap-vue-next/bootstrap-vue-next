@@ -1,4 +1,4 @@
-# BColorMode
+<DirectiveHeader path="BColorMode.ts" title="BColorMode" />
 
 <ContentsSidebar>
 
@@ -49,6 +49,7 @@ import {ref} from 'vue'
 import {vBColorMode, BButton, BCard} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
 import ContentsSidebar from '../../components/ContentsSidebar.vue'
+import DirectiveHeader from './DirectiveHeader.vue'
 
 const currentColor = ref<'light' | 'dark'>('dark')
 

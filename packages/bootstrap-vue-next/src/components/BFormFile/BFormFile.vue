@@ -35,11 +35,12 @@
 
 <script setup lang="ts">
 import {useFocus} from '@vueuse/core'
-import {computed, ref, toRef, watch} from 'vue'
-import type {BFormFileProps} from '../../types'
-import {useDefaults, useId, useStateClass} from '../../composables'
-import {isEmptySlot} from '../../utils'
-
+import {computed, ref, watch} from 'vue'
+import type {BFormFileProps} from '../../types/ComponentProps'
+import {useDefaults} from '../../composables/useDefaults'
+import {useId} from '../../composables/useId'
+import {useStateClass} from '../../composables/useStateClass'
+import {isEmptySlot} from '../../utils/dom'
 defineOptions({
   inheritAttrs: false,
 })
@@ -49,7 +50,7 @@ const slots = defineSlots<{
   label?: (props: Record<string, never>) => any
 }>()
 
-const _props = withDefaults(defineProps<BFormFileProps>(), {
+const _props = withDefaults(defineProps<Omit<BFormFileProps, 'modelValue'>>(), {
   ariaLabel: undefined,
   ariaLabelledby: undefined,
   accept: '',
@@ -74,7 +75,7 @@ const _props = withDefaults(defineProps<BFormFileProps>(), {
 })
 const props = useDefaults(_props, 'BFormFile')
 
-const modelValue = defineModel<File | File[] | null>({
+const modelValue = defineModel<Exclude<BFormFileProps['modelValue'], undefined>>({
   default: null,
 })
 
@@ -88,7 +89,7 @@ const input = ref<HTMLInputElement | null>(null)
 
 const {focused} = useFocus(input, {initialValue: props.autofocus})
 
-const hasLabelSlot = toRef(() => !isEmptySlot(slots['label']))
+const hasLabelSlot = computed(() => !isEmptySlot(slots['label']))
 
 const computedAccept = computed(() =>
   typeof props.accept === 'string' ? props.accept : props.accept.join(',')

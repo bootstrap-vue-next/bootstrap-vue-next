@@ -1,8 +1,9 @@
-import {Directives} from 'bootstrap-vue-next'
+import * as Directives from 'bootstrap-vue-next/directives'
 import {defineNuxtPlugin, useRuntimeConfig} from '#imports'
 import type {Directive} from 'vue'
 
 export default defineNuxtPlugin((nuxtApp) => {
+  // @ts-ignore
   const usedDirectives = useRuntimeConfig().public.bootstrapVueNext.directives
   const directiveValues = Object.entries(Directives)
 

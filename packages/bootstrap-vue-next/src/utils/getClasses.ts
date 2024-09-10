@@ -1,4 +1,4 @@
-export default (
+export const getClasses = (
   props: Readonly<Record<PropertyKey, unknown>>,
   els: string[],
   propPrefix: string,

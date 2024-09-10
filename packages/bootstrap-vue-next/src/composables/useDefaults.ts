@@ -13,8 +13,8 @@ import {
   type VNode,
   watchEffect,
 } from 'vue'
-import {defaultsKey} from '../utils'
-import type {BvnComponentProps} from '../types'
+import {defaultsKey} from '../utils/keys'
+import type {BvnComponentProps} from '../types/BootstrapVueOptions'
 
 // Code here was taken from
 // https://github.com/vuetifyjs/vuetify/blob/8ed87310890e2b6c8ad2a626a02c17f9467cbb60/packages/vuetify/src/composables/defaults.ts#L138

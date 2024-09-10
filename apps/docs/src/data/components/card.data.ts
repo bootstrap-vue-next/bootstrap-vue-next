@@ -6,6 +6,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BCard',
+      sourcePath: '/BCard/BCard.vue',
       props: {
         '': {
           align: {
@@ -114,6 +115,7 @@ export default {
     },
     {
       component: 'BCardBody',
+      sourcePath: '/BCard/BCardBody.vue',
       emits: [],
       props: {
         '': {
@@ -156,6 +158,7 @@ export default {
     },
     {
       component: 'BCardFooter',
+      sourcePath: '/BCard/BCardFooter.vue',
       emits: [],
       props: {
         '': {
@@ -188,6 +191,7 @@ export default {
     },
     {
       component: 'BCardGroup',
+      sourcePath: '/BCard/BCardGroup.vue',
       emits: [],
       props: {
         '': {
@@ -213,6 +217,7 @@ export default {
     },
     {
       component: 'BCardHeader',
+      sourcePath: '/BCard/BCardHeader.vue',
       emits: [],
       props: {
         '': {
@@ -245,6 +250,7 @@ export default {
     },
     {
       component: 'BCardImg',
+      sourcePath: '/BCard/BCardImg.vue',
       emits: [],
       props: {
         '': {
@@ -327,6 +333,7 @@ export default {
     },
     {
       component: 'BCardSubtitle',
+      sourcePath: '/BCard/BCardSubtitle.vue',
       emits: [],
       props: {
         '': {
@@ -357,6 +364,7 @@ export default {
     },
     {
       component: 'BCardText',
+      sourcePath: '/BCard/BCardText.vue',
       emits: [],
       props: {
         '': {
@@ -384,6 +392,7 @@ export default {
     },
     {
       component: 'BCardTitle',
+      sourcePath: '/BCard/BCardTitle.vue',
       emits: [],
       props: {
         '': {

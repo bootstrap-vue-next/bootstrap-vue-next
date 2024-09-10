@@ -5,6 +5,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BPlaceholder',
+      sourcePath: '/BPlaceholder/BPlaceholder.vue',
       props: {
         '': {
           animation: {
@@ -42,6 +43,7 @@ export default {
     },
     {
       component: 'BPlaceholderCard',
+      sourcePath: '/BPlaceholder/BPlaceholderCard.vue',
       emits: [],
       props: {
         '': {
@@ -148,6 +150,7 @@ export default {
     },
     {
       component: 'BPlaceholderWrapper',
+      sourcePath: '/BPlaceholder/BPlaceholderWrapper.vue',
       emits: [],
       props: {
         '': {
@@ -173,6 +176,7 @@ export default {
     },
     {
       component: 'BPlaceholderTable',
+      sourcePath: '/BPlaceholder/BPlaceholderTable.vue',
       emits: [],
       props: {
         '': {
@@ -270,6 +274,7 @@ export default {
     },
     {
       component: 'BPlaceholderButton',
+      sourcePath: '/BPlaceholder/BPlaceholderButton.vue',
       emits: [],
       slots: [],
       props: {

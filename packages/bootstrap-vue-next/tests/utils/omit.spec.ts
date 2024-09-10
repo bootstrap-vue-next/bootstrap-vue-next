@@ -1,4 +1,4 @@
-import {omit} from '../../src/utils'
+import {omit} from '../../src/utils/object'
 import {describe, expect, it} from 'vitest'
 
 describe('omit', () => {

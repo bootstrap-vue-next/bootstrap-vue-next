@@ -7,6 +7,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BAvatar',
+      sourcePath: '/BAvatar/BAvatar.vue',
       props: {
         '': {
           badge: {
@@ -155,6 +156,7 @@ export default {
     },
     {
       component: 'BAvatarGroup',
+      sourcePath: '/BAvatar/BAvatarGroup.vue',
       props: {
         '': {
           overlap: {

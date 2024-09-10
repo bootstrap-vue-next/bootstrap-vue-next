@@ -1,4 +1,4 @@
-import {pick} from '../../src/utils'
+import {pick} from '../../src/utils/object'
 import {describe, expect, it} from 'vitest'
 
 describe('pick', () => {

@@ -19,10 +19,10 @@
 
 <script setup lang="ts">
 import BProgressBar from './BProgressBar.vue'
-import type {BProgressProps} from '../../types'
+import type {BProgressProps} from '../../types/ComponentProps'
 import {provide, toRef} from 'vue'
-import {progressInjectionKey} from '../../utils'
-import {useDefaults} from '../../composables'
+import {progressInjectionKey} from '../../utils/keys'
+import {useDefaults} from '../../composables/useDefaults'
 
 const _props = withDefaults(defineProps<BProgressProps>(), {
   height: undefined,

@@ -1,4 +1,4 @@
-# useToast
+<ComposableHeader path="useToast.ts" title="useToast" />
 
 <ContentsSidebar>
 
@@ -210,6 +210,7 @@ import HighlightCard from '../../components/HighlightCard.vue'
 import ContentsSidebar from '../../components/ContentsSidebar.vue'
 import UsePluginAlert from '../../components/UsePluginAlert.vue'
 import {ref, computed, h, onMounted} from 'vue'
+import ComposableHeader from './ComposableHeader.vue'
 
 const {show, remove, toasts} = useToast()
 

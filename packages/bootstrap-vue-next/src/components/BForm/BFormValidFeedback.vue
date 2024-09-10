@@ -14,9 +14,9 @@
 </template>
 
 <script setup lang="ts">
-import {computed, toRef} from 'vue'
-import type {BFormFeedbackSharedProps} from '../../types'
-import {useDefaults} from '../../composables'
+import {computed} from 'vue'
+import type {BFormFeedbackSharedProps} from '../../types/ComponentProps'
+import {useDefaults} from '../../composables/useDefaults'
 
 const _props = withDefaults(defineProps<BFormFeedbackSharedProps>(), {
   ariaLive: undefined,
@@ -35,7 +35,7 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const computedShow = toRef(() => props.forceShow === true || props.state === true)
+const computedShow = computed(() => props.forceShow === true || props.state === true)
 
 const computedClasses = computed(() => ({
   'd-block': computedShow.value,

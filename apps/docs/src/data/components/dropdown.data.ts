@@ -5,6 +5,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BDropdown',
+      sourcePath: '/BDropdown/BDropdown.vue',
       props: {
         '': {
           ariaLabel: {
@@ -227,6 +228,7 @@ export default {
     },
     {
       component: 'BDropdownDivider',
+      sourcePath: '/BDropdown/BDropdownDivider.vue',
       emits: [],
       slots: [],
       props: {
@@ -241,6 +243,7 @@ export default {
     },
     {
       component: 'BDropdownForm',
+      sourcePath: '/BDropdown/BDropdownForm.vue',
       emits: [],
       props: {} satisfies Record<keyof BvnComponentProps['BDropdownForm'], PropertyReference>,
       slots: [
@@ -253,6 +256,7 @@ export default {
     },
     {
       component: 'BDropdownGroup',
+      sourcePath: '/BDropdown/BDropdownGroup.vue',
       emits: [],
       props: {
         '': {
@@ -297,6 +301,7 @@ export default {
     },
     {
       component: 'BDropdownHeader',
+      sourcePath: '/BDropdown/BDropdownHeader.vue',
       emits: [],
       props: {} satisfies Record<keyof BvnComponentProps['BDropdownHeader'], PropertyReference>,
       slots: [
@@ -309,6 +314,7 @@ export default {
     },
     {
       component: 'BDropdownItem',
+      sourcePath: '/BDropdown/BDropdownItem.vue',
       emits: [
         {
           event: 'click',
@@ -436,6 +442,7 @@ export default {
     },
     {
       component: 'BDropdownItemButton',
+      sourcePath: '/BDropdown/BDropdownItemButton.vue',
       emits: [
         {
           args: [
@@ -483,6 +490,7 @@ export default {
     },
     {
       component: 'BDropdownText',
+      sourcePath: '/BDropdown/BDropdownText.vue',
       emits: [],
       props: {
         '': {

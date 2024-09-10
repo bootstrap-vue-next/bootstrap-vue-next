@@ -1,7 +1,9 @@
-import type {AriaInvalid, ButtonVariant, Size} from '../types'
-import {computed, type MaybeRefOrGetter, toRef, toValue} from 'vue'
-import useAriaInvalid from './useAriaInvalid'
-import useStateClass from './useStateClass'
+import type {AriaInvalid} from '../types/AriaInvalid'
+import {computed, type MaybeRefOrGetter, readonly, toRef, toValue} from 'vue'
+import {useAriaInvalid} from './useAriaInvalid'
+import {useStateClass} from './useStateClass'
+import type {Size} from '../types/Size'
+import type {ButtonVariant} from '../types/ColorTypes'
 
 interface ClassesItemsInput {
   plain?: boolean
@@ -38,7 +40,7 @@ interface InputClassesItemsInput {
 }
 
 const getInputClasses = (items: MaybeRefOrGetter<InputClassesItemsInput>) => {
-  const resolvedItems = toRef(items)
+  const resolvedItems = readonly(toRef(items))
 
   const stateClass = useStateClass(() => resolvedItems.value.state ?? null)
 
@@ -81,7 +83,7 @@ interface GroupAttrItemsInput {
 }
 
 const getGroupAttr = (items: MaybeRefOrGetter<GroupAttrItemsInput>) => {
-  const resolvedItems = toRef(items)
+  const resolvedItems = readonly(toRef(items))
   const computedAriaInvalid = useAriaInvalid(
     () => resolvedItems.value.ariaInvalid,
     () => resolvedItems.value.state

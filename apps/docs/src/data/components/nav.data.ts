@@ -6,6 +6,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BNav',
+      sourcePath: '/BNav/BNav.vue',
       props: {
         '': {
           align: {
@@ -61,6 +62,7 @@ export default {
     },
     {
       component: 'BNavForm',
+      sourcePath: '/BNav/BNavForm.vue',
       props: {
         '': {
           floating: {
@@ -108,6 +110,7 @@ export default {
     },
     {
       component: 'BNavItem',
+      sourcePath: '/BNav/BNavItem.vue',
       props: {
         '': {
           active: {
@@ -227,6 +230,7 @@ export default {
     },
     {
       component: 'BNavItemDropdown',
+      sourcePath: '/BNav/BNavItemDropdown.vue',
       props: {
         '': {
           autoClose: {
@@ -466,6 +470,7 @@ export default {
     },
     {
       component: 'BNavText',
+      sourcePath: '/BNav/BNavText.vue',
       props: {
         '': {
           text: {

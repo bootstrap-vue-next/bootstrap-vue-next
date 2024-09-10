@@ -5,6 +5,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BListGroup',
+      sourcePath: '/BListGroup/BListGroup.vue',
       props: {
         '': {
           flush: {
@@ -36,6 +37,7 @@ export default {
     },
     {
       component: 'BListGroupItem',
+      sourcePath: '/BListGroup/BListGroupItem.vue',
       props: {
         '': {
           action: {

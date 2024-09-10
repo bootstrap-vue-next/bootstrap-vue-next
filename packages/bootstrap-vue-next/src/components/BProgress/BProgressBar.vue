@@ -15,10 +15,11 @@
 </template>
 
 <script setup lang="ts">
-import type {BProgressBarProps} from '../../types'
-import {useColorVariantClasses, useDefaults} from '../../composables'
+import type {BProgressBarProps} from '../../types/ComponentProps'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import {useDefaults} from '../../composables/useDefaults'
 import {computed, inject} from 'vue'
-import {progressInjectionKey} from '../../utils'
+import {progressInjectionKey} from '../../utils/keys'
 import {useToNumber} from '@vueuse/core'
 
 const _props = withDefaults(defineProps<BProgressBarProps>(), {

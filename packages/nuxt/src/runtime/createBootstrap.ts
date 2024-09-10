@@ -1,15 +1,13 @@
-import {createBootstrap} from 'bootstrap-vue-next'
+import {createBootstrap} from 'bootstrap-vue-next/plugins'
 import {defineNuxtPlugin, useId, useRuntimeConfig} from '#imports'
 
 export default defineNuxtPlugin((nuxtApp) => {
+  // @ts-ignore
   const opts = useRuntimeConfig().public.bootstrapVueNext.plugin
 
   nuxtApp.vueApp.use(
     createBootstrap({
       ...opts,
-      id: {
-        getId: () => useId(),
-      },
       components: {
         ...opts?.components,
         BModal: {

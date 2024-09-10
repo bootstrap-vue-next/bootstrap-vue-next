@@ -6,6 +6,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormSpinbutton',
+      sourcePath: '/BFormSpinbutton/BFormSpinbutton.vue',
       props: {
         '': {
           formatterFn: {
