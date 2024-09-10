@@ -5,8 +5,9 @@
 </template>
 
 <script setup lang="ts">
-import type {BNavProps} from '../../types'
-import {useAlignment, useDefaults} from '../../composables'
+import type {BNavProps} from '../../types/ComponentProps'
+import {useAlignment} from '../../composables/useAlignment'
+import {useDefaults} from '../../composables/useDefaults'
 import {computed} from 'vue'
 
 const _props = withDefaults(defineProps<BNavProps>(), {

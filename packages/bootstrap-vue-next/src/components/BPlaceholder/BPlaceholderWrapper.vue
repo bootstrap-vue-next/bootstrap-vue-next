@@ -4,8 +4,8 @@
 </template>
 
 <script setup lang="ts">
-import {useDefaults} from '../../composables'
-import type {BPlaceholderWrapperProps} from '../../types'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BPlaceholderWrapperProps} from '../../types/ComponentProps'
 
 const _props = withDefaults(defineProps<BPlaceholderWrapperProps>(), {
   loading: false,

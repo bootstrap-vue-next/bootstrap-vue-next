@@ -5,6 +5,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BImg',
+      sourcePath: '/BImg/BImg.vue',
       props: {
         '': imageProps,
       },

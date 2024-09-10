@@ -1,7 +1,7 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BAccordionItem from './BAccordionItem.vue'
-import BCollapse from '../BCollapse.vue'
+import BCollapse from '../BCollapse/BCollapse.vue'
 import {nextTick} from 'vue'
 
 describe('accordion-item', () => {

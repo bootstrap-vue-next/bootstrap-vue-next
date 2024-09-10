@@ -5,7 +5,7 @@ import {
   RX_SPACES,
   RX_START_SPACE_WORD,
   RX_UNDERSCORE,
-} from '../constants/regex'
+} from './constants'
 
 /**
  * @param str

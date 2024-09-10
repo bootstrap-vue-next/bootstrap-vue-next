@@ -1,4 +1,4 @@
-import type {ContainerPosition} from '../types'
+import type {ContainerPosition} from '../types/Alignment'
 
 export const positionClasses = {
   'top-start': 'top-0 start-0',

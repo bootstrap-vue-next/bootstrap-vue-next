@@ -25,6 +25,12 @@ type PropsRecord = Record<string, Record<string, PropertyReference> & {_linkTo?:
 
 export interface ComponentReference {
   component: string
+  /**
+   * Use package directory relative links. ex: BAccordion.vue => /BAccordion/BAccordion.vue (slash required)
+   *
+   * If path is empty string, it defaults to the package directory. If null, it does not render the button
+   */
+  sourcePath: string | null
   props: PropsRecord
   emits: {
     event: string

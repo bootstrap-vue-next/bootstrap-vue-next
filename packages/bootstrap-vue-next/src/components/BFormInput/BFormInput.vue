@@ -26,11 +26,13 @@
 
 <script setup lang="ts">
 import {computed, ref} from 'vue'
-import {useDefaults, useFormInput, useStateClass} from '../../composables'
-import {normalizeInput} from '../../utils'
-import type {BFormInputProps, Numberish} from '../../types'
+import {useDefaults} from '../../composables/useDefaults'
+import {normalizeInput} from '../../utils/normalizeInput'
+import type {BFormInputProps} from '../../types/ComponentProps'
+import {useFormInput} from '../../composables/useFormInput'
+import {useStateClass} from '../../composables/useStateClass'
 
-const _props = withDefaults(defineProps<BFormInputProps>(), {
+const _props = withDefaults(defineProps<Omit<BFormInputProps, 'modelValue'>>(), {
   max: undefined,
   min: undefined,
   step: undefined,
@@ -59,7 +61,10 @@ const _props = withDefaults(defineProps<BFormInputProps>(), {
 })
 const props = useDefaults(_props, 'BFormInput')
 
-const [modelValue, modelModifiers] = defineModel<Numberish | null, 'trim' | 'lazy' | 'number'>({
+const [modelValue, modelModifiers] = defineModel<
+  Exclude<BFormInputProps['modelValue'], undefined>,
+  'trim' | 'lazy' | 'number'
+>({
   default: '',
   set: (v) => normalizeInput(v, modelModifiers),
 })

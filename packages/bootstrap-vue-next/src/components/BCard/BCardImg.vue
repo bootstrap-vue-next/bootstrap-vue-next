@@ -3,11 +3,11 @@
 </template>
 
 <script setup lang="ts">
-import BImg from '../BImg.vue'
-import type {BCardImgProps} from '../../types'
-import {omit} from '../../utils'
+import BImg from '../BImg/BImg.vue'
+import type {BCardImgProps} from '../../types/ComponentProps'
+import {omit} from '../../utils/object'
 import {computed} from 'vue'
-import {useDefaults} from '../../composables'
+import {useDefaults} from '../../composables/useDefaults'
 
 const _props = withDefaults(defineProps<BCardImgProps>(), {
   placement: 'top',

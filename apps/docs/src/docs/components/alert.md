@@ -216,7 +216,9 @@ const dismissibleAlert = ref(true)
 
 ## Auto-dismissing Alerts
 
-To create a `BAlert` that dismisses automatically after some time set the `v-model` to the number of **milliseconds** you would like the `BAlert` to remain visible for. Timed Alerts are automatically paused when hovering with a mouse. You can disable pausing during hover by using the `noHoverPause` prop. You must only use an integer for milliseconds. Changing the v-model in any way will cause the timer to reset. The **interval** prop determines how often the timer will update, with the default being 1000 to trigger an update every 1 whole second. Due to the nature of this, one should be careful when creating many timed alerts with low intervals as it could negatively affect performance. Negative numbers for either v-model or interval will stop the timer. A value that does not divide wholely by an interval will continue to the greatest interval, ex: a value of 5400 ms and an interval of 1000 ms will run for exactly 6000 ms. To work around this, plan your interval to divide into this number easily. For example, use an interval of 540 ms or 1080 ms.
+To create a `BAlert` that dismisses automatically after a specified duration, set the `v-model` to the number of **milliseconds** you want the `BAlert` to remain visible. By default, the timer updates using `requestAnimationFrame`, which triggers an update approximately every second. Timed Alerts automatically pause when hovered over with a mouse, but you can disable this behavior using the `noHoverPause` prop. Ensure that the `v-model` value is an integer representing milliseconds. Any change to the `v-model` will reset the timer.
+
+The **interval** prop determines how frequently the timer updates. While the default is `requestAnimationFrame`, you can set a custom interval. Negative values for either `v-model` or `interval` will stop the timer. If the `v-model` value does not divide evenly by the interval, the timer will continue to the nearest interval. For example, a `v-model` of 5400 ms with an interval of 1000 ms will run for 6000 ms. To avoid this, choose an interval that divides evenly into the `v-model`, such as 540 ms or 1080 ms.
 
 <HighlightCard>
   <BAlert
@@ -227,10 +229,11 @@ To create a `BAlert` that dismisses automatically after some time set the `v-mod
     Alert countdown: {{ autoDismissingAlertCountdown }} interval: {{ autoDismissingAlertInterval }}
   </BAlert>
   <BButtonGroup>
-    <BButton @click="autoDismissingAlert = autoDismissingAlert + 1000">Adjust Alert Time +1000</BButton>
-    <BButton @click="autoDismissingAlert = autoDismissingAlert - 1000">Adjust Alert Time -1000</BButton>
-    <BButton @click="autoDismissingAlertInterval = autoDismissingAlertInterval + 100">Adjust Alert interval +100</BButton>
-    <BButton @click="autoDismissingAlertInterval = autoDismissingAlertInterval - 100">Adjust Alert interval -100</BButton>
+    <BButton @click="autoDismissingAlert = (typeof autoDismissingAlert === 'string' ? 5000 : autoDismissingAlert) + 1000">Adjust Alert Time +1000</BButton>
+    <BButton @click="autoDismissingAlert = (typeof autoDismissingAlert === 'string' ? 5000 : autoDismissingAlert) - 1000">Adjust Alert Time -1000</BButton>
+    <BButton @click="autoDismissingAlertInterval = (typeof autoDismissingAlertInterval === 'string' ? 5000 : autoDismissingAlert) + 100">Adjust Alert interval +100</BButton>
+    <BButton @click="autoDismissingAlertInterval = (typeof autoDismissingAlertInterval === 'string' ? 5000 : autoDismissingAlert) - 100">Adjust Alert interval -100</BButton>
+    <BButton @click="autoDismissingAlert = 'requestAnimationFrame'">Use requestAnimationFrame</BButton>
   </BButtonGroup>
   <template #html>
 
@@ -245,17 +248,36 @@ To create a `BAlert` that dismisses automatically after some time set the `v-mod
   </BAlert>
 
   <BButtonGroup>
-    <BButton @click="autoDismissingAlert = autoDismissingAlert + 1000"
+    <BButton
+      @click="
+        autoDismissingAlert =
+          (typeof autoDismissingAlert === 'string' ? 5000 : autoDismissingAlert) + 1000
+      "
       >Adjust Alert Time +1000</BButton
     >
-    <BButton @click="autoDismissingAlert = autoDismissingAlert - 1000"
+    <BButton
+      @click="
+        autoDismissingAlert =
+          (typeof autoDismissingAlert === 'string' ? 5000 : autoDismissingAlert) - 1000
+      "
       >Adjust Alert Time -1000</BButton
     >
-    <BButton @click="autoDismissingAlertInterval = autoDismissingAlertInterval + 100"
+    <BButton
+      @click="
+        autoDismissingAlertInterval =
+          (typeof autoDismissingAlertInterval === 'string' ? 5000 : autoDismissingAlert) + 100
+      "
       >Adjust Alert interval +100</BButton
     >
-    <BButton @click="autoDismissingAlertInterval = autoDismissingAlertInterval - 100"
+    <BButton
+      @click="
+        autoDismissingAlertInterval =
+          (typeof autoDismissingAlertInterval === 'string' ? 5000 : autoDismissingAlert) - 100
+      "
       >Adjust Alert interval -100</BButton
+    >
+    <BButton @click="autoDismissingAlert = 'requestAnimationFrame'"
+      >Use requestAnimationFrame</BButton
     >
   </BButtonGroup>
 </template>

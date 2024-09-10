@@ -109,19 +109,18 @@
 <script setup lang="ts">
 import {onKeyStroke, useEventListener, useFocus} from '@vueuse/core'
 import {useActivatedFocusTrap} from '../../composables/useActivatedFocusTrap'
-import {computed, type CSSProperties, ref, toRef, watch} from 'vue'
-import {
-  useColorVariantClasses,
-  useDefaults,
-  useFadeTransition,
-  useId,
-  useModalManager,
-  useSafeScrollLock,
-} from '../../composables'
-import type {BModalProps} from '../../types'
-import {BvTriggerableEvent, isEmptySlot} from '../../utils'
+import {computed, type CSSProperties, ref, watch} from 'vue'
+import type {BModalProps} from '../../types/ComponentProps'
+import {BvTriggerableEvent} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
+import {useDefaults} from '../../composables/useDefaults'
+import {useId} from '../../composables/useId'
+import {useFadeTransition} from '../../composables/useTransitions'
+import {useSafeScrollLock} from '../../composables/useSafeScrollLock'
+import {isEmptySlot} from '../../utils/dom'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import {useModalManager} from '../../composables/useModalManager'
 
 defineOptions({
   inheritAttrs: false,
@@ -134,7 +133,7 @@ defineOptions({
 // Note, attempt to return focus to item that openned the modal after close
 // Implement auto focus props like autoFocusButton
 
-const _props = withDefaults(defineProps<BModalProps>(), {
+const _props = withDefaults(defineProps<Omit<BModalProps, 'modelValue'>>(), {
   autofocus: true,
   autofocusButton: undefined,
   body: undefined,
@@ -237,7 +236,7 @@ const slots = defineSlots<{
 const computedId = useId(() => props.id, 'modal')
 // Note: passive: true will sync an internal ref... This is required for useModalManager to exit,
 // Since the modelValue that's passed from that composable is not reactive, this internal ref _is_ and thus it will trigger closing the modal
-const modelValue = defineModel<boolean>({default: false})
+const modelValue = defineModel<Exclude<BModalProps['modelValue'], undefined>>({default: false})
 
 const element = ref<HTMLElement | null>(null)
 const fallbackFocusElement = ref<HTMLElement | null>(null)
@@ -289,14 +288,14 @@ const modalClasses = computed(() => [
   },
 ])
 
-const lazyShowing = toRef(
+const lazyShowing = computed(
   () =>
     props.lazy === false ||
     (props.lazy === true && lazyLoadCompleted.value === true) ||
     (props.lazy === true && modelValue.value === true)
 )
 
-const hasHeaderCloseSlot = toRef(() => !isEmptySlot(slots['header-close']))
+const hasHeaderCloseSlot = computed(() => !isEmptySlot(slots['header-close']))
 
 const modalDialogClasses = computed(() => [
   props.dialogClass,
@@ -356,8 +355,8 @@ const titleClasses = computed(() => [
     ['visually-hidden']: props.titleSrOnly,
   },
 ])
-const disableCancel = toRef(() => props.cancelDisabled || props.busy)
-const disableOk = toRef(() => props.okDisabled || props.busy)
+const disableCancel = computed(() => props.cancelDisabled || props.busy)
+const disableOk = computed(() => props.okDisabled || props.busy)
 
 const buildTriggerableEvent = (
   type: string,

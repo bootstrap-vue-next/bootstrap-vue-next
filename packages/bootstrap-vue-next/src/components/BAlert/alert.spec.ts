@@ -3,7 +3,7 @@ import {afterEach, describe, expect, it} from 'vitest'
 import BAlert from './BAlert.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BButton from '../BButton/BButton.vue'
-import BTransition from '../BTransition/BTransition.vue'
+import BTransition from '../BTransition.vue'
 
 describe('alert', () => {
   enableAutoUnmount(afterEach)

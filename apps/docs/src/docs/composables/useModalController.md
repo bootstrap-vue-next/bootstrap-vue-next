@@ -1,4 +1,4 @@
-# useModalController
+<ComposableHeader path="useModalController.ts" title="useModalController" />
 
 <ContentsSidebar>
 
@@ -228,6 +228,7 @@ import HighlightCard from '../../components/HighlightCard.vue'
 import ContentsSidebar from '../../components/ContentsSidebar.vue'
 import UsePluginAlert from '../../components/UsePluginAlert.vue'
 import {ref, computed, h, onMounted} from 'vue'
+import ComposableHeader from './ComposableHeader.vue'
 
 const nestedModal1 = ref(false)
 const nestedModal2 = ref(false)

@@ -1,6 +1,6 @@
 import type {Slots, VNode} from 'vue'
 
-export default (name: string, scope = {}, $slots: Slots = {}): VNode => {
+export const normalizeSlot = (name: string, scope = {}, $slots: Slots = {}): VNode => {
   // Ensure names is an array
   const names = [name]
   let slot

@@ -2,7 +2,7 @@ import {defineNuxtModule, createResolver, addImports, addPlugin} from '@nuxt/kit
 import useComponents from './composables/useComponents'
 import type {ModuleOptions} from './types/ModuleOptions'
 import parseActiveImports from './utils/parseActiveImports'
-import {ComposableNames, DirectiveNames} from 'bootstrap-vue-next'
+import {composableNames, directiveNames, composablesWithExternalPath} from 'bootstrap-vue-next'
 import normalizeConfigurationValue from './utils/normalizeConfigurationValue'
 
 export default defineNuxtModule<ModuleOptions>({
@@ -67,7 +67,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Add directives
     if (Object.values(normalizedDirectiveOptions).some((el) => el === true)) {
-      const activeDirectives = parseActiveImports(normalizedDirectiveOptions, DirectiveNames)
+      const activeDirectives = parseActiveImports(normalizedDirectiveOptions, directiveNames)
 
       // Expose the values for the runtime to use in useDirectives
       nuxt.options.runtimeConfig.public.bootstrapVueNext = {
@@ -80,12 +80,13 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Add composables
     if (Object.values(normalizedComposableOptions).some((el) => el === true)) {
-      parseActiveImports(normalizedComposableOptions, ComposableNames).forEach((name) =>
+      parseActiveImports(normalizedComposableOptions, composableNames).forEach((name) => {
+        const from = `bootstrap-vue-next${composablesWithExternalPath[name]}`
         addImports({
-          from: 'bootstrap-vue-next',
+          from,
           name,
         })
-      )
+      })
     }
   },
 })

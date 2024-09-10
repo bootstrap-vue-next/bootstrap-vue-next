@@ -1,10 +1,12 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {ComponentReference, PropertyReference} from '../../types'
+import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BToast',
+      sourcePath: '/BToast/BToast.vue',
       props: {
         '': {
           active: {
@@ -62,8 +64,8 @@ export default {
               'Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed',
           },
           interval: {
-            type: 'Numberish',
-            default: '1000',
+            type: 'number | requestAnimationFrame',
+            default: 'requestAnimationFrame',
             description: 'The interval of which the countdown timer will refresh itself',
           },
           isStatus: {
@@ -88,12 +90,6 @@ export default {
             default: false,
             description:
               'When set to `true`, disables the fade animation/transition on the component',
-          },
-          noHoverPause: {
-            type: 'boolean',
-            default: false,
-            description:
-              'When set, disables the pausing of the auto hide delay when the mouse hovers the toast',
           },
           opacity: {
             type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
@@ -191,6 +187,7 @@ export default {
           noRel: {},
           prefetch: {},
           prefetchedClass: {},
+          ...pick(buildCommonProps(), ['noHoverPause', 'noResumeOnHoverLeave']),
         } satisfies Record<keyof BvnComponentProps['BToast'], PropertyReference>,
       },
       slots: [],
@@ -289,6 +286,7 @@ export default {
     },
     {
       component: 'BToastOrchestrator',
+      sourcePath: '/BToast/BToastOrchestrator.vue',
       emits: [],
       slots: [],
       props: {

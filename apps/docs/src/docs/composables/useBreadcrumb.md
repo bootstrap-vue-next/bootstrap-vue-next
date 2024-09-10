@@ -1,4 +1,4 @@
-# useBreadcrumb
+<ComposableHeader path="useBreadcrumb.ts" title="useBreadcrumb" />
 
 <ContentsSidebar>
 
@@ -53,6 +53,7 @@ import HighlightCard from '../../components/HighlightCard.vue'
 import ContentsSidebar from '../../components/ContentsSidebar.vue'
 import UsePluginAlert from '../../components/UsePluginAlert.vue'
 import {BBreadcrumb, BButton, BFormInput, BFormGroup, BCard, BCardBody, useBreadcrumb} from 'bootstrap-vue-next'
+import ComposableHeader from './ComposableHeader.vue'
 
 const breadcrumb = useBreadcrumb()
 

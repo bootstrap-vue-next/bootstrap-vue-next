@@ -3,8 +3,8 @@ export {autoUpdate} from '@floating-ui/vue'
 
 import {type DirectiveBinding, h, render} from 'vue'
 import {DefaultAllowlist, sanitizeHtml} from './sanitizer'
-import BPopover from '../components/BPopover.vue'
-import type {BPopoverProps} from '../types'
+import BPopover from '../components/BPopover/BPopover.vue'
+import type {BPopoverProps} from '../types/ComponentProps'
 
 // TODO this function doesn't currently resolve with RTL in mind. Once Bootstrap finalizes their RTL, we should make this change here
 /**
@@ -108,6 +108,7 @@ export const resolveDirectiveProps = (
 
 export interface ElementWithPopper extends HTMLElement {
   $__element?: HTMLElement
+  $__binding?: string
 }
 
 export const bind = (

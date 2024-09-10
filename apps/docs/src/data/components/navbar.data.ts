@@ -5,6 +5,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BNavbar',
+      sourcePath: '/BNavbar/BNavbar.vue',
       props: {
         '': {
           autoClose: {
@@ -52,6 +53,7 @@ export default {
     },
     {
       component: 'BNavbarBrand',
+      sourcePath: '/BNavbar/BNavbarBrand.vue',
       props: {
         '': {
           active: {
@@ -155,6 +157,7 @@ export default {
     },
     {
       component: 'BNavbarNav',
+      sourcePath: '/BNavbar/BNavbarNav.vue',
       props: {
         '': {
           align: {
@@ -190,6 +193,7 @@ export default {
     },
     {
       component: 'BNavbarToggle',
+      sourcePath: '/BNavbar/BNavbarToggle.vue',
       props: {
         '': {
           disabled: {

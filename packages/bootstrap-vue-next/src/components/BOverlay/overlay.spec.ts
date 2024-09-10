@@ -1,8 +1,8 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BOverlay from './BOverlay.vue'
-import BTransition from '../BTransition/BTransition.vue'
-import BSpinner from '../BSpinner.vue'
+import BTransition from '../BTransition.vue'
+import BSpinner from '../BSpinner/BSpinner.vue'
 
 describe('', () => {
   enableAutoUnmount(afterEach)

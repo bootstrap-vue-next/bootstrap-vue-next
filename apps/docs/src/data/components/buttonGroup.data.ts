@@ -6,6 +6,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BButtonGroup',
+      sourcePath: '/BButton/BButtonGroup.vue',
       props: {
         '': {
           vertical: {

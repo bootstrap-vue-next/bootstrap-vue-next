@@ -11,9 +11,11 @@
 </template>
 
 <script setup lang="ts">
-import {useBLinkHelper, useColorVariantClasses, useDefaults} from '../../composables'
-import {computed, toRef} from 'vue'
-import type {BBadgeProps} from '../../types'
+import {useBLinkHelper} from '../../composables/useBLinkHelper'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import {useDefaults} from '../../composables/useDefaults'
+import {computed} from 'vue'
+import type {BBadgeProps} from '../../types/ComponentProps'
 import BLink from '../BLink/BLink.vue'
 import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
 
@@ -81,7 +83,7 @@ const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'icon',
 ])
 
-const computedTag = toRef(() => (computedLink.value ? BLink : props.tag))
+const computedTag = computed(() => (computedLink.value ? BLink : props.tag))
 
 const placementClasses = computed(() => {
   // dotindicator is implicitly top-end if no placement is set

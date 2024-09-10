@@ -6,6 +6,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormTextarea',
+      sourcePath: '/BFormTextarea/BFormTextarea.vue',
       props: {
         '': {
           modelValue: {

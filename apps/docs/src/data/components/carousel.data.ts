@@ -5,6 +5,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BCarousel',
+      sourcePath: '/BCarousel/BCarousel.vue',
       props: {
         '': {
           background: {
@@ -48,7 +49,7 @@ export default {
             default: 'Slide',
           },
           interval: {
-            type: 'Numberish',
+            type: 'number',
             default: 5000,
           },
           keyboard: {
@@ -130,6 +131,7 @@ export default {
     },
     {
       component: 'BCarouselSlide',
+      sourcePath: '/BCarousel/BCarouselSlide.vue',
       emits: [],
       props: {
         '': {
@@ -190,7 +192,7 @@ export default {
             default: undefined,
           },
           interval: {
-            type: 'Numberish',
+            type: 'number',
             default: undefined,
           },
           text: {
