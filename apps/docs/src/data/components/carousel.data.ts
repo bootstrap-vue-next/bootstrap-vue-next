@@ -120,6 +120,28 @@ export default {
             },
           ],
         },
+        {
+          event: 'click:prev',
+          description: '',
+          args: [
+            {
+              arg: 'click',
+              description: 'Native click event',
+              type: 'MouseEvent',
+            },
+          ],
+        },
+        {
+          event: 'click:next',
+          description: '',
+          args: [
+            {
+              arg: 'click',
+              description: 'Native click event',
+              type: 'MouseEvent',
+            },
+          ],
+        },
       ],
       slots: [
         {
