@@ -3,14 +3,14 @@ import type {BootstrapVueOptions} from '../../types/BootstrapVueOptions'
 
 import '../../styles/styles.scss'
 
-import {breadcrumbPlugin} from '../breadcrumb/breadcrumbPlugin'
-import {defaultsPlugin} from '../defaults/defaultsPlugin'
-import {modalControllerPlugin} from '../modalController/modalControllerPlugin'
-import {modalManagerPlugin} from '../modalManager/modalManagerPlugin'
-import {popoverPlugin} from '../popover/popoverPlugin'
-import {rtlPlugin} from '../rtl/rtlPlugin'
-import {toastPlugin} from '../toast/toastPlugin'
-import {tooltipPlugin} from '../tooltip/tooltipPlugin'
+import {breadcrumbPlugin} from '../breadcrumb'
+import {defaultsPlugin} from '../defaults'
+import {modalControllerPlugin} from '../modalController'
+import {modalManagerPlugin} from '../modalManager'
+import {popoverPlugin} from '../popover'
+import {rtlPlugin} from '../rtl'
+import {toastPlugin} from '../toast'
+import {tooltipPlugin} from '../tooltip'
 
 // Main app plugin
 export const createBootstrap = (pluginData: Readonly<BootstrapVueOptions> = {}): Plugin => ({

@@ -1,7 +1,7 @@
 import {enableAutoUnmount, flushPromises, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it, vi} from 'vitest'
 import {nextTick} from 'vue'
-import {vBToggle as VBToggle} from './BToggle/BToggle'
+import {vBToggle as VBToggle} from './BToggle'
 import {asyncTimeout} from '../../tests/utils'
 
 // Emitted control event for collapse (emitted to collapse)

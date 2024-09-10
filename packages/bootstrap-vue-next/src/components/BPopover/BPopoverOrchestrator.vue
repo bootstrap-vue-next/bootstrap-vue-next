@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import {usePopover} from '../../composables/usePopover/usePopover'
+import {usePopover} from '../../composables/usePopover'
 import BPopover from './BPopover.vue'
 
 const tools = usePopover()
