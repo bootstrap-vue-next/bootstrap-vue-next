@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import {useBreadcrumb} from '../../composables/useBreadcrumb/useBreadcrumb'
+import {useBreadcrumb} from '../../composables/useBreadcrumb'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BBreadcrumbProps} from '../../types/ComponentProps'
 import BBreadcrumbItem from './BBreadcrumbItem.vue'

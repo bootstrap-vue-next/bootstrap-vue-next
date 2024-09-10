@@ -1,5 +1,5 @@
 import {type Directive, type DirectiveBinding} from 'vue'
-import {useScrollspy} from '../../composables/useScrollspy/useScrollspy'
+import {useScrollspy} from '../../composables/useScrollspy'
 import {omit} from '../../utils/object'
 
 export interface ElementWithScrollspy extends HTMLElement {

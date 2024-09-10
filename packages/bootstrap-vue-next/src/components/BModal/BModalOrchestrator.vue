@@ -37,7 +37,7 @@ import type {BvTriggerableEvent} from '../../utils'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BModalOrchestratorProps} from '../../types/ComponentProps'
 import BModal from './BModal.vue'
-import {useModalController} from '../../composables/useModalController/useModalController'
+import {useModalController} from '../../composables/useModalController'
 
 defineOptions({
   inheritAttrs: false,

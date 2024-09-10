@@ -116,26 +116,26 @@ export const componentNames = Object.freeze(
 )
 
 export const directivesWithExternalPath = {
-  vBColorMode: '/directives',
-  vBModal: '/directives',
-  vBPopover: '/directives',
-  vBScrollspy: '/directives',
-  vBToggle: '/directives',
-  vBTooltip: '/directives',
+  vBColorMode: '/directives/BColorMode',
+  vBModal: '/directives/BModal',
+  vBPopover: '/directives/BPopover',
+  vBScrollspy: '/directives/BScrollspy',
+  vBToggle: '/directives/BToggle',
+  vBTooltip: '/directives/BTooltip',
 } as const satisfies Record<DirectiveType, string>
 export const directiveNames = Object.freeze(
   Object.keys(directivesWithExternalPath) as DirectiveType[]
 )
 
 export const composablesWithExternalPath = {
-  useBreadcrumb: '/composables',
-  useColorMode: '/composables',
-  useModal: '/composables',
-  useModalController: '/composables',
-  useScrollspy: '/composables',
-  useToast: '/composables',
-  usePopover: '/composables',
-  useTooltip: '/composables',
+  useBreadcrumb: '/composables/useBreadcrumb',
+  useColorMode: '/composables/useColorMode',
+  useModal: '/composables/useModal',
+  useModalController: '/composables/useModalController',
+  useScrollspy: '/composables/useScrollspy',
+  useToast: '/composables/useToast',
+  usePopover: '/composables/usePopover',
+  useTooltip: '/composables/useTooltip',
 } as const satisfies Record<ComposableType, string>
 export const composableNames = Object.freeze(
   Object.keys(composablesWithExternalPath) as ComposableType[]

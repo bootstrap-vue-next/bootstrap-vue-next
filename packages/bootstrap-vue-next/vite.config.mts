@@ -58,14 +58,13 @@ const processDirectory = (dirPath: string, baseDir: string): Record<string, stri
       const relativePath = relative(__dirname, file)
       const dirPart = relative(dirPath, dirname(file))
 
-      if (ext === '.ts' && !file.endsWith('.spec.ts') && !file.includes('/node_modules/')) {
-        let key = dirPart ? `${baseDir}/${dirPart}/${baseName}` : `${baseDir}/${baseName}`
-        if (baseName === 'index') {
-          key = dirPart ? `${baseDir}/${dirPart}/index` : `${baseDir}/index`
-        }
-        acc[key] = resolve(__dirname, relativePath)
-      } else if (ext === '.vue') {
-        const key = dirPart ? `${baseDir}/${dirPart}/${baseName}` : `${baseDir}/${baseName}`
+      if (
+        ext === '.ts' &&
+        !file.endsWith('.spec.ts') &&
+        !file.includes('/node_modules/') &&
+        baseName === 'index'
+      ) {
+        const key = dirPart ? `${baseDir}/${dirPart}/index` : `${baseDir}/index`
         acc[key] = resolve(__dirname, relativePath)
       }
 
@@ -74,7 +73,10 @@ const processDirectory = (dirPath: string, baseDir: string): Record<string, stri
     {} as Record<string, string>
   )
 
-const components = processDirectory(resolve(__dirname, 'src/components'), 'src/components')
+const components = {
+  ...processDirectory(resolve(__dirname, 'src/components'), 'src/components'),
+  'src/components/index': resolve(__dirname, 'src/components/index.ts'),
+}
 const plugins = {
   ...processDirectory(resolve(__dirname, 'src/plugins'), 'src/plugins'),
   'src/plugins/index': resolve(__dirname, 'src/plugins/index.ts'),
@@ -140,7 +142,6 @@ export default defineConfig({
     dts({
       tsconfigPath: './tsconfig.app.json',
       outDir: './dist',
-      cleanVueFileName: true,
       afterBuild: async () => {
         await Promise.all(
           readFilesInDirectory('./dist/src/')

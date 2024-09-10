@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import {useTooltip} from '../../composables/useTooltip/useTooltip'
+import {useTooltip} from '../../composables/useTooltip'
 import BTooltip from './BTooltip.vue'
 
 const tools = useTooltip()

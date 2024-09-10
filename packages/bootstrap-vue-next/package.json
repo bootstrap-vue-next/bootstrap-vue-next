@@ -18,6 +18,86 @@
         "default": "./dist/bootstrap-vue-next.umd.js"
       }
     },
+    "./components": {
+      "import": {
+        "default": "./dist/src/components/index.mjs",
+        "types": "./dist/src/components/index.mts"
+      },
+      "require": {
+        "default": "./dist/src/components/index.umd.js",
+        "types": "./dist/src/components/index.d.ts"
+      }
+    },
+    "./components/*": {
+      "import": {
+        "default": "./dist/src/components/*/index.mjs",
+        "types": "./dist/src/components/*/index.mts"
+      },
+      "require": {
+        "default": "./dist/src/components/*/index.umd.js",
+        "types": "./dist/src/components/*/index.d.ts"
+      }
+    },
+    "./directives": {
+      "import": {
+        "default": "./dist/src/directives/index.mjs",
+        "types": "./dist/src/directives/index.mts"
+      },
+      "require": {
+        "default": "./dist/src/directives/index.umd.js",
+        "types": "./dist/src/directives/index.d.ts"
+      }
+    },
+    "./directives/*": {
+      "import": {
+        "default": "./dist/src/directives/*/index.mjs",
+        "types": "./dist/src/directives/*/index.mts"
+      },
+      "require": {
+        "default": "./dist/src/directives/*/index.umd.js",
+        "types": "./dist/src/directives/*/index.d.ts"
+      }
+    },
+    "./plugins": {
+      "import": {
+        "default": "./dist/src/plugins/index.mjs",
+        "types": "./dist/src/plugins/index.mts"
+      },
+      "require": {
+        "default": "./dist/src/plugins/index.umd.js",
+        "types": "./dist/src/plugins/index.d.ts"
+      }
+    },
+    "./plugins/*": {
+      "import": {
+        "default": "./dist/src/plugins/*/index.mjs",
+        "types": "./dist/src/plugins/*/index.mts"
+      },
+      "require": {
+        "default": "./dist/src/plugins/*/index.umd.js",
+        "types": "./dist/src/plugins/*/index.d.ts"
+      }
+    },
+    "./composables": {
+      "import": {
+        "default": "./dist/src/composables/index.mjs",
+        "types": "./dist/src/composables/index.mts"
+      },
+      "require": {
+        "default": "./dist/src/composables/index.umd.js",
+        "types": "./dist/src/composables/index.d.ts"
+      }
+    },
+    "./composables/*": {
+      "import": {
+        "default": "./dist/src/composables/*/index.mjs",
+        "types": "./dist/src/composables/*/index.mts"
+      },
+      "require": {
+        "default": "./dist/src/composables/*/index.umd.js",
+        "types": "./dist/src/composables/*/index.d.ts"
+      }
+    },
     "./resolvers": {
       "import": {
         "default": "./dist/src/resolvers/index.mjs",
@@ -60,10 +140,7 @@
     "test:lint:ci": "pnpm run test:lint",
     "test:unit:ci": "vitest run",
     "test": "pnpm run test:lint && pnpm run test:unit",
-    "test:ci": "pnpm run test:lint:ci && pnpm run test:unit:ci",
-    "prepublishOnly": "node scripts/prepublish.js",
-    "postpublish": "node scripts/postpublish.js",
-    "dry-run-publish": "npm run prepublishOnly && npm pack && npm run postpublish"
+    "test:ci": "pnpm run test:lint:ci && pnpm run test:unit:ci"
   },
   "peerDependencies": {
     "vue": "^3.5.3"
