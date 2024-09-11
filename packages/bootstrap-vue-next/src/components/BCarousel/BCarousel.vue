@@ -39,11 +39,11 @@
     </div>
 
     <template v-if="props.controls">
-      <button class="carousel-control-prev" type="button" @click="prev">
+      <button class="carousel-control-prev" type="button" @click="onClickPrev">
         <span class="carousel-control-prev-icon" aria-hidden="true" />
         <span class="visually-hidden">{{ props.controlsPrevText }}</span>
       </button>
-      <button class="carousel-control-next" type="button" @click="next">
+      <button class="carousel-control-next" type="button" @click="onClickNext">
         <span class="carousel-control-next-icon" aria-hidden="true" />
         <span class="visually-hidden">{{ props.controlsNextText }}</span>
       </button>
@@ -87,8 +87,10 @@ const _props = withDefaults(defineProps<Omit<BCarouselProps, 'modelValue'>>(), {
 const props = useDefaults(_props, 'BCarousel')
 
 const emit = defineEmits<{
-  slide: [value: BvCarouselEvent]
-  slid: [value: BvCarouselEvent]
+  'slide': [value: BvCarouselEvent]
+  'slid': [value: BvCarouselEvent]
+  'click:prev': [value: MouseEvent]
+  'click:next': [value: MouseEvent]
 }>()
 
 const slots = defineSlots<{
@@ -277,6 +279,17 @@ watch(isHovering, (newValue) => {
   }
   onMouseLeave()
 })
+
+const onClickPrev = (event: MouseEvent) => {
+  emit('click:prev', event)
+  if (event.defaultPrevented) return
+  prev()
+}
+const onClickNext = (event: MouseEvent) => {
+  emit('click:next', event)
+  if (event.defaultPrevented) return
+  next()
+}
 
 defineExpose({
   next,

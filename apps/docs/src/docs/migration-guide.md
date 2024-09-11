@@ -212,6 +212,12 @@ and `BCardTitle` components.
 `body-border-variant` and `body-variant` are not implemented on `BCard` and `border-variant` is not
 implemented on `BCardBody`.
 
+## BCarousel
+
+The `sliding-start` and `sliding-end` events have been renamed to `slide` and `slid`.
+The `label-indicators` prop has been renamed to `indicators-button-label`.
+The `label-goto-slide`and `no-animation` props are not yet implemented.
+
 ## BForm
 
 Bootstrap 5 has dropped form-specific layout classes for the grid system. See the

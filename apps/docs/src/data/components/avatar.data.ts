@@ -155,7 +155,7 @@ export default {
     },
     {
       component: 'BAvatarGroup',
-      sourcePath: '/BAvatarGroup/BAvatarGroup.vue',
+      sourcePath: '/BAvatar/BAvatarGroup.vue',
       props: {
         '': {
           overlap: {
