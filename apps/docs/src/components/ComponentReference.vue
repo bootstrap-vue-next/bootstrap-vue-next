@@ -70,6 +70,10 @@
                           {{ normalizeDefault(d.item.default) }}
                         </code>
                       </template>
+                      <template #cell(description)="d">
+                        <NotYetImplemented v-if="d.item.notYetImplemented" />
+                        {{ d.item.description }}
+                      </template>
                     </BTable>
                     <template v-if="component.props.some((el) => el.name.trim() !== '')">
                       <span
@@ -171,6 +175,7 @@
                           v-for="scope in d.item.scope as SlotScopeReference[]"
                           :key="scope.prop"
                         >
+                          <span v-if="scope.notYetImplemented"><NotYetImplemented />: </span>
                           <code>{{ kebabCase(scope.prop) }}</code>
                           <code>: {{ scope.type }}</code>
                           <span v-if="!!scope.description"> - {{ scope.description }}</span>

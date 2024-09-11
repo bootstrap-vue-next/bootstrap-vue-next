@@ -1,12 +1,18 @@
 export type ComponentItem = Exclude<keyof ComponentReference, 'component' | 'sections'>
 export type ComponentSection = 'Properties' | 'Events' | 'Slots'
 export type EmitArgReference = {arg: string; type: string; description?: string}
-export type SlotScopeReference = {prop: string; type: string | string[]; description?: string}
+export type SlotScopeReference = {
+  prop: string
+  type: string | string[]
+  description?: string
+  notYetImplemented?: boolean
+}
 
 export interface PropertyReference {
   type?: string
   description?: string
   default?: unknown
+  notYetImplemented?: boolean
 }
 
 /**
