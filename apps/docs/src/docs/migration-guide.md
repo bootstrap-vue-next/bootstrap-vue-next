@@ -108,45 +108,7 @@ now the `close` slot.
 Icon support has been deprecated. Icons support can be implemented using the default slot including
 either [unplug icons](/docs/icons) or by embedding an `.svg`.
 
-<HighlightCard>
-  <BAvatar>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="80%"
-      height="80%"
-      fill="currentColor"
-      class="bi bi-person-hearts"
-      viewBox="0 0 16 16"
-    >
-      <path
-        fill-rule="evenodd"
-        d="M11.5 1.246c.832-.855 2.913.642 0 2.566-2.913-1.924-.832-3.421 0-2.566M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4m13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276ZM15 2.165c.555-.57 1.942.428 0 1.711-1.942-1.283-.555-2.281 0-1.71Z"
-      /></svg
-  ></BAvatar>
-
-<template #html>
-
-```vue
-<template>
-  <BAvatar>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="80%"
-      height="80%"
-      fill="currentColor"
-      class="bi bi-person-hearts"
-      viewBox="0 0 16 16"
-    >
-      <path
-        fill-rule="evenodd"
-        d="M11.5 1.246c.832-.855 2.913.642 0 2.566-2.913-1.924-.832-3.421 0-2.566M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4m13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276ZM15 2.165c.555-.57 1.942.428 0 1.711-1.942-1.283-.555-2.281 0-1.71Z"
-      /></svg
-  ></BAvatar>
-</template>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/AvatarIcon.vue#template{vue-html}
 
 ### Badge Positioning
 
@@ -340,99 +302,11 @@ for `msgBoxOk` and `msgBoxConfirm`.
 
 Example using `useModalController.show` to replace `msgBoxOk` (Remember to include `<BModalOrchestrator />` in your App Root):
 
-<HighlightCard>
-  <div>
-    <BButton @click="okBox">Show Message</BButton>
-    <div>Result: {{ okResult }}</div>
-  </div>
-
-<template #html>
-
-```vue
-<template>
-  <div>
-    <BButton @click="okBox">Show Message</BButton>
-    <div>Result: {{ okResult }}</div>
-  </div>
-</template>
-
-<script setup lang="ts">
-import {BButton} from './components'
-import {useModalController} from './composables'
-import {ref} from 'vue'
-
-const {confirm, show} = useModalController()
-
-const confirmResult = ref<boolean | null | undefined>(null)
-
-const confirmBox = async () => {
-  confirmResult.value = await confirm?.({
-    props: {
-      body: 'Are you sure you want to do this?',
-      title: 'Confirm',
-      okTitle: 'Yes',
-      cancelTitle: 'No',
-    },
-  })
-}
-
-const okResult = ref<boolean | null | undefined>(undefined)
-
-const okBox = async () => {
-  okResult.value = await show?.({
-    props: {
-      body: 'This is an informational message',
-      title: 'Message',
-      okOnly: true,
-    },
-  })
-}
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/ModalMessageBox.vue
 
 Example using `useModalController.confirm` to replace `msgBoxConfirm` (Remember to include `<BModalOrchestrator />` in your App Root):
 
-<HighlightCard>
-  <div>
-    <BButton @click="confirmBox">Show Confirm</BButton>
-    <div>Result: {{ confirmResult ?? 'null' }}</div>
-  </div>
-
-<template #html>
-
-```vue
-<template>
-  <div>
-    <BButton @click="confirmBox">Show Confirm</BButton>
-    <div>Result: {{ confirmResult ?? 'null' }}</div>
-  </div>
-</template>
-
-<script setup lang="ts">
-import {BButton, useModalController} from 'bootstrap-vue-next'
-import {ref} from 'vue'
-
-const {confirm} = useModalController()
-const confirmResult = ref<boolean | null | undefined>(null)
-
-const confirmBox = async () => {
-  confirmResult.value = await confirm?.({
-    props: {
-      body: 'Are you sure you want to do this?',
-      title: 'Confirm',
-      okTitle: 'Yes',
-      cancelTitle: 'No',
-    },
-  })
-}
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/ModalConfirm.vue
 
 The `show` and `confirm` `props` object accespts all of the properties that are defined on
 [BModal](/docs/components/modal#component-reference) excpet for `modelValue`.
