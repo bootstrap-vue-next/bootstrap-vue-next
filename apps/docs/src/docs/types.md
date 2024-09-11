@@ -348,6 +348,22 @@ type RadiusElement =
 
 </BCard>
 
+## RadiusElementExtendables
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type RadiusElementExtendables = {
+  rounded?: boolean | RadiusElement
+  roundedTop?: boolean | RadiusElement
+  roundedBottom?: boolean | RadiusElement
+  roundedStart?: boolean | RadiusElement
+  roundedEnd?: boolean | RadiusElement
+}
+```
+
+</BCard>
+
 ## SelectValue
 
 <BCard class="bg-body-tertiary">

@@ -299,6 +299,11 @@ export const commonProps = () =>
       default: 'md',
       description: "Set the size of the component's appearance. 'sm', 'md' (default), or 'lg'",
     },
+    src: {
+      type: 'string',
+      default: undefined,
+      description: 'URL to set for the `src` attribute',
+    },
     state: {
       type: 'boolean | null',
       default: undefined,

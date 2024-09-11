@@ -60,6 +60,18 @@ becomes
 See the [Vue 3 migration guide](https://v3-migration.vuejs.org/breaking-changes/v-model.html)
 for more info.
 
+## Shared Properties
+
+### Rounding
+
+`BAvatar`, `BAvatarGroup`, `BCardImg`, `BImg` and `BOverlay` all implement
+[`RadiusElementExtendables`](/docs/types#radius-element-extendables) in order to support complex
+rounding behavior. The `rounded`, `rounded-top`, `rounded-bottom`, `rounded-start`, and `rounded-end`
+props each takes a [`RadiusElement](/docs/types#radius-element) value to specify how the component
+is rounded. The edge specific props such as`rounded-top` override the `rounded` prop for that edge.
+
+This takes the place of `top`, `bottom`, `left`, and `right` values for the `rounded` prop.
+
 ## BAlert
 
 As in `bootstrap-vue`, a simple `BAlert` is not visible by default. However, the means of showing the alert are different.
@@ -147,9 +159,7 @@ For instance, use `badge-placement='top'` in place of `badge-top` or `badge-plac
 
 ### Rounding Sides
 
-Rounding a specific side of the avatar is now accomplished using the boolean props `rounded-top`,
-`rounded-bottom`, `rounded-start`, and `rounded-end` rather than the `top`, `bottom`, `left`, and `right`
-values for the `rounded` prop.
+See the [Rounding](#rounding) section.
 
 ## BBadge
 
@@ -177,6 +187,30 @@ embedded svg for the close icon. See [their migration guide](https://getbootstra
 
 [Keyboard navigation](https://bootstrap-vue.org/docs/components/button-toolbar#keyboard-navigation) is
 not implemented.
+
+## BCard
+
+Image placement is accomplished by the single `img-placement` prop, which takes the values
+`top`, `bottom`, `start`, `end`, or `overlay`. This allows us to deprecate the `imgBottom`,
+`imgEnd`, `imgLeft`, `imgRight`, `imgStart`, and `imgTop` props from `BCard`.
+
+Similarly, the `top`, `bottom`, `left`, and `right` props on `BCardImg` are deprecated in favor
+of a single `placement` prop that take the values `top`, `bottom`, `start`, and `end`. Note that
+`end` and `start` are not yet imnplemented.
+
+The `sub-title`, `sub-title-tag` and `sub-title-text-variant` props have been renamed to
+`subtitle`, `subtitle-tag` and `subtitle-text-variant`, respectively.
+
+For `BCardBody`, `BCardHeader`, `BCardFooter`, `BCardTitle`, and `BCardText` components the component name specific
+props are deprecated and replaced by the generalized props. For example `footer-bg-variant` is replaced by `bg-variant`.
+This is true for all of the `body-*`, `header-*`, and `footer-*` props on these components. Note
+that the specific props are still retained on the main `BCard` component.
+
+Similarly the `text-tag` and `title-tag` props have been replaced by `tag` on the `BCardText`
+and `BCardTitle` components.
+
+`body-border-variant` and `body-variant` are not implemented on `BCard` and `border-variant` is not
+implemented on `BCardBody`.
 
 ## BCarousel
 
@@ -223,6 +257,13 @@ They work as documented in vue.js, so there is no longer a need for the properti
 ## BFormSelect
 
 [Options as an object](https://bootstrap-vue.org/docs/components/form-select#options-as-an-object) was deprecated in BootstrapVue and never implemented in BootstrapVueNext
+
+## BImg
+
+See the [Rounding](#rounding) section.
+
+Lazy loading is now achieved through the native `loading` attribute rather than a seperate component. Thus
+`BImgLazy` and `BCardImgLazy` are deprecated.
 
 ## BInputGroup
 
@@ -285,26 +326,6 @@ and `exact-path-active-class` props on `BLink`. See the [`Vue Router` migration 
 ### $root events
 
 BSVN no longer emits the `bv::link::clicked` event on `$root`.
-
-## BCard
-
-Image placement is accomplished by the single `img-placement` prop, which takes the values
-`top`, `bottom`, `start`, `end`, or `overlay`. This allows us to deprecate the `imgBottom`,
-`imgEnd`, `imgLeft`, `imgRight`, `imgStart`, and `imgTop` props from `BCard`.
-
-The `sub-title`, `sub-title-tag` and `sub-title-text-variant` props have been renamed to
-`subtitle`, `subtitle-tag` and `subtitle-text-variant`, respectively.
-
-For `BCardBody`, `BCardHeader`, `BCardFooter`, `BCardTitle`, and `BCardText` components the component name specific
-props are deprecated and replaced by the generalized props. For example `footer-bg-variant` is replaced by `bg-variant`.
-This is true for all of the `body-*`, `header-*`, and `footer-*` props on these components. Note
-that the specific props are still retained on the main `BCard` component.
-
-Similarly the `text-tag` and `title-tag` props have been replaced by `tag` on the `BCardText`
-and `BCardTitle` components.
-
-`body-border-variant` and `body-variant` are not implemented on `BCard` and `border-variant` is not
-implemented on `BCardBody`.
 
 ## BModal
 

@@ -1,6 +1,7 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {ComponentReference, PropertyReference} from '../../types'
-import {buildCommonProps, pick} from '../../utils'
+import {buildCommonProps, omit, pick} from '../../utils'
+import {imageProps, linkTo} from '../../utils/image-props'
 
 export default {
   load: (): ComponentReference[] => [
@@ -250,85 +251,22 @@ export default {
     },
     {
       component: 'BCardImg',
-      sourcePath: '/BCard/BCardImg.vue',
-      emits: [],
       props: {
         '': {
-          blank: {
-            type: 'boolean',
-            default: undefined,
-          },
-          blankColor: {
-            type: 'string',
-            default: undefined,
-          },
-          block: {
-            type: 'boolean',
-            default: undefined,
-          },
-          fluid: {
-            type: 'boolean',
-            default: undefined,
-          },
-          fluidGrow: {
-            type: 'boolean',
-            default: undefined,
-          },
-          height: {
-            type: 'Numberish',
-            default: undefined,
-          },
-          lazy: {
-            type: 'boolean',
-            default: undefined,
-          },
           placement: {
             type: 'Placement | "overlay"',
             default: 'top',
           },
-          rounded: {
-            type: 'boolean | RadiusElement',
-            default: undefined,
-          },
-          roundedTop: {
-            type: 'boolean | RadiusElement',
-            default: undefined,
-          },
-          roundedBottom: {
-            type: 'boolean | RadiusElement',
-            default: undefined,
-          },
-          roundedStart: {
-            type: 'boolean | RadiusElement',
-            default: undefined,
-          },
-          roundedEnd: {
-            type: 'boolean | RadiusElement',
-            default: undefined,
-          },
-          sizes: {
-            type: 'string | string[]',
-            default: undefined,
-          },
-          src: {
-            type: 'string',
-            default: undefined,
-          },
-          srcset: {
-            type: 'string | string[]',
-            default: undefined,
-          },
-          thumbnail: {
-            type: 'boolean',
-            default: undefined,
-          },
-          width: {
-            type: 'Numberish',
-            default: undefined,
-          },
-          tag: {},
-        } satisfies Record<keyof BvnComponentProps['BCardImg'], PropertyReference>,
+        } satisfies Record<
+          Exclude<keyof BvnComponentProps['BCardImg'], keyof typeof imageProps>,
+          PropertyReference
+        >,
+        'BImg props': {
+          _linkTo: {type: linkTo},
+          ...omit(imageProps, ['placement']),
+        },
       },
+      emits: [],
       slots: [],
     },
     {
