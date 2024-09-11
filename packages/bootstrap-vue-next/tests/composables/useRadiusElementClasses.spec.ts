@@ -1,4 +1,4 @@
-import {useRadiusElementClasses} from '../../src/composables'
+import {useRadiusElementClasses} from '../../src/composables/useRadiusElementClasses'
 import {describe, expect, it} from 'vitest'
 
 // Produced a string array of the rounded properties of the obj that have a truthy value

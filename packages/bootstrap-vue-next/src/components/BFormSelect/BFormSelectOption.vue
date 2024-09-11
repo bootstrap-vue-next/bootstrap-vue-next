@@ -5,8 +5,8 @@
 </template>
 
 <script setup lang="ts" generic="T">
-import {useDefaults} from '../../composables'
-import type {BFormSelectOptionProps} from '../../types'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BFormSelectOptionProps} from '../../types/ComponentProps'
 
 const _props = withDefaults(defineProps<BFormSelectOptionProps<T>>(), {
   disabled: false,

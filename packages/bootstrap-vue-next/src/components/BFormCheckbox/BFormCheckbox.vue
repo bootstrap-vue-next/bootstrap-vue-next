@@ -16,7 +16,7 @@
       :value="props.value"
       :true-value="props.value"
       :false-value="props.uncheckedValue"
-      :indeterminate="props.indeterminate"
+      :indeterminate.attr="indeterminate || undefined"
       v-bind="inputAttrs"
     />
     <label v-if="hasDefaultSlot || props.plain === false" :for="computedId" :class="labelClasses">
@@ -27,11 +27,15 @@
 
 <script setup lang="ts">
 import {useFocus} from '@vueuse/core'
-import {computed, inject, ref, toRef, useAttrs} from 'vue'
-import {getClasses, getInputClasses, getLabelClasses, useDefaults, useId} from '../../composables'
-import type {BFormCheckboxProps, CheckboxValue} from '../../types'
-import {checkboxGroupKey, isEmptySlot} from '../../utils'
+import {computed, inject, ref, useAttrs} from 'vue'
+import {getClasses, getInputClasses, getLabelClasses} from '../../composables/useFormCheck'
+import type {BFormCheckboxProps} from '../../types/ComponentProps'
+import {checkboxGroupKey} from '../../utils/keys'
 import BWrapper from '../BWrapper.vue'
+import {isEmptySlot} from '../../utils/dom'
+import {useDefaults} from '../../composables/useDefaults'
+import type {CheckboxValue} from '../../types/CheckboxTypes'
+import {useId} from '../../composables/useId'
 
 defineOptions({
   inheritAttrs: false,
@@ -39,29 +43,32 @@ defineOptions({
 
 const {class: wrapperClass, ...inputAttrs} = useAttrs()
 
-const _props = withDefaults(defineProps<BFormCheckboxProps>(), {
-  wrapperAttrs: undefined,
-  inputClass: undefined,
-  ariaLabel: undefined,
-  ariaLabelledby: undefined,
-  autofocus: false,
-  button: false,
-  buttonGroup: false,
-  buttonVariant: null,
-  disabled: false,
-  form: undefined,
-  id: undefined,
-  inline: false,
-  name: undefined,
-  plain: false,
-  required: undefined,
-  reverse: false,
-  size: undefined,
-  state: null,
-  switch: false,
-  uncheckedValue: false,
-  value: true,
-})
+const _props = withDefaults(
+  defineProps<Omit<BFormCheckboxProps, 'modelValue' | 'indeterminate'>>(),
+  {
+    wrapperAttrs: undefined,
+    inputClass: undefined,
+    ariaLabel: undefined,
+    ariaLabelledby: undefined,
+    autofocus: false,
+    button: false,
+    buttonGroup: false,
+    buttonVariant: null,
+    disabled: false,
+    form: undefined,
+    id: undefined,
+    inline: false,
+    name: undefined,
+    plain: false,
+    required: undefined,
+    reverse: false,
+    size: undefined,
+    state: null,
+    switch: false,
+    uncheckedValue: false,
+    value: true,
+  }
+)
 const props = useDefaults(_props, 'BFormCheckbox')
 
 const slots = defineSlots<{
@@ -69,12 +76,15 @@ const slots = defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = defineModel<CheckboxValue | CheckboxValue[]>({
+const modelValue = defineModel<BFormCheckboxProps['modelValue']>({
   default: undefined,
 })
-const indeterminate = defineModel<boolean>('indeterminate', {
-  default: false,
-})
+const indeterminate = defineModel<Exclude<BFormCheckboxProps['indeterminate'], undefined>>(
+  'indeterminate',
+  {
+    default: false,
+  }
+)
 
 const computedId = useId(() => props.id, 'form-check')
 
@@ -86,7 +96,7 @@ const {focused} = useFocus(input, {
   initialValue: props.autofocus,
 })
 
-const hasDefaultSlot = toRef(() => !isEmptySlot(slots.default))
+const hasDefaultSlot = computed(() => !isEmptySlot(slots.default))
 
 const localValue = computed({
   get: () => (parentData ? parentData.modelValue.value : modelValue.value),
@@ -107,11 +117,11 @@ const localValue = computed({
   },
 })
 
-const computedRequired = toRef(
+const computedRequired = computed(
   () => !!(props.name ?? parentData?.name.value) && (props.required || parentData?.required.value)
 )
 
-const isButtonGroup = toRef(() => props.buttonGroup || (parentData?.buttons.value ?? false))
+const isButtonGroup = computed(() => props.buttonGroup || (parentData?.buttons.value ?? false))
 
 const classesObject = computed(() => ({
   plain: props.plain || (parentData?.plain.value ?? false),
@@ -120,7 +130,7 @@ const classesObject = computed(() => ({
   reverse: props.reverse || (parentData?.reverse.value ?? false),
   switch: props.switch || (parentData?.switch.value ?? false),
   state:
-    props.state === true || props.state === false ? props.state : parentData?.state.value ?? null,
+    props.state === true || props.state === false ? props.state : (parentData?.state.value ?? null),
   size: props.size ?? parentData?.size.value ?? 'md', // This is where the true default is made
   buttonVariant: props.buttonVariant ?? parentData?.buttonVariant.value ?? 'secondary', // This is where the true default is made
   hasDefaultSlot: hasDefaultSlot.value,

@@ -1,12 +1,18 @@
 export type ComponentItem = Exclude<keyof ComponentReference, 'component' | 'sections'>
 export type ComponentSection = 'Properties' | 'Events' | 'Slots'
 export type EmitArgReference = {arg: string; type: string; description?: string}
-export type SlotScopeReference = {prop: string; type: string | string[]; description?: string}
+export type SlotScopeReference = {
+  prop: string
+  type: string | string[]
+  description?: string
+  notYetImplemented?: boolean
+}
 
 export interface PropertyReference {
   type?: string
   description?: string
   default?: unknown
+  notYetImplemented?: boolean
 }
 
 /**
@@ -25,6 +31,12 @@ type PropsRecord = Record<string, Record<string, PropertyReference> & {_linkTo?:
 
 export interface ComponentReference {
   component: string
+  /**
+   * Use package directory relative links. ex: BAccordion.vue => /BAccordion/BAccordion.vue (slash required)
+   *
+   * If path is empty string, it defaults to the package directory. If null, it does not render the button
+   */
+  sourcePath: string | null
   props: PropsRecord
   emits: {
     event: string

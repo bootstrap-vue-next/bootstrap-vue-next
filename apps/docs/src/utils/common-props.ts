@@ -47,10 +47,45 @@ export const commonProps = () =>
         'When set to `true`, attempts to auto-focus the control when it is mounted, or re-activated when in a keep-alive. Does not set the `autofocus` attribute on the control',
     },
     bgVariant: {
-      type: 'TextColorVariant | null',
+      type: 'ColorVariant | null',
       default: null,
       description:
         'Applies one of the Bootstrap theme color variants to background of the component',
+    },
+    bodyBgVariant: {
+      type: 'ColorVariant | null',
+      default: undefined,
+      description: 'Applies one of the Bootstrap theme color variants to the body background',
+    },
+    bodyBorderVariant: {
+      type: 'ColorVariant | null',
+      default: undefined,
+      description: 'Applies one of the Bootstrap theme color variants to the body border',
+    },
+    bodyClass: {
+      type: 'ClassValue',
+      default: undefined,
+      description: 'CSS class (or classes) to apply to the body',
+    },
+    bodyTag: {
+      type: 'string',
+      default: 'div',
+      description: 'Specify the HTML tag to render instead of the default tag for the body',
+    },
+    bodyTextVariant: {
+      type: 'TextColorVariant | null',
+      default: undefined,
+      description: 'Applies one of the Bootstrap theme color variants to the body text',
+    },
+    bodyVariant: {
+      type: 'ColorVariant | null',
+      default: undefined,
+      description: 'Applies one of the Bootstrap theme color variants to the body',
+    },
+    borderVariant: {
+      type: 'ColorVariant | null',
+      default: undefined,
+      description: 'Applies one of the Bootstrap theme color variants to the border',
     },
     debounce: {
       type: 'Numberish',
@@ -74,6 +109,46 @@ export const commonProps = () =>
       default: 'disabled',
       description: 'Field name in the `options` array that should be used for the disabled state',
     },
+    footer: {
+      type: 'string',
+      default: undefined,
+      description: 'Text content to place in the footer',
+    },
+    footerBgVariant: {
+      type: 'ColorVariant | null',
+      default: undefined,
+      description: 'Applies one of the Bootstrap theme color variants to the footer background',
+    },
+    footerBorderVariant: {
+      type: 'ColorVariant | null',
+      default: undefined,
+      description: 'Applies one of the Bootstrap theme color variants to the footer border',
+    },
+    footerClass: {
+      type: 'ClassValue',
+      default: undefined,
+      description: 'CSS class (or classes) to apply to the footer',
+    },
+    footerHtml: {
+      type: 'string',
+      default: "''",
+      description: 'HTML string content to place in the footer',
+    },
+    footerTag: {
+      type: 'string',
+      default: 'div',
+      description: 'Specify the HTML tag to render instead of the default tag for the footer',
+    },
+    footerTextVariant: {
+      type: 'TextColorVariant | null',
+      default: undefined,
+      description: 'Applies one of the Bootstrap theme color variants to the footer text',
+    },
+    footerVariant: {
+      type: 'ColorVariant | null',
+      default: undefined,
+      description: 'Applies one of the Bootstrap theme color variants to the footer',
+    },
     form: {
       type: 'string',
       default: undefined,
@@ -84,6 +159,46 @@ export const commonProps = () =>
       type: '(val: string, evt: Event) => string',
       default: 'undefined',
       description: 'Reference to a function for formatting the input',
+    },
+    header: {
+      type: 'string',
+      default: undefined,
+      description: 'Text content to place in the header',
+    },
+    headerBgVariant: {
+      type: 'ColorVariant | null',
+      default: undefined,
+      description: 'Applies one of the Bootstrap theme color variants to the header background',
+    },
+    headerBorderVariant: {
+      type: 'ColorVariant | null',
+      default: undefined,
+      description: 'Applies one of the Bootstrap theme color variants to the header border',
+    },
+    headerClass: {
+      type: 'ClassValue',
+      default: undefined,
+      description: 'CSS class (or classes) to apply to the header',
+    },
+    headerHtml: {
+      type: 'string',
+      default: "''",
+      description: 'HTML string content to place in the header',
+    },
+    headerTag: {
+      type: 'string',
+      default: 'div',
+      description: 'Specify the HTML tag to render instead of the default tag for the header',
+    },
+    headerTextVariant: {
+      type: 'TextColorVariant | null',
+      default: undefined,
+      description: 'Applies one of the Bootstrap theme color variants to the header text',
+    },
+    headerVariant: {
+      type: 'ColorVariant | null',
+      default: undefined,
+      description: 'Applies one of the Bootstrap theme color variants to the header',
     },
     htmlField: {
       type: 'string',
@@ -106,8 +221,7 @@ export const commonProps = () =>
     list: {
       type: 'string',
       default: 'undefined',
-      description:
-        'The ID of the associated datalist element or component (Datalist is Not Yet Implemented)',
+      description: 'The ID of the associated datalist element or component',
     },
     name: {
       type: 'string',
@@ -185,11 +299,31 @@ export const commonProps = () =>
       default: 'md',
       description: "Set the size of the component's appearance. 'sm', 'md' (default), or 'lg'",
     },
+    src: {
+      type: 'string',
+      default: undefined,
+      description: 'URL to set for the `src` attribute',
+    },
     state: {
       type: 'boolean | null',
       default: undefined,
       description:
         'Controls the validation state appearance of the component. `true` for valid, `false` for invalid, or `null` for no validation state',
+    },
+    subtitle: {
+      type: 'string',
+      default: undefined,
+      description: 'Text content to place in the subtitle',
+    },
+    subtitleTag: {
+      type: 'string',
+      default: 'h6',
+      description: 'Specify the HTML tag to render instead of the default tag for the subtitle',
+    },
+    subtitleTextVariant: {
+      type: 'TextColorVariant | null',
+      default: 'body-secondary',
+      description: 'Applies one of the Bootstrap theme color variants to the subtitle text',
     },
     tag: {
       type: 'string',
@@ -211,6 +345,11 @@ export const commonProps = () =>
       default: undefined,
       description: 'Text content to place in the title',
     },
+    titleTag: {
+      type: 'string',
+      default: 'h4',
+      description: 'Specify the HTML tag to render instead of the default tag for the title',
+    },
     tooltip: {
       type: 'boolean',
       default: false,
@@ -225,5 +364,16 @@ export const commonProps = () =>
       type: 'ColorVariant | null',
       default: null,
       description: 'Applies one of the Bootstrap theme color variants to the component',
+    },
+    noHoverPause: {
+      type: 'boolean',
+      default: false,
+      description: 'When set to true, disables pausing the timer on hover behavior',
+    },
+    noResumeOnHoverLeave: {
+      type: 'boolean',
+      default: false,
+      description:
+        'When set to true, the timer will not resume when the mouse leaves the element. It will need to be manually resumed',
     },
   }) satisfies Record<string, PropertyReference>

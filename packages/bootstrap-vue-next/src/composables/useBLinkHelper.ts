@@ -1,14 +1,18 @@
-import {computed, type MaybeRefOrGetter, toRef} from 'vue'
-import {isLink, pick} from '../utils'
+import {computed, type MaybeRefOrGetter, readonly, toRef} from 'vue'
+import {isLink} from '../utils/isLink'
+import {pick} from '../utils/object'
 
-export default <T extends Record<string, unknown>, const B extends ReadonlyArray<PropertyKey>>(
+export const useBLinkHelper = <
+  T extends Record<string, unknown>,
+  const B extends ReadonlyArray<PropertyKey>,
+>(
   props: MaybeRefOrGetter<T>,
   pickProps?: MaybeRefOrGetter<B | (keyof T)[]>
 ) => {
-  const pickPropsResolved = toRef(pickProps)
-  const resolvedProps = toRef(props)
+  const pickPropsResolved = readonly(toRef(pickProps))
+  const resolvedProps = readonly(toRef(props))
 
-  const computedLink = toRef(() => isLink(resolvedProps.value))
+  const computedLink = computed(() => isLink(resolvedProps.value))
   const computedLinkProps = computed(() =>
     computedLink.value
       ? pick(

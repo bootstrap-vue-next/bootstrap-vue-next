@@ -82,14 +82,14 @@ describe('form-group', () => {
 
   it('attr disabled is false by default', () => {
     const wrapper = mount(BFormGroup)
-    expect(wrapper.attributes('disabled')).toBe('false')
+    expect(wrapper.attributes('disabled')).toBeUndefined()
   })
 
   it('attr disabled is true when prop disabled', () => {
     const wrapper = mount(BFormGroup, {
       props: {disabled: true},
     })
-    expect(wrapper.attributes('disabled')).toBe('true')
+    expect(wrapper.attributes('disabled')).toBe('')
   })
 
   it('attr disabled is undefined when disabled true but prop labelFor exists', () => {

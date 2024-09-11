@@ -1,56 +1,51 @@
 import type {Boundary, Middleware, Padding, RootBoundary, Strategy} from '@floating-ui/vue'
 import type {ComponentPublicInstance, TransitionProps} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
+import type {LinkTarget} from './LinkTarget'
+import type {ButtonVariant, ColorExtendables, ColorVariant, TextColorVariant} from './ColorTypes'
+import type {AttrsValue, ClassValue} from './AnyValuedAttributes'
+import type {CheckboxOptionRaw, CheckboxValue} from './CheckboxTypes'
+import type {Size} from './Size'
+import type {AriaInvalid} from './AriaInvalid'
+import type {Numberish, TeleporterProps} from './CommonTypes'
+import type {CommonInputProps} from './FormCommonInputProps'
+import type {RadioOptionRaw, RadioValue} from './RadioTypes'
+import type {SelectValue} from './SelectTypes'
+import type {
+  Breakpoint,
+  ColBreakpointProps,
+  ColsNumbers,
+  OffsetBreakpointProps,
+  OrderBreakpointProps,
+  RowColsBreakpointProps,
+} from './BreakpointProps'
 import type {
   AlignmentContent,
   AlignmentJustifyContent,
   AlignmentTextHorizontal,
   AlignmentVertical,
-  AriaInvalid,
-  AttrsValue,
-  BreadcrumbItemRaw,
-  Breakpoint,
+  CombinedPlacement,
+  Placement,
+  VerticalAlign,
+} from './Alignment'
+import type {RadiusElementExtendables} from './RadiusElement'
+import type {SpinnerType} from './SpinnerType'
+import type {PlaceholderAnimation, PlaceholderSize} from './PlaceholderTypes'
+import type {ButtonType} from './ButtonType'
+import type {LiteralUnion} from './LiteralUnion'
+import type {BreadcrumbItemRaw} from './BreadcrumbTypes'
+import type {TransitionMode} from './TransitionMode'
+import type {
   BTableProvider,
   BTableSortBy,
-  ButtonType,
-  ButtonVariant,
-  CheckboxOptionRaw,
-  CheckboxValue,
-  ClassValue,
-  ColBreakpointProps,
-  ColorExtendables,
-  ColorVariant,
-  ColsNumbers,
-  CombinedPlacement,
-  CommonInputProps,
-  ComponentType,
-  InputType,
-  LinkTarget,
-  LiteralUnion,
   NoProviderTypes,
-  Numberish,
-  OffsetBreakpointProps,
-  OrderBreakpointProps,
-  PlaceholderAnimation,
-  PlaceholderSize,
-  Placement,
-  PopoverPlacement,
-  RadioOptionRaw,
-  RadioValue,
-  RadiusElementExtendables,
-  RowColsBreakpointProps,
-  SelectValue,
-  Size,
-  SpinnerType,
   TableField,
   TableFieldRaw,
   TableRowType,
   TableStrictClassValue,
-  TeleporterProps,
-  TextColorVariant,
-  TransitionMode,
-  VerticalAlign,
-} from '.'
+} from './TableTypes'
+import type {PopoverPlacement} from './PopoverPlacement'
+import type {InputType} from './InputType'
 
 export interface BLinkProps {
   active?: boolean
@@ -740,9 +735,10 @@ export interface BAlertProps {
   dismissible?: boolean
   fade?: boolean
   immediate?: boolean
-  interval?: Numberish
+  interval?: number | 'requestAnimationFrame'
   modelValue?: boolean | number
   noHoverPause?: boolean
+  noResumeOnHoverLeave?: boolean
   showOnPause?: boolean
   variant?: ColorVariant | null
 }
@@ -913,7 +909,7 @@ export interface BCarouselProps {
   imgWidth?: string
   indicators?: boolean
   indicatorsButtonLabel?: string
-  interval?: Numberish
+  interval?: number
   keyboard?: boolean
   modelValue?: number
   noHoverPause?: boolean
@@ -939,7 +935,7 @@ export interface BCarouselSlideProps {
   imgSrc?: string
   imgSrcset?: string | readonly string[]
   imgWidth?: Numberish
-  interval?: Numberish
+  interval?: number | 'requestAnimationFrame'
   text?: string
   textHtml?: string
   textTag?: string
@@ -1187,12 +1183,13 @@ export interface BToastProps extends ColorExtendables, Omit<BLinkProps, 'routerT
   headerClass?: ClassValue
   headerTag?: string
   id?: string
-  interval?: Numberish
+  interval?: number | 'requestAnimationFrame'
   isStatus?: boolean
   modelValue?: boolean | number
   noCloseButton?: boolean
   noFade?: boolean
   noHoverPause?: boolean
+  noResumeOnHoverLeave?: boolean
   progressProps?: Omit<BProgressBarProps, 'label' | 'labelHtml' | 'max' | 'value'>
   showOnPause?: boolean
   solid?: boolean
@@ -1326,115 +1323,4 @@ export interface BColProps extends OffsetBreakpointProps, OrderBreakpointProps, 
   offset?: ColsNumbers
   cols?: ColsNumbers | 'auto'
   col?: boolean
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = any> = {
-  BLink: BLinkProps
-  BAccordion: BAccordionProps
-  BDropdownDivider: BDropdownDividerProps
-  BDropdownGroup: BDropdownGroupProps
-  BDropdownItem: BDropdownItemProps
-  BDropdownItemButton: BDropdownItemButtonProps
-  BDropdownText: BDropdownTextProps
-  BFormFloatingLabel: BFormFloatingLabelProps
-  BFormRow: BFormRowProps
-  BFormText: BFormTextProps
-  BFormCheckbox: BFormCheckboxProps
-  BFormCheckboxGroup: BFormCheckboxGroupProps
-  BFormDatalist: BFormDatalistProps
-  BFormFile: BFormFileProps
-  BFormInput: BFormInputProps
-  BFormRadio: BFormRadioProps
-  BFormRadioGroup: BFormRadioGroupProps
-  BFormSelect: BFormSelectProps
-  BFormSelectOption: BFormSelectOptionProps<BFormSelectOption>
-  BFormSelectOptionGroup: BFormSelectOptionGroupProps
-  BFormSpinbutton: BFormSpinbuttonProps
-  BFormTag: BFormTagProps
-  BFormTags: BFormTagsProps
-  BFormTextarea: BFormTextareaProps
-  BInputGroup: BInputGroupProps
-  BInputGroupText: BInputGroupTextProps
-  BListGroup: BListGroupProps
-  BListGroupItem: BListGroupItemProps
-  BModalOrchestrator: BModalOrchestratorProps
-  BNav: BNavProps
-  BNavForm: BNavFormProps
-  BNavItem: BNavItemProps
-  BNavText: BNavTextProps
-  BNavbar: BNavbarProps
-  BNavbarBrand: BNavbarBrandProps
-  BNavbarNav: BNavbarNavProps
-  BNavbarToggle: BNavbarToggleProps
-  BOffcanvas: BOffcanvasProps
-  BOverlay: BOverlayProps
-  BPagination: BPaginationProps
-  BPlaceholder: BPlaceholderProps
-  BPlaceholderButton: BPlaceholderButtonProps
-  BPlaceholderCard: BPlaceholderCardProps
-  BPlaceholderTable: BPlaceholderTableProps
-  BPlaceholderWrapper: BPlaceholderWrapperProps
-  BProgress: BProgressProps
-  BTab: BTabProps
-  BTabs: BTabsProps
-  BToastOrchestrator: BToastOrchestratorProps
-  BCollapse: BCollapseProps
-  BContainer: BContainerProps
-  BSpinner: BSpinnerProps
-  BAccordionItem: BAccordionItemProps
-  BAlert: BAlertProps
-  BAvatar: BAvatarProps
-  BAvatarGroup: BAvatarGroupProps
-  BBadge: BBadgeProps
-  BBreadcrumb: BBreadcrumbProps
-  BBreadcrumbItem: BBreadcrumbItemProps
-  BButton: BButtonProps
-  BButtonGroup: BButtonGroupProps
-  BButtonToolbar: BButtonToolbarProps
-  BCloseButton: BCloseButtonProps
-  BCard: BCardProps
-  BCardBody: BCardBodyProps
-  BCardGroup: BCardGroupProps
-  BCardSubtitle: BCardSubtitleProps
-  BCardText: BCardTextProps
-  BCardTitle: BCardTitleProps
-  BCarousel: BCarouselProps
-  BCarouselSlide: BCarouselSlideProps
-  BTransition: BTransitionProps
-  BImg: BImgProps
-  BForm: BFormProps
-  BTableSimple: BTableSimpleProps
-  BTableLite: BTableLiteProps<BTableLite>
-  BTable: BTableProps<BTable>
-  BTr: BTrProps
-  BThead: BTheadProps
-  BTfoot: BTfootProps
-  BTd: BTdProps
-  BTbody: BTbodyProps
-  BTh: BThProps
-  BProgressBar: BProgressBarProps
-  BInputGroupAddon: BInputGroupAddonProps
-  BDropdown: BDropdownProps
-  BToast: BToastProps
-  BPopover: BPopoverProps
-  BTooltip: BTooltipProps
-  BModal: BModalProps
-  BCardFooter: BCardHeadFootProps
-  BCardHeader: BCardHeadFootProps
-  BCardImg: BCardImgProps
-  BCol: BColProps
-  BDropdownForm: never
-  BDropdownHeader: never
-  BFormInvalidFeedback: BFormFeedbackSharedProps
-  BFormValidFeedback: BFormFeedbackSharedProps
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  BFormGroup: any
-  BNavItemDropdown: BDropdownProps
-  BRow: BRowProps
-  BInput: BFormInputProps
-}
-
-export type BvnComponentProps = {
-  [K in ComponentType]: UnmappedComponentProps[K]
 }

@@ -20,9 +20,11 @@
 
 <script setup lang="ts" generic="T">
 import BFormSelectOption from './BFormSelectOption.vue'
-import {useDefaults, useFormSelect} from '../../composables'
-import type {BFormSelectOptionGroupProps, SelectOption} from '../../types'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BFormSelectOptionGroupProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
+import {useFormSelect} from '../../composables/useFormSelect'
+import type {SelectOption} from '../../types/SelectTypes'
 
 const _props = withDefaults(defineProps<BFormSelectOptionGroupProps>(), {
   disabledField: 'disabled',

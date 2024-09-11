@@ -6,6 +6,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormTag',
+      sourcePath: '/BFormTag/BFormTag.vue',
       props: {
         '': {
           noRemove: {
@@ -62,6 +63,7 @@ export default {
     },
     {
       component: 'BFormTags',
+      sourcePath: '/BFormTags/BFormTags.vue',
       props: {
         '': {
           addButtonText: {
@@ -410,7 +412,8 @@ export default {
             {
               prop: 'remove',
               type: '() => void',
-              description: 'Method to fully reset the tags input [Not yet implemented]',
+              description: 'Method to fully reset the tags input',
+              notYetImplemented: true,
             },
             {
               prop: 'removeTag',

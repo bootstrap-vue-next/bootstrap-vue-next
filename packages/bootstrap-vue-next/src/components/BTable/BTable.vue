@@ -136,95 +136,102 @@
 
 <script setup lang="ts" generic="T">
 import {useToNumber} from '@vueuse/core'
-import {computed, onMounted, type Ref, ref, toRef, watch} from 'vue'
-import type {
-  BTableProps,
-  BTableSortBy,
-  BTableSortByOrder,
-  NoProviderTypes,
-  TableField,
-  TableFieldRaw,
-  TableItem,
-  TableRowType,
-  TableStrictClassValue,
-} from '../../types'
-import {formatItem, get, getTableFieldHeadLabel, set, startCase} from '../../utils'
+import {computed, onMounted, type Ref, ref, watch} from 'vue'
+import {formatItem} from '../../utils/formatItem'
 import BOverlay from '../BOverlay/BOverlay.vue'
-import BSpinner from '../BSpinner.vue'
+import BSpinner from '../BSpinner/BSpinner.vue'
 import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
 import BTr from './BTr.vue'
-import {isTableField, isTableItem} from '../../types/TableTypes'
-import {useDefaults} from '../../composables'
+import {
+  type BTableSortBy,
+  type BTableSortByOrder,
+  isTableField,
+  isTableItem,
+  type NoProviderTypes,
+  type TableField,
+  type TableFieldRaw,
+  type TableItem,
+  type TableRowType,
+  type TableStrictClassValue,
+} from '../../types/TableTypes'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BTableProps} from '../../types/ComponentProps'
+import {get, set} from '../../utils/object'
+import {startCase} from '../../utils/stringUtils'
+import {getTableFieldHeadLabel} from '../../utils/getTableFieldHeadLabel'
 
-const _props = withDefaults(defineProps<BTableProps<T>>(), {
-  noSortableIcon: false,
-  perPage: Number.POSITIVE_INFINITY,
-  filter: undefined,
-  mustSort: false,
-  filterable: undefined,
-  provider: undefined,
-  noProvider: undefined,
-  noProviderPaging: false,
-  noProviderSorting: false,
-  multisort: false,
-  noProviderFiltering: false,
-  noLocalSorting: false,
-  noSelectOnClick: false,
-  selectable: false,
-  stickySelect: false,
-  selectHead: true,
-  selectMode: 'multi',
-  selectionVariant: 'primary',
-  busyLoadingText: 'Loading...',
-  currentPage: 1,
-  // BTableLite props
-  items: () => [],
-  fields: () => [],
-  // All others use defaults
-  caption: undefined,
-  align: undefined,
-  footClone: undefined,
-  labelStacked: undefined,
-  showEmpty: undefined,
-  emptyText: undefined,
-  emptyFilteredText: undefined,
-  fieldColumnClass: undefined,
-  tbodyTrClass: undefined,
-  captionHtml: undefined,
-  detailsTdClass: undefined,
-  headVariant: undefined,
-  headRowVariant: undefined,
-  footRowVariant: undefined,
-  footVariant: undefined,
-  modelValue: undefined,
-  primaryKey: undefined,
-  tbodyClass: undefined,
-  tfootClass: undefined,
-  tfootTrClass: undefined,
-  theadClass: undefined,
-  theadTrClass: undefined,
-  // End BTableLite props
-  // BTableSimple props
-  borderVariant: undefined,
-  variant: undefined,
-  bordered: undefined,
-  borderless: undefined,
-  captionTop: undefined,
-  dark: undefined,
-  hover: undefined,
-  id: undefined,
-  noBorderCollapse: undefined,
-  outlined: undefined,
-  fixed: undefined,
-  responsive: undefined,
-  stacked: undefined,
-  striped: undefined,
-  stripedColumns: undefined,
-  small: undefined,
-  stickyHeader: undefined,
-  // End BTableSimple props
-})
+const _props = withDefaults(
+  defineProps<Omit<BTableProps<T>, 'sortBy' | 'busy' | 'selectedItems'>>(),
+  {
+    noSortableIcon: false,
+    perPage: Number.POSITIVE_INFINITY,
+    filter: undefined,
+    mustSort: false,
+    filterable: undefined,
+    provider: undefined,
+    noProvider: undefined,
+    noProviderPaging: false,
+    noProviderSorting: false,
+    multisort: false,
+    noProviderFiltering: false,
+    noLocalSorting: false,
+    noSelectOnClick: false,
+    selectable: false,
+    stickySelect: false,
+    selectHead: true,
+    selectMode: 'multi',
+    selectionVariant: 'primary',
+    busyLoadingText: 'Loading...',
+    currentPage: 1,
+    // BTableLite props
+    items: () => [],
+    fields: () => [],
+    // All others use defaults
+    caption: undefined,
+    align: undefined,
+    footClone: undefined,
+    labelStacked: undefined,
+    showEmpty: undefined,
+    emptyText: undefined,
+    emptyFilteredText: undefined,
+    fieldColumnClass: undefined,
+    tbodyTrClass: undefined,
+    captionHtml: undefined,
+    detailsTdClass: undefined,
+    headVariant: undefined,
+    headRowVariant: undefined,
+    footRowVariant: undefined,
+    footVariant: undefined,
+    modelValue: undefined,
+    primaryKey: undefined,
+    tbodyClass: undefined,
+    tfootClass: undefined,
+    tfootTrClass: undefined,
+    theadClass: undefined,
+    theadTrClass: undefined,
+    // End BTableLite props
+    // BTableSimple props
+    borderVariant: undefined,
+    variant: undefined,
+    bordered: undefined,
+    borderless: undefined,
+    captionTop: undefined,
+    dark: undefined,
+    hover: undefined,
+    id: undefined,
+    noBorderCollapse: undefined,
+    outlined: undefined,
+    fixed: undefined,
+    responsive: undefined,
+    stacked: undefined,
+    striped: undefined,
+    stripedColumns: undefined,
+    small: undefined,
+    stickyHeader: undefined,
+    // End BTableSimple props
+  }
+)
 const props = useDefaults(_props, 'BTable')
 
 const emit = defineEmits<{
@@ -240,15 +247,18 @@ const emit = defineEmits<{
   'change': [value: T[]]
 }>()
 
-const sortByModel = defineModel<BTableSortBy[] | undefined>('sortBy', {
+const sortByModel = defineModel<BTableProps<T>['sortBy']>('sortBy', {
   default: undefined,
 })
-const busyModel = defineModel<boolean>('busy', {
+const busyModel = defineModel<Exclude<BTableProps<T>['busy'], undefined>>('busy', {
   default: false,
 })
-const selectedItemsModel = defineModel<T[]>('selectedItems', {
-  default: () => [],
-})
+const selectedItemsModel = defineModel<Exclude<BTableProps<T>['selectedItems'], undefined>>(
+  'selectedItems',
+  {
+    default: () => [],
+  }
+)
 
 const selectedItemsToSet = computed({
   get: () => new Set([...selectedItemsModel.value]),
@@ -319,9 +329,9 @@ const internalItems: Ref<T[]> = ref([])
 const perPageNumber = useToNumber(() => props.perPage, {method: 'parseInt'})
 const currentPageNumber = useToNumber(() => props.currentPage, {method: 'parseInt'})
 
-const isFilterableTable = toRef(() => !!props.filter)
-const usesProvider = toRef(() => props.provider !== undefined)
-const isSelecting = toRef(() => selectedItemsToSet.value.size > 0)
+const isFilterableTable = computed(() => !!props.filter)
+const usesProvider = computed(() => props.provider !== undefined)
+const isSelecting = computed(() => selectedItemsToSet.value.size > 0)
 
 const isSortable = computed(
   () =>
@@ -429,7 +439,7 @@ const computedItems = computed<T[]>(() => {
           }
           return typeof val === 'object' && val !== null
             ? JSON.stringify(val)
-            : val?.toString() ?? ''
+            : (val?.toString() ?? '')
         }
 
         const aValue = realVal(a)

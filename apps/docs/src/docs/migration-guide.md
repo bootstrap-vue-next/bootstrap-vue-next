@@ -60,6 +60,18 @@ becomes
 See the [Vue 3 migration guide](https://v3-migration.vuejs.org/breaking-changes/v-model.html)
 for more info.
 
+## Shared Properties
+
+### Rounding
+
+`BAvatar`, `BAvatarGroup`, `BCardImg`, `BImg` and `BOverlay` all implement
+[`RadiusElementExtendables`](/docs/types#radius-element-extendables) in order to support complex
+rounding behavior. The `rounded`, `rounded-top`, `rounded-bottom`, `rounded-start`, and `rounded-end`
+props each takes a [`RadiusElement](/docs/types#radius-element) value to specify how the component
+is rounded. The edge specific props such as`rounded-top` override the `rounded` prop for that edge.
+
+This takes the place of `top`, `bottom`, `left`, and `right` values for the `rounded` prop.
+
 ## BAlert
 
 As in `bootstrap-vue`, a simple `BAlert` is not visible by default. However, the means of showing the alert are different.
@@ -147,9 +159,7 @@ For instance, use `badge-placement='top'` in place of `badge-top` or `badge-plac
 
 ### Rounding Sides
 
-Rounding a specific side of the avatar is now accomplished using the boolean props `rounded-top`,
-`rounded-bottom`, `rounded-start`, and `rounded-end` rather than the `top`, `bottom`, `left`, and `right`
-values for the `rounded` prop.
+See the [Rounding](#rounding) section.
 
 ## BBadge
 
@@ -177,6 +187,36 @@ embedded svg for the close icon. See [their migration guide](https://getbootstra
 
 [Keyboard navigation](https://bootstrap-vue.org/docs/components/button-toolbar#keyboard-navigation) is
 not implemented.
+
+## BCard
+
+Image placement is accomplished by the single `img-placement` prop, which takes the values
+`top`, `bottom`, `start`, `end`, or `overlay`. This allows us to deprecate the `imgBottom`,
+`imgEnd`, `imgLeft`, `imgRight`, `imgStart`, and `imgTop` props from `BCard`.
+
+Similarly, the `top`, `bottom`, `left`, and `right` props on `BCardImg` are deprecated in favor
+of a single `placement` prop that take the values `top`, `bottom`, `start`, and `end`. Note that
+`end` and `start` are not yet imnplemented.
+
+The `sub-title`, `sub-title-tag` and `sub-title-text-variant` props have been renamed to
+`subtitle`, `subtitle-tag` and `subtitle-text-variant`, respectively.
+
+For `BCardBody`, `BCardHeader`, `BCardFooter`, `BCardTitle`, and `BCardText` components the component name specific
+props are deprecated and replaced by the generalized props. For example `footer-bg-variant` is replaced by `bg-variant`.
+This is true for all of the `body-*`, `header-*`, and `footer-*` props on these components. Note
+that the specific props are still retained on the main `BCard` component.
+
+Similarly the `text-tag` and `title-tag` props have been replaced by `tag` on the `BCardText`
+and `BCardTitle` components.
+
+`body-border-variant` and `body-variant` are not implemented on `BCard` and `border-variant` is not
+implemented on `BCardBody`.
+
+## BCarousel
+
+The `sliding-start` and `sliding-end` events have been renamed to `slide` and `slid`.
+The `label-indicators` prop has been renamed to `indicators-button-label`.
+<NotYetImplemented>The `label-goto-slide`and `no-animation` props.</NotYetImplemented>
 
 ## BForm
 
@@ -208,7 +248,7 @@ Use `label-visually-hidden` instead of `label-sronly` per
 Access to the native `input` element is implemented differently due to changes in how Vue 3
 handles references. See the [BFormInput documentation](/docs/components/form-input#exposed-input-element) for more details.
 
-Datalist and disabling mousewheel events are not yet implemented.
+<NotYetImplemented>Disabling mousewheel events.</NotYetImplemented>
 
 `trim`, `lazy`, or `number` properties have been deprecated. We support the native modifiers
 [`trim`, `lazy`, and `number`](https://vuejs.org/guide/essentials/forms.html#modifiers).
@@ -217,6 +257,13 @@ They work as documented in vue.js, so there is no longer a need for the properti
 ## BFormSelect
 
 [Options as an object](https://bootstrap-vue.org/docs/components/form-select#options-as-an-object) was deprecated in BootstrapVue and never implemented in BootstrapVueNext
+
+## BImg
+
+See the [Rounding](#rounding) section.
+
+Lazy loading is now achieved through the native `loading` attribute rather than a seperate component. Thus
+`BImgLazy` and `BCardImgLazy` are deprecated.
 
 ## BInputGroup
 
@@ -390,60 +437,15 @@ const confirmBox = async () => {
 The `show` and `confirm` `props` object accespts all of the properties that are defined on
 [BModal](/docs/components/modal#component-reference) excpet for `modelValue`.
 
-<MigrationWrapper v-for="(item, i) in changes" :key="i" v-bind="item" />
+## BPagination
+
+Keyboard Navigation and Small Screen Support.
+
+## BPaginationNav
+
+<NotYetImplemented/>
 
 <script setup lang="ts">
 import {computed, ref} from 'vue'
-import {BAvatar, BButton, BModalOrchestrator, useModalController} from 'bootstrap-vue-next'
-import MigrationWrapper from '../components/MigrationWrapper.vue'
-import HighlightCard from '../components/HighlightCard.vue'
-
-const changes = computed<{
-  component: string
-  change: string
-  fix: string
-}[]>(() => [
-  {
-    change: 'subTitle prop renamed to subtitle',
-    fix: "Any instances of using prop 'subTitle' on BCard should be replaced with 'subtitle'",
-    component: 'BCard',
-  },
-  {
-    change: 'subTitleTag prop renamed to subtitleTag',
-    fix: "Any instances of using prop 'subTitleTag' on BCard should be replaced with 'subtitleTag'",
-    component: 'BCard',
-  },
-  {
-    change: 'subTitleTextVariant prop renamed to subtitleTextVariant',
-    fix: "Any instances of using prop 'subTitleTextVariant' on BCard should be replaced with 'subtitleTextVariant'",
-    component: 'BCard',
-  },
-].sort((a, b) => a.component.localeCompare(b.component)))
-
-const {confirm, show} = useModalController()
-
-const okResult = ref<boolean | null | undefined>(undefined)
-
-const okBox = async () => {
-  okResult.value = await show?.({
-    props: {
-      body: 'This is an informational message',
-      title: 'Message',
-      okOnly: true,
-    },
-  })
-}
-
-const confirmResult = ref<boolean | null | undefined>(null)
-
-const confirmBox = async () => {
-  confirmResult.value = await confirm?.({
-    props: {
-      body: 'Are you sure you want to do this?',
-      title: 'Confirm',
-      okTitle: 'Yes',
-      cancelTitle: 'No',
-    },
-  })
-}
+import {useModalController} from 'bootstrap-vue-next'
 </script>

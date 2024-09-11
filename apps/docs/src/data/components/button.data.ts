@@ -7,6 +7,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BButton',
+      sourcePath: '/BButton/BButton.vue',
       props: {
         '': {
           loading: {
@@ -113,6 +114,7 @@ export default {
     },
     {
       component: 'BCloseButton',
+      sourcePath: '/BCloseButton/BCloseButton.vue',
       props: {
         '': {
           type: {

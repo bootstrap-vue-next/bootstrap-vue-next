@@ -15,10 +15,10 @@
 </template>
 
 <script setup lang="ts">
-import type {BNavbarToggleProps} from '../../types'
+import type {BNavbarToggleProps} from '../../types/ComponentProps'
 import {vBToggle} from '../../directives'
 import {computed} from 'vue'
-import {useDefaults} from '../../composables'
+import {useDefaults} from '../../composables/useDefaults'
 
 const _props = withDefaults(defineProps<BNavbarToggleProps>(), {
   label: 'Toggle navigation',

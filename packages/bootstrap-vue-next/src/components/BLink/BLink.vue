@@ -28,10 +28,10 @@
 </template>
 
 <script setup lang="ts">
-import {useDefaults} from '../../composables'
+import {useDefaults} from '../../composables/useDefaults'
 import {useLinkClasses} from '../../composables/useLinkClasses'
-import type {BLinkProps} from '../../types'
-import {collapseInjectionKey, navbarInjectionKey} from '../../utils'
+import type {BLinkProps} from '../../types/ComponentProps'
+import {collapseInjectionKey, navbarInjectionKey} from '../../utils/keys'
 import {computed, getCurrentInstance, inject, useAttrs} from 'vue'
 
 defineSlots<{
@@ -131,7 +131,7 @@ const routerAttr = computed(() => ({
   'replace': props.replace,
   'href': computedHref.value,
   'target': props.target,
-  'rel': props.target === '_blank' ? props.rel ?? 'noopener' : undefined,
+  'rel': props.target === '_blank' ? (props.rel ?? 'noopener') : undefined,
   'tabindex': props.disabled ? '-1' : typeof attrs.tabindex === 'undefined' ? null : attrs.tabindex,
   'aria-disabled': props.disabled ? true : null,
 }))

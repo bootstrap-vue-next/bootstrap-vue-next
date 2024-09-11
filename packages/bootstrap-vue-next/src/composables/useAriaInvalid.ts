@@ -1,7 +1,7 @@
-import type {AriaInvalid} from '../types'
+import type {AriaInvalid} from '../types/AriaInvalid'
 import {computed, type MaybeRefOrGetter, toValue} from 'vue'
 
-export default (
+export const useAriaInvalid = (
   ariaInvalid: MaybeRefOrGetter<AriaInvalid | undefined>,
   state: MaybeRefOrGetter<boolean | null | undefined>
 ) =>

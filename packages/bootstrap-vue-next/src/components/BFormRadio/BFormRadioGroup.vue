@@ -26,14 +26,16 @@
 </template>
 
 <script setup lang="ts">
-import type {BFormRadioGroupProps, RadioValue} from '../../types'
+import type {BFormRadioGroupProps} from '../../types/ComponentProps'
 import {computed, provide, ref, toRef} from 'vue'
-import {radioGroupKey} from '../../utils'
+import {radioGroupKey} from '../../utils/keys'
 import BFormRadio from './BFormRadio.vue'
-import {getGroupAttr, getGroupClasses, useDefaults, useId} from '../../composables'
+import {getGroupAttr, getGroupClasses} from '../../composables/useFormCheck'
 import {useFocus} from '@vueuse/core'
+import {useDefaults} from '../../composables/useDefaults'
+import {useId} from '../../composables/useId'
 
-const _props = withDefaults(defineProps<BFormRadioGroupProps>(), {
+const _props = withDefaults(defineProps<Omit<BFormRadioGroupProps, 'modelValue'>>(), {
   ariaInvalid: undefined,
   autofocus: false,
   buttonVariant: 'secondary',
@@ -64,7 +66,7 @@ defineSlots<{
   first?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = defineModel<RadioValue | null>({
+const modelValue = defineModel<Exclude<BFormRadioGroupProps['modelValue'], undefined>>({
   default: null,
 })
 

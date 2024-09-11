@@ -39,10 +39,11 @@
 
 <script setup lang="ts">
 import {computed, type CSSProperties, inject, toRef} from 'vue'
-import type {BCarouselSlideProps} from '../../types'
-import {carouselInjectionKey, isEmptySlot} from '../../utils'
-import BImg from '../BImg.vue'
-import {useDefaults} from '../../composables'
+import type {BCarouselSlideProps} from '../../types/ComponentProps'
+import {carouselInjectionKey} from '../../utils/keys'
+import BImg from '../BImg/BImg.vue'
+import {useDefaults} from '../../composables/useDefaults'
+import {isEmptySlot} from '../../utils/dom'
 
 const _props = withDefaults(defineProps<BCarouselSlideProps>(), {
   background: undefined,
@@ -79,9 +80,9 @@ const slots = defineSlots<{
 
 const parentData = inject(carouselInjectionKey, null)
 
-const hasText = toRef(() => props.text || props.textHtml || !isEmptySlot(slots.text))
-const hasCaption = toRef(() => props.caption || props.captionHtml || !isEmptySlot(slots.caption))
-const hasContent = toRef(() => hasText.value || hasCaption.value || !isEmptySlot(slots.default))
+const hasText = computed(() => props.text || props.textHtml || !isEmptySlot(slots.text))
+const hasCaption = computed(() => props.caption || props.captionHtml || !isEmptySlot(slots.caption))
+const hasContent = computed(() => hasText.value || hasCaption.value || !isEmptySlot(slots.default))
 
 const computedStyle = computed<CSSProperties>(() => ({
   background: `${

@@ -7,6 +7,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BAvatar',
+      sourcePath: '/BAvatar/BAvatar.vue',
       props: {
         '': {
           badge: {
@@ -69,11 +70,6 @@ export default {
             default: false,
             description: 'Disables rounding of the avatar, rending the avatar with square corners',
           },
-          src: {
-            type: 'string',
-            default: undefined,
-            description: 'Image URL to use for the avatar',
-          },
           text: {
             type: 'string',
             default: undefined,
@@ -89,6 +85,9 @@ export default {
                 description:
                   'Specifies the type of rounding to apply to the component or its children. The `square` prop takes precedence',
               },
+              src: {
+                description: 'Image URL to use for the avatar',
+              },
               variant: {
                 default: 'secondary',
               },
@@ -102,6 +101,7 @@ export default {
               'roundedEnd',
               'roundedStart',
               'roundedTop',
+              'src',
               'textVariant',
               'variant',
             ]
@@ -155,6 +155,7 @@ export default {
     },
     {
       component: 'BAvatarGroup',
+      sourcePath: '/BAvatar/BAvatarGroup.vue',
       props: {
         '': {
           overlap: {

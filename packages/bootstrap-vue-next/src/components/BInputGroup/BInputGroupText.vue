@@ -7,8 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import {useDefaults} from '../../composables'
-import type {BInputGroupTextProps} from '../../types'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BInputGroupTextProps} from '../../types/ComponentProps'
 
 const _props = withDefaults(defineProps<BInputGroupTextProps>(), {
   tag: 'div',

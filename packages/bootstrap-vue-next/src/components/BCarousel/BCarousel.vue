@@ -39,11 +39,11 @@
     </div>
 
     <template v-if="props.controls">
-      <button class="carousel-control-prev" type="button" @click="prev">
+      <button class="carousel-control-prev" type="button" @click="onClickPrev">
         <span class="carousel-control-prev-icon" aria-hidden="true" />
         <span class="visually-hidden">{{ props.controlsPrevText }}</span>
       </button>
-      <button class="carousel-control-next" type="button" @click="next">
+      <button class="carousel-control-next" type="button" @click="onClickNext">
         <span class="carousel-control-next-icon" aria-hidden="true" />
         <span class="visually-hidden">{{ props.controlsNextText }}</span>
       </button>
@@ -52,14 +52,18 @@
 </template>
 
 <script setup lang="ts">
-import {BvCarouselEvent, carouselInjectionKey, getSlotElements} from '../../utils'
+import {BvCarouselEvent} from '../../utils'
 import {computed, onMounted, provide, ref, toRef, watch} from 'vue'
-import {useDefaults, useId} from '../../composables'
-import type {BCarouselProps, Numberish} from '../../types'
+import {useId} from '../../composables/useId'
+import type {BCarouselProps} from '../../types/ComponentProps'
 import {onKeyStroke, useElementHover, useIntervalFn, useSwipe, useToNumber} from '@vueuse/core'
 import type BCarouselSlide from './BCarouselSlide.vue'
+import {useDefaults} from '../../composables/useDefaults'
+import type {Numberish} from '../../types/CommonTypes'
+import {getSlotElements} from '../../utils/getSlotElements'
+import {carouselInjectionKey} from '../../utils/keys'
 
-const _props = withDefaults(defineProps<BCarouselProps>(), {
+const _props = withDefaults(defineProps<Omit<BCarouselProps, 'modelValue'>>(), {
   background: undefined,
   controls: false,
   controlsNextText: 'Next',
@@ -83,8 +87,10 @@ const _props = withDefaults(defineProps<BCarouselProps>(), {
 const props = useDefaults(_props, 'BCarousel')
 
 const emit = defineEmits<{
-  slide: [value: BvCarouselEvent]
-  slid: [value: BvCarouselEvent]
+  'slide': [value: BvCarouselEvent]
+  'slid': [value: BvCarouselEvent]
+  'click:prev': [value: MouseEvent]
+  'click:next': [value: MouseEvent]
 }>()
 
 const slots = defineSlots<{
@@ -94,7 +100,7 @@ const slots = defineSlots<{
 
 const computedId = useId(() => props.id, 'carousel')
 
-const modelValue = defineModel<number>({default: 0})
+const modelValue = defineModel<Exclude<BCarouselProps['modelValue'], undefined>>({default: 0})
 
 const slideValues = ref<null | InstanceType<typeof BCarouselSlide>[]>(null)
 
@@ -120,13 +126,13 @@ const isHovering = useElementHover(element)
 // So all that would be great. However, when you do this, it will break the transition flow. Something about it breaks and I'm not sure why!
 // Try it by removing carousel-item from below and making `!direction.value` => `direction.value` for enter
 // Then reviewing the behavior
-const enterClasses = toRef(
+const enterClasses = computed(
   () =>
     `carousel-item carousel-item-${!direction.value ? 'next' : 'prev'} carousel-item-${
       !direction.value ? 'start' : 'end'
     }`
 )
-const leaveClasses = toRef(
+const leaveClasses = computed(
   () => `carousel-item active carousel-item-${direction.value ? 'start' : 'end'}`
 )
 
@@ -138,7 +144,7 @@ const {pause, resume} = useIntervalFn(
   {immediate: props.ride === 'carousel'}
 )
 
-const isRiding = toRef(
+const isRiding = computed(
   () => (props.ride === true && rideStarted.value === true) || props.ride === 'carousel'
 )
 const slides = computed(() => getSlotElements(slots.default, 'BCarouselSlide'))
@@ -273,6 +279,17 @@ watch(isHovering, (newValue) => {
   }
   onMouseLeave()
 })
+
+const onClickPrev = (event: MouseEvent) => {
+  emit('click:prev', event)
+  if (event.defaultPrevented) return
+  prev()
+}
+const onClickNext = (event: MouseEvent) => {
+  emit('click:next', event)
+  if (event.defaultPrevented) return
+  next()
+}
 
 defineExpose({
   next,

@@ -353,7 +353,7 @@ If you are using one of the preferred installation methods, JS will be tree-shak
 ### Tree-shake JS plugins
 
 `createBootstrap` is a simple utility that provides everything that is required for the library to work. However, some plugins may not be needed.
-One could individually import each needed plugin, they are all appended with `Plugin` (`toastPlugin`, `idPlugin`, etc). So, one could pick and choose what is needed
+One could individually import each needed plugin, they are all appended with `Plugin` (`toastPlugin`, `breadcrumbPlugin`, etc). So, one could pick and choose what is needed
 Practically the `createBootstrap` plugin is ~20kb gzipped with `toast` and `modalController` accounting for the majority. Use this if you really want the tiniest possible size.
 
 <NoteAlert>

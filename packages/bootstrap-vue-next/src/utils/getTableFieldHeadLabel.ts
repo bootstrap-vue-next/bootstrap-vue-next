@@ -1,7 +1,7 @@
 import {titleCase} from './stringUtils'
-import type {TableFieldRaw} from '../types'
+import type {TableFieldRaw} from '../types/TableTypes'
 
-export default (field: Readonly<TableFieldRaw<unknown>>) =>
+export const getTableFieldHeadLabel = (field: Readonly<TableFieldRaw<unknown>>) =>
   typeof field === 'string'
     ? titleCase(field)
     : field.label !== undefined

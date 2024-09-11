@@ -307,7 +307,7 @@ Prefer a square avatar? simply set the `square` prop to `true`.
 ### Rounding
 
 `BAvatar` renders with a circular border radius. You can change the rounding by setting the prop
-`rounded` to one of the values `true`, `'circle'`, `'sm'`, or `'lg'`.
+`rounded` to any of the values of [`RadiusElement`](/docs/types#radiuselement).
 When set to `true` (or the empty string `''`), it uses the Bootstrap default of medium rounding.
 When set to `circle`, it uses a border radius of 50%, resulting in a circle.
 Rounding specific edges is accomplished via the `rounded-top`, `rounded-bottom`, `rounded-start` and

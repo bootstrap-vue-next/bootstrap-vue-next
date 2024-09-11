@@ -6,11 +6,12 @@
 
 <script setup lang="ts">
 import {computed, provide, readonly, toRef} from 'vue'
-import {accordionInjectionKey} from '../../utils'
-import {useDefaults, useId} from '../../composables'
-import type {BAccordionProps} from '../../types'
+import {accordionInjectionKey} from '../../utils/keys'
+import {useId} from '../../composables/useId'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BAccordionProps} from '../../types/ComponentProps'
 
-const _props = withDefaults(defineProps<BAccordionProps>(), {
+const _props = withDefaults(defineProps<Omit<BAccordionProps, 'modelValue'>>(), {
   flush: false,
   free: false,
   id: undefined,
@@ -23,7 +24,7 @@ defineSlots<{
 
 const props = useDefaults(_props, 'BAccordion')
 
-const modelValue = defineModel<string | undefined>({
+const modelValue = defineModel<BAccordionProps['modelValue']>({
   default: undefined,
 })
 

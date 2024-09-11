@@ -7,6 +7,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BBadge',
+      sourcePath: '/BBadge/BBadge.vue',
       props: {
         '': {
           dotIndicator: {

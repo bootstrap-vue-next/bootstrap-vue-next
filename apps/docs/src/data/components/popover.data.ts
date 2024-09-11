@@ -5,6 +5,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BPopover',
+      sourcePath: '/BPopover/BPopover.vue',
       props: {
         '': {
           boundary: {

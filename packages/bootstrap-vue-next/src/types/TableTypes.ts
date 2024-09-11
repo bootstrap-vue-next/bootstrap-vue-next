@@ -1,5 +1,8 @@
-import type {AttrsValue, ClassValue, ColorVariant, LiteralUnion, MaybePromise} from '.'
 import type {StyleValue} from 'vue'
+import type {ColorVariant} from './ColorTypes'
+import type {MaybePromise} from './MaybePromise'
+import type {LiteralUnion} from './LiteralUnion'
+import type {AttrsValue, ClassValue} from './AnyValuedAttributes'
 
 export type TableItem<T = Record<string, unknown>> = T & {
   _rowVariant?: ColorVariant | null
