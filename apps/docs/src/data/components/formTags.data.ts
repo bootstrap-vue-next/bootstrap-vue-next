@@ -412,7 +412,8 @@ export default {
             {
               prop: 'remove',
               type: '() => void',
-              description: 'Method to fully reset the tags input [Not yet implemented]',
+              description: 'Method to fully reset the tags input',
+              notYetImplemented: true,
             },
             {
               prop: 'removeTag',
