@@ -182,7 +182,7 @@ not implemented.
 
 The `sliding-start` and `sliding-end` events have been renamed to `slide` and `slid`.
 The `label-indicators` prop has been renamed to `indicators-button-label`.
-The `label-goto-slide`and `no-animation` props are not yet implemented.
+<NotYetImplemented>The `label-goto-slide`and `no-animation` props.</NotYetImplemented>
 
 ## BForm
 
@@ -214,7 +214,7 @@ Use `label-visually-hidden` instead of `label-sronly` per
 Access to the native `input` element is implemented differently due to changes in how Vue 3
 handles references. See the [BFormInput documentation](/docs/components/form-input#exposed-input-element) for more details.
 
-Datalist and disabling mousewheel events are not yet implemented.
+<NotYetImplemented>Disabling mousewheel events.</NotYetImplemented>
 
 `trim`, `lazy`, or `number` properties have been deprecated. We support the native modifiers
 [`trim`, `lazy`, and `number`](https://vuejs.org/guide/essentials/forms.html#modifiers).
@@ -422,7 +422,7 @@ Keyboard Navigation and Small Screen Support.
 
 ## BPaginationNav
 
-This component is not yet implemented
+<NotYetImplemented/>
 
 <script setup lang="ts">
 import {computed, ref} from 'vue'

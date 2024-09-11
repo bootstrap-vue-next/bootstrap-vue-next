@@ -221,8 +221,7 @@ export const commonProps = () =>
     list: {
       type: 'string',
       default: 'undefined',
-      description:
-        'The ID of the associated datalist element or component (Datalist is Not Yet Implemented)',
+      description: 'The ID of the associated datalist element or component',
     },
     name: {
       type: 'string',
