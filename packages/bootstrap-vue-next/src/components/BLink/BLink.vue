@@ -8,12 +8,13 @@
     custom
   >
     <component
-      :is="routerTag"
+      :is="props.routerTag"
       :href="localHref"
+      :target="props.target"
       :class="{
         [defaultActiveClass]: props.active,
-        [activeClass]: isActive,
-        [exactActiveClass]: isExactActive,
+        [props.activeClass]: isActive,
+        [props.exactActiveClass]: isExactActive,
       }"
       v-bind="$attrs"
       @click=";[navigate($event), clicked($event)]"
@@ -27,20 +28,20 @@
 </template>
 
 <script setup lang="ts">
-import type {BLinkProps} from '../../types'
-import {collapseInjectionKey, navbarInjectionKey} from '../../utils'
+import {useDefaults} from '../../composables/useDefaults'
+import {useLinkClasses} from '../../composables/useLinkClasses'
+import type {BLinkProps} from '../../types/ComponentProps'
+import {collapseInjectionKey, navbarInjectionKey} from '../../utils/keys'
 import {computed, getCurrentInstance, inject, useAttrs} from 'vue'
 
-// TODO this component will likely have an issue with inheritAttrs
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
 }>()
 
-const props = withDefaults(defineProps<BLinkProps>(), {
+const _props = withDefaults(defineProps<BLinkProps>(), {
   active: undefined,
   activeClass: 'router-link-active',
-  append: false,
   disabled: false,
   exactActiveClass: 'router-link-exact-active',
   href: undefined,
@@ -53,6 +54,7 @@ const props = withDefaults(defineProps<BLinkProps>(), {
   replace: false,
   routerComponentName: 'router-link',
   routerTag: 'a',
+  stretched: false,
   target: undefined,
   to: undefined,
   underlineOffset: undefined,
@@ -62,6 +64,7 @@ const props = withDefaults(defineProps<BLinkProps>(), {
   underlineVariant: null,
   variant: null,
 })
+const props = useDefaults(_props, 'BLink')
 
 const emit = defineEmits<{
   click: [value: MouseEvent]
@@ -69,15 +72,12 @@ const emit = defineEmits<{
 
 const attrs = useAttrs()
 
-// TODO append not yet implemented
-
-// TODO replace not yet implemented
 const collapseData = inject(collapseInjectionKey, null)
 const navbarData = inject(navbarInjectionKey, null)
 
 const instance = getCurrentInstance()
 
-const defaultActiveClass = 'active' as const
+const defaultActiveClass = 'active'
 
 const tag = computed(() => {
   const routerName = props.routerComponentName
@@ -114,25 +114,24 @@ const computedHref = computed(() => {
   return toFallback
 })
 
-const computedClasses = computed(() => ({
-  [`link-${props.variant}`]: props.variant !== null,
-  [`link-opacity-${props.opacity}`]: props.opacity !== undefined,
-  [`link-opacity-${props.opacityHover}-hover`]: props.opacityHover !== undefined,
-  [`link-underline-${props.underlineVariant}`]: props.underlineVariant !== null,
-  [`link-offset-${props.underlineOffset}`]: props.underlineOffset !== undefined,
-  [`link-offset-${props.underlineOffsetHover}-hover`]: props.underlineOffsetHover !== undefined,
-  [`link-underline-opacity-${props.underlineOpacity}`]: props.underlineOpacity !== undefined,
-  [`link-underline-opacity-${props.underlineOpacityHover}-hover`]:
-    props.underlineOpacityHover !== undefined,
-  'icon-link': props.icon === true,
-}))
+/**
+ * Not to be confused with computedLinkClasses
+ */
+const linkValueClasses = useLinkClasses(props)
+const computedClasses = computed(() => [
+  linkValueClasses.value,
+  {
+    'stretched-link': props.stretched === true,
+  },
+])
 
 const routerAttr = computed(() => ({
   'class': computedClasses.value,
   'to': props.to,
+  'replace': props.replace,
   'href': computedHref.value,
   'target': props.target,
-  'rel': props.target === '_blank' ? props.rel ?? 'noopener' : undefined,
+  'rel': props.target === '_blank' ? (props.rel ?? 'noopener') : undefined,
   'tabindex': props.disabled ? '-1' : typeof attrs.tabindex === 'undefined' ? null : attrs.tabindex,
   'aria-disabled': props.disabled ? true : null,
 }))

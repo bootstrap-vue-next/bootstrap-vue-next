@@ -1,31 +1,31 @@
-import type {ComponentReference} from './ComponentReference'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BListGroup',
-      props: [
-        {
-          prop: 'flush',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'horizontal',
-          type: 'boolean | Breakpoint',
-          default: false,
-        },
-        {
-          prop: 'numbered',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'div',
-        },
-      ],
+      sourcePath: '/BListGroup/BListGroup.vue',
+      props: {
+        '': {
+          flush: {
+            type: 'boolean',
+            default: false,
+          },
+          horizontal: {
+            type: 'boolean | Breakpoint',
+            default: false,
+          },
+          numbered: {
+            type: 'boolean',
+            default: false,
+          },
+          tag: {
+            type: 'string',
+            default: 'div',
+          },
+        } satisfies Record<keyof BvnComponentProps['BListGroup'], PropertyReference>,
+      },
       emits: [],
       slots: [
         {
@@ -37,23 +37,107 @@ export default {
     },
     {
       component: 'BListGroupItem',
-      props: [
-        {
-          prop: 'action',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'button',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'div',
-        },
-      ],
+      sourcePath: '/BListGroup/BListGroupItem.vue',
+      props: {
+        '': {
+          action: {
+            type: 'boolean',
+            default: false,
+          },
+          active: {
+            type: 'boolean',
+            default: false,
+          },
+          activeClass: {
+            type: 'string',
+            default: undefined,
+          },
+          button: {
+            type: 'boolean',
+            default: false,
+          },
+          disabled: {
+            type: 'boolean',
+            default: undefined,
+          },
+          exactActiveClass: {
+            type: 'string',
+            default: undefined,
+          },
+          href: {
+            type: 'string',
+            default: undefined,
+          },
+          icon: {
+            type: 'boolean',
+            default: undefined,
+          },
+          opacity: {
+            type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
+            default: undefined,
+          },
+          opacityHover: {
+            type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
+            default: undefined,
+          },
+          rel: {
+            type: 'string',
+            default: undefined,
+          },
+          replace: {
+            type: 'boolean',
+            default: undefined,
+          },
+          routerComponentName: {
+            type: 'string',
+            default: undefined,
+          },
+          stretched: {
+            type: 'boolean',
+            default: false,
+          },
+          tag: {
+            type: 'string',
+            default: 'div',
+          },
+          target: {
+            type: 'LinkTarget',
+            default: undefined,
+          },
+          to: {
+            type: 'RouteLocationRaw',
+            default: undefined,
+          },
+          underlineOffset: {
+            type: "1 | 2 | 3 | '1' | '2' | '3'",
+            default: undefined,
+          },
+          underlineOffsetHover: {
+            type: "1 | 2 | 3 | '1' | '2' | '3'",
+            default: undefined,
+          },
+          underlineOpacity: {
+            type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
+            default: undefined,
+          },
+          underlineOpacityHover: {
+            type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
+            default: undefined,
+          },
+          underlineVariant: {
+            type: 'ColorVariant | null',
+            default: undefined,
+          },
+          variant: {
+            type: 'ColorVariant | null',
+            default: undefined,
+          },
+          noPrefetch: {},
+          noRel: {},
+          prefetch: {},
+          prefetchedClass: {},
+        } satisfies Record<keyof BvnComponentProps['BListGroupItem'], PropertyReference>,
+      },
       emits: [],
       slots: [
         {

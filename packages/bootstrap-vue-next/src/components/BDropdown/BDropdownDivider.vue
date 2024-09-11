@@ -1,13 +1,20 @@
 <template>
   <li role="presentation">
-    <component :is="tag" class="dropdown-divider" role="separator" aria-orientation="horizontal" />
+    <component
+      :is="props.tag"
+      class="dropdown-divider"
+      role="separator"
+      aria-orientation="horizontal"
+    />
   </li>
 </template>
 
 <script setup lang="ts">
-import type {BDropdownDividerProps} from '../../types'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BDropdownDividerProps} from '../../types/ComponentProps'
 
-withDefaults(defineProps<BDropdownDividerProps>(), {
+const _props = withDefaults(defineProps<BDropdownDividerProps>(), {
   tag: 'hr',
 })
+const props = useDefaults(_props, 'BDropdownDivider')
 </script>

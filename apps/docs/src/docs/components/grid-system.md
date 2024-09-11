@@ -1,12 +1,10 @@
 # Grid System
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -176,6 +174,7 @@ For more detailed documentation and understanding, please visit Bootstrap's offi
 <script setup lang="ts">
 import {data} from '../../data/components/gridSystem.data'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BCard, BCardBody, BContainer, BRow, BCol, BImg} from 'bootstrap-vue-next'
 </script>

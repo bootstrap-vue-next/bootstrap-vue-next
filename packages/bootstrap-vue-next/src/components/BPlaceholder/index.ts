@@ -1,0 +1,5 @@
+export {default as BPlaceholder} from './BPlaceholder.vue'
+export {default as BPlaceholderButton} from './BPlaceholderButton.vue'
+export {default as BPlaceholderCard} from './BPlaceholderCard.vue'
+export {default as BPlaceholderTable} from './BPlaceholderTable.vue'
+export {default as BPlaceholderWrapper} from './BPlaceholderWrapper.vue'

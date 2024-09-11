@@ -3,33 +3,33 @@
     <slot name="img">
       <BImg
         class="d-block w-100"
-        :alt="imgAlt"
-        :srcset="imgSrcset"
-        :src="imgSrc"
-        :width="imgWidth || parentData?.width.value"
-        :height="imgHeight || parentData?.height.value"
-        :blank="imgBlank"
-        :blank-color="imgBlankColor"
+        :alt="props.imgAlt"
+        :srcset="props.imgSrcset"
+        :src="props.imgSrc"
+        :width="props.imgWidth || parentData?.width.value"
+        :height="props.imgHeight || parentData?.height.value"
+        :blank="props.imgBlank"
+        :blank-color="props.imgBlankColor"
       />
     </slot>
     <component
-      :is="contentTag"
+      :is="props.contentTag"
       v-if="hasContent"
       class="carousel-caption"
       :class="computedContentClasses"
     >
-      <component :is="captionTag" v-if="hasCaption">
+      <component :is="props.captionTag" v-if="hasCaption">
         <slot name="caption">
           <!-- eslint-disable-next-line vue/no-v-html -->
-          <span v-if="captionHtml" v-html="captionHtml" />
-          <span v-else>{{ caption }}</span>
+          <span v-if="props.captionHtml" v-html="props.captionHtml" />
+          <span v-else>{{ props.caption }}</span>
         </slot>
       </component>
-      <component :is="textTag" v-if="hasText">
+      <component :is="props.textTag" v-if="hasText">
         <slot name="text">
           <!-- eslint-disable-next-line vue/no-v-html -->
-          <span v-if="textHtml" v-html="textHtml" />
-          <span v-else>{{ text }}</span>
+          <span v-if="props.textHtml" v-html="props.textHtml" />
+          <span v-else>{{ props.text }}</span>
         </slot>
       </component>
       <slot />
@@ -39,15 +39,13 @@
 
 <script setup lang="ts">
 import {computed, type CSSProperties, inject, toRef} from 'vue'
-import type {BCarouselSlideProps} from '../../types'
-import {carouselInjectionKey, isEmptySlot} from '../../utils'
-import BImg from '../BImg.vue'
+import type {BCarouselSlideProps} from '../../types/ComponentProps'
+import {carouselInjectionKey} from '../../utils/keys'
+import BImg from '../BImg/BImg.vue'
+import {useDefaults} from '../../composables/useDefaults'
+import {isEmptySlot} from '../../utils/dom'
 
-// TODO interval is unused
-// Need to add https://getbootstrap.com/docs/5.3/components/carousel/#individual-carousel-item-interval
-// Perhaps a provide/inject with next/prev values where the component can call those would work.
-
-const props = withDefaults(defineProps<BCarouselSlideProps>(), {
+const _props = withDefaults(defineProps<BCarouselSlideProps>(), {
   background: undefined,
   caption: undefined,
   captionHtml: undefined,
@@ -67,6 +65,7 @@ const props = withDefaults(defineProps<BCarouselSlideProps>(), {
   textHtml: undefined,
   textTag: 'p',
 })
+const props = useDefaults(_props, 'BCarouselSlide')
 
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -81,9 +80,9 @@ const slots = defineSlots<{
 
 const parentData = inject(carouselInjectionKey, null)
 
-const hasText = toRef(() => props.text || props.textHtml || !isEmptySlot(slots.text))
-const hasCaption = toRef(() => props.caption || props.captionHtml || !isEmptySlot(slots.caption))
-const hasContent = toRef(() => hasText.value || hasCaption.value || !isEmptySlot(slots.default))
+const hasText = computed(() => props.text || props.textHtml || !isEmptySlot(slots.text))
+const hasCaption = computed(() => props.caption || props.captionHtml || !isEmptySlot(slots.caption))
+const hasContent = computed(() => hasText.value || hasCaption.value || !isEmptySlot(slots.default))
 
 const computedStyle = computed<CSSProperties>(() => ({
   background: `${
@@ -95,4 +94,8 @@ const computedContentClasses = computed(() => ({
   'd-none': props.contentVisibleUp !== undefined,
   [`d-${props.contentVisibleUp}-block`]: props.contentVisibleUp !== undefined,
 }))
+
+defineExpose({
+  _interval: toRef(() => props.interval),
+})
 </script>

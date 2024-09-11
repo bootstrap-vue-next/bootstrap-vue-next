@@ -1,13 +1,10 @@
 # Color variants and CSS class mapping
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ContentsSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
-
+</ContentsSidebar>
 <div class="lead mb-5">
 
 <p>Color variants are available when using the default Bootstrap v5 CSS and their mappings to CSS classes</p>
@@ -240,6 +237,7 @@ $dark: $gray-900;
 <script setup lang="ts">
 import {BCard} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
+import ContentsSidebar from '../../components/ContentsSidebar.vue'
 </script>
 
 <style lang="scss">

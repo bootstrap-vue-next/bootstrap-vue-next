@@ -1,71 +1,63 @@
-import type {ComponentReference} from './ComponentReference'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BTab',
-      props: [
-        {
-          prop: 'id',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'title',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'active',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'buttonId',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'disabled',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'lazy',
-          type: 'boolean',
-          default: undefined,
-        },
-        {
-          prop: 'lazyOnce',
-          type: 'boolean',
-          default: undefined,
-        },
-        {
-          prop: 'noBody',
-          type: 'boolean | string',
-          default: false,
-        },
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'div',
-        },
-        {
-          prop: 'titleItemClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'titleLinkAttributes',
-          type: 'Record<string, unknown>',
-          default: undefined,
-        },
-        {
-          prop: 'titleLinkClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-      ],
+      sourcePath: '/BTabs/BTab.vue',
+      props: {
+        '': {
+          active: {
+            type: 'boolean',
+            default: false,
+          },
+          buttonId: {
+            type: 'string',
+            default: undefined,
+          },
+          disabled: {
+            type: 'boolean',
+            default: false,
+          },
+          id: {
+            type: 'string',
+            default: undefined,
+          },
+          lazy: {
+            type: 'boolean',
+            default: undefined,
+          },
+          lazyOnce: {
+            type: 'boolean',
+            default: undefined,
+          },
+          noBody: {
+            type: 'boolean',
+            default: false,
+          },
+          tag: {
+            type: 'string',
+            default: 'div',
+          },
+          title: {
+            type: 'string',
+            default: undefined,
+          },
+          titleItemClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          titleLinkAttrs: {
+            type: 'AttrsValue',
+            default: undefined,
+          },
+          titleLinkClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+        } satisfies Record<keyof BvnComponentProps['BTab'], PropertyReference>,
+      },
       emits: [],
       slots: [
         {
@@ -73,133 +65,127 @@ export default {
           name: 'default',
           scope: [],
         },
+        {
+          name: 'title',
+          description: '',
+          scope: [],
+        },
       ],
     },
     {
       component: 'BTabs',
-      props: [
-        {
-          prop: 'activeNavItemClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'activeTabClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'align',
-          type: 'AlignmentJustifyContent',
-          default: undefined,
-        },
-        {
-          prop: 'contentClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'card',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'end',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'fill',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'id',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'inactiveNavItemClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'inactiveTabClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'justified',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'lazy',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'navClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'navItemClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'navWrapperClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'noFade',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'noNavStyle',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'pills',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'small',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'div',
-        },
-        {
-          prop: 'vertical',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'modelValue',
-          type: 'number',
-          default: -1,
-        },
-      ],
+      sourcePath: '/BTabs/BTabs.vue',
+      props: {
+        '': {
+          activeId: {
+            type: 'string',
+            default: undefined,
+          },
+          activeNavItemClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          activeTabClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          align: {
+            type: 'AlignmentJustifyContent',
+            default: undefined,
+          },
+          card: {
+            type: 'boolean',
+            default: false,
+          },
+          contentClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          end: {
+            type: 'boolean',
+            default: false,
+          },
+          fill: {
+            type: 'boolean',
+            default: false,
+          },
+          id: {
+            type: 'string',
+            default: undefined,
+          },
+          inactiveNavItemClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          inactiveTabClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          justified: {
+            type: 'boolean',
+            default: false,
+          },
+          lazy: {
+            type: 'boolean',
+            default: false,
+          },
+          modelValue: {
+            type: 'number',
+            default: -1,
+          },
+          navClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          navItemClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          navWrapperClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          noFade: {
+            type: 'boolean',
+            default: false,
+          },
+          noNavStyle: {
+            type: 'boolean',
+            default: false,
+          },
+          pills: {
+            type: 'boolean',
+            default: false,
+          },
+          small: {
+            type: 'boolean',
+            default: false,
+          },
+          tag: {
+            type: 'string',
+            default: 'div',
+          },
+          tabClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          vertical: {
+            type: 'boolean',
+            default: false,
+          },
+        } satisfies Record<keyof BvnComponentProps['BTabs'], PropertyReference>,
+      },
       emits: [
         {
           args: [
             {
-              arg: 'update:modelValue',
+              arg: 'update:model-value',
               description: '',
               type: 'number',
             },
           ],
           description: '',
-          event: 'update:modelValue',
+          event: 'update:model-value',
         },
         {
           args: [

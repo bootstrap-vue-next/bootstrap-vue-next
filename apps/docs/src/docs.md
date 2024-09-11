@@ -14,21 +14,13 @@ Get started with BootstrapVueNext and Bootstrap `v5`, the world’s most popular
 
 </div>
 
-<BAlert variant="danger" :model-value="true" class="my-5">
-
-NOT PRODUCTION READY
-
-This project is still in **alpha version**. There is a lot of work to do and the documentation may be out of date, if you want to contribute you can use it and submit an [issue](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues) or even better, a [pull request](https://github.com/bootstrap-vue-next/bootstrap-vue-next/pulls) 😄
-
-</BAlert>
-
 ## Why BootstrapVueNext?
 
 BootstrapVueNext is an attempt to have the [BootstrapVue](https://bootstrap-vue.org/) components in Vue3, Bootstrap 5, and typescript. Another goal is to have the components written in a simple and readable way for a better developer experience.
 
 ## Contribute and Support 🙌
 
-This project is still in **alpha version** so there is a lot of work to do. If you want to contribute you can:
+This project is in the **late stages of alpha version**. While most features are functioning as expected, you may still encounter some issues. Your contributions at this stage can be particularly impactful in shaping the final product. If you're interested in contributing, here's how you can help:
 
 - submit an [issue](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues)
 - or better, a [pull request](https://github.com/bootstrap-vue-next/bootstrap-vue-next/pulls)
@@ -112,11 +104,7 @@ Now, you can begin importing and using components
 
 #### Automatic Registering of Components
 
-By default, the plugin does not globally register components. In order to accomplish this, there are two methods
-
-##### Tree-shaken Installation Method
-
-To have components automatically registered **and** tree-shaken, we recommend [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components). Read their docs for additional details. This is in addition to the above installation steps
+To have components automatically registered **and** tree-shaken, we recommend [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components). Read their docs for additional details. This is in addition to the above installation steps. We supply a resolver
 
 <ClientOnly>
 <BTabs v-model="codePreference">
@@ -176,7 +164,7 @@ The following is an example of a basic `vite.config.js/ts`. All you need to do i
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
-import {BootstrapVueNextResolver} from 'unplugin-vue-components/resolvers'
+import {BootstrapVueNextResolver} from 'bootstrap-vue-next'
 
 export default defineConfig({
   plugins: [
@@ -190,27 +178,28 @@ export default defineConfig({
 
 </HighlightCard>
 
-##### Built-in Registry
+<NoteAlert>
+The resolver import is from `bootstrap-vue-next`, not `unplugin-vue-components`
+</NoteAlert>
 
-This method for globally registering components is usually not recommended. The reason is because all components are registered in Vue, and thus are not automatically tree-shaken if you do not use them, increasing the bundle size
+##### Aliasing
 
-<HighlightCard>
+With the `BootstrapVueNextResolver` we also have an option for aliasing components like so:
 
-```typescript
-// main.js/ts
-import {createApp} from 'vue'
-import {createBootstrap} from 'bootstrap-vue-next'
+```ts
+import {Components} from 'unplugin-vue-components'
+import {BootstrapVueNextResolver} from 'bootstrap-vue-next'
 
-// Add the necessary CSS
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
-
-const app = createApp(App)
-app.use(createBootstrap({components: true, directives: true})) // Change this line
-app.mount('#app')
+Components({
+  resolvers: [
+    BootstrapVueNextResolver({
+      aliases: {
+        BInput: 'BFormInput',
+      },
+    }),
+  ],
+})
 ```
-
-</HighlightCard>
 
 ### Installation - Nuxt.js 3
 
@@ -311,8 +300,11 @@ export default defineNuxtConfig({
     // composables: {useBreadcrumb: true, useColorMode: true, all: false}, // Will include only useBreadcrumb & useColorMode
     // composables: {useBreadcrumb: false, useColorMode: false, all: true} // Will include everything except useBreadcrumb & useColorMode
     directives: {all: true}, // Will include all directives
+    css: true, // Will include the module's CSS. If set to false, you can add the CSS manually in the 'css' property below
   },
-  css: ['bootstrap/dist/css/bootstrap.min.css'],
+  css: [
+    // 'bootstrap/dist/css/bootstrap.min.css' // Not necessary if `css: true`
+  ],
 })
 ```
 
@@ -338,9 +330,9 @@ BootstrapVueNext is available through `jsdelivr`. You can add the package by usi
 
 - **NOTE** Do not forget to set the version!
 
-<BAlert :model-value="true" variant="info">
+<NoteAlert>
 Links should be loaded after Bootstrap and Vue
-</BAlert>
+</NoteAlert>
 
 Alternatively the ESM package is available as well
 
@@ -358,14 +350,25 @@ Alternatively the ESM package is available as well
 
 If you are using one of the preferred installation methods, JS will be tree-shaken by default. The one thing we are not able to do automatically is optimize CSS. Methods like PurgeCSS are not ideal because of a limitation with the dynamic nature of class renderings and Vue (Problematic code like: `[btn-${props.variant}]: props.variant !== undefined`). With that being said, BootstrapVueNext does not handle CSS imports from Bootstrap, we only add some additional CSS ourselves. So, using a method such as [Lean Sass Imports](https://getbootstrap.com/docs/5.3/customize/optimize/#lean-sass-imports) from the Bootstrap documentation is likely the best way to achieve the tiniest possible application size. Though it is not automatic, it should prove the safest bet for minifying your application.
 
+### Tree-shake JS plugins
+
+`createBootstrap` is a simple utility that provides everything that is required for the library to work. However, some plugins may not be needed.
+One could individually import each needed plugin, they are all appended with `Plugin` (`toastPlugin`, `breadcrumbPlugin`, etc). So, one could pick and choose what is needed
+Practically the `createBootstrap` plugin is ~20kb gzipped with `toast` and `modalController` accounting for the majority. Use this if you really want the tiniest possible size.
+
+<NoteAlert>
+The `defaultsPlugin` is required by all components if one chooses to use this
+</NoteAlert>
+
 ## Comparison with BootstrapVue
 
-BootstrapVue is the parent project for which this is based on. We consider BootstrapVue as the best implementation of Bootstrap `v4`. We strive for a full compatibility list for BootstrapVue. However, due to the nature of the rewrite, some features may be missing or changed. If anyone has spotted a missing compatibility feature, we request that you submit a GitHub issue.
+BootstrapVue is the parent project for which this is based on. We consider BootstrapVue as the best implementation of Bootstrap `v4`. We strive for a full compatibility list for BootstrapVue. However, due to the nature of the rewrite, some features may be missing or changed. If anyone has spotted a missing compatibility feature, we request that you submit a GitHub issue or contribute to the [parity report](https://github.com/bootstrap-vue-next/bootstrap-vue-next/blob/main/CONTRIBUTING.md#help-verify-bootstrapvue-and-bootstrap-v5-parity).
 
 <script setup lang="ts">
-import {BCard, BCardBody, BAlert, BTab, BTabs} from 'bootstrap-vue-next'
+import {BCard, BCardBody, BTab, BTabs} from 'bootstrap-vue-next'
 import {useLocalStorage} from '@vueuse/core'
 import HighlightCard from './components/HighlightCard.vue'
+import NoteAlert from './components/NoteAlert.vue'
 
 const codePreference = useLocalStorage('code-group-preference', 0)
 </script>

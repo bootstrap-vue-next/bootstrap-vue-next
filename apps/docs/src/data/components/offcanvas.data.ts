@@ -1,157 +1,284 @@
-import type {ComponentReference} from './ComponentReference'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BOffcanvas',
-      props: [
-        {
-          prop: 'modelValue',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'bodyScrolling',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'backdrop',
-          type: 'boolean',
-          default: true,
-        },
-        {
-          prop: 'noCloseOnBackdrop',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'noCloseOnEsc',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'placement',
-          type: "'top' | 'bottom' | 'start' | 'end'",
-          default: 'start',
-        },
-        {
-          prop: 'title',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'noHeaderClose',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'noHeader',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'lazy',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'id',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'noFocus',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'backdropVariant',
-          type: 'ColorVariant | null',
-          default: 'dark',
-        },
-        {
-          prop: 'headerClass',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'headerCloseClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'headerCloseLabel',
-          type: 'string',
-          default: 'Close',
-        },
-        {
-          prop: 'headerCloseVariant',
-          type: 'ButtonVariant | null',
-          default: 'secondary',
-        },
-        {
-          prop: 'bodyClass',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'footerClass',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'teleportDisabled',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'teleportTo',
-          type: 'string | RendererElement | null | undefined',
-          default: 'body',
-        },
-      ],
+      sourcePath: '/BOffcanvas/BOffcanvas.vue',
+      props: {
+        '': {
+          bodyAttrs: {
+            type: 'Readonly<AttrsValue>',
+            default: undefined,
+          },
+          bodyClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          bodyScrolling: {
+            type: 'boolean',
+            default: false,
+          },
+          footerClass: {
+            type: 'string',
+            default: undefined,
+          },
+          headerClass: {
+            type: 'string',
+            default: undefined,
+          },
+          headerCloseClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          headerCloseLabel: {
+            type: 'string',
+            default: 'Close',
+          },
+          headerCloseVariant: {
+            type: 'ButtonVariant | null',
+            default: 'secondary',
+          },
+          hideBackdrop: {
+            type: 'boolean',
+            default: false,
+          },
+          id: {
+            type: 'string',
+            default: undefined,
+          },
+          lazy: {
+            type: 'boolean',
+            default: false,
+          },
+          modelValue: {
+            type: 'boolean',
+            default: false,
+          },
+          noCloseOnBackdrop: {
+            type: 'boolean',
+            default: false,
+          },
+          noCloseOnEsc: {
+            type: 'boolean',
+            default: false,
+          },
+          noFocus: {
+            type: 'boolean',
+            default: false,
+          },
+          noHeader: {
+            type: 'boolean',
+            default: false,
+          },
+          noHeaderClose: {
+            type: 'boolean',
+            default: false,
+          },
+          noTrap: {
+            type: 'boolean',
+            default: false,
+            description: 'Disables the focus trap feature',
+          },
+          placement: {
+            type: 'Placement',
+            default: 'start',
+          },
+          responsive: {
+            type: 'Breakpoint',
+          },
+          shadow: {
+            type: 'Size | boolean',
+            default: false,
+          },
+          teleportDisabled: {
+            type: 'boolean',
+            default: false,
+          },
+          teleportTo: {
+            type: 'string | RendererElement | null | undefined',
+            default: 'body',
+          },
+          title: {
+            type: 'string',
+            default: undefined,
+          },
+          width: {
+            type: 'string',
+            default: undefined,
+          },
+        } satisfies Record<keyof BvnComponentProps['BOffcanvas'], PropertyReference>,
+      },
       emits: [
         {
-          event: 'update:modelValue',
+          event: 'update:model-value',
           args: [
             {
-              arg: 'update:modelValue',
+              arg: 'update:model-value',
               description: '',
               type: 'boolean',
             },
           ],
         },
         {
-          args: [],
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
           description: '',
           event: 'show',
         },
         {
+          event: 'show-prevented',
+          description: '',
           args: [],
+        },
+        {
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
           description: '',
           event: 'shown',
         },
         {
-          args: [],
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
           description: '',
           event: 'hide',
         },
         {
+          event: 'hide-prevented',
+          description: '',
           args: [],
+        },
+        {
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
           description: '',
           event: 'hidden',
+        },
+        {
+          event: 'close',
+          description: '',
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
+        },
+        {
+          event: 'esc',
+          description: '',
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
         },
       ],
       slots: [
         {
           description: '',
           name: 'title',
-          scope: [],
+          scope: [
+            {
+              prop: 'visible',
+              type: 'boolean',
+            },
+            {
+              prop: 'placement',
+              type: "'top' | 'bottom' | 'start' | 'end'",
+            },
+            {
+              prop: 'hide',
+              type: '(trigger?: string) => void',
+            },
+          ],
         },
         {
           description: '',
           name: 'default',
+          scope: [
+            {
+              prop: 'visible',
+              type: 'boolean',
+            },
+            {
+              prop: 'placement',
+              type: "'top' | 'bottom' | 'start' | 'end'",
+            },
+            {
+              prop: 'hide',
+              type: '(trigger?: string) => void',
+            },
+          ],
+        },
+        {
+          name: 'backdrop',
+          description: '',
+          scope: [],
+        },
+        {
+          name: 'footer',
+          description: '',
+          scope: [
+            {
+              prop: 'visible',
+              type: 'boolean',
+            },
+            {
+              prop: 'placement',
+              type: "'top' | 'bottom' | 'start' | 'end'",
+            },
+            {
+              prop: 'hide',
+              type: '(trigger?: string) => void',
+            },
+          ],
+        },
+        {
+          name: 'header',
+          description: '',
+          scope: [
+            {
+              prop: 'visible',
+              type: 'boolean',
+            },
+            {
+              prop: 'placement',
+              type: "'top' | 'bottom' | 'start' | 'end'",
+            },
+            {
+              prop: 'hide',
+              type: '(trigger?: string) => void',
+            },
+          ],
+        },
+        {
+          name: 'header-close',
+          description: '',
           scope: [],
         },
       ],

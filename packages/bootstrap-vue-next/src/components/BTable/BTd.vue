@@ -2,11 +2,11 @@
   <td
     :scope="scope"
     :class="computedClasses"
-    :colspan="colspan"
-    :rowspan="rowspan"
-    :data-label="stackedHeading"
+    :colspan="props.colspan"
+    :rowspan="props.rowspan"
+    :data-label="props.stackedHeading"
   >
-    <div v-if="stackedHeading">
+    <div v-if="props.stackedHeading">
       <slot />
     </div>
     <slot v-else />
@@ -14,16 +14,18 @@
 </template>
 
 <script setup lang="ts">
-import type {BTdProps} from '../../types'
-import {computed, toRef} from 'vue'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BTdProps} from '../../types/ComponentProps'
+import {computed} from 'vue'
 
-const props = withDefaults(defineProps<BTdProps>(), {
+const _props = withDefaults(defineProps<BTdProps>(), {
   colspan: undefined,
   rowspan: undefined,
   stackedHeading: undefined,
   stickyColumn: false,
   variant: null,
 })
+const props = useDefaults(_props, 'BTd')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -36,5 +38,5 @@ const computedClasses = computed(() => ({
   'table-b-table-default': props.stickyColumn && props.variant === null,
 }))
 
-const scope = toRef(() => (props.colspan ? 'colspan' : props.rowspan ? 'rowspan' : 'col'))
+const scope = computed(() => (props.colspan ? 'colspan' : props.rowspan ? 'rowspan' : 'col'))
 </script>

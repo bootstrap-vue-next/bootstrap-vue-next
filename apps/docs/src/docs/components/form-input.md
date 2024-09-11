@@ -1,12 +1,10 @@
 # Form Input
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -35,7 +33,7 @@ const selectedText = ref('')
 
 ## Input type
 
-`BFormInput` defaults to a `text` input, but you can set the `type` prop to one of the supported native browser HTML5 types: `text`, `password`, `email`, `number`, `url`, `tel`, `search`, `date`, `datetime`, `datetime-local`, `month`, `week`, `time`, `range`, or `color`.
+`BFormInput` defaults to a `text` input, but you can set the `type` prop to one of the supported native browser HTML5 types: `text`, `password`, `email`, `number`, `url`, `tel`, `search`, `date`, `datetime-local`, `month`, `week`, `time`, `range`, or `color`.
 
 <HighlightCard>
   <BRow class="my-1" v-for="type in inputTypes" :key="type">
@@ -76,7 +74,6 @@ const inputTypes = [
   'time',
   'range',
   'color',
-  'datetime',
   'datetime-local',
   'month',
   'week',
@@ -105,9 +102,6 @@ If the `type` prop is set to an input type that is not supported (see above), a 
 - Regardless of input type, the value is **always** returned as a string representation
 - `v-model.lazy` is not supported by `BFormInput` (nor any custom Vue component). Use the `lazy`
   prop instead
-- `v-model` modifiers `.number` and `.trim` can cause unexpected cursor jumps when the user is
-  typing (this is a Vue issue with `v-model` on custom components). _Avoid using these modifiers_.
-  Use the `number` or `trim` props instead
 - Older version of Firefox may not support `readonly` for `range` type inputs
 - Input types that do not support `min`, `max` and `step` (i.e. `text`, `password`, `tel`, `email`,
   `url`, etc.) will silently ignore these values (although they will still be rendered on the input
@@ -123,7 +117,7 @@ If the `type` prop is set to an input type that is not supported (see above), a 
 
 ### Range type input
 
-Inputs with type `range` render using Bootstrap v5's `.custom-range` class. The track (the
+Inputs with type `range` render using Bootstrap v5's `.form-range` class. The track (the
 background) and thumb (the value) are both styled to appear the same across browsers.
 
 Range inputs have implicit values for `min` and `max` of `0` and `100` respectively. You may specify
@@ -177,10 +171,6 @@ const rangeValueStep = ref('2')
 **Note:** Range inputs (as do all input types) return their value as a string. You may need to
 convert the value to a native number by using `Number(value)`, `parseInt(value, 10)`,
 `parseFloat(value)`, or use the `number` prop.
-
-~~**Note:** Bootstrap v5 CSS does not include styling for range inputs inside input groups, nor
-validation styling on range inputs. However, bootstrap-vue-next includes custom styling to handle these
-situations until styling is included in Bootstrap v5.~~
 
 ## Control sizing
 
@@ -250,8 +240,9 @@ To control width, place the input inside standard Bootstrap grid column.
   </template>
 </HighlightCard>
 
-~~**Note:** Input type `range` currently does not support control sizing unless it is placed inside a
-`BInputGroup` which has its `size` prop set.~~
+**Note:** Input type `range` currently does not support control sizing. If is placed inside a
+`BInputGroup` which has its `size` prop set, then the associated controls as sized,
+but the range control stays the same size.
 
 **Note:** The native HTML `<input>` attribute `size` (which sets a horizontal width on the `<input>`
 in characters) is not supported. Use styling, utility classes, or the layout rows (`BRow`) and
@@ -341,11 +332,10 @@ invalid), `true` (for valid), or `null` (no validation state).
     <label for="input-live">Name:</label>
     <BFormInput
       id="input-live"
-      v-model="lifeName"
+      v-model.trim="lifeName"
       :state="lifeNameState"
       aria-describedby="input-live-help input-live-feedback"
       placeholder="Enter your name"
-      trim
     />
     <!-- This will only be shown if the preceding input has an invalid state -->
     <BFormInvalidFeedback id="input-live-feedback">
@@ -362,11 +352,10 @@ invalid), `true` (for valid), or `null` (no validation state).
     <label for="input-live">Name:</label>
     <BFormInput
       id="input-live"
-      v-model="lifeName"
+      v-model.trim="lifeName"
       :state="lifeNameState"
       aria-describedby="input-live-help input-live-feedback"
       placeholder="Enter your name"
-      trim
     />
     <!-- This will only be shown if the preceding input has an invalid state -->
     <BFormInvalidFeedback id="input-live-feedback"> Enter at least 3 letters </BFormInvalidFeedback>
@@ -431,7 +420,7 @@ Formatting does not occur if a `formatter` is not provided.
 
 <HighlightCard>
   <div role="group">
-    <label for="input-formatter">"Text input with formatter (on input)"</label>
+    <label for="input-formatter">Text input with formatter (on input)</label>
     <BFormInput
       id="input-formatter"
       v-model="formatInputText"
@@ -441,7 +430,7 @@ Formatting does not occur if a `formatter` is not provided.
     <p><b>Value:</b> {{ formatInputText }}</p>
   </div>
   <div role="group">
-    <label for="input-formatter">"Text input with lazy formatter (on blur)"</label>
+    <label for="input-formatter">Text input with lazy formatter (on blur)</label>
     <BFormInput
       id="input-lazy"
       v-model="formatLazyInputText"
@@ -508,32 +497,104 @@ the correct margin and padding.
 
 The `plaintext` option is not supported by input types `color` or `range`.
 
-## ~~Disabling mousewheel events on numeric-like inputs~~
+## Disabling mousewheel events on numeric-like inputs
 
-## ~~Datalist support~~
+<NotYetImplemented/>
 
-## `v-model` modifiers
+## Datalist support
 
-Vue does not officially support `.lazy`, `.trim`, and `.number` modifiers on the `v-model` of custom
-component based inputs, and may generate a bad user experience. Avoid using Vue's native modifiers.
+Datalists are a native HTML tag `<datalist>` that contains a list of `<option>` tags. By assigning
+an ID to the datalist tag, the list can be references from a text input by adding a `list`
+attribute.
 
-To get around this, `BFormInput` has three boolean props `trim`, `number`, and `lazy` which
-emulate the native Vue `v-model` modifiers `.trim` and `.number` and `.lazy` respectively. The
-`lazy` prop will update the v-model on `change`/`blur`events.
+This gives the input the behavior of a combo box or auto-complete, allowing existing values to be
+chosen, or new values to be entered.
+
+<HighlightCard>
+  <div>
+    <BFormInput list="my-list-id" />
+    <datalist id="my-list-id">
+      <option>Manual Option</option>
+      <option v-for="size in datalistSizes" :key="size">{{ size }}</option>
+    </datalist>
+  </div>
+  <template #html>
+
+```vue
+<template>
+  <div>
+    <BFormInput list="my-list-id" />
+
+    <datalist id="my-list-id">
+      <option>Manual Option</option>
+      <option v-for="size in datalistSizes" :key="size">{{ size }}</option>
+    </datalist>
+  </div>
+</template>
+
+<script setup lang="ts">
+const datalistSizes = ['Small', 'Medium', 'Large', 'Extra Large']
+</script>
+```
+
+  </template>
+</HighlightCard>
+
+The above is a 'native' implementation of `datalist`. BootstrapVueNext provides the form helper component
+[`<BFormDatalist>`](/docs/components/form/#datalist-helper) for quickly creating a `<datalist>`
+from an array of options using the same options object as [`<BFormSelect>`](/docs/components/form-select#options-property).
 
 **Notes:**
 
-- The `number` prop takes precedence over the `trim` prop (i.e. `trim` will have no effect when
-  `number` is set)
-- When using the `number` prop, and if the value can be parsed as a number (via `parseFloat`) it
-  will return a value of type `Number` to the `v-model`, otherwise the original input value is
-  returned as type `String`. This is the same behaviour as the native `.number` modifier
-- The `trim` and `number` modifier props do not affect the value returned by the `input` or `change`
-  events. These events will always return the string value of the content of `<textarea>` after
-  optional formatting (which may not match the value returned via the `v-model` `update` event,
-  which handles the modifiers)
+- Datalists work in conjunction with the browser's built in auto-complete, displaying datalist
+  options first, followed by auto-complete options. To only display datalist options, set
+  `autocomplete="off"` on `<BFormInput>`.
+- Datalists **cannot** be applied to input fields with type `password`, `range` or `color`.
+- Not all browsers fully support `<datalist>` and implementations can be buggy. It is recommended
+  that datalists be treated as an enhancement and not be relied upon at this time. Check
+  [Can I use](https://caniuse.com/datalist) for full support details on all browsers. In particular
+  chromium based browsers display both the text and value of object in the options list.
 
-## ~~Debounce support~~
+## `v-model` modifiers
+
+We support the native modifiers [`trim`, `lazy`, and `number`](https://vuejs.org/guide/essentials/forms.html#modifiers).
+They work as documented in vue.js, so there is no longer a need for `trim`, `lazy`, or `number` properties as in BSV.
+
+## Debounce support
+
+As an alternative to the `lazy` modifier prop, `<BFormInput>` optionally supports debouncing user
+input, updating the `v-model` after a period of idle time from when the last character was entered
+by the user (or a `change` event occurs). If the user enters a new character (or deletes characters)
+before the idle timeout expires, the timeout is re-started.
+
+To enable debouncing, set the prop `debounce` to any integer greater than zero. The value is
+specified in milliseconds. Setting `debounce` to `0` will disable debouncing.
+
+Note: debouncing will _not_ occur if the `lazy` prop is set.
+
+<HighlightCard>
+  <div>
+    <b-form-input v-model="debounceValue" type="text" debounce="500" />
+    <div class="mt-2">Value: "{{ debounceValue }}"</div>
+  </div>
+  <template #html>
+
+```vue
+<template>
+  <div>
+    <b-form-input v-model="debounceValue" type="text" debounce="500" />
+    <div class="mt-2">Value: "{{ debounceValue }}"</div>
+  </div>
+</template>
+
+<script setup>
+import {ref} from 'vue'
+const debounceValue = ref('')
+</script>
+```
+
+  </template>
+</HighlightCard>
 
 ## Autofocus
 
@@ -544,21 +605,18 @@ input becomes visible.
 
 ## Native and custom events
 
-All native events (other than the custom `input` and `change` events) are supported, without the
-need for the `.native` modifier.
+All native events are supported, without the need for the `.native` modifier.
 
-The custom `input` and `change` events receive a single argument of the current `value` (after any
-formatting has been applied), and are triggered by user interaction.
+See the [migration guide](/docs/migration-guide#bform-components) for changes handling of the `change` and `input` events from bootstrap-vue.
 
-The custom `update` event is passed the input value, and is emitted whenever the `v-model` needs
-updating (it is emitted before `input`, `change`. and `blur` as needed).
+## Exposed input element
 
-You can always access the native `input` and `change` events by using the `.native` modifier.
+`BFormInput` exposes the native input element
+(of type [HTMLInputElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement))
+on the component as a reference with name `element`. You can use that reference to access the native properties and methods.
 
-## Exposed input properties and methods
-
-`BFormInput` exposes the native input element on the component reference as a reference with name 'input'.
-You can use that reference to access the native properties and methods.
+e.g. `<BFormInput ref="foo" ... />`, `const foo = ref<InstanceType<typeof BFormInput> | null>(null)`, and then
+`foo?.value?.element?.methodName` or `foo?.value?.element?.propertyName`
 
 ### Input properties
 
@@ -587,16 +645,19 @@ You can use that reference to access the native properties and methods.
 Refer to [HTMLInputElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement) for more information on
 these methods and properties. Support will vary based on input type.
 
+`BFormInput` also exposes two methods on the component: `focus` and `blur`.
+
+e.g. With the same setup as above, call `foo?.value?.element?.focus` to set the foccus on the input element.
+
 <HighlightCard>
   <div role="group">
-    <BFormInput
-      ref="inputRef"
-      v-model="sampleInputText"
-      placeholder="Enter your name"
-    />
+    <BFormInput ref="inputRef" v-model="sampleInputText" placeholder="Enter your name" />
   </div>
   <div class="mt-2">
     <BButton primary @click="selectAllText">Select all text</BButton>
+  </div>
+  <div class="mt-2">
+    <BButton primary @click="inputRef?.focus">Set Focus</BButton>
   </div>
   <template #html>
 
@@ -608,17 +669,23 @@ these methods and properties. Support will vary based on input type.
   <div class="mt-2">
     <BButton primary @click="selectAllText">Select all text</BButton>
   </div>
+  <div class="mt-2">
+    <BButton primary @click="inputRef?.focus">Set Focus</BButton>
+  </div>
 </template>
 
 <script setup lang="ts">
-// refs are unified in vue3. We need a ref variable with the same as used in the template.
+import {ref} from 'vue'
+import {type BFormInput} from 'bootstrap-vue-next'
+
+// refs are unified in vue3. We need a ref variable with the same name as used in the template.
 // The variable will be filled up during mount with the reference to custom component.
 // inputRef will become the reference to the b-form-input component.
-const inputRef = ref<HTMLElement | null>(null)
+const inputRef = ref<InstanceType<typeof BFormInput> | null>(null)
 const sampleInputText = ref('sample text')
 
-// The inner native input is exposed as ref with name "input"
-const selectAllText = () => inputRef.value.input.select()
+// The inner native input is exposed as ref with name "element"
+const selectAllText = () => inputRef?.value?.element?.select()
 </script>
 ```
 
@@ -630,8 +697,10 @@ const selectAllText = () => inputRef.value.input.select()
 <script setup lang="ts">
 import {data} from '../../data/components/formInput.data'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
+import NotYetImplemented from '../../components/NotYetImplemented.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
-import {BButton, BFormText, BFormInvalidFeedback, BRow, BCol, BContainer, BCard, BCardBody, BFormInput} from 'bootstrap-vue-next'
+import {BButton, BFormText, BFormInvalidFeedback, BRow, BCol, BContainer, BCard, BCardBody, BFormInput } from 'bootstrap-vue-next'
 import {ref, computed} from 'vue'
 
 const selectedText = ref('')
@@ -662,8 +731,11 @@ const formatInputText = ref('')
 const formatLazyInputText = ref('')
 const toLowerCaseFormatter = (value: string) => value.toLowerCase()
 
-const inputRef = ref<HTMLElement | null>(null)
-const sampleInputText = ref('sample text')
+const debounceValue = ref('')
 
-const selectAllText = () => inputRef.value.input.select()
+const inputRef = ref<InstanceType<typeof BFormInput> | null>(null)
+const sampleInputText = ref('sample text')
+const selectAllText = () => inputRef?.value?.element?.select()
+
+const datalistSizes = ['Small', 'Medium', 'Large', 'Extra Large']
 </script>

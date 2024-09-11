@@ -2,6 +2,7 @@ import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BTable from './BTable.vue'
 import type {LiteralUnion, TableField, TableItem} from '../../types'
+import {nextTick} from 'vue'
 
 interface SimplePerson {
   first_name: string
@@ -40,9 +41,34 @@ const formattedFields: Exclude<TableField<SimplePerson>, string>[] = [
   {key: 'age', label: 'Age', sortable: true},
 ]
 
-describe('tbody', () => {
-  enableAutoUnmount(afterEach)
+class Person {
+  constructor(
+    public id: number,
+    public firstName: string,
+    public lastName: string,
+    public age: number
+  ) {
+    this.id = id
+    this.firstName = firstName
+    this.lastName = lastName
+    this.age = age
+  }
+}
 
+const nestableItemsTest = {
+  items: [
+    {yoo1: 123, yoo2: 321},
+    {yoo1: 789, yoo2: 987},
+  ] satisfies TableItem[],
+  fields: [
+    {key: 'yoo1', label: 'YOO1'},
+    {key: 'yoo2', label: 'YOO2'},
+  ] satisfies TableField[],
+}
+
+enableAutoUnmount(afterEach)
+
+describe('tbody', () => {
   it('has table class by default', () => {
     const wrapper = mount(BTable, {
       props: {items: simpleItems},
@@ -83,6 +109,7 @@ describe('tbody', () => {
     expect(heads[1].classes()).toContain('b-table-sortable-column')
   })
 })
+
 describe('single-sort', () => {
   it('does not show sortable columns when sortable undefined', () => {
     const wrapper = mount(BTable, {
@@ -230,42 +257,225 @@ describe('single-sort', () => {
       .map((row) => row.find('td').text())
     expect(text).toStrictEqual(['Havij', 'Robert', 'Cyndi'])
   })
+})
 
-  describe('multi-sort', () => {
-    it('has aria-sort labels reflecting sortBy prop', () => {
+describe('multi-sort', () => {
+  it('has aria-sort labels reflecting sortBy prop', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        multisort: true,
+        items: multiSort,
+        fields: simpleFields,
+        sortBy: [
+          {key: 'age', order: 'asc'},
+          {key: 'first_name', order: 'desc'},
+        ],
+      },
+    })
+    const heads = wrapper.get('table').findAll('th')
+    expect(heads[0].attributes('aria-sort')).toBe('descending')
+    expect(heads[1].attributes('aria-sort')).toBe('ascending')
+  })
+
+  it('correctly sorts on two columns', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        multisort: true,
+        items: multiSort,
+        fields: simpleFields,
+        sortBy: [
+          {key: 'first_name', order: 'desc'},
+          {key: 'age', order: 'asc'},
+        ],
+      },
+    })
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.findAll('td')[1].text())
+    expect(text).toStrictEqual(['35', '42', '27', '9', '101'])
+  })
+})
+
+it('will display data when using a inferred nested object [item: { "yoo.1": 123, "yoo.2": 321 }]', () => {
+  const wrapper = mount(BTable, {
+    props: nestableItemsTest,
+  })
+  const text = wrapper
+    .get('tbody')
+    .findAll('tr')
+    .map((row) => row.findAll('td').map((td) => td.text()))
+  expect(text).toStrictEqual([
+    ['123', '321'],
+    ['789', '987'],
+  ])
+})
+
+describe('object-persistence', () => {
+  it('Passes the original object for scoped cell slot item', () => {
+    const items = [new Person(1, 'John', 'Doe', 30), new Person(2, 'Jane', 'Smith', 25)]
+    const wrapper = mount(BTable, {
+      props: {
+        primaryKey: 'id',
+        items,
+      },
+      slots: {
+        'cell()': `<template #cell()="row">{{ row.item.constructor.name }}</template>`,
+      },
+    })
+    const $tbody = wrapper.get('tbody')
+    const $tr = $tbody.findAll('tr')
+    $tr.forEach((el) => {
+      const $tds = el.findAll('td')
+      expect($tds.length).toBe(4)
+      $tds.forEach(($td) => {
+        expect($td.text()).toBe('Person')
+      })
+    })
+  })
+
+  describe('selectedItems system', () => {
+    it('gives the correct row a class when selected', async () => {
+      const items = [new Person(1, 'John', 'Doe', 30), new Person(2, 'Jane', 'Smith', 25)]
+
       const wrapper = mount(BTable, {
         props: {
-          multisort: true,
-          items: multiSort,
-          fields: simpleFields,
-          sortBy: [
-            {key: 'age', order: 'asc'},
-            {key: 'first_name', order: 'desc'},
-          ],
+          'selectMode': 'multi',
+          'selectable': true,
+          items,
+          'selectedItems': [],
+          'onUpdate:selectedItems': (value: Person[]) => wrapper.setProps({selectedItems: value}),
         },
       })
-      const heads = wrapper.get('table').findAll('th')
-      expect(heads[0].attributes('aria-sort')).toBe('descending')
-      expect(heads[1].attributes('aria-sort')).toBe('ascending')
+      const $trs = wrapper.findAll('tr')
+      await $trs[1].trigger('click')
+      await $trs[2].trigger('click')
+      expect($trs[1].classes()).toContain('selected')
+      expect($trs[2].classes()).toContain('selected')
+      await $trs[1].trigger('click')
+      await $trs[2].trigger('click')
+      expect($trs[1].classes()).not.toContain('selected')
+      expect($trs[2].classes()).not.toContain('selected')
     })
 
-    it('correctly sorts on two columns', () => {
+    it('single mode', async () => {
+      const items = [new Person(1, 'John', 'Doe', 30), new Person(2, 'Jane', 'Smith', 25)]
+
       const wrapper = mount(BTable, {
         props: {
-          multisort: true,
-          items: multiSort,
-          fields: simpleFields,
-          sortBy: [
-            {key: 'first_name', order: 'desc'},
-            {key: 'age', order: 'asc'},
-          ],
+          'selectMode': 'single',
+          'selectable': true,
+          items,
+          'selectedItems': [],
+          'onUpdate:selectedItems': (value: Person[]) => wrapper.setProps({selectedItems: value}),
         },
       })
-      const text = wrapper
-        .get('tbody')
-        .findAll('tr')
-        .map((row) => row.findAll('td')[1].text())
-      expect(text).toStrictEqual(['35', '42', '27', '9', '101'])
+      const $trs = wrapper.findAll('tr')
+      await $trs[1].trigger('click')
+      expect($trs[1].classes()).toContain('selected')
+      await nextTick()
+      await $trs[2].trigger('click')
+      expect($trs[1].classes()).not.toContain('selected')
+      expect($trs[2].classes()).toContain('selected')
+    })
+
+    it('multi mode', async () => {
+      const items = [new Person(1, 'John', 'Doe', 30), new Person(2, 'Jane', 'Smith', 25)]
+      const wrapper = mount(BTable, {
+        props: {
+          'selectMode': 'multi',
+          'selectable': true,
+          items,
+          'selectedItems': [],
+          'onUpdate:selectedItems': (value: Person[]) => wrapper.setProps({selectedItems: value}),
+        },
+      })
+      const $trs = wrapper.findAll('tr')
+      await $trs[1].trigger('click')
+      await $trs[2].trigger('click')
+      expect($trs[1].classes()).toContain('selected')
+      expect($trs[2].classes()).toContain('selected')
+    })
+
+    describe('ranged mode', () => {
+      it('no modifiers', async () => {
+        const items = [
+          new Person(1, 'John', 'Doe', 30),
+          new Person(2, 'Jane', 'Smith', 25),
+          new Person(3, 'John', 'Doe', 30),
+          new Person(4, 'Jane', 'Smith', 25),
+        ]
+
+        const wrapper = mount(BTable, {
+          props: {
+            'selectMode': 'single',
+            'selectable': true,
+            items,
+            'selectedItems': [],
+            'onUpdate:selectedItems': (value: Person[]) => wrapper.setProps({selectedItems: value}),
+          },
+        })
+        const $trs = wrapper.findAll('tr')
+        await $trs[1].trigger('click')
+        expect($trs[1].classes()).toContain('selected')
+        await nextTick()
+        await $trs[2].trigger('click')
+        expect($trs[1].classes()).not.toContain('selected')
+        expect($trs[2].classes()).toContain('selected')
+      })
+      it('ctrl click', async () => {
+        const items = [
+          new Person(1, 'John', 'Doe', 30),
+          new Person(2, 'Jane', 'Smith', 25),
+          new Person(3, 'John', 'Doe', 30),
+          new Person(4, 'Jane', 'Smith', 25),
+        ]
+
+        const wrapper = mount(BTable, {
+          props: {
+            'selectMode': 'range',
+            'selectable': true,
+            items,
+            'selectedItems': [],
+            'onUpdate:selectedItems': (value: Person[]) => wrapper.setProps({selectedItems: value}),
+          },
+        })
+        const $trs = wrapper.findAll('tr')
+        await $trs[1].trigger('click')
+        expect($trs[1].classes()).toContain('selected')
+        const event = new MouseEvent('click', {ctrlKey: true})
+        $trs[3].element.dispatchEvent(event)
+        await nextTick()
+        expect($trs[1].classes()).toContain('selected')
+        expect($trs[3].classes()).toContain('selected')
+      })
+      it('shift click', async () => {
+        const items = [
+          new Person(1, 'John', 'Doe', 30),
+          new Person(2, 'Jane', 'Smith', 25),
+          new Person(3, 'John', 'Doe', 30),
+          new Person(4, 'Jane', 'Smith', 25),
+        ]
+
+        const wrapper = mount(BTable, {
+          props: {
+            'selectMode': 'range',
+            'selectable': true,
+            items,
+            'selectedItems': [],
+            'onUpdate:selectedItems': (value: Person[]) => wrapper.setProps({selectedItems: value}),
+          },
+        })
+        const $trs = wrapper.findAll('tr')
+        await $trs[1].trigger('click')
+        expect($trs[1].classes()).toContain('selected')
+        const event = new MouseEvent('click', {shiftKey: true})
+        $trs[3].element.dispatchEvent(event)
+        await nextTick()
+        expect($trs[1].classes()).toContain('selected')
+        expect($trs[2].classes()).toContain('selected')
+        expect($trs[3].classes()).toContain('selected')
+      })
     })
   })
 })

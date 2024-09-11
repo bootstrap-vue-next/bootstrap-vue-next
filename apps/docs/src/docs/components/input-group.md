@@ -1,12 +1,10 @@
 # Input Group
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -29,10 +27,8 @@ Easily extend form controls by adding text, buttons, or button groups on either 
   <!-- Using components -->
   <BInputGroup prepend="Username" class="mt-3">
     <BFormInput />
-    <BInputGroupAppend>
-      <BButton variant="outline-success">Button</BButton>
-      <BButton variant="info">Button</BButton>
-    </BInputGroupAppend>
+    <BButton variant="outline-success">Button</BButton>
+    <BButton variant="info">Button</BButton>
   </BInputGroup>
   <template #html>
 
@@ -53,10 +49,8 @@ Easily extend form controls by adding text, buttons, or button groups on either 
 <!-- Using components -->
 <BInputGroup prepend="Username" class="mt-3">
   <BFormInput />
-  <BInputGroupAppend>
-    <BButton variant="outline-success">Button</BButton>
-    <BButton variant="info">Button</BButton>
-  </BInputGroupAppend>
+  <BButton variant="outline-success">Button</BButton>
+  <BButton variant="info">Button</BButton>
 </BInputGroup>
 ```
 
@@ -97,11 +91,6 @@ Values will be internally wrapped by a `BInputGroupText` to display correctly.
 
 ### Using named slots
 
-if you want better control over addons, you can use `prepend` and `append` slots instead.
-
-The slot content will automatically be wrapped by
-[`BInputGroupPrepend` or `BInputGroupAppend`](#using-sub-components) to display correctly.
-
 <HighlightCard>
   <BInputGroup>
     <template #prepend>
@@ -135,44 +124,33 @@ The slot content will automatically be wrapped by
   </template>
 </HighlightCard>
 
-### Using sub-components
+### Using `BInputGroupText`
 
-Use the `BInputGroupPrepend` or `BInputGroupAppend` to add arbitrary addons wherever you
-like, and use these components to group buttons in your input group. Single buttons must always be
-wrapped in these components for proper styling.
+Use the `BInputGroupText` to add styled text before or after the control.
+
+Do not use `BInputGroupText` to group sub-components as was done in Bootstrap-Vue, see the
+[migration guide](/docs/migration-guide#binputgroup) for details.
 
 <HighlightCard>
   <BInputGroup>
-    <BInputGroupPrepend>
-      <BButton variant="outline-info">Button</BButton>
-    </BInputGroupPrepend>
+    <BInputGroupText>$</BInputGroupText>
     <BFormInput type="number" min="0.00" />
-    <BInputGroupAppend>
-      <BButton variant="outline-secondary">Button</BButton>
-      <BButton variant="outline-primary">Button</BButton>
-    </BInputGroupAppend>
+    <BInputGroupText>.00</BInputGroupText>
   </BInputGroup>
   <template #html>
 
 ```vue-html
 <BInputGroup>
-  <BInputGroupPrepend>
-    <BButton variant="outline-info">Button</BButton>
-  </BInputGroupPrepend>
-  <BFormInput type="number" min="0.00" />
-  <BInputGroupAppend>
-    <BButton variant="outline-secondary">Button</BButton>
-    <BButton variant="outline-primary">Button</BButton>
-  </BInputGroupAppend>
+  <BInputGroup>
+    <BInputGroupText>$</BInputGroupText>
+    <BFormInput type="number" min="0.00" />
+    <BInputGroupText>.00</BInputGroupText>
+  </BInputGroup>
 </BInputGroup>
 ```
 
   </template>
 </HighlightCard>
-
-Set the `is-text` prop on `BInputGroupPrepend` or `BInputGroupAppend` if the content is
-textual in nature to apply proper styling. Alternatively, place the `BInputGroupText`
-subcomponent inside the `BInputGroupPrepend` or `BInputGroupAppend`.
 
 ## Supported form-controls
 
@@ -182,19 +160,9 @@ The following are the form controls supported as the input-group's _main_ input 
 - [`BFormTextarea`](/docs/components/form-textarea)
 - [`BFormSelect`](/docs/components/form-select)
 - [`BFormFile`](/docs/components/form-file)
-- [`BFormRating`](/docs/components/form-rating)
+- [`BFormRating`](/docs/components/form-rating) <NotYetImplemented />
 - [`BFormTags`](/docs/components/form-tags)
 - [`BFormSpinbutton`](/docs/components/form-spinbutton)
-- [`BFormDatepicker`](/docs/components/form-datepicker)
-- [`BFormTimepicker`](/docs/components/form-timepicker)
-
-**Notes:**
-
-- ~~BootstrapVueNext uses custom SCSS/CSS to handling sizing the `BFormFile` input when it is placed
-  in a `BInputGroup` which has a [`size`](#control-sizing) specified~~
-- ~~BootstrapVueNext uses custom SCSS/CSS when `<BFormInput type="range">` is placed in a `BInputGroup`~~
-- ~~BootstrapVueNext's custom components (i.e. `BFormSpinbutton`, `BFormRating`, `BFormTags`,
-  etc.) require BootstrapVueNext's custom SCSS/CSS~~
 
 ## Checkbox and radio addons
 
@@ -208,31 +176,31 @@ classes applied.
 
 <HighlightCard>
   <BInputGroup class="mb-2">
-    <BInputGroupPrepend is-text>
+    <BInputGroupText>
       <input type="checkbox" aria-label="Checkbox for following text input">
-    </BInputGroupPrepend>
+    </BInputGroupText>
     <BFormInput aria-label="Text input with checkbox" />
   </BInputGroup>
   <BInputGroup>
-    <BInputGroupPrepend is-text>
+    <BInputGroupText>
       <input type="radio" aria-label="Radio for following text input">
-    </BInputGroupPrepend>
+    </BInputGroupText>
     <BFormInput aria-label="Text input with radio input" />
   </BInputGroup>
   <template #html>
 
 ```vue-html
 <BInputGroup class="mb-2">
-  <BInputGroupPrepend is-text>
+  <BInputGroupText>
     <input type="checkbox" aria-label="Checkbox for following text input" />
-  </BInputGroupPrepend>
+  </BInputGroupText>
   <BFormInput aria-label="Text input with checkbox" />
 </BInputGroup>
 
 <BInputGroup>
-  <BInputGroupPrepend is-text>
+  <BInputGroupText>
     <input type="radio" aria-label="Radio for following text input" />
-  </BInputGroupPrepend>
+  </BInputGroupText>
   <BFormInput aria-label="Text input with radio input" />
 </BInputGroup>
 ```
@@ -248,56 +216,56 @@ the addon:
 
 <HighlightCard>
   <BInputGroup class="mb-2">
-    <BInputGroupPrepend is-text>
+    <BInputGroupText>
       <BFormCheckbox class="me-n2">
         <span class="visually-hidden">Checkbox for following text input</span>
       </BFormCheckbox>
-    </BInputGroupPrepend>
+    </BInputGroupText>
     <BFormInput aria-label="Text input with checkbox" />
   </BInputGroup>
   <BInputGroup class="mb-2">
-    <BInputGroupPrepend is-text>
+    <BInputGroupText>
       <BFormRadio class="me-n2">
         <span class="visually-hidden">Radio for following text input</span>
       </BFormRadio>
-    </BInputGroupPrepend>
+    </BInputGroupText>
     <BFormInput aria-label="Text input with radio input" />
   </BInputGroup>
   <BInputGroup>
-    <BInputGroupPrepend is-text>
+    <BInputGroupText>
       <BFormCheckbox switch class="me-n2">
         <span class="visually-hidden">Switch for following text input</span>
       </BFormCheckbox>
-    </BInputGroupPrepend>
+    </BInputGroupText>
     <BFormInput aria-label="Text input with switch" />
   </BInputGroup>
   <template #html>
 
 ```vue-html
 <BInputGroup class="mb-2">
-  <BInputGroupPrepend is-text>
+  <BInputGroupText>
     <BFormCheckbox class="me-n2">
       <span class="visually-hidden">Checkbox for following text input</span>
     </BFormCheckbox>
-  </BInputGroupPrepend>
+  </BInputGroupText>
   <BFormInput aria-label="Text input with checkbox" />
 </BInputGroup>
 
 <BInputGroup class="mb-2">
-  <BInputGroupPrepend is-text>
+  <BInputGroupText>
     <BFormRadio class="me-n2">
       <span class="visually-hidden">Radio for following text input</span>
     </BFormRadio>
-  </BInputGroupPrepend>
+  </BInputGroupText>
   <BFormInput aria-label="Text input with radio input" />
 </BInputGroup>
 
 <BInputGroup>
-  <BInputGroupPrepend is-text>
+  <BInputGroupText>
     <BFormCheckbox switch class="me-n2">
       <span class="visually-hidden">Switch for following text input</span>
     </BFormCheckbox>
-  </BInputGroupPrepend>
+  </BInputGroupText>
   <BFormInput aria-label="Text input with switch" />
 </BInputGroup>
 ```
@@ -335,21 +303,33 @@ Multiple add-ons are supported and can be mixed with checkbox and radio input ve
 
 <HighlightCard>
   <BInputGroup prepend="Item">
-    <BInputGroupPrepend is-text>
+    <BInputGroupText>
       <input type="checkbox" aria-label="Checkbox for following text input">
-    </BInputGroupPrepend>
-    <BInputGroupPrepend is-text><b>$</b></BInputGroupPrepend>
+    </BInputGroupText>
+    <BInputGroupText><b>$</b></BInputGroupText>
     <BFormInput type="number" aria-label="Text input with checkbox" />
   </BInputGroup>
-  <template #html>
+  <BInputGroup class="mt-2">
+    <BButton variant="outline-info">Button</BButton>
+    <BFormInput type="number" min="0.00" />
+    <BButton variant="outline-secondary">Button</BButton>
+    <BButton variant="outline-primary">Button</BButton>
+  </BInputGroup>
+<template #html>
 
 ```vue-html
 <BInputGroup prepend="Item">
-  <BInputGroupPrepend is-text>
-    <input type="checkbox" aria-label="Checkbox for following text input" />
-  </BInputGroupPrepend>
-  <BInputGroupPrepend is-text><b>$</b></BInputGroupPrepend>
+  <BInputGroupText>
+    <input type="checkbox" aria-label="Checkbox for following text input">
+  </BInputGroupText>
+  <BInputGroupText><b>$</b></BInputGroupText>
   <BFormInput type="number" aria-label="Text input with checkbox" />
+</BInputGroup>
+<BInputGroup class="mt-2">
+  <BButton variant="outline-info">Button</BButton>
+  <BFormInput type="number" min="0.00" />
+  <BButton variant="outline-secondary">Button</BButton>
+  <BButton variant="outline-primary">Button</BButton>
 </BInputGroup>
 ```
 
@@ -412,9 +392,7 @@ the size on dropdowns.
     prepend="Label"
   >
     <BFormInput />
-    <BInputGroupAppend>
-      <BButton size="sm" text="Button" variant="success">Button</BButton>
-    </BInputGroupAppend>
+    <BButton size="sm" text="Button" variant="success">Button</BButton>
   </BInputGroup>
   <template #html>
 
@@ -427,9 +405,7 @@ the size on dropdowns.
   prepend="Label"
 >
   <BFormInput />
-  <BInputGroupAppend>
-    <BButton size="sm" text="Button" variant="success">Button</BButton>
-  </BInputGroupAppend>
+  <BButton size="sm" text="Button" variant="success">Button</BButton>
 </BInputGroup>
 ```
 
@@ -446,39 +422,39 @@ required to make everything fit correctly, depending on the size chosen:
 <HighlightCard>
   <BInputGroup size="sm" prepend="Small" class="mb-2">
     <BFormInput aria-label="Small text input with custom switch" />
-    <BInputGroupAppend is-text>
+    <BInputGroupText>
     <BFormCheckbox switch class="me-n2 mb-n1">
         <span class="visually-hidden">Checkbox for previous text input</span>
     </BFormCheckbox>
-    </BInputGroupAppend>
+    </BInputGroupText>
   </BInputGroup>
   <BInputGroup size="lg" prepend="Large" class="mb-2">
     <BFormInput aria-label="Large text input with switch" />
-    <BInputGroupAppend is-text>
+    <BInputGroupText>
       <BFormCheckbox switch class="me-n2">
         <span class="visually-hidden">Switch for previous text input</span>
       </BFormCheckbox>
-    </BInputGroupAppend>
+    </BInputGroupText>
   </BInputGroup>
   <template #html>
 
 ```vue-html
 <BInputGroup size="sm" prepend="Small" class="mb-2">
   <BFormInput aria-label="Small text input with custom switch" />
-  <BInputGroupAppend is-text>
+  <BInputGroupText>
     <BFormCheckbox switch class="me-n2 mb-n1">
       <span class="visually-hidden">Checkbox for previous text input</span>
     </BFormCheckbox>
-  </BInputGroupAppend>
+  </BInputGroupText>
 </BInputGroup>
 
 <BInputGroup size="lg" prepend="Large" class="mb-2">
   <BFormInput aria-label="Large text input with switch" />
-  <BInputGroupAppend is-text>
+  <BInputGroupText>
     <BFormCheckbox switch class="me-n2">
       <span class="visually-hidden">Switch for previous text input</span>
     </BFormCheckbox>
-  </BInputGroupAppend>
+  </BInputGroupText>
 </BInputGroup>
 ```
 
@@ -498,19 +474,19 @@ input groups. However, the inputs inside the input group do support contextual s
 <script setup lang="ts">
 import {data} from '../../data/components/inputGroup.data'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
+import NotYetImplemented from '../../components/NotYetImplemented.vue'
 import {
   BFormRadio,
   BFormCheckbox,
-  BInputGroupPrepend,
+  BInputGroupText,
   BDropdown,
   BDropdownItem,
   BCard,
   BCardBody,
   BButton,
-  BInputGroupAppend,
   BInputGroup,
-  BFormInput,
-  BInputGroupText
+  BFormInput
 } from 'bootstrap-vue-next'
 </script>

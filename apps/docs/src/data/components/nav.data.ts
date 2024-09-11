@@ -1,61 +1,56 @@
-import type {ComponentReference} from './ComponentReference'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
+import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BNav',
-      props: [
-        {
-          prop: 'align',
-          type: 'AlignmentJustifyContent',
-          default: undefined,
-        },
-        {
-          prop: 'cardHeader',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'fill',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'justified',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'pills',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'small',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'tabs',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'ul',
-        },
-        {
-          prop: 'vertical',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'underline',
-          type: 'boolean',
-          default: false,
-        },
-      ],
+      sourcePath: '/BNav/BNav.vue',
+      props: {
+        '': {
+          align: {
+            type: 'AlignmentJustifyContent',
+            default: undefined,
+          },
+          cardHeader: {
+            type: 'boolean',
+            default: false,
+          },
+          fill: {
+            type: 'boolean',
+            default: false,
+          },
+          justified: {
+            type: 'boolean',
+            default: false,
+          },
+          pills: {
+            type: 'boolean',
+            default: false,
+          },
+          small: {
+            type: 'boolean',
+            default: false,
+          },
+          tabs: {
+            type: 'boolean',
+            default: false,
+          },
+          tag: {
+            type: 'string',
+            default: 'ul',
+          },
+          underline: {
+            type: 'boolean',
+            default: false,
+          },
+          vertical: {
+            type: 'boolean',
+            default: false,
+          },
+        } satisfies Record<keyof BvnComponentProps['BNav'], PropertyReference>,
+      },
       emits: [],
       slots: [
         {
@@ -67,13 +62,31 @@ export default {
     },
     {
       component: 'BNavForm',
-      props: [
-        {
-          prop: 'role',
-          type: 'string',
-          default: undefined,
-        },
-      ],
+      sourcePath: '/BNav/BNavForm.vue',
+      props: {
+        '': {
+          floating: {
+            type: 'boolean',
+            default: undefined,
+          },
+          id: {
+            type: 'string',
+            default: undefined,
+          },
+          novalidate: {
+            type: 'boolean',
+            default: undefined,
+          },
+          role: {
+            type: 'string',
+            default: undefined,
+          },
+          validated: {
+            type: 'boolean',
+            default: undefined,
+          },
+        } satisfies Record<keyof BvnComponentProps['BNavForm'], PropertyReference>,
+      },
       emits: [
         {
           args: [
@@ -97,19 +110,116 @@ export default {
     },
     {
       component: 'BNavItem',
-      props: [
+      sourcePath: '/BNav/BNavItem.vue',
+      props: {
+        '': {
+          active: {
+            type: 'boolean',
+            default: undefined,
+          },
+          activeClass: {
+            type: 'string',
+            default: undefined,
+          },
+          disabled: {
+            type: 'boolean',
+            default: undefined,
+          },
+          exactActiveClass: {
+            type: 'string',
+            default: undefined,
+          },
+          href: {
+            type: 'string',
+            default: undefined,
+          },
+          icon: {
+            type: 'boolean',
+            default: undefined,
+          },
+          linkAttrs: {
+            type: 'Readonly<AttrsValue>',
+            default: undefined,
+          },
+          linkClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          opacity: {
+            type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
+            default: undefined,
+          },
+          opacityHover: {
+            type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
+            default: undefined,
+          },
+          rel: {
+            type: 'string',
+            default: undefined,
+          },
+          replace: {
+            type: 'boolean',
+            default: undefined,
+          },
+          routerComponentName: {
+            type: 'string',
+            default: undefined,
+          },
+          stretched: {
+            type: 'boolean',
+            default: false,
+          },
+          target: {
+            type: 'LinkTarget',
+            default: undefined,
+          },
+          to: {
+            type: 'RouteLocationRaw',
+            default: undefined,
+          },
+          underlineOffset: {
+            type: "1 | 2 | 3 | '1' | '2' | '3'",
+            default: undefined,
+          },
+          underlineOffsetHover: {
+            type: "1 | 2 | 3 | '1' | '2' | '3'",
+            default: undefined,
+          },
+          underlineOpacity: {
+            type: "0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'",
+            default: undefined,
+          },
+          underlineOpacityHover: {
+            type: "0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'",
+            default: undefined,
+          },
+          underlineVariant: {
+            type: 'ColorVariant | null',
+            default: undefined,
+          },
+          variant: {
+            type: 'ColorVariant | null',
+            default: undefined,
+          },
+          noPrefetch: {},
+          noRel: {},
+          prefetch: {},
+          prefetchedClass: {},
+        } satisfies Record<keyof BvnComponentProps['BNavItem'], PropertyReference>,
+      },
+      emits: [
         {
-          prop: 'linkClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'linkAttrs',
-          type: 'Record<string, unknown>',
-          default: undefined,
+          event: 'click',
+          description: '',
+          args: [
+            {
+              arg: 'click',
+              description: 'On click event',
+              type: 'MouseEvent',
+            },
+          ],
         },
       ],
-      emits: [],
       slots: [
         {
           description: '',
@@ -120,132 +230,256 @@ export default {
     },
     {
       component: 'BNavItemDropdown',
-      props: [
+      sourcePath: '/BNav/BNavItemDropdown.vue',
+      props: {
+        '': {
+          autoClose: {
+            type: "boolean | 'inside' | 'outside'",
+            default: true,
+          },
+          boundary: {
+            type: 'Boundary | RootBoundary',
+            default: 'clippingAncestors',
+          },
+          boundaryPadding: {
+            type: 'Padding',
+            default: undefined,
+          },
+          center: {
+            type: 'boolean',
+            default: false,
+          },
+          dropend: {
+            type: 'boolean',
+            default: false,
+          },
+          dropstart: {
+            type: 'boolean',
+            default: false,
+          },
+          dropup: {
+            type: 'boolean',
+            default: false,
+          },
+          end: {
+            type: 'boolean',
+            default: false,
+          },
+          floatingMiddleware: {
+            type: 'Middleware[]',
+            default: undefined,
+          },
+          isNav: {
+            type: 'boolean',
+            default: true,
+          },
+          lazy: {
+            type: 'boolean',
+            default: false,
+          },
+          menuClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          modelValue: {
+            type: 'boolean',
+            default: false,
+          },
+          noCaret: {
+            type: 'boolean',
+            default: false,
+          },
+          noFlip: {
+            type: 'boolean',
+            default: false,
+          },
+          noShift: {
+            type: 'boolean',
+            default: false,
+          },
+          noSize: {
+            type: 'boolean',
+            default: false,
+          },
+          offset: {
+            type: 'number | string | {mainAxis?: number | string; crossAxis?: number; alignmentAxis?: number | null}',
+            default: 0,
+          },
+          skipWrapper: {
+            type: 'boolean',
+          },
+          split: {
+            type: 'boolean',
+            default: false,
+          },
+          splitButtonType: {
+            type: 'ButtonType',
+            default: 'button',
+          },
+          splitClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          splitDisabled: {
+            type: 'boolean',
+            default: undefined,
+          },
+          splitHref: {
+            type: 'string',
+            default: undefined,
+          },
+          splitTo: {
+            type: 'RouteLocationRaw',
+            default: undefined,
+          },
+          splitVariant: {
+            type: 'ButtonVariant | null',
+            default: undefined,
+          },
+          strategy: {
+            type: 'Strategy',
+            default: 'absolute',
+          },
+          teleportDisabled: {
+            type: 'boolean',
+            default: false,
+          },
+          teleportTo: {
+            type: 'string | RendererElement | null | undefined',
+            default: undefined,
+          },
+          text: {
+            type: 'string',
+            default: undefined,
+          },
+          toggleClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          toggleText: {
+            type: 'string',
+            default: 'Toggle dropdown',
+          },
+          variant: {
+            type: 'ButtonVariant | null',
+            default: 'link',
+          },
+          wrapperClass: {
+            type: 'ClassValue',
+          },
+          ...pick(buildCommonProps(), ['ariaLabel', 'disabled', 'id', 'size', 'role']),
+        } satisfies Record<keyof BvnComponentProps['BNavItemDropdown'], PropertyReference>,
+      },
+      emits: [
         {
-          prop: 'id',
-          type: 'string',
-          default: undefined,
+          event: 'update:model-value',
+          args: [
+            {
+              arg: 'value',
+              description: "The new value of the dropdown's state",
+              type: 'boolean',
+            },
+          ],
+          description: 'Emitted when the dropdown state changes',
         },
         {
-          prop: 'text',
-          type: 'string',
-          default: undefined,
+          event: 'show',
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
+          description: '',
         },
         {
-          prop: 'toggleClass',
-          type: 'ClassValue',
-          default: undefined,
+          event: 'shown',
+          args: [],
+          description: '',
         },
         {
-          prop: 'size',
-          type: 'Size',
-          default: 'md',
+          event: 'hide',
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
+          description: '',
         },
         {
-          prop: 'offset',
-          type: 'string',
-          default: undefined,
+          event: 'hidden',
+          args: [],
+          description: '',
         },
         {
-          prop: 'autoClose',
-          type: "boolean | 'inside' | 'outside'",
-          default: undefined,
+          event: 'hide-prevented',
+          args: [],
+          description: 'Emitted when the dropdown tried to close, but was prevented from doing so.',
         },
         {
-          prop: 'splitVariant',
-          type: 'ButtonVariant | null',
-          default: undefined,
+          event: 'show-prevented',
+          args: [],
+          description: 'Emitted when the dropdown tried to open, but was prevented from doing so.',
         },
         {
-          prop: 'noCaret',
-          type: 'boolean',
-          default: undefined,
+          event: 'toggle',
+          args: [],
+          description: '',
         },
         {
-          prop: 'variant',
-          type: 'ButtonVariant | null',
-          default: 'link',
-        },
-        {
-          prop: 'modelValue',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'lazy',
-          type: 'boolean',
-          default: undefined,
-        },
-        {
-          prop: 'strategy',
-          type: 'Strategy',
-          default: undefined,
-        },
-        {
-          prop: 'floatingMiddleware',
-          type: 'Middleware[]',
-          default: undefined,
-        },
-        {
-          prop: 'noFlip',
-          type: 'boolean',
-          default: undefined,
-        },
-        {
-          prop: 'noShift',
-          type: 'boolean',
-          default: undefined,
-        },
-        {
-          prop: 'dropup',
-          type: 'boolean',
-          default: undefined,
-        },
-        {
-          prop: 'dropend',
-          type: 'boolean',
-          default: undefined,
-        },
-        {
-          prop: 'dropstart',
-          type: 'boolean',
-          default: undefined,
-        },
-        {
-          prop: 'center',
-          type: 'boolean',
-          default: undefined,
-        },
-        {
-          prop: 'end',
-          type: 'boolean',
-          default: undefined,
-        },
-        {
-          prop: 'menuClass',
-          type: 'ClassValue',
-          default: undefined,
+          event: 'click',
+          description: '',
+          args: [
+            {
+              arg: 'click',
+              description: '',
+              type: 'MouseEvent',
+            },
+          ],
         },
       ],
-      emits: [],
       slots: [
         {
           description: '',
           name: 'default',
           scope: [],
         },
+        {
+          description: '',
+          name: 'button-content',
+          scope: [],
+        },
+        {
+          description: '',
+          name: 'toggle-text',
+          scope: [
+            {
+              prop: 'hide',
+              type: '() => void',
+            },
+            {
+              prop: 'show',
+              type: '() => void',
+            },
+          ],
+        },
       ],
     },
     {
       component: 'BNavText',
-      props: [
-        {
-          description: '',
-          prop: 'text',
-          type: 'string',
-          default: undefined,
-        },
-      ],
+      sourcePath: '/BNav/BNavText.vue',
+      props: {
+        '': {
+          text: {
+            description: '',
+            type: 'string',
+            default: undefined,
+          },
+        } satisfies Record<keyof BvnComponentProps['BNavText'], PropertyReference>,
+      },
       emits: [],
       slots: [
         {

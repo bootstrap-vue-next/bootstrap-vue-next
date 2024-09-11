@@ -1,12 +1,10 @@
 # Nav
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -191,6 +189,7 @@ Use the `BNavText` child component to place plain text content into the nav:
 <script setup lang="ts">
 import {data} from '../../data/components/nav.data'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {
   BNav,

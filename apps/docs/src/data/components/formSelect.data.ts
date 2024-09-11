@@ -1,227 +1,142 @@
-import type {ComponentReference} from './ComponentReference'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
+import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormSelect',
-      props: [
-        {
-          prop: 'ariaInvalid',
-          type: 'AriaInvalid',
-          default: undefined,
-        },
-        {
-          prop: 'autofocus',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'disabled',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'disabledField',
-          type: 'string',
-          default: 'disabled',
-        },
-        {
-          prop: 'form',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'htmlField',
-          type: 'string',
-          default: 'html',
-        },
-        {
-          prop: 'id',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'labelField',
-          type: 'string',
-          default: 'label',
-        },
-        {
-          prop: 'multiple',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'name',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'options',
-          type: 'unknown[] | Record<string, unknown>',
-          default: '() => []',
-        },
-        {
-          prop: 'optionsField',
-          type: 'string',
-          default: 'options',
-        },
-        {
-          prop: 'plain',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'required',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'selectSize',
-          type: 'number | string',
-          default: 0,
-        },
-        {
-          prop: 'size',
-          type: 'Size',
-          default: 'md',
-        },
-        {
-          prop: 'state',
-          type: 'boolean | null',
-          default: undefined,
-        },
-        {
-          prop: 'textField',
-          type: 'string',
-          default: 'text',
-        },
-        {
-          prop: 'valueField',
-          type: 'string',
-          default: 'value',
-        },
-        {
-          prop: 'modelValue',
-          type: 'string | unknown[] | Record<string, unknown> | number | null',
-          default: '',
-        },
-      ],
+      sourcePath: '/BFormSelect/BFormSelect.vue',
+      props: {
+        '': {
+          labelField: {
+            type: 'string',
+            default: 'label',
+            description: 'The key to use from the option object to get the label',
+          },
+          modelValue: {
+            type: `SelectValue`,
+            default: '',
+            description: 'The value of the select control',
+          },
+          multiple: {
+            type: 'boolean',
+            default: false,
+            description: 'When set, allows multiple options to be selected (multi-select)',
+          },
+          optionsField: {
+            type: 'string',
+            default: 'options',
+            description: 'The key to use from the option object to get the options',
+          },
+          selectSize: {
+            type: 'Numberish',
+            default: 0,
+            description:
+              'When set to a number larger than 0, will set the number of display option rows. Note not all browser will respect this setting',
+          },
+          ...pick(
+            buildCommonProps({
+              options: {type: 'unknown[] | Record<string, unknown>'},
+            }),
+            [
+              'ariaInvalid',
+              'autofocus',
+              'disabled',
+              'disabledField',
+              'form',
+              'htmlField',
+              'id',
+              'name',
+              'options',
+              'plain',
+              'required',
+              'size',
+              'state',
+              'textField',
+              'valueField',
+            ]
+          ),
+        } satisfies Record<keyof BvnComponentProps['BFormSelect'], PropertyReference>,
+      },
       emits: [
         {
+          event: 'update:model-value',
           args: [
             {
-              arg: 'input',
-              description: '',
-              type: 'unknown',
+              arg: 'value',
+              description: 'Currently selected value of the select control.',
+              type: 'SelectValue',
             },
           ],
-          description: '',
-          event: 'input',
-        },
-        {
-          args: [
-            {
-              arg: 'update:modelValue',
-              description: '',
-              type: 'unknown',
-            },
-          ],
-          description: '',
-          event: 'update:modelValue',
-        },
-        {
-          args: [
-            {
-              arg: 'change',
-              description: '',
-              type: 'unknown',
-            },
-          ],
-          description: '',
-          event: 'change',
+          description:
+            'Emitted when the selected value(s) are changed. Looking for the `input` or `change` event - use `update:model-value` instead.',
         },
       ],
       slots: [
         {
-          description: '',
+          description: 'Content to place in the form select',
           name: 'default',
-          scope: [],
         },
         {
-          description: '',
+          description:
+            "Slot to place options or option groups above options provided via the 'options' prop",
           name: 'first',
-          scope: [],
         },
       ],
     },
     {
       component: 'BFormSelectOption',
+      sourcePath: '/BFormSelect/BFormSelectOption.vue',
       emits: [],
-      props: [
-        {
-          prop: 'value',
-          type: 'any',
-          default: undefined,
-        },
-        {
-          prop: 'disabled',
-          type: 'boolean',
-          default: false,
-        },
-      ],
+      props: {
+        '': {
+          value: {
+            type: 'any',
+            default: undefined,
+            description: 'The value of the option',
+          },
+          disabled: {
+            type: 'boolean',
+            default: false,
+            description: 'The disabled state of the option',
+          },
+        } satisfies Record<keyof BvnComponentProps['BFormSelectOption'], PropertyReference>,
+      },
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the form select option',
         },
       ],
     },
     {
       component: 'BFormSelectOptionGroup',
-      props: [
-        {
-          prop: 'label',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'disabledField',
-          type: 'string',
-          default: 'disabled',
-        },
-        {
-          prop: 'htmlField',
-          type: 'string',
-          default: 'html',
-        },
-        {
-          prop: 'options',
-          type: 'unknown[] | Record<string, unknown>',
-          default: '() => []',
-        },
-        {
-          prop: 'textField',
-          type: 'string',
-          default: 'text',
-        },
-        {
-          prop: 'valueField',
-          type: 'string',
-          default: 'value',
-        },
-      ],
+      sourcePath: '/BFormSelect/BFormSelectOptionGroup.vue',
+      props: {
+        '': {
+          label: {
+            type: 'string',
+            default: undefined,
+            description: 'The label for the option group',
+          },
+          ...pick(
+            buildCommonProps({
+              options: {type: 'readonly (unknown | Record<string, unknown>)[]'},
+            }),
+            ['disabledField', 'htmlField', 'options', 'textField', 'valueField']
+          ),
+        } satisfies Record<keyof BvnComponentProps['BFormSelectOptionGroup'], PropertyReference>,
+      },
       emits: [],
       slots: [
         {
-          description: '',
           name: 'first',
-          scope: [],
+          description: 'Content to place in the form select option group',
         },
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: "Slot to place options above options provided via the 'options' prop",
         },
       ],
     },

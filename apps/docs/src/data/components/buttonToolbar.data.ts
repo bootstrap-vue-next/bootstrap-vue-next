@@ -1,31 +1,27 @@
-import type {ComponentReference} from './ComponentReference'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
+import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BButtonToolbar',
-      props: [
-        {
-          prop: 'ariaLabel',
-          type: 'string',
-          default: 'Group',
-        },
-        {
-          prop: 'justify',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'role',
-          type: 'string',
-          default: 'toolbar',
-        },
-      ],
+      sourcePath: '/BButton/BButtonToolbar.vue',
+      props: {
+        '': {
+          justify: {
+            type: 'boolean',
+            default: false,
+            description:
+              'Make the toolbar span the maximum available width, by increasing spacing between the button groups, input groups and dropdowns',
+          },
+          ...pick(buildCommonProps(), ['ariaLabel', 'role']),
+        } satisfies Record<keyof BvnComponentProps['BButtonToolbar'], PropertyReference>,
+      },
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the button toolbar',
         },
       ],
       emits: [],

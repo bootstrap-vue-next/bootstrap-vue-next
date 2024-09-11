@@ -1,12 +1,12 @@
 <template>
   <component
-    :is="tag"
+    :is="props.tag"
     :id="computedId"
     ref="el"
     class="tab-pane"
     :class="computedClasses"
     role="tabpanel"
-    :aria-labelledby="buttonId"
+    :aria-labelledby="computedButtonId"
     v-bind="attrs"
   >
     <slot v-if="showSlot" />
@@ -14,12 +14,14 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject, onMounted, onUnmounted, ref, toRef, useAttrs, watch} from 'vue'
-import {useId} from '../../composables'
-import type {BTabProps, TabType} from '../../types'
-import {tabsInjectionKey} from '../../utils'
+import {computed, inject, onMounted, onUnmounted, ref, useAttrs, watch} from 'vue'
+import {useId} from '../../composables/useId'
+import {useDefaults} from '../../composables/useDefaults'
+import type {TabType} from '../../types/Tab'
+import type {BTabProps} from '../../types/ComponentProps'
+import {tabsInjectionKey} from '../../utils/keys'
 
-const props = withDefaults(defineProps<BTabProps>(), {
+const _props = withDefaults(defineProps<Omit<BTabProps, 'active'>>(), {
   buttonId: undefined,
   disabled: false,
   id: undefined,
@@ -32,6 +34,7 @@ const props = withDefaults(defineProps<BTabProps>(), {
   titleLinkAttrs: undefined,
   titleLinkClass: undefined,
 })
+const props = useDefaults(_props, 'BTab')
 
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -44,13 +47,13 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const activeModel = defineModel<boolean>('active', {
+const activeModel = defineModel<Exclude<BTabProps['active'], undefined>>('active', {
   default: false,
 })
 
 const parentData = inject(tabsInjectionKey, null)
 const computedId = useId(() => props.id, 'tabpane')
-const buttonId = useId(() => props.buttonId, 'tab')
+const computedButtonId = useId(() => props.buttonId, 'tab')
 
 const lazyRenderCompleted = ref(false)
 const el = ref<HTMLElement | null>(null)
@@ -61,13 +64,13 @@ const tab = computed(
   () =>
     ({
       id: computedId.value,
-      buttonId: buttonId.value,
+      buttonId: computedButtonId.value,
       disabled: props.disabled,
       title: props.title,
       titleComponent: slots.title,
-      titleItemClass: props.titleItemClass,
-      titleLinkAttrs: props.titleLinkAttrs,
-      titleLinkClass: props.titleLinkClass,
+      titleItemClass: () => props.titleItemClass,
+      titleLinkAttrs: () => props.titleLinkAttrs,
+      titleLinkClass: () => props.titleLinkClass,
       onClick,
       el: el.value,
     }) as TabType
@@ -76,7 +79,7 @@ const tab = computed(
 onMounted(() => {
   if (!parentData) return
   parentData.registerTab(tab)
-  if (props.active) {
+  if (activeModel.value) {
     parentData.activateTab(computedId.value)
   }
 })
@@ -86,14 +89,14 @@ onUnmounted(() => {
   parentData.unregisterTab(computedId.value)
 })
 
-const isActive = toRef(() => parentData?.activeId.value === computedId.value)
+const isActive = computed(() => parentData?.activeId.value === computedId.value)
 const show = ref(isActive.value)
 
-const computedLazy = toRef(() => !!(parentData?.lazy.value || (props.lazyOnce ?? props.lazy)))
-const computedLazyOnce = toRef(() => props.lazyOnce !== undefined)
+const computedLazy = computed(() => !!(parentData?.lazy.value || (props.lazyOnce ?? props.lazy)))
+const computedLazyOnce = computed(() => props.lazyOnce !== undefined)
 
-const computedActive = toRef(() => isActive.value && !props.disabled)
-const showSlot = toRef(
+const computedActive = computed(() => isActive.value && !props.disabled)
+const showSlot = computed(
   () =>
     computedActive.value ||
     !computedLazy.value ||
@@ -111,19 +114,16 @@ watch(isActive, (active) => {
   show.value = false
   activeModel.value = false
 })
-watch(
-  () => props.active,
-  (active) => {
-    if (!parentData) return
-    if (!active) {
-      if (isActive.value) {
-        parentData.activateTab(undefined)
-      }
-      return
+watch(activeModel, (active) => {
+  if (!parentData) return
+  if (!active) {
+    if (isActive.value) {
+      parentData.activateTab(undefined)
     }
-    parentData.activateTab(computedId.value)
+    return
   }
-)
+  parentData.activateTab(computedId.value)
+})
 
 const computedClasses = computed(() => [
   {
@@ -132,8 +132,8 @@ const computedClasses = computed(() => [
     'card-body': parentData?.card.value && props.noBody === false,
     'fade': !parentData?.noFade.value,
   },
-  show.value ? parentData?.activeTabClass : parentData?.inactiveTabClass,
-  parentData?.tabClass,
+  show.value ? parentData?.activeTabClass.value : parentData?.inactiveTabClass.value,
+  parentData?.tabClass.value,
 ])
 
 watch(showSlot, (shown) => {

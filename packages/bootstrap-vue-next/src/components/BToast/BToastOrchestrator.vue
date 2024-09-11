@@ -1,24 +1,26 @@
 <template>
-  <Teleport :to="teleportTo" :disabled="props.teleportDisabled">
-    <!-- This wrapper div is used for specific targetting by the user -->
-    <!-- Even though it serves no direct purpose itself -->
-    <div id="__BVID__toaster-container">
+  <Teleport :to="props.teleportTo" :disabled="props.teleportDisabled">
+    <div id="__BVID__toaster-container" v-bind="$attrs">
       <div
-        v-for="(value, key) in toastPositions"
+        v-for="(value, key) in positionClasses"
         :key="key"
         :class="value"
         class="toast-container position-fixed p-3"
       >
         <TransitionGroup name="b-list">
           <component
-            :is="toast.value.component"
-            v-for="toast in toasts?.filter((el) => el.value.props.pos === key)"
-            :key="toast.value.props._self"
-            v-bind="pluckToastItem(toast.value.props)"
-            v-model="toast.value.props._modelValue"
-            :trans-props="{...toast.value.props.transProps, appear: true}"
-            @hide.prevent="remove?.(toast.value.props._self)"
+            :is="toast.component ?? BToast"
+            v-for="toast in tools.toasts?.value.filter((el) => el.props.pos === key)"
+            :key="toast.props._self"
+            v-bind="toast.props"
+            :model-value="toast.props._modelValue"
+            :trans-props="{...toast.props.transProps, appear: true}"
+            @update:model-value="tools.leave?.(toast.props._self)"
+            @hide="tools.remove?.(toast.props._self)"
           />
+          <!-- I think it's only coincidence that hide works, It's not tied to the lifecycle of a transition -->
+          <!-- I think actually removes the el before the transition ends, But it's just not noticeable as it's "fading" -->
+          <!-- It _should_ be @hidden -- as hidden is when the transition has ended. But transition in transition groups isn't "okay" -->
         </TransitionGroup>
       </div>
     </div>
@@ -27,46 +29,35 @@
 
 <script setup lang="ts">
 import {watch} from 'vue'
-import {useToast} from '../../composables'
-import {omit} from '../../utils'
-import type {BToastOrchestratorProps} from '../../types'
+import {useDefaults} from '../../composables/useDefaults'
+import {positionClasses} from '../../utils/positionClasses'
+import type {BToastOrchestratorProps} from '../../types/ComponentProps'
+import BToast from './BToast.vue'
+import {useToast} from '../../composables/useToast'
 
-const props = withDefaults(defineProps<BToastOrchestratorProps>(), {
+defineOptions({
+  inheritAttrs: false,
+})
+
+const _props = withDefaults(defineProps<BToastOrchestratorProps>(), {
   teleportDisabled: false,
   teleportTo: 'body',
   appendToast: false,
 })
+const props = useDefaults(_props, 'BToastOrchestrator')
 
-const toastPositions = {
-  'top-left': 'top-0 start-0',
-  'top-center': 'top-0 start-50 translate-middle-x',
-  'top-right': 'top-0 end-0',
-  'middle-left': 'top-50 start-0 translate-middle-y',
-  'middle-center': 'top-50 start-50 translate-middle',
-  'middle-right': 'top-50 end-0 translate-middle-y',
-  'bottom-left': 'bottom-0 start-0',
-  'bottom-center': 'bottom-0 start-50 translate-middle-x',
-  'bottom-right': 'bottom-0 end-0',
-} as const
-
-const {remove, toasts, show, _setIsAppend} = useToast()
+const tools = useToast()
 
 watch(
   () => props.appendToast,
   (value) => {
-    _setIsAppend?.(value)
+    tools._setIsAppend?.(value)
   },
   {immediate: true}
 )
 
-const pluckToastItem = (
-  payload: Readonly<Exclude<typeof toasts, undefined>['value'][number]['value']['props']>
-) => omit(payload, ['_modelValue', '_self', 'pos'])
-
 defineExpose({
-  remove,
-  show,
-  toasts,
+  ...tools,
 })
 </script>
 

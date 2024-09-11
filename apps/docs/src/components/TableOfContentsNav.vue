@@ -204,6 +204,17 @@ const groupComputedList = computed(() => [
     icon: () => CodeSlashIcon,
     children: directivesComputedList.value,
   },
+  {
+    label: 'Configurations',
+    uri: '/docs/configurations',
+    icon: () => GearIcon,
+    children: [
+      {
+        name: 'Global Options',
+        route: withBase('/docs/configurations/global-options'),
+      },
+    ],
+  },
 ])
 </script>
 

@@ -1,41 +1,39 @@
-import type {ComponentReference} from './ComponentReference'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BSpinner',
-      props: [
-        {
-          prop: 'label',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'role',
-          type: 'string',
-          default: 'status',
-        },
-        {
-          prop: 'small',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'span',
-        },
-        {
-          prop: 'type',
-          type: 'SpinnerType',
-          default: 'border',
-        },
-        {
-          prop: 'variant',
-          type: 'ColorVariant | null',
-          default: null,
-        },
-      ],
+      sourcePath: '/BSpinner/BSpinner.vue',
+      props: {
+        '': {
+          label: {
+            type: 'string',
+            default: undefined,
+          },
+          role: {
+            type: 'string',
+            default: 'status',
+          },
+          small: {
+            type: 'boolean',
+            default: false,
+          },
+          tag: {
+            type: 'string',
+            default: 'span',
+          },
+          type: {
+            type: 'SpinnerType',
+            default: 'border',
+          },
+          variant: {
+            type: 'ColorVariant | null',
+            default: null,
+          },
+        } satisfies Record<keyof BvnComponentProps['BSpinner'], PropertyReference>,
+      },
       emits: [],
       slots: [
         {

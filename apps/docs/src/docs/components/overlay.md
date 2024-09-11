@@ -1,12 +1,10 @@
 # Overlay
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -899,6 +897,7 @@ also set the `rounded` prop on `BOverlay`.
 <script setup lang="ts">
 import {data} from '../../data/components/overlay.data'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BForm, BProgress, BRow, BImg, BFormInput, BFormSelect, BOverlay, BCol, BButton, BCard, BCardBody, BCardText, BAlert} from 'bootstrap-vue-next'
 import {ref, nextTick} from 'vue';

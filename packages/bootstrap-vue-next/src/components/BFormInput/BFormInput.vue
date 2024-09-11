@@ -4,18 +4,18 @@
     ref="input"
     :value="modelValue"
     :class="computedClasses"
-    :name="name || undefined"
-    :form="form || undefined"
-    :type="type"
+    :name="props.name || undefined"
+    :form="props.form || undefined"
+    :type="props.type"
     :disabled="props.disabled"
-    :placeholder="placeholder"
+    :placeholder="props.placeholder"
     :required="props.required || undefined"
-    :autocomplete="autocomplete || undefined"
+    :autocomplete="props.autocomplete || undefined"
     :readonly="props.readonly || props.plaintext"
-    :min="min"
-    :max="max"
-    :step="step"
-    :list="type !== 'password' ? list : undefined"
+    :min="props.min"
+    :max="props.max"
+    :step="props.step"
+    :list="props.type !== 'password' ? props.list : undefined"
     :aria-required="props.required || undefined"
     :aria-invalid="computedAriaInvalid"
     @input="onInput($event)"
@@ -26,10 +26,13 @@
 
 <script setup lang="ts">
 import {computed, ref} from 'vue'
-import {useFormInput, useStateClass} from '../../composables'
-import type {BFormInputProps, Numberish} from '../../types'
+import {useDefaults} from '../../composables/useDefaults'
+import {normalizeInput} from '../../utils/normalizeInput'
+import type {BFormInputProps} from '../../types/ComponentProps'
+import {useFormInput} from '../../composables/useFormInput'
+import {useStateClass} from '../../composables/useStateClass'
 
-const props = withDefaults(defineProps<BFormInputProps>(), {
+const _props = withDefaults(defineProps<Omit<BFormInputProps, 'modelValue'>>(), {
   max: undefined,
   min: undefined,
   step: undefined,
@@ -44,28 +47,30 @@ const props = withDefaults(defineProps<BFormInputProps>(), {
   form: undefined,
   formatter: undefined,
   id: undefined,
-  lazy: false,
   lazyFormatter: false,
   list: undefined,
   modelValue: '',
   name: undefined,
-  number: false,
   placeholder: undefined,
   plaintext: false,
   readonly: false,
   required: false,
   size: undefined,
   state: null,
-  trim: false,
   // End CommonInputProps
 })
+const props = useDefaults(_props, 'BFormInput')
 
-const emit = defineEmits<{
-  'update:modelValue': [val: Numberish | null]
-}>()
+const [modelValue, modelModifiers] = defineModel<
+  Exclude<BFormInputProps['modelValue'], undefined>,
+  'trim' | 'lazy' | 'number'
+>({
+  default: '',
+  set: (v) => normalizeInput(v, modelModifiers),
+})
 
 const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
-  useFormInput(props, emit)
+  useFormInput(props, modelValue, modelModifiers)
 
 const stateClass = useStateClass(() => props.state)
 

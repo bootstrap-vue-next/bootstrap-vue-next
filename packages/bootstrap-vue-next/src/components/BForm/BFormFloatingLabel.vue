@@ -1,28 +1,28 @@
 <template>
   <div class="form-floating">
-    <slot>
-      {{ text }}
-    </slot>
-    <label :for="labelFor">
+    <slot />
+    <label :for="props.labelFor">
       <slot name="label">
-        {{ label }}
+        {{ props.label }}
       </slot>
     </label>
   </div>
 </template>
 
 <script setup lang="ts">
-import type {BFormFloatingLabelProps} from '../../types'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BFormFloatingLabelProps} from '../../types/ComponentProps'
 
-withDefaults(defineProps<BFormFloatingLabelProps>(), {
+const _props = withDefaults(defineProps<BFormFloatingLabelProps>(), {
   label: undefined,
   labelFor: undefined,
   text: undefined,
 })
+const props = useDefaults(_props, 'BFormFloatingLabel')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
+  default: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   label?: (props: Record<string, never>) => any
 }>()

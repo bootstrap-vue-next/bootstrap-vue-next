@@ -22,13 +22,6 @@ describe('form-floating-label', () => {
     expect(wrapper.text()).toBe('foobar')
   })
 
-  it('renders prop text', () => {
-    const wrapper = mount(BFormFloatingLabel, {
-      props: {text: 'foobar'},
-    })
-    expect(wrapper.text()).toBe('foobar')
-  })
-
   it('prefers to render slot default over prop text', () => {
     const wrapper = mount(BFormFloatingLabel, {
       props: {text: 'props'},
@@ -55,7 +48,7 @@ describe('form-floating-label', () => {
 
   it('child label renders slot label', () => {
     const wrapper = mount(BFormFloatingLabel, {
-      slots: {label: 'foobar'},
+      slots: {label: 'foobar', default: 'slots'},
     })
     const $label = wrapper.get('label')
     expect($label.text()).toBe('foobar')
@@ -72,7 +65,7 @@ describe('form-floating-label', () => {
   it('child label prefers to render slot label over prop label', () => {
     const wrapper = mount(BFormFloatingLabel, {
       props: {label: 'props'},
-      slots: {label: 'slots'},
+      slots: {label: 'slots', default: 'slots'},
     })
     const $label = wrapper.get('label')
     expect($label.text()).toBe('slots')

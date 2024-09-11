@@ -1,60 +1,70 @@
 import type {Boundary, Middleware, Padding, RootBoundary, Strategy} from '@floating-ui/vue'
 import type {ComponentPublicInstance, TransitionProps} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
+import type {LinkTarget} from './LinkTarget'
+import type {ButtonVariant, ColorExtendables, ColorVariant, TextColorVariant} from './ColorTypes'
+import type {AttrsValue, ClassValue} from './AnyValuedAttributes'
+import type {CheckboxOptionRaw, CheckboxValue} from './CheckboxTypes'
+import type {Size} from './Size'
+import type {AriaInvalid} from './AriaInvalid'
+import type {Numberish, TeleporterProps} from './CommonTypes'
+import type {CommonInputProps} from './FormCommonInputProps'
+import type {RadioOptionRaw, RadioValue} from './RadioTypes'
+import type {SelectValue} from './SelectTypes'
 import type {
+  Breakpoint,
+  ColBreakpointProps,
+  ColsNumbers,
+  OffsetBreakpointProps,
+  OrderBreakpointProps,
+  RowColsBreakpointProps,
+} from './BreakpointProps'
+import type {
+  AlignmentContent,
   AlignmentJustifyContent,
   AlignmentTextHorizontal,
-  AriaInvalid,
-  AttrsValue,
-  BreadcrumbItemRaw,
-  Breakpoint,
+  AlignmentVertical,
+  CombinedPlacement,
+  Placement,
+  VerticalAlign,
+} from './Alignment'
+import type {RadiusElementExtendables} from './RadiusElement'
+import type {SpinnerType} from './SpinnerType'
+import type {PlaceholderAnimation, PlaceholderSize} from './PlaceholderTypes'
+import type {ButtonType} from './ButtonType'
+import type {LiteralUnion} from './LiteralUnion'
+import type {BreadcrumbItemRaw} from './BreadcrumbTypes'
+import type {TransitionMode} from './TransitionMode'
+import type {
   BTableProvider,
   BTableSortBy,
-  ButtonType,
-  ButtonVariant,
-  CheckboxOptionRaw,
-  CheckboxValue,
-  ClassValue,
-  ColorExtendables,
-  ColorVariant,
-  CommonInputProps,
-  InputType,
-  LinkTarget,
-  LiteralUnion,
   NoProviderTypes,
-  Numberish,
-  PlaceholderAnimation,
-  PlaceholderSize,
-  PopoverPlacement,
-  RadioOptionRaw,
-  RadioValue,
-  RadiusElementExtendables,
-  Size,
-  SpinnerType,
   TableField,
   TableFieldRaw,
-  TeleporterProps,
-  TextColorVariant,
-  TransitionMode,
-  VerticalAlign,
-} from '.'
+  TableRowType,
+  TableStrictClassValue,
+} from './TableTypes'
+import type {PopoverPlacement} from './PopoverPlacement'
+import type {InputType} from './InputType'
 
 export interface BLinkProps {
   active?: boolean
   activeClass?: string
-  append?: boolean
   disabled?: boolean
   exactActiveClass?: string
   href?: string
   icon?: boolean
-  // noPrefetch: {type: [Boolean, String] as PropType<boolean>, default: false},
+  noRel?: boolean
+  // noPrefetch?: boolean
   opacity?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
   opacityHover?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
-  // prefetch: {type: [Boolean, String] as PropType<boolean>, default: null},
+  // prefetch?: boolean
+  // prefetchedClass?: ClassValue
   rel?: string
   replace?: boolean
   routerComponentName?: string
   routerTag?: string
+  stretched?: boolean
   target?: LinkTarget
   to?: RouteLocationRaw
   underlineOffset?: 1 | 2 | 3 | '1' | '2' | '3'
@@ -64,6 +74,18 @@ export interface BLinkProps {
   underlineVariant?: ColorVariant | null
   variant?: ColorVariant | null
 }
+
+export type LinkUnderlineProps = Pick<
+  BLinkProps,
+  | 'underlineOffset'
+  | 'underlineOffsetHover'
+  | 'underlineOpacity'
+  | 'underlineOpacityHover'
+  | 'underlineVariant'
+>
+export type LinkOpacityProps = Pick<BLinkProps, 'opacity' | 'opacityHover'>
+export type LinkIconProps = Pick<BLinkProps, 'icon'>
+export type LinkVariantProps = Pick<BLinkProps, 'variant'>
 
 export interface BAccordionProps {
   flush?: boolean
@@ -94,6 +116,7 @@ export interface BDropdownItemButtonProps {
   active?: boolean
   activeClass?: ClassValue
   buttonClass?: ClassValue
+  wrapperAttrs?: Readonly<AttrsValue>
   disabled?: boolean
   variant?: ColorVariant | null
 }
@@ -105,7 +128,6 @@ export interface BDropdownTextProps {
 export interface BFormFloatingLabelProps {
   label?: string
   labelFor?: string
-  text?: string
 }
 
 export interface BFormRowProps {
@@ -141,6 +163,8 @@ export interface BFormCheckboxProps {
   state?: boolean | null
   switch?: boolean
   uncheckedValue?: CheckboxValue
+  wrapperAttrs?: Readonly<AttrsValue>
+  inputClass?: ClassValue
   // Since the compiler-sfc doesn't crawl external filed, the redundant string/boolean union is
   // necessary to tell it that we don't want it to follow Boolean casting rules
   // https://vuejs.org/guide/components/props.html#boolean-casting which would cast the empty
@@ -173,12 +197,20 @@ export interface BFormCheckboxGroupProps {
   valueField?: string
 }
 
+export interface BFormDatalistProps {
+  disabledField?: string
+  htmlField?: string
+  id?: string
+  options?: readonly (unknown | Record<string, unknown>)[]
+  textField?: string
+  valueField?: string
+}
+
 export interface BFormFileProps {
   ariaLabel?: string
   ariaLabelledby?: string
   accept?: string | readonly string[]
   autofocus?: boolean
-  browserText?: string
   capture?: boolean | 'user' | 'environment'
   directory?: boolean
   disabled?: boolean
@@ -189,9 +221,10 @@ export interface BFormFileProps {
   modelValue?: readonly File[] | File | null
   multiple?: boolean
   name?: string
+  noButton?: boolean
   noDrop?: boolean
   noTraverse?: boolean
-  placement?: 'start' | 'end'
+  plain?: boolean
   required?: boolean
   size?: Size
   state?: boolean | null
@@ -259,13 +292,7 @@ export interface BFormSelectProps {
   htmlField?: string
   id?: string
   labelField?: string
-  modelValue?:
-    | boolean
-    | string
-    | readonly unknown[]
-    | Readonly<Record<string, unknown>>
-    | number
-    | null
+  modelValue?: SelectValue
   multiple?: boolean
   name?: string
   options?: readonly (unknown | Record<string, unknown>)[]
@@ -432,9 +459,9 @@ export interface BNavTextProps {
 export interface BNavbarProps {
   autoClose?: boolean
   container?: boolean | 'fluid' | Breakpoint
-  fixed?: 'top' | 'bottom'
+  fixed?: Extract<Placement, 'top' | 'bottom'>
   print?: boolean
-  sticky?: 'top' | 'bottom'
+  sticky?: Extract<Placement, 'top' | 'bottom'>
   tag?: string
   toggleable?: boolean | Breakpoint
   variant?: ColorVariant | null
@@ -459,9 +486,7 @@ export interface BNavbarToggleProps {
 }
 
 export interface BOffcanvasProps extends TeleporterProps {
-  backdrop?: boolean
-  backdropBlur?: string
-  backdropVariant?: ColorVariant | 'white' | 'transparent' | null
+  hideBackdrop?: boolean
   bodyAttrs?: Readonly<AttrsValue>
   bodyClass?: ClassValue
   bodyScrolling?: boolean
@@ -477,15 +502,13 @@ export interface BOffcanvasProps extends TeleporterProps {
   noCloseOnEsc?: boolean
   noFocus?: boolean
   noHeader?: boolean
+  noTrap?: boolean
   noHeaderClose?: boolean
-  // TODO standardize this. Create a dedicated type
-  // Then in components that use individual props (BImg)
-  // Make them just use prop placement
-  placement?: 'top' | 'bottom' | 'start' | 'end'
+  placement?: Placement
   shadow?: Size | boolean
   title?: string
-  // responsive?: Breakpoint
-  // TODO responsive doesn't work
+  responsive?: Breakpoint
+  width?: string
 }
 
 export interface BOverlayProps extends RadiusElementExtendables {
@@ -569,7 +592,7 @@ export interface BPlaceholderCardProps {
   headerVariant?: ColorVariant | null
   headerWidth?: Numberish
   imgBlankColor?: string
-  imgBottom?: boolean
+  imgPlacement?: Extract<Placement, 'top' | 'bottom'>
   imgHeight?: Numberish
   imgSrc?: string
   noButton?: boolean
@@ -670,8 +693,8 @@ export interface BCollapseProps {
 
 export interface BContainerProps {
   fluid?: boolean | Breakpoint
-  gutterX?: Numberish
-  gutterY?: Numberish
+  gutterX?: ColsNumbers
+  gutterY?: ColsNumbers
   tag?: string
 }
 
@@ -712,9 +735,10 @@ export interface BAlertProps {
   dismissible?: boolean
   fade?: boolean
   immediate?: boolean
-  interval?: Numberish
+  interval?: number | 'requestAnimationFrame'
   modelValue?: boolean | number
   noHoverPause?: boolean
+  noResumeOnHoverLeave?: boolean
   showOnPause?: boolean
   variant?: ColorVariant | null
 }
@@ -726,14 +750,13 @@ export interface BAvatarProps
   alt?: string
   badge?: boolean | string
   badgeBgVariant?: ColorVariant | null
-  badgeOffset?: string
-  badgeStart?: boolean
+  badgePlacement?: CombinedPlacement
   badgeTextVariant?: TextColorVariant | null
-  badgeTop?: boolean
   badgeVariant?: ColorVariant | null
+  badgePill?: boolean
+  badgeDotIndicator?: boolean
   button?: boolean
   buttonType?: ButtonType
-  icon?: string
   size?: LiteralUnion<Size, Numberish>
   square?: boolean
   src?: string
@@ -750,8 +773,8 @@ export interface BAvatarGroupProps extends ColorExtendables, RadiusElementExtend
 export interface BBadgeProps extends Omit<BLinkProps, 'routerTag'>, ColorExtendables {
   dotIndicator?: boolean
   pill?: boolean
+  placement?: CombinedPlacement
   tag?: string
-  textIndicator?: boolean
 }
 
 export interface BBreadcrumbProps {
@@ -761,6 +784,10 @@ export interface BBreadcrumbProps {
 export interface BBreadcrumbItemProps extends Omit<BLinkProps, 'routerTag'> {
   ariaCurrent?: string
   text?: string
+}
+
+type CustomLinkVariant = {
+  [K in ColorVariant as `link-${K}`]: unknown
 }
 
 export interface BButtonProps extends Omit<BLinkProps, 'variant'> {
@@ -773,7 +800,7 @@ export interface BButtonProps extends Omit<BLinkProps, 'variant'> {
   squared?: boolean
   tag?: string
   type?: ButtonType
-  variant?: ButtonVariant | null
+  variant?: (ButtonVariant | keyof CustomLinkVariant) | null
 }
 
 export interface BButtonGroupProps {
@@ -821,15 +848,11 @@ export interface BCardProps extends ColorExtendables {
   headerTextVariant?: TextColorVariant | null
   headerVariant?: ColorVariant | null
   imgAlt?: string
-  imgBottom?: boolean
-  imgEnd?: boolean
+  imgPlacement?: Placement | 'overlay'
   imgHeight?: Numberish
   imgSrc?: string
-  imgStart?: boolean
-  imgTop?: boolean
   imgWidth?: Numberish
   noBody?: boolean
-  overlay?: boolean
   subtitle?: string
   subtitleTag?: string
   subtitleTextVariant?: TextColorVariant | null
@@ -855,9 +878,8 @@ export interface BCardGroupProps {
   tag?: string
 }
 
-export interface BCardImageProps extends BImgProps {
-  bottom?: boolean
-  top?: boolean
+export interface BCardImgProps extends Omit<BImgProps, 'placement'> {
+  placement?: Placement | 'overlay'
 }
 
 export interface BCardSubtitleProps {
@@ -887,7 +909,7 @@ export interface BCarouselProps {
   imgWidth?: string
   indicators?: boolean
   indicatorsButtonLabel?: string
-  interval?: Numberish
+  interval?: number
   keyboard?: boolean
   modelValue?: number
   noHoverPause?: boolean
@@ -913,7 +935,7 @@ export interface BCarouselSlideProps {
   imgSrc?: string
   imgSrcset?: string | readonly string[]
   imgWidth?: Numberish
-  interval?: Numberish
+  interval?: number | 'requestAnimationFrame'
   text?: string
   textHtml?: string
   textTag?: string
@@ -930,18 +952,17 @@ export interface BImgProps extends RadiusElementExtendables {
   blank?: boolean
   blankColor?: string
   block?: boolean
-  center?: boolean
-  end?: boolean
   fluid?: boolean
   fluidGrow?: boolean
   height?: Numberish
+  tag?: string
   lazy?: boolean
   sizes?: string | readonly string[]
   src?: string
   srcset?: string | readonly string[]
-  start?: boolean
   thumbnail?: boolean
   width?: Numberish
+  placement?: Extract<Placement, 'start' | 'end'> | 'center'
 }
 
 export interface BFormProps {
@@ -968,8 +989,9 @@ export interface BTableSimpleProps {
   stickyHeader?: boolean | Numberish
   striped?: boolean
   stripedColumns?: boolean
-  tableClass?: ClassValue
   variant?: ColorVariant | null
+  tableAttrs?: Readonly<AttrsValue>
+  tableClass?: ClassValue
 }
 
 export interface BTableLiteProps<T> extends BTableSimpleProps {
@@ -999,21 +1021,12 @@ export interface BTableLiteProps<T> extends BTableSimpleProps {
   primaryKey?: string
   showEmpty?: boolean
   tbodyClass?: ClassValue
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  tbodyTrAttr?: any
+  tbodyTrAttrs?: ((item: T | null, type: TableRowType) => AttrsValue) | AttrsValue
   // tbodyTransitionHandlers
   // tbodyTransitionProps
   tbodyTrClass?:
-    | ((
-        item: T | null,
-        type: string
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ) => string | readonly any[] | null | undefined)
-    | string
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    | Readonly<Record<PropertyKey, any>>
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    | readonly any[]
+    | ((item: T | null, type: TableRowType) => TableStrictClassValue)
+    | TableStrictClassValue
   tfootClass?: ClassValue
   tfootTrClass?: ClassValue
   theadClass?: ClassValue
@@ -1028,7 +1041,6 @@ export interface BTableProps<T> extends Omit<BTableLiteProps<T>, 'tableClass'> {
   noProviderFiltering?: boolean
   sortBy?: BTableSortBy[]
   mustSort?: boolean | string[] // TODO this is a string of fields, possibly generic
-  noSortReset?: boolean
   selectable?: boolean
   multisort?: boolean
   stickySelect?: boolean
@@ -1149,6 +1161,7 @@ export interface BDropdownProps extends TeleporterProps {
     | Readonly<{mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null}>
   role?: string
   size?: Size
+  skipWrapper?: boolean
   split?: boolean
   splitButtonType?: ButtonType
   splitClass?: ClassValue
@@ -1161,6 +1174,7 @@ export interface BDropdownProps extends TeleporterProps {
   toggleClass?: ClassValue
   toggleText?: string
   variant?: ButtonVariant | null
+  wrapperClass?: ClassValue
 }
 
 export interface BToastProps extends ColorExtendables, Omit<BLinkProps, 'routerTag'> {
@@ -1169,12 +1183,13 @@ export interface BToastProps extends ColorExtendables, Omit<BLinkProps, 'routerT
   headerClass?: ClassValue
   headerTag?: string
   id?: string
-  interval?: Numberish
+  interval?: number | 'requestAnimationFrame'
   isStatus?: boolean
   modelValue?: boolean | number
   noCloseButton?: boolean
   noFade?: boolean
   noHoverPause?: boolean
+  noResumeOnHoverLeave?: boolean
   progressProps?: Omit<BProgressBarProps, 'label' | 'labelHtml' | 'max' | 'value'>
   showOnPause?: boolean
   solid?: boolean
@@ -1187,6 +1202,7 @@ export interface BPopoverProps extends TeleporterProps {
   boundary?: Boundary | RootBoundary
   boundaryPadding?: Padding
   click?: boolean
+  closeOnHide?: boolean
   content?: string
   customClass?: ClassValue
   delay?:
@@ -1196,7 +1212,6 @@ export interface BPopoverProps extends TeleporterProps {
         hide: number
       }>
   floatingMiddleware?: Middleware[]
-  hide?: boolean
   html?: boolean
   id?: string
   inline?: boolean
@@ -1233,10 +1248,9 @@ export interface BCardHeadFootProps extends ColorExtendables {
 }
 
 export interface BModalProps extends TeleporterProps {
-  autoFocus?: boolean
-  autoFocusButton?: 'ok' | 'cancel' | 'close'
+  autofocus?: boolean
+  autofocusButton?: 'ok' | 'cancel' | 'close'
   body?: string
-  backdropVariant?: ColorVariant | null
   bodyAttrs?: Readonly<AttrsValue>
   bodyBgVariant?: ColorVariant | null
   bodyClass?: ClassValue
@@ -1276,6 +1290,8 @@ export interface BModalProps extends TeleporterProps {
   noCloseOnBackdrop?: boolean
   noCloseOnEsc?: boolean
   noFade?: boolean
+  noTrap?: boolean
+  noStacking?: boolean
   okDisabled?: boolean
   okOnly?: boolean
   okTitle?: string
@@ -1287,4 +1303,24 @@ export interface BModalProps extends TeleporterProps {
   titleSrOnly?: boolean
   titleTag?: string
   transProps?: Readonly<BTransitionProps>
+}
+
+export interface BRowProps extends RowColsBreakpointProps {
+  tag?: string
+  gutterX?: ColsNumbers
+  gutterY?: ColsNumbers
+  noGutters?: boolean
+  alignV?: AlignmentVertical
+  alignH?: AlignmentJustifyContent
+  alignContent?: AlignmentContent
+  cols?: ColsNumbers
+}
+
+export interface BColProps extends OffsetBreakpointProps, OrderBreakpointProps, ColBreakpointProps {
+  alignSelf?: AlignmentVertical | 'auto'
+  tag?: string
+  order?: ColsNumbers
+  offset?: ColsNumbers
+  cols?: ColsNumbers | 'auto'
+  col?: boolean
 }

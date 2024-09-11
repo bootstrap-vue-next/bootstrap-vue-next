@@ -3,24 +3,24 @@
     v-bind="props"
     :aria-busy="busyModel"
     :items="computedDisplayItems"
-    :fields="computedFields"
+    :fields="computedFields as TableFieldRaw<T>[]"
     :table-class="tableClasses"
     :tbody-tr-class="getRowClasses"
     :field-column-class="getFieldColumnClasses"
     @head-clicked="onFieldHeadClick"
     @row-dbl-clicked="
-      (row, index, e) => {
+      (row: T, index: number, e: MouseEvent) => {
         emit('row-dbl-clicked', row, index, e)
       }
     "
     @row-clicked="onRowClick"
     @row-hovered="
-      (row, index, e) => {
+      (row: T, index: number, e: MouseEvent) => {
         emit('row-hovered', row, index, e)
       }
     "
     @row-unhovered="
-      (row, index, e) => {
+      (row: T, index: number, e: MouseEvent) => {
         emit('row-unhovered', row, index, e)
       }
     "
@@ -28,8 +28,17 @@
     <template v-for="(_, name) in $slots" #[name]="slotData">
       <slot :name="name" v-bind="slotData" />
     </template>
-    <template #head()="scope">
-      {{ getTableFieldHeadLabel(scope.field) }}
+    <template
+      v-for="field in computedFields"
+      :key="field.key"
+      #[`head(${String(field.key)})`]="scope"
+    >
+      <slot
+        :name="$slots[`head(${String(field.key)})`] ? `head(${String(field.key)})` : 'head()'"
+        v-bind="scope"
+      >
+        {{ getTableFieldHeadLabel(field) }}
+      </slot>
       <template v-if="isSortable && !!scope.field.sortable && props.noSortableIcon === false">
         <slot
           v-if="sortByModel?.find((el) => el.key === scope.field.key)?.order === 'asc'"
@@ -114,7 +123,7 @@
               <template #overlay>
                 <div class="d-flex align-items-center gap-2 mt-5">
                   <BSpinner />
-                  <strong>{{ busyLoadingText }}</strong>
+                  <strong>{{ props.busyLoadingText }}</strong>
                 </div>
               </template>
             </BOverlay>
@@ -127,93 +136,103 @@
 
 <script setup lang="ts" generic="T">
 import {useToNumber} from '@vueuse/core'
-import {computed, onMounted, ref, type Ref, toRef, watch} from 'vue'
-import type {
-  BTableProps,
-  BTableSortBy,
-  BTableSortByOrder,
-  NoProviderTypes,
-  TableField,
-  TableFieldRaw,
-  TableItem,
-} from '../../types'
-import {formatItem, get, getTableFieldHeadLabel} from '../../utils'
+import {computed, onMounted, type Ref, ref, watch} from 'vue'
+import {formatItem} from '../../utils/formatItem'
 import BOverlay from '../BOverlay/BOverlay.vue'
-import BSpinner from '../BSpinner.vue'
+import BSpinner from '../BSpinner/BSpinner.vue'
 import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
 import BTr from './BTr.vue'
-import {isTableField, isTableItem} from '../../types/TableTypes'
+import {
+  type BTableSortBy,
+  type BTableSortByOrder,
+  isTableField,
+  isTableItem,
+  type NoProviderTypes,
+  type TableField,
+  type TableFieldRaw,
+  type TableItem,
+  type TableRowType,
+  type TableStrictClassValue,
+} from '../../types/TableTypes'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BTableProps} from '../../types/ComponentProps'
+import {get, set} from '../../utils/object'
+import {startCase} from '../../utils/stringUtils'
+import {getTableFieldHeadLabel} from '../../utils/getTableFieldHeadLabel'
 
-const props = withDefaults(defineProps<BTableProps<T>>(), {
-  noSortableIcon: false,
-  perPage: Number.POSITIVE_INFINITY,
-  filter: undefined,
-  mustSort: false,
-  filterable: undefined,
-  provider: undefined,
-  noProvider: undefined,
-  noProviderPaging: false,
-  noProviderSorting: false,
-  multisort: false,
-  noProviderFiltering: false,
-  noLocalSorting: false,
-  noSelectOnClick: false,
-  selectable: false,
-  stickySelect: false,
-  selectHead: true,
-  selectMode: 'multi',
-  selectionVariant: 'primary',
-  busyLoadingText: 'Loading...',
-  currentPage: 1,
-  // BTableLite props
-  items: () => [],
-  fields: () => [],
-  // All others use defaults
-  caption: undefined,
-  align: undefined,
-  footClone: undefined,
-  labelStacked: undefined,
-  showEmpty: undefined,
-  emptyText: undefined,
-  emptyFilteredText: undefined,
-  fieldColumnClass: undefined,
-  tbodyTrClass: undefined,
-  captionHtml: undefined,
-  detailsTdClass: undefined,
-  headVariant: undefined,
-  headRowVariant: undefined,
-  footRowVariant: undefined,
-  footVariant: undefined,
-  modelValue: undefined,
-  primaryKey: undefined,
-  tbodyClass: undefined,
-  tbodyTrAttr: undefined,
-  tfootClass: undefined,
-  tfootTrClass: undefined,
-  theadClass: undefined,
-  theadTrClass: undefined,
-  // End BTableLite props
-  // BTableSimple props
-  borderVariant: undefined,
-  variant: undefined,
-  bordered: undefined,
-  borderless: undefined,
-  captionTop: undefined,
-  dark: undefined,
-  hover: undefined,
-  id: undefined,
-  noBorderCollapse: undefined,
-  outlined: undefined,
-  fixed: undefined,
-  responsive: undefined,
-  stacked: undefined,
-  striped: undefined,
-  stripedColumns: undefined,
-  small: undefined,
-  stickyHeader: undefined,
-  // End BTableSimple props
-})
+const _props = withDefaults(
+  defineProps<Omit<BTableProps<T>, 'sortBy' | 'busy' | 'selectedItems'>>(),
+  {
+    noSortableIcon: false,
+    perPage: Number.POSITIVE_INFINITY,
+    filter: undefined,
+    mustSort: false,
+    filterable: undefined,
+    provider: undefined,
+    noProvider: undefined,
+    noProviderPaging: false,
+    noProviderSorting: false,
+    multisort: false,
+    noProviderFiltering: false,
+    noLocalSorting: false,
+    noSelectOnClick: false,
+    selectable: false,
+    stickySelect: false,
+    selectHead: true,
+    selectMode: 'multi',
+    selectionVariant: 'primary',
+    busyLoadingText: 'Loading...',
+    currentPage: 1,
+    // BTableLite props
+    items: () => [],
+    fields: () => [],
+    // All others use defaults
+    caption: undefined,
+    align: undefined,
+    footClone: undefined,
+    labelStacked: undefined,
+    showEmpty: undefined,
+    emptyText: undefined,
+    emptyFilteredText: undefined,
+    fieldColumnClass: undefined,
+    tbodyTrClass: undefined,
+    captionHtml: undefined,
+    detailsTdClass: undefined,
+    headVariant: undefined,
+    headRowVariant: undefined,
+    footRowVariant: undefined,
+    footVariant: undefined,
+    modelValue: undefined,
+    primaryKey: undefined,
+    tbodyClass: undefined,
+    tfootClass: undefined,
+    tfootTrClass: undefined,
+    theadClass: undefined,
+    theadTrClass: undefined,
+    // End BTableLite props
+    // BTableSimple props
+    borderVariant: undefined,
+    variant: undefined,
+    bordered: undefined,
+    borderless: undefined,
+    captionTop: undefined,
+    dark: undefined,
+    hover: undefined,
+    id: undefined,
+    noBorderCollapse: undefined,
+    outlined: undefined,
+    fixed: undefined,
+    responsive: undefined,
+    stacked: undefined,
+    striped: undefined,
+    stripedColumns: undefined,
+    small: undefined,
+    stickyHeader: undefined,
+    // End BTableSimple props
+  }
+)
+const props = useDefaults(_props, 'BTable')
 
 const emit = defineEmits<{
   'filtered': [value: T[]]
@@ -224,19 +243,22 @@ const emit = defineEmits<{
   'row-unhovered': [item: T, index: number, event: MouseEvent]
   'row-selected': [value: T]
   'row-unselected': [value: T]
-  'selection': [value: T[]]
   'sorted': [value: BTableSortBy]
+  'change': [value: T[]]
 }>()
 
-const sortByModel = defineModel<BTableSortBy[] | undefined>('sortBy', {
+const sortByModel = defineModel<BTableProps<T>['sortBy']>('sortBy', {
   default: undefined,
 })
-const busyModel = defineModel<boolean>('busy', {
+const busyModel = defineModel<Exclude<BTableProps<T>['busy'], undefined>>('busy', {
   default: false,
 })
-const selectedItemsModel = defineModel<T[]>('selectedItems', {
-  default: () => [],
-})
+const selectedItemsModel = defineModel<Exclude<BTableProps<T>['selectedItems'], undefined>>(
+  'selectedItems',
+  {
+    default: () => [],
+  }
+)
 
 const selectedItemsToSet = computed({
   get: () => new Set([...selectedItemsModel.value]),
@@ -262,18 +284,28 @@ const selectedItemsSetUtilities = {
   },
   delete: (item: T) => {
     const value = new Set(selectedItemsToSet.value)
-    value.delete(item)
+    if (props.primaryKey) {
+      const pkey: string = props.primaryKey
+      selectedItemsModel.value.forEach((v, i) => {
+        const selectedKey = get(v, pkey)
+        const itemKey = get(item, pkey)
+
+        if (!!selectedKey && !!itemKey && selectedKey === itemKey) {
+          value.delete(selectedItemsModel.value[i])
+        }
+      })
+    } else {
+      value.delete(item)
+    }
     selectedItemsToSet.value = value
     emit('row-unselected', item)
   },
-  /* TODO
-  This has method and the delete method suffer from an error when using a non-reactive source as the items prop
-  ```ts
-  const items = [{first_name: 'Geneva', last_name: 'Wilson', age: 89},{first_name: 'Jami', last_name: 'Carney', age: 38}]
-  ```
-  For some reason, the reference of the object gets lost. However, when you use an actual ref(), it works just fine
-  Getting the reference properly will fix all outstanding issues
-  */
+  set: (items: T[]) => {
+    selectedItemsToSet.value = new Set(items)
+    selectedItemsToSet.value.forEach((item) => {
+      emit('row-unselected', item)
+    })
+  },
   has: (item: T) => {
     if (!props.primaryKey) return selectedItemsToSet.value.has(item)
 
@@ -297,9 +329,9 @@ const internalItems: Ref<T[]> = ref([])
 const perPageNumber = useToNumber(() => props.perPage, {method: 'parseInt'})
 const currentPageNumber = useToNumber(() => props.currentPage, {method: 'parseInt'})
 
-const isFilterableTable = toRef(() => !!props.filter)
-const usesProvider = toRef(() => props.provider !== undefined)
-const isSelecting = toRef(() => selectedItemsToSet.value.size > 0)
+const isFilterableTable = computed(() => !!props.filter)
+const usesProvider = computed(() => props.provider !== undefined)
+const isSelecting = computed(() => selectedItemsToSet.value.size > 0)
 
 const isSortable = computed(
   () =>
@@ -309,9 +341,16 @@ const isSortable = computed(
     )
 )
 
-const computedFields = computed<TableFieldRaw<T>[]>(() =>
+const computedFields = computed<TableField<T>[]>(() =>
   props.fields.map((el) => {
-    if (!(typeof el === 'object' && el !== null)) return el
+    if (!isTableField(el)) {
+      const label = startCase(el as string)
+      return {
+        key: el as string,
+        label,
+        tdAttr: props.stacked === true ? {'data-label': label} : undefined,
+      }
+    }
 
     const value = sortByModel.value?.find((sb) => el.key === sb.key)
     const sortValue =
@@ -321,9 +360,12 @@ const computedFields = computed<TableFieldRaw<T>[]>(() =>
           ? 'none'
           : value.order === 'desc'
             ? 'descending'
-            : 'ascending'
+            : value.order === 'asc'
+              ? 'ascending'
+              : 'none'
+
     return {
-      ...el,
+      ...(el as TableField<T>),
       thAttr: {
         'aria-sort': sortValue,
         ...el.thAttr,
@@ -337,7 +379,7 @@ const tableClasses = computed(() => ({
   'b-table-selectable': props.selectable,
   'user-select-none': props.selectable && isSelecting.value,
 }))
-// All three of these are similar, even though the two following are not computeds
+
 const getBusyRowClasses = computed(() => [
   props.tbodyTrClass
     ? typeof props.tbodyTrClass === 'function'
@@ -354,10 +396,10 @@ const getFieldColumnClasses = (field: TableField) => [
 // Also the row should technically have aria-selected . Both things could probably just use a function with tbodyTrAttrs
 // But functional tbodyTrAttrs are not supported yet
 // Also the stuff for resolving functions could probably be made a util
-const getRowClasses = (item: T, type: string) => [
+const getRowClasses = (item: T | null, type: TableRowType): TableStrictClassValue => [
   {
     [`selected table-${props.selectionVariant}`]:
-      props.selectable && item && selectedItemsSetUtilities.has(item),
+      props.selectable && !!item && selectedItemsSetUtilities.has(item),
   },
   props.tbodyTrClass
     ? typeof props.tbodyTrClass === 'function'
@@ -385,7 +427,7 @@ const computedItems = computed<T[]>(() => {
 
             return false
           })
-          const val = ob[sortOption.key as keyof TableItem]
+          const val = get(ob, sortOption.key as keyof TableItem)
           if (isTableField(sortField) && !!sortField.sortByFormatted) {
             const formatter =
               typeof sortField.sortByFormatted === 'function'
@@ -397,7 +439,7 @@ const computedItems = computed<T[]>(() => {
           }
           return typeof val === 'object' && val !== null
             ? JSON.stringify(val)
-            : val?.toString() ?? ''
+            : (val?.toString() ?? '')
         }
 
         const aValue = realVal(a)
@@ -425,14 +467,52 @@ const computedItems = computed<T[]>(() => {
               (!props.filterable?.includes(key) && !!props.filterable?.length)
             )
               return false
-            const itemValue: string =
-              typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
+            const realVal = (): string => {
+              const filterField = computedFields.value.find((el) => {
+                if (isTableField(el)) return el.key === key
+
+                return false
+              })
+              if (isTableField(filterField) && !!filterField.filterByFormatted) {
+                const formatter =
+                  typeof filterField.filterByFormatted === 'function'
+                    ? filterField.filterByFormatted
+                    : filterField.formatter
+                if (formatter) {
+                  return formatter(val, String(filterField.key), item) as string
+                }
+              }
+              return typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
+            }
+            const itemValue: string = realVal()
             return itemValue.toLowerCase().includes(props.filter?.toLowerCase() ?? '')
           })
         : true
     )
 
   let mappedItems = usesProvider.value ? internalItems.value : (props.items as T[])
+  mappedItems = mappedItems.map((item) => {
+    if (
+      typeof item === 'object' &&
+      item !== null &&
+      Object.keys(item).some((key) => key.includes('.'))
+    ) {
+      // We use any here because the TS doesn't isn't certain that "item" is the same type as our newItem.
+      // But we've determined that it's an object, so we can ignore it since they will always be the same "object"
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let newItem: any = {}
+      for (const key in item) {
+        if (key.includes('.')) {
+          newItem = set(newItem, key, item[key])
+        } else {
+          newItem[key] = item[key]
+        }
+      }
+      return newItem
+      // return
+    }
+    return item
+  })
 
   if (
     (isFilterableTable.value === true && !usesProvider.value) ||
@@ -462,6 +542,10 @@ const computedDisplayItems = computed<T[]>(() => {
   )
 })
 
+watch(computedDisplayItems, (v) => {
+  emit('change', v)
+})
+
 const handleRowSelection = (
   row: T,
   index: number,
@@ -478,12 +562,11 @@ const handleRowSelection = (
     if (selectedItemsSetUtilities.has(row)) {
       selectedItemsSetUtilities.delete(row)
     } else {
-      // If it is single, we clear out everything first
       if (props.selectMode === 'single') {
-        selectedItemsSetUtilities.clear()
+        selectedItemsSetUtilities.set([row])
+      } else {
+        selectedItemsSetUtilities.add(row)
       }
-      // Then set the item
-      selectedItemsSetUtilities.add(row)
     }
   } else {
     if (ctrlClicked || metaClicked) {
@@ -500,19 +583,13 @@ const handleRowSelection = (
       const lastSelectedIndex = props.items.findIndex((i) => i === lastSelectedItem)
       const selectStartIndex = Math.min(lastSelectedIndex, index)
       const selectEndIndex = Math.max(lastSelectedIndex, index)
-      props.items.slice(selectStartIndex, selectEndIndex + 1).forEach((item) => {
-        if (!selectedItemsSetUtilities.has(item)) {
-          selectedItemsSetUtilities.add(item)
-        }
-      })
+      const items = props.items.slice(selectStartIndex, selectEndIndex + 1)
+      selectedItemsSetUtilities.set(items)
       // If nothing is being held, then we just behave like it's single mode
     } else {
-      selectedItemsSetUtilities.clear()
-      selectedItemsSetUtilities.add(row)
+      selectedItemsSetUtilities.set([row])
     }
   }
-  // Notify
-  notifySelectionEvent()
 }
 
 const onRowClick = (row: T, index: number, e: MouseEvent) => {
@@ -527,8 +604,6 @@ const handleFieldSorting = (field: TableField<T>) => {
 
   const fieldKey = typeof field === 'object' && field !== null ? field.key : field
   const fieldSortable = typeof field === 'object' && field !== null ? field.sortable : false
-
-  // TODO implement rules for noSortReset
 
   if (!(isSortable.value === true && fieldSortable === true)) return
 
@@ -615,11 +690,6 @@ const callItemsProvider = async () => {
   }
 }
 
-const notifySelectionEvent = () => {
-  if (!props.selectable) return
-  emit('selection', [...selectedItemsToSet.value])
-}
-
 const providerPropsWatch = async (prop: string, val: unknown, oldVal: unknown) => {
   if (val === oldVal) return
 
@@ -690,7 +760,6 @@ defineExpose({
   clearSelected: () => {
     if (!props.selectable) return
     selectedItemsSetUtilities.clear()
-    notifySelectionEvent()
   },
   refresh: callItemsProvider,
   selectAllRows: () => {
@@ -701,21 +770,23 @@ defineExpose({
       if (unselectableItems.includes(item)) return
       emit('row-selected', item)
     })
-    notifySelectionEvent()
   },
   selectRow: (index: number) => {
     if (!props.selectable) return
     const item = computedItems.value[index]
     if (!item || selectedItemsSetUtilities.has(item)) return
     selectedItemsSetUtilities.add(item)
-    notifySelectionEvent()
   },
   unselectRow: (index: number) => {
     if (!props.selectable) return
     const item = computedItems.value[index]
     if (!item || !selectedItemsSetUtilities.has(item)) return
     selectedItemsSetUtilities.delete(item)
-    notifySelectionEvent()
+  },
+  isRowSelected: (index: number) => {
+    if (!props.selectable) return false
+    const item = computedItems.value[index]
+    return selectedItemsSetUtilities.has(item)
   },
 })
 </script>

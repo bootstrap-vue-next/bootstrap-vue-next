@@ -1,0 +1,9 @@
+input[type="file"].form-control-input-file-hide-button {
+  &::-webkit-file-upload-button {
+    display: none;
+  }
+
+  &::file-selector-button {
+    display: none;
+  }
+}

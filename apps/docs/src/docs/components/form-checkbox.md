@@ -1,12 +1,10 @@
 # Form Checkbox
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -271,6 +269,68 @@ const checkEx2Options = [
   </template>
 </HighlightCard>
 
+## Checkbox values and `v-model`
+
+By default, `BFormCheckbox` value will be true when checked and false when unchecked. You can customize the checked and unchecked values by specifying the `value` and `unchecked-value` properties, respectively.
+
+When you have multiple checkboxes that bind to a single data state variable, you must provide an array reference (`[ ]`) to your v-model.
+
+Note that when `v-model` is bound to multiple checkboxes (i.e an array ref), the `unchecked-value` is **not used**. Only the value(s) of the checked checkboxes will be returned in the `v-model` bound array. You should provide a unique `value` for each checkbox's `value` prop (the default of `true` will not work when bound to an array).
+
+To pre-check any checkboxes, set the `v-model` to the value(s) of the checks that you would like pre-selected.
+
+When placing individual `BFormCheckbox` components within a `BFormCheckboxGroup`, most
+props and the `v-model` are inherited from the `BFormCheckboxGroup`.
+
+**Note:** the `unchecked-value` prop does not affect the native `<input>`'s `value` attribute, because browsers do not include unchecked boxes in form submissions. To guarantee that one of two values is submitted in a native `<form>` submit (e.g. `'yes'` or `'no'`), use radio inputs instead. This is the same limitation that [Vue has with native checkbox inputs](https://vuejs.org/guide/essentials/forms.html#checkbox-1).
+
+<HighlightCard>
+  <BFormCheckbox
+    v-for="(car, index) in availableCars"
+    :key="index"
+    v-model="selectedCars"
+    :value="car"
+  >
+    {{ car }}
+  </BFormCheckbox>
+  <div class="mt-2">Selected: <strong>{{ concatSelectedCars}}</strong></div>
+  <template #html>
+
+```vue
+<template>
+  <BFormCheckbox
+    v-for="(car, index) in availableCars"
+    :key="index"
+    v-model="selectedCars"
+    :value="car"
+  >
+    {{ car }}
+  </BFormCheckbox>
+
+  Selected: <strong>{{ concatSelectedCars }}</strong>
+</template>
+
+<script setup lang="ts">
+import {ref} from 'vue'
+
+const availableCars = ['BMW', 'Mercedes', 'Toyota']
+const selectedCars = ref([])
+
+const concatSelectedCars = computed(() => {
+  return selectedCars.value.join(', ')
+})
+</script>
+```
+
+  </template>
+</HighlightCard>
+
+### Multiple checkboxes and accessibility
+
+When binding multiple checkboxes together, you must set the `name` prop to the same value for all `BFormCheckbox`s in the group individually. This will inform users of assistive technologies that the checkboxes are related and enables native browser keyboard navigation.
+
+Whenever using multiple checkboxes, it is recommended that the checkboxes be placed in a [`BFormGroup`](/docs/components/form-group) component to associate a label with the entire group of checkboxes. See examples above.
+
 ## Inline and stacked checkboxes
 
 `BFormCheckboxGroup` components render inline checkboxes by default, while `BFormCheckbox`
@@ -431,67 +491,27 @@ Use the `reverse` prop to put your checkboxes and switches on the opposite side 
   </template>
 </HighlightCard>
 
-## Checkbox values and `v-model`
+## Without Labels
 
-By default, `BFormCheckbox` value will be true when checked and false when unchecked. You can customize the checked and unchecked values by specifying the `value` and `unchecked-value` properties, respectively.
-
-When you have multiple checkboxes that bind to a single data state variable, you must provide an array reference (`[ ]`) to your v-model.
-
-Note that when `v-model` is bound to multiple checkboxes (i.e an array ref), the `unchecked-value` is **not used**. Only the value(s) of the checked checkboxes will be returned in the `v-model` bound array. You should provide a unique `value` for each checkbox's `value` prop (the default of `true` will not work when bound to an array).
-
-To pre-check any checkboxes, set the `v-model` to the value(s) of the checks that you would like pre-selected.
-
-When placing individual `BFormCheckbox` components within a `BFormCheckboxGroup`, most
-props and the `v-model` are inherited from the `BFormCheckboxGroup`.
-
-**Note:** the `unchecked-value` prop does not affect the native `<input>`'s `value` attribute, because browsers do not include unchecked boxes in form submissions. To guarantee that one of two values is submitted in a native `<form>` submit (e.g. `'yes'` or `'no'`), use radio inputs instead. This is the same limitation that [Vue has with native checkbox inputs](https://vuejs.org/guide/essentials/forms.html#checkbox-1).
+In order to omit labels as described in the
+[bootstrap documentation](https://getbootstrap.com/docs/5.3/forms/checks-radios/#without-labels)
+just leave the default slot empty. Remember to still provide some form of accessible name for
+assistive technologies (for instance, using aria-label).
 
 <HighlightCard>
-  <BFormCheckbox
-    v-for="(car, index) in availableCars"
-    :key="index"
-    v-model="selectedCars"
-    :value="car"
-  >
-    {{ car }}
-  </BFormCheckbox>
-  <div class="mt-2">Selected: <strong>{{ concatSelectedCars}}</strong></div>
+  <BFormCheckbox></BFormCheckbox>
+  <BFormCheckbox disabled></BFormCheckbox>
+  <BFormCheckbox switch></BFormCheckbox>
   <template #html>
 
-```vue
-<template>
-  <BFormCheckbox
-    v-for="(car, index) in availableCars"
-    :key="index"
-    v-model="selectedCars"
-    :value="car"
-  >
-    {{ car }}
-  </BFormCheckbox>
-
-  Selected: <strong>{{ concatSelectedCars }}</strong>
-</template>
-
-<script setup lang="ts">
-import {ref} from 'vue'
-
-const availableCars = ['BMW', 'Mercedes', 'Toyota']
-const selectedCars = ref([])
-
-const concatSelectedCars = computed(() => {
-  return selectedCars.value.join(', ')
-})
-</script>
+```vue-html
+  <BFormCheckbox></BFormCheckbox>
+  <BFormCheckbox disabled></BFormCheckbox>
+  <BFormCheckbox switch></BFormCheckbox>
 ```
 
   </template>
 </HighlightCard>
-
-### Multiple checkboxes and accessibility
-
-When binding multiple checkboxes together, you must set the `name` prop to the same value for all `BFormCheckbox`s in the group individually. This will inform users of assistive technologies that the checkboxes are related and enables native browser keyboard navigation.
-
-Whenever using multiple checkboxes, it is recommended that the checkboxes be placed in a [`BFormGroup`](/docs/components/form-group) component to associate a label with the entire group of checkboxes. See examples above.
 
 ## Button style checkboxes
 
@@ -953,7 +973,7 @@ const indeterminate = ref(true)
               v-model:indeterminate="asIndeterminate"
               aria-describedby="flavors"
               aria-controls="flavors"
-              @update:modelValue="toggleAll"
+              @update:model-value="toggleAll"
             >
               {{ allSelected ? 'Un-select All' : 'Select All' }}
             </BFormCheckbox>
@@ -991,7 +1011,7 @@ const indeterminate = ref(true)
         v-model:indeterminate="asIndeterminate"
         aria-describedby="flavors"
         aria-controls="flavors"
-        @update:modelValue="toggleAll"
+        @update:model-value="toggleAll"
       >
         {{ allSelected ? 'Un-select All' : 'Select All' }}
       </BFormCheckbox>
@@ -1058,6 +1078,7 @@ watch(flavorSelected, (newValue: string[]) => {
 import {data} from '../../data/components/formCheckbox.data'
 import {computed, ref, watch} from 'vue'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import CrossSiteScriptingWarning from '../../components/CrossSiteScriptingWarning.vue'
 import {BButton, BFormCheckboxGroup, BFormCheckbox, BFormGroup, BCard, BCardBody, BAlert} from 'bootstrap-vue-next'

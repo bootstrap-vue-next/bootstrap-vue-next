@@ -40,7 +40,7 @@ jobs:
         if: ${{ steps.release.outputs.releases_created }}
 
       - name: Install PNPM
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         id: pnpm-install
         if: ${{ steps.release.outputs.releases_created }}
 

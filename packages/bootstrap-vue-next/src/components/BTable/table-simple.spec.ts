@@ -52,7 +52,4 @@ describe('BTableSimple', () => {
     await wrapper.setProps({stickyHeader: '400px'})
     expect(wrapper.get('div').attributes('style')).toBe('max-height: 400px;')
   })
-
-  // TODO assert classes and attributes on elements
-  // didn't test tableAttrs or responsiveClasses
 })

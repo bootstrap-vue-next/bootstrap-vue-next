@@ -1,7 +1,7 @@
-import type {TableFieldFormatter} from '../types'
-import {get} from '.'
+import type {TableFieldFormatter} from '../types/TableTypes'
+import {get} from './object'
 
-export default (
+export const formatItem = (
   item: unknown,
   // Weakly type fieldKey because it can be a nested string, such as 'foo.bar.baz'
   fieldKey: string,

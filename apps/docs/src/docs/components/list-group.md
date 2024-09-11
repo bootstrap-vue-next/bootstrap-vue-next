@@ -1,12 +1,10 @@
 # List Group
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -573,6 +571,7 @@ help of [flexbox utility classes](/docs/reference/utility-classes).
 <script setup lang="ts">
 import {data} from '../../data/components/listGroup.data'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BCard, BCardBody, BListGroup, BBadge, BCardGroup, BListGroupItem} from 'bootstrap-vue-next'
 </script>

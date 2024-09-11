@@ -1,21 +1,23 @@
 <template>
   <button
-    :type="type"
+    :type="props.type"
     class="btn-close"
     :disabled="props.disabled"
-    :aria-label="ariaLabel"
+    :aria-label="props.ariaLabel"
     @click="emit('click', $event)"
   />
 </template>
 
 <script setup lang="ts">
-import type {BCloseButtonProps} from '../../types'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BCloseButtonProps} from '../../types/ComponentProps'
 
-const props = withDefaults(defineProps<BCloseButtonProps>(), {
+const _props = withDefaults(defineProps<BCloseButtonProps>(), {
   ariaLabel: 'Close',
   disabled: false,
   type: 'button',
 })
+const props = useDefaults(_props, 'BCloseButton')
 
 const emit = defineEmits<{
   click: [value: MouseEvent]

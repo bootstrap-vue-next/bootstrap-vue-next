@@ -1,6 +1,6 @@
 {
   "$schema": "https://turborepo.org/schema.json",
-  "pipeline": {
+  "tasks": {
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
@@ -16,18 +16,39 @@
     },
     "test:unit": {
       "outputs": [],
-      "inputs": ["**/tests/*.ts", "**/tests/*.js", "**/*.spec.ts", "**/*.spec.js", "**/*.test.ts", "**/*.test.js"]
+      "inputs": [
+        "**/tests/*.ts",
+        "**/tests/*.js",
+        "**/*.spec.ts",
+        "**/*.spec.js",
+        "**/*.test.ts",
+        "**/*.test.js"
+      ]
     },
     "test:coverage": {
       "outputs": [],
-      "inputs": ["**/tests/*.ts", "**/tests/*.js", "**/*.spec.ts", "**/*.spec.js", "**/*.test.ts", "**/*.test.js"]
+      "inputs": [
+        "**/tests/*.ts",
+        "**/tests/*.js",
+        "**/*.spec.ts",
+        "**/*.spec.js",
+        "**/*.test.ts",
+        "**/*.test.js"
+      ]
     },
     "test:lint:ci": {
       "outputs": []
     },
     "test:unit:ci": {
       "outputs": [],
-      "inputs": ["**/tests/*.ts", "**/tests/*.js", "**/*.spec.ts", "**/*.spec.js", "**/*.test.ts", "**/*.test.js"]
+      "inputs": [
+        "**/tests/*.ts",
+        "**/tests/*.js",
+        "**/*.spec.ts",
+        "**/*.spec.js",
+        "**/*.test.ts",
+        "**/*.test.js"
+      ]
     },
     "lint": {
       "outputs": []

@@ -1,4 +1,5 @@
 {
+  "name": "bootstrap-vue-next-monorepo",
   "private": true,
   "workspaces": [
     "packages/*",
@@ -36,13 +37,13 @@
     "test:ci": "turbo run test:ci"
   },
   "devDependencies": {
-    "husky": "^9.0.11",
-    "lint-staged": "^15.2.2",
+    "husky": "^9.1.5",
+    "lint-staged": "^15.2.10",
     "turbo": "latest"
   },
   "engines": {
     "npm": ">=10.0.0",
     "node": ">=20.0.0"
   },
-  "packageManager": "pnpm@8.15.1"
+  "packageManager": "pnpm@9.5.0"
 }

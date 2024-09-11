@@ -1,6 +1,6 @@
 import type {Slot, VNode} from 'vue'
 
-export default (slot: Slot | undefined, filterBy: string): VNode[] =>
+export const getSlotElements = (slot: Slot | undefined, filterBy: string): VNode[] =>
   (slot?.() ?? [])
     .reduce((arr: VNode[], slot: VNode) => {
       if (typeof slot.type === 'symbol') {

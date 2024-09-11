@@ -26,7 +26,7 @@ jobs:
           node-version: 20.x.x
 
       - name: Install PNPM
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         id: pnpm-install
 
       - name: Get PNPM Store Directory
@@ -49,6 +49,8 @@ jobs:
       - name: Build Library
         run: pnpm run build
 
+      - run: pnpx pkg-pr-new publish './packages/bootstrap-vue-next' './packages/nuxt'
+
   test-lint:
     runs-on: ubuntu-latest
 
@@ -62,7 +64,7 @@ jobs:
           node-version: 20.x.x
 
       - name: Install PNPM
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         id: pnpm-install
 
       - name: Get PNPM Store Directory
@@ -98,7 +100,7 @@ jobs:
           node-version: 20.x.x
 
       - name: Install PNPM
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         id: pnpm-install
 
       - name: Get PNPM Store Directory

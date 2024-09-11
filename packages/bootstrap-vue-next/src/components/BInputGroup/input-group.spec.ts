@@ -273,6 +273,4 @@ describe('input-group', () => {
     })
     expect(wrapper.text()).toBe('prependdefaultappend')
   })
-
-  // TODO root component is finished, do internals
 })

@@ -1,6 +1,8 @@
 <template>
   <div style="min-height: 1000vh">
+    <BAlert :model-value="true">Hello World</BAlert>
     <BToastOrchestrator />
+    <BModalOrchestrator />
     <BModal v-model="show"> Nuxt module playground! </BModal>
     <BButton @click="show = !show"> Click me </BButton>
     <img src="@/assets/logo.png" width="50" alt="Bootstrap logo" />
@@ -33,6 +35,36 @@
         </BCollapse>
       </BCard>
     </BCollapse>
+    <BCard title="foobar"> bar foo</BCard>
+    <BContainer class="mt-5">
+      <BRow>
+        <BCol>
+          <BLink :to="{path: '/about'}" variant="info">About</BLink>
+        </BCol>
+      </BRow>
+      <BRow>
+        <BCol>
+          <BLink to="/" variant="primary" prefetch>Home</BLink>
+        </BCol>
+      </BRow>
+      <BRow>
+        <BCol>
+          <BLink href="https://google.com" target="_blank" variant="danger">Google</BLink>
+        </BCol>
+      </BRow>
+      <BRow>
+        <BCol>
+          <BLink :to="{path: '/about'}" prefetched-class="link-underline-danger" variant="info"
+            >About with prefetch underline class</BLink
+          >
+        </BCol>
+      </BRow>
+      <BRow class="mt-3 border">
+        <BCol>
+          <NuxtPage />
+        </BCol>
+      </BRow>
+    </BContainer>
   </div>
 </template>
 

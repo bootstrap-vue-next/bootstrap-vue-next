@@ -1,86 +1,122 @@
-import type {ComponentReference} from './ComponentReference'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
+import {buildCommonProps, pick} from '../../utils'
+import {linkProps, linkTo} from '../../utils/link-props'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BAvatar',
-      props: [
-        {
-          prop: 'alt',
-          type: 'string',
-          default: 'avatar',
+      sourcePath: '/BAvatar/BAvatar.vue',
+      props: {
+        '': {
+          badge: {
+            type: 'boolean | string',
+            default: false,
+            description:
+              'When `true` shows an empty badge on the avatar, alternatively set to a string for content in the badge',
+          },
+          badgeBgVariant: {
+            type: 'ColorVariant | null',
+            default: null,
+            description:
+              'Applies one of the Bootstrap theme color variants to the background of the badge',
+          },
+          badgeDotIndicator: {
+            type: 'boolean',
+            default: false,
+            description:
+              'When `true` shows a small dot indicator on the Avatar. All of the badge props are applied to the dot. `badge-dot-indicator` takes precedence over `badge`',
+          },
+          badgeTextVariant: {
+            type: 'TextColorVariant | null',
+            default: null,
+            description: 'Applies one of the Bootstrap theme color variants to the text',
+          },
+          badgeVariant: {
+            type: 'ColorVariant | null',
+            default: 'primary',
+            description: 'Applies one of the Bootstrap theme color variants to the badge',
+          },
+          badgePlacement: {
+            type: 'CombinedPlacement',
+            default: 'bottom-end',
+            description:
+              'Placement of the badge relative to the avatar. One of the values of `CombinedPlacement`',
+          },
+          badgePill: {
+            type: 'boolean',
+            default: false,
+            description: 'Renders the badge with pill styling',
+          },
+          button: {
+            type: 'boolean',
+            default: false,
+            description: 'When set to `true`, renders the avatar as a button',
+          },
+          buttonType: {
+            type: 'ButtonType',
+            default: 'button',
+            description:
+              'Type of button to render (i.e. `button`, `submit`, `reset`). Has no effect if prop button is not set',
+          },
+          size: {
+            type: 'Size | string',
+            default: undefined,
+            description: 'Size of the avatar. Refer to the documentation for details',
+          },
+          square: {
+            type: 'boolean',
+            default: false,
+            description: 'Disables rounding of the avatar, rending the avatar with square corners',
+          },
+          text: {
+            type: 'string',
+            default: undefined,
+            description: 'Text to place in the avatar',
+          },
+          ...pick(
+            buildCommonProps({
+              alt: {
+                default: 'avatar',
+              },
+              rounded: {
+                default: 'circle',
+                description:
+                  'Specifies the type of rounding to apply to the component or its children. The `square` prop takes precedence',
+              },
+              src: {
+                description: 'Image URL to use for the avatar',
+              },
+              variant: {
+                default: 'secondary',
+              },
+            }),
+            [
+              'ariaLabel',
+              'alt',
+              'bgVariant',
+              'rounded',
+              'roundedBottom',
+              'roundedEnd',
+              'roundedStart',
+              'roundedTop',
+              'src',
+              'textVariant',
+              'variant',
+            ]
+          ),
+        } satisfies Record<
+          Exclude<keyof BvnComponentProps['BAvatar'], keyof typeof linkProps>,
+          PropertyReference
+        >,
+        'BLink props': {
+          _linkTo: {
+            type: linkTo,
+          },
+          ...linkProps,
         },
-        {
-          prop: 'badge',
-          type: 'boolean | string',
-          default: false,
-        },
-        {
-          prop: 'badgeLeft',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'badgeOffset',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'badgeTop',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'badgeVariant',
-          type: 'ColorVariant | null',
-          default: 'primary',
-        },
-        {
-          prop: 'button',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'buttonType',
-          type: 'ButtonType',
-          default: 'button',
-        },
-        {
-          prop: 'icon',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'rounded',
-          type: 'boolean | string',
-          default: 'circle',
-        },
-        {
-          prop: 'size',
-          type: 'Size | string',
-          default: undefined,
-        },
-        {
-          prop: 'square',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'src',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'text',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'textVariant',
-          type: 'TextColorVariant | null',
-          default: null,
-        },
-      ],
+      },
       emits: [
         {
           event: 'click',
@@ -88,7 +124,7 @@ export default {
           args: [
             {
               arg: 'click',
-              description: 'On click event',
+              description: 'Native click event',
               type: 'MouseEvent',
             },
           ],
@@ -108,55 +144,66 @@ export default {
       slots: [
         {
           name: 'default',
-          description: '',
-          scope: [],
+          description: 'Content to place in the avatars optional badge. Overrides the `badge` prop',
         },
         {
           name: 'badge',
-          description: '',
-          scope: [],
+          description:
+            'Content to place in the avatar. Overrides props `text`, `src`, and `icon-name`',
         },
       ],
     },
     {
       component: 'BAvatarGroup',
-      props: [
-        {
-          prop: 'overlap',
-          type: 'number | string',
-          default: 0.3,
-        },
-        {
-          prop: 'rounded',
-          type: 'boolean | string',
-          default: false,
-        },
-        {
-          prop: 'size',
-          type: 'Size | string',
-          default: undefined,
-        },
-        {
-          prop: 'square',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'div',
-        },
-        {
-          prop: 'variant',
-          type: 'ColorVariant | null',
-          default: null,
-        },
-      ],
+      sourcePath: '/BAvatar/BAvatarGroup.vue',
+      props: {
+        '': {
+          overlap: {
+            type: 'Numberish',
+            default: 0.3,
+            description:
+              'Content to place in the avatar. Overrides props `text`, `src`, and `icon-name`',
+          },
+          size: {
+            type: 'Size | string',
+            default: undefined,
+            description: 'Size of the child avatars. Refer to the documentation for details',
+          },
+          square: {
+            type: 'boolean',
+            default: false,
+            description:
+              'Disables rounding of the child avatars, rending the avatar with square corners',
+          },
+          ...pick(
+            buildCommonProps({
+              rounded: {
+                default: 'circle',
+                description:
+                  'Specifies the type of rounding to apply to the component or its children. The `square` prop takes precedence. Refer to the documentation for details.',
+              },
+              variant: {
+                default: 'secondary',
+              },
+            }),
+            [
+              'bgVariant',
+              'rounded',
+              'roundedBottom',
+              'roundedEnd',
+              'roundedStart',
+              'roundedTop',
+              'tag',
+              'textVariant',
+              'variant',
+            ]
+          ),
+        } satisfies Record<keyof BvnComponentProps['BAvatarGroup'], PropertyReference>,
+      },
       slots: [
         {
           name: 'default',
-          description: '',
-          scope: [],
+          description: 'Content (avatars) to place in the avatar group',
         },
       ],
       emits: [],

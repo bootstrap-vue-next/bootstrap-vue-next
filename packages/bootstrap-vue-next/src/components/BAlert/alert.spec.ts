@@ -3,7 +3,7 @@ import {afterEach, describe, expect, it} from 'vitest'
 import BAlert from './BAlert.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BButton from '../BButton/BButton.vue'
-import BTransition from '../BTransition/BTransition.vue'
+import BTransition from '../BTransition.vue'
 
 describe('alert', () => {
   enableAutoUnmount(afterEach)
@@ -387,6 +387,4 @@ describe('alert', () => {
     const $bbutton = $div.getComponent(BButton)
     expect($bbutton.classes()).toContain('btn-warning')
   })
-
-  // TODO try to test countdown items
 })

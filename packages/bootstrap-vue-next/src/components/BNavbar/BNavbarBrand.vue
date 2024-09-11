@@ -5,25 +5,26 @@
 </template>
 
 <script setup lang="ts">
-import {toRef} from 'vue'
 import BLink from '../BLink/BLink.vue'
-import type {BNavbarBrandProps} from '../../types'
-import {useBLinkHelper} from '../../composables'
+import type {BNavbarBrandProps} from '../../types/ComponentProps'
+import {useBLinkHelper} from '../../composables/useBLinkHelper'
+import {useDefaults} from '../../composables/useDefaults'
+import {computed} from 'vue'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
 }>()
 
-const props = withDefaults(defineProps<BNavbarBrandProps>(), {
+const _props = withDefaults(defineProps<BNavbarBrandProps>(), {
   tag: 'div',
   // Link props
   active: undefined,
   activeClass: undefined,
-  append: undefined,
   disabled: undefined,
   exactActiveClass: undefined,
   href: undefined,
+  stretched: false,
   icon: undefined,
   opacity: undefined,
   opacityHover: undefined,
@@ -40,6 +41,7 @@ const props = withDefaults(defineProps<BNavbarBrandProps>(), {
   variant: undefined,
   // End link props
 })
+const props = useDefaults(_props, 'BNavbarBrand')
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'active',
@@ -63,5 +65,5 @@ const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'icon',
 ])
 
-const computedTag = toRef(() => (computedLink.value ? BLink : props.tag))
+const computedTag = computed(() => (computedLink.value ? BLink : props.tag))
 </script>

@@ -41,7 +41,7 @@
       </BNavbarNav>
     </BCollapse>
     <div class="d-flex align-items-center gap-2">
-      <VPNavBarSearch />
+      <VPNavBarSearch :class="{dark: colorMode === 'dark'}" />
       <div class="d-flex gap-2 flex-wrap socials">
         <BNav class="d-flex">
           <BNavItem
@@ -62,11 +62,16 @@
                 <component
                   :is="currentIcon"
                   height="1.1rem"
-                  :aria-label="`Toggle theme (${dark})`"
+                  :aria-label="`Toggle theme (${colorMode})`"
                   class="d-inline-block"
                 />
               </template>
-              <BDropdownItem v-for="el in options" :key="el" :active="dark === el" @click="set(el)">
+              <BDropdownItem
+                v-for="el in options"
+                :key="el"
+                :active="colorMode === el"
+                @click="set(el)"
+              >
                 <component :is="map[el]" /> {{ el }}
               </BDropdownItem>
             </BNavItemDropdown>
@@ -89,11 +94,10 @@
         <BOffcanvas
           id="sidebar-menu"
           v-model="sidebar"
-          :teleport-disabled="true"
-          :backdrop="false"
+          responsive="lg"
           title="Browse docs"
+          header-class="d-flex offcanvas-hidden-width"
           class="h-100 border-0"
-          :body-scrolling="isLargeScreen"
         >
           <TableOfContentsNav />
         </BOffcanvas>
@@ -123,13 +127,11 @@
               <BOffcanvas
                 id="otp-menu"
                 v-model="onThisPage"
-                :teleport-disabled="true"
-                :backdrop="false"
+                responsive="lg"
                 placement="end"
                 title="On this page"
                 class="h-100 border-0"
-                :body-scrolling="isLargeScreen"
-                header-class="pb-0"
+                header-class="pb-0 d-flex offcanvas-hidden-width"
                 body-class="py-2"
               >
                 <div class="bd-toc" />
@@ -164,7 +166,7 @@ import {
   BToastOrchestrator,
   BModalOrchestrator,
 } from 'bootstrap-vue-next'
-import {inject, ref, computed, watch} from 'vue'
+import {inject, ref, computed, onMounted, watch} from 'vue'
 import GithubIcon from '~icons/bi/github'
 import OpencollectiveIcon from '~icons/simple-icons/opencollective'
 import DiscordIcon from '~icons/bi/discord'
@@ -174,7 +176,7 @@ import ChevronRight from '~icons/bi/chevron-right'
 import CircleHalf from '~icons/bi/circle-half'
 import {useData, useRoute, withBase} from 'vitepress'
 import {appInfoKey} from './keys'
-import {useMediaQuery} from '@vueuse/core'
+import {useMediaQuery, type BasicColorMode, type UseColorModeReturn} from '@vueuse/core'
 import TableOfContentsNav from '../../src/components/TableOfContentsNav.vue'
 // @ts-ignore
 import VPNavBarSearch from 'vitepress/dist/client/theme-default/components/VPNavBarSearch.vue'
@@ -190,8 +192,8 @@ const globalData = inject(appInfoKey, {
 })
 
 const isLargeScreen = useMediaQuery('(min-width: 992px)')
-const sidebar = ref(isLargeScreen.value)
-const onThisPage = ref(isLargeScreen.value)
+const sidebar = ref(false)
+const onThisPage = ref(false)
 
 const headerLinks = [
   {
@@ -234,16 +236,22 @@ const headerExternalLinks = [
   },
 ]
 
-const dark = useColorMode({
+const colorMode = useColorMode({
   persist: true,
-  onChanged(mode, defaultHandler) {
-    defaultHandler(mode)
-    if (mode === 'dark') {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-  },
+})
+
+onMounted(() => {
+  watch(
+    colorMode,
+    (newValue) => {
+      if (newValue === 'dark') {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
+    },
+    {immediate: true}
+  )
 })
 
 const map = {
@@ -254,21 +262,11 @@ const map = {
 
 const options = Object.keys(map) as (keyof typeof map)[]
 
-const currentIcon = computed(() => map[dark.value])
+const currentIcon = computed(() => map[colorMode.value])
 
 const set = (newValue: keyof typeof map) => {
-  dark.value = newValue
+  colorMode.value = newValue
 }
-
-watch(isLargeScreen, (newValue) => {
-  if (newValue === true) {
-    sidebar.value = true
-    onThisPage.value = true
-    return
-  }
-  sidebar.value = false
-  onThisPage.value = false
-})
 
 watch(
   () => route.path,
@@ -348,6 +346,14 @@ watch(
 
     hr {
       margin: 3rem 0;
+    }
+
+    ol {
+      list-style-type: decimal;
+    }
+
+    ul {
+      list-style-type: disc;
     }
   }
 
@@ -676,7 +682,9 @@ watch(
   }
 
   .offcanvas.offcanvas-start,
-  .offcanvas.offcanvas-end {
+  .offcanvas-lg.offcanvas-start,
+  .offcanvas.offcanvas-end,
+  .offcanvas-lg.offcanvas-end {
     @media (min-width: 992px) {
       width: 12.5rem !important;
     }
@@ -752,6 +760,12 @@ watch(
 [data-bs-theme='light'] {
   .vp-code-dark {
     display: none;
+  }
+}
+
+@media (min-width: 992px) {
+  .offcanvas-header.offcanvas-hidden-width .btn-close {
+    display: none !important;
   }
 }
 </style>

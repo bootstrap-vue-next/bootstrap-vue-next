@@ -1,12 +1,10 @@
 # Modal
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -218,11 +216,17 @@ To programmatically control your modals with global state, refer to our document
 
 To programmatically create modals, refer to the documentation at [useModalController](/docs/composables/useModalController)
 
+### Modal message boxes
+
+If you're looking for replacements for `$bvModal.msgBoxOk` and `$bvModal.msgBoxConfirm` please see the
+[migration guide](/docs/migration-guide#replacement-for-modal-message-boxes)
+
 <ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/modal.data'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BCard, BCardBody, BModal, BButton, vBModal} from 'bootstrap-vue-next'
 import {ref} from 'vue'

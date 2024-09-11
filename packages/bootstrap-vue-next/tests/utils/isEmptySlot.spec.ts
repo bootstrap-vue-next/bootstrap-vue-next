@@ -1,7 +1,7 @@
 import {mount} from '@vue/test-utils'
 import {isEmptySlot} from '../../src/utils/dom'
 import {describe, expect, it} from 'vitest'
-import BSpinner from '../../src/components/BSpinner.vue'
+import BSpinner from '../../src/components/BSpinner/BSpinner.vue'
 
 describe('isEmptySlot', () => {
   it('returns true when slot is empty', () => {

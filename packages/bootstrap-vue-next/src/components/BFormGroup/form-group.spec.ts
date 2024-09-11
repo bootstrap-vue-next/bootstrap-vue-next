@@ -31,6 +31,13 @@ describe('form-group', () => {
     expect(wrapper.classes()).toContain('is-invalid')
   })
 
+  it('legend has class visually-hidden when prop label-visually-hidden is true', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {label: 'foo', labelVisuallyHidden: true},
+    })
+    expect(wrapper.get('legend').classes()).toContain('visually-hidden')
+  })
+
   it('does not contain a valid class when prop state is null', () => {
     const wrapper = mount(BFormGroup, {
       props: {state: null},
@@ -75,14 +82,14 @@ describe('form-group', () => {
 
   it('attr disabled is false by default', () => {
     const wrapper = mount(BFormGroup)
-    expect(wrapper.attributes('disabled')).toBe('false')
+    expect(wrapper.attributes('disabled')).toBeUndefined()
   })
 
   it('attr disabled is true when prop disabled', () => {
     const wrapper = mount(BFormGroup, {
       props: {disabled: true},
     })
-    expect(wrapper.attributes('disabled')).toBe('true')
+    expect(wrapper.attributes('disabled')).toBe('')
   })
 
   it('attr disabled is undefined when disabled true but prop labelFor exists', () => {
@@ -467,8 +474,4 @@ describe('form-group', () => {
     })
     expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
   })
-
-  // Finish of rowProps branch
-
-  // TODO Need to test to get the expected structure. Which is difficult
 })

@@ -1,6 +1,6 @@
 <template>
   <component
-    :is="tag"
+    :is="props.tag"
     :id="computedId"
     :title="tagText"
     class="badge b-form-tag d-inline-flex align-items-center mw-100"
@@ -13,22 +13,23 @@
     <BCloseButton
       v-if="!props.disabled && !props.noRemove"
       aria-keyshortcuts="Delete"
-      :aria-label="removeLabel"
+      :aria-label="props.removeLabel"
       class="b-form-tag-remove"
       :aria-describedby="taglabelId"
-      :aria-controls="id"
+      :aria-controls="props.id"
       @click="emit('remove', tagText)"
     />
   </component>
 </template>
 
 <script setup lang="ts">
-import {computed, toRef} from 'vue'
-import {useId} from '../../composables'
-import type {BFormTagProps} from '../../types'
+import {computed} from 'vue'
+import {useDefaults} from '../../composables/useDefaults'
+import {useId} from '../../composables/useId'
+import type {BFormTagProps} from '../../types/ComponentProps'
 import BCloseButton from '../BButton/BCloseButton.vue'
 
-const props = withDefaults(defineProps<BFormTagProps>(), {
+const _props = withDefaults(defineProps<BFormTagProps>(), {
   disabled: false,
   id: undefined,
   noRemove: false,
@@ -38,6 +39,7 @@ const props = withDefaults(defineProps<BFormTagProps>(), {
   title: undefined,
   variant: 'secondary',
 })
+const props = useDefaults(_props, 'BFormTag')
 
 const emit = defineEmits<{
   remove: [value: string]
@@ -53,7 +55,7 @@ const computedId = useId(() => props.id)
 const tagText = computed(
   () => ((slots.default?.({})[0].children ?? '').toString() || props.title) ?? ''
 )
-const taglabelId = toRef(() => `${computedId.value}taglabel__`)
+const taglabelId = computed(() => `${computedId.value}taglabel__`)
 
 const computedClasses = computed(() => ({
   [`text-bg-${props.variant}`]: props.variant !== null,

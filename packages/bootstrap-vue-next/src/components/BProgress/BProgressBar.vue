@@ -3,9 +3,9 @@
     class="progress-bar"
     :class="computedClasses"
     role="progressbar"
-    :aria-valuenow="value"
+    :aria-valuenow="props.value"
     aria-valuemin="0"
-    :aria-valuemax="max"
+    :aria-valuemax="props.max"
     :style="{width: computedWidth}"
   >
     <slot>
@@ -15,13 +15,14 @@
 </template>
 
 <script setup lang="ts">
-import type {BProgressBarProps} from '../../types'
-import {useColorVariantClasses} from '../../composables'
+import type {BProgressBarProps} from '../../types/ComponentProps'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import {useDefaults} from '../../composables/useDefaults'
 import {computed, inject} from 'vue'
-import {progressInjectionKey} from '../../utils'
+import {progressInjectionKey} from '../../utils/keys'
 import {useToNumber} from '@vueuse/core'
 
-const props = withDefaults(defineProps<BProgressBarProps>(), {
+const _props = withDefaults(defineProps<BProgressBarProps>(), {
   animated: false,
   bgVariant: null,
   label: undefined,
@@ -35,6 +36,7 @@ const props = withDefaults(defineProps<BProgressBarProps>(), {
   value: 0,
   variant: null,
 })
+const props = useDefaults(_props, 'BProgressBar')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

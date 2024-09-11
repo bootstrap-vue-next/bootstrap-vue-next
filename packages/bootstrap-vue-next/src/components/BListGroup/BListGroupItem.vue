@@ -5,9 +5,9 @@
     :class="computedClasses"
     :aria-current="props.active ? true : undefined"
     :aria-disabled="props.disabled ? true : undefined"
-    :target="isLink ? target : undefined"
-    :href="!props.button ? href : undefined"
-    :to="!props.button ? to : undefined"
+    :target="isLink ? props.target : undefined"
+    :href="!props.button ? props.href : undefined"
+    :to="!props.button ? props.to : undefined"
     v-bind="computedAttrs"
   >
     <slot />
@@ -15,13 +15,14 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject, toRef, useAttrs} from 'vue'
-import type {BListGroupItemProps} from '../../types'
-import {useBLinkHelper} from '../../composables'
+import {computed, inject, useAttrs} from 'vue'
+import type {BListGroupItemProps} from '../../types/ComponentProps'
+import {useDefaults} from '../../composables/useDefaults'
 import BLink from '../BLink/BLink.vue'
-import {listGroupInjectionKey} from '../../utils'
+import {listGroupInjectionKey} from '../../utils/keys'
+import {useBLinkHelper} from '../../composables/useBLinkHelper'
 
-const props = withDefaults(defineProps<BListGroupItemProps>(), {
+const _props = withDefaults(defineProps<BListGroupItemProps>(), {
   action: false,
   button: false,
   tag: 'div',
@@ -29,13 +30,13 @@ const props = withDefaults(defineProps<BListGroupItemProps>(), {
   active: false, // Why is this active: false?
   // All others use defaults
   activeClass: undefined,
-  append: undefined,
   disabled: undefined,
   exactActiveClass: undefined,
   href: undefined,
   icon: undefined,
   opacity: undefined,
   opacityHover: undefined,
+  stretched: false,
   rel: undefined,
   replace: undefined,
   routerComponentName: undefined,
@@ -49,6 +50,7 @@ const props = withDefaults(defineProps<BListGroupItemProps>(), {
   variant: undefined,
   // End link props
 })
+const props = useDefaults(_props, 'BListGroupItem')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -61,8 +63,8 @@ const parentData = inject(listGroupInjectionKey, null)
 
 const {computedLink} = useBLinkHelper(props)
 
-const isLink = toRef(() => !props.button && computedLink.value)
-const tagComputed = toRef(() =>
+const isLink = computed(() => !props.button && computedLink.value)
+const tagComputed = computed(() =>
   parentData?.numbered.value ? 'li' : props.button ? 'button' : !isLink.value ? props.tag : BLink
 )
 

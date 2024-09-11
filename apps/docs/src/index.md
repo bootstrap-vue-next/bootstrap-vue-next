@@ -44,7 +44,7 @@ With BootstrapVueNext you can build fast, responsive, and ARIA accessible projec
 
 ## Overview
 
-With more than 35 components, several directives and composibles (and growing), BootstrapVueNext provides one of the most comprehensive implementations of the Bootstrap v5 component and grid system available for Vue.js v3 / Nuxt.js 3, complete with extensive and automated WAI-ARIA accessibility markup.
+With more than 35 components, several directives and composables (and growing), BootstrapVueNext provides one of the most comprehensive implementations of the Bootstrap v5 component and grid system available for Vue.js v3 / Nuxt.js 3, complete with extensive and automated WAI-ARIA accessibility markup.
 
 <div class="d-flex gap-2 mt-4">
   <BButton :to="withBase('/docs')" variant="primary">Get Started</BButton>

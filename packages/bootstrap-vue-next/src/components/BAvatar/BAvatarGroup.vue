@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" class="b-avatar-group" role="group">
+  <component :is="props.tag" class="b-avatar-group" role="group">
     <div class="b-avatar-group-inner" :style="paddingStyle">
       <slot />
     </div>
@@ -8,18 +8,19 @@
 
 <script setup lang="ts">
 import {computed, provide, type StyleValue, toRef} from 'vue'
-import type {BAvatarGroupProps} from '../../types'
-import {avatarGroupInjectionKey} from '../../utils'
-import {useNumberishToStyle} from '../../composables'
+import type {BAvatarGroupProps} from '../../types/ComponentProps'
+import {avatarGroupInjectionKey} from '../../utils/keys'
+import {useDefaults} from '../../composables/useDefaults'
 import {useToNumber} from '@vueuse/core'
+import {useNumberishToStyle} from '../../composables/useNumberishToStyle'
 
-const props = withDefaults(defineProps<BAvatarGroupProps>(), {
+const _props = withDefaults(defineProps<BAvatarGroupProps>(), {
   overlap: 0.3,
   size: undefined,
   square: false,
   tag: 'div',
   // RadiusElementExtendables props
-  rounded: false,
+  rounded: 'circle',
   roundedBottom: undefined,
   roundedEnd: undefined,
   roundedStart: undefined,
@@ -31,6 +32,7 @@ const props = withDefaults(defineProps<BAvatarGroupProps>(), {
   variant: null,
   // End ColorExtendables props
 })
+const props = useDefaults(_props, 'BAvatarGroup')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -40,7 +42,7 @@ defineSlots<{
 const overlapNumber = useToNumber(() => props.overlap)
 
 const computedSize = useNumberishToStyle(() => props.size)
-const overlapScale = toRef(() => Math.min(Math.max(overlapNumber.value, 0), 1) / 2)
+const overlapScale = computed(() => Math.min(Math.max(overlapNumber.value, 0), 1) / 2)
 
 const paddingStyle = computed<StyleValue>(() => {
   const value = computedSize.value ? `calc(${computedSize.value} * ${overlapScale.value})` : null

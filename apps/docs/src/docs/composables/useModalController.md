@@ -1,13 +1,10 @@
-# useModalController
+<ComposableHeader path="useModalController.ts" title="useModalController" />
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ContentsSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
-
+</ContentsSidebar>
 <div class="lead mb-5">
 
 `useModalController` can hide modals everywhere in the app, as well as creating modals on the fly
@@ -55,12 +52,12 @@ Showing a modal is done through the `show` or `confirm` method
 
 <script setup lang="ts">
 const {confirm} = useModalController()
-const toast = useToast()
+const modal = useModal()
 
 const showExample = async () => {
   const value = await confirm?.({props: {title: 'Hello World!'}})
 
-  toast.show?.({props: {title: `Promise resolved to ${value}`, variant: 'info'}})
+  modal.show?.({props: {title: `Promise resolved to ${value}`, variant: 'info'}})
 }
 </script>
 ```
@@ -226,17 +223,19 @@ const {hide, hideAll} = useModalController()
 </HighlightCard>
 
 <script setup lang="ts">
-import {BButton, BModal, useModalController, BButtonGroup, useToast} from 'bootstrap-vue-next'
+import {BButton, BModal, useModalController, BButtonGroup, useModal} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
+import ContentsSidebar from '../../components/ContentsSidebar.vue'
 import UsePluginAlert from '../../components/UsePluginAlert.vue'
 import {ref, computed, h, onMounted} from 'vue'
+import ComposableHeader from './ComposableHeader.vue'
 
 const nestedModal1 = ref(false)
 const nestedModal2 = ref(false)
 const nestedModal3 = ref(false)
 
 const {hide, hideAll, show, confirm, modals} = useModalController()
-const toast = useToast()
+const modal = useModal()
 
 const title = ref('Hello')
 
@@ -249,7 +248,7 @@ onMounted(() => {
 const showExample = async () => {
   const value = await confirm?.({ props: { title: 'Hello World!' } })
 
-  toast.show?.({ props: { title: `Promise resolved to ${value}`, variant: 'info' } })
+  modal.show?.({ props: { title: `Promise resolved to ${value}`, variant: 'info' } })
 }
 
 const showReactiveExample = () => {

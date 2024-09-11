@@ -376,6 +376,7 @@ describe('modal', () => {
     // closed state
     $modal = wrapper.find('div.modal')
     await $modal.trigger('keydown.Escape')
+    $modal = wrapper.find('div.modal')
     expect($modal.isVisible()).toBe(false)
     expect(document.body.attributes.getNamedItem('style')?.textContent ?? '').toBe('')
 
@@ -403,7 +404,7 @@ describe('modal', () => {
 
       expect(wrapper.vm).toBeDefined()
 
-      const $modal = wrapper.find('div.modal')
+      let $modal = wrapper.find('div.modal')
       expect($modal.exists()).toBe(true)
       expect($modal.isVisible()).toBe(true)
 
@@ -425,6 +426,7 @@ describe('modal', () => {
       expect(closeEvent?.[0][0]).toBeInstanceOf(BvTriggerableEvent)
 
       // Modal should still be open
+      $modal = wrapper.find('div.modal')
       expect($modal.isVisible()).toBe(true)
 
       // Try and close modal (and not prevent it)
@@ -435,6 +437,7 @@ describe('modal', () => {
       expect(closeEvent?.[1][0]).toBeInstanceOf(BvTriggerableEvent)
 
       // Modal should now be closed
+      $modal = wrapper.find('div.modal')
       expect($modal.isVisible()).toBe(false)
 
       wrapper.unmount()
@@ -460,7 +463,7 @@ describe('modal', () => {
 
       expect(wrapper.vm).toBeDefined()
 
-      const $modal = wrapper.find('div.modal')
+      let $modal = wrapper.find('div.modal')
       expect($modal.exists()).toBe(true)
       expect($modal.isVisible()).toBe(true)
 
@@ -492,6 +495,7 @@ describe('modal', () => {
       expect(closeEvent?.[1][0]).toBeInstanceOf(BvTriggerableEvent)
 
       // Modal should now be closed
+      $modal = wrapper.find('div.modal')
       expect($modal.isVisible()).toBe(false)
 
       wrapper.unmount()

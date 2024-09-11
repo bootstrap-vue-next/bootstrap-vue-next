@@ -1,13 +1,10 @@
-# useModal
+<ComposableHeader path="useModal.ts" title="useModal" />
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ContentsSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
-
+</ContentsSidebar>
 <div class="lead mb-5">
 
 You can use `useModal` to get the closest modal in **child component** and hide it. It can also be supplied a target id to show or hide a specific modal
@@ -70,7 +67,9 @@ const {show, hide, modal} = useModal('my-modal')
 <script setup lang="ts">
 import {BButton, BModal, useModal} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
+import ContentsSidebar from '../../components/ContentsSidebar.vue'
 import {ref, onMounted} from 'vue'
+import ComposableHeader from './ComposableHeader.vue'
 
 const someConditions = ref(false)
 const programmaticModal = ref(false)

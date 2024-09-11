@@ -14,6 +14,9 @@ export type VerticalAlign = 'baseline' | 'top' | 'middle' | 'bottom' | 'text-top
 
 export type ContainerVerticalAlign = Exclude<VerticalAlign, 'baseline' | 'text-top' | 'text-bottom'>
 
-export type ContainerHorizontalAlign = 'left' | 'center' | 'right'
+export type ContainerHorizontalAlign = 'start' | 'center' | 'end'
 
 export type ContainerPosition = `${ContainerVerticalAlign}-${ContainerHorizontalAlign}`
+
+export type Placement = 'top' | 'bottom' | 'start' | 'end'
+export type CombinedPlacement = Placement | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end'

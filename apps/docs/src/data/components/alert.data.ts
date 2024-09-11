@@ -1,81 +1,90 @@
-import type {ComponentReference} from './ComponentReference'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
+import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BAlert',
-      props: [
+      sourcePath: '/BAlert/BAlert.vue',
+      props: {
+        '': {
+          closeVariant: {
+            type: 'ButtonVariant | null',
+            default: 'secondary',
+            description: 'Applies one of the Bootstrap button variants to the close button',
+          },
+          closeClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: 'Applies one or more custom classes to the close button',
+          },
+          closeLabel: {
+            type: 'string',
+            default: 'Close',
+            description: 'Sets the aria-label attribute on the close button',
+          },
+          closeContent: {
+            type: 'string',
+            default: undefined,
+            description: 'Sets the text of the close button. The `close` slot takes precedence',
+          },
+          dismissible: {
+            type: 'boolean',
+            default: false,
+            description: 'When set, enables the close button',
+          },
+          fade: {
+            type: 'boolean',
+            default: false,
+            description: 'When set to true, enables the fade animation/transition on the component',
+          },
+          modelValue: {
+            type: 'boolean | number',
+            default: false,
+            description:
+              'Controls the visibility of the alert. A `boolean` value directly controls the visibility. A number starts the countdown timer',
+          },
+          immediate: {
+            type: 'boolean',
+            default: true,
+            description:
+              'Setting this property to `false` will cause a timer to not start immediately upon render. A timer that is not started is not rendered. It must manually be started with `resume()` or `restart()`',
+          },
+          interval: {
+            type: 'number | requestAnimationFrame',
+            default: 'requestAnimationFrame',
+            description: 'The interval in milliseconds to update the countdown timer',
+          },
+          showOnPause: {
+            type: 'boolean',
+            default: true,
+            description:
+              'Setting this property to `false` will override the behavior of showing the Alert when the timer is paused',
+          },
+          ...pick(buildCommonProps(), ['variant', 'noHoverPause', 'noResumeOnHoverLeave']),
+        } satisfies Record<keyof BvnComponentProps['BAlert'], PropertyReference>,
+      },
+      slots: [
         {
-          prop: 'closeVariant',
-          type: 'ButtonVariant | null',
-          default: 'secondary',
+          name: 'default',
+          description: 'Content to place in the Alert',
         },
         {
-          prop: 'closeClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'closeLabel',
-          type: 'string',
-          default: 'Close',
-        },
-        {
-          prop: 'closeContent',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'noHoverPause',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'dismissible',
-          type: 'boolean',
-          default: false,
-          description: 'When set, enables the dismiss close button',
-        },
-        {
-          prop: 'fade',
-          type: 'boolean',
-          default: false,
-          description: 'When set to true, enables the fade animation/transition on the component',
-        },
-        {
-          prop: 'modelValue',
-          type: 'boolean | number',
-          default: false,
-        },
-        {
-          prop: 'variant',
-          type: 'ColorVariant | null',
-          default: 'info',
-          description: 'Applies one of the Bootstrap theme color variants to the component',
-        },
-        {
-          prop: 'immediate',
-          type: 'boolean',
-          default: true,
-        },
-        {
-          prop: 'interval',
-          type: 'number | string',
-          default: 1000,
-        },
-        {
-          prop: 'showOnPause',
-          type: 'boolean',
-          default: true,
+          name: 'close',
+          description: 'Content to place in the close button',
         },
       ],
-      slots: [],
       emits: [
         {
           args: [],
-          event: 'dismissed',
-          description:
-            'Alert dismissed either via the dismiss close button or when the dismiss countdown has expired',
+          event: 'close',
+          description: 'Emitted when the alert begins its transition to close',
+        },
+        {
+          args: [],
+          event: 'closed',
+          description: 'Emitted after the alert ends its transition to close',
         },
         {
           event: 'close-countdown',
@@ -89,11 +98,11 @@ export default {
           ],
         },
         {
-          event: 'update:modelValue',
+          event: 'update:model-value',
           description: 'Standard event to update the v-model',
           args: [
             {
-              arg: 'update:modelValue',
+              arg: 'update:model-value',
               description: 'modelValue',
               type: 'boolean | number',
             },

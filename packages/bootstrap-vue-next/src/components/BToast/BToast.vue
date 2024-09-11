@@ -1,52 +1,57 @@
 <template>
   <BTransition
     :no-fade="props.noFade"
-    v-bind="transProps"
+    v-bind="props.transProps"
     @before-enter="onBeforeEnter"
     @after-enter="onAfterEnter"
     @after-leave="onAfterLeave"
   >
     <div
       v-if="isToastVisible"
-      :id="id"
+      :id="props.id"
       ref="element"
       class="toast"
-      :class="[toastClass, computedClasses]"
+      :class="[props.toastClass, computedClasses]"
       tabindex="0"
       :role="!isToastVisible ? undefined : props.isStatus ? 'status' : 'alert'"
       :aria-live="!isToastVisible ? undefined : props.isStatus ? 'polite' : 'assertive'"
       :aria-atomic="!isToastVisible ? undefined : true"
     >
-      <component :is="headerTag" v-if="$slots.title || title" class="toast-header">
+      <component
+        :is="props.headerTag"
+        v-if="$slots.title || props.title"
+        class="toast-header"
+        :class="props.headerClass"
+      >
         <slot name="title" :hide="hideFn">
           <strong class="me-auto">
-            {{ title }}
+            {{ props.title }}
           </strong>
         </slot>
         <BCloseButton v-if="!props.noCloseButton" @click="hideFn('close')" />
       </component>
-      <template v-if="$slots.default || body">
+      <template v-if="$slots.default || props.body">
         <component
           :is="computedTag"
           class="toast-body"
           style="display: block"
-          :class="bodyClass"
+          :class="props.bodyClass"
           v-bind="computedLinkProps"
           @click="computedLink ? hideFn() : () => {}"
         >
           <slot :hide="hideFn">
-            {{ body }}
+            {{ props.body }}
           </slot>
         </component>
       </template>
       <BProgress
-        v-if="typeof modelValue === 'number' && progressProps !== undefined"
-        :animated="progressProps.animated"
-        :precision="progressProps.precision"
-        :show-progress="progressProps.showProgress"
-        :show-value="progressProps.showValue"
-        :striped="progressProps.striped"
-        :variant="progressProps.variant"
+        v-if="typeof modelValue === 'number' && props.progressProps !== undefined"
+        :animated="props.progressProps.animated"
+        :precision="props.progressProps.precision"
+        :show-progress="props.progressProps.showProgress"
+        :show-value="props.progressProps.showValue"
+        :striped="props.progressProps.striped"
+        :variant="props.progressProps.variant"
         :max="modelValue"
         :value="remainingMs"
         height="4px"
@@ -56,28 +61,32 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onBeforeUnmount, ref, toRef, watch, watchEffect} from 'vue'
-import {useBLinkHelper, useColorVariantClasses, useCountdown} from '../../composables'
-import type {BToastProps} from '../../types'
-import BTransition from '../BTransition/BTransition.vue'
+import {computed, ref, watch, watchEffect} from 'vue'
+import {useBLinkHelper} from '../../composables/useBLinkHelper'
+import type {BToastProps} from '../../types/ComponentProps'
+import BTransition from '../BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BLink from '../BLink/BLink.vue'
-import {useElementHover, useToNumber} from '@vueuse/core'
 import BProgress from '../BProgress/BProgress.vue'
 import {BvTriggerableEvent} from '../../utils'
+import {useCountdown} from '../../composables/useCountdown'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import {useDefaults} from '../../composables/useDefaults'
+import {useCountdownHover} from '../../composables/useCountdownHover'
 
-const props = withDefaults(defineProps<BToastProps>(), {
+const _props = withDefaults(defineProps<Omit<BToastProps, 'modelValue'>>(), {
   bgVariant: null,
   body: undefined,
   bodyClass: undefined,
   headerClass: undefined,
   headerTag: 'div',
   id: undefined,
-  interval: 1000,
+  interval: 'requestAnimationFrame',
   isStatus: false,
   noCloseButton: false,
   noFade: false,
   noHoverPause: false,
+  noResumeOnHoverLeave: false,
   progressProps: undefined,
   showOnPause: true,
   solid: false,
@@ -87,15 +96,16 @@ const props = withDefaults(defineProps<BToastProps>(), {
   transProps: undefined,
   // Link props
   // All others use defaults
+  noRel: undefined,
   active: undefined,
   activeClass: undefined,
-  append: undefined,
   disabled: undefined,
   exactActiveClass: undefined,
   href: undefined,
   icon: undefined,
   opacity: undefined,
   opacityHover: undefined,
+  stretched: false,
   rel: undefined,
   replace: undefined,
   routerComponentName: undefined,
@@ -109,6 +119,7 @@ const props = withDefaults(defineProps<BToastProps>(), {
   variant: undefined,
   // End link props
 })
+const props = useDefaults(_props, 'BToast')
 
 const emit = defineEmits<{
   'close': [value: BvTriggerableEvent]
@@ -123,17 +134,15 @@ const emit = defineEmits<{
 
 const element = ref<HTMLElement | null>(null)
 
-const isHovering = useElementHover(element)
-// Note: passive: true will sync an internal ref... This is required for useToast to exit,
-// Since the modelValue that's passed from that composable is not reactive, this internal ref _is_ and thus it will trigger closing the toast
-const modelValue = defineModel<boolean | number>({default: false})
+const modelValue = defineModel<Exclude<BToastProps['modelValue'], undefined>>({default: false})
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props)
 
-const intervalNumber = useToNumber(() => props.interval)
 // TODO solid is never used
 const resolvedBackgroundClasses = useColorVariantClasses(props)
-const countdownLength = toRef(() => (typeof modelValue.value === 'boolean' ? 0 : modelValue.value))
+const countdownLength = computed(() =>
+  typeof modelValue.value === 'boolean' ? 0 : modelValue.value
+)
 
 const {
   isActive,
@@ -143,17 +152,25 @@ const {
   stop,
   isPaused,
   value: remainingMs,
-} = useCountdown(countdownLength, intervalNumber, {
+} = useCountdown(countdownLength, props.interval, {
   immediate: typeof modelValue.value === 'number',
 })
+useCountdownHover(
+  element,
+  computed(() => ({
+    noHoverPause: props.noHoverPause,
+    noResumeOnHoverLeave: props.noResumeOnHoverLeave,
+  })),
+  {pause, resume}
+)
 
 watchEffect(() => {
   emit('close-countdown', remainingMs.value)
 })
 
-const computedTag = toRef(() => (computedLink.value ? BLink : 'div'))
+const computedTag = computed(() => (computedLink.value ? BLink : 'div'))
 
-const isToastVisible = toRef(() =>
+const isToastVisible = computed(() =>
   typeof modelValue.value === 'boolean'
     ? modelValue.value
     : isActive.value || (props.showOnPause && isPaused.value)
@@ -165,19 +182,6 @@ const computedClasses = computed(() => [
     show: isToastVisible.value,
   },
 ])
-
-const onMouseEnter = () => {
-  if (props.noHoverPause) return
-  pause()
-}
-
-watch(isHovering, (newValue) => {
-  if (newValue) {
-    onMouseEnter()
-    return
-  }
-  resume()
-})
 
 const buildTriggerableEvent = (
   type: string,
@@ -241,8 +245,6 @@ watch(isActive, (newValue) => {
     hideFn()
   }
 })
-
-onBeforeUnmount(stop)
 
 defineExpose({
   pause,

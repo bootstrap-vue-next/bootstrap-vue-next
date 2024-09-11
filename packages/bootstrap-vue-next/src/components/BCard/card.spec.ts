@@ -64,20 +64,16 @@ describe('card', () => {
 
   it('has class flex-row when prop imgStart', async () => {
     const wrapper = mount(BCard, {
-      props: {imgStart: true},
+      props: {imgPlacement: 'start'},
     })
     expect(wrapper.classes()).toContain('flex-row')
-    await wrapper.setProps({imgStart: undefined})
-    expect(wrapper.classes()).not.toContain('flex-row')
   })
 
   it('has class flex-row-reverse when prop imgEnd', async () => {
     const wrapper = mount(BCard, {
-      props: {imgEnd: true},
+      props: {imgPlacement: 'end'},
     })
     expect(wrapper.classes()).toContain('flex-row-reverse')
-    await wrapper.setProps({imgEnd: undefined})
-    expect(wrapper.classes()).not.toContain('flex-row-reverse')
   })
 
   it('renders img slot', () => {
@@ -105,7 +101,7 @@ describe('card', () => {
 
   it('renders img in correct order when prop imgBottom', () => {
     const wrapper = mount(BCard, {
-      props: {header: 'header', bodyText: 'bodyText', footer: 'footer', imgBottom: true},
+      props: {header: 'header', bodyText: 'bodyText', footer: 'footer', imgPlacement: 'bottom'},
       slots: {img: 'img'},
     })
     expect(wrapper.text()).toBe('headerbodyTextfooterimg')
@@ -330,14 +326,6 @@ describe('card', () => {
     expect($body.classes()).toContain('foobar')
   })
 
-  it('child BCardHeader has internal prop overlay as prop overlay', () => {
-    const wrapper = mount(BCard, {
-      props: {overlay: true},
-    })
-    const $body = wrapper.getComponent(BCardBody)
-    expect($body.props('overlay')).toBe(true)
-  })
-
   it('child BCardHeader has internal prop bodyBgVariant as prop bodyBgVariant', () => {
     const wrapper = mount(BCard, {
       props: {bodyBgVariant: 'danger'},
@@ -512,8 +500,6 @@ describe('card', () => {
     expect(wrapper.text()).toBe('headerbodyTextfooter')
   })
 
-  // Since it's a bit difficult to check what the order is without just checking html
-  // Workaround to just make both items imgs, then test the order by checking which img has src attr
   it('renders img in correct order', () => {
     const wrapper = mount(BCard, {
       props: {header: 'header', headerTag: 'img', imgSrc: '/abc'},
@@ -524,9 +510,9 @@ describe('card', () => {
     expect($first.attributes('src')).toBe('/abc')
   })
 
-  it('renders img in correct order when imgBottom', () => {
+  it('renders img in correct order when imgPlacement', () => {
     const wrapper = mount(BCard, {
-      props: {header: 'header', headerTag: 'img', imgSrc: '/abc', imgBottom: true},
+      props: {header: 'header', headerTag: 'img', imgSrc: '/abc', imgPlacement: 'bottom'},
     })
     const [$first, $second] = wrapper.findAll('img')
     expect($first.exists()).toBe(true)

@@ -13,11 +13,14 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import {useBreadcrumb} from '../../composables'
-import type {BBreadcrumbProps, BreadcrumbItem} from '../../types'
+import {useBreadcrumb} from '../../composables/useBreadcrumb'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BBreadcrumbProps} from '../../types/ComponentProps'
 import BBreadcrumbItem from './BBreadcrumbItem.vue'
+import type {BreadcrumbItem} from '../../types/BreadcrumbTypes'
 
-const props = withDefaults(defineProps<BBreadcrumbProps>(), {items: undefined})
+const _props = withDefaults(defineProps<BBreadcrumbProps>(), {items: undefined})
+const props = useDefaults(_props, 'BBreadcrumb')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

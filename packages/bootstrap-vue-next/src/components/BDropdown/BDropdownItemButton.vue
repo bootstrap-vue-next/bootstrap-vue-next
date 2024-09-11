@@ -1,11 +1,12 @@
 <template>
-  <li role="presentation">
+  <li role="presentation" :class="wrapperClass" v-bind="props.wrapperAttrs">
     <button
       role="menu"
       type="button"
       class="dropdown-item"
       :class="computedClasses"
       :disabled="props.disabled"
+      v-bind="attrs"
       @click="clicked"
     >
       <slot />
@@ -14,24 +15,29 @@
 </template>
 
 <script setup lang="ts">
-import type {BDropdownItemButtonProps} from '../../types'
-import {computed} from 'vue'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BDropdownItemButtonProps} from '../../types/ComponentProps'
+import {computed, useAttrs} from 'vue'
 
 defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<BDropdownItemButtonProps>(), {
+const _props = withDefaults(defineProps<BDropdownItemButtonProps>(), {
   active: false,
   activeClass: 'active',
   buttonClass: undefined,
   disabled: false,
   variant: null,
+  wrapperAttrs: undefined,
 })
+const props = useDefaults(_props, 'BDropdownItemButton')
 
 const emit = defineEmits<{
   click: [value: MouseEvent]
 }>()
+
+const {class: wrapperClass, ...attrs} = useAttrs()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

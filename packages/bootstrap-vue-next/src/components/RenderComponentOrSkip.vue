@@ -1,15 +1,9 @@
 <script lang="ts">
-import {
-  defineComponent,
-  h,
-  type PropType,
-  type RendererElement,
-  type SlotsType,
-  Teleport,
-} from 'vue'
+import {defineComponent, h, type PropType, type SlotsType, Teleport, type TeleportProps} from 'vue'
 
 export default defineComponent({
-  name: 'ComponentOrEmpty',
+  name: 'RenderComponentOrSkip',
+  inheritAttrs: false,
   slots: Object as SlotsType<{
     default?: Record<string, never>
   }>,
@@ -19,7 +13,7 @@ export default defineComponent({
       default: 'div',
     },
     to: {
-      type: [String, Object] as PropType<string | RendererElement | null | undefined>,
+      type: [String, Object] as PropType<TeleportProps['to']>,
       default: null,
     },
     skip: {

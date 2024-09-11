@@ -7,37 +7,38 @@
       @click="clicked"
     >
       <slot>
-        {{ text }}
+        {{ props.text }}
       </slot>
     </component>
   </li>
 </template>
 
 <script setup lang="ts">
-import {pick} from '../../utils'
-import {computed, toRef} from 'vue'
+import {pick} from '../../utils/object'
+import {computed} from 'vue'
 import BLink from '../BLink/BLink.vue'
-import type {BBreadcrumbItemProps} from '../../types'
+import type {BBreadcrumbItemProps} from '../../types/ComponentProps'
+import {useDefaults} from '../../composables/useDefaults'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
 }>()
 
-const props = withDefaults(defineProps<BBreadcrumbItemProps>(), {
+const _props = withDefaults(defineProps<BBreadcrumbItemProps>(), {
   ariaCurrent: 'location',
   text: undefined,
   // Link props
   active: false, // Why is this active: false?
   // All others use defaults
   activeClass: undefined,
-  append: undefined,
   disabled: undefined,
   exactActiveClass: undefined,
   href: undefined,
   icon: undefined,
   opacity: undefined,
   opacityHover: undefined,
+  stretched: false,
   rel: undefined,
   replace: undefined,
   routerComponentName: undefined,
@@ -52,6 +53,7 @@ const props = withDefaults(defineProps<BBreadcrumbItemProps>(), {
   variant: undefined,
   // End link props
 })
+const props = useDefaults(_props, 'BBreadcrumbItem')
 
 const emit = defineEmits<{
   click: [value: MouseEvent]
@@ -61,9 +63,9 @@ const computedClasses = computed(() => ({
   active: props.active,
 }))
 
-const computedTag = toRef(() => (props.active ? 'span' : BLink))
+const computedTag = computed(() => (props.active ? 'span' : BLink))
 
-const computedAriaCurrent = toRef(() => (props.active ? props.ariaCurrent : undefined))
+const computedAriaCurrent = computed(() => (props.active ? props.ariaCurrent : undefined))
 
 const computedLinkProps = computed(() =>
   computedTag.value !== 'span'

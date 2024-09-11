@@ -1,5 +1,9 @@
 import {defineConfig} from 'vitepress'
 import Icons from 'unplugin-icons/vite'
+import markdownItClass from '@toycode/markdown-it-class'
+import {demoContainer} from './plugins/demo-container'
+import Components from 'unplugin-vue-components/vite'
+import {BootstrapVueNextResolver} from 'bootstrap-vue-next'
 
 const title = 'BootstrapVueNext'
 const description = 'Quickly and Easily Integrate Bootstrap V5 Components With Vue 3'
@@ -22,7 +26,16 @@ export default defineConfig({
     ['meta', {property: 'twitter:description', name: 'twitter:description', content: description}],
   ],
   vite: {
-    plugins: [Icons()],
+    plugins: [
+      Icons(),
+      Components({
+        dirs: ['components', 'docs/components/demo'],
+        extensions: ['vue'],
+        dts: true,
+        include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+        resolvers: [BootstrapVueNextResolver()],
+      }),
+    ],
   },
   locales: {
     root: {
@@ -37,6 +50,12 @@ export default defineConfig({
   themeConfig: {
     search: {
       provider: 'local',
+    },
+  },
+  markdown: {
+    config: (md) => {
+      md.use(markdownItClass, {table: ['table', 'table-striped']})
+      md.use(demoContainer, 'src')
     },
   },
 })

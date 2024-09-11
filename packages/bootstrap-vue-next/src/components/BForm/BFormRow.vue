@@ -1,18 +1,20 @@
 <template>
-  <component :is="tag" class="row d-flex flex-wrap">
+  <component :is="props.tag" class="row d-flex flex-wrap">
     <slot />
   </component>
 </template>
 
 <script setup lang="ts">
-import type {BFormRowProps} from '../../types'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BFormRowProps} from '../../types/ComponentProps'
 
-withDefaults(defineProps<BFormRowProps>(), {
+const _props = withDefaults(defineProps<BFormRowProps>(), {
   tag: 'div',
 })
+const props = useDefaults(_props, 'BFormRow')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
+  default: (props: Record<string, never>) => any
 }>()
 </script>

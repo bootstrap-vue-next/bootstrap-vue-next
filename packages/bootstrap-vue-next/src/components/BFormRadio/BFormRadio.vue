@@ -9,11 +9,11 @@
       type="radio"
       :disabled="props.disabled || parentData?.disabled.value"
       :required="computedRequired || undefined"
-      :name="name || parentData?.name.value"
-      :form="form || parentData?.form.value"
-      :aria-label="ariaLabel"
-      :aria-labelledby="ariaLabelledby"
-      :value="value"
+      :name="props.name || parentData?.name.value"
+      :form="props.form || parentData?.form.value"
+      :aria-label="props.ariaLabel"
+      :aria-labelledby="props.ariaLabelledby"
+      :value="props.value"
       :aria-required="computedRequired || undefined"
     />
     <label v-if="hasDefaultSlot || props.plain === false" :for="computedId" :class="labelClasses">
@@ -24,17 +24,21 @@
 
 <script setup lang="ts">
 import {useFocus} from '@vueuse/core'
-import {computed, inject, ref, toRef} from 'vue'
-import {getClasses, getInputClasses, getLabelClasses, useId} from '../../composables'
-import type {BFormRadioProps, RadioValue} from '../../types'
-import {isEmptySlot, radioGroupKey} from '../../utils'
+import {computed, inject, ref} from 'vue'
+import {getClasses, getInputClasses, getLabelClasses} from '../../composables/useFormCheck'
+import type {BFormRadioProps} from '../../types/ComponentProps'
+import {isEmptySlot} from '../../utils/dom'
 import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
+import {useDefaults} from '../../composables/useDefaults'
+import type {RadioValue} from '../../types/RadioTypes'
+import {useId} from '../../composables/useId'
+import {radioGroupKey} from '../../utils/keys'
 
 defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<BFormRadioProps>(), {
+const _props = withDefaults(defineProps<Omit<BFormRadioProps, 'modelValue'>>(), {
   ariaLabel: undefined,
   ariaLabelledby: undefined,
   autofocus: false,
@@ -53,13 +57,14 @@ const props = withDefaults(defineProps<BFormRadioProps>(), {
   state: null,
   value: true,
 })
+const props = useDefaults(_props, 'BFormRadio')
 
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = defineModel<RadioValue | undefined>({
+const modelValue = defineModel<BFormRadioProps['modelValue']>({
   default: undefined,
 })
 
@@ -73,10 +78,10 @@ const {focused} = useFocus(input, {
   initialValue: props.autofocus,
 })
 
-const hasDefaultSlot = toRef(() => !isEmptySlot(slots.default))
+const hasDefaultSlot = computed(() => !isEmptySlot(slots.default))
 
 const localValue = computed({
-  get: () => parentData?.modelValue.value ?? modelValue.value,
+  get: () => (parentData ? parentData.modelValue.value : modelValue.value),
   set: (newValue) => {
     if (newValue === undefined) return
     if (parentData !== null) {
@@ -87,11 +92,11 @@ const localValue = computed({
   },
 })
 
-const computedRequired = toRef(
+const computedRequired = computed(
   () => !!(props.name ?? parentData?.name.value) && (props.required || parentData?.required.value)
 )
 
-const isButtonGroup = toRef(() => props.buttonGroup || (parentData?.buttons.value ?? false))
+const isButtonGroup = computed(() => props.buttonGroup || (parentData?.buttons.value ?? false))
 
 const classesObject = computed(() => ({
   plain: props.plain || (parentData?.plain.value ?? false),

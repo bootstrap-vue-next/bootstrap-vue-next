@@ -26,14 +26,16 @@
 </template>
 
 <script setup lang="ts">
-import type {BFormRadioGroupProps, RadioValue} from '../../types'
+import type {BFormRadioGroupProps} from '../../types/ComponentProps'
 import {computed, provide, ref, toRef} from 'vue'
-import {radioGroupKey} from '../../utils'
+import {radioGroupKey} from '../../utils/keys'
 import BFormRadio from './BFormRadio.vue'
-import {getGroupAttr, getGroupClasses, useId} from '../../composables'
+import {getGroupAttr, getGroupClasses} from '../../composables/useFormCheck'
 import {useFocus} from '@vueuse/core'
+import {useDefaults} from '../../composables/useDefaults'
+import {useId} from '../../composables/useId'
 
-const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
+const _props = withDefaults(defineProps<Omit<BFormRadioGroupProps, 'modelValue'>>(), {
   ariaInvalid: undefined,
   autofocus: false,
   buttonVariant: 'secondary',
@@ -55,6 +57,7 @@ const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
   validated: false,
   valueField: 'value',
 })
+const props = useDefaults(_props, 'BFormRadioGroup')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -63,7 +66,7 @@ defineSlots<{
   first?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = defineModel<RadioValue | null>({
+const modelValue = defineModel<Exclude<BFormRadioGroupProps['modelValue'], undefined>>({
   default: null,
 })
 
@@ -86,7 +89,7 @@ provide(radioGroupKey, {
   plain: toRef(() => props.plain),
   size: toRef(() => props.size),
   inline: toRef(() => !props.stacked),
-  reverse: toRef(() => !props.reverse),
+  reverse: toRef(() => props.reverse),
   required: toRef(() => props.required),
   disabled: toRef(() => props.disabled),
 })

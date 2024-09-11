@@ -6,7 +6,7 @@ export type RadioValue =
   | number
   | null
 
-export interface RadioOption {
+export type RadioOption = {
   text: string
   value: RadioValue
   disabled?: boolean

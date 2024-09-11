@@ -1,12 +1,10 @@
 # Tables
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -692,9 +690,9 @@ const sortFields: Exclude<TableFieldRaw<SortPerson>, string>[] = [
               type="search"
               placeholder="Type to Search"
             />
-            <BInputGroupAppend>
+            <BInputGroupText>
               <BButton :disabled="!filter" @click="filter = ''">Clear</BButton>
-            </BInputGroupAppend>
+            </BInputGroupText>
           </BInputGroup>
         </BFormGroup>
       </BCol>
@@ -851,9 +849,9 @@ const sortFields: Exclude<TableFieldRaw<SortPerson>, string>[] = [
               type="search"
               placeholder="Type to Search"
             />
-            <BInputGroupAppend>
+            <BInputGroupText>
               <BButton :disabled="!filter" @click="filter = ''">Clear</BButton>
-            </BInputGroupAppend>
+            </BInputGroupText>
           </BInputGroup>
         </BFormGroup>
       </BCol>
@@ -962,7 +960,7 @@ import {
   BFormGroup,
   BCol,
   BFormInput,
-  BInputGroupAppend,
+  BInputGroupText,
   BFormCHeckbox,
   BPagination,
   BRow,
@@ -1099,6 +1097,7 @@ function onAddSort() {
 <script setup lang="ts">
 import {data} from '../../data/components/table.data'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {
   BButton,
@@ -1111,7 +1110,7 @@ import {
   BFormInput,
   BFormSelect,
   BInputGroup,
-  BInputGroupAppend,
+  BInputGroupText,
   BModal,
   BPagination,
   BRow,

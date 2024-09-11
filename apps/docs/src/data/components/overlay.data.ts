@@ -1,96 +1,99 @@
-import type {ComponentReference} from './ComponentReference'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BOverlay',
-      props: [
-        {
-          prop: 'bgColor',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'blur',
-          type: 'string | null',
-          default: '2px',
-        },
-        {
-          prop: 'fixed',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'noCenter',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'noFade',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'noWrap',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'opacity',
-          type: 'number | string',
-          default: 0.85,
-        },
-        {
-          prop: 'overlayTag',
-          type: 'string',
-          default: 'div',
-        },
-        {
-          prop: 'rounded',
-          type: 'boolean | string',
-          default: false,
-        },
-        {
-          prop: 'show',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'spinnerSmall',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'spinnerType',
-          type: 'SpinnerType',
-          default: 'border',
-        },
-        {
-          prop: 'spinnerVariant',
-          type: 'ColorVariant | null',
-          default: undefined,
-        },
-        {
-          prop: 'noSpinner',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'variant',
-          type: "ColorVariant | 'white' | 'transparent' | null",
-          default: 'light',
-        },
-        {
-          prop: 'wrapTag',
-          type: 'string',
-          default: 'div',
-        },
-        {
-          prop: 'zIndex',
-          type: 'number | string',
-          default: 10,
-        },
-      ],
+      sourcePath: '/BOverlay/BOverlay.vue',
+      props: {
+        '': {
+          bgColor: {
+            type: 'string',
+            default: undefined,
+          },
+          blur: {
+            type: 'string | null',
+            default: '2px',
+          },
+          fixed: {
+            type: 'boolean',
+            default: false,
+          },
+          noCenter: {
+            type: 'boolean',
+            default: false,
+          },
+          noFade: {
+            type: 'boolean',
+            default: false,
+          },
+          noSpinner: {
+            type: 'boolean',
+            default: false,
+          },
+          noWrap: {
+            type: 'boolean',
+            default: false,
+          },
+          opacity: {
+            type: 'Numberish',
+            default: 0.85,
+          },
+          overlayTag: {
+            type: 'string',
+            default: 'div',
+          },
+          rounded: {
+            type: 'boolean | RadiusElement',
+            default: false,
+          },
+          roundedTop: {
+            type: 'boolean | RadiusElement',
+            default: undefined,
+          },
+          roundedBottom: {
+            type: 'boolean | RadiusElement',
+            default: undefined,
+          },
+          roundedStart: {
+            type: 'boolean | RadiusElement',
+            default: undefined,
+          },
+          roundedEnd: {
+            type: 'boolean | RadiusElement',
+            default: undefined,
+          },
+          show: {
+            type: 'boolean',
+            default: false,
+          },
+          spinnerSmall: {
+            type: 'boolean',
+            default: false,
+          },
+          spinnerType: {
+            type: 'SpinnerType',
+            default: 'border',
+          },
+          spinnerVariant: {
+            type: 'ColorVariant | null',
+            default: undefined,
+          },
+          variant: {
+            type: "ColorVariant | 'white' | 'transparent' | null",
+            default: 'light',
+          },
+          wrapTag: {
+            type: 'string',
+            default: 'div',
+          },
+          zIndex: {
+            type: 'Numberish',
+            default: 10,
+          },
+        } satisfies Record<keyof BvnComponentProps['BOverlay'], PropertyReference>,
+      },
       emits: [
         {
           args: [
@@ -119,6 +122,24 @@ export default {
           description: '',
           name: 'default',
           scope: [],
+        },
+        {
+          name: 'overlay',
+          description: '',
+          scope: [
+            {
+              prop: 'type',
+              type: 'SpinnerType',
+            },
+            {
+              prop: 'variant',
+              type: 'ColorVariant | null',
+            },
+            {
+              prop: 'small',
+              type: 'boolean',
+            },
+          ],
         },
       ],
     },

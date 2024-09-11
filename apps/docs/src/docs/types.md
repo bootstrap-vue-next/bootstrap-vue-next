@@ -1,13 +1,10 @@
 # Types
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ContentsSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
-
+</ContentsSidebar>
 <div class="lead mb-5">
 
 `BootstrapVueNext` is a complete rewrite that strives for full TypeScript compatibility. This is a list of types we use in this library and that you can use too.
@@ -19,12 +16,36 @@
 <BCard class="bg-body-tertiary">
 
 ```ts
-type CommonAlignment = 'start' | 'end' | 'center' | 'fill'
-type Vertical = CommonAlignment | 'baseline' | 'stretch'
-type Horizontal = CommonAlignment | 'between' | 'around'
-type Content = CommonAlignment | 'between' | 'around' | 'stretch'
-type JustifyContent = 'start' | 'end' | 'center' | 'between' | 'around' | 'evenly'
-type TextHorizontal = 'start' | 'end' | 'center'
+type AlignmentCommon = 'start' | 'end' | 'center' | 'fill'
+type AlignmentContent = AlignmentCommon | 'between' | 'around' | 'stretch'
+type AlignmentHorizontal = AlignmentCommon | 'between' | 'around'
+type AlignmentJustifyContent = 'start' | 'end' | 'center' | 'between' | 'around' | 'evenly'
+type AlignmentTextHorizontal = 'start' | 'end' | 'center'
+type AlignmentVertical = AlignmentCommon | 'baseline' | 'stretch'
+type VerticalAlign = 'baseline' | 'top' | 'middle' | 'bottom' | 'text-top' | 'text-bottom'
+type ContainerVerticalAlign = Exclude<VerticalAlign, 'baseline' | 'text-top' | 'text-bottom'>
+type ContainerHorizontalAlign = 'start' | 'center' | 'end'
+type ContainerPosition = `${ContainerVerticalAlign}-${ContainerHorizontalAlign}`
+```
+
+</BCard>
+
+## AriaInvalid
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type AriaInvalid = boolean | 'grammar' | 'spelling'
+```
+
+</BCard>
+
+## AttrsValue
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type AttrsValue = Record<string, any>
 ```
 
 </BCard>
@@ -109,6 +130,57 @@ type ButtonVariant =
 
 </BCard>
 
+## CheckboxOption
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type CheckboxOption = {
+  text: string
+  value: CheckboxValue
+  disabled?: boolean
+}
+```
+
+</BCard>
+
+## CheckboxOptionRaw
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type CheckboxOptionRaw = string | number | (Partial<CheckboxOption> & Record<string, unknown>)
+```
+
+</BCard>
+
+## CheckboxValue
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type CheckboxValue =
+  | readonly unknown[]
+  | ReadonlySet<unknown>
+  | string
+  | boolean
+  | Readonly<Record<string, unknown>>
+  | number
+  | null
+```
+
+</BCard>
+
+## ClassValue
+
+<BCard class="bg-body-tertiary">
+
+```ts
+export type ClassValue = any
+```
+
+</BCard>
+
 ## ColorVariant
 
 <BCard class="bg-body-tertiary">
@@ -123,6 +195,16 @@ type ColorVariant =
   | 'info'
   | 'light'
   | 'dark'
+```
+
+</BCard>
+
+## CombinedPlacement
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type CombinedPlacement = Placement | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end'
 ```
 
 </BCard>
@@ -174,6 +256,16 @@ type LinkTarget = '_self' | '_blank' | '_parent' | '_top'
 
 </BCard>
 
+## Placement
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type Placement = 'top' | 'bottom' | 'start' | 'end'
+```
+
+</BCard>
+
 ## Position
 
 <BCard class="bg-body-tertiary">
@@ -185,6 +277,105 @@ type Position =
   | 'position-absolute'
   | 'position-fixed'
   | 'position-sticky'
+```
+
+</BCard>
+
+## RadioOption
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type RadioOption = {
+  text: string
+  value: RadioValue
+  disabled?: boolean
+}
+```
+
+</BCard>
+
+## RadioOptionRaw
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type RadioOptionRaw = string | number | (Partial<RadioOption> & Record<string, unknown>)
+```
+
+</BCard>
+
+## RadioValue
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type RadioValue =
+  | boolean
+  | string
+  | readonly unknown[]
+  | Readonly<Record<string, unknown>>
+  | number
+  | null
+```
+
+</BCard>
+
+## RadiusElement
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type RadiusElement =
+  | 'circle'
+  | 'pill'
+  | 'none'
+  | 'sm'
+  | 'lg'
+  | '0'
+  | '1'
+  | '2'
+  | '3'
+  | '4'
+  | '5'
+  | 0
+  | 1
+  | 2
+  | 3
+  | 4
+  | 5
+```
+
+</BCard>
+
+## RadiusElementExtendables
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type RadiusElementExtendables = {
+  rounded?: boolean | RadiusElement
+  roundedTop?: boolean | RadiusElement
+  roundedBottom?: boolean | RadiusElement
+  roundedStart?: boolean | RadiusElement
+  roundedEnd?: boolean | RadiusElement
+}
+```
+
+</BCard>
+
+## SelectValue
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type SelectValue =
+  | boolean
+  | string
+  | readonly unknown[]
+  | Readonly<Record<string, unknown>>
+  | number
+  | null
 ```
 
 </BCard>
@@ -233,7 +424,7 @@ interface TableField<T = Record<string, unknown>> {
   sortKey?: string
   sortDirection?: string
   sortByFormatted?: boolean | TableFieldFormatter<T>
-  filterByFormatted?: boolean
+  filterByFormatted?: boolean | TableFieldFormatter<T>
   tdClass?: ClassValue
   thClass?: ClassValue
   thStyle?: StyleValue
@@ -357,4 +548,5 @@ New values can be used now and the type check will be successful:
 
 <script setup lang="ts">
 import {BCard, BCardBody} from 'bootstrap-vue-next'
+import ContentsSidebar from '../components/ContentsSidebar.vue'
 </script>

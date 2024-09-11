@@ -1,36 +1,34 @@
+import type {ComponentInternalInstance, ComputedRef, InjectionKey, Ref} from 'vue'
+import type {TabType} from '../types/Tab'
+import type {ClassValue} from '../types/AnyValuedAttributes'
+import type {Numberish} from '../types/CommonTypes'
+import type {LiteralUnion} from '../types/LiteralUnion'
+import type {Size} from '../types/Size'
+import type {RadiusElement} from '../types/RadiusElement'
+import type {ButtonVariant, ColorVariant, TextColorVariant} from '../types/ColorTypes'
+import type {CheckboxValue} from '../types/CheckboxTypes'
+import type {RadioValue} from '../types/RadioTypes'
+import type {BreadcrumbItemRaw} from '../types/BreadcrumbTypes'
 import type {
-  Component,
-  ComponentInternalInstance,
-  ComputedRef,
-  InjectionKey,
-  MaybeRefOrGetter,
-  Ref,
-  ShallowRef,
-} from 'vue'
-import type {
-  BModalProps,
-  BreadcrumbItemRaw,
-  ButtonVariant,
-  CheckboxValue,
-  ClassValue,
-  ColorVariant,
-  LiteralUnion,
-  Numberish,
-  OrchestratedModal,
-  OrchestratedToast,
-  RadioValue,
-  RadiusElement,
-  Size,
-  TabType,
-  TextColorVariant,
-} from '../types'
+  ModalOrchestratorMapValue,
+  ModalOrchestratorShowParam,
+  PopoverOrchestratorMapValue,
+  PopoverOrchestratorShowParam,
+  PrivateOrchestratedPopover,
+  PrivateOrchestratedTooltip,
+  ToastOrchestratorArrayValue,
+  ToastOrchestratorShowParam,
+  TooltipOrchestratorMapValue,
+  TooltipOrchestratorShowParam,
+} from '../types/ComponentOrchestratorTypes'
+import type {BvnComponentProps} from '../types/BootstrapVueOptions'
 
 // BCarousel
 export const carouselInjectionKey: InjectionKey<{
   background: Readonly<Ref<string | undefined>>
   width: Readonly<Ref<string | undefined>>
   height: Readonly<Ref<string | undefined>>
-}> = Symbol('carousel')
+}> = Symbol('bvn::carousel')
 
 // BTabs
 export const tabsInjectionKey: InjectionKey<{
@@ -44,7 +42,7 @@ export const tabsInjectionKey: InjectionKey<{
   inactiveTabClass: Readonly<Ref<ClassValue>>
   tabClass: Readonly<Ref<ClassValue>>
   activeId: Readonly<Ref<string | undefined>>
-}> = Symbol('tabs')
+}> = Symbol('bvn::tabs')
 
 // BProgress
 export const progressInjectionKey: InjectionKey<{
@@ -53,12 +51,12 @@ export const progressInjectionKey: InjectionKey<{
   showProgress: Readonly<Ref<boolean | undefined>>
   showValue: Readonly<Ref<boolean | undefined>>
   striped: Readonly<Ref<boolean | undefined>>
-}> = Symbol('progress')
+}> = Symbol('bvn::progress')
 
 // BListGroup
 export const listGroupInjectionKey: InjectionKey<{
   numbered: Readonly<Ref<boolean>>
-}> = Symbol('listGroup')
+}> = Symbol('bvn::listGroup')
 
 // BAvatarGroup
 export const avatarGroupInjectionKey: InjectionKey<{
@@ -73,14 +71,14 @@ export const avatarGroupInjectionKey: InjectionKey<{
   variant: Readonly<Ref<ColorVariant | null>>
   bgVariant: Readonly<Ref<ColorVariant | null>>
   textVariant: Readonly<Ref<TextColorVariant | null>>
-}> = Symbol('avatarGroup')
+}> = Symbol('bvn::avatarGroup')
 
 // BAccordion
 export const accordionInjectionKey: InjectionKey<{
   openItem: Readonly<Ref<string | undefined>>
   free: Readonly<Ref<boolean>>
   setOpenItem: (id: string) => void
-}> = Symbol('accordion')
+}> = Symbol('bvn::accordion')
 
 // BFormCheckboxGroup
 export const checkboxGroupKey: InjectionKey<{
@@ -97,7 +95,7 @@ export const checkboxGroupKey: InjectionKey<{
   required: Readonly<Ref<boolean>>
   buttons: Readonly<Ref<boolean>>
   disabled: Readonly<Ref<boolean>>
-}> = Symbol('checkboxGroup')
+}> = Symbol('bvn::checkboxGroup')
 
 export const radioGroupKey: InjectionKey<{
   modelValue: Ref<RadioValue>
@@ -112,7 +110,7 @@ export const radioGroupKey: InjectionKey<{
   reverse: Readonly<Ref<boolean>>
   required: Readonly<Ref<boolean>>
   disabled: Readonly<Ref<boolean>>
-}> = Symbol('radioGroup')
+}> = Symbol('bvn::radioGroup')
 
 // Collapse
 export const collapseInjectionKey: InjectionKey<{
@@ -122,7 +120,7 @@ export const collapseInjectionKey: InjectionKey<{
   readonly toggle?: () => void
   visible?: Readonly<Ref<boolean>>
   isNav?: Readonly<Ref<boolean>>
-}> = Symbol('collapse')
+}> = Symbol('bvn::collapse')
 
 export const dropdownInjectionKey: InjectionKey<{
   id?: Readonly<Ref<string>>
@@ -131,77 +129,64 @@ export const dropdownInjectionKey: InjectionKey<{
   readonly toggle?: () => void
   visible?: Readonly<Ref<boolean>>
   isNav?: Readonly<Ref<boolean>>
-}> = Symbol('collapse')
+}> = Symbol('bvn::collapse')
 
 export const navbarInjectionKey: InjectionKey<{
   tag?: Readonly<Ref<string>>
   autoClose?: Readonly<Ref<boolean>>
-}> = Symbol('navbar')
-
-export const toastPluginKey: InjectionKey<{
-  toasts: ShallowRef<
-    ComputedRef<{
-      component: unknown
-      props: Omit<OrchestratedToast, 'value'> & {
-        _self: symbol
-        _modelValue: OrchestratedToast['value'] // Convert it to be the same name as useModalController.
-        // The difference between the two is that unlike that one, this value can be defined (there's cannot be).
-      }
-    }>[]
-  >
-  _setIsAppend: (value: boolean) => void
-  show: (obj: {
-    component?: Readonly<Component>
-    props?: MaybeRefOrGetter<Readonly<OrchestratedToast>>
-  }) => symbol
-  remove: (self: symbol) => void
-}> = Symbol('toastPlugin')
+}> = Symbol('bvn::navbar')
 
 export const rtlPluginKey: InjectionKey<{
   isRtl: Ref<boolean>
   locale: Ref<string | undefined>
-}> = Symbol('rtlPlugin')
+}> = Symbol('bvn::rtlPlugin')
 
 export const breadcrumbPluginKey: InjectionKey<{
   items: Ref<BreadcrumbItemRaw[]>
   reset: () => void
-}> = Symbol('breadcrumbPlugin')
-
-export const modalControllerPluginKey: InjectionKey<{
-  modals: ShallowRef<
-    ComputedRef<{
-      component: unknown // TS being weird here, just use unknown
-      props: OrchestratedModal & {
-        _self: symbol
-        _modelValue: BModalProps['modelValue']
-        _promise: {
-          value: Promise<boolean | null>
-          resolve: (value: boolean | null) => void
-        }
-        _isConfirm: boolean
-      }
-    }>[]
-  >
-  show: (obj: {
-    component?: Readonly<Component>
-    props?: MaybeRefOrGetter<Readonly<OrchestratedModal>>
-  }) => Promise<boolean | null>
-  confirm: (obj: {
-    component?: Readonly<Component>
-    props?: MaybeRefOrGetter<Readonly<OrchestratedModal>>
-  }) => Promise<boolean | null>
-  remove: (self: symbol) => void
-}> = Symbol('modalControllerPlugin')
+}> = Symbol('bvn::breadcrumbPlugin')
 
 export const modalManagerPluginKey: InjectionKey<{
-  stack: ShallowRef<Readonly<ComponentInternalInstance>[]>
-  countStack: Readonly<Ref<number>>
-  lastStack: Readonly<Ref<ComponentInternalInstance | undefined>>
+  stack: ComputedRef<ComponentInternalInstance[]>
+  countStack: ComputedRef<number>
+  lastStack: ComputedRef<ComponentInternalInstance | undefined>
   pushStack: (modal: Readonly<ComponentInternalInstance>) => void
   removeStack: (modal: Readonly<ComponentInternalInstance>) => void
-  registry: ShallowRef<Readonly<ComponentInternalInstance>[]>
+  registry: Readonly<Ref<Map<number, ComponentInternalInstance>>>
   pushRegistry: (modal: Readonly<ComponentInternalInstance>) => void
   removeRegistry: (modal: Readonly<ComponentInternalInstance>) => void
-}> = Symbol('modalManagerPlugin')
+}> = Symbol('bvn::modalManagerPlugin')
 
-export const idPluginKey: InjectionKey<() => string> = Symbol('idPluginKey')
+export const defaultsKey: InjectionKey<Ref<Partial<BvnComponentProps>>> = Symbol('bvn::defaults')
+
+export const inputGroupKey: InjectionKey<boolean> = Symbol('bvn::inputGroup')
+
+export const toastPluginKey: InjectionKey<{
+  toasts: Ref<ToastOrchestratorArrayValue[]>
+  _setIsAppend: (value: boolean) => void
+  show: (obj: ToastOrchestratorShowParam) => symbol
+  remove: (self: symbol) => void
+  leave: (self: symbol) => void
+}> = Symbol('bvn::toastPlugin')
+
+export const modalControllerPluginKey: InjectionKey<{
+  modals: Ref<Map<symbol, ModalOrchestratorMapValue>>
+  show: (obj: ModalOrchestratorShowParam) => Promise<boolean | null>
+  confirm: (obj: ModalOrchestratorShowParam) => Promise<boolean | null>
+  remove: (self: symbol) => void
+  leave: (self: symbol) => void
+}> = Symbol('bvn::modalControllerPlugin')
+
+export const tooltipPluginKey: InjectionKey<{
+  tooltips: Ref<Map<symbol, TooltipOrchestratorMapValue>>
+  show: (obj: TooltipOrchestratorShowParam) => symbol
+  remove: (self: symbol) => void
+  set: (self: symbol, val: Partial<PrivateOrchestratedTooltip>) => void
+}> = Symbol('bvn::toastPlugin')
+
+export const popoverPluginKey: InjectionKey<{
+  popovers: Ref<Map<symbol, PopoverOrchestratorMapValue>>
+  show: (obj: PopoverOrchestratorShowParam) => symbol
+  remove: (self: symbol) => void
+  set: (self: symbol, val: Partial<PrivateOrchestratedPopover>) => void
+}> = Symbol('bvn::toastPlugin')

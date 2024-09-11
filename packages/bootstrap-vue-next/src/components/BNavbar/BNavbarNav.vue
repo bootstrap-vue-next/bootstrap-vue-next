@@ -5,17 +5,19 @@
 </template>
 
 <script setup lang="ts">
-import type {BNavbarNavProps} from '../../types'
+import type {BNavbarNavProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
-import {useAlignment} from '../../composables'
+import {useAlignment} from '../../composables/useAlignment'
+import {useDefaults} from '../../composables/useDefaults'
 
-const props = withDefaults(defineProps<BNavbarNavProps>(), {
+const _props = withDefaults(defineProps<BNavbarNavProps>(), {
   align: undefined,
   fill: false,
   justified: false,
   small: false,
   tag: 'ul',
 })
+const props = useDefaults(_props, 'BNavbarNav')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

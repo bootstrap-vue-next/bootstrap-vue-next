@@ -1,5 +1,8 @@
-import type {ClassValue, ColorVariant, LiteralUnion, MaybePromise} from '.'
 import type {StyleValue} from 'vue'
+import type {ColorVariant} from './ColorTypes'
+import type {MaybePromise} from './MaybePromise'
+import type {LiteralUnion} from './LiteralUnion'
+import type {AttrsValue, ClassValue} from './AnyValuedAttributes'
 
 export type TableItem<T = Record<string, unknown>> = T & {
   _rowVariant?: ColorVariant | null
@@ -32,9 +35,10 @@ export type BTableProvider<T> = (
 
 export type TableFieldFormatter<T> = (value: unknown, key: string, item: T) => string
 
-export type TableFieldAttribute<T> =
-  | Record<string, unknown>
-  | ((value: unknown, key: string, item: T) => Record<string, unknown>)
+export type TableRowType = 'row' | 'row-details' | 'row-top' | 'row-bottom' | 'table-busy'
+export type TableRowThead = 'top' | 'bottom'
+
+export type TableStrictClassValue = unknown
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TableField<T = any> = {
@@ -48,13 +52,17 @@ export type TableField<T = any> = {
   sortKey?: string
   sortDirection?: string
   sortByFormatted?: boolean | TableFieldFormatter<T>
-  filterByFormatted?: boolean
-  tdClass?: ClassValue
+  filterByFormatted?: boolean | TableFieldFormatter<T>
+  tdClass?:
+    | TableStrictClassValue
+    | ((value: unknown, key: string, item: T) => TableStrictClassValue)
   thClass?: ClassValue
   thStyle?: StyleValue
   variant?: ColorVariant | null
-  tdAttr?: TableFieldAttribute<T>
-  thAttr?: TableFieldAttribute<T>
+  tdAttr?: AttrsValue | ((value: unknown, key: string, item: T) => AttrsValue)
+  thAttr?:
+    | AttrsValue
+    | ((value: unknown, key: string, item: T | null, type: TableRowThead) => AttrsValue)
   isRowHeader?: boolean
   stickyColumn?: boolean
 }

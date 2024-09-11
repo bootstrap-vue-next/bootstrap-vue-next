@@ -24,7 +24,7 @@
       aria-atomic="true"
       class="visually-hidden"
     >
-      ({{ tagRemovedLabel }}) {{ lastRemovedTag }}
+      ({{ props.tagRemovedLabel }}) {{ lastRemovedTag }}
     </div>
 
     <slot v-bind="slotAttrs">
@@ -36,17 +36,17 @@
           <slot
             name="tag"
             :tag="tag"
-            :tag-class="tagClass"
-            :tag-variant="tagVariant"
+            :tag-class="props.tagClass"
+            :tag-variant="props.tagVariant"
             :tag-pills="props.tagPills"
             :remove-tag="removeTag"
           >
             <BFormTag
               :key="tag"
-              :class="tagClass"
+              :class="props.tagClass"
               tag="li"
-              :variant="tagVariant"
-              :pill="tagPills"
+              :variant="props.tagVariant"
+              :pill="props.tagPills"
               @remove="removeTag"
               >{{ tag }}</BFormTag
             >
@@ -64,12 +64,12 @@
               ref="input"
               :disabled="props.disabled"
               :value="inputValue"
-              :type="inputType"
-              :placeholder="placeholder"
+              :type="props.inputType"
+              :placeholder="props.placeholder"
               class="b-form-tags-input w-100 flex-grow-1 p-0 m-0 bg-transparent border-0"
               style="outline: currentcolor none 0px; min-width: 5rem"
-              v-bind="inputAttrs"
-              :form="form"
+              v-bind="props.inputAttrs"
+              :form="props.form"
               :required="props.required || undefined"
               :aria-required="props.required || undefined"
               @input="onInput"
@@ -84,7 +84,7 @@
               :class="[
                 inputClass,
                 {
-                  [`btn-${addButtonVariant}`]: addButtonVariant !== null,
+                  [`btn-${props.addButtonVariant}`]: props.addButtonVariant !== null,
                   'disabled invisible': inputValue.length === 0,
                 },
               ]"
@@ -92,38 +92,48 @@
               :disabled="props.disabled || inputValue.length === 0 || isLimitReached"
               @click="addTag(inputValue)"
             >
-              <slot name="add-button-text">{{ addButtonText }}</slot>
+              <slot name="add-button-text">{{ props.addButtonText }}</slot>
             </button>
           </div>
         </li>
       </ul>
       <div aria-live="polite" aria-atomic="true">
         <div v-if="isInvalid" class="d-block invalid-feedback">
-          {{ invalidTagText }}: {{ inputValue }}
+          {{ props.invalidTagText }}: {{ inputValue }}
         </div>
         <small v-if="isDuplicate" class="form-text text-body-secondary"
-          >{{ duplicateTagText }}: {{ inputValue }}</small
+          >{{ props.duplicateTagText }}: {{ inputValue }}</small
         >
-        <small v-if="tags.length === limit" class="form-text text-body-secondary">
-          {{ limitTagsText }}</small
+        <small v-if="tags.length === props.limit" class="form-text text-body-secondary">
+          {{ props.limitTagsText }}</small
         >
       </div>
     </slot>
-    <template v-if="name">
-      <input v-for="(tag, index) in tags" :key="index" type="hidden" :name="name" :value="tag" />
+    <template v-if="props.name">
+      <input
+        v-for="(tag, index) in tags"
+        :key="index"
+        type="hidden"
+        :name="props.name"
+        :value="tag"
+      />
     </template>
   </div>
 </template>
 
 <script setup lang="ts">
 import {onKeyStroke, syncRef, useFocus, useToNumber} from '@vueuse/core'
-import {computed, ref, toRef} from 'vue'
-import {useId, useStateClass} from '../../composables'
-import type {BFormTagsProps, ClassValue, ColorVariant} from '../../types'
-import {escapeRegExpChars} from '../../utils'
+import {computed, ref} from 'vue'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BFormTagsProps} from '../../types/ComponentProps'
+import {escapeRegExpChars} from '../../utils/stringUtils'
 import BFormTag from './BFormTag.vue'
+import type {ClassValue} from '../../types/AnyValuedAttributes'
+import type {ColorVariant} from '../../types/ColorTypes'
+import {useId} from '../../composables/useId'
+import {useStateClass} from '../../composables/useStateClass'
 
-const props = withDefaults(defineProps<BFormTagsProps>(), {
+const _props = withDefaults(defineProps<Omit<BFormTagsProps, 'modelValue'>>(), {
   addButtonText: 'Add',
   addButtonVariant: 'outline-secondary',
   addOnChange: false,
@@ -155,6 +165,7 @@ const props = withDefaults(defineProps<BFormTagsProps>(), {
   tagValidator: () => true,
   tagVariant: 'secondary',
 })
+const props = useDefaults(_props, 'BFormTags')
 
 const emit = defineEmits<{
   'blur': [value: FocusEvent]
@@ -180,7 +191,7 @@ defineSlots<{
   }) => any
 }>()
 
-const modelValue = defineModel<string[]>({
+const modelValue = defineModel<Exclude<BFormTagsProps['modelValue'], undefined>>({
   default: () => [],
 })
 
@@ -196,7 +207,7 @@ const {focused} = useFocus(input, {
   initialValue: props.autofocus,
 })
 
-const _inputId = toRef(() => props.inputId || `${computedId.value}input__`)
+const _inputId = computed(() => props.inputId || `${computedId.value}input__`)
 const tags = ref<string[]>([...modelValue.value])
 const inputValue = ref<string>('')
 const shouldRemoveOnDelete = ref<boolean>(modelValue.value.length > 0)
@@ -225,8 +236,8 @@ const isDuplicate = computed(() => tags.value.includes(inputValue.value))
 const isInvalid = computed(() =>
   inputValue.value === '' ? false : !props.tagValidator(inputValue.value)
 )
-const isLimitReached = toRef(() => tags.value.length === limitNumber.value)
-const disableAddButton = toRef(() => !isInvalid.value && !isDuplicate.value)
+const isLimitReached = computed(() => tags.value.length === limitNumber.value)
+const disableAddButton = computed(() => !isInvalid.value && !isDuplicate.value)
 
 const slotAttrs = computed(() => ({
   addButtonText: props.addButtonText,
@@ -241,15 +252,16 @@ const slotAttrs = computed(() => ({
     ...props.inputAttrs,
     disabled: props.disabled,
     form: props.form,
-    id: _inputId,
-    value: inputValue,
+    id: _inputId.value,
+    value: inputValue.value,
   },
+  inputClass: props.inputClass,
   inputHandlers: {
     input: onInput,
     keydown: onKeydown,
     change: onChange,
   },
-  inputId: _inputId,
+  inputId: _inputId.value,
   inputType: props.inputType,
   invalidTagText: props.invalidTagText,
   invalidTags: invalidTags.value,
@@ -399,11 +411,10 @@ const addTag = (tag?: string): void => {
 const removeTag = (tag?: string): void => {
   const tagIndex = tags.value.indexOf(tag?.toString() ?? '')
   if (tagIndex === -1) return
-  lastRemovedTag.value = tags.value.splice(tagIndex, 1).toString() // TODO this seems strange, if index === -1 you'll remove the last el
+  lastRemovedTag.value = tags.value.splice(tagIndex, 1).toString()
   modelValue.value = tags.value
 }
 
-// TODO these focus/blur events aren't quite in line with use useFormInput implementation. Perhaps we should bring them together?
 defineExpose({
   blur: () => {
     focused.value = false

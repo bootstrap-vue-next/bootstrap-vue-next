@@ -2,6 +2,20 @@ import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BTableLite from './BTableLite.vue'
 
+class Person {
+  constructor(
+    public id: number,
+    public firstName: string,
+    public lastName: string,
+    public age: number
+  ) {
+    this.id = id
+    this.firstName = firstName
+    this.lastName = lastName
+    this.age = age
+  }
+}
+
 describe('btablelite', () => {
   enableAutoUnmount(afterEach)
 
@@ -170,6 +184,156 @@ describe('btablelite', () => {
       $tds.forEach(($td, j) => {
         expect($td.text()).toBe(items[i][j].toString())
       })
+    })
+  })
+
+  it('Will properly display row details when toggleDetails is actived', async () => {
+    const items = [
+      [1, 2],
+      [1, 2],
+    ]
+    const wrapper = mount(BTableLite, {
+      props: {
+        items,
+      },
+      slots: {
+        'cell()': `<template #cell()="row"><button id="foobar" size="sm" @click="row.toggleDetails">{{ row.detailsShowing ? 'Hide' : 'Show' }} notes</button></template>`,
+        'row-details': `<template #row-details="row">THE ROW!</template>`,
+      },
+    })
+    const [$first, , $third] = wrapper.findAll('#foobar')
+
+    await $first.trigger('click')
+    await $third.trigger('click')
+
+    expect((wrapper.html().match(/THE ROW!/g) || []).length).toBe(2)
+  })
+
+  it('Passes the original object for scoped cell slot item', () => {
+    const items = [new Person(1, 'John', 'Doe', 30), new Person(2, 'Jane', 'Smith', 25)]
+    const wrapper = mount(BTableLite, {
+      props: {
+        primaryKey: 'id',
+        items,
+      },
+      slots: {
+        'cell()': `<template #cell()="row">{{ row.item.constructor.name }}</template>`,
+      },
+    })
+    const $tbody = wrapper.get('tbody')
+    const $tr = $tbody.findAll('tr')
+    $tr.forEach((el) => {
+      const $tds = el.findAll('td')
+      expect($tds.length).toBe(4)
+      $tds.forEach(($td) => {
+        expect($td.text()).toBe('Person')
+      })
+    })
+  })
+
+  it('Passes the original objects for scoped cell slot items', () => {
+    const items = [new Person(1, 'John', 'Doe', 30), new Person(2, 'Jane', 'Smith', 25)]
+    const wrapper = mount(BTableLite, {
+      props: {
+        primaryKey: 'id',
+        items,
+      },
+      slots: {
+        'cell()': `<template #cell()="row">{{ row.items[0].constructor.name }}</template>`,
+      },
+    })
+    const $tbody = wrapper.get('tbody')
+    const $tr = $tbody.findAll('tr')
+    $tr.forEach((el) => {
+      const $tds = el.findAll('td')
+      expect($tds.length).toBe(4)
+      $tds.forEach(($td) => {
+        expect($td.text()).toBe('Person')
+      })
+    })
+  })
+
+  it('Passes the original objects for scoped custom table body', () => {
+    const items = [new Person(1, 'John', 'Doe', 30), new Person(2, 'Jane', 'Smith', 25)]
+    const wrapper = mount(BTableLite, {
+      props: {
+        primaryKey: 'id',
+        items,
+      },
+      slots: {
+        'custom-body': `<template #custom-body="table">{{ table.items[0].constructor.name }}</template>`,
+      },
+    })
+    const $tbody = wrapper.get('tbody')
+    expect($tbody.text()).toBe('Person')
+  })
+
+  describe('toggle details', () => {
+    it('works internally', async () => {
+      const items = [{isActive: true, age: 40, name: {first: 'Dickerson', last: 'Macdonald'}}]
+      const fields = [{key: 'actions', label: 'Actions', sortable: false}]
+      const wrapper = mount(BTableLite, {
+        props: {
+          items,
+          fields,
+        },
+        slots: {
+          'cell(actions)':
+            '<template #cell(actions)="row"><button @click="row.toggleDetails"></button></template>',
+          'row-details': 'foobar!',
+        },
+      })
+      await wrapper.get('button').trigger('click')
+      expect(wrapper.text()).toContain('foobar!')
+      await wrapper.get('button').trigger('click')
+      expect(wrapper.text()).not.toContain('foobar!')
+    })
+
+    it('works externally', async () => {
+      const fields = [{key: 'actions', label: 'Actions', sortable: false}]
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [
+            {
+              isActive: true,
+              age: 40,
+              name: {first: 'Dickerson', last: 'Macdonald'},
+              _showDetails: true,
+            },
+          ],
+          fields,
+        },
+        slots: {
+          'cell(actions)':
+            '<template #cell(actions)="row"><button @click="row.toggleDetails"></button></template>',
+          'row-details': 'foobar!',
+        },
+      })
+      expect(wrapper.text()).toContain('foobar!')
+      await wrapper.setProps({
+        items: [
+          {
+            isActive: true,
+            age: 40,
+            name: {first: 'Dickerson', last: 'Macdonald'},
+            _showDetails: false,
+          },
+        ],
+      })
+      expect(wrapper.text()).not.toContain('foobar!')
+      await wrapper.get('button').trigger('click')
+      expect(wrapper.text()).toContain('foobar!')
+      await wrapper.setProps({
+        items: [
+          {
+            isActive: true,
+            age: 40,
+            name: {first: 'Dickerson', last: 'Macdonald'},
+            _showDetails: false,
+          },
+        ],
+      })
+      expect(wrapper.text()).not.toContain('foobar!')
     })
   })
 })

@@ -1,18 +1,25 @@
 import {inject, onMounted, watch} from 'vue'
-import {rtlPluginKey} from '../utils'
+import {rtlPluginKey} from '../utils/keys'
 
-export default () => {
+export const useRtl = () => {
   const rtlPlugin = inject(rtlPluginKey)
 
   onMounted(() => {
+    // I can't think of a reason why one might want to destroy these if unmounted...
     watch(
-      [() => rtlPlugin?.isRtl.value, () => rtlPlugin?.locale.value],
-      ([rtlNew, localeNew]) => {
+      () => rtlPlugin?.locale.value,
+      (newValue) => {
         const html = document.documentElement
+        html.setAttribute('lang', newValue ?? '')
+      },
+      {immediate: true}
+    )
 
-        // I can't think of a reason why one might want to destroy these if unmounted...
-        html.setAttribute('dir', rtlNew ?? false ? 'rtl' : 'ltr')
-        html.setAttribute('lang', localeNew ?? '')
+    watch(
+      () => rtlPlugin?.isRtl.value,
+      (newValue) => {
+        const html = document.documentElement
+        html.setAttribute('dir', (newValue ?? false) ? 'rtl' : 'ltr')
       },
       {immediate: true}
     )

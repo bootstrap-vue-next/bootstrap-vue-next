@@ -1,31 +1,35 @@
 <template>
-  <div ref="wrapper" :class="computedClasses" class="btn-group">
+  <RenderComponentOrSkip
+    ref="wrapper"
+    :skip="inInputGroup || props.skipWrapper"
+    :class="computedClasses"
+  >
     <BButton
       :id="computedId"
       ref="splitButton"
-      :variant="splitVariant || variant"
-      :size="size"
+      :variant="props.splitVariant || props.variant"
+      :size="props.size"
       :class="buttonClasses"
-      :disabled="props.splitDisabled || disabled"
-      :type="splitButtonType"
-      :aria-label="ariaLabel"
+      :disabled="props.splitDisabled || props.disabled"
+      :type="props.splitButtonType"
+      :aria-label="props.ariaLabel"
       :aria-expanded="props.split ? undefined : modelValue"
       :aria-haspopup="props.split ? undefined : 'menu'"
-      :href="props.split ? splitHref : undefined"
-      :to="props.split && splitTo ? splitTo : undefined"
+      :href="props.split ? props.splitHref : undefined"
+      :to="props.split && props.splitTo ? props.splitTo : undefined"
       @click="onSplitClick"
     >
       <slot name="button-content">
-        {{ text }}
+        {{ props.text }}
       </slot>
     </BButton>
     <BButton
       v-if="props.split"
       ref="button"
-      :variant="variant"
-      :size="size"
-      :disabled="disabled"
-      :class="[toggleClass, {show: modelValue}]"
+      :variant="props.variant"
+      :size="props.size"
+      :disabled="props.disabled"
+      :class="[props.toggleClass, {show: modelValue}]"
       class="dropdown-toggle-split dropdown-toggle"
       :aria-expanded="modelValue"
       aria-haspopup="menu"
@@ -33,26 +37,26 @@
     >
       <span class="visually-hidden">
         <slot name="toggle-text">
-          {{ toggleText }}
+          {{ props.toggleText }}
         </slot>
       </span>
     </BButton>
-    <Teleport :to="teleportTo" :disabled="!teleportTo || teleportDisabled">
+    <Teleport :to="props.teleportTo" :disabled="!props.teleportTo || props.teleportDisabled">
       <ul
         v-if="!props.lazy || modelValue"
         v-show="props.lazy || modelValue"
         ref="floating"
         :style="[floatingStyles, sizeStyles]"
         class="dropdown-menu overflow-auto"
-        :class="[menuClass, {show: modelValue}]"
+        :class="[props.menuClass, {show: modelValue}]"
         :aria-labelledby="computedId"
-        :role="role"
+        :role="props.role"
         @click="onClickInside"
       >
         <slot :hide="hide" :show="show" />
       </ul>
     </Teleport>
-  </div>
+  </RenderComponentOrSkip>
 </template>
 
 <script setup lang="ts">
@@ -68,16 +72,17 @@ import {
   useFloating,
 } from '@floating-ui/vue'
 import {onClickOutside, onKeyStroke, useToNumber} from '@vueuse/core'
-import {computed, type CSSProperties, nextTick, provide, ref, toRef, watch} from 'vue'
-import {useId} from '../../composables'
-import type {BDropdownProps} from '../../types'
-import {BvTriggerableEvent, dropdownInjectionKey, resolveFloatingPlacement} from '../../utils'
+import {computed, type CSSProperties, inject, nextTick, provide, ref, toRef, watch} from 'vue'
+import {useDefaults} from '../../composables/useDefaults'
+import {useId} from '../../composables/useId'
+import type {BDropdownProps} from '../../types/ComponentProps'
+import {BvTriggerableEvent} from '../../utils'
 import BButton from '../BButton/BButton.vue'
+import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
+import {isBoundary, isRootBoundary, resolveFloatingPlacement} from '../../utils/floatingUi'
+import {dropdownInjectionKey, inputGroupKey} from '../../utils/keys'
 
-// TODO add navigation through keyboard events
-// TODO standardize keydown vs keyup events globally
-
-const props = withDefaults(defineProps<BDropdownProps>(), {
+const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   ariaLabel: undefined,
   autoClose: true,
   boundary: 'clippingAncestors',
@@ -102,6 +107,7 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   offset: 0,
   role: 'menu',
   size: 'md',
+  skipWrapper: false,
   split: false,
   splitButtonType: 'button',
   splitClass: undefined,
@@ -114,7 +120,9 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   toggleClass: undefined,
   toggleText: 'Toggle dropdown',
   variant: 'secondary',
+  wrapperClass: undefined,
 })
+const props = useDefaults(_props, 'BDropdown')
 
 const emit = defineEmits<{
   'click': [event: MouseEvent]
@@ -138,9 +146,11 @@ defineSlots<{
 
 const computedId = useId(() => props.id, 'dropdown')
 
-const modelValue = defineModel<boolean>({default: false})
+const modelValue = defineModel<Exclude<BDropdownProps['modelValue'], undefined>>({default: false})
 
-const computedOffset = toRef(() =>
+const inInputGroup = inject(inputGroupKey, false)
+
+const computedOffset = computed(() =>
   typeof props.offset === 'string' || typeof props.offset === 'number' ? props.offset : NaN
 )
 const offsetToNumber = useToNumber(computedOffset)
@@ -151,13 +161,13 @@ const splitButton = ref<HTMLElement | null>(null)
 const wrapper = ref<HTMLElement | null>(null)
 
 const boundary = computed<Boundary | undefined>(() =>
-  props.boundary === 'document' || props.boundary === 'viewport' ? undefined : props.boundary
+  isBoundary(props.boundary) ? props.boundary : undefined
 )
 const rootBoundary = computed<RootBoundary | undefined>(() =>
-  props.boundary === 'document' || props.boundary === 'viewport' ? props.boundary : undefined
+  isRootBoundary(props.boundary) ? props.boundary : undefined
 )
 
-const referencePlacement = toRef(() => (!props.split ? splitButton.value : button.value))
+const referencePlacement = computed(() => (!props.split ? splitButton.value : button.value))
 
 onKeyStroke(
   'Escape',
@@ -260,12 +270,17 @@ const {update, floatingStyles} = useFloating(referencePlacement, floating, {
   whileElementsMounted: autoUpdate,
 })
 
-const computedClasses = computed(() => ({
-  'dropup': props.dropup,
-  'dropend': props.dropend,
-  'dropstart': props.dropstart,
-  'position-static': props.boundary !== 'clippingAncestors' && !props.isNav,
-}))
+const computedClasses = computed(() => [
+  props.wrapperClass,
+  {
+    'btn-group': !props.wrapperClass && props.split,
+    'dropdown': !props.wrapperClass && !props.split,
+    'dropup': props.dropup,
+    'dropend': props.dropend,
+    'dropstart': props.dropstart,
+    'position-static': props.boundary !== 'clippingAncestors' && !props.isNav,
+  },
+])
 
 const buttonClasses = computed(() => [
   props.split ? props.splitClass : props.toggleClass,
@@ -317,7 +332,7 @@ const toggle = () => {
   }
   modelValue.value = !currentModelValue
   currentModelValue ? emit('hidden') : emit('shown')
-  wrapper.value?.dispatchEvent(new Event('forceHide'))
+  wrapper.value?.dispatchEvent?.(new Event('forceHide'))
 }
 
 watch(modelValue, () => {

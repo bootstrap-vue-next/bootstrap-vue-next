@@ -1,245 +1,206 @@
-import type {ComponentReference} from './ComponentReference'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
+import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BForm',
-      props: [
-        {
-          prop: 'id',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'floating',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'novalidate',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'validated',
-          type: 'boolean',
-          default: false,
-        },
-      ],
+      sourcePath: '/BForm/BForm.vue',
+      props: {
+        '': {
+          floating: {
+            type: 'boolean',
+            default: false,
+            description:
+              'When set, renders a single control form with a floating label. This only works for forms where the immediate children are a label and one of the supported controls. See above for details.',
+          },
+          novalidate: {
+            type: 'boolean',
+            default: false,
+            description:
+              'When set, disables browser native HTML5 validation on controls in the form',
+          },
+          validated: {
+            type: 'boolean',
+            default: false,
+            description:
+              "When set, adds the Bootstrap class 'was-validated' on the form, triggering the native browser validation states",
+          },
+          ...pick(buildCommonProps(), ['id']),
+        } satisfies Record<keyof BvnComponentProps['BForm'], PropertyReference>,
+      },
       emits: [
         {
+          event: 'submit',
+          description: 'Emitted when the form is submitted',
           args: [
             {
               arg: 'submit',
-              description: '',
               type: 'Event',
+              description: 'Native submit event',
             },
           ],
-          description: '',
-          event: 'submit',
         },
       ],
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Contet to place in the form',
         },
       ],
     },
     {
-      component: 'BFormFloatingLabel',
-      props: [
-        {
-          prop: 'labelFor',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'label',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'text',
-          type: 'string',
-          default: undefined,
-        },
-      ],
+      component: 'BFormDatalist',
+      sourcePath: '/BForm/BFormDatalist.vue',
+      props: {
+        '': {
+          ...pick(
+            buildCommonProps({
+              options: {
+                type: 'readonly (unknown | Record<string, unknown>)[]',
+                description:
+                  'Array of items to render in the component. Note that BFormDatalist only supports Options, not OptionsGroups',
+              },
+            }),
+            ['disabledField', 'htmlField', 'id', 'options', 'textField', 'valueField']
+          ),
+        } satisfies Record<keyof BvnComponentProps['BFormDatalist'], PropertyReference>,
+      },
       emits: [],
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the from datalist',
         },
         {
-          description: '',
+          name: 'first',
+          description: "Slot to place options above options provided via the 'options' prop",
+        },
+      ],
+    },
+
+    {
+      component: 'BFormFloatingLabel',
+      sourcePath: '/BForm/BFormFloatingLabel.vue',
+      props: {
+        '': {
+          label: {
+            type: 'string',
+            default: undefined,
+            description: 'The text of the floating label',
+          },
+          labelFor: {
+            type: 'string',
+            default: undefined,
+            description: 'The id of the input control that the floating label is for',
+          },
+        } satisfies Record<keyof BvnComponentProps['BFormFloatingLabel'], PropertyReference>,
+      },
+      emits: [],
+      slots: [
+        {
+          name: 'default',
+          description: 'The input control that contains the floating label',
+        },
+        {
           name: 'label',
-          scope: [],
+          description: 'The content to display in the floating label',
         },
       ],
     },
     {
       component: 'BFormInvalidFeedback',
-      props: [
-        {
-          prop: 'ariaLive',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'forceShow',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'id',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'text',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'role',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'state',
-          type: 'boolean',
-          default: null,
-        },
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'div',
-        },
-        {
-          prop: 'tooltip',
-          type: 'boolean',
-          default: false,
-        },
-      ],
+      sourcePath: '/BForm/BFormInvalidFeedback.vue',
+      props: {
+        '': {
+          forceShow: {
+            type: 'boolean',
+            default: false,
+            description: "Shows the feedback text, regardless of the value of the 'state' prop",
+          },
+          text: {
+            type: 'string',
+            default: undefined,
+            description: 'The feedback text to display',
+          },
+          ...pick(buildCommonProps(), ['ariaLive', 'id', 'role', 'state', 'tag', 'tooltip']),
+        } satisfies Record<keyof BvnComponentProps['BFormInvalidFeedback'], PropertyReference>,
+      },
       emits: [],
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the form invalid feedback',
         },
       ],
     },
     {
       component: 'BFormRow',
-      props: [
-        {
-          description: '',
-          prop: 'tag',
-          type: 'string',
-          default: 'div',
-        },
-      ],
+      sourcePath: '/BForm/BFormRow.vue',
+      props: {
+        '': {
+          ...pick(buildCommonProps(), ['tag']),
+        } satisfies Record<keyof BvnComponentProps['BFormRow'], PropertyReference>,
+      },
       emits: [],
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the form row',
         },
       ],
     },
     {
       component: 'BFormText',
-      props: [
-        {
-          prop: 'id',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'inline',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'small',
-        },
-        {
-          prop: 'text',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'textVariant',
-          type: 'TextColorVariant | null',
-          default: 'body-secondary',
-        },
-      ],
+      sourcePath: '/BForm/BFormText.vue',
+      props: {
+        '': {
+          inline: {
+            type: 'boolean',
+            default: false,
+            description:
+              'When set, renders the help text as an inline element, rather than a block element',
+          },
+          text: {
+            type: 'string',
+            default: undefined,
+            description: 'The text to display',
+          },
+          ...pick(buildCommonProps(), ['id', 'tag', 'textVariant']),
+        } satisfies Record<keyof BvnComponentProps['BFormText'], PropertyReference>,
+      },
       emits: [],
       slots: [
         {
           description: '',
-          name: 'default',
-          scope: [],
+          name: 'Content to place in the form text',
         },
       ],
     },
     {
       component: 'BFormValidFeedback',
-      props: [
-        {
-          prop: 'ariaLive',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'forceShow',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'id',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'role',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'text',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'state',
-          type: 'boolean',
-          default: null,
-        },
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'div',
-        },
-        {
-          prop: 'tooltip',
-          type: 'boolean',
-          default: false,
-        },
-      ],
+      sourcePath: '/BForm/BFormValidFeedback.vue',
+      props: {
+        '': {
+          forceShow: {
+            type: 'boolean',
+            default: false,
+            description: "Shows the feedback text, regardless of the value of the 'state' prop",
+          },
+          text: {
+            type: 'string',
+            default: undefined,
+            description: 'The feedback text to display',
+          },
+          ...pick(buildCommonProps(), ['ariaLive', 'id', 'role', 'state', 'tag', 'tooltip']),
+        } satisfies Record<keyof BvnComponentProps['BFormValidFeedback'], PropertyReference>,
+      },
       emits: [],
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the form invalid feedback',
         },
       ],
     },

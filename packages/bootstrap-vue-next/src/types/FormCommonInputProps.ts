@@ -1,4 +1,6 @@
-import type {AriaInvalid, Numberish, Size} from '.'
+import type {AriaInvalid} from './AriaInvalid'
+import type {Numberish} from './CommonTypes'
+import type {Size} from './Size'
 
 export interface FormDebounceOptions {
   debounce?: Numberish
@@ -13,17 +15,14 @@ export interface CommonInputProps extends FormDebounceOptions {
   form?: string
   formatter?: (val: string, evt: Event) => string
   id?: string
-  lazy?: boolean
   lazyFormatter?: boolean
   list?: string
   modelValue?: Numberish | null
   name?: string
-  number?: boolean
   placeholder?: string
   plaintext?: boolean
   readonly?: boolean
   required?: boolean
   size?: Size
   state?: boolean | null | undefined
-  trim?: boolean
 }

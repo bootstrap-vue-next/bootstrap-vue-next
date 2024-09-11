@@ -586,8 +586,4 @@ describe('form-radio', () => {
     const $label = wrapper.get('label')
     expect($label.text()).toBe('foobar')
   })
-
-  // TODO onMounted events
-  // TODO localValue change emit events
-  // TODO input element has v-model, not sure how this works. Does it bind to value??
 })

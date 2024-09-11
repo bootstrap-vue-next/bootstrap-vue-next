@@ -2,7 +2,7 @@ import {defineNuxtModule, createResolver, addImports, addPlugin} from '@nuxt/kit
 import useComponents from './composables/useComponents'
 import type {ModuleOptions} from './types/ModuleOptions'
 import parseActiveImports from './utils/parseActiveImports'
-import {Composables, Directives} from 'bootstrap-vue-next'
+import {composableNames, directiveNames, composablesWithExternalPath} from 'bootstrap-vue-next'
 import normalizeConfigurationValue from './utils/normalizeConfigurationValue'
 
 export default defineNuxtModule<ModuleOptions>({
@@ -10,24 +10,27 @@ export default defineNuxtModule<ModuleOptions>({
     name: 'bootstrap-vue-next',
     configKey: 'bootstrapVueNext',
     compatibility: {
-      nuxt: '^3.0.0',
+      nuxt: '>=3.0.0',
       bridge: false,
     },
   },
   defaults: {
     composables: true,
     directives: true,
+    css: true,
+    plugin: {},
   },
   setup(options, nuxt) {
     // @ts-ignore
     const {resolve} = createResolver(import.meta.url)
     nuxt.options.build.transpile.push(resolve('./runtime'))
-    nuxt.options.css.push('bootstrap-vue-next/dist/bootstrap-vue-next.css')
+
+    if (options.css === true) {
+      nuxt.options.css.push('bootstrap-vue-next/dist/bootstrap-vue-next.css')
+    }
 
     const normalizedComposableOptions = normalizeConfigurationValue(options.composables)
     const normalizedDirectiveOptions = normalizeConfigurationValue(options.directives)
-
-    nuxt.options.css.push('bootstrap-vue-next/dist/bootstrap-vue-next.css')
 
     nuxt.options.vite.optimizeDeps = nuxt.options.vite.optimizeDeps || {}
     nuxt.options.vite.optimizeDeps.include = nuxt.options.vite.optimizeDeps.include || []
@@ -64,14 +67,12 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Add directives
     if (Object.values(normalizedDirectiveOptions).some((el) => el === true)) {
-      const activeDirectives = parseActiveImports(
-        normalizedDirectiveOptions,
-        Object.keys(Directives)
-      )
+      const activeDirectives = parseActiveImports(normalizedDirectiveOptions, directiveNames)
 
       // Expose the values for the runtime to use in useDirectives
       nuxt.options.runtimeConfig.public.bootstrapVueNext = {
         directives: activeDirectives,
+        plugin: options.plugin,
       }
 
       addPlugin(resolve('./runtime/useDirectives'))
@@ -79,12 +80,13 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Add composables
     if (Object.values(normalizedComposableOptions).some((el) => el === true)) {
-      parseActiveImports(normalizedComposableOptions, Object.keys(Composables)).forEach((name) =>
+      parseActiveImports(normalizedComposableOptions, composableNames).forEach((name) => {
+        const from = `bootstrap-vue-next${composablesWithExternalPath[name]}`
         addImports({
-          from: 'bootstrap-vue-next',
+          from,
           name,
         })
-      )
+      })
     }
   },
 })

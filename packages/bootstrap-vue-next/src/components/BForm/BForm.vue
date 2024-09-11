@@ -1,29 +1,21 @@
 <template>
-  <form
-    :id="id"
-    ref="element"
-    :novalidate="props.novalidate"
-    :class="computedClasses"
-    @submit.prevent="submitted"
-  >
+  <form :id="props.id" ref="element" :novalidate="props.novalidate" :class="computedClasses">
     <slot />
   </form>
 </template>
 
 <script setup lang="ts">
-import type {BFormProps} from '../../types'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BFormProps} from '../../types/ComponentProps'
 import {computed, ref} from 'vue'
 
-const props = withDefaults(defineProps<BFormProps>(), {
-  floating: false,
+const _props = withDefaults(defineProps<BFormProps>(), {
   id: undefined,
+  floating: false,
   novalidate: false,
   validated: false,
 })
-
-const emit = defineEmits<{
-  submit: [value: Event]
-}>()
+const props = useDefaults(_props, 'BForm')
 
 const element = ref<HTMLFormElement | null>(null)
 
@@ -36,10 +28,6 @@ const computedClasses = computed(() => ({
   'form-floating': props.floating,
   'was-validated': props.validated,
 }))
-
-const submitted = (e: Readonly<Event>) => {
-  emit('submit', e)
-}
 
 defineExpose({
   element,

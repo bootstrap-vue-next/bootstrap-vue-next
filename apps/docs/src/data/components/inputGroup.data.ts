@@ -1,121 +1,73 @@
-import type {ComponentReference} from './ComponentReference'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
+import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BInputGroup',
-      props: [
-        {
-          prop: 'append',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'appendHtml',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'id',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'prepend',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'prependHtml',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'size',
-          type: 'Size',
-          default: 'md',
-        },
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'div',
-        },
-      ],
+      sourcePath: '/BInputGroup/BInputGroup.vue',
+      props: {
+        '': {
+          append: {
+            type: 'string',
+            default: undefined,
+            description: 'Text to append to the input group',
+          },
+          appendHtml: {
+            type: 'string',
+            default: undefined,
+            description:
+              "HTML string to append to the input group. Has precedence over 'append' prop",
+          },
+          prepend: {
+            type: 'string',
+            default: undefined,
+            description: 'Text to prepend to the input group',
+          },
+          prependHtml: {
+            type: 'string',
+            default: undefined,
+            description:
+              "HTML string to prepend to the input group. Has precedence over 'prepend' prop",
+          },
+          ...pick(buildCommonProps(buildCommonProps()), ['id', 'size', 'tag']),
+        } satisfies Record<keyof BvnComponentProps['BInputGroup'], PropertyReference>,
+      },
       emits: [],
       slots: [
         {
-          description: '',
-          name: 'prepend',
-          scope: [],
-        },
-        {
-          description: '',
-          name: 'default',
-          scope: [],
-        },
-        {
-          description: '',
           name: 'append',
-          scope: [],
+          description: 'Content to append to the input group',
         },
-      ],
-    },
-    {
-      component: 'BInputGroupAppend',
-      props: [
         {
-          prop: 'isText',
-          type: 'boolean',
-          default: false,
-        },
-      ],
-      emits: [],
-      slots: [
-        {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the input group',
         },
-      ],
-    },
-    {
-      component: 'BInputGroupPrepend',
-      props: [
         {
-          prop: 'isText',
-          type: 'boolean',
-          default: false,
-        },
-      ],
-      emits: [],
-      slots: [
-        {
-          description: '',
-          name: 'default',
-          scope: [],
+          name: 'prepend',
+          description: 'Content to prepend to the input group',
         },
       ],
     },
     {
       component: 'BInputGroupText',
-      props: [
-        {
-          prop: 'tag',
-          type: 'string',
-          default: 'div',
-        },
-        {
-          prop: 'text',
-          type: 'string',
-          default: undefined,
-        },
-      ],
+      sourcePath: '/BInputGroup/BInputGroupText.vue',
+      props: {
+        '': {
+          text: {
+            type: 'string',
+            default: undefined,
+            description: 'Content to place in the input group text',
+          },
+          ...pick(buildCommonProps(buildCommonProps()), ['tag']),
+        } satisfies Record<keyof BvnComponentProps['BInputGroupText'], PropertyReference>,
+      },
       emits: [],
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the input group text',
         },
       ],
     },

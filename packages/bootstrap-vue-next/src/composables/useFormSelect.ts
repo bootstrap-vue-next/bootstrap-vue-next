@@ -1,8 +1,11 @@
 import {computed, type MaybeRefOrGetter, toValue} from 'vue'
-import {get} from '../utils'
-import type {ComplexSelectOptionRaw, SelectOption} from '../types'
+import {get} from '../utils/object'
+import type {ComplexSelectOptionRaw, SelectOption} from '../types/SelectTypes'
 
-export default (options: MaybeRefOrGetter, props: Record<string, unknown>) => {
+export const useFormSelect = (
+  options: MaybeRefOrGetter<ReadonlyArray<unknown>>,
+  props: MaybeRefOrGetter<Record<string, unknown>>
+) => {
   const isComplex = (option: unknown): option is ComplexSelectOptionRaw =>
     typeof option === 'object' && option !== null && 'label' in option
 
@@ -10,6 +13,8 @@ export default (options: MaybeRefOrGetter, props: Record<string, unknown>) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     option: any
   ): ComplexSelectOptionRaw | SelectOption => {
+    const propsValue = toValue(props)
+
     if (typeof option === 'string') {
       return {value: option, text: option}
     }
@@ -20,18 +25,18 @@ export default (options: MaybeRefOrGetter, props: Record<string, unknown>) => {
       return {value: option, text: option.toLocaleString()}
     }
 
-    const value: unknown = get(option, props.valueField as string)
-    const text: string = get(option, props.textField as string)
-    const html: string = get(option, props.htmlField as string)
-    const disabled: boolean = get(option, props.disabledField as string)
+    const value: unknown = get(option, propsValue.valueField as string)
+    const text: string = get(option, propsValue.textField as string)
+    const html: string = get(option, propsValue.htmlField as string)
+    const disabled: boolean = get(option, propsValue.disabledField as string)
 
-    const opts: undefined | (unknown | Record<string, unknown>)[] = props.optionsField
-      ? get(option, props.optionsField as string)
+    const opts: undefined | unknown[] = propsValue.optionsField
+      ? get(option, propsValue.optionsField as string)
       : undefined
 
     if (opts !== undefined) {
       return {
-        label: get(option, props.labelField as string) || text,
+        label: get(option, propsValue.labelField as string) || text,
         options: opts,
       } as ComplexSelectOptionRaw
     }
@@ -45,9 +50,9 @@ export default (options: MaybeRefOrGetter, props: Record<string, unknown>) => {
   }
 
   const normalizeOptions = (
-    options: (unknown | Record<string, unknown>)[]
+    opts: ReadonlyArray<unknown>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ): (ComplexSelectOptionRaw | SelectOption)[] => options.map((option) => normalizeOption(option))
+  ): (ComplexSelectOptionRaw | SelectOption)[] => opts.map((option) => normalizeOption(option))
 
   const normalizedOptions = computed(() => normalizeOptions(toValue(options)))
 

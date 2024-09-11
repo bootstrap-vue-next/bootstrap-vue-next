@@ -1,12 +1,10 @@
 # Navbar
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
+<ComponentSidebar>
 
 [[toc]]
 
-  </Teleport>
-</ClientOnly>
+</ComponentSidebar>
 
 <div class="lead mb-5">
 
@@ -447,6 +445,7 @@ Navbars are hidden by default when printing. Force them to be printed by setting
 <script setup lang="ts">
 import {data} from '../../data/components/navbar.data'
 import ComponentReference from '../../components/ComponentReference.vue'
+import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BNavText, BInputGroup, BNavbar, BNavbarBrand, BNavbarToggle, BCollapse, BNavbarNav, BNavForm, BNavItem, BFormInput, BNavItemDropdown, BDropdownItem, BButton, vBColorMode} from 'bootstrap-vue-next'
 import ChevronBarUpIcon from '~icons/bi/chevron-bar-up'

@@ -1,6 +1,6 @@
-import type {ComponentProps, PropDefinition} from '../types'
+import type {ComponentProps, PropDefinition} from '../types/Props'
 
-export default (
+export const getBreakpointProps = (
   prefix: string,
   breakpoints: readonly string[],
   definition: Readonly<PropDefinition>

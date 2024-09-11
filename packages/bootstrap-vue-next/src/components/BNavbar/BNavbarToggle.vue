@@ -1,11 +1,11 @@
 <template>
   <button
-    v-b-toggle="!props.disabled ? target : undefined"
+    v-b-toggle="!props.disabled ? props.target : undefined"
     class="navbar-toggler"
     type="button"
     :class="computedClasses"
     :disabled="props.disabled"
-    :aria-label="label"
+    :aria-label="props.label"
     @click="onClick"
   >
     <slot>
@@ -15,15 +15,17 @@
 </template>
 
 <script setup lang="ts">
-import type {BNavbarToggleProps} from '../../types'
+import type {BNavbarToggleProps} from '../../types/ComponentProps'
 import {vBToggle} from '../../directives'
 import {computed} from 'vue'
+import {useDefaults} from '../../composables/useDefaults'
 
-const props = withDefaults(defineProps<BNavbarToggleProps>(), {
+const _props = withDefaults(defineProps<BNavbarToggleProps>(), {
   label: 'Toggle navigation',
   disabled: false,
   target: undefined,
 })
+const props = useDefaults(_props, 'BNavbarToggle')
 
 const emit = defineEmits<{
   click: [value: MouseEvent]

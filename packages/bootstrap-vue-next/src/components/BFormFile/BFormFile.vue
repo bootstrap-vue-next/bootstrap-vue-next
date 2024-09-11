@@ -1,51 +1,46 @@
 <template>
-  <DefineTemplate>
-    <label class="input-group-text" :for="computedId">
-      {{ browserText }}
-    </label>
-  </DefineTemplate>
-
-  <label v-if="hasLabelSlot || label" class="form-label" :class="labelClass" :for="computedId">
+  <label
+    v-if="hasLabelSlot || props.label"
+    class="form-label"
+    :class="props.labelClass"
+    :for="computedId"
+  >
     <slot name="label">
-      {{ label }}
+      {{ props.label }}
     </slot>
   </label>
 
-  <div class="input-group form-input-file">
-    <ReusableTemplate v-if="placement === 'start'" />
-    <input
-      :id="computedId"
-      v-bind="$attrs"
-      ref="input"
-      type="file"
-      class="form-control"
-      :class="computedClasses"
-      :form="form"
-      :name="name"
-      :multiple="props.multiple"
-      :disabled="props.disabled"
-      :capture="props.capture"
-      :accept="computedAccept || undefined"
-      :required="props.required || undefined"
-      :aria-label="ariaLabel"
-      :aria-labelledby="ariaLabelledby"
-      :aria-required="props.required || undefined"
-      :directory="props.directory"
-      :webkitdirectory="props.directory"
-      @change="onChange"
-      @drop="onDrop"
-    />
-    <ReusableTemplate v-if="placement === 'end'" />
-  </div>
+  <input
+    :id="computedId"
+    v-bind="$attrs"
+    ref="input"
+    type="file"
+    :class="computedClasses"
+    :form="props.form"
+    :name="props.name"
+    :multiple="props.multiple"
+    :disabled="props.disabled"
+    :capture="props.capture"
+    :accept="computedAccept || undefined"
+    :required="props.required || undefined"
+    :aria-label="props.ariaLabel"
+    :aria-labelledby="props.ariaLabelledby"
+    :aria-required="props.required || undefined"
+    :directory="props.directory"
+    :webkitdirectory="props.directory"
+    @change="onChange"
+    @drop="onDrop"
+  />
 </template>
 
 <script setup lang="ts">
-import {createReusableTemplate, useFocus} from '@vueuse/core'
-import {computed, ref, toRef, watch} from 'vue'
-import type {BFormFileProps} from '../../types'
-import {useId, useStateClass} from '../../composables'
-import {isEmptySlot} from '../../utils'
-
+import {useFocus} from '@vueuse/core'
+import {computed, ref, watch} from 'vue'
+import type {BFormFileProps} from '../../types/ComponentProps'
+import {useDefaults} from '../../composables/useDefaults'
+import {useId} from '../../composables/useId'
+import {useStateClass} from '../../composables/useStateClass'
+import {isEmptySlot} from '../../utils/dom'
 defineOptions({
   inheritAttrs: false,
 })
@@ -55,12 +50,11 @@ const slots = defineSlots<{
   label?: (props: Record<string, never>) => any
 }>()
 
-const props = withDefaults(defineProps<BFormFileProps>(), {
+const _props = withDefaults(defineProps<Omit<BFormFileProps, 'modelValue'>>(), {
   ariaLabel: undefined,
   ariaLabelledby: undefined,
   accept: '',
   autofocus: false,
-  browserText: 'Choose',
   // eslint-disable-next-line vue/require-valid-default-prop
   capture: false,
   directory: false,
@@ -71,17 +65,20 @@ const props = withDefaults(defineProps<BFormFileProps>(), {
   labelClass: undefined,
   multiple: false,
   name: undefined,
+  noButton: false,
   noDrop: false,
   noTraverse: false,
-  placement: 'start',
+  plain: false,
   required: false,
   size: undefined,
   state: null,
 })
+const props = useDefaults(_props, 'BFormFile')
 
-const modelValue = defineModel<File | File[] | null>({
+const modelValue = defineModel<Exclude<BFormFileProps['modelValue'], undefined>>({
   default: null,
 })
+
 const computedId = useId(() => props.id)
 
 // TODO noTraverse is not implemented yet
@@ -92,9 +89,9 @@ const input = ref<HTMLInputElement | null>(null)
 
 const {focused} = useFocus(input, {initialValue: props.autofocus})
 
-const hasLabelSlot = toRef(() => !isEmptySlot(slots['label']))
+const hasLabelSlot = computed(() => !isEmptySlot(slots['label']))
 
-const computedAccept = toRef(() =>
+const computedAccept = computed(() =>
   typeof props.accept === 'string' ? props.accept : props.accept.join(',')
 )
 
@@ -102,6 +99,8 @@ const computedClasses = computed(() => [
   stateClass.value,
   {
     [`form-control-${props.size}`]: props.size !== undefined,
+    'form-control': !props.plain,
+    'form-control-input-file-hide-button': props.noButton,
   },
 ])
 
@@ -140,29 +139,4 @@ defineExpose({
   },
   reset,
 })
-
-const [DefineTemplate, ReusableTemplate] = createReusableTemplate()
 </script>
-
-<style scoped>
-.form-input-file {
-  input[type='file'] {
-    margin-left: -2px !important;
-
-    &::-webkit-file-upload-button {
-      display: none;
-    }
-
-    &::file-selector-button {
-      display: none;
-    }
-  }
-
-  &:hover {
-    label {
-      background-color: #dde0e3;
-      cursor: pointer;
-    }
-  }
-}
-</style>

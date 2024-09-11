@@ -1,111 +1,165 @@
-import type {ComponentReference} from './ComponentReference'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BDropdown',
-      props: [
-        {
-          prop: 'ariaLabel',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'id',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'menuClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'size',
-          type: 'Size',
-          default: 'md',
-        },
-        {
-          prop: 'splitClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'splitVariant',
-          type: 'ButtonVariant | null',
-          default: undefined,
-        },
-        {
-          prop: 'text',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'toggleClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'autoClose',
-          type: "boolean | 'inside' | 'outside'",
-          default: true,
-        },
-        {
-          prop: 'block',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'disabled',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'isNav',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'dropup',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'dropend',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'dropstart',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'center',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'end',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'noFlip',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'noShift',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'offset',
-          type: 'number | string | {mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null',
-          default: 0,
-        },
-      ],
+      sourcePath: '/BDropdown/BDropdown.vue',
+      props: {
+        '': {
+          ariaLabel: {
+            type: 'string',
+            default: undefined,
+          },
+          autoClose: {
+            type: "boolean | 'inside' | 'outside'",
+            default: true,
+          },
+          boundary: {
+            type: 'Boundary | RootBoundary',
+            default: 'clippingAncestors',
+          },
+          boundaryPadding: {
+            type: 'Padding',
+            default: undefined,
+          },
+          center: {
+            type: 'boolean',
+            default: false,
+          },
+          disabled: {
+            type: 'boolean',
+            default: false,
+          },
+          dropend: {
+            type: 'boolean',
+            default: false,
+          },
+          dropstart: {
+            type: 'boolean',
+            default: false,
+          },
+          dropup: {
+            type: 'boolean',
+            default: false,
+          },
+          end: {
+            type: 'boolean',
+            default: false,
+          },
+          floatingMiddleware: {
+            type: 'Middleware[]',
+            default: undefined,
+          },
+          id: {
+            type: 'string',
+            default: undefined,
+          },
+          isNav: {
+            type: 'boolean',
+            default: false,
+          },
+          lazy: {
+            type: 'boolean',
+            default: false,
+          },
+          menuClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          modelValue: {
+            type: 'boolean',
+            default: false,
+          },
+          noCaret: {
+            type: 'boolean',
+            default: false,
+          },
+          noFlip: {
+            type: 'boolean',
+            default: false,
+          },
+          noShift: {
+            type: 'boolean',
+            default: false,
+          },
+          noSize: {
+            type: 'boolean',
+            default: false,
+          },
+          offset: {
+            type: 'number | string | {mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null',
+            default: 0,
+          },
+          role: {
+            type: 'string',
+            default: 'menu',
+          },
+          size: {
+            type: 'Size',
+            default: 'md',
+          },
+          skipWrapper: {
+            type: 'boolean',
+            default: false,
+          },
+          split: {
+            type: 'boolean',
+            default: false,
+          },
+          splitButtonType: {
+            type: 'ButtonType',
+            default: 'button',
+          },
+          splitClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          splitDisabled: {
+            type: 'boolean',
+            default: undefined,
+          },
+          splitHref: {
+            type: 'string',
+            default: undefined,
+          },
+          splitTo: {
+            type: 'RouteLocationRaw',
+            default: undefined,
+          },
+          splitVariant: {
+            type: 'ButtonVariant | null',
+            default: undefined,
+          },
+          strategy: {
+            type: 'Strategy',
+            default: 'absolute',
+          },
+          text: {
+            type: 'string',
+            default: undefined,
+          },
+          toggleClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          toggleText: {
+            type: 'string',
+            default: 'Toggle dropdown',
+          },
+          variant: {
+            type: 'ButtonVariant | null',
+            default: 'secondary',
+          },
+          wrapperClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          teleportDisabled: {},
+          teleportTo: {},
+        } satisfies Record<keyof BvnComponentProps['BDropdown'], PropertyReference>,
+      },
       emits: [
         {
           args: [],
@@ -119,12 +173,22 @@ export default {
         },
         {
           args: [],
+          event: 'show-prevented',
+          description: '',
+        },
+        {
+          args: [],
           event: 'hide',
           description: '',
         },
         {
           args: [],
           event: 'hidden',
+          description: '',
+        },
+        {
+          args: [],
+          event: 'hide-prevented',
           description: '',
         },
         {
@@ -164,21 +228,24 @@ export default {
     },
     {
       component: 'BDropdownDivider',
+      sourcePath: '/BDropdown/BDropdownDivider.vue',
       emits: [],
       slots: [],
-      props: [
-        {
-          description: '',
-          prop: 'tag',
-          type: 'string',
-          default: 'hr',
-        },
-      ],
+      props: {
+        '': {
+          tag: {
+            description: '',
+            type: 'string',
+            default: 'hr',
+          },
+        } satisfies Record<keyof BvnComponentProps['BDropdownDivider'], PropertyReference>,
+      },
     },
     {
       component: 'BDropdownForm',
+      sourcePath: '/BDropdown/BDropdownForm.vue',
       emits: [],
-      props: [],
+      props: {} satisfies Record<keyof BvnComponentProps['BDropdownForm'], PropertyReference>,
       slots: [
         {
           scope: [],
@@ -189,39 +256,36 @@ export default {
     },
     {
       component: 'BDropdownGroup',
+      sourcePath: '/BDropdown/BDropdownGroup.vue',
       emits: [],
-      props: [
-        {
-          prop: 'id',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'ariaDescribedby',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'header',
-          type: 'string',
-          default: 'header',
-        },
-        {
-          prop: 'headerClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'headerTag',
-          type: 'string',
-          default: 'header',
-        },
-        {
-          prop: 'headerVariant',
-          type: 'ColorVariant | null',
-          default: undefined,
-        },
-      ],
+      props: {
+        '': {
+          ariaDescribedby: {
+            type: 'string',
+            default: undefined,
+          },
+          header: {
+            type: 'string',
+            default: undefined,
+          },
+          headerClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          headerTag: {
+            type: 'string',
+            default: 'header',
+          },
+          headerVariant: {
+            type: 'ColorVariant | null',
+            default: null,
+          },
+          id: {
+            type: 'string',
+            default: undefined,
+          },
+        } satisfies Record<keyof BvnComponentProps['BDropdownGroup'], PropertyReference>,
+      },
       slots: [
         {
           description: '',
@@ -237,8 +301,9 @@ export default {
     },
     {
       component: 'BDropdownHeader',
+      sourcePath: '/BDropdown/BDropdownHeader.vue',
       emits: [],
-      props: [],
+      props: {} satisfies Record<keyof BvnComponentProps['BDropdownHeader'], PropertyReference>,
       slots: [
         {
           scope: [],
@@ -249,6 +314,7 @@ export default {
     },
     {
       component: 'BDropdownItem',
+      sourcePath: '/BDropdown/BDropdownItem.vue',
       emits: [
         {
           event: 'click',
@@ -262,13 +328,110 @@ export default {
           description: '',
         },
       ],
-      props: [
-        {
-          prop: 'linkClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-      ],
+      props: {
+        '': {
+          active: {
+            type: 'boolean',
+            default: undefined,
+          },
+          activeClass: {
+            type: 'string',
+            default: undefined,
+          },
+          disabled: {
+            type: 'boolean',
+            default: undefined,
+          },
+          exactActiveClass: {
+            type: 'string',
+            default: undefined,
+          },
+          href: {
+            type: 'string',
+            default: undefined,
+          },
+          icon: {
+            type: 'boolean',
+            default: undefined,
+          },
+          linkClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          noPrefetch: {
+            type: 'boolean',
+          },
+          noRel: {
+            type: 'boolean',
+          },
+          opacity: {
+            type: '10 | 25 | 50 | 75 | 100 | "10" | "25" | "50" | "75" | "100"',
+            default: undefined,
+          },
+          opacityHover: {
+            type: '10 | 25 | 50 | 75 | 100 | "10" | "25" | "50" | "75" | "100"',
+            default: undefined,
+          },
+          prefetch: {
+            type: 'boolean',
+          },
+          prefetchedClass: {
+            type: 'ClassValue',
+          },
+          rel: {
+            type: 'string',
+            default: undefined,
+          },
+          replace: {
+            type: 'boolean',
+            default: undefined,
+          },
+          routerComponentName: {
+            type: 'string',
+            default: undefined,
+          },
+          stretched: {
+            type: 'boolean',
+            default: false,
+          },
+          target: {
+            type: 'LinkTarget',
+            default: undefined,
+          },
+          to: {
+            type: 'RouteLocationRaw',
+            default: undefined,
+          },
+          underlineOffset: {
+            type: '1 | 2 | 3 | "1" | "2" | "3"',
+            default: undefined,
+          },
+          underlineOffsetHover: {
+            type: '1 | 2 | 3 | "1" | "2" | "3"',
+            default: undefined,
+          },
+          underlineOpacity: {
+            type: '0 | 10 | 25 | 50 | 75 | 100 | "0" | "10" | "25" | "50" | "75" | "100"',
+            default: undefined,
+          },
+          underlineOpacityHover: {
+            type: '0 | 10 | 25 | 50 | 75 | 100 | "0" | "10" | "25" | "50" | "75" | "100"',
+            default: undefined,
+          },
+          underlineVariant: {
+            type: 'ColorVariant | null',
+            default: undefined,
+          },
+          variant: {
+            type: 'ColorVariant | null',
+            default: null,
+          },
+          wrapperAttrs: {
+            type: 'Readonly<AttrsValue>',
+            default: undefined,
+          },
+        } satisfies Record<keyof BvnComponentProps['BDropdownItem'], PropertyReference>,
+      },
       slots: [
         {
           description: '',
@@ -279,6 +442,7 @@ export default {
     },
     {
       component: 'BDropdownItemButton',
+      sourcePath: '/BDropdown/BDropdownItemButton.vue',
       emits: [
         {
           args: [
@@ -292,33 +456,30 @@ export default {
           event: 'click',
         },
       ],
-      props: [
-        {
-          prop: 'buttonClass',
-          type: 'ClassValue',
-          default: undefined,
-        },
-        {
-          prop: 'active',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'activeClass',
-          type: 'ClassValue',
-          default: 'active',
-        },
-        {
-          prop: 'disabled',
-          type: 'boolean',
-          default: false,
-        },
-        {
-          prop: 'variant',
-          type: 'ColorVariant | null',
-          default: undefined,
-        },
-      ],
+      props: {
+        '': {
+          active: {
+            type: 'boolean',
+            default: false,
+          },
+          activeClass: {
+            type: 'ClassValue',
+            default: 'active',
+          },
+          buttonClass: {
+            type: 'ClassValue',
+            default: undefined,
+          },
+          disabled: {
+            type: 'boolean',
+            default: false,
+          },
+          variant: {
+            type: 'ColorVariant | null',
+            default: null,
+          },
+        } satisfies Record<keyof BvnComponentProps['BDropdownItemButton'], PropertyReference>,
+      },
       slots: [
         {
           description: '',
@@ -329,15 +490,17 @@ export default {
     },
     {
       component: 'BDropdownText',
+      sourcePath: '/BDropdown/BDropdownText.vue',
       emits: [],
-      props: [
-        {
-          description: '',
-          prop: 'text',
-          type: 'string',
-          default: '',
-        },
-      ],
+      props: {
+        '': {
+          text: {
+            description: '',
+            type: 'string',
+            default: '',
+          },
+        } satisfies Record<keyof BvnComponentProps['BDropdownText'], PropertyReference>,
+      },
       slots: [
         {
           description: '',

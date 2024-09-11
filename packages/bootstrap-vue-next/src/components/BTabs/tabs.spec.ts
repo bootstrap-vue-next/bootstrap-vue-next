@@ -150,7 +150,6 @@ describe('tabs', () => {
     expect($div2.exists()).toBe(false)
   })
 
-  // TODO the tests for the inside of the <component> from v-for tabs
   // end div
 
   it('first child div is next div if not prop end', () => {
@@ -340,8 +339,6 @@ describe('tabs', () => {
     const $ul = $div.get('ul')
     expect($ul.text()).toBe('foobar')
   })
-
-  // TODO the next li v-for containing tabs
 
   // start beginning end div test duplication
   it('second child div is end div', () => {

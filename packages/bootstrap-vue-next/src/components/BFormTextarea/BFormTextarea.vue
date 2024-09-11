@@ -3,19 +3,19 @@
     :id="computedId"
     ref="input"
     :class="computedClasses"
-    :name="name || undefined"
-    :form="form || undefined"
+    :name="props.name || undefined"
+    :form="props.form || undefined"
     :value="modelValue ?? undefined"
     :disabled="props.disabled"
-    :placeholder="placeholder"
+    :placeholder="props.placeholder"
     :required="props.required || undefined"
-    :autocomplete="autocomplete || undefined"
+    :autocomplete="props.autocomplete || undefined"
     :readonly="props.readonly || props.plaintext"
-    :aria-required="required || undefined"
+    :aria-required="props.required || undefined"
     :aria-invalid="computedAriaInvalid"
-    :rows="rows"
+    :rows="props.rows"
     :style="computedStyles"
-    :wrap="wrap || undefined"
+    :wrap="props.wrap || undefined"
     @input="onInput($event)"
     @change="onChange($event)"
     @blur="onBlur($event)"
@@ -23,11 +23,14 @@
 </template>
 
 <script setup lang="ts">
-import type {BFormTextareaProps, Numberish} from '../../types'
+import type {BFormTextareaProps} from '../../types/ComponentProps'
 import {computed, type CSSProperties} from 'vue'
-import {useFormInput, useStateClass} from '../../composables'
+import {useDefaults} from '../../composables/useDefaults'
+import {normalizeInput} from '../../utils/normalizeInput'
+import {useFormInput} from '../../composables/useFormInput'
+import {useStateClass} from '../../composables/useStateClass'
 
-const props = withDefaults(defineProps<BFormTextareaProps>(), {
+const _props = withDefaults(defineProps<Omit<BFormTextareaProps, 'modelValue'>>(), {
   // CommonInputProps
   ariaInvalid: undefined,
   autocomplete: undefined,
@@ -38,31 +41,33 @@ const props = withDefaults(defineProps<BFormTextareaProps>(), {
   form: undefined,
   formatter: undefined,
   id: undefined,
-  lazy: false,
   lazyFormatter: false,
   list: undefined,
   modelValue: '',
   name: undefined,
-  number: false,
   placeholder: undefined,
   plaintext: false,
   readonly: false,
   required: false,
   size: undefined,
   state: null,
-  trim: false,
   // End CommonInputProps
   noResize: false,
   rows: 2,
   wrap: 'soft',
 })
+const props = useDefaults(_props, 'BFormTextarea')
 
-const emit = defineEmits<{
-  'update:modelValue': [val: Numberish | null]
-}>()
+const [modelValue, modelModifiers] = defineModel<
+  Exclude<BFormTextareaProps['modelValue'], undefined>,
+  'trim' | 'lazy' | 'number'
+>({
+  default: '',
+  set: (v) => normalizeInput(v, modelModifiers),
+})
 
 const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
-  useFormInput(props, emit)
+  useFormInput(props, modelValue, modelModifiers)
 
 const stateClass = useStateClass(() => props.state)
 
