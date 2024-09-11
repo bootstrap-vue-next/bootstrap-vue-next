@@ -31,31 +31,11 @@ on the the model (generally named models).
 For instance, in order to two-way bind to the `indeterminate` property in `BFormCheckBox` you `v-bind` to the the model
 named `indeterminate` rather than adding the sync modifier to the `indeterminate` property:
 
-<HighlightCard>
-  <template #html>
-
-```vue-html
-    <BFormCheckbox v-model="checked" :indeterminate.sync="indeterminate">
-      Click me to see what happens
-    </BFormCheckbox>
-```
-
-  </template>
-</HighlightCard>
+<<< FRAGMENT ./demo/SyncBefore.vue#template{vue-html}
 
 becomes
 
-<HighlightCard>
-  <template #html>
-
-```vue-html
-  <BFormCheckbox v-model="checked" v-model:indeterminate="indeterminate"
-    >Click me to see what happens</BFormCheckbox
-  >
-```
-
-  </template>
-</HighlightCard>
+<<< FRAGMENT ./demo/SyncAfter.vue#template{vue-html}
 
 See the [Vue 3 migration guide](https://v3-migration.vuejs.org/breaking-changes/v-model.html)
 for more info.
@@ -77,27 +57,11 @@ This takes the place of `top`, `bottom`, `left`, and `right` values for the `rou
 As in `bootstrap-vue`, a simple `BAlert` is not visible by default. However, the means of showing the alert are different.
 The `bootstrap-vue` `show` prop is deprecated, use `model-value` instead.
 
-<HighlightCard>
-  <template #html>
-
-```vue-html
-  <BAlert variant="primary" show>A simple primary alert—check it out!</BAlert>
-```
-
-  </template>
-</HighlightCard>
+<<< FRAGMENT ./demo/AlertBefore.vue#template{vue-html}
 
 becomes
 
-<HighlightCard>
-  <template #html>
-
-```vue-html
-  <BAlert :model-value="true" variant="primary">A simple primary alert—check it out!</BAlert>
-```
-
-  </template>
-</HighlightCard>
+<<< FRAGMENT ./demo/AlertAfter.vue#template{vue-html}
 
 For consistency with other components properties, slots and events that use the term `dismissible` in `bootstrap-vue`
 now use the term `close`. For example the `dismissed` event is now the `closed` event and the `dsimiss` slot is
