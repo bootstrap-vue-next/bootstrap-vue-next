@@ -61,6 +61,7 @@ const computedLinkProps = computed(() =>
   pick(props, [
     'active',
     'activeClass',
+    'exactActiveClass',
     'append',
     'disabled',
     'href',
