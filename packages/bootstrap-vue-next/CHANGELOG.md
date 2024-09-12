@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.24.14](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.13...bootstrapvuenext-v0.24.14) (2024-09-12)
+
+
+### Bug Fixes
+
+* improper import path ([#2189](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2189)) ([bb40e21](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bb40e21aa778bce05e9d89111d4b580172312317))
+
 ## [0.24.13](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.12...bootstrapvuenext-v0.24.13) (2024-09-11)
 
 
