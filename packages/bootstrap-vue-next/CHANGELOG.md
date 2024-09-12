@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.24.15](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.14...bootstrapvuenext-v0.24.15) (2024-09-12)
+
+
+### Bug Fixes
+
+* **BNavItem:** pass prop exactActiveClass to router component ([#2188](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2188)) ([f0b49fe](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f0b49fe3410bea6cc5a53d2f66ed2a6413718468))
+
 ## [0.24.14](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.13...bootstrapvuenext-v0.24.14) (2024-09-12)
 
 
