@@ -17,7 +17,7 @@
 <script setup lang="ts">
 // You can use this file as a development spot to test your changes
 // Please do not commit this file
-import {computed, h, ref} from 'vue'
+import {computed, h, onMounted, ref} from 'vue'
 import {BToast, type ColorVariant, type OrchestratedToast, useToast} from 'bootstrap-vue-next'
 
 const {show, toasts} = useToast()
@@ -26,9 +26,11 @@ const firstRef = ref<OrchestratedToast>({
   body: `${Math.random()}`,
 })
 
-setInterval(() => {
-  firstRef.value.body = `${Math.random()}`
-}, 1000)
+onMounted(() => {
+  setInterval(() => {
+    firstRef.value.body = `${Math.random()}`
+  }, 1000)
+})
 
 const showFns = {
   basicNoReactive: () => {
