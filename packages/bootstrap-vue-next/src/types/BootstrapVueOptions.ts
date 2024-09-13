@@ -19,7 +19,7 @@ export const componentsWithExternalPath = {
   BButton: '/components/BButton',
   BButtonGroup: '/components/BButton',
   BButtonToolbar: '/components/BButton',
-  BCloseButton: '/components/BCloseButton',
+  BCloseButton: '/components/BButton',
   BCard: '/components/BCard',
   BCardBody: '/components/BCard',
   BCardFooter: '/components/BCard',
@@ -108,6 +108,7 @@ export const componentsWithExternalPath = {
   BThead: '/components/BTable',
   BTfoot: '/components/BTable',
   BTr: '/components/BTable',
+  BTransition: '/components/BTransition.vue',
   BPopoverOrchestrator: '/components/BPopover',
   BTooltipOrchestrator: '/components/BTooltip',
 } as const satisfies Record<ComponentType, string>
