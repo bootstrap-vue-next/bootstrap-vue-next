@@ -912,6 +912,7 @@ export interface BCarouselProps {
   interval?: number
   keyboard?: boolean
   modelValue?: number
+  noAnimation?: boolean
   noHoverPause?: boolean
   noTouch?: boolean
   noWrap?: boolean
