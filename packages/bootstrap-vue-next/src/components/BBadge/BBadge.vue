@@ -1,12 +1,12 @@
 <template>
   <component :is="computedTag" class="badge" :class="computedClasses" v-bind="computedLinkProps">
-    <BWrapper
+    <ConditionalWrapper
       :skip="props.dotIndicator !== true"
       tag="span"
       v-bind="props.dotIndicator ? {class: 'visually-hidden'} : {}"
     >
       <slot />
-    </BWrapper>
+    </ConditionalWrapper>
   </component>
 </template>
 
@@ -17,7 +17,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import {computed} from 'vue'
 import type {BBadgeProps} from '../../types/ComponentProps'
 import BLink from '../BLink/BLink.vue'
-import BWrapper from '../BWrapper.vue'
+import ConditionalWrapper from '../ConditionalWrapper.vue'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

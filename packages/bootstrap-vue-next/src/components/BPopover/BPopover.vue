@@ -1,7 +1,10 @@
 <template>
   <span :id="computedId + '_placeholder'" ref="placeholder" />
   <slot name="target" :show="show" :hide="hide" :toggle="toggle" :show-state="showState" />
-  <BTeleport :to="props.teleportTo" :disabled="!props.teleportTo || props.teleportDisabled">
+  <ConditionalTeleport
+    :to="props.teleportTo"
+    :disabled="!props.teleportTo || props.teleportDisabled"
+  >
     <div
       v-if="showStateInternal || props.persistent"
       :id="computedId"
@@ -54,7 +57,7 @@
         </template>
       </div>
     </div>
-  </BTeleport>
+  </ConditionalTeleport>
 </template>
 
 <script setup lang="ts">
@@ -96,7 +99,7 @@ import {isBoundary, isRootBoundary, resolveBootstrapPlacement} from '../../utils
 import {getTransitionDelay} from '../../utils/dom'
 import {getElement} from '../../utils/getElement'
 import {IS_BROWSER} from '../../utils/event'
-import BTeleport from '../BTeleport.vue'
+import ConditionalTeleport from '../ConditionalTeleport.vue'
 
 defineOptions({
   inheritAttrs: false,
@@ -487,3 +490,4 @@ onMounted(bind)
 
 onBeforeUnmount(unbind)
 </script>
+../ConditionalTeleport.vue

@@ -2,7 +2,7 @@
 import {defineComponent, h, type PropType, type SlotsType, Teleport, type TeleportProps} from 'vue'
 
 export default defineComponent({
-  name: 'BTeleport',
+  name: 'ConditionalTeleport',
   inheritAttrs: false,
   slots: Object as SlotsType<{
     default?: Record<string, never>

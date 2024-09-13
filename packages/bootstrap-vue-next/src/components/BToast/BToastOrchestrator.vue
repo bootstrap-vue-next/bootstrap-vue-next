@@ -1,5 +1,5 @@
 <template>
-  <BTeleport :to="props.teleportTo" :disabled="props.teleportDisabled">
+  <ConditionalTeleport :to="props.teleportTo" :disabled="props.teleportDisabled">
     <div id="__BVID__toaster-container" v-bind="$attrs">
       <div
         v-for="(value, key) in positionClasses"
@@ -24,7 +24,7 @@
         </TransitionGroup>
       </div>
     </div>
-  </BTeleport>
+  </ConditionalTeleport>
 </template>
 
 <script setup lang="ts">
@@ -33,7 +33,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import {positionClasses} from '../../utils/positionClasses'
 import type {BToastOrchestratorProps} from '../../types/ComponentProps'
 import BToast from './BToast.vue'
-import BTeleport from '../BTeleport.vue'
+import ConditionalTeleport from '../ConditionalTeleport.vue'
 import {useToast} from '../../composables/useToast'
 
 defineOptions({
@@ -83,3 +83,4 @@ I think it's because it's "moving", but I don't know where it's moving to
   position: fixed;
 }
 </style>
+../ConditionalTeleport.vue

@@ -1,5 +1,9 @@
 <template>
-  <BWrapper ref="wrapper" :skip="inInputGroup || props.skipWrapper" :class="computedClasses">
+  <ConditionalWrapper
+    ref="wrapper"
+    :skip="inInputGroup || props.skipWrapper"
+    :class="computedClasses"
+  >
     <BButton
       :id="computedId"
       ref="splitButton"
@@ -37,7 +41,10 @@
         </slot>
       </span>
     </BButton>
-    <BTeleport :to="props.teleportTo" :disabled="!props.teleportTo || props.teleportDisabled">
+    <ConditionalTeleport
+      :to="props.teleportTo"
+      :disabled="!props.teleportTo || props.teleportDisabled"
+    >
       <ul
         v-if="!props.lazy || modelValue"
         v-show="props.lazy || modelValue"
@@ -51,8 +58,8 @@
       >
         <slot :hide="hide" :show="show" />
       </ul>
-    </BTeleport>
-  </BWrapper>
+    </ConditionalTeleport>
+  </ConditionalWrapper>
 </template>
 
 <script setup lang="ts">
@@ -74,8 +81,8 @@ import {useId} from '../../composables/useId'
 import type {BDropdownProps} from '../../types/ComponentProps'
 import {BvTriggerableEvent} from '../../utils'
 import BButton from '../BButton/BButton.vue'
-import BWrapper from '../BWrapper.vue'
-import BTeleport from '../BTeleport.vue'
+import ConditionalWrapper from '../ConditionalWrapper.vue'
+import ConditionalTeleport from '../ConditionalTeleport.vue'
 import {isBoundary, isRootBoundary, resolveFloatingPlacement} from '../../utils/floatingUi'
 import {dropdownInjectionKey, inputGroupKey} from '../../utils/keys'
 
@@ -351,4 +358,4 @@ provide(dropdownInjectionKey, {
   isNav: toRef(() => props.isNav),
 })
 </script>
-../BWrapper.vue
+../ConditionalTeleport.vue

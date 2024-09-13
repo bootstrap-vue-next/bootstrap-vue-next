@@ -1,5 +1,5 @@
 <template>
-  <BTeleport :to="props.teleportTo" :disabled="props.teleportDisabled">
+  <ConditionalTeleport :to="props.teleportTo" :disabled="props.teleportDisabled">
     <Transition
       v-bind="{...fadeTransitionProps, ...props.transProps, enterToClass: 'show'}"
       :appear="modelValue"
@@ -103,7 +103,7 @@
         />
       </div>
     </Transition>
-  </BTeleport>
+  </ConditionalTeleport>
 </template>
 
 <script setup lang="ts">
@@ -121,7 +121,7 @@ import {useSafeScrollLock} from '../../composables/useSafeScrollLock'
 import {isEmptySlot} from '../../utils/dom'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useModalManager} from '../../composables/useModalManager'
-import BTeleport from '../BTeleport.vue'
+import ConditionalTeleport from '../ConditionalTeleport.vue'
 
 defineOptions({
   inheritAttrs: false,
@@ -522,3 +522,4 @@ defineExpose({
   z-index: 1051;
 }
 </style>
+../ConditionalTeleport.vue
