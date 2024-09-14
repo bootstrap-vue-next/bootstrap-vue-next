@@ -1,5 +1,5 @@
 <template>
-  <RenderComponentOrSkip
+  <ConditionalWrapper
     ref="wrapper"
     :skip="inInputGroup || props.skipWrapper"
     :class="computedClasses"
@@ -41,7 +41,10 @@
         </slot>
       </span>
     </BButton>
-    <Teleport :to="props.teleportTo" :disabled="!props.teleportTo || props.teleportDisabled">
+    <ConditionalTeleport
+      :to="props.teleportTo"
+      :disabled="!props.teleportTo || props.teleportDisabled"
+    >
       <ul
         v-if="!props.lazy || modelValue"
         v-show="props.lazy || modelValue"
@@ -55,8 +58,8 @@
       >
         <slot :hide="hide" :show="show" />
       </ul>
-    </Teleport>
-  </RenderComponentOrSkip>
+    </ConditionalTeleport>
+  </ConditionalWrapper>
 </template>
 
 <script setup lang="ts">
@@ -78,7 +81,8 @@ import {useId} from '../../composables/useId'
 import type {BDropdownProps} from '../../types/ComponentProps'
 import {BvTriggerableEvent} from '../../utils'
 import BButton from '../BButton/BButton.vue'
-import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
+import ConditionalWrapper from '../ConditionalWrapper.vue'
+import ConditionalTeleport from '../ConditionalTeleport.vue'
 import {isBoundary, isRootBoundary, resolveFloatingPlacement} from '../../utils/floatingUi'
 import {dropdownInjectionKey, inputGroupKey} from '../../utils/keys'
 

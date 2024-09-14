@@ -16,19 +16,17 @@
 
 ## [0.24.13](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.12...bootstrapvuenext-v0.24.13) (2024-09-11)
 
-
 ### Features
 
-* **BAlert:** add noResumeOnHoverLeave prop ([69316a5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69316a565f39f0b17932dcf6691a287f0ce4ed9d))
-* **BCarousel:** add click:prev and click:next events ([228926e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/228926e90d538e7087ad3693733e9f41e494721d))
-* **BToast:** add noResumeOnHoverLeave prop ([69316a5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69316a565f39f0b17932dcf6691a287f0ce4ed9d))
-* namespace out package - bootstrap-vue-next/directives bootstrap-vue-next/components etc ([69316a5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69316a565f39f0b17932dcf6691a287f0ce4ed9d))
-* use vues useId fn ([69316a5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69316a565f39f0b17932dcf6691a287f0ce4ed9d))
-
+- **BAlert:** add noResumeOnHoverLeave prop ([69316a5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69316a565f39f0b17932dcf6691a287f0ce4ed9d))
+- **BCarousel:** add click:prev and click:next events ([228926e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/228926e90d538e7087ad3693733e9f41e494721d))
+- **BToast:** add noResumeOnHoverLeave prop ([69316a5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69316a565f39f0b17932dcf6691a287f0ce4ed9d))
+- namespace out package - bootstrap-vue-next/directives bootstrap-vue-next/components etc ([69316a5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69316a565f39f0b17932dcf6691a287f0ce4ed9d))
+- use vues useId fn ([69316a5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69316a565f39f0b17932dcf6691a287f0ce4ed9d))
 
 ### Bug Fixes
 
-* **BTabs:** fix recursion on titleLinkAttrs ([#2169](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2169)) ([b607508](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b607508604b22def50028a264ce3d9b0890331ff))
+- **BTabs:** fix recursion on titleLinkAttrs ([#2169](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2169)) ([b607508](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b607508604b22def50028a264ce3d9b0890331ff))
 
 ## [0.24.12](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.11...bootstrapvuenext-v0.24.12) (2024-09-04)
 
