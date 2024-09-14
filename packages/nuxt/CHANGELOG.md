@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.24.16](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.24.15...nuxt-v0.24.16) (2024-09-14)
+
+
+### Bug Fixes
+
+* change renderorskip to wrapper, add our own teleport logic. ([#2162](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2162)) ([8c0acbd](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8c0acbd2ca957be27dd618bb7e33b7ff943973be))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.24.16
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.24.16
+
 ## [0.24.15](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.24.14...nuxt-v0.24.15) (2024-09-12)
 
 

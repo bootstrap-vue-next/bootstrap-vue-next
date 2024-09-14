@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.24.16](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.15...bootstrapvuenext-v0.24.16) (2024-09-14)
+
+
+### Features
+
+* **BCarousel:** add noAnimation prop ([#2194](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2194)) ([ff2a1f1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ff2a1f1634f52bd3952684b76bdc6f4cb8fea58e))
+
+
+### Bug Fixes
+
+* **BTable:** Type check failed for prop tbodyTrClass fixes [#2197](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2197) ([#2198](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2198)) ([1100a75](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1100a759477734f8ec2f8c3d15890b3ea8c318c9))
+* change renderorskip to wrapper, add our own teleport logic. ([#2162](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2162)) ([8c0acbd](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8c0acbd2ca957be27dd618bb7e33b7ff943973be))
+* **resolver:** resolver path for BCloseButton ([173a838](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/173a83816bee87bec6b2f18121775180151cd9e5))
+
 ## [0.24.15](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.14...bootstrapvuenext-v0.24.15) (2024-09-12)
 
 
