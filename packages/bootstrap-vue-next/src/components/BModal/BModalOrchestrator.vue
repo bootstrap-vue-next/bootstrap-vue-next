@@ -56,4 +56,3 @@ defineExpose({
   ...tools,
 })
 </script>
-../ConditionalTeleport.vue

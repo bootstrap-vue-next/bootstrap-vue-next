@@ -83,4 +83,3 @@ I think it's because it's "moving", but I don't know where it's moving to
   position: fixed;
 }
 </style>
-../ConditionalTeleport.vue
