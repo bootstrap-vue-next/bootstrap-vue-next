@@ -108,7 +108,6 @@ export const componentsWithExternalPath = {
   BThead: '/components/BTable',
   BTfoot: '/components/BTable',
   BTr: '/components/BTable',
-  BTransition: '/components/BTransition.vue',
   BPopoverOrchestrator: '/components/BPopover',
   BTooltipOrchestrator: '/components/BTooltip',
 } as const satisfies Record<ComponentType, string>
