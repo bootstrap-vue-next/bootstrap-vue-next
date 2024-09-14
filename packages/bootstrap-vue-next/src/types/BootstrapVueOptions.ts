@@ -19,7 +19,7 @@ export const componentsWithExternalPath = {
   BButton: '/components/BButton',
   BButtonGroup: '/components/BButton',
   BButtonToolbar: '/components/BButton',
-  BCloseButton: '/components/BCloseButton',
+  BCloseButton: '/components/BButton',
   BCard: '/components/BCard',
   BCardBody: '/components/BCard',
   BCardFooter: '/components/BCard',
