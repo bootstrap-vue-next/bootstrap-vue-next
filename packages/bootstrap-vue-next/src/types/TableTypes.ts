@@ -38,7 +38,7 @@ export type TableFieldFormatter<T> = (value: unknown, key: string, item: T) => s
 export type TableRowType = 'row' | 'row-details' | 'row-top' | 'row-bottom' | 'table-busy'
 export type TableRowThead = 'top' | 'bottom'
 
-export type TableStrictClassValue = unknown
+export type TableStrictClassValue = string | unknown[] | Record<string, boolean>
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TableField<T = any> = {
