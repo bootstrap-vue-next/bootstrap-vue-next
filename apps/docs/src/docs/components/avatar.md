@@ -232,27 +232,28 @@ Use the `variant` prop to specify one of Bootstrap theme variant colors. The def
   </template>
 </HighlightCard>
 
-When displaying text inside the avatar, text colors are calculated based on the `variant` prop. The result is either `light` or `dark`. You can override the calculated text color by manually specifying the `bg-variant` and `text-variant` props. In order to do so, you must override the default for the variant prop by
-setting it to null - `:variant='null'`
+When displaying text inside the avatar, text colors are calculated based on the `variant` prop. The result is either `light` or `dark`. You can override the calculated text color by manually specifying the `bg-variant` and `text-variant` props. Note that
+`bg-variant` and `text-variant` take precedence over `variant`. See the
+[Color Variant Reference](/docs/reference/color-variants#variant-interactions) for details.
 
 <HighlightCard>
   <div class="d-flex" style="column-gap: 1%;">
-    <BAvatar :variant="null" bg-variant="primary" text="P" />
-    <BAvatar :variant="null" bg-variant="primary" text-variant="info" text="P" />
-    <BAvatar :variant="null" bg-variant="secondary" text="A" />
-    <BAvatar :variant="null" bg-variant="secondary" text-variant="info" text="A" />
-    <BAvatar :variant="null" bg-variant="warning" text="A" />
-    <BAvatar :variant="null" bg-variant="warning" text-variant="light" text="A" />
+    <BAvatar bg-variant="primary" text="P" />
+    <BAvatar bg-variant="primary" text-variant="info" text="P" />
+    <BAvatar bg-variant="secondary" text="A" />
+    <BAvatar bg-variant="secondary" text-variant="info" text="A" />
+    <BAvatar bg-variant="warning" text="A" />
+    <BAvatar bg-variant="warning" text-variant="light" text="A" />
   </div>
   <template #html>
 
 ```vue-html
-<BAvatar :variant="null" bg-variant="primary" text="P" />
-<BAvatar :variant="null" bg-variant="primary" text-variant="info" text="P" />
-<BAvatar :variant="null" bg-variant="secondary" text="A" />
-<BAvatar :variant="null" bg-variant="secondary" text-variant="info" text="A" />
-<BAvatar :variant="null" bg-variant="warning" text="A" />
-<BAvatar :variant="null" bg-variant="warning" text-variant="light" text="A" />
+<BAvatar bg-variant="primary" text="P" />
+<BAvatar bg-variant="primary" text-variant="info" text="P" />
+<BAvatar bg-variant="secondary" text="A" />
+<BAvatar bg-variant="secondary" text-variant="info" text="A" />
+<BAvatar bg-variant="warning" text="A" />
+<BAvatar bg-variant="warning" text-variant="light" text="A" />
 ```
 
   </template>

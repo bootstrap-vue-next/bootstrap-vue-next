@@ -110,17 +110,13 @@ These variants are used by components (such as `BCard`, `BModal`, etc.) that pro
 
 ## Variant Interactions
 
-The `variant` prop takes precedence over `bg-variant` and `text-variant` props. In general, you should set
-**either** `variant` **or** `bg-variant` and `text-variant`, but not a combination of `variant` with
-the other two as they will be ignored.
+The `bg-variant` and `text-variant` props take precedence over the `variant` prop. It is more
+straightforward to set **either** `variant` **or** `bg-variant` and `text-variant`, but not a
+combination of `variant` with the other two. But the more specific props effectively override
+the `text` or `bg` portion of the `variant` prop, so an alternative is to use the `variant`
+prop and then override the `text` or `bg` as needed.
 
-The exception to the above is that the components [`<BAvatar>`](/docs/components/avatar),
-[`<BBadge>`](/docs/components/badge), and [`<BButton>`](/docs/components/button) specify defaults for
-their `variant` props, which overrided the values of the `bg-vairaint` and `text-variant` props even
-if they are set explicitly. To get around this behavior, manually set `:variant='null'` and then your
-`bg-variant` and `text-variant` props will be respected.
-
-<<< DEMO ./demo/VariantInteractions.vue#templage{vue-html}
+<<< DEMO ./demo/VariantInteractions.vue#template{vue-html}
 
 ## Component specific variants
 

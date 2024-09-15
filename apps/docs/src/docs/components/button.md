@@ -178,8 +178,9 @@ padding and size of a button.
 **Tip:** remove the hover underline from a link variant button by setting `underline-opacity="0"`.
 
 ::: warning Interactions between Variant props
-`BButton` implements `bg-variant` and `text-variant` to provide finer control of colors, but there
-are non-intutive interactions between these props. See the [Color Variant Reference](/docs/reference/color-variants#variant-interactions) for details.
+`BButton` implements `bg-variant` and `text-variant` to provide finer control of colors, they take
+precedence over the `variant` prop. See the
+[Color Variant Reference](/docs/reference/color-variants#variant-interactions) for details.
 :::
 
 ## Block level buttons

@@ -152,8 +152,9 @@ Using color to add meaning only provides a visual indication, which will not be 
 <div class="mt-2"></div>
 
 ::: warning Interactions between Variant props
-`BBadge` implements `bg-variant` and `text-variant` to provide finer control of colors, but there
-are non-intutive interactions between these props. See the [Color Variant Reference](/docs/reference/color-variants#variant-interactions) for details.
+`BBadge` implements `bg-variant` and `text-variant` to provide finer control of colors, they take
+precedence over the `variant` prop. See the
+[Color Variant Reference](/docs/reference/color-variants#variant-interactions) for details.
 :::
 
 ## Pill badges
