@@ -1,4 +1,4 @@
-<ComposableHeader path="useModalController.ts" title="useModalController" />
+<ComposableHeader path="useModalController/index.ts" title="useModalController" />
 
 <ContentsSidebar>
 

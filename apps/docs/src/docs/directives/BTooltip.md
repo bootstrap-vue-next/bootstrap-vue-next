@@ -1,4 +1,4 @@
-<DirectiveHeader path="BTooltip.ts" title="BTooltip" />
+<DirectiveHeader path="BTooltip/index.ts" title="BTooltip" />
 
 <ContentsSidebar>
 

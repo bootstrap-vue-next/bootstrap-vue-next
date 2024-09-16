@@ -1,4 +1,4 @@
-<DirectiveHeader path="BPopover.ts" title="Docs to be made" />
+<DirectiveHeader path="BPopover/index.ts" title="Docs to be made" />
 
 <script setup lang="ts">
 import DirectiveHeader from './DirectiveHeader.vue'
