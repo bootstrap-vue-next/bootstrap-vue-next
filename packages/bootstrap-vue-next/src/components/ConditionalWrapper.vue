@@ -3,7 +3,7 @@ import {defineComponent, h, type SlotsType} from 'vue'
 
 export default defineComponent({
   name: 'ConditionalWrapper',
-  // inheritAttrs: false,
+  inheritAttrs: false,
   slots: Object as SlotsType<{
     default?: Record<string, never>
   }>,
