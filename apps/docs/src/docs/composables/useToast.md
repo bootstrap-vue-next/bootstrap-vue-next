@@ -1,4 +1,4 @@
-<ComposableHeader path="useToast.ts" title="useToast" />
+<ComposableHeader path="useToast/index.ts" title="useToast" />
 
 <ContentsSidebar>
 

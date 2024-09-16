@@ -1,4 +1,4 @@
-<ComposableHeader path="useBreadcrumb.ts" title="useBreadcrumb" />
+<ComposableHeader path="useBreadcrumb/index.ts" title="useBreadcrumb" />
 
 <ContentsSidebar>
 

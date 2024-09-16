@@ -251,6 +251,7 @@ export default {
     },
     {
       component: 'BCardImg',
+      sourcePath: '/BCard/BCardImg.vue',
       props: {
         '': {
           placement: {

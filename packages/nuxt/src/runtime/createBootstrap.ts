@@ -1,5 +1,5 @@
-import {createBootstrap} from 'bootstrap-vue-next/plugins'
-import {defineNuxtPlugin, useId, useRuntimeConfig} from '#imports'
+import {createBootstrap} from 'bootstrap-vue-next/plugins/createBootstrap'
+import {defineNuxtPlugin, useRuntimeConfig} from '#imports'
 
 export default defineNuxtPlugin((nuxtApp) => {
   // @ts-ignore
