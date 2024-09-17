@@ -1,5 +1,5 @@
 <template>
-  <RenderComponentOrSkip :skip="isButtonGroup" :class="computedClasses">
+  <ConditionalWrapper :skip="isButtonGroup" :class="computedClasses">
     <input
       :id="computedId"
       v-bind="$attrs"
@@ -19,7 +19,7 @@
     <label v-if="hasDefaultSlot || props.plain === false" :for="computedId" :class="labelClasses">
       <slot />
     </label>
-  </RenderComponentOrSkip>
+  </ConditionalWrapper>
 </template>
 
 <script setup lang="ts">
@@ -28,7 +28,7 @@ import {computed, inject, ref} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses} from '../../composables/useFormCheck'
 import type {BFormRadioProps} from '../../types/ComponentProps'
 import {isEmptySlot} from '../../utils/dom'
-import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
+import ConditionalWrapper from '../ConditionalWrapper.vue'
 import {useDefaults} from '../../composables/useDefaults'
 import type {RadioValue} from '../../types/RadioTypes'
 import {useId} from '../../composables/useId'

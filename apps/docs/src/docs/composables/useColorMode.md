@@ -1,4 +1,4 @@
-<ComposableHeader path="useColorMode.ts" title="useColorMode" />
+<ComposableHeader path="useColorMode/index.ts" title="useColorMode" />
 
 <ContentsSidebar>
 

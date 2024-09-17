@@ -34,6 +34,7 @@
           :key="i"
           ref="slideValues"
           :class="{active: i === modelValue && isTransitioning === false}"
+          :style="props.noAnimation && {transition: 'none'}"
         />
       </TransitionGroup>
     </div>
@@ -76,6 +77,7 @@ const _props = withDefaults(defineProps<Omit<BCarouselProps, 'modelValue'>>(), {
   indicatorsButtonLabel: 'Slide',
   interval: 5000,
   keyboard: true,
+  noAnimation: false,
   noHoverPause: false,
   noTouch: false,
   noWrap: false,

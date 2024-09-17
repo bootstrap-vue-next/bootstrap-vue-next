@@ -114,7 +114,7 @@ export default {
     },
     {
       component: 'BCloseButton',
-      sourcePath: '/BCloseButton/BCloseButton.vue',
+      sourcePath: '/BButton/BCloseButton.vue',
       props: {
         '': {
           type: {

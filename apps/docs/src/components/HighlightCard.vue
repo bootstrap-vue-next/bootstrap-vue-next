@@ -1,6 +1,6 @@
 <template>
   <BCard no-body class="mb-5">
-    <BCardBody>
+    <BCardBody v-if="$slots.default">
       <slot />
     </BCardBody>
     <template v-if="$slots.html">

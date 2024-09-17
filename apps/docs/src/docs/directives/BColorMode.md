@@ -1,4 +1,4 @@
-<DirectiveHeader path="BColorMode.ts" title="BColorMode" />
+<DirectiveHeader path="BColorMode/index.ts" title="BColorMode" />
 
 <ContentsSidebar>
 

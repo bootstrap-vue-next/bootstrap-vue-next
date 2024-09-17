@@ -65,16 +65,16 @@ describe('useColorVariantClasses blackbox test', () => {
     })
   })
 
-  it('value returns text-bg-{type} when everything is active, but prop variant takes priority over all', () => {
+  it('variat props are independent', () => {
     const backgroundVariant = useColorVariantClasses(() => ({
       bgVariant: 'danger',
-      textVariant: 'danger',
-      variant: 'danger',
+      textVariant: 'info',
+      variant: 'success',
     }))
     expect(backgroundVariant.value).toEqual({
-      'text-bg-danger': true,
-      'text-danger': false,
-      'bg-danger': false,
+      'text-bg-success': true,
+      'text-info': true,
+      'bg-danger': true,
     })
   })
 
@@ -95,8 +95,8 @@ describe('useColorVariantClasses blackbox test', () => {
     react.variant = 'danger'
     expect(backgroundVariant.value).toEqual({
       'text-bg-danger': true,
-      'text-info': false,
-      'bg-info': false,
+      'text-info': true,
+      'bg-info': true,
     })
   })
 })

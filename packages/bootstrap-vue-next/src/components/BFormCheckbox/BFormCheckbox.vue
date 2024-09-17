@@ -1,5 +1,5 @@
 <template>
-  <RenderComponentOrSkip
+  <ConditionalWrapper
     :skip="isButtonGroup"
     v-bind="props.wrapperAttrs"
     :class="computedWrapperClasses"
@@ -26,7 +26,7 @@
     <label v-if="hasDefaultSlot || props.plain === false" :for="computedId" :class="labelClasses">
       <slot />
     </label>
-  </RenderComponentOrSkip>
+  </ConditionalWrapper>
 </template>
 
 <script setup lang="ts">
@@ -35,7 +35,7 @@ import {computed, inject, ref, useAttrs} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses} from '../../composables/useFormCheck'
 import type {BFormCheckboxProps} from '../../types/ComponentProps'
 import {checkboxGroupKey} from '../../utils/keys'
-import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
+import ConditionalWrapper from '../ConditionalWrapper.vue'
 import {isEmptySlot} from '../../utils/dom'
 import {useDefaults} from '../../composables/useDefaults'
 import type {CheckboxValue} from '../../types/CheckboxTypes'

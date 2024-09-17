@@ -3,7 +3,7 @@ import type {RadiusElement, RadiusElementExtendables} from '../types/RadiusEleme
 
 export const useRadiusElementClasses = (obj: MaybeRefOrGetter<RadiusElementExtendables>) => {
   const resolveRadiusElement = (
-    value: boolean | RadiusElement,
+    value: true | RadiusElement,
     str: 'top' | 'bottom' | 'start' | 'end' | null
   ): string => {
     const strValue = str === null ? '' : `-${str}`
@@ -33,14 +33,14 @@ export const useRadiusElementClasses = (obj: MaybeRefOrGetter<RadiusElementExten
     const props = toValue(obj)
 
     return {
-      [`${resolveRadiusElement(props.rounded as boolean | RadiusElement, null)}`]: !!props.rounded,
-      [`${resolveRadiusElement(props.roundedTop as boolean | RadiusElement, 'top')}`]:
+      [`${resolveRadiusElement(props.rounded as true | RadiusElement, null)}`]: !!props.rounded,
+      [`${resolveRadiusElement(props.roundedTop as true | RadiusElement, 'top')}`]:
         !!props.roundedTop,
-      [`${resolveRadiusElement(props.roundedBottom as boolean | RadiusElement, 'bottom')}`]:
+      [`${resolveRadiusElement(props.roundedBottom as true | RadiusElement, 'bottom')}`]:
         !!props.roundedBottom,
-      [`${resolveRadiusElement(props.roundedStart as boolean | RadiusElement, 'start')}`]:
+      [`${resolveRadiusElement(props.roundedStart as true | RadiusElement, 'start')}`]:
         !!props.roundedStart,
-      [`${resolveRadiusElement(props.roundedEnd as boolean | RadiusElement, 'end')}`]:
+      [`${resolveRadiusElement(props.roundedEnd as true | RadiusElement, 'end')}`]:
         !!props.roundedEnd,
     }
   })

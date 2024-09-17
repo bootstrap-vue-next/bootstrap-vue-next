@@ -1,23 +1,85 @@
 # Changelog
 
-## [0.24.13](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.24.12...nuxt-v0.24.13) (2024-09-11)
+## [0.24.17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.24.16...nuxt-v0.24.17) (2024-09-16)
 
 
-### Features
+### Miscellaneous Chores
 
-* **BAlert:** add noResumeOnHoverLeave prop ([69316a5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69316a565f39f0b17932dcf6691a287f0ce4ed9d))
-* **BToast:** add noResumeOnHoverLeave prop ([69316a5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69316a565f39f0b17932dcf6691a287f0ce4ed9d))
-* namespace out package - bootstrap-vue-next/directives bootstrap-vue-next/components etc ([69316a5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69316a565f39f0b17932dcf6691a287f0ce4ed9d))
-* use vues useId fn ([69316a5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69316a565f39f0b17932dcf6691a287f0ce4ed9d))
+* **nuxt:** Synchronize main group versions
 
 
 ### Dependencies
 
 * The following workspace dependencies were updated
   * devDependencies
-    * bootstrap-vue-next bumped to 0.24.13
+    * bootstrap-vue-next bumped to 0.24.17
   * peerDependencies
-    * bootstrap-vue-next bumped to 0.24.13
+    * bootstrap-vue-next bumped to 0.24.17
+
+## [0.24.16](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.24.15...nuxt-v0.24.16) (2024-09-14)
+
+
+### Bug Fixes
+
+* change renderorskip to wrapper, add our own teleport logic. ([#2162](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2162)) ([8c0acbd](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8c0acbd2ca957be27dd618bb7e33b7ff943973be))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.24.16
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.24.16
+
+## [0.24.15](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.24.14...nuxt-v0.24.15) (2024-09-12)
+
+
+### Miscellaneous Chores
+
+* **nuxt:** Synchronize main group versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.24.15
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.24.15
+
+## [0.24.14](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.24.13...nuxt-v0.24.14) (2024-09-12)
+
+
+### Miscellaneous Chores
+
+* **nuxt:** Synchronize main group versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.24.14
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.24.14
+
+## [0.24.13](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.24.12...nuxt-v0.24.13) (2024-09-11)
+
+### Features
+
+- **BAlert:** add noResumeOnHoverLeave prop ([69316a5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69316a565f39f0b17932dcf6691a287f0ce4ed9d))
+- **BToast:** add noResumeOnHoverLeave prop ([69316a5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69316a565f39f0b17932dcf6691a287f0ce4ed9d))
+- namespace out package - bootstrap-vue-next/directives bootstrap-vue-next/components etc ([69316a5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69316a565f39f0b17932dcf6691a287f0ce4ed9d))
+- use vues useId fn ([69316a5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69316a565f39f0b17932dcf6691a287f0ce4ed9d))
+
+### Dependencies
+
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.24.13
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.24.13
 
 ## [0.24.12](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.24.11...nuxt-v0.24.12) (2024-09-04)
 

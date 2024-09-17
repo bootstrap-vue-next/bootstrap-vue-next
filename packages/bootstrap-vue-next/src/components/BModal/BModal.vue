@@ -1,5 +1,5 @@
 <template>
-  <Teleport :to="props.teleportTo" :disabled="props.teleportDisabled">
+  <ConditionalTeleport :to="props.teleportTo" :disabled="props.teleportDisabled">
     <Transition
       v-bind="{...fadeTransitionProps, ...props.transProps, enterToClass: 'show'}"
       :appear="modelValue"
@@ -91,7 +91,7 @@
             </div>
           </div>
         </div>
-        <slot v-if="!props.hideBackdrop" name="backdrop">
+        <slot v-if="!props.hideBackdrop" name="backdrop" v-bind="sharedSlots">
           <div class="modal-backdrop fade show" @click="hideFn('backdrop')" />
         </slot>
         <div
@@ -103,7 +103,7 @@
         />
       </div>
     </Transition>
-  </Teleport>
+  </ConditionalTeleport>
 </template>
 
 <script setup lang="ts">
@@ -121,6 +121,7 @@ import {useSafeScrollLock} from '../../composables/useSafeScrollLock'
 import {isEmptySlot} from '../../utils/dom'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useModalManager} from '../../composables/useModalManager'
+import ConditionalTeleport from '../ConditionalTeleport.vue'
 
 defineOptions({
   inheritAttrs: false,
@@ -211,12 +212,13 @@ type SharedSlotsData = {
   close: () => void
   hide: (trigger?: string) => void
   ok: () => void
+  active: boolean
   visible: boolean
 }
 
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'backdrop'?: (props: Record<string, never>) => any
+  'backdrop'?: (props: SharedSlotsData) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'cancel'?: (props: SharedSlotsData) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -500,6 +502,7 @@ const sharedSlots = computed<SharedSlotsData>(() => ({
   ok: () => {
     hideFn('ok')
   },
+  active: isActive.value,
   visible: modelValue.value,
 }))
 

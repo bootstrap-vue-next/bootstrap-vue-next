@@ -1,5 +1,5 @@
 <template>
-  <Teleport :to="props.teleportTo" :disabled="props.teleportDisabled">
+  <ConditionalTeleport :to="props.teleportTo" :disabled="props.teleportDisabled">
     <div id="__BVID__toaster-container" v-bind="$attrs">
       <div
         v-for="(value, key) in positionClasses"
@@ -24,7 +24,7 @@
         </TransitionGroup>
       </div>
     </div>
-  </Teleport>
+  </ConditionalTeleport>
 </template>
 
 <script setup lang="ts">
@@ -33,6 +33,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import {positionClasses} from '../../utils/positionClasses'
 import type {BToastOrchestratorProps} from '../../types/ComponentProps'
 import BToast from './BToast.vue'
+import ConditionalTeleport from '../ConditionalTeleport.vue'
 import {useToast} from '../../composables/useToast'
 
 defineOptions({

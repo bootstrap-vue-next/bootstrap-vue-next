@@ -1,20 +1,53 @@
 # Changelog
 
-## [0.24.13](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.12...bootstrapvuenext-v0.24.13) (2024-09-11)
-
-
-### Features
-
-* **BAlert:** add noResumeOnHoverLeave prop ([69316a5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69316a565f39f0b17932dcf6691a287f0ce4ed9d))
-* **BCarousel:** add click:prev and click:next events ([228926e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/228926e90d538e7087ad3693733e9f41e494721d))
-* **BToast:** add noResumeOnHoverLeave prop ([69316a5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69316a565f39f0b17932dcf6691a287f0ce4ed9d))
-* namespace out package - bootstrap-vue-next/directives bootstrap-vue-next/components etc ([69316a5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69316a565f39f0b17932dcf6691a287f0ce4ed9d))
-* use vues useId fn ([69316a5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69316a565f39f0b17932dcf6691a287f0ce4ed9d))
+## [0.24.17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.16...bootstrapvuenext-v0.24.17) (2024-09-16)
 
 
 ### Bug Fixes
 
-* **BTabs:** fix recursion on titleLinkAttrs ([#2169](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2169)) ([b607508](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b607508604b22def50028a264ce3d9b0890331ff))
+* **ConditionalWrapper:** don't inherit attrs ([#2205](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2205)) ([6db9e53](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6db9e5344510e642bd1b235bb25bce49d2bc30a0))
+
+## [0.24.16](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.15...bootstrapvuenext-v0.24.16) (2024-09-14)
+
+
+### Features
+
+* **BCarousel:** add noAnimation prop ([#2194](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2194)) ([ff2a1f1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ff2a1f1634f52bd3952684b76bdc6f4cb8fea58e))
+
+
+### Bug Fixes
+
+* **BTable:** Type check failed for prop tbodyTrClass fixes [#2197](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2197) ([#2198](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2198)) ([1100a75](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1100a759477734f8ec2f8c3d15890b3ea8c318c9))
+* change renderorskip to wrapper, add our own teleport logic. ([#2162](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2162)) ([8c0acbd](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8c0acbd2ca957be27dd618bb7e33b7ff943973be))
+* **resolver:** resolver path for BCloseButton ([173a838](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/173a83816bee87bec6b2f18121775180151cd9e5))
+
+## [0.24.15](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.14...bootstrapvuenext-v0.24.15) (2024-09-12)
+
+
+### Bug Fixes
+
+* **BNavItem:** pass prop exactActiveClass to router component ([#2188](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2188)) ([f0b49fe](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f0b49fe3410bea6cc5a53d2f66ed2a6413718468))
+
+## [0.24.14](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.13...bootstrapvuenext-v0.24.14) (2024-09-12)
+
+
+### Bug Fixes
+
+* improper import path ([#2189](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2189)) ([bb40e21](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bb40e21aa778bce05e9d89111d4b580172312317))
+
+## [0.24.13](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.12...bootstrapvuenext-v0.24.13) (2024-09-11)
+
+### Features
+
+- **BAlert:** add noResumeOnHoverLeave prop ([69316a5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69316a565f39f0b17932dcf6691a287f0ce4ed9d))
+- **BCarousel:** add click:prev and click:next events ([228926e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/228926e90d538e7087ad3693733e9f41e494721d))
+- **BToast:** add noResumeOnHoverLeave prop ([69316a5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69316a565f39f0b17932dcf6691a287f0ce4ed9d))
+- namespace out package - bootstrap-vue-next/directives bootstrap-vue-next/components etc ([69316a5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69316a565f39f0b17932dcf6691a287f0ce4ed9d))
+- use vues useId fn ([69316a5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69316a565f39f0b17932dcf6691a287f0ce4ed9d))
+
+### Bug Fixes
+
+- **BTabs:** fix recursion on titleLinkAttrs ([#2169](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2169)) ([b607508](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b607508604b22def50028a264ce3d9b0890331ff))
 
 ## [0.24.12](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.11...bootstrapvuenext-v0.24.12) (2024-09-04)
 

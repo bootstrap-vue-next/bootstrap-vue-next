@@ -29,8 +29,7 @@ export default defineConfig({
     plugins: [
       Icons(),
       Components({
-        dirs: ['components', 'docs/components/demo'],
-        extensions: ['vue'],
+        globs: ['components/*.vue', 'docs/**/demo/*.vue'],
         dts: true,
         include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
         resolvers: [BootstrapVueNextResolver()],

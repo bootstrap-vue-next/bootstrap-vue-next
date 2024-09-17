@@ -1,5 +1,5 @@
 <template>
-  <RenderComponentOrSkip
+  <ConditionalWrapper
     :tag="props.wrapTag"
     class="b-overlay-wrap position-relative"
     :aria-busy="computedAriaBusy"
@@ -30,7 +30,7 @@
         </div>
       </component>
     </BTransition>
-  </RenderComponentOrSkip>
+  </ConditionalWrapper>
 </template>
 
 <script setup lang="ts">
@@ -39,7 +39,7 @@ import type {BOverlayProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import BTransition from '../BTransition.vue'
 import BSpinner from '../BSpinner/BSpinner.vue'
-import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
+import ConditionalWrapper from '../ConditionalWrapper.vue'
 import {useRadiusElementClasses} from '../../composables/useRadiusElementClasses'
 
 const _props = withDefaults(defineProps<BOverlayProps>(), {

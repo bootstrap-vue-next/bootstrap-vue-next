@@ -59,7 +59,7 @@ export default {
     },
     {
       component: 'BAccordionItem',
-      sourcePath: '/BAccordionItem/BAccordionItem.vue',
+      sourcePath: '/BAccordion/BAccordionItem.vue',
       props: {
         '': {
           bodyAttrs: {

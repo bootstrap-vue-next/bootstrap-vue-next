@@ -1,5 +1,8 @@
 <template>
-  <Teleport :to="props.teleportTo" :disabled="props.teleportDisabled || isOpenByBreakpoint">
+  <ConditionalTeleport
+    :to="props.teleportTo"
+    :disabled="props.teleportDisabled || isOpenByBreakpoint"
+  >
     <Transition
       v-bind="transitionProps"
       @before-enter="OnBeforeEnter"
@@ -60,7 +63,7 @@
     <slot v-if="showBackdrop" name="backdrop">
       <div class="offcanvas-backdrop fade show" @click="hide('backdrop')" />
     </slot>
-  </Teleport>
+  </ConditionalTeleport>
 </template>
 
 <script setup lang="ts">
@@ -79,6 +82,7 @@ import type {BOffcanvasProps} from '../../types/ComponentProps'
 import {BvTriggerableEvent} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
+import ConditionalTeleport from '../ConditionalTeleport.vue'
 import {useSafeScrollLock} from '../../composables/useSafeScrollLock'
 import {isEmptySlot} from '../../utils/dom'
 import type {Placement} from '../../types/Alignment'
