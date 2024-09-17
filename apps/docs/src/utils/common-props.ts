@@ -363,7 +363,8 @@ export const commonProps = () =>
     variant: {
       type: 'ColorVariant | null',
       default: null,
-      description: 'Applies one of the Bootstrap theme color variants to the component',
+      description:
+        'Applies one of the Bootstrap theme color variants to the component. When implemented `bg-variant` and `text-variant` will take precedence',
     },
     noHoverPause: {
       type: 'boolean',

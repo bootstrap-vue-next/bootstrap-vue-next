@@ -12,7 +12,7 @@ export const useColorVariantClasses = (obj: MaybeRefOrGetter<ColorExtendables>) 
     }
     return {
       [`text-bg-${props.variant}`]: props.variant !== null,
-      [`text-${props.textVariant}`]: props.textVariant !== null && props.variant === null,
-      [`bg-${props.bgVariant}`]: props.bgVariant !== null && props.variant === null,
+      [`text-${props.textVariant}`]: props.textVariant !== null,
+      [`bg-${props.bgVariant}`]: props.bgVariant !== null,
     }
   })
