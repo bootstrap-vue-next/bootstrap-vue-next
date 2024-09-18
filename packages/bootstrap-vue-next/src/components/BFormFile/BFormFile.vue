@@ -20,7 +20,7 @@
     :name="props.name"
     :multiple="props.multiple"
     :disabled="props.disabled"
-    :capture="props.capture"
+    :capture="props.capture || undefined"
     :accept="computedAccept || undefined"
     :required="props.required || undefined"
     :aria-label="props.ariaLabel"
