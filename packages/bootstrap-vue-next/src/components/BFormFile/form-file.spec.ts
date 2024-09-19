@@ -229,7 +229,7 @@ describe('form-file', () => {
         props: {capture: undefined},
       })
       const $input = wrapper.get('input')
-      expect($input.attributes('capture')).toBe('false')
+      expect($input.attributes('capture')).toBe(undefined)
     })
 
     it('input element has set attr accept to empty when prop accept is true', () => {
