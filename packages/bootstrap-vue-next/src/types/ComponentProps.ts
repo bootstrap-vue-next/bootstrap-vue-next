@@ -2,7 +2,14 @@ import type {Boundary, Middleware, Padding, RootBoundary, Strategy} from '@float
 import type {ComponentPublicInstance, TransitionProps} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {LinkTarget} from './LinkTarget'
-import type {ButtonVariant, ColorExtendables, ColorVariant, TextColorVariant} from './ColorTypes'
+import type {
+  BgColorVariant,
+  BorderColorVariant,
+  ButtonVariant,
+  ColorExtendables,
+  ColorVariant,
+  TextColorVariant,
+} from './ColorTypes'
 import type {AttrsValue, ClassValue} from './AnyValuedAttributes'
 import type {CheckboxOptionRaw, CheckboxValue} from './CheckboxTypes'
 import type {Size} from './Size'
@@ -749,7 +756,7 @@ export interface BAvatarProps
     RadiusElementExtendables {
   alt?: string
   badge?: boolean | string
-  badgeBgVariant?: ColorVariant | null
+  badgeBgVariant?: BgColorVariant | null
   badgePlacement?: CombinedPlacement
   badgeTextVariant?: TextColorVariant | null
   badgeVariant?: ColorVariant | null
@@ -825,23 +832,23 @@ export interface BCloseButtonProps {
 
 export interface BCardProps extends ColorExtendables {
   align?: AlignmentTextHorizontal
-  bodyBgVariant?: ColorVariant | null
+  bodyBgVariant?: BgColorVariant | null
   bodyClass?: ClassValue
   bodyTag?: string
   bodyText?: string
   bodyTextVariant?: TextColorVariant | null
-  borderVariant?: ColorVariant | null
+  borderVariant?: BorderColorVariant | null
   footer?: string
-  footerBgVariant?: ColorVariant | null
-  footerBorderVariant?: ColorVariant | null
+  footerBgVariant?: BgColorVariant | null
+  footerBorderVariant?: BorderColorVariant | null
   footerClass?: ClassValue
   footerHtml?: string
   footerTag?: string
   footerTextVariant?: TextColorVariant | null
   footerVariant?: ColorVariant | null
   header?: string
-  headerBgVariant?: ColorVariant | null
-  headerBorderVariant?: ColorVariant | null
+  headerBgVariant?: BgColorVariant | null
+  headerBorderVariant?: BorderColorVariant | null
   headerClass?: ClassValue
   headerHtml?: string
   headerTag?: string
@@ -976,7 +983,7 @@ export interface BFormProps {
 export interface BTableSimpleProps {
   bordered?: boolean
   borderless?: boolean
-  borderVariant?: ColorVariant | null
+  borderVariant?: BorderColorVariant | null
   captionTop?: boolean
   dark?: boolean
   fixed?: boolean
@@ -1242,7 +1249,7 @@ export interface BTooltipProps extends Omit<BPopoverProps, 'tooltip'> {
 }
 
 export interface BCardHeadFootProps extends ColorExtendables {
-  borderVariant?: ColorVariant | null
+  borderVariant?: BorderColorVariant | null
   html?: string
   tag?: string
   text?: string
@@ -1253,7 +1260,7 @@ export interface BModalProps extends TeleporterProps {
   autofocusButton?: 'ok' | 'cancel' | 'close'
   body?: string
   bodyAttrs?: Readonly<AttrsValue>
-  bodyBgVariant?: ColorVariant | null
+  bodyBgVariant?: BgColorVariant | null
   bodyClass?: ClassValue
   bodyScrolling?: boolean
   bodyTextVariant?: TextColorVariant | null
@@ -1266,14 +1273,14 @@ export interface BModalProps extends TeleporterProps {
   centered?: boolean
   contentClass?: ClassValue
   dialogClass?: ClassValue
-  footerBgVariant?: ColorVariant | null
-  footerBorderVariant?: ColorVariant | null
+  footerBgVariant?: BgColorVariant | null
+  footerBorderVariant?: BorderColorVariant | null
   footerClass?: ClassValue
   footerTextVariant?: TextColorVariant | null
   footerVariant?: ColorVariant | null
   fullscreen?: boolean | Breakpoint
-  headerBgVariant?: ColorVariant | null
-  headerBorderVariant?: ColorVariant | null
+  headerBgVariant?: BgColorVariant | null
+  headerBorderVariant?: BorderColorVariant | null
   headerClass?: ClassValue
   headerCloseClass?: ClassValue
   headerCloseLabel?: string

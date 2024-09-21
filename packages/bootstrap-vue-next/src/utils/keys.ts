@@ -5,7 +5,12 @@ import type {Numberish} from '../types/CommonTypes'
 import type {LiteralUnion} from '../types/LiteralUnion'
 import type {Size} from '../types/Size'
 import type {RadiusElement} from '../types/RadiusElement'
-import type {ButtonVariant, ColorVariant, TextColorVariant} from '../types/ColorTypes'
+import type {
+  BgColorVariant,
+  ButtonVariant,
+  ColorVariant,
+  TextColorVariant,
+} from '../types/ColorTypes'
 import type {CheckboxValue} from '../types/CheckboxTypes'
 import type {RadioValue} from '../types/RadioTypes'
 import type {BreadcrumbItemRaw} from '../types/BreadcrumbTypes'
@@ -72,7 +77,7 @@ export const avatarGroupInjectionKey: InjectionKey<{
   roundedStart: Readonly<Ref<RadiusElement | boolean | undefined>>
   roundedEnd: Readonly<Ref<RadiusElement | boolean | undefined>>
   variant: Readonly<Ref<ColorVariant | null>>
-  bgVariant: Readonly<Ref<ColorVariant | null>>
+  bgVariant: Readonly<Ref<BgColorVariant | null>>
   textVariant: Readonly<Ref<TextColorVariant | null>>
 }> = createBvnInjectionKey('avatarGroup')
 
