@@ -37,6 +37,7 @@ export const useActivatedFocusTrap = (
   focusTrapOpts: UseFocusTrapOptions = {
     allowOutsideClick: true,
     fallbackFocus: fallbackFocus.ref.value ?? undefined,
+    escapeDeactivates: false,
   }
 ) => {
   const resolvedIsActive = readonly(toRef(isActive))

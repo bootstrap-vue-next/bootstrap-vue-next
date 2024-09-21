@@ -302,29 +302,16 @@ const generateDetailsItem = (item: TableItem): [object, boolean | undefined] => 
   item,
   item._showDetails,
 ]
-const detailsMap = ref(
-  new WeakMap(
-    props.items.reduce(
-      (acc, el) => {
-        if (isTableItem(el)) {
-          acc.push(generateDetailsItem(el))
-        }
-        return acc
-      },
-      [] as [object, boolean | undefined][]
-    )
-  )
-)
+const detailsMap = ref(new WeakMap<object, boolean | undefined>())
 watch(
   () => props.items,
   (items) => {
     items.forEach((item) => {
       if (!isTableItem(item)) return
-      const detailsItem = generateDetailsItem(item)
-      detailsMap.value.set(detailsItem[0], detailsItem[1])
+      detailsMap.value.set(...generateDetailsItem(item))
     })
   },
-  {deep: true}
+  {deep: true, immediate: true}
 )
 
 const computedTableClasses = computed(() => [
