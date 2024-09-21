@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.24.19](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.18...bootstrapvuenext-v0.24.19) (2024-09-21)
+
+
+### Bug Fixes
+
+* **BFormFile:** remove capture attrs from dom if not defined. ([#2214](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2214)) ([85b38f3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/85b38f35b81600c05b504738096148afad8db713))
+* **nuxt:** make injection keys static strings fixes [#2209](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2209) ([#2218](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2218)) ([5634dc3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5634dc3f733bcd414737d5bb92bd56c83972b194))
+
 ## [0.24.18](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.17...bootstrapvuenext-v0.24.18) (2024-09-17)
 
 
