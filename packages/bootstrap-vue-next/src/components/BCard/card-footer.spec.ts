@@ -1,7 +1,7 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BCardFooter from './BCardFooter.vue'
-import BCardHeadFoot from './BCardHeadFoot.vue'
+import BCardHeadFoot from '../BCardHeadFoot.vue'
 
 describe('card-header', () => {
   enableAutoUnmount(afterEach)

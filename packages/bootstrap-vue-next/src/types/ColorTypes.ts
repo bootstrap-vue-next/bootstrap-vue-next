@@ -42,6 +42,9 @@ export type TextColorVariant = keyof BaseTextColorVariant
 export interface BaseBgColorVariant extends BaseColorVariant, BaseColorVariantEmphasis {}
 export type BgColorVariant = keyof BaseBgColorVariant
 
+export interface BaseBorderColorVariant extends BaseColorVariant, BaseColorVariantSubtle {}
+export type BorderColorVariant = keyof BaseBorderColorVariant
+
 export type ColorExtendables = {
   variant?: ColorVariant | null
   bgVariant?: BgColorVariant | null

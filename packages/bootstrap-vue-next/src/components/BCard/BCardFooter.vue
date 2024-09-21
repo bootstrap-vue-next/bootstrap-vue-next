@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import {useDefaults} from '../../composables/useDefaults'
 import type {BCardHeadFootProps} from '../../types/ComponentProps'
-import BCardHeadFoot from './BCardHeadFoot.vue'
+import BCardHeadFoot from '../BCardHeadFoot.vue'
 
 const _props = withDefaults(defineProps<BCardHeadFootProps>(), {
   borderVariant: undefined,
