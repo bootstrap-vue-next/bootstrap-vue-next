@@ -302,7 +302,7 @@ const generateDetailsItem = (item: TableItem): [object, boolean | undefined] => 
   item,
   item._showDetails,
 ]
-const detailsMap = ref(new WeakMap())
+const detailsMap = ref(new WeakMap<object, boolean | undefined>())
 watch(
   () => props.items,
   (items) => {
