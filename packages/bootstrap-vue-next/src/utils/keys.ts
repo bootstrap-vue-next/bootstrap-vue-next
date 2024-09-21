@@ -132,7 +132,7 @@ export const dropdownInjectionKey: InjectionKey<{
   readonly toggle?: () => void
   visible?: Readonly<Ref<boolean>>
   isNav?: Readonly<Ref<boolean>>
-}> = createBvnInjectionKey('collapse')
+}> = createBvnInjectionKey('dropdown')
 
 export const navbarInjectionKey: InjectionKey<{
   tag?: Readonly<Ref<string>>
@@ -186,11 +186,11 @@ export const tooltipPluginKey: InjectionKey<{
   show: (obj: TooltipOrchestratorShowParam) => symbol
   remove: (self: symbol) => void
   set: (self: symbol, val: Partial<PrivateOrchestratedTooltip>) => void
-}> = createBvnInjectionKey('toastPlugin')
+}> = createBvnInjectionKey('tooltipPlugin')
 
 export const popoverPluginKey: InjectionKey<{
   popovers: Ref<Map<symbol, PopoverOrchestratorMapValue>>
   show: (obj: PopoverOrchestratorShowParam) => symbol
   remove: (self: symbol) => void
   set: (self: symbol, val: Partial<PrivateOrchestratedPopover>) => void
-}> = createBvnInjectionKey('toastPlugin')
+}> = createBvnInjectionKey('popoverPlugin')

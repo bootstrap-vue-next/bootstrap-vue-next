@@ -56,7 +56,7 @@ const _props = withDefaults(defineProps<Omit<BFormFileProps, 'modelValue'>>(), {
   accept: '',
   autofocus: false,
   // eslint-disable-next-line vue/require-valid-default-prop
-  capture: false,
+  capture: undefined,
   directory: false,
   disabled: false,
   form: undefined,
