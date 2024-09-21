@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.24.18](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.17...bootstrapvuenext-v0.24.18) (2024-09-17)
+
+
+### Bug Fixes
+
+* **vBPopover:** fix vue error with floating directives. ([#2208](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2208)) ([e50a5ba](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e50a5ba867ac0ad7b1f71a73a8e76d690d58e686))
+
+## [0.24.17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.16...bootstrapvuenext-v0.24.17) (2024-09-16)
+
+
+### Bug Fixes
+
+* **ConditionalWrapper:** don't inherit attrs ([#2205](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2205)) ([6db9e53](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6db9e5344510e642bd1b235bb25bce49d2bc30a0))
+
 ## [0.24.16](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.15...bootstrapvuenext-v0.24.16) (2024-09-14)
 
 
