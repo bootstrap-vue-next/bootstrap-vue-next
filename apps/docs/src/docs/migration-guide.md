@@ -23,6 +23,8 @@ For instance, there are likely many places where you use `Bootstrap` utility cla
 classes that involve `left` and `right` (or `l` and `r`) to be `start` and `end` (or `s` and `e`). This
 will affect compents such as `BNavBar` in unexpected ways that BSVN has no control over.
 
+Bootstrap-vue-next will commit to breaking changes whenever Bootstrap marks something as "deprecated". These changes may be resolved automatically, or they might necessitate manual action from the library's users.
+
 ## Sync modifier
 
 A number of components in `bootstrap-vue` use `v-bind`'s `.sync` modifier. This modifier has been replaced by properties
