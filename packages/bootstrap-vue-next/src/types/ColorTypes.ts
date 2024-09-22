@@ -29,7 +29,7 @@ export interface BaseButtonVariant extends BaseColorVariant, BaseColorVariantOut
 }
 export type ButtonVariant = keyof BaseButtonVariant
 
-export interface BaseTextColorVariant extends BaseColorVariant, BaseColorVariantSubtle {
+export interface BaseTextColorVariant extends BaseColorVariant, BaseColorVariantEmphasis {
   'white': unknown
   'body': unknown
   'body-secondary': unknown
@@ -39,7 +39,7 @@ export interface BaseTextColorVariant extends BaseColorVariant, BaseColorVariant
 }
 export type TextColorVariant = keyof BaseTextColorVariant
 
-export interface BaseBgColorVariant extends BaseColorVariant, BaseColorVariantEmphasis {}
+export interface BaseBgColorVariant extends BaseColorVariant, BaseColorVariantSubtle {}
 export type BgColorVariant = keyof BaseBgColorVariant
 
 export interface BaseBorderColorVariant extends BaseColorVariant, BaseColorVariantSubtle {}

@@ -156,17 +156,14 @@ const radiusElementClasses = useRadiusElementClasses(() => ({
 const badgeText = computed(() => (props.badge === true ? '' : props.badge))
 const badgeImplicitlyDot = computed(() => !badgeText.value && !hasBadgeSlot.value)
 
-const computedTextVariant = computed(() => parentData?.textVariant.value ?? props.textVariant)
-const computedBgVariant = computed(() => parentData?.bgVariant.value ?? props.bgVariant)
-
-const resolvedBackgroundClasses = useColorVariantClasses(() => ({
-  bgVariant: computedBgVariant.value,
-  textVariant: computedTextVariant.value,
+const colorClasses = useColorVariantClasses(() => ({
+  bgVariant: parentData?.bgVariant.value ?? props.bgVariant,
+  textVariant: parentData?.textVariant.value ?? props.textVariant,
   variant: computedVariant.value,
 }))
 
 const computedClasses = computed(() => [
-  resolvedBackgroundClasses.value,
+  colorClasses.value,
   // Square overwrites all else
   computedSquare.value === true ? undefined : radiusElementClasses.value,
   {

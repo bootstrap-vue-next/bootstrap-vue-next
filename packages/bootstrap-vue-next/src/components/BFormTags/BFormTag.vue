@@ -28,6 +28,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import type {BFormTagProps} from '../../types/ComponentProps'
 import BCloseButton from '../BButton/BCloseButton.vue'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 
 const _props = withDefaults(defineProps<BFormTagProps>(), {
   disabled: false,
@@ -57,9 +58,12 @@ const tagText = computed(
 )
 const taglabelId = computed(() => `${computedId.value}taglabel__`)
 
-const computedClasses = computed(() => ({
-  [`text-bg-${props.variant}`]: props.variant !== null,
-  'rounded-pill': props.pill,
-  'disabled': props.disabled,
-}))
+const colorClasses = useColorVariantClasses(props)
+const computedClasses = computed(() => [
+  colorClasses.value,
+  {
+    'rounded-pill': props.pill,
+    'disabled': props.disabled,
+  },
+])
 </script>

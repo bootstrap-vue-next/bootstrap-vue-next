@@ -15,6 +15,7 @@ import {computed, type StyleValue} from 'vue'
 import type {BTableSimpleProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import {useNumberishToStyle} from '../../composables/useNumberishToStyle'
+import {useColorVariantClasses} from 'src/composables/useColorVariantClasses'
 
 const defaultStickyHeaderHeight = '300px'
 
@@ -46,14 +47,19 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
+const colorClasses = useColorVariantClasses(
+  computed(() => ({
+    borderVariant: props.borderVariant,
+  }))
+)
 const computedClasses = computed(() => [
   props.tableClass,
   'table',
   'b-table',
+  colorClasses.value,
   {
     'table-bordered': props.bordered,
     'table-borderless': props.borderless,
-    [`border-${props.borderVariant}`]: props.borderVariant !== null,
     'caption-top': props.captionTop,
     'table-dark': props.dark,
     'table-hover': props.hover,

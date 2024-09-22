@@ -129,13 +129,11 @@ const slots = defineSlots<{
 const hasHeaderSlot = computed(() => !isEmptySlot(slots.header))
 const hasFooterSlot = computed(() => !isEmptySlot(slots.footer))
 
-const resolvedBackgroundClasses = useColorVariantClasses(props)
-
+const colorClasses = useColorVariantClasses(props)
 const computedClasses = computed(() => [
-  resolvedBackgroundClasses.value,
+  colorClasses.value,
   {
     [`text-${props.align}`]: props.align !== undefined,
-    [`border-${props.borderVariant}`]: props.borderVariant !== null,
     'flex-row': props.imgPlacement === 'start',
     'flex-row-reverse': props.imgPlacement === 'end',
   },

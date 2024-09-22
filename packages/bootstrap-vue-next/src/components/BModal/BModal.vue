@@ -310,46 +310,33 @@ const modalDialogClasses = computed(() => [
   },
 ])
 
-const resolvedBodyBgClasses = useColorVariantClasses(() => ({
+const bodyColorClasses = useColorVariantClasses(() => ({
   bgVariant: props.bodyBgVariant,
   textVariant: props.bodyTextVariant,
   variant: props.bodyVariant,
 }))
+const bodyClasses = computed(() => [props.bodyClass, bodyColorClasses.value])
 
-const bodyClasses = computed(() => [props.bodyClass, resolvedBodyBgClasses.value])
-
-const resolvedHeaderBgClasses = useColorVariantClasses(() => ({
+const headerColorClasses = useColorVariantClasses(() => ({
   bgVariant: props.headerBgVariant,
   textVariant: props.headerTextVariant,
   variant: props.headerVariant,
+  borderVariant: props.headerBorderVariant,
 }))
-
-const headerClasses = computed(() => [
-  props.headerClass,
-  resolvedHeaderBgClasses.value,
-  {
-    [`border-${props.headerBorderVariant}`]: props.headerBorderVariant !== null,
-  },
-])
+const headerClasses = computed(() => [props.headerClass, headerColorClasses.value])
 
 const headerCloseAttrs = computed(() => ({
   variant: hasHeaderCloseSlot.value ? props.headerCloseVariant : undefined,
   class: props.headerCloseClass,
 }))
 
-const resolvedFooterBgClasses = useColorVariantClasses(() => ({
+const footerColorClasses = useColorVariantClasses(() => ({
   bgVariant: props.footerBgVariant,
   textVariant: props.footerTextVariant,
   variant: props.footerVariant,
+  borderVariant: props.footerBorderVariant,
 }))
-
-const footerClasses = computed(() => [
-  props.footerClass,
-  resolvedFooterBgClasses.value,
-  {
-    [`border-${props.footerBorderVariant}`]: props.footerBorderVariant !== null,
-  },
-])
+const footerClasses = computed(() => [props.footerClass, footerColorClasses.value])
 
 const titleClasses = computed(() => [
   props.titleClass,

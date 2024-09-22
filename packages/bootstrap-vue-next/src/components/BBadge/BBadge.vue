@@ -60,8 +60,6 @@ const _props = withDefaults(defineProps<BBadgeProps>(), {
 })
 const props = useDefaults(_props, 'BBadge')
 
-const resolvedBackgroundClasses = useColorVariantClasses(props)
-
 const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'active',
   'activeClass',
@@ -104,8 +102,9 @@ const placementClasses = computed(() => {
   ]
 })
 
+const colorClasses = useColorVariantClasses(props)
 const computedClasses = computed(() => [
-  resolvedBackgroundClasses.value,
+  colorClasses.value,
   props.placement !== undefined || props.dotIndicator === true ? placementClasses.value : undefined,
   {
     'active': props.active,

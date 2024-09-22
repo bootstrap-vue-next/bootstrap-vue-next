@@ -471,7 +471,7 @@ export interface BNavbarProps {
   sticky?: Extract<Placement, 'top' | 'bottom'>
   tag?: string
   toggleable?: boolean | Breakpoint
-  variant?: ColorVariant | null
+  variant?: BgColorVariant | null
 }
 
 export interface BNavbarBrandProps extends Omit<BLinkProps, 'routerTag'> {
@@ -532,7 +532,7 @@ export interface BOverlayProps extends RadiusElementExtendables {
   spinnerSmall?: boolean
   spinnerType?: SpinnerType
   spinnerVariant?: ColorVariant | null
-  variant?: ColorVariant | 'white' | 'transparent' | null
+  variant?: BgColorVariant | 'white' | 'transparent' | null
   wrapTag?: string
   zIndex?: Numberish
 }
@@ -575,7 +575,7 @@ export interface BPlaceholderProps {
   cols?: Numberish
   size?: PlaceholderSize
   tag?: string
-  variant?: ColorVariant | null
+  variant?: BgColorVariant | null
   width?: Numberish
   wrapperTag?: string
 }
