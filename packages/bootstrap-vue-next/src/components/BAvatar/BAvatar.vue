@@ -161,7 +161,6 @@ const colorClasses = useColorVariantClasses(() => ({
   textVariant: parentData?.textVariant.value ?? props.textVariant,
   variant: computedVariant.value,
 }))
-
 const computedClasses = computed(() => [
   colorClasses.value,
   // Square overwrites all else
