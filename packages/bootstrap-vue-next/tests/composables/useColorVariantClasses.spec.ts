@@ -23,6 +23,22 @@ describe('useColorVariantClasses blackbox test', () => {
       'text-bg-danger': true,
       'text-null': false,
       'bg-null': false,
+      'border-null': false,
+    })
+  })
+
+  it('value returns text-bg-{type} when prop variant', () => {
+    const backgroundVariant = useColorVariantClasses(() => ({
+      bgVariant: null,
+      textVariant: null,
+      variant: null,
+      borderVariant: 'danger-subtle',
+    }))
+    expect(backgroundVariant.value).toEqual({
+      'text-bg-null': false,
+      'text-null': false,
+      'bg-null': false,
+      'border-danger-subtle': true,
     })
   })
 
@@ -36,6 +52,7 @@ describe('useColorVariantClasses blackbox test', () => {
       'text-bg-null': false,
       'text-null': false,
       'bg-danger': true,
+      'border-null': false,
     })
   })
 
@@ -48,6 +65,7 @@ describe('useColorVariantClasses blackbox test', () => {
     expect(backgroundVariant.value).toEqual({
       'text-bg-null': false,
       'text-danger': true,
+      'border-null': false,
       'bg-null': false,
     })
   })
@@ -62,6 +80,7 @@ describe('useColorVariantClasses blackbox test', () => {
       'text-bg-null': false,
       'text-danger': true,
       'bg-danger': true,
+      'border-null': false,
     })
   })
 
@@ -74,6 +93,7 @@ describe('useColorVariantClasses blackbox test', () => {
     expect(backgroundVariant.value).toEqual({
       'text-bg-success': true,
       'text-info': true,
+      'border-null': false,
       'bg-danger': true,
     })
   })
@@ -89,6 +109,7 @@ describe('useColorVariantClasses blackbox test', () => {
       'text-bg-null': false,
       'text-danger': true,
       'bg-danger': true,
+      'border-null': false,
     })
     react.bgVariant = 'info'
     react.textVariant = 'info'
@@ -97,6 +118,7 @@ describe('useColorVariantClasses blackbox test', () => {
       'text-bg-danger': true,
       'text-info': true,
       'bg-info': true,
+      'border-null': false,
     })
   })
 })

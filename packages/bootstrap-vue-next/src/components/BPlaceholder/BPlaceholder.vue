@@ -14,6 +14,7 @@
 import {computed, type CSSProperties} from 'vue'
 import type {BPlaceholderProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 
 defineOptions({
   inheritAttrs: false,
@@ -46,11 +47,18 @@ const colsString = computed(() =>
       : props.cols
 )
 
-const computedClasses = computed(() => ({
-  [`col-${colsString.value}`]: colsString.value !== undefined && widthString.value === undefined,
-  [`bg-${props.variant}`]: props.variant !== null,
-  [`placeholder-${props.size}`]: props.size !== 'md',
-}))
+const colorClasses = useColorVariantClasses(
+  computed(() => ({
+    bgVariant: props.variant,
+  }))
+)
+const computedClasses = computed(() => [
+  colorClasses.value,
+  {
+    [`col-${colsString.value}`]: colsString.value !== undefined && widthString.value === undefined,
+    [`placeholder-${props.size}`]: props.size !== 'md',
+  },
+])
 
 const wrapperClasses = computed(() => ({
   [`placeholder-${props.animation}`]: props.animation !== undefined,

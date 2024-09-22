@@ -16,6 +16,7 @@ import {computed} from 'vue'
 import type {BSpinnerProps} from '../../types/ComponentProps'
 import {isEmptySlot} from '../../utils/dom'
 import {useDefaults} from '../../composables/useDefaults'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 
 const _props = withDefaults(defineProps<BSpinnerProps>(), {
   label: undefined,
@@ -33,11 +34,16 @@ const slots = defineSlots<{
   label?: (props: Record<string, never>) => any
 }>()
 
+const colorClasses = useColorVariantClasses(
+  computed(() => ({
+    textVariant: props.variant,
+  }))
+)
 const computedClasses = computed(() => [
   `spinner-${props.type}`,
+  colorClasses.value,
   {
     [`spinner-${props.type}-sm`]: props.small,
-    [`text-${props.variant}`]: props.variant !== null,
   },
 ])
 

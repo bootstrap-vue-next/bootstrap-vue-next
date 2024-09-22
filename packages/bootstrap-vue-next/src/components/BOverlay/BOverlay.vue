@@ -41,6 +41,8 @@ import BTransition from '../BTransition.vue'
 import BSpinner from '../BSpinner/BSpinner.vue'
 import ConditionalWrapper from '../ConditionalWrapper.vue'
 import {useRadiusElementClasses} from '../../composables/useRadiusElementClasses'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import type {BgColorVariant} from '../../types/ColorTypes'
 
 const _props = withDefaults(defineProps<BOverlayProps>(), {
   blur: '2px',
@@ -92,10 +94,6 @@ const radiusElementClasses = useRadiusElementClasses(() => ({
   roundedEnd: props.roundedEnd,
 }))
 
-const computedVariant = computed(() =>
-  props.variant !== null && !props.bgColor ? `bg-${props.variant}` : ''
-)
-
 const computedAriaBusy = computed(() => (props.show ? true : null))
 
 const spinnerAttrs = computed(() => ({
@@ -114,7 +112,12 @@ const overlayClasses = computed(() => ({
   'position-fixed': props.noWrap && props.fixed,
 }))
 
-const blurClasses = computed(() => [computedVariant.value, radiusElementClasses.value])
+const colorClasses = useColorVariantClasses(
+  computed(() => ({
+    bgVariant: props.variant !== null && !props.bgColor ? (props.variant as BgColorVariant) : null,
+  }))
+)
+const blurClasses = computed(() => [colorClasses.value, radiusElementClasses.value])
 
 const blurStyles = computed(() => ({
   ...positionStyles,

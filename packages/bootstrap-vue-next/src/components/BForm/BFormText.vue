@@ -10,6 +10,7 @@
 import {computed} from 'vue'
 import type {BFormTextProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 
 const _props = withDefaults(defineProps<BFormTextProps>(), {
   id: undefined,
@@ -25,8 +26,11 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const computedClasses = computed(() => ({
-  [`text-${props.textVariant}`]: props.textVariant !== null,
-  'form-text': !props.inline,
-}))
+const colorClasses = useColorVariantClasses(props)
+const computedClasses = computed(() => [
+  colorClasses.value,
+  {
+    'form-text': !props.inline,
+  },
+])
 </script>
