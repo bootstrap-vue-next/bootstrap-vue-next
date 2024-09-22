@@ -15,7 +15,7 @@ import {computed, type StyleValue} from 'vue'
 import type {BTableSimpleProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import {useNumberishToStyle} from '../../composables/useNumberishToStyle'
-import {useColorVariantClasses} from 'src/composables/useColorVariantClasses'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 
 const defaultStickyHeaderHeight = '300px'
 
