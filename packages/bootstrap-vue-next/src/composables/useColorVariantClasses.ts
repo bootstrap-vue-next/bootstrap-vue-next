@@ -7,7 +7,6 @@ export const useColorVariantClasses = (
   computed(() => {
     let props = toValue(obj)
     props = {
-      ...props,
       variant: props.variant ?? null,
       bgVariant: props.bgVariant ?? null,
       textVariant: props.textVariant ?? null,
