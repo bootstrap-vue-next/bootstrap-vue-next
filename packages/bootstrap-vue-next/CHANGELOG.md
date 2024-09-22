@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.24.21](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.20...bootstrapvuenext-v0.24.21) (2024-09-22)
+
+
+### Features
+
+* **colorvariant:** add subtle and emphasis variant fixes [#2079](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2079) ([5946219](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5946219512bfbf1a533a23670295ed5a8dfbaba9))
+
 ## [0.24.20](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.19...bootstrapvuenext-v0.24.20) (2024-09-21)
 
 
