@@ -282,8 +282,3 @@ Keyboard Navigation and Small Screen Support.
 ## BPaginationNav
 
 <NotYetImplemented/>
-
-<script setup lang="ts">
-import {computed, ref} from 'vue'
-import {useModalController} from 'bootstrap-vue-next'
-</script>
