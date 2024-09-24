@@ -580,10 +580,10 @@ const handleRowSelection = (
       // This is where range is different, due to the difference in shift
     } else if (shiftClicked) {
       const lastSelectedItem = [...selectedItemsToSet.value].pop()
-      const lastSelectedIndex = props.items.findIndex((i) => i === lastSelectedItem)
+      const lastSelectedIndex = computedItems.value.findIndex((i) => i === lastSelectedItem)
       const selectStartIndex = Math.min(lastSelectedIndex, index)
       const selectEndIndex = Math.max(lastSelectedIndex, index)
-      const items = props.items.slice(selectStartIndex, selectEndIndex + 1)
+      const items = computedItems.value.slice(selectStartIndex, selectEndIndex + 1)
       selectedItemsSetUtilities.set(items)
       // If nothing is being held, then we just behave like it's single mode
     } else {
