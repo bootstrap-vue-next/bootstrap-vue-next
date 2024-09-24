@@ -476,6 +476,37 @@ describe('object-persistence', () => {
         expect($trs[2].classes()).toContain('selected')
         expect($trs[3].classes()).toContain('selected')
       })
+      it('shift click correct order', async () => {
+        const wrapper = mount(BTable, {
+          props: {
+            'selectMode': 'range',
+            'selectable': true,
+            'items': [
+              {id: 1, text: 'C'},
+              {id: 2, text: 'A'},
+              {id: 3, text: 'B'},
+              {id: 4, text: 'D'},
+            ],
+            'fields': [
+              {key: 'id', sortable: true},
+              {key: 'text', sortable: true},
+            ],
+            'selectedItems': [],
+            'onUpdate:selectedItems': (value) => wrapper.setProps({selectedItems: value}),
+            'sortBy': [{key: 'text', order: 'asc'}],
+            'primaryKey': 'id',
+          },
+        })
+        const [first, second, third, fourth] = wrapper.findAll('tr')
+        await fourth.trigger('click')
+        const event = new MouseEvent('click', {shiftKey: true})
+        third.element.dispatchEvent(event)
+        await nextTick()
+        expect(first.classes()).not.toContain('selected')
+        expect(second.classes()).not.toContain('selected')
+        expect(third.classes()).toContain('selected')
+        expect(fourth.classes()).toContain('selected')
+      })
     })
   })
 })
