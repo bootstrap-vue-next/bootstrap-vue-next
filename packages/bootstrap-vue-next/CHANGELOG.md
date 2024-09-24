@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.24.22](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.21...bootstrapvuenext-v0.24.22) (2024-09-24)
+
+
+### Bug Fixes
+
+* **BTable:** select mode range when table is sorted fixes [#2229](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2229) ([#2230](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2230)) ([e29a9ef](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e29a9efaee7a26257fa4a18e197b24d0dd819270))
+
 ## [0.24.21](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.20...bootstrapvuenext-v0.24.21) (2024-09-22)
 
 
