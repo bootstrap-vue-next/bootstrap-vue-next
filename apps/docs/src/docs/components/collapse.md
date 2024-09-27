@@ -10,97 +10,24 @@
 
 Easily toggle visibility of almost any content on your pages in a vertically collapsing container.
 Includes support for making accordions. Visibility can be easily toggled with our
-[`v-b-toggle` directive](/docs/directives/toggle), or via `v-model`.
+[`v-b-toggle` directive](/docs/directives/BToggle), or via [`v-model`](#v-model-support).
 
 </div>
 
-<HighlightCard>
-  <BButton v-b-toggle.collapse-1 variant="primary">Toggle Collapse</BButton>
-  <BCollapse id="collapse-1">
-    <BCard class="mt-4">
-      <p class="card-text">Collapse contents Here</p>
-      <BButton v-b-toggle.collapse-1-inner size="sm">Toggle Inner Collapse</BButton>
-      <BCollapse id="collapse-1-inner">
-        <BCard class="mt-4">Hello!</BCard>
-      </BCollapse>
-    </BCard>
-  </BCollapse>
-  <template #html>
-
-```vue-html
-<BButton v-b-toggle.collapse-1 variant="primary">Toggle Collapse</BButton>
-
-<BCollapse id="collapse-1">
-  <BCard>
-    <p class="card-text">Collapse contents Here</p>
-    <BButton v-b-toggle.collapse-1-inner size="sm">Toggle Inner Collapse</BButton>
-    <BCollapse id="collapse-1-inner" class="mt-2">
-      <BCard>Hello!</BCard>
-    </BCollapse>
-  </BCard>
-</BCollapse>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/CollapseOverview.vue#template{vue-html}
 
 ## Usage
 
 Other elements can easily toggle `BCollapse` components using the
 [`v-b-toggle` directive](/docs/directives/toggle).
 
-<HighlightCard>
-  <!-- Using modifiers -->
-  <BButton v-b-toggle.collapse-2 class="m-1">Toggle Collapse</BButton>
-  <!-- Using value -->
-  <BButton v-b-toggle="'collapse-2'" class="m-1">Toggle Collapse</BButton>
-  <!-- Element to collapse -->
-  <BCollapse id="collapse-2">
-    <BCard class="mt-4">I am collapsible content!</BCard>
-  </BCollapse>
-  <template #html>
-
-```vue-html
-<!-- Using modifiers -->
-<BButton v-b-toggle.collapse-2 class="m-1">Toggle Collapse</BButton>
-
-<!-- Using value -->
-<BButton v-b-toggle="'collapse-2'" class="m-1">Toggle Collapse</BButton>
-
-<!-- Element to collapse -->
-<BCollapse id="collapse-2">
-  <BCard>I am collapsible content!</BCard>
-</BCollapse>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/CollapseUsage.vue#template{vue-html}
 
 ## Initial visibility (start expanded)
 
 To make the `BCollapse` show initially, set the `v-model` prop:
 
-<HighlightCard>
-  <BButton v-b-toggle.collapse-3 class="m-1">Toggle Collapse</BButton>
-  <BCollapse visible id="collapse-3">
-    <BCard class="mt-4">I should start open!</BCard>
-  </BCollapse>
-  <template #html>
-
-```vue-html
-<BButton v-b-toggle.collapse-3 class="m-1">Toggle Collapse</BButton>
-
-<BCollapse visible id="collapse-3">
-  <BCard>I should start open!</BCard>
-</BCollapse>
-```
-
-  </template>
-</HighlightCard>
-
-~~By default, an initially visible collapse will not animate on mount. To enable the collapse
-expanding animation on mount (when `visible` or `v-model` is `true`), set the `appear` prop on
-`BCollapse`.~~
+<<< DEMO ./demo/CollapseInitial.vue#template{vue-html}
 
 ## `v-model` support
 
@@ -112,44 +39,7 @@ are not automatically placed on the trigger button (as is the case when using th
 directive). In this example we **must control the attributes ourselves** for proper accessibility
 support.
 
-<HighlightCard>
-  <BButton
-    :class="visible ? null : 'collapsed'"
-    :aria-expanded="visible ? 'true' : 'false'"
-    aria-controls="collapse-4"
-    @click="visible = !visible"
-  >
-    Toggle Collapse
-  </BButton>
-  <BCollapse id="collapse-4" v-model="visible">
-    <BCard class="mt-4">I should start open!</BCard>
-  </BCollapse>
-  <template #html>
-
-```vue
-<template>
-  <BCard>
-    <BButton
-      :class="visible ? null : 'collapsed'"
-      :aria-expanded="visible ? 'true' : 'false'"
-      aria-controls="collapse-4"
-      @click="visible = !visible"
-    >
-      Toggle Collapse
-    </BButton>
-    <BCollapse id="collapse-4" v-model="visible" class="mt-2">
-      <BCard>I should start open!</BCard>
-    </BCollapse>
-  </BCard>
-</template>
-
-<script setup lang="ts">
-const visible = ref(true)
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/CollapseModel.vue
 
 ## Trigger multiple collapse elements
 
@@ -158,50 +48,9 @@ multiple target Ids using _modifiers_.
 
 You can also pass multiple target Ids via the directive _value_ in BootstrapVueNext.
 
-<HighlightCard>
-  <div class="d-flex gap-2">
-    <!-- Via multiple directive modifiers -->
-    <BButton v-b-toggle.collapse-a.collapse-b>Toggle Collapse A and B</BButton>
-    <!-- Via space separated string of Ids passed to directive value -->
-    <BButton v-b-toggle="'collapse-a collapse-b'">Toggle Collapse A and B</BButton>
-    <!-- Via array of string Ids passed to directive value -->
-    <BButton v-b-toggle="['collapse-a', 'collapse-b']">Toggle Collapse A and B</BButton>
-  </div>
-  <!-- Elements to collapse -->
-  <BCollapse id="collapse-a">
-      <BCard class="mt-4">I am collapsible content A!</BCard>
-  </BCollapse>
-  <BCollapse id="collapse-b">
-      <BCard class="mt-4">I am collapsible content B!</BCard>
-  </BCollapse>
-  <template #html>
-
-```vue-html
-<!-- Via multiple directive modifiers -->
-<BButton v-b-toggle.collapse-a.collapse-b>Toggle Collapse A and B</BButton>
-
-<!-- Via space separated string of Ids passed to directive value -->
-<BButton v-b-toggle="'collapse-a collapse-b'">Toggle Collapse A and B</BButton>
-
-<!-- Via array of string Ids passed to directive value -->
-<BButton v-b-toggle="['collapse-a', 'collapse-b']">Toggle Collapse A and B</BButton>
-
-<!-- Elements to collapse -->
-<BCollapse id="collapse-a">
-  <BCard>I am collapsible content A!</BCard>
-</BCollapse>
-
-<BCollapse id="collapse-b">
-  <BCard>I am collapsible content B!</BCard>
-</BCollapse>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/CollapseMultiple.vue#template{vue-html}
 
 ## Hiding and showing content in the toggle button based on collapse state
-
-<span class="badge bg-info small">New in v0.8.0</span>
 
 The `header` slot can be used to create custom toggles for your collapsible content. The `footer` slot is also available and can be used in the same manner.
 
@@ -217,32 +66,7 @@ The following properties are available for the `header` and `footer` slots:
 | `hide`    | Function | When called, will close the collapse  |
 | `id`      | String   | The ID of the collapsible element     |
 
-<HighlightCard>
-  <BCollapse id="my-collapse">
-    <template #header="{visible, toggle, id}">
-      <BButton variant="primary" :aria-expanded="visible" :aria-controls="id" @click="toggle">
-          <span>{{ visible ? 'Close' : 'Open' }}</span> My Collapse
-      </BButton>
-    </template>
-    <!-- Content here -->
-    <div class="mt-2">This is data that is being collapsed</div>
-  </BCollapse>
-  <template #html>
-
-```vue-html
-<BCollapse id="my-collapse">
-  <template #header="{visible, toggle, id}">
-    <BButton variant="primary" :aria-expanded="visible" :aria-controls="id" @click="toggle">
-      <span>{{ visible ? 'Close' : 'Open' }}</span> My Collapse
-    </BButton>
-  </template>
-  <!-- Content here -->
-  <div class="mt-2">This is data that is being collapsed</div>
-</BCollapse>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/CollapseContent.vue#template{vue-html}
 
 ## Accessibility
 
@@ -262,39 +86,14 @@ something other than a button or link (or similar component), you should add the
 `tabindex="0"` and `role="button"` to allow users of assistive technology to reach your trigger
 element.
 
-When using accordion mode, make sure you place the trigger elements and `BCollapse` components
-inside an element with `role="tablist"` and set `role="tab"` on each trigger element's container in
-order to help screen reader users navigate the accordion group. Unfortunately, BootstrapVueNext cannot
-apply those roles for you automatically, as it depends on your final document markup.
-
 <ComponentReference :data="data" />
 
-<script setup lang="ts">
+<script lang="ts">
 import {data} from '../../data/components/collapse.data'
-import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
-import HighlightCard from '../../components/HighlightCard.vue'
-import {
-  BCard,
-  BCardText,
-  BCardBody,
-  BCardHeader,
-  BCollapse,
-  BButton,
-  vBToggle,
-} from 'bootstrap-vue-next'
-import {ref, computed} from 'vue'
 
-const visible = ref(true);
-
-const text = "Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably have not heard of them accusamus labore VHS."
+export default {
+  setup() {
+    return {data}
+  }
+}
 </script>
-
-<style>
-.collapsed > .when-open {
-  display: none;
-}
-button:not(.collapsed) > .when-closed {
-  display: none;
-}
-</style>

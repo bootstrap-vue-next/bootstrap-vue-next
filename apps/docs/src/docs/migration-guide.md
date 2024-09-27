@@ -146,6 +146,13 @@ The `sliding-start` and `sliding-end` events have been renamed to `slide` and `s
 The `label-indicators` prop has been renamed to `indicators-button-label`.
 <NotYetImplemented>The `label-goto-slide`and `no-animation` props.</NotYetImplemented>
 
+## BCollapse
+
+In `bootstrap-vue`/`bootstrap4`, accordians are implemented via `BCollapse` in `boostrap-vue-nexst`/`bootstrap5`
+accordians are first class citizens, so please use the [`BAccordian`](/docs/components/accordian) instead.
+
+<NotYetImplemented>The `appear` prop.</NotYetImplemented>
+
 ## BForm
 
 Bootstrap 5 has dropped form-specific layout classes for the grid system. See the
