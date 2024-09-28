@@ -53,13 +53,14 @@ You can also pass multiple target Ids via the directive _value_ in BootstrapVueN
 
 <<< DEMO ./demo/CollapseMultiple.vue#template{vue-html}
 
-## Hiding and showing content in the toggle button based on collapse state
+## Slots
 
-The `header` slot can be used to create custom toggles for your collapsible content. The `footer` slot is also available and can be used in the same manner.
+The `header` and `footer` slots can be used to create custom toggles for your collapsible content. The default slot is
+used for the content to be hidden or shown.
 
 Using the `v-b-toggle` directive to toggle the `BCollapse` will still work but the `collapsed` CSS class will no longer be applied to the element with the directive.
 
-The following properties are available for the `header` and `footer` slots:
+The following properties are available for the `header` and `footer` and `default` slots:
 
 | Property  | Type     | Description                           |
 | --------- | -------- | ------------------------------------- |
@@ -68,6 +69,9 @@ The following properties are available for the `header` and `footer` slots:
 | `show`    | Function | When called, will open the collapse   |
 | `hide`    | Function | When called, will close the collapse  |
 | `id`      | String   | The ID of the collapsible element     |
+
+`BCollapse` also [provides](https://vuejs.org/guide/components/provide-inject.html) the above variables
+to its children as well as the value of the `isNav` prop.
 
 <<< DEMO ./demo/CollapseContent.vue#template{vue-html}
 
