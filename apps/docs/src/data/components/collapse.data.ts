@@ -6,7 +6,7 @@ const sharedSlots: SlotScopeReference[] = [
   {
     prop: 'hide',
     type: '() => void',
-    description: "Closes the collapse and fires the 'hide' event",
+    description: "Hides the collapse and fires the 'hide' event",
   },
   {
     prop: 'id',
