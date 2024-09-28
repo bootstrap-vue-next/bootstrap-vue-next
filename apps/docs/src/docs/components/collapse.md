@@ -39,6 +39,9 @@ are not automatically placed on the trigger button (as is the case when using th
 directive). In this example we **must control the attributes ourselves** for proper accessibility
 support.
 
+By default, an initially visible collapse will not animate on mount. To enable the collapse expanding animation on mount,
+set the `toggle` prop on `<BCollapse>` and leave the `visible` prop as false.
+
 <<< DEMO ./demo/CollapseModel.vue
 
 ## Trigger multiple collapse elements

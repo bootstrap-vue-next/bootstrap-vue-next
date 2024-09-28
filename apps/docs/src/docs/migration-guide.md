@@ -148,8 +148,15 @@ The `label-indicators` prop has been renamed to `indicators-button-label`.
 
 ## BCollapse
 
-In `bootstrap-vue`/`bootstrap4`, accordians are implemented via `BCollapse` in `boostrap-vue-nexst`/`bootstrap5`
-accordians are first class citizens, so please use the [`BAccordian`](/docs/components/accordian) instead.
+The `accordian` prop is deprecated: In `bootstrap-vue`/`bootstrap4`, accordians are implemented via `BCollapse`.
+In `boostrap-vue-nexst`/`bootstrap5` accordians are first class citizens, so please use the
+[`BAccordian`](/docs/components/accordian) instead.
+
+The prop `toggle` has replaced the prop `appear` with slightly different semantics. In order to create a
+collapse that is closed and transitions to open on the initial mount, set `visible` to false and `toggle` to true.
+
+The `close` scoped slot element has been replaced by `hide` for consistency with the other props and
+events on this component.
 
 <NotYetImplemented>The `appear` prop.</NotYetImplemented>
 
