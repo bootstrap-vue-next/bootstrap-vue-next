@@ -161,6 +161,12 @@ recommended unless the content of the button textually conveys its purpose.
 
 <ComponentReference :data="data" />
 
-<script setup lang="ts">
+<script lang="ts">
 import {data} from '../../data/components/pagination.data'
+
+export default {
+  setup() {
+    return {data}
+  }
+}
 </script>
