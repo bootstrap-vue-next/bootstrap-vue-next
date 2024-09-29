@@ -1,4 +1,5 @@
 <template>
+  <!-- eslint-disable prettier/prettier -->
   <BTableLite
     v-bind="props"
     :aria-busy="busyModel"
@@ -8,23 +9,34 @@
     :tbody-tr-class="getRowClasses"
     :field-column-class="getFieldColumnClasses"
     @head-clicked="onFieldHeadClick"
-    @row-dbl-clicked="
-      (row: T, index: number, e: MouseEvent) => {
-        emit('row-dbl-clicked', row, index, e)
+    @row-clicked="onRowClick"
+    @row-dblclicked="
+      (row, index, e) => {
+        emit('row-dblclicked', row, index, e)
       }
     "
-    @row-clicked="onRowClick"
+    @row-contextmenu="
+      (row, index, e) => {
+        emit('row-contextmenu', row, index, e)
+      }
+    "
     @row-hovered="
-      (row: T, index: number, e: MouseEvent) => {
+      (row, index, e) => {
         emit('row-hovered', row, index, e)
       }
     "
     @row-unhovered="
-      (row: T, index: number, e: MouseEvent) => {
+      (row, index, e) => {
         emit('row-unhovered', row, index, e)
       }
     "
+    @row-middle-clicked="
+      (row, index, e) => {
+        emit('row-middle-clicked', row, index, e)
+      }
+    "
   >
+    <!-- eslint-enable prettier/prettier -->
     <template v-for="(_, name) in $slots" #[name]="slotData">
       <slot :name="name" v-bind="slotData" />
     </template>
@@ -152,6 +164,7 @@ import {
   type TableField,
   type TableFieldRaw,
   type TableItem,
+  type TableRowEvent,
   type TableRowType,
   type TableStrictClassValue,
 } from '../../types/TableTypes'
@@ -237,10 +250,12 @@ const props = useDefaults(_props, 'BTable')
 const emit = defineEmits<{
   'filtered': [value: T[]]
   'head-clicked': [key: string, field: TableField<T>, event: MouseEvent, isFooter: boolean]
-  'row-clicked': [item: T, index: number, event: MouseEvent]
-  'row-dbl-clicked': [item: T, index: number, event: MouseEvent]
-  'row-hovered': [item: T, index: number, event: MouseEvent]
-  'row-unhovered': [item: T, index: number, event: MouseEvent]
+  'row-clicked': TableRowEvent<T>
+  'row-dblclicked': TableRowEvent<T>
+  'row-contextmenu': TableRowEvent<T>
+  'row-hovered': TableRowEvent<T>
+  'row-unhovered': TableRowEvent<T>
+  'row-middle-clicked': TableRowEvent<T>
   'row-selected': [value: T]
   'row-unselected': [value: T]
   'sorted': [value: BTableSortBy]

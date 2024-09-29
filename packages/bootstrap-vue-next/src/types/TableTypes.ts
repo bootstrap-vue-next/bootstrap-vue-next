@@ -4,6 +4,8 @@ import type {MaybePromise} from './MaybePromise'
 import type {LiteralUnion} from './LiteralUnion'
 import type {AttrsValue, ClassValue} from './AnyValuedAttributes'
 
+export type TableRowEvent<T> = [item: T, index: number, event: MouseEvent]
+
 export type TableItem<T = Record<string, unknown>> = T & {
   _rowVariant?: ColorVariant | null
   _cellVariants?: Partial<Record<keyof T, ColorVariant>>

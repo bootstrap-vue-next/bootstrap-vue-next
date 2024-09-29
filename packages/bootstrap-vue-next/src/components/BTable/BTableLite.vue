@@ -83,9 +83,11 @@
             :variant="isTableItem(item) ? item._rowVariant : undefined"
             v-bind="callTbodyTrAttrs(item, 'row')"
             @click="!filterEvent($event) && emit('row-clicked', item, itemIndex, $event)"
-            @dblclick="!filterEvent($event) && emit('row-dbl-clicked', item, itemIndex, $event)"
+            @dblclick="!filterEvent($event) && emit('row-dblclicked', item, itemIndex, $event)"
+            @contextmenu="!filterEvent($event) && emit('row-contextmenu', item, itemIndex, $event)"
             @mouseenter="!filterEvent($event) && emit('row-hovered', item, itemIndex, $event)"
             @mouseleave="!filterEvent($event) && emit('row-unhovered', item, itemIndex, $event)"
+            @mousedown="handleMiddleClick(item, itemIndex, $event)"
           >
             <BTd
               v-for="field in computedFields"
@@ -224,6 +226,7 @@ import {
   isTableItem,
   type TableField,
   type TableItem,
+  type TableRowEvent,
   type TableRowThead,
   type TableRowType,
 } from '../../types/TableTypes'
@@ -292,10 +295,12 @@ const props = useDefaults(_props, 'BTableLite')
 
 const emit = defineEmits<{
   'head-clicked': [key: string, field: TableField<T>, event: MouseEvent, isFooter: boolean]
-  'row-clicked': [item: T, index: number, event: MouseEvent]
-  'row-dbl-clicked': [item: T, index: number, event: MouseEvent]
-  'row-hovered': [item: T, index: number, event: MouseEvent]
-  'row-unhovered': [item: T, index: number, event: MouseEvent]
+  'row-clicked': TableRowEvent<T>
+  'row-dblclicked': TableRowEvent<T>
+  'row-contextmenu': TableRowEvent<T>
+  'row-hovered': TableRowEvent<T>
+  'row-unhovered': TableRowEvent<T>
+  'row-middle-clicked': TableRowEvent<T>
 }>()
 
 const generateDetailsItem = (item: TableItem): [object, boolean | undefined] => [
@@ -419,6 +424,11 @@ const getFieldRowClasses = (field: Readonly<TableField>, tr: T) => {
   ]
 }
 
+const handleMiddleClick = (item: T, itemIndex: number, event: MouseEvent) => {
+  if (event.button === 1 && !filterEvent(event)) {
+    emit('row-middle-clicked', item, itemIndex, event)
+  }
+}
 const callTbodyTrAttrs = (item: T | null, type: TableRowType) =>
   props.tbodyTrAttrs
     ? typeof props.tbodyTrAttrs === 'function'
