@@ -146,6 +146,22 @@ The `sliding-start` and `sliding-end` events have been renamed to `slide` and `s
 The `label-indicators` prop has been renamed to `indicators-button-label`.
 <NotYetImplemented>The `label-goto-slide`and `no-animation` props.</NotYetImplemented>
 
+## BCollapse
+
+The `accordian` prop is deprecated: In `bootstrap-vue`/`bootstrap4`, accordians are implemented via `BCollapse`.
+In `boostrap-vue-nexst`/`bootstrap5` accordians are first class citizens, so please use the
+[`BAccordian`](/docs/components/accordian) instead.
+
+The prop `toggle` has replaced the prop `appear` with slightly different semantics. In order to create a
+collapse that is closed and transitions to open on the initial mount, set `visible` to false and `toggle` to true.
+
+The `close` scoped slot element has been replaced by `hide` for consistency with the other props and
+events on this component.
+
+`$root` instance events `bv::collapse::state` and `bv::toggle::collapse` are deprecrated.
+
+<NotYetImplemented>The `appear` prop.</NotYetImplemented>
+
 ## BForm
 
 Bootstrap 5 has dropped form-specific layout classes for the grid system. See the
