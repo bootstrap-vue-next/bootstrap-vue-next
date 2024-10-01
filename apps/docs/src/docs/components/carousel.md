@@ -137,8 +137,6 @@ You are also able to use the built in methods for going to the next, or previous
 
 <<< DEMO ./demo/CarouselFull.vue#template{vue-html}
 
-## Reference
-
 <ComponentReference :data="data" />
 
 <script lang="ts">
