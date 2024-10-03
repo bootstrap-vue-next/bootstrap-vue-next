@@ -63,14 +63,18 @@ Like to move your menu away from the toggle buttons a bit? Then use the `offset`
 ### Floating Strategy
 
 By default, the floating element will render using _absolute_. You can change this using the `strategy` prop. The only other option is `fixed`.
+See the [floating-ui documentation](https://floating-ui.com/docs/hide#strategy) for details.
 
 <<< DEMO ./demo/DropdownFloating.vue#template{vue-html}
 
 ### Boundary constraint
 
-By default, dropdowns are visually constrained to their clipping ancestors, which will suffice in most situations. However, if you place a dropdown inside an element that has `overflow: scroll` (or similar) set, the dropdown menu may - in some situations - get cut off. To get around this, you can specify a boundary element via the `boundary` prop. Supported values are `clippingAncestors` (the default), `viewport`, `document`, or a reference to an HTML element.
+By default, dropdowns are visually constrained to their clipping ancestors, which will suffice in most situations. However, if you place a dropdown inside an element that has `overflow: scroll` (or similar) set, the dropdown menu may - in some situations - get cut off. To get around this, you can specify a boundary element via the `boundary` prop. Supported values any values from [floating-ui](https://floating-ui.com/)
+[Boundary](https://floating-ui.com/docs/detectoverflow#boundary) or [RootBoundary](https://floating-ui.com/docs/detectoverflow#rootboundary) types. The default value is `clippingAncestors`.
 
 **Note:** When `boundary` is any value other than the default of `clippingAncestors`, the style `position: static` is applied to the dropdown component's root element to allow the menu to "break out" of its scroll container. In some situations, this may affect your layout or positioning of the dropdown trigger button. In these cases, you may need to wrap your dropdown inside another element
+
+**Note:** BootstrapVueNext uses [floating-ui](https://floating-ui.com/) under the hood, so please read [their options documnetation](https://floating-ui.com/docs/detectoverflow#options) for details on `boundary` and `boundary-padding`.
 
 ### Container element
 

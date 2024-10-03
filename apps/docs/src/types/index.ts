@@ -40,7 +40,7 @@ export interface ComponentReference {
   props: PropsRecord
   emits: {
     event: string
-    args: EmitArgReference[]
+    args?: EmitArgReference[]
     description?: string
   }[]
   slots: {
