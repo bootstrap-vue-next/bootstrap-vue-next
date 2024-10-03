@@ -152,7 +152,7 @@ split button its variant via the `split-variant` prop.
 
 ### Dark mode
 
-Dar variants for components were deprecated in Bootstrap v 5.3.0. See
+Dark variants for components were deprecated in Bootstrap v5.3.0. See
 [their documentation](https://getbootstrap.com/docs/5.3/components/dropdowns/#dark-dropdowns) for details.
 
 ### Block level dropdowns
