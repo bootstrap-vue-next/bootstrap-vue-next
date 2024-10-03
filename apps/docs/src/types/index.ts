@@ -38,12 +38,12 @@ export interface ComponentReference {
    */
   sourcePath: string | null
   props: PropsRecord
-  emits: {
+  emits?: {
     event: string
     args?: EmitArgReference[]
     description?: string
   }[]
-  slots: {
+  slots?: {
     scope?: SlotScopeReference[]
     name: string
     description?: string

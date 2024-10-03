@@ -157,8 +157,6 @@ Dar variants for components were deprecated in Bootstrap v 5.3.0. See
 
 ### Block level dropdowns
 
-<NotYetImplemented>Bootstrap 5's block button implementation doesn't appear to work for dropdowns.</NotYetImplemented>
-
 By default, dropdowns act like buttons and are displayed inline. Create a full-width, “block button”
 by adding the classes `d-grid` and `gap-2` to the `BDropdown`. For split buttons, wrap the `BDropdown` in a div
 that has the `d-grid` and `gap-2` classes and add `split-class="w-100"` to the `BDropdown` itself.
@@ -245,6 +243,8 @@ constrain/set the menu width.
 
 `BDropdownText` has the BootstrapVueNext custom class `.b-dropdown-text` applied to it which sets some basic styles which are suitable in most situations. By default, its width will be the same as the widest `BDropdownItem` content. You may need to place additional styles or helper classes on the component.
 
+<NotYetImplemented/>: While the basic `BDropdownText` works, none of the props are implemented to customize the text (`tag`, `text-class`, and `variant`)
+
 ### BDropdownGroup
 
 Group a set of dropdown sub-components with an optional associated header. Place a `BDropdownDivider` between your `BDropdownGroup` and other groups or non-grouped dropdown contents.
@@ -260,6 +260,16 @@ Add a header to label sections of actions in any dropdown menu.
 See Section [Headers and accessibility](#headers-and-accessibility) for details on making headers more accessible for users of assistive technologies.
 
 Using the `BDropdownGroup` sub-component simplifies creating accessible grouped dropdown items with an associated header.
+
+<NotYetImplemented/>: While the basic `BDropdownHeader` works, none of the props are implemented to customize the header (`id`, `tag`, and `variant`)
+
+### BDropdownForm
+
+Add a form into your dropdown with `BDropdownForm`.
+
+<<< DEMO ./demo/DropdownForm.vue#template{vue-html}
+
+<NotYetImplemented/>: While the basic `BDropdownForm` works, none of the props are implemented to customize the form (`formClass`, `inline`, `novalidate` and `validated`)
 
 ## Accessibility
 

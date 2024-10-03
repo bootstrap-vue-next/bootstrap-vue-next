@@ -23,6 +23,8 @@ For instance, there are likely many places where you use `Bootstrap` utility cla
 classes that involve `left` and `right` (or `l` and `r`) to be `start` and `end` (or `s` and `e`). This
 will affect compents such as `BNavBar` in unexpected ways that BSVN has no control over.
 
+Similarly, `left` and `right` props and values in the `bootstrap-vue-next` API are generally replaced by `start` and `end`.
+
 Bootstrap-vue-next will commit to breaking changes whenever Bootstrap marks something as "deprecated". These changes may be resolved automatically, or they might necessitate manual action from the library's users.
 
 ## Sync modifier
@@ -161,6 +163,26 @@ events on this component.
 `$root` instance events `bv::collapse::state` and `bv::toggle::collapse` are deprecrated.
 
 <NotYetImplemented>The `appear` prop.</NotYetImplemented>
+
+## BDropdown
+
+BootstrapVueNext uses [floating-ui](https://floating-ui.com/) to implemented dropdowns. This affects values and behaviors
+for properties souch as `boundary` as well as the alignent and placement properties. For fine control, use `floating-middleware`
+in place of `popper-opts`. Check out [our documentation](/docs/components/dropdown) and [theirs] for details.
+
+The `block` prop is deprecated. See our [`BDropdown` documentation](/docs/components/dropdown#block-level-dropdowns)
+and [Bootstrap's documentation](https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons) for
+details.
+
+The `right` prop is replaced by `end` see the [overview section](#overview) of this page for details.
+
+The `html` prop has been deprecated, use the `button-content`.
+
+`$root` instance events `bv::dropdown::hide` and `bv::dropdown::show` are deprecrated.
+
+<NotYetImplemented>`toggleAttrs`</NotYetImplementd>
+
+<NotYetImplemented/>The props on `BDropdownForm`, `BDropdownHeader`, and `BDropdownText`.
 
 ## BForm
 
