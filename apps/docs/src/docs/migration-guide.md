@@ -180,7 +180,7 @@ The `html` prop has been deprecated, use the `button-content`.
 
 `$root` instance events `bv::dropdown::hide` and `bv::dropdown::show` are deprecrated.
 
-<NotYetImplemented>`toggleAttrs`</NotYetImplementd>
+<NotYetImplemented>`toggleAttrs`</NotYetImplemented>
 
 <NotYetImplemented/>The props on `BDropdownForm`, `BDropdownHeader`, and `BDropdownText`.
 
