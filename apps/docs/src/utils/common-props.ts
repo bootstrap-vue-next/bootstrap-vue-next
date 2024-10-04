@@ -2,6 +2,18 @@ import {type PropertyReference} from '../types'
 
 export const commonProps = () =>
   ({
+    active: {
+      type: 'boolean',
+      default: false,
+      description:
+        'When set to `true`, places the component in the active state with active styling',
+    },
+    activeClass: {
+      type: 'ClassValue',
+      default: 'active',
+      description:
+        "Configure the active CSS class applied when the link is active. Typically you will want to set this to class name 'active'",
+    },
     alt: {
       type: 'string',
       default: 'undefined',
@@ -12,6 +24,12 @@ export const commonProps = () =>
       default: undefined,
       description:
         'If this component controls another component or element, set this to the ID of the controlled component or element',
+    },
+    ariaDescribedby: {
+      type: 'string',
+      default: undefined,
+      description:
+        'The ID of the element that provides a description for this component. Used as the value for the `aria-describedby` attribute',
     },
     ariaInvalid: {
       type: 'AriaInvalid',
@@ -218,6 +236,11 @@ export const commonProps = () =>
       description:
         'When set, the input is formatted on blur instead of each keystroke (if there is a formatter specified)',
     },
+    linkClass: {
+      type: 'ClassValue',
+      default: undefined,
+      description: 'Class or classes to apply to the inner link element',
+    },
     list: {
       type: 'string',
       default: 'undefined',
@@ -227,6 +250,17 @@ export const commonProps = () =>
       type: 'string',
       default: undefined,
       description: 'Sets the value of the `name` attribute on the form control',
+    },
+    noHoverPause: {
+      type: 'boolean',
+      default: false,
+      description: 'When set to true, disables pausing the timer on hover behavior',
+    },
+    noResumeOnHoverLeave: {
+      type: 'boolean',
+      default: false,
+      description:
+        'When set to true, the timer will not resume when the mouse leaves the element. It will need to be manually resumed',
     },
     options: {
       type: 'readonly CheckboxOptionRaw[]',
@@ -366,15 +400,9 @@ export const commonProps = () =>
       description:
         'Applies one of the Bootstrap theme color variants to the component. When implemented `bg-variant` and `text-variant` will take precedence',
     },
-    noHoverPause: {
-      type: 'boolean',
-      default: false,
-      description: 'When set to true, disables pausing the timer on hover behavior',
-    },
-    noResumeOnHoverLeave: {
-      type: 'boolean',
-      default: false,
-      description:
-        'When set to true, the timer will not resume when the mouse leaves the element. It will need to be manually resumed',
+    wrapperAttrs: {
+      type: 'Readonly<AttrsValue>',
+      default: undefined,
+      description: 'Attributes to be applied to the wrapper element',
     },
   }) satisfies Record<string, PropertyReference>

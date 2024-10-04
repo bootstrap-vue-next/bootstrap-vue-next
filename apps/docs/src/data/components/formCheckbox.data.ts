@@ -37,6 +37,11 @@ export default {
             description:
               'When set, renders the checkbox as an inline element rather than as a 100% width block',
           },
+          inputClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: 'Class to be applied to the body of the checkbox item',
+          },
           modelValue: {
             type: 'CheckboxValue | readonly CheckboxValue[]',
             default: undefined,
@@ -64,16 +69,6 @@ export default {
             default: true,
             description: 'Value returned when this checkbox is checked',
           },
-          wrapperAttrs: {
-            type: 'Readonly<AttrsValue>',
-            default: undefined,
-            description: 'Attributes to be applied to the wrapper element',
-          },
-          inputClass: {
-            type: 'ClassValue',
-            default: undefined,
-            description: 'Class to be applied to the body of the accordion item',
-          },
           ...pick(buildCommonProps(), [
             'ariaLabel',
             'ariaLabelledby',
@@ -86,6 +81,7 @@ export default {
             'required',
             'size',
             'state',
+            'wrapperAttrs',
           ]),
         } satisfies Record<keyof BvnComponentProps['BFormCheckbox'], PropertyReference>,
       },

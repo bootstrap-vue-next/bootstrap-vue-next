@@ -193,15 +193,15 @@ documentation for details
 
 <HighlightCard>
   <div class="d-grid gap-2">
-    <BButton block variant="primary">Block Level Button</BButton>
-    <BButton block variant="primary">Another Block Level Button</BButton>
+    <BButton variant="primary">Block Level Button</BButton>
+    <BButton variant="primary">Another Block Level Button</BButton>
   </div>
   <template #html>
 
 ```vue-html
 <div class="d-grid gap-2">
-  <BButton block variant="primary">Block Level Button</BButton>
-  <BButton block variant="primary">Another Block Level Button</BButton>
+  <BButton variant="primary">Block Level Button</BButton>
+  <BButton variant="primary">Another Block Level Button</BButton>
 </div>
 ```
 
