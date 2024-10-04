@@ -281,6 +281,19 @@ const selectedItemsToSet = computed({
     selectedItemsModel.value = [...val]
   },
 })
+
+watch(selectedItemsToSet, (newValue, oldValue) => {
+  Array.from(oldValue)
+    .filter((item) => !newValue.has(item))
+    .forEach((item) => {
+      emit('row-unselected', item)
+    })
+  Array.from(newValue)
+    .filter((item) => !oldValue.has(item))
+    .forEach((item) => {
+      emit('row-selected', item)
+    })
+})
 /**
  * This is to avoid the issue of directly mutating the array structure and to properly trigger the computed setter.
  * The utils also conveniently emit the proper events after
@@ -290,7 +303,6 @@ const selectedItemsSetUtilities = {
     const value = new Set(selectedItemsToSet.value)
     value.add(item)
     selectedItemsToSet.value = value
-    emit('row-selected', item)
   },
   clear: () => {
     selectedItemsToSet.value.forEach((item) => {
@@ -313,13 +325,9 @@ const selectedItemsSetUtilities = {
       value.delete(item)
     }
     selectedItemsToSet.value = value
-    emit('row-unselected', item)
   },
   set: (items: T[]) => {
     selectedItemsToSet.value = new Set(items)
-    selectedItemsToSet.value.forEach((item) => {
-      emit('row-unselected', item)
-    })
   },
   has: (item: T) => {
     if (!props.primaryKey) return selectedItemsToSet.value.has(item)
@@ -779,12 +787,7 @@ defineExpose({
   refresh: callItemsProvider,
   selectAllRows: () => {
     if (!props.selectable) return
-    const unselectableItems = selectedItemsToSet.value.size > 0 ? [...selectedItemsToSet.value] : []
     selectedItemsToSet.value = new Set([...computedItems.value])
-    selectedItemsToSet.value.forEach((item) => {
-      if (unselectableItems.includes(item)) return
-      emit('row-selected', item)
-    })
   },
   selectRow: (index: number) => {
     if (!props.selectable) return
