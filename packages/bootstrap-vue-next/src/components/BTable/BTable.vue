@@ -162,6 +162,7 @@ import {
   isTableItem,
   type NoProviderTypes,
   type TableField,
+  type TableFieldFormatter,
   type TableFieldRaw,
   type TableItem,
   type TableRowEvent,
@@ -431,6 +432,8 @@ const getRowClasses = (item: T | null, type: TableRowType): TableStrictClassValu
     : null,
 ]
 
+const getFormatter = (value: TableField): TableFieldFormatter<unknown> | undefined =>
+  typeof value.sortByFormatted === 'function' ? value.sortByFormatted : value.formatter
 const computedItems = computed<T[]>(() => {
   const sortItems = (items: T[]) => {
     // "undefined" values are set by us, we do this so we dont wipe out the comparer
@@ -452,12 +455,9 @@ const computedItems = computed<T[]>(() => {
           })
           const val = get(ob, sortOption.key as keyof TableItem)
           if (isTableField(sortField) && !!sortField.sortByFormatted) {
-            const formatter =
-              typeof sortField.sortByFormatted === 'function'
-                ? sortField.sortByFormatted
-                : sortField.formatter
+            const formatter = getFormatter(sortField)
             if (formatter) {
-              return formatItem(ob, String(sortField.key), formatter) as string
+              return String(formatItem(ob, String(sortField.key), formatter))
             }
           }
           return typeof val === 'object' && val !== null
@@ -497,12 +497,9 @@ const computedItems = computed<T[]>(() => {
                 return false
               })
               if (isTableField(filterField) && !!filterField.filterByFormatted) {
-                const formatter =
-                  typeof filterField.filterByFormatted === 'function'
-                    ? filterField.filterByFormatted
-                    : filterField.formatter
+                const formatter = getFormatter(filterField)
                 if (formatter) {
-                  return formatter(val, String(filterField.key), item) as string
+                  return String(formatter(val, String(filterField.key), item))
                 }
               }
               return typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
