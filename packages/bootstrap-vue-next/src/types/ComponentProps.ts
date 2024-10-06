@@ -1014,8 +1014,6 @@ export interface BTableLiteProps<T> extends BTableSimpleProps {
   caption?: string
   captionHtml?: string
   detailsTdClass?: ClassValue
-  emptyFilteredText?: string
-  emptyText?: string
   fieldColumnClass?: // eslint-disable-next-line @typescript-eslint/no-explicit-any
   | ((field: TableField<T>) => readonly Record<string, any>[])
     | string
@@ -1034,7 +1032,6 @@ export interface BTableLiteProps<T> extends BTableSimpleProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   modelValue?: any
   primaryKey?: string
-  showEmpty?: boolean
   tbodyClass?: ClassValue
   tbodyTrAttrs?: ((item: T | null, type: TableRowType) => AttrsValue) | AttrsValue
   // tbodyTransitionHandlers
@@ -1088,6 +1085,9 @@ export interface BTableProps<T> extends Omit<BTableLiteProps<T>, 'tableClass'> {
   // sortNullLast?: boolean
   selectedItems?: readonly T[]
   noSortableIcon?: boolean
+  emptyFilteredText?: string
+  emptyText?: string
+  showEmpty?: boolean
 }
 
 export interface BTrProps {
