@@ -256,8 +256,8 @@ const sortData = computed(() =>
           .map(([key, value]) => ({prop: kebabCase(key), ...value}))
           .sort((a, b) => a.prop.localeCompare(b.prop)),
       })),
-      emits: el.emits.sort((a, b) => a.event.localeCompare(b.event)),
-      slots: el.slots.sort((a, b) => a.name.localeCompare(b.name)),
+      emits: el.emits?.sort((a, b) => a.event.localeCompare(b.event)),
+      slots: el.slots?.sort((a, b) => a.name.localeCompare(b.name)),
     }
 
     data.sections = (['Properties', 'Events', 'Slots'] as ComponentSection[]).filter(

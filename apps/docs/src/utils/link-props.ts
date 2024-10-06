@@ -63,7 +63,9 @@ export const linkProps = {
     type: 'string',
     default: undefined,
     description: 'Not Yet Implmented: A class to apply to links that have been prefetched.',
+    notYetImplemented: true,
   },
+  noRel: {},
   rel: {
     type: 'string',
     default: undefined,
@@ -133,5 +135,8 @@ export const linkProps = {
     default: null,
     description: 'Set the color variant for the link',
   },
-  noRel: {},
-} as const satisfies Record<keyof BvnComponentProps['BLink'], PropertyReference>
+  // TODO: remove the hard-coded NYI props below when they are implemented
+} as const satisfies Record<
+  keyof BvnComponentProps['BLink'] | 'noPrefetch' | 'prefetch' | 'prefetchedClass',
+  PropertyReference
+>
