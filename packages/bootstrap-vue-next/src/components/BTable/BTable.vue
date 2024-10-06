@@ -128,18 +128,13 @@
       </template>
     </template>
     <template #custom-body="scope">
-      <BTr v-if="busyModel" class="b-table-busy-slot" :class="getBusyRowClasses">
+      <BTr
+        v-if="busyModel && $slots['table-busy']"
+        class="b-table-busy-slot"
+        :class="getBusyRowClasses"
+      >
         <BTd :colspan="scope.fields.length">
-          <slot name="table-busy">
-            <BOverlay show>
-              <template #overlay>
-                <div class="d-flex align-items-center gap-2 mt-5">
-                  <BSpinner />
-                  <strong>{{ props.busyLoadingText }}</strong>
-                </div>
-              </template>
-            </BOverlay>
-          </slot>
+          <slot name="table-busy" />
         </BTd>
       </BTr>
     </template>
@@ -150,8 +145,6 @@
 import {useToNumber} from '@vueuse/core'
 import {computed, onMounted, type Ref, ref, watch} from 'vue'
 import {formatItem} from '../../utils/formatItem'
-import BOverlay from '../BOverlay/BOverlay.vue'
-import BSpinner from '../BSpinner/BSpinner.vue'
 import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
 import BTr from './BTr.vue'
