@@ -1,7 +1,7 @@
 <template>
   <ConditionalTeleport :to="props.teleportTo" :disabled="props.teleportDisabled">
     <Transition
-      v-bind="{...fadeTransitionProps, ...props.transProps, enterToClass: 'show'}"
+      v-bind="{...props.transProps}"
       :appear="modelValue"
       @before-enter="onBeforeEnter"
       @after-enter="onAfterEnter"
@@ -20,6 +20,7 @@
         tabindex="-1"
         v-bind="$attrs"
         :style="computedZIndex"
+        @click.self="hideFn('close-modal')"
       >
         <div class="modal-dialog" :class="modalDialogClasses">
           <div v-if="lazyShowing" class="modal-content" :class="props.contentClass">
@@ -91,9 +92,6 @@
             </div>
           </div>
         </div>
-        <slot v-if="!props.hideBackdrop" name="backdrop" v-bind="sharedSlots">
-          <div class="modal-backdrop fade show" @click="hideFn('backdrop')" />
-        </slot>
         <div
           v-if="needsFallback"
           ref="fallbackFocusElement"
@@ -103,6 +101,18 @@
         />
       </div>
     </Transition>
+    <slot v-if="!props.hideBackdrop" name="backdrop" v-bind="sharedSlots">
+      <Transition @after-enter="fadeIn" @before-leave="fadeOut">
+        <div
+          v-if="modelValue"
+          class="modal-backdrop"
+          :class="{
+            fade: !props.noFade,
+          }"
+          @click="hideFn('backdrop')"
+        />
+      </Transition>
+    </slot>
   </ConditionalTeleport>
 </template>
 
@@ -116,7 +126,6 @@ import BButton from '../BButton/BButton.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
-import {useFadeTransition} from '../../composables/useTransitions'
 import {useSafeScrollLock} from '../../composables/useSafeScrollLock'
 import {isEmptySlot} from '../../utils/dom'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
@@ -259,8 +268,6 @@ const {needsFallback} = useActivatedFocusTrap({
   },
 })
 
-const fadeTransitionProps = useFadeTransition(true)
-
 onKeyStroke(
   'Escape',
   () => {
@@ -360,6 +367,17 @@ const buildTriggerableEvent = (
     componentId: computedId.value,
   })
 
+const fadeIn = (el: Element) => {
+  if (el) {
+    el.classList.add('show')
+  }
+}
+const fadeOut = (el: Element) => {
+  if (el) {
+    el.classList.remove('show')
+  }
+}
+
 watch(modelValue, (newValue, oldValue) => {
   if (newValue === oldValue) return
   if (newValue === true) {
@@ -434,7 +452,8 @@ const pickFocusItem = () => {
 const onBeforeEnter = () => {
   showFn()
 }
-const onAfterEnter = () => {
+const onAfterEnter = (el: Element) => {
+  fadeIn(el)
   isActive.value = true
   pickFocusItem()
   emit('shown', buildTriggerableEvent('shown'))
@@ -445,10 +464,11 @@ const onLeave = () => {
   isActive.value = false
   isLeaving.value = true
 }
-const onAfterLeave = () => {
+const onAfterLeave = (el: Element) => {
   emit('hidden', buildTriggerableEvent('hidden'))
   if (props.lazy === true) lazyLoadCompleted.value = false
   isLeaving.value = false
+  fadeOut(el)
 }
 
 const {activePosition, activeModalCount, stackWithoutSelf} = useModalManager(
