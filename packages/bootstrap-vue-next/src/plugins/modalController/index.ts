@@ -1,13 +1,14 @@
 import {markRaw, type Plugin, ref, toRef, watch} from 'vue'
 import {modalControllerPluginKey} from '../../utils/keys'
 import type {
+  ControllerKey,
   ModalOrchestratorMapValue,
   ModalOrchestratorShowParam,
 } from '../../types/ComponentOrchestratorTypes'
 
 export const modalControllerPlugin: Plugin = {
   install(app) {
-    const modals = ref(new Map<symbol, ModalOrchestratorMapValue>())
+    const modals = ref(new Map<ControllerKey, ModalOrchestratorMapValue>())
 
     const buildPromise = (): {
       value: Promise<boolean | null>
@@ -27,12 +28,13 @@ export const modalControllerPlugin: Plugin = {
       }
     }
 
-    const buildPrereqs = () => [buildPromise(), Symbol('Modals controller'), true] as const
+    const buildPrereqs = (id: string | undefined) =>
+      [buildPromise(), (id || Symbol('Modals controller')) as ControllerKey, true] as const
 
-    const show = (obj: ModalOrchestratorShowParam = {}) => {
+    const show = (obj: ModalOrchestratorShowParam = {}): Promise<boolean | null> => {
       const resolvedProps = toRef(obj.props)
 
-      const [_promise, _self, _modelValue] = buildPrereqs()
+      const [_promise, _self, _modelValue] = buildPrereqs(resolvedProps.value?.id)
 
       modals.value.set(_self, {
         component: !obj.component ? undefined : markRaw(obj.component),
@@ -51,10 +53,10 @@ export const modalControllerPlugin: Plugin = {
       return _promise.value
     }
 
-    const confirm = (obj: ModalOrchestratorShowParam = {}) => {
+    const confirm = (obj: ModalOrchestratorShowParam = {}): Promise<boolean | null> => {
       const resolvedProps = toRef(obj.props)
 
-      const [_promise, _self, _modelValue] = buildPrereqs()
+      const [_promise, _self, _modelValue] = buildPrereqs(resolvedProps.value?.id)
 
       modals.value.set(_self, {
         component: !obj.component ? undefined : markRaw(obj.component),
@@ -73,7 +75,10 @@ export const modalControllerPlugin: Plugin = {
       return _promise.value
     }
 
-    const leave = (self: symbol) => {
+    /**
+     * You can get the symbol param from the return value from the show method, or use props.id
+     */
+    const leave = (self: ControllerKey) => {
       const modal = modals.value.get(self)
       if (!modal?.props) return
       modal.props = {
@@ -82,7 +87,10 @@ export const modalControllerPlugin: Plugin = {
       }
     }
 
-    const remove = (self: symbol) => {
+    /**
+     * You can get the symbol param from the return value from the show method, or use props.id
+     */
+    const remove = (self: ControllerKey) => {
       modals.value.delete(self)
     }
 

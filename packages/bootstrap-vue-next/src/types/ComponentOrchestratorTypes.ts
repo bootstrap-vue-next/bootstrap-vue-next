@@ -2,6 +2,8 @@ import type {Component, MaybeRefOrGetter, Ref} from 'vue'
 import type {BModalProps, BPopoverProps, BToastProps, BTooltipProps} from './ComponentProps'
 import type {ContainerPosition} from './Alignment'
 
+export type ControllerKey = symbol | string
+
 export type OrchestratedToastModelValue = boolean | number
 export type PrivateOrchestratedToast = Omit<BToastProps, 'modelValue'> & {
   /**
@@ -22,7 +24,7 @@ export type PrivateOrchestratedToast = Omit<BToastProps, 'modelValue'> & {
    * @default 5000
    */
   value?: OrchestratedToastModelValue // show or hide
-  _self: symbol
+  _self: ControllerKey
   _modelValue: OrchestratedToastModelValue // Convert it to be the same name as useModalController.
   // The difference between the two is that unlike that one, this value can be defined (there's cannot be).
 }

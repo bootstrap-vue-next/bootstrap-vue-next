@@ -1,6 +1,7 @@
 import {markRaw, type Plugin, ref, toRef, watch} from 'vue'
 import {popoverPluginKey} from '../../utils/keys'
 import type {
+  ControllerKey,
   PopoverOrchestratorMapValue,
   PopoverOrchestratorShowParam,
   PrivateOrchestratedPopover,
@@ -8,16 +9,16 @@ import type {
 
 export const popoverPlugin: Plugin = {
   install(app) {
-    const popovers = ref(new Map<symbol, PopoverOrchestratorMapValue>())
+    const popovers = ref(new Map<ControllerKey, PopoverOrchestratorMapValue>())
 
     /**
-     * @returns {symbol} A symbol that corresponds to its unique id. You can pass this id to the hide function to force a Toast to hide
+     * @returns {ControllerKey} If `id` is passed to props, it will use that id, otherwise, a symbol will be created that corresponds to its unique id.
      */
-    const show = (obj: PopoverOrchestratorShowParam): symbol => {
+    const show = (obj: PopoverOrchestratorShowParam): ControllerKey => {
       const resolvedProps = toRef(obj.props)
       const reference = toRef(obj.target)
 
-      const _self = Symbol('Popover controller')
+      const _self = resolvedProps.value?.id || Symbol('Popover controller')
 
       watch(
         reference,
@@ -47,13 +48,16 @@ export const popoverPlugin: Plugin = {
     }
 
     /**
-     * You can get the symbol param from the return value from the show method
+     * You can get the symbol param from the return value from the show method, or use props.id
      */
-    const remove = (self: symbol) => {
+    const remove = (self: ControllerKey) => {
       popovers.value.delete(self)
     }
 
-    const set = (self: symbol, val: Partial<PrivateOrchestratedPopover>) => {
+    /**
+     * You can get the symbol param from the return value from the show method, or use props.id
+     */
+    const set = (self: ControllerKey, val: Partial<PrivateOrchestratedPopover>) => {
       const popover = popovers.value.get(self)
       if (!popover?.props) return
       popover.props = {

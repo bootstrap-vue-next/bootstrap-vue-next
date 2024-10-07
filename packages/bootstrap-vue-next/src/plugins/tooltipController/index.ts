@@ -1,6 +1,7 @@
 import {markRaw, type Plugin, ref, toRef, watch} from 'vue'
 import {tooltipPluginKey} from '../../utils/keys'
 import type {
+  ControllerKey,
   PrivateOrchestratedTooltip,
   TooltipOrchestratorMapValue,
   TooltipOrchestratorShowParam,
@@ -8,16 +9,16 @@ import type {
 
 export const tooltipPlugin: Plugin = {
   install(app) {
-    const tooltips = ref(new Map<symbol, TooltipOrchestratorMapValue>())
+    const tooltips = ref(new Map<ControllerKey, TooltipOrchestratorMapValue>())
 
     /**
-     * @returns {symbol} A symbol that corresponds to its unique id. You can pass this id to the hide function to force a Toast to hide
+     * @returns {ControllerKey} If `id` is passed to props, it will use that id, otherwise, a symbol will be created that corresponds to its unique id.
      */
-    const show = (obj: TooltipOrchestratorShowParam): symbol => {
+    const show = (obj: TooltipOrchestratorShowParam): ControllerKey => {
       const resolvedProps = toRef(obj.props)
       const reference = toRef(obj.target)
 
-      const _self = Symbol('Tooltip controller')
+      const _self = resolvedProps.value?.id || Symbol('Tooltip controller')
 
       watch(
         reference,
@@ -49,13 +50,16 @@ export const tooltipPlugin: Plugin = {
     }
 
     /**
-     * You can get the symbol param from the return value from the show method
+     * You can get the symbol param from the return value from the show method, or use props.id
      */
-    const remove = (self: symbol) => {
+    const remove = (self: ControllerKey) => {
       tooltips.value.delete(self)
     }
 
-    const set = (self: symbol, val: Partial<PrivateOrchestratedTooltip>) => {
+    /**
+     * You can get the symbol param from the return value from the show method, or use props.id
+     */
+    const set = (self: ControllerKey, val: Partial<PrivateOrchestratedTooltip>) => {
       const tip = tooltips.value.get(self)
       if (!tip?.props) return
       tip.props = {
