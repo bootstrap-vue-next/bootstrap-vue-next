@@ -78,7 +78,7 @@ import {
   size as sizeMiddleware,
   useFloating,
 } from '@floating-ui/vue'
-import {onClickOutside, useMouseInElement, useToNumber} from '@vueuse/core'
+import {onClickOutside, useToNumber} from '@vueuse/core'
 import {
   computed,
   type CSSProperties,
@@ -91,6 +91,7 @@ import {
   watchEffect,
 } from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
+import {useMouse} from '../../composables/useMouse'
 import {useId} from '../../composables/useId'
 import type {BPopoverProps} from '../../types/ComponentProps'
 import {BvTriggerableEvent} from '../../utils'
@@ -116,6 +117,7 @@ const _props = withDefaults(defineProps<Omit<BPopoverProps, 'modelValue'>>(), {
   customClass: '',
   delay: () => ({show: 100, hide: 300}),
   floatingMiddleware: undefined,
+  hideMargin: 2,
   html: false,
   id: undefined,
   inline: false,
@@ -323,9 +325,6 @@ const computedClasses = computed(() => {
   ]
 })
 
-const {isOutside} = useMouseInElement(element)
-const {isOutside: triggerIsOutside} = useMouseInElement(trigger)
-
 const toggle = (e?: Event) => {
   const event = e ?? new Event('click')
   showState.value ? hide(event) : show()
@@ -368,6 +367,31 @@ const show = () => {
   })
 }
 
+const {x, y} = useMouse()
+
+const isElementAndTriggerOutside = () => {
+  const triggerRect = trigger.value?.getBoundingClientRect()
+  const elementRect = element.value?.getBoundingClientRect()
+  const margin = parseInt(props.hideMargin as unknown as string, 10) || 0
+  const offsetX = window?.scrollX || 0
+  const offsetY = window?.scrollY || 0
+  const triggerIsOutside =
+    !triggerRect ||
+    x.value < triggerRect.left + offsetX - margin ||
+    x.value > triggerRect.right + offsetX + margin ||
+    y.value < triggerRect.top + offsetY - margin ||
+    y.value > triggerRect.bottom + offsetY + margin
+
+  const isOutside =
+    !elementRect ||
+    x.value < elementRect.left + offsetX - margin ||
+    x.value > elementRect.right + offsetX + margin ||
+    y.value < elementRect.top + offsetY - margin ||
+    y.value > elementRect.bottom + offsetY + margin
+
+  return {triggerIsOutside, isOutside}
+}
+
 const hide = (e: Readonly<Event>) => {
   const event = buildTriggerableEvent('hide', {cancelable: true})
   emit('hide', event)
@@ -381,17 +405,18 @@ const hide = (e: Readonly<Event>) => {
   }
   const delay = typeof props.delay === 'number' ? props.delay : props.delay?.hide || 0
   setTimeout(() => {
+    const {triggerIsOutside, isOutside} = isElementAndTriggerOutside()
     if (
       e?.type === 'click' ||
       e?.type === 'forceHide' ||
       e?.type === 'closeOnHide' ||
       (e?.type === 'update:modelValue' && props.manual) ||
       (!props.noninteractive &&
-        isOutside.value &&
-        triggerIsOutside.value &&
+        isOutside &&
+        triggerIsOutside &&
         !element.value?.contains(document?.activeElement) &&
         !trigger.value?.contains(document?.activeElement)) ||
-      (props.noninteractive && triggerIsOutside.value)
+      (props.noninteractive && triggerIsOutside)
     ) {
       showState.value = false
       nextTick(() => {

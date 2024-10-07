@@ -1220,6 +1220,7 @@ export interface BPopoverProps extends TeleporterProps {
         hide: number
       }>
   floatingMiddleware?: Middleware[]
+  hideMargin?: number
   html?: boolean
   id?: string
   inline?: boolean
