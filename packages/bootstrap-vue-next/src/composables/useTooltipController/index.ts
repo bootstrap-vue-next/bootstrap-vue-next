@@ -1,4 +1,4 @@
 import {inject} from 'vue'
 import {tooltipPluginKey} from '../../utils/keys'
 
-export const useTooltip = () => ({...inject(tooltipPluginKey)})
+export const useTooltipController = () => ({...inject(tooltipPluginKey)})

@@ -36,38 +36,32 @@ export type ToastOrchestratorShowParam = {
   props?: MaybeRefOrGetter<PublicOrchestratedToast>
 }
 
-export type PrivateOrchestratedTooltip = Omit<BTooltipProps, 'modelValue' | 'reference'> & {
-  _reference: Exclude<BTooltipProps['reference'], undefined>
+export type PrivateOrchestratedTooltip = Omit<BTooltipProps, 'modelValue' | 'target'> & {
+  _target: Exclude<BTooltipProps['target'], undefined>
   _modelValue: BTooltipProps['modelValue']
 }
-export type PublicOrchestratedTooltip = Omit<
-  PrivateOrchestratedTooltip,
-  '_reference' | '_modelValue'
->
+export type PublicOrchestratedTooltip = Omit<PrivateOrchestratedTooltip, '_target' | '_modelValue'>
 export type TooltipOrchestratorMapValue = {
   component: unknown
   props: PrivateOrchestratedTooltip
 }
 export type TooltipOrchestratorShowParam = {
-  ref: Readonly<Ref<PrivateOrchestratedTooltip['_reference']>>
+  target: Readonly<Ref<PrivateOrchestratedTooltip['_target']>>
   component?: Readonly<Component>
   props?: MaybeRefOrGetter<PublicOrchestratedTooltip>
 }
 
-export type PrivateOrchestratedPopover = Omit<BPopoverProps, 'modelValue' | 'reference'> & {
-  _reference: Exclude<BPopoverProps['reference'], undefined>
+export type PrivateOrchestratedPopover = Omit<BPopoverProps, 'modelValue' | 'target'> & {
+  _target: Exclude<BPopoverProps['target'], undefined>
   _modelValue: BPopoverProps['modelValue']
 }
-export type PublicOrchestratedPopover = Omit<
-  PrivateOrchestratedPopover,
-  '_reference' | '_modelValue'
->
+export type PublicOrchestratedPopover = Omit<PrivateOrchestratedPopover, '_target' | '_modelValue'>
 export type PopoverOrchestratorMapValue = {
   component: unknown
   props: PrivateOrchestratedPopover
 }
 export type PopoverOrchestratorShowParam = {
-  ref: Readonly<Ref<PrivateOrchestratedPopover['_reference']>>
+  target: Readonly<Ref<PrivateOrchestratedPopover['_target']>>
   component?: Readonly<Component>
   props?: MaybeRefOrGetter<PublicOrchestratedPopover>
 }

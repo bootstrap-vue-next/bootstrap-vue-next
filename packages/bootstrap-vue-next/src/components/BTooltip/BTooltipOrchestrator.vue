@@ -11,10 +11,10 @@
 </template>
 
 <script setup lang="ts">
-import {useTooltip} from '../../composables/useTooltip'
+import {useTooltipController} from '../../composables/useTooltipController'
 import BTooltip from './BTooltip.vue'
 
-const tools = useTooltip()
+const tools = useTooltipController()
 
 defineExpose({
   ...tools,

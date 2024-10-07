@@ -1,13 +1,5 @@
 <template>
-  <div
-    class="progress-bar"
-    :class="computedClasses"
-    role="progressbar"
-    :aria-valuenow="props.value"
-    aria-valuemin="0"
-    :aria-valuemax="props.max"
-    :style="{width: computedWidth}"
-  >
+  <div class="progress-bar" :class="computedClasses" :style="{width: computedWidth}">
     <slot>
       {{ computedLabel }}
     </slot>

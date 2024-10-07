@@ -11,10 +11,10 @@
 </template>
 
 <script setup lang="ts">
-import {usePopover} from '../../composables/usePopover'
+import {usePopoverController} from '../../composables/usePopoverController'
 import BPopover from './BPopover.vue'
 
-const tools = usePopover()
+const tools = usePopoverController()
 
 defineExpose({
   ...tools,

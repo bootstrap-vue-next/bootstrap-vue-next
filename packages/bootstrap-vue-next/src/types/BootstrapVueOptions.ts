@@ -133,9 +133,9 @@ export const composablesWithExternalPath = {
   useModal: '/composables/useModal',
   useModalController: '/composables/useModalController',
   useScrollspy: '/composables/useScrollspy',
-  useToast: '/composables/useToast',
-  usePopover: '/composables/usePopover',
-  useTooltip: '/composables/useTooltip',
+  useToastController: '/composables/useToastController',
+  usePopoverController: '/composables/usePopoverController',
+  useTooltipController: '/composables/useTooltipController',
 } as const satisfies Record<ComposableType, string>
 export const composableNames = Object.freeze(
   Object.keys(composablesWithExternalPath) as ComposableType[]

@@ -14,7 +14,7 @@ export default defineComponent({
     },
     disabled: {
       type: Boolean,
-      default: false,
+      required: true,
     },
   },
   setup(props, {slots}) {

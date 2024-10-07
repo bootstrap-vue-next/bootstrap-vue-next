@@ -1,5 +1,12 @@
 <template>
-  <div class="progress" :style="{height: props.height}">
+  <div
+    class="progress"
+    role="progressbar"
+    :style="{height: props.height}"
+    :aria-valuenow="props.value"
+    aria-valuemin="0"
+    :aria-valuemax="props.max"
+  >
     <slot>
       <BProgressBar
         :animated="props.animated"

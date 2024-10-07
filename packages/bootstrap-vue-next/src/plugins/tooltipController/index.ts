@@ -1,42 +1,45 @@
 import {markRaw, type Plugin, ref, toRef, watch} from 'vue'
-import {popoverPluginKey} from '../../utils/keys'
+import {tooltipPluginKey} from '../../utils/keys'
 import type {
-  PopoverOrchestratorMapValue,
-  PopoverOrchestratorShowParam,
-  PrivateOrchestratedPopover,
+  PrivateOrchestratedTooltip,
+  TooltipOrchestratorMapValue,
+  TooltipOrchestratorShowParam,
 } from '../../types/ComponentOrchestratorTypes'
 
-export const popoverPlugin: Plugin = {
+export const tooltipPlugin: Plugin = {
   install(app) {
-    const popovers = ref(new Map<symbol, PopoverOrchestratorMapValue>())
+    const tooltips = ref(new Map<symbol, TooltipOrchestratorMapValue>())
 
     /**
      * @returns {symbol} A symbol that corresponds to its unique id. You can pass this id to the hide function to force a Toast to hide
      */
-    const show = (obj: PopoverOrchestratorShowParam): symbol => {
+    const show = (obj: TooltipOrchestratorShowParam): symbol => {
       const resolvedProps = toRef(obj.props)
+      const reference = toRef(obj.target)
 
-      const _self = Symbol()
+      const _self = Symbol('Tooltip controller')
 
       watch(
-        obj.ref,
+        reference,
         (newValue) => {
           if (!newValue) {
-            popovers.value.delete(_self)
+            tooltips.value.delete(_self)
           } else {
-            popovers.value.set(_self, {
+            tooltips.value.set(_self, {
               component: !obj.component ? undefined : markRaw(obj.component),
-              props: {...resolvedProps.value, _reference: newValue, _modelValue: false},
+              props: {...resolvedProps.value, _modelValue: false, _target: newValue},
             })
           }
         },
-        {immediate: true}
+        {
+          immediate: true,
+        }
       )
 
       watch(resolvedProps, (newValue) => {
-        const previous = popovers.value.get(_self)
+        const previous = tooltips.value.get(_self)
         if (!previous) return
-        popovers.value.set(_self, {
+        tooltips.value.set(_self, {
           component: !obj.component ? undefined : markRaw(obj.component),
           props: {...previous.props, ...newValue},
         })
@@ -49,20 +52,20 @@ export const popoverPlugin: Plugin = {
      * You can get the symbol param from the return value from the show method
      */
     const remove = (self: symbol) => {
-      popovers.value.delete(self)
+      tooltips.value.delete(self)
     }
 
-    const set = (self: symbol, val: Partial<PrivateOrchestratedPopover>) => {
-      const popover = popovers.value.get(self)
-      if (!popover?.props) return
-      popover.props = {
-        ...popover.props,
+    const set = (self: symbol, val: Partial<PrivateOrchestratedTooltip>) => {
+      const tip = tooltips.value.get(self)
+      if (!tip?.props) return
+      tip.props = {
+        ...tip.props,
         ...val,
       }
     }
 
-    app.provide(popoverPluginKey, {
-      popovers,
+    app.provide(tooltipPluginKey, {
+      tooltips,
       show,
       remove,
       set,

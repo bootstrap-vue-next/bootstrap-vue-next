@@ -27,7 +27,7 @@ export const modalControllerPlugin: Plugin = {
       }
     }
 
-    const buildPrereqs = () => [buildPromise(), Symbol(), true] as const
+    const buildPrereqs = () => [buildPromise(), Symbol('Modals controller'), true] as const
 
     const show = (obj: ModalOrchestratorShowParam = {}) => {
       const resolvedProps = toRef(obj.props)

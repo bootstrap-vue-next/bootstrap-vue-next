@@ -30,11 +30,19 @@ const composablesList: {name: string; description: string}[] = [
   },
   {
     name: 'useModalController',
-    description: 'Hide modals from anywhere in the app, or close all modals from one source using this utility',
+    description: 'Create or hide modals from anywhere in the app, or close all modals from one source using this utility',
   },
   {
-    name: 'useToast',
-    description: 'Conveniently orchestrate a push notification system by showing or hiding Toasts with our useToast composable system',
+    name: 'useToastController',
+    description: 'Conveniently orchestrate a push notification system by showing or hiding Toasts with our useToastController composable system',
+  },
+  {
+    name: 'useTooltipController',
+    description: 'Easily manage tooltips within your application, allowing for dynamic display and hiding of tooltip elements',
+  },
+  {
+    name: 'usePopoverController',
+    description: 'Control popovers in your application, enabling the display popover elements with ease',
   }
 ]
 

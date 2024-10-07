@@ -24,7 +24,7 @@ export const toastPlugin: Plugin = {
     const show = (obj: ToastOrchestratorShowParam = {}): symbol => {
       const resolvedProps = toRef(obj.props)
 
-      const _self = Symbol()
+      const _self = Symbol('Toast controller')
 
       const toastToAdd: ToastOrchestratorArrayValue = {
         component: !obj.component ? undefined : markRaw(obj.component),

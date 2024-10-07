@@ -27,9 +27,9 @@ import type {
   TooltipOrchestratorShowParam,
 } from '../types/ComponentOrchestratorTypes'
 import type {BvnComponentProps} from '../types/BootstrapVueOptions'
-import {bvnPrefix} from './bvnPrefix'
+import {withBvnPrefix} from './withBvnPrefix'
 
-const createBvnInjectionKey = (name: string) => bvnPrefix(name) as unknown as symbol // Type cast to symbol, these should be static
+const createBvnInjectionKey = (name: string) => withBvnPrefix(name) as unknown as symbol // Type cast to symbol, these should be static
 
 // BCarousel
 export const carouselInjectionKey: InjectionKey<{

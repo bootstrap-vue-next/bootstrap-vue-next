@@ -7,10 +7,10 @@ import {breadcrumbPlugin} from '../breadcrumb'
 import {defaultsPlugin} from '../defaults'
 import {modalControllerPlugin} from '../modalController'
 import {modalManagerPlugin} from '../modalManager'
-import {popoverPlugin} from '../popover'
+import {popoverPlugin} from '../popoverController'
 import {rtlPlugin} from '../rtl'
-import {toastPlugin} from '../toast'
-import {tooltipPlugin} from '../tooltip'
+import {toastPlugin} from '../toastController'
+import {tooltipPlugin} from '../tooltipController'
 
 // Main app plugin
 export const createBootstrap = (pluginData: Readonly<BootstrapVueOptions> = {}): Plugin => ({
