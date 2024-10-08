@@ -148,7 +148,6 @@ const composablesList: {name: string}[] = [
   {name: 'useModal'},
   {name: 'useModalController'},
   {name: 'useToastController'},
-  {name: 'useTooltipController'},
   {name: 'usePopoverController'},
 ]
 

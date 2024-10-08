@@ -5,16 +5,19 @@ import type {
   PopoverOrchestratorMapValue,
   PopoverOrchestratorShowParam,
   PrivateOrchestratedPopover,
+  PrivateOrchestratedTooltip,
+  TooltipOrchestratorMapValue,
+  TooltipOrchestratorShowParam,
 } from '../../types/ComponentOrchestratorTypes'
 
 export const popoverPlugin: Plugin = {
   install(app) {
     const popovers = ref(new Map<ControllerKey, PopoverOrchestratorMapValue>())
-
     /**
-     * @returns {ControllerKey} If `id` is passed to props, it will use that id, otherwise, a symbol will be created that corresponds to its unique id.
+     * @returns {ControllerKey} If `id` is passed to props, it will use that id, otherwise,
+     * a symbol will be created that corresponds to its unique id.
      */
-    const show = (obj: PopoverOrchestratorShowParam): ControllerKey => {
+    const popover = (obj: PopoverOrchestratorShowParam): ControllerKey => {
       const resolvedProps = toRef(obj.props)
       const reference = toRef(obj.target)
 
@@ -46,18 +49,10 @@ export const popoverPlugin: Plugin = {
 
       return _self
     }
-
     /**
-     * You can get the symbol param from the return value from the show method, or use props.id
+     * @param {ControllerKey} self You can get the symbol param from the return value from the show method, or use props.id
      */
-    const remove = (self: ControllerKey) => {
-      popovers.value.delete(self)
-    }
-
-    /**
-     * You can get the symbol param from the return value from the show method, or use props.id
-     */
-    const set = (self: ControllerKey, val: Partial<PrivateOrchestratedPopover>) => {
+    const setPopover = (self: ControllerKey, val: Partial<PrivateOrchestratedPopover>) => {
       const popover = popovers.value.get(self)
       if (!popover?.props) return
       popover.props = {
@@ -65,12 +60,75 @@ export const popoverPlugin: Plugin = {
         ...val,
       }
     }
+    /**
+     * @param {ControllerKey} self You can get the symbol param from the return value from the show method, or use props.id
+     */
+    const removePopover = (self: ControllerKey) => popovers.value.delete(self)
+
+    const tooltips = ref(new Map<ControllerKey, TooltipOrchestratorMapValue>())
+    /**
+     * @returns {ControllerKey} If `id` is passed to props, it will use that id, otherwise,
+     * a symbol will be created that corresponds to its unique id.
+     */
+    const tooltip = (obj: TooltipOrchestratorShowParam): ControllerKey => {
+      const resolvedProps = toRef(obj.props)
+      const reference = toRef(obj.target)
+
+      const _self = resolvedProps.value?.id || Symbol('Tooltip controller')
+
+      watch(
+        reference,
+        (newValue) => {
+          if (!newValue) {
+            tooltips.value.delete(_self)
+          } else {
+            tooltips.value.set(_self, {
+              component: !obj.component ? undefined : markRaw(obj.component),
+              props: {...resolvedProps.value, _modelValue: false, _target: newValue},
+            })
+          }
+        },
+        {
+          immediate: true,
+        }
+      )
+
+      watch(resolvedProps, (newValue) => {
+        const previous = tooltips.value.get(_self)
+        if (!previous) return
+        tooltips.value.set(_self, {
+          component: !obj.component ? undefined : markRaw(obj.component),
+          props: {...previous.props, ...newValue},
+        })
+      })
+
+      return _self
+    }
+    /**
+     * @param {ControllerKey} self You can get the symbol param from the return value from the show method, or use props.id
+     */
+    const setTooltip = (self: ControllerKey, val: Partial<PrivateOrchestratedTooltip>) => {
+      const tip = tooltips.value.get(self)
+      if (!tip?.props) return
+      tip.props = {
+        ...tip.props,
+        ...val,
+      }
+    }
+    /**
+     * @param {ControllerKey} self You can get the symbol param from the return value from the show method, or use props.id
+     */
+    const removeTooltip = (self: ControllerKey) => tooltips.value.delete(self)
 
     app.provide(popoverPluginKey, {
       popovers,
-      show,
-      remove,
-      set,
+      tooltips,
+      tooltip,
+      popover,
+      setPopover,
+      setTooltip,
+      removePopover,
+      removeTooltip,
     })
   },
 }
