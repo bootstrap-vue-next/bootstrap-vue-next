@@ -91,7 +91,7 @@ Group a series of button-groups and/or input-groups together on a single line.
       <BButton>Edit</BButton>
       <BButton>Undo</BButton>
     </BButtonGroup>
-    <BDropdown class="mx-1" right text="menu">
+    <BDropdown class="mx-1" placement="right"text="menu">
       <BDropdownItem>Item 1</BDropdownItem>
       <BDropdownItem>Item 2</BDropdownItem>
       <BDropdownItem>Item 3</BDropdownItem>
@@ -110,7 +110,7 @@ Group a series of button-groups and/or input-groups together on a single line.
     <BButton>Edit</BButton>
     <BButton>Undo</BButton>
   </BButtonGroup>
-  <BDropdown class="mx-1" right text="menu">
+  <BDropdown class="mx-1" placement="right"text="menu">
     <BDropdownItem>Item 1</BDropdownItem>
     <BDropdownItem>Item 2</BDropdownItem>
     <BDropdownItem>Item 3</BDropdownItem>
@@ -147,7 +147,7 @@ Note, if you want smaller or larger buttons or controls, set the `size` prop dir
   </div>
   <div class="mt-2">
     <BButtonToolbar aria-label="Toolbar with dropdown size sm">
-        <BDropdown size="sm" class="mx-1" right text="menu">
+        <BDropdown size="sm" class="mx-1" placement="right"text="menu">
           <BDropdownItem>Item 1</BDropdownItem>
           <BDropdownItem>Item 2</BDropdownItem>
           <BDropdownItem>Item 3</BDropdownItem>
@@ -165,7 +165,7 @@ Note, if you want smaller or larger buttons or controls, set the `size` prop dir
   </div>
   <div class="mt-2">
     <BButtonToolbar aria-label="Toolbar with dropdown size lg">
-      <BDropdown size="lg" class="mx-1" right text="menu">
+      <BDropdown size="lg" class="mx-1" placement="right"text="menu">
         <BDropdownItem>Item 1</BDropdownItem>
         <BDropdownItem>Item 2</BDropdownItem>
         <BDropdownItem>Item 3</BDropdownItem>
@@ -184,7 +184,7 @@ Note, if you want smaller or larger buttons or controls, set the `size` prop dir
 </BButtonToolbar>
 
 <BButtonToolbar aria-label="Toolbar with dropdown size sm">
-  <BDropdown size="sm" class="mx-1" right text="menu">
+  <BDropdown size="sm" class="mx-1" placement="right"text="menu">
     <BDropdownItem>Item 1</BDropdownItem>
     <BDropdownItem>Item 2</BDropdownItem>
     <BDropdownItem>Item 3</BDropdownItem>
@@ -200,7 +200,7 @@ Note, if you want smaller or larger buttons or controls, set the `size` prop dir
 </BButtonToolbar>
 
 <BButtonToolbar aria-label="Toolbar with dropdown size lg">
-  <BDropdown size="lg" class="mx-1" right text="menu">
+  <BDropdown size="lg" class="mx-1" placement="right"text="menu">
     <BDropdownItem>Item 1</BDropdownItem>
     <BDropdownItem>Item 2</BDropdownItem>
     <BDropdownItem>Item 3</BDropdownItem>
@@ -223,7 +223,7 @@ input groups and dropdowns, by setting the prop `justify`.
       <BButton>Edit</BButton>
       <BButton>Undo</BButton>
     </BButtonGroup>
-    <BDropdown class="mx-1" right text="menu">
+    <BDropdown class="mx-1" placement="right"text="menu">
       <BDropdownItem>Item 1</BDropdownItem>
       <BDropdownItem>Item 2</BDropdownItem>
       <BDropdownItem>Item 3</BDropdownItem>
@@ -242,7 +242,7 @@ input groups and dropdowns, by setting the prop `justify`.
     <BButton>Edit</BButton>
     <BButton>Undo</BButton>
   </BButtonGroup>
-  <BDropdown class="mx-1" right text="menu">
+  <BDropdown class="mx-1" placement="right"text="menu">
     <BDropdownItem>Item 1</BDropdownItem>
     <BDropdownItem>Item 2</BDropdownItem>
     <BDropdownItem>Item 3</BDropdownItem>

@@ -3,6 +3,7 @@
     ref="wrapper"
     :skip="inInputGroup || props.skipWrapper"
     :class="computedClasses"
+    :role="inButtonGroupAttributes?.role"
   >
     <BButton
       :id="computedId"
@@ -84,7 +85,7 @@ import BButton from '../BButton/BButton.vue'
 import ConditionalWrapper from '../ConditionalWrapper.vue'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
 import {isBoundary, isRootBoundary} from '../../utils/floatingUi'
-import {dropdownInjectionKey, inputGroupKey} from '../../utils/keys'
+import {buttonGroupKey, dropdownInjectionKey, inputGroupKey} from '../../utils/keys'
 
 const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   ariaLabel: undefined,
@@ -149,6 +150,7 @@ const computedId = useId(() => props.id, 'dropdown')
 const modelValue = defineModel<Exclude<BDropdownProps['modelValue'], undefined>>({default: false})
 
 const inInputGroup = inject(inputGroupKey, false)
+const inButtonGroup = inject(buttonGroupKey, false)
 
 const computedOffset = computed(() =>
   typeof props.offset === 'string' || typeof props.offset === 'number' ? props.offset : NaN
@@ -261,10 +263,19 @@ const {update, floatingStyles} = useFloating(referencePlacement, floating, {
   whileElementsMounted: autoUpdate,
 })
 
+const inButtonGroupAttributes = inButtonGroup
+  ? {
+      class: 'btn-group',
+      role: 'group',
+    }
+  : undefined
+
 const computedClasses = computed(() => [
+  inButtonGroupAttributes?.class,
   props.wrapperClass,
   {
     'btn-group': !props.wrapperClass && props.split,
+    'dropdown': !props.wrapperClass && !props.split,
     'position-static': props.boundary !== 'clippingAncestors' && !props.isNav,
   },
 ])

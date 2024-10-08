@@ -170,6 +170,7 @@ export const defaultsKey: InjectionKey<Ref<Partial<BvnComponentProps>>> =
   createBvnInjectionKey('defaults')
 
 export const inputGroupKey: InjectionKey<boolean> = createBvnInjectionKey('inputGroup')
+export const buttonGroupKey: InjectionKey<boolean> = createBvnInjectionKey('buttonGroup')
 
 export const toastPluginKey: InjectionKey<{
   toasts: Ref<ToastOrchestratorArrayValue[]>

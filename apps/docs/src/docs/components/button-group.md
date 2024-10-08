@@ -138,13 +138,13 @@ that split dropdown menus are not supported when prop `vertical` is set.
 <HighlightCard>
   <BButtonGroup>
     <BButton>Button</BButton>
-    <BDropdown right text="Menu">
+    <BDropdown placement="right"text="Menu">
       <BDropdownItem>Item 1</BDropdownItem>
       <BDropdownItem>Item 2</BDropdownItem>
       <BDropdownDivider />
       <BDropdownItem>Item 3</BDropdownItem>
     </BDropdown>
-    <BDropdown right split text="Split Menu">
+    <BDropdown placement="right"split text="Split Menu">
       <BDropdownItem>Item 1</BDropdownItem>
       <BDropdownItem>Item 2</BDropdownItem>
       <BDropdownDivider />
@@ -156,13 +156,13 @@ that split dropdown menus are not supported when prop `vertical` is set.
 ```vue-html
 <BButtonGroup>
   <BButton>Button</BButton>
-  <BDropdown right text="Menu">
+  <BDropdown placement="right"text="Menu">
     <BDropdownItem>Item 1</BDropdownItem>
     <BDropdownItem>Item 2</BDropdownItem>
     <BDropdownDivider />
     <BDropdownItem>Item 3</BDropdownItem>
   </BDropdown>
-  <BDropdown right split text="Split Menu">
+  <BDropdown placement="right"split text="Split Menu">
     <BDropdownItem>Item 1</BDropdownItem>
     <BDropdownItem>Item 2</BDropdownItem>
     <BDropdownDivider />
