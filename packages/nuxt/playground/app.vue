@@ -75,6 +75,6 @@ const f = useBreadcrumb()
 useColorMode()
 useModal()
 useModalController()
-const toast = useToast()
+const toast = useToastController()
 const formSelectMultipleSelected = ref([])
 </script>

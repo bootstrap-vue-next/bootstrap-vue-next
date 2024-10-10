@@ -245,26 +245,6 @@ export default {
             type: 'Padding',
             default: undefined,
           },
-          center: {
-            type: 'boolean',
-            default: false,
-          },
-          dropend: {
-            type: 'boolean',
-            default: false,
-          },
-          dropstart: {
-            type: 'boolean',
-            default: false,
-          },
-          dropup: {
-            type: 'boolean',
-            default: false,
-          },
-          end: {
-            type: 'boolean',
-            default: false,
-          },
           floatingMiddleware: {
             type: 'Middleware[]',
             default: undefined,
@@ -367,7 +347,7 @@ export default {
           wrapperClass: {
             type: 'ClassValue',
           },
-          ...pick(buildCommonProps(), ['ariaLabel', 'disabled', 'id', 'size', 'role']),
+          ...pick(buildCommonProps(), ['ariaLabel', 'disabled', 'id', 'size', 'role', 'placement']),
         } satisfies Record<keyof BvnComponentProps['BNavItemDropdown'], PropertyReference>,
       },
       emits: [

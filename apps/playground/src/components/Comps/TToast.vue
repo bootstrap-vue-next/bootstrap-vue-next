@@ -18,9 +18,14 @@
 // You can use this file as a development spot to test your changes
 // Please do not commit this file
 import {computed, h, onMounted, ref} from 'vue'
-import {BToast, type ColorVariant, type OrchestratedToast, useToast} from 'bootstrap-vue-next'
+import {
+  BToast,
+  type ColorVariant,
+  type OrchestratedToast,
+  useToastController,
+} from 'bootstrap-vue-next'
 
-const {show, toasts} = useToast()
+const {show, toasts} = useToastController()
 
 const firstRef = ref<OrchestratedToast>({
   body: `${Math.random()}`,

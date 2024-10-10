@@ -34,7 +34,7 @@ import {positionClasses} from '../../utils/positionClasses'
 import type {BToastOrchestratorProps} from '../../types/ComponentProps'
 import BToast from './BToast.vue'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
-import {useToast} from '../../composables/useToast'
+import {useToastController} from '../../composables/useToastController'
 
 defineOptions({
   inheritAttrs: false,
@@ -47,7 +47,7 @@ const _props = withDefaults(defineProps<BToastOrchestratorProps>(), {
 })
 const props = useDefaults(_props, 'BToastOrchestrator')
 
-const tools = useToast()
+const tools = useToastController()
 
 watch(
   () => props.appendToast,

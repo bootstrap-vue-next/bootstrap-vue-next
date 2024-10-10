@@ -7,10 +7,9 @@ import {breadcrumbPlugin} from '../breadcrumb'
 import {defaultsPlugin} from '../defaults'
 import {modalControllerPlugin} from '../modalController'
 import {modalManagerPlugin} from '../modalManager'
-import {popoverPlugin} from '../popover'
+import {popoverPlugin} from '../popoverController'
 import {rtlPlugin} from '../rtl'
-import {toastPlugin} from '../toast'
-import {tooltipPlugin} from '../tooltip'
+import {toastPlugin} from '../toastController'
 
 // Main app plugin
 export const createBootstrap = (pluginData: Readonly<BootstrapVueOptions> = {}): Plugin => ({
@@ -29,9 +28,6 @@ export const createBootstrap = (pluginData: Readonly<BootstrapVueOptions> = {}):
     }
     if (pluginData.toast ?? true === true) {
       app.use(toastPlugin)
-    }
-    if (pluginData.tooltip ?? true === true) {
-      app.use(tooltipPlugin)
     }
     if (pluginData.popover ?? true === true) {
       app.use(popoverPlugin)

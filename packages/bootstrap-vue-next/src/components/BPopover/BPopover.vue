@@ -68,11 +68,11 @@ import {
   autoUpdate,
   type Boundary,
   flip,
+  type Placement as FloatingPlacement,
   hide as hideMiddleware,
   inline as inlineMiddleware,
   type Middleware,
   offset as offsetMiddleware,
-  type Placement as OriginalPlacement,
   type RootBoundary,
   shift,
   size as sizeMiddleware,
@@ -273,7 +273,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
 })
 
 const placementRef = computed(() =>
-  isAutoPlacement.value ? undefined : (props.placement as OriginalPlacement)
+  isAutoPlacement.value ? undefined : (props.placement as FloatingPlacement)
 )
 
 const {floatingStyles, middlewareData, placement, update} = useFloating(targetTrigger, element, {

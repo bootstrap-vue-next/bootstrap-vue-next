@@ -1,4 +1,11 @@
-import type {Boundary, Middleware, Padding, RootBoundary, Strategy} from '@floating-ui/vue'
+import type {
+  Boundary,
+  Placement as FloatingPlacement,
+  Middleware,
+  Padding,
+  RootBoundary,
+  Strategy,
+} from '@floating-ui/vue'
 import type {ComponentPublicInstance, TransitionProps} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {LinkTarget} from './LinkTarget'
@@ -1007,8 +1014,6 @@ export interface BTableLiteProps<T> extends BTableSimpleProps {
   caption?: string
   captionHtml?: string
   detailsTdClass?: ClassValue
-  emptyFilteredText?: string
-  emptyText?: string
   fieldColumnClass?: // eslint-disable-next-line @typescript-eslint/no-explicit-any
   | ((field: TableField<T>) => readonly Record<string, any>[])
     | string
@@ -1027,7 +1032,6 @@ export interface BTableLiteProps<T> extends BTableSimpleProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   modelValue?: any
   primaryKey?: string
-  showEmpty?: boolean
   tbodyClass?: ClassValue
   tbodyTrAttrs?: ((item: T | null, type: TableRowType) => AttrsValue) | AttrsValue
   // tbodyTransitionHandlers
@@ -1081,6 +1085,9 @@ export interface BTableProps<T> extends Omit<BTableLiteProps<T>, 'tableClass'> {
   // sortNullLast?: boolean
   selectedItems?: readonly T[]
   noSortableIcon?: boolean
+  emptyFilteredText?: string
+  emptyText?: string
+  showEmpty?: boolean
 }
 
 export interface BTrProps {
@@ -1147,12 +1154,7 @@ export interface BDropdownProps extends TeleporterProps {
   autoClose?: boolean | 'inside' | 'outside'
   boundary?: Boundary | RootBoundary
   boundaryPadding?: Padding
-  center?: boolean
   disabled?: boolean
-  dropend?: boolean
-  dropstart?: boolean
-  dropup?: boolean
-  end?: boolean
   floatingMiddleware?: Middleware[]
   id?: string
   isNav?: boolean
@@ -1183,6 +1185,7 @@ export interface BDropdownProps extends TeleporterProps {
   toggleText?: string
   variant?: ButtonVariant | null
   wrapperClass?: ClassValue
+  placement?: FloatingPlacement
 }
 
 export interface BToastProps extends ColorExtendables, Omit<BLinkProps, 'routerTag'> {

@@ -36,15 +36,13 @@ The dropdown menu can either be _start_ aligned (default) or _end_ aligned to th
 
 ### Dropup
 
-Turn your dropdown menu into a drop-up menu by setting the `dropup` prop.
+Turn your dropdown menu into a drop-up menu by setting the `placement` prop.
 
 <<< DEMO ./demo/DropdownDropup.vue#template{vue-html}
 
 ### Drop start or end
 
-Turn your dropdown menu into a drop-end menu by setting the `dropend` prop. Or, turn it into a drop-start menu by setting the `dropstart` prop to true.
-
-The order of precedence is top -> start -> end -> bottom.
+Turn your dropdown menu into a drop-end or drop-start menu by setting the `placement` prop.
 
 <<< DEMO ./demo/DropdownStartEnd.vue#template{vue-html}
 

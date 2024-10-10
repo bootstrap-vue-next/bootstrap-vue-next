@@ -13,7 +13,8 @@ export const modalManagerPlugin: Plugin = {
     const stack: Ref<Map<number, ComponentInternalInstance>> = ref(new Map())
 
     const countStack = computed(() => stack.value.size)
-    const lastStack = computed(() => [...stack.value.values()].pop())
+    const valuesStack = computed(() => [...stack.value.values()])
+    const lastStack = computed(() => valuesStack.value[valuesStack.value.length - 1])
 
     const pushStack = (modal: Readonly<ComponentInternalInstance>) => {
       stack.value.set(modal.uid, modal)
@@ -42,7 +43,7 @@ export const modalManagerPlugin: Plugin = {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       registry: readonly(registry) as Readonly<Ref<Map<number, ComponentInternalInstance>>>,
-      stack: computed(() => [...stack.value.values()]),
+      stack: valuesStack,
       pushStack,
       removeStack,
       pushRegistry,

@@ -152,13 +152,6 @@
             </BTr>
           </template>
         </template>
-        <BTr v-if="props.showEmpty && props.items.length === 0" class="b-table-empty-slot">
-          <BTd :colspan="computedFieldsTotal">
-            <slot name="empty" :items="props.items">
-              {{ props.emptyText }}
-            </slot>
-          </BTd>
-        </BTr>
         <!-- This class is for specific targetting of this slot element -->
         <BTr
           v-if="!props.stacked && $slots['bottom-row']"
@@ -251,9 +244,6 @@ const _props = withDefaults(defineProps<BTableLiteProps<T>>(), {
   footClone: false,
   items: () => [],
   labelStacked: false,
-  showEmpty: false,
-  emptyText: 'There are no records to show',
-  emptyFilteredText: 'There are no records matching your request', // TODO not implemented
   fieldColumnClass: undefined,
   tbodyTrClass: undefined,
   captionHtml: undefined,

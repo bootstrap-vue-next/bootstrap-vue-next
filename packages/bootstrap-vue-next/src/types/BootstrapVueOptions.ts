@@ -109,7 +109,6 @@ export const componentsWithExternalPath = {
   BTfoot: '/components/BTable',
   BTr: '/components/BTable',
   BPopoverOrchestrator: '/components/BPopover',
-  BTooltipOrchestrator: '/components/BTooltip',
 } as const satisfies Record<ComponentType, string>
 export const componentNames = Object.freeze(
   Object.keys(componentsWithExternalPath) as ComponentType[]
@@ -133,9 +132,8 @@ export const composablesWithExternalPath = {
   useModal: '/composables/useModal',
   useModalController: '/composables/useModalController',
   useScrollspy: '/composables/useScrollspy',
-  useToast: '/composables/useToast',
-  usePopover: '/composables/usePopover',
-  useTooltip: '/composables/useTooltip',
+  useToastController: '/composables/useToastController',
+  usePopoverController: '/composables/usePopoverController',
 } as const satisfies Record<ComposableType, string>
 export const composableNames = Object.freeze(
   Object.keys(composablesWithExternalPath) as ComposableType[]

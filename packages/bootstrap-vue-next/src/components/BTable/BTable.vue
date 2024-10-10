@@ -137,6 +137,24 @@
           <slot name="table-busy" />
         </BTd>
       </BTr>
+
+      <BTr
+        v-else-if="props.showEmpty === true && computedItems.length === 0"
+        class="b-table-empty-row"
+      >
+        <BTd :colspan="computedFields.length">
+          <div role="alert" aria-live="polite">
+            <div class="text-center my-2">
+              <slot v-if="isFilterableTable" name="empty-filtered" v-bind="emptySlotScope">
+                {{ props.emptyFilteredText }}
+              </slot>
+              <slot v-else name="empty" v-bind="emptySlotScope">
+                {{ props.emptyText }}
+              </slot>
+            </div>
+          </div>
+        </BTd>
+      </BTr>
     </template>
   </BTableLite>
 </template>
@@ -199,9 +217,9 @@ const _props = withDefaults(
     align: undefined,
     footClone: undefined,
     labelStacked: undefined,
-    showEmpty: undefined,
-    emptyText: undefined,
-    emptyFilteredText: undefined,
+    showEmpty: false,
+    emptyText: 'There are no records to show',
+    emptyFilteredText: 'There are no records matching your request',
     fieldColumnClass: undefined,
     tbodyTrClass: undefined,
     captionHtml: undefined,
@@ -543,6 +561,13 @@ const computedItems = computed<T[]>(() => {
 
   return mappedItems
 })
+
+const emptySlotScope = computed(() => ({
+  emptyFilteredText: props.emptyFilteredText,
+  emptyText: props.emptyText,
+  fields: computedFields.value,
+  items: computedItems.value,
+}))
 
 const computedDisplayItems = computed<T[]>(() => {
   if (Number.isNaN(perPageNumber.value) || (usesProvider.value && !props.noProviderPaging)) {

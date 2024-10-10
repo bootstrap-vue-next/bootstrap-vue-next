@@ -27,34 +27,6 @@ export default {
             default: undefined,
             description: 'The virtual padding around the boundary to check for overflow',
           },
-          center: {
-            type: 'boolean',
-            default: false,
-            description: 'Centers the dropdown on the button',
-          },
-          dropend: {
-            type: 'boolean',
-            default: false,
-            description:
-              'When set, positions the menu to at the end (right for ltr reading) of the button',
-          },
-          dropstart: {
-            type: 'boolean',
-            default: false,
-            description:
-              'When set, positions the menu to at the start (left for ltr reading) of the button.',
-          },
-          dropup: {
-            type: 'boolean',
-            default: false,
-            description: 'When set, positions the menu on the top of the button',
-          },
-          end: {
-            type: 'boolean',
-            default: false,
-            description:
-              'Aligns the dropdown with the end (right for ltr reading) of the button. Default is start (left for ltr reading)',
-          },
           floatingMiddleware: {
             type: 'Middleware[]',
             default: undefined,
@@ -195,7 +167,7 @@ export default {
                 default: 'secondary',
               },
             }),
-            ['ariaLabel', 'disabled', 'id', 'role', 'size', 'variant']
+            ['ariaLabel', 'disabled', 'id', 'role', 'size', 'variant', 'placement']
           ),
         } satisfies Record<keyof BvnComponentProps['BDropdown'], PropertyReference>,
       },
