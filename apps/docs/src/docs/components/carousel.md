@@ -137,31 +137,14 @@ You are also able to use the built in methods for going to the next, or previous
 
 <<< DEMO ./demo/CarouselFull.vue#template{vue-html}
 
-## Reference
-
 <ComponentReference :data="data" />
 
-<script setup lang="ts">
+<script lang="ts">
 import {data} from '../../data/components/carousel.data'
-import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
-import HighlightCard from '../../components/HighlightCard.vue'
-import {BButton, BButtonGroup, BAlert, BCarouselSlide, BCarousel} from 'bootstrap-vue-next'
-import {ref} from 'vue'
 
-const firstSlide = ref(0)
-
-const secondSlide = ref(2)
-
-const slideInterval = ref(5000)
-
-const myCarousel = ref<null | InstanceType<typeof BCarousel>>(null)
-const pause = () => myCarousel.value?.pause()
-const resume = () => myCarousel.value?.resume()
-
-const mySecondCarousel = ref<null | InstanceType<typeof BCarousel>>(null)
-const prev = () => mySecondCarousel.value?.prev()
-const next = () => mySecondCarousel.value?.next()
-
-const slideThreshold = ref(50)
+export default {
+  setup() {
+    return {data}
+  }
+}
 </script>

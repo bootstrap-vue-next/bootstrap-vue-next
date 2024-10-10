@@ -15,6 +15,7 @@
 </template>
 
 <script setup lang="ts">
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BDropdownItemButtonProps} from '../../types/ComponentProps'
 import {computed, useAttrs} from 'vue'
@@ -44,12 +45,17 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
+const colorClasses = useColorVariantClasses(
+  computed(() => ({
+    textVariant: props.variant,
+  }))
+)
 const computedClasses = computed(() => [
   props.buttonClass,
+  colorClasses.value,
   {
     [props.activeClass]: props.active,
     disabled: props.disabled,
-    [`text-${props.variant}`]: props.variant !== null,
   },
 ])
 

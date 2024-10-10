@@ -139,7 +139,6 @@ const modelValue = defineModel<Exclude<BToastProps['modelValue'], undefined>>({d
 const {computedLink, computedLinkProps} = useBLinkHelper(props)
 
 // TODO solid is never used
-const resolvedBackgroundClasses = useColorVariantClasses(props)
 const countdownLength = computed(() =>
   typeof modelValue.value === 'boolean' ? 0 : modelValue.value
 )
@@ -176,8 +175,9 @@ const isToastVisible = computed(() =>
     : isActive.value || (props.showOnPause && isPaused.value)
 )
 
+const colorClasses = useColorVariantClasses(props)
 const computedClasses = computed(() => [
-  resolvedBackgroundClasses.value,
+  colorClasses.value,
   {
     show: isToastVisible.value,
   },

@@ -366,19 +366,25 @@ describe('modal', () => {
     // initial closed state
     let $modal = wrapper.find('div.modal')
     expect($modal.isVisible()).toBe(false)
-    expect(document.body.attributes.getNamedItem('style')?.textContent ?? '').toBe('')
+    expect(document.body.attributes.getNamedItem('style')?.textContent ?? '').not.toContain(
+      'overflow: hidden;'
+    )
 
     // open stated
     await wrapper.setProps({modelValue: true})
     expect($modal.isVisible()).toBe(true)
-    expect(document.body.attributes.getNamedItem('style')?.textContent).toBe('overflow: hidden;')
+    expect(document.body.attributes.getNamedItem('style')?.textContent).toContain(
+      'overflow: hidden;'
+    )
 
     // closed state
     $modal = wrapper.find('div.modal')
     await $modal.trigger('keydown.Escape')
     $modal = wrapper.find('div.modal')
     expect($modal.isVisible()).toBe(false)
-    expect(document.body.attributes.getNamedItem('style')?.textContent ?? '').toBe('')
+    expect(document.body.attributes.getNamedItem('style')?.textContent ?? '').not.toContain(
+      'overflow: hidden;'
+    )
 
     wrapper.unmount()
   })

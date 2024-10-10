@@ -1,4 +1,5 @@
 <template>
+  <!-- eslint-disable prettier/prettier -->
   <BTableLite
     v-bind="props"
     :aria-busy="busyModel"
@@ -8,23 +9,34 @@
     :tbody-tr-class="getRowClasses"
     :field-column-class="getFieldColumnClasses"
     @head-clicked="onFieldHeadClick"
-    @row-dbl-clicked="
-      (row: T, index: number, e: MouseEvent) => {
-        emit('row-dbl-clicked', row, index, e)
+    @row-clicked="onRowClick"
+    @row-dblclicked="
+      (row, index, e) => {
+        emit('row-dblclicked', row, index, e)
       }
     "
-    @row-clicked="onRowClick"
+    @row-contextmenu="
+      (row, index, e) => {
+        emit('row-contextmenu', row, index, e)
+      }
+    "
     @row-hovered="
-      (row: T, index: number, e: MouseEvent) => {
+      (row, index, e) => {
         emit('row-hovered', row, index, e)
       }
     "
     @row-unhovered="
-      (row: T, index: number, e: MouseEvent) => {
+      (row, index, e) => {
         emit('row-unhovered', row, index, e)
       }
     "
+    @row-middle-clicked="
+      (row, index, e) => {
+        emit('row-middle-clicked', row, index, e)
+      }
+    "
   >
+    <!-- eslint-enable prettier/prettier -->
     <template v-for="(_, name) in $slots" #[name]="slotData">
       <slot :name="name" v-bind="slotData" />
     </template>
@@ -116,18 +128,13 @@
       </template>
     </template>
     <template #custom-body="scope">
-      <BTr v-if="busyModel" class="b-table-busy-slot" :class="getBusyRowClasses">
+      <BTr
+        v-if="busyModel && $slots['table-busy']"
+        class="b-table-busy-slot"
+        :class="getBusyRowClasses"
+      >
         <BTd :colspan="scope.fields.length">
-          <slot name="table-busy">
-            <BOverlay show>
-              <template #overlay>
-                <div class="d-flex align-items-center gap-2 mt-5">
-                  <BSpinner />
-                  <strong>{{ props.busyLoadingText }}</strong>
-                </div>
-              </template>
-            </BOverlay>
-          </slot>
+          <slot name="table-busy" />
         </BTd>
       </BTr>
     </template>
@@ -138,8 +145,6 @@
 import {useToNumber} from '@vueuse/core'
 import {computed, onMounted, type Ref, ref, watch} from 'vue'
 import {formatItem} from '../../utils/formatItem'
-import BOverlay from '../BOverlay/BOverlay.vue'
-import BSpinner from '../BSpinner/BSpinner.vue'
 import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
 import BTr from './BTr.vue'
@@ -150,8 +155,10 @@ import {
   isTableItem,
   type NoProviderTypes,
   type TableField,
+  type TableFieldFormatter,
   type TableFieldRaw,
   type TableItem,
+  type TableRowEvent,
   type TableRowType,
   type TableStrictClassValue,
 } from '../../types/TableTypes'
@@ -237,10 +244,12 @@ const props = useDefaults(_props, 'BTable')
 const emit = defineEmits<{
   'filtered': [value: T[]]
   'head-clicked': [key: string, field: TableField<T>, event: MouseEvent, isFooter: boolean]
-  'row-clicked': [item: T, index: number, event: MouseEvent]
-  'row-dbl-clicked': [item: T, index: number, event: MouseEvent]
-  'row-hovered': [item: T, index: number, event: MouseEvent]
-  'row-unhovered': [item: T, index: number, event: MouseEvent]
+  'row-clicked': TableRowEvent<T>
+  'row-dblclicked': TableRowEvent<T>
+  'row-contextmenu': TableRowEvent<T>
+  'row-hovered': TableRowEvent<T>
+  'row-unhovered': TableRowEvent<T>
+  'row-middle-clicked': TableRowEvent<T>
   'row-selected': [value: T]
   'row-unselected': [value: T]
   'sorted': [value: BTableSortBy]
@@ -266,6 +275,19 @@ const selectedItemsToSet = computed({
     selectedItemsModel.value = [...val]
   },
 })
+
+watch(selectedItemsToSet, (newValue, oldValue) => {
+  Array.from(oldValue)
+    .filter((item) => !newValue.has(item))
+    .forEach((item) => {
+      emit('row-unselected', item)
+    })
+  Array.from(newValue)
+    .filter((item) => !oldValue.has(item))
+    .forEach((item) => {
+      emit('row-selected', item)
+    })
+})
 /**
  * This is to avoid the issue of directly mutating the array structure and to properly trigger the computed setter.
  * The utils also conveniently emit the proper events after
@@ -275,7 +297,6 @@ const selectedItemsSetUtilities = {
     const value = new Set(selectedItemsToSet.value)
     value.add(item)
     selectedItemsToSet.value = value
-    emit('row-selected', item)
   },
   clear: () => {
     selectedItemsToSet.value.forEach((item) => {
@@ -298,13 +319,9 @@ const selectedItemsSetUtilities = {
       value.delete(item)
     }
     selectedItemsToSet.value = value
-    emit('row-unselected', item)
   },
   set: (items: T[]) => {
     selectedItemsToSet.value = new Set(items)
-    selectedItemsToSet.value.forEach((item) => {
-      emit('row-unselected', item)
-    })
   },
   has: (item: T) => {
     if (!props.primaryKey) return selectedItemsToSet.value.has(item)
@@ -408,6 +425,8 @@ const getRowClasses = (item: T | null, type: TableRowType): TableStrictClassValu
     : null,
 ]
 
+const getFormatter = (value: TableField): TableFieldFormatter<unknown> | undefined =>
+  typeof value.sortByFormatted === 'function' ? value.sortByFormatted : value.formatter
 const computedItems = computed<T[]>(() => {
   const sortItems = (items: T[]) => {
     // "undefined" values are set by us, we do this so we dont wipe out the comparer
@@ -429,12 +448,9 @@ const computedItems = computed<T[]>(() => {
           })
           const val = get(ob, sortOption.key as keyof TableItem)
           if (isTableField(sortField) && !!sortField.sortByFormatted) {
-            const formatter =
-              typeof sortField.sortByFormatted === 'function'
-                ? sortField.sortByFormatted
-                : sortField.formatter
+            const formatter = getFormatter(sortField)
             if (formatter) {
-              return formatItem(ob, String(sortField.key), formatter) as string
+              return String(formatItem(ob, String(sortField.key), formatter))
             }
           }
           return typeof val === 'object' && val !== null
@@ -474,12 +490,9 @@ const computedItems = computed<T[]>(() => {
                 return false
               })
               if (isTableField(filterField) && !!filterField.filterByFormatted) {
-                const formatter =
-                  typeof filterField.filterByFormatted === 'function'
-                    ? filterField.filterByFormatted
-                    : filterField.formatter
+                const formatter = getFormatter(filterField)
                 if (formatter) {
-                  return formatter(val, String(filterField.key), item) as string
+                  return String(formatter(val, String(filterField.key), item))
                 }
               }
               return typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
@@ -580,10 +593,10 @@ const handleRowSelection = (
       // This is where range is different, due to the difference in shift
     } else if (shiftClicked) {
       const lastSelectedItem = [...selectedItemsToSet.value].pop()
-      const lastSelectedIndex = props.items.findIndex((i) => i === lastSelectedItem)
+      const lastSelectedIndex = computedItems.value.findIndex((i) => i === lastSelectedItem)
       const selectStartIndex = Math.min(lastSelectedIndex, index)
       const selectEndIndex = Math.max(lastSelectedIndex, index)
-      const items = props.items.slice(selectStartIndex, selectEndIndex + 1)
+      const items = computedItems.value.slice(selectStartIndex, selectEndIndex + 1)
       selectedItemsSetUtilities.set(items)
       // If nothing is being held, then we just behave like it's single mode
     } else {
@@ -764,12 +777,7 @@ defineExpose({
   refresh: callItemsProvider,
   selectAllRows: () => {
     if (!props.selectable) return
-    const unselectableItems = selectedItemsToSet.value.size > 0 ? [...selectedItemsToSet.value] : []
     selectedItemsToSet.value = new Set([...computedItems.value])
-    selectedItemsToSet.value.forEach((item) => {
-      if (unselectableItems.includes(item)) return
-      emit('row-selected', item)
-    })
   },
   selectRow: (index: number) => {
     if (!props.selectable) return

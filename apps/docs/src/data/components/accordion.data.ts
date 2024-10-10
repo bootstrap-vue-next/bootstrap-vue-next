@@ -136,11 +136,6 @@ export default {
             default: false,
             description: 'When true, the AccordionItem will be visible',
           },
-          wrapperAttrs: {
-            type: 'Readonly<AttrsValue>',
-            default: undefined,
-            description: 'Attributes to be applied to the wrapper element',
-          },
           ...pick(
             buildCommonProps({
               id: {
@@ -148,7 +143,7 @@ export default {
                   'The Id to be injected to accordion items and used to in BCollapse for state managment',
               },
             }),
-            ['id', 'tag']
+            ['id', 'tag', 'wrapperAttrs']
           ),
         } satisfies Record<keyof BvnComponentProps['BAccordionItem'], PropertyReference>,
       },

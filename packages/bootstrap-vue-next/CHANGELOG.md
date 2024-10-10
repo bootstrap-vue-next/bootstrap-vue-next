@@ -1,5 +1,49 @@
 # Changelog
 
+## [0.24.23](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.22...bootstrapvuenext-v0.24.23) (2024-09-26)
+
+
+### Bug Fixes
+
+* **vBPopover:** add position absolute to floating directives ([#2234](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2234)) ([9e4d8b7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9e4d8b7b8372a8aa3d6e3ec3fb3298f27e6292e0))
+
+## [0.24.22](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.21...bootstrapvuenext-v0.24.22) (2024-09-24)
+
+
+### Bug Fixes
+
+* **BTable:** select mode range when table is sorted fixes [#2229](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2229) ([#2230](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2230)) ([e29a9ef](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e29a9efaee7a26257fa4a18e197b24d0dd819270))
+
+## [0.24.21](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.20...bootstrapvuenext-v0.24.21) (2024-09-22)
+
+
+### Features
+
+* **colorvariant:** add subtle and emphasis variant fixes [#2079](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2079) ([5946219](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5946219512bfbf1a533a23670295ed5a8dfbaba9))
+
+## [0.24.20](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.19...bootstrapvuenext-v0.24.20) (2024-09-21)
+
+
+### Bug Fixes
+
+* **BModal:** fix jumping when scrollbars are present ([#2211](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2211)) ([9ab6132](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9ab613252676524538e2713d5e55e21c0863320a))
+* **useFocusTrap:** dont deactivate focus on esc fixes [#2144](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2144)  ([#2219](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2219)) ([89656ab](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/89656ab96deb986f1674f5ffdef59ff4743a44c5))
+
+## [0.24.19](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.18...bootstrapvuenext-v0.24.19) (2024-09-21)
+
+
+### Bug Fixes
+
+* **BFormFile:** remove capture attrs from dom if not defined. ([#2214](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2214)) ([85b38f3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/85b38f35b81600c05b504738096148afad8db713))
+* **nuxt:** make injection keys static strings fixes [#2209](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2209) ([#2218](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2218)) ([5634dc3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5634dc3f733bcd414737d5bb92bd56c83972b194))
+
+## [0.24.18](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.17...bootstrapvuenext-v0.24.18) (2024-09-17)
+
+
+### Bug Fixes
+
+* **vBPopover:** fix vue error with floating directives. ([#2208](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2208)) ([e50a5ba](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e50a5ba867ac0ad7b1f71a73a8e76d690d58e686))
+
 ## [0.24.17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.16...bootstrapvuenext-v0.24.17) (2024-09-16)
 
 

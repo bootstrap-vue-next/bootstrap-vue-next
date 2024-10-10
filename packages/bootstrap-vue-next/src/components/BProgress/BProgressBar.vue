@@ -45,10 +45,9 @@ defineSlots<{
 
 const parentData = inject(progressInjectionKey, null)
 
-const resolvedBackgroundClasses = useColorVariantClasses(props)
-
+const colorClasses = useColorVariantClasses(props)
 const computedClasses = computed(() => [
-  resolvedBackgroundClasses.value,
+  colorClasses.value,
   {
     'progress-bar-animated': props.animated || parentData?.animated.value,
     'progress-bar-striped':

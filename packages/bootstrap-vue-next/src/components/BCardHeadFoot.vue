@@ -9,9 +9,8 @@
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue'
-import type {BCardHeadFootProps} from '../../types/ComponentProps'
-import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import type {BCardHeadFootProps} from '../types/ComponentProps'
+import {useColorVariantClasses} from '../composables/useColorVariantClasses'
 
 const props = withDefaults(defineProps<BCardHeadFootProps>(), {
   borderVariant: null,
@@ -30,12 +29,5 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const resolvedBackgroundClasses = useColorVariantClasses(props)
-
-const computedClasses = computed(() => [
-  resolvedBackgroundClasses.value,
-  {
-    [`border-${props.borderVariant}`]: props.borderVariant !== null,
-  },
-])
+const computedClasses = useColorVariantClasses(props)
 </script>

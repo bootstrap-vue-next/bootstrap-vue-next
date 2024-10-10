@@ -23,6 +23,10 @@ For instance, there are likely many places where you use `Bootstrap` utility cla
 classes that involve `left` and `right` (or `l` and `r`) to be `start` and `end` (or `s` and `e`). This
 will affect compents such as `BNavBar` in unexpected ways that BSVN has no control over.
 
+Similarly, `left` and `right` props and values in the `bootstrap-vue-next` API are generally replaced by `start` and `end`.
+
+Bootstrap-vue-next will commit to breaking changes whenever Bootstrap marks something as "deprecated". These changes may be resolved automatically, or they might necessitate manual action from the library's users.
+
 ## Sync modifier
 
 A number of components in `bootstrap-vue` use `v-bind`'s `.sync` modifier. This modifier has been replaced by properties
@@ -143,6 +147,42 @@ implemented on `BCardBody`.
 The `sliding-start` and `sliding-end` events have been renamed to `slide` and `slid`.
 The `label-indicators` prop has been renamed to `indicators-button-label`.
 <NotYetImplemented>The `label-goto-slide`and `no-animation` props.</NotYetImplemented>
+
+## BCollapse
+
+The `accordian` prop is deprecated: In `bootstrap-vue`/`bootstrap4`, accordians are implemented via `BCollapse`.
+In `boostrap-vue-nexst`/`bootstrap5` accordians are first class citizens, so please use the
+[`BAccordian`](/docs/components/accordian) instead.
+
+The prop `toggle` has replaced the prop `appear` with slightly different semantics. In order to create a
+collapse that is closed and transitions to open on the initial mount, set `visible` to false and `toggle` to true.
+
+The `close` scoped slot element has been replaced by `hide` for consistency with the other props and
+events on this component.
+
+`$root` instance events `bv::collapse::state` and `bv::toggle::collapse` are deprecrated.
+
+<NotYetImplemented>The `appear` prop.</NotYetImplemented>
+
+## BDropdown
+
+BootstrapVueNext uses [floating-ui](https://floating-ui.com/) to implemented dropdowns. This affects values and behaviors
+for properties souch as `boundary` as well as the alignent and placement properties. For fine control, use `floating-middleware`
+in place of `popper-opts`. Check out [our documentation](/docs/components/dropdown) and [theirs] for details.
+
+The `block` prop is deprecated. See our [`BDropdown` documentation](/docs/components/dropdown#block-level-dropdowns)
+and [Bootstrap's documentation](https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons) for
+details.
+
+The `right` prop is replaced by `end` see the [overview section](#overview) of this page for details.
+
+The `html` prop has been deprecated, use the `button-content`.
+
+`$root` instance events `bv::dropdown::hide` and `bv::dropdown::show` are deprecrated.
+
+<NotYetImplemented>`toggleAttrs`</NotYetImplemented>
+
+<NotYetImplemented/>The props on `BDropdownForm`, `BDropdownHeader`, and `BDropdownText`.
 
 ## BForm
 
@@ -282,8 +322,3 @@ Keyboard Navigation and Small Screen Support.
 ## BPaginationNav
 
 <NotYetImplemented/>
-
-<script setup lang="ts">
-import {computed, ref} from 'vue'
-import {useModalController} from 'bootstrap-vue-next'
-</script>

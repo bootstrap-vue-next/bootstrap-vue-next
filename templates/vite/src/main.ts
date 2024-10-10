@@ -13,6 +13,6 @@ for (const name in Components) {
   app.component(name, Components[name])
 }
 for (const name in Directives) {
-  app.directive(name, Directives[name])
+  app.directive(name.replace(/^v/, ''), Directives[name])
 }
 app.mount('#app')

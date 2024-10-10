@@ -57,13 +57,12 @@ const slots = defineSlots<{
   title?: (props: Record<string, never>) => any
 }>()
 
-const resolvedBackgroundClasses = useColorVariantClasses(props)
-
 const hasTitleSlot = computed(() => !isEmptySlot(slots.title))
 const hasSubtitleSlot = computed(() => !isEmptySlot(slots.subtitle))
 
+const colorClasses = useColorVariantClasses(props)
 const computedClasses = computed(() => [
-  resolvedBackgroundClasses.value,
+  colorClasses.value,
   props.overlay ? 'card-img-overlay' : 'card-body',
 ])
 </script>

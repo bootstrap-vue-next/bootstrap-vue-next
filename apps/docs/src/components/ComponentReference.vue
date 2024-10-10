@@ -77,14 +77,16 @@
                     </BTable>
                     <template v-if="component.props.some((el) => el.name.trim() !== '')">
                       <span
-                        v-b-tooltip="
-                          'Extensions are selected properties from another component, integrated here. It may not include all original properties'
-                        "
+                        id="extension-info"
                         :style="{cursor: 'help'}"
                         class="text-decoration-underline text-info cursor-help"
                       >
                         Extensions:
                       </span>
+                      <b-tooltip
+                        target="extension-info"
+                        title="Extensions are selected properties from another component, integrated here. It may not include all original properties"
+                      />
                       <BAccordion free>
                         <BAccordionItem
                           v-for="(table, index) in component.props.filter(
@@ -216,8 +218,8 @@ import {
   BLink,
   BRow,
   BTable,
+  BTooltip,
   type TableFieldRaw,
-  vBTooltip,
 } from 'bootstrap-vue-next'
 import type {
   ComponentItem,
@@ -254,8 +256,8 @@ const sortData = computed(() =>
           .map(([key, value]) => ({prop: kebabCase(key), ...value}))
           .sort((a, b) => a.prop.localeCompare(b.prop)),
       })),
-      emits: el.emits.sort((a, b) => a.event.localeCompare(b.event)),
-      slots: el.slots.sort((a, b) => a.name.localeCompare(b.name)),
+      emits: el.emits?.sort((a, b) => a.event.localeCompare(b.event)),
+      slots: el.slots?.sort((a, b) => a.name.localeCompare(b.name)),
     }
 
     data.sections = (['Properties', 'Events', 'Slots'] as ComponentSection[]).filter(

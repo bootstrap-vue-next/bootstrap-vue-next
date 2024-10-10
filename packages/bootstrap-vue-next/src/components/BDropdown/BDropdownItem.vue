@@ -27,6 +27,7 @@ import type {BDropdownItemProps} from '../../types/ComponentProps'
 import {useBLinkHelper} from '../../composables/useBLinkHelper'
 import {collapseInjectionKey, dropdownInjectionKey, navbarInjectionKey} from '../../utils/keys'
 import {useDefaults} from '../../composables/useDefaults'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 
 defineOptions({
   inheritAttrs: false,
@@ -74,12 +75,17 @@ defineSlots<{
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props)
 
+const colorClasses = useColorVariantClasses(
+  computed(() => ({
+    textVariant: props.variant,
+  }))
+)
 const computedClasses = computed(() => [
   props.linkClass,
+  colorClasses.value,
   {
     active: props.active,
     disabled: props.disabled,
-    [`text-${props.variant}`]: props.variant !== null,
   },
 ])
 

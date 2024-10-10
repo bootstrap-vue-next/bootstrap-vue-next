@@ -13,6 +13,7 @@ import type {BNavbarProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import {useContainerClasses} from '../../composables/useContainerClasses'
 import {navbarInjectionKey} from '../../utils/keys'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 
 const _props = withDefaults(defineProps<BNavbarProps>(), {
   autoClose: true,
@@ -35,14 +36,21 @@ const computedRole = computed(() => (props.tag === 'nav' ? undefined : 'navigati
 
 const containerClass = useContainerClasses(() => props.container)
 
-const computedClasses = computed(() => ({
-  'd-print': props.print,
-  [`sticky-${props.sticky}`]: props.sticky !== undefined,
-  [`bg-${props.variant}`]: props.variant !== null,
-  [`fixed-${props.fixed}`]: props.fixed !== undefined,
-  'navbar-expand': props.toggleable === false,
-  [`navbar-expand-${props.toggleable}`]: typeof props.toggleable === 'string',
-}))
+const colorClasses = useColorVariantClasses(
+  computed(() => ({
+    bgVariant: props.variant,
+  }))
+)
+const computedClasses = computed(() => [
+  colorClasses.value,
+  {
+    'd-print': props.print,
+    [`sticky-${props.sticky}`]: props.sticky !== undefined,
+    [`fixed-${props.fixed}`]: props.fixed !== undefined,
+    'navbar-expand': props.toggleable === false,
+    [`navbar-expand-${props.toggleable}`]: typeof props.toggleable === 'string',
+  },
+])
 
 provide(navbarInjectionKey, {
   tag: toRef(() => props.tag),
