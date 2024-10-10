@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.25.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.23...bootstrapvuenext-v0.25.0) (2024-10-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BTable:** rename event row-dbl-clicked to row-dblclicked ([#2239](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2239))
+
+### Features
+
+* **BTable:** add row-contextmenu event fixes [#2238](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2238) ([3f81473](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3f814733a36cb0611597602d2f142caf0c99621b))
+* **BTable:** add row-middle-clicked event ([3f81473](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3f814733a36cb0611597602d2f142caf0c99621b))
+
+
+### Bug Fixes
+
+* **BModal:** fix backdrop, fade and reduced animation ([#2250](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2250)) ([48cc89c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/48cc89ca198d811c520e0ca42a38ca9438429ae5))
+* **BTable:** busy slot behavior to match bootstrap-vue fixes [#1636](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1636)  ([#2249](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2249)) ([9581572](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/95815728328bc7eedce33e4dc62376b651259f08))
+* **BTable:** cast formatted items to string fixes [#2227](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2227) ([#2247](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2247)) ([dabd159](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/dabd1597e1d4775a23a6a9b161065db553a204a6))
+* **BTable:** rename event row-dbl-clicked to row-dblclicked ([#2239](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2239)) ([3f81473](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3f814733a36cb0611597602d2f142caf0c99621b))
+* **BTable:** use watcher to compare changes with selectedItems fixes [#2245](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2245) ([#2246](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2246)) ([d48b559](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d48b559c1ecd68a14d523a52bfb96426595f1288))
+* **vBPopover:** revert [#2234](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2234) ([#2256](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2256)) ([67ab6c8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/67ab6c858fbd31a626d4a22e0eae9af49d86d1f7))
+
 ## [0.24.23](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.22...bootstrapvuenext-v0.24.23) (2024-09-26)
 
 
