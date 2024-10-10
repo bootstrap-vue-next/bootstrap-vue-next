@@ -392,7 +392,7 @@ const isElementAndTriggerOutside = () => {
   return {triggerIsOutside, isOutside}
 }
 
-const hide = (e: Readonly<Event>) => {
+const hide = (e?: Readonly<Event>) => {
   const event = buildTriggerableEvent('hide', {cancelable: true})
   emit('hide', event)
   if (event.defaultPrevented) {
@@ -407,6 +407,7 @@ const hide = (e: Readonly<Event>) => {
   setTimeout(() => {
     const {triggerIsOutside, isOutside} = isElementAndTriggerOutside()
     if (
+      !e ||
       e?.type === 'click' ||
       e?.type === 'forceHide' ||
       e?.type === 'closeOnHide' ||
