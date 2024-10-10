@@ -117,7 +117,6 @@ export const bind = (
   props: BPopoverProps
 ) => {
   const div = document.createElement('span')
-  div.style.position = 'absolute'
   if (binding.modifiers.body) document.body.appendChild(div)
   else if (binding.modifiers.child) el.appendChild(div)
   else el.parentNode?.insertBefore(div, el.nextSibling)
