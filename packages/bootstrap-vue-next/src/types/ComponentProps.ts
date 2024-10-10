@@ -102,7 +102,15 @@ export interface BAccordionProps {
 }
 
 export interface BDropdownDividerProps {
+  innerClass?: ClassValue
   tag?: string
+  variant?: ColorVariant | null
+  wrapperAttrs?: Readonly<AttrsValue>
+}
+
+export interface BDropdownFormProps {
+  innerClass?: ClassValue
+  wrapperAttrs?: Readonly<AttrsValue>
 }
 
 export interface BDropdownGroupProps {
@@ -112,6 +120,13 @@ export interface BDropdownGroupProps {
   headerTag?: string
   headerVariant?: ColorVariant | null
   id?: string
+}
+
+export interface BDropdownHeaderProps {
+  innerClass?: ClassValue
+  tag?: string
+  variant?: ColorVariant | null
+  wrapperAttrs?: Readonly<AttrsValue>
 }
 
 export interface BDropdownItemProps extends Omit<BLinkProps, 'routerTag'> {
@@ -129,7 +144,10 @@ export interface BDropdownItemButtonProps {
 }
 
 export interface BDropdownTextProps {
-  text?: string
+  innerClass?: ClassValue
+  tag?: string
+  variant?: ColorVariant | null
+  wrapperAttrs?: Readonly<AttrsValue>
 }
 
 export interface BFormFloatingLabelProps {

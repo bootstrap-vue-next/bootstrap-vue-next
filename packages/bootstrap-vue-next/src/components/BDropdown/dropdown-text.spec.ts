@@ -33,19 +33,4 @@ describe('dropdown-text', () => {
     })
     expect(wrapper.text()).toBe('foobar')
   })
-
-  it('renders prop text', () => {
-    const wrapper = mount(BDropdownText, {
-      props: {text: 'foobar'},
-    })
-    expect(wrapper.text()).toBe('foobar')
-  })
-
-  it('renders default slot over prop text', () => {
-    const wrapper = mount(BDropdownText, {
-      slots: {default: 'slots'},
-      props: {text: 'props'},
-    })
-    expect(wrapper.text()).toBe('slots')
-  })
 })
