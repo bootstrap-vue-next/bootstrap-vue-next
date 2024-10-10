@@ -186,7 +186,7 @@ const computedId = useId(() => props.id, 'popover')
 const hidden = ref(false)
 
 const element = ref<HTMLElement | null>(null)
-const targetTrigger = ref<HTMLElement | null>(null)
+const floatingTarget = ref<HTMLElement | null>(null)
 const arrow = ref<HTMLElement | null>(null)
 const trigger = ref<HTMLElement | null>(null)
 const placeholder = ref<HTMLElement | null>(null)
@@ -278,7 +278,7 @@ const placementRef = computed(() =>
   isAutoPlacement.value ? undefined : (props.placement as OriginalPlacement)
 )
 
-const {floatingStyles, middlewareData, placement, update} = useFloating(targetTrigger, element, {
+const {floatingStyles, middlewareData, placement, update} = useFloating(floatingTarget, element, {
   placement: placementRef,
   middleware: floatingMiddleware,
   strategy: toRef(() => props.strategy),
@@ -462,13 +462,13 @@ const bind = () => {
   if (props.reference) {
     const elem = getElement(props.reference)
     if (elem) {
-      targetTrigger.value = elem
+      floatingTarget.value = elem
     } else {
       // eslint-disable-next-line no-console
       console.warn('Reference element not found', props.reference)
     }
   } else {
-    targetTrigger.value = trigger.value
+    floatingTarget.value = trigger.value
   }
   if (!trigger.value || props.manual) {
     return
