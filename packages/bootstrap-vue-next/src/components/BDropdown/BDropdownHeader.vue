@@ -6,7 +6,9 @@
       :class="[colorClasses, props.headerClass]"
       v-bind="attrs"
     >
-      <slot />
+      <slot>
+        {{ props.text }}
+      </slot>
     </component>
   </li>
 </template>
@@ -25,6 +27,7 @@ const {class: wrapperClass, ...attrs} = useAttrs()
 const _props = withDefaults(defineProps<BDropdownHeaderProps>(), {
   headerClass: undefined,
   tag: 'h6',
+  text: undefined,
   variant: null,
   wrapperAttrs: undefined,
 })

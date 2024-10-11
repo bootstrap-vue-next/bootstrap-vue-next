@@ -125,6 +125,7 @@ export interface BDropdownGroupProps {
 export interface BDropdownHeaderProps {
   headerClass?: ClassValue
   tag?: string
+  text?: string
   variant?: ColorVariant | null
   wrapperAttrs?: Readonly<AttrsValue>
 }
@@ -146,6 +147,7 @@ export interface BDropdownItemButtonProps {
 export interface BDropdownTextProps {
   textClass?: ClassValue
   tag?: string
+  text?: string
   variant?: ColorVariant | null
   wrapperAttrs?: Readonly<AttrsValue>
 }
