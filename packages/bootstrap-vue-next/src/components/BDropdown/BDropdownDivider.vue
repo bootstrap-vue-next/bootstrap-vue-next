@@ -18,12 +18,12 @@ import type {BDropdownDividerProps} from '../../types/ComponentProps'
 
 defineOptions({
   inheritAttrs: false,
-  innerClass: undefined,
 })
 
 const {class: wrapperClass, ...attrs} = useAttrs()
 
 const _props = withDefaults(defineProps<BDropdownDividerProps>(), {
+  innerClass: undefined,
   tag: 'hr',
   wrapperAttrs: undefined,
 })
