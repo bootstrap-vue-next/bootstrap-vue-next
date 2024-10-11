@@ -18,5 +18,11 @@ export type ContainerHorizontalAlign = 'start' | 'center' | 'end'
 
 export type ContainerPosition = `${ContainerVerticalAlign}-${ContainerHorizontalAlign}`
 
+/**
+ * Not to be confused with FloatingUi's placement
+ */
 export type Placement = 'top' | 'bottom' | 'start' | 'end'
+/**
+ * Not to be confused with FloatingUi's placement
+ */
 export type CombinedPlacement = Placement | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end'

@@ -405,4 +405,9 @@ export const commonProps = () =>
       default: undefined,
       description: 'Attributes to be applied to the wrapper element',
     },
+    placement: {
+      type: 'Placement',
+      default: 'bottom-start',
+      description: 'Placement of a floating element',
+    },
   }) satisfies Record<string, PropertyReference>

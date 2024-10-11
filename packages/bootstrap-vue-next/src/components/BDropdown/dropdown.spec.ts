@@ -2,6 +2,7 @@ import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BDropdown from './BDropdown.vue'
 import BButton from '../BButton/BButton.vue'
+import BButtonGroup from '../BButton/BButtonGroup.vue'
 
 describe('dropdown', () => {
   enableAutoUnmount(afterEach)
@@ -456,5 +457,22 @@ describe('dropdown', () => {
     expect(wrapper.exists()).toBe(true)
     expect(wrapper.element.querySelector('ul')).toBe(null)
     expect(document.body?.querySelector('.dropdown-menu')).not.toBe(null)
+  })
+
+  describe('Dropdown in button group', () => {
+    it('has class btn-group when child of button group', () => {
+      const wrapper = mount(BButtonGroup, {
+        slots: {default: BDropdown},
+      })
+      const dropdown = wrapper.getComponent(BDropdown)
+      expect(dropdown.get('div').classes()).toContain('btn-group')
+    })
+    it('has attribute `group` when child of button group', () => {
+      const wrapper = mount(BButtonGroup, {
+        slots: {default: BDropdown},
+      })
+      const dropdown = wrapper.getComponent(BDropdown)
+      expect(dropdown.get('div').attributes('role')).toBe('group')
+    })
   })
 })
