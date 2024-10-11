@@ -3,6 +3,7 @@
     ref="wrapper"
     :skip="inInputGroup || props.skipWrapper"
     :class="computedClasses"
+    :role="inButtonGroupAttributes?.role"
   >
     <BButton
       :id="computedId"
@@ -83,22 +84,17 @@ import {BvTriggerableEvent} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 import ConditionalWrapper from '../ConditionalWrapper.vue'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
-import {isBoundary, isRootBoundary, resolveFloatingPlacement} from '../../utils/floatingUi'
-import {dropdownInjectionKey, inputGroupKey} from '../../utils/keys'
+import {isBoundary, isRootBoundary} from '../../utils/floatingUi'
+import {buttonGroupKey, dropdownInjectionKey, inputGroupKey} from '../../utils/keys'
 
 const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   ariaLabel: undefined,
   autoClose: true,
   boundary: 'clippingAncestors',
   boundaryPadding: undefined,
-  center: false,
   teleportTo: undefined,
   teleportDisabled: false,
   disabled: false,
-  dropend: false,
-  dropstart: false,
-  dropup: false,
-  end: false,
   floatingMiddleware: undefined,
   id: undefined,
   isNav: false,
@@ -118,6 +114,7 @@ const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   splitDisabled: undefined,
   splitHref: undefined,
   splitTo: undefined,
+  placement: 'bottom-start',
   splitVariant: undefined,
   strategy: 'absolute',
   text: undefined,
@@ -153,6 +150,7 @@ const computedId = useId(() => props.id, 'dropdown')
 const modelValue = defineModel<Exclude<BDropdownProps['modelValue'], undefined>>({default: false})
 
 const inInputGroup = inject(inputGroupKey, false)
+const inButtonGroup = inject(buttonGroupKey, false)
 
 const computedOffset = computed(() =>
   typeof props.offset === 'string' || typeof props.offset === 'number' ? props.offset : NaN
@@ -213,15 +211,6 @@ onKeyStroke('ArrowDown', (e) => keynav(e, 1), {target: referencePlacement})
 onKeyStroke('ArrowUp', (e) => keynav(e, -1), {target: floating})
 onKeyStroke('ArrowDown', (e) => keynav(e, 1), {target: floating})
 
-const floatingPlacement = computed(() =>
-  resolveFloatingPlacement({
-    top: props.dropup,
-    start: props.dropstart,
-    end: props.dropend,
-    alignCenter: props.center,
-    alignEnd: props.end,
-  })
-)
 const sizeStyles = ref<CSSProperties>({})
 const floatingMiddleware = computed<Middleware[]>(() => {
   if (props.floatingMiddleware !== undefined) {
@@ -268,20 +257,25 @@ const floatingMiddleware = computed<Middleware[]>(() => {
   return arr
 })
 const {update, floatingStyles} = useFloating(referencePlacement, floating, {
-  placement: floatingPlacement,
+  placement: () => props.placement,
   middleware: floatingMiddleware,
   strategy: toRef(() => props.strategy),
   whileElementsMounted: autoUpdate,
 })
 
+const inButtonGroupAttributes = inButtonGroup
+  ? {
+      class: 'btn-group',
+      role: 'group',
+    }
+  : undefined
+
 const computedClasses = computed(() => [
+  inButtonGroupAttributes?.class,
   props.wrapperClass,
   {
     'btn-group': !props.wrapperClass && props.split,
     'dropdown': !props.wrapperClass && !props.split,
-    'dropup': props.dropup,
-    'dropend': props.dropend,
-    'dropstart': props.dropstart,
     'position-static': props.boundary !== 'clippingAncestors' && !props.isNav,
   },
 ])

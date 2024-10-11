@@ -16,7 +16,7 @@ Toasts are lightweight notifications designed to mimic the push notifications th
 
 ## Overview
 
-This section only refers to using the raw component variation. Often times, `Toasts` are generated in a global context programatically, like showing a success message after saving a form. That functionality is covered under the composable docs [here](/docs/composables/useToast)
+This section only refers to using the raw component variation. Often times, `Toasts` are generated in a global context programatically, like showing a success message after saving a form. That functionality is covered under the composable docs [here](/docs/composables/useToastController)
 
 The component variation is shown by using the `v-model` like so
 
@@ -223,7 +223,7 @@ As you may have noticed in that example, there was a built-in progress bar. This
 </template>
 
 <script setup lang="ts">
-const {show} = useToast()
+const {show} = useToastController()
 </script>
 ```
 
@@ -233,7 +233,7 @@ const {show} = useToast()
 
 ## Programmatically Control
 
-To programmatically control your modals with global state, refer to our documentation at [useToast](/docs/composables/useToast)
+To programmatically control your modals with global state, refer to our documentation at [useToastController](/docs/composables/useToastController)
 
 ## Accessibility
 
@@ -247,11 +247,11 @@ If you just need a single simple message to appear along the bottom or top of th
 import {data} from '../../data/components/toast.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import ComponentSidebar from '../../components/ComponentSidebar.vue'
-import {BButtonGroup, BButton, BToast, useToast} from 'bootstrap-vue-next'
+import {BButtonGroup, BButton, BToast, useToastController} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {ref, h, onMounted} from 'vue'
 
-const {show, hide, toasts} = useToast()
+const {show, hide, toasts} = useToastController()
 
 const active = ref(true)
 

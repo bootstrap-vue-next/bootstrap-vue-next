@@ -18,19 +18,18 @@
 You must have initialized `BModalOrchestrator` component once and only once (doing multiple may display multiple `Modals`). This is usually best placed at the App root.
 
 <HighlightCard>
-
 <template #html>
 
 ```vue-html
 <BModalOrchestrator />
 ```
 
-  </template>
+</template>
 </HighlightCard>
 
 The only props it access are `teleportDisabled` and `teleportTo` to modify the location that it is placed
 
-In addition, it contains a few exposed methods. These exposed methods on the `template ref` correspond to those in the `useToast` function, described below
+In addition, it contains a few exposed methods. These exposed methods on the `template ref` correspond to those in the `useToastController` function, described below
 
 - confirm
 - show

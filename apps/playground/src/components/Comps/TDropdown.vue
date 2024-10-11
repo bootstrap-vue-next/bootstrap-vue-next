@@ -61,31 +61,37 @@
     </BRow>
     <BRow>
       <BCol>
-        <BDropdown dropup text="Up" variant="success" class="m-2">
+        <BDropdown placement="top" text="Up" variant="success" class="m-2">
           <BDropdownItem href="#">Action</BDropdownItem>
         </BDropdown>
 
-        <BDropdown dropup end text="Up End" variant="dark" class="m-2">
+        <BDropdown placement="top" end text="Up End" variant="dark" class="m-2">
           <BDropdownItem href="#">Action</BDropdownItem>
         </BDropdown>
 
-        <BDropdown dropend text="drop end" variant="info" class="m-2">
+        <BDropdown placement="right" text="drop end" variant="info" class="m-2">
           <BDropdownItem href="#">Action</BDropdownItem>
         </BDropdown>
 
-        <BDropdown dropstart text="dropstart" variant="outline-primary" class="m-2">
-          <BDropdownItem href="#">Action</BDropdownItem>
-          <BDropdownItem href="#">Action</BDropdownItem>
-          <BDropdownItem href="#">Action</BDropdownItem>
-        </BDropdown>
-
-        <BDropdown dropstart center text="dropstart center" variant="outline-primary" class="m-2">
+        <BDropdown placement="left" text="dropstart" variant="outline-primary" class="m-2">
           <BDropdownItem href="#">Action</BDropdownItem>
           <BDropdownItem href="#">Action</BDropdownItem>
           <BDropdownItem href="#">Action</BDropdownItem>
         </BDropdown>
 
-        <BDropdown dropstart end text="dropstart end" variant="outline-primary" class="m-2">
+        <BDropdown
+          placement="left"
+          center
+          text="dropstart center"
+          variant="outline-primary"
+          class="m-2"
+        >
+          <BDropdownItem href="#">Action</BDropdownItem>
+          <BDropdownItem href="#">Action</BDropdownItem>
+          <BDropdownItem href="#">Action</BDropdownItem>
+        </BDropdown>
+
+        <BDropdown placement="left" end text="dropstart end" variant="outline-primary" class="m-2">
           <BDropdownItem href="#">Action</BDropdownItem>
           <BDropdownItem href="#">Action</BDropdownItem>
           <BDropdownItem href="#">Action</BDropdownItem>
@@ -111,11 +117,11 @@
     </BRow>
     <BRow>
       <BCol>
-        <BDropdown dropup text="Flip enabled" class="m-2">
+        <BDropdown placement="top" text="Flip enabled" class="m-2">
           <BDropdownItem href="#">Action</BDropdownItem>
         </BDropdown>
 
-        <BDropdown dropup text="Flip disabled" class="m-2" no-flip>
+        <BDropdown placement="top" text="Flip disabled" class="m-2" no-flip>
           <BDropdownItem href="#">Action</BDropdownItem>
         </BDropdown>
       </BCol>
@@ -127,11 +133,11 @@
     </BRow>
     <BRow>
       <BCol>
-        <BDropdown dropup text="Size enabled" class="m-2">
+        <BDropdown placement="top" text="Size enabled" class="m-2">
           <BDropdownItem v-for="i in 200" :key="i" href="#"> Action {{ i }} </BDropdownItem>
         </BDropdown>
 
-        <BDropdown dropup text="Size disabled" class="m-2" no-size>
+        <BDropdown placement="top" text="Size disabled" class="m-2" no-size>
           <BDropdownItem v-for="i in 200" :key="i" href="#"> Action {{ i }} </BDropdownItem>
         </BDropdown>
       </BCol>

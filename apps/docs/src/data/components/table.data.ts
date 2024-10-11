@@ -101,14 +101,6 @@ export default {
         type: 'ClassValue',
         default: undefined,
       },
-      emptyFilteredText: {
-        type: 'string',
-        default: 'There are no records matching your request',
-      },
-      emptyText: {
-        type: 'string',
-        default: 'There are no records to show',
-      },
       fieldColumnClass: {
         type: '(field: TableField) => Record<string, any>[] | string | Record<PropertyKey, any> | any[]',
         default: undefined,
@@ -152,10 +144,6 @@ export default {
       primaryKey: {
         type: 'string',
         default: undefined,
-      },
-      showEmpty: {
-        type: 'boolean',
-        default: false,
       },
       tbodyClass: {
         type: 'ClassValue',
@@ -215,6 +203,22 @@ export default {
             filterable: {
               type: 'string[]',
               default: undefined,
+            },
+            emptyFilteredText: {
+              type: 'string',
+              default: 'There are no records matching your request',
+              description:
+                'Text to display when no items are present in the `items` array after filtering',
+            },
+            emptyText: {
+              type: 'string',
+              default: 'There are no records to show',
+              description: 'Text to display when no items are present in the `items` array',
+            },
+            showEmpty: {
+              type: 'boolean',
+              default: false,
+              description: 'Show the empty text when no items are present in the `items` array',
             },
             multisort: {
               type: 'boolean',
@@ -518,6 +522,15 @@ export default {
             description: '',
             name: 'default',
             scope: [],
+          },
+          {
+            name: 'empty-filtered',
+            description:
+              'Content to display when no items are present in the `items` array after filtering',
+          },
+          {
+            name: 'empty',
+            description: 'Content to display when no items are present in the `items` array',
           },
         ],
       },

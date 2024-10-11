@@ -2,6 +2,7 @@ import {markRaw, type Plugin, ref, toRef, watch} from 'vue'
 import {toastPluginKey} from '../../utils/keys'
 import type {ContainerPosition} from '../../types/Alignment'
 import type {
+  ControllerKey,
   ToastOrchestratorArrayValue,
   ToastOrchestratorShowParam,
 } from '../../types/ComponentOrchestratorTypes'
@@ -19,12 +20,13 @@ export const toastPlugin: Plugin = {
     }
 
     /**
-     * @returns {symbol} A symbol that corresponds to its unique id. You can pass this id to the hide function to force a Toast to hide
+     * @returns {ControllerKey} If `id` is passed to props, it will use that id, otherwise, a symbol will be created that corresponds to its unique id.
+     * You can pass this id to the hide function to force a Toast to hide
      */
-    const show = (obj: ToastOrchestratorShowParam = {}): symbol => {
+    const show = (obj: ToastOrchestratorShowParam = {}): ControllerKey => {
       const resolvedProps = toRef(obj.props)
 
-      const _self = Symbol()
+      const _self = resolvedProps.value?.id || Symbol('Toast controller')
 
       const toastToAdd: ToastOrchestratorArrayValue = {
         component: !obj.component ? undefined : markRaw(obj.component),
@@ -63,13 +65,16 @@ export const toastPlugin: Plugin = {
     }
 
     /**
-     * You can get the symbol param from the return value from the show method
+     * You can get the symbol param from the return value from the show method, or use props.id
      */
-    const remove = (self: symbol) => {
+    const remove = (self: ControllerKey) => {
       toasts.value = toasts.value.filter((el) => el.props._self !== self)
     }
 
-    const leave = (self: symbol) => {
+    /**
+     * You can get the symbol param from the return value from the show method, or use props.id
+     */
+    const leave = (self: ControllerKey) => {
       const toastIndex = toasts.value.findIndex((el) => el.props._self === self)
       if (toastIndex === -1) return
       toasts.value.splice(toastIndex, 1, {

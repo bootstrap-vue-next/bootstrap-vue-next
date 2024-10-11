@@ -15,6 +15,7 @@ import type {CheckboxValue} from '../types/CheckboxTypes'
 import type {RadioValue} from '../types/RadioTypes'
 import type {BreadcrumbItemRaw} from '../types/BreadcrumbTypes'
 import type {
+  ControllerKey,
   ModalOrchestratorMapValue,
   ModalOrchestratorShowParam,
   PopoverOrchestratorMapValue,
@@ -27,9 +28,9 @@ import type {
   TooltipOrchestratorShowParam,
 } from '../types/ComponentOrchestratorTypes'
 import type {BvnComponentProps} from '../types/BootstrapVueOptions'
-import {bvnPrefix} from './bvnPrefix'
+import {withBvnPrefix} from './withBvnPrefix'
 
-const createBvnInjectionKey = (name: string) => bvnPrefix(name) as unknown as symbol // Type cast to symbol, these should be static
+const createBvnInjectionKey = (name: string) => withBvnPrefix(name) as unknown as symbol // Type cast to symbol, these should be static
 
 // BCarousel
 export const carouselInjectionKey: InjectionKey<{
@@ -169,33 +170,31 @@ export const defaultsKey: InjectionKey<Ref<Partial<BvnComponentProps>>> =
   createBvnInjectionKey('defaults')
 
 export const inputGroupKey: InjectionKey<boolean> = createBvnInjectionKey('inputGroup')
+export const buttonGroupKey: InjectionKey<boolean> = createBvnInjectionKey('buttonGroup')
 
 export const toastPluginKey: InjectionKey<{
   toasts: Ref<ToastOrchestratorArrayValue[]>
   _setIsAppend: (value: boolean) => void
-  show: (obj: ToastOrchestratorShowParam) => symbol
-  remove: (self: symbol) => void
-  leave: (self: symbol) => void
+  show: (obj: ToastOrchestratorShowParam) => ControllerKey
+  remove: (self: ControllerKey) => void
+  leave: (self: ControllerKey) => void
 }> = createBvnInjectionKey('toastPlugin')
 
 export const modalControllerPluginKey: InjectionKey<{
-  modals: Ref<Map<symbol, ModalOrchestratorMapValue>>
+  modals: Ref<Map<ControllerKey, ModalOrchestratorMapValue>>
   show: (obj: ModalOrchestratorShowParam) => Promise<boolean | null>
   confirm: (obj: ModalOrchestratorShowParam) => Promise<boolean | null>
-  remove: (self: symbol) => void
-  leave: (self: symbol) => void
+  remove: (self: ControllerKey) => void
+  leave: (self: ControllerKey) => void
 }> = createBvnInjectionKey('modalControllerPlugin')
 
-export const tooltipPluginKey: InjectionKey<{
-  tooltips: Ref<Map<symbol, TooltipOrchestratorMapValue>>
-  show: (obj: TooltipOrchestratorShowParam) => symbol
-  remove: (self: symbol) => void
-  set: (self: symbol, val: Partial<PrivateOrchestratedTooltip>) => void
-}> = createBvnInjectionKey('tooltipPlugin')
-
 export const popoverPluginKey: InjectionKey<{
-  popovers: Ref<Map<symbol, PopoverOrchestratorMapValue>>
-  show: (obj: PopoverOrchestratorShowParam) => symbol
-  remove: (self: symbol) => void
-  set: (self: symbol, val: Partial<PrivateOrchestratedPopover>) => void
+  popovers: Ref<Map<ControllerKey, PopoverOrchestratorMapValue>>
+  popover: (obj: PopoverOrchestratorShowParam) => ControllerKey
+  setPopover: (self: ControllerKey, val: Partial<PrivateOrchestratedPopover>) => void
+  removePopover: (self: ControllerKey) => void
+  tooltips: Ref<Map<ControllerKey, TooltipOrchestratorMapValue>>
+  tooltip: (obj: TooltipOrchestratorShowParam) => ControllerKey
+  setTooltip: (self: ControllerKey, val: Partial<PrivateOrchestratedTooltip>) => void
+  removeTooltip: (self: ControllerKey) => void
 }> = createBvnInjectionKey('popoverPlugin')

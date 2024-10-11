@@ -1,4 +1,4 @@
-<ComposableHeader path="useToast/index.ts" title="useToast" />
+<ComposableHeader path="useToastController/index.ts" title="useToastController" />
 
 <ContentsSidebar>
 
@@ -7,7 +7,7 @@
 </ContentsSidebar>
 <div class="lead mb-5">
 
-Often times one may want to open a `Toast` in a global context, without the need for declaring a component, perhaps to display an error after a function threw an error. `useToast` is used to create `Toasts` on demand. You must have initialized the `BToastOrchestrator` component once in your application. The following functionality requires the existance of that component
+Often times one may want to open a `Toast` in a global context, without the need for declaring a component, perhaps to display an error after a function threw an error. `useToastController` is used to create `Toasts` on demand. You must have initialized the `BToastOrchestrator` component once in your application. The following functionality requires the existance of that component
 
 </div>
 
@@ -30,7 +30,7 @@ You must have initialized `BToastOrchestrator` component once and only once (doi
 
 The only props it access are `teleportDisabled` and `teleportTo` to modify the location that it is placed
 
-In addition, it contains a few exposed methods. These exposed methods on the `template ref` correspond to those in the `useToast` function, described below
+In addition, it contains a few exposed methods. These exposed methods on the `template ref` correspond to those in the `useToastController` function, described below
 
 - remove
 - show
@@ -50,7 +50,7 @@ Showing a toast is done through the show method
 </template>
 
 <script setup lang="ts">
-const {show} = useToast()
+const {show} = useToastController()
 </script>
 ```
 
@@ -81,7 +81,7 @@ The props property excludes `modelValue`, it is replaced with `value`. These wor
 </template>
 
 <script setup lang="ts">
-const {show} = useToast()
+const {show} = useToastController()
 
 const firstRef = ref<OrchestratedToast>({
   body: `${Math.random()}`,
@@ -123,7 +123,7 @@ Using props can work for most situations, but it leaves some finer control to be
 <script setup lang="ts">
 import {BToast} from 'bootstrap-vue-next'
 
-const {show} = useToast()
+const {show} = useToastController()
 
 const firstRef = ref<OrchestratedToast>({
   body: `${Math.random()}`,
@@ -179,7 +179,7 @@ Hiding a `Toast` programmatically is very simple. Simply use the return value fr
 </template>
 
 <script setup lang="ts">
-const {show, remove} = useToast()
+const {show, remove} = useToastController()
 
 let showValue: undefined | symbol
 
@@ -205,14 +205,14 @@ const hideMe = () => {
 
 <script setup lang="ts">
 import {data} from '../../data/components/toast.data'
-import {BButton, useToast, BButtonGroup, BToast} from 'bootstrap-vue-next'
+import {BButton, useToastController, BButtonGroup, BToast} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
 import ContentsSidebar from '../../components/ContentsSidebar.vue'
 import UsePluginAlert from '../../components/UsePluginAlert.vue'
 import {ref, computed, h, onMounted} from 'vue'
 import ComposableHeader from './ComposableHeader.vue'
 
-const {show, remove, toasts} = useToast()
+const {show, remove, toasts} = useToastController()
 
 let showValue: undefined | symbol
 
