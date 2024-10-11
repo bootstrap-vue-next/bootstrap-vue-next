@@ -11,7 +11,7 @@
       @after-leave="OnAfterLeave"
     >
       <div
-        v-show="modelValue || isOpenByBreakpoint"
+        v-show="showRef || isOpenByBreakpoint"
         :id="computedId"
         ref="element"
         aria-modal="true"
@@ -131,9 +131,9 @@ const emit = defineEmits<{
   'esc': [value: BvTriggerableEvent]
   'hidden': [value: BvTriggerableEvent]
   'hide': [value: BvTriggerableEvent]
-  'hide-prevented': []
+  'hide-prevented': [value: BvTriggerableEvent]
   'show': [value: BvTriggerableEvent]
-  'show-prevented': []
+  'show-prevented': [value: BvTriggerableEvent]
   'shown': [value: BvTriggerableEvent]
 }>()
 
@@ -161,6 +161,8 @@ const slots = defineSlots<{
 const modelValue = defineModel<Exclude<BOffcanvasProps['modelValue'], undefined>>({
   default: false,
 })
+
+const showRef = ref(modelValue.value)
 
 const computedId = useId(() => props.id, 'offcanvas')
 
@@ -271,12 +273,21 @@ const buildTriggerableEvent = (
     componentId: computedId.value,
   })
 
+let noAction = false
+watch(modelValue, () => {
+  if (noAction) {
+    noAction = false
+    return
+  }
+  modelValue.value ? show() : hide()
+})
+
 const hide = (trigger = '') => {
   if (
     (trigger === 'backdrop' && props.noCloseOnBackdrop) ||
     (trigger === 'esc' && props.noCloseOnEsc)
   ) {
-    emit('hide-prevented')
+    emit('hide-prevented', buildTriggerableEvent('hide-prevented', {trigger}))
     return
   }
 
@@ -291,22 +302,42 @@ const hide = (trigger = '') => {
   emit('hide', event)
 
   if (event.defaultPrevented) {
-    emit('hide-prevented')
+    emit('hide-prevented', buildTriggerableEvent('hide-prevented', {trigger}))
+    if (!modelValue.value) {
+      nextTick(() => {
+        noAction = true
+        modelValue.value = true
+      })
+    }
     return
   }
 
-  modelValue.value = false
+  showRef.value = false
+  if (modelValue.value) {
+    noAction = true
+    modelValue.value = false
+  }
 }
 
 const show = () => {
   const event = buildTriggerableEvent('show', {cancelable: true})
   emit('show', event)
   if (event.defaultPrevented) {
-    modelValue.value = false
-    emit('show-prevented')
+    if (modelValue.value) {
+      nextTick(() => {
+        noAction = true
+        modelValue.value = false
+      })
+    }
+
+    emit('show-prevented', buildTriggerableEvent('show-prevented'))
     return
   }
-  modelValue.value = true
+  showRef.value = true
+  if (!modelValue.value) {
+    noAction = true
+    modelValue.value = true
+  }
 }
 
 const focus = () => {

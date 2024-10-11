@@ -129,9 +129,9 @@ const props = useDefaults(_props, 'BPopover')
 const emit = defineEmits<{
   'hidden': [value: BvTriggerableEvent]
   'hide': [value: BvTriggerableEvent]
-  'hide-prevented': []
+  'hide-prevented': [value: BvTriggerableEvent]
   'show': [value: BvTriggerableEvent]
-  'show-prevented': []
+  'show-prevented': [value: BvTriggerableEvent]
   'shown': [value: BvTriggerableEvent]
 }>()
 
@@ -324,7 +324,12 @@ const show = () => {
   const event = buildTriggerableEvent('show', {cancelable: true})
   emit('show', event)
   if (event.defaultPrevented) {
-    emit('show-prevented')
+    emit('show-prevented', buildTriggerableEvent('show-prevented'))
+    if (modelValue.value) {
+      nextTick(() => {
+        modelValue.value = false
+      })
+    }
     return
   }
   showStateInternal.value = true
@@ -332,8 +337,8 @@ const show = () => {
     update()
     showTimeout = setTimeout(
       () => {
-        update()
         showState.value = true
+        update()
         nextTick(() => {
           emit('shown', buildTriggerableEvent('shown'))
         })
@@ -372,7 +377,12 @@ const hide = (e?: Readonly<Event>) => {
   const event = buildTriggerableEvent('hide', {cancelable: true})
   emit('hide', event)
   if (event.defaultPrevented) {
-    emit('hide-prevented')
+    emit('hide-prevented', buildTriggerableEvent('hide-prevented'))
+    if (!modelValue.value) {
+      nextTick(() => {
+        modelValue.value = true
+      })
+    }
     return
   }
   if (showTimeout) {

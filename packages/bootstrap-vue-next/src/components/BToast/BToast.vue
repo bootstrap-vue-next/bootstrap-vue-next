@@ -61,7 +61,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, useTemplateRef, watch, watchEffect} from 'vue'
+import {computed, nextTick, ref, useTemplateRef, watch, watchEffect} from 'vue'
 import {useBLinkHelper} from '../../composables/useBLinkHelper'
 import type {BToastProps} from '../../types/ComponentProps'
 import BTransition from '../BTransition.vue'
@@ -128,8 +128,8 @@ const emit = defineEmits<{
   'hidden': [value: BvTriggerableEvent]
   'show': [value: BvTriggerableEvent]
   'shown': [value: BvTriggerableEvent]
-  'show-prevented': []
-  'hide-prevented': []
+  'show-prevented': [value: BvTriggerableEvent]
+  'hide-prevented': [value: BvTriggerableEvent]
 }>()
 
 const slots = defineSlots<{
@@ -142,7 +142,7 @@ const slots = defineSlots<{
 const element = useTemplateRef('element')
 
 const modelValue = defineModel<Exclude<BToastProps['modelValue'], undefined>>({default: false})
-
+const showRef = ref(modelValue.value)
 const {computedLink, computedLinkProps} = useBLinkHelper(props)
 
 // TODO solid is never used
@@ -177,10 +177,8 @@ watchEffect(() => {
 
 const computedTag = computed(() => (computedLink.value ? BLink : 'div'))
 
-const isToastVisible = computed(() =>
-  typeof modelValue.value === 'boolean'
-    ? modelValue.value
-    : isActive.value || (props.showOnPause && isPaused.value)
+const isToastVisible = computed(
+  () => showRef.value || isActive.value || (props.showOnPause && isPaused.value)
 )
 
 const colorClasses = useColorVariantClasses(props)
@@ -204,42 +202,75 @@ const buildTriggerableEvent = (
     componentId: props.id,
   })
 
+let noAction = false
+watch(modelValue, (newValue) => {
+  if (typeof newValue === 'number') {
+    restart()
+  } else {
+    if (noAction) {
+      noAction = false
+      return
+    }
+    if (newValue) {
+      showFn()
+    } else {
+      hideFn()
+    }
+  }
+})
+
 const showFn = () => {
   const event = buildTriggerableEvent('show', {cancelable: true})
   emit('show', event)
   if (event.defaultPrevented) {
-    if (modelValue.value) modelValue.value = false
-    emit('show-prevented')
+    emit('show-prevented', buildTriggerableEvent('show-prevented'))
+    nextTick(() => {
+      noAction = true
+      if (modelValue.value) modelValue.value = false
+    })
     return
   }
-  if (!modelValue.value) modelValue.value = true
+  showRef.value = true
+
+  if (!modelValue.value) {
+    noAction = true
+    modelValue.value = true
+  }
 }
+
 const hideFn = (trigger = '') => {
-  const event = buildTriggerableEvent('hide', {cancelable: trigger !== '', trigger})
+  const event = buildTriggerableEvent('hide', {cancelable: true, trigger})
 
   emit('hide', event)
 
   if (trigger === 'close') {
-    emit('close', event)
+    emit('close', buildTriggerableEvent('close'))
   }
 
   if (event.defaultPrevented) {
-    emit('hide-prevented')
-    if (!modelValue.value) modelValue.value = true
+    showRef.value = true
+    emit('hide-prevented', buildTriggerableEvent('hide-prevented'))
+    nextTick(() => {
+      if (!modelValue.value) {
+        noAction = true
+        modelValue.value = true
+      }
+    })
     return
   }
-
+  showRef.value = false
   if (typeof modelValue.value === 'boolean') {
-    modelValue.value = false
+    if (modelValue.value) {
+      noAction = true
+      modelValue.value = false
+    }
   } else {
     modelValue.value = 0
     stop()
   }
 }
 
-const onBeforeEnter = () => {
-  showFn()
-}
+const onBeforeEnter = () => {}
 const onAfterEnter = () => {
   emit('shown', buildTriggerableEvent('shown'))
 }
@@ -249,7 +280,7 @@ const onAfterLeave = () => {
 
 // isActive in the composable will cause the toast to hide when the countdown is done
 watch(isActive, (newValue) => {
-  if (newValue === false && isPaused.value === false && !!modelValue.value) {
+  if (newValue === false && isPaused.value === false) {
     hideFn()
   }
 })
