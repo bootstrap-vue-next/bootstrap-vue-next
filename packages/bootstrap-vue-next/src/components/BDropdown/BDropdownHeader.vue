@@ -3,7 +3,7 @@
     <component
       :is="props.tag"
       class="dropdown-header"
-      :class="[colorClasses, innerClass]"
+      :class="[colorClasses, props.headerClass]"
       v-bind="attrs"
     >
       <slot />
@@ -23,7 +23,7 @@ defineOptions({
 const {class: wrapperClass, ...attrs} = useAttrs()
 
 const _props = withDefaults(defineProps<BDropdownHeaderProps>(), {
-  innerClass: undefined,
+  headerClass: undefined,
   tag: 'h6',
   variant: null,
   wrapperAttrs: undefined,

@@ -3,7 +3,7 @@
     <component
       :is="props.tag"
       class="dropdown-item-text"
-      :class="[colorClasses, innerClass]"
+      :class="[colorClasses, props.textClass]"
       v-bind="attrs"
     >
       <slot />
@@ -23,7 +23,7 @@ defineOptions({
 const {class: wrapperClass, ...attrs} = useAttrs()
 
 const _props = withDefaults(defineProps<BDropdownTextProps>(), {
-  innerClass: undefined,
+  textClass: undefined,
   tag: 'span',
   variant: null,
   wrapperAttrs: undefined,

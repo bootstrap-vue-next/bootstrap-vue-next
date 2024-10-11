@@ -3,7 +3,7 @@
     <component
       :is="props.tag"
       class="dropdown-divider"
-      :class="props.innerClass"
+      :class="props.dividerClass"
       role="separator"
       aria-orientation="horizontal"
       v-bind="attrs"
@@ -23,7 +23,7 @@ defineOptions({
 const {class: wrapperClass, ...attrs} = useAttrs()
 
 const _props = withDefaults(defineProps<BDropdownDividerProps>(), {
-  innerClass: undefined,
+  dividerClass: undefined,
   tag: 'hr',
   wrapperAttrs: undefined,
 })

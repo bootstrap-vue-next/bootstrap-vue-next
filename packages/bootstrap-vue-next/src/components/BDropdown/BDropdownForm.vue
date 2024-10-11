@@ -1,6 +1,6 @@
 <template>
   <li role="presentation" :class="wrapperClass" v-bind="props.wrapperAttrs">
-    <form class="dropdown-item-text" :class="props.innerClass" v-bind="attrs">
+    <form class="dropdown-item-text" :class="props.formClass" v-bind="attrs">
       <slot />
     </form>
   </li>
@@ -17,7 +17,7 @@ defineOptions({
 const {class: wrapperClass, ...attrs} = useAttrs()
 
 const _props = withDefaults(defineProps<BDropdownFormProps>(), {
-  innerClass: undefined,
+  formClass: undefined,
   wrapperAttrs: undefined,
 })
 const props = useDefaults(_props, 'BDropdownForm')

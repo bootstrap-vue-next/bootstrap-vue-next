@@ -102,14 +102,14 @@ export interface BAccordionProps {
 }
 
 export interface BDropdownDividerProps {
-  innerClass?: ClassValue
+  dividerClass?: ClassValue
   tag?: string
   variant?: ColorVariant | null
   wrapperAttrs?: Readonly<AttrsValue>
 }
 
 export interface BDropdownFormProps {
-  innerClass?: ClassValue
+  formClass?: ClassValue
   wrapperAttrs?: Readonly<AttrsValue>
 }
 
@@ -123,7 +123,7 @@ export interface BDropdownGroupProps {
 }
 
 export interface BDropdownHeaderProps {
-  innerClass?: ClassValue
+  headerClass?: ClassValue
   tag?: string
   variant?: ColorVariant | null
   wrapperAttrs?: Readonly<AttrsValue>
@@ -144,7 +144,7 @@ export interface BDropdownItemButtonProps {
 }
 
 export interface BDropdownTextProps {
-  innerClass?: ClassValue
+  textClass?: ClassValue
   tag?: string
   variant?: ColorVariant | null
   wrapperAttrs?: Readonly<AttrsValue>
