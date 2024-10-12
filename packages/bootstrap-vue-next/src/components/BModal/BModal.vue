@@ -20,7 +20,7 @@
         tabindex="-1"
         v-bind="$attrs"
         :style="computedZIndex"
-        @click.self="hideFn('close-modal')"
+        @click.self="hideFn('backdrop')"
       >
         <div class="modal-dialog" :class="modalDialogClasses">
           <div v-if="lazyShowing" class="modal-content" :class="props.contentClass">
@@ -108,6 +108,7 @@
           class="modal-backdrop"
           :class="{
             fade: !props.noFade,
+            show: props.noFade,
           }"
           @click="hideFn('backdrop')"
         />
