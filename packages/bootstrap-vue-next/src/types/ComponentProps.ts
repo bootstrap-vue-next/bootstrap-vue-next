@@ -110,6 +110,8 @@ export interface BDropdownDividerProps {
 
 export interface BDropdownFormProps {
   formClass?: ClassValue
+  novalidate?: boolean
+  validated?: boolean
   wrapperAttrs?: Readonly<AttrsValue>
 }
 
