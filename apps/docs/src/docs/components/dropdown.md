@@ -200,6 +200,7 @@ may break layout and/or keyboard navigation.
 | `BDropdownText`                                                | Free flowing text content in a menu                                                                                      |
 | `BDropdownGroup`                                               | For grouping dropdown sub-components with an optional header                                                             |
 | `BDropdownHeader`                                              | A header item, used to help identify a group of dropdown items                                                           |
+| `BDropdownForm`                                                | For placing form controls within a dropdown menu.                                                                        |
 
 ::: warning
 _Nested sub-menus are **not** supported._
