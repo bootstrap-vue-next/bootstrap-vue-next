@@ -106,6 +106,7 @@
         <div
           v-if="modelValue"
           class="modal-backdrop"
+          :style="computedZIndexBackdrop"
           :class="{
             fade: !props.noFade,
             show: props.noFade,
@@ -483,16 +484,23 @@ watch(stackWithoutSelf, (newValue, oldValue) => {
 })
 
 const defaultModalDialogZIndex = 1056
-const computedZIndex = computed<CSSProperties>(() => ({
+const computedZIndexNumber = computed<number>(() =>
   // Make sure that newly opened modals have a higher z-index than currently active ones.
   // All active modals have a z-index of ('defaultZIndex' - 'stackSize' - 'positionInStack').
   //
   // This means inactive modals will already be higher than active ones when opened.
-  'z-index':
-    isActive.value || isLeaving.value
-      ? // Just for reference there is a single frame in which the modal is not active but still has a higher z-index than the active ones due to _when_ it calculates its position. It's a small visual effect
-        defaultModalDialogZIndex - ((activeModalCount?.value ?? 0) - (activePosition?.value ?? 0))
-      : defaultModalDialogZIndex,
+
+  isActive.value || isLeaving.value
+    ? // Just for reference there is a single frame in which the modal is not active but still has a higher z-index than the active ones due to _when_ it calculates its position. It's a small visual effect
+      defaultModalDialogZIndex -
+      ((activeModalCount?.value ?? 0) * 2 - (activePosition?.value ?? 0) * 2)
+    : defaultModalDialogZIndex
+)
+const computedZIndex = computed<CSSProperties>(() => ({
+  'z-index': computedZIndexNumber.value,
+}))
+const computedZIndexBackdrop = computed<CSSProperties>(() => ({
+  'z-index': computedZIndexNumber.value - 1,
 }))
 
 useEventListener(element, 'bv-toggle', () => {
