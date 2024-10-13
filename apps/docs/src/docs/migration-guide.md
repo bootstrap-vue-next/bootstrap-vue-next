@@ -182,7 +182,43 @@ The `html` prop has been deprecated, use the `button-content`.
 
 <NotYetImplemented>`toggleAttrs`</NotYetImplemented>
 
-<NotYetImplemented/>The props on `BDropdownForm`, `BDropdownHeader`, and `BDropdownText`.
+### Dropdown sub-components
+
+BootstrapVueNext makes extensive use of inherrited attributes to implement customization in dropdown sub-components
+in places where BootstrapVue used explicit props on the sub-components. In general the sub-components are
+implemented as an `<li>` element wrapping the actual sub-component. In these cases, there is a `wrapper-class` prop
+that is used to apply classes to the `<li>` element and an `*-class` prop that is used to apply classes to the
+sub-component where `*-class` is related the name of the sub-component. e.g. `BDropdownDivier` has a `divider-class`
+prop that is used to add classes to the actual divider element. In addition, the inheritted attributes are applied to
+the subcomonent rather than the wrapper `<li>` tag and there is an explicit `wrapper-attr` tag defined to place
+additional attributes on the `<li>` tag.
+
+Looking at the code for
+[`BDropdownDivider`](https://github.com/bootstrap-vue-next/bootstrap-vue-next/blob/main/packages/bootstrap-vue-next/src/components/BDropdown/BDropdownDivider.vue)
+should give a clear picture how how the above fits together and the remainder of this section will give specifics
+on how to handle migration from BootstrapVue.
+
+Several of the BootstrapVue sub-components have an explicit `id` prop, which sets the id on the inner component. In
+BootstrapVueNext the `id` as well as any other unspecified props will be set will be set on the inner component, having
+the same effect as in BootstrapVue.
+
+For example:
+
+<<< FRAGMENT ./demo/DropdownHeader.vue#template{vue-html}
+
+yields
+
+<<< FRAGMENT ./demo/DropdownHeader.html#template
+
+The exception to this rule is `<BDropdownGroup>` where we explicitly implement `id` in order to be able to generate
+a header id.
+
+#### BDropdownForm
+
+`inline` is deprectated, see the [BForm](#bform) migration information. To add classes to the `<form>` tag in `BdropdownForm`
+use the `form-class` prop.
+
+The `disabled` prop is deprecated, set the disabled prop on individual components as you do with `BForm`.
 
 ## BForm
 
