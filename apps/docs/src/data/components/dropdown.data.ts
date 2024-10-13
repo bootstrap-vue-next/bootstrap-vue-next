@@ -142,7 +142,7 @@ export default {
             type: 'string',
             default: 'Toggle dropdown',
             description:
-              'ARIA label (sr-only) to set on the toggle when in split mode. Overriden by the slot of the same name',
+              'ARIA label (visually-hidden) to set on the toggle when in split mode. Overriden by the slot of the same name',
           },
           wrapperClass: {
             type: 'ClassValue',
@@ -261,7 +261,7 @@ export default {
         {
           name: 'toggle-text',
           description:
-            'ARIA label (sr-only) to set on the toggle when in split mode. Overrides the toggle-text prop',
+            'ARIA label (visually-hidden) to set on the toggle when in split mode. Overrides the toggle-text prop',
         },
       ],
     },

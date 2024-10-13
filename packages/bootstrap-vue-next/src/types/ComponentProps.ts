@@ -1312,7 +1312,7 @@ export interface BModalProps extends TeleporterProps {
   size?: Size | 'xl'
   title?: string
   titleClass?: ClassValue
-  titleSrOnly?: boolean
+  titleVisuallyHidden?: boolean
   titleTag?: string
   transProps?: Readonly<BTransitionProps>
 }

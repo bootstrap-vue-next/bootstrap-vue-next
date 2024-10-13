@@ -197,7 +197,7 @@ const _props = withDefaults(defineProps<Omit<BModalProps, 'modelValue'>>(), {
   teleportTo: 'body',
   title: undefined,
   titleClass: undefined,
-  titleSrOnly: false,
+  titleVisuallyHidden: false,
   titleTag: 'h5',
   transProps: undefined,
 })
@@ -349,7 +349,7 @@ const footerClasses = computed(() => [props.footerClass, footerColorClasses.valu
 const titleClasses = computed(() => [
   props.titleClass,
   {
-    ['visually-hidden']: props.titleSrOnly,
+    ['visually-hidden']: props.titleVisuallyHidden,
   },
 ])
 const disableCancel = computed(() => props.cancelDisabled || props.busy)
