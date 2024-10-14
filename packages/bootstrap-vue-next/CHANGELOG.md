@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.25.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.1...bootstrapvuenext-v0.25.2) (2024-10-14)
+
+
+### Bug Fixes
+
+* **BModal:** fix backdrop when modal is shown using v-if ([#2269](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2269)) ([f317fab](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f317fabbf8a91665bd5f639249850811c5780c18))
+
 ## [0.25.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.0...bootstrapvuenext-v0.25.1) (2024-10-14)
 
 
