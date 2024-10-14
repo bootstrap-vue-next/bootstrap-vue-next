@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from 'vue'
+import {computed} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {normalizeInput} from '../../utils/normalizeInput'
 import type {BFormInputProps} from '../../types/ComponentProps'
@@ -74,15 +74,12 @@ const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus,
 
 const stateClass = useStateClass(() => props.state)
 
-const isHighlighted = ref(false)
-
 const computedClasses = computed(() => {
   const isRange = props.type === 'range'
   const isColor = props.type === 'color'
   return [
     stateClass.value,
     {
-      'form-control-highlighted': isHighlighted.value,
       'form-range': isRange,
       'form-control': isColor || (!props.plaintext && !isRange),
       'form-control-color': isColor,
@@ -97,12 +94,4 @@ defineExpose({
   element: input,
   focus,
 })
-
-// const highlight = () => {
-//   if (isHighlighted.value === true) return
-//   isHighlighted.value = true
-//   setTimeout(() => {
-//     isHighlighted.value = false
-//   }, 2000)
-// }
 </script>
