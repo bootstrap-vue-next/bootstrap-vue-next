@@ -102,7 +102,7 @@
       </div>
     </Transition>
     <slot v-if="!props.hideBackdrop" name="backdrop" v-bind="sharedSlots">
-      <Transition @after-enter="fadeIn" @before-leave="fadeOut">
+      <Transition :appear="modelValue" @after-enter="fadeIn" @before-leave="fadeOut">
         <div
           v-if="modelValue"
           class="modal-backdrop"
