@@ -18,9 +18,9 @@
     :list="props.type !== 'password' ? props.list : undefined"
     :aria-required="props.required || undefined"
     :aria-invalid="computedAriaInvalid"
-    @input="onInput($event)"
-    @change="onChange($event)"
-    @blur="onBlur($event)"
+    @input="onInput"
+    @change="onChange"
+    @blur="onBlur"
   />
 </template>
 

@@ -1,5 +1,5 @@
 import type {Numberish} from '../types/CommonTypes'
-import {nextTick, onActivated, onMounted, ref, type Ref} from 'vue'
+import {getCurrentInstance, nextTick, onActivated, onMounted, ref, type Ref} from 'vue'
 import {useAriaInvalid} from './useAriaInvalid'
 import {useId} from './useId'
 import {useDebounceFn, useFocus, useToNumber} from '@vueuse/core'
@@ -11,6 +11,7 @@ export const useFormInput = (
   modelModifiers: Record<'number' | 'lazy' | 'trim', true | undefined>
 ) => {
   const input = ref<HTMLInputElement | null>(null)
+  const instance = getCurrentInstance()
 
   const computedId = useId(() => props.id, 'input')
   const debounceNumber = useToNumber(() => props.debounce ?? 0)
@@ -86,14 +87,21 @@ export const useFormInput = (
   }
 
   const onBlur = (evt: Readonly<FocusEvent>) => {
-    if (!modelModifiers.lazy && !props.lazyFormatter) return
+    if (!modelModifiers.lazy && !props.lazyFormatter && !modelModifiers.trim) return
 
     const {value} = evt.target as HTMLInputElement
     const formattedValue = _formatValue(value, evt, true)
 
-    const nextModel = formattedValue
+    const formattedLengthBefore = formattedValue.length
+    const nextModel = modelModifiers.trim ? formattedValue.toString().trim() : formattedValue
+    const needsForceUpdate = nextModel.length !== formattedLengthBefore
     if (modelValue.value !== nextModel) {
       updateModelValue(formattedValue, true)
+    }
+    if (modelModifiers.trim && needsForceUpdate) {
+      // The value is trimmed but there would still exist some white space
+      // So, force update the value
+      instance?.proxy?.$forceUpdate()
     }
   }
 
