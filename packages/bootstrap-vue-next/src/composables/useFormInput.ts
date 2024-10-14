@@ -92,9 +92,8 @@ export const useFormInput = (
     const {value} = evt.target as HTMLInputElement
     const formattedValue = _formatValue(value, evt, true)
 
-    const formattedLengthBefore = formattedValue.length
-    const nextModel = modelModifiers.trim ? formattedValue.toString().trim() : formattedValue
-    const needsForceUpdate = nextModel.length !== formattedLengthBefore
+    const nextModel = modelModifiers.trim ? formattedValue.trim() : formattedValue
+    const needsForceUpdate = nextModel.length !== formattedValue.length
     if (modelValue.value !== nextModel) {
       updateModelValue(formattedValue, true)
     }
