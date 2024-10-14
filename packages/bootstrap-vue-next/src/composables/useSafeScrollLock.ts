@@ -9,7 +9,7 @@ import {
   useId,
   watch,
 } from 'vue'
-import {useScrollLock} from '@vueuse/core'
+import {useScrollLock} from './useScrollLock'
 
 let prevousRightPadding = ''
 const lockRegistry = new Map()
