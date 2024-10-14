@@ -11,6 +11,7 @@ export const useFormInput = (
   modelModifiers: Record<'number' | 'lazy' | 'trim', true | undefined>
 ) => {
   const input = ref<HTMLInputElement | null>(null)
+  const forceUpdateKey = ref(0)
 
   const computedId = useId(() => props.id, 'input')
   const debounceNumber = useToNumber(() => props.debounce ?? 0)
@@ -86,14 +87,20 @@ export const useFormInput = (
   }
 
   const onBlur = (evt: Readonly<FocusEvent>) => {
-    if (!modelModifiers.lazy && !props.lazyFormatter) return
+    if (!modelModifiers.lazy && !props.lazyFormatter && !modelModifiers.trim) return
 
     const {value} = evt.target as HTMLInputElement
     const formattedValue = _formatValue(value, evt, true)
 
-    const nextModel = formattedValue
+    const nextModel = modelModifiers.trim ? formattedValue.trim() : formattedValue
+    const needsForceUpdate = nextModel.length !== formattedValue.length
     if (modelValue.value !== nextModel) {
       updateModelValue(formattedValue, true)
+    }
+    if (modelModifiers.trim && needsForceUpdate) {
+      // The value is trimmed but there would still exist some white space
+      // So, force update the value. You need to bind this to :key on the input element
+      forceUpdateKey.value = forceUpdateKey.value + 1
     }
   }
 
@@ -118,5 +125,6 @@ export const useFormInput = (
     onBlur,
     focus,
     blur,
+    forceUpdateKey,
   }
 }

@@ -2,6 +2,7 @@
   <input
     :id="computedId"
     ref="input"
+    :key="forceUpdateKey"
     :value="modelValue"
     :class="computedClasses"
     :name="props.name || undefined"
@@ -18,9 +19,9 @@
     :list="props.type !== 'password' ? props.list : undefined"
     :aria-required="props.required || undefined"
     :aria-invalid="computedAriaInvalid"
-    @input="onInput($event)"
-    @change="onChange($event)"
-    @blur="onBlur($event)"
+    @input="onInput"
+    @change="onChange"
+    @blur="onBlur"
   />
 </template>
 
@@ -69,8 +70,17 @@ const [modelValue, modelModifiers] = defineModel<
   set: (v) => normalizeInput(v, modelModifiers),
 })
 
-const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
-  useFormInput(props, modelValue, modelModifiers)
+const {
+  input,
+  computedId,
+  computedAriaInvalid,
+  onInput,
+  onChange,
+  onBlur,
+  focus,
+  blur,
+  forceUpdateKey,
+} = useFormInput(props, modelValue, modelModifiers)
 
 const stateClass = useStateClass(() => props.state)
 
