@@ -1,5 +1,5 @@
 import type {Numberish} from '../types/CommonTypes'
-import {getCurrentInstance, nextTick, onActivated, onMounted, ref, type Ref} from 'vue'
+import {nextTick, onActivated, onMounted, ref, type Ref} from 'vue'
 import {useAriaInvalid} from './useAriaInvalid'
 import {useId} from './useId'
 import {useDebounceFn, useFocus, useToNumber} from '@vueuse/core'
@@ -11,7 +11,7 @@ export const useFormInput = (
   modelModifiers: Record<'number' | 'lazy' | 'trim', true | undefined>
 ) => {
   const input = ref<HTMLInputElement | null>(null)
-  const instance = getCurrentInstance()
+  const forceUpdateKey = ref(0)
 
   const computedId = useId(() => props.id, 'input')
   const debounceNumber = useToNumber(() => props.debounce ?? 0)
@@ -99,8 +99,8 @@ export const useFormInput = (
     }
     if (modelModifiers.trim && needsForceUpdate) {
       // The value is trimmed but there would still exist some white space
-      // So, force update the value
-      instance?.proxy?.$forceUpdate()
+      // So, force update the value. You need to bind this to :key on the input element
+      forceUpdateKey.value = forceUpdateKey.value + 1
     }
   }
 
@@ -125,5 +125,6 @@ export const useFormInput = (
     onBlur,
     focus,
     blur,
+    forceUpdateKey,
   }
 }
