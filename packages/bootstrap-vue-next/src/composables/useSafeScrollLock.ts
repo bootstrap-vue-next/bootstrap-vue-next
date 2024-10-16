@@ -26,12 +26,12 @@ export const useSafeScrollLock = (
    */
   const inverseBodyScrollingValue = computed(() => !toValue(bodyScroll))
 
+  const isLocked = useScrollLock(
+    document?.body,
+    resolvedIsOpen.value && inverseBodyScrollingValue.value
+  )
   onMounted(() => {
     lockRegistry.set(id, false)
-    const isLocked = useScrollLock(
-      document.body,
-      resolvedIsOpen.value && inverseBodyScrollingValue.value
-    )
 
     watch(
       [resolvedIsOpen, inverseBodyScrollingValue],
@@ -62,5 +62,11 @@ export const useSafeScrollLock = (
   })
   onUnmounted(() => {
     lockRegistry.delete(id)
+
+    const hasLockedAfter = Array.from(lockRegistry.values()).some((val) => val === true)
+    if (!hasLockedAfter) {
+      document.body.style.paddingRight = prevousRightPadding
+      isLocked.value = false
+    }
   })
 }
