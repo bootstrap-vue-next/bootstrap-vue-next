@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.25.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.2...bootstrapvuenext-v0.25.3) (2024-10-16)
+
+
+### Bug Fixes
+
+* **BFormCheckbox:** indeterminate state not working properly fixes [#2271](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2271) ([#2274](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2274)) ([0d2fc28](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0d2fc2896534f7f00036db8e5cb8339b37117f14))
+
 ## [0.25.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.1...bootstrapvuenext-v0.25.2) (2024-10-14)
 
 
