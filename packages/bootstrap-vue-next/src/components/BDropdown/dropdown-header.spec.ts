@@ -29,4 +29,19 @@ describe('dropdown-header', () => {
     const $h6 = wrapper.get('h6')
     expect($h6.text()).toBe('foobar')
   })
+
+  it('renders prop text', () => {
+    const wrapper = mount(BDropdownHeader, {
+      props: {text: 'foobar'},
+    })
+    expect(wrapper.text()).toBe('foobar')
+  })
+
+  it('renders default slot over prop text', () => {
+    const wrapper = mount(BDropdownHeader, {
+      slots: {default: 'slots'},
+      props: {text: 'props'},
+    })
+    expect(wrapper.text()).toBe('slots')
+  })
 })

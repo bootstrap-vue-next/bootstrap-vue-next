@@ -109,7 +109,17 @@ export interface BAccordionProps {
 }
 
 export interface BDropdownDividerProps {
+  dividerClass?: ClassValue
   tag?: string
+  variant?: ColorVariant | null
+  wrapperAttrs?: Readonly<AttrsValue>
+}
+
+export interface BDropdownFormProps {
+  formClass?: ClassValue
+  novalidate?: boolean
+  validated?: boolean
+  wrapperAttrs?: Readonly<AttrsValue>
 }
 
 export interface BDropdownGroupProps {
@@ -119,6 +129,14 @@ export interface BDropdownGroupProps {
   headerTag?: string
   headerVariant?: ColorVariant | null
   id?: string
+}
+
+export interface BDropdownHeaderProps {
+  headerClass?: ClassValue
+  tag?: string
+  text?: string
+  variant?: ColorVariant | null
+  wrapperAttrs?: Readonly<AttrsValue>
 }
 
 export interface BDropdownItemProps extends Omit<BLinkProps, 'routerTag'> {
@@ -136,7 +154,11 @@ export interface BDropdownItemButtonProps {
 }
 
 export interface BDropdownTextProps {
+  textClass?: ClassValue
+  tag?: string
   text?: string
+  variant?: ColorVariant | null
+  wrapperAttrs?: Readonly<AttrsValue>
 }
 
 export interface BFormFloatingLabelProps {
@@ -1223,6 +1245,7 @@ export interface BPopoverProps extends TeleporterProps {
         hide: number
       }>
   floatingMiddleware?: Middleware[]
+  hideMargin?: number
   html?: boolean
   id?: string
   inline?: boolean
@@ -1311,7 +1334,7 @@ export interface BModalProps extends TeleporterProps {
   size?: Size | 'xl'
   title?: string
   titleClass?: ClassValue
-  titleSrOnly?: boolean
+  titleVisuallyHidden?: boolean
   titleTag?: string
   transProps?: Readonly<BTransitionProps>
 }

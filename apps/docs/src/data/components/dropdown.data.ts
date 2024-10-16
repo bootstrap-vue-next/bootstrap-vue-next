@@ -142,7 +142,7 @@ export default {
             type: 'string',
             default: 'Toggle dropdown',
             description:
-              'ARIA label (sr-only) to set on the toggle when in split mode. Overriden by the slot of the same name',
+              'ARIA label (visually-hidden) to set on the toggle when in split mode. Overriden by the slot of the same name',
           },
           wrapperClass: {
             type: 'ClassValue',
@@ -261,7 +261,7 @@ export default {
         {
           name: 'toggle-text',
           description:
-            'ARIA label (sr-only) to set on the toggle when in split mode. Overrides the toggle-text prop',
+            'ARIA label (visually-hidden) to set on the toggle when in split mode. Overrides the toggle-text prop',
         },
       ],
     },
@@ -270,13 +270,18 @@ export default {
       sourcePath: '/BDropdown/BDropdownDivider.vue',
       props: {
         '': {
+          dividerClass: {
+            default: undefined,
+            type: 'ClassValue',
+            description: 'CSS class (or classes) to add to the divider component',
+          },
           ...pick(
             buildCommonProps({
               tag: {
                 default: 'hr',
               },
             }),
-            ['tag']
+            ['tag', 'variant', 'wrapperAttrs']
           ),
         } satisfies Record<keyof BvnComponentProps['BDropdownDivider'], PropertyReference>,
       },
@@ -286,14 +291,16 @@ export default {
       sourcePath: '/BDropdown/BDropdownForm.vue',
       props: {
         '': {
-          formClass: {notYetImplemented: true},
-          inline: {notYetImplemented: true},
+          formClass: {
+            default: undefined,
+            type: 'ClassValue',
+            description: 'CSS class (or classes) to add to the form component',
+          },
           novalidate: {notYetImplemented: true},
           validated: {notYetImplemented: true},
-        },
+          ...pick(buildCommonProps({}), ['wrapperAttrs']),
+        } satisfies Record<keyof BvnComponentProps['BDropdownForm'], PropertyReference>,
       },
-      // Add the typing back in when props are implemented
-      // satisfies Record<keyof BvnComponentProps['BDropdownForm'], PropertyReference>,
       slots: [
         {
           name: 'default',
@@ -336,7 +343,16 @@ export default {
       component: 'BDropdownHeader',
       sourcePath: '/BDropdown/BDropdownHeader.vue',
       emits: [],
-      props: {} satisfies Record<keyof BvnComponentProps['BDropdownHeader'], PropertyReference>,
+      props: {
+        '': {
+          text: {
+            default: undefined,
+            description: 'Content to place in the dropdown text. Default slot takes precedence',
+            type: 'string',
+          },
+          ...pick(buildCommonProps({}), ['headerClass', 'tag', 'variant', 'wrapperAttrs']),
+        } satisfies Record<keyof BvnComponentProps['BDropdownHeader'], PropertyReference>,
+      },
       slots: [
         {
           name: 'default',
@@ -431,6 +447,19 @@ export default {
             description: 'Content to place in the dropdown text. Default slot takes precedence',
             type: 'string',
           },
+          textClass: {
+            default: undefined,
+            type: 'ClassValue',
+            description: 'CSS class (or classes) to add to the text component',
+          },
+          ...pick(
+            buildCommonProps({
+              tag: {
+                default: 'span',
+              },
+            }),
+            ['tag', 'variant', 'wrapperAttrs']
+          ),
         } satisfies Record<keyof BvnComponentProps['BDropdownText'], PropertyReference>,
       },
       slots: [

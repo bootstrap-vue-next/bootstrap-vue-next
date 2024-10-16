@@ -765,7 +765,7 @@ const sortFields: Exclude<TableFieldRaw<SortPerson>, string>[] = [
         {{ (row.value as PersonName).last }}
       </template>
       <template #cell(actions)="row">
-        <BButton size="sm" class="mr-1" @click="info(row.item, row.index)"> Info modal </BButton>
+        <BButton size="sm" class="me-1" @click="info(row.item, row.index)"> Info modal </BButton>
         <BButton size="sm" @click="row.toggleDetails">
           {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
         </BButton>
@@ -924,7 +924,7 @@ const sortFields: Exclude<TableFieldRaw<SortPerson>, string>[] = [
         {{ (row.value as PersonName).last }}
       </template>
       <template #cell(actions)="row">
-        <BButton size="sm" class="mr-1" @click="info(row.item, row.index)"> Info modal </BButton>
+        <BButton size="sm" class="me-1" @click="info(row.item, row.index)"> Info modal </BButton>
         <BButton size="sm" @click="row.toggleDetails">
           {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
         </BButton>

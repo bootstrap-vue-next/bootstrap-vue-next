@@ -1,5 +1,41 @@
 # Changelog
 
+## [0.25.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.2...bootstrapvuenext-v0.25.3) (2024-10-16)
+
+
+### Bug Fixes
+
+* **BFormCheckbox:** indeterminate state not working properly fixes [#2271](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2271) ([#2274](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2274)) ([0d2fc28](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0d2fc2896534f7f00036db8e5cb8339b37117f14))
+
+## [0.25.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.1...bootstrapvuenext-v0.25.2) (2024-10-14)
+
+
+### Bug Fixes
+
+* **BModal:** fix backdrop when modal is shown using v-if ([#2269](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2269)) ([f317fab](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f317fabbf8a91665bd5f639249850811c5780c18))
+
+## [0.25.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.0...bootstrapvuenext-v0.25.1) (2024-10-14)
+
+
+### Features
+
+* **BDropdown:** add variant, classes and correct attrs to text sub components ([d2d4905](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d2d4905e5506ca7b15aa285a8acd972469db3d38))
+* **BDropdown:** add variant, classes and correct attrs to text sub components ([#2258](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2258)) ([d2d4905](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d2d4905e5506ca7b15aa285a8acd972469db3d38))
+* **BDropdownForm:** add validated and novalidate to form ([d2d4905](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d2d4905e5506ca7b15aa285a8acd972469db3d38))
+* **BPopover:** add prop hideMargin ([bc4df5f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bc4df5ffd9bbab0061ad80ca3d2266b3587b003b))
+* clean deprecated classes and props from bootstrap (sr-only =&gt; visually-hidden) ([d3783ec](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d3783ec1d3cfd13e1aed747dbd04005a245b3b11))
+
+
+### Bug Fixes
+
+* **BFormInput:** bad model modifier trim behavior fixes [#2253](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2253) ([#2267](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2267)) ([bb0733f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bb0733f20cdc7019bf4feac416a66f1555996d95))
+* **BModal:** fix backdrop click prevention, fix flickering when no-fade ([#2262](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2262)) ([e008cf4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e008cf43645cbf6656beaf9d568f63545db34888))
+* **BModal:** fix scrollLock in stack ([f713aaa](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f713aaa353968b4a0761486b881efadcfddea6e5))
+* **BModal:** multiple modals backdrop fix ([#2263](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2263)) ([f713aaa](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f713aaa353968b4a0761486b881efadcfddea6e5))
+* **BPopover:** allow hide without event. ([bc4df5f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bc4df5ffd9bbab0061ad80ca3d2266b3587b003b))
+* **BPopover:** calculate mouse and element positions in a performant way ([bc4df5f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bc4df5ffd9bbab0061ad80ca3d2266b3587b003b))
+* **BPopover:** calculate mouse and element positions in a performant way ([#2252](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2252)) ([bc4df5f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bc4df5ffd9bbab0061ad80ca3d2266b3587b003b))
+
 ## [0.25.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.23...bootstrapvuenext-v0.25.0) (2024-10-11)
 
 
