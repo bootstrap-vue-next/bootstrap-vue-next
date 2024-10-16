@@ -20,7 +20,7 @@
       :value="props.value"
       :true-value="props.value"
       :false-value="props.uncheckedValue"
-      :indeterminate.attr="indeterminate || undefined"
+      :indeterminate="indeterminate || undefined"
       v-bind="inputAttrs"
     />
     <label v-if="hasDefaultSlot || props.plain === false" :for="computedId" :class="labelClasses">
