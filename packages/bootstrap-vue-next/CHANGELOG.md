@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.25.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.3...bootstrapvuenext-v0.25.4) (2024-10-16)
+
+
+### Bug Fixes
+
+* **BModal:** remove scrolllock on unmount ([#2277](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2277)) ([cb12723](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cb12723ae7c410116197b5fd2b60fa210156e083))
+
 ## [0.25.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.2...bootstrapvuenext-v0.25.3) (2024-10-16)
 
 
