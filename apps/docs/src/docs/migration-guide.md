@@ -329,6 +329,10 @@ and `exact-path-active-class` props on `BLink`. See the [`Vue Router` migration 
 
 BSVN no longer emits the `bv::link::clicked` event on `$root`.
 
+## BListGroup
+
+See [BLink](#blink) for changes to link and router behavior.
+
 ## BModal
 
 ### Replacement for Modal Message boxes
