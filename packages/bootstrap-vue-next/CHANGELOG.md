@@ -1,117 +1,142 @@
 # Changelog
 
-## [0.25.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.23...bootstrapvuenext-v0.25.0) (2024-10-11)
+## [0.25.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.3...bootstrapvuenext-v0.25.4) (2024-10-16)
 
+### Bug Fixes
+
+- **BModal:** remove scrolllock on unmount ([#2277](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2277)) ([cb12723](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cb12723ae7c410116197b5fd2b60fa210156e083))
+
+## [0.25.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.2...bootstrapvuenext-v0.25.3) (2024-10-16)
+
+### Bug Fixes
+
+- **BFormCheckbox:** indeterminate state not working properly fixes [#2271](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2271) ([#2274](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2274)) ([0d2fc28](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0d2fc2896534f7f00036db8e5cb8339b37117f14))
+
+## [0.25.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.1...bootstrapvuenext-v0.25.2) (2024-10-14)
+
+### Bug Fixes
+
+- **BModal:** fix backdrop when modal is shown using v-if ([#2269](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2269)) ([f317fab](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f317fabbf8a91665bd5f639249850811c5780c18))
+
+## [0.25.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.0...bootstrapvuenext-v0.25.1) (2024-10-14)
+
+### Features
+
+- **BDropdown:** add variant, classes and correct attrs to text sub components ([d2d4905](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d2d4905e5506ca7b15aa285a8acd972469db3d38))
+- **BDropdown:** add variant, classes and correct attrs to text sub components ([#2258](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2258)) ([d2d4905](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d2d4905e5506ca7b15aa285a8acd972469db3d38))
+- **BDropdownForm:** add validated and novalidate to form ([d2d4905](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d2d4905e5506ca7b15aa285a8acd972469db3d38))
+- **BPopover:** add prop hideMargin ([bc4df5f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bc4df5ffd9bbab0061ad80ca3d2266b3587b003b))
+- clean deprecated classes and props from bootstrap (sr-only =&gt; visually-hidden) ([d3783ec](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d3783ec1d3cfd13e1aed747dbd04005a245b3b11))
+
+### Bug Fixes
+
+- **BFormInput:** bad model modifier trim behavior fixes [#2253](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2253) ([#2267](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2267)) ([bb0733f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bb0733f20cdc7019bf4feac416a66f1555996d95))
+- **BModal:** fix backdrop click prevention, fix flickering when no-fade ([#2262](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2262)) ([e008cf4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e008cf43645cbf6656beaf9d568f63545db34888))
+- **BModal:** fix scrollLock in stack ([f713aaa](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f713aaa353968b4a0761486b881efadcfddea6e5))
+- **BModal:** multiple modals backdrop fix ([#2263](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2263)) ([f713aaa](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f713aaa353968b4a0761486b881efadcfddea6e5))
+- **BPopover:** allow hide without event. ([bc4df5f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bc4df5ffd9bbab0061ad80ca3d2266b3587b003b))
+- **BPopover:** calculate mouse and element positions in a performant way ([bc4df5f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bc4df5ffd9bbab0061ad80ca3d2266b3587b003b))
+- **BPopover:** calculate mouse and element positions in a performant way ([#2252](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2252)) ([bc4df5f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bc4df5ffd9bbab0061ad80ca3d2266b3587b003b))
+
+## [0.25.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.23...bootstrapvuenext-v0.25.0) (2024-10-11)
 
 ### ⚠ BREAKING CHANGES
 
-* **BDropdown:** remove props center, dropend, dropstart, dropup, & end -- use single prop placement -- has same rules as popover. placement=top-start placement=bottom-start placement=right-start etc etc fixes #1752
-* **BProgress:** fix markup for BProgress to match bootstrap 5.3 recommended fixes #2221 . Manual intervention may not be needed, double check your aria markup (if manually configured), may be automatic
-* **useToast:** rename useToast to useToastController fixes #2155
-* **BTable:** rename event row-dbl-clicked to row-dblclicked ([#2239](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2239))
+- **BDropdown:** remove props center, dropend, dropstart, dropup, & end -- use single prop placement -- has same rules as popover. placement=top-start placement=bottom-start placement=right-start etc etc fixes #1752
+- **BProgress:** fix markup for BProgress to match bootstrap 5.3 recommended fixes #2221 . Manual intervention may not be needed, double check your aria markup (if manually configured), may be automatic
+- **useToast:** rename useToast to useToastController fixes #2155
+- **BTable:** rename event row-dbl-clicked to row-dblclicked ([#2239](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2239))
 
 ### Features
 
-* **BDropdown:** remove props center, dropend, dropstart, dropup, & end -- use single prop placement -- has same rules as popover. placement=top-start placement=bottom-start placement=right-start etc etc fixes [#1752](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1752) ([e6749a3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6749a366aa839d2607c1aeba6b786e4e2299abf))
-* **BProgress:** fix markup for BProgress to match bootstrap 5.3 recommended fixes [#2221](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2221) . Manual intervention may not be needed, double check your aria markup (if manually configured), may be automatic ([e6749a3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6749a366aa839d2607c1aeba6b786e4e2299abf))
-* **BTable:** add emptyText and emptyFilteredText functionality fixes [#664](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/664) ([e6749a3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6749a366aa839d2607c1aeba6b786e4e2299abf))
-* **BTable:** add row-contextmenu event fixes [#2238](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2238) ([3f81473](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3f814733a36cb0611597602d2f142caf0c99621b))
-* **BTable:** add row-middle-clicked event ([3f81473](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3f814733a36cb0611597602d2f142caf0c99621b))
-* **PluginControllers:** Allow for using the prop.id for the items key. Ie if you supply modalController.show({props: {id: 'foo' }}) You can reference it leave('foo') ([e6749a3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6749a366aa839d2607c1aeba6b786e4e2299abf))
-* **usePopoverController:** create usePopoverController composable (not fully complete) ([e6749a3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6749a366aa839d2607c1aeba6b786e4e2299abf))
-* **useToast:** rename useToast to useToastController fixes [#2155](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2155) ([e6749a3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6749a366aa839d2607c1aeba6b786e4e2299abf))
-
+- **BDropdown:** remove props center, dropend, dropstart, dropup, & end -- use single prop placement -- has same rules as popover. placement=top-start placement=bottom-start placement=right-start etc etc fixes [#1752](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1752) ([e6749a3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6749a366aa839d2607c1aeba6b786e4e2299abf))
+- **BProgress:** fix markup for BProgress to match bootstrap 5.3 recommended fixes [#2221](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2221) . Manual intervention may not be needed, double check your aria markup (if manually configured), may be automatic ([e6749a3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6749a366aa839d2607c1aeba6b786e4e2299abf))
+- **BTable:** add emptyText and emptyFilteredText functionality fixes [#664](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/664) ([e6749a3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6749a366aa839d2607c1aeba6b786e4e2299abf))
+- **BTable:** add row-contextmenu event fixes [#2238](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2238) ([3f81473](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3f814733a36cb0611597602d2f142caf0c99621b))
+- **BTable:** add row-middle-clicked event ([3f81473](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3f814733a36cb0611597602d2f142caf0c99621b))
+- **PluginControllers:** Allow for using the prop.id for the items key. Ie if you supply modalController.show({props: {id: 'foo' }}) You can reference it leave('foo') ([e6749a3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6749a366aa839d2607c1aeba6b786e4e2299abf))
+- **usePopoverController:** create usePopoverController composable (not fully complete) ([e6749a3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6749a366aa839d2607c1aeba6b786e4e2299abf))
+- **useToast:** rename useToast to useToastController fixes [#2155](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2155) ([e6749a3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6749a366aa839d2607c1aeba6b786e4e2299abf))
 
 ### Bug Fixes
 
-* **BDropdown:** bdropdown when in button group has class btn-group fixes [#2025](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2025) ([e6749a3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6749a366aa839d2607c1aeba6b786e4e2299abf))
-* **BModal:** fix backdrop, fade and reduced animation ([#2250](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2250)) ([48cc89c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/48cc89ca198d811c520e0ca42a38ca9438429ae5))
-* **BTable:** busy slot behavior to match bootstrap-vue fixes [#1636](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1636) ([e6749a3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6749a366aa839d2607c1aeba6b786e4e2299abf))
-* **BTable:** busy slot behavior to match bootstrap-vue fixes [#1636](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1636)  ([#2249](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2249)) ([9581572](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/95815728328bc7eedce33e4dc62376b651259f08))
-* **BTable:** cast formatted items to string fixes [#2227](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2227) ([e6749a3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6749a366aa839d2607c1aeba6b786e4e2299abf))
-* **BTable:** cast formatted items to string fixes [#2227](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2227) ([#2247](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2247)) ([dabd159](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/dabd1597e1d4775a23a6a9b161065db553a204a6))
-* **BTable:** rename event row-dbl-clicked to row-dblclicked ([#2239](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2239)) ([3f81473](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3f814733a36cb0611597602d2f142caf0c99621b))
-* **BTable:** use watcher to compare changes with selectedItems fixes [#2245](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2245) ([#2246](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2246)) ([d48b559](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d48b559c1ecd68a14d523a52bfb96426595f1288))
-* **vBPopover:** revert [#2234](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2234) ([#2256](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2256)) ([67ab6c8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/67ab6c858fbd31a626d4a22e0eae9af49d86d1f7))
+- **BDropdown:** bdropdown when in button group has class btn-group fixes [#2025](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2025) ([e6749a3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6749a366aa839d2607c1aeba6b786e4e2299abf))
+- **BModal:** fix backdrop, fade and reduced animation ([#2250](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2250)) ([48cc89c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/48cc89ca198d811c520e0ca42a38ca9438429ae5))
+- **BTable:** busy slot behavior to match bootstrap-vue fixes [#1636](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1636) ([e6749a3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6749a366aa839d2607c1aeba6b786e4e2299abf))
+- **BTable:** busy slot behavior to match bootstrap-vue fixes [#1636](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1636) ([#2249](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2249)) ([9581572](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/95815728328bc7eedce33e4dc62376b651259f08))
+- **BTable:** cast formatted items to string fixes [#2227](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2227) ([e6749a3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6749a366aa839d2607c1aeba6b786e4e2299abf))
+- **BTable:** cast formatted items to string fixes [#2227](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2227) ([#2247](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2247)) ([dabd159](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/dabd1597e1d4775a23a6a9b161065db553a204a6))
+- **BTable:** rename event row-dbl-clicked to row-dblclicked ([#2239](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2239)) ([3f81473](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3f814733a36cb0611597602d2f142caf0c99621b))
+- **BTable:** use watcher to compare changes with selectedItems fixes [#2245](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2245) ([#2246](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2246)) ([d48b559](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d48b559c1ecd68a14d523a52bfb96426595f1288))
+- **vBPopover:** revert [#2234](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2234) ([#2256](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2256)) ([67ab6c8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/67ab6c858fbd31a626d4a22e0eae9af49d86d1f7))
 
 ## [0.24.23](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.22...bootstrapvuenext-v0.24.23) (2024-09-26)
 
-
 ### Bug Fixes
 
-* **vBPopover:** add position absolute to floating directives ([#2234](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2234)) ([9e4d8b7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9e4d8b7b8372a8aa3d6e3ec3fb3298f27e6292e0))
+- **vBPopover:** add position absolute to floating directives ([#2234](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2234)) ([9e4d8b7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9e4d8b7b8372a8aa3d6e3ec3fb3298f27e6292e0))
 
 ## [0.24.22](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.21...bootstrapvuenext-v0.24.22) (2024-09-24)
 
-
 ### Bug Fixes
 
-* **BTable:** select mode range when table is sorted fixes [#2229](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2229) ([#2230](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2230)) ([e29a9ef](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e29a9efaee7a26257fa4a18e197b24d0dd819270))
+- **BTable:** select mode range when table is sorted fixes [#2229](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2229) ([#2230](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2230)) ([e29a9ef](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e29a9efaee7a26257fa4a18e197b24d0dd819270))
 
 ## [0.24.21](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.20...bootstrapvuenext-v0.24.21) (2024-09-22)
 
-
 ### Features
 
-* **colorvariant:** add subtle and emphasis variant fixes [#2079](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2079) ([5946219](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5946219512bfbf1a533a23670295ed5a8dfbaba9))
+- **colorvariant:** add subtle and emphasis variant fixes [#2079](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2079) ([5946219](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5946219512bfbf1a533a23670295ed5a8dfbaba9))
 
 ## [0.24.20](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.19...bootstrapvuenext-v0.24.20) (2024-09-21)
 
-
 ### Bug Fixes
 
-* **BModal:** fix jumping when scrollbars are present ([#2211](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2211)) ([9ab6132](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9ab613252676524538e2713d5e55e21c0863320a))
-* **useFocusTrap:** dont deactivate focus on esc fixes [#2144](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2144)  ([#2219](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2219)) ([89656ab](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/89656ab96deb986f1674f5ffdef59ff4743a44c5))
+- **BModal:** fix jumping when scrollbars are present ([#2211](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2211)) ([9ab6132](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9ab613252676524538e2713d5e55e21c0863320a))
+- **useFocusTrap:** dont deactivate focus on esc fixes [#2144](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2144) ([#2219](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2219)) ([89656ab](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/89656ab96deb986f1674f5ffdef59ff4743a44c5))
 
 ## [0.24.19](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.18...bootstrapvuenext-v0.24.19) (2024-09-21)
 
-
 ### Bug Fixes
 
-* **BFormFile:** remove capture attrs from dom if not defined. ([#2214](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2214)) ([85b38f3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/85b38f35b81600c05b504738096148afad8db713))
-* **nuxt:** make injection keys static strings fixes [#2209](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2209) ([#2218](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2218)) ([5634dc3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5634dc3f733bcd414737d5bb92bd56c83972b194))
+- **BFormFile:** remove capture attrs from dom if not defined. ([#2214](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2214)) ([85b38f3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/85b38f35b81600c05b504738096148afad8db713))
+- **nuxt:** make injection keys static strings fixes [#2209](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2209) ([#2218](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2218)) ([5634dc3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5634dc3f733bcd414737d5bb92bd56c83972b194))
 
 ## [0.24.18](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.17...bootstrapvuenext-v0.24.18) (2024-09-17)
 
-
 ### Bug Fixes
 
-* **vBPopover:** fix vue error with floating directives. ([#2208](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2208)) ([e50a5ba](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e50a5ba867ac0ad7b1f71a73a8e76d690d58e686))
+- **vBPopover:** fix vue error with floating directives. ([#2208](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2208)) ([e50a5ba](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e50a5ba867ac0ad7b1f71a73a8e76d690d58e686))
 
 ## [0.24.17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.16...bootstrapvuenext-v0.24.17) (2024-09-16)
 
-
 ### Bug Fixes
 
-* **ConditionalWrapper:** don't inherit attrs ([#2205](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2205)) ([6db9e53](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6db9e5344510e642bd1b235bb25bce49d2bc30a0))
+- **ConditionalWrapper:** don't inherit attrs ([#2205](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2205)) ([6db9e53](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6db9e5344510e642bd1b235bb25bce49d2bc30a0))
 
 ## [0.24.16](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.15...bootstrapvuenext-v0.24.16) (2024-09-14)
 
-
 ### Features
 
-* **BCarousel:** add noAnimation prop ([#2194](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2194)) ([ff2a1f1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ff2a1f1634f52bd3952684b76bdc6f4cb8fea58e))
-
+- **BCarousel:** add noAnimation prop ([#2194](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2194)) ([ff2a1f1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ff2a1f1634f52bd3952684b76bdc6f4cb8fea58e))
 
 ### Bug Fixes
 
-* **BTable:** Type check failed for prop tbodyTrClass fixes [#2197](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2197) ([#2198](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2198)) ([1100a75](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1100a759477734f8ec2f8c3d15890b3ea8c318c9))
-* change renderorskip to wrapper, add our own teleport logic. ([#2162](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2162)) ([8c0acbd](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8c0acbd2ca957be27dd618bb7e33b7ff943973be))
-* **resolver:** resolver path for BCloseButton ([173a838](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/173a83816bee87bec6b2f18121775180151cd9e5))
+- **BTable:** Type check failed for prop tbodyTrClass fixes [#2197](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2197) ([#2198](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2198)) ([1100a75](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1100a759477734f8ec2f8c3d15890b3ea8c318c9))
+- change renderorskip to wrapper, add our own teleport logic. ([#2162](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2162)) ([8c0acbd](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8c0acbd2ca957be27dd618bb7e33b7ff943973be))
+- **resolver:** resolver path for BCloseButton ([173a838](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/173a83816bee87bec6b2f18121775180151cd9e5))
 
 ## [0.24.15](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.14...bootstrapvuenext-v0.24.15) (2024-09-12)
 
-
 ### Bug Fixes
 
-* **BNavItem:** pass prop exactActiveClass to router component ([#2188](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2188)) ([f0b49fe](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f0b49fe3410bea6cc5a53d2f66ed2a6413718468))
+- **BNavItem:** pass prop exactActiveClass to router component ([#2188](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2188)) ([f0b49fe](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f0b49fe3410bea6cc5a53d2f66ed2a6413718468))
 
 ## [0.24.14](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.13...bootstrapvuenext-v0.24.14) (2024-09-12)
 
-
 ### Bug Fixes
 
-* improper import path ([#2189](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2189)) ([bb40e21](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bb40e21aa778bce05e9d89111d4b580172312317))
+- improper import path ([#2189](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2189)) ([bb40e21](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bb40e21aa778bce05e9d89111d4b580172312317))
 
 ## [0.24.13](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.24.12...bootstrapvuenext-v0.24.13) (2024-09-11)
 

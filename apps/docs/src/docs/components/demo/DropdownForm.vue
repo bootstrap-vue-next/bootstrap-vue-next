@@ -10,7 +10,7 @@
         <BFormInput id="email" type="email" placeholder="Enter email" required />
       </BFormGroup>
       <BFormGroup
-        label="Passoword:"
+        label="Password:"
         label-for="password"
         description="We'll never share your email with anyone else."
       >

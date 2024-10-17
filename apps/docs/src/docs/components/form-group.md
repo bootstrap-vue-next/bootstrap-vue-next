@@ -193,7 +193,7 @@ value via the prop `label-text-align` and/or `label-align-{breakpoint}`.
 | `label-align-lg` | Applies to breakpoint `lg` and up |
 | `label-align-xl` | Applies to breakpoint `xl` and up |
 
-Alignment has no effect if the `label-sr-only` prop is set.
+Alignment has no effect if the `label-visually-hidden` prop is set.
 
 ## Nested form groups
 

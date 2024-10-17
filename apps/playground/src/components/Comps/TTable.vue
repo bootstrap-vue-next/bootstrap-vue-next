@@ -121,7 +121,7 @@
           <template #thead-top>
             <tr class="my">
               <th colspan="2">
-                <span class="sr-only">List of users</span>
+                <span class="visually-hidden">List of users</span>
               </th>
             </tr>
           </template>
@@ -319,7 +319,7 @@
           </template>
 
           <template #cell(actions)="row">
-            <BButton size="sm" class="mr-1" @click="info(row.item, row.index)">
+            <BButton size="sm" class="me-1" @click="info(row.item, row.index)">
               Info modal
             </BButton>
             <BButton size="sm" @click="row.toggleDetails">

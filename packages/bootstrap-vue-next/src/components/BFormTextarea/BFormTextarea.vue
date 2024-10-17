@@ -2,6 +2,7 @@
   <textarea
     :id="computedId"
     ref="input"
+    :key="forceUpdateKey"
     :class="computedClasses"
     :name="props.name || undefined"
     :form="props.form || undefined"
@@ -16,9 +17,9 @@
     :rows="props.rows"
     :style="computedStyles"
     :wrap="props.wrap || undefined"
-    @input="onInput($event)"
-    @change="onChange($event)"
-    @blur="onBlur($event)"
+    @input="onInput"
+    @change="onChange"
+    @blur="onBlur"
   />
 </template>
 
@@ -66,8 +67,17 @@ const [modelValue, modelModifiers] = defineModel<
   set: (v) => normalizeInput(v, modelModifiers),
 })
 
-const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
-  useFormInput(props, modelValue, modelModifiers)
+const {
+  input,
+  computedId,
+  forceUpdateKey,
+  computedAriaInvalid,
+  onInput,
+  onChange,
+  onBlur,
+  focus,
+  blur,
+} = useFormInput(props, modelValue, modelModifiers)
 
 const stateClass = useStateClass(() => props.state)
 

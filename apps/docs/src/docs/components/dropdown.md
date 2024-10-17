@@ -200,8 +200,16 @@ may break layout and/or keyboard navigation.
 | `BDropdownText`                                                | Free flowing text content in a menu                                                                                      |
 | `BDropdownGroup`                                               | For grouping dropdown sub-components with an optional header                                                             |
 | `BDropdownHeader`                                              | A header item, used to help identify a group of dropdown items                                                           |
+| `BDropdownForm`                                                | For placing form controls within a dropdown menu.                                                                        |
 
-**Note:** _Nested sub-menus are **not** supported._
+::: warning
+_Nested sub-menus are **not** supported._
+:::
+
+::: tip
+There are small differences in how the sub-components behave, please read our [migration guide](/docs/migration-guide#dropdown-sub-components)
+if you are converting from `bootstrap-vue`.
+:::
 
 ### BDropdownItem
 
@@ -241,7 +249,7 @@ constrain/set the menu width.
 
 `BDropdownText` has the BootstrapVueNext custom class `.b-dropdown-text` applied to it which sets some basic styles which are suitable in most situations. By default, its width will be the same as the widest `BDropdownItem` content. You may need to place additional styles or helper classes on the component.
 
-<NotYetImplemented/>: While the basic `BDropdownText` works, none of the props are implemented to customize the text (`tag`, `text-class`, and `variant`)
+`variant`)
 
 ### BDropdownGroup
 
@@ -259,15 +267,15 @@ See Section [Headers and accessibility](#headers-and-accessibility) for details 
 
 Using the `BDropdownGroup` sub-component simplifies creating accessible grouped dropdown items with an associated header.
 
-<NotYetImplemented/>: While the basic `BDropdownHeader` works, none of the props are implemented to customize the header (`id`, `tag`, and `variant`)
-
 ### BDropdownForm
 
 Add a form into your dropdown with `BDropdownForm`.
 
 <<< DEMO ./demo/DropdownForm.vue#template{vue-html}
 
-<NotYetImplemented/>: While the basic `BDropdownForm` works, none of the props are implemented to customize the form (`formClass`, `inline`, `novalidate` and `validated`)
+Or make it inline.
+
+<<< DEMO ./demo/DropdownInlineForm.vue#template{vue-html}
 
 ## Accessibility
 

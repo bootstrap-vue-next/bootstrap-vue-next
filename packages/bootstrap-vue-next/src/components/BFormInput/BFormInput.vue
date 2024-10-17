@@ -2,6 +2,7 @@
   <input
     :id="computedId"
     ref="input"
+    :key="forceUpdateKey"
     :value="modelValue"
     :class="computedClasses"
     :name="props.name || undefined"
@@ -18,14 +19,14 @@
     :list="props.type !== 'password' ? props.list : undefined"
     :aria-required="props.required || undefined"
     :aria-invalid="computedAriaInvalid"
-    @input="onInput($event)"
-    @change="onChange($event)"
-    @blur="onBlur($event)"
+    @input="onInput"
+    @change="onChange"
+    @blur="onBlur"
   />
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from 'vue'
+import {computed} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {normalizeInput} from '../../utils/normalizeInput'
 import type {BFormInputProps} from '../../types/ComponentProps'
@@ -69,12 +70,19 @@ const [modelValue, modelModifiers] = defineModel<
   set: (v) => normalizeInput(v, modelModifiers),
 })
 
-const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
-  useFormInput(props, modelValue, modelModifiers)
+const {
+  input,
+  computedId,
+  computedAriaInvalid,
+  onInput,
+  onChange,
+  onBlur,
+  focus,
+  blur,
+  forceUpdateKey,
+} = useFormInput(props, modelValue, modelModifiers)
 
 const stateClass = useStateClass(() => props.state)
-
-const isHighlighted = ref(false)
 
 const computedClasses = computed(() => {
   const isRange = props.type === 'range'
@@ -82,7 +90,6 @@ const computedClasses = computed(() => {
   return [
     stateClass.value,
     {
-      'form-control-highlighted': isHighlighted.value,
       'form-range': isRange,
       'form-control': isColor || (!props.plaintext && !isRange),
       'form-control-color': isColor,
@@ -97,12 +104,4 @@ defineExpose({
   element: input,
   focus,
 })
-
-// const highlight = () => {
-//   if (isHighlighted.value === true) return
-//   isHighlighted.value = true
-//   setTimeout(() => {
-//     isHighlighted.value = false
-//   }, 2000)
-// }
 </script>

@@ -319,10 +319,10 @@ export default {
             default: undefined,
             description: 'CSS class (or classes) to apply to the title',
           },
-          titleSrOnly: {
+          titleVisuallyHidden: {
             type: 'boolean',
             default: false,
-            description: "Wraps the title in an '.sr-only' wrapper",
+            description: "Wraps the title in an '.visually-hidden' wrapper",
           },
           titleTag: {
             type: 'string',
