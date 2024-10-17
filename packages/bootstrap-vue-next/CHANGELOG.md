@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.25.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.4...bootstrapvuenext-v0.25.5) (2024-10-17)
+
+
+### Bug Fixes
+
+* **BAvatar:** failback on image load error ([#2281](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2281)) ([a51327f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a51327f2721aa373329258ff8e551f57c123b394))
+
 ## [0.25.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.3...bootstrapvuenext-v0.25.4) (2024-10-16)
 
 
