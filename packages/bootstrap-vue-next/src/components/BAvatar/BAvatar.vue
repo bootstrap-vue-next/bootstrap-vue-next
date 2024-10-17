@@ -12,8 +12,8 @@
     <span v-if="hasDefaultSlot" class="b-avatar-custom">
       <slot />
     </span>
-    <span v-else-if="!!props.src" class="b-avatar-img">
-      <img :src="props.src" :alt="props.alt" @error="onImgError" />
+    <span v-else-if="!!localSrc" class="b-avatar-img">
+      <img :src="localSrc" :alt="props.alt" @error="onImgError" />
     </span>
     <span v-else-if="!!props.text" class="b-avatar-text" :style="textFontStyle">
       {{ props.text }}
@@ -27,8 +27,9 @@
         class="bi bi-person-fill"
         viewBox="0 0 16 16"
       >
-        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" /></svg
-    ></span>
+        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+      </svg>
+    </span>
     <BBadge
       v-if="showBadge"
       :pill="props.badgePill"
@@ -48,7 +49,7 @@
 
 <script setup lang="ts">
 import {avatarGroupInjectionKey} from '../../utils/keys'
-import {computed, type CSSProperties, inject, type StyleValue} from 'vue'
+import {computed, type CSSProperties, inject, ref, type StyleValue, watch} from 'vue'
 import type {BAvatarProps} from '../../types/ComponentProps'
 import BLink from '../BLink/BLink.vue'
 import BBadge from '../BBadge/BBadge.vue'
@@ -107,6 +108,14 @@ const props = withDefaults(defineProps<BAvatarProps>(), {
   roundedTop: undefined,
   // End RadiusElementExtendables props
 })
+
+const localSrc = ref(props.src)
+watch(
+  () => props.src,
+  (value) => {
+    localSrc.value = value
+  }
+)
 
 const emit = defineEmits<{
   'click': [value: MouseEvent]
@@ -212,6 +221,7 @@ const clicked = (e: Readonly<MouseEvent>): void => {
 }
 
 const onImgError = (e: Readonly<Event>) => {
+  localSrc.value = undefined
   emit('img-error', e)
 }
 </script>
