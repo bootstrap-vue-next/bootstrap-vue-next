@@ -14,7 +14,7 @@
     :readonly="props.readonly || props.plaintext"
     :aria-required="props.required || undefined"
     :aria-invalid="computedAriaInvalid"
-    :rows="props.rows"
+    :rows="computedRows || 2"
     :style="computedStyles"
     :wrap="props.wrap || undefined"
     @input="
@@ -97,7 +97,11 @@ const computedClasses = computed(() => [
   },
 ])
 
-const {computedStyles: resizeStyles, onInput: handleHeightChange} = useTextareaResize(
+const {
+  computedStyles: resizeStyles,
+  onInput: handleHeightChange,
+  computedRows,
+} = useTextareaResize(
   input,
   computed(() => ({
     maxRows: props.maxRows,

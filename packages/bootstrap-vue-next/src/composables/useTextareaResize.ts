@@ -4,11 +4,13 @@ import {
   computed,
   type CSSProperties,
   type MaybeRefOrGetter,
+  nextTick,
   onMounted,
   ref,
   type Ref,
   toRef,
 } from 'vue'
+import {isVisible} from '../utils/dom'
 
 export const useTextareaResize = (
   input: Ref<HTMLInputElement | null>,
@@ -18,77 +20,93 @@ export const useTextareaResize = (
     noAutoShrink: boolean
   }>
 ) => {
-  const height = ref<number | null>(0)
+  const height = ref<number | null | string>(0)
   const resolvedProps = toRef(props)
-  const maxRows = useToNumber(() => resolvedProps.value.maxRows || NaN, {
+  const maxRowsNumber = useToNumber(() => resolvedProps.value.maxRows || NaN, {
     method: 'parseInt',
     nanToZero: true,
   })
-  const minRows = useToNumber(() => resolvedProps.value.rows || NaN, {
+  const rowsNumber = useToNumber(() => resolvedProps.value.rows || NaN, {
     method: 'parseInt',
     nanToZero: true,
   })
+  const computedMinRows = computed(() => Math.max(rowsNumber.value || 2, 2))
+  const computedMaxRows = computed(() => Math.max(computedMinRows.value, maxRowsNumber.value || 0))
+  const computedRows = computed(() =>
+    computedMinRows.value === computedMaxRows.value ? computedMinRows.value : null
+  )
 
-  const computeHeight = () => {
-    if (!input.value) {
-      height.value = null
-    }
-    const el = this.$el
-
+  const handleHeightChange = async () => {
     // Element must be visible (not hidden) and in document
     // Must be checked after above checks
-    if (!isVisible(el)) {
-      return null
+    if (!input.value || !isVisible(input.value)) {
+      height.value = null
+      return
     }
 
     // Get current computed styles
-    const computedStyle = getCS(el)
+    const computedStyle = getComputedStyle(input.value)
     // Height of one line of text in px
-    const lineHeight = toFloat(computedStyle.lineHeight, 1)
+    const lineHeight = Number.parseFloat(computedStyle.lineHeight) || 1
     // Calculate height of border and padding
     const border =
-      toFloat(computedStyle.borderTopWidth, 0) + toFloat(computedStyle.borderBottomWidth, 0)
-    const padding = toFloat(computedStyle.paddingTop, 0) + toFloat(computedStyle.paddingBottom, 0)
+      (Number.parseFloat(computedStyle.borderTopWidth) || 0) +
+      (Number.parseFloat(computedStyle.borderBottomWidth) || 0)
+    const padding =
+      (Number.parseFloat(computedStyle.paddingTop) || 0) +
+      (Number.parseFloat(computedStyle.paddingBottom) || 0)
     // Calculate offset
     const offset = border + padding
     // Minimum height for min rows (which must be 2 rows or greater for cross-browser support)
-    const minHeight = lineHeight * this.computedMinRows + offset
+    const minHeight = lineHeight * computedMinRows.value + offset
 
     // Get the current style height (with `px` units)
-    const oldHeight = getStyle(el, 'height') || computedStyle.height
+    const oldHeight = input.value.style.height || computedStyle.height
     // Probe scrollHeight by temporarily changing the height to `auto`
-    setStyle(el, 'height', 'auto')
-    const {scrollHeight} = el
+    height.value = 'auto'
+    await nextTick() // We need to wait for the dom to update. These cannot be batched in the same tick
+    const {scrollHeight} = input.value
     // Place the original old height back on the element, just in case `computedProp`
     // returns the same value as before
-    setStyle(el, 'height', oldHeight)
+    height.value = oldHeight
+    await nextTick() // We need to wait for the dom to update. These cannot be batched in the same tick
 
     // Calculate content height in 'rows' (scrollHeight includes padding but not border)
-    const contentRows = mathMax((scrollHeight - padding) / lineHeight, 2)
+    const contentRows = Math.max((scrollHeight - padding) / lineHeight, 2)
     // Calculate number of rows to display (limited within min/max rows)
-    const rows = mathMin(mathMax(contentRows, this.computedMinRows), this.computedMaxRows)
+    const rows = Math.min(Math.max(contentRows, computedMinRows.value), computedMaxRows.value)
     // Calculate the required height of the textarea including border and padding (in pixels)
-    const height = mathMax(mathCeil(rows * lineHeight + offset), minHeight)
+    const newHeight = Math.max(Math.ceil(rows * lineHeight + offset), minHeight)
 
     // Computed height remains the larger of `oldHeight` and new `height`,
     // when height is in `sticky` mode (prop `no-auto-shrink` is true)
-    if (this.noAutoShrink && toFloat(oldHeight, 0) > height) {
-      return oldHeight
+    if (
+      resolvedProps.value.noAutoShrink &&
+      (Number.parseFloat(oldHeight.toString()) || 0) > newHeight
+    ) {
+      height.value = oldHeight
+      return
     }
 
     // Return the new computed CSS height in px units
-    return `${height}px`
+    height.value = `${newHeight}px`
   }
 
   onMounted(handleHeightChange)
 
   const computedStyles = computed<CSSProperties>(() => ({
     resize: 'none',
-    height: height.value ? `${height.value}px` : undefined,
+    height:
+      typeof height.value === 'string'
+        ? height.value
+        : height.value
+          ? `${height.value}px`
+          : undefined,
   }))
 
   return {
     onInput: handleHeightChange,
     computedStyles,
+    computedRows,
   }
 }
