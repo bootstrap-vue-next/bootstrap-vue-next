@@ -1,6 +1,6 @@
+export {bootstrapPlugin} from './bootstrap'
 export {breadcrumbPlugin} from './breadcrumb'
 export {createBootstrap} from './createBootstrap'
-export {defaultsPlugin} from './defaults'
 export {modalControllerPlugin} from './modalController'
 export {modalManagerPlugin} from './modalManager'
 export {popoverPlugin} from './popoverController'
