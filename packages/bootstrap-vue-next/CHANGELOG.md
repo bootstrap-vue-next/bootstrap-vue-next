@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.25.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.5...bootstrapvuenext-v0.25.6) (2024-10-18)
+
+
+### Features
+
+* **BFormTextarea:** add props max-rows & no-auto-shrink fixes [#2077](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2077)  ([#2284](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2284)) ([87cbcb7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/87cbcb7d7f1b88c3a28658ce44e48bdb4b9eae7a))
+
 ## [0.25.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.4...bootstrapvuenext-v0.25.5) (2024-10-17)
 
 
