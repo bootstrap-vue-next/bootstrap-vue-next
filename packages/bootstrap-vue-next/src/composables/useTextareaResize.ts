@@ -6,8 +6,9 @@ import {
   type MaybeRefOrGetter,
   nextTick,
   onMounted,
-  ref,
+  readonly,
   type Ref,
+  ref,
   toRef,
 } from 'vue'
 import {isVisible} from '../utils/dom'
@@ -21,7 +22,7 @@ export const useTextareaResize = (
   }>
 ) => {
   const height = ref<number | null | string>(0)
-  const resolvedProps = toRef(props)
+  const resolvedProps = readonly(toRef(props))
   const maxRowsNumber = useToNumber(() => resolvedProps.value.maxRows || NaN, {
     method: 'parseInt',
     nanToZero: true,
