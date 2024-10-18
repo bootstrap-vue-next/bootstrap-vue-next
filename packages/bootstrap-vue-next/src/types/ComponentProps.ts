@@ -434,6 +434,8 @@ export interface BFormTextareaProps extends CommonInputProps {
   noResize?: boolean
   rows?: Numberish
   wrap?: string
+  noAutoShrink?: boolean
+  maxRows?: Numberish
 }
 
 export interface BInputGroupProps {
