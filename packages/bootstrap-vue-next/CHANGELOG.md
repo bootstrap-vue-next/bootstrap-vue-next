@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.25.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.6...bootstrapvuenext-v0.25.7) (2024-10-18)
+
+
+### Features
+
+* rename defaultsPlugin to more generic bootstrapPlugin -- this essential plugin may contain more essential features than just defaults ([#2288](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2288)) ([22440a9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/22440a9cefd7d1a381c23ac33a07198ae4532ec7))
+
 ## [0.25.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.5...bootstrapvuenext-v0.25.6) (2024-10-18)
 
 
