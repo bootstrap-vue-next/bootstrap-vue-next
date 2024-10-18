@@ -56,6 +56,13 @@ is rounded. The edge specific props such as`rounded-top` override the `rounded` 
 
 This takes the place of `top`, `bottom`, `left`, and `right` values for the `rounded` prop.
 
+## Grid
+
+BSVN doesn't currently implement the ability to define `breakpoint` names.
+
+See the [Bootstrap 5 migration guide](https://getbootstrap.com/docs/5.3/migration/#grid-updates), in particular
+vallues for `order` on `<BCol>` only provides support for 1 - 5.
+
 ## BAlert
 
 As in `bootstrap-vue`, a simple `BAlert` is not visible by default. However, the means of showing the alert are different.
@@ -224,8 +231,8 @@ The `disabled` prop is deprecated, set the disabled prop on individual component
 
 Bootstrap 5 has dropped form-specific layout classes for the grid system. See the
 [Bootstrap 5 Changelog](https://getbootstrap.com/docs/5.3/migration/#forms), so we no longer
-explicitly implemnt and `inline` property on the `BForm` component. Inline forms are still
-supported through use of bootstrap classes. See the [inline form](/docs/components/form#inline-form)
+explicitly implemnt and `inline` property on the `BForm` component nor is there a `BFormRow` component.
+Inline forms are still supported through use of bootstrap classes. See the [inline form](/docs/components/form#inline-form)
 documentation for more info.
 
 ### BForm Components
