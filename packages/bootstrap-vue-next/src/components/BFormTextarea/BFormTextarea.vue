@@ -112,7 +112,7 @@ const {
 
 const computedStyles = computed<CSSProperties>(() => ({
   resize: props.noResize ? 'none' : undefined,
-  ...resizeStyles.value,
+  ...(props.maxRows || props.noAutoShrink ? resizeStyles.value : undefined),
 }))
 
 defineExpose({
