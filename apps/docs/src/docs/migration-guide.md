@@ -61,7 +61,7 @@ This takes the place of `top`, `bottom`, `left`, and `right` values for the `rou
 BSVN doesn't currently implement the ability to define `breakpoint` names.
 
 See the [Bootstrap 5 migration guide](https://getbootstrap.com/docs/5.3/migration/#grid-updates), in particular
-vallues for `order` on `<BCol>` only provides support for 1 - 5.
+values for `order` on `<BCol>` only provides support for 1 - 5.
 
 ## BAlert
 
