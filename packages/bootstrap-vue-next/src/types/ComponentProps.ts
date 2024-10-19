@@ -29,6 +29,9 @@ import type {
   Breakpoint,
   ColBreakpointProps,
   ColsNumbers,
+  ColsOffsetNumbers,
+  ColsOrderNumbers,
+  GutterNumbers,
   OffsetBreakpointProps,
   OrderBreakpointProps,
   RowColsBreakpointProps,
@@ -731,8 +734,8 @@ export interface BCollapseProps {
 
 export interface BContainerProps {
   fluid?: boolean | Breakpoint
-  gutterX?: ColsNumbers
-  gutterY?: ColsNumbers
+  gutterX?: GutterNumbers
+  gutterY?: GutterNumbers
   tag?: string
 }
 
@@ -1343,8 +1346,8 @@ export interface BModalProps extends TeleporterProps {
 
 export interface BRowProps extends RowColsBreakpointProps {
   tag?: string
-  gutterX?: ColsNumbers
-  gutterY?: ColsNumbers
+  gutterX?: GutterNumbers
+  gutterY?: GutterNumbers
   noGutters?: boolean
   alignV?: AlignmentVertical
   alignH?: AlignmentJustifyContent
@@ -1355,8 +1358,8 @@ export interface BRowProps extends RowColsBreakpointProps {
 export interface BColProps extends OffsetBreakpointProps, OrderBreakpointProps, ColBreakpointProps {
   alignSelf?: AlignmentVertical | 'auto'
   tag?: string
-  order?: ColsNumbers
-  offset?: ColsNumbers
+  order?: ColsOrderNumbers
+  offset?: ColsOffsetNumbers
   cols?: ColsNumbers | 'auto'
   col?: boolean
 }
