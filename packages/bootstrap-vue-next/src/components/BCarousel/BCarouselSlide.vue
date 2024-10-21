@@ -1,5 +1,5 @@
 <template>
-  <div class="carousel-item" :style="computedStyle">
+  <div :id="computedId" class="carousel-item" :style="computedStyle">
     <slot name="img">
       <BImg
         class="d-block w-100"
@@ -44,6 +44,7 @@ import {carouselInjectionKey} from '../../utils/keys'
 import BImg from '../BImg/BImg.vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {isEmptySlot} from '../../utils/dom'
+import {useId} from '../../composables/useId'
 
 const _props = withDefaults(defineProps<BCarouselSlideProps>(), {
   background: undefined,
@@ -78,6 +79,7 @@ const slots = defineSlots<{
   text?: (props: Record<string, never>) => any
 }>()
 
+const computedId = useId(() => props.id, 'carousel-slide')
 const parentData = inject(carouselInjectionKey, null)
 
 const hasText = computed(() => props.text || props.textHtml || !isEmptySlot(slots.text))
@@ -97,5 +99,6 @@ const computedContentClasses = computed(() => ({
 
 defineExpose({
   _interval: toRef(() => props.interval),
+  _id: computedId,
 })
 </script>
