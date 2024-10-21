@@ -15,6 +15,8 @@ const _props = withDefaults(defineProps<Omit<BAccordionProps, 'modelValue'>>(), 
   flush: false,
   free: false,
   id: undefined,
+  lazy: false,
+  persistent: false,
 })
 
 defineSlots<{
@@ -37,6 +39,8 @@ const computedClasses = computed(() => ({
 provide(accordionInjectionKey, {
   openItem: readonly(modelValue),
   free: toRef(() => props.free),
+  lazy: toRef(() => props.lazy),
+  persistent: toRef(() => props.persistent),
   setOpenItem: (id: string) => {
     modelValue.value = id
   },

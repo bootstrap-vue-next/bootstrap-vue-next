@@ -40,7 +40,7 @@ export default {
             type: 'ButtonVariant | null',
             default: 'secondary',
           },
-          hideBackdrop: {
+          noBackdrop: {
             type: 'boolean',
             default: false,
           },

@@ -219,6 +219,7 @@ describe('modal', () => {
   it('second div has another div by default', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
+      props: {modelValue: true},
     })
     const $div = wrapper.get('div')
     const $div2 = $div.get('div')
@@ -229,6 +230,7 @@ describe('modal', () => {
   it('third nested div has static class modal-content', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
+      props: {modelValue: true},
     })
     const $div = wrapper.get('div')
     const $div2 = $div.get('div')
@@ -239,7 +241,7 @@ describe('modal', () => {
   it('third nested div has class from prop contentClass', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
-      props: {contentClass: ['foo']},
+      props: {contentClass: ['foo'], modelValue: true},
     })
     const $div = wrapper.get('div')
     const $div2 = $div.get('div')
@@ -250,7 +252,7 @@ describe('modal', () => {
   it('second div has nested div when not prop lazy', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
-      props: {lazy: false},
+      props: {lazy: false, modelValue: true},
     })
     const $div = wrapper.get('div')
     const $div2 = $div.get('div')
@@ -261,6 +263,7 @@ describe('modal', () => {
   it('third nested div has another div', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
+      props: {modelValue: true},
     })
     const $div = wrapper.get('div')
     const $div2 = $div.get('div')
@@ -271,7 +274,7 @@ describe('modal', () => {
   it('nested div BCloseButton has class when prop headerCloseClass', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
-      props: {headerCloseClass: 'foobar'},
+      props: {headerCloseClass: 'foobar', modelValue: true},
     })
     const $div = wrapper.get('div')
     const $bclosebutton = $div.getComponent(BCloseButton)
@@ -281,7 +284,7 @@ describe('modal', () => {
   it('nested div BCloseButton has no variant class when headerCloseVariant', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
-      props: {headerCloseVariant: 'warning'},
+      props: {headerCloseVariant: 'warning', modelValue: true},
     })
     const $div = wrapper.get('div')
     const $bclosebutton = $div.getComponent(BCloseButton)
@@ -291,6 +294,7 @@ describe('modal', () => {
   it('nested div BCloseButton has aria-label to be Close by default', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
+      props: {modelValue: true},
     })
     const $div = wrapper.get('div')
     const $bclosebutton = $div.getComponent(BCloseButton)
@@ -300,7 +304,7 @@ describe('modal', () => {
   it('nested div BCloseButton has aria-label to be prop headerCloseLabel', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
-      props: {headerCloseLabel: 'foobar'},
+      props: {headerCloseLabel: 'foobar', modelValue: true},
     })
     const $div = wrapper.get('div')
     const $bclosebutton = $div.getComponent(BCloseButton)
@@ -310,7 +314,7 @@ describe('modal', () => {
   it('nested div BButton has class when prop headerCloseClass', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
-      props: {headerCloseClass: 'foobar'},
+      props: {headerCloseClass: 'foobar', modelValue: true},
       slots: {'header-close': 'foobar'},
     })
     const $div = wrapper.get('div')
@@ -321,7 +325,7 @@ describe('modal', () => {
   it('nested div BButton has variant class when headerCloseVariant', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
-      props: {headerCloseVariant: 'warning'},
+      props: {headerCloseVariant: 'warning', modelValue: true},
       slots: {'header-close': 'foobar'},
     })
     const $div = wrapper.get('div')
@@ -372,6 +376,7 @@ describe('modal', () => {
 
     // open stated
     await wrapper.setProps({modelValue: true})
+    await new Promise((resolve) => setTimeout(resolve, 30))
     expect($modal.isVisible()).toBe(true)
     expect(document.body.attributes.getNamedItem('style')?.textContent).toContain(
       'overflow: hidden;'
@@ -380,6 +385,7 @@ describe('modal', () => {
     // closed state
     $modal = wrapper.find('div.modal')
     await $modal.trigger('keydown.Escape')
+    await new Promise((resolve) => setTimeout(resolve, 30))
     $modal = wrapper.find('div.modal')
     expect($modal.isVisible()).toBe(false)
     expect(document.body.attributes.getNamedItem('style')?.textContent ?? '').not.toContain(
@@ -442,6 +448,7 @@ describe('modal', () => {
       expect(closeEvent).toHaveLength(2)
       expect(closeEvent?.[1][0]).toBeInstanceOf(BvTriggerableEvent)
 
+      await new Promise((resolve) => setTimeout(resolve, 30))
       // Modal should now be closed
       $modal = wrapper.find('div.modal')
       expect($modal.isVisible()).toBe(false)
@@ -501,6 +508,7 @@ describe('modal', () => {
       expect(closeEvent?.[1][0]).toBeInstanceOf(BvTriggerableEvent)
 
       // Modal should now be closed
+      await new Promise((resolve) => setTimeout(resolve, 30))
       $modal = wrapper.find('div.modal')
       expect($modal.isVisible()).toBe(false)
 
@@ -514,6 +522,7 @@ describe('modal', () => {
       global: {stubs: {teleport: true}},
       props: {
         bodyClass: 'foobar',
+        modelValue: true,
       },
     })
 
@@ -534,6 +543,7 @@ describe('modal', () => {
         bodyAttrs: {
           role: 'foo',
         },
+        modelValue: true,
       },
     })
 

@@ -57,12 +57,12 @@ export default {
             default: '\u00AB',
             description: 'Content to place in the go to first page button',
           },
-          hideEllipsis: {
+          noEllipsis: {
             type: 'boolean',
             default: false,
             description: 'Do not show ellipsis buttons',
           },
-          hideGotoEndButtons: {
+          noGotoEndButtons: {
             type: 'boolean',
             default: false,
             description: 'Hides the go to first and go to last page buttons',

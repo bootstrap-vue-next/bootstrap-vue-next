@@ -51,6 +51,6 @@ const app = createApp(App)
 app.use(createBootstrap())
 app.use(router)
 for (const name in Directives) {
-  app.directive(name.replace(/^v/, ''), Directives[name as keyof typeof Directives])
+  app.directive(name.replace(/^v/, ''), Directives[name as unknown as keyof typeof Directives])
 }
 app.mount('#app')

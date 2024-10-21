@@ -105,7 +105,9 @@ export interface BAccordionProps {
   flush?: boolean
   free?: boolean
   id?: string
+  lazy?: boolean
   modelValue?: string
+  persistent?: boolean
 }
 
 export interface BDropdownDividerProps {
@@ -522,7 +524,7 @@ export interface BNavbarToggleProps {
 }
 
 export interface BOffcanvasProps extends TeleporterProps {
-  hideBackdrop?: boolean
+  noBackdrop?: boolean
   bodyAttrs?: Readonly<AttrsValue>
   bodyClass?: ClassValue
   bodyScrolling?: boolean
@@ -534,16 +536,20 @@ export interface BOffcanvasProps extends TeleporterProps {
   id?: string
   lazy?: boolean
   modelValue?: boolean
+  noAnimation?: boolean
   noCloseOnBackdrop?: boolean
   noCloseOnEsc?: boolean
   noFocus?: boolean
   noHeader?: boolean
   noTrap?: boolean
   noHeaderClose?: boolean
+  persistent?: boolean
   placement?: Placement
   shadow?: Size | boolean
   title?: string
+  toggle?: boolean
   responsive?: Breakpoint
+  visible?: boolean
   width?: string
 }
 
@@ -576,8 +582,8 @@ export interface BPaginationProps {
   firstClass?: ClassValue
   firstNumber?: boolean
   firstText?: string
-  hideEllipsis?: boolean
-  hideGotoEndButtons?: boolean
+  noEllipsis?: boolean
+  noGotoEndButtons?: boolean
   labelFirstPage?: string
   labelLastPage?: string
   labelNextPage?: string
@@ -653,7 +659,7 @@ export interface BPlaceholderTableProps {
   headerColumns?: Numberish
   headerSize?: PlaceholderSize
   headerVariant?: ColorVariant | null
-  hideHeader?: boolean
+  noHeader?: boolean
   rows?: Numberish
   showFooter?: boolean
   size?: PlaceholderSize
@@ -720,8 +726,10 @@ export interface BCollapseProps {
   horizontal?: boolean
   id?: string
   isNav?: boolean
+  lazy?: boolean
   modelValue?: boolean
-  skipAnimation?: boolean
+  noAnimation?: boolean
+  persistent?: boolean
   tag?: string
   toggle?: boolean
   visible?: boolean
@@ -756,6 +764,8 @@ export interface BAccordionItemProps {
   id?: string
   isNav?: boolean
   modelValue?: boolean
+  lazy?: boolean
+  persistent?: boolean
   tag?: string
   title?: string
   toggle?: boolean
@@ -1184,6 +1194,7 @@ export interface BDropdownProps extends TeleporterProps {
   menuClass?: ClassValue
   modelValue?: boolean
   noCaret?: boolean
+  noFade?: boolean
   noFlip?: boolean
   noShift?: boolean
   noSize?: boolean
@@ -1191,9 +1202,10 @@ export interface BDropdownProps extends TeleporterProps {
     | number
     | string
     | Readonly<{mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null}>
+  persistent?: boolean
   role?: string
   size?: Size
-  skipWrapper?: boolean
+  noWrapper?: boolean
   split?: boolean
   splitButtonType?: ButtonType
   splitClass?: ClassValue
@@ -1203,9 +1215,12 @@ export interface BDropdownProps extends TeleporterProps {
   splitVariant?: ButtonVariant | null
   strategy?: Strategy
   text?: string
+  toggle?: boolean
   toggleClass?: ClassValue
   toggleText?: string
+  transProps?: Readonly<BTransitionProps>
   variant?: ButtonVariant | null
+  visible?: boolean
   wrapperClass?: ClassValue
   placement?: FloatingPlacement
 }
@@ -1218,17 +1233,21 @@ export interface BToastProps extends ColorExtendables, Omit<BLinkProps, 'routerT
   id?: string
   interval?: number | 'requestAnimationFrame'
   isStatus?: boolean
+  lazy?: boolean
   modelValue?: boolean | number
   noCloseButton?: boolean
   noFade?: boolean
   noHoverPause?: boolean
   noResumeOnHoverLeave?: boolean
+  persistent?: boolean
   progressProps?: Omit<BProgressBarProps, 'label' | 'labelHtml' | 'max' | 'value'>
   showOnPause?: boolean
   solid?: boolean
   title?: string
   toastClass?: ClassValue
+  toggle?: boolean
   transProps?: Readonly<BTransitionProps>
+  visible?: boolean
 }
 
 export interface BPopoverProps extends TeleporterProps {
@@ -1266,8 +1285,10 @@ export interface BPopoverProps extends TeleporterProps {
   strategy?: Strategy
   target?: string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | null
   title?: string
+  toggle?: boolean
   tooltip?: boolean
   variant?: ColorVariant | null
+  visible?: boolean
 }
 
 export interface BTooltipProps extends Omit<BPopoverProps, 'tooltip'> {
@@ -1313,10 +1334,10 @@ export interface BModalProps extends TeleporterProps {
   headerCloseVariant?: ButtonVariant | null
   headerTextVariant?: TextColorVariant | null
   headerVariant?: ColorVariant | null
-  hideBackdrop?: boolean
-  hideFooter?: boolean
-  hideHeader?: boolean
-  hideHeaderClose?: boolean
+  noBackdrop?: boolean
+  noFooter?: boolean
+  noHeader?: boolean
+  noHeaderClose?: boolean
   id?: string
   lazy?: boolean
   modalClass?: ClassValue
@@ -1330,6 +1351,7 @@ export interface BModalProps extends TeleporterProps {
   okOnly?: boolean
   okTitle?: string
   okVariant?: ButtonVariant | null
+  persistent?: boolean
   scrollable?: boolean
   size?: Size | 'xl'
   title?: string
@@ -1338,6 +1360,7 @@ export interface BModalProps extends TeleporterProps {
   titleTag?: string
   toggle?: boolean
   transProps?: Readonly<BTransitionProps>
+  visible?: boolean
 }
 
 export interface BRowProps extends RowColsBreakpointProps {

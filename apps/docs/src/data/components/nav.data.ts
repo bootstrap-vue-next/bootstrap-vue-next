@@ -285,7 +285,7 @@ export default {
             type: 'number | string | {mainAxis?: number | string; crossAxis?: number; alignmentAxis?: number | null}',
             default: 0,
           },
-          skipWrapper: {
+          noWrapper: {
             type: 'boolean',
           },
           split: {

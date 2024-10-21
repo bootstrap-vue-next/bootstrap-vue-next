@@ -79,7 +79,7 @@ export default {
             description:
               'Specify the number of pixels to shift the menu by. See above for details.',
           },
-          skipWrapper: {
+          noWrapper: {
             type: 'boolean',
             default: false,
             description: 'Do not render the dropdown wrapper element',
