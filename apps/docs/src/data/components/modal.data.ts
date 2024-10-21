@@ -202,22 +202,22 @@ export default {
             description:
               'Applies one of the Bootstrap theme color variants to the header (this takes priority over headerBgVariant and headerTextVariant)',
           },
-          hideBackdrop: {
+          noBackdrop: {
             type: 'boolean',
             default: false,
             description: 'Disables rendering of the modal backdrop',
           },
-          hideFooter: {
+          noFooter: {
             type: 'boolean',
             default: false,
             description: 'Disables rendering of the modal footer',
           },
-          hideHeader: {
+          noHeader: {
             type: 'boolean',
             default: false,
             description: 'Disables rendering of the modal header',
           },
-          hideHeaderClose: {
+          noHeaderClose: {
             type: 'boolean',
             default: false,
             description: 'Disables rendering of the modal header close button',

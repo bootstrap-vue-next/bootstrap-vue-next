@@ -1,46 +1,49 @@
 <template>
   <span :id="computedId + '_placeholder'" ref="placeholder" />
-  <slot name="target" :show="show" :hide="hide" :toggle="toggle" :show-state="showState" />
+  <slot name="target" :show="show" :hide="hide" :toggle="toggle" :visible="showRef" />
   <ConditionalTeleport
     :to="props.teleportTo"
     :disabled="!props.teleportTo || props.teleportDisabled"
   >
-    <div
-      v-if="showStateInternal || props.persistent"
-      :id="computedId"
-      v-bind="$attrs"
-      ref="element"
-      :class="computedClasses"
-      role="tooltip"
-      tabindex="-1"
-      :style="floatingStyles"
-    >
+    <Transition v-bind="fadeTransitionProps" :appear="!!modelValue">
       <div
-        ref="arrow"
-        :class="`${props.tooltip ? 'tooltip' : 'popover'}-arrow`"
-        :style="arrowStyle"
-        data-popper-arrow
-      />
-      <div class="overflow-auto" :style="sizeStyles">
-        <template v-if="props.title || slots.title">
-          <div
-            class="position-sticky top-0"
-            :class="props.tooltip ? 'tooltip-inner' : 'popover-header'"
-          >
-            <slot name="title">
-              {{ props.title }}
-            </slot>
-          </div>
-        </template>
-        <template v-if="(props.tooltip && !slots.title && !props.title) || !props.tooltip">
-          <div :class="props.tooltip ? 'tooltip-inner' : 'popover-body'">
-            <slot>
-              {{ props.content }}
-            </slot>
-          </div>
-        </template>
+        v-if="contentShowing"
+        v-show="isVisible && !hidden"
+        :id="computedId"
+        v-bind="$attrs"
+        ref="element"
+        :class="computedClasses"
+        role="tooltip"
+        tabindex="-1"
+        :style="floatingStyles"
+      >
+        <div
+          ref="arrow"
+          :class="`${props.tooltip ? 'tooltip' : 'popover'}-arrow`"
+          :style="arrowStyle"
+          data-popper-arrow
+        />
+        <div class="overflow-auto" :style="sizeStyles">
+          <template v-if="props.title || $slots.title">
+            <div
+              class="position-sticky top-0"
+              :class="props.tooltip ? 'tooltip-inner' : 'popover-header'"
+            >
+              <slot name="title">
+                {{ props.title }}
+              </slot>
+            </div>
+          </template>
+          <template v-if="(props.tooltip && !$slots.title && !props.title) || !props.tooltip">
+            <div :class="props.tooltip ? 'tooltip-inner' : 'popover-body'">
+              <slot>
+                {{ props.content }}
+              </slot>
+            </div>
+          </template>
+        </div>
       </div>
-    </div>
+    </Transition>
   </ConditionalTeleport>
 </template>
 
@@ -66,14 +69,13 @@ import {onClickOutside, useToNumber} from '@vueuse/core'
 import {
   computed,
   type CSSProperties,
-  nextTick,
+  type EmitFn,
   onBeforeUnmount,
   onMounted,
   ref,
   toRef,
   useTemplateRef,
   watch,
-  watchEffect,
 } from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {useMouse} from '../../composables/useMouse'
@@ -81,10 +83,9 @@ import {useId} from '../../composables/useId'
 import type {BPopoverProps} from '../../types/ComponentProps'
 import {BvTriggerableEvent} from '../../utils'
 import {isBoundary, isRootBoundary, resolveBootstrapPlacement} from '../../utils/floatingUi'
-import {getTransitionDelay} from '../../utils/dom'
 import {getElement} from '../../utils/getElement'
-import {IS_BROWSER} from '../../utils/event'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
+import {useShowHide} from '../../composables/useShowHide'
 
 defineOptions({
   inheritAttrs: false,
@@ -120,8 +121,10 @@ const _props = withDefaults(defineProps<Omit<BPopoverProps, 'modelValue'>>(), {
   strategy: 'absolute',
   target: null,
   title: undefined,
+  toggle: false,
   tooltip: false,
   variant: null,
+  visible: false,
 })
 
 const props = useDefaults(_props, 'BPopover')
@@ -133,6 +136,9 @@ const emit = defineEmits<{
   'show': [value: BvTriggerableEvent]
   'show-prevented': [value: BvTriggerableEvent]
   'shown': [value: BvTriggerableEvent]
+  'pointerleave': [value: BvTriggerableEvent]
+  'blur': [value: BvTriggerableEvent]
+  'click-outside': [value: BvTriggerableEvent]
 }>()
 
 const slots = defineSlots<{
@@ -140,9 +146,9 @@ const slots = defineSlots<{
   default?: (props: Record<string, never>) => any
   target?: (props: {
     show: () => void
-    hide: (e: Event) => void
+    hide: (trigger?: string) => void
     toggle: (e: Event) => void
-    showState: boolean
+    visible: boolean
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -151,17 +157,6 @@ const slots = defineSlots<{
 
 const modelValue = defineModel<Exclude<BPopoverProps['modelValue'], undefined>>({
   default: false,
-})
-
-const showState = ref(modelValue.value)
-const showStateInternal = ref(modelValue.value)
-watchEffect(() => {
-  modelValue.value = showState.value
-})
-
-watch(modelValue, (newValue) => {
-  if (newValue === showState.value) return
-  newValue ? show() : hide(new Event('update:modelValue'))
 })
 
 const computedId = useId(() => props.id, 'popover')
@@ -271,7 +266,7 @@ watch(middlewareData, (newValue) => {
   if (props.noHide === false) {
     hidden.value = !!newValue.hide?.referenceHidden
     if (props.closeOnHide && hidden.value && !props.noAutoClose && !props.manual) {
-      hide(new Event('closeOnHide'))
+      hide('closeOnHide')
     }
   }
   if (newValue.arrow) {
@@ -284,6 +279,17 @@ watch(middlewareData, (newValue) => {
   }
 })
 
+const {
+  showRef,
+  hide,
+  show,
+  toggle,
+  computedNoAnimation,
+  fadeTransitionProps,
+  contentShowing,
+  isVisible,
+} = useShowHide(modelValue, props, emit as EmitFn, element, computedId)
+
 const computedClasses = computed(() => {
   const type = props.tooltip ? 'tooltip' : 'popover'
   return [
@@ -291,62 +297,15 @@ const computedClasses = computed(() => {
     `b-${type}`,
     {
       [`b-${type}-${props.variant}`]: props.variant !== null,
-      show: showState.value && !hidden.value,
-      ['pe-none']: !showState.value,
-      fade: !props.noFade,
-      ['d-none']: !showState.value && props.noFade,
+      show: isVisible.value && !hidden.value,
+      // ['pe-none']: !showState.value,
+      fade: !computedNoAnimation.value,
+      // ['d-none']: !showState.value && props.noFade,
       [`${props.customClass}`]: props.customClass !== undefined,
       [`bs-${type}-${resolveBootstrapPlacement(placement.value)}`]: placement.value !== undefined,
     },
   ]
 })
-
-const toggle = (e?: Event) => {
-  const event = e ?? new Event('click')
-  showState.value ? hide(event) : show()
-}
-
-const buildTriggerableEvent = (
-  type: string,
-  opts: Partial<BvTriggerableEvent> = {}
-): BvTriggerableEvent =>
-  new BvTriggerableEvent(type, {
-    cancelable: false,
-    target: element.value || null,
-    relatedTarget: null,
-    trigger: null,
-    ...opts,
-    componentId: computedId.value,
-  })
-
-let showTimeout: ReturnType<typeof setTimeout> | undefined
-const show = () => {
-  const event = buildTriggerableEvent('show', {cancelable: true})
-  emit('show', event)
-  if (event.defaultPrevented) {
-    emit('show-prevented', buildTriggerableEvent('show-prevented'))
-    if (modelValue.value) {
-      nextTick(() => {
-        modelValue.value = false
-      })
-    }
-    return
-  }
-  showStateInternal.value = true
-  nextTick(() => {
-    update()
-    showTimeout = setTimeout(
-      () => {
-        showState.value = true
-        update()
-        nextTick(() => {
-          emit('shown', buildTriggerableEvent('shown'))
-        })
-      },
-      typeof props.delay === 'number' ? props.delay : props.delay?.show || 0
-    )
-  })
-}
 
 const {x, y} = useMouse()
 
@@ -373,64 +332,48 @@ const isElementAndTriggerOutside = () => {
   return {triggerIsOutside, isOutside}
 }
 
-const hide = (e?: Readonly<Event>) => {
-  const event = buildTriggerableEvent('hide', {cancelable: true})
-  emit('hide', event)
-  if (event.defaultPrevented) {
-    emit('hide-prevented', buildTriggerableEvent('hide-prevented'))
-    if (!modelValue.value) {
-      nextTick(() => {
-        modelValue.value = true
-      })
-    }
-    return
-  }
-  if (showTimeout) {
-    clearTimeout(showTimeout)
-    showTimeout = undefined
-  }
+let looptimeout: ReturnType<typeof setTimeout> | undefined
+const tryHide = (e?: Readonly<Event>) => {
   const delay = typeof props.delay === 'number' ? props.delay : props.delay?.hide || 0
-  setTimeout(() => {
-    const {triggerIsOutside, isOutside} = isElementAndTriggerOutside()
-    if (
-      !e ||
-      e?.type === 'click' ||
-      e?.type === 'forceHide' ||
-      e?.type === 'closeOnHide' ||
-      (e?.type === 'update:modelValue' && props.manual) ||
-      (!props.noninteractive &&
-        isOutside &&
-        triggerIsOutside &&
-        !element.value?.contains(document?.activeElement) &&
-        !trigger.value?.contains(document?.activeElement)) ||
-      (props.noninteractive && triggerIsOutside)
-    ) {
-      showState.value = false
-      nextTick(() => {
-        setTimeout(
-          () => {
-            showStateInternal.value = false
-          },
-          element.value ? getTransitionDelay(element.value) : 150
-        )
-        emit('hidden', buildTriggerableEvent('hidden'))
-      })
-    } else {
-      setTimeout(
-        () => {
-          hide(e)
-        },
-        delay < 50 ? 50 : delay
-      )
-    }
-  }, delay)
+
+  const {triggerIsOutside, isOutside} = isElementAndTriggerOutside()
+  if (
+    (!props.noninteractive &&
+      isOutside &&
+      triggerIsOutside &&
+      !element.value?.contains(document?.activeElement) &&
+      !trigger.value?.contains(document?.activeElement)) ||
+    (props.noninteractive && triggerIsOutside)
+  ) {
+    hide(e?.type)
+  } else {
+    if (looptimeout) clearTimeout(looptimeout)
+    looptimeout = setTimeout(
+      () => {
+        tryHide(e)
+      },
+      delay < 50 ? 50 : delay
+    )
+  }
 }
+
+watch(isVisible, () => {
+  update()
+})
 
 defineExpose({
   hide,
   show,
   toggle,
 })
+
+const localToggle = (e: Event) => {
+  if (showRef.value) {
+    hide(e.type === 'click' ? 'click' : 'toggle')
+  } else {
+    show()
+  }
+}
 
 const bind = () => {
   // TODO: is this the best way to bind the events?
@@ -460,34 +403,30 @@ const bind = () => {
   if (!trigger.value || props.manual) {
     return
   }
-  if (!IS_BROWSER) return
-  trigger.value.addEventListener('forceHide', hide)
   if (props.click) {
-    trigger.value.addEventListener('click', toggle)
+    trigger.value.addEventListener('click', localToggle)
     return
   }
   trigger.value.addEventListener('pointerenter', show)
-  trigger.value.addEventListener('pointerleave', hide)
+  trigger.value.addEventListener('pointerleave', tryHide)
   trigger.value.addEventListener('focus', show)
-  trigger.value.addEventListener('blur', hide)
+  trigger.value.addEventListener('blur', tryHide)
 }
 
 const unbind = () => {
   if (trigger.value) {
-    trigger.value.removeEventListener('forceHide', hide)
-    trigger.value.removeEventListener('click', toggle)
+    trigger.value.removeEventListener('click', localToggle)
     trigger.value.removeEventListener('pointerenter', show)
-    trigger.value.removeEventListener('pointerleave', hide)
+    trigger.value.removeEventListener('pointerleave', tryHide)
     trigger.value.removeEventListener('focus', show)
-    trigger.value.removeEventListener('blur', hide)
+    trigger.value.removeEventListener('blur', tryHide)
   }
 }
 
 onClickOutside(
   element,
   () => {
-    if (showState.value && props.click && !props.noAutoClose && !props.manual)
-      hide(new Event('clickOutside'))
+    if (showRef.value && props.click && !props.noAutoClose && !props.manual) hide('click-outside')
   },
   {ignore: [trigger]}
 )

@@ -63,7 +63,7 @@ const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   splitTo: undefined,
   splitVariant: undefined,
   placement: undefined,
-  skipWrapper: undefined,
+  noWrapper: undefined,
   wrapperClass: undefined,
   strategy: 'absolute',
   text: undefined,

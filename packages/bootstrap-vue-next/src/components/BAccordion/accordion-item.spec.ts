@@ -25,19 +25,21 @@ describe('accordion-item', () => {
 
   it('b-collapse contains static class accordion-collapse', () => {
     const wrapper = mount(BAccordionItem)
-    const [, $bcollapse] = wrapper.findComponent(BCollapse).findAll('*')
+    const [, , , $bcollapse] = wrapper.findComponent(BCollapse).findAll('*')
     expect($bcollapse.classes()).toContain('accordion-collapse')
   })
 
   it('b-collapse has child div', () => {
     const wrapper = mount(BAccordionItem)
     const $bcollapse = wrapper.findComponent(BCollapse)
-    const [, $div] = $bcollapse.findAll('div')
+    const [$div] = $bcollapse.findAll('div')
     expect($div.exists()).toBe(true)
   })
 
   it('b-collapse child div contains static class accordion-body', () => {
-    const wrapper = mount(BAccordionItem)
+    const wrapper = mount(BAccordionItem, {
+      props: {modelValue: true},
+    })
     const $bcollapse = wrapper.findComponent(BCollapse)
     const [, $div] = $bcollapse.findAll('div')
     expect($div.classes()).toContain('accordion-body')
@@ -46,9 +48,10 @@ describe('accordion-item', () => {
   it('b-collapse child div contains default slot', () => {
     const wrapper = mount(BAccordionItem, {
       slots: {default: 'foobar'},
+      props: {modelValue: true},
     })
     const $bcollapse = wrapper.findComponent(BCollapse)
-    const [, $div] = $bcollapse.findAll('div')
+    const [$div] = $bcollapse.findAll('div')
     expect($div.text()).toBe('foobar')
   })
 
@@ -62,7 +65,7 @@ describe('accordion-item', () => {
     const wrapper = mount(BAccordionItem, {
       props: {id: 'spam&eggs'},
     })
-    const [, $bcollapse] = wrapper.findComponent(BCollapse).findAll('*')
+    const [, , , $bcollapse] = wrapper.findComponent(BCollapse).findAll('*')
     expect($bcollapse.attributes('id')).toBe('spam&eggs')
   })
 
@@ -80,7 +83,7 @@ describe('accordion-item', () => {
     const wrapper = mount(BAccordionItem, {
       props: {id: 'foobar'},
     })
-    const [, $bcollapse] = wrapper.findComponent(BCollapse).findAll('*')
+    const [, , , $bcollapse] = wrapper.findComponent(BCollapse).findAll('*')
     expect($bcollapse.attributes('aria-labelledby')).toBe('foobar-heading')
   })
 
@@ -152,6 +155,7 @@ describe('accordion-item', () => {
     })
     const $button = wrapper.get('.accordion-button')
     await nextTick()
+    await new Promise((resolve) => setTimeout(resolve, 30))
     expect($button.attributes('aria-expanded')).toBe('true')
   })
 
@@ -172,6 +176,10 @@ describe('accordion-item', () => {
     const $button = $h2.get('button')
     expect($button.classes()).toContain('collapsed')
     await wrapper.setProps({visible: true})
+    await nextTick()
+
+    await new Promise((resolve) => setTimeout(resolve, 30))
+
     expect($button.classes()).not.toContain('collapsed')
   })
 })

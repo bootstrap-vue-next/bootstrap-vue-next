@@ -12,6 +12,8 @@
       :horizontal="props.horizontal"
       :visible="props.visible"
       :is-nav="props.isNav"
+      :lazy="props.lazy || parentData?.lazy.value"
+      :persistent="props.persistent || parentData?.persistent.value"
       @show="emit('show', $event)"
       @shown="emit('shown')"
       @hide="emit('hide', $event)"
@@ -73,6 +75,8 @@ const _props = withDefaults(defineProps<Omit<BAccordionItemProps, 'modelValue'>>
   horizontal: undefined,
   id: undefined,
   isNav: undefined,
+  lazy: false,
+  persistent: false,
   tag: undefined,
   title: undefined,
   toggle: undefined,

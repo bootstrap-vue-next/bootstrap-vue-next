@@ -1,13 +1,8 @@
 <template>
-  <BTransition
-    :no-fade="props.noFade"
-    v-bind="props.transProps"
-    @before-enter="onBeforeEnter"
-    @after-enter="onAfterEnter"
-    @after-leave="onAfterLeave"
-  >
+  <Transition v-bind="fadeTransitionProps" :appear="!!modelValue">
     <div
-      v-if="isToastVisible"
+      v-show="isToastVisible"
+      v-if="contentShowing"
       :id="props.id"
       ref="element"
       class="toast"
@@ -17,18 +12,19 @@
       :aria-live="!isToastVisible ? undefined : props.isStatus ? 'polite' : 'assertive'"
       :aria-atomic="!isToastVisible ? undefined : true"
     >
+      ssss
       <component
         :is="props.headerTag"
         v-if="slots.title || props.title"
         class="toast-header"
         :class="props.headerClass"
       >
-        <slot name="title" :hide="hideFn">
+        <slot name="title" :hide="hide">
           <strong class="me-auto">
             {{ props.title }}
           </strong>
         </slot>
-        <BCloseButton v-if="!props.noCloseButton" @click="hideFn('close')" />
+        <BCloseButton v-if="!props.noCloseButton" @click="hide('close')" />
       </component>
       <template v-if="slots.default || props.body">
         <component
@@ -37,9 +33,9 @@
           style="display: block"
           :class="props.bodyClass"
           v-bind="computedLinkProps"
-          @click="computedLink ? hideFn() : () => {}"
+          @click="computedLink ? hide() : () => {}"
         >
-          <slot :hide="hideFn">
+          <slot :hide="hide">
             {{ props.body }}
           </slot>
         </component>
@@ -57,14 +53,13 @@
         height="4px"
       />
     </div>
-  </BTransition>
+  </Transition>
 </template>
 
 <script setup lang="ts">
-import {computed, nextTick, ref, useTemplateRef, watch, watchEffect} from 'vue'
+import {computed, type EmitFn, ref, useTemplateRef, watch, watchEffect} from 'vue'
 import {useBLinkHelper} from '../../composables/useBLinkHelper'
 import type {BToastProps} from '../../types/ComponentProps'
-import BTransition from '../BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BLink from '../BLink/BLink.vue'
 import BProgress from '../BProgress/BProgress.vue'
@@ -73,6 +68,8 @@ import {useCountdown} from '../../composables/useCountdown'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useDefaults} from '../../composables/useDefaults'
 import {useCountdownHover} from '../../composables/useCountdownHover'
+import {useId} from '../../composables/useId'
+import {useShowHide} from '../../composables/useShowHide'
 
 const _props = withDefaults(defineProps<Omit<BToastProps, 'modelValue'>>(), {
   bgVariant: null,
@@ -83,11 +80,13 @@ const _props = withDefaults(defineProps<Omit<BToastProps, 'modelValue'>>(), {
   id: undefined,
   interval: 'requestAnimationFrame',
   isStatus: false,
+  lazy: false,
   noCloseButton: false,
   noFade: false,
   noHoverPause: false,
   noResumeOnHoverLeave: false,
   progressProps: undefined,
+  persistent: false,
   showOnPause: true,
   solid: false,
   textVariant: null,
@@ -142,8 +141,21 @@ const slots = defineSlots<{
 const element = useTemplateRef('element')
 
 const modelValue = defineModel<Exclude<BToastProps['modelValue'], undefined>>({default: false})
-const showRef = ref(modelValue.value)
 const {computedLink, computedLinkProps} = useBLinkHelper(props)
+
+const computedId = useId(() => props.id, 'toast')
+
+const {
+  showRef,
+  hide,
+  toggle,
+  show,
+  buildTriggerableEvent,
+  computedNoAnimation,
+  isVisible,
+  fadeTransitionProps,
+  contentShowing,
+} = useShowHide(modelValue, props, emit as EmitFn, element, computedId)
 
 // TODO solid is never used
 const countdownLength = computed(() =>
@@ -159,13 +171,13 @@ const {
   isPaused,
   value: remainingMs,
 } = useCountdown(countdownLength, props.interval, {
-  immediate: typeof modelValue.value === 'number',
+  immediate: typeof modelValue.value === 'number' && !!modelValue.value,
 })
 useCountdownHover(
   element,
   computed(() => ({
-    noHoverPause: props.noHoverPause,
-    noResumeOnHoverLeave: props.noResumeOnHoverLeave,
+    noHoverPause: props.noHoverPause || typeof modelValue.value !== 'number',
+    noResumeOnHoverLeave: props.noResumeOnHoverLeave || typeof modelValue.value !== 'number',
     modelValueIgnoresHover: typeof modelValue.value === 'boolean',
   })),
   {pause, resume}
@@ -185,110 +197,49 @@ const colorClasses = useColorVariantClasses(props)
 const computedClasses = computed(() => [
   colorClasses.value,
   {
-    show: isToastVisible.value,
+    show: isVisible.value,
+    fade: !computedNoAnimation.value,
   },
 ])
 
-const buildTriggerableEvent = (
-  type: string,
-  opts: Readonly<Partial<BvTriggerableEvent>> = {}
-): BvTriggerableEvent =>
-  new BvTriggerableEvent(type, {
-    cancelable: false,
-    target: element.value || null,
-    relatedTarget: null,
-    trigger: null,
-    ...opts,
-    componentId: props.id,
-  })
-
-let noAction = false
 watch(modelValue, (newValue) => {
   if (typeof newValue === 'number') {
-    restart()
-  } else {
-    if (noAction) {
-      noAction = false
-      return
-    }
-    if (newValue) {
-      showFn()
+    const event = buildTriggerableEvent('show', {cancelable: true, trigger: 'model'})
+    emit('show', event)
+    if (event.defaultPrevented) {
+      emit('show-prevented', buildTriggerableEvent('show-prevented'))
     } else {
-      hideFn()
+      restart()
     }
   }
 })
-
-const showFn = () => {
-  const event = buildTriggerableEvent('show', {cancelable: true})
-  emit('show', event)
-  if (event.defaultPrevented) {
-    emit('show-prevented', buildTriggerableEvent('show-prevented'))
-    nextTick(() => {
-      noAction = true
-      if (modelValue.value) modelValue.value = false
-    })
-    return
-  }
-  showRef.value = true
-
-  if (!modelValue.value) {
-    noAction = true
-    modelValue.value = true
-  }
-}
-
-const hideFn = (trigger = '') => {
-  const event = buildTriggerableEvent('hide', {cancelable: true, trigger})
-
-  emit('hide', event)
-
-  if (trigger === 'close') {
-    emit('close', buildTriggerableEvent('close'))
-  }
-
-  if (event.defaultPrevented) {
-    showRef.value = true
-    emit('hide-prevented', buildTriggerableEvent('hide-prevented'))
-    nextTick(() => {
-      if (!modelValue.value) {
-        noAction = true
-        modelValue.value = true
-      }
-    })
-    return
-  }
-  showRef.value = false
-  if (typeof modelValue.value === 'boolean') {
-    if (modelValue.value) {
-      noAction = true
-      modelValue.value = false
-    }
-  } else {
-    modelValue.value = 0
-    stop()
-  }
-}
-
-const onBeforeEnter = () => {}
-const onAfterEnter = () => {
-  emit('shown', buildTriggerableEvent('shown'))
-}
-const onAfterLeave = () => {
-  emit('hidden', buildTriggerableEvent('hidden'))
-}
 
 // isActive in the composable will cause the toast to hide when the countdown is done
 watch(isActive, (newValue) => {
   if (newValue === false && isPaused.value === false) {
-    hideFn()
+    hide()
+    modelValue.value = 0
+    stop()
   }
 })
 
 defineExpose({
+  show,
+  hide,
+  toggle,
   pause,
   restart,
   resume,
   stop,
 })
 </script>
+
+<style lang="scss" scoped>
+.toast:not(.show) {
+  display: block;
+  opacity: unset;
+}
+.toast.fade:not(.show) {
+  opacity: 0;
+}
+</style>

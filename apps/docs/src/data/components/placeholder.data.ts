@@ -232,7 +232,7 @@ export default {
             type: 'ColorVariant | null',
             default: undefined,
           },
-          hideHeader: {
+          noHeader: {
             type: 'boolean',
             default: false,
           },
