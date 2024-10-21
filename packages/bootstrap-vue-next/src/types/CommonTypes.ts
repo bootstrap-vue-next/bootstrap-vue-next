@@ -6,3 +6,5 @@ export type TeleporterProps = {
   teleportDisabled?: TeleportProps['disabled']
   teleportTo?: TeleportProps['to']
 }
+
+export type ValidationState = boolean | null

@@ -1,3 +1,5 @@
+import type {Numberish} from './CommonTypes'
+
 export type Breakpoint = 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
 export type ColsBaseNumbers = 1 | 2 | 3 | 4 | 5 | '1' | '2' | '3' | '4' | '5'
 
@@ -65,4 +67,25 @@ export interface RowColsBreakpointProps {
   colsLg?: ColsNumbers
   colsXl?: ColsNumbers
   colsXxl?: ColsNumbers
+}
+
+export interface ContentColsBreakpointProps {
+  contentColsSm?: boolean | Numberish
+  contentColsMd?: boolean | Numberish
+  contentColsLg?: boolean | Numberish
+  contentColsXl?: boolean | Numberish
+}
+
+export interface LabelAlignBreakpointProps {
+  labelAlignSm?: string
+  labelAlignMd?: string
+  labelAlignLg?: string
+  labelAlignXl?: string
+}
+
+export interface LabelColsBreakpointProps {
+  labelColsSm?: boolean | Numberish
+  labelColsMd?: boolean | Numberish
+  labelColsLg?: boolean | Numberish
+  labelColsXl?: boolean | Numberish
 }

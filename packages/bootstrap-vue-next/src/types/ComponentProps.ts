@@ -21,7 +21,7 @@ import type {AttrsValue, ClassValue} from './AnyValuedAttributes'
 import type {CheckboxOptionRaw, CheckboxValue} from './CheckboxTypes'
 import type {Size} from './Size'
 import type {AriaInvalid} from './AriaInvalid'
-import type {Numberish, TeleporterProps} from './CommonTypes'
+import type {Numberish, TeleporterProps, ValidationState} from './CommonTypes'
 import type {CommonInputProps} from './FormCommonInputProps'
 import type {RadioOptionRaw, RadioValue} from './RadioTypes'
 import type {SelectValue} from './SelectTypes'
@@ -31,7 +31,10 @@ import type {
   ColsNumbers,
   ColsOffsetNumbers,
   ColsOrderNumbers,
+  ContentColsBreakpointProps,
   GutterNumbers,
+  LabelAlignBreakpointProps,
+  LabelColsBreakpointProps,
   OffsetBreakpointProps,
   OrderBreakpointProps,
   RowColsBreakpointProps,
@@ -199,7 +202,7 @@ export interface BFormCheckboxProps {
   required?: boolean
   reverse?: boolean
   size?: Size
-  state?: boolean | null
+  state?: ValidationState
   switch?: boolean
   uncheckedValue?: CheckboxValue
   wrapperAttrs?: Readonly<AttrsValue>
@@ -229,7 +232,7 @@ export interface BFormCheckboxGroupProps {
   reverse?: boolean
   size?: Size
   stacked?: boolean
-  state?: boolean | null
+  state?: ValidationState
   switches?: boolean
   textField?: string
   validated?: boolean
@@ -266,7 +269,7 @@ export interface BFormFileProps {
   plain?: boolean
   required?: boolean
   size?: Size
-  state?: boolean | null
+  state?: ValidationState
 }
 
 export interface BFormInputProps extends CommonInputProps {
@@ -294,7 +297,7 @@ export interface BFormRadioProps {
   required?: boolean
   reverse?: boolean
   size?: Size
-  state?: boolean | null
+  state?: ValidationState
   value?: RadioValue
 }
 
@@ -316,7 +319,7 @@ export interface BFormRadioGroupProps {
   reverse?: boolean
   size?: Size
   stacked?: boolean
-  state?: boolean | null
+  state?: ValidationState
   textField?: string
   validated?: boolean
   valueField?: string
@@ -340,7 +343,7 @@ export interface BFormSelectProps {
   required?: boolean
   selectSize?: Numberish
   size?: Size
-  state?: boolean | null
+  state?: ValidationState
   textField?: string
   valueField?: string
 }
@@ -382,7 +385,7 @@ export interface BFormSpinbuttonProps {
   repeatThreshold?: Numberish
   required?: boolean
   size?: Size
-  state?: boolean | null
+  state?: ValidationState
   step?: Numberish
   vertical?: boolean
   wrap?: boolean
@@ -424,7 +427,7 @@ export interface BFormTagsProps {
   required?: boolean
   separator?: string | readonly string[]
   size?: Size
-  state?: boolean | null
+  state?: ValidationState
   tagClass?: ClassValue
   tagPills?: boolean
   tagRemoveLabel?: string
@@ -1171,7 +1174,7 @@ export interface BFormFeedbackSharedProps {
   forceShow?: boolean
   id?: string
   role?: string
-  state?: boolean | null
+  state?: ValidationState
   tag?: string
   text?: string
   tooltip?: boolean
@@ -1363,4 +1366,29 @@ export interface BColProps extends OffsetBreakpointProps, OrderBreakpointProps, 
   offset?: ColsOffsetNumbers
   cols?: ColsNumbers | 'auto'
   col?: boolean
+}
+
+export interface BFormGroupProps
+  extends ContentColsBreakpointProps,
+    LabelColsBreakpointProps,
+    LabelAlignBreakpointProps {
+  contentCols?: boolean | Numberish
+  labelCols?: boolean | Numberish
+  labelAlign?: string
+  ariaInvalid?: AriaInvalid
+  description?: string
+  disabled?: boolean
+  feedbackAriaLive?: string
+  floating?: boolean
+  id?: string
+  invalidFeedback?: string
+  label?: string
+  labelClass?: ClassValue
+  labelFor?: string
+  labelSize?: string
+  labelVisuallyHidden?: boolean
+  state?: ValidationState
+  tooltip?: boolean
+  validFeedback?: string
+  validated?: boolean
 }
