@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.25.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.6...bootstrapvuenext-v0.25.7) (2024-10-21)
+
+
+### Features
+
+* **BCarousel:** add aria attributes, add prop labelIndicators ([#2293](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2293)) ([c3f8199](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c3f8199a609affb46dc5b7b0efc08e8c12c9e973))
+* BFormGroup to SFC -- more a refactor, but be mindful of accidental changes. Please submit issue reports if things look wrong. Also you can now use useDefaults now with BFormGroup ([07daa80](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/07daa80aef41df5b8e31578c2bc695823c2f6510))
+* rename defaultsPlugin to more generic bootstrapPlugin -- this essential plugin may contain more essential features than just defaults ([#2288](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2288)) ([22440a9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/22440a9cefd7d1a381c23ac33a07198ae4532ec7))
+
+
+### Bug Fixes
+
+* **grid:** Correct some inconsistencies in breakpoint types ([#2290](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2290)) ([7e7dc7f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7e7dc7fabf3b39f18e9261b4eb14987d3a92aac1))
+
 ## [0.25.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.5...bootstrapvuenext-v0.25.6) (2024-10-18)
 
 
