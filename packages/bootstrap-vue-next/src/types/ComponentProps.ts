@@ -951,6 +951,7 @@ export interface BCarouselProps {
   indicators?: boolean
   indicatorsButtonLabel?: string
   interval?: number
+  labelIndicators?: string
   keyboard?: boolean
   modelValue?: number
   noAnimation?: boolean
