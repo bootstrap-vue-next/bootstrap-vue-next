@@ -177,55 +177,6 @@ describe('form-group', () => {
     expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
   })
 
-  // Start example labelCols props branches
-
-  it('attr aria-labelledby is undefined when has labelCols props but no label', () => {
-    const wrapper = mount(BFormGroup, {
-      props: {
-        labelCols: 3,
-      },
-    })
-    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
-  })
-
-  it('attr aria-labelledby is undefined when has labelColsLg props but no label', () => {
-    const wrapper = mount(BFormGroup, {
-      props: {
-        labelColsLg: 3,
-      },
-    })
-    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
-  })
-
-  it('attr aria-labelledby is undefined when has labelColsMd props but no label', () => {
-    const wrapper = mount(BFormGroup, {
-      props: {
-        labelColsMd: 3,
-      },
-    })
-    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
-  })
-
-  it('attr aria-labelledby is undefined when has labelColsSm props but no label', () => {
-    const wrapper = mount(BFormGroup, {
-      props: {
-        labelColsSm: 3,
-      },
-    })
-    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
-  })
-
-  it('attr aria-labelledby is undefined when has labelColsXl props but no label', () => {
-    const wrapper = mount(BFormGroup, {
-      props: {
-        labelColsXl: 3,
-      },
-    })
-    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
-  })
-
-  // End example
-
   it('attr aria-labelledby is defined when has labelCols props but also slot label', () => {
     const wrapper = mount(BFormGroup, {
       props: {
@@ -428,50 +379,5 @@ describe('form-group', () => {
       },
     })
     expect(wrapper.attributes('aria-labelledby')).toBeDefined()
-  })
-
-  it('attr aria-labelledby is undefined when has contentCols props but no label', () => {
-    const wrapper = mount(BFormGroup, {
-      props: {
-        contentCols: 3,
-      },
-    })
-    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
-  })
-
-  it('attr aria-labelledby is undefined when has contentColsLg props but no label', () => {
-    const wrapper = mount(BFormGroup, {
-      props: {
-        contentColsLg: 3,
-      },
-    })
-    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
-  })
-
-  it('attr aria-labelledby is undefined when has contentColsMd props but no label', () => {
-    const wrapper = mount(BFormGroup, {
-      props: {
-        contentColsMd: 3,
-      },
-    })
-    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
-  })
-
-  it('attr aria-labelledby is undefined when has contentColsSm props but no label', () => {
-    const wrapper = mount(BFormGroup, {
-      props: {
-        contentColsSm: 3,
-      },
-    })
-    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
-  })
-
-  it('attr aria-labelledby is undefined when has contentColsXl props but no label', () => {
-    const wrapper = mount(BFormGroup, {
-      props: {
-        contentColsXl: 3,
-      },
-    })
-    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
   })
 })

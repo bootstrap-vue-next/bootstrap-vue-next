@@ -1,6 +1,8 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BCarousel from './BCarousel.vue'
+import BCarouselSlide from './BCarouselSlide.vue'
+import {h, nextTick} from 'vue'
 // TODO test for newest changes
 describe('carousel', () => {
   enableAutoUnmount(afterEach)
@@ -268,5 +270,44 @@ describe('carousel', () => {
     const $button = wrapper.get('.carousel-control-next')
     const $span = $button.get('.visually-hidden')
     expect($span.text()).toBe('Next')
+  })
+
+  describe('aria', () => {
+    it('gives aria-label on the carousel-indicators with prop labelIndicators', async () => {
+      const wrapper = mount(BCarousel, {
+        props: {indicators: true},
+        slots: {default: () => h(BCarouselSlide)},
+      })
+
+      const div = wrapper.get('.carousel-indicators')
+      expect(div.attributes('aria-label')).toBe('Select a slide to display')
+      await wrapper.setProps({labelIndicators: 'foobar'})
+      expect(div.attributes('aria-label')).toBe('foobar')
+    })
+    it('gives aria-owns on the carousel-indicators with the id of the carousel', async () => {
+      const wrapper = mount(BCarousel, {
+        props: {indicators: true},
+        slots: {default: () => [h(BCarouselSlide), h(BCarouselSlide)]},
+      })
+      const div = wrapper.get('.carousel-indicators')
+      const ariaOwnership = div.attributes('aria-owns')
+      expect(ariaOwnership).toContain('carousel-button-ownership')
+      const buttons = div.findAll('button')
+      for (const button of buttons) {
+        expect(button.attributes('aria-controls')).toBe(ariaOwnership)
+      }
+    })
+    it('button contains aria-described by of the carousel-item', async () => {
+      const wrapper = mount(BCarousel, {
+        props: {indicators: true},
+        slots: {default: () => [h(BCarouselSlide), h(BCarouselSlide, {id: 'foobar!!!'})]},
+      })
+      const div = wrapper.get('.carousel-indicators')
+      const [first, second] = div.findAll('button')
+      await nextTick()
+      expect(first.attributes('aria-describedby')).toBeDefined()
+      expect(first.attributes('aria-describedby')).toContain('__carousel-slide___')
+      expect(second.attributes('aria-describedby')).toBe('foobar!!!')
+    })
   })
 })

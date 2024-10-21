@@ -4,7 +4,7 @@ import type {BootstrapVueOptions} from '../../types/BootstrapVueOptions'
 import '../../styles/styles.scss'
 
 import {breadcrumbPlugin} from '../breadcrumb'
-import {defaultsPlugin} from '../defaults'
+import {bootstrapPlugin} from '../bootstrap'
 import {modalControllerPlugin} from '../modalController'
 import {modalManagerPlugin} from '../modalManager'
 import {popoverPlugin} from '../popoverController'
@@ -32,6 +32,6 @@ export const createBootstrap = (pluginData: Readonly<BootstrapVueOptions> = {}):
     if (pluginData.popover ?? true === true) {
       app.use(popoverPlugin)
     }
-    app.use(defaultsPlugin, pluginData)
+    app.use(bootstrapPlugin, pluginData)
   },
 })

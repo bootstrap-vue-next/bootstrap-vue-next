@@ -31,6 +31,17 @@ export default {
             description:
               "The value to place on the textarea's 'wrap' attribute. Controls how line break are returned",
           },
+          maxRows: {
+            type: 'Numberish',
+            default: 'undefined',
+            description: 'The maximum number of rows to display. Must be a value greater than 1',
+          },
+          noAutoShrink: {
+            type: 'boolean',
+            default: false,
+            description:
+              'When set, disables the auto-shrink feature when the textarea is in auto-height mode',
+          },
           ...pick(buildCommonProps(), [
             'ariaInvalid',
             'autocomplete',

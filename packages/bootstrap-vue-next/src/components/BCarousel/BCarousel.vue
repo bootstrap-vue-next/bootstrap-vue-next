@@ -1,6 +1,11 @@
 <template>
   <div :id="computedId" ref="element" class="carousel slide pointer-event" :class="computedClasses">
-    <div v-if="props.indicators" class="carousel-indicators">
+    <div
+      v-if="props.indicators"
+      class="carousel-indicators"
+      :aria-label="props.labelIndicators"
+      :aria-owns="buttonOwnership"
+    >
       <!-- :data-bs-target="`#${computedId}`" is required since the classes target elems with that attr -->
       <button
         v-for="(_, i) in slides.length"
@@ -10,6 +15,8 @@
         :class="i === modelValue ? 'active' : ''"
         :aria-current="i === modelValue ? true : undefined"
         :aria-label="`${props.indicatorsButtonLabel} ${i}`"
+        :aria-controls="buttonOwnership"
+        :aria-describedby="slideValues?.[i]._id"
         @click="goToValue(i)"
       />
     </div>
@@ -76,6 +83,7 @@ const _props = withDefaults(defineProps<Omit<BCarouselProps, 'modelValue'>>(), {
   indicators: false,
   indicatorsButtonLabel: 'Slide',
   interval: 5000,
+  labelIndicators: 'Select a slide to display',
   keyboard: true,
   noAnimation: false,
   noHoverPause: false,
@@ -101,6 +109,7 @@ const slots = defineSlots<{
 }>()
 
 const computedId = useId(() => props.id, 'carousel')
+const buttonOwnership = useId(undefined, 'carousel-button-ownership')
 
 const modelValue = defineModel<Exclude<BCarouselProps['modelValue'], undefined>>({default: 0})
 
