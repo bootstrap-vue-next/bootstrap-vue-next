@@ -57,7 +57,7 @@ Easily integrate BootstrapVueNext into your Nuxt.js projects using our included 
 
 <BButton variant="secondary" :to="withBase('/docs#installation-nuxt-js-3')" class="my-3">BootstrapVueNext Nuxt.js module</BButton>
 
-<BLink :href="globalData.opencollectiveUrl" target="_blank"><h2>View Our OpenCollective</h2></BLink>
+## Our OpenCollective
 
 <OpenCollectiveMemberDisplay />
 
