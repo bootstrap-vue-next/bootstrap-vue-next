@@ -7,6 +7,7 @@
     v-bind="computedLinkProps"
     :type="props.button && !computedLink ? props.buttonType : undefined"
     :disabled="props.disabled || null"
+    :variant="null"
     @click="clicked"
   >
     <span v-if="hasDefaultSlot" class="b-avatar-custom">

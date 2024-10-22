@@ -55,7 +55,11 @@ With more than 35 components, several directives and composables (and growing), 
 
 Easily integrate BootstrapVueNext into your Nuxt.js projects using our included Nuxt.js module. You can optionally specify only the components, directives and/or plugins you require.
 
-<BButton variant="secondary" :to="withBase('/docs#installation-nuxt-js-3')" class="mt-3">BootstrapVueNext Nuxt.js module</BButton>
+<BButton variant="secondary" :to="withBase('/docs#installation-nuxt-js-3')" class="my-3">BootstrapVueNext Nuxt.js module</BButton>
+
+<BLink :href="globalData.opencollectiveUrl" target="_blank"><h2>View Our OpenCollective</h2></BLink>
+
+<OpenCollectiveMemberDisplay />
 
 <script setup lang="ts">
 import {
@@ -72,6 +76,7 @@ import {withBase} from 'vitepress'
 import BootstrapIcon from '~icons/simple-icons/bootstrap'
 import VueIcon from '~icons/simple-icons/vuedotjs'
 import {appInfoKey} from '../.vitepress/theme/keys'
+import OpenCollectiveMemberDisplay from './components/OpenCollectiveMemberDisplay.vue'
 
 const globalData = inject(appInfoKey, {
   discordUrl: '',
