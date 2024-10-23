@@ -195,7 +195,7 @@
                     : 'foot()'
                 "
                 :label="field.label"
-                :column="field.key as LiteralUnion<keyof Items>"
+                :column="(field.key as LiteralUnion<keyof Items>)"
                 :field="field"
                 :is-foot="true"
               >
