@@ -39,7 +39,7 @@
     <!-- eslint-enable prettier/prettier -->
     <template v-for="(_, name) in $slots" #[name]="slotData">
       <!-- eslint-disable-next-line prettier/prettier -->
-      <slot :name="name as any" v-bind="slotData" />
+      <slot :name="(name as any)" v-bind="slotData" />
     </template>
     <template
       v-for="field in computedFields"
