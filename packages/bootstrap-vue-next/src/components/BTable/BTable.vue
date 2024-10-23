@@ -4,7 +4,7 @@
     v-bind="props"
     :aria-busy="busyModel"
     :items="computedDisplayItems"
-    :fields="computedFields as TableFieldRaw<Items>[]"
+    :fields="(computedFields as TableFieldRaw<Items>[])"
     :table-class="tableClasses"
     :tbody-tr-class="getRowClasses"
     :field-column-class="getFieldColumnClasses"
