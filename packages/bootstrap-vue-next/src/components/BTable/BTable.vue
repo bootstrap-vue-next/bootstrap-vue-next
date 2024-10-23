@@ -86,7 +86,7 @@
           v-bind="scope"
           :name="
             $slots[`sortDesc(${String(scope.field.key)})`]
-              ? (`sortDesc(${String(scope.field.key)})` as 'sortDesc')
+              ? (`sortDesc(${String(scope.field.key)})` as 'sortDesc()')
               : 'sortDesc()'
           "
         >
