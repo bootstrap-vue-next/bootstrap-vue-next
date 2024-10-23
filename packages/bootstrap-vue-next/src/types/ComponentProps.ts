@@ -1040,35 +1040,35 @@ export interface BTableSimpleProps {
   tableClass?: ClassValue
 }
 
-export interface BTableLiteProps<T> extends BTableSimpleProps {
+export interface BTableLiteProps<Items> extends BTableSimpleProps {
   align?: VerticalAlign
   caption?: string
   captionHtml?: string
   detailsTdClass?: ClassValue
   fieldColumnClass?: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  | ((field: TableField<T>) => readonly Record<string, any>[])
+  | ((field: TableField<Items>) => readonly Record<string, any>[])
     | string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     | Readonly<Record<PropertyKey, any>>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     | readonly any[]
-  fields?: TableFieldRaw<T>[]
+  fields?: TableFieldRaw<Items>[]
   footClone?: boolean
   footRowVariant?: ColorVariant | null
   footVariant?: ColorVariant | null
   headRowVariant?: ColorVariant | null
   headVariant?: ColorVariant | null
-  items?: readonly T[]
+  items?: readonly Items[]
   labelStacked?: boolean
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   modelValue?: any
   primaryKey?: string
   tbodyClass?: ClassValue
-  tbodyTrAttrs?: ((item: T | null, type: TableRowType) => AttrsValue) | AttrsValue
+  tbodyTrAttrs?: ((item: Items | null, type: TableRowType) => AttrsValue) | AttrsValue
   // tbodyTransitionHandlers
   // tbodyTransitionProps
   tbodyTrClass?:
-    | ((item: T | null, type: TableRowType) => TableStrictClassValue)
+    | ((item: Items | null, type: TableRowType) => TableStrictClassValue)
     | TableStrictClassValue
   tfootClass?: ClassValue
   tfootTrClass?: ClassValue
@@ -1076,8 +1076,8 @@ export interface BTableLiteProps<T> extends BTableSimpleProps {
   theadTrClass?: ClassValue
 }
 
-export interface BTableProps<T> extends Omit<BTableLiteProps<T>, 'tableClass'> {
-  provider?: BTableProvider<T>
+export interface BTableProps<Items> extends Omit<BTableLiteProps<Items>, 'tableClass'> {
+  provider?: BTableProvider<Items>
   noProvider?: readonly NoProviderTypes[]
   noProviderPaging?: boolean
   noProviderSorting?: boolean
@@ -1114,7 +1114,7 @@ export interface BTableProps<T> extends Omit<BTableLiteProps<T>, 'tableClass'> {
   // sortDirection?: 'asc' | 'desc' | 'last'
   // sortIconLeft?: boolean
   // sortNullLast?: boolean
-  selectedItems?: readonly T[]
+  selectedItems?: readonly Items[]
   noSortableIcon?: boolean
   emptyFilteredText?: string
   emptyText?: string
