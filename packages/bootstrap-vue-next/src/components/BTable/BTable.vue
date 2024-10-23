@@ -62,7 +62,7 @@
           v-bind="scope"
           :name="
             $slots[`sortAsc(${String(scope.field.key)})`]
-              ? (`sortAsc(${String(scope.field.key)})` as 'sortAsc')
+              ? (`sortAsc(${String(scope.field.key)})` as 'sortAsc()')
               : 'sortAsc()'
           "
         >
