@@ -20,7 +20,7 @@
     :striped-columns="props.stripedColumns"
   >
     <BThead v-show="showComputedHeaders" :variant="props.headVariant" :class="props.theadClass">
-      <slot v-if="$slots['thead-top']" name="thead-top" />
+      <slot name="thead-top" />
       <BTr :variant="props.headRowVariant" :class="props.theadTrClass">
         <BTh
           v-for="field in computedFields"
@@ -34,13 +34,19 @@
           v-bind="callThAttr(null, field, 'top')"
           @click="headerClicked(field, $event)"
         >
+          <!-- eslint-disable prettier/prettier -->
           <slot
-            :name="$slots[`head(${String(field.key)})`] ? `head(${String(field.key)})` : 'head()'"
+            :name="
+              $slots[`head(${String(field.key)})`]
+                ? (`head(${String(field.key)})` as 'head()')
+                : 'head()'
+            "
             :label="field.label"
-            :column="field.key"
+            :column="(field.key as LiteralUnion<keyof Items>)"
             :field="field"
             :is-foot="false"
           >
+            <!-- eslint-enable prettier/prettier -->
             {{ getTableFieldHeadLabel(field) }}
           </slot>
         </BTh>
@@ -105,7 +111,9 @@
               </label>
               <slot
                 :name="
-                  $slots[`cell(${String(field.key)})`] ? `cell(${String(field.key)})` : 'cell()'
+                  $slots[`cell(${String(field.key)})`]
+                    ? (`cell(${String(field.key)})` as 'cell()')
+                    : 'cell()'
                 "
                 :value="formatItem(item, String(field.key), field.formatter)"
                 :unformatted="get(item, String(field.key))"
@@ -179,15 +187,19 @@
         >
           <div class="d-inline-flex flex-nowrap align-items-center gap-1">
             <div>
+              <!-- eslint-disable prettier/prettier -->
               <slot
                 :name="
-                  $slots[`foot(${String(field.key)})`] ? `foot(${String(field.key)})` : 'foot()'
+                  $slots[`foot(${String(field.key)})`]
+                    ? (`foot(${String(field.key)})` as 'foot()')
+                    : 'foot()'
                 "
                 :label="field.label"
-                :column="field.key"
+                :column="(field.key as LiteralUnion<keyof Items>)"
                 :field="field"
                 :is-foot="true"
               >
+                <!-- eslint-enable prettier/prettier -->
                 {{ getTableFieldHeadLabel(field) }}
               </slot>
             </div>
@@ -211,13 +223,14 @@
   </BTableSimple>
 </template>
 
-<script setup lang="ts" generic="T">
+<script setup lang="ts" generic="Items">
 import {computed, ref, watch} from 'vue'
 import type {BTableLiteProps} from '../../types/ComponentProps'
 import {
   isTableField,
   isTableItem,
   type TableField,
+  type TableFieldRaw,
   type TableItem,
   type TableRowEvent,
   type TableRowThead,
@@ -236,8 +249,9 @@ import {getTableFieldHeadLabel} from '../../utils/getTableFieldHeadLabel'
 import {formatItem} from '../../utils/formatItem'
 import {filterEvent} from '../../utils/filterEvent'
 import {startCase} from '../../utils/stringUtils'
+import type {LiteralUnion} from '../../types/LiteralUnion'
 
-const _props = withDefaults(defineProps<BTableLiteProps<T>>(), {
+const _props = withDefaults(defineProps<BTableLiteProps<Items>>(), {
   caption: undefined,
   align: undefined,
   fields: () => [],
@@ -284,13 +298,114 @@ const _props = withDefaults(defineProps<BTableLiteProps<T>>(), {
 const props = useDefaults(_props, 'BTableLite')
 
 const emit = defineEmits<{
-  'head-clicked': [key: string, field: TableField<T>, event: MouseEvent, isFooter: boolean]
-  'row-clicked': TableRowEvent<T>
-  'row-dblclicked': TableRowEvent<T>
-  'row-contextmenu': TableRowEvent<T>
-  'row-hovered': TableRowEvent<T>
-  'row-unhovered': TableRowEvent<T>
-  'row-middle-clicked': TableRowEvent<T>
+  'head-clicked': [key: string, field: TableField<Items>, event: MouseEvent, isFooter: boolean]
+  'row-clicked': TableRowEvent<Items>
+  'row-dblclicked': TableRowEvent<Items>
+  'row-contextmenu': TableRowEvent<Items>
+  'row-hovered': TableRowEvent<Items>
+  'row-unhovered': TableRowEvent<Items>
+  'row-middle-clicked': TableRowEvent<Items>
+}>()
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'thead-top'?: (props: Record<string, never>) => any
+  'head()': (props: {
+    label: string | undefined
+    column: LiteralUnion<keyof Items>
+    field: TableField & {
+      _noHeader?: true
+    }
+    isFoot: false
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  [key: `head(${string})`]: (props: {
+    label: string | undefined
+    column: LiteralUnion<keyof Items>
+    field: TableField & {
+      _noHeader?: true
+    }
+    isFoot: false
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  'thead-sub'?: (
+    props: {
+      items: typeof computedFields.value
+    } & TableField & {
+        _noHeader?: true
+      }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ) => any
+  'custom-body'?: (props: {
+    fields: typeof computedFields.value
+    items: readonly Items[]
+    columns: number
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'top-row'?: (props: Record<string, never>) => any
+  'cell()': (props: {
+    value: unknown
+    unformatted: unknown
+    index: number
+    item: Items
+    field: TableField & {
+      _noHeader?: true
+    }
+    items: readonly Items[]
+    toggleDetails: () => void
+    detailsShowing: boolean
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  [key: `cell(${string})`]: (props: {
+    value: unknown
+    unformatted: unknown
+    index: number
+    item: Items
+    field: TableField & {
+      _noHeader?: true
+    }
+    items: readonly Items[]
+    toggleDetails: () => void
+    detailsShowing: boolean
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  'row-details'?: (props: {
+    item: Items
+    toggleDetails: () => void
+    fields: TableFieldRaw<Items>[]
+    index: number
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'bottom-row'?: (props: Record<string, never>) => any
+  'foot()': (props: {
+    label: string | undefined
+    column: LiteralUnion<keyof Items>
+    field: TableField & {
+      _noHeader?: true
+    }
+    isFoot: true
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: `foot(${string})`]: (props: {
+    label: string | undefined
+    column: LiteralUnion<keyof Items>
+    field: TableField & {
+      _noHeader?: true
+    }
+    isFoot: true
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  'custom-foot'?: (props: {
+    fields: typeof computedFields.value
+    items: readonly Items[]
+    columns: number
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'table-caption'?: (props: Record<string, never>) => any
 }>()
 
 const generateDetailsItem = (item: TableItem): [object, boolean | undefined] => [
@@ -362,12 +477,12 @@ const showComputedHeaders = computed(() => {
   return true
 })
 
-const itemAttributes = (item: T, fieldKey: string, attr?: unknown) => {
+const itemAttributes = (item: Items, fieldKey: string, attr?: unknown) => {
   const val = get(item, fieldKey)
   return attr && typeof attr === 'function' ? attr(val, fieldKey, item) : attr
 }
 
-const callThAttr = (item: T | null, field: TableField<T>, type: TableRowThead) => {
+const callThAttr = (item: Items | null, field: TableField<Items>, type: TableRowThead) => {
   const fieldKey = String(field.key)
   const val = get(item, fieldKey)
   return field.thAttr && typeof field.thAttr === 'function'
@@ -375,11 +490,11 @@ const callThAttr = (item: T | null, field: TableField<T>, type: TableRowThead) =
     : field.thAttr
 }
 
-const headerClicked = (field: TableField<T>, event: Readonly<MouseEvent>, isFooter = false) => {
+const headerClicked = (field: TableField<Items>, event: Readonly<MouseEvent>, isFooter = false) => {
   emit('head-clicked', field.key as string, field, event, isFooter)
 }
 
-const toggleRowDetails = (tr: T) => {
+const toggleRowDetails = (tr: Items) => {
   if (isTableItem(tr)) {
     const prevValue = detailsMap.value.get(tr)
     detailsMap.value.set(tr, !prevValue)
@@ -400,7 +515,7 @@ const getFieldColumnClasses = (field: TableField) => [
     : null,
 ]
 
-const getFieldRowClasses = (field: Readonly<TableField>, tr: T) => {
+const getFieldRowClasses = (field: Readonly<TableField>, tr: Items) => {
   const val = get(tr, String(field.key))
   return [
     field.class,
@@ -414,19 +529,19 @@ const getFieldRowClasses = (field: Readonly<TableField>, tr: T) => {
   ]
 }
 
-const handleMiddleClick = (item: T, itemIndex: number, event: MouseEvent) => {
+const handleMiddleClick = (item: Items, itemIndex: number, event: MouseEvent) => {
   if (event.button === 1 && !filterEvent(event)) {
     emit('row-middle-clicked', item, itemIndex, event)
   }
 }
-const callTbodyTrAttrs = (item: T | null, type: TableRowType) =>
+const callTbodyTrAttrs = (item: Items | null, type: TableRowType) =>
   props.tbodyTrAttrs
     ? typeof props.tbodyTrAttrs === 'function'
       ? props.tbodyTrAttrs(item, type)
       : props.tbodyTrAttrs
     : null
 
-const getRowClasses = (item: T | null, type: TableRowType) =>
+const getRowClasses = (item: Items | null, type: TableRowType) =>
   props.tbodyTrClass
     ? typeof props.tbodyTrClass === 'function'
       ? props.tbodyTrClass(item, type)

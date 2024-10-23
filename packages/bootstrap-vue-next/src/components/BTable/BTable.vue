@@ -4,7 +4,7 @@
     v-bind="props"
     :aria-busy="busyModel"
     :items="computedDisplayItems"
-    :fields="computedFields as TableFieldRaw<T>[]"
+    :fields="(computedFields as TableFieldRaw<Items>[])"
     :table-class="tableClasses"
     :tbody-tr-class="getRowClasses"
     :field-column-class="getFieldColumnClasses"
@@ -38,7 +38,8 @@
   >
     <!-- eslint-enable prettier/prettier -->
     <template v-for="(_, name) in $slots" #[name]="slotData">
-      <slot :name="name" v-bind="slotData" />
+      <!-- eslint-disable-next-line prettier/prettier -->
+      <slot :name="(name as any)" v-bind="slotData" />
     </template>
     <template
       v-for="field in computedFields"
@@ -46,7 +47,11 @@
       #[`head(${String(field.key)})`]="scope"
     >
       <slot
-        :name="$slots[`head(${String(field.key)})`] ? `head(${String(field.key)})` : 'head()'"
+        :name="
+          $slots[`head(${String(field.key)})`]
+            ? (`head(${String(field.key)})` as 'head()')
+            : 'head()'
+        "
         v-bind="scope"
       >
         {{ getTableFieldHeadLabel(field) }}
@@ -54,10 +59,10 @@
       <template v-if="isSortable && !!scope.field.sortable && props.noSortableIcon === false">
         <slot
           v-if="sortByModel?.find((el) => el.key === scope.field.key)?.order === 'asc'"
-          v-bind="{...scope}"
+          v-bind="scope"
           :name="
             $slots[`sortAsc(${String(scope.field.key)})`]
-              ? `sortAsc(${String(scope.field.key)})`
+              ? (`sortAsc(${String(scope.field.key)})` as 'sortAsc()')
               : 'sortAsc()'
           "
         >
@@ -78,10 +83,10 @@
         </slot>
         <slot
           v-else-if="sortByModel?.find((el) => el.key === scope.field.key)?.order === 'desc'"
-          v-bind="{...scope}"
+          v-bind="scope"
           :name="
             $slots[`sortDesc(${String(scope.field.key)})`]
-              ? `sortDesc(${String(scope.field.key)})`
+              ? (`sortDesc(${String(scope.field.key)})` as 'sortDesc()')
               : 'sortDesc()'
           "
         >
@@ -102,10 +107,10 @@
         </slot>
         <slot
           v-else
-          v-bind="{...scope}"
+          v-bind="scope"
           :name="
             $slots[`sortDefault(${String(scope.field.key)})`]
-              ? `sortDefault(${String(scope.field.key)})`
+              ? (`sortDefault(${String(scope.field.key)})` as 'sortDefault()')
               : 'sortDefault()'
           "
         >
@@ -159,7 +164,7 @@
   </BTableLite>
 </template>
 
-<script setup lang="ts" generic="T">
+<script setup lang="ts" generic="Items">
 import {useToNumber} from '@vueuse/core'
 import {computed, onMounted, type Ref, ref, watch} from 'vue'
 import {formatItem} from '../../utils/formatItem'
@@ -185,9 +190,10 @@ import type {BTableProps} from '../../types/ComponentProps'
 import {get, set} from '../../utils/object'
 import {startCase} from '../../utils/stringUtils'
 import {getTableFieldHeadLabel} from '../../utils/getTableFieldHeadLabel'
+import type {LiteralUnion} from '../../types/LiteralUnion'
 
 const _props = withDefaults(
-  defineProps<Omit<BTableProps<T>, 'sortBy' | 'busy' | 'selectedItems'>>(),
+  defineProps<Omit<BTableProps<Items>, 'sortBy' | 'busy' | 'selectedItems'>>(),
   {
     noSortableIcon: false,
     perPage: Number.POSITIVE_INFINITY,
@@ -260,27 +266,192 @@ const _props = withDefaults(
 const props = useDefaults(_props, 'BTable')
 
 const emit = defineEmits<{
-  'filtered': [value: T[]]
-  'head-clicked': [key: string, field: TableField<T>, event: MouseEvent, isFooter: boolean]
-  'row-clicked': TableRowEvent<T>
-  'row-dblclicked': TableRowEvent<T>
-  'row-contextmenu': TableRowEvent<T>
-  'row-hovered': TableRowEvent<T>
-  'row-unhovered': TableRowEvent<T>
-  'row-middle-clicked': TableRowEvent<T>
-  'row-selected': [value: T]
-  'row-unselected': [value: T]
+  'filtered': [value: Items[]]
+  'head-clicked': [key: string, field: TableField<Items>, event: MouseEvent, isFooter: boolean]
+  'row-clicked': TableRowEvent<Items>
+  'row-dblclicked': TableRowEvent<Items>
+  'row-contextmenu': TableRowEvent<Items>
+  'row-hovered': TableRowEvent<Items>
+  'row-unhovered': TableRowEvent<Items>
+  'row-middle-clicked': TableRowEvent<Items>
+  'row-selected': [value: Items]
+  'row-unselected': [value: Items]
   'sorted': [value: BTableSortBy]
-  'change': [value: T[]]
+  'change': [value: Items[]]
 }>()
 
-const sortByModel = defineModel<BTableProps<T>['sortBy']>('sortBy', {
+defineSlots<{
+  // BTableLite
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'thead-top'?: (props: Record<string, never>) => any
+  'head()': (props: {
+    label: string | undefined
+    column: LiteralUnion<keyof Items>
+    field: TableField & {
+      _noHeader?: true
+    }
+    isFoot: false
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  [key: `head(${string})`]: (props: {
+    label: string | undefined
+    column: LiteralUnion<keyof Items>
+    field: TableField & {
+      _noHeader?: true
+    }
+    isFoot: false
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  'thead-sub'?: (
+    props: {
+      items: typeof computedFields.value
+    } & TableField & {
+        _noHeader?: true
+      }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ) => any
+  'custom-body'?: (props: {
+    fields: typeof computedFields.value
+    items: readonly Items[]
+    columns: number
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'top-row'?: (props: Record<string, never>) => any
+  'cell()': (props: {
+    value: unknown
+    unformatted: unknown
+    index: number
+    item: Items
+    field: TableField & {
+      _noHeader?: true
+    }
+    items: readonly Items[]
+    toggleDetails: () => void
+    detailsShowing: boolean
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  [key: `cell(${string})`]: (props: {
+    value: unknown
+    unformatted: unknown
+    index: number
+    item: Items
+    field: TableField & {
+      _noHeader?: true
+    }
+    items: readonly Items[]
+    toggleDetails: () => void
+    detailsShowing: boolean
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  'row-details'?: (props: {
+    item: Items
+    toggleDetails: () => void
+    fields: TableFieldRaw<Items>[]
+    index: number
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'bottom-row'?: (props: Record<string, never>) => any
+  'foot()': (props: {
+    label: string | undefined
+    column: LiteralUnion<keyof Items>
+    field: TableField & {
+      _noHeader?: true
+    }
+    isFoot: true
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: `foot(${string})`]: (props: {
+    label: string | undefined
+    column: LiteralUnion<keyof Items>
+    field: TableField & {
+      _noHeader?: true
+    }
+    isFoot: true
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  'custom-foot'?: (props: {
+    fields: typeof computedFields.value
+    items: readonly Items[]
+    columns: number
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'table-caption'?: (props: Record<string, never>) => any
+
+  // end btable slots
+
+  'sortAsc()': (props: {
+    label: string | undefined
+    column: LiteralUnion<keyof Items>
+    field: TableField & {
+      _noHeader?: true
+    }
+    isFoot: false
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  [key: `sortAsc(${string})`]: (props: {
+    label: string | undefined
+    column: LiteralUnion<keyof Items>
+    field: TableField & {
+      _noHeader?: true
+    }
+    isFoot: false
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  'sortDesc()': (props: {
+    label: string | undefined
+    column: LiteralUnion<keyof Items>
+    field: TableField & {
+      _noHeader?: true
+    }
+    isFoot: false
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  [key: `sortDesc(${string})`]: (props: {
+    label: string | undefined
+    column: LiteralUnion<keyof Items>
+    field: TableField & {
+      _noHeader?: true
+    }
+    isFoot: false
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  'sortDefault()': (props: {
+    label: string | undefined
+    column: LiteralUnion<keyof Items>
+    field: TableField & {
+      _noHeader?: true
+    }
+    isFoot: false
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  [key: `sortDefault(${string})`]: (props: {
+    label: string | undefined
+    column: LiteralUnion<keyof Items>
+    field: TableField & {
+      _noHeader?: true
+    }
+    isFoot: false
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'table-busy'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'empty-filtered'?: (props: typeof emptySlotScope.value) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'empty'?: (props: typeof emptySlotScope.value) => any
+}>()
+
+const sortByModel = defineModel<BTableProps<Items>['sortBy']>('sortBy', {
   default: undefined,
 })
-const busyModel = defineModel<Exclude<BTableProps<T>['busy'], undefined>>('busy', {
+const busyModel = defineModel<Exclude<BTableProps<Items>['busy'], undefined>>('busy', {
   default: false,
 })
-const selectedItemsModel = defineModel<Exclude<BTableProps<T>['selectedItems'], undefined>>(
+const selectedItemsModel = defineModel<Exclude<BTableProps<Items>['selectedItems'], undefined>>(
   'selectedItems',
   {
     default: () => [],
@@ -311,7 +482,7 @@ watch(selectedItemsToSet, (newValue, oldValue) => {
  * The utils also conveniently emit the proper events after
  */
 const selectedItemsSetUtilities = {
-  add: (item: T) => {
+  add: (item: Items) => {
     const value = new Set(selectedItemsToSet.value)
     value.add(item)
     selectedItemsToSet.value = value
@@ -321,7 +492,7 @@ const selectedItemsSetUtilities = {
       selectedItemsSetUtilities.delete(item)
     })
   },
-  delete: (item: T) => {
+  delete: (item: Items) => {
     const value = new Set(selectedItemsToSet.value)
     if (props.primaryKey) {
       const pkey: string = props.primaryKey
@@ -338,10 +509,10 @@ const selectedItemsSetUtilities = {
     }
     selectedItemsToSet.value = value
   },
-  set: (items: T[]) => {
+  set: (items: Items[]) => {
     selectedItemsToSet.value = new Set(items)
   },
-  has: (item: T) => {
+  has: (item: Items) => {
     if (!props.primaryKey) return selectedItemsToSet.value.has(item)
 
     // Resolver for when we are using primary keys
@@ -359,7 +530,7 @@ const selectedItemsSetUtilities = {
 /**
  * Only stores data that is fetched when using the provider
  */
-const internalItems: Ref<T[]> = ref([])
+const internalItems: Ref<Items[]> = ref([])
 
 const perPageNumber = useToNumber(() => props.perPage, {method: 'parseInt'})
 const currentPageNumber = useToNumber(() => props.currentPage, {method: 'parseInt'})
@@ -376,7 +547,7 @@ const isSortable = computed(
     )
 )
 
-const computedFields = computed<TableField<T>[]>(() =>
+const computedFields = computed<TableField<Items>[]>(() =>
   props.fields.map((el) => {
     if (!isTableField(el)) {
       const label = startCase(el as string)
@@ -400,7 +571,7 @@ const computedFields = computed<TableField<T>[]>(() =>
               : 'none'
 
     return {
-      ...(el as TableField<T>),
+      ...(el as TableField<Items>),
       thAttr: {
         'aria-sort': sortValue,
         ...el.thAttr,
@@ -431,7 +602,7 @@ const getFieldColumnClasses = (field: TableField) => [
 // Also the row should technically have aria-selected . Both things could probably just use a function with tbodyTrAttrs
 // But functional tbodyTrAttrs are not supported yet
 // Also the stuff for resolving functions could probably be made a util
-const getRowClasses = (item: T | null, type: TableRowType): TableStrictClassValue => [
+const getRowClasses = (item: Items | null, type: TableRowType): TableStrictClassValue => [
   {
     [`selected table-${props.selectionVariant}`]:
       props.selectable && !!item && selectedItemsSetUtilities.has(item),
@@ -445,8 +616,8 @@ const getRowClasses = (item: T | null, type: TableRowType): TableStrictClassValu
 
 const getFormatter = (value: TableField): TableFieldFormatter<unknown> | undefined =>
   typeof value.sortByFormatted === 'function' ? value.sortByFormatted : value.formatter
-const computedItems = computed<T[]>(() => {
-  const sortItems = (items: T[]) => {
+const computedItems = computed<Items[]>(() => {
+  const sortItems = (items: Items[]) => {
     // "undefined" values are set by us, we do this so we dont wipe out the comparer
     const sortByItems = sortByModel.value?.filter((el) => !!el.order)
 
@@ -456,7 +627,7 @@ const computedItems = computed<T[]>(() => {
     return [...items].sort((a, b) => {
       for (let i = 0; i < (sortByItems.length ?? 0); i++) {
         const sortOption = sortByItems[i]
-        const realVal = (ob: T): string => {
+        const realVal = (ob: Items): string => {
           if (!isTableItem(ob)) return String(ob)
 
           const sortField = computedFields.value.find((el) => {
@@ -490,7 +661,7 @@ const computedItems = computed<T[]>(() => {
     })
   }
 
-  const filterItems = (items: T[]) =>
+  const filterItems = (items: Items[]) =>
     items.filter((item) =>
       isTableItem(item)
         ? Object.entries(item).some(([key, val]) => {
@@ -521,7 +692,7 @@ const computedItems = computed<T[]>(() => {
         : true
     )
 
-  let mappedItems = usesProvider.value ? internalItems.value : (props.items as T[])
+  let mappedItems = usesProvider.value ? internalItems.value : (props.items as Items[])
   mappedItems = mappedItems.map((item) => {
     if (
       typeof item === 'object' &&
@@ -569,7 +740,7 @@ const emptySlotScope = computed(() => ({
   items: computedItems.value,
 }))
 
-const computedDisplayItems = computed<T[]>(() => {
+const computedDisplayItems = computed<Items[]>(() => {
   if (Number.isNaN(perPageNumber.value) || (usesProvider.value && !props.noProviderPaging)) {
     return computedItems.value
   }
@@ -585,7 +756,7 @@ watch(computedDisplayItems, (v) => {
 })
 
 const handleRowSelection = (
-  row: T,
+  row: Items,
   index: number,
   shiftClicked = false,
   ctrlClicked = false,
@@ -630,14 +801,14 @@ const handleRowSelection = (
   }
 }
 
-const onRowClick = (row: T, index: number, e: MouseEvent) => {
+const onRowClick = (row: Items, index: number, e: MouseEvent) => {
   if (props.noSelectOnClick === false) {
     handleRowSelection(row, index, e.shiftKey, e.ctrlKey, e.metaKey)
   }
   emit('row-clicked', row, index, e)
 }
 
-const handleFieldSorting = (field: TableField<T>) => {
+const handleFieldSorting = (field: TableField<Items>) => {
   if (!isSortable.value) return
 
   const fieldKey = typeof field === 'object' && field !== null ? field.key : field
@@ -698,7 +869,7 @@ const handleFieldSorting = (field: TableField<T>) => {
 
 const onFieldHeadClick = (
   fieldKey: string,
-  field: TableField<T>,
+  field: TableField<Items>,
   event: Readonly<MouseEvent>,
   isFooter = false
 ) => {
