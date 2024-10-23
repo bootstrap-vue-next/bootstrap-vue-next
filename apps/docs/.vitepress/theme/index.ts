@@ -1,6 +1,7 @@
 // https://vitepress.dev/guide/custom-theme
 import Layout from './Layout.vue'
 import type {Theme} from 'vitepress'
+import DefaultTheme from 'vitepress/theme-without-fonts'
 import {appInfoKey} from './keys'
 
 import 'bootstrap/dist/css/bootstrap.css'
@@ -8,6 +9,7 @@ import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
 import {createBootstrap} from 'bootstrap-vue-next'
 
 export default {
+  ...DefaultTheme,
   Layout,
   enhanceApp(ctx) {
     const githubUrl = 'https://github.com/bootstrap-vue-next/bootstrap-vue-next'
