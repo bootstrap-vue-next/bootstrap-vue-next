@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.25.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.7...bootstrapvuenext-v0.25.8) (2024-10-24)
+
+
+### Features
+
+* **BTable:** add defineSlots types ([#2300](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2300)) ([cc5af51](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cc5af51327ccbc366a9354cb387b025e5e377904))
+
+
+### Bug Fixes
+
+* **BAvatar:** variant being applied to link causing avatar img to become faded and not show svg when using prop href ([#2295](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2295)) ([daecdd9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/daecdd97953ff675e4c094a18946e45195cf3d9c))
+
 ## [0.25.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.6...bootstrapvuenext-v0.25.7) (2024-10-21)
 
 
