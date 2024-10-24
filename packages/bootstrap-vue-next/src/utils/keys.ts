@@ -86,6 +86,8 @@ export const avatarGroupInjectionKey: InjectionKey<{
 export const accordionInjectionKey: InjectionKey<{
   openItem: Readonly<Ref<string | undefined>>
   free: Readonly<Ref<boolean>>
+  lazy: Readonly<Ref<boolean>>
+  unmountLazy: Readonly<Ref<boolean>>
   setOpenItem: (id: string) => void
 }> = createBvnInjectionKey('accordion')
 

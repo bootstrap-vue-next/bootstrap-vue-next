@@ -28,27 +28,27 @@ describe.skip('placeholder-table', () => {
     expect($thead.exists()).toBe(true)
   })
 
-  it('renders slot thead if not prop hideHeader', () => {
+  it('renders slot thead if not prop noHeader', () => {
     const wrapper = mount(BPlaceholderTable, {
-      props: {hideHeader: false},
+      props: {noHeader: false},
       slots: {thead: 'foobar'},
     })
     const $tablesimple = wrapper.getComponent(BTableSimple)
     expect($tablesimple.text()).toBe('foobar')
   })
 
-  it('does not render slot thead if prop hideHeader', () => {
+  it('does not render slot thead if prop noHeader', () => {
     const wrapper = mount(BPlaceholderTable, {
-      props: {hideHeader: true},
+      props: {noHeader: true},
       slots: {thead: 'foobar'},
     })
     const $tablesimple = wrapper.getComponent(BTableSimple)
     expect($tablesimple.text()).toBe('')
   })
 
-  it('child thead does not exist if prop hideHeader', () => {
+  it('child thead does not exist if prop noHeader', () => {
     const wrapper = mount(BPlaceholderTable, {
-      props: {hideHeader: true},
+      props: {noHeader: true},
     })
     const $tablesimple = wrapper.getComponent(BTableSimple)
     const $thead = $tablesimple.find('thead')

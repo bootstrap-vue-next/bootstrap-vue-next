@@ -1,28 +1,40 @@
 <template>
   <slot name="header" v-bind="sharedSlots" />
-  <component
-    :is="props.tag"
-    :id="computedId"
-    ref="element"
-    class="collapse"
-    :class="computedClasses"
-    :is-nav="props.isNav"
-    v-bind="$attrs"
+  <Transition
+    v-bind="emptyTransitionProps"
+    :enter-active-class="computedNoAnimation ? '' : 'collapsing'"
+    :leave-active-class="computedNoAnimation ? '' : 'collapsing'"
+    :appear="modelValue"
+    @before-leave="onBeforeLeave"
+    @enter="onEnter"
+    @leave="onLeave"
+    @after-enter="onAfterEnter"
+    @after-leave="onAfterLeave"
   >
-    <slot v-bind="sharedSlots" />
-  </component>
+    <component
+      :is="props.tag"
+      v-show="showRef"
+      :id="computedId"
+      ref="element"
+      class="collapse"
+      :class="computedClasses"
+      :is-nav="props.isNav"
+      v-bind="$attrs"
+    >
+      <slot v-if="contentShowing || isVisible" v-bind="sharedSlots" />
+    </component>
+  </Transition>
   <slot name="footer" v-bind="sharedSlots" />
 </template>
 
 <script setup lang="ts">
-import {computed, nextTick, onMounted, provide, readonly, ref, toRef, watch} from 'vue'
+import {computed, type EmitFn, provide, readonly, ref, toRef} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
-import {useEventListener} from '@vueuse/core'
 import {collapseInjectionKey} from '../../utils/keys'
 import type {BCollapseProps} from '../../types/ComponentProps'
 import {BvTriggerableEvent} from '../../utils'
-import {getTransitionDelay} from '../../utils/dom'
+import {emptyTransitionProps, useShowHide} from '../../composables/useShowHide'
 
 defineOptions({
   inheritAttrs: false,
@@ -32,21 +44,24 @@ const _props = withDefaults(defineProps<Omit<BCollapseProps, 'modelValue'>>(), {
   horizontal: false,
   id: undefined,
   isNav: false,
-  skipAnimation: false,
+  lazy: false,
+  noAnimation: false,
+  unmountLazy: false,
   tag: 'div',
-  toggle: false,
+  show: false,
   visible: false,
 })
 
 const props = useDefaults(_props, 'BCollapse')
 
 const emit = defineEmits<{
-  'hidden': []
+  'hidden': [value: BvTriggerableEvent]
   'hide': [value: BvTriggerableEvent]
-  'hide-prevented': []
+  'hide-prevented': [value: BvTriggerableEvent]
   'show': [value: BvTriggerableEvent]
-  'show-prevented': []
-  'shown': []
+  'show-prevented': [value: BvTriggerableEvent]
+  'shown': [value: BvTriggerableEvent]
+  'toggle': [value: BvTriggerableEvent]
 }>()
 
 type SharedSlotsData = {
@@ -66,19 +81,6 @@ defineSlots<{
   header?: (props: SharedSlotsData) => any
 }>()
 
-const buildTriggerableEvent = (
-  type: string,
-  opts: Readonly<Partial<BvTriggerableEvent>> = {}
-): BvTriggerableEvent =>
-  new BvTriggerableEvent(type, {
-    cancelable: false,
-    target: element.value || null,
-    relatedTarget: null,
-    trigger: null,
-    ...opts,
-    componentId: computedId.value,
-  })
-
 const modelValue = defineModel<Exclude<BCollapseProps['modelValue'], undefined>>({
   default: false,
 })
@@ -86,156 +88,89 @@ const modelValue = defineModel<Exclude<BCollapseProps['modelValue'], undefined>>
 const computedId = useId(() => props.id, 'collapse')
 
 const element = ref<HTMLElement | null>(null)
-const isCollapsing = ref(false)
-const showRef = ref(modelValue.value)
+
+const {
+  showRef,
+  hide,
+  show,
+  toggle,
+  isVisible,
+  buildTriggerableEvent,
+  computedNoAnimation,
+  contentShowing,
+  markLazyLoadCompleted,
+} = useShowHide(modelValue, props, emit as EmitFn, element, computedId)
 
 const computedClasses = computed(() => ({
-  'show': showRef.value,
+  'show': isVisible.value,
   'navbar-collapse': props.isNav,
-  'collapsing': isCollapsing.value,
-  'closing': showRef.value && !modelValue.value,
   'collapse-horizontal': props.horizontal,
 }))
 
-const hide = () => {
-  modelValue.value = false
+let inCollapse = false
+const onEnter = (el: Element) => {
+  inCollapse = true
+  isVisible.value = true
+  requestAnimationFrame(() => {
+    if (props.horizontal) {
+      ;(el as HTMLElement).style.width = `${(el as HTMLElement).scrollWidth}px`
+    } else {
+      ;(el as HTMLElement).style.height = `${(el as HTMLElement).scrollHeight}px`
+    }
+  })
 }
-const show = () => {
-  modelValue.value = true
+const onBeforeLeave = (el: Element) => {
+  isVisible.value = true
+  if (inCollapse) {
+    return
+  }
+  if (props.horizontal) {
+    ;(el as HTMLElement).style.width = `${el.scrollWidth}px`
+  } else {
+    ;(el as HTMLElement).style.height = `${el.scrollHeight}px`
+  }
+  ;(el as HTMLElement).offsetHeight // force reflow
 }
-const toggleFn = () => {
-  modelValue.value = !modelValue.value
+const onLeave = (el: Element) => {
+  requestAnimationFrame(() => {
+    if (props.horizontal) {
+      ;(el as HTMLElement).style.width = ``
+    } else {
+      ;(el as HTMLElement).style.height = ``
+    }
+  })
+}
+
+const onAfterEnter = (el: Element) => {
+  ;(el as HTMLElement).style.height = ``
+  ;(el as HTMLElement).style.width = ``
+  inCollapse = false
+  isVisible.value = true
+  emit('shown', buildTriggerableEvent('shown'))
+  markLazyLoadCompleted()
+}
+
+const onAfterLeave = (el: Element) => {
+  ;(el as HTMLElement).style.height = ``
+  ;(el as HTMLElement).style.width = ``
+  inCollapse = false
+  isVisible.value = false
+  emit('hidden', buildTriggerableEvent('hidden'))
 }
 
 const sharedSlots = computed<SharedSlotsData>(() => ({
-  toggle: toggleFn,
+  toggle,
   show,
   hide,
   id: computedId.value,
-  visible: modelValue.value,
+  visible: showRef.value,
 }))
-
-let revealTimeout: ReturnType<typeof setTimeout> | undefined
-let hideTimeout: ReturnType<typeof setTimeout> | undefined
-let _skipAnimation = props.skipAnimation
-
-const reveal = () => {
-  const event = buildTriggerableEvent('show', {cancelable: true})
-  emit('show', event)
-  if (event.defaultPrevented) {
-    emit('show-prevented')
-    return
-  }
-  clearTimeout(hideTimeout)
-  clearTimeout(revealTimeout)
-  showRef.value = true
-  if (_skipAnimation) return
-  isCollapsing.value = true
-  nextTick(() => {
-    if (element.value === null) return
-    if (props.horizontal) {
-      element.value.style.width = `${element.value.scrollWidth}px`
-    } else {
-      element.value.style.height = `${element.value.scrollHeight}px`
-    }
-    revealTimeout = setTimeout(() => {
-      isCollapsing.value = false
-      emit('shown')
-      if (element.value === null) return
-      element.value.style.height = ''
-      element.value.style.width = ''
-    }, getTransitionDelay(element.value))
-  })
-}
-
-const hideFn = () => {
-  const event = buildTriggerableEvent('hide', {cancelable: true})
-  emit('hide', event)
-  if (event.defaultPrevented) {
-    emit('hide-prevented')
-    return
-  }
-  clearTimeout(revealTimeout)
-  clearTimeout(hideTimeout)
-  if (element.value === null) return
-  if (_skipAnimation) {
-    showRef.value = false
-    return
-  }
-  if (isCollapsing.value) {
-    element.value.style.height = ``
-    element.value.style.width = ``
-    // return
-  } else {
-    if (props.horizontal) {
-      element.value.style.width = `${element.value.scrollWidth}px`
-    } else {
-      element.value.style.height = `${element.value.scrollHeight}px`
-    }
-  }
-  // element.value.style.height = `${element.value.scrollHeight}px`
-  element.value.offsetHeight // force reflow
-  isCollapsing.value = true
-  nextTick(() => {
-    if (element.value === null) return
-    element.value.style.height = ``
-    element.value.style.width = ``
-    hideTimeout = setTimeout(() => {
-      showRef.value = false
-      isCollapsing.value = false
-      emit('hidden')
-    }, getTransitionDelay(element.value))
-  })
-}
-
-watch(modelValue, () => {
-  modelValue.value ? reveal() : hideFn()
-})
-
-onMounted(() => {
-  if (element.value === null) return
-  if (!modelValue.value && props.toggle) {
-    nextTick(() => {
-      modelValue.value = true
-    })
-  }
-})
-
-watch(
-  () => props.skipAnimation,
-  (newval) => {
-    _skipAnimation = newval
-  }
-)
-
-if (props.visible) {
-  _skipAnimation = true
-  modelValue.value = true
-  nextTick(() => {
-    _skipAnimation = props.skipAnimation
-  })
-}
-
-watch(
-  () => props.visible,
-  (newval) => {
-    _skipAnimation = true
-    newval ? show() : hide()
-    nextTick(() => {
-      _skipAnimation = props.skipAnimation
-    })
-  }
-)
-
-useEventListener(element, 'bv-toggle', () => {
-  modelValue.value = !modelValue.value
-})
 
 defineExpose({
   hide,
   isNav: props.isNav,
   show,
-  toggle: toggleFn,
+  toggle,
   visible: readonly(showRef),
 })
 
@@ -243,7 +178,7 @@ provide(collapseInjectionKey, {
   id: computedId,
   hide,
   show,
-  toggle: toggleFn,
+  toggle,
   visible: readonly(showRef),
   isNav: toRef(() => props.isNav),
 })

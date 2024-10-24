@@ -71,8 +71,8 @@ const _props = withDefaults(defineProps<Omit<BPaginationProps, 'modelValue'>>(),
   firstClass: undefined,
   firstNumber: false,
   firstText: '\u00AB',
-  hideEllipsis: false,
-  hideGotoEndButtons: false,
+  noEllipsis: false,
+  noGotoEndButtons: false,
   labelFirstPage: 'Go to first page',
   labelLastPage: 'Go to last page',
   labelNextPage: 'Go to next page',
@@ -371,9 +371,9 @@ const elements = computed(() => {
   const limit = limitNumber.value
   const firstPage = props.firstNumber ? 1 : 0
   const lastPage = props.lastNumber ? 1 : 0
-  const hideEllipsis = props.hideEllipsis || limit <= ELLIPSIS_THRESHOLD
-  const hideFirstButton = props.hideGotoEndButtons && !props.firstNumber ? 1 : 0
-  const hideLastButton = props.hideGotoEndButtons && !props.lastNumber ? 1 : 0
+  const noEllipsis = props.noEllipsis || limit <= ELLIPSIS_THRESHOLD
+  const hideFirstButton = props.noGotoEndButtons && !props.firstNumber ? 1 : 0
+  const hideLastButton = props.noGotoEndButtons && !props.lastNumber ? 1 : 0
   const showFirstButton = hideFirstButton ? 0 : 1
   const showLastButton = hideLastButton ? 0 : 1
 
@@ -428,7 +428,7 @@ const elements = computed(() => {
       buttons[index + 1 - hideFirstButton] = index + firstPage
     }
 
-    if (!hideEllipsis) {
+    if (!noEllipsis) {
       buttons[buttons.length - (2 + showLastButton)] = LAST_ELLIPSIS
     }
   }
@@ -442,7 +442,7 @@ const elements = computed(() => {
       buttons[index + 2 - hideFirstButton] = start + index
     }
 
-    if (!hideEllipsis) {
+    if (!noEllipsis) {
       buttons[1 + showFirstButton] = FIRST_ELLIPSIS
     }
   }
@@ -455,7 +455,7 @@ const elements = computed(() => {
       buttons[index + 2 - hideFirstButton] = start + index
     }
 
-    if (!hideEllipsis) {
+    if (!noEllipsis) {
       buttons[1 + showFirstButton] = FIRST_ELLIPSIS
       buttons[buttons.length - (2 + showLastButton)] = LAST_ELLIPSIS
     }

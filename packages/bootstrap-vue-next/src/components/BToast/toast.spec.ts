@@ -11,6 +11,7 @@ describe('toast', () => {
       attachTo: document.body,
       props: {
         modelValue: true,
+        visible: true,
         title: 'title',
       },
       slots: {
@@ -19,6 +20,7 @@ describe('toast', () => {
     })
 
     expect(wrapper.vm).toBeDefined()
+    await nextTick()
     await nextTick()
 
     expect(wrapper.element.tagName).toBe('TRANSITION-STUB')

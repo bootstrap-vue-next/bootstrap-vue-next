@@ -1,4 +1,4 @@
-import {createApp} from 'vue'
+import {type Component, createApp} from 'vue'
 import App from './App.vue'
 import {createBootstrap, Components, Directives} from 'bootstrap-vue-next'
 
@@ -10,9 +10,9 @@ app.use(
   createBootstrap()
 )
 for (const name in Components) {
-  app.component(name, Components[name])
+  app.component(name, Components[name as keyof typeof Components] as Component)
 }
 for (const name in Directives) {
-  app.directive(name.replace(/^v/, ''), Directives[name])
+  app.directive(name.replace(/^v/, ''), Directives[name as keyof typeof Directives])
 }
 app.mount('#app')
