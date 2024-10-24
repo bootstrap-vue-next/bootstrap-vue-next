@@ -27,10 +27,11 @@ export const useSafeScrollLock = (
   const inverseBodyScrollingValue = computed(() => !toValue(bodyScroll))
 
   const isLocked = useScrollLock(
-    document?.body,
+    typeof document !== 'undefined' ? document.body : null,
     resolvedIsOpen.value && inverseBodyScrollingValue.value
   )
   onMounted(() => {
+    if (typeof document === 'undefined') return
     lockRegistry.set(id, false)
 
     watch(
