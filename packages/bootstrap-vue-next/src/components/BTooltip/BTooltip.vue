@@ -1,7 +1,13 @@
 <template>
   <BPopover ref="popover" v-bind="computedProps" v-model="modelValue" tooltip>
-    <template v-for="(_, name) in $slots" #[name]="slotData">
-      <slot :name="name" v-bind="slotData" />
+    <template #default>
+      <slot />
+    </template>
+    <template #target="scope">
+      <slot name="target" v-bind="scope" />
+    </template>
+    <template #title>
+      <slot name="title" />
     </template>
   </BPopover>
 </template>
@@ -43,6 +49,20 @@ const _props = withDefaults(defineProps<Omit<BTooltipProps, 'modelValue'>>(), {
 })
 
 const props = useDefaults(_props, 'BTooltip')
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  target?: (props: {
+    show: () => void
+    hide: (e: Event) => void
+    toggle: (e: Event) => void
+    showState: boolean
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  title?: (props: Record<string, never>) => any
+}>()
 
 const modelValue = defineModel<BTooltipProps['modelValue']>({default: undefined})
 
