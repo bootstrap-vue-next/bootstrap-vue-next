@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.25.10](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.9...bootstrapvuenext-v0.25.10) (2024-10-24)
+
+
+### Bug Fixes
+
+* **BFormSpinButton:** fix lacks default sizing ([#2305](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2305)) ([9e3614f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9e3614fa9e1f3ccb4cdd614d60ba762a08a6a015))
+
 ## [0.25.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.8...bootstrapvuenext-v0.25.9) (2024-10-24)
 
 
