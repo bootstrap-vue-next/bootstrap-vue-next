@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.25.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.8...bootstrapvuenext-v0.25.9) (2024-10-24)
+
+
+### Features
+
+* **BTooltip:** strongly type slots ([e51461e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e51461e16188e2ea290a6979c75da68edf3cc749))
+
+
+### Bug Fixes
+
+* **BTable:** clean up slots to match those from bootstrap-vue fixes #… ([#2303](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2303)) ([e51461e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e51461e16188e2ea290a6979c75da68edf3cc749))
+
 ## [0.25.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.7...bootstrapvuenext-v0.25.8) (2024-10-24)
 
 
