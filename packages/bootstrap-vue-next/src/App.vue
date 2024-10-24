@@ -49,7 +49,7 @@
     <BFormCheckbox v-model="noFade">no fade/animation</BFormCheckbox>
     <BFormCheckbox v-model="slowAnimation">slow animations</BFormCheckbox>
     <BFormCheckbox v-model="lazyLoad">lazy load</BFormCheckbox>
-    <BFormCheckbox v-model="persistent">persistent children</BFormCheckbox>
+    <BFormCheckbox v-model="unmountLazy">unmountLazy children</BFormCheckbox>
   </BCard>
   <b-row>
     <b-col>
@@ -62,7 +62,7 @@
         v-model="modalIf"
         :no-fade="noFade"
         :lazy="lazyLoad"
-        :persistent="persistent"
+        :unmount-lazy="unmountLazy"
         @show="doEvent($event, 'show')"
         @shown="doEvent($event, 'shown')"
         @show-prevented="doEvent($event, 'show-prevented')"
@@ -110,7 +110,7 @@
         :toggle="modal.toggle"
         :visible="modal.visible"
         :lazy="lazyLoad"
-        :persistent="persistent"
+        :unmount-lazy="unmountLazy"
         @show="doEvent($event, 'show')"
         @shown="doEvent($event, 'shown')"
         @show-prevented="doEvent($event, 'show-prevented')"
@@ -158,7 +158,7 @@
         :toggle="collapse.toggle"
         :visible="collapse.visible"
         :lazy="lazyLoad"
-        :persistent="persistent"
+        :unmount-lazy="unmountLazy"
         @show="doEvent($event, 'show')"
         @shown="doEvent($event, 'shown')"
         @show-prevented="doEvent($event, 'show-prevented')"
@@ -204,7 +204,7 @@
         :toggle="popover.toggle"
         :visible="popover.visible"
         :lazy="lazyLoad"
-        :persistent="persistent"
+        :unmount-lazy="unmountLazy"
         @show="doEvent($event, 'show')"
         @shown="doEvent($event, 'shown')"
         @show-prevented="doEvent($event, 'show-prevented')"
@@ -256,7 +256,7 @@
         :toggle="offcanvas.toggle"
         :visible="offcanvas.visible"
         :lazy="lazyLoad"
-        :persistent="persistent"
+        :unmount-lazy="unmountLazy"
         @show="doEvent($event, 'show')"
         @shown="doEvent($event, 'shown')"
         @show-prevented="doEvent($event, 'show-prevented')"
@@ -309,7 +309,7 @@
         :toggle="dropdown.toggle"
         :visible="dropdown.visible"
         :lazy="lazyLoad"
-        :persistent="persistent"
+        :unmount-lazy="unmountLazy"
         @show="doEvent($event, 'show')"
         @shown="doEvent($event, 'shown')"
         @show-prevented="doEvent($event, 'show-prevented')"
@@ -357,7 +357,7 @@
         :visible="toast.visible"
         :progress-props="{}"
         :lazy="lazyLoad"
-        :persistent="persistent"
+        :unmount-lazy="unmountLazy"
         @show="doEvent($event, 'show')"
         @shown="doEvent($event, 'shown')"
         @show-prevented="doEvent($event, 'show-prevented')"
@@ -401,7 +401,7 @@ const preventHide = ref(false)
 const noFade = ref(false)
 const slowAnimation = ref(false)
 const lazyLoad = ref(true)
-const persistent = ref(true)
+const unmountLazy = ref(true)
 
 const modalIf = ref(false)
 
@@ -411,7 +411,7 @@ const collapse = ref<State>({value: false, toggle: false, visible: false, ref: n
 const popover = ref<State>({value: false, toggle: false, visible: false, ref: null})
 const offcanvas = ref<State>({value: false, toggle: false, visible: false, ref: null})
 const dropdown = ref<State>({value: false, toggle: false, visible: false, ref: null})
-const toast = ref<State>({value: 0, toggle: false, visible: false, ref: null})
+const toast = ref<State>({value: false, toggle: false, visible: false, ref: null})
 
 const messages = ref<Record<string, string[]>>({})
 
