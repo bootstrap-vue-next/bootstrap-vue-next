@@ -23,7 +23,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20.x.x
+          node-version: 22.x.x
 
       - name: Install PNPM
         uses: pnpm/action-setup@v4
@@ -61,7 +61,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20.x.x
+          node-version: 22.x.x
 
       - name: Install PNPM
         uses: pnpm/action-setup@v4
@@ -97,7 +97,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20.x.x
+          node-version: 22.x.x
 
       - name: Install PNPM
         uses: pnpm/action-setup@v4

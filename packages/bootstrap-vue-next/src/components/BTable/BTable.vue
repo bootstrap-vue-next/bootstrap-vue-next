@@ -4,7 +4,7 @@
     v-bind="props"
     :aria-busy="busyModel"
     :items="computedDisplayItems"
-    :fields="(computedFields as TableFieldRaw<Items>[])"
+    :fields="computedFields as TableFieldRaw<Items>[]"
     :table-class="tableClasses"
     :tbody-tr-class="getRowClasses"
     :field-column-class="getFieldColumnClasses"
@@ -37,10 +37,50 @@
     "
   >
     <!-- eslint-enable prettier/prettier -->
-    <template v-for="(_, name) in $slots" #[name]="slotData">
-      <!-- eslint-disable-next-line prettier/prettier -->
-      <slot :name="(name as any)" v-bind="slotData" />
+    <template v-if="slots['thead-top']" #thead-top="scope">
+      <slot
+        name="thead-top"
+        v-bind="scope"
+        :clear-selected="exposedSelectableUtilities.clearSelected"
+        :select-all-rows="exposedSelectableUtilities.selectAllRows"
+        :fields="computedFields"
+      />
     </template>
+    <template v-if="slots['thead-sub']" #thead-sub="scope">
+      <slot name="thead-sub" v-bind="scope" :fields="computedFields" />
+    </template>
+    <template v-if="slots['top-row']" #top-row="scope">
+      <slot name="top-row" v-bind="scope" :fields="computedFields" />
+    </template>
+    <template v-if="slots['row-details']" #row-details="scope">
+      <slot
+        name="row-details"
+        v-bind="scope"
+        :fields="computedFields"
+        :select-row="(index = scope.index) => exposedSelectableUtilities.selectRow(index)"
+        :unselect-row="(index = scope.index) => exposedSelectableUtilities.unselectRow(index)"
+        :row-selected="exposedSelectableUtilities.isRowSelected(scope.index)"
+      />
+    </template>
+    <template v-if="slots['bottom-row']" #bottom-row="scope">
+      <slot name="bottom-row" v-bind="scope" :fields="computedFields" />
+    </template>
+    <template v-if="slots['custom-foot']" #custom-foot="scope">
+      <slot name="custom-foot" v-bind="scope" :fields="computedFields" />
+    </template>
+    <template v-if="slots['table-caption']" #table-caption>
+      <slot name="table-caption" />
+    </template>
+    <template v-for="name in dynamicCellSlots" #[name]="scope">
+      <slot
+        :name
+        v-bind="scope"
+        :select-row="(index = scope.index) => exposedSelectableUtilities.selectRow(index)"
+        :unselect-row="(index = scope.index) => exposedSelectableUtilities.unselectRow(index)"
+        :row-selected="exposedSelectableUtilities.isRowSelected(scope.index)"
+      />
+    </template>
+
     <template
       v-for="field in computedFields"
       :key="field.key"
@@ -53,6 +93,8 @@
             : 'head()'
         "
         v-bind="scope"
+        :select-all-rows="exposedSelectableUtilities.selectAllRows"
+        :clear-selected="exposedSelectableUtilities.clearSelected"
       >
         {{ getTableFieldHeadLabel(field) }}
       </slot>
@@ -267,7 +309,12 @@ const props = useDefaults(_props, 'BTable')
 
 const emit = defineEmits<{
   'filtered': [value: Items[]]
-  'head-clicked': [key: string, field: TableField<Items>, event: MouseEvent, isFooter: boolean]
+  'head-clicked': [
+    key: string,
+    field: (typeof computedFields.value)[0],
+    event: MouseEvent,
+    isFooter: boolean,
+  ]
   'row-clicked': TableRowEvent<Items>
   'row-dblclicked': TableRowEvent<Items>
   'row-contextmenu': TableRowEvent<Items>
@@ -280,96 +327,68 @@ const emit = defineEmits<{
   'change': [value: Items[]]
 }>()
 
-defineSlots<{
+const slots = defineSlots<{
   // BTableLite
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'thead-top'?: (props: Record<string, never>) => any
-  'head()': (props: {
-    label: string | undefined
-    column: LiteralUnion<keyof Items>
-    field: TableField & {
-      _noHeader?: true
-    }
-    isFoot: false
+  'thead-top'?: (props: {
+    columns: number
+    fields: typeof computedFields.value
+    selectAllRows: () => void
+    clearSelected: () => void
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any
   [key: `head(${string})`]: (props: {
     label: string | undefined
     column: LiteralUnion<keyof Items>
-    field: TableField & {
-      _noHeader?: true
-    }
+    field: (typeof computedFields.value)[0]
     isFoot: false
+    selectAllRows: () => void
+    clearSelected: () => void
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any
   'thead-sub'?: (
     props: {
-      items: typeof computedFields.value
-    } & TableField & {
-        _noHeader?: true
-      }
+      items: readonly Items[]
+      fields: typeof computedFields.value
+      field: (typeof computedFields.value)[0]
+    }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ) => any
-  'custom-body'?: (props: {
-    fields: typeof computedFields.value
-    items: readonly Items[]
-    columns: number
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'top-row'?: (props: Record<string, never>) => any
-  'cell()': (props: {
-    value: unknown
-    unformatted: unknown
-    index: number
-    item: Items
-    field: TableField & {
-      _noHeader?: true
-    }
-    items: readonly Items[]
-    toggleDetails: () => void
-    detailsShowing: boolean
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
+  'top-row'?: (props: {columns: number; fields: typeof computedFields.value}) => any
   [key: `cell(${string})`]: (props: {
     value: unknown
     unformatted: unknown
     index: number
     item: Items
-    field: TableField & {
-      _noHeader?: true
-    }
+    field: (typeof computedFields.value)[0]
     items: readonly Items[]
     toggleDetails: () => void
     detailsShowing: boolean
+    rowSelected: boolean
+    selectRow: (index?: number) => void
+    unselectRow: (index?: number) => void
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any
   'row-details'?: (props: {
     item: Items
     toggleDetails: () => void
-    fields: TableFieldRaw<Items>[]
+    fields: typeof computedFields.value
     index: number
+    rowSelected: boolean
+    selectRow: (index?: number) => void
+    unselectRow: (index?: number) => void
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'bottom-row'?: (props: Record<string, never>) => any
-  'foot()': (props: {
-    label: string | undefined
-    column: LiteralUnion<keyof Items>
-    field: TableField & {
-      _noHeader?: true
-    }
-    isFoot: true
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
+  'bottom-row'?: (props: {columns: number; fields: typeof computedFields.value}) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: `foot(${string})`]: (props: {
     label: string | undefined
     column: LiteralUnion<keyof Items>
-    field: TableField & {
-      _noHeader?: true
-    }
+    field: (typeof computedFields.value)[0]
     isFoot: true
+    selectAllRows: () => void
+    clearSelected: () => void
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any
   'custom-foot'?: (props: {
@@ -383,57 +402,24 @@ defineSlots<{
 
   // end btable slots
 
-  'sortAsc()': (props: {
-    label: string | undefined
-    column: LiteralUnion<keyof Items>
-    field: TableField & {
-      _noHeader?: true
-    }
-    isFoot: false
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
   [key: `sortAsc(${string})`]: (props: {
     label: string | undefined
     column: LiteralUnion<keyof Items>
-    field: TableField & {
-      _noHeader?: true
-    }
-    isFoot: false
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  'sortDesc()': (props: {
-    label: string | undefined
-    column: LiteralUnion<keyof Items>
-    field: TableField & {
-      _noHeader?: true
-    }
+    field: (typeof computedFields.value)[0]
     isFoot: false
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any
   [key: `sortDesc(${string})`]: (props: {
     label: string | undefined
     column: LiteralUnion<keyof Items>
-    field: TableField & {
-      _noHeader?: true
-    }
-    isFoot: false
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  'sortDefault()': (props: {
-    label: string | undefined
-    column: LiteralUnion<keyof Items>
-    field: TableField & {
-      _noHeader?: true
-    }
+    field: (typeof computedFields.value)[0]
     isFoot: false
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any
   [key: `sortDefault(${string})`]: (props: {
     label: string | undefined
     column: LiteralUnion<keyof Items>
-    field: TableField & {
-      _noHeader?: true
-    }
+    field: (typeof computedFields.value)[0]
     isFoot: false
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any
@@ -444,6 +430,10 @@ defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'empty'?: (props: typeof emptySlotScope.value) => any
 }>()
+
+const dynamicCellSlots = computed(
+  () => Object.keys(slots).filter((key) => key.startsWith('cell(')) as 'cell()'[]
+)
 
 const sortByModel = defineModel<BTableProps<Items>['sortBy']>('sortBy', {
   default: undefined,
@@ -549,7 +539,7 @@ const isSortable = computed(
 
 const computedFields = computed<TableField<Items>[]>(() =>
   props.fields.map((el) => {
-    if (!isTableField(el)) {
+    if (!isTableField<Items>(el)) {
       const label = startCase(el as string)
       return {
         key: el as string,
@@ -614,7 +604,7 @@ const getRowClasses = (item: Items | null, type: TableRowType): TableStrictClass
     : null,
 ]
 
-const getFormatter = (value: TableField): TableFieldFormatter<unknown> | undefined =>
+const getFormatter = (value: TableField<Items>): TableFieldFormatter<Items> | undefined =>
   typeof value.sortByFormatted === 'function' ? value.sortByFormatted : value.formatter
 const computedItems = computed<Items[]>(() => {
   const sortItems = (items: Items[]) => {
@@ -631,12 +621,12 @@ const computedItems = computed<Items[]>(() => {
           if (!isTableItem(ob)) return String(ob)
 
           const sortField = computedFields.value.find((el) => {
-            if (isTableField(el)) return el.key === sortOption.key
+            if (isTableField<Items>(el)) return el.key === sortOption.key
 
             return false
           })
           const val = get(ob, sortOption.key as keyof TableItem)
-          if (isTableField(sortField) && !!sortField.sortByFormatted) {
+          if (isTableField<Items>(sortField) && !!sortField.sortByFormatted) {
             const formatter = getFormatter(sortField)
             if (formatter) {
               return String(formatItem(ob, String(sortField.key), formatter))
@@ -674,11 +664,11 @@ const computedItems = computed<Items[]>(() => {
               return false
             const realVal = (): string => {
               const filterField = computedFields.value.find((el) => {
-                if (isTableField(el)) return el.key === key
+                if (isTableField<Items>(el)) return el.key === key
 
                 return false
               })
-              if (isTableField(filterField) && !!filterField.filterByFormatted) {
+              if (isTableField<Items>(filterField) && !!filterField.filterByFormatted) {
                 const formatter = getFormatter(filterField)
                 if (formatter) {
                   return String(formatter(val, String(filterField.key), item))
@@ -964,13 +954,11 @@ watch(
 
 onMounted(callItemsProvider)
 
-defineExpose({
-  // The row selection methods are really for compat. Users should probably use the v-model though
+const exposedSelectableUtilities = {
   clearSelected: () => {
     if (!props.selectable) return
     selectedItemsSetUtilities.clear()
   },
-  refresh: callItemsProvider,
   selectAllRows: () => {
     if (!props.selectable) return
     selectedItemsToSet.value = new Set([...computedItems.value])
@@ -992,5 +980,11 @@ defineExpose({
     const item = computedItems.value[index]
     return selectedItemsSetUtilities.has(item)
   },
+} as const
+
+defineExpose({
+  // The row selection methods are really for compat. Users should probably use the v-model though
+  ...exposedSelectableUtilities,
+  refresh: callItemsProvider,
 })
 </script>
