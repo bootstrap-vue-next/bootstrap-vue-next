@@ -2,7 +2,6 @@
   <Transition v-bind="fadeTransitionProps" :appear="!!modelValue">
     <div
       v-show="isToastVisible"
-      v-if="contentShowing"
       :id="props.id"
       ref="element"
       class="toast"
@@ -12,10 +11,9 @@
       :aria-live="!isToastVisible ? undefined : props.isStatus ? 'polite' : 'assertive'"
       :aria-atomic="!isToastVisible ? undefined : true"
     >
-      ssss
       <component
         :is="props.headerTag"
-        v-if="slots.title || props.title"
+        v-if="contentShowing && (slots.title || props.title)"
         class="toast-header"
         :class="props.headerClass"
       >
@@ -26,7 +24,7 @@
         </slot>
         <BCloseButton v-if="!props.noCloseButton" @click="hide('close')" />
       </component>
-      <template v-if="slots.default || props.body">
+      <template v-if="contentShowing && (slots.default || props.body)">
         <component
           :is="computedTag"
           class="toast-body"
@@ -86,7 +84,7 @@ const _props = withDefaults(defineProps<Omit<BToastProps, 'modelValue'>>(), {
   noHoverPause: false,
   noResumeOnHoverLeave: false,
   progressProps: undefined,
-  persistent: false,
+  unmountLazy: false,
   showOnPause: true,
   solid: false,
   textVariant: null,

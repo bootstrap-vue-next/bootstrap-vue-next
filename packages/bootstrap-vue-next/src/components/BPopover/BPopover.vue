@@ -1,14 +1,14 @@
 <template>
   <span :id="computedId + '_placeholder'" ref="placeholder" />
   <slot name="target" :show="show" :hide="hide" :toggle="toggle" :visible="showRef" />
+  <p>c {{ contentShowing }}</p>
   <ConditionalTeleport
     :to="props.teleportTo"
     :disabled="!props.teleportTo || props.teleportDisabled"
   >
     <Transition v-bind="fadeTransitionProps" :appear="!!modelValue">
       <div
-        v-if="contentShowing"
-        v-show="isVisible && !hidden"
+        v-show="showRef && !hidden"
         :id="computedId"
         v-bind="$attrs"
         ref="element"
@@ -23,7 +23,7 @@
           :style="arrowStyle"
           data-popper-arrow
         />
-        <div class="overflow-auto" :style="sizeStyles">
+        <div v-if="contentShowing" class="overflow-auto" :style="sizeStyles">
           <template v-if="props.title || $slots.title">
             <div
               class="position-sticky top-0"
@@ -114,7 +114,7 @@ const _props = withDefaults(defineProps<Omit<BPopoverProps, 'modelValue'>>(), {
   noSize: false,
   noninteractive: false,
   offset: null,
-  persistent: false,
+  unmountLazy: false,
   placement: 'top',
   realtime: false,
   reference: null,

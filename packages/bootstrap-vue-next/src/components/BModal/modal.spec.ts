@@ -100,15 +100,6 @@ describe('modal', () => {
     expect($div.classes()).not.toContain('fade')
   })
 
-  it('div has class show when prop show', () => {
-    const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}},
-      props: {show: false},
-    })
-    const $div = wrapper.get('div')
-    expect($div.classes()).not.toContain('show')
-  })
-
   it('div has attrs from attrs', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
@@ -219,7 +210,6 @@ describe('modal', () => {
   it('second div has another div by default', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
-      props: {modelValue: true},
     })
     const $div = wrapper.get('div')
     const $div2 = $div.get('div')
@@ -230,7 +220,6 @@ describe('modal', () => {
   it('third nested div has static class modal-content', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
-      props: {modelValue: true},
     })
     const $div = wrapper.get('div')
     const $div2 = $div.get('div')
@@ -241,7 +230,7 @@ describe('modal', () => {
   it('third nested div has class from prop contentClass', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
-      props: {contentClass: ['foo'], modelValue: true},
+      props: {contentClass: ['foo']},
     })
     const $div = wrapper.get('div')
     const $div2 = $div.get('div')
@@ -252,7 +241,7 @@ describe('modal', () => {
   it('second div has nested div when not prop lazy', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
-      props: {lazy: false, modelValue: true},
+      props: {lazy: false},
     })
     const $div = wrapper.get('div')
     const $div2 = $div.get('div')
@@ -263,7 +252,6 @@ describe('modal', () => {
   it('third nested div has another div', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
-      props: {modelValue: true},
     })
     const $div = wrapper.get('div')
     const $div2 = $div.get('div')
@@ -274,7 +262,7 @@ describe('modal', () => {
   it('nested div BCloseButton has class when prop headerCloseClass', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
-      props: {headerCloseClass: 'foobar', modelValue: true},
+      props: {headerCloseClass: 'foobar'},
     })
     const $div = wrapper.get('div')
     const $bclosebutton = $div.getComponent(BCloseButton)
@@ -284,7 +272,7 @@ describe('modal', () => {
   it('nested div BCloseButton has no variant class when headerCloseVariant', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
-      props: {headerCloseVariant: 'warning', modelValue: true},
+      props: {headerCloseVariant: 'warning'},
     })
     const $div = wrapper.get('div')
     const $bclosebutton = $div.getComponent(BCloseButton)
@@ -294,7 +282,6 @@ describe('modal', () => {
   it('nested div BCloseButton has aria-label to be Close by default', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
-      props: {modelValue: true},
     })
     const $div = wrapper.get('div')
     const $bclosebutton = $div.getComponent(BCloseButton)
@@ -304,7 +291,7 @@ describe('modal', () => {
   it('nested div BCloseButton has aria-label to be prop headerCloseLabel', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
-      props: {headerCloseLabel: 'foobar', modelValue: true},
+      props: {headerCloseLabel: 'foobar'},
     })
     const $div = wrapper.get('div')
     const $bclosebutton = $div.getComponent(BCloseButton)
@@ -314,7 +301,7 @@ describe('modal', () => {
   it('nested div BButton has class when prop headerCloseClass', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
-      props: {headerCloseClass: 'foobar', modelValue: true},
+      props: {headerCloseClass: 'foobar'},
       slots: {'header-close': 'foobar'},
     })
     const $div = wrapper.get('div')
@@ -325,7 +312,7 @@ describe('modal', () => {
   it('nested div BButton has variant class when headerCloseVariant', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
-      props: {headerCloseVariant: 'warning', modelValue: true},
+      props: {headerCloseVariant: 'warning'},
       slots: {'header-close': 'foobar'},
     })
     const $div = wrapper.get('div')
@@ -522,7 +509,6 @@ describe('modal', () => {
       global: {stubs: {teleport: true}},
       props: {
         bodyClass: 'foobar',
-        modelValue: true,
       },
     })
 
@@ -543,7 +529,6 @@ describe('modal', () => {
         bodyAttrs: {
           role: 'foo',
         },
-        modelValue: true,
       },
     })
 

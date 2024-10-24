@@ -37,9 +37,7 @@ describe('accordion-item', () => {
   })
 
   it('b-collapse child div contains static class accordion-body', () => {
-    const wrapper = mount(BAccordionItem, {
-      props: {modelValue: true},
-    })
+    const wrapper = mount(BAccordionItem)
     const $bcollapse = wrapper.findComponent(BCollapse)
     const [, $div] = $bcollapse.findAll('div')
     expect($div.classes()).toContain('accordion-body')
@@ -48,7 +46,6 @@ describe('accordion-item', () => {
   it('b-collapse child div contains default slot', () => {
     const wrapper = mount(BAccordionItem, {
       slots: {default: 'foobar'},
-      props: {modelValue: true},
     })
     const $bcollapse = wrapper.findComponent(BCollapse)
     const [$div] = $bcollapse.findAll('div')

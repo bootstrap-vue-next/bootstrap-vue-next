@@ -56,7 +56,7 @@ const _props = withDefaults(defineProps<Omit<BCollapseProps, 'modelValue'>>(), {
   isNav: false,
   lazy: false,
   noAnimation: false,
-  persistent: false,
+  unmountLazy: false,
   tag: 'div',
   toggle: false,
   visible: false,

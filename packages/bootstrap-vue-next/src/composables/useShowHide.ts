@@ -293,9 +293,9 @@ export const useShowHide = (
 
   const contentShowing = computed(
     () =>
-      showRef.value === true ||
-      (props.lazy === false && props.persistent === true) ||
-      (props.lazy === true && lazyLoadCompleted.value === true && props.persistent === true)
+      props.lazy === false ||
+      (props.lazy === true && props.unmountLazy === true && showRef.value === true) ||
+      (props.lazy === true && lazyLoadCompleted.value === true && props.unmountLazy === false)
   )
   const transitionFunctions = {
     ...options.transitionProps,

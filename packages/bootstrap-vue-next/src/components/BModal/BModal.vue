@@ -186,7 +186,7 @@ const _props = withDefaults(defineProps<Omit<BModalProps, 'modelValue'>>(), {
   okOnly: false,
   okTitle: 'OK',
   okVariant: 'primary',
-  persistent: false,
+  unmountLazy: false,
   scrollable: false,
   size: 'md',
   teleportDisabled: false,

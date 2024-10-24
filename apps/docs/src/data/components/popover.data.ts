@@ -84,7 +84,7 @@ export default {
             type: 'Numberish | null',
             default: null,
           },
-          persistent: {
+          unmountLazy: {
             type: 'boolean',
             default: false,
           },

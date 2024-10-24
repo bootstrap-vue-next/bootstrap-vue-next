@@ -46,7 +46,6 @@
     >
       <Transition v-bind="fadeTransitionProps" :appear="!!modelValue">
         <ul
-          v-if="contentShowing"
           v-show="showRef"
           ref="floating"
           :style="[floatingStyles, sizeStyles]"
@@ -56,7 +55,7 @@
           :role="props.role"
           @click="onClickInside"
         >
-          <slot :hide="hide" :show="show" />
+          <slot v-if="contentShowing" :hide="hide" :show="show" />
         </ul>
       </Transition>
     </ConditionalTeleport>
@@ -118,7 +117,7 @@ const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   noShift: false,
   noSize: false,
   offset: 0,
-  persistent: false,
+  unmountLazy: false,
   role: 'menu',
   size: 'md',
   noWrapper: false,
