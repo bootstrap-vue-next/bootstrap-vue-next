@@ -9,7 +9,7 @@ import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
 import {createBootstrap} from 'bootstrap-vue-next'
 
 export default {
-  ...DefaultTheme,
+  extends: DefaultTheme,
   Layout,
   enhanceApp(ctx) {
     const githubUrl = 'https://github.com/bootstrap-vue-next/bootstrap-vue-next'
