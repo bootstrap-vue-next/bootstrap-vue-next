@@ -1,7 +1,6 @@
 <template>
   <span :id="computedId + '_placeholder'" ref="placeholder" />
   <slot name="target" :show="show" :hide="hide" :toggle="toggle" :visible="showRef" />
-  <p>c {{ contentShowing }}</p>
   <ConditionalTeleport
     :to="props.teleportTo"
     :disabled="!props.teleportTo || props.teleportDisabled"
@@ -86,6 +85,7 @@ import {
   computed,
   type CSSProperties,
   type EmitFn,
+  nextTick,
   onBeforeUnmount,
   onMounted,
   ref,
@@ -122,6 +122,7 @@ const _props = withDefaults(defineProps<Omit<BPopoverProps, 'modelValue'>>(), {
   html: false,
   id: undefined,
   inline: false,
+  lazy: false,
   manual: false,
   noAutoClose: false,
   noFade: false,
@@ -138,7 +139,7 @@ const _props = withDefaults(defineProps<Omit<BPopoverProps, 'modelValue'>>(), {
   strategy: 'absolute',
   target: null,
   title: undefined,
-  toggle: false,
+  show: false,
   tooltip: false,
   variant: null,
   visible: false,
@@ -312,7 +313,13 @@ const {
   fadeTransitionProps,
   contentShowing,
   isVisible,
-} = useShowHide(modelValue, props, emit as EmitFn, element, computedId)
+} = useShowHide(modelValue, props, emit as EmitFn, element, computedId, {
+  showFn: () => {
+    if (hidden.value) {
+      update()
+    }
+  },
+})
 
 const computedClasses = computed(() => {
   const type = props.tooltip ? 'tooltip' : 'popover'
@@ -461,7 +468,12 @@ watch([() => props.click, () => props.target, () => props.reference], () => {
   // update()
 })
 
-onMounted(bind)
+onMounted(() => {
+  bind()
+  nextTick(() => {
+    update()
+  })
+})
 
 onBeforeUnmount(unbind)
 </script>

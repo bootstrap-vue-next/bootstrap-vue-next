@@ -25,6 +25,7 @@ const _props = withDefaults(defineProps<Omit<BTooltipProps, 'modelValue'>>(), {
   id: undefined,
   inline: undefined,
   interactive: undefined,
+  lazy: undefined,
   manual: undefined,
   noAutoClose: undefined,
   noFade: undefined,
@@ -36,10 +37,13 @@ const _props = withDefaults(defineProps<Omit<BTooltipProps, 'modelValue'>>(), {
   placement: undefined,
   realtime: undefined,
   reference: undefined,
+  show: undefined,
   strategy: undefined,
   target: undefined,
+  unmountLazy: undefined,
   title: undefined,
   variant: undefined,
+  visible: undefined,
 })
 
 const props = useDefaults(_props, 'BTooltip')

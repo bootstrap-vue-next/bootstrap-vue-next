@@ -130,7 +130,7 @@ const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   splitVariant: undefined,
   strategy: 'absolute',
   text: undefined,
-  toggle: false,
+  show: false,
   toggleClass: undefined,
   toggleText: 'Toggle dropdown',
   transProps: undefined,

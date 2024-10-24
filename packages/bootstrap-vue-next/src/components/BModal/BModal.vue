@@ -195,7 +195,7 @@ const _props = withDefaults(defineProps<Omit<BModalProps, 'modelValue'>>(), {
   titleClass: undefined,
   titleVisuallyHidden: false,
   titleTag: 'h5',
-  toggle: false,
+  show: false,
   transProps: undefined,
   visible: false,
 })

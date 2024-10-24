@@ -56,7 +56,7 @@ export const useShowHide = (
   modelValue: Ref<boolean | number>,
   props: {
     visible?: boolean
-    toggle?: boolean
+    show?: boolean
     noAnimation?: boolean
     noFade?: boolean
     noCloseOnBackdrop?: boolean
@@ -76,9 +76,13 @@ export const useShowHide = (
   options: {
     transitionProps?: TransitionProps
     addShowClass?: boolean
+    showFn?: () => void
+    hideFn?: () => void
   } = {
     transitionProps: {},
     addShowClass: true,
+    showFn: () => {},
+    hideFn: () => {},
   }
 ) => {
   let noAction = false
@@ -110,7 +114,7 @@ export const useShowHide = (
           localNoAnimation.value = false
         }, 50)
       })
-    } else if (props.toggle) {
+    } else if (props.show) {
       show()
     }
   })
@@ -131,7 +135,7 @@ export const useShowHide = (
     }
   )
   watch(
-    () => props.toggle,
+    () => props.show,
     (newval) => {
       newval ? show() : hide()
     }
@@ -174,6 +178,7 @@ export const useShowHide = (
     showTimeout = setTimeout(
       () => {
         showRef.value = true
+        options.showFn?.()
         if (!modelValue.value) {
           noAction = true
           nextTick(() => {
@@ -221,6 +226,7 @@ export const useShowHide = (
     setTimeout(
       () => {
         showRef.value = false
+        options.hideFn?.()
         if (modelValue.value) {
           noAction = true
           modelValue.value = isCountdown ? 0 : false
