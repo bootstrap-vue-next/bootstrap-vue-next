@@ -37,7 +37,7 @@
     "
   >
     <!-- eslint-enable prettier/prettier -->
-    <template #thead-top="scope">
+    <template v-if="slots['thead-top']" #thead-top="scope">
       <slot
         name="thead-top"
         v-bind="scope"
@@ -46,13 +46,13 @@
         :fields="computedFields"
       />
     </template>
-    <template #thead-sub="scope">
+    <template v-if="slots['thead-sub']" #thead-sub="scope">
       <slot name="thead-sub" v-bind="scope" :fields="computedFields" />
     </template>
-    <template #top-row="scope">
+    <template v-if="slots['top-row']" #top-row="scope">
       <slot name="top-row" v-bind="scope" :fields="computedFields" />
     </template>
-    <template #row-details="scope">
+    <template v-if="slots['row-details']" #row-details="scope">
       <slot
         name="row-details"
         v-bind="scope"
@@ -62,13 +62,13 @@
         :row-selected="exposedSelectableUtilities.isRowSelected(scope.index)"
       />
     </template>
-    <template #bottom-row="scope">
+    <template v-if="slots['bottom-row']" #bottom-row="scope">
       <slot name="bottom-row" v-bind="scope" :fields="computedFields" />
     </template>
-    <template #custom-foot="scope">
+    <template v-if="slots['custom-foot']" #custom-foot="scope">
       <slot name="custom-foot" v-bind="scope" :fields="computedFields" />
     </template>
-    <template #table-caption>
+    <template v-if="slots['table-caption']" #table-caption>
       <slot name="table-caption" />
     </template>
     <template v-for="name in dynamicCellSlots" #[name]="scope">
