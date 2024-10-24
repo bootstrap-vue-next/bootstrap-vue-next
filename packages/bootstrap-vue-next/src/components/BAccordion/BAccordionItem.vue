@@ -79,7 +79,7 @@ const _props = withDefaults(defineProps<Omit<BAccordionItemProps, 'modelValue'>>
   unmountLazy: false,
   tag: undefined,
   title: undefined,
-  toggle: undefined,
+  show: undefined,
   visible: false,
   wrapperAttrs: undefined,
 })

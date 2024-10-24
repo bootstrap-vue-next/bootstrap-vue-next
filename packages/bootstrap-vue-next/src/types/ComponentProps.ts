@@ -1334,7 +1334,7 @@ interface ShowHideProps {
   noFade?: boolean
   lazy?: boolean
   unmountLazy?: boolean
-  toggle?: boolean
+  show?: boolean
   transProps?: Readonly<TransitionProps>
   visible?: boolean
 }

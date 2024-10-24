@@ -86,11 +86,13 @@ const _props = withDefaults(defineProps<Omit<BToastProps, 'modelValue'>>(), {
   progressProps: undefined,
   unmountLazy: false,
   showOnPause: true,
+  show: false,
   solid: false,
   textVariant: null,
   title: undefined,
   toastClass: undefined,
   transProps: undefined,
+  visible: false,
   // Link props
   // All others use defaults
   noRel: undefined,
@@ -233,6 +235,9 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
+.toast :deep(.progress .progress-bar) {
+  --bs-progress-bar-transition: none;
+}
 .toast:not(.show) {
   display: block;
   opacity: unset;

@@ -126,7 +126,7 @@ const _props = withDefaults(defineProps<Omit<BOffcanvasProps, 'modelValue'>>(), 
   teleportDisabled: false,
   teleportTo: 'body',
   title: undefined,
-  toggle: false,
+  show: false,
   width: undefined,
   visible: false,
 })
@@ -191,7 +191,6 @@ const focus = () => {
 }
 
 const onAfterEnter = () => {
-  //el.classList.add('show')
   requestAnimationFrame(() => {
     localShowRef.value = true
   })

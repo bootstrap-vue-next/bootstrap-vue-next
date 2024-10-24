@@ -21,7 +21,7 @@
       :is-nav="props.isNav"
       v-bind="$attrs"
     >
-      <slot v-if="contentShowing || isActive" v-bind="sharedSlots" />
+      <slot v-if="contentShowing || isVisible" v-bind="sharedSlots" />
     </component>
   </Transition>
   <slot name="footer" v-bind="sharedSlots" />
@@ -58,7 +58,7 @@ const _props = withDefaults(defineProps<Omit<BCollapseProps, 'modelValue'>>(), {
   noAnimation: false,
   unmountLazy: false,
   tag: 'div',
-  toggle: false,
+  show: false,
   visible: false,
 })
 
@@ -117,12 +117,10 @@ const computedClasses = computed(() => ({
   'collapse-horizontal': props.horizontal,
 }))
 
-const isActive = ref(false)
-
 let inCollapse = false
 const onEnter = (el: Element) => {
-  el.classList.add('show')
   inCollapse = true
+  isVisible.value = true
   requestAnimationFrame(() => {
     if (props.horizontal) {
       ;(el as HTMLElement).style.width = `${(el as HTMLElement).scrollWidth}px`
@@ -132,7 +130,7 @@ const onEnter = (el: Element) => {
   })
 }
 const onBeforeLeave = (el: Element) => {
-  isActive.value = true
+  isVisible.value = true
   if (inCollapse) {
     return
   }
@@ -157,7 +155,7 @@ const onAfterEnter = (el: Element) => {
   ;(el as HTMLElement).style.height = ``
   ;(el as HTMLElement).style.width = ``
   inCollapse = false
-  isActive.value = true
+  isVisible.value = true
   emit('shown', buildTriggerableEvent('shown'))
   markLazyLoadCompleted()
 }
@@ -165,9 +163,8 @@ const onAfterEnter = (el: Element) => {
 const onAfterLeave = (el: Element) => {
   ;(el as HTMLElement).style.height = ``
   ;(el as HTMLElement).style.width = ``
-  el.classList.remove('show')
   inCollapse = false
-  isActive.value = false
+  isVisible.value = false
   emit('hidden', buildTriggerableEvent('hidden'))
 }
 

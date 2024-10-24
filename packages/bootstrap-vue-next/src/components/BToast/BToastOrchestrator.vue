@@ -8,19 +8,18 @@
         class="toast-container position-fixed p-3"
       >
         <TransitionGroup name="b-list">
-          <component
-            :is="toast.component ?? BToast"
+          <span
             v-for="toast in tools.toasts?.value.filter((el) => el.props.pos === key)"
             :key="toast.props._self"
-            v-bind="toast.props"
-            :model-value="toast.props._modelValue"
-            :trans-props="{...toast.props.transProps, appear: true}"
-            @update:model-value="tools.leave?.(toast.props._self)"
-            @hide="tools.remove?.(toast.props._self)"
-          />
-          <!-- I think it's only coincidence that hide works, It's not tied to the lifecycle of a transition -->
-          <!-- I think actually removes the el before the transition ends, But it's just not noticeable as it's "fading" -->
-          <!-- It _should_ be @hidden -- as hidden is when the transition has ended. But transition in transition groups isn't "okay" -->
+          >
+            <component
+              :is="toast.component ?? BToast"
+              v-bind="toast.props"
+              :model-value="toast.props._modelValue"
+              @update:model-value="tools.leave?.(toast.props._self)"
+              @hidden="tools.remove?.(toast.props._self)"
+            />
+          </span>
         </TransitionGroup>
       </div>
     </div>
