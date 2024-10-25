@@ -6,6 +6,10 @@ export const useCountdownHover = (
   props: MaybeRefOrGetter<{
     noHoverPause?: boolean
     noResumeOnHoverLeave?: boolean
+    /**
+     * Countdown/hover rules don't apply to static model-values (boolean)
+     */
+    modelValueIgnoresHover: boolean
   }>,
   actions: {
     pause: () => void
@@ -24,6 +28,7 @@ export const useCountdownHover = (
   }
 
   watch(isHovering, (newValue) => {
+    if (toValue(props).modelValueIgnoresHover) return
     if (newValue) {
       onMouseEnter()
       return

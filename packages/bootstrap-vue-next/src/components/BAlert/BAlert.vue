@@ -95,6 +95,7 @@ useCountdownHover(
   computed(() => ({
     noHoverPause: props.noHoverPause,
     noResumeOnHoverLeave: props.noResumeOnHoverLeave,
+    modelValueIgnoresHover: typeof modelValue.value === 'boolean',
   })),
   {pause, resume}
 )
