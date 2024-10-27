@@ -162,6 +162,7 @@ const getBaseButtonProps = ({
       {
         'active': isActive,
         'disabled': dis,
+        'bv-d-sm-down-none': isSmHidden,
         'flex-fill': computedFill.value,
         'd-flex': computedFill.value && !dis,
       },
