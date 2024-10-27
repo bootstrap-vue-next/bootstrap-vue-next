@@ -143,6 +143,7 @@ const getBaseButtonProps = ({
   isActive,
   role,
   hidden,
+  isSmHidden,
 }: {
   page: number
   dis: boolean
@@ -155,6 +156,7 @@ const getBaseButtonProps = ({
   isActive?: boolean
   role?: string
   hidden?: boolean
+  isSmHidden?: boolean
 }) => ({
   li: {
     'class': [
@@ -211,7 +213,7 @@ const getButtonProps = ({
   label: string
 }) => getBaseButtonProps({page, classVal, dis, slotName, textValue, label, tabIndex: '-1'})
 
-const getPageButtonProps = (page: number) =>
+const getPageButtonProps = (page: number, isSmHidden?: boolean) =>
   getBaseButtonProps({
     page,
     dis: props.disabled,
@@ -221,6 +223,7 @@ const getPageButtonProps = (page: number) =>
     tabIndex: getTabIndex(page) ?? undefined,
     position: page,
     isActive: isActivePage(page),
+    isSmHidden,
   })
 
 const firstButtonProps = computed(() =>
@@ -270,7 +273,7 @@ const ellipsisProps = computed(() => ({
       'page-item',
       'disabled',
       'text-center',
-      'bv-d-xs-down-none',
+      'bv-d-sm-down-none',
       computedFill.value ? 'flex-fill' : '',
       props.ellipsisClass,
     ],
@@ -341,26 +344,49 @@ watch(pagination, (oldValue, newValue) => {
   }
 })
 
-const pages = computed(
-  () =>
-    elements.value.map((p) => {
-      switch (p) {
-        case FIRST_BUTTON:
-          return {id: p, ...firstButtonProps.value}
-        case PREV_BUTTON:
-          return {id: p, ...prevButtonProps.value}
-        case NEXT_BUTTON:
-          return {id: p, ...nextButtonProps.value}
-        case LAST_BUTTON:
-          return {id: p, ...lastButtonProps.value}
-        case FIRST_ELLIPSIS:
-        case LAST_ELLIPSIS:
-          return {id: p, ...ellipsisProps.value}
-        default:
-          return {id: p, ...getPageButtonProps(p)}
-      }
-    }) as PageButton[]
-)
+const hideFirstButton = computed(() => (props.hideGotoEndButtons && !props.firstNumber ? 1 : 0))
+const hideLastButton = computed(() => (props.hideGotoEndButtons && !props.lastNumber ? 1 : 0))
+const showFirstButton = computed(() => (hideFirstButton.value ? 0 : 1))
+const showLastButton = computed(() => (hideLastButton.value ? 0 : 1))
+const firstPage = computed(() => (props.firstNumber ? 1 : 0))
+const lastPage = computed(() => (props.lastNumber ? 1 : 0))
+const halfLimit = computed(() => Math.floor(limitNumber.value / 2))
+
+const pages = computed(() => {
+  const {value} = modelValueNumber
+
+  const els = elements.value.map((p) => {
+    switch (p) {
+      case FIRST_BUTTON:
+        return {id: p, ...firstButtonProps.value}
+      case PREV_BUTTON:
+        return {id: p, ...prevButtonProps.value}
+      case NEXT_BUTTON:
+        return {id: p, ...nextButtonProps.value}
+      case LAST_BUTTON:
+        return {id: p, ...lastButtonProps.value}
+      case FIRST_ELLIPSIS:
+      case LAST_ELLIPSIS:
+        return {id: p, ...ellipsisProps.value}
+      default:
+        return {id: p, ...getPageButtonProps(p)}
+    }
+  })
+
+  if (numberOfPages.value > 3) {
+    if (value > numberOfPages.value - halfLimit.value - lastPage.value) {
+      const idx = 2 + showFirstButton.value
+      els[idx] = {id: els[idx].id, ...getPageButtonProps(els[idx].id, true)}
+    }
+
+    if (value <= halfLimit.value + firstPage.value) {
+      const idx = els.length - (3 + showLastButton.value)
+      els[idx] = {id: els[idx].id, ...getPageButtonProps(els[idx].id, true)}
+    }
+  }
+
+  return els as PageButton[]
+})
 
 const elements = computed(() => {
   // The idea here is to create an array of all the buttons on the page control.
@@ -370,34 +396,28 @@ const elements = computed(() => {
   const pages = numberOfPages.value
   const {value} = modelValueNumber
   const limit = limitNumber.value
-  const firstPage = props.firstNumber ? 1 : 0
-  const lastPage = props.lastNumber ? 1 : 0
   const hideEllipsis = props.hideEllipsis || limit <= ELLIPSIS_THRESHOLD
-  const hideFirstButton = props.hideGotoEndButtons && !props.firstNumber ? 1 : 0
-  const hideLastButton = props.hideGotoEndButtons && !props.lastNumber ? 1 : 0
-  const showFirstButton = hideFirstButton ? 0 : 1
-  const showLastButton = hideLastButton ? 0 : 1
 
   // The first case is when all of the page buttons fit on the control, this is
   //  the simplest case and the only one that will create an array smaller than
   //  Limit + 4 - hideEndButtons * 2 (the [first, last,] prev, next buttons)
 
-  if (pages < limit + firstPage + lastPage) {
+  if (pages < limit + firstPage.value + lastPage.value) {
     return [
-      !firstPage && !hideFirstButton ? FIRST_BUTTON : null,
+      !firstPage.value && !hideFirstButton.value ? FIRST_BUTTON : null,
       PREV_BUTTON,
       ...Array.from({length: pages}, (_, index) => index + 1),
       NEXT_BUTTON,
-      !lastPage && !hideLastButton ? LAST_BUTTON : null,
+      !lastPage.value && !hideLastButton.value ? LAST_BUTTON : null,
     ].filter((x) => x !== null) as number[]
   }
 
   // All of the remaining cases result in an array that is exactly limit + 4 - hideEndButtons * 2 in length, so create
   //  the array upfront and set up the beginning and end buttons, then fill the rest for each case
 
-  const buttons = Array.from({length: limit + 4 - (hideFirstButton + hideLastButton)})
-  if (!hideFirstButton) {
-    if (!firstPage) {
+  const buttons = Array.from({length: limit + 4 - (hideFirstButton.value + hideLastButton.value)})
+  if (!hideFirstButton.value) {
+    if (!firstPage.value) {
       buttons[0] = FIRST_BUTTON
       buttons[1] = PREV_BUTTON
     } else {
@@ -408,8 +428,8 @@ const elements = computed(() => {
     buttons[0] = PREV_BUTTON
   }
 
-  if (!hideLastButton) {
-    if (!lastPage) {
+  if (!hideLastButton.value) {
+    if (!lastPage.value) {
       buttons[buttons.length - 1] = LAST_BUTTON
       buttons[buttons.length - 2] = NEXT_BUTTON
     } else {
@@ -423,28 +443,27 @@ const elements = computed(() => {
   // The next case is where the page buttons start at the begginning, with
   //  no ellipsis at the beginning, but one at the end
 
-  const halfLimit = Math.floor(limit / 2)
-  if (value <= halfLimit + firstPage) {
+  if (value <= halfLimit.value + firstPage.value) {
     for (let index = 1; index <= limit; index++) {
-      buttons[index + 1 - hideFirstButton] = index + firstPage
+      buttons[index + 1 - hideFirstButton.value] = index + firstPage.value
     }
 
     if (!hideEllipsis) {
-      buttons[buttons.length - (2 + showLastButton)] = LAST_ELLIPSIS
+      buttons[buttons.length - (2 + showLastButton.value)] = LAST_ELLIPSIS
     }
   }
 
   // And then we have the case where the page buttons go up to the end, with no
   //  ellipsis at the end, but one at the beginning
 
-  if (value > pages - halfLimit - lastPage) {
-    const start = pages - (limit - 1) - lastPage
+  if (value > pages - halfLimit.value - lastPage.value) {
+    const start = pages - (limit - 1) - lastPage.value
     for (let index = 0; index < limit; index++) {
-      buttons[index + 2 - hideFirstButton] = start + index
+      buttons[index + 2 - hideFirstButton.value] = start + index
     }
 
     if (!hideEllipsis) {
-      buttons[1 + showFirstButton] = FIRST_ELLIPSIS
+      buttons[1 + showFirstButton.value] = FIRST_ELLIPSIS
     }
   }
 
@@ -453,12 +472,12 @@ const elements = computed(() => {
     // Is there a more elegant way to ceck that we're in the final case?
     const start = value - Math.floor(limit / 2)
     for (let index = 0; index < limit; index++) {
-      buttons[index + 2 - hideFirstButton] = start + index
+      buttons[index + 2 - hideFirstButton.value] = start + index
     }
 
     if (!hideEllipsis) {
-      buttons[1 + showFirstButton] = FIRST_ELLIPSIS
-      buttons[buttons.length - (2 + showLastButton)] = LAST_ELLIPSIS
+      buttons[1 + showFirstButton.value] = FIRST_ELLIPSIS
+      buttons[buttons.length - (2 + showLastButton.value)] = LAST_ELLIPSIS
     }
   }
 
