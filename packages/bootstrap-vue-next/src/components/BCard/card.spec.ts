@@ -175,14 +175,6 @@ describe('card', () => {
     expect($header.exists()).toBe(true)
   })
 
-  it('has child BCardHeader when prop headerHtml', () => {
-    const wrapper = mount(BCard, {
-      props: {headerHtml: 'foobar'},
-    })
-    const $header = wrapper.findComponent(BCardHeader)
-    expect($header.exists()).toBe(true)
-  })
-
   it('child BCardHeader is given class of headerClass', () => {
     const wrapper = mount(BCard, {
       props: {header: 'foobar', headerClass: ['foobar']},
@@ -205,14 +197,6 @@ describe('card', () => {
     })
     const $header = wrapper.getComponent(BCardHeader)
     expect($header.props('borderVariant')).toBe('danger')
-  })
-
-  it('child BCardHeader has internal prop html as prop headerHtml', () => {
-    const wrapper = mount(BCard, {
-      props: {header: 'foobar', headerHtml: '<h1>foobar</h1>'},
-    })
-    const $header = wrapper.getComponent(BCardHeader)
-    expect($header.props('html')).toBe('<h1>foobar</h1>')
   })
 
   it('child BCardHeader has internal prop tag as prop headerTag', () => {
@@ -412,14 +396,6 @@ describe('card', () => {
     expect($footer.exists()).toBe(true)
   })
 
-  it('has child BCardFooter when prop footerHtml', () => {
-    const wrapper = mount(BCard, {
-      props: {footerHtml: '<h1>foobar</h1>'},
-    })
-    const $footer = wrapper.findComponent(BCardFooter)
-    expect($footer.exists()).toBe(true)
-  })
-
   it('child BCardFooter contains class prop footerClass', () => {
     const wrapper = mount(BCard, {
       props: {footer: 'foobar', footerClass: ['foobar']},
@@ -442,14 +418,6 @@ describe('card', () => {
     })
     const $footer = wrapper.getComponent(BCardFooter)
     expect($footer.props('borderVariant')).toBe('danger')
-  })
-
-  it('child BCardFooter has internal prop html as prop footerHtml', () => {
-    const wrapper = mount(BCard, {
-      props: {footerHtml: '<h1>foobarr</h1>'},
-    })
-    const $footer = wrapper.getComponent(BCardFooter)
-    expect($footer.props('html')).toBe('<h1>foobarr</h1>')
   })
 
   it('child BCardFooter has internal prop tag as prop footerTag', () => {

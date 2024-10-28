@@ -52,16 +52,6 @@ describe('card-head-foot', () => {
     expect($div.exists()).toBe(true)
   })
 
-  it('nested div renders html when prop html', () => {
-    const wrapper = mount(BCardHeadFoot, {
-      props: {html: '<span>foobar</span>'},
-    })
-    const $div = wrapper.get('div')
-    const $span = $div.find('span')
-    expect($span.exists()).toBe(true)
-    expect($span.text()).toBe('foobar')
-  })
-
   it('renders default slot', () => {
     const wrapper = mount(BCardHeadFoot, {
       slots: {default: 'foobar'},
@@ -82,13 +72,5 @@ describe('card-head-foot', () => {
       slots: {default: 'slots'},
     })
     expect(wrapper.text()).toBe('slots')
-  })
-
-  it('renders html over default slot', () => {
-    const wrapper = mount(BCardHeadFoot, {
-      slots: {default: 'slots'},
-      props: {html: '<span>foobar</span>'},
-    })
-    expect(wrapper.text()).toBe('foobar')
   })
 })
