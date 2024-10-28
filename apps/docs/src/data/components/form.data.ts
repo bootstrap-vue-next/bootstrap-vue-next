@@ -63,7 +63,7 @@ export default {
                   'Array of items to render in the component. Note that BFormDatalist only supports Options, not OptionsGroups',
               },
             }),
-            ['disabledField', 'htmlField', 'id', 'options', 'textField', 'valueField']
+            ['disabledField', 'id', 'options', 'textField', 'valueField']
           ),
         } satisfies Record<keyof BvnComponentProps['BFormDatalist'], PropertyReference>,
       },

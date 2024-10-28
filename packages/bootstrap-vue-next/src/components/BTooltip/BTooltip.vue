@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from 'vue'
+import {computed, useTemplateRef} from 'vue'
 import BPopover from '../BPopover/BPopover.vue'
 import type {BPopoverProps, BTooltipProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
@@ -27,7 +27,6 @@ const _props = withDefaults(defineProps<Omit<BTooltipProps, 'modelValue'>>(), {
   delay: undefined,
   floatingMiddleware: undefined,
   hide: undefined,
-  html: undefined,
   id: undefined,
   inline: undefined,
   interactive: undefined,
@@ -71,11 +70,17 @@ const computedProps = computed<BPopoverProps>(() => {
   return {noninteractive: noninteractive !== undefined ? noninteractive : !interactive, ...rest}
 })
 
-const popover = ref<null | InstanceType<typeof BPopover>>(null)
+const popover = useTemplateRef('popover')
 
 defineExpose({
-  hide: popover.value?.hide,
-  show: popover.value?.show,
-  toggle: popover.value?.toggle,
+  hide: () => {
+    popover.value?.hide()
+  },
+  show: () => {
+    popover.value?.show()
+  },
+  toggle: () => {
+    popover.value?.toggle()
+  },
 })
 </script>

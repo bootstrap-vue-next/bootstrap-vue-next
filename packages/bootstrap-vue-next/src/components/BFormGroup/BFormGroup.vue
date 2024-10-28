@@ -95,7 +95,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from 'vue'
+import {computed, useTemplateRef} from 'vue'
 import {useAriaInvalid} from '../../composables/useAriaInvalid'
 import {attemptFocus, isVisible} from '../../utils/dom'
 import BCol from '../BContainer/BCol.vue'
@@ -194,7 +194,7 @@ const getColProps = (props: any, prefix: string) =>
     return result
   }, {})
 
-const content = ref<HTMLElement | null>(null)
+const content = useTemplateRef('content')
 
 const contentColProps = computed(() => getColProps(props, 'content'))
 const labelAlignClasses = computed(() =>

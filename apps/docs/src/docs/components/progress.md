@@ -94,7 +94,9 @@ Need more control over the label? Provide your own label by using the default sl
     </BProgress>
     <h5 class="mt-3">Custom label via property (HTML support)</h5>
     <BProgress :max="50">
-      <BProgressBar :value="33.333333" :label-html="`<del>${33.333333}</del>`" />
+      <BProgressBar :value="33.333333">
+        <del>{{33.333333}}</del>
+      </BProgressBar>
     </BProgress>
   </BCard>
   <template #html>
@@ -117,7 +119,9 @@ Need more control over the label? Provide your own label by using the default sl
 
 <h5 class="mt-3">Custom label via property (HTML support)</h5>
 <BProgress :max="50">
-  <BProgressBar :value="33.333333" :label-html="`<del>${33.333333}</del>`" />
+  <BProgressBar :value="33.333333">
+    <del>{{33.333333}}</del>
+  </BProgressBar>
 </BProgress>
 ```
 

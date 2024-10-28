@@ -61,7 +61,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, watch, watchEffect} from 'vue'
+import {computed, useTemplateRef, watch, watchEffect} from 'vue'
 import {useBLinkHelper} from '../../composables/useBLinkHelper'
 import type {BToastProps} from '../../types/ComponentProps'
 import BTransition from '../BTransition.vue'
@@ -132,7 +132,7 @@ const emit = defineEmits<{
   'hide-prevented': []
 }>()
 
-const element = ref<HTMLElement | null>(null)
+const element = useTemplateRef('element')
 
 const modelValue = defineModel<Exclude<BToastProps['modelValue'], undefined>>({default: false})
 

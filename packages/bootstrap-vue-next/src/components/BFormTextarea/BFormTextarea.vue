@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import type {BFormTextareaProps} from '../../types/ComponentProps'
-import {computed, type CSSProperties} from 'vue'
+import {computed, type CSSProperties, useTemplateRef} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {normalizeInput} from '../../utils/normalizeInput'
 import {useFormInput} from '../../composables/useFormInput'
@@ -75,17 +75,10 @@ const [modelValue, modelModifiers] = defineModel<
   set: (v) => normalizeInput(v, modelModifiers),
 })
 
-const {
-  input,
-  computedId,
-  forceUpdateKey,
-  computedAriaInvalid,
-  onInput,
-  onChange,
-  onBlur,
-  focus,
-  blur,
-} = useFormInput(props, modelValue, modelModifiers)
+const input = useTemplateRef('input')
+
+const {computedId, forceUpdateKey, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
+  useFormInput(props, input, modelValue, modelModifiers)
 
 const stateClass = useStateClass(() => props.state)
 

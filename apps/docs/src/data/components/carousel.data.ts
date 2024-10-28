@@ -186,11 +186,6 @@ export default {
             default: undefined,
             description: 'Text content to place in the caption',
           },
-          captionHtml: {
-            type: 'string',
-            default: undefined,
-            description: 'HTML string content to place in the caption',
-          },
           captionTag: {
             type: 'string',
             default: 'h3',
@@ -252,11 +247,6 @@ export default {
             type: 'string',
             default: undefined,
             description: 'Text content to place in the text of the slide',
-          },
-          textHtml: {
-            type: 'string',
-            default: undefined,
-            description: 'HTML string content to place in the text of the slide',
           },
           textTag: {
             type: 'string',

@@ -11,7 +11,6 @@ import BCardHeadFoot from '../BCardHeadFoot.vue'
 
 const _props = withDefaults(defineProps<BCardHeadFootProps>(), {
   borderVariant: undefined,
-  html: undefined,
   tag: 'div',
   text: undefined,
   // ColorExtendables props

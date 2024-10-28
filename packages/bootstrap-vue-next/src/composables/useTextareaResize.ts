@@ -7,14 +7,14 @@ import {
   nextTick,
   onMounted,
   readonly,
-  type Ref,
   ref,
+  type ShallowRef,
   toRef,
 } from 'vue'
 import {isVisible} from '../utils/dom'
 
 export const useTextareaResize = (
-  input: Ref<HTMLInputElement | null>,
+  input: Readonly<ShallowRef<HTMLTextAreaElement | null>>,
   props: MaybeRefOrGetter<{
     rows: Numberish
     maxRows: Numberish | undefined

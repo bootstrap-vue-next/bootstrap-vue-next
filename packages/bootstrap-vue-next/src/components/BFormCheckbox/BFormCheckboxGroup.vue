@@ -10,18 +10,14 @@
   >
     <slot name="first" />
     <BFormCheckbox v-for="item in normalizeOptions" :key="item.self" v-bind="item.props">
-      <!-- eslint-disable-next-line vue/no-v-html -->
-      <span v-if="!!item.html" v-html="item.html" />
-      <template v-else>
-        {{ item.text }}
-      </template>
+      {{ item.text }}
     </BFormCheckbox>
     <slot />
   </div>
 </template>
 
 <script setup lang="ts">
-import {computed, provide, ref, toRef} from 'vue'
+import {computed, provide, toRef, useTemplateRef} from 'vue'
 import BFormCheckbox from './BFormCheckbox.vue'
 import {checkboxGroupKey} from '../../utils/keys'
 import {useFocus} from '@vueuse/core'
@@ -38,7 +34,6 @@ const _props = withDefaults(defineProps<Omit<BFormCheckboxGroupProps, 'modelValu
   disabled: false,
   disabledField: 'disabled',
   form: undefined,
-  htmlField: 'html',
   id: undefined,
   name: undefined,
   options: () => [],
@@ -69,7 +64,7 @@ const modelValue = defineModel<Exclude<BFormCheckboxGroupProps['modelValue'], un
 const computedId = useId(() => props.id, 'checkbox')
 const computedName = useId(() => props.name, 'checkbox')
 
-const element = ref<HTMLElement | null>(null)
+const element = useTemplateRef('element')
 
 const {focused} = useFocus(element, {
   initialValue: props.autofocus,
@@ -100,7 +95,6 @@ const normalizeOptions = computed(() =>
             disabled: props.disabled,
           },
           text: el.toString(),
-          html: undefined,
           self: Symbol(`checkboxGroupOptionItem${ind}`),
         }
       : {
@@ -110,7 +104,6 @@ const normalizeOptions = computed(() =>
             ...(el.props ? el.props : {}),
           },
           text: el[props.textField] as string | undefined,
-          html: el[props.htmlField] as string | undefined,
           self: Symbol(`checkboxGroupOptionItem${ind}`),
         }
   )

@@ -222,7 +222,6 @@ export interface BFormCheckboxGroupProps {
   disabled?: boolean
   disabledField?: string
   form?: string
-  htmlField?: string
   id?: string
   modelValue?: readonly CheckboxValue[]
   name?: string
@@ -241,7 +240,6 @@ export interface BFormCheckboxGroupProps {
 
 export interface BFormDatalistProps {
   disabledField?: string
-  htmlField?: string
   id?: string
   options?: readonly (unknown | Record<string, unknown>)[]
   textField?: string
@@ -309,7 +307,6 @@ export interface BFormRadioGroupProps {
   disabled?: boolean
   disabledField?: string
   form?: string
-  htmlField?: string
   id?: string
   modelValue?: RadioValue
   name?: string
@@ -331,7 +328,6 @@ export interface BFormSelectProps {
   disabled?: boolean
   disabledField?: string
   form?: string
-  htmlField?: string
   id?: string
   labelField?: string
   modelValue?: SelectValue
@@ -355,7 +351,6 @@ export interface BFormSelectOptionProps<T> {
 
 export interface BFormSelectOptionGroupProps {
   disabledField?: string
-  htmlField?: string
   label?: string
   options?: readonly (unknown | Record<string, unknown>)[]
   textField?: string
@@ -446,10 +441,8 @@ export interface BFormTextareaProps extends CommonInputProps {
 
 export interface BInputGroupProps {
   append?: string
-  appendHtml?: string
   id?: string
   prepend?: string
-  prependHtml?: string
   size?: Size
   tag?: string
 }
@@ -672,7 +665,7 @@ export interface BPlaceholderWrapperProps {
   loading?: boolean
 }
 
-export interface BProgressProps extends Omit<BProgressBarProps, 'label' | 'labelHtml'> {
+export interface BProgressProps extends Omit<BProgressBarProps, 'label'> {
   height?: string
 }
 
@@ -879,7 +872,6 @@ export interface BCardProps extends ColorExtendables {
   footerBgVariant?: BgColorVariant | null
   footerBorderVariant?: BorderColorVariant | null
   footerClass?: ClassValue
-  footerHtml?: string
   footerTag?: string
   footerTextVariant?: TextColorVariant | null
   footerVariant?: ColorVariant | null
@@ -887,7 +879,6 @@ export interface BCardProps extends ColorExtendables {
   headerBgVariant?: BgColorVariant | null
   headerBorderVariant?: BorderColorVariant | null
   headerClass?: ClassValue
-  headerHtml?: string
   headerTag?: string
   headerTextVariant?: TextColorVariant | null
   headerVariant?: ColorVariant | null
@@ -969,7 +960,6 @@ export interface BCarouselProps {
 export interface BCarouselSlideProps {
   background?: string
   caption?: string
-  captionHtml?: string
   captionTag?: string
   contentTag?: string
   contentVisibleUp?: string
@@ -983,7 +973,6 @@ export interface BCarouselSlideProps {
   imgWidth?: Numberish
   interval?: number | 'requestAnimationFrame'
   text?: string
-  textHtml?: string
   textTag?: string
 }
 
@@ -1043,7 +1032,6 @@ export interface BTableSimpleProps {
 export interface BTableLiteProps<Items> extends BTableSimpleProps {
   align?: VerticalAlign
   caption?: string
-  captionHtml?: string
   detailsTdClass?: ClassValue
   fieldColumnClass?: // eslint-disable-next-line @typescript-eslint/no-explicit-any
   | ((field: TableField<Items>) => readonly Record<string, any>[])
@@ -1156,7 +1144,6 @@ export interface BThProps {
 export interface BProgressBarProps extends ColorExtendables {
   animated?: boolean
   label?: string
-  labelHtml?: string
   max?: Numberish
   precision?: Numberish
   showProgress?: boolean
@@ -1232,7 +1219,7 @@ export interface BToastProps extends ColorExtendables, Omit<BLinkProps, 'routerT
   noFade?: boolean
   noHoverPause?: boolean
   noResumeOnHoverLeave?: boolean
-  progressProps?: Omit<BProgressBarProps, 'label' | 'labelHtml' | 'max' | 'value'>
+  progressProps?: Omit<BProgressBarProps, 'label' | 'max' | 'value'>
   showOnPause?: boolean
   solid?: boolean
   title?: string
@@ -1255,7 +1242,6 @@ export interface BPopoverProps extends TeleporterProps {
       }>
   floatingMiddleware?: Middleware[]
   hideMargin?: number
-  html?: boolean
   id?: string
   inline?: boolean
   manual?: boolean
@@ -1285,7 +1271,6 @@ export interface BTooltipProps extends Omit<BPopoverProps, 'tooltip'> {
 
 export interface BCardHeadFootProps extends ColorExtendables {
   borderVariant?: BorderColorVariant | null
-  html?: string
   tag?: string
   text?: string
 }

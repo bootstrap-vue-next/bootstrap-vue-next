@@ -8,11 +8,7 @@
       :value="option.value"
       v-bind="$attrs"
     >
-      <!-- eslint-disable-next-line vue/no-v-html -->
-      <span v-if="!!option.html" v-html="option.html" />
-      <template v-else>
-        {{ option.text }}
-      </template>
+      {{ option.text }}
     </BFormSelectOption>
     <slot />
   </optgroup>
@@ -28,7 +24,6 @@ import type {SelectOption} from '../../types/SelectTypes'
 
 const _props = withDefaults(defineProps<BFormSelectOptionGroupProps>(), {
   disabledField: 'disabled',
-  htmlField: 'html',
   label: undefined,
   options: () => [],
   textField: 'text',

@@ -123,7 +123,7 @@
 
 <script setup lang="ts">
 import {onKeyStroke, syncRef, useFocus, useToNumber} from '@vueuse/core'
-import {computed, ref} from 'vue'
+import {computed, ref, useTemplateRef} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BFormTagsProps} from '../../types/ComponentProps'
 import {escapeRegExpChars} from '../../utils/stringUtils'
@@ -201,7 +201,7 @@ const limitNumber = useToNumber(() => props.limit ?? NaN)
 
 const stateClass = useStateClass(() => props.state)
 
-const input = ref<HTMLInputElement | null>(null)
+const input = useTemplateRef('input')
 
 const {focused} = useFocus(input, {
   initialValue: props.autofocus,

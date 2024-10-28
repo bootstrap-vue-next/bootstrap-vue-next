@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject, onMounted, onUnmounted, ref, useAttrs, watch} from 'vue'
+import {computed, inject, onMounted, onUnmounted, ref, useAttrs, useTemplateRef, watch} from 'vue'
 import {useId} from '../../composables/useId'
 import {useDefaults} from '../../composables/useDefaults'
 import type {TabType} from '../../types/Tab'
@@ -56,7 +56,7 @@ const computedId = useId(() => props.id, 'tabpane')
 const computedButtonId = useId(() => props.buttonId, 'tab')
 
 const lazyRenderCompleted = ref(false)
-const el = ref<HTMLElement | null>(null)
+const el = useTemplateRef<HTMLElement | null>('el')
 
 const {onClick, ...attrs} = useAttrs()
 

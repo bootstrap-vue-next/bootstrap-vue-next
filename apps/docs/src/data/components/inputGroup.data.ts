@@ -14,22 +14,10 @@ export default {
             default: undefined,
             description: 'Text to append to the input group',
           },
-          appendHtml: {
-            type: 'string',
-            default: undefined,
-            description:
-              "HTML string to append to the input group. Has precedence over 'append' prop",
-          },
           prepend: {
             type: 'string',
             default: undefined,
             description: 'Text to prepend to the input group',
-          },
-          prependHtml: {
-            type: 'string',
-            default: undefined,
-            description:
-              "HTML string to prepend to the input group. Has precedence over 'prepend' prop",
           },
           ...pick(buildCommonProps(buildCommonProps()), ['id', 'size', 'tag']),
         } satisfies Record<keyof BvnComponentProps['BInputGroup'], PropertyReference>,

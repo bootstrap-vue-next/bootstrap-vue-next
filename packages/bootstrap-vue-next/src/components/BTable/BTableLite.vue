@@ -251,7 +251,6 @@ const _props = withDefaults(defineProps<BTableLiteProps<Items>>(), {
   labelStacked: false,
   fieldColumnClass: undefined,
   tbodyTrClass: undefined,
-  captionHtml: undefined,
   detailsTdClass: undefined,
   headVariant: undefined,
   headRowVariant: undefined,

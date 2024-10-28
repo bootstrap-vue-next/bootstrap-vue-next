@@ -270,7 +270,6 @@ const _props = withDefaults(
     emptyFilteredText: 'There are no records matching your request',
     fieldColumnClass: undefined,
     tbodyTrClass: undefined,
-    captionHtml: undefined,
     detailsTdClass: undefined,
     headVariant: undefined,
     headRowVariant: undefined,

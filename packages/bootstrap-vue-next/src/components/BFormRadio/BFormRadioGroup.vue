@@ -15,11 +15,7 @@
       :disabled="item.disabled"
       :value="item.value"
     >
-      <!-- eslint-disable-next-line vue/no-v-html -->
-      <span v-if="!!item.html" v-html="item.html" />
-      <template v-else>
-        {{ item.text }}
-      </template>
+      {{ item.text }}
     </BFormRadio>
     <slot />
   </div>
@@ -27,7 +23,7 @@
 
 <script setup lang="ts">
 import type {BFormRadioGroupProps} from '../../types/ComponentProps'
-import {computed, provide, ref, toRef} from 'vue'
+import {computed, provide, toRef, useTemplateRef} from 'vue'
 import {radioGroupKey} from '../../utils/keys'
 import BFormRadio from './BFormRadio.vue'
 import {getGroupAttr, getGroupClasses} from '../../composables/useFormCheck'
@@ -43,7 +39,6 @@ const _props = withDefaults(defineProps<Omit<BFormRadioGroupProps, 'modelValue'>
   disabled: false,
   disabledField: 'disabled',
   form: undefined,
-  htmlField: 'html',
   id: undefined,
   name: undefined,
   options: () => [],
@@ -73,7 +68,7 @@ const modelValue = defineModel<Exclude<BFormRadioGroupProps['modelValue'], undef
 const computedId = useId(() => props.id, 'radio')
 const computedName = useId(() => props.name, 'checkbox')
 
-const element = ref<HTMLElement | null>(null)
+const element = useTemplateRef('element')
 
 const {focused} = useFocus(element, {
   initialValue: props.autofocus,
@@ -101,7 +96,6 @@ const normalizeOptions = computed(() =>
           value: el,
           disabled: props.disabled,
           text: el.toString(),
-          html: undefined,
           self: Symbol(`radioGroupOptionItem${ind}`),
         }
       : {
@@ -109,7 +103,6 @@ const normalizeOptions = computed(() =>
           disabled: el[props.disabledField] as boolean | undefined,
           ...(el.props ? el.props : {}),
           text: el[props.textField] as string | undefined,
-          html: el[props.htmlField] as string | undefined,
           self: Symbol(`radioGroupOptionItem${ind}`),
         }
   )

@@ -8,17 +8,13 @@
   >
     <slot name="prepend">
       <span v-if="hasPrepend" class="input-group-text">
-        <!-- eslint-disable-next-line vue/no-v-html -->
-        <span v-if="!!props.prependHtml" v-html="props.prependHtml" />
-        <span v-else>{{ props.prepend }}</span>
+        <span>{{ props.prepend }}</span>
       </span>
     </slot>
     <slot />
     <slot name="append">
       <span v-if="hasAppend" class="input-group-text">
-        <!-- eslint-disable-next-line vue/no-v-html -->
-        <span v-if="!!props.appendHtml" v-html="props.appendHtml" />
-        <span v-else>{{ props.append }}</span>
+        <span>{{ props.append }}</span>
       </span>
     </slot>
   </component>
@@ -34,10 +30,8 @@ provide(inputGroupKey, true)
 
 const _props = withDefaults(defineProps<BInputGroupProps>(), {
   append: undefined,
-  appendHtml: undefined,
   id: undefined,
   prepend: undefined,
-  prependHtml: undefined,
   size: 'md',
   tag: 'div',
 })
@@ -55,6 +49,6 @@ defineSlots<{
 const computedClasses = computed(() => ({
   [`input-group-${props.size}`]: props.size !== 'md',
 }))
-const hasAppend = computed(() => !!props.append || !!props.appendHtml)
-const hasPrepend = computed(() => !!props.prepend || !!props.prependHtml)
+const hasAppend = computed(() => !!props.append)
+const hasPrepend = computed(() => !!props.prepend)
 </script>

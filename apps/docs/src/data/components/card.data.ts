@@ -70,7 +70,6 @@ export default {
               'footerBgVariant',
               'footerBorderVariant',
               'footerClass',
-              'footerHtml',
               'footerTag',
               'footerTextVariant',
               'footerVariant',
@@ -78,7 +77,6 @@ export default {
               'headerBgVariant',
               'headerBorderVariant',
               'headerClass',
-              'headerHtml',
               'headerTag',
               'headerTextVariant',
               'headerVariant',
@@ -163,12 +161,6 @@ export default {
       emits: [],
       props: {
         '': {
-          html: {
-            type: 'string',
-            default: undefined,
-            description:
-              'HTML content to place in the card footer, takes precednce over text prop and default slot',
-          },
           text: {
             type: 'string',
             default: undefined,
@@ -222,12 +214,6 @@ export default {
       emits: [],
       props: {
         '': {
-          html: {
-            type: 'string',
-            default: undefined,
-            description:
-              'HTML content to place in the card header, takes precednce over text prop and default slot',
-          },
           text: {
             type: 'string',
             default: undefined,

@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
+import {useTemplateRef} from 'vue'
 import {BvTriggerableEvent} from '../../utils'
 import BDropdown from '../BDropdown/BDropdown.vue'
 import type {BDropdownProps} from '../../types/ComponentProps'
@@ -94,7 +94,7 @@ defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'toggle-text'?: (props: Record<string, never>) => any
 }>()
-const dropdown = ref<InstanceType<typeof BDropdown> | null>(null)
+const dropdown = useTemplateRef('dropdown')
 
 const hide = () => {
   dropdown.value?.hide()

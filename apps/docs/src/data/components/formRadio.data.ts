@@ -126,7 +126,6 @@ export default {
             'disabled',
             'disabledField',
             'form',
-            'htmlField',
             'id',
             'name',
             'options',

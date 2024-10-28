@@ -27,7 +27,6 @@ export const useFormSelect = (
 
     const value: unknown = get(option, propsValue.valueField as string)
     const text: string = get(option, propsValue.textField as string)
-    const html: string = get(option, propsValue.htmlField as string)
     const disabled: boolean = get(option, propsValue.disabledField as string)
 
     const opts: undefined | unknown[] = propsValue.optionsField
@@ -44,7 +43,6 @@ export const useFormSelect = (
     return {
       value,
       text,
-      html,
       disabled,
     } as SelectOption
   }

@@ -9,7 +9,6 @@ export type SelectValue =
 export interface SelectOption<T = unknown> {
   value: T
   text?: string
-  html?: string
   disabled?: boolean
 }
 

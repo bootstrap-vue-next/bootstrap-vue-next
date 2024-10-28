@@ -1,5 +1,5 @@
 import type {Numberish} from '../types/CommonTypes'
-import {nextTick, onActivated, onMounted, ref, type Ref} from 'vue'
+import {nextTick, onActivated, onMounted, ref, type Ref, type ShallowRef} from 'vue'
 import {useAriaInvalid} from './useAriaInvalid'
 import {useId} from './useId'
 import {useDebounceFn, useFocus, useToNumber} from '@vueuse/core'
@@ -7,10 +7,12 @@ import type {CommonInputProps} from '../types/FormCommonInputProps'
 
 export const useFormInput = (
   props: Readonly<CommonInputProps>,
+  input:
+    | Readonly<ShallowRef<HTMLInputElement | null>>
+    | Readonly<ShallowRef<HTMLTextAreaElement | null>>,
   modelValue: Ref<Numberish | null>,
   modelModifiers: Record<'number' | 'lazy' | 'trim', true | undefined>
 ) => {
-  const input = ref<HTMLInputElement | null>(null)
   const forceUpdateKey = ref(0)
 
   const computedId = useId(() => props.id, 'input')

@@ -36,10 +36,6 @@ export default {
             type: 'Middleware[]',
             default: undefined,
           },
-          html: {
-            type: 'boolean',
-            default: false,
-          },
           id: {
             type: 'string',
             default: undefined,

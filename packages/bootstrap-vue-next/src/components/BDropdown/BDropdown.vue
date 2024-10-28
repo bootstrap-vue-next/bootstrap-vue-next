@@ -76,7 +76,17 @@ import {
   useFloating,
 } from '@floating-ui/vue'
 import {onClickOutside, onKeyStroke, useToNumber} from '@vueuse/core'
-import {computed, type CSSProperties, inject, nextTick, provide, ref, toRef, watch} from 'vue'
+import {
+  computed,
+  type CSSProperties,
+  inject,
+  nextTick,
+  provide,
+  ref,
+  toRef,
+  useTemplateRef,
+  watch,
+} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import type {BDropdownProps} from '../../types/ComponentProps'
@@ -157,10 +167,10 @@ const computedOffset = computed(() =>
 )
 const offsetToNumber = useToNumber(computedOffset)
 
-const floating = ref<HTMLElement | null>(null)
-const button = ref<HTMLElement | null>(null)
-const splitButton = ref<HTMLElement | null>(null)
-const wrapper = ref<HTMLElement | null>(null)
+const floating = useTemplateRef<HTMLElement | null>('floating')
+const button = useTemplateRef<HTMLElement | null>('button')
+const splitButton = useTemplateRef<HTMLElement | null>('splitButton')
+const wrapper = useTemplateRef<HTMLElement | null>('wrapper')
 
 const boundary = computed<Boundary | undefined>(() =>
   isBoundary(props.boundary) ? props.boundary : undefined

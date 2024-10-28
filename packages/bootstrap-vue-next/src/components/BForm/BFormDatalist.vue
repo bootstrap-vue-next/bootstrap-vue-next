@@ -3,11 +3,7 @@
     <slot name="first" />
     <template v-for="(option, index) in normalizedOptsWrapper" :key="index">
       <BFormSelectOption :value="option.value" :disabled="option.disabled">
-        <!-- eslint-disable-next-line vue/no-v-html -->
-        <span v-if="!!option.html" v-html="option.html" />
-        <template v-else>
-          {{ option.text }}
-        </template>
+        {{ option.text }}
       </BFormSelectOption>
     </template>
     <slot />
@@ -26,7 +22,6 @@ import type {SelectOption} from '../../types/SelectTypes'
 const _props = withDefaults(defineProps<BFormDatalistProps>(), {
   disabled: false,
   disabledField: 'disabled',
-  htmlField: 'html',
   id: undefined,
   // eslint-disable-next-line vue/require-valid-default-prop
   options: () => [],
