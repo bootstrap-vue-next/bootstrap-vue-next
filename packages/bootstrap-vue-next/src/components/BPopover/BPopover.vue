@@ -149,7 +149,7 @@ const slots = defineSlots<{
   target?: (props: {
     show: () => void
     hide: (trigger?: string) => void
-    toggle: (e: Event) => void
+    toggle: () => void
     visible: boolean
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any

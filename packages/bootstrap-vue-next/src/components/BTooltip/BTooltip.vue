@@ -58,9 +58,9 @@ const slots = defineSlots<{
   default?: (props: Record<string, never>) => any
   target?: (props: {
     show: () => void
-    hide: (e: Event) => void
-    toggle: (e: Event) => void
-    showState: boolean
+    hide: (trigger?: string) => void
+    toggle: () => void
+    visible: boolean
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
