@@ -87,7 +87,8 @@ export const useShowHide = (
   }
 ) => {
   let noAction = false
-  const showRef = ref<boolean>(!!modelValue.value && !props.initialAnimation)
+  const initialShow = (!!modelValue.value && !props.initialAnimation) || props.visible || false
+  const showRef = ref<boolean>(initialShow)
 
   let isCountdown = typeof modelValue.value !== 'boolean'
 
@@ -100,13 +101,17 @@ export const useShowHide = (
     modelValue.value ? show() : hide()
   })
 
-  const localNoAnimation = ref(!!modelValue.value && !props.initialAnimation)
+  const localNoAnimation = ref(initialShow)
   const computedNoAnimation = computed(
     () => props.noAnimation || props.noFade || localNoAnimation.value || false
   )
   onMounted(() => {
-    if (props.visible || (!props.show && !!modelValue.value && !props.initialAnimation)) {
+    if (props.visible || (!props.show && initialShow)) {
       localNoAnimation.value = true
+      if (!modelValue.value) {
+        noAction = true
+        modelValue.value = true
+      }
       nextTick(() => {
         isVisible.value = true
         show()
@@ -281,7 +286,9 @@ export const useShowHide = (
     options.transitionProps?.onAfterEnter?.(el)
     props.transitionProps?.onAfterEnter?.(el)
     if (localNoAnimation.value) {
-      localNoAnimation.value = false
+      requestAnimationFrame(() => {
+        localNoAnimation.value = false
+      })
     }
   }
   const onBeforeLeave = (el: Element) => {
@@ -296,7 +303,9 @@ export const useShowHide = (
     isLeaving.value = false
     isActive.value = false
     if (localNoAnimation.value) {
-      localNoAnimation.value = false
+      requestAnimationFrame(() => {
+        localNoAnimation.value = false
+      })
     }
   }
 

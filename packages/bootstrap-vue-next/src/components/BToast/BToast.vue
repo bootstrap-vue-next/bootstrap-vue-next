@@ -1,5 +1,5 @@
 <template>
-  <Transition v-bind="fadeTransitionProps" :appear="!!modelValue">
+  <Transition v-bind="fadeTransitionProps" :appear="true">
     <div
       v-show="isToastVisible"
       :id="props.id"

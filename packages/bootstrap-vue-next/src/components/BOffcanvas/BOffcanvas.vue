@@ -3,10 +3,7 @@
     :to="props.teleportTo"
     :disabled="props.teleportDisabled || isOpenByBreakpoint"
   >
-    <Transition
-      v-bind="wasClosedByBreakpointChange ? {} : basicTransitionProps"
-      :appear="!!modelValue"
-    >
+    <Transition v-bind="wasClosedByBreakpointChange ? {} : basicTransitionProps" :appear="true">
       <div
         v-show="showRef || isOpenByBreakpoint"
         :id="computedId"
@@ -58,13 +55,13 @@
       </div>
     </Transition>
     <slot v-if="!props.noBackdrop" name="backdrop" v-bind="sharedSlots">
-      <Transition :appear="showBackdrop" v-bind="fadeBaseTransitionProps">
+      <Transition :appear="true" v-bind="fadeBaseTransitionProps">
         <div
           v-if="showBackdrop"
           class="offcanvas-backdrop"
           :class="{
             fade: !computedNoAnimation,
-            show: props.visible,
+            show: showRef,
           }"
           @click="hide('backdrop')"
         />

@@ -1,12 +1,12 @@
 <template>
   <ConditionalTeleport :to="props.teleportTo" :disabled="props.teleportDisabled">
-    <Transition v-bind="fadeTransitionProps" :appear="modelValue" @after-enter="onAfterEnter">
+    <Transition v-bind="fadeTransitionProps" :appear="true" @after-enter="onAfterEnter">
       <div
         v-show="showRef"
         :id="computedId"
         ref="element"
         class="modal"
-        :class="modalClasses"
+        :class="[props.modalClass, fadeClasses]"
         role="dialog"
         :aria-labelledby="!props.noHeader ? `${computedId}-label` : undefined"
         :aria-describedby="`${computedId}-body`"
@@ -95,15 +95,12 @@
       </div>
     </Transition>
     <slot v-if="!props.noBackdrop" name="backdrop" v-bind="sharedSlots">
-      <Transition :appear="modelValue" v-bind="fadeBaseTransitionProps">
+      <Transition :appear="true" v-bind="fadeBaseTransitionProps">
         <div
           v-show="showRef"
           class="modal-backdrop"
           :style="computedZIndexBackdrop"
-          :class="{
-            fade: !computedNoAnimation,
-            show: props.visible,
-          }"
+          :class="fadeClasses"
           @click="hide('backdrop')"
         />
       </Transition>
@@ -317,8 +314,7 @@ const {focused: closeButtonFocus} = useFocus(closeButton, {
   initialValue: modelValue.value && props.autofocusButton === 'close' && props.autofocus === true,
 })
 
-const modalClasses = computed(() => [
-  props.modalClass,
+const fadeClasses = computed(() => [
   {
     fade: !computedNoAnimation.value,
     show: isVisible.value,

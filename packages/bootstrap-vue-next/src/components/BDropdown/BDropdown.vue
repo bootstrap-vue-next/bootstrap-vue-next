@@ -44,7 +44,7 @@
       :to="props.teleportTo"
       :disabled="!props.teleportTo || props.teleportDisabled"
     >
-      <Transition v-bind="fadeTransitionProps" :appear="!!modelValue">
+      <Transition v-bind="fadeTransitionProps" :appear="true">
         <ul
           v-show="showRef"
           ref="floating"
