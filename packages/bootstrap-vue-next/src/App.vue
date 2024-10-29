@@ -448,7 +448,7 @@ import LazyComponent from './LazyComponent.vue'
 import PopoverTest from './PopoverTest.vue'
 import {useModal, useModalController, usePopoverController, useToastController} from './index'
 
-import {h, ref, watch} from 'vue'
+import {computed, h, ref, watch} from 'vue'
 
 const {show} = useModal('test-modal')
 const {show: toastShow} = useToastController()
@@ -487,12 +487,32 @@ function testPopoverList(toast: Record<string, string>) {
     placement: 'top-end',
   })
 }
+const testRandom = ref('a')
+setInterval(() => {
+  testRandom.value = Math.random().toString(36).substring(7)
+}, 1500)
 function testPopover() {
   popoverShow?.({
     target: 'popover-button-target',
-    title: () => h('div', {class: 'text-danger'}, ['this ', h('b', 'is'), ' title']),
+    title: () =>
+      h('div', {class: 'text-danger'}, [
+        'this ',
+        h('b', 'is'),
+        ' title:',
+        h('b', testRandom.value),
+      ]),
     // content: () => h('div', ['foo ', h('b', 'bar'), ' daz']),
     content: () => h(LazyComponent, {msg: 'popover content'}),
+    // content: computed(() => `foo: ${testRandom.value}`),
+    placement: 'bottom',
+  })
+  popoverShow?.({
+    target: 'popover-button-target',
+    // title: () => h('div', {class: 'text-danger'}, ['this ', h('b', 'is'), ' title']),
+    title: testRandom,
+    // content: () => h('div', ['foo ', h('b', 'bar'), ' daz']),
+    // content: () => h(LazyComponent, {msg: 'popover content'}),
+    content: computed(() => `foo: ${testRandom.value}`),
     placement: 'right-end',
   })
 }

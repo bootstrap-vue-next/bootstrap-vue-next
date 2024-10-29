@@ -56,8 +56,8 @@ export type TooltipOrchestratorShowParam = {
 export type SlotFunction = () => VNode<RendererNode, RendererElement, {[key: string]: unknown}>
 
 export type PopoverOrchestratorParam = {
-  title?: BPopoverProps['title'] | SlotFunction
-  content?: BPopoverProps['content'] | SlotFunction
+  title?: MaybeRefOrGetter<BPopoverProps['title'] | SlotFunction>
+  content?: MaybeRefOrGetter<BPopoverProps['content'] | SlotFunction>
 } & Omit<BPopoverProps, 'content' | 'title'>
 
 export type PopoverOrchestratorShowParam = MaybeRefOrGetter<PopoverOrchestratorParam>
