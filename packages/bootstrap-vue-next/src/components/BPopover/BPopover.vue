@@ -74,6 +74,7 @@ import {
   onMounted,
   ref,
   toRef,
+  toValue,
   useTemplateRef,
   watch,
 } from 'vue'
@@ -386,7 +387,7 @@ const bind = () => {
   // TODO: is this the best way to bind the events?
   // we place a span and get the next element sibling fo rthe listeners
   if (props.target) {
-    const elem = getElement(props.target)
+    const elem = getElement(toValue(props.target))
     if (elem) {
       trigger.value = elem
     } else {
@@ -397,7 +398,7 @@ const bind = () => {
     trigger.value = placeholder.value?.nextElementSibling as HTMLElement
   }
   if (props.reference) {
-    const elem = getElement(props.reference)
+    const elem = getElement(toValue(props.reference))
     if (elem) {
       floatingTarget.value = elem
     } else {
@@ -453,3 +454,10 @@ onMounted(() => {
 
 onBeforeUnmount(unbind)
 </script>
+<style lang="scss" scoped>
+.bs-popover-auto[data-popper-placement^='bottom']
+  .popover-arrow:has(+ div > .popover-header)::after,
+.bs-popover-bottom .popover-arrow:has(+ div > .popover-header)::after {
+  --bs-popover-bg: var(--bs-popover-header-bg);
+}
+</style>

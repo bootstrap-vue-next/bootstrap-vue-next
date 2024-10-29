@@ -1,6 +1,61 @@
 <template>
+  <BToastOrchestrator />
+  <BModalOrchestrator />
+  <BPopoverOrchestrator />
   <BCard>
-    <BButton @click="nestedModal1 = !nestedModal1">Open First Modal</BButton>
+    <div>
+      <PopoverTest />
+    </div>
+    <BButton
+      @click="
+        toastShow?.({
+          props: {
+            title: 'Counting down!',
+            variant: 'info',
+            pos: 'middle-center',
+            value: 10000,
+            progressProps: {
+              variant: 'danger',
+            },
+            body: 'Watch me!',
+          },
+        })
+      "
+    >
+      Show toast
+    </BButton>
+    <BButton
+      @click="
+        modalShow?.({
+          props: {
+            body: 'Modal!',
+          },
+        })
+      "
+    >
+      Show modal
+    </BButton>
+    <BButton id="popover-button" @click="testPopover()">add popover to -></BButton>
+    <span id="popover-button-target" class="m-1 p-1 border rounded">Popover Here</span>
+    <div>
+      bpopovers:
+      <BButton
+        @click="
+          testPopoverList({
+            id: 'pop' + theList.length,
+            target: 'tpop' + theList.length,
+            title: 'foo',
+          })
+        "
+        >Add</BButton
+      >
+      <BButton v-for="(p, i) in theList" :id="p.target" :key="i">{{ p.id }} </BButton>
+      <!-- <BPopover v-for="p in toastList" v-bind="p">
+        {{ p.title }}
+      </BPopover> -->
+    </div>
+
+    <BButton @click="nestedModal1 = !nestedModal1">Open First of nested Modals</BButton>
 
     <BModal v-model="nestedModal1" size="lg" title="First Modal" ok-only no-stacking>
       <p class="my-2">First Modal</p>
@@ -86,7 +141,7 @@
     <b-col>
       <div class="d-flex flex-wrap gap-1">
         <BFormCheckbox v-model="modal.value">modal ({{ modal.value }})</BFormCheckbox>
-        <BFormCheckbox v-model="modal.toggle">toggle</BFormCheckbox>
+        <BFormCheckbox v-model="modal.show">show</BFormCheckbox>
         <BFormCheckbox v-model="modal.visible">visible</BFormCheckbox>
       </div>
       <div class="d-flex flex-wrap gap-1">
@@ -94,7 +149,7 @@
         <BButton v-b-toggle.test-modal size="sm">directive</BButton>
         <BButton size="sm" @click="(modal.ref as any)?.toggle?.()">expose</BButton>
         <BButton size="sm" @click="timer(modal, 'value')">timer</BButton>
-        <BButton size="sm" @click="timer(modal, 'toggle')">timer toggle</BButton>
+        <BButton size="sm" @click="timer(modal, 'show')">timer show</BButton>
         <BButton size="sm" @click="timer(modal, 'visible')">timer visible</BButton>
       </div>
       <BModal
@@ -107,7 +162,7 @@
         v-model="modal.value"
         :no-fade="noFade"
         no-close-on-esc
-        :toggle="modal.toggle"
+        :show="modal.show"
         :visible="modal.visible"
         :lazy="lazyLoad"
         :unmount-lazy="unmountLazy"
@@ -136,14 +191,14 @@
     <b-col>
       <div class="d-flex flex-wrap gap-1">
         <BFormCheckbox v-model="collapse.value">collapse ({{ collapse.value }})</BFormCheckbox>
-        <BFormCheckbox v-model="collapse.toggle">toggle </BFormCheckbox>
+        <BFormCheckbox v-model="collapse.show">show </BFormCheckbox>
         <BFormCheckbox v-model="collapse.visible">visible</BFormCheckbox>
       </div>
       <div class="d-flex flex-wrap gap-1">
         <BButton v-b-toggle.test-collapse size="sm">directive</BButton>
         <BButton size="sm" @click="(collapse.ref as any)?.toggle?.()">expose</BButton>
         <BButton size="sm" @click="timer(collapse, 'value')">timer</BButton>
-        <BButton size="sm" @click="timer(collapse, 'toggle')">timer toggle</BButton>
+        <BButton size="sm" @click="timer(collapse, 'show')">timer show</BButton>
         <BButton size="sm" @click="timer(collapse, 'visible')">timer visible</BButton>
       </div>
       <BCollapse
@@ -155,7 +210,7 @@
         "
         v-model="collapse.value"
         :no-animation="noFade"
-        :toggle="collapse.toggle"
+        :show="collapse.show"
         :visible="collapse.visible"
         :lazy="lazyLoad"
         :unmount-lazy="unmountLazy"
@@ -181,13 +236,15 @@
     <b-col>
       <div class="d-flex flex-wrap gap-1">
         <BFormCheckbox v-model="popover.value">popover ({{ popover.value }})</BFormCheckbox>
-        <BFormCheckbox v-model="popover.toggle">toggle </BFormCheckbox>
+        <BFormCheckbox v-model="popover.show">show </BFormCheckbox>
         <BFormCheckbox v-model="popover.visible">visible</BFormCheckbox>
       </div>
       <div class="d-flex flex-wrap gap-1">
         <BButton v-b-toggle.test-popover size="sm">directive</BButton>
         <BButton size="sm" @click="(popover.ref as any)?.toggle?.()">expose</BButton>
-        <BButton size="sm" @click="timer(popover)">timer</BButton>
+        <BButton size="sm" @click="timer(popover, 'value')">timer</BButton>
+        <BButton size="sm" @click="timer(popover, 'show')">timer show</BButton>
+        <BButton size="sm" @click="timer(popover, 'visible')">timer visible</BButton>
       </div>
       <BButton id="button2" class="mt-3">popover target</BButton>
 
@@ -201,10 +258,12 @@
         v-model="popover.value"
         :target="'#button2'"
         :no-fade="noFade"
-        :toggle="popover.toggle"
+        :show="popover.show"
         :visible="popover.visible"
         :lazy="lazyLoad"
         :unmount-lazy="unmountLazy"
+        tooltip
+        @update:model-value="log"
         @show="doEvent($event, 'show')"
         @shown="doEvent($event, 'shown')"
         @show-prevented="doEvent($event, 'show-prevented')"
@@ -232,14 +291,14 @@
     <b-col>
       <div class="d-flex flex-wrap gap-1">
         <BFormCheckbox v-model="offcanvas.value">offcanvas ({{ offcanvas.value }})</BFormCheckbox>
-        <BFormCheckbox v-model="offcanvas.toggle">toggle </BFormCheckbox>
+        <BFormCheckbox v-model="offcanvas.show">show </BFormCheckbox>
         <BFormCheckbox v-model="offcanvas.visible">visible</BFormCheckbox>
       </div>
       <div class="d-flex flex-wrap gap-1">
         <BButton v-b-toggle.test-offcanvas size="sm">directive</BButton>
         <BButton size="sm" @click="(offcanvas.ref as any)?.toggle?.()">expose</BButton>
         <BButton size="sm" @click="timer(offcanvas, 'value')">timer</BButton>
-        <BButton size="sm" @click="timer(offcanvas, 'toggle')">timer toggle</BButton>
+        <BButton size="sm" @click="timer(offcanvas, 'show')">timer show</BButton>
         <BButton size="sm" @click="timer(offcanvas, 'visible')">timer visible</BButton>
       </div>
 
@@ -253,7 +312,7 @@
         v-model="offcanvas.value"
         title="Title"
         :no-animation="noFade"
-        :toggle="offcanvas.toggle"
+        :show="offcanvas.show"
         :visible="offcanvas.visible"
         :lazy="lazyLoad"
         :unmount-lazy="unmountLazy"
@@ -282,14 +341,14 @@
     <b-col>
       <div class="d-flex flex-wrap gap-1">
         <BFormCheckbox v-model="dropdown.value">dropdown ({{ dropdown.value }})</BFormCheckbox>
-        <BFormCheckbox v-model="dropdown.toggle">toggle </BFormCheckbox>
+        <BFormCheckbox v-model="dropdown.show">show </BFormCheckbox>
         <BFormCheckbox v-model="dropdown.visible">visible</BFormCheckbox>
       </div>
       <div class="d-flex flex-wrap gap-1">
         <BButton v-b-toggle.test-dropdown size="sm">directive</BButton>
         <BButton size="sm" @click="(dropdown.ref as any)?.toggle?.()">expose</BButton>
         <BButton size="sm" @click="timer(dropdown, 'value')">timer</BButton>
-        <BButton size="sm" @click="timer(dropdown, 'toggle')">timer toggle</BButton>
+        <BButton size="sm" @click="timer(dropdown, 'show')">timer show</BButton>
         <BButton size="sm" @click="timer(dropdown, 'visible')">timer visible</BButton>
       </div>
 
@@ -306,7 +365,7 @@
         text="dropdown"
         :auto-close="true"
         :no-fade="noFade"
-        :toggle="dropdown.toggle"
+        :show="dropdown.show"
         :visible="dropdown.visible"
         :lazy="lazyLoad"
         :unmount-lazy="unmountLazy"
@@ -331,16 +390,18 @@
     <b-col>
       <div class="d-flex flex-wrap gap-1">
         <BFormCheckbox v-model="toast.value">toast ({{ toast.value }})</BFormCheckbox>
-        <BFormCheckbox v-model="toast.toggle">toggle </BFormCheckbox>
+        <BFormCheckbox v-model="toast.show">show </BFormCheckbox>
         <BFormCheckbox v-model="toast.visible">visible</BFormCheckbox>
       </div>
       <div class="d-flex flex-wrap gap-1">
         <BButton v-b-toggle.test-toast size="sm">directive</BButton>
         <BButton size="sm" @click="(toast.ref as any)?.toggle?.()">expose</BButton>
         <BButton size="sm" @click="timer(toast, 'value')">timer</BButton>
-        <BButton size="sm" @click="timer(toast, 'toggle')">timer toggle</BButton>
+        <BButton size="sm" @click="timer(toast, 'show')">timer show</BButton>
         <BButton size="sm" @click="timer(toast, 'visible')">timer visible</BButton>
         <BButton size="sm" @click="toast.value = 5000">reset modelvalue to 5000</BButton>
+        <BButton size="sm" @click="toast.value = 10000">reset modelvalue to 10000</BButton>
+        <BButton size="sm" @click="toast.value = 15000">reset modelvalue to 15000</BButton>
       </div>
 
       <BToast
@@ -353,7 +414,7 @@
         v-model="toast.value"
         title="title"
         :no-fade="noFade"
-        :toggle="toast.toggle"
+        :show="toast.show"
         :visible="toast.visible"
         :progress-props="{}"
         :lazy="lazyLoad"
@@ -381,15 +442,18 @@
 </template>
 
 <script setup lang="ts">
-// import {useModal} from 'bootstrap-vue-next'
+// import {seModal, useModalController, usePopoverController, useToastController} from 'bootstrap-vue-next'
 
-import BButton from './components/BButton/BButton.vue'
 import LazyComponent from './LazyComponent.vue'
-import {useModal} from './index'
+import PopoverTest from './PopoverTest.vue'
+import {useModal, useModalController, usePopoverController, useToastController} from './index'
 
-import {ref, watch} from 'vue'
+import {h, ref, watch} from 'vue'
 
 const {show} = useModal('test-modal')
+const {show: toastShow} = useToastController()
+const {popover: popoverShow} = usePopoverController()
+const {show: modalShow} = useModalController()
 
 const nestedModal1 = ref(false)
 const nestedModal2 = ref(false)
@@ -405,13 +469,33 @@ const unmountLazy = ref(true)
 
 const modalIf = ref(false)
 
-type State = {value: boolean | number; toggle: boolean; visible: boolean; ref: HTMLElement | null}
-const modal = ref<State>({value: false, toggle: false, visible: false, ref: null})
-const collapse = ref<State>({value: false, toggle: false, visible: false, ref: null})
-const popover = ref<State>({value: false, toggle: false, visible: false, ref: null})
-const offcanvas = ref<State>({value: false, toggle: false, visible: false, ref: null})
-const dropdown = ref<State>({value: false, toggle: false, visible: false, ref: null})
-const toast = ref<State>({value: false, toggle: false, visible: false, ref: null})
+type State = {value: boolean | number; show: boolean; visible: boolean; ref: HTMLElement | null}
+const modal = ref<State>({value: false, show: false, visible: false, ref: null})
+const collapse = ref<State>({value: false, show: false, visible: false, ref: null})
+const popover = ref<State>({value: false, show: false, visible: false, ref: null})
+const offcanvas = ref<State>({value: false, show: false, visible: false, ref: null})
+const dropdown = ref<State>({value: false, show: false, visible: false, ref: null})
+const toast = ref<State>({value: 5000, show: false, visible: false, ref: null})
+
+const theList = ref<Record<string, string>[]>([])
+function testPopoverList(toast: Record<string, string>) {
+  theList.value.push(toast)
+  popoverShow?.({
+    target: toast?.target,
+    title: toast?.title,
+    content: toast?.title,
+    placement: 'top-end',
+  })
+}
+function testPopover() {
+  popoverShow?.({
+    target: 'popover-button-target',
+    title: () => h('div', {class: 'text-danger'}, ['this ', h('b', 'is'), ' title']),
+    // content: () => h('div', ['foo ', h('b', 'bar'), ' daz']),
+    content: () => h(LazyComponent, {msg: 'popover content'}),
+    placement: 'right-end',
+  })
+}
 
 const messages = ref<Record<string, string[]>>({})
 
@@ -446,7 +530,12 @@ function addMessage(id: string, message: string) {
   messages.value[id].push(message)
 }
 
-function timer(myVar: State, part: 'value' | 'toggle' | 'visible' = 'value') {
+function log(msg: string) {
+  // eslint-disable-next-line no-console
+  console.log(msg)
+}
+
+function timer(myVar: State, part: 'value' | 'show' | 'visible' = 'value') {
   setTimeout(() => {
     myVar[part] = !myVar[part]
   }, 500)

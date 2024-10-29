@@ -1,13 +1,5 @@
 <template>
-  <component
-    :is="popover.component ?? BPopover"
-    v-for="[self, popover] in tools.popovers?.value"
-    :key="self"
-    v-bind="popover.props"
-    :model-value="popover.props._modelValue"
-    :target="popover.props._target"
-    @update:model-value="tools.setPopover?.(self, {...popover.props, _modelValue: $event})"
-  />
+  <PopoverList />
   <component
     :is="tooltip.component ?? BTooltip"
     v-for="[self, tooltip] in tools.tooltips?.value"
@@ -23,8 +15,26 @@
 import {usePopoverController} from '../../composables/usePopoverController'
 import BPopover from './BPopover.vue'
 import BTooltip from '../BTooltip/BTooltip.vue'
+import {h} from 'vue'
 
 const tools = usePopoverController()
+
+const PopoverList = () =>
+  Array.from(tools.popovers?.value?.entries() ?? []).map(([self, {content, title, ...popover}]) => {
+    const props: Record<string, string> = {}
+    const slots: Record<string, unknown> = {}
+    if (typeof content === 'string') {
+      props.content = content
+    } else {
+      slots.default = content
+    }
+    if (typeof title === 'string') {
+      props.title = title
+    } else {
+      slots.title = title
+    }
+    return h(BPopover, {key: self, ...props, ...popover}, slots)
+  })
 
 defineExpose({
   ...tools,

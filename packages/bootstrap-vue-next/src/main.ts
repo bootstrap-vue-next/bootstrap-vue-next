@@ -51,7 +51,8 @@ const app = createApp(App)
 app.use(createBootstrap())
 app.use(router)
 for (const name in Directives) {
-  // tslint:disable-next-line: some directives have a weird type
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore some directives are weird
   app.directive(name.replace(/^v/, ''), Directives[name as unknown as keyof typeof Directives])
 }
 app.mount('#app')

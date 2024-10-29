@@ -58,7 +58,7 @@ export type * from './ComponentProps'
 export type {
   PublicOrchestratedTooltip as OrchestratedTooltip,
   PublicOrchestratedToast as OrchestratedToast,
-  PublicOrchestratedPopover as OrchestratedPopover,
+  PopoverOrchestratorShowParam as OrchestratedPopover,
   PublicOrchestratedModal as OrchestratedModal,
 } from './ComponentOrchestratorTypes'
 export type * from './ComponentOrchestratorTypes'
