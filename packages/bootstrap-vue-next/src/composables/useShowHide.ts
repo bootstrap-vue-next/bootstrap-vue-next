@@ -63,6 +63,7 @@ export const useShowHide = (
     noCloseOnEsc?: boolean
     transitionProps?: TransitionProps
     lazy?: boolean
+    initialAnimation?: boolean
     delay?:
       | number
       | {
@@ -86,7 +87,7 @@ export const useShowHide = (
   }
 ) => {
   let noAction = false
-  const showRef = ref<boolean>(!!modelValue.value)
+  const showRef = ref<boolean>(!!modelValue.value && !props.initialAnimation)
 
   let isCountdown = typeof modelValue.value !== 'boolean'
 
@@ -99,22 +100,18 @@ export const useShowHide = (
     modelValue.value ? show() : hide()
   })
 
-  const localNoAnimation = ref(false)
+  const localNoAnimation = ref(!!modelValue.value && !props.initialAnimation)
   const computedNoAnimation = computed(
     () => props.noAnimation || props.noFade || localNoAnimation.value || false
   )
   onMounted(() => {
-    if (props.visible) {
+    if (props.visible || (!props.show && !!modelValue.value && !props.initialAnimation)) {
       localNoAnimation.value = true
       nextTick(() => {
         isVisible.value = true
         show()
-        // TODO: find a better way to do this
-        setTimeout(() => {
-          localNoAnimation.value = false
-        }, 50)
       })
-    } else if (props.show) {
+    } else if (props.show || (!!modelValue.value && props.initialAnimation)) {
       show()
     }
   })
@@ -127,10 +124,6 @@ export const useShowHide = (
       nextTick(() => {
         if (newval) isVisible.value = true
         newval ? show() : hide()
-        // TODO: find a better way to do this
-        setTimeout(() => {
-          localNoAnimation.value = false
-        }, 150)
       })
     }
   )
@@ -165,8 +158,10 @@ export const useShowHide = (
     emit('show', event)
 
     if (event.defaultPrevented) {
-      // if (modelValue.value) modelValue.value = false
       emit('show-prevented', buildTriggerableEvent('show-prevented'))
+      if (isVisible.value) {
+        isVisible.value = false
+      }
       if (modelValue.value && !isCountdown) {
         noAction = true
         nextTick(() => {
@@ -196,7 +191,6 @@ export const useShowHide = (
 
   const hide = (trigger?: string) => {
     if (!showRef.value) return
-    // inAction = true
     const event = buildTriggerableEvent('hide', {cancelable: true, trigger})
     const event2 = buildTriggerableEvent(trigger || 'ignore', {cancelable: true, trigger})
     if (
@@ -256,10 +250,12 @@ export const useShowHide = (
   }
 
   const isLeaving = ref(false)
+  const isActive = ref(false)
   const isVisible = ref(false)
   const onBeforeEnter = (el: Element) => {
     options.transitionProps?.onBeforeEnter?.(el)
     props.transitionProps?.onBeforeEnter?.(el)
+    isActive.value = true
   }
   const onEnter = (el: Element) => {
     requestAnimationFrame(() => {
@@ -284,6 +280,9 @@ export const useShowHide = (
     markLazyLoadCompleted()
     options.transitionProps?.onAfterEnter?.(el)
     props.transitionProps?.onAfterEnter?.(el)
+    if (localNoAnimation.value) {
+      localNoAnimation.value = false
+    }
   }
   const onBeforeLeave = (el: Element) => {
     isLeaving.value = true
@@ -295,6 +294,10 @@ export const useShowHide = (
     options.transitionProps?.onAfterLeave?.(el)
     props.transitionProps?.onAfterLeave?.(el)
     isLeaving.value = false
+    isActive.value = false
+    if (localNoAnimation.value) {
+      localNoAnimation.value = false
+    }
   }
 
   const contentShowing = computed(
@@ -315,6 +318,7 @@ export const useShowHide = (
   return {
     showRef,
     isVisible,
+    isActive,
     show,
     hide,
     toggle,

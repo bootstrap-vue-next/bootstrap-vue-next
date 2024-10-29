@@ -1,15 +1,10 @@
 <template>
   <slot name="header" v-bind="sharedSlots" />
   <Transition
-    v-bind="emptyTransitionProps"
+    v-bind="basicTransitionProps"
     :enter-active-class="computedNoAnimation ? '' : 'collapsing'"
     :leave-active-class="computedNoAnimation ? '' : 'collapsing'"
     :appear="modelValue"
-    @before-leave="onBeforeLeave"
-    @enter="onEnter"
-    @leave="onLeave"
-    @after-enter="onAfterEnter"
-    @after-leave="onAfterLeave"
   >
     <component
       :is="props.tag"
@@ -21,7 +16,7 @@
       :is-nav="props.isNav"
       v-bind="$attrs"
     >
-      <slot v-if="contentShowing || isVisible" v-bind="sharedSlots" />
+      <slot v-if="contentShowing || isActive" v-bind="sharedSlots" />
     </component>
   </Transition>
   <slot name="footer" v-bind="sharedSlots" />
@@ -44,7 +39,7 @@ import {useId} from '../../composables/useId'
 import {collapseInjectionKey, globalCollapseStorageInjectionKey} from '../../utils/keys'
 import type {BCollapseProps} from '../../types/ComponentProps'
 import {BvTriggerableEvent} from '../../utils'
-import {emptyTransitionProps, useShowHide} from '../../composables/useShowHide'
+import {useShowHide} from '../../composables/useShowHide'
 
 defineOptions({
   inheritAttrs: false,
@@ -99,28 +94,9 @@ const computedId = useId(() => props.id, 'collapse')
 
 const element = useTemplateRef<HTMLElement | null>('element')
 
-const {
-  showRef,
-  hide,
-  show,
-  toggle,
-  isVisible,
-  buildTriggerableEvent,
-  computedNoAnimation,
-  contentShowing,
-  markLazyLoadCompleted,
-} = useShowHide(modelValue, props, emit as EmitFn, element, computedId)
-
-const computedClasses = computed(() => ({
-  'show': isVisible.value,
-  'navbar-collapse': props.isNav,
-  'collapse-horizontal': props.horizontal,
-}))
-
 let inCollapse = false
 const onEnter = (el: Element) => {
   inCollapse = true
-  isVisible.value = true
   requestAnimationFrame(() => {
     if (props.horizontal) {
       ;(el as HTMLElement).style.width = `${(el as HTMLElement).scrollWidth}px`
@@ -130,7 +106,6 @@ const onEnter = (el: Element) => {
   })
 }
 const onBeforeLeave = (el: Element) => {
-  isVisible.value = true
   if (inCollapse) {
     return
   }
@@ -155,18 +130,39 @@ const onAfterEnter = (el: Element) => {
   ;(el as HTMLElement).style.height = ``
   ;(el as HTMLElement).style.width = ``
   inCollapse = false
-  isVisible.value = true
-  emit('shown', buildTriggerableEvent('shown'))
-  markLazyLoadCompleted()
 }
 
 const onAfterLeave = (el: Element) => {
   ;(el as HTMLElement).style.height = ``
   ;(el as HTMLElement).style.width = ``
   inCollapse = false
-  isVisible.value = false
-  emit('hidden', buildTriggerableEvent('hidden'))
 }
+
+const {
+  showRef,
+  hide,
+  show,
+  toggle,
+  isActive,
+  computedNoAnimation,
+  contentShowing,
+  basicTransitionProps,
+} = useShowHide(modelValue, props, emit as EmitFn, element, computedId, {
+  addShowClass: false,
+  transitionProps: {
+    onBeforeLeave,
+    onEnter,
+    onLeave,
+    onAfterEnter,
+    onAfterLeave,
+  },
+})
+
+const computedClasses = computed(() => ({
+  'show': isActive.value,
+  'navbar-collapse': props.isNav,
+  'collapse-horizontal': props.horizontal,
+}))
 
 const sharedSlots = computed<SharedSlotsData>(() => ({
   toggle,

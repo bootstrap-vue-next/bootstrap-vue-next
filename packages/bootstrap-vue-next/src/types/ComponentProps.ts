@@ -111,6 +111,7 @@ export interface BAccordionProps {
   flush?: boolean
   free?: boolean
   id?: string
+  initialAnimation?: boolean
   lazy?: boolean
   modelValue?: string
   unmountLazy?: boolean
@@ -760,7 +761,7 @@ export interface BAccordionItemProps {
   unmountLazy?: boolean
   tag?: string
   title?: string
-  toggle?: boolean
+  show?: boolean
   visible?: boolean
   wrapperAttrs?: Readonly<AttrsValue>
 }
@@ -1329,7 +1330,8 @@ export interface BModalProps extends TeleporterProps, ShowHideProps {
   titleTag?: string
 }
 
-interface ShowHideProps {
+export interface ShowHideProps {
+  initialAnimation?: boolean
   noAnimation?: boolean
   noFade?: boolean
   lazy?: boolean
