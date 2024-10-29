@@ -199,7 +199,7 @@
         </BTh>
       </BTr>
     </BTfoot>
-    <BTfoot v-else-if="$slots['custom-foot']">
+    <BTfoot v-else-if="$slots['custom-foot']" :variant="props.footVariant" :class="props.tfootClass">
       <slot
         name="custom-foot"
         :fields="computedFields"
