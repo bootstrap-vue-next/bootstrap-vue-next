@@ -60,6 +60,7 @@ export const commonProps = () =>
         'The ID of the element that provides a label for this component. Used as the value for the `aria-labelledby` attribute',
     },
     autofocus: {
+      type: 'boolean',
       default: false,
       description:
         'When set to `true`, attempts to auto-focus the control when it is mounted, or re-activated when in a keep-alive. Does not set the `autofocus` attribute on the control',
