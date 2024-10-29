@@ -1,7 +1,9 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {ComponentReference, PropertyReference} from '../types'
+export {showHideProps} from './showhide-props'
 import {buildCommonProps} from './build-common-props'
 import {pick} from './object-utils'
+import {showHideProps} from './showhide-props'
 
 export const dropdownProps = {
   autoClose: {
@@ -31,21 +33,10 @@ export const dropdownProps = {
     default: false,
     description: 'Indicates the dropdown is a nav dropdown',
   },
-  lazy: {
-    type: 'boolean',
-    default: false,
-    description:
-      'When set, will only mount the dropdown content into the DOM when the dropdown is open',
-  },
   menuClass: {
     type: 'ClassValue',
     default: undefined,
     description: 'CSS class (or classes) to add to the menu container',
-  },
-  modelValue: {
-    type: 'boolean',
-    default: false,
-    description: 'Controls the visibility of the dropdown',
   },
   noCaret: {
     type: 'boolean',
@@ -72,7 +63,7 @@ export const dropdownProps = {
     default: 0,
     description: 'Specify the number of pixels to shift the menu by. See above for details.',
   },
-  skipWrapper: {
+  noWrapper: {
     type: 'boolean',
     default: false,
     description: 'Do not render the dropdown wrapper element',
@@ -146,6 +137,7 @@ export const dropdownProps = {
     default: undefined,
     description: 'Overrides the default teleport location',
   },
+  ...showHideProps,
   ...pick(
     buildCommonProps({
       role: {

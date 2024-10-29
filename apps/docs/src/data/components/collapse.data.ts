@@ -1,6 +1,6 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {ComponentReference, PropertyReference, SlotScopeReference} from '../../types'
-import {buildCommonProps, pick} from '../../utils'
+import {buildCommonProps, pick, showHideProps} from '../../utils'
 
 const sharedSlots: SlotScopeReference[] = [
   {
@@ -47,27 +47,7 @@ export default {
             description:
               'When set, signifies that the collapse is part of a navbar, enabling certain features for navbar support',
           },
-          modelValue: {
-            type: 'boolean',
-            default: false,
-            description: 'Controls the visibility of the collapse',
-          },
-          skipAnimation: {
-            type: 'boolean',
-            default: false,
-            description: 'When set, disables the animation',
-          },
-          toggle: {
-            type: 'boolean',
-            default: false,
-            description:
-              "When set, and prop 'visible' is false on mount, will animate from closed to open on initial mount",
-          },
-          visible: {
-            type: 'boolean',
-            default: false,
-            description: "When 'true', expands the collapse",
-          },
+          ...showHideProps,
           ...pick(buildCommonProps(), ['id', 'tag']),
         } satisfies Record<keyof BvnComponentProps['BCollapse'], PropertyReference>,
       },

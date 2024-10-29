@@ -1,5 +1,6 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {ComponentReference, PropertyReference} from '../../types'
+import {showHideProps} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
@@ -47,14 +48,6 @@ export default {
           id: {
             type: 'string',
             default: undefined,
-          },
-          lazy: {
-            type: 'boolean',
-            default: false,
-          },
-          modelValue: {
-            type: 'boolean',
-            default: false,
           },
           noCloseOnBackdrop: {
             type: 'boolean',
@@ -108,6 +101,7 @@ export default {
             type: 'string',
             default: undefined,
           },
+          ...showHideProps,
         } satisfies Record<keyof BvnComponentProps['BOffcanvas'], PropertyReference>,
       },
       emits: [
