@@ -279,6 +279,8 @@ watch(
 </script>
 
 <style lang="scss">
+@use 'bootstrap/dist/css/bootstrap.css';
+
 :root {
   --vp-c-brand-1: hsla(237, 31%, 35%, 1);
 }
@@ -346,6 +348,11 @@ watch(
 
     ul {
       list-style-type: disc;
+    }
+
+    table {
+      @extend .table;
+      @extend .table-striped;
     }
   }
 
