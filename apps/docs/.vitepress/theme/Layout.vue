@@ -350,6 +350,7 @@ watch(
       list-style-type: disc;
     }
 
+    // alternative solution until https://github.com/vuejs/vitepress/pull/4082 is released
     table {
       @extend .table;
       @extend .table-striped;
