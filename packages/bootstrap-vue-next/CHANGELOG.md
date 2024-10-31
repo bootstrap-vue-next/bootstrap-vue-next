@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.25.11](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.10...bootstrapvuenext-v0.25.11) (2024-10-31)
+
+
+### Features
+
+* **BPagination:** add small screen support ([#2308](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2308)) ([9764584](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/97645843d0d47afa69286fee4f965841295125ed))
+
+
+### Bug Fixes
+
+* **BPagination:** fix maximum of 4 page number buttons displayed on small screens ([9764584](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/97645843d0d47afa69286fee4f965841295125ed))
+
 ## [0.25.10](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.9...bootstrapvuenext-v0.25.10) (2024-10-25)
 
 
