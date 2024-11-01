@@ -437,7 +437,7 @@ const showComputedHeaders = computed(() => {
 
 const footerProps = computed(() => ({
   variant: props.footVariant,
-  class: props.tfootClass
+  class: props.tfootClass,
 }))
 
 const itemAttributes = (item: Items, fieldKey: string, attr?: unknown) => {
