@@ -163,7 +163,7 @@
         </BTr>
       </slot>
     </BTbody>
-    <BTfoot v-if="props.footClone" :variant="props.footVariant" :class="props.tfootClass">
+    <BTfoot v-if="props.footClone" v-bind="footerProps">
       <BTr :variant="props.footRowVariant" :class="props.tfootTrClass">
         <BTh
           v-for="field in computedFields"
@@ -199,11 +199,7 @@
         </BTh>
       </BTr>
     </BTfoot>
-    <BTfoot
-      v-else-if="$slots['custom-foot']"
-      :variant="props.footVariant"
-      :class="props.tfootClass"
-    >
+    <BTfoot v-else-if="$slots['custom-foot']" v-bind="footerProps">
       <slot
         name="custom-foot"
         :fields="computedFields"
@@ -437,6 +433,11 @@ const showComputedHeaders = computed(() => {
   if (computedFieldsTotal.value > 0 && computedFields.value.every((el) => el._noHeader === true))
     return false
   return true
+})
+
+const footerProps = computed(() => ({
+  variant: props.footerVariant,
+  class: props.tfootClass
 })
 
 const itemAttributes = (item: Items, fieldKey: string, attr?: unknown) => {
