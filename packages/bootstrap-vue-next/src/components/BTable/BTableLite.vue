@@ -436,7 +436,7 @@ const showComputedHeaders = computed(() => {
 })
 
 const footerProps = computed(() => ({
-  variant: props.footerVariant,
+  variant: props.footVariant,
   class: props.tfootClass
 }))
 
