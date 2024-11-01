@@ -6,7 +6,7 @@
     :role="isFieldset ? null : 'group'"
     :aria-invalid="computedAriaInvalid"
     :aria-labelledby="isFieldset && isHorizontal ? labelId : null"
-    :class="[stateClass, {'was-validated': props.validated}]"
+    :class="['bv-form-group', stateClass, {'was-validated': props.validated}]"
   >
     <ContentTemplate.define>
       <BFormInvalidFeedback
