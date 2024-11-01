@@ -86,3 +86,19 @@ export const eventOnOff = (on: boolean, eventParams: Parameters<typeof eventOff>
   const method = on ? eventOn : eventOff
   method(...eventParams)
 }
+
+// Utility method to prevent the default event handling and propagation
+export const stopEvent = (
+  event: Readonly<Event>,
+  {preventDefault = true, propagation = false, immediatePropagation = false} = {}
+) => {
+  if (preventDefault) {
+    event.preventDefault()
+  }
+  if (propagation) {
+    event.stopPropagation()
+  }
+  if (immediatePropagation) {
+    event.stopImmediatePropagation()
+  }
+}
