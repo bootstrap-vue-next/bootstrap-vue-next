@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.25.12](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.11...bootstrapvuenext-v0.25.12) (2024-11-01)
+
+
+### Bug Fixes
+
+* **BFormGroup:** fix layout problem when label-for is not used ([#2321](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2321)) ([61d2b6b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/61d2b6b2725c5c5e8af1ffdca2440285d411e5b3))
+
 ## [0.25.11](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.10...bootstrapvuenext-v0.25.11) (2024-10-31)
 
 
