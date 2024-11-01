@@ -42,8 +42,6 @@ The showing of the `ellipsis` can be optionally disabled by setting the `hide-el
 
 #### Small screen support
 
-<NotYetImplemented />
-
 On smaller screens (i.e. mobile), some of the `BPagination` buttons will be hidden to minimize
 the potential of the pagination interface wrapping onto multiple lines:
 

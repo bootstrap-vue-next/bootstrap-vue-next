@@ -78,6 +78,10 @@ For consistency with other components properties, slots and events that use the 
 now use the term `close`. For example the `dismissed` event is now the `closed` event and the `dsimiss` slot is
 now the `close` slot.
 
+## BAspect
+
+<NotYetImplemented/>
+
 ## BAvatar
 
 Icon support has been deprecated. Icons support can be implemented using the default slot including
@@ -125,6 +129,10 @@ embedded svg for the close icon. See [their migration guide](https://getbootstra
 [Keyboard navigation](https://bootstrap-vue.org/docs/components/button-toolbar#keyboard-navigation) is
 not implemented.
 
+## BCalendar
+
+<NotYetImplemented><BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">See issue #1860</BLink></NotYetImplemented>
+
 ## BCard
 
 Image placement is accomplished by the single `img-placement` prop, which takes the values
@@ -148,6 +156,10 @@ and `BCardTitle` components.
 
 `body-border-variant` and `body-variant` are not implemented on `BCard` and `border-variant` is not
 implemented on `BCardBody`.
+
+## BCardImgLazy
+
+This functionality has been replaced by lazy loading on `<BImg>` see [BImg notes](#bimg) for details.
 
 ## BCarousel
 
@@ -227,6 +239,10 @@ use the `form-class` prop.
 
 The `disabled` prop is deprecated, set the disabled prop on individual components as you do with `BForm`.
 
+## BEmbed
+
+<NotYetImplemented/>
+
 ## BForm
 
 Bootstrap 5 has dropped form-specific layout classes for the grid system. See the
@@ -246,6 +262,10 @@ property and `update:model-value` events. Bootstrap-vue-next no longer provides 
 
 See the [Vue 3 migration guide](https://v3-migration.vuejs.org/breaking-changes/v-model.html)
 for more info.
+
+## BFormDatePicker
+
+<NotYetImplemented><BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">See issue #1860</BLink></NotYetImplemented>
 
 ## BFormGroup
 
@@ -267,12 +287,24 @@ They work as documented in vue.js, so there is no longer a need for the properti
 
 [Options as an object](https://bootstrap-vue.org/docs/components/form-select#options-as-an-object) was deprecated in BootstrapVue and never implemented in BootstrapVueNext
 
+## BFormTimePicker
+
+<NotYetImplemented><BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">See issue #1860</BLink></NotYetImplemented>
+
+## BFormRating
+
+<NotYetImplemented><BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2051">See issue #2051</BLink></NotYetImplemented>
+
 ## BImg
 
 See the [Rounding](#rounding) section.
 
 Lazy loading is now achieved through the native `loading` attribute rather than a seperate component. Thus
 `BImgLazy` and `BCardImgLazy` are deprecated.
+
+## BImgLazy
+
+This functionality has been replaced by lazy loading on `<BImg>` see [BImg](#bimg) for details.
 
 ## BInputGroup
 
@@ -310,6 +342,14 @@ a limitation that affect your scenario, please [file an issue](https://github.co
 [`trim`, `lazy`, and `number`](https://vuejs.org/guide/essentials/forms.html#modifiers).
 They work as documented in vue.js, so there is no longer a need for the properties.
 
+## BJumbotron
+
+<NotYetImplemened/>
+
+Note that Bootstrap has deprecated their Jumbotron component, but it can be replicated using
+utility classes. See their [migration guide](https://getbootstrap.com/docs/5.3/migration/#jumbotron)
+for details.
+
 ## BLink
 
 Bootstrap Vue used `Vue Router 3`, BSVN uses [`Vue Router 4`](https://router.vuejs.org/) please read the
@@ -340,6 +380,13 @@ BSVN no longer emits the `bv::link::clicked` event on `$root`.
 
 See [BLink](#blink) for changes to link and router behavior.
 
+## BMedia
+
+<NotYetImplemened/>
+
+Note that Bootstrap has deprecated their Media object, but it can be replicated using
+flex utility classes. See their [documentation](https://getbootstrap.com/docs/5.3/utilities/flex/#media-object) for details.
+
 ## BModal
 
 ### Replacement for Modal Message boxes
@@ -369,3 +416,15 @@ Keyboard Navigation and Small Screen Support.
 ## BPaginationNav
 
 <NotYetImplemented/>
+
+## BSkeleton
+
+`<BSkeleton*>` components have been replaced by the more appropriately named `<BPlaceholder*>` components.
+
+`<BSkeletonIcon>` is deprecated along with the rest of the the BootstrapVue icon support. See our
+[icon documentation](/docs/icons) for details. This functionality can be replicated by using
+`<BplaceholderWrapper>` with your choice of icon replacement in the `loading` slot.
+
+## BTime
+
+<NotYetImplemented><BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">See issue #1860</BLink></NotYetImplemented>
