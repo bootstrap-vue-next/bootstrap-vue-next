@@ -329,9 +329,8 @@ const pageClick = (event: Readonly<MouseEvent>, pageNumber: number) => {
 
 const isDisabled = (el: HTMLButtonElement) => {
   const isElement = !!(el && el.nodeType === Node.ELEMENT_NODE)
-  const hasAttr = 'disabled' && isElement ? el.hasAttribute('disabled') : null
-  const hasClass =
-    'disabled' && isElement && el.classList ? el.classList.contains('disabled') : false
+  const hasAttr = isElement ? el.hasAttribute('disabled') : null
+  const hasClass = isElement && el.classList ? el.classList.contains('disabled') : false
 
   return !isElement || el.disabled || hasAttr || hasClass
 }
