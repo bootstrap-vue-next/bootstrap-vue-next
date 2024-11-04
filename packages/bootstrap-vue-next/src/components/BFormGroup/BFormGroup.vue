@@ -58,7 +58,7 @@
         </component>
       </template>
     </LabelContentTemplate.define>
-    <BFormRow v-if="isHorizontal && !isFieldset">
+    <BFormRow v-if="isHorizontal">
       <LabelContentTemplate.reuse />
       <BCol v-bind="contentColProps" ref="content">
         <slot

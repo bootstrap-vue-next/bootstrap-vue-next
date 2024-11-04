@@ -12,30 +12,7 @@ Create multi-line text inputs with support for auto height sizing, minimum and m
 
 </div>
 
-<HighlightCard>
-  <BFormTextarea
-    id="textarea"
-    v-model="textEx1"
-    placeholder="Enter something..."
-    rows="3"
-  />
-  <pre class="mt-3 mb-0">{{ textEx1 }}</pre>
-  <template #html>
-
-```vue
-<template>
-  <BFormTextarea id="textarea" v-model="textEx1" placeholder="Enter something..." rows="3" />
-
-  <pre class="mt-3 mb-0">{{ textEx1 }}</pre>
-</template>
-
-<script setup lang="ts">
-const textEx1 = ref()
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/TextareaOverview.vue
 
 ## Control sizing
 
@@ -43,64 +20,7 @@ Set text height using the `size` prop to `sm` or `lg` for small or large respect
 
 To control width, place the input inside standard Bootstrap grid column.
 
-<HighlightCard>
-  <BRow>
-    <BCol sm="2">
-      <label for="textarea-small">Small:</label>
-    </BCol>
-    <BCol sm="10">
-      <BFormTextarea id="textarea-small" size="sm" placeholder="Small textarea" />
-    </BCol>
-  </BRow>
-  <BRow class="mt-2">
-    <BCol sm="2">
-      <label for="textarea-default">Default:</label>
-    </BCol>
-    <BCol sm="10">
-      <BFormTextarea id="textarea-default" placeholder="Default textarea" />
-    </BCol>
-  </BRow>
-  <BRow class="mt-2">
-    <BCol sm="2">
-      <label for="textarea-large">Large:</label>
-    </BCol>
-    <BCol sm="10">
-      <BFormTextarea id="textarea-large" size="lg" placeholder="Large textarea" />
-    </BCol>
-  </BRow>
-  <template #html>
-
-```vue-html
-<BRow>
-  <BCol sm="2">
-    <label for="textarea-small">Small:</label>
-  </BCol>
-  <BCol sm="10">
-    <BFormTextarea id="textarea-small" size="sm" placeholder="Small textarea" />
-  </BCol>
-</BRow>
-
-<BRow class="mt-2">
-  <BCol sm="2">
-    <label for="textarea-default">Default:</label>
-  </BCol>
-  <BCol sm="10">
-    <BFormTextarea id="textarea-default" placeholder="Default textarea" />
-  </BCol>
-</BRow>
-
-<BRow class="mt-2">
-  <BCol sm="2">
-    <label for="textarea-large">Large:</label>
-  </BCol>
-  <BCol sm="10">
-    <BFormTextarea id="textarea-large" size="lg" placeholder="Large textarea" />
-  </BCol>
-</BRow>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/TextareaSizing.vue#template{vue-html}
 
 ## Displayed rows
 
@@ -108,41 +28,32 @@ To set the height of `BFormTextarea`, set the `rows` prop to the desired number 
 value is provided to `rows`, then it will default to `2` (the browser default and minimum acceptable
 value). Setting it to null or a value below 2 will result in the default of `2` being used.
 
-<HighlightCard>
-  <BFormTextarea id="textarea-rows" placeholder="Tall textarea" rows="8" />
-  <template #html>
-
-```vue
-<BFormTextarea id="textarea-rows" placeholder="Tall textarea" rows="8" />
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/TextareaDisplayedRows.vue#template{vue-html}
 
 ### Disable resize handle
 
 Some web browsers will allow the user to re-size the height of the textarea. To disable this
 feature, set the `no-resize` prop to `true`.
 
-<HighlightCard>
-  <BFormTextarea
-    id="textarea-no-resize"
-    placeholder="Fixed height textarea"
-    rows="3"
-    no-resize
-  />
-  <template #html>
-
-```vue
-<BFormTextarea id="textarea-no-resize" placeholder="Fixed height textarea" rows="3" no-resize />
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/TextareaResizeHandle.vue#template{vue-html}
 
 ### Auto height
 
-<NotYetImplemented />
+`<BFormTextarea>` can also automatically adjust its height (text rows) to fit the content, even as
+the user enters or deletes text. The height of the textarea will either grow or shrink to fit the
+content (grow to a maximum of `max-rows` or shrink to a minimum of `rows`).
+
+To set the initial minimum height (in rows), set the `rows` prop to the desired number of lines (or
+leave it at the default of `2`), And then set maximum rows that the text area will grow to (before
+showing a scrollbar) by setting the `max-rows` prop to the maximum number of lines of text.
+
+To make the height `sticky` (i.e. never shrink), set the `no-auto-shrink` prop to `true`. The
+`no-auto-shrink` props has no effect if `max-rows` is not set or is equal to or less than `rows`.
+
+Note that the resize handle of the textarea (if supported by the browser) will automatically be
+disabled in auto-height mode.
+
+<<< DEMO ./demo/TextareaAutoHeight.vue#template{vue-html}
 
 ## Contextual states
 
@@ -159,34 +70,7 @@ Generally speaking, you'll want to use a particular state for specific types of 
 To apply one of the contextual state icons on `BFormTextarea`, set the `state` prop to `false`
 (for invalid), `true` (for valid), or `null` (no validation state).
 
-<HighlightCard>
-  <BFormTextarea
-    id="textarea-state"
-    v-model="textStates"
-    :state="textStates.length >= 10"
-    placeholder="Enter at least 10 characters"
-    rows="3"
-  />
-  <template #html>
-
-```vue
-<template>
-  <BFormTextarea
-    id="textarea-state"
-    v-model="textStates"
-    :state="textStates.length >= 10"
-    placeholder="Enter at least 10 characters"
-    rows="3"
-  />
-</template>
-
-<script setup lang="ts">
-const textStates = ref('')
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/TextareaStates.vue
 
 ### Conveying contextual state to assistive technologies and colorblind users
 
@@ -226,84 +110,7 @@ The `formatter` function should return the formatted value as a _string_.
 
 Formatting does not occur if a `formatter` is not provided.
 
-<HighlightCard>
-  <BFormGroup
-    label="Textarea with formatter (on input)"
-    label-for="textarea-formatter"
-    description="We will convert your text to lowercase instantly"
-    class="mb-0"
-  >
-    <BFormTextarea
-      id="textarea-formatter"
-      v-model="textFormatter"
-      placeholder="Enter your text"
-      :formatter="formatter"
-    />
-  </BFormGroup>
-  <p style="white-space: pre-line"><b>Value:</b> {{ textFormatter }}</p>
-  <BFormGroup
-    label="Textarea with lazy formatter (on blur)"
-    label-for="textarea-lazy"
-    description="This one is a little lazy!"
-    class="mb-0"
-  >
-    <BFormTextarea
-      id="textarea-lazy"
-      v-model="textFormatter2"
-      placeholder="Enter your text"
-      lazy-formatter
-      :formatter="formatter"
-    />
-  </BFormGroup>
-  <p class="mb-0" style="white-space: pre-line"><b>Value:</b> {{ textFormatter2 }}</p>
-  <template #html>
-
-```vue
-<template>
-  <BFormGroup
-    label="Textarea with formatter (on input)"
-    label-for="textarea-formatter"
-    description="We will convert your text to lowercase instantly"
-    class="mb-0"
-  >
-    <BFormTextarea
-      id="textarea-formatter"
-      v-model="textFormatter"
-      placeholder="Enter your text"
-      :formatter="formatter"
-    />
-  </BFormGroup>
-
-  <p style="white-space: pre-line"><b>Value:</b> {{ textFormatter }}</p>
-
-  <BFormGroup
-    label="Textarea with lazy formatter (on blur)"
-    label-for="textarea-lazy"
-    description="This one is a little lazy!"
-    class="mb-0"
-  >
-    <BFormTextarea
-      id="textarea-lazy"
-      v-model="textFormatter2"
-      placeholder="Enter your text"
-      lazy-formatter
-      :formatter="formatter"
-    />
-  </BFormGroup>
-
-  <p class="mb-0" style="white-space: pre-line"><b>Value:</b> {{ textFormatter2 }}</p>
-</template>
-
-<script setup lang="ts">
-const textFormatter = ref('')
-const textFormatter2 = ref('')
-
-const formatter = (value) => value.toLowerCase()
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/TextareaFormatter.vue
 
 **Note:** With non-lazy formatting, if the cursor is not at the end of the input value, the cursor
 may jump to the end _after_ a character is typed. You can use the provided event object and the
@@ -316,22 +123,7 @@ If you want to have `<BFormTextarea readonly>` elements in your form styled as p
 `plaintext` prop (no need to set `readonly` as it will be set automatically) to remove the default
 form field styling and preserve the correct text size, margin, padding and height.
 
-<HighlightCard>
-  <BFormTextarea id="textarea-plaintext" plaintext :model-value="textReadOnly" />
-  <template #html>
-
-```vue
-<template>
-  <BFormTextarea id="textarea-plaintext" plaintext :model-value="textReadOnly" />
-</template>
-
-<script setup lang="ts">
-const textReadOnly = 'This is some text.\nIt is read only and does not look like an input.'
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/TextareaReadonly.vue
 
 ## Floating labels
 
@@ -339,41 +131,7 @@ When using [floating labels](/docs/components/form#floating-labels) in `BFormTex
 height. Instead set an explicit `height` (either inline or via custom CSS) as per the
 [Bootstrap 5 documentation](https://getbootstrap.com/docs/5.3/forms/floating-labels/#textareas).
 
-<HighlightCard>
-  <BFormFloatingLabel label="type something" label-for="textarea-floatinglabel">
-    <BFormTextarea
-      id="textarea-floatinglabel"
-      v-model="textFloatingLabel"
-      placeholder="Enter something..."
-      style="height: 6rem"
-    />
-  </BFormFloatingLabel>
-
-  <pre class="mt-3 mb-0">{{ textFloatingLabel }}</pre>
-
-<template #html>
-
-```vue
-<template>
-  <BFormFloatingLabel label="type something" label-for="textarea-floatinglabel">
-    <BFormTextarea
-      id="textarea-floatinglabel"
-      v-model="textFloatingLabel"
-      placeholder="Enter something..."
-      style="height: 6rem"
-    />
-  </BFormFloatingLabel>
-
-  <pre class="mt-3 mb-0">{{ textFloatingLabel }}</pre>
-</template>
-
-<script setup lang="ts">
-const textFloatingLabel = ref()
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/TextareaFloatingLabels.vue
 
 ## `v-model` modifiers
 
@@ -382,7 +140,7 @@ They work as documented in vue.js, so there is no longer a need for `trim`, `laz
 
 ## Debounce support
 
-As an alternative to the `lazy` modifier prop, `<b-form-textarea>` optionally supports debouncing
+As an alternative to the `lazy` modifier prop, `<BFormTextarea>` optionally supports debouncing
 user input, updating the `v-model` after a period of idle time from when the last character was
 entered by the user (or a `change` event occurs). If the user enters a new character (or deletes
 characters) before the idle timeout expires, the timeout is re-started.
@@ -392,29 +150,7 @@ specified in milliseconds. Setting `debounce` to `0` will disable debouncing.
 
 Note: debouncing will _not_ occur if the `lazy` prop is set.
 
-<HighlightCard>
-  <BFormTextarea id="textarea-debounce" v-model="textDebounce" rows="3" debounce="500" />
-
-  <pre class="mt-3 mb-0">{{ textDebounce }}</pre>
-
-<template #html>
-
-```vue
-<template>
-  <BFormTextarea id="textarea-debounce" v-model="textDebounce" rows="3" debounce="500" />
-
-  <pre class="mt-3 mb-0">{{ textDebounce }}</pre>
-</template>
-
-<script setup lang="ts">
-import {ref} from 'vue'
-import {BFormTextarea} from './components'
-const textDebounce = ref()
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/TextareaDebounce.vue
 
 ## Autofocus
 
@@ -438,43 +174,7 @@ on the component as a reference with name `element`. You can use that reference 
 e.g. `<BFormInput ref="foo" ... />`, `const foo = ref<InstanceType<typeof BFormInput> | null>(null)`, and then
 `foo?.value?.element?.methodName` or `foo?.value?.element?.propertyName`
 
-<HighlightCard>
-  <BFormTextarea
-    id="textarea"
-    ref="textArea"
-    v-model="textSelectEx"
-    placeholder="Enter something..."
-    rows="3"
-  />
-
-<button class="btn btn-primary mt-1" @click="selectText">Select text</button>
-<template #html>
-
-```vue
-<template>
-  <BFormTextarea
-    id="textarea"
-    ref="textArea"
-    v-model="textSelectEx"
-    placeholder="Enter something..."
-    rows="3"
-  />
-
-  <button class="btn btn-primary mt-1" @click="selectText">Select text</button>
-</template>
-
-<script setup lang="ts">
-const textSelectEx = ref('')
-const textArea = ref<InstanceType<typeof BFormTextarea> | null>(null)
-
-const selectText = () => {
-  textArea?.value?.element?.select()
-}
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/TextareaProperties.vue
 
 ### Input properties
 
@@ -500,35 +200,17 @@ const selectText = () => {
 | `.checkValidity()`     |                                   |
 | `.reportValidity()`    |                                   |
 
-Refer to https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement for more information on
+Refer to [https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement] for more information on
 these methods and properties. Support will vary based on input type.
 
 <ComponentReference :data="data" />
 
-<script setup lang="ts">
+<script lang="ts">
 import {data} from '../../data/components/formTextarea.data'
-import {ref, computed} from 'vue'
-import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
-import HighlightCard from '../../components/HighlightCard.vue'
-import NotYetImplemented from '../../components/NotYetImplemented.vue'
-import {BFormFloatingLabel, BFormGroup, BRow, BCol, BFormTextarea, BCard, BCardBody} from 'bootstrap-vue-next'
 
-const textEx1 = ref()
-const textStates = ref('')
-
-const textFormatter = ref('')
-const textFormatter2 = ref('')
-
-const formatter = (value) => value.toLowerCase()
-
-const textReadOnly = "This is some text.\nIt is read only and does not look like an input."
-
-const textFloatingLabel = ref()
-const textDebounce = ref()
-const textSelectEx = ref('')
-const textArea = ref<InstanceType<typeof BFormTextarea> | null>(null)
-const selectText = () => {
-  textArea?.value?.element?.select()
+export default {
+  setup() {
+    return {data}
+  }
 }
 </script>

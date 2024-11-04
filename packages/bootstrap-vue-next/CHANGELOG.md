@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.25.12](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.11...bootstrapvuenext-v0.25.12) (2024-11-01)
+
+
+### Bug Fixes
+
+* **BFormGroup:** fix layout problem when label-for is not used ([#2321](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2321)) ([61d2b6b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/61d2b6b2725c5c5e8af1ffdca2440285d411e5b3))
+
+## [0.25.11](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.10...bootstrapvuenext-v0.25.11) (2024-10-31)
+
+
+### Features
+
+* **BPagination:** add small screen support ([#2308](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2308)) ([9764584](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/97645843d0d47afa69286fee4f965841295125ed))
+
+
+### Bug Fixes
+
+* **BPagination:** fix maximum of 4 page number buttons displayed on small screens ([9764584](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/97645843d0d47afa69286fee4f965841295125ed))
+
 ## [0.25.10](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.9...bootstrapvuenext-v0.25.10) (2024-10-25)
 
 

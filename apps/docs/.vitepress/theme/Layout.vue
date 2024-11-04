@@ -279,6 +279,8 @@ watch(
 </script>
 
 <style lang="scss">
+@use 'bootstrap/dist/css/bootstrap.css';
+
 :root {
   --vp-c-brand-1: hsla(237, 31%, 35%, 1);
 }
@@ -346,6 +348,12 @@ watch(
 
     ul {
       list-style-type: disc;
+    }
+
+    // alternative solution until https://github.com/vuejs/vitepress/pull/4082 is released
+    table {
+      @extend .table;
+      @extend .table-striped;
     }
   }
 
