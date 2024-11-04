@@ -9,8 +9,15 @@
     tabindex="-1"
   >
     <slot name="first" />
-    <BFormCheckbox v-for="item in normalizeOptions" :key="item.self" v-bind="item.props">
-      {{ item.text }}
+    <BFormCheckbox v-for="(item, index) in normalizeOptions" :key="item.self" v-bind="item.props">
+      <slot
+        :name="slots[`option(${index})`] ? (`option(${index})` as 'option()') : 'option()'"
+        :value="item.props.value"
+        :disabled="item.props.disabled"
+        :text="item.text"
+      >
+        {{ item.text }}
+      </slot>
     </BFormCheckbox>
     <slot />
   </div>
@@ -50,11 +57,17 @@ const _props = withDefaults(defineProps<Omit<BFormCheckboxGroupProps, 'modelValu
 })
 const props = useDefaults(_props, 'BFormCheckboxGroup')
 
-defineSlots<{
+const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   first?: (props: Record<string, never>) => any
+  [key: `option(${string})`]: (props: {
+    value: string | number | undefined
+    disabled: boolean | undefined
+    text: string | undefined
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
 }>()
 
 const modelValue = defineModel<Exclude<BFormCheckboxGroupProps['modelValue'], undefined>>({

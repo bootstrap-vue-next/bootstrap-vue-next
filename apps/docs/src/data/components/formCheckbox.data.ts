@@ -18,7 +18,7 @@ export default {
             type: 'boolean',
             default: false,
             description:
-              "When set, renders the checkbox as part of a button group (it doesn't enclose the checkbox and label with a div). It is not necessary to set this to true if this is part of a RadioGroup as it is handled internally",
+              "When set, renders the checkbox as part of a button group (it doesn't enclose the checkbox and label with a div). It is not necessary to set this to true if this is part of a CheckboxGroup as it is handled internally",
           },
           buttonVariant: {
             type: 'ButtonVariant | null',
@@ -206,6 +206,29 @@ export default {
           description:
             'Slot to place for checkboxes so that they appear before checks generated from options prop',
           scope: [],
+        },
+        {
+          // eslint-disable-next-line no-template-curly-in-string
+          name: 'option(${string})',
+          description:
+            'Use this slot to have finer control over the content render inside each checkbox button. option() applies to all buttons, option(index) goes for a specific checkbox button',
+          scope: [
+            {
+              prop: 'value',
+              type: 'string | number | undefined',
+              description: 'The value of the checkbox button',
+            },
+            {
+              prop: 'disabled',
+              type: 'boolean | undefined',
+              description: 'Whether the checkbox button is disabled',
+            },
+            {
+              prop: 'text',
+              type: 'string | undefined',
+              description: 'The text to display for the checkbox button',
+            },
+          ],
         },
       ],
     },

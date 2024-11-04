@@ -164,6 +164,29 @@ export default {
             'Slot to place for radio buttons so that they appear before radios generated from options prop',
           scope: [],
         },
+        {
+          // eslint-disable-next-line no-template-curly-in-string
+          name: 'option(${string})',
+          description:
+            'Use this slot to have finer control over the content render inside each radio button. option() applies to all buttons, option(index) goes for a specific radio button',
+          scope: [
+            {
+              prop: 'value',
+              type: 'string | number | undefined',
+              description: 'The value of the radio button',
+            },
+            {
+              prop: 'disabled',
+              type: 'boolean | undefined',
+              description: 'Whether the radio button is disabled',
+            },
+            {
+              prop: 'text',
+              type: 'string | undefined',
+              description: 'The text to display for the radio button',
+            },
+          ],
+        },
       ],
     },
   ],
