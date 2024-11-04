@@ -80,6 +80,14 @@
         :row-selected="exposedSelectableUtilities.isRowSelected(scope.index)"
       />
     </template>
+    <template v-for="name in dynamicFootSlots" #[name]="scope">
+      <slot
+        :name
+        v-bind="scope"
+        :select-all-rows="exposedSelectableUtilities.selectAllRows"
+        :clear-selected="exposedSelectableUtilities.clearSelected"
+      />
+    </template>
 
     <template
       v-for="field in computedFields"
@@ -327,6 +335,13 @@ const emit = defineEmits<{
   'change': [value: Items[]]
 }>()
 
+type SortSlotScope = {
+  label: string | undefined
+  column: LiteralUnion<keyof Items>
+  field: (typeof computedFields.value)[0]
+  isFoot: false
+}
+
 const slots = defineSlots<{
   // BTableLite
   'thead-top'?: (props: {
@@ -402,27 +417,12 @@ const slots = defineSlots<{
 
   // end btable slots
 
-  [key: `sortAsc(${string})`]: (props: {
-    label: string | undefined
-    column: LiteralUnion<keyof Items>
-    field: (typeof computedFields.value)[0]
-    isFoot: false
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  [key: `sortDesc(${string})`]: (props: {
-    label: string | undefined
-    column: LiteralUnion<keyof Items>
-    field: (typeof computedFields.value)[0]
-    isFoot: false
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  [key: `sortDefault(${string})`]: (props: {
-    label: string | undefined
-    column: LiteralUnion<keyof Items>
-    field: (typeof computedFields.value)[0]
-    isFoot: false
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: `sortAsc(${string})`]: (props: SortSlotScope) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: `sortDesc(${string})`]: (props: SortSlotScope) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: `sortDefault(${string})`]: (props: SortSlotScope) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'table-busy'?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -433,6 +433,9 @@ const slots = defineSlots<{
 
 const dynamicCellSlots = computed(
   () => Object.keys(slots).filter((key) => key.startsWith('cell(')) as 'cell()'[]
+)
+const dynamicFootSlots = computed(
+  () => Object.keys(slots).filter((key) => key.startsWith('foot(')) as 'foot()'[]
 )
 
 const sortByModel = defineModel<BTableProps<Items>['sortBy']>('sortBy', {

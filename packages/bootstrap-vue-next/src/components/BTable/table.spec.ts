@@ -1,7 +1,7 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BTable from './BTable.vue'
-import type {LiteralUnion, TableField, TableItem} from '../../types'
+import type {TableField, TableItem} from '../../types'
 import {nextTick} from 'vue'
 
 interface SimplePerson {
@@ -34,7 +34,7 @@ const formattedFields: Exclude<TableField<SimplePerson>, string>[] = [
     label: 'Adult?',
     sortable: true,
     sortByFormatted: true,
-    formatter: (_value: unknown, _key?: LiteralUnion<keyof SimplePerson>, item?: SimplePerson) =>
+    formatter: (_value: unknown, _key?: unknown, item?: SimplePerson) =>
       item ? (item.age >= 18 ? 'Yes' : 'No') : 'Something went wrong',
   },
   {key: 'first_name', label: 'First Name', sortable: true},
@@ -68,45 +68,119 @@ const nestableItemsTest = {
 
 enableAutoUnmount(afterEach)
 
-describe('tbody', () => {
-  it('has table class by default', () => {
-    const wrapper = mount(BTable, {
-      props: {items: simpleItems},
+describe('structure', () => {
+  describe('tbody', () => {
+    it('has table class by default', () => {
+      const wrapper = mount(BTable, {
+        props: {items: simpleItems},
+      })
+      expect(wrapper.get('table').classes()).toContain('table')
     })
-    expect(wrapper.get('table').classes()).toContain('table')
+
+    it('has b-table class by default', () => {
+      const wrapper = mount(BTable, {
+        props: {items: simpleItems},
+      })
+      expect(wrapper.get('table').classes()).toContain('b-table')
+    })
+
+    it('creates #columns === #fields', () => {
+      const wrapper = mount(BTable, {
+        props: {items: simpleItems, fields: formattedFields},
+      })
+      const heads = wrapper.get('table').findAll('th')
+      expect(heads.length).toBe(3)
+    })
+
+    it('uses label from fields', () => {
+      const wrapper = mount(BTable, {
+        props: {items: simpleItems, fields: simpleFields},
+      })
+      const heads = wrapper.get('table').findAll('th')
+      expect(heads[0].text()).toBe('First Name')
+      expect(heads[1].text()).toBe('Age')
+    })
+
+    it('shows sortable columns when sortable === true', () => {
+      const wrapper = mount(BTable, {
+        props: {items: simpleItems, fields: simpleFields},
+      })
+      const heads = wrapper.get('table').findAll('th')
+      expect(heads[0].classes()).toContain('b-table-sortable-column')
+      expect(heads[1].classes()).toContain('b-table-sortable-column')
+    })
   })
 
-  it('has b-table class by default', () => {
-    const wrapper = mount(BTable, {
-      props: {items: simpleItems},
+  describe('dynamic slots', () => {
+    it('foot()', () => {
+      const wrapper = mount(BTable, {
+        props: {
+          fields: [{key: 'name'}, {key: 'count'}],
+          items: [
+            {
+              name: 'John Smith',
+              count: 3,
+            },
+          ],
+          responsive: true,
+          showEmpty: true,
+          bordered: true,
+          footClone: true,
+        },
+        slots: {
+          'foot(name)': 'total',
+          'foot()': 'a lot',
+        },
+      })
+      const tfoot = wrapper.get('tfoot')
+      expect(tfoot.text()).toBe('totala lot')
     })
-    expect(wrapper.get('table').classes()).toContain('b-table')
-  })
-
-  it('creates #columns === #fields', () => {
-    const wrapper = mount(BTable, {
-      props: {items: simpleItems, fields: formattedFields},
+    it('head()', () => {
+      const wrapper = mount(BTable, {
+        props: {
+          fields: [{key: 'name'}, {key: 'count'}],
+          items: [
+            {
+              name: 'John Smith',
+              count: 3,
+            },
+          ],
+          responsive: true,
+          showEmpty: true,
+          bordered: true,
+          footClone: true,
+        },
+        slots: {
+          'head(name)': 'total',
+          'head()': 'a lot',
+        },
+      })
+      const thead = wrapper.get('thead')
+      expect(thead.text()).toBe('totala lot')
     })
-    const heads = wrapper.get('table').findAll('th')
-    expect(heads.length).toBe(3)
-  })
-
-  it('uses label from fields', () => {
-    const wrapper = mount(BTable, {
-      props: {items: simpleItems, fields: simpleFields},
+    it('cell()', () => {
+      const wrapper = mount(BTable, {
+        props: {
+          fields: [{key: 'name'}, {key: 'count'}],
+          items: [
+            {
+              name: 'John Smith',
+              count: 3,
+            },
+          ],
+          responsive: true,
+          showEmpty: true,
+          bordered: true,
+          footClone: true,
+        },
+        slots: {
+          'cell(name)': 'total',
+          'cell()': 'a lot',
+        },
+      })
+      const tbody = wrapper.get('tbody')
+      expect(tbody.text()).toBe('totala lot')
     })
-    const heads = wrapper.get('table').findAll('th')
-    expect(heads[0].text()).toBe('First Name')
-    expect(heads[1].text()).toBe('Age')
-  })
-
-  it('shows sortable columns when sortable === true', () => {
-    const wrapper = mount(BTable, {
-      props: {items: simpleItems, fields: simpleFields},
-    })
-    const heads = wrapper.get('table').findAll('th')
-    expect(heads[0].classes()).toContain('b-table-sortable-column')
-    expect(heads[1].classes()).toContain('b-table-sortable-column')
   })
 })
 
