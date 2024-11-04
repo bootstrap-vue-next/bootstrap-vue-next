@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.25.13](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.12...bootstrapvuenext-v0.25.13) (2024-11-04)
+
+
+### Features
+
+* **BTable:** make it possible to style custom footers ([#2314](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2314)) ([264fc9e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/264fc9eca9e1f0951706dbf88087a2da2ba214ea))
+
+
+### Bug Fixes
+
+* **BTable:** dynamic slots not rendering fixes [#2328](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2328) ([#2329](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2329)) ([6c16a9b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6c16a9b970adb0607ea6dca9e785937aa001382b))
+
 ## [0.25.12](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.11...bootstrapvuenext-v0.25.12) (2024-11-01)
 
 
