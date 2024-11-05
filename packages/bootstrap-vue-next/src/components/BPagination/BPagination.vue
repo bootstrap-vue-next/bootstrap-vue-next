@@ -1,6 +1,5 @@
 <template>
   <ul
-    ref="element"
     class="pagination"
     :class="computedWrapperClasses"
     role="menubar"
@@ -9,7 +8,7 @@
     @keydown="handleKeyNav"
   >
     <template v-for="page in pages" :key="`page-${page.id}`">
-      <li v-bind="page.li">
+      <li v-bind="page.li" ref="pageElements">
         <span
           v-if="page.id === FIRST_ELLIPSIS || page.id === LAST_ELLIPSIS"
           v-bind="ellipsisProps.span"
@@ -37,7 +36,7 @@
 
 <script setup lang="ts">
 import {BvEvent} from '../../utils'
-import {computed, nextTick, ref, watch} from 'vue'
+import {computed, nextTick, useTemplateRef, watch} from 'vue'
 import type {BPaginationProps} from '../../types/ComponentProps'
 import {useAlignment} from '../../composables/useAlignment'
 import {useToNumber} from '@vueuse/core'
@@ -105,7 +104,7 @@ const emit = defineEmits<{
 
 const modelValue = defineModel<Exclude<BPaginationProps['modelValue'], undefined>>({default: 1})
 
-const element = ref<HTMLElement | null>(null)
+const pageElements = useTemplateRef('pageElements')
 
 const limitNumber = useToNumber(() => props.limit, {nanToZero: true, method: 'parseInt'})
 const perPageNumber = useToNumber(() => props.perPage, {nanToZero: true, method: 'parseInt'})
@@ -335,21 +334,18 @@ const isDisabled = (el: HTMLButtonElement) => {
   return !isElement || el.disabled || hasAttr || hasClass
 }
 
-const getButtons = () => {
-  const ele = element.value?.querySelectorAll(
-    'button.page-link, a.page-link'
-  ) as NodeListOf<HTMLButtonElement>
+const getButtons = () =>
+  pageElements.value
+    ?.map((page) => page.children[0] as HTMLButtonElement)
+    .filter((btn) => {
+      if (btn.getAttribute('display') === 'none') {
+        return false
+      }
 
-  return Array.from(ele).filter((btn) => {
-    if (btn.getAttribute('display') === 'none') {
-      return false
-    }
+      const bcr = btn.getBoundingClientRect()
 
-    const bcr = btn.getBoundingClientRect()
-
-    return !!(bcr && bcr.height > 0 && bcr.width > 0)
-  })
-}
+      return !!(bcr && bcr.height > 0 && bcr.width > 0)
+    }) ?? []
 
 const focusFirst = () => {
   nextTick(() => {
