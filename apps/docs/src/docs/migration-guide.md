@@ -27,6 +27,11 @@ Similarly, `left` and `right` props and values in the `bootstrap-vue-next` API a
 
 Bootstrap-vue-next will commit to breaking changes whenever Bootstrap marks something as "deprecated". These changes may be resolved automatically, or they might necessitate manual action from the library's users.
 
+### Nuxt
+
+`bootstrap-vue-next` integrates with `nuxt 3` so if you are using `nuxt`, please read their
+[migration guide](https://nuxt.com/docs/migration/overview) and our [router link support](/docs/reference/router-links) reference
+
 ## Sync modifier
 
 A number of components in `bootstrap-vue` use `v-bind`'s `.sync` modifier. This modifier has been replaced by properties
@@ -408,6 +413,14 @@ Example using `useModalController.confirm` to replace `msgBoxConfirm` (Remember 
 
 The `show` and `confirm` `props` object accespts all of the properties that are defined on
 [BModal](/docs/components/modal#component-reference) excpet for `modelValue`.
+
+## BNav
+
+`align` prop now takes values from [`AlignmentJustifyContent`](/docs/types/alignment): `start`, `center`, `end`, `between`, `around`, and `evenly`
+
+### BNavItemDropdown
+
+<NotYetImplemented>The `hide` slot does not implement the boolean argument to control returning focus to the toggle button</NotYetImplemented>
 
 ## BPagination
 
