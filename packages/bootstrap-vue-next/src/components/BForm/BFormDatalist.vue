@@ -3,7 +3,14 @@
     <slot name="first" />
     <template v-for="(option, index) in normalizedOptsWrapper" :key="index">
       <BFormSelectOption :value="option.value" :disabled="option.disabled">
-        {{ option.text }}
+        <slot
+          :name="slots[`option(${index})`] ? (`option(${index})` as 'option()') : 'option()'"
+          :value="option.value"
+          :disabled="option.disabled"
+          :text="option.text"
+        >
+          {{ option.text }}
+        </slot>
       </BFormSelectOption>
     </template>
     <slot />
@@ -35,6 +42,12 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   first?: (props: Record<string, never>) => any
+  [key: `option(${string})`]: (props: {
+    value: T
+    disabled: boolean | undefined
+    text: string | undefined
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
 }>()
 
 const computedId = useId(() => props.id, 'datalist')

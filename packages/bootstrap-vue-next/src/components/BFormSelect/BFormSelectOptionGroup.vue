@@ -8,7 +8,14 @@
       :value="option.value"
       v-bind="$attrs"
     >
-      {{ option.text }}
+      <slot
+        :name="slots[`option(${index})`] ? (`option(${index})` as 'option()') : 'option()'"
+        :value="option.value"
+        :disabled="option.disabled"
+        :text="option.text"
+      >
+        {{ option.text }}
+      </slot>
     </BFormSelectOption>
     <slot />
   </optgroup>
@@ -36,6 +43,12 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   first?: (props: Record<string, never>) => any
+  [key: `option(${string})`]: (props: {
+    value: T
+    disabled: boolean | undefined
+    text: string | undefined
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
 }>()
 
 const {normalizedOptions} = useFormSelect(() => props.options, props)
