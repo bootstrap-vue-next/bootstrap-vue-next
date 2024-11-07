@@ -1,6 +1,14 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {ComponentReference, PropertyReference} from '../../types'
-import {buildCommonProps, pick} from '../../utils'
+import {
+  buildCommonProps,
+  dropdownEmits,
+  dropdownProps,
+  dropdownSlots,
+  omit,
+  pick,
+} from '../../utils'
+import {linkProps, linkTo} from '../../utils/link-props'
 
 export default {
   load: (): ComponentReference[] => [
@@ -12,51 +20,64 @@ export default {
           align: {
             type: 'AlignmentJustifyContent',
             default: undefined,
+            description: 'Align the nav items in the nav to any value of AlignmentJustifyContent',
           },
           cardHeader: {
             type: 'boolean',
             default: false,
+            description: 'Set this prop when the nav is placed inside a card header',
           },
           fill: {
             type: 'boolean',
             default: false,
+            description:
+              'Proportionately fills all horizontal space with nav items. All horizontal space is occupied, but not every nav item has the same width',
           },
           justified: {
             type: 'boolean',
             default: false,
+            description:
+              "Fills all horizontal space with nav items, but unlike 'fill', every nav item will be the same width",
           },
           pills: {
             type: 'boolean',
             default: false,
+            description: 'Renders the nav items with the appearance of pill buttons',
           },
           small: {
             type: 'boolean',
             default: false,
+            description: 'Makes the nav smaller',
           },
           tabs: {
             type: 'boolean',
             default: false,
-          },
-          tag: {
-            type: 'string',
-            default: 'ul',
+            description: 'Renders the nav items with the appearance of tabs',
           },
           underline: {
             type: 'boolean',
             default: false,
+            description: 'Adds an underline to the active nav item',
           },
           vertical: {
             type: 'boolean',
             default: false,
+            description: 'Stacks the nav items vertically',
           },
+          ...pick(
+            buildCommonProps({
+              tag: {
+                default: 'ul',
+              },
+            }),
+            ['tag']
+          ),
         } satisfies Record<keyof BvnComponentProps['BNav'], PropertyReference>,
       },
-      emits: [],
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the nav',
         },
       ],
     },
@@ -65,46 +86,26 @@ export default {
       sourcePath: '/BNav/BNavForm.vue',
       props: {
         '': {
-          floating: {
-            type: 'boolean',
-            default: undefined,
-          },
-          id: {
-            type: 'string',
-            default: undefined,
-          },
-          novalidate: {
-            type: 'boolean',
-            default: undefined,
-          },
-          role: {
-            type: 'string',
-            default: undefined,
-          },
-          validated: {
-            type: 'boolean',
-            default: undefined,
-          },
+          ...pick(buildCommonProps(), ['floating', 'id', 'novalidate', 'role', 'validated']),
         } satisfies Record<keyof BvnComponentProps['BNavForm'], PropertyReference>,
       },
       emits: [
         {
+          event: 'submit',
+          description: 'Emitted when the form is submitted',
           args: [
             {
               arg: 'submit',
-              description: '',
               type: 'Event',
+              description: 'Native submit event',
             },
           ],
-          description: '',
-          event: 'submit',
         },
       ],
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the nav form',
         },
       ],
     },
@@ -113,104 +114,31 @@ export default {
       sourcePath: '/BNav/BNavItem.vue',
       props: {
         '': {
-          active: {
-            type: 'boolean',
-            default: undefined,
-          },
-          activeClass: {
-            type: 'string',
-            default: undefined,
-          },
-          disabled: {
-            type: 'boolean',
-            default: undefined,
-          },
-          exactActiveClass: {
-            type: 'string',
-            default: undefined,
-          },
-          href: {
-            type: 'string',
-            default: undefined,
-          },
-          icon: {
-            type: 'boolean',
-            default: undefined,
-          },
           linkAttrs: {
             type: 'Readonly<AttrsValue>',
             default: undefined,
+            description: 'Additional attributes to place on the nested link element',
           },
           linkClass: {
             type: 'ClassValue',
             default: undefined,
+            description: 'CSS class (or classes) to place on the nested link element',
           },
-          opacity: {
-            type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
-            default: undefined,
+        } satisfies Record<
+          Exclude<keyof BvnComponentProps['BNavItem'], keyof typeof linkProps>,
+          PropertyReference
+        >,
+        'BLink props': {
+          _linkTo: {
+            type: linkTo,
           },
-          opacityHover: {
-            type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
-            default: undefined,
-          },
-          rel: {
-            type: 'string',
-            default: undefined,
-          },
-          replace: {
-            type: 'boolean',
-            default: undefined,
-          },
-          routerComponentName: {
-            type: 'string',
-            default: undefined,
-          },
-          stretched: {
-            type: 'boolean',
-            default: false,
-          },
-          target: {
-            type: 'LinkTarget',
-            default: undefined,
-          },
-          to: {
-            type: 'RouteLocationRaw',
-            default: undefined,
-          },
-          underlineOffset: {
-            type: "1 | 2 | 3 | '1' | '2' | '3'",
-            default: undefined,
-          },
-          underlineOffsetHover: {
-            type: "1 | 2 | 3 | '1' | '2' | '3'",
-            default: undefined,
-          },
-          underlineOpacity: {
-            type: "0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'",
-            default: undefined,
-          },
-          underlineOpacityHover: {
-            type: "0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'",
-            default: undefined,
-          },
-          underlineVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-          variant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-          noPrefetch: {},
-          noRel: {},
-          prefetch: {},
-          prefetchedClass: {},
-        } satisfies Record<keyof BvnComponentProps['BNavItem'], PropertyReference>,
+          ...omit(linkProps, ['routerTag']),
+        },
       },
       emits: [
         {
           event: 'click',
-          description: '',
+          description: 'Emitted when non-disabled nav item clicked',
           args: [
             {
               arg: 'click',
@@ -222,9 +150,8 @@ export default {
       ],
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the nav item',
         },
       ],
     },
@@ -232,221 +159,10 @@ export default {
       component: 'BNavItemDropdown',
       sourcePath: '/BNav/BNavItemDropdown.vue',
       props: {
-        '': {
-          autoClose: {
-            type: "boolean | 'inside' | 'outside'",
-            default: true,
-          },
-          boundary: {
-            type: 'Boundary | RootBoundary',
-            default: 'clippingAncestors',
-          },
-          boundaryPadding: {
-            type: 'Padding',
-            default: undefined,
-          },
-          floatingMiddleware: {
-            type: 'Middleware[]',
-            default: undefined,
-          },
-          isNav: {
-            type: 'boolean',
-            default: true,
-          },
-          lazy: {
-            type: 'boolean',
-            default: false,
-          },
-          menuClass: {
-            type: 'ClassValue',
-            default: undefined,
-          },
-          modelValue: {
-            type: 'boolean',
-            default: false,
-          },
-          noCaret: {
-            type: 'boolean',
-            default: false,
-          },
-          noFlip: {
-            type: 'boolean',
-            default: false,
-          },
-          noShift: {
-            type: 'boolean',
-            default: false,
-          },
-          noSize: {
-            type: 'boolean',
-            default: false,
-          },
-          offset: {
-            type: 'number | string | {mainAxis?: number | string; crossAxis?: number; alignmentAxis?: number | null}',
-            default: 0,
-          },
-          skipWrapper: {
-            type: 'boolean',
-          },
-          split: {
-            type: 'boolean',
-            default: false,
-          },
-          splitButtonType: {
-            type: 'ButtonType',
-            default: 'button',
-          },
-          splitClass: {
-            type: 'ClassValue',
-            default: undefined,
-          },
-          splitDisabled: {
-            type: 'boolean',
-            default: undefined,
-          },
-          splitHref: {
-            type: 'string',
-            default: undefined,
-          },
-          splitTo: {
-            type: 'RouteLocationRaw',
-            default: undefined,
-          },
-          splitVariant: {
-            type: 'ButtonVariant | null',
-            default: undefined,
-          },
-          strategy: {
-            type: 'Strategy',
-            default: 'absolute',
-          },
-          teleportDisabled: {
-            type: 'boolean',
-            default: false,
-          },
-          teleportTo: {
-            type: 'string | RendererElement | null | undefined',
-            default: undefined,
-          },
-          text: {
-            type: 'string',
-            default: undefined,
-          },
-          toggleClass: {
-            type: 'ClassValue',
-            default: undefined,
-          },
-          toggleText: {
-            type: 'string',
-            default: 'Toggle dropdown',
-          },
-          variant: {
-            type: 'ButtonVariant | null',
-            default: 'link',
-          },
-          wrapperClass: {
-            type: 'ClassValue',
-          },
-          ...pick(buildCommonProps(), ['ariaLabel', 'disabled', 'id', 'size', 'role', 'placement']),
-        } satisfies Record<keyof BvnComponentProps['BNavItemDropdown'], PropertyReference>,
+        '': dropdownProps,
       },
-      emits: [
-        {
-          event: 'update:model-value',
-          args: [
-            {
-              arg: 'value',
-              description: "The new value of the dropdown's state",
-              type: 'boolean',
-            },
-          ],
-          description: 'Emitted when the dropdown state changes',
-        },
-        {
-          event: 'show',
-          args: [
-            {
-              arg: 'value',
-              description: '',
-              type: 'BvTriggerableEvent',
-            },
-          ],
-          description: '',
-        },
-        {
-          event: 'shown',
-          args: [],
-          description: '',
-        },
-        {
-          event: 'hide',
-          args: [
-            {
-              arg: 'value',
-              description: '',
-              type: 'BvTriggerableEvent',
-            },
-          ],
-          description: '',
-        },
-        {
-          event: 'hidden',
-          args: [],
-          description: '',
-        },
-        {
-          event: 'hide-prevented',
-          args: [],
-          description: 'Emitted when the dropdown tried to close, but was prevented from doing so.',
-        },
-        {
-          event: 'show-prevented',
-          args: [],
-          description: 'Emitted when the dropdown tried to open, but was prevented from doing so.',
-        },
-        {
-          event: 'toggle',
-          args: [],
-          description: '',
-        },
-        {
-          event: 'click',
-          description: '',
-          args: [
-            {
-              arg: 'click',
-              description: '',
-              type: 'MouseEvent',
-            },
-          ],
-        },
-      ],
-      slots: [
-        {
-          description: '',
-          name: 'default',
-          scope: [],
-        },
-        {
-          description: '',
-          name: 'button-content',
-          scope: [],
-        },
-        {
-          description: '',
-          name: 'toggle-text',
-          scope: [
-            {
-              prop: 'hide',
-              type: '() => void',
-            },
-            {
-              prop: 'show',
-              type: '() => void',
-            },
-          ],
-        },
-      ],
+      emits: dropdownEmits,
+      slots: dropdownSlots,
     },
     {
       component: 'BNavText',
@@ -454,18 +170,16 @@ export default {
       props: {
         '': {
           text: {
-            description: '',
+            description: 'Plain text to display in the nav',
             type: 'string',
             default: undefined,
           },
         } satisfies Record<keyof BvnComponentProps['BNavText'], PropertyReference>,
       },
-      emits: [],
       slots: [
         {
-          description: '',
+          description: 'Content to display in the nav',
           name: 'default',
-          scope: [],
         },
       ],
     },

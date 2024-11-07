@@ -194,6 +194,9 @@ BootstrapVueNext uses [floating-ui](https://floating-ui.com/) to implemented dro
 for properties souch as `boundary` as well as the alignent and placement properties. For fine control, use `floating-middleware`
 in place of `popper-opts`. Check out [our documentation](/docs/components/dropdown) and [theirs] for details.
 
+BootstrapVueNext replaces `drop-up`, `drop-left` and `drop-right` props with a single `placement` prop.
+Valid values for `placement` are defined in `float-ui`'s docs [here](https://floating-ui.com/docs/computeposition#placement).
+
 The `block` prop is deprecated. See our [`BDropdown` documentation](/docs/components/dropdown#block-level-dropdowns)
 and [Bootstrap's documentation](https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons) for
 details.
@@ -419,6 +422,8 @@ The `show` and `confirm` `props` object accespts all of the properties that are 
 `align` prop now takes values from [`AlignmentJustifyContent`](/docs/types/alignment): `start`, `center`, `end`, `between`, `around`, and `evenly`
 
 ### BNavItemDropdown
+
+See [`BDropdown`](#bdropdown) for details
 
 <NotYetImplemented>The `hide` slot does not implement the boolean argument to control returning focus to the toggle button</NotYetImplemented>
 

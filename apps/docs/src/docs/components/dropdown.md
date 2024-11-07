@@ -40,11 +40,13 @@ Turn your dropdown menu into a drop-up menu by setting the `placement` prop.
 
 <<< DEMO ./demo/DropdownDropup.vue#template{vue-html}
 
-### Drop start or end
+### Drop placement
 
-Turn your dropdown menu into a drop-end or drop-start menu by setting the `placement` prop.
+Turn your dropdown menu into a drop left, right or other menu by setting the `placement` prop.
 
-<<< DEMO ./demo/DropdownStartEnd.vue#template{vue-html}
+Values for `placement` come from [floating-ui's placement definition](https://floating-ui.com/docs/computeposition#placement).
+
+<<< DEMO ./demo/DropdownPlacement.vue#template{vue-html}
 
 ### Auto "flipping"
 

@@ -187,8 +187,10 @@ components, to created tabbed content that changes with route URL:
 
 <<< FRAGMENT ./demo/NavRouter.vue#template{vue-html}
 
-Note: Vue Router does not support defining active routes with hashes (`#`), which is why you must
+::: info
+Vue Router does not support defining active routes with hashes (`#`), which is why you must
 define the "tab" content as child routes.
+:::
 
 **Example router config for above:**
 
