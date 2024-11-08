@@ -207,6 +207,9 @@ The `html` prop has been deprecated, use the `button-content`.
 
 `$root` instance events `bv::dropdown::hide` and `bv::dropdown::show` are deprecrated.
 
+The the boolean argument to control returning focus to the toggle button on the `hide` scoped property of the default slot is deprecated.
+It is less important in BSVN since bootstrap v5 by default doesn't have the focus ring that v4 has.
+
 <NotYetImplemented>`toggleAttrs`</NotYetImplemented>
 
 ### Dropdown sub-components
@@ -424,8 +427,6 @@ The `show` and `confirm` `props` object accespts all of the properties that are 
 ### BNavItemDropdown
 
 See [`BDropdown`](#bdropdown) for details
-
-<NotYetImplemented>The `hide` slot does not implement the boolean argument to control returning focus to the toggle button</NotYetImplemented>
 
 ## BPagination
 
