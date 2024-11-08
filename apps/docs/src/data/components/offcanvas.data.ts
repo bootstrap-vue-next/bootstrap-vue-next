@@ -9,6 +9,12 @@ export default {
       sourcePath: '/BOffcanvas/BOffcanvas.vue',
       props: {
         '': {
+          backdropFirst: {
+            type: 'boolean',
+            default: false,
+            description:
+              'Animate the backdrop before the offcanvas, and on leave animate the offcanvas before the backdrop',
+          },
           bodyAttrs: {
             type: 'Readonly<AttrsValue>',
             default: undefined,

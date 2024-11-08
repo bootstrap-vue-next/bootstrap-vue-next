@@ -1,10 +1,10 @@
 <template>
   <slot name="header" v-bind="sharedSlots" />
   <Transition
-    v-bind="basicTransitionProps"
+    v-bind="transitionProps"
     :enter-active-class="computedNoAnimation ? '' : 'collapsing'"
     :leave-active-class="computedNoAnimation ? '' : 'collapsing'"
-    :appear="true"
+    :appear="modelValue"
   >
     <component
       :is="props.tag"
@@ -16,7 +16,7 @@
       :is-nav="props.isNav"
       v-bind="$attrs"
     >
-      <slot v-if="contentShowing || isActive" v-bind="sharedSlots" />
+      <slot v-if="contentShowing" v-bind="sharedSlots" />
     </component>
   </Transition>
   <slot name="footer" v-bind="sharedSlots" />
@@ -48,6 +48,7 @@ defineOptions({
 const _props = withDefaults(defineProps<Omit<BCollapseProps, 'modelValue'>>(), {
   horizontal: false,
   id: undefined,
+  initialAnimation: false,
   isNav: false,
   lazy: false,
   noAnimation: false,
@@ -146,15 +147,21 @@ const {
   isActive,
   computedNoAnimation,
   contentShowing,
-  basicTransitionProps,
+  transitionProps,
 } = useShowHide(modelValue, props, emit as EmitFn, element, computedId, {
-  addShowClass: false,
+  // addShowClass: false,
   transitionProps: {
     onBeforeLeave,
     onEnter,
     onLeave,
     onAfterEnter,
     onAfterLeave,
+    enterToClass: '',
+    leaveToClass: '',
+    enterFromClass: '',
+    leaveFromClass: '',
+    enterActiveClass: '',
+    leaveActiveClass: '',
   },
 })
 

@@ -20,9 +20,7 @@ export default defineComponent({
   setup(props, {slots}) {
     // use this untill https://github.com/vuejs/core/issues/9782 is resolved
     return () =>
-      props.disabled || !props.to
-        ? slots.default?.({})
-        : h(Teleport, {to: props.to}, [slots.default?.({})])
+      h(Teleport, {to: props.to, disabled: props.disabled || !props.to}, [slots.default?.({})])
   },
 })
 </script>

@@ -53,6 +53,12 @@ export default {
             description:
               "Specify which built-in button to focus once the modal opens: 'ok', 'cancel', or 'close'",
           },
+          backdropFirst: {
+            type: 'boolean',
+            default: false,
+            description:
+              'Animate the backdrop before the modal, and on leave animate the modal before the backdrop',
+          },
           body: {
             type: 'string',
             default: undefined,

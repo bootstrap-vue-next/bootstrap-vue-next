@@ -5,7 +5,7 @@
     :to="props.teleportTo"
     :disabled="!props.teleportTo || props.teleportDisabled"
   >
-    <Transition v-bind="fadeTransitionProps" :appear="true">
+    <Transition v-bind="transitionProps" :appear="modelValue">
       <div
         v-show="showRef && !hidden"
         :id="computedId"
@@ -105,6 +105,7 @@ const _props = withDefaults(defineProps<Omit<BPopoverProps, 'modelValue'>>(), {
   floatingMiddleware: undefined,
   hideMargin: 2,
   id: undefined,
+  initialAnimation: false,
   inline: false,
   lazy: false,
   manual: false,
@@ -287,7 +288,7 @@ const {
   show,
   toggle,
   computedNoAnimation,
-  fadeTransitionProps,
+  transitionProps,
   contentShowing,
   isVisible,
 } = useShowHide(modelValue, props, emit as EmitFn, element, computedId, {

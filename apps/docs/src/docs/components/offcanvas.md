@@ -55,10 +55,10 @@ Customize location with four standard options `top, bottom, start, end`.
 
 ```vue
 <template>
-  <BButton @click="click" class="m-2">Show start</BButton>
-  <BButton @click="click" class="m-2">Show end</BButton>
-  <BButton @click="click" class="m-2">Show bottom</BButton>
-  <BButton @click="click" class="m-2">Show top</BButton>
+  <BButton @click="click('start')" class="m-2">Show start</BButton>
+  <BButton @click="click('end')" class="m-2">Show end</BButton>
+  <BButton @click="click('bottom')" class="m-2">Show bottom</BButton>
+  <BButton @click="click('top')" class="m-2">Show top</BButton>
 
   <BOffcanvas v-model="show" :placement="placement" />
 </template>

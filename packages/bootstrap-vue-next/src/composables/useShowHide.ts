@@ -3,38 +3,14 @@ import {BvTriggerableEvent} from '../utils'
 import {useEventListener} from '@vueuse/core'
 
 export const fadeBaseTransitionProps = {
-  // enterToClass: 'showing',
-  // leaveToClass: 'hiding',
-  // enterFromClass: '',
-  // leaveFromClass: '',
-  enterToClass: '',
-  leaveToClass: 'showing',
-  enterFromClass: 'showing',
-  leaveFromClass: '',
-  css: true,
-
   name: 'fade',
   enterActiveClass: '',
-  leaveActiveClass: '',
-  onEnter: (el: Element) => {
-    requestAnimationFrame(() => {
-      el.classList.add('show')
-    })
-  },
-  onLeave: (el: Element) => {
-    el.classList.remove('show')
-  },
-}
-export const emptyTransitionProps = {
+  enterFromClass: 'showing',
   enterToClass: '',
-  leaveToClass: '',
-  enterFromClass: '',
-  leaveFromClass: '',
-  css: true,
-
-  name: 'empty',
-  enterActiveClass: '',
   leaveActiveClass: '',
+  leaveFromClass: '',
+  leaveToClass: 'showing',
+  css: true,
 }
 
 interface TransitionProps {
@@ -76,12 +52,10 @@ export const useShowHide = (
   computedId: Ref<string>,
   options: {
     transitionProps?: TransitionProps
-    addShowClass?: boolean
     showFn?: () => void
     hideFn?: () => void
   } = {
     transitionProps: {},
-    addShowClass: true,
     showFn: () => {},
     hideFn: () => {},
   }
@@ -257,6 +231,7 @@ export const useShowHide = (
   const isLeaving = ref(false)
   const isActive = ref(false)
   const isVisible = ref(false)
+
   const onBeforeEnter = (el: Element) => {
     options.transitionProps?.onBeforeEnter?.(el)
     props.transitionProps?.onBeforeEnter?.(el)
@@ -264,21 +239,13 @@ export const useShowHide = (
   }
   const onEnter = (el: Element) => {
     requestAnimationFrame(() => {
-      if (options.addShowClass) {
-        el.classList.add('show')
-      }
-      isVisible.value = true
+      requestAnimationFrame(() => {
+        // sometimes one just isn't enough (offcanvas on the first load after refresh)
+        isVisible.value = true
+      })
     })
     options.transitionProps?.onEnter?.(el)
     props.transitionProps?.onEnter?.(el)
-  }
-  const onLeave = (el: Element) => {
-    if (options.addShowClass) {
-      el.classList.remove('show')
-    }
-    isVisible.value = false
-    options.transitionProps?.onLeave?.(el)
-    props.transitionProps?.onLeave?.(el)
   }
   const onAfterEnter = (el: Element) => {
     emit('shown', buildTriggerableEvent('shown'))
@@ -294,7 +261,12 @@ export const useShowHide = (
   const onBeforeLeave = (el: Element) => {
     isLeaving.value = true
     options.transitionProps?.onBeforeLeave?.(el)
-    props.transitionProps?.onBeforeLeave
+    props.transitionProps?.onBeforeLeave?.(el)
+  }
+  const onLeave = (el: Element) => {
+    isVisible.value = false
+    options.transitionProps?.onLeave?.(el)
+    props.transitionProps?.onLeave?.(el)
   }
   const onAfterLeave = (el: Element) => {
     emit('hidden', buildTriggerableEvent('hidden'))
@@ -311,10 +283,19 @@ export const useShowHide = (
 
   const contentShowing = computed(
     () =>
+      isActive.value === true ||
       props.lazy === false ||
-      (props.lazy === true && props.unmountLazy === true && showRef.value === true) ||
       (props.lazy === true && lazyLoadCompleted.value === true && props.unmountLazy === false)
   )
+  const trapActive = ref(false)
+  watch(isVisible, (val) => {
+    setTimeout(() => {
+      trapActive.value = val
+    }, 32)
+  })
+  const backdropVisible = ref(false)
+  const backdropReady = ref(false)
+
   const transitionFunctions = {
     ...options.transitionProps,
     onBeforeEnter,
@@ -328,24 +309,44 @@ export const useShowHide = (
     showRef,
     isVisible,
     isActive,
+    trapActive,
     show,
     hide,
     toggle,
     buildTriggerableEvent,
     computedNoAnimation,
+    localNoAnimation,
     isLeaving,
-    fadeTransitionProps: {
+    transitionProps: {
       ...fadeBaseTransitionProps,
       ...(props.transitionProps || {}),
       ...transitionFunctions,
     },
-    basicTransitionProps: {
-      ...emptyTransitionProps,
-      ...(props.transitionProps || {}),
-      ...transitionFunctions,
-    },
+
     lazyLoadCompleted,
     markLazyLoadCompleted,
     contentShowing,
+    backdropReady,
+    backdropVisible,
+    backdropTransitionProps: {
+      ...fadeBaseTransitionProps,
+      onBeforeEnter: () => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            backdropVisible.value = true
+          })
+        })
+        backdropReady.value = false
+      },
+      onAfterEnter: () => {
+        backdropReady.value = true
+      },
+      onBeforeLeave: () => {
+        backdropVisible.value = false
+      },
+      onAfterLeave: () => {
+        backdropReady.value = false
+      },
+    },
   }
 }

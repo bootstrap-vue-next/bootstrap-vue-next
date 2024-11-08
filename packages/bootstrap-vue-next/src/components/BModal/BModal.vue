@@ -1,12 +1,18 @@
 <template>
   <ConditionalTeleport :to="props.teleportTo" :disabled="props.teleportDisabled">
-    <Transition v-bind="fadeTransitionProps" :appear="true" @after-enter="onAfterEnter">
+    <Transition v-bind="transitionProps" :appear="modelValue" @after-enter="onAfterEnter">
       <div
-        v-show="showRef"
+        v-show="showRef && ((backdropReady && props.backdropFirst) || !props.backdropFirst)"
         :id="computedId"
         ref="element"
         class="modal"
-        :class="[props.modalClass, fadeClasses]"
+        :class="[
+          props.modalClass,
+          {
+            fade: !computedNoAnimation,
+            show: isVisible,
+          },
+        ]"
         role="dialog"
         :aria-labelledby="!props.noHeader ? `${computedId}-label` : undefined"
         :aria-describedby="`${computedId}-body`"
@@ -95,12 +101,15 @@
       </div>
     </Transition>
     <slot v-if="!props.noBackdrop" name="backdrop" v-bind="sharedSlots">
-      <Transition :appear="true" v-bind="fadeBaseTransitionProps">
+      <Transition v-bind="backdropTransitionProps">
         <div
-          v-show="showRef"
+          v-show="showRef || (isLeaving && props.backdropFirst && !computedNoAnimation)"
           class="modal-backdrop"
           :style="computedZIndexBackdrop"
-          :class="fadeClasses"
+          :class="{
+            fade: !computedNoAnimation,
+            show: backdropVisible,
+          }"
           @click="hide('backdrop')"
         />
       </Transition>
@@ -122,7 +131,7 @@ import {useSafeScrollLock} from '../../composables/useSafeScrollLock'
 import {isEmptySlot} from '../../utils/dom'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useModalManager} from '../../composables/useModalManager'
-import {fadeBaseTransitionProps, useShowHide} from '../../composables/useShowHide'
+import {useShowHide} from '../../composables/useShowHide'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
 
 defineOptions({
@@ -139,6 +148,7 @@ defineOptions({
 const _props = withDefaults(defineProps<Omit<BModalProps, 'modelValue'>>(), {
   autofocus: true,
   autofocusButton: undefined,
+  backdropFirst: false,
   body: undefined,
   bodyBgVariant: null,
   bodyAttrs: undefined,
@@ -172,6 +182,7 @@ const _props = withDefaults(defineProps<Omit<BModalProps, 'modelValue'>>(), {
   noHeader: false,
   noHeaderClose: false,
   id: undefined,
+  initialAnimation: false,
   lazy: false,
   modalClass: undefined,
   noBackdrop: false,
@@ -272,11 +283,16 @@ const {
   show,
   toggle,
   computedNoAnimation,
-  fadeTransitionProps,
+  transitionProps,
+  backdropTransitionProps,
   isLeaving,
   isVisible,
+  trapActive,
   contentShowing,
+  backdropReady,
+  backdropVisible,
 } = useShowHide(modelValue, props, emit as EmitFn, element, computedId, {
+  // addShowClass: false,
   transitionProps: {
     onAfterEnter,
   },
@@ -285,7 +301,7 @@ const {
 const fallbackClassSelector = 'modal-fallback-focus'
 const {needsFallback} = useActivatedFocusTrap({
   element,
-  isActive: showRef,
+  isActive: trapActive,
   noTrap: () => props.noTrap,
   fallbackFocus: {
     ref: fallbackFocusElement,
@@ -313,13 +329,6 @@ const {focused: cancelButtonFocus} = useFocus(cancelButton, {
 const {focused: closeButtonFocus} = useFocus(closeButton, {
   initialValue: modelValue.value && props.autofocusButton === 'close' && props.autofocus === true,
 })
-
-const fadeClasses = computed(() => [
-  {
-    fade: !computedNoAnimation.value,
-    show: isVisible.value,
-  },
-])
 
 const hasHeaderCloseSlot = computed(() => !isEmptySlot(slots['header-close']))
 

@@ -28,6 +28,7 @@ const _props = withDefaults(defineProps<Omit<BTooltipProps, 'modelValue'>>(), {
   floatingMiddleware: undefined,
   hide: undefined,
   id: undefined,
+  initialAnimation: false,
   inline: undefined,
   interactive: undefined,
   lazy: undefined,

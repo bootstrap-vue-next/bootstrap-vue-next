@@ -6,13 +6,13 @@
       v-model="modelValue"
       is-nav
       @show="emit('show', $event)"
-      @shown="emit('shown')"
+      @shown="emit('shown', $event)"
       @hide="emit('hide', $event)"
-      @hidden="emit('hidden')"
-      @hide-prevented="emit('hide-prevented')"
-      @show-prevented="emit('show-prevented')"
+      @hidden="emit('hidden', $event)"
+      @hide-prevented="emit('hide-prevented', $event)"
+      @show-prevented="emit('show-prevented', $event)"
       @click="emit('click', $event)"
-      @toggle="emit('toggle')"
+      @toggle="emit('toggle', $event)"
     >
       <template #button-content>
         <slot name="button-content" />
@@ -45,6 +45,7 @@ const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   disabled: false,
   floatingMiddleware: undefined,
   id: undefined,
+  initialAnimation: false,
   isNav: true,
   lazy: false,
   menuClass: undefined,
@@ -75,13 +76,13 @@ const props = useDefaults(_props, 'BNavItemDropdown')
 
 const emit = defineEmits<{
   'click': [event: MouseEvent]
-  'hidden': []
+  'hidden': [value: BvTriggerableEvent]
   'hide': [value: BvTriggerableEvent]
-  'hide-prevented': []
+  'hide-prevented': [value: BvTriggerableEvent]
   'show': [value: BvTriggerableEvent]
-  'show-prevented': []
-  'shown': []
-  'toggle': []
+  'show-prevented': [value: BvTriggerableEvent]
+  'shown': [value: BvTriggerableEvent]
+  'toggle': [value: BvTriggerableEvent]
 }>()
 
 const modelValue = defineModel<Exclude<BDropdownProps['modelValue'], undefined>>({default: false})

@@ -3,9 +3,12 @@
     :to="props.teleportTo"
     :disabled="props.teleportDisabled || isOpenByBreakpoint"
   >
-    <Transition v-bind="wasClosedByBreakpointChange ? {} : basicTransitionProps" :appear="true">
+    <Transition v-bind="transitionProps" :appear="modelValue || isOpenByBreakpoint">
       <div
-        v-show="showRef || isOpenByBreakpoint"
+        v-show="
+          (showRef && ((backdropReady && props.backdropFirst) || !props.backdropFirst)) ||
+          isOpenByBreakpoint
+        "
         :id="computedId"
         ref="element"
         aria-modal="true"
@@ -17,7 +20,7 @@
         data-bs-backdrop="false"
         v-bind="$attrs"
       >
-        <template v-if="contentShowing">
+        <template v-if="contentShowing || isOpenByBreakpoint">
           <div v-if="!props.noHeader" class="offcanvas-header" :class="props.headerClass">
             <slot name="header" v-bind="sharedSlots">
               <h5 :id="`${computedId}-offcanvas-label`" class="offcanvas-title">
@@ -55,13 +58,13 @@
       </div>
     </Transition>
     <slot v-if="!props.noBackdrop" name="backdrop" v-bind="sharedSlots">
-      <Transition :appear="true" v-bind="fadeBaseTransitionProps">
+      <Transition v-bind="backdropTransitionProps">
         <div
-          v-if="showBackdrop"
+          v-show="showBackdrop"
           class="offcanvas-backdrop"
           :class="{
             fade: !computedNoAnimation,
-            show: showRef,
+            show: backdropVisible,
           }"
           @click="hide('backdrop')"
         />
@@ -83,7 +86,7 @@ import BCloseButton from '../BButton/BCloseButton.vue'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
 import {useSafeScrollLock} from '../../composables/useSafeScrollLock'
 import {isEmptySlot} from '../../utils/dom'
-import {fadeBaseTransitionProps, useShowHide} from '../../composables/useShowHide'
+import {useShowHide} from '../../composables/useShowHide'
 import type {Placement} from '../../types/Alignment'
 
 // TODO once the responsive stuff may be implemented correctly,
@@ -99,6 +102,7 @@ defineOptions({
 })
 
 const _props = withDefaults(defineProps<Omit<BOffcanvasProps, 'modelValue'>>(), {
+  backdropFirst: false,
   bodyAttrs: undefined,
   bodyClass: undefined,
   bodyScrolling: false,
@@ -108,6 +112,7 @@ const _props = withDefaults(defineProps<Omit<BOffcanvasProps, 'modelValue'>>(), 
   headerCloseLabel: 'Close',
   headerCloseVariant: 'secondary',
   id: undefined,
+  initialAnimation: false,
   lazy: false,
   noAnimation: false,
   noBackdrop: false,
@@ -133,6 +138,7 @@ const emit = defineEmits<{
   'close': [value: BvTriggerableEvent]
   'esc': [value: BvTriggerableEvent]
   'backdrop': [value: BvTriggerableEvent]
+  'breakpoint': [value: BvTriggerableEvent]
   'hidden': [value: BvTriggerableEvent]
   'hide': [value: BvTriggerableEvent]
   'hide-prevented': [value: BvTriggerableEvent]
@@ -169,51 +175,48 @@ const modelValue = defineModel<Exclude<BOffcanvasProps['modelValue'], undefined>
 const computedId = useId(() => props.id, 'offcanvas')
 
 const breakpoints = useBreakpoints(breakpointsBootstrapV5)
-const greaterOrEqualToBreakpoint = breakpoints.greaterOrEqual(() => props.responsive ?? 'xs')
 const smallerOrEqualToBreakpoint = breakpoints.smallerOrEqual(() => props.responsive ?? 'xs')
 
-const isOpenByBreakpoint = computed(
-  () => props.responsive !== undefined && greaterOrEqualToBreakpoint.value
-)
+const isOpenByBreakpoint = ref(props.responsive !== undefined && !smallerOrEqualToBreakpoint.value)
 
 const element = useTemplateRef<HTMLElement>('element')
 const fallbackFocusElement = useTemplateRef<HTMLElement>('fallbackFocusElement')
 
-const focus = () => {
+const onAfterEnter = () => {
   nextTick(() => {
-    if (props.noFocus === false) {
+    if (props.noFocus === false && !isOpenByBreakpoint.value) {
       focused.value = true
     }
   })
 }
 
-const onAfterEnter = () => {
-  requestAnimationFrame(() => {
-    localShowRef.value = true
-  })
-  focus()
-}
-const onLeave = () => {
-  wasClosedByBreakpointChange.value = false
-  localShowRef.value = false
-}
-
-const localShowRef = ref(false)
-
-const {showRef, hide, show, toggle, computedNoAnimation, contentShowing, basicTransitionProps} =
-  useShowHide(modelValue, props, emit as EmitFn, element, computedId, {
-    addShowClass: false,
-    transitionProps: {
-      onAfterEnter,
-      onLeave,
-      enterToClass: 'showing',
-      leaveToClass: 'hiding show',
-      enterActiveClass: '',
-      leaveActiveClass: '',
-      enterFromClass: '',
-      leaveFromClass: '',
-    },
-  })
+const {
+  showRef,
+  hide,
+  show,
+  toggle,
+  computedNoAnimation,
+  contentShowing,
+  transitionProps,
+  backdropReady,
+  backdropTransitionProps,
+  backdropVisible,
+  isVisible,
+  buildTriggerableEvent,
+  localNoAnimation,
+  isLeaving,
+  trapActive,
+} = useShowHide(modelValue, props, emit as EmitFn, element, computedId, {
+  transitionProps: {
+    onAfterEnter,
+    enterToClass: 'showing',
+    leaveToClass: 'hiding',
+    enterActiveClass: '',
+    leaveActiveClass: '',
+    enterFromClass: '',
+    leaveFromClass: '',
+  },
+})
 
 useSafeScrollLock(showRef, () => props.bodyScrolling || isOpenByBreakpoint.value)
 
@@ -226,13 +229,14 @@ onKeyStroke(
 )
 
 const {focused} = useFocus(element, {
-  initialValue: modelValue.value && props.noFocus === false,
+  initialValue: modelValue.value && props.noFocus === false && !isOpenByBreakpoint.value,
 })
 
 const fallbackClassSelector = 'offcanvas-fallback-focus'
+
 const {needsFallback} = useActivatedFocusTrap({
   element,
-  isActive: localShowRef,
+  isActive: trapActive,
   noTrap: () => props.noTrap || isOpenByBreakpoint.value,
   fallbackFocus: {
     classSelector: fallbackClassSelector,
@@ -240,13 +244,12 @@ const {needsFallback} = useActivatedFocusTrap({
   },
 })
 
-const wasClosedByBreakpointChange = ref(false)
-
 const showBackdrop = computed(
   () =>
     (props.responsive === undefined || !isOpenByBreakpoint.value) &&
     props.noBackdrop === false &&
-    showRef.value === true
+    (showRef.value === true ||
+      (isLeaving.value && props.backdropFirst && !computedNoAnimation.value))
 )
 
 const hasHeaderCloseSlot = computed(() => !isEmptySlot(slots['header-close']))
@@ -264,7 +267,7 @@ const computedClasses = computed(() => [
   props.responsive === undefined ? 'offcanvas' : `offcanvas-${props.responsive}`,
   `offcanvas-${props.placement}`,
   {
-    'show': localShowRef.value,
+    'show': isVisible.value,
     [`shadow-${props.shadow}`]: !!props.shadow,
     'no-transition': computedNoAnimation.value,
   },
@@ -280,13 +283,23 @@ const sharedSlots = computed<SharedSlotsData>(() => ({
   hide,
 }))
 
-watch(greaterOrEqualToBreakpoint, (newValue) => {
-  if (props.responsive === undefined) return
-  modelValue.value = newValue
-})
 watch(smallerOrEqualToBreakpoint, (newValue) => {
-  if (props.responsive === undefined && newValue === true) return
-  wasClosedByBreakpointChange.value = true
+  if (props.responsive === undefined) return
+  if (newValue === true) {
+    localNoAnimation.value = true
+    requestAnimationFrame(() => {
+      isOpenByBreakpoint.value = false
+    })
+    emit('breakpoint', buildTriggerableEvent('breakpoint'))
+    emit('hide', buildTriggerableEvent('hide'))
+  } else {
+    localNoAnimation.value = true
+    requestAnimationFrame(() => {
+      isOpenByBreakpoint.value = true
+    })
+    emit('breakpoint', buildTriggerableEvent('breakpoint'))
+    emit('show', buildTriggerableEvent('show'))
+  }
 })
 
 defineExpose({

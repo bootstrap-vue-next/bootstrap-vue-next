@@ -4,7 +4,7 @@ import type {PropertyReference} from '../types'
 export const showHideProps = {
   initialAnimation: {
     type: 'boolean',
-    default: true,
+    default: false,
     description: 'When set, enables the initial animation on mount',
   },
   modelValue: {

@@ -1,5 +1,5 @@
 <template>
-  <Transition v-bind="fadeTransitionProps" :appear="true">
+  <Transition v-bind="transitionProps" :appear="!!modelValue">
     <div
       v-show="isToastVisible"
       :id="props.id"
@@ -76,6 +76,7 @@ const _props = withDefaults(defineProps<Omit<BToastProps, 'modelValue'>>(), {
   headerClass: undefined,
   headerTag: 'div',
   id: undefined,
+  initialAnimation: false,
   interval: 'requestAnimationFrame',
   isStatus: false,
   lazy: false,
@@ -153,7 +154,7 @@ const {
   buildTriggerableEvent,
   computedNoAnimation,
   isVisible,
-  fadeTransitionProps,
+  transitionProps,
   contentShowing,
 } = useShowHide(modelValue, props, emit as EmitFn, element, computedId)
 

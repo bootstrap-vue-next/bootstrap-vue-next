@@ -44,7 +44,7 @@
       :to="props.teleportTo"
       :disabled="!props.teleportTo || props.teleportDisabled"
     >
-      <Transition v-bind="fadeTransitionProps" :appear="true">
+      <Transition v-bind="transitionProps" :appear="modelValue">
         <ul
           v-show="showRef"
           ref="floating"
@@ -108,6 +108,7 @@ const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   disabled: false,
   floatingMiddleware: undefined,
   id: undefined,
+  initialAnimation: false,
   isNav: false,
   lazy: false,
   menuClass: undefined,
@@ -194,7 +195,7 @@ const {
   show,
   toggle,
   computedNoAnimation,
-  fadeTransitionProps,
+  transitionProps,
   contentShowing,
   isVisible,
 } = useShowHide(modelValue, props, emit as EmitFn, referencePlacement, computedId)
