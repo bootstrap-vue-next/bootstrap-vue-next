@@ -19,7 +19,7 @@
     >
       <component
         :is="props.headerTag"
-        v-if="$slots.title || props.title"
+        v-if="slots.title || props.title"
         class="toast-header"
         :class="props.headerClass"
       >
@@ -30,7 +30,7 @@
         </slot>
         <BCloseButton v-if="!props.noCloseButton" @click="hideFn('close')" />
       </component>
-      <template v-if="$slots.default || props.body">
+      <template v-if="slots.default || props.body">
         <component
           :is="computedTag"
           class="toast-body"
@@ -130,6 +130,13 @@ const emit = defineEmits<{
   'shown': [value: BvTriggerableEvent]
   'show-prevented': []
   'hide-prevented': []
+}>()
+
+const slots = defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  title?: (props: {hide: (trigger?: string) => void}) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: {hide: (trigger?: string) => void}) => any
 }>()
 
 const element = useTemplateRef('element')

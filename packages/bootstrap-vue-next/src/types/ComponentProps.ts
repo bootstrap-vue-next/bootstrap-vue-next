@@ -482,6 +482,8 @@ export interface BNavProps {
 
 export interface BNavFormProps extends BFormProps {
   role?: string
+  wrapperAttrs?: Readonly<AttrsValue>
+  formClass?: ClassValue
 }
 
 export interface BNavItemProps extends Omit<BLinkProps, 'routerTag'> {

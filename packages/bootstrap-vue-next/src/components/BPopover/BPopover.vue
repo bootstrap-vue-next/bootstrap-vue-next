@@ -22,7 +22,7 @@
         data-popper-arrow
       />
       <div class="overflow-auto" :style="sizeStyles">
-        <template v-if="props.title || $slots.title">
+        <template v-if="props.title || slots.title">
           <div
             class="position-sticky top-0"
             :class="props.tooltip ? 'tooltip-inner' : 'popover-header'"
@@ -32,7 +32,7 @@
             </slot>
           </div>
         </template>
-        <template v-if="(props.tooltip && !$slots.title && !props.title) || !props.tooltip">
+        <template v-if="(props.tooltip && !slots.title && !props.title) || !props.tooltip">
           <div :class="props.tooltip ? 'tooltip-inner' : 'popover-body'">
             <slot>
               {{ props.content }}
@@ -135,7 +135,7 @@ const emit = defineEmits<{
   'shown': [value: BvTriggerableEvent]
 }>()
 
-defineSlots<{
+const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
   target?: (props: {

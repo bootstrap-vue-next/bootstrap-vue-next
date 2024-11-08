@@ -37,7 +37,7 @@
           <!-- eslint-disable prettier/prettier -->
           <slot
             :name="
-              $slots[`head(${String(field.key)})`]
+              slots[`head(${String(field.key)})`]
                 ? (`head(${String(field.key)})` as 'head()')
                 : 'head()'
             "
@@ -51,7 +51,7 @@
           </slot>
         </BTh>
       </BTr>
-      <BTr v-if="$slots['thead-sub']">
+      <BTr v-if="slots['thead-sub']">
         <BTd
           v-for="field in computedFields"
           :key="field.key"
@@ -73,7 +73,7 @@
         :columns="computedFieldsTotal"
       >
         <BTr
-          v-if="!props.stacked && $slots['top-row']"
+          v-if="!props.stacked && slots['top-row']"
           :class="getRowClasses(null, 'row-top')"
           v-bind="callTbodyTrAttrs(null, 'row-top')"
         >
@@ -111,7 +111,7 @@
               </label>
               <slot
                 :name="
-                  $slots[`cell(${String(field.key)})`]
+                  slots[`cell(${String(field.key)})`]
                     ? (`cell(${String(field.key)})` as 'cell()')
                     : 'cell()'
                 "
@@ -124,7 +124,7 @@
                 :toggle-details="() => toggleRowDetails(item)"
                 :details-showing="isTableItem(item) ? (detailsMap.get(item) ?? false) : false"
               >
-                <template v-if="!$slots[`cell(${String(field.key)})`] && !$slots['cell()']">
+                <template v-if="!slots[`cell(${String(field.key)})`] && !slots['cell()']">
                   {{ formatItem(item, String(field.key), field.formatter) }}
                 </template>
               </slot>
@@ -132,7 +132,7 @@
           </BTr>
 
           <template
-            v-if="isTableItem(item) && detailsMap.get(item) === true && $slots['row-details']"
+            v-if="isTableItem(item) && detailsMap.get(item) === true && slots['row-details']"
           >
             <BTr aria-hidden="true" role="presentation" class="d-none" />
             <BTr
@@ -154,7 +154,7 @@
         </template>
         <!-- This class is for specific targetting of this slot element -->
         <BTr
-          v-if="!props.stacked && $slots['bottom-row']"
+          v-if="!props.stacked && slots['bottom-row']"
           class="bottom-row"
           :class="getRowClasses(null, 'row-bottom')"
           v-bind="callTbodyTrAttrs(null, 'row-bottom')"
@@ -182,7 +182,7 @@
               <!-- eslint-disable prettier/prettier -->
               <slot
                 :name="
-                  $slots[`foot(${String(field.key)})`]
+                  slots[`foot(${String(field.key)})`]
                     ? (`foot(${String(field.key)})` as 'foot()')
                     : 'foot()'
                 "
@@ -199,7 +199,7 @@
         </BTh>
       </BTr>
     </BTfoot>
-    <BTfoot v-else-if="$slots['custom-foot']" v-bind="footerProps">
+    <BTfoot v-else-if="slots['custom-foot']" v-bind="footerProps">
       <slot
         name="custom-foot"
         :fields="computedFields"
@@ -207,7 +207,7 @@
         :columns="computedFieldsTotal"
       />
     </BTfoot>
-    <caption v-if="$slots['table-caption'] || props.caption">
+    <caption v-if="slots['table-caption'] || props.caption">
       <slot name="table-caption">
         {{ props.caption }}
       </slot>
@@ -302,7 +302,7 @@ const emit = defineEmits<{
   'row-middle-clicked': TableRowEvent<Items>
 }>()
 
-defineSlots<{
+const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'thead-top'?: (props: {columns: number; fields: typeof computedFields.value}) => any
   [key: `head(${string})`]: (props: {

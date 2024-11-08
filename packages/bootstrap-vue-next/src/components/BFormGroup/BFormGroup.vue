@@ -10,7 +10,7 @@
   >
     <ContentTemplate.define>
       <BFormInvalidFeedback
-        v-if="$slots.invalidFeedback || props.invalidFeedback"
+        v-if="slots['invalid-feedback'] || props.invalidFeedback"
         :id="invalidFeedbackId"
         :aria-live="props.feedbackAriaLive"
         :state="props.state"
@@ -19,7 +19,7 @@
         <slot name="invalid-feedback">{{ props.invalidFeedback }}</slot>
       </BFormInvalidFeedback>
       <BFormValidFeedback
-        v-if="$slots.validFeedback || props.validFeedback"
+        v-if="slots['valid-feedback'] || props.validFeedback"
         :id="validFeedbackId"
         :aria-live="props.feedbackAriaLive"
         :state="props.state"
@@ -27,12 +27,12 @@
       >
         <slot name="valid-feedback">{{ props.validFeedback }}</slot>
       </BFormValidFeedback>
-      <BFormText v-if="$slots.description || props.description" :id="descriptionId">
+      <BFormText v-if="slots.description || props.description" :id="descriptionId">
         <slot name="description">{{ props.description }}</slot>
       </BFormText>
     </ContentTemplate.define>
     <LabelContentTemplate.define>
-      <template v-if="$slots.label || props.label || isHorizontal">
+      <template v-if="slots.label || props.label || isHorizontal">
         <BCol v-if="isHorizontal" v-bind="labelColProps">
           <component
             :is="labelTag"
@@ -148,7 +148,7 @@ const _props = withDefaults(defineProps<BFormGroupProps>(), {
 })
 const props = useDefaults(_props, 'BFormGroup')
 
-defineSlots<{
+const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'invalid-feedback'?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
