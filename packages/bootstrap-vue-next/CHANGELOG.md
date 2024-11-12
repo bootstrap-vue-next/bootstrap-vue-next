@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.25.14](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.13...bootstrapvuenext-v0.25.14) (2024-11-12)
+
+
+### Features
+
+* **BPagination:** add keyboard shortcuts fixes [#2153](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2153) ([69cf134](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69cf134f9b22fe06bd8bc2e43f21617ecd17a296))
+
 ## [0.25.13](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.12...bootstrapvuenext-v0.25.13) (2024-11-04)
 
 
