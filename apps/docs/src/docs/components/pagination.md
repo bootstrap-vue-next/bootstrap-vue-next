@@ -155,7 +155,16 @@ recommended unless the content of the button textually conveys its purpose.
 
 ### Keyboard navigation support
 
-<NotYetImplemented />
+`<BPagination>` supports keyboard navigation out of the box, and follows the
+[WAI-ARIA roving tabindex](https://www.w3.org/TR/wai-aria-practices-1.2/#kbd_roving_tabindex)
+pattern.
+
+- Tabbing into the pagination component will autofocus the current active page button
+- <kbd>Left</kbd> (or <kbd>Up</kbd>) and <kbd>Right</kbd> (or <kbd>Down</kbd>) arrow keys will focus
+  the previous and next buttons, respectively, in the page list
+- <kbd>Enter</kbd> or <kbd>Space</kbd> keys will select (click) the currently focused page button
+- Pressing <kbd>Tab</kbd> will move to the next control or link on the page, while pressing
+  <kbd>Shift</kbd>+<kbd>Tab</kbd> will move to the previous control or link on the page.
 
 <ComponentReference :data="data" />
 

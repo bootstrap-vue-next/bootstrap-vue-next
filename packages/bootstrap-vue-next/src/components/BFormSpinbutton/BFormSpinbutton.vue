@@ -72,7 +72,7 @@
 <script setup lang="ts">
 import {computed, ref} from 'vue'
 import type {BFormSpinbuttonProps} from '../../types/ComponentProps'
-import {eventOnOff} from '../../utils/event'
+import {eventOnOff, stopEvent} from '../../utils/event'
 import {
   CODE_DOWN,
   CODE_END,
@@ -295,11 +295,6 @@ const stepDown = (multiplier = 1) => {
   stepValue(-1 * multiplier)
 }
 
-const stopEvent = (event: Readonly<Event>) => {
-  event.preventDefault()
-  event.stopImmediatePropagation()
-}
-
 onKeyStroke(
   KEY_CODES,
   (event) => {
@@ -308,7 +303,7 @@ onKeyStroke(
     if (props.disabled || props.readonly || altKey || ctrlKey || metaKey) return
 
     // https://w3c.github.io/aria-practices/#spinbutton
-    stopEvent(event)
+    stopEvent(event, {immediatePropagation: true})
     if ($_keyIsDown) {
       // Keypress is already in progress
       return
@@ -357,7 +352,7 @@ onKeyStroke(
 
     if (props.disabled || props.readonly || altKey || ctrlKey || metaKey) return
 
-    stopEvent(event)
+    stopEvent(event, {immediatePropagation: true})
     resetTimers()
     $_keyIsDown = false
     emit('change', modelValue.value)
@@ -410,7 +405,7 @@ const onMouseup: EventListener = (event: Readonly<Event>) => {
     }
   }
 
-  stopEvent(event)
+  stopEvent(event, {immediatePropagation: true})
   resetTimers()
   setMouseup(false)
   // Trigger the change event
@@ -477,7 +472,7 @@ const buttons = computed(() => {
 
   const handler = (event: Readonly<Event>, stepper: (multiplier?: number) => void) => {
     if (!props.disabled && !props.readonly) {
-      stopEvent(event)
+      stopEvent(event, {immediatePropagation: true})
       setMouseup(true)
       // Since we `preventDefault()`, we must manually focus the button
       // Though it's likely captured from the element click focus
