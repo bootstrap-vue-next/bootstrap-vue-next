@@ -26,7 +26,7 @@ If both the prop `text` and slot `button-content` are present, the slot `button-
 
 ## Positioning
 
-Dropdown supports various positioning such as left and right aligned, dropdown and dropup, and supports auto-flipping dropdown to dropup, and vice-versa) when the menu would overflow off of the visible screen area.
+Dropdown supports various positioning such as left (start) and right (end) aligned, dropdown and dropup, and supports auto-flipping dropdown to dropup, and vice-versa) when the menu would overflow off of the visible screen area.
 
 ### Menu alignment
 
@@ -40,11 +40,13 @@ Turn your dropdown menu into a drop-up menu by setting the `placement` prop.
 
 <<< DEMO ./demo/DropdownDropup.vue#template{vue-html}
 
-### Drop start or end
+### Drop placement
 
-Turn your dropdown menu into a drop-end or drop-start menu by setting the `placement` prop.
+Turn your dropdown menu into a drop left, right or other menu by setting the `placement` prop.
 
-<<< DEMO ./demo/DropdownStartEnd.vue#template{vue-html}
+Values for `placement` come from [floating-ui's placement definition](https://floating-ui.com/docs/computeposition#placement).
+
+<<< DEMO ./demo/DropdownPlacement.vue#template{vue-html}
 
 ### Auto "flipping"
 
@@ -186,6 +188,16 @@ The dropdown's opened state is bound to the component's `v-model`. Programatic c
 managed via the model. The model can also be used to observe the state of the dropdown.
 
 <<< DEMO ./demo/DropdownModel.vue
+
+## Exposed Methods
+
+You are also able to use the built in methods for showing, hiding or toggling the dropdown via[template refs](https://vuejs.org/guide/essentials/template-refs.html#template-refs).
+
+1. `show`: shows the dropdown
+2. `hide`: hides the dropdown
+3. `toggle`: toggles the dropdown
+
+<<< DEMO ./demo/DropdownMethods.vue
 
 ## Dropdown supported sub-components
 
