@@ -27,6 +27,11 @@ Similarly, `left` and `right` props and values in the `bootstrap-vue-next` API a
 
 Bootstrap-vue-next will commit to breaking changes whenever Bootstrap marks something as "deprecated". These changes may be resolved automatically, or they might necessitate manual action from the library's users.
 
+### Nuxt
+
+`bootstrap-vue-next` integrates with `nuxt 3` so if you are using `nuxt`, please read their
+[migration guide](https://nuxt.com/docs/migration/overview) and our [router link support](/docs/reference/router-links) reference
+
 ## Sync modifier
 
 A number of components in `bootstrap-vue` use `v-bind`'s `.sync` modifier. This modifier has been replaced by properties
@@ -189,6 +194,9 @@ BootstrapVueNext uses [floating-ui](https://floating-ui.com/) to implemented dro
 for properties souch as `boundary` as well as the alignent and placement properties. For fine control, use `floating-middleware`
 in place of `popper-opts`. Check out [our documentation](/docs/components/dropdown) and [theirs] for details.
 
+BootstrapVueNext replaces `drop-up`, `drop-left` and `drop-right` props with a single `placement` prop.
+Valid values for `placement` are defined in `float-ui`'s docs [here](https://floating-ui.com/docs/computeposition#placement).
+
 The `block` prop is deprecated. See our [`BDropdown` documentation](/docs/components/dropdown#block-level-dropdowns)
 and [Bootstrap's documentation](https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons) for
 details.
@@ -198,6 +206,9 @@ The `right` prop is replaced by `end` see the [overview section](#overview) of t
 The `html` prop has been deprecated, use the `button-content`.
 
 `$root` instance events `bv::dropdown::hide` and `bv::dropdown::show` are deprecrated.
+
+The the boolean argument to control returning focus to the toggle button on the `hide` scoped property of the default slot is deprecated.
+It is less important in BSVN since bootstrap v5 by default doesn't have the focus ring that v4 has.
 
 <NotYetImplemented>`toggleAttrs`</NotYetImplemented>
 
@@ -408,6 +419,14 @@ Example using `useModalController.confirm` to replace `msgBoxConfirm` (Remember 
 
 The `show` and `confirm` `props` object accespts all of the properties that are defined on
 [BModal](/docs/components/modal#component-reference) excpet for `modelValue`.
+
+## BNav
+
+`align` prop now takes values from [`AlignmentJustifyContent`](/docs/types/alignment): `start`, `center`, `end`, `between`, `around`, and `evenly`
+
+### BNavItemDropdown
+
+See [`BDropdown`](#bdropdown) for details
 
 ## BPagination
 

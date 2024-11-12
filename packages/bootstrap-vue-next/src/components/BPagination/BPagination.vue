@@ -5,9 +5,10 @@
     role="menubar"
     :aria-disabled="props.disabled"
     :aria-label="props.ariaLabel || undefined"
+    @keydown="handleKeyNav"
   >
     <template v-for="page in pages" :key="`page-${page.id}`">
-      <li v-bind="page.li">
+      <li v-bind="page.li" ref="pageElements">
         <span
           v-if="page.id === FIRST_ELLIPSIS || page.id === LAST_ELLIPSIS"
           v-bind="ellipsisProps.span"
@@ -35,12 +36,15 @@
 
 <script setup lang="ts">
 import {BvEvent} from '../../utils'
-import {computed, watch} from 'vue'
+import {computed, nextTick, useTemplateRef, watch} from 'vue'
 import type {BPaginationProps} from '../../types/ComponentProps'
 import {useAlignment} from '../../composables/useAlignment'
 import {useToNumber} from '@vueuse/core'
 import {useDefaults} from '../../composables/useDefaults'
 import type {ClassValue} from '../../types/AnyValuedAttributes'
+import {CODE_DOWN, CODE_LEFT, CODE_RIGHT, CODE_UP} from '../../utils/constants'
+import {stopEvent} from '../../utils/event'
+import {getActiveElement} from '../../utils/dom'
 
 // Threshold of limit size when we start/stop showing ellipsis
 const ELLIPSIS_THRESHOLD = 3
@@ -99,6 +103,8 @@ const emit = defineEmits<{
 }>()
 
 const modelValue = defineModel<Exclude<BPaginationProps['modelValue'], undefined>>({default: 1})
+
+const pageElements = useTemplateRef<HTMLLIElement[]>('pageElements')
 
 const limitNumber = useToNumber(() => props.limit, {nanToZero: true, method: 'parseInt'})
 const perPageNumber = useToNumber(() => props.perPage, {nanToZero: true, method: 'parseInt'})
@@ -318,6 +324,77 @@ const pageClick = (event: Readonly<MouseEvent>, pageNumber: number) => {
   //this.focusCurrent()
   //}
   // })
+}
+
+const isDisabled = (el: HTMLButtonElement) => {
+  const isElement = !!(el && el.nodeType === Node.ELEMENT_NODE)
+  const hasAttr = isElement ? el.hasAttribute('disabled') : null
+  const hasClass = isElement && el.classList ? el.classList.contains('disabled') : false
+
+  return !isElement || el.disabled || hasAttr || hasClass
+}
+
+const getButtons = () =>
+  pageElements.value
+    ?.map((page) => page.children[0] as HTMLButtonElement)
+    .filter((btn) => {
+      if (btn.getAttribute('display') === 'none') {
+        return false
+      }
+
+      const bcr = btn.getBoundingClientRect()
+
+      return !!(bcr && bcr.height > 0 && bcr.width > 0)
+    }) ?? []
+
+const focusFirst = () => {
+  nextTick(() => {
+    const btn = getButtons().find((el) => !isDisabled(el))
+    btn?.focus()
+  })
+}
+
+const focusPrev = () => {
+  nextTick(() => {
+    const buttons = getButtons()
+    const index = buttons.indexOf(getActiveElement() as HTMLButtonElement)
+
+    if (index > 0 && !isDisabled(buttons[index - 1])) {
+      buttons[index - 1]?.focus()
+    }
+  })
+}
+
+const focusLast = () => {
+  nextTick(() => {
+    const btn = getButtons()
+      .reverse()
+      .find((el) => !isDisabled(el))
+    btn?.focus()
+  })
+}
+
+const focusNext = () => {
+  nextTick(() => {
+    const buttons = getButtons()
+    const index = buttons.indexOf(getActiveElement() as HTMLButtonElement)
+
+    if (index < buttons.length - 1 && !isDisabled(buttons[index + 1])) {
+      buttons[index + 1]?.focus()
+    }
+  })
+}
+
+const handleKeyNav = (event: KeyboardEvent) => {
+  const {code, shiftKey} = event
+
+  if (code === CODE_LEFT || code === CODE_UP) {
+    stopEvent(event)
+    shiftKey ? focusFirst() : focusPrev()
+  } else if (code === CODE_RIGHT || code === CODE_DOWN) {
+    stopEvent(event)
+    shiftKey ? focusLast() : focusNext()
+  }
 }
 
 watch(modelValueNumber, (newValue) => {

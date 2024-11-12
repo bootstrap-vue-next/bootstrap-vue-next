@@ -128,6 +128,13 @@ export const commonProps = () =>
       default: 'disabled',
       description: 'Field name in the `options` array that should be used for the disabled state',
     },
+    floating: {
+      type: 'boolean',
+      default: false,
+      description:
+        'When set, renders a single control form with a floating label. This only works for forms where the immediate children are a label and one of the supported controls. See above for details.',
+    },
+
     footer: {
       type: 'string',
       default: undefined,
@@ -263,6 +270,11 @@ export const commonProps = () =>
       description:
         'When set to true, the timer will not resume when the mouse leaves the element. It will need to be manually resumed',
     },
+    novalidate: {
+      type: 'boolean',
+      default: false,
+      description: 'When set, disables browser native HTML5 validation on controls in the form',
+    },
     options: {
       type: 'readonly CheckboxOptionRaw[]',
       default: '() => []',
@@ -390,6 +402,12 @@ export const commonProps = () =>
       default: false,
       description: 'Renders the feedback text in a rudimentary tooltip style',
     },
+    validated: {
+      type: 'boolean',
+      default: false,
+      description:
+        "When set, adds the Bootstrap class 'was-validated' on the form, triggering the native browser validation states",
+    },
     valueField: {
       type: 'string',
       default: 'value',
@@ -405,6 +423,11 @@ export const commonProps = () =>
       type: 'Readonly<AttrsValue>',
       default: undefined,
       description: 'Attributes to be applied to the wrapper element',
+    },
+    wrapperClass: {
+      type: 'ClassValue',
+      default: undefined,
+      description: 'CSS class (or classes) to add to the wrapper element',
     },
     placement: {
       type: 'Placement',

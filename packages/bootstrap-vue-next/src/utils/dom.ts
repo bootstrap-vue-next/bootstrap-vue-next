@@ -1,5 +1,11 @@
 import type {Slot} from 'vue'
 
+// Get the currently active HTML element
+export const getActiveElement = (excludes: readonly HTMLElement[] = []): Element | null => {
+  const {activeElement} = document
+  return activeElement && !excludes?.some((el) => el === activeElement) ? activeElement : null
+}
+
 /**
  * @deprecated only used in BFormGroup, which is not an SFC... Function could probably be replaced with pure Vue
  */
@@ -7,11 +13,6 @@ export const attemptFocus = (
   el: Readonly<HTMLElement>,
   options: Readonly<FocusOptions> = {}
 ): boolean => {
-  const getActiveElement = (excludes: readonly HTMLElement[] = []): Element | null => {
-    const {activeElement} = document
-    return activeElement && !excludes.some((el) => el === activeElement) ? activeElement : null
-  }
-
   const isActiveElement = (el: Readonly<HTMLElement>): boolean => el === getActiveElement()
 
   try {

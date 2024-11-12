@@ -9,25 +9,7 @@ export default {
       sourcePath: '/BForm/BForm.vue',
       props: {
         '': {
-          floating: {
-            type: 'boolean',
-            default: false,
-            description:
-              'When set, renders a single control form with a floating label. This only works for forms where the immediate children are a label and one of the supported controls. See above for details.',
-          },
-          novalidate: {
-            type: 'boolean',
-            default: false,
-            description:
-              'When set, disables browser native HTML5 validation on controls in the form',
-          },
-          validated: {
-            type: 'boolean',
-            default: false,
-            description:
-              "When set, adds the Bootstrap class 'was-validated' on the form, triggering the native browser validation states",
-          },
-          ...pick(buildCommonProps(), ['id']),
+          ...pick(buildCommonProps(), ['floating', 'id', 'novalidate', 'validated']),
         } satisfies Record<keyof BvnComponentProps['BForm'], PropertyReference>,
       },
       emits: [
