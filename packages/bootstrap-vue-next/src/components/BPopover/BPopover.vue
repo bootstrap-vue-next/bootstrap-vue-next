@@ -5,7 +5,7 @@
     :to="props.teleportTo"
     :disabled="!props.teleportTo || props.teleportDisabled"
   >
-    <Transition v-bind="transitionProps" :appear="modelValue">
+    <Transition v-if="renderRef || contentShowing" v-bind="transitionProps" :appear="modelValue">
       <div
         v-show="showRef && !hidden"
         :id="computedId"
@@ -22,8 +22,8 @@
           :style="arrowStyle"
           data-popper-arrow
         />
-        <div v-if="contentShowing" class="overflow-auto" :style="sizeStyles">
-          <template v-if="props.title || $slots.title">
+        <div ref="content" class="overflow-auto" :style="sizeStyles">
+          <template v-if="props.title || slots.title">
             <div
               class="position-sticky top-0"
               :class="props.tooltip ? 'tooltip-inner' : 'popover-header'"
@@ -33,7 +33,7 @@
               </slot>
             </div>
           </template>
-          <template v-if="(props.tooltip && !$slots.title && !props.title) || !props.tooltip">
+          <template v-if="(props.tooltip && !slots.title && !props.title) || !props.tooltip">
             <div :class="props.tooltip ? 'tooltip-inner' : 'popover-body'">
               <slot>
                 {{ props.content }}
@@ -166,9 +166,10 @@ const computedId = useId(() => props.id, 'popover')
 
 const hidden = ref(false)
 
-const element = useTemplateRef('element')
-const arrow = useTemplateRef('arrow')
-const placeholder = useTemplateRef('placeholder')
+const element = useTemplateRef<HTMLElement>('element')
+const content = useTemplateRef<HTMLElement>('content')
+const arrow = useTemplateRef<HTMLElement>('arrow')
+const placeholder = useTemplateRef<HTMLElement>('placeholder')
 const floatingTarget = ref<HTMLElement | null>(null)
 const trigger = ref<HTMLElement | null>(null)
 
@@ -238,8 +239,18 @@ const floatingMiddleware = computed<Middleware[]>(() => {
         padding: props.boundaryPadding,
         apply({availableWidth, availableHeight}) {
           sizeStyles.value = {
-            maxHeight: availableHeight ? `${availableHeight}px` : undefined,
-            maxWidth: availableWidth ? `${availableWidth}px` : undefined,
+            maxHeight:
+              availableHeight >= (content.value?.scrollHeight ?? 0)
+                ? undefined
+                : availableHeight
+                  ? `${Math.max(0, availableHeight)}px`
+                  : undefined,
+            maxWidth:
+              availableWidth >= (content.value?.scrollWidth ?? 0)
+                ? undefined
+                : availableWidth
+                  ? `${Math.max(0, availableWidth)}px`
+                  : undefined,
           }
         },
       })
@@ -291,6 +302,7 @@ const {
   transitionProps,
   contentShowing,
   isVisible,
+  renderRef,
 } = useShowHide(modelValue, props, emit as EmitFn, element, computedId, {
   showFn: () => {
     if (hidden.value) {
@@ -386,7 +398,7 @@ const localToggle = (e: Event) => {
 
 const bind = () => {
   // TODO: is this the best way to bind the events?
-  // we place a span and get the next element sibling fo rthe listeners
+  // we place a span and get the next element sibling for the listeners
   if (props.target) {
     const elem = getElement(toValue(props.target))
     if (elem) {

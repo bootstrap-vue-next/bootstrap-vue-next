@@ -1,6 +1,7 @@
 <template>
   <slot name="header" v-bind="sharedSlots" />
   <Transition
+    v-if="renderRef || contentShowing"
     v-bind="transitionProps"
     :enter-active-class="computedNoAnimation ? '' : 'collapsing'"
     :leave-active-class="computedNoAnimation ? '' : 'collapsing'"
@@ -141,6 +142,7 @@ const onAfterLeave = (el: Element) => {
 
 const {
   showRef,
+  renderRef,
   hide,
   show,
   toggle,

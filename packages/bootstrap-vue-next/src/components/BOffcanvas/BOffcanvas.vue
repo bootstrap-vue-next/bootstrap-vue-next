@@ -3,7 +3,11 @@
     :to="props.teleportTo"
     :disabled="props.teleportDisabled || isOpenByBreakpoint"
   >
-    <Transition v-bind="transitionProps" :appear="modelValue || isOpenByBreakpoint">
+    <Transition
+      v-if="renderRef || contentShowing || isOpenByBreakpoint"
+      v-bind="transitionProps"
+      :appear="modelValue || isOpenByBreakpoint"
+    >
       <div
         v-show="
           (showRef && ((backdropReady && props.backdropFirst) || !props.backdropFirst)) ||
@@ -58,7 +62,7 @@
       </div>
     </Transition>
     <slot v-if="!props.noBackdrop" name="backdrop" v-bind="sharedSlots">
-      <Transition v-bind="backdropTransitionProps">
+      <Transition v-if="renderBackdropRef" v-bind="backdropTransitionProps">
         <div
           v-show="showBackdrop"
           class="offcanvas-backdrop"
@@ -192,6 +196,8 @@ const onAfterEnter = () => {
 
 const {
   showRef,
+  renderRef,
+  renderBackdropRef,
   hide,
   show,
   toggle,

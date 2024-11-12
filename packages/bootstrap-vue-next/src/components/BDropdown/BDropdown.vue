@@ -44,7 +44,7 @@
       :to="props.teleportTo"
       :disabled="!props.teleportTo || props.teleportDisabled"
     >
-      <Transition v-bind="transitionProps" :appear="modelValue">
+      <Transition v-if="renderRef || contentShowing" v-bind="transitionProps" :appear="modelValue">
         <ul
           v-show="showRef"
           ref="floating"
@@ -191,6 +191,7 @@ const referencePlacement = computed(() => (!props.split ? splitButton.value : bu
 
 const {
   showRef,
+  renderRef,
   hide,
   show,
   toggle,

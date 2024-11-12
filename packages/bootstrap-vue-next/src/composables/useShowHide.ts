@@ -63,6 +63,8 @@ export const useShowHide = (
   let noAction = false
   const initialShow = (!!modelValue.value && !props.initialAnimation) || props.visible || false
   const showRef = ref<boolean>(initialShow)
+  const renderRef = ref<boolean>(initialShow)
+  const renderBackdropRef = ref<boolean>(initialShow)
 
   let isCountdown = typeof modelValue.value !== 'boolean'
 
@@ -149,23 +151,27 @@ export const useShowHide = (
       }
       return
     }
-    showTimeout = setTimeout(
-      () => {
-        showRef.value = true
-        options.showFn?.()
-        if (!modelValue.value) {
-          noAction = true
-          nextTick(() => {
-            modelValue.value = true
-          })
-        }
-      },
-      localNoAnimation.value
-        ? 0
-        : typeof props.delay === 'number'
-          ? props.delay
-          : props.delay?.show || 0
-    )
+    renderRef.value = true
+    renderBackdropRef.value = true
+    requestAnimationFrame(() => {
+      showTimeout = setTimeout(
+        () => {
+          showRef.value = true
+          options.showFn?.()
+          if (!modelValue.value) {
+            noAction = true
+            nextTick(() => {
+              modelValue.value = true
+            })
+          }
+        },
+        localNoAnimation.value
+          ? 0
+          : typeof props.delay === 'number'
+            ? props.delay
+            : props.delay?.show || 0
+      )
+    })
   }
 
   const hide = (trigger?: string) => {
@@ -279,6 +285,9 @@ export const useShowHide = (
         localNoAnimation.value = false
       })
     }
+    requestAnimationFrame(() => {
+      renderRef.value = false
+    })
   }
 
   const contentShowing = computed(
@@ -307,6 +316,8 @@ export const useShowHide = (
   }
   return {
     showRef,
+    renderRef,
+    renderBackdropRef,
     isVisible,
     isActive,
     trapActive,
@@ -346,6 +357,9 @@ export const useShowHide = (
       },
       onAfterLeave: () => {
         backdropReady.value = false
+        requestAnimationFrame(() => {
+          renderBackdropRef.value = false
+        })
       },
     },
   }
