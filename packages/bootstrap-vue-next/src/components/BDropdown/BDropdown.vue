@@ -175,10 +175,10 @@ const computedOffset = computed(() =>
 )
 const offsetToNumber = useToNumber(computedOffset)
 
-const floating = useTemplateRef<HTMLElement | null>('floating')
-const button = useTemplateRef<HTMLElement | null>('button')
-const splitButton = useTemplateRef<HTMLElement | null>('splitButton')
-const wrapper = useTemplateRef<HTMLElement | null>('wrapper')
+const floating = useTemplateRef<HTMLElement>('floating')
+const button = useTemplateRef<HTMLElement>('button')
+const splitButton = useTemplateRef<HTMLElement>('splitButton')
+const wrapper = useTemplateRef<HTMLElement>('wrapper')
 
 const boundary = computed<Boundary | undefined>(() =>
   isBoundary(props.boundary) ? props.boundary : undefined
@@ -284,8 +284,18 @@ const floatingMiddleware = computed<Middleware[]>(() => {
         padding: props.boundaryPadding,
         apply({availableWidth, availableHeight}) {
           sizeStyles.value = {
-            maxHeight: availableHeight && showRef.value ? `${availableHeight}px` : undefined,
-            maxWidth: availableWidth && showRef.value ? `${availableWidth}px` : undefined,
+            maxHeight:
+              availableHeight >= (floating.value?.scrollHeight ?? 0)
+                ? undefined
+                : availableHeight
+                  ? `${Math.max(0, availableHeight)}px`
+                  : undefined,
+            maxWidth:
+              availableWidth >= (floating.value?.scrollWidth ?? 0)
+                ? undefined
+                : availableWidth
+                  ? `${Math.max(0, availableWidth)}px`
+                  : undefined,
           }
         },
       })
