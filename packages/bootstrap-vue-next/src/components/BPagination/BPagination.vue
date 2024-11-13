@@ -36,7 +36,7 @@
 
 <script setup lang="ts">
 import {BvEvent} from '../../utils'
-import {computed, nextTick, useTemplateRef, watch} from 'vue'
+import {computed, nextTick, ref, watch} from 'vue'
 import type {BPaginationProps} from '../../types/ComponentProps'
 import {useAlignment} from '../../composables/useAlignment'
 import {useToNumber} from '@vueuse/core'
@@ -104,7 +104,7 @@ const emit = defineEmits<{
 
 const modelValue = defineModel<Exclude<BPaginationProps['modelValue'], undefined>>({default: 1})
 
-const pageElements = useTemplateRef<HTMLLIElement[]>('pageElements')
+const pageElements = ref<HTMLElement[]>(null)
 
 const limitNumber = useToNumber(() => props.limit, {nanToZero: true, method: 'parseInt'})
 const perPageNumber = useToNumber(() => props.perPage, {nanToZero: true, method: 'parseInt'})

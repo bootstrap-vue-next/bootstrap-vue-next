@@ -75,7 +75,6 @@ import {
   ref,
   toRef,
   toValue,
-  useTemplateRef,
   watch,
 } from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
@@ -166,10 +165,10 @@ const computedId = useId(() => props.id, 'popover')
 
 const hidden = ref(false)
 
-const element = useTemplateRef<HTMLElement>('element')
-const content = useTemplateRef<HTMLElement>('content')
-const arrow = useTemplateRef<HTMLElement>('arrow')
-const placeholder = useTemplateRef<HTMLElement>('placeholder')
+const element = ref<HTMLElement | null>(null)
+const content = ref<HTMLElement | null>(null)
+const arrow = ref<HTMLElement | null>(null)
+const placeholder = ref<HTMLElement | null>(null)
 const floatingTarget = ref<HTMLElement | null>(null)
 const trigger = ref<HTMLElement | null>(null)
 

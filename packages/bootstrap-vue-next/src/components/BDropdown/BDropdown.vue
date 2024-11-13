@@ -84,7 +84,6 @@ import {
   provide,
   ref,
   toRef,
-  useTemplateRef,
   watch,
 } from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
@@ -175,10 +174,10 @@ const computedOffset = computed(() =>
 )
 const offsetToNumber = useToNumber(computedOffset)
 
-const floating = useTemplateRef<HTMLElement>('floating')
-const button = useTemplateRef<HTMLElement>('button')
-const splitButton = useTemplateRef<HTMLElement>('splitButton')
-const wrapper = useTemplateRef<HTMLElement>('wrapper')
+const floating = ref<HTMLElement | null>(null)
+const button = ref<HTMLElement | null>(null)
+const splitButton = ref<HTMLElement | null>(null)
+const wrapper = ref<HTMLElement | null>(null)
 
 const boundary = computed<Boundary | undefined>(() =>
   isBoundary(props.boundary) ? props.boundary : undefined
