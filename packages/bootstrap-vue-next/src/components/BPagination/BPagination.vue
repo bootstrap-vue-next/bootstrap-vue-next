@@ -104,7 +104,7 @@ const emit = defineEmits<{
 
 const modelValue = defineModel<Exclude<BPaginationProps['modelValue'], undefined>>({default: 1})
 
-const pageElements = ref<HTMLElement[]>(null)
+const pageElements = ref<HTMLElement[]>([])
 
 const limitNumber = useToNumber(() => props.limit, {nanToZero: true, method: 'parseInt'})
 const perPageNumber = useToNumber(() => props.perPage, {nanToZero: true, method: 'parseInt'})
