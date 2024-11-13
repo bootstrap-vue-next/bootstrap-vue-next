@@ -140,7 +140,7 @@ const nextDisabled = computed(() => checkDisabled(modelValueNumber.value + 1))
 const getBaseButtonProps = ({
   page,
   classVal,
-  dis,
+  disabled,
   slotName,
   textValue,
   tabIndex,
@@ -152,7 +152,7 @@ const getBaseButtonProps = ({
   isSmHidden,
 }: {
   page: number
-  dis: boolean
+  disabled: boolean
   classVal: ClassValue
   slotName: string
   textValue?: string
@@ -169,10 +169,10 @@ const getBaseButtonProps = ({
       'page-item',
       {
         'active': isActive,
-        'disabled': dis,
+        disabled,
         'bv-d-sm-down-none': isSmHidden,
         'flex-fill': computedFill.value,
-        'd-flex': computedFill.value && !dis,
+        'd-flex': computedFill.value && !disabled,
       },
       classVal,
     ],
@@ -180,23 +180,23 @@ const getBaseButtonProps = ({
     'aria-hidden': hidden,
   },
   button: {
-    'is': dis ? 'span' : 'button',
-    'class': ['page-link', 'text-center', {'flex-grow-1': !dis && computedFill.value}],
+    'is': disabled ? 'span' : 'button',
+    'class': ['page-link', 'text-center', {'flex-grow-1': !disabled && computedFill.value}],
     'aria-label': label,
     'aria-controls': props.ariaControls || undefined,
-    'aria-disabled': dis ? true : undefined,
+    'aria-disabled': disabled ? true : undefined,
     'aria-posinset': position,
     'aria-setsize': position ? numberOfPages.value : undefined,
     'role': 'menuitem',
-    'type': dis ? undefined : 'button',
-    'tabindex': dis ? undefined : tabIndex,
+    'type': disabled ? undefined : 'button',
+    'tabindex': disabled ? undefined : tabIndex,
   },
   text: {
     name: slotName,
     active: isActive,
     value: textValue ?? page,
     page,
-    disabled: dis,
+    disabled,
     index: page - 1,
     content: textValue ? undefined : page,
   },
@@ -206,23 +206,23 @@ const getBaseButtonProps = ({
 const getButtonProps = ({
   page,
   classVal,
-  dis,
+  disabled,
   slotName,
   textValue,
   label,
 }: {
   page: number
-  dis: boolean
+  disabled: boolean
   classVal: ClassValue
   slotName: string
   textValue?: string
   label: string
-}) => getBaseButtonProps({page, classVal, dis, slotName, textValue, label, tabIndex: '-1'})
+}) => getBaseButtonProps({page, classVal, disabled, slotName, textValue, label, tabIndex: '-1'})
 
 const getPageButtonProps = (page: number, isSmHidden?: boolean) =>
   getBaseButtonProps({
     page,
-    dis: props.disabled,
+    disabled: props.disabled,
     classVal: props.pageClass,
     slotName: 'page',
     label: props.labelPage ? `${props.labelPage} ${page}` : undefined,
@@ -235,7 +235,7 @@ const getPageButtonProps = (page: number, isSmHidden?: boolean) =>
 const firstButtonProps = computed(() =>
   getButtonProps({
     page: 1,
-    dis: firstDisabled.value,
+    disabled: firstDisabled.value,
     classVal: props.firstClass,
     slotName: 'first-text',
     textValue: props.firstText,
@@ -245,7 +245,7 @@ const firstButtonProps = computed(() =>
 const prevButtonProps = computed(() =>
   getButtonProps({
     page: Math.max(modelValueNumber.value - 1, 1),
-    dis: prevDisabled.value,
+    disabled: prevDisabled.value,
     classVal: props.prevClass,
     slotName: 'prev-text',
     textValue: props.prevText,
@@ -255,7 +255,7 @@ const prevButtonProps = computed(() =>
 const nextButtonProps = computed(() =>
   getButtonProps({
     page: Math.min(modelValueNumber.value + 1, numberOfPages.value),
-    dis: nextDisabled.value,
+    disabled: nextDisabled.value,
     classVal: props.nextClass,
     slotName: 'next-text',
     textValue: props.nextText,
@@ -265,7 +265,7 @@ const nextButtonProps = computed(() =>
 const lastButtonProps = computed(() =>
   getButtonProps({
     page: numberOfPages.value,
-    dis: lastDisabled.value,
+    disabled: lastDisabled.value,
     classVal: props.lastClass,
     slotName: 'last-text',
     textValue: props.lastText,
