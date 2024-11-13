@@ -319,9 +319,7 @@ const computedClasses = computed(() => {
     {
       [`b-${type}-${props.variant}`]: props.variant !== null,
       show: isVisible.value && !hidden.value,
-      // ['pe-none']: !showState.value,
       fade: !computedNoAnimation.value,
-      // ['d-none']: !showState.value && props.noFade,
       [`${props.customClass}`]: props.customClass !== undefined,
       [`bs-${type}-${resolveBootstrapPlacement(placement.value)}`]: placement.value !== undefined,
     },

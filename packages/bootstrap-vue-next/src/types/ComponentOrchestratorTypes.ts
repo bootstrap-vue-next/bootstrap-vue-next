@@ -1,4 +1,4 @@
-import type {Component, MaybeRefOrGetter, Ref, RendererElement, RendererNode, VNode} from 'vue'
+import type {Component, MaybeRefOrGetter, RendererElement, RendererNode, VNode} from 'vue'
 import type {BModalProps, BPopoverProps, BToastProps, BTooltipProps} from './ComponentProps'
 import type {ContainerPosition} from './Alignment'
 
@@ -38,22 +38,14 @@ export type ToastOrchestratorShowParam = {
   props?: MaybeRefOrGetter<PublicOrchestratedToast>
 }
 
-export type PrivateOrchestratedTooltip = Omit<BTooltipProps, 'modelValue' | 'target'> & {
-  _target: Exclude<BTooltipProps['target'], undefined>
-  _modelValue: BTooltipProps['modelValue']
-}
-export type PublicOrchestratedTooltip = Omit<PrivateOrchestratedTooltip, '_target' | '_modelValue'>
-export type TooltipOrchestratorMapValue = {
-  component: unknown
-  props: PrivateOrchestratedTooltip
-}
-export type TooltipOrchestratorShowParam = {
-  target: Readonly<Ref<PrivateOrchestratedTooltip['_target']>>
-  component?: Readonly<Component>
-  props?: MaybeRefOrGetter<PublicOrchestratedTooltip>
-}
-
 export type SlotFunction = () => VNode<RendererNode, RendererElement, {[key: string]: unknown}>
+
+export type TooltipOrchestratorParam = {
+  title?: MaybeRefOrGetter<BTooltipProps['title'] | SlotFunction>
+  content?: MaybeRefOrGetter<BTooltipProps['content'] | SlotFunction>
+} & Omit<BTooltipProps, 'content' | 'title'>
+
+export type TooltipOrchestratorShowParam = MaybeRefOrGetter<TooltipOrchestratorParam>
 
 export type PopoverOrchestratorParam = {
   title?: MaybeRefOrGetter<BPopoverProps['title'] | SlotFunction>

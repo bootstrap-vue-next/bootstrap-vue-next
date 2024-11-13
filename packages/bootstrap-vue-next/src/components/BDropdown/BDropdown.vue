@@ -55,7 +55,7 @@
           :role="props.role"
           @click="onClickInside"
         >
-          <slot v-if="contentShowing" :hide="hide" :show="show" />
+          <slot v-if="contentShowing" :hide="hide" :show="show" :visible="showRef" />
         </ul>
       </Transition>
     </ConditionalTeleport>
@@ -158,7 +158,7 @@ defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'button-content'?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'default'?: (props: {hide: () => void; show: () => void}) => any
+  'default'?: (props: {hide: () => void; show: () => void; visible: boolean}) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'toggle-text'?: (props: Record<string, never>) => any
 }>()

@@ -1,14 +1,6 @@
 <template>
   <PopoverList />
-  <component
-    :is="tooltip.component ?? BTooltip"
-    v-for="[self, tooltip] in tools.tooltips?.value"
-    :key="self"
-    v-bind="tooltip.props"
-    :model-value="tooltip.props._modelValue"
-    :target="tooltip.props._target"
-    @update:model-value="tools.setTooltip?.(self, {...tooltip.props, _modelValue: $event})"
-  />
+  <TooltipList />
 </template>
 
 <script setup lang="ts">
@@ -34,6 +26,23 @@ const PopoverList = () =>
       slots.title = title
     }
     return h(BPopover, {key: self, ...props, ...popover}, slots)
+  })
+
+const TooltipList = () =>
+  Array.from(tools.tooltips?.value?.entries() ?? []).map(([self, {content, title, ...popover}]) => {
+    const props: Record<string, string> = {}
+    const slots: Record<string, unknown> = {}
+    if (typeof content === 'string') {
+      props.content = content
+    } else {
+      slots.default = content
+    }
+    if (typeof title === 'string') {
+      props.title = title
+    } else {
+      slots.title = title
+    }
+    return h(BTooltip, {key: self, ...props, ...popover}, slots)
   })
 
 defineExpose({

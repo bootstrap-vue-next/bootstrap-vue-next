@@ -20,10 +20,9 @@ import type {
   ModalOrchestratorShowParam,
   PopoverOrchestratorParam,
   PopoverOrchestratorShowParam,
-  PrivateOrchestratedTooltip,
   ToastOrchestratorArrayValue,
   ToastOrchestratorShowParam,
-  TooltipOrchestratorMapValue,
+  TooltipOrchestratorParam,
   TooltipOrchestratorShowParam,
 } from '../types/ComponentOrchestratorTypes'
 import type {BvnComponentProps} from '../types/BootstrapVueOptions'
@@ -207,9 +206,9 @@ export const popoverPluginKey: InjectionKey<{
   popover: (obj: PopoverOrchestratorShowParam) => ControllerKey
   setPopover: (self: ControllerKey, val: Partial<PopoverOrchestratorParam>) => void
   removePopover: (self: ControllerKey) => void
-  tooltips: Ref<Map<ControllerKey, TooltipOrchestratorMapValue>>
+  tooltips: Ref<Map<ControllerKey, TooltipOrchestratorParam>>
   tooltip: (obj: TooltipOrchestratorShowParam) => ControllerKey
-  setTooltip: (self: ControllerKey, val: Partial<PrivateOrchestratedTooltip>) => void
+  setTooltip: (self: ControllerKey, val: Partial<TooltipOrchestratorParam>) => void
   removeTooltip: (self: ControllerKey) => void
 }> = createBvnPluginInjectionKey('popover')
 
