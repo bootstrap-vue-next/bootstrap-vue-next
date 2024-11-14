@@ -191,7 +191,7 @@ const keynav = (e: Readonly<Event>, v: number) => {
   if (/input|select|option|textarea|form/i.test((e.target as HTMLElement)?.tagName)) return
   e.preventDefault()
   if (!modelValue.value) {
-    open()
+    show()
     nextTick(() => keynav(e, v))
     return
   }
