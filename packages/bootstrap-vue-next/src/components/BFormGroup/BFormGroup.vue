@@ -7,6 +7,7 @@
     :aria-invalid="computedAriaInvalid"
     :aria-labelledby="isFieldset && isHorizontal ? labelId : null"
     :class="[stateClass, {'was-validated': props.validated}]"
+    class="b-form-group"
   >
     <ContentTemplate.define>
       <BFormInvalidFeedback
