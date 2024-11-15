@@ -432,6 +432,10 @@ See [`BDropdown`](#bdropdown) for details
 
 The `type` prop is deprectated. Use the the `v-b-color-mode` directive or `useColorMode` composable instead. Details in our [docs](/components/navbar#color-scheme)
 
+### BNavbarNav
+
+`align` prop now takes values from [`AlignmentJustifyContent`](/docs/types/alignment): `start`, `center`, `end`, `between`, `around`, and `evenly`
+
 ## BPagination
 
 Keyboard Navigation and Small Screen Support.

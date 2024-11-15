@@ -152,6 +152,17 @@ contents of a collapsed navbar. By default, scrolling kicks in at 75vh (or 75% o
 
 <<< DEMO ./demo/NavbarScroll.vue
 
+### Auto close behavior
+
+By default, the collapsible component is closed when clicking inside or outside the dropdown menu. You can use the `auto-close` property to change this behavior of the collapsible component.
+
+The `auto-close`property has 4 options.
+
+- `true` : the collapsible component will be closed by clicking outside or inside the collapsible component
+- `false` : the collapsible component will be closed by clicking the toggle button and manually calling the hide method. (Also will not be closed by pressing <kbd>esc</kbd> key)
+- `inside` : the collapsible component will be closed (only) by clicking inside the collapsible component menu
+- `outside` : the collapsible component will be closed (only) by clicking outside the dropdown menu
+
 ## Printing
 
 Navbars are hidden by default when printing. Force them to be printed by setting the print prop.
