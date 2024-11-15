@@ -428,6 +428,10 @@ The `show` and `confirm` `props` object accespts all of the properties that are 
 
 See [`BDropdown`](#bdropdown) for details
 
+## BNavbar
+
+The `type` prop is deprectated. Use the the `v-b-color-mode` directive or `useColorMode` composable instead. Details in our [docs](/components/navbar#color-scheme)
+
 ## BPagination
 
 Keyboard Navigation and Small Screen Support.
