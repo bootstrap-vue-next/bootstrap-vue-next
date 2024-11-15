@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.25.15](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.14...bootstrapvuenext-v0.25.15) (2024-11-14)
+
+
+### Bug Fixes
+
+* **BDropdown:** fix infinite loop on keyboard navigation ([#2342](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2342)) ([2fd5db7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2fd5db76eedae23635b23e7f6eead55ce89ee005))
+
 ## [0.25.14](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.13...bootstrapvuenext-v0.25.14) (2024-11-12)
 
 
