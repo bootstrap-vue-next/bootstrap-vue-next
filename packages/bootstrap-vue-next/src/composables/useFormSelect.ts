@@ -11,7 +11,7 @@ export const useFormSelect = (
 
   const normalizeOption = (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    option: any
+    option: unknown
   ): ComplexSelectOptionRaw | SelectOption => {
     const propsValue = toValue(props)
 
@@ -41,6 +41,7 @@ export const useFormSelect = (
     }
 
     return {
+      ...(typeof option === 'object' ? option : {}),
       value,
       text,
       disabled,

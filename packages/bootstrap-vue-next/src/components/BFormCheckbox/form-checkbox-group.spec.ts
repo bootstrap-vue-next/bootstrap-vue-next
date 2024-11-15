@@ -69,15 +69,13 @@ describe('form-checkbox-group', () => {
           ],
         },
         slots: {
-          'option()': 'foo',
-          'option(0)': 'bar',
-          'option(2)': 'buzz',
+          option: 'foo',
         },
       })
       const checkboxes = wrapper.findAllComponents(BFormCheckbox)
-      expect(checkboxes[0].text()).toBe('bar')
+      expect(checkboxes[0].text()).toBe('foo')
       expect(checkboxes[1].text()).toBe('foo')
-      expect(checkboxes[2].text()).toBe('buzz')
+      expect(checkboxes[2].text()).toBe('foo')
     })
   })
 })

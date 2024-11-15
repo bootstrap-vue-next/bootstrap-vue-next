@@ -176,7 +176,7 @@ describe('form-radio-group', () => {
       })
     })
 
-    it('renders objects that uses slots options()', async () => {
+    it('renders objects that uses slots options', async () => {
       const wrapper = mount(BFormRadioGroup, {
         props: {
           options: [
@@ -192,15 +192,13 @@ describe('form-radio-group', () => {
           ],
         },
         slots: {
-          'option()': 'foo',
-          'option(0)': 'bar',
-          'option(2)': 'buzz',
+          option: 'foo',
         },
       })
       const radios = wrapper.findAllComponents(BFormRadio)
-      expect(radios[0].text()).toBe('bar')
+      expect(radios[0].text()).toBe('foo')
       expect(radios[1].text()).toBe('foo')
-      expect(radios[2].text()).toBe('buzz')
+      expect(radios[2].text()).toBe('foo')
     })
   })
 })

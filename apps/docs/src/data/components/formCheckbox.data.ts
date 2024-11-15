@@ -208,10 +208,9 @@ export default {
           scope: [],
         },
         {
-          // eslint-disable-next-line no-template-curly-in-string
-          name: 'option(${string})',
+          name: 'option',
           description:
-            'Use this slot to have finer control over the content render inside each checkbox button. option() applies to all buttons, option(index) goes for a specific checkbox button',
+            'Use this slot to have finer control over the content render inside each checkbox button.',
           scope: [
             {
               prop: 'value',

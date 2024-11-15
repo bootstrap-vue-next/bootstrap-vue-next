@@ -165,10 +165,9 @@ export default {
           scope: [],
         },
         {
-          // eslint-disable-next-line no-template-curly-in-string
-          name: 'option(${string})',
+          name: 'option',
           description:
-            'Use this slot to have finer control over the content render inside each radio button. option() applies to all buttons, option(index) goes for a specific radio button',
+            'Use this slot to have finer control over the content render inside each radio button',
           scope: [
             {
               prop: 'value',

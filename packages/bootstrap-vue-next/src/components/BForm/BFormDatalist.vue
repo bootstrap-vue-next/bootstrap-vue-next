@@ -1,18 +1,15 @@
 <template>
   <datalist :id="computedId">
     <slot name="first" />
-    <template v-for="(option, index) in normalizedOptsWrapper" :key="index">
-      <BFormSelectOption :value="option.value" :disabled="option.disabled">
-        <slot
-          :name="slots[`option(${index})`] ? (`option(${index})` as 'option()') : 'option()'"
-          :value="option.value"
-          :disabled="option.disabled"
-          :text="option.text"
-        >
-          {{ option.text }}
-        </slot>
-      </BFormSelectOption>
-    </template>
+    <BFormSelectOption
+      v-for="(option, index) in normalizedOptsWrapper"
+      :key="index"
+      v-bind="option"
+    >
+      <slot name="option" v-bind="option">
+        {{ option.text }}
+      </slot>
+    </BFormSelectOption>
     <slot />
   </datalist>
 </template>
@@ -37,17 +34,13 @@ const _props = withDefaults(defineProps<BFormDatalistProps>(), {
 })
 const props = useDefaults(_props, 'BFormDatalist')
 
-const slots = defineSlots<{
+defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   first?: (props: Record<string, never>) => any
-  [key: `option(${string})`]: (props: {
-    value: T
-    disabled: boolean | undefined
-    text: string | undefined
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  option: (props: SelectOption<T>) => any
 }>()
 
 const computedId = useId(() => props.id, 'datalist')
