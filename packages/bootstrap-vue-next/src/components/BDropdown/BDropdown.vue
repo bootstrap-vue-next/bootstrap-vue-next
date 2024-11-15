@@ -228,7 +228,12 @@ const keynav = (e: Readonly<Event>, v: number) => {
   e.preventDefault()
   if (!showRef.value) {
     show()
-    nextTick(() => keynav(e, v))
+    const loop = setInterval(() => {
+      if (isVisible.value) {
+        clearInterval(loop)
+        nextTick(() => keynav(e, v))
+      }
+    }, 16)
     return
   }
   const list = floating.value?.querySelectorAll('.dropdown-item:not(.disabled):not(:disabled)')
