@@ -10,7 +10,7 @@
   >
     <ContentTemplate.define>
       <BFormInvalidFeedback
-        v-if="$slots.invalidFeedback || props.invalidFeedback"
+        v-if="slots['invalid-feedback'] || props.invalidFeedback"
         :id="invalidFeedbackId"
         :aria-live="props.feedbackAriaLive"
         :state="props.state"
@@ -19,7 +19,7 @@
         <slot name="invalid-feedback">{{ props.invalidFeedback }}</slot>
       </BFormInvalidFeedback>
       <BFormValidFeedback
-        v-if="$slots.validFeedback || props.validFeedback"
+        v-if="slots['valid-feedback'] || props.validFeedback"
         :id="validFeedbackId"
         :aria-live="props.feedbackAriaLive"
         :state="props.state"
@@ -27,17 +27,17 @@
       >
         <slot name="valid-feedback">{{ props.validFeedback }}</slot>
       </BFormValidFeedback>
-      <BFormText v-if="$slots.description || props.description" :id="descriptionId">
+      <BFormText v-if="slots.description || props.description" :id="descriptionId">
         <slot name="description">{{ props.description }}</slot>
       </BFormText>
     </ContentTemplate.define>
     <LabelContentTemplate.define>
-      <template v-if="$slots.label || props.label || isHorizontal">
+      <template v-if="slots.label || props.label || isHorizontal">
         <BCol v-if="isHorizontal" v-bind="labelColProps">
           <component
             :is="labelTag"
             :id="labelId"
-            :for="props.labelFor || null"
+            :for="computedLabelFor || null"
             :tabindex="isFieldset ? '-1' : null"
             :class="labelClasses"
             @click="isFieldset ? onLegendClick : null"
@@ -49,7 +49,7 @@
           :is="labelTag"
           v-else
           :id="labelId"
-          :for="props.labelFor || null"
+          :for="computedLabelFor || null"
           :tabindex="isFieldset ? '-1' : null"
           :class="labelClasses"
           @click="isFieldset ? onLegendClick : null"
@@ -95,7 +95,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from 'vue'
+import {computed, provide, type Ref, ref, useTemplateRef} from 'vue'
 import {useAriaInvalid} from '../../composables/useAriaInvalid'
 import {attemptFocus, isVisible} from '../../utils/dom'
 import BCol from '../BContainer/BCol.vue'
@@ -109,6 +109,7 @@ import {useId} from '../../composables/useId'
 import {createReusableTemplate} from '@vueuse/core'
 import type {BFormGroupProps} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
+import {formGroupPluginKey} from '../../utils/keys'
 
 const INPUTS = ['input', 'select', 'textarea']
 
@@ -147,7 +148,7 @@ const _props = withDefaults(defineProps<BFormGroupProps>(), {
 })
 const props = useDefaults(_props, 'BFormGroup')
 
-defineSlots<{
+const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'invalid-feedback'?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -167,6 +168,16 @@ defineSlots<{
 
 const LabelContentTemplate = createReusableTemplate()
 const ContentTemplate = createReusableTemplate()
+
+const childId = ref<Ref<string>[]>([])
+provide(formGroupPluginKey, (id) => {
+  childId.value = [id]
+})
+const computedLabelFor = computed(() => {
+  if (props.labelFor !== undefined) return props.labelFor
+  if (childId.value[0] && childId.value[0].value) return childId.value[0].value
+  return null
+})
 
 const breakPoints = ['xs', 'sm', 'md', 'lg', 'xl']
 
@@ -194,7 +205,7 @@ const getColProps = (props: any, prefix: string) =>
     return result
   }, {})
 
-const content = ref<HTMLElement | null>(null)
+const content = useTemplateRef('content')
 
 const contentColProps = computed(() => getColProps(props, 'content'))
 const labelAlignClasses = computed(() =>
@@ -226,7 +237,7 @@ const computedAriaInvalid = useAriaInvalid(
 )
 
 const onLegendClick = (event: Readonly<MouseEvent>) => {
-  if (props.labelFor || content.value === null) return
+  if (computedLabelFor.value || content.value === null) return
 
   const {target} = event
   const tagName = target ? (target as HTMLElement).tagName : ''
@@ -244,14 +255,14 @@ const onLegendClick = (event: Readonly<MouseEvent>) => {
 
 const computedId = useId(() => props.id)
 const labelId = useId(undefined, '_BV_label_')
-const labelTag = computed(() => (!props.labelFor ? 'legend' : 'label'))
+const labelTag = computed(() => (!computedLabelFor.value ? 'legend' : 'label'))
 const labelClasses = computed(() => [
   isHorizontal.value ? 'col-form-label' : 'form-label',
   {
-    'bv-no-focus-ring': !props.labelFor,
-    'col-form-label': isHorizontal.value || !props.labelFor,
-    'pt-0': !isHorizontal.value && !props.labelFor,
-    'd-block': !isHorizontal.value && props.labelFor,
+    'bv-no-focus-ring': !computedLabelFor.value,
+    'col-form-label': isHorizontal.value || !computedLabelFor.value,
+    'pt-0': !isHorizontal.value && !computedLabelFor.value,
+    'd-block': !isHorizontal.value && computedLabelFor.value,
     [`col-form-label-${props.labelSize}`]: !!props.labelSize,
     'visually-hidden': props.labelVisuallyHidden,
   },
@@ -264,5 +275,5 @@ const invalidFeedbackId = useId(undefined, '_BV_feedback_invalid_')
 const validFeedbackId = useId(undefined, '_BV_feedback_valid_')
 const descriptionId = useId(undefined, '_BV_description_')
 
-const isFieldset = computed(() => !props.labelFor)
+const isFieldset = computed(() => !computedLabelFor.value)
 </script>

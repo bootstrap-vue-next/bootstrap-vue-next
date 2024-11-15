@@ -198,3 +198,10 @@ export const popoverPluginKey: InjectionKey<{
   setTooltip: (self: ControllerKey, val: Partial<PrivateOrchestratedTooltip>) => void
   removeTooltip: (self: ControllerKey) => void
 }> = createBvnInjectionKey('popoverPlugin')
+
+/**
+ * Automatically use a "for" attribute on label elements for its associated input
+ * Works on BFormInput & Textarea
+ */
+export const formGroupPluginKey: InjectionKey<(id: Ref<string>) => void> =
+  createBvnInjectionKey('formGroupPlugin')

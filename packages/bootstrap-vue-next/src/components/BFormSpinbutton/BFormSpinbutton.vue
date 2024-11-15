@@ -70,7 +70,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from 'vue'
+import {computed, useTemplateRef} from 'vue'
 import type {BFormSpinbuttonProps} from '../../types/ComponentProps'
 import {eventOnOff, stopEvent} from '../../utils/event'
 import {
@@ -133,7 +133,7 @@ const modelValue = defineModel<Exclude<BFormSpinbuttonProps['modelValue'], undef
   default: null,
 })
 
-const element = ref<HTMLElement | null>(null)
+const element = useTemplateRef('element')
 
 const {focused} = useFocus(element)
 

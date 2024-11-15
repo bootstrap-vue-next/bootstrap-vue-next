@@ -19,7 +19,7 @@
     >
       <component
         :is="props.headerTag"
-        v-if="$slots.title || props.title"
+        v-if="slots.title || props.title"
         class="toast-header"
         :class="props.headerClass"
       >
@@ -30,7 +30,7 @@
         </slot>
         <BCloseButton v-if="!props.noCloseButton" @click="hideFn('close')" />
       </component>
-      <template v-if="$slots.default || props.body">
+      <template v-if="slots.default || props.body">
         <component
           :is="computedTag"
           class="toast-body"
@@ -61,7 +61,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, watch, watchEffect} from 'vue'
+import {computed, useTemplateRef, watch, watchEffect} from 'vue'
 import {useBLinkHelper} from '../../composables/useBLinkHelper'
 import type {BToastProps} from '../../types/ComponentProps'
 import BTransition from '../BTransition.vue'
@@ -132,7 +132,14 @@ const emit = defineEmits<{
   'hide-prevented': []
 }>()
 
-const element = ref<HTMLElement | null>(null)
+const slots = defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  title?: (props: {hide: (trigger?: string) => void}) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: {hide: (trigger?: string) => void}) => any
+}>()
+
+const element = useTemplateRef('element')
 
 const modelValue = defineModel<Exclude<BToastProps['modelValue'], undefined>>({default: false})
 

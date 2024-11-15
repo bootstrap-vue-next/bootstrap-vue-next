@@ -93,10 +93,6 @@ export default {
         type: 'string',
         default: undefined,
       },
-      captionHtml: {
-        type: 'string',
-        default: undefined,
-      },
       detailsTdClass: {
         type: 'ClassValue',
         default: undefined,

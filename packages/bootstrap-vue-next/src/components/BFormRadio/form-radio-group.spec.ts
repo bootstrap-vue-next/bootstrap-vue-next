@@ -128,4 +128,77 @@ describe('form-radio-group', () => {
     })
     expect(wrapper.attributes('aria-invalid')).toBeUndefined()
   })
+
+  describe('options prop', () => {
+    it('renders strings', async () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          options: ['0', '1', '2'],
+        },
+      })
+      const radios = wrapper.findAllComponents(BFormRadio)
+      radios.forEach((element, index) => {
+        expect(element.text()).toBe(index.toString())
+      })
+    })
+
+    it('renders numbers', async () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          options: [0, 1, 2],
+        },
+      })
+      const radios = wrapper.findAllComponents(BFormRadio)
+      radios.forEach((element, index) => {
+        expect(element.text()).toBe(index.toString())
+      })
+    })
+
+    it('renders objects', async () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          options: [
+            {
+              text: '0',
+            },
+            {
+              text: '1',
+            },
+            {
+              text: '2',
+            },
+          ],
+        },
+      })
+      const radios = wrapper.findAllComponents(BFormRadio)
+      radios.forEach((element, index) => {
+        expect(element.text()).toBe(index.toString())
+      })
+    })
+
+    it('renders objects that uses slots options', async () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          options: [
+            {
+              text: '0',
+            },
+            {
+              text: '1',
+            },
+            {
+              text: '2',
+            },
+          ],
+        },
+        slots: {
+          option: 'foo',
+        },
+      })
+      const radios = wrapper.findAllComponents(BFormRadio)
+      expect(radios[0].text()).toBe('foo')
+      expect(radios[1].text()).toBe('foo')
+      expect(radios[2].text()).toBe('foo')
+    })
+  })
 })

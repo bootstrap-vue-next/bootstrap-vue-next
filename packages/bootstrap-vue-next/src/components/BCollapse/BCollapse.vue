@@ -15,7 +15,17 @@
 </template>
 
 <script setup lang="ts">
-import {computed, nextTick, onMounted, provide, readonly, ref, toRef, watch} from 'vue'
+import {
+  computed,
+  nextTick,
+  onMounted,
+  provide,
+  readonly,
+  ref,
+  toRef,
+  useTemplateRef,
+  watch,
+} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import {useEventListener} from '@vueuse/core'
@@ -85,7 +95,7 @@ const modelValue = defineModel<Exclude<BCollapseProps['modelValue'], undefined>>
 
 const computedId = useId(() => props.id, 'collapse')
 
-const element = ref<HTMLElement | null>(null)
+const element = useTemplateRef<HTMLElement | null>('element')
 const isCollapsing = ref(false)
 const showRef = ref(modelValue.value)
 

@@ -61,7 +61,7 @@
 
 <script setup lang="ts">
 import {BvCarouselEvent} from '../../utils'
-import {computed, onMounted, provide, ref, toRef, watch} from 'vue'
+import {computed, onMounted, provide, ref, toRef, useTemplateRef, watch} from 'vue'
 import {useId} from '../../composables/useId'
 import type {BCarouselProps} from '../../types/ComponentProps'
 import {onKeyStroke, useElementHover, useIntervalFn, useSwipe, useToNumber} from '@vueuse/core'
@@ -113,7 +113,7 @@ const buttonOwnership = useId(undefined, 'carousel-button-ownership')
 
 const modelValue = defineModel<Exclude<BCarouselProps['modelValue'], undefined>>({default: 0})
 
-const slideValues = ref<null | InstanceType<typeof BCarouselSlide>[]>(null)
+const slideValues = useTemplateRef<null | InstanceType<typeof BCarouselSlide>[]>('slideValues')
 
 const touchThresholdNumber = useToNumber(() => props.touchThreshold)
 const slideInterval = ref<Numberish | null>(null)
@@ -126,8 +126,8 @@ const intervalNumber = useToNumber(() => slideInterval.value ?? props.interval)
 const isTransitioning = ref(false)
 const rideStarted = ref(false)
 const direction = ref(true)
-const relatedTarget = ref<HTMLElement | null>(null)
-const element = ref<HTMLElement | null>(null)
+const relatedTarget = useTemplateRef('relatedTarget')
+const element = useTemplateRef('element')
 const previousModelValue = ref(modelValue.value)
 
 const isHovering = useElementHover(element)

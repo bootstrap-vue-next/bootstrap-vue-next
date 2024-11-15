@@ -126,7 +126,6 @@ export default {
             'disabled',
             'disabledField',
             'form',
-            'htmlField',
             'id',
             'name',
             'options',
@@ -164,6 +163,28 @@ export default {
           description:
             'Slot to place for radio buttons so that they appear before radios generated from options prop',
           scope: [],
+        },
+        {
+          name: 'option',
+          description:
+            'Use this slot to have finer control over the content render inside each radio button',
+          scope: [
+            {
+              prop: 'value',
+              type: 'string | number | undefined',
+              description: 'The value of the radio button',
+            },
+            {
+              prop: 'disabled',
+              type: 'boolean | undefined',
+              description: 'Whether the radio button is disabled',
+            },
+            {
+              prop: 'text',
+              type: 'string | undefined',
+              description: 'The text to display for the radio button',
+            },
+          ],
         },
       ],
     },

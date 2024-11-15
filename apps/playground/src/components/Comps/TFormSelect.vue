@@ -63,7 +63,6 @@ const formSelectOptions = [
   {value: null, text: 'Please select an option'},
   {text: 'Item 1', value: 'first'},
   {text: 'Item 2', value: 'second'},
-  {html: '<b>Item</b> 3', value: 'third', disabled: true},
   {text: 'Item 4'},
   {text: 'Item 5', value: {foo: 'item 5', baz: true}},
   {text: 'Item 6', value: {foo: 'item 6', baz: false}},

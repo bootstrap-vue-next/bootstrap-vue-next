@@ -1,6 +1,9 @@
 import {afterEach, describe, expect, it} from 'vitest'
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import BFormGroup from './BFormGroup.vue'
+import {h, nextTick} from 'vue'
+import BFormInput from '../BFormInput/BFormInput.vue'
+import BFormTextarea from '../BFormTextarea/BFormTextarea.vue'
 
 describe('form-group', () => {
   enableAutoUnmount(afterEach)
@@ -379,5 +382,36 @@ describe('form-group', () => {
       },
     })
     expect(wrapper.attributes('aria-labelledby')).toBeDefined()
+  })
+
+  describe('provide functionality', () => {
+    it('label should automatically inherit input id', async () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo'},
+        slots: {
+          default: h(BFormInput, {id: 'foobar'}),
+        },
+      })
+      await nextTick()
+      expect(wrapper.get('label').attributes('for')).toBe('foobar')
+      const textArea = mount(BFormGroup, {
+        props: {label: 'foo'},
+        slots: {
+          default: h(BFormTextarea, {id: 'foobar'}),
+        },
+      })
+      await nextTick()
+      expect(textArea.get('label').attributes('for')).toBe('foobar')
+    })
+    it('uses prop labelFor over input id', async () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo', labelFor: 'spam and eggs'},
+        slots: {
+          default: h(BFormInput, {id: 'foobar'}),
+        },
+      })
+      await nextTick()
+      expect(wrapper.get('label').attributes('for')).toBe('spam and eggs')
+    })
   })
 })

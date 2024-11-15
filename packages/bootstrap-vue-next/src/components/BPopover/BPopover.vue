@@ -22,9 +22,8 @@
         data-popper-arrow
       />
       <div class="overflow-auto" :style="sizeStyles">
-        <template v-if="props.title || $slots.title">
+        <template v-if="props.title || slots.title">
           <div
-            v-if="!props.html"
             class="position-sticky top-0"
             :class="props.tooltip ? 'tooltip-inner' : 'popover-header'"
           >
@@ -32,28 +31,13 @@
               {{ props.title }}
             </slot>
           </div>
-          <!-- eslint-disable vue/no-v-html -->
-          <div
-            v-else
-            class="position-sticky top-0"
-            :class="props.tooltip ? 'tooltip-inner' : 'popover-header'"
-            v-html="sanitizedTitle"
-          />
-          <!-- eslint-enable vue/no-v-html -->
         </template>
-        <template v-if="(props.tooltip && !$slots.title && !props.title) || !props.tooltip">
-          <div v-if="!props.html" :class="props.tooltip ? 'tooltip-inner' : 'popover-body'">
+        <template v-if="(props.tooltip && !slots.title && !props.title) || !props.tooltip">
+          <div :class="props.tooltip ? 'tooltip-inner' : 'popover-body'">
             <slot>
               {{ props.content }}
             </slot>
           </div>
-          <!-- eslint-disable vue/no-v-html -->
-          <div
-            v-else
-            :class="props.tooltip ? 'tooltip-inner' : 'popover-body'"
-            v-html="sanitizedContent"
-          />
-          <!-- eslint-enable vue/no-v-html -->
         </template>
       </div>
     </div>
@@ -87,6 +71,7 @@ import {
   onMounted,
   ref,
   toRef,
+  useTemplateRef,
   watch,
   watchEffect,
 } from 'vue'
@@ -95,7 +80,6 @@ import {useMouse} from '../../composables/useMouse'
 import {useId} from '../../composables/useId'
 import type {BPopoverProps} from '../../types/ComponentProps'
 import {BvTriggerableEvent} from '../../utils'
-import {DefaultAllowlist, sanitizeHtml} from '../../utils/sanitizer'
 import {isBoundary, isRootBoundary, resolveBootstrapPlacement} from '../../utils/floatingUi'
 import {getTransitionDelay} from '../../utils/dom'
 import {getElement} from '../../utils/getElement'
@@ -118,7 +102,6 @@ const _props = withDefaults(defineProps<Omit<BPopoverProps, 'modelValue'>>(), {
   delay: () => ({show: 100, hide: 300}),
   floatingMiddleware: undefined,
   hideMargin: 2,
-  html: false,
   id: undefined,
   inline: false,
   manual: false,
@@ -152,7 +135,7 @@ const emit = defineEmits<{
   'shown': [value: BvTriggerableEvent]
 }>()
 
-defineSlots<{
+const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
   target?: (props: {
@@ -185,19 +168,12 @@ const computedId = useId(() => props.id, 'popover')
 
 const hidden = ref(false)
 
-const element = ref<HTMLElement | null>(null)
+const element = useTemplateRef('element')
+const arrow = useTemplateRef('arrow')
+const placeholder = useTemplateRef('placeholder')
 const floatingTarget = ref<HTMLElement | null>(null)
-const arrow = ref<HTMLElement | null>(null)
 const trigger = ref<HTMLElement | null>(null)
-const placeholder = ref<HTMLElement | null>(null)
 
-const sanitizedTitle = computed(() =>
-  props.title ? sanitizeHtml(props.title, DefaultAllowlist) : ''
-)
-
-const sanitizedContent = computed(() =>
-  props.content ? sanitizeHtml(props.content, DefaultAllowlist) : ''
-)
 const isAutoPlacement = computed(() => props.placement.startsWith('auto'))
 const offsetNumber = useToNumber(() => props.offset ?? NaN)
 

@@ -96,7 +96,7 @@
     >
       <slot
         :name="
-          $slots[`head(${String(field.key)})`]
+          slots[`head(${String(field.key)})`]
             ? (`head(${String(field.key)})` as 'head()')
             : 'head()'
         "
@@ -111,7 +111,7 @@
           v-if="sortByModel?.find((el) => el.key === scope.field.key)?.order === 'asc'"
           v-bind="scope"
           :name="
-            $slots[`sortAsc(${String(scope.field.key)})`]
+            slots[`sortAsc(${String(scope.field.key)})`]
               ? (`sortAsc(${String(scope.field.key)})` as 'sortAsc()')
               : 'sortAsc()'
           "
@@ -135,7 +135,7 @@
           v-else-if="sortByModel?.find((el) => el.key === scope.field.key)?.order === 'desc'"
           v-bind="scope"
           :name="
-            $slots[`sortDesc(${String(scope.field.key)})`]
+            slots[`sortDesc(${String(scope.field.key)})`]
               ? (`sortDesc(${String(scope.field.key)})` as 'sortDesc()')
               : 'sortDesc()'
           "
@@ -159,7 +159,7 @@
           v-else
           v-bind="scope"
           :name="
-            $slots[`sortDefault(${String(scope.field.key)})`]
+            slots[`sortDefault(${String(scope.field.key)})`]
               ? (`sortDefault(${String(scope.field.key)})` as 'sortDefault()')
               : 'sortDefault()'
           "
@@ -184,7 +184,7 @@
     </template>
     <template #custom-body="scope">
       <BTr
-        v-if="busyModel && $slots['table-busy']"
+        v-if="busyModel && slots['table-busy']"
         class="b-table-busy-slot"
         :class="getBusyRowClasses"
       >
@@ -278,7 +278,6 @@ const _props = withDefaults(
     emptyFilteredText: 'There are no records matching your request',
     fieldColumnClass: undefined,
     tbodyTrClass: undefined,
-    captionHtml: undefined,
     detailsTdClass: undefined,
     headVariant: undefined,
     headRowVariant: undefined,

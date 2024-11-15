@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import {useDefaults} from '../../composables/useDefaults'
 import type {BFormProps} from '../../types/ComponentProps'
-import {computed, ref} from 'vue'
+import {computed, useTemplateRef} from 'vue'
 
 const _props = withDefaults(defineProps<BFormProps>(), {
   id: undefined,
@@ -17,7 +17,7 @@ const _props = withDefaults(defineProps<BFormProps>(), {
 })
 const props = useDefaults(_props, 'BForm')
 
-const element = ref<HTMLFormElement | null>(null)
+const element = useTemplateRef('element')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

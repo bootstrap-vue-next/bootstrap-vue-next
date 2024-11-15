@@ -100,7 +100,7 @@ export default {
             default: undefined,
           },
           progressProps: {
-            type: "Omit<BProgressBarProps, 'label' | 'labelHtml' | 'max' | 'value'>",
+            type: "Omit<BProgressBarProps, 'label' | 'max' | 'value'>",
             default: undefined,
             description:
               'The properties to define the progress bar in the toast. No progress will be shown if left undefined',

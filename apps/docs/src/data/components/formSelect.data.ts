@@ -45,7 +45,6 @@ export default {
               'disabled',
               'disabledField',
               'form',
-              'htmlField',
               'id',
               'name',
               'options',
@@ -124,7 +123,7 @@ export default {
             buildCommonProps({
               options: {type: 'readonly (unknown | Record<string, unknown>)[]'},
             }),
-            ['disabledField', 'htmlField', 'options', 'textField', 'valueField']
+            ['disabledField', 'options', 'textField', 'valueField']
           ),
         } satisfies Record<keyof BvnComponentProps['BFormSelectOptionGroup'], PropertyReference>,
       },

@@ -1,8 +1,6 @@
 <template>
   <component :is="tag" :class="computedClasses">
-    <!-- eslint-disable-next-line vue/no-v-html -->
-    <div v-if="!!html" v-html="html" />
-    <slot v-else>
+    <slot>
       {{ text }}
     </slot>
   </component>
@@ -14,7 +12,6 @@ import {useColorVariantClasses} from '../composables/useColorVariantClasses'
 
 const props = withDefaults(defineProps<BCardHeadFootProps>(), {
   borderVariant: null,
-  html: undefined,
   tag: 'div',
   text: undefined,
   // ColorExtendables props

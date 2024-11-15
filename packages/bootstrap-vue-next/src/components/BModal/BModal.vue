@@ -121,7 +121,7 @@
 <script setup lang="ts">
 import {onKeyStroke, useEventListener, useFocus} from '@vueuse/core'
 import {useActivatedFocusTrap} from '../../composables/useActivatedFocusTrap'
-import {computed, type CSSProperties, ref, watch} from 'vue'
+import {computed, type CSSProperties, ref, useTemplateRef, watch} from 'vue'
 import type {BModalProps} from '../../types/ComponentProps'
 import {BvTriggerableEvent} from '../../utils'
 import BButton from '../BButton/BButton.vue'
@@ -251,11 +251,11 @@ const computedId = useId(() => props.id, 'modal')
 // Since the modelValue that's passed from that composable is not reactive, this internal ref _is_ and thus it will trigger closing the modal
 const modelValue = defineModel<Exclude<BModalProps['modelValue'], undefined>>({default: false})
 
-const element = ref<HTMLElement | null>(null)
-const fallbackFocusElement = ref<HTMLElement | null>(null)
-const okButton = ref<HTMLElement | null>(null)
-const cancelButton = ref<HTMLElement | null>(null)
-const closeButton = ref<HTMLElement | null>(null)
+const element = useTemplateRef('element')
+const fallbackFocusElement = useTemplateRef('fallbackFocusElement')
+const okButton = useTemplateRef<HTMLElement | null>('okButton')
+const cancelButton = useTemplateRef<HTMLElement | null>('cancelButton')
+const closeButton = useTemplateRef<HTMLElement | null>('closeButton')
 const isActive = ref(false)
 const lazyLoadCompleted = ref(false)
 

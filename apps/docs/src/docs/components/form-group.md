@@ -78,6 +78,30 @@ You can also apply additional classes to the label via the `label-class` prop, s
 padding and text alignment utility classes. The `label-class` prop accepts either a string or array
 of strings.
 
+### Automatic Inheriting of id
+
+The `BFormGroup` component automatically inherits the id of its child input components, such as BFormInput and BFormTextarea. This functionality ensures that the label element's for attribute is correctly set to match the id of the input component, providing proper association between the label and the input field.
+
+<HighlightCard>
+  <BFormGroup
+    label="Enter your name"
+  >
+    <BFormInput id="this-id-will-be-automatically-applied-to-the-label" />
+  </BFormGroup>
+
+<template #html>
+
+```vue-html
+<BFormGroup
+  label="Enter your name"
+  >
+  <BFormInput id="this-id-will-be-automatically-applied-to-the-label" />
+</BFormGroup>
+```
+
+  </template>
+</HighlightCard>
+
 ### Horizontal layout
 
 By default, the label appears above the input element(s), but you may optionally render horizontal

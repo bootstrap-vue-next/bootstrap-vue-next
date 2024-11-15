@@ -18,7 +18,6 @@ const _props = withDefaults(defineProps<BProgressBarProps>(), {
   animated: false,
   bgVariant: null,
   label: undefined,
-  labelHtml: undefined,
   max: undefined,
   precision: 0,
   showProgress: false,
@@ -53,15 +52,13 @@ const numberMax = useToNumber(() => props.max ?? NaN)
 const parentMaxNumber = useToNumber(() => parentData?.max.value ?? NaN)
 
 const computedLabel = computed(() =>
-  props.labelHtml !== undefined
-    ? props.labelHtml
-    : props.showValue || parentData?.showValue.value
-      ? numberValue.value.toFixed(numberPrecision.value)
-      : props.showProgress || parentData?.showProgress.value
-        ? ((numberValue.value * 100) / (numberMax.value || 100)).toFixed(numberPrecision.value)
-        : props.label !== undefined
-          ? props.label
-          : ''
+  props.showValue || parentData?.showValue.value
+    ? numberValue.value.toFixed(numberPrecision.value)
+    : props.showProgress || parentData?.showProgress.value
+      ? ((numberValue.value * 100) / (numberMax.value || 100)).toFixed(numberPrecision.value)
+      : props.label !== undefined
+        ? props.label
+        : ''
 )
 
 const computedWidth = computed(() =>
