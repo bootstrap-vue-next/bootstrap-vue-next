@@ -11,6 +11,7 @@ module.exports = defineConfig({
     '@vue/eslint-config-typescript/recommended',
     '@vue/eslint-config-prettier',
   ],
+  ignorePatterns: ['**/demo/*.js'],
   parserOptions: {
     ecmaVersion: 'latest',
   },
