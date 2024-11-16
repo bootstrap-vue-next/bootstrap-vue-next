@@ -269,5 +269,5 @@ const appRegistry = inject(
   value: readonly(showRef),
 })
 
-onBeforeUnmount(appRegistry?.unregister)
+onBeforeUnmount(appRegistry?.unregister ?? (() => {}))
 </script>
