@@ -17,7 +17,9 @@
 <script setup lang="ts">
 import {
   computed,
+  inject,
   nextTick,
+  onBeforeUnmount,
   onMounted,
   provide,
   readonly,
@@ -29,7 +31,7 @@ import {
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import {useEventListener} from '@vueuse/core'
-import {collapseInjectionKey} from '../../utils/keys'
+import {collapseInjectionKey, globalCollapseStorageInjectionKey} from '../../utils/keys'
 import type {BCollapseProps} from '../../types/ComponentProps'
 import {BvTriggerableEvent} from '../../utils'
 import {getTransitionDelay} from '../../utils/dom'
@@ -257,4 +259,15 @@ provide(collapseInjectionKey, {
   visible: readonly(showRef),
   isNav: toRef(() => props.isNav),
 })
+
+const appRegistry = inject(
+  globalCollapseStorageInjectionKey,
+  undefined
+)?.({
+  id: computedId.value,
+  toggle: toggleFn,
+  value: readonly(showRef),
+})
+
+onBeforeUnmount(appRegistry?.unregister)
 </script>
