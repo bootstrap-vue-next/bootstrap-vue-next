@@ -428,6 +428,14 @@ The `show` and `confirm` `props` object accespts all of the properties that are 
 
 See [`BDropdown`](#bdropdown) for details
 
+## BNavbar
+
+The `type` prop is deprectated. Use the the `v-b-color-mode` directive or `useColorMode` composable instead. Details in our [docs](/components/navbar#color-scheme)
+
+### BNavbarNav
+
+`align` prop now takes values from [`AlignmentJustifyContent`](/docs/types/alignment): `start`, `center`, `end`, `between`, `around`, and `evenly`
+
 ## BPagination
 
 Keyboard Navigation and Small Screen Support.

@@ -37,6 +37,12 @@ export const commonProps = () =>
       description:
         'Sets the `aria-invalid` attribute value on the wrapper element. When not provided, the `state` prop will control the attribute',
     },
+    autoClose: {
+      type: "boolean | 'inside' | 'outside'",
+      default: true,
+      description:
+        'Controls the automatic closing of the component when clicking. See above for details.',
+    },
     autocomplete: {
       type: 'string',
       default: 'false',
