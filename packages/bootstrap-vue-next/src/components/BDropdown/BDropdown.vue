@@ -75,7 +75,7 @@ import {
   size as sizeMiddleware,
   useFloating,
 } from '@floating-ui/vue'
-import {onClickOutside, onKeyStroke, useToNumber} from '@vueuse/core'
+import {onClickOutside, onKeyStroke, useFocus, useToNumber} from '@vueuse/core'
 import {
   computed,
   type CSSProperties,
@@ -181,20 +181,13 @@ const rootBoundary = computed<RootBoundary | undefined>(() =>
 
 const referencePlacement = computed(() => (!props.split ? splitButton.value : button.value))
 
-onKeyStroke(
-  'Escape',
-  () => {
-    modelValue.value = !modelValue.value
-  },
-  {target: referencePlacement}
-)
-onKeyStroke(
-  'Escape',
-  () => {
-    modelValue.value = !modelValue.value
-  },
-  {target: floating}
-)
+const {focused} = useFocus(referencePlacement)
+const handleEscape = () => {
+  modelValue.value = !modelValue.value
+  focused.value = true
+}
+onKeyStroke('Escape', handleEscape, {target: referencePlacement})
+onKeyStroke('Escape', handleEscape, {target: floating})
 
 const keynav = (e: Readonly<Event>, v: number) => {
   if (floating.value?.contains((e.target as HTMLElement)?.closest('form'))) return
