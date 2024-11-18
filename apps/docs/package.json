@@ -7,8 +7,8 @@
     "dev": "vitepress dev --port 8000",
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=4096 vitepress build",
     "preview": "vitepress preview",
-    "lint": "eslint --ignore-path ../../.gitignore --fix src",
-    "test:lint": "eslint --ignore-path ../../.gitignore src",
+    "lint": "eslint --fix src",
+    "test:lint": "eslint src",
     "test": "pnpm run test:lint"
   },
   "devDependencies": {
