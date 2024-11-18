@@ -24,7 +24,7 @@
     }
   ],
   "scripts": {
-    "prepare": "husky install && turbo run build",
+    "prepare": "husky && turbo run build",
     "dev": "turbo run dev --parallel",
     "build": "turbo run build",
     "lint": "turbo run lint",
@@ -37,7 +37,7 @@
     "test:ci": "turbo run test:ci"
   },
   "devDependencies": {
-    "husky": "^9.1.5",
+    "husky": "^9.1.7",
     "lint-staged": "^15.2.10",
     "turbo": "latest"
   },

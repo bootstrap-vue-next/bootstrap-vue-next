@@ -1,6 +1,6 @@
 import type {ConfigurationOption} from '../types/ModuleOptions'
 
-export default <Type extends string, Base extends ConfigurationOption<Type>>(
+export const parseActiveImports = <Type extends string, Base extends ConfigurationOption<Type>>(
   options: Readonly<Base>,
   values: readonly Type[]
 ): Type[] => {

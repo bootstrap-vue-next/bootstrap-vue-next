@@ -1,9 +1,9 @@
 import {defineNuxtModule, createResolver, addImports, addPlugin} from '@nuxt/kit'
-import useComponents from './composables/useComponents'
+import {useComponents} from './composables/useComponents'
 import type {ModuleOptions} from './types/ModuleOptions'
-import parseActiveImports from './utils/parseActiveImports'
+import {parseActiveImports} from './utils/parseActiveImports'
 import {composableNames, directiveNames, composablesWithExternalPath} from 'bootstrap-vue-next'
-import normalizeConfigurationValue from './utils/normalizeConfigurationValue'
+import {normalizeConfigurationValue} from './utils/normalizeConfigurationValue'
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {

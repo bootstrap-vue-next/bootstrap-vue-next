@@ -1,5 +1,5 @@
 import * as Directives from 'bootstrap-vue-next/directives'
-import {defineNuxtPlugin, useRuntimeConfig} from '#imports'
+import {defineNuxtPlugin, useRuntimeConfig} from '#app'
 import type {Directive} from 'vue'
 
 export default defineNuxtPlugin((nuxtApp) => {
