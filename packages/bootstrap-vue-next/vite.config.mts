@@ -9,6 +9,7 @@ import Components from 'unplugin-vue-components/vite'
 import {readdirSync} from 'node:fs'
 import {basename, dirname, extname, join, relative} from 'node:path'
 import {copyFile} from 'fs/promises'
+import vueDevTools from 'vite-plugin-vue-devtools'
 
 const readFilesInDirectory = (
   dir: string,
@@ -133,6 +134,7 @@ export default defineConfig({
   css: {preprocessorOptions: {scss: {charset: false}}},
 
   plugins: [
+    vueDevTools(),
     vue({
       include: [/\.vue$/, /\.md$/],
     }),
