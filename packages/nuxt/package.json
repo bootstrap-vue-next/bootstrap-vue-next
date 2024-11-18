@@ -26,8 +26,8 @@
     "build": "pnpm run dev:prepare && pnpm run dev:build && pnpm run prepack",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
-    "lint": "eslint --ext .js,.ts,.vue --ignore-path ../../.gitignore --fix",
-    "test:lint": "eslint --ext .js,.ts,.vue --ignore-path ../../.gitignore",
+    "lint": "eslint --ignore-path ../../.gitignore --fix",
+    "test:lint": "eslint --ignore-path ../../.gitignore",
     "test": "vitest run",
     "test:watch": "vitest watch",
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
