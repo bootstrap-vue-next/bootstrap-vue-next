@@ -56,9 +56,9 @@ export type {TabType} from './Tab'
 export type {TransitionMode} from './TransitionMode'
 export type * from './ComponentProps'
 export type {
-  PublicOrchestratedTooltip as OrchestratedTooltip,
+  TooltipOrchestratorShowParam as OrchestratedTooltip,
   PublicOrchestratedToast as OrchestratedToast,
-  PublicOrchestratedPopover as OrchestratedPopover,
+  PopoverOrchestratorShowParam as OrchestratedPopover,
   PublicOrchestratedModal as OrchestratedModal,
 } from './ComponentOrchestratorTypes'
 export type * from './ComponentOrchestratorTypes'

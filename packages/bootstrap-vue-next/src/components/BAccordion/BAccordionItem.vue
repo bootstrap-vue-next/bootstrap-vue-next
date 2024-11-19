@@ -8,10 +8,12 @@
       :aria-labelledby="`${computedId}-heading`"
       v-bind="collapseAttrs"
       :tag="props.tag"
-      :toggle="props.toggle"
+      :show="props.show"
       :horizontal="props.horizontal"
       :visible="props.visible"
       :is-nav="props.isNav"
+      :lazy="props.lazy || parentData?.lazy.value"
+      :unmount-lazy="props.unmountLazy || parentData?.unmountLazy.value"
       @show="emit('show', $event)"
       @shown="emit('shown')"
       @hide="emit('hide', $event)"
@@ -48,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import {inject, onMounted, useAttrs, watch} from 'vue'
+import {inject, nextTick, onMounted, useAttrs, watch} from 'vue'
 import BCollapse from '../BCollapse/BCollapse.vue'
 import {accordionInjectionKey} from '../../utils/keys'
 import {useDefaults} from '../../composables/useDefaults'
@@ -73,9 +75,11 @@ const _props = withDefaults(defineProps<Omit<BAccordionItemProps, 'modelValue'>>
   horizontal: undefined,
   id: undefined,
   isNav: undefined,
+  lazy: false,
+  unmountLazy: false,
   tag: undefined,
   title: undefined,
-  toggle: undefined,
+  show: undefined,
   visible: false,
   wrapperAttrs: undefined,
 })
@@ -97,20 +101,26 @@ defineSlots<{
   title?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = defineModel<Exclude<BAccordionItemProps['modelValue'], undefined>>({
-  default: false,
-})
-
 const parentData = inject(accordionInjectionKey, null)
 
 const computedId = useId(() => props.id, 'accordion_item')
 
+const modelValue = defineModel<Exclude<BAccordionItemProps['modelValue'], undefined>>({
+  default: false,
+})
+
+modelValue.value =
+  parentData?.openItem.value === computedId.value && !parentData?.initialAnimation.value
+
+if (modelValue.value && !parentData?.free.value) {
+  parentData?.setOpenItem(computedId.value)
+}
+
 onMounted(() => {
-  if (modelValue.value && !parentData?.free.value) {
-    parentData?.setOpenItem(computedId.value)
-  }
   if (!modelValue.value && parentData?.openItem.value === computedId.value) {
-    modelValue.value = true
+    nextTick(() => {
+      modelValue.value = true
+    })
   }
 })
 

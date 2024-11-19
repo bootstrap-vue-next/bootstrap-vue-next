@@ -1,5 +1,6 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {ComponentReference, PropertyReference} from '../../types'
+import {showHideProps} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
@@ -8,6 +9,12 @@ export default {
       sourcePath: '/BOffcanvas/BOffcanvas.vue',
       props: {
         '': {
+          backdropFirst: {
+            type: 'boolean',
+            default: false,
+            description:
+              'Animate the backdrop before the offcanvas, and on leave animate the offcanvas before the backdrop',
+          },
           bodyAttrs: {
             type: 'Readonly<AttrsValue>',
             default: undefined,
@@ -40,21 +47,13 @@ export default {
             type: 'ButtonVariant | null',
             default: 'secondary',
           },
-          hideBackdrop: {
+          noBackdrop: {
             type: 'boolean',
             default: false,
           },
           id: {
             type: 'string',
             default: undefined,
-          },
-          lazy: {
-            type: 'boolean',
-            default: false,
-          },
-          modelValue: {
-            type: 'boolean',
-            default: false,
           },
           noCloseOnBackdrop: {
             type: 'boolean',
@@ -108,6 +107,7 @@ export default {
             type: 'string',
             default: undefined,
           },
+          ...showHideProps,
         } satisfies Record<keyof BvnComponentProps['BOffcanvas'], PropertyReference>,
       },
       emits: [

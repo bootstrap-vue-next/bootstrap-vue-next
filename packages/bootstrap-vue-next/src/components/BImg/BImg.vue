@@ -2,6 +2,7 @@
   <component
     :is="props.tag"
     :class="computedClasses"
+    class="b-img"
     :src="!props.blank ? props.src : computedBlankImgSrc"
     :width="computedDimentions.width || undefined"
     :height="computedDimentions.height || undefined"

@@ -52,8 +52,8 @@
       </BCol>
       <BCol>
         <BTooltip click>
-          <template #target="{showState}">
-            <BButton :variant="showState ? 'primary' : 'secondary'">
+          <template #target="{visible}">
+            <BButton :variant="visible ? 'primary' : 'secondary'">
               click tooltip component
             </BButton>
           </template>
@@ -165,12 +165,12 @@
 
           <p>Position is calculated to parent relative element. (Try changing the textarea size)</p>
 
-          <template #target="{toggle, showState}">
+          <template #target="{toggle, visible}">
             <BButton @click="toggle">Click to toggle popover</BButton>
             <div>
-              {{ showState ? 'Visible' : 'hidden' }}
+              {{ visible ? 'Visible' : 'hidden' }}
             </div>
-            <BFormCheckbox :model-value="showState" @click="toggle"> show </BFormCheckbox>
+            <BFormCheckbox :model-value="visible" @click="toggle"> show </BFormCheckbox>
           </template>
         </BPopover>
         <BFormRadioGroup>

@@ -63,7 +63,7 @@ const slots = defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const element = useTemplateRef('element')
+const element = useTemplateRef<HTMLElement>('element')
 
 const modelValue = defineModel<Exclude<BAlertProps['modelValue'], undefined>>({default: false})
 

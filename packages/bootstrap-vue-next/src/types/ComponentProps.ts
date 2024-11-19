@@ -111,7 +111,10 @@ export interface BAccordionProps {
   flush?: boolean
   free?: boolean
   id?: string
+  initialAnimation?: boolean
+  lazy?: boolean
   modelValue?: string
+  unmountLazy?: boolean
 }
 
 export interface BDropdownDividerProps {
@@ -524,8 +527,9 @@ export interface BNavbarToggleProps {
   target?: string | readonly string[]
 }
 
-export interface BOffcanvasProps extends TeleporterProps {
-  hideBackdrop?: boolean
+export interface BOffcanvasProps extends TeleporterProps, ShowHideProps {
+  noBackdrop?: boolean
+  backdropFirst?: boolean
   bodyAttrs?: Readonly<AttrsValue>
   bodyClass?: ClassValue
   bodyScrolling?: boolean
@@ -535,7 +539,6 @@ export interface BOffcanvasProps extends TeleporterProps {
   headerCloseLabel?: string
   headerCloseVariant?: ButtonVariant | null
   id?: string
-  lazy?: boolean
   modelValue?: boolean
   noCloseOnBackdrop?: boolean
   noCloseOnEsc?: boolean
@@ -579,8 +582,8 @@ export interface BPaginationProps {
   firstClass?: ClassValue
   firstNumber?: boolean
   firstText?: string
-  hideEllipsis?: boolean
-  hideGotoEndButtons?: boolean
+  noEllipsis?: boolean
+  noGotoEndButtons?: boolean
   labelFirstPage?: string
   labelLastPage?: string
   labelNextPage?: string
@@ -656,7 +659,7 @@ export interface BPlaceholderTableProps {
   headerColumns?: Numberish
   headerSize?: PlaceholderSize
   headerVariant?: ColorVariant | null
-  hideHeader?: boolean
+  noHeader?: boolean
   rows?: Numberish
   showFooter?: boolean
   size?: PlaceholderSize
@@ -718,16 +721,12 @@ export interface BToastOrchestratorProps extends TeleporterProps {
   appendToast?: boolean
 }
 
-export interface BCollapseProps {
-  // appear?: boolean
+export interface BCollapseProps extends ShowHideProps {
   horizontal?: boolean
   id?: string
   isNav?: boolean
   modelValue?: boolean
-  skipAnimation?: boolean
   tag?: string
-  toggle?: boolean
-  visible?: boolean
 }
 
 export interface BContainerProps {
@@ -759,9 +758,11 @@ export interface BAccordionItemProps {
   id?: string
   isNav?: boolean
   modelValue?: boolean
+  lazy?: boolean
+  unmountLazy?: boolean
   tag?: string
   title?: string
-  toggle?: boolean
+  show?: boolean
   visible?: boolean
   wrapperAttrs?: Readonly<AttrsValue>
 }
@@ -1169,7 +1170,7 @@ export interface BFormFeedbackSharedProps {
   tooltip?: boolean
 }
 
-export interface BDropdownProps extends TeleporterProps {
+export interface BDropdownProps extends TeleporterProps, ShowHideProps {
   ariaLabel?: string
   autoClose?: boolean | 'inside' | 'outside'
   boundary?: Boundary | RootBoundary
@@ -1178,7 +1179,6 @@ export interface BDropdownProps extends TeleporterProps {
   floatingMiddleware?: Middleware[]
   id?: string
   isNav?: boolean
-  lazy?: boolean
   menuClass?: ClassValue
   modelValue?: boolean
   noCaret?: boolean
@@ -1191,7 +1191,7 @@ export interface BDropdownProps extends TeleporterProps {
     | Readonly<{mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null}>
   role?: string
   size?: Size
-  skipWrapper?: boolean
+  noWrapper?: boolean
   split?: boolean
   splitButtonType?: ButtonType
   splitClass?: ClassValue
@@ -1208,7 +1208,10 @@ export interface BDropdownProps extends TeleporterProps {
   placement?: FloatingPlacement
 }
 
-export interface BToastProps extends ColorExtendables, Omit<BLinkProps, 'routerTag'> {
+export interface BToastProps
+  extends ColorExtendables,
+    Omit<BLinkProps, 'routerTag'>,
+    ShowHideProps {
   body?: string
   bodyClass?: ClassValue
   headerClass?: ClassValue
@@ -1218,7 +1221,6 @@ export interface BToastProps extends ColorExtendables, Omit<BLinkProps, 'routerT
   isStatus?: boolean
   modelValue?: boolean | number
   noCloseButton?: boolean
-  noFade?: boolean
   noHoverPause?: boolean
   noResumeOnHoverLeave?: boolean
   progressProps?: Omit<BProgressBarProps, 'label' | 'max' | 'value'>
@@ -1226,10 +1228,9 @@ export interface BToastProps extends ColorExtendables, Omit<BLinkProps, 'routerT
   solid?: boolean
   title?: string
   toastClass?: ClassValue
-  transProps?: Readonly<BTransitionProps>
 }
 
-export interface BPopoverProps extends TeleporterProps {
+export interface BPopoverProps extends TeleporterProps, ShowHideProps {
   boundary?: Boundary | RootBoundary
   boundaryPadding?: Padding
   click?: boolean
@@ -1249,7 +1250,6 @@ export interface BPopoverProps extends TeleporterProps {
   manual?: boolean
   modelValue?: boolean
   noAutoClose?: boolean
-  noFade?: boolean
   noFlip?: boolean
   noHide?: boolean
   noShift?: boolean
@@ -1257,7 +1257,6 @@ export interface BPopoverProps extends TeleporterProps {
   noninteractive?: boolean
   offset?: Numberish | null
   placement?: PopoverPlacement
-  persistent?: boolean
   realtime?: boolean
   reference?: string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | null
   strategy?: Strategy
@@ -1277,9 +1276,10 @@ export interface BCardHeadFootProps extends ColorExtendables {
   text?: string
 }
 
-export interface BModalProps extends TeleporterProps {
+export interface BModalProps extends TeleporterProps, ShowHideProps {
   autofocus?: boolean
   autofocusButton?: 'ok' | 'cancel' | 'close'
+  backdropFirst?: boolean
   body?: string
   bodyAttrs?: Readonly<AttrsValue>
   bodyBgVariant?: BgColorVariant | null
@@ -1309,17 +1309,15 @@ export interface BModalProps extends TeleporterProps {
   headerCloseVariant?: ButtonVariant | null
   headerTextVariant?: TextColorVariant | null
   headerVariant?: ColorVariant | null
-  hideBackdrop?: boolean
-  hideFooter?: boolean
-  hideHeader?: boolean
-  hideHeaderClose?: boolean
+  noBackdrop?: boolean
+  noFooter?: boolean
+  noHeader?: boolean
+  noHeaderClose?: boolean
   id?: string
-  lazy?: boolean
   modalClass?: ClassValue
   modelValue?: boolean
   noCloseOnBackdrop?: boolean
   noCloseOnEsc?: boolean
-  noFade?: boolean
   noTrap?: boolean
   noStacking?: boolean
   okDisabled?: boolean
@@ -1332,7 +1330,17 @@ export interface BModalProps extends TeleporterProps {
   titleClass?: ClassValue
   titleVisuallyHidden?: boolean
   titleTag?: string
-  transProps?: Readonly<BTransitionProps>
+}
+
+export interface ShowHideProps {
+  initialAnimation?: boolean
+  noAnimation?: boolean
+  noFade?: boolean
+  lazy?: boolean
+  unmountLazy?: boolean
+  show?: boolean
+  transProps?: Readonly<TransitionProps>
+  visible?: boolean
 }
 
 export interface BRowProps extends RowColsBreakpointProps {

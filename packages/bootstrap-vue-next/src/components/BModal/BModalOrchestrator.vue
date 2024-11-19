@@ -7,6 +7,7 @@
         :key="self"
         v-bind="modal.props"
         v-model="modal.props._modelValue"
+        initial-animation
         :teleport-disabled="true"
         @update:model-value="tools.leave?.(self)"
         @hide="

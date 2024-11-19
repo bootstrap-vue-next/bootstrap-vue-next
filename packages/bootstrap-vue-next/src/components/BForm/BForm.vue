@@ -17,7 +17,7 @@ const _props = withDefaults(defineProps<BFormProps>(), {
 })
 const props = useDefaults(_props, 'BForm')
 
-const element = useTemplateRef('element')
+const element = useTemplateRef<HTMLElement>('element')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
