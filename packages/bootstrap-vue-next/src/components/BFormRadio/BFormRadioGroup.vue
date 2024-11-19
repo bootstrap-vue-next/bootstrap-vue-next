@@ -67,7 +67,7 @@ const modelValue = defineModel<Exclude<BFormRadioGroupProps['modelValue'], undef
 const computedId = useId(() => props.id, 'radio')
 const computedName = useId(() => props.name, 'checkbox')
 
-const element = useTemplateRef('element')
+const element = useTemplateRef<HTMLElement>('element')
 
 const {focused} = useFocus(element, {
   initialValue: props.autofocus,

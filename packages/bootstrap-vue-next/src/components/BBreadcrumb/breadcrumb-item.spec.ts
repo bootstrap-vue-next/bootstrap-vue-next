@@ -95,7 +95,7 @@ describe('breadcrumb-item', () => {
     expect($span.text()).toBe('foobar')
   })
 
-  it('renders prop text in child when child is span', () => {
+  it('renders slot over prop when child is span', () => {
     const wrapper = mount(BBreadcrumbItem, {
       props: {active: true, text: 'props'},
       slots: {default: 'slots'},
@@ -144,28 +144,12 @@ describe('breadcrumb-item', () => {
     expect($blink.props('active')).toBe(false)
   })
 
-  it('does not give prop ariaCurrent to child when blink', () => {
-    const wrapper = mount(BBreadcrumbItem, {
-      props: {active: false, ariaCurrent: 'foobar'},
-    })
-    const $blink = wrapper.getComponent(BLink)
-    expect($blink.props('ariaCurrent')).toBeUndefined()
-  })
-
   it('gives prop disabled to child when blink', () => {
     const wrapper = mount(BBreadcrumbItem, {
       props: {active: false, disabled: true},
     })
     const $blink = wrapper.getComponent(BLink)
     expect($blink.props('disabled')).toBe(true)
-  })
-
-  it('does not give prop text to child when blink', () => {
-    const wrapper = mount(BBreadcrumbItem, {
-      props: {active: false, text: 'foobar'},
-    })
-    const $blink = wrapper.getComponent(BLink)
-    expect($blink.props('text')).toBeUndefined()
   })
 
   it('gives prop activeClass to blink', () => {

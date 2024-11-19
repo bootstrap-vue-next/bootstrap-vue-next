@@ -89,12 +89,6 @@ describe('pagination', () => {
     expect($li.classes()).toContain('page-item')
   })
 
-  it('li child has static class page item', () => {
-    const wrapper = mount(BPagination)
-    const $li = wrapper.get('li')
-    expect($li.classes()).toContain('page-item')
-  })
-
   it('has first button by default', () => {
     const wrapper = mount(BPagination, {props: {totalRows: 100, perPage: 1, modelValue: 5}})
     expect(wrapper.find('[aria-label="Go to first page"]').exists()).toBeTruthy()
@@ -119,58 +113,58 @@ describe('pagination', () => {
     expect(wrapper.findAll('[aria-posinset]').length).toBe(3)
   })
 
-  it('does not have first button when hideGotoEndButtons="true"', () => {
+  it('does not have first button when noGotoEndButtons="true"', () => {
     const wrapper = mount(BPagination, {
-      props: {totalRows: 100, perPage: 1, modelValue: 5, hideGotoEndButtons: true},
+      props: {totalRows: 100, perPage: 1, modelValue: 5, noGotoEndButtons: true},
     })
     expect(wrapper.find('[aria-label="Go to first page"]').exists()).toBeFalsy()
   })
 
-  it('has page 1 button when hideGotoEndButtons="true" and firstNumber="true"', () => {
+  it('has page 1 button when noGotoEndButtons="true" and firstNumber="true"', () => {
     const wrapper = mount(BPagination, {
       props: {
         totalRows: 100,
         perPage: 1,
         modelValue: 1,
-        hideGotoEndButtons: true,
+        noGotoEndButtons: true,
         firstNumber: true,
       },
     })
     expect(wrapper.find('[aria-label="Go to page 1"]').exists()).toBeTruthy()
   })
 
-  it('does not have last button when hideGotoEndButtons="true"', () => {
+  it('does not have last button when noGotoEndButtons="true"', () => {
     const wrapper = mount(BPagination, {
-      props: {totalRows: 100, perPage: 1, modelValue: 5, hideGotoEndButtons: true},
+      props: {totalRows: 100, perPage: 1, modelValue: 5, noGotoEndButtons: true},
     })
     expect(wrapper.find('[aria-label="Go to last page"]').exists()).toBeFalsy()
   })
 
-  it('has page n button when hideGotoEndButtons="true" and lastNumber="true"', () => {
+  it('has page n button when noGotoEndButtons="true" and lastNumber="true"', () => {
     const wrapper = mount(BPagination, {
       props: {
         totalRows: 100,
         perPage: 1,
         modelValue: 5,
-        hideGotoEndButtons: true,
+        noGotoEndButtons: true,
         lastNumber: true,
       },
     })
     expect(wrapper.find('[aria-label="Go to page 100"]').exists()).toBeTruthy()
   })
 
-  it('has end ellipses in correct place when hideGotoEndButtons="true"', () => {
+  it('has end ellipses in correct place when noGotoEndButtons="true"', () => {
     const wrapper = mount(BPagination, {
-      props: {totalRows: 100, perPage: 1, modelValue: 5, hideGotoEndButtons: true},
+      props: {totalRows: 100, perPage: 1, modelValue: 5, noGotoEndButtons: true},
     })
     const buttons = wrapper.findAll('li')
     const ellipses = buttons[buttons.length - 2]
     expect(ellipses.attributes('role')).toBe('separator')
   })
 
-  it('has start ellipses in correct place when hideGotoEndButtons="true"', () => {
+  it('has start ellipses in correct place when noGotoEndButtons="true"', () => {
     const wrapper = mount(BPagination, {
-      props: {totalRows: 100, perPage: 1, modelValue: 5, hideGotoEndButtons: true},
+      props: {totalRows: 100, perPage: 1, modelValue: 5, noGotoEndButtons: true},
     })
     const buttons = wrapper.findAll('li')
     const [, ellipses] = buttons
@@ -300,13 +294,13 @@ describe('pagination', () => {
     expect(wrapper.findAll('[role="separator"]').length).toBe(1)
   })
 
-  it('does not have ellipses when in the middle and hideEllipsis="true"', () => {
+  it('does not have ellipses when in the middle and noEllipsis="true"', () => {
     const wrapper = mount(BPagination, {
       props: {
         totalRows: 100,
         perPage: 1,
         modelValue: 50,
-        hideEllipsis: true,
+        noEllipsis: true,
       },
     })
     expect(wrapper.find('[role="separator"]').exists()).toBeFalsy()
@@ -318,7 +312,7 @@ describe('pagination', () => {
         totalRows: 100,
         perPage: 1,
         modelValue: 2,
-        hideEllipsis: true,
+        noEllipsis: true,
       },
     })
     expect(wrapper.find('[role="separator"]').exists()).toBeFalsy()
@@ -330,7 +324,7 @@ describe('pagination', () => {
         totalRows: 100,
         perPage: 1,
         modelValue: 98,
-        hideEllipsis: true,
+        noEllipsis: true,
       },
     })
     expect(wrapper.find('[role="separator"]').exists()).toBeFalsy()
@@ -466,14 +460,6 @@ describe('pagination', () => {
 
     expect(await TestScenariosAgainstInvariants(wrapper)).toBe(0)
   })
-
-  // it('TEMP: Check one configuration', async () => {
-  //   const wrapper = mount(BPagination, {
-  //     props: {totalRows: 100, perPage: 1, modelValue: 5, limit: 3},
-  //   })
-
-  //   expect(TestInvariants(wrapper)).toBeTruthy()
-  // })
 })
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

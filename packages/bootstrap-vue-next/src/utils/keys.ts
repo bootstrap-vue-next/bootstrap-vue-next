@@ -18,13 +18,11 @@ import type {
   ControllerKey,
   ModalOrchestratorMapValue,
   ModalOrchestratorShowParam,
-  PopoverOrchestratorMapValue,
+  PopoverOrchestratorParam,
   PopoverOrchestratorShowParam,
-  PrivateOrchestratedPopover,
-  PrivateOrchestratedTooltip,
   ToastOrchestratorArrayValue,
   ToastOrchestratorShowParam,
-  TooltipOrchestratorMapValue,
+  TooltipOrchestratorParam,
   TooltipOrchestratorShowParam,
 } from '../types/ComponentOrchestratorTypes'
 import type {BvnComponentProps} from '../types/BootstrapVueOptions'
@@ -88,6 +86,9 @@ export const avatarGroupInjectionKey: InjectionKey<{
 export const accordionInjectionKey: InjectionKey<{
   openItem: Readonly<Ref<string | undefined>>
   free: Readonly<Ref<boolean>>
+  initialAnimation: Readonly<Ref<boolean>>
+  lazy: Readonly<Ref<boolean>>
+  unmountLazy: Readonly<Ref<boolean>>
   setOpenItem: (id: string) => void
 }> = createBvnInjectionKey('accordion')
 
@@ -201,13 +202,13 @@ export const modalControllerPluginKey: InjectionKey<{
 }> = createBvnPluginInjectionKey('modalController')
 
 export const popoverPluginKey: InjectionKey<{
-  popovers: Ref<Map<ControllerKey, PopoverOrchestratorMapValue>>
+  popovers: Ref<Map<ControllerKey, PopoverOrchestratorParam>>
   popover: (obj: PopoverOrchestratorShowParam) => ControllerKey
-  setPopover: (self: ControllerKey, val: Partial<PrivateOrchestratedPopover>) => void
+  setPopover: (self: ControllerKey, val: Partial<PopoverOrchestratorParam>) => void
   removePopover: (self: ControllerKey) => void
-  tooltips: Ref<Map<ControllerKey, TooltipOrchestratorMapValue>>
+  tooltips: Ref<Map<ControllerKey, TooltipOrchestratorParam>>
   tooltip: (obj: TooltipOrchestratorShowParam) => ControllerKey
-  setTooltip: (self: ControllerKey, val: Partial<PrivateOrchestratedTooltip>) => void
+  setTooltip: (self: ControllerKey, val: Partial<TooltipOrchestratorParam>) => void
   removeTooltip: (self: ControllerKey) => void
 }> = createBvnPluginInjectionKey('popover')
 

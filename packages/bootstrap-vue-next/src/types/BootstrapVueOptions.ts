@@ -291,6 +291,7 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
   BInput: ComponentProps.BFormInputProps
   BTooltipOrchestrator: never
   BPopoverOrchestrator: never
+  showHide: ComponentProps.ShowHideProps
 }
 
 export type BvnComponentProps = {

@@ -14,7 +14,10 @@ import type {BAccordionProps} from '../../types/ComponentProps'
 const _props = withDefaults(defineProps<Omit<BAccordionProps, 'modelValue'>>(), {
   flush: false,
   free: false,
+  initialAnimation: false,
   id: undefined,
+  lazy: false,
+  unmountLazy: false,
 })
 
 defineSlots<{
@@ -37,6 +40,9 @@ const computedClasses = computed(() => ({
 provide(accordionInjectionKey, {
   openItem: readonly(modelValue),
   free: toRef(() => props.free),
+  initialAnimation: toRef(() => props.initialAnimation),
+  lazy: toRef(() => props.lazy),
+  unmountLazy: toRef(() => props.unmountLazy),
   setOpenItem: (id: string) => {
     modelValue.value = id
   },

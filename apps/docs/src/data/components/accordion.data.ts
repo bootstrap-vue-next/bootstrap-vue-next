@@ -26,6 +26,31 @@ export default {
             description:
               'The Id of the accordion item that is currently open (not compatible with the `free===true`)',
           },
+          lazy: {
+            type: 'boolean',
+            default: false,
+            description: 'When set, the content will not be mounted until opened',
+          },
+          unmountLazy: {
+            type: 'boolean',
+            default: false,
+            description: 'When set and `lazy` is true, the content will be unmounted when closed',
+          },
+          // transProps: {
+          //   type: 'TransitionProps',
+          //   default: undefined,
+          //   description: 'Transition properties',
+          // },
+          // noAnimation: {
+          //   type: 'boolean',
+          //   default: false,
+          //   description: 'When set, disables the animation',
+          // },
+          // noFade: {
+          //   type: 'boolean',
+          //   default: false,
+          //   description: 'Alias for `noAnimation`',
+          // },
           ...pick(
             buildCommonProps({
               id: {
@@ -125,17 +150,42 @@ export default {
             description:
               'Text to place in the header of the AccordionItem (title slot takes precedence)',
           },
-          toggle: {
+          show: {
             type: 'boolean',
-            default: undefined,
+            default: false,
             description:
-              'When true, will toggle the visibility of the AccordionItem (including animation) when the component is mounted',
+              "When set, and prop 'visible' is false on mount, will animate from closed to open on initial mount",
           },
           visible: {
             type: 'boolean',
             default: false,
-            description: 'When true, the AccordionItem will be visible',
+            description: "When 'true', open without animation",
           },
+          lazy: {
+            type: 'boolean',
+            default: false,
+            description: 'When set, the content will not be mounted until opened',
+          },
+          unmountLazy: {
+            type: 'boolean',
+            default: false,
+            description: 'When set and `lazy` is true, the content will be unmounted when closed',
+          },
+          // transProps: {
+          //   type: 'TransitionProps',
+          //   default: undefined,
+          //   description: 'Transition properties',
+          // },
+          //   noAnimation: {
+          //   type: 'boolean',
+          //   default: false,
+          //   description: 'When set, disables the animation',
+          // },
+          // noFade: {
+          //   type: 'boolean',
+          //   default: false,
+          //   description: 'Alias for `noAnimation`',
+          // },
           ...pick(
             buildCommonProps({
               id: {

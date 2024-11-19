@@ -21,7 +21,7 @@ describe('form-radio-group', () => {
     expect(wrapper.classes()).toContain('bv-no-focus-ring')
   })
 
-  it('has static attr role to be radiogroup', () => {
+  it('has tabindex to be -1', () => {
     const wrapper = mount(BFormRadioGroup)
     expect(wrapper.attributes('tabindex')).toBe('-1')
   })

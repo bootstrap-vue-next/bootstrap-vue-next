@@ -200,7 +200,7 @@ const limitNumber = useToNumber(() => props.limit ?? NaN)
 
 const stateClass = useStateClass(() => props.state)
 
-const input = useTemplateRef('input')
+const input = useTemplateRef<HTMLInputElement>('input')
 
 const {focused} = useFocus(input, {
   initialValue: props.autofocus,

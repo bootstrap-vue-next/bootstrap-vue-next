@@ -55,7 +55,7 @@ describe('form-radio', () => {
     expect(wrapper.classes()).toContain('form-check-inline')
   })
 
-  it('has class form-check-inline when prop inline', () => {
+  it('does not have class form-check-inline when prop inline false', () => {
     const wrapper = mount(BFormRadio, {
       props: {inline: false},
     })
@@ -322,14 +322,6 @@ describe('form-radio', () => {
     expect($input.attributes('aria-labelledby')).toBeUndefined()
   })
 
-  it('input element has attr aria-labelledby is undefined when prop ariaLabelledby undefined', () => {
-    const wrapper = mount(BFormRadio, {
-      props: {ariaLabelledby: undefined},
-    })
-    const $input = wrapper.get('input')
-    expect($input.attributes('aria-labelledby')).toBeUndefined()
-  })
-
   it('input element has attr value to be prop value', () => {
     const wrapper = mount(BFormRadio, {
       props: {value: 'foobar'},
@@ -454,14 +446,6 @@ describe('form-radio', () => {
     await $input.trigger('focus')
     await $input.trigger('blur')
     expect($label.classes()).not.toContain('focus')
-  })
-
-  it('child label has class form-check-label when prop plain and prop button are false', () => {
-    const wrapper = mount(BFormRadio, {
-      props: {plain: false, button: false},
-    })
-    const $label = wrapper.get('label')
-    expect($label.classes()).toContain('form-check-label')
   })
 
   it('child label has class form-check-label when prop plain and prop button are false', () => {

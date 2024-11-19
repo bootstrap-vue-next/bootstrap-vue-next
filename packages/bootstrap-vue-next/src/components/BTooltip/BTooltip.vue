@@ -28,8 +28,10 @@ const _props = withDefaults(defineProps<Omit<BTooltipProps, 'modelValue'>>(), {
   floatingMiddleware: undefined,
   hide: undefined,
   id: undefined,
+  initialAnimation: false,
   inline: undefined,
   interactive: undefined,
+  lazy: undefined,
   manual: undefined,
   noAutoClose: undefined,
   noFade: undefined,
@@ -41,10 +43,13 @@ const _props = withDefaults(defineProps<Omit<BTooltipProps, 'modelValue'>>(), {
   placement: undefined,
   realtime: undefined,
   reference: undefined,
+  show: undefined,
   strategy: undefined,
   target: undefined,
+  unmountLazy: undefined,
   title: undefined,
   variant: undefined,
+  visible: undefined,
 })
 
 const props = useDefaults(_props, 'BTooltip')
@@ -54,9 +59,9 @@ const slots = defineSlots<{
   default?: (props: Record<string, never>) => any
   target?: (props: {
     show: () => void
-    hide: (e: Event) => void
-    toggle: (e: Event) => void
-    showState: boolean
+    hide: (trigger?: string) => void
+    toggle: () => void
+    visible: boolean
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -70,7 +75,7 @@ const computedProps = computed<BPopoverProps>(() => {
   return {noninteractive: noninteractive !== undefined ? noninteractive : !interactive, ...rest}
 })
 
-const popover = useTemplateRef('popover')
+const popover = useTemplateRef<InstanceType<typeof BPopover>>('popover')
 
 defineExpose({
   hide: () => {

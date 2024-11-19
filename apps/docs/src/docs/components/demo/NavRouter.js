@@ -1,4 +1,4 @@
-// eslint-disable-next-line
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const routes = [
   {
     path: '/some/route',

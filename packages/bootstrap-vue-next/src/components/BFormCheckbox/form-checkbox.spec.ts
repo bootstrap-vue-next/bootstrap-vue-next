@@ -323,14 +323,6 @@ describe('form-checkbox', () => {
       expect($input.attributes('aria-labelledby')).toBeUndefined()
     })
 
-    it('input element has attr aria-labelledby is undefined when prop ariaLabelledby undefined', () => {
-      const wrapper = mount(BFormCheckbox, {
-        props: {ariaLabelledby: undefined},
-      })
-      const $input = wrapper.get('input')
-      expect($input.attributes('aria-labelledby')).toBeUndefined()
-    })
-
     it('input element has attr value to be prop value', () => {
       const wrapper = mount(BFormCheckbox, {
         props: {value: 'foobar'},
@@ -457,14 +449,6 @@ describe('form-checkbox', () => {
       await $input.trigger('focus')
       await $input.trigger('blur')
       expect($label.classes()).not.toContain('focus')
-    })
-
-    it('child label has class form-check-label when prop plain and prop button are false', () => {
-      const wrapper = mount(BFormCheckbox, {
-        props: {plain: false, button: false},
-      })
-      const $label = wrapper.get('label')
-      expect($label.classes()).toContain('form-check-label')
     })
 
     it('child label has class form-check-label when prop plain and prop button are false', () => {

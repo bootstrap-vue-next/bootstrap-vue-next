@@ -81,5 +81,4 @@ const computedLinkProps = computed(() =>
     'variant',
   ])
 )
-computedLinkProps.value.activeClass
 </script>

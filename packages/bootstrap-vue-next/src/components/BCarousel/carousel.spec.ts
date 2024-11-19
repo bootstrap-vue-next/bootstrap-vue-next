@@ -76,16 +76,6 @@ describe('carousel', () => {
     expect($button.exists()).toBe(false)
   })
 
-  it.skip('div with carousel-indicators class has no button child by default', () => {
-    const wrapper = mount(BCarousel, {
-      props: {indicators: true},
-      slots: {default: 'foobar'},
-    })
-    const $div = wrapper.get('.carousel-indicators')
-    const $button = $div.find('button')
-    expect($button.exists()).toBe(true)
-  })
-
   it('does not have element with class carousel-control-prev by default', () => {
     const wrapper = mount(BCarousel)
     const $button = wrapper.find('.carousel-control-prev')

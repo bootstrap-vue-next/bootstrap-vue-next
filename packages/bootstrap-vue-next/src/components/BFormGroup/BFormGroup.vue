@@ -7,6 +7,7 @@
     :aria-invalid="computedAriaInvalid"
     :aria-labelledby="isFieldset && isHorizontal ? labelId : null"
     :class="[stateClass, {'was-validated': props.validated}]"
+    class="b-form-group"
   >
     <ContentTemplate.define>
       <BFormInvalidFeedback
@@ -158,10 +159,10 @@ const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'label'?: (props: Record<string, never>) => any
   'default'?: (props: {
-    'id': string
-    'ariaDescribedby': string | null
-    'descriptionId': string | undefined
-    'label-id': string | null
+    id: string
+    ariaDescribedby: string | null
+    descriptionId: string | undefined
+    labelId: string | null
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any
 }>()
@@ -205,7 +206,7 @@ const getColProps = (props: any, prefix: string) =>
     return result
   }, {})
 
-const content = useTemplateRef('content')
+const content = useTemplateRef<HTMLElement>('content')
 
 const contentColProps = computed(() => getColProps(props, 'content'))
 const labelAlignClasses = computed(() =>
@@ -217,9 +218,11 @@ const labelAlignClasses = computed(() =>
       ) as keyof BFormGroupProps
       const propValue: string = props[suffix] || null
       if (propValue) {
-        breakpoint === 'xs'
-          ? result.push(`text-${propValue}`)
-          : result.push(`text-${breakpoint}-${propValue}`)
+        if (breakpoint === 'xs') {
+          result.push(`text-${propValue}`)
+        } else {
+          result.push(`text-${breakpoint}-${propValue}`)
+        }
       }
       return result
     }, []))(props, 'label')
