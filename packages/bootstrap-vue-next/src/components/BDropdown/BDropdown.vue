@@ -211,6 +211,7 @@ onKeyStroke(
   'Escape',
   () => {
     hide()
+    referencePlacement.value?.focus()
   },
   {target: referencePlacement}
 )
@@ -218,6 +219,7 @@ onKeyStroke(
   'Escape',
   () => {
     hide()
+    referencePlacement.value?.focus()
   },
   {target: floating}
 )
