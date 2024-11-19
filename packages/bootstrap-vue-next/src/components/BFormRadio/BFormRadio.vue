@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 import {useFocus} from '@vueuse/core'
-import {computed, inject, ref} from 'vue'
+import {computed, inject, useTemplateRef} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses} from '../../composables/useFormCheck'
 import type {BFormRadioProps} from '../../types/ComponentProps'
 import {isEmptySlot} from '../../utils/dom'
@@ -72,7 +72,7 @@ const computedId = useId(() => props.id, 'form-check')
 
 const parentData = inject(radioGroupKey, null)
 
-const input = ref<HTMLElement | null>(null)
+const input = useTemplateRef<HTMLElement>('input')
 
 const {focused} = useFocus(input, {
   initialValue: props.autofocus,

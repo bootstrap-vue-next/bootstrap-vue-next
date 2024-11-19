@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 import {useFocus} from '@vueuse/core'
-import {computed, inject, ref, useAttrs} from 'vue'
+import {computed, inject, useAttrs, useTemplateRef} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses} from '../../composables/useFormCheck'
 import type {BFormCheckboxProps} from '../../types/ComponentProps'
 import {checkboxGroupKey} from '../../utils/keys'
@@ -94,7 +94,7 @@ const computedId = useId(() => props.id, 'form-check')
 
 const parentData = inject(checkboxGroupKey, null)
 
-const input = ref<HTMLElement | null>(null)
+const input = useTemplateRef<HTMLElement>('input')
 
 const {focused} = useFocus(input, {
   initialValue: props.autofocus,

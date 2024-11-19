@@ -20,7 +20,7 @@
     :striped-columns="props.stripedColumns"
   >
     <BThead v-show="showComputedHeaders" :variant="props.headVariant" :class="props.theadClass">
-      <slot v-if="$slots['thead-top']" name="thead-top" />
+      <slot name="thead-top" :columns="computedFieldsTotal" :fields="computedFields" />
       <BTr :variant="props.headRowVariant" :class="props.theadTrClass">
         <BTh
           v-for="field in computedFields"
@@ -34,18 +34,24 @@
           v-bind="callThAttr(null, field, 'top')"
           @click="headerClicked(field, $event)"
         >
+          <!-- eslint-disable prettier/prettier -->
           <slot
-            :name="$slots[`head(${String(field.key)})`] ? `head(${String(field.key)})` : 'head()'"
+            :name="
+              slots[`head(${String(field.key)})`]
+                ? (`head(${String(field.key)})` as 'head()')
+                : 'head()'
+            "
             :label="field.label"
-            :column="field.key"
-            :field="field"
+            :column="field.key as LiteralUnion<keyof Items>"
+            :field
             :is-foot="false"
           >
+            <!-- eslint-enable prettier/prettier -->
             {{ getTableFieldHeadLabel(field) }}
           </slot>
         </BTh>
       </BTr>
-      <BTr v-if="$slots['thead-sub']">
+      <BTr v-if="slots['thead-sub']">
         <BTd
           v-for="field in computedFields"
           :key="field.key"
@@ -53,7 +59,7 @@
           :variant="field.variant"
           :class="[field.class, field.thClass]"
         >
-          <slot name="thead-sub" :items="computedFields" v-bind="field">
+          <slot name="thead-sub" :items="props.items" :fields="computedFields" :field>
             {{ field.label }}
           </slot>
         </BTd>
@@ -64,14 +70,14 @@
         name="custom-body"
         :fields="computedFields"
         :items="props.items"
-        :columns="computedFields.length"
+        :columns="computedFieldsTotal"
       >
         <BTr
-          v-if="!props.stacked && $slots['top-row']"
+          v-if="!props.stacked && slots['top-row']"
           :class="getRowClasses(null, 'row-top')"
           v-bind="callTbodyTrAttrs(null, 'row-top')"
         >
-          <slot name="top-row" />
+          <slot name="top-row" :columns="computedFieldsTotal" :fields="computedFields" />
         </BTr>
 
         <template
@@ -105,7 +111,9 @@
               </label>
               <slot
                 :name="
-                  $slots[`cell(${String(field.key)})`] ? `cell(${String(field.key)})` : 'cell()'
+                  slots[`cell(${String(field.key)})`]
+                    ? (`cell(${String(field.key)})` as 'cell()')
+                    : 'cell()'
                 "
                 :value="formatItem(item, String(field.key), field.formatter)"
                 :unformatted="get(item, String(field.key))"
@@ -113,14 +121,10 @@
                 :item="item"
                 :field="field"
                 :items="items"
-                :toggle-details="
-                  () => {
-                    toggleRowDetails(item)
-                  }
-                "
+                :toggle-details="() => toggleRowDetails(item)"
                 :details-showing="isTableItem(item) ? (detailsMap.get(item) ?? false) : false"
               >
-                <template v-if="!$slots[`cell(${String(field.key)})`] && !$slots['cell()']">
+                <template v-if="!slots[`cell(${String(field.key)})`] && !slots['cell()']">
                   {{ formatItem(item, String(field.key), field.formatter) }}
                 </template>
               </slot>
@@ -128,7 +132,7 @@
           </BTr>
 
           <template
-            v-if="isTableItem(item) && detailsMap.get(item) === true && $slots['row-details']"
+            v-if="isTableItem(item) && detailsMap.get(item) === true && slots['row-details']"
           >
             <BTr aria-hidden="true" role="presentation" class="d-none" />
             <BTr
@@ -140,12 +144,8 @@
                 <slot
                   name="row-details"
                   :item="item"
-                  :toggle-details="
-                    () => {
-                      toggleRowDetails(item)
-                    }
-                  "
-                  :fields="props.fields"
+                  :toggle-details="() => toggleRowDetails(item)"
+                  :fields="computedFields"
                   :index="itemIndex"
                 />
               </BTd>
@@ -154,16 +154,16 @@
         </template>
         <!-- This class is for specific targetting of this slot element -->
         <BTr
-          v-if="!props.stacked && $slots['bottom-row']"
+          v-if="!props.stacked && slots['bottom-row']"
           class="bottom-row"
           :class="getRowClasses(null, 'row-bottom')"
           v-bind="callTbodyTrAttrs(null, 'row-bottom')"
         >
-          <slot name="bottom-row" />
+          <slot name="bottom-row" :columns="computedFieldsTotal" :fields="computedFields" />
         </BTr>
       </slot>
     </BTbody>
-    <BTfoot v-if="props.footClone" :variant="props.footVariant" :class="props.tfootClass">
+    <BTfoot v-if="props.footClone" v-bind="footerProps">
       <BTr :variant="props.footRowVariant" :class="props.tfootTrClass">
         <BTh
           v-for="field in computedFields"
@@ -179,15 +179,19 @@
         >
           <div class="d-inline-flex flex-nowrap align-items-center gap-1">
             <div>
+              <!-- eslint-disable prettier/prettier -->
               <slot
                 :name="
-                  $slots[`foot(${String(field.key)})`] ? `foot(${String(field.key)})` : 'foot()'
+                  slots[`foot(${String(field.key)})`]
+                    ? (`foot(${String(field.key)})` as 'foot()')
+                    : 'foot()'
                 "
                 :label="field.label"
-                :column="field.key"
+                :column="field.key as LiteralUnion<keyof Items>"
                 :field="field"
                 :is-foot="true"
               >
+                <!-- eslint-enable prettier/prettier -->
                 {{ getTableFieldHeadLabel(field) }}
               </slot>
             </div>
@@ -195,15 +199,15 @@
         </BTh>
       </BTr>
     </BTfoot>
-    <BTfoot v-else-if="$slots['custom-foot']">
+    <BTfoot v-else-if="slots['custom-foot']" v-bind="footerProps">
       <slot
         name="custom-foot"
         :fields="computedFields"
         :items="props.items"
-        :columns="computedFields.length"
+        :columns="computedFieldsTotal"
       />
     </BTfoot>
-    <caption v-if="$slots['table-caption'] || props.caption">
+    <caption v-if="slots['table-caption'] || props.caption">
       <slot name="table-caption">
         {{ props.caption }}
       </slot>
@@ -211,7 +215,7 @@
   </BTableSimple>
 </template>
 
-<script setup lang="ts" generic="T">
+<script setup lang="ts" generic="Items">
 import {computed, ref, watch} from 'vue'
 import type {BTableLiteProps} from '../../types/ComponentProps'
 import {
@@ -236,8 +240,9 @@ import {getTableFieldHeadLabel} from '../../utils/getTableFieldHeadLabel'
 import {formatItem} from '../../utils/formatItem'
 import {filterEvent} from '../../utils/filterEvent'
 import {startCase} from '../../utils/stringUtils'
+import type {LiteralUnion} from '../../types/LiteralUnion'
 
-const _props = withDefaults(defineProps<BTableLiteProps<T>>(), {
+const _props = withDefaults(defineProps<BTableLiteProps<Items>>(), {
   caption: undefined,
   align: undefined,
   fields: () => [],
@@ -246,7 +251,6 @@ const _props = withDefaults(defineProps<BTableLiteProps<T>>(), {
   labelStacked: false,
   fieldColumnClass: undefined,
   tbodyTrClass: undefined,
-  captionHtml: undefined,
   detailsTdClass: undefined,
   headVariant: undefined,
   headRowVariant: undefined,
@@ -284,13 +288,81 @@ const _props = withDefaults(defineProps<BTableLiteProps<T>>(), {
 const props = useDefaults(_props, 'BTableLite')
 
 const emit = defineEmits<{
-  'head-clicked': [key: string, field: TableField<T>, event: MouseEvent, isFooter: boolean]
-  'row-clicked': TableRowEvent<T>
-  'row-dblclicked': TableRowEvent<T>
-  'row-contextmenu': TableRowEvent<T>
-  'row-hovered': TableRowEvent<T>
-  'row-unhovered': TableRowEvent<T>
-  'row-middle-clicked': TableRowEvent<T>
+  'head-clicked': [
+    key: string,
+    field: (typeof computedFields.value)[0],
+    event: MouseEvent,
+    isFooter: boolean,
+  ]
+  'row-clicked': TableRowEvent<Items>
+  'row-dblclicked': TableRowEvent<Items>
+  'row-contextmenu': TableRowEvent<Items>
+  'row-hovered': TableRowEvent<Items>
+  'row-unhovered': TableRowEvent<Items>
+  'row-middle-clicked': TableRowEvent<Items>
+}>()
+
+const slots = defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'thead-top'?: (props: {columns: number; fields: typeof computedFields.value}) => any
+  [key: `head(${string})`]: (props: {
+    label: string | undefined
+    column: LiteralUnion<keyof Items>
+    field: (typeof computedFields.value)[0]
+    isFoot: false
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  'thead-sub'?: (
+    props: {
+      items: readonly Items[]
+      fields: typeof computedFields.value
+      field: (typeof computedFields.value)[0]
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ) => any
+  'custom-body'?: (props: {
+    fields: typeof computedFields.value
+    items: readonly Items[]
+    columns: number
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'top-row'?: (props: {columns: number; fields: typeof computedFields.value}) => any
+  [key: `cell(${string})`]: (props: {
+    value: unknown
+    unformatted: unknown
+    index: number
+    item: Items
+    field: (typeof computedFields.value)[0]
+    items: readonly Items[]
+    toggleDetails: () => void
+    detailsShowing: boolean
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  'row-details'?: (props: {
+    item: Items
+    toggleDetails: () => void
+    fields: typeof computedFields.value
+    index: number
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'bottom-row'?: (props: {columns: number; fields: typeof computedFields.value}) => any
+  [key: `foot(${string})`]: (props: {
+    label: string | undefined
+    column: LiteralUnion<keyof Items>
+    field: (typeof computedFields.value)[0]
+    isFoot: true
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  'custom-foot'?: (props: {
+    fields: typeof computedFields.value
+    items: readonly Items[]
+    columns: number
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'table-caption'?: (props: Record<string, never>) => any
 }>()
 
 const generateDetailsItem = (item: TableItem): [object, boolean | undefined] => [
@@ -316,7 +388,7 @@ const computedTableClasses = computed(() => [
   },
 ])
 
-const computedFields = computed<(TableField & {_noHeader?: true})[]>(() => {
+const computedFields = computed<(TableField<Items> & {_noHeader?: true})[]>(() => {
   if (!props.fields.length && props.items.length) {
     const [firstItem] = props.items
     if (isTableItem(firstItem) || Array.isArray(firstItem)) {
@@ -337,7 +409,7 @@ const computedFields = computed<(TableField & {_noHeader?: true})[]>(() => {
   return props.fields.map((f) => {
     if (isTableField(f)) {
       return {
-        ...(f as TableField),
+        ...(f as TableField<Items>),
         tdAttr:
           props.stacked === true
             ? {'data-label': startCase(f.key as string), ...f.tdAttr}
@@ -357,17 +429,22 @@ const showComputedHeaders = computed(() => {
   // We only hide the header if all fields have _noHeader set to true. Which would be our doing
   // This usually happens under a circumstance of displaying an array of primitives
   // Under any other circumstance, I'm not sure how this would apply
-  if (computedFields.value.length > 0 && computedFields.value.every((el) => el._noHeader === true))
+  if (computedFieldsTotal.value > 0 && computedFields.value.every((el) => el._noHeader === true))
     return false
   return true
 })
 
-const itemAttributes = (item: T, fieldKey: string, attr?: unknown) => {
+const footerProps = computed(() => ({
+  variant: props.footVariant,
+  class: props.tfootClass,
+}))
+
+const itemAttributes = (item: Items, fieldKey: string, attr?: unknown) => {
   const val = get(item, fieldKey)
   return attr && typeof attr === 'function' ? attr(val, fieldKey, item) : attr
 }
 
-const callThAttr = (item: T | null, field: TableField<T>, type: TableRowThead) => {
+const callThAttr = (item: Items | null, field: TableField<Items>, type: TableRowThead) => {
   const fieldKey = String(field.key)
   const val = get(item, fieldKey)
   return field.thAttr && typeof field.thAttr === 'function'
@@ -375,11 +452,11 @@ const callThAttr = (item: T | null, field: TableField<T>, type: TableRowThead) =
     : field.thAttr
 }
 
-const headerClicked = (field: TableField<T>, event: Readonly<MouseEvent>, isFooter = false) => {
+const headerClicked = (field: TableField<Items>, event: Readonly<MouseEvent>, isFooter = false) => {
   emit('head-clicked', field.key as string, field, event, isFooter)
 }
 
-const toggleRowDetails = (tr: T) => {
+const toggleRowDetails = (tr: Items) => {
   if (isTableItem(tr)) {
     const prevValue = detailsMap.value.get(tr)
     detailsMap.value.set(tr, !prevValue)
@@ -400,7 +477,7 @@ const getFieldColumnClasses = (field: TableField) => [
     : null,
 ]
 
-const getFieldRowClasses = (field: Readonly<TableField>, tr: T) => {
+const getFieldRowClasses = (field: Readonly<TableField>, tr: Items) => {
   const val = get(tr, String(field.key))
   return [
     field.class,
@@ -414,19 +491,19 @@ const getFieldRowClasses = (field: Readonly<TableField>, tr: T) => {
   ]
 }
 
-const handleMiddleClick = (item: T, itemIndex: number, event: MouseEvent) => {
+const handleMiddleClick = (item: Items, itemIndex: number, event: MouseEvent) => {
   if (event.button === 1 && !filterEvent(event)) {
     emit('row-middle-clicked', item, itemIndex, event)
   }
 }
-const callTbodyTrAttrs = (item: T | null, type: TableRowType) =>
+const callTbodyTrAttrs = (item: Items | null, type: TableRowType) =>
   props.tbodyTrAttrs
     ? typeof props.tbodyTrAttrs === 'function'
       ? props.tbodyTrAttrs(item, type)
       : props.tbodyTrAttrs
     : null
 
-const getRowClasses = (item: T | null, type: TableRowType) =>
+const getRowClasses = (item: Items | null, type: TableRowType) =>
   props.tbodyTrClass
     ? typeof props.tbodyTrClass === 'function'
       ? props.tbodyTrClass(item, type)

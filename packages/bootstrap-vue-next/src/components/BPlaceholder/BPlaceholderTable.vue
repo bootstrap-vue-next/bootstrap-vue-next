@@ -1,6 +1,6 @@
 <template>
   <BTableSimple>
-    <slot v-if="!props.hideHeader" name="thead">
+    <slot v-if="!props.noHeader" name="thead">
       <thead>
         <tr>
           <th v-for="(_, i) in computedHeaderColumnsLength" :key="i">
@@ -67,7 +67,7 @@ const _props = withDefaults(defineProps<BPlaceholderTableProps>(), {
   headerColumns: undefined,
   headerSize: 'md',
   headerVariant: undefined,
-  hideHeader: false,
+  noHeader: false,
   rows: 3,
   showFooter: false,
   size: 'md',

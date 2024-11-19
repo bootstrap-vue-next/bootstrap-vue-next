@@ -1,6 +1,5 @@
 <template>
   <button
-    v-b-toggle="!props.disabled ? props.target : undefined"
     class="navbar-toggler"
     type="button"
     :class="computedClasses"
@@ -8,7 +7,7 @@
     :aria-label="props.label"
     @click="onClick"
   >
-    <slot>
+    <slot :expanded="collapseExpanded">
       <span class="navbar-toggler-icon" />
     </slot>
   </button>
@@ -16,9 +15,9 @@
 
 <script setup lang="ts">
 import type {BNavbarToggleProps} from '../../types/ComponentProps'
-import {vBToggle} from '../../directives'
-import {computed} from 'vue'
+import {computed, inject} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
+import {globalCollapseStorageInjectionKey} from '../../utils/keys'
 
 const _props = withDefaults(defineProps<BNavbarToggleProps>(), {
   label: 'Toggle navigation',
@@ -32,18 +31,36 @@ const emit = defineEmits<{
 }>()
 
 defineSlots<{
-  // TODO this scoped slot is {expanded: boolean}
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
+  default?: (props: {
+    expanded: boolean
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
 }>()
 
 const computedClasses = computed(() => ({
   disabled: props.disabled,
 }))
 
+const collapseData = inject(globalCollapseStorageInjectionKey, undefined)
+
+const collapseExpanded = computed(() => {
+  if (!props.target || !collapseData) return false
+  if (typeof props.target === 'string') return collapseData.map[props.target]?.value || false
+  return props.target.some((target) => collapseData.map[target]?.value)
+})
+const toggleExpand = () => {
+  if (!props.target || !collapseData) return
+  if (typeof props.target === 'string') {
+    collapseData.map[props.target]?.toggle()
+    return
+  }
+  props.target.forEach((target) => collapseData.map[target]?.toggle())
+}
+
 const onClick = (e: Readonly<MouseEvent>): void => {
   if (!props.disabled) {
     emit('click', e)
+    toggleExpand()
   }
 }
 </script>

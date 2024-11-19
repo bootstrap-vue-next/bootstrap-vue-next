@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import {useFocus} from '@vueuse/core'
-import {computed, ref, watch} from 'vue'
+import {computed, useTemplateRef, watch} from 'vue'
 import type {BFormFileProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
@@ -85,7 +85,7 @@ const computedId = useId(() => props.id)
 
 const stateClass = useStateClass(() => props.state)
 
-const input = ref<HTMLInputElement | null>(null)
+const input = useTemplateRef<HTMLInputElement>('input')
 
 const {focused} = useFocus(input, {initialValue: props.autofocus})
 

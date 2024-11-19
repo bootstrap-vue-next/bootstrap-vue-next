@@ -14,10 +14,15 @@
     :readonly="props.readonly || props.plaintext"
     :aria-required="props.required || undefined"
     :aria-invalid="computedAriaInvalid"
-    :rows="props.rows"
+    :rows="computedRows || 2"
     :style="computedStyles"
     :wrap="props.wrap || undefined"
-    @input="onInput"
+    @input="
+      (e) => {
+        onInput(e)
+        handleHeightChange()
+      }
+    "
     @change="onChange"
     @blur="onBlur"
   />
@@ -25,11 +30,12 @@
 
 <script setup lang="ts">
 import type {BFormTextareaProps} from '../../types/ComponentProps'
-import {computed, type CSSProperties} from 'vue'
+import {computed, type CSSProperties, useTemplateRef} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {normalizeInput} from '../../utils/normalizeInput'
 import {useFormInput} from '../../composables/useFormInput'
 import {useStateClass} from '../../composables/useStateClass'
+import {useTextareaResize} from '../../composables/useTextareaResize'
 
 const _props = withDefaults(defineProps<Omit<BFormTextareaProps, 'modelValue'>>(), {
   // CommonInputProps
@@ -54,6 +60,8 @@ const _props = withDefaults(defineProps<Omit<BFormTextareaProps, 'modelValue'>>(
   state: null,
   // End CommonInputProps
   noResize: false,
+  noAutoShrink: false,
+  maxRows: undefined,
   rows: 2,
   wrap: 'soft',
 })
@@ -67,17 +75,10 @@ const [modelValue, modelModifiers] = defineModel<
   set: (v) => normalizeInput(v, modelModifiers),
 })
 
-const {
-  input,
-  computedId,
-  forceUpdateKey,
-  computedAriaInvalid,
-  onInput,
-  onChange,
-  onBlur,
-  focus,
-  blur,
-} = useFormInput(props, modelValue, modelModifiers)
+const input = useTemplateRef<HTMLTextAreaElement>('input')
+
+const {computedId, forceUpdateKey, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
+  useFormInput(props, input, modelValue, modelModifiers)
 
 const stateClass = useStateClass(() => props.state)
 
@@ -89,8 +90,22 @@ const computedClasses = computed(() => [
   },
 ])
 
+const {
+  computedStyles: resizeStyles,
+  onInput: handleHeightChange,
+  computedRows,
+} = useTextareaResize(
+  input,
+  computed(() => ({
+    maxRows: props.maxRows,
+    rows: props.rows,
+    noAutoShrink: props.noAutoShrink,
+  }))
+)
+
 const computedStyles = computed<CSSProperties>(() => ({
   resize: props.noResize ? 'none' : undefined,
+  ...(props.maxRows || props.noAutoShrink ? resizeStyles.value : undefined),
 }))
 
 defineExpose({

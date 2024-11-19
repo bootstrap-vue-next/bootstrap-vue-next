@@ -60,7 +60,6 @@ const checkboxes = reactive({
     {text: 'Apple', value: 'apple'},
     {text: 'Pineapple', value: 'pineapple'},
     {text: 'Object', value: {foo: 1}},
-    {html: '<b>Grape</b> (html content)', value: 'grape'},
   ],
 })
 </script>

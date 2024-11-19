@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue'
+import {computed, useTemplateRef} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {normalizeInput} from '../../utils/normalizeInput'
 import type {BFormInputProps} from '../../types/ComponentProps'
@@ -70,17 +70,10 @@ const [modelValue, modelModifiers] = defineModel<
   set: (v) => normalizeInput(v, modelModifiers),
 })
 
-const {
-  input,
-  computedId,
-  computedAriaInvalid,
-  onInput,
-  onChange,
-  onBlur,
-  focus,
-  blur,
-  forceUpdateKey,
-} = useFormInput(props, modelValue, modelModifiers)
+const input = useTemplateRef<HTMLInputElement>('input')
+
+const {computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur, forceUpdateKey} =
+  useFormInput(props, input, modelValue, modelModifiers)
 
 const stateClass = useStateClass(() => props.state)
 

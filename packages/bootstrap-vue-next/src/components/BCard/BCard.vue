@@ -8,11 +8,10 @@
 
     <ReusableImg.reuse v-if="props.imgPlacement !== 'bottom'" />
     <BCardHeader
-      v-if="props.header || hasHeaderSlot || props.headerHtml"
+      v-if="props.header || hasHeaderSlot"
       :bg-variant="props.headerBgVariant"
       :variant="props.headerVariant"
       :border-variant="props.headerBorderVariant"
-      :html="props.headerHtml"
       :tag="props.headerTag"
       :text-variant="props.headerTextVariant"
       :class="props.headerClass"
@@ -42,11 +41,10 @@
       {{ props.bodyText }}
     </slot>
     <BCardFooter
-      v-if="props.footer || hasFooterSlot || props.footerHtml"
+      v-if="props.footer || hasFooterSlot"
       :bg-variant="props.footerBgVariant"
       :border-variant="props.footerBorderVariant"
       :variant="props.footerVariant"
-      :html="props.footerHtml"
       :tag="props.footerTag"
       :text-variant="props.footerTextVariant"
       :class="props.footerClass"
@@ -83,7 +81,6 @@ const _props = withDefaults(defineProps<BCardProps>(), {
   footerBgVariant: undefined,
   footerBorderVariant: undefined,
   footerClass: undefined,
-  footerHtml: '',
   footerTag: 'div',
   footerTextVariant: undefined,
   footerVariant: null,
@@ -91,7 +88,6 @@ const _props = withDefaults(defineProps<BCardProps>(), {
   headerBgVariant: undefined,
   headerBorderVariant: undefined,
   headerClass: undefined,
-  headerHtml: '',
   headerTag: 'div',
   headerTextVariant: undefined,
   headerVariant: null,

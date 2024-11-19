@@ -199,6 +199,39 @@ type ColorVariant =
 
 </BCard>
 
+## ColsNumbers
+
+<BCard class="bg-body-tertiary">
+
+```ts
+export type ColsBaseNumbers = 1 | 2 | 3 | 4 | 5 | '1' | '2' | '3' | '4' | '5'
+
+export type ColsNumbers =
+  | ColsBaseNumbers
+  | 6
+  | 7
+  | 8
+  | 9
+  | 10
+  | 11
+  | 12
+  | '6'
+  | '7'
+  | '8'
+  | '9'
+  | '10'
+  | '11'
+  | '12'
+
+export type GutterNumbers = ColsBaseNumbers | 0 | '0'
+
+export type ColsOrderNumbers = ColsBaseNumbers | 'first' | 'last'
+
+export type ColsOffsetNumbers = ColsNumbers | 0 | '0'
+```
+
+</BCard>
+
 ## CombinedPlacement
 
 <BCard class="bg-body-tertiary">

@@ -73,4 +73,8 @@
   &.disabled {
     pointer-events: none;
   }
+
+  &:not(.form-control-sm):not(.form-control-lg):not(.flex-column) {
+    height: calc(1.5em + 0.5rem + calc(var(--bs-border-width) * 2));
+  }
 }

@@ -5,9 +5,10 @@
     role="menubar"
     :aria-disabled="props.disabled"
     :aria-label="props.ariaLabel || undefined"
+    @keydown="handleKeyNav"
   >
     <template v-for="page in pages" :key="`page-${page.id}`">
-      <li v-bind="page.li">
+      <li v-bind="page.li" ref="page-elements">
         <span
           v-if="page.id === FIRST_ELLIPSIS || page.id === LAST_ELLIPSIS"
           v-bind="ellipsisProps.span"
@@ -35,12 +36,15 @@
 
 <script setup lang="ts">
 import {BvEvent} from '../../utils'
-import {computed, watch} from 'vue'
+import {computed, nextTick, ref, watch} from 'vue'
 import type {BPaginationProps} from '../../types/ComponentProps'
 import {useAlignment} from '../../composables/useAlignment'
 import {useToNumber} from '@vueuse/core'
 import {useDefaults} from '../../composables/useDefaults'
 import type {ClassValue} from '../../types/AnyValuedAttributes'
+import {CODE_DOWN, CODE_LEFT, CODE_RIGHT, CODE_UP} from '../../utils/constants'
+import {stopEvent} from '../../utils/event'
+import {getActiveElement} from '../../utils/dom'
 
 // Threshold of limit size when we start/stop showing ellipsis
 const ELLIPSIS_THRESHOLD = 3
@@ -71,8 +75,8 @@ const _props = withDefaults(defineProps<Omit<BPaginationProps, 'modelValue'>>(),
   firstClass: undefined,
   firstNumber: false,
   firstText: '\u00AB',
-  hideEllipsis: false,
-  hideGotoEndButtons: false,
+  noEllipsis: false,
+  noGotoEndButtons: false,
   labelFirstPage: 'Go to first page',
   labelLastPage: 'Go to last page',
   labelNextPage: 'Go to next page',
@@ -99,6 +103,8 @@ const emit = defineEmits<{
 }>()
 
 const modelValue = defineModel<Exclude<BPaginationProps['modelValue'], undefined>>({default: 1})
+
+const pageElements = useTemplateRef<HTMLLIElement[]>('page-elements')
 
 const limitNumber = useToNumber(() => props.limit, {nanToZero: true, method: 'parseInt'})
 const perPageNumber = useToNumber(() => props.perPage, {nanToZero: true, method: 'parseInt'})
@@ -134,7 +140,7 @@ const nextDisabled = computed(() => checkDisabled(modelValueNumber.value + 1))
 const getBaseButtonProps = ({
   page,
   classVal,
-  dis,
+  disabled,
   slotName,
   textValue,
   tabIndex,
@@ -143,9 +149,10 @@ const getBaseButtonProps = ({
   isActive,
   role,
   hidden,
+  isSmHidden,
 }: {
   page: number
-  dis: boolean
+  disabled: boolean
   classVal: ClassValue
   slotName: string
   textValue?: string
@@ -155,15 +162,17 @@ const getBaseButtonProps = ({
   isActive?: boolean
   role?: string
   hidden?: boolean
+  isSmHidden?: boolean
 }) => ({
   li: {
     'class': [
       'page-item',
       {
         'active': isActive,
-        'disabled': dis,
+        disabled,
+        'bv-d-sm-down-none': isSmHidden,
         'flex-fill': computedFill.value,
-        'd-flex': computedFill.value && !dis,
+        'd-flex': computedFill.value && !disabled,
       },
       classVal,
     ],
@@ -171,23 +180,23 @@ const getBaseButtonProps = ({
     'aria-hidden': hidden,
   },
   button: {
-    'is': dis ? 'span' : 'button',
-    'class': ['page-link', 'text-center', {'flex-grow-1': !dis && computedFill.value}],
+    'is': disabled ? 'span' : 'button',
+    'class': ['page-link', 'text-center', {'flex-grow-1': !disabled && computedFill.value}],
     'aria-label': label,
     'aria-controls': props.ariaControls || undefined,
-    'aria-disabled': dis ? true : undefined,
+    'aria-disabled': disabled ? true : undefined,
     'aria-posinset': position,
     'aria-setsize': position ? numberOfPages.value : undefined,
     'role': 'menuitem',
-    'type': dis ? undefined : 'button',
-    'tabindex': dis ? undefined : tabIndex,
+    'type': disabled ? undefined : 'button',
+    'tabindex': disabled ? undefined : tabIndex,
   },
   text: {
     name: slotName,
     active: isActive,
     value: textValue ?? page,
     page,
-    disabled: dis,
+    disabled,
     index: page - 1,
     content: textValue ? undefined : page,
   },
@@ -197,35 +206,36 @@ const getBaseButtonProps = ({
 const getButtonProps = ({
   page,
   classVal,
-  dis,
+  disabled,
   slotName,
   textValue,
   label,
 }: {
   page: number
-  dis: boolean
+  disabled: boolean
   classVal: ClassValue
   slotName: string
   textValue?: string
   label: string
-}) => getBaseButtonProps({page, classVal, dis, slotName, textValue, label, tabIndex: '-1'})
+}) => getBaseButtonProps({page, classVal, disabled, slotName, textValue, label, tabIndex: '-1'})
 
-const getPageButtonProps = (page: number) =>
+const getPageButtonProps = (page: number, isSmHidden?: boolean) =>
   getBaseButtonProps({
     page,
-    dis: props.disabled,
+    disabled: props.disabled,
     classVal: props.pageClass,
     slotName: 'page',
     label: props.labelPage ? `${props.labelPage} ${page}` : undefined,
     tabIndex: getTabIndex(page) ?? undefined,
     position: page,
     isActive: isActivePage(page),
+    isSmHidden,
   })
 
 const firstButtonProps = computed(() =>
   getButtonProps({
     page: 1,
-    dis: firstDisabled.value,
+    disabled: firstDisabled.value,
     classVal: props.firstClass,
     slotName: 'first-text',
     textValue: props.firstText,
@@ -235,7 +245,7 @@ const firstButtonProps = computed(() =>
 const prevButtonProps = computed(() =>
   getButtonProps({
     page: Math.max(modelValueNumber.value - 1, 1),
-    dis: prevDisabled.value,
+    disabled: prevDisabled.value,
     classVal: props.prevClass,
     slotName: 'prev-text',
     textValue: props.prevText,
@@ -245,7 +255,7 @@ const prevButtonProps = computed(() =>
 const nextButtonProps = computed(() =>
   getButtonProps({
     page: Math.min(modelValueNumber.value + 1, numberOfPages.value),
-    dis: nextDisabled.value,
+    disabled: nextDisabled.value,
     classVal: props.nextClass,
     slotName: 'next-text',
     textValue: props.nextText,
@@ -255,7 +265,7 @@ const nextButtonProps = computed(() =>
 const lastButtonProps = computed(() =>
   getButtonProps({
     page: numberOfPages.value,
-    dis: lastDisabled.value,
+    disabled: lastDisabled.value,
     classVal: props.lastClass,
     slotName: 'last-text',
     textValue: props.lastText,
@@ -269,7 +279,7 @@ const ellipsisProps = computed(() => ({
       'page-item',
       'disabled',
       'text-center',
-      'bv-d-xs-down-none',
+      'bv-d-sm-down-none',
       computedFill.value ? 'flex-fill' : '',
       props.ellipsisClass,
     ],
@@ -316,6 +326,77 @@ const pageClick = (event: Readonly<MouseEvent>, pageNumber: number) => {
   // })
 }
 
+const isDisabled = (el: HTMLButtonElement) => {
+  const isElement = !!(el && el.nodeType === Node.ELEMENT_NODE)
+  const hasAttr = isElement ? el.hasAttribute('disabled') : null
+  const hasClass = isElement && el.classList ? el.classList.contains('disabled') : false
+
+  return !isElement || el.disabled || hasAttr || hasClass
+}
+
+const getButtons = () =>
+  pageElements.value
+    ?.map((page) => page.children[0] as HTMLButtonElement)
+    .filter((btn) => {
+      if (btn.getAttribute('display') === 'none') {
+        return false
+      }
+
+      const bcr = btn.getBoundingClientRect()
+
+      return !!(bcr && bcr.height > 0 && bcr.width > 0)
+    }) ?? []
+
+const focusFirst = () => {
+  nextTick(() => {
+    const btn = getButtons().find((el) => !isDisabled(el))
+    btn?.focus()
+  })
+}
+
+const focusPrev = () => {
+  nextTick(() => {
+    const buttons = getButtons()
+    const index = buttons.indexOf(getActiveElement() as HTMLButtonElement)
+
+    if (index > 0 && !isDisabled(buttons[index - 1])) {
+      buttons[index - 1]?.focus()
+    }
+  })
+}
+
+const focusLast = () => {
+  nextTick(() => {
+    const btn = getButtons()
+      .reverse()
+      .find((el) => !isDisabled(el))
+    btn?.focus()
+  })
+}
+
+const focusNext = () => {
+  nextTick(() => {
+    const buttons = getButtons()
+    const index = buttons.indexOf(getActiveElement() as HTMLButtonElement)
+
+    if (index < buttons.length - 1 && !isDisabled(buttons[index + 1])) {
+      buttons[index + 1]?.focus()
+    }
+  })
+}
+
+const handleKeyNav = (event: KeyboardEvent) => {
+  const {code, shiftKey} = event
+
+  if (code === CODE_LEFT || code === CODE_UP) {
+    stopEvent(event)
+    shiftKey ? focusFirst() : focusPrev()
+  } else if (code === CODE_RIGHT || code === CODE_DOWN) {
+    stopEvent(event)
+    shiftKey ? focusLast() : focusNext()
+  }
+}
+
 watch(modelValueNumber, (newValue) => {
   const sanitizeCurrentPage = (value: number, numberOfPages: number) => {
     const page = value || 1
@@ -340,26 +421,49 @@ watch(pagination, (oldValue, newValue) => {
   }
 })
 
-const pages = computed(
-  () =>
-    elements.value.map((p) => {
-      switch (p) {
-        case FIRST_BUTTON:
-          return {id: p, ...firstButtonProps.value}
-        case PREV_BUTTON:
-          return {id: p, ...prevButtonProps.value}
-        case NEXT_BUTTON:
-          return {id: p, ...nextButtonProps.value}
-        case LAST_BUTTON:
-          return {id: p, ...lastButtonProps.value}
-        case FIRST_ELLIPSIS:
-        case LAST_ELLIPSIS:
-          return {id: p, ...ellipsisProps.value}
-        default:
-          return {id: p, ...getPageButtonProps(p)}
-      }
-    }) as PageButton[]
-)
+const noFirstButton = computed(() => (props.noGotoEndButtons && !props.firstNumber ? 1 : 0))
+const noLastButton = computed(() => (props.noGotoEndButtons && !props.lastNumber ? 1 : 0))
+const showFirstButton = computed(() => (noFirstButton.value ? 0 : 1))
+const showLastButton = computed(() => (noLastButton.value ? 0 : 1))
+const firstPage = computed(() => (props.firstNumber ? 1 : 0))
+const lastPage = computed(() => (props.lastNumber ? 1 : 0))
+const halfLimit = computed(() => Math.floor(limitNumber.value / 2))
+
+const pages = computed(() => {
+  const {value} = modelValueNumber
+
+  const els = elements.value.map((p) => {
+    switch (p) {
+      case FIRST_BUTTON:
+        return {id: p, ...firstButtonProps.value}
+      case PREV_BUTTON:
+        return {id: p, ...prevButtonProps.value}
+      case NEXT_BUTTON:
+        return {id: p, ...nextButtonProps.value}
+      case LAST_BUTTON:
+        return {id: p, ...lastButtonProps.value}
+      case FIRST_ELLIPSIS:
+      case LAST_ELLIPSIS:
+        return {id: p, ...ellipsisProps.value}
+      default:
+        return {id: p, ...getPageButtonProps(p)}
+    }
+  })
+
+  if (numberOfPages.value > 3) {
+    if (value > numberOfPages.value - halfLimit.value - lastPage.value) {
+      const idx = 2 + showFirstButton.value
+      els[idx] = {id: els[idx].id, ...getPageButtonProps(els[idx].id, true)}
+    }
+
+    if (value <= halfLimit.value + firstPage.value) {
+      const idx = els.length - (3 + showLastButton.value)
+      els[idx] = {id: els[idx].id, ...getPageButtonProps(els[idx].id, true)}
+    }
+  }
+
+  return els as PageButton[]
+})
 
 const elements = computed(() => {
   // The idea here is to create an array of all the buttons on the page control.
@@ -369,34 +473,28 @@ const elements = computed(() => {
   const pages = numberOfPages.value
   const {value} = modelValueNumber
   const limit = limitNumber.value
-  const firstPage = props.firstNumber ? 1 : 0
-  const lastPage = props.lastNumber ? 1 : 0
-  const hideEllipsis = props.hideEllipsis || limit <= ELLIPSIS_THRESHOLD
-  const hideFirstButton = props.hideGotoEndButtons && !props.firstNumber ? 1 : 0
-  const hideLastButton = props.hideGotoEndButtons && !props.lastNumber ? 1 : 0
-  const showFirstButton = hideFirstButton ? 0 : 1
-  const showLastButton = hideLastButton ? 0 : 1
+  const noEllipsis = props.noEllipsis || limit <= ELLIPSIS_THRESHOLD
 
   // The first case is when all of the page buttons fit on the control, this is
   //  the simplest case and the only one that will create an array smaller than
-  //  Limit + 4 - hideEndButtons * 2 (the [first, last,] prev, next buttons)
+  //  Limit + 4 - noEndButtons * 2 (the [first, last,] prev, next buttons)
 
-  if (pages < limit + firstPage + lastPage) {
+  if (pages < limit + firstPage.value + lastPage.value) {
     return [
-      !firstPage && !hideFirstButton ? FIRST_BUTTON : null,
+      !firstPage.value && !noFirstButton.value ? FIRST_BUTTON : null,
       PREV_BUTTON,
       ...Array.from({length: pages}, (_, index) => index + 1),
       NEXT_BUTTON,
-      !lastPage && !hideLastButton ? LAST_BUTTON : null,
+      !lastPage.value && !noLastButton.value ? LAST_BUTTON : null,
     ].filter((x) => x !== null) as number[]
   }
 
-  // All of the remaining cases result in an array that is exactly limit + 4 - hideEndButtons * 2 in length, so create
+  // All of the remaining cases result in an array that is exactly limit + 4 - noEndButtons * 2 in length, so create
   //  the array upfront and set up the beginning and end buttons, then fill the rest for each case
 
-  const buttons = Array.from({length: limit + 4 - (hideFirstButton + hideLastButton)})
-  if (!hideFirstButton) {
-    if (!firstPage) {
+  const buttons = Array.from({length: limit + 4 - (noFirstButton.value + noLastButton.value)})
+  if (!noFirstButton.value) {
+    if (!firstPage.value) {
       buttons[0] = FIRST_BUTTON
       buttons[1] = PREV_BUTTON
     } else {
@@ -407,8 +505,8 @@ const elements = computed(() => {
     buttons[0] = PREV_BUTTON
   }
 
-  if (!hideLastButton) {
-    if (!lastPage) {
+  if (!noLastButton.value) {
+    if (!lastPage.value) {
       buttons[buttons.length - 1] = LAST_BUTTON
       buttons[buttons.length - 2] = NEXT_BUTTON
     } else {
@@ -422,28 +520,27 @@ const elements = computed(() => {
   // The next case is where the page buttons start at the begginning, with
   //  no ellipsis at the beginning, but one at the end
 
-  const halfLimit = Math.floor(limit / 2)
-  if (value <= halfLimit + firstPage) {
+  if (value <= halfLimit.value + firstPage.value) {
     for (let index = 1; index <= limit; index++) {
-      buttons[index + 1 - hideFirstButton] = index + firstPage
+      buttons[index + 1 - noFirstButton.value] = index + firstPage.value
     }
 
-    if (!hideEllipsis) {
-      buttons[buttons.length - (2 + showLastButton)] = LAST_ELLIPSIS
+    if (!noEllipsis) {
+      buttons[buttons.length - (2 + showLastButton.value)] = LAST_ELLIPSIS
     }
   }
 
   // And then we have the case where the page buttons go up to the end, with no
   //  ellipsis at the end, but one at the beginning
 
-  if (value > pages - halfLimit - lastPage) {
-    const start = pages - (limit - 1) - lastPage
+  if (value > pages - halfLimit.value - lastPage.value) {
+    const start = pages - (limit - 1) - lastPage.value
     for (let index = 0; index < limit; index++) {
-      buttons[index + 2 - hideFirstButton] = start + index
+      buttons[index + 2 - noFirstButton.value] = start + index
     }
 
-    if (!hideEllipsis) {
-      buttons[1 + showFirstButton] = FIRST_ELLIPSIS
+    if (!noEllipsis) {
+      buttons[1 + showFirstButton.value] = FIRST_ELLIPSIS
     }
   }
 
@@ -452,12 +549,12 @@ const elements = computed(() => {
     // Is there a more elegant way to ceck that we're in the final case?
     const start = value - Math.floor(limit / 2)
     for (let index = 0; index < limit; index++) {
-      buttons[index + 2 - hideFirstButton] = start + index
+      buttons[index + 2 - noFirstButton.value] = start + index
     }
 
-    if (!hideEllipsis) {
-      buttons[1 + showFirstButton] = FIRST_ELLIPSIS
-      buttons[buttons.length - (2 + showLastButton)] = LAST_ELLIPSIS
+    if (!noEllipsis) {
+      buttons[1 + showFirstButton.value] = FIRST_ELLIPSIS
+      buttons[buttons.length - (2 + showLastButton.value)] = LAST_ELLIPSIS
     }
   }
 

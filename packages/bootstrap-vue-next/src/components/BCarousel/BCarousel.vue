@@ -1,6 +1,11 @@
 <template>
   <div :id="computedId" ref="element" class="carousel slide pointer-event" :class="computedClasses">
-    <div v-if="props.indicators" class="carousel-indicators">
+    <div
+      v-if="props.indicators"
+      class="carousel-indicators"
+      :aria-label="props.labelIndicators"
+      :aria-owns="buttonOwnership"
+    >
       <!-- :data-bs-target="`#${computedId}`" is required since the classes target elems with that attr -->
       <button
         v-for="(_, i) in slides.length"
@@ -10,6 +15,8 @@
         :class="i === modelValue ? 'active' : ''"
         :aria-current="i === modelValue ? true : undefined"
         :aria-label="`${props.indicatorsButtonLabel} ${i}`"
+        :aria-controls="buttonOwnership"
+        :aria-describedby="slideValues?.[i]._id"
         @click="goToValue(i)"
       />
     </div>
@@ -54,7 +61,7 @@
 
 <script setup lang="ts">
 import {BvCarouselEvent} from '../../utils'
-import {computed, onMounted, provide, ref, toRef, watch} from 'vue'
+import {computed, onMounted, provide, ref, toRef, useTemplateRef, watch} from 'vue'
 import {useId} from '../../composables/useId'
 import type {BCarouselProps} from '../../types/ComponentProps'
 import {onKeyStroke, useElementHover, useIntervalFn, useSwipe, useToNumber} from '@vueuse/core'
@@ -76,6 +83,7 @@ const _props = withDefaults(defineProps<Omit<BCarouselProps, 'modelValue'>>(), {
   indicators: false,
   indicatorsButtonLabel: 'Slide',
   interval: 5000,
+  labelIndicators: 'Select a slide to display',
   keyboard: true,
   noAnimation: false,
   noHoverPause: false,
@@ -101,10 +109,11 @@ const slots = defineSlots<{
 }>()
 
 const computedId = useId(() => props.id, 'carousel')
+const buttonOwnership = useId(undefined, 'carousel-button-ownership')
 
 const modelValue = defineModel<Exclude<BCarouselProps['modelValue'], undefined>>({default: 0})
 
-const slideValues = ref<null | InstanceType<typeof BCarouselSlide>[]>(null)
+const slideValues = useTemplateRef<null | InstanceType<typeof BCarouselSlide>[]>('slideValues')
 
 const touchThresholdNumber = useToNumber(() => props.touchThreshold)
 const slideInterval = ref<Numberish | null>(null)
@@ -117,8 +126,8 @@ const intervalNumber = useToNumber(() => slideInterval.value ?? props.interval)
 const isTransitioning = ref(false)
 const rideStarted = ref(false)
 const direction = ref(true)
-const relatedTarget = ref<HTMLElement | null>(null)
-const element = ref<HTMLElement | null>(null)
+const relatedTarget = useTemplateRef<HTMLElement>('relatedTarget')
+const element = useTemplateRef<HTMLElement>('element')
 const previousModelValue = ref(modelValue.value)
 
 const isHovering = useElementHover(element)

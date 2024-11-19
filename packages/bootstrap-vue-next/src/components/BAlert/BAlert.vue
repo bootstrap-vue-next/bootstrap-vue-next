@@ -27,7 +27,7 @@ import BTransition from '../BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BButton from '../BButton/BButton.vue'
 import type {BAlertProps} from '../../types/ComponentProps'
-import {computed, ref, watchEffect} from 'vue'
+import {computed, useTemplateRef, watchEffect} from 'vue'
 import {useCountdown} from '../../composables/useCountdown'
 import {useDefaults} from '../../composables/useDefaults'
 import {isEmptySlot} from '../../utils/dom'
@@ -63,7 +63,7 @@ const slots = defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const element = ref<HTMLElement | null>(null)
+const element = useTemplateRef<HTMLElement>('element')
 
 const modelValue = defineModel<Exclude<BAlertProps['modelValue'], undefined>>({default: false})
 
@@ -95,6 +95,7 @@ useCountdownHover(
   computed(() => ({
     noHoverPause: props.noHoverPause,
     noResumeOnHoverLeave: props.noResumeOnHoverLeave,
+    modelValueIgnoresHover: typeof modelValue.value === 'boolean',
   })),
   {pause, resume}
 )

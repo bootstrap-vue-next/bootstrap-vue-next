@@ -2,7 +2,6 @@ import type {Boundary, Placement, RootBoundary} from '@floating-ui/vue'
 export {autoUpdate} from '@floating-ui/vue'
 
 import {type DirectiveBinding, h, render} from 'vue'
-import {DefaultAllowlist, sanitizeHtml} from './sanitizer'
 import BPopover from '../components/BPopover/BPopover.vue'
 import type {BPopoverProps} from '../types/ComponentProps'
 
@@ -38,19 +37,19 @@ export const resolveContent = (
       el.setAttribute('data-original-title', title)
 
       return {
-        content: sanitizeHtml(title, DefaultAllowlist),
+        content: title,
       }
     }
     return {}
   }
   if (typeof values === 'string') {
     return {
-      content: sanitizeHtml(values, DefaultAllowlist),
+      content: values,
     }
   }
   return {
-    title: values?.title ? sanitizeHtml(values?.title, DefaultAllowlist) : undefined,
-    content: values?.content ? sanitizeHtml(values?.content, DefaultAllowlist) : undefined,
+    title: values?.title ? values?.title : undefined,
+    content: values?.content ? values?.content : undefined,
   }
 }
 
@@ -63,7 +62,7 @@ export const resolveDirectiveProps = (
   inline: binding.modifiers.inline,
   click: binding.modifiers.click,
   realtime: binding.modifiers.realtime,
-  persistent: binding.modifiers.persistent,
+  lazy: binding.modifiers.lazy,
   placement: binding.modifiers.left
     ? 'left'
     : binding.modifiers.right

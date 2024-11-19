@@ -49,9 +49,9 @@ It is possible to prevent showing/closing modals. You can prevent hiding on the 
   <BButton @click="preventableModal = !preventableModal">
     Toggle modal
   </BButton>
-  <BModal v-model="preventableModal" title="Hello, World!" @hide.prevent>
+  <BModal  v-model="preventableModal" title="Hello, World!" @hide="preventFn">
     Foobar?
-    <BButton @click="preventableModal = false">Force leave</BButton>
+    <BFormCheckbox v-model="preventModal">Prevent close</BFormCheckbox>
   </BModal>
   <template #html>
 
@@ -59,14 +59,18 @@ It is possible to prevent showing/closing modals. You can prevent hiding on the 
 <template>
   <BButton @click="preventableModal = !preventableModal"> Toggle modal </BButton>
 
-  <BModal v-model="preventableModal" title="Hello, World!" @hide.prevent>
+  <BModal v-model="preventableModal" title="Hello, World!" @hide="preventFn">
     Foobar?
-    <BButton @click="preventableModal = false">Force leave</BButton>
+    <BFormCheckbox v-model="preventModal">Prevent close</BFormCheckbox>
   </BModal>
 </template>
 
 <script setup lang="ts">
 const preventableModal = ref(false)
+const preventModal = ref(true)
+const preventFn = (e: Event) => {
+  if (preventModal.value) e.preventDefault()
+}
 </script>
 ```
 
@@ -229,11 +233,16 @@ import ComponentReference from '../../components/ComponentReference.vue'
 import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BCard, BCardBody, BModal, BButton, vBModal} from 'bootstrap-vue-next'
-import {ref} from 'vue'
+import {ref, nextTick} from 'vue'
 
 const modal = ref(false)
 
 const preventableModal = ref(false)
+const preventModal = ref(true)
+const preventFn = (e: Event) => {
+  if (preventModal.value)
+    e.preventDefault()
+}
 
 const nestedModal1 = ref(false)
 const nestedModal2 = ref(false)

@@ -356,9 +356,7 @@ If you are using one of the preferred installation methods, JS will be tree-shak
 One could individually import each needed plugin, they are all appended with `Plugin` (`toastPlugin`, `breadcrumbPlugin`, etc). So, one could pick and choose what is needed
 Practically the `createBootstrap` plugin is ~20kb gzipped with `toast` and `modalController` accounting for the majority. Use this if you really want the tiniest possible size.
 
-<NoteAlert>
-The `defaultsPlugin` is required by all components if one chooses to use this
-</NoteAlert>
+<BootstrapPluginWarning />
 
 ## Comparison with BootstrapVue
 
@@ -369,6 +367,7 @@ import {BCard, BCardBody, BTab, BTabs} from 'bootstrap-vue-next'
 import {useLocalStorage} from '@vueuse/core'
 import HighlightCard from './components/HighlightCard.vue'
 import NoteAlert from './components/NoteAlert.vue'
+import BootstrapPluginWarning from './components/BootstrapPluginWarning.vue'
 
 const codePreference = useLocalStorage('code-group-preference', 0)
 </script>

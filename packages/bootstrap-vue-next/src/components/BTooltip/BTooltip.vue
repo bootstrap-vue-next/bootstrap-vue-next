@@ -1,13 +1,19 @@
 <template>
   <BPopover ref="popover" v-bind="computedProps" v-model="modelValue" tooltip>
-    <template v-for="(_, name) in $slots" #[name]="slotData">
-      <slot :name="name" v-bind="slotData" />
+    <template v-if="slots.default" #default>
+      <slot />
+    </template>
+    <template v-if="slots.target" #target="scope">
+      <slot name="target" v-bind="scope" />
+    </template>
+    <template v-if="slots.title" #title>
+      <slot name="title" />
     </template>
   </BPopover>
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from 'vue'
+import {computed, useTemplateRef} from 'vue'
 import BPopover from '../BPopover/BPopover.vue'
 import type {BPopoverProps, BTooltipProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
@@ -21,10 +27,11 @@ const _props = withDefaults(defineProps<Omit<BTooltipProps, 'modelValue'>>(), {
   delay: undefined,
   floatingMiddleware: undefined,
   hide: undefined,
-  html: undefined,
   id: undefined,
+  initialAnimation: false,
   inline: undefined,
   interactive: undefined,
+  lazy: undefined,
   manual: undefined,
   noAutoClose: undefined,
   noFade: undefined,
@@ -36,13 +43,30 @@ const _props = withDefaults(defineProps<Omit<BTooltipProps, 'modelValue'>>(), {
   placement: undefined,
   realtime: undefined,
   reference: undefined,
+  show: undefined,
   strategy: undefined,
   target: undefined,
+  unmountLazy: undefined,
   title: undefined,
   variant: undefined,
+  visible: undefined,
 })
 
 const props = useDefaults(_props, 'BTooltip')
+
+const slots = defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  target?: (props: {
+    show: () => void
+    hide: (trigger?: string) => void
+    toggle: () => void
+    visible: boolean
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  title?: (props: Record<string, never>) => any
+}>()
 
 const modelValue = defineModel<BTooltipProps['modelValue']>({default: undefined})
 
@@ -51,11 +75,17 @@ const computedProps = computed<BPopoverProps>(() => {
   return {noninteractive: noninteractive !== undefined ? noninteractive : !interactive, ...rest}
 })
 
-const popover = ref<null | InstanceType<typeof BPopover>>(null)
+const popover = useTemplateRef<InstanceType<typeof BPopover>>('popover')
 
 defineExpose({
-  hide: popover.value?.hide,
-  show: popover.value?.show,
-  toggle: popover.value?.toggle,
+  hide: () => {
+    popover.value?.hide()
+  },
+  show: () => {
+    popover.value?.show()
+  },
+  toggle: () => {
+    popover.value?.toggle()
+  },
 })
 </script>

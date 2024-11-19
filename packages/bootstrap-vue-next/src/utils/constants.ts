@@ -6,10 +6,10 @@ export const CODE_END = 'End'
 export const CODE_ENTER = 13
 export const CODE_ESC = 27
 export const CODE_HOME = 'Home'
-export const CODE_LEFT = 37
+export const CODE_LEFT = 'ArrowLeft'
 export const CODE_PAGEDOWN = 'PageDown'
 export const CODE_PAGEUP = 'PageUp'
-export const CODE_RIGHT = 39
+export const CODE_RIGHT = 'ArrowRight'
 export const CODE_SPACE = 32
 export const CODE_UP = 'ArrowUp'
 

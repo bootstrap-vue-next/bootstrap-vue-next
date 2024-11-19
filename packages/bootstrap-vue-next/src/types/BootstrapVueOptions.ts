@@ -285,13 +285,13 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
   BDropdownHeader: never
   BFormInvalidFeedback: ComponentProps.BFormFeedbackSharedProps
   BFormValidFeedback: ComponentProps.BFormFeedbackSharedProps
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  BFormGroup: any
+  BFormGroup: ComponentProps.BFormGroupProps
   BNavItemDropdown: ComponentProps.BDropdownProps
   BRow: ComponentProps.BRowProps
   BInput: ComponentProps.BFormInputProps
   BTooltipOrchestrator: never
   BPopoverOrchestrator: never
+  showHide: ComponentProps.ShowHideProps
 }
 
 export type BvnComponentProps = {

@@ -1,5 +1,117 @@
 # Changelog
 
+## [0.25.15](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.14...bootstrapvuenext-v0.25.15) (2024-11-14)
+
+
+### Bug Fixes
+
+* **BDropdown:** fix infinite loop on keyboard navigation ([#2342](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2342)) ([2fd5db7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2fd5db76eedae23635b23e7f6eead55ce89ee005))
+
+## [0.25.14](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.13...bootstrapvuenext-v0.25.14) (2024-11-12)
+
+
+### Features
+
+* **BPagination:** add keyboard shortcuts fixes [#2153](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2153) ([69cf134](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/69cf134f9b22fe06bd8bc2e43f21617ecd17a296))
+
+## [0.25.13](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.12...bootstrapvuenext-v0.25.13) (2024-11-04)
+
+
+### Features
+
+* **BTable:** make it possible to style custom footers ([#2314](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2314)) ([264fc9e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/264fc9eca9e1f0951706dbf88087a2da2ba214ea))
+
+
+### Bug Fixes
+
+* **BTable:** dynamic slots not rendering fixes [#2328](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2328) ([#2329](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2329)) ([6c16a9b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6c16a9b970adb0607ea6dca9e785937aa001382b))
+
+## [0.25.12](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.11...bootstrapvuenext-v0.25.12) (2024-11-01)
+
+
+### Bug Fixes
+
+* **BFormGroup:** fix layout problem when label-for is not used ([#2321](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2321)) ([61d2b6b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/61d2b6b2725c5c5e8af1ffdca2440285d411e5b3))
+
+## [0.25.11](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.10...bootstrapvuenext-v0.25.11) (2024-10-31)
+
+
+### Features
+
+* **BPagination:** add small screen support ([#2308](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2308)) ([9764584](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/97645843d0d47afa69286fee4f965841295125ed))
+
+
+### Bug Fixes
+
+* **BPagination:** fix maximum of 4 page number buttons displayed on small screens ([9764584](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/97645843d0d47afa69286fee4f965841295125ed))
+
+## [0.25.10](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.9...bootstrapvuenext-v0.25.10) (2024-10-25)
+
+
+### Bug Fixes
+
+* **BFormSpinButton:** fix lacks default sizing ([#2305](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2305)) ([9e3614f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9e3614fa9e1f3ccb4cdd614d60ba762a08a6a015))
+* **BToast:** toast disappearing on hover leave when is a boolean modelvalue ([#2307](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2307)) ([2971f61](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2971f617ba3a9f082d5a1bf8f1f29f51dc42c558))
+
+## [0.25.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.8...bootstrapvuenext-v0.25.9) (2024-10-24)
+
+
+### Features
+
+* **BTooltip:** strongly type slots ([e51461e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e51461e16188e2ea290a6979c75da68edf3cc749))
+
+
+### Bug Fixes
+
+* **BTable:** clean up slots to match those from bootstrap-vue fixes #… ([#2303](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2303)) ([e51461e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e51461e16188e2ea290a6979c75da68edf3cc749))
+
+## [0.25.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.7...bootstrapvuenext-v0.25.8) (2024-10-24)
+
+
+### Features
+
+* **BTable:** add defineSlots types ([#2300](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2300)) ([cc5af51](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cc5af51327ccbc366a9354cb387b025e5e377904))
+
+
+### Bug Fixes
+
+* **BAvatar:** variant being applied to link causing avatar img to become faded and not show svg when using prop href ([#2295](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2295)) ([daecdd9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/daecdd97953ff675e4c094a18946e45195cf3d9c))
+
+## [0.25.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.6...bootstrapvuenext-v0.25.7) (2024-10-21)
+
+
+### Features
+
+* **BCarousel:** add aria attributes, add prop labelIndicators ([#2293](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2293)) ([c3f8199](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c3f8199a609affb46dc5b7b0efc08e8c12c9e973))
+* BFormGroup to SFC -- more a refactor, but be mindful of accidental changes. Please submit issue reports if things look wrong. Also you can now use useDefaults now with BFormGroup ([07daa80](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/07daa80aef41df5b8e31578c2bc695823c2f6510))
+* rename defaultsPlugin to more generic bootstrapPlugin -- this essential plugin may contain more essential features than just defaults ([#2288](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2288)) ([22440a9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/22440a9cefd7d1a381c23ac33a07198ae4532ec7))
+
+
+### Bug Fixes
+
+* **grid:** Correct some inconsistencies in breakpoint types ([#2290](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2290)) ([7e7dc7f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7e7dc7fabf3b39f18e9261b4eb14987d3a92aac1))
+
+## [0.25.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.5...bootstrapvuenext-v0.25.6) (2024-10-18)
+
+
+### Features
+
+* **BFormTextarea:** add props max-rows & no-auto-shrink fixes [#2077](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2077)  ([#2284](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2284)) ([87cbcb7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/87cbcb7d7f1b88c3a28658ce44e48bdb4b9eae7a))
+
+## [0.25.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.4...bootstrapvuenext-v0.25.5) (2024-10-17)
+
+
+### Bug Fixes
+
+* **BAvatar:** failback on image load error ([#2281](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2281)) ([a51327f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a51327f2721aa373329258ff8e551f57c123b394))
+
+## [0.25.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.3...bootstrapvuenext-v0.25.4) (2024-10-16)
+
+
+### Bug Fixes
+
+* **BModal:** remove scrolllock on unmount ([#2277](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2277)) ([cb12723](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cb12723ae7c410116197b5fd2b60fa210156e083))
+
 ## [0.25.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.2...bootstrapvuenext-v0.25.3) (2024-10-16)
 
 

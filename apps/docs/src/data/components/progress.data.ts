@@ -80,10 +80,6 @@ export default {
             type: 'string',
             default: undefined,
           },
-          labelHtml: {
-            type: 'string',
-            default: undefined,
-          },
           max: {
             type: 'Numberish',
             default: undefined,

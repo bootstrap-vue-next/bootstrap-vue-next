@@ -9,17 +9,10 @@
     tabindex="-1"
   >
     <slot name="first" />
-    <BFormRadio
-      v-for="item in normalizeOptions"
-      :key="item.self"
-      :disabled="item.disabled"
-      :value="item.value"
-    >
-      <!-- eslint-disable-next-line vue/no-v-html -->
-      <span v-if="!!item.html" v-html="item.html" />
-      <template v-else>
+    <BFormRadio v-for="(item, index) in normalizeOptions" :key="index" v-bind="item">
+      <slot name="option" v-bind="item">
         {{ item.text }}
-      </template>
+      </slot>
     </BFormRadio>
     <slot />
   </div>
@@ -27,7 +20,7 @@
 
 <script setup lang="ts">
 import type {BFormRadioGroupProps} from '../../types/ComponentProps'
-import {computed, provide, ref, toRef} from 'vue'
+import {computed, provide, toRef, useTemplateRef} from 'vue'
 import {radioGroupKey} from '../../utils/keys'
 import BFormRadio from './BFormRadio.vue'
 import {getGroupAttr, getGroupClasses} from '../../composables/useFormCheck'
@@ -43,7 +36,6 @@ const _props = withDefaults(defineProps<Omit<BFormRadioGroupProps, 'modelValue'>
   disabled: false,
   disabledField: 'disabled',
   form: undefined,
-  htmlField: 'html',
   id: undefined,
   name: undefined,
   options: () => [],
@@ -64,6 +56,8 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   first?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  option: (props: Record<string, unknown>) => any
 }>()
 
 const modelValue = defineModel<Exclude<BFormRadioGroupProps['modelValue'], undefined>>({
@@ -73,7 +67,7 @@ const modelValue = defineModel<Exclude<BFormRadioGroupProps['modelValue'], undef
 const computedId = useId(() => props.id, 'radio')
 const computedName = useId(() => props.name, 'checkbox')
 
-const element = ref<HTMLElement | null>(null)
+const element = useTemplateRef<HTMLElement>('element')
 
 const {focused} = useFocus(element, {
   initialValue: props.autofocus,
@@ -95,22 +89,18 @@ provide(radioGroupKey, {
 })
 
 const normalizeOptions = computed(() =>
-  props.options.map((el, ind) =>
+  props.options.map((el) =>
     typeof el === 'string' || typeof el === 'number'
       ? {
           value: el,
           disabled: props.disabled,
           text: el.toString(),
-          html: undefined,
-          self: Symbol(`radioGroupOptionItem${ind}`),
         }
       : {
           value: el[props.valueField] as string | undefined,
           disabled: el[props.disabledField] as boolean | undefined,
           ...(el.props ? el.props : {}),
           text: el[props.textField] as string | undefined,
-          html: el[props.htmlField] as string | undefined,
-          self: Symbol(`radioGroupOptionItem${ind}`),
         }
   )
 )

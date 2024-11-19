@@ -1,5 +1,5 @@
 <template>
-  <div class="carousel-item" :style="computedStyle">
+  <div :id="computedId" class="carousel-item" :style="computedStyle">
     <slot name="img">
       <BImg
         class="d-block w-100"
@@ -20,16 +20,12 @@
     >
       <component :is="props.captionTag" v-if="hasCaption">
         <slot name="caption">
-          <!-- eslint-disable-next-line vue/no-v-html -->
-          <span v-if="props.captionHtml" v-html="props.captionHtml" />
-          <span v-else>{{ props.caption }}</span>
+          <span>{{ props.caption }}</span>
         </slot>
       </component>
       <component :is="props.textTag" v-if="hasText">
         <slot name="text">
-          <!-- eslint-disable-next-line vue/no-v-html -->
-          <span v-if="props.textHtml" v-html="props.textHtml" />
-          <span v-else>{{ props.text }}</span>
+          <span>{{ props.text }}</span>
         </slot>
       </component>
       <slot />
@@ -44,11 +40,11 @@ import {carouselInjectionKey} from '../../utils/keys'
 import BImg from '../BImg/BImg.vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {isEmptySlot} from '../../utils/dom'
+import {useId} from '../../composables/useId'
 
 const _props = withDefaults(defineProps<BCarouselSlideProps>(), {
   background: undefined,
   caption: undefined,
-  captionHtml: undefined,
   captionTag: 'h3',
   contentTag: 'div',
   contentVisibleUp: undefined,
@@ -62,7 +58,6 @@ const _props = withDefaults(defineProps<BCarouselSlideProps>(), {
   imgWidth: undefined,
   interval: undefined,
   text: undefined,
-  textHtml: undefined,
   textTag: 'p',
 })
 const props = useDefaults(_props, 'BCarouselSlide')
@@ -78,10 +73,11 @@ const slots = defineSlots<{
   text?: (props: Record<string, never>) => any
 }>()
 
+const computedId = useId(() => props.id, 'carousel-slide')
 const parentData = inject(carouselInjectionKey, null)
 
-const hasText = computed(() => props.text || props.textHtml || !isEmptySlot(slots.text))
-const hasCaption = computed(() => props.caption || props.captionHtml || !isEmptySlot(slots.caption))
+const hasText = computed(() => props.text || !isEmptySlot(slots.text))
+const hasCaption = computed(() => props.caption || !isEmptySlot(slots.caption))
 const hasContent = computed(() => hasText.value || hasCaption.value || !isEmptySlot(slots.default))
 
 const computedStyle = computed<CSSProperties>(() => ({
@@ -97,5 +93,6 @@ const computedContentClasses = computed(() => ({
 
 defineExpose({
   _interval: toRef(() => props.interval),
+  _id: computedId,
 })
 </script>

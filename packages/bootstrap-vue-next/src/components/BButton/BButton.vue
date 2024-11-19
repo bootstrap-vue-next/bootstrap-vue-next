@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from 'vue'
+import {computed, useTemplateRef} from 'vue'
 import BSpinner from '../BSpinner/BSpinner.vue'
 import {useBLinkHelper} from '../../composables/useBLinkHelper'
 import BLink from '../BLink/BLink.vue'
@@ -97,7 +97,7 @@ const emit = defineEmits<{
   click: [value: MouseEvent]
 }>()
 
-const element = ref<HTMLElement | null>(null)
+const element = useTemplateRef<HTMLElement | null>('element')
 
 const pressedValue = defineModel<BButtonProps['pressed']>('pressed', {default: undefined})
 

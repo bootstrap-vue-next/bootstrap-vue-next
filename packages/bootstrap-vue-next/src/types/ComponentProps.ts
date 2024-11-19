@@ -21,7 +21,7 @@ import type {AttrsValue, ClassValue} from './AnyValuedAttributes'
 import type {CheckboxOptionRaw, CheckboxValue} from './CheckboxTypes'
 import type {Size} from './Size'
 import type {AriaInvalid} from './AriaInvalid'
-import type {Numberish, TeleporterProps} from './CommonTypes'
+import type {Numberish, TeleporterProps, ValidationState} from './CommonTypes'
 import type {CommonInputProps} from './FormCommonInputProps'
 import type {RadioOptionRaw, RadioValue} from './RadioTypes'
 import type {SelectValue} from './SelectTypes'
@@ -29,6 +29,12 @@ import type {
   Breakpoint,
   ColBreakpointProps,
   ColsNumbers,
+  ColsOffsetNumbers,
+  ColsOrderNumbers,
+  ContentColsBreakpointProps,
+  GutterNumbers,
+  LabelAlignBreakpointProps,
+  LabelColsBreakpointProps,
   OffsetBreakpointProps,
   OrderBreakpointProps,
   RowColsBreakpointProps,
@@ -105,7 +111,10 @@ export interface BAccordionProps {
   flush?: boolean
   free?: boolean
   id?: string
+  initialAnimation?: boolean
+  lazy?: boolean
   modelValue?: string
+  unmountLazy?: boolean
 }
 
 export interface BDropdownDividerProps {
@@ -196,7 +205,7 @@ export interface BFormCheckboxProps {
   required?: boolean
   reverse?: boolean
   size?: Size
-  state?: boolean | null
+  state?: ValidationState
   switch?: boolean
   uncheckedValue?: CheckboxValue
   wrapperAttrs?: Readonly<AttrsValue>
@@ -216,7 +225,6 @@ export interface BFormCheckboxGroupProps {
   disabled?: boolean
   disabledField?: string
   form?: string
-  htmlField?: string
   id?: string
   modelValue?: readonly CheckboxValue[]
   name?: string
@@ -226,7 +234,7 @@ export interface BFormCheckboxGroupProps {
   reverse?: boolean
   size?: Size
   stacked?: boolean
-  state?: boolean | null
+  state?: ValidationState
   switches?: boolean
   textField?: string
   validated?: boolean
@@ -235,7 +243,6 @@ export interface BFormCheckboxGroupProps {
 
 export interface BFormDatalistProps {
   disabledField?: string
-  htmlField?: string
   id?: string
   options?: readonly (unknown | Record<string, unknown>)[]
   textField?: string
@@ -263,7 +270,7 @@ export interface BFormFileProps {
   plain?: boolean
   required?: boolean
   size?: Size
-  state?: boolean | null
+  state?: ValidationState
 }
 
 export interface BFormInputProps extends CommonInputProps {
@@ -291,7 +298,7 @@ export interface BFormRadioProps {
   required?: boolean
   reverse?: boolean
   size?: Size
-  state?: boolean | null
+  state?: ValidationState
   value?: RadioValue
 }
 
@@ -303,7 +310,6 @@ export interface BFormRadioGroupProps {
   disabled?: boolean
   disabledField?: string
   form?: string
-  htmlField?: string
   id?: string
   modelValue?: RadioValue
   name?: string
@@ -313,7 +319,7 @@ export interface BFormRadioGroupProps {
   reverse?: boolean
   size?: Size
   stacked?: boolean
-  state?: boolean | null
+  state?: ValidationState
   textField?: string
   validated?: boolean
   valueField?: string
@@ -325,7 +331,6 @@ export interface BFormSelectProps {
   disabled?: boolean
   disabledField?: string
   form?: string
-  htmlField?: string
   id?: string
   labelField?: string
   modelValue?: SelectValue
@@ -337,7 +342,7 @@ export interface BFormSelectProps {
   required?: boolean
   selectSize?: Numberish
   size?: Size
-  state?: boolean | null
+  state?: ValidationState
   textField?: string
   valueField?: string
 }
@@ -349,7 +354,6 @@ export interface BFormSelectOptionProps<T> {
 
 export interface BFormSelectOptionGroupProps {
   disabledField?: string
-  htmlField?: string
   label?: string
   options?: readonly (unknown | Record<string, unknown>)[]
   textField?: string
@@ -379,7 +383,7 @@ export interface BFormSpinbuttonProps {
   repeatThreshold?: Numberish
   required?: boolean
   size?: Size
-  state?: boolean | null
+  state?: ValidationState
   step?: Numberish
   vertical?: boolean
   wrap?: boolean
@@ -421,7 +425,7 @@ export interface BFormTagsProps {
   required?: boolean
   separator?: string | readonly string[]
   size?: Size
-  state?: boolean | null
+  state?: ValidationState
   tagClass?: ClassValue
   tagPills?: boolean
   tagRemoveLabel?: string
@@ -434,14 +438,14 @@ export interface BFormTextareaProps extends CommonInputProps {
   noResize?: boolean
   rows?: Numberish
   wrap?: string
+  noAutoShrink?: boolean
+  maxRows?: Numberish
 }
 
 export interface BInputGroupProps {
   append?: string
-  appendHtml?: string
   id?: string
   prepend?: string
-  prependHtml?: string
   size?: Size
   tag?: string
 }
@@ -481,6 +485,8 @@ export interface BNavProps {
 
 export interface BNavFormProps extends BFormProps {
   role?: string
+  wrapperAttrs?: Readonly<AttrsValue>
+  formClass?: ClassValue
 }
 
 export interface BNavItemProps extends Omit<BLinkProps, 'routerTag'> {
@@ -521,8 +527,9 @@ export interface BNavbarToggleProps {
   target?: string | readonly string[]
 }
 
-export interface BOffcanvasProps extends TeleporterProps {
-  hideBackdrop?: boolean
+export interface BOffcanvasProps extends TeleporterProps, ShowHideProps {
+  noBackdrop?: boolean
+  backdropFirst?: boolean
   bodyAttrs?: Readonly<AttrsValue>
   bodyClass?: ClassValue
   bodyScrolling?: boolean
@@ -532,7 +539,6 @@ export interface BOffcanvasProps extends TeleporterProps {
   headerCloseLabel?: string
   headerCloseVariant?: ButtonVariant | null
   id?: string
-  lazy?: boolean
   modelValue?: boolean
   noCloseOnBackdrop?: boolean
   noCloseOnEsc?: boolean
@@ -576,8 +582,8 @@ export interface BPaginationProps {
   firstClass?: ClassValue
   firstNumber?: boolean
   firstText?: string
-  hideEllipsis?: boolean
-  hideGotoEndButtons?: boolean
+  noEllipsis?: boolean
+  noGotoEndButtons?: boolean
   labelFirstPage?: string
   labelLastPage?: string
   labelNextPage?: string
@@ -653,7 +659,7 @@ export interface BPlaceholderTableProps {
   headerColumns?: Numberish
   headerSize?: PlaceholderSize
   headerVariant?: ColorVariant | null
-  hideHeader?: boolean
+  noHeader?: boolean
   rows?: Numberish
   showFooter?: boolean
   size?: PlaceholderSize
@@ -664,7 +670,7 @@ export interface BPlaceholderWrapperProps {
   loading?: boolean
 }
 
-export interface BProgressProps extends Omit<BProgressBarProps, 'label' | 'labelHtml'> {
+export interface BProgressProps extends Omit<BProgressBarProps, 'label'> {
   height?: string
 }
 
@@ -715,22 +721,18 @@ export interface BToastOrchestratorProps extends TeleporterProps {
   appendToast?: boolean
 }
 
-export interface BCollapseProps {
-  // appear?: boolean
+export interface BCollapseProps extends ShowHideProps {
   horizontal?: boolean
   id?: string
   isNav?: boolean
   modelValue?: boolean
-  skipAnimation?: boolean
   tag?: string
-  toggle?: boolean
-  visible?: boolean
 }
 
 export interface BContainerProps {
   fluid?: boolean | Breakpoint
-  gutterX?: ColsNumbers
-  gutterY?: ColsNumbers
+  gutterX?: GutterNumbers
+  gutterY?: GutterNumbers
   tag?: string
 }
 
@@ -756,9 +758,11 @@ export interface BAccordionItemProps {
   id?: string
   isNav?: boolean
   modelValue?: boolean
+  lazy?: boolean
+  unmountLazy?: boolean
   tag?: string
   title?: string
-  toggle?: boolean
+  show?: boolean
   visible?: boolean
   wrapperAttrs?: Readonly<AttrsValue>
 }
@@ -871,7 +875,6 @@ export interface BCardProps extends ColorExtendables {
   footerBgVariant?: BgColorVariant | null
   footerBorderVariant?: BorderColorVariant | null
   footerClass?: ClassValue
-  footerHtml?: string
   footerTag?: string
   footerTextVariant?: TextColorVariant | null
   footerVariant?: ColorVariant | null
@@ -879,7 +882,6 @@ export interface BCardProps extends ColorExtendables {
   headerBgVariant?: BgColorVariant | null
   headerBorderVariant?: BorderColorVariant | null
   headerClass?: ClassValue
-  headerHtml?: string
   headerTag?: string
   headerTextVariant?: TextColorVariant | null
   headerVariant?: ColorVariant | null
@@ -946,6 +948,7 @@ export interface BCarouselProps {
   indicators?: boolean
   indicatorsButtonLabel?: string
   interval?: number
+  labelIndicators?: string
   keyboard?: boolean
   modelValue?: number
   noAnimation?: boolean
@@ -960,7 +963,6 @@ export interface BCarouselProps {
 export interface BCarouselSlideProps {
   background?: string
   caption?: string
-  captionHtml?: string
   captionTag?: string
   contentTag?: string
   contentVisibleUp?: string
@@ -974,7 +976,6 @@ export interface BCarouselSlideProps {
   imgWidth?: Numberish
   interval?: number | 'requestAnimationFrame'
   text?: string
-  textHtml?: string
   textTag?: string
 }
 
@@ -1031,35 +1032,34 @@ export interface BTableSimpleProps {
   tableClass?: ClassValue
 }
 
-export interface BTableLiteProps<T> extends BTableSimpleProps {
+export interface BTableLiteProps<Items> extends BTableSimpleProps {
   align?: VerticalAlign
   caption?: string
-  captionHtml?: string
   detailsTdClass?: ClassValue
   fieldColumnClass?: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  | ((field: TableField<T>) => readonly Record<string, any>[])
+  | ((field: TableField<Items>) => readonly Record<string, any>[])
     | string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     | Readonly<Record<PropertyKey, any>>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     | readonly any[]
-  fields?: TableFieldRaw<T>[]
+  fields?: TableFieldRaw<Items>[]
   footClone?: boolean
   footRowVariant?: ColorVariant | null
   footVariant?: ColorVariant | null
   headRowVariant?: ColorVariant | null
   headVariant?: ColorVariant | null
-  items?: readonly T[]
+  items?: readonly Items[]
   labelStacked?: boolean
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   modelValue?: any
   primaryKey?: string
   tbodyClass?: ClassValue
-  tbodyTrAttrs?: ((item: T | null, type: TableRowType) => AttrsValue) | AttrsValue
+  tbodyTrAttrs?: ((item: Items | null, type: TableRowType) => AttrsValue) | AttrsValue
   // tbodyTransitionHandlers
   // tbodyTransitionProps
   tbodyTrClass?:
-    | ((item: T | null, type: TableRowType) => TableStrictClassValue)
+    | ((item: Items | null, type: TableRowType) => TableStrictClassValue)
     | TableStrictClassValue
   tfootClass?: ClassValue
   tfootTrClass?: ClassValue
@@ -1067,8 +1067,8 @@ export interface BTableLiteProps<T> extends BTableSimpleProps {
   theadTrClass?: ClassValue
 }
 
-export interface BTableProps<T> extends Omit<BTableLiteProps<T>, 'tableClass'> {
-  provider?: BTableProvider<T>
+export interface BTableProps<Items> extends Omit<BTableLiteProps<Items>, 'tableClass'> {
+  provider?: BTableProvider<Items>
   noProvider?: readonly NoProviderTypes[]
   noProviderPaging?: boolean
   noProviderSorting?: boolean
@@ -1105,7 +1105,7 @@ export interface BTableProps<T> extends Omit<BTableLiteProps<T>, 'tableClass'> {
   // sortDirection?: 'asc' | 'desc' | 'last'
   // sortIconLeft?: boolean
   // sortNullLast?: boolean
-  selectedItems?: readonly T[]
+  selectedItems?: readonly Items[]
   noSortableIcon?: boolean
   emptyFilteredText?: string
   emptyText?: string
@@ -1147,7 +1147,6 @@ export interface BThProps {
 export interface BProgressBarProps extends ColorExtendables {
   animated?: boolean
   label?: string
-  labelHtml?: string
   max?: Numberish
   precision?: Numberish
   showProgress?: boolean
@@ -1165,13 +1164,13 @@ export interface BFormFeedbackSharedProps {
   forceShow?: boolean
   id?: string
   role?: string
-  state?: boolean | null
+  state?: ValidationState
   tag?: string
   text?: string
   tooltip?: boolean
 }
 
-export interface BDropdownProps extends TeleporterProps {
+export interface BDropdownProps extends TeleporterProps, ShowHideProps {
   ariaLabel?: string
   autoClose?: boolean | 'inside' | 'outside'
   boundary?: Boundary | RootBoundary
@@ -1180,7 +1179,6 @@ export interface BDropdownProps extends TeleporterProps {
   floatingMiddleware?: Middleware[]
   id?: string
   isNav?: boolean
-  lazy?: boolean
   menuClass?: ClassValue
   modelValue?: boolean
   noCaret?: boolean
@@ -1193,7 +1191,7 @@ export interface BDropdownProps extends TeleporterProps {
     | Readonly<{mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null}>
   role?: string
   size?: Size
-  skipWrapper?: boolean
+  noWrapper?: boolean
   split?: boolean
   splitButtonType?: ButtonType
   splitClass?: ClassValue
@@ -1210,7 +1208,10 @@ export interface BDropdownProps extends TeleporterProps {
   placement?: FloatingPlacement
 }
 
-export interface BToastProps extends ColorExtendables, Omit<BLinkProps, 'routerTag'> {
+export interface BToastProps
+  extends ColorExtendables,
+    Omit<BLinkProps, 'routerTag'>,
+    ShowHideProps {
   body?: string
   bodyClass?: ClassValue
   headerClass?: ClassValue
@@ -1220,18 +1221,16 @@ export interface BToastProps extends ColorExtendables, Omit<BLinkProps, 'routerT
   isStatus?: boolean
   modelValue?: boolean | number
   noCloseButton?: boolean
-  noFade?: boolean
   noHoverPause?: boolean
   noResumeOnHoverLeave?: boolean
-  progressProps?: Omit<BProgressBarProps, 'label' | 'labelHtml' | 'max' | 'value'>
+  progressProps?: Omit<BProgressBarProps, 'label' | 'max' | 'value'>
   showOnPause?: boolean
   solid?: boolean
   title?: string
   toastClass?: ClassValue
-  transProps?: Readonly<BTransitionProps>
 }
 
-export interface BPopoverProps extends TeleporterProps {
+export interface BPopoverProps extends TeleporterProps, ShowHideProps {
   boundary?: Boundary | RootBoundary
   boundaryPadding?: Padding
   click?: boolean
@@ -1246,13 +1245,11 @@ export interface BPopoverProps extends TeleporterProps {
       }>
   floatingMiddleware?: Middleware[]
   hideMargin?: number
-  html?: boolean
   id?: string
   inline?: boolean
   manual?: boolean
   modelValue?: boolean
   noAutoClose?: boolean
-  noFade?: boolean
   noFlip?: boolean
   noHide?: boolean
   noShift?: boolean
@@ -1260,7 +1257,6 @@ export interface BPopoverProps extends TeleporterProps {
   noninteractive?: boolean
   offset?: Numberish | null
   placement?: PopoverPlacement
-  persistent?: boolean
   realtime?: boolean
   reference?: string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | null
   strategy?: Strategy
@@ -1276,14 +1272,14 @@ export interface BTooltipProps extends Omit<BPopoverProps, 'tooltip'> {
 
 export interface BCardHeadFootProps extends ColorExtendables {
   borderVariant?: BorderColorVariant | null
-  html?: string
   tag?: string
   text?: string
 }
 
-export interface BModalProps extends TeleporterProps {
+export interface BModalProps extends TeleporterProps, ShowHideProps {
   autofocus?: boolean
   autofocusButton?: 'ok' | 'cancel' | 'close'
+  backdropFirst?: boolean
   body?: string
   bodyAttrs?: Readonly<AttrsValue>
   bodyBgVariant?: BgColorVariant | null
@@ -1313,17 +1309,15 @@ export interface BModalProps extends TeleporterProps {
   headerCloseVariant?: ButtonVariant | null
   headerTextVariant?: TextColorVariant | null
   headerVariant?: ColorVariant | null
-  hideBackdrop?: boolean
-  hideFooter?: boolean
-  hideHeader?: boolean
-  hideHeaderClose?: boolean
+  noBackdrop?: boolean
+  noFooter?: boolean
+  noHeader?: boolean
+  noHeaderClose?: boolean
   id?: string
-  lazy?: boolean
   modalClass?: ClassValue
   modelValue?: boolean
   noCloseOnBackdrop?: boolean
   noCloseOnEsc?: boolean
-  noFade?: boolean
   noTrap?: boolean
   noStacking?: boolean
   okDisabled?: boolean
@@ -1336,13 +1330,23 @@ export interface BModalProps extends TeleporterProps {
   titleClass?: ClassValue
   titleVisuallyHidden?: boolean
   titleTag?: string
-  transProps?: Readonly<BTransitionProps>
+}
+
+export interface ShowHideProps {
+  initialAnimation?: boolean
+  noAnimation?: boolean
+  noFade?: boolean
+  lazy?: boolean
+  unmountLazy?: boolean
+  show?: boolean
+  transProps?: Readonly<TransitionProps>
+  visible?: boolean
 }
 
 export interface BRowProps extends RowColsBreakpointProps {
   tag?: string
-  gutterX?: ColsNumbers
-  gutterY?: ColsNumbers
+  gutterX?: GutterNumbers
+  gutterY?: GutterNumbers
   noGutters?: boolean
   alignV?: AlignmentVertical
   alignH?: AlignmentJustifyContent
@@ -1353,8 +1357,33 @@ export interface BRowProps extends RowColsBreakpointProps {
 export interface BColProps extends OffsetBreakpointProps, OrderBreakpointProps, ColBreakpointProps {
   alignSelf?: AlignmentVertical | 'auto'
   tag?: string
-  order?: ColsNumbers
-  offset?: ColsNumbers
+  order?: ColsOrderNumbers
+  offset?: ColsOffsetNumbers
   cols?: ColsNumbers | 'auto'
   col?: boolean
+}
+
+export interface BFormGroupProps
+  extends ContentColsBreakpointProps,
+    LabelColsBreakpointProps,
+    LabelAlignBreakpointProps {
+  contentCols?: boolean | Numberish
+  labelCols?: boolean | Numberish
+  labelAlign?: string
+  ariaInvalid?: AriaInvalid
+  description?: string
+  disabled?: boolean
+  feedbackAriaLive?: string
+  floating?: boolean
+  id?: string
+  invalidFeedback?: string
+  label?: string
+  labelClass?: ClassValue
+  labelFor?: string
+  labelSize?: string
+  labelVisuallyHidden?: boolean
+  state?: ValidationState
+  tooltip?: boolean
+  validFeedback?: string
+  validated?: boolean
 }
