@@ -94,6 +94,7 @@ import BButton from '../BButton/BButton.vue'
 import ConditionalWrapper from '../ConditionalWrapper.vue'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
 import {isBoundary, isRootBoundary} from '../../utils/floatingUi'
+import {getElement} from '../../utils/getElement'
 import {buttonGroupKey, dropdownInjectionKey, inputGroupKey} from '../../utils/keys'
 import {useShowHide} from '../../composables/useShowHide'
 
@@ -211,7 +212,7 @@ onKeyStroke(
   'Escape',
   () => {
     hide()
-    referencePlacement.value?.focus()
+    getElement(referencePlacement.value)?.focus()
   },
   {target: referencePlacement}
 )
@@ -219,7 +220,7 @@ onKeyStroke(
   'Escape',
   () => {
     hide()
-    referencePlacement.value?.focus()
+    getElement(referencePlacement.value)?.focus()
   },
   {target: floating}
 )
