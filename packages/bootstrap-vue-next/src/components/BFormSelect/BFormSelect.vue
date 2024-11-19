@@ -89,7 +89,7 @@ const selectSizeNumber = useToNumber(() => props.selectSize)
 
 const stateClass = useStateClass(() => props.state)
 
-const input = useTemplateRef('input')
+const input = useTemplateRef<HTMLElement>('input')
 
 const {focused} = useFocus(input, {
   initialValue: props.autofocus,

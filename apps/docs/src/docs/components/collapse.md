@@ -40,7 +40,7 @@ directive). In this example we **must control the attributes ourselves** for pro
 support.
 
 By default, an initially visible collapse will not animate on mount. To enable the collapse expanding animation on mount,
-set the `toggle` prop on `<BCollapse>` and leave the `visible` prop as false.
+set the `initial-animation` prop on `<BCollapse>` and leave the `visible` prop as false.
 
 <<< DEMO ./demo/CollapseModel.vue
 

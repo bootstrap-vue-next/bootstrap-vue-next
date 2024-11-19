@@ -159,10 +159,10 @@ const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'label'?: (props: Record<string, never>) => any
   'default'?: (props: {
-    'id': string
-    'ariaDescribedby': string | null
-    'descriptionId': string | undefined
-    'label-id': string | null
+    id: string
+    ariaDescribedby: string | null
+    descriptionId: string | undefined
+    labelId: string | null
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any
 }>()
@@ -206,7 +206,7 @@ const getColProps = (props: any, prefix: string) =>
     return result
   }, {})
 
-const content = useTemplateRef('content')
+const content = useTemplateRef<HTMLElement>('content')
 
 const contentColProps = computed(() => getColProps(props, 'content'))
 const labelAlignClasses = computed(() =>

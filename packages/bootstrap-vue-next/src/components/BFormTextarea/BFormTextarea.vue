@@ -75,7 +75,7 @@ const [modelValue, modelModifiers] = defineModel<
   set: (v) => normalizeInput(v, modelModifiers),
 })
 
-const input = useTemplateRef('input')
+const input = useTemplateRef<HTMLTextAreaElement>('input')
 
 const {computedId, forceUpdateKey, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
   useFormInput(props, input, modelValue, modelModifiers)

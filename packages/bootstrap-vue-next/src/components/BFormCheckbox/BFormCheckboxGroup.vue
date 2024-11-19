@@ -68,7 +68,7 @@ const modelValue = defineModel<Exclude<BFormCheckboxGroupProps['modelValue'], un
 const computedId = useId(() => props.id, 'checkbox')
 const computedName = useId(() => props.name, 'checkbox')
 
-const element = useTemplateRef('element')
+const element = useTemplateRef<HTMLElement>('element')
 
 const {focused} = useFocus(element, {
   initialValue: props.autofocus,

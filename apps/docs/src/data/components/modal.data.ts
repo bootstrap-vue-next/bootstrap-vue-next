@@ -1,5 +1,6 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {ComponentReference, PropertyReference, SlotScopeReference} from '../../types'
+import {showHideProps} from '../../utils'
 
 const sharedSlots: SlotScopeReference[] = [
   {
@@ -51,6 +52,12 @@ export default {
             default: undefined,
             description:
               "Specify which built-in button to focus once the modal opens: 'ok', 'cancel', or 'close'",
+          },
+          backdropFirst: {
+            type: 'boolean',
+            default: false,
+            description:
+              'Animate the backdrop before the modal, and on leave animate the modal before the backdrop',
           },
           body: {
             type: 'string',
@@ -202,22 +209,22 @@ export default {
             description:
               'Applies one of the Bootstrap theme color variants to the header (this takes priority over headerBgVariant and headerTextVariant)',
           },
-          hideBackdrop: {
+          noBackdrop: {
             type: 'boolean',
             default: false,
             description: 'Disables rendering of the modal backdrop',
           },
-          hideFooter: {
+          noFooter: {
             type: 'boolean',
             default: false,
             description: 'Disables rendering of the modal footer',
           },
-          hideHeader: {
+          noHeader: {
             type: 'boolean',
             default: false,
             description: 'Disables rendering of the modal header',
           },
-          hideHeaderClose: {
+          noHeaderClose: {
             type: 'boolean',
             default: false,
             description: 'Disables rendering of the modal header close button',
@@ -228,20 +235,10 @@ export default {
             description:
               "Used to set the 'id' attribute on the rendered content, and used as the base to generate any additional element IDs as needed",
           },
-          lazy: {
-            type: 'boolean',
-            default: false,
-            description: 'Renders the modal content lazily',
-          },
           modalClass: {
             type: 'ClassValue',
             default: undefined,
             description: "CSS class (or classes) to apply to the '.modal' wrapper element",
-          },
-          modelValue: {
-            type: 'boolean',
-            default: false,
-            description: 'Controls the visibility state of the modal',
           },
           noCloseOnBackdrop: {
             type: 'boolean',
@@ -253,12 +250,6 @@ export default {
             type: 'boolean',
             default: false,
             description: 'Disables the ability to close the modal by pressing the ESC key',
-          },
-          noFade: {
-            type: 'boolean',
-            default: false,
-            description:
-              "When set to 'true', disables the fade animation/transition on the component",
           },
           noStacking: {
             type: 'boolean',
@@ -329,10 +320,7 @@ export default {
             default: 'h5',
             description: 'Specify the HTML tag to render instead of the default tag for the title',
           },
-          transProps: {
-            type: 'Readonly<BTransitionProps>',
-            default: undefined,
-          },
+          ...showHideProps,
         } satisfies Record<keyof BvnComponentProps['BModal'], PropertyReference>,
       },
       emits: [

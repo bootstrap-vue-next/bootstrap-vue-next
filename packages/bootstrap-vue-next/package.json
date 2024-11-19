@@ -146,8 +146,8 @@
     "vue": "^3.5.3"
   },
   "devDependencies": {
-    "@floating-ui/core": "^1.6.7",
-    "@floating-ui/vue": "^1.1.4",
+    "@floating-ui/core": "^1.6.8",
+    "@floating-ui/vue": "^1.1.5",
     "@rushstack/eslint-patch": "^1.10.4",
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^22.5.4",

@@ -1,6 +1,6 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {ComponentReference, PropertyReference} from '../../types'
-import {buildCommonProps, pick} from '../../utils'
+import {buildCommonProps, omit, pick, showHideProps} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
@@ -85,12 +85,6 @@ export default {
             default: false,
             description: 'When set, hides the close button in the toast header',
           },
-          noFade: {
-            type: 'boolean',
-            default: false,
-            description:
-              'When set to `true`, disables the fade animation/transition on the component',
-          },
           opacity: {
             type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
             default: undefined,
@@ -154,11 +148,6 @@ export default {
             default: undefined,
             description: 'CSS class (or classes) to add to the toast wrapper element',
           },
-          transProps: {
-            type: 'BTransitionProps',
-            default: undefined,
-            description: 'Props to pass to the BTransition wrapper',
-          },
           underlineOffset: {
             type: "1 | 2 | 3 | '1' | '2' | '3'",
             default: undefined,
@@ -183,10 +172,12 @@ export default {
             type: 'ColorVariant | null',
             default: undefined,
           },
-          noPrefetch: {},
+          // noPrefetch: {},
           noRel: {},
-          prefetch: {},
-          prefetchedClass: {},
+          // prefetch: {},
+          // prefetchedClass: {},
+          ...omit(showHideProps, ['modelValue']),
+
           ...pick(buildCommonProps(), ['noHoverPause', 'noResumeOnHoverLeave']),
         } satisfies Record<keyof BvnComponentProps['BToast'], PropertyReference>,
       },
