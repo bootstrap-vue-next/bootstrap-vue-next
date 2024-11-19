@@ -24,6 +24,7 @@
     </BButton>
     <BButton
       v-if="props.split"
+      :id="computedId + '-split'"
       ref="button"
       :variant="props.variant"
       :size="props.size"
@@ -47,6 +48,7 @@
       <Transition v-if="renderRef || contentShowing" v-bind="transitionProps" :appear="modelValue">
         <ul
           v-show="showRef"
+          :id="computedId + '-menu'"
           ref="floating"
           :style="[floatingStyles, sizeStyles]"
           class="dropdown-menu overflow-auto"
