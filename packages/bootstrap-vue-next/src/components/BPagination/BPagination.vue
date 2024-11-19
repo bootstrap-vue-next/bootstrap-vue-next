@@ -36,7 +36,7 @@
 
 <script setup lang="ts">
 import {BvEvent} from '../../utils'
-import {computed, nextTick, ref, watch} from 'vue'
+import {computed, nextTick, useTemplateRef, watch} from 'vue'
 import type {BPaginationProps} from '../../types/ComponentProps'
 import {useAlignment} from '../../composables/useAlignment'
 import {useToNumber} from '@vueuse/core'
