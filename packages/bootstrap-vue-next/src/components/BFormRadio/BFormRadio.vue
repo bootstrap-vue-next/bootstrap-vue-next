@@ -72,7 +72,7 @@ const computedId = useId(() => props.id, 'form-check')
 
 const parentData = inject(radioGroupKey, null)
 
-const input = useTemplateRef('input')
+const input = useTemplateRef<HTMLElement>('input')
 
 const {focused} = useFocus(input, {
   initialValue: props.autofocus,

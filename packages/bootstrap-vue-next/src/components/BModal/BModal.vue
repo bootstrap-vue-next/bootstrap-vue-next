@@ -125,7 +125,7 @@
 <script setup lang="ts">
 import {onKeyStroke, useFocus} from '@vueuse/core'
 import {useActivatedFocusTrap} from '../../composables/useActivatedFocusTrap'
-import {computed, type CSSProperties, type EmitFn, ref, useTemplateRef, watch} from 'vue'
+import {computed, type CSSProperties, type EmitFn, useTemplateRef, watch} from 'vue'
 import type {BModalProps} from '../../types/ComponentProps'
 import {BvTriggerableEvent} from '../../utils'
 import BButton from '../BButton/BButton.vue'

@@ -16,6 +16,7 @@
               :is="toast.component ?? BToast"
               v-bind="toast.props"
               :model-value="toast.props._modelValue"
+              initial-animation
               @update:model-value="tools.leave?.(toast.props._self)"
               @hidden="tools.remove?.(toast.props._self)"
             />

@@ -133,7 +133,7 @@ const modelValue = defineModel<Exclude<BFormSpinbuttonProps['modelValue'], undef
   default: null,
 })
 
-const element = useTemplateRef('element')
+const element = useTemplateRef<HTMLElement>('element')
 
 const {focused} = useFocus(element)
 

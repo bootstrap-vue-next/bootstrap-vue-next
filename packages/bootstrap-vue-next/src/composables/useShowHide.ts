@@ -90,6 +90,8 @@ export const useShowHide = (
       }
       nextTick(() => {
         isVisible.value = true
+        backdropVisible.value = true
+        backdropReady.value = true
         show()
       })
     } else if (props.show || (!!modelValue.value && props.initialAnimation)) {

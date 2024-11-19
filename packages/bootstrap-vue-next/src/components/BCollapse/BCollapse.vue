@@ -31,7 +31,6 @@ import {
   onBeforeUnmount,
   provide,
   readonly,
-  ref,
   toRef,
   useTemplateRef,
 } from 'vue'
@@ -94,7 +93,7 @@ const modelValue = defineModel<Exclude<BCollapseProps['modelValue'], undefined>>
 
 const computedId = useId(() => props.id, 'collapse')
 
-const element = useTemplateRef<HTMLElement | null>('element')
+const element = useTemplateRef<HTMLElement>('element')
 
 let inCollapse = false
 const onEnter = (el: Element) => {

@@ -55,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, type EmitFn, ref, useTemplateRef, watch, watchEffect} from 'vue'
+import {computed, type EmitFn, useTemplateRef, watch, watchEffect} from 'vue'
 import {useBLinkHelper} from '../../composables/useBLinkHelper'
 import type {BToastProps} from '../../types/ComponentProps'
 import BCloseButton from '../BButton/BCloseButton.vue'
@@ -139,7 +139,7 @@ const slots = defineSlots<{
   default?: (props: {hide: (trigger?: string) => void}) => any
 }>()
 
-const element = useTemplateRef('element')
+const element = useTemplateRef<HTMLElement>('element')
 
 const modelValue = defineModel<Exclude<BToastProps['modelValue'], undefined>>({default: false})
 const {computedLink, computedLinkProps} = useBLinkHelper(props)
