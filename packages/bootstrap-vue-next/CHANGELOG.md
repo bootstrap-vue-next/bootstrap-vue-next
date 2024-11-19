@@ -1,5 +1,57 @@
 # Changelog
 
+## [0.26.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.15...bootstrapvuenext-v0.26.0) (2024-11-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* **show/hide:** make components that show/hide use a composable useShowHide
+* **show/hide:** add props lazy and unmount-lazy
+* **show/hide:** many animation fixes
+* **show/hide:** add prop initial-animation to animate on initial render if modelValue is true, otherwise display the component without animation
+* **BPopover:** change slot prop showState to visible
+* **BPopover:** remove prop persistent, use lazy instead
+* many changes to show/hide components (BCollapse,BDropdown,BModal,BOffcanvas,BPopover,BTooltip,BToast) and rename props starting with skip or hide to start with no
+* **BFormRadioGroup:** add slot option to replace html prop
+* **BFormCheckboxGroup:** add slot option to replace html prop
+* remove html props -- use equivalent slots fixes #1930 ([#2311](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2311))
+
+### Features
+
+* add __usedComponents __usedDirectives property to the BootstrapVueNextResolver function ([#2351](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2351)) ([7a0cfa9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7a0cfa91e98abff85a9b7b47e54b0dd2a59bf61a))
+* add option slot syntax to other group components ([ce01648](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ce016480358f50653354d27b3d4ad59db58a221f))
+* **BFormCheckboxGroup:** add slot option to replace html prop ([ce01648](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ce016480358f50653354d27b3d4ad59db58a221f))
+* **BFormGroup:** add the ability to automatically get the ids from inputs and apply them to the associated label element ([ce01648](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ce016480358f50653354d27b3d4ad59db58a221f))
+* **BFormRadioGroup:** add slot option to replace html prop ([ce01648](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ce016480358f50653354d27b3d4ad59db58a221f))
+* **BNavForm:** add props wrapperAttrs & bind attrs.class to li also add prop formClass ([ce01648](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ce016480358f50653354d27b3d4ad59db58a221f))
+* **BPopover:** add hideMargin prop to add margin to the hide boundary ([673529d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/673529d86d35b8052d12ab7d1d8aa73028b269b6))
+* **BToast:** add defineSlots ([ce01648](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ce016480358f50653354d27b3d4ad59db58a221f))
+* remove html props -- use equivalent slots fixes [#1930](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1930) ([#2311](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2311)) ([ce01648](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ce016480358f50653354d27b3d4ad59db58a221f))
+* **show/hide:** add prop backdrop-first to animate backdrop first ([673529d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/673529d86d35b8052d12ab7d1d8aa73028b269b6))
+* **show/hide:** add prop initial-animation to animate on initial render if modelValue is true, otherwise display the component without animation ([673529d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/673529d86d35b8052d12ab7d1d8aa73028b269b6))
+* **show/hide:** add prop visible to show without animation ([673529d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/673529d86d35b8052d12ab7d1d8aa73028b269b6))
+* **show/hide:** add props lazy and unmount-lazy ([673529d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/673529d86d35b8052d12ab7d1d8aa73028b269b6))
+* **show/hide:** make components that show/hide use a composable useShowHide ([673529d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/673529d86d35b8052d12ab7d1d8aa73028b269b6))
+* **show/hide:** rename toggle prop to show, it opens the component with animation ([673529d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/673529d86d35b8052d12ab7d1d8aa73028b269b6))
+
+
+### Bug Fixes
+
+* **BDropdown:** correctly calculate size on some edge cases ([673529d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/673529d86d35b8052d12ab7d1d8aa73028b269b6))
+* **BDropdown:** focus returned to dropdown when escape key hit ([673529d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/673529d86d35b8052d12ab7d1d8aa73028b269b6))
+* **BNavbarToggle:** toggle default slot doesnt have a scoped argument 'expanded' fixes [#2348](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2348) ([981d684](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/981d68415062b72f92414ec9dd905b6d61f15c38))
+* **BPopover:** better hide functionality, called only once ([673529d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/673529d86d35b8052d12ab7d1d8aa73028b269b6))
+* **BPopover:** change slot prop showState to visible ([673529d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/673529d86d35b8052d12ab7d1d8aa73028b269b6))
+* **BPopover:** Correct color arrow when arrow on top ([673529d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/673529d86d35b8052d12ab7d1d8aa73028b269b6))
+* **BPopover:** correctly calculate size on some edge cases ([673529d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/673529d86d35b8052d12ab7d1d8aa73028b269b6))
+* **BPopover:** fire hide event only once ([673529d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/673529d86d35b8052d12ab7d1d8aa73028b269b6))
+* **BPopover:** remove prop persistent, use lazy instead ([673529d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/673529d86d35b8052d12ab7d1d8aa73028b269b6))
+* change all props starting skip or hide to start with no ([673529d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/673529d86d35b8052d12ab7d1d8aa73028b269b6))
+* rename ref to avoid Vue warnings (Fix [#2337](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2337)) ([#2353](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2353)) ([f505fe9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f505fe992bf2dab57c6e10f42dfa8f0533ec1ad3))
+* **show/hide:** emit shown/hidden after transition ([673529d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/673529d86d35b8052d12ab7d1d8aa73028b269b6))
+* **show/hide:** many animation fixes ([673529d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/673529d86d35b8052d12ab7d1d8aa73028b269b6))
+* **show/hide:** prevented emit events restore modelValue ([673529d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/673529d86d35b8052d12ab7d1d8aa73028b269b6))
+
 ## [0.25.15](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.14...bootstrapvuenext-v0.25.15) (2024-11-14)
 
 
