@@ -269,13 +269,15 @@ const closeButton = useTemplateRef<HTMLElement>('closeButton')
 
 const pickFocusItem = () => {
   if (props.autofocus === false) return
-  props.autofocusButton === 'ok'
-    ? (okButtonFocus.value = true)
-    : props.autofocusButton === 'close'
-      ? (closeButtonFocus.value = true)
-      : props.autofocusButton === 'cancel'
-        ? (cancelButtonFocus.value = true)
-        : (modalFocus.value = true)
+  if (props.autofocusButton === 'ok') {
+    okButtonFocus.value = true
+  } else if (props.autofocusButton === 'close') {
+    closeButtonFocus.value = true
+  } else if (props.autofocusButton === 'cancel') {
+    cancelButtonFocus.value = true
+  } else {
+    modalFocus.value = true
+  }
 }
 
 const onAfterEnter = () => {

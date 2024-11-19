@@ -32,7 +32,7 @@ describe.skip('button', () => {
     expect(wrapper.element.tagName).toBe('A')
   })
 
-  it('is tag a if prop href', () => {
+  it('is correct tag with prop tag', () => {
     const wrapper = mount(BButton, {
       props: {tag: 'div'},
     })
@@ -161,7 +161,7 @@ describe.skip('button', () => {
     expect(wrapper.attributes('aria-pressed')).toBe('true')
     await wrapper.setProps({pressed: false})
     expect(wrapper.attributes('aria-pressed')).toBe('false')
-    await wrapper.setProps({pressed: null})
+    await wrapper.setProps({pressed: undefined})
     expect(wrapper.attributes('aria-pressed')).toBeUndefined()
   })
 
@@ -172,7 +172,7 @@ describe.skip('button', () => {
     expect(wrapper.attributes('autocomplete')).toBe('off')
     await wrapper.setProps({pressed: false})
     expect(wrapper.attributes('autocomplete')).toBe('off')
-    await wrapper.setProps({pressed: null})
+    await wrapper.setProps({pressed: undefined})
     expect(wrapper.attributes('autocomplete')).toBeUndefined()
   })
 
@@ -338,17 +338,9 @@ describe.skip('button', () => {
     expect(wrapper.attributes('to')).toBe('/def')
   })
 
-  it('has attr to when prop to and prop tag', async () => {
+  it('does not have attr to when prop', () => {
     const wrapper = mount(BButton)
     expect(wrapper.attributes('to')).toBeUndefined()
-  })
-
-  it('has attr append when prop to and prop append', () => {
-    const wrapper = mount(BButton, {
-      props: {to: '/abc', append: true},
-    })
-    const $blink = wrapper.getComponent(BLink)
-    expect($blink.props('append')).toBe(true)
   })
 
   it('has activeClass when prop activeClass and prop to', () => {
@@ -357,14 +349,6 @@ describe.skip('button', () => {
     })
     const $blink = wrapper.getComponent(BLink)
     expect($blink.props('activeClass')).toBe('foobar')
-  })
-
-  it('has nested prop event when prop event and prop to', () => {
-    const wrapper = mount(BButton, {
-      props: {to: '/abc', event: 'foobar'},
-    })
-    const $blink = wrapper.getComponent(BLink)
-    expect($blink.props('event')).toBe('foobar')
   })
 
   it('has nested prop routerComponentName when prop routerComponentName and prop to', () => {
@@ -549,16 +533,6 @@ describe.skip('button', () => {
   it('second child div does not have class btn-loading-fill when prop loading false', () => {
     const wrapper = mount(BButton)
     const $div = wrapper.get('div')
-    expect($div.classes()).not.toContain('btn-loading-fill')
-  })
-
-  it('second child div has class btn-loading-fill when prop loading and loadingMode is fill', async () => {
-    const wrapper = mount(BButton, {
-      props: {loading: true, loadingMode: 'fill'},
-    })
-    const [, $div] = wrapper.findAll('div')
-    expect($div.classes()).toContain('btn-loading-fill')
-    await wrapper.setProps({loadingMode: 'inline'})
     expect($div.classes()).not.toContain('btn-loading-fill')
   })
 

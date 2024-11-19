@@ -11,7 +11,7 @@ describe('collapse', () => {
     // expect(wrapper.classes()).toContain('collapse')
   })
 
-  it('has default tag div', () => {
+  it('has default tag TRANSITION', () => {
     const wrapper = mount(BCollapse)
     expect(wrapper.findAll('*')[0].element.tagName).toBe('TRANSITION-STUB')
   })

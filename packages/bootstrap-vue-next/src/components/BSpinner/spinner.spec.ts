@@ -35,15 +35,6 @@ describe('spinner', () => {
     expect(wrapper.classes()).not.toContain('spinner-border-sm')
   })
 
-  it('has class spinner-grow when prop type is grow', async () => {
-    const wrapper = mount(BSpinner, {
-      props: {type: 'grow'},
-    })
-    expect(wrapper.classes()).toContain('spinner-grow')
-    await wrapper.setProps({type: 'border'})
-    expect(wrapper.classes()).not.toContain('spinner-grow')
-  })
-
   it('has class spinner-grow-sm when prop type is grow and prop small', async () => {
     const wrapper = mount(BSpinner, {
       props: {type: 'grow', small: true},
@@ -136,7 +127,7 @@ describe('spinner', () => {
     expect($span.exists()).toBe(true)
   })
 
-  it('has span child if prop label', () => {
+  it('has span child if prop label and tag div', () => {
     const wrapper = mount(BSpinner, {
       props: {tag: 'div'},
       slots: {label: 'foobar'},

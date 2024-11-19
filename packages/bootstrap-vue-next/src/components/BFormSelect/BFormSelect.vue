@@ -56,7 +56,6 @@ const _props = withDefaults(defineProps<Omit<BFormSelectProps, 'modelValue'>>(),
   labelField: 'label',
   multiple: false,
   name: undefined,
-  // eslint-disable-next-line vue/require-valid-default-prop
   options: () => [],
   optionsField: 'options',
   plain: false,

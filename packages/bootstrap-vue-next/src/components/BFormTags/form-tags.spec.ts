@@ -1,6 +1,5 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
-import {afterEach, describe} from 'node:test'
-import {expect, it} from 'vitest'
+import {afterEach, describe, expect, it} from 'vitest'
 import BFormTags from './BFormTags.vue'
 
 // Add unit testing only for limitTag

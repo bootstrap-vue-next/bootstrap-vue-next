@@ -390,10 +390,18 @@ const handleKeyNav = (event: KeyboardEvent) => {
 
   if (code === CODE_LEFT || code === CODE_UP) {
     stopEvent(event)
-    shiftKey ? focusFirst() : focusPrev()
+    if (shiftKey) {
+      focusFirst()
+    } else {
+      focusPrev()
+    }
   } else if (code === CODE_RIGHT || code === CODE_DOWN) {
     stopEvent(event)
-    shiftKey ? focusLast() : focusNext()
+    if (shiftKey) {
+      focusLast()
+    } else {
+      focusNext()
+    }
   }
 }
 

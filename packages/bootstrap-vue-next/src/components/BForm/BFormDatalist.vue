@@ -27,7 +27,6 @@ const _props = withDefaults(defineProps<BFormDatalistProps>(), {
   disabled: false,
   disabledField: 'disabled',
   id: undefined,
-  // eslint-disable-next-line vue/require-valid-default-prop
   options: () => [],
   textField: 'text',
   valueField: 'value',

@@ -45,19 +45,19 @@ describe('avatar', () => {
 
   it('has class `b-avatar-sm` when prop size is `sm`', () => {
     const wrapper = mount(BAvatar, {props: {size: 'sm'}})
-    expect(wrapper.attributes('style')).toEqual('')
+    expect(wrapper.attributes('style')).toBeUndefined()
     expect(wrapper.classes()).toContain('b-avatar-sm')
   })
 
   it('does not include default class `b-avatar-md` when prop size is `md`', () => {
     const wrapper = mount(BAvatar, {props: {size: 'md'}})
-    expect(wrapper.attributes('style')).toEqual('')
+    expect(wrapper.attributes('style')).toBeUndefined()
     expect(wrapper.classes()).not.toContain('b-avatar-md')
   })
 
   it('has class `b-avatar-lg` when prop size is `lg`', () => {
     const wrapper = mount(BAvatar, {props: {size: 'lg'}})
-    expect(wrapper.attributes('style')).toEqual('')
+    expect(wrapper.attributes('style')).toBeUndefined()
     expect(wrapper.classes()).toContain('b-avatar-lg')
   })
 
@@ -79,6 +79,6 @@ describe('avatar', () => {
 
   it('does not apply styles when prop size is a non-decimal numeric value', () => {
     const wrapper = mount(BAvatar, {props: {size: '0x123'}})
-    expect(wrapper.attributes('style')).toEqual('')
+    expect(wrapper.attributes('style')).toBeUndefined()
   })
 })

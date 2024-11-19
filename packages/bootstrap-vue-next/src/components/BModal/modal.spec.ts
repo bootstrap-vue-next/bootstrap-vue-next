@@ -443,7 +443,7 @@ describe('modal', () => {
       wrapper.unmount()
     })
 
-    it('header close button triggers modal close and is preventable', async () => {
+    it('header close button triggers modal close and is preventable ?', async () => {
       let cancelHide = true
       const wrapper = mount(BModal, {
         attachTo: document.body,

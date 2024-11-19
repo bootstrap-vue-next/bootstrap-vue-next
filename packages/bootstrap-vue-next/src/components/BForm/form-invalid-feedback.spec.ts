@@ -103,7 +103,7 @@ describe('form-invalid-feedback', () => {
     expect(wrapper.text()).toBe('foobar')
   })
 
-  it('renders default slot', () => {
+  it('renders default slot over prop', () => {
     const wrapper = mount(BFormInvalidFeedback, {
       slots: {default: 'slots'},
       props: {text: 'props'},
