@@ -1,7 +1,6 @@
-import type {Composables, Directives} from 'bootstrap-vue-next'
-import type {BootstrapVueOptions} from 'bootstrap-vue-next'
+import type { Composables, Directives, BootstrapVueOptions } from 'bootstrap-vue-next'
 
-export type ConfigurationOption<T extends string> = Partial<Record<T, boolean>> & {all: boolean}
+export type ConfigurationOption<T extends string> = Partial<Record<T, boolean>> & { all: boolean }
 export type ConfigurationValue<T extends string> = boolean | ConfigurationOption<T>
 
 export interface ModuleOptions {

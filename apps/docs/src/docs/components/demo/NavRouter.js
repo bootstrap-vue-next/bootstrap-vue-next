@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 const routes = [
   {
     path: '/some/route',

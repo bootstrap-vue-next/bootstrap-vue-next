@@ -101,7 +101,7 @@ describe.skip('offcanvas', () => {
     expect($div.exists()).toBe(true)
   })
 
-  it(' offcanvas-header exists', () => {
+  it('offcanvas-header exists', () => {
     const wrapper = mount(BOffcanvas)
     const offcanvas = wrapper.get('.offcanvas')
     const $header = offcanvas.find('.offcanvas-header')

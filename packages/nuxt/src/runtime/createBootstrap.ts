@@ -1,8 +1,7 @@
-import {createBootstrap as createBootstrapVue} from 'bootstrap-vue-next/plugins/createBootstrap'
-import {defineNuxtPlugin, useRuntimeConfig} from '#app'
+import { createBootstrap as createBootstrapVue } from 'bootstrap-vue-next/plugins/createBootstrap'
+import { defineNuxtPlugin, useRuntimeConfig } from '#app'
 
 export default defineNuxtPlugin((nuxtApp) => {
-  // @ts-ignore
   const opts = useRuntimeConfig().public.bootstrapVueNext.plugin
 
   nuxtApp.vueApp.use(
@@ -27,6 +26,6 @@ export default defineNuxtPlugin((nuxtApp) => {
           ...opts?.components?.BToastOrchestrator,
         },
       },
-    })
+    }),
   )
 })

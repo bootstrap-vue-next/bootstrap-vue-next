@@ -1,9 +1,9 @@
-import {defineNuxtModule, createResolver, addImports, addPlugin} from '@nuxt/kit'
-import {useComponents} from './composables/useComponents'
-import type {ModuleOptions} from './types/ModuleOptions'
-import {parseActiveImports} from './utils/parseActiveImports'
-import {composableNames, directiveNames, composablesWithExternalPath} from 'bootstrap-vue-next'
-import {normalizeConfigurationValue} from './utils/normalizeConfigurationValue'
+import { defineNuxtModule, createResolver, addImports, addPlugin } from '@nuxt/kit'
+import { composableNames, directiveNames, composablesWithExternalPath } from 'bootstrap-vue-next'
+import { useComponents } from './composables/useComponents'
+import type { ModuleOptions } from './types/ModuleOptions'
+import { parseActiveImports } from './utils/parseActiveImports'
+import { normalizeConfigurationValue } from './utils/normalizeConfigurationValue'
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -21,8 +21,7 @@ export default defineNuxtModule<ModuleOptions>({
     plugin: {},
   },
   setup(options, nuxt) {
-    // @ts-ignore
-    const {resolve} = createResolver(import.meta.url)
+    const { resolve } = createResolver(import.meta.url)
     nuxt.options.build.transpile.push(resolve('./runtime'))
 
     if (options.css === true) {
@@ -46,14 +45,14 @@ export default defineNuxtModule<ModuleOptions>({
 
     nuxt.options.vite.vue = nuxt.options.vite.vue || {}
     nuxt.options.vite.vue.template = nuxt.options.vite.vue.template || {}
-    nuxt.options.vite.vue.template.transformAssetUrls =
-      nuxt.options.vite.vue.template.transformAssetUrls ?? {}
+    nuxt.options.vite.vue.template.transformAssetUrls
+      = nuxt.options.vite.vue.template.transformAssetUrls ?? {}
 
     if (
-      typeof nuxt.options.vite.vue.template.transformAssetUrls !== 'boolean' &&
-      !(
-        'BImg' in nuxt.options.vite.vue.template.transformAssetUrls ||
-        'b-img' in nuxt.options.vite.vue.template.transformAssetUrls
+      typeof nuxt.options.vite.vue.template.transformAssetUrls !== 'boolean'
+      && !(
+        'BImg' in nuxt.options.vite.vue.template.transformAssetUrls
+        || 'b-img' in nuxt.options.vite.vue.template.transformAssetUrls
       )
     ) {
       nuxt.options.vite.vue.template.transformAssetUrls = {
@@ -66,7 +65,7 @@ export default defineNuxtModule<ModuleOptions>({
     useComponents()
 
     // Add directives
-    if (Object.values(normalizedDirectiveOptions).some((el) => el === true)) {
+    if (Object.values(normalizedDirectiveOptions).includes(true)) {
       const activeDirectives = parseActiveImports(normalizedDirectiveOptions, directiveNames)
 
       // Expose the values for the runtime to use in useDirectives
@@ -79,7 +78,7 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     // Add composables
-    if (Object.values(normalizedComposableOptions).some((el) => el === true)) {
+    if (Object.values(normalizedComposableOptions).includes(true)) {
       parseActiveImports(normalizedComposableOptions, composableNames).forEach((name) => {
         const from = `bootstrap-vue-next${composablesWithExternalPath[name]}`
         addImports({

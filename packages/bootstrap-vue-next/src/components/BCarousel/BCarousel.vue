@@ -89,7 +89,6 @@ const _props = withDefaults(defineProps<Omit<BCarouselProps, 'modelValue'>>(), {
   noHoverPause: false,
   noTouch: false,
   noWrap: false,
-  // eslint-disable-next-line vue/require-valid-default-prop
   ride: false,
   rideReverse: false,
   touchThreshold: 50,
@@ -149,7 +148,11 @@ const leaveClasses = computed(
 
 const {pause, resume} = useIntervalFn(
   () => {
-    props.rideReverse ? prev() : next()
+    if (props.rideReverse) {
+      prev()
+      return
+    }
+    next()
   },
   intervalNumber,
   {immediate: props.ride === 'carousel'}

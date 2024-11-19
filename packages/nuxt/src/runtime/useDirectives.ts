@@ -1,9 +1,8 @@
 import * as Directives from 'bootstrap-vue-next/directives'
-import {defineNuxtPlugin, useRuntimeConfig} from '#app'
-import type {Directive} from 'vue'
+import type { Directive } from 'vue'
+import { defineNuxtPlugin, useRuntimeConfig } from '#app'
 
 export default defineNuxtPlugin((nuxtApp) => {
-  // @ts-ignore
   const usedDirectives = useRuntimeConfig().public.bootstrapVueNext.directives
   const directiveValues = Object.entries(Directives)
 
@@ -14,7 +13,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       }
       return acc
     },
-    {} as Record<string, Directive>
+    {} as Record<string, Directive>,
   )
 
   const sliceName = (str: string) => (str.toLowerCase().startsWith('v') ? str.slice(1) : str)

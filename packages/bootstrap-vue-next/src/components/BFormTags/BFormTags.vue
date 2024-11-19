@@ -180,7 +180,6 @@ defineSlots<{
   'add-button-text'?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'default'?: (props: typeof slotAttrs.value) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'tag'?: (props: {
     tag: string
     tagClass: ClassValue

@@ -1,7 +1,6 @@
 import pluginVue from 'eslint-plugin-vue'
 import vueTsEslintConfig from '@vue/eslint-config-typescript'
 import pluginVitest from '@vitest/eslint-plugin'
-import oxlint from 'eslint-plugin-oxlint'
 import skipFormatting from '@vue/eslint-config-prettier'
 
 export default [
@@ -19,7 +18,6 @@ export default [
     ...pluginVitest.configs.recommended,
     files: ['src/**/*.spec.*', 'src/**/*.test.*'],
   },
-  oxlint.configs['flat/recommended'],
   skipFormatting,
   {
     rules: {
