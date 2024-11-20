@@ -1,5 +1,5 @@
 <template>
-  <span :id="computedId + '_placeholder'" ref="placeholder" />
+  <span :id="computedId + '_placeholder'" ref="_placeholder" />
   <slot name="target" :show="show" :hide="hide" :toggle="toggle" :visible="showRef" />
   <ConditionalTeleport
     :to="props.teleportTo"
@@ -10,19 +10,19 @@
         v-show="showRef && !hidden"
         :id="computedId"
         v-bind="$attrs"
-        ref="element"
+        ref="_element"
         :class="computedClasses"
         role="tooltip"
         tabindex="-1"
         :style="floatingStyles"
       >
         <div
-          ref="arrow"
+          ref="_arrow"
           :class="`${props.tooltip ? 'tooltip' : 'popover'}-arrow`"
           :style="arrowStyle"
           data-popper-arrow
         />
-        <div ref="content" class="overflow-auto" :style="sizeStyles">
+        <div ref="_content" class="overflow-auto" :style="sizeStyles">
           <template v-if="props.title || slots.title">
             <div
               class="position-sticky top-0"
@@ -166,10 +166,10 @@ const computedId = useId(() => props.id, 'popover')
 
 const hidden = ref(false)
 
-const element = useTemplateRef<HTMLElement>('element')
-const content = useTemplateRef<HTMLElement>('content')
-const arrow = useTemplateRef<HTMLElement>('arrow')
-const placeholder = useTemplateRef<HTMLElement>('placeholder')
+const element = useTemplateRef<HTMLElement>('_element')
+const content = useTemplateRef<HTMLElement>('_content')
+const arrow = useTemplateRef<HTMLElement>('_arrow')
+const placeholder = useTemplateRef<HTMLElement>('_placeholder')
 
 const floatingTarget = ref<HTMLElement | null>(null)
 const trigger = ref<HTMLElement | null>(null)

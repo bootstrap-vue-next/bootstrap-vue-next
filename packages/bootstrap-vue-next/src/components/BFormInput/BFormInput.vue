@@ -1,7 +1,7 @@
 <template>
   <input
     :id="computedId"
-    ref="input"
+    ref="_input"
     :key="forceUpdateKey"
     :value="modelValue"
     :class="computedClasses"

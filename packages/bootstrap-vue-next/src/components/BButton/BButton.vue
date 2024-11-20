@@ -1,7 +1,7 @@
 <template>
   <component
     :is="computedTag"
-    ref="element"
+    ref="_element"
     class="btn"
     v-bind="linkProps"
     :class="computedClasses"

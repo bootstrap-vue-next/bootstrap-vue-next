@@ -9,7 +9,7 @@
       <div
         v-show="showRef && ((backdropReady && props.backdropFirst) || !props.backdropFirst)"
         :id="computedId"
-        ref="element"
+        ref="_element"
         class="modal"
         :class="[
           props.modalClass,
@@ -72,7 +72,7 @@
                 <slot name="cancel" v-bind="sharedSlots">
                   <BButton
                     v-if="!props.okOnly"
-                    ref="cancelButton"
+                    ref="_cancelButton"
                     :disabled="disableCancel"
                     :size="props.buttonSize"
                     :variant="props.cancelVariant"
@@ -83,7 +83,7 @@
                 </slot>
                 <slot name="ok" v-bind="sharedSlots">
                   <BButton
-                    ref="okButton"
+                    ref="_okButton"
                     :disabled="disableOk"
                     :size="props.buttonSize"
                     :variant="props.okVariant"
@@ -98,7 +98,7 @@
         </div>
         <div
           v-if="needsFallback"
-          ref="fallbackFocusElement"
+          ref="_fallbackFocusElement"
           :class="fallbackClassSelector"
           tabindex="0"
           style="width: 0; height: 0; overflow: hidden"
@@ -261,11 +261,11 @@ const computedId = useId(() => props.id, 'modal')
 // Since the modelValue that's passed from that composable is not reactive, this internal ref _is_ and thus it will trigger closing the modal
 const modelValue = defineModel<Exclude<BModalProps['modelValue'], undefined>>({default: false})
 
-const element = useTemplateRef<HTMLElement>('element')
-const fallbackFocusElement = useTemplateRef<HTMLElement>('fallbackFocusElement')
-const okButton = useTemplateRef<HTMLElement>('okButton')
-const cancelButton = useTemplateRef<HTMLElement>('cancelButton')
-const closeButton = useTemplateRef<HTMLElement>('closeButton')
+const element = useTemplateRef<HTMLElement>('_element')
+const fallbackFocusElement = useTemplateRef<HTMLElement>('_fallbackFocusElement')
+const okButton = useTemplateRef<HTMLElement>('_okButton')
+const cancelButton = useTemplateRef<HTMLElement>('_cancelButton')
+const closeButton = useTemplateRef<HTMLElement>('_closeButton')
 
 const pickFocusItem = () => {
   if (props.autofocus === false) return

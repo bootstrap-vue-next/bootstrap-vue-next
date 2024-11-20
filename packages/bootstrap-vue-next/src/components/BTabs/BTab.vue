@@ -2,7 +2,7 @@
   <component
     :is="props.tag"
     :id="computedId"
-    ref="el"
+    ref="_el"
     class="tab-pane"
     :class="computedClasses"
     role="tabpanel"

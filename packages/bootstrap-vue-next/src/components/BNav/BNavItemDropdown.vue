@@ -1,7 +1,7 @@
 <template>
   <li class="nav-item dropdown">
     <BDropdown
-      ref="dropdown"
+      ref="_dropdown"
       v-bind="props"
       v-model="modelValue"
       is-nav

@@ -61,7 +61,7 @@
           <div role="group" class="d-flex">
             <input
               :id="_inputId"
-              ref="input"
+              ref="_input"
               :disabled="props.disabled"
               :value="inputValue"
               :type="props.inputType"

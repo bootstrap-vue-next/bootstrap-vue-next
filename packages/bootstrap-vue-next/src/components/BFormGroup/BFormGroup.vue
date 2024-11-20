@@ -61,7 +61,7 @@
     </LabelContentTemplate.define>
     <BFormRow v-if="isHorizontal">
       <LabelContentTemplate.reuse />
-      <BCol v-bind="contentColProps" ref="content">
+      <BCol v-bind="contentColProps" ref="_content">
         <slot
           :id="computedId"
           :aria-describedby="null"
@@ -73,7 +73,7 @@
     </BFormRow>
     <template v-else>
       <LabelContentTemplate.reuse />
-      <div v-if="!isHorizontal && props.floating" ref="content" class="form-floating">
+      <div v-if="!isHorizontal && props.floating" ref="_content" class="form-floating">
         <slot
           :id="computedId"
           :aria-describedby="null"
@@ -206,7 +206,7 @@ const getColProps = (props: any, prefix: string) =>
     return result
   }, {})
 
-const content = useTemplateRef<HTMLElement>('content')
+const content = useTemplateRef<HTMLElement>('_content')
 
 const contentColProps = computed(() => getColProps(props, 'content'))
 const labelAlignClasses = computed(() =>

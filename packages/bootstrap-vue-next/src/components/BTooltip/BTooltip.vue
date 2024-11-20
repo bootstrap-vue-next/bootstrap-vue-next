@@ -1,5 +1,5 @@
 <template>
-  <BPopover ref="popover" v-bind="computedProps" v-model="modelValue" tooltip>
+  <BPopover ref="_popover" v-bind="computedProps" v-model="modelValue" tooltip>
     <template v-if="slots.default" #default>
       <slot />
     </template>

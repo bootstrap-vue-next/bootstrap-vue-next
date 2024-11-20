@@ -13,7 +13,7 @@
   <input
     :id="computedId"
     v-bind="$attrs"
-    ref="input"
+    ref="_input"
     type="file"
     :class="computedClasses"
     :form="props.form"
