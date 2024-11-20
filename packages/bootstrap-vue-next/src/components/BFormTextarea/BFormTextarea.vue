@@ -1,7 +1,7 @@
 <template>
   <textarea
     :id="computedId"
-    ref="input"
+    ref="_input"
     :key="forceUpdateKey"
     :class="computedClasses"
     :name="props.name || undefined"
@@ -75,7 +75,7 @@ const [modelValue, modelModifiers] = defineModel<
   set: (v) => normalizeInput(v, modelModifiers),
 })
 
-const input = useTemplateRef<HTMLTextAreaElement>('input')
+const input = useTemplateRef<HTMLTextAreaElement>('_input')
 
 const {computedId, forceUpdateKey, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
   useFormInput(props, input, modelValue, modelModifiers)

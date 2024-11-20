@@ -61,7 +61,7 @@
           <div role="group" class="d-flex">
             <input
               :id="_inputId"
-              ref="input"
+              ref="_input"
               :disabled="props.disabled"
               :value="inputValue"
               :type="props.inputType"
@@ -200,7 +200,7 @@ const limitNumber = useToNumber(() => props.limit ?? NaN)
 
 const stateClass = useStateClass(() => props.state)
 
-const input = useTemplateRef<HTMLInputElement>('input')
+const input = useTemplateRef<HTMLInputElement>('_input')
 
 const {focused} = useFocus(input, {
   initialValue: props.autofocus,

@@ -1,5 +1,10 @@
 <template>
-  <div :id="computedId" ref="element" class="carousel slide pointer-event" :class="computedClasses">
+  <div
+    :id="computedId"
+    ref="_element"
+    class="carousel slide pointer-event"
+    :class="computedClasses"
+  >
     <div
       v-if="props.indicators"
       class="carousel-indicators"
@@ -21,7 +26,7 @@
       />
     </div>
 
-    <div ref="relatedTarget" class="carousel-inner">
+    <div ref="_relatedTarget" class="carousel-inner">
       <TransitionGroup
         :enter-from-class="enterClasses"
         :enter-active-class="enterClasses"
@@ -39,7 +44,7 @@
           v-for="(slide, i) in slides"
           v-show="i === modelValue"
           :key="i"
-          ref="slideValues"
+          ref="_slideValues"
           :class="{active: i === modelValue && isTransitioning === false}"
           :style="props.noAnimation && {transition: 'none'}"
         />
@@ -112,7 +117,7 @@ const buttonOwnership = useId(undefined, 'carousel-button-ownership')
 
 const modelValue = defineModel<Exclude<BCarouselProps['modelValue'], undefined>>({default: 0})
 
-const slideValues = useTemplateRef<null | InstanceType<typeof BCarouselSlide>[]>('slideValues')
+const slideValues = useTemplateRef<InstanceType<typeof BCarouselSlide>[]>('_slideValues')
 
 const touchThresholdNumber = useToNumber(() => props.touchThreshold)
 const slideInterval = ref<Numberish | null>(null)
@@ -125,8 +130,8 @@ const intervalNumber = useToNumber(() => slideInterval.value ?? props.interval)
 const isTransitioning = ref(false)
 const rideStarted = ref(false)
 const direction = ref(true)
-const relatedTarget = useTemplateRef<HTMLElement>('relatedTarget')
-const element = useTemplateRef<HTMLElement>('element')
+const relatedTarget = useTemplateRef<HTMLElement>('_relatedTarget')
+const element = useTemplateRef<HTMLElement>('_element')
 const previousModelValue = ref(modelValue.value)
 
 const isHovering = useElementHover(element)

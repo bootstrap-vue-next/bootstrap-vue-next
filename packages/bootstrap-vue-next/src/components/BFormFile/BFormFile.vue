@@ -13,7 +13,7 @@
   <input
     :id="computedId"
     v-bind="$attrs"
-    ref="input"
+    ref="_input"
     type="file"
     :class="computedClasses"
     :form="props.form"
@@ -84,7 +84,7 @@ const computedId = useId(() => props.id)
 
 const stateClass = useStateClass(() => props.state)
 
-const input = useTemplateRef<HTMLInputElement>('input')
+const input = useTemplateRef<HTMLInputElement>('_input')
 
 const {focused} = useFocus(input, {initialValue: props.autofocus})
 

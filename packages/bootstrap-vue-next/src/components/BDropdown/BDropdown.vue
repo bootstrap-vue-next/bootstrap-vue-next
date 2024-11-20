@@ -1,13 +1,12 @@
 <template>
   <ConditionalWrapper
-    ref="wrapper"
     :skip="inInputGroup || props.noWrapper"
     :class="computedClasses"
     :role="inButtonGroupAttributes?.role"
   >
     <BButton
       :id="computedId"
-      ref="splitButton"
+      ref="_splitButton"
       :variant="props.splitVariant || props.variant"
       :size="props.size"
       :class="buttonClasses"
@@ -25,7 +24,7 @@
     <BButton
       v-if="props.split"
       :id="computedId + '-split'"
-      ref="button"
+      ref="_button"
       :variant="props.variant"
       :size="props.size"
       :disabled="props.disabled"
@@ -49,7 +48,7 @@
         <ul
           v-show="showRef"
           :id="computedId + '-menu'"
-          ref="floating"
+          ref="_floating"
           :style="[floatingStyles, sizeStyles]"
           class="dropdown-menu overflow-auto"
           :class="[props.menuClass, computedMenuClasses]"
@@ -86,6 +85,7 @@ import {
   provide,
   ref,
   toRef,
+  useTemplateRef,
   watch,
 } from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
@@ -177,10 +177,9 @@ const computedOffset = computed(() =>
 )
 const offsetToNumber = useToNumber(computedOffset)
 
-const floating = ref<HTMLElement | null>(null)
-const button = ref<HTMLElement | null>(null)
-const splitButton = ref<HTMLElement | null>(null)
-const wrapper = ref<HTMLElement | null>(null)
+const floating = useTemplateRef<HTMLElement>('_floating')
+const button = useTemplateRef<HTMLElement>('_button')
+const splitButton = useTemplateRef<HTMLElement>('_splitButton')
 
 const boundary = computed<Boundary | undefined>(() =>
   isBoundary(props.boundary) ? props.boundary : undefined

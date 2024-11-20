@@ -1,7 +1,7 @@
 <template>
   <component
     :is="computedTag"
-    ref="element"
+    ref="_element"
     class="btn"
     v-bind="linkProps"
     :class="computedClasses"
@@ -97,7 +97,7 @@ const emit = defineEmits<{
   click: [value: MouseEvent]
 }>()
 
-const element = useTemplateRef<HTMLElement | null>('element')
+const element = useTemplateRef<HTMLElement>('_element')
 
 const pressedValue = defineModel<BButtonProps['pressed']>('pressed', {default: undefined})
 

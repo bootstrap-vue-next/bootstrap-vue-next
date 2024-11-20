@@ -1,7 +1,7 @@
 <template>
   <li class="nav-item dropdown">
     <BDropdown
-      ref="dropdown"
+      ref="_dropdown"
       v-bind="props"
       v-model="modelValue"
       is-nav
@@ -95,7 +95,7 @@ defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'toggle-text'?: (props: Record<string, never>) => any
 }>()
-const dropdown = useTemplateRef<InstanceType<typeof BDropdown>>('dropdown')
+const dropdown = useTemplateRef<InstanceType<typeof BDropdown>>('_dropdown')
 
 const hide = () => {
   dropdown.value?.hide()

@@ -3,7 +3,7 @@
     <input
       :id="computedId"
       v-bind="$attrs"
-      ref="input"
+      ref="_input"
       v-model="localValue"
       :class="inputClasses"
       type="radio"
@@ -72,7 +72,7 @@ const computedId = useId(() => props.id, 'form-check')
 
 const parentData = inject(radioGroupKey, null)
 
-const input = useTemplateRef<HTMLElement>('input')
+const input = useTemplateRef<HTMLElement>('_input')
 
 const {focused} = useFocus(input, {
   initialValue: props.autofocus,

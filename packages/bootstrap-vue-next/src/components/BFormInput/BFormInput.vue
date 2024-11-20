@@ -1,7 +1,7 @@
 <template>
   <input
     :id="computedId"
-    ref="input"
+    ref="_input"
     :key="forceUpdateKey"
     :value="modelValue"
     :class="computedClasses"
@@ -70,7 +70,7 @@ const [modelValue, modelModifiers] = defineModel<
   set: (v) => normalizeInput(v, modelModifiers),
 })
 
-const input = useTemplateRef<HTMLInputElement>('input')
+const input = useTemplateRef<HTMLInputElement>('_input')
 
 const {computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur, forceUpdateKey} =
   useFormInput(props, input, modelValue, modelModifiers)

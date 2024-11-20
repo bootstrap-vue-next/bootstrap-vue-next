@@ -11,7 +11,7 @@
       :is="props.tag"
       v-show="showRef"
       :id="computedId"
-      ref="element"
+      ref="_element"
       class="collapse"
       :class="computedClasses"
       :is-nav="props.isNav"
@@ -93,7 +93,7 @@ const modelValue = defineModel<Exclude<BCollapseProps['modelValue'], undefined>>
 
 const computedId = useId(() => props.id, 'collapse')
 
-const element = useTemplateRef<HTMLElement>('element')
+const element = useTemplateRef<HTMLElement>('_element')
 
 let inCollapse = false
 const onEnter = (el: Element) => {

@@ -1,5 +1,5 @@
 <template>
-  <form :id="props.id" ref="element" :novalidate="props.novalidate" :class="computedClasses">
+  <form :id="props.id" ref="_element" :novalidate="props.novalidate" :class="computedClasses">
     <slot />
   </form>
 </template>
@@ -17,7 +17,7 @@ const _props = withDefaults(defineProps<BFormProps>(), {
 })
 const props = useDefaults(_props, 'BForm')
 
-const element = useTemplateRef<HTMLElement>('element')
+const element = useTemplateRef<HTMLElement>('_element')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
