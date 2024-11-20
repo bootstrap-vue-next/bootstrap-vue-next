@@ -160,7 +160,7 @@ const navTabsClasses = computed(() => ({
   'flex-column me-3': props.vertical,
   [alignment.value]: props.align !== undefined,
   'nav-fill': props.fill,
-  'card-header-tabs': props.card,
+  'card-header-tabs': props.card && !props.pills,
   'nav-justified': props.justified,
   'nav-tabs': !props.noNavStyle && !props.pills,
   'small': props.small,

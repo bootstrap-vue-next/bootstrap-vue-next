@@ -452,6 +452,10 @@ Keyboard Navigation and Small Screen Support.
 [icon documentation](/docs/icons) for details. This functionality can be replicated by using
 `<BplaceholderWrapper>` with your choice of icon replacement in the `loading` slot.
 
+## BTabs
+
+`align` prop now takes values from [`AlignmentJustifyContent`](/docs/types/alignment): `start`, `center`, `end`, `between`, `around`, and `evenly`
+
 ## BTime
 
 <NotYetImplemented><BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">See issue #1860</BLink></NotYetImplemented>
