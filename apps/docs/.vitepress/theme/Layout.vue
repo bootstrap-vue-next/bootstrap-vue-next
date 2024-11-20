@@ -1,5 +1,6 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <BNavbar variant="primary" sticky="top" toggleable="lg" :container="true" v-b-color-mode="'dark'">
+  <BNavbar v-b-color-mode="'dark'" variant="primary" sticky="top" toggleable="lg" :container="true">
     <BToastOrchestrator />
     <BModalOrchestrator />
     <div class="d-flex gap-2 align-items-center">
@@ -31,6 +32,7 @@
         <BNav>
           <BNavItem
             v-for="link in headerLinks"
+            :key="link.route"
             :to="link.route"
             :active="route.path === `${link.route}.html`"
             class="py-2"
@@ -46,6 +48,7 @@
         <BNav class="d-flex">
           <BNavItem
             v-for="link in headerExternalLinks"
+            :key="link.url"
             :href="link.url"
             :link-attrs="{'aria-label': link.label}"
             target="_blank"
@@ -81,7 +84,7 @@
     </div>
   </BNavbar>
   <ClientOnly>
-    <div class="py-4 px-3 text-end" v-if="!isLargeScreen">
+    <div v-if="!isLargeScreen" class="py-4 px-3 text-end">
       <BNavbarToggle v-b-toggle.otp-menu class="otp-menu-toggle">
         On this page
         <ChevronRight aria-hidden />
@@ -150,23 +153,23 @@ import {
   BCol,
   BCollapse,
   BContainer,
-  BNavItemDropdown,
   BDropdownItem,
+  BModalOrchestrator,
   BNav,
   BNavbar,
   BNavbarBrand,
   BNavbarNav,
   BNavbarToggle,
   BNavItem,
+  BNavItemDropdown,
   BOffcanvas,
   BRow,
-  useColorMode,
-  vBToggle,
-  vBColorMode,
   BToastOrchestrator,
-  BModalOrchestrator,
+  useColorMode,
+  vBColorMode,
+  vBToggle,
 } from 'bootstrap-vue-next'
-import {inject, ref, computed, onMounted, watch} from 'vue'
+import {computed, inject, onMounted, ref, watch} from 'vue'
 import GithubIcon from '~icons/bi/github'
 import OpencollectiveIcon from '~icons/simple-icons/opencollective'
 import DiscordIcon from '~icons/bi/discord'
@@ -176,9 +179,8 @@ import ChevronRight from '~icons/bi/chevron-right'
 import CircleHalf from '~icons/bi/circle-half'
 import {useData, useRoute, withBase} from 'vitepress'
 import {appInfoKey} from './keys'
-import {useMediaQuery, type BasicColorMode, type UseColorModeReturn} from '@vueuse/core'
+import {useMediaQuery} from '@vueuse/core'
 import TableOfContentsNav from '../../src/components/TableOfContentsNav.vue'
-// @ts-ignore
 import VPNavBarSearch from 'vitepress/dist/client/theme-default/components/VPNavBarSearch.vue'
 
 // https://vitepress.dev/reference/runtime-api#usedata
@@ -188,6 +190,10 @@ const route = useRoute()
 const globalData = inject(appInfoKey, {
   discordUrl: '',
   githubUrl: '',
+  githubPackageDirectory: '',
+  githubComponentsDirectory: '',
+  githubComposablesDirectory: '',
+  githubDirectivesDirectory: '',
   opencollectiveUrl: '',
 })
 
