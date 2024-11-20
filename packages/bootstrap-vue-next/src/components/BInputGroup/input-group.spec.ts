@@ -140,7 +140,7 @@ describe('input-group', () => {
     expect($span.exists()).toBe(true)
   })
 
-  it('child span has static class input-group-text', () => {
+  it('child span has static class input-group-text when append', () => {
     const wrapper = mount(BInputGroup, {
       props: {append: 'foobar'},
     })
@@ -148,7 +148,7 @@ describe('input-group', () => {
     expect($span.classes()).toContain('input-group-text')
   })
 
-  it('child span has an additional span element', () => {
+  it('child span has an additional span element when append', () => {
     const wrapper = mount(BInputGroup, {
       props: {append: 'foobar'},
     })

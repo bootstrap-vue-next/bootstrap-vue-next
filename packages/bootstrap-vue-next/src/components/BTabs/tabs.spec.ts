@@ -450,7 +450,7 @@ describe('tabs', () => {
     expect(wrapper.text()).toBe('startempty')
   })
 
-  it('renders content passed via ', async () => {
+  it('renders content passed via', async () => {
     const msg = 'foobar'
 
     const HelloWorld = {

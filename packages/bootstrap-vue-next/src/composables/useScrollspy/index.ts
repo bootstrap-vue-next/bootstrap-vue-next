@@ -186,8 +186,9 @@ export const useScrollspy = (
           let parentNav = node.closest('.nav')?.previousSibling as HTMLElement
           while (parentNav?.classList?.contains('nav-item')) {
             foundParent = true
-            parentNav.querySelector('.nav-link') !== activeElement &&
+            if (parentNav.querySelector('.nav-link') !== activeElement) {
               parentNav.querySelector('.nav-link')?.classList.remove('active')
+            }
             parentNav = parentNav.closest('.nav')?.previousSibling as HTMLElement
           }
         }
@@ -212,9 +213,11 @@ export const useScrollspy = (
     const el: HTMLElement | null = href ? document?.querySelector(href) : null
     // console.log('scrollIntoView', event, el, content.value.$el)
     if (el && resolvedContent.value) {
-      resolvedContent.value.scrollTo
-        ? resolvedContent.value.scrollTo({top: el.offsetTop, behavior: smooth ? 'smooth' : 'auto'})
-        : (resolvedContent.value.scrollTop = el.offsetTop)
+      if (resolvedContent.value.scrollTo) {
+        resolvedContent.value.scrollTo({top: el.offsetTop, behavior: smooth ? 'smooth' : 'auto'})
+      } else {
+        resolvedContent.value.scrollTop = el.offsetTop
+      }
     }
   }
   const cleanup = () => {

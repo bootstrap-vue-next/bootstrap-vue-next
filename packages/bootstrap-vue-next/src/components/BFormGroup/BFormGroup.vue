@@ -218,9 +218,11 @@ const labelAlignClasses = computed(() =>
       ) as keyof BFormGroupProps
       const propValue: string = props[suffix] || null
       if (propValue) {
-        breakpoint === 'xs'
-          ? result.push(`text-${propValue}`)
-          : result.push(`text-${breakpoint}-${propValue}`)
+        if (breakpoint === 'xs') {
+          result.push(`text-${propValue}`)
+        } else {
+          result.push(`text-${breakpoint}-${propValue}`)
+        }
       }
       return result
     }, []))(props, 'label')

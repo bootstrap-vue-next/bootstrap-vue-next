@@ -74,7 +74,11 @@ export const useShowHide = (
       noAction = false
       return
     }
-    modelValue.value ? show() : hide()
+    if (modelValue.value) {
+      show()
+    } else {
+      hide()
+    }
   })
 
   const localNoAnimation = ref(initialShow)
@@ -106,14 +110,22 @@ export const useShowHide = (
 
       nextTick(() => {
         if (newval) isVisible.value = true
-        newval ? show() : hide()
+        if (newval) {
+          show()
+        } else {
+          hide()
+        }
       })
     }
   )
   watch(
     () => props.show,
     (newval) => {
-      newval ? show() : hide()
+      if (newval) {
+        show()
+      } else {
+        hide()
+      }
     }
   )
   useEventListener(element, 'bv-toggle', () => {
@@ -228,7 +240,11 @@ export const useShowHide = (
       emit('toggle-prevented', buildTriggerableEvent('toggle-prevented'))
       return
     }
-    showRef.value ? hide() : show()
+    if (showRef.value) {
+      hide()
+    } else {
+      show()
+    }
   }
 
   const lazyLoadCompleted = ref(false)
@@ -332,7 +348,7 @@ export const useShowHide = (
     isLeaving,
     transitionProps: {
       ...fadeBaseTransitionProps,
-      ...(props.transitionProps || {}),
+      ...props.transitionProps,
       ...transitionFunctions,
     },
 

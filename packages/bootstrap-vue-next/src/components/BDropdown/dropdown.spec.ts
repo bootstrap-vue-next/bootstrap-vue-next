@@ -297,7 +297,7 @@ describe('dropdown', () => {
     expect(wrapper.emitted()).not.toHaveProperty('click')
   })
 
-  it('first child BButton emits click when prop split', async () => {
+  it('wrapper emits click when prop split', async () => {
     const wrapper = mount(BDropdown, {
       props: {split: true},
     })

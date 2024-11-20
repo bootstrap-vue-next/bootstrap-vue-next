@@ -89,12 +89,6 @@ describe('pagination', () => {
     expect($li.classes()).toContain('page-item')
   })
 
-  it('li child has static class page item', () => {
-    const wrapper = mount(BPagination)
-    const $li = wrapper.get('li')
-    expect($li.classes()).toContain('page-item')
-  })
-
   it('has first button by default', () => {
     const wrapper = mount(BPagination, {props: {totalRows: 100, perPage: 1, modelValue: 5}})
     expect(wrapper.find('[aria-label="Go to first page"]').exists()).toBeTruthy()
@@ -466,14 +460,6 @@ describe('pagination', () => {
 
     expect(await TestScenariosAgainstInvariants(wrapper)).toBe(0)
   })
-
-  // it('TEMP: Check one configuration', async () => {
-  //   const wrapper = mount(BPagination, {
-  //     props: {totalRows: 100, perPage: 1, modelValue: 5, limit: 3},
-  //   })
-
-  //   expect(TestInvariants(wrapper)).toBeTruthy()
-  // })
 })
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

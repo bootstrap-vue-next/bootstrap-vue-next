@@ -9,10 +9,7 @@ export const useFormSelect = (
   const isComplex = (option: unknown): option is ComplexSelectOptionRaw =>
     typeof option === 'object' && option !== null && 'label' in option
 
-  const normalizeOption = (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    option: unknown
-  ): ComplexSelectOptionRaw | SelectOption => {
+  const normalizeOption = (option: unknown): ComplexSelectOptionRaw | SelectOption => {
     const propsValue = toValue(props)
 
     if (typeof option === 'string') {
@@ -50,7 +47,6 @@ export const useFormSelect = (
 
   const normalizeOptions = (
     opts: ReadonlyArray<unknown>
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): (ComplexSelectOptionRaw | SelectOption)[] => opts.map((option) => normalizeOption(option))
 
   const normalizedOptions = computed(() => normalizeOptions(toValue(options)))

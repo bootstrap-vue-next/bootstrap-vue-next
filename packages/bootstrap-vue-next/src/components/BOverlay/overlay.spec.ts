@@ -4,7 +4,7 @@ import BOverlay from './BOverlay.vue'
 import BTransition from '../BTransition.vue'
 import BSpinner from '../BSpinner/BSpinner.vue'
 
-describe('', () => {
+describe('overlay', () => {
   enableAutoUnmount(afterEach)
 
   it('tag is default div', () => {
@@ -24,7 +24,7 @@ describe('', () => {
     expect(wrapper.classes()).toContain('b-overlay-wrap')
   })
 
-  it('has static class b-overlay-wrap', () => {
+  it('has static class position-relative', () => {
     const wrapper = mount(BOverlay)
     expect(wrapper.classes()).toContain('position-relative')
   })
@@ -564,7 +564,7 @@ describe('', () => {
     expect($spinner.props('type')).toBe('grow')
   })
 
-  it('child BTransition child div second child div BSpinner is given prop type to be prop spinnerType', () => {
+  it('child BTransition child div second child div BSpinner is given prop variant', () => {
     const wrapper = mount(BOverlay, {
       props: {show: true, spinnerVariant: 'danger'},
     })
@@ -575,7 +575,7 @@ describe('', () => {
     expect($spinner.props('variant')).toBe('danger')
   })
 
-  it('child BTransition child div second child div BSpinner is given prop type to be prop spinnerType', () => {
+  it('child BTransition child div second child div BSpinner is given prop small', () => {
     const wrapper = mount(BOverlay, {
       props: {show: true, spinnerSmall: true},
     })

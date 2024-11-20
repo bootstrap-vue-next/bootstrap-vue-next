@@ -395,7 +395,7 @@ const slots = defineSlots<{
   }) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'bottom-row'?: (props: {columns: number; fields: typeof computedFields.value}) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
   [key: `foot(${string})`]: (props: {
     label: string | undefined
     column: LiteralUnion<keyof Items>

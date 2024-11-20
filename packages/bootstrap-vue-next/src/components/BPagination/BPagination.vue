@@ -36,7 +36,7 @@
 
 <script setup lang="ts">
 import {BvEvent} from '../../utils'
-import {computed, nextTick, ref, watch} from 'vue'
+import {computed, nextTick, useTemplateRef, watch} from 'vue'
 import type {BPaginationProps} from '../../types/ComponentProps'
 import {useAlignment} from '../../composables/useAlignment'
 import {useToNumber} from '@vueuse/core'
@@ -390,10 +390,18 @@ const handleKeyNav = (event: KeyboardEvent) => {
 
   if (code === CODE_LEFT || code === CODE_UP) {
     stopEvent(event)
-    shiftKey ? focusFirst() : focusPrev()
+    if (shiftKey) {
+      focusFirst()
+    } else {
+      focusPrev()
+    }
   } else if (code === CODE_RIGHT || code === CODE_DOWN) {
     stopEvent(event)
-    shiftKey ? focusLast() : focusNext()
+    if (shiftKey) {
+      focusLast()
+    } else {
+      focusNext()
+    }
   }
 }
 

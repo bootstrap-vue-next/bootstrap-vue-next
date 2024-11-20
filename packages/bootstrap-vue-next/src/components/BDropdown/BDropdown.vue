@@ -351,7 +351,11 @@ const onButtonClick = () => {
 }
 
 const onSplitClick = (event: Readonly<MouseEvent>) => {
-  props.split ? emit('click', event) : onButtonClick()
+  if (props.split) {
+    emit('click', event)
+    return
+  }
+  onButtonClick()
 }
 
 onClickOutside(
