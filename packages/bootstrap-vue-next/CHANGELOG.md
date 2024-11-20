@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.0...bootstrapvuenext-v0.26.1) (2024-11-20)
+
+
+### Bug Fixes
+
+* useTemplateRef usage throwing errors fixes [#2361](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2361) ([1a03b9b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1a03b9b4c089ad80797f22200d02a1f6310714d2))
+
 ## [0.26.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.25.15...bootstrapvuenext-v0.26.0) (2024-11-19)
 
 
