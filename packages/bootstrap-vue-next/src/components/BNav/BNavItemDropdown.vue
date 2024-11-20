@@ -95,7 +95,7 @@ defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'toggle-text'?: (props: Record<string, never>) => any
 }>()
-const dropdown = useTemplateRef<InstanceType<typeof BDropdown>>('dropdown')
+const dropdown = useTemplateRef<InstanceType<typeof BDropdown>>('_dropdown')
 
 const hide = () => {
   dropdown.value?.hide()
