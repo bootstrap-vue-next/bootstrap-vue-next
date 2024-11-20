@@ -117,7 +117,7 @@ const buttonOwnership = useId(undefined, 'carousel-button-ownership')
 
 const modelValue = defineModel<Exclude<BCarouselProps['modelValue'], undefined>>({default: 0})
 
-const slideValues = useTemplateRef<null | InstanceType<typeof BCarouselSlide>[]>('slideValues')
+const slideValues = useTemplateRef<InstanceType<typeof BCarouselSlide>[]>('_slideValues')
 
 const touchThresholdNumber = useToNumber(() => props.touchThreshold)
 const slideInterval = ref<Numberish | null>(null)

@@ -56,7 +56,7 @@ const computedId = useId(() => props.id, 'tabpane')
 const computedButtonId = useId(() => props.buttonId, 'tab')
 
 const lazyRenderCompleted = ref(false)
-const el = useTemplateRef<HTMLElement | null>('el')
+const el = useTemplateRef<HTMLElement>('_el')
 
 const {onClick, ...attrs} = useAttrs()
 

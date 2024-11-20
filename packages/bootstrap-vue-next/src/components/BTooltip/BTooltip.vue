@@ -75,7 +75,7 @@ const computedProps = computed<BPopoverProps>(() => {
   return {noninteractive: noninteractive !== undefined ? noninteractive : !interactive, ...rest}
 })
 
-const popover = useTemplateRef<InstanceType<typeof BPopover>>('popover')
+const popover = useTemplateRef<InstanceType<typeof BPopover>>('_popover')
 
 defineExpose({
   hide: () => {
