@@ -187,11 +187,11 @@ deactivated (hidden):
 There is currently a bug in `lazy` that causes an infinite recursion
 :::
 
-<!-- <<< DEMO ./demo/TabsLazy.vue#template{vue-html} -->
+<<< DEMO ./demo/TabsLazy.vue#template{vue-html}
 
 One can also make all tab's lazy by setting the `lazy` prop on the parent `<BTabs>` component:
 
-<!-- <<< DEMO ./demo/TabsLazyAll.vue#template{vue-html} -->
+<<< DEMO ./demo/TabsLazyAll.vue#template{vue-html}
 
 <ComponentReference :data="data" />
 
