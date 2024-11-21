@@ -6,9 +6,9 @@
     :skip="props.noWrap"
   >
     <slot />
-    <BTransition
-      :no-fade="props.noFade"
-      :trans-props="{enterToClass: 'show'}"
+    <Transition
+      v-bind="fadeTransitions"
+      enter-to-class="show"
       name="fade"
       @after-enter="emit('shown')"
       @after-leave="emit('hidden')"
@@ -29,7 +29,7 @@
           </slot>
         </div>
       </component>
-    </BTransition>
+    </Transition>
   </ConditionalWrapper>
 </template>
 
@@ -37,12 +37,12 @@
 import {computed} from 'vue'
 import type {BOverlayProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
-import BTransition from '../BTransition.vue'
 import BSpinner from '../BSpinner/BSpinner.vue'
 import ConditionalWrapper from '../ConditionalWrapper.vue'
 import {useRadiusElementClasses} from '../../composables/useRadiusElementClasses'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import type {BgColorVariant} from '../../types/ColorTypes'
+import {useFadeTransition} from '../../composables/useTransitions'
 
 const _props = withDefaults(defineProps<BOverlayProps>(), {
   blur: '2px',
@@ -85,6 +85,8 @@ defineSlots<{
 }>()
 
 const positionStyles = {top: 0, left: 0, bottom: 0, right: 0} as const
+
+const fadeTransitions = useFadeTransition(() => !props.noFade)
 
 const radiusElementClasses = useRadiusElementClasses(() => ({
   rounded: props.rounded,
