@@ -73,8 +73,8 @@ import {
 } from 'bootstrap-vue-next'
 import {inject} from 'vue'
 import {withBase} from 'vitepress'
-import BootstrapIcon from '~icons/simple-icons/bootstrap'
-import VueIcon from '~icons/simple-icons/vuedotjs'
+import BootstrapIcon from '~icons/logos/bootstrap'
+import VueIcon from '~icons/logos/vue'
 import {appInfoKey} from '../.vitepress/theme/keys'
 import OpenCollectiveMemberDisplay from './components/OpenCollectiveMemberDisplay.vue'
 
