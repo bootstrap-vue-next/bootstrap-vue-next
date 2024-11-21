@@ -7,7 +7,7 @@
   >
     <Transition v-if="renderRef || contentShowing" v-bind="transitionProps" :appear="modelValue">
       <div
-        v-show="showRef"
+        v-show="showRef && !hidden"
         :id="computedId"
         v-bind="$attrs"
         ref="_element"
@@ -280,9 +280,16 @@ const arrowStyle = ref<CSSProperties>({position: 'absolute'})
 
 watch(middlewareData, (newValue) => {
   if (props.noHide === false) {
-    hidden.value = !!newValue.hide?.referenceHidden
-    if (showRef.value && props.closeOnHide && hidden.value && !props.noAutoClose && !props.manual) {
-      throttleHide('close-on-hide')
+    if (newValue.hide?.referenceHidden && !hidden.value && showRef.value) {
+      if (props.closeOnHide && !props.noAutoClose && !props.manual) {
+        throttleHide('close-on-hide')
+      } else {
+        localTemporaryHide.value = true
+        hidden.value = true
+      }
+    } else if (localTemporaryHide.value && !newValue.hide?.referenceHidden) {
+      localTemporaryHide.value = false
+      hidden.value = false
     }
   }
   if (newValue.arrow) {
@@ -306,6 +313,7 @@ const {
   contentShowing,
   isVisible,
   renderRef,
+  localTemporaryHide,
 } = useShowHide(modelValue, props, emit as EmitFn, element, computedId, {
   showFn: () => {
     if (hidden.value) {
