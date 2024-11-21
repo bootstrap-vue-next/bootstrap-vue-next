@@ -7,7 +7,7 @@
   >
     <Transition v-if="renderRef || contentShowing" v-bind="transitionProps" :appear="modelValue">
       <div
-        v-show="showRef && !hidden"
+        v-show="showRef"
         :id="computedId"
         v-bind="$attrs"
         ref="_element"
@@ -142,6 +142,7 @@ const emit = defineEmits<{
   'pointerleave': [value: BvTriggerableEvent]
   'blur': [value: BvTriggerableEvent]
   'click-outside': [value: BvTriggerableEvent]
+  'close-on-hide': [value: BvTriggerableEvent]
 }>()
 
 const slots = defineSlots<{
@@ -280,8 +281,8 @@ const arrowStyle = ref<CSSProperties>({position: 'absolute'})
 watch(middlewareData, (newValue) => {
   if (props.noHide === false) {
     hidden.value = !!newValue.hide?.referenceHidden
-    if (props.closeOnHide && hidden.value && !props.noAutoClose && !props.manual) {
-      hide('closeOnHide')
+    if (showRef.value && props.closeOnHide && hidden.value && !props.noAutoClose && !props.manual) {
+      throttleHide('close-on-hide')
     }
   }
   if (newValue.arrow) {
@@ -299,6 +300,7 @@ const {
   hide,
   show,
   toggle,
+  throttleHide,
   computedNoAnimation,
   transitionProps,
   contentShowing,
