@@ -68,7 +68,7 @@
           class="offcanvas-backdrop"
           :class="{
             fade: !computedNoAnimation,
-            show: backdropVisible,
+            show: backdropVisible || computedNoAnimation,
           }"
           @click="hide('backdrop')"
         />

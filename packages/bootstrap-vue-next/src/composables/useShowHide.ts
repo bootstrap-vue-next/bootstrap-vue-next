@@ -218,6 +218,7 @@ export const useShowHide = (
     }
     setTimeout(
       () => {
+        isLeaving.value = true
         showRef.value = false
         options.hideFn?.()
         if (modelValue.value) {
@@ -283,7 +284,7 @@ export const useShowHide = (
     }
   }
   const onBeforeLeave = (el: Element) => {
-    isLeaving.value = true
+    if (!isLeaving.value) isLeaving.value = true
     options.transitionProps?.onBeforeLeave?.(el)
     props.transitionProps?.onBeforeLeave?.(el)
   }
