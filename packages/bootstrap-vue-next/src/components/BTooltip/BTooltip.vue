@@ -1,5 +1,5 @@
 <template>
-  <BPopover ref="popover" v-bind="computedProps" v-model="modelValue" tooltip>
+  <BPopover ref="_popover" v-bind="computedProps" v-model="modelValue" tooltip>
     <template v-if="slots.default" #default>
       <slot />
     </template>
@@ -75,7 +75,7 @@ const computedProps = computed<BPopoverProps>(() => {
   return {noninteractive: noninteractive !== undefined ? noninteractive : !interactive, ...rest}
 })
 
-const popover = useTemplateRef<InstanceType<typeof BPopover>>('popover')
+const popover = useTemplateRef<InstanceType<typeof BPopover>>('_popover')
 
 defineExpose({
   hide: () => {

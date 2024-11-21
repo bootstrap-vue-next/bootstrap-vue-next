@@ -3,7 +3,7 @@
     <div
       v-show="isToastVisible"
       :id="props.id"
-      ref="element"
+      ref="_element"
       class="toast"
       :class="[props.toastClass, computedClasses]"
       tabindex="0"
@@ -139,7 +139,7 @@ const slots = defineSlots<{
   default?: (props: {hide: (trigger?: string) => void}) => any
 }>()
 
-const element = useTemplateRef<HTMLElement>('element')
+const element = useTemplateRef<HTMLElement>('_element')
 
 const modelValue = defineModel<Exclude<BToastProps['modelValue'], undefined>>({default: false})
 const {computedLink, computedLinkProps} = useBLinkHelper(props)

@@ -8,7 +8,7 @@
     @keydown="handleKeyNav"
   >
     <template v-for="page in pages" :key="`page-${page.id}`">
-      <li v-bind="page.li" ref="page-elements">
+      <li v-bind="page.li" ref="_page-elements">
         <span
           v-if="page.id === FIRST_ELLIPSIS || page.id === LAST_ELLIPSIS"
           v-bind="ellipsisProps.span"
@@ -104,7 +104,7 @@ const emit = defineEmits<{
 
 const modelValue = defineModel<Exclude<BPaginationProps['modelValue'], undefined>>({default: 1})
 
-const pageElements = useTemplateRef<HTMLLIElement[]>('page-elements')
+const pageElements = useTemplateRef<HTMLLIElement[]>('_page-elements')
 
 const limitNumber = useToNumber(() => props.limit, {nanToZero: true, method: 'parseInt'})
 const perPageNumber = useToNumber(() => props.perPage, {nanToZero: true, method: 'parseInt'})

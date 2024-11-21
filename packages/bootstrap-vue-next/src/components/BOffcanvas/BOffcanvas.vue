@@ -14,7 +14,7 @@
           isOpenByBreakpoint
         "
         :id="computedId"
-        ref="element"
+        ref="_element"
         aria-modal="true"
         role="dialog"
         :class="computedClasses"
@@ -54,7 +54,7 @@
         </template>
         <div
           v-if="needsFallback"
-          ref="fallbackFocusElement"
+          ref="_fallbackFocusElement"
           :class="fallbackClassSelector"
           tabindex="0"
           style="width: 0; height: 0; overflow: hidden"
@@ -68,7 +68,7 @@
           class="offcanvas-backdrop"
           :class="{
             fade: !computedNoAnimation,
-            show: backdropVisible,
+            show: backdropVisible || computedNoAnimation,
           }"
           @click="hide('backdrop')"
         />
@@ -183,8 +183,8 @@ const smallerOrEqualToBreakpoint = breakpoints.smallerOrEqual(() => props.respon
 
 const isOpenByBreakpoint = ref(props.responsive !== undefined && !smallerOrEqualToBreakpoint.value)
 
-const element = useTemplateRef<HTMLElement>('element')
-const fallbackFocusElement = useTemplateRef<HTMLElement>('fallbackFocusElement')
+const element = useTemplateRef<HTMLElement>('_element')
+const fallbackFocusElement = useTemplateRef<HTMLElement>('_fallbackFocusElement')
 
 const onAfterEnter = () => {
   nextTick(() => {

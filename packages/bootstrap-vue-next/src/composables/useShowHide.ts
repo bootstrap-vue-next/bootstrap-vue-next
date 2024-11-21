@@ -1,6 +1,6 @@
 import {computed, type EmitFn, nextTick, onMounted, type Ref, ref, watch} from 'vue'
 import {BvTriggerableEvent} from '../utils'
-import {useEventListener} from '@vueuse/core'
+import {useEventListener, useThrottleFn} from '@vueuse/core'
 
 export const fadeBaseTransitionProps = {
   name: 'fade',
@@ -218,6 +218,7 @@ export const useShowHide = (
     }
     setTimeout(
       () => {
+        isLeaving.value = true
         showRef.value = false
         options.hideFn?.()
         if (modelValue.value) {
@@ -232,6 +233,8 @@ export const useShowHide = (
           : props.delay?.hide || 0
     )
   }
+  const throttleHide = useThrottleFn((a) => hide(a), 500)
+  const throttleShow = useThrottleFn(() => show(), 500)
 
   const toggle = () => {
     const e = buildTriggerableEvent('toggle', {cancelable: true})
@@ -283,7 +286,7 @@ export const useShowHide = (
     }
   }
   const onBeforeLeave = (el: Element) => {
-    isLeaving.value = true
+    if (!isLeaving.value) isLeaving.value = true
     options.transitionProps?.onBeforeLeave?.(el)
     props.transitionProps?.onBeforeLeave?.(el)
   }
@@ -342,6 +345,8 @@ export const useShowHide = (
     show,
     hide,
     toggle,
+    throttleHide,
+    throttleShow,
     buildTriggerableEvent,
     computedNoAnimation,
     localNoAnimation,

@@ -6,7 +6,7 @@
   >
     <input
       :id="computedId"
-      ref="input"
+      ref="_input"
       v-model="localValue"
       :class="computedInputClasses"
       type="checkbox"
@@ -94,7 +94,7 @@ const computedId = useId(() => props.id, 'form-check')
 
 const parentData = inject(checkboxGroupKey, null)
 
-const input = useTemplateRef<HTMLElement>('input')
+const input = useTemplateRef<HTMLElement>('_input')
 
 const {focused} = useFocus(input, {
   initialValue: props.autofocus,

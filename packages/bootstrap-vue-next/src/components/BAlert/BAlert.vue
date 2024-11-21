@@ -2,7 +2,7 @@
   <BTransition :no-fade="!props.fade" :trans-props="{enterToClass: 'show'}">
     <div
       v-if="isAlertVisible"
-      ref="element"
+      ref="_element"
       class="alert"
       role="alert"
       aria-live="polite"
@@ -63,7 +63,7 @@ const slots = defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const element = useTemplateRef<HTMLElement>('element')
+const element = useTemplateRef<HTMLElement>('_element')
 
 const modelValue = defineModel<Exclude<BAlertProps['modelValue'], undefined>>({default: false})
 
