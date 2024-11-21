@@ -7,30 +7,28 @@
     :aria-label="props.ariaLabel || undefined"
     @keydown="handleKeyNav"
   >
-    <template v-for="page in pages" :key="`page-${page.id}`">
-      <li v-bind="page.li" ref="_page-elements">
-        <span
-          v-if="page.id === FIRST_ELLIPSIS || page.id === LAST_ELLIPSIS"
-          v-bind="ellipsisProps.span"
+    <li v-for="page in pages" :key="`page-${page.id}`" v-bind="page.li" ref="_pageElements">
+      <span
+        v-if="page.id === FIRST_ELLIPSIS || page.id === LAST_ELLIPSIS"
+        v-bind="ellipsisProps.span"
+      >
+        <slot name="ellipsis-text">
+          {{ props.ellipsisText || '...' }}
+        </slot>
+      </span>
+      <component v-bind="page.button" :is="page.button.is" v-else @click="page.clickHandler">
+        <slot
+          :name="page.text.name"
+          :disabled="page.text.disabled"
+          :page="page.text.page"
+          :index="page.text.index"
+          :active="page.text.active"
+          :content="page.text.value"
         >
-          <slot name="ellipsis-text">
-            {{ props.ellipsisText || '...' }}
-          </slot>
-        </span>
-        <component v-bind="page.button" :is="page.button.is" v-else @click="page.clickHandler">
-          <slot
-            :name="page.text.name"
-            :disabled="page.text.disabled"
-            :page="page.text.page"
-            :index="page.text.index"
-            :active="page.text.active"
-            :content="page.text.value"
-          >
-            {{ page.text.value }}
-          </slot>
-        </component>
-      </li>
-    </template>
+          {{ page.text.value }}
+        </slot>
+      </component>
+    </li>
   </ul>
 </template>
 
@@ -104,7 +102,7 @@ const emit = defineEmits<{
 
 const modelValue = defineModel<Exclude<BPaginationProps['modelValue'], undefined>>({default: 1})
 
-const pageElements = useTemplateRef<HTMLLIElement[]>('_page-elements')
+const pageElements = useTemplateRef<HTMLLIElement[]>('_pageElements')
 
 const limitNumber = useToNumber(() => props.limit, {nanToZero: true, method: 'parseInt'})
 const perPageNumber = useToNumber(() => props.perPage, {nanToZero: true, method: 'parseInt'})
