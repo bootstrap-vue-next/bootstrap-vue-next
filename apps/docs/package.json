@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@iconify-json/bi": "^1.2.1",
-    "@iconify-json/simple-icons": "^1.2.11",
+    "@iconify-json/logos": "^1.2.3",
     "@rushstack/eslint-patch": "^1.10.4",
     "@toycode/markdown-it-class": "^1.2.4",
     "@tsconfig/node22": "^22.0.0",

@@ -113,7 +113,7 @@
           :style="computedZIndexBackdrop"
           :class="{
             fade: !computedNoAnimation,
-            show: backdropVisible,
+            show: backdropVisible || computedNoAnimation,
           }"
           @click="hide('backdrop')"
         />
