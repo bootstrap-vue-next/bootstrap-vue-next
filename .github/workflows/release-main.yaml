@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - name: Use Release Please
-        uses: googleapis/release-please-action@v4
+        uses: google-github-actions/release-please-action@v3
         id: release
         with:
           command: manifest
