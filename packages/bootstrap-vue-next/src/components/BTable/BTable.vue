@@ -1,13 +1,7 @@
 <template>
   <!-- eslint-disable prettier/prettier -->
   <BTableLite
-    v-bind="props"
-    :aria-busy="busyModel"
-    :items="computedDisplayItems"
-    :fields="computedFields as TableFieldRaw<Items>[]"
-    :table-class="tableClasses"
-    :tbody-tr-class="getRowClasses"
-    :field-column-class="getFieldColumnClasses"
+    v-bind="computedLiteProps"
     @head-clicked="onFieldHeadClick"
     @row-clicked="onRowClick"
     @row-dblclicked="
@@ -237,10 +231,10 @@ import {
 } from '../../types/TableTypes'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BTableProps} from '../../types/ComponentProps'
-import {get, set} from '../../utils/object'
+import {get, pick, set} from '../../utils/object'
 import {startCase} from '../../utils/stringUtils'
-import {getTableFieldHeadLabel} from '../../utils/getTableFieldHeadLabel'
 import type {LiteralUnion} from '../../types/LiteralUnion'
+import {btableLiteProps, btableSimpleProps, getTableFieldHeadLabel} from '../../utils/tableUtils'
 
 const _props = withDefaults(
   defineProps<Omit<BTableProps<Items>, 'sortBy' | 'busy' | 'selectedItems'>>(),
@@ -983,6 +977,18 @@ const exposedSelectableUtilities = {
     return selectedItemsSetUtilities.has(item)
   },
 } as const
+
+const computedLiteProps = computed(() => ({
+  ...pick(props, [...btableLiteProps, ...btableSimpleProps]),
+  tableAttrs: {
+    ariaBusy: busyModel.value,
+  },
+  items: computedDisplayItems.value,
+  fields: computedFields.value as TableFieldRaw<Items>[],
+  tableClass: tableClasses.value,
+  tbodyTrClass: getRowClasses,
+  fieldColumnClass: getFieldColumnClasses,
+}))
 
 defineExpose({
   // The row selection methods are really for compat. Users should probably use the v-model though

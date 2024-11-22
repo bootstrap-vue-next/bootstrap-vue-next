@@ -1,11 +1,11 @@
 <template>
   <!-- tables definitions are shared. Can't use createReusableTemplate cause it becomes a non-root node -->
   <div v-if="isResponsive" :class="responsiveClasses" :style="responsiveStyles">
-    <table v-bind="{...computedTableAttrs, ...$attrs}">
+    <table v-bind="computedTableAttrs">
       <slot />
     </table>
   </div>
-  <table v-else v-bind="{...computedTableAttrs, ...$attrs}">
+  <table v-else v-bind="computedTableAttrs">
     <slot />
   </table>
 </template>
@@ -16,10 +16,6 @@ import type {BTableSimpleProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import {useNumberishToStyle} from '../../composables/useNumberishToStyle'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
-
-defineOptions({
-  inheritAttrs: false,
-})
 
 const defaultStickyHeaderHeight = '300px'
 
