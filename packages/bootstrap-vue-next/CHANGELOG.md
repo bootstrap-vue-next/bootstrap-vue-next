@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.2...bootstrapvuenext-v0.26.3) (2024-11-22)
+
+
+### Bug Fixes
+
+* correctly pass attribute ariabusy fixes [#2378](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2378) ([bccf138](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bccf1387dd381f17f9ee3610e6c8cdd3ede1f73f))
+
 ## [0.26.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.1...bootstrapvuenext-v0.26.2) (2024-11-21)
 
 
