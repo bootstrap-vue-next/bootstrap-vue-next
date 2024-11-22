@@ -582,5 +582,19 @@ describe('object-persistence', () => {
         expect(fourth.classes()).toContain('selected')
       })
     })
+
+    it('classes are applied correctly when using prop responsive and busy simultaneously', () => {
+      const wrapper = mount(BTable, {
+        props: {
+          items: simpleItems,
+          fields: simpleFields,
+          responsive: true,
+          busy: true,
+        },
+      })
+      const $table = wrapper.get('table')
+      expect($table.classes()).toContain('b-table-busy')
+      expect($table.attributes('ariabusy')).toBe('true')
+    })
   })
 })

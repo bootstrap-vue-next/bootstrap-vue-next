@@ -1,24 +1,5 @@
 <template>
-  <BTableSimple
-    :id="props.id"
-    :bordered="props.bordered"
-    :borderless="props.borderless"
-    :border-variant="props.borderVariant"
-    :caption-top="props.captionTop"
-    :dark="props.dark"
-    :fixed="props.fixed"
-    :hover="props.hover"
-    :no-border-collapse="props.noBorderCollapse"
-    :outlined="props.outlined"
-    :responsive="props.responsive"
-    :small="props.small"
-    :stacked="props.stacked"
-    :sticky-header="props.stickyHeader"
-    :striped="props.striped"
-    :table-class="computedTableClasses"
-    :variant="props.variant"
-    :striped-columns="props.stripedColumns"
-  >
+  <BTableSimple v-bind="computedSimpleProps">
     <BThead v-show="showComputedHeaders" :variant="props.headVariant" :class="props.theadClass">
       <slot name="thead-top" :columns="computedFieldsTotal" :fields="computedFields" />
       <BTr :variant="props.headRowVariant" :class="props.theadTrClass">
@@ -235,8 +216,8 @@ import BTh from './BTh.vue'
 import BThead from './BThead.vue'
 import BTr from './BTr.vue'
 import {useDefaults} from '../../composables/useDefaults'
-import {get} from '../../utils/object'
-import {getTableFieldHeadLabel} from '../../utils/getTableFieldHeadLabel'
+import {get, pick} from '../../utils/object'
+import {btableSimpleProps, getTableFieldHeadLabel} from '../../utils/tableUtils'
 import {formatItem} from '../../utils/formatItem'
 import {filterEvent} from '../../utils/filterEvent'
 import {startCase} from '../../utils/stringUtils'
@@ -509,4 +490,9 @@ const getRowClasses = (item: Items | null, type: TableRowType) =>
       ? props.tbodyTrClass(item, type)
       : props.tbodyTrClass
     : null
+
+const computedSimpleProps = computed(() => ({
+  ...pick(props, btableSimpleProps),
+  tableClass: computedTableClasses.value,
+}))
 </script>
