@@ -216,6 +216,44 @@ prop. When a value is provided for `bg-color`, the `variant` prop value is ignor
 By default, the overlay uses Bootstrap's fade transition when showing or hiding. You can disable the
 fade transition via adding the `no-fade` prop to `BOverlay`.
 
+<!-- @dwgray this is the same as the first example, but it uses no-fade prop -->
+
+<HighlightCard>
+  <BOverlay no-fade :show="showOverlayEx1" rounded="sm">
+    <BCard title="Card with overlay" :aria-hidden="showOverlayEx1 ? 'true' : null">
+      <BCardText>Laborum consequat non elit enim exercitation cillum.</BCardText>
+      <BCardText>Click the button to toggle the overlay:</BCardText>
+      <BButton :disabled="showOverlayEx1" variant="primary" @click="showOverlayEx1 = true">
+        Show overlay
+      </BButton>
+    </BCard>
+  </BOverlay>
+  <BButton class="mt-3" @click="showOverlayEx1 = !showOverlayEx1">Toggle overlay</BButton>
+  <template #html>
+
+```vue
+<template>
+  <BOverlay no-fade :show="showOverlayEx1" rounded="sm">
+    <BCard title="Card with overlay" :aria-hidden="showOverlayEx1 ? 'true' : null">
+      <BCardText>Laborum consequat non elit enim exercitation cillum.</BCardText>
+      <BCardText>Click the button to toggle the overlay:</BCardText>
+      <BButton :disabled="showOverlayEx1" variant="primary" @click="showOverlayEx1 = true">
+        Show overlay
+      </BButton>
+    </BCard>
+  </BOverlay>
+
+  <BButton @click="showOverlayEx1 = !showOverlayEx1">Toggle overlay</BButton>
+</template>
+
+<script setup lang="ts">
+const showOverlayEx1 = ref(false)
+</script>
+```
+
+  </template>
+</HighlightCard>
+
 ### Default spinner styling
 
 The default overlay content is a [`BSpinner`](/docs/components/spinner) of type `'border'`. You

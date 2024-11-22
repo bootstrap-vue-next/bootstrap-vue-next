@@ -1,5 +1,5 @@
 <template>
-  <BTransition :no-fade="!props.fade" :trans-props="{enterToClass: 'show'}">
+  <Transition v-bind="fadeTransitions" enter-to-class="show">
     <div
       v-if="isAlertVisible"
       ref="_element"
@@ -19,11 +19,10 @@
         <BCloseButton v-else :aria-label="props.closeLabel" v-bind="closeAttrs" @click="hide" />
       </template>
     </div>
-  </BTransition>
+  </Transition>
 </template>
 
 <script setup lang="ts">
-import BTransition from '../BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BButton from '../BButton/BButton.vue'
 import type {BAlertProps} from '../../types/ComponentProps'
@@ -32,6 +31,7 @@ import {useCountdown} from '../../composables/useCountdown'
 import {useDefaults} from '../../composables/useDefaults'
 import {isEmptySlot} from '../../utils/dom'
 import {useCountdownHover} from '../../composables/useCountdownHover'
+import {useFadeTransition} from '../../composables/useTransitions'
 
 const _props = withDefaults(defineProps<Omit<BAlertProps, 'modelValue'>>(), {
   closeClass: undefined,
@@ -62,6 +62,8 @@ const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
 }>()
+
+const fadeTransitions = useFadeTransition(() => props.fade)
 
 const element = useTemplateRef<HTMLElement>('_element')
 

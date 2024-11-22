@@ -258,7 +258,6 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
   BCardTitle: ComponentProps.BCardTitleProps
   BCarousel: ComponentProps.BCarouselProps
   BCarouselSlide: ComponentProps.BCarouselSlideProps
-  BTransition: ComponentProps.BTransitionProps
   BImg: ComponentProps.BImgProps
   BForm: ComponentProps.BFormProps
   BTableSimple: ComponentProps.BTableSimpleProps

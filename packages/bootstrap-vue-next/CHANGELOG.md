@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.26.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.1...bootstrapvuenext-v0.26.2) (2024-11-21)
+
+
+### Bug Fixes
+
+* **BModal,BOffcanvas:** flicker when no animation and double animation when leaving with animation and backdrop-first ([0f5375f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0f5375f259fd1c750efc265345b46f77fa061106))
+* **BPopover:** fix hide on reference hidden, fix close-on-hide. ([0f5375f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0f5375f259fd1c750efc265345b46f77fa061106))
+
+
+### Performance Improvements
+
+* use a composable rather than BTransition component, eliminating a useless fragment ([#2372](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2372)) ([a788a2d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a788a2d6f1910221472e0bddb39e9029ec9f1a9b))
+
 ## [0.26.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.0...bootstrapvuenext-v0.26.1) (2024-11-20)
 
 

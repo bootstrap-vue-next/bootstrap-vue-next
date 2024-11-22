@@ -3,7 +3,7 @@ import {afterEach, describe, expect, it} from 'vitest'
 import BAlert from './BAlert.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BButton from '../BButton/BButton.vue'
-import BTransition from '../BTransition.vue'
+import {Transition as BTransition} from 'vue'
 
 describe('alert', () => {
   enableAutoUnmount(afterEach)
@@ -12,26 +12,6 @@ describe('alert', () => {
     const wrapper = mount(BAlert)
     const $transition = wrapper.findComponent(BTransition)
     expect($transition.exists()).toBe(true)
-  })
-
-  it('gives prop fade to btransition of true by default', () => {
-    const wrapper = mount(BAlert)
-    const $transition = wrapper.getComponent(BTransition)
-    expect($transition.props('noFade')).toBe(true)
-  })
-
-  it('when prop fade is true, gives BTransition false', () => {
-    const wrapper = mount(BAlert, {
-      props: {fade: true},
-    })
-    const $transition = wrapper.getComponent(BTransition)
-    expect($transition.props('noFade')).toBe(false)
-  })
-
-  it('BTransition is given static transProps object', () => {
-    const wrapper = mount(BAlert)
-    const $transition = wrapper.getComponent(BTransition)
-    expect($transition.props('transProps')).toEqual({enterToClass: 'show'})
   })
 
   it('there is not a nested div by default', () => {

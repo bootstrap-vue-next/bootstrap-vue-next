@@ -82,6 +82,7 @@ export const useShowHide = (
   })
 
   const localNoAnimation = ref(initialShow)
+  const localTemporaryHide = ref(false)
   const computedNoAnimation = computed(
     () => props.noAnimation || props.noFade || localNoAnimation.value || false
   )
@@ -284,6 +285,9 @@ export const useShowHide = (
         localNoAnimation.value = false
       })
     }
+    if (localTemporaryHide.value) {
+      localTemporaryHide.value = false
+    }
   }
   const onBeforeLeave = (el: Element) => {
     if (!isLeaving.value) isLeaving.value = true
@@ -307,12 +311,13 @@ export const useShowHide = (
       })
     }
     requestAnimationFrame(() => {
-      renderRef.value = false
+      if (!localTemporaryHide.value) renderRef.value = false
     })
   }
 
   const contentShowing = computed(
     () =>
+      localTemporaryHide.value === true ||
       isActive.value === true ||
       props.lazy === false ||
       (props.lazy === true && lazyLoadCompleted.value === true && props.unmountLazy === false)
@@ -350,6 +355,7 @@ export const useShowHide = (
     buildTriggerableEvent,
     computedNoAnimation,
     localNoAnimation,
+    localTemporaryHide,
     isLeaving,
     transitionProps: {
       ...fadeBaseTransitionProps,
