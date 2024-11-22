@@ -35,29 +35,28 @@ export const btableSimpleProps = Object.freeze(
   } satisfies Record<keyof BTableSimpleProps, 0>)
 ) as readonly (keyof BTableSimpleProps)[]
 
-export const btableLiteProps = Object.keys({
-  align: 0,
-  caption: 0,
-  detailsTdClass: 0,
-  fieldColumnClass: 0,
-  fields: 0,
-  footClone: 0,
-  footRowVariant: 0,
-  footVariant: 0,
-  headRowVariant: 0,
-  headVariant: 0,
-  items: 0,
-  labelStacked: 0,
-  modelValue: 0,
-  primaryKey: 0,
-  tbodyClass: 0,
-  tbodyTrAttrs: 0,
-  tbodyTrClass: 0,
-  tfootClass: 0,
-  tfootTrClass: 0,
-  theadClass: 0,
-  theadTrClass: 0,
-} satisfies Record<
-  keyof Omit<BTableLiteProps<unknown>, keyof BTableSimpleProps>,
-  0
->) as readonly (keyof Omit<BTableLiteProps<unknown>, keyof BTableSimpleProps>)[]
+export const btableLiteProps = Object.freeze(
+  Object.keys({
+    align: 0,
+    caption: 0,
+    detailsTdClass: 0,
+    fieldColumnClass: 0,
+    fields: 0,
+    footClone: 0,
+    footRowVariant: 0,
+    footVariant: 0,
+    headRowVariant: 0,
+    headVariant: 0,
+    items: 0,
+    labelStacked: 0,
+    modelValue: 0,
+    primaryKey: 0,
+    tbodyClass: 0,
+    tbodyTrAttrs: 0,
+    tbodyTrClass: 0,
+    tfootClass: 0,
+    tfootTrClass: 0,
+    theadClass: 0,
+    theadTrClass: 0,
+  } satisfies Record<keyof Omit<BTableLiteProps<unknown>, keyof BTableSimpleProps>, 0>)
+) as readonly (keyof Omit<BTableLiteProps<unknown>, keyof BTableSimpleProps>)[]
