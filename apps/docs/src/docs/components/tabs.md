@@ -193,7 +193,76 @@ One can also make all tab's lazy by setting the `lazy` prop on the parent `<BTab
 
 <<< DEMO ./demo/TabsLazyAll.vue#template{vue-html}
 
+## Keyboard navigation
+
+Keyboard navigation is enabled by default for ARIA compliance with tablists when a tab button has
+focus.
+
+<NotYetImplemented>no-key-nave prop and keyboard navigations as described below is not fully implemented</NotYetImplemented>
+
+| Keypress                                                              | Action                                         |
+| --------------------------------------------------------------------- | ---------------------------------------------- |
+| <kbd>Left</kbd> or <kbd>Up</kbd>                                      | Activate the previous non-disabled tab         |
+| <kbd>Right</kbd> or <kbd>Down</kbd>                                   | Activate the next non-disabled tab             |
+| <kbd>Shift</kbd>+<kbd>Left</kbd> or <kbd>Shift</kbd>+<kbd>Up</kbd>    | Activate the first non-disabled tab            |
+| <kbd>Home</kbd>                                                       | Activate the first non-disabled tab            |
+| <kbd>Shift</kbd>+<kbd>Right</kbd> or <kbd>Shift</kbd>+<kbd>Down</kbd> | Activate the last non-disabled tab             |
+| <kbd>End</kbd>                                                        | Activate the last non-disabled tab             |
+| <kbd>Tab</kbd>                                                        | Move focus to the active tab content           |
+| <kbd>Shift</kbd>+<kbd>Tab</kbd>                                       | Move focus to the previous control on the page |
+
+Disable keyboard navigation by setting the prop `no-key-nav`. Behavior will now default to regular
+browser navigation with TAB key.
+
+| Keypress                             | Action                                                 |
+| ------------------------------------ | ------------------------------------------------------ |
+| <kbd>Tab</kbd>                       | Move to the next tab button or control on the page     |
+| <kbd>Shift</kbd>+<kbd>Tab</kbd>      | Move to the previous tab button or control on the page |
+| <kbd>Enter</kbd> or <kbd>Space</kbd> | Activate current focused button's tab                  |
+
+## Programmatically activating and deactivating tabs
+
+Use the `<BTabs>` `v-model` to control which tab is active by setting the `v-model` to the index
+(zero-based) of the tab to be shown (see example below).
+
+Alternatively, you can use the `active` prop on each `<BTab>` with the `.sync` modifier to activate
+the tab, or to detect if a particular tab is active.
+
+<NotYetImplemented>.activate() and .deactivate()</NotYetImplemented>
+Each `<BTab>`instance also provides two public methods to activate or deactivate the tab. The
+methods are`.activate()`and`.deactivate()`, respectively. If activation or deactivation fails
+(i.e. a tab is disabled or no tab is available to move activation to), then the currently active tab
+will remain active and the method will return `false`. You will need a reference to the `<BTab>` in
+order to use these methods.
+
+## Preventing a `<BTab>` from being activated
+
+To prevent a tab from activating, simply set the `disabled` prop on the `<BTab>` component.
+
+Alternatively, you can listen for the `activate-tab` event, which provides an option to prevent the
+tab from activating. The `activate-tab` event is emitted with three arguments:
+
+- `newTabIndex`: The index of the tab that is going to be activated
+- `prevTabIndex`: The index of the currently active tab
+- `bvEvent`: The `BvEvent` object. Call `bvEvent.preventDefault()` to prevent `newTabIndex` from
+  being activated
+
+For accessibility reasons, when using the `activate-tab` event to prevent a tab from activating, you
+should provide some means of notification to the user as to why the tab is not able to be activated.
+It is recommended to use the `disabled` attribute on the `<BTab>` component instead of using the
+`activate-tab` event (as `disabled` is more intuitive for screen reader users).
+
 <ComponentReference :data="data" />
+
+## Advanced examples
+
+### External controls using `v-model`
+
+<<< DEMO ./demo/TabsExternalControls.vue
+
+### Dynamic tabs + tabs-end slot
+
+<<< DEMO ./demo/TabsDynamic.vue
 
 <script lang="ts">
 import {data} from '../../data/components/tabs.data'
