@@ -124,37 +124,11 @@ export default {
             description:
               'When set, signifies that the accordion is part of a navbar, enabling certain features for navbar support',
           },
-          modelValue: {
-            type: 'boolean',
-            default: false,
-            description: 'Controls the visibility of the AccordionItem',
-          },
           title: {
             type: 'string',
             default: undefined,
             description:
               'Text to place in the header of the AccordionItem (title slot takes precedence)',
-          },
-          show: {
-            type: 'boolean',
-            default: false,
-            description:
-              "When set, and prop 'visible' is false on mount, will animate from closed to open on initial mount",
-          },
-          visible: {
-            type: 'boolean',
-            default: false,
-            description: "When 'true', open without animation",
-          },
-          lazy: {
-            type: 'boolean',
-            default: false,
-            description: 'When set, the content will not be mounted until opened',
-          },
-          unmountLazy: {
-            type: 'boolean',
-            default: false,
-            description: 'When set and `lazy` is true, the content will be unmounted when closed',
           },
           // transProps: {
           //   type: 'TransitionProps',
@@ -171,6 +145,7 @@ export default {
           //   default: false,
           //   description: 'Alias for `noAnimation`',
           // },
+          ...pick(showHideProps, ['modelValue', 'lazy', 'show', 'unmountLazy', 'visible']),
           ...pick(
             buildCommonProps({
               id: {
