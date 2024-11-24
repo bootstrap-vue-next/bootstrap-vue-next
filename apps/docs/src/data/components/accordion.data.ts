@@ -1,6 +1,6 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {ComponentReference, PropertyReference} from '../../types'
-import {buildCommonProps, pick} from '../../utils'
+import {buildCommonProps, pick, showHideProps} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
@@ -20,22 +20,6 @@ export default {
             default: false,
             description: 'Accordion items will stay open when another item is opened',
           },
-          modelValue: {
-            type: 'string',
-            default: undefined,
-            description:
-              'The Id of the accordion item that is currently open (not compatible with the `free===true`)',
-          },
-          lazy: {
-            type: 'boolean',
-            default: false,
-            description: 'When set, the content will not be mounted until opened',
-          },
-          unmountLazy: {
-            type: 'boolean',
-            default: false,
-            description: 'When set and `lazy` is true, the content will be unmounted when closed',
-          },
           // transProps: {
           //   type: 'TransitionProps',
           //   default: undefined,
@@ -51,6 +35,7 @@ export default {
           //   default: false,
           //   description: 'Alias for `noAnimation`',
           // },
+          ...pick(showHideProps, ['initialAnimation', 'modelValue', 'lazy', 'unmountLazy']),
           ...pick(
             buildCommonProps({
               id: {
