@@ -715,6 +715,7 @@ export interface BTabsProps {
   small?: boolean
   tag?: string
   tabClass?: ClassValue
+  underline?: boolean
   vertical?: boolean
 }
 

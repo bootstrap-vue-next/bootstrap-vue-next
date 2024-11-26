@@ -95,6 +95,7 @@ const _props = withDefaults(defineProps<Omit<BTabsProps, 'modelValue' | 'activeI
   small: false,
   tag: 'div',
   tabClass: undefined,
+  underline: false,
   vertical: false,
 })
 const props = useDefaults(_props, 'BTabs')
@@ -157,13 +158,14 @@ const alignment = useAlignment(() => props.align)
 
 const navTabsClasses = computed(() => ({
   'nav-pills': props.pills,
+  'nav-underline': props.underline,
   'flex-column me-3': props.vertical,
   [alignment.value]: props.align !== undefined,
   'nav-fill': props.fill,
-  'card-header-tabs': props.card && !props.pills,
+  'card-header-tabs': props.card && !props.pills && !props.underline,
   'card-header-pills': props.card && props.pills,
   'nav-justified': props.justified,
-  'nav-tabs': !props.noNavStyle && !props.pills,
+  'nav-tabs': !props.noNavStyle && !props.pills && !props.underline,
   'small': props.small,
 }))
 
