@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.26.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.3...bootstrapvuenext-v0.26.4) (2024-11-26)
+
+
+### Bug Fixes
+
+* **BTabs:** correct class with card and pills ([8633804](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/86338043e3b0ebfd99c7ecc196a5936e3b24d1d4))
+* **useShowHide:** fix race condition on close ([633ac35](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/633ac35b4b6347e4d8c72b09fc4d38bac5893110))
+* **useShowHide:** fix visible prop, better initial render ([0957eb1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0957eb1f95d6d27f52479ce301eefc94af537a8b))
+
 ## [0.26.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.2...bootstrapvuenext-v0.26.3) (2024-11-22)
 
 
