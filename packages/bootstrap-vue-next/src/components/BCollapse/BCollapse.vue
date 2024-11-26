@@ -5,7 +5,7 @@
     v-bind="transitionProps"
     :enter-active-class="computedNoAnimation ? '' : 'collapsing'"
     :leave-active-class="computedNoAnimation ? '' : 'collapsing'"
-    :appear="true"
+    :appear="modelValue || props.visible"
   >
     <component
       :is="props.tag"
