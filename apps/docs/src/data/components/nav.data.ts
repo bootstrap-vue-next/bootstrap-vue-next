@@ -86,7 +86,19 @@ export default {
       sourcePath: '/BNav/BNavForm.vue',
       props: {
         '': {
-          ...pick(buildCommonProps(), ['floating', 'id', 'novalidate', 'role', 'validated']),
+          formClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: 'CSS class (or classes) to add to the form element',
+          },
+          ...pick(buildCommonProps(), [
+            'floating',
+            'id',
+            'novalidate',
+            'role',
+            'validated',
+            'wrapperAttrs',
+          ]),
         } satisfies Record<keyof BvnComponentProps['BNavForm'], PropertyReference>,
       },
       emits: [
