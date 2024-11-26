@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.4...bootstrapvuenext-v0.26.5) (2024-11-26)
+
+
+### Bug Fixes
+
+* **useShowHide:** fix transition triggering in production build ([#2390](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2390)) ([ec07f13](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ec07f13a2b5b67dbdd3e03f5779cc794ca447dee))
+
 ## [0.26.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.3...bootstrapvuenext-v0.26.4) (2024-11-26)
 
 
