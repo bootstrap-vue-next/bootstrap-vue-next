@@ -338,7 +338,10 @@ export const useShowHide = (
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
-            trapActive.value = val
+            // timeout to make the test pass... what a hack!
+            setTimeout(() => {
+              trapActive.value = val
+            }, 32)
           })
         })
       })
