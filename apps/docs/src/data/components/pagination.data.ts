@@ -57,16 +57,6 @@ export default {
             default: '\u00AB',
             description: 'Content to place in the go to first page button',
           },
-          noEllipsis: {
-            type: 'boolean',
-            default: false,
-            description: 'Do not show ellipsis buttons',
-          },
-          noGotoEndButtons: {
-            type: 'boolean',
-            default: false,
-            description: 'Hides the go to first and go to last page buttons',
-          },
           labelFirstPage: {
             type: 'string',
             default: 'Go to first page',
@@ -172,7 +162,7 @@ export default {
                 default: undefined,
               },
             }),
-            ['ariaControls', 'ariaLabel', 'disabled', 'size']
+            ['ariaControls', 'ariaLabel', 'disabled', 'noEllipsis', 'noGotoEndButtons', 'size']
           ),
         } satisfies Record<keyof BvnComponentProps['BPagination'], PropertyReference>,
       },

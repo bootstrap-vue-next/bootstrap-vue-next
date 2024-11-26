@@ -77,17 +77,35 @@ export default {
         {
           event: 'hidden',
           description: 'Emitted when collapse has finished closing',
-          args: [],
+          args: [
+            {
+              arg: 'value',
+              type: 'BvTriggerableEvent',
+              description: 'The event object',
+            },
+          ],
         },
         {
           event: 'hide-prevented',
           description: 'Emitted when the Collapse tried to close, but was prevented from doing so.',
-          args: [],
+          args: [
+            {
+              arg: 'value',
+              type: 'BvTriggerableEvent',
+              description: 'The event object',
+            },
+          ],
         },
         {
           event: 'show',
           description: 'Emitted when collapse has started to open',
-          args: [],
+          args: [
+            {
+              arg: 'value',
+              type: 'BvTriggerableEvent',
+              description: 'The event object',
+            },
+          ],
         },
         {
           event: 'shown',
@@ -103,7 +121,24 @@ export default {
         {
           event: 'show-prevented',
           description: 'Emitted when the Collapse tried to open, but was prevented from doing so.',
-          args: [],
+          args: [
+            {
+              arg: 'value',
+              type: 'BvTriggerableEvent',
+              description: 'The event object',
+            },
+          ],
+        },
+        {
+          event: 'toggle',
+          description: 'Emitted when collapse has started to toggle',
+          args: [
+            {
+              arg: 'value',
+              type: 'BvTriggerableEvent',
+              description: 'The event object',
+            },
+          ],
         },
       ],
       slots: [
