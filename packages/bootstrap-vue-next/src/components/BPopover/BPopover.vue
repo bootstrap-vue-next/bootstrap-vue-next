@@ -5,7 +5,11 @@
     :to="props.teleportTo"
     :disabled="!props.teleportTo || props.teleportDisabled"
   >
-    <Transition v-if="renderRef || contentShowing" v-bind="transitionProps" :appear="true">
+    <Transition
+      v-if="renderRef || contentShowing"
+      v-bind="transitionProps"
+      :appear="modelValue || props.visible"
+    >
       <div
         v-show="showRef && !hidden"
         :id="computedId"
