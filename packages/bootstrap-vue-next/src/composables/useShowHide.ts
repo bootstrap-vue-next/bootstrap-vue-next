@@ -211,10 +211,12 @@ export const useShowHide = (
 
     if (event.defaultPrevented || event2.defaultPrevented) {
       emit('hide-prevented', buildTriggerableEvent('hide-prevented'))
-      noAction = true
-      nextTick(() => {
-        modelValue.value = true
-      })
+      if (!modelValue.value) {
+        nextTick(() => {
+          noAction = true
+          modelValue.value = true
+        })
+      }
       return
     }
     setTimeout(
