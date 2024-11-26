@@ -43,10 +43,12 @@
             :aria-controls="tab.id"
             :aria-selected="tab.active"
             v-bind="tab.titleLinkAttrs?.()"
-            @keydown.left.stop.prevent="keynav(-1)"
-            @keydown.right.stop.prevent="keynav(1)"
-            @keydown.page-up.stop.prevent="keynav(-999)"
-            @keydown.page-down.stop.prevent="keynav(999)"
+            @keydown.left="keynav($event, -1)"
+            @keydown.up="keynav($event, -1)"
+            @keydown.right="keynav($event, 1)"
+            @keydown.down="keynav($event, 1)"
+            @keydown.page-up="keynav($event, -999)"
+            @keydown.page-down="keynav($event, 999)"
             @click.stop.prevent="(e) => handleClick(e, idx)"
           >
             <component :is="tab.titleComponent" v-if="tab.titleComponent" />
@@ -89,7 +91,7 @@ const _props = withDefaults(defineProps<Omit<BTabsProps, 'modelValue' | 'activeI
   navItemClass: undefined,
   navWrapperClass: undefined,
   noFade: false,
-  // noKeyNav: false,
+  noKeyNav: false,
   noNavStyle: false,
   pills: false,
   small: false,
@@ -200,8 +202,10 @@ const handleClick = (event: Readonly<MouseEvent>, index: number) => {
   }
 }
 
-const keynav = (direction: number) => {
-  if (tabs.value.length <= 0) return
+const keynav = (e: Event, direction: number) => {
+  if (tabs.value.length <= 0 || props.noKeyNav) return
+  e.preventDefault()
+  e.stopPropagation()
   modelValue.value = nextIndex(modelValue.value + direction, direction)
   document.getElementById(tabs.value[modelValue.value]?.buttonId)?.focus()
 }
