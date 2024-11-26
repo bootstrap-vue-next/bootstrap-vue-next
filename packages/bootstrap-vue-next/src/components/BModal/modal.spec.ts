@@ -400,7 +400,7 @@ describe('modal', () => {
           },
         },
       })
-
+      await nextTick()
       expect(wrapper.vm).toBeDefined()
 
       let $modal = wrapper.find('div.modal')
@@ -460,7 +460,7 @@ describe('modal', () => {
           },
         },
       })
-
+      await nextTick()
       expect(wrapper.vm).toBeDefined()
 
       let $modal = wrapper.find('div.modal')

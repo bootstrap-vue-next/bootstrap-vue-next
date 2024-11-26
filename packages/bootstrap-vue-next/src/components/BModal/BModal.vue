@@ -3,7 +3,7 @@
     <Transition
       v-if="renderRef || contentShowing"
       v-bind="transitionProps"
-      :appear="modelValue"
+      :appear="true"
       @after-enter="onAfterEnter"
     >
       <div
