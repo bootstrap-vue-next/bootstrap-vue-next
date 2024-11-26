@@ -62,7 +62,7 @@ export const useShowHide = (
 ) => {
   let noAction = false
   const initialShow = (!!modelValue.value && !props.initialAnimation) || props.visible || false
-  const showRef = ref<boolean>(initialShow)
+  const showRef = ref<boolean>(false)
   const renderRef = ref<boolean>(initialShow)
   const renderBackdropRef = ref<boolean>(initialShow)
 
@@ -87,18 +87,27 @@ export const useShowHide = (
     () => props.noAnimation || props.noFade || localNoAnimation.value || false
   )
   onMounted(() => {
-    if (props.visible || (!props.show && initialShow)) {
+    if (!props.show && initialShow) {
+      // show without delay or animation
+      const event = buildTriggerableEvent('show', {cancelable: true})
+      emit('show', event)
+
+      if (event.defaultPrevented) {
+        emit('show-prevented', buildTriggerableEvent('show-prevented'))
+        return
+      }
       localNoAnimation.value = true
       if (!modelValue.value) {
         noAction = true
         modelValue.value = true
       }
-      nextTick(() => {
-        isVisible.value = true
-        backdropVisible.value = true
-        backdropReady.value = true
-        show()
-      })
+      renderRef.value = true
+      renderBackdropRef.value = true
+      isVisible.value = true
+      backdropVisible.value = true
+      backdropReady.value = true
+      showRef.value = true
+      options.showFn?.()
     } else if (props.show || (!!modelValue.value && props.initialAnimation)) {
       show()
     }
@@ -324,9 +333,16 @@ export const useShowHide = (
   )
   const trapActive = ref(false)
   watch(isVisible, (val) => {
-    setTimeout(() => {
-      trapActive.value = val
-    }, 32)
+    // This is a hack to ensure that the trapActive is set after the isVisible
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            trapActive.value = val
+          })
+        })
+      })
+    })
   })
   const backdropVisible = ref(false)
   const backdropReady = ref(false)

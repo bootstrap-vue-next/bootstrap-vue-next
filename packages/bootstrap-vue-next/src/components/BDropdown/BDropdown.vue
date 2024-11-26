@@ -44,7 +44,7 @@
       :to="props.teleportTo"
       :disabled="!props.teleportTo || props.teleportDisabled"
     >
-      <Transition v-if="renderRef || contentShowing" v-bind="transitionProps" :appear="modelValue">
+      <Transition v-if="renderRef || contentShowing" v-bind="transitionProps" :appear="true">
         <ul
           v-show="showRef"
           :id="computedId + '-menu'"

@@ -6,7 +6,7 @@
     <Transition
       v-if="renderRef || contentShowing || isOpenByBreakpoint"
       v-bind="transitionProps"
-      :appear="modelValue || isOpenByBreakpoint"
+      :appear="true"
     >
       <div
         v-show="
