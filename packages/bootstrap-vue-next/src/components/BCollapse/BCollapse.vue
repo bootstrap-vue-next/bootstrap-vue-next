@@ -38,8 +38,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import {collapseInjectionKey, globalCollapseStorageInjectionKey} from '../../utils/keys'
 import type {BCollapseProps} from '../../types/ComponentProps'
-import {BvTriggerableEvent} from '../../utils'
-import {useShowHide} from '../../composables/useShowHide'
+import {type showHideEmits, useShowHide} from '../../composables/useShowHide'
 
 defineOptions({
   inheritAttrs: false,
@@ -60,15 +59,7 @@ const _props = withDefaults(defineProps<Omit<BCollapseProps, 'modelValue'>>(), {
 
 const props = useDefaults(_props, 'BCollapse')
 
-const emit = defineEmits<{
-  'hidden': [value: BvTriggerableEvent]
-  'hide': [value: BvTriggerableEvent]
-  'hide-prevented': [value: BvTriggerableEvent]
-  'show': [value: BvTriggerableEvent]
-  'show-prevented': [value: BvTriggerableEvent]
-  'shown': [value: BvTriggerableEvent]
-  'toggle': [value: BvTriggerableEvent]
-}>()
+const emit = defineEmits<showHideEmits>()
 
 type SharedSlotsData = {
   hide: () => void

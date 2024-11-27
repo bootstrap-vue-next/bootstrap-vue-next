@@ -95,14 +95,13 @@ import {
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import type {BDropdownProps} from '../../types/ComponentProps'
-import {BvTriggerableEvent} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 import ConditionalWrapper from '../ConditionalWrapper.vue'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
 import {isBoundary, isRootBoundary} from '../../utils/floatingUi'
 import {getElement} from '../../utils/getElement'
 import {buttonGroupKey, dropdownInjectionKey, inputGroupKey} from '../../utils/keys'
-import {useShowHide} from '../../composables/useShowHide'
+import {type showHideEmits, useShowHide} from '../../composables/useShowHide'
 
 const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   ariaLabel: undefined,
@@ -148,17 +147,11 @@ const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
 })
 const props = useDefaults(_props, 'BDropdown')
 
-const emit = defineEmits<{
-  'click': [event: MouseEvent]
-  'hidden': [value: BvTriggerableEvent]
-  'hide': [value: BvTriggerableEvent]
-  'hide-prevented': [value: BvTriggerableEvent]
-  'show': [value: BvTriggerableEvent]
-  'show-prevented': [value: BvTriggerableEvent]
-  'shown': [value: BvTriggerableEvent]
-  'toggle': [value: BvTriggerableEvent]
-  'toggle-prevented': [value: BvTriggerableEvent]
-}>()
+const emit = defineEmits<
+  {
+    click: [event: MouseEvent]
+  } & showHideEmits
+>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
