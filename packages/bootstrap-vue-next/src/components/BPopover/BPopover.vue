@@ -90,7 +90,7 @@ import {BvTriggerableEvent} from '../../utils'
 import {isBoundary, isRootBoundary, resolveBootstrapPlacement} from '../../utils/floatingUi'
 import {getElement} from '../../utils/getElement'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
-import {useShowHide} from '../../composables/useShowHide'
+import {type showHideEmits, useShowHide} from '../../composables/useShowHide'
 
 defineOptions({
   inheritAttrs: false,
@@ -136,18 +136,14 @@ const _props = withDefaults(defineProps<Omit<BPopoverProps, 'modelValue'>>(), {
 
 const props = useDefaults(_props, 'BPopover')
 
-const emit = defineEmits<{
-  'hidden': [value: BvTriggerableEvent]
-  'hide': [value: BvTriggerableEvent]
-  'hide-prevented': [value: BvTriggerableEvent]
-  'show': [value: BvTriggerableEvent]
-  'show-prevented': [value: BvTriggerableEvent]
-  'shown': [value: BvTriggerableEvent]
-  'pointerleave': [value: BvTriggerableEvent]
-  'blur': [value: BvTriggerableEvent]
-  'click-outside': [value: BvTriggerableEvent]
-  'close-on-hide': [value: BvTriggerableEvent]
-}>()
+const emit = defineEmits<
+  {
+    'pointerleave': [value: BvTriggerableEvent]
+    'blur': [value: BvTriggerableEvent]
+    'click-outside': [value: BvTriggerableEvent]
+    'close-on-hide': [value: BvTriggerableEvent]
+  } & showHideEmits
+>()
 
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

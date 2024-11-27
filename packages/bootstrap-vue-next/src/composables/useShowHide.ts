@@ -13,6 +13,17 @@ export const fadeBaseTransitionProps = {
   css: true,
 }
 
+export interface showHideEmits {
+  'hide': [value: BvTriggerableEvent]
+  'hide-prevented': [value: BvTriggerableEvent]
+  'hidden': [value: BvTriggerableEvent]
+  'show': [value: BvTriggerableEvent]
+  'show-prevented': [value: BvTriggerableEvent]
+  'shown': [value: BvTriggerableEvent]
+  'toggle': [value: BvTriggerableEvent]
+  'toggle-prevented': [value: BvTriggerableEvent]
+}
+
 interface TransitionProps {
   onBeforeEnter?: (el: Element) => void
   onEnter?: (el: Element) => void

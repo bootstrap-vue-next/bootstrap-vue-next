@@ -11,8 +11,9 @@
       @hidden="emit('hidden', $event)"
       @hide-prevented="emit('hide-prevented', $event)"
       @show-prevented="emit('show-prevented', $event)"
-      @click="emit('click', $event)"
+      @toggle-prevented="emit('toggle-prevented', $event)"
       @toggle="emit('toggle', $event)"
+      @click="emit('click', $event)"
     >
       <template #button-content>
         <slot name="button-content" />
@@ -29,10 +30,10 @@
 
 <script setup lang="ts">
 import {useTemplateRef} from 'vue'
-import {BvTriggerableEvent} from '../../utils'
 import BDropdown from '../BDropdown/BDropdown.vue'
 import type {BDropdownProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
+import type {showHideEmits} from '../../composables/useShowHide'
 
 const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   ariaLabel: undefined,
@@ -74,16 +75,11 @@ const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
 })
 const props = useDefaults(_props, 'BNavItemDropdown')
 
-const emit = defineEmits<{
-  'click': [event: MouseEvent]
-  'hidden': [value: BvTriggerableEvent]
-  'hide': [value: BvTriggerableEvent]
-  'hide-prevented': [value: BvTriggerableEvent]
-  'show': [value: BvTriggerableEvent]
-  'show-prevented': [value: BvTriggerableEvent]
-  'shown': [value: BvTriggerableEvent]
-  'toggle': [value: BvTriggerableEvent]
-}>()
+const emit = defineEmits<
+  {
+    click: [event: MouseEvent]
+  } & showHideEmits
+>()
 
 const modelValue = defineModel<Exclude<BDropdownProps['modelValue'], undefined>>({default: false})
 

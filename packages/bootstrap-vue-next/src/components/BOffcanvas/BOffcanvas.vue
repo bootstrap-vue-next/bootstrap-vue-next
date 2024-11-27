@@ -90,7 +90,7 @@ import BCloseButton from '../BButton/BCloseButton.vue'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
 import {useSafeScrollLock} from '../../composables/useSafeScrollLock'
 import {isEmptySlot} from '../../utils/dom'
-import {useShowHide} from '../../composables/useShowHide'
+import {type showHideEmits, useShowHide} from '../../composables/useShowHide'
 import type {Placement} from '../../types/Alignment'
 
 // TODO once the responsive stuff may be implemented correctly,
@@ -138,18 +138,14 @@ const _props = withDefaults(defineProps<Omit<BOffcanvasProps, 'modelValue'>>(), 
 })
 const props = useDefaults(_props, 'BOffcanvas')
 
-const emit = defineEmits<{
-  'close': [value: BvTriggerableEvent]
-  'esc': [value: BvTriggerableEvent]
-  'backdrop': [value: BvTriggerableEvent]
-  'breakpoint': [value: BvTriggerableEvent]
-  'hidden': [value: BvTriggerableEvent]
-  'hide': [value: BvTriggerableEvent]
-  'hide-prevented': [value: BvTriggerableEvent]
-  'show': [value: BvTriggerableEvent]
-  'show-prevented': [value: BvTriggerableEvent]
-  'shown': [value: BvTriggerableEvent]
-}>()
+const emit = defineEmits<
+  {
+    close: [value: BvTriggerableEvent]
+    esc: [value: BvTriggerableEvent]
+    backdrop: [value: BvTriggerableEvent]
+    breakpoint: [value: BvTriggerableEvent]
+  } & showHideEmits
+>()
 
 type SharedSlotsData = {
   visible: boolean

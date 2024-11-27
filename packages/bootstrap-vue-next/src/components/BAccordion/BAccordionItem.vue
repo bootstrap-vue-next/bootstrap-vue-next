@@ -15,11 +15,13 @@
       :lazy="props.lazy || parentData?.lazy.value"
       :unmount-lazy="props.unmountLazy || parentData?.unmountLazy.value"
       @show="emit('show', $event)"
-      @shown="emit('shown')"
+      @shown="emit('shown', $event)"
       @hide="emit('hide', $event)"
-      @hidden="emit('hidden')"
-      @hide-prevented="emit('hide-prevented')"
-      @show-prevented="emit('show-prevented')"
+      @hidden="emit('hidden', $event)"
+      @hide-prevented="emit('hide-prevented', $event)"
+      @show-prevented="emit('show-prevented', $event)"
+      @toggle-prevented="emit('toggle-prevented', $event)"
+      @toggle="emit('toggle', $event)"
     >
       <template #header="{visible: toggleVisible, toggle: slotToggle}">
         <component
@@ -56,7 +58,7 @@ import {accordionInjectionKey} from '../../utils/keys'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import type {BAccordionItemProps} from '../../types/ComponentProps'
-import type {BvTriggerableEvent} from '../../utils'
+import type {showHideEmits} from '../../composables/useShowHide'
 
 defineOptions({
   inheritAttrs: false,
@@ -85,14 +87,7 @@ const _props = withDefaults(defineProps<Omit<BAccordionItemProps, 'modelValue'>>
 })
 const props = useDefaults(_props, 'BAccordionItem')
 
-const emit = defineEmits<{
-  'hidden': []
-  'hide': [value: BvTriggerableEvent]
-  'hide-prevented': []
-  'show': [value: BvTriggerableEvent]
-  'show-prevented': []
-  'shown': []
-}>()
+const emit = defineEmits<showHideEmits>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

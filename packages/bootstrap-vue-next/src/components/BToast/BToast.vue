@@ -71,7 +71,7 @@ import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useDefaults} from '../../composables/useDefaults'
 import {useCountdownHover} from '../../composables/useCountdownHover'
 import {useId} from '../../composables/useId'
-import {useShowHide} from '../../composables/useShowHide'
+import {type showHideEmits, useShowHide} from '../../composables/useShowHide'
 
 const _props = withDefaults(defineProps<Omit<BToastProps, 'modelValue'>>(), {
   bgVariant: null,
@@ -125,16 +125,12 @@ const _props = withDefaults(defineProps<Omit<BToastProps, 'modelValue'>>(), {
 })
 const props = useDefaults(_props, 'BToast')
 
-const emit = defineEmits<{
-  'close': [value: BvTriggerableEvent]
-  'close-countdown': [value: number]
-  'hide': [value: BvTriggerableEvent]
-  'hidden': [value: BvTriggerableEvent]
-  'show': [value: BvTriggerableEvent]
-  'shown': [value: BvTriggerableEvent]
-  'show-prevented': [value: BvTriggerableEvent]
-  'hide-prevented': [value: BvTriggerableEvent]
-}>()
+const emit = defineEmits<
+  {
+    'close': [value: BvTriggerableEvent]
+    'close-countdown': [value: number]
+  } & showHideEmits
+>()
 
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

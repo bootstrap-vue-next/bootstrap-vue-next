@@ -136,7 +136,7 @@ import {useSafeScrollLock} from '../../composables/useSafeScrollLock'
 import {isEmptySlot} from '../../utils/dom'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useModalManager} from '../../composables/useModalManager'
-import {useShowHide} from '../../composables/useShowHide'
+import {type showHideEmits, useShowHide} from '../../composables/useShowHide'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
 
 defineOptions({
@@ -214,19 +214,15 @@ const _props = withDefaults(defineProps<Omit<BModalProps, 'modelValue'>>(), {
 })
 const props = useDefaults(_props, 'BModal')
 
-const emit = defineEmits<{
-  'backdrop': [value: BvTriggerableEvent]
-  'cancel': [value: BvTriggerableEvent]
-  'close': [value: BvTriggerableEvent]
-  'esc': [value: BvTriggerableEvent]
-  'hidden': [value: BvTriggerableEvent]
-  'hide': [value: BvTriggerableEvent]
-  'hide-prevented': [value: BvTriggerableEvent]
-  'ok': [value: BvTriggerableEvent]
-  'show': [value: BvTriggerableEvent]
-  'show-prevented': [value: BvTriggerableEvent]
-  'shown': [value: BvTriggerableEvent]
-}>()
+const emit = defineEmits<
+  {
+    backdrop: [value: BvTriggerableEvent]
+    cancel: [value: BvTriggerableEvent]
+    close: [value: BvTriggerableEvent]
+    esc: [value: BvTriggerableEvent]
+    ok: [value: BvTriggerableEvent]
+  } & showHideEmits
+>()
 
 type SharedSlotsData = {
   cancel: () => void
