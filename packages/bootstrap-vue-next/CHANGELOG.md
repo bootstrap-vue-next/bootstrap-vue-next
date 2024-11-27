@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.26.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.5...bootstrapvuenext-v0.26.6) (2024-11-27)
+
+
+### Features
+
+* **BTabs:** add underline prop ([f464982](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f464982fc78f5f7eec28d23187a8127fd9751859))
+* **BTabs:** noKeyNav prop ([85de425](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/85de4253ab98a40d097a49cca52e89b81e95fc47))
+
+
+### Bug Fixes
+
+* **BTabs:** make keyboard nav aria compatible. ([6d8de32](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6d8de3249e61e461a354158fc80f886f865a0e05))
+* **useModal:** fix lazy modal ([42a1768](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/42a17683fd450d6f67b5913b7d7554630236b42b))
+* **useShowHide:** add all the emits ([a8a2481](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a8a24814355ea107671dc2d7178380ce19a36968))
+
 ## [0.26.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.4...bootstrapvuenext-v0.26.5) (2024-11-26)
 
 
