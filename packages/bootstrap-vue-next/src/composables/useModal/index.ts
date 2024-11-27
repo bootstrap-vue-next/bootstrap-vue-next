@@ -29,7 +29,7 @@ export const useModal = (id: MaybeRefOrGetter<string | undefined> = undefined) =
     if (resolvedId) {
       if (!registry) return null
       for (const [, modal] of registry.value) {
-        if (modal.exposed?.id.value === resolvedId) {
+        if (toValue(modal?.exposed?.id) === resolvedId) {
           return modal
         }
       }
