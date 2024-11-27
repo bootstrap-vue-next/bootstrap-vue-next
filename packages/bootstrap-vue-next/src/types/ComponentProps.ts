@@ -709,12 +709,13 @@ export interface BTabsProps {
   navItemClass?: ClassValue
   navWrapperClass?: ClassValue
   noFade?: boolean
-  // noKeyNav?: boolean,
+  noKeyNav?: boolean
   noNavStyle?: boolean
   pills?: boolean
   small?: boolean
   tag?: string
   tabClass?: ClassValue
+  underline?: boolean
   vertical?: boolean
 }
 

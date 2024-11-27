@@ -12,7 +12,7 @@
 
 ### Examples
 
-- **Private File**: `./src/components/BTransition.vue` is a private file and is not exported from the library.
+- **Private File**: `./src/components/BCardHeadFoot.vue` is a private file and is not exported from the library.
 - **Public File**: `./src/components/BTooltip/BTooltip.vue` is a public file and is exported to users.
 
 ### Special Cases

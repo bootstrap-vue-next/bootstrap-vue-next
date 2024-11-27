@@ -3,7 +3,7 @@
     <Transition
       v-if="renderRef || contentShowing"
       v-bind="transitionProps"
-      :appear="modelValue"
+      :appear="modelValue || props.visible"
       @after-enter="onAfterEnter"
     >
       <div
@@ -113,7 +113,7 @@
           :style="computedZIndexBackdrop"
           :class="{
             fade: !computedNoAnimation,
-            show: backdropVisible,
+            show: backdropVisible || computedNoAnimation,
           }"
           @click="hide('backdrop')"
         />

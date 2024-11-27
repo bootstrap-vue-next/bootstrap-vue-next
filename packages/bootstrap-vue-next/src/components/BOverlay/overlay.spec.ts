@@ -1,7 +1,7 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BOverlay from './BOverlay.vue'
-import BTransition from '../BTransition.vue'
+import {Transition as BTransition} from 'vue'
 import BSpinner from '../BSpinner/BSpinner.vue'
 
 describe('overlay', () => {
@@ -49,22 +49,6 @@ describe('overlay', () => {
     const wrapper = mount(BOverlay)
     const $transition = wrapper.findComponent(BTransition)
     expect($transition.exists()).toBe(true)
-  })
-
-  it('child BTransition is given prop noFade to be noFade', async () => {
-    const wrapper = mount(BOverlay, {
-      props: {noFade: true},
-    })
-    const $transition = wrapper.getComponent(BTransition)
-    expect($transition.props('noFade')).toBe(true)
-    await wrapper.setProps({noFade: false})
-    expect($transition.props('noFade')).toBe(false)
-  })
-
-  it("child BTransition is given prop transProps to be static {enterToClass: 'show'}", () => {
-    const wrapper = mount(BOverlay)
-    const $transition = wrapper.getComponent(BTransition)
-    expect($transition.props('transProps')).toEqual({enterToClass: 'show'})
   })
 
   it('child BTransition has child div when prop show true', () => {

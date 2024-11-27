@@ -1,6 +1,6 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {ComponentReference, PropertyReference, SlotScopeReference} from '../../types'
-import {showHideProps} from '../../utils'
+import {buildCommonProps, pick, showHideProps} from '../../utils'
 
 const sharedSlots: SlotScopeReference[] = [
   {
@@ -209,31 +209,10 @@ export default {
             description:
               'Applies one of the Bootstrap theme color variants to the header (this takes priority over headerBgVariant and headerTextVariant)',
           },
-          noBackdrop: {
-            type: 'boolean',
-            default: false,
-            description: 'Disables rendering of the modal backdrop',
-          },
           noFooter: {
             type: 'boolean',
             default: false,
             description: 'Disables rendering of the modal footer',
-          },
-          noHeader: {
-            type: 'boolean',
-            default: false,
-            description: 'Disables rendering of the modal header',
-          },
-          noHeaderClose: {
-            type: 'boolean',
-            default: false,
-            description: 'Disables rendering of the modal header close button',
-          },
-          id: {
-            type: 'string',
-            default: undefined,
-            description:
-              "Used to set the 'id' attribute on the rendered content, and used as the base to generate any additional element IDs as needed",
           },
           modalClass: {
             type: 'ClassValue',
@@ -321,6 +300,7 @@ export default {
             description: 'Specify the HTML tag to render instead of the default tag for the title',
           },
           ...showHideProps,
+          ...pick(buildCommonProps(), ['id', 'noBackdrop', 'noHeader', 'noHeaderClose']),
         } satisfies Record<keyof BvnComponentProps['BModal'], PropertyReference>,
       },
       emits: [

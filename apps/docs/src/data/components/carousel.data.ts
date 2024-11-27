@@ -65,10 +65,20 @@ export default {
             default: true,
             description: 'Enable keyboard navigation with the right and left arrow keys',
           },
+          labelIndicators: {
+            type: 'string',
+            default: 'Select a slide to display',
+            description: 'Set the aria-label for the indicators',
+          },
           modelValue: {
             type: 'number',
             default: 0,
             description: 'The index of the currently active slide',
+          },
+          noAnimation: {
+            type: 'boolean',
+            default: false,
+            description: 'When set, disables the animation',
           },
           noHoverPause: {
             type: 'boolean',

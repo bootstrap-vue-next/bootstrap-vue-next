@@ -5,7 +5,11 @@
     :to="props.teleportTo"
     :disabled="!props.teleportTo || props.teleportDisabled"
   >
-    <Transition v-if="renderRef || contentShowing" v-bind="transitionProps" :appear="modelValue">
+    <Transition
+      v-if="renderRef || contentShowing"
+      v-bind="transitionProps"
+      :appear="modelValue || props.visible"
+    >
       <div
         v-show="showRef && !hidden"
         :id="computedId"
@@ -142,6 +146,7 @@ const emit = defineEmits<{
   'pointerleave': [value: BvTriggerableEvent]
   'blur': [value: BvTriggerableEvent]
   'click-outside': [value: BvTriggerableEvent]
+  'close-on-hide': [value: BvTriggerableEvent]
 }>()
 
 const slots = defineSlots<{
@@ -279,9 +284,16 @@ const arrowStyle = ref<CSSProperties>({position: 'absolute'})
 
 watch(middlewareData, (newValue) => {
   if (props.noHide === false) {
-    hidden.value = !!newValue.hide?.referenceHidden
-    if (props.closeOnHide && hidden.value && !props.noAutoClose && !props.manual) {
-      hide('closeOnHide')
+    if (newValue.hide?.referenceHidden && !hidden.value && showRef.value) {
+      if (props.closeOnHide && !props.noAutoClose && !props.manual) {
+        throttleHide('close-on-hide')
+      } else {
+        localTemporaryHide.value = true
+        hidden.value = true
+      }
+    } else if (localTemporaryHide.value && !newValue.hide?.referenceHidden) {
+      localTemporaryHide.value = false
+      hidden.value = false
     }
   }
   if (newValue.arrow) {
@@ -299,11 +311,13 @@ const {
   hide,
   show,
   toggle,
+  throttleHide,
   computedNoAnimation,
   transitionProps,
   contentShowing,
   isVisible,
   renderRef,
+  localTemporaryHide,
 } = useShowHide(modelValue, props, emit as EmitFn, element, computedId, {
   showFn: () => {
     if (hidden.value) {

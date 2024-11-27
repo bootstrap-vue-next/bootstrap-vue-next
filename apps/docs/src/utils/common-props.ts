@@ -265,6 +265,31 @@ export const commonProps = () =>
       default: undefined,
       description: 'Sets the value of the `name` attribute on the form control',
     },
+    noBackdrop: {
+      type: 'boolean',
+      default: false,
+      description: 'Disables rendering of the backdrop',
+    },
+    noEllipsis: {
+      type: 'boolean',
+      default: false,
+      description: 'Do not show ellipsis buttons',
+    },
+    noGotoEndButtons: {
+      type: 'boolean',
+      default: false,
+      description: 'Hides the go to first and go to last page buttons',
+    },
+    noHeader: {
+      type: 'boolean',
+      default: false,
+      description: 'Disables rendering of the  header',
+    },
+    noHeaderClose: {
+      type: 'boolean',
+      default: false,
+      description: 'Disables rendering of the header close button',
+    },
     noHoverPause: {
       type: 'boolean',
       default: false,

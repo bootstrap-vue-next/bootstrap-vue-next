@@ -6,7 +6,7 @@
     <Transition
       v-if="renderRef || contentShowing || isOpenByBreakpoint"
       v-bind="transitionProps"
-      :appear="modelValue || isOpenByBreakpoint"
+      :appear="modelValue || props.visible"
     >
       <div
         v-show="
@@ -68,7 +68,7 @@
           class="offcanvas-backdrop"
           :class="{
             fade: !computedNoAnimation,
-            show: backdropVisible,
+            show: backdropVisible || computedNoAnimation,
           }"
           @click="hide('backdrop')"
         />

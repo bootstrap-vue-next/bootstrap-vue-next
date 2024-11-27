@@ -19,7 +19,7 @@ some places where this library will insulate you from the changes to the underly
 a general familiarity with the changes in the core dependencies will serve you well.
 
 For instance, there are likely many places where you use `Bootstrap` utility classes in order to style your components.
-`Bootstrap 5` change made a [breaking change](https://getbootstrap.com/docs/5.3/migration/#utilities-3) to all utility
+`Bootstrap 5` made a [breaking change](https://getbootstrap.com/docs/5.3/migration/#utilities-3) to all utility
 classes that involve `left` and `right` (or `l` and `r`) to be `start` and `end` (or `s` and `e`). This
 will affect compents such as `BNavBar` in unexpected ways that BSVN has no control over.
 
@@ -61,12 +61,36 @@ is rounded. The edge specific props such as`rounded-top` override the `rounded` 
 
 This takes the place of `top`, `bottom`, `left`, and `right` values for the `rounded` prop.
 
+### Show and Hide
+
+We have made an effort to standardize the names and behaviors of props that are related to the showing
+and hiding of components and subcomponents.
+
+The primary reactive way to contorl the visibility of a component is generally by use of the `v-model` rather
+than a `visible` as in `BCollapse`, `BModal`, `BToast`.
+
+Rather than using `hide` as a prefix to specify that you don't want a subcomponent to be rendered, we've moved to using `no`
+as the prefix. For instant in `BPlaceholder`, `hideHeader` becomes `noHeader`. Similarly we use the 'no' prefix in place
+of 'skip' in places like `BCollapse` where `skipAnimation` becomes `noAnimation`.
+
+The properties and components that are affected by this change are show in the following table:
+
+<ShowHideProps/>
+
 ## Grid
 
 BSVN doesn't currently implement the ability to define `breakpoint` names.
 
 See the [Bootstrap 5 migration guide](https://getbootstrap.com/docs/5.3/migration/#grid-updates), in particular
 values for `order` on `<BCol>` only provides support for 1 - 5.
+
+## BAccordian
+
+see [Show and Hide](#show-and-hide) shared properties.
+
+### BAccordianItem
+
+see [Show and Hide](#show-and-hide) shared properties.
 
 ## BAlert
 
@@ -186,7 +210,7 @@ events on this component.
 
 `$root` instance events `bv::collapse::state` and `bv::toggle::collapse` are deprecrated.
 
-<NotYetImplemented>The `appear` prop.</NotYetImplemented>
+see [Show and Hide](#show-and-hide) shared properties.
 
 ## BDropdown
 
@@ -209,6 +233,8 @@ The `html` prop has been deprecated, use the `button-content`.
 
 The the boolean argument to control returning focus to the toggle button on the `hide` scoped property of the default slot is deprecated.
 It is less important in BSVN since bootstrap v5 by default doesn't have the focus ring that v4 has.
+
+see [Show and Hide](#show-and-hide) shared properties.
 
 <NotYetImplemented>`toggleAttrs`</NotYetImplemented>
 
@@ -355,7 +381,7 @@ They work as documented in vue.js, so there is no longer a need for the properti
 
 ## BJumbotron
 
-<NotYetImplemened/>
+<NotYetImplemented/>
 
 Note that Bootstrap has deprecated their Jumbotron component, but it can be replicated using
 utility classes. See their [migration guide](https://getbootstrap.com/docs/5.3/migration/#jumbotron)
@@ -393,7 +419,7 @@ See [BLink](#blink) for changes to link and router behavior.
 
 ## BMedia
 
-<NotYetImplemened/>
+<NotYetImplemented/>
 
 Note that Bootstrap has deprecated their Media object, but it can be replicated using
 flex utility classes. See their [documentation](https://getbootstrap.com/docs/5.3/utilities/flex/#media-object) for details.
@@ -417,8 +443,10 @@ Example using `useModalController.confirm` to replace `msgBoxConfirm` (Remember 
 
 <<< DEMO ./demo/ModalConfirm.vue
 
-The `show` and `confirm` `props` object accespts all of the properties that are defined on
+The `show` and `confirm` `props` object accepts all of the properties that are defined on
 [BModal](/docs/components/modal#component-reference) excpet for `modelValue`.
+
+see [Show and Hide](#show-and-hide) shared properties.
 
 ## BNav
 
@@ -436,13 +464,21 @@ The `type` prop is deprectated. Use the the `v-b-color-mode` directive or `useCo
 
 `align` prop now takes values from [`AlignmentJustifyContent`](/docs/types/alignment): `start`, `center`, `end`, `between`, `around`, and `evenly`
 
+## BOffcanvas
+
+see [Show and Hide](#show-and-hide) shared properties.
+
 ## BPagination
 
-Keyboard Navigation and Small Screen Support.
+see [Show and Hide](#show-and-hide) shared properties.
 
 ## BPaginationNav
 
 <NotYetImplemented/>
+
+## BPopover
+
+see [Show and Hide](#show-and-hide) shared properties.
 
 ## BSkeleton
 
@@ -466,3 +502,11 @@ Keyboard Navigation and Small Screen Support.
 ## BTime
 
 <NotYetImplemented><BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">See issue #1860</BLink></NotYetImplemented>
+
+## BToast
+
+see [Show and Hide](#show-and-hide) shared properties.
+
+## BTooltip
+
+see [Show and Hide](#show-and-hide) shared properties.

@@ -1,6 +1,6 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {ComponentReference, PropertyReference} from '../../types'
-import {buildCommonProps, pick} from '../../utils'
+import {buildCommonProps, pick, showHideProps} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
@@ -20,22 +20,6 @@ export default {
             default: false,
             description: 'Accordion items will stay open when another item is opened',
           },
-          modelValue: {
-            type: 'string',
-            default: undefined,
-            description:
-              'The Id of the accordion item that is currently open (not compatible with the `free===true`)',
-          },
-          lazy: {
-            type: 'boolean',
-            default: false,
-            description: 'When set, the content will not be mounted until opened',
-          },
-          unmountLazy: {
-            type: 'boolean',
-            default: false,
-            description: 'When set and `lazy` is true, the content will be unmounted when closed',
-          },
           // transProps: {
           //   type: 'TransitionProps',
           //   default: undefined,
@@ -51,6 +35,7 @@ export default {
           //   default: false,
           //   description: 'Alias for `noAnimation`',
           // },
+          ...pick(showHideProps, ['initialAnimation', 'modelValue', 'lazy', 'unmountLazy']),
           ...pick(
             buildCommonProps({
               id: {
@@ -139,37 +124,11 @@ export default {
             description:
               'When set, signifies that the accordion is part of a navbar, enabling certain features for navbar support',
           },
-          modelValue: {
-            type: 'boolean',
-            default: false,
-            description: 'Controls the visibility of the AccordionItem',
-          },
           title: {
             type: 'string',
             default: undefined,
             description:
               'Text to place in the header of the AccordionItem (title slot takes precedence)',
-          },
-          show: {
-            type: 'boolean',
-            default: false,
-            description:
-              "When set, and prop 'visible' is false on mount, will animate from closed to open on initial mount",
-          },
-          visible: {
-            type: 'boolean',
-            default: false,
-            description: "When 'true', open without animation",
-          },
-          lazy: {
-            type: 'boolean',
-            default: false,
-            description: 'When set, the content will not be mounted until opened',
-          },
-          unmountLazy: {
-            type: 'boolean',
-            default: false,
-            description: 'When set and `lazy` is true, the content will be unmounted when closed',
           },
           // transProps: {
           //   type: 'TransitionProps',
@@ -186,6 +145,7 @@ export default {
           //   default: false,
           //   description: 'Alias for `noAnimation`',
           // },
+          ...pick(showHideProps, ['modelValue', 'lazy', 'show', 'unmountLazy', 'visible']),
           ...pick(
             buildCommonProps({
               id: {

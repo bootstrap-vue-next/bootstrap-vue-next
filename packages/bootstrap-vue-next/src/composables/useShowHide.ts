@@ -1,6 +1,6 @@
 import {computed, type EmitFn, nextTick, onMounted, type Ref, ref, watch} from 'vue'
 import {BvTriggerableEvent} from '../utils'
-import {useEventListener} from '@vueuse/core'
+import {useEventListener, useThrottleFn} from '@vueuse/core'
 
 export const fadeBaseTransitionProps = {
   name: 'fade',
@@ -62,7 +62,7 @@ export const useShowHide = (
 ) => {
   let noAction = false
   const initialShow = (!!modelValue.value && !props.initialAnimation) || props.visible || false
-  const showRef = ref<boolean>(initialShow)
+  const showRef = ref<boolean>(false)
   const renderRef = ref<boolean>(initialShow)
   const renderBackdropRef = ref<boolean>(initialShow)
 
@@ -82,22 +82,32 @@ export const useShowHide = (
   })
 
   const localNoAnimation = ref(initialShow)
+  const localTemporaryHide = ref(false)
   const computedNoAnimation = computed(
     () => props.noAnimation || props.noFade || localNoAnimation.value || false
   )
   onMounted(() => {
-    if (props.visible || (!props.show && initialShow)) {
+    if (!props.show && initialShow) {
+      // show without delay or animation
+      const event = buildTriggerableEvent('show', {cancelable: true})
+      emit('show', event)
+
+      if (event.defaultPrevented) {
+        emit('show-prevented', buildTriggerableEvent('show-prevented'))
+        return
+      }
       localNoAnimation.value = true
       if (!modelValue.value) {
         noAction = true
         modelValue.value = true
       }
-      nextTick(() => {
-        isVisible.value = true
-        backdropVisible.value = true
-        backdropReady.value = true
-        show()
-      })
+      renderRef.value = true
+      renderBackdropRef.value = true
+      isVisible.value = true
+      backdropVisible.value = true
+      backdropReady.value = true
+      showRef.value = true
+      options.showFn?.()
     } else if (props.show || (!!modelValue.value && props.initialAnimation)) {
       show()
     }
@@ -210,14 +220,17 @@ export const useShowHide = (
 
     if (event.defaultPrevented || event2.defaultPrevented) {
       emit('hide-prevented', buildTriggerableEvent('hide-prevented'))
-      noAction = true
-      nextTick(() => {
-        modelValue.value = true
-      })
+      if (!modelValue.value) {
+        nextTick(() => {
+          noAction = true
+          modelValue.value = true
+        })
+      }
       return
     }
     setTimeout(
       () => {
+        isLeaving.value = true
         showRef.value = false
         options.hideFn?.()
         if (modelValue.value) {
@@ -232,6 +245,8 @@ export const useShowHide = (
           : props.delay?.hide || 0
     )
   }
+  const throttleHide = useThrottleFn((a) => hide(a), 500)
+  const throttleShow = useThrottleFn(() => show(), 500)
 
   const toggle = () => {
     const e = buildTriggerableEvent('toggle', {cancelable: true})
@@ -281,9 +296,12 @@ export const useShowHide = (
         localNoAnimation.value = false
       })
     }
+    if (localTemporaryHide.value) {
+      localTemporaryHide.value = false
+    }
   }
   const onBeforeLeave = (el: Element) => {
-    isLeaving.value = true
+    if (!isLeaving.value) isLeaving.value = true
     options.transitionProps?.onBeforeLeave?.(el)
     props.transitionProps?.onBeforeLeave?.(el)
   }
@@ -304,21 +322,32 @@ export const useShowHide = (
       })
     }
     requestAnimationFrame(() => {
-      renderRef.value = false
+      if (!localTemporaryHide.value) renderRef.value = false
     })
   }
 
   const contentShowing = computed(
     () =>
+      localTemporaryHide.value === true ||
       isActive.value === true ||
       props.lazy === false ||
       (props.lazy === true && lazyLoadCompleted.value === true && props.unmountLazy === false)
   )
   const trapActive = ref(false)
   watch(isVisible, (val) => {
-    setTimeout(() => {
-      trapActive.value = val
-    }, 32)
+    // This is a hack to ensure that the trapActive is set after the isVisible
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            // timeout to make the test pass... what a hack!
+            setTimeout(() => {
+              trapActive.value = val
+            }, 32)
+          })
+        })
+      })
+    })
   })
   const backdropVisible = ref(false)
   const backdropReady = ref(false)
@@ -342,9 +371,12 @@ export const useShowHide = (
     show,
     hide,
     toggle,
+    throttleHide,
+    throttleShow,
     buildTriggerableEvent,
     computedNoAnimation,
     localNoAnimation,
+    localTemporaryHide,
     isLeaving,
     transitionProps: {
       ...fadeBaseTransitionProps,

@@ -1,5 +1,41 @@
 # Changelog
 
+## [0.26.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.4...bootstrapvuenext-v0.26.5) (2024-11-26)
+
+
+### Bug Fixes
+
+* **useShowHide:** fix transition triggering in production build ([#2390](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2390)) ([ec07f13](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ec07f13a2b5b67dbdd3e03f5779cc794ca447dee))
+
+## [0.26.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.3...bootstrapvuenext-v0.26.4) (2024-11-26)
+
+
+### Bug Fixes
+
+* **BTabs:** correct class with card and pills ([8633804](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/86338043e3b0ebfd99c7ecc196a5936e3b24d1d4))
+* **useShowHide:** fix race condition on close ([633ac35](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/633ac35b4b6347e4d8c72b09fc4d38bac5893110))
+* **useShowHide:** fix visible prop, better initial render ([0957eb1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0957eb1f95d6d27f52479ce301eefc94af537a8b))
+
+## [0.26.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.2...bootstrapvuenext-v0.26.3) (2024-11-22)
+
+
+### Bug Fixes
+
+* correctly pass attribute ariabusy fixes [#2378](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2378) ([bccf138](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bccf1387dd381f17f9ee3610e6c8cdd3ede1f73f))
+
+## [0.26.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.1...bootstrapvuenext-v0.26.2) (2024-11-21)
+
+
+### Bug Fixes
+
+* **BModal,BOffcanvas:** flicker when no animation and double animation when leaving with animation and backdrop-first ([0f5375f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0f5375f259fd1c750efc265345b46f77fa061106))
+* **BPopover:** fix hide on reference hidden, fix close-on-hide. ([0f5375f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0f5375f259fd1c750efc265345b46f77fa061106))
+
+
+### Performance Improvements
+
+* use a composable rather than BTransition component, eliminating a useless fragment ([#2372](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2372)) ([a788a2d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a788a2d6f1910221472e0bddb39e9029ec9f1a9b))
+
 ## [0.26.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.0...bootstrapvuenext-v0.26.1) (2024-11-20)
 
 
