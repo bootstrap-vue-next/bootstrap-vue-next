@@ -26,7 +26,7 @@ const _props = withDefaults(defineProps<Omit<BTooltipProps, 'modelValue'>>(), {
   customClass: undefined,
   delay: undefined,
   floatingMiddleware: undefined,
-  hide: undefined,
+  hide: 0,
   id: undefined,
   initialAnimation: false,
   inline: undefined,
