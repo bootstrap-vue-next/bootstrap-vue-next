@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.26.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.6...bootstrapvuenext-v0.26.7) (2024-11-28)
+
+
+### Bug Fixes
+
+* **BTooltip:** default to 0 delay, fixes [#1938](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1938) ([b6603f1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b6603f1bb59b1022bb43b6921a3a105747960b15))
+* **useShowHide:** convert collapsePlugin to showHidePlugin ([da64f3f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/da64f3f0306ee818b98603bc2b32ed2e0d8c85af))
+* **vBToggle:** use global showHide registry instead of dom to toggle components. fixes [#2398](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2398) ([da64f3f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/da64f3f0306ee818b98603bc2b32ed2e0d8c85af))
+* **vBTooltip:** better default finding closes [#2076](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2076) ([da64f3f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/da64f3f0306ee818b98603bc2b32ed2e0d8c85af))
+
 ## [0.26.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.5...bootstrapvuenext-v0.26.6) (2024-11-27)
 
 
