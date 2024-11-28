@@ -10,7 +10,7 @@ import {modalManagerPlugin} from '../modalManager'
 import {popoverPlugin} from '../popoverController'
 import {rtlPlugin} from '../rtl'
 import {toastPlugin} from '../toastController'
-import {collapsePlugin} from '../collapse'
+import {showHidePlugin} from '../showHide'
 
 // Main app plugin
 export const createBootstrap = (pluginData: Readonly<BootstrapVueOptions> = {}): Plugin => ({
@@ -33,7 +33,7 @@ export const createBootstrap = (pluginData: Readonly<BootstrapVueOptions> = {}):
     if (pluginData.popover ?? true === true) {
       app.use(popoverPlugin)
     }
-    app.use(collapsePlugin)
+    app.use(showHidePlugin)
     app.use(bootstrapPlugin, pluginData)
   },
 })

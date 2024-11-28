@@ -1,4 +1,4 @@
-import {type Directive} from 'vue'
+import {type Directive, type Ref} from 'vue'
 import {
   bind,
   type ElementWithPopper,
@@ -8,10 +8,11 @@ import {
   unbind,
 } from '../../utils/floatingUi'
 import {defaultsKey} from '../../utils/keys'
+import {findProvides} from '../utils'
 
 export const vBPopover: Directive<ElementWithPopper> = {
-  mounted(el, binding) {
-    const defaults = binding.instance?.$.appContext?.provides?.[defaultsKey as symbol]?.value
+  mounted(el, binding, vnode) {
+    const defaults = (findProvides(binding, vnode) as Record<symbol, Ref>)[defaultsKey]?.value
     const isActive = resolveActiveStatus(binding.value)
     if (!isActive) return
 
@@ -25,8 +26,8 @@ export const vBPopover: Directive<ElementWithPopper> = {
       ...text,
     })
   },
-  updated(el, binding) {
-    const defaults = binding.instance?.$.appContext?.provides?.[defaultsKey as symbol]?.value
+  updated(el, binding, vnode) {
+    const defaults = (findProvides(binding, vnode) as Record<symbol, Ref>)[defaultsKey]?.value
 
     const isActive = resolveActiveStatus(binding.value)
     if (!isActive) return
