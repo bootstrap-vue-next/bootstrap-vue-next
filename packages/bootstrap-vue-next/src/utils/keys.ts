@@ -134,15 +134,27 @@ export const collapseInjectionKey: InjectionKey<{
   isNav?: Readonly<Ref<boolean>>
 }> = createBvnInjectionKey('collapse')
 
-export type RegisterCollapseFnInput = {id: string; value: Ref<boolean>; toggle: () => void}
-export interface RegisterCollapseValue {
-  (input: RegisterCollapseFnInput): {
+// Show/Hide components
+export type RegisterShowHideFnInput = {
+  id: string
+  value: Ref<boolean>
+  toggle: () => void
+  show: () => void
+  hide: (trigger?: string) => void
+}
+export interface RegisterShowHideValue {
+  (input: RegisterShowHideFnInput): {
     unregister: () => void
   }
-  map: Readonly<Record<string, {value: boolean; toggle: () => void}>>
+  map: Readonly<
+    Record<
+      string,
+      {value: boolean; toggle: () => void; show: () => void; hide: (trigger?: string) => void}
+    >
+  >
 }
-export const globalCollapseStorageInjectionKey: InjectionKey<RegisterCollapseValue> =
-  createBvnPluginInjectionKey('globalCollapseStorage')
+export const globalShowHideStorageInjectionKey: InjectionKey<RegisterShowHideValue> =
+  createBvnPluginInjectionKey('globalShowHideStorage')
 
 export const dropdownInjectionKey: InjectionKey<{
   id?: Readonly<Ref<string>>

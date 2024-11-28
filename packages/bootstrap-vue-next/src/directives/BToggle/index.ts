@@ -1,5 +1,7 @@
 import {RX_HASH, RX_HASH_ID, RX_SPACE_SPLIT} from '../../utils/constants'
-import type {Directive, DirectiveBinding} from 'vue'
+import type {Directive, DirectiveBinding, VNode} from 'vue'
+import {findProvides} from '../utils'
+import {globalShowHideStorageInjectionKey, type RegisterShowHideValue} from '../../utils/keys'
 
 const getTargets = (
   binding: DirectiveBinding<string | readonly string[] | undefined>,
@@ -31,8 +33,22 @@ const getTargets = (
   return targets.filter((t, index, arr) => t && arr.indexOf(t) === index)
 }
 
-const toggle = (targetIds: readonly string[], el: Readonly<HTMLElement>) => {
+const toggle = (
+  targetIds: readonly string[],
+  el: Readonly<HTMLElement>,
+  binding: DirectiveBinding,
+  vnode: VNode
+) => {
+  const provides = findProvides(binding, vnode)
+  const showHide = (provides as Record<symbol, RegisterShowHideValue>)[
+    globalShowHideStorageInjectionKey
+  ]?.map
+
   targetIds.forEach((targetId) => {
+    if (showHide?.[targetId]) {
+      showHide[targetId].toggle()
+      return
+    }
     const target = document.getElementById(targetId)
 
     if (target !== null) {
@@ -61,7 +77,8 @@ const checkVisibility = (targetIds: readonly string[], el: Readonly<HTMLElement>
 
 const handleUpdate = (
   el: WithToggle,
-  binding: DirectiveBinding<string | readonly string[] | undefined>
+  binding: DirectiveBinding<string | readonly string[] | undefined>,
+  vnode: VNode
 ) => {
   // Determine targets
   const targets = getTargets(binding, el)
@@ -71,11 +88,11 @@ const handleUpdate = (
   if (el.__toggle) {
     setTimeout(() => {
       el.removeEventListener('click', el.__toggle)
-      el.__toggle = () => toggle(targets, el)
+      el.__toggle = () => toggle(targets, el, binding, vnode)
       el.addEventListener('click', el.__toggle)
     }, 0)
   } else {
-    el.__toggle = () => toggle(targets, el)
+    el.__toggle = () => toggle(targets, el, binding, vnode)
     el.addEventListener('click', el.__toggle)
   }
 

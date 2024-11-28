@@ -24,19 +24,10 @@
 </template>
 
 <script setup lang="ts">
-import {
-  computed,
-  type EmitFn,
-  inject,
-  onBeforeUnmount,
-  provide,
-  readonly,
-  toRef,
-  useTemplateRef,
-} from 'vue'
+import {computed, type EmitFn, provide, readonly, toRef, useTemplateRef} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
-import {collapseInjectionKey, globalCollapseStorageInjectionKey} from '../../utils/keys'
+import {collapseInjectionKey} from '../../utils/keys'
 import type {BCollapseProps} from '../../types/ComponentProps'
 import {type showHideEmits, useShowHide} from '../../composables/useShowHide'
 
@@ -187,18 +178,5 @@ provide(collapseInjectionKey, {
   toggle,
   visible: readonly(showRef),
   isNav: toRef(() => props.isNav),
-})
-
-const appRegistry = inject(
-  globalCollapseStorageInjectionKey,
-  undefined
-)?.({
-  id: computedId.value,
-  toggle,
-  value: readonly(showRef),
-})
-
-onBeforeUnmount(() => {
-  appRegistry?.unregister()
 })
 </script>

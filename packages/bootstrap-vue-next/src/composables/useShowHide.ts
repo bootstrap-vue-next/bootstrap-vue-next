@@ -1,4 +1,16 @@
-import {computed, type EmitFn, nextTick, onMounted, type Ref, ref, watch} from 'vue'
+import {
+  computed,
+  type EmitFn,
+  inject,
+  nextTick,
+  onBeforeUnmount,
+  onMounted,
+  readonly,
+  ref,
+  type Ref,
+  watch,
+} from 'vue'
+import {globalShowHideStorageInjectionKey} from '../utils/keys'
 import {BvTriggerableEvent} from '../utils'
 import {useEventListener, useThrottleFn} from '@vueuse/core'
 
@@ -149,6 +161,7 @@ export const useShowHide = (
       }
     }
   )
+  // todo: remove
   useEventListener(element, 'bv-toggle', () => {
     modelValue.value = !modelValue.value
   })
@@ -272,6 +285,21 @@ export const useShowHide = (
       show()
     }
   }
+
+  const appRegistry = inject(
+    globalShowHideStorageInjectionKey,
+    undefined
+  )?.({
+    id: computedId.value,
+    toggle,
+    show,
+    hide,
+    value: readonly(showRef),
+  })
+
+  onBeforeUnmount(() => {
+    appRegistry?.unregister()
+  })
 
   const lazyLoadCompleted = ref(false)
   const markLazyLoadCompleted = () => {
