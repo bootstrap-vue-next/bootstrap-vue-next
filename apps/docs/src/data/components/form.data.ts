@@ -59,6 +59,28 @@ export default {
           name: 'first',
           description: "Slot to place options above options provided via the 'options' prop",
         },
+        {
+          name: 'option',
+          description:
+            'Use this slot to have finer control over the content render inside each data item',
+          scope: [
+            {
+              prop: 'value',
+              type: 'any (T)',
+              description: 'The value of the option',
+            },
+            {
+              prop: 'text',
+              type: 'string',
+              description: 'The text of the option',
+            },
+            {
+              prop: 'disabled',
+              type: 'boolean',
+              description: 'Is the option disabled',
+            },
+          ],
+        },
       ],
     },
 

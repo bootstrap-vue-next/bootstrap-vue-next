@@ -77,6 +77,46 @@ The properties and components that are affected by this change are show in the f
 
 <ShowHideProps/>
 
+### v-html
+
+BootstrapVue provided a number of different props named `html` and `*-html` that passed arbitrary data to Vue's `v-html`.
+While a warning was included with each instance of this use, it is not recommeded practice to use `v-html` and obscuring
+that practice further by passing down other props is ill advised in our oppinion. We have instead worked to insure
+that you have the ability to access the same funcdtionality via slots. In many cases slots were already available and
+took priority over the `[*-]html` props and we've filled in the gaps where there wasn't a direct replacement.
+We believe the developer experience in these cases is as good or better than when using props.
+Most importantly any use your code makes of `v-html` will be explicit. See the [Vue Documentation](https://vuejs.org/guide/best-practices/security.html#html-injection) for their take on the `HTML Injection` attack that use of `v-html` exposes.
+
+| Component                      | Prop                  | Replacement Slot |
+| ------------------------------ | --------------------- | ---------------- |
+| `BBreadcrumbItem`              | `html`                | `default`        |
+| `BCard`                        | `footer-html`         | `footer`         |
+| `BCard`                        | `header-html`         | `header`         |
+| `BCardFooter`                  | `html`                | `default`        |
+| `BCardHeader`                  | `html`                | `default`        |
+| `BCarouselSlide`               | `caption-html`        | `caption`        |
+| `BCarouselSlide`               | `text-html`           | `default`        |
+| `BDropdown`                    | `html`                | `default`        |
+| `BInputGroup`                  | `append-html`         | `append`         |
+| `BInputGroup`                  | `prepend-html`        | `prepend`        |
+| `BModal`                       | `cancel-title-html`   | `cancel`         |
+| `BModal`                       | `ok-title`            | `ok`             |
+| `BModal`                       | `title-html`          | `title`          |
+| `BNavItemDropdown`             | `html`                | `default`        |
+| `BPopover` [\*](#popover-html) | `html`                | `default`        |
+| `BProgressBar`                 | `label-html`          | `default`        |
+| `BTable`                       | `empty-filtered-html` | `empty-filtered` |
+| `BTable`                       | `empty-html`          | `empty`          |
+| `BTable`                       | `caption-html`        | `table-caption`  |
+| `BTableSimple`                 | `caption-html`        | `table-caption`  |
+
+<a name="popover-html">BootstrapVue `b-popover` didn't have an `html` attribute, but alpha versions of BSVN did</a>
+
+Each of the options group components `BFormDatalist`, `BFormRadioGroup`, `BFormSelect`, and
+`BFormSelectOptionGroup` implements a scoped slot `option` which takes a `SelectOption<T>` parameter.
+
+<<< DEMO ./demo/CheckboxGroupMigration.vue
+
 ## Grid
 
 BSVN doesn't currently implement the ability to define `breakpoint` names.
@@ -86,11 +126,11 @@ values for `order` on `<BCol>` only provides support for 1 - 5.
 
 ## BAccordian
 
-see [Show and Hide](#show-and-hide) shared properties.
+See [Show and Hide](#show-and-hide) shared properties.
 
 ### BAccordianItem
 
-see [Show and Hide](#show-and-hide) shared properties.
+See [Show and Hide](#show-and-hide) shared properties.
 
 ## BAlert
 
@@ -138,7 +178,7 @@ Badges no longer have focus or hover styles for links. See the
 
 ## BBreadcrumb
 
-The `html` prop on `BBreadcrumbItem` is deprecated. Use the default slot instead.
+See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
 ## BButton
 
@@ -186,6 +226,9 @@ and `BCardTitle` components.
 `body-border-variant` and `body-variant` are not implemented on `BCard` and `border-variant` is not
 implemented on `BCardBody`.
 
+See the [v-html](#v-html) section for information on deprecation of the `footer-html` and `header-html` props on
+`BCard` and the `html` props on `BCardFooter` and `BCardHeader`.
+
 ## BCardImgLazy
 
 This functionality has been replaced by lazy loading on `<BImg>` see [BImg notes](#bimg) for details.
@@ -194,7 +237,9 @@ This functionality has been replaced by lazy loading on `<BImg>` see [BImg notes
 
 The `sliding-start` and `sliding-end` events have been renamed to `slide` and `slid`.
 The `label-indicators` prop has been renamed to `indicators-button-label`.
-<NotYetImplemented>The `label-goto-slide`and `no-animation` props.</NotYetImplemented>
+
+See the [v-html](#v-html) section for information on deprecation of the `caption-html` and `text-html` props
+on `BCarouselSlide`.
 
 ## BCollapse
 
@@ -210,7 +255,7 @@ events on this component.
 
 `$root` instance events `bv::collapse::state` and `bv::toggle::collapse` are deprecrated.
 
-see [Show and Hide](#show-and-hide) shared properties.
+See [Show and Hide](#show-and-hide) shared properties.
 
 ## BDropdown
 
@@ -234,7 +279,9 @@ The `html` prop has been deprecated, use the `button-content`.
 The the boolean argument to control returning focus to the toggle button on the `hide` scoped property of the default slot is deprecated.
 It is less important in BSVN since bootstrap v5 by default doesn't have the focus ring that v4 has.
 
-see [Show and Hide](#show-and-hide) shared properties.
+See [Show and Hide](#show-and-hide) shared properties.
+
+See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
 <NotYetImplemented>`toggleAttrs`</NotYetImplemented>
 
@@ -300,6 +347,9 @@ property and `update:model-value` events. Bootstrap-vue-next no longer provides 
 See the [Vue 3 migration guide](https://v3-migration.vuejs.org/breaking-changes/v-model.html)
 for more info.
 
+See the [v-html](#v-html) section for information on deprecation of the `html` prop on
+`BFormDatalist`, `BFormRadioGroup`, `BFormSelect`, and`BFormSelectOptionGroup`
+
 ## BFormDatePicker
 
 <NotYetImplemented><BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">See issue #1860</BLink></NotYetImplemented>
@@ -351,6 +401,8 @@ Due to this change `<BInputGroupAppend>`, `<BInputGroupPrepend>`, and `<BInputGr
 This also has implications on the use of `<BInputGroupText>` - in BootstrapVue, this component was used form grouping
 sub-components. In BootstrapVueNext, `<BInputGroupText>` should only be used to apply styles to textual elements
 appended or prepended to a group. Using it to group components breaks the automatic append and prepend stylings.
+
+See the [v-html](#v-html) section for information on deprecation of the `append-html` and `prepend-html` props.
 
 ## BInputGroupAddon
 
@@ -426,6 +478,8 @@ flex utility classes. See their [documentation](https://getbootstrap.com/docs/5.
 
 ## BModal
 
+See the [v-html](#v-html) section for information on deprecation of the `cancel-title-html`, `ok-title-html`, and `title-html` props.
+
 ### Replacement for Modal Message boxes
 
 [BootstrapVue](https://bootstrap-vue.org/docs/components/modal#modal-message-boxes) provided two methods on the `this.$bvModal` object called `msgBoxOk` and `msgBoxConfirm`.
@@ -446,7 +500,7 @@ Example using `useModalController.confirm` to replace `msgBoxConfirm` (Remember 
 The `show` and `confirm` `props` object accepts all of the properties that are defined on
 [BModal](/docs/components/modal#component-reference) excpet for `modelValue`.
 
-see [Show and Hide](#show-and-hide) shared properties.
+See [Show and Hide](#show-and-hide) shared properties.
 
 ## BNav
 
@@ -455,6 +509,8 @@ see [Show and Hide](#show-and-hide) shared properties.
 ### BNavItemDropdown
 
 See [`BDropdown`](#bdropdown) for details
+
+See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
 ## BNavbar
 
@@ -466,11 +522,11 @@ The `type` prop is deprectated. Use the the `v-b-color-mode` directive or `useCo
 
 ## BOffcanvas
 
-see [Show and Hide](#show-and-hide) shared properties.
+See [Show and Hide](#show-and-hide) shared properties.
 
 ## BPagination
 
-see [Show and Hide](#show-and-hide) shared properties.
+See [Show and Hide](#show-and-hide) shared properties.
 
 ## BPaginationNav
 
@@ -478,7 +534,13 @@ see [Show and Hide](#show-and-hide) shared properties.
 
 ## BPopover
 
-see [Show and Hide](#show-and-hide) shared properties.
+See [Show and Hide](#show-and-hide) shared properties.
+
+See the [v-html](#v-html) section for information on deprecation of the `html` prop.
+
+## BProgressBar
+
+See the [v-html](#v-html) section for information on deprecation of the `label-html` prop.
 
 ## BSkeleton
 
@@ -487,6 +549,14 @@ see [Show and Hide](#show-and-hide) shared properties.
 `<BSkeletonIcon>` is deprecated along with the rest of the the BootstrapVue icon support. See our
 [icon documentation](/docs/icons) for details. This functionality can be replicated by using
 `<BplaceholderWrapper>` with your choice of icon replacement in the `loading` slot.
+
+## BTable
+
+See the [v-html](#v-html) section for information on deprecation of the `html` prop.
+
+## BTableSimple
+
+See the [v-html](#v-html) section for information on deprecation of the `caption-html` prop.
 
 ## BTabs
 
@@ -505,8 +575,8 @@ see [Show and Hide](#show-and-hide) shared properties.
 
 ## BToast
 
-see [Show and Hide](#show-and-hide) shared properties.
+See [Show and Hide](#show-and-hide) shared properties.
 
 ## BTooltip
 
-see [Show and Hide](#show-and-hide) shared properties.
+See [Show and Hide](#show-and-hide) shared properties.

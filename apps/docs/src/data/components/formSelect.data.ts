@@ -2,6 +2,29 @@ import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {ComponentReference, PropertyReference} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
+const optionSlot = {
+  name: 'option',
+  description:
+    'Use this slot to have finer control over the content render inside each select item',
+  scope: [
+    {
+      prop: 'value',
+      type: 'any (T)',
+      description: 'The value of the option',
+    },
+    {
+      prop: 'text',
+      type: 'string',
+      description: 'The text of the option',
+    },
+    {
+      prop: 'disabled',
+      type: 'boolean',
+      description: 'Is the option disabled',
+    },
+  ],
+}
+
 export default {
   load: (): ComponentReference[] => [
     {
@@ -82,6 +105,7 @@ export default {
             "Slot to place options or option groups above options provided via the 'options' prop",
           name: 'first',
         },
+        optionSlot,
       ],
     },
     {
@@ -137,6 +161,7 @@ export default {
           name: 'default',
           description: "Slot to place options above options provided via the 'options' prop",
         },
+        optionSlot,
       ],
     },
   ],
