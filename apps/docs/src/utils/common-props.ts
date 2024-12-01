@@ -161,11 +161,6 @@ export const commonProps = () =>
       default: undefined,
       description: 'CSS class (or classes) to apply to the footer',
     },
-    footerHtml: {
-      type: 'string',
-      default: "''",
-      description: 'HTML string content to place in the footer',
-    },
     footerTag: {
       type: 'string',
       default: 'div',
@@ -212,11 +207,6 @@ export const commonProps = () =>
       default: undefined,
       description: 'CSS class (or classes) to apply to the header',
     },
-    headerHtml: {
-      type: 'string',
-      default: "''",
-      description: 'HTML string content to place in the header',
-    },
     headerTag: {
       type: 'string',
       default: 'div',
@@ -231,12 +221,6 @@ export const commonProps = () =>
       type: 'ColorVariant | null',
       default: undefined,
       description: 'Applies one of the Bootstrap theme color variants to the header',
-    },
-    htmlField: {
-      type: 'string',
-      default: 'html',
-      description:
-        'Field name in the `options` array that should be used for the html label instead of text field',
     },
     id: {
       type: 'string',
