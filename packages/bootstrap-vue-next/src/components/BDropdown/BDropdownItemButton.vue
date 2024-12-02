@@ -60,6 +60,11 @@ const computedClasses = computed(() => [
 ])
 
 const clicked = (e: Readonly<MouseEvent>) => {
+  if (props.disabled) {
+    e.preventDefault()
+    e.stopPropagation()
+    return
+  }
   emit('click', e)
 }
 </script>
