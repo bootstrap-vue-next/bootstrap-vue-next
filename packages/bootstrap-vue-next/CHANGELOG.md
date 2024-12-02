@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.7...bootstrapvuenext-v0.26.8) (2024-12-02)
+
+
+### Bug Fixes
+
+* **BDropdownItemButton:** prevent click on disabled button ([#2406](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2406)) ([6c2cd5f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6c2cd5fde6ab4ff8e9d816fa2171fc230ccba004))
+
 ## [0.26.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.6...bootstrapvuenext-v0.26.7) (2024-11-28)
 
 
