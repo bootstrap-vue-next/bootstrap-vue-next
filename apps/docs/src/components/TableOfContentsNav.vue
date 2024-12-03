@@ -214,6 +214,10 @@ const groupComputedList = computed(() => [
         name: 'Global Options',
         route: withBase('/docs/configurations/global-options'),
       },
+      {
+        name: 'Customizing Styles',
+        route: withBase('/docs/configurations/customizing-styles'),
+      },
     ],
   },
 ])

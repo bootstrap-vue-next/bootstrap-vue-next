@@ -1,11 +1,12 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 import {showHideProps} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BPopover',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.tooltip, .popover'},
       sourcePath: '/BPopover/BPopover.vue',
       props: {
         '': {

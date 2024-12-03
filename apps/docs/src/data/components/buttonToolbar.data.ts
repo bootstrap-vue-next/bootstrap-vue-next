@@ -1,11 +1,12 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BButtonToolbar',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.btn-toolbar'},
       sourcePath: '/BButton/BButtonToolbar.vue',
       props: {
         '': {

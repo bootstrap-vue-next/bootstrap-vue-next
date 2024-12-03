@@ -1,11 +1,12 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormRadio',
+      styleSpec: {kind: StyleKind.Tag, value: 'input[type="radio"]'},
       sourcePath: '/BFormRadio/BFormRadio.vue',
       props: {
         '': {
@@ -85,6 +86,7 @@ export default {
     },
     {
       component: 'BFormRadioGroup',
+      styleSpec: {kind: StyleKind.Tag, value: 'dev[role="radiogroup"]'},
       sourcePath: '/BFormRadio/BFormRadioGroup.vue',
       props: {
         '': {

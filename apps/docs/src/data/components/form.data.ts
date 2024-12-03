@@ -1,11 +1,12 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BForm',
+      styleSpec: {kind: StyleKind.Tag, value: 'form'},
       sourcePath: '/BForm/BForm.vue',
       props: {
         '': {
@@ -34,6 +35,7 @@ export default {
     },
     {
       component: 'BFormDatalist',
+      styleSpec: {kind: StyleKind.Tag, value: 'datalist'},
       sourcePath: '/BForm/BFormDatalist.vue',
       props: {
         '': {
@@ -86,6 +88,7 @@ export default {
 
     {
       component: 'BFormFloatingLabel',
+      styleSpec: {kind: StyleKind.OverrideClass, value: 'floating-label'},
       sourcePath: '/BForm/BFormFloatingLabel.vue',
       props: {
         '': {
@@ -115,6 +118,7 @@ export default {
     },
     {
       component: 'BFormInvalidFeedback',
+      styleSpec: {kind: StyleKind.OverrideClass, value: 'invalid-feedback, invalid-tooltip'},
       sourcePath: '/BForm/BFormInvalidFeedback.vue',
       props: {
         '': {
@@ -141,6 +145,7 @@ export default {
     },
     {
       component: 'BFormRow',
+      styleSpec: {kind: StyleKind.OverrideClass, value: 'row'},
       sourcePath: '/BForm/BFormRow.vue',
       props: {
         '': {
@@ -184,6 +189,7 @@ export default {
     },
     {
       component: 'BFormValidFeedback',
+      styleSpec: {kind: StyleKind.OverrideClass, value: 'valid-feedback, valid-tooltip'},
       sourcePath: '/BForm/BFormValidFeedback.vue',
       props: {
         '': {
