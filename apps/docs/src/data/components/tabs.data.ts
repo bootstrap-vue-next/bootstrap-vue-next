@@ -1,10 +1,11 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BTab',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.tab-pane'},
       sourcePath: '/BTabs/BTab.vue',
       props: {
         '': {

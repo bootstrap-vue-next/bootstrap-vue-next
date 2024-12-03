@@ -1,11 +1,12 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormTag',
+      styleSpec: {kind: StyleKind.BsvnClass},
       sourcePath: '/BFormTag/BFormTag.vue',
       props: {
         '': {
@@ -63,6 +64,7 @@ export default {
     },
     {
       component: 'BFormTags',
+      styleSpec: {kind: StyleKind.BsvnClass},
       sourcePath: '/BFormTags/BFormTags.vue',
       props: {
         '': {

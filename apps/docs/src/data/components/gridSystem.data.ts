@@ -1,11 +1,12 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BContainer',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.container[-*]'},
       sourcePath: '/BContainer/BContainer.vue',
       props: {
         '': {
@@ -116,6 +117,7 @@ export default {
     },
     {
       component: 'BCol',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.col[-*]'},
       sourcePath: '/BContainer/BCol.vue',
       props: {
         '': {

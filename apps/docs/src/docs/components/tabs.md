@@ -252,8 +252,6 @@ should provide some means of notification to the user as to why the tab is not a
 It is recommended to use the `disabled` attribute on the `<BTab>` component instead of using the
 `activate-tab` event (as `disabled` is more intuitive for screen reader users).
 
-<ComponentReference :data="data" />
-
 ## Advanced examples
 
 ### External controls using `v-model`
@@ -263,6 +261,8 @@ It is recommended to use the `disabled` attribute on the `<BTab>` component inst
 ### Dynamic tabs + tabs-end slot
 
 <<< DEMO ./demo/TabsDynamic.vue
+
+<ComponentReference :data="data" />
 
 <script lang="ts">
 import {data} from '../../data/components/tabs.data'
