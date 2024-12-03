@@ -21,7 +21,7 @@
         class="toast-header"
         :class="props.headerClass"
       >
-        <slot name="title" :hide="hide">
+        <slot name="title" v-bind="sharedSlots">
           <strong class="me-auto">
             {{ props.title }}
           </strong>
@@ -37,7 +37,7 @@
           v-bind="computedLinkProps"
           @click="computedLink ? hide() : () => {}"
         >
-          <slot :hide="hide">
+          <slot v-bind="sharedSlots">
             {{ props.body }}
           </slot>
         </component>
@@ -62,16 +62,17 @@
 import {computed, type EmitFn, useTemplateRef, watch, watchEffect} from 'vue'
 import {useBLinkHelper} from '../../composables/useBLinkHelper'
 import type {BToastProps} from '../../types/ComponentProps'
+import type {BToastEmits} from '../../types/ComponentEmits'
+import type {BToastSlots, ShowHideSlotsData} from '../../types/ComponentSlots'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BLink from '../BLink/BLink.vue'
 import BProgress from '../BProgress/BProgress.vue'
-import {BvTriggerableEvent} from '../../utils'
 import {useCountdown} from '../../composables/useCountdown'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useDefaults} from '../../composables/useDefaults'
 import {useCountdownHover} from '../../composables/useCountdownHover'
 import {useId} from '../../composables/useId'
-import {type showHideEmits, useShowHide} from '../../composables/useShowHide'
+import {useShowHide} from '../../composables/useShowHide'
 
 const _props = withDefaults(defineProps<Omit<BToastProps, 'modelValue'>>(), {
   bgVariant: null,
@@ -125,19 +126,9 @@ const _props = withDefaults(defineProps<Omit<BToastProps, 'modelValue'>>(), {
 })
 const props = useDefaults(_props, 'BToast')
 
-const emit = defineEmits<
-  {
-    'close': [value: BvTriggerableEvent]
-    'close-countdown': [value: number]
-  } & showHideEmits
->()
+const emit = defineEmits<BToastEmits>()
 
-const slots = defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  title?: (props: {hide: (trigger?: string) => void}) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: {hide: (trigger?: string) => void}) => any
-}>()
+const slots = defineSlots<BToastSlots>()
 
 const element = useTemplateRef<HTMLElement>('_element')
 
@@ -224,6 +215,14 @@ watch(isActive, (newValue) => {
     stop()
   }
 })
+const sharedSlots = computed<ShowHideSlotsData>(() => ({
+  toggle,
+  show,
+  hide,
+  id: computedId.value,
+  visible: showRef.value,
+  active: isActive.value,
+}))
 
 defineExpose({
   show,
