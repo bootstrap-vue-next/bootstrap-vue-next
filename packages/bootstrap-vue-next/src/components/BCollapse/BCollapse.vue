@@ -4,7 +4,7 @@
     v-if="renderRef || contentShowing"
     v-bind="transitionProps"
     :enter-active-class="computedNoAnimation ? '' : 'collapsing'"
-    :leave-active-class="computedNoAnimation ? '' : 'collapsing'"
+    :leave-active-class="computedNoAnimation ? '' : 'collapsing closing'"
     :appear="modelValue || props.visible"
   >
     <component
