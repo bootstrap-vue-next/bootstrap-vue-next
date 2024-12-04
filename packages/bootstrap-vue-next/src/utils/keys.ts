@@ -141,6 +141,8 @@ export type RegisterShowHideFnInput = {
   toggle: () => void
   show: () => void
   hide: (trigger?: string) => void
+  registerTrigger: (trigger: string, el: Element) => void
+  unregisterTrigger: (trigger: string, el: Element, clean: boolean) => void
 }
 export interface RegisterShowHideValue {
   (input: RegisterShowHideFnInput): {
@@ -149,7 +151,14 @@ export interface RegisterShowHideValue {
   map: Readonly<
     Record<
       string,
-      {value: boolean; toggle: () => void; show: () => void; hide: (trigger?: string) => void}
+      {
+        value: boolean
+        toggle: () => void
+        show: () => void
+        hide: (trigger?: string) => void
+        registerTrigger: (trigger: string, el: Element) => void
+        unregisterTrigger: (trigger: string, el: Element, clean: boolean) => void
+      }
     >
   >
 }

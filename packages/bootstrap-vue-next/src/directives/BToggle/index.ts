@@ -5,7 +5,7 @@ import {globalShowHideStorageInjectionKey, type RegisterShowHideValue} from '../
 
 const getTargets = (
   binding: DirectiveBinding<string | readonly string[] | undefined>,
-  el: Readonly<HTMLElement>
+  el: Readonly<Element>
 ) => {
   const {modifiers, arg, value} = binding
   // Any modifiers are considered target Ids
@@ -33,84 +33,63 @@ const getTargets = (
   return targets.filter((t, index, arr) => t && arr.indexOf(t) === index)
 }
 
-const toggle = (
-  targetIds: readonly string[],
-  el: Readonly<HTMLElement>,
-  binding: DirectiveBinding,
-  vnode: VNode
-) => {
-  const provides = findProvides(binding, vnode)
-  const showHide = (provides as Record<symbol, RegisterShowHideValue>)[
-    globalShowHideStorageInjectionKey
-  ]?.map
-
-  targetIds.forEach((targetId) => {
-    if (showHide?.[targetId]) {
-      showHide[targetId].toggle()
-      return
-    }
-    const target = document.getElementById(targetId)
-
-    if (target !== null) {
-      target.dispatchEvent(new Event('bv-toggle'))
-    }
-  })
-  setTimeout(() => checkVisibility(targetIds, el), 50)
-}
-
-const checkVisibility = (targetIds: readonly string[], el: Readonly<HTMLElement>) => {
-  let visible = false
-  targetIds.forEach((targetId) => {
-    const target = document.getElementById(targetId)
-
-    if (target?.classList.contains('show')) {
-      visible = true
-    }
-    if (target?.classList.contains('closing')) {
-      visible = false
-    }
-  })
-  el.setAttribute('aria-expanded', visible ? 'true' : 'false')
-  el.classList.remove(visible ? 'collapsed' : 'not-collapsed')
-  el.classList.add(visible ? 'not-collapsed' : 'collapsed')
-}
-
 const handleUpdate = (
-  el: WithToggle,
+  el: Element,
   binding: DirectiveBinding<string | readonly string[] | undefined>,
   vnode: VNode
 ) => {
   // Determine targets
   const targets = getTargets(binding, el)
   if (targets.length === 0) return
+  const provides = findProvides(binding, vnode)
+  const showHideMap = (provides as Record<symbol, RegisterShowHideValue>)[
+    globalShowHideStorageInjectionKey
+  ]?.map
 
-  // Set up click handler
-  if (el.__toggle) {
-    setTimeout(() => {
-      el.removeEventListener('click', el.__toggle)
-      el.__toggle = () => toggle(targets, el, binding, vnode)
-      el.addEventListener('click', el.__toggle)
-    }, 0)
-  } else {
-    el.__toggle = () => toggle(targets, el, binding, vnode)
-    el.addEventListener('click', el.__toggle)
-  }
+  targets.forEach((targetId) => {
+    const showHide = showHideMap?.[targetId]
+    if (!showHide) {
+      // eslint-disable-next-line no-console
+      console.warn(`[v-b-toggle] Target element with ID ${targetId} not found`)
+      return
+    }
+    // Register the trigger element
 
-  // Update attributes
+    showHide.unregisterTrigger('click', el, false)
+    showHide.registerTrigger('click', el)
+  })
+
   el.setAttribute('aria-controls', targets.join(' '))
-  checkVisibility(targets, el)
+}
+const handleUnmount = (
+  el: Element,
+  binding: DirectiveBinding<string | readonly string[] | undefined>,
+  vnode: VNode
+) => {
+  // Determine targets
+  const targets = getTargets(binding, el)
+  if (targets.length === 0) return
+  const provides = findProvides(binding, vnode)
+  const showHideMap = (provides as Record<symbol, RegisterShowHideValue>)[
+    globalShowHideStorageInjectionKey
+  ]?.map
+
+  targets.forEach((targetId) => {
+    const showHide = showHideMap?.[targetId]
+    if (!showHide) {
+      return
+    }
+    showHide.unregisterTrigger('click', el, false)
+  })
+
+  el.removeAttribute('aria-controls')
+  el.removeAttribute('aria-expanded')
+  el.classList.remove('collapsed')
+  el.classList.remove('not-collapsed')
 }
 
-export interface WithToggle extends HTMLElement {
-  __toggle: () => void
-}
-
-export const vBToggle: Directive<WithToggle> = {
+export const vBToggle: Directive<Element> = {
   mounted: handleUpdate,
   updated: handleUpdate,
-  unmounted(el: WithToggle): void {
-    el.removeEventListener('click', el.__toggle)
-    el.removeAttribute('aria-controls')
-    el.removeAttribute('aria-expanded')
-  },
+  unmounted: handleUnmount,
 }

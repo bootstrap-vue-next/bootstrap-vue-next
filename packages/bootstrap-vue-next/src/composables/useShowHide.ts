@@ -274,6 +274,24 @@ export const useShowHide = (
       show()
     }
   }
+  const triggerRegistry: {trigger: string; el: Element}[] = []
+  const registerTrigger = (trigger: string, el: Element) => {
+    triggerRegistry.push({trigger, el})
+    el.addEventListener(trigger, toggle)
+    checkVisibility(el)
+  }
+  const unregisterTrigger = (trigger: string, el: Element, clean = true) => {
+    const idx = triggerRegistry.findIndex((t) => t?.trigger === trigger && t.el === el)
+    if (idx > -1) {
+      triggerRegistry.splice(idx, 1)
+      el.removeEventListener(trigger, toggle)
+      if (clean) {
+        el.removeAttribute('aria-expanded')
+        el.classList.remove('collapsed')
+        el.classList.remove('not-collapsed')
+      }
+    }
+  }
 
   const appRegistry = inject(
     globalShowHideStorageInjectionKey,
@@ -284,10 +302,26 @@ export const useShowHide = (
     show,
     hide,
     value: readonly(showRef),
+    registerTrigger,
+    unregisterTrigger,
+  })
+  const checkVisibility = (el: Element) => {
+    el.setAttribute('aria-expanded', modelValue.value ? 'true' : 'false')
+    el.classList.toggle('collapsed', !modelValue.value)
+    el.classList.toggle('not-collapsed', !!modelValue.value)
+  }
+
+  watch(modelValue, () => {
+    triggerRegistry.forEach((t) => {
+      checkVisibility(t.el)
+    })
   })
 
   onBeforeUnmount(() => {
     appRegistry?.unregister()
+    triggerRegistry.forEach((t) => {
+      t.el.removeEventListener(t.trigger, toggle)
+    })
   })
 
   const lazyLoadCompleted = ref(false)
