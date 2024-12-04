@@ -22,25 +22,68 @@
         :class="props.headerClass"
       >
         <slot name="title" v-bind="sharedSlots">
-          <strong class="me-auto">
+          <strong>
             {{ props.title }}
           </strong>
         </slot>
-        <BCloseButton v-if="!props.noCloseButton" @click="hide('close')" />
+        <template v-if="!props.noCloseButton">
+          <BButton
+            v-if="slots.close || props.closeContent"
+            :class="[props.closeClass]"
+            class="ms-auto"
+            :variant="props.closeVariant"
+            @click.stop.prevent="hide('close')"
+          >
+            <slot name="close" v-bind="sharedSlots">
+              {{ props.closeContent }}
+            </slot>
+          </BButton>
+          <BCloseButton
+            v-else
+            :aria-label="props.closeLabel"
+            class="ms-auto"
+            :class="[props.closeClass]"
+            @click.stop.prevent="hide('close')"
+          />
+        </template>
+        <!-- <BCloseButton  class="ms-auto" @click="hide('close')" /> -->
       </component>
       <template v-if="contentShowing && (slots.default || props.body)">
-        <component
-          :is="computedTag"
-          class="toast-body"
-          style="display: block"
-          :class="props.bodyClass"
-          v-bind="computedLinkProps"
-          @click="computedLink ? hide() : () => {}"
-        >
-          <slot v-bind="sharedSlots">
-            {{ props.body }}
-          </slot>
-        </component>
+        <div class="d-flex">
+          <component
+            :is="computedTag"
+            class="toast-body"
+            style="display: block"
+            :class="props.bodyClass"
+            v-bind="computedLinkProps"
+            @click="computedLink ? hide() : () => {}"
+          >
+            <slot v-bind="sharedSlots">
+              {{ props.body }}
+            </slot>
+          </component>
+
+          <template v-if="!props.noCloseButton && !(slots.title || props.title)">
+            <BButton
+              v-if="slots.close || props.closeContent"
+              :class="[props.closeClass]"
+              class="ms-auto btn-close-custom"
+              :variant="props.closeVariant"
+              @click.stop.prevent="hide('close')"
+            >
+              <slot name="close" v-bind="sharedSlots">
+                {{ props.closeContent }}
+              </slot>
+            </BButton>
+            <BCloseButton
+              v-else
+              :aria-label="props.closeLabel"
+              class="ms-auto btn-close-custom"
+              :class="[props.closeClass]"
+              @click.stop.prevent="hide('close')"
+            />
+          </template>
+        </div>
       </template>
       <BProgress
         v-if="typeof modelValue === 'number' && props.progressProps !== undefined"
@@ -78,6 +121,10 @@ const _props = withDefaults(defineProps<Omit<BToastProps, 'modelValue'>>(), {
   bgVariant: null,
   body: undefined,
   bodyClass: undefined,
+  closeClass: undefined,
+  closeContent: undefined,
+  closeLabel: 'Close',
+  closeVariant: 'secondary',
   headerClass: undefined,
   headerTag: 'div',
   id: undefined,
@@ -245,5 +292,8 @@ defineExpose({
 }
 .toast.fade:not(.show) {
   opacity: 0;
+}
+.btn-close-custom {
+  margin: var(--bs-toast-padding-x) var(--bs-toast-padding-x) auto;
 }
 </style>
