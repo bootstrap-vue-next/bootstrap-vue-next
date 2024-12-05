@@ -29,12 +29,7 @@
       <BCard border-variant="info" header="Info" align="center">
         <BCardText>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</BCardText>
       </BCard>
-      <BCard
-        border-variant="warning"
-        header="Warning"
-        header-bg-variant="transparent"
-        align="center"
-      >
+      <BCard border-variant="warning" header="Warning" align="center">
         <BCardText>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</BCardText>
       </BCard>
       <BCard

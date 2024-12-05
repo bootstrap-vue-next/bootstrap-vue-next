@@ -150,6 +150,10 @@ export default {
             type: 'boolean',
             default: false,
           },
+          noKeyNav: {
+            type: 'boolean',
+            default: false,
+          },
           noNavStyle: {
             type: 'boolean',
             default: false,
@@ -165,6 +169,10 @@ export default {
           tag: {
             type: 'string',
             default: 'div',
+          },
+          underline: {
+            type: 'boolean',
+            default: false,
           },
           tabClass: {
             type: 'ClassValue',
