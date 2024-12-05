@@ -144,23 +144,20 @@ export type RegisterShowHideFnInput = {
   registerTrigger: (trigger: string, el: Element) => void
   unregisterTrigger: (trigger: string, el: Element, clean: boolean) => void
 }
+
+export interface RegisterShowHideMapValue {
+  value: boolean
+  toggle: () => void
+  show: () => void
+  hide: (trigger?: string) => void
+  registerTrigger: (trigger: string, el: Element) => void
+  unregisterTrigger: (trigger: string, el: Element, clean: boolean) => void
+}
 export interface RegisterShowHideValue {
   (input: RegisterShowHideFnInput): {
     unregister: () => void
   }
-  map: Readonly<
-    Record<
-      string,
-      {
-        value: boolean
-        toggle: () => void
-        show: () => void
-        hide: (trigger?: string) => void
-        registerTrigger: (trigger: string, el: Element) => void
-        unregisterTrigger: (trigger: string, el: Element, clean: boolean) => void
-      }
-    >
-  >
+  map: Readonly<Record<string, RegisterShowHideMapValue>>
 }
 export const globalShowHideStorageInjectionKey: InjectionKey<RegisterShowHideValue> =
   createBvnPluginInjectionKey('globalShowHideStorage')

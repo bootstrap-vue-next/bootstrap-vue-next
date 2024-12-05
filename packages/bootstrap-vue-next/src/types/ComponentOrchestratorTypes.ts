@@ -1,6 +1,8 @@
 import type {Component, MaybeRefOrGetter, RendererElement, RendererNode, VNode} from 'vue'
 import type {BModalProps, BPopoverProps, BToastProps, BTooltipProps} from './ComponentProps'
 import type {ContainerPosition} from './Alignment'
+import type {BPopoverSlots} from './ComponentSlots'
+import type {showHideEmits} from './ComponentEmits'
 
 export type ControllerKey = symbol | string
 
@@ -39,17 +41,36 @@ export type ToastOrchestratorShowParam = {
 }
 
 export type SlotFunction = () => VNode<RendererNode, RendererElement, {[key: string]: unknown}>
+type Prefix<P extends string, S extends string> = `${P}${S}`
+
+type CamelCase<S extends string> = S extends `${infer P1}-${infer P2}${infer P3}`
+  ? `${Lowercase<P1>}${Uppercase<P2>}${CamelCase<P3>}`
+  : Lowercase<S>
 
 export type TooltipOrchestratorParam = {
-  title?: MaybeRefOrGetter<BTooltipProps['title'] | SlotFunction>
-  content?: MaybeRefOrGetter<BTooltipProps['content'] | SlotFunction>
+  [K in keyof showHideEmits as CamelCase<Prefix<'on-', K>>]?: (e: showHideEmits[K][0]) => void
+} & {
+  [K in keyof Omit<BPopoverSlots, 'title' | 'default' | 'target'>]?: MaybeRefOrGetter<
+    BPopoverSlots[K]
+  >
+} & {
+  'onUpdate:modelValue'?: (val: boolean) => void
+  'title'?: BTooltipProps['title'] | SlotFunction
+  'content'?: BTooltipProps['content'] | SlotFunction
 } & Omit<BTooltipProps, 'content' | 'title'>
 
 export type TooltipOrchestratorShowParam = MaybeRefOrGetter<TooltipOrchestratorParam>
 
 export type PopoverOrchestratorParam = {
-  title?: MaybeRefOrGetter<BPopoverProps['title'] | SlotFunction>
-  content?: MaybeRefOrGetter<BPopoverProps['content'] | SlotFunction>
+  [K in keyof showHideEmits as CamelCase<Prefix<'on-', K>>]?: (e: showHideEmits[K][0]) => void
+} & {
+  [K in keyof Omit<BPopoverSlots, 'title' | 'default' | 'target'>]?: MaybeRefOrGetter<
+    BPopoverSlots[K]
+  >
+} & {
+  'onUpdate:modelValue'?: (val: boolean) => void
+  'title'?: BPopoverProps['title'] | BPopoverSlots['title']
+  'content'?: BPopoverProps['content'] | BPopoverSlots['default']
 } & Omit<BPopoverProps, 'content' | 'title'>
 
 export type PopoverOrchestratorShowParam = MaybeRefOrGetter<PopoverOrchestratorParam>

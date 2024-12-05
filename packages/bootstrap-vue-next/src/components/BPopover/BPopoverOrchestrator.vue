@@ -1,49 +1,48 @@
 <template>
-  <PopoverList />
-  <TooltipList />
+  <BPopover
+    v-for="[key, {title, content, ...val}] in tools.popovers?.value.entries() || []"
+    :key="key"
+    v-bind="val"
+  >
+    <template v-if="title" #title="scope">
+      <template v-if="typeof title === 'string'">
+        {{ title }}
+      </template>
+      <component :is="title" v-bind="scope" v-else />
+    </template>
+    <template v-if="content" #default="scope">
+      <template v-if="typeof content === 'string'">
+        {{ content }}
+      </template>
+      <component :is="content" v-else v-bind="scope" />
+    </template>
+  </BPopover>
+  <BTooltip
+    v-for="[key, {title, content, ...val}] in tools.tooltips?.value.entries() || []"
+    :key="key"
+    v-bind="val"
+  >
+    <template v-if="title" #title>
+      <template v-if="typeof title === 'string'">
+        {{ title }}
+      </template>
+      <component :is="title" v-else />
+    </template>
+    <template v-if="content" #default>
+      <template v-if="typeof content === 'string'">
+        {{ content }}
+      </template>
+      <component :is="content" v-else />
+    </template>
+  </BTooltip>
 </template>
 
 <script setup lang="ts">
 import {usePopoverController} from '../../composables/usePopoverController'
 import BPopover from './BPopover.vue'
 import BTooltip from '../BTooltip/BTooltip.vue'
-import {h} from 'vue'
 
 const tools = usePopoverController()
-
-const PopoverList = () =>
-  Array.from(tools.popovers?.value?.entries() ?? []).map(([self, {content, title, ...popover}]) => {
-    const props: Record<string, string> = {}
-    const slots: Record<string, unknown> = {}
-    if (typeof content === 'string') {
-      props.content = content
-    } else {
-      slots.default = content
-    }
-    if (typeof title === 'string') {
-      props.title = title
-    } else {
-      slots.title = title
-    }
-    return h(BPopover, {key: self, ...props, ...popover}, slots)
-  })
-
-const TooltipList = () =>
-  Array.from(tools.tooltips?.value?.entries() ?? []).map(([self, {content, title, ...popover}]) => {
-    const props: Record<string, string> = {}
-    const slots: Record<string, unknown> = {}
-    if (typeof content === 'string') {
-      props.content = content
-    } else {
-      slots.default = content
-    }
-    if (typeof title === 'string') {
-      props.title = title
-    } else {
-      slots.title = title
-    }
-    return h(BTooltip, {key: self, ...props, ...popover}, slots)
-  })
 
 defineExpose({
   ...tools,

@@ -22,15 +22,11 @@ export const popoverPlugin: Plugin = {
       watch(
         resolvedProps,
         (newValue) => {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore: How to add refs for title & content?
           popovers.value.set(_self, {
             ...newValue,
             ...(typeof newValue['modelValue'] !== 'undefined' && isRef(obj)
               ? {
                   'onUpdate:modelValue': (val: boolean) => {
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-ignore: How to add emit types?
                     newValue['onUpdate:modelValue']?.(val)
                     obj.value.modelValue = val
                   },
@@ -53,8 +49,6 @@ export const popoverPlugin: Plugin = {
     const setPopover = (self: ControllerKey, val: Partial<PopoverOrchestratorParam>) => {
       const popover = popovers.value.get(self)
       if (!popover) return
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore: How to add refs for title & content?
       popovers.value.set(self, {
         ...popover,
         ...toValue(val),
@@ -77,15 +71,11 @@ export const popoverPlugin: Plugin = {
       watch(
         resolvedProps,
         (newValue) => {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore: How to add refs for title & content?
           popovers.value.set(_self, {
             ...newValue,
             ...(typeof newValue['modelValue'] !== 'undefined' && isRef(obj)
               ? {
                   'onUpdate:modelValue': (val: boolean) => {
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-ignore: How to add emit types?
                     newValue['onUpdate:modelValue']?.(val)
                     obj.value.modelValue = val
                   },
@@ -108,8 +98,6 @@ export const popoverPlugin: Plugin = {
     const setTooltip = (self: ControllerKey, val: Partial<TooltipOrchestratorParam>) => {
       const tooltip = tooltips.value.get(self)
       if (!tooltip) return
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore: How to add refs for title & content?
       tooltips.value.set(self, {
         ...tooltip,
         ...toValue(val),
