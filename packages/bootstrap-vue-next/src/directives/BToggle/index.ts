@@ -41,16 +41,29 @@ const handleUpdate = (
   // Determine targets
   const targets = getTargets(binding, el)
   if (targets.length === 0) return
+
   const provides = findProvides(binding, vnode)
   const showHideMap = (provides as Record<symbol, RegisterShowHideValue>)[
     globalShowHideStorageInjectionKey
   ]?.map
+  if ((el as HTMLElement).dataset.bvtoggle) {
+    const oldTargets = ((el as HTMLElement).dataset.bvtoggle || '').split(' ')
+    if (oldTargets.length === 0) return
+    oldTargets.forEach((targetId) => {
+      const showHide = showHideMap?.[targetId]
+      if (!showHide) {
+        return
+      }
+      if (!targets.includes(targetId)) showHide.unregisterTrigger('click', el, false)
+    })
+  }
+  ;(el as HTMLElement).dataset.bvtoggle = targets.join(' ')
 
   targets.forEach((targetId) => {
     const showHide = showHideMap?.[targetId]
     if (!showHide) {
       // eslint-disable-next-line no-console
-      console.warn(`[v-b-toggle] Target element with ID ${targetId} not found`)
+      console.warn(`[v-b-toggle] Target with ID ${targetId} not found`)
       return
     }
     // Register the trigger element
@@ -86,6 +99,7 @@ const handleUnmount = (
   el.removeAttribute('aria-expanded')
   el.classList.remove('collapsed')
   el.classList.remove('not-collapsed')
+  delete (el as HTMLElement).dataset.bvtoggle
 }
 
 export const vBToggle: Directive<Element> = {
