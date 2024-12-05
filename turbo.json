@@ -50,6 +50,9 @@
         "**/*.test.js"
       ]
     },
+    "type-check": {
+      "outputs": []
+    },
     "lint": {
       "outputs": []
     },

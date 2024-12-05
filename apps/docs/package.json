@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vitepress dev --port 8000",
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=4096 vitepress build",
+    "type-check": "vue-tsc --noEmit -p tsconfig.app.json",
     "preview": "vitepress preview",
     "lint": "eslint --fix src",
     "test:lint": "eslint src",

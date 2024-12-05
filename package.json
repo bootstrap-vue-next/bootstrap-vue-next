@@ -32,6 +32,7 @@
     "dev": "turbo run dev --parallel",
     "build": "turbo run build",
     "lint": "turbo run lint",
+    "type-check": "turbo run type-check",
     "test:lint": "turbo run test:lint",
     "test:unit": "turbo run test:unit",
     "test:coverage": "turbo run test:coverage",
