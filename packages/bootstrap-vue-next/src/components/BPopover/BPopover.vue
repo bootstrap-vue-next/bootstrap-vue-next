@@ -13,7 +13,7 @@
       <div
         v-show="showRef && !hidden"
         :id="computedId"
-        v-bind="$attrs"
+        v-bind="attrs"
         ref="_element"
         :class="computedClasses"
         role="tooltip"
@@ -39,9 +39,7 @@
           </template>
           <template v-if="(props.tooltip && !slots.title && !props.title) || !props.tooltip">
             <div :class="props.tooltip ? 'tooltip-inner' : 'popover-body'">
-              <slot v-bind="sharedSlots">
-                {{ props.content }}
-              </slot>
+              <slot v-bind="sharedSlots">{{ props.body }}{{ attrs.content }}</slot>
             </div>
           </template>
         </div>
@@ -79,6 +77,7 @@ import {
   ref,
   toRef,
   toValue,
+  useAttrs,
   useTemplateRef,
   watch,
 } from 'vue'
@@ -97,6 +96,15 @@ defineOptions({
   inheritAttrs: false,
 })
 
+const attrs = useAttrs()
+
+// TODO: deprication remove warning in 2025-02
+if (attrs.content)
+  // eslint-disable-next-line no-console
+  console.warn(
+    'BPopover/BTooltip: `content` prop is deprecated. Use prop body or default slot instead.'
+  )
+
 const _props = withDefaults(defineProps<Omit<BPopoverProps, 'modelValue'>>(), {
   boundary: 'clippingAncestors',
   boundaryPadding: undefined,
@@ -104,7 +112,7 @@ const _props = withDefaults(defineProps<Omit<BPopoverProps, 'modelValue'>>(), {
   closeOnHide: false,
   teleportTo: undefined,
   teleportDisabled: false,
-  content: undefined,
+  body: undefined,
   customClass: '',
   delay: () => ({show: 100, hide: 300}),
   floatingMiddleware: undefined,

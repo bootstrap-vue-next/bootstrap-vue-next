@@ -1,6 +1,6 @@
 <template>
   <BPopover
-    v-for="[key, {title, content, ...val}] in tools.popovers?.value.entries() || []"
+    v-for="[key, {title, body, ...val}] in tools.popovers?.value.entries() || []"
     :key="key"
     v-bind="val"
   >
@@ -10,29 +10,29 @@
       </template>
       <component :is="title" v-bind="scope" v-else />
     </template>
-    <template v-if="content" #default="scope">
-      <template v-if="typeof content === 'string'">
-        {{ content }}
+    <template v-if="body" #default="scope">
+      <template v-if="typeof body === 'string'">
+        {{ body }}
       </template>
-      <component :is="content" v-else v-bind="scope" />
+      <component :is="body" v-else v-bind="scope" />
     </template>
   </BPopover>
   <BTooltip
-    v-for="[key, {title, content, ...val}] in tools.tooltips?.value.entries() || []"
+    v-for="[key, {title, body, ...val}] in tools.tooltips?.value.entries() || []"
     :key="key"
     v-bind="val"
   >
-    <template v-if="title" #title>
+    <template v-if="title" #title="scope">
       <template v-if="typeof title === 'string'">
         {{ title }}
       </template>
-      <component :is="title" v-else />
+      <component :is="title" v-else v-bind="scope" />
     </template>
-    <template v-if="content" #default>
-      <template v-if="typeof content === 'string'">
-        {{ content }}
+    <template v-if="body" #default="scope">
+      <template v-if="typeof body === 'string'">
+        {{ body }}
       </template>
-      <component :is="content" v-else />
+      <component :is="body" v-else v-bind="scope" />
     </template>
   </BTooltip>
 </template>

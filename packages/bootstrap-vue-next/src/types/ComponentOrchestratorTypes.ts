@@ -56,8 +56,8 @@ export type TooltipOrchestratorParam = {
 } & {
   'onUpdate:modelValue'?: (val: boolean) => void
   'title'?: BTooltipProps['title'] | SlotFunction
-  'content'?: BTooltipProps['content'] | SlotFunction
-} & Omit<BTooltipProps, 'content' | 'title'>
+  'body'?: BTooltipProps['body'] | SlotFunction
+} & Omit<BTooltipProps, 'body' | 'title'>
 
 export type TooltipOrchestratorShowParam = MaybeRefOrGetter<TooltipOrchestratorParam>
 
@@ -70,8 +70,8 @@ export type PopoverOrchestratorParam = {
 } & {
   'onUpdate:modelValue'?: (val: boolean) => void
   'title'?: BPopoverProps['title'] | BPopoverSlots['title']
-  'content'?: BPopoverProps['content'] | BPopoverSlots['default']
-} & Omit<BPopoverProps, 'content' | 'title'>
+  'body'?: BPopoverProps['body'] | BPopoverSlots['default']
+} & Omit<BPopoverProps, 'body' | 'title'>
 
 export type PopoverOrchestratorShowParam = MaybeRefOrGetter<PopoverOrchestratorParam>
 

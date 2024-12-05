@@ -90,7 +90,7 @@ describe('popover', () => {
 
   it('second child contains prop content', () => {
     const wrapper = mount(BPopover, {
-      props: {content: 'foobar', modelValue: true},
+      props: {body: 'foobar', modelValue: true},
     })
     const $div = wrapper.get('div.popover-body')
     expect($div.text()).toBe('foobar')
