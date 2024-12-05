@@ -191,6 +191,17 @@ export const useShowHide = (
     renderRef.value = true
     renderBackdropRef.value = true
     requestAnimationFrame(() => {
+      if (localNoAnimation.value || props.delay === undefined) {
+        showRef.value = true
+        options.showFn?.()
+        if (!modelValue.value) {
+          noAction = true
+          nextTick(() => {
+            modelValue.value = true
+          })
+        }
+        return
+      }
       showTimeout = setTimeout(
         () => {
           showRef.value = true
@@ -202,14 +213,11 @@ export const useShowHide = (
             })
           }
         },
-        localNoAnimation.value
-          ? 0
-          : typeof props.delay === 'number'
-            ? props.delay
-            : props.delay?.show || 0
+        typeof props.delay === 'number' ? props.delay : props.delay?.show || 0
       )
     })
   }
+
   let leaveTrigger: string | undefined
   const hide = (trigger?: string) => {
     if (!showRef.value) return

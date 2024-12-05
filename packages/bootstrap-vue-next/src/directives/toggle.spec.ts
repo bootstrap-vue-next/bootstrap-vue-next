@@ -4,7 +4,7 @@ import {nextTick} from 'vue'
 import {vBToggle as VBToggle} from './BToggle'
 import {asyncTimeout} from '../../tests/utils'
 import BCollapse from '../components/BCollapse/BCollapse.vue'
-import {createBootstrap} from '../plugins/createBootstrap'
+import {createBootstrap} from '../plugins'
 
 // Emitted control event for collapse (emitted to collapse)
 
