@@ -9,7 +9,7 @@ import {
 } from 'vue'
 import {isLink} from '../utils/isLink'
 import {pick} from '../utils/object'
-import {type RouteLocationRaw, RouterLink} from 'vue-router'
+import type {RouteLocationRaw, RouterLink} from 'vue-router'
 
 export const useBLinkHelper = <
   T extends Record<string, unknown>,
