@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.8...bootstrapvuenext-v0.26.9) (2024-12-06)
+
+
+### Features
+
+* make blink a non fragment fixes [#295](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/295) ([395b100](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/395b100e2c2034024bc292fbaf70ffa3906170b8))
+
 ## [0.26.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.7...bootstrapvuenext-v0.26.8) (2024-12-02)
 
 
