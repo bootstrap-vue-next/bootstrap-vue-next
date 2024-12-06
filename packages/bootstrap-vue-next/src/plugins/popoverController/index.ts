@@ -1,6 +1,7 @@
 import {
   isReadonly,
   isRef,
+  markRaw,
   onScopeDispose,
   type Plugin,
   type Ref,
@@ -28,17 +29,34 @@ export const popoverPlugin: Plugin = {
      * a symbol will be created that corresponds to its unique id.
      */
     const popover = (obj: PopoverOrchestratorShowParam): ControllerKey => {
+      const {component, slots} = toValue(obj)
+      if (component) {
+        if (isRef(obj)) obj.value.component = markRaw(component)
+        else if (typeof obj === 'object') obj.component = markRaw(component)
+      }
+      if (slots) {
+        if (isRef(obj)) obj.value.slots = markRaw(slots)
+        else if (typeof obj === 'object') obj.slots = markRaw(slots)
+      }
       const resolvedProps = toRef(obj)
       const _self = resolvedProps.value?.id || Symbol('Popover controller')
 
-      watch(
+      const stop = watch(
         resolvedProps,
         (newValue) => {
+          const previous = popovers.value.get(_self)
+          // if (!previous) return
+          const v = {
+            ...(previous || {}),
+          }
+
+          for (const key in newValue) {
+            v[key as keyof PopoverOrchestratorShowParam] = toValue(
+              newValue[key as keyof PopoverOrchestratorShowParam]
+            )
+          }
           popovers.value.set(_self, {
-            ...newValue,
-            title: toValue(newValue.title),
-            body: toValue(newValue.body),
-            modelValue: toValue(newValue.modelValue),
+            ...v,
             ...(typeof toValue(newValue['modelValue']) !== 'undefined' &&
             (isRef(obj) || isRef(toValue(obj).modelValue))
               ? {
@@ -59,7 +77,11 @@ export const popoverPlugin: Plugin = {
           deep: true,
         }
       )
-      onScopeDispose(() => popovers.value.delete(_self), true)
+      popovers.value.set(_self, {
+        ...popovers.value.get(_self),
+        stop,
+      })
+      onScopeDispose(() => removePopover(_self), true)
 
       return _self
     }
@@ -73,6 +95,7 @@ export const popoverPlugin: Plugin = {
       popovers.value.set(self, {
         ...popover,
         ...v,
+
         title: toValue(v.title),
         body: toValue(v.body),
         modelValue: toValue(v.modelValue),
@@ -81,7 +104,12 @@ export const popoverPlugin: Plugin = {
     /**
      * @param {ControllerKey} self You can get the symbol param from the return value from the show method, or use props.id
      */
-    const removePopover = (self: ControllerKey) => popovers.value.delete(self)
+    const removePopover = (self: ControllerKey) => {
+      const popover = popovers.value.get(self)
+      if (!popover) return
+      popover.stop?.()
+      popovers.value.delete(self)
+    }
 
     const tooltips = ref(new Map<ControllerKey, TooltipOrchestratorMapValue>())
     /**
@@ -89,17 +117,34 @@ export const popoverPlugin: Plugin = {
      * a symbol will be created that corresponds to its unique id.
      */
     const tooltip = (obj: TooltipOrchestratorShowParam): ControllerKey => {
+      const {component, slots} = toValue(obj)
+      if (component) {
+        if (isRef(obj)) obj.value.component = markRaw(component)
+        else if (typeof obj === 'object') obj.component = markRaw(component)
+      }
+      if (slots) {
+        if (isRef(obj)) obj.value.slots = markRaw(slots)
+        else if (typeof obj === 'object') obj.slots = markRaw(slots)
+      }
       const resolvedProps = toRef(obj)
       const _self = resolvedProps.value?.id || Symbol('Tooltip controller')
 
-      watch(
+      const stop = watch(
         resolvedProps,
         (newValue) => {
+          const previous = tooltips.value.get(_self)
+          // if (!previous) return
+          const v = {
+            ...(previous || {}),
+          }
+
+          for (const key in newValue) {
+            v[key as keyof TooltipOrchestratorShowParam] = toValue(
+              newValue[key as keyof TooltipOrchestratorShowParam]
+            )
+          }
           tooltips.value.set(_self, {
-            ...newValue,
-            title: toValue(newValue.title),
-            body: toValue(newValue.body),
-            modelValue: toValue(newValue.modelValue),
+            ...v,
             ...(typeof toValue(newValue['modelValue']) !== 'undefined' &&
             (isRef(obj) || isRef(toValue(obj).modelValue))
               ? {
@@ -108,7 +153,7 @@ export const popoverPlugin: Plugin = {
                     const {modelValue} = toValue(obj)
                     if (isRef(obj) && !isRef(modelValue)) obj.value.modelValue = val
                     if (isRef(modelValue) && !isReadonly(modelValue)) {
-                      ;(modelValue as Ref<TooltipOrchestratorMapParam['modelValue']>).value = val
+                      ;(modelValue as Ref<TooltipOrchestratorParam['modelValue']>).value = val
                     }
                   },
                 }
@@ -120,7 +165,12 @@ export const popoverPlugin: Plugin = {
           deep: true,
         }
       )
-      onScopeDispose(() => tooltips.value.delete(_self), true)
+
+      tooltips.value.set(_self, {
+        ...tooltips.value.get(_self),
+        stop,
+      })
+      onScopeDispose(() => removeTooltip(_self), true)
 
       return _self
     }
@@ -142,7 +192,12 @@ export const popoverPlugin: Plugin = {
     /**
      * @param {ControllerKey} self You can get the symbol param from the return value from the show method, or use props.id
      */
-    const removeTooltip = (self: ControllerKey) => tooltips.value.delete(self)
+    const removeTooltip = (self: ControllerKey) => {
+      const tooltip = tooltips.value.get(self)
+      if (!tooltip) return
+      tooltip.stop?.()
+      tooltips.value.delete(self)
+    }
 
     app.provide(popoverPluginKey, {
       popovers,

@@ -221,6 +221,7 @@ export const useShowHide = (
   let leaveTrigger: string | undefined
   const hide = (trigger?: string) => {
     if (!showRef.value) return
+    if (typeof trigger !== 'string') trigger = undefined
     leaveTrigger = trigger
     const event = buildTriggerableEvent('hide', {cancelable: true, trigger})
     const event2 = buildTriggerableEvent(trigger || 'ignore', {cancelable: true, trigger})

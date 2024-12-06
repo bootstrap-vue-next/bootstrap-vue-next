@@ -59,7 +59,7 @@ export type {
   TooltipOrchestratorShowParam as OrchestratedTooltip,
   PublicOrchestratedToast as OrchestratedToast,
   PopoverOrchestratorShowParam as OrchestratedPopover,
-  PublicOrchestratedModal as OrchestratedModal,
+  ModalOrchestratorShowParam as OrchestratedModal,
 } from './ComponentOrchestratorTypes'
 export type * from './ComponentOrchestratorTypes'
 

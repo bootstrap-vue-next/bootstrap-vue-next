@@ -1,40 +1,24 @@
 <template>
-  <BPopover
-    v-for="[key, {title, body, ...val}] in tools.popovers?.value.entries() || []"
+  <component
+    :is="_component ?? BPopover"
+    v-for="[key, {component: _component, slots, ...val}] in tools.popovers?.value.entries()"
     :key="key"
     v-bind="val"
   >
-    <template v-if="title" #title="scope">
-      <template v-if="typeof title === 'string'">
-        {{ title }}
-      </template>
-      <component :is="title" v-bind="scope" v-else />
+    <template v-for="(comp, slot) in slots" #[slot]="scope" :key="slot">
+      <component :is="comp" v-bind="scope" />
     </template>
-    <template v-if="body" #default="scope">
-      <template v-if="typeof body === 'string'">
-        {{ body }}
-      </template>
-      <component :is="body" v-else v-bind="scope" />
-    </template>
-  </BPopover>
-  <BTooltip
-    v-for="[key, {title, body, ...val}] in tools.tooltips?.value.entries() || []"
+  </component>
+  <component
+    :is="_component ?? BTooltip"
+    v-for="[key, {component: _component, slots, ...val}] in tools.tooltips?.value.entries()"
     :key="key"
     v-bind="val"
   >
-    <template v-if="title" #title="scope">
-      <template v-if="typeof title === 'string'">
-        {{ title }}
-      </template>
-      <component :is="title" v-else v-bind="scope" />
+    <template v-for="(comp, slot) in slots" #[slot]="scope" :key="slot">
+      <component :is="comp" v-bind="scope" />
     </template>
-    <template v-if="body" #default="scope">
-      <template v-if="typeof body === 'string'">
-        {{ body }}
-      </template>
-      <component :is="body" v-else v-bind="scope" />
-    </template>
-  </BTooltip>
+  </component>
 </template>
 
 <script setup lang="ts">
