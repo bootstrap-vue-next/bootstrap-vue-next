@@ -31,6 +31,7 @@
     "prepare": "husky && turbo run build",
     "dev": "turbo run dev --parallel",
     "build": "turbo run build",
+    "build-only": "turbo run build-only",
     "lint": "turbo run lint",
     "type-check": "turbo run type-check",
     "test:lint": "turbo run test:lint",
