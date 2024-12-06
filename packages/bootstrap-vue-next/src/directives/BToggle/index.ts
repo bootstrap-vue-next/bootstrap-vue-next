@@ -59,17 +59,24 @@ const handleUpdate = (
   }
   ;(el as HTMLElement).dataset.bvtoggle = targets.join(' ')
 
-  targets.forEach((targetId) => {
-    const showHide = showHideMap?.[targetId]
-    if (!showHide) {
-      // eslint-disable-next-line no-console
-      console.warn(`[v-b-toggle] Target with ID ${targetId} not found`)
-      return
-    }
-    // Register the trigger element
+  targets.forEach(async (targetId) => {
+    let count = 0
+    while (count < 5) {
+      const showHide = showHideMap?.[targetId]
+      if (!showHide) {
+        count++
+        await new Promise((resolve) => setTimeout(resolve, 100))
+        if (count < 4) continue
+        // eslint-disable-next-line no-console
+        console.warn(`[v-b-toggle] Target with ID ${targetId} not found`)
+        break
+      }
+      // Register the trigger element
 
-    showHide.unregisterTrigger('click', el, false)
-    showHide.registerTrigger('click', el)
+      showHide.unregisterTrigger('click', el, false)
+      showHide.registerTrigger('click', el)
+      break
+    }
   })
 
   el.setAttribute('aria-controls', targets.join(' '))
