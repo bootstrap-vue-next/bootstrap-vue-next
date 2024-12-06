@@ -1,30 +1,32 @@
 <template>
-  <component :is="tag" v-bind="rootBoundAttributes">
-    <template #default="scope">
-      <slot v-if="!isRouterLink" />
-      <component
-        :is="props.routerTag"
-        v-else
-        v-bind="generalAttributesToATag"
-        :href="scope.href"
-        :class="[
-          {
-            [defaultActiveClass]: props.active,
-            [props.activeClass]: scope.isActive,
-            [props.exactActiveClass]: scope.isExactActive,
-          },
-        ]"
-        @click="
-          (e: MouseEvent) => {
-            clicked(e)
-            scope.navigate(e)
-          }
-        "
-      >
-        <slot />
-      </component>
-    </template>
-  </component>
+  <div>
+    <component :is="tag" v-bind="rootBoundAttributes">
+      <template #default="scope">
+        <slot v-if="!isRouterLink" />
+        <component
+          :is="props.routerTag"
+          v-else
+          v-bind="generalAttributesToATag"
+          :href="scope.href"
+          :class="[
+            {
+              [defaultActiveClass]: props.active,
+              [props.activeClass]: scope.isActive,
+              [props.exactActiveClass]: scope.isExactActive,
+            },
+          ]"
+          @click="
+            (e: MouseEvent) => {
+              clicked(e)
+              scope.navigate(e)
+            }
+          "
+        >
+          <slot />
+        </component>
+      </template>
+    </component>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -37,6 +39,10 @@ import {computed, inject, useAttrs} from 'vue'
 import {useBLinkTagResolver} from '../../composables/useBLinkHelper'
 
 const defaultActiveClass = 'active'
+
+defineOptions({
+  inheritAttrs: false,
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
