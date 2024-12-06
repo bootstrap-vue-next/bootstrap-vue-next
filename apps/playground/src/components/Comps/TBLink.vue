@@ -1,15 +1,46 @@
 <template>
   <BContainer fluid>
-    <BRow>
-      <BCol>
-        <BLink :to="home">Home</BLink>
-      </BCol>
-    </BRow>
-    <BRow>
-      <BCol>
-        <BLink :to="about">About</BLink>
-      </BCol>
-    </BRow>
+    <BContainer fluid>
+      <BRow>
+        <BCol>
+          <h2>BLink with to</h2>
+        </BCol>
+      </BRow>
+      <BRow>
+        <BCol>
+          <BLink underline-variant="success" variant="danger" :to="home">Home</BLink>
+        </BCol>
+      </BRow>
+      <BRow>
+        <BCol>
+          <BLink :to="about">About</BLink>
+        </BCol>
+      </BRow>
+    </BContainer>
+    <BContainer fluid>
+      <BRow>
+        <BCol>
+          <h2>BLink with raw href</h2>
+        </BCol>
+      </BRow>
+      <BRow>
+        <BCol>
+          <BLink variant="danger" href="https://www.google.com">Google</BLink>
+        </BCol>
+      </BRow>
+      <BRow>
+        <BCol>
+          <BLink variant="info" href="https://www.google.com" target="_blank"
+            >Google (new tab)</BLink
+          >
+        </BCol>
+      </BRow>
+      <BRow>
+        <BCol>
+          <BLink :href="about.path">Internal link to about</BLink>
+        </BCol>
+      </BRow>
+    </BContainer>
     <BRow>
       <BCol>
         <p>NB: navigation behavior depends of the usage of "vue-router"</p>
@@ -22,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import type {RouteLocationRaw} from 'vue-router'
+import {BLink} from 'bootstrap-vue-next/components/BLink'
 
 // TODO: We're using `RouteLocationRaw` here which is an internal class of vue-router
 //  I believe we're using it incorrectly in that we're using path as a fallback
@@ -33,12 +64,12 @@ import type {RouteLocationRaw} from 'vue-router'
 const home = {
   name: 'index',
   path: '/' /* path is used when vue-router is not present */,
-} as RouteLocationRaw
+}
 
 const about = {
   name: 'about',
   params: {id: '456'},
   query: {param: 'someVal'},
   path: '/about' /* path is used when vue-router is not present */,
-} as RouteLocationRaw
+}
 </script>

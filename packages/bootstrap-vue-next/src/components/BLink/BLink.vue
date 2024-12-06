@@ -1,38 +1,42 @@
 <template>
-  <component
-    :is="tag"
-    v-if="tag === 'router-link'"
-    v-slot="//@ts-ignore 
-    {href: localHref, navigate, isActive, isExactActive}"
-    v-bind="routerAttr"
-    custom
-  >
-    <component
-      :is="props.routerTag"
-      :href="localHref"
-      :target="props.target"
-      :class="{
-        [defaultActiveClass]: props.active,
-        [props.activeClass]: isActive,
-        [props.exactActiveClass]: isExactActive,
-      }"
-      v-bind="$attrs"
-      @click=";[navigate($event), clicked($event)]"
-    >
-      <slot />
-    </component>
-  </component>
-  <component :is="tag" v-else :class="computedLinkClasses" v-bind="routerAttr" @click="clicked">
-    <slot />
+  <component :is="tag" v-bind="rootBoundAttributes">
+    <template #default="scope">
+      <slot v-if="!isRouterLink" />
+      <component
+        :is="props.routerTag"
+        v-else
+        v-bind="generalAttributesToATag"
+        :href="scope.href"
+        :class="[
+          {
+            [defaultActiveClass]: props.active,
+            [props.activeClass]: scope.isActive,
+            [props.exactActiveClass]: scope.isExactActive,
+          },
+        ]"
+        @click="
+          (e: MouseEvent) => {
+            clicked(e)
+            scope.navigate(e)
+          }
+        "
+      >
+        <slot />
+      </component>
+    </template>
   </component>
 </template>
 
 <script setup lang="ts">
+import type {RouterLinkProps} from 'vue-router'
 import {useDefaults} from '../../composables/useDefaults'
 import {useLinkClasses} from '../../composables/useLinkClasses'
 import type {BLinkProps} from '../../types/ComponentProps'
 import {collapseInjectionKey, navbarInjectionKey} from '../../utils/keys'
-import {computed, getCurrentInstance, inject, useAttrs} from 'vue'
+import {computed, inject, useAttrs} from 'vue'
+import {useBLinkTagResolver} from '../../composables/useBLinkHelper'
+
+const defaultActiveClass = 'active'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -71,48 +75,17 @@ const emit = defineEmits<{
 }>()
 
 const attrs = useAttrs()
+const {computedHref, isRouterLink, tag} = useBLinkTagResolver(
+  computed(() => ({
+    routerComponentName: props.routerComponentName,
+    disabled: props.disabled,
+    to: props.to,
+    href: props.href,
+  }))
+)
 
 const collapseData = inject(collapseInjectionKey, null)
 const navbarData = inject(navbarInjectionKey, null)
-
-const instance = getCurrentInstance()
-
-const defaultActiveClass = 'active'
-
-const tag = computed(() => {
-  const routerName = props.routerComponentName
-    .split('-')
-    .map((e) => e.charAt(0).toUpperCase() + e.slice(1))
-    .join('')
-  const hasRouter = instance?.appContext.app.component(routerName) !== undefined
-  if (!hasRouter || props.disabled || !props.to) {
-    return 'a'
-  }
-  return props.routerComponentName
-})
-
-const computedHref = computed(() => {
-  const toFallback = '#'
-  if (props.href) return props.href
-
-  if (typeof props.to === 'string') return props.to || toFallback
-
-  const {to} = props
-
-  if (to !== undefined && 'path' in to) {
-    const path = to.path || ''
-    const query = to.query
-      ? `?${Object.keys(to.query)
-          .map((e) => `${e}=${to.query?.[e]}`)
-          .join('=')}`
-      : ''
-    const hash = !to.hash || to.hash.charAt(0) === '#' ? to.hash || '' : `#${to.hash}`
-    return `${path}${query}${hash}` || toFallback
-  }
-  // There is no resolver for `RouteLocationNamedRaw`. Which, I'm not sure there can be one in this context.
-
-  return toFallback
-})
 
 /**
  * Not to be confused with computedLinkClasses
@@ -120,22 +93,11 @@ const computedHref = computed(() => {
 const linkValueClasses = useLinkClasses(props)
 const computedClasses = computed(() => [
   linkValueClasses.value,
+  attrs.class,
   {
     'stretched-link': props.stretched === true,
   },
 ])
-
-const routerAttr = computed(() => ({
-  'class': computedClasses.value,
-  'to': props.to,
-  'replace': props.replace,
-  'href': computedHref.value,
-  'target': props.target,
-  'rel': props.target === '_blank' ? (props.rel ?? 'noopener') : undefined,
-  'tabindex': props.disabled ? '-1' : typeof attrs.tabindex === 'undefined' ? null : attrs.tabindex,
-  'aria-disabled': props.disabled ? true : null,
-}))
-
 const computedLinkClasses = computed(() => ({
   [defaultActiveClass]: props.active,
   disabled: props.disabled,
@@ -157,4 +119,43 @@ const clicked = (e: Readonly<MouseEvent>): void => {
 
   emit('click', e)
 }
+
+/**
+ * These are applied to the a tag itself, when router-link exists, it must be applied to the component
+ * (the router-link is renderless)
+ */
+const generalAttributesToATag = computed(() => ({
+  ...attrs,
+  'class': computedClasses.value,
+  'href': computedHref.value,
+  'target': props.target,
+  'rel': props.target === '_blank' ? (props.rel ?? 'noopener') : undefined,
+  'tabindex': props.disabled ? '-1' : typeof attrs.tabindex === 'undefined' ? null : attrs.tabindex,
+  'aria-disabled': props.disabled ? true : null,
+}))
+/**
+ * These are applied to the router-link component as props
+ */
+const vueRouterSpecificAttrs = computed<Partial<RouterLinkProps>>(() => ({
+  to: props.to,
+  replace: props.replace,
+  activeClass: props.activeClass,
+  custom: true,
+  exactActiveClass: props.exactActiveClass,
+}))
+/**
+ * We dynamically switch which items go to the root <component :is /> because we give router-link its props if it's a router-link
+ * And then the a tag gets attributes when router-link,
+ *
+ * otherwise the root is already an a tag, so it gets the attributes
+ */
+const rootBoundAttributes = computed(() =>
+  isRouterLink.value
+    ? vueRouterSpecificAttrs.value
+    : {
+        ...generalAttributesToATag.value,
+        class: [generalAttributesToATag.value.class, computedLinkClasses.value],
+        onClick: clicked,
+      }
+)
 </script>
