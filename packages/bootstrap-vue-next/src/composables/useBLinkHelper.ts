@@ -1,7 +1,15 @@
-import {computed, getCurrentInstance, type MaybeRefOrGetter, readonly, toRef} from 'vue'
+import {
+  computed,
+  getCurrentInstance,
+  type MaybeRefOrGetter,
+  readonly,
+  type Ref,
+  resolveDynamicComponent,
+  toRef,
+} from 'vue'
 import {isLink} from '../utils/isLink'
 import {pick} from '../utils/object'
-import type {RouteLocationRaw} from 'vue-router'
+import type {RouteLocationRaw, RouterLink} from 'vue-router'
 
 export const useBLinkHelper = <
   T extends Record<string, unknown>,
@@ -50,17 +58,30 @@ export const useBLinkTagResolver = (
     disabled: boolean
     to: RouteLocationRaw | undefined
     href: string | undefined
+    replace: boolean
   }>
 ) => {
   const instance = getCurrentInstance()
+  const router = instance?.appContext.app.config.globalProperties.$router
+  const route = instance?.appContext.app.config.globalProperties.$route
+  const RouterLinkComponent = resolveDynamicComponent('RouterLink') as typeof RouterLink | string
+  const useLink = typeof RouterLinkComponent === 'string' ? null : RouterLinkComponent.useLink
   const resolvedProps = toRef(props)
 
-  const tag = computed(() => {
-    const routerName = resolvedProps.value.routerComponentName
+  const link = useLink?.({
+    to: toRef(() => resolvedProps.value.to || '') as Ref<string>,
+    replace: toRef(() => resolvedProps.value.replace),
+  })
+
+  const routerName = computed(() =>
+    resolvedProps.value.routerComponentName
       .split('-')
       .map((e) => e.charAt(0).toUpperCase() + e.slice(1))
       .join('')
-    const hasRouter = instance?.appContext.app.component(routerName) !== undefined
+  )
+
+  const tag = computed(() => {
+    const hasRouter = instance?.appContext.app.component(routerName.value) !== undefined
     if (!hasRouter || resolvedProps.value.disabled || !resolvedProps.value.to) {
       return 'a'
     }
@@ -94,5 +115,14 @@ export const useBLinkTagResolver = (
     return toFallback
   })
 
-  return {tag, isRouterLink: computed(() => tag.value === 'router-link'), computedHref}
+  return {
+    tag,
+    isRouterLink: computed(() => tag.value === 'router-link'),
+    isNuxtLink: computed(() => tag.value === 'nuxt-link'),
+    computedHref,
+    routerName,
+    router,
+    route,
+    link,
+  }
 }
