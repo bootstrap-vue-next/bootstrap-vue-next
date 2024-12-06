@@ -18,10 +18,12 @@ import type {
   ControllerKey,
   ModalOrchestratorMapValue,
   ModalOrchestratorShowParam,
+  PopoverOrchestratorMapValue,
   PopoverOrchestratorParam,
   PopoverOrchestratorShowParam,
   ToastOrchestratorArrayValue,
   ToastOrchestratorShowParam,
+  TooltipOrchestratorMapValue,
   TooltipOrchestratorParam,
   TooltipOrchestratorShowParam,
 } from '../types/ComponentOrchestratorTypes'
@@ -220,11 +222,11 @@ export const modalControllerPluginKey: InjectionKey<{
 }> = createBvnPluginInjectionKey('modalController')
 
 export const popoverPluginKey: InjectionKey<{
-  popovers: Ref<Map<ControllerKey, PopoverOrchestratorParam>>
+  popovers: Ref<Map<ControllerKey, PopoverOrchestratorMapValue>>
   popover: (obj: PopoverOrchestratorShowParam) => ControllerKey
   setPopover: (self: ControllerKey, val: Partial<PopoverOrchestratorParam>) => void
   removePopover: (self: ControllerKey) => void
-  tooltips: Ref<Map<ControllerKey, TooltipOrchestratorParam>>
+  tooltips: Ref<Map<ControllerKey, TooltipOrchestratorMapValue>>
   tooltip: (obj: TooltipOrchestratorShowParam) => ControllerKey
   setTooltip: (self: ControllerKey, val: Partial<TooltipOrchestratorParam>) => void
   removeTooltip: (self: ControllerKey) => void

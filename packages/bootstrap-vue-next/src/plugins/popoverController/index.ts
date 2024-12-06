@@ -1,16 +1,28 @@
-import {isRef, onScopeDispose, type Plugin, ref, toRef, toValue, watch} from 'vue'
+import {
+  isReadonly,
+  isRef,
+  onScopeDispose,
+  type Plugin,
+  type Ref,
+  ref,
+  toRef,
+  toValue,
+  watch,
+} from 'vue'
 import {popoverPluginKey} from '../../utils/keys'
 import type {
   ControllerKey,
+  PopoverOrchestratorMapValue,
   PopoverOrchestratorParam,
   PopoverOrchestratorShowParam,
+  TooltipOrchestratorMapValue,
   TooltipOrchestratorParam,
   TooltipOrchestratorShowParam,
 } from '../../types/ComponentOrchestratorTypes'
 
 export const popoverPlugin: Plugin = {
   install(app) {
-    const popovers = ref(new Map<ControllerKey, PopoverOrchestratorParam>())
+    const popovers = ref(new Map<ControllerKey, PopoverOrchestratorMapValue>())
     /**
      * @returns {ControllerKey} If `id` is passed to props, it will use that id, otherwise,
      * a symbol will be created that corresponds to its unique id.
@@ -24,11 +36,19 @@ export const popoverPlugin: Plugin = {
         (newValue) => {
           popovers.value.set(_self, {
             ...newValue,
-            ...(typeof newValue['modelValue'] !== 'undefined' && isRef(obj)
+            title: toValue(newValue.title),
+            body: toValue(newValue.body),
+            modelValue: toValue(newValue.modelValue),
+            ...(typeof toValue(newValue['modelValue']) !== 'undefined' &&
+            (isRef(obj) || isRef(toValue(obj).modelValue))
               ? {
                   'onUpdate:modelValue': (val: boolean) => {
                     newValue['onUpdate:modelValue']?.(val)
-                    obj.value.modelValue = val
+                    const {modelValue} = toValue(obj)
+                    if (isRef(obj) && !isRef(modelValue)) obj.value.modelValue = val
+                    if (isRef(modelValue) && !isReadonly(modelValue)) {
+                      ;(modelValue as Ref<PopoverOrchestratorParam['modelValue']>).value = val
+                    }
                   },
                 }
               : {}),
@@ -49,9 +69,13 @@ export const popoverPlugin: Plugin = {
     const setPopover = (self: ControllerKey, val: Partial<PopoverOrchestratorParam>) => {
       const popover = popovers.value.get(self)
       if (!popover) return
+      const v = toValue(val)
       popovers.value.set(self, {
         ...popover,
-        ...toValue(val),
+        ...v,
+        title: toValue(v.title),
+        body: toValue(v.body),
+        modelValue: toValue(v.modelValue),
       })
     }
     /**
@@ -59,7 +83,7 @@ export const popoverPlugin: Plugin = {
      */
     const removePopover = (self: ControllerKey) => popovers.value.delete(self)
 
-    const tooltips = ref(new Map<ControllerKey, TooltipOrchestratorParam>())
+    const tooltips = ref(new Map<ControllerKey, TooltipOrchestratorMapValue>())
     /**
      * @returns {ControllerKey} If `id` is passed to props, it will use that id, otherwise,
      * a symbol will be created that corresponds to its unique id.
@@ -71,13 +95,21 @@ export const popoverPlugin: Plugin = {
       watch(
         resolvedProps,
         (newValue) => {
-          popovers.value.set(_self, {
+          tooltips.value.set(_self, {
             ...newValue,
-            ...(typeof newValue['modelValue'] !== 'undefined' && isRef(obj)
+            title: toValue(newValue.title),
+            body: toValue(newValue.body),
+            modelValue: toValue(newValue.modelValue),
+            ...(typeof toValue(newValue['modelValue']) !== 'undefined' &&
+            (isRef(obj) || isRef(toValue(obj).modelValue))
               ? {
                   'onUpdate:modelValue': (val: boolean) => {
                     newValue['onUpdate:modelValue']?.(val)
-                    obj.value.modelValue = val
+                    const {modelValue} = toValue(obj)
+                    if (isRef(obj) && !isRef(modelValue)) obj.value.modelValue = val
+                    if (isRef(modelValue) && !isReadonly(modelValue)) {
+                      ;(modelValue as Ref<TooltipOrchestratorMapParam['modelValue']>).value = val
+                    }
                   },
                 }
               : {}),
@@ -98,9 +130,13 @@ export const popoverPlugin: Plugin = {
     const setTooltip = (self: ControllerKey, val: Partial<TooltipOrchestratorParam>) => {
       const tooltip = tooltips.value.get(self)
       if (!tooltip) return
+      const v = toValue(val)
       tooltips.value.set(self, {
         ...tooltip,
-        ...toValue(val),
+        ...v,
+        title: toValue(v.title),
+        body: toValue(v.body),
+        modelValue: toValue(v.modelValue),
       })
     }
     /**

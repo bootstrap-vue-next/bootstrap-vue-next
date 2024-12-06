@@ -1,8 +1,8 @@
-import type {Component, MaybeRefOrGetter, RendererElement, RendererNode, VNode} from 'vue'
+import type {Component, MaybeRefOrGetter} from 'vue'
 import type {BModalProps, BPopoverProps, BToastProps, BTooltipProps} from './ComponentProps'
 import type {ContainerPosition} from './Alignment'
 import type {BPopoverSlots} from './ComponentSlots'
-import type {showHideEmits} from './ComponentEmits'
+import type {BPopoverEmits} from './ComponentEmits'
 
 export type ControllerKey = symbol | string
 
@@ -40,38 +40,61 @@ export type ToastOrchestratorShowParam = {
   props?: MaybeRefOrGetter<PublicOrchestratedToast>
 }
 
-export type SlotFunction = () => VNode<RendererNode, RendererElement, {[key: string]: unknown}>
 type Prefix<P extends string, S extends string> = `${P}${S}`
 
 type CamelCase<S extends string> = S extends `${infer P1}-${infer P2}${infer P3}`
   ? `${Lowercase<P1>}${Uppercase<P2>}${CamelCase<P3>}`
   : Lowercase<S>
 
+export type TooltipOrchestratorMapValue = {
+  [K in keyof BPopoverEmits as CamelCase<Prefix<'on-', K>>]?: (e: BPopoverEmits[K][0]) => void
+} & {
+  [K in keyof Omit<BPopoverSlots, 'title' | 'default' | 'target'>]?: BPopoverSlots[K]
+} & {
+  'onUpdate:modelValue'?: (val: boolean) => void
+  'title'?: BTooltipProps['title'] | BPopoverSlots['title']
+  'body'?: BTooltipProps['body'] | BPopoverSlots['default']
+  'modelValue'?: BTooltipProps['modelValue']
+} & Omit<BTooltipProps, 'body' | 'title' | 'modelValue'>
+
 export type TooltipOrchestratorParam = {
-  [K in keyof showHideEmits as CamelCase<Prefix<'on-', K>>]?: (e: showHideEmits[K][0]) => void
+  [K in keyof BPopoverEmits as CamelCase<Prefix<'on-', K>>]?: (e: BPopoverEmits[K][0]) => void
 } & {
   [K in keyof Omit<BPopoverSlots, 'title' | 'default' | 'target'>]?: MaybeRefOrGetter<
     BPopoverSlots[K]
   >
 } & {
   'onUpdate:modelValue'?: (val: boolean) => void
-  'title'?: BTooltipProps['title'] | SlotFunction
-  'body'?: BTooltipProps['body'] | SlotFunction
-} & Omit<BTooltipProps, 'body' | 'title'>
+  'title'?: MaybeRefOrGetter<BTooltipProps['title'] | BPopoverSlots['title']>
+  'body'?: MaybeRefOrGetter<BTooltipProps['body'] | BPopoverSlots['default']>
+  'modelValue'?: MaybeRefOrGetter<BTooltipProps['modelValue']>
+} & Omit<BTooltipProps, 'body' | 'title' | 'modelValue'>
 
 export type TooltipOrchestratorShowParam = MaybeRefOrGetter<TooltipOrchestratorParam>
 
-export type PopoverOrchestratorParam = {
-  [K in keyof showHideEmits as CamelCase<Prefix<'on-', K>>]?: (e: showHideEmits[K][0]) => void
+export type PopoverOrchestratorMapValue = {
+  [K in keyof BPopoverEmits as CamelCase<Prefix<'on-', K>>]?: (e: BPopoverEmits[K][0]) => void
 } & {
-  [K in keyof Omit<BPopoverSlots, 'title' | 'default' | 'target'>]?: MaybeRefOrGetter<
-    BPopoverSlots[K]
-  >
+  [K in keyof Omit<BPopoverSlots, 'title' | 'default' | 'target'>]?: BPopoverSlots[K]
 } & {
   'onUpdate:modelValue'?: (val: boolean) => void
   'title'?: BPopoverProps['title'] | BPopoverSlots['title']
   'body'?: BPopoverProps['body'] | BPopoverSlots['default']
-} & Omit<BPopoverProps, 'body' | 'title'>
+  'modelValue'?: BPopoverProps['modelValue']
+} & Omit<BPopoverProps, 'body' | 'title' | 'modelValue'>
+
+export type PopoverOrchestratorParam = {
+  [K in keyof BPopoverEmits as CamelCase<Prefix<'on-', K>>]?: (e: BPopoverEmits[K][0]) => void
+} & {
+  [K in keyof Omit<BPopoverSlots, 'title' | 'default' | 'target'>]?: MaybeRefOrGetter<
+    BPopoverSlots[K]
+  >
+} & {
+  'onUpdate:modelValue'?: (val: boolean) => void
+  'title'?: MaybeRefOrGetter<BPopoverProps['title'] | BPopoverSlots['title']>
+  'body'?: MaybeRefOrGetter<BPopoverProps['body'] | BPopoverSlots['default']>
+  'modelValue'?: MaybeRefOrGetter<BPopoverProps['modelValue']>
+} & Omit<BPopoverProps, 'body' | 'title' | 'modelValue'>
 
 export type PopoverOrchestratorShowParam = MaybeRefOrGetter<PopoverOrchestratorParam>
 
