@@ -101,8 +101,8 @@ const showFns = {
     })
   },
   basicCustomComponent: () => {
-    show?.({
-      component: h(BModal, null, {default: () => 'foobar!'}),
+    show({
+      slots: {default: h('div', null, {default: () => 'foobar!'})},
 
       okVariant: 'info',
     })

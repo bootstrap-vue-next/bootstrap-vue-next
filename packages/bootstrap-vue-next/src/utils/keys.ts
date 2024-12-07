@@ -208,7 +208,7 @@ export const buttonGroupKey: InjectionKey<boolean> = createBvnInjectionKey('butt
 export const toastPluginKey: InjectionKey<{
   toasts: Ref<ToastOrchestratorArrayValue[]>
   _setIsAppend: (value: boolean) => void
-  show: (obj: ToastOrchestratorShowParam) => ControllerKey
+  show: (obj: ToastOrchestratorShowParam) => Promise<boolean | null>
   remove: (self: ControllerKey) => void
   leave: (self: ControllerKey) => void
 }> = createBvnPluginInjectionKey('toast')

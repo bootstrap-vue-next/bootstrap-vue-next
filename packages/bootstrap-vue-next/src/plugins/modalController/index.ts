@@ -28,9 +28,6 @@ export const modalControllerPlugin: Plugin = {
       }
     }
 
-    const buildPrereqs = (id: string | undefined) =>
-      [buildPromise(), (id || Symbol('Modals controller')) as ControllerKey] as const
-
     const create = (
       obj: ModalOrchestratorShowParam = {},
       isConfirm: boolean
@@ -47,8 +44,9 @@ export const modalControllerPlugin: Plugin = {
         else if (typeof obj === 'object') obj.slots = markRaw(slots)
       }
       const resolvedProps = toRef(obj)
+      const _self = resolvedProps.value?.id || Symbol('Modals controller')
 
-      const [promise, _self] = buildPrereqs(resolvedProps.value?.id)
+      const promise = buildPromise()
 
       const stop = watch(
         resolvedProps,

@@ -1,7 +1,8 @@
+<!-- eslint-disable vue/no-unused-vars -->
 <template>
   <component
     :is="_component ?? BPopover"
-    v-for="[key, {component: _component, slots, ...val}] in tools.popovers?.value.entries()"
+    v-for="[key, {component: _component, slots, stop, ...val}] in tools.popovers?.value.entries()"
     :key="key"
     v-bind="val"
   >
@@ -11,7 +12,7 @@
   </component>
   <component
     :is="_component ?? BTooltip"
-    v-for="[key, {component: _component, slots, ...val}] in tools.tooltips?.value.entries()"
+    v-for="[key, {component: _component, slots, stop, ...val}] in tools.tooltips?.value.entries()"
     :key="key"
     v-bind="val"
   >

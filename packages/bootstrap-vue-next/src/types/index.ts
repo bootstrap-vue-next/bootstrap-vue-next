@@ -57,7 +57,7 @@ export type {TransitionMode} from './TransitionMode'
 export type * from './ComponentProps'
 export type {
   TooltipOrchestratorShowParam as OrchestratedTooltip,
-  PublicOrchestratedToast as OrchestratedToast,
+  ToastOrchestratorShowParam as OrchestratedToast,
   PopoverOrchestratorShowParam as OrchestratedPopover,
   ModalOrchestratorShowParam as OrchestratedModal,
 } from './ComponentOrchestratorTypes'
