@@ -12,11 +12,9 @@ export const useToastController = () => {
     _setIsAppend: noop,
   })
   if (toastContollerPlugin.leave === noop) {
-    if (process.env.NODE_ENV === 'development')
-      // eslint-disable-next-line no-console
-      console.error(
-        'useToastController() was called outside of the setup() function! or the plugin is not provided.'
-      )
+    throw new Error(
+      'useToastController() was called outside of the setup() function! or the plugin is not provided.'
+    )
   }
   return {
     ...toastContollerPlugin,

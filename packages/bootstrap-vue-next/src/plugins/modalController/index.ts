@@ -58,9 +58,6 @@ export const modalControllerPlugin: Plugin = {
           }
 
           if (newValue.props) {
-            if (process.env.NODE_ENV === 'development')
-              // eslint-disable-next-line no-console
-              console.warn('props object is deprecated, please use the specific props')
             Object.assign(v, newValue.props)
             delete newValue.props
           }

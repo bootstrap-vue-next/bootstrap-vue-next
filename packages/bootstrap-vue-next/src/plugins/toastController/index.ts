@@ -67,16 +67,10 @@ export const toastPlugin: Plugin = {
             promise,
           }
           if (newValue.props) {
-            if (process.env.NODE_ENV === 'development')
-              // eslint-disable-next-line no-console
-              console.warn('props object is deprecated, please use the specific props')
             Object.assign(v, newValue.props)
             delete newValue.props
           }
           if (newValue.pos) {
-            if (process.env.NODE_ENV === 'development')
-              // eslint-disable-next-line no-console
-              console.warn('pos is deprecated, please use the position')
             v.position = newValue.pos
             delete newValue.pos
           }

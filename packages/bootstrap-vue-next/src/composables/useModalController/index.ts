@@ -14,11 +14,9 @@ export const useModalController = () => {
     leave: noop,
   })
   if (modalControllerPlugin.leave === noop) {
-    if (process.env.NODE_ENV === 'development')
-      // eslint-disable-next-line no-console
-      console.error(
-        'useModalController() was called outside of the setup() function! or the plugin is not provided.'
-      )
+    throw Error(
+      'useModalController() was called outside of the setup() function! or the plugin is not provided.'
+    )
   }
 
   const hide = (trigger = '') => {
