@@ -1,5 +1,6 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
 import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
+import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
@@ -12,35 +13,32 @@ export default {
           label: {
             type: 'string',
             default: undefined,
-          },
-          role: {
-            type: 'string',
-            default: 'status',
+            description: 'Text content to place in the sr-only label',
           },
           small: {
             type: 'boolean',
             default: false,
-          },
-          tag: {
-            type: 'string',
-            default: 'span',
+            description: 'When set, rendered a smaller spinner suitable for placing in buttons',
           },
           type: {
             type: 'SpinnerType',
             default: 'border',
+            description: "Type of spinner to show. Current supported types are 'border' and 'grow'",
           },
-          variant: {
-            type: 'ColorVariant | null',
-            default: null,
-          },
+          ...pick(
+            buildCommonProps({
+              tag: {
+                default: 'span',
+              },
+            }),
+            ['role', 'tag', 'variant']
+          ),
         } satisfies Record<keyof BvnComponentProps['BSpinner'], PropertyReference>,
       },
-      emits: [],
       slots: [
         {
-          description: '',
           name: 'label',
-          scope: [],
+          description: 'Content to place in the visually-hidden label',
         },
       ],
     },
