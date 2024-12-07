@@ -35,17 +35,17 @@ You can also provide an id to get particular modal and show/hide it. Currently, 
 find modal since the `BModal` in lazy mode may not render at page initial. If the modal component does not exist and you attempt to call any of the exposed methods the methods will safely ignore
 
 <HighlightCard>
-<BButton @click="show">Click me</BButton>
+<BButton @click="show()">Click me</BButton>
 <BModal v-if="someConditions" v-model="programmaticModal" id="my-modal">
-  <BButton @click="hide">Hide me</BButton>
+  <BButton @click="hide()">Hide me</BButton>
 </BModal>
 <template #html>
 
 ```vue
 <template>
-  <BButton @click="show">Click me</BButton>
+  <BButton @click="show()">Click me</BButton>
   <BModal v-if="someConditions" v-model="programmaticModal" id="my-modal">
-    <BButton @click="hide">Hide me</BButton>
+    <BButton @click="hide()">Hide me</BButton>
   </BModal>
 </template>
 

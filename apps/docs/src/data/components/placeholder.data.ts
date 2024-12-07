@@ -1,5 +1,5 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
@@ -43,6 +43,7 @@ export default {
     },
     {
       component: 'BPlaceholderCard',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.card'},
       sourcePath: '/BPlaceholder/BPlaceholderCard.vue',
       emits: [],
       props: {
@@ -150,6 +151,7 @@ export default {
     },
     {
       component: 'BPlaceholderWrapper',
+      styleSpec: {kind: StyleKind.None},
       sourcePath: '/BPlaceholder/BPlaceholderWrapper.vue',
       emits: [],
       props: {
@@ -176,6 +178,7 @@ export default {
     },
     {
       component: 'BPlaceholderTable',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.table'},
       sourcePath: '/BPlaceholder/BPlaceholderTable.vue',
       emits: [],
       props: {
@@ -274,6 +277,7 @@ export default {
     },
     {
       component: 'BPlaceholderButton',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.placeholder.btn'},
       sourcePath: '/BPlaceholder/BPlaceholderButton.vue',
       emits: [],
       slots: [],

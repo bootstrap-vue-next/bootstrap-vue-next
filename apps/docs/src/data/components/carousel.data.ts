@@ -1,5 +1,5 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 export default {
@@ -182,6 +182,7 @@ export default {
     },
     {
       component: 'BCarouselSlide',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.carousel-item'},
       sourcePath: '/BCarousel/BCarouselSlide.vue',
       emits: [],
       props: {

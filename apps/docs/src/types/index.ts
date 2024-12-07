@@ -29,8 +29,22 @@ export interface PropertyReference {
  */
 type PropsRecord = Record<string, Record<string, PropertyReference> & {_linkTo?: PropertyReference}>
 
+export enum StyleKind {
+  BootstrapClass = 'BOOTSTRAP-CLASS',
+  BsvnClass = 'BSVN-CLASS',
+  OverrideClass = 'OVERRIDE-CLASS',
+  Tag = 'TAG',
+  None = 'NONE',
+}
+
+export interface StyleSpec {
+  kind: StyleKind
+  value?: string
+}
+
 export interface ComponentReference {
   component: string
+  styleSpec?: StyleSpec
   /**
    * Use package directory relative links. ex: BAccordion.vue => /BAccordion/BAccordion.vue (slash required)
    *

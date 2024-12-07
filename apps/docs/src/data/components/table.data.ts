@@ -1,5 +1,5 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 
 export default {
   load: (): ComponentReference[] => {
@@ -557,6 +557,7 @@ export default {
       },
       {
         component: 'BTbody',
+        styleSpec: {kind: StyleKind.Tag, value: 'tbody'},
         sourcePath: '/BTable/BTbody.vue',
         props: {
           '': {
@@ -577,6 +578,7 @@ export default {
       },
       {
         component: 'BTd',
+        styleSpec: {kind: StyleKind.Tag, value: 'td'},
         sourcePath: '/BTable/BTd.vue',
         props: {
           '': {
@@ -613,6 +615,7 @@ export default {
       },
       {
         component: 'BTfoot',
+        styleSpec: {kind: StyleKind.Tag, value: 'tfoot'},
         sourcePath: '/BTable/BTfoot.vue',
         props: {
           '': {
@@ -633,6 +636,7 @@ export default {
       },
       {
         component: 'BTh',
+        styleSpec: {kind: StyleKind.Tag, value: 'th'},
         sourcePath: '/BTable/BTh.vue',
         props: {
           '': {
@@ -669,6 +673,7 @@ export default {
       },
       {
         component: 'BThead',
+        styleSpec: {kind: StyleKind.Tag, value: 'thead'},
         sourcePath: '/BTable/BThead.vue',
         props: {
           '': {
@@ -689,6 +694,7 @@ export default {
       },
       {
         component: 'BTr',
+        styleSpec: {kind: StyleKind.Tag, value: 'tr'},
         sourcePath: '/BTable/BTr.vue',
         props: {
           '': {

@@ -32,6 +32,7 @@
                 </li>
               </ul>
             </BCol>
+            <BCol cols="4" class="text-md-right"><StyleExtension :component="component" /> </BCol>
           </BRow>
           <BRow class="my-3">
             <BCol>
@@ -248,6 +249,7 @@ const sortData = computed(() =>
   props.data.map((el: ComponentReference): MappedComponentReference => {
     const data: MappedComponentReference = {
       component: el.component,
+      styleSpec: el.styleSpec,
       sourcePath: el.sourcePath,
       props: Object.entries(el.props).map(([name, {_linkTo, ...rest}]) => ({
         name,

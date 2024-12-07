@@ -75,11 +75,15 @@ export interface BLinkProps {
   href?: string
   icon?: boolean
   noRel?: boolean
-  // noPrefetch?: boolean
   opacity?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
   opacityHover?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
-  // prefetch?: boolean
-  // prefetchedClass?: ClassValue
+  prefetch?: boolean
+  prefetchOn?: Partial<{
+    visibility: boolean
+    interaction: boolean
+  }>
+  noPrefetch?: boolean
+  prefetchedClass?: ClassValue
   rel?: string
   replace?: boolean
   routerComponentName?: string

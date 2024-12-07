@@ -1,5 +1,5 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 import {
   buildCommonProps,
   dropdownEmits,
@@ -83,6 +83,7 @@ export default {
     },
     {
       component: 'BNavForm',
+      styleSpec: {kind: StyleKind.Tag, value: 'li > form'},
       sourcePath: '/BNav/BNavForm.vue',
       props: {
         '': {
@@ -169,6 +170,7 @@ export default {
     },
     {
       component: 'BNavItemDropdown',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.nav-item.dropdown'},
       sourcePath: '/BNav/BNavItemDropdown.vue',
       props: {
         '': dropdownProps,
@@ -178,6 +180,7 @@ export default {
     },
     {
       component: 'BNavText',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.navbar-text'},
       sourcePath: '/BNav/BNavText.vue',
       props: {
         '': {

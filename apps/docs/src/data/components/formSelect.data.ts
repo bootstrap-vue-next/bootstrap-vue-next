@@ -1,5 +1,5 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 const optionSlot = {
@@ -29,6 +29,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormSelect',
+      styleSpec: {kind: StyleKind.Tag, value: 'select'},
       sourcePath: '/BFormSelect/BFormSelect.vue',
       props: {
         '': {
@@ -110,6 +111,7 @@ export default {
     },
     {
       component: 'BFormSelectOption',
+      styleSpec: {kind: StyleKind.Tag, value: 'option'},
       sourcePath: '/BFormSelect/BFormSelectOption.vue',
       emits: [],
       props: {
@@ -135,6 +137,7 @@ export default {
     },
     {
       component: 'BFormSelectOptionGroup',
+      styleSpec: {kind: StyleKind.Tag, value: 'optgroup'},
       sourcePath: '/BFormSelect/BFormSelectOptionGroup.vue',
       props: {
         '': {

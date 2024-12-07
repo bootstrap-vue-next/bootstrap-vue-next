@@ -62,9 +62,9 @@ Unless the context is clear (as with the “Notifications” example, where it i
 
 ### Positioned
 
-Use the `placement` property to position it relative to a parent [link](/docs/components/link) or [button](/docs/components/link).
+Use the `placement` property to position it relative to a parent [link](/docs/components/link) or [button](/docs/components/button).
 Note that for links of buttons, you haveto manually apply the `postition-relative` class to the badge's parent,
-unlike with [`Avatars`](<(/docs/components/avatar)>) where that is hanlded automatically.
+unlike with [`Avatars`](/docs/components/avatar) where that is hanlded automatically.
 
 <HighlightCard>
   <BButton variant="primary" class="position-relative">
