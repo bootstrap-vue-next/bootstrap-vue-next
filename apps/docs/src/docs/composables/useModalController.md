@@ -81,10 +81,11 @@ const showExample = async () => {
 const {show} = useModalController()
 
 const title = ref('Hello')
-
-setInterval(() => {
-  title.value = title.value === 'Hello' ? 'World' : 'Hello'
-}, 2500)
+onMounted(() => {
+  setInterval(() => {
+    title.value = title.value === 'Hello' ? 'World' : 'Hello'
+  }, 2500)
+})
 
 const showReactiveExample = () => {
   show({
@@ -119,11 +120,11 @@ const {show} = useModalController()
 const firstRef = ref<OrchestratedToast>({
   body: `${Math.random()}`,
 })
-
-setInterval(() => {
-  firstRef.value.body = `${Math.random()}`
-}, 1000)
-
+onMounted(() => {
+  setInterval(() => {
+    firstRef.value.body = `${Math.random()}`
+  }, 1000)
+})
 const showMeAdvancedExample = () => {
   show({
     slots: {
@@ -258,10 +259,11 @@ const showReactiveExample = () => {
 const firstRef = ref<OrchestratedToast>({
   body: `${Math.random()}`,
 })
-
-setInterval(() => {
-  firstRef.value.body = `${Math.random()}`
-}, 1000)
+onMounted(() => {
+  setInterval(() => {
+    firstRef.value.body = `${Math.random()}`
+  }, 1000)
+})
 
 const showMeAdvancedExample = () => {
   show({

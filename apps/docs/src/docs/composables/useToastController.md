@@ -84,10 +84,11 @@ const {show} = useToastController()
 const firstRef = ref<OrchestratedToast>({
   body: `${Math.random()}`,
 })
-
-setInterval(() => {
-  firstRef.value.body = `${Math.random()}`
-}, 1000)
+onMounted(() => {
+  setInterval(() => {
+    firstRef.value.body = `${Math.random()}`
+  }, 1000)
+})
 
 const showMe = () => {
   show(
@@ -127,9 +128,11 @@ const firstRef = ref<OrchestratedToast>({
   body: `${Math.random()}`,
 })
 
-setInterval(() => {
-  firstRef.value.body = `${Math.random()}`
-}, 1000)
+onMounted(() => {
+  setInterval(() => {
+    firstRef.value.body = `${Math.random()}`
+  }, 1000)
+})
 
 const showMe = () => {
   show({
@@ -232,7 +235,6 @@ const firstRef = ref<OrchestratedToast>({
 })
 
 onMounted(() => {
-  console.log('mounted')
   setInterval(() => {
     firstRef.value.body = `${Math.random()}`
   }, 1000)
