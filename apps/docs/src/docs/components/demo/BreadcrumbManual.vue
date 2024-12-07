@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-const alertEvent = (event: PointerEvent) => {
+const alertEvent = (event: MouseEvent) => {
   // eslint-disable-next-line no-alert
   alert(`Event ${event.target}`)
 }

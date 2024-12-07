@@ -5,3 +5,9 @@
   </BFormCheckbox>
   <!-- #endregion template -->
 </template>
+
+<script setup lang="ts">
+import {ref} from 'vue'
+const checked = ref(false)
+const indeterminate = ref(false)
+</script>
