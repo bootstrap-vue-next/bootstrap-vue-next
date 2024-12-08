@@ -1,7 +1,7 @@
 <template>
   <component
     :is="tag"
-    v-bind="isNuxtLink ? nuxtSpecificProps : {}"
+    v-bind="computedSpecificProps"
     :class="computedClasses"
     :target="props.target"
     :href="link?.href.value || computedHref"
@@ -69,7 +69,7 @@ const emit = defineEmits<{
 }>()
 
 const attrs = useAttrs()
-const {computedHref, tag, link, isNuxtLink} = useBLinkTagResolver(
+const {computedHref, tag, link, isNuxtLink, isRouterLink, linkProps} = useBLinkTagResolver(
   computed(() => ({
     routerComponentName: props.routerComponentName,
     disabled: props.disabled,
@@ -131,5 +131,10 @@ const nuxtSpecificProps = computed(() => ({
   noPrefetch: props.noPrefetch,
   prefetchOn: props.prefetchOn,
   prefetchedClass: props.prefetchedClass,
+  ...linkProps.value,
+}))
+const computedSpecificProps = computed(() => ({
+  ...(isNuxtLink.value ? nuxtSpecificProps.value : undefined),
+  ...(isRouterLink.value ? linkProps.value : undefined),
 }))
 </script>
