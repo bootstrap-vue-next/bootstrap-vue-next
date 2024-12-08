@@ -3,7 +3,6 @@ import {
   getCurrentInstance,
   type MaybeRefOrGetter,
   readonly,
-  type Ref,
   resolveDynamicComponent,
   toRef,
 } from 'vue'
@@ -68,9 +67,16 @@ export const useBLinkTagResolver = (
   const useLink = typeof RouterLinkComponent === 'string' ? null : RouterLinkComponent.useLink
   const resolvedProps = toRef(props)
 
+  const resolvedTo = toRef(() => resolvedProps.value.to || '')
+  const resolvedReplace = toRef(() => resolvedProps.value.replace)
+  const linkProps = computed(() => ({
+    to: resolvedTo.value,
+    replace: resolvedReplace.value,
+  }))
+
   const link = useLink?.({
-    to: toRef(() => resolvedProps.value.to || '') as Ref<string>,
-    replace: toRef(() => resolvedProps.value.replace),
+    to: resolvedTo,
+    replace: resolvedReplace,
   })
 
   const routerName = computed(() =>
@@ -124,5 +130,6 @@ export const useBLinkTagResolver = (
     router,
     route,
     link,
+    linkProps,
   }
 }

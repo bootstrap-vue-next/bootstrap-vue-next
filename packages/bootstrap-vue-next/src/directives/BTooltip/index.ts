@@ -22,7 +22,7 @@ export const vBTooltip: Directive<ElementWithPopper> = {
     el.$__binding = JSON.stringify([binding.modifiers, binding.value])
     bind(el, binding, {
       noninteractive: true,
-      ...(defaults['BTooltip'] || {}),
+      ...(defaults['BTooltip'] || undefined),
       ...resolveDirectiveProps(binding, el),
       title: text.title ?? text.content ?? '',
       tooltip: isActive,
@@ -42,7 +42,7 @@ export const vBTooltip: Directive<ElementWithPopper> = {
     unbind(el)
     bind(el, binding, {
       noninteractive: true,
-      ...(defaults['BTooltip'] || {}),
+      ...(defaults['BTooltip'] || undefined),
       ...resolveDirectiveProps(binding, el),
       title: text.title ?? text.content ?? '',
       tooltip: isActive,

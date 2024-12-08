@@ -73,8 +73,8 @@ export const resolveDirectiveProps = (
           ? 'top'
           : undefined,
   html: true,
-  ...(typeof binding.value === 'object' ? binding.value : {}),
-  ...(binding.modifiers.interactive ? {noninteractive: false} : {}),
+  ...(typeof binding.value === 'object' ? binding.value : undefined),
+  ...(binding.modifiers.interactive ? {noninteractive: false} : undefined),
   title: null,
   content: null,
 })

@@ -38,7 +38,7 @@ export const useFormSelect = (
     }
 
     return {
-      ...(typeof option === 'object' ? option : {}),
+      ...(typeof option === 'object' ? option : undefined),
       value,
       text,
       disabled,
