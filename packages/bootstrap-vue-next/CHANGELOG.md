@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.26.10](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.9...bootstrapvuenext-v0.26.10) (2024-12-08)
+
+
+### Bug Fixes
+
+* **BLink:** add computed to attribute (to || '') to routerLink fixes [#2429](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2429) ([ae01574](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ae0157491e9126da382272c381e0c402d066c408))
+
+
+### Performance Improvements
+
+* when dynamic spread, use ...undefined rather than ...{} for slightly less memory consumption ([#2430](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2430)) ([ae01574](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ae0157491e9126da382272c381e0c402d066c408))
+
 ## [0.26.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.8...bootstrapvuenext-v0.26.9) (2024-12-06)
 
 
