@@ -77,12 +77,10 @@ export default {
       ],
       emits: [
         {
-          args: [],
           event: 'close',
           description: 'Emitted when the alert begins its transition to close',
         },
         {
-          args: [],
           event: 'closed',
           description: 'Emitted after the alert ends its transition to close',
         },
