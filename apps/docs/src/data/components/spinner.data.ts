@@ -13,7 +13,7 @@ export default {
           label: {
             type: 'string',
             default: undefined,
-            description: 'Text content to place in the sr-only label',
+            description: 'Text content to place in the visually-hidden label',
           },
           small: {
             type: 'boolean',
