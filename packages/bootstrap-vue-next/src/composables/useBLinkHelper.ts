@@ -60,31 +60,17 @@ export const useBLinkTagResolver = (
     replace: boolean
   }>
 ) => {
+  // Getting instance
   const instance = getCurrentInstance()
   const router = instance?.appContext.app.config.globalProperties.$router
   const route = instance?.appContext.app.config.globalProperties.$route
   const RouterLinkComponent = resolveDynamicComponent('RouterLink') as typeof RouterLink | string
   const useLink = typeof RouterLinkComponent === 'string' ? null : RouterLinkComponent.useLink
-  const resolvedProps = toRef(props)
 
+  // Resolving props
+  const resolvedProps = toRef(props)
   const resolvedTo = toRef(() => resolvedProps.value.to || '')
   const resolvedReplace = toRef(() => resolvedProps.value.replace)
-  const linkProps = computed(() => ({
-    to: resolvedTo.value,
-    replace: resolvedReplace.value,
-  }))
-
-  const link = useLink?.({
-    to: resolvedTo,
-    replace: resolvedReplace,
-  })
-
-  const routerName = computed(() =>
-    resolvedProps.value.routerComponentName
-      .split('-')
-      .map((e) => e.charAt(0).toUpperCase() + e.slice(1))
-      .join('')
-  )
 
   const tag = computed(() => {
     const hasRouter = instance?.appContext.app.component(routerName.value) !== undefined
@@ -94,7 +80,30 @@ export const useBLinkTagResolver = (
     return resolvedProps.value.routerComponentName
   })
 
+  const isRouterLink = computed(() => tag.value === 'router-link')
+  const isNuxtLink = computed(() => tag.value === 'nuxt-link')
+  const isOfRouterType = computed(() => isRouterLink.value || isNuxtLink.value)
+  const linkProps = computed(() => ({
+    to: resolvedTo.value,
+    replace: resolvedReplace.value,
+  }))
+
+  const _link = useLink?.({
+    to: resolvedTo,
+    replace: resolvedReplace,
+  })
+  const link = computed(() => (isOfRouterType.value ? _link : null))
+
+  const routerName = computed(() =>
+    resolvedProps.value.routerComponentName
+      .split('-')
+      .map((e) => e.charAt(0).toUpperCase() + e.slice(1))
+      .join('')
+  )
+
   const computedHref = computed(() => {
+    if (link.value?.href.value) return link.value.href.value
+
     const toFallback = '#'
     if (resolvedProps.value.href) return resolvedProps.value.href
 
@@ -123,8 +132,8 @@ export const useBLinkTagResolver = (
 
   return {
     tag,
-    isRouterLink: computed(() => tag.value === 'router-link'),
-    isNuxtLink: computed(() => tag.value === 'nuxt-link'),
+    isRouterLink,
+    isNuxtLink,
     computedHref,
     routerName,
     router,
