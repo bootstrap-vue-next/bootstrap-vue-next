@@ -956,14 +956,18 @@ const exposedSelectableUtilities = {
     selectedItemsSetUtilities.clear()
   },
   selectAllRows: () => {
-    if (!props.selectable) return
+    if (!props.selectable || props.selectMode === 'single') return
     selectedItemsToSet.value = new Set([...computedItems.value])
   },
   selectRow: (index: number) => {
     if (!props.selectable) return
     const item = computedItems.value[index]
     if (!item || selectedItemsSetUtilities.has(item)) return
-    selectedItemsSetUtilities.add(item)
+    if (props.selectMode === 'single') {
+      selectedItemsSetUtilities.set([item])
+    } else {
+      selectedItemsSetUtilities.add(item)
+    }
   },
   unselectRow: (index: number) => {
     if (!props.selectable) return
