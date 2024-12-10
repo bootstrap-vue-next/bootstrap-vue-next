@@ -364,6 +364,7 @@ type RadiusElement =
   | 'pill'
   | 'none'
   | 'sm'
+  | 'md'
   | 'lg'
   | '0'
   | '1'
