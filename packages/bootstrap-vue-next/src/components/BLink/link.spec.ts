@@ -3,7 +3,7 @@ import {afterEach, describe, expect, it} from 'vitest'
 import BLink from './BLink.vue'
 import {createRouter, createWebHistory} from 'vue-router'
 
-describe('modal', () => {
+describe('link', () => {
   enableAutoUnmount(afterEach)
 
   const router = createRouter({
