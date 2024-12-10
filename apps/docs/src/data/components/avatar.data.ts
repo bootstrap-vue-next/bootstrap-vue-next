@@ -208,7 +208,6 @@ export default {
           description: 'Content (avatars) to place in the avatar group',
         },
       ],
-      emits: [],
     },
   ],
 }
