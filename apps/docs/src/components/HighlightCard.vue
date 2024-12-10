@@ -4,7 +4,7 @@
       <slot />
     </BCardBody>
     <template v-if="$slots.html">
-      <div class="html">HTML</div>
+      <div v-if="$slots.default" class="html">HTML</div>
       <BCardBody class="bg-body-tertiary">
         <slot name="html" />
       </BCardBody>
