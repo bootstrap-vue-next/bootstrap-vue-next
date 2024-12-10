@@ -161,7 +161,6 @@ export default {
         {
           event: 'hidden',
           description: 'Emitted when AccordionItem has finished closing',
-          args: [],
         },
         {
           event: 'hide',
@@ -178,7 +177,6 @@ export default {
           event: 'hide-prevented',
           description:
             'Emitted when the AccordionItem tried to close, but was prevented from doing so.',
-          args: [],
         },
         {
           event: 'show',
@@ -194,13 +192,11 @@ export default {
         {
           event: 'shown',
           description: 'Emitted when AccordionItem has finished showing',
-          args: [],
         },
         {
           event: 'show-prevented',
           description:
             'Emitted when the AccordionItem tried to open, but was prevented from doing so.',
-          args: [],
         },
         {
           event: 'update:model-value',
@@ -216,12 +212,10 @@ export default {
       ],
       slots: [
         {
-          scope: [],
           name: 'default',
           description: 'Content to place in the AccordionItem',
         },
         {
-          scope: [],
           name: 'title',
           description: 'Content to place in the header of the AccordionItem',
         },
