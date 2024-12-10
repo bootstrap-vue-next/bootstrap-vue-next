@@ -4,7 +4,7 @@
     v-bind="computedSpecificProps"
     :class="computedClasses"
     :target="props.target"
-    :href="link?.href.value || computedHref"
+    :href="computedHref"
     :rel="computedRel"
     :tabindex="computedTabIndex"
     :aria-disabled="props.disabled ? true : null"
@@ -92,8 +92,8 @@ const computedClasses = computed(() => [
   computedLinkClasses.value,
   {
     [defaultActiveClass]: props.active,
-    [props.activeClass]: link?.isActive.value || false,
-    [props.exactActiveClass]: link?.isExactActive.value || false,
+    [props.activeClass]: link.value?.isActive.value || false,
+    [props.exactActiveClass]: link.value?.isExactActive.value || false,
     'stretched-link': props.stretched === true,
   },
 ])
