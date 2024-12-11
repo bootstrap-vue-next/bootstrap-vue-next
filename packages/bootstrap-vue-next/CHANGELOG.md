@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.13](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.12...bootstrapvuenext-v0.26.13) (2024-12-11)
+
+
+### Features
+
+* **BOffcanvas:** fire breakpoint on mounted & add ref into defineExpose as isOpenByBreakpoint ([083805b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/083805b6b533639b1209b9a312aa541528e74987))
+
 ## [0.26.12](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.11...bootstrapvuenext-v0.26.12) (2024-12-11)
 
 
