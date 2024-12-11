@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.12](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.11...bootstrapvuenext-v0.26.12) (2024-12-11)
+
+
+### Features
+
+* **BOffcanvas:** add opened to breakpoint event ([#2443](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2443)) ([e82be33](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e82be33486a71d0e7412fb20c70e176be4db0d4c))
+
 ## [0.26.11](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.10...bootstrapvuenext-v0.26.11) (2024-12-10)
 
 
