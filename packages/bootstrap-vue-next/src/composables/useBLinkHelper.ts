@@ -9,6 +9,7 @@ import {
 import {isLink} from '../utils/isLink'
 import {pick} from '../utils/object'
 import type {RouteLocationRaw, RouterLink} from 'vue-router'
+import {toPascalCase} from '../utils/stringUtils'
 
 export const useBLinkHelper = <
   T extends Record<string, unknown>,
@@ -72,16 +73,24 @@ export const useBLinkTagResolver = (
   const resolvedTo = toRef(() => resolvedProps.value.to || '')
   const resolvedReplace = toRef(() => resolvedProps.value.replace)
 
+  const routerName = computed(() => toPascalCase(resolvedProps.value.routerComponentName))
+
   const tag = computed(() => {
     const hasRouter = instance?.appContext.app.component(routerName.value) !== undefined
     if (!hasRouter || resolvedProps.value.disabled || !resolvedProps.value.to) {
       return 'a'
     }
-    return resolvedProps.value.routerComponentName
+    return routerName.value
   })
 
-  const isRouterLink = computed(() => tag.value === 'router-link')
-  const isNuxtLink = computed(() => tag.value === 'nuxt-link')
+  const isRouterLink = computed(() => tag.value === 'RouterLink')
+  const isNuxtLink = computed(
+    // @ts-expect-error we're doing an explicit check for Nuxt, so we can safely ignore this
+    () => isRouterLink.value && typeof instance?.appContext.app.$nuxt !== 'undefined'
+  )
+  const isNonStandardTag = computed(
+    () => tag.value !== 'a' && !isRouterLink.value && !isNuxtLink.value
+  )
   const isOfRouterType = computed(() => isRouterLink.value || isNuxtLink.value)
   const linkProps = computed(() => ({
     to: resolvedTo.value,
@@ -93,13 +102,6 @@ export const useBLinkTagResolver = (
     replace: resolvedReplace,
   })
   const link = computed(() => (isOfRouterType.value ? _link : null))
-
-  const routerName = computed(() =>
-    resolvedProps.value.routerComponentName
-      .split('-')
-      .map((e) => e.charAt(0).toUpperCase() + e.slice(1))
-      .join('')
-  )
 
   const computedHref = computed(() => {
     if (link.value?.href.value) return link.value.href.value
@@ -131,6 +133,7 @@ export const useBLinkTagResolver = (
   })
 
   return {
+    isNonStandardTag,
     tag,
     isRouterLink,
     isNuxtLink,
