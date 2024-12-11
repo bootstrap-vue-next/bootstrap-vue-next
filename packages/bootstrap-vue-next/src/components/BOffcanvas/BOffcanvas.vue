@@ -143,7 +143,7 @@ const emit = defineEmits<
     close: [value: BvTriggerableEvent]
     esc: [value: BvTriggerableEvent]
     backdrop: [value: BvTriggerableEvent]
-    breakpoint: [value: BvTriggerableEvent]
+    breakpoint: [value: BvTriggerableEvent, opened: boolean]
   } & showHideEmits
 >()
 
@@ -292,14 +292,14 @@ watch(smallerOrEqualToBreakpoint, (newValue) => {
     requestAnimationFrame(() => {
       isOpenByBreakpoint.value = false
     })
-    emit('breakpoint', buildTriggerableEvent('breakpoint'))
+    emit('breakpoint', buildTriggerableEvent('breakpoint'), !newValue)
     emit('hide', buildTriggerableEvent('hide'))
   } else {
     localNoAnimation.value = true
     requestAnimationFrame(() => {
       isOpenByBreakpoint.value = true
     })
-    emit('breakpoint', buildTriggerableEvent('breakpoint'))
+    emit('breakpoint', buildTriggerableEvent('breakpoint'), !newValue)
     emit('show', buildTriggerableEvent('show'))
   }
 })
