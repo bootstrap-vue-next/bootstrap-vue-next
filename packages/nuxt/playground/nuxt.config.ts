@@ -10,8 +10,8 @@ export default defineNuxtConfig({
           variant: 'danger',
         },
         BLink: {
-          routerComponentName: 'NuxtLink',
-        }
+          routerComponentName: 'RouterLink',
+        },
       },
     },
   },
