@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.26.14](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.13...nuxt-v0.26.14) (2024-12-11)
+
+
+### Bug Fixes
+
+* **BLink:** nuxt should do full page reloads on to prop fixes [#2445](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2445) ([#2449](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2449)) ([cce9833](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cce9833ebd91bcfe1037ffb6422edfdc03389198))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.26.14
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.26.14
+
 ## [0.26.13](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.12...nuxt-v0.26.13) (2024-12-11)
 
 

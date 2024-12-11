@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.26.14](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.13...bootstrapvuenext-v0.26.14) (2024-12-11)
+
+
+### Bug Fixes
+
+* **BLink:** nuxt should do full page reloads on to prop fixes [#2445](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2445) ([#2449](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2449)) ([cce9833](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cce9833ebd91bcfe1037ffb6422edfdc03389198))
+* **BTable:** reflect single select mode on programmatic selection ([#2440](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2440)) ([1ea89dc](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1ea89dca23a80bbc5cc58ea479669663a4da0592))
+
 ## [0.26.13](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.12...bootstrapvuenext-v0.26.13) (2024-12-11)
 
 
