@@ -4,5 +4,6 @@
     "composite": true,
     "module": "ESNext",
     "types": ["node"]
-  }
+  },
+  "include": ["./.vitepress/theme/keys.ts"]
 }
