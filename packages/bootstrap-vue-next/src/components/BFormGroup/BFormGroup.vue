@@ -84,6 +84,7 @@
         <ContentTemplate.reuse />
       </div>
       <template v-else>
+        <LabelContentTemplate.reuse />
         <slot
           :id="computedId"
           :aria-describedby="null"
