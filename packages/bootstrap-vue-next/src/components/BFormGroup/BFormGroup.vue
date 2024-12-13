@@ -59,6 +59,7 @@
         </component>
       </template>
     </LabelContentTemplate.define>
+    <!-- End of definitions -->
     <BFormRow v-if="isHorizontal">
       <LabelContentTemplate.reuse />
       <BCol v-bind="contentColProps" ref="_content">
@@ -72,14 +73,14 @@
       </BCol>
     </BFormRow>
     <template v-else>
-      <LabelContentTemplate.reuse />
-      <div v-if="!isHorizontal && props.floating" ref="_content" class="form-floating">
+      <div v-if="props.floating && !isHorizontal" ref="_content" class="form-floating">
         <slot
           :id="computedId"
           :aria-describedby="null"
           :description-id="descriptionId"
           :label-id="labelId"
         />
+        <LabelContentTemplate.reuse />
         <ContentTemplate.reuse />
       </div>
       <template v-else>
