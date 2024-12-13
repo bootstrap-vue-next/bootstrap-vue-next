@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.26.15](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.14...bootstrapvuenext-v0.26.15) (2024-12-13)
+
+
+### Bug Fixes
+
+* **BFormGroup:** floating labels not working fixes [#2452](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2452) ([#2455](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2455)) ([aa4b1c6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/aa4b1c6e1be3a75a7ed459f54c89068f2a677ade))
+* last commit label issue ([#2457](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2457)) ([703eca3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/703eca32c66ffa1ccf2135e0217832ac4d00c1e4))
+
 ## [0.26.14](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.13...bootstrapvuenext-v0.26.14) (2024-12-11)
 
 
