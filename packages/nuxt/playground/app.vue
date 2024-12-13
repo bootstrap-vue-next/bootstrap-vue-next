@@ -127,6 +127,30 @@
           </BLink>
         </BCol>
       </BRow>
+      <BRow>
+        <BCol>
+          Nav items
+          <BNavItem :to="{ path: '/about' }">
+            About
+          </BNavItem>
+          <BNavItem to="/">
+            Home
+          </BNavItem>
+        </BCol>
+      </BRow>
+      <BRow>
+        <BCol>
+          dropdown
+          <BDropdown>
+            <BDropdownItem to="/">
+              Home
+            </BDropdownItem>
+            <BDropdownItem to="/about">
+              About
+            </BDropdownItem>
+          </BDropdown>
+        </BCol>
+      </BRow>
       <BRow class="mt-3 border">
         <BCol>
           <NuxtPage />
