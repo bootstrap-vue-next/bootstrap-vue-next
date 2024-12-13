@@ -42,10 +42,8 @@ Internally, BootstrapVueNext will convert the above array to the following array
 <<< FRAGMENT ./demo/CheckboxObjectArray.ts#snippet{ts}
 
 ::: info NOTE
-
 The BootstrapVue field `html` on the `options` object has been deprecated. See our
 [Migration Guide](/docs/migration-guide/#v-html) for details.
-
 :::
 
 ### Options as an array of objects

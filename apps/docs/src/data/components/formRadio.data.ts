@@ -158,13 +158,11 @@ export default {
         {
           name: 'default',
           description: 'Content (form radio buttons) to place in the form radio button group',
-          scope: [],
         },
         {
           name: 'first',
           description:
             'Slot to place for radio buttons so that they appear before radios generated from options prop',
-          scope: [],
         },
         {
           name: 'option',
