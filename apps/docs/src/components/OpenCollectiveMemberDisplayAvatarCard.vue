@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-wrap justify-content-center">
+  <div v-if="members" class="d-flex flex-wrap justify-content-center">
     <BCard
       v-for="member in members"
       :key="member.MemberId"
@@ -8,7 +8,7 @@
       <template #img>
         <BAvatar
           class="mt-2"
-          :src="member.image"
+          :src="member.image ?? undefined"
           :href="member.profile"
           target="_blank"
           :alt="member.name"
@@ -31,9 +31,9 @@
 </template>
 
 <script setup lang="ts">
-import type {CollectiveMembersResponse} from '../data/opencollective.data'
+import type {CollectiveMembersResponse} from '../types'
 
 defineProps<{
-  members: CollectiveMembersResponse[]
+  members?: CollectiveMembersResponse[]
 }>()
 </script>

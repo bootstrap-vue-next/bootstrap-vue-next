@@ -68,3 +68,29 @@ export interface ComponentReference {
 export type MappedComponentReference = Omit<ComponentReference, 'props'> & {
   props: {name: string; linkTo?: string; ref: (PropertyReference & {prop: string})[]}[]
 }
+
+export type CollectiveMembersResponse = {
+  MemberId: number
+  createdAt: string
+  type: string
+  role: string
+  tier: string
+  isActive: boolean
+  totalAmountDonated: number
+  currency: string
+  lastTransactionAt: string
+  lastTransactionAmount: number
+  profile: string
+  name: string
+  company: null | null
+  description: string | null
+  image: string | null
+  email: null | string
+  twitter: null | string
+  github: string | null
+  website: null | string
+}
+
+export type CollectivePartialResponse = {
+  members: CollectiveMembersResponse[]
+}
