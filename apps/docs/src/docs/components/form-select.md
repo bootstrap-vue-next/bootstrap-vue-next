@@ -65,11 +65,10 @@ Internally, BootstrapVueNext will convert the above array to the following array
 
 If `value` is missing, then `text` will be used as both the `value` and `text` fields.
 
+Internally, BootstrapVueNext will convert the above array to the following array (the
+[array of objects](#options-as-an-array-of-objects)) format:
+
 <<< FRAGMENT ./demo/OptionsObjectArrayNormalized.ts#snippet{ts}
-
-To define option groups, just add an object with a `label` prop as the groups name and a `options` property with the array of options of the group.
-
-<<< FRAGMENT ./demo/OptionsGroups.ts#snippet{ts}
 
 ### Changing the option field names
 
@@ -78,6 +77,12 @@ If you want to customize the field property names (for example using `name` fiel
 `disabled-field` props to a string that contains the property name you would like to use:
 
 <<< DEMO ./demo/SelectCustomFields.vue
+
+### Options groups
+
+To define option groups, just add an object with a `label` prop as the groups name and a `options` property with the array of options of the group.
+
+<<< FRAGMENT ./demo/OptionsGroups.ts#snippet{ts}
 
 ### Option notes
 

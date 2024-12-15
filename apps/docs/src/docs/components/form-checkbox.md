@@ -20,7 +20,7 @@ For cross browser consistency, `BFormCheckboxGroup` and `BFormCheckbox` use Boot
 
 <<< DEMO ./demo/CheckboxExample2.vue
 
-## Checkbox group options array
+## Options property
 
 `options` can be an array of strings or objects. Available fields:
 
@@ -29,6 +29,13 @@ For cross browser consistency, `BFormCheckboxGroup` and `BFormCheckbox` use Boot
 - `text` Display text
 
 `value` can be a string, number, or simple object. Avoid using complex types in values.
+
+::: info NOTE
+The BootstrapVue field `html` on the `options` object has been deprecated. See our
+[Migration Guide](/docs/migration-guide/#v-html) for details.
+:::
+
+### Options as an array
 
 <<< FRAGMENT ./demo/OptionsArray.ts#snippet{ts}
 
@@ -40,11 +47,6 @@ Internally, BootstrapVueNext will convert the above array to the following array
 [array of objects](#options-as-an-array-of-objects)) format:
 
 <<< FRAGMENT ./demo/OptionsObjectArray.ts#snippet{ts}
-
-::: info NOTE
-The BootstrapVue field `html` on the `options` object has been deprecated. See our
-[Migration Guide](/docs/migration-guide/#v-html) for details.
-:::
 
 ### Options as an array of objects
 
