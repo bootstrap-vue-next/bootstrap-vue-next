@@ -30,7 +30,7 @@ For cross browser consistency, `BFormCheckboxGroup` and `BFormCheckbox` use Boot
 
 `value` can be a string, number, or simple object. Avoid using complex types in values.
 
-<<< FRAGMENT ./demo/CheckboxArray.ts#snippet{ts}
+<<< FRAGMENT ./demo/OptionsArray.ts#snippet{ts}
 
 If an array entry is a string, it will be used for both the generated `value` and `text` fields.
 
@@ -39,7 +39,7 @@ You can mix using strings and [objects](#options-as-an-array-of-objects) in the 
 Internally, BootstrapVueNext will convert the above array to the following array (the
 [array of objects](#options-as-an-array-of-objects)) format:
 
-<<< FRAGMENT ./demo/CheckboxObjectArray.ts#snippet{ts}
+<<< FRAGMENT ./demo/OptionsObjectArray.ts#snippet{ts}
 
 ::: info NOTE
 The BootstrapVue field `html` on the `options` object has been deprecated. See our
@@ -48,14 +48,14 @@ The BootstrapVue field `html` on the `options` object has been deprecated. See o
 
 ### Options as an array of objects
 
-<<< FRAGMENT ./demo/CheckboxObjectArrayRaw.ts#snippet{ts}
+<<< FRAGMENT ./demo/OptionsObjectArrayRaw.ts#snippet{ts}
 
 If `value` is missing, then `text` will be used as both the `value` and `text` fields.
 
 Internally, BootstrapVueNext will convert the above array to the following array (the
 [array of objects](#options-as-an-array-of-objects)) format:
 
-<<< FRAGMENT ./demo/CheckboxObjectArrayNormalized.ts#snippet{ts}
+<<< FRAGMENT ./demo/OptionsObjectArrayNormalized.ts#snippet{ts}
 
 ### Changing the option field names
 

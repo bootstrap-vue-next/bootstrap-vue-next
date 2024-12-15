@@ -113,7 +113,6 @@ export default {
       component: 'BFormSelectOption',
       styleSpec: {kind: StyleKind.Tag, value: 'option'},
       sourcePath: '/BFormSelect/BFormSelectOption.vue',
-      emits: [],
       props: {
         '': {
           value: {
@@ -154,7 +153,6 @@ export default {
           ),
         } satisfies Record<keyof BvnComponentProps['BFormSelectOptionGroup'], PropertyReference>,
       },
-      emits: [],
       slots: [
         {
           name: 'first',
