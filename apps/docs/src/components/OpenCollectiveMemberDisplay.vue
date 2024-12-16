@@ -66,6 +66,7 @@
 
 <script setup lang="ts">
 import {type CollectiveMembersResponse, type CollectivePartialResponse} from '../types'
+// @ts-expect-error - Vitepress isn't correctly mocking the type in this case
 import {data} from '../data/opencollective.data'
 
 const OpenCollectiveData = data as CollectivePartialResponse
