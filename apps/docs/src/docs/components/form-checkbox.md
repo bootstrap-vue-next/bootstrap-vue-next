@@ -20,48 +20,9 @@ For cross browser consistency, `BFormCheckboxGroup` and `BFormCheckbox` use Boot
 
 <<< DEMO ./demo/CheckboxExample2.vue
 
-## Checkbox group options array
+## Options property
 
-`options` can be an array of strings or objects. Available fields:
-
-- `value` The selected value which will be set on `v-model`
-- `disabled` Disables item for selection
-- `text` Display text
-
-`value` can be a string, number, or simple object. Avoid using complex types in values.
-
-<<< FRAGMENT ./demo/CheckboxArray.ts#snippet{ts}
-
-If an array entry is a string, it will be used for both the generated `value` and `text` fields.
-
-You can mix using strings and [objects](#options-as-an-array-of-objects) in the array.
-
-Internally, BootstrapVueNext will convert the above array to the following array (the
-[array of objects](#options-as-an-array-of-objects)) format:
-
-<<< FRAGMENT ./demo/CheckboxObjectArray.ts#snippet{ts}
-
-::: info NOTE
-The BootstrapVue field `html` on the `options` object has been deprecated. See our
-[Migration Guide](/docs/migration-guide/#v-html) for details.
-:::
-
-### Options as an array of objects
-
-<<< FRAGMENT ./demo/CheckboxObjectArrayRaw.ts#snippet{ts}
-
-If `value` is missing, then `text` will be used as both the `value` and `text` fields.
-
-Internally, BootstrapVueNext will convert the above array to the following array (the
-[array of objects](#options-as-an-array-of-objects)) format:
-
-<<< FRAGMENT ./demo/CheckboxObjectArrayNormalized.ts#snippet{ts}
-
-### Changing the option field names
-
-If you want to customize the field property names (for example using `name` field for display
-`text`) you can easily change them by setting the `text-field`, `value-field`, and
-`disabled-field` props to a string that contains the property name you would like to use:
+<!--@include: ./_options.md{5,}-->
 
 <<< DEMO ./demo/CheckboxCustomFields.vue
 
