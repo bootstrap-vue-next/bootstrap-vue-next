@@ -1,10 +1,6 @@
 # Form Group
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
+<ComponentSidebar />
 
 <div class="lead mb-5">
 

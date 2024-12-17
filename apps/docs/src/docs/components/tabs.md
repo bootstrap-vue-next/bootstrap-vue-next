@@ -1,10 +1,6 @@
 # Tabs
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
+<ComponentSidebar />
 
 <div class="lead mb-5">
 Create a widget of tabbable panes of _local content_. The tabs component is built upon navs and

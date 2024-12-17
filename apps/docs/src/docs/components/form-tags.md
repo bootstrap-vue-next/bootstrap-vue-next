@@ -1,10 +1,6 @@
 # Form Tags
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
+<ComponentSidebar />
 
 <div class="lead mb-5">
 
@@ -1116,11 +1112,11 @@ Note `<BFormTag>` requires BootstrapVueNext's custom CSS/SCSS for proper styling
   const customDropdownOptions = ref<string[]>(['Apple', 'Orange', 'Banana', 'Lime', 'Peach', 'Chocolate', 'Strawberry'])
   const customDropdownSearch = ref<string>('')
   const customDropdownTags = ref<string[]>([])
-  
+
   const criteria = computed(() => customDropdownSearch.value.trim().toLowerCase())
   const customDropdownAvailableOptions = computed(() => {
   const searchCriteria = criteria.value
-  
+
   // Filter out already selected options
   const optionsFiltered = customDropdownOptions.value.filter(opt => customDropdownTags.value.indexOf(opt) === -1)
     if (searchCriteria) {

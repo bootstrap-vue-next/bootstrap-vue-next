@@ -1,10 +1,6 @@
 # Popover
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
+<ComponentSidebar />
 
 ## Docs to be written
 
