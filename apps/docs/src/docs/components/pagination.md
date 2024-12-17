@@ -1,7 +1,5 @@
 # Pagination
 
-<ComponentSidebar />
-
 <div class="lead mb-5">
 
 Quick first, previous, next, last, and page buttons for pagination control of another component

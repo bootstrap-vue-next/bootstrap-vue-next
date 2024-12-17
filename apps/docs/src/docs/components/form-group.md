@@ -1,7 +1,5 @@
 # Form Group
 
-<ComponentSidebar />
-
 <div class="lead mb-5">
 
 The `BFormGroup` component is the easiest way to add some structure to forms. Its purpose is to pair form controls with a legend or label, and to provide help text and invalid/valid feedback text, as well as visual (color) contextual state feedback.
@@ -495,7 +493,6 @@ scoped `default` slot.
 <script setup lang="ts">
 import {data} from '../../data/components/formGroup.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BCard, BCardBody, BFormRadioGroup, BFormGroup, BFormInput} from 'bootstrap-vue-next'
 import {computed, ref} from 'vue'

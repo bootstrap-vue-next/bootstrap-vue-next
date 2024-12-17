@@ -1,7 +1,5 @@
 # Form
 
-<ComponentSidebar />
-
 <div class="lead mb-5">
 
 BootstrapVueNext form component and helper components that optionally support inline form styles and
@@ -547,7 +545,6 @@ for details on the Bootstrap v5 validation states.
 <script setup lang="ts">
 import {data} from '../../data/components/form.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import NotYetImplemented from '../../components/NotYetImplemented.vue'
 import {

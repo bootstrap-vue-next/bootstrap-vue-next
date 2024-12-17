@@ -1,7 +1,5 @@
 # Button
 
-<ComponentSidebar />
-
 <div class="lead mb-5">
 
 Use Bootstrap's custom `BButton` component for actions in forms, dialogs, and more. Includes support for a handful of contextual variations, sizes, states, and more.
@@ -413,7 +411,6 @@ import {data} from '../../data/components/button.data'
 import {ref, computed} from 'vue'
 import {BButtonGroup, BButton} from 'bootstrap-vue-next'
 import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import NotYetImplemented from '../../components/NotYetImplemented.vue'
 

@@ -4,7 +4,7 @@
       <li v-for="header in headers" :key="header.slug">
         <PageContentsItem :item="header" />
       </li>
-      <li>
+      <li v-if="isComponentPage">
         <a href="#component-reference">Component Reference</a>
       </li>
     </ul>
@@ -17,4 +17,5 @@ import {useData} from 'vitepress'
 
 const data = useData()
 const headers = computed(() => data.page.value.headers)
+const isComponentPage = computed(() => data.page.value.relativePath.includes('/components/'))
 </script>

@@ -1,7 +1,5 @@
 # Accordion
 
-<ComponentSidebar />
-
 <div class="lead mb-5">
 
 Build vertically collapsing accordions in combination with `BCollapse` component.

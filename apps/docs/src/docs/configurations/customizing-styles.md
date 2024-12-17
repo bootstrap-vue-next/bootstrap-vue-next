@@ -1,13 +1,5 @@
 # Customizing Styles
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
-
-[[toc]]
-
-  </Teleport>
-</ClientOnly>
-
 ## Bootstrap Customization
 
 There are many ways to customize the underlying [Bootstrap](https://getbootstrap.com/) styles. See

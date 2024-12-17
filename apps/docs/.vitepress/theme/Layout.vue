@@ -137,7 +137,7 @@
                 header-class="pb-0 d-flex offcanvas-hidden-width"
                 body-class="py-2"
               >
-                <div class="bd-toc" />
+                <PageContents />
               </BOffcanvas>
             </ClientOnly>
           </aside>
@@ -180,7 +180,6 @@ import CircleHalf from '~icons/bi/circle-half'
 import {useData, useRoute, withBase} from 'vitepress'
 import {appInfoKey} from './keys'
 import {useMediaQuery} from '@vueuse/core'
-import TableOfContentsNav from '../../src/components/TableOfContentsNav.vue'
 import VPNavBarSearch from 'vitepress/dist/client/theme-default/components/VPNavBarSearch.vue'
 
 // https://vitepress.dev/reference/runtime-api#usedata

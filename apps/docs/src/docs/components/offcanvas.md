@@ -1,7 +1,5 @@
 # Offcanvas
 
-<ComponentSidebar />
-
 <div class="lead mb-5">
 
 Build hidden sidebars into your project. Sidebars can aid in enhancing user interaction or preventing further interaction.
@@ -96,7 +94,6 @@ In SSR environments, the BOffcanvas component must be rendered client-side due t
 <script setup lang="ts">
 import {data} from '../../data/components/offcanvas.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BCard, BCardBody, BOffcanvas, BButton} from 'bootstrap-vue-next'
 import {ref, computed} from 'vue'

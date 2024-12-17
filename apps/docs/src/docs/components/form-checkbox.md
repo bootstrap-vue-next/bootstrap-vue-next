@@ -1,7 +1,5 @@
 # Form Checkbox
 
-<ComponentSidebar />
-
 <div class="lead mb-5">
 
 For cross browser consistency, `BFormCheckboxGroup` and `BFormCheckbox` use Bootstrap's custom checkbox input to replace the browser default checkbox input. It is built on top of semantic and accessible markup, so it is a solid replacement for the default checkbox input.

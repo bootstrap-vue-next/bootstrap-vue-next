@@ -1,7 +1,5 @@
 # Button Toolbar
 
-<ComponentSidebar />
-
 <div class="lead mb-5">
 
 Group a series of button-groups and/or input-groups together on a single line.
@@ -259,6 +257,5 @@ input groups and dropdowns, by setting the prop `justify`.
 import {data} from '../../data/components/buttonToolbar.data'
 import {BButtonGroup, BDropdown, BInputGroup, BDropdownItem, BButton, BButtonToolbar, BFormInput} from 'bootstrap-vue-next'
 import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 </script>

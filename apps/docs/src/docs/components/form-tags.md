@@ -1,7 +1,5 @@
 # Form Tags
 
-<ComponentSidebar />
-
 <div class="lead mb-5">
 
 Lightweight custom tagged input form control, with options for customized interface rendering, duplicate tag detection and optional tag validation.
@@ -1046,7 +1044,6 @@ Note `<BFormTag>` requires BootstrapVueNext's custom CSS/SCSS for proper styling
 <script setup lang="ts">
   import {data} from '../../data/components/formTags.data'
   import ComponentReference from '../../components/ComponentReference.vue'
-  import ComponentSidebar from '../../components/ComponentSidebar.vue'
   import HighlightCard from '../../components/HighlightCard.vue'
   import {BFormTags, BFormText, BFormGroup, BInputGroupText, BButton, BCard, BInputGroup, BFormTag, BFormInput, BFormSelect, BFormCheckbox, BFormInvalidFeedback, BDropdownForm, BDropdownDivider, BDropdownItemButton, BDropdownText, BDropdown} from 'bootstrap-vue-next'
   import {ref, computed, watch} from 'vue'

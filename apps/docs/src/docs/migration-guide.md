@@ -1,13 +1,5 @@
 # Migration Guide
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
-
-[[toc]]
-
-  </Teleport>
-</ClientOnly>
-
 ## Overview
 
 `bootstrap-vue-next` is an entirely new implementation of [bootrap-vue](https://bootstrap-vue.org/) based on [Vue 3](https://vuejs.org/) and [Bootstrap 5](https://getbootstrap.com/). Therefore, you should not expect this to be a drop-in replacement. Where possible compatibility has been maintained, but providing a clean developer experience when working with `Vue 3`, `Bootstrap 5` and this library is a higher priority.

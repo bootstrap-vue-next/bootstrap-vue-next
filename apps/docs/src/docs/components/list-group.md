@@ -1,7 +1,5 @@
 # List Group
 
-<ComponentSidebar />
-
 <div class="lead mb-5">
 
 List Groups are a flexible and powerful component for displaying a series of content. List Group items can be modified to support just about any content within. They can also be used as navigation via various props.

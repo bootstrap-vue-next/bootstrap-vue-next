@@ -1,7 +1,5 @@
 # Navbar
 
-<ComponentSidebar />
-
 <div class="lead mb-5">
 
 The component `BNavbar` is a wrapper that positions branding, navigation, and other elements into a concise header. It is easily extensible and thanks to the `BCollapse` component, it can easily integrate responsive behaviors.

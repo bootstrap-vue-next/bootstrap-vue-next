@@ -1,7 +1,5 @@
 # Collapse
 
-<ComponentSidebar />
-
 <div class="lead mb-5">
 
 Easily toggle visibility of almost any content on your pages in a vertically collapsing container.

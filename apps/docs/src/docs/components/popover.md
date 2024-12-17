@@ -1,7 +1,5 @@
 # Popover
 
-<ComponentSidebar />
-
 ## Docs to be written
 
 ## Auto close popover when hidden by `hide` middleware
@@ -72,7 +70,6 @@ import { computed, ref, onMounted } from 'vue';
 import {data} from '../../data/components/popover.data'
 import HighlightCard from '../../components/HighlightCard.vue'
 import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
 
 import {
   BCol,
