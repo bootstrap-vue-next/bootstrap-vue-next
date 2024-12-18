@@ -997,6 +997,7 @@ const computedLiteProps = computed(() => ({
 defineExpose({
   // The row selection methods are really for compat. Users should probably use the v-model though
   ...exposedSelectableUtilities,
+  items: computedItems,
   refresh: callItemsProvider,
 })
 </script>
