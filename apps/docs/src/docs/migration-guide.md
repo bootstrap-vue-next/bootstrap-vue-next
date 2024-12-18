@@ -556,10 +556,8 @@ See the [v-html](#v-html) section for information on deprecation of the `caption
 
 <NotYetImplemented/>
 
-- Pills are broken
-- Keyboard navigation is not fully implemented
-- `no-key-nav` is not yet implemented
-- `underline` is not yet implemented
+- `click` event is not implementd on `BTab`
+- `changed` event is not implemented on `BTabs`
 
 ## BTime
 

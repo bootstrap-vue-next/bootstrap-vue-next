@@ -112,10 +112,12 @@ export default {
           inactiveNavItemClass: {
             type: 'ClassValue',
             default: undefined,
+            description: 'CSS class (or classes) to apply to inactive nav item tab controls',
           },
           inactiveTabClass: {
             type: 'ClassValue',
             default: undefined,
+            description: 'CSS class (or classes) to apply to inactive tabs',
           },
           justified: {
             type: 'boolean',
