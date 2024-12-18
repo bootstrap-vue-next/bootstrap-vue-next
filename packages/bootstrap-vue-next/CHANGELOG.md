@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.16](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.15...bootstrapvuenext-v0.26.16) (2024-12-18)
+
+
+### Features
+
+* **BTable:** expose table items ([#2463](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2463)) ([40be163](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/40be16314ef901d3819647ec76445290a38cae26))
+
 ## [0.26.15](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.14...bootstrapvuenext-v0.26.15) (2024-12-13)
 
 

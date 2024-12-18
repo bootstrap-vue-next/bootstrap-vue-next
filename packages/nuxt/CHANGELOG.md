@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.26.16](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.15...nuxt-v0.26.16) (2024-12-18)
+
+
+### Bug Fixes
+
+* **nuxt:** module using wrong routerComponentName causing default a tag to do full page reloads ([#2465](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2465)) ([c737ec2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c737ec255b8eb848a6711eea5383cbf20b002556))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.26.16
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.26.16
+
 ## [0.26.15](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.14...nuxt-v0.26.15) (2024-12-13)
 
 
