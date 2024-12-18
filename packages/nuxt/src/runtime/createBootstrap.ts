@@ -26,7 +26,7 @@ export default defineNuxtPlugin((nuxtApp) => {
           ...opts?.components?.BToastOrchestrator,
         },
         BLink: {
-          routerComponentName: 'NuxtLink',
+          routerComponentName: 'RouterLink',
           ...opts?.components?.BLink,
         },
       },
