@@ -1,11 +1,5 @@
 # Breadcrumb
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
 <div class="lead mb-5">
 
 Indicate the current page’s location within a navigational hierarchy that automatically adds separators via CSS.

@@ -1,11 +1,5 @@
 # Link
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
 <div class="lead mb-5">
 
 Use BootstrapVue's custom b-link component for generating a standard `<a>` link or `RouterLink`. `BLink` supports the `disabled` state and `click` event propagation.
@@ -330,7 +324,6 @@ a.disabled {
 <script setup lang="ts">
 import {data} from '../../data/components/link.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import NoteAlert from '../../components/NoteAlert.vue'
 import {BLink, BCard, BCardBody} from 'bootstrap-vue-next'

@@ -1,11 +1,5 @@
 # Button Group
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
 <div class="lead mb-5">
 
 Group a series of buttons together on a single line or stack them in a vertical column with `BButtonGroup`.
@@ -185,6 +179,5 @@ toolbars containing button groups and input groups.
 import {data} from '../../data/components/buttonGroup.data'
 import {BDropdownItem, BDropdownDivider, BButton, BButtonGroup, BDropdown} from 'bootstrap-vue-next'
 import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 </script>

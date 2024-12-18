@@ -1,13 +1,5 @@
 # Introduction
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
-
-[[toc]]
-
-  </Teleport>
-</ClientOnly>
-
 <div class="lead">
 
 Get started with BootstrapVueNext and Bootstrap `v5`, the world’s most popular framework for building responsive, mobile-first sites.

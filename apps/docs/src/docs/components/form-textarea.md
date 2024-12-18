@@ -1,11 +1,5 @@
 # Form Textarea
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
 <div class="lead mb-5">
 
 Create multi-line text inputs with support for auto height sizing, minimum and maximum number of rows, and contextual states.

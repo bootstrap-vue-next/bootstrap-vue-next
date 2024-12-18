@@ -1,11 +1,5 @@
 # Alert
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
 <div class="lead mb-5">
 
 Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages.

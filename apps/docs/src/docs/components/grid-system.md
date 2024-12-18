@@ -1,11 +1,5 @@
 # Grid System
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
 <div class="lead mb-5">
 
 Use the powerful mobile-first flexbox grid (via the `<BContainer>`, `<BRow>` and

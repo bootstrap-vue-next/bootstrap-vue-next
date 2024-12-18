@@ -1,11 +1,5 @@
 # Nav
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
 <div class="lead mb-5">
 
 Navigation available in Bootstrap share general markup and styles, from the base `<BNav>` class

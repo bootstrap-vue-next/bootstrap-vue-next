@@ -1,11 +1,5 @@
 # Badge
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
 <div class="lead mb-5">
 
 Documentation and examples for badges, our small count and labeling component.
@@ -225,6 +219,5 @@ Quickly provide actionable badges by specifying either the `href` prop (links) o
 import {data} from '../../data/components/badge.data'
 import {BButton, BBadge} from 'bootstrap-vue-next'
 import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 </script>

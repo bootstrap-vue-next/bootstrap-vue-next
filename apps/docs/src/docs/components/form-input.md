@@ -1,11 +1,5 @@
 # Form Input
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
 <div class="lead mb-5">
 
 Create various type inputs such as: `text`, `password`, `number`, `url`, `email`, `search`, `range`, `date` and more.
@@ -697,7 +691,6 @@ const selectAllText = () => inputRef?.value?.element?.select()
 <script setup lang="ts">
 import {data} from '../../data/components/formInput.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import NotYetImplemented from '../../components/NotYetImplemented.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BButton, BFormText, BFormInvalidFeedback, BRow, BCol, BContainer, BCard, BCardBody, BFormInput } from 'bootstrap-vue-next'

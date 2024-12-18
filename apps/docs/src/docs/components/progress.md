@@ -1,11 +1,5 @@
 # Progress
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
 <div class="lead mb-5">
 
 Documentation and examples for using Bootstrap custom progress bars featuring support for stacked bars, animated backgrounds, and text labels.
@@ -252,7 +246,6 @@ const animate = ref(false)
 <script setup lang="ts">
 import {data} from '../../data/components/progress.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import {BButton, BProgressBar, BCard, BProgress} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
 import { ref } from 'vue';

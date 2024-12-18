@@ -1,11 +1,5 @@
 # Form Select
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
 <div class="lead mb-5">
 
 Bootstrap custom `<select>` using custom styles. Optionally specify options based on an array, array of objects, or an object.

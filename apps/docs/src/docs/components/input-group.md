@@ -1,11 +1,5 @@
 # Input Group
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
 <div class="lead mb-5">
 
 Easily extend form controls by adding text, buttons, or button groups on either side of textual inputs.
@@ -474,7 +468,6 @@ input groups. However, the inputs inside the input group do support contextual s
 <script setup lang="ts">
 import {data} from '../../data/components/inputGroup.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import NotYetImplemented from '../../components/NotYetImplemented.vue'
 import {

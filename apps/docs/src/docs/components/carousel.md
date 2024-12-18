@@ -1,11 +1,5 @@
 # Carousel
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
 <div class="lead mb-5">
 
 The carousel is a slideshow for cycling through a series of content. It works with a series of images, text,

@@ -1,11 +1,5 @@
 # Overlay
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
 <div class="lead mb-5">
 
 BootstrapVueNext's custom `BOverlay` component is used to _visually obscure_ a particular element or component and its content. It signals to the user of a state change within the element or component and can be used for creating loaders, warnings/alerts, prompts, and more.
@@ -935,7 +929,6 @@ also set the `rounded` prop on `BOverlay`.
 <script setup lang="ts">
 import {data} from '../../data/components/overlay.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BForm, BProgress, BRow, BImg, BFormInput, BFormSelect, BOverlay, BCol, BButton, BCard, BCardBody, BCardText, BAlert} from 'bootstrap-vue-next'
 import {ref, nextTick} from 'vue';
