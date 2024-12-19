@@ -196,6 +196,12 @@ export default {
               type: 'string',
               default: undefined,
             },
+            filterFunction: {
+              type: '(item: Items) => boolean',
+              default: undefined,
+              description:
+                'Function called during filtering of items, gets passed the current item being filtered',
+            },
             filterable: {
               type: 'string[]',
               default: undefined,
