@@ -143,10 +143,10 @@
     "test:ci": "pnpm run test:lint:ci && pnpm run test:unit:ci"
   },
   "peerDependencies": {
-    "@floating-ui/vue": "^1.1.5",
-    "@vueuse/core": "^12.0.0",
+    "@floating-ui/vue": "*",
+    "@vueuse/core": "*",
     "vue": "^3.5.13",
-    "vue-router": "^4.4.5"
+    "vue-router": "*"
   },
   "peerDependenciesMeta": {
     "@floating-ui/vue": {
