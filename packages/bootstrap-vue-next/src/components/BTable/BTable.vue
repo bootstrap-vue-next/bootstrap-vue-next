@@ -242,6 +242,7 @@ const _props = withDefaults(
     noSortableIcon: false,
     perPage: Number.POSITIVE_INFINITY,
     filter: undefined,
+    filterFunction: undefined,
     mustSort: false,
     filterable: undefined,
     provider: undefined,
@@ -658,6 +659,11 @@ const computedItems = computed<Items[]>(() => {
               (!props.filterable?.includes(key) && !!props.filterable?.length)
             )
               return false
+
+            if (props.filterFunction && typeof props.filterFunction === 'function') {
+              return props.filterFunction(item)
+            }
+
             const realVal = (): string => {
               const filterField = computedFields.value.find((el) => {
                 if (isTableField<Items>(el)) return el.key === key
