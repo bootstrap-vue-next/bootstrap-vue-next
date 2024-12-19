@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.16...bootstrapvuenext-v0.26.17) (2024-12-19)
+
+
+### Features
+
+* use vueuse 12 fixes [#2469](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2469) ([#2471](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2471)) ([bf50c30](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bf50c304b1612411311f035e9b1ca3af701fdd19))
+
 ## [0.26.16](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.15...bootstrapvuenext-v0.26.16) (2024-12-18)
 
 
