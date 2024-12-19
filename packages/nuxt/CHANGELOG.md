@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.26.17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.16...nuxt-v0.26.17) (2024-12-19)
+
+
+### Miscellaneous Chores
+
+* **nuxt:** Synchronize main group versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.26.17
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.26.17
+
 ## [0.26.16](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.15...nuxt-v0.26.16) (2024-12-18)
 
 
