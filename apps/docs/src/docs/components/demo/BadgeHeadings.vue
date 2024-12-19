@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="d-flex mb-4" style="column-gap: 1%">
+    <!-- #region template -->
     <h1>
       Example heading
       <BBadge>New</BBadge>
@@ -24,5 +25,6 @@
       Example heading
       <BBadge>New</BBadge>
     </h6>
+    <!-- #endregion template -->
   </div>
 </template>
