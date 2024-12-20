@@ -1,7 +1,7 @@
 <template>
   <li role="presentation" :class="wrapperClass" v-bind="props.wrapperAttrs">
     <button
-      role="menu"
+      role="menuitem"
       type="button"
       class="dropdown-item"
       :class="computedClasses"
