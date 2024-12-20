@@ -1,7 +1,7 @@
 <template>
   <li role="presentation" :class="wrapperClass" v-bind="props.wrapperAttrs">
     <button
-      role="menuitem"
+      :role="props.buttonRole"
       type="button"
       class="dropdown-item"
       :class="computedClasses"
@@ -28,6 +28,7 @@ const _props = withDefaults(defineProps<BDropdownItemButtonProps>(), {
   active: false,
   activeClass: 'active',
   buttonClass: undefined,
+  buttonRole: 'menuitem',
   disabled: false,
   variant: null,
   wrapperAttrs: undefined,

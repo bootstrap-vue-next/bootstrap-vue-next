@@ -9,7 +9,7 @@
       :aria-current="props.active ? true : null"
       :href="computedTag === 'a' ? props.href : null"
       :rel="props.rel"
-      role="menuitem"
+      :role="props.itemRole"
       :type="computedTag === 'button' ? 'button' : null"
       :target="props.target"
       v-bind="{...computedLinkProps, ...attrs}"
@@ -35,6 +35,7 @@ defineOptions({
 
 const _props = withDefaults(defineProps<BDropdownItemProps>(), {
   wrapperAttrs: undefined,
+  itemRole: 'menuitem',
   // Link props
   linkClass: undefined,
   variant: null,
