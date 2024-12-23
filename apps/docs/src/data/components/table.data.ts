@@ -197,7 +197,7 @@ export default {
               default: undefined,
             },
             filterFunction: {
-              type: '(item: Items) => boolean',
+              type: '(item: Readonly<Items>, filter: string | undefined) => boolean',
               default: undefined,
               description:
                 'Function called during filtering of items, gets passed the current item being filtered',

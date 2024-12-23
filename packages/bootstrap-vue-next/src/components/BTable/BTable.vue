@@ -661,7 +661,7 @@ const computedItems = computed<Items[]>(() => {
               return false
 
             if (props.filterFunction && typeof props.filterFunction === 'function') {
-              return props.filterFunction(item)
+              return props.filterFunction(item, props.filter)
             }
 
             const realVal = (): string => {
