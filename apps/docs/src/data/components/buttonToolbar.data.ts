@@ -25,7 +25,6 @@ export default {
           description: 'Content to place in the button toolbar',
         },
       ],
-      emits: [],
     },
   ],
 }

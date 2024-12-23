@@ -299,11 +299,11 @@ the same effect as in BootstrapVue.
 
 For example:
 
-<<< FRAGMENT ./demo/DropdownHeader.vue#template{vue-html}
+<<< FRAGMENT ./demo/DropdownHeaderMigration.vue#template{vue-html}
 
 yields
 
-<<< FRAGMENT ./demo/DropdownHeader.html#template
+<<< FRAGMENT ./demo/DropdownHeaderMigration.html#template
 
 The exception to this rule is `<BDropdownGroup>` where we explicitly implement `id` in order to be able to generate
 a header id.
