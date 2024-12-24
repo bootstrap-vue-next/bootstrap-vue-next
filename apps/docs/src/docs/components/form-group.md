@@ -364,6 +364,38 @@ details on validation methods.
 You should always provide content via the `invalid-feedback` prop (or slot) to aid users using
 assistive technologies when setting a contextual `invalid` state.
 
+### Automatic passing of state to child
+
+For some elements the child input element will automatically receive the state of the form group. `:state="false"` on the `BFormGroup` will automatically give the appropriate class to the input element. Explicit sets of the `state` prop to the child element will override this.
+
+<HighlightCard>
+  <BCard>
+    <BFormGroup :state="false">
+      <BFormInput />
+    </BFormGroup>
+    <BFormGroup :state="false">
+      <!-- Use the state prop to override this behavior -->
+      <BFormInput :state="null" />
+    </BFormGroup>
+  </BCard>
+
+<template #html>
+
+```vue-html
+<BCard>
+  <BFormGroup :state="false">
+    <BFormInput />
+  </BFormGroup>
+  <BFormGroup :state="false">
+    <!-- Use the state prop to override this behavior -->
+    <BFormInput :state="null" />
+  </BFormGroup>
+</BCard>
+```
+
+  </template>
+</HighlightCard>
+
 ### Invalid feedback
 
 Show optional invalid state feedback text to provide textual state feedback (html supported) by
