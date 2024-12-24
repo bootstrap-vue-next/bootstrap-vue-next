@@ -31,7 +31,6 @@ import {useDefaults} from '../../composables/useDefaults'
 import {normalizeInput} from '../../utils/normalizeInput'
 import type {BFormInputProps} from '../../types/ComponentProps'
 import {useFormInput} from '../../composables/useFormInput'
-import {useStateClass} from '../../composables/useStateClass'
 
 const _props = withDefaults(defineProps<Omit<BFormInputProps, 'modelValue'>>(), {
   max: undefined,
@@ -57,7 +56,7 @@ const _props = withDefaults(defineProps<Omit<BFormInputProps, 'modelValue'>>(), 
   readonly: false,
   required: false,
   size: undefined,
-  state: null,
+  state: undefined,
   // End CommonInputProps
 })
 const props = useDefaults(_props, 'BFormInput')
@@ -72,10 +71,17 @@ const [modelValue, modelModifiers] = defineModel<
 
 const input = useTemplateRef<HTMLInputElement>('_input')
 
-const {computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur, forceUpdateKey} =
-  useFormInput(props, input, modelValue, modelModifiers)
-
-const stateClass = useStateClass(() => props.state)
+const {
+  computedId,
+  computedAriaInvalid,
+  onInput,
+  onChange,
+  onBlur,
+  stateClass,
+  focus,
+  blur,
+  forceUpdateKey,
+} = useFormInput(props, input, modelValue, modelModifiers)
 
 const computedClasses = computed(() => {
   const isRange = props.type === 'range'
