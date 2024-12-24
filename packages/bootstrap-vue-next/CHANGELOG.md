@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.26.18](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.17...bootstrapvuenext-v0.26.18) (2024-12-24)
+
+
+### Features
+
+* **BFormGroup:** automatically add state to child element fixes [#2476](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2476) ([#2478](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2478)) ([25a77ee](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/25a77eefcb24a002626dbf7422666d36cde6f155))
+* **BTable:** add custom filter functions ([9ec1e04](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9ec1e04e38894e6f8fa73d7cfc83cd5bd28a2244))
+
 ## [0.26.17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.16...bootstrapvuenext-v0.26.17) (2024-12-19)
 
 
