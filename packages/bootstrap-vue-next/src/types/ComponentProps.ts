@@ -1092,10 +1092,10 @@ export interface BTableProps<Items> extends Omit<BTableLiteProps<Items>, 'tableC
   perPage?: Numberish
   currentPage?: Numberish
   filter?: string
+  filterFunction?: (item: Readonly<Items>, filter: string | undefined) => boolean
   filterable?: readonly string[]
   // TODO
   // apiUrl?: string
-  // filterFunction?: () => any
   // filterIgnoredFields?: any[]
   // filterIncludedFields?: any[]
   // headRowVariant?: ColorVariant | null
