@@ -24,7 +24,6 @@ export default {
           description: 'Content (buttons) to place in the button group',
         },
       ],
-      emits: [],
     },
   ],
 }
