@@ -155,12 +155,14 @@ export interface BDropdownHeaderProps {
 export interface BDropdownItemProps extends Omit<BLinkProps, 'routerTag'> {
   linkClass?: ClassValue
   wrapperAttrs?: Readonly<AttrsValue>
+  itemRole: 'menuitem' | 'menuitemradio' | 'menuitemcheckbox'
 }
 
 export interface BDropdownItemButtonProps {
   active?: boolean
   activeClass?: ClassValue
   buttonClass?: ClassValue
+  buttonRole: 'menuitem' | 'menuitemradio' | 'menuitemcheckbox'
   wrapperAttrs?: Readonly<AttrsValue>
   disabled?: boolean
   variant?: ColorVariant | null
