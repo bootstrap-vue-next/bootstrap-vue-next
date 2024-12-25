@@ -163,6 +163,10 @@ export default {
       ],
       slots: [
         {
+          name: 'after',
+          description: 'Content to place after the nav item link (useful for nested navs)',
+        },
+        {
           name: 'default',
           description: 'Content to place in the nav item',
         },
