@@ -10,6 +10,7 @@
     >
       <slot />
     </BLink>
+    <slot name="after" />
   </li>
 </template>
 
@@ -23,6 +24,8 @@ import {useDefaults} from '../../composables/useDefaults'
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  after?: (props: Record<string, never>) => any
 }>()
 
 const _props = withDefaults(defineProps<BNavItemProps>(), {
