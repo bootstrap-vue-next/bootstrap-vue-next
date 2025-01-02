@@ -172,7 +172,7 @@ They work as documented in vue.js, so there is no longer a need for the properti
 ### Replacement for Modal Message boxes
 
 [BootstrapVue](https://bootstrap-vue.org/docs/components/modal#modal-message-boxes) provided two methods on the `this.$bvModal` object called `msgBoxOk` and `msgBoxConfirm`.
-In holding with the Vue3 first philosophy, BootstrapVueNext provides a composible called [`useModalController`](/docs/composables/useModalController) that
+In holding with the Vue3 first philosophy, BootstrapVueNext provides a composable called [`useModalController`](/docs/composables/useModalController) that
 fills the same needs (and more).
 
 Please read the [`useModalController`](/docs/composables/useModalController) documentation and then come back here for examples of replacements
@@ -275,8 +275,22 @@ const confirmBox = async () => {
   </template>
 </HighlightCard>
 
-The `show` and `confirm` `props` object accespts all of the properties that are defined on
-[BModal](/docs/components/modal#component-reference) excpet for `modelValue`.
+The `show` and `confirm` `props` object accepts all of the properties that are defined on
+[BModal](/docs/components/modal#component-reference) except for `modelValue`.
+
+### Replacement for Modal slots
+
+[BootstrapVue](https://bootstrap-vue.org/docs/components/modal#custom-rendering-with-slots) provides different slots to configure some pieces of the modal component. These slots are slightly different in [BootstrapVueNext](http://localhost:8000/bootstrap-vue-next/docs/components/modal.html#comp-reference-bmodal-slots):
+
+| BootStrapVue       | BootStrapVueNext |
+| ------------------ | ---------------- |
+| default            | default          |
+| modal-title        | title            |
+| modal-header       | header           |
+| modal-footer       | footer           |
+| modal-ok           | ok               |
+| modal-cancel       | cancel           |
+| modal-header-close | header-close     |
 
 <MigrationWrapper v-for="(item, i) in changes" :key="i" v-bind="item" />
 
