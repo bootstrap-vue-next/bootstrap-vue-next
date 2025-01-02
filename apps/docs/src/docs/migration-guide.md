@@ -109,22 +109,24 @@ Each of the options group components `BFormDatalist`, `BFormRadioGroup`, `BFormS
 
 <<< DEMO ./demo/CheckboxGroupMigration.vue
 
-## Grid
+## Components
+
+### Grid
 
 BSVN doesn't currently implement the ability to define `breakpoint` names.
 
 See the [Bootstrap 5 migration guide](https://getbootstrap.com/docs/5.3/migration/#grid-updates), in particular
 values for `order` on `<BCol>` only provides support for 1 - 5.
 
-## BAccordian
+### BAccordian
 
 See [Show and Hide](#show-and-hide) shared properties.
 
-### BAccordianItem
+#### BAccordianItem
 
 See [Show and Hide](#show-and-hide) shared properties.
 
-## BAlert
+### BAlert
 
 As in `bootstrap-vue`, a simple `BAlert` is not visible by default. However, the means of showing the alert are different.
 The `bootstrap-vue` `show` prop is deprecated, use `model-value` instead.
@@ -139,18 +141,18 @@ For consistency with other components properties, slots and events that use the 
 now use the term `close`. For example the `dismissed` event is now the `closed` event and the `dsimiss` slot is
 now the `close` slot.
 
-## BAspect
+### BAspect
 
 <NotYetImplemented/>
 
-## BAvatar
+### BAvatar
 
 Icon support has been deprecated. Icons support can be implemented using the default slot including
 either [unplug icons](/docs/icons) or by embedding an `.svg`.
 
 <<< DEMO ./demo/AvatarIcon.vue#template{vue-html}
 
-### Badge Positioning
+#### Badge Positioning
 
 Badge positioning has changed to using a single property `badge-placement` and our
 [`CombinedPlacement` utility](/docs/types/combined-placement) rather than individual properties.
@@ -159,42 +161,42 @@ For instance, use `badge-placement='top'` in place of `badge-top` or `badge-plac
 `badge-right`. For combined props, rather than using `badge-top` and `badge-right`, use
 `badge-placement='top-end'.
 
-### Rounding Sides
+#### Rounding Sides
 
 See the [Rounding](#rounding) section.
 
-## BBadge
+### BBadge
 
 Badges no longer have focus or hover styles for links. See the
 [Bootstrap migration guide](https://getbootstrap.com/docs/5.3/migration/#badges) for more information.
 
-## BBreadcrumb
+### BBreadcrumb
 
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
-## BButton
+### BButton
 
 The `block` prop is deprecated. See our [`BButton` documentation](/docs/components/button#block-level-buttons)
 and [Bootstrap's documentation](https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons) for
 details.
 
-## BButtonClose
+### BButtonClose
 
 `BButtonClose` has been renamed to `BCloseButton` for consistency with [Bootstrap](https://getbootstrap.com/docs/5.3/components/close-button/)
 
 The `content` and `text-variant` props have been deprecated since Bootstrap 5 moved to using an
 embedded svg for the close icon. See [their migration guide](https://getbootstrap.com/docs/5.3/migration/#close-button-1) for details.
 
-## BButtonToolbar
+### BButtonToolbar
 
 [Keyboard navigation](https://bootstrap-vue.org/docs/components/button-toolbar#keyboard-navigation) is
 not implemented.
 
-## BCalendar
+### BCalendar
 
 <NotYetImplemented><BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">See issue #1860</BLink></NotYetImplemented>
 
-## BCard
+### BCard
 
 Image placement is accomplished by the single `img-placement` prop, which takes the values
 `top`, `bottom`, `start`, `end`, or `overlay`. This allows us to deprecate the `imgBottom`,
@@ -221,11 +223,11 @@ implemented on `BCardBody`.
 See the [v-html](#v-html) section for information on deprecation of the `footer-html` and `header-html` props on
 `BCard` and the `html` props on `BCardFooter` and `BCardHeader`.
 
-## BCardImgLazy
+### BCardImgLazy
 
 This functionality has been replaced by lazy loading on `<BImg>` see [BImg notes](#bimg) for details.
 
-## BCarousel
+### BCarousel
 
 The `sliding-start` and `sliding-end` events have been renamed to `slide` and `slid`.
 The `label-indicators` prop has been renamed to `indicators-button-label`.
@@ -233,7 +235,7 @@ The `label-indicators` prop has been renamed to `indicators-button-label`.
 See the [v-html](#v-html) section for information on deprecation of the `caption-html` and `text-html` props
 on `BCarouselSlide`.
 
-## BCollapse
+### BCollapse
 
 The `accordian` prop is deprecated: In `bootstrap-vue`/`bootstrap4`, accordians are implemented via `BCollapse`.
 In `boostrap-vue-nexst`/`bootstrap5` accordians are first class citizens, so please use the
@@ -249,7 +251,7 @@ events on this component.
 
 See [Show and Hide](#show-and-hide) shared properties.
 
-## BDropdown
+### BDropdown
 
 BootstrapVueNext uses [floating-ui](https://floating-ui.com/) to implemented dropdowns. This affects values and behaviors
 for properties souch as `boundary` as well as the alignent and placement properties. For fine control, use `floating-middleware`
@@ -277,7 +279,7 @@ See the [v-html](#v-html) section for information on deprecation of the `html` p
 
 <NotYetImplemented>`toggleAttrs`</NotYetImplemented>
 
-### Dropdown sub-components
+#### Dropdown sub-components
 
 BootstrapVueNext makes extensive use of inherrited attributes to implement customization in dropdown sub-components
 in places where BootstrapVue used explicit props on the sub-components. In general the sub-components are
@@ -308,18 +310,18 @@ yields
 The exception to this rule is `<BDropdownGroup>` where we explicitly implement `id` in order to be able to generate
 a header id.
 
-#### BDropdownForm
+##### BDropdownForm
 
 `inline` is deprectated, see the [BForm](#bform) migration information. To add classes to the `<form>` tag in `BdropdownForm`
 use the `form-class` prop.
 
 The `disabled` prop is deprecated, set the disabled prop on individual components as you do with `BForm`.
 
-## BEmbed
+### BEmbed
 
 <NotYetImplemented/>
 
-## BForm
+### BForm
 
 Bootstrap 5 has dropped form-specific layout classes for the grid system. See the
 [Bootstrap 5 Changelog](https://getbootstrap.com/docs/5.3/migration/#forms), so we no longer
@@ -327,7 +329,7 @@ explicitly implemnt and `inline` property on the `BForm` component nor is there 
 Inline forms are still supported through use of bootstrap classes. See the [inline form](/docs/components/form#inline-form)
 documentation for more info.
 
-### BForm Components
+#### BForm Components
 
 `Vue 3` changed the the way that `v-model` binding works and in the process changed the guidance
 when naming the main model property and events for the primary model. `bootstrap-vue-next` follows
@@ -342,16 +344,24 @@ for more info.
 See the [v-html](#v-html) section for information on deprecation of the `html` prop on
 `BFormDatalist`, `BFormRadioGroup`, `BFormSelect`, and`BFormSelectOptionGroup`
 
-## BFormDatePicker
+### BFormChecbox
+
+See [BForm Components](bform-components)
+
+### BFormDatePicker
 
 <NotYetImplemented><BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">See issue #1860</BLink></NotYetImplemented>
 
-## BFormGroup
+### BFormFile
+
+<NotYetDocumented type="component"/>
+
+### BFormGroup
 
 Use `label-visually-hidden` instead of `label-sronly` per
 [Bootstrap Migration Guide](https://getbootstrap.com/docs/5.3/migration/#helpers-2)
 
-## BFormInput
+### BFormInput
 
 Access to the native `input` element is implemented differently due to changes in how Vue 3
 handles references. See the [BFormInput documentation](/docs/components/form-input#exposed-input-element) for more details.
@@ -362,30 +372,38 @@ handles references. See the [BFormInput documentation](/docs/components/form-inp
 [`trim`, `lazy`, and `number`](https://vuejs.org/guide/essentials/forms.html#modifiers).
 They work as documented in vue.js, so there is no longer a need for the properties.
 
-## BFormSelect
+### BFormRadio
 
-[Options as an object](https://bootstrap-vue.org/docs/components/form-select#options-as-an-object) was deprecated in BootstrapVue and never implemented in BootstrapVueNext
+See [BForm Components](bform-components)
 
-## BFormTimePicker
-
-<NotYetImplemented><BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">See issue #1860</BLink></NotYetImplemented>
-
-## BFormRating
+### BFormRating
 
 <NotYetImplemented><BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2051">See issue #2051</BLink></NotYetImplemented>
 
-## BImg
+### BFormSelect
+
+[Options as an object](https://bootstrap-vue.org/docs/components/form-select#options-as-an-object) was deprecated in BootstrapVue and never implemented in BootstrapVueNext
+
+### BFormSpinButton
+
+See [BForm Components](bform-components)
+
+### BFormTimePicker
+
+<NotYetImplemented><BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">See issue #1860</BLink></NotYetImplemented>
+
+### BImg
 
 See the [Rounding](#rounding) section.
 
 Lazy loading is now achieved through the native `loading` attribute rather than a seperate component. Thus
 `BImgLazy` and `BCardImgLazy` are deprecated.
 
-## BImgLazy
+### BImgLazy
 
 This functionality has been replaced by lazy loading on `<BImg>` see [BImg](#bimg) for details.
 
-## BInputGroup
+### BInputGroup
 
 Bootstrap 5 [no longer requires](https://getbootstrap.com/docs/5.3/migration/#forms-1) `input-group-append` or `input-group-prepend`
 on elements to append or prepend them to the control, they can just be added as direct children of the input group.
@@ -396,34 +414,34 @@ appended or prepended to a group. Using it to group components breaks the automa
 
 See the [v-html](#v-html) section for information on deprecation of the `append-html` and `prepend-html` props.
 
-## BInputGroupAddon
+### BInputGroupAddon
 
 Deprectated - See [BInputGroup]
 
-## BInputGroupAppend
+### BInputGroupAppend
 
 Deprectated - See [BInputGroup]
 
-## BInputGroupText
+### BInputGroupText
 
 Deprectated - See [BInputGroup]
 
-## BInputGroupPrepend
+### BInputGroupPrepend
 
 Deprectated - See [BInputGroup]
 
-## BFormSpinbutton
+### BFormSpinbutton
 
 The locale property in BSVN only allows a for a single locale, while BSV allows for an array of locales. If this is
 a limitation that affect your scenario, please [file an issue](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues) with an explanation of the expected behavior.
 
-## BFormTextbox
+### BFormTextbox
 
 `trim`, `lazy`, or `number` properties have been deprecated. We support the native modifiers
 [`trim`, `lazy`, and `number`](https://vuejs.org/guide/essentials/forms.html#modifiers).
 They work as documented in vue.js, so there is no longer a need for the properties.
 
-## BJumbotron
+### BJumbotron
 
 <NotYetImplemented/>
 
@@ -431,48 +449,50 @@ Note that Bootstrap has deprecated their Jumbotron component, but it can be repl
 utility classes. See their [migration guide](https://getbootstrap.com/docs/5.3/migration/#jumbotron)
 for details.
 
-## BLink
+### BLink
 
 Bootstrap Vue used `Vue Router 3`, BSVN uses [`Vue Router 4`](https://router.vuejs.org/) please read the
 [Vue Router migration guide](https://router.vuejs.org/guide/migration/) if using the router features of `BLink`.
 
 `BLink` no longer supresses the scroll to top default behavior when `href='#'`.
 
-### append
+#### append
 
 Vue router deprecated the `append` prop in `<router-link>`, BSVN has followed suit and deprecated the `append`
 prop on `BLink`. See the [`Vue Router` migration guide](https://router.vuejs.org/guide/migration/#Removal-of-append-prop-in-router-link-) for details.
 
-### event
+#### event
 
 Vue router deprecated the `event` prop in `<router-link>`, BSVN has followed suit and deprecated the `event`
 prop on `BLink`. See the [`Vue Router` migration guide](https://router.vuejs.org/guide/migration/#Removal-of-event-and-tag-props-in-router-link-) for details.
 
-### exact
+#### exact
 
 Vue router deprecated the `exact` prop in `<router-link>`, BSVN has followed suit and deprecated the `exact`, `exact-path`
 and `exact-path-active-class` props on `BLink`. See the [`Vue Router` migration guide](https://router.vuejs.org/guide/migration/#Removal-of-the-exact-prop-in-router-link-) for details.
 
-### $root events
+#### $root events
 
 BSVN no longer emits the `bv::link::clicked` event on `$root`.
 
-## BListGroup
+### BListGroup
 
 See [BLink](#blink) for changes to link and router behavior.
 
-## BMedia
+### BMedia
 
 <NotYetImplemented/>
 
 Note that Bootstrap has deprecated their Media object, but it can be replicated using
 flex utility classes. See their [documentation](https://getbootstrap.com/docs/5.3/utilities/flex/#media-object) for details.
 
-## BModal
+### BModal
+
+<NotYetDocumented type="component"/>
 
 See the [v-html](#v-html) section for information on deprecation of the `cancel-title-html`, `ok-title-html`, and `title-html` props.
 
-### Replacement for Modal Message boxes
+#### Replacement for Modal Message boxes
 
 [BootstrapVue](https://bootstrap-vue.org/docs/components/modal#modal-message-boxes) provided two methods on the `this.$bvModal` object called `msgBoxOk` and `msgBoxConfirm`.
 In holding with the Vue3 first philosophy, BootstrapVueNext provides a composable called [`useModalController`](/docs/composables/useModalController) that
@@ -494,47 +514,51 @@ The `show` and `confirm` `props` object accepts all of the properties that are d
 
 See [Show and Hide](#show-and-hide) shared properties.
 
-## BNav
+### BNav
 
 `align` prop now takes values from [`AlignmentJustifyContent`](/docs/types/alignment): `start`, `center`, `end`, `between`, `around`, and `evenly`
 
-### BNavItemDropdown
+#### BNavItemDropdown
 
 See [`BDropdown`](#bdropdown) for details
 
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
-## BNavbar
+### BNavbar
 
 The `type` prop is deprectated. Use the the `v-b-color-mode` directive or `useColorMode` composable instead. Details in our [docs](/components/navbar#color-scheme)
 
-### BNavbarNav
+#### BNavbarNav
 
 `align` prop now takes values from [`AlignmentJustifyContent`](/docs/types/alignment): `start`, `center`, `end`, `between`, `around`, and `evenly`
 
-## BOffcanvas
+### BOffcanvas
+
+<NotYetDocumented type="component"/>
 
 See [Show and Hide](#show-and-hide) shared properties.
 
-## BPagination
+### BPagination
 
 See [Show and Hide](#show-and-hide) shared properties.
 
-## BPaginationNav
+### BPaginationNav
 
 <NotYetImplemented/>
 
-## BPopover
+### BPopover
+
+<NotYetDocumented type="component"/>
 
 See [Show and Hide](#show-and-hide) shared properties.
 
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
-## BProgressBar
+### BProgressBar
 
 See the [v-html](#v-html) section for information on deprecation of the `label-html` prop.
 
-## BSkeleton
+### BSkeleton
 
 `<BSkeleton*>` components have been replaced by the more appropriately named `<BPlaceholder*>` components.
 
@@ -542,15 +566,25 @@ See the [v-html](#v-html) section for information on deprecation of the `label-h
 [icon documentation](/docs/icons) for details. This functionality can be replicated by using
 `<BplaceholderWrapper>` with your choice of icon replacement in the `loading` slot.
 
-## BTable
+### BTable
+
+<NotYetDocumented type="component"/>
 
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
-## BTableSimple
+### BTableLight
+
+<NotYetDocumented type="component"/>
+
+See the [v-html](#v-html) section for information on deprecation of the `html` prop.
+
+### BTableSimple
+
+<NotYetDocumented type="component"/>
 
 See the [v-html](#v-html) section for information on deprecation of the `caption-html` prop.
 
-## BTabs
+### BTabs
 
 `align` prop now takes values from [`AlignmentJustifyContent`](/docs/types/alignment): `start`, `center`, `end`, `between`, `around`, and `evenly`
 
@@ -559,14 +593,48 @@ See the [v-html](#v-html) section for information on deprecation of the `caption
 - `click` event is not implementd on `BTab`
 - `changed` event is not implemented on `BTabs`
 
-## BTime
+### BTime
 
 <NotYetImplemented><BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">See issue #1860</BLink></NotYetImplemented>
 
-## BToast
+### BToast
+
+<NotYetDocumented type="component"/>
 
 See [Show and Hide](#show-and-hide) shared properties.
 
-## BTooltip
+### BTooltip
+
+<NotYetDocumented type="component"/>
 
 See [Show and Hide](#show-and-hide) shared properties.
+
+## Directives
+
+### Hover
+
+<NotYetImplemented/>
+
+### Modal
+
+<NotYetDocumented type="directive"/>
+
+### Popover
+
+<NotYetDocumented type="directive"/>
+
+### Scrollspy
+
+<NotYetDocumented type="directive"/>
+
+### Toggle
+
+<NotYetDocumented type="directive"/>
+
+### Tooltip
+
+<NotYetDocumented type="directive"/>
+
+### Visible
+
+<NotYetImplemented />
