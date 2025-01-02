@@ -1,6 +1,6 @@
-import {computed, type MaybeRefOrGetter, toValue} from 'vue'
+import {computed, type MaybeRefOrGetter, toValue, type TransitionProps} from 'vue'
 
-export const useFadeTransition = (noFade: MaybeRefOrGetter<boolean>) =>
+export const useFadeTransition = (fade: MaybeRefOrGetter<boolean>) =>
   computed(() => {
     const NO_FADE_PROPS = {
       name: '',
@@ -10,13 +10,11 @@ export const useFadeTransition = (noFade: MaybeRefOrGetter<boolean>) =>
       leaveToClass: 'showing',
       enterFromClass: 'showing',
       leaveFromClass: '',
-      css: true,
-    }
+    } satisfies TransitionProps
     const FADE_PROPS = {
       ...NO_FADE_PROPS,
-      name: 'fade',
       enterActiveClass: 'fade showing',
       leaveActiveClass: 'fade showing',
-    }
-    return toValue(noFade) ? NO_FADE_PROPS : FADE_PROPS
+    } satisfies TransitionProps
+    return toValue(fade) ? FADE_PROPS : NO_FADE_PROPS
   })

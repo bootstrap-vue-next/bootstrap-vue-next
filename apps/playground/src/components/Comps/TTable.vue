@@ -121,7 +121,7 @@
           <template #thead-top>
             <tr class="my">
               <th colspan="2">
-                <span class="sr-only">List of users</span>
+                <span class="visually-hidden">List of users</span>
               </th>
             </tr>
           </template>
@@ -319,7 +319,7 @@
           </template>
 
           <template #cell(actions)="row">
-            <BButton size="sm" class="mr-1" @click="info(row.item, row.index)">
+            <BButton size="sm" class="me-1" @click="info(row.item, row.index)">
               Info modal
             </BButton>
             <BButton size="sm" @click="row.toggleDetails">
@@ -353,7 +353,6 @@
 </template>
 
 <script setup lang="ts">
-import {computed, reactive, ref} from 'vue'
 import type {
   BTable,
   BTableSortBy,
@@ -362,6 +361,7 @@ import type {
   TableFieldRaw,
   TableItem,
 } from 'bootstrap-vue-next'
+import {computed, reactive, ref} from 'vue'
 
 type LiteralUnion<T, U = string> = T | (U & Record<never, never>)
 
@@ -534,6 +534,7 @@ function onFiltered(filteredItems: TableItem<Person>[]) {
   currentPage.value = 1
 
   // The following lines are just to prove that typing is working
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   false &&
     filteredItems.forEach((item) => {
       // eslint-disable-next-line no-console

@@ -2,6 +2,7 @@ import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BDropdown from './BDropdown.vue'
 import BButton from '../BButton/BButton.vue'
+import BButtonGroup from '../BButton/BButtonGroup.vue'
 
 describe('dropdown', () => {
   enableAutoUnmount(afterEach)
@@ -33,40 +34,48 @@ describe('dropdown', () => {
   })
 
   it('has child ul', () => {
-    const wrapper = mount(BDropdown)
+    const wrapper = mount(BDropdown, {
+      props: {modelValue: true},
+    })
     const $ul = wrapper.find('ul')
     expect($ul.exists()).toBe(true)
   })
 
   it('child ul has static class dropdown-menu', () => {
-    const wrapper = mount(BDropdown)
+    const wrapper = mount(BDropdown, {
+      props: {modelValue: true},
+    })
     const $ul = wrapper.get('ul')
     expect($ul.classes()).toContain('dropdown-menu')
   })
 
   it('child ul has attr role to be prop role', () => {
     const wrapper = mount(BDropdown, {
-      props: {role: 'foobar'},
+      props: {role: 'foobar', modelValue: true},
     })
     const $ul = wrapper.get('ul')
     expect($ul.attributes('role')).toBe('foobar')
   })
 
   it('child ul has prop role default to be menu', () => {
-    const wrapper = mount(BDropdown)
+    const wrapper = mount(BDropdown, {
+      props: {modelValue: true},
+    })
     const $ul = wrapper.get('ul')
     expect($ul.attributes('role')).toBe('menu')
   })
 
   it('child ul has attr aria-labelledby to be defined by default', () => {
-    const wrapper = mount(BDropdown)
+    const wrapper = mount(BDropdown, {
+      props: {modelValue: true},
+    })
     const $ul = wrapper.get('ul')
     expect($ul.attributes('aria-labelledby')).toBeDefined()
   })
 
   it('child ul has attr aria-labelledby contains prop id', () => {
     const wrapper = mount(BDropdown, {
-      props: {id: 'foobar'},
+      props: {id: 'foobar', modelValue: true},
     })
     const $ul = wrapper.get('ul')
     expect($ul.attributes('aria-labelledby')).toContain('foobar')
@@ -74,25 +83,16 @@ describe('dropdown', () => {
 
   it('child ul has class from prop menuClass', () => {
     const wrapper = mount(BDropdown, {
-      props: {menuClass: ['foobar']},
+      props: {menuClass: ['foobar'], modelValue: true},
     })
     const $ul = wrapper.get('ul')
     expect($ul.classes()).toContain('foobar')
   })
 
-  it.skip('child ul has class dropdown-menu-end when prop right', async () => {
-    const wrapper = mount(BDropdown, {
-      props: {right: true},
-    })
-    const $ul = wrapper.get('ul')
-    expect($ul.classes()).toContain('dropdown-menu-end')
-    await wrapper.setProps({right: false})
-    expect($ul.classes()).not.toContain('dropdown-menu-end')
-  })
-
   it('child ul renders default slot', () => {
     const wrapper = mount(BDropdown, {
       slots: {default: 'foobar'},
+      props: {modelValue: true},
     })
     const $ul = wrapper.get('ul')
     expect($ul.text()).toBe('foobar')
@@ -297,7 +297,7 @@ describe('dropdown', () => {
     expect(wrapper.emitted()).not.toHaveProperty('click')
   })
 
-  it('first child BButton emits click when prop split', async () => {
+  it('wrapper emits click when prop split', async () => {
     const wrapper = mount(BDropdown, {
       props: {split: true},
     })
@@ -451,10 +451,27 @@ describe('dropdown', () => {
   })
   it('teleportTo prop to teleport to body', async () => {
     const wrapper = mount(BDropdown, {
-      props: {teleportTo: 'body'},
+      props: {teleportTo: 'body', modelValue: true},
     })
     expect(wrapper.exists()).toBe(true)
     expect(wrapper.element.querySelector('ul')).toBe(null)
     expect(document.body?.querySelector('.dropdown-menu')).not.toBe(null)
+  })
+
+  describe('Dropdown in button group', () => {
+    it('has class btn-group when child of button group', () => {
+      const wrapper = mount(BButtonGroup, {
+        slots: {default: BDropdown},
+      })
+      const dropdown = wrapper.getComponent(BDropdown)
+      expect(dropdown.get('div').classes()).toContain('btn-group')
+    })
+    it('has attribute `group` when child of button group', () => {
+      const wrapper = mount(BButtonGroup, {
+        slots: {default: BDropdown},
+      })
+      const dropdown = wrapper.getComponent(BDropdown)
+      expect(dropdown.get('div').attributes('role')).toBe('group')
+    })
   })
 })

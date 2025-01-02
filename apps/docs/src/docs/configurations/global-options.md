@@ -1,5 +1,7 @@
 # Global options
 
+## Overview
+
 Global configurations allow you to set default prop values for all Vue components in your application. This is achieved using the createBootstrap plugin. Here's an example:
 
 ```ts

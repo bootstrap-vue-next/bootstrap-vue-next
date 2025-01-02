@@ -1,10 +1,5 @@
-# useModal
+<ComposableHeader path="useModal/index.ts" title="useModal" />
 
-<ContentsSidebar>
-
-[[toc]]
-
-</ContentsSidebar>
 <div class="lead mb-5">
 
 You can use `useModal` to get the closest modal in **child component** and hide it. It can also be supplied a target id to show or hide a specific modal
@@ -35,17 +30,17 @@ You can also provide an id to get particular modal and show/hide it. Currently, 
 find modal since the `BModal` in lazy mode may not render at page initial. If the modal component does not exist and you attempt to call any of the exposed methods the methods will safely ignore
 
 <HighlightCard>
-<BButton @click="show">Click me</BButton>
+<BButton @click="show()">Click me</BButton>
 <BModal v-if="someConditions" v-model="programmaticModal" id="my-modal">
-  <BButton @click="hide">Hide me</BButton>
+  <BButton @click="hide()">Hide me</BButton>
 </BModal>
 <template #html>
 
 ```vue
 <template>
-  <BButton @click="show">Click me</BButton>
+  <BButton @click="show()">Click me</BButton>
   <BModal v-if="someConditions" v-model="programmaticModal" id="my-modal">
-    <BButton @click="hide">Hide me</BButton>
+    <BButton @click="hide()">Hide me</BButton>
   </BModal>
 </template>
 
@@ -67,8 +62,9 @@ const {show, hide, modal} = useModal('my-modal')
 <script setup lang="ts">
 import {BButton, BModal, useModal} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
-import ContentsSidebar from '../../components/ContentsSidebar.vue'
+
 import {ref, onMounted} from 'vue'
+import ComposableHeader from './ComposableHeader.vue'
 
 const someConditions = ref(false)
 const programmaticModal = ref(false)

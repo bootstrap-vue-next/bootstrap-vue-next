@@ -21,13 +21,19 @@
     {
       "name": "Marius A",
       "url": "https://github.com/mariusa"
+    },
+    {
+      "name": "Jukka Raimovaara",
+      "url": "https://github.com/xvaara"
     }
   ],
   "scripts": {
-    "prepare": "husky install && turbo run build",
+    "prepare": "husky && turbo run build",
     "dev": "turbo run dev --parallel",
     "build": "turbo run build",
+    "build-only": "turbo run build-only",
     "lint": "turbo run lint",
+    "type-check": "turbo run type-check",
     "test:lint": "turbo run test:lint",
     "test:unit": "turbo run test:unit",
     "test:coverage": "turbo run test:coverage",
@@ -37,13 +43,13 @@
     "test:ci": "turbo run test:ci"
   },
   "devDependencies": {
-    "husky": "^9.0.11",
-    "lint-staged": "^15.2.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
     "turbo": "latest"
   },
   "engines": {
     "npm": ">=10.0.0",
-    "node": ">=20.0.0"
+    "node": ">=22.0.0"
   },
-  "packageManager": "pnpm@9.5.0"
+  "packageManager": "pnpm@9.12.2"
 }

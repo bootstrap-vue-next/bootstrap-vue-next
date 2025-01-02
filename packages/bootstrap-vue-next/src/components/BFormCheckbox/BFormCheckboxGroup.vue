@@ -2,33 +2,33 @@
   <div
     v-bind="computedAttrs"
     :id="computedId"
-    ref="element"
+    ref="_element"
     role="group"
     :class="computedClasses"
     class="bv-no-focus-ring"
     tabindex="-1"
   >
     <slot name="first" />
-    <BFormCheckbox v-for="item in normalizeOptions" :key="item.self" v-bind="item.props">
-      <!-- eslint-disable-next-line vue/no-v-html -->
-      <span v-if="!!item.html" v-html="item.html" />
-      <template v-else>
+    <BFormCheckbox v-for="(item, index) in normalizeOptions" :key="index" v-bind="item">
+      <slot name="option" v-bind="item">
         {{ item.text }}
-      </template>
+      </slot>
     </BFormCheckbox>
     <slot />
   </div>
 </template>
 
 <script setup lang="ts">
-import {computed, provide, ref, toRef} from 'vue'
+import {computed, provide, toRef, useTemplateRef} from 'vue'
 import BFormCheckbox from './BFormCheckbox.vue'
-import type {BFormCheckboxGroupProps, CheckboxValue} from '../../types'
-import {getGroupAttr, getGroupClasses, useDefaults, useId} from '../../composables'
-import {checkboxGroupKey} from '../../utils'
+import {checkboxGroupKey} from '../../utils/keys'
 import {useFocus} from '@vueuse/core'
+import type {BFormCheckboxGroupProps} from '../../types/ComponentProps'
+import {useDefaults} from '../../composables/useDefaults'
+import {useId} from '../../composables/useId'
+import {getGroupAttr, getGroupClasses} from '../../composables/useFormCheck'
 
-const _props = withDefaults(defineProps<BFormCheckboxGroupProps>(), {
+const _props = withDefaults(defineProps<Omit<BFormCheckboxGroupProps, 'modelValue'>>(), {
   ariaInvalid: undefined,
   autofocus: false,
   buttonVariant: 'secondary',
@@ -36,7 +36,6 @@ const _props = withDefaults(defineProps<BFormCheckboxGroupProps>(), {
   disabled: false,
   disabledField: 'disabled',
   form: undefined,
-  htmlField: 'html',
   id: undefined,
   name: undefined,
   options: () => [],
@@ -58,16 +57,18 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   first?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  option: (props: Record<string, unknown>) => any
 }>()
 
-const modelValue = defineModel<CheckboxValue[]>({
+const modelValue = defineModel<Exclude<BFormCheckboxGroupProps['modelValue'], undefined>>({
   default: () => [],
 })
 
 const computedId = useId(() => props.id, 'checkbox')
 const computedName = useId(() => props.name, 'checkbox')
 
-const element = ref<HTMLElement | null>(null)
+const element = useTemplateRef<HTMLElement>('_element')
 
 const {focused} = useFocus(element, {
   initialValue: props.autofocus,
@@ -90,26 +91,18 @@ provide(checkboxGroupKey, {
 })
 
 const normalizeOptions = computed(() =>
-  props.options.map((el, ind) =>
+  props.options.map((el) =>
     typeof el === 'string' || typeof el === 'number'
       ? {
-          props: {
-            value: el,
-            disabled: props.disabled,
-          },
+          value: el,
+          disabled: props.disabled,
           text: el.toString(),
-          html: undefined,
-          self: Symbol(`checkboxGroupOptionItem${ind}`),
         }
       : {
-          props: {
-            value: el[props.valueField] as string | number | undefined,
-            disabled: el[props.disabledField] as boolean | undefined,
-            ...(el.props ? el.props : {}),
-          },
+          value: el[props.valueField] as string | number | undefined,
+          disabled: el[props.disabledField] as boolean | undefined,
+          ...(el.props ? el.props : undefined),
           text: el[props.textField] as string | undefined,
-          html: el[props.htmlField] as string | undefined,
-          self: Symbol(`checkboxGroupOptionItem${ind}`),
         }
   )
 )

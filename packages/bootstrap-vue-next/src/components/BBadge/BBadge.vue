@@ -1,21 +1,23 @@
 <template>
   <component :is="computedTag" class="badge" :class="computedClasses" v-bind="computedLinkProps">
-    <RenderComponentOrSkip
+    <ConditionalWrapper
       :skip="props.dotIndicator !== true"
       tag="span"
       v-bind="props.dotIndicator ? {class: 'visually-hidden'} : {}"
     >
       <slot />
-    </RenderComponentOrSkip>
+    </ConditionalWrapper>
   </component>
 </template>
 
 <script setup lang="ts">
-import {useBLinkHelper, useColorVariantClasses, useDefaults} from '../../composables'
-import {computed, toRef} from 'vue'
-import type {BBadgeProps} from '../../types'
+import {useBLinkHelper} from '../../composables/useBLinkHelper'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import {useDefaults} from '../../composables/useDefaults'
+import {computed} from 'vue'
+import type {BBadgeProps} from '../../types/ComponentProps'
 import BLink from '../BLink/BLink.vue'
-import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
+import ConditionalWrapper from '../ConditionalWrapper.vue'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -58,8 +60,6 @@ const _props = withDefaults(defineProps<BBadgeProps>(), {
 })
 const props = useDefaults(_props, 'BBadge')
 
-const resolvedBackgroundClasses = useColorVariantClasses(props)
-
 const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'active',
   'activeClass',
@@ -81,7 +81,7 @@ const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'icon',
 ])
 
-const computedTag = toRef(() => (computedLink.value ? BLink : props.tag))
+const computedTag = computed(() => (computedLink.value ? BLink : props.tag))
 
 const placementClasses = computed(() => {
   // dotindicator is implicitly top-end if no placement is set
@@ -102,8 +102,9 @@ const placementClasses = computed(() => {
   ]
 })
 
+const colorClasses = useColorVariantClasses(props)
 const computedClasses = computed(() => [
-  resolvedBackgroundClasses.value,
+  colorClasses.value,
   props.placement !== undefined || props.dotIndicator === true ? placementClasses.value : undefined,
   {
     'active': props.active,

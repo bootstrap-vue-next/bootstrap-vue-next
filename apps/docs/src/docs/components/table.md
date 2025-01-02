@@ -1,11 +1,5 @@
 # Tables
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
 <div class="lead mb-5">
 
 For displaying tabular data, `BTable` supports pagination, filtering, sorting, custom rendering, various style options, events, and asynchronous data. For simple display of tabular data without all the fancy features, BootstrapVueNext provides two lightweight alternative components `BTableLite` and `BTableSimple`.
@@ -765,7 +759,7 @@ const sortFields: Exclude<TableFieldRaw<SortPerson>, string>[] = [
         {{ (row.value as PersonName).last }}
       </template>
       <template #cell(actions)="row">
-        <BButton size="sm" class="mr-1" @click="info(row.item, row.index)"> Info modal </BButton>
+        <BButton size="sm" class="me-1" @click="info(row.item, row.index)"> Info modal </BButton>
         <BButton size="sm" @click="row.toggleDetails">
           {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
         </BButton>
@@ -924,7 +918,7 @@ const sortFields: Exclude<TableFieldRaw<SortPerson>, string>[] = [
         {{ (row.value as PersonName).last }}
       </template>
       <template #cell(actions)="row">
-        <BButton size="sm" class="mr-1" @click="info(row.item, row.index)"> Info modal </BButton>
+        <BButton size="sm" class="me-1" @click="info(row.item, row.index)"> Info modal </BButton>
         <BButton size="sm" @click="row.toggleDetails">
           {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
         </BButton>
@@ -1097,7 +1091,6 @@ function onAddSort() {
 <script setup lang="ts">
 import {data} from '../../data/components/table.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {
   BButton,

@@ -1,20 +1,42 @@
-import type {Numberish} from '../types'
-import {nextTick, onActivated, onMounted, ref, type Ref} from 'vue'
-import useAriaInvalid from './useAriaInvalid'
-import useId from './useId'
+import type {Numberish} from '../types/CommonTypes'
+import {
+  computed,
+  inject,
+  nextTick,
+  onActivated,
+  onMounted,
+  ref,
+  type Ref,
+  type ShallowRef,
+} from 'vue'
+import {useAriaInvalid} from './useAriaInvalid'
+import {useId} from './useId'
 import {useDebounceFn, useFocus, useToNumber} from '@vueuse/core'
 import type {CommonInputProps} from '../types/FormCommonInputProps'
+import {formGroupPluginKey} from '../utils/keys'
+import {useStateClass} from './useStateClass'
 
-export default (
+export const useFormInput = (
   props: Readonly<CommonInputProps>,
+  input:
+    | Readonly<ShallowRef<HTMLInputElement | null>>
+    | Readonly<ShallowRef<HTMLTextAreaElement | null>>,
   modelValue: Ref<Numberish | null>,
   modelModifiers: Record<'number' | 'lazy' | 'trim', true | undefined>
 ) => {
-  const input = ref<HTMLInputElement | null>(null)
+  const forceUpdateKey = ref(0)
 
   const computedId = useId(() => props.id, 'input')
   const debounceNumber = useToNumber(() => props.debounce ?? 0)
   const debounceMaxWaitNumber = useToNumber(() => props.debounceMaxWait ?? NaN)
+
+  // This automatically adds the appropriate "for" attribute to a BFormGroup label
+  const formGroupData = inject(formGroupPluginKey, null)?.(computedId)
+  const computedState = computed(() =>
+    props.state !== undefined ? props.state : (formGroupData?.state.value ?? null)
+  )
+  const computedAriaInvalid = useAriaInvalid(() => props.ariaInvalid, computedState)
+  const stateClass = useStateClass(computedState)
 
   const internalUpdateModelValue = useDebounceFn(
     (value: Numberish) => {
@@ -53,11 +75,6 @@ export default (
     })
   })
 
-  const computedAriaInvalid = useAriaInvalid(
-    () => props.ariaInvalid,
-    () => props.state
-  )
-
   const onInput = (evt: Readonly<Event>) => {
     const {value} = evt.target as HTMLInputElement
     const formattedValue = _formatValue(value, evt)
@@ -86,14 +103,20 @@ export default (
   }
 
   const onBlur = (evt: Readonly<FocusEvent>) => {
-    if (!modelModifiers.lazy && !props.lazyFormatter) return
+    if (!modelModifiers.lazy && !props.lazyFormatter && !modelModifiers.trim) return
 
     const {value} = evt.target as HTMLInputElement
     const formattedValue = _formatValue(value, evt, true)
 
-    const nextModel = formattedValue
+    const nextModel = modelModifiers.trim ? formattedValue.trim() : formattedValue
+    const needsForceUpdate = nextModel.length !== formattedValue.length
     if (modelValue.value !== nextModel) {
       updateModelValue(formattedValue, true)
+    }
+    if (modelModifiers.trim && needsForceUpdate) {
+      // The value is trimmed but there would still exist some white space
+      // So, force update the value. You need to bind this to :key on the input element
+      forceUpdateKey.value = forceUpdateKey.value + 1
     }
   }
 
@@ -118,5 +141,7 @@ export default (
     onBlur,
     focus,
     blur,
+    forceUpdateKey,
+    stateClass,
   }
 }

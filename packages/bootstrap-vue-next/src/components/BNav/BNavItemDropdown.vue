@@ -1,18 +1,19 @@
 <template>
   <li class="nav-item dropdown">
     <BDropdown
-      ref="dropdown"
+      ref="_dropdown"
       v-bind="props"
       v-model="modelValue"
       is-nav
       @show="emit('show', $event)"
-      @shown="emit('shown')"
+      @shown="emit('shown', $event)"
       @hide="emit('hide', $event)"
-      @hidden="emit('hidden')"
-      @hide-prevented="emit('hide-prevented')"
-      @show-prevented="emit('show-prevented')"
+      @hidden="emit('hidden', $event)"
+      @hide-prevented="emit('hide-prevented', $event)"
+      @show-prevented="emit('show-prevented', $event)"
+      @toggle-prevented="emit('toggle-prevented', $event)"
+      @toggle="emit('toggle', $event)"
       @click="emit('click', $event)"
-      @toggle="emit('toggle')"
     >
       <template #button-content>
         <slot name="button-content" />
@@ -28,28 +29,24 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-import {BvTriggerableEvent} from '../../utils'
+import {useTemplateRef} from 'vue'
 import BDropdown from '../BDropdown/BDropdown.vue'
-import type {BDropdownProps} from '../../types'
-import {useDefaults} from '../../composables'
+import type {BDropdownProps} from '../../types/ComponentProps'
+import {useDefaults} from '../../composables/useDefaults'
+import type {showHideEmits} from '../../composables/useShowHide'
 
-const _props = withDefaults(defineProps<BDropdownProps>(), {
+const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   ariaLabel: undefined,
   autoClose: true,
   block: false,
   boundary: 'clippingAncestors',
   boundaryPadding: undefined,
-  center: false,
   teleportTo: undefined,
   teleportDisabled: false,
   disabled: false,
-  dropend: false,
-  dropstart: false,
-  dropup: false,
-  end: false,
   floatingMiddleware: undefined,
   id: undefined,
+  initialAnimation: false,
   isNav: true,
   lazy: false,
   menuClass: undefined,
@@ -67,6 +64,9 @@ const _props = withDefaults(defineProps<BDropdownProps>(), {
   splitHref: undefined,
   splitTo: undefined,
   splitVariant: undefined,
+  placement: undefined,
+  noWrapper: undefined,
+  wrapperClass: undefined,
   strategy: 'absolute',
   text: undefined,
   toggleClass: undefined,
@@ -75,18 +75,13 @@ const _props = withDefaults(defineProps<BDropdownProps>(), {
 })
 const props = useDefaults(_props, 'BNavItemDropdown')
 
-const emit = defineEmits<{
-  'click': [event: MouseEvent]
-  'hidden': []
-  'hide': [value: BvTriggerableEvent]
-  'hide-prevented': []
-  'show': [value: BvTriggerableEvent]
-  'show-prevented': []
-  'shown': []
-  'toggle': []
-}>()
+const emit = defineEmits<
+  {
+    click: [event: MouseEvent]
+  } & showHideEmits
+>()
 
-const modelValue = defineModel<boolean>({default: false})
+const modelValue = defineModel<Exclude<BDropdownProps['modelValue'], undefined>>({default: false})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -96,7 +91,7 @@ defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'toggle-text'?: (props: Record<string, never>) => any
 }>()
-const dropdown = ref<InstanceType<typeof BDropdown> | null>(null)
+const dropdown = useTemplateRef<InstanceType<typeof BDropdown>>('_dropdown')
 
 const hide = () => {
   dropdown.value?.hide()

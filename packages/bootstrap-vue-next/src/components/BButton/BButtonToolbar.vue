@@ -10,8 +10,8 @@
 </template>
 
 <script setup lang="ts">
-import {useDefaults} from '../../composables'
-import type {BButtonToolbarProps} from '../../types'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BButtonToolbarProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
 
 const _props = withDefaults(defineProps<BButtonToolbarProps>(), {

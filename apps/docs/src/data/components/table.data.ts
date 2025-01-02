@@ -1,5 +1,5 @@
-import type {ComponentReference, PropertyReference} from '../../types'
-import {omit} from '../../utils'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 
 export default {
   load: (): ComponentReference[] => {
@@ -82,7 +82,7 @@ export default {
         type: 'ColorVariant | null',
         default: null,
       },
-    } as const
+    } as const satisfies Record<keyof BvnComponentProps['BTableSimple'], PropertyReference>
 
     const BTableLiteProps = {
       align: {
@@ -93,21 +93,9 @@ export default {
         type: 'string',
         default: undefined,
       },
-      captionHtml: {
-        type: 'string',
-        default: undefined,
-      },
       detailsTdClass: {
         type: 'ClassValue',
         default: undefined,
-      },
-      emptyFilteredText: {
-        type: 'string',
-        default: 'There are no records matching your request',
-      },
-      emptyText: {
-        type: 'string',
-        default: 'There are no records to show',
       },
       fieldColumnClass: {
         type: '(field: TableField) => Record<string, any>[] | string | Record<PropertyKey, any> | any[]',
@@ -153,10 +141,6 @@ export default {
         type: 'string',
         default: undefined,
       },
-      showEmpty: {
-        type: 'boolean',
-        default: false,
-      },
       tbodyClass: {
         type: 'ClassValue',
         default: undefined,
@@ -185,22 +169,15 @@ export default {
         type: 'ClassValue',
         default: undefined,
       },
-    } as const
-
-    const BTableLitePropsDefinition = (
-      obj: {header: string; val: Record<string, PropertyReference>} = {
-        header: '',
-        val: BTableLiteProps,
-      }
-    ): Record<string, Record<string, PropertyReference>> =>
-      ({
-        [obj.header]: obj.val,
-        'BTableSimple Props': BTableSimpleProps,
-      }) as const
+    } as const satisfies Record<
+      Exclude<keyof BvnComponentProps['BTableLite'], keyof BvnComponentProps['BTableSimple']>,
+      PropertyReference
+    >
 
     return [
       {
         component: 'BTable',
+        sourcePath: '/BTable/BTable.vue',
         props: {
           '': {
             busy: {
@@ -219,11 +196,33 @@ export default {
               type: 'string',
               default: undefined,
             },
+            filterFunction: {
+              type: '(item: Readonly<Items>, filter: string | undefined) => boolean',
+              default: undefined,
+              description:
+                'Function called during filtering of items, gets passed the current item being filtered',
+            },
             filterable: {
               type: 'string[]',
               default: undefined,
             },
-            multiSort: {
+            emptyFilteredText: {
+              type: 'string',
+              default: 'There are no records matching your request',
+              description:
+                'Text to display when no items are present in the `items` array after filtering',
+            },
+            emptyText: {
+              type: 'string',
+              default: 'There are no records to show',
+              description: 'Text to display when no items are present in the `items` array',
+            },
+            showEmpty: {
+              type: 'boolean',
+              default: false,
+              description: 'Show the empty text when no items are present in the `items` array',
+            },
+            multisort: {
               type: 'boolean',
               default: false,
             },
@@ -296,11 +295,15 @@ export default {
               type: 'boolean',
               default: false,
             },
-          },
-          ...BTableLitePropsDefinition({
-            header: 'BTableLite Props',
-            val: omit(BTableLiteProps, ['tableClass']),
-          }),
+          } satisfies Record<
+            Exclude<
+              keyof BvnComponentProps['BTable'],
+              keyof BvnComponentProps['BTableSimple'] | keyof BvnComponentProps['BTableLite']
+            >,
+            PropertyReference
+          >,
+          'BTableLite Props': BTableLiteProps,
+          'BTableSimple Props': BTableSimpleProps,
         },
         emits: [
           {
@@ -522,16 +525,30 @@ export default {
             name: 'default',
             scope: [],
           },
+          {
+            name: 'empty-filtered',
+            description:
+              'Content to display when no items are present in the `items` array after filtering',
+          },
+          {
+            name: 'empty',
+            description: 'Content to display when no items are present in the `items` array',
+          },
         ],
       },
       {
         component: 'BTableLite',
-        props: BTableLitePropsDefinition(),
+        sourcePath: '/BTable/BTableLite.vue',
+        props: {
+          '': BTableLiteProps,
+          'BTableSimple Props': BTableSimpleProps,
+        },
         emits: [],
         slots: [],
       },
       {
         component: 'BTableSimple',
+        sourcePath: '/BTable/BTableSimple.vue',
         props: {
           '': BTableSimpleProps,
         },
@@ -546,13 +563,15 @@ export default {
       },
       {
         component: 'BTbody',
+        styleSpec: {kind: StyleKind.Tag, value: 'tbody'},
+        sourcePath: '/BTable/BTbody.vue',
         props: {
           '': {
             variant: {
               type: 'ColorVariant',
               default: null,
             },
-          },
+          } satisfies Record<keyof BvnComponentProps['BTbody'], PropertyReference>,
         },
         emits: [],
         slots: [
@@ -565,6 +584,8 @@ export default {
       },
       {
         component: 'BTd',
+        styleSpec: {kind: StyleKind.Tag, value: 'td'},
+        sourcePath: '/BTable/BTd.vue',
         props: {
           '': {
             colspan: {
@@ -587,7 +608,7 @@ export default {
               type: 'ColorVariant | null',
               default: null,
             },
-          },
+          } satisfies Record<keyof BvnComponentProps['BTd'], PropertyReference>,
         },
         emits: [],
         slots: [
@@ -600,13 +621,15 @@ export default {
       },
       {
         component: 'BTfoot',
+        styleSpec: {kind: StyleKind.Tag, value: 'tfoot'},
+        sourcePath: '/BTable/BTfoot.vue',
         props: {
           '': {
             variant: {
               type: 'ColorVariant | null',
               default: null,
             },
-          },
+          } satisfies Record<keyof BvnComponentProps['BTfoot'], PropertyReference>,
         },
         emits: [],
         slots: [
@@ -619,6 +642,8 @@ export default {
       },
       {
         component: 'BTh',
+        styleSpec: {kind: StyleKind.Tag, value: 'th'},
+        sourcePath: '/BTable/BTh.vue',
         props: {
           '': {
             colspan: {
@@ -641,7 +666,7 @@ export default {
               type: 'ColorVariant | null',
               default: null,
             },
-          },
+          } satisfies Record<keyof BvnComponentProps['BTh'], PropertyReference>,
         },
         emits: [],
         slots: [
@@ -654,13 +679,15 @@ export default {
       },
       {
         component: 'BThead',
+        styleSpec: {kind: StyleKind.Tag, value: 'thead'},
+        sourcePath: '/BTable/BThead.vue',
         props: {
           '': {
             variant: {
               type: 'ColorVariant',
               default: null,
             },
-          },
+          } satisfies Record<keyof BvnComponentProps['BThead'], PropertyReference>,
         },
         emits: [],
         slots: [
@@ -673,13 +700,15 @@ export default {
       },
       {
         component: 'BTr',
+        styleSpec: {kind: StyleKind.Tag, value: 'tr'},
+        sourcePath: '/BTable/BTr.vue',
         props: {
           '': {
             variant: {
               type: 'ColorVariant',
               default: null,
             },
-          },
+          } satisfies Record<keyof BvnComponentProps['BTr'], PropertyReference>,
         },
         emits: [],
         slots: [

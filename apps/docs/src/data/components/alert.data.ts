@@ -1,10 +1,12 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BAlert',
+      sourcePath: '/BAlert/BAlert.vue',
       props: {
         '': {
           closeVariant: {
@@ -26,11 +28,6 @@ export default {
             type: 'string',
             default: undefined,
             description: 'Sets the text of the close button. The `close` slot takes precedence',
-          },
-          noHoverPause: {
-            type: 'boolean',
-            default: false,
-            description: 'When set to true, disables pausing the timer on hover behavior',
           },
           dismissible: {
             type: 'boolean',
@@ -55,8 +52,8 @@ export default {
               'Setting this property to `false` will cause a timer to not start immediately upon render. A timer that is not started is not rendered. It must manually be started with `resume()` or `restart()`',
           },
           interval: {
-            type: 'Numberish',
-            default: 1000,
+            type: 'number | requestAnimationFrame',
+            default: 'requestAnimationFrame',
             description: 'The interval in milliseconds to update the countdown timer',
           },
           showOnPause: {
@@ -65,16 +62,8 @@ export default {
             description:
               'Setting this property to `false` will override the behavior of showing the Alert when the timer is paused',
           },
-          ...pick(
-            buildCommonProps({
-              id: {
-                description:
-                  'The Id to be injected to accordion items and used to in BCollapse for state managment',
-              },
-            }),
-            ['variant']
-          ),
-        },
+          ...pick(buildCommonProps(), ['variant', 'noHoverPause', 'noResumeOnHoverLeave']),
+        } satisfies Record<keyof BvnComponentProps['BAlert'], PropertyReference>,
       },
       slots: [
         {
@@ -88,12 +77,10 @@ export default {
       ],
       emits: [
         {
-          args: [],
           event: 'close',
           description: 'Emitted when the alert begins its transition to close',
         },
         {
-          args: [],
           event: 'closed',
           description: 'Emitted after the alert ends its transition to close',
         },

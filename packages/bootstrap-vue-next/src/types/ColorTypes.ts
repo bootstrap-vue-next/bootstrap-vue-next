@@ -8,10 +8,28 @@ export interface BaseColorVariant {
   light: unknown
   dark: unknown
 }
-
 export type ColorVariant = keyof BaseColorVariant
 
-export interface BaseTextColorVariant extends BaseColorVariant {
+export type ColorVariantSubtle = `${ColorVariant}-subtle`
+export type BaseColorVariantSubtle = {
+  [K in ColorVariantSubtle]: unknown
+}
+export type ColorVariantEmphasis = `${ColorVariant}-emphasis`
+export type BaseColorVariantEmphasis = {
+  [K in ColorVariantEmphasis]: unknown
+}
+
+export type ColorVariantOutline = `outline-${ColorVariant}`
+export type BaseColorVariantOutline = {
+  [K in ColorVariantOutline]: unknown
+}
+
+export interface BaseButtonVariant extends BaseColorVariant, BaseColorVariantOutline {
+  link: unknown
+}
+export type ButtonVariant = keyof BaseButtonVariant
+
+export interface BaseTextColorVariant extends BaseColorVariant, BaseColorVariantEmphasis {
   'white': unknown
   'body': unknown
   'body-secondary': unknown
@@ -19,25 +37,16 @@ export interface BaseTextColorVariant extends BaseColorVariant {
   'white-50': unknown
   'reset': unknown
 }
-
 export type TextColorVariant = keyof BaseTextColorVariant
+
+export interface BaseBgColorVariant extends BaseColorVariant, BaseColorVariantSubtle {}
+export type BgColorVariant = keyof BaseBgColorVariant
+
+export interface BaseBorderColorVariant extends BaseColorVariant, BaseColorVariantSubtle {}
+export type BorderColorVariant = keyof BaseBorderColorVariant
 
 export type ColorExtendables = {
   variant?: ColorVariant | null
-  bgVariant?: ColorVariant | null
+  bgVariant?: BgColorVariant | null
   textVariant?: TextColorVariant | null
 }
-
-export interface BaseButtonVariant extends BaseColorVariant {
-  'link': unknown
-  'outline-primary': unknown
-  'outline-secondary': unknown
-  'outline-success': unknown
-  'outline-danger': unknown
-  'outline-warning': unknown
-  'outline-info': unknown
-  'outline-light': unknown
-  'outline-dark': unknown
-}
-
-export type ButtonVariant = keyof BaseButtonVariant

@@ -1,10 +1,30 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
+
+const sharedScope = [
+  {
+    prop: 'disabled',
+    type: 'Boolean',
+    description: 'Will be `true` if this button is disabled (non-clickable)',
+  },
+  {
+    prop: 'index',
+    type: 'Number',
+    description: 'Page number (indexed from `0` to `numberOfPages - 1`)',
+  },
+  {
+    prop: 'page',
+    type: 'Number',
+    description: 'Page number (from `1` to `numberOfPages`)',
+  },
+]
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BPagination',
+      sourcePath: '/BPagination/BPagination.vue',
       props: {
         '': {
           align: {
@@ -25,72 +45,62 @@ export default {
           firstClass: {
             type: 'ClassValue',
             default: undefined,
-            description: "Class(es) to apply to the 'Go to first page' button",
+            description: 'Class(es) to apply to the go to first page button',
           },
           firstNumber: {
             type: 'boolean',
             default: false,
-            description: 'Display first page number instead of Goto First button',
+            description: 'Display first page number instead of go to first page button',
           },
           firstText: {
             type: 'string',
             default: '\u00AB',
-            description: 'Content to place in the goto first page button',
-          },
-          hideEllipsis: {
-            type: 'boolean',
-            default: false,
-            description: 'Do not show ellipsis buttons',
-          },
-          hideGotoEndButtons: {
-            type: 'boolean',
-            default: false,
-            description: 'Hides the goto first and goto last page buttons',
+            description: 'Content to place in the go to first page button',
           },
           labelFirstPage: {
             type: 'string',
             default: 'Go to first page',
             description:
-              "Value to place in the 'aria-label' attribute of the goto first page button",
+              "Value to place in the 'aria-label' attribute of the go to first page button",
           },
           labelLastPage: {
             type: 'string',
             default: 'Go to last page',
             description:
-              "Value to place in the 'aria-label' attribute of the goto last page button",
+              "Value to place in the 'aria-label' attribute of the go to last page button",
           },
           labelNextPage: {
             type: 'string',
             default: 'Go to next page',
             description:
-              "Value to place in the 'aria-label' attribute of the goto next page button",
+              "Value to place in the 'aria-label' attribute of the go to next page button",
           },
           labelPage: {
             type: 'string',
             default: 'Go to page',
             description:
-              "Value to place in the 'aria-label' attribute of the goto page button. Page number will be prepended automatically",
+              "Value to place in the 'aria-label' attribute of the go to page button. Page number will be appended automatically",
           },
           labelPrevPage: {
             type: 'string',
             default: 'Go to previous page',
             description:
-              "Value to place in the 'aria-label' attribute of the goto previous page button",
+              "Value to place in the 'aria-label' attribute of the go to previous page button",
           },
           lastClass: {
             type: 'ClassValue',
             default: undefined,
-            description: "Class(es) to apply to the 'Go to last page' button",
+            description: 'Class(es) to apply to the go to last page button',
           },
           lastNumber: {
             type: 'boolean',
             default: false,
-            description: 'Display last page number instead of Goto Last button',
+            description: 'Display last page number instead of go to Last button',
           },
           lastText: {
             type: 'string',
             default: '\u00BB',
-            description: 'Content to place in the goto last page button',
+            description: 'Content to place in the go to last page button',
           },
           limit: {
             type: 'Numberish',
@@ -106,17 +116,17 @@ export default {
           nextClass: {
             type: 'ClassValue',
             default: undefined,
-            description: "Class(es) to apply to the 'Go to next page' button",
+            description: 'Class(es) to apply to the go to next page button',
           },
           nextText: {
             type: 'string',
             default: '\u203A',
-            description: 'Content to place in the goto next page button',
+            description: 'Content to place in the go to next page button',
           },
           pageClass: {
             type: 'ClassValue',
             default: undefined,
-            description: "Class(es) to apply to the 'Go to page #' buttons",
+            description: 'Class(es) to apply to the go to page # buttons',
           },
           perPage: {
             type: 'Numberish',
@@ -136,7 +146,7 @@ export default {
           prevText: {
             type: 'string',
             default: '\u2039',
-            description: 'Content to place in the goto previous page button',
+            description: 'Content to place in the go to previous page button',
           },
           totalRows: {
             type: 'Numberish',
@@ -152,9 +162,9 @@ export default {
                 default: undefined,
               },
             }),
-            ['ariaControls', 'ariaLabel', 'disabled', 'size']
+            ['ariaControls', 'ariaLabel', 'disabled', 'noEllipsis', 'noGotoEndButtons', 'size']
           ),
-        },
+        } satisfies Record<keyof BvnComponentProps['BPagination'], PropertyReference>,
       },
       emits: [
         {
@@ -194,71 +204,24 @@ export default {
         },
         {
           name: 'first-text',
-          description: "The 'Go to first page' button content",
-          scope: [
-            {
-              prop: 'disabled',
-              type: 'Boolean',
-              description: 'Will be `true` if this button is disabled (non-clickable)',
-            },
-            {
-              prop: 'index',
-              type: 'Number',
-              description: 'Page number (indexed from `0` to `numberOfPages - 1`)',
-            },
-            {
-              prop: 'page',
-              type: 'Number',
-              description: 'Page number (from `1` to `numberOfPages`)',
-            },
-          ],
+          description: 'The go to first page button content',
+          scope: sharedScope,
         },
         {
           name: 'last-text',
-          description: "The 'Go to last page' button content",
-          scope: [
-            {
-              prop: 'disabled',
-              type: 'Boolean',
-              description: 'Will be `true` if this button is disabled (non-clickable)',
-            },
-            {
-              prop: 'index',
-              type: 'Number',
-              description: 'Page number (indexed from `0` to `numberOfPages - 1`)',
-            },
-            {
-              prop: 'page',
-              type: 'Number',
-              description: 'Page number (from `1` to `numberOfPages`)',
-            },
-          ],
+          description: 'The go to last page button content',
+          scope: sharedScope,
         },
         {
           name: 'next-text',
-          description: "The 'Go to next page' button content",
-          scope: [
-            {
-              prop: 'disabled',
-              type: 'Boolean',
-              description: 'Will be `true` if this button is disabled (non-clickable)',
-            },
-            {
-              prop: 'index',
-              type: 'Number',
-              description: 'Page number (indexed from `0` to `numberOfPages - 1`)',
-            },
-            {
-              prop: 'page',
-              type: 'Number',
-              description: 'Page number (from `1` to `numberOfPages`)',
-            },
-          ],
+          description: 'The go to next page button content',
+          scope: sharedScope,
         },
         {
           name: 'page',
           description: 'Page number button content',
           scope: [
+            ...sharedScope,
             {
               prop: 'active',
               type: 'Boolean',
@@ -269,43 +232,12 @@ export default {
               type: 'String',
               description: 'Default button content',
             },
-            {
-              prop: 'disabled',
-              type: 'Boolean',
-              description: 'Will be `true` if this button is disabled (non-clickable)',
-            },
-            {
-              prop: 'index',
-              type: 'Number',
-              description: 'Page number (indexed from `0` to `numberOfPages - 1`)',
-            },
-            {
-              prop: 'page',
-              type: 'Number',
-              description: 'Page number (from `1` to `numberOfPages`)',
-            },
           ],
         },
         {
           name: 'prev-text',
-          description: "The 'Go to previous page' button content",
-          scope: [
-            {
-              prop: 'disabled',
-              type: 'Boolean',
-              description: 'Will be `true` if this button is disabled (non-clickable)',
-            },
-            {
-              prop: 'index',
-              type: 'Number',
-              description: 'Page number (indexed from `0` to `numberOfPages - 1`)',
-            },
-            {
-              prop: 'page',
-              type: 'Number',
-              description: 'Page number (from `1` to `numberOfPages`)',
-            },
-          ],
+          description: 'The go to previous page button content',
+          scope: sharedScope,
         },
       ],
     },

@@ -2,35 +2,8 @@ import type {Boundary, Placement, RootBoundary} from '@floating-ui/vue'
 export {autoUpdate} from '@floating-ui/vue'
 
 import {type DirectiveBinding, h, render} from 'vue'
-import {DefaultAllowlist, sanitizeHtml} from './sanitizer'
-import BPopover from '../components/BPopover.vue'
-import type {BPopoverProps} from '../types'
-
-// TODO this function doesn't currently resolve with RTL in mind. Once Bootstrap finalizes their RTL, we should make this change here
-/**
- * Configures Bootstrap-like placement props to floating-ui Placement strings.
- * Top drops up, bottom drops down, end drops right, start drops left, dropend will _align_ the drop to the 'end',
- * dropstart will _align_ the drop to the 'start'. Bottom is default, so it is the last in the order. Bottom should essentially be the opposite of top
- * @param {top: boolean; bottom: boolean; start: boolean; end: boolean; dropstart: boolean; dropend: boolean}
- * @returns {Placement} Placement
- */
-export const resolveFloatingPlacement = ({
-  top,
-  end,
-  start,
-  alignCenter,
-  alignEnd,
-}: Readonly<{
-  top: boolean
-  start: boolean
-  end: boolean
-  alignCenter: boolean
-  alignEnd: boolean
-}>): Placement => {
-  const direction = top ? 'top' : start ? 'left' : end ? 'right' : 'bottom'
-  const align = alignEnd ? 'end' : alignCenter ? null : 'start'
-  return `${direction}${align ? `-${align}` : ''}` as Placement
-}
+import BPopover from '../components/BPopover/BPopover.vue'
+import type {BPopoverProps} from '../types/ComponentProps'
 
 export const resolveBootstrapPlacement = (placement: Placement): string => {
   const [_placement] = placement.split('-')
@@ -64,19 +37,19 @@ export const resolveContent = (
       el.setAttribute('data-original-title', title)
 
       return {
-        content: sanitizeHtml(title, DefaultAllowlist),
+        content: title,
       }
     }
     return {}
   }
   if (typeof values === 'string') {
     return {
-      content: sanitizeHtml(values, DefaultAllowlist),
+      content: values,
     }
   }
   return {
-    title: values?.title ? sanitizeHtml(values?.title, DefaultAllowlist) : undefined,
-    content: values?.content ? sanitizeHtml(values?.content, DefaultAllowlist) : undefined,
+    title: values?.title ? values?.title : undefined,
+    content: values?.content ? values?.content : undefined,
   }
 }
 
@@ -89,7 +62,7 @@ export const resolveDirectiveProps = (
   inline: binding.modifiers.inline,
   click: binding.modifiers.click,
   realtime: binding.modifiers.realtime,
-  persistent: binding.modifiers.persistent,
+  lazy: binding.modifiers.lazy,
   placement: binding.modifiers.left
     ? 'left'
     : binding.modifiers.right
@@ -100,14 +73,15 @@ export const resolveDirectiveProps = (
           ? 'top'
           : undefined,
   html: true,
-  ...(typeof binding.value === 'object' ? binding.value : {}),
-  ...(binding.modifiers.interactive ? {noninteractive: false} : {}),
+  ...(typeof binding.value === 'object' ? binding.value : undefined),
+  ...(binding.modifiers.interactive ? {noninteractive: false} : undefined),
   title: null,
   content: null,
 })
 
 export interface ElementWithPopper extends HTMLElement {
   $__element?: HTMLElement
+  $__binding?: string
 }
 
 export const bind = (

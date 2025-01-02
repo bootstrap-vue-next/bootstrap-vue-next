@@ -1,11 +1,5 @@
 # Modal
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
 <div class="lead mb-5">
 
 Modals are streamlined, but flexible dialog prompts powered by JavaScript and CSS. They support a number of use cases from user notification to completely custom content and feature a handful of helpful sub-components, sizes, variants, accessibility, and more.
@@ -49,9 +43,9 @@ It is possible to prevent showing/closing modals. You can prevent hiding on the 
   <BButton @click="preventableModal = !preventableModal">
     Toggle modal
   </BButton>
-  <BModal v-model="preventableModal" title="Hello, World!" @hide.prevent>
+  <BModal  v-model="preventableModal" title="Hello, World!" @hide="preventFn">
     Foobar?
-    <BButton @click="preventableModal = false">Force leave</BButton>
+    <BFormCheckbox v-model="preventModal">Prevent close</BFormCheckbox>
   </BModal>
   <template #html>
 
@@ -59,14 +53,18 @@ It is possible to prevent showing/closing modals. You can prevent hiding on the 
 <template>
   <BButton @click="preventableModal = !preventableModal"> Toggle modal </BButton>
 
-  <BModal v-model="preventableModal" title="Hello, World!" @hide.prevent>
+  <BModal v-model="preventableModal" title="Hello, World!" @hide="preventFn">
     Foobar?
-    <BButton @click="preventableModal = false">Force leave</BButton>
+    <BFormCheckbox v-model="preventModal">Prevent close</BFormCheckbox>
   </BModal>
 </template>
 
 <script setup lang="ts">
 const preventableModal = ref(false)
+const preventModal = ref(true)
+const preventFn = (e: Event) => {
+  if (preventModal.value) e.preventDefault()
+}
 </script>
 ```
 
@@ -226,14 +224,18 @@ If you're looking for replacements for `$bvModal.msgBoxOk` and `$bvModal.msgBoxC
 <script setup lang="ts">
 import {data} from '../../data/components/modal.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BCard, BCardBody, BModal, BButton, vBModal} from 'bootstrap-vue-next'
-import {ref} from 'vue'
+import {ref, nextTick} from 'vue'
 
 const modal = ref(false)
 
 const preventableModal = ref(false)
+const preventModal = ref(true)
+const preventFn = (e: Event) => {
+  if (preventModal.value)
+    e.preventDefault()
+}
 
 const nestedModal1 = ref(false)
 const nestedModal2 = ref(false)

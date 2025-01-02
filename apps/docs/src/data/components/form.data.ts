@@ -1,32 +1,17 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BForm',
+      styleSpec: {kind: StyleKind.Tag, value: 'form'},
+      sourcePath: '/BForm/BForm.vue',
       props: {
         '': {
-          floating: {
-            type: 'boolean',
-            default: false,
-            description:
-              'When set, renders a single control form with a floating label. This only works for forms where the immediate children are a label and one of the supported controls. See above for details.',
-          },
-          novalidate: {
-            type: 'boolean',
-            default: false,
-            description:
-              'When set, disables browser native HTML5 validation on controls in the form',
-          },
-          validated: {
-            type: 'boolean',
-            default: false,
-            description:
-              "When set, adds the Bootstrap class 'was-validated' on the form, triggering the native browser validation states",
-          },
-          ...pick(buildCommonProps(), ['id']),
-        },
+          ...pick(buildCommonProps(), ['floating', 'id', 'novalidate', 'validated']),
+        } satisfies Record<keyof BvnComponentProps['BForm'], PropertyReference>,
       },
       emits: [
         {
@@ -49,7 +34,62 @@ export default {
       ],
     },
     {
+      component: 'BFormDatalist',
+      styleSpec: {kind: StyleKind.Tag, value: 'datalist'},
+      sourcePath: '/BForm/BFormDatalist.vue',
+      props: {
+        '': {
+          ...pick(
+            buildCommonProps({
+              options: {
+                type: 'readonly (unknown | Record<string, unknown>)[]',
+                description:
+                  'Array of items to render in the component. Note that BFormDatalist only supports Options, not OptionsGroups',
+              },
+            }),
+            ['disabledField', 'id', 'options', 'textField', 'valueField']
+          ),
+        } satisfies Record<keyof BvnComponentProps['BFormDatalist'], PropertyReference>,
+      },
+      emits: [],
+      slots: [
+        {
+          name: 'default',
+          description: 'Content to place in the from datalist',
+        },
+        {
+          name: 'first',
+          description: "Slot to place options above options provided via the 'options' prop",
+        },
+        {
+          name: 'option',
+          description:
+            'Use this slot to have finer control over the content render inside each data item',
+          scope: [
+            {
+              prop: 'value',
+              type: 'any (T)',
+              description: 'The value of the option',
+            },
+            {
+              prop: 'text',
+              type: 'string',
+              description: 'The text of the option',
+            },
+            {
+              prop: 'disabled',
+              type: 'boolean',
+              description: 'Is the option disabled',
+            },
+          ],
+        },
+      ],
+    },
+
+    {
       component: 'BFormFloatingLabel',
+      styleSpec: {kind: StyleKind.OverrideClass, value: 'floating-label'},
+      sourcePath: '/BForm/BFormFloatingLabel.vue',
       props: {
         '': {
           label: {
@@ -62,7 +102,7 @@ export default {
             default: undefined,
             description: 'The id of the input control that the floating label is for',
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormFloatingLabel'], PropertyReference>,
       },
       emits: [],
       slots: [
@@ -78,6 +118,8 @@ export default {
     },
     {
       component: 'BFormInvalidFeedback',
+      styleSpec: {kind: StyleKind.OverrideClass, value: 'invalid-feedback, invalid-tooltip'},
+      sourcePath: '/BForm/BFormInvalidFeedback.vue',
       props: {
         '': {
           forceShow: {
@@ -91,7 +133,7 @@ export default {
             description: 'The feedback text to display',
           },
           ...pick(buildCommonProps(), ['ariaLive', 'id', 'role', 'state', 'tag', 'tooltip']),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormInvalidFeedback'], PropertyReference>,
       },
       emits: [],
       slots: [
@@ -103,10 +145,12 @@ export default {
     },
     {
       component: 'BFormRow',
+      styleSpec: {kind: StyleKind.OverrideClass, value: 'row'},
+      sourcePath: '/BForm/BFormRow.vue',
       props: {
         '': {
           ...pick(buildCommonProps(), ['tag']),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormRow'], PropertyReference>,
       },
       emits: [],
       slots: [
@@ -118,6 +162,7 @@ export default {
     },
     {
       component: 'BFormText',
+      sourcePath: '/BForm/BFormText.vue',
       props: {
         '': {
           inline: {
@@ -132,7 +177,7 @@ export default {
             description: 'The text to display',
           },
           ...pick(buildCommonProps(), ['id', 'tag', 'textVariant']),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormText'], PropertyReference>,
       },
       emits: [],
       slots: [
@@ -144,6 +189,8 @@ export default {
     },
     {
       component: 'BFormValidFeedback',
+      styleSpec: {kind: StyleKind.OverrideClass, value: 'valid-feedback, valid-tooltip'},
+      sourcePath: '/BForm/BFormValidFeedback.vue',
       props: {
         '': {
           forceShow: {
@@ -157,7 +204,7 @@ export default {
             description: 'The feedback text to display',
           },
           ...pick(buildCommonProps(), ['ariaLive', 'id', 'role', 'state', 'tag', 'tooltip']),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormValidFeedback'], PropertyReference>,
       },
       emits: [],
       slots: [

@@ -1,8 +1,8 @@
 <template>
-  <BTransition :no-fade="!props.fade" :trans-props="{enterToClass: 'show'}">
+  <Transition v-bind="fadeTransitions" enter-to-class="show">
     <div
       v-if="isAlertVisible"
-      ref="element"
+      ref="_element"
       class="alert"
       role="alert"
       aria-live="polite"
@@ -19,20 +19,21 @@
         <BCloseButton v-else :aria-label="props.closeLabel" v-bind="closeAttrs" @click="hide" />
       </template>
     </div>
-  </BTransition>
+  </Transition>
 </template>
 
 <script setup lang="ts">
-import BTransition from '../BTransition/BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BButton from '../BButton/BButton.vue'
-import type {BAlertProps} from '../../types'
-import {computed, onBeforeUnmount, ref, toRef, watch, watchEffect} from 'vue'
-import {useCountdown, useDefaults} from '../../composables'
-import {isEmptySlot} from '../../utils'
-import {useElementHover, useToNumber} from '@vueuse/core'
+import type {BAlertProps} from '../../types/ComponentProps'
+import {computed, useTemplateRef, watchEffect} from 'vue'
+import {useCountdown} from '../../composables/useCountdown'
+import {useDefaults} from '../../composables/useDefaults'
+import {isEmptySlot} from '../../utils/dom'
+import {useCountdownHover} from '../../composables/useCountdownHover'
+import {useFadeTransition} from '../../composables/useTransitions'
 
-const _props = withDefaults(defineProps<BAlertProps>(), {
+const _props = withDefaults(defineProps<Omit<BAlertProps, 'modelValue'>>(), {
   closeClass: undefined,
   closeContent: undefined,
   closeLabel: 'Close',
@@ -40,8 +41,9 @@ const _props = withDefaults(defineProps<BAlertProps>(), {
   dismissible: false,
   fade: false,
   immediate: true,
-  interval: 1000,
+  interval: 'requestAnimationFrame',
   noHoverPause: false,
+  noResumeOnHoverLeave: false,
   showOnPause: true,
   variant: 'info',
 })
@@ -61,17 +63,16 @@ const slots = defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const element = ref<HTMLElement | null>(null)
+const fadeTransitions = useFadeTransition(() => props.fade)
 
-const modelValue = defineModel<boolean | number>({default: false})
+const element = useTemplateRef<HTMLElement>('_element')
 
-const isHovering = useElementHover(element)
+const modelValue = defineModel<Exclude<BAlertProps['modelValue'], undefined>>({default: false})
 
-const intervalNumber = useToNumber(() => props.interval)
-
-const hasCloseSlot = toRef(() => !isEmptySlot(slots.close))
-
-const countdownLength = toRef(() => (typeof modelValue.value === 'boolean' ? 0 : modelValue.value))
+const hasCloseSlot = computed(() => !isEmptySlot(slots.close))
+const countdownLength = computed(() =>
+  typeof modelValue.value === 'boolean' ? 0 : modelValue.value
+)
 
 const computedClasses = computed(() => ({
   [`alert-${props.variant}`]: props.variant !== null,
@@ -83,16 +84,25 @@ const closeClasses = computed(() => [props.closeClass, {'btn-close-custom': hasC
 const {
   isActive,
   pause,
-  restart,
   resume,
   stop,
   isPaused,
+  restart,
   value: remainingMs,
-} = useCountdown(countdownLength, intervalNumber, {
+} = useCountdown(countdownLength, props.interval, {
   immediate: typeof modelValue.value === 'number' && props.immediate,
 })
+useCountdownHover(
+  element,
+  computed(() => ({
+    noHoverPause: props.noHoverPause,
+    noResumeOnHoverLeave: props.noResumeOnHoverLeave,
+    modelValueIgnoresHover: typeof modelValue.value === 'boolean',
+  })),
+  {pause, resume}
+)
 
-const isAlertVisible = toRef(() =>
+const isAlertVisible = computed(() =>
   typeof modelValue.value === 'boolean'
     ? modelValue.value
     : isActive.value || (props.showOnPause && isPaused.value)
@@ -120,26 +130,11 @@ const hide = () => {
   emit('closed')
 }
 
-const onMouseEnter = () => {
-  if (props.noHoverPause) return
-  pause()
-}
-
-watch(isHovering, (newValue) => {
-  if (newValue) {
-    onMouseEnter()
-    return
-  }
-  resume()
-})
-
-onBeforeUnmount(stop)
-
 defineExpose({
   pause,
-  restart,
   resume,
   stop,
+  restart,
 })
 </script>
 

@@ -1,4 +1,4 @@
-import {suffixPropName} from '../../src/utils'
+import {suffixPropName} from '../../src/utils/props'
 import {describe, expect, it} from 'vitest'
 
 describe('suffixPropName', () => {

@@ -1,7 +1,7 @@
 <template>
   <select
     :id="computedId"
-    ref="input"
+    ref="_input"
     v-model="localValue"
     :class="computedClasses"
     :name="props.name"
@@ -21,15 +21,12 @@
         :options="option.options"
         :value-field="props.valueField"
         :text-field="props.textField"
-        :html-field="props.htmlField"
         :disabled-field="props.disabledField"
       />
       <BFormSelectOption v-else :value="option.value" :disabled="option.disabled">
-        <!-- eslint-disable-next-line vue/no-v-html -->
-        <span v-if="!!option.html" v-html="option.html" />
-        <template v-else>
+        <slot name="option" v-bind="option">
           {{ option.text }}
-        </template>
+        </slot>
       </BFormSelectOption>
     </template>
     <slot />
@@ -37,25 +34,28 @@
 </template>
 
 <script setup lang="ts" generic="T">
-import type {BFormSelectProps, ComplexSelectOptionRaw, SelectOption} from '../../types'
-import {computed, ref, toRef} from 'vue'
+import type {BFormSelectProps} from '../../types/ComponentProps'
+import {computed, useTemplateRef} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
-import {useAriaInvalid, useDefaults, useFormSelect, useId, useStateClass} from '../../composables'
+import {useAriaInvalid} from '../../composables/useAriaInvalid'
 import {useFocus, useToNumber} from '@vueuse/core'
+import {useDefaults} from '../../composables/useDefaults'
+import {useId} from '../../composables/useId'
+import {useStateClass} from '../../composables/useStateClass'
+import {useFormSelect} from '../../composables/useFormSelect'
+import type {ComplexSelectOptionRaw, SelectOption} from '../../types/SelectTypes'
 
-const _props = withDefaults(defineProps<BFormSelectProps>(), {
+const _props = withDefaults(defineProps<Omit<BFormSelectProps, 'modelValue'>>(), {
   ariaInvalid: undefined,
   autofocus: false,
   disabled: false,
   disabledField: 'disabled',
   form: undefined,
-  htmlField: 'html',
   id: undefined,
   labelField: 'label',
   multiple: false,
   name: undefined,
-  // eslint-disable-next-line vue/require-valid-default-prop
   options: () => [],
   optionsField: 'options',
   plain: false,
@@ -73,6 +73,8 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   first?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  option: (props: SelectOption<T>) => any
 }>()
 
 const modelValue = defineModel<T>({
@@ -86,7 +88,7 @@ const selectSizeNumber = useToNumber(() => props.selectSize)
 
 const stateClass = useStateClass(() => props.state)
 
-const input = ref<HTMLElement | null>(null)
+const input = useTemplateRef<HTMLElement>('_input')
 
 const {focused} = useFocus(input, {
   initialValue: props.autofocus,
@@ -102,7 +104,7 @@ const computedClasses = computed(() => [
   },
 ])
 
-const computedSelectSize = toRef(() =>
+const computedSelectSize = computed(() =>
   selectSizeNumber.value || props.plain ? selectSizeNumber.value : undefined
 )
 

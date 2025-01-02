@@ -1,11 +1,12 @@
 <template>
   <component
     :is="computedTag"
+    ref="_element"
     class="btn"
     v-bind="linkProps"
     :class="computedClasses"
-    :aria-disabled="nonStandardTag ? props.disabled : null"
-    :aria-pressed="isToggle ? props.pressed : null"
+    :aria-disabled="computedAriaDisabled"
+    :aria-pressed="isToggle ? pressedValue : null"
     :autocomplete="isToggle ? 'off' : null"
     :disabled="isButton ? props.disabled : null"
     :href="props.href"
@@ -16,31 +17,31 @@
     :to="!isButton ? props.to : null"
     @click="clicked"
   >
-    <template v-if="props.loading">
-      <slot name="loading">
-        <template v-if="!props.loadingFill">
-          {{ props.loadingText }}
-        </template>
-        <slot name="loading-spinner">
-          <BSpinner
-            :small="props.size !== 'lg'"
-            :label="props.loadingFill ? props.loadingText : undefined"
-          />
-        </slot>
+    <slot v-if="props.loading" name="loading">
+      <template v-if="!props.loadingFill">
+        {{ props.loadingText }}
+      </template>
+      <slot name="loading-spinner">
+        <BSpinner
+          :small="props.size !== 'lg'"
+          :label="props.loadingFill ? props.loadingText : undefined"
+        />
       </slot>
-    </template>
-    <template v-else>
-      <slot />
-    </template>
+    </slot>
+    <slot v-else />
   </component>
 </template>
 
 <script setup lang="ts">
-import {computed, toRef} from 'vue'
-import BSpinner from '../BSpinner.vue'
-import {useBLinkHelper, useDefaults} from '../../composables'
-import type {BButtonProps} from '../../types'
+import {computed, useTemplateRef} from 'vue'
+import BSpinner from '../BSpinner/BSpinner.vue'
+import {useBLinkHelper} from '../../composables/useBLinkHelper'
 import BLink from '../BLink/BLink.vue'
+import {useLinkClasses} from '../../composables/useLinkClasses'
+import {onKeyStroke} from '@vueuse/core'
+import type {BButtonProps} from '../../types/ComponentProps'
+import {useDefaults} from '../../composables/useDefaults'
+import type {ColorVariant} from '../../types/ColorTypes'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -51,7 +52,7 @@ defineSlots<{
   'loading-spinner'?: (props: Record<string, never>) => any
 }>()
 
-const _props = withDefaults(defineProps<BButtonProps>(), {
+const _props = withDefaults(defineProps<Omit<BButtonProps, 'pressed'>>(), {
   loading: false,
   loadingFill: false,
   loadingText: 'Loading...',
@@ -69,7 +70,7 @@ const _props = withDefaults(defineProps<BButtonProps>(), {
   exactActiveClass: undefined,
   stretched: false,
   href: undefined,
-  icon: undefined,
+  icon: false,
   opacity: undefined,
   opacityHover: undefined,
   rel: undefined,
@@ -82,7 +83,7 @@ const _props = withDefaults(defineProps<BButtonProps>(), {
   underlineOffsetHover: undefined,
   underlineOpacity: undefined,
   underlineOpacityHover: undefined,
-  underlineVariant: undefined,
+  underlineVariant: null,
   // End link props
 })
 
@@ -92,7 +93,9 @@ const emit = defineEmits<{
   click: [value: MouseEvent]
 }>()
 
-const pressedValue = defineModel<boolean | undefined>('pressed', {default: undefined})
+const element = useTemplateRef<HTMLElement>('_element')
+
+const pressedValue = defineModel<BButtonProps['pressed']>('pressed', {default: undefined})
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'active-class',
@@ -102,27 +105,57 @@ const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'routerTag',
 ])
 
-const isToggle = toRef(() => typeof props.pressed === 'boolean')
-const isButton = toRef(
+const isToggle = computed(() => typeof pressedValue.value === 'boolean')
+const isButton = computed(
   () => props.tag === 'button' && props.href === undefined && props.to === undefined
 )
-const isBLink = toRef(() => props.to !== undefined)
-const nonStandardTag = toRef(() => (props.href !== undefined ? false : !isButton.value))
+const isBLink = computed(() => props.to !== undefined)
+const nonStandardTag = computed(() => (props.href !== undefined ? false : !isButton.value))
 
 const linkProps = computed(() => (isBLink.value ? computedLinkProps.value : []))
+const computedAriaDisabled = computed(() => {
+  if (props.href === '#' && props.disabled) return true
 
+  return nonStandardTag.value ? props.disabled : null
+})
+
+const variantIsLinkType = computed(() => props.variant?.startsWith('link') || false)
+const variantIsLinkTypeSubset = computed(() => props.variant?.startsWith('link-') || false)
+const linkValueClasses = useLinkClasses(
+  computed(() => ({
+    ...(variantIsLinkType.value
+      ? {
+          icon: props.icon,
+          opacity: props.opacity,
+          opacityHover: props.opacityHover,
+          underlineOffset: props.underlineOffset,
+          underlineOffsetHover: props.underlineOffsetHover,
+          underlineOpacity: props.underlineOpacity,
+          underlineOpacityHover: props.underlineOpacityHover,
+          underlineVariant: props.underlineVariant,
+          variant:
+            variantIsLinkTypeSubset.value === true
+              ? (props.variant?.slice(5) as ColorVariant)
+              : null,
+        }
+      : undefined),
+  }))
+)
 const computedClasses = computed(() => [
+  variantIsLinkType.value === true && computedLink.value === false
+    ? linkValueClasses.value
+    : undefined,
   [`btn-${props.size}`],
   {
-    [`btn-${props.variant}`]: props.variant !== null,
-    'active': props.active || props.pressed,
+    [`btn-${props.variant}`]: props.variant !== null && variantIsLinkTypeSubset.value === false,
+    'active': props.active || pressedValue.value,
     'rounded-pill': props.pill,
     'rounded-0': props.squared,
     'disabled': props.disabled,
   },
 ])
 
-const computedTag = toRef(() => (isBLink.value ? BLink : props.href ? 'a' : props.tag))
+const computedTag = computed(() => (isBLink.value ? BLink : props.href ? 'a' : props.tag))
 
 const clicked = (e: Readonly<MouseEvent>): void => {
   if (props.disabled) {
@@ -131,8 +164,17 @@ const clicked = (e: Readonly<MouseEvent>): void => {
     return
   }
   emit('click', e)
-  if (isToggle.value) {
-    pressedValue.value = !props.pressed
-  }
+  if (isToggle.value) pressedValue.value = !pressedValue.value
 }
+
+onKeyStroke(
+  [' ', 'enter'],
+  (e) => {
+    if (props.href === '#') {
+      e.preventDefault()
+      element.value?.click()
+    }
+  },
+  {target: element}
+)
 </script>

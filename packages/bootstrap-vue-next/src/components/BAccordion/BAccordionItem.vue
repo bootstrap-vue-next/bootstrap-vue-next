@@ -8,16 +8,20 @@
       :aria-labelledby="`${computedId}-heading`"
       v-bind="collapseAttrs"
       :tag="props.tag"
-      :toggle="props.toggle"
+      :show="props.show"
       :horizontal="props.horizontal"
       :visible="props.visible"
       :is-nav="props.isNav"
+      :lazy="props.lazy || parentData?.lazy.value"
+      :unmount-lazy="props.unmountLazy || parentData?.unmountLazy.value"
       @show="emit('show', $event)"
-      @shown="emit('shown')"
+      @shown="emit('shown', $event)"
       @hide="emit('hide', $event)"
-      @hidden="emit('hidden')"
-      @hide-prevented="emit('hide-prevented')"
-      @show-prevented="emit('show-prevented')"
+      @hidden="emit('hidden', $event)"
+      @hide-prevented="emit('hide-prevented', $event)"
+      @show-prevented="emit('show-prevented', $event)"
+      @toggle-prevented="emit('toggle-prevented', $event)"
+      @toggle="emit('toggle', $event)"
     >
       <template #header="{visible: toggleVisible, toggle: slotToggle}">
         <component
@@ -48,18 +52,20 @@
 </template>
 
 <script setup lang="ts">
-import {inject, onMounted, useAttrs, watch} from 'vue'
-import BCollapse from '../BCollapse.vue'
-import {accordionInjectionKey, BvTriggerableEvent} from '../../utils'
-import {useDefaults, useId} from '../../composables'
-import type {BAccordionItemProps} from '../../types'
+import {inject, nextTick, onMounted, useAttrs, watch} from 'vue'
+import BCollapse from '../BCollapse/BCollapse.vue'
+import {accordionInjectionKey} from '../../utils/keys'
+import {useDefaults} from '../../composables/useDefaults'
+import {useId} from '../../composables/useId'
+import type {BAccordionItemProps} from '../../types/ComponentProps'
+import type {showHideEmits} from '../../composables/useShowHide'
 
 defineOptions({
   inheritAttrs: false,
 })
 const {class: wrapperClass, ...collapseAttrs} = useAttrs()
 
-const _props = withDefaults(defineProps<BAccordionItemProps>(), {
+const _props = withDefaults(defineProps<Omit<BAccordionItemProps, 'modelValue'>>(), {
   bodyAttrs: undefined,
   bodyClass: undefined,
   buttonAttrs: undefined,
@@ -71,22 +77,17 @@ const _props = withDefaults(defineProps<BAccordionItemProps>(), {
   horizontal: undefined,
   id: undefined,
   isNav: undefined,
+  lazy: false,
+  unmountLazy: false,
   tag: undefined,
   title: undefined,
-  toggle: undefined,
+  show: undefined,
   visible: false,
   wrapperAttrs: undefined,
 })
 const props = useDefaults(_props, 'BAccordionItem')
 
-const emit = defineEmits<{
-  'hidden': []
-  'hide': [value: BvTriggerableEvent]
-  'hide-prevented': []
-  'show': [value: BvTriggerableEvent]
-  'show-prevented': []
-  'shown': []
-}>()
+const emit = defineEmits<showHideEmits>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -95,18 +96,26 @@ defineSlots<{
   title?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = defineModel<boolean>({default: false})
-
 const parentData = inject(accordionInjectionKey, null)
 
 const computedId = useId(() => props.id, 'accordion_item')
 
+const modelValue = defineModel<Exclude<BAccordionItemProps['modelValue'], undefined>>({
+  default: false,
+})
+
+modelValue.value =
+  parentData?.openItem.value === computedId.value && !parentData?.initialAnimation.value
+
+if (modelValue.value && !parentData?.free.value) {
+  parentData?.setOpenItem(computedId.value)
+}
+
 onMounted(() => {
-  if (modelValue.value && !parentData?.free.value) {
-    parentData?.setOpenItem(computedId.value)
-  }
   if (!modelValue.value && parentData?.openItem.value === computedId.value) {
-    modelValue.value = true
+    nextTick(() => {
+      modelValue.value = true
+    })
   }
 })
 

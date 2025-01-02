@@ -61,7 +61,7 @@
           <div role="group" class="d-flex">
             <input
               :id="_inputId"
-              ref="input"
+              ref="_input"
               :disabled="props.disabled"
               :value="inputValue"
               :type="props.inputType"
@@ -123,13 +123,17 @@
 
 <script setup lang="ts">
 import {onKeyStroke, syncRef, useFocus, useToNumber} from '@vueuse/core'
-import {computed, ref, toRef} from 'vue'
-import {useDefaults, useId, useStateClass} from '../../composables'
-import type {BFormTagsProps, ClassValue, ColorVariant} from '../../types'
-import {escapeRegExpChars} from '../../utils'
+import {computed, ref, useTemplateRef} from 'vue'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BFormTagsProps} from '../../types/ComponentProps'
+import {escapeRegExpChars} from '../../utils/stringUtils'
 import BFormTag from './BFormTag.vue'
+import type {ClassValue} from '../../types/AnyValuedAttributes'
+import type {ColorVariant} from '../../types/ColorTypes'
+import {useId} from '../../composables/useId'
+import {useStateClass} from '../../composables/useStateClass'
 
-const _props = withDefaults(defineProps<BFormTagsProps>(), {
+const _props = withDefaults(defineProps<Omit<BFormTagsProps, 'modelValue'>>(), {
   addButtonText: 'Add',
   addButtonVariant: 'outline-secondary',
   addOnChange: false,
@@ -176,7 +180,6 @@ defineSlots<{
   'add-button-text'?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'default'?: (props: typeof slotAttrs.value) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'tag'?: (props: {
     tag: string
     tagClass: ClassValue
@@ -187,7 +190,7 @@ defineSlots<{
   }) => any
 }>()
 
-const modelValue = defineModel<string[]>({
+const modelValue = defineModel<Exclude<BFormTagsProps['modelValue'], undefined>>({
   default: () => [],
 })
 
@@ -197,13 +200,13 @@ const limitNumber = useToNumber(() => props.limit ?? NaN)
 
 const stateClass = useStateClass(() => props.state)
 
-const input = ref<HTMLInputElement | null>(null)
+const input = useTemplateRef<HTMLInputElement>('_input')
 
 const {focused} = useFocus(input, {
   initialValue: props.autofocus,
 })
 
-const _inputId = toRef(() => props.inputId || `${computedId.value}input__`)
+const _inputId = computed(() => props.inputId || `${computedId.value}input__`)
 const tags = ref<string[]>([...modelValue.value])
 const inputValue = ref<string>('')
 const shouldRemoveOnDelete = ref<boolean>(modelValue.value.length > 0)
@@ -232,8 +235,8 @@ const isDuplicate = computed(() => tags.value.includes(inputValue.value))
 const isInvalid = computed(() =>
   inputValue.value === '' ? false : !props.tagValidator(inputValue.value)
 )
-const isLimitReached = toRef(() => tags.value.length === limitNumber.value)
-const disableAddButton = toRef(() => !isInvalid.value && !isDuplicate.value)
+const isLimitReached = computed(() => tags.value.length === limitNumber.value)
+const disableAddButton = computed(() => !isInvalid.value && !isDuplicate.value)
 
 const slotAttrs = computed(() => ({
   addButtonText: props.addButtonText,

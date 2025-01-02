@@ -1,10 +1,12 @@
-import type {ComponentReference} from '../../types'
-import {buildCommonProps, pick} from '../../utils'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
+import {buildCommonProps, pick, showHideProps} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BAccordion',
+      sourcePath: '/BAccordion/BAccordion.vue',
       props: {
         '': {
           flush: {
@@ -18,12 +20,22 @@ export default {
             default: false,
             description: 'Accordion items will stay open when another item is opened',
           },
-          modelValue: {
-            type: 'string',
-            default: undefined,
-            description:
-              'The Id of the accordion item that is currently open (not compatible with the `free===true`)',
-          },
+          // transProps: {
+          //   type: 'TransitionProps',
+          //   default: undefined,
+          //   description: 'Transition properties',
+          // },
+          // noAnimation: {
+          //   type: 'boolean',
+          //   default: false,
+          //   description: 'When set, disables the animation',
+          // },
+          // noFade: {
+          //   type: 'boolean',
+          //   default: false,
+          //   description: 'Alias for `noAnimation`',
+          // },
+          ...pick(showHideProps, ['initialAnimation', 'modelValue', 'lazy', 'unmountLazy']),
           ...pick(
             buildCommonProps({
               id: {
@@ -33,7 +45,7 @@ export default {
             }),
             ['id']
           ),
-        },
+        } satisfies Record<keyof BvnComponentProps['BAccordion'], PropertyReference>,
       },
       emits: [
         {
@@ -57,6 +69,7 @@ export default {
     },
     {
       component: 'BAccordionItem',
+      sourcePath: '/BAccordion/BAccordionItem.vue',
       props: {
         '': {
           bodyAttrs: {
@@ -111,33 +124,28 @@ export default {
             description:
               'When set, signifies that the accordion is part of a navbar, enabling certain features for navbar support',
           },
-          modelValue: {
-            type: 'boolean',
-            default: false,
-            description: 'Controls the visibility of the AccordionItem',
-          },
           title: {
             type: 'string',
             default: undefined,
             description:
               'Text to place in the header of the AccordionItem (title slot takes precedence)',
           },
-          toggle: {
-            type: 'boolean',
-            default: undefined,
-            description:
-              'When true, will toggle the visibility of the AccordionItem (including animation) when the component is mounted',
-          },
-          visible: {
-            type: 'boolean',
-            default: false,
-            description: 'When true, the AccordionItem will be visible',
-          },
-          wrapperAttrs: {
-            type: 'Readonly<AttrsValue>',
-            default: undefined,
-            description: 'Attributes to be applied to the wrapper element',
-          },
+          // transProps: {
+          //   type: 'TransitionProps',
+          //   default: undefined,
+          //   description: 'Transition properties',
+          // },
+          //   noAnimation: {
+          //   type: 'boolean',
+          //   default: false,
+          //   description: 'When set, disables the animation',
+          // },
+          // noFade: {
+          //   type: 'boolean',
+          //   default: false,
+          //   description: 'Alias for `noAnimation`',
+          // },
+          ...pick(showHideProps, ['modelValue', 'lazy', 'show', 'unmountLazy', 'visible']),
           ...pick(
             buildCommonProps({
               id: {
@@ -145,15 +153,14 @@ export default {
                   'The Id to be injected to accordion items and used to in BCollapse for state managment',
               },
             }),
-            ['id', 'tag']
+            ['id', 'tag', 'wrapperAttrs']
           ),
-        },
+        } satisfies Record<keyof BvnComponentProps['BAccordionItem'], PropertyReference>,
       },
       emits: [
         {
           event: 'hidden',
           description: 'Emitted when AccordionItem has finished closing',
-          args: [],
         },
         {
           event: 'hide',
@@ -170,7 +177,6 @@ export default {
           event: 'hide-prevented',
           description:
             'Emitted when the AccordionItem tried to close, but was prevented from doing so.',
-          args: [],
         },
         {
           event: 'show',
@@ -186,13 +192,11 @@ export default {
         {
           event: 'shown',
           description: 'Emitted when AccordionItem has finished showing',
-          args: [],
         },
         {
           event: 'show-prevented',
           description:
             'Emitted when the AccordionItem tried to open, but was prevented from doing so.',
-          args: [],
         },
         {
           event: 'update:model-value',
@@ -208,12 +212,10 @@ export default {
       ],
       slots: [
         {
-          scope: [],
           name: 'default',
           description: 'Content to place in the AccordionItem',
         },
         {
-          scope: [],
           name: 'title',
           description: 'Content to place in the header of the AccordionItem',
         },

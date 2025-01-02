@@ -1,5 +1,5 @@
 import type {ColorVariant, TextColorVariant} from '../../src/types'
-import {useColorVariantClasses} from '../../src/composables'
+import {useColorVariantClasses} from '../../src/composables/useColorVariantClasses'
 import {describe, expect, it} from 'vitest'
 import {reactive} from 'vue'
 
@@ -23,6 +23,22 @@ describe('useColorVariantClasses blackbox test', () => {
       'text-bg-danger': true,
       'text-null': false,
       'bg-null': false,
+      'border-null': false,
+    })
+  })
+
+  it('value returns text-bg-{type} when prop variant', () => {
+    const backgroundVariant = useColorVariantClasses(() => ({
+      bgVariant: null,
+      textVariant: null,
+      variant: null,
+      borderVariant: 'danger-subtle',
+    }))
+    expect(backgroundVariant.value).toEqual({
+      'text-bg-null': false,
+      'text-null': false,
+      'bg-null': false,
+      'border-danger-subtle': true,
     })
   })
 
@@ -36,6 +52,7 @@ describe('useColorVariantClasses blackbox test', () => {
       'text-bg-null': false,
       'text-null': false,
       'bg-danger': true,
+      'border-null': false,
     })
   })
 
@@ -48,6 +65,7 @@ describe('useColorVariantClasses blackbox test', () => {
     expect(backgroundVariant.value).toEqual({
       'text-bg-null': false,
       'text-danger': true,
+      'border-null': false,
       'bg-null': false,
     })
   })
@@ -62,19 +80,21 @@ describe('useColorVariantClasses blackbox test', () => {
       'text-bg-null': false,
       'text-danger': true,
       'bg-danger': true,
+      'border-null': false,
     })
   })
 
-  it('value returns text-bg-{type} when everything is active, but prop variant takes priority over all', () => {
+  it('variat props are independent', () => {
     const backgroundVariant = useColorVariantClasses(() => ({
       bgVariant: 'danger',
-      textVariant: 'danger',
-      variant: 'danger',
+      textVariant: 'info',
+      variant: 'success',
     }))
     expect(backgroundVariant.value).toEqual({
-      'text-bg-danger': true,
-      'text-danger': false,
-      'bg-danger': false,
+      'text-bg-success': true,
+      'text-info': true,
+      'border-null': false,
+      'bg-danger': true,
     })
   })
 
@@ -89,14 +109,16 @@ describe('useColorVariantClasses blackbox test', () => {
       'text-bg-null': false,
       'text-danger': true,
       'bg-danger': true,
+      'border-null': false,
     })
     react.bgVariant = 'info'
     react.textVariant = 'info'
     react.variant = 'danger'
     expect(backgroundVariant.value).toEqual({
       'text-bg-danger': true,
-      'text-info': false,
-      'bg-info': false,
+      'text-info': true,
+      'bg-info': true,
+      'border-null': false,
     })
   })
 })

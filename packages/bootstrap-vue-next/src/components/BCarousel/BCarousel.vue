@@ -1,6 +1,16 @@
 <template>
-  <div :id="computedId" ref="element" class="carousel slide pointer-event" :class="computedClasses">
-    <div v-if="props.indicators" class="carousel-indicators">
+  <div
+    :id="computedId"
+    ref="_element"
+    class="carousel slide pointer-event"
+    :class="computedClasses"
+  >
+    <div
+      v-if="props.indicators"
+      class="carousel-indicators"
+      :aria-label="props.labelIndicators"
+      :aria-owns="buttonOwnership"
+    >
       <!-- :data-bs-target="`#${computedId}`" is required since the classes target elems with that attr -->
       <button
         v-for="(_, i) in slides.length"
@@ -10,11 +20,13 @@
         :class="i === modelValue ? 'active' : ''"
         :aria-current="i === modelValue ? true : undefined"
         :aria-label="`${props.indicatorsButtonLabel} ${i}`"
+        :aria-controls="buttonOwnership"
+        :aria-describedby="slideValues?.[i]._id"
         @click="goToValue(i)"
       />
     </div>
 
-    <div ref="relatedTarget" class="carousel-inner">
+    <div ref="_relatedTarget" class="carousel-inner">
       <TransitionGroup
         :enter-from-class="enterClasses"
         :enter-active-class="enterClasses"
@@ -32,18 +44,19 @@
           v-for="(slide, i) in slides"
           v-show="i === modelValue"
           :key="i"
-          ref="slideValues"
+          ref="_slideValues"
           :class="{active: i === modelValue && isTransitioning === false}"
+          :style="props.noAnimation && {transition: 'none'}"
         />
       </TransitionGroup>
     </div>
 
     <template v-if="props.controls">
-      <button class="carousel-control-prev" type="button" @click="prev">
+      <button class="carousel-control-prev" type="button" @click="onClickPrev">
         <span class="carousel-control-prev-icon" aria-hidden="true" />
         <span class="visually-hidden">{{ props.controlsPrevText }}</span>
       </button>
-      <button class="carousel-control-next" type="button" @click="next">
+      <button class="carousel-control-next" type="button" @click="onClickNext">
         <span class="carousel-control-next-icon" aria-hidden="true" />
         <span class="visually-hidden">{{ props.controlsNextText }}</span>
       </button>
@@ -52,14 +65,18 @@
 </template>
 
 <script setup lang="ts">
-import {BvCarouselEvent, carouselInjectionKey, getSlotElements} from '../../utils'
-import {computed, onMounted, provide, ref, toRef, watch} from 'vue'
-import {useDefaults, useId} from '../../composables'
-import type {BCarouselProps, Numberish} from '../../types'
+import {BvCarouselEvent} from '../../utils'
+import {computed, onMounted, provide, ref, toRef, useTemplateRef, watch} from 'vue'
+import {useId} from '../../composables/useId'
+import type {BCarouselProps} from '../../types/ComponentProps'
 import {onKeyStroke, useElementHover, useIntervalFn, useSwipe, useToNumber} from '@vueuse/core'
 import type BCarouselSlide from './BCarouselSlide.vue'
+import {useDefaults} from '../../composables/useDefaults'
+import type {Numberish} from '../../types/CommonTypes'
+import {getSlotElements} from '../../utils/getSlotElements'
+import {carouselInjectionKey} from '../../utils/keys'
 
-const _props = withDefaults(defineProps<BCarouselProps>(), {
+const _props = withDefaults(defineProps<Omit<BCarouselProps, 'modelValue'>>(), {
   background: undefined,
   controls: false,
   controlsNextText: 'Next',
@@ -71,11 +88,12 @@ const _props = withDefaults(defineProps<BCarouselProps>(), {
   indicators: false,
   indicatorsButtonLabel: 'Slide',
   interval: 5000,
+  labelIndicators: 'Select a slide to display',
   keyboard: true,
+  noAnimation: false,
   noHoverPause: false,
   noTouch: false,
   noWrap: false,
-  // eslint-disable-next-line vue/require-valid-default-prop
   ride: false,
   rideReverse: false,
   touchThreshold: 50,
@@ -83,8 +101,10 @@ const _props = withDefaults(defineProps<BCarouselProps>(), {
 const props = useDefaults(_props, 'BCarousel')
 
 const emit = defineEmits<{
-  slide: [value: BvCarouselEvent]
-  slid: [value: BvCarouselEvent]
+  'slide': [value: BvCarouselEvent]
+  'slid': [value: BvCarouselEvent]
+  'click:prev': [value: MouseEvent]
+  'click:next': [value: MouseEvent]
 }>()
 
 const slots = defineSlots<{
@@ -93,24 +113,25 @@ const slots = defineSlots<{
 }>()
 
 const computedId = useId(() => props.id, 'carousel')
+const buttonOwnership = useId(undefined, 'carousel-button-ownership')
 
-const modelValue = defineModel<number>({default: 0})
+const modelValue = defineModel<Exclude<BCarouselProps['modelValue'], undefined>>({default: 0})
 
-const slideValues = ref<null | InstanceType<typeof BCarouselSlide>[]>(null)
+const slideValues = useTemplateRef<InstanceType<typeof BCarouselSlide>[]>('_slideValues')
 
 const touchThresholdNumber = useToNumber(() => props.touchThreshold)
 const slideInterval = ref<Numberish | null>(null)
 onMounted(() => {
   slideInterval.value =
-    slideValues.value?.find((slid) => slid.$el.style.display !== 'none')?.$props.interval ?? null
+    slideValues.value?.find((slid) => slid.$el.style.display !== 'none')?._interval ?? null
 })
 const intervalNumber = useToNumber(() => slideInterval.value ?? props.interval)
 
 const isTransitioning = ref(false)
 const rideStarted = ref(false)
 const direction = ref(true)
-const relatedTarget = ref<HTMLElement | null>(null)
-const element = ref<HTMLElement | null>(null)
+const relatedTarget = useTemplateRef<HTMLElement>('_relatedTarget')
+const element = useTemplateRef<HTMLElement>('_element')
 const previousModelValue = ref(modelValue.value)
 
 const isHovering = useElementHover(element)
@@ -120,25 +141,29 @@ const isHovering = useElementHover(element)
 // So all that would be great. However, when you do this, it will break the transition flow. Something about it breaks and I'm not sure why!
 // Try it by removing carousel-item from below and making `!direction.value` => `direction.value` for enter
 // Then reviewing the behavior
-const enterClasses = toRef(
+const enterClasses = computed(
   () =>
     `carousel-item carousel-item-${!direction.value ? 'next' : 'prev'} carousel-item-${
       !direction.value ? 'start' : 'end'
     }`
 )
-const leaveClasses = toRef(
+const leaveClasses = computed(
   () => `carousel-item active carousel-item-${direction.value ? 'start' : 'end'}`
 )
 
 const {pause, resume} = useIntervalFn(
   () => {
-    props.rideReverse ? prev() : next()
+    if (props.rideReverse) {
+      prev()
+      return
+    }
+    next()
   },
   intervalNumber,
   {immediate: props.ride === 'carousel'}
 )
 
-const isRiding = toRef(
+const isRiding = computed(
   () => (props.ride === true && rideStarted.value === true) || props.ride === 'carousel'
 )
 const slides = computed(() => getSlotElements(slots.default, 'BCarouselSlide'))
@@ -241,7 +266,7 @@ const onAfterEnter = (el: Readonly<Element>) => {
   }
 }
 const onEnter = (el: Readonly<Element>) => {
-  slideInterval.value = slideValues.value?.find((slid) => slid.$el === el)?.$props.interval ?? null
+  slideInterval.value = slideValues.value?.find((slid) => slid.$el === el)?._interval ?? null
 }
 
 onKeyStroke(
@@ -273,6 +298,17 @@ watch(isHovering, (newValue) => {
   }
   onMouseLeave()
 })
+
+const onClickPrev = (event: MouseEvent) => {
+  emit('click:prev', event)
+  if (event.defaultPrevented) return
+  prev()
+}
+const onClickNext = (event: MouseEvent) => {
+  emit('click:next', event)
+  if (event.defaultPrevented) return
+  next()
+}
 
 defineExpose({
   next,

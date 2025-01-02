@@ -1,5 +1,10 @@
-import type {AttrsValue, ClassValue, ColorVariant, LiteralUnion, MaybePromise} from '.'
 import type {StyleValue} from 'vue'
+import type {ColorVariant} from './ColorTypes'
+import type {MaybePromise} from './MaybePromise'
+import type {LiteralUnion} from './LiteralUnion'
+import type {AttrsValue, ClassValue} from './AnyValuedAttributes'
+
+export type TableRowEvent<T> = [item: T, index: number, event: MouseEvent]
 
 export type TableItem<T = Record<string, unknown>> = T & {
   _rowVariant?: ColorVariant | null
@@ -35,7 +40,7 @@ export type TableFieldFormatter<T> = (value: unknown, key: string, item: T) => s
 export type TableRowType = 'row' | 'row-details' | 'row-top' | 'row-bottom' | 'table-busy'
 export type TableRowThead = 'top' | 'bottom'
 
-export type TableStrictClassValue = unknown
+export type TableStrictClassValue = string | unknown[] | Record<string, boolean>
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TableField<T = any> = {

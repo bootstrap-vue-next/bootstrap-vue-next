@@ -12,9 +12,9 @@
 
 <script setup lang="ts">
 import BPlaceholder from './BPlaceholder.vue'
-import type {BPlaceholderButtonProps} from '../../types'
+import type {BPlaceholderButtonProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
-import {useDefaults} from '../../composables'
+import {useDefaults} from '../../composables/useDefaults'
 
 const _props = withDefaults(defineProps<BPlaceholderButtonProps>(), {
   animation: undefined,

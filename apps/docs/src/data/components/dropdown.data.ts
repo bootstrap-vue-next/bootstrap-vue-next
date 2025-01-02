@@ -1,500 +1,227 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
+import {
+  buildCommonProps,
+  dropdownEmits,
+  dropdownProps,
+  dropdownSlots,
+  omit,
+  pick,
+} from '../../utils'
+import {linkProps, linkTo} from '../../utils/link-props'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BDropdown',
+      sourcePath: '/BDropdown/BDropdown.vue',
       props: {
-        '': {
-          ariaLabel: {
-            type: 'string',
-            default: undefined,
-          },
-          autoClose: {
-            type: "boolean | 'inside' | 'outside'",
-            default: true,
-          },
-          boundary: {
-            type: 'Boundary | RootBoundary',
-            default: 'clippingAncestors',
-          },
-          boundaryPadding: {
-            type: 'Padding',
-            default: undefined,
-          },
-          center: {
-            type: 'boolean',
-            default: false,
-          },
-          disabled: {
-            type: 'boolean',
-            default: false,
-          },
-          dropend: {
-            type: 'boolean',
-            default: false,
-          },
-          dropstart: {
-            type: 'boolean',
-            default: false,
-          },
-          dropup: {
-            type: 'boolean',
-            default: false,
-          },
-          end: {
-            type: 'boolean',
-            default: false,
-          },
-          floatingMiddleware: {
-            type: 'Middleware[]',
-            default: undefined,
-          },
-          id: {
-            type: 'string',
-            default: undefined,
-          },
-          isNav: {
-            type: 'boolean',
-            default: false,
-          },
-          lazy: {
-            type: 'boolean',
-            default: false,
-          },
-          menuClass: {
-            type: 'ClassValue',
-            default: undefined,
-          },
-          modelValue: {
-            type: 'boolean',
-            default: false,
-          },
-          noCaret: {
-            type: 'boolean',
-            default: false,
-          },
-          noFlip: {
-            type: 'boolean',
-            default: false,
-          },
-          noShift: {
-            type: 'boolean',
-            default: false,
-          },
-          noSize: {
-            type: 'boolean',
-            default: false,
-          },
-          offset: {
-            type: 'number | string | {mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null',
-            default: 0,
-          },
-          role: {
-            type: 'string',
-            default: 'menu',
-          },
-          size: {
-            type: 'Size',
-            default: 'md',
-          },
-          skipWrapper: {
-            type: 'boolean',
-            default: false,
-          },
-          split: {
-            type: 'boolean',
-            default: false,
-          },
-          splitButtonType: {
-            type: 'ButtonType',
-            default: 'button',
-          },
-          splitClass: {
-            type: 'ClassValue',
-            default: undefined,
-          },
-          splitDisabled: {
-            type: 'boolean',
-            default: undefined,
-          },
-          splitHref: {
-            type: 'string',
-            default: undefined,
-          },
-          splitTo: {
-            type: 'RouteLocationRaw',
-            default: undefined,
-          },
-          splitVariant: {
-            type: 'ButtonVariant | null',
-            default: undefined,
-          },
-          strategy: {
-            type: 'Strategy',
-            default: 'absolute',
-          },
-          text: {
-            type: 'string',
-            default: undefined,
-          },
-          toggleClass: {
-            type: 'ClassValue',
-            default: undefined,
-          },
-          toggleText: {
-            type: 'string',
-            default: 'Toggle dropdown',
-          },
-          variant: {
-            type: 'ButtonVariant | null',
-            default: 'secondary',
-          },
-          wrapperClass: {
-            type: 'ClassValue',
-            default: undefined,
-          },
-        },
+        '': dropdownProps,
       },
-      emits: [
-        {
-          args: [],
-          event: 'show',
-          description: '',
-        },
-        {
-          args: [],
-          event: 'shown',
-          description: '',
-        },
-        {
-          args: [],
-          event: 'show-prevented',
-          description: '',
-        },
-        {
-          args: [],
-          event: 'hide',
-          description: '',
-        },
-        {
-          args: [],
-          event: 'hidden',
-          description: '',
-        },
-        {
-          args: [],
-          event: 'hide-prevented',
-          description: '',
-        },
-        {
-          event: 'click',
-          description: '',
-          args: [
-            {
-              arg: 'click',
-              description: '',
-              type: 'MouseEvent',
-            },
-          ],
-        },
-        {
-          args: [],
-          event: 'toggle',
-          description: '',
-        },
-      ],
-      slots: [
-        {
-          description: '',
-          scope: [],
-          name: 'button-content',
-        },
-        {
-          description: '',
-          scope: [],
-          name: 'toggle-text',
-        },
-        {
-          scope: [],
-          description: '',
-          name: 'default',
-        },
-      ],
+      emits: dropdownEmits,
+      slots: dropdownSlots,
     },
     {
       component: 'BDropdownDivider',
-      emits: [],
-      slots: [],
+      sourcePath: '/BDropdown/BDropdownDivider.vue',
       props: {
         '': {
-          tag: {
-            description: '',
-            type: 'string',
-            default: 'hr',
+          dividerClass: {
+            default: undefined,
+            type: 'ClassValue',
+            description: 'CSS class (or classes) to add to the divider component',
           },
-        },
+          ...pick(
+            buildCommonProps({
+              tag: {
+                default: 'hr',
+              },
+            }),
+            ['tag', 'variant', 'wrapperAttrs']
+          ),
+        } satisfies Record<keyof BvnComponentProps['BDropdownDivider'], PropertyReference>,
       },
     },
     {
       component: 'BDropdownForm',
-      emits: [],
-      props: {},
+      sourcePath: '/BDropdown/BDropdownForm.vue',
+      props: {
+        '': {
+          formClass: {
+            default: undefined,
+            type: 'ClassValue',
+            description: 'CSS class (or classes) to add to the form component',
+          },
+          novalidate: {notYetImplemented: true},
+          validated: {notYetImplemented: true},
+          ...pick(buildCommonProps({}), ['wrapperAttrs']),
+        } satisfies Record<keyof BvnComponentProps['BDropdownForm'], PropertyReference>,
+      },
       slots: [
         {
-          scope: [],
-          description: '',
           name: 'default',
+          description: 'Content to place in the dropdown form',
         },
       ],
     },
     {
       component: 'BDropdownGroup',
+      sourcePath: '/BDropdown/BDropdownGroup.vue',
       emits: [],
       props: {
         '': {
-          ariaDescribedby: {
-            type: 'string',
-            default: undefined,
-          },
           header: {
             type: 'string',
             default: undefined,
           },
-          headerClass: {
-            type: 'ClassValue',
-            default: undefined,
-          },
-          headerTag: {
-            type: 'string',
-            default: 'header',
-          },
-          headerVariant: {
-            type: 'ColorVariant | null',
-            default: null,
-          },
-          id: {
-            type: 'string',
-            default: undefined,
-          },
-        },
+          ...pick(
+            buildCommonProps({
+              headerTag: {
+                default: 'header',
+              },
+            }),
+            ['ariaDescribedby', 'headerClass', 'headerTag', 'headerVariant', 'id']
+          ),
+        } satisfies Record<keyof BvnComponentProps['BDropdownGroup'], PropertyReference>,
       },
       slots: [
         {
-          description: '',
-          scope: [],
           name: 'default',
+          description: 'Content (items) to place in the dropdown group',
         },
         {
-          scope: [],
-          description: '',
           name: 'header',
+          description: 'Optional header content for the dropdown group',
         },
       ],
     },
     {
       component: 'BDropdownHeader',
+      sourcePath: '/BDropdown/BDropdownHeader.vue',
       emits: [],
-      props: {},
+      props: {
+        '': {
+          text: {
+            default: undefined,
+            description: 'Content to place in the dropdown text. Default slot takes precedence',
+            type: 'string',
+          },
+          ...pick(buildCommonProps({}), ['headerClass', 'tag', 'variant', 'wrapperAttrs']),
+        } satisfies Record<keyof BvnComponentProps['BDropdownHeader'], PropertyReference>,
+      },
       slots: [
         {
-          scope: [],
-          description: '',
           name: 'default',
+          description: 'Content to place in the dropdown header',
         },
       ],
     },
     {
       component: 'BDropdownItem',
+      sourcePath: '/BDropdown/BDropdownItem.vue',
+      props: {
+        '': {
+          ...pick(buildCommonProps({}), ['linkClass', 'wrapperAttrs']),
+        } satisfies Record<
+          Exclude<keyof BvnComponentProps['BDropdownItem'], keyof typeof linkProps>,
+          PropertyReference
+        >,
+        'BLink props': {
+          _linkTo: {
+            type: linkTo,
+          },
+          ...omit(linkProps, ['routerTag']),
+        },
+      },
       emits: [
         {
           event: 'click',
+          description: 'Emitted when item is clicked',
           args: [
             {
-              arg: 'click',
-              description: '',
+              arg: 'value',
               type: 'MouseEvent',
+              description: 'Native click event object',
             },
           ],
-          description: '',
         },
       ],
-      props: {
-        '': {
-          active: {
-            type: 'boolean',
-            default: undefined,
-          },
-          activeClass: {
-            type: 'string',
-            default: undefined,
-          },
-          disabled: {
-            type: 'boolean',
-            default: undefined,
-          },
-          exactActiveClass: {
-            type: 'string',
-            default: undefined,
-          },
-          href: {
-            type: 'string',
-            default: undefined,
-          },
-          icon: {
-            type: 'boolean',
-            default: undefined,
-          },
-          linkClass: {
-            type: 'ClassValue',
-            default: undefined,
-          },
-          noPrefetch: {
-            type: 'boolean',
-          },
-          noRel: {
-            type: 'boolean',
-          },
-          opacity: {
-            type: '10 | 25 | 50 | 75 | 100 | "10" | "25" | "50" | "75" | "100"',
-            default: undefined,
-          },
-          opacityHover: {
-            type: '10 | 25 | 50 | 75 | 100 | "10" | "25" | "50" | "75" | "100"',
-            default: undefined,
-          },
-          prefetch: {
-            type: 'boolean',
-          },
-          prefetchedClass: {
-            type: 'ClassValue',
-          },
-          rel: {
-            type: 'string',
-            default: undefined,
-          },
-          replace: {
-            type: 'boolean',
-            default: undefined,
-          },
-          routerComponentName: {
-            type: 'string',
-            default: undefined,
-          },
-          stretched: {
-            type: 'boolean',
-            default: false,
-          },
-          target: {
-            type: 'LinkTarget',
-            default: undefined,
-          },
-          to: {
-            type: 'RouteLocationRaw',
-            default: undefined,
-          },
-          underlineOffset: {
-            type: '1 | 2 | 3 | "1" | "2" | "3"',
-            default: undefined,
-          },
-          underlineOffsetHover: {
-            type: '1 | 2 | 3 | "1" | "2" | "3"',
-            default: undefined,
-          },
-          underlineOpacity: {
-            type: '0 | 10 | 25 | 50 | 75 | 100 | "0" | "10" | "25" | "50" | "75" | "100"',
-            default: undefined,
-          },
-          underlineOpacityHover: {
-            type: '0 | 10 | 25 | 50 | 75 | 100 | "0" | "10" | "25" | "50" | "75" | "100"',
-            default: undefined,
-          },
-          underlineVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-          variant: {
-            type: 'ColorVariant | null',
-            default: null,
-          },
-          wrapperAttrs: {
-            type: 'Readonly<AttrsValue>',
-            default: undefined,
-          },
-        },
-      },
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the dropdown item',
         },
       ],
     },
     {
       component: 'BDropdownItemButton',
-      emits: [
-        {
-          args: [
-            {
-              arg: 'click',
-              description: '',
-              type: 'MouseEvent',
-            },
-          ],
-          description: '',
-          event: 'click',
-        },
-      ],
+      sourcePath: '/BDropdown/BDropdownItemButton.vue',
       props: {
         '': {
-          active: {
-            type: 'boolean',
-            default: false,
-          },
-          activeClass: {
-            type: 'ClassValue',
-            default: 'active',
-          },
           buttonClass: {
             type: 'ClassValue',
             default: undefined,
+            description: 'Class or classes to apply to the inner button element',
           },
-          disabled: {
-            type: 'boolean',
-            default: false,
-          },
-          variant: {
-            type: 'ColorVariant | null',
-            default: null,
-          },
-        },
+          ...pick(buildCommonProps({}), [
+            'active',
+            'activeClass',
+            'disabled',
+            'variant',
+            'wrapperAttrs',
+          ]),
+        } satisfies Record<keyof BvnComponentProps['BDropdownItemButton'], PropertyReference>,
       },
+      emits: [
+        {
+          event: 'click',
+          description: 'Emitted when item is clicked',
+          args: [
+            {
+              arg: 'value',
+              type: 'MouseEvent',
+              description: 'Native click event object',
+            },
+          ],
+        },
+      ],
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the dropdown item button',
         },
       ],
     },
     {
       component: 'BDropdownText',
+      sourcePath: '/BDropdown/BDropdownText.vue',
       emits: [],
       props: {
         '': {
           text: {
-            description: '',
+            default: undefined,
+            description: 'Content to place in the dropdown text. Default slot takes precedence',
             type: 'string',
-            default: '',
           },
-        },
+          textClass: {
+            default: undefined,
+            type: 'ClassValue',
+            description: 'CSS class (or classes) to add to the text component',
+          },
+          ...pick(
+            buildCommonProps({
+              tag: {
+                default: 'span',
+              },
+            }),
+            ['tag', 'variant', 'wrapperAttrs']
+          ),
+        } satisfies Record<keyof BvnComponentProps['BDropdownText'], PropertyReference>,
       },
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the dropdown text',
         },
       ],
     },

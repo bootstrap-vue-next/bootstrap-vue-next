@@ -1,10 +1,12 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormFile',
+      sourcePath: '/BForm/BFormFile.vue',
       props: {
         '': {
           accept: {
@@ -68,7 +70,7 @@ export default {
             }),
             [
               'ariaLabel',
-              'ariaLabelledBy',
+              'ariaLabelledby',
               'autofocus',
               'disabled',
               'form',
@@ -80,7 +82,7 @@ export default {
               'state',
             ]
           ),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormFile'], PropertyReference>,
       },
       emits: [
         {

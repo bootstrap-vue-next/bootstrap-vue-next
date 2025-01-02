@@ -13,9 +13,11 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import {useBreadcrumb, useDefaults} from '../../composables'
-import type {BBreadcrumbProps, BreadcrumbItem} from '../../types'
+import {useBreadcrumb} from '../../composables/useBreadcrumb'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BBreadcrumbProps} from '../../types/ComponentProps'
 import BBreadcrumbItem from './BBreadcrumbItem.vue'
+import type {BreadcrumbItem} from '../../types/BreadcrumbTypes'
 
 const _props = withDefaults(defineProps<BBreadcrumbProps>(), {items: undefined})
 const props = useDefaults(_props, 'BBreadcrumb')

@@ -1,29 +1,34 @@
 <template>
-  <Teleport :to="props.teleportTo" :disabled="props.teleportDisabled">
+  <ConditionalTeleport :to="props.teleportTo" :disabled="props.teleportDisabled">
     <Transition
-      v-bind="{...fadeTransitionProps, ...props.transProps, enterToClass: 'show'}"
-      :appear="modelValue"
-      @before-enter="onBeforeEnter"
+      v-if="renderRef || contentShowing"
+      v-bind="transitionProps"
+      :appear="modelValue || props.visible"
       @after-enter="onAfterEnter"
-      @leave="onLeave"
-      @after-leave="onAfterLeave"
     >
       <div
-        v-show="modelValue"
+        v-show="showRef && ((backdropReady && props.backdropFirst) || !props.backdropFirst)"
         :id="computedId"
-        ref="element"
+        ref="_element"
         class="modal"
-        :class="modalClasses"
+        :class="[
+          props.modalClass,
+          {
+            fade: !computedNoAnimation,
+            show: isVisible,
+          },
+        ]"
         role="dialog"
-        :aria-labelledby="!props.hideHeader ? `${computedId}-label` : undefined"
+        :aria-labelledby="!props.noHeader ? `${computedId}-label` : undefined"
         :aria-describedby="`${computedId}-body`"
         tabindex="-1"
         v-bind="$attrs"
         :style="computedZIndex"
+        @click.self="hide('backdrop')"
       >
-        <div class="modal-dialog" :class="modalDialogClasses" tabindex="0">
-          <div v-if="lazyShowing" class="modal-content" :class="props.contentClass">
-            <div v-if="!props.hideHeader" class="modal-header" :class="headerClasses">
+        <div class="modal-dialog" :class="modalDialogClasses">
+          <div v-if="contentShowing" class="modal-content" :class="props.contentClass">
+            <div v-if="!props.noHeader" class="modal-header" :class="headerClasses">
               <slot name="header" v-bind="sharedSlots">
                 <component
                   :is="props.titleTag"
@@ -35,11 +40,11 @@
                     {{ props.title }}
                   </slot>
                 </component>
-                <template v-if="!props.hideHeaderClose">
+                <template v-if="!props.noHeaderClose">
                   <BButton
                     v-if="hasHeaderCloseSlot"
                     v-bind="headerCloseAttrs"
-                    @click="hideFn('close')"
+                    @click="hide('close')"
                   >
                     <slot name="header-close" />
                   </BButton>
@@ -47,7 +52,7 @@
                     v-else
                     :aria-label="props.headerCloseLabel"
                     v-bind="headerCloseAttrs"
-                    @click="hideFn('close')"
+                    @click="hide('close')"
                   />
                 </template>
               </slot>
@@ -62,27 +67,27 @@
                 {{ props.body }}
               </slot>
             </div>
-            <div v-if="!props.hideFooter" class="modal-footer" :class="footerClasses">
+            <div v-if="!props.noFooter" class="modal-footer" :class="footerClasses">
               <slot name="footer" v-bind="sharedSlots">
                 <slot name="cancel" v-bind="sharedSlots">
                   <BButton
                     v-if="!props.okOnly"
-                    ref="cancelButton"
+                    ref="_cancelButton"
                     :disabled="disableCancel"
                     :size="props.buttonSize"
                     :variant="props.cancelVariant"
-                    @click="hideFn('cancel')"
+                    @click="hide('cancel')"
                   >
                     {{ props.cancelTitle }}
                   </BButton>
                 </slot>
                 <slot name="ok" v-bind="sharedSlots">
                   <BButton
-                    ref="okButton"
+                    ref="_okButton"
                     :disabled="disableOk"
                     :size="props.buttonSize"
                     :variant="props.okVariant"
-                    @click="hideFn('ok')"
+                    @click="hide('ok')"
                   >
                     {{ props.okTitle }}
                   </BButton>
@@ -91,30 +96,48 @@
             </div>
           </div>
         </div>
-        <slot v-if="!props.hideBackdrop" name="backdrop">
-          <div class="modal-backdrop fade show" @click="hideFn('backdrop')" />
-        </slot>
+        <div
+          v-if="needsFallback"
+          ref="_fallbackFocusElement"
+          :class="fallbackClassSelector"
+          tabindex="0"
+          style="width: 0; height: 0; overflow: hidden"
+        />
       </div>
     </Transition>
-  </Teleport>
+    <slot v-if="!props.noBackdrop" name="backdrop" v-bind="sharedSlots">
+      <Transition v-if="renderBackdropRef" v-bind="backdropTransitionProps">
+        <div
+          v-show="showRef || (isLeaving && props.backdropFirst && !computedNoAnimation)"
+          class="modal-backdrop"
+          :style="computedZIndexBackdrop"
+          :class="{
+            fade: !computedNoAnimation,
+            show: backdropVisible || computedNoAnimation,
+          }"
+          @click="hide('backdrop')"
+        />
+      </Transition>
+    </slot>
+  </ConditionalTeleport>
 </template>
 
 <script setup lang="ts">
-import {onKeyStroke, useEventListener, useFocus} from '@vueuse/core'
+import {onKeyStroke, useFocus} from '@vueuse/core'
 import {useActivatedFocusTrap} from '../../composables/useActivatedFocusTrap'
-import {computed, type CSSProperties, ref, toRef, watch} from 'vue'
-import {
-  useColorVariantClasses,
-  useDefaults,
-  useFadeTransition,
-  useId,
-  useModalManager,
-  useSafeScrollLock,
-} from '../../composables'
-import type {BModalProps} from '../../types'
-import {BvTriggerableEvent, isEmptySlot} from '../../utils'
+import {computed, type CSSProperties, type EmitFn, useTemplateRef, watch} from 'vue'
+import type {BModalProps} from '../../types/ComponentProps'
+import {BvTriggerableEvent} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
+import {useDefaults} from '../../composables/useDefaults'
+import {useId} from '../../composables/useId'
+import {useSafeScrollLock} from '../../composables/useSafeScrollLock'
+import {isEmptySlot} from '../../utils/dom'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import {useModalManager} from '../../composables/useModalManager'
+import {type showHideEmits, useShowHide} from '../../composables/useShowHide'
+import ConditionalTeleport from '../ConditionalTeleport.vue'
 
 defineOptions({
   inheritAttrs: false,
@@ -127,9 +150,10 @@ defineOptions({
 // Note, attempt to return focus to item that openned the modal after close
 // Implement auto focus props like autoFocusButton
 
-const _props = withDefaults(defineProps<BModalProps>(), {
+const _props = withDefaults(defineProps<Omit<BModalProps, 'modelValue'>>(), {
   autofocus: true,
   autofocusButton: undefined,
+  backdropFirst: false,
   body: undefined,
   bodyBgVariant: null,
   bodyAttrs: undefined,
@@ -159,13 +183,14 @@ const _props = withDefaults(defineProps<BModalProps>(), {
   headerCloseVariant: 'secondary',
   headerTextVariant: null,
   headerVariant: null,
-  hideBackdrop: false,
-  hideFooter: false,
-  hideHeader: false,
-  hideHeaderClose: false,
+  noFooter: false,
+  noHeader: false,
+  noHeaderClose: false,
   id: undefined,
+  initialAnimation: false,
   lazy: false,
   modalClass: undefined,
+  noBackdrop: false,
   noCloseOnBackdrop: false,
   noCloseOnEsc: false,
   noFade: false,
@@ -174,43 +199,43 @@ const _props = withDefaults(defineProps<BModalProps>(), {
   okOnly: false,
   okTitle: 'OK',
   okVariant: 'primary',
+  unmountLazy: false,
   scrollable: false,
   size: 'md',
   teleportDisabled: false,
   teleportTo: 'body',
   title: undefined,
   titleClass: undefined,
-  titleSrOnly: false,
+  titleVisuallyHidden: false,
   titleTag: 'h5',
+  show: false,
   transProps: undefined,
+  visible: false,
 })
 const props = useDefaults(_props, 'BModal')
 
-const emit = defineEmits<{
-  'backdrop': [value: BvTriggerableEvent]
-  'cancel': [value: BvTriggerableEvent]
-  'close': [value: BvTriggerableEvent]
-  'esc': [value: BvTriggerableEvent]
-  'hidden': [value: BvTriggerableEvent]
-  'hide': [value: BvTriggerableEvent]
-  'hide-prevented': []
-  'ok': [value: BvTriggerableEvent]
-  'show': [value: BvTriggerableEvent]
-  'show-prevented': []
-  'shown': [value: BvTriggerableEvent]
-}>()
+const emit = defineEmits<
+  {
+    backdrop: [value: BvTriggerableEvent]
+    cancel: [value: BvTriggerableEvent]
+    close: [value: BvTriggerableEvent]
+    esc: [value: BvTriggerableEvent]
+    ok: [value: BvTriggerableEvent]
+  } & showHideEmits
+>()
 
 type SharedSlotsData = {
   cancel: () => void
   close: () => void
   hide: (trigger?: string) => void
   ok: () => void
+  active: boolean
   visible: boolean
 }
 
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'backdrop'?: (props: Record<string, never>) => any
+  'backdrop'?: (props: SharedSlotsData) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'cancel'?: (props: SharedSlotsData) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -230,27 +255,73 @@ const slots = defineSlots<{
 const computedId = useId(() => props.id, 'modal')
 // Note: passive: true will sync an internal ref... This is required for useModalManager to exit,
 // Since the modelValue that's passed from that composable is not reactive, this internal ref _is_ and thus it will trigger closing the modal
-const modelValue = defineModel<boolean>({default: false})
+const modelValue = defineModel<Exclude<BModalProps['modelValue'], undefined>>({default: false})
 
-const element = ref<HTMLElement | null>(null)
-const okButton = ref<HTMLElement | null>(null)
-const cancelButton = ref<HTMLElement | null>(null)
-const closeButton = ref<HTMLElement | null>(null)
-const isActive = ref(false)
-const lazyLoadCompleted = ref(false)
+const element = useTemplateRef<HTMLElement>('_element')
+const fallbackFocusElement = useTemplateRef<HTMLElement>('_fallbackFocusElement')
+const okButton = useTemplateRef<HTMLElement>('_okButton')
+const cancelButton = useTemplateRef<HTMLElement>('_cancelButton')
+const closeButton = useTemplateRef<HTMLElement>('_closeButton')
 
-useActivatedFocusTrap({element, isActive, noTrap: () => props.noTrap})
+const pickFocusItem = () => {
+  if (props.autofocus === false) return
+  if (props.autofocusButton === 'ok') {
+    okButtonFocus.value = true
+  } else if (props.autofocusButton === 'close') {
+    closeButtonFocus.value = true
+  } else if (props.autofocusButton === 'cancel') {
+    cancelButtonFocus.value = true
+  } else {
+    modalFocus.value = true
+  }
+}
 
-const fadeTransitionProps = useFadeTransition(true)
+const onAfterEnter = () => {
+  pickFocusItem()
+}
+
+const {
+  showRef,
+  renderRef,
+  renderBackdropRef,
+  hide,
+  show,
+  toggle,
+  computedNoAnimation,
+  transitionProps,
+  backdropTransitionProps,
+  isLeaving,
+  isVisible,
+  trapActive,
+  contentShowing,
+  backdropReady,
+  backdropVisible,
+} = useShowHide(modelValue, props, emit as EmitFn, element, computedId, {
+  // addShowClass: false,
+  transitionProps: {
+    onAfterEnter,
+  },
+})
+
+const fallbackClassSelector = 'modal-fallback-focus'
+const {needsFallback} = useActivatedFocusTrap({
+  element,
+  isActive: trapActive,
+  noTrap: () => props.noTrap,
+  fallbackFocus: {
+    ref: fallbackFocusElement,
+    classSelector: fallbackClassSelector,
+  },
+})
 
 onKeyStroke(
   'Escape',
   () => {
-    hideFn('esc')
+    hide('esc')
   },
   {target: element}
 )
-useSafeScrollLock(modelValue, () => props.bodyScrolling)
+useSafeScrollLock(showRef, () => props.bodyScrolling)
 const {focused: modalFocus} = useFocus(element, {
   initialValue: modelValue.value && props.autofocusButton === undefined && props.autofocus === true,
 })
@@ -264,22 +335,7 @@ const {focused: closeButtonFocus} = useFocus(closeButton, {
   initialValue: modelValue.value && props.autofocusButton === 'close' && props.autofocus === true,
 })
 
-const modalClasses = computed(() => [
-  props.modalClass,
-  {
-    fade: !props.noFade,
-    show: isActive.value,
-  },
-])
-
-const lazyShowing = toRef(
-  () =>
-    props.lazy === false ||
-    (props.lazy === true && lazyLoadCompleted.value === true) ||
-    (props.lazy === true && modelValue.value === true)
-)
-
-const hasHeaderCloseSlot = toRef(() => !isEmptySlot(slots['header-close']))
+const hasHeaderCloseSlot = computed(() => !isEmptySlot(slots['header-close']))
 
 const modalDialogClasses = computed(() => [
   props.dialogClass,
@@ -292,205 +348,93 @@ const modalDialogClasses = computed(() => [
   },
 ])
 
-const resolvedBodyBgClasses = useColorVariantClasses(() => ({
+const bodyColorClasses = useColorVariantClasses(() => ({
   bgVariant: props.bodyBgVariant,
   textVariant: props.bodyTextVariant,
   variant: props.bodyVariant,
 }))
+const bodyClasses = computed(() => [props.bodyClass, bodyColorClasses.value])
 
-const bodyClasses = computed(() => [props.bodyClass, resolvedBodyBgClasses.value])
-
-const resolvedHeaderBgClasses = useColorVariantClasses(() => ({
+const headerColorClasses = useColorVariantClasses(() => ({
   bgVariant: props.headerBgVariant,
   textVariant: props.headerTextVariant,
   variant: props.headerVariant,
+  borderVariant: props.headerBorderVariant,
 }))
-
-const headerClasses = computed(() => [
-  props.headerClass,
-  resolvedHeaderBgClasses.value,
-  {
-    [`border-${props.headerBorderVariant}`]: props.headerBorderVariant !== null,
-  },
-])
+const headerClasses = computed(() => [props.headerClass, headerColorClasses.value])
 
 const headerCloseAttrs = computed(() => ({
   variant: hasHeaderCloseSlot.value ? props.headerCloseVariant : undefined,
   class: props.headerCloseClass,
 }))
 
-const resolvedFooterBgClasses = useColorVariantClasses(() => ({
+const footerColorClasses = useColorVariantClasses(() => ({
   bgVariant: props.footerBgVariant,
   textVariant: props.footerTextVariant,
   variant: props.footerVariant,
+  borderVariant: props.footerBorderVariant,
 }))
-
-const footerClasses = computed(() => [
-  props.footerClass,
-  resolvedFooterBgClasses.value,
-  {
-    [`border-${props.footerBorderVariant}`]: props.footerBorderVariant !== null,
-  },
-])
+const footerClasses = computed(() => [props.footerClass, footerColorClasses.value])
 
 const titleClasses = computed(() => [
   props.titleClass,
   {
-    ['visually-hidden']: props.titleSrOnly,
+    ['visually-hidden']: props.titleVisuallyHidden,
   },
 ])
-const disableCancel = toRef(() => props.cancelDisabled || props.busy)
-const disableOk = toRef(() => props.okDisabled || props.busy)
-
-const buildTriggerableEvent = (
-  type: string,
-  opts: Readonly<Partial<BvTriggerableEvent>> = {}
-): BvTriggerableEvent =>
-  new BvTriggerableEvent(type, {
-    cancelable: false,
-    target: element.value || null,
-    relatedTarget: null,
-    trigger: null,
-    ...opts,
-    componentId: computedId.value,
-  })
-
-watch(modelValue, (newValue, oldValue) => {
-  if (newValue === oldValue) return
-  if (newValue === true) {
-    showFn()
-  } else {
-    hideFn()
-  }
-})
-
-const hideFn = (trigger = '') => {
-  if (
-    (trigger === 'backdrop' && props.noCloseOnBackdrop) ||
-    (trigger === 'esc' && props.noCloseOnEsc)
-  ) {
-    emit('hide-prevented')
-    return
-  }
-
-  const event = buildTriggerableEvent('hide', {cancelable: trigger !== '', trigger})
-
-  if (trigger === 'ok') {
-    emit(trigger, event)
-  }
-  if (trigger === 'cancel') {
-    emit(trigger, event)
-  }
-  if (trigger === 'close') {
-    emit(trigger, event)
-  }
-  if (trigger === 'backdrop') {
-    emit(trigger, event)
-  }
-  if (trigger === 'esc') {
-    emit(trigger, event)
-  }
-  emit('hide', event)
-
-  if (event.defaultPrevented) {
-    emit('hide-prevented')
-    if (!modelValue.value) modelValue.value = true
-    return
-  }
-  if (modelValue.value) modelValue.value = false
-}
-
-// TODO: If a show is prevented, it will briefly show the animation. This is a bug
-// I'm not sure how to wait for the event to be determined. Before showing
-const showFn = () => {
-  if (isActive.value) return
-
-  const event = buildTriggerableEvent('show', {cancelable: true})
-  emit('show', event)
-  if (event.defaultPrevented) {
-    if (modelValue.value) modelValue.value = false
-    emit('show-prevented')
-    return
-  }
-  if (!modelValue.value) modelValue.value = true
-}
-
-const pickFocusItem = () => {
-  if (props.autofocus === false) return
-  props.autofocusButton === 'ok'
-    ? (okButtonFocus.value = true)
-    : props.autofocusButton === 'close'
-      ? (closeButtonFocus.value = true)
-      : props.autofocusButton === 'cancel'
-        ? (cancelButtonFocus.value = true)
-        : (modalFocus.value = true)
-}
-
-const onBeforeEnter = () => {
-  showFn()
-}
-const onAfterEnter = () => {
-  isActive.value = true
-  pickFocusItem()
-  emit('shown', buildTriggerableEvent('shown'))
-  if (props.lazy === true) lazyLoadCompleted.value = true
-}
-const isLeaving = ref(false)
-const onLeave = () => {
-  isActive.value = false
-  isLeaving.value = true
-}
-const onAfterLeave = () => {
-  emit('hidden', buildTriggerableEvent('hidden'))
-  if (props.lazy === true) lazyLoadCompleted.value = false
-  isLeaving.value = false
-}
+const disableCancel = computed(() => props.cancelDisabled || props.busy)
+const disableOk = computed(() => props.okDisabled || props.busy)
 
 const {activePosition, activeModalCount, stackWithoutSelf} = useModalManager(
-  isActive,
+  showRef,
   modelValue.value
 )
 
 watch(stackWithoutSelf, (newValue, oldValue) => {
-  if (newValue.length > oldValue.length && isActive.value === true && props.noStacking === true)
-    hideFn()
+  if (newValue.length > oldValue.length && showRef.value === true && props.noStacking === true)
+    hide()
 })
 
 const defaultModalDialogZIndex = 1056
-const computedZIndex = computed<CSSProperties>(() => ({
+const computedZIndexNumber = computed<number>(() =>
   // Make sure that newly opened modals have a higher z-index than currently active ones.
   // All active modals have a z-index of ('defaultZIndex' - 'stackSize' - 'positionInStack').
   //
   // This means inactive modals will already be higher than active ones when opened.
-  'z-index':
-    isActive.value || isLeaving.value
-      ? // Just for reference there is a single frame in which the modal is not active but still has a higher z-index than the active ones due to _when_ it calculates its position. It's a small visual effect
-        defaultModalDialogZIndex - ((activeModalCount?.value ?? 0) - (activePosition?.value ?? 0))
-      : defaultModalDialogZIndex,
-}))
 
-useEventListener(element, 'bv-toggle', () => {
-  modelValue.value ? hideFn() : showFn()
-})
+  showRef.value || isLeaving.value
+    ? // Just for reference there is a single frame in which the modal is not active but still has a higher z-index than the active ones due to _when_ it calculates its position. It's a small visual effect
+      defaultModalDialogZIndex -
+      ((activeModalCount?.value ?? 0) * 2 - (activePosition?.value ?? 0) * 2)
+    : defaultModalDialogZIndex
+)
+const computedZIndex = computed<CSSProperties>(() => ({
+  'z-index': computedZIndexNumber.value,
+}))
+const computedZIndexBackdrop = computed<CSSProperties>(() => ({
+  'z-index': computedZIndexNumber.value - 1,
+}))
 
 const sharedSlots = computed<SharedSlotsData>(() => ({
   cancel: () => {
-    hideFn('cancel')
+    hide('cancel')
   },
   close: () => {
-    hideFn('close')
+    hide('close')
   },
-  hide: hideFn,
+  hide,
   ok: () => {
-    hideFn('ok')
+    hide('ok')
   },
-  visible: modelValue.value,
+  active: showRef.value,
+  visible: showRef.value,
 }))
 
 defineExpose({
-  hide: hideFn,
+  hide,
   id: computedId,
-  show: showFn,
+  show,
+  toggle,
 })
 </script>
 

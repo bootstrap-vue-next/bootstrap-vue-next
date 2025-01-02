@@ -323,14 +323,6 @@ describe('form-checkbox', () => {
       expect($input.attributes('aria-labelledby')).toBeUndefined()
     })
 
-    it('input element has attr aria-labelledby is undefined when prop ariaLabelledby undefined', () => {
-      const wrapper = mount(BFormCheckbox, {
-        props: {ariaLabelledby: undefined},
-      })
-      const $input = wrapper.get('input')
-      expect($input.attributes('aria-labelledby')).toBeUndefined()
-    })
-
     it('input element has attr value to be prop value', () => {
       const wrapper = mount(BFormCheckbox, {
         props: {value: 'foobar'},
@@ -457,14 +449,6 @@ describe('form-checkbox', () => {
       await $input.trigger('focus')
       await $input.trigger('blur')
       expect($label.classes()).not.toContain('focus')
-    })
-
-    it('child label has class form-check-label when prop plain and prop button are false', () => {
-      const wrapper = mount(BFormCheckbox, {
-        props: {plain: false, button: false},
-      })
-      const $label = wrapper.get('label')
-      expect($label.classes()).toContain('form-check-label')
     })
 
     it('child label has class form-check-label when prop plain and prop button are false', () => {
@@ -644,42 +628,46 @@ describe('form-checkbox', () => {
   })
 
   describe('indeterminate model behavior', () => {
-    it('has attribute "indeterminate" when indeterminate prop is true', () => {
+    it('modelValue behaves as intended', async () => {
       const wrapper = mount(BFormCheckbox, {
-        props: {indeterminate: true},
+        props: {
+          'modelValue': true,
+          'indeterminate': true,
+          'onUpdate:indeterminate': (e) => {
+            wrapper.setProps({indeterminate: e})
+          },
+          'onUpdate:modelValue': (e) => {
+            wrapper.setProps({modelValue: e})
+          },
+        },
+        attachTo: document.body,
       })
-      const $input = wrapper.find('input')
-      expect($input.attributes('indeterminate')).toBeDefined()
+      const input = wrapper.get('input')
+      await input.trigger('click')
+      expect(wrapper.props('modelValue')).toBe(false)
+      expect(wrapper.props('indeterminate')).toBe(false)
+      await input.trigger('click')
+      expect(wrapper.props('modelValue')).toBe(true)
+      expect(wrapper.props('indeterminate')).toBe(false)
+      await input.trigger('click')
+      expect(wrapper.props('modelValue')).toBe(false)
+      expect(wrapper.props('indeterminate')).toBe(false)
     })
 
-    it('does not have attribute "indeterminate" when indeterminate prop is false', () => {
+    it('is given the javascript psuedo property', async () => {
       const wrapper = mount(BFormCheckbox, {
-        props: {indeterminate: false},
+        props: {
+          'indeterminate': true,
+          'onUpdate:indeterminate': (e) => {
+            wrapper.setProps({indeterminate: e})
+          },
+        },
+        attachTo: document.body,
       })
-      const $input = wrapper.find('input')
-      expect($input.attributes('indeterminate')).toBeUndefined()
-    })
-
-    it('does not have attribute "indeterminate" when indeterminate prop is undefined', () => {
-      const wrapper = mount(BFormCheckbox)
-      const $input = wrapper.find('input')
-      expect($input.attributes('indeterminate')).toBeUndefined()
-    })
-
-    it('emits "update:indeterminate=false" when checkbox is changed', async () => {
-      const wrapper = mount(BFormCheckbox)
-      const $input = wrapper.find('input')
-      await $input.trigger('change')
-      expect($input.attributes('indeterminate')).toBeUndefined()
-    })
-
-    it('has attribute "indeterminate" when indeterminate prop is set to true', async () => {
-      const wrapper = mount(BFormCheckbox, {
-        props: {indeterminate: false},
-      })
-      await wrapper.setProps({indeterminate: true})
-      const $input = wrapper.find('input')
-      expect($input.attributes('indeterminate')).toBeDefined()
+      const input = wrapper.get('input')
+      expect(input.element.indeterminate).toBe(true)
+      await input.trigger('click')
+      expect(input.element.indeterminate).toBe(false)
     })
   })
 })

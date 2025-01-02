@@ -24,9 +24,10 @@
 </template>
 
 <script setup lang="ts">
-import {useDefaults} from '../../composables'
-import type {BDropdownGroupProps} from '../../types'
-import {computed, toRef} from 'vue'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BDropdownGroupProps} from '../../types/ComponentProps'
+import {computed} from 'vue'
 
 defineOptions({
   inheritAttrs: false,
@@ -49,13 +50,13 @@ defineSlots<{
   header?: (props: Record<string, never>) => any
 }>()
 
-const headerId = toRef(() => (props.id ? `${props.id}_group_dd_header` : undefined))
-const headerRole = toRef(() => (props.headerTag === 'header' ? undefined : 'heading'))
+const headerId = computed(() => (props.id ? `${props.id}_group_dd_header` : undefined))
+const headerRole = computed(() => (props.headerTag === 'header' ? undefined : 'heading'))
 
-const computedClasses = computed(() => [
-  props.headerClass,
-  {
-    [`text-${props.headerVariant}`]: props.headerVariant !== null,
-  },
-])
+const colorClasses = useColorVariantClasses(
+  computed(() => ({
+    textVariant: props.headerVariant,
+  }))
+)
+const computedClasses = computed(() => [props.headerClass, colorClasses.value])
 </script>

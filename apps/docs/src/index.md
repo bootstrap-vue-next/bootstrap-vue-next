@@ -1,13 +1,5 @@
 # Introduction
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
-
-[[toc]]
-
-  </Teleport>
-</ClientOnly>
-
 <div class="lead mb-5">
 
 With BootstrapVueNext you can build fast, responsive, and ARIA accessible projects on the web using Vue.js and Bootstrap v5.
@@ -44,7 +36,7 @@ With BootstrapVueNext you can build fast, responsive, and ARIA accessible projec
 
 ## Overview
 
-With more than 35 components, several directives and composibles (and growing), BootstrapVueNext provides one of the most comprehensive implementations of the Bootstrap v5 component and grid system available for Vue.js v3 / Nuxt.js 3, complete with extensive and automated WAI-ARIA accessibility markup.
+With more than 35 components, several directives and composables (and growing), BootstrapVueNext provides one of the most comprehensive implementations of the Bootstrap v5 component and grid system available for Vue.js v3 / Nuxt.js 3, complete with extensive and automated WAI-ARIA accessibility markup.
 
 <div class="d-flex gap-2 mt-4">
   <BButton :to="withBase('/docs')" variant="primary">Get Started</BButton>
@@ -55,7 +47,11 @@ With more than 35 components, several directives and composibles (and growing), 
 
 Easily integrate BootstrapVueNext into your Nuxt.js projects using our included Nuxt.js module. You can optionally specify only the components, directives and/or plugins you require.
 
-<BButton variant="secondary" :to="withBase('/docs#installation-nuxt-js-3')" class="mt-3">BootstrapVueNext Nuxt.js module</BButton>
+<BButton variant="secondary" :to="withBase('/docs#installation-nuxt-js-3')" class="my-3">BootstrapVueNext Nuxt.js module</BButton>
+
+## Our OpenCollective
+
+<OpenCollectiveMemberDisplay />
 
 <script setup lang="ts">
 import {
@@ -69,9 +65,10 @@ import {
 } from 'bootstrap-vue-next'
 import {inject} from 'vue'
 import {withBase} from 'vitepress'
-import BootstrapIcon from '~icons/simple-icons/bootstrap'
-import VueIcon from '~icons/simple-icons/vuedotjs'
+import BootstrapIcon from '~icons/logos/bootstrap'
+import VueIcon from '~icons/logos/vue'
 import {appInfoKey} from '../.vitepress/theme/keys'
+import OpenCollectiveMemberDisplay from './components/OpenCollectiveMemberDisplay.vue'
 
 const globalData = inject(appInfoKey, {
   discordUrl: '',

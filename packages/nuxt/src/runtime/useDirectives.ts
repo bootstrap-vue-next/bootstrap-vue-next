@@ -1,6 +1,6 @@
-import {Directives} from 'bootstrap-vue-next'
-import {defineNuxtPlugin, useRuntimeConfig} from '#imports'
-import type {Directive} from 'vue'
+import * as Directives from 'bootstrap-vue-next/directives'
+import type { Directive } from 'vue'
+import { defineNuxtPlugin, useRuntimeConfig } from '#app'
 
 export default defineNuxtPlugin((nuxtApp) => {
   const usedDirectives = useRuntimeConfig().public.bootstrapVueNext.directives
@@ -13,7 +13,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       }
       return acc
     },
-    {} as Record<string, Directive>
+    {} as Record<string, Directive>,
   )
 
   const sliceName = (str: string) => (str.toLowerCase().startsWith('v') ? str.slice(1) : str)

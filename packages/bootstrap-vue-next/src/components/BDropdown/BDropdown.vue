@@ -1,37 +1,36 @@
 <template>
-  <RenderComponentOrSkip
-    ref="wrapper"
-    :skip="inInputGroup || props.skipWrapper"
+  <ConditionalWrapper
+    :skip="inInputGroup || props.noWrapper"
     :class="computedClasses"
+    :role="inButtonGroupAttributes?.role"
   >
     <BButton
       :id="computedId"
-      ref="splitButton"
+      ref="_splitButton"
       :variant="props.splitVariant || props.variant"
       :size="props.size"
       :class="buttonClasses"
       :disabled="props.splitDisabled || props.disabled"
       :type="props.splitButtonType"
       :aria-label="props.ariaLabel"
-      :aria-expanded="props.split ? undefined : modelValue"
+      :aria-expanded="props.split ? undefined : showRef"
       :aria-haspopup="props.split ? undefined : 'menu'"
       :href="props.split ? props.splitHref : undefined"
       :to="props.split && props.splitTo ? props.splitTo : undefined"
       @click="onSplitClick"
     >
-      <slot name="button-content">
-        {{ props.text }}
-      </slot>
+      <slot name="button-content"> {{ props.text }} </slot>
     </BButton>
     <BButton
       v-if="props.split"
-      ref="button"
+      :id="computedId + '-split'"
+      ref="_button"
       :variant="props.variant"
       :size="props.size"
       :disabled="props.disabled"
-      :class="[props.toggleClass, {show: modelValue}]"
+      :class="[props.toggleClass, {show: showRef}]"
       class="dropdown-toggle-split dropdown-toggle"
-      :aria-expanded="modelValue"
+      :aria-expanded="showRef"
       aria-haspopup="menu"
       @click="onButtonClick"
     >
@@ -41,22 +40,31 @@
         </slot>
       </span>
     </BButton>
-    <Teleport :to="props.teleportTo" :disabled="!props.teleportTo || props.teleportDisabled">
-      <ul
-        v-if="!props.lazy || modelValue"
-        v-show="props.lazy || modelValue"
-        ref="floating"
-        :style="[floatingStyles, sizeStyles]"
-        class="dropdown-menu overflow-auto"
-        :class="[props.menuClass, {show: modelValue}]"
-        :aria-labelledby="computedId"
-        :role="props.role"
-        @click="onClickInside"
+    <ConditionalTeleport
+      :to="props.teleportTo"
+      :disabled="!props.teleportTo || props.teleportDisabled"
+    >
+      <Transition
+        v-if="renderRef || contentShowing"
+        v-bind="transitionProps"
+        :appear="modelValue || props.visible"
       >
-        <slot :hide="hide" :show="show" />
-      </ul>
-    </Teleport>
-  </RenderComponentOrSkip>
+        <ul
+          v-show="showRef"
+          :id="computedId + '-menu'"
+          ref="_floating"
+          :style="[floatingStyles, sizeStyles]"
+          class="dropdown-menu overflow-auto"
+          :class="[props.menuClass, computedMenuClasses]"
+          :aria-labelledby="computedId"
+          :role="props.role"
+          @click="onClickInside"
+        >
+          <slot v-if="contentShowing" :hide="hide" :show="show" :visible="showRef" />
+        </ul>
+      </Transition>
+    </ConditionalTeleport>
+  </ConditionalWrapper>
 </template>
 
 <script setup lang="ts">
@@ -72,91 +80,103 @@ import {
   useFloating,
 } from '@floating-ui/vue'
 import {onClickOutside, onKeyStroke, useToNumber} from '@vueuse/core'
-import {computed, type CSSProperties, inject, nextTick, provide, ref, toRef, watch} from 'vue'
-import {useDefaults, useId} from '../../composables'
-import type {BDropdownProps} from '../../types'
-import {BvTriggerableEvent, dropdownInjectionKey, inputGroupKey} from '../../utils'
+import {
+  computed,
+  type CSSProperties,
+  type EmitFn,
+  inject,
+  nextTick,
+  provide,
+  ref,
+  toRef,
+  useTemplateRef,
+  watch,
+} from 'vue'
+import {useDefaults} from '../../composables/useDefaults'
+import {useId} from '../../composables/useId'
+import type {BDropdownProps} from '../../types/ComponentProps'
 import BButton from '../BButton/BButton.vue'
-import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
-import {isBoundary, isRootBoundary, resolveFloatingPlacement} from '../../utils/floatingUi'
+import ConditionalWrapper from '../ConditionalWrapper.vue'
+import ConditionalTeleport from '../ConditionalTeleport.vue'
+import {isBoundary, isRootBoundary} from '../../utils/floatingUi'
+import {getElement} from '../../utils/getElement'
+import {buttonGroupKey, dropdownInjectionKey, inputGroupKey} from '../../utils/keys'
+import {type showHideEmits, useShowHide} from '../../composables/useShowHide'
 
-const _props = withDefaults(defineProps<BDropdownProps>(), {
+const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   ariaLabel: undefined,
   autoClose: true,
   boundary: 'clippingAncestors',
   boundaryPadding: undefined,
-  center: false,
   teleportTo: undefined,
   teleportDisabled: false,
   disabled: false,
-  dropend: false,
-  dropstart: false,
-  dropup: false,
-  end: false,
   floatingMiddleware: undefined,
   id: undefined,
+  initialAnimation: false,
   isNav: false,
   lazy: false,
   menuClass: undefined,
   noCaret: false,
+  noFade: false,
   noFlip: false,
   noShift: false,
   noSize: false,
   offset: 0,
+  unmountLazy: false,
   role: 'menu',
   size: 'md',
-  skipWrapper: false,
+  noWrapper: false,
   split: false,
   splitButtonType: 'button',
   splitClass: undefined,
   splitDisabled: undefined,
   splitHref: undefined,
   splitTo: undefined,
+  placement: 'bottom-start',
   splitVariant: undefined,
   strategy: 'absolute',
   text: undefined,
+  show: false,
   toggleClass: undefined,
   toggleText: 'Toggle dropdown',
+  transProps: undefined,
   variant: 'secondary',
+  visible: false,
   wrapperClass: undefined,
 })
 const props = useDefaults(_props, 'BDropdown')
 
-const emit = defineEmits<{
-  'click': [event: MouseEvent]
-  'hidden': []
-  'hide': [value: BvTriggerableEvent]
-  'hide-prevented': []
-  'show': [value: BvTriggerableEvent]
-  'show-prevented': []
-  'shown': []
-  'toggle': []
-}>()
+const emit = defineEmits<
+  {
+    click: [event: MouseEvent]
+  } & showHideEmits
+>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'button-content'?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'default'?: (props: {hide: () => void; show: () => void}) => any
+  'default'?: (props: {hide: () => void; show: () => void; visible: boolean}) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'toggle-text'?: (props: Record<string, never>) => any
 }>()
 
 const computedId = useId(() => props.id, 'dropdown')
 
-const modelValue = defineModel<boolean>({default: false})
+const modelValue = defineModel<Exclude<BDropdownProps['modelValue'], undefined>>({default: false})
 
 const inInputGroup = inject(inputGroupKey, false)
+const inButtonGroup = inject(buttonGroupKey, false)
 
-const computedOffset = toRef(() =>
+const computedOffset = computed(() =>
   typeof props.offset === 'string' || typeof props.offset === 'number' ? props.offset : NaN
 )
 const offsetToNumber = useToNumber(computedOffset)
 
-const floating = ref<HTMLElement | null>(null)
-const button = ref<HTMLElement | null>(null)
-const splitButton = ref<HTMLElement | null>(null)
-const wrapper = ref<HTMLElement | null>(null)
+const floating = useTemplateRef<HTMLElement>('_floating')
+const button = useTemplateRef<HTMLElement>('_button')
+const splitButton = useTemplateRef<HTMLElement>('_splitButton')
 
 const boundary = computed<Boundary | undefined>(() =>
   isBoundary(props.boundary) ? props.boundary : undefined
@@ -165,19 +185,40 @@ const rootBoundary = computed<RootBoundary | undefined>(() =>
   isRootBoundary(props.boundary) ? props.boundary : undefined
 )
 
-const referencePlacement = toRef(() => (!props.split ? splitButton.value : button.value))
+const referencePlacement = computed(() => (!props.split ? splitButton.value : button.value))
+
+const {
+  showRef,
+  renderRef,
+  hide,
+  show,
+  toggle,
+  computedNoAnimation,
+  transitionProps,
+  contentShowing,
+  isVisible,
+} = useShowHide(modelValue, props, emit as EmitFn, referencePlacement, computedId)
+
+const computedMenuClasses = computed(() => [
+  {
+    show: isVisible.value,
+    fade: !computedNoAnimation.value,
+  },
+])
 
 onKeyStroke(
   'Escape',
   () => {
-    modelValue.value = !modelValue.value
+    hide()
+    getElement(referencePlacement.value)?.focus()
   },
   {target: referencePlacement}
 )
 onKeyStroke(
   'Escape',
   () => {
-    modelValue.value = !modelValue.value
+    hide()
+    getElement(referencePlacement.value)?.focus()
   },
   {target: floating}
 )
@@ -186,9 +227,14 @@ const keynav = (e: Readonly<Event>, v: number) => {
   if (floating.value?.contains((e.target as HTMLElement)?.closest('form'))) return
   if (/input|select|option|textarea|form/i.test((e.target as HTMLElement)?.tagName)) return
   e.preventDefault()
-  if (!modelValue.value) {
-    open()
-    nextTick(() => keynav(e, v))
+  if (!showRef.value) {
+    show()
+    const loop = setInterval(() => {
+      if (isVisible.value) {
+        clearInterval(loop)
+        nextTick(() => keynav(e, v))
+      }
+    }, 16)
     return
   }
   const list = floating.value?.querySelectorAll('.dropdown-item:not(.disabled):not(:disabled)')
@@ -207,15 +253,6 @@ onKeyStroke('ArrowDown', (e) => keynav(e, 1), {target: referencePlacement})
 onKeyStroke('ArrowUp', (e) => keynav(e, -1), {target: floating})
 onKeyStroke('ArrowDown', (e) => keynav(e, 1), {target: floating})
 
-const floatingPlacement = computed(() =>
-  resolveFloatingPlacement({
-    top: props.dropup,
-    start: props.dropstart,
-    end: props.dropend,
-    alignCenter: props.center,
-    alignEnd: props.end,
-  })
-)
 const sizeStyles = ref<CSSProperties>({})
 const floatingMiddleware = computed<Middleware[]>(() => {
   if (props.floatingMiddleware !== undefined) {
@@ -252,8 +289,18 @@ const floatingMiddleware = computed<Middleware[]>(() => {
         padding: props.boundaryPadding,
         apply({availableWidth, availableHeight}) {
           sizeStyles.value = {
-            maxHeight: availableHeight && modelValue.value ? `${availableHeight}px` : undefined,
-            maxWidth: availableWidth && modelValue.value ? `${availableWidth}px` : undefined,
+            maxHeight:
+              availableHeight >= (floating.value?.scrollHeight ?? 0)
+                ? undefined
+                : availableHeight
+                  ? `${Math.max(0, availableHeight)}px`
+                  : undefined,
+            maxWidth:
+              availableWidth >= (floating.value?.scrollWidth ?? 0)
+                ? undefined
+                : availableWidth
+                  ? `${Math.max(0, availableWidth)}px`
+                  : undefined,
           }
         },
       })
@@ -262,20 +309,25 @@ const floatingMiddleware = computed<Middleware[]>(() => {
   return arr
 })
 const {update, floatingStyles} = useFloating(referencePlacement, floating, {
-  placement: floatingPlacement,
+  placement: () => props.placement,
   middleware: floatingMiddleware,
   strategy: toRef(() => props.strategy),
   whileElementsMounted: autoUpdate,
 })
 
+const inButtonGroupAttributes = inButtonGroup
+  ? {
+      class: 'btn-group',
+      role: 'group',
+    }
+  : undefined
+
 const computedClasses = computed(() => [
+  inButtonGroupAttributes?.class,
   props.wrapperClass,
   {
     'btn-group': !props.wrapperClass && props.split,
     'dropdown': !props.wrapperClass && !props.split,
-    'dropup': props.dropup,
-    'dropend': props.dropend,
-    'dropstart': props.dropstart,
     'position-static': props.boundary !== 'clippingAncestors' && !props.isNav,
   },
 ])
@@ -286,7 +338,7 @@ const buttonClasses = computed(() => [
     'nav-link': props.isNav,
     'dropdown-toggle': !props.split,
     'dropdown-toggle-no-caret': props.noCaret && !props.split,
-    'show': props.split ? undefined : modelValue.value,
+    'show': props.split ? undefined : showRef.value,
   },
 ])
 
@@ -295,45 +347,29 @@ const onButtonClick = () => {
 }
 
 const onSplitClick = (event: Readonly<MouseEvent>) => {
-  props.split ? emit('click', event) : onButtonClick()
+  if (props.split) {
+    emit('click', event)
+    return
+  }
+  onButtonClick()
 }
 
 onClickOutside(
   floating,
   () => {
-    if (modelValue.value && (props.autoClose === true || props.autoClose === 'outside')) {
-      toggle()
+    if (showRef.value && (props.autoClose === true || props.autoClose === 'outside')) {
+      hide()
     }
   },
   {ignore: [button, splitButton]}
 )
 const onClickInside = () => {
-  if (modelValue.value && (props.autoClose === true || props.autoClose === 'inside')) {
-    toggle()
+  if (showRef.value && (props.autoClose === true || props.autoClose === 'inside')) {
+    hide()
   }
 }
 
-const hide = () => {
-  modelValue.value && toggle()
-}
-const show = () => {
-  modelValue.value || toggle()
-}
-const toggle = () => {
-  emit('toggle')
-  const currentModelValue = modelValue.value
-  const e = new BvTriggerableEvent(currentModelValue ? 'hide' : 'show')
-  currentModelValue ? emit('hide', e) : emit('show', e)
-  if (e.defaultPrevented) {
-    currentModelValue ? emit('hide-prevented') : emit('show-prevented')
-    return
-  }
-  modelValue.value = !currentModelValue
-  currentModelValue ? emit('hidden') : emit('shown')
-  wrapper.value?.dispatchEvent?.(new Event('forceHide'))
-}
-
-watch(modelValue, () => {
+watch(isVisible, () => {
   update()
 })
 
@@ -348,7 +384,14 @@ provide(dropdownInjectionKey, {
   show,
   hide,
   toggle,
-  visible: toRef(() => modelValue.value),
+  visible: toRef(() => showRef.value),
   isNav: toRef(() => props.isNav),
 })
 </script>
+<style lang="scss" scoped>
+.dropdown-menu {
+  &.fade {
+    display: block;
+  }
+}
+</style>

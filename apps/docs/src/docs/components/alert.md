@@ -1,11 +1,5 @@
 # Alert
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
 <div class="lead mb-5">
 
 Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages.
@@ -16,71 +10,7 @@ Provide contextual feedback messages for typical user actions with the handful o
 
 Alerts are available for any length of text, as well as an optional dismiss button (and optional auto-dismissing).
 
-<HighlightCard>
-  <BAlert :model-value="true">Default Alert</BAlert>
-
-<BAlert variant="success" :model-value="true">Success Alert</BAlert>
-
-<BAlert v-model="showDismissibleAlert" variant="danger" dismissible> Dismissible Alert! </BAlert>
-
-<BAlert
-v-model="dismissCountDown"
-dismissible
-variant="warning"
-@close-countdown="countdown = $event">
-
-<p>This alert will dismiss after {{ countdown / 1000 }} seconds...</p>
-<BProgress variant="warning" :max="dismissCountDown" :value="countdown" height="4px" />
-</BAlert>
-
-<BButton variant="info" class="m-1" @click="dismissCountDown = dismissCountDown + 5000">
-Add a five seconds to the alert with countdown timer
-</BButton>
-
-<BButton variant="info" class="m-1" @click="showDismissibleAlert = !showDismissibleAlert">
-{{ !showDismissibleAlert ? 'Show' : 'Hide' }} dismissible alert
-</BButton>
-<template #html>
-
-```vue
-<template>
-  <BAlert :model-value="true">Default Alert</BAlert>
-
-  <BAlert variant="success" :model-value="true">Success Alert</BAlert>
-
-  <BAlert v-model="showDismissibleAlert" variant="danger" dismissible> Dismissible Alert! </BAlert>
-
-  <BAlert
-    v-model="dismissCountDown"
-    dismissible
-    variant="warning"
-    @close-countdown="countdown = $event"
-  >
-    <p>This alert will dismiss after {{ countdown / 1000 }} seconds...</p>
-    <BProgress variant="warning" :max="dismissCountDown" :value="countdown" height="4px" />
-  </BAlert>
-
-  <BButton variant="info" class="m-1" @click="dismissCountDown = dismissCountDown + 5000">
-    Add a five seconds to the alert with countdown timer
-  </BButton>
-
-  <BButton variant="info" class="m-1" @click="showDismissibleAlert = !showDismissibleAlert">
-    {{ !showDismissibleAlert ? 'Show' : 'Hide' }} dismissible alert
-  </BButton>
-</template>
-
-<script setup lang="ts">
-import {ref} from 'vue'
-
-const showDismissibleAlert = ref(false)
-
-const dismissCountDown = ref(10000)
-const countdown = ref(0)
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/AlertOverview.vue
 
 ### `v-model` Support
 
@@ -91,30 +21,7 @@ You can use the `v-model` directive to create two-way data bindings as in `v-mod
 
 For proper styling of `BAlert`, use one of the four required contextual variants by setting the `variant` prop to one of the following: `info`, `success`, `warning`, or `danger`. The default is `info`.
 
-<HighlightCard>
-  <BAlert :model-value="true" variant="primary">Primary Alert</BAlert>
-  <BAlert :model-value="true" variant="secondary">Secondary Alert</BAlert>
-  <BAlert :model-value="true" variant="success">Success Alert</BAlert>
-  <BAlert :model-value="true" variant="danger">Danger Alert</BAlert>
-  <BAlert :model-value="true" variant="warning">Warning Alert</BAlert>
-  <BAlert :model-value="true" variant="info">Info Alert</BAlert>
-  <BAlert :model-value="true" variant="light">Light Alert</BAlert>
-  <BAlert :model-value="true" variant="dark">Dark Alert</BAlert>
-  <template #html>
-
-```vue-html
-<BAlert :model-value="true" variant="primary">Primary Alert</BAlert>
-<BAlert :model-value="true" variant="secondary">Secondary Alert</BAlert>
-<BAlert :model-value="true" variant="success">Success Alert</BAlert>
-<BAlert :model-value="true" variant="danger">Danger Alert</BAlert>
-<BAlert :model-value="true" variant="warning">Warning Alert</BAlert>
-<BAlert :model-value="true" variant="info">Info Alert</BAlert>
-<BAlert :model-value="true" variant="light">Light Alert</BAlert>
-<BAlert :model-value="true" variant="dark">Dark Alert</BAlert>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/AlertVariants.vue#template{vue-html}
 
 ### Conveying Meaning to Assistive Technologies
 
@@ -124,151 +31,27 @@ Using color variants to add meaning only provides a visual indication, which wil
 
 `BAlerts` can also contain additional HTML elements like headings and paragraphs, which will be styled with the appropriate color matching the variant.
 
-<HighlightCard>
-  <BAlert :model-value="true" variant="success">
-    <h4 class="alert-heading">Well done!</h4>
-    <p>
-      Aww yeah, you successfully read this important alert message. This example text is going to
-      run a bit longer so that you can see how spacing within an alert works with this kind of
-      content.
-    </p>
-    <hr>
-    <p class="mb-0">
-      Whenever you need to, be sure to use margin utilities to keep things nice and tidy.
-    </p>
-  </BAlert>
-  <template #html>
-
-```vue-html
-<BAlert :model-value="true" variant="success">
-  <h4 class="alert-heading">Well done!</h4>
-
-  <p>
-    Aww yeah, you successfully read this important alert message. This example text is going to
-    run a bit longer so that you can see how spacing within an alert works with this kind of
-    content.
-  </p>
-
-  <hr>
-
-  <p class="mb-0">
-    Whenever you need to, be sure to use margin utilities to keep things nice and tidy.
-  </p>
-</BAlert>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/AlertContent.vue#template{vue-html}
 
 ### Color of Links Within Alerts
 
 Use the `.alert-link` utility CSS class to quickly provide matching colored links within any alert. Use on `<a>` or `BLink`.
 
-<HighlightCard>
-  <BAlert :model-value="true" variant="primary"><a href="#" class="alert-link">Primary Alert</a></BAlert>
-  <BAlert :model-value="true" variant="secondary"><a href="#" class="alert-link">Secondary Alert</a></BAlert>
-  <BAlert :model-value="true" variant="success"><a href="#" class="alert-link">Success Alert</a></BAlert>
-  <BAlert :model-value="true" variant="danger"><a href="#" class="alert-link">Danger Alert</a></BAlert>
-  <BAlert :model-value="true" variant="warning"><a href="#" class="alert-link">Warning Alert</a></BAlert>
-  <BAlert :model-value="true" variant="info"><a href="#" class="alert-link">Info Alert</a></BAlert>
-  <BAlert :model-value="true" variant="light"><a href="#" class="alert-link">Light Alert</a></BAlert>
-  <BAlert :model-value="true" variant="dark"><a href="#" class="alert-link">Dark Alert</a></BAlert>
-  <template #html>
-
-```vue-html
-<BAlert :model-value="true" variant="primary"><a href="#" class="alert-link">Primary Alert</a></BAlert>
-<BAlert :model-value="true" variant="secondary"><a href="#" class="alert-link">Secondary Alert</a></BAlert>
-<BAlert :model-value="true" variant="success"><a href="#" class="alert-link">Success Alert</a></BAlert>
-<BAlert :model-value="true" variant="danger"><a href="#" class="alert-link">Danger Alert</a></BAlert>
-<BAlert :model-value="true" variant="warning"><a href="#" class="alert-link">Warning Alert</a></BAlert>
-<BAlert :model-value="true" variant="info"><a href="#" class="alert-link">Info Alert</a></BAlert>
-<BAlert :model-value="true" variant="light"><a href="#" class="alert-link">Light Alert</a></BAlert>
-<BAlert :model-value="true" variant="dark"><a href="#" class="alert-link">Dark Alert</a></BAlert>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/AlertLinkColors.vue#template{vue-html}
 
 ## Dismissible Alerts
 
 Using the `dismissible` prop it is possible to dismiss any `BAlert` inline. The alert must be v-modeled to a reactive value. This will add a close `X` button. Use the `dismiss-label` prop to change the hidden aria-label text associated with the dismiss button.
 
-<HighlightCard>
-  <BAlert v-model="secondDismissibleAlert" dismissible>
-    Dismissible Alert! Click the close button over there <b>&rArr;</b>
-  </BAlert>
-  <template #html>
+<<< DEMO ./demo/AlertDismissible.vue
 
-```vue
-<template>
-  <BAlert v-model="dismissibleAlert" dismissible>
-    Dismissible Alert! Click the close button over there <b>&rArr;</b>
-  </BAlert>
-</template>
+### Auto-dismissing Alerts
 
-<script setup lang="ts">
-const dismissibleAlert = ref(true)
-</script>
-```
+To create a `BAlert` that dismisses automatically after a specified duration, set the `v-model` to the number of **milliseconds** you want the `BAlert` to remain visible. By default, the timer updates using `requestAnimationFrame`, which triggers an update approximately every second. Timed Alerts automatically pause when hovered over with a mouse, but you can disable this behavior using the `noHoverPause` prop. Ensure that the `v-model` value is an integer representing milliseconds. Any change to the `v-model` will reset the timer.
 
-  </template>
-</HighlightCard>
+The **interval** prop determines how frequently the timer updates. While the default is `requestAnimationFrame`, you can set a custom interval. Negative values for either `v-model` or `interval` will stop the timer. If the `v-model` value does not divide evenly by the interval, the timer will continue to the nearest interval. For example, a `v-model` of 5400 ms with an interval of 1000 ms will run for 6000 ms. To avoid this, choose an interval that divides evenly into the `v-model`, such as 540 ms or 1080 ms.
 
-## Auto-dismissing Alerts
-
-To create a `BAlert` that dismisses automatically after some time set the `v-model` to the number of **milliseconds** you would like the `BAlert` to remain visible for. Timed Alerts are automatically paused when hovering with a mouse. You can disable pausing during hover by using the `noHoverPause` prop. You must only use an integer for milliseconds. Changing the v-model in any way will cause the timer to reset. The **interval** prop determines how often the timer will update, with the default being 1000 to trigger an update every 1 whole second. Due to the nature of this, one should be careful when creating many timed alerts with low intervals as it could negatively affect performance. Negative numbers for either v-model or interval will stop the timer. A value that does not divide wholely by an interval will continue to the greatest interval, ex: a value of 5400 ms and an interval of 1000 ms will run for exactly 6000 ms. To work around this, plan your interval to divide into this number easily. For example, use an interval of 540 ms or 1080 ms.
-
-<HighlightCard>
-  <BAlert
-    v-model="autoDismissingAlert"
-    :interval="autoDismissingAlertInterval"
-    @close-countdown="autoDismissingAlertCountdown = $event"
-  >
-    Alert countdown: {{ autoDismissingAlertCountdown }} interval: {{ autoDismissingAlertInterval }}
-  </BAlert>
-  <BButtonGroup>
-    <BButton @click="autoDismissingAlert = autoDismissingAlert + 1000">Adjust Alert Time +1000</BButton>
-    <BButton @click="autoDismissingAlert = autoDismissingAlert - 1000">Adjust Alert Time -1000</BButton>
-    <BButton @click="autoDismissingAlertInterval = autoDismissingAlertInterval + 100">Adjust Alert interval +100</BButton>
-    <BButton @click="autoDismissingAlertInterval = autoDismissingAlertInterval - 100">Adjust Alert interval -100</BButton>
-  </BButtonGroup>
-  <template #html>
-
-```vue
-<template>
-  <BAlert
-    v-model="autoDismissingAlert"
-    :interval="autoDismissingAlertInterval"
-    @close-countdown="autoDismissingAlertCountdown = $event"
-  >
-    Alert countdown: {{ autoDismissingAlertCountdown }} interval: {{ autoDismissingAlertInterval }}
-  </BAlert>
-
-  <BButtonGroup>
-    <BButton @click="autoDismissingAlert = autoDismissingAlert + 1000"
-      >Adjust Alert Time +1000</BButton
-    >
-    <BButton @click="autoDismissingAlert = autoDismissingAlert - 1000"
-      >Adjust Alert Time -1000</BButton
-    >
-    <BButton @click="autoDismissingAlertInterval = autoDismissingAlertInterval + 100"
-      >Adjust Alert interval +100</BButton
-    >
-    <BButton @click="autoDismissingAlertInterval = autoDismissingAlertInterval - 100"
-      >Adjust Alert interval -100</BButton
-    >
-  </BButtonGroup>
-</template>
-
-<script setup lang="ts">
-const autoDismissingAlert = ref(10000)
-const autoDismissingAlertInterval = ref(1000)
-const autoDismissingAlertCountdown = ref(0)
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/AlertAutoDismissible.vue
 
 ## Fading alerts
 
@@ -276,75 +59,7 @@ Use the `fade` prop to enable animation. By default alerts are not animated.
 
 Note that `bootstrap-vue-next` uses Vue's transitions for this animation rather than bootstrap's `.fade` class.
 
-<HighlightCard>
-  <BAlert :model-value="true" fade>Default Alert</BAlert>
-
-<BAlert variant="success" :model-value="true" fade>Success Alert</BAlert>
-
-<BAlert v-model="showDismissibleAlert" variant="danger" dismissible fade> Dismissible Alert! </BAlert>
-
-<BAlert
-v-model="dismissCountDown"
-dismissible
-variant="warning"
-fade
-@close-countdown="countdown = $event">
-
-  <p>This alert will dismiss after {{ countdown / 1000 }} seconds...</p>
-  <BProgress variant="warning" :max="dismissCountDown" :value="countdown" height="4px" />
-</BAlert>
-
-<BButton variant="info" class="m-1" @click="dismissCountDown = dismissCountDown + 5000">
-Add a five seconds to the alert with countdown timer
-</BButton>
-
-<BButton variant="info" class="m-1" @click="showDismissibleAlert = !showDismissibleAlert">
-{{ !showDismissibleAlert ? 'Show' : 'Hide' }} dismissible alert
-</BButton>
-<template #html>
-
-```vue
-<template>
-  <BAlert :model-value="true" fade>Default Alert</BAlert>
-
-  <BAlert variant="success" :model-value="true" fade>Success Alert</BAlert>
-
-  <BAlert v-model="showDismissibleAlert" variant="danger" dismissible fade>
-    Dismissible Alert!
-  </BAlert>
-
-  <BAlert
-    v-model="dismissCountDown"
-    dismissible
-    variant="warning"
-    fade
-    @close-countdown="countdown = $event"
-  >
-    <p>This alert will dismiss after {{ countdown / 1000 }} seconds...</p>
-    <BProgress variant="warning" :max="dismissCountDown" :value="countdown" height="4px" />
-  </BAlert>
-
-  <BButton variant="info" class="m-1" @click="dismissCountDown = dismissCountDown + 5000">
-    Add a five seconds to the alert with countdown timer
-  </BButton>
-
-  <BButton variant="info" class="m-1" @click="showDismissibleAlert = !showDismissibleAlert">
-    {{ !showDismissibleAlert ? 'Show' : 'Hide' }} dismissible alert
-  </BButton>
-</template>
-
-<script setup lang="ts">
-import {ref} from 'vue'
-
-const showDismissibleAlert = ref(false)
-
-const dismissCountDown = ref(10000)
-const countdown = ref(0)
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/AlertFade.vue
 
 ## Exposed functions
 
@@ -355,57 +70,7 @@ The BAlert exposes four functions to manipulate the state of an active timer: `p
 3. Restart: restarts the timer back to its v-model saved spot. Ex: v-model="5400" and restarted at 3200ms will restart back to 5400ms
 4. Stop: stops the timer. Unlike pause, it sets the value to 0ms and cannot be `resumed`, only `restarted`
 
-<HighlightCard>
-  <BAlert
-    v-model="secondAutoDismissingAlert"
-    ref="myAlert"
-    @close-countdown="secondAutoDismissingAlertCountdown = $event"
-  >
-    Alert countdown: {{ secondAutoDismissingAlertCountdown }}
-  </BAlert>
-  <BButtonGroup>
-    <BButton @click="pause">pause</BButton>
-    <BButton @click="resume">resume</BButton>
-    <BButton @click="restart">restart</BButton>
-    <BButton @click="stop">stop</BButton>
-  </BButtonGroup>
-  <template #html>
-
-```vue
-<template>
-  <BAlert
-    v-model="secondAutoDismissingAlert"
-    ref="myAlert"
-    @close-countdown="secondAutoDismissingAlertCountdown = $event"
-  >
-    Alert countdown: {{ secondAutoDismissingAlertCountdown }}
-  </BAlert>
-
-  <BButtonGroup>
-    <BButton @click="pause">pause</BButton>
-    <BButton @click="resume">resume</BButton>
-    <BButton @click="restart">restart</BButton>
-    <BButton @click="stop">stop</BButton>
-  </BButtonGroup>
-</template>
-
-<script setup lang="ts">
-import type {BAlert} from 'bootstrap-vue-next'
-
-const secondAutoDismissingAlert = ref(10000)
-const secondAutoDismissingAlertCountdown = ref(0)
-const myAlert = ref<null | InstanceType<typeof BAlert>>(null)
-
-// Where 'myAlert' is the **ref** of the BAlert
-const pause = () => myAlert.value?.pause()
-const resume = () => myAlert.value?.resume()
-const restart = () => myAlert.value?.restart()
-const stop = () => myAlert.value?.stop()
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/AlertFunctions.vue
 
 ## Timer Props
 
@@ -414,31 +79,12 @@ const stop = () => myAlert.value?.stop()
 
 <ComponentReference :data="data" />
 
-<script setup lang="ts">
+<script lang="ts">
 import {data} from '../../data/components/alert.data'
-import {BAlert, BProgress, BButton, BButtonGroup} from 'bootstrap-vue-next'
-import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
-import HighlightCard from '../../components/HighlightCard.vue'
-import {ref, computed} from 'vue'
 
-const showDismissibleAlert = ref(false);
-
-const dismissCountDown = ref(10000);
-const countdown = ref(0);
-
-const secondDismissibleAlert = ref(true);
-
-const autoDismissingAlert = ref(10000);
-const autoDismissingAlertInterval = ref(1000);
-const autoDismissingAlertCountdown = ref(0);
-
-const secondAutoDismissingAlert = ref(10000);
-const secondAutoDismissingAlertCountdown = ref(0);
-const myAlert = ref<HTMLElement | null>(null)
-
-const pause = () => myAlert.value?.pause()
-const resume = () => myAlert.value?.resume()
-const restart = () => myAlert.value?.restart()
-const stop = () => myAlert.value?.stop()
+export default {
+  setup() {
+    return {data}
+  }
+}
 </script>

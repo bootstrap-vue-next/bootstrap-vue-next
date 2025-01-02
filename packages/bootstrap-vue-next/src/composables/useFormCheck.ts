@@ -1,7 +1,10 @@
-import type {AriaInvalid, ButtonVariant, Size} from '../types'
-import {computed, type MaybeRefOrGetter, toRef, toValue} from 'vue'
-import useAriaInvalid from './useAriaInvalid'
-import useStateClass from './useStateClass'
+import type {AriaInvalid} from '../types/AriaInvalid'
+import {computed, type MaybeRefOrGetter, readonly, toRef, toValue} from 'vue'
+import {useAriaInvalid} from './useAriaInvalid'
+import {useStateClass} from './useStateClass'
+import type {Size} from '../types/Size'
+import type {ButtonVariant} from '../types/ColorTypes'
+import type {ValidationState} from '../types/CommonTypes'
 
 interface ClassesItemsInput {
   plain?: boolean
@@ -34,11 +37,11 @@ const getClasses = (items: MaybeRefOrGetter<ClassesItemsInput>) =>
 interface InputClassesItemsInput {
   plain?: boolean
   button?: boolean
-  state?: boolean | null
+  state?: ValidationState
 }
 
 const getInputClasses = (items: MaybeRefOrGetter<InputClassesItemsInput>) => {
-  const resolvedItems = toRef(items)
+  const resolvedItems = readonly(toRef(items))
 
   const stateClass = useStateClass(() => resolvedItems.value.state ?? null)
 
@@ -77,11 +80,11 @@ const getLabelClasses = (items: MaybeRefOrGetter<LabelClasesItemsInput>) =>
 interface GroupAttrItemsInput {
   required?: boolean
   ariaInvalid?: AriaInvalid
-  state?: boolean | null
+  state?: ValidationState
 }
 
 const getGroupAttr = (items: MaybeRefOrGetter<GroupAttrItemsInput>) => {
-  const resolvedItems = toRef(items)
+  const resolvedItems = readonly(toRef(items))
   const computedAriaInvalid = useAriaInvalid(
     () => resolvedItems.value.ariaInvalid,
     () => resolvedItems.value.state

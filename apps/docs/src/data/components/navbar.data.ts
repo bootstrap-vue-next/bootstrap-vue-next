@@ -1,224 +1,189 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
+import {buildCommonProps, omit, pick} from '../../utils'
+import {linkProps, linkTo} from '../../utils/link-props'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BNavbar',
+      sourcePath: '/BNavbar/BNavbar.vue',
       props: {
         '': {
-          autoClose: {
-            type: 'boolean',
-            default: true,
-          },
           container: {
             type: "boolean | 'fluid' | Breakpoint",
             default: 'fluid',
+            description:
+              "Use the container option to change the layout of the navbar. By default, the navbar is a fluid container. Use 'fluid' for a full width navbar, or a responsive breakpoint for a container width navbar.",
           },
           fixed: {
             type: "'top' | 'bottom'",
             default: undefined,
+            description:
+              "Set to 'top' for fixed to the top of the viewport, or 'bottom' for fixed to the bottom of the viewport",
           },
           print: {
             type: 'boolean',
             default: false,
+            description:
+              'Navbars are hidden by default when printing. When this prop is set it will be printed',
           },
           sticky: {
             type: "'top' | 'bottom'",
             default: undefined,
-          },
-          tag: {
-            type: 'string',
-            default: 'nav',
+            description:
+              "Set to true to make the navbar stick to the top of the viewport (or parent container that has 'position: relative' set) when scrolled",
           },
           toggleable: {
             type: 'boolean | Breakpoint',
             default: false,
+            description:
+              "Set to 'true' for an always collapsed navbar, or to a specific breakpoint at which point the navbar will be expanded: 'sm', 'md', 'lg', 'xl', or 'xxl'",
           },
-          variant: {
-            type: 'ColorVariant | null',
-            default: null,
-          },
-        },
+          ...pick(
+            buildCommonProps({
+              tag: {
+                default: 'nav',
+              },
+            }),
+            ['autoClose', 'tag', 'variant']
+          ),
+        } satisfies Record<keyof BvnComponentProps['BNavbar'], PropertyReference>,
       },
-      emits: [],
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the navbar',
         },
       ],
     },
     {
       component: 'BNavbarBrand',
+      sourcePath: '/BNavbar/BNavbarBrand.vue',
       props: {
         '': {
-          active: {
-            type: 'boolean',
-            default: undefined,
+          ...pick(
+            buildCommonProps({
+              tag: {
+                default: 'ul',
+              },
+            }),
+            ['tag']
+          ),
+        } satisfies Record<
+          Exclude<keyof BvnComponentProps['BNavbarBrand'], keyof typeof linkProps>,
+          PropertyReference
+        >,
+        'BLink props': {
+          _linkTo: {
+            type: linkTo,
           },
-          activeClass: {
-            type: 'string',
-            default: undefined,
-          },
-          disabled: {
-            type: 'boolean',
-            default: undefined,
-          },
-          exactActiveClass: {
-            type: 'string',
-            default: undefined,
-          },
-          href: {
-            type: 'string',
-            default: undefined,
-          },
-          icon: {
-            type: 'boolean',
-            default: undefined,
-          },
-          opacity: {
-            type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
-            default: undefined,
-          },
-          opacityHover: {
-            type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
-            default: undefined,
-          },
-          rel: {
-            type: 'string',
-            default: undefined,
-          },
-          replace: {
-            type: 'boolean',
-            default: undefined,
-          },
-          routerComponentName: {
-            type: 'string',
-            default: undefined,
-          },
-          stretched: {
-            type: 'boolean',
-            default: false,
-          },
-          tag: {
-            type: 'string',
-            default: 'div',
-          },
-          target: {
-            type: 'LinkTarget',
-            default: undefined,
-          },
-          to: {
-            type: 'RouteLocationRaw',
-            default: undefined,
-          },
-          underlineOffset: {
-            type: "1 | 2 | 3 | '1' | '2' | '3'",
-            default: undefined,
-          },
-          underlineOffsetHover: {
-            type: "1 | 2 | 3 | '1' | '2' | '3'",
-            default: undefined,
-          },
-          underlineOpacity: {
-            type: "0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'",
-            default: undefined,
-          },
-          underlineOpacityHover: {
-            type: "0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'",
-            default: undefined,
-          },
-          underlineVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-          variant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
+          ...omit(linkProps, ['routerTag']),
         },
       },
-      emits: [],
       slots: [
         {
           name: 'default',
-          description: '',
-          scope: [],
+          description: 'Content to place in the navbar brand',
         },
       ],
     },
     {
       component: 'BNavbarNav',
+      sourcePath: '/BNavbar/BNavbarNav.vue',
       props: {
         '': {
           align: {
             type: 'AlignmentJustifyContent',
             default: undefined,
+            description:
+              "Align the nav items in the nav: 'start', 'end', 'center', 'between', 'around', or 'evenly'",
           },
           fill: {
             type: 'boolean',
             default: false,
+            description:
+              'Proportionately fills all horizontal space with nav items. All horizontal space is occupied, but not every nav item has the same width',
           },
           justified: {
             type: 'boolean',
             default: false,
+            description:
+              "Fills all horizontal space with nav items, but unlike 'fill', every nav item will be the same width",
           },
           small: {
             type: 'boolean',
             default: false,
+            description: 'Makes the nav smaller',
           },
-          tag: {
-            type: 'string',
-            default: 'ul',
-          },
-        },
+          ...pick(
+            buildCommonProps({
+              tag: {
+                default: 'ul',
+              },
+            }),
+            ['tag']
+          ),
+        } satisfies Record<keyof BvnComponentProps['BNavbarNav'], PropertyReference>,
       },
-      emits: [],
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the navbar nav',
         },
       ],
     },
     {
       component: 'BNavbarToggle',
+      sourcePath: '/BNavbar/BNavbarToggle.vue',
       props: {
         '': {
-          disabled: {
-            type: 'boolean',
-            default: false,
-          },
           label: {
             type: 'string',
             default: 'Toggle navigation',
+            description: "String to place in the toggle's 'aria-label' attribute",
           },
           target: {
-            type: 'string | string[]',
+            type: 'string | readonly string[]',
             default: undefined,
+            description:
+              'ID (or array of IDs) of the collapse/sidebar components that should be toggled',
           },
-        },
+          ...pick(
+            buildCommonProps({
+              tag: {
+                default: 'ul',
+              },
+            }),
+            ['disabled']
+          ),
+        } satisfies Record<keyof BvnComponentProps['BNavbarToggle'], PropertyReference>,
       },
       emits: [
         {
+          event: 'click',
+          description: 'Emitted when the toggle is clicked',
           args: [
             {
               arg: 'click',
-              description: '',
+              description: 'Native mouse event object',
               type: 'MouseEvent',
             },
           ],
-          description: '',
-          event: 'click',
         },
       ],
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Alternate content to replace the default Bootstrap hamburger',
+          scope: [
+            {
+              prop: 'expanded',
+              type: 'boolean',
+              description: '`true` if the collapse is expanded, `false` otherwise',
+              notYetImplemented: true,
+            },
+          ],
         },
       ],
     },

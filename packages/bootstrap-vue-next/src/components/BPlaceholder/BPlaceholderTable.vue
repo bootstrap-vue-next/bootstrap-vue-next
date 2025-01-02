@@ -1,6 +1,6 @@
 <template>
   <BTableSimple>
-    <slot v-if="!props.hideHeader" name="thead">
+    <slot v-if="!props.noHeader" name="thead">
       <thead>
         <tr>
           <th v-for="(_, i) in computedHeaderColumnsLength" :key="i">
@@ -46,12 +46,12 @@
 </template>
 
 <script setup lang="ts">
-import {toRef} from 'vue'
-import type {BPlaceholderTableProps} from '../../types'
+import type {BPlaceholderTableProps} from '../../types/ComponentProps'
 import BTableSimple from '../BTable/BTableSimple.vue'
 import BPlaceholder from './BPlaceholder.vue'
 import {useToNumber} from '@vueuse/core'
-import {useDefaults} from '../../composables'
+import {useDefaults} from '../../composables/useDefaults'
+import {computed} from 'vue'
 
 const _props = withDefaults(defineProps<BPlaceholderTableProps>(), {
   animation: undefined,
@@ -67,7 +67,7 @@ const _props = withDefaults(defineProps<BPlaceholderTableProps>(), {
   headerColumns: undefined,
   headerSize: 'md',
   headerVariant: undefined,
-  hideHeader: false,
+  noHeader: false,
   rows: 3,
   showFooter: false,
   size: 'md',
@@ -86,18 +86,18 @@ defineSlots<{
 
 const columnsToNumber = useToNumber(() => props.columns)
 const rowsToNumber = useToNumber(() => props.rows)
-const computedHeaderColumns = toRef(() => props.headerColumns ?? NaN)
-const computedFooterColumns = toRef(() => props.footerColumns ?? NaN)
+const computedHeaderColumns = computed(() => props.headerColumns ?? NaN)
+const computedFooterColumns = computed(() => props.footerColumns ?? NaN)
 const headerColumnsNumber = useToNumber(computedHeaderColumns)
 const footerColumnsNumber = useToNumber(computedFooterColumns)
 
-const columnsNumber = toRef(() => columnsToNumber.value || 5)
-const rowsNumber = toRef(() => rowsToNumber.value || 3)
+const columnsNumber = computed(() => columnsToNumber.value || 5)
+const rowsNumber = computed(() => rowsToNumber.value || 3)
 
-const computedHeaderColumnsLength = toRef(() =>
+const computedHeaderColumnsLength = computed(() =>
   props.headerColumns === undefined ? columnsNumber.value : headerColumnsNumber.value
 )
-const computedFooterColumnsLength = toRef(() =>
+const computedFooterColumnsLength = computed(() =>
   props.footerColumns === undefined ? columnsNumber.value : footerColumnsNumber.value
 )
 </script>

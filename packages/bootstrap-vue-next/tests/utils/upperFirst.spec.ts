@@ -1,4 +1,4 @@
-import {upperFirst} from '../../src/utils'
+import {upperFirst} from '../../src/utils/stringUtils'
 import {describe, expect, it} from 'vitest'
 
 describe('upperFirst', () => {

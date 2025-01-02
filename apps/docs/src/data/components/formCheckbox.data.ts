@@ -1,10 +1,12 @@
-import type {ComponentReference} from '../../types'
+import type {ComponentReference, PropertyReference} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormCheckbox',
+      sourcePath: '/BFormCheckbox/BFormCheckbox.vue',
       props: {
         '': {
           button: {
@@ -16,7 +18,7 @@ export default {
             type: 'boolean',
             default: false,
             description:
-              "When set, renders the checkbox as part of a button group (it doesn't enclose the checkbox and label with a div). It is not necessary to set this to true if this is part of a RadioGroup as it is handled internally",
+              "When set, renders the checkbox as part of a button group (it doesn't enclose the checkbox and label with a div). It is not necessary to set this to true if this is part of a CheckboxGroup as it is handled internally",
           },
           buttonVariant: {
             type: 'ButtonVariant | null',
@@ -34,6 +36,11 @@ export default {
             default: false,
             description:
               'When set, renders the checkbox as an inline element rather than as a 100% width block',
+          },
+          inputClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: 'Class to be applied to the body of the checkbox item',
           },
           modelValue: {
             type: 'CheckboxValue | readonly CheckboxValue[]',
@@ -64,7 +71,7 @@ export default {
           },
           ...pick(buildCommonProps(), [
             'ariaLabel',
-            'ariaLabelledBy',
+            'ariaLabelledby',
             'autofocus',
             'disabled',
             'form',
@@ -74,8 +81,9 @@ export default {
             'required',
             'size',
             'state',
+            'wrapperAttrs',
           ]),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormCheckbox'], PropertyReference>,
       },
       emits: [
         {
@@ -112,6 +120,7 @@ export default {
     },
     {
       component: 'BFormCheckboxGroup',
+      sourcePath: '/BFormCheckbox/BFormCheckboxGroup.vue',
       props: {
         '': {
           buttonVariant: {
@@ -161,7 +170,6 @@ export default {
             'disabled',
             'disabledField',
             'form',
-            'htmlField',
             'id',
             'name',
             'plain',
@@ -171,7 +179,7 @@ export default {
             'textField',
             'valueField',
           ]),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormCheckboxGroup'], PropertyReference>,
       },
       emits: [
         {
@@ -191,13 +199,33 @@ export default {
         {
           name: 'default',
           description: 'Content (form checkboxes) to place in the form checkbox group',
-          scope: [],
         },
         {
           name: 'first',
           description:
             'Slot to place for checkboxes so that they appear before checks generated from options prop',
-          scope: [],
+        },
+        {
+          name: 'option',
+          description:
+            'Use this slot to have finer control over the content render inside each checkbox button.',
+          scope: [
+            {
+              prop: 'value',
+              type: 'string | number | undefined',
+              description: 'The value of the checkbox button',
+            },
+            {
+              prop: 'disabled',
+              type: 'boolean | undefined',
+              description: 'Whether the checkbox button is disabled',
+            },
+            {
+              prop: 'text',
+              type: 'string | undefined',
+              description: 'The text to display for the checkbox button',
+            },
+          ],
         },
       ],
     },

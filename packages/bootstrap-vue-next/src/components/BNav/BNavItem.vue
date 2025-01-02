@@ -10,19 +10,22 @@
     >
       <slot />
     </BLink>
+    <slot name="after" />
   </li>
 </template>
 
 <script setup lang="ts">
 import {computed} from 'vue'
 import BLink from '../BLink/BLink.vue'
-import type {BNavItemProps} from '../../types'
-import {pick} from '../../utils'
-import {useDefaults} from '../../composables'
+import type {BNavItemProps} from '../../types/ComponentProps'
+import {pick} from '../../utils/object'
+import {useDefaults} from '../../composables/useDefaults'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  after?: (props: Record<string, never>) => any
 }>()
 
 const _props = withDefaults(defineProps<BNavItemProps>(), {
@@ -61,6 +64,7 @@ const computedLinkProps = computed(() =>
   pick(props, [
     'active',
     'activeClass',
+    'exactActiveClass',
     'append',
     'disabled',
     'href',
@@ -80,5 +84,4 @@ const computedLinkProps = computed(() =>
     'variant',
   ])
 )
-computedLinkProps.value.activeClass
 </script>

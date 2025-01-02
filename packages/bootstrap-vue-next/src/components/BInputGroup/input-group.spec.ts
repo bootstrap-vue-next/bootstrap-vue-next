@@ -112,52 +112,6 @@ describe('input-group', () => {
     expect($nested.text()).toBe('foobar')
   })
 
-  it('has child span element when prop prependHtml', () => {
-    const wrapper = mount(BInputGroup, {
-      props: {prependHtml: '<h1>foobar</h1>'},
-    })
-    const $span = wrapper.find('span')
-    expect($span.exists()).toBe(true)
-  })
-
-  it('has child span has further child span when prop prependHtml', () => {
-    const wrapper = mount(BInputGroup, {
-      props: {prependHtml: '<h1>foobar</h1>'},
-    })
-    const $span = wrapper.get('span')
-    const $nested = $span.find('span')
-    expect($nested.exists()).toBe(true)
-  })
-
-  it('has child span has further child renders html', () => {
-    const wrapper = mount(BInputGroup, {
-      props: {prependHtml: '<h1>foobar</h1>'},
-    })
-    const $span = wrapper.get('span')
-    const $nested = $span.get('span')
-    const $h1 = $nested.find('h1')
-    expect($h1.exists()).toBe(true)
-  })
-
-  it('has child span has further child renders html text', () => {
-    const wrapper = mount(BInputGroup, {
-      props: {prependHtml: '<h1>foobar</h1>'},
-    })
-    const $span = wrapper.get('span')
-    const $nested = $span.get('span')
-    const $h1 = $nested.get('h1')
-    expect($h1.text()).toBe('foobar')
-  })
-
-  it('child span prefers to render prop prependHtml over prepend', () => {
-    const wrapper = mount(BInputGroup, {
-      props: {prependHtml: '<h1>html</h1>', prepend: 'foobar'},
-    })
-    const $span = wrapper.get('span')
-    const $nested = $span.get('span')
-    expect($nested.text()).toBe('html')
-  })
-
   it('does not have child span if prop prepend, but also slot prepend', () => {
     // May break if a span element is ever non v-if on the element
     const wrapper = mount(BInputGroup, {
@@ -186,7 +140,7 @@ describe('input-group', () => {
     expect($span.exists()).toBe(true)
   })
 
-  it('child span has static class input-group-text', () => {
+  it('child span has static class input-group-text when append', () => {
     const wrapper = mount(BInputGroup, {
       props: {append: 'foobar'},
     })
@@ -194,7 +148,7 @@ describe('input-group', () => {
     expect($span.classes()).toContain('input-group-text')
   })
 
-  it('child span has an additional span element', () => {
+  it('child span has an additional span element when append', () => {
     const wrapper = mount(BInputGroup, {
       props: {append: 'foobar'},
     })
@@ -212,63 +166,9 @@ describe('input-group', () => {
     expect($nested.text()).toBe('foobar')
   })
 
-  it('has child span element when prop appendHtml', () => {
-    const wrapper = mount(BInputGroup, {
-      props: {appendHtml: '<h1>foobar</h1>'},
-    })
-    const $span = wrapper.find('span')
-    expect($span.exists()).toBe(true)
-  })
-
-  it('has child span has further child span when prop appendHtml', () => {
-    const wrapper = mount(BInputGroup, {
-      props: {appendHtml: '<h1>foobar</h1>'},
-    })
-    const $span = wrapper.get('span')
-    const $nested = $span.find('span')
-    expect($nested.exists()).toBe(true)
-  })
-
-  it('has child span has further child renders html', () => {
-    const wrapper = mount(BInputGroup, {
-      props: {appendHtml: '<h1>foobar</h1>'},
-    })
-    const $span = wrapper.get('span')
-    const $nested = $span.get('span')
-    const $h1 = $nested.find('h1')
-    expect($h1.exists()).toBe(true)
-  })
-
-  it('has child span has further child renders html text', () => {
-    const wrapper = mount(BInputGroup, {
-      props: {appendHtml: '<h1>foobar</h1>'},
-    })
-    const $span = wrapper.get('span')
-    const $nested = $span.get('span')
-    const $h1 = $nested.get('h1')
-    expect($h1.text()).toBe('foobar')
-  })
-
-  it('child span prefers to render prop appendHtml over append', () => {
-    const wrapper = mount(BInputGroup, {
-      props: {appendHtml: '<h1>html</h1>', append: 'foobar'},
-    })
-    const $span = wrapper.get('span')
-    const $nested = $span.get('span')
-    expect($nested.text()).toBe('html')
-  })
-
   it('prop prepend prop append and slot default render in correct order', () => {
     const wrapper = mount(BInputGroup, {
       props: {prepend: 'prepend', append: 'append'},
-      slots: {default: 'default'},
-    })
-    expect(wrapper.text()).toBe('prependdefaultappend')
-  })
-
-  it('prop prependHtml prop appendHtml and slot default render in correct order', () => {
-    const wrapper = mount(BInputGroup, {
-      props: {prependHtml: 'prepend', appendHtml: 'append'},
       slots: {default: 'default'},
     })
     expect(wrapper.text()).toBe('prependdefaultappend')

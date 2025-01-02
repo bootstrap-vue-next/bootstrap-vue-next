@@ -1,5 +1,6 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <BNavbar variant="primary" sticky="top" toggleable="lg" :container="true" v-b-color-mode="'dark'">
+  <BNavbar v-b-color-mode="'dark'" variant="primary" sticky="top" toggleable="lg" :container="true">
     <BToastOrchestrator />
     <BModalOrchestrator />
     <div class="d-flex gap-2 align-items-center">
@@ -31,6 +32,7 @@
         <BNav>
           <BNavItem
             v-for="link in headerLinks"
+            :key="link.route"
             :to="link.route"
             :active="route.path === `${link.route}.html`"
             class="py-2"
@@ -46,6 +48,7 @@
         <BNav class="d-flex">
           <BNavItem
             v-for="link in headerExternalLinks"
+            :key="link.url"
             :href="link.url"
             :link-attrs="{'aria-label': link.label}"
             target="_blank"
@@ -81,7 +84,7 @@
     </div>
   </BNavbar>
   <ClientOnly>
-    <div class="py-4 px-3 text-end" v-if="!isLargeScreen">
+    <div v-if="!isLargeScreen" class="py-4 px-3 text-end">
       <BNavbarToggle v-b-toggle.otp-menu class="otp-menu-toggle">
         On this page
         <ChevronRight aria-hidden />
@@ -96,7 +99,7 @@
           v-model="sidebar"
           responsive="lg"
           title="Browse docs"
-          header-class="d-flex"
+          header-class="d-flex offcanvas-hidden-width"
           class="h-100 border-0"
         >
           <TableOfContentsNav />
@@ -131,10 +134,10 @@
                 placement="end"
                 title="On this page"
                 class="h-100 border-0"
-                header-class="pb-0 d-flex"
+                header-class="pb-0 d-flex offcanvas-hidden-width"
                 body-class="py-2"
               >
-                <div class="bd-toc" />
+                <PageContents />
               </BOffcanvas>
             </ClientOnly>
           </aside>
@@ -150,25 +153,25 @@ import {
   BCol,
   BCollapse,
   BContainer,
-  BNavItemDropdown,
   BDropdownItem,
+  BModalOrchestrator,
   BNav,
   BNavbar,
   BNavbarBrand,
   BNavbarNav,
   BNavbarToggle,
   BNavItem,
+  BNavItemDropdown,
   BOffcanvas,
   BRow,
-  useColorMode,
-  vBToggle,
-  vBColorMode,
   BToastOrchestrator,
-  BModalOrchestrator,
+  useColorMode,
+  vBColorMode,
+  vBToggle,
 } from 'bootstrap-vue-next'
-import {inject, ref, computed, onMounted, watch} from 'vue'
+import {computed, inject, onMounted, ref, watch} from 'vue'
 import GithubIcon from '~icons/bi/github'
-import OpencollectiveIcon from '~icons/simple-icons/opencollective'
+import OpencollectiveIcon from '~icons/logos/opencollective'
 import DiscordIcon from '~icons/bi/discord'
 import MoonStarsFill from '~icons/bi/moon-stars-fill'
 import SunFill from '~icons/bi/sun-fill'
@@ -176,9 +179,7 @@ import ChevronRight from '~icons/bi/chevron-right'
 import CircleHalf from '~icons/bi/circle-half'
 import {useData, useRoute, withBase} from 'vitepress'
 import {appInfoKey} from './keys'
-import {useMediaQuery, type BasicColorMode, type UseColorModeReturn} from '@vueuse/core'
-import TableOfContentsNav from '../../src/components/TableOfContentsNav.vue'
-// @ts-ignore
+import {useMediaQuery} from '@vueuse/core'
 import VPNavBarSearch from 'vitepress/dist/client/theme-default/components/VPNavBarSearch.vue'
 
 // https://vitepress.dev/reference/runtime-api#usedata
@@ -188,6 +189,10 @@ const route = useRoute()
 const globalData = inject(appInfoKey, {
   discordUrl: '',
   githubUrl: '',
+  githubPackageDirectory: '',
+  githubComponentsDirectory: '',
+  githubComposablesDirectory: '',
+  githubDirectivesDirectory: '',
   opencollectiveUrl: '',
 })
 
@@ -279,13 +284,7 @@ watch(
 </script>
 
 <style lang="scss">
-@import 'vitepress/dist/client/theme-default/styles/vars.css';
-@import 'vitepress/dist/client/theme-default/styles/base.css';
-@import 'vitepress/dist/client/theme-default/styles/utils.css';
-@import 'vitepress/dist/client/theme-default/styles/components/custom-block.css';
-@import 'vitepress/dist/client/theme-default/styles/components/vp-code.css';
-@import 'vitepress/dist/client/theme-default/styles/components/vp-code-group.css';
-@import 'vitepress/dist/client/theme-default/styles/components/vp-doc.css';
+@use 'bootstrap/dist/css/bootstrap.css';
 
 :root {
   --vp-c-brand-1: hsla(237, 31%, 35%, 1);
@@ -346,6 +345,20 @@ watch(
 
     hr {
       margin: 3rem 0;
+    }
+
+    ol {
+      list-style-type: decimal;
+    }
+
+    ul {
+      list-style-type: disc;
+    }
+
+    // alternative solution until https://github.com/vuejs/vitepress/pull/4082 is released
+    table {
+      @extend .table;
+      @extend .table-striped;
     }
   }
 
@@ -689,38 +702,6 @@ watch(
         column-gap: 1.5rem;
       }
     }
-
-    .table-of-contents {
-      font-size: 0.875rem;
-
-      ul {
-        padding-left: 0;
-        margin-bottom: 0;
-        list-style: none;
-
-        a {
-          display: block;
-          padding: 0.125rem 0 0.125rem 0.75rem;
-          color: inherit;
-          text-decoration: none;
-          border-left: 0.125rem solid transparent;
-
-          &.active {
-            color: var(--bd-toc-color);
-            border-left-color: var(--bd-toc-color);
-          }
-
-          &:hover {
-            color: var(--bd-toc-color);
-            border-left-color: var(--bd-toc-color);
-          }
-        }
-
-        ul {
-          padding-left: 1rem;
-        }
-      }
-    }
   }
 
   .offcanvas.offcanvas-end {
@@ -756,7 +737,7 @@ watch(
 }
 
 @media (min-width: 992px) {
-  .offcanvas-header button {
+  .offcanvas-header.offcanvas-hidden-width .btn-close {
     display: none !important;
   }
 }

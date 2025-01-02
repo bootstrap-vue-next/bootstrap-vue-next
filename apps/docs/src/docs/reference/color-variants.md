@@ -1,10 +1,5 @@
 # Color variants and CSS class mapping
 
-<ContentsSidebar>
-
-[[toc]]
-
-</ContentsSidebar>
 <div class="lead mb-5">
 
 <p>Color variants are available when using the default Bootstrap v5 CSS and their mappings to CSS classes</p>
@@ -108,6 +103,16 @@ These translate to class names `text-{variant}`
 
 These variants are used by components (such as `BCard`, `BModal`, etc.) that provide `text-variant` and `*-text-variant` props.
 
+## Variant Interactions
+
+The `bg-variant` and `text-variant` props take precedence over the `variant` prop. It is more
+straightforward to set **either** `variant` **or** `bg-variant` and `text-variant`, but not a
+combination of `variant` with the other two. But the more specific props effectively override
+the `text` or `bg` portion of the `variant` prop, so an alternative is to use the `variant`
+prop and then override the `text` or `bg` as needed.
+
+<<< DEMO ./demo/VariantInteractions.vue#template{vue-html}
+
 ## Component specific variants
 
 Some Bootstrap v5 components require additional CSS styling, or additional pseudo selector styling (i.e buttons), and hence have their own underlying variant CSS classes.
@@ -118,11 +123,15 @@ All the base variants
 
 These translate to class names `alert-{variant}`.
 
+See [Variant Interactions](#variant-interactions) for details on interactions between `variant`, `bg-variant`, and `text-variant`.
+
 ### Badge variants
 
 All the base variants
 
 These translate to class names `badge-{variant}`.
+
+See [Variant Interactions](#variant-interactions) for details on interactions between `variant`, `bg-variant`, and `text-variant`.
 
 ### Button variants
 
@@ -134,6 +143,8 @@ All the base variants plus:
 These translate to class names `btn-{variant}` and `btn-outline-{variant}`.
 
 Note the `link` variant does not have an outline version.
+
+See [Variant Interactions](#variant-interactions) for details on interactions between `variant`, `bg-variant`, and `text-variant`.
 
 ### Table variants
 
@@ -171,7 +182,7 @@ You may also use the underlying class names directly on elements (and some compo
 
 ## Creating custom variants
 
-When creating custom variants, follow the Bootstrap v4 variant CSS class naming scheme and they will become available to the various components that use that scheme (i.e. create a custom CSS class `btn-purple` and `purple` becomes a valid variant to use on `BButton`).
+When creating custom variants, follow the Bootstrap v5 variant CSS class naming scheme and they will become available to the various components that use that scheme (i.e. create a custom CSS class `btn-purple` and `purple` becomes a valid variant to use on `BButton`).
 
 Alternatively, you can create new variant theme colors by supplying custom Bootstrap SCSS theme color maps. The default theme color map is (from `bootstrap/scss/\_variables.scss`):
 
@@ -237,7 +248,7 @@ $dark: $gray-900;
 <script setup lang="ts">
 import {BCard} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
-import ContentsSidebar from '../../components/ContentsSidebar.vue'
+
 </script>
 
 <style lang="scss">

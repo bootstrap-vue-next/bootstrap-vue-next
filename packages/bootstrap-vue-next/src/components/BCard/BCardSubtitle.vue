@@ -7,9 +7,9 @@
 </template>
 
 <script setup lang="ts">
-import {useDefaults} from '../../composables'
-import type {BCardSubtitleProps} from '../../types'
-import {computed} from 'vue'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BCardSubtitleProps} from '../../types/ComponentProps'
 
 const _props = withDefaults(defineProps<BCardSubtitleProps>(), {
   tag: 'h6',
@@ -23,7 +23,5 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const computedClasses = computed(() => ({
-  [`text-${props.textVariant}`]: props.textVariant !== null,
-}))
+const computedClasses = useColorVariantClasses(props)
 </script>

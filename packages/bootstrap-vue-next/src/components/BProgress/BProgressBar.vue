@@ -1,13 +1,5 @@
 <template>
-  <div
-    class="progress-bar"
-    :class="computedClasses"
-    role="progressbar"
-    :aria-valuenow="props.value"
-    aria-valuemin="0"
-    :aria-valuemax="props.max"
-    :style="{width: computedWidth}"
-  >
+  <div class="progress-bar" :class="computedClasses" :style="{width: computedWidth}">
     <slot>
       {{ computedLabel }}
     </slot>
@@ -15,17 +7,17 @@
 </template>
 
 <script setup lang="ts">
-import type {BProgressBarProps} from '../../types'
-import {useColorVariantClasses, useDefaults} from '../../composables'
+import type {BProgressBarProps} from '../../types/ComponentProps'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import {useDefaults} from '../../composables/useDefaults'
 import {computed, inject} from 'vue'
-import {progressInjectionKey} from '../../utils'
+import {progressInjectionKey} from '../../utils/keys'
 import {useToNumber} from '@vueuse/core'
 
 const _props = withDefaults(defineProps<BProgressBarProps>(), {
   animated: false,
   bgVariant: null,
   label: undefined,
-  labelHtml: undefined,
   max: undefined,
   precision: 0,
   showProgress: false,
@@ -44,10 +36,9 @@ defineSlots<{
 
 const parentData = inject(progressInjectionKey, null)
 
-const resolvedBackgroundClasses = useColorVariantClasses(props)
-
+const colorClasses = useColorVariantClasses(props)
 const computedClasses = computed(() => [
-  resolvedBackgroundClasses.value,
+  colorClasses.value,
   {
     'progress-bar-animated': props.animated || parentData?.animated.value,
     'progress-bar-striped':
@@ -61,15 +52,13 @@ const numberMax = useToNumber(() => props.max ?? NaN)
 const parentMaxNumber = useToNumber(() => parentData?.max.value ?? NaN)
 
 const computedLabel = computed(() =>
-  props.labelHtml !== undefined
-    ? props.labelHtml
-    : props.showValue || parentData?.showValue.value
-      ? numberValue.value.toFixed(numberPrecision.value)
-      : props.showProgress || parentData?.showProgress.value
-        ? ((numberValue.value * 100) / (numberMax.value || 100)).toFixed(numberPrecision.value)
-        : props.label !== undefined
-          ? props.label
-          : ''
+  props.showValue || parentData?.showValue.value
+    ? numberValue.value.toFixed(numberPrecision.value)
+    : props.showProgress || parentData?.showProgress.value
+      ? ((numberValue.value * 100) / (numberMax.value || 100)).toFixed(numberPrecision.value)
+      : props.label !== undefined
+        ? props.label
+        : ''
 )
 
 const computedWidth = computed(() =>

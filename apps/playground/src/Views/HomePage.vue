@@ -10,6 +10,7 @@
         <BRow>
           <BCol>
             <BButton variant="danger" @click="clearActiveList">Clear all</BButton>
+            <BButton variant="danger" @click="addAllToActiveList">Add all</BButton>
             <BButton
               v-for="(comp, index) in filteredSearch"
               :key="index"
@@ -49,7 +50,8 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, ref} from 'vue'
+import {useLocalStorage} from '@vueuse/core'
+import {computed, ref} from 'vue'
 import TAccordion from '../components/Comps/TAccordion.vue'
 import TAlert from '../components/Comps/TAlert.vue'
 import TAvatar from '../components/Comps/TAvatar.vue'
@@ -134,7 +136,7 @@ const comps: {name: string; is: unknown; disabled?: true}[] = [
 
 const searchQuery = ref('')
 
-const active = ref<string[]>([])
+const active = useLocalStorage<string[]>('bv3-playground-dev-active-list', [])
 
 const filteredSearch = computed(() =>
   searchQuery.value.trim() !== ''
@@ -154,23 +156,15 @@ const switchActive = (name: string): void => {
   if (comp === undefined || comp.disabled === true) return
   const value = comp.name
   const index = active.value.findIndex((el) => el === value)
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   index !== -1 ? active.value.splice(index, 1) : active.value.push(value)
-  if (active.value.length === 0) {
-    localStorage.removeItem('bv3-playground-dev-active-list')
-    return
-  }
-  localStorage.setItem('bv3-playground-dev-active-list', JSON.stringify(active.value))
 }
 
 const clearActiveList = () => {
-  localStorage.removeItem('bv3-playground-dev-active-list')
   active.value = []
 }
 
-onMounted(() => {
-  const activeList = localStorage.getItem('bv3-playground-dev-active-list')
-  if (activeList !== null) {
-    active.value = JSON.parse(activeList)
-  }
-})
+const addAllToActiveList = () => {
+  active.value = comps.map((el) => el.name)
+}
 </script>

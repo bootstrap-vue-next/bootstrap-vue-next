@@ -1,15 +1,12 @@
-import {createBootstrap} from 'bootstrap-vue-next'
-import {defineNuxtPlugin, useId, useRuntimeConfig} from '#imports'
+import { createBootstrap as createBootstrapVue } from 'bootstrap-vue-next/plugins/createBootstrap'
+import { defineNuxtPlugin, useRuntimeConfig } from '#app'
 
 export default defineNuxtPlugin((nuxtApp) => {
   const opts = useRuntimeConfig().public.bootstrapVueNext.plugin
 
   nuxtApp.vueApp.use(
-    createBootstrap({
+    createBootstrapVue({
       ...opts,
-      id: {
-        getId: () => useId(),
-      },
       components: {
         ...opts?.components,
         BModal: {
@@ -28,7 +25,11 @@ export default defineNuxtPlugin((nuxtApp) => {
           teleportTo: '#teleports',
           ...opts?.components?.BToastOrchestrator,
         },
+        BLink: {
+          routerComponentName: 'RouterLink',
+          ...opts?.components?.BLink,
+        },
       },
-    })
+    }),
   )
 })

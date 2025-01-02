@@ -7,13 +7,12 @@
 </template>
 
 <script setup lang="ts">
-import {useDefaults} from '../../composables'
-import type {BCardHeadFootProps} from '../../types'
-import BCardHeadFoot from './BCardHeadFoot.vue'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BCardHeadFootProps} from '../../types/ComponentProps'
+import BCardHeadFoot from '../BCardHeadFoot.vue'
 
 const _props = withDefaults(defineProps<BCardHeadFootProps>(), {
   borderVariant: undefined,
-  html: undefined,
   tag: 'div',
   text: undefined,
   // ColorExtendables props

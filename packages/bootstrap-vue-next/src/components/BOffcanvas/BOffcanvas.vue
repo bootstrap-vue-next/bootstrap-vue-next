@@ -1,16 +1,20 @@
 <template>
-  <Teleport :to="props.teleportTo" :disabled="props.teleportDisabled || isOpenByBreakpoint">
+  <ConditionalTeleport
+    :to="props.teleportTo"
+    :disabled="props.teleportDisabled || isOpenByBreakpoint"
+  >
     <Transition
+      v-if="renderRef || contentShowing || isOpenByBreakpoint"
       v-bind="transitionProps"
-      @before-enter="OnBeforeEnter"
-      @after-enter="OnAfterEnter"
-      @leave="onLeave"
-      @after-leave="OnAfterLeave"
+      :appear="modelValue || props.visible"
     >
       <div
-        v-show="modelValue || isOpenByBreakpoint"
+        v-show="
+          (showRef && ((backdropReady && props.backdropFirst) || !props.backdropFirst)) ||
+          isOpenByBreakpoint
+        "
         :id="computedId"
-        ref="element"
+        ref="_element"
         aria-modal="true"
         role="dialog"
         :class="computedClasses"
@@ -20,7 +24,7 @@
         data-bs-backdrop="false"
         v-bind="$attrs"
       >
-        <template v-if="lazyShowing">
+        <template v-if="contentShowing || isOpenByBreakpoint">
           <div v-if="!props.noHeader" class="offcanvas-header" :class="props.headerClass">
             <slot name="header" v-bind="sharedSlots">
               <h5 :id="`${computedId}-offcanvas-label`" class="offcanvas-title">
@@ -41,41 +45,53 @@
               </template>
             </slot>
           </div>
-          <div
-            class="offcanvas-body"
-            tabindex="0"
-            :class="props.bodyClass"
-            v-bind="props.bodyAttrs"
-          >
+          <div class="offcanvas-body" :class="props.bodyClass" v-bind="props.bodyAttrs">
             <slot v-bind="sharedSlots" />
           </div>
           <div v-if="hasFooterSlot" :class="props.footerClass">
             <slot name="footer" v-bind="sharedSlots" />
           </div>
         </template>
+        <div
+          v-if="needsFallback"
+          ref="_fallbackFocusElement"
+          :class="fallbackClassSelector"
+          tabindex="0"
+          style="width: 0; height: 0; overflow: hidden"
+        />
       </div>
     </Transition>
-    <slot v-if="showBackdrop" name="backdrop">
-      <div class="offcanvas-backdrop fade show" @click="hide('backdrop')" />
+    <slot v-if="!props.noBackdrop" name="backdrop" v-bind="sharedSlots">
+      <Transition v-if="renderBackdropRef" v-bind="backdropTransitionProps">
+        <div
+          v-show="showBackdrop"
+          class="offcanvas-backdrop"
+          :class="{
+            fade: !computedNoAnimation,
+            show: backdropVisible || computedNoAnimation,
+          }"
+          @click="hide('backdrop')"
+        />
+      </Transition>
     </slot>
-  </Teleport>
+  </ConditionalTeleport>
 </template>
 
 <script setup lang="ts">
-import {
-  breakpointsBootstrapV5,
-  onKeyStroke,
-  useBreakpoints,
-  useEventListener,
-  useFocus,
-} from '@vueuse/core'
+import {breakpointsBootstrapV5, onKeyStroke, useBreakpoints, useFocus} from '@vueuse/core'
 import {useActivatedFocusTrap} from '../../composables/useActivatedFocusTrap'
-import {computed, nextTick, ref, toRef, watch} from 'vue'
-import {useDefaults, useId, useSafeScrollLock} from '../../composables'
-import type {BOffcanvasProps} from '../../types'
-import {BvTriggerableEvent, isEmptySlot} from '../../utils'
+import {computed, type EmitFn, nextTick, onMounted, ref, useTemplateRef, watch} from 'vue'
+import {useDefaults} from '../../composables/useDefaults'
+import {useId} from '../../composables/useId'
+import type {BOffcanvasProps} from '../../types/ComponentProps'
+import {BvTriggerableEvent} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
+import ConditionalTeleport from '../ConditionalTeleport.vue'
+import {useSafeScrollLock} from '../../composables/useSafeScrollLock'
+import {isEmptySlot} from '../../utils/dom'
+import {type showHideEmits, useShowHide} from '../../composables/useShowHide'
+import type {Placement} from '../../types/Alignment'
 
 // TODO once the responsive stuff may be implemented correctly,
 // What needs to occur is a fixing of the "body scrolling".
@@ -89,8 +105,8 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const _props = withDefaults(defineProps<BOffcanvasProps>(), {
-  hideBackdrop: false,
+const _props = withDefaults(defineProps<Omit<BOffcanvasProps, 'modelValue'>>(), {
+  backdropFirst: false,
   bodyAttrs: undefined,
   bodyClass: undefined,
   bodyScrolling: false,
@@ -100,42 +116,46 @@ const _props = withDefaults(defineProps<BOffcanvasProps>(), {
   headerCloseLabel: 'Close',
   headerCloseVariant: 'secondary',
   id: undefined,
+  initialAnimation: false,
   lazy: false,
+  noAnimation: false,
+  noBackdrop: false,
   noCloseOnBackdrop: false,
   noCloseOnEsc: false,
   noTrap: false,
   noFocus: false,
   noHeader: false,
   noHeaderClose: false,
+  unmountLazy: false,
   placement: 'start',
   shadow: false,
   teleportDisabled: false,
   teleportTo: 'body',
   title: undefined,
+  show: false,
   width: undefined,
+  visible: false,
 })
 const props = useDefaults(_props, 'BOffcanvas')
 
-const emit = defineEmits<{
-  'close': [value: BvTriggerableEvent]
-  'esc': [value: BvTriggerableEvent]
-  'hidden': [value: BvTriggerableEvent]
-  'hide': [value: BvTriggerableEvent]
-  'hide-prevented': []
-  'show': [value: BvTriggerableEvent]
-  'show-prevented': []
-  'shown': [value: BvTriggerableEvent]
-}>()
+const emit = defineEmits<
+  {
+    close: [value: BvTriggerableEvent]
+    esc: [value: BvTriggerableEvent]
+    backdrop: [value: BvTriggerableEvent]
+    breakpoint: [value: BvTriggerableEvent, opened: boolean]
+  } & showHideEmits
+>()
 
 type SharedSlotsData = {
   visible: boolean
-  placement: 'top' | 'bottom' | 'start' | 'end'
+  placement: Placement
   hide: (trigger?: string) => void
 }
 
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'backdrop'?: (props: Record<string, never>) => any
+  'backdrop'?: (props: SharedSlotsData) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'default'?: (props: SharedSlotsData) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -148,22 +168,62 @@ const slots = defineSlots<{
   'title'?: (props: SharedSlotsData) => any
 }>()
 
-const modelValue = defineModel<boolean>({
+const modelValue = defineModel<Exclude<BOffcanvasProps['modelValue'], undefined>>({
   default: false,
 })
 
 const computedId = useId(() => props.id, 'offcanvas')
 
+const element = useTemplateRef<HTMLElement>('_element')
+const fallbackFocusElement = useTemplateRef<HTMLElement>('_fallbackFocusElement')
+
+const onAfterEnter = () => {
+  nextTick(() => {
+    if (props.noFocus === false && !isOpenByBreakpoint.value) {
+      focused.value = true
+    }
+  })
+}
+
+const {
+  showRef,
+  renderRef,
+  renderBackdropRef,
+  hide,
+  show,
+  toggle,
+  computedNoAnimation,
+  contentShowing,
+  transitionProps,
+  backdropReady,
+  backdropTransitionProps,
+  backdropVisible,
+  isVisible,
+  buildTriggerableEvent,
+  localNoAnimation,
+  isLeaving,
+  trapActive,
+} = useShowHide(modelValue, props, emit as EmitFn, element, computedId, {
+  transitionProps: {
+    onAfterEnter,
+    enterToClass: 'showing',
+    leaveToClass: 'hiding',
+    enterActiveClass: '',
+    leaveActiveClass: '',
+    enterFromClass: '',
+    leaveFromClass: '',
+  },
+})
+
 const breakpoints = useBreakpoints(breakpointsBootstrapV5)
-const greaterOrEqualToBreakpoint = breakpoints.greaterOrEqual(() => props.responsive ?? 'xs')
 const smallerOrEqualToBreakpoint = breakpoints.smallerOrEqual(() => props.responsive ?? 'xs')
+const isOpenByBreakpoint = ref(props.responsive !== undefined && !smallerOrEqualToBreakpoint.value)
+onMounted(() => {
+  if (props.responsive !== undefined)
+    emit('breakpoint', buildTriggerableEvent('breakpoint'), isOpenByBreakpoint.value)
+})
 
-const isOpenByBreakpoint = computed(
-  () => props.responsive !== undefined && greaterOrEqualToBreakpoint.value
-)
-useSafeScrollLock(modelValue, () => props.bodyScrolling || isOpenByBreakpoint.value)
-
-const element = ref<HTMLElement | null>(null)
+useSafeScrollLock(showRef, () => props.bodyScrolling || isOpenByBreakpoint.value)
 
 onKeyStroke(
   'Escape',
@@ -174,35 +234,30 @@ onKeyStroke(
 )
 
 const {focused} = useFocus(element, {
-  initialValue: modelValue.value && props.noFocus === false,
+  initialValue: modelValue.value && props.noFocus === false && !isOpenByBreakpoint.value,
 })
 
-const isActive = ref(modelValue.value)
+const fallbackClassSelector = 'offcanvas-fallback-focus'
 
-useActivatedFocusTrap({
+const {needsFallback} = useActivatedFocusTrap({
   element,
-  isActive,
+  isActive: trapActive,
   noTrap: () => props.noTrap || isOpenByBreakpoint.value,
+  fallbackFocus: {
+    classSelector: fallbackClassSelector,
+    ref: fallbackFocusElement,
+  },
 })
-
-const lazyLoadCompleted = ref(false)
-const wasClosedByBreakpointChange = ref(false)
 
 const showBackdrop = computed(
   () =>
     (props.responsive === undefined || !isOpenByBreakpoint.value) &&
-    props.hideBackdrop === false &&
-    modelValue.value === true
+    props.noBackdrop === false &&
+    (showRef.value === true ||
+      (isLeaving.value && props.backdropFirst && !computedNoAnimation.value))
 )
 
-const lazyShowing = computed(
-  () =>
-    props.lazy === false ||
-    (props.lazy === true && lazyLoadCompleted.value === true) ||
-    (props.lazy === true && modelValue.value === true)
-)
-
-const hasHeaderCloseSlot = toRef(() => !isEmptySlot(slots['header-close']))
+const hasHeaderCloseSlot = computed(() => !isEmptySlot(slots['header-close']))
 const headerCloseClasses = computed(() => [
   {'text-reset': !hasHeaderCloseSlot.value},
   props.headerCloseClass,
@@ -211,24 +266,15 @@ const headerCloseAttrs = computed(() => ({
   variant: hasHeaderCloseSlot.value ? props.headerCloseVariant : undefined,
   class: headerCloseClasses.value,
 }))
-const transitionProps = computed(() =>
-  wasClosedByBreakpointChange.value === true
-    ? null
-    : {
-        enterToClass: 'showing',
-        enterFromClass: '',
-        leaveToClass: 'hiding show',
-        leaveFromClass: 'show',
-      }
-)
 
-const hasFooterSlot = toRef(() => !isEmptySlot(slots.footer))
+const hasFooterSlot = computed(() => !isEmptySlot(slots.footer))
 const computedClasses = computed(() => [
   props.responsive === undefined ? 'offcanvas' : `offcanvas-${props.responsive}`,
   `offcanvas-${props.placement}`,
   {
-    show: modelValue.value && isActive.value === true,
+    'show': isVisible.value,
     [`shadow-${props.shadow}`]: !!props.shadow,
+    'no-transition': computedNoAnimation.value,
   },
 ])
 
@@ -237,100 +283,42 @@ const computedStyles = computed(() => ({
 }))
 
 const sharedSlots = computed<SharedSlotsData>(() => ({
-  visible: modelValue.value,
+  visible: showRef.value,
   placement: props.placement,
   hide,
 }))
 
-const buildTriggerableEvent = (
-  type: string,
-  opts: Partial<BvTriggerableEvent> = {}
-): BvTriggerableEvent =>
-  new BvTriggerableEvent(type, {
-    cancelable: false,
-    target: element.value || null,
-    relatedTarget: null,
-    trigger: null,
-    ...opts,
-    componentId: computedId.value,
-  })
-
-const hide = (trigger = '') => {
-  if (
-    (trigger === 'backdrop' && props.noCloseOnBackdrop) ||
-    (trigger === 'esc' && props.noCloseOnEsc)
-  ) {
-    emit('hide-prevented')
-    return
-  }
-
-  const event = buildTriggerableEvent('hide', {cancelable: trigger !== '', trigger})
-
-  if (trigger === 'close') {
-    emit(trigger, event)
-  }
-  if (trigger === 'esc') {
-    emit(trigger, event)
-  }
-  emit('hide', event)
-
-  if (event.defaultPrevented) {
-    emit('hide-prevented')
-    return
-  }
-
-  modelValue.value = false
-}
-
-const show = () => {
-  const event = buildTriggerableEvent('show', {cancelable: true})
-  emit('show', event)
-  if (event.defaultPrevented) {
-    modelValue.value = false
-    emit('show-prevented')
-    return
-  }
-  modelValue.value = true
-}
-
-const focus = () => {
-  nextTick(() => {
-    if (props.noFocus === false) {
-      focused.value = true
-    }
-  })
-}
-
-const OnBeforeEnter = () => show()
-const OnAfterEnter = () => {
-  isActive.value = true
-  focus()
-  emit('shown', buildTriggerableEvent('shown'))
-  if (props.lazy === true) lazyLoadCompleted.value = true
-}
-const onLeave = () => {
-  wasClosedByBreakpointChange.value = false
-  isActive.value = false
-}
-const OnAfterLeave = () => {
-  emit('hidden', buildTriggerableEvent('hidden'))
-  if (props.lazy === true) lazyLoadCompleted.value = false
-}
-useEventListener(element, 'bv-toggle', () => {
-  modelValue.value ? hide() : show()
-})
-
-watch(greaterOrEqualToBreakpoint, (newValue) => {
-  if (props.responsive === undefined) return
-  modelValue.value = newValue
-})
 watch(smallerOrEqualToBreakpoint, (newValue) => {
-  if (props.responsive === undefined && newValue === true) return
-  wasClosedByBreakpointChange.value = true
+  if (props.responsive === undefined) return
+  if (newValue === true) {
+    const opened = false
+    localNoAnimation.value = true
+    requestAnimationFrame(() => {
+      isOpenByBreakpoint.value = opened
+    })
+    emit('breakpoint', buildTriggerableEvent('breakpoint'), opened)
+    emit('hide', buildTriggerableEvent('hide'))
+  } else {
+    const opened = true
+    localNoAnimation.value = true
+    requestAnimationFrame(() => {
+      isOpenByBreakpoint.value = opened
+    })
+    emit('breakpoint', buildTriggerableEvent('breakpoint'), opened)
+    emit('show', buildTriggerableEvent('show'))
+  }
 })
 
 defineExpose({
   hide,
   show,
+  toggle,
+  isOpenByBreakpoint,
 })
 </script>
+
+<style lang="scss" scoped>
+.no-transition {
+  transition: none !important;
+}
+</style>

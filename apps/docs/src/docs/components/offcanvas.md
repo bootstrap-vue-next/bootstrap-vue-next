@@ -1,11 +1,5 @@
 # Offcanvas
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
 <div class="lead mb-5">
 
 Build hidden sidebars into your project. Sidebars can aid in enhancing user interaction or preventing further interaction.
@@ -55,10 +49,10 @@ Customize location with four standard options `top, bottom, start, end`.
 
 ```vue
 <template>
-  <BButton @click="click" class="m-2">Show start</BButton>
-  <BButton @click="click" class="m-2">Show end</BButton>
-  <BButton @click="click" class="m-2">Show bottom</BButton>
-  <BButton @click="click" class="m-2">Show top</BButton>
+  <BButton @click="click('start')" class="m-2">Show start</BButton>
+  <BButton @click="click('end')" class="m-2">Show end</BButton>
+  <BButton @click="click('bottom')" class="m-2">Show bottom</BButton>
+  <BButton @click="click('top')" class="m-2">Show top</BButton>
 
   <BOffcanvas v-model="show" :placement="placement" />
 </template>
@@ -100,7 +94,6 @@ In SSR environments, the BOffcanvas component must be rendered client-side due t
 <script setup lang="ts">
 import {data} from '../../data/components/offcanvas.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BCard, BCardBody, BOffcanvas, BButton} from 'bootstrap-vue-next'
 import {ref, computed} from 'vue'

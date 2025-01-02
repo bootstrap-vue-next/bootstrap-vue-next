@@ -152,14 +152,6 @@ describe('form-file', () => {
       expect($input.attributes('aria-labelledby')).toBeUndefined()
     })
 
-    it('input element has attr aria-labelledby is undefined when prop ariaLabelledby undefined', () => {
-      const wrapper = mount(BFormFile, {
-        props: {ariaLabelledby: undefined},
-      })
-      const $input = wrapper.get('input')
-      expect($input.attributes('aria-labelledby')).toBeUndefined()
-    })
-
     it('input element has attr value to be true when value is undefined', () => {
       const wrapper = mount(BFormFile, {
         props: {value: undefined},
@@ -229,7 +221,7 @@ describe('form-file', () => {
         props: {capture: undefined},
       })
       const $input = wrapper.get('input')
-      expect($input.attributes('capture')).toBe('false')
+      expect($input.attributes('capture')).toBe(undefined)
     })
 
     it('input element has set attr accept to empty when prop accept is true', () => {
@@ -308,7 +300,7 @@ describe('form-file', () => {
       })
       const $label = wrapper.get('label')
       expect($label).not.toBeUndefined()
-      expect($label.attributes('class')?.includes('labelClass'))
+      expect($label.attributes('class')?.includes('labelClass')).toBe(true)
     })
     it('has label has attr for to be defined by default', () => {
       const wrapper = mount(BFormFile, {
@@ -386,8 +378,10 @@ describe('form-file', () => {
 
       expect(wrapper.emitted('update:modelValue')).toBeDefined()
       expect(wrapper.emitted('update:modelValue')).toHaveLength(1)
-      expect((wrapper.emitted('update:modelValue')?.[0][0] as File[])[0]).toStrictEqual(file1)
-      expect((wrapper.emitted('update:modelValue')?.[0][0] as File[])[1]).toStrictEqual(file2)
+      const emitted = wrapper.emitted('update:modelValue')
+      expect(emitted && (emitted[0][0] as File[])[0]).toStrictEqual(file1)
+      const em = wrapper.emitted('update:modelValue')
+      expect(em && (em[0][0] as File[])[1]).toStrictEqual(file2)
     })
 
     it('emits update:modelValue===file event when file changed in directory mode', async () => {
@@ -415,11 +409,10 @@ describe('form-file', () => {
 
       expect(wrapper.emitted('update:modelValue')).toBeDefined()
       expect(wrapper.emitted('update:modelValue')).toHaveLength(1)
-      expect((wrapper.emitted('update:modelValue')?.[0][0] as File[])[0]).toStrictEqual(file1)
-      expect((wrapper.emitted('update:modelValue')?.[0][0] as File[])[1]).toStrictEqual(file2)
+      const emittedValue = wrapper.emitted('update:modelValue')
+      expect(emittedValue && (emittedValue[0][0] as File[])[0]).toStrictEqual(file1)
+      const em = wrapper.emitted('update:modelValue')
+      expect(em && (em[0][0] as File[])[1]).toStrictEqual(file2)
     })
-
-    it('reset() method works in single mode', async () => {})
-    it('reset() method works in multiple mode', async () => {})
   })
 })

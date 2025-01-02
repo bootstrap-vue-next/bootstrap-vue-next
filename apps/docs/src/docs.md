@@ -1,13 +1,5 @@
 # Introduction
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
-
-[[toc]]
-
-  </Teleport>
-</ClientOnly>
-
 <div class="lead">
 
 Get started with BootstrapVueNext and Bootstrap `v5`, the world’s most popular framework for building responsive, mobile-first sites.
@@ -310,7 +302,60 @@ export default defineNuxtConfig({
 
 </HighlightCard>
 
-The practical difference between manually including an item and not is null as Nuxt should tree-shake out anything that is not used in the final build.
+This is mainly for the purpose of naming conflicts with other imports. It should not effect tree-shaking
+
+### Installation - TypeScript
+
+This package uses optional peer dependencies to generate type definitions for enhanced functionality. These dependencies are not installed by default to avoid unnecessary bloat in projects that don’t require these features. However, if you want full type support, you need to manually install the required packages.
+
+<ClientOnly>
+<BTabs v-model="codePreference">
+  <BTab title="PNPM">
+
+  <HighlightCard>
+
+```bash
+pnpm add -D @floating-ui/vue @vueuse/core vue-router
+```
+
+  </HighlightCard>
+
+  </BTab>
+  <BTab title="BUN">
+
+  <HighlightCard>
+
+```bash
+bun add -D @floating-ui/vue @vueuse/core vue-router
+```
+
+  </HighlightCard>
+
+  </BTab>
+  <BTab title="YARN">
+
+  <HighlightCard>
+
+```bash
+yarn add -D @floating-ui/vue @vueuse/core vue-router
+```
+
+  </HighlightCard>
+
+  </BTab>
+  <BTab title="NPM">
+
+  <HighlightCard>
+
+```bash
+npm i -D @floating-ui/vue @vueuse/core vue-router
+```
+
+  </HighlightCard>
+
+  </BTab>
+</BTabs>
+</ClientOnly>
 
 ### Installation - CDN
 
@@ -353,12 +398,10 @@ If you are using one of the preferred installation methods, JS will be tree-shak
 ### Tree-shake JS plugins
 
 `createBootstrap` is a simple utility that provides everything that is required for the library to work. However, some plugins may not be needed.
-One could individually import each needed plugin, they are all appended with `Plugin` (`toastPlugin`, `idPlugin`, etc). So, one could pick and choose what is needed
+One could individually import each needed plugin, they are all appended with `Plugin` (`toastPlugin`, `breadcrumbPlugin`, etc). So, one could pick and choose what is needed
 Practically the `createBootstrap` plugin is ~20kb gzipped with `toast` and `modalController` accounting for the majority. Use this if you really want the tiniest possible size.
 
-<NoteAlert>
-The `defaultsPlugin` is required by all components if one chooses to use this
-</NoteAlert>
+<BootstrapPluginWarning />
 
 ## Comparison with BootstrapVue
 
@@ -369,6 +412,7 @@ import {BCard, BCardBody, BTab, BTabs} from 'bootstrap-vue-next'
 import {useLocalStorage} from '@vueuse/core'
 import HighlightCard from './components/HighlightCard.vue'
 import NoteAlert from './components/NoteAlert.vue'
+import BootstrapPluginWarning from './components/BootstrapPluginWarning.vue'
 
 const codePreference = useLocalStorage('code-group-preference', 0)
 </script>

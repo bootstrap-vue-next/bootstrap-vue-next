@@ -1,10 +1,13 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormTag',
+      styleSpec: {kind: StyleKind.BsvnClass},
+      sourcePath: '/BFormTag/BFormTag.vue',
       props: {
         '': {
           noRemove: {
@@ -37,7 +40,7 @@ export default {
             }),
             ['disabled', 'id', 'tag', 'title', 'variant']
           ),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormTag'], PropertyReference>,
       },
       emits: [
         {
@@ -61,6 +64,8 @@ export default {
     },
     {
       component: 'BFormTags',
+      styleSpec: {kind: StyleKind.BsvnClass},
+      sourcePath: '/BFormTags/BFormTags.vue',
       props: {
         '': {
           addButtonText: {
@@ -197,7 +202,7 @@ export default {
             }),
             ['autofocus', 'disabled', 'form', 'name', 'placeholder', 'required', 'size', 'state']
           ),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormTags'], PropertyReference>,
       },
       emits: [
         {
@@ -409,7 +414,8 @@ export default {
             {
               prop: 'remove',
               type: '() => void',
-              description: 'Method to fully reset the tags input [Not yet implemented]',
+              description: 'Method to fully reset the tags input',
+              notYetImplemented: true,
             },
             {
               prop: 'removeTag',

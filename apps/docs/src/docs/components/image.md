@@ -1,11 +1,5 @@
 # Image
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
 <div class="lead mb-5">
 
 Documentation and examples for opting images (via `BImg` component) into responsive behavior (so they never become larger than their parent elements), optionally adding lightweight styles to them — all via props.
@@ -18,7 +12,8 @@ images is available via the `lazy` prop.
 
 ## Image src resolving
 
-The `src` prop and `blank-src` prop, out of the box, works only with absolute or fully-qualified-domain-name URLs. If you are using project assets as image sources, please refer to [Asset URL handling](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue#asset-url-handling) to configure Vite to transform asset urls. If using a different build tool, you will need to find the relevant documentation to transform assets.
+The `src` prop and `blank-src` prop, out of the box, works only with absolute or fully-qualified-domain-name URLs.
+See the [Image Support](/docs/reference/images) referece page for more details.
 
 ## Styling images
 
@@ -31,36 +26,12 @@ Images in BootstrapVueNext can be made responsive with the `fluid` prop (which s
 `max-width: 100%; height: auto;` via CSS classes) so that it scales with the parent element - up to
 the maximum native width of the image.
 
-<HighlightCard>
-  <BImg src="https://picsum.photos/1024/400/?image=41" fluid alt="Responsive image" />
-  <template #html>
-
-```vue-html
-<BImg src="https://picsum.photos/1024/400/?image=41" fluid alt="Responsive image" />
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/ImageResponsive.vue#template{vue-html}
 
 To make a fluid image that will grow to fill the width of its container, use the `fluid-grow` prop.
 Note this may cause blurring on small bitmap images.
 
-<HighlightCard>
-  <h5>Small image with <code>fluid</code>:</h5>
-  <BImg src="https://picsum.photos/300/150/?image=41" fluid alt="Fluid image" />
-  <h5 class="my-3">Small image with <code>fluid-grow</code>:</h5>
-  <BImg src="https://picsum.photos/300/150/?image=41" fluid-grow alt="Fluid-grow image" />
-  <template #html>
-
-```vue-html
-<h5>Small image with <code>fluid</code>:</h5>
-<BImg src="https://picsum.photos/300/150/?image=41" fluid alt="Fluid image" />
-<h5 class="my-3">Small image with <code>fluid-grow</code>:</h5>
-<BImg src="https://picsum.photos/300/150/?image=41" fluid-grow alt="Fluid-grow image" />
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/ImageFluid.vue#template{vue-html}
 
 Use the `block` prop to force the image to display as a block element rather than the browser
 default of inline-block element.
@@ -69,87 +40,19 @@ default of inline-block element.
 
 You can use prop `thumbnail` to give an image a rounded light border appearance.
 
-<HighlightCard>
-  <BRow>
-    <BCol>
-      <BImg thumbnail fluid src="https://picsum.photos/250/250/?image=54" alt="Image 1" />
-    </BCol>
-    <BCol>
-      <BImg thumbnail fluid src="https://picsum.photos/250/250/?image=58" alt="Image 2" />
-    </BCol>
-    <BCol>
-      <BImg thumbnail fluid src="https://picsum.photos/250/250/?image=59" alt="Image 3" />
-    </BCol>
-  </BRow>
-  <template #html>
-
-```vue-html
-<BRow>
-  <BCol>
-    <BImg thumbnail fluid src="https://picsum.photos/250/250/?image=54" alt="Image 1" />
-  </BCol>
-  <BCol>
-    <BImg thumbnail fluid src="https://picsum.photos/250/250/?image=58" alt="Image 2" />
-  </BCol>
-  <BCol>
-    <BImg thumbnail fluid src="https://picsum.photos/250/250/?image=59" alt="Image 3" />
-  </BCol>
-</BRow>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/ImageThumbnail.vue#template{vue-html}
 
 ### Rounded corners
 
-You can control which corners are rounded by setting the rounded prop to one of the following
-values:
+`BImg` renders without rounding by default. You can change the rounding by setting the prop
+`rounded` to any of the values of [`RadiusElement`](/docs/types#radiuselement).
+When set to `true` (or the empty string `''`), it uses the Bootstrap default of medium rounding.
+When set to `circle`, it uses a border radius of 50%, resulting in a circle.
+Rounding specific edges is accomplished via the `rounded-top`, `rounded-bottom`, `rounded-start` and
+`rounded-end` props. See the [migration guide](/docs/migration-guide#BAvatar) for differences
+from `bootstrap-vue`
 
-- `true` (or prop present with no value): round all corners
-- `false` (or prop not present): no explicit rounding or corners (default)
-- `'top'`: round the top corners
-- `'end'`: round the right corners
-- `'bottom'`: round the bottom corners
-- `'start'`: round the left corners
-- `'circle'`: make a circle (if square image) or oval (if not square) border
-- `'0'`: explicitly turn off rounding of corners
-
-<HighlightCard>
-  <div class="d-flex gap-2">
-    <BImg v-bind="mainProps" rounded alt="Rounded image" />
-    <BImg v-bind="mainProps" rounded="top" alt="Top-rounded image" />
-    <BImg v-bind="mainProps" rounded="end" alt="Right-rounded image" />
-    <BImg v-bind="mainProps" rounded="bottom" alt="Bottom-rounded image" />
-    <BImg v-bind="mainProps" rounded="start" alt="Left-rounded image" />
-    <BImg v-bind="mainProps" rounded="circle" alt="Circle image" />
-    <BImg v-bind="mainProps" rounded="0" alt="Not rounded image" />
-  </div>
-  <template #html>
-
-```vue
-<template>
-  <BImg v-bind="mainProps" rounded alt="Rounded image" />
-  <BImg v-bind="mainProps" rounded="top" alt="Top-rounded image" />
-  <BImg v-bind="mainProps" rounded="end" alt="Right-rounded image" />
-  <BImg v-bind="mainProps" rounded="bottom" alt="Bottom-rounded image" />
-  <BImg v-bind="mainProps" rounded="start" alt="Left-rounded image" />
-  <BImg v-bind="mainProps" rounded="circle" alt="Circle image" />
-  <BImg v-bind="mainProps" rounded="0" alt="Not rounded image" />
-</template>
-
-<script setup lang="ts">
-const mainProps = {
-  blank: true,
-  blankColor: '#777',
-  width: 75,
-  height: 75,
-  class: 'm1',
-}
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/ImageRounded.vue
 
 ### Aligning images
 
@@ -157,35 +60,13 @@ Align images with the boolean props `left` (floats left) `right`(floats right), 
 left+right margins). You can also center images by placing them in a container that has the class
 `text-center`.
 
-**Left and right aligned (float):**
+**Left and right aligned: (float)**
 
-<HighlightCard>
-  <div class="clearfix">
-    <BImg left src="https://picsum.photos/125/125/?image=58" alt="Left image" />
-    <BImg right src="https://picsum.photos/125/125/?image=58" alt="Right image" />
-  </div>
-  <template #html>
+<<< DEMO ./demo/ImageLeftRight.vue#template{vue-html}
 
-```vue-html
-<BImg left src="https://picsum.photos/125/125/?image=58" alt="Left image" />
-<BImg right src="https://picsum.photos/125/125/?image=58" alt="Right image" />
-```
+**Center aligned: (block)**
 
-  </template>
-</HighlightCard>
-
-**Center aligned (block):**
-
-<HighlightCard>
-  <BImg center src="https://picsum.photos/125/125/?image=58" alt="Center image" />
-  <template #html>
-
-```vue-html
-<BImg center src="https://picsum.photos/125/125/?image=58" alt="Center image" />
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/ImageCenter.vue#template{vue-html}
 
 Note: `left` takes precedence over `right` which takes precedence over `center`.
 
@@ -206,41 +87,7 @@ color value:
 
 The default `blank-color` is `transparent`.
 
-<HighlightCard>
-  <div class="d-flex gap-2">
-    <BImg v-bind="propsTr" alt="Transparent image" />
-    <BImg v-bind="propsTr" blank-color="#777" alt="HEX shorthand color image (#777)" />
-    <BImg v-bind="propsTr" blank-color="red" alt="Named color image (red)" />
-    <BImg v-bind="propsTr" blank-color="black" alt="Named color image (black)" />
-    <BImg v-bind="propsTr" blank-color="#338833" alt="HEX color image" />
-    <BImg v-bind="propsTr" blank-color="rgba(128, 255, 255, 0.5)" alt="RGBa color image" />
-    <BImg v-bind="propsTr" blank-color="#88f" alt="HEX shorthand color (#88f)" />
-  </div>
-  <template #html>
-
-```vue
-<template>
-  <BImg v-bind="propsTr" alt="Transparent image" />
-  <BImg v-bind="propsTr" blank-color="#777" alt="HEX shorthand color image (#777)" />
-  <BImg v-bind="propsTr" blank-color="red" alt="Named color image (red)" />
-  <BImg v-bind="propsTr" blank-color="black" alt="Named color image (black)" />
-  <BImg v-bind="propsTr" blank-color="#338833" alt="HEX color image" />
-  <BImg v-bind="propsTr" blank-color="rgba(128, 255, 255, 0.5)" alt="RGBa color image" />
-  <BImg v-bind="propsTr" blank-color="#88f" alt="HEX shorthand color (#88f)" />
-</template>
-
-<script setup lang="ts">
-const propsTr = {
-  blank: true,
-  width: 75,
-  height: 75,
-  class: 'm1',
-}
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/ImageBlank.vue
 
 **Notes:**
 
@@ -274,22 +121,21 @@ guide.
   URI's longer than supported by the maximum attribute value length of the browser. If your webpack
   config has a limit for the `url-loader` and you want to prevent inline data-urls, you may have to
   overwrite the loader limits: `require('!!url-loader?limit=0!./assets/photo.jpg')`
-- Support for `srcset` and `sizes` was added in release `2.1.0`
 
 ## Lazy loaded images
 
-Lazy loaded images are actived through the `lazy` prop. Eventually, the component will be expanded to include placeholder slots, but are not available at this time.
+Lazy loaded images are actived through the `lazy` prop. Eventually, the component will be expanded to include placeholder slots, but are not available at this time. See the [migration guide](/docs/migration-guide#bimg) for details.
+
+We implement this `lazy` prop using the native `loading` attribute. See the [MDN docs](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/loading) for details including how this effect how the native [`load` event](https://developer.mozilla.org/en-US/docs/Web/API/Window/load_event) works.
 
 <ComponentReference :data="data" />
 
-<script setup lang="ts">
+<script lang="ts">
 import {data} from '../../data/components/image.data'
-import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
-import HighlightCard from '../../components/HighlightCard.vue'
-import {BRow, BCol, BCard, BCardBody, BImg} from 'bootstrap-vue-next'
-import {ref, computed} from 'vue'
 
-const mainProps = {blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1'}
-const propsTr = {blank: true, width: 75, height: 75, class: 'm1'}
+export default {
+  setup() {
+    return {data}
+  }
+}
 </script>

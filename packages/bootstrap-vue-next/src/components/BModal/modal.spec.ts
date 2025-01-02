@@ -100,15 +100,6 @@ describe('modal', () => {
     expect($div.classes()).not.toContain('fade')
   })
 
-  it('div has class show when prop show', () => {
-    const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}},
-      props: {show: false},
-    })
-    const $div = wrapper.get('div')
-    expect($div.classes()).not.toContain('show')
-  })
-
   it('div has attrs from attrs', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
@@ -366,19 +357,27 @@ describe('modal', () => {
     // initial closed state
     let $modal = wrapper.find('div.modal')
     expect($modal.isVisible()).toBe(false)
-    expect(document.body.attributes.getNamedItem('style')?.textContent ?? '').toBe('')
+    expect(document.body.attributes.getNamedItem('style')?.textContent ?? '').not.toContain(
+      'overflow: hidden;'
+    )
 
     // open stated
     await wrapper.setProps({modelValue: true})
+    await new Promise((resolve) => setTimeout(resolve, 30))
     expect($modal.isVisible()).toBe(true)
-    expect(document.body.attributes.getNamedItem('style')?.textContent).toBe('overflow: hidden;')
+    expect(document.body.attributes.getNamedItem('style')?.textContent).toContain(
+      'overflow: hidden;'
+    )
 
     // closed state
     $modal = wrapper.find('div.modal')
     await $modal.trigger('keydown.Escape')
+    await new Promise((resolve) => setTimeout(resolve, 30))
     $modal = wrapper.find('div.modal')
     expect($modal.isVisible()).toBe(false)
-    expect(document.body.attributes.getNamedItem('style')?.textContent ?? '').toBe('')
+    expect(document.body.attributes.getNamedItem('style')?.textContent ?? '').not.toContain(
+      'overflow: hidden;'
+    )
 
     wrapper.unmount()
   })
@@ -401,7 +400,7 @@ describe('modal', () => {
           },
         },
       })
-
+      await nextTick()
       expect(wrapper.vm).toBeDefined()
 
       let $modal = wrapper.find('div.modal')
@@ -436,6 +435,7 @@ describe('modal', () => {
       expect(closeEvent).toHaveLength(2)
       expect(closeEvent?.[1][0]).toBeInstanceOf(BvTriggerableEvent)
 
+      await new Promise((resolve) => setTimeout(resolve, 30))
       // Modal should now be closed
       $modal = wrapper.find('div.modal')
       expect($modal.isVisible()).toBe(false)
@@ -443,7 +443,7 @@ describe('modal', () => {
       wrapper.unmount()
     })
 
-    it('header close button triggers modal close and is preventable', async () => {
+    it('header close button triggers modal close and is preventable ?', async () => {
       let cancelHide = true
       const wrapper = mount(BModal, {
         attachTo: document.body,
@@ -460,7 +460,7 @@ describe('modal', () => {
           },
         },
       })
-
+      await nextTick()
       expect(wrapper.vm).toBeDefined()
 
       let $modal = wrapper.find('div.modal')
@@ -495,6 +495,7 @@ describe('modal', () => {
       expect(closeEvent?.[1][0]).toBeInstanceOf(BvTriggerableEvent)
 
       // Modal should now be closed
+      await new Promise((resolve) => setTimeout(resolve, 30))
       $modal = wrapper.find('div.modal')
       expect($modal.isVisible()).toBe(false)
 

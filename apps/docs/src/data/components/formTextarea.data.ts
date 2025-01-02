@@ -1,10 +1,13 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormTextarea',
+      styleSpec: {kind: StyleKind.Tag, value: 'textarea'},
+      sourcePath: '/BFormTextarea/BFormTextarea.vue',
       props: {
         '': {
           modelValue: {
@@ -29,6 +32,17 @@ export default {
             description:
               "The value to place on the textarea's 'wrap' attribute. Controls how line break are returned",
           },
+          maxRows: {
+            type: 'Numberish',
+            default: 'undefined',
+            description: 'The maximum number of rows to display. Must be a value greater than 1',
+          },
+          noAutoShrink: {
+            type: 'boolean',
+            default: false,
+            description:
+              'When set, disables the auto-shrink feature when the textarea is in auto-height mode',
+          },
           ...pick(buildCommonProps(), [
             'ariaInvalid',
             'autocomplete',
@@ -49,7 +63,7 @@ export default {
             'size',
             'state',
           ]),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormTextarea'], PropertyReference>,
       },
       emits: [
         {

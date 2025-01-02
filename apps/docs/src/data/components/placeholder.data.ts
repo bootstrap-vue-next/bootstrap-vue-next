@@ -1,9 +1,11 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BPlaceholder',
+      sourcePath: '/BPlaceholder/BPlaceholder.vue',
       props: {
         '': {
           animation: {
@@ -34,13 +36,15 @@ export default {
             type: 'string',
             default: 'span',
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BPlaceholder'], PropertyReference>,
       },
       emits: [],
       slots: [],
     },
     {
       component: 'BPlaceholderCard',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.card'},
+      sourcePath: '/BPlaceholder/BPlaceholderCard.vue',
       emits: [],
       props: {
         '': {
@@ -120,7 +124,7 @@ export default {
             type: 'ColorVariant | null',
             default: undefined,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BPlaceholderCard'], PropertyReference>,
       },
       slots: [
         {
@@ -147,6 +151,8 @@ export default {
     },
     {
       component: 'BPlaceholderWrapper',
+      styleSpec: {kind: StyleKind.None},
+      sourcePath: '/BPlaceholder/BPlaceholderWrapper.vue',
       emits: [],
       props: {
         '': {
@@ -155,7 +161,7 @@ export default {
             type: 'boolean',
             default: false,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BPlaceholderWrapper'], PropertyReference>,
       },
       slots: [
         {
@@ -172,6 +178,8 @@ export default {
     },
     {
       component: 'BPlaceholderTable',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.table'},
+      sourcePath: '/BPlaceholder/BPlaceholderTable.vue',
       emits: [],
       props: {
         '': {
@@ -227,7 +235,7 @@ export default {
             type: 'ColorVariant | null',
             default: undefined,
           },
-          hideHeader: {
+          noHeader: {
             type: 'boolean',
             default: false,
           },
@@ -247,7 +255,7 @@ export default {
             type: 'ColorVariant | null',
             default: undefined,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BPlaceholderTable'], PropertyReference>,
       },
       slots: [
         {
@@ -269,6 +277,8 @@ export default {
     },
     {
       component: 'BPlaceholderButton',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.placeholder.btn'},
+      sourcePath: '/BPlaceholder/BPlaceholderButton.vue',
       emits: [],
       slots: [],
       props: {
@@ -293,7 +303,7 @@ export default {
             type: 'Numberish',
             default: undefined,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BPlaceholderButton'], PropertyReference>,
       },
     },
   ],

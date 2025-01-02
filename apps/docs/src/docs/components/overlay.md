@@ -1,11 +1,5 @@
 # Overlay
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
 <div class="lead mb-5">
 
 BootstrapVueNext's custom `BOverlay` component is used to _visually obscure_ a particular element or component and its content. It signals to the user of a state change within the element or component and can be used for creating loaders, warnings/alerts, prompts, and more.
@@ -215,6 +209,44 @@ prop. When a value is provided for `bg-color`, the `variant` prop value is ignor
 
 By default, the overlay uses Bootstrap's fade transition when showing or hiding. You can disable the
 fade transition via adding the `no-fade` prop to `BOverlay`.
+
+<!-- @dwgray this is the same as the first example, but it uses no-fade prop -->
+
+<HighlightCard>
+  <BOverlay no-fade :show="showOverlayEx1" rounded="sm">
+    <BCard title="Card with overlay" :aria-hidden="showOverlayEx1 ? 'true' : null">
+      <BCardText>Laborum consequat non elit enim exercitation cillum.</BCardText>
+      <BCardText>Click the button to toggle the overlay:</BCardText>
+      <BButton :disabled="showOverlayEx1" variant="primary" @click="showOverlayEx1 = true">
+        Show overlay
+      </BButton>
+    </BCard>
+  </BOverlay>
+  <BButton class="mt-3" @click="showOverlayEx1 = !showOverlayEx1">Toggle overlay</BButton>
+  <template #html>
+
+```vue
+<template>
+  <BOverlay no-fade :show="showOverlayEx1" rounded="sm">
+    <BCard title="Card with overlay" :aria-hidden="showOverlayEx1 ? 'true' : null">
+      <BCardText>Laborum consequat non elit enim exercitation cillum.</BCardText>
+      <BCardText>Click the button to toggle the overlay:</BCardText>
+      <BButton :disabled="showOverlayEx1" variant="primary" @click="showOverlayEx1 = true">
+        Show overlay
+      </BButton>
+    </BCard>
+  </BOverlay>
+
+  <BButton @click="showOverlayEx1 = !showOverlayEx1">Toggle overlay</BButton>
+</template>
+
+<script setup lang="ts">
+const showOverlayEx1 = ref(false)
+</script>
+```
+
+  </template>
+</HighlightCard>
 
 ### Default spinner styling
 
@@ -897,7 +929,6 @@ also set the `rounded` prop on `BOverlay`.
 <script setup lang="ts">
 import {data} from '../../data/components/overlay.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BForm, BProgress, BRow, BImg, BFormInput, BFormSelect, BOverlay, BCol, BButton, BCard, BCardBody, BCardText, BAlert} from 'bootstrap-vue-next'
 import {ref, nextTick} from 'vue';

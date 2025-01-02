@@ -1,11 +1,5 @@
 # Form
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
 <div class="lead mb-5">
 
 BootstrapVueNext form component and helper components that optionally support inline form styles and
@@ -381,7 +375,7 @@ The following helper components are available with the `Form` plugin:
 - `BFormText` Help text blocks for inputs
 - `BFormInvalidFeedback` Invalid feedback text blocks for input `invalid` states
 - `BFormValidFeedback` Valid feedback text blocks for input `valid` states
-- `BFormDatalist` Easily create a `<datalist>` for use with `BFormInput` or plain `<input>` (<NotYetImplemented/>)
+- `BFormDatalist` Easily create a `<datalist>` for use with `BFormInput` or plain `<input>`
 
 ### Form text helper
 
@@ -482,6 +476,50 @@ const validation = computed(() => userId.value.length > 4 && userId.value.length
   </template>
 </HighlightCard>
 
+### Datalist helper
+
+For browsers that support
+[`<datalist>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/datalist) elements, the
+`<BFormDatalist>` helper component will allow you to quickly create a `<datalist>` and child
+`<option>` elements via an array passed to the `options` prop.
+
+You may also manually provide `<option>` elements inside `<BFormDatalist>`. They will appear below
+any `<option>` elements generated from the `options` prop. Or use the `first` slot to place options
+above the generated options.
+
+<HighlightCard>
+    <div>
+      <label for="input-with-list">Input with datalist</label>
+      <BFormInput id="input-with-list" list="input-list" />
+      <BFormDatalist id="input-list" :options="datalistOptions" />
+    </div>
+  <template #html>
+
+```vue
+<template>
+  <div>
+    <label for="input-with-list">Input with datalist</label>
+    <BFormInput id="input-with-list" list="input-list" />
+    <BFormDatalist id="input-list" :options="datalistOptions" />
+  </div>
+</template>
+
+<script setup lang="ts">
+const datalistOptions = ['Apple', 'Banana', 'Grape', 'Kiwi', 'Orange']
+</script>
+```
+
+  </template>
+</HighlightCard>
+
+See also:
+
+- [`<BFormInput> datalist`](/docs/components/form-input#datalist-support) for datalist usage.
+- [`<BFormSelect>` `options` prop](/docs/components/form-select#options-property) docs for details
+  on the formats and helper props associated with `options`. Note that `<BFormDatalist>` only support
+  a flat list of `BFormSelectOptions`, unlike `<BFormSelect>` which support a heirarchy of
+  `BFormSelectOption` and `BFormSelectOptionGroup`.
+
 ## Validation
 
 Disable browser native HTML5 validation by setting the `novalidate` prop to true on `BForm`.
@@ -507,13 +545,13 @@ for details on the Bootstrap v5 validation states.
 <script setup lang="ts">
 import {data} from '../../data/components/form.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import NotYetImplemented from '../../components/NotYetImplemented.vue'
 import {
-  BFormValidFeedback,
+  BFormDatalist,
   BFormInvalidFeedback,
   BFormText,
+  BFormValidFeedback,
   BInputGroup,
   BCard,
   BCardBody,
@@ -561,5 +599,7 @@ const userId = ref('')
 const validation = computed(()=> userId.value.length > 4 && userId.value.length < 13)
 
 const customSelect = ref(null)
+
+const datalistOptions = ['Apple', 'Banana', 'Grape', 'Kiwi', 'Orange']
 
 </script>

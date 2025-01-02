@@ -42,3 +42,22 @@
 .bv-no-focus-ring:focus {
   outline: none;
 }
+
+// Create `.bv-d-<bp>-down-none` helper classes
+@each $breakpoint in (map-keys(map-remove($grid-breakpoints, "xs"))) {
+  @include media-breakpoint-down($breakpoint) {
+    .bv-d-#{$breakpoint}-down-none {
+      display: none !important;
+    }
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s linear;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}

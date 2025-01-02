@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, h, ref} from 'vue'
+import {computed, h, onMounted, ref} from 'vue'
 import {
   BModal,
   type ColorVariant,
@@ -82,9 +82,11 @@ const firstRef = ref<OrchestratedModal>({
   body: `${Math.random()}`,
 })
 
-setInterval(() => {
-  firstRef.value.body = `${Math.random()}`
-}, 1000)
+onMounted(() => {
+  setInterval(() => {
+    firstRef.value.body = `${Math.random()}`
+  }, 1000)
+})
 
 const {show, modals} = useModalController()
 

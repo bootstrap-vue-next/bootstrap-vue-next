@@ -1,11 +1,5 @@
 # Toast
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
 <div class="lead mb-5">
 
 Push notifications to your visitors with `BToast` and `BToastOrchestrator`. These are components that are easily customizable for generating alert messages
@@ -16,7 +10,7 @@ Toasts are lightweight notifications designed to mimic the push notifications th
 
 ## Overview
 
-This section only refers to using the raw component variation. Often times, `Toasts` are generated in a global context programatically, like showing a success message after saving a form. That functionality is covered under the composable docs [here](/docs/composables/useToast)
+This section only refers to using the raw component variation. Often times, `Toasts` are generated in a global context programatically, like showing a success message after saving a form. That functionality is covered under the composable docs [here](/docs/composables/useToastController)
 
 The component variation is shown by using the `v-model` like so
 
@@ -141,9 +135,11 @@ You can place toasts in static placements, and with more control by using them d
 </template>
 </HighlightCard>
 
-## Automatic Countdown
+## Auto-dismissing Toasts
 
-As you may have noticed, `BToast` counts down similarly to `BAlert` it uses the same underlying engine that powers the countdown timer of `BAlert`, albeit with some minor adjustments. So, many of the same props are shared, including the `interval` props and others. So, similar quirks apply
+To create a `BToast` that dismisses automatically after a specified duration, set the `value` prop to the number of **milliseconds** you want the `BToast` to remain visible. By default, the timer updates using `requestAnimationFrame`, which triggers an update approximately every second. Timed Toasts automatically pause when hovered over with a mouse, but you can disable this behavior using the `noHoverPause` prop. Ensure that the `value` is an integer representing milliseconds. Any change to the `value` will reset the timer.
+
+The **interval** prop determines how frequently the timer updates. While the default is `requestAnimationFrame`, you can set a custom interval. Negative values for either `value` or `interval` will stop the timer. If the `value` does not divide evenly by the interval, the timer will continue to the nearest interval. For example, a `value` of 5400 ms with an interval of 1000 ms will run for 6000 ms. To avoid this, choose an interval that divides evenly into the `value`, such as 540 ms or 1080 ms.
 
 <HighlightCard>
   <BButton
@@ -154,7 +150,6 @@ As you may have noticed, `BToast` counts down similarly to `BAlert` it uses the 
           variant: 'info',
           pos: 'middle-center',
           value: 10000,
-          interval: 100,
           progressProps: {
             variant: 'danger',
           },
@@ -165,7 +160,8 @@ As you may have noticed, `BToast` counts down similarly to `BAlert` it uses the 
   >
     Show
   </BButton>
-  <template #html>
+
+<template #html>
 
 ```vue
 <template>
@@ -177,7 +173,6 @@ As you may have noticed, `BToast` counts down similarly to `BAlert` it uses the 
           variant: 'info',
           pos: 'middle-center',
           value: 10000,
-          interval: 100,
           progressProps: {
             variant: 'danger',
           },
@@ -189,10 +184,6 @@ As you may have noticed, `BToast` counts down similarly to `BAlert` it uses the 
     Show
   </BButton>
 </template>
-
-<script setup lang="ts">
-const {show} = useToast()
-</script>
 ```
 
   </template>
@@ -211,7 +202,8 @@ As you may have noticed in that example, there was a built-in progress bar. This
   <BButton @click="show?.({ props: {href: 'https://getbootstrap.com/', target: '_blank', body: 'I am a BLink'}})">
     Show
   </BButton>
-  <template #html>
+
+<template #html>
 
 ```vue
 <template>
@@ -225,7 +217,7 @@ As you may have noticed in that example, there was a built-in progress bar. This
 </template>
 
 <script setup lang="ts">
-const {show} = useToast()
+const {show} = useToastController()
 </script>
 ```
 
@@ -235,7 +227,7 @@ const {show} = useToast()
 
 ## Programmatically Control
 
-To programmatically control your modals with global state, refer to our documentation at [useToast](/docs/composables/useToast)
+To programmatically control your modals with global state, refer to our documentation at [useToastController](/docs/composables/useToastController)
 
 ## Accessibility
 
@@ -248,12 +240,11 @@ If you just need a single simple message to appear along the bottom or top of th
 <script setup lang="ts">
 import {data} from '../../data/components/toast.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
-import {BButtonGroup, BButton, BToast, useToast} from 'bootstrap-vue-next'
+import {BButtonGroup, BButton, BToast, useToastController} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {ref, h, onMounted} from 'vue'
 
-const {show, hide, toasts} = useToast()
+const {show, hide, toasts} = useToastController()
 
 const active = ref(true)
 

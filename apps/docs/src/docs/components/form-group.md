@@ -1,11 +1,5 @@
 # Form Group
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
 <div class="lead mb-5">
 
 The `BFormGroup` component is the easiest way to add some structure to forms. Its purpose is to pair form controls with a legend or label, and to provide help text and invalid/valid feedback text, as well as visual (color) contextual state feedback.
@@ -77,6 +71,30 @@ include integrated label element(s) and the `<legend>` element is more suitable.
 You can also apply additional classes to the label via the `label-class` prop, such as responsive
 padding and text alignment utility classes. The `label-class` prop accepts either a string or array
 of strings.
+
+### Automatic Inheriting of id
+
+The `BFormGroup` component automatically inherits the id of its child input components, such as BFormInput and BFormTextarea. This functionality ensures that the label element's for attribute is correctly set to match the id of the input component, providing proper association between the label and the input field.
+
+<HighlightCard>
+  <BFormGroup
+    label="Enter your name"
+  >
+    <BFormInput id="this-id-will-be-automatically-applied-to-the-label" />
+  </BFormGroup>
+
+<template #html>
+
+```vue-html
+<BFormGroup
+  label="Enter your name"
+  >
+  <BFormInput id="this-id-will-be-automatically-applied-to-the-label" />
+</BFormGroup>
+```
+
+  </template>
+</HighlightCard>
 
 ### Horizontal layout
 
@@ -193,7 +211,7 @@ value via the prop `label-text-align` and/or `label-align-{breakpoint}`.
 | `label-align-lg` | Applies to breakpoint `lg` and up |
 | `label-align-xl` | Applies to breakpoint `xl` and up |
 
-Alignment has no effect if the `label-sr-only` prop is set.
+Alignment has no effect if the `label-visually-hidden` prop is set.
 
 ## Nested form groups
 
@@ -346,6 +364,38 @@ details on validation methods.
 You should always provide content via the `invalid-feedback` prop (or slot) to aid users using
 assistive technologies when setting a contextual `invalid` state.
 
+### Automatic passing of state to child
+
+For some elements the child input element will automatically receive the state of the form group. `:state="false"` on the `BFormGroup` will automatically give the appropriate class to the input element. Explicit sets of the `state` prop to the child element will override this.
+
+<HighlightCard>
+  <BCard>
+    <BFormGroup :state="false">
+      <BFormInput />
+    </BFormGroup>
+    <BFormGroup :state="false">
+      <!-- Use the state prop to override this behavior -->
+      <BFormInput :state="null" />
+    </BFormGroup>
+  </BCard>
+
+<template #html>
+
+```vue-html
+<BCard>
+  <BFormGroup :state="false">
+    <BFormInput />
+  </BFormGroup>
+  <BFormGroup :state="false">
+    <!-- Use the state prop to override this behavior -->
+    <BFormInput :state="null" />
+  </BFormGroup>
+</BCard>
+```
+
+  </template>
+</HighlightCard>
+
 ### Invalid feedback
 
 Show optional invalid state feedback text to provide textual state feedback (html supported) by
@@ -475,7 +525,6 @@ scoped `default` slot.
 <script setup lang="ts">
 import {data} from '../../data/components/formGroup.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BCard, BCardBody, BFormRadioGroup, BFormGroup, BFormInput} from 'bootstrap-vue-next'
 import {computed, ref} from 'vue'

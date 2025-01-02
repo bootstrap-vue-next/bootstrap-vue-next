@@ -1,10 +1,13 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormRadio',
+      styleSpec: {kind: StyleKind.Tag, value: 'input[type="radio"]'},
+      sourcePath: '/BFormRadio/BFormRadio.vue',
       props: {
         '': {
           button: {
@@ -48,7 +51,7 @@ export default {
 
           ...pick(buildCommonProps(), [
             'ariaLabel',
-            'ariaLabelledBy',
+            'ariaLabelledby',
             'autofocus',
             'disabled',
             'form',
@@ -59,7 +62,7 @@ export default {
             'size',
             'state',
           ]),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormRadio'], PropertyReference>,
       },
       emits: [
         {
@@ -83,6 +86,8 @@ export default {
     },
     {
       component: 'BFormRadioGroup',
+      styleSpec: {kind: StyleKind.Tag, value: 'dev[role="radiogroup"]'},
+      sourcePath: '/BFormRadio/BFormRadioGroup.vue',
       props: {
         '': {
           buttonVariant: {
@@ -123,7 +128,6 @@ export default {
             'disabled',
             'disabledField',
             'form',
-            'htmlField',
             'id',
             'name',
             'options',
@@ -134,7 +138,7 @@ export default {
             'textField',
             'valueField',
           ]),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormRadioGroup'], PropertyReference>,
       },
       emits: [
         {
@@ -154,13 +158,33 @@ export default {
         {
           name: 'default',
           description: 'Content (form radio buttons) to place in the form radio button group',
-          scope: [],
         },
         {
           name: 'first',
           description:
             'Slot to place for radio buttons so that they appear before radios generated from options prop',
-          scope: [],
+        },
+        {
+          name: 'option',
+          description:
+            'Use this slot to have finer control over the content render inside each radio button',
+          scope: [
+            {
+              prop: 'value',
+              type: 'string | number | undefined',
+              description: 'The value of the radio button',
+            },
+            {
+              prop: 'disabled',
+              type: 'boolean | undefined',
+              description: 'Whether the radio button is disabled',
+            },
+            {
+              prop: 'text',
+              type: 'string | undefined',
+              description: 'The text to display for the radio button',
+            },
+          ],
         },
       ],
     },

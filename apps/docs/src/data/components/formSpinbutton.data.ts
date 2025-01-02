@@ -1,10 +1,13 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormSpinbutton',
+      styleSpec: {kind: StyleKind.BsvnClass},
+      sourcePath: '/BFormSpinbutton/BFormSpinbutton.vue',
       props: {
         '': {
           formatterFn: {
@@ -100,7 +103,8 @@ export default {
             'size',
             'state',
           ]),
-        },
+          modelValue: {},
+        } satisfies Record<keyof BvnComponentProps['BFormSpinbutton'], PropertyReference>,
       },
       emits: [
         {

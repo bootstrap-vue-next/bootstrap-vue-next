@@ -1,7 +1,8 @@
 <template>
   <input
     :id="computedId"
-    ref="input"
+    ref="_input"
+    :key="forceUpdateKey"
     :value="modelValue"
     :class="computedClasses"
     :name="props.name || undefined"
@@ -18,19 +19,20 @@
     :list="props.type !== 'password' ? props.list : undefined"
     :aria-required="props.required || undefined"
     :aria-invalid="computedAriaInvalid"
-    @input="onInput($event)"
-    @change="onChange($event)"
-    @blur="onBlur($event)"
+    @input="onInput"
+    @change="onChange"
+    @blur="onBlur"
   />
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from 'vue'
-import {useDefaults, useFormInput, useStateClass} from '../../composables'
-import {normalizeInput} from '../../utils'
-import type {BFormInputProps, Numberish} from '../../types'
+import {computed, useTemplateRef} from 'vue'
+import {useDefaults} from '../../composables/useDefaults'
+import {normalizeInput} from '../../utils/normalizeInput'
+import type {BFormInputProps} from '../../types/ComponentProps'
+import {useFormInput} from '../../composables/useFormInput'
 
-const _props = withDefaults(defineProps<BFormInputProps>(), {
+const _props = withDefaults(defineProps<Omit<BFormInputProps, 'modelValue'>>(), {
   max: undefined,
   min: undefined,
   step: undefined,
@@ -54,22 +56,32 @@ const _props = withDefaults(defineProps<BFormInputProps>(), {
   readonly: false,
   required: false,
   size: undefined,
-  state: null,
+  state: undefined,
   // End CommonInputProps
 })
 const props = useDefaults(_props, 'BFormInput')
 
-const [modelValue, modelModifiers] = defineModel<Numberish | null, 'trim' | 'lazy' | 'number'>({
+const [modelValue, modelModifiers] = defineModel<
+  Exclude<BFormInputProps['modelValue'], undefined>,
+  'trim' | 'lazy' | 'number'
+>({
   default: '',
   set: (v) => normalizeInput(v, modelModifiers),
 })
 
-const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
-  useFormInput(props, modelValue, modelModifiers)
+const input = useTemplateRef<HTMLInputElement>('_input')
 
-const stateClass = useStateClass(() => props.state)
-
-const isHighlighted = ref(false)
+const {
+  computedId,
+  computedAriaInvalid,
+  onInput,
+  onChange,
+  onBlur,
+  stateClass,
+  focus,
+  blur,
+  forceUpdateKey,
+} = useFormInput(props, input, modelValue, modelModifiers)
 
 const computedClasses = computed(() => {
   const isRange = props.type === 'range'
@@ -77,7 +89,6 @@ const computedClasses = computed(() => {
   return [
     stateClass.value,
     {
-      'form-control-highlighted': isHighlighted.value,
       'form-range': isRange,
       'form-control': isColor || (!props.plaintext && !isRange),
       'form-control-color': isColor,
@@ -92,12 +103,4 @@ defineExpose({
   element: input,
   focus,
 })
-
-// const highlight = () => {
-//   if (isHighlighted.value === true) return
-//   isHighlighted.value = true
-//   setTimeout(() => {
-//     isHighlighted.value = false
-//   }, 2000)
-// }
 </script>

@@ -5,9 +5,12 @@
 </template>
 
 <script setup lang="ts">
-import {useDefaults} from '../../composables'
-import type {BButtonGroupProps} from '../../types'
-import {computed} from 'vue'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BButtonGroupProps} from '../../types/ComponentProps'
+import {computed, provide} from 'vue'
+import {buttonGroupKey} from '../../utils/keys'
+
+provide(buttonGroupKey, true)
 
 const _props = withDefaults(defineProps<BButtonGroupProps>(), {
   ariaLabel: 'Group',

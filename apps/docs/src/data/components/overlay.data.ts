@@ -1,9 +1,12 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BOverlay',
+      styleSpec: {kind: StyleKind.BsvnClass},
+      sourcePath: '/BOverlay/BOverlay.vue',
       props: {
         '': {
           bgColor: {
@@ -90,7 +93,7 @@ export default {
             type: 'Numberish',
             default: 10,
           },
-        },
+        } satisfies Record<keyof BvnComponentProps['BOverlay'], PropertyReference>,
       },
       emits: [
         {

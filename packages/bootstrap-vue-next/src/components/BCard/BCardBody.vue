@@ -23,12 +23,13 @@
 </template>
 
 <script setup lang="ts">
-import {computed, toRef} from 'vue'
+import {computed} from 'vue'
 import BCardTitle from './BCardTitle.vue'
-import {isEmptySlot} from '../../utils'
+import {isEmptySlot} from '../../utils/dom'
 import BCardSubtitle from './BCardSubtitle.vue'
-import type {BCardBodyProps} from '../../types'
-import {useColorVariantClasses, useDefaults} from '../../composables'
+import type {BCardBodyProps} from '../../types/ComponentProps'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import {useDefaults} from '../../composables/useDefaults'
 
 const _props = withDefaults(defineProps<BCardBodyProps>(), {
   overlay: false,
@@ -56,13 +57,12 @@ const slots = defineSlots<{
   title?: (props: Record<string, never>) => any
 }>()
 
-const resolvedBackgroundClasses = useColorVariantClasses(props)
+const hasTitleSlot = computed(() => !isEmptySlot(slots.title))
+const hasSubtitleSlot = computed(() => !isEmptySlot(slots.subtitle))
 
-const hasTitleSlot = toRef(() => !isEmptySlot(slots.title))
-const hasSubtitleSlot = toRef(() => !isEmptySlot(slots.subtitle))
-
+const colorClasses = useColorVariantClasses(props)
 const computedClasses = computed(() => [
-  resolvedBackgroundClasses.value,
+  colorClasses.value,
   props.overlay ? 'card-img-overlay' : 'card-body',
 ])
 </script>

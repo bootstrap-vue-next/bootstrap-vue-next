@@ -14,9 +14,9 @@
 </template>
 
 <script setup lang="ts">
-import {useDefaults} from '../../composables'
-import type {BTdProps} from '../../types'
-import {computed, toRef} from 'vue'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BTdProps} from '../../types/ComponentProps'
+import {computed} from 'vue'
 
 const _props = withDefaults(defineProps<BTdProps>(), {
   colspan: undefined,
@@ -38,5 +38,5 @@ const computedClasses = computed(() => ({
   'table-b-table-default': props.stickyColumn && props.variant === null,
 }))
 
-const scope = toRef(() => (props.colspan ? 'colspan' : props.rowspan ? 'rowspan' : 'col'))
+const scope = computed(() => (props.colspan ? 'colspan' : props.rowspan ? 'rowspan' : 'col'))
 </script>

@@ -1,9 +1,13 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
+import {showHideProps} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BPopover',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.tooltip, .popover'},
+      sourcePath: '/BPopover/BPopover.vue',
       props: {
         '': {
           boundary: {
@@ -34,10 +38,6 @@ export default {
             type: 'Middleware[]',
             default: undefined,
           },
-          html: {
-            type: 'boolean',
-            default: false,
-          },
           id: {
             type: 'string',
             default: undefined,
@@ -50,15 +50,7 @@ export default {
             type: 'boolean',
             default: false,
           },
-          modelValue: {
-            type: 'boolean',
-            default: false,
-          },
           noAutoClose: {
-            type: 'boolean',
-            default: false,
-          },
-          noFade: {
             type: 'boolean',
             default: false,
           },
@@ -85,10 +77,6 @@ export default {
           offset: {
             type: 'Numberish | null',
             default: null,
-          },
-          persistent: {
-            type: 'boolean',
-            default: false,
           },
           placement: {
             type: 'PopoverPlacement',
@@ -130,7 +118,15 @@ export default {
             type: 'ColorVariant | null',
             default: null,
           },
-        },
+          closeOnHide: {},
+          hideMargin: {
+            type: 'number',
+            default: 0,
+            description:
+              'The margin to apply when hiding the popover on pointer leave (how far the pointer can move off the target before hiding the popover)',
+          },
+          ...showHideProps,
+        } satisfies Record<keyof BvnComponentProps['BPopover'], PropertyReference>,
       },
       emits: [
         {
@@ -209,14 +205,14 @@ export default {
             },
             {
               prop: 'hide',
-              type: '(e: Event) => void',
+              type: '(trigger: string) => void',
             },
             {
               prop: 'toggle',
-              type: '(e: Event) => void',
+              type: '() => void',
             },
             {
-              prop: 'showState',
+              prop: 'visible',
               type: 'boolean',
             },
           ],

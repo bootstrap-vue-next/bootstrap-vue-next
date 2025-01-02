@@ -1,10 +1,5 @@
-# useModalController
+<ComposableHeader path="useModalController/index.ts" title="useModalController" />
 
-<ContentsSidebar>
-
-[[toc]]
-
-</ContentsSidebar>
 <div class="lead mb-5">
 
 `useModalController` can hide modals everywhere in the app, as well as creating modals on the fly
@@ -18,19 +13,18 @@
 You must have initialized `BModalOrchestrator` component once and only once (doing multiple may display multiple `Modals`). This is usually best placed at the App root.
 
 <HighlightCard>
-
 <template #html>
 
 ```vue-html
 <BModalOrchestrator />
 ```
 
-  </template>
+</template>
 </HighlightCard>
 
 The only props it access are `teleportDisabled` and `teleportTo` to modify the location that it is placed
 
-In addition, it contains a few exposed methods. These exposed methods on the `template ref` correspond to those in the `useToast` function, described below
+In addition, it contains a few exposed methods. These exposed methods on the `template ref` correspond to those in the `useToastController` function, described below
 
 - confirm
 - show
@@ -225,9 +219,10 @@ const {hide, hideAll} = useModalController()
 <script setup lang="ts">
 import {BButton, BModal, useModalController, BButtonGroup, useModal} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
-import ContentsSidebar from '../../components/ContentsSidebar.vue'
+
 import UsePluginAlert from '../../components/UsePluginAlert.vue'
 import {ref, computed, h, onMounted} from 'vue'
+import ComposableHeader from './ComposableHeader.vue'
 
 const nestedModal1 = ref(false)
 const nestedModal2 = ref(false)

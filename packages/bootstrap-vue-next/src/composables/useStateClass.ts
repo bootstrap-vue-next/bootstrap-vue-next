@@ -1,6 +1,6 @@
 import {computed, type MaybeRefOrGetter, toValue} from 'vue'
 
-export default (value: MaybeRefOrGetter<boolean | null>) =>
+export const useStateClass = (value: MaybeRefOrGetter<boolean | null>) =>
   computed(() => {
     const resolvedValue = toValue(value)
 

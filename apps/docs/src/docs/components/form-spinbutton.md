@@ -1,11 +1,5 @@
 # Form Spinbutton
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
 <div class="lead mb-5">
 
 The Form SpinButton allows the user to adjusting a numeric range with finite control
@@ -347,7 +341,6 @@ Note the the `repeat-delay`, `repeat-threshold` and `repeat-interval` only appli
 <script setup lang="ts">
 import {data} from '../../data/components/formSpinbutton.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BButton, BProgressBar, BCard, BCardBody, BProgress, BFormSpinbutton, BFormSelect, BRow, BCol} from 'bootstrap-vue-next'
 import {ref} from 'vue'

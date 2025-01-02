@@ -1,6 +1,6 @@
 <template>
   <div
-    ref="element"
+    ref="_element"
     class="b-form-spinbutton form-control"
     :class="computedClasses"
     role="group"
@@ -35,7 +35,7 @@
       key="output"
       class="flex-grow-1"
       :class="computedSpinClasses"
-      :dir="isRtl ?? false ? 'rtl' : 'ltr'"
+      :dir="(isRtl ?? false) ? 'rtl' : 'ltr'"
       :tabindex="props.disabled ? undefined : '0'"
       role="spinbutton"
       aria-live="off"
@@ -70,9 +70,9 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, toRef} from 'vue'
-import type {BFormSpinbuttonProps, ButtonType} from '../../types'
-import {eventOnOff} from '../../utils/event'
+import {computed, useTemplateRef} from 'vue'
+import type {BFormSpinbuttonProps} from '../../types/ComponentProps'
+import {eventOnOff, stopEvent} from '../../utils/event'
 import {
   CODE_DOWN,
   CODE_END,
@@ -80,13 +80,16 @@ import {
   CODE_PAGEDOWN,
   CODE_PAGEUP,
   CODE_UP,
-} from '../../constants/codes'
+} from '../../utils/constants'
 import {onKeyStroke, useFocus, useToNumber} from '@vueuse/core'
-import {useDefaults, useId, useRtl} from '../../composables'
+import {useDefaults} from '../../composables/useDefaults'
+import {useId} from '../../composables/useId'
+import {useRtl} from '../../composables/useRtl'
+import type {ButtonType} from '../../types/ButtonType'
 
 const KEY_CODES = [CODE_UP, CODE_DOWN, CODE_HOME, CODE_END, CODE_PAGEUP, CODE_PAGEDOWN]
 
-const _props = withDefaults(defineProps<BFormSpinbuttonProps>(), {
+const _props = withDefaults(defineProps<Omit<BFormSpinbuttonProps, 'modelValue'>>(), {
   ariaControls: undefined,
   ariaLabel: undefined,
   disabled: false,
@@ -126,11 +129,11 @@ defineSlots<{
   increment?: (props: {hasFocus: boolean}) => any
 }>()
 
-const modelValue = defineModel<number | null>({
+const modelValue = defineModel<Exclude<BFormSpinbuttonProps['modelValue'], undefined>>({
   default: null,
 })
 
-const element = ref<HTMLElement | null>(null)
+const element = useTemplateRef<HTMLElement>('_element')
 
 const {focused} = useFocus(element)
 
@@ -167,17 +170,17 @@ let $_keyIsDown = false
 // const computedReadonly = computed(() => props.readonly && !props.disabled)
 
 const stepNumber = useToNumber(() => props.step)
-const computedStep = toRef(() =>
+const computedStep = computed(() =>
   Number.isNaN(stepNumber.value) ? defaultValues.step : stepNumber.value
 )
 
 const minNumber = useToNumber(() => props.min)
-const computedMin = toRef(() =>
+const computedMin = computed(() =>
   Number.isNaN(minNumber.value) ? defaultValues.min : minNumber.value
 )
 
 const maxNumber = useToNumber(() => props.max)
-const computedMax = toRef(() => {
+const computedMax = computed(() => {
   const step = computedStep.value
   const min = computedMin.value
   return Math.floor((maxNumber.value - min) / step) * step + min
@@ -187,7 +190,7 @@ const repeatDelayNumber = useToNumber(() => props.repeatDelay, {
   nanToZero: true,
   method: 'parseInt',
 })
-const computedDelay = toRef(() =>
+const computedDelay = computed(() =>
   repeatDelayNumber.value > 0 ? repeatDelayNumber.value : defaultValues.repeatDelay
 )
 
@@ -195,7 +198,7 @@ const repeatIntervalNumber = useToNumber(() => props.repeatInterval, {
   nanToZero: true,
   method: 'parseInt',
 })
-const computedInterval = toRef(() =>
+const computedInterval = computed(() =>
   repeatIntervalNumber.value > 0 ? repeatIntervalNumber.value : defaultValues.repeatInterval
 )
 
@@ -203,7 +206,7 @@ const repeatThresholdNumber = useToNumber(() => props.repeatThreshold, {
   nanToZero: true,
   method: 'parseInt',
 })
-const computedThreshold = toRef(() =>
+const computedThreshold = computed(() =>
   Math.max(
     Number.isNaN(repeatThresholdNumber.value)
       ? defaultValues.repeatThreshold
@@ -216,7 +219,7 @@ const repeatStepMultiplierNumber = useToNumber(() => props.repeatStepMultiplier,
   nanToZero: true,
   method: 'parseInt',
 })
-const computedStepMultiplier = toRef(() =>
+const computedStepMultiplier = computed(() =>
   Math.max(
     Number.isNaN(repeatStepMultiplierNumber.value)
       ? defaultValues.repeatMultiplier
@@ -225,14 +228,14 @@ const computedStepMultiplier = toRef(() =>
   )
 )
 
-const computedPrecision = toRef(() => {
+const computedPrecision = computed(() => {
   const step = computedStep.value
   return Math.floor(step) === step ? 0 : (step.toString().split('.')[1] || '').length
 })
 
-const computedMultiplier = toRef(() => Math.pow(10, computedPrecision.value || 0))
+const computedMultiplier = computed(() => Math.pow(10, computedPrecision.value || 0))
 
-const valueAsFixed = toRef(() =>
+const valueAsFixed = computed(() =>
   modelValue.value === null ? '' : modelValue.value.toFixed(computedPrecision.value)
 )
 
@@ -255,7 +258,7 @@ const defaultFormatter = () =>
     notation: 'standard',
   }).format
 
-const computedFormatter = toRef(() => props.formatterFn ?? defaultFormatter())
+const computedFormatter = computed(() => props.formatterFn ?? defaultFormatter())
 
 const stepValue = (direction: number) => {
   // Sets a new incremented or decremented value, supporting optional wrapping
@@ -292,11 +295,6 @@ const stepDown = (multiplier = 1) => {
   stepValue(-1 * multiplier)
 }
 
-const stopEvent = (event: Readonly<Event>) => {
-  event.preventDefault()
-  event.stopImmediatePropagation()
-}
-
 onKeyStroke(
   KEY_CODES,
   (event) => {
@@ -305,7 +303,7 @@ onKeyStroke(
     if (props.disabled || props.readonly || altKey || ctrlKey || metaKey) return
 
     // https://w3c.github.io/aria-practices/#spinbutton
-    stopEvent(event)
+    stopEvent(event, {immediatePropagation: true})
     if ($_keyIsDown) {
       // Keypress is already in progress
       return
@@ -354,7 +352,7 @@ onKeyStroke(
 
     if (props.disabled || props.readonly || altKey || ctrlKey || metaKey) return
 
-    stopEvent(event)
+    stopEvent(event, {immediatePropagation: true})
     resetTimers()
     $_keyIsDown = false
     emit('change', modelValue.value)
@@ -407,7 +405,7 @@ const onMouseup: EventListener = (event: Readonly<Event>) => {
     }
   }
 
-  stopEvent(event)
+  stopEvent(event, {immediatePropagation: true})
   resetTimers()
   setMouseup(false)
   // Trigger the change event
@@ -474,7 +472,7 @@ const buttons = computed(() => {
 
   const handler = (event: Readonly<Event>, stepper: (multiplier?: number) => void) => {
     if (!props.disabled && !props.readonly) {
-      stopEvent(event)
+      stopEvent(event, {immediatePropagation: true})
       setMouseup(true)
       // Since we `preventDefault()`, we must manually focus the button
       // Though it's likely captured from the element click focus

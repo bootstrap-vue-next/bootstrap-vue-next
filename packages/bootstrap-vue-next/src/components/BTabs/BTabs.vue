@@ -32,21 +32,30 @@
           v-for="(tab, idx) in tabs"
           :key="tab.id"
           class="nav-item"
-          :class="tab.titleItemClass"
+          :class="tab.titleItemClass?.()"
           role="presentation"
         >
           <button
             :id="tab.buttonId"
             class="nav-link"
-            :class="tab.navItemClasses"
+            :class="[tab.navItemClasses, tab.titleLinkClass?.()]"
             role="tab"
             :aria-controls="tab.id"
             :aria-selected="tab.active"
-            v-bind="tab.titleLinkAttrs"
-            @keydown.left.stop.prevent="keynav(-1)"
-            @keydown.right.stop.prevent="keynav(1)"
-            @keydown.page-up.stop.prevent="keynav(-999)"
-            @keydown.page-down.stop.prevent="keynav(999)"
+            :tabindex="props.noKeyNav ? undefined : tab.active ? undefined : -1"
+            v-bind="tab.titleLinkAttrs?.()"
+            @keydown.left.exact="!props.vertical && keynav($event, -1)"
+            @keydown.left.shift="!props.vertical && keynav($event, -999)"
+            @keydown.up.exact="props.vertical && keynav($event, -1)"
+            @keydown.up.shift="props.vertical && keynav($event, -999)"
+            @keydown.right.exact="!props.vertical && keynav($event, 1)"
+            @keydown.right.shift="!props.vertical && keynav($event, 999)"
+            @keydown.down.exact="props.vertical && keynav($event, 1)"
+            @keydown.down.shift="props.vertical && keynav($event, 999)"
+            @keydown.page-up="keynav($event, -999)"
+            @keydown.page-down="keynav($event, 999)"
+            @keydown.home="keynav($event, -999)"
+            @keydown.end="keynav($event, 999)"
             @click.stop.prevent="(e) => handleClick(e, idx)"
           >
             <component :is="tab.titleComponent" v-if="tab.titleComponent" />
@@ -64,12 +73,15 @@
 
 <script setup lang="ts">
 import {computed, nextTick, provide, type Ref, ref, toRef, unref, watch} from 'vue'
-import {BvEvent, tabsInjectionKey} from '../../utils'
-import {useAlignment, useDefaults} from '../../composables'
-import type {BTabsProps, TabType} from '../../types'
+import {BvEvent} from '../../utils/classes'
+import {useAlignment} from '../../composables/useAlignment'
 import {createReusableTemplate} from '@vueuse/core'
+import type {TabType} from '../../types/Tab'
+import type {BTabsProps} from '../../types/ComponentProps'
+import {tabsInjectionKey} from '../../utils/keys'
+import {useDefaults} from '../../composables/useDefaults'
 
-const _props = withDefaults(defineProps<BTabsProps>(), {
+const _props = withDefaults(defineProps<Omit<BTabsProps, 'modelValue' | 'activeId'>>(), {
   activeNavItemClass: undefined,
   activeTabClass: undefined,
   align: undefined,
@@ -86,12 +98,13 @@ const _props = withDefaults(defineProps<BTabsProps>(), {
   navItemClass: undefined,
   navWrapperClass: undefined,
   noFade: false,
-  // noKeyNav: false,
+  noKeyNav: false,
   noNavStyle: false,
   pills: false,
   small: false,
   tag: 'div',
   tabClass: undefined,
+  underline: false,
   vertical: false,
 })
 const props = useDefaults(_props, 'BTabs')
@@ -112,10 +125,10 @@ defineSlots<{
   'tabs-start'?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = defineModel<number>({
+const modelValue = defineModel<Exclude<BTabsProps['modelValue'], undefined>>({
   default: -1,
 })
-const activeId = defineModel<string | undefined>('activeId', {
+const activeId = defineModel<BTabsProps['activeId']>('activeId', {
   default: undefined,
 })
 
@@ -138,13 +151,12 @@ const tabs = computed(() =>
         },
         active ? props.activeNavItemClass : props.inactiveNavItemClass,
         props.navItemClass,
-        tab.titleLinkClass,
       ],
     }
   })
 )
 
-const showEmpty = toRef(() => !(tabs?.value && tabs.value.length > 0))
+const showEmpty = computed(() => !(tabs?.value && tabs.value.length > 0))
 
 const computedClasses = computed(() => ({
   'd-flex': props.vertical,
@@ -155,12 +167,14 @@ const alignment = useAlignment(() => props.align)
 
 const navTabsClasses = computed(() => ({
   'nav-pills': props.pills,
+  'nav-underline': props.underline,
   'flex-column me-3': props.vertical,
   [alignment.value]: props.align !== undefined,
   'nav-fill': props.fill,
-  'card-header-tabs': props.card,
+  'card-header-tabs': props.card && !props.pills && !props.underline,
+  'card-header-pills': props.card && props.pills,
   'nav-justified': props.justified,
-  'nav-tabs': !props.noNavStyle && !props.pills,
+  'nav-tabs': !props.noNavStyle && !props.pills && !props.underline,
   'small': props.small,
 }))
 
@@ -195,8 +209,10 @@ const handleClick = (event: Readonly<MouseEvent>, index: number) => {
   }
 }
 
-const keynav = (direction: number) => {
-  if (tabs.value.length <= 0) return
+const keynav = (e: Event, direction: number) => {
+  if (tabs.value.length <= 0 || props.noKeyNav) return
+  e.preventDefault()
+  e.stopPropagation()
   modelValue.value = nextIndex(modelValue.value + direction, direction)
   document.getElementById(tabs.value[modelValue.value]?.buttonId)?.focus()
 }

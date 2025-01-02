@@ -1,236 +1,257 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
+import {buildCommonProps, pick, showHideProps} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BTab',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.tab-pane'},
+      sourcePath: '/BTabs/BTab.vue',
       props: {
         '': {
-          active: {
-            type: 'boolean',
-            default: false,
-          },
           buttonId: {
             type: 'string',
             default: undefined,
-          },
-          disabled: {
-            type: 'boolean',
-            default: false,
-          },
-          id: {
-            type: 'string',
-            default: undefined,
-          },
-          lazy: {
-            type: 'boolean',
-            default: undefined,
+            description:
+              "Use a specific ID for this tab's tab control button. If not provided, one will automatically be generated",
           },
           lazyOnce: {
             type: 'boolean',
             default: undefined,
+            description:
+              'When set and lazy is also set, the content will only be rendered once and then cached. Note: This will likely be deprecated in favor of unmount-lazy',
           },
           noBody: {
             type: 'boolean',
             default: false,
-          },
-          tag: {
-            type: 'string',
-            default: 'div',
-          },
-          title: {
-            type: 'string',
-            default: undefined,
+            description:
+              "When the parent b-tabs has the 'card' prop set, do not render a card-body wrapper",
           },
           titleItemClass: {
             type: 'ClassValue',
             default: undefined,
+            description: "CSS class (or classes) to apply to the tab's control button 'li' element",
           },
-          titleLinkAttributes: {
+          titleLinkAttrs: {
             type: 'AttrsValue',
             default: undefined,
+            description: "Attributes to apply to the tab's control button inner link element",
           },
           titleLinkClass: {
             type: 'ClassValue',
             default: undefined,
+            description:
+              "CSS class (or classes) to apply to the tab's control button inner link element",
           },
-        },
+          ...pick(showHideProps, ['lazy']),
+          ...pick(buildCommonProps(), ['active', 'disabled', 'id', 'tag', 'title']),
+        } satisfies Record<keyof BvnComponentProps['BTab'], PropertyReference>,
       },
       emits: [],
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Slot for custom tab content',
         },
         {
           name: 'title',
-          description: '',
-          scope: [],
+          description: 'Slot for custom tab title',
         },
       ],
     },
     {
       component: 'BTabs',
+      sourcePath: '/BTabs/BTabs.vue',
       props: {
         '': {
           activeId: {
             type: 'string',
             default: undefined,
+            description: 'The id of the currently active tab',
           },
           activeNavItemClass: {
             type: 'ClassValue',
             default: undefined,
+            description: 'CSS class (or classes) to apply to the active nav item tab control',
           },
           activeTabClass: {
             type: 'ClassValue',
             default: undefined,
+            description: 'CSS class (or classes) to apply to the currently active tab',
           },
           align: {
             type: 'AlignmentJustifyContent',
             default: undefined,
+            description:
+              "Align the nav items in the nav: 'start' , 'end' , 'center' , 'between' , 'around' or 'evenly'",
           },
           card: {
             type: 'boolean',
             default: false,
+            description:
+              "When set to true, renders the tabs the the appropriate styles to be placed into a 'b-card'",
           },
           contentClass: {
             type: 'ClassValue',
             default: undefined,
+            description: 'CSS class (or classes) to apply to the tab-content wrapper',
           },
           end: {
             type: 'boolean',
             default: false,
+            description:
+              'Place the tab controls at the bottom (horizontal tabs), or right (vertical tabs)',
           },
           fill: {
             type: 'boolean',
             default: false,
-          },
-          id: {
-            type: 'string',
-            default: undefined,
+            description:
+              'Proportionately fills all horizontal space with nav items. All horizontal space is occupied, but not every nav item has the same width',
           },
           inactiveNavItemClass: {
             type: 'ClassValue',
             default: undefined,
+            description: 'CSS class (or classes) to apply to inactive nav item tab controls',
           },
           inactiveTabClass: {
             type: 'ClassValue',
             default: undefined,
+            description: 'CSS class (or classes) to apply to inactive tabs',
           },
           justified: {
             type: 'boolean',
             default: false,
+            description:
+              "Fills all horizontal space with nav items, but unlike 'fill', every nav item will be the same width",
           },
           lazy: {
             type: 'boolean',
             default: false,
+            description: 'Lazily render the tab contents when shown',
           },
           modelValue: {
             type: 'number',
             default: -1,
+            description: 'Currently visible tab index (zero-based)',
           },
           navClass: {
             type: 'ClassValue',
             default: undefined,
+            description: 'CSS class (or classes) to apply to the tablist (nav) wrapper',
           },
           navItemClass: {
             type: 'ClassValue',
             default: undefined,
+            description: 'CSS class (or classes) to apply to the tab item element',
           },
           navWrapperClass: {
             type: 'ClassValue',
             default: undefined,
+            description: 'CSS class (or classes) to apply to the tab controls wrapper element',
           },
           noFade: {
             type: 'boolean',
             default: false,
+            description: 'When set, disables the fade animation',
+          },
+          noKeyNav: {
+            type: 'boolean',
+            default: false,
+            description: 'Disable keyboard navigation of the tab controls',
           },
           noNavStyle: {
             type: 'boolean',
             default: false,
+            description: 'Do not render the tab controls with tab styling',
           },
           pills: {
             type: 'boolean',
             default: false,
+            description: 'Renders the nav items with the appearance of pill buttons',
           },
           small: {
             type: 'boolean',
             default: false,
+            description: 'Makes the nav smaller',
           },
-          tag: {
-            type: 'string',
-            default: 'div',
+          underline: {
+            type: 'boolean',
+            default: false,
+            description: 'Renders the active name item with an underline',
           },
           tabClass: {
             type: 'ClassValue',
             default: undefined,
+            description: 'CSS class (or classes) to apply to the tab element',
           },
           vertical: {
             type: 'boolean',
             default: false,
+            description: 'Renders the tab controls vertically',
           },
-        },
+          ...pick(buildCommonProps(), ['id', 'tag']),
+        } satisfies Record<keyof BvnComponentProps['BTabs'], PropertyReference>,
       },
       emits: [
         {
-          args: [
-            {
-              arg: 'update:model-value',
-              description: '',
-              type: 'number',
-            },
-          ],
-          description: '',
           event: 'update:model-value',
-        },
-        {
           args: [
             {
-              arg: 'v1',
-              description: '',
+              arg: 'value',
               type: 'number',
+              description: 'Tab being activated (0-based index)',
             },
             {
               arg: 'v2',
-              description: '',
               type: 'number',
+              description:
+                'Tab that is currently active (0-based index). Will be -1 if no current active tab',
+            },
+          ],
+          description: 'The active tab has changed',
+        },
+        {
+          description: 'Emitted just before a tab is shown/activated. Cancelable',
+          event: 'activate-tab',
+          args: [
+            {
+              arg: 'v1',
+              type: 'number',
+              description: 'Tab being activated (0-based index)',
+            },
+            {
+              arg: 'v2',
+              type: 'number',
+              description:
+                'Tab that is currently active (0-based index). Will be -1 if no current active tab',
             },
             {
               arg: 'v3',
-              description: '',
               type: 'BvEvent',
+              description: 'BvEvent object. Call bvEvent.preventDefault() to cancel',
             },
           ],
-          description: '',
-          event: 'activate-tab',
-        },
-        {
-          event: 'click',
-          description: '',
-          args: [],
         },
       ],
       slots: [
         {
-          description: '',
+          name: 'default',
+          description: 'Content (tabs) to place in the tabs element',
+        },
+        {
           name: 'empty',
-          scope: [],
+          description: 'Renders this slot if no tabs are present',
         },
         {
-          description: '',
-          name: 'tabs-start',
-          scope: [],
-        },
-        {
-          description: '',
           name: 'tabs-end',
-          scope: [],
+          description:
+            'Additional tab buttons without tab content placed after content tab buttons',
         },
         {
-          description: '',
-          name: 'empty',
-          scope: [],
+          name: 'tabs-start',
+          description:
+            'Additional tab buttons without tab content placed before content tab buttons',
         },
       ],
     },

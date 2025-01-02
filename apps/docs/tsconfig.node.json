@@ -1,8 +1,9 @@
 {
-  "extends": ["@tsconfig/node20/tsconfig.json", "@vue/tsconfig/tsconfig.json"],
+  "extends": ["@tsconfig/node22/tsconfig.json", "@vue/tsconfig/tsconfig.json"],
   "compilerOptions": {
     "composite": true,
     "module": "ESNext",
     "types": ["node"]
-  }
+  },
+  "include": ["./.vitepress/theme/keys.ts"]
 }

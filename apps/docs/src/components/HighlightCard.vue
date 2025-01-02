@@ -1,10 +1,10 @@
 <template>
   <BCard no-body class="mb-5">
-    <BCardBody>
+    <BCardBody v-if="$slots.default">
       <slot />
     </BCardBody>
     <template v-if="$slots.html">
-      <div class="html">HTML</div>
+      <div v-if="$slots.default" class="html">HTML</div>
       <BCardBody class="bg-body-tertiary">
         <slot name="html" />
       </BCardBody>

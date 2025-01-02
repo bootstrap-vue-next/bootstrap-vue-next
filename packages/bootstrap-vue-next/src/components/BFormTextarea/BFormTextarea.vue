@@ -1,7 +1,8 @@
 <template>
   <textarea
     :id="computedId"
-    ref="input"
+    ref="_input"
+    :key="forceUpdateKey"
     :class="computedClasses"
     :name="props.name || undefined"
     :form="props.form || undefined"
@@ -13,22 +14,29 @@
     :readonly="props.readonly || props.plaintext"
     :aria-required="props.required || undefined"
     :aria-invalid="computedAriaInvalid"
-    :rows="props.rows"
+    :rows="computedRows || 2"
     :style="computedStyles"
     :wrap="props.wrap || undefined"
-    @input="onInput($event)"
-    @change="onChange($event)"
-    @blur="onBlur($event)"
+    @input="
+      (e) => {
+        onInput(e)
+        handleHeightChange()
+      }
+    "
+    @change="onChange"
+    @blur="onBlur"
   />
 </template>
 
 <script setup lang="ts">
-import type {BFormTextareaProps, Numberish} from '../../types'
-import {computed, type CSSProperties} from 'vue'
-import {useDefaults, useFormInput, useStateClass} from '../../composables'
-import {normalizeInput} from '../../utils'
+import type {BFormTextareaProps} from '../../types/ComponentProps'
+import {computed, type CSSProperties, useTemplateRef} from 'vue'
+import {useDefaults} from '../../composables/useDefaults'
+import {normalizeInput} from '../../utils/normalizeInput'
+import {useFormInput} from '../../composables/useFormInput'
+import {useTextareaResize} from '../../composables/useTextareaResize'
 
-const _props = withDefaults(defineProps<BFormTextareaProps>(), {
+const _props = withDefaults(defineProps<Omit<BFormTextareaProps, 'modelValue'>>(), {
   // CommonInputProps
   ariaInvalid: undefined,
   autocomplete: undefined,
@@ -48,23 +56,37 @@ const _props = withDefaults(defineProps<BFormTextareaProps>(), {
   readonly: false,
   required: false,
   size: undefined,
-  state: null,
+  state: undefined,
   // End CommonInputProps
   noResize: false,
+  noAutoShrink: false,
+  maxRows: undefined,
   rows: 2,
   wrap: 'soft',
 })
 const props = useDefaults(_props, 'BFormTextarea')
 
-const [modelValue, modelModifiers] = defineModel<Numberish | null, 'trim' | 'lazy' | 'number'>({
+const [modelValue, modelModifiers] = defineModel<
+  Exclude<BFormTextareaProps['modelValue'], undefined>,
+  'trim' | 'lazy' | 'number'
+>({
   default: '',
   set: (v) => normalizeInput(v, modelModifiers),
 })
 
-const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
-  useFormInput(props, modelValue, modelModifiers)
+const input = useTemplateRef<HTMLTextAreaElement>('_input')
 
-const stateClass = useStateClass(() => props.state)
+const {
+  computedId,
+  forceUpdateKey,
+  computedAriaInvalid,
+  onInput,
+  stateClass,
+  onChange,
+  onBlur,
+  focus,
+  blur,
+} = useFormInput(props, input, modelValue, modelModifiers)
 
 const computedClasses = computed(() => [
   stateClass.value,
@@ -74,8 +96,22 @@ const computedClasses = computed(() => [
   },
 ])
 
+const {
+  computedStyles: resizeStyles,
+  onInput: handleHeightChange,
+  computedRows,
+} = useTextareaResize(
+  input,
+  computed(() => ({
+    maxRows: props.maxRows,
+    rows: props.rows,
+    noAutoShrink: props.noAutoShrink,
+  }))
+)
+
 const computedStyles = computed<CSSProperties>(() => ({
   resize: props.noResize ? 'none' : undefined,
+  ...(props.maxRows || props.noAutoShrink ? resizeStyles.value : undefined),
 }))
 
 defineExpose({

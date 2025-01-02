@@ -1,9 +1,12 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
+import {buildCommonProps, omit, pick, showHideProps} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BToast',
+      sourcePath: '/BToast/BToast.vue',
       props: {
         '': {
           active: {
@@ -61,8 +64,8 @@ export default {
               'Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed',
           },
           interval: {
-            type: 'Numberish',
-            default: '1000',
+            type: 'number | requestAnimationFrame',
+            default: 'requestAnimationFrame',
             description: 'The interval of which the countdown timer will refresh itself',
           },
           isStatus: {
@@ -82,18 +85,6 @@ export default {
             default: false,
             description: 'When set, hides the close button in the toast header',
           },
-          noFade: {
-            type: 'boolean',
-            default: false,
-            description:
-              'When set to `true`, disables the fade animation/transition on the component',
-          },
-          noHoverPause: {
-            type: 'boolean',
-            default: false,
-            description:
-              'When set, disables the pausing of the auto hide delay when the mouse hovers the toast',
-          },
           opacity: {
             type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
             default: undefined,
@@ -103,7 +94,7 @@ export default {
             default: undefined,
           },
           progressProps: {
-            type: "Omit<BProgressBarProps, 'label' | 'labelHtml' | 'max' | 'value'>",
+            type: "Omit<BProgressBarProps, 'label' | 'max' | 'value'>",
             default: undefined,
             description:
               'The properties to define the progress bar in the toast. No progress will be shown if left undefined',
@@ -157,11 +148,6 @@ export default {
             default: undefined,
             description: 'CSS class (or classes) to add to the toast wrapper element',
           },
-          transProps: {
-            type: 'BTransitionProps',
-            default: undefined,
-            description: 'Props to pass to the BTransition wrapper',
-          },
           underlineOffset: {
             type: "1 | 2 | 3 | '1' | '2' | '3'",
             default: undefined,
@@ -186,7 +172,14 @@ export default {
             type: 'ColorVariant | null',
             default: undefined,
           },
-        },
+          // noPrefetch: {},
+          noRel: {},
+          // prefetch: {},
+          // prefetchedClass: {},
+          ...omit(showHideProps, ['modelValue']),
+
+          ...pick(buildCommonProps(), ['noHoverPause', 'noResumeOnHoverLeave']),
+        } satisfies Record<keyof BvnComponentProps['BToast'], PropertyReference>,
       },
       slots: [],
       emits: [
@@ -284,6 +277,7 @@ export default {
     },
     {
       component: 'BToastOrchestrator',
+      sourcePath: '/BToast/BToastOrchestrator.vue',
       emits: [],
       slots: [],
       props: {
@@ -298,7 +292,8 @@ export default {
             type: 'boolean',
             default: false,
           },
-        },
+          appendToast: {},
+        } satisfies Record<keyof BvnComponentProps['BToastOrchestrator'], PropertyReference>,
       },
     },
   ],

@@ -1,10 +1,5 @@
 # Router link support
 
-<ContentsSidebar>
-
-[[toc]]
-
-</ContentsSidebar>
 <div class="lead mb-5">
 
 Several BootstrapVue components support rendering `RouterLink` components compatible with Vue Router and Nuxt.js. For more information, see the official [Vue Router docs](https://router.vuejs.org) and official [Nuxt.js docs](https://nuxt.com/docs/api/components/nuxt-link#props).
@@ -63,21 +58,6 @@ Setting replace prop will call `router.replace()` instead of `router.push()` whe
 
 ```vue
 <BLink :to="{path: '/abc'}" replace />
-```
-
-</HighlightCard>
-
-### `append`
-
-- type: `boolean`
-- default: `false`
-
-Setting `append` prop always appends the relative path to the current path. For example, assuming we are navigating from `/a` to a relative link `b`, without `append` we will end up at `/b`, but with `append` we will end up at `/a/b`.
-
-<HighlightCard>
-
-```vue
-<BLink :to="{path: 'relative/path'}" append />
 ```
 
 </HighlightCard>
@@ -172,6 +152,8 @@ With components that support router links (have a `to` prop), you will want to s
 
 ## Nuxt.js specific router link props
 
+<NotYetImplemented/>
+
 When BootstrapVue detects that your app is running under [Nuxt.js](https://nuxt.com), it will render a [`NuxtLink`](https://nuxt.com/docs/api/components/nuxt-link#nuxtlink) sub component instead of a `RouterLink`. `NuxtLink` supports all of the above router link props, plus the following additional Nuxt.js specific props.
 
 ### `prefetch`
@@ -200,6 +182,7 @@ router: { prefetchLinks: false }
 
 <script setup lang="ts">
 import HighlightCard from '../../components/HighlightCard.vue'
-import ContentsSidebar from '../../components/ContentsSidebar.vue'
+
+import NotYetImplemented from '../../components/NotYetImplemented.vue'
 import {BAlert} from 'bootstrap-vue-next'
 </script>

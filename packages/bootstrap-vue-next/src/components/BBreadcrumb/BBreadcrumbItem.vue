@@ -14,11 +14,11 @@
 </template>
 
 <script setup lang="ts">
-import {pick} from '../../utils'
-import {computed, toRef} from 'vue'
+import {pick} from '../../utils/object'
+import {computed} from 'vue'
 import BLink from '../BLink/BLink.vue'
-import type {BBreadcrumbItemProps} from '../../types'
-import {useDefaults} from '../../composables'
+import type {BBreadcrumbItemProps} from '../../types/ComponentProps'
+import {useDefaults} from '../../composables/useDefaults'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -63,9 +63,9 @@ const computedClasses = computed(() => ({
   active: props.active,
 }))
 
-const computedTag = toRef(() => (props.active ? 'span' : BLink))
+const computedTag = computed(() => (props.active ? 'span' : BLink))
 
-const computedAriaCurrent = toRef(() => (props.active ? props.ariaCurrent : undefined))
+const computedAriaCurrent = computed(() => (props.active ? props.ariaCurrent : undefined))
 
 const computedLinkProps = computed(() =>
   computedTag.value !== 'span'

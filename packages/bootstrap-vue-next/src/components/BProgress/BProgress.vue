@@ -1,5 +1,12 @@
 <template>
-  <div class="progress" :style="{height: props.height}">
+  <div
+    class="progress"
+    role="progressbar"
+    :style="{height: props.height}"
+    :aria-valuenow="props.value"
+    aria-valuemin="0"
+    :aria-valuemax="props.max"
+  >
     <slot>
       <BProgressBar
         :animated="props.animated"
@@ -19,10 +26,10 @@
 
 <script setup lang="ts">
 import BProgressBar from './BProgressBar.vue'
-import type {BProgressProps} from '../../types'
+import type {BProgressProps} from '../../types/ComponentProps'
 import {provide, toRef} from 'vue'
-import {progressInjectionKey} from '../../utils'
-import {useDefaults} from '../../composables'
+import {progressInjectionKey} from '../../utils/keys'
+import {useDefaults} from '../../composables/useDefaults'
 
 const _props = withDefaults(defineProps<BProgressProps>(), {
   height: undefined,

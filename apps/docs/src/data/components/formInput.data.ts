@@ -1,10 +1,12 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormInput',
+      sourcePath: '/BFormInput/BFormInput.vue',
       props: {
         '': {
           max: {
@@ -56,7 +58,7 @@ export default {
             'state',
             'tooltip',
           ]),
-        },
+        } satisfies Record<keyof BvnComponentProps['BFormInput'], PropertyReference>,
       },
       emits: [
         {

@@ -1,6 +1,7 @@
 import {createApp, h} from 'vue'
 import App from './App.vue'
-import {createBootstrap} from './BootstrapVue'
+import {createBootstrap} from './plugins/createBootstrap'
+import {Directives} from './index'
 
 import {createRouter, createWebHistory, useRoute} from 'vue-router'
 
@@ -46,4 +47,12 @@ const router = createRouter({
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles/styles.scss'
 
-createApp(App).use(createBootstrap()).use(router).mount('#app')
+const app = createApp(App)
+app.use(createBootstrap())
+app.use(router)
+for (const name in Directives) {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore some directives are weird
+  app.directive(name.replace(/^v/, ''), Directives[name as unknown as keyof typeof Directives])
+}
+app.mount('#app')

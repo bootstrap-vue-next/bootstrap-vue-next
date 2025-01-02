@@ -6,14 +6,18 @@
 
 <script setup lang="ts">
 import {computed, provide, readonly, toRef} from 'vue'
-import {accordionInjectionKey} from '../../utils'
-import {useDefaults, useId} from '../../composables'
-import type {BAccordionProps} from '../../types'
+import {accordionInjectionKey} from '../../utils/keys'
+import {useId} from '../../composables/useId'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BAccordionProps} from '../../types/ComponentProps'
 
-const _props = withDefaults(defineProps<BAccordionProps>(), {
+const _props = withDefaults(defineProps<Omit<BAccordionProps, 'modelValue'>>(), {
   flush: false,
   free: false,
+  initialAnimation: false,
   id: undefined,
+  lazy: false,
+  unmountLazy: false,
 })
 
 defineSlots<{
@@ -23,7 +27,7 @@ defineSlots<{
 
 const props = useDefaults(_props, 'BAccordion')
 
-const modelValue = defineModel<string | undefined>({
+const modelValue = defineModel<BAccordionProps['modelValue']>({
   default: undefined,
 })
 
@@ -36,6 +40,9 @@ const computedClasses = computed(() => ({
 provide(accordionInjectionKey, {
   openItem: readonly(modelValue),
   free: toRef(() => props.free),
+  initialAnimation: toRef(() => props.initialAnimation),
+  lazy: toRef(() => props.lazy),
+  unmountLazy: toRef(() => props.unmountLazy),
   setOpenItem: (id: string) => {
     modelValue.value = id
   },

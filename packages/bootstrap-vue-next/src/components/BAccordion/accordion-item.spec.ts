@@ -1,7 +1,7 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BAccordionItem from './BAccordionItem.vue'
-import BCollapse from '../BCollapse.vue'
+import BCollapse from '../BCollapse/BCollapse.vue'
 import {nextTick} from 'vue'
 
 describe('accordion-item', () => {
@@ -25,14 +25,14 @@ describe('accordion-item', () => {
 
   it('b-collapse contains static class accordion-collapse', () => {
     const wrapper = mount(BAccordionItem)
-    const [, $bcollapse] = wrapper.findComponent(BCollapse).findAll('*')
+    const [, , , $bcollapse] = wrapper.findComponent(BCollapse).findAll('*')
     expect($bcollapse.classes()).toContain('accordion-collapse')
   })
 
   it('b-collapse has child div', () => {
     const wrapper = mount(BAccordionItem)
     const $bcollapse = wrapper.findComponent(BCollapse)
-    const [, $div] = $bcollapse.findAll('div')
+    const [$div] = $bcollapse.findAll('div')
     expect($div.exists()).toBe(true)
   })
 
@@ -48,7 +48,7 @@ describe('accordion-item', () => {
       slots: {default: 'foobar'},
     })
     const $bcollapse = wrapper.findComponent(BCollapse)
-    const [, $div] = $bcollapse.findAll('div')
+    const [$div] = $bcollapse.findAll('div')
     expect($div.text()).toBe('foobar')
   })
 
@@ -62,7 +62,7 @@ describe('accordion-item', () => {
     const wrapper = mount(BAccordionItem, {
       props: {id: 'spam&eggs'},
     })
-    const [, $bcollapse] = wrapper.findComponent(BCollapse).findAll('*')
+    const [, , , $bcollapse] = wrapper.findComponent(BCollapse).findAll('*')
     expect($bcollapse.attributes('id')).toBe('spam&eggs')
   })
 
@@ -80,7 +80,7 @@ describe('accordion-item', () => {
     const wrapper = mount(BAccordionItem, {
       props: {id: 'foobar'},
     })
-    const [, $bcollapse] = wrapper.findComponent(BCollapse).findAll('*')
+    const [, , , $bcollapse] = wrapper.findComponent(BCollapse).findAll('*')
     expect($bcollapse.attributes('aria-labelledby')).toBe('foobar-heading')
   })
 
@@ -152,6 +152,7 @@ describe('accordion-item', () => {
     })
     const $button = wrapper.get('.accordion-button')
     await nextTick()
+    await new Promise((resolve) => setTimeout(resolve, 30))
     expect($button.attributes('aria-expanded')).toBe('true')
   })
 
@@ -172,6 +173,10 @@ describe('accordion-item', () => {
     const $button = $h2.get('button')
     expect($button.classes()).toContain('collapsed')
     await wrapper.setProps({visible: true})
+    await nextTick()
+
+    await new Promise((resolve) => setTimeout(resolve, 30))
+
     expect($button.classes()).not.toContain('collapsed')
   })
 })

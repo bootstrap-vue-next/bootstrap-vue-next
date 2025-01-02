@@ -1,19 +1,13 @@
 <template>
-  <form
-    :id="props.id"
-    ref="element"
-    :novalidate="props.novalidate"
-    :class="computedClasses"
-    @submit.prevent="submitted"
-  >
+  <form :id="props.id" ref="_element" :novalidate="props.novalidate" :class="computedClasses">
     <slot />
   </form>
 </template>
 
 <script setup lang="ts">
-import {useDefaults} from '../../composables'
-import type {BFormProps} from '../../types'
-import {computed, ref} from 'vue'
+import {useDefaults} from '../../composables/useDefaults'
+import type {BFormProps} from '../../types/ComponentProps'
+import {computed, useTemplateRef} from 'vue'
 
 const _props = withDefaults(defineProps<BFormProps>(), {
   id: undefined,
@@ -23,11 +17,7 @@ const _props = withDefaults(defineProps<BFormProps>(), {
 })
 const props = useDefaults(_props, 'BForm')
 
-const emit = defineEmits<{
-  submit: [value: Event]
-}>()
-
-const element = ref<HTMLFormElement | null>(null)
+const element = useTemplateRef<HTMLElement>('_element')
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -38,10 +28,6 @@ const computedClasses = computed(() => ({
   'form-floating': props.floating,
   'was-validated': props.validated,
 }))
-
-const submitted = (e: Readonly<Event>) => {
-  emit('submit', e)
-}
 
 defineExpose({
   element,

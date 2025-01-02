@@ -1,6 +1,9 @@
 import {afterEach, describe, expect, it} from 'vitest'
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import BFormGroup from './BFormGroup.vue'
+import {h, nextTick} from 'vue'
+import BFormInput from '../BFormInput/BFormInput.vue'
+import BFormTextarea from '../BFormTextarea/BFormTextarea.vue'
 
 describe('form-group', () => {
   enableAutoUnmount(afterEach)
@@ -82,14 +85,14 @@ describe('form-group', () => {
 
   it('attr disabled is false by default', () => {
     const wrapper = mount(BFormGroup)
-    expect(wrapper.attributes('disabled')).toBe('false')
+    expect(wrapper.attributes('disabled')).toBeUndefined()
   })
 
   it('attr disabled is true when prop disabled', () => {
     const wrapper = mount(BFormGroup, {
       props: {disabled: true},
     })
-    expect(wrapper.attributes('disabled')).toBe('true')
+    expect(wrapper.attributes('disabled')).toBe('')
   })
 
   it('attr disabled is undefined when disabled true but prop labelFor exists', () => {
@@ -176,55 +179,6 @@ describe('form-group', () => {
     })
     expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
   })
-
-  // Start example labelCols props branches
-
-  it('attr aria-labelledby is undefined when has labelCols props but no label', () => {
-    const wrapper = mount(BFormGroup, {
-      props: {
-        labelCols: 3,
-      },
-    })
-    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
-  })
-
-  it('attr aria-labelledby is undefined when has labelColsLg props but no label', () => {
-    const wrapper = mount(BFormGroup, {
-      props: {
-        labelColsLg: 3,
-      },
-    })
-    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
-  })
-
-  it('attr aria-labelledby is undefined when has labelColsMd props but no label', () => {
-    const wrapper = mount(BFormGroup, {
-      props: {
-        labelColsMd: 3,
-      },
-    })
-    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
-  })
-
-  it('attr aria-labelledby is undefined when has labelColsSm props but no label', () => {
-    const wrapper = mount(BFormGroup, {
-      props: {
-        labelColsSm: 3,
-      },
-    })
-    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
-  })
-
-  it('attr aria-labelledby is undefined when has labelColsXl props but no label', () => {
-    const wrapper = mount(BFormGroup, {
-      props: {
-        labelColsXl: 3,
-      },
-    })
-    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
-  })
-
-  // End example
 
   it('attr aria-labelledby is defined when has labelCols props but also slot label', () => {
     const wrapper = mount(BFormGroup, {
@@ -430,48 +384,58 @@ describe('form-group', () => {
     expect(wrapper.attributes('aria-labelledby')).toBeDefined()
   })
 
-  it('attr aria-labelledby is undefined when has contentCols props but no label', () => {
-    const wrapper = mount(BFormGroup, {
-      props: {
-        contentCols: 3,
-      },
+  describe('provide functionality', () => {
+    it('label should automatically inherit input id', async () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo'},
+        slots: {
+          default: h(BFormInput, {id: 'foobar'}),
+        },
+      })
+      await nextTick()
+      expect(wrapper.get('label').attributes('for')).toBe('foobar')
+      const textArea = mount(BFormGroup, {
+        props: {label: 'foo'},
+        slots: {
+          default: h(BFormTextarea, {id: 'foobar'}),
+        },
+      })
+      await nextTick()
+      expect(textArea.get('label').attributes('for')).toBe('foobar')
     })
-    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
-  })
+    it('uses prop labelFor over input id', async () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo', labelFor: 'spam and eggs'},
+        slots: {
+          default: h(BFormInput, {id: 'foobar'}),
+        },
+      })
+      await nextTick()
+      expect(wrapper.get('label').attributes('for')).toBe('spam and eggs')
+    })
 
-  it('attr aria-labelledby is undefined when has contentColsLg props but no label', () => {
-    const wrapper = mount(BFormGroup, {
-      props: {
-        contentColsLg: 3,
-      },
-    })
-    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
-  })
+    describe('sub input to receive state of parent', () => {
+      it('sub input should receive state of parent', async () => {
+        const wrapper = mount(BFormGroup, {
+          props: {label: 'foo', labelFor: 'spam and eggs', state: true},
+          slots: {
+            default: h(BFormInput, {id: 'foobar', state: undefined}),
+          },
+        })
+        await nextTick()
+        expect(wrapper.get('#foobar').classes()).toContain('is-valid')
+      })
 
-  it('attr aria-labelledby is undefined when has contentColsMd props but no label', () => {
-    const wrapper = mount(BFormGroup, {
-      props: {
-        contentColsMd: 3,
-      },
+      it('sub input explicit prop state should override parent state', async () => {
+        const wrapper = mount(BFormGroup, {
+          props: {label: 'foo', labelFor: 'spam and eggs', state: true},
+          slots: {
+            default: h(BFormInput, {id: 'foobar', state: null}),
+          },
+        })
+        await nextTick()
+        expect(wrapper.get('#foobar').classes()).not.toContain('is-valid')
+      })
     })
-    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
-  })
-
-  it('attr aria-labelledby is undefined when has contentColsSm props but no label', () => {
-    const wrapper = mount(BFormGroup, {
-      props: {
-        contentColsSm: 3,
-      },
-    })
-    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
-  })
-
-  it('attr aria-labelledby is undefined when has contentColsXl props but no label', () => {
-    const wrapper = mount(BFormGroup, {
-      props: {
-        contentColsXl: 3,
-      },
-    })
-    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
   })
 })

@@ -1,37 +1,29 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
+import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BButtonGroup',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.btn-group'},
+      sourcePath: '/BButton/BButtonGroup.vue',
       props: {
         '': {
-          ariaLabel: {
-            type: 'string',
-            default: 'Group',
-          },
-          size: {
-            type: 'Size',
-            default: 'md',
-          },
-          tag: {
-            type: 'string',
-            default: 'div',
-          },
           vertical: {
             type: 'boolean',
             default: false,
+            description: 'When set, renders the button group in vertical mode',
           },
-        },
+          ...pick(buildCommonProps(), ['ariaLabel', 'size', 'tag']),
+        } satisfies Record<keyof BvnComponentProps['BButtonGroup'], PropertyReference>,
       },
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content (buttons) to place in the button group',
         },
       ],
-      emits: [],
     },
   ],
 }

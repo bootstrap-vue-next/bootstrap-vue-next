@@ -147,7 +147,8 @@ const composablesList: {name: string}[] = [
   {name: 'useColorMode'},
   {name: 'useModal'},
   {name: 'useModalController'},
-  {name: 'useToast'},
+  {name: 'useToastController'},
+  {name: 'usePopoverController'},
 ]
 
 const directivesList: {name: string}[] = [
@@ -212,6 +213,10 @@ const groupComputedList = computed(() => [
       {
         name: 'Global Options',
         route: withBase('/docs/configurations/global-options'),
+      },
+      {
+        name: 'Customizing Styles',
+        route: withBase('/docs/configurations/customizing-styles'),
       },
     ],
   },

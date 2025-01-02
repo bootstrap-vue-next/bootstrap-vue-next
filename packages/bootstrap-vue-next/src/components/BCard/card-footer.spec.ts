@@ -1,7 +1,7 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BCardFooter from './BCardFooter.vue'
-import BCardHeadFoot from './BCardHeadFoot.vue'
+import BCardHeadFoot from '../BCardHeadFoot.vue'
 
 describe('card-header', () => {
   enableAutoUnmount(afterEach)
@@ -39,14 +39,6 @@ describe('card-header', () => {
     })
     const $headfoot = wrapper.getComponent(BCardHeadFoot)
     expect($headfoot.props('borderVariant')).toBe('danger')
-  })
-
-  it('gives prop html to child', () => {
-    const wrapper = mount(BCardFooter, {
-      props: {html: 'danger'},
-    })
-    const $headfoot = wrapper.getComponent(BCardHeadFoot)
-    expect($headfoot.props('html')).toBe('danger')
   })
 
   it('gives prop tag to child', () => {

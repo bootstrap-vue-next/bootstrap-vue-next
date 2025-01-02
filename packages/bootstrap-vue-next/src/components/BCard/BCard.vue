@@ -8,11 +8,10 @@
 
     <ReusableImg.reuse v-if="props.imgPlacement !== 'bottom'" />
     <BCardHeader
-      v-if="props.header || hasHeaderSlot || props.headerHtml"
+      v-if="props.header || hasHeaderSlot"
       :bg-variant="props.headerBgVariant"
       :variant="props.headerVariant"
       :border-variant="props.headerBorderVariant"
-      :html="props.headerHtml"
       :tag="props.headerTag"
       :text-variant="props.headerTextVariant"
       :class="props.headerClass"
@@ -42,11 +41,10 @@
       {{ props.bodyText }}
     </slot>
     <BCardFooter
-      v-if="props.footer || hasFooterSlot || props.footerHtml"
+      v-if="props.footer || hasFooterSlot"
       :bg-variant="props.footerBgVariant"
       :border-variant="props.footerBorderVariant"
       :variant="props.footerVariant"
-      :html="props.footerHtml"
       :tag="props.footerTag"
       :text-variant="props.footerTextVariant"
       :class="props.footerClass"
@@ -60,10 +58,11 @@
 </template>
 
 <script setup lang="ts">
-import type {BCardProps} from '../../types'
-import {isEmptySlot} from '../../utils'
-import {computed, toRef} from 'vue'
-import {useColorVariantClasses, useDefaults} from '../../composables'
+import type {BCardProps} from '../../types/ComponentProps'
+import {isEmptySlot} from '../../utils/dom'
+import {computed} from 'vue'
+import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import {useDefaults} from '../../composables/useDefaults'
 import BCardImg from './BCardImg.vue'
 import BCardHeader from './BCardHeader.vue'
 import BCardBody from './BCardBody.vue'
@@ -82,7 +81,6 @@ const _props = withDefaults(defineProps<BCardProps>(), {
   footerBgVariant: undefined,
   footerBorderVariant: undefined,
   footerClass: undefined,
-  footerHtml: '',
   footerTag: 'div',
   footerTextVariant: undefined,
   footerVariant: null,
@@ -90,7 +88,6 @@ const _props = withDefaults(defineProps<BCardProps>(), {
   headerBgVariant: undefined,
   headerBorderVariant: undefined,
   headerClass: undefined,
-  headerHtml: '',
   headerTag: 'div',
   headerTextVariant: undefined,
   headerVariant: null,
@@ -125,16 +122,14 @@ const slots = defineSlots<{
   img?: (props: Record<string, never>) => any
 }>()
 
-const hasHeaderSlot = toRef(() => !isEmptySlot(slots.header))
-const hasFooterSlot = toRef(() => !isEmptySlot(slots.footer))
+const hasHeaderSlot = computed(() => !isEmptySlot(slots.header))
+const hasFooterSlot = computed(() => !isEmptySlot(slots.footer))
 
-const resolvedBackgroundClasses = useColorVariantClasses(props)
-
+const colorClasses = useColorVariantClasses(props)
 const computedClasses = computed(() => [
-  resolvedBackgroundClasses.value,
+  colorClasses.value,
   {
     [`text-${props.align}`]: props.align !== undefined,
-    [`border-${props.borderVariant}`]: props.borderVariant !== null,
     'flex-row': props.imgPlacement === 'start',
     'flex-row-reverse': props.imgPlacement === 'end',
   },

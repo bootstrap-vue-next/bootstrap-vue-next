@@ -1,4 +1,4 @@
-import {useRadiusElementClasses} from '../../src/composables'
+import {useRadiusElementClasses} from '../../src/composables/useRadiusElementClasses'
 import {describe, expect, it} from 'vitest'
 
 // Produced a string array of the rounded properties of the obj that have a truthy value
@@ -201,10 +201,10 @@ describe('useRadiusElementClasses blackbox test', () => {
 
     expect(radiusElementClasses.value).toEqual({
       'rounded': false,
-      'top-rounded-5': true,
-      'bottom-rounded-1': true,
-      'start-rounded-2': true,
-      'end-rounded-4': true,
+      'rounded-top-5': true,
+      'rounded-bottom-1': true,
+      'rounded-start-2': true,
+      'rounded-end-4': true,
     })
   })
 })

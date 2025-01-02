@@ -1,142 +1,63 @@
-import type {ComponentReference} from '../../types'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
+import {buildCommonProps, type linkProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BListGroup',
+      sourcePath: '/BListGroup/BListGroup.vue',
       props: {
         '': {
           flush: {
             type: 'boolean',
             default: false,
+            description: 'When set, renders a flush list group with no left and right borders',
           },
           horizontal: {
             type: 'boolean | Breakpoint',
             default: false,
+            description:
+              'When set, renders the list-group horizontally rather than the default of vertical',
           },
           numbered: {
             type: 'boolean',
             default: false,
+            description: 'When set, renders the list-group items with a number on the left side',
           },
-          tag: {
-            type: 'string',
-            default: 'div',
-          },
-        },
+          ...pick(buildCommonProps({}), ['tag']),
+        } satisfies Record<keyof BvnComponentProps['BListGroup'], PropertyReference>,
       },
-      emits: [],
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content (items) to place in the list group',
         },
       ],
     },
     {
       component: 'BListGroupItem',
+      sourcePath: '/BListGroup/BListGroupItem.vue',
       props: {
         '': {
           action: {
             type: 'boolean',
             default: false,
           },
-          active: {
-            type: 'boolean',
-            default: false,
-          },
-          activeClass: {
-            type: 'string',
-            default: undefined,
-          },
           button: {
             type: 'boolean',
             default: false,
           },
-          disabled: {
-            type: 'boolean',
-            default: undefined,
-          },
-          exactActiveClass: {
-            type: 'string',
-            default: undefined,
-          },
-          href: {
-            type: 'string',
-            default: undefined,
-          },
-          icon: {
-            type: 'boolean',
-            default: undefined,
-          },
-          opacity: {
-            type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
-            default: undefined,
-          },
-          opacityHover: {
-            type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
-            default: undefined,
-          },
-          rel: {
-            type: 'string',
-            default: undefined,
-          },
-          replace: {
-            type: 'boolean',
-            default: undefined,
-          },
-          routerComponentName: {
-            type: 'string',
-            default: undefined,
-          },
-          stretched: {
-            type: 'boolean',
-            default: false,
-          },
-          tag: {
-            type: 'string',
-            default: 'div',
-          },
-          target: {
-            type: 'LinkTarget',
-            default: undefined,
-          },
-          to: {
-            type: 'RouteLocationRaw',
-            default: undefined,
-          },
-          underlineOffset: {
-            type: "1 | 2 | 3 | '1' | '2' | '3'",
-            default: undefined,
-          },
-          underlineOffsetHover: {
-            type: "1 | 2 | 3 | '1' | '2' | '3'",
-            default: undefined,
-          },
-          underlineOpacity: {
-            type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
-            default: undefined,
-          },
-          underlineOpacityHover: {
-            type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
-            default: undefined,
-          },
-          underlineVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-          variant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-        },
+          ...pick(buildCommonProps({}), ['tag']),
+        } satisfies Record<
+          Exclude<keyof BvnComponentProps['BListGroupItem'], keyof typeof linkProps>,
+          PropertyReference
+        >,
       },
-      emits: [],
       slots: [
         {
-          description: '',
           name: 'default',
-          scope: [],
+          description: 'Content to place in the list group item',
         },
       ],
     },

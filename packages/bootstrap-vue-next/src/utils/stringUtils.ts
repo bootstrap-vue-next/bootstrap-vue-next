@@ -5,7 +5,7 @@ import {
   RX_SPACES,
   RX_START_SPACE_WORD,
   RX_UNDERSCORE,
-} from '../constants/regex'
+} from './constants'
 
 /**
  * @param str
@@ -55,3 +55,11 @@ export const escapeRegExp = (str: string): string => str.replace(RX_REGEXP_REPLA
  */
 export const escapeRegExpChars = (str: string): string =>
   escapeRegExp(str).replace(RX_SPACES, '\\s')
+
+export const toPascalCase = (str: string) =>
+  str
+    // Convert kebab-case to Pascal case
+    .replace(/-./g, (match) => match.charAt(1).toUpperCase())
+    // Capitalize the first letter of each word
+    .replace(/\b\w/g, (match) => match.toUpperCase())
+    .replace(/\s+/g, '') // Remove any spaces
