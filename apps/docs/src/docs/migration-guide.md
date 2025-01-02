@@ -118,11 +118,11 @@ BSVN doesn't currently implement the ability to define `breakpoint` names.
 See the [Bootstrap 5 migration guide](https://getbootstrap.com/docs/5.3/migration/#grid-updates), in particular
 values for `order` on `<BCol>` only provides support for 1 - 5.
 
-### BAccordian
+### BAccordion
 
 See [Show and Hide](#show-and-hide) shared properties.
 
-#### BAccordianItem
+#### BAccordionItem
 
 See [Show and Hide](#show-and-hide) shared properties.
 
@@ -237,9 +237,9 @@ on `BCarouselSlide`.
 
 ### BCollapse
 
-The `accordian` prop is deprecated: In `bootstrap-vue`/`bootstrap4`, accordians are implemented via `BCollapse`.
-In `boostrap-vue-nexst`/`bootstrap5` accordians are first class citizens, so please use the
-[`BAccordian`](/docs/components/accordian) instead.
+The `accordion` prop is deprecated: In `bootstrap-vue`/`bootstrap4`, accordions are implemented via `BCollapse`.
+In `boostrap-vue-nexst`/`bootstrap5` accordions are first class citizens, so please use the
+[`BAccordion`](/docs/components/accordion) instead.
 
 The prop `toggle` has replaced the prop `appear` with slightly different semantics. In order to create a
 collapse that is closed and transitions to open on the initial mount, set `visible` to false and `toggle` to true.
