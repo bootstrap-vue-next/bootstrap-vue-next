@@ -510,9 +510,23 @@ Example using `useModalController.confirm` to replace `msgBoxConfirm` (Remember 
 <<< DEMO ./demo/ModalConfirm.vue
 
 The `show` and `confirm` `props` object accepts all of the properties that are defined on
-[BModal](/docs/components/modal#component-reference) excpet for `modelValue`.
+[BModal](/docs/components/modal#component-reference) except for `modelValue`.
 
 See [Show and Hide](#show-and-hide) shared properties.
+
+#### Replacement for Modal slots
+
+[BootstrapVue](https://bootstrap-vue.org/docs/components/modal#custom-rendering-with-slots) provides different slots to configure some pieces of the modal component. These slots are slightly different in [BootstrapVueNext](http://localhost:8000/bootstrap-vue-next/docs/components/modal.html#comp-reference-bmodal-slots):
+
+| BootStrapVue       | BootStrapVueNext |
+| ------------------ | ---------------- |
+| default            | default          |
+| modal-title        | title            |
+| modal-header       | header           |
+| modal-footer       | footer           |
+| modal-ok           | ok               |
+| modal-cancel       | cancel           |
+| modal-header-close | header-close     |
 
 ### BNav
 
