@@ -121,6 +121,11 @@ export default {
       sourcePath: '/BDropdown/BDropdownItem.vue',
       props: {
         '': {
+          itemRole: {
+            type: `'menuitem' | 'menuitemradio' | 'menuitemcheckbox'`,
+            default: 'menuitem',
+            description: 'ARIA role of the inner link element',
+          },
           ...pick(buildCommonProps({}), ['linkClass', 'wrapperAttrs']),
         } satisfies Record<
           Exclude<keyof BvnComponentProps['BDropdownItem'], keyof typeof linkProps>,
@@ -162,6 +167,11 @@ export default {
             type: 'ClassValue',
             default: undefined,
             description: 'Class or classes to apply to the inner button element',
+          },
+          buttonRole: {
+            type: `'menuitem' | 'menuitemradio' | 'menuitemcheckbox'`,
+            default: 'menuitem',
+            description: 'ARIA role of the inner button element',
           },
           ...pick(buildCommonProps({}), [
             'active',
