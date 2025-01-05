@@ -596,7 +596,13 @@ See the [v-html](#v-html) section for information on deprecation of the `html` p
 
 <NotYetDocumented type="component"/>
 
+Use `table-attrs` to apply additional attributes to the `<table>` element in reponsive mode.
+
 See the [v-html](#v-html) section for information on deprecation of the `caption-html` prop.
+
+#### BTHead
+
+`head-variant` has been replaced with `variant`, which can used no other table elements.
 
 ### BTabs
 
