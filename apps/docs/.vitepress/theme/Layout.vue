@@ -713,38 +713,6 @@ watch(
   }
 }
 
-.table-of-contents {
-  font-size: 0.875rem;
-
-  ul {
-    padding-left: 0;
-    margin-bottom: 0;
-    list-style: none;
-
-    a {
-      display: block;
-      padding: 0.125rem 0 0.125rem 0.75rem;
-      color: inherit;
-      text-decoration: none;
-      border-left: 0.125rem solid transparent;
-
-      &.active {
-        color: var(--bd-toc-color);
-        border-left-color: var(--bd-toc-color);
-      }
-
-      &:hover {
-        color: var(--bd-toc-color);
-        border-left-color: var(--bd-toc-color);
-      }
-    }
-
-    ul {
-      padding-left: 1rem;
-    }
-  }
-}
-
 // Search
 .DocSearch-Button .DocSearch-Search-Icon {
   @media (max-width: 767px) {
