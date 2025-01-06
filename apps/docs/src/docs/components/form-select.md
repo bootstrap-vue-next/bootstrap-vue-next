@@ -1,10 +1,10 @@
 # Form Select
 
-<div class="lead mb-5">
+<PageHeader>
 
 Bootstrap custom `<select>` using custom styles. Optionally specify options based on an array, array of objects, or an object.
 
-</div>
+</PageHeader>
 
 ## Overview
 

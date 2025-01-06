@@ -77,3 +77,4 @@ export {
   type ComposableType,
   type DirectiveType,
 } from './BootstrapVueOptions'
+export type {ValidationState} from './CommonTypes'

@@ -192,8 +192,10 @@ const globalData = inject(appInfoKey, {
   githubPackageDirectory: '',
   githubComponentsDirectory: '',
   githubComposablesDirectory: '',
+  githubMainBranch: '',
   githubDirectivesDirectory: '',
   opencollectiveUrl: '',
+  githubDocsDirectory: '',
 })
 
 const isLargeScreen = useMediaQuery('(min-width: 992px)')

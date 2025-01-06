@@ -1,10 +1,10 @@
 # Placeholder
 
-<div class="lead mb-5">
+<PageHeader>
 
 Placeholders are components that indicate that something may still be loading.
 
-</div>
+</PageHeader>
 
 ## Basic Usage
 

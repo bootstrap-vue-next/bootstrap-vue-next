@@ -440,7 +440,7 @@ export default {
             },
             {
               prop: 'state',
-              type: 'boolean | null',
+              type: 'ValidationState',
               description:
                 "The contextual state of the component. Value of the 'state' prop. Possible values are true, false or null",
             },

@@ -1,10 +1,10 @@
 # Accordion
 
-<div class="lead mb-5">
+<PageHeader>
 
 Build vertically collapsing accordions in combination with `BCollapse` component.
 
-</div>
+</PageHeader>
 
 ## How it works
 

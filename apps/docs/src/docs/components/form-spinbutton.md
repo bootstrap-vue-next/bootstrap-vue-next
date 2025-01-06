@@ -1,10 +1,10 @@
 # Form Spinbutton
 
-<div class="lead mb-5">
+<PageHeader>
 
 The Form SpinButton allows the user to adjusting a numeric range with finite control
 
-</div>
+</PageHeader>
 
 ## Overview
 

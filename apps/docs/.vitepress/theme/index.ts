@@ -12,13 +12,18 @@ export default {
   extends: DefaultTheme,
   Layout,
   enhanceApp(ctx) {
+    const githubMainBranch = 'main'
+    const base = `tree/${githubMainBranch}`
     const githubUrl = 'https://github.com/bootstrap-vue-next/bootstrap-vue-next'
-    const githubPackageDirectory = `${githubUrl}/tree/main/packages/bootstrap-vue-next`
+    const githubPackageDirectory = `${githubUrl}/${base}/packages/bootstrap-vue-next`
     const githubComponentsDirectory = `${githubPackageDirectory}/src/components`
     const githubComposablesDirectory = `${githubPackageDirectory}/src/composables`
     const githubDirectivesDirectory = `${githubPackageDirectory}/src/directives`
+    const githubDocsDirectory = `${githubUrl}/${base}/apps/docs/src/docs`
     ctx.app.provide(appInfoKey, {
+      githubMainBranch,
       githubUrl,
+      githubDocsDirectory,
       githubPackageDirectory,
       githubComponentsDirectory,
       githubComposablesDirectory,

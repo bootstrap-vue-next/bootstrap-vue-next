@@ -1,10 +1,10 @@
 # Button
 
-<div class="lead mb-5">
+<PageHeader>
 
 Use Bootstrap's custom `BButton` component for actions in forms, dialogs, and more. Includes support for a handful of contextual variations, sizes, states, and more.
 
-</div>
+</PageHeader>
 
 ## Overview
 
