@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.19](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.18...bootstrapvuenext-v0.26.19) (2025-01-06)
+
+
+### Features
+
+* export validatestate type ([#2493](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2493)) ([43f2f5a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/43f2f5ac8341141f5100a190e81d0a76fe6bba04))
+
 ## [0.26.18](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.17...bootstrapvuenext-v0.26.18) (2024-12-24)
 
 
