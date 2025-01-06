@@ -1,13 +1,13 @@
 # Avatar
 
-<div class="lead mb-5">
+<PageHeader>
 
 Avatars are a custom component, and are typically used to display a user profile as a
 picture or short text. `BAvatar` provides several props for customizing its
 appearance such as color variant and roundness, and optionally supports acting as a button, link,
 or a [router link](/docs/reference/router-links).
 
-</div>
+</PageHeader>
 
 ## Overview
 

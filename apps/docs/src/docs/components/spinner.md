@@ -1,13 +1,13 @@
 # Spinners
 
-<div class="lead mb-5">
+<PageHeader>
 
 The `<BSpinner>` component can be used to show the loading state in your projects. They're
 rendered only with basic HTML and CSS as a lightweight Vue component. Their appearance,
 alignment, and sizing can be easily customized with a few built-in props and/or Bootstrap v5
 utility classes.
 
-</div>
+</PageHeader>
 
 Spinners can be placed just about anywhere, including inside buttons, alerts, and even `<BTable>`'s
 busy slot.

@@ -1,10 +1,10 @@
 # Button Group
 
-<div class="lead mb-5">
+<PageHeader>
 
 Group a series of buttons together on a single line or stack them in a vertical column with `BButtonGroup`.
 
-</div>
+</PageHeader>
 
 ## Overview
 

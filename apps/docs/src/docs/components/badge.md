@@ -1,10 +1,10 @@
 # Badge
 
-<div class="lead mb-5">
+<PageHeader>
 
 Documentation and examples for badges, our small count and labeling component.
 
-</div>
+</PageHeader>
 
 ## Examples
 

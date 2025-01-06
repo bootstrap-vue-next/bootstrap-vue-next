@@ -1,10 +1,10 @@
 # Form Textarea
 
-<div class="lead mb-5">
+<PageHeader>
 
 Create multi-line text inputs with support for auto height sizing, minimum and maximum number of rows, and contextual states.
 
-</div>
+</PageHeader>
 
 <<< DEMO ./demo/TextareaOverview.vue
 

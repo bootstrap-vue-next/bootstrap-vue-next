@@ -1,10 +1,10 @@
 # Alert
 
-<div class="lead mb-5">
+<PageHeader>
 
 Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages.
 
-</div>
+</PageHeader>
 
 ## Overview
 

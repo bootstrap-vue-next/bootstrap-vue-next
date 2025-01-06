@@ -1,9 +1,11 @@
 # Tabs
 
-<div class="lead mb-5">
+<PageHeader>
+
 Create a widget of tabbable panes of _local content_. The tabs component is built upon navs and
 cards internally, and provides full keyboard navigation control of the tabs.
-</div>
+
+</PageHeader>
 
 For navigation based tabs (i.e. tabs that would change the URL), use the
 [`<BNav>`](/docs/components/nav) component instead.

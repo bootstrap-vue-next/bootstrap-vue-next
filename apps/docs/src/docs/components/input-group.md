@@ -1,10 +1,10 @@
 # Input Group
 
-<div class="lead mb-5">
+<PageHeader>
 
 Easily extend form controls by adding text, buttons, or button groups on either side of textual inputs.
 
-</div>
+</PageHeader>
 
 <HighlightCard>
   <!-- Using props -->

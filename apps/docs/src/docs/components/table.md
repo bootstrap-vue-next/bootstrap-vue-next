@@ -1,10 +1,10 @@
 # Tables
 
-<div class="lead mb-5">
+<PageHeader>
 
 For displaying tabular data, `BTable` supports pagination, filtering, sorting, custom rendering, various style options, events, and asynchronous data. For simple display of tabular data without all the fancy features, BootstrapVueNext provides two lightweight alternative components `BTableLite` and `BTableSimple`.
 
-</div>
+</PageHeader>
 
 ## Simple tables
 

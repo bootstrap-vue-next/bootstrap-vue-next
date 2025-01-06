@@ -1,10 +1,10 @@
 # Form Input
 
-<div class="lead mb-5">
+<PageHeader>
 
 Create various type inputs such as: `text`, `password`, `number`, `url`, `email`, `search`, `range`, `date` and more.
 
-</div>
+</PageHeader>
 
 <HighlightCard>
   <BFormInput v-model="selectedText" placeholder="Enter your name" />

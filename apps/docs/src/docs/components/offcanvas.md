@@ -1,10 +1,10 @@
 # Offcanvas
 
-<div class="lead mb-5">
+<PageHeader>
 
 Build hidden sidebars into your project. Sidebars can aid in enhancing user interaction or preventing further interaction.
 
-</div>
+</PageHeader>
 
 <HighlightCard>
   <BButton @click="click">Show OffCanvas</BButton>

@@ -1,10 +1,10 @@
 # Progress
 
-<div class="lead mb-5">
+<PageHeader>
 
 Documentation and examples for using Bootstrap custom progress bars featuring support for stacked bars, animated backgrounds, and text labels.
 
-</div>
+</PageHeader>
 
 ## Basic Usage
 

@@ -1,10 +1,10 @@
 # Card
 
-<div class="lead mb-5">
+<PageHeader>
 
 A card is a flexible and extensible content container. It includes options for headers and footers, a wide variety of content, contextual background colors, and powerful display options.
 
-</div>
+</PageHeader>
 
 ## Overview
 

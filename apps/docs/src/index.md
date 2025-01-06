@@ -73,6 +73,12 @@ import OpenCollectiveMemberDisplay from './components/OpenCollectiveMemberDispla
 const globalData = inject(appInfoKey, {
   discordUrl: '',
   githubUrl: '',
+  githubPackageDirectory: '',
+  githubComponentsDirectory: '',
+  githubComposablesDirectory: '',
+  githubMainBranch: '',
+  githubDirectivesDirectory: '',
   opencollectiveUrl: '',
+  githubDocsDirectory: '',
 })
 </script>
