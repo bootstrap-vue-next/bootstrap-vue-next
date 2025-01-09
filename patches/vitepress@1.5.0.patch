@@ -1,0 +1,22 @@
+diff --git a/dist/client/index.d.ts b/dist/client/index.d.ts
+index 596adb4f22286b24fb5cb694943d835afa084fc4..4fcb57e4e5999c07c8c73fdb4b3d594808d8ceb2 100644
+--- a/dist/client/index.d.ts
++++ b/dist/client/index.d.ts
+@@ -130,4 +130,6 @@ declare const Content: vue.DefineComponent<vue.ExtractPropTypes<{
+     as: string | Record<string, any>;
+ }, {}, {}, {}, string, vue.ComponentProvideOptions, true, {}, any>;
+ 
+-export { Content, type EnhanceAppContext, type Route, type Router, type Theme, type VitePressData, escapeHtml as _escapeHtml, dataSymbol, defineClientComponent, getScrollOffset, inBrowser, onContentUpdated, useData, useRoute, useRouter, withBase };
++declare const VPNavBarSearch: vue.DefineComponent;
++
++export { Content, type EnhanceAppContext, type Route, type Router, type Theme, type VitePressData, escapeHtml as _escapeHtml, dataSymbol, defineClientComponent, getScrollOffset, inBrowser, onContentUpdated, useData, useRoute, useRouter, VPNavBarSearch, withBase };
+diff --git a/dist/client/index.js b/dist/client/index.js
+index da89a51b26f1f6eefb9133126e45b4e2ba618bb2..9210138afe8f94b64153de7ee55bba381736f4e8 100644
+--- a/dist/client/index.js
++++ b/dist/client/index.js
+@@ -7,3 +7,5 @@ export { useRoute, useRouter } from './app/router';
+ export { inBrowser, onContentUpdated, defineClientComponent, withBase, getScrollOffset, _escapeHtml } from './app/utils';
+ // components
+ export { Content } from './app/components/Content';
++import VPNavBarSearch from './theme-default/components/VPNavBarSearch.vue';
++export { VPNavBarSearch };

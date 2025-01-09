@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  vitepress@1.5.0:
+    hash: iraxpmbqxhubcplbfvmecu7tba
+    path: patches/vitepress@1.5.0.patch
+
 importers:
 
   .:
@@ -82,7 +87,7 @@ importers:
         version: 0.27.4(@babel/parser@7.26.2)(@nuxt/kit@3.14.159(magicast@0.3.5)(rollup@4.27.3))(rollup@4.27.3)(vue@3.5.13(typescript@5.6.3))
       vitepress:
         specifier: 1.5.0
-        version: 1.5.0(@algolia/client-search@5.14.2)(@types/node@22.9.0)(change-case@5.4.4)(postcss@8.4.49)(sass@1.81.0)(search-insights@2.17.3)(terser@5.36.0)(typescript@5.6.3)
+        version: 1.5.0(patch_hash=iraxpmbqxhubcplbfvmecu7tba)(@algolia/client-search@5.14.2)(@types/node@22.9.0)(change-case@5.4.4)(postcss@8.4.49)(sass@1.81.0)(search-insights@2.17.3)(terser@5.36.0)(typescript@5.6.3)
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.6.3)
@@ -10674,7 +10679,7 @@ snapshots:
       sass: 1.81.0
       terser: 5.36.0
 
-  vitepress@1.5.0(@algolia/client-search@5.14.2)(@types/node@22.9.0)(change-case@5.4.4)(postcss@8.4.49)(sass@1.81.0)(search-insights@2.17.3)(terser@5.36.0)(typescript@5.6.3):
+  vitepress@1.5.0(patch_hash=iraxpmbqxhubcplbfvmecu7tba)(@algolia/client-search@5.14.2)(@types/node@22.9.0)(change-case@5.4.4)(postcss@8.4.49)(sass@1.81.0)(search-insights@2.17.3)(terser@5.36.0)(typescript@5.6.3):
     dependencies:
       '@docsearch/css': 3.8.0
       '@docsearch/js': 3.8.0(@algolia/client-search@5.14.2)(search-insights@2.17.3)
