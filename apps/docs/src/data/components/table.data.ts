@@ -1,5 +1,6 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
 import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
+import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => {
@@ -7,54 +8,66 @@ export default {
       bordered: {
         type: 'boolean',
         default: false,
+        description: 'Adds borders to all the cells and headers',
       },
       borderless: {
         type: 'boolean',
         default: false,
+        description: 'Removes all borders from cells',
       },
       borderVariant: {
         type: 'ColorVariant | null',
         default: null,
+        description: 'Applies one of the Bootstrap theme color variants to the table border',
       },
       captionTop: {
         type: 'boolean',
         default: false,
+        description: 'When set, the table caption will appear above the table',
       },
       dark: {
         type: 'boolean',
         default: false,
+        description: 'Places the table in dark mode',
       },
       fixed: {
         type: 'boolean',
         default: false,
+        description:
+          'Makes all columns equal width (fixed layout table). Will speed up rendering for large tables. Column widths can be set via CSS or colgroup',
       },
       hover: {
         type: 'boolean',
         default: false,
-      },
-      id: {
-        type: 'string',
-        default: undefined,
+        description: 'Enables hover styling on rows',
       },
       noBorderCollapse: {
         type: 'boolean',
         default: false,
+        description:
+          "Disable's the collapsing of table borders. Useful when table has sticky headers or columns",
       },
       outlined: {
         type: 'boolean',
         default: false,
+        description: 'Adds an outline border to the table element',
       },
       responsive: {
         type: 'boolean | Breakpoint',
         default: false,
+        description:
+          "Makes the table responsive in width, adding a horizontal scrollbar. Set to true for always responsive or set to one of the breakpoints to switch from responsive to normal: 'sm', 'md', 'lg', 'xl'",
       },
       small: {
         type: 'boolean',
         default: false,
+        description: 'Renders the table with smaller cell padding',
       },
       stacked: {
         type: 'boolean | Breakpoint',
         default: false,
+        description:
+          "Place the table in stacked mode. Set to true for always stacked, or set to one of the breakpoints to switch from stacked to normal: 'sm', 'md', 'lg', 'xl'",
       },
       stickyHeader: {
         type: 'boolean | Numberish',
@@ -65,23 +78,24 @@ export default {
       striped: {
         type: 'boolean',
         default: false,
+        description: 'Applies striping to the tbody rows',
       },
       stripedColumns: {
         type: 'boolean',
         default: false,
+        description: 'Applies striping to the table columns',
       },
       tableAttrs: {
         type: 'AttrsValue',
         default: undefined,
+        description: 'Attributes to apply to the table element',
       },
       tableClass: {
         type: 'ClassValue',
         default: undefined,
+        description: 'Classes to apply to the table element',
       },
-      variant: {
-        type: 'ColorVariant | null',
-        default: null,
-      },
+      ...pick(buildCommonProps(buildCommonProps()), ['id', 'variant']),
     } as const satisfies Record<keyof BvnComponentProps['BTableSimple'], PropertyReference>
 
     const BTableLiteProps = {
@@ -555,9 +569,8 @@ export default {
         emits: [],
         slots: [
           {
-            description: '',
             name: 'default',
-            scope: [],
+            description: 'Content to place in the table',
           },
         ],
       },
