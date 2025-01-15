@@ -16,6 +16,7 @@ import type {BTableSimpleProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import {useNumberishToStyle} from '../../composables/useNumberishToStyle'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import {useId} from '../../composables/useId'
 
 const defaultStickyHeaderHeight = '300px'
 
@@ -47,6 +48,8 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
+const computedId = useId(() => props.id)
+
 const colorClasses = useColorVariantClasses(
   computed(() => ({
     borderVariant: props.borderVariant,
@@ -58,6 +61,7 @@ const computedClasses = computed(() => [
   'b-table',
   colorClasses.value,
   {
+    'border': props.outlined,
     'table-bordered': props.bordered,
     'table-borderless': props.borderless,
     'caption-top': props.captionTop,
@@ -72,7 +76,7 @@ const computedClasses = computed(() => [
   },
 ])
 const computedTableAttrs = computed(() => ({
-  id: props.id,
+  id: computedId.value,
   class: computedClasses.value,
   ...props.tableAttrs,
 }))
