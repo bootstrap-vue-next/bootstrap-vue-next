@@ -58,6 +58,7 @@ const computedClasses = computed(() => [
   'b-table',
   colorClasses.value,
   {
+    'border': props.outlined,
     'table-bordered': props.bordered,
     'table-borderless': props.borderless,
     'caption-top': props.captionTop,
