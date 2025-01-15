@@ -6,80 +6,17 @@ Create various type inputs such as: `text`, `password`, `number`, `url`, `email`
 
 </PageHeader>
 
-<HighlightCard>
-  <BFormInput v-model="selectedText" placeholder="Enter your name" />
-  <div class="mt-2">Value: {{ selectedText }}</div>
-  <template #html>
-
-```vue
-<template>
-  <BFormInput v-model="selectedText" placeholder="Enter your name" />
-  <div class="mt-2">Value: {{ selectedText }}</div>
-</template>
-
-<script setup lang="ts">
-const selectedText = ref('')
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormInputOverview.vue
 
 ## Input type
 
 `BFormInput` defaults to a `text` input, but you can set the `type` prop to one of the supported native browser HTML5 types: `text`, `password`, `email`, `number`, `url`, `tel`, `search`, `date`, `datetime-local`, `month`, `week`, `time`, `range`, or `color`.
 
-<HighlightCard>
-  <BRow class="my-1" v-for="type in inputTypes" :key="type">
-    <BCol sm="3">
-      <label :for="`type-${type}`">Type <code>{{ type }}</code>:</label>
-    </BCol>
-    <BCol sm="9">
-      <BFormInput :id="`type-${type}`" :type="type" />
-    </BCol>
-  </BRow>
-  <template #html>
-
-```vue
-<template>
-  <BRow class="my-1" v-for="type in inputTypes" :key="type">
-    <BCol sm="3">
-      <label :for="`type-${type}`"
-        >Type <code>{{ type }}</code
-        >:</label
-      >
-    </BCol>
-    <BCol sm="9">
-      <BFormInput :id="`type-${type}`" :type="type" />
-    </BCol>
-  </BRow>
-</template>
-
-<script setup lang="ts">
-const inputTypes = [
-  'text',
-  'number',
-  'email',
-  'password',
-  'search',
-  'url',
-  'tel',
-  'date',
-  'time',
-  'range',
-  'color',
-  'datetime-local',
-  'month',
-  'week',
-]
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormInputTypes.vue
 
 If the `type` prop is set to an input type that is not supported (see above), a `text` input will be rendered and a console warning will be issued.
 
+::: warning
 **Caveats with input types:**
 
 - Not all browsers support all input types, nor do some types render in the same format across
@@ -108,6 +45,7 @@ If the `type` prop is set to an input type that is not supported (see above), a 
   the v-model will update with the current _displayed text_ of the input when the input is blurred
 - When using IME composition (ie. Chinese, Japanese, etc.), the `v-model` will not update until the
   IME composition is completed
+  :::
 
 ### Range type input
 
@@ -117,54 +55,18 @@ background) and thumb (the value) are both styled to appear the same across brow
 Range inputs have implicit values for `min` and `max` of `0` and `100` respectively. You may specify
 new values for those using the `min` and `max` props.
 
-<HighlightCard>
-  <label for="range-1">Example range with min and max</label>
-  <BFormInput id="range-1" v-model="rangeValue" type="range" min="0" max="5" />
-  <div class="mt-2">Value: {{ rangeValue }}</div>
-  <template #html>
-
-```vue
-<template>
-  <label for="range-1">Example range with min and max</label>
-  <BFormInput id="range-1" v-model="rangeValue" type="range" min="0" max="5" />
-  <div class="mt-2">Value: {{ rangeValue }}</div>
-</template>
-
-<script setup lang="ts">
-const rangeValue = ref('2')
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormInputRange.vue
 
 By default, range inputs "snap" to integer values. To change this, you can specify a `step` value.
 In the example below, we double the number of steps by using step="0.5".
 
-<HighlightCard>
-  <label for="range-1">Example range with min and max</label>
-  <BFormInput id="range-1" v-model="rangeValueStep" type="range" min="0" max="5" step="0.5" />
-  <div class="mt-2">Value: {{ rangeValueStep }}</div>
-  <template #html>
+<<< DEMO ./demo/FormInputRangeStep.vue
 
-```vue
-<template>
-  <label for="range-1">Example range with min and max</label>
-  <BFormInput id="range-1" v-model="rangeValueStep" type="range" min="0" max="5" step="0.5" />
-  <div class="mt-2">Value: {{ rangeValueStep }}</div>
-</template>
-
-<script setup lang="ts">
-const rangeValueStep = ref('2')
-</script>
-```
-
-  </template>
-</HighlightCard>
-
-**Note:** Range inputs (as do all input types) return their value as a string. You may need to
+::: info NOTE
+Range inputs (as do all input types) return their value as a string. You may need to
 convert the value to a native number by using `Number(value)`, `parseInt(value, 10)`,
 `parseFloat(value)`, or use the `number` prop.
+:::
 
 ## Control sizing
 
@@ -172,75 +74,17 @@ Set heights using the `size` prop to `sm` or `lg` for small or large respectivel
 
 To control width, place the input inside standard Bootstrap grid column.
 
-<HighlightCard>
-  <BRow class="my-1">
-    <BCol sm="2">
-      <label for="input-small">Small:</label>
-    </BCol>
-    <BCol sm="10">
-      <BFormInput id="input-small" size="sm" placeholder="Enter your name" />
-    </BCol>
-  </BRow>
-  <BRow class="my-1">
-    <BCol sm="2">
-      <label for="input-default">Default:</label>
-    </BCol>
-    <BCol sm="10">
-      <BFormInput id="input-default" placeholder="Enter your name" />
-    </BCol>
-  </BRow>
-  <BRow class="my-1">
-    <BCol sm="2">
-      <label for="input-large">Large:</label>
-    </BCol>
-    <BCol sm="10">
-      <BFormInput id="input-large" size="lg" placeholder="Enter your name" />
-    </BCol>
-  </BRow>
-  <template #html>
+<<< DEMO ./demo/FormInputSize.vue#template{vue-html}
 
-```vue-html
-<BRow class="my-1">
-  <BCol sm="2">
-    <label for="input-small">Small:</label>
-  </BCol>
-
-  <BCol sm="10">
-    <BFormInput id="input-small" size="sm" placeholder="Enter your name" />
-  </BCol>
-</BRow>
-
-<BRow class="my-1">
-  <BCol sm="2">
-    <label for="input-default">Default:</label>
-  </BCol>
-
-  <BCol sm="10">
-    <BFormInput id="input-default" placeholder="Enter your name" />
-  </BCol>
-</BRow>
-
-<BRow class="my-1">
-  <BCol sm="2">
-    <label for="input-large">Large:</label>
-  </BCol>
-
-  <BCol sm="10">
-    <BFormInput id="input-large" size="lg" placeholder="Enter your name" />
-  </BCol>
-</BRow>
-```
-
-  </template>
-</HighlightCard>
-
-**Note:** Input type `range` currently does not support control sizing. If is placed inside a
+::: info NOTE
+Input type `range` currently does not support control sizing. If is placed inside a
 `BInputGroup` which has its `size` prop set, then the associated controls as sized,
 but the range control stays the same size.
 
-**Note:** The native HTML `<input>` attribute `size` (which sets a horizontal width on the `<input>`
+The native HTML `<input>` attribute `size` (which sets a horizontal width on the `<input>`
 in characters) is not supported. Use styling, utility classes, or the layout rows (`BRow`) and
 columns (`BCol`) to set the desired width.
+:::
 
 ## Contextual states
 
@@ -257,130 +101,25 @@ Generally speaking, you'll want to use a particular state for specific types of 
 To apply one of the contextual state icons on `BFormInput`, set the `state` prop to `false` (for
 invalid), `true` (for valid), or `null` (no validation state).
 
-<HighlightCard>
-  <BRow class="my-1">
-    <BCol sm="3">
-      <label for="input-none">No State:</label>
-    </BCol>
-    <BCol sm="9">
-      <BFormInput id="input-none" :state="null" placeholder="No validation" />
-    </BCol>
-  </BRow>
-  <BRow class="my-1">
-    <BCol sm="3">
-      <label for="input-valid">Valid State:</label>
-    </BCol>
-    <BCol sm="9">
-      <BFormInput id="input-valid" :state="true" placeholder="Valid input" />
-    </BCol>
-  </BRow>
-  <BRow class="my-1">
-    <BCol sm="3">
-      <label for="input-invalid">Invalid State:</label>
-    </BCol>
-    <BCol sm="9">
-      <BFormInput id="input-invalid" :state="false" placeholder="Invalid input" />
-    </BCol>
-  </BRow>
-  <template #html>
-
-```vue-html
-<BRow class="my-1">
-  <BCol sm="3">
-    <label for="input-none">No State:</label>
-  </BCol>
-
-  <BCol sm="9">
-    <BFormInput id="input-none" :state="null" placeholder="No validation" />
-  </BCol>
-</BRow>
-
-<BRow class="my-1">
-  <BCol sm="3">
-    <label for="input-valid">Valid State:</label>
-  </BCol>
-
-  <BCol sm="9">
-    <BFormInput id="input-valid" :state="true" placeholder="Valid input" />
-  </BCol>
-</BRow>
-
-<BRow class="my-1">
-  <BCol sm="3">
-    <label for="input-invalid">Invalid State:</label>
-  </BCol>
-
-  <BCol sm="9">
-    <BFormInput id="input-invalid" :state="false" placeholder="Invalid input" />
-  </BCol>
-</BRow>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormInputState.vue#template{vue-html}
 
 ## Live Example
 
-<HighlightCard>
-  <div role="group">
-    <label for="input-live">Name:</label>
-    <BFormInput
-      id="input-live"
-      v-model.trim="lifeName"
-      :state="lifeNameState"
-      aria-describedby="input-live-help input-live-feedback"
-      placeholder="Enter your name"
-    />
-    <!-- This will only be shown if the preceding input has an invalid state -->
-    <BFormInvalidFeedback id="input-live-feedback">
-      Enter at least 3 letters
-    </BFormInvalidFeedback>
-    <!-- This is a form text block (formerly known as help block) -->
-    <BFormText id="input-live-help">Your full name.</BFormText>
-  </div>
-  <template #html>
+<<< DEMO ./demo/FormInputStateLive.vue
 
-```vue
-<template>
-  <div role="group">
-    <label for="input-live">Name:</label>
-    <BFormInput
-      id="input-live"
-      v-model.trim="lifeName"
-      :state="lifeNameState"
-      aria-describedby="input-live-help input-live-feedback"
-      placeholder="Enter your name"
-    />
-    <!-- This will only be shown if the preceding input has an invalid state -->
-    <BFormInvalidFeedback id="input-live-feedback"> Enter at least 3 letters </BFormInvalidFeedback>
-    <!-- This is a form text block (formerly known as help block) -->
-    <BFormText id="input-live-help">Your full name.</BFormText>
-  </div>
-</template>
+::: info TIP
+Use the [`BFormGroup`](/docs/components/form-group) component to automatically generate markup similar to above.
+:::
 
-<script setup lang="ts">
-const lifeName = ref('')
+## Conveying contextual state to assistive technologies and colorblind users
 
-const lifeNameState = computed(() => (lifeName.value?.length > 2 ? true : false))
-</script>
-```
-
-  </template>
-</HighlightCard>
-
-> **Tip:** Use the [`BFormGroup`](/docs/components/form-group) component to automatically generate markup similar to above.
-
-### Conveying contextual state to assistive technologies and colorblind users
-
-Using these contextual states to denote the state of a form control only provides a visual,
+Using these contextual sta tes to denote the state of a form control only provides a visual,
 color-based indication, which will not be conveyed to users of assistive technologies - such as
 screen readers - or to colorblind users.
 
 Ensure that an alternative indication of state is also provided. For instance, you could include a
 hint about state in the form control's `<label>` text itself, or by providing an additional help
 text block.
-
-### ARIA `aria-invalid` attribute
 
 Specifically for assistive technologies, invalid form controls can also be assigned an
 `aria-invalid="true"` attribute.
@@ -412,76 +151,19 @@ The `formatter` function should return the formatted value as a _string_.
 
 Formatting does not occur if a `formatter` is not provided.
 
-<HighlightCard>
-  <div role="group">
-    <label for="input-formatter">Text input with formatter (on input)</label>
-    <BFormInput
-      id="input-formatter"
-      v-model="formatInputText"
-      placeholder="Enter your name"
-      :formatter="toLowerCaseFormatter"
-    />
-    <p><b>Value:</b> {{ formatInputText }}</p>
-  </div>
-  <div role="group">
-    <label for="input-formatter">Text input with lazy formatter (on blur)</label>
-    <BFormInput
-      id="input-lazy"
-      v-model="formatLazyInputText"
-      placeholder="Enter your name"
-      lazy-formatter
-      :formatter="toLowerCaseFormatter"
-    />
-    <p><b>Value:</b> {{ formatLazyInputText }}</p>
-  </div>
-  <template #html>
+<<< DEMO ./demo/FormInputFormatter.vue
 
-```vue
-<template>
-  <div role="group">
-    <label for="input-formatter">"Text input with formatter (on input)"</label>
-    <BFormInput
-      id="input-formatter"
-      v-model="formatInputText"
-      placeholder="Enter your name"
-      :formatter="toLowerCaseFormatter"
-    />
-    <p><b>Value:</b> {{ formatInputText }}</p>
-  </div>
-
-  <div role="group">
-    <label for="input-formatter">"Text input with lazy formatter (on blur)"</label>
-    <BFormInput
-      id="input-lazy"
-      v-model="formatLazyInputText"
-      placeholder="Enter your name"
-      lazy-formatter
-      :formatter="toLowerCaseFormatter"
-    />
-    <p><b>Value:</b> {{ formatLazyInputText }}</p>
-  </div>
-</template>
-
-<script setup lang="ts">
-const formatInputText = ref('')
-const formatLazyInputText = ref('')
-
-const toLowerCaseFormatter = (value: string) => value.toLowerCase()
-</script>
-```
-
-  </template>
-</HighlightCard>
-
-**Note:** When using a non-text-like input (i.e. `color`, `range`, `date`, `number`, `email` etc.),
+::: info NOTE
+When using a non-text-like input (i.e. `color`, `range`, `date`, `number`, `email` etc.),
 ensure that your formatter function returns the value in the expected format (`date` ->
 '2000-06-01', `color` -> '#ff0000', etc.) for the input type. The formatter **must** return the
 value as a _string_.
 
-**Note:** With non-lazy formatting, if the cursor is not at the end of the input value, the cursor
+With non-lazy formatting, if the cursor is not at the end of the input value, the cursor
 may jump to the end _after_ a character is typed. You can use the provided event object and the
 `event.target` to access the native input's selection methods and properties to control where the
 insertion point is. This is left as an exercise for the reader.
+:::
 
 ## Readonly plain text
 
@@ -504,35 +186,7 @@ attribute.
 This gives the input the behavior of a combo box or auto-complete, allowing existing values to be
 chosen, or new values to be entered.
 
-<HighlightCard>
-  <div>
-    <BFormInput list="my-list-id" />
-    <datalist id="my-list-id">
-      <option>Manual Option</option>
-      <option v-for="size in datalistSizes" :key="size">{{ size }}</option>
-    </datalist>
-  </div>
-  <template #html>
-
-```vue
-<template>
-  <div>
-    <BFormInput list="my-list-id" />
-
-    <datalist id="my-list-id">
-      <option>Manual Option</option>
-      <option v-for="size in datalistSizes" :key="size">{{ size }}</option>
-    </datalist>
-  </div>
-</template>
-
-<script setup lang="ts">
-const datalistSizes = ['Small', 'Medium', 'Large', 'Extra Large']
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormInputDatalist.vue
 
 The above is a 'native' implementation of `datalist`. BootstrapVueNext provides the form helper component
 [`<BFormDatalist>`](/docs/components/form/#datalist-helper) for quickly creating a `<datalist>`
@@ -564,31 +218,11 @@ before the idle timeout expires, the timeout is re-started.
 To enable debouncing, set the prop `debounce` to any integer greater than zero. The value is
 specified in milliseconds. Setting `debounce` to `0` will disable debouncing.
 
-Note: debouncing will _not_ occur if the `lazy` prop is set.
+::: info NOTE
+Debouncing will _not_ occur if the `lazy` prop is set.
+:::
 
-<HighlightCard>
-  <div>
-    <b-form-input v-model="debounceValue" type="text" debounce="500" />
-    <div class="mt-2">Value: "{{ debounceValue }}"</div>
-  </div>
-  <template #html>
-
-```vue
-<template>
-  <div>
-    <b-form-input v-model="debounceValue" type="text" debounce="500" />
-    <div class="mt-2">Value: "{{ debounceValue }}"</div>
-  </div>
-</template>
-
-<script setup>
-import {ref} from 'vue'
-const debounceValue = ref('')
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormInputDatalist.vue
 
 ## Autofocus
 
@@ -643,92 +277,16 @@ these methods and properties. Support will vary based on input type.
 
 e.g. With the same setup as above, call `foo?.value?.element?.focus` to set the foccus on the input element.
 
-<HighlightCard>
-  <div role="group">
-    <BFormInput ref="inputRef" v-model="sampleInputText" placeholder="Enter your name" />
-  </div>
-  <div class="mt-2">
-    <BButton primary @click="selectAllText">Select all text</BButton>
-  </div>
-  <div class="mt-2">
-    <BButton primary @click="inputRef?.focus">Set Focus</BButton>
-  </div>
-  <template #html>
-
-```vue
-<template>
-  <div role="group">
-    <BFormInput ref="inputRef" v-model="sampleInputText" placeholder="Enter your name" />
-  </div>
-  <div class="mt-2">
-    <BButton primary @click="selectAllText">Select all text</BButton>
-  </div>
-  <div class="mt-2">
-    <BButton primary @click="inputRef?.focus">Set Focus</BButton>
-  </div>
-</template>
-
-<script setup lang="ts">
-import {ref} from 'vue'
-import {type BFormInput} from 'bootstrap-vue-next'
-
-// refs are unified in vue3. We need a ref variable with the same name as used in the template.
-// The variable will be filled up during mount with the reference to custom component.
-// inputRef will become the reference to the b-form-input component.
-const inputRef = ref<InstanceType<typeof BFormInput> | null>(null)
-const sampleInputText = ref('sample text')
-
-// The inner native input is exposed as ref with name "element"
-const selectAllText = () => inputRef?.value?.element?.select()
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormInputMethods.vue
 
 <ComponentReference :data="data" />
 
-<script setup lang="ts">
+<script lang="ts">
 import {data} from '../../data/components/formInput.data'
-import ComponentReference from '../../components/ComponentReference.vue'
-import NotYetImplemented from '../../components/NotYetImplemented.vue'
-import HighlightCard from '../../components/HighlightCard.vue'
-import {BButton, BFormText, BFormInvalidFeedback, BRow, BCol, BContainer, BCard, BCardBody, BFormInput } from 'bootstrap-vue-next'
-import {ref, computed} from 'vue'
 
-const selectedText = ref('')
-const inputTypes = [
-  'text',
-  'number',
-  'email',
-  'password',
-  'search',
-  'url',
-  'tel',
-  'date',
-  'time',
-  'range',
-  'color',
-  'datetime',
-  'datetime-local',
-  'month',
-  'week',
-]
-const rangeValue = ref('2')
-const rangeValueStep = ref('2')
-
-const lifeName = ref('')
-const lifeNameState = computed(() => lifeName.value?.length > 2 ? true: false)
-
-const formatInputText = ref('')
-const formatLazyInputText = ref('')
-const toLowerCaseFormatter = (value: string) => value.toLowerCase()
-
-const debounceValue = ref('')
-
-const inputRef = ref<InstanceType<typeof BFormInput> | null>(null)
-const sampleInputText = ref('sample text')
-const selectAllText = () => inputRef?.value?.element?.select()
-
-const datalistSizes = ['Small', 'Medium', 'Large', 'Extra Large']
+export default {
+  setup() {
+    return {data}
+  }
+}
 </script>

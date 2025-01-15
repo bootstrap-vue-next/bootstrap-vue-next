@@ -1,6 +1,7 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {ComponentReference, PropertyReference} from '../../types'
 import {buildCommonProps, omit, pick, showHideProps} from '../../utils'
+import {linkProps, linkTo} from '../../utils/link-props'
 
 export default {
   load: (): ComponentReference[] => [
@@ -9,14 +10,6 @@ export default {
       sourcePath: '/BToast/BToast.vue',
       props: {
         '': {
-          active: {
-            type: 'boolean',
-            default: undefined,
-          },
-          activeClass: {
-            type: 'string',
-            default: undefined,
-          },
           bgVariant: {
             type: 'ColorVariant | null',
             default: null,
@@ -31,14 +24,6 @@ export default {
             default: undefined,
             description: 'CSS class (or classes) to add to the toast body element',
           },
-          disabled: {
-            type: 'boolean',
-            default: undefined,
-          },
-          exactActiveClass: {
-            type: 'string',
-            default: undefined,
-          },
           headerClass: {
             type: 'ClassValue',
             default: undefined,
@@ -48,14 +33,6 @@ export default {
             type: 'string',
             default: 'div',
             description: 'Specify the HTML tag to render instead of the default tag for the footer',
-          },
-          href: {
-            type: 'string',
-            default: undefined,
-          },
-          icon: {
-            type: 'boolean',
-            default: undefined,
           },
           id: {
             type: 'string',
@@ -85,14 +62,6 @@ export default {
             default: false,
             description: 'When set, hides the close button in the toast header',
           },
-          opacity: {
-            type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
-            default: undefined,
-          },
-          opacityHover: {
-            type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
-            default: undefined,
-          },
           progressProps: {
             type: "Omit<BProgressBarProps, 'label' | 'max' | 'value'>",
             default: undefined,
@@ -104,31 +73,11 @@ export default {
             default: true,
             description: "When set, keeps the toast visible when it's paused",
           },
-          rel: {
-            type: 'string',
-            default: undefined,
-          },
-          replace: {
-            type: 'boolean',
-            default: undefined,
-          },
-          routerComponentName: {
-            type: 'string',
-            default: undefined,
-          },
           solid: {
             type: 'boolean',
             default: false,
             description:
               'When set, renders the toast with a solid background rather than translucent',
-          },
-          stretched: {
-            type: 'boolean',
-            default: false,
-          },
-          target: {
-            type: 'LinkTarget',
-            default: undefined,
           },
           textVariant: {
             type: 'TextColorVariant | null',
@@ -139,47 +88,23 @@ export default {
             default: undefined,
             description: "The toast's title text",
           },
-          to: {
-            type: 'RouteLocationRaw',
-            default: undefined,
-          },
           toastClass: {
             type: 'ClassValue',
             default: undefined,
             description: 'CSS class (or classes) to add to the toast wrapper element',
           },
-          underlineOffset: {
-            type: "1 | 2 | 3 | '1' | '2' | '3'",
-            default: undefined,
-          },
-          underlineOffsetHover: {
-            type: "1 | 2 | 3 | '1' | '2' | '3'",
-            default: undefined,
-          },
-          underlineOpacity: {
-            type: "0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'",
-            default: undefined,
-          },
-          underlineOpacityHover: {
-            type: "0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'",
-            default: undefined,
-          },
-          underlineVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-          variant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-          // noPrefetch: {},
-          noRel: {},
-          // prefetch: {},
-          // prefetchedClass: {},
           ...omit(showHideProps, ['modelValue']),
-
           ...pick(buildCommonProps(), ['noHoverPause', 'noResumeOnHoverLeave']),
-        } satisfies Record<keyof BvnComponentProps['BToast'], PropertyReference>,
+        } satisfies Record<
+          Exclude<keyof BvnComponentProps['BToast'], keyof typeof linkProps>,
+          PropertyReference
+        >,
+        'BLink props': {
+          _linkTo: {
+            type: linkTo,
+          },
+          ...linkProps,
+        },
       },
       slots: [],
       emits: [
