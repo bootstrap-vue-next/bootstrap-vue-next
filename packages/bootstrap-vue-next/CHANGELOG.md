@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.26.20](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.19...bootstrapvuenext-v0.26.20) (2025-01-15)
+
+
+### Features
+
+* **BTable:** generate ids for tr elements when primary-key exists fixes [#2509](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2509) ([11cd367](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/11cd3672e3b50b2f8f70ba0583bd3e6dfd952b09))
+* **BTable:** implement outlined prop fixes [#2507](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2507)  ([#2511](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2511)) ([11cd367](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/11cd3672e3b50b2f8f70ba0583bd3e6dfd952b09))
+
+
+### Bug Fixes
+
+* **BTable:** use a computed id when no id prop is provided ([11cd367](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/11cd3672e3b50b2f8f70ba0583bd3e6dfd952b09))
+
 ## [0.26.19](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.18...bootstrapvuenext-v0.26.19) (2025-01-06)
 
 
