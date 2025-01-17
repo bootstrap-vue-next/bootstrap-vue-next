@@ -586,6 +586,13 @@ See the [v-html](#v-html) section for information on deprecation of the `label-h
 
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
+### Field Definitions
+
+`formatter` Only the callback function value for this field is implemented, not adding the name
+of a method in the component.
+
+`sortKey` is deprecated, use the table's `sortBy` model as documented [here](/docs/components/table#sorting) instead.
+
 ### BTableLight
 
 <NotYetDocumented type="component"/>
