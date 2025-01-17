@@ -586,8 +586,6 @@ See the [v-html](#v-html) section for information on deprecation of the `label-h
 
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
-`primary-key` is implemented to set the Vue `:key` value, but setting the `<tr>`'s `id` is <NotYetImplemented/>
-
 ### Field Definitions
 
 `formatter` Only the callback function value for this field is implemented, not adding the name
