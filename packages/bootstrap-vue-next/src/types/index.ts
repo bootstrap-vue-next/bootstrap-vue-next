@@ -20,6 +20,9 @@ export type {
   TableFieldFormatter,
   TableFieldRaw,
   TableItem,
+  TableRowThead,
+  TableRowType,
+  TableStrictClassValue,
 } from './TableTypes'
 export type {
   BaseButtonVariant,
