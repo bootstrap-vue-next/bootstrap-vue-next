@@ -240,13 +240,108 @@ will be as follows:
 
 ### Responsive tables
 
+Responsive tables allow tables to be scrolled horizontally with ease. Make any table responsive
+across all viewports by setting the prop `responsive` to `true`. Or, pick a maximum breakpoint with
+which to have a responsive table up to by setting the prop `responsive` to one of the breakpoint
+values: `sm`, `md`, `lg`, or `xl`.
+
+<<< DEMO ./demo/TableResponsive.vue
+
+**Responsive table notes:**
+
+- _Possible vertical clipping/truncation_. Responsive tables make use of `overflow-y: hidden`, which
+  clips off any content that goes beyond the bottom or top edges of the table. In particular, this
+  may clip off dropdown menus and other third-party widgets.
+- Using props `responsive` and `fixed` together will **not** work as expected. Fixed table layout
+  uses the first row (table header in this case) to compute the width required by each column (and
+  the overall table width) to fit within the width of the parent container &mdash; without taking
+  cells in the `<tbody>` into consideration &mdash; resulting in table that may not be responsive.
+  To get around this limitation, you would need to specify widths for the columns (or certain
+  columns) via one of the following methods:
+  - Use `<col>` elements within the [`table-colgroup` slot](#table-colgroup) that have widths set
+    (e.g. `<col style="width: 20rem">`), or
+  - Wrap header cells in `<div>` elements, via the use of
+    [custom header rendering](#header-and-footer-custom-rendering-via-scoped-slots), which have a
+    minimum width set on them, or
+  - Use the `thStyle` property of the [field definition object](#field-definition-reference) to set
+    a width for the column(s), or
+  - Use custom CSS to define classes to apply to the columns to set widths, via the `thClass` or
+    `class` properties of the [field definition object](#field-definition-reference).
+
 ### Stacked tables
+
+An alternative to responsive tables, BootstrapVue includes the stacked table option (using custom
+SCSS/CSS), which allow tables to be rendered in a visually stacked format. Make any table stacked
+across _all viewports_ by setting the prop `stacked` to `true`. Or, alternatively, set a breakpoint
+at which the table will return to normal table format by setting the prop `stacked` to one of the
+breakpoint values `'sm'`, `'md'`, `'lg'`, or `'xl'`.
+
+Column header labels will be rendered to the left of each field value using a CSS `::before` pseudo
+element, with a width of 40%.
+
+The `stacked` prop takes precedence over the [`sticky-header`](#sticky-headers) prop and the
+[`stickyColumn`](#sticky-columns) field definition property.
+
+<<< DEMO ./demo/TableStacked.vue
+
+**Note: When the table is visually stacked:**
+
+- The table header (and table footer) will be hidden.
+- Custom rendered header slots will not be shown, rather, the fields' `label` will be used.
+- The table **cannot** be sorted by clicking the rendered field labels. You will need to provide an
+  external control to select the field to sort by and the sort direction. See the
+  [Sorting](#sorting) section below for sorting control information, as well as the
+  [complete example](#complete-example) at the bottom of this page for an example of controlling
+  sorting via the use of form controls.
+- The slots `top-row` and `bottom-row` will be hidden when visually stacked.
+- The table caption, if provided, will always appear at the top of the table when visually stacked.
+- In an always stacked table, the table header and footer, and the fixed top and bottom row slots
+  will not be rendered.
+
+BootstrapVueNext's custom CSS is required in order to support stacked tables.
 
 ### Table caption
 
+Add an optional caption to your table via the prop `caption` or the named slot `table-caption` (the
+slot takes precedence over the prop). The default Bootstrap v4 styling places the caption at the
+bottom of the table:
+
+<<< DEMO ./demo/TableCaption.vue
+
+You can have the caption placed at the top of the table by setting the `caption-top` prop to `true`:
+
+<<< DEMO ./demo/TableCaptionTop.vue
+
+You can also use [custom CSS](https://developer.mozilla.org/en-US/docs/Web/CSS/caption-side) to
+control the caption positioning.
+
 ### Table colgroup
 
+<NotYetImplemented /> The `table-colgroup` slot is not yet implemented.
+
 ### Table busy state
+
+`<BTable>` provides a `busy` model that will flag the table as busy, which you can set to `true`
+just before you update your items, and then set it to `false` once you have your items. When in the
+busy state, the table will have the attribute `aria-busy="true"`.
+
+During the busy state, the table will be rendered in a "muted" look (`opacity: 0.55`), using the
+following custom CSS:
+
+<<< FRAGMENT ./demo/TableBusy.css#snippet{css}
+
+#### table-busy slot
+
+<<< DEMO ./demo/TableBusy.vue
+
+Also see the [Using Items Provider Functions](#using-items-provider-functions) below for additional
+information on the `busy` state.
+
+**Notes:**
+
+- All click related and hover events, and sort-changed events will **not** be emitted when the table
+  is in the `busy` state.
+- Busy styling and slot are not available in the `<BTableLite>` component.
 
 ## Custom data rendering
 

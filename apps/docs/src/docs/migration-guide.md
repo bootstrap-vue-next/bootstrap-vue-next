@@ -589,6 +589,8 @@ See the [v-html](#v-html) section for information on deprecation of the `html` p
 The following properties are <NotYetImplemented/> -
 `fixed`, `no-border-collapse`
 
+<NotYetImplemented /> The `table-colgroup` slot is not yet implemented.
+
 `sort-direction` is deprecated, use the `sortBy` prop (or model) instead.
 
 ### Field Definitions
