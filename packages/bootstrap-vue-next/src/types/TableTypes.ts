@@ -51,7 +51,6 @@ export type TableField<T = any> = {
   class?: ClassValue
   formatter?: TableFieldFormatter<T>
   sortable?: boolean
-  sortKey?: string
   sortDirection?: string
   sortByFormatted?: boolean | TableFieldFormatter<T>
   filterByFormatted?: boolean | TableFieldFormatter<T>
