@@ -442,6 +442,9 @@ type TableFieldAttribute<T = any> =
   | Record<string, unknown>
   | ((value: unknown, key?: LiteralUnion<keyof T>, item?: T) => Record<string, unknown>)
 
+type TableRowType = 'row' | 'row-details' | 'row-top' | 'row-bottom' | 'table-busy'
+type TableRowThead = 'top' | 'bottom'
+
 interface TableField<T = Record<string, unknown>> {
   key: LiteralUnion<keyof T>
   label?: string
