@@ -422,5 +422,6 @@ defineExpose({
   focus: () => {
     focused.value = true
   },
+  inputValue,
 })
 </script>
