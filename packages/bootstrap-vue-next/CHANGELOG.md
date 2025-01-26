@@ -1,5 +1,30 @@
 # Changelog
 
+## [0.26.21](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.20...bootstrapvuenext-v0.26.21) (2025-01-22)
+
+
+### Features
+
+* **BFormTags:** add inputValue to exposed fixes [#2503](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2503) ([9c5129b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9c5129bd49d596efe3e74772e355a67dc8c22356))
+
+
+### Bug Fixes
+
+* **BTable:** Export additional types ([#2519](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2519)) ([9b25255](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9b252551cff82c0ff1be4ba53b3c18d405962b86))
+
+## [0.26.20](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.19...bootstrapvuenext-v0.26.20) (2025-01-15)
+
+
+### Features
+
+* **BTable:** generate ids for tr elements when primary-key exists fixes [#2509](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2509) ([11cd367](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/11cd3672e3b50b2f8f70ba0583bd3e6dfd952b09))
+* **BTable:** implement outlined prop fixes [#2507](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2507)  ([#2511](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2511)) ([11cd367](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/11cd3672e3b50b2f8f70ba0583bd3e6dfd952b09))
+
+
+### Bug Fixes
+
+* **BTable:** use a computed id when no id prop is provided ([11cd367](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/11cd3672e3b50b2f8f70ba0583bd3e6dfd952b09))
+
 ## [0.26.19](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.18...bootstrapvuenext-v0.26.19) (2025-01-06)
 
 

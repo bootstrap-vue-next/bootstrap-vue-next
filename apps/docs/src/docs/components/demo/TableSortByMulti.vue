@@ -7,17 +7,6 @@
 import {ref} from 'vue'
 import {type BTableSortBy, type TableFieldRaw, type TableItem} from 'bootstrap-vue-next'
 
-interface PersonName {
-  first: string
-  last: string
-}
-
-interface Person {
-  name: PersonName
-  age: number
-  isActive: boolean
-}
-
 interface SortPerson {
   first_name: string
   last_name: string
@@ -25,7 +14,7 @@ interface SortPerson {
   isActive: boolean
 }
 
-const sortItems: TableItem<Person>[] = [
+const sortItems: TableItem<SortPerson>[] = [
   {isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald'},
   {isActive: true, age: 45, first_name: 'Zelda', last_name: 'Macdonald'},
   {isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw'},

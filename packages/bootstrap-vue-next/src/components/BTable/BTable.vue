@@ -235,6 +235,7 @@ import {get, pick, set} from '../../utils/object'
 import {startCase} from '../../utils/stringUtils'
 import type {LiteralUnion} from '../../types/LiteralUnion'
 import {btableLiteProps, btableSimpleProps, getTableFieldHeadLabel} from '../../utils/tableUtils'
+import {useId} from '../../composables/useId'
 
 const _props = withDefaults(
   defineProps<Omit<BTableProps<Items>, 'sortBy' | 'busy' | 'selectedItems'>>(),
@@ -444,6 +445,8 @@ const selectedItemsModel = defineModel<Exclude<BTableProps<Items>['selectedItems
     default: () => [],
   }
 )
+
+const computedId = useId(() => props.id)
 
 const selectedItemsToSet = computed({
   get: () => new Set([...selectedItemsModel.value]),
@@ -998,6 +1001,7 @@ const computedLiteProps = computed(() => ({
   tableClass: tableClasses.value,
   tbodyTrClass: getRowClasses,
   fieldColumnClass: getFieldColumnClasses,
+  id: computedId.value,
 }))
 
 defineExpose({

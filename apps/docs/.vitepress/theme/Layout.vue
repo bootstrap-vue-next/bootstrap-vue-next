@@ -178,9 +178,9 @@ import SunFill from '~icons/bi/sun-fill'
 import ChevronRight from '~icons/bi/chevron-right'
 import CircleHalf from '~icons/bi/circle-half'
 import {useData, useRoute, withBase} from 'vitepress'
+import {VPNavBarSearch} from 'vitepress/theme'
 import {appInfoKey} from './keys'
 import {useMediaQuery} from '@vueuse/core'
-import VPNavBarSearch from 'vitepress/dist/client/theme-default/components/VPNavBarSearch.vue'
 
 // https://vitepress.dev/reference/runtime-api#usedata
 const {page} = useData()
