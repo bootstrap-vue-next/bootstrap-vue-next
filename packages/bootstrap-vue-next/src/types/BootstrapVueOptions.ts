@@ -294,5 +294,7 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
 }
 
 export type BvnComponentProps = {
-  [K in ComponentType | 'showHide']: UnmappedComponentProps[K]
+  [K in ComponentType]: UnmappedComponentProps[K]
 }
+
+export type showHide = ComponentProps.ShowHideProps

@@ -1,4 +1,4 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {showHide} from 'bootstrap-vue-next'
 import type {PropertyReference} from '../types'
 
 export const showHideProps = {
@@ -48,4 +48,4 @@ export const showHideProps = {
     default: false,
     description: "When 'true', open without animation",
   },
-} as const satisfies Record<keyof BvnComponentProps['showHide'] | 'modelValue', PropertyReference>
+} as const satisfies Record<keyof showHide | 'modelValue', PropertyReference>
