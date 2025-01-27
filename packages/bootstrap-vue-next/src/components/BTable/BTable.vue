@@ -5,27 +5,27 @@
     @head-clicked="onFieldHeadClick"
     @row-clicked="onRowClick"
     @row-dblclicked="
-      (row, index, e) => {
+      (row: Items, index: number, e: MouseEvent) => {
         emit('row-dblclicked', row, index, e)
       }
     "
     @row-contextmenu="
-      (row, index, e) => {
+      (row: Items, index: number, e: MouseEvent) => {
         emit('row-contextmenu', row, index, e)
       }
     "
     @row-hovered="
-      (row, index, e) => {
+      (row: Items, index: number, e: MouseEvent) => {
         emit('row-hovered', row, index, e)
       }
     "
     @row-unhovered="
-      (row, index, e) => {
+      (row: Items, index: number, e: MouseEvent) => {
         emit('row-unhovered', row, index, e)
       }
     "
     @row-middle-clicked="
-      (row, index, e) => {
+      (row: Items, index: number, e: MouseEvent) => {
         emit('row-middle-clicked', row, index, e)
       }
     "
