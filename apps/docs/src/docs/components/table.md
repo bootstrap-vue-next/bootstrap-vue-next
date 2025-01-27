@@ -345,7 +345,78 @@ information on the `busy` state.
 
 ## Custom data rendering
 
-To Be Completed
+Custom rendering for each data field in a row is possible using either
+[scoped slots](https://vuejs.org/guide/components/slots.html#scoped-slots) or a formatter callback
+function, or a combination of both.
+
+### Scoped field slots
+
+Scoped field slots give you greater control over how the record data appears. You can use scoped
+slots to provided custom rendering for a particular field. If you want to add an extra field which
+does not exist in the records, just add it to the [`fields`](#fields-column-definitions) array, and
+then reference the field(s) in the scoped slot(s). Scoped field slots use the following naming
+syntax: `` `'cell(${field_key})'` ``.
+
+You can use the default _fall-back_ scoped slot `'cell()'` to format any cells that do not have an
+explicit scoped slot provided.
+
+<<< DEMO ./demo/TableCustomData.vue
+
+The slot's scope variable (`data` in the above sample) will have the following properties:
+
+| Property         | Type                               | Description                                                                                                                                                               |
+| ---------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `index`          | number                             | The row number (indexed from zero) relative to the _displayed_ rows                                                                                                       |
+| `item`           | Items                              | The entire raw record data (i.e. `items[index]`) for this row (before any formatter is applied)                                                                           |
+| `value`          | unknown                            | The value for this key in the record (`null` or `undefined` if a virtual column), or the output of the field's [`formatter` function](#formatter-callback)                |
+| `unformatted`    | unknown                            | The raw value for this key in the item record (`null` or `undefined` if a virtual column), before being passed to the field's [`formatter` function](#formatter-callback) |
+| `field`          | `(typeof computedFields.value)[0]` | The field's normalized field definition object                                                                                                                            |
+| `detailsShowing` | boolean                            | Will be `true` if the row's `row-details` scoped slot is visible. See section [Row details support](#row-details-support) below for additional information                |
+| `toggleDetails`  | `() => void`                       | Can be called to toggle the visibility of the rows `row-details` scoped slot. See section [Row details support](#row-details-support) below for additional information    |
+| `rowSelected`    | boolean                            | Will be `true` if the row has been selected. See section [Row select support](#row-select-support) for additional information                                             |
+| `selectRow`      | `(index?: number) => void`         | When called, selects the current row. See section [Row select support](#row-select-support) for additional information                                                    |
+| `unselectRow`    | `(index?: number) => void`         | When called, unselects the current row. See section [Row select support](#row-select-support) for additional information                                                  |
+
+**Notes:**
+
+- `index` will not always be the actual row's index number, as it is computed after filtering,
+  sorting and pagination have been applied to the original table data. The `index` value will refer
+  to the **displayed row number**. This number will align with the indexes from the optional
+  [`v-model` bound](#v-model-binding) variable.
+- When using the `v-slot` syntax, note that slot names **cannot** contain spaces, and
+  when using in-browser DOM templates the slot names will _always_ be lower cased. To get around
+  this, you can pass the slot name using Vue's
+  [dynamic slot names](https://vuejs.org/guide/components/slots.html#dynamic-slot-names)
+
+#### Displaying raw HTML
+
+By default `BTable` escapes HTML tags in items data and results of formatter functions, if you need
+to display raw HTML code in `BTable`, you should use `v-html` directive on an element in a in
+scoped field slot.
+
+<<< DEMO ./demo/TableRawHtml.vue
+
+::: danger WARNING
+Be cautious of using the <code>v-html</code> method to display user
+supplied content, as it may make your application vulnerable to
+<a class="alert-link" href="https://en.wikipedia.org/wiki/Cross-site_scripting">
+<abbr title="Cross Site Scripting Attacks">XSS attacks</abbr></a>, if you do not first
+<a class="alert-link" href="https://en.wikipedia.org/wiki/HTML_sanitization">sanitize</a> the
+user supplied string.
+:::
+
+### Formatter callback
+
+Optionally, you can customize field output by using a formatter callback function. To enable this,
+the field's `formatter` property is used. The value of this property may be String or function
+reference. In case of a String value, the function must be defined at the parent component's
+methods. When providing `formatter` as a `Function`, it must be declared at global scope (window or
+as global mixin at Vue, or as an anonymous function), unless it has been bound to a `this` context.
+
+The callback function accepts three arguments - `value`, `key`, and `item`, and should return the
+formatted value as a string (HTML strings are not supported)
+
+<<< DEMO ./demo/TableFormatter.vue
 
 ## Header and Footer custom rendering via scoped slots
 
