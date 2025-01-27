@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.22](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.21...bootstrapvuenext-v0.26.22) (2025-01-27)
+
+
+### Bug Fixes
+
+* **BTable:** Fix typescript errors ([#2527](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2527)) ([ef28ba4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ef28ba48a4cad8c00f9a7e68fa763a2a269cd852))
+
 ## [0.26.21](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.20...bootstrapvuenext-v0.26.21) (2025-01-22)
 
 
