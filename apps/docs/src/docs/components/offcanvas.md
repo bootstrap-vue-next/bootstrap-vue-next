@@ -24,27 +24,23 @@ In SSR environments, the BOffcanvas component must be rendered client-side due t
 
 <<< FRAGMENT ./demo/OffcanvasResponsive.vue#template{vue-html}
 
+## Sidebar
+
+One common use of offcanvas is to create a table of contents sider that is visible on a large screen, but becomes an offcanvas component below a certain breakpoint. This is common for documentation sites like the one you're reading now which includes two such sidebars - a "table of contents" on the left and a "on this page" on the right.
+
+Below is a simple template showing how to set up such a site and a fully function example is available
+on [stackblitz](https://stackblitz.com/edit/github-jmaeulo7?file=App.vue).
+
+<<< FRAGMENT ./demo/OffcanvasSidebar.vue
+
 <ComponentReference :data="data" />
 
-<script setup lang="ts">
+<script lang="ts">
 import {data} from '../../data/components/offcanvas.data'
-import ComponentReference from '../../components/ComponentReference.vue'
-import HighlightCard from '../../components/HighlightCard.vue'
-import {BCard, BCardBody, BOffcanvas, BButton} from 'bootstrap-vue-next'
-import {ref, computed} from 'vue'
-import NoteAlert from '../../components/NoteAlert.vue'
 
-const show = ref(false)
-const show2 = ref(false)
-const placement = ref('start')
-
-const click = () => {
-  show.value = !show.value
-}
-
-const clickTwo = (place ="start") => {
-  console.log('c')
-  placement.value = place
-  show2.value = !show2.value
+export default {
+  setup() {
+    return {data}
+  }
 }
 </script>
