@@ -738,6 +738,10 @@ watch(
   }
 }
 
+.custom-block {
+  margin-bottom: 1rem;
+}
+
 @media (min-width: 992px) {
   .offcanvas-header.offcanvas-hidden-width .btn-close {
     display: none !important;
