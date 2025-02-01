@@ -420,11 +420,83 @@ formatted value as a string (HTML strings are not supported)
 
 ## Header and Footer custom rendering via scoped slots
 
-To Be Completed
+It is also possible to provide custom rendering for the table's `thead` and `tfoot` elements. Note by
+default the table footer is not rendered unless `foot-clone` is set to `true`.
+
+Scoped slots for the header and footer cells uses a special naming convention of
+`'head(<fieldkey>)'` and `'foot(<fieldkey>)'` respectively. if a `'foot(...)'` slot for a field is
+not provided, but a `'head(...)'` slot is provided, then the footer will use the `'head(...)'` slot
+content.
+
+You can use a default _fall-back_ scoped slot `'head()'` or `'foot()'` to format any header or
+footer cells that do not have an explicit scoped slot provided.
+
+<<< DEMO ./demo/TableHeadSlot.vue
+
+The slots can be optionally scoped (`data` in the above example), and will have the following
+properties:
+
+| Property        | Type                        | Description                                                                               |
+| --------------- | --------------------------- | ----------------------------------------------------------------------------------------- |
+| `column`        | `LiteralUnion<keyof Items>` | The fields's `key` value                                                                  |
+| `field`         | `TableField<Items>`         | the field's object (from the `fields` prop)                                               |
+| `label`         | `string \| undefined`       | The fields label value (also available as `data.field.label`)                             |
+| `isFoot`        | `boolean`                   | Currently rending the foot if `true`                                                      |
+| `selectAllRows` | `() => void`                | Select all rows (applicable if the table is in [`selectable`](#row-select-support) mode   |
+| `clearSelected` | `() => void`                | Unselect all rows (applicable if the table is in [`selectable`](#row-select-support) mode |
+
+When placing inputs, buttons, selects or links within a `head(...)` or `foot(...)` slot, note that
+`head-clicked` event will not be emitted when the input, select, textarea is clicked (unless they
+are disabled). `head-clicked` will never be emitted when clicking on links or buttons inside the
+scoped slots (even when disabled)
+
+**Notes:**
+
+- Slot names **cannot** contain spaces, and when using in-browser DOM templates the slot names will _always_
+- be lower cased. To get around this, you can pass the slot name using Vue's
+  [dynamic slot names](https://vuejs.org/guide/components/slots.html#dynamic-slot-names)
+
+### Adding additional rows to the header
+
+If you wish to add additional rows to the header you may do so via the `thead-top` slot. This slot
+is inserted before the header cells row, and is not automatically encapsulated by `<tr>..</tr>`
+tags. It is recommended to use the BootstrapVue [table helper components](#table-helper-components),
+rather than native browser table child elements.
+
+<<< DEMO ./demo/TableHeaderRows.vue
+
+Slot `thead-top` can be optionally scoped, receiving an object with the following properties:
+
+| Property        | Type                  | Description                                                                               |
+| --------------- | --------------------- | ----------------------------------------------------------------------------------------- |
+| `columns`       | `number`              | The number of columns in the rendered table                                               |
+| `fields`        | `TableField<Items>[]` | Array of field definition objects (normalized to the array of objects format)             |
+| `selectAllRows` | `() => void`          | Select all rows (applicable if the table is in [`selectable`](#row-select-support) mode   |
+| `clearSelected` | `() => void`          | Unselect all rows (applicable if the table is in [`selectable`](#row-select-support) mode |
+
+### Creating a custom footer
+
+If you need greater layout control of the content of the `<tfoot>`, you can use the optionally
+scoped slot `custom-foot` to provide your own rows and cells. Use BootstrapVue's
+[table helper sub-components](#table-helper-components) `<BTr>`, `<BTh>`, and `<BTd>` to generate
+your custom footer layout.
+
+Slot `custom-foot` can be optionally scoped, receiving an object with the following properties:
+
+| Property  | Type                  | Description                                                                                |
+| --------- | --------------------- | ------------------------------------------------------------------------------------------ |
+| `columns` | `number`              | The number of columns in the rendered table                                                |
+| `fields`  | `TableField<Items>[]` | Array of field definition objects (normalized to the array of objects format)              |
+| `items`   | `readonly Items[]`    | Array of the currently _displayed_ items records - after filtering, sorting and pagination |
+
+**Notes:**
+
+- The `custom-foot` slot will **not** be rendered if the `foot-clone` prop has been set.
+- `head-clicked` events are not be emitted when clicking on `custom-foot` cells.
+- Sorting and sorting icons are not available for cells in the `custom-foot` slot.
+- The custom footer will not be shown when the table is in visually stacked mode.
 
 ## Custom empty and emptyfiltered rendering via slots
-
-To Be Completed
 
 ## Advanced Features
 
