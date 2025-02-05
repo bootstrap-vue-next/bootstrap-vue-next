@@ -111,13 +111,13 @@ export type LinkOpacityProps = Pick<BLinkProps, 'opacity' | 'opacityHover'>
 export type LinkIconProps = Pick<BLinkProps, 'icon'>
 export type LinkVariantProps = Pick<BLinkProps, 'variant'>
 
-export interface BAccordionProps {
+export interface BAccordionProps<Free extends boolean> {
   flush?: boolean
-  free?: boolean
+  free?: Free
   id?: string
   initialAnimation?: boolean
   lazy?: boolean
-  modelValue?: string
+  modelValue?: Free extends true ? string[] : string | null
   unmountLazy?: boolean
 }
 
@@ -763,7 +763,6 @@ export interface BAccordionItemProps {
   horizontal?: boolean
   id?: string
   isNav?: boolean
-  modelValue?: boolean
   lazy?: boolean
   unmountLazy?: boolean
   tag?: string

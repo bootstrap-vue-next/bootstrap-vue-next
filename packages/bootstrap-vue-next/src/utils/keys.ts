@@ -84,12 +84,12 @@ export const avatarGroupInjectionKey: InjectionKey<{
 
 // BAccordion
 export const accordionInjectionKey: InjectionKey<{
-  openItem: Readonly<Ref<string | undefined>>
+  openItem: Readonly<Ref<string[] | string | null>>
   free: Readonly<Ref<boolean>>
   initialAnimation: Readonly<Ref<boolean>>
   lazy: Readonly<Ref<boolean>>
   unmountLazy: Readonly<Ref<boolean>>
-  setOpenItem: (id: string) => void
+  toggleOpenItem: (id: string) => void
 }> = createBvnInjectionKey('accordion')
 
 // BFormCheckboxGroup

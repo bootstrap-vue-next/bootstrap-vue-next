@@ -36,7 +36,7 @@ export type {
 export type {BaseSize, Size} from './Size'
 export type {BootstrapVueOptions, BvnComponentProps} from './BootstrapVueOptions'
 export type {BreadcrumbItem, BreadcrumbItemRaw} from './BreadcrumbTypes'
-export type {Breakpoint} from './BreakpointProps'
+export type * from './BreakpointProps'
 export type {ButtonType} from './ButtonType'
 export type {CheckboxOption, CheckboxOptionRaw, CheckboxValue} from './CheckboxTypes'
 export type {
