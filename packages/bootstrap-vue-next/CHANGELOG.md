@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.23](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.22...bootstrapvuenext-v0.26.23) (2025-02-05)
+
+
+### Features
+
+* **Placement:** Export additional placement types ([#2532](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2532)) ([220b7e4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/220b7e4feb2e23ffedec4cd75d54e46e0111489c))
+
 ## [0.26.22](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.21...bootstrapvuenext-v0.26.22) (2025-01-27)
 
 
