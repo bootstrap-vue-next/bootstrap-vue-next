@@ -345,15 +345,158 @@ information on the `busy` state.
 
 ## Custom data rendering
 
-To Be Completed
+Custom rendering for each data field in a row is possible using either
+[scoped slots](https://vuejs.org/guide/components/slots.html#scoped-slots) or a formatter callback
+function, or a combination of both.
+
+### Scoped field slots
+
+Scoped field slots give you greater control over how the record data appears. You can use scoped
+slots to provided custom rendering for a particular field. If you want to add an extra field which
+does not exist in the records, just add it to the [`fields`](#fields-column-definitions) array, and
+then reference the field(s) in the scoped slot(s). Scoped field slots use the following naming
+syntax: `` `'cell(${field_key})'` ``.
+
+You can use the default _fall-back_ scoped slot `'cell()'` to format any cells that do not have an
+explicit scoped slot provided.
+
+<<< DEMO ./demo/TableCustomData.vue
+
+The slot's scope variable (`data` in the above sample) will have the following properties:
+
+| Property         | Type                               | Description                                                                                                                                                               |
+| ---------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `index`          | number                             | The row number (indexed from zero) relative to the _displayed_ rows                                                                                                       |
+| `item`           | Items                              | The entire raw record data (i.e. `items[index]`) for this row (before any formatter is applied)                                                                           |
+| `value`          | unknown                            | The value for this key in the record (`null` or `undefined` if a virtual column), or the output of the field's [`formatter` function](#formatter-callback)                |
+| `unformatted`    | unknown                            | The raw value for this key in the item record (`null` or `undefined` if a virtual column), before being passed to the field's [`formatter` function](#formatter-callback) |
+| `field`          | `(typeof computedFields.value)[0]` | The field's normalized field definition object                                                                                                                            |
+| `detailsShowing` | boolean                            | Will be `true` if the row's `row-details` scoped slot is visible. See section [Row details support](#row-details-support) below for additional information                |
+| `toggleDetails`  | `() => void`                       | Can be called to toggle the visibility of the rows `row-details` scoped slot. See section [Row details support](#row-details-support) below for additional information    |
+| `rowSelected`    | boolean                            | Will be `true` if the row has been selected. See section [Row select support](#row-select-support) for additional information                                             |
+| `selectRow`      | `(index?: number) => void`         | When called, selects the current row. See section [Row select support](#row-select-support) for additional information                                                    |
+| `unselectRow`    | `(index?: number) => void`         | When called, unselects the current row. See section [Row select support](#row-select-support) for additional information                                                  |
+
+**Notes:**
+
+- `index` will not always be the actual row's index number, as it is computed after filtering,
+  sorting and pagination have been applied to the original table data. The `index` value will refer
+  to the **displayed row number**. This number will align with the indexes from the optional
+  [`v-model` bound](#v-model-binding) variable.
+- When using the `v-slot` syntax, note that slot names **cannot** contain spaces, and
+  when using in-browser DOM templates the slot names will _always_ be lower cased. To get around
+  this, you can pass the slot name using Vue's
+  [dynamic slot names](https://vuejs.org/guide/components/slots.html#dynamic-slot-names)
+
+#### Displaying raw HTML
+
+By default `BTable` escapes HTML tags in items data and results of formatter functions, if you need
+to display raw HTML code in `BTable`, you should use `v-html` directive on an element in a in
+scoped field slot.
+
+<<< DEMO ./demo/TableRawHtml.vue
+
+::: danger WARNING
+Be cautious of using the <code>v-html</code> method to display user
+supplied content, as it may make your application vulnerable to
+<a class="alert-link" href="https://en.wikipedia.org/wiki/Cross-site_scripting">
+<abbr title="Cross Site Scripting Attacks">XSS attacks</abbr></a>, if you do not first
+<a class="alert-link" href="https://en.wikipedia.org/wiki/HTML_sanitization">sanitize</a> the
+user supplied string.
+:::
+
+### Formatter callback
+
+Optionally, you can customize field output by using a formatter callback function. To enable this,
+the field's `formatter` property is used. The value of this property may be String or function
+reference. In case of a String value, the function must be defined at the parent component's
+methods. When providing `formatter` as a `Function`, it must be declared at global scope (window or
+as global mixin at Vue, or as an anonymous function), unless it has been bound to a `this` context.
+
+The callback function accepts three arguments - `value`, `key`, and `item`, and should return the
+formatted value as a string (HTML strings are not supported)
+
+<<< DEMO ./demo/TableFormatter.vue
 
 ## Header and Footer custom rendering via scoped slots
 
-To Be Completed
+It is also possible to provide custom rendering for the table's `thead` and `tfoot` elements. Note by
+default the table footer is not rendered unless `foot-clone` is set to `true`.
+
+Scoped slots for the header and footer cells uses a special naming convention of
+`'head(<fieldkey>)'` and `'foot(<fieldkey>)'` respectively. if a `'foot(...)'` slot for a field is
+not provided, but a `'head(...)'` slot is provided, then the footer will use the `'head(...)'` slot
+content.
+
+You can use a default _fall-back_ scoped slot `'head()'` or `'foot()'` to format any header or
+footer cells that do not have an explicit scoped slot provided.
+
+<<< DEMO ./demo/TableHeadSlot.vue
+
+The slots can be optionally scoped (`data` in the above example), and will have the following
+properties:
+
+| Property        | Type                        | Description                                                                               |
+| --------------- | --------------------------- | ----------------------------------------------------------------------------------------- |
+| `column`        | `LiteralUnion<keyof Items>` | The fields's `key` value                                                                  |
+| `field`         | `TableField<Items>`         | the field's object (from the `fields` prop)                                               |
+| `label`         | `string \| undefined`       | The fields label value (also available as `data.field.label`)                             |
+| `isFoot`        | `boolean`                   | Currently rending the foot if `true`                                                      |
+| `selectAllRows` | `() => void`                | Select all rows (applicable if the table is in [`selectable`](#row-select-support) mode   |
+| `clearSelected` | `() => void`                | Unselect all rows (applicable if the table is in [`selectable`](#row-select-support) mode |
+
+When placing inputs, buttons, selects or links within a `head(...)` or `foot(...)` slot, note that
+`head-clicked` event will not be emitted when the input, select, textarea is clicked (unless they
+are disabled). `head-clicked` will never be emitted when clicking on links or buttons inside the
+scoped slots (even when disabled)
+
+**Notes:**
+
+- Slot names **cannot** contain spaces, and when using in-browser DOM templates the slot names will _always_
+- be lower cased. To get around this, you can pass the slot name using Vue's
+  [dynamic slot names](https://vuejs.org/guide/components/slots.html#dynamic-slot-names)
+
+### Adding additional rows to the header
+
+If you wish to add additional rows to the header you may do so via the `thead-top` slot. This slot
+is inserted before the header cells row, and is not automatically encapsulated by `<tr>..</tr>`
+tags. It is recommended to use the BootstrapVue [table helper components](#table-helper-components),
+rather than native browser table child elements.
+
+<<< DEMO ./demo/TableHeaderRows.vue
+
+Slot `thead-top` can be optionally scoped, receiving an object with the following properties:
+
+| Property        | Type                  | Description                                                                               |
+| --------------- | --------------------- | ----------------------------------------------------------------------------------------- |
+| `columns`       | `number`              | The number of columns in the rendered table                                               |
+| `fields`        | `TableField<Items>[]` | Array of field definition objects (normalized to the array of objects format)             |
+| `selectAllRows` | `() => void`          | Select all rows (applicable if the table is in [`selectable`](#row-select-support) mode   |
+| `clearSelected` | `() => void`          | Unselect all rows (applicable if the table is in [`selectable`](#row-select-support) mode |
+
+### Creating a custom footer
+
+If you need greater layout control of the content of the `<tfoot>`, you can use the optionally
+scoped slot `custom-foot` to provide your own rows and cells. Use BootstrapVue's
+[table helper sub-components](#table-helper-components) `<BTr>`, `<BTh>`, and `<BTd>` to generate
+your custom footer layout.
+
+Slot `custom-foot` can be optionally scoped, receiving an object with the following properties:
+
+| Property  | Type                  | Description                                                                                |
+| --------- | --------------------- | ------------------------------------------------------------------------------------------ |
+| `columns` | `number`              | The number of columns in the rendered table                                                |
+| `fields`  | `TableField<Items>[]` | Array of field definition objects (normalized to the array of objects format)              |
+| `items`   | `readonly Items[]`    | Array of the currently _displayed_ items records - after filtering, sorting and pagination |
+
+**Notes:**
+
+- The `custom-foot` slot will **not** be rendered if the `foot-clone` prop has been set.
+- `head-clicked` events are not be emitted when clicking on `custom-foot` cells.
+- Sorting and sorting icons are not available for cells in the `custom-foot` slot.
+- The custom footer will not be shown when the table is in visually stacked mode.
 
 ## Custom empty and emptyfiltered rendering via slots
-
-To Be Completed
 
 ## Advanced Features
 

@@ -5,9 +5,11 @@ export type {
   AlignmentJustifyContent,
   AlignmentTextHorizontal,
   AlignmentVertical,
+  CombinedPlacement,
   ContainerHorizontalAlign,
   ContainerPosition,
   ContainerVerticalAlign,
+  Placement,
   VerticalAlign,
 } from './Alignment'
 export type {Animation} from './Animation'
@@ -34,7 +36,7 @@ export type {
   TextColorVariant,
 } from './ColorTypes'
 export type {BaseSize, Size} from './Size'
-export type {BootstrapVueOptions, BvnComponentProps} from './BootstrapVueOptions'
+export type {BootstrapVueOptions, BvnComponentProps, showHide} from './BootstrapVueOptions'
 export type {BreadcrumbItem, BreadcrumbItemRaw} from './BreadcrumbTypes'
 export type {Breakpoint} from './BreakpointProps'
 export type {ButtonType} from './ButtonType'

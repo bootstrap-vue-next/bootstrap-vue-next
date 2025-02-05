@@ -595,8 +595,8 @@ The following properties are <NotYetImplemented/> -
 
 ### Field Definitions
 
-`formatter` Only the callback function value for this field is implemented, not adding the name
-of a method in the component.
+`formatter` Only the callback function value for this field is implemented, adding the name
+of a method in the component is deprecated.
 
 `sortKey` and `sortDirection` are deprecated, use the table's `sortBy` model as documented [here](/docs/components/table#sorting) instead.
 

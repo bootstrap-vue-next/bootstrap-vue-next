@@ -23,7 +23,7 @@ const items: TableItem<SortPerson>[] = [
   {isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney'},
 ]
 
-const fields: Exclude<TableFieldRaw<SortPerson>, string>[] = [
+const fields: TableFieldRaw<SortPerson>[] = [
   {key: 'last_name', sortable: true},
   {key: 'first_name', sortable: true},
   {key: 'age', sortable: true},
