@@ -28,8 +28,7 @@ In SSR environments, the BOffcanvas component must be rendered client-side due t
 
 One common use of offcanvas is to create a table of contents sider that is visible on a large screen, but becomes an offcanvas component below a certain breakpoint. This is common for documentation sites like the one you're reading now which includes two such sidebars - a "table of contents" on the left and a "on this page" on the right.
 
-Below is a simple template showing how to set up such a site and a fully function example is available
-on [stackblitz](https://stackblitz.com/edit/github-jmaeulo7?file=App.vue).
+Below is a simple example showing how to set up such a site.
 
 <<< FRAGMENT ./demo/OffcanvasSidebar.vue
 
