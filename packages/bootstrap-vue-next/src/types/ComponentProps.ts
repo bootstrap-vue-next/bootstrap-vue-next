@@ -1098,8 +1098,6 @@ export interface BTableProps<Items> extends Omit<BTableLiteProps<Items>, 'tableC
   // apiUrl?: string
   // filterIgnoredFields?: any[]
   // filterIncludedFields?: any[]
-  // headRowVariant?: ColorVariant | null
-  // headVariant?: ColorVariant | null
   // labelSortAsc?: string
   // labelSortClear?: string
   // labelSortDesc?: string
@@ -1108,7 +1106,6 @@ export interface BTableProps<Items> extends Omit<BTableLiteProps<Items>, 'tableC
   noSelectOnClick?: boolean
   // selectedVariant?: ColorVariant | null
   // showEmpty?: boolean
-  // sortDirection?: 'asc' | 'desc' | 'last'
   // sortIconLeft?: boolean
   // sortNullLast?: boolean
   selectedItems?: readonly Items[]

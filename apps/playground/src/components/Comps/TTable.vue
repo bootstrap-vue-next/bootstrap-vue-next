@@ -534,6 +534,7 @@ function onFiltered(filteredItems: TableItem<Person>[]) {
   currentPage.value = 1
 
   // The following lines are just to prove that typing is working
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   false &&
     filteredItems.forEach((item) => {
       // eslint-disable-next-line no-console

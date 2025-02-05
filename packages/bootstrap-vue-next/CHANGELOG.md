@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.26.22](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.21...bootstrapvuenext-v0.26.22) (2025-01-27)
+
+
+### Bug Fixes
+
+* **BTable:** Fix typescript errors ([#2527](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2527)) ([ef28ba4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ef28ba48a4cad8c00f9a7e68fa763a2a269cd852))
+
+## [0.26.21](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.20...bootstrapvuenext-v0.26.21) (2025-01-22)
+
+
+### Features
+
+* **BFormTags:** add inputValue to exposed fixes [#2503](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2503) ([9c5129b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9c5129bd49d596efe3e74772e355a67dc8c22356))
+
+
+### Bug Fixes
+
+* **BTable:** Export additional types ([#2519](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2519)) ([9b25255](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9b252551cff82c0ff1be4ba53b3c18d405962b86))
+
 ## [0.26.20](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.19...bootstrapvuenext-v0.26.20) (2025-01-15)
 
 

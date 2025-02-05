@@ -15,7 +15,7 @@ interface Person {
 }
 
 // Note 'isActive' is left out and will not appear in the rendered table
-const fields: Exclude<TableFieldRaw<Person>, string>[] = [
+const fields: TableFieldRaw<Person>[] = [
   {
     key: 'last_name',
     sortable: true,
