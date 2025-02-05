@@ -5,9 +5,11 @@ export type {
   AlignmentJustifyContent,
   AlignmentTextHorizontal,
   AlignmentVertical,
+  CombinedPlacement,
   ContainerHorizontalAlign,
   ContainerPosition,
   ContainerVerticalAlign,
+  Placement,
   VerticalAlign,
 } from './Alignment'
 export type {Animation} from './Animation'
