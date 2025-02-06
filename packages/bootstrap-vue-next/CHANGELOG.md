@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.26.25](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.24...bootstrapvuenext-v0.26.25) (2025-02-06)
+
+
+### Bug Fixes
+
+* **BPopover:** popover breaks flex layouts ([3a243f3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3a243f3aedb98e80c3a62cf0f6082da97834065b))
+* **useModalManager:** use correct value in comparison ([a70f252](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a70f252a7b3158cce510b58ce520bcfb604bd8fa))
+
 ## [0.26.24](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.23...bootstrapvuenext-v0.26.24) (2025-02-06)
 
 
