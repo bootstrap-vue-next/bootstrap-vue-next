@@ -13,7 +13,7 @@ Easily extend form controls by adding text, buttons, or button groups on either 
 You can attach addons using either props, named slots and/or sub-components.
 
 ::: info NOTE
-Bootstrap 5 dropped `.input-group-append` and `.input-group-prepend`. You can now just add buttons and `.input-group-text` as direct children of the input groups. The sub-components are added for compatibility reasons.
+Bootstrap 5 dropped `.input-group-append` and `.input-group-prepend`. You can now just add buttons and `.input-group-text` as direct children of the input groups.
 :::
 
 ### Using `prepend` and `append` props

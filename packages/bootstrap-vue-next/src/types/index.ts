@@ -50,6 +50,7 @@ export type {
 } from './SelectTypes'
 export type {InputType} from './InputType'
 export type {LinkTarget} from './LinkTarget'
+export type {LinkOpacity, UnderlineOffset, UnderlineOpacity} from './LinkDecorators'
 export type {LiteralUnion} from './LiteralUnion'
 export type {PaginationPage} from './PaginationPage'
 export type {PlaceholderAnimation, PlaceholderSize} from './PlaceholderTypes'
