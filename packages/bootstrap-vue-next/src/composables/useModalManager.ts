@@ -5,6 +5,7 @@ import {
   getCurrentInstance,
   inject,
   type Ref,
+  toValue,
   watch,
 } from 'vue'
 import {modalManagerPluginKey} from '../utils/keys'
@@ -84,11 +85,11 @@ export const useModalManager = (modalOpen: Readonly<Ref<boolean>>, initialValue:
 
   return {
     activePosition: computed(() =>
-      stack?.value.findIndex((el) => el.exposed?.id === currentModal.exposed?.id)
+      stack?.value.findIndex((el) => toValue(el.exposed?.id) === toValue(currentModal.exposed?.id))
     ),
     activeModalCount: countStack,
     stackWithoutSelf: computed(
-      () => stack?.value.filter((el) => el.exposed?.id !== currentModal.exposed?.id) ?? []
+      () => stack?.value.filter((el) => toValue(el.exposed?.id) !== toValue(currentModal.exposed?.id)) ?? []
     ),
   }
 }
