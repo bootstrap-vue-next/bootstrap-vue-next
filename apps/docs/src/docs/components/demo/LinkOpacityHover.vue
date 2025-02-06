@@ -5,6 +5,6 @@
 </template>
 
 <script setup lang="ts">
-import {type BvnComponentProps} from 'bootstrap-vue-next'
-const opacities: BvnComponentProps['BLink']['opacity'][] = [10, 25, 50, 75, 100]
+import {type LinkOpacity} from 'bootstrap-vue-next'
+const opacities: LinkOpacity[] = [10, 25, 50, 75, 100]
 </script>

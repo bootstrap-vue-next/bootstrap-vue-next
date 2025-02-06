@@ -5,6 +5,6 @@
 </template>
 
 <script setup lang="ts">
-import {type BvnComponentProps} from 'bootstrap-vue-next'
-const offsets: BvnComponentProps['BLink']['underlineOffset'][] = [1, 2, 3]
+import {type UnderlineOffset} from 'bootstrap-vue-next'
+const offsets: UnderlineOffset[] = [1, 2, 3]
 </script>
