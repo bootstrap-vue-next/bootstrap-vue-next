@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.24](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.23...bootstrapvuenext-v0.26.24) (2025-02-06)
+
+
+### Bug Fixes
+
+* **BLink:** Create and export Opacity and Offset types ([#2536](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2536)) ([f2af52f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f2af52fce99034c34c348ae01d3fb27c0833d071))
+
 ## [0.26.23](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.22...bootstrapvuenext-v0.26.23) (2025-02-05)
 
 
