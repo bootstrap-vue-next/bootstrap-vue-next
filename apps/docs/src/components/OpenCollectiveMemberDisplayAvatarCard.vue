@@ -20,7 +20,7 @@
           {{
             new Intl.NumberFormat('en-US', {
               style: 'currency',
-              currency: member.currency,
+              currency: member.currency ?? 'USD',
               maximumFractionDigits: 0,
             }).format(member.totalAmountDonated)
           }}</small
