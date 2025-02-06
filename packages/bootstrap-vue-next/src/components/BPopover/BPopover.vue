@@ -1,5 +1,5 @@
 <template>
-  <span :id="computedId + '_placeholder'" ref="_placeholder" />
+  <span :id="computedId + '_placeholder'" ref="_placeholder" style="display: none" />
   <slot name="target" :show="show" :hide="hide" :toggle="toggle" :visible="showRef" />
   <ConditionalTeleport
     :to="props.teleportTo"
