@@ -9,5 +9,5 @@
 import {ref} from 'vue'
 
 const value1 = ref(0)
-const value2 = ref(null)
+const value2 = ref<number | null>(null)
 </script>
