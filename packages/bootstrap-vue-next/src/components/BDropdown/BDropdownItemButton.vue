@@ -1,12 +1,12 @@
 <template>
-  <li role="presentation" :class="wrapperClass" v-bind="props.wrapperAttrs">
+  <li role="presentation" :class="processedAttrs.wrapperClass" v-bind="props.wrapperAttrs">
     <button
       role="menu"
       type="button"
       class="dropdown-item"
       :class="computedClasses"
       :disabled="props.disabled"
-      v-bind="attrs"
+      v-bind="processedAttrs.buttonAttrs"
       @click="clicked"
     >
       <slot />
@@ -38,7 +38,11 @@ const emit = defineEmits<{
   click: [value: MouseEvent]
 }>()
 
-const {class: wrapperClass, ...attrs} = useAttrs()
+const attrs = useAttrs()
+const processedAttrs = computed(() => {
+  const {class: wrapperClass, ...buttonAttrs} = attrs
+  return {wrapperClass, buttonAttrs}
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
