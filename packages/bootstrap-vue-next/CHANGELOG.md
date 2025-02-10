@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.26](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.25...bootstrapvuenext-v0.26.26) (2025-02-10)
+
+
+### Bug Fixes
+
+* make attributes reactive in Accordian, Tab, Dropdown*, etc. ([#2552](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2552)) ([081862d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/081862db996abbb8dbf7ba4ac2d3a824a4c03961))
+
 ## [0.26.25](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.24...bootstrapvuenext-v0.26.25) (2025-02-06)
 
 
