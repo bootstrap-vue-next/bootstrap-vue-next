@@ -143,7 +143,7 @@ export const modalControllerPlugin: Plugin = {
                 // modals.value.delete(_self)
               }
             },
-            'isConfirm': newValue.isConfirm ?? isConfirm ?? false,
+            ...(v.isConfirm === undefined && {isConfirm: isConfirm ?? false}),
             promise,
             stop,
           })
@@ -159,7 +159,7 @@ export const modalControllerPlugin: Plugin = {
     const show = (obj: ModalOrchestratorShowParam = {}): PromiseWithModal =>
       create(obj, false).show()
     const confirm = (obj: ModalOrchestratorShowParam = {}): PromiseWithModal =>
-      create(obj, true).show()
+      create(obj, true).confirm()
 
     /**
      * You can get the symbol param from the return value from the show method, or use props.id

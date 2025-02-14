@@ -60,7 +60,7 @@ const showExample = async () => {
 
 ### Reactivity Within Show
 
-`show` and `confirm` props property can accept a `MaybeRefOrGetter`, meaning that you can make properties reactive
+`show` and `confirm` props property can accept a `MaybeRef`, meaning that you can make properties reactive
 
 <HighlightCard>
   <BButton @click="showReactiveExample">Click me</BButton>
