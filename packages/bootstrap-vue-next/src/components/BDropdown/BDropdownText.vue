@@ -1,10 +1,10 @@
 <template>
-  <li role="presentation" :class="wrapperClass" v-bind="wrapperAttrs">
+  <li role="presentation" :class="processedAttrs.wrapperClass" v-bind="wrapperAttrs">
     <component
       :is="props.tag"
       class="dropdown-item-text"
       :class="[colorClasses, props.textClass]"
-      v-bind="attrs"
+      v-bind="processedAttrs.textAttrs"
     >
       <slot>
         {{ props.text }}
@@ -22,7 +22,11 @@ import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 defineOptions({
   inheritAttrs: false,
 })
-const {class: wrapperClass, ...attrs} = useAttrs()
+const attrs = useAttrs()
+const processedAttrs = computed(() => {
+  const {class: wrapperClass, ...textAttrs} = attrs
+  return {wrapperClass, textAttrs}
+})
 
 const _props = withDefaults(defineProps<BDropdownTextProps>(), {
   textClass: undefined,

@@ -7,7 +7,7 @@
     :class="computedClasses"
     role="tabpanel"
     :aria-labelledby="computedButtonId"
-    v-bind="attrs"
+    v-bind="processedAttrs.tabAttrs"
   >
     <slot v-if="showSlot" />
   </component>
@@ -58,7 +58,11 @@ const computedButtonId = useId(() => props.buttonId, 'tab')
 const lazyRenderCompleted = ref(false)
 const el = useTemplateRef<HTMLElement>('_el')
 
-const {onClick, ...attrs} = useAttrs()
+const attrs = useAttrs()
+const processedAttrs = computed(() => {
+  const {onClick, ...tabAttrs} = attrs
+  return {onClick, tabAttrs}
+})
 
 const tab = computed(
   () =>
@@ -71,7 +75,7 @@ const tab = computed(
       titleItemClass: () => props.titleItemClass,
       titleLinkAttrs: () => props.titleLinkAttrs,
       titleLinkClass: () => props.titleLinkClass,
-      onClick,
+      onClick: processedAttrs.value.onClick,
       el: el.value,
     }) as TabType
 )

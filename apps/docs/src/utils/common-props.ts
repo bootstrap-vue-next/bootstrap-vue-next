@@ -367,7 +367,7 @@ export const commonProps = () =>
       description: 'URL to set for the `src` attribute',
     },
     state: {
-      type: 'boolean | null',
+      type: 'ValidationState',
       default: undefined,
       description:
         'Controls the validation state appearance of the component. `true` for valid, `false` for invalid, or `null` for no validation state',

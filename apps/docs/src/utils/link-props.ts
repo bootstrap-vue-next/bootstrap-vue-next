@@ -57,13 +57,17 @@ export const linkProps = {
     default: undefined,
     description:
       'To improve the responsiveness of your Nuxt.js applications, when the link will be displayed within the viewport, Nuxt.js will automatically prefetch the code splitted page. Setting `prefetch` to `true` or `false` will overwrite the default value of `router.prefetchLinks`',
-    notYetImplemented: true,
   },
   prefetchedClass: {
     type: 'string',
     default: undefined,
     description: 'Not Yet Implmented: A class to apply to links that have been prefetched.',
-    notYetImplemented: true,
+  },
+  prefetchOn: {
+    type: 'Partial<{visibility: boolean, interaction: boolean}>',
+    default: undefined,
+    description:
+      "Allows custom control of when to prefetch links. Possible options are 'interaction' and 'visibility' (default).",
   },
   noRel: {},
   rel: {

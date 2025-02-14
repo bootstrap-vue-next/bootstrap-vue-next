@@ -1,60 +1,12 @@
 # Form Group
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
-<div class="lead mb-5">
+<PageHeader>
 
 The `BFormGroup` component is the easiest way to add some structure to forms. Its purpose is to pair form controls with a legend or label, and to provide help text and invalid/valid feedback text, as well as visual (color) contextual state feedback.
 
-</div>
+</PageHeader>
 
-<HighlightCard>
-  <BFormGroup
-    id="fieldset-1"
-    description="Let us know your name."
-    label="Enter your name"
-    label-for="input-1"
-    valid-feedback="Thank you!"
-    :invalid-feedback="invalidFeedback"
-    :state="state"
-    label-class="mb-1"
-  >
-    <BFormInput id="input-1" v-model="name" :state="state" trim />
-  </BFormGroup>
-  <template #html>
-
-```vue
-<template>
-  <BFormGroup
-    id="fieldset-1"
-    description="Let us know your name."
-    label="Enter your name"
-    label-for="input-1"
-    valid-feedback="Thank you!"
-    :invalid-feedback="invalidFeedback"
-    :state="state"
-    label-class="mb-1"
-  >
-    <BFormInput id="input-1" v-model="name" :state="state" trim />
-  </BFormGroup>
-</template>
-
-<script setup lang="ts">
-const name = ref('')
-
-const state = computed(() => name.value.length >= 4)
-const invalidFeedback = computed(() =>
-  name.value.length > 0 ? 'Enter at least 4 characters.' : 'Please enter something.'
-)
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormGroupOverview.vue
 
 ## Label
 
@@ -82,25 +34,7 @@ of strings.
 
 The `BFormGroup` component automatically inherits the id of its child input components, such as BFormInput and BFormTextarea. This functionality ensures that the label element's for attribute is correctly set to match the id of the input component, providing proper association between the label and the input field.
 
-<HighlightCard>
-  <BFormGroup
-    label="Enter your name"
-  >
-    <BFormInput id="this-id-will-be-automatically-applied-to-the-label" />
-  </BFormGroup>
-
-<template #html>
-
-```vue-html
-<BFormGroup
-  label="Enter your name"
-  >
-  <BFormInput id="this-id-will-be-automatically-applied-to-the-label" />
-</BFormGroup>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormGroupId.vue#template{vue-html}
 
 ### Horizontal layout
 
@@ -119,7 +53,7 @@ occupy in the row via the `content-cols` and `content-cols-{breakpoint}` props.
 When using both, the `label-cols` and `content-cols` props, make sure that the total amount of
 columns does not exceed `12`.
 
-See the [Layout and Grid System](/docs/components/layout#how-it-works) docs for further information.
+See the [Grid System](/docs/components/grid-system#how-it-works) docs for further information.
 
 | Prop              | Description                       |
 | ----------------- | --------------------------------- |
@@ -134,38 +68,7 @@ See the [Layout and Grid System](/docs/components/layout#how-it-works) docs for 
 | `content-cols-lg` | Applies to breakpoint `lg` and up |
 | `content-cols-xl` | Applies to breakpoint `xl` and up |
 
-<HighlightCard>
-  <BFormGroup
-    id="fieldset-horizontal"
-    label-cols-sm="4"
-    label-cols-lg="3"
-    content-cols-sm
-    content-cols-lg="7"
-    description="Let us know your name."
-    label="Enter your name"
-    label-for="input-horizontal"
-    >
-    <BFormInput id="input-horizontal" />
-  </BFormGroup>
-  <template #html>
-
-```vue-html
-<BFormGroup
-  id="fieldset-horizontal"
-  label-cols-sm="4"
-  label-cols-lg="3"
-  content-cols-sm
-  content-cols-lg="7"
-  description="Let us know your name."
-  label="Enter your name"
-  label-for="input-horizontal"
->
-  <BFormInput id="input-horizontal" />
-</BFormGroup>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormGroupHorizontalLayout.vue#template{vue-html}
 
 You can also set the label cols to `'auto'`.
 
@@ -175,34 +78,7 @@ You can control the label text size match the size of your form input(s) via the
 `label-size` prop. Values can be `'sm'` or `'lg'` for small or large label, respectively. Sizes work
 for both horizontal and non-horizontal form groups.
 
-<HighlightCard>
-  <BFormGroup label-cols="4" label-cols-lg="2" label-size="sm" label="Small" label-for="input-sm">
-    <BFormInput id="input-sm" size="sm" />
-  </BFormGroup>
-  <BFormGroup label-cols="4" label-cols-lg="2" label="Default" label-for="input-default">
-    <BFormInput id="input-default" />
-  </BFormGroup>
-  <BFormGroup label-cols="4" label-cols-lg="2" label-size="lg" label="Large" label-for="input-lg">
-    <BFormInput id="input-lg" size="lg" />
-  </BFormGroup>
-  <template #html>
-
-```vue-html
-<BFormGroup label-cols="4" label-cols-lg="2" label-size="sm" label="Small" label-for="input-sm">
-  <BFormInput id="input-sm" size="sm" />
-</BFormGroup>
-
-<BFormGroup label-cols="4" label-cols-lg="2" label="Default" label-for="input-default">
-  <BFormInput id="input-default" />
-</BFormGroup>
-
-<BFormGroup label-cols="4" label-cols-lg="2" label-size="lg" label="Large" label-for="input-lg">
-  <BFormInput id="input-lg" size="lg" />
-</BFormGroup>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormGroupLabelSize.vue#template{vue-html}
 
 ### Label text alignment
 
@@ -224,114 +100,7 @@ Alignment has no effect if the `label-visually-hidden` prop is set.
 Feel free to nest `BFormGroup` components to produce advanced form layouts and semantic grouping
 of related form controls:
 
-<HighlightCard>
-  <BCard bg-variant="light">
-    <BFormGroup
-      label-cols-lg="3"
-      label="Shipping Address"
-      label-size="lg"
-      label-class="fw-bold pt-0"
-      class="mb-0"
-    >
-      <BFormGroup
-        label="Street:"
-        label-for="nested-street"
-        label-cols-sm="3"
-        label-align-sm="end"
-      >
-        <BFormInput id="nested-street" />
-      </BFormGroup>
-      <BFormGroup
-        label="City:"
-        label-for="nested-city"
-        label-cols-sm="3"
-        label-align-sm="end"
-      >
-        <BFormInput id="nested-city" />
-      </BFormGroup>
-      <BFormGroup
-        label="State:"
-        label-for="nested-state"
-        label-cols-sm="3"
-        label-align-sm="end"
-      >
-        <BFormInput id="nested-state" />
-      </BFormGroup>
-      <BFormGroup
-        label="Country:"
-        label-for="nested-country"
-        label-cols-sm="3"
-        label-align-sm="end"
-      >
-        <BFormInput id="nested-country" />
-      </BFormGroup>
-      <BFormGroup
-        label="Ship via:"
-        label-cols-sm="3"
-        label-align-sm="end"
-        class="mb-0"
-      >
-      <BFormRadioGroup
-        class="pt-2"
-        :options="['Air', 'Courier', 'Mail']"
-      />
-      </BFormGroup>
-    </BFormGroup>
-  </BCard>
-  <template #html>
-
-```vue-html
-<BCard bg-variant="light">
-  <BFormGroup
-    label-cols-lg="3"
-    label="Shipping Address"
-    label-size="lg"
-    label-class="fw-bold pt-0"
-    class="mb-0"
-  >
-    <BFormGroup
-      label="Street:"
-      label-for="nested-street"
-      label-cols-sm="3"
-      label-align-sm="end"
-    >
-      <BFormInput id="nested-street" />
-    </BFormGroup>
-
-    <BFormGroup label="City:" label-for="nested-city" label-cols-sm="3" label-align-sm="end">
-      <BFormInput id="nested-city" />
-    </BFormGroup>
-
-    <BFormGroup label="State:" label-for="nested-state" label-cols-sm="3" label-align-sm="end">
-      <BFormInput id="nested-state" />
-    </BFormGroup>
-
-    <BFormGroup
-      label="Country:"
-      label-for="nested-country"
-      label-cols-sm="3"
-      label-align-sm="end"
-    >
-      <BFormInput id="nested-country" />
-    </BFormGroup>
-
-    <BFormGroup
-      label="Ship via:"
-      label-cols-sm="3"
-      label-align-sm="end"
-      class="mb-0"
-    >
-      <BFormRadioGroup
-        class="pt-2"
-        :options="['Air', 'Courier', 'Mail']"
-      />
-    </BFormGroup>
-  </BFormGroup>
-</BCard>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormGroupNested.vue#template{vue-html}
 
 ## Disabled form group
 
@@ -370,6 +139,12 @@ details on validation methods.
 You should always provide content via the `invalid-feedback` prop (or slot) to aid users using
 assistive technologies when setting a contextual `invalid` state.
 
+### Automatic passing of state to child
+
+For some elements the child input element will automatically receive the state of the form group. `:state="false"` on the `BFormGroup` will automatically give the appropriate class to the input element. Explicit sets of the `state` prop to the child element will override this.
+
+<<< DEMO ./demo/FormGroupState.vue#template{vue-html}
+
 ### Invalid feedback
 
 Show optional invalid state feedback text to provide textual state feedback (html supported) by
@@ -394,12 +169,14 @@ the feedback so that it shows as a static tooltip when visible, by setting the p
 
 ### Feedback limitations
 
-**Note:** When using `BInputGroup`, `BFormFile`, `BFormRadioGroup`, `BFormRadio`,
+::: Info NOTE
+When using `BInputGroup`, `BFormFile`, `BFormRadioGroup`, `BFormRadio`,
 `BFormCheckboxGroup` or `BFormCheckbox` inside a `BFormGroup`, setting an invalid (or
 valid) `state` on the `input` alone will **not** trigger the invalid (or valid) feedback to show
 (due to limitations with the Bootstrap 5 validation CSS). To get around this, **you must also**
 set the invalid/valid `state` on `BFormGroup`. Native browser validation will **not** trigger
 the invalid feedback to show when using one of the above-mentioned form controls.
+:::
 
 ## Floating labels
 
@@ -409,55 +186,7 @@ You can make a floating label by setting the property `floating` to true and spe
 
 ### Example
 
-<HighlightCard>
-  <BFormGroup
-    id="fieldset-1"
-    description="Let us know your name."
-    label="Name"
-    label-for="input-floating-1"
-    valid-feedback="Thank you!"
-    :invalid-feedback="floatingInvalidFeedback"
-    :state="floatingState"
-    floating
-  >
-    <BFormInput id="input-floating-1" v-model="floatingName" :state="floatingState" trim placeholder="Enter your name please" />
-  </BFormGroup>
-  <template #html>
-
-```vue
-<template>
-  <BFormGroup
-    id="fieldset-1"
-    description="Let us know your name."
-    label="Name"
-    label-for="input-floating-1"
-    valid-feedback="Thank you!"
-    :invalid-feedback="floatingInvalidFeedback"
-    :state="floatingState"
-    floating
-  >
-    <BFormInput
-      id="input-floating-1"
-      v-model="floatingName"
-      :state="floatingState"
-      trim
-      placeholder="Enter your name please"
-    />
-  </BFormGroup>
-</template>
-
-<script setup lang="ts">
-const floatingName = ref('')
-
-const floatingState = computed(() => floatingName.value.length >= 4)
-const floatingInvalidFeedback = computed(() =>
-  floatingName.value.length > 0 ? 'Enter at least 4 characters.' : 'Please enter something.'
-)
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormGroupFloatingLabels.vue
 
 ### Restrictions
 
@@ -496,23 +225,12 @@ scoped `default` slot.
 
 <ComponentReference :data="data" />
 
-<script setup lang="ts">
+<script lang="ts">
 import {data} from '../../data/components/formGroup.data'
-import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
-import HighlightCard from '../../components/HighlightCard.vue'
-import {BCard, BCardBody, BFormRadioGroup, BFormGroup, BFormInput} from 'bootstrap-vue-next'
-import {computed, ref} from 'vue'
 
-const name = ref('')
-const state = computed(() => name.value.length >= 4)
-const invalidFeedback = computed(() =>
-  name.value.length > 0 ? 'Enter at least 4 characters.' : 'Please enter something.'
-)
-
-const floatingName = ref('')
-const floatingState = computed(() => floatingName.value.length >= 4)
-const floatingInvalidFeedback = computed(() =>
-  floatingName.value.length > 0 ? 'Enter at least 4 characters.' : 'Please enter something.'
-)
+export default {
+  setup() {
+    return {data}
+  }
+}
 </script>

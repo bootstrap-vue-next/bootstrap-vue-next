@@ -137,7 +137,7 @@
                 header-class="pb-0 d-flex offcanvas-hidden-width"
                 body-class="py-2"
               >
-                <div class="bd-toc" />
+                <PageContents />
               </BOffcanvas>
             </ClientOnly>
           </aside>
@@ -178,10 +178,9 @@ import SunFill from '~icons/bi/sun-fill'
 import ChevronRight from '~icons/bi/chevron-right'
 import CircleHalf from '~icons/bi/circle-half'
 import {useData, useRoute, withBase} from 'vitepress'
+import {VPNavBarSearch} from 'vitepress/theme'
 import {appInfoKey} from './keys'
 import {useMediaQuery} from '@vueuse/core'
-import TableOfContentsNav from '../../src/components/TableOfContentsNav.vue'
-import VPNavBarSearch from 'vitepress/dist/client/theme-default/components/VPNavBarSearch.vue'
 
 // https://vitepress.dev/reference/runtime-api#usedata
 const {page} = useData()
@@ -193,8 +192,10 @@ const globalData = inject(appInfoKey, {
   githubPackageDirectory: '',
   githubComponentsDirectory: '',
   githubComposablesDirectory: '',
+  githubMainBranch: '',
   githubDirectivesDirectory: '',
   opencollectiveUrl: '',
+  githubDocsDirectory: '',
 })
 
 const isLargeScreen = useMediaQuery('(min-width: 992px)')
@@ -712,38 +713,6 @@ watch(
   }
 }
 
-.table-of-contents {
-  font-size: 0.875rem;
-
-  ul {
-    padding-left: 0;
-    margin-bottom: 0;
-    list-style: none;
-
-    a {
-      display: block;
-      padding: 0.125rem 0 0.125rem 0.75rem;
-      color: inherit;
-      text-decoration: none;
-      border-left: 0.125rem solid transparent;
-
-      &.active {
-        color: var(--bd-toc-color);
-        border-left-color: var(--bd-toc-color);
-      }
-
-      &:hover {
-        color: var(--bd-toc-color);
-        border-left-color: var(--bd-toc-color);
-      }
-    }
-
-    ul {
-      padding-left: 1rem;
-    }
-  }
-}
-
 // Search
 .DocSearch-Button .DocSearch-Search-Icon {
   @media (max-width: 767px) {
@@ -767,6 +736,10 @@ watch(
   .vp-code-dark {
     display: none;
   }
+}
+
+.custom-block {
+  margin-bottom: 1rem;
 }
 
 @media (min-width: 992px) {

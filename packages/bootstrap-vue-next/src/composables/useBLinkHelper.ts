@@ -3,13 +3,13 @@ import {
   getCurrentInstance,
   type MaybeRefOrGetter,
   readonly,
-  type Ref,
   resolveDynamicComponent,
   toRef,
 } from 'vue'
 import {isLink} from '../utils/isLink'
 import {pick} from '../utils/object'
 import type {RouteLocationRaw, RouterLink} from 'vue-router'
+import {toPascalCase} from '../utils/stringUtils'
 
 export const useBLinkHelper = <
   T extends Record<string, unknown>,
@@ -61,34 +61,51 @@ export const useBLinkTagResolver = (
     replace: boolean
   }>
 ) => {
+  // Getting instance
   const instance = getCurrentInstance()
   const router = instance?.appContext.app.config.globalProperties.$router
   const route = instance?.appContext.app.config.globalProperties.$route
   const RouterLinkComponent = resolveDynamicComponent('RouterLink') as typeof RouterLink | string
   const useLink = typeof RouterLinkComponent === 'string' ? null : RouterLinkComponent.useLink
+
+  // Resolving props
   const resolvedProps = toRef(props)
+  const resolvedTo = toRef(() => resolvedProps.value.to || '')
+  const resolvedReplace = toRef(() => resolvedProps.value.replace)
 
-  const link = useLink?.({
-    to: toRef(() => resolvedProps.value.to || '') as Ref<string>,
-    replace: toRef(() => resolvedProps.value.replace),
-  })
-
-  const routerName = computed(() =>
-    resolvedProps.value.routerComponentName
-      .split('-')
-      .map((e) => e.charAt(0).toUpperCase() + e.slice(1))
-      .join('')
-  )
+  const routerName = computed(() => toPascalCase(resolvedProps.value.routerComponentName))
 
   const tag = computed(() => {
     const hasRouter = instance?.appContext.app.component(routerName.value) !== undefined
     if (!hasRouter || resolvedProps.value.disabled || !resolvedProps.value.to) {
       return 'a'
     }
-    return resolvedProps.value.routerComponentName
+    return routerName.value
   })
 
+  const isRouterLink = computed(() => tag.value === 'RouterLink')
+  const isNuxtLink = computed(
+    // @ts-expect-error we're doing an explicit check for Nuxt, so we can safely ignore this
+    () => isRouterLink.value && typeof instance?.appContext.app.$nuxt !== 'undefined'
+  )
+  const isNonStandardTag = computed(
+    () => tag.value !== 'a' && !isRouterLink.value && !isNuxtLink.value
+  )
+  const isOfRouterType = computed(() => isRouterLink.value || isNuxtLink.value)
+  const linkProps = computed(() => ({
+    to: resolvedTo.value,
+    replace: resolvedReplace.value,
+  }))
+
+  const _link = useLink?.({
+    to: resolvedTo,
+    replace: resolvedReplace,
+  })
+  const link = computed(() => (isOfRouterType.value ? _link : null))
+
   const computedHref = computed(() => {
+    if (link.value?.href.value) return link.value.href.value
+
     const toFallback = '#'
     if (resolvedProps.value.href) return resolvedProps.value.href
 
@@ -116,13 +133,15 @@ export const useBLinkTagResolver = (
   })
 
   return {
+    isNonStandardTag,
     tag,
-    isRouterLink: computed(() => tag.value === 'router-link'),
-    isNuxtLink: computed(() => tag.value === 'nuxt-link'),
+    isRouterLink,
+    isNuxtLink,
     computedHref,
     routerName,
     router,
     route,
     link,
+    linkProps,
   }
 }

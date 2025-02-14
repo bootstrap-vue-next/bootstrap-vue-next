@@ -1,13 +1,5 @@
 # Introduction
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
-
-[[toc]]
-
-  </Teleport>
-</ClientOnly>
-
 <div class="lead">
 
 Get started with BootstrapVueNext and Bootstrap `v5`, the world’s most popular framework for building responsive, mobile-first sites.
@@ -310,7 +302,60 @@ export default defineNuxtConfig({
 
 </HighlightCard>
 
-The practical difference between manually including an item and not is null as Nuxt should tree-shake out anything that is not used in the final build.
+This is mainly for the purpose of naming conflicts with other imports. It should not effect tree-shaking
+
+### Installation - TypeScript
+
+This package uses optional peer dependencies to generate type definitions for enhanced functionality. These dependencies are not installed by default to avoid unnecessary bloat in projects that don’t require these features. However, if you want full type support, you need to manually install the required packages.
+
+<ClientOnly>
+<BTabs v-model="codePreference">
+  <BTab title="PNPM">
+
+  <HighlightCard>
+
+```bash
+pnpm add -D @floating-ui/vue @vueuse/core vue-router
+```
+
+  </HighlightCard>
+
+  </BTab>
+  <BTab title="BUN">
+
+  <HighlightCard>
+
+```bash
+bun add -D @floating-ui/vue @vueuse/core vue-router
+```
+
+  </HighlightCard>
+
+  </BTab>
+  <BTab title="YARN">
+
+  <HighlightCard>
+
+```bash
+yarn add -D @floating-ui/vue @vueuse/core vue-router
+```
+
+  </HighlightCard>
+
+  </BTab>
+  <BTab title="NPM">
+
+  <HighlightCard>
+
+```bash
+npm i -D @floating-ui/vue @vueuse/core vue-router
+```
+
+  </HighlightCard>
+
+  </BTab>
+</BTabs>
+</ClientOnly>
 
 ### Installation - CDN
 

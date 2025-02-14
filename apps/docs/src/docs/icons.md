@@ -1,10 +1,5 @@
 # Icons
 
-<ContentsSidebar>
-
-[[toc]]
-
-</ContentsSidebar>
 <BAlert variant="danger" :model-value="true" class="my-5">
 
 The icon components from BootstrapVue are deprecated. While migrating to BootstrapVueNext the icon components will not be supported as there are better, more modern solutions to incorporating icon packages into your application. Continue reading BootstrapVueNext's suggestion on how to incorporate Bootstrap-icons into your application! This documentation only serves as a reference, BootstrapVueNext has no part in the mentioned libraries and some content may be out of date.
@@ -21,7 +16,7 @@ To set up unplugin-icons, you can read directly from their documentation [here](
 
 #### Preferred Installation
 
-The preferred installation makes use of [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components) as it follows the same principles as the [preferred installation](../getting-started/#preferred-installation) for our core package.
+The preferred installation makes use of [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components) as it follows the same principles as the [preferred installation](../docs#install) for our core package.
 
 To start, install the necessary packages:
 
@@ -238,8 +233,6 @@ import IBiActivity from '~icons/bi/activity'
 <script setup lang="ts">
 import {BCard, BCardBody, BTab, BTabs, BAlert} from 'bootstrap-vue-next'
 import {useLocalStorage} from '@vueuse/core'
-import ContentsSidebar from '../components/ContentsSidebar.vue'
-
 
 const codePreference = useLocalStorage('code-group-preference', 0)
 </script>

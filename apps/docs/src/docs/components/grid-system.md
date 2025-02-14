@@ -1,18 +1,12 @@
 # Grid System
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
-<div class="lead mb-5">
+<PageHeader>
 
 Use the powerful mobile-first flexbox grid (via the `<BContainer>`, `<BRow>` and
 `<BCol>` components) to build layouts of all shapes and sizes thanks to a twelve column system,
 five default responsive tiers, CSS Sass variables and mixins, and dozens of predefined classes.
 
-</div>
+</PageHeader>
 
 ## Overview
 

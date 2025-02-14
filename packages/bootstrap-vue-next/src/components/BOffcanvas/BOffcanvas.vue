@@ -80,7 +80,7 @@
 <script setup lang="ts">
 import {breakpointsBootstrapV5, onKeyStroke, useBreakpoints, useFocus} from '@vueuse/core'
 import {useActivatedFocusTrap} from '../../composables/useActivatedFocusTrap'
-import {computed, type EmitFn, nextTick, ref, useTemplateRef, watch} from 'vue'
+import {computed, type EmitFn, nextTick, onMounted, ref, useTemplateRef, watch} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import type {BOffcanvasProps} from '../../types/ComponentProps'
@@ -148,11 +148,6 @@ const modelValue = defineModel<Exclude<BOffcanvasProps['modelValue'], undefined>
 
 const computedId = useId(() => props.id, 'offcanvas')
 
-const breakpoints = useBreakpoints(breakpointsBootstrapV5)
-const smallerOrEqualToBreakpoint = breakpoints.smallerOrEqual(() => props.responsive ?? 'xs')
-
-const isOpenByBreakpoint = ref(props.responsive !== undefined && !smallerOrEqualToBreakpoint.value)
-
 const element = useTemplateRef<HTMLElement>('_element')
 const fallbackFocusElement = useTemplateRef<HTMLElement>('_fallbackFocusElement')
 
@@ -192,6 +187,14 @@ const {
     enterFromClass: '',
     leaveFromClass: '',
   },
+})
+
+const breakpoints = useBreakpoints(breakpointsBootstrapV5)
+const smallerOrEqualToBreakpoint = breakpoints.smallerOrEqual(() => props.responsive ?? 'xs')
+const isOpenByBreakpoint = ref(props.responsive !== undefined && !smallerOrEqualToBreakpoint.value)
+onMounted(() => {
+  if (props.responsive !== undefined)
+    emit('breakpoint', buildTriggerableEvent('breakpoint'), isOpenByBreakpoint.value)
 })
 
 useSafeScrollLock(showRef, () => props.bodyScrolling || isOpenByBreakpoint.value)
@@ -266,18 +269,20 @@ const sharedSlots = computed<BOffcanvasSlotsData>(() => ({
 watch(smallerOrEqualToBreakpoint, (newValue) => {
   if (props.responsive === undefined) return
   if (newValue === true) {
+    const opened = false
     localNoAnimation.value = true
     requestAnimationFrame(() => {
-      isOpenByBreakpoint.value = false
+      isOpenByBreakpoint.value = opened
     })
-    emit('breakpoint', buildTriggerableEvent('breakpoint'))
+    emit('breakpoint', buildTriggerableEvent('breakpoint'), opened)
     emit('hide', buildTriggerableEvent('hide'))
   } else {
+    const opened = true
     localNoAnimation.value = true
     requestAnimationFrame(() => {
-      isOpenByBreakpoint.value = true
+      isOpenByBreakpoint.value = opened
     })
-    emit('breakpoint', buildTriggerableEvent('breakpoint'))
+    emit('breakpoint', buildTriggerableEvent('breakpoint'), opened)
     emit('show', buildTriggerableEvent('show'))
   }
 })
@@ -286,6 +291,7 @@ defineExpose({
   hide,
   show,
   toggle,
+  isOpenByBreakpoint,
 })
 </script>
 

@@ -199,13 +199,11 @@ export default {
         {
           name: 'default',
           description: 'Content (form checkboxes) to place in the form checkbox group',
-          scope: [],
         },
         {
           name: 'first',
           description:
             'Slot to place for checkboxes so that they appear before checks generated from options prop',
-          scope: [],
         },
         {
           name: 'option',

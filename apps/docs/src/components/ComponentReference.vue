@@ -270,7 +270,7 @@ const sortData = computed(() =>
   })
 )
 
-type ComponentItemFree = Exclude<ComponentItem, 'sourcePath'>
+type ComponentItemFree = Exclude<ComponentItem, 'sourcePath' | 'styleSpec'>
 
 const buildCompReferenceLink = (str: string): string => `#comp-reference-${str}`.toLowerCase()
 

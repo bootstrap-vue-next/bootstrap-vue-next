@@ -1,5 +1,145 @@
 # Changelog
 
+## [0.26.26](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.25...bootstrapvuenext-v0.26.26) (2025-02-10)
+
+
+### Bug Fixes
+
+* make attributes reactive in Accordian, Tab, Dropdown*, etc. ([#2552](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2552)) ([081862d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/081862db996abbb8dbf7ba4ac2d3a824a4c03961))
+
+## [0.26.25](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.24...bootstrapvuenext-v0.26.25) (2025-02-06)
+
+
+### Bug Fixes
+
+* **BPopover:** popover breaks flex layouts ([3a243f3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3a243f3aedb98e80c3a62cf0f6082da97834065b))
+* **useModalManager:** use correct value in comparison ([a70f252](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a70f252a7b3158cce510b58ce520bcfb604bd8fa))
+
+## [0.26.24](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.23...bootstrapvuenext-v0.26.24) (2025-02-06)
+
+
+### Bug Fixes
+
+* **BLink:** Create and export Opacity and Offset types ([#2536](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2536)) ([f2af52f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f2af52fce99034c34c348ae01d3fb27c0833d071))
+
+## [0.26.23](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.22...bootstrapvuenext-v0.26.23) (2025-02-05)
+
+
+### Features
+
+* **Placement:** Export additional placement types ([#2532](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2532)) ([220b7e4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/220b7e4feb2e23ffedec4cd75d54e46e0111489c))
+
+## [0.26.22](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.21...bootstrapvuenext-v0.26.22) (2025-01-27)
+
+
+### Bug Fixes
+
+* **BTable:** Fix typescript errors ([#2527](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2527)) ([ef28ba4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ef28ba48a4cad8c00f9a7e68fa763a2a269cd852))
+
+## [0.26.21](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.20...bootstrapvuenext-v0.26.21) (2025-01-22)
+
+
+### Features
+
+* **BFormTags:** add inputValue to exposed fixes [#2503](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2503) ([9c5129b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9c5129bd49d596efe3e74772e355a67dc8c22356))
+
+
+### Bug Fixes
+
+* **BTable:** Export additional types ([#2519](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2519)) ([9b25255](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9b252551cff82c0ff1be4ba53b3c18d405962b86))
+
+## [0.26.20](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.19...bootstrapvuenext-v0.26.20) (2025-01-15)
+
+
+### Features
+
+* **BTable:** generate ids for tr elements when primary-key exists fixes [#2509](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2509) ([11cd367](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/11cd3672e3b50b2f8f70ba0583bd3e6dfd952b09))
+* **BTable:** implement outlined prop fixes [#2507](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2507)  ([#2511](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2511)) ([11cd367](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/11cd3672e3b50b2f8f70ba0583bd3e6dfd952b09))
+
+
+### Bug Fixes
+
+* **BTable:** use a computed id when no id prop is provided ([11cd367](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/11cd3672e3b50b2f8f70ba0583bd3e6dfd952b09))
+
+## [0.26.19](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.18...bootstrapvuenext-v0.26.19) (2025-01-06)
+
+
+### Features
+
+* export validatestate type ([#2493](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2493)) ([43f2f5a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/43f2f5ac8341141f5100a190e81d0a76fe6bba04))
+
+## [0.26.18](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.17...bootstrapvuenext-v0.26.18) (2024-12-24)
+
+
+### Features
+
+* **BFormGroup:** automatically add state to child element fixes [#2476](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2476) ([#2478](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2478)) ([25a77ee](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/25a77eefcb24a002626dbf7422666d36cde6f155))
+* **BTable:** add custom filter functions ([9ec1e04](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9ec1e04e38894e6f8fa73d7cfc83cd5bd28a2244))
+
+## [0.26.17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.16...bootstrapvuenext-v0.26.17) (2024-12-19)
+
+
+### Features
+
+* use vueuse 12 fixes [#2469](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2469) ([#2471](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2471)) ([bf50c30](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bf50c304b1612411311f035e9b1ca3af701fdd19))
+
+## [0.26.16](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.15...bootstrapvuenext-v0.26.16) (2024-12-18)
+
+
+### Features
+
+* **BTable:** expose table items ([#2463](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2463)) ([40be163](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/40be16314ef901d3819647ec76445290a38cae26))
+
+## [0.26.15](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.14...bootstrapvuenext-v0.26.15) (2024-12-13)
+
+
+### Bug Fixes
+
+* **BFormGroup:** floating labels not working fixes [#2452](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2452) ([#2455](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2455)) ([aa4b1c6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/aa4b1c6e1be3a75a7ed459f54c89068f2a677ade))
+* last commit label issue ([#2457](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2457)) ([703eca3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/703eca32c66ffa1ccf2135e0217832ac4d00c1e4))
+
+## [0.26.14](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.13...bootstrapvuenext-v0.26.14) (2024-12-11)
+
+
+### Bug Fixes
+
+* **BLink:** nuxt should do full page reloads on to prop fixes [#2445](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2445) ([#2449](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2449)) ([cce9833](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cce9833ebd91bcfe1037ffb6422edfdc03389198))
+* **BTable:** reflect single select mode on programmatic selection ([#2440](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2440)) ([1ea89dc](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1ea89dca23a80bbc5cc58ea479669663a4da0592))
+
+## [0.26.13](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.12...bootstrapvuenext-v0.26.13) (2024-12-11)
+
+
+### Features
+
+* **BOffcanvas:** fire breakpoint on mounted & add ref into defineExpose as isOpenByBreakpoint ([083805b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/083805b6b533639b1209b9a312aa541528e74987))
+
+## [0.26.12](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.11...bootstrapvuenext-v0.26.12) (2024-12-11)
+
+
+### Features
+
+* **BOffcanvas:** add opened to breakpoint event ([#2443](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2443)) ([e82be33](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e82be33486a71d0e7412fb20c70e176be4db0d4c))
+
+## [0.26.11](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.10...bootstrapvuenext-v0.26.11) (2024-12-10)
+
+
+### Bug Fixes
+
+* **BLink:** Link receiving / href when trying to use href prop fixes [#2434](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2434) ([#2438](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2438)) ([aea1798](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/aea179881c27e429b1588a62844fd230ec36df0d))
+* **RadiusElement:** Add 'md' value ([#2436](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2436)) ([473bc07](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/473bc07a06e2fd6eff9d84bad50be8c393cc7ba5))
+
+## [0.26.10](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.9...bootstrapvuenext-v0.26.10) (2024-12-08)
+
+
+### Bug Fixes
+
+* **BLink:** add computed to attribute (to || '') to routerLink fixes [#2429](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2429) ([ae01574](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ae0157491e9126da382272c381e0c402d066c408))
+
+
+### Performance Improvements
+
+* when dynamic spread, use ...undefined rather than ...{} for slightly less memory consumption ([#2430](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2430)) ([ae01574](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ae0157491e9126da382272c381e0c402d066c408))
+
 ## [0.26.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.8...bootstrapvuenext-v0.26.9) (2024-12-06)
 
 

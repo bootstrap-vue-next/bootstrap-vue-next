@@ -4,6 +4,7 @@ import {useAriaInvalid} from './useAriaInvalid'
 import {useStateClass} from './useStateClass'
 import type {Size} from '../types/Size'
 import type {ButtonVariant} from '../types/ColorTypes'
+import type {ValidationState} from '../types/CommonTypes'
 
 interface ClassesItemsInput {
   plain?: boolean
@@ -36,7 +37,7 @@ const getClasses = (items: MaybeRefOrGetter<ClassesItemsInput>) =>
 interface InputClassesItemsInput {
   plain?: boolean
   button?: boolean
-  state?: boolean | null
+  state?: ValidationState
 }
 
 const getInputClasses = (items: MaybeRefOrGetter<InputClassesItemsInput>) => {
@@ -79,7 +80,7 @@ const getLabelClasses = (items: MaybeRefOrGetter<LabelClasesItemsInput>) =>
 interface GroupAttrItemsInput {
   required?: boolean
   ariaInvalid?: AriaInvalid
-  state?: boolean | null
+  state?: ValidationState
 }
 
 const getGroupAttr = (items: MaybeRefOrGetter<GroupAttrItemsInput>) => {

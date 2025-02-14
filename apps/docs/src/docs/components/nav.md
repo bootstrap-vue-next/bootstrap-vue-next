@@ -1,17 +1,11 @@
 # Nav
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
-<div class="lead mb-5">
+<PageHeader>
 
 Navigation available in Bootstrap share general markup and styles, from the base `<BNav>` class
 to the `active` and `disabled` states. Swap modifier props to switch between each style.
 
-</div>
+</PageHeader>
 
 <<< DEMO ./demo/NavOverview.vue#template{vue-html}
 

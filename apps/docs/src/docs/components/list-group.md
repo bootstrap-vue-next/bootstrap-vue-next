@@ -1,16 +1,10 @@
 # List Group
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
-<div class="lead mb-5">
+<PageHeader>
 
 List Groups are a flexible and powerful component for displaying a series of content. List Group items can be modified to support just about any content within. They can also be used as navigation via various props.
 
-</div>
+</PageHeader>
 
 <<< DEMO ./demo/ListGroupOverview.vue#template{vue-html}
 

@@ -1,5 +1,277 @@
 # Changelog
 
+## [0.26.26](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.25...nuxt-v0.26.26) (2025-02-10)
+
+
+### Miscellaneous Chores
+
+* **nuxt:** Synchronize main group versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.26.26
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.26.26
+
+## [0.26.25](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.24...nuxt-v0.26.25) (2025-02-06)
+
+
+### Miscellaneous Chores
+
+* **nuxt:** Synchronize main group versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.26.25
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.26.25
+
+## [0.26.24](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.23...nuxt-v0.26.24) (2025-02-06)
+
+
+### Miscellaneous Chores
+
+* **nuxt:** Synchronize main group versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.26.24
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.26.24
+
+## [0.26.23](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.22...nuxt-v0.26.23) (2025-02-05)
+
+
+### Miscellaneous Chores
+
+* **nuxt:** Synchronize main group versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.26.23
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.26.23
+
+## [0.26.22](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.21...nuxt-v0.26.22) (2025-01-27)
+
+
+### Miscellaneous Chores
+
+* **nuxt:** Synchronize main group versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.26.22
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.26.22
+
+## [0.26.21](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.20...nuxt-v0.26.21) (2025-01-22)
+
+
+### Miscellaneous Chores
+
+* **nuxt:** Synchronize main group versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.26.21
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.26.21
+
+## [0.26.20](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.19...nuxt-v0.26.20) (2025-01-15)
+
+
+### Miscellaneous Chores
+
+* **nuxt:** Synchronize main group versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.26.20
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.26.20
+
+## [0.26.19](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.18...nuxt-v0.26.19) (2025-01-06)
+
+
+### Miscellaneous Chores
+
+* **nuxt:** Synchronize main group versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.26.19
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.26.19
+
+## [0.26.18](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.17...nuxt-v0.26.18) (2024-12-24)
+
+
+### Miscellaneous Chores
+
+* **nuxt:** Synchronize main group versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.26.18
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.26.18
+
+## [0.26.17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.16...nuxt-v0.26.17) (2024-12-19)
+
+
+### Miscellaneous Chores
+
+* **nuxt:** Synchronize main group versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.26.17
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.26.17
+
+## [0.26.16](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.15...nuxt-v0.26.16) (2024-12-18)
+
+
+### Bug Fixes
+
+* **nuxt:** module using wrong routerComponentName causing default a tag to do full page reloads ([#2465](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2465)) ([c737ec2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c737ec255b8eb848a6711eea5383cbf20b002556))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.26.16
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.26.16
+
+## [0.26.15](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.14...nuxt-v0.26.15) (2024-12-13)
+
+
+### Miscellaneous Chores
+
+* **nuxt:** Synchronize main group versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.26.15
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.26.15
+
+## [0.26.14](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.13...nuxt-v0.26.14) (2024-12-11)
+
+
+### Bug Fixes
+
+* **BLink:** nuxt should do full page reloads on to prop fixes [#2445](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2445) ([#2449](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2449)) ([cce9833](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cce9833ebd91bcfe1037ffb6422edfdc03389198))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.26.14
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.26.14
+
+## [0.26.13](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.12...nuxt-v0.26.13) (2024-12-11)
+
+
+### Miscellaneous Chores
+
+* **nuxt:** Synchronize main group versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.26.13
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.26.13
+
+## [0.26.12](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.11...nuxt-v0.26.12) (2024-12-11)
+
+
+### Miscellaneous Chores
+
+* **nuxt:** Synchronize main group versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.26.12
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.26.12
+
+## [0.26.11](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.10...nuxt-v0.26.11) (2024-12-10)
+
+
+### Bug Fixes
+
+* **BLink:** Link receiving / href when trying to use href prop fixes [#2434](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2434) ([#2438](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2438)) ([aea1798](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/aea179881c27e429b1588a62844fd230ec36df0d))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.26.11
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.26.11
+
+## [0.26.10](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.9...nuxt-v0.26.10) (2024-12-08)
+
+
+### Miscellaneous Chores
+
+* **nuxt:** Synchronize main group versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.26.10
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.26.10
+
 ## [0.26.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.8...nuxt-v0.26.9) (2024-12-06)
 
 

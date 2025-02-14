@@ -1,16 +1,10 @@
 # Form Spinbutton
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
-<div class="lead mb-5">
+<PageHeader>
 
 The Form SpinButton allows the user to adjusting a numeric range with finite control
 
-</div>
+</PageHeader>
 
 ## Overview
 
@@ -19,26 +13,7 @@ The component `BFormSpinbutton` is
 
 Similar to range type inputs, BootstrapVue's `BFormSpinbutton` does not allow the user to type in a value
 
-<HighlightCard>
-  <label for="demo-sb">Spin Button</label>
-  <BFormSpinbutton id="demo-sb" v-model="ex1Value" min="1" max="100" />
-  <p>Value: {{ ex1Value }}</p>
-  <template #html>
-
-```vue
-<template>
-  <label for="demo-sb">Spin Button</label>
-  <BFormSpinbutton id="demo-sb" v-model="value" min="1" max="100" />
-  <p>Value: {{ value }}</p>
-</template>
-
-<script setup lang="ts">
-const value = ref(50)
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormSpinbuttonOverview.vue
 
 The <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd> keys can be used to increment or decrement the value
 
@@ -54,30 +29,7 @@ If the initial value is `null` no value will be displayed in the spinbutton. Use
 
 Spinbuttons have a default range from `1` to `100`, which can be changed by setting the `min` and `max` props. The default step increment is `1`, and can be changed via the `step` prop (decimal values allowed)
 
-<HighlightCard>
-  <label for="sb-step">Spin button with step of 0.25</label>
-  <BFormSpinbutton
-    id="sb-step"
-    min="0"
-    max="10"
-    step="0.25"
-    placeholder="--"
-  />
-  <template #html>
-
-```vue-html
-<label for="sb-step">Spin button with step of 0.25</label>
-<BFormSpinbutton
-  id="sb-step"
-  min="0"
-  max="10"
-  step="0.25"
-  placeholder="--"
-/>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormSpinbuttonStep.vue#template{vue-html}
 
 ## Number wrapping
 
@@ -85,18 +37,7 @@ By default, when the value is increased to the `max` value, it pressing the incr
 
 To allow the spin button to wrap from max to min when incrementing (or min to max when decrementing), set the `wrap` prop to true
 
-<HighlightCard>
-  <label for="sb-wrap">Wrapping value spin button</label>
-  <BFormSpinbutton id="sb-wrap" wrap min="1" max="25" placeholder="--" />
-  <template #html>
-
-```vue-html
-<label for="sb-wrap">Wrapping value spin button</label>
-<BFormSpinbutton id="sb-wrap" wrap min="1" max="25" placeholder="--" />
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormSpinbuttonWrapping.vue#template{vue-html}
 
 ## Styling
 
@@ -104,41 +45,11 @@ To allow the spin button to wrap from max to min when incrementing (or min to ma
 
 As with other form controls, `BFormSpinbutton` supports small and large sizing via setting the size prop to either 'sm' or 'lg', respectively
 
-<HighlightCard>
-  <label for="sb-small">Spin button - Small size</label>
-  <BFormSpinbutton id="sb-small" size="sm" placeholder="--" class="mb-2" />
-  <label for="sb-default">Spin button - Default size</label>
-  <BFormSpinbutton id="sb-default" placeholder="--" class="mb-2" />
-  <label for="sb-large">Spin button - Large size</label>
-  <BFormSpinbutton id="sb-large" size="lg" placeholder="--" class="mb-2" />
-  <template #html>
-
-```vue-html
-<label for="sb-small">Spin button - Small size</label>
-<BFormSpinbutton id="sb-small" size="sm" placeholder="--" class="mb-2" />
-<label for="sb-default">Spin button - Default size</label>
-<BFormSpinbutton id="sb-default" placeholder="--" class="mb-2" />
-<label for="sb-large">Spin button - Large size</label>
-<BFormSpinbutton id="sb-large" size="lg" placeholder="--" class="mb-2" />
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormSpinbuttonSizing.vue#template{vue-html}
 
 ### Inline
 
-<HighlightCard>
-  <label for="sb-inline">Inline spin button</label>
-  <BFormSpinbutton id="sb-inline" inline placeholder="--" />
-  <template #html>
-
-```vue-html
-<label for="sb-inline">Inline spin button</label>
-<BFormSpinbutton id="sb-inline" inline placeholder="--" />
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormSpinbuttonInline.vue#template{vue-html}
 
 The `Spinbutton` will automatically adjust it's width to fit the displayed value. See the [Width](#width) section below for details on controlling or setting the width
 
@@ -146,18 +57,7 @@ The `Spinbutton` will automatically adjust it's width to fit the displayed value
 
 `Spinbuttons` can be oriented in vertical mode:
 
-<HighlightCard>
-  <label for="sb-vertical">Vertical spin button</label>
-  <BFormSpinbutton id="sb-vertical" vertical placeholder="--" />
-  <template #html>
-
-```vue-html
-<label for="sb-vertical">Vertical spin button</label>
-<BFormSpinbutton id="sb-vertical" vertical placeholder="--" />
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormSpinbuttonVertical.vue#template{vue-html}
 
 Vertical spin buttons can also be sized using the `size` prop. When in vertical mode, the spin button is rendered as an inline element
 
@@ -173,46 +73,7 @@ When either `vertical` or `inline` is set, the control will adjust its width bas
 
 By default `BFormSpinbutton` will format the displayed number in the users browser default locale. You can change the localized formatting by specifying a locale (or array of locales) via the `locale` prop. Number format localization is performed via Intl.NumberFormat. The locales available will be dependent on the browser implementation. Localization only controls the presentation of the value to the user, and does not affect the `v-model`
 
-<HighlightCard>
-  <label for="sb-locales">Locale</label>
-  <BFormSelect id="sb-locales" v-model="locale" :options="locales" />
-  <label for="sb-local" class="mt-2">Spin button with locale</label>
-  <BFormSpinbutton
-    id="sb-locale"
-    v-model="ex2Value"
-    :locale="locale"
-    min="0"
-    max="10"
-    step="0.125"
-  />
-  <p>Value: {{ ex2Value }}</p>
-  <template #html>
-
-```vue
-<template>
-  <label for="sb-locales">Locale</label>
-  <BFormSelect id="sb-locales" v-model="locale" :options="locales" />
-  <label for="sb-local" class="mt-2">Spin button with locale</label>
-  <BFormSpinbutton id="sb-locale" v-model="value" :locale="locale" min="0" max="10" step="0.125" />
-  <p>Value: {{ value }}</p>
-</template>
-
-<script setup lang="ts">
-const value = ref(0)
-
-const locale = ref('fr-CA')
-const locales = [
-  {value: 'en', text: 'English'},
-  {value: 'de', text: 'German'},
-  {value: 'fr-CA', text: 'French (Canadian)'},
-  {value: 'fa', text: 'Persian'},
-  {value: 'ar-EG', text: 'Arabic (Egyptian)'},
-] as const
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormSpinbuttonFormatting.vue
 
 Alternatively, you can provide your own number formatter function to format the value displayed. This is useful for displaying text instead of a number, or if you want to implement different features of `Intl.NumberFormat`
 
@@ -220,63 +81,11 @@ To provide a formatter function, set the prop `formatter-fn` to a method referen
 
 ### Custom Formatter
 
-<HighlightCard>
-  <BFormSpinbutton
-    v-model="exDaysValue"
-    :formatter-fn="dayFormatter"
-    min="0"
-    max="6"
-    wrap
-  />
-  <p>Value: {{ exDaysValue }}</p>
-  <template #html>
-
-```vue
-<template>
-  <BFormSpinbutton v-model="value" :formatter-fn="dayFormatter" min="0" max="6" wrap />
-  <p>Value: {{ value }}</p>
-</template>
-
-<script setup lang="ts">
-const value = ref(0)
-
-const dayFormatter = (value) => days[value]
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormSpinbuttonCustomFormatting.vue
 
 ## Disabled and readonly states
 
-<HighlightCard>
-  <BRow>
-    <BCol md="6" class="mb-2">
-      <label for="sb-disabled">Disabled spin button</label>
-      <BFormSpinbutton id="sb-disabled" disabled placeholder="--" />
-    </BCol>
-    <BCol md="6" class="mb-2">
-      <label for="sb-readonly" class="">Readonly spin button</label>
-      <BFormSpinbutton id="sb-readonly" readonly placeholder="--" />
-    </BCol>
-  </BRow>
-  <template #html>
-
-```vue-html
-<BRow>
-  <BCol md="6" class="mb-2">
-    <label for="sb-disabled">Disabled spin button</label>
-    <BFormSpinbutton id="sb-disabled" disabled placeholder="--" />
-  </BCol>
-  <BCol md="6" class="mb-2">
-    <label for="sb-readonly" class="">Readonly spin button</label>
-    <BFormSpinbutton id="sb-readonly" readonly placeholder="--" />
-  </BCol>
-</BRow>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormSpinbuttonReadonly.vue
 
 ## Validation states
 
@@ -300,34 +109,7 @@ The `change` event is emitted once the user releases the mouse button (when pres
 
 The following example illustrates the difference between the `update:model-value` and `change` events. Click and hold the increment or decrement button (or use the up/down arrow keys)
 
-<HighlightCard>
-  <label for="sb-input">Spin button - input and change events</label>
-  <BFormSpinbutton
-    id="sb-input"
-    v-model="ex3Value"
-    @change="ex4Value = $event"
-    wrap
-  />
-  <p>Input event: {{ ex3Value }}</p>
-  <p>Change event: {{ ex4Value }}</p>
-  <template #html>
-
-```vue
-<template>
-  <label for="sb-input">Spin button - input and change events</label>
-  <BFormSpinbutton id="sb-input" v-model="value1" @change="value2 = $event" wrap />
-  <p>Input event: {{ value1 }}</p>
-  <p>Change event: {{ value2 }}</p>
-</template>
-
-<script setup lang="ts">
-const value1 = ref(0)
-const value2 = ref(null)
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormSpinbuttonEvents.vue
 
 ## Accessibility
 
@@ -344,32 +126,12 @@ Note the the `repeat-delay`, `repeat-threshold` and `repeat-interval` only appli
 
 <ComponentReference :data="data" />
 
-<script setup lang="ts">
+<script lang="ts">
 import {data} from '../../data/components/formSpinbutton.data'
-import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
-import HighlightCard from '../../components/HighlightCard.vue'
-import {BButton, BProgressBar, BCard, BCardBody, BProgress, BFormSpinbutton, BFormSelect, BRow, BCol} from 'bootstrap-vue-next'
-import {ref} from 'vue'
 
-const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-
-const ex1Value = ref(50)
-const ex2Value = ref(0)
-const exDaysValue = ref(0)
-
-const ex3Value = ref(0)
-const ex4Value = ref(null)
-
-const locale = ref('fr-CA')
-const locales = [
-  { value: 'en', text: 'English' },
-  { value: 'de', text: 'German' },
-  { value: 'fr-CA', text: 'French (Canadian)' },
-  { value: 'fa', text: 'Persian' },
-  { value: 'ar-EG', text: 'Arabic (Egyptian)' }
-] as const
-
-const dayFormatter = (value) => days[value]
-
+export default {
+  setup() {
+    return {data}
+  }
+}
 </script>

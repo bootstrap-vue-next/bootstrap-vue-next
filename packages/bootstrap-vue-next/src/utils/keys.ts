@@ -1,7 +1,7 @@
 import type {ComponentInternalInstance, ComputedRef, InjectionKey, Ref} from 'vue'
 import type {TabType} from '../types/Tab'
 import type {ClassValue} from '../types/AnyValuedAttributes'
-import type {Numberish} from '../types/CommonTypes'
+import type {Numberish, ValidationState} from '../types/CommonTypes'
 import type {LiteralUnion} from '../types/LiteralUnion'
 import type {Size} from '../types/Size'
 import type {RadiusElement} from '../types/RadiusElement'
@@ -103,7 +103,7 @@ export const checkboxGroupKey: InjectionKey<{
   buttonVariant: Readonly<Ref<ButtonVariant | null>>
   form: Readonly<Ref<string | undefined>>
   name: Readonly<Ref<string>>
-  state: Readonly<Ref<boolean | undefined | null>>
+  state: Readonly<Ref<ValidationState | undefined>>
   plain: Readonly<Ref<boolean>>
   size: Readonly<Ref<Size>>
   inline: Readonly<Ref<boolean>>
@@ -119,7 +119,7 @@ export const radioGroupKey: InjectionKey<{
   form: Readonly<Ref<string | undefined>>
   name: Readonly<Ref<string>>
   buttons: Readonly<Ref<boolean>>
-  state: Readonly<Ref<boolean | undefined | null>>
+  state: Readonly<Ref<ValidationState | undefined>>
   plain: Readonly<Ref<boolean>>
   size: Readonly<Ref<Size>>
   inline: Readonly<Ref<boolean>>
@@ -242,9 +242,8 @@ export const popoverPluginKey: InjectionKey<{
   _isOrchestratorInstalled: Ref<boolean>
 }> = createBvnPluginInjectionKey('popover')
 
-/**
- * Automatically use a "for" attribute on label elements for its associated input
- * Works on BFormInput & Textarea
- */
-export const formGroupPluginKey: InjectionKey<(id: Ref<string>) => void> =
-  createBvnInjectionKey('formGroupPlugin')
+export const formGroupPluginKey: InjectionKey<
+  (id: Ref<string>) => {
+    state: Readonly<Ref<ValidationState | undefined>>
+  }
+> = createBvnInjectionKey('formGroupPlugin')

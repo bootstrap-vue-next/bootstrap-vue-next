@@ -1,7 +1,7 @@
 <template>
   <li :class="liClasses" v-bind="wrapperAttrs">
     <BForm
-      v-bind="attrs"
+      v-bind="processedAttrs.formAttrs"
       :id="props.id"
       :floating="props.floating"
       :role="props.role"
@@ -43,7 +43,11 @@ const emit = defineEmits<{
   submit: [value: Event]
 }>()
 
-const {class: wrapperClass, ...attrs} = useAttrs()
+const attrs = useAttrs()
+const processedAttrs = computed(() => {
+  const {class: wrapperClass, ...formAttrs} = attrs
+  return {wrapperClass, formAttrs}
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -59,6 +63,6 @@ const liClasses = computed(() => [
   'flex-row',
   'align-items-center',
   'flex-wrap',
-  wrapperClass,
+  processedAttrs.value.wrapperClass,
 ])
 </script>

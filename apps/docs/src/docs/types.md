@@ -1,10 +1,5 @@
 # Types
 
-<ContentsSidebar>
-
-[[toc]]
-
-</ContentsSidebar>
 <div class="lead mb-5">
 
 `BootstrapVueNext` is a complete rewrite that strives for full TypeScript compatibility. This is a list of types we use in this library and that you can use too.
@@ -279,6 +274,18 @@ type InputType =
 
 </BCard>
 
+## LinkDecorators
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type LinkOpacity = 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
+type UnderlineOpacity = 0 | LinkOpacity
+type UnderlineOffset = 1 | 2 | 3 | '1' | '2' | '3'
+```
+
+</BCard>
+
 ## LinkTarget
 
 <BCard class="bg-body-tertiary">
@@ -364,6 +371,7 @@ type RadiusElement =
   | 'pill'
   | 'none'
   | 'sm'
+  | 'md'
   | 'lg'
   | '0'
   | '1'
@@ -446,6 +454,9 @@ type TableFieldAttribute<T = any> =
   | Record<string, unknown>
   | ((value: unknown, key?: LiteralUnion<keyof T>, item?: T) => Record<string, unknown>)
 
+type TableRowType = 'row' | 'row-details' | 'row-top' | 'row-bottom' | 'table-busy'
+type TableRowThead = 'top' | 'bottom'
+
 interface TableField<T = Record<string, unknown>> {
   key: LiteralUnion<keyof T>
   label?: string
@@ -454,8 +465,6 @@ interface TableField<T = Record<string, unknown>> {
   class?: ClassValue
   formatter?: TableFieldFormatter<T>
   sortable?: boolean
-  sortKey?: string
-  sortDirection?: string
   sortByFormatted?: boolean | TableFieldFormatter<T>
   filterByFormatted?: boolean | TableFieldFormatter<T>
   tdClass?: ClassValue
@@ -581,5 +590,4 @@ New values can be used now and the type check will be successful:
 
 <script setup lang="ts">
 import {BCard, BCardBody} from 'bootstrap-vue-next'
-import ContentsSidebar from '../components/ContentsSidebar.vue'
 </script>

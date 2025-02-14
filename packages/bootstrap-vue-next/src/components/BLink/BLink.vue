@@ -1,13 +1,13 @@
 <template>
   <component
     :is="tag"
-    v-bind="isNuxtLink ? nuxtSpecificProps : {}"
     :class="computedClasses"
     :target="props.target"
-    :href="link?.href.value || computedHref"
+    :href="computedHref"
     :rel="computedRel"
     :tabindex="computedTabIndex"
     :aria-disabled="props.disabled ? true : null"
+    v-bind="computedSpecificProps"
     @click="
       (e: MouseEvent) => {
         clicked(e)
@@ -69,15 +69,16 @@ const emit = defineEmits<{
 }>()
 
 const attrs = useAttrs()
-const {computedHref, tag, link, isNuxtLink} = useBLinkTagResolver(
-  computed(() => ({
-    routerComponentName: props.routerComponentName,
-    disabled: props.disabled,
-    to: props.to,
-    replace: props.replace,
-    href: props.href,
-  }))
-)
+const {computedHref, tag, link, isNuxtLink, isRouterLink, linkProps, isNonStandardTag} =
+  useBLinkTagResolver(
+    computed(() => ({
+      routerComponentName: props.routerComponentName,
+      disabled: props.disabled,
+      to: props.to,
+      replace: props.replace,
+      href: props.href,
+    }))
+  )
 
 const collapseData = inject(collapseInjectionKey, null)
 const navbarData = inject(navbarInjectionKey, null)
@@ -92,8 +93,8 @@ const computedClasses = computed(() => [
   computedLinkClasses.value,
   {
     [defaultActiveClass]: props.active,
-    [props.activeClass]: link?.isActive.value || false,
-    [props.exactActiveClass]: link?.isExactActive.value || false,
+    [props.activeClass]: link.value?.isActive.value || false,
+    [props.exactActiveClass]: link.value?.isExactActive.value || false,
     'stretched-link': props.stretched === true,
   },
 ])
@@ -131,5 +132,12 @@ const nuxtSpecificProps = computed(() => ({
   noPrefetch: props.noPrefetch,
   prefetchOn: props.prefetchOn,
   prefetchedClass: props.prefetchedClass,
+  ...linkProps.value,
+}))
+const computedSpecificProps = computed(() => ({
+  ...(isRouterLink.value ? linkProps.value : undefined),
+  // In addition to being Nuxt specific, we add these values if it's some non-standard tag. We don't know what it is,
+  // So we just add it anyways. It will be made as an attr if it's unused so it's fine
+  ...(isNuxtLink.value || isNonStandardTag.value ? nuxtSpecificProps.value : undefined),
 }))
 </script>

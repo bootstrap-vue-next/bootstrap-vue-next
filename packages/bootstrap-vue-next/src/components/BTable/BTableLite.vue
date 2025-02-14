@@ -63,9 +63,18 @@
 
         <template
           v-for="(item, itemIndex) in props.items"
-          :key="props.primaryKey ? get(item, props.primaryKey) : itemIndex"
+          :key="
+            props.primaryKey && get(item, props.primaryKey)
+              ? get(item, props.primaryKey)
+              : itemIndex
+          "
         >
           <BTr
+            :id="
+              props.primaryKey && get(item, props.primaryKey)
+                ? generateTableRowId(get(item, props.primaryKey))
+                : undefined
+            "
             :class="getRowClasses(item, 'row')"
             :variant="isTableItem(item) ? item._rowVariant : undefined"
             v-bind="callTbodyTrAttrs(item, 'row')"
@@ -222,6 +231,7 @@ import {formatItem} from '../../utils/formatItem'
 import {filterEvent} from '../../utils/filterEvent'
 import {startCase} from '../../utils/stringUtils'
 import type {LiteralUnion} from '../../types/LiteralUnion'
+import {useId} from '../../composables/useId'
 
 const _props = withDefaults(defineProps<BTableLiteProps<Items>>(), {
   caption: undefined,
@@ -345,6 +355,8 @@ const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'table-caption'?: (props: Record<string, never>) => any
 }>()
+
+const computedId = useId(() => props.id)
 
 const generateDetailsItem = (item: TableItem): [object, boolean | undefined] => [
   item,
@@ -491,8 +503,12 @@ const getRowClasses = (item: Items | null, type: TableRowType) =>
       : props.tbodyTrClass
     : null
 
+const generateTableRowId = (primaryKeyValue: string) =>
+  `${computedId.value}__row_${primaryKeyValue}`
+
 const computedSimpleProps = computed(() => ({
   ...pick(props, btableSimpleProps),
   tableClass: computedTableClasses.value,
+  id: computedId.value,
 }))
 </script>

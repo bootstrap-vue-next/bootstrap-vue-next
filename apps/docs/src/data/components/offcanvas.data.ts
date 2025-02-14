@@ -123,6 +123,22 @@ export default {
           ],
         },
         {
+          event: 'breakpoint',
+          args: [
+            {
+              arg: 'value',
+              type: 'BvTriggerableEvent',
+              description: 'The event',
+            },
+            {
+              arg: 'opened',
+              type: 'boolean',
+              description: 'Whether or not the offcanvas is above the breakpoint and is open by it',
+            },
+          ],
+          description: "Emitted when the offcanvas' breakpoint state changes",
+        },
+        {
           args: [
             {
               arg: 'value',

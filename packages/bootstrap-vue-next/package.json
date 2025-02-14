@@ -2,7 +2,7 @@
   "name": "bootstrap-vue-next",
   "displayName": "BootstrapVueNext",
   "description": "BootstrapVueNext is an early and lovely component library for Vue 3 & Nuxt 3 based on Bootstrap 5 and Typescript.",
-  "version": "0.26.9",
+  "version": "0.26.26",
   "license": "MIT",
   "main": "./dist/bootstrap-vue-next.umd.js",
   "module": "./dist/bootstrap-vue-next.mjs",
@@ -143,7 +143,21 @@
     "test:ci": "pnpm run test:lint:ci && pnpm run test:unit:ci"
   },
   "peerDependencies": {
-    "vue": "^3.5.13"
+    "@floating-ui/vue": "*",
+    "@vueuse/core": "*",
+    "vue": "^3.5.13",
+    "vue-router": "*"
+  },
+  "peerDependenciesMeta": {
+    "@floating-ui/vue": {
+      "optional": true
+    },
+    "@vueuse/core": {
+      "optional": true
+    },
+    "vue-router": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@floating-ui/core": "^1.6.8",
@@ -159,7 +173,7 @@
     "@vue/runtime-core": "^3.5.13",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.6.0",
-    "@vueuse/core": "^11.2.0",
+    "@vueuse/core": "^12.0.0",
     "@vueuse/integrations": "^11.2.0",
     "@vueuse/shared": "^11.2.0",
     "bootstrap": "^5.3.3",

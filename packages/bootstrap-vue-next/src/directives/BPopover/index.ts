@@ -21,7 +21,7 @@ export const vBPopover: Directive<ElementWithPopper> = {
     if (!text.body && !text.title) return
     el.$__binding = JSON.stringify([binding.modifiers, binding.value])
     bind(el, binding, {
-      ...(defaults['BPopover'] || {}),
+      ...(defaults['BPopover'] || undefined),
       ...resolveDirectiveProps(binding, el),
       ...text,
     })
@@ -39,7 +39,7 @@ export const vBPopover: Directive<ElementWithPopper> = {
     if (el.$__binding === JSON.stringify([binding.modifiers, binding.value])) return
     unbind(el)
     bind(el, binding, {
-      ...(defaults['BPopover'] || {}),
+      ...(defaults['BPopover'] || undefined),
       ...resolveDirectiveProps(binding, el),
       ...text,
     })

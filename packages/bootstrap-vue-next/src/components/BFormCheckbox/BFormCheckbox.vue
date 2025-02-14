@@ -21,7 +21,7 @@
       :true-value="props.value"
       :false-value="props.uncheckedValue"
       :indeterminate="indeterminate || undefined"
-      v-bind="inputAttrs"
+      v-bind="processedAttrs.inputAttrs"
     />
     <label v-if="hasDefaultSlot || props.plain === false" :for="computedId" :class="labelClasses">
       <slot />
@@ -45,7 +45,11 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const {class: wrapperClass, ...inputAttrs} = useAttrs()
+const attrs = useAttrs()
+const processedAttrs = computed(() => {
+  const {class: wrapperClass, ...inputAttrs} = attrs
+  return {wrapperClass, inputAttrs}
+})
 
 const _props = withDefaults(
   defineProps<Omit<BFormCheckboxProps, 'modelValue' | 'indeterminate'>>(),
@@ -140,7 +144,10 @@ const classesObject = computed(() => ({
   hasDefaultSlot: hasDefaultSlot.value,
 }))
 const wrapperClasses = getClasses(classesObject)
-const computedWrapperClasses = computed(() => [wrapperClasses.value, wrapperClass])
+const computedWrapperClasses = computed(() => [
+  wrapperClasses.value,
+  processedAttrs.value.wrapperClass,
+])
 const inputClasses = getInputClasses(classesObject)
 const computedInputClasses = computed(() => [inputClasses.value, props.inputClass])
 const labelClasses = getLabelClasses(classesObject)

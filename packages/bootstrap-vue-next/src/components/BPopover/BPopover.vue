@@ -1,5 +1,5 @@
 <template>
-  <span :id="computedId + '_placeholder'" ref="_placeholder" />
+  <span :id="computedId + '_placeholder'" ref="_placeholder" style="display: none" />
   <slot name="target" v-bind="sharedSlots" />
   <ConditionalTeleport
     :to="props.teleportTo"

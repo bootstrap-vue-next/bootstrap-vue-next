@@ -56,5 +56,6 @@ export default defineConfig({
       md.use(markdownItClass, {table: ['table', 'table-striped']})
       md.use(demoContainer, 'src')
     },
+    headers: true,
   },
 })

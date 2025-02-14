@@ -5,27 +5,27 @@
     @head-clicked="onFieldHeadClick"
     @row-clicked="onRowClick"
     @row-dblclicked="
-      (row, index, e) => {
+      (row: Items, index: number, e: MouseEvent) => {
         emit('row-dblclicked', row, index, e)
       }
     "
     @row-contextmenu="
-      (row, index, e) => {
+      (row: Items, index: number, e: MouseEvent) => {
         emit('row-contextmenu', row, index, e)
       }
     "
     @row-hovered="
-      (row, index, e) => {
+      (row: Items, index: number, e: MouseEvent) => {
         emit('row-hovered', row, index, e)
       }
     "
     @row-unhovered="
-      (row, index, e) => {
+      (row: Items, index: number, e: MouseEvent) => {
         emit('row-unhovered', row, index, e)
       }
     "
     @row-middle-clicked="
-      (row, index, e) => {
+      (row: Items, index: number, e: MouseEvent) => {
         emit('row-middle-clicked', row, index, e)
       }
     "
@@ -235,6 +235,7 @@ import {get, pick, set} from '../../utils/object'
 import {startCase} from '../../utils/stringUtils'
 import type {LiteralUnion} from '../../types/LiteralUnion'
 import {btableLiteProps, btableSimpleProps, getTableFieldHeadLabel} from '../../utils/tableUtils'
+import {useId} from '../../composables/useId'
 
 const _props = withDefaults(
   defineProps<Omit<BTableProps<Items>, 'sortBy' | 'busy' | 'selectedItems'>>(),
@@ -242,6 +243,7 @@ const _props = withDefaults(
     noSortableIcon: false,
     perPage: Number.POSITIVE_INFINITY,
     filter: undefined,
+    filterFunction: undefined,
     mustSort: false,
     filterable: undefined,
     provider: undefined,
@@ -443,6 +445,8 @@ const selectedItemsModel = defineModel<Exclude<BTableProps<Items>['selectedItems
     default: () => [],
   }
 )
+
+const computedId = useId(() => props.id)
 
 const selectedItemsToSet = computed({
   get: () => new Set([...selectedItemsModel.value]),
@@ -658,6 +662,11 @@ const computedItems = computed<Items[]>(() => {
               (!props.filterable?.includes(key) && !!props.filterable?.length)
             )
               return false
+
+            if (props.filterFunction && typeof props.filterFunction === 'function') {
+              return props.filterFunction(item, props.filter)
+            }
+
             const realVal = (): string => {
               const filterField = computedFields.value.find((el) => {
                 if (isTableField<Items>(el)) return el.key === key
@@ -956,14 +965,18 @@ const exposedSelectableUtilities = {
     selectedItemsSetUtilities.clear()
   },
   selectAllRows: () => {
-    if (!props.selectable) return
+    if (!props.selectable || props.selectMode === 'single') return
     selectedItemsToSet.value = new Set([...computedItems.value])
   },
   selectRow: (index: number) => {
     if (!props.selectable) return
     const item = computedItems.value[index]
     if (!item || selectedItemsSetUtilities.has(item)) return
-    selectedItemsSetUtilities.add(item)
+    if (props.selectMode === 'single') {
+      selectedItemsSetUtilities.set([item])
+    } else {
+      selectedItemsSetUtilities.add(item)
+    }
   },
   unselectRow: (index: number) => {
     if (!props.selectable) return
@@ -988,11 +1001,13 @@ const computedLiteProps = computed(() => ({
   tableClass: tableClasses.value,
   tbodyTrClass: getRowClasses,
   fieldColumnClass: getFieldColumnClasses,
+  id: computedId.value,
 }))
 
 defineExpose({
   // The row selection methods are really for compat. Users should probably use the v-model though
   ...exposedSelectableUtilities,
+  items: computedItems,
   refresh: callItemsProvider,
 })
 </script>

@@ -123,18 +123,22 @@ const variantIsLinkType = computed(() => props.variant?.startsWith('link') || fa
 const variantIsLinkTypeSubset = computed(() => props.variant?.startsWith('link-') || false)
 const linkValueClasses = useLinkClasses(
   computed(() => ({
-    ...(variantIsLinkType.value && {
-      icon: props.icon,
-      opacity: props.opacity,
-      opacityHover: props.opacityHover,
-      underlineOffset: props.underlineOffset,
-      underlineOffsetHover: props.underlineOffsetHover,
-      underlineOpacity: props.underlineOpacity,
-      underlineOpacityHover: props.underlineOpacityHover,
-      underlineVariant: props.underlineVariant,
-      variant:
-        variantIsLinkTypeSubset.value === true ? (props.variant?.slice(5) as ColorVariant) : null,
-    }),
+    ...(variantIsLinkType.value
+      ? {
+          icon: props.icon,
+          opacity: props.opacity,
+          opacityHover: props.opacityHover,
+          underlineOffset: props.underlineOffset,
+          underlineOffsetHover: props.underlineOffsetHover,
+          underlineOpacity: props.underlineOpacity,
+          underlineOpacityHover: props.underlineOpacityHover,
+          underlineVariant: props.underlineVariant,
+          variant:
+            variantIsLinkTypeSubset.value === true
+              ? (props.variant?.slice(5) as ColorVariant)
+              : null,
+        }
+      : undefined),
   }))
 )
 const computedClasses = computed(() => [

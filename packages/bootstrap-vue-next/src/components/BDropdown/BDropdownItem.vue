@@ -1,5 +1,5 @@
 <template>
-  <li role="presentation" :class="wrapperClass" v-bind="props.wrapperAttrs">
+  <li role="presentation" :class="processedAttrs.wrapperClass" v-bind="props.wrapperAttrs">
     <component
       :is="computedTag"
       class="dropdown-item"
@@ -12,7 +12,7 @@
       role="menuitem"
       :type="computedTag === 'button' ? 'button' : null"
       :target="props.target"
-      v-bind="{...computedLinkProps, ...attrs}"
+      v-bind="{...computedLinkProps, ...processedAttrs.dropdownItemAttrs}"
       @click="clicked"
     >
       <slot />
@@ -66,7 +66,11 @@ const emit = defineEmits<{
   click: [value: MouseEvent]
 }>()
 
-const {class: wrapperClass, ...attrs} = useAttrs()
+const attrs = useAttrs()
+const processedAttrs = computed(() => {
+  const {class: wrapperClass, ...dropdownItemAttrs} = attrs
+  return {wrapperClass, dropdownItemAttrs}
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

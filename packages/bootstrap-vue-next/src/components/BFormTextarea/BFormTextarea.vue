@@ -34,7 +34,6 @@ import {computed, type CSSProperties, useTemplateRef} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {normalizeInput} from '../../utils/normalizeInput'
 import {useFormInput} from '../../composables/useFormInput'
-import {useStateClass} from '../../composables/useStateClass'
 import {useTextareaResize} from '../../composables/useTextareaResize'
 
 const _props = withDefaults(defineProps<Omit<BFormTextareaProps, 'modelValue'>>(), {
@@ -57,7 +56,7 @@ const _props = withDefaults(defineProps<Omit<BFormTextareaProps, 'modelValue'>>(
   readonly: false,
   required: false,
   size: undefined,
-  state: null,
+  state: undefined,
   // End CommonInputProps
   noResize: false,
   noAutoShrink: false,
@@ -77,10 +76,17 @@ const [modelValue, modelModifiers] = defineModel<
 
 const input = useTemplateRef<HTMLTextAreaElement>('_input')
 
-const {computedId, forceUpdateKey, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
-  useFormInput(props, input, modelValue, modelModifiers)
-
-const stateClass = useStateClass(() => props.state)
+const {
+  computedId,
+  forceUpdateKey,
+  computedAriaInvalid,
+  onInput,
+  stateClass,
+  onChange,
+  onBlur,
+  focus,
+  blur,
+} = useFormInput(props, input, modelValue, modelModifiers)
 
 const computedClasses = computed(() => [
   stateClass.value,

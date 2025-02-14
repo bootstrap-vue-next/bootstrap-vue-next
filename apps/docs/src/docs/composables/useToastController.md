@@ -1,10 +1,5 @@
 <ComposableHeader path="useToastController/index.ts" title="useToastController" />
 
-<ContentsSidebar>
-
-[[toc]]
-
-</ContentsSidebar>
 <div class="lead mb-5">
 
 Often times one may want to open a `Toast` in a global context, without the need for declaring a component, perhaps to display an error after a function threw an error. `useToastController` is used to create `Toasts` on demand. You must have initialized the `BToastOrchestrator` component once in your application. The following functionality requires the existance of that component
@@ -209,7 +204,7 @@ const hideMe = () => {
 import {data} from '../../data/components/toast.data'
 import {BButton, useToastController, BButtonGroup, BToast} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
-import ContentsSidebar from '../../components/ContentsSidebar.vue'
+
 import UsePluginAlert from '../../components/UsePluginAlert.vue'
 import {ref, computed, h, onMounted} from 'vue'
 import ComposableHeader from './ComposableHeader.vue'

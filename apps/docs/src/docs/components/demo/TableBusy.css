@@ -1,0 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* #region snippet */
+/* Busy table styling */
+.table.b-table[aria-busy="true"] {
+  opacity: 0.55;
+}
+/* #endregion snippet */
