@@ -780,6 +780,7 @@ export interface BAlertProps
     ShowHideProps {
   alertClass?: ClassValue
   body?: string
+  bodyClass?: ClassValue
   closeClass?: ClassValue
   closeContent?: string
   closeLabel?: string
@@ -796,7 +797,6 @@ export interface BAlertProps
   progressProps?: Omit<BProgressBarProps, 'label' | 'max' | 'value'>
   showOnPause?: boolean
   title?: string
-  variant?: ColorVariant | null
 }
 
 export interface BAvatarProps

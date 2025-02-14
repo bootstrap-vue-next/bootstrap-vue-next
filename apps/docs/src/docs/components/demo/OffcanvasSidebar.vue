@@ -2,12 +2,14 @@
   <BContainer fluid="xxl">
     <BRow class="d-md-none"
       ><BCol>
-        <BButton variant="link" underline-opacity="0" @click="showToc"
+        <BButton variant="link" :underline-opacity="0" @click="showToc"
           >&lt; Table of Contents</BButton
         > </BCol
       ><BCol
         ><div class="text-end">
-          <BButton variant="link" underline-opacity="0" @click="showOtp">On this page &gt;</BButton>
+          <BButton variant="link" :underline-opacity="0" @click="showOtp"
+            >On this page &gt;</BButton
+          >
         </div></BCol
       ></BRow
     >
