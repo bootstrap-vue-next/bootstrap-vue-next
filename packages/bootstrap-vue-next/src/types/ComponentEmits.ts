@@ -28,7 +28,7 @@ export interface BOffcanvasEmits extends showHideEmits {
   close: [value: BvTriggerableEvent]
   esc: [value: BvTriggerableEvent]
   backdrop: [value: BvTriggerableEvent]
-  breakpoint: [value: BvTriggerableEvent]
+  breakpoint: [value: BvTriggerableEvent, opened: boolean]
 }
 
 export interface BPopoverEmits extends showHideEmits {
