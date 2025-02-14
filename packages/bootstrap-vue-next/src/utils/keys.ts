@@ -139,27 +139,30 @@ export const collapseInjectionKey: InjectionKey<{
 // Show/Hide components
 export type RegisterShowHideFnInput = {
   id: string
+  component: ComponentInternalInstance
   value: Ref<boolean>
-  toggle: () => void
-  show: () => void
-  hide: (trigger?: string) => void
+  toggle: () => Promise<boolean | null>
+  show: () => Promise<boolean | null>
+  hide: (trigger?: string) => Promise<boolean | null>
   registerTrigger: (trigger: string, el: Element) => void
   unregisterTrigger: (trigger: string, el: Element, clean: boolean) => void
 }
 
 export interface RegisterShowHideMapValue {
-  value: boolean
-  toggle: () => void
-  show: () => void
-  hide: (trigger?: string) => void
+  id: string
+  component: ComponentInternalInstance
+  value: Readonly<Ref<boolean>>
+  toggle: (resolveOnHide?: boolean) => Promise<boolean | null>
+  show: (resolveOnHide?: boolean) => Promise<boolean | null>
+  hide: (trigger?: string) => Promise<boolean | null>
   registerTrigger: (trigger: string, el: Element) => void
   unregisterTrigger: (trigger: string, el: Element, clean: boolean) => void
 }
 export interface RegisterShowHideValue {
-  (input: RegisterShowHideFnInput): {
+  register: (input: RegisterShowHideFnInput) => {
     unregister: () => void
   }
-  map: Readonly<Record<string, RegisterShowHideMapValue>>
+  values: Ref<Map<string, RegisterShowHideMapValue>>
 }
 export const globalShowHideStorageInjectionKey: InjectionKey<RegisterShowHideValue> =
   createBvnPluginInjectionKey('globalShowHideStorage')

@@ -1,5 +1,5 @@
 import {RX_HASH, RX_HASH_ID, RX_SPACE_SPLIT} from '../../utils/constants'
-import type {Directive, DirectiveBinding, VNode} from 'vue'
+import {type Directive, type DirectiveBinding, toValue, type VNode} from 'vue'
 import {findProvides} from '../utils'
 import {globalShowHideStorageInjectionKey, type RegisterShowHideValue} from '../../utils/keys'
 
@@ -45,24 +45,26 @@ const handleUpdate = (
   const provides = findProvides(binding, vnode)
   const showHideMap = (provides as Record<symbol, RegisterShowHideValue>)[
     globalShowHideStorageInjectionKey
-  ]?.map
+  ]?.values
   if ((el as HTMLElement).dataset.bvtoggle) {
     const oldTargets = ((el as HTMLElement).dataset.bvtoggle || '').split(' ')
     if (oldTargets.length === 0) return
-    oldTargets.forEach((targetId) => {
-      const showHide = showHideMap?.[targetId]
+    for (const targetId of oldTargets) {
+      const showHide = showHideMap?.value.get(targetId)
       if (!showHide) {
-        return
+        continue
       }
-      if (!targets.includes(targetId)) showHide.unregisterTrigger('click', el, false)
-    })
+      if (!targets.includes(targetId)) {
+        toValue(showHide).unregisterTrigger('click', el, false)
+      }
+    }
   }
   ;(el as HTMLElement).dataset.bvtoggle = targets.join(' ')
 
   targets.forEach(async (targetId) => {
     let count = 0
     while (count < 5) {
-      const showHide = showHideMap?.[targetId]
+      const showHide = showHideMap?.value.get(targetId)
       if (!showHide) {
         count++
         await new Promise((resolve) => setTimeout(resolve, 100))
@@ -73,8 +75,8 @@ const handleUpdate = (
       }
       // Register the trigger element
 
-      showHide.unregisterTrigger('click', el, false)
-      showHide.registerTrigger('click', el)
+      toValue(showHide).unregisterTrigger('click', el, false)
+      toValue(showHide).registerTrigger('click', el)
       break
     }
   })
@@ -92,14 +94,14 @@ const handleUnmount = (
   const provides = findProvides(binding, vnode)
   const showHideMap = (provides as Record<symbol, RegisterShowHideValue>)[
     globalShowHideStorageInjectionKey
-  ]?.map
+  ]?.values
 
   targets.forEach((targetId) => {
-    const showHide = showHideMap?.[targetId]
+    const showHide = showHideMap?.value.get(targetId)
     if (!showHide) {
       return
     }
-    showHide.unregisterTrigger('click', el, false)
+    toValue(showHide).unregisterTrigger('click', el, false)
   })
 
   el.removeAttribute('aria-controls')

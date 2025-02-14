@@ -1,4 +1,4 @@
-import {computed, type Plugin, reactive, readonly} from 'vue'
+import {type Plugin, readonly, ref, type Ref} from 'vue'
 import {
   globalShowHideStorageInjectionKey,
   type RegisterShowHideFnInput,
@@ -7,10 +7,11 @@ import {
 
 export const showHidePlugin: Plugin = {
   install(app) {
-    const values: Record<string, RegisterShowHideMapValue> = reactive({})
+    const values: Ref<Map<string, RegisterShowHideMapValue>> = ref(new Map())
 
-    const fun = ({
+    const register = ({
       id,
+      component,
       value,
       toggle,
       show,
@@ -18,22 +19,24 @@ export const showHidePlugin: Plugin = {
       registerTrigger,
       unregisterTrigger,
     }: RegisterShowHideFnInput) => {
-      values[id] = computed(() => ({
-        value: value.value,
+      values.value.set(id, {
+        id,
+        component,
+        value: readonly(value),
         toggle,
         show,
         hide,
         registerTrigger,
         unregisterTrigger,
-      })) as unknown as RegisterShowHideMapValue
+      })
       return {
         unregister() {
-          delete values[id]
+          // delete values.value[id]
+          values.value.delete(id)
         },
       }
     }
 
-    fun.map = readonly(values)
-    app.provide(globalShowHideStorageInjectionKey, fun)
+    app.provide(globalShowHideStorageInjectionKey, {register, values})
   },
 }
