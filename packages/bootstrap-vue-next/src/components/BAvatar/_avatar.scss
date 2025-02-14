@@ -4,7 +4,7 @@ $b-avatar-size-sm: 1.5rem !default;
 $b-avatar-size-lg: 3.5rem !default;
 $b-avatar-font-size-scale: 0.4 !default;
 $b-avatar-badge-font-size-scale: $b-avatar-font-size-scale * 0.7 !default;
-$b-avatar-border-color: #dee2e6;
+$b-avatar-border-color: #dee2e6 !default;
 
 .b-avatar {
   display: inline-flex;
