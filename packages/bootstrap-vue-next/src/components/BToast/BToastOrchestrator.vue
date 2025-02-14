@@ -6,7 +6,7 @@
         :key="key"
         :class="value"
         class="toast-container position-fixed p-3"
-        style="width: var(--bs-toast-max-width)"
+        style="width: calc(var(--bs-toast-max-width, 350px) + 2 * 1rem)"
       >
         <TransitionGroup name="b-list">
           <span
@@ -16,15 +16,38 @@
               promise,
               component: _component,
               ...val
-            } in tools.toasts?.value.filter((el) => el.position === key)"
+            } in tools.toasts?.value.filter((el) => el.position === key) || []"
             :key="_self"
           >
             <component
               :is="_component ?? BToast"
               v-bind="val"
               initial-animation
-              @hide="promise.resolve(true)"
-              @hidden="tools.remove?.(_self)"
+              :teleport-disabled="true"
+              @hide="
+                (e: BvTriggerableEvent) => {
+                  val.onHide?.(e)
+                  if (e.defaultPrevented) {
+                    return
+                  }
+                  // we resolve close button to false, true otherwise for example link
+                  if (e.trigger === 'close') {
+                    promise.resolve(false)
+                    return
+                  }
+
+                  promise.resolve(true)
+                }
+              "
+              @hidden="
+                (e: BvTriggerableEvent) => {
+                  val.onHidden?.(e)
+                  if (e.defaultPrevented) {
+                    return
+                  }
+                  tools.remove?.(key)
+                }
+              "
             >
               <template v-for="(comp, slot) in slots" #[slot]="scope" :key="slot">
                 <component :is="comp" v-bind="scope" />
@@ -38,6 +61,8 @@
 </template>
 
 <script setup lang="ts">
+import type {BvTriggerableEvent} from '../../utils'
+
 import {watch} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {positionClasses} from '../../utils/positionClasses'
@@ -58,11 +83,12 @@ const _props = withDefaults(defineProps<BToastOrchestratorProps>(), {
 const props = useDefaults(_props, 'BToastOrchestrator')
 
 const tools = useToastController()
+tools._isOrchestratorInstalled.value = true
 
 watch(
   () => props.appendToast,
   (value) => {
-    tools._setIsAppend?.(value)
+    tools._isAppend.value = value
   },
   {immediate: true}
 )

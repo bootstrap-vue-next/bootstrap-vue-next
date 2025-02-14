@@ -3,14 +3,18 @@
     <div id="__BVID__modal-container" v-bind="$attrs">
       <component
         :is="_component ?? BModal"
-        v-for="[self, {component: _component, promise, isConfirm, slots, ...val}] in tools.modals
+        v-for="[key, {component: _component, promise, isConfirm, slots, ...val}] in tools.modals
           ?.value"
-        :key="self"
+        :key="key"
         v-bind="val"
         initial-animation
         :teleport-disabled="true"
         @hide="
           (e: BvTriggerableEvent) => {
+            val.onHide?.(e)
+            if (e.defaultPrevented) {
+              return
+            }
             // These following are confirm rules, otherwise we always resolve true
             if (isConfirm === true) {
               if (e.trigger === 'ok') {
@@ -26,7 +30,15 @@
             promise.resolve(true)
           }
         "
-        @hidden="tools.remove?.(self)"
+        @hidden="
+          (e: BvTriggerableEvent) => {
+            val.onHidden?.(e)
+            if (e.defaultPrevented) {
+              return
+            }
+            tools.remove?.(key)
+          }
+        "
       >
         <template v-for="(comp, slot) in slots" #[slot]="scope" :key="slot">
           <component :is="comp" v-bind="scope" />
@@ -55,6 +67,7 @@ const _props = withDefaults(defineProps<BModalOrchestratorProps>(), {
 const props = useDefaults(_props, 'BModalOrchestrator')
 
 const tools = useModalController()
+tools._isOrchestratorInstalled.value = true
 
 defineExpose({
   ...tools,

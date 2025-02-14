@@ -120,11 +120,6 @@ const showFns = {
       }))
     )
   },
-  getterFunction: () => {
-    show(() => ({
-      title: firstRef.value.body,
-    }))
-  },
   // Demonstration psuedocode, you can import a component and use it
   // importedComponent: () => {
   //   show?.({

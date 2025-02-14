@@ -1,17 +1,33 @@
-import {isReadonly, isRef, markRaw, type Plugin, ref, type Ref, toRef, toValue, watch} from 'vue'
+import {
+  isReadonly,
+  isRef,
+  markRaw,
+  onScopeDispose,
+  type Plugin,
+  type Ref,
+  ref,
+  toRef,
+  toValue,
+  watch,
+} from 'vue'
 import {modalControllerPluginKey} from '../../utils/keys'
 import type {
   ControllerKey,
   ModalOrchestratorMapValue,
   ModalOrchestratorShowParam,
+  PromiseWithModal,
 } from '../../types/ComponentOrchestratorTypes'
 
 export const modalControllerPlugin: Plugin = {
   install(app) {
     const modals = ref(new Map<ControllerKey, ModalOrchestratorMapValue>())
 
-    const buildPromise = (): {
-      value: Promise<boolean | null>
+    const _isOrchestratorInstalled = ref(false)
+
+    const buildPromise = (
+      _id: ControllerKey
+    ): {
+      value: PromiseWithModal
       resolve: (value: boolean | null) => void
     } => {
       let resolveFunc: (value: boolean | null) => void = () => {
@@ -20,6 +36,43 @@ export const modalControllerPlugin: Plugin = {
 
       const promise = new Promise<boolean | null>((resolve) => {
         resolveFunc = resolve
+      }) as PromiseWithModal
+      Object.assign(promise, {
+        id: _id,
+        show() {
+          const modal = modals.value.get(_id)
+          if (!modal) return promise
+          modal.isConfirm = false
+          modal.modelValue = true
+          modal['onUpdate:modelValue']?.(true)
+          return promise
+        },
+        confirm() {
+          const modal = modals.value.get(_id)
+          if (!modal) return promise
+          modal.isConfirm = true
+          modal.modelValue = true
+          modal['onUpdate:modelValue']?.(true)
+          return promise
+        },
+        hide() {
+          const modal = modals.value.get(_id)
+          if (modal) {
+            modal.modelValue = false
+            modal['onUpdate:modelValue']?.(false)
+          }
+        },
+        toggle() {
+          const modal = modals.value.get(_id)
+          if (modal) {
+            modal.modelValue = !modal.modelValue
+            modal['onUpdate:modelValue']?.(modal.modelValue)
+          }
+        },
+        remove() {
+          modals.value.get(_id)?.stop()
+          modals.value.delete(_id)
+        },
       })
 
       return {
@@ -30,10 +83,14 @@ export const modalControllerPlugin: Plugin = {
 
     const create = (
       obj: ModalOrchestratorShowParam = {},
-      isConfirm: boolean
-    ): Promise<boolean | null> => {
-      // if (isRef(obj)) obj.value.modelValue = ref(true)
-      // else if (typeof obj === 'object') obj.modelValue = ref(true)
+      isConfirm?: boolean
+    ): PromiseWithModal => {
+      if (!_isOrchestratorInstalled.value) {
+        throw new Error(
+          'The BModalOrchestrator component must be mounted to use the modal controller'
+        )
+      }
+
       const {component, slots} = toValue(obj)
       if (component) {
         if (isRef(obj)) obj.value.component = markRaw(component)
@@ -46,9 +103,9 @@ export const modalControllerPlugin: Plugin = {
       const resolvedProps = toRef(obj)
       const _self = resolvedProps.value?.id || Symbol('Modals controller')
 
-      const promise = buildPromise()
-
-      const stop = watch(
+      const promise = buildPromise(_self)
+      let stop = () => {}
+      stop = watch(
         resolvedProps,
         (newValue) => {
           const previous = modals.value.get(_self)
@@ -62,15 +119,18 @@ export const modalControllerPlugin: Plugin = {
             delete newValue.props
           }
           for (const key in newValue) {
-            v[key as keyof ModalOrchestratorShowParam] = toValue(
-              newValue[key as keyof ModalOrchestratorShowParam]
-            )
+            if (key.startsWith('on')) {
+              v[key as keyof ModalOrchestratorShowParam] =
+                newValue[key as keyof ModalOrchestratorShowParam]
+            } else {
+              v[key as keyof ModalOrchestratorShowParam] = toValue(
+                newValue[key as keyof ModalOrchestratorShowParam]
+              )
+            }
           }
           modals.value.set(_self, {
             ...v,
-            ...(v.modelValue === undefined && {modelValue: true}),
-            // 'component': !v.component ? undefined : markRaw(v.component),
-
+            ...(v.modelValue === undefined && {modelValue: false}),
             'onUpdate:modelValue': (val: boolean) => {
               newValue['onUpdate:modelValue']?.(val)
               const {modelValue} = toValue(obj)
@@ -80,11 +140,12 @@ export const modalControllerPlugin: Plugin = {
               }
               if (val === false) {
                 stop()
-                modals.value.delete(_self)
+                // modals.value.delete(_self)
               }
             },
-            isConfirm,
+            'isConfirm': newValue.isConfirm ?? isConfirm ?? false,
             promise,
+            stop,
           })
         },
         {
@@ -92,37 +153,29 @@ export const modalControllerPlugin: Plugin = {
           deep: true,
         }
       )
-
+      onScopeDispose(() => remove(_self), true)
       return promise.value
     }
-    const show = (obj: ModalOrchestratorShowParam = {}): Promise<boolean | null> =>
-      create(obj, false)
-    const confirm = (obj: ModalOrchestratorShowParam = {}): Promise<boolean | null> =>
-      create(obj, true)
-
-    /**
-     * You can get the symbol param from the return value from the show method, or use props.id
-     */
-    const leave = (self: ControllerKey) => {
-      const modal = modals.value.get(self)
-
-      if (!modal) return
-      modal['onUpdate:modelValue']?.(false)
-    }
+    const show = (obj: ModalOrchestratorShowParam = {}): PromiseWithModal =>
+      create(obj, false).show()
+    const confirm = (obj: ModalOrchestratorShowParam = {}): PromiseWithModal =>
+      create(obj, true).show()
 
     /**
      * You can get the symbol param from the return value from the show method, or use props.id
      */
     const remove = (self: ControllerKey) => {
+      modals.value.get(self)?.stop()
       modals.value.delete(self)
     }
 
     app.provide(modalControllerPluginKey, {
+      _isOrchestratorInstalled,
+      create,
       modals,
       remove,
       show,
       confirm,
-      leave,
     })
   },
 }

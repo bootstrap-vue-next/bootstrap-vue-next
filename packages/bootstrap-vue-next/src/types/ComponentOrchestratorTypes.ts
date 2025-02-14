@@ -1,10 +1,25 @@
-import type {Component, MaybeRefOrGetter} from 'vue'
+import type {Component, MaybeRef, MaybeRefOrGetter} from 'vue'
 import type {BModalProps, BPopoverProps, BToastProps, BTooltipProps} from './ComponentProps'
 import type {ContainerPosition} from './Alignment'
 import type {BModalSlots, BPopoverSlots, BToastSlots} from './ComponentSlots'
 import type {BModalEmits, BPopoverEmits, BToastEmits} from './ComponentEmits'
 
 export type ControllerKey = symbol | string
+export interface PromiseWithModal extends Promise<boolean | null> {
+  id: ControllerKey
+  show: () => PromiseWithModal
+  hide: () => void
+  toggle: () => void
+  confirm: () => PromiseWithModal
+  remove: () => void
+}
+export interface PromiseWithShowHide extends Promise<boolean | null> {
+  id: ControllerKey
+  show: () => PromiseWithShowHide
+  hide: () => void
+  toggle: () => void
+  remove: () => void
+}
 
 type Prefix<P extends string, S extends string> = `${P}${S}`
 
@@ -35,7 +50,7 @@ export type ToastOrchestratorArrayValue = Omit<BToastProps, 'modelValue'> & {
   'onUpdate:modelValue'?: (val: boolean) => void
   'component'?: Readonly<Component>
   'promise': {
-    value: Promise<boolean | null>
+    value: PromiseWithShowHide
     resolve: (value: boolean | null) => void
   }
 } & {
@@ -87,11 +102,15 @@ export type ToastOrchestratorParam = Omit<BToastProps, 'modelValue'> & {
   }
 }
 
-export type ToastOrchestratorShowParam = MaybeRefOrGetter<ToastOrchestratorParam>
+export type ToastOrchestratorShowParam = MaybeRef<ToastOrchestratorParam>
 
 export type TooltipOrchestratorMapValue = BTooltipProps & {
   'onUpdate:modelValue'?: (val: boolean) => void
   'component'?: Readonly<Component>
+  'promise': {
+    value: PromiseWithShowHide
+    resolve: (value: boolean | null) => void
+  }
   'stop'?: () => void
   'slots'?: {
     [K in keyof Omit<BPopoverSlots, 'target'>]?: BPopoverSlots[K] | Readonly<Component>
@@ -115,11 +134,15 @@ export type TooltipOrchestratorParam = Omit<BTooltipProps, 'body' | 'title' | 'm
   [K in keyof BPopoverEmits as CamelCase<Prefix<'on-', K>>]?: (e: BPopoverEmits[K][0]) => void
 }
 
-export type TooltipOrchestratorShowParam = MaybeRefOrGetter<TooltipOrchestratorParam>
+export type TooltipOrchestratorShowParam = MaybeRef<TooltipOrchestratorParam>
 
 export type PopoverOrchestratorMapValue = BPopoverProps & {
   'onUpdate:modelValue'?: (val: boolean) => void
   'component'?: Readonly<Component>
+  'promise': {
+    value: PromiseWithShowHide
+    resolve: (value: boolean | null) => void
+  }
   'stop'?: () => void
   'slots'?: {
     [K in keyof Omit<BPopoverSlots, 'target'>]?: BPopoverSlots[K] | Readonly<Component>
@@ -143,15 +166,16 @@ export type PopoverOrchestratorParam = Omit<BPopoverProps, 'body' | 'title' | 'm
   [K in keyof BPopoverEmits as CamelCase<Prefix<'on-', K>>]?: (e: BPopoverEmits[K][0]) => void
 }
 
-export type PopoverOrchestratorShowParam = MaybeRefOrGetter<PopoverOrchestratorParam>
+export type PopoverOrchestratorShowParam = MaybeRef<PopoverOrchestratorParam>
 
 export type ModalOrchestratorMapValue = BModalProps & {
   'onUpdate:modelValue'?: (val: boolean) => void
   'isConfirm'?: boolean
   'promise': {
-    value: Promise<boolean | null>
+    value: PromiseWithModal
     resolve: (value: boolean | null) => void
   }
+  'stop': () => void
   'component'?: Readonly<Component>
   'slots'?: {
     [K in keyof BModalSlots]?: BModalSlots[K] | Readonly<Component>
@@ -178,4 +202,4 @@ export type ModalOrchestratorParam = Omit<BModalProps, 'body' | 'title' | 'model
   [K in keyof BModalEmits as CamelCase<Prefix<'on-', K>>]?: (e: BModalEmits[K][0]) => void
 }
 
-export type ModalOrchestratorShowParam = MaybeRefOrGetter<ModalOrchestratorParam>
+export type ModalOrchestratorShowParam = MaybeRef<ModalOrchestratorParam>

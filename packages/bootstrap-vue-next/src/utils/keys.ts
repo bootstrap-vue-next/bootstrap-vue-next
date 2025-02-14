@@ -21,6 +21,8 @@ import type {
   PopoverOrchestratorMapValue,
   PopoverOrchestratorParam,
   PopoverOrchestratorShowParam,
+  PromiseWithModal,
+  PromiseWithShowHide,
   ToastOrchestratorArrayValue,
   ToastOrchestratorShowParam,
   TooltipOrchestratorMapValue,
@@ -210,29 +212,34 @@ export const buttonGroupKey: InjectionKey<boolean> = createBvnInjectionKey('butt
 
 export const toastPluginKey: InjectionKey<{
   toasts: Ref<ToastOrchestratorArrayValue[]>
-  _setIsAppend: (value: boolean) => void
+  _isAppend: Ref<boolean>
+  _isOrchestratorInstalled: Ref<boolean>
+  create: (obj: ToastOrchestratorShowParam) => Promise<boolean | null>
   show: (obj: ToastOrchestratorShowParam) => Promise<boolean | null>
   remove: (self: ControllerKey) => void
-  leave: (self: ControllerKey) => void
+  hide: (self: ControllerKey) => void
 }> = createBvnPluginInjectionKey('toast')
 
 export const modalControllerPluginKey: InjectionKey<{
   modals: Ref<Map<ControllerKey, ModalOrchestratorMapValue>>
-  show: (obj: ModalOrchestratorShowParam) => Promise<boolean | null>
-  confirm: (obj: ModalOrchestratorShowParam) => Promise<boolean | null>
+  _isOrchestratorInstalled: Ref<boolean>
+  create: (obj: ModalOrchestratorShowParam, isConfirm?: boolean) => PromiseWithModal
+  show: (obj: ModalOrchestratorShowParam) => PromiseWithModal
+  confirm: (obj: ModalOrchestratorShowParam) => PromiseWithModal
   remove: (self: ControllerKey) => void
-  leave: (self: ControllerKey) => void
 }> = createBvnPluginInjectionKey('modalController')
 
 export const popoverPluginKey: InjectionKey<{
   popovers: Ref<Map<ControllerKey, PopoverOrchestratorMapValue>>
-  popover: (obj: PopoverOrchestratorShowParam) => ControllerKey
-  setPopover: (self: ControllerKey, val: Partial<PopoverOrchestratorParam>) => void
-  removePopover: (self: ControllerKey) => void
+  popover: (obj: PopoverOrchestratorShowParam) => PromiseWithShowHide
   tooltips: Ref<Map<ControllerKey, TooltipOrchestratorMapValue>>
-  tooltip: (obj: TooltipOrchestratorShowParam) => ControllerKey
-  setTooltip: (self: ControllerKey, val: Partial<TooltipOrchestratorParam>) => void
-  removeTooltip: (self: ControllerKey) => void
+  tooltip: (obj: TooltipOrchestratorShowParam) => PromiseWithShowHide
+  set: (
+    self: ControllerKey,
+    val: Partial<PopoverOrchestratorParam | TooltipOrchestratorParam>
+  ) => void
+  remove: (self: ControllerKey) => void
+  _isOrchestratorInstalled: Ref<boolean>
 }> = createBvnPluginInjectionKey('popover')
 
 /**

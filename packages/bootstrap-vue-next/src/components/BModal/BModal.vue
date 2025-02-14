@@ -406,6 +406,7 @@ defineExpose({
   id: computedId,
   show,
   toggle,
+  visible: showRef,
 })
 </script>
 

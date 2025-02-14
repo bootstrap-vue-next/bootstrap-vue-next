@@ -3,6 +3,7 @@ import {toastPluginKey} from '../../utils/keys'
 import type {ContainerPosition} from '../../types/Alignment'
 import type {
   ControllerKey,
+  PromiseWithShowHide,
   ToastOrchestratorArrayValue,
   ToastOrchestratorShowParam,
 } from '../../types/ComponentOrchestratorTypes'
@@ -15,12 +16,10 @@ export const toastPlugin: Plugin = {
 
     const _isAppend = ref(false)
 
-    const _setIsAppend = (value: boolean) => {
-      _isAppend.value = value
-    }
-
-    const buildPromise = (): {
-      value: Promise<boolean | null>
+    const buildPromise = (
+      _id: ControllerKey
+    ): {
+      value: PromiseWithShowHide
       resolve: (value: boolean | null) => void
     } => {
       let resolveFunc: (value: boolean | null) => void = () => {
@@ -29,6 +28,33 @@ export const toastPlugin: Plugin = {
 
       const promise = new Promise<boolean | null>((resolve) => {
         resolveFunc = resolve
+      }) as PromiseWithShowHide
+      Object.assign(promise, {
+        id: _id,
+        show() {
+          const modal = toasts.value.find((el) => el._self === _id)
+          if (!modal) return promise
+          modal.modelValue = true
+          modal['onUpdate:modelValue']?.(true)
+          return promise
+        },
+        hide() {
+          const modal = toasts.value.find((el) => el._self === _id)
+          if (modal) {
+            modal.modelValue = false
+            modal['onUpdate:modelValue']?.(false)
+          }
+        },
+        toggle() {
+          const modal = toasts.value.find((el) => el._self === _id)
+          if (modal) {
+            modal.modelValue = !modal.modelValue
+            modal['onUpdate:modelValue']?.(modal.modelValue)
+          }
+        },
+        remove() {
+          remove(_id)
+        },
       })
 
       return {
@@ -41,7 +67,7 @@ export const toastPlugin: Plugin = {
      * @returns {ControllerKey} If `id` is passed to props, it will use that id, otherwise, a symbol will be created that corresponds to its unique id.
      * You can pass this id to the hide function to force a Toast to hide
      */
-    const show = (obj: ToastOrchestratorShowParam = {}): Promise<boolean | null> => {
+    const create = (obj: ToastOrchestratorShowParam = {}): PromiseWithShowHide => {
       const {component, slots} = toValue(obj)
       if (component) {
         if (isRef(obj)) obj.value.component = markRaw(component)
@@ -54,7 +80,7 @@ export const toastPlugin: Plugin = {
       const resolvedProps = toRef(obj)
 
       const _self = resolvedProps.value?.id || Symbol('Toast controller')
-      const promise = buildPromise()
+      const promise = buildPromise(_self)
 
       const stop = watch(
         resolvedProps,
@@ -75,9 +101,14 @@ export const toastPlugin: Plugin = {
             delete newValue.pos
           }
           for (const key in newValue) {
-            v[key as keyof ToastOrchestratorShowParam] = toValue(
-              newValue[key as keyof ToastOrchestratorShowParam]
-            )
+            if (key.startsWith('on')) {
+              v[key as keyof ToastOrchestratorShowParam] =
+                newValue[key as keyof ToastOrchestratorShowParam]
+            } else {
+              v[key as keyof ToastOrchestratorShowParam] = toValue(
+                newValue[key as keyof ToastOrchestratorShowParam]
+              )
+            }
           }
           v.position = v.position || posDefault
           v.modelValue = v.modelValue || 5000
@@ -116,6 +147,8 @@ export const toastPlugin: Plugin = {
       return promise.value
     }
 
+    const show = (obj: ToastOrchestratorShowParam = {}): PromiseWithShowHide => create(obj).show()
+
     /**
      * You can get the symbol param from the return value from the show method, or use props.id
      */
@@ -126,7 +159,7 @@ export const toastPlugin: Plugin = {
     /**
      * You can get the symbol param from the return value from the show method, or use props.id
      */
-    const leave = (self: ControllerKey) => {
+    const hide = (self: ControllerKey) => {
       const toastIndex = toasts.value.findIndex((el) => el._self === self)
       if (toastIndex === -1) return
       const toast = toasts.value[toastIndex]
@@ -134,11 +167,13 @@ export const toastPlugin: Plugin = {
     }
 
     app.provide(toastPluginKey, {
-      _setIsAppend,
+      _isAppend,
+      _isOrchestratorInstalled: ref(false),
       toasts,
       show,
+      create,
       remove,
-      leave,
+      hide,
     })
   },
 }
