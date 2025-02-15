@@ -89,7 +89,10 @@ export const useModalManager = (modalOpen: Readonly<Ref<boolean>>, initialValue:
     ),
     activeModalCount: countStack,
     stackWithoutSelf: computed(
-      () => stack?.value.filter((el) => toValue(el.exposed?.id) !== toValue(currentModal.exposed?.id)) ?? []
+      () =>
+        stack?.value.filter(
+          (el) => toValue(el.exposed?.id) !== toValue(currentModal.exposed?.id)
+        ) ?? []
     ),
   }
 }

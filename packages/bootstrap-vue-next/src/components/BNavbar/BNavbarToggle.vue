@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import type {BNavbarToggleProps} from '../../types/ComponentProps'
-import {computed, inject} from 'vue'
+import {computed, inject, toValue} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {globalShowHideStorageInjectionKey} from '../../utils/keys'
 
@@ -45,16 +45,17 @@ const showHideData = inject(globalShowHideStorageInjectionKey, undefined)
 
 const collapseExpanded = computed(() => {
   if (!props.target || !showHideData) return false
-  if (typeof props.target === 'string') return showHideData.map[props.target]?.value || false
-  return props.target.some((target) => showHideData.map[target]?.value)
+  if (typeof props.target === 'string')
+    return toValue(toValue(showHideData.values.value.get(props.target))?.value) || false
+  return props.target.some((target) => toValue(showHideData.values.value.get(target)?.value))
 })
 const toggleExpand = () => {
   if (!props.target || !showHideData) return
   if (typeof props.target === 'string') {
-    showHideData.map[props.target]?.toggle()
+    toValue(showHideData.values.value.get(props.target))?.toggle()
     return
   }
-  props.target.forEach((target) => showHideData.map[target]?.toggle())
+  props.target.forEach((target) => toValue(showHideData.values.value.get(target))?.toggle())
 }
 
 const onClick = (e: Readonly<MouseEvent>): void => {
