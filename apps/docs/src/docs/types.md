@@ -280,7 +280,7 @@ type InputType =
 
 ```ts
 type LinkOpacity = 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
-type UnderlineOpacity = 0 | LinkOpacity
+type UnderlineOpacity = 0 | '0' | LinkOpacity
 type UnderlineOffset = 1 | 2 | 3 | '1' | '2' | '3'
 ```
 
