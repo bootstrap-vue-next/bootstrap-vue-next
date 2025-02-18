@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.27](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.26...bootstrapvuenext-v0.26.27) (2025-02-18)
+
+
+### Bug Fixes
+
+* **BLink:** Allow  "0" as a value for UnderlineLinkOpacity ([75c9e48](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/75c9e48360d29dccc17120e072ad198985a8ab2d))
+
 ## [0.26.26](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.25...bootstrapvuenext-v0.26.26) (2025-02-10)
 
 
