@@ -597,7 +597,7 @@ describe('object-persistence', () => {
       expect($table.attributes('ariabusy')).toBe('true')
     })
 
-    it.only('sorting does not wipe out the comparer function', async () => {
+    it('sorting does not wipe out the comparer function', async () => {
       const sortFields = [
         {key: 'last_name', sortable: true},
         {key: 'first_name', sortable: true},
