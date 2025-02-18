@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.28](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.27...bootstrapvuenext-v0.26.28) (2025-02-18)
+
+
+### Bug Fixes
+
+* **BTable:** sorting algorithm deleting comparer functions fixes [#2555](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2555) ([#2563](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2563)) ([4ee8552](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4ee85528393d19a3cd7464d507cf36ee97f74bb2))
+
 ## [0.26.27](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.26...bootstrapvuenext-v0.26.27) (2025-02-18)
 
 ### Bug Fixes
