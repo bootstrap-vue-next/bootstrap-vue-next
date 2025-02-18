@@ -2,33 +2,48 @@
   <ConditionalTeleport :to="props.teleportTo" :disabled="props.teleportDisabled">
     <div id="__BVID__modal-container" v-bind="$attrs">
       <component
-        :is="modal.component ?? BModal"
-        v-for="[self, modal] in tools.modals?.value"
-        :key="self"
-        v-bind="modal.props"
-        v-model="modal.props._modelValue"
+        :is="_component ?? BModal"
+        v-for="[key, {component: _component, promise, isConfirm, slots, ...val}] in tools.modals
+          ?.value"
+        :key="key"
+        v-bind="val"
         initial-animation
         :teleport-disabled="true"
-        @update:model-value="tools.leave?.(self)"
         @hide="
           (e: BvTriggerableEvent) => {
+            val.onHide?.(e)
+            if (e.defaultPrevented) {
+              return
+            }
             // These following are confirm rules, otherwise we always resolve true
-            if (modal.props._isConfirm === true) {
+            if (isConfirm === true) {
               if (e.trigger === 'ok') {
-                modal.props._promise.resolve(true)
+                promise.resolve(true)
                 return
               }
               if (e.trigger === 'cancel') {
-                modal.props._promise.resolve(false)
+                promise.resolve(false)
                 return
               }
-              modal.props._promise.resolve(null)
+              promise.resolve(null)
             }
-            modal.props._promise.resolve(true)
+            promise.resolve(true)
           }
         "
-        @hidden="tools.remove?.(self)"
-      />
+        @hidden="
+          (e: BvTriggerableEvent) => {
+            val.onHidden?.(e)
+            if (e.defaultPrevented) {
+              return
+            }
+            tools.remove?.(key)
+          }
+        "
+      >
+        <template v-for="(comp, slot) in slots" #[slot]="scope" :key="slot">
+          <component :is="comp" v-bind="scope" />
+        </template>
+      </component>
     </div>
   </ConditionalTeleport>
 </template>
@@ -52,6 +67,7 @@ const _props = withDefaults(defineProps<BModalOrchestratorProps>(), {
 const props = useDefaults(_props, 'BModalOrchestrator')
 
 const tools = useModalController()
+tools._isOrchestratorInstalled.value = true
 
 defineExpose({
   ...tools,

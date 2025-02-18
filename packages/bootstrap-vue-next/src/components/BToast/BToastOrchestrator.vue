@@ -6,20 +6,53 @@
         :key="key"
         :class="value"
         class="toast-container position-fixed p-3"
+        style="width: calc(var(--bs-toast-max-width, 350px) + 2 * 1rem)"
       >
         <TransitionGroup name="b-list">
           <span
-            v-for="toast in tools.toasts?.value.filter((el) => el.props.pos === key)"
-            :key="toast.props._self"
+            v-for="{
+              _self,
+              slots,
+              promise,
+              component: _component,
+              ...val
+            } in tools.toasts?.value.filter((el) => el.position === key) || []"
+            :key="_self"
           >
             <component
-              :is="toast.component ?? BToast"
-              v-bind="toast.props"
-              :model-value="toast.props._modelValue"
+              :is="_component ?? BToast"
+              v-bind="val"
               initial-animation
-              @update:model-value="tools.leave?.(toast.props._self)"
-              @hidden="tools.remove?.(toast.props._self)"
-            />
+              :teleport-disabled="true"
+              @hide="
+                (e: BvTriggerableEvent) => {
+                  val.onHide?.(e)
+                  if (e.defaultPrevented) {
+                    return
+                  }
+                  // we resolve close button to false, true otherwise for example link
+                  if (e.trigger === 'close') {
+                    promise.resolve(false)
+                    return
+                  }
+
+                  promise.resolve(true)
+                }
+              "
+              @hidden="
+                (e: BvTriggerableEvent) => {
+                  val.onHidden?.(e)
+                  if (e.defaultPrevented) {
+                    return
+                  }
+                  tools.remove?.(_self)
+                }
+              "
+            >
+              <template v-for="(comp, slot) in slots" #[slot]="scope" :key="slot">
+                <component :is="comp" v-bind="scope" />
+              </template>
+            </component>
           </span>
         </TransitionGroup>
       </div>
@@ -28,6 +61,8 @@
 </template>
 
 <script setup lang="ts">
+import type {BvTriggerableEvent} from '../../utils'
+
 import {watch} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {positionClasses} from '../../utils/positionClasses'
@@ -48,11 +83,12 @@ const _props = withDefaults(defineProps<BToastOrchestratorProps>(), {
 const props = useDefaults(_props, 'BToastOrchestrator')
 
 const tools = useToastController()
+tools._isOrchestratorInstalled.value = true
 
 watch(
   () => props.appendToast,
   (value) => {
-    tools._setIsAppend?.(value)
+    tools._isAppend.value = value
   },
   {immediate: true}
 )

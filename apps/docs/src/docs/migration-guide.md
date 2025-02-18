@@ -579,6 +579,8 @@ See [Show and Hide](#show-and-hide) shared properties.
 
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
+`content` prop has been renamed to `body` for consistency with other components.
+
 ### BProgressBar
 
 See the [v-html](#v-html) section for information on deprecation of the `label-html` prop.
@@ -655,6 +657,11 @@ See [Show and Hide](#show-and-hide) shared properties.
 <NotYetDocumented type="component"/>
 
 See [Show and Hide](#show-and-hide) shared properties.
+
+See the [v-html](#v-html) section for information on deprecation of the `html` prop.
+
+`content` prop has been renamed to `body` for consistency with other components.
+
 
 ## Directives
 

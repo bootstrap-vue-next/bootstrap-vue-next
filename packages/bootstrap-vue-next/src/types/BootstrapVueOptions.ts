@@ -133,6 +133,7 @@ export const composablesWithExternalPath = {
   useModalController: '/composables/useModalController',
   useScrollspy: '/composables/useScrollspy',
   useToastController: '/composables/useToastController',
+  useToggle: '/composables/useToggle',
   usePopoverController: '/composables/usePopoverController',
 } as const satisfies Record<ComposableType, string>
 export const composableNames = Object.freeze(
