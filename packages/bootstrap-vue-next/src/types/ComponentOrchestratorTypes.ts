@@ -1,4 +1,4 @@
-import type {Component, MaybeRef, MaybeRefOrGetter} from 'vue'
+import type {Component, MaybeRef, MaybeRefOrGetter, WatchHandle} from 'vue'
 import type {BModalProps, BPopoverProps, BToastProps, BTooltipProps} from './ComponentProps'
 import type {ContainerPosition} from './Alignment'
 import type {BModalSlots, BPopoverSlots, BToastSlots} from './ComponentSlots'
@@ -52,6 +52,7 @@ export type ToastOrchestratorArrayValue = Omit<BToastProps, 'modelValue'> & {
   'promise': {
     value: PromiseWithShowHide
     resolve: (value: boolean | null) => void
+    stop?: WatchHandle
   }
 } & {
   [K in keyof BToastEmits as CamelCase<Prefix<'on-', K>>]?: (e: BToastEmits[K][0]) => void
@@ -110,8 +111,8 @@ export type TooltipOrchestratorMapValue = BTooltipProps & {
   'promise': {
     value: PromiseWithShowHide
     resolve: (value: boolean | null) => void
+    stop?: WatchHandle
   }
-  'stop'?: () => void
   'slots'?: {
     [K in keyof Omit<BPopoverSlots, 'target'>]?: BPopoverSlots[K] | Readonly<Component>
   }
@@ -142,8 +143,8 @@ export type PopoverOrchestratorMapValue = BPopoverProps & {
   'promise': {
     value: PromiseWithShowHide
     resolve: (value: boolean | null) => void
+    stop?: WatchHandle
   }
-  'stop'?: () => void
   'slots'?: {
     [K in keyof Omit<BPopoverSlots, 'target'>]?: BPopoverSlots[K] | Readonly<Component>
   }
@@ -174,8 +175,8 @@ export type ModalOrchestratorMapValue = BModalProps & {
   'promise': {
     value: PromiseWithModal
     resolve: (value: boolean | null) => void
+    stop?: WatchHandle
   }
-  'stop': () => void
   'component'?: Readonly<Component>
   'slots'?: {
     [K in keyof BModalSlots]?: BModalSlots[K] | Readonly<Component>

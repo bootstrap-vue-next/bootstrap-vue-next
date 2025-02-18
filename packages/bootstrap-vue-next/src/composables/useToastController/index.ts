@@ -17,6 +17,7 @@ export const useToastController = () => {
     show: noopPromise,
     remove: noop,
     hide: noop,
+    set: noop,
     _isAppend: ref(false),
     _isOrchestratorInstalled: ref(false),
   })

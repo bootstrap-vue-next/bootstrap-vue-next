@@ -26,6 +26,7 @@ export const useModalController = () => {
     show: noopPromise,
     confirm: noopPromise,
     remove: noop,
+    set: noop,
   })
   if (modalControllerPlugin.remove === noop) {
     throw Error(

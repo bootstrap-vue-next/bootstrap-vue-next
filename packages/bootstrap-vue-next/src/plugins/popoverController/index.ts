@@ -4,11 +4,12 @@ import {
   markRaw,
   onScopeDispose,
   type Plugin,
-  type Ref,
   ref,
+  type Ref,
   toRef,
   toValue,
   watch,
+  type WatchHandle,
 } from 'vue'
 import {popoverPluginKey} from '../../utils/keys'
 import type {
@@ -32,6 +33,7 @@ export const popoverPlugin: Plugin = {
     ): {
       value: PromiseWithShowHide
       resolve: (value: boolean | null) => void
+      stop?: WatchHandle
     } => {
       let resolveFunc: (value: boolean | null) => void = () => {
         /* empty */
@@ -43,30 +45,30 @@ export const popoverPlugin: Plugin = {
       Object.assign(promise, {
         id: _id,
         show() {
-          const modal = store.value.get(_id)
-          if (!modal) return promise
-          modal.modelValue = true
-          modal['onUpdate:modelValue']?.(true)
+          const item = store.value.get(_id)
+          if (!item) return promise
+          item.modelValue = true
+          item['onUpdate:modelValue']?.(true)
           return promise
         },
         hide() {
-          const modal = store.value.get(_id)
-          if (modal) {
-            modal.modelValue = false
-            modal['onUpdate:modelValue']?.(false)
+          const item = store.value.get(_id)
+          if (item) {
+            item.modelValue = false
+            item['onUpdate:modelValue']?.(false)
           }
         },
         toggle() {
-          const modal = store.value.get(_id)
-          if (modal) {
-            modal.modelValue = !modal.modelValue
-            modal['onUpdate:modelValue']?.(modal.modelValue)
+          const item = store.value.get(_id)
+          if (item) {
+            // item.modelValue = !item.modelValue
+            item['onUpdate:modelValue']?.(!item.modelValue)
           }
         },
         remove() {
-          const modal = store.value.get(_id)
-          if (modal && modal.stop) {
-            modal.stop()
+          const item = store.value.get(_id)
+          if (item && item.promise.stop) {
+            item.promise.stop?.()
           }
           store.value.delete(_id)
         },
@@ -86,7 +88,7 @@ export const popoverPlugin: Plugin = {
     const popover = (obj: PopoverOrchestratorShowParam): PromiseWithShowHide => {
       if (!_isOrchestratorInstalled.value) {
         throw new Error(
-          'The BModalOrchestrator component must be mounted to use the modal controller'
+          'The BPopoverOrchestrator component must be mounted to use the popover controller'
         )
       }
       const {component, slots} = toValue(obj)
@@ -103,8 +105,7 @@ export const popoverPlugin: Plugin = {
 
       const promise = buildPromise(_self, popovers)
 
-      let stop = () => {}
-      stop = watch(
+      promise.stop = watch(
         resolvedProps,
         (newValue) => {
           const previous = popovers.value.get(_self)
@@ -133,9 +134,14 @@ export const popoverPlugin: Plugin = {
               if (isRef(modelValue) && !isReadonly(modelValue)) {
                 ;(modelValue as Ref<PopoverOrchestratorParam['modelValue']>).value = val
               }
+              if (v.modelValue !== val) {
+                const popover = popovers.value.get(_self)
+                if (popover) {
+                  popover.modelValue = val
+                }
+              }
             },
             promise,
-            stop,
           })
         },
         {
@@ -160,7 +166,7 @@ export const popoverPlugin: Plugin = {
     const tooltip = (obj: TooltipOrchestratorShowParam): PromiseWithShowHide => {
       if (!_isOrchestratorInstalled.value) {
         throw new Error(
-          'The BModalOrchestrator component must be mounted to use the modal controller'
+          'The BModalOrchestrator component must be mounted to use the item controller'
         )
       }
       const {component, slots} = toValue(obj)
@@ -177,8 +183,7 @@ export const popoverPlugin: Plugin = {
 
       const promise = buildPromise(_self, tooltips)
 
-      let stop = () => {}
-      stop = watch(
+      promise.stop = watch(
         resolvedProps,
         (newValue) => {
           const previous = tooltips.value.get(_self)
@@ -207,8 +212,13 @@ export const popoverPlugin: Plugin = {
               if (isRef(modelValue) && !isReadonly(modelValue)) {
                 ;(modelValue as Ref<TooltipOrchestratorParam['modelValue']>).value = val
               }
+              if (v.modelValue !== val) {
+                const tooltip = tooltips.value.get(_self)
+                if (tooltip) {
+                  tooltip.modelValue = val
+                }
+              }
             },
-            stop,
             promise,
           })
         },
@@ -225,12 +235,15 @@ export const popoverPlugin: Plugin = {
     /**
      * @param {ControllerKey} self You can get the symbol param from the return value from the show method, or use props.id
      */
-    const set = (self: ControllerKey, val: Partial<TooltipOrchestratorParam>) => {
+    const set = (
+      self: ControllerKey,
+      val: Partial<TooltipOrchestratorParam | PopoverOrchestratorParam>
+    ) => {
       const tooltip = tooltips.value.get(self)
       if (tooltip) {
-        const v = toValue(val)
+        const v = {...tooltip, ...toValue(val)}
+        // add tooltip to v
         tooltips.value.set(self, {
-          ...tooltip,
           ...v,
           title: toValue(v.title),
           body: toValue(v.body),
@@ -240,28 +253,28 @@ export const popoverPlugin: Plugin = {
       }
       const popover = popovers.value.get(self)
       if (!popover) return
-      const v = toValue(val)
+      const v = {...popover, ...toValue(val)}
       popovers.value.set(self, {
-        ...popover,
         ...v,
         title: toValue(v.title),
         body: toValue(v.body),
         modelValue: toValue(v.modelValue),
       })
     }
+
     /**
      * @param {ControllerKey} self You can get the symbol param from the return value from the show method, or use props.id
      */
     const remove = (self: ControllerKey) => {
       const tooltip = tooltips.value.get(self)
       if (tooltip) {
-        tooltip.stop?.()
+        tooltip.promise.stop?.()
         tooltips.value.delete(self)
       }
 
       const popover = popovers.value.get(self)
       if (!popover) return
-      popover.stop?.()
+      popover.promise.stop?.()
       popovers.value.delete(self)
     }
 

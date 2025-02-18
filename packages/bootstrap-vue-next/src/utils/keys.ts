@@ -17,6 +17,7 @@ import type {BreadcrumbItemRaw} from '../types/BreadcrumbTypes'
 import type {
   ControllerKey,
   ModalOrchestratorMapValue,
+  ModalOrchestratorParam,
   ModalOrchestratorShowParam,
   PopoverOrchestratorMapValue,
   PopoverOrchestratorParam,
@@ -24,6 +25,7 @@ import type {
   PromiseWithModal,
   PromiseWithShowHide,
   ToastOrchestratorArrayValue,
+  ToastOrchestratorParam,
   ToastOrchestratorShowParam,
   TooltipOrchestratorMapValue,
   TooltipOrchestratorParam,
@@ -214,10 +216,11 @@ export const toastPluginKey: InjectionKey<{
   toasts: Ref<ToastOrchestratorArrayValue[]>
   _isAppend: Ref<boolean>
   _isOrchestratorInstalled: Ref<boolean>
-  create: (obj: ToastOrchestratorShowParam) => Promise<boolean | null>
-  show: (obj: ToastOrchestratorShowParam) => Promise<boolean | null>
+  create: (obj: ToastOrchestratorShowParam) => PromiseWithShowHide
+  show: (obj: ToastOrchestratorShowParam) => PromiseWithShowHide
   remove: (self: ControllerKey) => void
   hide: (self: ControllerKey) => void
+  set: (self: ControllerKey, val: Partial<ToastOrchestratorParam>) => void
 }> = createBvnPluginInjectionKey('toast')
 
 export const modalControllerPluginKey: InjectionKey<{
@@ -227,6 +230,7 @@ export const modalControllerPluginKey: InjectionKey<{
   show: (obj: ModalOrchestratorShowParam) => PromiseWithModal
   confirm: (obj: ModalOrchestratorShowParam) => PromiseWithModal
   remove: (self: ControllerKey) => void
+  set: (self: ControllerKey, val: Partial<ModalOrchestratorParam>) => void
 }> = createBvnPluginInjectionKey('modalController')
 
 export const popoverPluginKey: InjectionKey<{

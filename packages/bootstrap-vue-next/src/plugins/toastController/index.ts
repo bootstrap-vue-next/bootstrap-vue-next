@@ -1,10 +1,23 @@
-import {isReadonly, isRef, markRaw, type Plugin, ref, type Ref, toRef, toValue, watch} from 'vue'
+import {
+  isReadonly,
+  isRef,
+  markRaw,
+  onScopeDispose,
+  type Plugin,
+  ref,
+  type Ref,
+  toRef,
+  toValue,
+  watch,
+  type WatchHandle,
+} from 'vue'
 import {toastPluginKey} from '../../utils/keys'
 import type {ContainerPosition} from '../../types/Alignment'
 import type {
   ControllerKey,
   PromiseWithShowHide,
   ToastOrchestratorArrayValue,
+  ToastOrchestratorParam,
   ToastOrchestratorShowParam,
 } from '../../types/ComponentOrchestratorTypes'
 
@@ -21,6 +34,7 @@ export const toastPlugin: Plugin = {
     ): {
       value: PromiseWithShowHide
       resolve: (value: boolean | null) => void
+      stop?: WatchHandle
     } => {
       let resolveFunc: (value: boolean | null) => void = () => {
         /* empty */
@@ -82,7 +96,7 @@ export const toastPlugin: Plugin = {
       const _self = resolvedProps.value?.id || Symbol('Toast controller')
       const promise = buildPromise(_self)
 
-      const stop = watch(
+      promise.stop = watch(
         resolvedProps,
         (newValue) => {
           const previousIndex = toasts.value.findIndex((el) => el._self === _self)
@@ -111,7 +125,7 @@ export const toastPlugin: Plugin = {
             }
           }
           v.position = v.position || posDefault
-          v.modelValue = v.modelValue || 5000
+          v.modelValue = v.modelValue ?? 5000
           v['onUpdate:modelValue'] = (val: boolean) => {
             newValue['onUpdate:modelValue']?.(val)
             const {modelValue} = toValue(obj)
@@ -119,9 +133,16 @@ export const toastPlugin: Plugin = {
             if (isRef(modelValue) && !isReadonly(modelValue)) {
               ;(modelValue as Ref<ToastOrchestratorArrayValue['modelValue']>).value = val
             }
-            if (!!val === false) {
-              stop()
-              remove(_self)
+            // if (!!val === false) {
+            //   stop()
+            //   remove(_self)
+            //   return
+            // }
+            if (v.modelValue !== val) {
+              const toast = toasts.value.find((el) => el._self === _self)
+              if (toast) {
+                toast.modelValue = val
+              }
             }
           }
           if (previousIndex === -1) {
@@ -143,7 +164,7 @@ export const toastPlugin: Plugin = {
           immediate: true,
         }
       )
-
+      onScopeDispose(() => remove(_self), true)
       return promise.value
     }
 
@@ -153,6 +174,9 @@ export const toastPlugin: Plugin = {
      * You can get the symbol param from the return value from the show method, or use props.id
      */
     const remove = (self: ControllerKey) => {
+      const toast = toasts.value.find((el) => el._self === self)
+      if (!toast) return
+      toast.promise.stop?.()
       toasts.value = toasts.value.filter((el) => el._self !== self)
     }
 
@@ -166,6 +190,24 @@ export const toastPlugin: Plugin = {
       toast['onUpdate:modelValue']?.(false)
     }
 
+    /**
+     * @param {ControllerKey} self You can get the symbol param from the return value from the show method, or use props.id
+     */
+    const set = (self: ControllerKey, val: Partial<ToastOrchestratorParam>) => {
+      const toastIndex = toasts.value.findIndex((el) => el._self === self)
+      const toast = toasts.value[toastIndex]
+      if (toast) {
+        const v = {...toast, ...toValue(val)} // Use toast instead of modal
+        // add toast to v
+        toasts.value.splice(toastIndex, 1, {
+          ...v,
+          title: toValue(v.title),
+          body: toValue(v.body),
+          modelValue: toValue(v.modelValue),
+        })
+      }
+    }
+
     app.provide(toastPluginKey, {
       _isAppend,
       _isOrchestratorInstalled: ref(false),
@@ -174,6 +216,7 @@ export const toastPlugin: Plugin = {
       create,
       remove,
       hide,
+      set,
     })
   },
 }

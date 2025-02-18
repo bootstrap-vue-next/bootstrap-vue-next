@@ -45,7 +45,7 @@
                   if (e.defaultPrevented) {
                     return
                   }
-                  tools.remove?.(key)
+                  tools.remove?.(_self)
                 }
               "
             >

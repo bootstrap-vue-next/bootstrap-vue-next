@@ -9,11 +9,13 @@ import {
   toRef,
   toValue,
   watch,
+  type WatchHandle,
 } from 'vue'
 import {modalControllerPluginKey} from '../../utils/keys'
 import type {
   ControllerKey,
   ModalOrchestratorMapValue,
+  ModalOrchestratorParam,
   ModalOrchestratorShowParam,
   PromiseWithModal,
 } from '../../types/ComponentOrchestratorTypes'
@@ -29,6 +31,7 @@ export const modalControllerPlugin: Plugin = {
     ): {
       value: PromiseWithModal
       resolve: (value: boolean | null) => void
+      stop?: WatchHandle
     } => {
       let resolveFunc: (value: boolean | null) => void = () => {
         /* empty */
@@ -70,7 +73,7 @@ export const modalControllerPlugin: Plugin = {
           }
         },
         remove() {
-          modals.value.get(_id)?.stop()
+          modals.value.get(_id)?.promise.stop?.()
           modals.value.delete(_id)
         },
       })
@@ -104,8 +107,8 @@ export const modalControllerPlugin: Plugin = {
       const _self = resolvedProps.value?.id || Symbol('Modals controller')
 
       const promise = buildPromise(_self)
-      let stop = () => {}
-      stop = watch(
+
+      promise.stop = watch(
         resolvedProps,
         (newValue) => {
           const previous = modals.value.get(_self)
@@ -145,7 +148,6 @@ export const modalControllerPlugin: Plugin = {
             },
             ...(v.isConfirm === undefined && {isConfirm: isConfirm ?? false}),
             promise,
-            stop,
           })
         },
         {
@@ -165,8 +167,25 @@ export const modalControllerPlugin: Plugin = {
      * You can get the symbol param from the return value from the show method, or use props.id
      */
     const remove = (self: ControllerKey) => {
-      modals.value.get(self)?.stop()
+      modals.value.get(self)?.promise.stop?.()
       modals.value.delete(self)
+    }
+
+    /**
+     * @param {ControllerKey} self You can get the symbol param from the return value from the show method, or use props.id
+     */
+    const set = (self: ControllerKey, val: Partial<ModalOrchestratorParam>) => {
+      const modal = modals.value.get(self)
+      if (modal) {
+        const v = {...modal, ...toValue(val)}
+        // add modal to v
+        modals.value.set(self, {
+          ...v,
+          title: toValue(v.title),
+          body: toValue(v.body),
+          modelValue: toValue(v.modelValue),
+        })
+      }
     }
 
     app.provide(modalControllerPluginKey, {
@@ -176,6 +195,7 @@ export const modalControllerPlugin: Plugin = {
       remove,
       show,
       confirm,
+      set,
     })
   },
 }
