@@ -21,7 +21,7 @@
       :true-value="props.value"
       :false-value="props.uncheckedValue"
       :indeterminate="indeterminate || undefined"
-      v-bind="attrsWrap.inputAttrs"
+      v-bind="processedAttrs.inputAttrs"
     />
     <label v-if="hasDefaultSlot || props.plain === false" :for="computedId" :class="labelClasses">
       <slot />
@@ -46,7 +46,7 @@ defineOptions({
 })
 
 const attrs = useAttrs()
-const attrsWrap = computed(() => {
+const processedAttrs = computed(() => {
   const {class: wrapperClass, ...inputAttrs} = attrs
   return {wrapperClass, inputAttrs}
 })
@@ -144,7 +144,10 @@ const classesObject = computed(() => ({
   hasDefaultSlot: hasDefaultSlot.value,
 }))
 const wrapperClasses = getClasses(classesObject)
-const computedWrapperClasses = computed(() => [wrapperClasses.value, attrsWrap.value.wrapperClass])
+const computedWrapperClasses = computed(() => [
+  wrapperClasses.value,
+  processedAttrs.value.wrapperClass,
+])
 const inputClasses = getInputClasses(classesObject)
 const computedInputClasses = computed(() => [inputClasses.value, props.inputClass])
 const labelClasses = getLabelClasses(classesObject)

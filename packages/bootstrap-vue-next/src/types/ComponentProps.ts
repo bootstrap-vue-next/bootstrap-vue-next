@@ -52,6 +52,7 @@ import type {RadiusElementExtendables} from './RadiusElement'
 import type {SpinnerType} from './SpinnerType'
 import type {PlaceholderAnimation, PlaceholderSize} from './PlaceholderTypes'
 import type {ButtonType} from './ButtonType'
+import type {LinkOpacity, UnderlineOffset, UnderlineOpacity} from './LinkDecorators'
 import type {LiteralUnion} from './LiteralUnion'
 import type {BreadcrumbItemRaw} from './BreadcrumbTypes'
 import type {TransitionMode} from './TransitionMode'
@@ -75,8 +76,8 @@ export interface BLinkProps {
   href?: string
   icon?: boolean
   noRel?: boolean
-  opacity?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
-  opacityHover?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
+  opacity?: LinkOpacity
+  opacityHover?: LinkOpacity
   prefetch?: boolean
   prefetchOn?: Partial<{
     visibility: boolean
@@ -91,10 +92,10 @@ export interface BLinkProps {
   stretched?: boolean
   target?: LinkTarget
   to?: RouteLocationRaw
-  underlineOffset?: 1 | 2 | 3 | '1' | '2' | '3'
-  underlineOffsetHover?: 1 | 2 | 3 | '1' | '2' | '3'
-  underlineOpacity?: 0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'
-  underlineOpacityHover?: 0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'
+  underlineOffset?: UnderlineOffset
+  underlineOffsetHover?: UnderlineOffset
+  underlineOpacity?: UnderlineOpacity
+  underlineOpacityHover?: UnderlineOpacity
   underlineVariant?: ColorVariant | null
   variant?: ColorVariant | null
 }

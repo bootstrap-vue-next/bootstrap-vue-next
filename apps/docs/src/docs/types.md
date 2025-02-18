@@ -274,6 +274,18 @@ type InputType =
 
 </BCard>
 
+## LinkDecorators
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type LinkOpacity = 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
+type UnderlineOpacity = 0 | '0' | LinkOpacity
+type UnderlineOffset = 1 | 2 | 3 | '1' | '2' | '3'
+```
+
+</BCard>
+
 ## LinkTarget
 
 <BCard class="bg-body-tertiary">

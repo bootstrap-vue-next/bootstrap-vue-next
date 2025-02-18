@@ -19,7 +19,6 @@ import type {BDropdownFormProps} from '../../types/ComponentProps'
 defineOptions({
   inheritAttrs: false,
 })
-
 const attrs = useAttrs()
 const processedAttrs = computed(() => {
   const {class: wrapperClass, ...formAttrs} = attrs
