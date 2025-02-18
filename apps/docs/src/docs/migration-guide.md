@@ -597,6 +597,8 @@ See the [v-html](#v-html) section for information on deprecation of the `label-h
 
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
+The slot `emptyfiltered` has been renamed to `empty-filtered` for consistency.
+
 The following properties are <NotYetImplemented/> -
 `fixed`, `no-border-collapse`
 

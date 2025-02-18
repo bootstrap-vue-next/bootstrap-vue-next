@@ -496,7 +496,31 @@ Slot `custom-foot` can be optionally scoped, receiving an object with the follow
 - Sorting and sorting icons are not available for cells in the `custom-foot` slot.
 - The custom footer will not be shown when the table is in visually stacked mode.
 
-## Custom empty and emptyfiltered rendering via slots
+## Custom empty and empty-filtered rendering via slots
+
+Aside from using `empty-text`, `empty-filtered-text`, it is also possible to provide custom rendering
+for tables that have no data to display using named slots.
+
+In order for these slots to be shown, the `show-empty` attribute must be set and `items` must be
+either falsy or an array of length 0.
+
+<<< FRAGMENT ./demo/TableEmpty.vue#template{vue-html}
+
+The slot can optionally be scoped. The slot's scope (`scope` in the above example) will have the
+following properties:
+
+| Property            | Type                  | Description                                        |
+| ------------------- | --------------------- | -------------------------------------------------- |
+| `emptyFilteredHtml` | `string`              | The `empty-filtered-html` prop                     |
+| `emptyFilteredText` | `string`              | The `empty-filtered-text` prop                     |
+| `fields`            | `TableField<Items>[]` | The `fields` prop                                  |
+| `items`             | `Items[]`             | The `items` prop. Exposed here to check null vs [] |
+
+::: info NOTE
+If you prefiously used the `emptyHtml` or `emtpyFilteredHtml` scoped slots or the `empty-html` or
+`empty-filtered-html` props, please convert to using the `empty-text` or `empty-filtered-text` slots
+instead. See our [migration guide](/docs/migration-guide#v-html) for details.
+:::
 
 ## Advanced Features
 
