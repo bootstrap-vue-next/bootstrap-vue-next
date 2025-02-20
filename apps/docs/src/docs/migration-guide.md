@@ -612,7 +612,7 @@ that is emitted for each row that is unselected. There is also a named model `se
 like the BSV `row-selected` event, emitting an array of all seleted rows. An example of this is available
 in [the documentation](/docs/components/table#row-select-support)
 
-<NotYetImplemented/>BootstrapVue adds a utility classes to the `<table>` including `b-table-select-single`,`b-table-select-multi`, and `b-table-select-range`, these are not yet implemented.
+BootstrapVue adds utility classes to the `<table>` including `b-table-select-single`,`b-table-select-multi`, and `b-table-select-range`, these have been deprecated, as the functionality should be easily replicated by the developer without adding to the API surface.
 
 <NotYetImplemented/>The `aria-multiselect` attribute is not added to `<table>`
 

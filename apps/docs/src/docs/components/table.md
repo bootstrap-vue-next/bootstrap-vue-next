@@ -665,16 +665,6 @@ Rows can also be programmatically selected and unselected via the following expo
   `'false'` for `single` mode, and `'true'` for either `multi` or `range` modes.
 
 <NotYetImplemented/>
-When a `<BTable>` is selectable, it will have class `b-table-selectable` and one of the following
-three classes (depending on which mode is in use) on the `<table>` element:
-
-- `b-table-select-single`
-- `b-table-select-multi`
-- `b-table-select-range`
-
-When at least one row is selected, the class `b-table-selecting` will be active on the `<table>`
-element. Rows that are selected rows will have a class of `b-table-row-selected` applied to the
-`<tr>` element.
 
 Use the prop `selected-variant` to apply a Bootstrap theme color to the selected row(s). Note, due
 to the order that the table variants are defined in Bootstrap's CSS, any row-variant _might_ take
