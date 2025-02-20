@@ -524,15 +524,174 @@ instead. See our [migration guide](/docs/migration-guide#v-html) for details.
 
 ## Advanced Features
 
-To Be Completed
-
 ### Sticky headers
+
+Use the `sticky-header` prop to enable a vertically scrolling table with headers that remain fixed
+(sticky) as the table body scrolls. Setting the prop to `true` (or no explicit value) will generate
+a table that has a maximum height of `300px`. To specify a maximum height other than `300px`, set
+the `sticky-header` prop to a valid CSS height (including units), i.e. `sticky-header="200px"`.
+Tables with `sticky-header` enabled will also automatically become always responsive horizontally,
+regardless of the [`responsive`](#responsive-tables) prop setting, if the table is wider than the
+available horizontal space.
+
+<<< DEMO ./demo/TableStickyHeaders.vue
+
+**Sticky header notes:**
+
+- The `sticky-header` prop has no effect if the table has the [`stacked`](#stacked-tables) prop set.
+- Sticky header tables are wrapped inside a vertically scrollable `<div>` with a maximum height set.
+- BootstrapVue's custom CSS is required in order to support `sticky-header`.
+- Bootstrap v5 uses the CSS style `border-collapse: collapsed` on table elements. This prevents the
+  borders on the sticky header from "sticking" to the header, and hence the borders will scroll when
+  the body scrolls. To get around this issue, set the prop `no-border-collapse` on the table (note
+  that this may cause double width borders when using features such as `bordered`, etc.).
 
 ### Sticky columns
 
+Columns can be made sticky, where they stick to the left of the table when the table has a
+horizontal scrollbar. To make a column a sticky column, set the `stickyColumn` prop in the
+[field's header definition](#field-definition-reference). Sticky columns will only work when the
+table has either the `sticky-header` prop set and/or the [`responsive`](#responsive-tables) prop is
+set.
+
+<<< DEMO ./demo/TableStickyColumns.vue
+
+**Sticky column notes:**
+
+- Sticky columns has no effect if the table has the [`stacked`](#stacked-tables) prop set.
+- Sticky columns tables require either the `sticky-header` and/or `responsive` modes, and are
+  wrapped inside a horizontally scrollable `<div>`.
+- When you have multiple columns that are set as `stickyColumn`, the columns will stack over each
+  other visually, and the left-most sticky columns may "peek" out from under the next sticky column.
+  To get around this behaviour, make sure your latter sticky columns are the same width or wider
+  than previous sticky columns.
+- Bootstrap v5 uses the CSS style `border-collapse: collapsed` on table elements. This prevents any
+  borders on the sticky columns from "sticking" to the column, and hence those borders will scroll
+  when the body scrolls. To get around this issue, set the prop `no-border-collapse` on the table
+  (note that this may cause double width borders when using features such as `bordered`, etc.).
+- BootstrapVue's custom CSS is required in order to support sticky columns.
+- The sticky column feature uses CSS style `position: sticky` to position the column cells. Internet
+  Explorer does not support `position: sticky`, hence for IE 11 the sticky column will scroll with
+  the table body.
+
 ### Row details support
 
+If you would optionally like to display additional record information (such as columns not specified
+in the fields definition array), you can use the scoped slot `row-details`, in combination with the
+special item record `boolean` property `_showDetails`.
+
+If the record has its `_showDetails` property set to `true`, **and** a `row-details` scoped slot
+exists, a new row will be shown just below the item, with the rendered contents of the `row-details`
+scoped slot.
+
+In the scoped field slot, you can toggle the visibility of the row's `row-details` scoped slot by
+calling the `toggleDetails` function passed to the field's scoped slot variable. You can use the
+scoped fields slot variable `detailsShowing` to determine the visibility of the `row-details` slot.
+
+::: info NOTE
+If manipulating the `_showDetails` property directly on the item data (i.e. not via the
+`toggleDetails` function reference), the `_showDetails` property **must** exist in the items data
+for proper reactive detection of changes to its value. Read more about
+[how reactivity works in Vue](https://vuejs.org/guide/extras/reactivity-in-depth.html#Change-Detection-Caveats).
+:::
+
+**Available `row-details` scoped variable properties:**
+
+| Property        | Type                       | Description                                                                                                                   |
+| --------------- | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `item`          | `Items`                    | The entire row record data object                                                                                             |
+| `index`         | `number`                   | The current visible row number                                                                                                |
+| `fields`        | `TableField<Items>[]`      | The normalized fields definition array (in the _array of objects_ format)                                                     |
+| `toggleDetails` | `() => void`               | Function to toggle visibility of the row's details slot                                                                       |
+| `rowSelected`   | `boolean`                  | Will be `true` if the row has been selected. See section [Row select support](#row-select-support) for additional information |
+| `selectRow`     | `(index?: number) => void` | When called, selects the current row. See section [Row select support](#row-select-support) for additional information        |
+| `unselectRow`   | `(index?: number) => void` | When called, unselects the current row. See section [Row select support](#row-select-support) for additional information      |
+
+::: info NOTE
+the row select related scope properties are only available in `<BTable>`.
+:::
+
+In the following example, we show two methods of toggling the visibility of the details: one via a
+button, and one via a checkbox. We also show the third row details defaulting to have details
+initially showing.
+
+<<< DEMO ./demo/TableRowDetails.vue
+
 ### Row select support
+
+You can make rows selectable, by using the `<BTable>` prop `selectable`.
+
+Users can easily change the selecting mode by setting the `select-mode` prop.
+
+- `'multi'`: Each click will select/deselect the row (default mode)
+- `'single'`: Only a single row can be selected at one time
+- `'range'`: Any row clicked is selected, any other deselected. <kbd>Shift</kbd> + click selects a
+  range of rows, and <kbd>Ctrl</kbd> (or <kbd>Cmd</kbd>) + click will toggle the selected row.
+
+When a table is `selectable` and the user clicks on a row, `<BTable>` will emit the `update:selected-items`
+event, passing a single argument which is the complete list of selected items. **This argument
+is read-only.** In addition, `row-selected` or `row-unselected` events are emitted for each row.
+
+Rows can also be programmatically selected and unselected via the following exposed methods on the
+`<BTable>` instance:
+
+| Method                         | Description                                                                                          |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| `selectRow(index: number)`     | Selects a row with the given `index` number.                                                         |
+| `unselectRow(index: number)`   | Unselects a row with the given `index` number.                                                       |
+| `selectAllRows()`              | Selects all rows in the table, except in `single` mode in which case only the first row is selected. |
+| `clearSelected()`              | Unselects all rows.                                                                                  |
+| `isRowSelected(index: number)` | Returns `true` if the row with the given `index` is selected, otherwise it returns `false`.          |
+
+**Programmatic row selection notes:**
+
+- `index` is the zero-based index of the table's **visible rows**, after filtering, sorting, and
+  pagination have been applied.
+- In `single` mode, `selectRow(index)` will unselect any previous selected row.
+- Attempting to `selectRow(index)` or `unselectRow(index)` on a non-existent row will be ignored.
+- The table must be `selectable` for any of these methods to have effect.
+- You can disable selection of rows via click events by setting the `no-select-on-click` prop. Rows
+  will then only be selectable programmatically.
+
+**Row select notes:**
+
+- [Sorting](#sorting), [filtering](#filtering), or [paginating](#pagination) the table will **clear
+  the active selection**. The `update:selected-items` event will be emitted with an empty array (`[]`) if
+  needed.
+- When the table is in `selectable` mode, all data item `<tr>` elements will be in the document tab
+  sequence (`tabindex="0"`) for [accessibility](#accessibility) reasons, and will have the attribute
+  `aria-selected` set to either `'true'` or `'false'` depending on the selected state of the row.
+- When a table is `selectable`, the table will have the attribute `aria-multiselect` set to either
+  `'false'` for `single` mode, and `'true'` for either `multi` or `range` modes.
+
+<NotYetImplemented/>
+When a `<BTable>` is selectable, it will have class `b-table-selectable` and one of the following
+three classes (depending on which mode is in use) on the `<table>` element:
+
+- `b-table-select-single`
+- `b-table-select-multi`
+- `b-table-select-range`
+
+When at least one row is selected, the class `b-table-selecting` will be active on the `<table>`
+element. Rows that are selected rows will have a class of `b-table-row-selected` applied to the
+`<tr>` element.
+
+Use the prop `selected-variant` to apply a Bootstrap theme color to the selected row(s). Note, due
+to the order that the table variants are defined in Bootstrap's CSS, any row-variant _might_ take
+precedence over the `selected-variant`. You can set `selected-variant` to an empty string if you
+will be using other means to convey that a row is selected (such as a scoped field slot in the below
+example).
+
+The `selected-variant` can be any of the
+[standard (or custom) Bootstrap base color variants](/docs/reference/color-variants), or the special
+[table `active` variant](/docs/reference/color-variants#table-variants) (the default) which takes
+precedence over any specific row or cell variants.
+
+For accessibility reasons (specifically for color blind users, or users with color contrast issues),
+it is highly recommended to always provide some other visual means of conveying that a row is
+selected, such as a virtual column as shown in the example below.
+
+<<< DEMO ./demo/TableRowSelect.vue
 
 ### Table body transition support
 
@@ -633,6 +792,10 @@ Sticky columns are supported with `BTableSimple`, but you will need to set the s
 As with `BTable` and `BTableLite`, sticky columns are not supported when the stacked prop is set on `BTableSimple`.
 
 ## Table Helper Components
+
+To Be Completed
+
+## Accessibility
 
 To Be Completed
 
