@@ -600,11 +600,21 @@ See the [v-html](#v-html) section for information on deprecation of the `html` p
 The slot `emptyfiltered` has been renamed to `empty-filtered` for consistency.
 
 The following properties are <NotYetImplemented/> -
-`fixed`, `no-border-collapse`
+`fixed`, `no-border-collapse`, `selected-variant`
 
 <NotYetImplemented /> The `table-colgroup` slot is not yet implemented.
 
 `sort-direction` is deprecated, use the `sortBy` prop (or model) instead.
+
+The semantics of the `row-selected` event have changed. `row-selected` is now emitted for each selected
+row and sends the single row's item as it's parameter. There is a new matching event called `row-unselected`
+that is emitted for each row that is unselected. There is also a named model `selectedItems` that behaves
+like the BSV `row-selected` event, emitting an array of all seleted rows. An example of this is available
+in [the documentation](/docs/components/table#row-select-support)
+
+BootstrapVue adds utility classes to the `<table>` including `b-table-select-single`,`b-table-select-multi`, and `b-table-select-range`, these have been deprecated, as the functionality should be easily replicated by the developer without adding to the API surface.
+
+<NotYetImplemented/>The `aria-multiselect` attribute is not added to `<table>`
 
 ### Field Definitions
 
