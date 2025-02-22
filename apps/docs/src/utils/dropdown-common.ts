@@ -154,7 +154,7 @@ export const dropdownProps = {
 export const dropdownEmits: ComponentReference['emits'] = [
   {
     event: 'click',
-    description: 'Emitted when button is clicked',
+    description: 'Emitted when the main button is clicked only when in split mode.',
     args: [
       {
         arg: 'event',
@@ -200,17 +200,6 @@ export const dropdownEmits: ComponentReference['emits'] = [
   {
     event: 'show-prevented',
     description: 'Emitted when the dropdown tried to open, but was prevented from doing so.',
-  },
-  {
-    event: 'split-click',
-    description: 'Emitted when split button is clicked in split mode',
-    args: [
-      {
-        arg: 'event',
-        type: 'MouseEvent',
-        description: 'Native click event object',
-      },
-    ],
   },
   {
     event: 'toggle',
