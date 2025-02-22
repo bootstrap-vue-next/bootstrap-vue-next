@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.26.29](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.28...bootstrapvuenext-v0.26.29) (2025-02-22)
+
+
+### Bug Fixes
+
+* **BAvatar:** avatar style getting literal Size values fixes [#2535](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2535) ([7621aad](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7621aad0000c9138983315630e35657c6eb97f08))
+
+
+### Performance Improvements
+
+* **BTable:** use a single array.reduce instead of multiple verbose methods when iterating the items array. Reducing the total number of iterations fixes [#2404](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2404) ([7621aad](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7621aad0000c9138983315630e35657c6eb97f08))
+
 ## [0.26.28](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.27...bootstrapvuenext-v0.26.28) (2025-02-18)
 
 
