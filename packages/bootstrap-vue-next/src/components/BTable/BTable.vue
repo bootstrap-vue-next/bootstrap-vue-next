@@ -606,16 +606,85 @@ const getRowClasses = (item: Items | null, type: TableRowType): TableStrictClass
 
 const getFormatter = (value: TableField<Items>): TableFieldFormatter<Items> | undefined =>
   typeof value.sortByFormatted === 'function' ? value.sortByFormatted : value.formatter
+
 const computedItems = computed<Items[]>(() => {
-  const sortItems = (items: Items[]) => {
-    // "undefined" values are set by us, we do this so we dont wipe out the comparer
-    const sortByItems = sortByModel.value?.filter((el) => !!el.order)
+  // "undefined" values are set by us, we do this so we dont wipe out the comparer
+  const sortByItems = sortByModel.value?.filter((el) => !!el.order)
 
-    if (!sortByItems || sortByItems.length === 0) return items
+  const mapItem = (item: Items): Items => {
+    if (
+      typeof item === 'object' &&
+      item !== null &&
+      Object.keys(item).some((key) => key.includes('.'))
+    ) {
+      let newItem: Partial<Items> = {}
+      for (const key in item) {
+        if (key.includes('.')) {
+          newItem = set(newItem, key, item[key])
+        } else {
+          newItem[key] = item[key]
+        }
+      }
+      return newItem as Items // This should be an items at this point
+    }
+    return item
+  }
 
+  const filterItem = (item: Items): boolean => {
+    if (!isTableItem(item)) return true
+
+    return Object.entries(item).some(([key, val]) => {
+      if (
+        val === null ||
+        val === undefined ||
+        key[0] === '_' ||
+        (!props.filterable?.includes(key) && !!props.filterable?.length)
+      )
+        return false
+
+      if (props.filterFunction && typeof props.filterFunction === 'function') {
+        return props.filterFunction(item, props.filter)
+      }
+
+      const realVal = (): string => {
+        const filterField = computedFields.value.find((el) => {
+          if (isTableField<Items>(el)) return el.key === key
+          return false
+        })
+        if (isTableField<Items>(filterField) && !!filterField.filterByFormatted) {
+          const formatter = getFormatter(filterField)
+          if (formatter) {
+            return String(formatter(val, String(filterField.key), item))
+          }
+        }
+        return typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
+      }
+      const itemValue: string = realVal()
+      return itemValue.toLowerCase().includes(props.filter?.toLowerCase() ?? '')
+    })
+  }
+
+  const mappedItems = (usesProvider.value ? internalItems.value : props.items).reduce(
+    (acc, val) => {
+      const item = mapItem(val)
+      const shouldFilter =
+        isFilterableTable.value && (!usesProvider.value || props.noProviderFiltering)
+
+      if (!shouldFilter || filterItem(item)) acc.push(item)
+
+      return acc
+    },
+    [] as Items[]
+  )
+
+  if (
+    sortByItems?.length &&
+    ((isSortable.value === true && !usesProvider.value && !props.noLocalSorting) ||
+      (isSortable.value === true && usesProvider.value && props.noProviderSorting))
+  ) {
     // Multi-sort
-    return [...items].sort((a, b) => {
-      for (let i = 0; i < (sortByItems.length ?? 0); i++) {
+    return mappedItems.sort((a, b) => {
+      for (let i = 0; i < sortByItems.length; i++) {
         const sortOption = sortByItems[i]
         const realVal = (ob: Items): string => {
           if (!isTableItem(ob)) return String(ob)
@@ -649,80 +718,6 @@ const computedItems = computed<Items[]>(() => {
       }
       return 0 // items are equal
     })
-  }
-
-  const filterItems = (items: Items[]) =>
-    items.filter((item) =>
-      isTableItem(item)
-        ? Object.entries(item).some(([key, val]) => {
-            if (
-              val === null ||
-              val === undefined ||
-              key[0] === '_' ||
-              (!props.filterable?.includes(key) && !!props.filterable?.length)
-            )
-              return false
-
-            if (props.filterFunction && typeof props.filterFunction === 'function') {
-              return props.filterFunction(item, props.filter)
-            }
-
-            const realVal = (): string => {
-              const filterField = computedFields.value.find((el) => {
-                if (isTableField<Items>(el)) return el.key === key
-
-                return false
-              })
-              if (isTableField<Items>(filterField) && !!filterField.filterByFormatted) {
-                const formatter = getFormatter(filterField)
-                if (formatter) {
-                  return String(formatter(val, String(filterField.key), item))
-                }
-              }
-              return typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
-            }
-            const itemValue: string = realVal()
-            return itemValue.toLowerCase().includes(props.filter?.toLowerCase() ?? '')
-          })
-        : true
-    )
-
-  let mappedItems = usesProvider.value ? internalItems.value : (props.items as Items[])
-  mappedItems = mappedItems.map((item) => {
-    if (
-      typeof item === 'object' &&
-      item !== null &&
-      Object.keys(item).some((key) => key.includes('.'))
-    ) {
-      // We use any here because the TS doesn't isn't certain that "item" is the same type as our newItem.
-      // But we've determined that it's an object, so we can ignore it since they will always be the same "object"
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let newItem: any = {}
-      for (const key in item) {
-        if (key.includes('.')) {
-          newItem = set(newItem, key, item[key])
-        } else {
-          newItem[key] = item[key]
-        }
-      }
-      return newItem
-      // return
-    }
-    return item
-  })
-
-  if (
-    (isFilterableTable.value === true && !usesProvider.value) ||
-    (isFilterableTable.value === true && usesProvider.value && props.noProviderFiltering)
-  ) {
-    mappedItems = filterItems(mappedItems)
-  }
-
-  if (
-    (isSortable.value === true && !usesProvider.value && !props.noLocalSorting) ||
-    (isSortable.value === true && usesProvider.value && props.noProviderSorting)
-  ) {
-    mappedItems = sortItems(mappedItems)
   }
 
   return mappedItems
