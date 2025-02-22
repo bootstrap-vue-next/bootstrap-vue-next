@@ -18,10 +18,11 @@ export const isTableItem = (value: unknown): value is TableItem =>
 // undefined means no sorting
 export type BTableSortByOrder = 'desc' | 'asc' | undefined
 
+export type BTableSortByComparerFunction = (a: string, b: string) => number
 export type BTableSortBy = {
   order: BTableSortByOrder
   key: string
-  comparer?: (a: string, b: string) => number
+  comparer?: BTableSortByComparerFunction
 }
 
 export type BTableProviderContext = {

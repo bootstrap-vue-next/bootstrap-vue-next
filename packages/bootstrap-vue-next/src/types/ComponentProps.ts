@@ -122,6 +122,28 @@ export interface BAccordionProps {
   unmountLazy?: boolean
 }
 
+export interface BAccordionItemProps {
+  bodyAttrs?: Readonly<AttrsValue>
+  bodyClass?: ClassValue
+  buttonAttrs?: Readonly<AttrsValue>
+  buttonClass?: ClassValue
+  collapseClass?: ClassValue
+  headerAttrs?: Readonly<AttrsValue>
+  headerClass?: ClassValue
+  headerTag?: string
+  horizontal?: boolean
+  id?: string
+  isNav?: boolean
+  modelValue?: boolean
+  lazy?: boolean
+  unmountLazy?: boolean
+  tag?: string
+  title?: string
+  show?: boolean
+  visible?: boolean
+  wrapperAttrs?: Readonly<AttrsValue>
+}
+
 export interface BDropdownDividerProps {
   dividerClass?: ClassValue
   tag?: string
@@ -750,28 +772,6 @@ export interface BSpinnerProps {
   tag?: string
   type?: SpinnerType
   variant?: ColorVariant | null
-}
-
-export interface BAccordionItemProps {
-  bodyAttrs?: Readonly<AttrsValue>
-  bodyClass?: ClassValue
-  buttonAttrs?: Readonly<AttrsValue>
-  buttonClass?: ClassValue
-  collapseClass?: ClassValue
-  headerAttrs?: Readonly<AttrsValue>
-  headerClass?: ClassValue
-  headerTag?: string
-  horizontal?: boolean
-  id?: string
-  isNav?: boolean
-  modelValue?: boolean
-  lazy?: boolean
-  unmountLazy?: boolean
-  tag?: string
-  title?: string
-  show?: boolean
-  visible?: boolean
-  wrapperAttrs?: Readonly<AttrsValue>
 }
 
 export interface BAlertProps {

@@ -22,7 +22,9 @@ $b-avatar-border-color: #dee2e6 !default;
   text-align: center;
   overflow: visible;
   position: relative;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+  transition:
+    color 0.15s ease-in-out,
+    background-color 0.15s ease-in-out,
     box-shadow 0.15s ease-in-out;
 
   &:focus {
