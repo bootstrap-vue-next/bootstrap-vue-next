@@ -112,14 +112,36 @@ export type LinkOpacityProps = Pick<BLinkProps, 'opacity' | 'opacityHover'>
 export type LinkIconProps = Pick<BLinkProps, 'icon'>
 export type LinkVariantProps = Pick<BLinkProps, 'variant'>
 
-export interface BAccordionProps<Free extends boolean> {
+export interface BAccordionProps {
   flush?: boolean
-  free?: Free
+  free?: boolean
   id?: string
   initialAnimation?: boolean
   lazy?: boolean
-  modelValue?: Free extends true ? string[] : string | null
+  modelValue?: string
   unmountLazy?: boolean
+}
+
+export interface BAccordionItemProps {
+  bodyAttrs?: Readonly<AttrsValue>
+  bodyClass?: ClassValue
+  buttonAttrs?: Readonly<AttrsValue>
+  buttonClass?: ClassValue
+  collapseClass?: ClassValue
+  headerAttrs?: Readonly<AttrsValue>
+  headerClass?: ClassValue
+  headerTag?: string
+  horizontal?: boolean
+  id?: string
+  isNav?: boolean
+  modelValue?: boolean
+  lazy?: boolean
+  unmountLazy?: boolean
+  tag?: string
+  title?: string
+  show?: boolean
+  visible?: boolean
+  wrapperAttrs?: Readonly<AttrsValue>
 }
 
 export interface BDropdownDividerProps {
@@ -750,27 +772,6 @@ export interface BSpinnerProps {
   tag?: string
   type?: SpinnerType
   variant?: ColorVariant | null
-}
-
-export interface BAccordionItemProps {
-  bodyAttrs?: Readonly<AttrsValue>
-  bodyClass?: ClassValue
-  buttonAttrs?: Readonly<AttrsValue>
-  buttonClass?: ClassValue
-  collapseClass?: ClassValue
-  headerAttrs?: Readonly<AttrsValue>
-  headerClass?: ClassValue
-  headerTag?: string
-  horizontal?: boolean
-  id?: string
-  isNav?: boolean
-  lazy?: boolean
-  unmountLazy?: boolean
-  tag?: string
-  title?: string
-  show?: boolean
-  visible?: boolean
-  wrapperAttrs?: Readonly<AttrsValue>
 }
 
 export interface BAlertProps {

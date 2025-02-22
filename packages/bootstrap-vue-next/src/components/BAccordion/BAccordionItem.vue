@@ -2,7 +2,7 @@
   <div class="accordion-item" v-bind="props.wrapperAttrs" :class="processedAttrs.wrapperClass">
     <BCollapse
       :id="computedId"
-      v-model="open"
+      v-model="modelValue"
       class="accordion-collapse"
       :class="props.collapseClass"
       :aria-labelledby="`${computedId}-heading`"
@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject, useAttrs} from 'vue'
+import {computed, inject, nextTick, onMounted, useAttrs, watch} from 'vue'
 import BCollapse from '../BCollapse/BCollapse.vue'
 import {accordionInjectionKey} from '../../utils/keys'
 import {useDefaults} from '../../composables/useDefaults'
@@ -69,7 +69,7 @@ const processedAttrs = computed(() => {
   return {wrapperClass, collapseAttrs}
 })
 
-const _props = withDefaults(defineProps<BAccordionItemProps>(), {
+const _props = withDefaults(defineProps<Omit<BAccordionItemProps, 'modelValue'>>(), {
   bodyAttrs: undefined,
   bodyClass: undefined,
   buttonAttrs: undefined,
@@ -104,16 +104,31 @@ const parentData = inject(accordionInjectionKey, null)
 
 const computedId = useId(() => props.id, 'accordion_item')
 
-const open = computed({
-  get: () => {
-    if (!parentData) return false
-    if (Array.isArray(parentData.openItem.value))
-      return parentData.openItem.value.includes(computedId.value)
-    return parentData.openItem.value === computedId.value
-  },
-  set: () => {
-    if (!parentData) return
-    parentData.toggleOpenItem(computedId.value)
-  },
+const modelValue = defineModel<Exclude<BAccordionItemProps['modelValue'], undefined>>({
+  default: false,
+})
+
+modelValue.value =
+  parentData?.openItem.value === computedId.value && !parentData?.initialAnimation.value
+
+if (modelValue.value && !parentData?.free.value) {
+  parentData?.setOpenItem(computedId.value)
+}
+
+onMounted(() => {
+  if (!modelValue.value && parentData?.openItem.value === computedId.value) {
+    nextTick(() => {
+      modelValue.value = true
+    })
+  }
+})
+
+watch(
+  () => parentData?.openItem.value,
+  () =>
+    (modelValue.value = parentData?.openItem.value === computedId.value && !parentData?.free.value)
+)
+watch(modelValue, () => {
+  if (modelValue.value && !parentData?.free.value) parentData?.setOpenItem(computedId.value)
 })
 </script>
