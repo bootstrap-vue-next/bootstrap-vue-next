@@ -69,7 +69,7 @@ const processedAttrs = computed(() => {
   return {wrapperClass, collapseAttrs}
 })
 
-const _props = withDefaults(defineProps<Omit<BAccordionItemProps, 'modelValue'>>(), {
+const _props = withDefaults(defineProps<BAccordionItemProps>(), {
   bodyAttrs: undefined,
   bodyClass: undefined,
   buttonAttrs: undefined,

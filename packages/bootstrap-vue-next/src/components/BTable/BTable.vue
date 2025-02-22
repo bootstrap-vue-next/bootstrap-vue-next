@@ -849,7 +849,16 @@ const handleFieldSorting = (field: TableField<Items>) => {
       ...updatedValue,
       order: index === -1 ? updatedValue.order : resolveOrder(updatedValue.order),
     }
-    sortByModel.value = [val]
+    const tmp = (sortByModel.value || []).map<BTableSortBy>((e) => ({
+      ...e,
+      order: undefined,
+    }))
+    if (index === -1) {
+      tmp.push(val)
+    } else {
+      tmp[index] = val
+    }
+    sortByModel.value = tmp
     return val
   }
 
