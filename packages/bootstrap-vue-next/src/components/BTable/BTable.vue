@@ -828,15 +828,13 @@ const handleFieldSorting = (field: TableField<Items>) => {
    * @returns the updated value to emit for sorted
    */
   const handleMultiSort = (): BTableSortBy => {
-    let val = updatedValue
+    sortByModel.value = sortByModel.value ?? []
+    const val = updatedValue
     if (index === -1) {
-      sortByModel.value = [...(sortByModel.value ?? []), updatedValue]
+      sortByModel.value.push(val)
     } else {
-      const order = resolveOrder(updatedValue.order)
-      val = {...updatedValue, order}
-      sortByModel.value = order
-        ? sortByModel.value?.map((el) => (el.key === val.key ? val : el))
-        : sortByModel.value?.filter((el) => el.key !== val.key)
+      val.order = resolveOrder(val.order)
+      sortByModel.value.splice(index, 1, val)
     }
     return val
   }
