@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.30](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.29...bootstrapvuenext-v0.26.30) (2025-02-23)
+
+
+### Bug Fixes
+
+* **BTable:** multi sort wiping comparer function ([#2575](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2575)) ([2817acc](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2817accc607d2d20e8e2f04ab64d4453c2388878))
+
 ## [0.26.29](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.28...bootstrapvuenext-v0.26.29) (2025-02-22)
 
 
