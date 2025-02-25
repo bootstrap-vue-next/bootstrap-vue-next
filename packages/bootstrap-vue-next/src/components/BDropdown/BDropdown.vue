@@ -17,7 +17,7 @@
       :aria-haspopup="props.split ? undefined : 'menu'"
       :href="props.split ? props.splitHref : undefined"
       :to="props.split && props.splitTo ? props.splitTo : undefined"
-      @click.stop.prevent="onSplitClick"
+      @click="onSplitClick"
     >
       <slot name="button-content"> {{ props.text }} </slot>
     </BButton>
@@ -32,7 +32,7 @@
       class="dropdown-toggle-split dropdown-toggle"
       :aria-expanded="showRef"
       aria-haspopup="menu"
-      @click.stop.prevent="onButtonClick"
+      @click="onButtonClick"
     >
       <span class="visually-hidden">
         <slot name="toggle-text">
@@ -58,7 +58,7 @@
           :class="[props.menuClass, computedMenuClasses]"
           :aria-labelledby="computedId"
           :role="props.role"
-          @click.stop.prevent="onClickInside"
+          @click="onClickInside"
         >
           <slot v-if="contentShowing" :hide="hide" :show="show" :visible="showRef" />
         </ul>
@@ -364,7 +364,6 @@ onClickOutside(
   {ignore: [button, splitButton]}
 )
 const onClickInside = () => {
-  console.log('click inside')
   if (showRef.value && (props.autoClose === true || props.autoClose === 'inside')) {
     hide()
   }
