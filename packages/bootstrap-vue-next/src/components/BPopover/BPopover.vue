@@ -63,6 +63,7 @@ import {
   inline as inlineMiddleware,
   type Middleware,
   offset as offsetMiddleware,
+  type ReferenceElement,
   type RootBoundary,
   shift,
   size as sizeMiddleware,
@@ -269,11 +270,6 @@ const {floatingStyles, middlewareData, placement, update} = useFloating(floating
   placement: placementRef,
   middleware: floatingMiddleware,
   strategy: toRef(() => props.strategy),
-  whileElementsMounted: (...args) => {
-    const cleanup = autoUpdate(...args, {animationFrame: props.realtime})
-    // Important! Always return the cleanup function.
-    return cleanup
-  },
 })
 
 const arrowStyle = ref<CSSProperties>({position: 'absolute'})
@@ -302,6 +298,7 @@ watch(middlewareData, (newValue) => {
   }
 })
 
+let cleanup: ReturnType<typeof autoUpdate> | undefined
 const {
   showRef,
   hide,
@@ -316,8 +313,20 @@ const {
   localTemporaryHide,
 } = useShowHide(modelValue, props, emit as EmitFn, element, computedId, {
   showFn: () => {
-    if (hidden.value) {
-      update()
+    update()
+    nextTick(() => {
+      cleanup = autoUpdate(
+        floatingTarget.value as ReferenceElement,
+        element.value as HTMLElement,
+        update,
+        {animationFrame: props.realtime}
+      )
+    })
+  },
+  hideFn: () => {
+    if (cleanup) {
+      cleanup()
+      cleanup = undefined
     }
   },
 })
