@@ -98,7 +98,7 @@ import type {BDropdownProps} from '../../types/ComponentProps'
 import BButton from '../BButton/BButton.vue'
 import ConditionalWrapper from '../ConditionalWrapper.vue'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
-import {isBoundary, isRootBoundary} from '../../utils/floatingUi'
+import {isBoundary, isRootBoundary, resolveBootstrapCaret} from '../../utils/floatingUi'
 import {getElement} from '../../utils/getElement'
 import {buttonGroupKey, dropdownInjectionKey, inputGroupKey} from '../../utils/keys'
 import {type showHideEmits, useShowHide} from '../../composables/useShowHide'
@@ -327,7 +327,7 @@ const computedClasses = computed(() => [
   props.wrapperClass,
   {
     'btn-group': !props.wrapperClass && props.split,
-    'dropdown': !props.wrapperClass && !props.split,
+    [`drop${resolveBootstrapCaret(props.placement)}`]: !props.wrapperClass,
     'position-static': props.boundary !== 'clippingAncestors' && !props.isNav,
   },
 ])
