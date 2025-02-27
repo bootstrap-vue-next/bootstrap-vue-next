@@ -103,8 +103,8 @@ const props = useDefaults(_props, 'BCarousel')
 const emit = defineEmits<{
   'slide': [value: BvCarouselEvent]
   'slid': [value: BvCarouselEvent]
-  'click:prev': [value: MouseEvent]
-  'click:next': [value: MouseEvent]
+  'prev-click': [value: MouseEvent]
+  'next-click': [value: MouseEvent]
 }>()
 
 const slots = defineSlots<{
@@ -300,12 +300,12 @@ watch(isHovering, (newValue) => {
 })
 
 const onClickPrev = (event: MouseEvent) => {
-  emit('click:prev', event)
+  emit('prev-click', event)
   if (event.defaultPrevented) return
   prev()
 }
 const onClickNext = (event: MouseEvent) => {
-  emit('click:next', event)
+  emit('next-click', event)
   if (event.defaultPrevented) return
   next()
 }
