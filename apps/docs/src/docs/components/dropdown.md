@@ -97,7 +97,7 @@ You can view the [Floating-ui docs](https://floating-ui.com/docs/middleware) to 
 
 ## Split button support
 
-Create a split dropdown button, where the left button provides a `click:split` event and link support, while the right-hand side is the dropdown menu toggle button.
+Create a split dropdown button, where the left button provides a `split-click` event and link support, while the right-hand side is the dropdown menu toggle button.
 
 <<< DEMO ./demo/DropdownSplitButton.vue#template{vue-html}
 

@@ -149,7 +149,7 @@ const props = useDefaults(_props, 'BDropdown')
 
 const emit = defineEmits<
   {
-    'click:split': [event: MouseEvent]
+    'split-click': [event: MouseEvent]
   } & showHideEmits
 >()
 
@@ -348,7 +348,7 @@ const onButtonClick = () => {
 
 const onSplitClick = (event: Readonly<MouseEvent>) => {
   if (props.split) {
-    emit('click:split', event)
+    emit('split-click', event)
     return
   }
   onButtonClick()
