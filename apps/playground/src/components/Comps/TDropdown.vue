@@ -200,7 +200,7 @@
             <BDropdown
               text="click me"
               split
-              @split-click="consoleLog('split button clicked')"
+              @click:split="consoleLog('split button clicked')"
               @click.stop.prevent="consoleLog('button clicked')"
             >
               <BDropdownItem>First Action</BDropdownItem>

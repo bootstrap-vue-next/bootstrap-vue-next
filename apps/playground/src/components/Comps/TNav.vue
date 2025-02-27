@@ -16,7 +16,7 @@
             text="Dropdown"
             toggle-class="nav-link-custom"
             right
-            @split-click="consoleLog('split button clicked')"
+            @click:split="consoleLog('split button clicked')"
             @click.stop.prevent="consoleLog('button clicked')"
           >
             <BDropdownItem>One</BDropdownItem>
