@@ -554,7 +554,7 @@ function onSorted(sortby: BTableSortBy) {
   console.log(`sorted: ${JSON.stringify(sortby)}`)
 }
 
-function onSortUpdate(sortby: BTableSortBy | BTableSortBy[] | null) {
+function onSortUpdate(sortby: BTableSortBy[] | undefined) {
   // eslint-disable-next-line no-console
   console.log(`sort-by:update: ${JSON.stringify(sortby)}`)
 }

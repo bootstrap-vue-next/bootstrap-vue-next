@@ -125,7 +125,7 @@
     "dist",
     "src/**/*.scss"
   ],
-  "types": "./dist/src/BootstrapVue.d.ts",
+  "types": "./dist/bootstrap-vue-next.mjs",
   "private": false,
   "scripts": {
     "dev": "vite --port 5174",
