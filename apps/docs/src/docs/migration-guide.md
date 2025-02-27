@@ -278,7 +278,7 @@ See [Show and Hide](#show-and-hide) shared properties.
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
 The `click` event that was emitted when clicking on the left or button side of a `split` dropdown
-has been replaced by a `click:split` which provides the native mouse event. This is because
+has been replaced by a `split-click` which provides the native mouse event. This is because
 naming the event 'click' was hiding the native `click` event so supressing the that event for
 parents that might have unexpected actions (such as a link navigating to a new page) was difficult.
 

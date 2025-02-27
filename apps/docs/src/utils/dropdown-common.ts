@@ -191,7 +191,7 @@ export const dropdownEmits: ComponentReference['emits'] = [
     description: 'Emitted when the dropdown tried to open, but was prevented from doing so.',
   },
   {
-    event: 'click:split',
+    event: 'split-click',
     description: 'Emitted when split button is clicked in split mode',
     args: [
       {
