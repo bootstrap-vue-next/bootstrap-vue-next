@@ -2,14 +2,14 @@
   <BContainer fluid>
     <BRow>
       <BCol>
-        <BCarousel v-model="modelValue" controls interval="8000" indicators ride="carousel">
-          <BCarouselSlide interval="2000" img-src="https://picsum.photos/1024/480/?image=13" />
-          <BCarouselSlide interval="4000" img-src="https://picsum.photos/1024/480/?image=14" />
+        <BCarousel v-model="modelValue" controls :interval="8000" indicators ride="carousel">
+          <BCarouselSlide :interval="2000" img-src="https://picsum.photos/1024/480/?image=13" />
+          <BCarouselSlide :interval="4000" img-src="https://picsum.photos/1024/480/?image=14" />
           <BCarouselSlide img-src="https://picsum.photos/1024/480/?image=15" />
         </BCarousel>
-        <BCarousel controls interval="8000" indicators ride="carousel">
-          <BCarouselSlide interval="2000" img-src="https://picsum.photos/1024/480/?image=13" />
-          <BCarouselSlide interval="4000" img-src="https://picsum.photos/1024/480/?image=14" />
+        <BCarousel controls :interval="8000" indicators ride="carousel">
+          <BCarouselSlide :interval="2000" img-src="https://picsum.photos/1024/480/?image=13" />
+          <BCarouselSlide :interval="4000" img-src="https://picsum.photos/1024/480/?image=14" />
           <BCarouselSlide img-src="https://picsum.photos/1024/480/?image=15" />
         </BCarousel>
         <BCarousel
