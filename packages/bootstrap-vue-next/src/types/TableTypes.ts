@@ -20,7 +20,7 @@ export type BTableSortByOrder = 'desc' | 'asc' | undefined
 
 export type BTableSortByComparerFunction = (a: string, b: string) => number
 export type BTableSortBy = {
-  order: BTableSortByOrder
+  order?: BTableSortByOrder
   key: string
   comparer?: BTableSortByComparerFunction
 }
