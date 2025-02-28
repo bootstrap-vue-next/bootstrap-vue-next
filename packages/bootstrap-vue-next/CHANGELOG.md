@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.27.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.30...bootstrapvuenext-v0.27.0) (2025-02-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BCarousel:** rename 'click:prev' and 'click:next" to 'prev-click' and 'next-click'
+* **BDropdown:** rename 'click:split' to 'split-click'
+* **BDdropdown:** Replace click event on split button with split-click
+
+### Bug Fixes
+
+* augment global components for IDE inferences fixes [#2534](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2534) ([#2584](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2584)) ([3432f8b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3432f8b293671e4e6900164728eb63d3987e4bc5))
+* **BCarousel:** rename 'click:prev' and 'click:next" to 'prev-click' and 'next-click' ([dc496d0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/dc496d0a017116a89bec4c61250cceb2052b9e24))
+* **BDdropdown:** Replace click event on split button with split-click ([a9b59c8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a9b59c8ee53b7553b9644a4dff90ea4728b77521))
+* **BDropdown:** change `split-click` to `click:split` ([f27544b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f27544b56fc7bdb72769a9cb2ea57db676cb35f8))
+* **BDropdown:** point caret the right way ([fed58b5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/fed58b59ad3ab79244456d608c00df8872126dd8))
+* **BDropdown:** prevent propogation of click events ([3800847](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/380084711e8052e59d83d1ec4ecb85d63e6642c8))
+* **BDropdown:** rename 'click:split' to 'split-click' ([48caab3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/48caab3af1d8fd122e60600afce73b10d140bc41))
+* **BPopover:** don't calculate the position when popover is not shown. ([5d34b6d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5d34b6d852c2ff6e61d2ce14c79737090c670730))
+
 ## [0.26.30](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.29...bootstrapvuenext-v0.26.30) (2025-02-23)
 
 
