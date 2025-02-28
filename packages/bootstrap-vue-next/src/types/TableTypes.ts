@@ -18,22 +18,22 @@ export const isTableItem = (value: unknown): value is TableItem =>
 // undefined means no sorting
 export type BTableSortByOrder = 'desc' | 'asc' | undefined
 
-export type BTableSortByComparerFunction = (a: string, b: string) => number
-export type BTableSortBy = {
+export type BTableSortByComparerFunction<T = unknown> = (a: T, b: T) => number
+export type BTableSortBy<T = unknown> = {
   order: BTableSortByOrder
   key: string
-  comparer?: BTableSortByComparerFunction
+  comparer?: BTableSortByComparerFunction<T>
 }
 
-export type BTableProviderContext = {
-  sortBy: BTableSortBy[] | undefined
+export type BTableProviderContext<T = unknown> = {
+  sortBy: BTableSortBy<T>[] | undefined
   filter: string | undefined
   currentPage: number
   perPage: number
 }
 
 export type BTableProvider<T> = (
-  context: Readonly<BTableProviderContext>
+  context: Readonly<BTableProviderContext<T>>
 ) => MaybePromise<T[] | undefined>
 
 export type TableFieldFormatter<T> = (value: unknown, key: string, item: T) => string

@@ -1080,7 +1080,7 @@ export interface BTableProps<Items> extends Omit<BTableLiteProps<Items>, 'tableC
   noProviderPaging?: boolean
   noProviderSorting?: boolean
   noProviderFiltering?: boolean
-  sortBy?: BTableSortBy[]
+  sortBy?: BTableSortBy<Items>[]
   mustSort?: boolean | string[] // TODO this is a string of fields, possibly generic
   selectable?: boolean
   multisort?: boolean

@@ -623,25 +623,28 @@ describe('object-persistence', () => {
             {
               key: 'marks',
               order: 'asc',
-              comparer: (a, b) => {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              comparer: (a: any, b: any) => {
                 spyFn()
-                return a.localeCompare(b)
+                return a.marks.toString().localeCompare(b.marks.toString())
               },
             },
             {
               key: 'last_name',
               order: 'asc',
-              comparer: (a, b) => {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              comparer: (a: any, b: any) => {
                 spyFn()
-                return a.localeCompare(b)
+                return a.last_name.localeCompare(b.last_name)
               },
             },
             {
               key: 'first_name',
               order: 'asc',
-              comparer: (a, b) => {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              comparer: (a: any, b: any) => {
                 spyFn()
-                return a.localeCompare(b)
+                return a.first_name.localeCompare(b.first_name)
               },
             },
           ],
