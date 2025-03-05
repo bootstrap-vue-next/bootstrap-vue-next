@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.28.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.27.0...nuxt-v0.28.0) (2025-03-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BTable:** fix a long standing regression in which the comparer function in btable did not give the item value, instead passing a string fixes #2565
+
+### Bug Fixes
+
+* **BTable:** fix a long standing regression in which the comparer function in btable did not give the item value, instead passing a string fixes [#2565](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2565) ([05d0b6e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/05d0b6ef7f2561683d06132354616933a0455307))
+* **BTableLite:** stacked uses field key instead of defined label fixes [#2591](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2591) ([05d0b6e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/05d0b6ef7f2561683d06132354616933a0455307))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.28.0
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.28.0
+
 ## [0.27.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.30...nuxt-v0.27.0) (2025-02-28)
 
 
