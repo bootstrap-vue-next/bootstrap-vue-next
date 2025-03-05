@@ -326,7 +326,7 @@ const emit = defineEmits<{
   'row-middle-clicked': TableRowEvent<Items>
   'row-selected': [value: Items]
   'row-unselected': [value: Items]
-  'sorted': [value: BTableSortBy]
+  'sorted': [value: BTableSortBy<Items>]
   'change': [value: Items[]]
 }>()
 
@@ -449,7 +449,7 @@ const selectedItemsModel = defineModel<Exclude<BTableProps<Items>['selectedItems
 const computedId = useId(() => props.id)
 
 const selectedItemsToSet = computed({
-  get: () => new Set([...selectedItemsModel.value]),
+  get: () => new Set(selectedItemsModel.value),
   set: (val) => {
     selectedItemsModel.value = [...val]
   },
@@ -685,16 +685,16 @@ const computedItems = computed<Items[]>(() => {
     // Multi-sort
     return mappedItems.sort((a, b) => {
       for (let i = 0; i < sortByItems.length; i++) {
-        const sortOption = sortByItems[i]
-        const realVal = (ob: Items): string => {
+        const {key, comparer, order} = sortByItems[i]
+        const getStringValue = (ob: Items): string => {
           if (!isTableItem(ob)) return String(ob)
 
           const sortField = computedFields.value.find((el) => {
-            if (isTableField<Items>(el)) return el.key === sortOption.key
+            if (isTableField<Items>(el)) return el.key === key
 
             return false
           })
-          const val = get(ob, sortOption.key as keyof TableItem)
+          const val = get(ob, key as keyof TableItem)
           if (isTableField<Items>(sortField) && !!sortField.sortByFormatted) {
             const formatter = getFormatter(sortField)
             if (formatter) {
@@ -706,14 +706,12 @@ const computedItems = computed<Items[]>(() => {
             : (val?.toString() ?? '')
         }
 
-        const aValue = realVal(a)
-        const bValue = realVal(b)
-        const comparison = sortOption.comparer
-          ? sortOption.comparer(aValue, bValue)
-          : aValue.localeCompare(bValue, undefined, {numeric: true})
+        const comparison = comparer
+          ? comparer(a, b, key)
+          : getStringValue(a).localeCompare(getStringValue(b), undefined, {numeric: true})
 
         if (comparison !== 0) {
-          return sortOption.order === 'asc' ? comparison : -comparison
+          return order === 'asc' ? comparison : -comparison
         }
       }
       return 0 // items are equal
@@ -819,7 +817,7 @@ const handleFieldSorting = (field: TableField<Items>) => {
 
   const index = sortByModel.value?.findIndex((el) => el.key === fieldKey) ?? -1
   const originalValue = sortByModel.value?.[index]
-  const updatedValue: BTableSortBy =
+  const updatedValue: BTableSortBy<Items> =
     // If value is new, we default to ascending
     // Otherwise we make a temp copy of the value
     index === -1 || !originalValue ? {key: fieldKey as string, order: 'asc'} : {...originalValue}
@@ -827,7 +825,7 @@ const handleFieldSorting = (field: TableField<Items>) => {
   /**
    * @returns the updated value to emit for sorted
    */
-  const handleMultiSort = (): BTableSortBy => {
+  const handleMultiSort = (): BTableSortBy<Items> => {
     sortByModel.value = sortByModel.value ?? []
     const val = updatedValue
     if (index === -1) {
@@ -842,12 +840,12 @@ const handleFieldSorting = (field: TableField<Items>) => {
   /**
    * @returns the updated value to emit for sorted
    */
-  const handleSingleSort = (): BTableSortBy => {
+  const handleSingleSort = (): BTableSortBy<Items> => {
     const val = {
       ...updatedValue,
       order: index === -1 ? updatedValue.order : resolveOrder(updatedValue.order),
     }
-    const tmp = (sortByModel.value || []).map<BTableSortBy>((e) => ({
+    const tmp = (sortByModel.value || []).map<BTableSortBy<Items>>((e) => ({
       ...e,
       order: undefined,
     }))
@@ -968,7 +966,7 @@ const exposedSelectableUtilities = {
   },
   selectAllRows: () => {
     if (!props.selectable || props.selectMode === 'single') return
-    selectedItemsToSet.value = new Set([...computedItems.value])
+    selectedItemsToSet.value = new Set(computedItems.value)
   },
   selectRow: (index: number) => {
     if (!props.selectable) return
