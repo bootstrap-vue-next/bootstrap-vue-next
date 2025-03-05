@@ -15,11 +15,16 @@ export type TableItem<T = Record<string, unknown>> = T & {
 export const isTableItem = (value: unknown): value is TableItem =>
   typeof value === 'object' && value !== null
 
-// undefined means no sorting
+/**
+ * `undefined` means it's not sorting this column. It is set to undefined rather than removed from the array because
+ * we don't want to make updates that remove the comparer function from the value.
+ */
 export type BTableSortByOrder = 'desc' | 'asc' | undefined
 
-export type BTableSortByComparerFunction<T = unknown> = (a: T, b: T) => number
-export type BTableSortBy<T = unknown> = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type BTableSortByComparerFunction<T = any> = (a: T, b: T, key: string) => number
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type BTableSortBy<T = any> = {
   order: BTableSortByOrder
   key: string
   comparer?: BTableSortByComparerFunction<T>

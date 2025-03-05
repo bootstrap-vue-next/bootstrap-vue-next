@@ -680,4 +680,55 @@ describe('object-persistence', () => {
       expect(spyFn).toHaveBeenCalledTimes(129)
     })
   })
+
+  it('stacked mode renders the correct label', () => {
+    const fields = [
+      {
+        key: 'id',
+        label: 'The ID',
+      },
+      {
+        key: 'first_name',
+        label: 'this is the first name',
+      },
+      {
+        key: 'last_name',
+        label: 'this is the last name',
+      },
+    ]
+    const items = [
+      {
+        id: 1,
+        first_name: 'Ringo',
+        last_name: 'Starr',
+      },
+      {
+        id: 2,
+        first_name: 'John',
+        last_name: 'Lennon',
+      },
+      {
+        id: 3,
+        first_name: 'Paul',
+        last_name: 'McCartney',
+      },
+    ]
+
+    const wrapper = mount(BTable, {
+      props: {
+        fields,
+        items,
+        stacked: true,
+      },
+    })
+
+    const trs = wrapper.findAll('tr')
+    trs.forEach((tr) => {
+      const tds = tr.findAll('td')
+      tds.forEach((td, colIndex) => {
+        const field = fields[colIndex]
+        expect(td.attributes('data-label')).toBe(field.label)
+      })
+    })
+  })
 })

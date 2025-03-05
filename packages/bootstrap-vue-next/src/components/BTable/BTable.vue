@@ -685,16 +685,16 @@ const computedItems = computed<Items[]>(() => {
     // Multi-sort
     return mappedItems.sort((a, b) => {
       for (let i = 0; i < sortByItems.length; i++) {
-        const sortOption = sortByItems[i]
-        const realVal = (ob: Items): string => {
+        const {key, comparer, order} = sortByItems[i]
+        const getStringValue = (ob: Items): string => {
           if (!isTableItem(ob)) return String(ob)
 
           const sortField = computedFields.value.find((el) => {
-            if (isTableField<Items>(el)) return el.key === sortOption.key
+            if (isTableField<Items>(el)) return el.key === key
 
             return false
           })
-          const val = get(ob, sortOption.key as keyof TableItem)
+          const val = get(ob, key as keyof TableItem)
           if (isTableField<Items>(sortField) && !!sortField.sortByFormatted) {
             const formatter = getFormatter(sortField)
             if (formatter) {
@@ -706,13 +706,12 @@ const computedItems = computed<Items[]>(() => {
             : (val?.toString() ?? '')
         }
 
-        const comparison = sortOption.comparer
-          ? sortOption.comparer(a, b)
-          : // realVal is essentially a tostring here. comparer() doesn't give the strings
-            realVal(a).localeCompare(realVal(b), undefined, {numeric: true})
+        const comparison = comparer
+          ? comparer(a, b, key)
+          : getStringValue(a).localeCompare(getStringValue(b), undefined, {numeric: true})
 
         if (comparison !== 0) {
-          return sortOption.order === 'asc' ? comparison : -comparison
+          return order === 'asc' ? comparison : -comparison
         }
       }
       return 0 // items are equal

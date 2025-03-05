@@ -384,7 +384,7 @@ const computedTableClasses = computed(() => [
 const computedFields = computed<(TableField<Items> & {_noHeader?: true})[]>(() => {
   if (!props.fields.length && props.items.length) {
     const [firstItem] = props.items
-    if (isTableItem(firstItem) || Array.isArray(firstItem)) {
+    if (firstItem && (isTableItem(firstItem) || Array.isArray(firstItem))) {
       return Object.keys(firstItem).map((k) => {
         const label = startCase(k)
         return {
@@ -401,12 +401,10 @@ const computedFields = computed<(TableField<Items> & {_noHeader?: true})[]>(() =
 
   return props.fields.map((f) => {
     if (isTableField(f)) {
+      const label = f.label ?? startCase(f.key as string)
       return {
         ...(f as TableField<Items>),
-        tdAttr:
-          props.stacked === true
-            ? {'data-label': startCase(f.key as string), ...f.tdAttr}
-            : f.tdAttr,
+        tdAttr: props.stacked === true ? {'data-label': label, ...f.tdAttr} : f.tdAttr,
       }
     }
     const label = startCase(f as string)

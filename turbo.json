@@ -3,11 +3,11 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**"]
+      "outputs": ["dist/**", ".vitepress/dist/**"]
     },
     "build-only": {
       "dependsOn": ["^build-only"],
-      "outputs": ["dist/**"]
+      "outputs": ["dist/**", ".vitepress/dist/**"]
     },
     "test": {
       "outputs": []
