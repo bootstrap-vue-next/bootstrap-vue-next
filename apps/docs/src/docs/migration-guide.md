@@ -24,6 +24,13 @@ Bootstrap-vue-next will commit to breaking changes whenever Bootstrap marks some
 `bootstrap-vue-next` integrates with `nuxt 3` so if you are using `nuxt`, please read their
 [migration guide](https://nuxt.com/docs/migration/overview) and our [router link support](/docs/reference/router-links) reference
 
+### Status
+
+This migration guide is a work in progress. We're adding to this guide as we complete the documentation and parity pass and doing
+our best to note each component or directive that hasn't been through the full process. <NotYetDocumented :help-only="true" />
+For section of this guide that are not marked as in progress, we're still interested in examples of migrations that you
+have found tricky or clarifcation if the details in the guide weren't sufficent.
+
 ## Sync modifier
 
 A number of components in `bootstrap-vue` use `v-bind`'s `.sync` modifier. This modifier has been replaced by properties
@@ -108,6 +115,8 @@ Each of the options group components `BFormDatalist`, `BFormRadioGroup`, `BFormS
 `BFormSelectOptionGroup` implements a scoped slot `option` which takes a `SelectOption<T>` parameter.
 
 <<< DEMO ./demo/CheckboxGroupMigration.vue
+
+<<< DEMO ./demo/RadioGroupMigration.vue
 
 ## Components
 
