@@ -114,9 +114,9 @@ Most importantly any use your code makes of `v-html` will be explicit. See the [
 Each of the options group components `BFormDatalist`, `BFormRadioGroup`, `BFormSelect`, and
 `BFormSelectOptionGroup` implements a scoped slot `option` which takes a `SelectOption<T>` parameter.
 
-<<< DEMO ./demo/CheckboxGroupMigration.vue
-
 <<< DEMO ./demo/RadioGroupMigration.vue
+
+<<< DEMO ./demo/CheckboxGroupMigration.vue
 
 ## Components
 

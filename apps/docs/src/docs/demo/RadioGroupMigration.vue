@@ -1,32 +1,64 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <div>
-    <BFormRadioGroup v-model="model" :options="options">
-      <template #option="{value}">
-        {{ (value as Name).first }} <b>{{ (value as Name).last }}</b>
-      </template>
-    </BFormRadioGroup>
+    <BFormGroup class="form-group" label="Color" label-for="color-group" label-class="mb-1">
+      <BFormRadioGroup
+        id="color-group"
+        v-model="model"
+        name="color-group"
+        button-variant="outline-secondary"
+        :options="options"
+        buttons
+      >
+        <template #option="val"> <div v-html="val.html" /> </template>
+      </BFormRadioGroup>
+    </BFormGroup>
     <b>model = </b>{{ model }}
   </div>
 </template>
-
 <script setup lang="ts">
-import type {RadioValue} from 'bootstrap-vue-next'
 import {ref} from 'vue'
+import type {RadioValue} from 'bootstrap-vue-next'
 
-interface Name {
-  first: string
-  last: string
+enum MyColors {
+  black = 'BLACK',
+  red = 'RED',
+  green = 'GREEN',
+  blue = 'BLUE',
+  purple = 'PURPLE',
 }
 
+const model = ref<RadioValue>(MyColors.black)
 const options = [
-  {value: {last: 'Brown', first: 'Christina'}},
-  {value: {last: 'Smith', first: 'John'}},
-  {value: {last: 'Doe', first: 'Jane'}},
-  {value: {last: 'Johnson', first: 'Michael'}},
-  {value: {last: 'Williams', first: 'Patricia'}},
-  {value: {last: 'Jones', first: 'Robert'}},
-  {value: {last: 'Garcia', first: 'Linda'}},
+  {
+    props: {
+      html: `<span style="color:black" /> Black`,
+    },
+    value: MyColors.black,
+  },
+  {
+    props: {
+      html: `<span style="color:red" /> Red`,
+    },
+    value: MyColors.red,
+  },
+  {
+    props: {
+      html: `<span style="color:green" /> Green`,
+    },
+    value: MyColors.green,
+  },
+  {
+    props: {
+      html: `<span style="color:blue" /> Blue`,
+    },
+    value: MyColors.blue,
+  },
+  {
+    props: {
+      html: `<span style="color:purple" /> Purple`,
+    },
+    value: MyColors.purple,
+  },
 ]
-
-const model = ref<RadioValue>(options[0].value)
 </script>
