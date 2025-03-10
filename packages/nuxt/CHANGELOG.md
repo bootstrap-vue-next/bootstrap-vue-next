@@ -2,93 +2,82 @@
 
 ## [0.28.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.27.0...nuxt-v0.28.0) (2025-03-05)
 
-
 ### ⚠ BREAKING CHANGES
 
-* **BTable:** fix a long standing regression in which the comparer function in btable did not give the item value, instead passing a string fixes #2565
+- **BTable:** fix a long standing regression in which the comparer function in btable did not give the item value, instead passing a string fixes #2565
 
 ### Bug Fixes
 
-* **BTable:** fix a long standing regression in which the comparer function in btable did not give the item value, instead passing a string fixes [#2565](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2565) ([05d0b6e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/05d0b6ef7f2561683d06132354616933a0455307))
-* **BTableLite:** stacked uses field key instead of defined label fixes [#2591](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2591) ([05d0b6e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/05d0b6ef7f2561683d06132354616933a0455307))
-
+- **BTable:** fix a long standing regression in which the comparer function in btable did not give the item value, instead passing a string fixes [#2565](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2565) ([05d0b6e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/05d0b6ef7f2561683d06132354616933a0455307))
+- **BTableLite:** stacked uses field key instead of defined label fixes [#2591](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2591) ([05d0b6e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/05d0b6ef7f2561683d06132354616933a0455307))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.28.0
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.28.0
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.28.0
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.28.0
 
 ## [0.27.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.30...nuxt-v0.27.0) (2025-02-28)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.27.0
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.27.0
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.27.0
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.27.0
 
 ## [0.26.30](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.29...nuxt-v0.26.30) (2025-02-23)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.26.30
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.26.30
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.26.30
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.26.30
 
 ## [0.26.29](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.28...nuxt-v0.26.29) (2025-02-22)
 
-
 ### Bug Fixes
 
-* **BAvatar:** avatar style getting literal Size values fixes [#2535](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2535) ([7621aad](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7621aad0000c9138983315630e35657c6eb97f08))
-
+- **BAvatar:** avatar style getting literal Size values fixes [#2535](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2535) ([7621aad](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7621aad0000c9138983315630e35657c6eb97f08))
 
 ### Performance Improvements
 
-* **BTable:** use a single array.reduce instead of multiple verbose methods when iterating the items array. Reducing the total number of iterations fixes [#2404](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2404) ([7621aad](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7621aad0000c9138983315630e35657c6eb97f08))
-
+- **BTable:** use a single array.reduce instead of multiple verbose methods when iterating the items array. Reducing the total number of iterations fixes [#2404](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2404) ([7621aad](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7621aad0000c9138983315630e35657c6eb97f08))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.26.29
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.26.29
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.26.29
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.26.29
 
 ## [0.26.28](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.27...nuxt-v0.26.28) (2025-02-18)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.26.28
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.26.28
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.26.28
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.26.28
 
 ## [0.26.27](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.26.26...nuxt-v0.26.27) (2025-02-18)
 
