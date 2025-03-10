@@ -111,12 +111,19 @@ Most importantly any use your code makes of `v-html` will be explicit. See the [
 
 <a name="popover-html">BootstrapVue `b-popover` didn't have an `html` attribute, but alpha versions of BootstrapVueNext did</a>
 
-Each of the options group components `BFormDatalist`, `BFormRadioGroup`, `BFormSelect`, and
-`BFormSelectOptionGroup` implements a scoped slot `option` which takes a `SelectOption<T>` parameter.
-
-<<< DEMO ./demo/RadioGroupMigration.vue
+`BFormCheckboxGroup` and `BFormRadioGroup` implement a scoped slot `option` which takes a `Record<string, unknown>` parameter. You can add
+arbitrary fields to elements of the options array that you pass in and they will be accessible to the slot. The example
+below uses the data on the options object to create the html inline in the slot.
 
 <<< DEMO ./demo/CheckboxGroupMigration.vue
+
+Or you can do a straightforward translation of a `BFormRadioGroup` passing an `HTML` string through to its children.
+If you're passing user data, this still opens your code uop to <a class="alert-link" href="https://en.wikipedia.org/wiki/Cross-site_scripting">
+<abbr title="Cross Site Scripting Attacks">XSS attacks</abbr></a>, if you do not first
+<a class="alert-link" href="https://en.wikipedia.org/wiki/HTML_sanitization">sanitize</a> the
+user supplied string, but the BootstrapVueNext library isn't adding an extra layer of abstraction to this vulnerability.
+
+<<< DEMO ./demo/RadioGroupMigration.vue
 
 ## Components
 

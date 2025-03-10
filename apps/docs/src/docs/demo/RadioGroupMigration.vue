@@ -18,47 +18,12 @@
 </template>
 <script setup lang="ts">
 import {ref} from 'vue'
-import type {RadioValue} from 'bootstrap-vue-next'
 
-enum MyColors {
-  black = 'BLACK',
-  red = 'RED',
-  green = 'GREEN',
-  blue = 'BLUE',
-  purple = 'PURPLE',
-}
+const myColors = ['Black', 'Red', 'Green', 'Blue', 'Purple']
 
-const model = ref<RadioValue>(MyColors.black)
-const options = [
-  {
-    props: {
-      html: `<span style="color:black" /> Black`,
-    },
-    value: MyColors.black,
-  },
-  {
-    props: {
-      html: `<span style="color:red" /> Red`,
-    },
-    value: MyColors.red,
-  },
-  {
-    props: {
-      html: `<span style="color:green" /> Green`,
-    },
-    value: MyColors.green,
-  },
-  {
-    props: {
-      html: `<span style="color:blue" /> Blue`,
-    },
-    value: MyColors.blue,
-  },
-  {
-    props: {
-      html: `<span style="color:purple" /> Purple`,
-    },
-    value: MyColors.purple,
-  },
-]
+const model = ref(myColors[0])
+const options = myColors.map((e) => ({
+  value: e,
+  html: `<span style="color:${e.toLowerCase()}" /> ${e}`,
+}))
 </script>
