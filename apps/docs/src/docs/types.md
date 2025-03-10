@@ -495,6 +495,22 @@ type TableItem<T = Record<string, unknown>> = T & {
 
 </BCard>
 
+## TableSortBy
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type BTableSortByOrder = 'desc' | 'asc' | undefined
+type BTableSortByComparerFunction<T = any> = (a: T, b: T, key: string) => number
+type BTableSortBy<T = any> = {
+  order: BTableSortByOrder
+  key: string
+  comparer?: BTableSortByComparerFunction<T>
+}
+```
+
+</BCard>
+
 ## TextColorVariant
 
 <BCard class="bg-body-tertiary">

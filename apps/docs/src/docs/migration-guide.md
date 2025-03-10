@@ -609,7 +609,7 @@ The following properties are <NotYetImplemented/> -
 
 <NotYetImplemented /> The `table-colgroup` slot is not yet implemented.
 
-`sort-direction` is deprecated, use the `sortBy` prop (or model) instead.
+`sort-compare` and `sort-direction` are deprecated, use the `sortBy` prop (or model) as documented [here](/docs/components/table#sorting) instead.
 
 The semantics of the `row-selected` event have changed. `row-selected` is now emitted for each selected
 row and sends the single row's item as it's parameter. There is a new matching event called `row-unselected`
