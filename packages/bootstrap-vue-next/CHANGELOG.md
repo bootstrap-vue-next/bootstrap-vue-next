@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.28.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.28.0...bootstrapvuenext-v0.28.1) (2025-03-10)
+
+
+### Features
+
+* **BFormCheckbboxGroup:** spread the input object rather than el.props fixes [#2590](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2590) ([2c3970c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2c3970ca3ed0c3d312600877c8ec0043a6834144))
+* **BFormRadioGroup:** spread the input object rather than el.props fixes [#2590](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2590) ([2c3970c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2c3970ca3ed0c3d312600877c8ec0043a6834144))
+
+
+### Bug Fixes
+
+* **BTable:** stacked mode when using breakpoint data-label not rendering fixes [#2595](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2595) ([2c3970c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2c3970ca3ed0c3d312600877c8ec0043a6834144))
+
 ## [0.28.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.27.0...bootstrapvuenext-v0.28.0) (2025-03-05)
 
 ### ⚠ BREAKING CHANGES
