@@ -24,6 +24,13 @@ Bootstrap-vue-next will commit to breaking changes whenever Bootstrap marks some
 `bootstrap-vue-next` integrates with `nuxt 3` so if you are using `nuxt`, please read their
 [migration guide](https://nuxt.com/docs/migration/overview) and our [router link support](/docs/reference/router-links) reference
 
+### Status
+
+This migration guide is a work in progress. We're adding to this guide as we complete the documentation and parity pass and doing
+our best to note each component or directive that hasn't been through the full process. <NotYetDocumented :help-only="true" />
+For section of this guide that are not marked as in progress, we're still interested in examples of migrations that you
+have found tricky or clarifcation if the details in the guide weren't sufficent.
+
 ## Sync modifier
 
 A number of components in `bootstrap-vue` use `v-bind`'s `.sync` modifier. This modifier has been replaced by properties
@@ -104,10 +111,19 @@ Most importantly any use your code makes of `v-html` will be explicit. See the [
 
 <a name="popover-html">BootstrapVue `b-popover` didn't have an `html` attribute, but alpha versions of BootstrapVueNext did</a>
 
-Each of the options group components `BFormDatalist`, `BFormRadioGroup`, `BFormSelect`, and
-`BFormSelectOptionGroup` implements a scoped slot `option` which takes a `SelectOption<T>` parameter.
+`BFormCheckboxGroup` and `BFormRadioGroup` implement a scoped slot `option` which takes a `Record<string, unknown>` parameter. You can add
+arbitrary fields to elements of the options array that you pass in and they will be accessible to the slot. The example
+below uses the data on the options object to create the html inline in the slot.
 
 <<< DEMO ./demo/CheckboxGroupMigration.vue
+
+Or you can do a straightforward translation of a `BFormRadioGroup` passing an `HTML` string through to its children.
+If you're passing user data, this still opens your code uop to <a class="alert-link" href="https://en.wikipedia.org/wiki/Cross-site_scripting">
+<abbr title="Cross Site Scripting Attacks">XSS attacks</abbr></a>, if you do not first
+<a class="alert-link" href="https://en.wikipedia.org/wiki/HTML_sanitization">sanitize</a> the
+user supplied string, but the BootstrapVueNext library isn't adding an extra layer of abstraction to this vulnerability.
+
+<<< DEMO ./demo/RadioGroupMigration.vue
 
 ## Components
 
