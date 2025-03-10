@@ -1,50 +1,56 @@
 # Changelog
 
-## [0.27.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.30...bootstrapvuenext-v0.27.0) (2025-02-28)
-
+## [0.28.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.27.0...bootstrapvuenext-v0.28.0) (2025-03-05)
 
 ### ⚠ BREAKING CHANGES
 
-* **BCarousel:** rename 'click:prev' and 'click:next" to 'prev-click' and 'next-click'
-* **BDropdown:** rename 'click:split' to 'split-click'
-* **BDdropdown:** Replace click event on split button with split-click
+- **BTable:** fix a long standing regression in which the comparer function in btable did not give the item value, instead passing a string fixes #2565
 
 ### Bug Fixes
 
-* augment global components for IDE inferences fixes [#2534](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2534) ([#2584](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2584)) ([3432f8b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3432f8b293671e4e6900164728eb63d3987e4bc5))
-* **BCarousel:** rename 'click:prev' and 'click:next" to 'prev-click' and 'next-click' ([dc496d0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/dc496d0a017116a89bec4c61250cceb2052b9e24))
-* **BDdropdown:** Replace click event on split button with split-click ([a9b59c8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a9b59c8ee53b7553b9644a4dff90ea4728b77521))
-* **BDropdown:** change `split-click` to `click:split` ([f27544b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f27544b56fc7bdb72769a9cb2ea57db676cb35f8))
-* **BDropdown:** point caret the right way ([fed58b5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/fed58b59ad3ab79244456d608c00df8872126dd8))
-* **BDropdown:** prevent propogation of click events ([3800847](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/380084711e8052e59d83d1ec4ecb85d63e6642c8))
-* **BDropdown:** rename 'click:split' to 'split-click' ([48caab3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/48caab3af1d8fd122e60600afce73b10d140bc41))
-* **BPopover:** don't calculate the position when popover is not shown. ([5d34b6d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5d34b6d852c2ff6e61d2ce14c79737090c670730))
+- **BTable:** fix a long standing regression in which the comparer function in btable did not give the item value, instead passing a string fixes [#2565](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2565) ([05d0b6e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/05d0b6ef7f2561683d06132354616933a0455307))
+- **BTableLite:** stacked uses field key instead of defined label fixes [#2591](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2591) ([05d0b6e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/05d0b6ef7f2561683d06132354616933a0455307))
+
+## [0.27.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.30...bootstrapvuenext-v0.27.0) (2025-02-28)
+
+### ⚠ BREAKING CHANGES
+
+- **BCarousel:** rename 'click:prev' and 'click:next" to 'prev-click' and 'next-click'
+- **BDropdown:** rename 'click:split' to 'split-click'
+- **BDdropdown:** Replace click event on split button with split-click
+
+### Bug Fixes
+
+- augment global components for IDE inferences fixes [#2534](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2534) ([#2584](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2584)) ([3432f8b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3432f8b293671e4e6900164728eb63d3987e4bc5))
+- **BCarousel:** rename 'click:prev' and 'click:next" to 'prev-click' and 'next-click' ([dc496d0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/dc496d0a017116a89bec4c61250cceb2052b9e24))
+- **BDdropdown:** Replace click event on split button with split-click ([a9b59c8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a9b59c8ee53b7553b9644a4dff90ea4728b77521))
+- **BDropdown:** change `split-click` to `click:split` ([f27544b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f27544b56fc7bdb72769a9cb2ea57db676cb35f8))
+- **BDropdown:** point caret the right way ([fed58b5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/fed58b59ad3ab79244456d608c00df8872126dd8))
+- **BDropdown:** prevent propogation of click events ([3800847](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/380084711e8052e59d83d1ec4ecb85d63e6642c8))
+- **BDropdown:** rename 'click:split' to 'split-click' ([48caab3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/48caab3af1d8fd122e60600afce73b10d140bc41))
+- **BPopover:** don't calculate the position when popover is not shown. ([5d34b6d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5d34b6d852c2ff6e61d2ce14c79737090c670730))
 
 ## [0.26.30](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.29...bootstrapvuenext-v0.26.30) (2025-02-23)
 
-
 ### Bug Fixes
 
-* **BTable:** multi sort wiping comparer function ([#2575](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2575)) ([2817acc](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2817accc607d2d20e8e2f04ab64d4453c2388878))
+- **BTable:** multi sort wiping comparer function ([#2575](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2575)) ([2817acc](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2817accc607d2d20e8e2f04ab64d4453c2388878))
 
 ## [0.26.29](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.28...bootstrapvuenext-v0.26.29) (2025-02-22)
 
-
 ### Bug Fixes
 
-* **BAvatar:** avatar style getting literal Size values fixes [#2535](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2535) ([7621aad](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7621aad0000c9138983315630e35657c6eb97f08))
-
+- **BAvatar:** avatar style getting literal Size values fixes [#2535](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2535) ([7621aad](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7621aad0000c9138983315630e35657c6eb97f08))
 
 ### Performance Improvements
 
-* **BTable:** use a single array.reduce instead of multiple verbose methods when iterating the items array. Reducing the total number of iterations fixes [#2404](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2404) ([7621aad](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7621aad0000c9138983315630e35657c6eb97f08))
+- **BTable:** use a single array.reduce instead of multiple verbose methods when iterating the items array. Reducing the total number of iterations fixes [#2404](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2404) ([7621aad](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7621aad0000c9138983315630e35657c6eb97f08))
 
 ## [0.26.28](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.27...bootstrapvuenext-v0.26.28) (2025-02-18)
 
-
 ### Bug Fixes
 
-* **BTable:** sorting algorithm deleting comparer functions fixes [#2555](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2555) ([#2563](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2563)) ([4ee8552](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4ee85528393d19a3cd7464d507cf36ee97f74bb2))
+- **BTable:** sorting algorithm deleting comparer functions fixes [#2555](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2555) ([#2563](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2563)) ([4ee8552](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4ee85528393d19a3cd7464d507cf36ee97f74bb2))
 
 ## [0.26.27](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.26.26...bootstrapvuenext-v0.26.27) (2025-02-18)
 

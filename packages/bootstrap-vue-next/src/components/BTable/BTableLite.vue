@@ -390,7 +390,7 @@ const computedFields = computed<(TableField<Items> & {_noHeader?: true})[]>(() =
         return {
           key: k,
           label,
-          tdAttr: props.stacked === true ? {'data-label': label} : undefined,
+          tdAttr: props.stacked ? {'data-label': label} : undefined,
         }
       })
     }
@@ -411,7 +411,7 @@ const computedFields = computed<(TableField<Items> & {_noHeader?: true})[]>(() =
     return {
       key: f as string,
       label,
-      tdAttr: props.stacked === true ? {'data-label': label} : undefined,
+      tdAttr: props.stacked ? {'data-label': label} : undefined,
     }
   })
 })

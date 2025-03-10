@@ -544,7 +544,7 @@ const computedFields = computed<TableField<Items>[]>(() =>
       return {
         key: el as string,
         label,
-        tdAttr: props.stacked === true ? {'data-label': label} : undefined,
+        tdAttr: props.stacked ? {'data-label': label} : undefined,
       }
     }
 

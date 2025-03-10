@@ -733,7 +733,7 @@ describe('object-persistence', () => {
       })
     })
 
-    it('stacked mode breakpoint', () => {
+    it('stacked mode breakpoint label', () => {
       const fields = [
         {
           key: 'id',
