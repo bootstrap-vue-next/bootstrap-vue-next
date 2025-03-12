@@ -49,8 +49,9 @@ export const useActivatedFocusTrap = (
     )
     return !tabbableElements || tabbableElements.length === 0
   }
-  const needsFallback = ref(checkNeedsFocus())
+  const needsFallback = ref(false)
   onMounted(() => {
+    needsFallback.value = checkNeedsFocus()
     useMutationObserver(
       element,
       () => {
