@@ -394,7 +394,6 @@ describe('modal', () => {
       },
     })
     await nextTick()
-    await nextTick()
 
     expect(wrapper.find('div.modal div.modal-fallback-focus').exists()).toBe(true)
 
