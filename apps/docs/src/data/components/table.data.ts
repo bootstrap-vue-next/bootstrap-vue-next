@@ -146,6 +146,7 @@ export default {
       labelStacked: {
         type: 'boolean',
         default: false,
+        description:
           'When set, the labels will appear as actual label elements, rather than with the data-label attribute',
       },
       modelValue: {
