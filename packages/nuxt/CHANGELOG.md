@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.28.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.28.1...nuxt-v0.28.2) (2025-03-14)
+
+
+### Bug Fixes
+
+* **BTable:** duplicate labels with both labelstacked and label fixes [#2608](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2608) ([0658251](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0658251e3a592835c89b829993ea874a54b4ae22))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.28.2
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.28.2
+
 ## [0.28.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.28.0...nuxt-v0.28.1) (2025-03-14)
 
 ### Features
