@@ -783,5 +783,54 @@ describe('object-persistence', () => {
         })
       })
     })
+
+    it('does not have duplicate labels when both labelstacked and label', () => {
+      const fields = [
+        {
+          key: 'id',
+          label: 'The ID',
+        },
+        {
+          key: 'first_name',
+          label: 'this is the first name',
+        },
+        {
+          key: 'last_name',
+          label: 'this is the last name',
+        },
+      ]
+
+      const items = [
+        {
+          id: 1,
+          first_name: 'Ringo',
+          last_name: 'Starr',
+        },
+        {
+          id: 2,
+          first_name: 'John',
+          last_name: 'Lennon',
+        },
+        {
+          id: 3,
+          first_name: 'Paul',
+          last_name: 'McCartney',
+        },
+      ]
+
+      const wrapper = mount(BTable, {
+        props: {
+          fields,
+          items,
+          stacked: true,
+          labelStacked: true,
+        },
+      })
+
+      const labels = wrapper.findAll('label')
+      expect(labels.length).toBe(9)
+      const dataLabels = wrapper.findAll('[data-label]')
+      expect(dataLabels.length).toBe(0)
+    })
   })
 })
