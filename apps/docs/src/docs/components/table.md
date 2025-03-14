@@ -381,8 +381,7 @@ The slot's scope variable (`data` in the above sample) will have the following p
 
 - `index` will not always be the actual row's index number, as it is computed after filtering,
   sorting and pagination have been applied to the original table data. The `index` value will refer
-  to the **displayed row number**. This number will align with the indexes from the optional
-  [`v-model` bound](#v-model-binding) variable.
+  to the **displayed row number**.
 - When using the `v-slot` syntax, note that slot names **cannot** contain spaces, and
   when using in-browser DOM templates the slot names will _always_ be lower cased. To get around
   this, you can pass the slot name using Vue's
@@ -685,11 +684,11 @@ selected, such as a virtual column as shown in the example below.
 
 ### Table body transition support
 
-### `v-model` binding
+<NotYetImplemented />
 
 ## Sorting
 
-As mentioned in the [Fields](#fields) section above, you can make columns
+As mentioned in the [Fields](#fields-column-definitions) section above, you can make columns
 sortable in `<BTable>`. Clicking on a sortable column header will sort the column in ascending
 direction (smallest first), while clicking on it again will switch the direction of sorting to
 descending (largest first). Clicking on it a third time will stop sorting on the column. For
@@ -698,7 +697,7 @@ sort that column in ascending order and clear the sort order for the previously 
 
 You can control which column is pre-sorted and the order of sorting (ascending or descending). To
 pre-specify the column to be sorted use the `sortBy` model. For single column sorting (e.g. `multisort===false`)
-`sortBy` should be an array containing a single `BTableSortBy` object.
+`sortBy` should be an array containing a single `BTableSortBy` object with a defined `order` field.
 
 <<< FRAGMENT ./demo/TableSortBy.ts#snippet{ts}
 
@@ -709,7 +708,8 @@ pre-specify the column to be sorted use the `sortBy` model. For single column so
 
 By default the comparer function does a `numeric localeCompare`. If one wishes to change this, use a custom comparer function with that `BTableSortBy` element.
 
-To prevent the table from wiping out the comparer function, internally it will set the `order` key to `undefined`, instead of just removing the element from the `sortBy` array. i.e. `:sort-by="[]"` & `:sort-by="[key: 'someKey', order: undefined]"` behave identically. Naturally if this value is given to a server, orders of undefined should be handled.
+To prevent the table from wiping out the comparer function, internally it will set the `order` key to `undefined`, instead of just removing the element from the `sortBy` array. i.e. `:sort-by="[]"` & `:sort-by="[key: 'someKey', order: undefined]"` behave identically. Naturally if this value is given to a server, orders of undefined should be handled. See the computed `singleSortBy` function below as a simple means of retrieving the single sortded column reference from a table
+that is in single sort mode.
 
 <<< DEMO ./demo/TableSort.vue
 
@@ -728,7 +728,18 @@ to the `sortBy` array. From the user inteface, multi-sort works as follows:
 
 <<< DEMO ./demo/TableSortByMulti.vue
 
-### Change initial sort direction
+### Custom Sort Comparer(s)
+
+Each item in the `BSortBy` model may include a `comparer` field of the type `BTableSortByComparerFunction<T = any> = (a: T, b: T, key: string) => number`. This function takes the items to be compared and the key to compare on. Since the key is passed in, you may use the same function for multiple fields or you can craft a different comparer function for each fied. Leaving the `comparer` field undefined (or not defining a field in the `sortBy` array at all) will fall back to using hte default comparer, which looks like this:
+
+<<< FRAGMENT ./demo/TableSortCompareDefault.ts#snippet{ts}
+
+where `getStringValue` retrieves the field value as a string.
+
+If you have a particular field that you want to sort by, you can set up a record of the `sortBy` model
+with a custom comparer:
+
+<<< FRAGMENT ./demo/TableSortCompareCustom.ts#snippet{ts}
 
 ## Filtering
 

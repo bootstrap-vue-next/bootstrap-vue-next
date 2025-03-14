@@ -1,11 +1,12 @@
 <template>
   <BTable v-model:sort-by="sortBy" :items="items" :fields="fields" />
   <div>sortBy = {{ JSON.stringify(sortBy) }}</div>
+  <div>singleSortBy = {{ JSON.stringify(singleSortBy) }}</div>
 </template>
 
 <script setup lang="ts">
 import {type BTableSortBy, type TableFieldRaw, type TableItem} from 'bootstrap-vue-next'
-import {ref} from 'vue'
+import {computed, ref} from 'vue'
 
 interface SortPerson {
   first_name: string
@@ -31,4 +32,6 @@ const fields: TableFieldRaw<SortPerson>[] = [
 ]
 
 const sortBy = ref<BTableSortBy[]>([{key: 'first_name', order: 'desc'}])
+
+const singleSortBy = computed(() => sortBy.value.find((sb) => sb.order !== undefined))
 </script>
