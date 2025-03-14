@@ -43,18 +43,19 @@ export const useActivatedFocusTrap = (
   const resolvedIsActive = readonly(toRef(isActive))
   const resolvedNoTrap = readonly(toRef(noTrap))
 
-  const checkNeedsFocus = () => {
+  const checkNeedsFallback = () => {
     const tabbableElements = element.value?.querySelectorAll(
       `a, button, input, select, textarea, [tabindex]:not([tabindex="-1"]):not(.${fallbackFocus.classSelector})`
     )
-    return !tabbableElements || tabbableElements.length === 0
+    return !tabbableElements?.length
   }
-  const needsFallback = ref(checkNeedsFocus())
+  const needsFallback = ref(false)
   onMounted(() => {
+    needsFallback.value = checkNeedsFallback()
     useMutationObserver(
       element,
       () => {
-        needsFallback.value = checkNeedsFocus()
+        needsFallback.value = checkNeedsFallback()
       },
       {childList: true, subtree: true}
     )
