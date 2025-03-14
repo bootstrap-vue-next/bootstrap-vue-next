@@ -234,7 +234,12 @@ import type {BTableProps} from '../../types/ComponentProps'
 import {get, pick, set} from '../../utils/object'
 import {startCase} from '../../utils/stringUtils'
 import type {LiteralUnion} from '../../types/LiteralUnion'
-import {btableLiteProps, btableSimpleProps, getTableFieldHeadLabel} from '../../utils/tableUtils'
+import {
+  btableLiteProps,
+  btableSimpleProps,
+  getDataLabelAttr,
+  getTableFieldHeadLabel,
+} from '../../utils/tableUtils'
 import {useId} from '../../composables/useId'
 
 const _props = withDefaults(
@@ -544,7 +549,7 @@ const computedFields = computed<TableField<Items>[]>(() =>
       return {
         key: el as string,
         label,
-        tdAttr: props.stacked ? {'data-label': label} : undefined,
+        tdAttr: getDataLabelAttr(props, label),
       }
     }
 

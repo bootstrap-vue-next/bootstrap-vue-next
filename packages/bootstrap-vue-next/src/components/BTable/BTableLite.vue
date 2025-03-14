@@ -226,7 +226,7 @@ import BThead from './BThead.vue'
 import BTr from './BTr.vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {get, pick} from '../../utils/object'
-import {btableSimpleProps, getTableFieldHeadLabel} from '../../utils/tableUtils'
+import {btableSimpleProps, getDataLabelAttr, getTableFieldHeadLabel} from '../../utils/tableUtils'
 import {formatItem} from '../../utils/formatItem'
 import {filterEvent} from '../../utils/filterEvent'
 import {startCase} from '../../utils/stringUtils'
@@ -390,7 +390,7 @@ const computedFields = computed<(TableField<Items> & {_noHeader?: true})[]>(() =
         return {
           key: k,
           label,
-          tdAttr: props.stacked ? {'data-label': label} : undefined,
+          tdAttr: getDataLabelAttr(props, label),
         }
       })
     }
@@ -404,14 +404,14 @@ const computedFields = computed<(TableField<Items> & {_noHeader?: true})[]>(() =
       const label = f.label ?? startCase(f.key as string)
       return {
         ...(f as TableField<Items>),
-        tdAttr: props.stacked ? {'data-label': label, ...f.tdAttr} : f.tdAttr,
+        tdAttr: {...getDataLabelAttr(props, label), ...f.tdAttr},
       }
     }
     const label = startCase(f as string)
     return {
       key: f as string,
       label,
-      tdAttr: props.stacked ? {'data-label': label} : undefined,
+      tdAttr: getDataLabelAttr(props, label),
     }
   })
 })

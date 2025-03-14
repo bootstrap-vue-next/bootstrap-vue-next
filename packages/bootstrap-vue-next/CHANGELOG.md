@@ -2,17 +2,15 @@
 
 ## [0.28.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.28.0...bootstrapvuenext-v0.28.1) (2025-03-14)
 
-
 ### Features
 
-* **BFormCheckbboxGroup:** spread the input object rather than el.props fixes [#2590](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2590) ([2c3970c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2c3970ca3ed0c3d312600877c8ec0043a6834144))
-* **BFormRadioGroup:** spread the input object rather than el.props fixes [#2590](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2590) ([2c3970c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2c3970ca3ed0c3d312600877c8ec0043a6834144))
-
+- **BFormCheckbboxGroup:** spread the input object rather than el.props fixes [#2590](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2590) ([2c3970c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2c3970ca3ed0c3d312600877c8ec0043a6834144))
+- **BFormRadioGroup:** spread the input object rather than el.props fixes [#2590](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2590) ([2c3970c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2c3970ca3ed0c3d312600877c8ec0043a6834144))
 
 ### Bug Fixes
 
-* **BModal:** fallback focus element always present ([#2604](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2604)) ([#2605](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2605)) ([e512190](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e512190bd2ac5e6f55850423e40d880eb2170776))
-* **BTable:** stacked mode when using breakpoint data-label not rendering fixes [#2595](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2595) ([2c3970c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2c3970ca3ed0c3d312600877c8ec0043a6834144))
+- **BModal:** fallback focus element always present ([#2604](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2604)) ([#2605](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2605)) ([e512190](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e512190bd2ac5e6f55850423e40d880eb2170776))
+- **BTable:** stacked mode when using breakpoint data-label not rendering fixes [#2595](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2595) ([2c3970c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2c3970ca3ed0c3d312600877c8ec0043a6834144))
 
 ## [0.28.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.27.0...bootstrapvuenext-v0.28.0) (2025-03-05)
 
