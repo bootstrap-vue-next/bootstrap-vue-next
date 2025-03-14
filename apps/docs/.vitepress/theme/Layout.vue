@@ -55,7 +55,7 @@
             rel="noopener"
             link-classes="py-1 px-0"
           >
-            <component :is="link.icon()" height="1.1rem" aria-hidden />
+            <component :is="link.icon()" height="1.1em" aria-hidden />
           </BNavItem>
           <div class="border border-secondary ms-2 me-3" />
           <ClientOnly>
@@ -64,7 +64,7 @@
               <template #button-content>
                 <component
                   :is="currentIcon"
-                  height="1.1rem"
+                  height="1.1em"
                   :aria-label="`Toggle theme (${colorMode})`"
                   class="d-inline-block"
                 />
