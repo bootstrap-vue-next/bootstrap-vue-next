@@ -621,9 +621,10 @@ See the [v-html](#v-html) section for information on deprecation of the `html` p
 The slot `emptyfiltered` has been renamed to `empty-filtered` for consistency.
 
 The following properties are <NotYetImplemented/> -
-`fixed`, `no-border-collapse`, `selected-variant`
+`filter-ignored-fields`, `filter-included-fields`, `fixed`, `no-border-collapse`, `selected-variant`
 
-<NotYetImplemented /> The `table-colgroup` slot is not yet implemented.
+<NoteYetImplemented/>The `filter` prop does not yet support a RegEx object, only a string.
+<NotYetImplemented />The `table-colgroup` slot is not yet implemented.
 
 `sort-compare` and `sort-direction` are deprecated, use the `sortBy` prop (or model) as documented [here](/docs/components/table#sorting) instead.
 
@@ -637,12 +638,16 @@ BootstrapVue adds utility classes to the `<table>` including `b-table-select-sin
 
 <NotYetImplemented/>The `aria-multiselect` attribute is not added to `<table>`
 
+The `filtered` event has a single argument `Items[]` rather than two arguments with an array and length. The semantics haven't changed.
+
 ### Field Definitions
 
 `formatter` Only the callback function value for this field is implemented, adding the name
 of a method in the component is deprecated.
 
 `sortKey` and `sortDirection` are deprecated, use the table's `sortBy` model as documented [here](/docs/components/table#sorting) instead.
+
+`filterByFormatted` is implemented, but does not take a format function as an argument.
 
 ### BTableLight
 
