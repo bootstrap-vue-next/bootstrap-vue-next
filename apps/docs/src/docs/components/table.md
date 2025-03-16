@@ -743,7 +743,74 @@ with a custom comparer:
 
 ## Filtering
 
-To Be Completed
+Filtering, when used, is applied by default to the **original items** array data. `Btable` provides
+several options for how data is filtered.
+
+It is currently not possible to filter based on result of formatting via
+[scoped field slots](#scoped-field-slots).
+
+### Built in filtering
+
+The item's row data values are stringified (see the sorting section above for how stringification is
+done) and the filter searches that stringified data (excluding any of the special properties that
+begin with an underscore `'_'`). The stringification also, by default, includes any data not shown
+in the presented columns.
+
+With the default built-in filter function, the `filter` prop value can either be a string or a
+`RegExp` object (regular expressions should _not_ have the `/g` global flag set). <NotYetImplemented/> Currently the `filter` prop only supports a string, not a `RegExp`.
+
+If the stringified row contains the provided string value or matches the RegExp expression then it
+is included in the displayed results.
+
+Set the `filter` prop to `null` or an empty string to clear the current filter.
+
+### Built in filtering options
+
+There are several options for controlling what data the filter is applied against.
+
+- <NotYetImplemented/>The `filter-ignored-fields` prop accepts an array of _top-level_ (immediate properties of the row
+  data) field keys that should be ignored when filtering.
+- <NotYetImplemented/>The `filter-included-fields` prop accepts an array of _top-level_ (immediate properties of the row
+  data) field keys that should used when filtering. All other field keys not included in this array
+  will be ignored. This feature can be handy when you want to filter on specific columns. If the
+  specified array is empty, then _all_ fields are included, except those specified via the prop
+  `filter-ignored-fields`. If a field key is specified in both `filter-ignored-fields` and
+  `filter-included-fields`, then `filter-included-fields` takes precedence.
+- Normally, `<BTable>` filters based on the stringified record data. If the field has a `formatter`
+  function specified, you can optionally filter based on the result of the formatter by setting the
+  [field definition property](#field-definition-reference) `filterByFormatted` to `true`. If the
+  field does not have a formatter function, this option is ignored. <NotYetImplemented/>You can optionally pass a
+  formatter function _reference_, to be used for filtering only, to the field definition property
+  `filterByFormatted`.
+
+The props `filter-ignored-fields` and `filter-included-fields`, and the field definition property
+`filterByFormatted` have no effect when using a [custom filter function](#custom-filter-function),
+or [items provider](#using-items-provider-functions) based filtering.
+
+### Custom filter function
+
+You can also use a custom filter function, by setting the prop `filter-function` to a reference of
+custom filter test function. The filter function signature is `(item: Readonly<Items>, filter: string | undefined) => boolean`
+
+- `item` is the original item row record data object.
+- `filter` value of the `filter` prop
+
+The function should return `true` if the record matches your criteria or `false` if the record is to
+be filtered out.
+
+For proper reactive updates to the displayed data, when not filtering you should set the `filter`
+prop to `null` or an empty string (and not an empty object or array). The filter function will not
+be called when the `filter` prop is a falsey value.
+
+The display of the `empty-filter-text` relies on the truthiness of the `filter` prop.
+
+### Filter events
+
+When local filtering is applied, and the resultant number of items change, `<BTable>` will emit the
+`filtered` event with a single argument of type `Items[]`: which is the complete list of
+items passing the filter routine. **Treat this argument as read-only.**
+
+Setting the prop `filter` to null or an empty string will clear local items filtering.
 
 ## Pagination
 
@@ -763,7 +830,7 @@ The `BTableSimple` component gives the user complete control over the rendering 
 
 `BTableSimple` provides basic styling options via props: striped, bordered, borderless, outlined, small, hover, dark, fixed, responsive and sticky-header. Note that stacked mode is available but requires some additional markup to generate the cell headings, as described in the Simple tables and stacked mode section below. Sticky columns are also supported, but also require a bit of additional markup to specify which columns are to be sticky. See below for more information on using sticky columns.
 
-Since b-table-simple is just a wrapper component, of which you will need to render content inside, it does not provide any of the advanced features of `BTable` (i.e. row events, head events, sorting, pagination, filtering, foot-clone, items, fields, etc.).
+Since `BTableSimple` is just a wrapper component, of which you will need to render content inside, it does not provide any of the advanced features of `BTable` (i.e. row events, head events, sorting, pagination, filtering, foot-clone, items, fields, etc.).
 
 <<< DEMO ./demo/TableSimpleOverview.vue#template{vue-html}
 
