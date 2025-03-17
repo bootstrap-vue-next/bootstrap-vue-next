@@ -14,7 +14,7 @@ export interface showHideEmits {
 export type BCollapseEmits = showHideEmits
 
 export interface BDropdownEmits extends showHideEmits {
-  click: [value: MouseEvent]
+  'split-click': [value: MouseEvent]
 }
 export interface BModalEmits extends showHideEmits {
   backdrop: [value: BvTriggerableEvent]
