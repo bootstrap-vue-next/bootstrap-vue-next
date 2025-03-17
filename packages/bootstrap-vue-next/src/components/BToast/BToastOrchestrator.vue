@@ -3,7 +3,7 @@
     <div id="__BVID__toaster-container" v-bind="$attrs">
       <div
         v-for="(value, key) in positionClasses"
-        :key="key"
+        :key
         :class="value"
         class="toast-container position-fixed p-3"
         style="width: calc(var(--bs-toast-max-width, 350px) + 2 * 1rem)"

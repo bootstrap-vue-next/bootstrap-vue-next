@@ -13,7 +13,7 @@
       @show-prevented="emit('show-prevented', $event)"
       @toggle-prevented="emit('toggle-prevented', $event)"
       @toggle="emit('toggle', $event)"
-      @click="emit('click', $event)"
+      @split-click="emit('split-click', $event)"
     >
       <template #button-content>
         <slot name="button-content" />

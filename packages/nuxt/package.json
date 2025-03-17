@@ -1,7 +1,7 @@
 {
   "name": "@bootstrap-vue-next/nuxt",
   "description": "Nuxt Module for BootstrapVueNext",
-  "version": "0.26.26",
+  "version": "0.28.2",
   "license": "MIT",
   "author": {
     "name": "Issayah",
@@ -28,7 +28,7 @@
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "lint": "eslint --fix",
     "test:lint": "eslint",
-    "test": "vitest run",
+    "test": "pnpm run test:lint",
     "test:watch": "vitest watch",
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },

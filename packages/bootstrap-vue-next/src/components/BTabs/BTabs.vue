@@ -80,6 +80,7 @@ import type {TabType} from '../../types/Tab'
 import type {BTabsProps} from '../../types/ComponentProps'
 import {tabsInjectionKey} from '../../utils/keys'
 import {useDefaults} from '../../composables/useDefaults'
+import {sortSlotElementsByPosition} from '../../utils/dom'
 
 const _props = withDefaults(defineProps<Omit<BTabsProps, 'modelValue' | 'activeId'>>(), {
   activeNavItemClass: undefined,
@@ -270,13 +271,7 @@ const registerTab = (tab: Ref<TabType>) => {
   } else {
     tabsInternal.value[tabsInternal.value.findIndex((t) => t.value.id === tab.value.id)] = tab
   }
-  tabsInternal.value.sort((a, b) => {
-    if (!Node || !a.value.el || !b.value.el) return 0
-    const position = a.value.el.compareDocumentPosition(b.value.el)
-    if (position & Node.DOCUMENT_POSITION_FOLLOWING) return -1
-    if (position & Node.DOCUMENT_POSITION_PRECEDING) return 1
-    return 0
-  })
+  tabsInternal.value.sort((a, b) => sortSlotElementsByPosition(a.value.el, b.value.el))
 }
 const unregisterTab = (id: string) => {
   tabsInternal.value = tabsInternal.value.filter((t) => t.value.id !== id)

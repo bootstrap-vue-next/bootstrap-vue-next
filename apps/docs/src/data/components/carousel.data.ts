@@ -151,7 +151,7 @@ export default {
           ],
         },
         {
-          event: 'click:prev',
+          event: 'prev-click',
           description: '',
           args: [
             {
@@ -162,7 +162,7 @@ export default {
           ],
         },
         {
-          event: 'click:next',
+          event: 'next-click',
           description: '',
           args: [
             {

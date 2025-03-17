@@ -234,7 +234,12 @@ import type {BTableProps} from '../../types/ComponentProps'
 import {get, pick, set} from '../../utils/object'
 import {startCase} from '../../utils/stringUtils'
 import type {LiteralUnion} from '../../types/LiteralUnion'
-import {btableLiteProps, btableSimpleProps, getTableFieldHeadLabel} from '../../utils/tableUtils'
+import {
+  btableLiteProps,
+  btableSimpleProps,
+  getDataLabelAttr,
+  getTableFieldHeadLabel,
+} from '../../utils/tableUtils'
 import {useId} from '../../composables/useId'
 
 const _props = withDefaults(
@@ -326,7 +331,7 @@ const emit = defineEmits<{
   'row-middle-clicked': TableRowEvent<Items>
   'row-selected': [value: Items]
   'row-unselected': [value: Items]
-  'sorted': [value: BTableSortBy]
+  'sorted': [value: BTableSortBy<Items>]
   'change': [value: Items[]]
 }>()
 
@@ -449,7 +454,7 @@ const selectedItemsModel = defineModel<Exclude<BTableProps<Items>['selectedItems
 const computedId = useId(() => props.id)
 
 const selectedItemsToSet = computed({
-  get: () => new Set([...selectedItemsModel.value]),
+  get: () => new Set(selectedItemsModel.value),
   set: (val) => {
     selectedItemsModel.value = [...val]
   },
@@ -544,7 +549,7 @@ const computedFields = computed<TableField<Items>[]>(() =>
       return {
         key: el as string,
         label,
-        tdAttr: props.stacked === true ? {'data-label': label} : undefined,
+        tdAttr: getDataLabelAttr(props, label),
       }
     }
 
@@ -606,26 +611,95 @@ const getRowClasses = (item: Items | null, type: TableRowType): TableStrictClass
 
 const getFormatter = (value: TableField<Items>): TableFieldFormatter<Items> | undefined =>
   typeof value.sortByFormatted === 'function' ? value.sortByFormatted : value.formatter
+
 const computedItems = computed<Items[]>(() => {
-  const sortItems = (items: Items[]) => {
-    // "undefined" values are set by us, we do this so we dont wipe out the comparer
-    const sortByItems = sortByModel.value?.filter((el) => !!el.order)
+  // "undefined" values are set by us, we do this so we dont wipe out the comparer
+  const sortByItems = sortByModel.value?.filter((el) => !!el.order)
 
-    if (!sortByItems || sortByItems.length === 0) return items
+  const mapItem = (item: Items): Items => {
+    if (
+      typeof item === 'object' &&
+      item !== null &&
+      Object.keys(item).some((key) => key.includes('.'))
+    ) {
+      let newItem: Partial<Items> = {}
+      for (const key in item) {
+        if (key.includes('.')) {
+          newItem = set(newItem, key, item[key])
+        } else {
+          newItem[key] = item[key]
+        }
+      }
+      return newItem as Items // This should be an items at this point
+    }
+    return item
+  }
 
+  const filterItem = (item: Items): boolean => {
+    if (!isTableItem(item)) return true
+
+    return Object.entries(item).some(([key, val]) => {
+      if (
+        val === null ||
+        val === undefined ||
+        key[0] === '_' ||
+        (!props.filterable?.includes(key) && !!props.filterable?.length)
+      )
+        return false
+
+      if (props.filterFunction && typeof props.filterFunction === 'function') {
+        return props.filterFunction(item, props.filter)
+      }
+
+      const realVal = (): string => {
+        const filterField = computedFields.value.find((el) => {
+          if (isTableField<Items>(el)) return el.key === key
+          return false
+        })
+        if (isTableField<Items>(filterField) && !!filterField.filterByFormatted) {
+          const formatter = getFormatter(filterField)
+          if (formatter) {
+            return String(formatter(val, String(filterField.key), item))
+          }
+        }
+        return typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
+      }
+      const itemValue: string = realVal()
+      return itemValue.toLowerCase().includes(props.filter?.toLowerCase() ?? '')
+    })
+  }
+
+  const mappedItems = (usesProvider.value ? internalItems.value : props.items).reduce(
+    (acc, val) => {
+      const item = mapItem(val)
+      const shouldFilter =
+        isFilterableTable.value && (!usesProvider.value || props.noProviderFiltering)
+
+      if (!shouldFilter || filterItem(item)) acc.push(item)
+
+      return acc
+    },
+    [] as Items[]
+  )
+
+  if (
+    sortByItems?.length &&
+    ((isSortable.value === true && !usesProvider.value && !props.noLocalSorting) ||
+      (isSortable.value === true && usesProvider.value && props.noProviderSorting))
+  ) {
     // Multi-sort
-    return [...items].sort((a, b) => {
-      for (let i = 0; i < (sortByItems.length ?? 0); i++) {
-        const sortOption = sortByItems[i]
-        const realVal = (ob: Items): string => {
+    return mappedItems.sort((a, b) => {
+      for (let i = 0; i < sortByItems.length; i++) {
+        const {key, comparer, order} = sortByItems[i]
+        const getStringValue = (ob: Items): string => {
           if (!isTableItem(ob)) return String(ob)
 
           const sortField = computedFields.value.find((el) => {
-            if (isTableField<Items>(el)) return el.key === sortOption.key
+            if (isTableField<Items>(el)) return el.key === key
 
             return false
           })
-          const val = get(ob, sortOption.key as keyof TableItem)
+          const val = get(ob, key as keyof TableItem)
           if (isTableField<Items>(sortField) && !!sortField.sortByFormatted) {
             const formatter = getFormatter(sortField)
             if (formatter) {
@@ -637,92 +711,16 @@ const computedItems = computed<Items[]>(() => {
             : (val?.toString() ?? '')
         }
 
-        const aValue = realVal(a)
-        const bValue = realVal(b)
-        const comparison = sortOption.comparer
-          ? sortOption.comparer(aValue, bValue)
-          : aValue.localeCompare(bValue, undefined, {numeric: true})
+        const comparison = comparer
+          ? comparer(a, b, key)
+          : getStringValue(a).localeCompare(getStringValue(b), undefined, {numeric: true})
 
         if (comparison !== 0) {
-          return sortOption.order === 'asc' ? comparison : -comparison
+          return order === 'asc' ? comparison : -comparison
         }
       }
       return 0 // items are equal
     })
-  }
-
-  const filterItems = (items: Items[]) =>
-    items.filter((item) =>
-      isTableItem(item)
-        ? Object.entries(item).some(([key, val]) => {
-            if (
-              val === null ||
-              val === undefined ||
-              key[0] === '_' ||
-              (!props.filterable?.includes(key) && !!props.filterable?.length)
-            )
-              return false
-
-            if (props.filterFunction && typeof props.filterFunction === 'function') {
-              return props.filterFunction(item, props.filter)
-            }
-
-            const realVal = (): string => {
-              const filterField = computedFields.value.find((el) => {
-                if (isTableField<Items>(el)) return el.key === key
-
-                return false
-              })
-              if (isTableField<Items>(filterField) && !!filterField.filterByFormatted) {
-                const formatter = getFormatter(filterField)
-                if (formatter) {
-                  return String(formatter(val, String(filterField.key), item))
-                }
-              }
-              return typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
-            }
-            const itemValue: string = realVal()
-            return itemValue.toLowerCase().includes(props.filter?.toLowerCase() ?? '')
-          })
-        : true
-    )
-
-  let mappedItems = usesProvider.value ? internalItems.value : (props.items as Items[])
-  mappedItems = mappedItems.map((item) => {
-    if (
-      typeof item === 'object' &&
-      item !== null &&
-      Object.keys(item).some((key) => key.includes('.'))
-    ) {
-      // We use any here because the TS doesn't isn't certain that "item" is the same type as our newItem.
-      // But we've determined that it's an object, so we can ignore it since they will always be the same "object"
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let newItem: any = {}
-      for (const key in item) {
-        if (key.includes('.')) {
-          newItem = set(newItem, key, item[key])
-        } else {
-          newItem[key] = item[key]
-        }
-      }
-      return newItem
-      // return
-    }
-    return item
-  })
-
-  if (
-    (isFilterableTable.value === true && !usesProvider.value) ||
-    (isFilterableTable.value === true && usesProvider.value && props.noProviderFiltering)
-  ) {
-    mappedItems = filterItems(mappedItems)
-  }
-
-  if (
-    (isSortable.value === true && !usesProvider.value && !props.noLocalSorting) ||
-    (isSortable.value === true && usesProvider.value && props.noProviderSorting)
-  ) {
-    mappedItems = sortItems(mappedItems)
   }
 
   return mappedItems
@@ -824,7 +822,7 @@ const handleFieldSorting = (field: TableField<Items>) => {
 
   const index = sortByModel.value?.findIndex((el) => el.key === fieldKey) ?? -1
   const originalValue = sortByModel.value?.[index]
-  const updatedValue: BTableSortBy =
+  const updatedValue: BTableSortBy<Items> =
     // If value is new, we default to ascending
     // Otherwise we make a temp copy of the value
     index === -1 || !originalValue ? {key: fieldKey as string, order: 'asc'} : {...originalValue}
@@ -832,16 +830,14 @@ const handleFieldSorting = (field: TableField<Items>) => {
   /**
    * @returns the updated value to emit for sorted
    */
-  const handleMultiSort = (): BTableSortBy => {
-    let val = updatedValue
+  const handleMultiSort = (): BTableSortBy<Items> => {
+    sortByModel.value = sortByModel.value ?? []
+    const val = updatedValue
     if (index === -1) {
-      sortByModel.value = [...(sortByModel.value ?? []), updatedValue]
+      sortByModel.value.push(val)
     } else {
-      const order = resolveOrder(updatedValue.order)
-      val = {...updatedValue, order}
-      sortByModel.value = order
-        ? sortByModel.value?.map((el) => (el.key === val.key ? val : el))
-        : sortByModel.value?.filter((el) => el.key !== val.key)
+      val.order = resolveOrder(val.order)
+      sortByModel.value.splice(index, 1, val)
     }
     return val
   }
@@ -849,12 +845,21 @@ const handleFieldSorting = (field: TableField<Items>) => {
   /**
    * @returns the updated value to emit for sorted
    */
-  const handleSingleSort = (): BTableSortBy => {
+  const handleSingleSort = (): BTableSortBy<Items> => {
     const val = {
       ...updatedValue,
       order: index === -1 ? updatedValue.order : resolveOrder(updatedValue.order),
     }
-    sortByModel.value = [val]
+    const tmp = (sortByModel.value || []).map<BTableSortBy<Items>>((e) => ({
+      ...e,
+      order: undefined,
+    }))
+    if (index === -1) {
+      tmp.push(val)
+    } else {
+      tmp[index] = val
+    }
+    sortByModel.value = tmp
     return val
   }
 
@@ -966,7 +971,7 @@ const exposedSelectableUtilities = {
   },
   selectAllRows: () => {
     if (!props.selectable || props.selectMode === 'single') return
-    selectedItemsToSet.value = new Set([...computedItems.value])
+    selectedItemsToSet.value = new Set(computedItems.value)
   },
   selectRow: (index: number) => {
     if (!props.selectable) return

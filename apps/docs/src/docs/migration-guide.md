@@ -24,6 +24,13 @@ Bootstrap-vue-next will commit to breaking changes whenever Bootstrap marks some
 `bootstrap-vue-next` integrates with `nuxt 3` so if you are using `nuxt`, please read their
 [migration guide](https://nuxt.com/docs/migration/overview) and our [router link support](/docs/reference/router-links) reference
 
+### Status
+
+This migration guide is a work in progress. We're adding to this guide as we complete the documentation and parity pass and doing
+our best to note each component or directive that hasn't been through the full process. <NotYetDocumented :help-only="true" />
+For section of this guide that are not marked as in progress, we're still interested in examples of migrations that you
+have found tricky or clarifcation if the details in the guide weren't sufficent.
+
 ## Sync modifier
 
 A number of components in `bootstrap-vue` use `v-bind`'s `.sync` modifier. This modifier has been replaced by properties
@@ -104,10 +111,19 @@ Most importantly any use your code makes of `v-html` will be explicit. See the [
 
 <a name="popover-html">BootstrapVue `b-popover` didn't have an `html` attribute, but alpha versions of BootstrapVueNext did</a>
 
-Each of the options group components `BFormDatalist`, `BFormRadioGroup`, `BFormSelect`, and
-`BFormSelectOptionGroup` implements a scoped slot `option` which takes a `SelectOption<T>` parameter.
+`BFormCheckboxGroup` and `BFormRadioGroup` implement a scoped slot `option` which takes a `Record<string, unknown>` parameter. You can add
+arbitrary fields to elements of the options array that you pass in and they will be accessible to the slot. The example
+below uses the data on the options object to create the html inline in the slot.
 
 <<< DEMO ./demo/CheckboxGroupMigration.vue
+
+Or you can do a straightforward translation of a `BFormRadioGroup` passing an `HTML` string through to its children.
+If you're passing user data, this still opens your code uop to <a class="alert-link" href="https://en.wikipedia.org/wiki/Cross-site_scripting">
+<abbr title="Cross Site Scripting Attacks">XSS attacks</abbr></a>, if you do not first
+<a class="alert-link" href="https://en.wikipedia.org/wiki/HTML_sanitization">sanitize</a> the
+user supplied string, but the BootstrapVueNext library isn't adding an extra layer of abstraction to this vulnerability.
+
+<<< DEMO ./demo/RadioGroupMigration.vue
 
 ## Components
 
@@ -277,6 +293,11 @@ See [Show and Hide](#show-and-hide) shared properties.
 
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
+The `click` event that was emitted when clicking on the left or button side of a `split` dropdown
+has been replaced by a `split-click` which provides the native mouse event. This is because
+naming the event 'click' was hiding the native `click` event so supressing the that event for
+parents that might have unexpected actions (such as a link navigating to a new page) was difficult.
+
 <NotYetImplemented>`toggleAttrs`</NotYetImplemented>
 
 #### Dropdown sub-components
@@ -387,6 +408,17 @@ See [BForm Components](bform-components)
 ### BFormSpinButton
 
 See [BForm Components](bform-components)
+
+### BFormTags
+
+In BootstrapVue, the event handlers for some of the other input controls, like `BFormSelect`, lined up with
+the `inputHandlers` for the default slot's scoped properties such that one could directly bind them. See the
+[BootstrapVue](https://bootstrap-vue.org/docs/components/form-tags#advanced-custom-rendering-usage) documentation
+for an example. This is no longer the case with BootstrapVueNext.
+
+In general BootstrapVueNext prefered clean APIs to enabling this kind of matching of events, so many of the advanced
+examples in the [BFormTags docs](https://bootstrap-vue-next.github.io/bootstrap-vue-next/docs/components/form-tags.html#custom-rendering-with-default-scoped-slot) are more explicit when binding attributes from other controls. Please
+take a look at these examples for guidance when migrating.
 
 ### BFormTimePicker
 
@@ -588,12 +620,27 @@ See the [v-html](#v-html) section for information on deprecation of the `label-h
 
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
+The slot `emptyfiltered` has been renamed to `empty-filtered` for consistency.
+
 The following properties are <NotYetImplemented/> -
-`fixed`, `no-border-collapse`
+`filter-ignored-fields`, `filter-included-fields`, `fixed`, `no-border-collapse`, `selected-variant`
 
-<NotYetImplemented /> The `table-colgroup` slot is not yet implemented.
+<NoteYetImplemented/>The `filter` prop does not yet support a RegEx object, only a string.
+<NotYetImplemented />The `table-colgroup` slot is not yet implemented.
 
-`sort-direction` is deprecated, use the `sortBy` prop (or model) instead.
+`sort-compare` and `sort-direction` are deprecated, use the `sortBy` prop (or model) as documented [here](/docs/components/table#sorting) instead.
+
+The semantics of the `row-selected` event have changed. `row-selected` is now emitted for each selected
+row and sends the single row's item as it's parameter. There is a new matching event called `row-unselected`
+that is emitted for each row that is unselected. There is also a named model `selectedItems` that behaves
+like the BSV `row-selected` event, emitting an array of all seleted rows. An example of this is available
+in [the documentation](/docs/components/table#row-select-support)
+
+BootstrapVue adds utility classes to the `<table>` including `b-table-select-single`,`b-table-select-multi`, and `b-table-select-range`, these have been deprecated, as the functionality should be easily replicated by the developer without adding to the API surface.
+
+<NotYetImplemented/>The `aria-multiselect` attribute is not added to `<table>`
+
+The `filtered` event has a single argument `Items[]` rather than two arguments with an array and length. The semantics haven't changed.
 
 ### Field Definitions
 
@@ -601,6 +648,8 @@ The following properties are <NotYetImplemented/> -
 of a method in the component is deprecated.
 
 `sortKey` and `sortDirection` are deprecated, use the table's `sortBy` model as documented [here](/docs/components/table#sorting) instead.
+
+`filterByFormatted` is implemented, but does not take a format function as an argument.
 
 ### BTableLight
 

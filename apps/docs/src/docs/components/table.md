@@ -381,8 +381,7 @@ The slot's scope variable (`data` in the above sample) will have the following p
 
 - `index` will not always be the actual row's index number, as it is computed after filtering,
   sorting and pagination have been applied to the original table data. The `index` value will refer
-  to the **displayed row number**. This number will align with the indexes from the optional
-  [`v-model` bound](#v-model-binding) variable.
+  to the **displayed row number**.
 - When using the `v-slot` syntax, note that slot names **cannot** contain spaces, and
   when using in-browser DOM templates the slot names will _always_ be lower cased. To get around
   this, you can pass the slot name using Vue's
@@ -496,27 +495,200 @@ Slot `custom-foot` can be optionally scoped, receiving an object with the follow
 - Sorting and sorting icons are not available for cells in the `custom-foot` slot.
 - The custom footer will not be shown when the table is in visually stacked mode.
 
-## Custom empty and emptyfiltered rendering via slots
+## Custom empty and empty-filtered rendering via slots
+
+Aside from using `empty-text`, `empty-filtered-text`, it is also possible to provide custom rendering
+for tables that have no data to display using named slots.
+
+In order for these slots to be shown, the `show-empty` attribute must be set and `items` must be
+either falsy or an array of length 0.
+
+<<< FRAGMENT ./demo/TableEmpty.vue#template{vue-html}
+
+The slot can optionally be scoped. The slot's scope (`scope` in the above example) will have the
+following properties:
+
+| Property            | Type                  | Description                                        |
+| ------------------- | --------------------- | -------------------------------------------------- |
+| `emptyFilteredHtml` | `string`              | The `empty-filtered-html` prop                     |
+| `emptyFilteredText` | `string`              | The `empty-filtered-text` prop                     |
+| `fields`            | `TableField<Items>[]` | The `fields` prop                                  |
+| `items`             | `Items[]`             | The `items` prop. Exposed here to check null vs [] |
+
+::: info NOTE
+If you prefiously used the `emptyHtml` or `emtpyFilteredHtml` scoped slots or the `empty-html` or
+`empty-filtered-html` props, please convert to using the `empty-text` or `empty-filtered-text` slots
+instead. See our [migration guide](/docs/migration-guide#v-html) for details.
+:::
 
 ## Advanced Features
 
-To Be Completed
-
 ### Sticky headers
+
+Use the `sticky-header` prop to enable a vertically scrolling table with headers that remain fixed
+(sticky) as the table body scrolls. Setting the prop to `true` (or no explicit value) will generate
+a table that has a maximum height of `300px`. To specify a maximum height other than `300px`, set
+the `sticky-header` prop to a valid CSS height (including units), i.e. `sticky-header="200px"`.
+Tables with `sticky-header` enabled will also automatically become always responsive horizontally,
+regardless of the [`responsive`](#responsive-tables) prop setting, if the table is wider than the
+available horizontal space.
+
+<<< DEMO ./demo/TableStickyHeaders.vue
+
+**Sticky header notes:**
+
+- The `sticky-header` prop has no effect if the table has the [`stacked`](#stacked-tables) prop set.
+- Sticky header tables are wrapped inside a vertically scrollable `<div>` with a maximum height set.
+- BootstrapVue's custom CSS is required in order to support `sticky-header`.
+- Bootstrap v5 uses the CSS style `border-collapse: collapsed` on table elements. This prevents the
+  borders on the sticky header from "sticking" to the header, and hence the borders will scroll when
+  the body scrolls. To get around this issue, set the prop `no-border-collapse` on the table (note
+  that this may cause double width borders when using features such as `bordered`, etc.).
 
 ### Sticky columns
 
+Columns can be made sticky, where they stick to the left of the table when the table has a
+horizontal scrollbar. To make a column a sticky column, set the `stickyColumn` prop in the
+[field's header definition](#field-definition-reference). Sticky columns will only work when the
+table has either the `sticky-header` prop set and/or the [`responsive`](#responsive-tables) prop is
+set.
+
+<<< DEMO ./demo/TableStickyColumns.vue
+
+**Sticky column notes:**
+
+- Sticky columns has no effect if the table has the [`stacked`](#stacked-tables) prop set.
+- Sticky columns tables require either the `sticky-header` and/or `responsive` modes, and are
+  wrapped inside a horizontally scrollable `<div>`.
+- When you have multiple columns that are set as `stickyColumn`, the columns will stack over each
+  other visually, and the left-most sticky columns may "peek" out from under the next sticky column.
+  To get around this behaviour, make sure your latter sticky columns are the same width or wider
+  than previous sticky columns.
+- Bootstrap v5 uses the CSS style `border-collapse: collapsed` on table elements. This prevents any
+  borders on the sticky columns from "sticking" to the column, and hence those borders will scroll
+  when the body scrolls. To get around this issue, set the prop `no-border-collapse` on the table
+  (note that this may cause double width borders when using features such as `bordered`, etc.).
+- BootstrapVue's custom CSS is required in order to support sticky columns.
+- The sticky column feature uses CSS style `position: sticky` to position the column cells. Internet
+  Explorer does not support `position: sticky`, hence for IE 11 the sticky column will scroll with
+  the table body.
+
 ### Row details support
+
+If you would optionally like to display additional record information (such as columns not specified
+in the fields definition array), you can use the scoped slot `row-details`, in combination with the
+special item record `boolean` property `_showDetails`.
+
+If the record has its `_showDetails` property set to `true`, **and** a `row-details` scoped slot
+exists, a new row will be shown just below the item, with the rendered contents of the `row-details`
+scoped slot.
+
+In the scoped field slot, you can toggle the visibility of the row's `row-details` scoped slot by
+calling the `toggleDetails` function passed to the field's scoped slot variable. You can use the
+scoped fields slot variable `detailsShowing` to determine the visibility of the `row-details` slot.
+
+::: info NOTE
+If manipulating the `_showDetails` property directly on the item data (i.e. not via the
+`toggleDetails` function reference), the `_showDetails` property **must** exist in the items data
+for proper reactive detection of changes to its value. Read more about
+[how reactivity works in Vue](https://vuejs.org/guide/extras/reactivity-in-depth.html#Change-Detection-Caveats).
+:::
+
+**Available `row-details` scoped variable properties:**
+
+| Property        | Type                       | Description                                                                                                                   |
+| --------------- | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `item`          | `Items`                    | The entire row record data object                                                                                             |
+| `index`         | `number`                   | The current visible row number                                                                                                |
+| `fields`        | `TableField<Items>[]`      | The normalized fields definition array (in the _array of objects_ format)                                                     |
+| `toggleDetails` | `() => void`               | Function to toggle visibility of the row's details slot                                                                       |
+| `rowSelected`   | `boolean`                  | Will be `true` if the row has been selected. See section [Row select support](#row-select-support) for additional information |
+| `selectRow`     | `(index?: number) => void` | When called, selects the current row. See section [Row select support](#row-select-support) for additional information        |
+| `unselectRow`   | `(index?: number) => void` | When called, unselects the current row. See section [Row select support](#row-select-support) for additional information      |
+
+::: info NOTE
+the row select related scope properties are only available in `<BTable>`.
+:::
+
+In the following example, we show two methods of toggling the visibility of the details: one via a
+button, and one via a checkbox. We also show the third row details defaulting to have details
+initially showing.
+
+<<< DEMO ./demo/TableRowDetails.vue
 
 ### Row select support
 
+You can make rows selectable, by using the `<BTable>` prop `selectable`.
+
+Users can easily change the selecting mode by setting the `select-mode` prop.
+
+- `'multi'`: Each click will select/deselect the row (default mode)
+- `'single'`: Only a single row can be selected at one time
+- `'range'`: Any row clicked is selected, any other deselected. <kbd>Shift</kbd> + click selects a
+  range of rows, and <kbd>Ctrl</kbd> (or <kbd>Cmd</kbd>) + click will toggle the selected row.
+
+When a table is `selectable` and the user clicks on a row, `<BTable>` will emit the `update:selected-items`
+event, passing a single argument which is the complete list of selected items. **This argument
+is read-only.** In addition, `row-selected` or `row-unselected` events are emitted for each row.
+
+Rows can also be programmatically selected and unselected via the following exposed methods on the
+`<BTable>` instance:
+
+| Method                         | Description                                                                                          |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| `selectRow(index: number)`     | Selects a row with the given `index` number.                                                         |
+| `unselectRow(index: number)`   | Unselects a row with the given `index` number.                                                       |
+| `selectAllRows()`              | Selects all rows in the table, except in `single` mode in which case only the first row is selected. |
+| `clearSelected()`              | Unselects all rows.                                                                                  |
+| `isRowSelected(index: number)` | Returns `true` if the row with the given `index` is selected, otherwise it returns `false`.          |
+
+**Programmatic row selection notes:**
+
+- `index` is the zero-based index of the table's **visible rows**, after filtering, sorting, and
+  pagination have been applied.
+- In `single` mode, `selectRow(index)` will unselect any previous selected row.
+- Attempting to `selectRow(index)` or `unselectRow(index)` on a non-existent row will be ignored.
+- The table must be `selectable` for any of these methods to have effect.
+- You can disable selection of rows via click events by setting the `no-select-on-click` prop. Rows
+  will then only be selectable programmatically.
+
+**Row select notes:**
+
+- [Sorting](#sorting), [filtering](#filtering), or [paginating](#pagination) the table will **clear
+  the active selection**. The `update:selected-items` event will be emitted with an empty array (`[]`) if
+  needed.
+- When the table is in `selectable` mode, all data item `<tr>` elements will be in the document tab
+  sequence (`tabindex="0"`) for [accessibility](#accessibility) reasons, and will have the attribute
+  `aria-selected` set to either `'true'` or `'false'` depending on the selected state of the row.
+- <NotYetImplemented/>When a table is `selectable`, the table will have the attribute `aria-multiselect` set to either
+  `'false'` for `single` mode, and `'true'` for either `multi` or `range` modes.
+
+<NotYetImplemented/>
+
+Use the prop `selected-variant` to apply a Bootstrap theme color to the selected row(s). Note, due
+to the order that the table variants are defined in Bootstrap's CSS, any row-variant _might_ take
+precedence over the `selected-variant`. You can set `selected-variant` to an empty string if you
+will be using other means to convey that a row is selected (such as a scoped field slot in the below
+example).
+
+The `selected-variant` can be any of the
+[standard (or custom) Bootstrap base color variants](/docs/reference/color-variants), or the special
+[table `active` variant](/docs/reference/color-variants#table-variants) (the default) which takes
+precedence over any specific row or cell variants.
+
+For accessibility reasons (specifically for color blind users, or users with color contrast issues),
+it is highly recommended to always provide some other visual means of conveying that a row is
+selected, such as a virtual column as shown in the example below.
+
+<<< DEMO ./demo/TableRowSelect.vue
+
 ### Table body transition support
 
-### `v-model` binding
+<NotYetImplemented />
 
 ## Sorting
 
-As mentioned in the [Fields](#fields) section above, you can make columns
+As mentioned in the [Fields](#fields-column-definitions) section above, you can make columns
 sortable in `<BTable>`. Clicking on a sortable column header will sort the column in ascending
 direction (smallest first), while clicking on it again will switch the direction of sorting to
 descending (largest first). Clicking on it a third time will stop sorting on the column. For
@@ -525,7 +697,7 @@ sort that column in ascending order and clear the sort order for the previously 
 
 You can control which column is pre-sorted and the order of sorting (ascending or descending). To
 pre-specify the column to be sorted use the `sortBy` model. For single column sorting (e.g. `multisort===false`)
-`sortBy` should be an array containing a single `BTableSortBy` object.
+`sortBy` should be an array containing a single `BTableSortBy` object with a defined `order` field.
 
 <<< FRAGMENT ./demo/TableSortBy.ts#snippet{ts}
 
@@ -536,7 +708,8 @@ pre-specify the column to be sorted use the `sortBy` model. For single column so
 
 By default the comparer function does a `numeric localeCompare`. If one wishes to change this, use a custom comparer function with that `BTableSortBy` element.
 
-To prevent the table from wiping out the comparer function, internally it will set the `order` key to `undefined`, instead of just removing the element from the `sortBy` array. i.e. `:sort-by="[]"` & `:sort-by="[key: 'someKey', order: undefined]"` behave identically. Naturally if this value is given to a server, orders of undefined should be handled.
+To prevent the table from wiping out the comparer function, internally it will set the `order` key to `undefined`, instead of just removing the element from the `sortBy` array. i.e. `:sort-by="[]"` & `:sort-by="[key: 'someKey', order: undefined]"` behave identically. Naturally if this value is given to a server, orders of undefined should be handled. See the computed `singleSortBy` function below as a simple means of retrieving the single sortded column reference from a table
+that is in single sort mode.
 
 <<< DEMO ./demo/TableSort.vue
 
@@ -555,11 +728,89 @@ to the `sortBy` array. From the user inteface, multi-sort works as follows:
 
 <<< DEMO ./demo/TableSortByMulti.vue
 
-### Change initial sort direction
+### Custom Sort Comparer(s)
+
+Each item in the `BSortBy` model may include a `comparer` field of the type `BTableSortByComparerFunction<T = any> = (a: T, b: T, key: string) => number`. This function takes the items to be compared and the key to compare on. Since the key is passed in, you may use the same function for multiple fields or you can craft a different comparer function for each fied. Leaving the `comparer` field undefined (or not defining a field in the `sortBy` array at all) will fall back to using hte default comparer, which looks like this:
+
+<<< FRAGMENT ./demo/TableSortCompareDefault.ts#snippet{ts}
+
+where `getStringValue` retrieves the field value as a string.
+
+If you have a particular field that you want to sort by, you can set up a record of the `sortBy` model
+with a custom comparer:
+
+<<< FRAGMENT ./demo/TableSortCompareCustom.ts#snippet{ts}
 
 ## Filtering
 
-To Be Completed
+Filtering, when used, is applied by default to the **original items** array data. `Btable` provides
+several options for how data is filtered.
+
+It is currently not possible to filter based on result of formatting via
+[scoped field slots](#scoped-field-slots).
+
+### Built in filtering
+
+The item's row data values are stringified (see the sorting section above for how stringification is
+done) and the filter searches that stringified data (excluding any of the special properties that
+begin with an underscore `'_'`). The stringification also, by default, includes any data not shown
+in the presented columns.
+
+With the default built-in filter function, the `filter` prop value can either be a string or a
+`RegExp` object (regular expressions should _not_ have the `/g` global flag set). <NotYetImplemented/> Currently the `filter` prop only supports a string, not a `RegExp`.
+
+If the stringified row contains the provided string value or matches the RegExp expression then it
+is included in the displayed results.
+
+Set the `filter` prop to `null` or an empty string to clear the current filter.
+
+### Built in filtering options
+
+There are several options for controlling what data the filter is applied against.
+
+- <NotYetImplemented/>The `filter-ignored-fields` prop accepts an array of _top-level_ (immediate properties of the row
+  data) field keys that should be ignored when filtering.
+- <NotYetImplemented/>The `filter-included-fields` prop accepts an array of _top-level_ (immediate properties of the row
+  data) field keys that should used when filtering. All other field keys not included in this array
+  will be ignored. This feature can be handy when you want to filter on specific columns. If the
+  specified array is empty, then _all_ fields are included, except those specified via the prop
+  `filter-ignored-fields`. If a field key is specified in both `filter-ignored-fields` and
+  `filter-included-fields`, then `filter-included-fields` takes precedence.
+- Normally, `<BTable>` filters based on the stringified record data. If the field has a `formatter`
+  function specified, you can optionally filter based on the result of the formatter by setting the
+  [field definition property](#field-definition-reference) `filterByFormatted` to `true`. If the
+  field does not have a formatter function, this option is ignored. <NotYetImplemented/>You can optionally pass a
+  formatter function _reference_, to be used for filtering only, to the field definition property
+  `filterByFormatted`.
+
+The props `filter-ignored-fields` and `filter-included-fields`, and the field definition property
+`filterByFormatted` have no effect when using a [custom filter function](#custom-filter-function),
+or [items provider](#using-items-provider-functions) based filtering.
+
+### Custom filter function
+
+You can also use a custom filter function, by setting the prop `filter-function` to a reference of
+custom filter test function. The filter function signature is `(item: Readonly<Items>, filter: string | undefined) => boolean`
+
+- `item` is the original item row record data object.
+- `filter` value of the `filter` prop
+
+The function should return `true` if the record matches your criteria or `false` if the record is to
+be filtered out.
+
+For proper reactive updates to the displayed data, when not filtering you should set the `filter`
+prop to `null` or an empty string (and not an empty object or array). The filter function will not
+be called when the `filter` prop is a falsey value.
+
+The display of the `empty-filter-text` relies on the truthiness of the `filter` prop.
+
+### Filter events
+
+When local filtering is applied, and the resultant number of items change, `<BTable>` will emit the
+`filtered` event with a single argument of type `Items[]`: which is the complete list of
+items passing the filter routine. **Treat this argument as read-only.**
+
+Setting the prop `filter` to null or an empty string will clear local items filtering.
 
 ## Pagination
 
@@ -579,7 +830,7 @@ The `BTableSimple` component gives the user complete control over the rendering 
 
 `BTableSimple` provides basic styling options via props: striped, bordered, borderless, outlined, small, hover, dark, fixed, responsive and sticky-header. Note that stacked mode is available but requires some additional markup to generate the cell headings, as described in the Simple tables and stacked mode section below. Sticky columns are also supported, but also require a bit of additional markup to specify which columns are to be sticky. See below for more information on using sticky columns.
 
-Since b-table-simple is just a wrapper component, of which you will need to render content inside, it does not provide any of the advanced features of `BTable` (i.e. row events, head events, sorting, pagination, filtering, foot-clone, items, fields, etc.).
+Since `BTableSimple` is just a wrapper component, of which you will need to render content inside, it does not provide any of the advanced features of `BTable` (i.e. row events, head events, sorting, pagination, filtering, foot-clone, items, fields, etc.).
 
 <<< DEMO ./demo/TableSimpleOverview.vue#template{vue-html}
 
@@ -609,6 +860,10 @@ Sticky columns are supported with `BTableSimple`, but you will need to set the s
 As with `BTable` and `BTableLite`, sticky columns are not supported when the stacked prop is set on `BTableSimple`.
 
 ## Table Helper Components
+
+To Be Completed
+
+## Accessibility
 
 To Be Completed
 

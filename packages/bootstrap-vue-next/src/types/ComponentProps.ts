@@ -122,6 +122,28 @@ export interface BAccordionProps {
   unmountLazy?: boolean
 }
 
+export interface BAccordionItemProps {
+  bodyAttrs?: Readonly<AttrsValue>
+  bodyClass?: ClassValue
+  buttonAttrs?: Readonly<AttrsValue>
+  buttonClass?: ClassValue
+  collapseClass?: ClassValue
+  headerAttrs?: Readonly<AttrsValue>
+  headerClass?: ClassValue
+  headerTag?: string
+  horizontal?: boolean
+  id?: string
+  isNav?: boolean
+  modelValue?: boolean
+  lazy?: boolean
+  unmountLazy?: boolean
+  tag?: string
+  title?: string
+  show?: boolean
+  visible?: boolean
+  wrapperAttrs?: Readonly<AttrsValue>
+}
+
 export interface BDropdownDividerProps {
   dividerClass?: ClassValue
   tag?: string
@@ -752,28 +774,6 @@ export interface BSpinnerProps {
   variant?: ColorVariant | null
 }
 
-export interface BAccordionItemProps {
-  bodyAttrs?: Readonly<AttrsValue>
-  bodyClass?: ClassValue
-  buttonAttrs?: Readonly<AttrsValue>
-  buttonClass?: ClassValue
-  collapseClass?: ClassValue
-  headerAttrs?: Readonly<AttrsValue>
-  headerClass?: ClassValue
-  headerTag?: string
-  horizontal?: boolean
-  id?: string
-  isNav?: boolean
-  modelValue?: boolean
-  lazy?: boolean
-  unmountLazy?: boolean
-  tag?: string
-  title?: string
-  show?: boolean
-  visible?: boolean
-  wrapperAttrs?: Readonly<AttrsValue>
-}
-
 export interface BAlertProps
   extends ColorExtendables,
     Omit<BLinkProps, 'routerTag'>,
@@ -1089,7 +1089,7 @@ export interface BTableProps<Items> extends Omit<BTableLiteProps<Items>, 'tableC
   noProviderPaging?: boolean
   noProviderSorting?: boolean
   noProviderFiltering?: boolean
-  sortBy?: BTableSortBy[]
+  sortBy?: BTableSortBy<Items>[]
   mustSort?: boolean | string[] // TODO this is a string of fields, possibly generic
   selectable?: boolean
   multisort?: boolean

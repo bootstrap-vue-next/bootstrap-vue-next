@@ -1,5 +1,5 @@
 import type {Plugin} from 'vue'
-import type {BootstrapVueOptions} from '../../types/BootstrapVueOptions'
+import type {BootstrapVueOptions, BvnComponents} from '../../types/BootstrapVueOptions'
 
 import '../../styles/styles.scss'
 
@@ -37,3 +37,8 @@ export const createBootstrap = (pluginData: Readonly<BootstrapVueOptions> = {}):
     app.use(bootstrapPlugin, pluginData)
   },
 })
+
+declare module 'vue' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+  interface GlobalComponents extends BvnComponents {}
+}
