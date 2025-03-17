@@ -173,10 +173,11 @@
           <div class="d-inline-flex flex-nowrap align-items-center gap-1">
             <div>
               <!-- eslint-disable prettier/prettier -->
+              <!-- @vue-expect-error - typescript is generating 2322 errors for all properties after name, which is wrong -->
               <slot
                 :name="calculatedFooterSlot(field.key)"
                 :label="field.label"
-                :column="field.key as LiteralUnion<keyof Items>"
+                :column="field.key"
                 :field="field"
                 :is-foot="true"
               >
@@ -429,16 +430,14 @@ const footerProps = computed(() => ({
   class: props.tfootClass ?? props.theadClass,
 }))
 
-const calculatedFooterSlot = (key: LiteralUnion<keyof Items>) => {
-  if (!props.footClone) return undefined
-  return slots[`foot(${String(key)})`]
-    ? (`foot(${String(key)})` as 'foot()')
+const calculatedFooterSlot = (key: LiteralUnion<keyof Items>): keyof typeof slots =>
+  slots[`foot(${String(key)})`]
+    ? `foot(${String(key)})`
     : slots[`head(${String(key)})`]
-      ? (`head(${String(key)})` as 'foot()')
+      ? `head(${String(key)})`
       : slots['foot()']
         ? 'foot()'
         : 'head()'
-}
 
 const itemAttributes = (item: Items, fieldKey: string, attr?: unknown) => {
   const val = get(item, fieldKey)
