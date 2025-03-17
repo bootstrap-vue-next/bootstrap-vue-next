@@ -154,7 +154,10 @@
       </slot>
     </BTbody>
     <BTfoot v-if="props.footClone" v-bind="footerProps">
-      <BTr :variant="props.footRowVariant" :class="props.tfootTrClass">
+      <BTr
+        :variant="props.footRowVariant ?? props.headRowVariant"
+        :class="props.tfootTrClass ?? props.theadTrClass"
+      >
         <BTh
           v-for="field in computedFields"
           :key="field.key"
@@ -171,11 +174,7 @@
             <div>
               <!-- eslint-disable prettier/prettier -->
               <slot
-                :name="
-                  slots[`foot(${String(field.key)})`]
-                    ? (`foot(${String(field.key)})` as 'foot()')
-                    : 'foot()'
-                "
+                :name="calculatedFooterSlot(field.key)"
                 :label="field.label"
                 :column="field.key as LiteralUnion<keyof Items>"
                 :field="field"
@@ -426,9 +425,20 @@ const showComputedHeaders = computed(() => {
 })
 
 const footerProps = computed(() => ({
-  variant: props.footVariant,
-  class: props.tfootClass,
+  variant: props.footVariant ?? props.headVariant,
+  class: props.tfootClass ?? props.theadClass,
 }))
+
+const calculatedFooterSlot = (key: LiteralUnion<keyof Items>) => {
+  if (!props.footClone) return undefined
+  return slots[`foot(${String(key)})`]
+    ? (`foot(${String(key)})` as 'foot()')
+    : slots[`head(${String(key)})`]
+      ? (`head(${String(key)})` as 'foot()')
+      : slots['foot()']
+        ? 'foot()'
+        : 'head()'
+}
 
 const itemAttributes = (item: Items, fieldKey: string, attr?: unknown) => {
   const val = get(item, fieldKey)
