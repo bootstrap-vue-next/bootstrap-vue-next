@@ -5,7 +5,7 @@ import type {BModalSlots, BPopoverSlots, BToastSlots} from './ComponentSlots'
 import type {BModalEmits, BPopoverEmits, BToastEmits} from './ComponentEmits'
 
 export type ControllerKey = symbol | string
-export interface PromiseWithModal extends Promise<boolean | null> {
+export interface PromiseWithModal extends Promise<boolean | null>, AsyncDisposable, Disposable {
   id: ControllerKey
   show: () => PromiseWithModal
   hide: () => void

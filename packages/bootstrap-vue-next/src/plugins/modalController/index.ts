@@ -2,10 +2,11 @@ import {
   isReadonly,
   isRef,
   markRaw,
+  nextTick,
   onScopeDispose,
   type Plugin,
-  type Ref,
   ref,
+  type Ref,
   toRef,
   toValue,
   watch,
@@ -64,6 +65,7 @@ export const modalControllerPlugin: Plugin = {
             modal.modelValue = false
             modal['onUpdate:modelValue']?.(false)
           }
+          return promise
         },
         toggle() {
           const modal = modals.value.get(_id)
@@ -71,10 +73,43 @@ export const modalControllerPlugin: Plugin = {
             modal.modelValue = !modal.modelValue
             modal['onUpdate:modelValue']?.(modal.modelValue)
           }
+          return promise
         },
-        remove() {
-          modals.value.get(_id)?.promise.stop?.()
+        async remove() {
+          const modal = modals.value.get(_id)
+          if (!modal) return
+          modal.promise.stop?.()
+          if (modal.modelValue) {
+            await new Promise(async (resolve) => {
+              modal.modelValue = false
+              modal['onHidden'] = () => {
+                resolve(undefined)
+              }
+              await nextTick()
+              modal['onUpdate:modelValue']?.(false)
+            })
+          }
           modals.value.delete(_id)
+        },
+        set(val: Partial<ModalOrchestratorParam>) {
+          const modal = modals.value.get(_id)
+          if (modal) {
+            const v = {...modal, ...toValue(val)}
+            // add modal to v
+            modals.value.set(_id, {
+              ...v,
+              title: toValue(v.title),
+              body: toValue(v.body),
+              modelValue: toValue(v.modelValue),
+            })
+          }
+        },
+
+        async [Symbol.asyncDispose]() {
+          await this.remove()
+        },
+        [Symbol.dispose]() {
+          this.remove()
         },
       })
 
@@ -155,7 +190,12 @@ export const modalControllerPlugin: Plugin = {
           deep: true,
         }
       )
-      onScopeDispose(() => remove(_self), true)
+      onScopeDispose(() => {
+        const modal = modals.value.get(_self)
+        if (modal) {
+          modal.promise.value.remove?.()
+        }
+      }, true)
       return promise.value
     }
     const show = (obj: ModalOrchestratorShowParam = {}): PromiseWithModal =>
@@ -163,39 +203,12 @@ export const modalControllerPlugin: Plugin = {
     const confirm = (obj: ModalOrchestratorShowParam = {}): PromiseWithModal =>
       create(obj, true).confirm()
 
-    /**
-     * You can get the symbol param from the return value from the show method, or use props.id
-     */
-    const remove = (self: ControllerKey) => {
-      modals.value.get(self)?.promise.stop?.()
-      modals.value.delete(self)
-    }
-
-    /**
-     * @param {ControllerKey} self You can get the symbol param from the return value from the show method, or use props.id
-     */
-    const set = (self: ControllerKey, val: Partial<ModalOrchestratorParam>) => {
-      const modal = modals.value.get(self)
-      if (modal) {
-        const v = {...modal, ...toValue(val)}
-        // add modal to v
-        modals.value.set(self, {
-          ...v,
-          title: toValue(v.title),
-          body: toValue(v.body),
-          modelValue: toValue(v.modelValue),
-        })
-      }
-    }
-
     app.provide(modalControllerPluginKey, {
       _isOrchestratorInstalled,
       create,
       modals,
-      remove,
       show,
       confirm,
-      set,
     })
   },
 }

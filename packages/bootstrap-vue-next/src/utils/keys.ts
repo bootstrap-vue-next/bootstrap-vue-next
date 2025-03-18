@@ -17,7 +17,6 @@ import type {BreadcrumbItemRaw} from '../types/BreadcrumbTypes'
 import type {
   ControllerKey,
   ModalOrchestratorMapValue,
-  ModalOrchestratorParam,
   ModalOrchestratorShowParam,
   PopoverOrchestratorMapValue,
   PopoverOrchestratorParam,
@@ -229,8 +228,6 @@ export const modalControllerPluginKey: InjectionKey<{
   create: (obj: ModalOrchestratorShowParam, isConfirm?: boolean) => PromiseWithModal
   show: (obj: ModalOrchestratorShowParam) => PromiseWithModal
   confirm: (obj: ModalOrchestratorShowParam) => PromiseWithModal
-  remove: (self: ControllerKey) => void
-  set: (self: ControllerKey, val: Partial<ModalOrchestratorParam>) => void
 }> = createBvnPluginInjectionKey('modalController')
 
 export const popoverPluginKey: InjectionKey<{

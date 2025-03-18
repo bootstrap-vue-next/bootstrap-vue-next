@@ -36,7 +36,7 @@
             if (e.defaultPrevented) {
               return
             }
-            tools.remove?.(key)
+            promise.value.remove?.()
           }
         "
       >
