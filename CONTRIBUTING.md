@@ -68,7 +68,7 @@ We use [vitepress](https://vitepress.dev/) to build our documentation in the `./
 Evaluating parity is another great way to contribute to this project, especially if you're not quite ready to dive into the code.
 
 As we close in on a v1 of bootstrap-vue-next, we would like to verify our feature parity with both
-[bootstrap-vue](https://bootstrap-vue.org/) and [Bootstrap v5](https://getbootstrap.com/).
+[bootstrap-vue](https://bootstrap-vue.github.io/bootstrap-vue/) and [Bootstrap v5](https://getbootstrap.com/).
 
 This verification requires that someone take a close look at the documentation for both of the parity
 systems and the code and documentation for bootstrap-vue-next to evaluate feature parity. We're using a
@@ -96,7 +96,7 @@ For adding a new component, there are some notes...
 - You should first review the `./packages/bootstrap-vue-next/src/types` directory and get familiar with the internal types that you can use
 - They should follow `<script setup lang="ts">` syntax, to ensure uniformity, there are _some_ exceptions to this rule regarding Vue SFC being unable to import or extend types
 - If the component is a native [Bootstrap](https://getbootstrap.com/) component, you will need to read about that component and have a thorough understanding of how it works and appears
-- If the component is custom, or taken from [Bootstrap-vue](https://bootstrap-vue.org/) you will need to read the component documentation, then attempt to recreate that component using `<template>` and `<script setup lang="ts">` syntax. If a Bootstrap-vue component is based on a native Bootstrap component, then you should read Bootstrap's implementation first, and ensure any changes are made to correct for the v5 release of Bootstrap
+- If the component is custom, or taken from [Bootstrap-vue](https://bootstrap-vue.github.io/bootstrap-vue/) you will need to read the component documentation, then attempt to recreate that component using `<template>` and `<script setup lang="ts">` syntax. If a Bootstrap-vue component is based on a native Bootstrap component, then you should read Bootstrap's implementation first, and ensure any changes are made to correct for the v5 release of Bootstrap
 - All Props and Emits should be fully written as TypeScript interfaces, the more strongly typed, the better
 
 After the implementation of the component, based on Bootstrap's details, you can finally begin introducing the component to be exported by the main package, and usable by users of the library. To do that you will need to:
