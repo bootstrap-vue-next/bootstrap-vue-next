@@ -178,7 +178,7 @@
                 :name="calculatedFooterSlot(field.key)"
                 :label="field.label"
                 :column="field.key"
-                :field="field"
+                :field="field as LiteralUnion<keyof Items>"
                 :is-foot="true"
               >
                 <!-- eslint-enable prettier/prettier -->
@@ -433,10 +433,10 @@ const footerProps = computed(() => ({
 const calculatedFooterSlot = (key: LiteralUnion<keyof Items>): keyof typeof slots =>
   slots[`foot(${String(key)})`]
     ? `foot(${String(key)})`
-    : slots[`head(${String(key)})`]
-      ? `head(${String(key)})`
-      : slots['foot()']
-        ? 'foot()'
+    : slots['foot()']
+      ? 'foot()'
+      : slots[`head(${String(key)})`]
+        ? `head(${String(key)})`
         : 'head()'
 
 const itemAttributes = (item: Items, fieldKey: string, attr?: unknown) => {

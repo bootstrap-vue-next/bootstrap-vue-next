@@ -404,6 +404,25 @@ describe('btablelite', () => {
     expect($th[1].text()).toBe('Custom Header')
   })
 
+  it('Prefers the #foot() slot to the #head(x) slot when falling back from #foot(x)', () => {
+    const wrapper = mount(BTableLite, {
+      props: {
+        items: [{a: 1, b: 2}],
+        footClone: true,
+      },
+      slots: {
+        'head()': `<template #head()>Custom Header</template>`,
+        'head(a)': `<template #head()>A</template>`,
+        'foot()': `<template #head()>Custom Footer</template>`,
+      },
+    })
+    const $tfoot = wrapper.get('tfoot')
+    const $th = $tfoot.findAll('th')
+    expect($th.length).toBe(2)
+    expect($th[0].text()).toBe('Custom Footer')
+    expect($th[1].text()).toBe('Custom Footer')
+  })
+
   it('Passes the original objects for scoped cell slot items', () => {
     const items = [new Person(1, 'John', 'Doe', 30), new Person(2, 'Jane', 'Smith', 25)]
     const wrapper = mount(BTableLite, {
