@@ -33,7 +33,7 @@
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },
   "peerDependencies": {
-    "bootstrap-vue-next": "0.28.3"
+    "bootstrap-vue-next": "workspace:^"
   },
   "dependencies": {
     "@nuxt/kit": "^3.16.1"
@@ -47,7 +47,7 @@
     "@rushstack/eslint-patch": "^1.11.0",
     "@types/node": "^22.13.10",
     "@vue/eslint-config-prettier": "^10.2.0",
-    "bootstrap-vue-next": "0.28.3",
+    "bootstrap-vue-next": "workspace:^",
     "eslint": "^9.22.0",
     "eslint-define-config": "^2.1.0",
     "nuxt": "^3.16.1",
