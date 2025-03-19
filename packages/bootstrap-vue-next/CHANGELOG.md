@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.28.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.28.2...bootstrapvuenext-v0.28.3) (2025-03-19)
+
+
+### Bug Fixes
+
+* update deps fixes [#2487](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2487) ([#2617](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2617)) ([5f4416e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5f4416eaf644145cb3f454e051905a851b6a0091))
+* **useShowHide:** render based on initialState, fixes ssr on showhide components ([b889f1a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b889f1a19b06a58f594d64ed5404e27c7683e71c))
+
 ## [0.28.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.28.1...bootstrapvuenext-v0.28.2) (2025-03-14)
 
 
