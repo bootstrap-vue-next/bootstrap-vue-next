@@ -28,5 +28,19 @@
       ],
       "type": "node"
     },
+    {
+      "name": "Launch app unit test",
+      "request": "launch",
+      "runtimeArgs": [
+        "test:unit",
+        "--filter",
+        "bootstrap-vue-next"
+      ],
+      "runtimeExecutable": "pnpm",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
+    },
   ]
 }

@@ -140,6 +140,7 @@ const componentsList: {name: string}[] = [
   {name: 'Table'},
   {name: 'Tabs'},
   {name: 'Toast'},
+  {name: 'Tooltip'},
 ]
 
 const composablesList: {name: string}[] = [
@@ -148,6 +149,7 @@ const composablesList: {name: string}[] = [
   {name: 'useModal'},
   {name: 'useModalController'},
   {name: 'useToastController'},
+  {name: 'useToggle'},
   {name: 'usePopoverController'},
 ]
 
