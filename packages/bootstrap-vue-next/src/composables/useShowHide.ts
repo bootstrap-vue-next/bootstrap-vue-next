@@ -91,7 +91,7 @@ export const useShowHide = (
     if (modelValue.value) {
       show()
     } else {
-      hide()
+      hide('modelValue', true)
     }
   })
 
@@ -137,7 +137,7 @@ export const useShowHide = (
         if (newval) {
           show()
         } else {
-          hide()
+          hide('visible-prop', true)
         }
       })
     }
@@ -148,7 +148,7 @@ export const useShowHide = (
       if (newval) {
         show()
       } else {
-        hide()
+        hide('show-prop', true)
       }
     }
   )
@@ -232,7 +232,7 @@ export const useShowHide = (
   }
 
   let leaveTrigger: string | undefined
-  const hide = (trigger?: string): Promise<boolean> => {
+  const hide = (trigger?: string, noTriggerEmit?: boolean): Promise<boolean> => {
     if (!showRef.value) return Promise.resolve(true)
     if (!_Promise)
       _Promise = new Promise<boolean>((resolve) => {
@@ -254,7 +254,7 @@ export const useShowHide = (
       clearTimeout(showTimeout)
       showTimeout = undefined
     }
-    if (trigger) {
+    if (trigger && !noTriggerEmit) {
       emit(trigger, event2)
     }
     emit('hide', event)
@@ -300,7 +300,7 @@ export const useShowHide = (
       return Promise.resolve(false)
     }
     if (showRef.value) {
-      return hide()
+      return hide('toggle-function', true)
     }
     return show(resolveOnHide)
   }
@@ -312,7 +312,7 @@ export const useShowHide = (
       return
     }
     if (showRef.value) {
-      hide()
+      hide('toggle-trigger', true)
     } else {
       show()
     }
@@ -390,7 +390,6 @@ export const useShowHide = (
     props.transitionProps?.onEnter?.(el)
   }
   const onAfterEnter = (el: Element) => {
-    emit('shown', buildTriggerableEvent('shown'))
     markLazyLoadCompleted()
     options.transitionProps?.onAfterEnter?.(el)
     props.transitionProps?.onAfterEnter?.(el)
@@ -404,6 +403,9 @@ export const useShowHide = (
     }
     requestAnimationFrame(() => {
       trapActive.value = true
+      nextTick(() => {
+        emit('shown', buildTriggerableEvent('shown', {cancelable: false}))
+      })
     })
     if (!_resolveOnHide) {
       _Resolve?.(true)
@@ -423,7 +425,7 @@ export const useShowHide = (
     props.transitionProps?.onLeave?.(el)
   }
   const onAfterLeave = (el: Element) => {
-    emit('hidden', buildTriggerableEvent('hidden', {trigger: leaveTrigger}))
+    emit('hidden', buildTriggerableEvent('hidden', {trigger: leaveTrigger, cancelable: false}))
     options.transitionProps?.onAfterLeave?.(el)
     props.transitionProps?.onAfterLeave?.(el)
     isLeaving.value = false

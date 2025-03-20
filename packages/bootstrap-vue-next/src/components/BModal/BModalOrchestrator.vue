@@ -3,40 +3,39 @@
     <div id="__BVID__modal-container" v-bind="$attrs">
       <component
         :is="_component ?? BModal"
-        v-for="[key, {component: _component, promise, isConfirm, slots, ...val}] in tools.modals
+        v-for="[key, {component: _component, promise, options, slots, ...val}] in tools.modals
           ?.value"
         :key="key"
+        :ref="(ref: ComponentPublicInstance) => (promise.value.ref = ref)"
         v-bind="val"
         initial-animation
         :teleport-disabled="true"
         @hide="
           (e: BvTriggerableEvent) => {
+            e.ok = e.trigger === 'ok' ? true : e.trigger === 'cancel' ? false : null
             val.onHide?.(e)
             if (e.defaultPrevented) {
               return
             }
-            // These following are confirm rules, otherwise we always resolve true
-            if (isConfirm === true) {
-              if (e.trigger === 'ok') {
-                promise.resolve(true)
-                return
-              }
-              if (e.trigger === 'cancel') {
-                promise.resolve(false)
-                return
-              }
-              promise.resolve(null)
+            promise.stop?.()
+            if (options?.resolveOnHide) {
+              promise.resolve(options.returnBoolean ? e.ok : e)
             }
-            promise.resolve(true)
           }
         "
         @hidden="
           (e: BvTriggerableEvent) => {
+            e.ok = e.trigger === 'ok' ? true : e.trigger === 'cancel' ? false : null
             val.onHidden?.(e)
             if (e.defaultPrevented) {
               return
             }
-            promise.value.remove?.()
+            if (!options?.resolveOnHide) {
+              promise.resolve(options.returnBoolean ? e.ok : e)
+            }
+            if (!options?.keep) {
+              promise.value.destroy?.()
+            }
           }
         "
       >
@@ -55,6 +54,7 @@ import type {BModalOrchestratorProps} from '../../types/ComponentProps'
 import BModal from './BModal.vue'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
 import {useModalController} from '../../composables/useModalController'
+import type {ComponentPublicInstance} from 'vue'
 
 defineOptions({
   inheritAttrs: false,

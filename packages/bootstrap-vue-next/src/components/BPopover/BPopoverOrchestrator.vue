@@ -1,6 +1,6 @@
 <template>
   <component
-    :is="_component ?? BPopover"
+    :is="_component ?? (val.tooltip ? BTooltip : BPopover)"
     v-for="[
       key,
       {component: _component, promise, slots, ...val},
@@ -15,31 +15,7 @@
         if (e.defaultPrevented) {
           return
         }
-        promise.resolve(true)
-      }
-    "
-  >
-    <template v-for="(comp, slot) in slots" #[slot]="scope" :key="slot">
-      <component :is="comp" v-bind="scope" />
-    </template>
-  </component>
-  <component
-    :is="_component ?? BTooltip"
-    v-for="[
-      key,
-      {component: _component, promise, slots, ...val},
-    ] in tools.tooltips?.value.entries() ?? []"
-    :key="key"
-    v-bind="val"
-    initial-animation
-    :teleport-disabled="true"
-    @hide="
-      (e: BvTriggerableEvent) => {
-        val.onHide?.(e)
-        if (e.defaultPrevented) {
-          return
-        }
-        promise.resolve(true)
+        promise.resolve(e)
       }
     "
   >

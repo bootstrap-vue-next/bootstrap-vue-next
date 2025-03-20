@@ -465,7 +465,7 @@ onClickOutside(
   {ignore: [trigger]}
 )
 
-watch([() => props.click, () => props.target, () => props.reference], () => {
+watch([() => props.click, () => props.manual, () => props.target, () => props.reference], () => {
   unbind()
   bind()
   // update()

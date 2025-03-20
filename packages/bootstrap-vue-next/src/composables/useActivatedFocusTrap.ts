@@ -1,13 +1,4 @@
-import {
-  type MaybeRefOrGetter,
-  nextTick,
-  onMounted,
-  readonly,
-  ref,
-  type Ref,
-  toRef,
-  watch,
-} from 'vue'
+import {type MaybeRefOrGetter, onMounted, readonly, ref, type Ref, toRef, watch} from 'vue'
 import {useFocusTrap, type UseFocusTrapOptions} from '@vueuse/integrations/useFocusTrap'
 import {useMutationObserver} from '@vueuse/core'
 
@@ -63,7 +54,6 @@ export const useActivatedFocusTrap = (
 
   const trap = useFocusTrap(element, focusTrapOpts)
   watch(resolvedIsActive, async (newValue) => {
-    await nextTick()
     if (newValue && resolvedNoTrap.value === false) {
       trap.activate()
     } else {

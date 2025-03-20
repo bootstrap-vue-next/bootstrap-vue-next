@@ -16,19 +16,18 @@ import type {RadioValue} from '../types/RadioTypes'
 import type {BreadcrumbItemRaw} from '../types/BreadcrumbTypes'
 import type {
   ControllerKey,
+  ModalOrchestratorCreateOptions,
+  ModalOrchestratorCreateParam,
   ModalOrchestratorMapValue,
-  ModalOrchestratorShowParam,
+  PopoverOrchestratorCreateParam,
   PopoverOrchestratorMapValue,
-  PopoverOrchestratorParam,
-  PopoverOrchestratorShowParam,
   PromiseWithModal,
-  PromiseWithShowHide,
+  PromiseWithModalBoolean,
+  PromiseWithPopover,
+  PromiseWithToast,
   ToastOrchestratorArrayValue,
-  ToastOrchestratorParam,
-  ToastOrchestratorShowParam,
-  TooltipOrchestratorMapValue,
-  TooltipOrchestratorParam,
-  TooltipOrchestratorShowParam,
+  ToastOrchestratorCreateParam,
+  TooltipOrchestratorCreateParam,
 } from '../types/ComponentOrchestratorTypes'
 import type {BvnComponentProps} from '../types/BootstrapVueOptions'
 import {withBvnPrefix} from './withBvnPrefix'
@@ -215,31 +214,37 @@ export const toastPluginKey: InjectionKey<{
   toasts: Ref<ToastOrchestratorArrayValue[]>
   _isAppend: Ref<boolean>
   _isOrchestratorInstalled: Ref<boolean>
-  create: (obj: ToastOrchestratorShowParam) => PromiseWithShowHide
-  show: (obj: ToastOrchestratorShowParam) => PromiseWithShowHide
-  remove: (self: ControllerKey) => void
-  hide: (self: ControllerKey) => void
-  set: (self: ControllerKey, val: Partial<ToastOrchestratorParam>) => void
+  create: (obj: ToastOrchestratorCreateParam) => PromiseWithToast
+  /**
+   * show
+   * @deprecated
+   */
+  show: (obj: ToastOrchestratorCreateParam) => PromiseWithToast
 }> = createBvnPluginInjectionKey('toast')
 
 export const modalControllerPluginKey: InjectionKey<{
   modals: Ref<Map<ControllerKey, ModalOrchestratorMapValue>>
   _isOrchestratorInstalled: Ref<boolean>
-  create: (obj: ModalOrchestratorShowParam, isConfirm?: boolean) => PromiseWithModal
-  show: (obj: ModalOrchestratorShowParam) => PromiseWithModal
-  confirm: (obj: ModalOrchestratorShowParam) => PromiseWithModal
+  create: (
+    obj: ModalOrchestratorCreateParam,
+    options?: ModalOrchestratorCreateOptions
+  ) => PromiseWithModal | PromiseWithModalBoolean
+  /**
+   * show
+   * @deprecated
+   */
+  show: (obj: ModalOrchestratorCreateParam) => PromiseWithModalBoolean
+  /**
+   * show
+   * @deprecated
+   */
+  confirm: (obj: ModalOrchestratorCreateParam) => PromiseWithModalBoolean
 }> = createBvnPluginInjectionKey('modalController')
 
 export const popoverPluginKey: InjectionKey<{
   popovers: Ref<Map<ControllerKey, PopoverOrchestratorMapValue>>
-  popover: (obj: PopoverOrchestratorShowParam) => PromiseWithShowHide
-  tooltips: Ref<Map<ControllerKey, TooltipOrchestratorMapValue>>
-  tooltip: (obj: TooltipOrchestratorShowParam) => PromiseWithShowHide
-  set: (
-    self: ControllerKey,
-    val: Partial<PopoverOrchestratorParam | TooltipOrchestratorParam>
-  ) => void
-  remove: (self: ControllerKey) => void
+  popover: (obj: PopoverOrchestratorCreateParam) => PromiseWithPopover
+  tooltip: (obj: TooltipOrchestratorCreateParam) => PromiseWithPopover
   _isOrchestratorInstalled: Ref<boolean>
 }> = createBvnPluginInjectionKey('popover')
 

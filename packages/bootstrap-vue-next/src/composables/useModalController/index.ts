@@ -7,28 +7,29 @@ import {
   toValue,
 } from 'vue'
 import {modalControllerPluginKey} from '../../utils/keys'
-import type {ControllerKey, PromiseWithModal} from '../../types/ComponentOrchestratorTypes'
+import type {
+  ControllerKey,
+  PromiseWithModal,
+  PromiseWithModalBoolean,
+} from '../../types/ComponentOrchestratorTypes'
 import {useSharedModalStack} from '../../composables/useModalManager'
 
 export const useModalController = () => {
-  const noop = () => {}
   const noopPromise = () => {
     // eslint-disable-next-line no-console
     console.warn(
       'useModalController() was called outside of the setup() function! or the plugin is not provided.'
     )
-    return Promise.resolve(null) as PromiseWithModal
+    return Promise.resolve(null) as unknown as PromiseWithModal
   }
   const modalControllerPlugin = inject(modalControllerPluginKey, {
     modals: ref(new Map()),
     _isOrchestratorInstalled: ref(false),
     create: noopPromise,
-    show: noopPromise,
-    confirm: noopPromise,
-    remove: noop,
-    set: noop,
+    show: noopPromise as () => PromiseWithModalBoolean,
+    confirm: noopPromise as () => PromiseWithModalBoolean,
   })
-  if (modalControllerPlugin.remove === noop) {
+  if (modalControllerPlugin.create === noopPromise) {
     throw Error(
       'useModalController() was called outside of the setup() function! or the plugin is not provided.'
     )

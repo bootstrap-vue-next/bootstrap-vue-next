@@ -14,6 +14,7 @@
               _self,
               slots,
               promise,
+              options,
               component: _component,
               ...val
             } in tools.toasts?.value.filter((el) => el.position === key) || []"
@@ -22,30 +23,37 @@
             <component
               :is="_component ?? BToast"
               v-bind="val"
+              :ref="(ref: ComponentPublicInstance) => (promise.value.ref = ref)"
               initial-animation
               :teleport-disabled="true"
               @hide="
                 (e: BvTriggerableEvent) => {
+                  // we resolve close button to false, true otherwise for example link
+                  e.ok = e.trigger !== 'close'
+
                   val.onHide?.(e)
                   if (e.defaultPrevented) {
                     return
                   }
-                  // we resolve close button to false, true otherwise for example link
-                  if (e.trigger === 'close') {
-                    promise.resolve(false)
-                    return
+                  promise.stop?.()
+                  if (options?.resolveOnHide) {
+                    promise.resolve(e)
                   }
-
-                  promise.resolve(true)
                 }
               "
               @hidden="
                 (e: BvTriggerableEvent) => {
+                  e.ok = e.trigger !== 'close'
                   val.onHidden?.(e)
                   if (e.defaultPrevented) {
                     return
                   }
-                  tools.remove?.(_self)
+                  if (!options?.resolveOnHide) {
+                    promise.resolve(e)
+                  }
+                  if (!options?.keep) {
+                    promise.value.destroy?.()
+                  }
                 }
               "
             >
@@ -63,7 +71,7 @@
 <script setup lang="ts">
 import type {BvTriggerableEvent} from '../../utils'
 
-import {watch} from 'vue'
+import {type ComponentPublicInstance, watch} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {positionClasses} from '../../utils/positionClasses'
 import type {BToastOrchestratorProps} from '../../types/ComponentProps'
@@ -99,13 +107,6 @@ defineExpose({
 </script>
 
 <style lang="scss">
-/*
-If you remove the last element in the list, the animation goes farther to the right then normal.
-I don't know why
-I kind of like it though, and even if I didn't, I don't know how to get rid of it.
-Getting the transitions to work here was basically all trial and error.
-I think it's because it's "moving", but I don't know where it's moving to
-*/
 .b-list-move,
 .b-list-enter-active,
 .b-list-leave-active {

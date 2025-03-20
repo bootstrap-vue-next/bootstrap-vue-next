@@ -1,24 +1,61 @@
-import type {Component, MaybeRef, MaybeRefOrGetter, WatchHandle} from 'vue'
+import type {Component, ComponentPublicInstance, MaybeRef, MaybeRefOrGetter, WatchHandle} from 'vue'
 import type {BModalProps, BPopoverProps, BToastProps, BTooltipProps} from './ComponentProps'
 import type {ContainerPosition} from './Alignment'
 import type {BModalSlots, BPopoverSlots, BToastSlots} from './ComponentSlots'
 import type {BModalEmits, BPopoverEmits, BToastEmits} from './ComponentEmits'
+import type {BvTriggerableEvent} from '../utils'
+import type BModal from '../components/BModal/BModal.vue'
+import type BToast from '../components/BToast/BToast.vue'
+import type BPopover from '../components/BPopover/BPopover.vue'
+import type BTooltip from '../components/BTooltip/BTooltip.vue'
 
 export type ControllerKey = symbol | string
-export interface PromiseWithModal extends Promise<boolean | null>, AsyncDisposable, Disposable {
+export interface PromiseWithModalInternal extends AsyncDisposable {
   id: ControllerKey
+  ref: ComponentPublicInstance<typeof BModal> | null
   show: () => PromiseWithModal
-  hide: () => void
-  toggle: () => void
-  confirm: () => PromiseWithModal
-  remove: () => void
+  hide: () => PromiseWithModal
+  toggle: () => PromiseWithModal
+  set: (val: Partial<ModalOrchestratorParam>) => PromiseWithModal
+  get: () => ModalOrchestratorParam | undefined
+  destroy: () => void
 }
-export interface PromiseWithShowHide extends Promise<boolean | null> {
+export interface PromiseWithModal
+  extends Promise<BvTriggerableEvent | boolean | null>,
+    PromiseWithModalInternal {}
+
+/**
+ * Promise that resolves to a boolean or null
+ * @deprecated
+ */
+export interface PromiseWithModalBoolean
+  extends Promise<boolean | null>,
+    AsyncDisposable,
+    PromiseWithModalInternal {}
+
+export interface PromiseWithToast extends Promise<BvTriggerableEvent>, PromiseWithToastInternal {}
+export interface PromiseWithToastInternal extends AsyncDisposable {
   id: ControllerKey
-  show: () => PromiseWithShowHide
+  ref: ComponentPublicInstance<typeof BToast> | null
+  show: () => PromiseWithToast
   hide: () => void
   toggle: () => void
-  remove: () => void
+  set: (val: Partial<ToastOrchestratorParam>) => void
+  get: () => ToastOrchestratorParam | undefined
+  destroy: () => void
+}
+export interface PromiseWithPopover
+  extends Promise<BvTriggerableEvent>,
+    PromiseWithPopoverInternal {}
+export interface PromiseWithPopoverInternal extends AsyncDisposable {
+  id: ControllerKey
+  ref: ComponentPublicInstance<typeof BPopover | typeof BTooltip> | null
+  show: () => PromiseWithPopover
+  hide: () => void
+  toggle: () => void
+  set: (val: Partial<PopoverOrchestratorParam | TooltipOrchestratorParam>) => void
+  get: () => PopoverOrchestratorParam | undefined
+  destroy: () => void
 }
 
 type Prefix<P extends string, S extends string> = `${P}${S}`
@@ -35,7 +72,7 @@ export type ToastOrchestratorArrayValue = Omit<BToastProps, 'modelValue'> & {
   'position'?: ContainerPosition
   /**
    * Sets whether or not the toast should be appended to the container
-   * @default undefined Implicitly defualts to the BToastOrchestrator's appendToast value
+   * @default undefined Implicitly defaults to the BToastOrchestrator's appendToast value
    */
   'appendToast'?: boolean
   /**
@@ -49,9 +86,10 @@ export type ToastOrchestratorArrayValue = Omit<BToastProps, 'modelValue'> & {
   '_self': ControllerKey
   'onUpdate:modelValue'?: (val: boolean) => void
   'component'?: Readonly<Component>
+  'options': ToastOrchestratorCreateOptions
   'promise': {
-    value: PromiseWithShowHide
-    resolve: (value: boolean | null) => void
+    value: PromiseWithToast
+    resolve: (value: BvTriggerableEvent) => void
     stop?: WatchHandle
   }
 } & {
@@ -77,7 +115,7 @@ export type ToastOrchestratorParam = Omit<BToastProps, 'modelValue'> & {
   'position'?: ContainerPosition
   /**
    * Sets whether or not the toast should be appended to the container
-   * @default undefined Implicitly defualts to the BToastOrchestrator's appendToast value
+   * @default undefined Implicitly defaults to the BToastOrchestrator's appendToast value
    */
   'appendToast'?: boolean
   /**
@@ -103,14 +141,14 @@ export type ToastOrchestratorParam = Omit<BToastProps, 'modelValue'> & {
   }
 }
 
-export type ToastOrchestratorShowParam = MaybeRef<ToastOrchestratorParam>
+export type ToastOrchestratorCreateParam = MaybeRef<ToastOrchestratorParam>
 
 export type TooltipOrchestratorMapValue = BTooltipProps & {
   'onUpdate:modelValue'?: (val: boolean) => void
   'component'?: Readonly<Component>
   'promise': {
-    value: PromiseWithShowHide
-    resolve: (value: boolean | null) => void
+    value: PromiseWithPopover
+    resolve: (value: BvTriggerableEvent) => void
     stop?: WatchHandle
   }
   'slots'?: {
@@ -135,22 +173,23 @@ export type TooltipOrchestratorParam = Omit<BTooltipProps, 'body' | 'title' | 'm
   [K in keyof BPopoverEmits as CamelCase<Prefix<'on-', K>>]?: (e: BPopoverEmits[K][0]) => void
 }
 
-export type TooltipOrchestratorShowParam = MaybeRef<TooltipOrchestratorParam>
+export type TooltipOrchestratorCreateParam = MaybeRef<TooltipOrchestratorParam>
 
-export type PopoverOrchestratorMapValue = BPopoverProps & {
-  'onUpdate:modelValue'?: (val: boolean) => void
-  'component'?: Readonly<Component>
-  'promise': {
-    value: PromiseWithShowHide
-    resolve: (value: boolean | null) => void
-    stop?: WatchHandle
+export type PopoverOrchestratorMapValue = BPopoverProps &
+  BTooltipProps & {
+    'onUpdate:modelValue'?: (val: boolean) => void
+    'component'?: Readonly<Component>
+    'promise': {
+      value: PromiseWithPopover
+      resolve: (value: BvTriggerableEvent) => void
+      stop?: WatchHandle
+    }
+    'slots'?: {
+      [K in keyof Omit<BPopoverSlots, 'target'>]?: BPopoverSlots[K] | Readonly<Component>
+    }
+  } & {
+    [K in keyof BPopoverEmits as CamelCase<Prefix<'on-', K>>]?: (e: BPopoverEmits[K][0]) => void
   }
-  'slots'?: {
-    [K in keyof Omit<BPopoverSlots, 'target'>]?: BPopoverSlots[K] | Readonly<Component>
-  }
-} & {
-  [K in keyof BPopoverEmits as CamelCase<Prefix<'on-', K>>]?: (e: BPopoverEmits[K][0]) => void
-}
 
 export type PopoverOrchestratorParam = Omit<BPopoverProps, 'body' | 'title' | 'modelValue'> & {
   'onUpdate:modelValue'?: (val: boolean) => void
@@ -167,14 +206,14 @@ export type PopoverOrchestratorParam = Omit<BPopoverProps, 'body' | 'title' | 'm
   [K in keyof BPopoverEmits as CamelCase<Prefix<'on-', K>>]?: (e: BPopoverEmits[K][0]) => void
 }
 
-export type PopoverOrchestratorShowParam = MaybeRef<PopoverOrchestratorParam>
+export type PopoverOrchestratorCreateParam = MaybeRef<PopoverOrchestratorParam>
 
 export type ModalOrchestratorMapValue = BModalProps & {
   'onUpdate:modelValue'?: (val: boolean) => void
-  'isConfirm'?: boolean
+  'options': ModalOrchestratorCreateOptions
   'promise': {
-    value: PromiseWithModal
-    resolve: (value: boolean | null) => void
+    value: PromiseWithModal | PromiseWithModalBoolean
+    resolve: (value: BvTriggerableEvent | boolean | null) => void
     stop?: WatchHandle
   }
   'component'?: Readonly<Component>
@@ -190,7 +229,7 @@ export type ModalOrchestratorParam = Omit<BModalProps, 'body' | 'title' | 'model
   'title'?: MaybeRefOrGetter<BModalProps['title']>
   'body'?: MaybeRefOrGetter<BModalProps['body']>
   'modelValue'?: MaybeRefOrGetter<BModalProps['modelValue']>
-  'isConfirm'?: boolean
+  'options'?: ModalOrchestratorCreateOptions
   'component'?: Readonly<Component>
   /**
    * @deprecated
@@ -203,4 +242,21 @@ export type ModalOrchestratorParam = Omit<BModalProps, 'body' | 'title' | 'model
   [K in keyof BModalEmits as CamelCase<Prefix<'on-', K>>]?: (e: BModalEmits[K][0]) => void
 }
 
-export type ModalOrchestratorShowParam = MaybeRef<ModalOrchestratorParam>
+export type ModalOrchestratorCreateParam = MaybeRef<ModalOrchestratorParam>
+
+export type ModalOrchestratorCreateOptions = {
+  keep?: boolean
+  resolveOnHide?: boolean
+  /*
+   * @deprecated
+   */
+  returnBoolean?: boolean
+}
+export type ToastOrchestratorCreateOptions = {
+  keep?: boolean
+  resolveOnHide?: boolean
+  /*
+   * @deprecated
+   */
+  returnBoolean?: boolean
+}
