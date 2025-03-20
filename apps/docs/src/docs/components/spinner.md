@@ -104,9 +104,15 @@ As well, when no label is provided, the spinner will automatically have the attr
 
 <ComponentReference :data="data" />
 
-<script setup lang="ts">
+<script lang="ts">
 import {data} from '../../data/components/spinner.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BCard, BCardBody, BButton, BSpinner} from 'bootstrap-vue-next'
+
+export default {
+  setup() {
+    return {data}
+  }
+}
 </script>
