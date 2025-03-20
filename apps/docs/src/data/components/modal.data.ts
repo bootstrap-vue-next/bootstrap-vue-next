@@ -103,6 +103,11 @@ export default {
             type: 'Size',
             default: 'md',
           },
+          cancelClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: "CSS class (or classes) to apply to the '.modal-cancel' button",
+          },
           cancelDisabled: {
             type: 'boolean',
             default: false,
@@ -238,6 +243,11 @@ export default {
             type: 'boolean',
             default: false,
             description: 'Disables the focus trap feature',
+          },
+          okClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: "CSS class (or classes) to apply to the '.modal-ok' button",
           },
           okDisabled: {
             type: 'boolean',

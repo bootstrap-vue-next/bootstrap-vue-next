@@ -76,6 +76,7 @@
                     :disabled="disableCancel"
                     :size="props.buttonSize"
                     :variant="props.cancelVariant"
+                    :class="props.cancelClass"
                     @click="hide('cancel')"
                   >
                     {{ props.cancelTitle }}
@@ -87,6 +88,7 @@
                     :disabled="disableOk"
                     :size="props.buttonSize"
                     :variant="props.okVariant"
+                    :class="props.okClass"
                     @click="hide('ok')"
                   >
                     {{ props.okTitle }}
@@ -165,6 +167,7 @@ const _props = withDefaults(defineProps<Omit<BModalProps, 'modelValue'>>(), {
   bodyVariant: null,
   busy: false,
   buttonSize: 'md',
+  cancelClass: undefined,
   cancelDisabled: false,
   cancelTitle: 'Cancel',
   cancelVariant: 'secondary',
@@ -197,6 +200,7 @@ const _props = withDefaults(defineProps<Omit<BModalProps, 'modelValue'>>(), {
   noCloseOnEsc: false,
   noFade: false,
   noTrap: false,
+  okClass: undefined,
   okDisabled: false,
   okOnly: false,
   okTitle: 'OK',

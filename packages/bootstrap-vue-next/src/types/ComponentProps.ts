@@ -1306,6 +1306,7 @@ export interface BModalProps extends TeleporterProps, ShowHideProps {
   bodyVariant?: ColorVariant | null
   busy?: boolean
   buttonSize?: Size
+  cancelClass?: ClassValue
   cancelDisabled?: boolean
   cancelTitle?: string
   cancelVariant?: ButtonVariant | null
@@ -1337,6 +1338,7 @@ export interface BModalProps extends TeleporterProps, ShowHideProps {
   noCloseOnEsc?: boolean
   noTrap?: boolean
   noStacking?: boolean
+  okClass?: ClassValue
   okDisabled?: boolean
   okOnly?: boolean
   okTitle?: string
