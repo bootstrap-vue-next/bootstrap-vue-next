@@ -156,7 +156,7 @@ export interface RegisterShowHideMapValue {
   value: Readonly<Ref<boolean>>
   toggle: (resolveOnHide?: boolean) => Promise<boolean | null>
   show: (resolveOnHide?: boolean) => Promise<boolean | null>
-  hide: (trigger?: string) => Promise<boolean | null>
+  hide: (trigger?: string, noTraverse?: boolean) => Promise<boolean | null>
   registerTrigger: (trigger: string, el: Element) => void
   unregisterTrigger: (trigger: string, el: Element, clean: boolean) => void
 }

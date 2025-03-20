@@ -36,7 +36,7 @@ export const useModalController = () => {
   }
 
   const {lastStack, stack, registry} = useSharedModalStack()
-  const hide = (trigger = '', id?: ControllerKey) => {
+  const hide = (trigger?: string, id?: ControllerKey) => {
     if (id === undefined) {
       if (id === undefined && lastStack?.value) {
         lastStack?.value.exposed?.hide(trigger)
@@ -54,16 +54,16 @@ export const useModalController = () => {
       } else {
         stack?.value.forEach((modal) => {
           if (modal.exposed?.id === id) {
-            modal.exposed?.hide(trigger)
+            modal.exposed?.hide(trigger, true)
           }
         })
       }
     }
   }
 
-  const hideAll = (trigger = '') => {
+  const hideAll = (trigger?: string) => {
     stack?.value.forEach((modal) => {
-      modal.exposed?.hide(trigger)
+      modal.exposed?.hide(trigger, true)
     })
   }
 
@@ -75,8 +75,8 @@ export const useModalController = () => {
         show() {
           modal?.promise.value.show()
         },
-        hide() {
-          modal?.promise.value.hide()
+        hide(trigger?: string) {
+          modal?.promise.value.hide(trigger)
         },
       }
     }
@@ -88,8 +88,8 @@ export const useModalController = () => {
             show() {
               modal.exposed?.show()
             },
-            hide() {
-              modal.exposed?.hide()
+            hide(trigger?: string) {
+              modal.exposed?.hide(trigger, true)
             },
           }
         }
@@ -118,8 +118,8 @@ export const useModalController = () => {
       show() {
         modalComponent.value?.exposed?.show()
       },
-      hide(trigger = '') {
-        modalComponent.value?.exposed?.hide(trigger)
+      hide(trigger?: string) {
+        modalComponent.value?.exposed?.hide(trigger, true)
       },
       modal,
     }

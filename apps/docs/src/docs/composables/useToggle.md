@@ -10,12 +10,17 @@ You can use `useToggle` to get the closest toggleable component in **child compo
   <template #html>
 
 ```vue
-<BModal>
+<BModal @hide="(e) => e.trigger === 'sometrigger' && doSomething()">
   <MyComponent />
 </BModal>
+```
 
+<hr />
+MyComponent.vue
+
+```vue
 <template>
-  <BButton @click="hide">Done</BButton>
+  <BButton @click="hide('sometrigger')">Done</BButton>
 </template>
 
 <script setup lang="ts">

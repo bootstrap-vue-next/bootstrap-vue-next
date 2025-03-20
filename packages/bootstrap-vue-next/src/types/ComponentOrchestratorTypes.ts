@@ -14,7 +14,7 @@ export interface PromiseWithModalInternal extends AsyncDisposable {
   id: ControllerKey
   ref: ComponentPublicInstance<typeof BModal> | null
   show: () => PromiseWithModal
-  hide: () => PromiseWithModal
+  hide: (trigger?: string) => PromiseWithModal
   toggle: () => PromiseWithModal
   set: (val: Partial<ModalOrchestratorParam>) => PromiseWithModal
   get: () => ModalOrchestratorParam | undefined
@@ -38,7 +38,7 @@ export interface PromiseWithToastInternal extends AsyncDisposable {
   id: ControllerKey
   ref: ComponentPublicInstance<typeof BToast> | null
   show: () => PromiseWithToast
-  hide: () => void
+  hide: (trigger?: string) => void
   toggle: () => void
   set: (val: Partial<ToastOrchestratorParam>) => void
   get: () => ToastOrchestratorParam | undefined
@@ -51,7 +51,7 @@ export interface PromiseWithPopoverInternal extends AsyncDisposable {
   id: ControllerKey
   ref: ComponentPublicInstance<typeof BPopover | typeof BTooltip> | null
   show: () => PromiseWithPopover
-  hide: () => void
+  hide: (trigger?: string) => void
   toggle: () => void
   set: (val: Partial<PopoverOrchestratorParam | TooltipOrchestratorParam>) => void
   get: () => PopoverOrchestratorParam | undefined

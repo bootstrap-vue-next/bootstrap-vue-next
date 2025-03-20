@@ -56,9 +56,9 @@ export const popoverPlugin: Plugin = {
           this.ref.show()
           return promise
         },
-        hide() {
+        hide(trigger?: string) {
           if (!this.ref) return this.set({modelValue: false})
-          this.ref.hide()
+          this.ref.hide(trigger, true)
           return promise
         },
         toggle() {

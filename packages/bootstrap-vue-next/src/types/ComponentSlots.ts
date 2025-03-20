@@ -4,7 +4,7 @@ import type {Placement} from './Alignment'
 export interface ShowHideSlotsData {
   id: string
   show: () => void
-  hide: (trigger?: string) => void
+  hide: (trigger?: string, noTriggerEmit?: boolean) => void
   toggle: () => void
   active: boolean
   visible: boolean

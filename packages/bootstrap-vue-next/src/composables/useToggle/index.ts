@@ -60,7 +60,7 @@ export const useToggle = (id: MaybeRefOrGetter<string | undefined> = undefined) 
   return {
     value: computed(() => myComponent.value?.value),
     show: (resolveOnHide?: boolean) => myComponent.value?.show(resolveOnHide) || Promise.resolve(),
-    hide: (trigger = '') => myComponent.value?.hide(trigger) || Promise.resolve(),
+    hide: (trigger?: string) => myComponent.value?.hide(trigger, true) || Promise.resolve(),
     toggle: (resolveOnHide?: boolean) =>
       myComponent.value?.toggle(resolveOnHide) || Promise.resolve(),
     component: computed(() => myComponent.value?.component),

@@ -26,13 +26,14 @@ The only props it access are `teleportDisabled` and `teleportTo` to modify the l
 
 In addition, it contains a few exposed methods. These exposed methods on the `template ref` correspond to those in the `useToastController` function, described below
 
-- confirm
-- show
+- create
+- hide
+- hideAll
 - modals
 
 ## Creating Modals
 
-Showing a modal is done through the `show` or `confirm` method
+Showing a modal is done through the `create` method
 
 <HighlightCard>
   <BButton @click="showExample">Click me</BButton>
@@ -45,12 +46,15 @@ Showing a modal is done through the `show` or `confirm` method
 </template>
 
 <script setup lang="ts">
-const {confirm, show} = useModalController()
+const {create} = useModalController()
 
 const showExample = async () => {
-  const value = await confirm({title: 'Hello World!'})
+  const value = await create({title: 'Hello World!'})
 
-  show({title: `Promise resolved to ${value}`, variant: 'info'})
+  create({
+    body: `Promise resolved to object with {ok: ${value.ok}, trigger: ${value.trigger}}`,
+    variant: 'info',
+  })
 }
 </script>
 ```
@@ -58,9 +62,9 @@ const showExample = async () => {
   </template>
 </HighlightCard>
 
-### Reactivity Within Show
+### Reactivity Within `create`
 
-`show` and `confirm` props property can accept a `MaybeRef`, meaning that you can make properties reactive
+`create` props property can accept a `MaybeRef`, meaning that you can make properties reactive
 
 <HighlightCard>
   <BButton @click="showReactiveExample">Click me</BButton>
@@ -73,7 +77,7 @@ const showExample = async () => {
 </template>
 
 <script setup lang="ts">
-const {show} = useModalController()
+const {create} = useModalController()
 
 const title = ref('Hello')
 onMounted(() => {
@@ -83,7 +87,7 @@ onMounted(() => {
 })
 
 const showReactiveExample = () => {
-  show({
+  create({
     title: title,
   })
 }
@@ -110,7 +114,7 @@ You can also use component slots to render what you want. This is done through t
 </template>
 
 <script setup lang="ts">
-const {show} = useModalController()
+const {create} = useModalController()
 
 const firstRef = ref<OrchestratedToast>({
   body: `${Math.random()}`,
@@ -121,7 +125,7 @@ onMounted(() => {
   }, 1000)
 })
 const showMeAdvancedExample = () => {
-  show({
+  create({
     slots: {
       default: (scope) =>
         h('div', null, {default: () => `custom ${firstRef.value.body} - ${scope.visible}`}),
@@ -130,7 +134,7 @@ const showMeAdvancedExample = () => {
 
   // Demonstration psuedocode, you can import a component and use it
   // const importedComponent = () => {
-  //   show({
+  //   create({
   //     component: (await import('./TestModal.vue')).default,
   //   })
   // }
@@ -141,9 +145,64 @@ const showMeAdvancedExample = () => {
   </template>
 </HighlightCard>
 
-### Show vs Confirm
+### Return Value
 
-The difference between `show` and `confirm` is simple. Both methods accept the same parameters. The difference being that `show` will always have its promise resolve to `true`, whereas `confirm` can be one of `true`, `false`, or `null`. Clicking the `ok` button will resolve to `true`, `cancel` to `false` and any other closable action `null` (clicking the backdrop, or some other custom closing action. More accurately, when the `hide` function does not pass in the trigger parameter of `ok` or `cancel`)
+The `create` method will return a promise that resolves after the modal has been hidden to a `BvTriggableEvent` object.
+using the option 'resolveOnHide' the second argument of the `create` method will resolve the promise at time of hiding the modal, rather than waiting for the modal to be fully hidden.
+
+```js
+const value = await create({title: 'Hello World!'}, {resolveOnHide: true})
+```
+
+This object contains the following properties:
+
+- `ok: boolean`
+
+  Clicking the `ok` button resolve this to `true`, `cancel` to `false` and any other closable action `null` (clicking the backdrop, or some other custom closing action. More accurately, when the `hide` function does not pass in the trigger parameter of `ok` or `cancel`)
+
+- `trigger: string | null`
+
+  This is the trigger that closed the modal. This is useful for determining what action closed the modal.
+
+The promise also contains functions to control the modal:
+
+- `show: () => void`
+
+  This function shows the modal.
+
+- `hide: (trigger?: string) => void`
+
+  This function hides the modal. If a trigger is passed, it will be passed to the `trigger` property of the resolved promise
+
+- `toggle: () => void`
+
+  This function toggles the visibility of the modal.
+
+- `set: (props: Partial<ModalOrchestratorParam>) => void`
+
+  This function sets the props of the modal. This is useful for updating the modal after it has been created.
+
+- `destroy: () => Promise<void>`
+
+  This function destroys the modal and cleans up any resources associated with it.
+
+### Lifecycle
+
+By default the modal is destroyed once it's closed. If you want to keep the modal use the option 'keep' in the second argument of the `create` method.
+Modal is destoyed when the current scope is exited. Or you can destroy it manually by calling the `destroy` method.
+
+```js
+const modal = create({title: 'Hello World!'}, {keep: true})
+modal.show()
+// do something
+modal.destroy()
+```
+
+We also support the typescript feature `await using` to automatically destroy the modal when the scope is exited.
+
+```js
+await using modal = create({title: 'Hello World!'})
+```
 
 ## Globally Hiding Modals
 
@@ -228,7 +287,7 @@ const nestedModal1 = ref(false)
 const nestedModal2 = ref(false)
 const nestedModal3 = ref(false)
 
-const {hide, hideAll, show, confirm, modals} = useModalController()
+const {hide, hideAll, create} = useModalController()
 const modal = useModal()
 
 const title = ref('Hello')
@@ -240,13 +299,13 @@ onMounted(() => {
 })
 
 const showExample = async () => {
-  const value = await confirm({ body: 'Hello World!' })
+  const value = await create({ body: 'Hello World!' })
 
-  show({ body: `Promise resolved to ${value}`, variant: 'info' })
+  create({ body: `Promise resolved to object with {ok: ${value.ok}, trigger: ${value.trigger}}`, variant: 'info' })
 }
 
 const showReactiveExample = () => {
-  show({
+  create({
       title: title,
   })
 }
@@ -261,7 +320,7 @@ onMounted(() => {
 })
 
 const showMeAdvancedExample = () => {
-  show({
+  create({
     slots: {
       default: (scope) => h('div', null, {default: () => `custom ${firstRef.value.body} - ${scope.visible}`}),
     },

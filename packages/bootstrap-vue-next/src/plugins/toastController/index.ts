@@ -55,19 +55,15 @@ export const toastPlugin: Plugin = {
           this.ref.show()
           return promise
         },
-        hide() {
-          const modal = toasts.value.find((el) => el._self === _id)
-          if (modal) {
-            modal.modelValue = false
-            modal['onUpdate:modelValue']?.(false)
-          }
+        hide(trigger?: string) {
+          if (!this.ref) return this.set({modelValue: false})
+          this.ref.hide(trigger, true)
+          return promise
         },
         toggle() {
-          const modal = toasts.value.find((el) => el._self === _id)
-          if (modal) {
-            modal.modelValue = !modal.modelValue
-            modal['onUpdate:modelValue']?.(modal.modelValue)
-          }
+          if (!this.ref) return this.set({modelValue: !this.get()?.modelValue})
+          this.ref.toggle()
+          return promise
         },
         get() {
           return toasts.value.find((el) => el._self === _id)
