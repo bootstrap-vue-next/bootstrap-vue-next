@@ -85,7 +85,7 @@ export const useShowHide = (
 ) => {
   let noAction = false
   const initialShow = (!!modelValue.value && !props.initialAnimation) || props.visible || false
-  const showRef = ref<boolean>(false)
+  const showRef = ref<boolean>(initialShow)
   const renderRef = ref<boolean>(initialShow)
   const renderBackdropRef = ref<boolean>(initialShow)
 
@@ -307,8 +307,8 @@ export const useShowHide = (
   }
 
   const isLeaving = ref(false)
-  const isActive = ref(false)
-  const isVisible = ref(false)
+  const isActive = ref(initialShow)
+  const isVisible = ref(initialShow)
 
   const onBeforeEnter = (el: Element) => {
     options.transitionProps?.onBeforeEnter?.(el)

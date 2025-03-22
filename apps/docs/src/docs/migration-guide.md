@@ -2,7 +2,7 @@
 
 ## Overview
 
-`BootstrapVueNext` is an entirely new implementation of [BootstrapVue](https://bootstrap-vue.org/) based on [Vue 3](https://vuejs.org/) and [Bootstrap 5](https://getbootstrap.com/). Therefore, you should not expect this to be a drop-in replacement. Where possible compatibility has been maintained, but providing a clean developer experience when working with `Vue 3`, `Bootstrap 5` and this library is a higher priority.
+`BootstrapVueNext` is an entirely new implementation of [BootstrapVue](https://bootstrap-vue.github.io/bootstrap-vue/) based on [Vue 3](https://vuejs.org/) and [Bootstrap 5](https://getbootstrap.com/). Therefore, you should not expect this to be a drop-in replacement. Where possible compatibility has been maintained, but providing a clean developer experience when working with `Vue 3`, `Bootstrap 5` and this library is a higher priority.
 
 You should start by familiarizing yourself with the [Vue 3 Migration Guide](https://v3-migration.vuejs.org/), especially
 the [breaking changes](https://v3-migration.vuejs.org/breaking-changes/) section and the
@@ -205,7 +205,7 @@ embedded svg for the close icon. See [their migration guide](https://getbootstra
 
 ### BButtonToolbar
 
-[Keyboard navigation](https://bootstrap-vue.org/docs/components/button-toolbar#keyboard-navigation) is
+[Keyboard navigation](https://bootstrap-vue.github.io/bootstrap-vue/docs/components/button-toolbar#keyboard-navigation) is
 not implemented.
 
 ### BCalendar
@@ -403,7 +403,7 @@ See [BForm Components](bform-components)
 
 ### BFormSelect
 
-[Options as an object](https://bootstrap-vue.org/docs/components/form-select#options-as-an-object) was deprecated in BootstrapVue and never implemented in BootstrapVueNext
+[Options as an object](https://bootstrap-vue.github.io/bootstrap-vue/docs/components/form-select#options-as-an-object) was deprecated in BootstrapVue and never implemented in BootstrapVueNext
 
 ### BFormSpinButton
 
@@ -413,7 +413,7 @@ See [BForm Components](bform-components)
 
 In BootstrapVue, the event handlers for some of the other input controls, like `BFormSelect`, lined up with
 the `inputHandlers` for the default slot's scoped properties such that one could directly bind them. See the
-[BootstrapVue](https://bootstrap-vue.org/docs/components/form-tags#advanced-custom-rendering-usage) documentation
+[BootstrapVue](https://bootstrap-vue.github.io/bootstrap-vue/docs/components/form-tags#advanced-custom-rendering-usage) documentation
 for an example. This is no longer the case with BootstrapVueNext.
 
 In general BootstrapVueNext prefered clean APIs to enabling this kind of matching of events, so many of the advanced
@@ -526,7 +526,7 @@ See the [v-html](#v-html) section for information on deprecation of the `cancel-
 
 #### Replacement for Modal Message boxes
 
-[BootstrapVue](https://bootstrap-vue.org/docs/components/modal#modal-message-boxes) provided two methods on the `this.$bvModal` object called `msgBoxOk` and `msgBoxConfirm`.
+[BootstrapVue](https://bootstrap-vue.github.io/bootstrap-vue/docs/components/modal#modal-message-boxes) provided two methods on the `this.$bvModal` object called `msgBoxOk` and `msgBoxConfirm`.
 In holding with the Vue3 first philosophy, BootstrapVueNext provides a composable called [`useModalController`](/docs/composables/useModalController) that
 fills the same needs (and more).
 
@@ -548,7 +548,7 @@ See [Show and Hide](#show-and-hide) shared properties.
 
 #### Replacement for Modal slots
 
-[BootstrapVue](https://bootstrap-vue.org/docs/components/modal#custom-rendering-with-slots) provides different slots to configure some pieces of the modal component. These slots are slightly different in [BootstrapVueNext](http://localhost:8000/bootstrap-vue-next/docs/components/modal.html#comp-reference-bmodal-slots):
+[BootstrapVue](https://bootstrap-vue.github.io/bootstrap-vue/docs/components/modal#custom-rendering-with-slots) provides different slots to configure some pieces of the modal component. These slots are slightly different in [BootstrapVueNext](http://localhost:8000/bootstrap-vue-next/docs/components/modal.html#comp-reference-bmodal-slots):
 
 | BootstrapVue       | BootstrapVueNext |
 | ------------------ | ---------------- |
