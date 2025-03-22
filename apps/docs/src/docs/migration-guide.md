@@ -621,7 +621,8 @@ See the [v-html](#v-html) section for information on deprecation of the `html` p
 The slot `emptyfiltered` has been renamed to `empty-filtered` for consistency.
 
 The following properties are <NotYetImplemented/> -
-`filter-ignored-fields`, `filter-included-fields`, `fixed`, `no-border-collapse`, `selected-variant`
+`filter-ignored-fields`, `filter-included-fields`, `fixed`, `no-border-collapse`, `selected-variant`,
+`table-footer-sorting`
 
 <NoteYetImplemented/>The `filter` prop does not yet support a RegEx object, only a string.
 <NotYetImplemented />The `table-colgroup` slot is not yet implemented.

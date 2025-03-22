@@ -423,12 +423,14 @@ It is also possible to provide custom rendering for the table's `thead` and `tfo
 default the table footer is not rendered unless `foot-clone` is set to `true`.
 
 Scoped slots for the header and footer cells uses a special naming convention of
-`'head(<fieldkey>)'` and `'foot(<fieldkey>)'` respectively. if a `'foot(...)'` slot for a field is
-not provided, but a `'head(...)'` slot is provided, then the footer will use the `'head(...)'` slot
-content.
+`'head(<fieldkey>)'` and `'foot(<fieldkey>)'` respectively.
 
 You can use a default _fall-back_ scoped slot `'head()'` or `'foot()'` to format any header or
 footer cells that do not have an explicit scoped slot provided.
+
+In `BTableLight`, `'foot(<fieldkey>)'` will _fall-back_ first to `'foot()'` if it is provided, then to
+`'head(<fieldkey>)'`, and finally to `'head()'`. For `BTable`, there is a default for `'head(<fieldkey>)'`,
+so the fallback chain will stop with the default `'head(<fieldkey>)'` rather than falling back to `'head()'`.
 
 <<< DEMO ./demo/TableHeadSlot.vue
 

@@ -231,6 +231,198 @@ describe('btablelite', () => {
     })
   })
 
+  it('Sets the head variant correctly', () => {
+    const wrapper = mount(BTableLite, {
+      props: {
+        items: [{a: 1, b: 2}],
+        headVariant: 'dark',
+      },
+    })
+    const $thead = wrapper.get('thead')
+    expect($thead.classes()).toContain('table-dark')
+  })
+
+  it('Sets the foot variant correctly', () => {
+    const wrapper = mount(BTableLite, {
+      props: {
+        items: [{a: 1, b: 2}],
+        footVariant: 'primary',
+        footClone: true,
+      },
+    })
+    const $tfoot = wrapper.get('tfoot')
+    expect($tfoot.classes()).toContain('table-primary')
+  })
+
+  it('Falls back to head variant in cloned footer', () => {
+    const wrapper = mount(BTableLite, {
+      props: {
+        items: [{a: 1, b: 2}],
+        headVariant: 'primary',
+        footClone: true,
+      },
+    })
+    const $tfoot = wrapper.get('tfoot')
+    expect($tfoot.classes()).toContain('table-primary')
+  })
+
+  it('Sets the head row variant correctly', () => {
+    const wrapper = mount(BTableLite, {
+      props: {
+        items: [{a: 1, b: 2}],
+        headRowVariant: 'dark',
+      },
+    })
+    const $tr = wrapper.get('thead tr')
+    expect($tr.classes()).toContain('table-dark')
+  })
+
+  it('Sets the foot row variant correctly', () => {
+    const wrapper = mount(BTableLite, {
+      props: {
+        items: [{a: 1, b: 2}],
+        footRowVariant: 'primary',
+        footClone: true,
+      },
+    })
+    const $tr = wrapper.get('tfoot tr')
+    expect($tr.classes()).toContain('table-primary')
+  })
+
+  it('Falls back to head row variant in cloned footer', () => {
+    const wrapper = mount(BTableLite, {
+      props: {
+        items: [{a: 1, b: 2}],
+        headRowVariant: 'primary',
+        footClone: true,
+      },
+    })
+    const $tr = wrapper.get('tfoot tr')
+    expect($tr.classes()).toContain('table-primary')
+  })
+
+  it('Renders the #head() slot correctly', () => {
+    const wrapper = mount(BTableLite, {
+      props: {
+        items: [{a: 1, b: 2}],
+      },
+      slots: {
+        'head()': `<template #head()>Custom Header</template>`,
+      },
+    })
+    const $thead = wrapper.get('thead')
+    const $th = $thead.findAll('th')
+    expect($th.length).toBe(2)
+    expect($th[0].text()).toBe('Custom Header')
+    expect($th[1].text()).toBe('Custom Header')
+  })
+
+  it('Renders the #head(x) slot correctly', () => {
+    const wrapper = mount(BTableLite, {
+      props: {
+        items: [{a: 1, b: 2}],
+      },
+      slots: {
+        'head()': `<template #head()>Custom Header</template>`,
+        'head(a)': `<template #head()>A</template>`,
+      },
+    })
+    const $thead = wrapper.get('thead')
+    const $th = $thead.findAll('th')
+    expect($th.length).toBe(2)
+    expect($th[0].text()).toBe('A')
+    expect($th[1].text()).toBe('Custom Header')
+  })
+
+  it('Renders the #foot() slot correctly', () => {
+    const wrapper = mount(BTableLite, {
+      props: {
+        items: [{a: 1, b: 2}],
+        footClone: true,
+      },
+      slots: {
+        'foot()': `<template #foot()>Custom Footer</template>`,
+      },
+    })
+    const $tfoot = wrapper.get('tfoot')
+    const $th = $tfoot.findAll('th')
+    expect($th.length).toBe(2)
+    expect($th[0].text()).toBe('Custom Footer')
+    expect($th[1].text()).toBe('Custom Footer')
+  })
+
+  it('Renders the #foot(x) slot correctly', () => {
+    const wrapper = mount(BTableLite, {
+      props: {
+        items: [{a: 1, b: 2}],
+        footClone: true,
+      },
+      slots: {
+        'foot()': `<template #foot()>Custom Footer</template>`,
+        'foot(a)': `<template #foot()>A</template>`,
+      },
+    })
+    const $tfoot = wrapper.get('tfoot')
+    const $th = $tfoot.findAll('th')
+    expect($th.length).toBe(2)
+    expect($th[0].text()).toBe('A')
+    expect($th[1].text()).toBe('Custom Footer')
+  })
+
+  it('Renders the #foot() slot correctly falling back to #head() slot', () => {
+    const wrapper = mount(BTableLite, {
+      props: {
+        items: [{a: 1, b: 2}],
+        footClone: true,
+      },
+      slots: {
+        'head()': `<template #head()>Custom Header</template>`,
+      },
+    })
+    const $tfoot = wrapper.get('tfoot')
+    const $th = $tfoot.findAll('th')
+    expect($th.length).toBe(2)
+    expect($th[0].text()).toBe('Custom Header')
+    expect($th[1].text()).toBe('Custom Header')
+  })
+
+  it('Renders the #foot(x) slot correctly falling back to #head(x) slot', () => {
+    const wrapper = mount(BTableLite, {
+      props: {
+        items: [{a: 1, b: 2}],
+        footClone: true,
+      },
+      slots: {
+        'head()': `<template #head()>Custom Header</template>`,
+        'head(a)': `<template #head()>A</template>`,
+      },
+    })
+    const $tfoot = wrapper.get('tfoot')
+    const $th = $tfoot.findAll('th')
+    expect($th.length).toBe(2)
+    expect($th[0].text()).toBe('A')
+    expect($th[1].text()).toBe('Custom Header')
+  })
+
+  it('Prefers the #foot() slot to the #head(x) slot when falling back from #foot(x)', () => {
+    const wrapper = mount(BTableLite, {
+      props: {
+        items: [{a: 1, b: 2}],
+        footClone: true,
+      },
+      slots: {
+        'head()': `<template #head()>Custom Header</template>`,
+        'head(a)': `<template #head()>A</template>`,
+        'foot()': `<template #head()>Custom Footer</template>`,
+      },
+    })
+    const $tfoot = wrapper.get('tfoot')
+    const $th = $tfoot.findAll('th')
+    expect($th.length).toBe(2)
+    expect($th[0].text()).toBe('Custom Footer')
+    expect($th[1].text()).toBe('Custom Footer')
+  })
+
   it('Passes the original objects for scoped cell slot items', () => {
     const items = [new Person(1, 'John', 'Doe', 30), new Person(2, 'Jane', 'Smith', 25)]
     const wrapper = mount(BTableLite, {
