@@ -1,5 +1,5 @@
 <template>
-  <BNav v-if="headers.length > 0" vertical small class="otp-nav">
+  <BNav vertical small class="otp-nav">
     <PageContentsItem v-for="header in headers" :key="header.slug" :item="header" />
     <BNavItem v-if="isComponentPage" href="#component-reference" link-class="otp-link"
       >Component Reference</BNavItem

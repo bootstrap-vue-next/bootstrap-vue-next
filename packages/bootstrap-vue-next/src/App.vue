@@ -1,13 +1,20 @@
 <template>
-  <BContainer>
-    <BRow>
-      <BCol> Hello World! </BCol>
-    </BRow>
-  </BContainer>
+  <div>
+    <BOffcanvas ref="off-canvas" v-model="showOffcanvas" title="Title"
+      ><div ref="_content">Testing some content</div>
+    </BOffcanvas>
+
+    <BButton @click="showOffcanvas = !showOffcanvas">Toggle Offcanvas</BButton>
+  </div>
 </template>
 
 <script setup lang="ts">
-// You can use this file as a development spot to test your changes
-// Please do not commit this file
-import {BCol, BContainer, BRow} from './components'
+import {type ComponentPublicInstance, ref, useTemplateRef} from 'vue'
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const content = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_content')
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const offCanvas = useTemplateRef<ComponentPublicInstance<HTMLElement>>('off-canvas')
+
+const showOffcanvas = ref(false)
 </script>

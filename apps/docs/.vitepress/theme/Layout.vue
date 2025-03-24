@@ -137,11 +137,12 @@
                 header-class="pb-0 d-flex offcanvas-hidden-width"
                 body-class="py-2"
               >
-                <PageContents />
+                <PageContents ref="_target" />
+                <div>Current: {{ current }}</div>
               </BOffcanvas>
             </ClientOnly>
           </aside>
-          <Content class="doc-content" />
+          <Content ref="_content" style="height: 100%" class="doc-content" />
         </div>
       </BRow>
     </main>
@@ -166,10 +167,19 @@ import {
   BRow,
   BToastOrchestrator,
   useColorMode,
+  useScrollspy,
   vBColorMode,
   vBToggle,
 } from 'bootstrap-vue-next'
-import {computed, inject, onMounted, ref, watch} from 'vue'
+import {
+  type ComponentPublicInstance,
+  computed,
+  inject,
+  onMounted,
+  ref,
+  useTemplateRef,
+  watch,
+} from 'vue'
 import GithubIcon from '~icons/bi/github'
 import OpencollectiveIcon from '~icons/logos/opencollective'
 import DiscordIcon from '~icons/bi/discord'
@@ -181,10 +191,18 @@ import {useData, useRoute, withBase} from 'vitepress'
 import {VPNavBarSearch} from 'vitepress/theme'
 import {appInfoKey} from './keys'
 import {useMediaQuery} from '@vueuse/core'
+import PageContents from '../../src/components/PageContents.vue'
 
 // https://vitepress.dev/reference/runtime-api#usedata
 const {page} = useData()
 const route = useRoute()
+
+//debugger
+
+const content = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_content')
+const target = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_target')
+
+const {current} = useScrollspy(content, target)
 
 const globalData = inject(appInfoKey, {
   discordUrl: '',
