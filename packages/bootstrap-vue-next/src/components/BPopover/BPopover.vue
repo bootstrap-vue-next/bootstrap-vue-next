@@ -373,8 +373,6 @@ const isElementAndTriggerOutside = () => {
 
 let looptimeout: ReturnType<typeof setTimeout> | undefined
 const tryHide = (e?: Readonly<Event>) => {
-  const delay = typeof props.delay === 'number' ? props.delay : props.delay?.hide || 0
-
   const {triggerIsOutside, isOutside} = isElementAndTriggerOutside()
   if (
     (!props.noninteractive &&
@@ -387,12 +385,9 @@ const tryHide = (e?: Readonly<Event>) => {
     hide(e?.type)
   } else {
     if (looptimeout) clearTimeout(looptimeout)
-    looptimeout = setTimeout(
-      () => {
-        tryHide(e)
-      },
-      delay < 50 ? 50 : delay
-    )
+    looptimeout = setTimeout(() => {
+      tryHide(e)
+    }, 50)
   }
 }
 
