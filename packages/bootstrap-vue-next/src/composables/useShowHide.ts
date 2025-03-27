@@ -180,9 +180,11 @@ export const useShowHide = (
     })
 
   let showTimeout: ReturnType<typeof setTimeout> | undefined
+  let hideTimeout: ReturnType<typeof setTimeout> | undefined
 
   const show = () => {
-    if (showRef.value) return
+    if (showRef.value && !hideTimeout) return
+
     const event = buildTriggerableEvent('show', {cancelable: true})
     emit('show', event)
 
@@ -199,11 +201,16 @@ export const useShowHide = (
       }
       return
     }
+    if (hideTimeout) {
+      clearTimeout(hideTimeout)
+      hideTimeout = undefined
+    }
     renderRef.value = true
     renderBackdropRef.value = true
     requestAnimationFrame(() => {
       showTimeout = setTimeout(
         () => {
+          showTimeout = undefined
           showRef.value = true
           options.showFn?.()
           if (!modelValue.value) {
@@ -223,7 +230,7 @@ export const useShowHide = (
   }
 
   const hide = (trigger?: string) => {
-    if (!showRef.value) return
+    if (!showRef.value && !showTimeout) return
     const event = buildTriggerableEvent('hide', {cancelable: true, trigger})
     const event2 = buildTriggerableEvent(trigger || 'ignore', {cancelable: true, trigger})
     if (
@@ -232,10 +239,6 @@ export const useShowHide = (
     ) {
       emit('hide-prevented', buildTriggerableEvent('hide-prevented'))
       return
-    }
-    if (showTimeout) {
-      clearTimeout(showTimeout)
-      showTimeout = undefined
     }
     if (trigger) {
       emit(trigger, event2)
@@ -252,8 +255,15 @@ export const useShowHide = (
       }
       return
     }
-    setTimeout(
+    if (showTimeout) {
+      clearTimeout(showTimeout)
+      showTimeout = undefined
+      if (!localTemporaryHide.value) renderRef.value = false
+      renderBackdropRef.value = false
+    }
+    hideTimeout = setTimeout(
       () => {
+        hideTimeout = undefined
         isLeaving.value = true
         showRef.value = false
         options.hideFn?.()
