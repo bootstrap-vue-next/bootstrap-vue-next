@@ -497,6 +497,7 @@ export interface BListGroupItemProps extends Omit<BLinkProps, 'routerTag'> {
 
 // export interface BModalOrchestratorProps extends TeleporterProps {}
 export type BModalOrchestratorProps = TeleporterProps
+export type BPopoverOrchestratorProps = TeleporterProps
 
 export interface BNavProps {
   align?: AlignmentJustifyContent
