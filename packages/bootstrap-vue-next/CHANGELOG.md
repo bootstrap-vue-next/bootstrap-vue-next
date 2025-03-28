@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.28.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.28.3...bootstrapvuenext-v0.28.4) (2025-03-28)
+
+
+### Bug Fixes
+
+* **BPopover:** cancel show/hide during delay ([b915a98](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b915a98d8be6f170a404f13eb4c78b865b22313a))
+* **BTable:** make foot props and slot fall back to head if not defined ([#2614](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2614)) ([05fffbb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/05fffbba869309c07369c7e587ed3870966664cf))
+
 ## [0.28.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.28.2...bootstrapvuenext-v0.28.3) (2025-03-19)
 
 
