@@ -125,7 +125,7 @@
       </BRow>
       <BRow v-else>
         <div class="bd-content">
-          <aside class="otp-sidebar">
+          <aside ref="_target" class="otp-sidebar">
             <ClientOnly>
               <BOffcanvas
                 id="otp-menu"
@@ -141,7 +141,7 @@
               </BOffcanvas>
             </ClientOnly>
           </aside>
-          <Content class="doc-content" />
+          <Content ref="_content" style="height: 100%" class="doc-content" />
         </div>
       </BRow>
     </main>
@@ -166,10 +166,19 @@ import {
   BRow,
   BToastOrchestrator,
   useColorMode,
+  useScrollspy,
   vBColorMode,
   vBToggle,
 } from 'bootstrap-vue-next'
-import {computed, inject, onMounted, ref, watch} from 'vue'
+import {
+  type ComponentPublicInstance,
+  computed,
+  inject,
+  onMounted,
+  ref,
+  useTemplateRef,
+  watch,
+} from 'vue'
 import GithubIcon from '~icons/bi/github'
 import OpencollectiveIcon from '~icons/logos/opencollective'
 import DiscordIcon from '~icons/bi/discord'
@@ -181,10 +190,19 @@ import {useData, useRoute, withBase} from 'vitepress'
 import {VPNavBarSearch} from 'vitepress/theme'
 import {appInfoKey} from './keys'
 import {useMediaQuery} from '@vueuse/core'
+import PageContents from '../../src/components/PageContents.vue'
 
 // https://vitepress.dev/reference/runtime-api#usedata
 const {page} = useData()
 const route = useRoute()
+
+const content = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_content')
+const target = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_target')
+
+useScrollspy(content, target, {
+  contentQuery: ':scope > div > [id], #component-reference',
+  targetQuery: ':scope [href]',
+})
 
 const globalData = inject(appInfoKey, {
   discordUrl: '',
