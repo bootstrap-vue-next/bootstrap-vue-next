@@ -196,8 +196,6 @@ import PageContents from '../../src/components/PageContents.vue'
 const {page} = useData()
 const route = useRoute()
 
-//debugger
-
 const content = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_content')
 const target = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_target')
 
