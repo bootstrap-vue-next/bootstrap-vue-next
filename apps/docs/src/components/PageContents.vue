@@ -31,12 +31,9 @@ a.nav-link.otp-link {
   &.active {
     color: var(--bs-primary-text-emphasis);
     border-left-color: var(--bs-primary-text-emphasis);
-    font-weight: bold;
   }
 
   &:hover {
-    color: var(--bs-primary-text-emphasis);
-    border-left-color: var(--bs-primary-text-emphasis);
     font-weight: bold;
   }
 }

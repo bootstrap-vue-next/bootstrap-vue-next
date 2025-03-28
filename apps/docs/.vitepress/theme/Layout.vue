@@ -125,7 +125,7 @@
       </BRow>
       <BRow v-else>
         <div class="bd-content">
-          <aside class="otp-sidebar">
+          <aside ref="_target" class="otp-sidebar">
             <ClientOnly>
               <BOffcanvas
                 id="otp-menu"
@@ -137,8 +137,7 @@
                 header-class="pb-0 d-flex offcanvas-hidden-width"
                 body-class="py-2"
               >
-                <PageContents ref="_target" />
-                <div>Current: {{ current }}</div>
+                <PageContents />
               </BOffcanvas>
             </ClientOnly>
           </aside>
@@ -202,7 +201,10 @@ const route = useRoute()
 const content = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_content')
 const target = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_target')
 
-const {current} = useScrollspy(content, target)
+useScrollspy(content, target, {
+  contentQuery: ':scope > div > [id], #component-reference',
+  targetQuery: ':scope [href]',
+})
 
 const globalData = inject(appInfoKey, {
   discordUrl: '',
