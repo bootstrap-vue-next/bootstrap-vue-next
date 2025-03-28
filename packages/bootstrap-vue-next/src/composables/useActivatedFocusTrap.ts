@@ -17,6 +17,7 @@ export const useActivatedFocusTrap = (
     isActive,
     noTrap,
     fallbackFocus,
+    focus,
   }: {
     element: Ref<HTMLElement | null>
     isActive: MaybeRefOrGetter<boolean>
@@ -33,11 +34,14 @@ export const useActivatedFocusTrap = (
        */
       classSelector: string
     }
+    focus: () => HTMLElement | boolean | undefined
   },
   focusTrapOpts: UseFocusTrapOptions = {
     allowOutsideClick: true,
     fallbackFocus: fallbackFocus.ref.value ?? undefined,
     escapeDeactivates: false,
+    clickOutsideDeactivates: false,
+    initialFocus: focus,
   }
 ) => {
   const resolvedIsActive = readonly(toRef(isActive))
