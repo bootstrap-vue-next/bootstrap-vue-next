@@ -688,6 +688,17 @@ selected, such as a virtual column as shown in the example below.
 
 <NotYetImplemented />
 
+### Exposed functions
+
+See [Row select support](#row-select-support) for selection related exposed functions
+
+| Method                                           | Description                                                                                                                                |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `items(): Items[]`                               | Returns the complete set of items used to build the table.                                                                                 |
+| `displayItems(): Items[]`                        | Returns the set of items currently displayed in the tabe. See [Complete Example](#complete-example) for usage                              |
+| `getStringValue(ob: Items, key: string): string` | Returns the formatted string value of the field `key` of the object `ob`. See [Custom Sort Comparer(s)](#custom-sort-comparer-s) for usage |
+| `refresh()`                                      | Calls the async provider to refresh the table items                                                                                        |
+
 ## Sorting
 
 As mentioned in the [Fields](#fields-column-definitions) section above, you can make columns
@@ -732,7 +743,7 @@ to the `sortBy` array. From the user inteface, multi-sort works as follows:
 
 ### Custom Sort Comparer(s)
 
-Each item in the `BSortBy` model may include a `comparer` field of the type `BTableSortByComparerFunction<T = any> = (a: T, b: T, key: string) => number`. This function takes the items to be compared and the key to compare on. Since the key is passed in, you may use the same function for multiple fields or you can craft a different comparer function for each fied. Leaving the `comparer` field undefined (or not defining a field in the `sortBy` array at all) will fall back to using hte default comparer, which looks like this:
+Each item in the `BSortBy` model may include a `comparer` field of the type `BTableSortByComparerFunction<T = any> = (a: T, b: T, key: string) => number`. This function takes the items to be compared and the key to compare on. Since the key is passed in, you may use the same function for multiple fields or you can craft a different comparer function for each fied. Leaving the `comparer` field undefined (or not defining a field in the `sortBy` array at all) will fall back to using the default comparer, which looks like this:
 
 <<< FRAGMENT ./demo/TableSortCompareDefault.ts#snippet{ts}
 
@@ -742,6 +753,14 @@ If you have a particular field that you want to sort by, you can set up a record
 with a custom comparer:
 
 <<< FRAGMENT ./demo/TableSortCompareCustom.ts#snippet{ts}
+
+`getStringValue` is exposed to allow for customization of the simple string sorts by calling `localeCompare`
+with different options.
+
+In the example below, we enable sorting including casing, but one could as easily set the locale or modify
+any of the other options of [`localeCompare`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare)
+
+<<< DEMO ./demo/TableSortByCustom.vue
 
 ## Filtering
 
