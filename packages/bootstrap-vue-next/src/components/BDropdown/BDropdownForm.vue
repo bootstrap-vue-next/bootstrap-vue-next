@@ -40,6 +40,6 @@ defineSlots<{
 
 const computedClasses = computed(() => ({
   'was-validated': props.validated,
-  ...props.formClass,
+  props.formClass,
 }))
 </script>
