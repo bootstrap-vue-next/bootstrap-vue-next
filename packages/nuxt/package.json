@@ -1,7 +1,7 @@
 {
   "name": "@bootstrap-vue-next/nuxt",
   "description": "Nuxt Module for BootstrapVueNext",
-  "version": "0.28.3",
+  "version": "0.28.4",
   "license": "MIT",
   "author": {
     "name": "Issayah",
@@ -33,7 +33,7 @@
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },
   "peerDependencies": {
-    "bootstrap-vue-next": "workspace:^"
+    "bootstrap-vue-next": "0.28.4"
   },
   "dependencies": {
     "@nuxt/kit": "^3.16.1"
@@ -47,7 +47,7 @@
     "@rushstack/eslint-patch": "^1.11.0",
     "@types/node": "^22.13.10",
     "@vue/eslint-config-prettier": "^10.2.0",
-    "bootstrap-vue-next": "workspace:^",
+    "bootstrap-vue-next": "0.28.4",
     "eslint": "^9.22.0",
     "eslint-define-config": "^2.1.0",
     "nuxt": "^3.16.1",

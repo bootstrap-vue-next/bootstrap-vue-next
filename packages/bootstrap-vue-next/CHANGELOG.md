@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.28.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.28.3...bootstrapvuenext-v0.28.4) (2025-03-31)
+
+
+### Bug Fixes
+
+* **BDropdownForm:** form class not working with string values fixes [#2633](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2633) ([#2634](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2634)) ([65ef49a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/65ef49ac9b31532f952d1329144694664ce0354c))
+* **BPopover:** cancel show/hide during delay ([b915a98](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b915a98d8be6f170a404f13eb4c78b865b22313a))
+* **BTable:** make foot props and slot fall back to head if not defined ([#2614](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2614)) ([05fffbb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/05fffbba869309c07369c7e587ed3870966664cf))
+
 ## [0.28.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.28.2...bootstrapvuenext-v0.28.3) (2025-03-19)
 
 
