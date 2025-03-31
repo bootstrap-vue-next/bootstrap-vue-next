@@ -754,7 +754,7 @@ with a custom comparer:
 
 <<< FRAGMENT ./demo/TableSortCompareCustom.ts#snippet{ts}
 
-`getStringValue` is exposed to allow for customization of the simple string sorts by calling `localeCompare`
+The default sorting algorithm parses object syntax by using an internal function `getStringValue`. It's main purpose is to fetch the correct value from various types (object, string, etc), for example `{foo: {bar: '1'}}`, one can use `'foo.bar'` as an input to the function to get the value in the object -- `1`. It also returns the result after formatting. This function is exposed to allow for customization.
 with different options.
 
 In the example below, we enable sorting including casing, but one could as easily set the locale or modify
