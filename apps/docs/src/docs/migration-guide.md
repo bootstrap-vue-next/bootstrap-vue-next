@@ -638,8 +638,11 @@ in [the documentation](/docs/components/table#row-select-support)
 BootstrapVue adds utility classes to the `<table>` including `b-table-select-single`,`b-table-select-multi`, and `b-table-select-range`, these have been deprecated, as the functionality should be easily replicated by the developer without adding to the API surface.
 
 <NotYetImplemented/>The `aria-multiselect` attribute is not added to `<table>`
+<NotYetImplemented/>Automatically adding accessibility attributes `role` and `scope` to helper components
 
 The `filtered` event has a single argument `Items[]` rather than two arguments with an array and length. The semantics haven't changed.
+
+<NotYetImplemented/> Heading and data row accessibility
 
 ### Field Definitions
 
@@ -664,9 +667,17 @@ Use `table-attrs` to apply additional attributes to the `<table>` element in rep
 
 See the [v-html](#v-html) section for information on deprecation of the `caption-html` prop.
 
+#### BTBody
+
+<NotYetImplemented>`tbody-transition-props` and `tbody-transition-handlers`</NotYetImplemented>
+
+#### BTFoot
+
+`foot-variant` has been replaced with `variant`, which can used on other table elements.
+
 #### BTHead
 
-`head-variant` has been replaced with `variant`, which can used no other table elements.
+`head-variant` has been replaced with `variant`, which can used on other table elements.
 
 ### BTabs
 
