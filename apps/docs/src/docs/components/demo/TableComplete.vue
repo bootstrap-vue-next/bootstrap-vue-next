@@ -156,9 +156,9 @@
     </BModal>
     <BRow
       ><BCol
-        >Displayed Items ({{ displayItems().length }}):
+        >Displayed Items ({{ displayItems.length }}):
         {{
-          displayItems().map((item) => {
+          displayItems.map((item) => {
             const person = item as Person
             return `${person.name.first} ${person.name.last}`
           })
@@ -170,6 +170,7 @@
 
 <script setup lang="ts">
 import {
+  BTable,
   type BTableSortBy,
   type ColorVariant,
   type LiteralUnion,
@@ -177,6 +178,7 @@ import {
   type TableItem,
 } from 'bootstrap-vue-next'
 import {computed, reactive, ref, useTemplateRef} from 'vue'
+import {type ComponentExposed} from 'vue-component-type-helpers'
 
 interface PersonName {
   first: string
@@ -189,9 +191,8 @@ interface Person {
   isActive: boolean
 }
 
-const table = useTemplateRef('complete-table')
-
-const displayItems = () => table.value?.displayItems ?? []
+const table = useTemplateRef<ComponentExposed<typeof BTable<Person>>>('complete-table')
+const displayItems = computed(() => (table.value?.displayItems ?? []) as TableItem<Person>[])
 
 const items: TableItem<Person>[] = [
   {isActive: true, age: 40, name: {first: 'Dickerson', last: 'Macdonald'}},
