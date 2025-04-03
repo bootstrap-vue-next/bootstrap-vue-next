@@ -56,22 +56,7 @@ remove all background images and colors on any `BButton`:
 `outline-primary`, `outline-secondary`, `outline-success`, `outline-danger`, `outline-warning`,
 `outline-info`, `outline-light` and `outline-dark`.
 
-<HighlightCard>
-  <template #html>
-
-```vue-html
-<BButton variant="outline-primary">Primary</BButton>
-<BButton variant="outline-secondary">Secondary</BButton>
-<BButton variant="outline-success">Success</BButton>
-<BButton variant="outline-danger">Danger</BButton>
-<BButton variant="outline-warning">Warning</BButton>
-<BButton variant="outline-info">Info</BButton>
-<BButton variant="outline-light">Light</BButton>
-<BButton variant="outline-dark">Dark</BButton>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/ButtonOutlineVariants.vue#template{vue-html}
 
 ### Link variant
 
