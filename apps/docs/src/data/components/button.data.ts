@@ -55,7 +55,7 @@ export default {
                 default: 'secondary',
               },
             }),
-            ['size', 'tag', 'variant']
+            ['bgVariant', 'size', 'tag', 'textVariant', 'variant']
           ),
         } satisfies Record<
           Exclude<keyof BvnComponentProps['BButton'], keyof typeof linkProps>,

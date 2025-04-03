@@ -245,12 +245,6 @@ $dark: $gray-900;
   </template>
 </HighlightCard>
 
-<script setup lang="ts">
-import {BCard} from 'bootstrap-vue-next'
-import HighlightCard from '../../components/HighlightCard.vue'
-
-</script>
-
 <style lang="scss">
 .bg-body-tertiary [class^="border"] {
   display: inline-block;
