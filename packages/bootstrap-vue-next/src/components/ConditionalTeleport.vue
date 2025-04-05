@@ -4,9 +4,6 @@ import {defineComponent, h, type PropType, type SlotsType, Teleport, type Telepo
 export default defineComponent({
   name: 'ConditionalTeleport',
   inheritAttrs: false,
-  slots: Object as SlotsType<{
-    default?: Record<string, never>
-  }>,
   props: {
     to: {
       type: [String, Object] as PropType<TeleportProps['to']>,
@@ -17,6 +14,9 @@ export default defineComponent({
       required: true,
     },
   },
+  slots: Object as SlotsType<{
+    default?: Record<string, never>
+  }>,
   setup(props, {slots}) {
     // use this untill https://github.com/vuejs/core/issues/9782 is resolved
     return () =>
