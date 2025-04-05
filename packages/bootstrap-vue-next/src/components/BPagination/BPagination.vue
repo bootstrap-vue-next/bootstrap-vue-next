@@ -147,7 +147,6 @@ const getBaseButtonProps = ({
   label,
   position,
   isActive,
-  role,
   hidden,
   isSmHidden,
 }: {
@@ -160,7 +159,6 @@ const getBaseButtonProps = ({
   label?: string
   position?: number
   isActive?: boolean
-  role?: string
   hidden?: boolean
   isSmHidden?: boolean
 }) => ({
@@ -176,7 +174,7 @@ const getBaseButtonProps = ({
       },
       classVal,
     ],
-    role,
+    'role': 'presentation',
     'aria-hidden': hidden,
   },
   button: {
