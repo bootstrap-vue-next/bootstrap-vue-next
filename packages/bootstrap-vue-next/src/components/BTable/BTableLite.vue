@@ -6,7 +6,7 @@
         <BTh
           v-for="field in computedFields"
           :key="field.key"
-          scope="col"
+          :scope="field.scope"
           :class="getFieldColumnClasses(field)"
           :title="field.headerTitle"
           :variant="field.variant"
