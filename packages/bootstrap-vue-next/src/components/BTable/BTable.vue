@@ -231,7 +231,7 @@ import {
 } from '../../types/TableTypes'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BTableProps} from '../../types/ComponentProps'
-import {get, pick, set} from '../../utils/object'
+import {deepEqual, get, pick, set} from '../../utils/object'
 import {startCase} from '../../utils/stringUtils'
 import type {LiteralUnion} from '../../types/LiteralUnion'
 import {
@@ -831,14 +831,15 @@ const handleFieldSorting = (field: TableField<Items>) => {
    * @returns the updated value to emit for sorted
    */
   const handleMultiSort = (): BTableSortBy<Items> => {
-    sortByModel.value = sortByModel.value ?? []
+    const tmp = [...(sortByModel.value ?? [])]
     const val = updatedValue
     if (index === -1) {
-      sortByModel.value.push(val)
+      tmp.push(val)
     } else {
       val.order = resolveOrder(val.order)
-      sortByModel.value.splice(index, 1, val)
+      tmp.splice(index, 1, val)
     }
+    sortByModel.value = tmp
     return val
   }
 
@@ -900,7 +901,7 @@ const callItemsProvider = async () => {
 }
 
 const providerPropsWatch = async (prop: string, val: unknown, oldVal: unknown) => {
-  if (val === oldVal) return
+  if (deepEqual(val, oldVal)) return
 
   //stop provide when paging
   const inNoProvider = (key: NoProviderTypes) => props.noProvider?.includes(key) === true

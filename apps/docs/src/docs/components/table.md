@@ -822,6 +822,19 @@ To Be Completed
 
 To Be Completed
 
+Below are trimmed down versions of the [complete example](#complete-example) as a starting place for using provider functions until docs for the provider function are completed. They use local provider functions that implement
+sorting and filtering. Note that sorting is done in cooperation with `<BTable>` by having the
+provider function react to the `context.sortBy` array that it is passed, while filtering is done
+entirely by the provider, which manually forces a refresh of the table when the filter is changed.
+
+This version uses a syncronous provider funtion:
+
+<<< DEMO ./demo/TableProvider.vue
+
+This version uses an asyncronous provider function that simulates latency by sleeping for a second:
+
+<<< DEMO ./demo/TableProviderAsync.vue
+
 ## Light-weight tables
 
 `<BTableLite>` provides a great alternative to `<BTable>` if you just need simple display of
