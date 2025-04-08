@@ -7,7 +7,7 @@
     :class="computedClasses"
     role="tabpanel"
     :aria-labelledby="computedButtonId"
-    v-bind="processedAttrs.tabAttrs"
+    v-bind="processedAttrs"
   >
     <slot v-if="showSlot" />
   </component>
@@ -60,8 +60,9 @@ const el = useTemplateRef<HTMLElement>('_el')
 
 const attrs = useAttrs()
 const processedAttrs = computed(() => {
-  const {onClick, ...tabAttrs} = attrs
-  return {onClick, tabAttrs}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const {onClick: _, ...tabAttrs} = attrs
+  return tabAttrs
 })
 
 const tab = computed(
@@ -75,7 +76,7 @@ const tab = computed(
       titleItemClass: () => props.titleItemClass,
       titleLinkAttrs: () => props.titleLinkAttrs,
       titleLinkClass: () => props.titleLinkClass,
-      onClick: processedAttrs.value.onClick,
+      onClick: attrs.onClick,
       el: el.value,
     }) as TabType
 )
