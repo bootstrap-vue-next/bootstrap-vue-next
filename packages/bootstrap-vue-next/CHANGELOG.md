@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.28.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.28.4...bootstrapvuenext-v0.28.5) (2025-04-08)
+
+
+### Features
+
+* **BTable:** Expose additional functions and document them ([#2632](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2632)) ([2d1ecfd](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2d1ecfda397f0dd67dddd0c2d6a4663baeeda818))
+
+
+### Bug Fixes
+
+* **BButton:** Consume useColorVariantClasses ([#2640](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2640)) ([379fd9a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/379fd9acc185f87d806d62e4be4c8045a59da485))
+* **BTab:** error in recursion ([#2624](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2624)) ([da6fe97](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/da6fe97c1caf55b52f22c13f2153439e52580793))
+* **BTable:** correct multi-sort to not update sortby in place ([#2644](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2644)) ([8936ff2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8936ff24f69014c7077c493a51af4f9dbd4b4485))
+
 ## [0.28.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.28.3...bootstrapvuenext-v0.28.4) (2025-03-31)
 
 
