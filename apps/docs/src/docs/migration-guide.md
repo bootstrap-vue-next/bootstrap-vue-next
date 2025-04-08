@@ -624,10 +624,13 @@ The following properties are <NotYetImplemented/> -
 `filter-ignored-fields`, `filter-included-fields`, `fixed`, `no-border-collapse`, `selected-variant`,
 `table-footer-sorting`
 
-<NoteYetImplemented/>The `filter` prop does not yet support a RegEx object, only a string.
+<NotYetImplemented/>The `filter` prop does not yet support a RegEx object, only a string.
 <NotYetImplemented />The `table-colgroup` slot is not yet implemented.
 
 `sort-compare` and `sort-direction` are deprecated, use the `sortBy` prop (or model) as documented [here](/docs/components/table#sorting) instead.
+
+BootstrapVue used the main v-model binding to expose a readonly version of the displayed items. This is deprecated. Instead,
+used the exposed function `displayedItems` as demonstrated in [the documentation](/docs/components/table#complete-example).
 
 The semantics of the `row-selected` event have changed. `row-selected` is now emitted for each selected
 row and sends the single row's item as it's parameter. There is a new matching event called `row-unselected`
