@@ -41,8 +41,7 @@ import {useLinkClasses} from '../../composables/useLinkClasses'
 import {onKeyStroke} from '@vueuse/core'
 import type {BButtonProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BorderColorVariant, ColorExtendables, ColorVariant} from '../../types/ColorTypes'
-import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import type {ColorVariant} from '../../types/ColorTypes'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -142,14 +141,10 @@ const linkValueClasses = useLinkClasses(
       : undefined),
   }))
 )
-const colorClasses = useColorVariantClasses(
-  props as ColorExtendables & {borderVariant?: BorderColorVariant | null}
-)
-
 const computedClasses = computed(() => [
   variantIsLinkType.value === true && computedLink.value === false
     ? linkValueClasses.value
-    : colorClasses.value,
+    : undefined,
   [`btn-${props.size}`],
   {
     [`btn-${props.variant}`]: props.variant !== null && variantIsLinkTypeSubset.value === false,
