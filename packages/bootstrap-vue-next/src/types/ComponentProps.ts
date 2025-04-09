@@ -837,9 +837,7 @@ type CustomLinkVariant = {
   [K in ColorVariant as `link-${K}`]: unknown
 }
 
-export interface BButtonProps
-  extends Omit<BLinkProps, 'variant'>,
-    Omit<ColorExtendables, 'variant'> {
+export interface BButtonProps extends Omit<BLinkProps, 'variant'> {
   loading?: boolean
   loadingFill?: boolean
   loadingText?: string
