@@ -26,7 +26,13 @@ import type {
   TooltipOrchestratorShowParam,
 } from '../types/ComponentOrchestratorTypes'
 import type {BvnComponentProps} from '../types/BootstrapVueOptions'
-import {withBvnPrefix} from './withBvnPrefix'
+
+export const genericBvnPrefix = 'BootstrapVueNext__'
+
+export const withBvnPrefix = (value: string, suffix: string = '') => {
+  const suffixWithTrail = `${suffix}___`
+  return `${genericBvnPrefix}ID__${value}__${suffix ? suffixWithTrail : ''}`
+}
 
 const createBvnInjectionKey = (name: string) => withBvnPrefix(name) as unknown as symbol // Type cast to symbol, these should be static
 const createBvnPluginInjectionKey = (name: string) =>
@@ -175,9 +181,10 @@ export const rtlPluginKey: InjectionKey<{
   locale: Ref<string | undefined>
 }> = createBvnPluginInjectionKey('rtl')
 
+export const breadcrumbGlobalIndexKey = `${genericBvnPrefix}global_breadcrumb`
 export const breadcrumbPluginKey: InjectionKey<{
-  items: Ref<BreadcrumbItemRaw[]>
-  reset: () => void
+  items: Ref<Record<string, BreadcrumbItemRaw[]>>
+  reset: (key?: string) => void
 }> = createBvnPluginInjectionKey('breadcrumbPlugin')
 
 export const modalManagerPluginKey: InjectionKey<{
