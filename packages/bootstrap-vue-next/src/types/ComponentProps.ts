@@ -64,6 +64,7 @@ import type {
   TableFieldRaw,
   TableRowType,
   TableStrictClassValue,
+  TableThScope,
 } from './TableTypes'
 import type {PopoverPlacement} from './PopoverPlacement'
 import type {InputType} from './InputType'
@@ -1147,6 +1148,7 @@ export interface BThProps {
   stackedHeading?: string
   stickyColumn?: boolean
   variant?: ColorVariant | null
+  scope?: TableThScope
 }
 
 export interface BProgressBarProps extends ColorExtendables {
