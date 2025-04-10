@@ -58,7 +58,7 @@ defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   first?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  option: (props: Record<string, unknown>) => any
+  option: (props: (typeof normalizeOptions.value)[number]) => any
 }>()
 
 const modelValue = defineModel<Exclude<BFormCheckboxGroupProps['modelValue'], undefined>>({
@@ -90,7 +90,14 @@ provide(checkboxGroupKey, {
   disabled: toRef(() => props.disabled),
 })
 
-const normalizeOptions = computed(() =>
+const normalizeOptions = computed<
+  {
+    text: string | undefined
+    value: string | number | undefined
+    disabled: boolean | undefined
+    [key: string]: unknown
+  }[]
+>(() =>
   props.options.map((el) =>
     typeof el === 'string' || typeof el === 'number'
       ? {
@@ -102,6 +109,7 @@ const normalizeOptions = computed(() =>
           ...el,
           value: el[props.valueField] as string | number | undefined,
           disabled: el[props.disabledField] as boolean | undefined,
+          ...(el.props || undefined),
           text: el[props.textField] as string | undefined,
         }
   )
