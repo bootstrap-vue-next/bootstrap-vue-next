@@ -8,7 +8,7 @@ export const breadcrumbPlugin: Plugin = {
       [breadcrumbGlobalIndexKey]: [],
     })
     const reset = (key: string = breadcrumbGlobalIndexKey) => {
-      items.value[key].splice(0, items.value[key].length)
+      items.value[key] = []
     }
 
     app.provide(breadcrumbPluginKey, {items, reset})
