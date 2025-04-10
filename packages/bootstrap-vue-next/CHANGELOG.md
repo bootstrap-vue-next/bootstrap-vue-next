@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.28.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.28.5...bootstrapvuenext-v0.28.6) (2025-04-10)
+
+
+### Features
+
+* **BBreadcrumb:** allow it to use individual breadcrumb trails with useBreadcrumb by passing prop id to component and id param to composable fixes [#2630](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2630) ([0271b95](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0271b956b25b5b837698cca81bfe64af9dde8ebd))
+
 ## [0.28.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.28.4...bootstrapvuenext-v0.28.5) (2025-04-08)
 
 
