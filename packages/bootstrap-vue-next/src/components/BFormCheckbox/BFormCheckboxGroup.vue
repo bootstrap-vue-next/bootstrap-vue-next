@@ -93,7 +93,8 @@ provide(checkboxGroupKey, {
 const normalizeOptions = computed<
   {
     text: string | undefined
-    value: string | number | undefined
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    value: any
     disabled: boolean | undefined
     [key: string]: unknown
   }[]
@@ -107,7 +108,7 @@ const normalizeOptions = computed<
         }
       : {
           ...el,
-          value: el[props.valueField] as string | number | undefined,
+          value: el[props.valueField],
           disabled: el[props.disabledField] as boolean | undefined,
           ...(el.props || undefined),
           text: el[props.textField] as string | undefined,

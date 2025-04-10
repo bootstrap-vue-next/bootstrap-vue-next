@@ -91,8 +91,10 @@ provide(radioGroupKey, {
 const normalizeOptions = computed<
   {
     text: string | undefined
-    value: string | number | undefined
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    value: any
     disabled?: boolean | undefined
+    [key: string]: unknown
   }[]
 >(() =>
   props.options.map((el) =>
@@ -104,7 +106,7 @@ const normalizeOptions = computed<
         }
       : {
           ...el,
-          value: el[props.valueField] as string | undefined,
+          value: el[props.valueField],
           disabled: el[props.disabledField] as boolean | undefined,
           ...(el.props || undefined),
           text: el[props.textField] as string | undefined,
