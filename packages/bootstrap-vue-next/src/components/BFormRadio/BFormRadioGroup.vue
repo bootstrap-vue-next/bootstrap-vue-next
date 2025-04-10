@@ -108,7 +108,6 @@ const normalizeOptions = computed<
           ...el,
           value: el[props.valueField],
           disabled: el[props.disabledField] as boolean | undefined,
-          ...(el.props || undefined),
           text: el[props.textField] as string | undefined,
         }
   )
