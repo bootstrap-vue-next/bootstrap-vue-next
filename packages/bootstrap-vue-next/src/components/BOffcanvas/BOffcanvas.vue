@@ -98,7 +98,6 @@ import ConditionalTeleport from '../ConditionalTeleport.vue'
 import {useSafeScrollLock} from '../../composables/useSafeScrollLock'
 import {isEmptySlot} from '../../utils/dom'
 import {useShowHide} from '../../composables/useShowHide'
-import type {Placement} from '../../types/Alignment'
 import {getElement} from '../../utils/getElement'
 
 // TODO once the responsive stuff may be implemented correctly,

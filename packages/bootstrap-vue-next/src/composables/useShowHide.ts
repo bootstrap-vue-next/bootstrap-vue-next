@@ -184,7 +184,6 @@ export const useShowHide = (
       _Resolve = resolve
     })
 
-
     const event = buildTriggerableEvent('show', {cancelable: true})
     emit('show', event)
 
