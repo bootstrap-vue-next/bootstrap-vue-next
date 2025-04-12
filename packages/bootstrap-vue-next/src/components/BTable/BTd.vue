@@ -1,6 +1,5 @@
 <template>
   <td
-    :scope="scope"
     :class="computedClasses"
     :colspan="props.colspan"
     :rowspan="props.rowspan"
@@ -37,6 +36,4 @@ const computedClasses = computed(() => ({
   'b-table-sticky-column': props.stickyColumn,
   'table-b-table-default': props.stickyColumn && props.variant === null,
 }))
-
-const scope = computed(() => (props.colspan ? 'colspan' : props.rowspan ? 'rowspan' : 'col'))
 </script>

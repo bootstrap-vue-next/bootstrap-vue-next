@@ -89,6 +89,12 @@ describe('pagination', () => {
     expect($li.classes()).toContain('page-item')
   })
 
+  it('li child has static role', () => {
+    const wrapper = mount(BPagination)
+    const $li = wrapper.get('li')
+    expect($li.attributes('role')).toBe('presentation')
+  })
+
   it('has first button by default', () => {
     const wrapper = mount(BPagination, {props: {totalRows: 100, perPage: 1, modelValue: 5}})
     expect(wrapper.find('[aria-label="Go to first page"]').exists()).toBeTruthy()

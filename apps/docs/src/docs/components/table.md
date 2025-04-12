@@ -122,6 +122,7 @@ The following field properties (defined as [TableField](/docs/types#tableitem)) 
 | `thAttr`            | `AttrsValue \| ((value: unknown, key: string, item: T \| null, type: TableRowThead) => AttrsValue` | Object representing additional attributes to apply to the field's `<thead>`/`<tfoot>` heading `<th>` cell. If the field's `isRowHeader` is set to `true`, the attributes will also apply to the `<tbody>` field `<th>` cell. If custom attributes per cell are required, a callback function can be specified instead. See the typescript definition for accepted parameters and return types. |
 | `isRowHeader`       | `boolean`                                                                                          | When set to `true`, the field's item data cell will be rendered with `<th>` rather than the default of `<td>`.                                                                                                                                                                                                                                                                                 |
 | `stickyColumn`      | `boolean`                                                                                          | When set to `true`, and the table in [responsive](#responsive-tables) mode or has [sticky headers](#sticky-headers), will cause the column to become fixed to the left when the table's horizontal scrollbar is scrolled. See [Sticky columns](#sticky-columns) for more details                                                                                                               |
+| `scope`             | `TableThScope`                                                                                     | The scope attribute for the field's `<th>` element. This is used to specify the relationship of the header cell to the data cells. Valid values are `row`, `col`, `rowgroup`, and `colgroup`. Defaults to `colgroup` if `colspan` specified, `rowgroup` if `rowspan` specified, otherwise `col`.                                                                                               |
 
 **Notes:**
 
@@ -423,12 +424,14 @@ It is also possible to provide custom rendering for the table's `thead` and `tfo
 default the table footer is not rendered unless `foot-clone` is set to `true`.
 
 Scoped slots for the header and footer cells uses a special naming convention of
-`'head(<fieldkey>)'` and `'foot(<fieldkey>)'` respectively. if a `'foot(...)'` slot for a field is
-not provided, but a `'head(...)'` slot is provided, then the footer will use the `'head(...)'` slot
-content.
+`'head(<fieldkey>)'` and `'foot(<fieldkey>)'` respectively.
 
 You can use a default _fall-back_ scoped slot `'head()'` or `'foot()'` to format any header or
 footer cells that do not have an explicit scoped slot provided.
+
+In `BTableLight`, `'foot(<fieldkey>)'` will _fall-back_ first to `'foot()'` if it is provided, then to
+`'head(<fieldkey>)'`, and finally to `'head()'`. For `BTable`, there is a default for `'head(<fieldkey>)'`,
+so the fallback chain will stop with the default `'head(<fieldkey>)'` rather than falling back to `'head()'`.
 
 <<< DEMO ./demo/TableHeadSlot.vue
 
@@ -686,6 +689,17 @@ selected, such as a virtual column as shown in the example below.
 
 <NotYetImplemented />
 
+### Exposed functions
+
+See [Row select support](#row-select-support) for selection related exposed functions
+
+| Method                                           | Description                                                                                                                                |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `items(): Items[]`                               | Returns the complete set of items used to build the table.                                                                                 |
+| `displayItems(): Items[]`                        | Returns the set of items currently displayed in the tabe. See [Complete Example](#complete-example) for usage                              |
+| `getStringValue(ob: Items, key: string): string` | Returns the formatted string value of the field `key` of the object `ob`. See [Custom Sort Comparer(s)](#custom-sort-comparer-s) for usage |
+| `refresh()`                                      | Calls the async provider to refresh the table items                                                                                        |
+
 ## Sorting
 
 As mentioned in the [Fields](#fields-column-definitions) section above, you can make columns
@@ -730,7 +744,7 @@ to the `sortBy` array. From the user inteface, multi-sort works as follows:
 
 ### Custom Sort Comparer(s)
 
-Each item in the `BSortBy` model may include a `comparer` field of the type `BTableSortByComparerFunction<T = any> = (a: T, b: T, key: string) => number`. This function takes the items to be compared and the key to compare on. Since the key is passed in, you may use the same function for multiple fields or you can craft a different comparer function for each fied. Leaving the `comparer` field undefined (or not defining a field in the `sortBy` array at all) will fall back to using hte default comparer, which looks like this:
+Each item in the `BSortBy` model may include a `comparer` field of the type `BTableSortByComparerFunction<T = any> = (a: T, b: T, key: string) => number`. This function takes the items to be compared and the key to compare on. Since the key is passed in, you may use the same function for multiple fields or you can craft a different comparer function for each fied. Leaving the `comparer` field undefined (or not defining a field in the `sortBy` array at all) will fall back to using the default comparer, which looks like this:
 
 <<< FRAGMENT ./demo/TableSortCompareDefault.ts#snippet{ts}
 
@@ -740,6 +754,14 @@ If you have a particular field that you want to sort by, you can set up a record
 with a custom comparer:
 
 <<< FRAGMENT ./demo/TableSortCompareCustom.ts#snippet{ts}
+
+The default sorting algorithm parses object syntax by using an internal function `getStringValue`. It's main purpose is to fetch the correct value from various types (object, string, etc), for example `{foo: {bar: '1'}}`, one can use `'foo.bar'` as an input to the function to get the value in the object -- `1`. It also returns the result after formatting. This function is exposed to allow for customization.
+with different options.
+
+In the example below, we enable sorting including casing, but one could as easily set the locale or modify
+any of the other options of [`localeCompare`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare)
+
+<<< DEMO ./demo/TableSortByCustom.vue
 
 ## Filtering
 
@@ -820,9 +842,33 @@ To Be Completed
 
 To Be Completed
 
+Below are trimmed down versions of the [complete example](#complete-example) as a starting place for using provider functions until docs for the provider function are completed. They use local provider functions that implement
+sorting and filtering. Note that sorting is done in cooperation with `<BTable>` by having the
+provider function react to the `context.sortBy` array that it is passed, while filtering is done
+entirely by the provider, which manually forces a refresh of the table when the filter is changed.
+
+This version uses a syncronous provider funtion:
+
+<<< DEMO ./demo/TableProvider.vue
+
+This version uses an asyncronous provider function that simulates latency by sleeping for a second:
+
+<<< DEMO ./demo/TableProviderAsync.vue
+
 ## Light-weight tables
 
-To Be Completed
+`<BTableLite>` provides a great alternative to `<BTable>` if you just need simple display of
+tabular data. The `<BTableLite>` component provides all of the styling and formatting features of
+`<BTable>` (including row details and stacked support), while **excluding** the following features:
+
+- Filtering
+- Sorting
+- Pagination
+- Items provider support
+- Selectable rows
+- Busy table state and styling
+- Fixed top and bottom rows
+- Empty row support
 
 ## Simple tables
 
@@ -861,11 +907,114 @@ As with `BTable` and `BTableLite`, sticky columns are not supported when the sta
 
 ## Table Helper Components
 
-To Be Completed
+BootstrapVueNext provides additional helper child components when using `<BTableSimple>`, or the named
+slots `top-row`, `bottom-row`, `thead-top`, and `custom-foot` (all of which accept table child
+elements). The helper components are as follows:
+
+- `BTbody` (`<BTableSimple>` only)
+- `BThead` (`<BTableSimple>` only)
+- `BTfoot` (`<BTableSimple>` only)
+- `BTr`
+- `BTd`
+- `BTh`
+
+These components are optimized to handle converting variants to the appropriate classes (such as
+handling table `dark` mode), and automatically applying certain accessibility attributes (i.e.
+`role`s and `scope`s). They also can generate the stacked table, and sticky header and column,
+markup. Components `<BTable>` and `<BTableLite>` use these helper components internally.
+
+In the [Simple tables](#simple-tables) example, we are using the helper components `<BThead>`,
+`<BTbody>`, `<BTr>`, `<BTh>`, `<BTd>` and `<BTfoot>`. While you can use regular table child
+elements (i.e. `<tbody>`, `<tr>`, `<td>`, etc.) within `<BTableSimple>`, and the named slots
+`top-row`, `bottom-row`, and `thead-top`, it is recommended to use these BootstrapVue table `<BT*>`
+helper components. Note that there are no helper components for `<caption>`, `<colgroup>` or
+`<col>`, so you may use these three HTML5 elements directly in `<BTableSimple>`.
+
+- Table helper components `<BThead>`, `<BTfoot>`, `<BTr>`, `<BTd>` and `<BTh>` all accept a `variant`
+  prop, which will apply one of the Bootstrap theme colors (custom theme colors are supported via
+  [theming](/docs/reference/theming).) and will automatically adjust to use the correct variant
+  class based on the table's `dark` mode.
+- <NotYetImplemented/> Accessibility attributes `role` and `scope` are automatically set on `<BTh>` and `<BTd>`
+  components based on their location (thead, tbody, or tfoot) and their `rowspan` or `colspan`
+  props. You can override the automatic `scope` and `role` values by setting the appropriate
+  attribute on the helper component.
+- <NotYetImplemented/> For `<BTbody>`, `<BThead>`, and `<BTfoot>` helper components, the appropriate default `role` of
+  `'rowgroup'` will be applied, unless you override the role by supplying a `role` attribute.
+- <NotYetImplemented/> For the `<BTr>` helper component, the appropriate default `role` of `'row'` will be applied,
+  unless you override the role by supplying a `role` attribute. `<BTr>` does not add a `scope`.
+- <NotYetImplemented/>The `<BTbody>` element supports rendering a Vue `<transition-group>` when either, or both, of the
+  `tbody-transition-props` and `tbody-transition-handlers` props are used. See the
+  [Table body transition support](#table-body-transition-support) section for more details.
 
 ## Accessibility
 
-To Be Completed
+<NotYetImplemented/>
+
+The `<BTable>` and `<BTableLite>` components, when using specific features, will attempt to
+provide the best accessibility markup possible.
+
+When using `<BTableSimple>` with the helper table components, elements will have the appropriate
+roles applied by default, of which you can optionally override. When using click handlers on the
+`<BTableSimple>` helper components, you will need to apply appropriate `aria-*` attributes, and
+set `tabindex="0"` to make the click actions accessible to screen reader and keyboard-only users.
+You should also listen for `@keydown.enter.prevent` to handle users pressing <kbd>Enter</kbd> to
+trigger your click on cells or rows (required for accessibility for keyboard-only users).
+
+### Heading accessibility
+
+<NotYetImplemented/>
+
+When a column (field) is sortable (`<BTable>` only) or there is a `head-clicked` listener
+registered (`<BTable>` and `<BTableLite>`), the header (and footer) `<th>` cells will be placed
+into the document tab sequence (via `tabindex="0"`) for accessibility by keyboard-only and screen
+reader users, so that the user may trigger a click (by pressing <kbd>Enter</kbd> on the header
+cells.
+
+### Data row accessibility
+
+<NotYetImplemented/>
+
+When the table is in `selectable` mode (`<BTable>` only, and prop `no-select-on-click` is not set),
+or if there is a `row-clicked` event listener registered (`<BTable>` and `<BTableLite>`), all
+data item rows (`<tr>` elements) will be placed into the document tab sequence (via `tabindex="0"`)
+to allow keyboard-only and screen reader users the ability to click the rows by pressing
+<kbd>Enter</kbd> or <kbd>Space</kbd>.
+
+When the table items rows are placed in the document tab sequence (`<BTable>` and
+`<BTableLite>`), they will also support basic keyboard navigation when focused:
+
+- <kbd>Down</kbd> will move to the next row
+- <kbd>Up</kbd> will move to the previous row
+- <kbd>End</kbd> or <kbd>Down</kbd>+<kbd>Shift</kbd> will move to the last row
+- <kbd>Home</kbd> or <kbd>Up</kbd>+<kbd>Shift</kbd> will move to the first row
+- <kbd>Enter</kbd> or <kbd>Space</kbd> to click the row.
+
+### Row event accessibility
+
+Note the following row based events/actions (available with `<BTable>` and `<BTableLite>`) are
+not considered accessible, and should only be used if the functionality is non critical or can be
+provided via other means:
+
+- `row-dblclicked`
+- `row-contextmenu`
+- `row-hovered`
+- `row-unhovered`
+- `row-middle-clicked`
+
+Note that the `row-middle-clicked` event is not supported in all browsers (i.e. IE, Safari and most
+mobile browsers). When listening for `row-middle-clicked` events originating on elements that do not
+support input or navigation, you will often want to explicitly prevent other default actions mapped
+to the down action of the middle mouse button. On Windows this is usually autoscroll, and on macOS
+and Linux this is usually clipboard paste. This can be done by preventing the default behaviour of
+the `mousedown` or `pointerdown` event.
+
+Additionally, you may need to avoid opening a default system or browser context menu after a right
+click. Due to timing differences between operating systems, this too is not a preventable default
+behaviour of `row-middle-clicked`. Instead, this can be done by preventing the default behaviour of
+the `row-contextmenu` event.
+
+It is recommended you test your app in as many browser and device variants as possible to ensure
+your app handles the various inconsistencies with events.
 
 ## Complete Example
 

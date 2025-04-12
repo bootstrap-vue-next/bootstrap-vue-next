@@ -76,7 +76,7 @@ export const useShowHide = (
 ) => {
   let noAction = false
   const initialShow = (!!modelValue.value && !props.initialAnimation) || props.visible || false
-  const showRef = ref<boolean>(false)
+  const showRef = ref<boolean>(initialShow)
   const renderRef = ref<boolean>(initialShow)
   const renderBackdropRef = ref<boolean>(initialShow)
 
@@ -171,17 +171,19 @@ export const useShowHide = (
     })
 
   let showTimeout: ReturnType<typeof setTimeout> | undefined
+  let hideTimeout: ReturnType<typeof setTimeout> | undefined
   let _Resolve: ((value: boolean) => void) | undefined
   let _Promise: Promise<boolean> | undefined
   let _resolveOnHide: boolean | undefined
   const show = (resolveOnHide: boolean = false): Promise<boolean> => {
-    if (showRef.value && !_Promise) return Promise.resolve(true)
+    if (showRef.value && !hideTimeout && !_Promise) return Promise.resolve(true)
     _resolveOnHide = resolveOnHide
-    if (showRef.value && _Promise) return _Promise
+    if (showRef.value && !hideTimeout && _Promise) return _Promise
 
     _Promise = new Promise<boolean>((resolve) => {
       _Resolve = resolve
     })
+
 
     const event = buildTriggerableEvent('show', {cancelable: true})
     emit('show', event)
@@ -200,6 +202,10 @@ export const useShowHide = (
       _Resolve?.(false)
       return _Promise
     }
+    if (hideTimeout) {
+      clearTimeout(hideTimeout)
+      hideTimeout = undefined
+    }
     renderRef.value = true
     renderBackdropRef.value = true
     requestAnimationFrame(() => {
@@ -216,6 +222,7 @@ export const useShowHide = (
       }
       showTimeout = setTimeout(
         () => {
+          showTimeout = undefined
           showRef.value = true
           options.showFn?.()
           if (!modelValue.value) {
@@ -233,7 +240,7 @@ export const useShowHide = (
 
   let leaveTrigger: string | undefined
   const hide = (trigger?: string, noTriggerEmit?: boolean): Promise<boolean> => {
-    if (!showRef.value) return Promise.resolve(true)
+    if (!showRef.value && !showTimeout) return Promise.resolve(true)
     if (!_Promise)
       _Promise = new Promise<boolean>((resolve) => {
         _Resolve = resolve
@@ -271,8 +278,15 @@ export const useShowHide = (
       return _Promise
     }
     trapActive.value = false
-    setTimeout(
+    if (showTimeout) {
+      clearTimeout(showTimeout)
+      showTimeout = undefined
+      if (!localTemporaryHide.value) renderRef.value = false
+      renderBackdropRef.value = false
+    }
+    hideTimeout = setTimeout(
       () => {
+        hideTimeout = undefined
         isLeaving.value = true
         showRef.value = false
         options.hideFn?.()
@@ -371,8 +385,8 @@ export const useShowHide = (
   }
 
   const isLeaving = ref(false)
-  const isActive = ref(false)
-  const isVisible = ref(false)
+  const isActive = ref(initialShow)
+  const isVisible = ref(initialShow)
 
   const onBeforeEnter = (el: Element) => {
     options.transitionProps?.onBeforeEnter?.(el)

@@ -72,6 +72,7 @@ export type TableField<T = any> = {
     | ((value: unknown, key: string, item: T | null, type: TableRowThead) => AttrsValue)
   isRowHeader?: boolean
   stickyColumn?: boolean
+  scope?: TableThScope
 }
 
 export type TableFieldRaw<T = unknown> = T extends object
@@ -85,3 +86,5 @@ export const isTableFieldRaw = <T>(value: unknown): value is TableFieldRaw<T> =>
   typeof value === 'string' || isTableField(value)
 
 export type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
+
+export type TableThScope = 'row' | 'col' | 'rowgroup' | 'colgroup'

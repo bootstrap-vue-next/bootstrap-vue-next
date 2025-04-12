@@ -2,7 +2,7 @@
   <optgroup :label="props.label">
     <slot name="first" />
     <BFormSelectOption
-      v-for="(option, index) in normalizedOptsWrapper"
+      v-for="(option, index) in normalizedOptions"
       :key="index"
       :disabled="option.disabled"
       :value="option.value"
@@ -20,7 +20,7 @@
 import BFormSelectOption from './BFormSelectOption.vue'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BFormSelectOptionGroupProps} from '../../types/ComponentProps'
-import {computed} from 'vue'
+import type {ComputedRef} from 'vue'
 import {useFormSelect} from '../../composables/useFormSelect'
 import type {SelectOption} from '../../types/SelectTypes'
 
@@ -42,7 +42,7 @@ defineSlots<{
   option: (props: SelectOption<T>) => any
 }>()
 
-const {normalizedOptions} = useFormSelect(() => props.options, props)
-
-const normalizedOptsWrapper = computed(() => normalizedOptions.value as SelectOption<T>[])
+const {normalizedOptions} = useFormSelect(() => props.options, props) as {
+  normalizedOptions: ComputedRef<SelectOption<T>[]>
+}
 </script>

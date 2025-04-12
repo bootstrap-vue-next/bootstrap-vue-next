@@ -681,6 +681,10 @@ export default {
               type: 'ColorVariant | null',
               default: null,
             },
+            scope: {
+              type: 'string',
+              default: undefined,
+            },
           } satisfies Record<keyof BvnComponentProps['BTh'], PropertyReference>,
         },
         emits: [],

@@ -33,11 +33,17 @@
                 </slot>
               </h5>
               <template v-if="!props.noHeaderClose">
-                <BButton v-if="hasHeaderCloseSlot" v-bind="headerCloseAttrs" @click="hide('close')">
+                <BButton
+                  v-if="hasHeaderCloseSlot"
+                  ref="_close"
+                  v-bind="headerCloseAttrs"
+                  @click="hide('close')"
+                >
                   <slot name="header-close" v-bind="sharedSlots" />
                 </BButton>
                 <BCloseButton
                   v-else
+                  ref="_close"
                   :aria-label="props.headerCloseLabel"
                   v-bind="headerCloseAttrs"
                   @click="hide('close')"
@@ -78,7 +84,7 @@
 </template>
 
 <script setup lang="ts">
-import {breakpointsBootstrapV5, onKeyStroke, useBreakpoints, useFocus} from '@vueuse/core'
+import {breakpointsBootstrapV5, onKeyStroke, unrefElement, useBreakpoints} from '@vueuse/core'
 import {useActivatedFocusTrap} from '../../composables/useActivatedFocusTrap'
 import {computed, type EmitFn, nextTick, onMounted, ref, useTemplateRef, watch} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
@@ -92,6 +98,8 @@ import ConditionalTeleport from '../ConditionalTeleport.vue'
 import {useSafeScrollLock} from '../../composables/useSafeScrollLock'
 import {isEmptySlot} from '../../utils/dom'
 import {useShowHide} from '../../composables/useShowHide'
+import type {Placement} from '../../types/Alignment'
+import {getElement} from '../../utils/getElement'
 
 // TODO once the responsive stuff may be implemented correctly,
 // What needs to occur is a fixing of the "body scrolling".
@@ -110,6 +118,7 @@ const _props = withDefaults(defineProps<Omit<BOffcanvasProps, 'modelValue'>>(), 
   bodyAttrs: undefined,
   bodyClass: undefined,
   bodyScrolling: false,
+  focus: undefined,
   footerClass: undefined,
   headerClass: undefined,
   headerCloseClass: undefined,
@@ -123,7 +132,6 @@ const _props = withDefaults(defineProps<Omit<BOffcanvasProps, 'modelValue'>>(), 
   noCloseOnBackdrop: false,
   noCloseOnEsc: false,
   noTrap: false,
-  noFocus: false,
   noHeader: false,
   noHeaderClose: false,
   unmountLazy: false,
@@ -150,11 +158,23 @@ const computedId = useId(() => props.id, 'offcanvas')
 
 const element = useTemplateRef<HTMLElement>('_element')
 const fallbackFocusElement = useTemplateRef<HTMLElement>('_fallbackFocusElement')
+const closeButton = useTemplateRef<HTMLElement>('_close')
+
+const pickFocusItem = () => {
+  if (props.focus && typeof props.focus !== 'boolean') {
+    if (props.focus === 'close') {
+      return closeButton
+    }
+    return getElement(props.focus, element.value ?? undefined)
+  }
+  return element
+}
 
 const onAfterEnter = () => {
   nextTick(() => {
-    if (props.noFocus === false && !isOpenByBreakpoint.value) {
-      focused.value = true
+    if (props.focus !== false && !isOpenByBreakpoint.value && props.noTrap) {
+      const focusElement = unrefElement(pickFocusItem())
+      focusElement?.focus()
     }
   })
 }
@@ -207,10 +227,6 @@ onKeyStroke(
   {target: element}
 )
 
-const {focused} = useFocus(element, {
-  initialValue: modelValue.value && props.noFocus === false && !isOpenByBreakpoint.value,
-})
-
 const fallbackClassSelector = 'offcanvas-fallback-focus'
 
 const {needsFallback} = useActivatedFocusTrap({
@@ -221,6 +237,10 @@ const {needsFallback} = useActivatedFocusTrap({
     classSelector: fallbackClassSelector,
     ref: fallbackFocusElement,
   },
+  focus: () =>
+    props.focus === false || isOpenByBreakpoint.value
+      ? false
+      : (unrefElement(pickFocusItem()) ?? undefined),
 })
 
 const showBackdrop = computed(

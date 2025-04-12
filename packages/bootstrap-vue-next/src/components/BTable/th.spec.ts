@@ -75,22 +75,22 @@ describe('th', () => {
     expect(wrapper.classes()).not.toContain('table-b-table-default')
   })
 
-  it('has attr scope to be colspan when prop colspan', () => {
+  it('has attr scope to be colgroup when prop colspan', () => {
     const wrapper = mount(BTh, {
       props: {
         colspan: '6',
       },
     })
-    expect(wrapper.attributes('scope')).toBe('colspan')
+    expect(wrapper.attributes('scope')).toBe('colgroup')
   })
 
-  it('has attr scope to be rowspan when prop rowspan', () => {
+  it('has attr scope to be rowgroup when prop rowspan', () => {
     const wrapper = mount(BTh, {
       props: {
         rowspan: '6',
       },
     })
-    expect(wrapper.attributes('scope')).toBe('rowspan')
+    expect(wrapper.attributes('scope')).toBe('rowgroup')
   })
 
   it('has attr scope to be col by default', () => {
@@ -98,11 +98,30 @@ describe('th', () => {
     expect(wrapper.attributes('scope')).toBe('col')
   })
 
-  it('has scope colspan when both rowspan and colspan', () => {
+  it('can override attr scope to be row when prop scope set', () => {
+    const wrapper = mount(BTh, {
+      props: {
+        scope: 'row',
+      },
+    })
+    expect(wrapper.attributes('scope')).toBe('row')
+  })
+
+  it('can override attr scope to be row when props scope and colspan are set', () => {
+    const wrapper = mount(BTh, {
+      props: {
+        scope: 'row',
+        colspan: '5',
+      },
+    })
+    expect(wrapper.attributes('scope')).toBe('row')
+  })
+
+  it('has scope colgroup when both rowspan and colspan', () => {
     const wrapper = mount(BTh, {
       props: {colspan: 6, rowspan: 5},
     })
-    expect(wrapper.attributes('scope')).toBe('colspan')
+    expect(wrapper.attributes('scope')).toBe('colgroup')
   })
 
   it('does not have a nested div by default when stackedHeading is undefined', () => {

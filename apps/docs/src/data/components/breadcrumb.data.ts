@@ -14,6 +14,12 @@ export default {
             default: undefined,
             description: 'Array of `BreadCrumbItem`s or strings to render. See above for details.',
           },
+          id: {
+            type: 'string',
+            default: undefined,
+            description:
+              'ID of the breadcrumb component. When combined with the `useBreadcrumb` composable, it will use this id as a breadcrumb trail instead of the global trail.',
+          },
         } satisfies Record<keyof BvnComponentProps['BBreadcrumb'], PropertyReference>,
       },
       emits: [],

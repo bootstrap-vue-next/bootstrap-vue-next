@@ -64,6 +64,7 @@ import type {
   TableFieldRaw,
   TableRowType,
   TableStrictClassValue,
+  TableThScope,
 } from './TableTypes'
 import type {PopoverPlacement} from './PopoverPlacement'
 import type {InputType} from './InputType'
@@ -562,6 +563,13 @@ export interface BOffcanvasProps extends TeleporterProps, ShowHideProps {
   bodyAttrs?: Readonly<AttrsValue>
   bodyClass?: ClassValue
   bodyScrolling?: boolean
+  focus?:
+    | 'close'
+    | boolean
+    | string
+    | Readonly<ComponentPublicInstance>
+    | Readonly<HTMLElement>
+    | null
   footerClass?: string
   headerClass?: string
   headerCloseClass?: ClassValue
@@ -571,7 +579,6 @@ export interface BOffcanvasProps extends TeleporterProps, ShowHideProps {
   modelValue?: boolean
   noCloseOnBackdrop?: boolean
   noCloseOnEsc?: boolean
-  noFocus?: boolean
   noHeader?: boolean
   noTrap?: boolean
   noHeaderClose?: boolean
@@ -836,6 +843,7 @@ export interface BBadgeProps extends Omit<BLinkProps, 'routerTag'>, ColorExtenda
 
 export interface BBreadcrumbProps {
   items?: readonly BreadcrumbItemRaw[]
+  id?: string
 }
 
 export interface BBreadcrumbItemProps extends Omit<BLinkProps, 'routerTag'> {
@@ -1156,6 +1164,7 @@ export interface BThProps {
   stackedHeading?: string
   stickyColumn?: boolean
   variant?: ColorVariant | null
+  scope?: TableThScope
 }
 
 export interface BProgressBarProps extends ColorExtendables {
@@ -1295,8 +1304,15 @@ export interface BCardHeadFootProps extends ColorExtendables {
 }
 
 export interface BModalProps extends TeleporterProps, ShowHideProps {
-  autofocus?: boolean
-  autofocusButton?: 'ok' | 'cancel' | 'close'
+  focus?:
+    | 'ok'
+    | 'cancel'
+    | 'close'
+    | boolean
+    | string
+    | Readonly<ComponentPublicInstance>
+    | Readonly<HTMLElement>
+    | null
   backdropFirst?: boolean
   body?: string
   bodyAttrs?: Readonly<AttrsValue>

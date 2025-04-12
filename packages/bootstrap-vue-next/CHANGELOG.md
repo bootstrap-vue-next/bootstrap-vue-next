@@ -1,5 +1,43 @@
 # Changelog
 
+## [0.28.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.28.5...bootstrapvuenext-v0.28.6) (2025-04-10)
+
+
+### Features
+
+* **BBreadcrumb:** allow it to use individual breadcrumb trails with useBreadcrumb by passing prop id to component and id param to composable fixes [#2630](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2630) ([0271b95](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0271b956b25b5b837698cca81bfe64af9dde8ebd))
+
+## [0.28.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.28.4...bootstrapvuenext-v0.28.5) (2025-04-08)
+
+
+### Features
+
+* **BTable:** Expose additional functions and document them ([#2632](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2632)) ([2d1ecfd](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2d1ecfda397f0dd67dddd0c2d6a4663baeeda818))
+
+
+### Bug Fixes
+
+* **BButton:** Consume useColorVariantClasses ([#2640](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2640)) ([379fd9a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/379fd9acc185f87d806d62e4be4c8045a59da485))
+* **BTab:** error in recursion ([#2624](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2624)) ([da6fe97](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/da6fe97c1caf55b52f22c13f2153439e52580793))
+* **BTable:** correct multi-sort to not update sortby in place ([#2644](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2644)) ([8936ff2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8936ff24f69014c7077c493a51af4f9dbd4b4485))
+
+## [0.28.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.28.3...bootstrapvuenext-v0.28.4) (2025-03-31)
+
+
+### Bug Fixes
+
+* **BDropdownForm:** form class not working with string values fixes [#2633](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2633) ([#2634](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2634)) ([65ef49a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/65ef49ac9b31532f952d1329144694664ce0354c))
+* **BPopover:** cancel show/hide during delay ([b915a98](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b915a98d8be6f170a404f13eb4c78b865b22313a))
+* **BTable:** make foot props and slot fall back to head if not defined ([#2614](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2614)) ([05fffbb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/05fffbba869309c07369c7e587ed3870966664cf))
+
+## [0.28.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.28.2...bootstrapvuenext-v0.28.3) (2025-03-19)
+
+
+### Bug Fixes
+
+* update deps fixes [#2487](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2487) ([#2617](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2617)) ([5f4416e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5f4416eaf644145cb3f454e051905a851b6a0091))
+* **useShowHide:** render based on initialState, fixes ssr on showhide components ([b889f1a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b889f1a19b06a58f594d64ed5404e27c7683e71c))
+
 ## [0.28.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.28.1...bootstrapvuenext-v0.28.2) (2025-03-14)
 
 

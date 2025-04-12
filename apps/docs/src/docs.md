@@ -8,7 +8,7 @@ Get started with BootstrapVueNext and Bootstrap `v5`, the world’s most popular
 
 ## Why BootstrapVueNext?
 
-BootstrapVueNext is an attempt to have the [BootstrapVue](https://bootstrap-vue.org/) components in Vue3, Bootstrap 5, and typescript. Another goal is to have the components written in a simple and readable way for a better developer experience.
+BootstrapVueNext is an attempt to have the [BootstrapVue](https://bootstrap-vue.github.io/bootstrap-vue/) components in Vue3, Bootstrap 5, and typescript. Another goal is to have the components written in a simple and readable way for a better developer experience.
 
 ## Migrating from BootstrapVue
 

@@ -38,8 +38,10 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const computedClasses = computed(() => ({
-  'was-validated': props.validated,
-  ...props.formClass,
-}))
+const computedClasses = computed(() => [
+  props.formClass,
+  {
+    'was-validated': props.validated,
+  },
+])
 </script>

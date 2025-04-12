@@ -33,7 +33,8 @@ export default defineConfig({
         dts: true,
         include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
         resolvers: [BootstrapVueNextResolver()],
-      }),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      }) as any,
     ],
   },
   locales: {

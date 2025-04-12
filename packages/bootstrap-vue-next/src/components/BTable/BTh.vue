@@ -1,6 +1,6 @@
 <template>
   <th
-    :scope="scope"
+    :scope="localScope"
     :class="computedClasses"
     :colspan="props.colspan"
     :rowspan="props.rowspan"
@@ -24,6 +24,7 @@ const _props = withDefaults(defineProps<BThProps>(), {
   stackedHeading: undefined,
   stickyColumn: false,
   variant: null,
+  scope: undefined,
 })
 const props = useDefaults(_props, 'BTh')
 
@@ -38,5 +39,7 @@ const computedClasses = computed(() => ({
   'table-b-table-default': props.stickyColumn && props.variant === null,
 }))
 
-const scope = computed(() => (props.colspan ? 'colspan' : props.rowspan ? 'rowspan' : 'col'))
+const localScope = computed(() =>
+  props.scope ? props.scope : props.colspan ? 'colgroup' : props.rowspan ? 'rowgroup' : 'col'
+)
 </script>

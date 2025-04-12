@@ -231,7 +231,7 @@ import {
 } from '../../types/TableTypes'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BTableProps} from '../../types/ComponentProps'
-import {get, pick, set} from '../../utils/object'
+import {deepEqual, get, pick, set} from '../../utils/object'
 import {startCase} from '../../utils/stringUtils'
 import type {LiteralUnion} from '../../types/LiteralUnion'
 import {
@@ -612,6 +612,24 @@ const getRowClasses = (item: Items | null, type: TableRowType): TableStrictClass
 const getFormatter = (value: TableField<Items>): TableFieldFormatter<Items> | undefined =>
   typeof value.sortByFormatted === 'function' ? value.sortByFormatted : value.formatter
 
+const getStringValue = (ob: Items, key: string): string => {
+  if (!isTableItem(ob)) return String(ob)
+
+  const sortField = computedFields.value.find((el) => {
+    if (isTableField<Items>(el)) return el.key === key
+
+    return false
+  })
+  const val = get(ob, key as keyof TableItem)
+  if (isTableField<Items>(sortField) && !!sortField.sortByFormatted) {
+    const formatter = getFormatter(sortField)
+    if (formatter) {
+      return String(formatItem(ob, String(sortField.key), formatter))
+    }
+  }
+  return typeof val === 'object' && val !== null ? JSON.stringify(val) : (val?.toString() ?? '')
+}
+
 const computedItems = computed<Items[]>(() => {
   // "undefined" values are set by us, we do this so we dont wipe out the comparer
   const sortByItems = sortByModel.value?.filter((el) => !!el.order)
@@ -691,29 +709,9 @@ const computedItems = computed<Items[]>(() => {
     return mappedItems.sort((a, b) => {
       for (let i = 0; i < sortByItems.length; i++) {
         const {key, comparer, order} = sortByItems[i]
-        const getStringValue = (ob: Items): string => {
-          if (!isTableItem(ob)) return String(ob)
-
-          const sortField = computedFields.value.find((el) => {
-            if (isTableField<Items>(el)) return el.key === key
-
-            return false
-          })
-          const val = get(ob, key as keyof TableItem)
-          if (isTableField<Items>(sortField) && !!sortField.sortByFormatted) {
-            const formatter = getFormatter(sortField)
-            if (formatter) {
-              return String(formatItem(ob, String(sortField.key), formatter))
-            }
-          }
-          return typeof val === 'object' && val !== null
-            ? JSON.stringify(val)
-            : (val?.toString() ?? '')
-        }
-
         const comparison = comparer
           ? comparer(a, b, key)
-          : getStringValue(a).localeCompare(getStringValue(b), undefined, {numeric: true})
+          : getStringValue(a, key).localeCompare(getStringValue(b, key), undefined, {numeric: true})
 
         if (comparison !== 0) {
           return order === 'asc' ? comparison : -comparison
@@ -831,14 +829,15 @@ const handleFieldSorting = (field: TableField<Items>) => {
    * @returns the updated value to emit for sorted
    */
   const handleMultiSort = (): BTableSortBy<Items> => {
-    sortByModel.value = sortByModel.value ?? []
+    const tmp = [...(sortByModel.value ?? [])]
     const val = updatedValue
     if (index === -1) {
-      sortByModel.value.push(val)
+      tmp.push(val)
     } else {
       val.order = resolveOrder(val.order)
-      sortByModel.value.splice(index, 1, val)
+      tmp.splice(index, 1, val)
     }
+    sortByModel.value = tmp
     return val
   }
 
@@ -900,7 +899,7 @@ const callItemsProvider = async () => {
 }
 
 const providerPropsWatch = async (prop: string, val: unknown, oldVal: unknown) => {
-  if (val === oldVal) return
+  if (deepEqual(val, oldVal)) return
 
   //stop provide when paging
   const inNoProvider = (key: NoProviderTypes) => props.noProvider?.includes(key) === true
@@ -1013,6 +1012,8 @@ defineExpose({
   // The row selection methods are really for compat. Users should probably use the v-model though
   ...exposedSelectableUtilities,
   items: computedItems,
+  displayItems: computedDisplayItems,
+  getStringValue,
   refresh: callItemsProvider,
 })
 </script>

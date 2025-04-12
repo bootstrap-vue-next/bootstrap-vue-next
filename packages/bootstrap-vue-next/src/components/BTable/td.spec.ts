@@ -75,36 +75,6 @@ describe('td', () => {
     expect(wrapper.classes()).not.toContain('table-b-table-default')
   })
 
-  it('has attr scope to be colspan when prop colspan', () => {
-    const wrapper = mount(BTd, {
-      props: {
-        colspan: '6',
-      },
-    })
-    expect(wrapper.attributes('scope')).toBe('colspan')
-  })
-
-  it('has attr scope to be rowspan when prop rowspan', () => {
-    const wrapper = mount(BTd, {
-      props: {
-        rowspan: '6',
-      },
-    })
-    expect(wrapper.attributes('scope')).toBe('rowspan')
-  })
-
-  it('has attr scope to be col by default', () => {
-    const wrapper = mount(BTd)
-    expect(wrapper.attributes('scope')).toBe('col')
-  })
-
-  it('has scope colspan when both rowspan and colspan', () => {
-    const wrapper = mount(BTd, {
-      props: {colspan: 6, rowspan: 5},
-    })
-    expect(wrapper.attributes('scope')).toBe('colspan')
-  })
-
   it('does not have a nested div by default when stackedHeading is undefined', () => {
     const wrapper = mount(BTd)
     const $div = wrapper.find('div')
