@@ -495,6 +495,23 @@ type TableItem<T = Record<string, unknown>> = T & {
 
 </BCard>
 
+## TableProvider
+
+```ts
+type MaybePromise<T> = Promise<T> | T
+
+type BTableProviderContext<T = unknown> = {
+  sortBy: BTableSortBy<T>[] | undefined
+  filter: string | undefined
+  currentPage: number
+  perPage: number
+}
+
+type BTableProvider<T> = (
+  context: Readonly<BTableProviderContext<T>>
+) => MaybePromise<T[] | undefined>
+```
+
 ## TableSortBy
 
 <BCard class="bg-body-tertiary">
