@@ -659,7 +659,7 @@ see the [sorting docs](/docs/components/table#sorting) for details
 The table prop `api-url` and the item provider function `ctx` parameter `apiUrl` field are both deperecdated
 as they are easily replaced by direct management of the api call by the user.
 
-The item provider no longer includes an optionnal callback parameter, use the async method of calling instead.
+The item provider no longer includes an optional callback parameter, use the async method of calling instead.
 
 ### Field Definitions
 
