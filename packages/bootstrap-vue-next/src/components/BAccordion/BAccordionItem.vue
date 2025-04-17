@@ -108,11 +108,13 @@ const modelValue = defineModel<Exclude<BAccordionItemProps['modelValue'], undefi
   default: false,
 })
 
-modelValue.value =
-  parentData?.openItem.value === computedId.value && !parentData?.initialAnimation.value
-
-if (modelValue.value && !parentData?.free.value) {
-  parentData?.setOpenItem(computedId.value)
+if (modelValue.value) {
+  if (!parentData?.free.value) {
+    parentData?.setOpenItem(computedId.value)
+  }
+} else {
+  modelValue.value =
+    parentData?.openItem.value === computedId.value && !parentData?.initialAnimation.value
 }
 
 onMounted(() => {
