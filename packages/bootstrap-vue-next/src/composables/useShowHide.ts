@@ -267,6 +267,7 @@ export const useShowHide = (
     }
     hideTimeout = setTimeout(
       () => {
+        if (!isMounted) return
         hideTimeout = undefined
         isLeaving.value = true
         showRef.value = false
