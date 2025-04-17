@@ -5,6 +5,7 @@ import {
   nextTick,
   onBeforeUnmount,
   onMounted,
+  onUnmounted,
   readonly,
   ref,
   type Ref,
@@ -109,7 +110,9 @@ export const useShowHide = (
   const computedNoAnimation = computed(
     () => props.noAnimation || props.noFade || localNoAnimation.value || false
   )
+  let isMounted = false
   onMounted(() => {
+    isMounted = true
     if (!props.show && initialShow) {
       // show without delay or animation
       const event = buildTriggerableEvent('show', {cancelable: true})
@@ -210,6 +213,7 @@ export const useShowHide = (
     requestAnimationFrame(() => {
       showTimeout = setTimeout(
         () => {
+          if (!isMounted) return
           showTimeout = undefined
           showRef.value = true
           options.showFn?.()
@@ -309,6 +313,13 @@ export const useShowHide = (
 
   onBeforeUnmount(() => {
     appRegistry?.unregister()
+  })
+  onUnmounted(() => {
+    isMounted = false
+    clearTimeout(showTimeout)
+    clearTimeout(hideTimeout)
+    showTimeout = undefined
+    hideTimeout = undefined
   })
 
   const lazyLoadCompleted = ref(false)
