@@ -296,6 +296,16 @@ type LinkTarget = '_self' | '_blank' | '_parent' | '_top'
 
 </BCard>
 
+## MaybePromise
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type MaybePromise<T> = Promise<T> | T
+```
+
+</BCard>
+
 ## Placement
 
 <BCard class="bg-body-tertiary">
@@ -498,8 +508,6 @@ type TableItem<T = Record<string, unknown>> = T & {
 ## TableProvider
 
 ```ts
-type MaybePromise<T> = Promise<T> | T
-
 type BTableProviderContext<T = unknown> = {
   sortBy: BTableSortBy<T>[] | undefined
   filter: string | undefined

@@ -649,17 +649,17 @@ The `filtered` event has a single argument `Items[]` rather than two arguments w
 
 ### Items Provider Functions
 
-In order to use an items provider, set the `provider` prop to a provider function and leave the
+To use an items provider, set the `provider` prop to a provider function and leave the
 `items` prop undefined (unlike in BootstrapVue, where the `items` prop was overloaded). See
 our [documentation](/docs/components/table#using-items-provider-functions) for details.
 
-The item provider function `ctx` parameter now contains `sortBy` array rather than `sortBy` and `sortDesc` fields -
+The items provider function `ctx` parameter now contains `sortBy` array rather than `sortBy` and `sortDesc` fields -
 see the [sorting docs](/docs/components/table#sorting) for details
 
-The table prop `api-url` and the item provider function `ctx` parameter `apiUrl` field are both deperecdated
+The table prop `api-url` and the items provider function `ctx` parameter `apiUrl` field are both deperecdated
 as they are easily replaced by direct management of the api call by the user.
 
-The item provider no longer includes an optional callback parameter, use the async method of calling instead.
+The items provider no longer includes an optional callback parameter, use the async method of calling instead.
 
 ### Field Definitions
 
