@@ -85,3 +85,4 @@ export {
   type DirectiveType,
 } from './BootstrapVueOptions'
 export type {ValidationState} from './CommonTypes'
+export type {MaybePromise} from './MaybePromise'
