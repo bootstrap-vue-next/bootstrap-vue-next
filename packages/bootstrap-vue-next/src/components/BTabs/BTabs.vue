@@ -115,7 +115,7 @@ const emit = defineEmits<{
   'click': [] // TODO click event is never used
 }>()
 
-defineSlots<{
+const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'default'?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -137,8 +137,38 @@ const ReusableEmptyTab = createReusableTemplate()
 
 const tabsInternal = ref<Ref<TabType>[]>([])
 
-const tabs = computed(() =>
-  tabsInternal.value.map((_tab) => {
+const tabs = computed(() => {
+  const tabElements = slots.default?.({}) || []
+  const tabElementsArray = (Array.isArray(tabElements) ? tabElements : [tabElements]).filter(
+    (tab) => tab.type.__name === 'BTab'
+  )
+  if (tabsInternal.value.length === 0) {
+    // fail back on the slot elements, the children haven't been registered yet
+    return tabElementsArray.map((tab, index) => {
+      const active = activeId.value ? tab.props.id === activeId.value : index === 0
+      return {
+        id: tab.props.id,
+        buttonId: tab.props.buttonId,
+        disabled: tab.props.disabled,
+        title: tab.props.title,
+        titleComponent: tab.ctx.slots.title,
+        titleItemClass: () => tab.props.titleItemClass,
+        titleLinkAttrs: () => tab.props.titleLinkAttrs,
+        titleLinkClass: () => tab.props.titleLinkClass,
+        onClick: tab.attrs?.onClick,
+        active,
+        navItemClasses: [
+          {
+            active,
+            disabled: tab.props.disabled,
+          },
+          active ? props.activeNavItemClass : props.inactiveNavItemClass,
+          props.navItemClass,
+        ],
+      }
+    })
+  }
+  return tabsInternal.value.map((_tab) => {
     const tab = unref(_tab)
     const active = tab.id === activeId.value
 
@@ -155,7 +185,7 @@ const tabs = computed(() =>
       ],
     }
   })
-)
+})
 
 const showEmpty = computed(() => !(tabs?.value && tabs.value.length > 0))
 

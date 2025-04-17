@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject, onMounted, onUnmounted, ref, useAttrs, useTemplateRef, watch} from 'vue'
+import {computed, inject, onUnmounted, ref, useAttrs, useTemplateRef, watch} from 'vue'
 import {useId} from '../../composables/useId'
 import {useDefaults} from '../../composables/useDefaults'
 import type {TabType} from '../../types/Tab'
@@ -81,13 +81,12 @@ const tab = computed(
     }) as TabType
 )
 
-onMounted(() => {
-  if (!parentData) return
+if (parentData) {
   parentData.registerTab(tab)
   if (activeModel.value) {
     parentData.activateTab(computedId.value)
   }
-})
+}
 
 onUnmounted(() => {
   if (!parentData) return
