@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.29.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.28.6...bootstrapvuenext-v0.29.0) (2025-04-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BOffcanvas:** remove nofocus prop and add more versitile focus prop
+* **BModal:** remove autofocus and autofocusButton props and add more versitile focus prop
+
+### Features
+
+* **BModal:** remove autofocus and autofocusButton props and add more versitile focus prop ([e6a89ef](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6a89efb6af359c19d93f70b257a0fb29e906bca))
+* **BModal:** return focus to previous element on close ([e6a89ef](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6a89efb6af359c19d93f70b257a0fb29e906bca))
+* **BOffcanvas:** remove nofocus prop and add more versitile focus prop ([e6a89ef](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6a89efb6af359c19d93f70b257a0fb29e906bca))
+* **BOffcanvas:** return focus to previous element on close ([e6a89ef](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6a89efb6af359c19d93f70b257a0fb29e906bca))
+
+
+### Bug Fixes
+
+* **BAccordionItem:** fix initial modelValue ([b72b8da](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b72b8da7e503c3395d0f2f4139d392268c0cc5bc))
+* **BModal:** set focus only once ([e6a89ef](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6a89efb6af359c19d93f70b257a0fb29e906bca))
+* **useShowHide:** don't run show if component already unmounted (ie. BPopover) ([269e8c1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/269e8c17ba2c262aa734acd2aac231f5ea433575))
+
 ## [0.28.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.28.5...bootstrapvuenext-v0.28.6) (2025-04-10)
 
 
