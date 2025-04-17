@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject, onUnmounted, ref, useAttrs, useTemplateRef, watch} from 'vue'
+import {computed, inject, onMounted, onUnmounted, ref, useAttrs, useTemplateRef, watch} from 'vue'
 import {useId} from '../../composables/useId'
 import {useDefaults} from '../../composables/useDefaults'
 import type {TabType} from '../../types/Tab'
@@ -87,6 +87,11 @@ if (parentData) {
     parentData.activateTab(computedId.value)
   }
 }
+
+onMounted(() => {
+  if (!parentData) return
+  parentData.sortTabs()
+})
 
 onUnmounted(() => {
   if (!parentData) return

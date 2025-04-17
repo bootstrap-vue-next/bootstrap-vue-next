@@ -303,6 +303,11 @@ const registerTab = (tab: Ref<TabType>) => {
   }
   tabsInternal.value.sort((a, b) => sortSlotElementsByPosition(a.value.el, b.value.el))
 }
+
+const sortTabs = () => {
+  tabsInternal.value.sort((a, b) => sortSlotElementsByPosition(a.value.el, b.value.el))
+}
+
 const unregisterTab = (id: string) => {
   tabsInternal.value = tabsInternal.value.filter((t) => t.value.id !== id)
 }
@@ -349,5 +354,6 @@ provide(tabsInjectionKey, {
     }
     activateTab(idx)
   },
+  sortTabs,
 })
 </script>
