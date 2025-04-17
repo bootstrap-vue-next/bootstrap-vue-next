@@ -81,12 +81,16 @@ const tab = computed(
     }) as TabType
 )
 
-onMounted(() => {
-  if (!parentData) return
+if (parentData) {
   parentData.registerTab(tab)
   if (activeModel.value) {
     parentData.activateTab(computedId.value)
   }
+}
+
+onMounted(() => {
+  if (!parentData) return
+  parentData.sortTabs()
 })
 
 onUnmounted(() => {
