@@ -1,6 +1,6 @@
 <template>
   <span :id="computedId + '_placeholder'" ref="_placeholder" style="display: none" />
-  <slot name="target" :show="show" :hide="hide" :toggle="toggle" :visible="showRef" />
+  <slot name="target" v-bind="sharedSlots" />
   <ConditionalTeleport
     :to="props.teleportTo"
     :disabled="!props.teleportTo || props.teleportDisabled"
@@ -13,7 +13,7 @@
       <div
         v-show="showRef && !hidden"
         :id="computedId"
-        v-bind="$attrs"
+        v-bind="attrs"
         ref="_element"
         :class="computedClasses"
         role="tooltip"
@@ -32,16 +32,14 @@
               class="position-sticky top-0"
               :class="props.tooltip ? 'tooltip-inner' : 'popover-header'"
             >
-              <slot name="title">
+              <slot name="title" v-bind="sharedSlots">
                 {{ props.title }}
               </slot>
             </div>
           </template>
           <template v-if="(props.tooltip && !slots.title && !props.title) || !props.tooltip">
             <div :class="props.tooltip ? 'tooltip-inner' : 'popover-body'">
-              <slot>
-                {{ props.content }}
-              </slot>
+              <slot v-bind="sharedSlots">{{ props.body }}{{ attrs.content }}</slot>
             </div>
           </template>
         </div>
@@ -80,6 +78,7 @@ import {
   ref,
   toRef,
   toValue,
+  useAttrs,
   useTemplateRef,
   watch,
 } from 'vue'
@@ -87,15 +86,25 @@ import {useDefaults} from '../../composables/useDefaults'
 import {useMouse} from '../../composables/useMouse'
 import {useId} from '../../composables/useId'
 import type {BPopoverProps} from '../../types/ComponentProps'
-import {BvTriggerableEvent} from '../../utils'
+import type {BPopoverEmits} from '../../types/ComponentEmits'
+import type {BPopoverSlots, ShowHideSlotsData} from '../../types/ComponentSlots'
 import {isBoundary, isRootBoundary, resolveBootstrapPlacement} from '../../utils/floatingUi'
 import {getElement} from '../../utils/getElement'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
-import {type showHideEmits, useShowHide} from '../../composables/useShowHide'
+import {useShowHide} from '../../composables/useShowHide'
 
 defineOptions({
   inheritAttrs: false,
 })
+
+const attrs = useAttrs()
+
+// TODO: deprication remove warning in 2025-06
+if (attrs.content)
+  // eslint-disable-next-line no-console
+  console.warn(
+    'BPopover/BTooltip: `content` prop is deprecated. Use prop body or default slot instead.'
+  )
 
 const _props = withDefaults(defineProps<Omit<BPopoverProps, 'modelValue'>>(), {
   boundary: 'clippingAncestors',
@@ -104,7 +113,7 @@ const _props = withDefaults(defineProps<Omit<BPopoverProps, 'modelValue'>>(), {
   closeOnHide: false,
   teleportTo: undefined,
   teleportDisabled: false,
-  content: undefined,
+  body: undefined,
   customClass: '',
   delay: () => ({show: 100, hide: 300}),
   floatingMiddleware: undefined,
@@ -137,28 +146,9 @@ const _props = withDefaults(defineProps<Omit<BPopoverProps, 'modelValue'>>(), {
 
 const props = useDefaults(_props, 'BPopover')
 
-const emit = defineEmits<
-  {
-    'pointerleave': [value: BvTriggerableEvent]
-    'blur': [value: BvTriggerableEvent]
-    'click-outside': [value: BvTriggerableEvent]
-    'close-on-hide': [value: BvTriggerableEvent]
-  } & showHideEmits
->()
+const emit = defineEmits<BPopoverEmits>()
 
-const slots = defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-  target?: (props: {
-    show: () => void
-    hide: (trigger?: string) => void
-    toggle: () => void
-    visible: boolean
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  title?: (props: Record<string, never>) => any
-}>()
+const slots = defineSlots<BPopoverSlots>()
 
 const modelValue = defineModel<Exclude<BPopoverProps['modelValue'], undefined>>({
   default: false,
@@ -309,6 +299,7 @@ const {
   transitionProps,
   contentShowing,
   isVisible,
+  isActive,
   renderRef,
   localTemporaryHide,
 } = useShowHide(modelValue, props, emit as EmitFn, element, computedId, {
@@ -409,6 +400,10 @@ const localToggle = (e: Event) => {
   }
 }
 
+const localShow = () => {
+  show()
+}
+
 const bind = () => {
   // TODO: is this the best way to bind the events?
   // we place a span and get the next element sibling for the listeners
@@ -441,18 +436,18 @@ const bind = () => {
     trigger.value.addEventListener('click', localToggle)
     return
   }
-  trigger.value.addEventListener('pointerenter', show)
+  trigger.value.addEventListener('pointerenter', localShow)
   trigger.value.addEventListener('pointerleave', tryHide)
-  trigger.value.addEventListener('focus', show)
+  trigger.value.addEventListener('focus', localShow)
   trigger.value.addEventListener('blur', tryHide)
 }
 
 const unbind = () => {
   if (trigger.value) {
     trigger.value.removeEventListener('click', localToggle)
-    trigger.value.removeEventListener('pointerenter', show)
+    trigger.value.removeEventListener('pointerenter', localShow)
     trigger.value.removeEventListener('pointerleave', tryHide)
-    trigger.value.removeEventListener('focus', show)
+    trigger.value.removeEventListener('focus', localShow)
     trigger.value.removeEventListener('blur', tryHide)
   }
 }
@@ -465,11 +460,20 @@ onClickOutside(
   {ignore: [trigger]}
 )
 
-watch([() => props.click, () => props.target, () => props.reference], () => {
+watch([() => props.click, () => props.manual, () => props.target, () => props.reference], () => {
   unbind()
   bind()
   // update()
 })
+
+const sharedSlots = computed<ShowHideSlotsData>(() => ({
+  toggle,
+  show,
+  hide,
+  id: computedId.value,
+  visible: isVisible.value,
+  active: isActive.value,
+}))
 
 onMounted(() => {
   bind()
