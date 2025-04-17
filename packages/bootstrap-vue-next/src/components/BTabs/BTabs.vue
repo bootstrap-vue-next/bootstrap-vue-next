@@ -81,6 +81,8 @@ import type {BTabsProps} from '../../types/ComponentProps'
 import {tabsInjectionKey} from '../../utils/keys'
 import {useDefaults} from '../../composables/useDefaults'
 import {sortSlotElementsByPosition} from '../../utils/dom'
+import {flattenFragments} from '../../utils/flattenFragments'
+import BTab from './BTab.vue'
 
 const _props = withDefaults(defineProps<Omit<BTabsProps, 'modelValue' | 'activeId'>>(), {
   activeNavItemClass: undefined,
@@ -138,29 +140,36 @@ const ReusableEmptyTab = createReusableTemplate()
 const tabsInternal = ref<Ref<TabType>[]>([])
 
 const tabs = computed(() => {
-  const tabElements = slots.default?.({}) || []
+  const tabElements = flattenFragments(slots.default?.({}))
   const tabElementsArray = (Array.isArray(tabElements) ? tabElements : [tabElements]).filter(
-    (tab) => tab.type.__name === 'BTab'
+    (tab) => tab.type === BTab
   )
+  console.log('tabElementsArray', tabElementsArray)
   if (tabsInternal.value.length === 0) {
     // fail back on the slot elements, the children haven't been registered yet
+    const activeIndex = tabElementsArray.findIndex(
+      (tab) =>
+        (tab.props?.active !== undefined &&
+          (tab.props.disabled === false || tab.props.disabled === undefined)) ||
+        (activeId.value && tab.props?.id === activeId.value)
+    )
     return tabElementsArray.map((tab, index) => {
-      const active = activeId.value ? tab.props.id === activeId.value : index === 0
+      const active = activeIndex !== -1 ? index === activeIndex : index === 0
       return {
-        id: tab.props.id,
-        buttonId: tab.props.buttonId,
-        disabled: tab.props.disabled,
-        title: tab.props.title,
-        titleComponent: tab.ctx.slots.title,
-        titleItemClass: () => tab.props.titleItemClass,
-        titleLinkAttrs: () => tab.props.titleLinkAttrs,
-        titleLinkClass: () => tab.props.titleLinkClass,
-        onClick: tab.attrs?.onClick,
+        id: tab.props?.id,
+        buttonId: tab.props?.buttonId,
+        disabled: tab.props?.disabled,
+        title: tab.props?.title,
+        titleComponent: (tab.children as {title: unknown})?.title,
+        titleItemClass: () => tab.props?.titleItemClass,
+        titleLinkAttrs: () => tab.props?.titleLinkAttrs,
+        titleLinkClass: () => tab.props?.titleLinkClass,
+        onClick: tab.props?.onClick,
         active,
         navItemClasses: [
           {
             active,
-            disabled: tab.props.disabled,
+            disabled: !(tab.props?.disabled === false || tab.props?.disabled === undefined),
           },
           active ? props.activeNavItemClass : props.inactiveNavItemClass,
           props.navItemClass,
@@ -302,6 +311,7 @@ const registerTab = (tab: Ref<TabType>) => {
     tabsInternal.value[tabsInternal.value.findIndex((t) => t.value.id === tab.value.id)] = tab
   }
   tabsInternal.value.sort((a, b) => sortSlotElementsByPosition(a.value.el, b.value.el))
+  findActive()
 }
 
 const sortTabs = () => {
