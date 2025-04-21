@@ -466,6 +466,25 @@ describe('pagination', () => {
 
     expect(await TestScenariosAgainstInvariants(wrapper)).toBe(0)
   })
+  it('can navigate to different pages using the left and right arrow keys', async () => {
+    const wrapper = mount(BPagination, {
+      props: {totalRows: 7, perPage: 1, modelValue: 1},
+      attachTo: document.body,
+    })
+    await wrapper.find('li.active > button').element?.focus()
+    expect(document.activeElement?.textContent).toBe('1')
+    await wrapper.find('ul').trigger('keydown', {code: 'ArrowRight'})
+    expect(document.activeElement?.textContent).toBe('2')
+    await wrapper.find('ul').trigger('keydown', {code: 'ArrowRight'})
+    expect(document.activeElement?.textContent).toBe('3')
+    await wrapper.find('ul').trigger('keydown', {code: 'ArrowRight'})
+    expect(document.activeElement?.textContent).toBe('4')
+    await wrapper.find('button[aria-posinset="4"]').trigger('click')
+    await wrapper.find('ul').trigger('keydown', {code: 'ArrowRight'})
+    expect(document.activeElement?.textContent).toBe('5')
+    await wrapper.find('ul').trigger('keydown', {code: 'ArrowLeft'})
+    expect(document.activeElement?.textContent).toBe('4')
+  })
 })
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
