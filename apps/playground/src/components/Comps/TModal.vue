@@ -67,7 +67,7 @@ import {computed, h, onMounted, ref} from 'vue'
 import {
   BModal,
   type ColorVariant,
-  // type OrchestratedModal,
+  type OrchestratedModal,
   useModalController,
 } from 'bootstrap-vue-next'
 
@@ -78,9 +78,7 @@ const showModal3 = ref(false)
 const noClose = ref(true)
 const isModalVisible = ref(false)
 
-// TODO: This should be ref<OrchestratedModal>, but it's not working
-// const firstRef = ref<OrchestratedModal>({
-const firstRef = ref({
+const firstRef = ref<OrchestratedModal>({
   body: `${Math.random()}`,
   title: 'foobar',
 })

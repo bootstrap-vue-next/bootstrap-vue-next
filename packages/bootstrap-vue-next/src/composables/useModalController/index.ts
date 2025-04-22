@@ -81,7 +81,7 @@ export const useModalController = () => {
       }
     }
     if (registry?.value) {
-      for (const [, modal] of registry?.value.entries()) {
+      for (const [, modal] of registry?.value.entries() ?? []) {
         if (toValue(modal.exposed?.id) === id) {
           return {
             modal,

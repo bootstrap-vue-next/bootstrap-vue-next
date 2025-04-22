@@ -32,7 +32,7 @@ const {hide} = useToggle()
 </HighlightCard>
 
 You can also provide an id to get particular component and show/hide it. Currently, we do not support using CSS selector to
-find modal since the component in lazy mode may not render at page initial. If the modal component does not exist and you attempt to call any of the exposed methods the methods will safely ignore
+find modal since the component in lazy mode may not render at page initial. If the modal component does not exist and you attempt to call any of the exposed methods, the methods will safely no-op without throwing errors.
 
 <HighlightCard>
 <BButton @click="show()">Click me</BButton>

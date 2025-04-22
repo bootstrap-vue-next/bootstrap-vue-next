@@ -91,13 +91,14 @@ export const popoverPlugin: Plugin = {
           if (!item) return
           item.promise.stop?.()
           if (item.modelValue) {
-            await new Promise(async (resolve) => {
+            await new Promise((resolve) => {
               item.modelValue = false
               item['onHidden'] = () => {
                 resolve(undefined)
               }
-              await nextTick()
-              item['onUpdate:modelValue']?.(false)
+              nextTick(() => {
+                item['onUpdate:modelValue']?.(false)
+              })
             })
           }
           store.value.delete(_id)
