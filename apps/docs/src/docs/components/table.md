@@ -53,15 +53,8 @@ defines the supported optional item record modifier properties
 
 <<< DEMO ./demo/TableCellVariants.vue
 
-`items` can also be a reference to a _provider_ function, which returns an `Array` of items data.
-Provider functions can also be asynchronous:
-
-- By returning `null` (or `undefined`) and calling a callback, when the data is ready, with the data
-  array as the only argument to the callback,
-- By returning a `Promise` that resolves to an array.
-
-See the ["Using Items Provider functions"](#using-items-provider-functions) section below for more
-details.
+A provider function can be provided instead of setting `items` to return items syncronously or asyncronously.
+See the ["Using Items Provider functions"](#using-items-provider-functions) section below for more details.
 
 ### Table item notes and warnings
 
@@ -836,22 +829,47 @@ Setting the prop `filter` to null or an empty string will clear local items filt
 
 ## Pagination
 
-To Be Completed
+`<BTable>` supports built in pagination of item data. You can control how many rows are displayed
+at a time by setting the `per-page` prop to the maximum number of rows you would like displayed, and
+use the `current-page` prop to specify which page to display (starting from page `1`). If you set
+`current-page` to a value larger than the computed number of pages, then no rows will be shown.
+
+You can use the [`<BPagination>`](/docs/components/pagination) component in conjunction with
+`<BTable>` for providing control over pagination.
 
 ## Using items provider functions
 
-To Be Completed
+As mentioned under the [Items](#items-record-data) prop section, it is possible to use a function to
+provide the row data (items) by specifying a function reference via the `provider` prop and leaving
+the `items` prop undefined.
 
-Below are trimmed down versions of the [complete example](#complete-example) as a starting place for using provider functions until docs for the provider function are completed. They use local provider functions that implement
-sorting and filtering. Note that sorting is done in cooperation with `<BTable>` by having the
+::: info NOTE
+If both the `provider` and `items` props are set, the `provider` will be used and `items` will be ignored.
+:::
+
+The provider function is called with the following signature:
+
+<<< FRAGMENT ./demo/TableProvider.ts#snippet{ts}
+
+The `ctx` is the context object associated with the table state, and contains the following
+properties:
+
+| Property      | Type                             | Description                                                                       |
+| ------------- | -------------------------------- | --------------------------------------------------------------------------------- |
+| `currentPage` | `number`                         | The current page number (starting from 1, the value of the `current-page` prop)   |
+| `perPage`     | `number`                         | The maximum number of rows per page to display (the value of the `per-page` prop) |
+| `filter`      | `string \| undefined`            | The value of the `filter` prop                                                    |
+| `sortBy`      | `BTableSortBy<T>[] \| undefined` | The current column key being sorted, or an empty string if not sorting            |
+
+Below are trimmed down versions of the [complete example](#complete-example) as a starting place for using provider functions. They use local provider functions that implement sorting and filtering. Note that sorting is done in cooperation with `<BTable>` by having the
 provider function react to the `context.sortBy` array that it is passed, while filtering is done
 entirely by the provider, which manually forces a refresh of the table when the filter is changed.
 
-This version uses a syncronous provider funtion:
+Example using a syncronous provider function:
 
 <<< DEMO ./demo/TableProvider.vue
 
-This version uses an asyncronous provider function that simulates latency by sleeping for a second:
+Example using an asyncronous provider function that simulates latency by sleeping for a second:
 
 <<< DEMO ./demo/TableProviderAsync.vue
 
