@@ -89,13 +89,14 @@ export const toastPlugin: Plugin = {
           if (!toast) return
           toast.promise.stop?.()
           if (toast.modelValue) {
-            await new Promise(async (resolve) => {
+            await new Promise((resolve) => {
               toast.modelValue = false
               toast['onHidden'] = () => {
                 resolve(undefined)
               }
-              await nextTick()
-              toast['onUpdate:modelValue']?.(false)
+              nextTick(() => {
+                toast['onUpdate:modelValue']?.(false)
+              })
             })
           }
           toasts.value.splice(
