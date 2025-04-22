@@ -140,11 +140,10 @@ const ReusableEmptyTab = createReusableTemplate()
 const tabsInternal = ref<Ref<TabType>[]>([])
 
 const tabs = computed(() => {
-  const tabElements = flattenFragments(slots.default?.({}))
+  const tabElements = flattenFragments(slots.default?.({}) ?? [])
   const tabElementsArray = (Array.isArray(tabElements) ? tabElements : [tabElements]).filter(
     (tab) => tab.type === BTab
   )
-  console.log('tabElementsArray', tabElementsArray)
   if (tabsInternal.value.length === 0) {
     // fail back on the slot elements, the children haven't been registered yet
     const activeIndex = tabElementsArray.findIndex(
@@ -317,6 +316,7 @@ const registerTab = (tab: Ref<TabType>) => {
 
 const sortTabs = () => {
   tabsInternal.value.sort((a, b) => sortSlotElementsByPosition(a.value.el, b.value.el))
+  findActive()
 }
 
 const unregisterTab = (id: string) => {
