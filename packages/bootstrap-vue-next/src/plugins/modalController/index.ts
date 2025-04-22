@@ -147,7 +147,7 @@ export const modalControllerPlugin: Plugin = {
 
           if (newValue.props) {
             Object.assign(v, newValue.props)
-            delete newValue.props
+            newValue.props = undefined
           }
           for (const key in newValue) {
             if (key.startsWith('on')) {
@@ -196,12 +196,12 @@ export const modalControllerPlugin: Plugin = {
     }
 
     /*
-     * @deprecated
+     * @deprecated use create().show() instead
      */
     const show = (obj: ModalOrchestratorCreateParam = {}): PromiseWithModalBoolean =>
       create(obj, {returnBoolean: true}).show() as PromiseWithModalBoolean
     /*
-     * @deprecated
+     * @deprecated use create().show() instead
      */
     const confirm = (obj: ModalOrchestratorCreateParam = {}): PromiseWithModalBoolean =>
       create(obj, {returnBoolean: true}).show() as PromiseWithModalBoolean

@@ -149,11 +149,11 @@ export const toastPlugin: Plugin = {
           }
           if (newValue.props) {
             Object.assign(v, newValue.props)
-            delete newValue.props
+            newValue.props = undefined
           }
           if (newValue.pos) {
             v.position = newValue.pos
-            delete newValue.pos
+            newValue.pos = undefined
           }
           for (const key in newValue) {
             if (key.startsWith('on')) {

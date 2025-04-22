@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, h, onMounted, ref} from 'vue'
+import {computed, h, onMounted, ref, toValue} from 'vue'
 import {
   BModal,
   type ColorVariant,
@@ -112,7 +112,7 @@ const showFns = {
     show(
       computed(() => ({
         ...firstRef.value,
-        okVariant: (Number.parseInt(firstRef.value.body?.charAt(2) ?? '0') % 2 === 0
+        okVariant: (Number.parseInt((toValue(firstRef.value.body) ?? '').charAt(2) ?? '0') % 2 === 0
           ? 'danger'
           : 'info') as ColorVariant,
       }))

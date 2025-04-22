@@ -34,8 +34,8 @@ To use the tooltip, simply wrap your target element with the `<BTooltip>` compon
 
 ## Differences with Popover
 
-the delay is zero, hideMargin is 0, and it noninteractive by default. You can override these properties if needed.
-`BTooltip` has a interactive prop, which allows you to set the tooltip to be interactive. This means that the tooltip will remain open when the mouse is over it or focus is in it, allowing users to interact with its content.
+The delay is zero, hideMargin is 0, and it is noninteractive by default. You can override these properties if needed.
+`BTooltip` has an interactive prop, which allows you to set the tooltip to be interactive. This means that the tooltip will remain open when the mouse is over it or focus is in it, allowing users to interact with its content.
 
 <HighlightCard>
 <BTooltip interactive>
