@@ -11,6 +11,6 @@ export interface TabType {
   titleItemClass?: () => ClassValue
   titleLinkAttrs?: () => Record<string, unknown>
   titleLinkClass?: () => ClassValue
-  onClick?: (event: Event) => void
+  onClick?: () => (event: Event) => void
   el: HTMLElement | null
 }

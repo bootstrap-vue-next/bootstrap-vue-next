@@ -76,7 +76,7 @@ const tab = computed(
       titleItemClass: () => props.titleItemClass,
       titleLinkAttrs: () => props.titleLinkAttrs,
       titleLinkClass: () => props.titleLinkClass,
-      onClick: attrs.onClick,
+      onClick: () => attrs.onClick,
       el: el.value,
     }) as TabType
 )

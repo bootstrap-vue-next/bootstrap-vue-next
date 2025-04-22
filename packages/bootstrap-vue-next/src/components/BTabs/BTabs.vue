@@ -243,9 +243,10 @@ const handleClick = (event: Readonly<MouseEvent>, index: number) => {
     index >= 0 &&
     !tabs.value[index].disabled &&
     tabs.value[index]?.onClick &&
-    typeof tabs.value[index].onClick === 'function'
+    typeof tabs.value[index].onClick === 'function' &&
+    typeof tabs.value[index].onClick() === 'function'
   ) {
-    tabs.value[index].onClick?.(event)
+    tabs.value[index].onClick?.()(event)
   }
 }
 
