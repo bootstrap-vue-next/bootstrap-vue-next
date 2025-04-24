@@ -116,8 +116,7 @@ export const toastPlugin: Plugin = {
     }
 
     /**
-     * @returns {ControllerKey} If `id` is passed to props, it will use that id, otherwise, a symbol will be created that corresponds to its unique id.
-     * You can pass this id to the hide function to force a Toast to hide
+     * @returns {PromiseWithToast} Returns a promise object with methods to control the toast (show, hide, toggle, get, set, destroy)
      */
     const create = (
       obj: ToastOrchestratorCreateParam = {},

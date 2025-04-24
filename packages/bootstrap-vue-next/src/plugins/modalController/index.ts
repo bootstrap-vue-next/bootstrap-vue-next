@@ -112,6 +112,9 @@ export const modalControllerPlugin: Plugin = {
       }
     }
 
+    /**
+     * @returns {PromiseWithModal}  Returns a promise object with methods to control the modal (show, hide, toggle, get, set, destroy)
+     */
     const create = (
       obj: ModalOrchestratorCreateParam = {},
       options: ModalOrchestratorCreateOptions = {}

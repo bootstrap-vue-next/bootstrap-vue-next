@@ -115,6 +115,12 @@ export const popoverPlugin: Plugin = {
       }
     }
 
+    /**
+     * Create a popover or tooltip
+     * @param obj The popover or tooltip props
+     * @param tooltip If true, create a tooltip, otherwise create a popover
+     * @returns {PromiseWithPopover} A promise object with methods to control the popover (show, hide, toggle, get, set, destroy)
+     */
     const create = (obj: PopoverOrchestratorCreateParam, tooltip?: boolean): PromiseWithPopover => {
       if (!_isOrchestratorInstalled.value) {
         throw new Error(
