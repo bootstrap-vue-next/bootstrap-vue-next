@@ -251,7 +251,7 @@ export default {
 
     const tableLiteEmits = [
       {
-        event: 'headClicked',
+        event: 'head-clicked',
         description:
           "Emitted when a header or footer cell is clicked. Not applicable for 'custom-foot' slot",
         args: [
@@ -278,27 +278,27 @@ export default {
         ],
       },
       {
-        event: 'rowClicked',
+        event: 'row-clicked',
         description: 'Emitted when a row is clicked',
         args: tableRowEventArgs('being clicked'),
       },
       {
-        event: 'rowClicked',
+        event: 'row-contextmenu',
         description: 'Emitted when a context menu is displayed for a row',
         args: tableRowEventArgs('showing the context menu'),
       },
       {
-        event: 'rowDblclicked',
+        event: 'row-dblclicked',
         description: 'Emitted when a row is double clicked',
         args: tableRowEventArgs('being double clicked'),
       },
       {
-        event: 'rowHovered',
+        event: 'row-hovered',
         description: 'Emitted when a row is hovered',
         args: tableRowEventArgs('being hovered'),
       },
       {
-        event: 'rowUnhovered',
+        event: 'row-unhovered',
         description: 'Emitted when a row is unhovered',
         args: tableRowEventArgs('being unhovered'),
       },
@@ -683,7 +683,7 @@ export default {
               {
                 arg: 'value',
                 type: 'Items[]',
-                description: 'Array of items diplayed in the table',
+                description: 'Array of items displayed in the table',
               },
             ],
           },
@@ -699,7 +699,7 @@ export default {
             ],
           },
           {
-            event: 'rowSelected',
+            event: 'row-selected',
             description: 'Emitted when a row or rows have been selected',
             args: [
               {
@@ -710,7 +710,7 @@ export default {
             ],
           },
           {
-            event: 'rowUnselected',
+            event: 'row-unselected',
             description: 'Emitted when a row or rows have been unselected',
             args: [
               {
@@ -777,7 +777,7 @@ export default {
             ],
           },
           {
-            name: 'emptyfiltered',
+            name: 'empty-filtered',
             description:
               'Content to display when no items are present in the filtered `items` array. Optionally scoped',
             scope: [
@@ -875,7 +875,7 @@ export default {
               type: 'boolean',
               default: false,
               description:
-                'If this will be a sticky colum. Must be set on all cells in this column. table must be in sticky-header or responsive mode to work',
+                'If this will be a sticky column. Must be set on all cells in this column. Table must be in sticky-header or responsive mode to work',
             },
             ...pick(buildCommonProps(), ['variant']),
           } satisfies Record<keyof BvnComponentProps['BTd'], PropertyReference>,

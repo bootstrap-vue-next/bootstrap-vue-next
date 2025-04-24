@@ -622,7 +622,7 @@ The slot `emptyfiltered` has been renamed to `empty-filtered` for consistency.
 
 The following are <NotYetImplemented/> -
 
-- `filter-debounce`, `fixed`, `no-border-collapse`, `selected-variant`, `table-footer-sorting` props
+- The `filter-debounce`, `fixed`, `no-border-collapse`, `selected-variant`, and `table-footer-sorting` props
 - The `filter` prop does not yet support a RegEx object, only a string.
 - The `table-colgroup` slot
 - The `context-changed` and `refreshed` events
@@ -630,13 +630,13 @@ The following are <NotYetImplemented/> -
 `filter-included-fields` have been replaced by a single `filterable` prop. `filter-ignored-fields`
 is deprecated.
 
-`no-sort-reset` is deprecated. Use `must-sort`. By default sortability can be reset by clicking (3) times [asc => desc => undefined => asc...]
+`no-sort-reset` is deprecated. Use `must-sort`. By default, sortability can be reset by clicking (3) times [asc => desc => undefined => asc...]
 
 `selected-variant` has been renamed to `selection-variant` for internal consistency.
 
 `sort-compare` and `sort-direction` are deprecated, use the `sortBy` prop (or model) as documented [here](/docs/components/table#sorting) instead.
 
-Similarly the `sort-changed` event is replaced by the `update:sortBy` event
+Similarly, the `sort-changed` event is replaced by the `update:sortBy` event
 
 `table-variant` is replaced with `variant` for consistency.
 
