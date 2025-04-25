@@ -177,7 +177,8 @@ watch(
       value &&
       !['polite', 'assertive', 'off'].includes(value)
     ) {
-      console.warn(
+      emit(
+        'warning',
         `BFormTags: feedbackAriaLive must be 'polite', 'assertive', or 'off', received: ${value}`
       )
     }
