@@ -97,7 +97,7 @@
           </div>
         </li>
       </ul>
-      <div aria-live="polite" aria-atomic="true">
+      <div :aria-live="props.feedbackAriaLive" aria-atomic="true">
         <div v-if="isInvalid" class="d-block invalid-feedback">
           {{ props.invalidTagText }}: {{ inputValue }}
         </div>
@@ -123,7 +123,7 @@
 
 <script setup lang="ts">
 import {onKeyStroke, syncRef, useFocus, useToNumber} from '@vueuse/core'
-import {computed, ref, useTemplateRef} from 'vue'
+import {computed, ref, useTemplateRef, watch} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BFormTagsProps} from '../../types/ComponentProps'
 import {escapeRegExpChars} from '../../utils/stringUtils'
@@ -164,8 +164,26 @@ const _props = withDefaults(defineProps<Omit<BFormTagsProps, 'modelValue'>>(), {
   tagRemovedLabel: 'Tag removed',
   tagValidator: () => true,
   tagVariant: 'secondary',
+  feedbackAriaLive: 'assertive', // New prop
 })
 const props = useDefaults(_props, 'BFormTags')
+
+// Runtime validation for feedbackAriaLive
+watch(
+  () => props.feedbackAriaLive,
+  (value) => {
+    if (
+      process.env.NODE_ENV === 'development' &&
+      value &&
+      !['polite', 'assertive', 'off'].includes(value)
+    ) {
+      console.warn(
+        `BFormTags: feedbackAriaLive must be 'polite', 'assertive', or 'off', received: ${value}`
+      )
+    }
+  },
+  {immediate: true}
+)
 
 const emit = defineEmits<{
   'blur': [value: FocusEvent]

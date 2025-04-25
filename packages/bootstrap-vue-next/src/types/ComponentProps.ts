@@ -460,6 +460,7 @@ export interface BFormTagsProps {
   tagRemovedLabel?: string
   tagValidator?: (t: string) => boolean
   tagVariant?: ColorVariant | null
+  feedbackAriaLive?: 'polite' | 'assertive' | 'off' // New prop
 }
 
 export interface BFormTextareaProps extends CommonInputProps {
