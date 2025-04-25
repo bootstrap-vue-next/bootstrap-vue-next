@@ -359,7 +359,7 @@ const getButtons = (): HTMLButtonElement[] =>
 
       const bcr = el.getBoundingClientRect()
 
-      return true || !!(bcr && bcr.height > 0 && bcr.width > 0)
+      return !!(bcr && bcr.height > 0 && bcr.width > 0)
     })
     ?.map((el) => el as HTMLButtonElement)
 
