@@ -382,6 +382,42 @@ describe('modal', () => {
     wrapper.unmount()
   })
 
+  it('fallback element is added when no focusable elements are present', async () => {
+    const wrapper = mount(BModal, {
+      attachTo: document.body,
+      global: {
+        stubs: {teleport: true, transition: false},
+      },
+      props: {
+        noHeader: true,
+        noFooter: true,
+      },
+    })
+    await nextTick()
+
+    expect(wrapper.find('div.modal div.modal-fallback-focus').exists()).toBe(true)
+
+    wrapper.unmount()
+  })
+
+  it('fallback element is not added when a focusable element is present', async () => {
+    const wrapper = mount(BModal, {
+      attachTo: document.body,
+      global: {
+        stubs: {teleport: true},
+      },
+      props: {
+        noHeader: false,
+        noFooter: false,
+      },
+    })
+    await nextTick()
+
+    expect(wrapper.find('div.modal div.modal-fallback-focus').exists()).toBe(false)
+
+    wrapper.unmount()
+  })
+
   describe('button and event functionality', () => {
     it('header close button triggers modal close and is preventable', async () => {
       let cancelHide = true
@@ -400,7 +436,7 @@ describe('modal', () => {
           },
         },
       })
-
+      await nextTick()
       expect(wrapper.vm).toBeDefined()
 
       let $modal = wrapper.find('div.modal')
@@ -460,7 +496,7 @@ describe('modal', () => {
           },
         },
       })
-
+      await nextTick()
       expect(wrapper.vm).toBeDefined()
 
       let $modal = wrapper.find('div.modal')

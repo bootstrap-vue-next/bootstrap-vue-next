@@ -161,11 +161,6 @@ export const commonProps = () =>
       default: undefined,
       description: 'CSS class (or classes) to apply to the footer',
     },
-    footerHtml: {
-      type: 'string',
-      default: "''",
-      description: 'HTML string content to place in the footer',
-    },
     footerTag: {
       type: 'string',
       default: 'div',
@@ -212,11 +207,6 @@ export const commonProps = () =>
       default: undefined,
       description: 'CSS class (or classes) to apply to the header',
     },
-    headerHtml: {
-      type: 'string',
-      default: "''",
-      description: 'HTML string content to place in the header',
-    },
     headerTag: {
       type: 'string',
       default: 'div',
@@ -231,12 +221,6 @@ export const commonProps = () =>
       type: 'ColorVariant | null',
       default: undefined,
       description: 'Applies one of the Bootstrap theme color variants to the header',
-    },
-    htmlField: {
-      type: 'string',
-      default: 'html',
-      description:
-        'Field name in the `options` array that should be used for the html label instead of text field',
     },
     id: {
       type: 'string',
@@ -264,6 +248,31 @@ export const commonProps = () =>
       type: 'string',
       default: undefined,
       description: 'Sets the value of the `name` attribute on the form control',
+    },
+    noBackdrop: {
+      type: 'boolean',
+      default: false,
+      description: 'Disables rendering of the backdrop',
+    },
+    noEllipsis: {
+      type: 'boolean',
+      default: false,
+      description: 'Do not show ellipsis buttons',
+    },
+    noGotoEndButtons: {
+      type: 'boolean',
+      default: false,
+      description: 'Hides the go to first and go to last page buttons',
+    },
+    noHeader: {
+      type: 'boolean',
+      default: false,
+      description: 'Disables rendering of the  header',
+    },
+    noHeaderClose: {
+      type: 'boolean',
+      default: false,
+      description: 'Disables rendering of the header close button',
     },
     noHoverPause: {
       type: 'boolean',
@@ -358,7 +367,7 @@ export const commonProps = () =>
       description: 'URL to set for the `src` attribute',
     },
     state: {
-      type: 'boolean | null',
+      type: 'ValidationState',
       default: undefined,
       description:
         'Controls the validation state appearance of the component. `true` for valid, `false` for invalid, or `null` for no validation state',

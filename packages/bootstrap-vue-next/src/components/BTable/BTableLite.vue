@@ -1,31 +1,12 @@
 <template>
-  <BTableSimple
-    :id="props.id"
-    :bordered="props.bordered"
-    :borderless="props.borderless"
-    :border-variant="props.borderVariant"
-    :caption-top="props.captionTop"
-    :dark="props.dark"
-    :fixed="props.fixed"
-    :hover="props.hover"
-    :no-border-collapse="props.noBorderCollapse"
-    :outlined="props.outlined"
-    :responsive="props.responsive"
-    :small="props.small"
-    :stacked="props.stacked"
-    :sticky-header="props.stickyHeader"
-    :striped="props.striped"
-    :table-class="computedTableClasses"
-    :variant="props.variant"
-    :striped-columns="props.stripedColumns"
-  >
+  <BTableSimple v-bind="computedSimpleProps">
     <BThead v-show="showComputedHeaders" :variant="props.headVariant" :class="props.theadClass">
       <slot name="thead-top" :columns="computedFieldsTotal" :fields="computedFields" />
       <BTr :variant="props.headRowVariant" :class="props.theadTrClass">
         <BTh
           v-for="field in computedFields"
           :key="field.key"
-          scope="col"
+          :scope="field.scope"
           :class="getFieldColumnClasses(field)"
           :title="field.headerTitle"
           :variant="field.variant"
@@ -82,9 +63,18 @@
 
         <template
           v-for="(item, itemIndex) in props.items"
-          :key="props.primaryKey ? get(item, props.primaryKey) : itemIndex"
+          :key="
+            props.primaryKey && get(item, props.primaryKey)
+              ? get(item, props.primaryKey)
+              : itemIndex
+          "
         >
           <BTr
+            :id="
+              props.primaryKey && get(item, props.primaryKey)
+                ? generateTableRowId(get(item, props.primaryKey))
+                : undefined
+            "
             :class="getRowClasses(item, 'row')"
             :variant="isTableItem(item) ? item._rowVariant : undefined"
             v-bind="callTbodyTrAttrs(item, 'row')"
@@ -164,7 +154,10 @@
       </slot>
     </BTbody>
     <BTfoot v-if="props.footClone" v-bind="footerProps">
-      <BTr :variant="props.footRowVariant" :class="props.tfootTrClass">
+      <BTr
+        :variant="props.footRowVariant ?? props.headRowVariant"
+        :class="props.tfootTrClass ?? props.theadTrClass"
+      >
         <BTh
           v-for="field in computedFields"
           :key="field.key"
@@ -180,15 +173,12 @@
           <div class="d-inline-flex flex-nowrap align-items-center gap-1">
             <div>
               <!-- eslint-disable prettier/prettier -->
+              <!-- @vue-expect-error - typescript is generating 2322 errors for all properties after name, which is wrong -->
               <slot
-                :name="
-                  slots[`foot(${String(field.key)})`]
-                    ? (`foot(${String(field.key)})` as 'foot()')
-                    : 'foot()'
-                "
+                :name="calculatedFooterSlot(field.key)"
                 :label="field.label"
-                :column="field.key as LiteralUnion<keyof Items>"
-                :field="field"
+                :column="field.key"
+                :field="field as LiteralUnion<keyof Items>"
                 :is-foot="true"
               >
                 <!-- eslint-enable prettier/prettier -->
@@ -235,12 +225,13 @@ import BTh from './BTh.vue'
 import BThead from './BThead.vue'
 import BTr from './BTr.vue'
 import {useDefaults} from '../../composables/useDefaults'
-import {get} from '../../utils/object'
-import {getTableFieldHeadLabel} from '../../utils/getTableFieldHeadLabel'
+import {get, pick} from '../../utils/object'
+import {btableSimpleProps, getDataLabelAttr, getTableFieldHeadLabel} from '../../utils/tableUtils'
 import {formatItem} from '../../utils/formatItem'
 import {filterEvent} from '../../utils/filterEvent'
 import {startCase} from '../../utils/stringUtils'
 import type {LiteralUnion} from '../../types/LiteralUnion'
+import {useId} from '../../composables/useId'
 
 const _props = withDefaults(defineProps<BTableLiteProps<Items>>(), {
   caption: undefined,
@@ -365,6 +356,8 @@ const slots = defineSlots<{
   'table-caption'?: (props: Record<string, never>) => any
 }>()
 
+const computedId = useId(() => props.id)
+
 const generateDetailsItem = (item: TableItem): [object, boolean | undefined] => [
   item,
   item._showDetails,
@@ -391,13 +384,13 @@ const computedTableClasses = computed(() => [
 const computedFields = computed<(TableField<Items> & {_noHeader?: true})[]>(() => {
   if (!props.fields.length && props.items.length) {
     const [firstItem] = props.items
-    if (isTableItem(firstItem) || Array.isArray(firstItem)) {
+    if (firstItem && (isTableItem(firstItem) || Array.isArray(firstItem))) {
       return Object.keys(firstItem).map((k) => {
         const label = startCase(k)
         return {
           key: k,
           label,
-          tdAttr: props.stacked === true ? {'data-label': label} : undefined,
+          tdAttr: getDataLabelAttr(props, label),
         }
       })
     }
@@ -408,19 +401,17 @@ const computedFields = computed<(TableField<Items> & {_noHeader?: true})[]>(() =
 
   return props.fields.map((f) => {
     if (isTableField(f)) {
+      const label = f.label ?? startCase(f.key as string)
       return {
         ...(f as TableField<Items>),
-        tdAttr:
-          props.stacked === true
-            ? {'data-label': startCase(f.key as string), ...f.tdAttr}
-            : f.tdAttr,
+        tdAttr: {...getDataLabelAttr(props, label), ...f.tdAttr},
       }
     }
     const label = startCase(f as string)
     return {
       key: f as string,
       label,
-      tdAttr: props.stacked === true ? {'data-label': label} : undefined,
+      tdAttr: getDataLabelAttr(props, label),
     }
   })
 })
@@ -435,9 +426,18 @@ const showComputedHeaders = computed(() => {
 })
 
 const footerProps = computed(() => ({
-  variant: props.footVariant,
-  class: props.tfootClass,
+  variant: props.footVariant ?? props.headVariant,
+  class: props.tfootClass ?? props.theadClass,
 }))
+
+const calculatedFooterSlot = (key: LiteralUnion<keyof Items>): keyof typeof slots =>
+  slots[`foot(${String(key)})`]
+    ? `foot(${String(key)})`
+    : slots['foot()']
+      ? 'foot()'
+      : slots[`head(${String(key)})`]
+        ? `head(${String(key)})`
+        : 'head()'
 
 const itemAttributes = (item: Items, fieldKey: string, attr?: unknown) => {
   const val = get(item, fieldKey)
@@ -509,4 +509,13 @@ const getRowClasses = (item: Items | null, type: TableRowType) =>
       ? props.tbodyTrClass(item, type)
       : props.tbodyTrClass
     : null
+
+const generateTableRowId = (primaryKeyValue: string) =>
+  `${computedId.value}__row_${primaryKeyValue}`
+
+const computedSimpleProps = computed(() => ({
+  ...pick(props, btableSimpleProps),
+  tableClass: computedTableClasses.value,
+  id: computedId.value,
+}))
 </script>

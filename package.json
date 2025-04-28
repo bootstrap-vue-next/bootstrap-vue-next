@@ -15,6 +15,10 @@
       "url": "https://github.com/cdmoro"
     },
     {
+      "name": "David W. Gray",
+      "url": "https://github.com/dwgray"
+    },
+    {
       "name": "Issayah",
       "url": "https://github.com/VividLemon"
     },
@@ -31,7 +35,9 @@
     "prepare": "husky && turbo run build",
     "dev": "turbo run dev --parallel",
     "build": "turbo run build",
+    "build-only": "turbo run build-only",
     "lint": "turbo run lint",
+    "type-check": "turbo run type-check",
     "test:lint": "turbo run test:lint",
     "test:unit": "turbo run test:unit",
     "test:coverage": "turbo run test:coverage",
@@ -42,12 +48,12 @@
   },
   "devDependencies": {
     "husky": "^9.1.7",
-    "lint-staged": "^15.2.10",
+    "lint-staged": "^15.5.0",
     "turbo": "latest"
   },
   "engines": {
     "npm": ">=10.0.0",
     "node": ">=22.0.0"
   },
-  "packageManager": "pnpm@9.12.2"
+  "packageManager": "pnpm@10.8.0"
 }

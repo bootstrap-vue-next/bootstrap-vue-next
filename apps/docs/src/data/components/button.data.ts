@@ -1,5 +1,5 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 import {linkProps, linkTo} from '../../utils/link-props'
 
@@ -7,6 +7,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BButton',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.btn'},
       sourcePath: '/BButton/BButton.vue',
       props: {
         '': {
@@ -114,6 +115,7 @@ export default {
     },
     {
       component: 'BCloseButton',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.btn-close'},
       sourcePath: '/BButton/BCloseButton.vue',
       props: {
         '': {
@@ -146,7 +148,6 @@ export default {
           ],
         },
       ],
-      slots: [],
     },
   ],
 }

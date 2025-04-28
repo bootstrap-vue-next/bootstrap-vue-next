@@ -1,13 +1,5 @@
 # Introduction
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
-
-[[toc]]
-
-  </Teleport>
-</ClientOnly>
-
 <div class="lead mb-5">
 
 With BootstrapVueNext you can build fast, responsive, and ARIA accessible projects on the web using Vue.js and Bootstrap v5.
@@ -81,6 +73,12 @@ import OpenCollectiveMemberDisplay from './components/OpenCollectiveMemberDispla
 const globalData = inject(appInfoKey, {
   discordUrl: '',
   githubUrl: '',
+  githubPackageDirectory: '',
+  githubComponentsDirectory: '',
+  githubComposablesDirectory: '',
+  githubMainBranch: '',
+  githubDirectivesDirectory: '',
   opencollectiveUrl: '',
+  githubDocsDirectory: '',
 })
 </script>

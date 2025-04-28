@@ -1,16 +1,10 @@
 # Form File
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
-<div class="lead mb-5">
+<PageHeader>
 
 File input control that supports single and multiple file modes
 
-</div>
+</PageHeader>
 
 <BAlert :model-value="true" variant="danger">
 The current variation is subject to change pre v1.0. The implementation may change to become closer to the Bootstrap-vue implementation based on feedback <BLink target="_blank" href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/discussions/1213" rel="noopener">vote here</BLink>
@@ -231,7 +225,6 @@ The BFormFile exposes functions to control the component: `focus(), blur(), rese
 <script setup lang="ts">
 import {data} from '../../data/components/formFile.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BFormFile, BAlert, BLink} from 'bootstrap-vue-next'
 import {ref} from 'vue'

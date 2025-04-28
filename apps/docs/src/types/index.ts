@@ -29,8 +29,22 @@ export interface PropertyReference {
  */
 type PropsRecord = Record<string, Record<string, PropertyReference> & {_linkTo?: PropertyReference}>
 
+export enum StyleKind {
+  BootstrapClass = 'BOOTSTRAP-CLASS',
+  BsvnClass = 'BSVN-CLASS',
+  OverrideClass = 'OVERRIDE-CLASS',
+  Tag = 'TAG',
+  None = 'NONE',
+}
+
+export interface StyleSpec {
+  kind: StyleKind
+  value?: string
+}
+
 export interface ComponentReference {
   component: string
+  styleSpec?: StyleSpec
   /**
    * Use package directory relative links. ex: BAccordion.vue => /BAccordion/BAccordion.vue (slash required)
    *
@@ -53,4 +67,30 @@ export interface ComponentReference {
 
 export type MappedComponentReference = Omit<ComponentReference, 'props'> & {
   props: {name: string; linkTo?: string; ref: (PropertyReference & {prop: string})[]}[]
+}
+
+export type CollectiveMembersResponse = {
+  MemberId: number
+  createdAt: string
+  type: string
+  role: string
+  tier: string
+  isActive: boolean
+  totalAmountDonated: number
+  currency: string
+  lastTransactionAt: string
+  lastTransactionAmount: number
+  profile: string
+  name: string
+  company: null | null
+  description: string | null
+  image: string | null
+  email: null | string
+  twitter: null | string
+  github: string | null
+  website: null | string
+}
+
+export type CollectivePartialResponse = {
+  members: CollectiveMembersResponse[]
 }

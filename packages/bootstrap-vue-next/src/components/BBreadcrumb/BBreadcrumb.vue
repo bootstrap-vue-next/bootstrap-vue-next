@@ -1,5 +1,5 @@
 <template>
-  <nav aria-label="breadcrumb">
+  <nav :id="props.id" aria-label="breadcrumb">
     <ol class="breadcrumb">
       <slot name="prepend" />
       <BBreadcrumbItem v-for="(item, i) in breadcrumbItemObjects" :key="i" v-bind="item">
@@ -19,7 +19,7 @@ import type {BBreadcrumbProps} from '../../types/ComponentProps'
 import BBreadcrumbItem from './BBreadcrumbItem.vue'
 import type {BreadcrumbItem} from '../../types/BreadcrumbTypes'
 
-const _props = withDefaults(defineProps<BBreadcrumbProps>(), {items: undefined})
+const _props = withDefaults(defineProps<BBreadcrumbProps>(), {items: undefined, id: undefined})
 const props = useDefaults(_props, 'BBreadcrumb')
 
 defineSlots<{
@@ -31,7 +31,7 @@ defineSlots<{
   prepend?: (props: Record<string, never>) => any
 }>()
 
-const breadcrumb = useBreadcrumb()
+const breadcrumb = useBreadcrumb(() => props.id || null)
 
 const breadcrumbItemObjects = computed<BreadcrumbItem[]>(() => {
   const localItems = props.items || breadcrumb.items?.value || []

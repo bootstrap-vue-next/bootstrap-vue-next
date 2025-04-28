@@ -1,5 +1,5 @@
+import {withBvnPrefix} from '../utils/keys'
 import {computed, type ComputedRef, type MaybeRefOrGetter, toValue, useId as vueUseId} from 'vue'
-import {withBvnPrefix} from '../utils/withBvnPrefix'
 
 export const useId = (
   id?: MaybeRefOrGetter<string | undefined>,

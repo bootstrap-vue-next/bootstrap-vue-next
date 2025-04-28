@@ -65,11 +65,23 @@
 </template>
 
 <script setup lang="ts">
-import {data as OpenCollectiveData} from '../data/opencollective.data'
+import {type CollectiveMembersResponse, type CollectivePartialResponse} from '../types'
+// @ts-expect-error - Vitepress isn't correctly mocking the type in this case
+import {data} from '../data/opencollective.data'
+
+const OpenCollectiveData = data as CollectivePartialResponse
 
 const filteredKeys = ['HOST', 'FOLLOWER']
+const roleNames = ['ADMIN', 'CONTRIBUTOR', 'BACKER'] as const
+type RoleNames = (typeof roleNames)[number]
+
+type RoleGroups = Record<RoleNames, CollectiveMembersResponse[]>
 const filteredMembers = OpenCollectiveData.members.filter((el) => !filteredKeys.includes(el.role))
-const groupedCollectiveMembers = Object.groupBy(filteredMembers, (el) => el.role)
+const groupedCollectiveMembers: RoleGroups = {
+  ...Object.fromEntries(roleNames.map((role) => [role, []])),
+  ...Object.groupBy(filteredMembers, (el) => el.role),
+} as RoleGroups
+
 /**
  * Profiles are used because for some reason MemberIds are not the same between roles?
  */
@@ -96,22 +108,33 @@ const inactiveFinancialBackers = groupedCollectiveMembers.BACKER.filter((el) => 
   const lastTransactionDate = new Date(el.lastTransactionAt)
   return lastTransactionDate < oneYearAgo && lastTransactionDate >= twoYearsAgo
 })
-// Grouping active financial backers by tier
-const groupedActiveFinancialBackers = Object.groupBy(activeFinancialBackers, (el) => el.tier)
 
-/**
- * The priority of the tiers
- */
-const sortTiers = [
+// Grouping active financial backers by tier
+
+const tierNames = [
   'Platinum Sponsor',
   'Gold Sponsor',
   'Silver Sponsor',
   'Bronze Sponsor',
   'Sponsor',
   'Backer',
-].filter((el) =>
+] as const
+
+type TierNames = (typeof tierNames)[number]
+
+type BackerGroups = Partial<Record<TierNames, CollectiveMembersResponse[]>>
+
+const groupedActiveFinancialBackers: BackerGroups = Object.groupBy(
+  activeFinancialBackers,
+  (el) => el.tier
+)
+
+/**
+ * The priority of the tiers
+ */
+const sortTiers = tierNames.filter((el) =>
   Object.keys(groupedActiveFinancialBackers)
     .map((v) => v.toLowerCase())
     .includes(el.toLowerCase())
-)
+) as (keyof BackerGroups)[]
 </script>

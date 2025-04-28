@@ -52,6 +52,7 @@ import type {RadiusElementExtendables} from './RadiusElement'
 import type {SpinnerType} from './SpinnerType'
 import type {PlaceholderAnimation, PlaceholderSize} from './PlaceholderTypes'
 import type {ButtonType} from './ButtonType'
+import type {LinkOpacity, UnderlineOffset, UnderlineOpacity} from './LinkDecorators'
 import type {LiteralUnion} from './LiteralUnion'
 import type {BreadcrumbItemRaw} from './BreadcrumbTypes'
 import type {TransitionMode} from './TransitionMode'
@@ -63,6 +64,7 @@ import type {
   TableFieldRaw,
   TableRowType,
   TableStrictClassValue,
+  TableThScope,
 } from './TableTypes'
 import type {PopoverPlacement} from './PopoverPlacement'
 import type {InputType} from './InputType'
@@ -75,11 +77,15 @@ export interface BLinkProps {
   href?: string
   icon?: boolean
   noRel?: boolean
-  // noPrefetch?: boolean
-  opacity?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
-  opacityHover?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
-  // prefetch?: boolean
-  // prefetchedClass?: ClassValue
+  opacity?: LinkOpacity
+  opacityHover?: LinkOpacity
+  prefetch?: boolean
+  prefetchOn?: Partial<{
+    visibility: boolean
+    interaction: boolean
+  }>
+  noPrefetch?: boolean
+  prefetchedClass?: ClassValue
   rel?: string
   replace?: boolean
   routerComponentName?: string
@@ -87,10 +93,10 @@ export interface BLinkProps {
   stretched?: boolean
   target?: LinkTarget
   to?: RouteLocationRaw
-  underlineOffset?: 1 | 2 | 3 | '1' | '2' | '3'
-  underlineOffsetHover?: 1 | 2 | 3 | '1' | '2' | '3'
-  underlineOpacity?: 0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'
-  underlineOpacityHover?: 0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'
+  underlineOffset?: UnderlineOffset
+  underlineOffsetHover?: UnderlineOffset
+  underlineOpacity?: UnderlineOpacity
+  underlineOpacityHover?: UnderlineOpacity
   underlineVariant?: ColorVariant | null
   variant?: ColorVariant | null
 }
@@ -115,6 +121,28 @@ export interface BAccordionProps {
   lazy?: boolean
   modelValue?: string
   unmountLazy?: boolean
+}
+
+export interface BAccordionItemProps {
+  bodyAttrs?: Readonly<AttrsValue>
+  bodyClass?: ClassValue
+  buttonAttrs?: Readonly<AttrsValue>
+  buttonClass?: ClassValue
+  collapseClass?: ClassValue
+  headerAttrs?: Readonly<AttrsValue>
+  headerClass?: ClassValue
+  headerTag?: string
+  horizontal?: boolean
+  id?: string
+  isNav?: boolean
+  modelValue?: boolean
+  lazy?: boolean
+  unmountLazy?: boolean
+  tag?: string
+  title?: string
+  show?: boolean
+  visible?: boolean
+  wrapperAttrs?: Readonly<AttrsValue>
 }
 
 export interface BDropdownDividerProps {
@@ -534,6 +562,13 @@ export interface BOffcanvasProps extends TeleporterProps, ShowHideProps {
   bodyAttrs?: Readonly<AttrsValue>
   bodyClass?: ClassValue
   bodyScrolling?: boolean
+  focus?:
+    | 'close'
+    | boolean
+    | string
+    | Readonly<ComponentPublicInstance>
+    | Readonly<HTMLElement>
+    | null
   footerClass?: string
   headerClass?: string
   headerCloseClass?: ClassValue
@@ -543,7 +578,6 @@ export interface BOffcanvasProps extends TeleporterProps, ShowHideProps {
   modelValue?: boolean
   noCloseOnBackdrop?: boolean
   noCloseOnEsc?: boolean
-  noFocus?: boolean
   noHeader?: boolean
   noTrap?: boolean
   noHeaderClose?: boolean
@@ -709,12 +743,13 @@ export interface BTabsProps {
   navItemClass?: ClassValue
   navWrapperClass?: ClassValue
   noFade?: boolean
-  // noKeyNav?: boolean,
+  noKeyNav?: boolean
   noNavStyle?: boolean
   pills?: boolean
   small?: boolean
   tag?: string
   tabClass?: ClassValue
+  underline?: boolean
   vertical?: boolean
 }
 
@@ -744,28 +779,6 @@ export interface BSpinnerProps {
   tag?: string
   type?: SpinnerType
   variant?: ColorVariant | null
-}
-
-export interface BAccordionItemProps {
-  bodyAttrs?: Readonly<AttrsValue>
-  bodyClass?: ClassValue
-  buttonAttrs?: Readonly<AttrsValue>
-  buttonClass?: ClassValue
-  collapseClass?: ClassValue
-  headerAttrs?: Readonly<AttrsValue>
-  headerClass?: ClassValue
-  headerTag?: string
-  horizontal?: boolean
-  id?: string
-  isNav?: boolean
-  modelValue?: boolean
-  lazy?: boolean
-  unmountLazy?: boolean
-  tag?: string
-  title?: string
-  show?: boolean
-  visible?: boolean
-  wrapperAttrs?: Readonly<AttrsValue>
 }
 
 export interface BAlertProps {
@@ -820,6 +833,7 @@ export interface BBadgeProps extends Omit<BLinkProps, 'routerTag'>, ColorExtenda
 
 export interface BBreadcrumbProps {
   items?: readonly BreadcrumbItemRaw[]
+  id?: string
 }
 
 export interface BBreadcrumbItemProps extends Omit<BLinkProps, 'routerTag'> {
@@ -1074,7 +1088,7 @@ export interface BTableProps<Items> extends Omit<BTableLiteProps<Items>, 'tableC
   noProviderPaging?: boolean
   noProviderSorting?: boolean
   noProviderFiltering?: boolean
-  sortBy?: BTableSortBy[]
+  sortBy?: BTableSortBy<Items>[]
   mustSort?: boolean | string[] // TODO this is a string of fields, possibly generic
   selectable?: boolean
   multisort?: boolean
@@ -1087,14 +1101,12 @@ export interface BTableProps<Items> extends Omit<BTableLiteProps<Items>, 'tableC
   perPage?: Numberish
   currentPage?: Numberish
   filter?: string
+  filterFunction?: (item: Readonly<Items>, filter: string | undefined) => boolean
   filterable?: readonly string[]
   // TODO
   // apiUrl?: string
-  // filterFunction?: () => any
   // filterIgnoredFields?: any[]
   // filterIncludedFields?: any[]
-  // headRowVariant?: ColorVariant | null
-  // headVariant?: ColorVariant | null
   // labelSortAsc?: string
   // labelSortClear?: string
   // labelSortDesc?: string
@@ -1103,7 +1115,6 @@ export interface BTableProps<Items> extends Omit<BTableLiteProps<Items>, 'tableC
   noSelectOnClick?: boolean
   // selectedVariant?: ColorVariant | null
   // showEmpty?: boolean
-  // sortDirection?: 'asc' | 'desc' | 'last'
   // sortIconLeft?: boolean
   // sortNullLast?: boolean
   selectedItems?: readonly Items[]
@@ -1143,6 +1154,7 @@ export interface BThProps {
   stackedHeading?: string
   stickyColumn?: boolean
   variant?: ColorVariant | null
+  scope?: TableThScope
 }
 
 export interface BProgressBarProps extends ColorExtendables {
@@ -1278,8 +1290,15 @@ export interface BCardHeadFootProps extends ColorExtendables {
 }
 
 export interface BModalProps extends TeleporterProps, ShowHideProps {
-  autofocus?: boolean
-  autofocusButton?: 'ok' | 'cancel' | 'close'
+  focus?:
+    | 'ok'
+    | 'cancel'
+    | 'close'
+    | boolean
+    | string
+    | Readonly<ComponentPublicInstance>
+    | Readonly<HTMLElement>
+    | null
   backdropFirst?: boolean
   body?: string
   bodyAttrs?: Readonly<AttrsValue>

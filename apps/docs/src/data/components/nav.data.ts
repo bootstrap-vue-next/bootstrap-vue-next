@@ -1,5 +1,5 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 import {
   buildCommonProps,
   dropdownEmits,
@@ -83,10 +83,23 @@ export default {
     },
     {
       component: 'BNavForm',
+      styleSpec: {kind: StyleKind.Tag, value: 'li > form'},
       sourcePath: '/BNav/BNavForm.vue',
       props: {
         '': {
-          ...pick(buildCommonProps(), ['floating', 'id', 'novalidate', 'role', 'validated']),
+          formClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: 'CSS class (or classes) to add to the form element',
+          },
+          ...pick(buildCommonProps(), [
+            'floating',
+            'id',
+            'novalidate',
+            'role',
+            'validated',
+            'wrapperAttrs',
+          ]),
         } satisfies Record<keyof BvnComponentProps['BNavForm'], PropertyReference>,
       },
       emits: [
@@ -150,6 +163,10 @@ export default {
       ],
       slots: [
         {
+          name: 'after',
+          description: 'Content to place after the nav item link (useful for nested navs)',
+        },
+        {
           name: 'default',
           description: 'Content to place in the nav item',
         },
@@ -157,6 +174,7 @@ export default {
     },
     {
       component: 'BNavItemDropdown',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.nav-item.dropdown'},
       sourcePath: '/BNav/BNavItemDropdown.vue',
       props: {
         '': dropdownProps,
@@ -166,6 +184,7 @@ export default {
     },
     {
       component: 'BNavText',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.navbar-text'},
       sourcePath: '/BNav/BNavText.vue',
       props: {
         '': {

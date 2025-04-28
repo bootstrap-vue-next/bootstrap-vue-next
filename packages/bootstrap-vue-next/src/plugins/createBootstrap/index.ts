@@ -1,5 +1,5 @@
 import type {Plugin} from 'vue'
-import type {BootstrapVueOptions} from '../../types/BootstrapVueOptions'
+import type {BootstrapVueOptions, BvnComponents} from '../../types/BootstrapVueOptions'
 
 import '../../styles/styles.scss'
 
@@ -10,7 +10,7 @@ import {modalManagerPlugin} from '../modalManager'
 import {popoverPlugin} from '../popoverController'
 import {rtlPlugin} from '../rtl'
 import {toastPlugin} from '../toastController'
-import {collapsePlugin} from '../collapse'
+import {showHidePlugin} from '../showHide'
 
 // Main app plugin
 export const createBootstrap = (pluginData: Readonly<BootstrapVueOptions> = {}): Plugin => ({
@@ -33,7 +33,12 @@ export const createBootstrap = (pluginData: Readonly<BootstrapVueOptions> = {}):
     if (pluginData.popover ?? true === true) {
       app.use(popoverPlugin)
     }
-    app.use(collapsePlugin)
+    app.use(showHidePlugin)
     app.use(bootstrapPlugin, pluginData)
   },
 })
+
+declare module 'vue' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+  interface GlobalComponents extends BvnComponents {}
+}

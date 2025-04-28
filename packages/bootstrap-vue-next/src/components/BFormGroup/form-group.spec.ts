@@ -413,5 +413,29 @@ describe('form-group', () => {
       await nextTick()
       expect(wrapper.get('label').attributes('for')).toBe('spam and eggs')
     })
+
+    describe('sub input to receive state of parent', () => {
+      it('sub input should receive state of parent', async () => {
+        const wrapper = mount(BFormGroup, {
+          props: {label: 'foo', labelFor: 'spam and eggs', state: true},
+          slots: {
+            default: h(BFormInput, {id: 'foobar', state: undefined}),
+          },
+        })
+        await nextTick()
+        expect(wrapper.get('#foobar').classes()).toContain('is-valid')
+      })
+
+      it('sub input explicit prop state should override parent state', async () => {
+        const wrapper = mount(BFormGroup, {
+          props: {label: 'foo', labelFor: 'spam and eggs', state: true},
+          slots: {
+            default: h(BFormInput, {id: 'foobar', state: null}),
+          },
+        })
+        await nextTick()
+        expect(wrapper.get('#foobar').classes()).not.toContain('is-valid')
+      })
+    })
   })
 })

@@ -1,16 +1,10 @@
 # Toast
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
-<div class="lead mb-5">
+<PageHeader>
 
 Push notifications to your visitors with `BToast` and `BToastOrchestrator`. These are components that are easily customizable for generating alert messages
 
-</div>
+</PageHeader>
 
 Toasts are lightweight notifications designed to mimic the push notifications that have been popularized by mobile and desktop operating systems. Toasts are intended to be small interruptions to your visitors or users and therefore should contain minimal, to-the-point, non-interactive content. Please refer to the Accessibility Tips section below for important usage information
 
@@ -246,7 +240,6 @@ If you just need a single simple message to appear along the bottom or top of th
 <script setup lang="ts">
 import {data} from '../../data/components/toast.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import {BButtonGroup, BButton, BToast, useToastController} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {ref, h, onMounted} from 'vue'

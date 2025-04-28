@@ -1,6 +1,6 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {ComponentReference, PropertyReference, SlotScopeReference} from '../../types'
-import {showHideProps} from '../../utils'
+import {buildCommonProps, pick, showHideProps} from '../../utils'
 
 const sharedSlots: SlotScopeReference[] = [
   {
@@ -42,16 +42,11 @@ export default {
       sourcePath: '/BModal/BModal.vue',
       props: {
         '': {
-          autofocus: {
-            type: 'boolean',
-            default: true,
-            description: "When set to 'false', disables auto focusing the modal when opened",
-          },
-          autofocusButton: {
-            type: "'ok' | 'cancel' | 'close'",
+          focus: {
+            type: "'ok' | 'cancel' | 'close' | string | ComponentPublicInstance | HTMLElement | null",
             default: undefined,
             description:
-              "Specify which built-in button to focus once the modal opens: 'ok', 'cancel', or 'close'",
+              "Specify where to focus once modal opens. Can be built-in button: 'ok', 'cancel', or 'close'. Can be ref, HTMLElement, id or selector string. If set to 'false', no focus will be set (if noTrap isn't set the focus trap will focus the modal element or failback element). If set to a string, the element with that id will be focused. If set to a ComponentPublicInstance, the $el property of the instance will be focused.",
           },
           backdropFirst: {
             type: 'boolean',
@@ -209,31 +204,10 @@ export default {
             description:
               'Applies one of the Bootstrap theme color variants to the header (this takes priority over headerBgVariant and headerTextVariant)',
           },
-          noBackdrop: {
-            type: 'boolean',
-            default: false,
-            description: 'Disables rendering of the modal backdrop',
-          },
           noFooter: {
             type: 'boolean',
             default: false,
             description: 'Disables rendering of the modal footer',
-          },
-          noHeader: {
-            type: 'boolean',
-            default: false,
-            description: 'Disables rendering of the modal header',
-          },
-          noHeaderClose: {
-            type: 'boolean',
-            default: false,
-            description: 'Disables rendering of the modal header close button',
-          },
-          id: {
-            type: 'string',
-            default: undefined,
-            description:
-              "Used to set the 'id' attribute on the rendered content, and used as the base to generate any additional element IDs as needed",
           },
           modalClass: {
             type: 'ClassValue',
@@ -321,6 +295,7 @@ export default {
             description: 'Specify the HTML tag to render instead of the default tag for the title',
           },
           ...showHideProps,
+          ...pick(buildCommonProps(), ['id', 'noBackdrop', 'noHeader', 'noHeaderClose']),
         } satisfies Record<keyof BvnComponentProps['BModal'], PropertyReference>,
       },
       emits: [

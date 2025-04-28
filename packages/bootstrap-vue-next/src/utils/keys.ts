@@ -1,7 +1,7 @@
 import type {ComponentInternalInstance, ComputedRef, InjectionKey, Ref} from 'vue'
 import type {TabType} from '../types/Tab'
 import type {ClassValue} from '../types/AnyValuedAttributes'
-import type {Numberish} from '../types/CommonTypes'
+import type {Numberish, ValidationState} from '../types/CommonTypes'
 import type {LiteralUnion} from '../types/LiteralUnion'
 import type {Size} from '../types/Size'
 import type {RadiusElement} from '../types/RadiusElement'
@@ -26,7 +26,13 @@ import type {
   TooltipOrchestratorShowParam,
 } from '../types/ComponentOrchestratorTypes'
 import type {BvnComponentProps} from '../types/BootstrapVueOptions'
-import {withBvnPrefix} from './withBvnPrefix'
+
+export const genericBvnPrefix = 'BootstrapVueNext__'
+
+export const withBvnPrefix = (value: string, suffix: string = '') => {
+  const suffixWithTrail = `${suffix}___`
+  return `${genericBvnPrefix}ID__${value}__${suffix ? suffixWithTrail : ''}`
+}
 
 const createBvnInjectionKey = (name: string) => withBvnPrefix(name) as unknown as symbol // Type cast to symbol, these should be static
 const createBvnPluginInjectionKey = (name: string) =>
@@ -99,7 +105,7 @@ export const checkboxGroupKey: InjectionKey<{
   buttonVariant: Readonly<Ref<ButtonVariant | null>>
   form: Readonly<Ref<string | undefined>>
   name: Readonly<Ref<string>>
-  state: Readonly<Ref<boolean | undefined | null>>
+  state: Readonly<Ref<ValidationState | undefined>>
   plain: Readonly<Ref<boolean>>
   size: Readonly<Ref<Size>>
   inline: Readonly<Ref<boolean>>
@@ -115,7 +121,7 @@ export const radioGroupKey: InjectionKey<{
   form: Readonly<Ref<string | undefined>>
   name: Readonly<Ref<string>>
   buttons: Readonly<Ref<boolean>>
-  state: Readonly<Ref<boolean | undefined | null>>
+  state: Readonly<Ref<ValidationState | undefined>>
   plain: Readonly<Ref<boolean>>
   size: Readonly<Ref<Size>>
   inline: Readonly<Ref<boolean>>
@@ -134,15 +140,27 @@ export const collapseInjectionKey: InjectionKey<{
   isNav?: Readonly<Ref<boolean>>
 }> = createBvnInjectionKey('collapse')
 
-export type RegisterCollapseFnInput = {id: string; value: Ref<boolean>; toggle: () => void}
-export interface RegisterCollapseValue {
-  (input: RegisterCollapseFnInput): {
+// Show/Hide components
+export type RegisterShowHideFnInput = {
+  id: string
+  value: Ref<boolean>
+  toggle: () => void
+  show: () => void
+  hide: (trigger?: string) => void
+}
+export interface RegisterShowHideValue {
+  (input: RegisterShowHideFnInput): {
     unregister: () => void
   }
-  map: Readonly<Record<string, {value: boolean; toggle: () => void}>>
+  map: Readonly<
+    Record<
+      string,
+      {value: boolean; toggle: () => void; show: () => void; hide: (trigger?: string) => void}
+    >
+  >
 }
-export const globalCollapseStorageInjectionKey: InjectionKey<RegisterCollapseValue> =
-  createBvnPluginInjectionKey('globalCollapseStorage')
+export const globalShowHideStorageInjectionKey: InjectionKey<RegisterShowHideValue> =
+  createBvnPluginInjectionKey('globalShowHideStorage')
 
 export const dropdownInjectionKey: InjectionKey<{
   id?: Readonly<Ref<string>>
@@ -163,9 +181,10 @@ export const rtlPluginKey: InjectionKey<{
   locale: Ref<string | undefined>
 }> = createBvnPluginInjectionKey('rtl')
 
+export const breadcrumbGlobalIndexKey = `${genericBvnPrefix}global_breadcrumb`
 export const breadcrumbPluginKey: InjectionKey<{
-  items: Ref<BreadcrumbItemRaw[]>
-  reset: () => void
+  items: Ref<Record<string, BreadcrumbItemRaw[]>>
+  reset: (key?: string) => void
 }> = createBvnPluginInjectionKey('breadcrumbPlugin')
 
 export const modalManagerPluginKey: InjectionKey<{
@@ -212,9 +231,8 @@ export const popoverPluginKey: InjectionKey<{
   removeTooltip: (self: ControllerKey) => void
 }> = createBvnPluginInjectionKey('popover')
 
-/**
- * Automatically use a "for" attribute on label elements for its associated input
- * Works on BFormInput & Textarea
- */
-export const formGroupPluginKey: InjectionKey<(id: Ref<string>) => void> =
-  createBvnInjectionKey('formGroupPlugin')
+export const formGroupPluginKey: InjectionKey<
+  (id: Ref<string>) => {
+    state: Readonly<Ref<ValidationState | undefined>>
+  }
+> = createBvnInjectionKey('formGroupPlugin')

@@ -1,11 +1,12 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 import {showHideProps} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BOffcanvas',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.offcanvas[-*]'},
       sourcePath: '/BOffcanvas/BOffcanvas.vue',
       props: {
         '': {
@@ -26,6 +27,12 @@ export default {
           bodyScrolling: {
             type: 'boolean',
             default: false,
+          },
+          focus: {
+            type: "'ok' | 'cancel' | 'close' | string | ComponentPublicInstance | HTMLElement | null",
+            default: undefined,
+            description:
+              "Specify where to focus once offcanvas opens. Can be built-in button 'close'. Can be ref, HTMLElement, id or selector string. If set to 'false', no focus will be set (if noTrap isn't set the focus trap will focus the modal element or failback element). If set to a string, the element with that id will be focused. If set to a ComponentPublicInstance, the $el property of the instance will be focused.",
           },
           footerClass: {
             type: 'string',
@@ -60,10 +67,6 @@ export default {
             default: false,
           },
           noCloseOnEsc: {
-            type: 'boolean',
-            default: false,
-          },
-          noFocus: {
             type: 'boolean',
             default: false,
           },
@@ -120,6 +123,22 @@ export default {
               type: 'boolean',
             },
           ],
+        },
+        {
+          event: 'breakpoint',
+          args: [
+            {
+              arg: 'value',
+              type: 'BvTriggerableEvent',
+              description: 'The event',
+            },
+            {
+              arg: 'opened',
+              type: 'boolean',
+              description: 'Whether or not the offcanvas is above the breakpoint and is open by it',
+            },
+          ],
+          description: "Emitted when the offcanvas' breakpoint state changes",
         },
         {
           args: [

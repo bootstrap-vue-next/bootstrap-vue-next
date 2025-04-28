@@ -1,5 +1,5 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 
 export default {
@@ -65,10 +65,20 @@ export default {
             default: true,
             description: 'Enable keyboard navigation with the right and left arrow keys',
           },
+          labelIndicators: {
+            type: 'string',
+            default: 'Select a slide to display',
+            description: 'Set the aria-label for the indicators',
+          },
           modelValue: {
             type: 'number',
             default: 0,
             description: 'The index of the currently active slide',
+          },
+          noAnimation: {
+            type: 'boolean',
+            default: false,
+            description: 'When set, disables the animation',
           },
           noHoverPause: {
             type: 'boolean',
@@ -141,7 +151,7 @@ export default {
           ],
         },
         {
-          event: 'click:prev',
+          event: 'prev-click',
           description: '',
           args: [
             {
@@ -152,7 +162,7 @@ export default {
           ],
         },
         {
-          event: 'click:next',
+          event: 'next-click',
           description: '',
           args: [
             {
@@ -172,6 +182,7 @@ export default {
     },
     {
       component: 'BCarouselSlide',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.carousel-item'},
       sourcePath: '/BCarousel/BCarouselSlide.vue',
       emits: [],
       props: {

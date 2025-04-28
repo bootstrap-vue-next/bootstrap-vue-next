@@ -1,11 +1,35 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
+
+const optionSlot = {
+  name: 'option',
+  description:
+    'Use this slot to have finer control over the content render inside each select item',
+  scope: [
+    {
+      prop: 'value',
+      type: 'any (T)',
+      description: 'The value of the option',
+    },
+    {
+      prop: 'text',
+      type: 'string',
+      description: 'The text of the option',
+    },
+    {
+      prop: 'disabled',
+      type: 'boolean',
+      description: 'Is the option disabled',
+    },
+  ],
+}
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormSelect',
+      styleSpec: {kind: StyleKind.Tag, value: 'select'},
       sourcePath: '/BFormSelect/BFormSelect.vue',
       props: {
         '': {
@@ -82,12 +106,13 @@ export default {
             "Slot to place options or option groups above options provided via the 'options' prop",
           name: 'first',
         },
+        optionSlot,
       ],
     },
     {
       component: 'BFormSelectOption',
+      styleSpec: {kind: StyleKind.Tag, value: 'option'},
       sourcePath: '/BFormSelect/BFormSelectOption.vue',
-      emits: [],
       props: {
         '': {
           value: {
@@ -111,6 +136,7 @@ export default {
     },
     {
       component: 'BFormSelectOptionGroup',
+      styleSpec: {kind: StyleKind.Tag, value: 'optgroup'},
       sourcePath: '/BFormSelect/BFormSelectOptionGroup.vue',
       props: {
         '': {
@@ -127,7 +153,6 @@ export default {
           ),
         } satisfies Record<keyof BvnComponentProps['BFormSelectOptionGroup'], PropertyReference>,
       },
-      emits: [],
       slots: [
         {
           name: 'first',
@@ -137,6 +162,7 @@ export default {
           name: 'default',
           description: "Slot to place options above options provided via the 'options' prop",
         },
+        optionSlot,
       ],
     },
   ],

@@ -1,5 +1,5 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 import {buildCommonProps, omit, pick} from '../../utils'
 import {imageProps, linkTo} from '../../utils/image-props'
 
@@ -114,6 +114,7 @@ export default {
     },
     {
       component: 'BCardBody',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.card-body, .card-img-overlay'},
       sourcePath: '/BCard/BCardBody.vue',
       emits: [],
       props: {
@@ -184,6 +185,7 @@ export default {
     },
     {
       component: 'BCardGroup',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.card-deck, .ard-group, .card-columns'},
       sourcePath: '/BCard/BCardGroup.vue',
       emits: [],
       props: {

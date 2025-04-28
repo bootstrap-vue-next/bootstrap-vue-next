@@ -279,22 +279,22 @@ describe('dropdown', () => {
     expect($bbutton.text()).toBe('slots')
   })
 
-  it('first child BButton emits click when prop split', async () => {
+  it('first child BButton does emits split-click when prop split', async () => {
     const wrapper = mount(BDropdown, {
       props: {split: true},
     })
     const $bbutton = wrapper.getComponent(BButton)
     await $bbutton.trigger('click')
-    expect($bbutton.emitted()).toHaveProperty('click')
+    expect(wrapper.emitted()).toHaveProperty('split-click')
   })
 
-  it('first child BButton does not emit click when not prop split', async () => {
+  it('first child BButton does not emit split-click when not prop split', async () => {
     const wrapper = mount(BDropdown, {
       props: {split: false},
     })
     const $bbutton = wrapper.getComponent(BButton)
     await $bbutton.trigger('click')
-    expect(wrapper.emitted()).not.toHaveProperty('click')
+    expect(wrapper.emitted()).not.toHaveProperty('split-click')
   })
 
   it('wrapper emits click when prop split', async () => {

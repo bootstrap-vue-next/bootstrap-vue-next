@@ -1,16 +1,10 @@
 # Placeholder
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
-<div class="lead mb-5">
+<PageHeader>
 
 Placeholders are components that indicate that something may still be loading.
 
-</div>
+</PageHeader>
 
 ## Basic Usage
 
@@ -340,7 +334,6 @@ Optionally, you can manually adjust any scope of the table using slots. The foll
 <script setup lang="ts">
 import {data} from '../../data/components/placeholder.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {
   BPlaceholderButton,

@@ -1,17 +1,11 @@
 # Pagination
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
-<div class="lead mb-5">
+<PageHeader>
 
 Quick first, previous, next, last, and page buttons for pagination control of another component
 (such as `BTable` or lists).
 
-</div>
+</PageHeader>
 
 ## Overview
 

@@ -1,10 +1,5 @@
 # Accessibility
 
-<ContentsSidebar>
-
-[[toc]]
-
-</ContentsSidebar>
 <div class="lead mb-5">
 
 A brief overview of BootstrapVueNext's features and limitations for the creation of accessible content.
@@ -94,5 +89,5 @@ Steps you should do for testing:
 
 <script setup lang="ts">
 import {BCard} from 'bootstrap-vue-next'
-import ContentsSidebar from '../../components/ContentsSidebar.vue'
+
 </script>

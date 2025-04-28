@@ -14,7 +14,7 @@
         v-if="slots['invalid-feedback'] || props.invalidFeedback"
         :id="invalidFeedbackId"
         :aria-live="props.feedbackAriaLive"
-        :state="props.state"
+        :state="computedState"
         :tooltip="props.tooltip"
       >
         <slot name="invalid-feedback">{{ props.invalidFeedback }}</slot>
@@ -23,7 +23,7 @@
         v-if="slots['valid-feedback'] || props.validFeedback"
         :id="validFeedbackId"
         :aria-live="props.feedbackAriaLive"
-        :state="props.state"
+        :state="computedState"
         :tooltip="props.tooltip"
       >
         <slot name="valid-feedback">{{ props.validFeedback }}</slot>
@@ -59,6 +59,7 @@
         </component>
       </template>
     </LabelContentTemplate.define>
+    <!-- End of definitions -->
     <BFormRow v-if="isHorizontal">
       <LabelContentTemplate.reuse />
       <BCol v-bind="contentColProps" ref="_content">
@@ -72,17 +73,18 @@
       </BCol>
     </BFormRow>
     <template v-else>
-      <LabelContentTemplate.reuse />
-      <div v-if="!isHorizontal && props.floating" ref="_content" class="form-floating">
+      <div v-if="props.floating && !isHorizontal" ref="_content" class="form-floating">
         <slot
           :id="computedId"
           :aria-describedby="null"
           :description-id="descriptionId"
           :label-id="labelId"
         />
+        <LabelContentTemplate.reuse />
         <ContentTemplate.reuse />
       </div>
       <template v-else>
+        <LabelContentTemplate.reuse />
         <slot
           :id="computedId"
           :aria-describedby="null"
@@ -96,7 +98,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, provide, type Ref, ref, useTemplateRef} from 'vue'
+import {computed, provide, type Ref, ref, toRef, useTemplateRef} from 'vue'
 import {useAriaInvalid} from '../../composables/useAriaInvalid'
 import {attemptFocus, isVisible} from '../../utils/dom'
 import BCol from '../BContainer/BCol.vue'
@@ -170,9 +172,14 @@ const slots = defineSlots<{
 const LabelContentTemplate = createReusableTemplate()
 const ContentTemplate = createReusableTemplate()
 
+const computedState = toRef(() => props.state)
 const childId = ref<Ref<string>[]>([])
 provide(formGroupPluginKey, (id) => {
   childId.value = [id]
+
+  return {
+    state: computedState,
+  }
 })
 const computedLabelFor = computed(() => {
   if (props.labelFor !== undefined) return props.labelFor
@@ -232,12 +239,8 @@ const isHorizontal = computed(
   () => Object.keys(contentColProps.value).length > 0 || Object.keys(labelColProps.value).length > 0
 )
 
-const stateClass = useStateClass(() => props.state)
-
-const computedAriaInvalid = useAriaInvalid(
-  () => props.ariaInvalid,
-  () => props.state
-)
+const stateClass = useStateClass(computedState)
+const computedAriaInvalid = useAriaInvalid(() => props.ariaInvalid, computedState)
 
 const onLegendClick = (event: Readonly<MouseEvent>) => {
   if (computedLabelFor.value || content.value === null) return

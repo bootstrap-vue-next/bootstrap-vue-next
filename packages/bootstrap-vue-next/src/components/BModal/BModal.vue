@@ -3,8 +3,7 @@
     <Transition
       v-if="renderRef || contentShowing"
       v-bind="transitionProps"
-      :appear="modelValue"
-      @after-enter="onAfterEnter"
+      :appear="modelValue || props.visible"
     >
       <div
         v-show="showRef && ((backdropReady && props.backdropFirst) || !props.backdropFirst)"
@@ -123,7 +122,7 @@
 </template>
 
 <script setup lang="ts">
-import {onKeyStroke, useFocus} from '@vueuse/core'
+import {onKeyStroke, unrefElement} from '@vueuse/core'
 import {useActivatedFocusTrap} from '../../composables/useActivatedFocusTrap'
 import {computed, type CSSProperties, type EmitFn, useTemplateRef, watch} from 'vue'
 import type {BModalProps} from '../../types/ComponentProps'
@@ -136,23 +135,16 @@ import {useSafeScrollLock} from '../../composables/useSafeScrollLock'
 import {isEmptySlot} from '../../utils/dom'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useModalManager} from '../../composables/useModalManager'
-import {useShowHide} from '../../composables/useShowHide'
+import {type showHideEmits, useShowHide} from '../../composables/useShowHide'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
+import {getElement} from '../../utils/getElement'
 
 defineOptions({
   inheritAttrs: false,
 })
 
-// aria
-// autofocus
-// close on escape when autofocus
-
-// Note, attempt to return focus to item that openned the modal after close
-// Implement auto focus props like autoFocusButton
-
 const _props = withDefaults(defineProps<Omit<BModalProps, 'modelValue'>>(), {
-  autofocus: true,
-  autofocusButton: undefined,
+  focus: undefined,
   backdropFirst: false,
   body: undefined,
   bodyBgVariant: null,
@@ -214,19 +206,15 @@ const _props = withDefaults(defineProps<Omit<BModalProps, 'modelValue'>>(), {
 })
 const props = useDefaults(_props, 'BModal')
 
-const emit = defineEmits<{
-  'backdrop': [value: BvTriggerableEvent]
-  'cancel': [value: BvTriggerableEvent]
-  'close': [value: BvTriggerableEvent]
-  'esc': [value: BvTriggerableEvent]
-  'hidden': [value: BvTriggerableEvent]
-  'hide': [value: BvTriggerableEvent]
-  'hide-prevented': [value: BvTriggerableEvent]
-  'ok': [value: BvTriggerableEvent]
-  'show': [value: BvTriggerableEvent]
-  'show-prevented': [value: BvTriggerableEvent]
-  'shown': [value: BvTriggerableEvent]
-}>()
+const emit = defineEmits<
+  {
+    backdrop: [value: BvTriggerableEvent]
+    cancel: [value: BvTriggerableEvent]
+    close: [value: BvTriggerableEvent]
+    esc: [value: BvTriggerableEvent]
+    ok: [value: BvTriggerableEvent]
+  } & showHideEmits
+>()
 
 type SharedSlotsData = {
   cancel: () => void
@@ -268,20 +256,44 @@ const cancelButton = useTemplateRef<HTMLElement>('_cancelButton')
 const closeButton = useTemplateRef<HTMLElement>('_closeButton')
 
 const pickFocusItem = () => {
-  if (props.autofocus === false) return
-  if (props.autofocusButton === 'ok') {
-    okButtonFocus.value = true
-  } else if (props.autofocusButton === 'close') {
-    closeButtonFocus.value = true
-  } else if (props.autofocusButton === 'cancel') {
-    cancelButtonFocus.value = true
-  } else {
-    modalFocus.value = true
+  if (props.focus && typeof props.focus !== 'boolean') {
+    if (props.focus === 'ok') {
+      return okButton
+    } else if (props.focus === 'close') {
+      return closeButton
+    } else if (props.focus === 'cancel') {
+      return cancelButton
+    }
+    return getElement(props.focus, element.value ?? undefined) ?? element.value
+  }
+  return element
+}
+
+let activeElement: HTMLElement | null = null
+const onAfterEnter = () => {
+  if (props.noTrap && props.focus !== false) {
+    activeElement = document.activeElement as HTMLElement
+    if (activeElement === element.value) {
+      activeElement = null
+    }
+    const el = unrefElement(pickFocusItem())
+    if (!el) return
+    el?.focus()
+    if (
+      el.tagName &&
+      el.tagName.toLowerCase() === 'input' &&
+      typeof (el as HTMLInputElement).select === 'function'
+    ) {
+      ;(el as HTMLInputElement).select()
+    }
   }
 }
 
-const onAfterEnter = () => {
-  pickFocusItem()
+const onAfterLeave = () => {
+  if (props.noTrap && props.focus !== false && activeElement) {
+    activeElement?.focus()
+    activeElement = null
+  }
 }
 
 const {
@@ -304,6 +316,7 @@ const {
   // addShowClass: false,
   transitionProps: {
     onAfterEnter,
+    onAfterLeave,
   },
 })
 
@@ -316,6 +329,8 @@ const {needsFallback} = useActivatedFocusTrap({
     ref: fallbackFocusElement,
     classSelector: fallbackClassSelector,
   },
+  focus: () => (props.focus === false ? false : (unrefElement(pickFocusItem()) ?? undefined)),
+  // () => (typeof focus === 'boolean' ? focus : (unrefElement(focus) ?? undefined)),
 })
 
 onKeyStroke(
@@ -326,18 +341,6 @@ onKeyStroke(
   {target: element}
 )
 useSafeScrollLock(showRef, () => props.bodyScrolling)
-const {focused: modalFocus} = useFocus(element, {
-  initialValue: modelValue.value && props.autofocusButton === undefined && props.autofocus === true,
-})
-const {focused: okButtonFocus} = useFocus(okButton, {
-  initialValue: modelValue.value && props.autofocusButton === 'ok' && props.autofocus === true,
-})
-const {focused: cancelButtonFocus} = useFocus(cancelButton, {
-  initialValue: modelValue.value && props.autofocusButton === 'cancel' && props.autofocus === true,
-})
-const {focused: closeButtonFocus} = useFocus(closeButton, {
-  initialValue: modelValue.value && props.autofocusButton === 'close' && props.autofocus === true,
-})
 
 const hasHeaderCloseSlot = computed(() => !isEmptySlot(slots['header-close']))
 

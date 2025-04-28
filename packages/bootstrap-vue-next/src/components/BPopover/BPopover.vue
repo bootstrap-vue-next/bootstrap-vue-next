@@ -1,11 +1,15 @@
 <template>
-  <span :id="computedId + '_placeholder'" ref="_placeholder" />
+  <span :id="computedId + '_placeholder'" ref="_placeholder" style="display: none" />
   <slot name="target" :show="show" :hide="hide" :toggle="toggle" :visible="showRef" />
   <ConditionalTeleport
     :to="props.teleportTo"
     :disabled="!props.teleportTo || props.teleportDisabled"
   >
-    <Transition v-if="renderRef || contentShowing" v-bind="transitionProps" :appear="modelValue">
+    <Transition
+      v-if="renderRef || contentShowing"
+      v-bind="transitionProps"
+      :appear="modelValue || props.visible"
+    >
       <div
         v-show="showRef && !hidden"
         :id="computedId"
@@ -59,6 +63,7 @@ import {
   inline as inlineMiddleware,
   type Middleware,
   offset as offsetMiddleware,
+  type ReferenceElement,
   type RootBoundary,
   shift,
   size as sizeMiddleware,
@@ -86,7 +91,7 @@ import {BvTriggerableEvent} from '../../utils'
 import {isBoundary, isRootBoundary, resolveBootstrapPlacement} from '../../utils/floatingUi'
 import {getElement} from '../../utils/getElement'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
-import {useShowHide} from '../../composables/useShowHide'
+import {type showHideEmits, useShowHide} from '../../composables/useShowHide'
 
 defineOptions({
   inheritAttrs: false,
@@ -132,18 +137,14 @@ const _props = withDefaults(defineProps<Omit<BPopoverProps, 'modelValue'>>(), {
 
 const props = useDefaults(_props, 'BPopover')
 
-const emit = defineEmits<{
-  'hidden': [value: BvTriggerableEvent]
-  'hide': [value: BvTriggerableEvent]
-  'hide-prevented': [value: BvTriggerableEvent]
-  'show': [value: BvTriggerableEvent]
-  'show-prevented': [value: BvTriggerableEvent]
-  'shown': [value: BvTriggerableEvent]
-  'pointerleave': [value: BvTriggerableEvent]
-  'blur': [value: BvTriggerableEvent]
-  'click-outside': [value: BvTriggerableEvent]
-  'close-on-hide': [value: BvTriggerableEvent]
-}>()
+const emit = defineEmits<
+  {
+    'pointerleave': [value: BvTriggerableEvent]
+    'blur': [value: BvTriggerableEvent]
+    'click-outside': [value: BvTriggerableEvent]
+    'close-on-hide': [value: BvTriggerableEvent]
+  } & showHideEmits
+>()
 
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -167,13 +168,13 @@ const computedId = useId(() => props.id, 'popover')
 
 const hidden = ref(false)
 
-const element = useTemplateRef<HTMLElement>('_element')
+const floatingElement = useTemplateRef<HTMLElement>('_element')
 const content = useTemplateRef<HTMLElement>('_content')
 const arrow = useTemplateRef<HTMLElement>('_arrow')
 const placeholder = useTemplateRef<HTMLElement>('_placeholder')
 
-const floatingTarget = ref<HTMLElement | null>(null)
-const trigger = ref<HTMLElement | null>(null)
+const referenceElement = ref<HTMLElement | null>(null)
+const triggerElement = ref<HTMLElement | null>(null)
 
 const isAutoPlacement = computed(() => props.placement.startsWith('auto'))
 const offsetNumber = useToNumber(() => props.offset ?? NaN)
@@ -265,16 +266,15 @@ const placementRef = computed(() =>
   isAutoPlacement.value ? undefined : (props.placement as FloatingPlacement)
 )
 
-const {floatingStyles, middlewareData, placement, update} = useFloating(floatingTarget, element, {
-  placement: placementRef,
-  middleware: floatingMiddleware,
-  strategy: toRef(() => props.strategy),
-  whileElementsMounted: (...args) => {
-    const cleanup = autoUpdate(...args, {animationFrame: props.realtime})
-    // Important! Always return the cleanup function.
-    return cleanup
-  },
-})
+const {floatingStyles, middlewareData, placement, update} = useFloating(
+  referenceElement,
+  floatingElement,
+  {
+    placement: placementRef,
+    middleware: floatingMiddleware,
+    strategy: toRef(() => props.strategy),
+  }
+)
 
 const arrowStyle = ref<CSSProperties>({position: 'absolute'})
 
@@ -302,6 +302,7 @@ watch(middlewareData, (newValue) => {
   }
 })
 
+let cleanup: ReturnType<typeof autoUpdate> | undefined
 const {
   showRef,
   hide,
@@ -314,10 +315,22 @@ const {
   isVisible,
   renderRef,
   localTemporaryHide,
-} = useShowHide(modelValue, props, emit as EmitFn, element, computedId, {
+} = useShowHide(modelValue, props, emit as EmitFn, floatingElement, computedId, {
   showFn: () => {
-    if (hidden.value) {
-      update()
+    update()
+    nextTick(() => {
+      cleanup = autoUpdate(
+        referenceElement.value as ReferenceElement,
+        floatingElement.value as HTMLElement,
+        update,
+        {animationFrame: props.realtime}
+      )
+    })
+  },
+  hideFn: () => {
+    if (cleanup) {
+      cleanup()
+      cleanup = undefined
     }
   },
 })
@@ -340,8 +353,8 @@ const computedClasses = computed(() => {
 const {x, y} = useMouse()
 
 const isElementAndTriggerOutside = () => {
-  const triggerRect = trigger.value?.getBoundingClientRect()
-  const elementRect = element.value?.getBoundingClientRect()
+  const triggerRect = triggerElement.value?.getBoundingClientRect()
+  const elementRect = floatingElement.value?.getBoundingClientRect()
   const margin = parseInt(props.hideMargin as unknown as string, 10) || 0
   const offsetX = window?.scrollX || 0
   const offsetY = window?.scrollY || 0
@@ -364,26 +377,21 @@ const isElementAndTriggerOutside = () => {
 
 let looptimeout: ReturnType<typeof setTimeout> | undefined
 const tryHide = (e?: Readonly<Event>) => {
-  const delay = typeof props.delay === 'number' ? props.delay : props.delay?.hide || 0
-
   const {triggerIsOutside, isOutside} = isElementAndTriggerOutside()
   if (
     (!props.noninteractive &&
       isOutside &&
       triggerIsOutside &&
-      !element.value?.contains(document?.activeElement) &&
-      !trigger.value?.contains(document?.activeElement)) ||
+      !floatingElement.value?.contains(document?.activeElement) &&
+      !triggerElement.value?.contains(document?.activeElement)) ||
     (props.noninteractive && triggerIsOutside)
   ) {
     hide(e?.type)
   } else {
     if (looptimeout) clearTimeout(looptimeout)
-    looptimeout = setTimeout(
-      () => {
-        tryHide(e)
-      },
-      delay < 50 ? 50 : delay
-    )
+    looptimeout = setTimeout(() => {
+      tryHide(e)
+    }, 50)
   }
 }
 
@@ -411,54 +419,54 @@ const bind = () => {
   if (props.target) {
     const elem = getElement(toValue(props.target))
     if (elem) {
-      trigger.value = elem
+      triggerElement.value = elem
     } else {
       // eslint-disable-next-line no-console
       console.warn('Target element not found', props.target)
     }
   } else {
-    trigger.value = placeholder.value?.nextElementSibling as HTMLElement
+    triggerElement.value = placeholder.value?.nextElementSibling as HTMLElement
   }
   if (props.reference) {
     const elem = getElement(toValue(props.reference))
     if (elem) {
-      floatingTarget.value = elem
+      referenceElement.value = elem
     } else {
       // eslint-disable-next-line no-console
       console.warn('Reference element not found', props.reference)
     }
   } else {
-    floatingTarget.value = trigger.value
+    referenceElement.value = triggerElement.value
   }
-  if (!trigger.value || props.manual) {
+  if (!triggerElement.value || props.manual) {
     return
   }
   if (props.click) {
-    trigger.value.addEventListener('click', localToggle)
+    triggerElement.value.addEventListener('click', localToggle)
     return
   }
-  trigger.value.addEventListener('pointerenter', show)
-  trigger.value.addEventListener('pointerleave', tryHide)
-  trigger.value.addEventListener('focus', show)
-  trigger.value.addEventListener('blur', tryHide)
+  triggerElement.value.addEventListener('pointerenter', show)
+  triggerElement.value.addEventListener('pointerleave', tryHide)
+  triggerElement.value.addEventListener('focus', show)
+  triggerElement.value.addEventListener('blur', tryHide)
 }
 
 const unbind = () => {
-  if (trigger.value) {
-    trigger.value.removeEventListener('click', localToggle)
-    trigger.value.removeEventListener('pointerenter', show)
-    trigger.value.removeEventListener('pointerleave', tryHide)
-    trigger.value.removeEventListener('focus', show)
-    trigger.value.removeEventListener('blur', tryHide)
+  if (triggerElement.value) {
+    triggerElement.value.removeEventListener('click', localToggle)
+    triggerElement.value.removeEventListener('pointerenter', show)
+    triggerElement.value.removeEventListener('pointerleave', tryHide)
+    triggerElement.value.removeEventListener('focus', show)
+    triggerElement.value.removeEventListener('blur', tryHide)
   }
 }
 
 onClickOutside(
-  element,
+  floatingElement,
   () => {
     if (showRef.value && props.click && !props.noAutoClose && !props.manual) hide('click-outside')
   },
-  {ignore: [trigger]}
+  {ignore: [triggerElement]}
 )
 
 watch([() => props.click, () => props.target, () => props.reference], () => {

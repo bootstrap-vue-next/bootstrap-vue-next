@@ -1,13 +1,5 @@
 # Introduction
 
-<ClientOnly>
-  <Teleport to=".bd-toc">
-
-[[toc]]
-
-  </Teleport>
-</ClientOnly>
-
 <div class="lead">
 
 Get started with BootstrapVueNext and Bootstrap `v5`, the world’s most popular framework for building responsive, mobile-first sites.
@@ -16,7 +8,11 @@ Get started with BootstrapVueNext and Bootstrap `v5`, the world’s most popular
 
 ## Why BootstrapVueNext?
 
-BootstrapVueNext is an attempt to have the [BootstrapVue](https://bootstrap-vue.org/) components in Vue3, Bootstrap 5, and typescript. Another goal is to have the components written in a simple and readable way for a better developer experience.
+BootstrapVueNext is an attempt to have the [BootstrapVue](https://bootstrap-vue.github.io/bootstrap-vue/) components in Vue3, Bootstrap 5, and typescript. Another goal is to have the components written in a simple and readable way for a better developer experience.
+
+## Migrating from BootstrapVue
+
+If you are migrating from BootstrapVue, please refer to our [migration guide](/docs/migration-guide)
 
 ## Contribute and Support 🙌
 
@@ -310,7 +306,60 @@ export default defineNuxtConfig({
 
 </HighlightCard>
 
-The practical difference between manually including an item and not is null as Nuxt should tree-shake out anything that is not used in the final build.
+This is mainly for the purpose of naming conflicts with other imports. It should not effect tree-shaking
+
+### Installation - TypeScript
+
+This package uses optional peer dependencies to generate type definitions for enhanced functionality. These dependencies are not installed by default to avoid unnecessary bloat in projects that don’t require these features. However, if you want full type support, you need to manually install the required packages.
+
+<ClientOnly>
+<BTabs v-model="codePreference">
+  <BTab title="PNPM">
+
+  <HighlightCard>
+
+```bash
+pnpm add -D @floating-ui/vue @vueuse/core vue-router
+```
+
+  </HighlightCard>
+
+  </BTab>
+  <BTab title="BUN">
+
+  <HighlightCard>
+
+```bash
+bun add -D @floating-ui/vue @vueuse/core vue-router
+```
+
+  </HighlightCard>
+
+  </BTab>
+  <BTab title="YARN">
+
+  <HighlightCard>
+
+```bash
+yarn add -D @floating-ui/vue @vueuse/core vue-router
+```
+
+  </HighlightCard>
+
+  </BTab>
+  <BTab title="NPM">
+
+  <HighlightCard>
+
+```bash
+npm i -D @floating-ui/vue @vueuse/core vue-router
+```
+
+  </HighlightCard>
+
+  </BTab>
+</BTabs>
+</ClientOnly>
 
 ### Installation - CDN
 
@@ -362,12 +411,16 @@ Practically the `createBootstrap` plugin is ~20kb gzipped with `toast` and `moda
 
 BootstrapVue is the parent project for which this is based on. We consider BootstrapVue as the best implementation of Bootstrap `v4`. We strive for a full compatibility list for BootstrapVue. However, due to the nature of the rewrite, some features may be missing or changed. If anyone has spotted a missing compatibility feature, we request that you submit a GitHub issue or contribute to the [parity report](https://github.com/bootstrap-vue-next/bootstrap-vue-next/blob/main/CONTRIBUTING.md#help-verify-bootstrapvue-and-bootstrap-v5-parity).
 
-<script setup lang="ts">
-import {BCard, BCardBody, BTab, BTabs} from 'bootstrap-vue-next'
+If you are migrating from BootstrapVue, please refer to our [migration guide](/docs/migration-guide)
+
+<script lang="ts">
 import {useLocalStorage} from '@vueuse/core'
-import HighlightCard from './components/HighlightCard.vue'
-import NoteAlert from './components/NoteAlert.vue'
-import BootstrapPluginWarning from './components/BootstrapPluginWarning.vue'
 
 const codePreference = useLocalStorage('code-group-preference', 0)
+
+export default {
+  setup() {
+    return {codePreference}
+  }
+}
 </script>

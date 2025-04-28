@@ -3,9 +3,15 @@ import type * as ExportedDirectives from '../directives'
 import type * as ExportedComposables from '../composables'
 import type * as ComponentProps from './ComponentProps'
 
-export type ComponentType = keyof typeof ExportedComponents
+type AllComponentsTyped = typeof ExportedComponents
+
+export type ComponentType = keyof AllComponentsTyped
 export type DirectiveType = keyof typeof ExportedDirectives
 export type ComposableType = keyof typeof ExportedComposables
+
+export type BvnComponents = {
+  [K in ComponentType]: AllComponentsTyped[K]
+}
 
 export const componentsWithExternalPath = {
   BAccordion: '/components/BAccordion',
@@ -296,3 +302,5 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
 export type BvnComponentProps = {
   [K in ComponentType]: UnmappedComponentProps[K]
 }
+
+export type showHide = ComponentProps.ShowHideProps

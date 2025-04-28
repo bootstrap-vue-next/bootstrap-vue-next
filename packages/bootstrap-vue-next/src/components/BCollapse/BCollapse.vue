@@ -5,7 +5,7 @@
     v-bind="transitionProps"
     :enter-active-class="computedNoAnimation ? '' : 'collapsing'"
     :leave-active-class="computedNoAnimation ? '' : 'collapsing'"
-    :appear="modelValue"
+    :appear="modelValue || props.visible"
   >
     <component
       :is="props.tag"
@@ -24,22 +24,12 @@
 </template>
 
 <script setup lang="ts">
-import {
-  computed,
-  type EmitFn,
-  inject,
-  onBeforeUnmount,
-  provide,
-  readonly,
-  toRef,
-  useTemplateRef,
-} from 'vue'
+import {computed, type EmitFn, provide, readonly, toRef, useTemplateRef} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
-import {collapseInjectionKey, globalCollapseStorageInjectionKey} from '../../utils/keys'
+import {collapseInjectionKey} from '../../utils/keys'
 import type {BCollapseProps} from '../../types/ComponentProps'
-import {BvTriggerableEvent} from '../../utils'
-import {useShowHide} from '../../composables/useShowHide'
+import {type showHideEmits, useShowHide} from '../../composables/useShowHide'
 
 defineOptions({
   inheritAttrs: false,
@@ -60,15 +50,7 @@ const _props = withDefaults(defineProps<Omit<BCollapseProps, 'modelValue'>>(), {
 
 const props = useDefaults(_props, 'BCollapse')
 
-const emit = defineEmits<{
-  'hidden': [value: BvTriggerableEvent]
-  'hide': [value: BvTriggerableEvent]
-  'hide-prevented': [value: BvTriggerableEvent]
-  'show': [value: BvTriggerableEvent]
-  'show-prevented': [value: BvTriggerableEvent]
-  'shown': [value: BvTriggerableEvent]
-  'toggle': [value: BvTriggerableEvent]
-}>()
+const emit = defineEmits<showHideEmits>()
 
 type SharedSlotsData = {
   hide: () => void
@@ -196,18 +178,5 @@ provide(collapseInjectionKey, {
   toggle,
   visible: readonly(showRef),
   isNav: toRef(() => props.isNav),
-})
-
-const appRegistry = inject(
-  globalCollapseStorageInjectionKey,
-  undefined
-)?.({
-  id: computedId.value,
-  toggle,
-  value: readonly(showRef),
-})
-
-onBeforeUnmount(() => {
-  appRegistry?.unregister()
 })
 </script>

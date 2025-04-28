@@ -1,12 +1,12 @@
 <template>
-  <div class="accordion-item" v-bind="props.wrapperAttrs" :class="wrapperClass">
+  <div class="accordion-item" v-bind="props.wrapperAttrs" :class="processedAttrs.wrapperClass">
     <BCollapse
       :id="computedId"
       v-model="modelValue"
       class="accordion-collapse"
       :class="props.collapseClass"
       :aria-labelledby="`${computedId}-heading`"
-      v-bind="collapseAttrs"
+      v-bind="processedAttrs.collapseAttrs"
       :tag="props.tag"
       :show="props.show"
       :horizontal="props.horizontal"
@@ -15,11 +15,13 @@
       :lazy="props.lazy || parentData?.lazy.value"
       :unmount-lazy="props.unmountLazy || parentData?.unmountLazy.value"
       @show="emit('show', $event)"
-      @shown="emit('shown')"
+      @shown="emit('shown', $event)"
       @hide="emit('hide', $event)"
-      @hidden="emit('hidden')"
-      @hide-prevented="emit('hide-prevented')"
-      @show-prevented="emit('show-prevented')"
+      @hidden="emit('hidden', $event)"
+      @hide-prevented="emit('hide-prevented', $event)"
+      @show-prevented="emit('show-prevented', $event)"
+      @toggle-prevented="emit('toggle-prevented', $event)"
+      @toggle="emit('toggle', $event)"
     >
       <template #header="{visible: toggleVisible, toggle: slotToggle}">
         <component
@@ -50,18 +52,22 @@
 </template>
 
 <script setup lang="ts">
-import {inject, nextTick, onMounted, useAttrs, watch} from 'vue'
+import {computed, inject, nextTick, onMounted, useAttrs, watch} from 'vue'
 import BCollapse from '../BCollapse/BCollapse.vue'
 import {accordionInjectionKey} from '../../utils/keys'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import type {BAccordionItemProps} from '../../types/ComponentProps'
-import type {BvTriggerableEvent} from '../../utils'
+import type {showHideEmits} from '../../composables/useShowHide'
 
 defineOptions({
   inheritAttrs: false,
 })
-const {class: wrapperClass, ...collapseAttrs} = useAttrs()
+const attrs = useAttrs()
+const processedAttrs = computed(() => {
+  const {class: wrapperClass, ...collapseAttrs} = attrs
+  return {wrapperClass, collapseAttrs}
+})
 
 const _props = withDefaults(defineProps<Omit<BAccordionItemProps, 'modelValue'>>(), {
   bodyAttrs: undefined,
@@ -85,14 +91,7 @@ const _props = withDefaults(defineProps<Omit<BAccordionItemProps, 'modelValue'>>
 })
 const props = useDefaults(_props, 'BAccordionItem')
 
-const emit = defineEmits<{
-  'hidden': []
-  'hide': [value: BvTriggerableEvent]
-  'hide-prevented': []
-  'show': [value: BvTriggerableEvent]
-  'show-prevented': []
-  'shown': []
-}>()
+const emit = defineEmits<showHideEmits>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -109,11 +108,13 @@ const modelValue = defineModel<Exclude<BAccordionItemProps['modelValue'], undefi
   default: false,
 })
 
-modelValue.value =
-  parentData?.openItem.value === computedId.value && !parentData?.initialAnimation.value
-
-if (modelValue.value && !parentData?.free.value) {
-  parentData?.setOpenItem(computedId.value)
+if (modelValue.value) {
+  if (!parentData?.free.value) {
+    parentData?.setOpenItem(computedId.value)
+  }
+} else {
+  modelValue.value =
+    parentData?.openItem.value === computedId.value && !parentData?.initialAnimation.value
 }
 
 onMounted(() => {

@@ -55,7 +55,7 @@
             rel="noopener"
             link-classes="py-1 px-0"
           >
-            <component :is="link.icon()" height="1.1rem" aria-hidden />
+            <component :is="link.icon()" height="1.1em" aria-hidden />
           </BNavItem>
           <div class="border border-secondary ms-2 me-3" />
           <ClientOnly>
@@ -64,7 +64,7 @@
               <template #button-content>
                 <component
                   :is="currentIcon"
-                  height="1.1rem"
+                  height="1.1em"
                   :aria-label="`Toggle theme (${colorMode})`"
                   class="d-inline-block"
                 />
@@ -125,7 +125,7 @@
       </BRow>
       <BRow v-else>
         <div class="bd-content">
-          <aside class="otp-sidebar">
+          <aside ref="_target" class="otp-sidebar">
             <ClientOnly>
               <BOffcanvas
                 id="otp-menu"
@@ -137,11 +137,11 @@
                 header-class="pb-0 d-flex offcanvas-hidden-width"
                 body-class="py-2"
               >
-                <div class="bd-toc" />
+                <PageContents />
               </BOffcanvas>
             </ClientOnly>
           </aside>
-          <Content class="doc-content" />
+          <Content ref="_content" style="height: 100%" class="doc-content" />
         </div>
       </BRow>
     </main>
@@ -166,10 +166,19 @@ import {
   BRow,
   BToastOrchestrator,
   useColorMode,
+  useScrollspy,
   vBColorMode,
   vBToggle,
 } from 'bootstrap-vue-next'
-import {computed, inject, onMounted, ref, watch} from 'vue'
+import {
+  type ComponentPublicInstance,
+  computed,
+  inject,
+  onMounted,
+  ref,
+  useTemplateRef,
+  watch,
+} from 'vue'
 import GithubIcon from '~icons/bi/github'
 import OpencollectiveIcon from '~icons/logos/opencollective'
 import DiscordIcon from '~icons/bi/discord'
@@ -178,14 +187,22 @@ import SunFill from '~icons/bi/sun-fill'
 import ChevronRight from '~icons/bi/chevron-right'
 import CircleHalf from '~icons/bi/circle-half'
 import {useData, useRoute, withBase} from 'vitepress'
+import {VPNavBarSearch} from 'vitepress/theme'
 import {appInfoKey} from './keys'
 import {useMediaQuery} from '@vueuse/core'
-import TableOfContentsNav from '../../src/components/TableOfContentsNav.vue'
-import VPNavBarSearch from 'vitepress/dist/client/theme-default/components/VPNavBarSearch.vue'
+import PageContents from '../../src/components/PageContents.vue'
 
 // https://vitepress.dev/reference/runtime-api#usedata
 const {page} = useData()
 const route = useRoute()
+
+const content = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_content')
+const target = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_target')
+
+useScrollspy(content, target, {
+  contentQuery: ':scope > div > [id], #component-reference',
+  targetQuery: ':scope [href]',
+})
 
 const globalData = inject(appInfoKey, {
   discordUrl: '',
@@ -193,8 +210,10 @@ const globalData = inject(appInfoKey, {
   githubPackageDirectory: '',
   githubComponentsDirectory: '',
   githubComposablesDirectory: '',
+  githubMainBranch: '',
   githubDirectivesDirectory: '',
   opencollectiveUrl: '',
+  githubDocsDirectory: '',
 })
 
 const isLargeScreen = useMediaQuery('(min-width: 992px)')
@@ -712,38 +731,6 @@ watch(
   }
 }
 
-.table-of-contents {
-  font-size: 0.875rem;
-
-  ul {
-    padding-left: 0;
-    margin-bottom: 0;
-    list-style: none;
-
-    a {
-      display: block;
-      padding: 0.125rem 0 0.125rem 0.75rem;
-      color: inherit;
-      text-decoration: none;
-      border-left: 0.125rem solid transparent;
-
-      &.active {
-        color: var(--bd-toc-color);
-        border-left-color: var(--bd-toc-color);
-      }
-
-      &:hover {
-        color: var(--bd-toc-color);
-        border-left-color: var(--bd-toc-color);
-      }
-    }
-
-    ul {
-      padding-left: 1rem;
-    }
-  }
-}
-
 // Search
 .DocSearch-Button .DocSearch-Search-Icon {
   @media (max-width: 767px) {
@@ -767,6 +754,10 @@ watch(
   .vp-code-dark {
     display: none;
   }
+}
+
+.custom-block {
+  margin-bottom: 1rem;
 }
 
 @media (min-width: 992px) {

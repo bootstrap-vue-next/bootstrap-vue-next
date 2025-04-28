@@ -1,5 +1,6 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
+import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => {
@@ -7,54 +8,66 @@ export default {
       bordered: {
         type: 'boolean',
         default: false,
+        description: 'Adds borders to all the cells and headers',
       },
       borderless: {
         type: 'boolean',
         default: false,
+        description: 'Removes all borders from cells',
       },
       borderVariant: {
         type: 'ColorVariant | null',
         default: null,
+        description: 'Applies one of the Bootstrap theme color variants to the table border',
       },
       captionTop: {
         type: 'boolean',
         default: false,
+        description: 'When set, the table caption will appear above the table',
       },
       dark: {
         type: 'boolean',
         default: false,
+        description: 'Places the table in dark mode',
       },
       fixed: {
         type: 'boolean',
         default: false,
+        description:
+          'Makes all columns equal width (fixed layout table). Will speed up rendering for large tables. Column widths can be set via CSS or colgroup',
       },
       hover: {
         type: 'boolean',
         default: false,
-      },
-      id: {
-        type: 'string',
-        default: undefined,
+        description: 'Enables hover styling on rows',
       },
       noBorderCollapse: {
         type: 'boolean',
         default: false,
+        description:
+          "Disable's the collapsing of table borders. Useful when table has sticky headers or columns",
       },
       outlined: {
         type: 'boolean',
         default: false,
+        description: 'Adds an outline border to the table element',
       },
       responsive: {
         type: 'boolean | Breakpoint',
         default: false,
+        description:
+          "Makes the table responsive in width, adding a horizontal scrollbar. Set to true for always responsive or set to one of the breakpoints to switch from responsive to normal: 'sm', 'md', 'lg', 'xl'",
       },
       small: {
         type: 'boolean',
         default: false,
+        description: 'Renders the table with smaller cell padding',
       },
       stacked: {
         type: 'boolean | Breakpoint',
         default: false,
+        description:
+          "Place the table in stacked mode. Set to true for always stacked, or set to one of the breakpoints to switch from stacked to normal: 'sm', 'md', 'lg', 'xl'",
       },
       stickyHeader: {
         type: 'boolean | Numberish',
@@ -65,23 +78,24 @@ export default {
       striped: {
         type: 'boolean',
         default: false,
+        description: 'Applies striping to the tbody rows',
       },
       stripedColumns: {
         type: 'boolean',
         default: false,
+        description: 'Applies striping to the table columns',
       },
       tableAttrs: {
         type: 'AttrsValue',
         default: undefined,
+        description: 'Attributes to apply to the table element',
       },
       tableClass: {
         type: 'ClassValue',
         default: undefined,
+        description: 'Classes to apply to the table element',
       },
-      variant: {
-        type: 'ColorVariant | null',
-        default: null,
-      },
+      ...pick(buildCommonProps(buildCommonProps()), ['id', 'variant']),
     } as const satisfies Record<keyof BvnComponentProps['BTableSimple'], PropertyReference>
 
     const BTableLiteProps = {
@@ -132,6 +146,8 @@ export default {
       labelStacked: {
         type: 'boolean',
         default: false,
+        description:
+          'When set, the labels will appear as actual label elements, rather than with the data-label attribute',
       },
       modelValue: {
         type: 'any',
@@ -195,6 +211,12 @@ export default {
             filter: {
               type: 'string',
               default: undefined,
+            },
+            filterFunction: {
+              type: '(item: Readonly<Items>, filter: string | undefined) => boolean',
+              default: undefined,
+              description:
+                'Function called during filtering of items, gets passed the current item being filtered',
             },
             filterable: {
               type: 'string[]',
@@ -549,14 +571,14 @@ export default {
         emits: [],
         slots: [
           {
-            description: '',
             name: 'default',
-            scope: [],
+            description: 'Content to place in the table',
           },
         ],
       },
       {
         component: 'BTbody',
+        styleSpec: {kind: StyleKind.Tag, value: 'tbody'},
         sourcePath: '/BTable/BTbody.vue',
         props: {
           '': {
@@ -577,6 +599,7 @@ export default {
       },
       {
         component: 'BTd',
+        styleSpec: {kind: StyleKind.Tag, value: 'td'},
         sourcePath: '/BTable/BTd.vue',
         props: {
           '': {
@@ -613,6 +636,7 @@ export default {
       },
       {
         component: 'BTfoot',
+        styleSpec: {kind: StyleKind.Tag, value: 'tfoot'},
         sourcePath: '/BTable/BTfoot.vue',
         props: {
           '': {
@@ -633,6 +657,7 @@ export default {
       },
       {
         component: 'BTh',
+        styleSpec: {kind: StyleKind.Tag, value: 'th'},
         sourcePath: '/BTable/BTh.vue',
         props: {
           '': {
@@ -656,6 +681,10 @@ export default {
               type: 'ColorVariant | null',
               default: null,
             },
+            scope: {
+              type: 'string',
+              default: undefined,
+            },
           } satisfies Record<keyof BvnComponentProps['BTh'], PropertyReference>,
         },
         emits: [],
@@ -669,6 +698,7 @@ export default {
       },
       {
         component: 'BThead',
+        styleSpec: {kind: StyleKind.Tag, value: 'thead'},
         sourcePath: '/BTable/BThead.vue',
         props: {
           '': {
@@ -689,6 +719,7 @@ export default {
       },
       {
         component: 'BTr',
+        styleSpec: {kind: StyleKind.Tag, value: 'tr'},
         sourcePath: '/BTable/BTr.vue',
         props: {
           '': {

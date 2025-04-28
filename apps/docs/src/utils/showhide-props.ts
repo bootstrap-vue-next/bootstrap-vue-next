@@ -1,4 +1,4 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {showHide} from 'bootstrap-vue-next'
 import type {PropertyReference} from '../types'
 
 export const showHideProps = {
@@ -7,10 +7,20 @@ export const showHideProps = {
     default: false,
     description: 'When set, enables the initial animation on mount',
   },
+  lazy: {
+    type: 'boolean',
+    default: false,
+    description: 'When set, the content will not be mounted until opened',
+  },
   modelValue: {
     type: 'boolean',
     default: false,
     description: 'Controls the visibility of the component',
+  },
+  noFade: {
+    type: 'boolean',
+    default: false,
+    description: 'Alias for `noAnimation`',
   },
   noAnimation: {
     type: 'boolean',
@@ -21,31 +31,21 @@ export const showHideProps = {
     type: 'boolean',
     default: false,
     description:
-      "When set, and prop 'visible' is false on mount, will animate from closed to open on initial mount. Mainly to help with template show. Use modelValue for reactive show/hide",
-  },
-  visible: {
-    type: 'boolean',
-    default: false,
-    description: "When 'true', open without animation",
-  },
-  lazy: {
-    type: 'boolean',
-    default: false,
-    description: 'When set, the content will not be mounted until opened',
-  },
-  unmountLazy: {
-    type: 'boolean',
-    default: false,
-    description: 'When set and `lazy` is true, the content will be unmounted when closed',
+      "When set, and prop 'visible' is false on mount, will animate from closed to open on initial mount. Mainly to help with template show. Use model-value for reactive show/hide",
   },
   transProps: {
     type: 'TransitionProps',
     default: undefined,
     description: 'Transition properties',
   },
-  noFade: {
+  unmountLazy: {
     type: 'boolean',
     default: false,
-    description: 'Alias for `noAnimation`',
+    description: 'When set and `lazy` is true, the content will be unmounted when closed',
   },
-} as const satisfies Record<keyof BvnComponentProps['showHide'], PropertyReference>
+  visible: {
+    type: 'boolean',
+    default: false,
+    description: "When 'true', open without animation",
+  },
+} as const satisfies Record<keyof showHide | 'modelValue', PropertyReference>

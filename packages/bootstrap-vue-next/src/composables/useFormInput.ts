@@ -1,10 +1,20 @@
 import type {Numberish} from '../types/CommonTypes'
-import {inject, nextTick, onActivated, onMounted, ref, type Ref, type ShallowRef} from 'vue'
+import {
+  computed,
+  inject,
+  nextTick,
+  onActivated,
+  onMounted,
+  ref,
+  type Ref,
+  type ShallowRef,
+} from 'vue'
 import {useAriaInvalid} from './useAriaInvalid'
 import {useId} from './useId'
 import {useDebounceFn, useFocus, useToNumber} from '@vueuse/core'
 import type {CommonInputProps} from '../types/FormCommonInputProps'
 import {formGroupPluginKey} from '../utils/keys'
+import {useStateClass} from './useStateClass'
 
 export const useFormInput = (
   props: Readonly<CommonInputProps>,
@@ -21,7 +31,12 @@ export const useFormInput = (
   const debounceMaxWaitNumber = useToNumber(() => props.debounceMaxWait ?? NaN)
 
   // This automatically adds the appropriate "for" attribute to a BFormGroup label
-  inject(formGroupPluginKey, null)?.(computedId)
+  const formGroupData = inject(formGroupPluginKey, null)?.(computedId)
+  const computedState = computed(() =>
+    props.state !== undefined ? props.state : (formGroupData?.state.value ?? null)
+  )
+  const computedAriaInvalid = useAriaInvalid(() => props.ariaInvalid, computedState)
+  const stateClass = useStateClass(computedState)
 
   const internalUpdateModelValue = useDebounceFn(
     (value: Numberish) => {
@@ -59,11 +74,6 @@ export const useFormInput = (
       }
     })
   })
-
-  const computedAriaInvalid = useAriaInvalid(
-    () => props.ariaInvalid,
-    () => props.state
-  )
 
   const onInput = (evt: Readonly<Event>) => {
     const {value} = evt.target as HTMLInputElement
@@ -132,5 +142,6 @@ export const useFormInput = (
     focus,
     blur,
     forceUpdateKey,
+    stateClass,
   }
 }

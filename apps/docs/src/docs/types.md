@@ -1,10 +1,5 @@
 # Types
 
-<ContentsSidebar>
-
-[[toc]]
-
-</ContentsSidebar>
 <div class="lead mb-5">
 
 `BootstrapVueNext` is a complete rewrite that strives for full TypeScript compatibility. This is a list of types we use in this library and that you can use too.
@@ -279,12 +274,34 @@ type InputType =
 
 </BCard>
 
+## LinkDecorators
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type LinkOpacity = 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
+type UnderlineOpacity = 0 | '0' | LinkOpacity
+type UnderlineOffset = 1 | 2 | 3 | '1' | '2' | '3'
+```
+
+</BCard>
+
 ## LinkTarget
 
 <BCard class="bg-body-tertiary">
 
 ```ts
 type LinkTarget = '_self' | '_blank' | '_parent' | '_top'
+```
+
+</BCard>
+
+## MaybePromise
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type MaybePromise<T> = Promise<T> | T
 ```
 
 </BCard>
@@ -364,6 +381,7 @@ type RadiusElement =
   | 'pill'
   | 'none'
   | 'sm'
+  | 'md'
   | 'lg'
   | '0'
   | '1'
@@ -446,6 +464,9 @@ type TableFieldAttribute<T = any> =
   | Record<string, unknown>
   | ((value: unknown, key?: LiteralUnion<keyof T>, item?: T) => Record<string, unknown>)
 
+type TableRowType = 'row' | 'row-details' | 'row-top' | 'row-bottom' | 'table-busy'
+type TableRowThead = 'top' | 'bottom'
+
 interface TableField<T = Record<string, unknown>> {
   key: LiteralUnion<keyof T>
   label?: string
@@ -454,8 +475,6 @@ interface TableField<T = Record<string, unknown>> {
   class?: ClassValue
   formatter?: TableFieldFormatter<T>
   sortable?: boolean
-  sortKey?: string
-  sortDirection?: string
   sortByFormatted?: boolean | TableFieldFormatter<T>
   filterByFormatted?: boolean | TableFieldFormatter<T>
   tdClass?: ClassValue
@@ -481,6 +500,37 @@ type TableItem<T = Record<string, unknown>> = T & {
   _rowVariant?: ColorVariant
   _cellVariants?: Partial<Record<keyof T, ColorVariant>>
   _showDetails?: boolean
+}
+```
+
+</BCard>
+
+## TableProvider
+
+```ts
+type BTableProviderContext<T = unknown> = {
+  sortBy: BTableSortBy<T>[] | undefined
+  filter: string | undefined
+  currentPage: number
+  perPage: number
+}
+
+type BTableProvider<T> = (
+  context: Readonly<BTableProviderContext<T>>
+) => MaybePromise<T[] | undefined>
+```
+
+## TableSortBy
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type BTableSortByOrder = 'desc' | 'asc' | undefined
+type BTableSortByComparerFunction<T = any> = (a: T, b: T, key: string) => number
+type BTableSortBy<T = any> = {
+  order: BTableSortByOrder
+  key: string
+  comparer?: BTableSortByComparerFunction<T>
 }
 ```
 
@@ -581,5 +631,4 @@ New values can be used now and the type check will be successful:
 
 <script setup lang="ts">
 import {BCard, BCardBody} from 'bootstrap-vue-next'
-import ContentsSidebar from '../components/ContentsSidebar.vue'
 </script>

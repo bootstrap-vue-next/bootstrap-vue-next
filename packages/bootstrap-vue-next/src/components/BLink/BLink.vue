@@ -1,28 +1,20 @@
 <template>
   <component
     :is="tag"
-    v-if="tag === 'router-link'"
-    v-slot="//@ts-ignore 
-    {href: localHref, navigate, isActive, isExactActive}"
-    v-bind="routerAttr"
-    custom
+    :class="computedClasses"
+    :target="props.target"
+    :href="computedHref"
+    :rel="computedRel"
+    :tabindex="computedTabIndex"
+    :aria-disabled="props.disabled ? true : null"
+    v-bind="computedSpecificProps"
+    @click="
+      (e: MouseEvent) => {
+        clicked(e)
+        link?.navigate(e)
+      }
+    "
   >
-    <component
-      :is="props.routerTag"
-      :href="localHref"
-      :target="props.target"
-      :class="{
-        [defaultActiveClass]: props.active,
-        [props.activeClass]: isActive,
-        [props.exactActiveClass]: isExactActive,
-      }"
-      v-bind="$attrs"
-      @click=";[navigate($event), clicked($event)]"
-    >
-      <slot />
-    </component>
-  </component>
-  <component :is="tag" v-else :class="computedLinkClasses" v-bind="routerAttr" @click="clicked">
     <slot />
   </component>
 </template>
@@ -32,7 +24,10 @@ import {useDefaults} from '../../composables/useDefaults'
 import {useLinkClasses} from '../../composables/useLinkClasses'
 import type {BLinkProps} from '../../types/ComponentProps'
 import {collapseInjectionKey, navbarInjectionKey} from '../../utils/keys'
-import {computed, getCurrentInstance, inject, useAttrs} from 'vue'
+import {computed, inject, useAttrs} from 'vue'
+import {useBLinkTagResolver} from '../../composables/useBLinkHelper'
+
+const defaultActiveClass = 'active'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -48,8 +43,11 @@ const _props = withDefaults(defineProps<BLinkProps>(), {
   icon: false,
   opacity: undefined,
   opacityHover: undefined,
-  // noPrefetch: {type: Boolean, default: false},
-  // prefetch: {type: Boolean, default: null},
+  noPrefetch: undefined,
+  prefetchOn: undefined,
+  noRel: false,
+  prefetchedClass: undefined,
+  prefetch: undefined,
   rel: undefined,
   replace: false,
   routerComponentName: 'router-link',
@@ -71,48 +69,19 @@ const emit = defineEmits<{
 }>()
 
 const attrs = useAttrs()
+const {computedHref, tag, link, isNuxtLink, isRouterLink, linkProps, isNonStandardTag} =
+  useBLinkTagResolver(
+    computed(() => ({
+      routerComponentName: props.routerComponentName,
+      disabled: props.disabled,
+      to: props.to,
+      replace: props.replace,
+      href: props.href,
+    }))
+  )
 
 const collapseData = inject(collapseInjectionKey, null)
 const navbarData = inject(navbarInjectionKey, null)
-
-const instance = getCurrentInstance()
-
-const defaultActiveClass = 'active'
-
-const tag = computed(() => {
-  const routerName = props.routerComponentName
-    .split('-')
-    .map((e) => e.charAt(0).toUpperCase() + e.slice(1))
-    .join('')
-  const hasRouter = instance?.appContext.app.component(routerName) !== undefined
-  if (!hasRouter || props.disabled || !props.to) {
-    return 'a'
-  }
-  return props.routerComponentName
-})
-
-const computedHref = computed(() => {
-  const toFallback = '#'
-  if (props.href) return props.href
-
-  if (typeof props.to === 'string') return props.to || toFallback
-
-  const {to} = props
-
-  if (to !== undefined && 'path' in to) {
-    const path = to.path || ''
-    const query = to.query
-      ? `?${Object.keys(to.query)
-          .map((e) => `${e}=${to.query?.[e]}`)
-          .join('=')}`
-      : ''
-    const hash = !to.hash || to.hash.charAt(0) === '#' ? to.hash || '' : `#${to.hash}`
-    return `${path}${query}${hash}` || toFallback
-  }
-  // There is no resolver for `RouteLocationNamedRaw`. Which, I'm not sure there can be one in this context.
-
-  return toFallback
-})
 
 /**
  * Not to be confused with computedLinkClasses
@@ -120,22 +89,15 @@ const computedHref = computed(() => {
 const linkValueClasses = useLinkClasses(props)
 const computedClasses = computed(() => [
   linkValueClasses.value,
+  attrs.class,
+  computedLinkClasses.value,
   {
+    [defaultActiveClass]: props.active,
+    [props.activeClass]: link.value?.isActive.value || false,
+    [props.exactActiveClass]: link.value?.isExactActive.value || false,
     'stretched-link': props.stretched === true,
   },
 ])
-
-const routerAttr = computed(() => ({
-  'class': computedClasses.value,
-  'to': props.to,
-  'replace': props.replace,
-  'href': computedHref.value,
-  'target': props.target,
-  'rel': props.target === '_blank' ? (props.rel ?? 'noopener') : undefined,
-  'tabindex': props.disabled ? '-1' : typeof attrs.tabindex === 'undefined' ? null : attrs.tabindex,
-  'aria-disabled': props.disabled ? true : null,
-}))
-
 const computedLinkClasses = computed(() => ({
   [defaultActiveClass]: props.active,
   disabled: props.disabled,
@@ -157,4 +119,25 @@ const clicked = (e: Readonly<MouseEvent>): void => {
 
   emit('click', e)
 }
+
+const computedRel = computed(() =>
+  props.target === '_blank' ? (!props.rel && props.noRel ? 'noopener' : props.rel) : undefined
+)
+const computedTabIndex = computed(() =>
+  props.disabled ? '-1' : typeof attrs.tabindex === 'undefined' ? null : attrs.tabindex
+)
+
+const nuxtSpecificProps = computed(() => ({
+  prefetch: props.prefetch,
+  noPrefetch: props.noPrefetch,
+  prefetchOn: props.prefetchOn,
+  prefetchedClass: props.prefetchedClass,
+  ...linkProps.value,
+}))
+const computedSpecificProps = computed(() => ({
+  ...(isRouterLink.value ? linkProps.value : undefined),
+  // In addition to being Nuxt specific, we add these values if it's some non-standard tag. We don't know what it is,
+  // So we just add it anyways. It will be made as an attr if it's unused so it's fine
+  ...(isNuxtLink.value || isNonStandardTag.value ? nuxtSpecificProps.value : undefined),
+}))
 </script>

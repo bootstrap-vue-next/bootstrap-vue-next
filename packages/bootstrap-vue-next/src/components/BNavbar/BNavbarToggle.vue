@@ -17,7 +17,7 @@
 import type {BNavbarToggleProps} from '../../types/ComponentProps'
 import {computed, inject} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
-import {globalCollapseStorageInjectionKey} from '../../utils/keys'
+import {globalShowHideStorageInjectionKey} from '../../utils/keys'
 
 const _props = withDefaults(defineProps<BNavbarToggleProps>(), {
   label: 'Toggle navigation',
@@ -41,20 +41,20 @@ const computedClasses = computed(() => ({
   disabled: props.disabled,
 }))
 
-const collapseData = inject(globalCollapseStorageInjectionKey, undefined)
+const showHideData = inject(globalShowHideStorageInjectionKey, undefined)
 
 const collapseExpanded = computed(() => {
-  if (!props.target || !collapseData) return false
-  if (typeof props.target === 'string') return collapseData.map[props.target]?.value || false
-  return props.target.some((target) => collapseData.map[target]?.value)
+  if (!props.target || !showHideData) return false
+  if (typeof props.target === 'string') return showHideData.map[props.target]?.value || false
+  return props.target.some((target) => showHideData.map[target]?.value)
 })
 const toggleExpand = () => {
-  if (!props.target || !collapseData) return
+  if (!props.target || !showHideData) return
   if (typeof props.target === 'string') {
-    collapseData.map[props.target]?.toggle()
+    showHideData.map[props.target]?.toggle()
     return
   }
-  props.target.forEach((target) => collapseData.map[target]?.toggle())
+  props.target.forEach((target) => showHideData.map[target]?.toggle())
 }
 
 const onClick = (e: Readonly<MouseEvent>): void => {

@@ -1,10 +1,10 @@
 <template>
-  <li role="presentation" :class="wrapperClass" v-bind="props.wrapperAttrs">
+  <li role="presentation" :class="processedAttrs.wrapperClass" v-bind="props.wrapperAttrs">
     <form
       class="dropdown-item-text"
       :class="computedClasses"
       :novalidate="props.novalidate"
-      v-bind="attrs"
+      v-bind="processedAttrs.formAttrs"
     >
       <slot />
     </form>
@@ -19,7 +19,11 @@ import type {BDropdownFormProps} from '../../types/ComponentProps'
 defineOptions({
   inheritAttrs: false,
 })
-const {class: wrapperClass, ...attrs} = useAttrs()
+const attrs = useAttrs()
+const processedAttrs = computed(() => {
+  const {class: wrapperClass, ...formAttrs} = attrs
+  return {wrapperClass, formAttrs}
+})
 
 const _props = withDefaults(defineProps<BDropdownFormProps>(), {
   formClass: undefined,
@@ -34,8 +38,10 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const computedClasses = computed(() => ({
-  'was-validated': props.validated,
-  ...props.formClass,
-}))
+const computedClasses = computed(() => [
+  props.formClass,
+  {
+    'was-validated': props.validated,
+  },
+])
 </script>

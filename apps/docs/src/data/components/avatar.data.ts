@@ -1,5 +1,5 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
 import {buildCommonProps, pick} from '../../utils'
 import {linkProps, linkTo} from '../../utils/link-props'
 
@@ -7,6 +7,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BAvatar',
+      styleSpec: {kind: StyleKind.BsvnClass},
       sourcePath: '/BAvatar/BAvatar.vue',
       props: {
         '': {
@@ -155,6 +156,7 @@ export default {
     },
     {
       component: 'BAvatarGroup',
+      styleSpec: {kind: StyleKind.BsvnClass},
       sourcePath: '/BAvatar/BAvatarGroup.vue',
       props: {
         '': {
@@ -206,7 +208,6 @@ export default {
           description: 'Content (avatars) to place in the avatar group',
         },
       ],
-      emits: [],
     },
   ],
 }

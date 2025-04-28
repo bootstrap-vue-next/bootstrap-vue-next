@@ -89,6 +89,12 @@ describe('pagination', () => {
     expect($li.classes()).toContain('page-item')
   })
 
+  it('li child has static role', () => {
+    const wrapper = mount(BPagination)
+    const $li = wrapper.get('li')
+    expect($li.attributes('role')).toBe('presentation')
+  })
+
   it('has first button by default', () => {
     const wrapper = mount(BPagination, {props: {totalRows: 100, perPage: 1, modelValue: 5}})
     expect(wrapper.find('[aria-label="Go to first page"]').exists()).toBeTruthy()
@@ -459,6 +465,25 @@ describe('pagination', () => {
     })
 
     expect(await TestScenariosAgainstInvariants(wrapper)).toBe(0)
+  })
+  it('can navigate to different pages using the left and right arrow keys', async () => {
+    const wrapper = mount(BPagination, {
+      props: {totalRows: 7, perPage: 1, modelValue: 1},
+      attachTo: document.body,
+    })
+    await wrapper.find('li.active > button').element?.focus()
+    expect(document.activeElement?.textContent).toBe('1')
+    await wrapper.find('ul').trigger('keydown', {code: 'ArrowRight'})
+    expect(document.activeElement?.textContent).toBe('2')
+    await wrapper.find('ul').trigger('keydown', {code: 'ArrowRight'})
+    expect(document.activeElement?.textContent).toBe('3')
+    await wrapper.find('ul').trigger('keydown', {code: 'ArrowRight'})
+    expect(document.activeElement?.textContent).toBe('4')
+    await wrapper.find('button[aria-posinset="4"]').trigger('click')
+    await wrapper.find('ul').trigger('keydown', {code: 'ArrowRight'})
+    expect(document.activeElement?.textContent).toBe('5')
+    await wrapper.find('ul').trigger('keydown', {code: 'ArrowLeft'})
+    expect(document.activeElement?.textContent).toBe('4')
   })
 })
 

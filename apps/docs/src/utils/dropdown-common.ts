@@ -172,17 +172,6 @@ export const dropdownEmits: ComponentReference['emits'] = [
     description: 'Emitted when the dropdown tried to close, but was prevented from doing so.',
   },
   {
-    event: 'click',
-    description: 'Emitted when button is clicked',
-    args: [
-      {
-        arg: 'event',
-        type: 'MouseEvent',
-        description: 'Native click event object',
-      },
-    ],
-  },
-  {
     event: 'show',
     description: 'Emitted just before dropdown is shown. Cancelable',
     args: [

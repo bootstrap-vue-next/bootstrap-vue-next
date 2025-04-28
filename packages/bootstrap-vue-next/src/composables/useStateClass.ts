@@ -1,6 +1,7 @@
 import {computed, type MaybeRefOrGetter, toValue} from 'vue'
+import type {ValidationState} from '../types/CommonTypes'
 
-export const useStateClass = (value: MaybeRefOrGetter<boolean | null>) =>
+export const useStateClass = (value: MaybeRefOrGetter<ValidationState>) =>
   computed(() => {
     const resolvedValue = toValue(value)
 

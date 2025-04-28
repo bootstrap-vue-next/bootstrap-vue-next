@@ -1,12 +1,6 @@
 # Carousel
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
-<div class="lead mb-5">
+<PageHeader>
 
 The carousel is a slideshow for cycling through a series of content. It works with a series of images, text,
 or custom markup. It also includes support for previous/next controls and indicators.
@@ -14,7 +8,7 @@ or custom markup. It also includes support for previous/next controls and indica
 Nested carousels are not supported. You should also be aware that carousels in general can often cause
 usability and accessibility challenges.
 
-</div>
+</PageHeader>
 
 ## Basic usage
 

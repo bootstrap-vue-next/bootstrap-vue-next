@@ -1,5 +1,5 @@
 import type {AriaInvalid} from './AriaInvalid'
-import type {Numberish} from './CommonTypes'
+import type {Numberish, ValidationState} from './CommonTypes'
 import type {Size} from './Size'
 
 export interface FormDebounceOptions {
@@ -24,5 +24,5 @@ export interface CommonInputProps extends FormDebounceOptions {
   readonly?: boolean
   required?: boolean
   size?: Size
-  state?: boolean | null | undefined
+  state?: ValidationState
 }

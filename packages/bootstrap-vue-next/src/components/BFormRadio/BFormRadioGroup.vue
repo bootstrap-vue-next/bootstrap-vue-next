@@ -57,7 +57,7 @@ defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   first?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  option: (props: Record<string, unknown>) => any
+  option: (props: (typeof normalizeOptions.value)[number]) => any
 }>()
 
 const modelValue = defineModel<Exclude<BFormRadioGroupProps['modelValue'], undefined>>({
@@ -88,7 +88,15 @@ provide(radioGroupKey, {
   disabled: toRef(() => props.disabled),
 })
 
-const normalizeOptions = computed(() =>
+const normalizeOptions = computed<
+  {
+    text: string | undefined
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    value: any
+    disabled?: boolean | undefined
+    [key: string]: unknown
+  }[]
+>(() =>
   props.options.map((el) =>
     typeof el === 'string' || typeof el === 'number'
       ? {
@@ -97,9 +105,9 @@ const normalizeOptions = computed(() =>
           text: el.toString(),
         }
       : {
-          value: el[props.valueField] as string | undefined,
+          ...el,
+          value: el[props.valueField],
           disabled: el[props.disabledField] as boolean | undefined,
-          ...(el.props ? el.props : {}),
           text: el[props.textField] as string | undefined,
         }
   )

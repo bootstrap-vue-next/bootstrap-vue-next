@@ -12,9 +12,12 @@
           <BNavItem>Link</BNavItem>
           <BNavItemDropdown
             id="my-nav-dropdown"
+            split
             text="Dropdown"
             toggle-class="nav-link-custom"
             right
+            @split-click="consoleLog('split button clicked')"
+            @click.stop.prevent="consoleLog('button clicked')"
           >
             <BDropdownItem>One</BDropdownItem>
             <BDropdownItem>Two</BDropdownItem>
@@ -45,3 +48,7 @@
     </BRow>
   </BContainer>
 </template>
+
+<script setup lang="ts">
+const consoleLog = (...args: unknown[]) => console.log(...args)
+</script>

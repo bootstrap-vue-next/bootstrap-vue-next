@@ -7,7 +7,13 @@
     :aria-label="props.ariaLabel || undefined"
     @keydown="handleKeyNav"
   >
-    <li v-for="page in pages" :key="`page-${page.id}`" v-bind="page.li" ref="_pageElements">
+    <li
+      v-for="(page, index) in pages"
+      :key="`page-${page.id}`"
+      v-bind="page.li"
+      ref="_pageElements"
+      :displayIndex="index"
+    >
       <span
         v-if="page.id === FIRST_ELLIPSIS || page.id === LAST_ELLIPSIS"
         v-bind="ellipsisProps.span"
@@ -100,7 +106,9 @@ const emit = defineEmits<{
   'page-click': [event: BvEvent, pageNumber: number]
 }>()
 
-const modelValue = defineModel<Exclude<BPaginationProps['modelValue'], undefined>>({default: 1})
+const modelValue = defineModel<Exclude<BPaginationProps['modelValue'], undefined>>({
+  default: 1,
+})
 
 const pageElements = useTemplateRef<HTMLLIElement[]>('_pageElements')
 
@@ -119,21 +127,21 @@ const justifyAlign = computed(() => (props.align === 'fill' ? 'start' : props.al
 
 const alignment = useAlignment(justifyAlign)
 
-const isActivePage = (pageNumber: number) => pageNumber === modelValueNumber.value
+const isActivePage = (pageNumber: number) => pageNumber === computedModelValue.value
 const getTabIndex = (num: number) => (props.disabled ? null : isActivePage(num) ? '0' : '-1')
 
 const checkDisabled = (num: number) =>
   props.disabled ||
   isActivePage(num) ||
-  modelValueNumber.value < 1 ||
+  computedModelValue.value < 1 ||
   // Check if the number is out of bounds
   num < 1 ||
   num > numberOfPages.value
 
 const firstDisabled = computed(() => checkDisabled(1))
-const prevDisabled = computed(() => checkDisabled(modelValueNumber.value - 1))
+const prevDisabled = computed(() => checkDisabled(computedModelValue.value - 1))
 const lastDisabled = computed(() => checkDisabled(numberOfPages.value))
-const nextDisabled = computed(() => checkDisabled(modelValueNumber.value + 1))
+const nextDisabled = computed(() => checkDisabled(computedModelValue.value + 1))
 
 const getBaseButtonProps = ({
   page,
@@ -145,7 +153,6 @@ const getBaseButtonProps = ({
   label,
   position,
   isActive,
-  role,
   hidden,
   isSmHidden,
 }: {
@@ -158,7 +165,6 @@ const getBaseButtonProps = ({
   label?: string
   position?: number
   isActive?: boolean
-  role?: string
   hidden?: boolean
   isSmHidden?: boolean
 }) => ({
@@ -174,7 +180,7 @@ const getBaseButtonProps = ({
       },
       classVal,
     ],
-    role,
+    'role': 'presentation',
     'aria-hidden': hidden,
   },
   button: {
@@ -242,7 +248,7 @@ const firstButtonProps = computed(() =>
 )
 const prevButtonProps = computed(() =>
   getButtonProps({
-    page: Math.max(modelValueNumber.value - 1, 1),
+    page: Math.max(computedModelValue.value - 1, 1),
     disabled: prevDisabled.value,
     classVal: props.prevClass,
     slotName: 'prev-text',
@@ -252,7 +258,7 @@ const prevButtonProps = computed(() =>
 )
 const nextButtonProps = computed(() =>
   getButtonProps({
-    page: Math.min(modelValueNumber.value + 1, numberOfPages.value),
+    page: Math.min(computedModelValue.value + 1, numberOfPages.value),
     disabled: nextDisabled.value,
     classVal: props.nextClass,
     slotName: 'next-text',
@@ -303,8 +309,7 @@ const pagination = computed(() => ({
 }))
 
 const pageClick = (event: Readonly<MouseEvent>, pageNumber: number) => {
-  if (pageNumber === modelValueNumber.value) return
-
+  if (pageNumber === computedModelValue.value) return
   const clickEvent = new BvEvent('page-click', {
     cancelable: true,
     target: event.target,
@@ -315,6 +320,13 @@ const pageClick = (event: Readonly<MouseEvent>, pageNumber: number) => {
 
   modelValue.value = pageNumber
 
+  nextTick(() => {
+    if (pageNumber === 1) {
+      focusFirst()
+    } else if (pageNumber === pagination.value.numberOfPages) {
+      focusLast()
+    }
+  })
   //    nextTick(() => {
   //  if (isVisible(target) && un_element.contains(target)) {
   //  attemptFocus(target)
@@ -332,18 +344,24 @@ const isDisabled = (el: HTMLButtonElement) => {
   return !isElement || el.disabled || hasAttr || hasClass
 }
 
-const getButtons = () =>
-  pageElements.value
-    ?.map((page) => page.children[0] as HTMLButtonElement)
-    .filter((btn) => {
-      if (btn.getAttribute('display') === 'none') {
+const getButtons = (): HTMLButtonElement[] =>
+  [...(pageElements.value ?? [])]
+    ?.sort(
+      (a, b) =>
+        parseInt(a.getAttribute('displayIndex') || '0') -
+        parseInt(b.getAttribute('displayIndex') || '0')
+    )
+    ?.map((page) => page.children[0])
+    ?.filter((el) => {
+      if (el.getAttribute('display') === 'none' || el.tagName.toUpperCase() !== 'BUTTON') {
         return false
       }
 
-      const bcr = btn.getBoundingClientRect()
+      const bcr = el.getBoundingClientRect()
 
-      return !!(bcr && bcr.height > 0 && bcr.width > 0)
-    }) ?? []
+      return true || !!(bcr && bcr.height > 0 && bcr.width > 0)
+    })
+    ?.map((el) => el as HTMLButtonElement)
 
 const focusFirst = () => {
   nextTick(() => {
@@ -376,7 +394,6 @@ const focusNext = () => {
   nextTick(() => {
     const buttons = getButtons()
     const index = buttons.indexOf(getActiveElement() as HTMLButtonElement)
-
     if (index < buttons.length - 1 && !isDisabled(buttons[index + 1])) {
       buttons[index + 1]?.focus()
     }
@@ -385,7 +402,6 @@ const focusNext = () => {
 
 const handleKeyNav = (event: KeyboardEvent) => {
   const {code, shiftKey} = event
-
   if (code === CODE_LEFT || code === CODE_UP) {
     stopEvent(event)
     if (shiftKey) {
@@ -403,26 +419,14 @@ const handleKeyNav = (event: KeyboardEvent) => {
   }
 }
 
-watch(modelValueNumber, (newValue) => {
-  const sanitizeCurrentPage = (value: number, numberOfPages: number) => {
-    const page = value || 1
-    return page > numberOfPages ? numberOfPages : page < 1 ? 1 : page
-  }
-  const calculatedValue = sanitizeCurrentPage(newValue, numberOfPages.value)
-  if (calculatedValue === modelValue.value) return
-  modelValue.value = calculatedValue
+const computedModelValue = computed(() => {
+  const page = modelValueNumber.value || 1
+  return page > numberOfPages.value ? numberOfPages.value : page < 1 ? 1 : page
 })
 
 watch(pagination, (oldValue, newValue) => {
   if (newValue.pageSize !== oldValue.pageSize && newValue.totalRows === oldValue.totalRows) {
     // If the page size changes, reset to page 1
-    modelValue.value = 1
-  } else if (
-    newValue.numberOfPages !== oldValue.numberOfPages &&
-    modelValueNumber.value > newValue.numberOfPages
-  ) {
-    // If `numberOfPages` changes and is less than
-    // the `currentPage` number, reset to page 1
     modelValue.value = 1
   }
 })
@@ -436,7 +440,7 @@ const lastPage = computed(() => (props.lastNumber ? 1 : 0))
 const halfLimit = computed(() => Math.floor(limitNumber.value / 2))
 
 const pages = computed(() => {
-  const {value} = modelValueNumber
+  const {value} = computedModelValue
 
   const els = elements.value.map((p) => {
     switch (p) {
@@ -477,7 +481,7 @@ const elements = computed(() => {
   // iterates over the array.
 
   const pages = numberOfPages.value
-  const {value} = modelValueNumber
+  const {value} = computedModelValue
   const limit = limitNumber.value
   const noEllipsis = props.noEllipsis || limit <= ELLIPSIS_THRESHOLD
 

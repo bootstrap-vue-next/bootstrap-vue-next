@@ -55,3 +55,14 @@ export const getTransitionDelay = (element: Readonly<HTMLElement>) => {
   const transitionDurationMs = Number(transitionDuration.slice(0, -1)) * 1000
   return transitionDelayMs + transitionDurationMs
 }
+
+export const sortSlotElementsByPosition = (
+  a: Readonly<HTMLElement> | null,
+  b: Readonly<HTMLElement> | null
+): number => {
+  if (typeof Node === 'undefined' || !Node || !a || !b) return 0
+  const position = a.compareDocumentPosition(b)
+  if (position & Node.DOCUMENT_POSITION_FOLLOWING) return -1
+  if (position & Node.DOCUMENT_POSITION_PRECEDING) return 1
+  return 0
+}

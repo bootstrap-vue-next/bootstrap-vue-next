@@ -1,10 +1,11 @@
-import type {ComponentReference} from '../../types'
+import {type ComponentReference, StyleKind} from '../../types'
 import {imageProps} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => [
     {
       component: 'BImg',
+      styleSpec: {kind: StyleKind.BsvnClass},
       sourcePath: '/BImg/BImg.vue',
       props: {
         '': imageProps,

@@ -131,7 +131,15 @@ export default defineConfig({
     },
   },
 
-  css: {preprocessorOptions: {scss: {charset: false}}},
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler',
+        charset: false,
+        silenceDeprecations: ['mixed-decls', 'color-functions', 'global-builtin', 'import'],
+      },
+    },
+  },
 
   plugins: [
     vueDevTools(),

@@ -42,11 +42,20 @@
             role="tab"
             :aria-controls="tab.id"
             :aria-selected="tab.active"
+            :tabindex="props.noKeyNav ? undefined : tab.active ? undefined : -1"
             v-bind="tab.titleLinkAttrs?.()"
-            @keydown.left.stop.prevent="keynav(-1)"
-            @keydown.right.stop.prevent="keynav(1)"
-            @keydown.page-up.stop.prevent="keynav(-999)"
-            @keydown.page-down.stop.prevent="keynav(999)"
+            @keydown.left.exact="!props.vertical && keynav($event, -1)"
+            @keydown.left.shift="!props.vertical && keynav($event, -999)"
+            @keydown.up.exact="props.vertical && keynav($event, -1)"
+            @keydown.up.shift="props.vertical && keynav($event, -999)"
+            @keydown.right.exact="!props.vertical && keynav($event, 1)"
+            @keydown.right.shift="!props.vertical && keynav($event, 999)"
+            @keydown.down.exact="props.vertical && keynav($event, 1)"
+            @keydown.down.shift="props.vertical && keynav($event, 999)"
+            @keydown.page-up="keynav($event, -999)"
+            @keydown.page-down="keynav($event, 999)"
+            @keydown.home="keynav($event, -999)"
+            @keydown.end="keynav($event, 999)"
             @click.stop.prevent="(e) => handleClick(e, idx)"
           >
             <component :is="tab.titleComponent" v-if="tab.titleComponent" />
@@ -71,6 +80,7 @@ import type {TabType} from '../../types/Tab'
 import type {BTabsProps} from '../../types/ComponentProps'
 import {tabsInjectionKey} from '../../utils/keys'
 import {useDefaults} from '../../composables/useDefaults'
+import {sortSlotElementsByPosition} from '../../utils/dom'
 
 const _props = withDefaults(defineProps<Omit<BTabsProps, 'modelValue' | 'activeId'>>(), {
   activeNavItemClass: undefined,
@@ -89,12 +99,13 @@ const _props = withDefaults(defineProps<Omit<BTabsProps, 'modelValue' | 'activeI
   navItemClass: undefined,
   navWrapperClass: undefined,
   noFade: false,
-  // noKeyNav: false,
+  noKeyNav: false,
   noNavStyle: false,
   pills: false,
   small: false,
   tag: 'div',
   tabClass: undefined,
+  underline: false,
   vertical: false,
 })
 const props = useDefaults(_props, 'BTabs')
@@ -157,12 +168,14 @@ const alignment = useAlignment(() => props.align)
 
 const navTabsClasses = computed(() => ({
   'nav-pills': props.pills,
+  'nav-underline': props.underline,
   'flex-column me-3': props.vertical,
   [alignment.value]: props.align !== undefined,
   'nav-fill': props.fill,
-  'card-header-tabs': props.card,
+  'card-header-tabs': props.card && !props.pills && !props.underline,
+  'card-header-pills': props.card && props.pills,
   'nav-justified': props.justified,
-  'nav-tabs': !props.noNavStyle && !props.pills,
+  'nav-tabs': !props.noNavStyle && !props.pills && !props.underline,
   'small': props.small,
 }))
 
@@ -197,8 +210,10 @@ const handleClick = (event: Readonly<MouseEvent>, index: number) => {
   }
 }
 
-const keynav = (direction: number) => {
-  if (tabs.value.length <= 0) return
+const keynav = (e: Event, direction: number) => {
+  if (tabs.value.length <= 0 || props.noKeyNav) return
+  e.preventDefault()
+  e.stopPropagation()
   modelValue.value = nextIndex(modelValue.value + direction, direction)
   document.getElementById(tabs.value[modelValue.value]?.buttonId)?.focus()
 }
@@ -256,13 +271,7 @@ const registerTab = (tab: Ref<TabType>) => {
   } else {
     tabsInternal.value[tabsInternal.value.findIndex((t) => t.value.id === tab.value.id)] = tab
   }
-  tabsInternal.value.sort((a, b) => {
-    if (!Node || !a.value.el || !b.value.el) return 0
-    const position = a.value.el.compareDocumentPosition(b.value.el)
-    if (position & Node.DOCUMENT_POSITION_FOLLOWING) return -1
-    if (position & Node.DOCUMENT_POSITION_PRECEDING) return 1
-    return 0
-  })
+  tabsInternal.value.sort((a, b) => sortSlotElementsByPosition(a.value.el, b.value.el))
 }
 const unregisterTab = (id: string) => {
   tabsInternal.value = tabsInternal.value.filter((t) => t.value.id !== id)

@@ -1,39 +1,16 @@
 # Button
 
-<ComponentSidebar>
-
-[[toc]]
-
-</ComponentSidebar>
-
-<div class="lead mb-5">
+<PageHeader>
 
 Use Bootstrap's custom `BButton` component for actions in forms, dialogs, and more. Includes support for a handful of contextual variations, sizes, states, and more.
 
-</div>
+</PageHeader>
 
 ## Overview
 
 BootstrapVueNext's `BButton` component generates either a `<button>` element, `<a>` element, or `RouterLink` component with the styling of a button.
 
-<HighlightCard>
-  <div class="d-flex gap-2">
-    <BButton>Button</BButton>
-    <BButton variant="danger">Button</BButton>
-    <BButton variant="success">Button</BButton>
-    <BButton variant="outline-primary">Button</BButton>
-  </div>
-  <template #html>
-
-```vue-html
-<BButton>Button</BButton>
-<BButton variant="danger">Button</BButton>
-<BButton variant="success">Button</BButton>
-<BButton variant="outline-primary">Button</BButton>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/ButtonOverview.vue#template{vue-html}
 
 ## Element type
 
@@ -41,20 +18,7 @@ The `BButton` component generally renders a `<button>` element. However, you can
 `<a>` element by providing an `href` prop value. You may also generate `vue-router` `RouterLink`
 when providing a value for the `to` prop (`vue-router` is required).
 
-<HighlightCard>
-  <div class="d-flex gap-2">
-    <BButton>I am a Button</BButton>
-    <BButton href="#">I am a Link</BButton>
-  </div>
-  <template #html>
-
-```vue-html
-<BButton>I am a Button</BButton>
-<BButton href="#">I am a Link</BButton>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/ButtonElementType.vue#template{vue-html}
 
 ## Type
 
@@ -67,22 +31,7 @@ Note the `type` prop has no effect when either `href` or `to` props are set.
 
 Fancy larger or smaller buttons? Specify `lg` or `sm` via the `size` prop.
 
-<HighlightCard>
-  <div>
-    <BButton size="sm" class="mx-1">Small Button</BButton>
-    <BButton class="mx-1">Default Button</BButton>
-    <BButton size="lg" class="mx-1">Large Button</BButton>
-  </div>
-  <template #html>
-
-```vue-html
-<BButton size="sm" class="mx-1">Small Button</BButton>
-<BButton class="mx-1">Default Button</BButton>
-<BButton size="lg" class="mx-1">Large Button</BButton>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/ButtonSizing.vue#template{vue-html}
 
 ## Contextual variants
 
@@ -97,32 +46,7 @@ See the [Color Variants](/docs/reference/color-variants) page for details.
 
 `primary`, `secondary`, `success`, `danger`, `warning`, `info`, `light` and `dark`.
 
-<HighlightCard>
-  <div class="d-flex gap-2">
-    <BButton variant="primary">Primary</BButton>
-    <BButton variant="secondary">Secondary</BButton>
-    <BButton variant="success">Success</BButton>
-    <BButton variant="danger">Danger</BButton>
-    <BButton variant="warning">Warning</BButton>
-    <BButton variant="info">Info</BButton>
-    <BButton variant="light">Light</BButton>
-    <BButton variant="dark">Dark</BButton>
-  </div>
-  <template #html>
-
-```vue-html
-<BButton variant="primary">Primary</BButton>
-<BButton variant="secondary">Secondary</BButton>
-<BButton variant="success">Success</BButton>
-<BButton variant="danger">Danger</BButton>
-<BButton variant="warning">Warning</BButton>
-<BButton variant="info">Info</BButton>
-<BButton variant="light">Light</BButton>
-<BButton variant="dark">Dark</BButton>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/ButtonContextualVariants.vue#template{vue-html}
 
 ### Outline color variants
 
@@ -132,56 +56,16 @@ remove all background images and colors on any `BButton`:
 `outline-primary`, `outline-secondary`, `outline-success`, `outline-danger`, `outline-warning`,
 `outline-info`, `outline-light` and `outline-dark`.
 
-<HighlightCard>
-  <div class="d-flex gap-2">
-    <BButton variant="outline-primary">Primary</BButton>
-    <BButton variant="outline-secondary">Secondary</BButton>
-    <BButton variant="outline-success">Success</BButton>
-    <BButton variant="outline-danger">Danger</BButton>
-    <BButton variant="outline-warning">Warning</BButton>
-    <BButton variant="outline-info">Info</BButton>
-    <BButton variant="outline-light">Light</BButton>
-    <BButton variant="outline-dark">Dark</BButton>
-  </div>
-  <template #html>
-
-```vue-html
-<BButton variant="outline-primary">Primary</BButton>
-<BButton variant="outline-secondary">Secondary</BButton>
-<BButton variant="outline-success">Success</BButton>
-<BButton variant="outline-danger">Danger</BButton>
-<BButton variant="outline-warning">Warning</BButton>
-<BButton variant="outline-info">Info</BButton>
-<BButton variant="outline-light">Light</BButton>
-<BButton variant="outline-dark">Dark</BButton>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/ButtonOutlineVariants.vue#template{vue-html}
 
 ### Link variant
 
 Variant `link` will render a button with the appearance of a link while maintaining the default
 padding and size of a button.
 
-<HighlightCard>
-  <BButton variant="link">Link</BButton>
-  <template #html>
-
-```vue-html
-<BButton variant="link">Link</BButton>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/ButtonLinkVariant.vue#template{vue-html}
 
 **Tip:** remove the hover underline from a link variant button by setting `underline-opacity="0"`.
-
-::: warning Interactions between Variant props
-`BButton` implements `bg-variant` and `text-variant` to provide finer control of colors, they take
-precedence over the `variant` prop. See the
-[Color Variant Reference](/docs/reference/color-variants#variant-interactions) for details.
-:::
 
 ## Block level buttons
 
@@ -191,49 +75,13 @@ control over spacing, alignment, and responsive behaviors. See the
 [Bootstrap 5](https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons)
 documentation for details
 
-<HighlightCard>
-  <div class="d-grid gap-2">
-    <BButton variant="primary">Block Level Button</BButton>
-    <BButton variant="primary">Another Block Level Button</BButton>
-  </div>
-  <template #html>
-
-```vue-html
-<div class="d-grid gap-2">
-  <BButton variant="primary">Block Level Button</BButton>
-  <BButton variant="primary">Another Block Level Button</BButton>
-</div>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/ButtonBlockLevel.vue#template{vue-html}
 
 ## Pill style
 
 Prefer buttons with a more rounded-pill style? Just set the prop `pill` to true.
 
-<HighlightCard>
-  <div class="d-flex gap-2">
-    <BButton pill>Button</BButton>
-    <BButton pill variant="primary">Button</BButton>
-    <BButton pill variant="outline-secondary">Button</BButton>
-    <BButton pill variant="success">Button</BButton>
-    <BButton pill variant="outline-danger">Button</BButton>
-    <BButton pill variant="info">Button</BButton>
-  </div>
-  <template #html>
-
-```vue-html
-<BButton pill>Button</BButton>
-<BButton pill variant="primary">Button</BButton>
-<BButton pill variant="outline-secondary">Button</BButton>
-<BButton pill variant="success">Button</BButton>
-<BButton pill variant="outline-danger">Button</BButton>
-<BButton pill variant="info">Button</BButton>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/ButtonPillStyle.vue#template{vue-html}
 
 This prop adds the Bootstrap v5 utility class `.rounded-pill` on the rendered button.
 
@@ -241,28 +89,7 @@ This prop adds the Bootstrap v5 utility class `.rounded-pill` on the rendered bu
 
 Prefer buttons with a more square corner style? Just set the prop `squared` to true.
 
-<HighlightCard>
-  <div class="d-flex gap-2">
-    <BButton squared>Button</BButton>
-    <BButton squared variant="primary">Button</BButton>
-    <BButton squared variant="outline-secondary">Button</BButton>
-    <BButton squared variant="success">Button</BButton>
-    <BButton squared variant="outline-danger">Button</BButton>
-    <BButton squared variant="info">Button</BButton>
-  </div>
-  <template #html>
-
-```vue-html
-<BButton squared>Button</BButton>
-<BButton squared variant="primary">Button</BButton>
-<BButton squared variant="outline-secondary">Button</BButton>
-<BButton squared variant="success">Button</BButton>
-<BButton squared variant="outline-danger">Button</BButton>
-<BButton squared variant="info">Button</BButton>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/ButtonSquaredStyle.vue#template{vue-html}
 
 The `squared` prop adds the Bootstrap v5 utility class `.rounded-0` on the rendered button. The
 `pill` prop takes precedence over the `squared` prop.
@@ -272,20 +99,7 @@ The `squared` prop adds the Bootstrap v5 utility class `.rounded-0` on the rende
 Set the `disabled` prop to disable button default functionality. `disabled` also works with buttons
 rendered as `<a>` elements and `RouterLink` (i.e. with the `href` or `to` prop set).
 
-<HighlightCard>
-  <div class="d-flex gap-2">
-    <BButton disabled size="lg" variant="primary">Disabled</BButton>
-    <BButton disabled size="lg">Also Disabled</BButton>
-  </div>
-  <template #html>
-
-```vue-html
-<BButton disabled size="lg" variant="primary">Disabled</BButton>
-<BButton disabled size="lg">Also Disabled</BButton>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/ButtonDisabledState.vue#template{vue-html}
 
 ## Pressed state and toggling
 
@@ -300,67 +114,7 @@ The `pressed` prop can be set to one of three values:
 
 To create a button that can be toggled between active and non-active states, use the `v-model` (available in Vue 3.0+) on the `pressed` property by specifying `v-model:pressed`.
 
-<HighlightCard>
-  <h5>Pressed and un-pressed state</h5>
-  <div class="d-flex gap-2">
-    <BButton :pressed="true" variant="success">Always Pressed</BButton>
-    <BButton :pressed="false" variant="success">Not Pressed</BButton>
-  </div>
-  <h5 class="mt-3">Toggleable Button</h5>
-  <BButton v-model:pressed="buttonToggle" variant="primary">Toggle Me</BButton>
-  <p>Pressed State: <strong>{{ buttonToggle }}</strong></p>
-  <h5>In a button group</h5>
-  <BButtonGroup size="sm">
-    <BButton
-      v-for="(btn, idx) in buttons"
-      :key="idx"
-      v-model:pressed="btn.state"
-      variant="primary"
-    >
-      {{ btn.caption }}
-    </BButton>
-  </BButtonGroup>
-  <p>Pressed States: <strong>{{ btnStates }}</strong></p>
-  <template #html>
-
-```vue
-<template>
-  <h5>Pressed and un-pressed state</h5>
-  <div class="d-flex gap-2">
-    <BButton :pressed="true" variant="success">Always Pressed</BButton>
-    <BButton :pressed="false" variant="success">Not Pressed</BButton>
-  </div>
-  <h5 class="mt-3">Toggleable Button</h5>
-  <BButton v-model:pressed="buttonToggle" variant="primary">Toggle Me</BButton>
-  <p>
-    Pressed State: <strong>{{ buttonToggle }}</strong>
-  </p>
-  <h5>In a button group</h5>
-  <BButtonGroup size="sm">
-    <BButton v-for="(btn, idx) in buttons" :key="idx" v-model:pressed="btn.state" variant="primary">
-      {{ btn.caption }}
-    </BButton>
-  </BButtonGroup>
-  <p>
-    Pressed States: <strong>{{ btnStates }}</strong>
-  </p>
-</template>
-
-<script setup lang="ts">
-const buttonToggle = ref(false)
-const buttons = ref([
-  {caption: 'Toggle 1', state: true},
-  {caption: 'Toggle 2', state: false},
-  {caption: 'Toggle 3', state: true},
-  {caption: 'Toggle 4', state: false},
-])
-
-const btnStates = computed(() => buttons.value.map((b) => b.state))
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/ButtonPressedState.vue#template{vue-html}
 
 If using toggle button style for a radio or checkbox style interface, it is best to use the built-in
 `button` style support of [`BFormRadioGroup`](/docs/components/form-radio) and
@@ -374,24 +128,7 @@ is shown along with a spinner. If `loading-fill` is true, the button shows only 
 `loading-text` is ignored. You can also override the spinner with an arbitrary component by
 using the `loading-spinner` slot or the entire content of the button with the `loading` slot.
 
-<HighlightCard>
-  <div class="d-flex gap-2">
-    <BButton :loading="true">Button</BButton>
-    <BButton :loading="true" loading-fill>Button</BButton>
-    <BButton :loading="true" loading-text="Please Wait...">Button</BButton>
-    <BButton :loading="false" loading-text="Please Wait...">Button</BButton>
-  </div>
-  <template #html>
-
-```vue-html
-<BButton :loading="true">Button</BButton>
-<BButton :loading="true" loading-fill>Button</BButton>
-<BButton :loading="true" loading-text="Please Wait...">Button</BButton>
-<BButton :loading="false" loading-text="Please Wait...">Button</BButton>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/ButtonLoading.vue#template{vue-html}
 
 ## Router link support
 
@@ -412,22 +149,12 @@ added, nor will the keyboard event listeners be enabled.
 
 <ComponentReference :data="data" />
 
-<script setup lang="ts">
+<script lang="ts">
 import {data} from '../../data/components/button.data'
-import {ref, computed} from 'vue'
-import {BButtonGroup, BButton} from 'bootstrap-vue-next'
-import ComponentReference from '../../components/ComponentReference.vue'
-import ComponentSidebar from '../../components/ComponentSidebar.vue'
-import HighlightCard from '../../components/HighlightCard.vue'
-import NotYetImplemented from '../../components/NotYetImplemented.vue'
 
-const buttonToggle = ref(false);
-const buttons = ref([
-  {caption: 'Toggle 1', state: true},
-  {caption: 'Toggle 2', state: false},
-  {caption: 'Toggle 3', state: true},
-  {caption: 'Toggle 4', state: false},
-])
-
-const btnStates = computed(() => buttons.value.map(b => b.state))
+export default {
+  setup() {
+    return {data}
+  }
+}
 </script>

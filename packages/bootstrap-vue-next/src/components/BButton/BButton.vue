@@ -17,22 +17,18 @@
     :to="!isButton ? props.to : null"
     @click="clicked"
   >
-    <template v-if="props.loading">
-      <slot name="loading">
-        <template v-if="!props.loadingFill">
-          {{ props.loadingText }}
-        </template>
-        <slot name="loading-spinner">
-          <BSpinner
-            :small="props.size !== 'lg'"
-            :label="props.loadingFill ? props.loadingText : undefined"
-          />
-        </slot>
+    <slot v-if="props.loading" name="loading">
+      <template v-if="!props.loadingFill">
+        {{ props.loadingText }}
+      </template>
+      <slot name="loading-spinner">
+        <BSpinner
+          :small="props.size !== 'lg'"
+          :label="props.loadingFill ? props.loadingText : undefined"
+        />
       </slot>
-    </template>
-    <template v-else>
-      <slot />
-    </template>
+    </slot>
+    <slot v-else />
   </component>
 </template>
 
@@ -127,18 +123,22 @@ const variantIsLinkType = computed(() => props.variant?.startsWith('link') || fa
 const variantIsLinkTypeSubset = computed(() => props.variant?.startsWith('link-') || false)
 const linkValueClasses = useLinkClasses(
   computed(() => ({
-    ...(variantIsLinkType.value && {
-      icon: props.icon,
-      opacity: props.opacity,
-      opacityHover: props.opacityHover,
-      underlineOffset: props.underlineOffset,
-      underlineOffsetHover: props.underlineOffsetHover,
-      underlineOpacity: props.underlineOpacity,
-      underlineOpacityHover: props.underlineOpacityHover,
-      underlineVariant: props.underlineVariant,
-      variant:
-        variantIsLinkTypeSubset.value === true ? (props.variant?.slice(5) as ColorVariant) : null,
-    }),
+    ...(variantIsLinkType.value
+      ? {
+          icon: props.icon,
+          opacity: props.opacity,
+          opacityHover: props.opacityHover,
+          underlineOffset: props.underlineOffset,
+          underlineOffsetHover: props.underlineOffsetHover,
+          underlineOpacity: props.underlineOpacity,
+          underlineOpacityHover: props.underlineOpacityHover,
+          underlineVariant: props.underlineVariant,
+          variant:
+            variantIsLinkTypeSubset.value === true
+              ? (props.variant?.slice(5) as ColorVariant)
+              : null,
+        }
+      : undefined),
   }))
 )
 const computedClasses = computed(() => [
