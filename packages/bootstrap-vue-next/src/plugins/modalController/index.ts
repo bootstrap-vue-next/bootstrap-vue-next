@@ -67,7 +67,7 @@ export const modalControllerPlugin: Plugin = {
         set(val: Partial<ModalOrchestratorParam>) {
           const modal = modals.value.get(_id)
           if (modal) {
-            const v = {...modal, ...toValue(val)}
+            const v = {...toValue(modal), ...toValue(val)}
             // add modal to v
             if (modal.modelValue !== v.modelValue) {
               modal['onUpdate:modelValue']?.(v.modelValue as boolean)
@@ -140,7 +140,7 @@ export const modalControllerPlugin: Plugin = {
       promise.stop = watch(
         resolvedProps,
         (_newValue) => {
-          const newValue = toValue(_newValue)
+          const newValue = {...toValue(_newValue)}
           const previous = modals.value.get(_self)
           // if (!previous) return
           const v = {

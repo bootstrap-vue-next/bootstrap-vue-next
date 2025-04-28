@@ -70,7 +70,7 @@ export const popoverPlugin: Plugin = {
         set(val: Partial<PopoverOrchestratorParam | TooltipOrchestratorParam>) {
           const item = store.value.get(_id)
           if (item) {
-            const v = {...item, ...toValue(val)}
+            const v = {...toValue(item), ...toValue(val)}
             // add modal to v
             if (item.modelValue !== v.modelValue) {
               item['onUpdate:modelValue']?.(v.modelValue as boolean)
@@ -142,7 +142,7 @@ export const popoverPlugin: Plugin = {
       promise.stop = watch(
         resolvedProps,
         (_newValue) => {
-          const newValue = toValue(_newValue)
+          const newValue = {...toValue(_newValue)}
           const previous = popovers.value.get(_self)
           // if (!previous) return
           const v: Partial<PopoverOrchestratorMapValue> = {

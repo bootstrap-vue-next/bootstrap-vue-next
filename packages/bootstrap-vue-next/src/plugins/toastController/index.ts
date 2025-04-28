@@ -70,7 +70,7 @@ export const toastPlugin: Plugin = {
           const toastIndex = toasts.value.findIndex((el) => el._self === _id)
           const toast = toasts.value[toastIndex]
           if (toast) {
-            const v = {...toast, ...toValue(val)}
+            const v = {...toValue(toast), ...toValue(val)}
             if (toast.modelValue !== v.modelValue) {
               toast['onUpdate:modelValue']?.(v.modelValue as boolean)
             }
@@ -138,7 +138,7 @@ export const toastPlugin: Plugin = {
       promise.stop = watch(
         resolvedProps,
         (_newValue) => {
-          const newValue = toValue(_newValue)
+          const newValue = {...toValue(_newValue)}
           const previousIndex = toasts.value.findIndex((el) => el._self === _self)
           const previous = previousIndex === -1 ? {} : toasts.value[previousIndex]
           const v: ToastOrchestratorArrayValue = {

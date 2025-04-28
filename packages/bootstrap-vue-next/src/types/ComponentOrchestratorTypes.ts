@@ -255,8 +255,4 @@ export type ModalOrchestratorCreateOptions = {
 export type ToastOrchestratorCreateOptions = {
   keep?: boolean
   resolveOnHide?: boolean
-  /*
-   * @deprecated
-   */
-  returnBoolean?: boolean
 }
