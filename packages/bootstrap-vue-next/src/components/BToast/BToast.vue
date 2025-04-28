@@ -11,6 +11,7 @@
       class="toast"
       :class="[props.toastClass, computedClasses]"
       tabindex="0"
+      style="display: block"
       :role="!isToastVisible ? undefined : props.isStatus ? 'status' : 'alert'"
       :aria-live="!isToastVisible ? undefined : props.isStatus ? 'polite' : 'assertive'"
       :aria-atomic="!isToastVisible ? undefined : true"
@@ -53,7 +54,6 @@
           <component
             :is="computedTag"
             class="toast-body"
-            style="display: block"
             :class="props.bodyClass"
             v-bind="computedLinkProps"
             @click="computedLink ? hide() : () => {}"
@@ -287,7 +287,6 @@ defineExpose({
   --bs-progress-bar-transition: none;
 }
 .toast:not(.show) {
-  display: block;
   opacity: unset;
 }
 .toast.fade:not(.show) {

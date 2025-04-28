@@ -52,7 +52,6 @@
             :is="computedTag"
             class="alert-body"
             :class="props.bodyClass"
-            style="display: block"
             v-bind="computedLinkProps"
             @click="computedLink && props.dismissible ? hide() : () => {}"
           >
