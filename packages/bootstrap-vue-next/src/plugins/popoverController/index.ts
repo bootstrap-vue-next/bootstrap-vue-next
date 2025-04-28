@@ -41,9 +41,7 @@ export const popoverPlugin: Plugin = {
       resolve: (value: BvTriggerableEvent) => void
       stop?: WatchHandle
     } => {
-      let resolveFunc: (value: BvTriggerableEvent) => void = () => {
-        /* empty */
-      }
+      let resolveFunc: (value: BvTriggerableEvent) => void = () => {}
 
       const promise = new Promise<BvTriggerableEvent>((resolve) => {
         resolveFunc = resolve
@@ -67,7 +65,7 @@ export const popoverPlugin: Plugin = {
           return promise
         },
         get() {
-          store.value.get(_id)
+          return store.value.get(_id)
         },
         set(val: Partial<PopoverOrchestratorParam | TooltipOrchestratorParam>) {
           const item = store.value.get(_id)
@@ -143,7 +141,8 @@ export const popoverPlugin: Plugin = {
 
       promise.stop = watch(
         resolvedProps,
-        (newValue) => {
+        (_newValue) => {
+          const newValue = toValue(_newValue)
           const previous = popovers.value.get(_self)
           // if (!previous) return
           const v: Partial<PopoverOrchestratorMapValue> = {

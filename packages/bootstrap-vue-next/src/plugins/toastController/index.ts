@@ -40,9 +40,7 @@ export const toastPlugin: Plugin = {
       resolve: (value: BvTriggerableEvent) => void
       stop?: WatchHandle
     } => {
-      let resolveFunc: (value: BvTriggerableEvent) => void = () => {
-        /* empty */
-      }
+      let resolveFunc: (value: BvTriggerableEvent) => void = () => {}
 
       const promise = new Promise<BvTriggerableEvent>((resolve) => {
         resolveFunc = resolve
@@ -138,7 +136,8 @@ export const toastPlugin: Plugin = {
 
       promise.stop = watch(
         resolvedProps,
-        (newValue) => {
+        (_newValue) => {
+          const newValue = toValue(_newValue)
           const previousIndex = toasts.value.findIndex((el) => el._self === _self)
           const previous = previousIndex === -1 ? {} : toasts.value[previousIndex]
           const v: ToastOrchestratorArrayValue = {

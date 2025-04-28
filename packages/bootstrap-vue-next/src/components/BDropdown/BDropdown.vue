@@ -58,6 +58,7 @@
           :class="[props.menuClass, computedMenuClasses]"
           :aria-labelledby="computedId"
           :role="props.role"
+          style="display: block"
           @click="onClickInside"
         >
           <slot v-if="contentShowing" :hide="hide" :show="show" :visible="showRef" />
@@ -385,10 +386,3 @@ provide(dropdownInjectionKey, {
   isNav: toRef(() => props.isNav),
 })
 </script>
-<style lang="scss" scoped>
-.dropdown-menu {
-  &.fade {
-    display: block;
-  }
-}
-</style>

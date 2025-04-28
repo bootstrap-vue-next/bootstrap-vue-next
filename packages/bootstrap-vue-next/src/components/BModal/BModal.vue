@@ -23,6 +23,7 @@
         tabindex="-1"
         v-bind="$attrs"
         :style="computedZIndex"
+        style="display: block"
         @click.self="hide('backdrop')"
       >
         <div class="modal-dialog" :class="modalDialogClasses">
@@ -420,13 +421,3 @@ defineExpose({
   visible: showRef,
 })
 </script>
-
-<style lang="scss" scoped>
-.modal {
-  display: block;
-}
-
-.modal-dialog {
-  z-index: 1051;
-}
-</style>

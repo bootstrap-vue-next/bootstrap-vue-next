@@ -38,9 +38,7 @@ export const modalControllerPlugin: Plugin = {
       resolve: (value: BvTriggerableEvent | boolean | null) => void
       stop?: WatchHandle
     } => {
-      let resolveFunc: (value: BvTriggerableEvent | boolean | null) => void = () => {
-        /* empty */
-      }
+      let resolveFunc: (value: BvTriggerableEvent | boolean | null) => void = () => {}
 
       const promise = new Promise<BvTriggerableEvent | boolean | null>((resolve) => {
         resolveFunc = resolve
@@ -141,7 +139,8 @@ export const modalControllerPlugin: Plugin = {
 
       promise.stop = watch(
         resolvedProps,
-        (newValue) => {
+        (_newValue) => {
+          const newValue = toValue(_newValue)
           const previous = modals.value.get(_self)
           // if (!previous) return
           const v = {
