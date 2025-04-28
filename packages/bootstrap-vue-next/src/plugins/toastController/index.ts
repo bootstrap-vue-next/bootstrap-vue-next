@@ -81,6 +81,7 @@ export const toastPlugin: Plugin = {
               modelValue: toValue(v.modelValue),
             })
           }
+          return promise
         },
         async destroy() {
           const toast = toasts.value.find((el) => el._self === _id)
