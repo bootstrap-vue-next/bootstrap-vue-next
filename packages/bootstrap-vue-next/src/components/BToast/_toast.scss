@@ -1,4 +1,4 @@
-.toast :deep(.progress .progress-bar) {
+.toast .progress .progress-bar {
   --bs-progress-bar-transition: none;
 }
 .toast:not(.show) {
