@@ -61,6 +61,21 @@
         </BCarousel>
       </BCol>
     </BRow>
+    <BRow>
+      <BCol>
+        <BCarousel>
+          <BCarouselSlide
+            v-for="(image, index) in images"
+            :key="index"
+            :img-src="image"
+            img-alt="Image alt text"
+          >
+            <h1>Image {{ index + 1 }}</h1>
+            <p>Some more detailed description or whatever content.</p>
+          </BCarouselSlide>
+        </BCarousel>
+      </BCol>
+    </BRow>
   </BContainer>
 </template>
 
@@ -68,4 +83,26 @@
 import {ref} from 'vue'
 
 const modelValue = ref(0)
+const images = ref(['https://picsum.photos/1024/480/?image=55'])
+
+const newValue = [
+  'https://picsum.photos/1024/480/?image=56',
+  'https://picsum.photos/1024/480/?image=57',
+  'https://picsum.photos/1024/480/?image=58',
+  'https://picsum.photos/1024/480/?image=59',
+  'https://picsum.photos/1024/480/?image=60',
+  'https://picsum.photos/1024/480/?image=61',
+  'https://picsum.photos/1024/480/?image=62',
+  'https://picsum.photos/1024/480/?image=63',
+  'https://picsum.photos/1024/480/?image=64',
+  'https://picsum.photos/1024/480/?image=65',
+  'https://picsum.photos/1024/480/?image=66',
+  'https://picsum.photos/1024/480/?image=67',
+  'https://picsum.photos/1024/480/?image=68',
+  'https://picsum.photos/1024/480/?image=69',
+]
+
+setTimeout(() => {
+  images.value = [images.value[0], ...newValue]
+}, 1000)
 </script>
