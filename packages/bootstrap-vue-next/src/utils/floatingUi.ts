@@ -63,7 +63,7 @@ export const resolveContent = (
     }
   }
 
-  // TODO: deprication remove warning in 2025-02
+  // TODO: deprication remove warning in 2025-07
   if (values?.content)
     // eslint-disable-next-line no-console
     console.warn('v-b-popover/v-b-tooltip: `content` is deprecated, use `body` instead')

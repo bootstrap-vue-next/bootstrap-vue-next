@@ -64,6 +64,39 @@ const {show, hide, component} = useToggle('my-modal')
   </template>
 </HighlightCard>
 
+## Promise Flow
+
+The `show` and `toggle` methods take a boolean argument to control wether to resolve the promise on show (`false`) or on hide (`true`). On `show` the promise resolves to `true` when shown and to `'show-prevented'` if show is prevented. On `hide` the promise resolves to the trigger that caused the hide event. The promise can be awaited to get the result.
+
+<HighlightCard>
+  <BButton @click="testToggle">Click me</BButton>
+  <BModal id="toggleTest"> content </BModal>
+  <span v-if="reason !== ''" class="mx-3">Close reason: {{ reason }}</span>
+
+<template #html>
+
+```vue
+<template>
+  <BButton @click="testToggle">Click me</BButton>
+  <BModal id="toggleTest"> content </BModal>
+</template>
+<script setup lang="ts">
+const toggle = useToggle('toggleTest')
+async function testToggle() {
+  toggle.show(true).then((e) => {
+    if (e === 'ok') {
+      console.log('ok pressed')
+    } else {
+      console.log('closed with', e)
+    }
+  })
+}
+</script>
+```
+
+  </template>
+</HighlightCard>
+
 <script setup lang="ts">
 import {BButton, BModal, useToggle} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
@@ -79,4 +112,20 @@ onMounted(() => {
 })
 
 const {show, hide} = useToggle('my-modal')
+
+const reason = ref('')
+const toggle = useToggle('toggleTest')
+async function testToggle() {
+  reason.value = ''
+  toggle
+    .show(true)
+    .then((e) => {
+      if (e === 'ok') {
+        console.log('ok pressed')
+      } else {
+        console.log('closed with', e)
+      }
+      reason.value = e
+    })
+}
 </script>

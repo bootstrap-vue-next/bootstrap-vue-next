@@ -175,15 +175,15 @@ export const useShowHide = (
 
   let showTimeout: ReturnType<typeof setTimeout> | undefined
   let hideTimeout: ReturnType<typeof setTimeout> | undefined
-  let _Resolve: ((value: boolean) => void) | undefined
-  let _Promise: Promise<boolean> | undefined
+  let _Resolve: ((value: boolean | string) => void) | undefined
+  let _Promise: Promise<boolean | string> | undefined
   let _resolveOnHide: boolean | undefined
-  const show = (resolveOnHide: boolean = false): Promise<boolean> => {
+  const show = (resolveOnHide: boolean = false): Promise<boolean | string> => {
     if (showRef.value && !hideTimeout && !_Promise) return Promise.resolve(true)
     _resolveOnHide = resolveOnHide
     if (showRef.value && !hideTimeout && _Promise) return _Promise
 
-    _Promise = new Promise<boolean>((resolve) => {
+    _Promise = new Promise<boolean | string>((resolve) => {
       _Resolve = resolve
     })
 
@@ -201,7 +201,7 @@ export const useShowHide = (
           modelValue.value = false
         })
       }
-      _Resolve?.(false)
+      _Resolve?.('show-prevented')
       return _Promise
     }
     if (hideTimeout) {
@@ -244,11 +244,11 @@ export const useShowHide = (
   }
 
   let leaveTrigger: string | undefined
-  const hide = (trigger?: string, noTriggerEmit?: boolean): Promise<boolean> => {
-    if (!showRef.value && !showTimeout) return Promise.resolve(true)
+  const hide = (trigger?: string, noTriggerEmit?: boolean): Promise<string> => {
+    if (!showRef.value && !showTimeout) return Promise.resolve('')
     if (!_Promise)
-      _Promise = new Promise<boolean>((resolve) => {
-        _Resolve = resolve
+      _Promise = new Promise<string>((resolve) => {
+        ;(_Resolve as (value: string | PromiseLike<string>) => void) = resolve
       })
     if (typeof trigger !== 'string') trigger = undefined
     leaveTrigger = trigger
@@ -259,8 +259,8 @@ export const useShowHide = (
       (trigger === 'esc' && props.noCloseOnEsc)
     ) {
       emit('hide-prevented', buildTriggerableEvent('hide-prevented', {trigger}))
-      _Resolve?.(false)
-      return _Promise
+      _Resolve?.('hide-prevented')
+      return _Promise as Promise<string>
     }
     if (showTimeout) {
       clearTimeout(showTimeout)
@@ -279,8 +279,8 @@ export const useShowHide = (
           modelValue.value = true
         })
       }
-      _Resolve?.(false)
-      return _Promise
+      _Resolve?.('hide-prevented')
+      return _Promise as Promise<string>
     }
     trapActive.value = false
     if (showTimeout) {
@@ -307,17 +307,17 @@ export const useShowHide = (
           ? props.delay
           : props.delay?.hide || 0
     )
-    return _Promise
+    return _Promise as Promise<string>
   }
   const throttleHide = useThrottleFn((a) => hide(a), 500)
   const throttleShow = useThrottleFn(() => show(), 500)
 
-  const toggle = (resolveOnHide: boolean = false): Promise<boolean> => {
+  const toggle = (resolveOnHide: boolean = false): Promise<boolean | string> => {
     const e = buildTriggerableEvent('toggle', {cancelable: true})
     emit('toggle', e)
     if (e.defaultPrevented) {
       emit('toggle-prevented', buildTriggerableEvent('toggle-prevented'))
-      return Promise.resolve(false)
+      return Promise.resolve('toggle-prevented')
     }
     if (showRef.value) {
       return hide('toggle-function', true)
@@ -465,9 +465,10 @@ export const useShowHide = (
     requestAnimationFrame(() => {
       if (!localTemporaryHide.value) renderRef.value = false
     })
-    _Resolve?.(true)
+    _Resolve?.(leaveTrigger || '')
     _Promise = undefined
     _Resolve = undefined
+    leaveTrigger = undefined
   }
 
   const contentShowing = computed(

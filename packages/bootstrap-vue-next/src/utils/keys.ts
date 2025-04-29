@@ -149,9 +149,9 @@ export type RegisterShowHideFnInput = {
   id: string
   component: ComponentInternalInstance
   value: Ref<boolean>
-  toggle: () => Promise<boolean | null>
-  show: () => Promise<boolean | null>
-  hide: (trigger?: string) => Promise<boolean | null>
+  toggle: (resolveOnHide?: boolean) => Promise<boolean | string>
+  show: (resolveOnHide?: boolean) => Promise<boolean | string>
+  hide: (trigger?: string) => Promise<boolean | string>
   registerTrigger: (trigger: string, el: Element) => void
   unregisterTrigger: (trigger: string, el: Element, clean: boolean) => void
 }
@@ -160,9 +160,9 @@ export interface RegisterShowHideMapValue {
   id: string
   component: ComponentInternalInstance
   value: Readonly<Ref<boolean>>
-  toggle: (resolveOnHide?: boolean) => Promise<boolean | null>
-  show: (resolveOnHide?: boolean) => Promise<boolean | null>
-  hide: (trigger?: string, noTraverse?: boolean) => Promise<boolean | null>
+  toggle: (resolveOnHide?: boolean) => Promise<boolean | string | null>
+  show: (resolveOnHide?: boolean) => Promise<boolean | string | null>
+  hide: (trigger?: string, noTraverse?: boolean) => Promise<boolean | string | null>
   registerTrigger: (trigger: string, el: Element) => void
   unregisterTrigger: (trigger: string, el: Element, clean: boolean) => void
 }
