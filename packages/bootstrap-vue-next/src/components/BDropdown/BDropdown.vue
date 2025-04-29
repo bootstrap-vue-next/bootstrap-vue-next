@@ -411,10 +411,3 @@ provide(dropdownInjectionKey, {
   isNav: toRef(() => props.isNav),
 })
 </script>
-<style lang="scss" scoped>
-.dropdown-menu {
-  &.fade {
-    display: block;
-  }
-}
-</style>

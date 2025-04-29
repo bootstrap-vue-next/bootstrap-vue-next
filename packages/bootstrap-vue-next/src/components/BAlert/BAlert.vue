@@ -137,13 +137,3 @@ defineExpose({
   restart,
 })
 </script>
-
-<style lang="scss" scoped>
-.btn-close-custom {
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 2;
-  margin: var(--bs-alert-padding-y) var(--bs-alert-padding-x);
-}
-</style>

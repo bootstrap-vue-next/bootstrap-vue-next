@@ -61,25 +61,3 @@ defineExpose({
   ...tools,
 })
 </script>
-
-<style lang="scss">
-/*
-If you remove the last element in the list, the animation goes farther to the right then normal.
-I don't know why
-I kind of like it though, and even if I didn't, I don't know how to get rid of it.
-Getting the transitions to work here was basically all trial and error.
-I think it's because it's "moving", but I don't know where it's moving to
-*/
-.b-list-move,
-.b-list-enter-active,
-.b-list-leave-active {
-  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
-}
-.b-list-enter-from,
-.b-list-leave-to {
-  opacity: 0; // TODO this should be the responsibility of the child
-}
-.b-list-leave-active {
-  position: fixed;
-}
-</style>

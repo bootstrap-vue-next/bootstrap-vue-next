@@ -444,13 +444,3 @@ defineExpose({
   toggle,
 })
 </script>
-
-<style lang="scss" scoped>
-.modal {
-  display: block;
-}
-
-.modal-dialog {
-  z-index: 1051;
-}
-</style>
