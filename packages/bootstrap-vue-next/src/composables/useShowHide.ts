@@ -212,6 +212,8 @@ export const useShowHide = (
     renderBackdropRef.value = true
     requestAnimationFrame(() => {
       if (localNoAnimation.value || props.delay === undefined) {
+        if (!isMounted) return
+        showTimeout = undefined
         showRef.value = true
         options.showFn?.()
         if (!modelValue.value) {
