@@ -198,17 +198,17 @@ export const modalControllerPlugin: Plugin = {
     }
 
     /*
-     * @deprecated use create().show() instead
+     * @deprecated use create({}).show() instead
      */
     const show = (obj: ModalOrchestratorCreateParam = {}): PromiseWithModalBoolean => {
       // eslint-disable-next-line no-console
       console.warn(
         '[BootstrapVueNext] useModalController: The show() method is deprecated. Use create({}).show() instead.'
       )
-      create(obj, {returnBoolean: true}).show() as PromiseWithModalBoolean
+      return create(obj, {returnBoolean: true}).show() as PromiseWithModalBoolean
     }
     /*
-     * @deprecated use create().show() instead
+     * @deprecated use create({}).show() instead
      */
     const confirm = (obj: ModalOrchestratorCreateParam = {}): PromiseWithModalBoolean => {
       // eslint-disable-next-line no-console
