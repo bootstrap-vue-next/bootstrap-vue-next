@@ -210,9 +210,15 @@ export const toastPlugin: Plugin = {
     }
 
     /*
-    @deprecated
-    */
-    const show = (obj: ToastOrchestratorCreateParam = {}): PromiseWithToast => create(obj).show()
+     * @deprecated The `show` method is deprecated. Use the `create` method instead.
+     */
+    const show = (obj: ToastOrchestratorCreateParam = {}): PromiseWithToast => {
+      // eslint-disable-next-line no-console
+      console.warn(
+        '[BootstrapVueNext] useToastController: The `show` method is deprecated. Use the `create` method instead.'
+      )
+      return create(obj).show()
+    }
 
     app.provide(toastPluginKey, {
       _isAppend,
