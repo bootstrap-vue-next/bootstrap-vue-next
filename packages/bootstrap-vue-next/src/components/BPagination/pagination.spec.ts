@@ -467,24 +467,22 @@ describe('pagination', () => {
     expect(await TestScenariosAgainstInvariants(wrapper)).toBe(0)
   })
   it('can navigate to different pages using the left and right arrow keys', async () => {
+    // Mock getBoundingClientRect to return a non-zero size
+    window.HTMLElement.prototype.getBoundingClientRect = () =>
+      ({
+        x: 0,
+        y: 0,
+        width: 10,
+        height: 10,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+      }) as DOMRect
     const wrapper = mount(BPagination, {
       props: {totalRows: 7, perPage: 1, modelValue: 1},
       attachTo: document.body,
     })
-    // Mock getBoundingClientRect to return a non-zero size for buttons
-    wrapper.findAll('button').forEach(
-      (el) =>
-        (el.getBoundingClientRect = () => ({
-          x: 0,
-          y: 0,
-          width: 1,
-          height: 1,
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0,
-        }))
-    )
     await wrapper.find('li.active > button').element?.focus()
     expect(document.activeElement?.textContent).toBe('1')
     await wrapper.find('ul').trigger('keydown', {code: 'ArrowRight'})
