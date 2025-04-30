@@ -468,6 +468,7 @@ describe('pagination', () => {
   })
   it('can navigate to different pages using the left and right arrow keys', async () => {
     // Mock getBoundingClientRect to return a non-zero size
+    const originalGetBoundingClientRect = window.HTMLElement.prototype.getBoundingClientRect
     window.HTMLElement.prototype.getBoundingClientRect = () =>
       ({
         x: 0,
@@ -496,6 +497,7 @@ describe('pagination', () => {
     expect(document.activeElement?.textContent).toBe('5')
     await wrapper.find('ul').trigger('keydown', {code: 'ArrowLeft'})
     expect(document.activeElement?.textContent).toBe('4')
+    window.HTMLElement.prototype.getBoundingClientRect = originalGetBoundingClientRect
   })
 })
 
