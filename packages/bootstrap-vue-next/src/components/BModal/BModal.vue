@@ -23,6 +23,7 @@
         tabindex="-1"
         v-bind="$attrs"
         :style="computedZIndex"
+        style="display: block"
         @click.self="hide('backdrop')"
       >
         <div class="modal-dialog" :class="modalDialogClasses">
@@ -45,7 +46,7 @@
                     v-bind="headerCloseAttrs"
                     @click="hide('close')"
                   >
-                    <slot name="header-close" />
+                    <slot name="header-close" v-bind="sharedSlots" />
                   </BButton>
                   <BCloseButton
                     v-else
@@ -75,6 +76,7 @@
                     :disabled="disableCancel"
                     :size="props.buttonSize"
                     :variant="props.cancelVariant"
+                    :class="props.cancelClass"
                     @click="hide('cancel')"
                   >
                     {{ props.cancelTitle }}
@@ -86,6 +88,7 @@
                     :disabled="disableOk"
                     :size="props.buttonSize"
                     :variant="props.okVariant"
+                    :class="props.okClass"
                     @click="hide('ok')"
                   >
                     {{ props.okTitle }}
@@ -126,7 +129,9 @@ import {onKeyStroke, unrefElement} from '@vueuse/core'
 import {useActivatedFocusTrap} from '../../composables/useActivatedFocusTrap'
 import {computed, type CSSProperties, type EmitFn, useTemplateRef, watch} from 'vue'
 import type {BModalProps} from '../../types/ComponentProps'
-import {BvTriggerableEvent} from '../../utils'
+import type {BModalEmits} from '../../types/ComponentEmits'
+import type {BModalSlots, BModalSlotsData} from '../../types/ComponentSlots'
+
 import BButton from '../BButton/BButton.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import {useDefaults} from '../../composables/useDefaults'
@@ -135,7 +140,7 @@ import {useSafeScrollLock} from '../../composables/useSafeScrollLock'
 import {isEmptySlot} from '../../utils/dom'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useModalManager} from '../../composables/useModalManager'
-import {type showHideEmits, useShowHide} from '../../composables/useShowHide'
+import {useShowHide} from '../../composables/useShowHide'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
 import {getElement} from '../../utils/getElement'
 
@@ -155,6 +160,7 @@ const _props = withDefaults(defineProps<Omit<BModalProps, 'modelValue'>>(), {
   bodyVariant: null,
   busy: false,
   buttonSize: 'md',
+  cancelClass: undefined,
   cancelDisabled: false,
   cancelTitle: 'Cancel',
   cancelVariant: 'secondary',
@@ -187,6 +193,7 @@ const _props = withDefaults(defineProps<Omit<BModalProps, 'modelValue'>>(), {
   noCloseOnEsc: false,
   noFade: false,
   noTrap: false,
+  okClass: undefined,
   okDisabled: false,
   okOnly: false,
   okTitle: 'OK',
@@ -206,43 +213,9 @@ const _props = withDefaults(defineProps<Omit<BModalProps, 'modelValue'>>(), {
 })
 const props = useDefaults(_props, 'BModal')
 
-const emit = defineEmits<
-  {
-    backdrop: [value: BvTriggerableEvent]
-    cancel: [value: BvTriggerableEvent]
-    close: [value: BvTriggerableEvent]
-    esc: [value: BvTriggerableEvent]
-    ok: [value: BvTriggerableEvent]
-  } & showHideEmits
->()
+const emit = defineEmits<BModalEmits>()
 
-type SharedSlotsData = {
-  cancel: () => void
-  close: () => void
-  hide: (trigger?: string) => void
-  ok: () => void
-  active: boolean
-  visible: boolean
-}
-
-const slots = defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'backdrop'?: (props: SharedSlotsData) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'cancel'?: (props: SharedSlotsData) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'default'?: (props: SharedSlotsData) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'footer'?: (props: SharedSlotsData) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'header'?: (props: SharedSlotsData) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'header-close'?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'ok'?: (props: SharedSlotsData) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'title'?: (props: SharedSlotsData) => any
-}>()
+const slots = defineSlots<BModalSlots>()
 
 const computedId = useId(() => props.id, 'modal')
 // Note: passive: true will sync an internal ref... This is required for useModalManager to exit,
@@ -422,7 +395,8 @@ const computedZIndexBackdrop = computed<CSSProperties>(() => ({
   'z-index': computedZIndexNumber.value - 1,
 }))
 
-const sharedSlots = computed<SharedSlotsData>(() => ({
+const sharedSlots = computed<BModalSlotsData>(() => ({
+  id: computedId.value,
   cancel: () => {
     hide('cancel')
   },
@@ -430,6 +404,8 @@ const sharedSlots = computed<SharedSlotsData>(() => ({
     hide('close')
   },
   hide,
+  show,
+  toggle,
   ok: () => {
     hide('ok')
   },
@@ -442,15 +418,6 @@ defineExpose({
   id: computedId,
   show,
   toggle,
+  visible: showRef,
 })
 </script>
-
-<style lang="scss" scoped>
-.modal {
-  display: block;
-}
-
-.modal-dialog {
-  z-index: 1051;
-}
-</style>

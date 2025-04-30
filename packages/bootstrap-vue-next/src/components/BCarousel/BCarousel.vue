@@ -21,7 +21,7 @@
         :aria-current="i === modelValue ? true : undefined"
         :aria-label="`${props.indicatorsButtonLabel} ${i}`"
         :aria-controls="buttonOwnership"
-        :aria-describedby="slideValues?.[i]._id"
+        :aria-describedby="slideValues?.[i]?._id"
         @click="goToValue(i)"
       />
     </div>

@@ -22,7 +22,7 @@ export default {
             type: 'boolean',
             default: false,
           },
-          content: {
+          body: {
             type: 'string',
             default: undefined,
           },

@@ -36,6 +36,10 @@ const composablesList: {name: string; description: string}[] = [
     name: 'useToastController',
     description: 'Conveniently orchestrate a push notification system by showing or hiding Toasts with our useToastController composable system',
   },
+    {
+      name: 'useToggle',
+      description: 'Conveniently show, hide or toggle components programmatically from anywhere in the app',
+    },
   {
     name: 'usePopoverController',
     description: 'Control popovers and tooltips in your application, enabling the display popover elements with ease',
