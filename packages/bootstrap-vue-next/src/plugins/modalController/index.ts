@@ -88,8 +88,10 @@ export const modalControllerPlugin: Plugin = {
           if (modal.modelValue) {
             await new Promise((resolve) => {
               modal.modelValue = false
-              modal['onHidden'] = () => {
-                resolve(undefined)
+              const prev = modal['onHidden']
+              modal['onHidden'] = (e) => {
+                prev?.(e)
+                resolve(e)
               }
               nextTick(() => {
                 modal['onUpdate:modelValue']?.(false)

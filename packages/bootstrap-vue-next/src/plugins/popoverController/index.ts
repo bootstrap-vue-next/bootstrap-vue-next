@@ -91,8 +91,10 @@ export const popoverPlugin: Plugin = {
           if (item.modelValue) {
             await new Promise((resolve) => {
               item.modelValue = false
-              item['onHidden'] = () => {
-                resolve(undefined)
+              const prev = item['onHidden']
+              item['onHidden'] = (e) => {
+                prev?.(e)
+                resolve(e)
               }
               nextTick(() => {
                 item['onUpdate:modelValue']?.(false)
