@@ -138,7 +138,7 @@
                 header-class="pb-0 d-flex offcanvas-hidden-width"
                 body-class="py-2"
               >
-                <PageContents :contents="contents" :active-id="currentItem" />
+                <PageContents :contents="contents" :active-id="activeId" />
               </BOffcanvas>
             </ClientOnly>
           </aside>
@@ -202,7 +202,7 @@ const route = useRoute()
 const content = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_content')
 const target = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_target')
 
-const {current: currentItem, list: items} = useScrollspy(content, target, {
+const {current: activeId, list: items} = useScrollspy(content, target, {
   contentQuery: ':scope > div > [id], #component-reference, .component-reference h3',
   targetQuery: ':scope [href]',
   rootMargin: '0px 0px -25%',
