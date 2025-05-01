@@ -300,7 +300,9 @@ const set = (newValue: keyof typeof map) => {
 
 const headers = computed(() =>
   items.value.map((item) => {
-    const tag = item.el?.tagName.toUpperCase() ?? 'H0'
+    const rawTag = item.el?.tagName?.toUpperCase() ?? ''
+    const isHeading = /^H[1-6]$/.test(rawTag)
+    const tag = isHeading ? rawTag : 'DIV'
     const level = tag.startsWith('H') ? parseInt(tag.replace('H', '')) : 3
     return {
       ...item,
