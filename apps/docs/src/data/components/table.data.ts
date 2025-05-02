@@ -517,6 +517,10 @@ export default {
         ],
       },
       {
+        name: 'table-colgroup',
+        description: 'Slot for user supplied `<colgroup>` element',
+      },
+      {
         name: 'top-row',
         description: 'Fixed top row slot for user supplied B-TD cells. Optionally scoped',
         scope: endRowScope,

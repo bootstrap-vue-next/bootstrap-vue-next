@@ -30,6 +30,9 @@
       }
     "
   >
+    <template v-if="slots['table-colgroup']" #table-colgroup>
+      <slot name="table-colgroup" />
+    </template>
     <!-- eslint-enable prettier/prettier -->
     <template v-if="slots['thead-top']" #thead-top="scope">
       <slot
@@ -344,6 +347,8 @@ type SortSlotScope = {
 
 const slots = defineSlots<{
   // BTableLite
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'table-colgroup'?: (props: Record<string, never>) => any
   'thead-top'?: (props: {
     columns: number
     fields: typeof computedFields.value

@@ -311,7 +311,10 @@ control the caption positioning.
 
 ### Table colgroup
 
-<NotYetImplemented /> The `table-colgroup` slot is not yet implemented.
+The `table-colgroup` slot allows you to include a `<colgroup>` element in your table. You can use
+this slot to specify widths for columns using the `<col>` element.
+
+<<< DEMO ./demo/TableColgroup.vue
 
 ### Table busy state
 
