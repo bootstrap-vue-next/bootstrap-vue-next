@@ -579,6 +579,7 @@ const tableClasses = computed(() => ({
   'b-table-busy': busyModel.value,
   'b-table-selectable': props.selectable,
   'user-select-none': props.selectable && isSelecting.value,
+  'b-table-fixed': props.fixed,
 }))
 
 const getBusyRowClasses = computed(() => [
