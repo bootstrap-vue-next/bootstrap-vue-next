@@ -31,7 +31,7 @@
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },
   "peerDependencies": {
-    "bootstrap-vue-next": "0.29.0"
+    "bootstrap-vue-next": "workspace:^"
   },
   "dependencies": {
     "@nuxt/kit": "^3.17.1"
