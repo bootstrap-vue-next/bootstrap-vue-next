@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.29.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.29.0...bootstrapvuenext-v0.29.1) (2025-05-05)
+
+
+### Bug Fixes
+
+* **BFormSelect:** prevent options with label from being treated as groups ([#2666](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2666)) ([c1645a9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c1645a92d3ede914ef0fc939bed65066e13020ff))
+* patch regression issue in [#2665](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2665) ([#2670](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2670)) ([59ddc39](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/59ddc3971cb58e88a8e460f2a9f21b47aa7b8d90))
+
 ## [0.29.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.28.6...bootstrapvuenext-v0.29.0) (2025-04-30)
 
 
