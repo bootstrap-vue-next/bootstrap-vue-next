@@ -6,7 +6,7 @@ import type {
   RootBoundary,
   Strategy,
 } from '@floating-ui/vue'
-import type {ComponentPublicInstance, TransitionProps} from 'vue'
+import type {AriaAttributes, ComponentPublicInstance, TransitionProps} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {LinkTarget} from './LinkTarget'
 import type {
@@ -435,6 +435,7 @@ export interface BFormTagsProps {
   autofocus?: boolean
   disabled?: boolean
   duplicateTagText?: string
+  feedbackAriaLive?: AriaAttributes['aria-live']
   form?: string
   inputAttrs?: Readonly<AttrsValue>
   inputClass?: ClassValue
@@ -460,7 +461,6 @@ export interface BFormTagsProps {
   tagRemovedLabel?: string
   tagValidator?: (t: string) => boolean
   tagVariant?: ColorVariant | null
-  feedbackAriaLive?: 'polite' | 'assertive' | 'off'
 }
 
 export interface BFormTextareaProps extends CommonInputProps {

@@ -140,6 +140,7 @@ const _props = withDefaults(defineProps<Omit<BFormTagsProps, 'modelValue'>>(), {
   autofocus: false,
   disabled: false,
   duplicateTagText: 'Duplicate tag(s)',
+  feedbackAriaLive: 'assertive',
   form: undefined,
   inputAttrs: undefined,
   inputClass: undefined,
@@ -164,7 +165,6 @@ const _props = withDefaults(defineProps<Omit<BFormTagsProps, 'modelValue'>>(), {
   tagRemovedLabel: 'Tag removed',
   tagValidator: () => true,
   tagVariant: 'secondary',
-  feedbackAriaLive: 'assertive',
 })
 const props = useDefaults(_props, 'BFormTags')
 
