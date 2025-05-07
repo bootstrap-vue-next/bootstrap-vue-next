@@ -7,7 +7,7 @@
           v-for="child in item.children"
           :key="child.id!"
           :item="child"
-          :active-id="activeId"
+          :active-id="filteredActiveId(item, activeId)"
         />
       </BNav>
     </template>
@@ -15,7 +15,8 @@
 </template>
 
 <script setup lang="ts">
-import type {ContentsItem} from 'src/types'
+import type {ContentsItem} from '../types'
+import {filteredActiveId} from '../utils'
 import {computed} from 'vue'
 
 const props = defineProps<{
