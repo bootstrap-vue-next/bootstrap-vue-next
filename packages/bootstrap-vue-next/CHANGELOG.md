@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.29.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.29.1...bootstrapvuenext-v0.29.2) (2025-05-07)
+
+
+### Features
+
+* **BTable:** implement 'fixed' and 'noBorderCollapse' props ([#2681](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2681)) ([9486276](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9486276fe43ddc5085681a6fa8dc32a9cfacd242))
+
 ## [0.29.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.29.0...bootstrapvuenext-v0.29.1) (2025-05-05)
 
 
