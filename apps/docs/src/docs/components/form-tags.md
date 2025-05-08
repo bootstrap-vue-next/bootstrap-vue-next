@@ -214,97 +214,12 @@ Note `<BFormTag>` requires BootstrapVueNext's custom CSS/SCSS for proper styling
 
 <ComponentReference :data="data" />
 
-<script setup lang="ts">
-  import {data} from '../../data/components/formTags.data'
-  import ComponentReference from '../../components/ComponentReference.vue'
-  import HighlightCard from '../../components/HighlightCard.vue'
-  import {BFormTags, BFormText, BFormGroup, BInputGroupText, BButton, BCard, BInputGroup, BFormTag, BFormInput, BFormSelect, BFormCheckbox, BFormInvalidFeedback, BDropdownForm, BDropdownDivider, BDropdownItemButton, BDropdownText, BDropdown} from 'bootstrap-vue-next'
-  import {ref, computed, watch} from 'vue'
+<script lang="ts">
+import {data} from '../../data/components/formTags.data'
 
-  const basicUsageTags = ref<string[]>([])
-  const usingSeparators = ref<string[]>(['apple', 'orange'])
-  const tagRemoval = ref<string[]>(['apple', 'orange', 'grape'])
-  const stylingOptions = ref<string[]>(['apple', 'orange', 'grape'])
-
-  const tagsValidator = ref<string[]>([])
-  const dirty = ref<boolean>(false)
-  const stateTagValidator = computed(() => {
-    // Overall component validation state
-    return dirty.value ? (tagsValidator.value.length > 2 && tagsValidator.value.length < 9) : null
-  })
-
-  watch(tagsValidator, () => {
-    // Set the dirty flag on first change to the tags array
-    dirty.value = true
-  })
-  const tagValidator = (tag) => {
-    // Individual tag validator function
-    return tag === tag.toLowerCase() && tag.length > 2 && tag.length < 6
+export default {
+  setup() {
+    return {data}
   }
-
-  const detectingTags = ref<string[]>([])
-  const validTags = ref<string[]>([])
-  const invalidTags = ref<string[]>([])
-  const duplicateTags = ref<string[]>([])
-  const onTagState = (valid, invalid, duplicate) => {
-    validTags.value = valid
-    invalidTags.value = invalid
-    duplicateTags.value = duplicate
-  }
-  const detectTagValidator = (tag) => {
-    return tag.length > 2 && tag.length < 6
-  }
-
-  const limitTagsModel = ref<string[]>([])
-  const limitTag = ref<number>(5)
-
-  const nativeTags = ref<string[]>(['apple', 'orange', 'banana', 'pear', 'peach'])
-
-  const customComponentTags = ref<string[]>(['apple', 'orange', 'banana'])
-
-  const customPredefinedTags = ref<string[]>([])
-  const options = ref<string[]>(['Apple', 'Orange', 'Banana', 'Lime', 'Peach', 'Chocolate', 'Strawberry'])
-  const availableOptions = computed(() => {
-    return options.value.filter(opt => customPredefinedTags.value.indexOf(opt) === -1)
-  })
-
-  const advancedDisabled = ref<boolean>(false)
-  const advancedTags = ref<string[]>([])
-  const newTag = ref<string>('')
-  const advancedState = computed(() => advancedTags.value.indexOf(newTag.value.trim()) > -1 ? false : null)
-  const resetInputValue = () => {
-        newTag.value = ''
-  }
-  const formatter = (value) => {
-    return value.toUpperCase()
-  }
-
-  const customDropdownOptions = ref<string[]>(['Apple', 'Orange', 'Banana', 'Lime', 'Peach', 'Chocolate', 'Strawberry'])
-  const customDropdownSearch = ref<string>('')
-  const customDropdownTags = ref<string[]>([])
-
-  const criteria = computed(() => customDropdownSearch.value.trim().toLowerCase())
-  const customDropdownAvailableOptions = computed(() => {
-  const searchCriteria = criteria.value
-
-  // Filter out already selected options
-  const optionsFiltered = customDropdownOptions.value.filter(opt => customDropdownTags.value.indexOf(opt) === -1)
-    if (searchCriteria) {
-      // Show only options that match criteria
-      return optionsFiltered.filter(opt => opt.toLowerCase().indexOf(searchCriteria) > -1);
-    }
-    // Show all options available
-    return optionsFiltered
-  })
-  const searchDesc = computed(() => {
-    if (criteria.value && customDropdownAvailableOptions.value.length === 0) {
-      return 'There are no tags matching your search criteria'
-    }
-    return ''
-  })
-  const onOptionClick = ({ option, addTag }) => {
-    addTag(option)
-    searchCriteria.value = ''
-  }
-
+}
 </script>

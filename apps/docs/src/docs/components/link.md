@@ -97,7 +97,7 @@ changes).
 <ComponentReference :data="data" />
 
 <script lang="ts">
-import {data} from '../../data/components/inputGroup.data'
+import {data} from '../../data/components/link.data'
 
 export default {
   setup() {
