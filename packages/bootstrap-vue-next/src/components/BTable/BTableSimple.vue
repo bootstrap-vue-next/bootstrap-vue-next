@@ -73,6 +73,8 @@ const computedClasses = computed(() => [
     'table-sm': props.small,
     [`table-${props.variant}`]: props.variant !== null,
     'table-striped-columns': props.stripedColumns,
+    'b-table-fixed': props.fixed,
+    'b-table-no-border-collapse': props.noBorderCollapse,
   },
 ])
 const computedTableAttrs = computed(() => ({
