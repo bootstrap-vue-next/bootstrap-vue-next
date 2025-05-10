@@ -10,7 +10,9 @@
         <BContainer v-for="component in sortData" :key="component.component" fluid class="p-0">
           <BRow>
             <BCol>
-              <code class="display-6">{{ `<` + component.component + `>` }}</code>
+              <h3 :id="kebabCase(component.component)">
+                <code class="display-6">{{ `<` + component.component + `>` }}</code>
+              </h3>
             </BCol>
             <BCol v-if="globalData && component.sourcePath !== null" cols="4" class="text-md-right">
               <ViewSourceButton

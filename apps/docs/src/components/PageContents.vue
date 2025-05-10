@@ -1,19 +1,18 @@
 <template>
   <BNav vertical small class="otp-nav">
-    <PageContentsItem v-for="header in headers" :key="header.slug" :item="header" />
-    <BNavItem v-if="isComponentPage" href="#component-reference" link-class="otp-link"
-      >Component Reference</BNavItem
-    >
+    <PageContentsItem
+      v-for="item in contents?.children"
+      :key="item.id!"
+      :item="item"
+      :active-id="activeId"
+    />
   </BNav>
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue'
-import {useData} from 'vitepress'
+import type {ContentsItem} from 'src/types'
 
-const data = useData()
-const headers = computed(() => data.page.value.headers)
-const isComponentPage = computed(() => data.page.value.relativePath.includes('/components/'))
+defineProps<{contents?: ContentsItem; activeId: string | null}>()
 </script>
 
 <style lang="scss">

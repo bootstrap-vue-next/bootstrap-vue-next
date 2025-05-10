@@ -1,3 +1,5 @@
+import type {useScrollspy} from 'bootstrap-vue-next'
+
 export type ComponentItem = Exclude<keyof ComponentReference, 'component' | 'sections'>
 export type ComponentSection = 'Properties' | 'Events' | 'Slots'
 export type EmitArgReference = {arg: string; type: string; description?: string}
@@ -94,3 +96,7 @@ export type CollectiveMembersResponse = {
 export type CollectivePartialResponse = {
   members: CollectiveMembersResponse[]
 }
+
+export type ScrollspyItem = ReturnType<typeof useScrollspy>['list']['value'][0]
+export type HeaderItem = ScrollspyItem & {tag: string; level: number}
+export type ContentsItem = HeaderItem & {children: ContentsItem[]}
