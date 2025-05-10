@@ -4,14 +4,13 @@
       v-for="item in contents?.children"
       :key="item.id!"
       :item="item"
-      :active-id="filteredActiveId(item, activeId)"
+      :active-id="activeId"
     />
   </BNav>
 </template>
 
 <script setup lang="ts">
-import type {ContentsItem} from '../types'
-import {filteredActiveId} from '../utils'
+import type {ContentsItem} from 'src/types'
 
 defineProps<{contents?: ContentsItem; activeId: string | null}>()
 </script>
