@@ -626,7 +626,6 @@ The following are <NotYetImplemented/> -
 
 - The `filter-debounce`, `fixed`, `no-border-collapse`, `selected-variant`, and `table-footer-sorting` props
 - The `filter` prop does not yet support a RegEx object, only a string.
-- The `table-colgroup` slot
 - The `context-changed` and `refreshed` events
 
 `filter-included-fields` have been replaced by a single `filterable` prop. `filter-ignored-fields`
@@ -737,7 +736,6 @@ See [Show and Hide](#show-and-hide) shared properties.
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
 `content` prop has been renamed to `body` for consistency with other components.
-
 
 ## Directives
 
