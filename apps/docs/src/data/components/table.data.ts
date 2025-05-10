@@ -519,6 +519,18 @@ export default {
       {
         name: 'table-colgroup',
         description: 'Slot for user supplied `<colgroup>` element',
+        scope: [
+          {
+            prop: 'columns',
+            type: 'number',
+            description: 'The number of columns in the table',
+          },
+          {
+            prop: 'fields',
+            type: 'TableField<Items>[]',
+            description: 'The normalized fields definition array (in the array of objects format)',
+          },
+        ],
       },
       {
         name: 'top-row',

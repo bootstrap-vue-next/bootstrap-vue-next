@@ -1,7 +1,7 @@
 <template>
   <BTableSimple v-bind="computedSimpleProps">
     <colgroup v-if="slots['table-colgroup']">
-      <slot name="table-colgroup" />
+      <slot name="table-colgroup" :columns="computedFieldsTotal" :fields="computedFields" />
     </colgroup>
     <BThead v-show="showComputedHeaders" :variant="props.headVariant" :class="props.theadClass">
       <slot name="thead-top" :columns="computedFieldsTotal" :fields="computedFields" />
@@ -298,7 +298,7 @@ const emit = defineEmits<{
 
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'table-colgroup'?: (props: Record<string, never>) => any
+  'table-colgroup'?: (props: {columns: number; fields: typeof computedFields.value}) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'thead-top'?: (props: {columns: number; fields: typeof computedFields.value}) => any
   [key: `head(${string})`]: (props: {
