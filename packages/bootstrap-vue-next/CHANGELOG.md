@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.29.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.29.2...bootstrapvuenext-v0.29.3) (2025-05-11)
+
+
+### Bug Fixes
+
+* **BTableSimple:** fixed and nobordercollapse to work fixes [#2685](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2685) ([c61f532](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c61f532ce9c6ac232611084f25235e0926c7b836))
+
 ## [0.29.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.29.1...bootstrapvuenext-v0.29.2) (2025-05-07)
 
 
