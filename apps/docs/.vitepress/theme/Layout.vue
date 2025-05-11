@@ -138,7 +138,7 @@
                 header-class="pb-0 d-flex offcanvas-hidden-width"
                 body-class="py-2"
               >
-                <PageContents />
+                <PageContents :contents="contents" :active-id="activeId" />
               </BOffcanvas>
             </ClientOnly>
           </aside>
@@ -193,6 +193,7 @@ import {VPNavBarSearch} from 'vitepress/theme'
 import {appInfoKey} from './keys'
 import {useMediaQuery} from '@vueuse/core'
 import PageContents from '../../src/components/PageContents.vue'
+import {type ContentsItem, type HeaderItem} from '../../src/types'
 
 // https://vitepress.dev/reference/runtime-api#usedata
 const {page} = useData()
@@ -201,9 +202,11 @@ const route = useRoute()
 const content = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_content')
 const target = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_target')
 
-useScrollspy(content, target, {
-  contentQuery: ':scope > div > [id], #component-reference',
+const {current: activeId, list: items} = useScrollspy(content, target, {
+  contentQuery: ':scope > div > [id], #component-reference, .component-reference h3',
   targetQuery: ':scope [href]',
+  rootMargin: '0px 0px -25%',
+  manual: true,
 })
 
 const globalData = inject(appInfoKey, {
@@ -294,6 +297,49 @@ const currentIcon = computed(() => map[colorMode.value])
 const set = (newValue: keyof typeof map) => {
   colorMode.value = newValue
 }
+
+const headers = computed(() =>
+  items.value.map((item) => {
+    const rawTag = item.el?.tagName?.toUpperCase() ?? ''
+    const isHeading = /^H[1-6]$/.test(rawTag)
+    const tag = isHeading ? rawTag : 'DIV'
+    const level = tag.startsWith('H') ? parseInt(tag.replace('H', '')) : 3
+    return {
+      ...item,
+      tag,
+      level,
+    } as HeaderItem
+  })
+)
+
+const contents = computed(() => {
+  const root: ContentsItem[] = []
+  const stack: ContentsItem[] = []
+
+  headers.value.forEach((header) => {
+    const item = {...header, children: [] as ContentsItem[]} as ContentsItem
+
+    while (stack.length && stack[stack.length - 1].level >= item.level) {
+      stack.pop()
+    }
+
+    if (stack.length === 0) {
+      root.push(item)
+    } else {
+      stack[stack.length - 1].children.push(item)
+    }
+
+    stack.push(item)
+  })
+
+  if (root.length !== 1) {
+    // Something isn't right if we have no root items or more than one root item
+    // eslint-disable-next-line no-console
+    console.warn('Unexpected header structure:', headers, 'Root items:', root)
+  }
+
+  return root.length > 0 ? root[0] : undefined
+})
 
 watch(
   () => route.path,
