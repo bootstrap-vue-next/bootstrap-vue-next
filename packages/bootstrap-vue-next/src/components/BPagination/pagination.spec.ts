@@ -466,6 +466,39 @@ describe('pagination', () => {
 
     expect(await TestScenariosAgainstInvariants(wrapper)).toBe(0)
   })
+  it('can navigate to different pages using the left and right arrow keys', async () => {
+    // Mock getBoundingClientRect to return a non-zero size
+    const originalGetBoundingClientRect = window.HTMLElement.prototype.getBoundingClientRect
+    window.HTMLElement.prototype.getBoundingClientRect = () =>
+      ({
+        x: 0,
+        y: 0,
+        width: 10,
+        height: 10,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+      }) as DOMRect
+    const wrapper = mount(BPagination, {
+      props: {totalRows: 7, perPage: 1, modelValue: 1},
+      attachTo: document.body,
+    })
+    await wrapper.find('li.active > button').element?.focus()
+    expect(document.activeElement?.textContent).toBe('1')
+    await wrapper.find('ul').trigger('keydown', {code: 'ArrowRight'})
+    expect(document.activeElement?.textContent).toBe('2')
+    await wrapper.find('ul').trigger('keydown', {code: 'ArrowRight'})
+    expect(document.activeElement?.textContent).toBe('3')
+    await wrapper.find('ul').trigger('keydown', {code: 'ArrowRight'})
+    expect(document.activeElement?.textContent).toBe('4')
+    await wrapper.find('button[aria-posinset="4"]').trigger('click')
+    await wrapper.find('ul').trigger('keydown', {code: 'ArrowRight'})
+    expect(document.activeElement?.textContent).toBe('5')
+    await wrapper.find('ul').trigger('keydown', {code: 'ArrowLeft'})
+    expect(document.activeElement?.textContent).toBe('4')
+    window.HTMLElement.prototype.getBoundingClientRect = originalGetBoundingClientRect
+  })
 })
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

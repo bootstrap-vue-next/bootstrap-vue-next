@@ -7,7 +7,13 @@
     :aria-label="props.ariaLabel || undefined"
     @keydown="handleKeyNav"
   >
-    <li v-for="page in pages" :key="`page-${page.id}`" v-bind="page.li" ref="_pageElements">
+    <li
+      v-for="(page, index) in pages"
+      :key="`page-${page.id}`"
+      v-bind="page.li"
+      ref="_pageElements"
+      :displayIndex="index"
+    >
       <span
         v-if="page.id === FIRST_ELLIPSIS || page.id === LAST_ELLIPSIS"
         v-bind="ellipsisProps.span"
@@ -304,7 +310,6 @@ const pagination = computed(() => ({
 
 const pageClick = (event: Readonly<MouseEvent>, pageNumber: number) => {
   if (pageNumber === computedModelValue.value) return
-
   const clickEvent = new BvEvent('page-click', {
     cancelable: true,
     target: event.target,
@@ -315,6 +320,13 @@ const pageClick = (event: Readonly<MouseEvent>, pageNumber: number) => {
 
   modelValue.value = pageNumber
 
+  nextTick(() => {
+    if (pageNumber === 1) {
+      focusFirst()
+    } else if (pageNumber === pagination.value.numberOfPages) {
+      focusLast()
+    }
+  })
   //    nextTick(() => {
   //  if (isVisible(target) && un_element.contains(target)) {
   //  attemptFocus(target)
@@ -332,18 +344,24 @@ const isDisabled = (el: HTMLButtonElement) => {
   return !isElement || el.disabled || hasAttr || hasClass
 }
 
-const getButtons = () =>
-  pageElements.value
-    ?.map((page) => page.children[0] as HTMLButtonElement)
-    .filter((btn) => {
-      if (btn.getAttribute('display') === 'none') {
+const getButtons = (): HTMLButtonElement[] =>
+  [...(pageElements.value ?? [])]
+    ?.sort(
+      (a, b) =>
+        parseInt(a.getAttribute('displayIndex') || '0') -
+        parseInt(b.getAttribute('displayIndex') || '0')
+    )
+    ?.map((page) => page.children[0])
+    ?.filter((el) => {
+      if (el.getAttribute('display') === 'none' || el.tagName.toUpperCase() !== 'BUTTON') {
         return false
       }
 
-      const bcr = btn.getBoundingClientRect()
+      const bcr = el.getBoundingClientRect()
 
       return !!(bcr && bcr.height > 0 && bcr.width > 0)
-    }) ?? []
+    })
+    ?.map((el) => el as HTMLButtonElement)
 
 const focusFirst = () => {
   nextTick(() => {
@@ -376,7 +394,6 @@ const focusNext = () => {
   nextTick(() => {
     const buttons = getButtons()
     const index = buttons.indexOf(getActiveElement() as HTMLButtonElement)
-
     if (index < buttons.length - 1 && !isDisabled(buttons[index + 1])) {
       buttons[index + 1]?.focus()
     }
@@ -385,7 +402,6 @@ const focusNext = () => {
 
 const handleKeyNav = (event: KeyboardEvent) => {
   const {code, shiftKey} = event
-
   if (code === CODE_LEFT || code === CODE_UP) {
     stopEvent(event)
     if (shiftKey) {

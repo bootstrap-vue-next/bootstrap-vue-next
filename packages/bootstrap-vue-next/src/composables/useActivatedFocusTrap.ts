@@ -1,13 +1,4 @@
-import {
-  type MaybeRefOrGetter,
-  nextTick,
-  onMounted,
-  readonly,
-  ref,
-  type Ref,
-  toRef,
-  watch,
-} from 'vue'
+import {type MaybeRefOrGetter, onMounted, readonly, ref, type Ref, toRef, watch} from 'vue'
 import {useFocusTrap, type UseFocusTrapOptions} from '@vueuse/integrations/useFocusTrap'
 import {useMutationObserver} from '@vueuse/core'
 
@@ -17,6 +8,7 @@ export const useActivatedFocusTrap = (
     isActive,
     noTrap,
     fallbackFocus,
+    focus,
   }: {
     element: Ref<HTMLElement | null>
     isActive: MaybeRefOrGetter<boolean>
@@ -33,11 +25,14 @@ export const useActivatedFocusTrap = (
        */
       classSelector: string
     }
+    focus: () => HTMLElement | boolean | undefined
   },
   focusTrapOpts: UseFocusTrapOptions = {
     allowOutsideClick: true,
     fallbackFocus: fallbackFocus.ref.value ?? undefined,
     escapeDeactivates: false,
+    clickOutsideDeactivates: false,
+    initialFocus: focus,
   }
 ) => {
   const resolvedIsActive = readonly(toRef(isActive))
@@ -63,7 +58,6 @@ export const useActivatedFocusTrap = (
 
   const trap = useFocusTrap(element, focusTrapOpts)
   watch(resolvedIsActive, async (newValue) => {
-    await nextTick()
     if (newValue && resolvedNoTrap.value === false) {
       trap.activate()
     } else {

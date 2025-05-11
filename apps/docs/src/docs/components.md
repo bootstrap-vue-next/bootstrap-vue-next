@@ -193,7 +193,11 @@ const componentList: {name: string; description: string}[] = [
   {
     name: 'Form Spinbutton',
     description: ''
-  }
+  },
+    {
+      name: 'Tooltip',
+      description: 'Tooltip provides a tooltip behavior over another component',
+    },
 ]
 
 const computedComponentsList = computed(() =>

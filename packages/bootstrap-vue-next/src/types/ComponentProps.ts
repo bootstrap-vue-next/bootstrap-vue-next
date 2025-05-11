@@ -498,6 +498,7 @@ export interface BListGroupItemProps extends Omit<BLinkProps, 'routerTag'> {
 
 // export interface BModalOrchestratorProps extends TeleporterProps {}
 export type BModalOrchestratorProps = TeleporterProps
+export type BPopoverOrchestratorProps = TeleporterProps
 
 export interface BNavProps {
   align?: AlignmentJustifyContent
@@ -562,6 +563,13 @@ export interface BOffcanvasProps extends TeleporterProps, ShowHideProps {
   bodyAttrs?: Readonly<AttrsValue>
   bodyClass?: ClassValue
   bodyScrolling?: boolean
+  focus?:
+    | 'close'
+    | boolean
+    | string
+    | Readonly<ComponentPublicInstance>
+    | Readonly<HTMLElement>
+    | null
   footerClass?: string
   headerClass?: string
   headerCloseClass?: ClassValue
@@ -571,7 +579,6 @@ export interface BOffcanvasProps extends TeleporterProps, ShowHideProps {
   modelValue?: boolean
   noCloseOnBackdrop?: boolean
   noCloseOnEsc?: boolean
-  noFocus?: boolean
   noHeader?: boolean
   noTrap?: boolean
   noHeaderClose?: boolean
@@ -775,20 +782,29 @@ export interface BSpinnerProps {
   variant?: ColorVariant | null
 }
 
-export interface BAlertProps {
+export interface BAlertProps
+  extends ColorExtendables,
+    Omit<BLinkProps, 'routerTag'>,
+    ShowHideProps {
+  alertClass?: ClassValue
+  body?: string
+  bodyClass?: ClassValue
   closeClass?: ClassValue
   closeContent?: string
   closeLabel?: string
   closeVariant?: ButtonVariant | null
   dismissible?: boolean
-  fade?: boolean
-  immediate?: boolean
+  headerClass?: ClassValue
+  headerTag?: string
+  id?: string
   interval?: number | 'requestAnimationFrame'
+  isStatus?: boolean
   modelValue?: boolean | number
   noHoverPause?: boolean
   noResumeOnHoverLeave?: boolean
+  progressProps?: Omit<BProgressBarProps, 'label' | 'max' | 'value'>
   showOnPause?: boolean
-  variant?: ColorVariant | null
+  title?: string
 }
 
 export interface BAvatarProps
@@ -1221,6 +1237,10 @@ export interface BToastProps
     ShowHideProps {
   body?: string
   bodyClass?: ClassValue
+  closeClass?: ClassValue
+  closeContent?: string
+  closeLabel?: string
+  closeVariant?: ButtonVariant | null
   headerClass?: ClassValue
   headerTag?: string
   id?: string
@@ -1242,7 +1262,7 @@ export interface BPopoverProps extends TeleporterProps, ShowHideProps {
   boundaryPadding?: Padding
   click?: boolean
   closeOnHide?: boolean
-  content?: string
+  body?: string
   customClass?: ClassValue
   delay?:
     | number
@@ -1284,8 +1304,15 @@ export interface BCardHeadFootProps extends ColorExtendables {
 }
 
 export interface BModalProps extends TeleporterProps, ShowHideProps {
-  autofocus?: boolean
-  autofocusButton?: 'ok' | 'cancel' | 'close'
+  focus?:
+    | 'ok'
+    | 'cancel'
+    | 'close'
+    | boolean
+    | string
+    | Readonly<ComponentPublicInstance>
+    | Readonly<HTMLElement>
+    | null
   backdropFirst?: boolean
   body?: string
   bodyAttrs?: Readonly<AttrsValue>
@@ -1296,6 +1323,7 @@ export interface BModalProps extends TeleporterProps, ShowHideProps {
   bodyVariant?: ColorVariant | null
   busy?: boolean
   buttonSize?: Size
+  cancelClass?: ClassValue
   cancelDisabled?: boolean
   cancelTitle?: string
   cancelVariant?: ButtonVariant | null
@@ -1327,6 +1355,7 @@ export interface BModalProps extends TeleporterProps, ShowHideProps {
   noCloseOnEsc?: boolean
   noTrap?: boolean
   noStacking?: boolean
+  okClass?: ClassValue
   okDisabled?: boolean
   okOnly?: boolean
   okTitle?: string

@@ -20,11 +20,8 @@ jobs:
 
     steps:
       - name: Use Release Please
-        uses: google-github-actions/release-please-action@v4
+        uses: googleapis/release-please-action@v4
         id: release
-        with:
-          command: manifest
-          monorepo-tags: true
   
       # The logic below handles the npm publication:
 

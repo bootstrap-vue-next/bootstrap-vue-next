@@ -600,6 +600,8 @@ See [Show and Hide](#show-and-hide) shared properties.
 
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
+`content` prop has been renamed to `body` for consistency with other components.
+
 ### BProgressBar
 
 See the [v-html](#v-html) section for information on deprecation of the `label-html` prop.
@@ -620,14 +622,25 @@ See the [v-html](#v-html) section for information on deprecation of the `html` p
 
 The slot `emptyfiltered` has been renamed to `empty-filtered` for consistency.
 
-The following properties are <NotYetImplemented/> -
-`filter-ignored-fields`, `filter-included-fields`, `fixed`, `no-border-collapse`, `selected-variant`,
-`table-footer-sorting`
+The following are <NotYetImplemented/> -
 
-<NotYetImplemented/>The `filter` prop does not yet support a RegEx object, only a string.
-<NotYetImplemented />The `table-colgroup` slot is not yet implemented.
+- The `filter-debounce`, `fixed`, `no-border-collapse`, `selected-variant`, and `table-footer-sorting` props
+- The `filter` prop does not yet support a RegEx object, only a string.
+- The `table-colgroup` slot
+- The `context-changed` and `refreshed` events
+
+`filter-included-fields` have been replaced by a single `filterable` prop. `filter-ignored-fields`
+is deprecated.
+
+`no-sort-reset` is deprecated. Use `must-sort`. By default, sortability can be reset by clicking (3) times [asc => desc => undefined => asc...]
+
+`selected-variant` has been renamed to `selection-variant` for internal consistency.
 
 `sort-compare` and `sort-direction` are deprecated, use the `sortBy` prop (or model) as documented [here](/docs/components/table#sorting) instead.
+
+Similarly, the `sort-changed` event is replaced by the `update:sortBy` event
+
+`table-variant` is replaced with `variant` for consistency.
 
 BootstrapVue used the main v-model binding to expose a readonly version of the displayed items. This is deprecated. Instead,
 used the exposed function `displayedItems` as demonstrated in [the documentation](/docs/components/table#complete-example).
@@ -646,6 +659,20 @@ BootstrapVue adds utility classes to the `<table>` including `b-table-select-sin
 The `filtered` event has a single argument `Items[]` rather than two arguments with an array and length. The semantics haven't changed.
 
 <NotYetImplemented/> Heading and data row accessibility
+
+### Items Provider Functions
+
+To use an items provider, set the `provider` prop to a provider function and leave the
+`items` prop undefined (unlike in BootstrapVue, where the `items` prop was overloaded). See
+our [documentation](/docs/components/table#using-items-provider-functions) for details.
+
+The items provider function `ctx` parameter now contains `sortBy` array rather than `sortBy` and `sortDesc` fields -
+see the [sorting docs](/docs/components/table#sorting) for details
+
+The table prop `api-url` and the items provider function `ctx` parameter `apiUrl` field are both deperecdated
+as they are easily replaced by direct management of the api call by the user.
+
+The items provider no longer includes an optional callback parameter, use the async method of calling instead.
 
 ### Field Definitions
 
@@ -706,6 +733,10 @@ See [Show and Hide](#show-and-hide) shared properties.
 <NotYetDocumented type="component"/>
 
 See [Show and Hide](#show-and-hide) shared properties.
+
+See the [v-html](#v-html) section for information on deprecation of the `html` prop.
+
+`content` prop has been renamed to `body` for consistency with other components.
 
 ## Directives
 

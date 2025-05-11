@@ -2,33 +2,47 @@
   <ConditionalTeleport :to="props.teleportTo" :disabled="props.teleportDisabled">
     <div id="__BVID__modal-container" v-bind="$attrs">
       <component
-        :is="modal.component ?? BModal"
-        v-for="[self, modal] in tools.modals?.value"
-        :key="self"
-        v-bind="modal.props"
-        v-model="modal.props._modelValue"
+        :is="_component ?? BModal"
+        v-for="[key, {component: _component, promise, options, slots, ...val}] in tools.modals
+          ?.value"
+        :key="key"
+        :ref="(ref: ComponentPublicInstance) => (promise.value.ref = ref)"
+        v-bind="val"
         initial-animation
         :teleport-disabled="true"
-        @update:model-value="tools.leave?.(self)"
         @hide="
           (e: BvTriggerableEvent) => {
-            // These following are confirm rules, otherwise we always resolve true
-            if (modal.props._isConfirm === true) {
-              if (e.trigger === 'ok') {
-                modal.props._promise.resolve(true)
-                return
-              }
-              if (e.trigger === 'cancel') {
-                modal.props._promise.resolve(false)
-                return
-              }
-              modal.props._promise.resolve(null)
+            e.ok = e.trigger === 'ok' ? true : e.trigger === 'cancel' ? false : null
+            val.onHide?.(e)
+            if (e.defaultPrevented) {
+              return
             }
-            modal.props._promise.resolve(true)
+            promise.stop?.()
+            if (options?.resolveOnHide) {
+              promise.resolve(options.returnBoolean ? e.ok : e)
+            }
           }
         "
-        @hidden="tools.remove?.(self)"
-      />
+        @hidden="
+          (e: BvTriggerableEvent) => {
+            e.ok = e.trigger === 'ok' ? true : e.trigger === 'cancel' ? false : null
+            val.onHidden?.(e)
+            if (e.defaultPrevented) {
+              return
+            }
+            if (!options?.resolveOnHide) {
+              promise.resolve(options.returnBoolean ? e.ok : e)
+            }
+            if (!options?.keep) {
+              promise.value.destroy?.()
+            }
+          }
+        "
+      >
+        <template v-for="(comp, slot) in slots" #[slot]="scope" :key="slot">
+          <component :is="comp" v-bind="scope" />
+        </template>
+      </component>
     </div>
   </ConditionalTeleport>
 </template>
@@ -40,6 +54,7 @@ import type {BModalOrchestratorProps} from '../../types/ComponentProps'
 import BModal from './BModal.vue'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
 import {useModalController} from '../../composables/useModalController'
+import type {ComponentPublicInstance} from 'vue'
 
 defineOptions({
   inheritAttrs: false,
@@ -52,6 +67,7 @@ const _props = withDefaults(defineProps<BModalOrchestratorProps>(), {
 const props = useDefaults(_props, 'BModalOrchestrator')
 
 const tools = useModalController()
+tools._isOrchestratorInstalled.value = true
 
 defineExpose({
   ...tools,
