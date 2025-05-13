@@ -37,8 +37,9 @@
       :dot-indicator="props.badgeDotIndicator || badgeImplicitlyDot"
       :variant="props.badgeVariant"
       :bg-variant="props.badgeBgVariant"
+      :badge-offset="props.badgeOffset"
       :text-variant="props.badgeTextVariant"
-      :style="badgeStyle"
+      :style="[badgeStyle, badgeOffsetStyle]"
       :placement="props.badgePlacement"
     >
       <slot name="badge">
@@ -69,6 +70,7 @@ const props = withDefaults(defineProps<BAvatarProps>(), {
   badgeVariant: 'primary',
   badgePlacement: 'bottom-end',
   badgeDotIndicator: false,
+  badgeOffset: null,
   badgePill: false,
   button: false,
   buttonType: 'button',
@@ -214,6 +216,30 @@ const textFontStyle = computed<StyleValue>(() => {
     ? `calc(${computedSize.value} * ${FONT_SIZE_SCALE})`
     : null
   return fontSize ? {fontSize} : {}
+})
+
+const badgeOffsetStyle = computed<StyleValue>(() => {
+  const offset = props.badgeOffset
+  const placement = props.badgePlacement
+
+  let x = `-50%`
+  let y = `-50%`
+
+  if (placement.includes('top')) {
+    y = `calc(-50% + ${offset})`
+  } else if (placement.includes('bottom')) {
+    y = `calc(-50% - ${offset})`
+  }
+
+  if (placement.includes('end')) {
+    x = `calc(-50% - ${offset})`
+  } else if (placement.includes('start')) {
+    x = `calc(-50% + ${offset})`
+  }
+
+  return {
+    transform: `translate(${x}, ${y}) !important`,
+  }
 })
 
 const marginStyle = computed(() => {
