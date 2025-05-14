@@ -86,13 +86,13 @@
         </div>
       </template>
       <BProgress
-        v-if="typeof modelValue === 'number' && props.progressProps !== undefined"
-        :animated="props.progressProps.animated"
-        :precision="props.progressProps.precision"
-        :show-progress="props.progressProps.showProgress"
-        :show-value="props.progressProps.showValue"
-        :striped="props.progressProps.striped"
-        :variant="props.progressProps.variant"
+        v-if="typeof modelValue === 'number' && !props.noProgress"
+        :animated="props.progressProps?.animated"
+        :precision="props.progressProps?.precision"
+        :show-progress="props.progressProps?.showProgress"
+        :show-value="props.progressProps?.showValue"
+        :striped="props.progressProps?.striped"
+        :variant="props.progressProps?.variant"
         :max="modelValue"
         :value="remainingMs"
         height="4px"
@@ -135,6 +135,7 @@ const _props = withDefaults(defineProps<Omit<BToastProps, 'modelValue'>>(), {
   noCloseButton: false,
   noFade: false,
   noHoverPause: false,
+  noProgress: false,
   noResumeOnHoverLeave: false,
   progressProps: undefined,
   unmountLazy: false,

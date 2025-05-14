@@ -28,8 +28,7 @@
               :teleport-disabled="true"
               @hide="
                 (e: BvTriggerableEvent) => {
-                  // we resolve close button to false, true otherwise for example link
-                  e.ok = e.trigger !== 'close'
+                  e.ok = e.trigger === 'ok' ? true : e.trigger === 'cancel' ? false : null
 
                   val.onHide?.(e)
                   if (e.defaultPrevented) {
@@ -43,7 +42,7 @@
               "
               @hidden="
                 (e: BvTriggerableEvent) => {
-                  e.ok = e.trigger !== 'close'
+                  e.ok = e.trigger === 'ok' ? true : e.trigger === 'cancel' ? false : null
                   val.onHidden?.(e)
                   if (e.defaultPrevented) {
                     return

@@ -26,6 +26,7 @@ import type {
   PromiseWithPopover,
   PromiseWithToast,
   ToastOrchestratorArrayValue,
+  ToastOrchestratorCreateOptions,
   ToastOrchestratorCreateParam,
   TooltipOrchestratorCreateParam,
 } from '../types/ComponentOrchestratorTypes'
@@ -222,7 +223,10 @@ export const toastPluginKey: InjectionKey<{
   toasts: Ref<ToastOrchestratorArrayValue[]>
   _isAppend: Ref<boolean>
   _isOrchestratorInstalled: Ref<boolean>
-  create: (obj: ToastOrchestratorCreateParam) => PromiseWithToast
+  create: (
+    obj: ToastOrchestratorCreateParam,
+    options?: ToastOrchestratorCreateOptions
+  ) => PromiseWithToast
   /**
    * show
    * @deprecated
