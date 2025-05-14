@@ -50,8 +50,8 @@ export const useModal = (id: MaybeRefOrGetter<string | undefined> = undefined) =
     show() {
       modalComponent.value?.exposed?.show()
     },
-    hide(trigger = '') {
-      modalComponent.value?.exposed?.hide(trigger)
+    hide(trigger?: string) {
+      modalComponent.value?.exposed?.hide(trigger, true)
     },
     modal,
   }

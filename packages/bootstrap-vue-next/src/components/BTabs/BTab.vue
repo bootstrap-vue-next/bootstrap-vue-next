@@ -76,17 +76,21 @@ const tab = computed(
       titleItemClass: () => props.titleItemClass,
       titleLinkAttrs: () => props.titleLinkAttrs,
       titleLinkClass: () => props.titleLinkClass,
-      onClick: attrs.onClick,
+      onClick: () => attrs.onClick,
       el: el.value,
     }) as TabType
 )
 
-onMounted(() => {
-  if (!parentData) return
+if (parentData) {
   parentData.registerTab(tab)
   if (activeModel.value) {
     parentData.activateTab(computedId.value)
   }
+}
+
+onMounted(() => {
+  if (!parentData) return
+  parentData.sortTabs()
 })
 
 onUnmounted(() => {

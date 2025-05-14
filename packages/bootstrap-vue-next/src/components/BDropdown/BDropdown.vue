@@ -58,6 +58,7 @@
           :class="[props.menuClass, computedMenuClasses]"
           :aria-labelledby="computedId"
           :role="props.role"
+          style="display: block"
           @click="onClickInside"
         >
           <slot v-if="contentShowing" :hide="hide" :show="show" :visible="showRef" />
@@ -96,13 +97,14 @@ import {
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import type {BDropdownProps} from '../../types/ComponentProps'
+import type {BDropdownEmits} from '../../types/ComponentEmits'
 import BButton from '../BButton/BButton.vue'
 import ConditionalWrapper from '../ConditionalWrapper.vue'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
 import {isBoundary, isRootBoundary, resolveBootstrapCaret} from '../../utils/floatingUi'
 import {getElement} from '../../utils/getElement'
 import {buttonGroupKey, dropdownInjectionKey, inputGroupKey} from '../../utils/keys'
-import {type showHideEmits, useShowHide} from '../../composables/useShowHide'
+import {useShowHide} from '../../composables/useShowHide'
 
 const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   ariaLabel: undefined,
@@ -148,11 +150,7 @@ const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
 })
 const props = useDefaults(_props, 'BDropdown')
 
-const emit = defineEmits<
-  {
-    'split-click': [event: MouseEvent]
-  } & showHideEmits
->()
+const emit = defineEmits<BDropdownEmits>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -411,10 +409,3 @@ provide(dropdownInjectionKey, {
   isNav: toRef(() => props.isNav),
 })
 </script>
-<style lang="scss" scoped>
-.dropdown-menu {
-  &.fade {
-    display: block;
-  }
-}
-</style>

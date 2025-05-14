@@ -7,7 +7,7 @@ export const useFormSelect = (
   props: MaybeRefOrGetter<Record<string, unknown>>
 ) => {
   const isComplex = (option: unknown): option is ComplexSelectOptionRaw =>
-    typeof option === 'object' && option !== null && 'label' in option
+    typeof option === 'object' && option !== null && 'options' in option
 
   const normalizeOption = (option: unknown): ComplexSelectOptionRaw | SelectOption => {
     const propsValue = toValue(props)
