@@ -1249,6 +1249,7 @@ export interface BToastProps
   modelValue?: boolean | number
   noCloseButton?: boolean
   noHoverPause?: boolean
+  noProgress?: boolean
   noResumeOnHoverLeave?: boolean
   progressProps?: Omit<BProgressBarProps, 'label' | 'max' | 'value'>
   showOnPause?: boolean
