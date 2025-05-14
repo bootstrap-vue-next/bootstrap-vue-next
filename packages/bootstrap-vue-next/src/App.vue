@@ -1,9 +1,13 @@
 <template>
-  <div class="text-center">
-    <BButton id="popover-button-open" variant="primary">Button</BButton>
-
-    <BPopover :model-value="true" target="popover-button-open" title="Popover">
-      I start <strong>open</strong>
-    </BPopover>
-  </div>
+  <BContainer>
+    <BRow>
+      <BCol> Hello World! </BCol>
+    </BRow>
+  </BContainer>
 </template>
+
+<script setup lang="ts">
+// You can use this file as a development spot to test your changes
+// Please do not commit this file
+import {BCol, BContainer, BRow} from './components'
+</script>
