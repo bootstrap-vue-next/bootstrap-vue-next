@@ -594,13 +594,24 @@ See [Show and Hide](#show-and-hide) shared properties.
 
 ### BPopover
 
-<NotYetDocumented type="component"/>
-
 See [Show and Hide](#show-and-hide) shared properties.
 
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
 `content` prop has been renamed to `body` for consistency with other components.
+
+<NotYetImplemented/>The `target` prop does not implement taking a function.
+
+Triggers work differently as the underlying library that we use to manage popovers have changed. See
+[our documentation](/docs/components/popover#triggers) and [floating-ui](https://floating-ui.com/)
+for details.
+
+The `variant` prop has been deprecated. Use
+[Bootstrap's Color and background utilities](https://getbootstrap.com/docs/5.3/helpers/color-background/) instead.
+
+`$root` events are deprecated. See [usePopoverController](/docs/composables/usePopoverController) as an alternative.
+
+<NotYetImplemented/>[Programmatically Disabling](https://bootstrap-vue.org/docs/components/popover#programmatically-disabling-popover)
 
 ### BProgressBar
 
@@ -737,7 +748,6 @@ See [Show and Hide](#show-and-hide) shared properties.
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
 `content` prop has been renamed to `body` for consistency with other components.
-
 
 ## Directives
 
