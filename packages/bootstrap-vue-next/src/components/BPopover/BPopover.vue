@@ -30,7 +30,7 @@
           <template v-if="props.title || slots.title">
             <div
               class="position-sticky top-0"
-              :class="props.tooltip ? 'tooltip-inner' : 'popover-header'"
+              :class="[props.tooltip ? 'tooltip-inner' : 'popover-header', props.titleClass]"
             >
               <slot name="title" v-bind="sharedSlots">
                 {{ props.title }}
@@ -38,7 +38,7 @@
             </div>
           </template>
           <template v-if="(props.tooltip && !slots.title && !props.title) || !props.tooltip">
-            <div :class="props.tooltip ? 'tooltip-inner' : 'popover-body'">
+            <div :class="[props.tooltip ? 'tooltip-inner' : 'popover-body', props.bodyClass]">
               <slot v-bind="sharedSlots">{{ props.body }}{{ attrs.content }}</slot>
             </div>
           </template>
@@ -109,12 +109,12 @@ if (attrs.content)
 const _props = withDefaults(defineProps<Omit<BPopoverProps, 'modelValue'>>(), {
   boundary: 'clippingAncestors',
   boundaryPadding: undefined,
+  bodyClass: undefined,
   click: false,
   closeOnHide: false,
   teleportTo: undefined,
   teleportDisabled: false,
   body: undefined,
-  customClass: '',
   delay: () => ({show: 100, hide: 300}),
   floatingMiddleware: undefined,
   hideMargin: 2,
@@ -138,6 +138,7 @@ const _props = withDefaults(defineProps<Omit<BPopoverProps, 'modelValue'>>(), {
   strategy: 'absolute',
   target: null,
   title: undefined,
+  titleClass: undefined,
   show: false,
   tooltip: false,
   variant: null,
@@ -335,7 +336,6 @@ const computedClasses = computed(() => {
       [`b-${type}-${props.variant}`]: props.variant !== null,
       show: isVisible.value && !hidden.value,
       fade: !computedNoAnimation.value,
-      [`${props.customClass}`]: props.customClass !== undefined,
       [`bs-${type}-${resolveBootstrapPlacement(placement.value)}`]: placement.value !== undefined,
     },
   ]
