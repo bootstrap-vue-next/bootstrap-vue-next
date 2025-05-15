@@ -15,6 +15,7 @@
           {
             fade: !computedNoAnimation,
             show: isVisible,
+            ontop: (activeModalCount ?? 0) - 1 === (activePosition ?? 0),
           },
         ]"
         role="dialog"
@@ -116,6 +117,7 @@
           :class="{
             fade: !computedNoAnimation,
             show: backdropVisible || computedNoAnimation,
+            ontop: (activeModalCount ?? 0) - 1 === (activePosition ?? 0),
           }"
           @click="hide('backdrop')"
         />
@@ -127,7 +129,16 @@
 <script setup lang="ts">
 import {onKeyStroke, unrefElement} from '@vueuse/core'
 import {useActivatedFocusTrap} from '../../composables/useActivatedFocusTrap'
-import {computed, type CSSProperties, type EmitFn, useTemplateRef, watch} from 'vue'
+import {
+  computed,
+  type CSSProperties,
+  type EmitFn,
+  nextTick,
+  onMounted,
+  ref,
+  useTemplateRef,
+  watch,
+} from 'vue'
 import type {BModalProps} from '../../types/ComponentProps'
 import type {BModalEmits} from '../../types/ComponentEmits'
 import type {BModalSlots, BModalSlotsData} from '../../types/ComponentSlots'
@@ -375,7 +386,23 @@ watch(stackWithoutSelf, (newValue, oldValue) => {
     hide()
 })
 
-const defaultModalDialogZIndex = 1056
+onMounted(() => {
+  watch(
+    renderRef,
+    (v) => {
+      if (!v) return
+      nextTick(() => {
+        if (!element.value) return
+        defaultModalDialogZIndex.value = parseInt(
+          window.getComputedStyle(element.value).getPropertyValue('--bs-modal-zindex')
+        )
+      })
+    },
+    {immediate: true}
+  )
+})
+
+const defaultModalDialogZIndex = ref(1056)
 const computedZIndexNumber = computed<number>(() =>
   // Make sure that newly opened modals have a higher z-index than currently active ones.
   // All active modals have a z-index of ('defaultZIndex' - 'stackSize' - 'positionInStack').
@@ -384,15 +411,19 @@ const computedZIndexNumber = computed<number>(() =>
 
   showRef.value || isLeaving.value
     ? // Just for reference there is a single frame in which the modal is not active but still has a higher z-index than the active ones due to _when_ it calculates its position. It's a small visual effect
-      defaultModalDialogZIndex -
+      defaultModalDialogZIndex.value -
       ((activeModalCount?.value ?? 0) * 2 - (activePosition?.value ?? 0) * 2)
-    : defaultModalDialogZIndex
+    : defaultModalDialogZIndex.value
 )
 const computedZIndex = computed<CSSProperties>(() => ({
   'z-index': computedZIndexNumber.value,
+  '--b-position': activePosition?.value ?? 0,
+  '--b-count': activeModalCount?.value ?? 0,
 }))
 const computedZIndexBackdrop = computed<CSSProperties>(() => ({
   'z-index': computedZIndexNumber.value - 1,
+  '--b-position': activePosition?.value ?? 0,
+  '--b-count': activeModalCount?.value ?? 0,
 }))
 
 const sharedSlots = computed<BModalSlotsData>(() => ({
