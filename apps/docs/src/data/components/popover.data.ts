@@ -26,9 +26,9 @@ export default {
             type: 'string',
             default: undefined,
           },
-          customClass: {
+          bodyClass: {
             type: 'ClassValue',
-            default: '',
+            default: undefined,
           },
           delay: {
             type: 'number | { show: number; hide: number }',
@@ -108,6 +108,10 @@ export default {
           },
           title: {
             type: 'string',
+            default: undefined,
+          },
+          titleClass: {
+            type: 'ClassValue',
             default: undefined,
           },
           tooltip: {
