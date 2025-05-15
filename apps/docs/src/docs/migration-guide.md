@@ -738,7 +738,6 @@ See the [v-html](#v-html) section for information on deprecation of the `html` p
 
 `content` prop has been renamed to `body` for consistency with other components.
 
-
 ## Directives
 
 ### Hover

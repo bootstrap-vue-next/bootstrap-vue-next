@@ -6,28 +6,33 @@ import {
   type MaybeRefOrGetter,
   nextTick,
   onMounted,
-  readonly,
   ref,
   type ShallowRef,
-  toRef,
+  toValue,
 } from 'vue'
 import {isVisible} from '../utils/dom'
 
 export const useTextareaResize = (
   input: Readonly<ShallowRef<HTMLTextAreaElement | null>>,
-  props: MaybeRefOrGetter<{
-    rows: Numberish
-    maxRows: Numberish | undefined
-    noAutoShrink: boolean
-  }>
+  {
+    maxRows,
+    noAutoShrink,
+    rows,
+  }: {
+    rows: MaybeRefOrGetter<Numberish>
+    maxRows: MaybeRefOrGetter<Numberish | undefined>
+    noAutoShrink: MaybeRefOrGetter<boolean>
+  }
 ) => {
   const height = ref<number | null | string>(0)
-  const resolvedProps = readonly(toRef(props))
-  const maxRowsNumber = useToNumber(() => resolvedProps.value.maxRows || NaN, {
-    method: 'parseInt',
-    nanToZero: true,
-  })
-  const rowsNumber = useToNumber(() => resolvedProps.value.rows || NaN, {
+  const maxRowsNumber = useToNumber(
+    computed(() => toValue(maxRows) || NaN),
+    {
+      method: 'parseInt',
+      nanToZero: true,
+    }
+  )
+  const rowsNumber = useToNumber(rows, {
     method: 'parseInt',
     nanToZero: true,
   })
@@ -81,10 +86,7 @@ export const useTextareaResize = (
 
     // Computed height remains the larger of `oldHeight` and new `height`,
     // when height is in `sticky` mode (prop `no-auto-shrink` is true)
-    if (
-      resolvedProps.value.noAutoShrink &&
-      (Number.parseFloat(oldHeight.toString()) || 0) > newHeight
-    ) {
+    if (toValue(noAutoShrink) && (Number.parseFloat(oldHeight.toString()) || 0) > newHeight) {
       height.value = oldHeight
       return
     }

@@ -70,15 +70,13 @@ const emit = defineEmits<{
 
 const attrs = useAttrs()
 const {computedHref, tag, link, isNuxtLink, isRouterLink, linkProps, isNonStandardTag} =
-  useBLinkTagResolver(
-    computed(() => ({
-      routerComponentName: props.routerComponentName,
-      disabled: props.disabled,
-      to: props.to,
-      replace: props.replace,
-      href: props.href,
-    }))
-  )
+  useBLinkTagResolver({
+    routerComponentName: () => props.routerComponentName,
+    disabled: () => props.disabled,
+    to: () => props.to,
+    replace: () => props.replace,
+    href: () => props.href,
+  })
 
 const collapseData = inject(collapseInjectionKey, null)
 const navbarData = inject(navbarInjectionKey, null)
