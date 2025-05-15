@@ -97,7 +97,7 @@
           </div>
         </li>
       </ul>
-      <div aria-live="polite" aria-atomic="true">
+      <div :aria-live="props.feedbackAriaLive" aria-atomic="true">
         <div v-if="isInvalid" class="d-block invalid-feedback">
           {{ props.invalidTagText }}: {{ inputValue }}
         </div>
@@ -140,6 +140,7 @@ const _props = withDefaults(defineProps<Omit<BFormTagsProps, 'modelValue'>>(), {
   autofocus: false,
   disabled: false,
   duplicateTagText: 'Duplicate tag(s)',
+  feedbackAriaLive: 'assertive',
   form: undefined,
   inputAttrs: undefined,
   inputClass: undefined,

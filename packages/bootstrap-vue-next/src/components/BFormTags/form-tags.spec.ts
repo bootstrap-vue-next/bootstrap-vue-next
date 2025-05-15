@@ -25,4 +25,31 @@ describe('form-tags', () => {
       expect($smallElement.text()).toBe('Foo')
     })
   })
+
+  describe('feedbackAriaLive behavior', () => {
+    it('sets aria-live to assertive by default', () => {
+      const wrapper = mount(BFormTags)
+      const feedbackDiv = wrapper.find('.b-form-tags > div[aria-atomic="true"]:last-child')
+      expect(feedbackDiv.exists()).toBe(true)
+      expect(feedbackDiv.attributes('aria-live')).toBe('assertive')
+    })
+
+    it('sets aria-live to polite when feedbackAriaLive is polite', () => {
+      const wrapper = mount(BFormTags, {
+        props: {feedbackAriaLive: 'polite'},
+      })
+      const feedbackDiv = wrapper.find('.b-form-tags > div[aria-atomic="true"]:last-child')
+      expect(feedbackDiv.exists()).toBe(true)
+      expect(feedbackDiv.attributes('aria-live')).toBe('polite')
+    })
+
+    it('sets aria-live to off when feedbackAriaLive is off', () => {
+      const wrapper = mount(BFormTags, {
+        props: {feedbackAriaLive: 'off'},
+      })
+      const feedbackDiv = wrapper.find('.b-form-tags > div[aria-atomic="true"]:last-child')
+      expect(feedbackDiv.exists()).toBe(true)
+      expect(feedbackDiv.attributes('aria-live')).toBe('off')
+    })
+  })
 })
