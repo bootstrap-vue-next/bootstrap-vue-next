@@ -352,6 +352,18 @@ export interface BFormRadioGroupProps {
   validated?: boolean
   valueField?: string
 }
+export interface BFormRatingProps {
+  modelValue?: number
+  readonly?: boolean
+  stars?: number
+  precision?: number
+  iconFull?: string
+  iconHalf?: string
+  iconEmpty?: string
+  colorFull?: string
+  colorEmpty?: string
+  size?: string
+}
 
 export interface BFormSelectProps {
   ariaInvalid?: AriaInvalid
@@ -809,6 +821,8 @@ export interface BAvatarProps
   badgeVariant?: ColorVariant | null
   badgePill?: boolean
   badgeDotIndicator?: boolean
+  /** Offset for badge positioning (e.g. "10% 20px") */
+  badgeOffset?: string
   button?: boolean
   buttonType?: ButtonType
   size?: LiteralUnion<Size, Numberish>
