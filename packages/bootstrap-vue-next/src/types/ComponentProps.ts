@@ -1264,7 +1264,7 @@ export interface BPopoverProps extends TeleporterProps, ShowHideProps {
   click?: boolean
   closeOnHide?: boolean
   body?: string
-  customClass?: ClassValue
+  bodyClass?: ClassValue
   delay?:
     | number
     | Readonly<{
@@ -1290,6 +1290,7 @@ export interface BPopoverProps extends TeleporterProps, ShowHideProps {
   strategy?: Strategy
   target?: string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | null
   title?: string
+  titleClass?: ClassValue
   tooltip?: boolean
   variant?: ColorVariant | null
 }
