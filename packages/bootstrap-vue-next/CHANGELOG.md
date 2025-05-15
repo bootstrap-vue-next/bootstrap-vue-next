@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.29.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.29.3...bootstrapvuenext-v0.29.4) (2025-05-15)
+
+
+### Features
+
+* **BPopover:** add titleClass and bodyClass, remove unneeded customClass prop since class is inherited to the same place ([08c89fd](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/08c89fdbb4a1782f33fe651f71229d46d9d35de6))
+* **BToast:** add noProgress prop, make progress show as default if modelValue is number. fix(useToastController): if using the deprecated show method the countdown didn't start. ([90b578d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/90b578d54392fdd699e583f07cfe437fdd8d8979))
+
 ## [0.29.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.29.2...bootstrapvuenext-v0.29.3) (2025-05-11)
 
 
