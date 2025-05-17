@@ -609,7 +609,7 @@ to handle placment.
 
 <NotYetImplemented/>The `target` prop does not implement taking a function.
 
-Triggers work differently as the underlying library that we use to manage popovers have changed. See
+Triggers work differently as the underlying library we use to manage popovers have changed. See
 [our documentation](/docs/components/popover#triggers) and [floating-ui](https://floating-ui.com/)
 for details.
 

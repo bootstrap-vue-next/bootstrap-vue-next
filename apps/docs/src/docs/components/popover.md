@@ -12,10 +12,10 @@ directive. Popovers can also be created and programmatically controlled via the 
 
 ## Overview
 
-Things to know when using popover component:
+Things to know when using the popover component:
 
 - Popovers rely on the 3rd party library [floating-ui](https://floating-ui.com/docs) for positioning.
-- Popovers require BootstrapVueNext's custom SCSS/CSS in order to function correctly.
+- Popovers require BootstrapVueNext's custom SCSS/CSS to function correctly.
 - Specify `container` as `null` (default, appends to `<body>`) to avoid rendering problems in more
   complex components (like input groups, button groups, etc.). You can use `container` to optionally
   specify a different element to append the rendered popover to.
