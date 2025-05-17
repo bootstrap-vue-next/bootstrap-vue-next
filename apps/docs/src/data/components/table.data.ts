@@ -517,6 +517,17 @@ export default {
         ],
       },
       {
+        name: 'table-colgroup',
+        description: 'Slot for user supplied `<colgroup>` element',
+        scope: [
+          {
+            prop: 'fields',
+            type: 'TableField<Items>[]',
+            description: 'The normalized fields definition array (in the array of objects format)',
+          },
+        ],
+      },
+      {
         name: 'top-row',
         description: 'Fixed top row slot for user supplied B-TD cells. Optionally scoped',
         scope: endRowScope,
