@@ -3,7 +3,7 @@
 <PageHeader>
 
 The Popover feature, which provides a tooltip-like behavior, can be easily applied to any
-interactive element via the `<Bpopover>` component or [`v-b-popover`](/docs/directives/b-popover)
+interactive element via the `<BPopover>` component or [`v-b-popover`](/docs/directives/b-popover)
 directive. Popovers can also be created and programmatically controlled via the `usePopoverController`
 
 </PageHeader>
@@ -14,8 +14,8 @@ directive. Popovers can also be created and programmatically controlled via the 
 
 Things to know when using popover component:
 
-- Popovers rely on the 3rd party library [floating-use](https://floating-ui.com/docs) for positioning.
-- Popovers require BootstrapVueNexts's custom SCSS/CSS in order to function correctly, and for variants.
+- Popovers rely on the 3rd party library [floating-ui](https://floating-ui.com/docs) for positioning.
+- Popovers require BootstrapVueNext's custom SCSS/CSS in order to function correctly.
 - Specify `container` as `null` (default, appends to `<body>`) to avoid rendering problems in more
   complex components (like input groups, button groups, etc.). You can use `container` to optionally
   specify a different element to append the rendered popover to.
@@ -40,9 +40,9 @@ specified via the `target` prop, and can be any of the following:
 The target element **must** exist in the document before `<BPopover>` is mounted. If the target
 element is not found during mount, the popover will never open. Always place your `<BPopover>`
 component lower in the DOM than your target element. This rule also applies if a callback function
-is used as target element, since that callback is called only once on mount.
+is used as the target element, since that callback is called only once on mount.
 
-`HTMLElement` refers to standard HTML elements such as `<div>`, `<button>`, etc, while `SVGElement`
+`HTMLElement` refers to standard HTML elements such as `<div>`, `<button>`, etc., while `SVGElement`
 refers to `<svg>` or supported child elements of SVGs.
 
 :::
@@ -60,9 +60,9 @@ Positioning is relative to the trigger element.
 
 ## Triggers
 
-By default popovers are shown by `pointerenter` and `focus` events and closed by `pointerleave` and `blur` events
+By default, popovers are shown by `pointerenter` and `focus` events and closed by `pointerleave` and `blur` events
 on the `target` element by default. To override this behavior and make the popover show and hide based
-on `click` events set the `click` prop to `true`.
+on `click` events, set the `click` prop to `true`.
 
 <<< DEMO ./demo/PopoverTriggers.vue#template{vue-html}
 
@@ -121,7 +121,7 @@ props can be used to control what's considered clipping.
 
 ## Exposed functions
 
-`BPopover` exposes several functions allow manipulation of the state of the component.
+`BPopover` exposes several functions to allow manipulation of the state of the component.
 These are accessed through the [template ref](https://vuejs.org/guide/essentials/template-refs.html#template-refs)
 
 <<< DEMO ./demo/PopoverExposed.vue

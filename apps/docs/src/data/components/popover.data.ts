@@ -161,7 +161,7 @@ export default {
           args: [
             {
               arg: 'value',
-              type: 'FocusEventg',
+              type: 'FocusEvent',
               description: 'Native focuse event',
             },
           ],

@@ -44,12 +44,12 @@
         </BPopover>
         <BButton id="popover-target-leftstart"> Left Start </BButton>
         <BPopover target="popover-target-leftstart" triggers="hover" placement="left-start">
-          <template #title>Popover Bottom Start</template>
+          <template #title>Popover Left Start</template>
           I am popover <b>component</b> content!
         </BPopover>
         <BButton id="popover-target-leftend"> Left End </BButton>
         <BPopover target="popover-target-leftend" triggers="hover" placement="left-end">
-          <template #title>Popover Bottom End</template>
+          <template #title>Popover Left End</template>
           I am popover <b>component</b> content!
         </BPopover>
       </BCol>
