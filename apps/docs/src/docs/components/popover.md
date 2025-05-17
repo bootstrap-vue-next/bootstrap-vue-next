@@ -121,7 +121,7 @@ props can be used to control what's considered clipping.
 
 ## Exposed functions
 
-`BCollapse` exposes several functions allow manipulation of the state of the component.
+`BPopover` exposes several functions allow manipulation of the state of the component.
 These are accessed through the [template ref](https://vuejs.org/guide/essentials/template-refs.html#template-refs)
 
 <<< DEMO ./demo/PopoverExposed.vue
