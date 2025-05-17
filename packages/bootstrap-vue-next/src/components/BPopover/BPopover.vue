@@ -141,7 +141,6 @@ const _props = withDefaults(defineProps<Omit<BPopoverProps, 'modelValue'>>(), {
   titleClass: undefined,
   show: false,
   tooltip: false,
-  variant: null,
   visible: false,
 })
 
@@ -333,7 +332,6 @@ const computedClasses = computed(() => {
     type,
     `b-${type}`,
     {
-      [`b-${type}-${props.variant}`]: props.variant !== null,
       show: isVisible.value && !hidden.value,
       fade: !computedNoAnimation.value,
       [`bs-${type}-${resolveBootstrapPlacement(placement.value)}`]: placement.value !== undefined,

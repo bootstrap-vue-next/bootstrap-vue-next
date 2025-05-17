@@ -60,11 +60,15 @@ Positioning is relative to the trigger element.
 
 ## Triggers
 
-Popovers can are shown by `pointerenter` and `focus` events and closed by `pointerleave` and `blur` events
-on the `target` element by default. To override this behavior and make popover show and hide based
+By default popovers are shown by `pointerenter` and `focus` events and closed by `pointerleave` and `blur` events
+on the `target` element by default. To override this behavior and make the popover show and hide based
 on `click` events set the `click` prop to `true`.
 
 <<< DEMO ./demo/PopoverTriggers.vue#template{vue-html}
+
+To take finer control of popover visibility, set the `manual` prop and use the
+[`v-model`](#programmatic-control-via-v-model) or
+[exposed functions](#exposed-functions) to control visibility.
 
 ## Content
 
@@ -73,22 +77,26 @@ and `default` slots.
 
 <<< DEMO ./demo/PopoverContent.vue#template{vue-html}
 
-## Custom Class and Variant
+## Custom Classes and Variants
 
-A custom class can be applied to the popover outer wrapper `<div>` by using the `custom-class` prop:
+Custom classes can be applied to the popover's title `<div>` by using the `title-class` prop and to
+the popover's body `<div>` by using the `body-class` prop:
 
 <<< FRAGMENT ./demo/PopoverCustomClass.vue#template{vue-html}
 
-<NotYetImplemented/>
 Similarly, use [Bootstrap's Color and background](https://getbootstrap.com/docs/5.3/helpers/color-background/)
 utitlities to change the variant of the popover.
 
 <<< DEMO ./demo/PopoverVariant.vue#template{vue-html}
 
-`custom-class` is reactive and can be changed while the popover is open.
+`body-class` and `title-class` is reactive and can be changed while the popover is open.
 
 Refer to the [popover directive](/docs/directives/popover) docs on applying custom
-class to the directive version.
+classes to the directive version.
+
+For finer control, use the bootstrap 5 css variables to apply styles directly.
+
+<<< DEMO ./demo/PopoverStyles.vue#template{vue-html}
 
 ## Programmatic control via v-model
 
@@ -101,7 +109,7 @@ To make the popover shown on initial render, simply set `model-value` on `<BPopo
 
 <<< DEMO ./demo/PopoverStartOpen.vue#template{vue-html}
 
-Popovers can also be controlled via [Exposed functions](#exposed-funtions).
+Popovers can also be controlled via [Exposed functions](#exposed-functions).
 
 ## Close on Hide
 
@@ -111,7 +119,7 @@ props can be used to control what's considered clipping.
 
 <<< DEMO ./demo/PopoverCloseOnHide.vue
 
-## Exposed funtions
+## Exposed functions
 
 `BCollapse` exposes several functions allow manipulation of the state of the component.
 These are accessed through the [template ref](https://vuejs.org/guide/essentials/template-refs.html#template-refs)

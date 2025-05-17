@@ -4,7 +4,8 @@
     <BButton id="popover-variant">Button</BButton>
     <BPopover
       target="popover-variant"
-      custom-class="text-bg-danger"
+      title-class="text-bg-danger"
+      body-class="text-bg-danger"
       title="Danger!"
       body="Danger variant popover"
     />
