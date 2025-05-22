@@ -15,32 +15,24 @@ directive. Popovers can also be created and programmatically controlled via the 
 Things to know when using the popover component:
 
 - Popovers rely on the 3rd party library [floating-ui](https://floating-ui.com/docs) for positioning.
-- Popovers require BootstrapVueNext's custom SCSS/CSS to function correctly.
-- Specify `container` as `null` (default, appends to `<body>`) to avoid rendering problems in more
-  complex components (like input groups, button groups, etc.). You can use `container` to optionally
-  specify a different element to append the rendered popover to.
+- Use `teleportTo` and `teleportDisabled` to control where in the DOM the popover is rendered. See the [Vue.js Docs](https://vuejs.org/guide/built-ins/teleport.html) for details.
 - Triggering popovers on hidden elements will not work.
 - Popovers for `disabled` elements must be triggered on a wrapper element.
-- When triggered from hyperlinks that span multiple lines, popovers will be centered. Use
-  `white-space: nowrap;` on your `<a>`s, `<BLink>`s and `<router-link>`s to avoid this behavior.
+- When triggered from hyperlinks that span multiple lines, popovers will be centered. Set the `inline` prop to improve the positioning see the [Floating UI docs](https://floating-ui.com/docs/inline) for details.
 
 ## Target
 
 The target is the _trigger_ element (or component) that will trigger the popover. The target is
-specified via the `target` prop, and can be any of the following:
+specified via the `target` slot or prop, and can be any of the following:
+
+The `target` prop may be any of the following:
 
 - A string identifying the ID of the trigger element (or ID of the root element of a component)
 - A reference (ref) to an `HTMLElement` or an `SVGElement` via a [Template Ref](https://vuejs.org/guide/essentials/template-refs.html)
 - A reference (ref) to a component that has either an `HTMLElement` or `SVGElement` as its root
   element via [Template Ref](https://vuejs.org/guide/essentials/template-refs.html)
-- <NotYetImplemented/> A function (callback) that returns a reference to an `HTMLElement` or `SVGElement`
 
 :::info NOTE
-
-The target element **must** exist in the document before `<BPopover>` is mounted. If the target
-element is not found during mount, the popover will never open. Always place your `<BPopover>`
-component lower in the DOM than your target element. This rule also applies if a callback function
-is used as the target element, since that callback is called only once on mount.
 
 `HTMLElement` refers to standard HTML elements such as `<div>`, `<button>`, etc., while `SVGElement`
 refers to `<svg>` or supported child elements of SVGs.
@@ -66,8 +58,9 @@ on `click` events, set the `click` prop to `true`.
 
 <<< DEMO ./demo/PopoverTriggers.vue#template{vue-html}
 
-To take finer control of popover visibility, set the `manual` prop and use the
-[`v-model`](#programmatic-control-via-v-model) or
+To take finer control of popover visibility, you can use the [useToggle](/docs/composables/useToggle) or
+[usePopoverController](/docs/composables/usePopoverController). Alternately, you can set the `manual` prop
+and use the [`v-model`](#programmatic-control-via-v-model) or
 [exposed functions](#exposed-functions) to control visibility.
 
 ## Content
