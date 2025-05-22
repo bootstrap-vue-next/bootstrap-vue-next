@@ -2,7 +2,6 @@
   --bs-progress-bar-transition: none;
 }
 .toast:not(.show) {
-  display: block;
   opacity: unset;
 }
 .toast.fade:not(.show) {
