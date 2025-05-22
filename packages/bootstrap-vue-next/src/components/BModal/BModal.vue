@@ -24,8 +24,9 @@
         v-bind="$attrs"
         :style="computedZIndex"
         style="display: block"
+        @mousedown.self="hide('backdrop')"
       >
-        <div ref="_modalDialog" class="modal-dialog" :class="modalDialogClasses">
+        <div class="modal-dialog" :class="modalDialogClasses">
           <div v-if="contentShowing" class="modal-content" :class="props.contentClass">
             <div v-if="!props.noHeader" class="modal-header" :class="headerClasses">
               <slot name="header" v-bind="sharedSlots">
@@ -124,7 +125,7 @@
 </template>
 
 <script setup lang="ts">
-import {onClickOutside, onKeyStroke, unrefElement} from '@vueuse/core'
+import {onKeyStroke, unrefElement} from '@vueuse/core'
 import {useActivatedFocusTrap} from '../../composables/useActivatedFocusTrap'
 import {computed, type CSSProperties, type EmitFn, useTemplateRef, watch} from 'vue'
 import type {BModalProps} from '../../types/ComponentProps'
@@ -222,7 +223,6 @@ const computedId = useId(() => props.id, 'modal')
 const modelValue = defineModel<Exclude<BModalProps['modelValue'], undefined>>({default: false})
 
 const element = useTemplateRef<HTMLElement>('_element')
-const modalDialog = useTemplateRef<HTMLElement>('_modalDialog')
 const fallbackFocusElement = useTemplateRef<HTMLElement>('_fallbackFocusElement')
 const okButton = useTemplateRef<HTMLElement>('_okButton')
 const cancelButton = useTemplateRef<HTMLElement>('_cancelButton')
@@ -314,8 +314,6 @@ onKeyStroke(
   {target: element}
 )
 useSafeScrollLock(showRef, () => props.bodyScrolling)
-
-onClickOutside(modalDialog, () => hide('backdrop'))
 
 const hasHeaderCloseSlot = computed(() => !isEmptySlot(slots['header-close']))
 
