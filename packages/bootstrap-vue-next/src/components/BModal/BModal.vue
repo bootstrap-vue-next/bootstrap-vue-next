@@ -24,7 +24,7 @@
         v-bind="$attrs"
         :style="computedZIndex"
         style="display: block"
-        @click.self="hide('backdrop')"
+        @mousedown.self="hide('backdrop')"
       >
         <div class="modal-dialog" :class="modalDialogClasses">
           <div v-if="contentShowing" class="modal-content" :class="props.contentClass">
