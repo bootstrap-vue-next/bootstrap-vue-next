@@ -313,9 +313,3 @@ defineExpose({
   isOpenByBreakpoint,
 })
 </script>
-
-<style lang="scss" scoped>
-.no-transition {
-  transition: none !important;
-}
-</style>

@@ -288,12 +288,10 @@ defineExpose({
   --bs-progress-bar-transition: none;
 }
 .toast:not(.show) {
+  display: block;
   opacity: unset;
 }
 .toast.fade:not(.show) {
   opacity: 0;
-}
-.btn-close-custom {
-  margin: var(--bs-toast-padding-x) var(--bs-toast-padding-x) auto;
 }
 </style>
