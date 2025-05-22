@@ -488,10 +488,3 @@ onMounted(() => {
 
 onBeforeUnmount(unbind)
 </script>
-<style lang="scss" scoped>
-.bs-popover-auto[data-popper-placement^='bottom']
-  .popover-arrow:has(+ div > .popover-header)::after,
-.bs-popover-bottom .popover-arrow:has(+ div > .popover-header)::after {
-  --bs-popover-bg: var(--bs-popover-header-bg);
-}
-</style>

@@ -282,18 +282,3 @@ defineExpose({
   stop,
 })
 </script>
-
-<style lang="scss" scoped>
-.toast :deep(.progress .progress-bar) {
-  --bs-progress-bar-transition: none;
-}
-.toast:not(.show) {
-  opacity: unset;
-}
-.toast.fade:not(.show) {
-  opacity: 0;
-}
-.btn-close-custom {
-  margin: var(--bs-toast-padding-x) var(--bs-toast-padding-x) auto;
-}
-</style>
