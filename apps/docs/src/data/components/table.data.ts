@@ -4,6 +4,52 @@ import {buildCommonProps, pick} from '../../utils'
 
 export default {
   load: (): ComponentReference[] => {
+    const tableRowEventArgs = (action: string) => [
+      {
+        arg: 'item',
+        type: 'TableItem',
+        description: `Item data of the row ${action}`,
+      },
+      {
+        arg: 'index',
+        type: 'number',
+        description: `Index of the row ${action}`,
+      },
+      {
+        arg: 'event',
+        description: '',
+        type: 'MouseEvent|KeyboardEvent',
+      },
+    ]
+
+    const rowSelectionScope = [
+      {
+        prop: 'rowSelected',
+        type: 'boolean',
+        description:
+          'Will be true if the row has been selected. Only applicable when table is in selectable mode',
+      },
+      {
+        prop: 'selectRow',
+        type: '(index?: number) => void',
+        description:
+          'Can be called to select the current row. Only applicable when table is in selectable mode',
+      },
+    ]
+
+    const endRowScope = [
+      {
+        prop: 'columns',
+        type: 'number',
+        description: 'The number of columns in the table',
+      },
+      {
+        prop: 'fields',
+        type: 'TableField<Items>[]',
+        description: 'The normalized fields definition array (in the array of objects format)',
+      },
+    ]
+
     const BTableSimpleProps = {
       bordered: {
         type: 'boolean',
@@ -106,10 +152,12 @@ export default {
       caption: {
         type: 'string',
         default: undefined,
+        description: 'Text string to place in the caption element',
       },
       detailsTdClass: {
         type: 'ClassValue',
         default: undefined,
+        description: 'CSS class (or classes) to apply to the td element in the details row',
       },
       fieldColumnClass: {
         type: '(field: TableField) => Record<string, any>[] | string | Record<PropertyKey, any> | any[]',
@@ -118,34 +166,45 @@ export default {
       fields: {
         type: 'TableFieldRaw[]',
         default: '() => []',
+        description: 'Array of field names or array of field definition objects',
       },
       footClone: {
         type: 'boolean',
         default: false,
+        description: 'Enable the footer of the table, and clone the header content by default',
       },
       footRowVariant: {
         type: 'ColorVariant | null',
         default: undefined,
+        description:
+          'Apply a Bootstrap theme color variant to the tr element in the tfoot. Falls back to head-row-variant',
       },
       footVariant: {
         type: 'ColorVariant | null',
         default: undefined,
+        description:
+          'Apply a Bootstrap theme color variant to the foot, falls back to head-variant if that prop is specified. May take precedence over foot-row-variant',
       },
       headRowVariant: {
         type: 'ColorVariant | null',
         default: undefined,
+        description: 'Apply a Bootstrap theme color variant to the tr element in the thead',
       },
       headVariant: {
         type: 'ColorVariant | null',
         default: undefined,
+        description:
+          'Apply a Bootstrap theme color variant to the head. May take precedence over head-row-variant',
       },
       items: {
-        type: 'TableItem[]',
+        type: 'readonly Items[]',
         default: '() => []',
       },
       labelStacked: {
         type: 'boolean',
         default: false,
+        description:
+          'When set, the labels will appear as actual label elements, rather than with the data-label attribute',
       },
       modelValue: {
         type: 'any',
@@ -154,13 +213,15 @@ export default {
       primaryKey: {
         type: 'string',
         default: undefined,
+        description:
+          'Name of a table field that contains a guaranteed unique value per row. Needed for tbody transition support, and also speeds up table rendering',
       },
       tbodyClass: {
         type: 'ClassValue',
         default: undefined,
       },
       tbodyTrAttrs: {
-        type: 'ClassValue',
+        type: '((item: Items | null, type: TableRowType) => AttrsValue) | AttrsValue',
         default: undefined,
       },
       tbodyTrClass: {
@@ -188,6 +249,280 @@ export default {
       PropertyReference
     >
 
+    const tableLiteEmits = [
+      {
+        event: 'head-clicked',
+        description:
+          "Emitted when a header or footer cell is clicked. Not applicable for 'custom-foot' slot",
+        args: [
+          {
+            arg: 'key',
+            type: 'TableField<Record<string, unknown>>.key: LiteralUnion<string, string>',
+            description: 'Column key clicked (field name)',
+          },
+          {
+            arg: 'field',
+            type: 'TableField',
+            description: 'Field definition object',
+          },
+          {
+            arg: 'event',
+            description: 'Native event object',
+            type: 'MouseEvent|KeyboardEvent',
+          },
+          {
+            arg: 'isFooter',
+            description: '`true` if this event originated from clicking on the footer cell',
+            type: 'boolean',
+          },
+        ],
+      },
+      {
+        event: 'row-clicked',
+        description: 'Emitted when a row is clicked',
+        args: tableRowEventArgs('being clicked'),
+      },
+      {
+        event: 'row-contextmenu',
+        description: 'Emitted when a context menu is displayed for a row',
+        args: tableRowEventArgs('showing the context menu'),
+      },
+      {
+        event: 'row-dblclicked',
+        description: 'Emitted when a row is double clicked',
+        args: tableRowEventArgs('being double clicked'),
+      },
+      {
+        event: 'row-hovered',
+        description: 'Emitted when a row is hovered',
+        args: tableRowEventArgs('being hovered'),
+      },
+      {
+        event: 'row-unhovered',
+        description: 'Emitted when a row is unhovered',
+        args: tableRowEventArgs('being unhovered'),
+      },
+    ]
+
+    const tableLiteSlots: ComponentReference['slots'] = [
+      {
+        name: 'bottom-row',
+        description: 'Fixed bottom row slot for user supplied B-TD cells. Optionally Scoped',
+        scope: endRowScope,
+      },
+      {
+        name: 'cell({key})',
+        description:
+          'Default scoped slot for custom data rendering of field data. See docs for scoped data',
+        scope: [
+          {
+            prop: 'detailsShowing',
+            type: 'boolean',
+            description: "Will be true if the row's row-details scoped slot is visible",
+          },
+          {
+            prop: 'field',
+            type: 'TableField<Items>',
+            description: "The field's normalized definition object (from the fields prop)",
+          },
+          {
+            prop: 'index',
+            type: 'number',
+            description: "The row's index (zero-based) with respect to the displayed rows",
+          },
+          {
+            prop: 'item',
+            type: 'readonly Items[]',
+            description: "The row's item data object",
+          },
+          {
+            prop: 'toggleDetails',
+            type: '() => void',
+            description:
+              'Can be called to toggle the visibility of the rows row-details scoped slot',
+          },
+          {
+            prop: 'unformatted',
+            type: 'unknown',
+            description:
+              "The raw value for this key in the item record (null or undefined if a virtual column), before being passed to the field's formatter function",
+          },
+          {
+            prop: 'value',
+            type: 'unknown',
+            description:
+              "The value for this key in the record (null or undefined if a virtual column), or the output of the field's formatter function",
+          },
+          ...rowSelectionScope,
+        ],
+      },
+      {
+        name: 'custom-foot',
+        description:
+          'Custom footer content slot for user supplied B-TR, B-TH, B-TD. Optionally Scoped',
+        scope: [
+          {
+            prop: 'fields',
+            type: 'TableField<Items>[]',
+            description: 'The normalized fields definition array (in the array of objects format)',
+          },
+          {
+            prop: 'items',
+            type: 'readonly Items[]',
+            description: 'Array of items that are currently being displayed',
+          },
+          {
+            prop: 'columns',
+            type: 'number',
+            description: 'The number of columns in the table',
+          },
+        ],
+      },
+      {
+        name: 'foot({key})',
+        description:
+          "Scoped slot for custom rendering of field footer. '{key}' is the field's key name. See docs for scoped footer",
+        scope: [
+          {
+            prop: 'clearSelected',
+            type: '() => void',
+            description: 'Unselect all rows (applicable if the table is in selectable mode)',
+          },
+          {
+            prop: 'column',
+            type: 'LiteralUnion<keyof Items>',
+            description: "The field's key value",
+          },
+          {
+            prop: 'field',
+            type: 'TableField<Items>',
+            description: "The field's normalized definition object (from the fields prop)",
+          },
+          {
+            prop: 'isFoot',
+            type: 'true',
+            description: 'Used to distinguish foot when falling back to head()',
+          },
+          {
+            prop: 'label',
+            type: 'string | undefined',
+            description: "The field's label value",
+          },
+          {
+            prop: 'selectAllRows',
+            type: '() => void',
+            description: 'Select all rows (applicable if the table is in selectable mode)',
+          },
+        ],
+      },
+      {
+        name: 'head({key})',
+        description:
+          "Scoped slot for custom rendering of field header. '{key}' is the field's key name",
+        scope: [
+          {
+            prop: 'clearSelected',
+            type: '() => void',
+            description: 'Unselect all rows (applicable if the table is in selectable mode)',
+          },
+          {
+            prop: 'column',
+            type: 'LiteralUnion<keyof Items>',
+            description: "The field's key value",
+          },
+          {
+            prop: 'field',
+            type: 'TableField<Items>',
+            description: "The field's normalized definition object (from the fields prop)",
+          },
+          {
+            prop: 'isFoot',
+            type: 'boolean',
+            description: 'Will be true if the slot is being rendered in the table footer',
+          },
+          {
+            prop: 'label',
+            type: 'string | undefined',
+            description: "The field's label value",
+          },
+          {
+            prop: 'selectAllRows',
+            type: '() => void',
+            description: 'Select all rows (applicable if the table is in selectable mode)',
+          },
+        ],
+      },
+      {
+        name: 'row-details',
+        description:
+          'Scoped slot for optional rendering additional record details. See docs for Row details support',
+        scope: [
+          {
+            prop: 'fields',
+            type: 'TableField<Items>[]',
+            description: 'The normalized fields definition array (in the array of objects format)',
+          },
+          {
+            prop: 'index',
+            type: 'Number',
+            description: "The item's row index number (with respect to the displayed item rows)",
+          },
+          {
+            prop: 'item',
+            type: 'Items',
+            description: "The entire row's record data object",
+          },
+          {
+            prop: 'toggleDetails',
+            type: '() => void',
+            description: "Function to toggle visibility of the row's details slot",
+          },
+          ...rowSelectionScope,
+        ],
+      },
+      {
+        name: 'table-caption',
+        description: "Content to display in the table's caption element",
+      },
+      {
+        name: 'thead-top',
+        description:
+          'Slot above the column headers in the `thead` element for user-supplied B-TR with B-TH/B-TD. Optionally scoped',
+        scope: [
+          {
+            prop: 'clearSelected',
+            type: '() => void',
+            description: 'Unselect all rows (applicable if the table is in selectable mode)',
+          },
+          {
+            prop: 'columns',
+            type: 'number',
+            description: 'The number of columns in the table',
+          },
+          {
+            prop: 'label',
+            type: 'string | undefined',
+            description: "The field's label value",
+          },
+          {
+            prop: 'fields',
+            type: 'TableField<Items>[]',
+            description: 'The normalized fields definition array (in the array of objects format)',
+          },
+          {
+            prop: 'selectAllRows',
+            type: '() => void',
+            description: 'Select all rows (applicable if the table is in selectable mode)',
+          },
+        ],
+      },
+      {
+        name: 'top-row',
+        description: 'Fixed top row slot for user supplied B-TD cells. Optionally scoped',
+        scope: endRowScope,
+      },
+    ]
+
     return [
       {
         component: 'BTable',
@@ -197,28 +532,36 @@ export default {
             busy: {
               type: 'boolean',
               default: false,
+              description:
+                'When set, forces the table into the busy state. Automatically set when an items provider function is being called',
             },
             busyLoadingText: {
               type: 'string',
               default: 'Loading...',
+              notYetImplemented: true,
             },
             currentPage: {
               type: 'Numberish',
               default: 1,
+              description:
+                'The current page number to display when the table is paginated. Starting from 1 and up',
             },
             filter: {
               type: 'string',
               default: undefined,
+              description:
+                'Criteria for filtering. Internal filtering supports only string or RegExpr criteria (RegExp is not yet implemented)',
             },
             filterFunction: {
               type: '(item: Readonly<Items>, filter: string | undefined) => boolean',
               default: undefined,
               description:
-                'Function called during filtering of items, gets passed the current item being filtered',
+                'Function called during filtering of items, gets passed the current item being filtered. See docs for details.',
             },
             filterable: {
               type: 'string[]',
               default: undefined,
+              description: 'Array of fields to include when filtering.',
             },
             emptyFilteredText: {
               type: 'string',
@@ -251,18 +594,26 @@ export default {
             noProvider: {
               type: 'NoProviderTypes[]',
               default: undefined,
+              description:
+                'Alternate way to set provider functionality, equivalent to using no-provider-filtering, no-provider-paging, and no-provider-sorting',
             },
             noProviderFiltering: {
               type: 'boolean',
               default: false,
+              description:
+                'When set, uses internal filtering to filter the data. Otherwise the provider is expected to perform the filtering',
             },
             noProviderPaging: {
               type: 'boolean',
               default: false,
+              description:
+                'When set, uses internal paging to paginate the data. Otherwise the items provider is expected to perform the paging',
             },
             noProviderSorting: {
               type: 'boolean',
               default: false,
+              description:
+                'When set, uses internal sorting to sort the data. Otherwise the items provider is expected to perform the sorting',
             },
             noSelectOnClick: {
               type: 'boolean',
@@ -284,6 +635,7 @@ export default {
             selectable: {
               type: 'boolean',
               default: false,
+              description: 'When set, places the table body rows in selectable mode',
             },
             selectedItems: {
               type: 'TableItem[]',
@@ -295,10 +647,14 @@ export default {
             selectionVariant: {
               type: 'ColorVariant | null',
               default: 'primary',
+              description:
+                "Bootstrap color theme variant to set selected rows to. Use any of the standard Bootstrap theme color variants, or the special table row variant 'active' (default). Set to an empty string to not use a variant",
             },
             selectMode: {
               type: "'multi' | 'single' | 'range'",
               default: 'multi',
+              description:
+                "The selectable mode for the table when 'selectable' is set. Possible values: 'single', 'multi' or 'range'",
             },
             sortBy: {
               type: 'BTableSortBy[]',
@@ -321,161 +677,65 @@ export default {
         },
         emits: [
           {
-            args: [
-              {
-                arg: 'key',
-                description: '',
-                type: 'TableField<Record<string, unknown>>.key: LiteralUnion<string, string>',
-              },
-              {
-                arg: 'field',
-                description: '',
-                type: 'TableField',
-              },
-              {
-                arg: 'event',
-                description: '',
-                type: 'MouseEvent',
-              },
-              {
-                arg: 'isFooter',
-                description: '',
-                type: 'boolean',
-              },
-            ],
-            event: 'headClicked',
-            description: '',
-          },
-          {
-            args: [
-              {
-                arg: 'item',
-                description: '',
-                type: 'TableItem',
-              },
-              {
-                arg: 'index',
-                description: '',
-                type: 'number',
-              },
-              {
-                arg: 'event',
-                description: '',
-                type: 'MouseEvent',
-              },
-            ],
-            event: 'rowClicked',
-            description: '',
-          },
-          {
-            args: [
-              {
-                arg: 'item',
-                description: '',
-                type: 'TableItem',
-              },
-              {
-                arg: 'index',
-                description: '',
-                type: 'number',
-              },
-              {
-                arg: 'event',
-                description: '',
-                type: 'MouseEvent',
-              },
-            ],
-            event: 'rowDblClicked',
-            description: '',
-          },
-          {
-            args: [
-              {
-                arg: 'item',
-                description: '',
-                type: 'TableItem',
-              },
-              {
-                arg: 'index',
-                description: '',
-                type: 'number',
-              },
-              {
-                arg: 'event',
-                description: '',
-                type: 'MouseEvent',
-              },
-            ],
-            event: 'rowHovered',
-            description: '',
-          },
-          {
-            args: [
-              {
-                arg: 'item',
-                description: '',
-                type: 'TableItem',
-              },
-              {
-                arg: 'index',
-                description: '',
-                type: 'number',
-              },
-              {
-                arg: 'event',
-                description: '',
-                type: 'MouseEvent',
-              },
-            ],
-            event: 'rowUnhovered',
-            description: '',
-          },
-          {
-            args: [
-              {
-                arg: 'rowSelected',
-                description: '',
-                type: 'TableItem',
-              },
-            ],
-            event: 'rowSelected',
-            description: '',
-          },
-          {
-            args: [
-              {
-                arg: 'rowUnselected',
-                description: '',
-                type: 'TableItem',
-              },
-            ],
-            event: 'rowUnselected',
-            description: '',
-          },
-          {
-            args: [
-              {
-                arg: 'selection',
-                description: '',
-                type: 'TableItem[]',
-              },
-            ],
-            event: 'selection',
-            description: '',
-          },
-          {
+            event: 'changed',
+            description: 'Emitted when the displayed items change',
             args: [
               {
                 arg: 'value',
-                description: 'BTableSortBy[] | undefined',
-                type: 'string',
+                type: 'Items[]',
+                description: 'Array of items displayed in the table',
               },
             ],
+          },
+          {
+            event: 'filtered',
+            description: 'Emitted when local filtering causes a change in the number of items',
+            args: [
+              {
+                arg: 'value',
+                type: 'Items[]',
+                description: 'Array of items after filtering (before local pagination occurs)',
+              },
+            ],
+          },
+          {
+            event: 'row-selected',
+            description: 'Emitted when a row or rows have been selected',
+            args: [
+              {
+                arg: 'value',
+                type: 'Items[]',
+                description: 'Array of the row items that are selected',
+              },
+            ],
+          },
+          {
+            event: 'row-unselected',
+            description: 'Emitted when a row or rows have been unselected',
+            args: [
+              {
+                arg: 'value',
+                type: 'Items[]',
+                description: 'Array of the row items that are unselected',
+              },
+            ],
+          },
+          {
             event: 'update:sortBy',
             description:
               'Emitted when the `sortBy` model is changed and represents the current sort state',
+            args: [
+              {
+                arg: 'value',
+                type: 'BTableSortBy[] | undefined',
+                description: 'New sortBy model value',
+              },
+            ],
           },
           {
+            event: 'sorted',
+            description:
+              'Updated when the user clicks a sortable column heading and represents the column click and the sort state (`asc`, `desc`, or undefined)',
             args: [
               {
                 arg: 'value',
@@ -483,70 +743,70 @@ export default {
                 type: 'BTableSortBy',
               },
             ],
-            event: 'sorted',
-            description:
-              'Updated when the user clicks a sortable column heading and represents the column click and the sort state (`asc`, `desc`, or undefined)',
           },
+          ...tableLiteEmits,
         ],
         slots: [
+          ...tableLiteSlots,
           {
-            description: '',
-            name: 'thead-top',
-            scope: [],
-          },
-          {
-            description: '',
-            name: 'select-head',
-            scope: [],
-          },
-          {
-            description: '',
-            name: 'thead-sub',
-            scope: [],
-          },
-          {
-            description: '',
-            name: 'selectCell',
-            scope: [],
-          },
-          {
-            description: '',
-            name: 'row-details',
-            scope: [],
-          },
-          {
-            description: '',
-            name: 'table-busy',
-            scope: [],
-          },
-          {
-            description: '',
-            name: 'table-caption',
-            scope: [],
-          },
-          {
-            description: '',
-            name: 'custom-foot',
-            scope: [],
-          },
-          {
-            description: '',
-            name: 'table-caption',
-            scope: [],
-          },
-          {
-            description: '',
-            name: 'default',
-            scope: [],
+            name: 'empty',
+            description:
+              'Content to display when no items are present in the `items` array. Optionally scoped',
+            scope: [
+              {
+                prop: 'emptyFilteredText',
+                type: 'string',
+                description: 'The value of the empty-filtered-text prop',
+              },
+              {
+                prop: 'emptyText',
+                type: 'string',
+                description: 'The value of the empty-text prop',
+              },
+              {
+                prop: 'fields',
+                type: 'TableField<Items>[]',
+                description:
+                  'The normalized fields definition array (in the array of objects format)',
+              },
+              {
+                prop: 'items',
+                type: 'Items[] | null',
+                description: 'The items array.',
+              },
+            ],
           },
           {
             name: 'empty-filtered',
             description:
-              'Content to display when no items are present in the `items` array after filtering',
+              'Content to display when no items are present in the filtered `items` array. Optionally scoped',
+            scope: [
+              {
+                prop: 'emptyFilteredText',
+                type: 'string',
+                description: 'The value of the empty-filtered-text prop',
+              },
+              {
+                prop: 'emptyText',
+                type: 'string',
+                description: 'The value of the empty-text prop',
+              },
+              {
+                prop: 'fields',
+                type: 'TableField<Items>[]',
+                description:
+                  'The normalized fields definition array (in the array of objects format)',
+              },
+              {
+                prop: 'items',
+                type: 'Items[]',
+                description: 'The items array.',
+              },
+            ],
           },
           {
-            name: 'empty',
-            description: 'Content to display when no items are present in the `items` array',
+            name: 'table-busy',
+            description: 'Optional slot to place loading message when table is in the busy state',
           },
         ],
       },
@@ -557,8 +817,8 @@ export default {
           '': BTableLiteProps,
           'BTableSimple Props': BTableSimpleProps,
         },
-        emits: [],
-        slots: [],
+        emits: tableLiteEmits,
+        slots: tableLiteSlots,
       },
       {
         component: 'BTableSimple',
@@ -566,7 +826,6 @@ export default {
         props: {
           '': BTableSimpleProps,
         },
-        emits: [],
         slots: [
           {
             name: 'default',
@@ -580,18 +839,13 @@ export default {
         sourcePath: '/BTable/BTbody.vue',
         props: {
           '': {
-            variant: {
-              type: 'ColorVariant',
-              default: null,
-            },
+            ...pick(buildCommonProps(), ['variant']),
           } satisfies Record<keyof BvnComponentProps['BTbody'], PropertyReference>,
         },
-        emits: [],
         slots: [
           {
-            description: '',
             name: 'default',
-            scope: [],
+            description: 'Content to place in the tbody',
           },
         ],
       },
@@ -602,33 +856,34 @@ export default {
         props: {
           '': {
             colspan: {
-              type: 'string | number',
+              type: 'Numberish',
               default: undefined,
+              description: 'Number of columns this cell spans',
             },
             rowspan: {
-              type: 'string | number',
+              type: 'Numberish',
               default: undefined,
+              description: 'Number of rows this cell spans',
             },
             stackedHeading: {
               type: 'string',
               default: undefined,
+              description:
+                "Heading for the cell when in stacked mode. Only applicable to cells in the 'tbody' element",
             },
             stickyColumn: {
               type: 'boolean',
               default: false,
+              description:
+                'If this will be a sticky column. Must be set on all cells in this column. Table must be in sticky-header or responsive mode to work',
             },
-            variant: {
-              type: 'ColorVariant | null',
-              default: null,
-            },
+            ...pick(buildCommonProps(), ['variant']),
           } satisfies Record<keyof BvnComponentProps['BTd'], PropertyReference>,
         },
-        emits: [],
         slots: [
           {
-            description: '',
             name: 'default',
-            scope: [],
+            description: 'Content to place in the td',
           },
         ],
       },
@@ -638,18 +893,13 @@ export default {
         sourcePath: '/BTable/BTfoot.vue',
         props: {
           '': {
-            variant: {
-              type: 'ColorVariant | null',
-              default: null,
-            },
+            ...pick(buildCommonProps(), ['variant']),
           } satisfies Record<keyof BvnComponentProps['BTfoot'], PropertyReference>,
         },
-        emits: [],
         slots: [
           {
-            description: '',
             name: 'default',
-            scope: [],
+            description: 'Content to place in the tfoot',
           },
         ],
       },
@@ -660,33 +910,37 @@ export default {
         props: {
           '': {
             colspan: {
-              type: 'string | number',
+              type: 'Numberish',
               default: undefined,
             },
             rowspan: {
-              type: 'string | number',
+              type: 'Numberish',
               default: undefined,
             },
             stackedHeading: {
               type: 'string',
               default: undefined,
+              description:
+                "Heading for the cell when in stacked mode. Only applicable to cells in the 'tbody' element",
             },
             stickyColumn: {
               type: 'boolean',
               default: false,
+              description:
+                'If this will be a sticky colum. Must be set on all cells in this column. table must be in sticky-header or responsive mode to work',
             },
-            variant: {
-              type: 'ColorVariant | null',
-              default: null,
+            scope: {
+              type: 'TableThScope',
+              default: undefined,
+              description: 'Scope of the header cell. Can be one of: col, row, colgroup, rowgroup',
             },
+            ...pick(buildCommonProps(), ['variant']),
           } satisfies Record<keyof BvnComponentProps['BTh'], PropertyReference>,
         },
-        emits: [],
         slots: [
           {
-            description: '',
             name: 'default',
-            scope: [],
+            description: 'Content to place in the th',
           },
         ],
       },

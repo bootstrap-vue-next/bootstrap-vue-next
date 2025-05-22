@@ -171,4 +171,13 @@
       }
     }
   }
+
+  &.b-table-fixed {
+    table-layout: fixed;
+  }
+
+  &.b-table-no-border-collapse {
+    border-collapse: separate;
+    border-spacing: 0;
+  }
 }

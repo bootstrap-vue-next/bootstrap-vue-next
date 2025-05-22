@@ -21,7 +21,7 @@
         :aria-current="i === modelValue ? true : undefined"
         :aria-label="`${props.indicatorsButtonLabel} ${i}`"
         :aria-controls="buttonOwnership"
-        :aria-describedby="slideValues?.[i]._id"
+        :aria-describedby="slideValues?.[i]?._id"
         @click="goToValue(i)"
       />
     </div>
@@ -103,8 +103,8 @@ const props = useDefaults(_props, 'BCarousel')
 const emit = defineEmits<{
   'slide': [value: BvCarouselEvent]
   'slid': [value: BvCarouselEvent]
-  'click:prev': [value: MouseEvent]
-  'click:next': [value: MouseEvent]
+  'prev-click': [value: MouseEvent]
+  'next-click': [value: MouseEvent]
 }>()
 
 const slots = defineSlots<{
@@ -300,12 +300,12 @@ watch(isHovering, (newValue) => {
 })
 
 const onClickPrev = (event: MouseEvent) => {
-  emit('click:prev', event)
+  emit('prev-click', event)
   if (event.defaultPrevented) return
   prev()
 }
 const onClickNext = (event: MouseEvent) => {
-  emit('click:next', event)
+  emit('next-click', event)
   if (event.defaultPrevented) return
   next()
 }

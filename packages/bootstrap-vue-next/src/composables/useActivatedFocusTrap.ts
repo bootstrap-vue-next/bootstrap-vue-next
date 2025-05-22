@@ -1,13 +1,4 @@
-import {
-  type MaybeRefOrGetter,
-  nextTick,
-  onMounted,
-  readonly,
-  ref,
-  type Ref,
-  toRef,
-  watch,
-} from 'vue'
+import {type MaybeRefOrGetter, onMounted, readonly, ref, type Ref, toRef, watch} from 'vue'
 import {useFocusTrap, type UseFocusTrapOptions} from '@vueuse/integrations/useFocusTrap'
 import {useMutationObserver} from '@vueuse/core'
 
@@ -17,6 +8,7 @@ export const useActivatedFocusTrap = (
     isActive,
     noTrap,
     fallbackFocus,
+    focus,
   }: {
     element: Ref<HTMLElement | null>
     isActive: MaybeRefOrGetter<boolean>
@@ -33,28 +25,32 @@ export const useActivatedFocusTrap = (
        */
       classSelector: string
     }
+    focus: () => HTMLElement | boolean | undefined
   },
   focusTrapOpts: UseFocusTrapOptions = {
     allowOutsideClick: true,
     fallbackFocus: fallbackFocus.ref.value ?? undefined,
     escapeDeactivates: false,
+    clickOutsideDeactivates: false,
+    initialFocus: focus,
   }
 ) => {
   const resolvedIsActive = readonly(toRef(isActive))
   const resolvedNoTrap = readonly(toRef(noTrap))
 
-  const checkNeedsFocus = () => {
+  const checkNeedsFallback = () => {
     const tabbableElements = element.value?.querySelectorAll(
       `a, button, input, select, textarea, [tabindex]:not([tabindex="-1"]):not(.${fallbackFocus.classSelector})`
     )
-    return !tabbableElements || tabbableElements.length === 0
+    return !tabbableElements?.length
   }
-  const needsFallback = ref(checkNeedsFocus())
+  const needsFallback = ref(false)
   onMounted(() => {
+    needsFallback.value = checkNeedsFallback()
     useMutationObserver(
       element,
       () => {
-        needsFallback.value = checkNeedsFocus()
+        needsFallback.value = checkNeedsFallback()
       },
       {childList: true, subtree: true}
     )
@@ -62,7 +58,6 @@ export const useActivatedFocusTrap = (
 
   const trap = useFocusTrap(element, focusTrapOpts)
   watch(resolvedIsActive, async (newValue) => {
-    await nextTick()
     if (newValue && resolvedNoTrap.value === false) {
       trap.activate()
     } else {

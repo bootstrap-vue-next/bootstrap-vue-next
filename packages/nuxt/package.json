@@ -1,25 +1,23 @@
 {
   "name": "@bootstrap-vue-next/nuxt",
   "description": "Nuxt Module for BootstrapVueNext",
-  "version": "0.26.26",
+  "version": "0.29.3",
   "license": "MIT",
   "author": {
     "name": "Issayah",
     "url": "https://github.com/VividLemon"
   },
   "type": "module",
-  "main": "./dist/module.cjs",
+  "main": "./dist/module.mjs",
   "exports": {
     ".": {
-      "types": "./dist/types.d.ts",
-      "import": "./dist/module.mjs",
-      "require": "./dist/module.cjs"
+      "types": "./dist/types.d.mts",
+      "import": "./dist/module.mjs"
     }
   },
   "files": [
     "dist"
   ],
-  "types": "./dist/types.d.ts",
   "scripts": {
     "prepack": "nuxt-module-build build",
     "dev": "nuxi dev playground --port 3030",
@@ -28,7 +26,7 @@
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "lint": "eslint --fix",
     "test:lint": "eslint",
-    "test": "vitest run",
+    "test": "pnpm run test:lint",
     "test:watch": "vitest watch",
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },
@@ -36,23 +34,24 @@
     "bootstrap-vue-next": "workspace:^"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.14.159"
+    "@nuxt/kit": "^3.17.1"
   },
   "devDependencies": {
-    "@nuxt/devtools": "^1.6.0",
-    "@nuxt/eslint-config": "^0.7.0",
-    "@nuxt/module-builder": "^0.8.4",
-    "@nuxt/schema": "^3.14.159",
-    "@nuxt/test-utils": "^3.14.4",
-    "@rushstack/eslint-patch": "^1.10.4",
-    "@types/node": "^22.9.0",
-    "@vue/eslint-config-prettier": "^10.1.0",
+    "@nuxt/devtools": "^2.4.0",
+    "@nuxt/eslint-config": "^1.2.0",
+    "@nuxt/module-builder": "^1.0.1",
+    "@nuxt/schema": "^3.17.1",
+    "@nuxt/test-utils": "^3.17.2",
+    "@rushstack/eslint-patch": "^1.11.0",
+    "@types/node": "^22.15.3",
+    "@vue/eslint-config-prettier": "^10.2.0",
     "bootstrap-vue-next": "workspace:^",
-    "eslint": "^9.15.0",
+    "eslint": "^9.25.1",
     "eslint-define-config": "^2.1.0",
-    "nuxt": "^3.14.159",
-    "prettier": "^3.3.3",
-    "unimport": "^3.13.2",
+    "nuxt": "^3.17.1",
+    "prettier": "^3.5.3",
+    "typescript": "~5.8.3",
+    "unimport": "^5.0.0",
     "vue": "^3.5.13"
   },
   "repository": {

@@ -2,7 +2,7 @@
 
 ## Overview
 
-`BootstrapVueNext` is an entirely new implementation of [BootstrapVue](https://bootstrap-vue.org/) based on [Vue 3](https://vuejs.org/) and [Bootstrap 5](https://getbootstrap.com/). Therefore, you should not expect this to be a drop-in replacement. Where possible compatibility has been maintained, but providing a clean developer experience when working with `Vue 3`, `Bootstrap 5` and this library is a higher priority.
+`BootstrapVueNext` is an entirely new implementation of [BootstrapVue](https://bootstrap-vue.github.io/bootstrap-vue/) based on [Vue 3](https://vuejs.org/) and [Bootstrap 5](https://getbootstrap.com/). Therefore, you should not expect this to be a drop-in replacement. Where possible compatibility has been maintained, but providing a clean developer experience when working with `Vue 3`, `Bootstrap 5` and this library is a higher priority.
 
 You should start by familiarizing yourself with the [Vue 3 Migration Guide](https://v3-migration.vuejs.org/), especially
 the [breaking changes](https://v3-migration.vuejs.org/breaking-changes/) section and the
@@ -23,6 +23,13 @@ Bootstrap-vue-next will commit to breaking changes whenever Bootstrap marks some
 
 `bootstrap-vue-next` integrates with `nuxt 3` so if you are using `nuxt`, please read their
 [migration guide](https://nuxt.com/docs/migration/overview) and our [router link support](/docs/reference/router-links) reference
+
+### Status
+
+This migration guide is a work in progress. We're adding to this guide as we complete the documentation and parity pass and doing
+our best to note each component or directive that hasn't been through the full process. <NotYetDocumented :help-only="true" />
+For section of this guide that are not marked as in progress, we're still interested in examples of migrations that you
+have found tricky or clarifcation if the details in the guide weren't sufficent.
 
 ## Sync modifier
 
@@ -104,10 +111,19 @@ Most importantly any use your code makes of `v-html` will be explicit. See the [
 
 <a name="popover-html">BootstrapVue `b-popover` didn't have an `html` attribute, but alpha versions of BootstrapVueNext did</a>
 
-Each of the options group components `BFormDatalist`, `BFormRadioGroup`, `BFormSelect`, and
-`BFormSelectOptionGroup` implements a scoped slot `option` which takes a `SelectOption<T>` parameter.
+`BFormCheckboxGroup` and `BFormRadioGroup` implement a scoped slot `option` which takes a `Record<string, unknown>` parameter. You can add
+arbitrary fields to elements of the options array that you pass in and they will be accessible to the slot. The example
+below uses the data on the options object to create the html inline in the slot.
 
 <<< DEMO ./demo/CheckboxGroupMigration.vue
+
+Or you can do a straightforward translation of a `BFormRadioGroup` passing an `HTML` string through to its children.
+If you're passing user data, this still opens your code uop to <a class="alert-link" href="https://en.wikipedia.org/wiki/Cross-site_scripting">
+<abbr title="Cross Site Scripting Attacks">XSS attacks</abbr></a>, if you do not first
+<a class="alert-link" href="https://en.wikipedia.org/wiki/HTML_sanitization">sanitize</a> the
+user supplied string, but the BootstrapVueNext library isn't adding an extra layer of abstraction to this vulnerability.
+
+<<< DEMO ./demo/RadioGroupMigration.vue
 
 ## Components
 
@@ -189,7 +205,7 @@ embedded svg for the close icon. See [their migration guide](https://getbootstra
 
 ### BButtonToolbar
 
-[Keyboard navigation](https://bootstrap-vue.org/docs/components/button-toolbar#keyboard-navigation) is
+[Keyboard navigation](https://bootstrap-vue.github.io/bootstrap-vue/docs/components/button-toolbar#keyboard-navigation) is
 not implemented.
 
 ### BCalendar
@@ -276,6 +292,11 @@ It is less important in BootstrapVueNext since bootstrap v5 by default doesn't h
 See [Show and Hide](#show-and-hide) shared properties.
 
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
+
+The `click` event that was emitted when clicking on the left or button side of a `split` dropdown
+has been replaced by a `split-click` which provides the native mouse event. This is because
+naming the event 'click' was hiding the native `click` event so supressing the that event for
+parents that might have unexpected actions (such as a link navigating to a new page) was difficult.
 
 <NotYetImplemented>`toggleAttrs`</NotYetImplemented>
 
@@ -382,11 +403,22 @@ See [BForm Components](bform-components)
 
 ### BFormSelect
 
-[Options as an object](https://bootstrap-vue.org/docs/components/form-select#options-as-an-object) was deprecated in BootstrapVue and never implemented in BootstrapVueNext
+[Options as an object](https://bootstrap-vue.github.io/bootstrap-vue/docs/components/form-select#options-as-an-object) was deprecated in BootstrapVue and never implemented in BootstrapVueNext
 
 ### BFormSpinButton
 
 See [BForm Components](bform-components)
+
+### BFormTags
+
+In BootstrapVue, the event handlers for some of the other input controls, like `BFormSelect`, lined up with
+the `inputHandlers` for the default slot's scoped properties such that one could directly bind them. See the
+[BootstrapVue](https://bootstrap-vue.github.io/bootstrap-vue/docs/components/form-tags#advanced-custom-rendering-usage) documentation
+for an example. This is no longer the case with BootstrapVueNext.
+
+In general BootstrapVueNext prefered clean APIs to enabling this kind of matching of events, so many of the advanced
+examples in the [BFormTags docs](https://bootstrap-vue-next.github.io/bootstrap-vue-next/docs/components/form-tags.html#custom-rendering-with-default-scoped-slot) are more explicit when binding attributes from other controls. Please
+take a look at these examples for guidance when migrating.
 
 ### BFormTimePicker
 
@@ -494,7 +526,7 @@ See the [v-html](#v-html) section for information on deprecation of the `cancel-
 
 #### Replacement for Modal Message boxes
 
-[BootstrapVue](https://bootstrap-vue.org/docs/components/modal#modal-message-boxes) provided two methods on the `this.$bvModal` object called `msgBoxOk` and `msgBoxConfirm`.
+[BootstrapVue](https://bootstrap-vue.github.io/bootstrap-vue/docs/components/modal#modal-message-boxes) provided two methods on the `this.$bvModal` object called `msgBoxOk` and `msgBoxConfirm`.
 In holding with the Vue3 first philosophy, BootstrapVueNext provides a composable called [`useModalController`](/docs/composables/useModalController) that
 fills the same needs (and more).
 
@@ -516,7 +548,7 @@ See [Show and Hide](#show-and-hide) shared properties.
 
 #### Replacement for Modal slots
 
-[BootstrapVue](https://bootstrap-vue.org/docs/components/modal#custom-rendering-with-slots) provides different slots to configure some pieces of the modal component. These slots are slightly different in [BootstrapVueNext](http://localhost:8000/bootstrap-vue-next/docs/components/modal.html#comp-reference-bmodal-slots):
+[BootstrapVue](https://bootstrap-vue.github.io/bootstrap-vue/docs/components/modal#custom-rendering-with-slots) provides different slots to configure some pieces of the modal component. These slots are slightly different in [BootstrapVueNext](http://localhost:8000/bootstrap-vue-next/docs/components/modal.html#comp-reference-bmodal-slots):
 
 | BootstrapVue       | BootstrapVueNext |
 | ------------------ | ---------------- |
@@ -568,6 +600,8 @@ See [Show and Hide](#show-and-hide) shared properties.
 
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
+`content` prop has been renamed to `body` for consistency with other components.
+
 ### BProgressBar
 
 See the [v-html](#v-html) section for information on deprecation of the `label-html` prop.
@@ -586,12 +620,59 @@ See the [v-html](#v-html) section for information on deprecation of the `label-h
 
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
-The following properties are <NotYetImplemented/> -
-`fixed`, `no-border-collapse`
+The slot `emptyfiltered` has been renamed to `empty-filtered` for consistency.
 
-<NotYetImplemented /> The `table-colgroup` slot is not yet implemented.
+The following are <NotYetImplemented/> -
 
-`sort-direction` is deprecated, use the `sortBy` prop (or model) instead.
+- The `filter-debounce`, `fixed`, `no-border-collapse`, `selected-variant`, and `table-footer-sorting` props
+- The `filter` prop does not yet support a RegEx object, only a string.
+- The `table-colgroup` slot
+- The `context-changed` and `refreshed` events
+
+`filter-included-fields` have been replaced by a single `filterable` prop. `filter-ignored-fields`
+is deprecated.
+
+`no-sort-reset` is deprecated. Use `must-sort`. By default, sortability can be reset by clicking (3) times [asc => desc => undefined => asc...]
+
+`selected-variant` has been renamed to `selection-variant` for internal consistency.
+
+`sort-compare` and `sort-direction` are deprecated, use the `sortBy` prop (or model) as documented [here](/docs/components/table#sorting) instead.
+
+Similarly, the `sort-changed` event is replaced by the `update:sortBy` event
+
+`table-variant` is replaced with `variant` for consistency.
+
+BootstrapVue used the main v-model binding to expose a readonly version of the displayed items. This is deprecated. Instead,
+used the exposed function `displayedItems` as demonstrated in [the documentation](/docs/components/table#complete-example).
+
+The semantics of the `row-selected` event have changed. `row-selected` is now emitted for each selected
+row and sends the single row's item as it's parameter. There is a new matching event called `row-unselected`
+that is emitted for each row that is unselected. There is also a named model `selectedItems` that behaves
+like the BSV `row-selected` event, emitting an array of all seleted rows. An example of this is available
+in [the documentation](/docs/components/table#row-select-support)
+
+BootstrapVue adds utility classes to the `<table>` including `b-table-select-single`,`b-table-select-multi`, and `b-table-select-range`, these have been deprecated, as the functionality should be easily replicated by the developer without adding to the API surface.
+
+<NotYetImplemented/>The `aria-multiselect` attribute is not added to `<table>`
+<NotYetImplemented/>Automatically adding accessibility attributes `role` and `scope` to helper components
+
+The `filtered` event has a single argument `Items[]` rather than two arguments with an array and length. The semantics haven't changed.
+
+<NotYetImplemented/> Heading and data row accessibility
+
+### Items Provider Functions
+
+To use an items provider, set the `provider` prop to a provider function and leave the
+`items` prop undefined (unlike in BootstrapVue, where the `items` prop was overloaded). See
+our [documentation](/docs/components/table#using-items-provider-functions) for details.
+
+The items provider function `ctx` parameter now contains `sortBy` array rather than `sortBy` and `sortDesc` fields -
+see the [sorting docs](/docs/components/table#sorting) for details
+
+The table prop `api-url` and the items provider function `ctx` parameter `apiUrl` field are both deperecdated
+as they are easily replaced by direct management of the api call by the user.
+
+The items provider no longer includes an optional callback parameter, use the async method of calling instead.
 
 ### Field Definitions
 
@@ -599,6 +680,8 @@ The following properties are <NotYetImplemented/> -
 of a method in the component is deprecated.
 
 `sortKey` and `sortDirection` are deprecated, use the table's `sortBy` model as documented [here](/docs/components/table#sorting) instead.
+
+`filterByFormatted` is implemented, but does not take a format function as an argument.
 
 ### BTableLight
 
@@ -614,9 +697,17 @@ Use `table-attrs` to apply additional attributes to the `<table>` element in rep
 
 See the [v-html](#v-html) section for information on deprecation of the `caption-html` prop.
 
+#### BTBody
+
+<NotYetImplemented>`tbody-transition-props` and `tbody-transition-handlers`</NotYetImplemented>
+
+#### BTFoot
+
+`foot-variant` has been replaced with `variant`, which can used on other table elements.
+
 #### BTHead
 
-`head-variant` has been replaced with `variant`, which can used no other table elements.
+`head-variant` has been replaced with `variant`, which can used on other table elements.
 
 ### BTabs
 
@@ -642,6 +733,11 @@ See [Show and Hide](#show-and-hide) shared properties.
 <NotYetDocumented type="component"/>
 
 See [Show and Hide](#show-and-hide) shared properties.
+
+See the [v-html](#v-html) section for information on deprecation of the `html` prop.
+
+`content` prop has been renamed to `body` for consistency with other components.
+
 
 ## Directives
 

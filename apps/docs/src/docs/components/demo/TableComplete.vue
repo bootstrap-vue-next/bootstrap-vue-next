@@ -111,6 +111,7 @@
     </BRow>
     <!-- Main table element for typed table-->
     <BTable
+      ref="complete-table"
       v-model:sort-by="sortBy"
       :sort-internal="true"
       :items="items"
@@ -153,18 +154,31 @@
     >
       <pre>{{ infoModal.content }}</pre>
     </BModal>
+    <BRow
+      ><BCol
+        >Displayed Items ({{ displayItems.length }}):
+        {{
+          displayItems.map((item) => {
+            const person = item as Person
+            return `${person.name.first} ${person.name.last}`
+          })
+        }}</BCol
+      ></BRow
+    >
   </BContainer>
 </template>
 
 <script setup lang="ts">
 import {
+  BTable,
   type BTableSortBy,
   type ColorVariant,
   type LiteralUnion,
   type TableFieldRaw,
   type TableItem,
 } from 'bootstrap-vue-next'
-import {computed, reactive, ref} from 'vue'
+import {computed, reactive, ref, useTemplateRef} from 'vue'
+import {type ComponentExposed} from 'vue-component-type-helpers'
 
 interface PersonName {
   first: string
@@ -176,6 +190,9 @@ interface Person {
   age: number
   isActive: boolean
 }
+
+const table = useTemplateRef<ComponentExposed<typeof BTable<Person>>>('complete-table')
+const displayItems = computed(() => (table.value?.displayItems ?? []) as TableItem<Person>[])
 
 const items: TableItem<Person>[] = [
   {isActive: true, age: 40, name: {first: 'Dickerson', last: 'Macdonald'}},

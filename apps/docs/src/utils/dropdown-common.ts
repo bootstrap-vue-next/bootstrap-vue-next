@@ -153,17 +153,6 @@ export const dropdownProps = {
 
 export const dropdownEmits: ComponentReference['emits'] = [
   {
-    event: 'click',
-    description: 'Emitted when button is clicked',
-    args: [
-      {
-        arg: 'event',
-        type: 'MouseEvent',
-        description: 'Native click event object',
-      },
-    ],
-  },
-  {
     event: 'hide',
     description: 'Emitted just before dropdown is hidden. Cancelable',
     args: [

@@ -58,7 +58,7 @@ import {accordionInjectionKey} from '../../utils/keys'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import type {BAccordionItemProps} from '../../types/ComponentProps'
-import type {showHideEmits} from '../../composables/useShowHide'
+import type {BCollapseEmits} from '../../types/ComponentEmits'
 
 defineOptions({
   inheritAttrs: false,
@@ -91,7 +91,7 @@ const _props = withDefaults(defineProps<Omit<BAccordionItemProps, 'modelValue'>>
 })
 const props = useDefaults(_props, 'BAccordionItem')
 
-const emit = defineEmits<showHideEmits>()
+const emit = defineEmits<BCollapseEmits>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -108,11 +108,13 @@ const modelValue = defineModel<Exclude<BAccordionItemProps['modelValue'], undefi
   default: false,
 })
 
-modelValue.value =
-  parentData?.openItem.value === computedId.value && !parentData?.initialAnimation.value
-
-if (modelValue.value && !parentData?.free.value) {
-  parentData?.setOpenItem(computedId.value)
+if (modelValue.value) {
+  if (!parentData?.free.value) {
+    parentData?.setOpenItem(computedId.value)
+  }
+} else {
+  modelValue.value =
+    parentData?.openItem.value === computedId.value && !parentData?.initialAnimation.value
 }
 
 onMounted(() => {

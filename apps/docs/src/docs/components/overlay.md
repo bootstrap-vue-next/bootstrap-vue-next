@@ -85,9 +85,8 @@ Control the opacity of the backdrop via the `opacity` prop (opacity values can r
       <div class="d-inline">
         <BFormInput
           id="bg-opacity"
-          v-model="opacity"
+          v-model.number="opacity"
           type="range"
-          number
           min="0"
           max="1"
           step="0.01"
@@ -133,9 +132,8 @@ Control the opacity of the backdrop via the `opacity` prop (opacity values can r
       <div class="d-inline">
         <BFormInput
           id="bg-opacity"
-          v-model="opacity"
+          v-model.number="opacity"
           type="range"
-          number
           min="0"
           max="1"
           step="0.01"

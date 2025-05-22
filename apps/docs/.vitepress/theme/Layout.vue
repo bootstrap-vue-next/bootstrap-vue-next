@@ -3,6 +3,7 @@
   <BNavbar v-b-color-mode="'dark'" variant="primary" sticky="top" toggleable="lg" :container="true">
     <BToastOrchestrator />
     <BModalOrchestrator />
+    <BPopoverOrchestrator />
     <div class="d-flex gap-2 align-items-center">
       <BNavbarToggle v-b-toggle.sidebar-menu />
       <BNavbarBrand :to="withBase('/')" class="p-0 me-0 me-lg-2">
@@ -55,7 +56,7 @@
             rel="noopener"
             link-classes="py-1 px-0"
           >
-            <component :is="link.icon()" height="1.1rem" aria-hidden />
+            <component :is="link.icon()" height="1.1em" aria-hidden />
           </BNavItem>
           <div class="border border-secondary ms-2 me-3" />
           <ClientOnly>
@@ -64,7 +65,7 @@
               <template #button-content>
                 <component
                   :is="currentIcon"
-                  height="1.1rem"
+                  height="1.1em"
                   :aria-label="`Toggle theme (${colorMode})`"
                   class="d-inline-block"
                 />
@@ -125,7 +126,7 @@
       </BRow>
       <BRow v-else>
         <div class="bd-content">
-          <aside class="otp-sidebar">
+          <aside ref="_target" class="otp-sidebar">
             <ClientOnly>
               <BOffcanvas
                 id="otp-menu"
@@ -137,11 +138,11 @@
                 header-class="pb-0 d-flex offcanvas-hidden-width"
                 body-class="py-2"
               >
-                <PageContents />
+                <PageContents :contents="contents" :active-id="activeId" />
               </BOffcanvas>
             </ClientOnly>
           </aside>
-          <Content class="doc-content" />
+          <Content ref="_content" style="height: 100%" class="doc-content" />
         </div>
       </BRow>
     </main>
@@ -163,13 +164,23 @@ import {
   BNavItem,
   BNavItemDropdown,
   BOffcanvas,
+  BPopoverOrchestrator,
   BRow,
   BToastOrchestrator,
   useColorMode,
+  useScrollspy,
   vBColorMode,
   vBToggle,
 } from 'bootstrap-vue-next'
-import {computed, inject, onMounted, ref, watch} from 'vue'
+import {
+  type ComponentPublicInstance,
+  computed,
+  inject,
+  onMounted,
+  ref,
+  useTemplateRef,
+  watch,
+} from 'vue'
 import GithubIcon from '~icons/bi/github'
 import OpencollectiveIcon from '~icons/logos/opencollective'
 import DiscordIcon from '~icons/bi/discord'
@@ -181,10 +192,22 @@ import {useData, useRoute, withBase} from 'vitepress'
 import {VPNavBarSearch} from 'vitepress/theme'
 import {appInfoKey} from './keys'
 import {useMediaQuery} from '@vueuse/core'
+import PageContents from '../../src/components/PageContents.vue'
+import {type ContentsItem, type HeaderItem} from '../../src/types'
 
 // https://vitepress.dev/reference/runtime-api#usedata
 const {page} = useData()
 const route = useRoute()
+
+const content = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_content')
+const target = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_target')
+
+const {current: activeId, list: items} = useScrollspy(content, target, {
+  contentQuery: ':scope > div > [id], #component-reference, .component-reference h3',
+  targetQuery: ':scope [href]',
+  rootMargin: '0px 0px -25%',
+  manual: true,
+})
 
 const globalData = inject(appInfoKey, {
   discordUrl: '',
@@ -274,6 +297,49 @@ const currentIcon = computed(() => map[colorMode.value])
 const set = (newValue: keyof typeof map) => {
   colorMode.value = newValue
 }
+
+const headers = computed(() =>
+  items.value.map((item) => {
+    const rawTag = item.el?.tagName?.toUpperCase() ?? ''
+    const isHeading = /^H[1-6]$/.test(rawTag)
+    const tag = isHeading ? rawTag : 'DIV'
+    const level = tag.startsWith('H') ? parseInt(tag.replace('H', '')) : 3
+    return {
+      ...item,
+      tag,
+      level,
+    } as HeaderItem
+  })
+)
+
+const contents = computed(() => {
+  const root: ContentsItem[] = []
+  const stack: ContentsItem[] = []
+
+  headers.value.forEach((header) => {
+    const item = {...header, children: [] as ContentsItem[]} as ContentsItem
+
+    while (stack.length && stack[stack.length - 1].level >= item.level) {
+      stack.pop()
+    }
+
+    if (stack.length === 0) {
+      root.push(item)
+    } else {
+      stack[stack.length - 1].children.push(item)
+    }
+
+    stack.push(item)
+  })
+
+  if (root.length !== 1) {
+    // Something isn't right if we have no root items or more than one root item
+    // eslint-disable-next-line no-console
+    console.warn('Unexpected header structure:', headers, 'Root items:', root)
+  }
+
+  return root.length > 0 ? root[0] : undefined
+})
 
 watch(
   () => route.path,

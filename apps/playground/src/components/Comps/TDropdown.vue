@@ -189,6 +189,32 @@
     </BRow>
     <BRow>
       <BCol>
+        <h4 class="m-2">Split embeded in link</h4>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BListGroup>
+          <BListGroupItem href="https://bootstrap-vue-next.github.io/bootstrap-vue-next/docs">
+            Some link
+            <BDropdown
+              text="click me"
+              split
+              @split-click="consoleLog('split button clicked')"
+              @click.stop.prevent="consoleLog('button clicked')"
+            >
+              <BDropdownItem>First Action</BDropdownItem>
+              <BDropdownItem variant="primary">Second Action</BDropdownItem>
+              <BDropdownItem active>Active action</BDropdownItem>
+              <BDropdownItem disabled>Disabled action</BDropdownItem>
+              <BDropdownItem to="/docs/components/badge">Badge</BDropdownItem></BDropdown
+            >
+          </BListGroupItem>
+        </BListGroup>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         <h4 class="m-2">Custom popper config</h4>
       </BCol>
     </BRow>

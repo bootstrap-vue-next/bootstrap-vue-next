@@ -1,10 +1,10 @@
+import 'bootstrap/dist/css/bootstrap.min.css'
 import {createApp, h} from 'vue'
-import App from './App.vue'
-import {createBootstrap} from './plugins/createBootstrap'
-import {Directives} from './index'
-
 import {createRouter, createWebHistory, useRoute} from 'vue-router'
-
+import App from './App.vue'
+import {Directives} from './index'
+import {createBootstrap} from './plugins/createBootstrap'
+import './styles/styles.scss'
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -43,9 +43,6 @@ const router = createRouter({
     },
   ],
 })
-
-import 'bootstrap/dist/css/bootstrap.min.css'
-import './styles/styles.scss'
 
 const app = createApp(App)
 app.use(createBootstrap())

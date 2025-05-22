@@ -42,16 +42,11 @@ export default {
       sourcePath: '/BModal/BModal.vue',
       props: {
         '': {
-          autofocus: {
-            type: 'boolean',
-            default: true,
-            description: "When set to 'false', disables auto focusing the modal when opened",
-          },
-          autofocusButton: {
-            type: "'ok' | 'cancel' | 'close'",
+          focus: {
+            type: "'ok' | 'cancel' | 'close' | string | ComponentPublicInstance | HTMLElement | null",
             default: undefined,
             description:
-              "Specify which built-in button to focus once the modal opens: 'ok', 'cancel', or 'close'",
+              "Specify where to focus once modal opens. Can be built-in button: 'ok', 'cancel', or 'close'. Can be ref, HTMLElement, id or selector string. If set to 'false', no focus will be set (if noTrap isn't set the focus trap will focus the modal element or failback element). If set to a string, the element with that id will be focused. If set to a ComponentPublicInstance, the $el property of the instance will be focused.",
           },
           backdropFirst: {
             type: 'boolean',
@@ -102,6 +97,11 @@ export default {
           buttonSize: {
             type: 'Size',
             default: 'md',
+          },
+          cancelClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: "CSS class (or classes) to apply to the '.modal-cancel' button",
           },
           cancelDisabled: {
             type: 'boolean',
@@ -238,6 +238,11 @@ export default {
             type: 'boolean',
             default: false,
             description: 'Disables the focus trap feature',
+          },
+          okClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: "CSS class (or classes) to apply to the '.modal-ok' button",
           },
           okDisabled: {
             type: 'boolean',

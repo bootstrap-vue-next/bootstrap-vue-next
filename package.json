@@ -15,6 +15,10 @@
       "url": "https://github.com/cdmoro"
     },
     {
+      "name": "David W. Gray",
+      "url": "https://github.com/dwgray"
+    },
+    {
       "name": "Issayah",
       "url": "https://github.com/VividLemon"
     },
@@ -44,12 +48,12 @@
   },
   "devDependencies": {
     "husky": "^9.1.7",
-    "lint-staged": "^15.2.10",
-    "turbo": "latest"
+    "lint-staged": "^15.5.1",
+    "turbo": "^2.5.2"
   },
   "engines": {
     "npm": ">=10.0.0",
     "node": ">=22.0.0"
   },
-  "packageManager": "pnpm@10.0.0"
+  "packageManager": "pnpm@10.8.0"
 }

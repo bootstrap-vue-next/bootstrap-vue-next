@@ -20,11 +20,8 @@ jobs:
 
     steps:
       - name: Use Release Please
-        uses: google-github-actions/release-please-action@v3
+        uses: googleapis/release-please-action@v4
         id: release
-        with:
-          command: manifest
-          monorepo-tags: true
   
       # The logic below handles the npm publication:
 
@@ -33,7 +30,7 @@ jobs:
         if: ${{ steps.release.outputs.releases_created }}
         
       - name: Install Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 22.x.x
           registry-url: 'https://registry.npmjs.org'

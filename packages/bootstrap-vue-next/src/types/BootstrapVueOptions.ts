@@ -3,9 +3,15 @@ import type * as ExportedDirectives from '../directives'
 import type * as ExportedComposables from '../composables'
 import type * as ComponentProps from './ComponentProps'
 
-export type ComponentType = keyof typeof ExportedComponents
+type AllComponentsTyped = typeof ExportedComponents
+
+export type ComponentType = keyof AllComponentsTyped
 export type DirectiveType = keyof typeof ExportedDirectives
 export type ComposableType = keyof typeof ExportedComposables
+
+export type BvnComponents = {
+  [K in ComponentType]: AllComponentsTyped[K]
+}
 
 export const componentsWithExternalPath = {
   BAccordion: '/components/BAccordion',
@@ -133,6 +139,7 @@ export const composablesWithExternalPath = {
   useModalController: '/composables/useModalController',
   useScrollspy: '/composables/useScrollspy',
   useToastController: '/composables/useToastController',
+  useToggle: '/composables/useToggle',
   usePopoverController: '/composables/usePopoverController',
 } as const satisfies Record<ComposableType, string>
 export const composableNames = Object.freeze(

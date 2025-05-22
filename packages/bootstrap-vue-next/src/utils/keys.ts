@@ -16,17 +16,28 @@ import type {RadioValue} from '../types/RadioTypes'
 import type {BreadcrumbItemRaw} from '../types/BreadcrumbTypes'
 import type {
   ControllerKey,
+  ModalOrchestratorCreateOptions,
+  ModalOrchestratorCreateParam,
   ModalOrchestratorMapValue,
-  ModalOrchestratorShowParam,
-  PopoverOrchestratorParam,
-  PopoverOrchestratorShowParam,
+  PopoverOrchestratorCreateParam,
+  PopoverOrchestratorMapValue,
+  PromiseWithModal,
+  PromiseWithModalBoolean,
+  PromiseWithPopover,
+  PromiseWithToast,
   ToastOrchestratorArrayValue,
-  ToastOrchestratorShowParam,
-  TooltipOrchestratorParam,
-  TooltipOrchestratorShowParam,
+  ToastOrchestratorCreateOptions,
+  ToastOrchestratorCreateParam,
+  TooltipOrchestratorCreateParam,
 } from '../types/ComponentOrchestratorTypes'
 import type {BvnComponentProps} from '../types/BootstrapVueOptions'
-import {withBvnPrefix} from './withBvnPrefix'
+
+export const genericBvnPrefix = 'BootstrapVueNext__'
+
+export const withBvnPrefix = (value: string, suffix: string = '') => {
+  const suffixWithTrail = `${suffix}___`
+  return `${genericBvnPrefix}ID__${value}__${suffix ? suffixWithTrail : ''}`
+}
 
 const createBvnInjectionKey = (name: string) => withBvnPrefix(name) as unknown as symbol // Type cast to symbol, these should be static
 const createBvnPluginInjectionKey = (name: string) =>
@@ -51,6 +62,7 @@ export const tabsInjectionKey: InjectionKey<{
   inactiveTabClass: Readonly<Ref<ClassValue>>
   tabClass: Readonly<Ref<ClassValue>>
   activeId: Readonly<Ref<string | undefined>>
+  sortTabs: () => void
 }> = createBvnInjectionKey('tabs')
 
 // BProgress
@@ -137,21 +149,30 @@ export const collapseInjectionKey: InjectionKey<{
 // Show/Hide components
 export type RegisterShowHideFnInput = {
   id: string
+  component: ComponentInternalInstance
   value: Ref<boolean>
-  toggle: () => void
-  show: () => void
-  hide: (trigger?: string) => void
+  toggle: (resolveOnHide?: boolean) => Promise<boolean | string>
+  show: (resolveOnHide?: boolean) => Promise<boolean | string>
+  hide: (trigger?: string) => Promise<boolean | string>
+  registerTrigger: (trigger: string, el: Element) => void
+  unregisterTrigger: (trigger: string, el: Element, clean: boolean) => void
+}
+
+export interface RegisterShowHideMapValue {
+  id: string
+  component: ComponentInternalInstance
+  value: Readonly<Ref<boolean>>
+  toggle: (resolveOnHide?: boolean) => Promise<boolean | string | null>
+  show: (resolveOnHide?: boolean) => Promise<boolean | string | null>
+  hide: (trigger?: string, noTraverse?: boolean) => Promise<boolean | string | null>
+  registerTrigger: (trigger: string, el: Element) => void
+  unregisterTrigger: (trigger: string, el: Element, clean: boolean) => void
 }
 export interface RegisterShowHideValue {
-  (input: RegisterShowHideFnInput): {
+  register: (input: RegisterShowHideFnInput) => {
     unregister: () => void
   }
-  map: Readonly<
-    Record<
-      string,
-      {value: boolean; toggle: () => void; show: () => void; hide: (trigger?: string) => void}
-    >
-  >
+  values: Ref<Map<string, RegisterShowHideMapValue>>
 }
 export const globalShowHideStorageInjectionKey: InjectionKey<RegisterShowHideValue> =
   createBvnPluginInjectionKey('globalShowHideStorage')
@@ -175,9 +196,10 @@ export const rtlPluginKey: InjectionKey<{
   locale: Ref<string | undefined>
 }> = createBvnPluginInjectionKey('rtl')
 
+export const breadcrumbGlobalIndexKey = `${genericBvnPrefix}global_breadcrumb`
 export const breadcrumbPluginKey: InjectionKey<{
-  items: Ref<BreadcrumbItemRaw[]>
-  reset: () => void
+  items: Ref<Record<string, BreadcrumbItemRaw[]>>
+  reset: (key?: string) => void
 }> = createBvnPluginInjectionKey('breadcrumbPlugin')
 
 export const modalManagerPluginKey: InjectionKey<{
@@ -199,29 +221,43 @@ export const buttonGroupKey: InjectionKey<boolean> = createBvnInjectionKey('butt
 
 export const toastPluginKey: InjectionKey<{
   toasts: Ref<ToastOrchestratorArrayValue[]>
-  _setIsAppend: (value: boolean) => void
-  show: (obj: ToastOrchestratorShowParam) => ControllerKey
-  remove: (self: ControllerKey) => void
-  leave: (self: ControllerKey) => void
+  _isAppend: Ref<boolean>
+  _isOrchestratorInstalled: Ref<boolean>
+  create: (
+    obj: ToastOrchestratorCreateParam,
+    options?: ToastOrchestratorCreateOptions
+  ) => PromiseWithToast
+  /**
+   * show
+   * @deprecated
+   */
+  show: (obj: ToastOrchestratorCreateParam) => PromiseWithToast
 }> = createBvnPluginInjectionKey('toast')
 
 export const modalControllerPluginKey: InjectionKey<{
   modals: Ref<Map<ControllerKey, ModalOrchestratorMapValue>>
-  show: (obj: ModalOrchestratorShowParam) => Promise<boolean | null>
-  confirm: (obj: ModalOrchestratorShowParam) => Promise<boolean | null>
-  remove: (self: ControllerKey) => void
-  leave: (self: ControllerKey) => void
+  _isOrchestratorInstalled: Ref<boolean>
+  create: (
+    obj: ModalOrchestratorCreateParam,
+    options?: ModalOrchestratorCreateOptions
+  ) => PromiseWithModal | PromiseWithModalBoolean
+  /**
+   * show
+   * @deprecated
+   */
+  show: (obj: ModalOrchestratorCreateParam) => PromiseWithModalBoolean
+  /**
+   * show
+   * @deprecated
+   */
+  confirm: (obj: ModalOrchestratorCreateParam) => PromiseWithModalBoolean
 }> = createBvnPluginInjectionKey('modalController')
 
 export const popoverPluginKey: InjectionKey<{
-  popovers: Ref<Map<ControllerKey, PopoverOrchestratorParam>>
-  popover: (obj: PopoverOrchestratorShowParam) => ControllerKey
-  setPopover: (self: ControllerKey, val: Partial<PopoverOrchestratorParam>) => void
-  removePopover: (self: ControllerKey) => void
-  tooltips: Ref<Map<ControllerKey, TooltipOrchestratorParam>>
-  tooltip: (obj: TooltipOrchestratorShowParam) => ControllerKey
-  setTooltip: (self: ControllerKey, val: Partial<TooltipOrchestratorParam>) => void
-  removeTooltip: (self: ControllerKey) => void
+  popovers: Ref<Map<ControllerKey, PopoverOrchestratorMapValue>>
+  popover: (obj: PopoverOrchestratorCreateParam) => PromiseWithPopover
+  tooltip: (obj: TooltipOrchestratorCreateParam) => PromiseWithPopover
+  _isOrchestratorInstalled: Ref<boolean>
 }> = createBvnPluginInjectionKey('popover')
 
 export const formGroupPluginKey: InjectionKey<

@@ -28,6 +28,12 @@ export default {
             type: 'boolean',
             default: false,
           },
+          focus: {
+            type: "'ok' | 'cancel' | 'close' | string | ComponentPublicInstance | HTMLElement | null",
+            default: undefined,
+            description:
+              "Specify where to focus once offcanvas opens. Can be built-in button 'close'. Can be ref, HTMLElement, id or selector string. If set to 'false', no focus will be set (if noTrap isn't set the focus trap will focus the modal element or failback element). If set to a string, the element with that id will be focused. If set to a ComponentPublicInstance, the $el property of the instance will be focused.",
+          },
           footerClass: {
             type: 'string',
             default: undefined,
@@ -61,10 +67,6 @@ export default {
             default: false,
           },
           noCloseOnEsc: {
-            type: 'boolean',
-            default: false,
-          },
-          noFocus: {
             type: 'boolean',
             default: false,
           },

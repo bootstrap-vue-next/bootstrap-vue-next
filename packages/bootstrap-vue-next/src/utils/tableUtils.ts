@@ -1,6 +1,6 @@
 import {titleCase} from './stringUtils'
 import type {TableFieldRaw} from '../types/TableTypes'
-import type {BTableLiteProps, BTableSimpleProps} from '../types'
+import type {Breakpoint, BTableLiteProps, BTableSimpleProps} from '../types'
 
 export const getTableFieldHeadLabel = (field: Readonly<TableFieldRaw<unknown>>) =>
   typeof field === 'string'
@@ -60,3 +60,8 @@ export const btableLiteProps = Object.freeze(
     theadTrClass: 0,
   } satisfies Record<keyof Omit<BTableLiteProps<unknown>, keyof BTableSimpleProps>, 0>)
 ) as readonly (keyof Omit<BTableLiteProps<unknown>, keyof BTableSimpleProps>)[]
+
+export const getDataLabelAttr = (
+  props: {stacked: boolean | Breakpoint | undefined; labelStacked: boolean | undefined},
+  label: string
+) => (props.stacked && props.labelStacked !== true ? {'data-label': label} : undefined)

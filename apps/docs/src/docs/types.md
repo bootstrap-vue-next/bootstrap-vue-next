@@ -280,7 +280,7 @@ type InputType =
 
 ```ts
 type LinkOpacity = 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
-type UnderlineOpacity = 0 | LinkOpacity
+type UnderlineOpacity = 0 | '0' | LinkOpacity
 type UnderlineOffset = 1 | 2 | 3 | '1' | '2' | '3'
 ```
 
@@ -292,6 +292,16 @@ type UnderlineOffset = 1 | 2 | 3 | '1' | '2' | '3'
 
 ```ts
 type LinkTarget = '_self' | '_blank' | '_parent' | '_top'
+```
+
+</BCard>
+
+## MaybePromise
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type MaybePromise<T> = Promise<T> | T
 ```
 
 </BCard>
@@ -490,6 +500,37 @@ type TableItem<T = Record<string, unknown>> = T & {
   _rowVariant?: ColorVariant
   _cellVariants?: Partial<Record<keyof T, ColorVariant>>
   _showDetails?: boolean
+}
+```
+
+</BCard>
+
+## TableProvider
+
+```ts
+type BTableProviderContext<T = unknown> = {
+  sortBy: BTableSortBy<T>[] | undefined
+  filter: string | undefined
+  currentPage: number
+  perPage: number
+}
+
+type BTableProvider<T> = (
+  context: Readonly<BTableProviderContext<T>>
+) => MaybePromise<T[] | undefined>
+```
+
+## TableSortBy
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type BTableSortByOrder = 'desc' | 'asc' | undefined
+type BTableSortByComparerFunction<T = any> = (a: T, b: T, key: string) => number
+type BTableSortBy<T = any> = {
+  order: BTableSortByOrder
+  key: string
+  comparer?: BTableSortByComparerFunction<T>
 }
 ```
 

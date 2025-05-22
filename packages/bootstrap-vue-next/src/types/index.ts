@@ -38,7 +38,7 @@ export type {
 export type {BaseSize, Size} from './Size'
 export type {BootstrapVueOptions, BvnComponentProps, showHide} from './BootstrapVueOptions'
 export type {BreadcrumbItem, BreadcrumbItemRaw} from './BreadcrumbTypes'
-export type {Breakpoint} from './BreakpointProps'
+export type * from './BreakpointProps'
 export type {ButtonType} from './ButtonType'
 export type {CheckboxOption, CheckboxOptionRaw, CheckboxValue} from './CheckboxTypes'
 export type {
@@ -63,10 +63,10 @@ export type {TabType} from './Tab'
 export type {TransitionMode} from './TransitionMode'
 export type * from './ComponentProps'
 export type {
-  TooltipOrchestratorShowParam as OrchestratedTooltip,
-  PublicOrchestratedToast as OrchestratedToast,
-  PopoverOrchestratorShowParam as OrchestratedPopover,
-  PublicOrchestratedModal as OrchestratedModal,
+  TooltipOrchestratorCreateParam as OrchestratedTooltip,
+  ToastOrchestratorCreateParam as OrchestratedToast,
+  PopoverOrchestratorCreateParam as OrchestratedPopover,
+  ModalOrchestratorCreateParam as OrchestratedModal,
 } from './ComponentOrchestratorTypes'
 export type * from './ComponentOrchestratorTypes'
 
@@ -85,3 +85,4 @@ export {
   type DirectiveType,
 } from './BootstrapVueOptions'
 export type {ValidationState} from './CommonTypes'
+export type {MaybePromise} from './MaybePromise'

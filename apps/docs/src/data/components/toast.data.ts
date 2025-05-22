@@ -24,6 +24,26 @@ export default {
             default: undefined,
             description: 'CSS class (or classes) to add to the toast body element',
           },
+          closeClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: 'Applies one or more custom classes to the close button',
+          },
+          closeContent: {
+            type: 'string',
+            default: undefined,
+            description: 'Sets the text of the close button. The `close` slot takes precedence',
+          },
+          closeLabel: {
+            type: 'string',
+            default: 'Close',
+            description: 'Sets the aria-label attribute on the close button',
+          },
+          closeVariant: {
+            type: 'string | null',
+            default: null,
+            description: 'Color variant for the close button',
+          },
           headerClass: {
             type: 'ClassValue',
             default: undefined,
@@ -62,6 +82,11 @@ export default {
             default: false,
             description: 'When set, hides the close button in the toast header',
           },
+          noProgress: {
+            type: 'boolean',
+            default: false,
+            description: 'When set, hides the progress bar in the toast',
+          },
           progressProps: {
             type: "Omit<BProgressBarProps, 'label' | 'max' | 'value'>",
             default: undefined,
@@ -94,7 +119,7 @@ export default {
             description: 'CSS class (or classes) to add to the toast wrapper element',
           },
           ...omit(showHideProps, ['modelValue']),
-          ...pick(buildCommonProps(), ['noHoverPause', 'noResumeOnHoverLeave']),
+          ...pick(buildCommonProps(), ['variant', 'noHoverPause', 'noResumeOnHoverLeave']),
         } satisfies Record<
           Exclude<keyof BvnComponentProps['BToast'], keyof typeof linkProps>,
           PropertyReference

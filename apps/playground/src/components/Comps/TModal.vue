@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, h, onMounted, ref} from 'vue'
+import {computed, h, onMounted, ref, toValue} from 'vue'
 import {
   BModal,
   type ColorVariant,
@@ -80,6 +80,7 @@ const isModalVisible = ref(false)
 
 const firstRef = ref<OrchestratedModal>({
   body: `${Math.random()}`,
+  title: 'foobar',
 })
 
 onMounted(() => {
@@ -92,42 +93,30 @@ const {show, modals} = useModalController()
 
 const showFns = {
   basicNoReactive: () => {
-    show?.({
-      props: {
-        title: 'foobar',
-        okVariant: 'danger',
-      },
+    show({
+      title: 'foobar',
+      okVariant: 'danger',
     })
   },
   basicCustomComponent: () => {
-    show?.({
-      component: h(BModal, null, {default: () => 'foobar!'}),
-      props: {
-        okVariant: 'info',
-      },
+    show({
+      slots: {default: h('div', null, {default: () => 'foobar!'})},
+
+      okVariant: 'info',
     })
   },
   simpleRefProps: () => {
-    show?.({
-      props: firstRef,
-    })
+    show(firstRef)
   },
   dynamicRefProps: () => {
-    show?.({
-      props: computed(() => ({
+    show(
+      computed(() => ({
         ...firstRef.value,
-        okVariant: (Number.parseInt(firstRef.value.body?.charAt(2) ?? '0') % 2 === 0
+        okVariant: (Number.parseInt((toValue(firstRef.value.body) ?? '').charAt(2) ?? '0') % 2 === 0
           ? 'danger'
           : 'info') as ColorVariant,
-      })),
-    })
-  },
-  getterFunction: () => {
-    show?.({
-      props: () => ({
-        title: firstRef.value.body,
-      }),
-    })
+      }))
+    )
   },
   // Demonstration psuedocode, you can import a component and use it
   // importedComponent: () => {
