@@ -66,3 +66,9 @@ export const sortSlotElementsByPosition = (
   if (position & Node.DOCUMENT_POSITION_PRECEDING) return 1
   return 0
 }
+
+export const getModalZIndex = (element: Readonly<HTMLElement>) =>
+  Number.parseInt(
+    window.getComputedStyle(element ?? document.body).getPropertyValue('--bs-modal-zindex'),
+    10
+  ) || 1055
