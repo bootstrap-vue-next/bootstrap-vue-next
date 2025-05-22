@@ -211,7 +211,7 @@ const nestedModal3 = ref(false)
 const nestedModal4 = ref(false)
 </script>
 <style>
-// just a little example of the variables and classes for stack
+/* just a little example of the variables and classes for stack */
 .modal {
   --bs-modal-zindex: 1900;
   transform: translate(
