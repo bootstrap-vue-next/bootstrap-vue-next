@@ -374,12 +374,6 @@ const titleClasses = computed(() => [
   },
 ])
 
-const sharedClasses = computed(() => ({
-  [`stack-position-${activePosition?.value ?? 0}`]: true,
-  [`stack-inverse-position-${(activeModalCount?.value ?? 1) - 1 - (activePosition?.value ?? 0)}`]:
-    true,
-}))
-
 const disableCancel = computed(() => props.cancelDisabled || props.busy)
 const disableOk = computed(() => props.okDisabled || props.busy)
 
@@ -387,6 +381,12 @@ const {activePosition, activeModalCount, stackWithoutSelf} = useModalManager(
   showRef,
   modelValue.value
 )
+
+const sharedClasses = computed(() => ({
+  [`stack-position-${activePosition?.value ?? 0}`]: true,
+  [`stack-inverse-position-${(activeModalCount?.value ?? 1) - 1 - (activePosition?.value ?? 0)}`]:
+    true,
+}))
 
 watch(stackWithoutSelf, (newValue, oldValue) => {
   if (newValue.length > oldValue.length && showRef.value === true && props.noStacking === true)
