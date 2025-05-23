@@ -362,6 +362,8 @@ export interface BFormRatingProps {
   iconEmpty?: string
   colorFull?: string
   colorEmpty?: string
+  showValue?: boolean
+  ShowValueMax?: boolean
   size?: string
 }
 
