@@ -100,14 +100,11 @@ const {
   computedStyles: resizeStyles,
   onInput: handleHeightChange,
   computedRows,
-} = useTextareaResize(
-  input,
-  computed(() => ({
-    maxRows: props.maxRows,
-    rows: props.rows,
-    noAutoShrink: props.noAutoShrink,
-  }))
-)
+} = useTextareaResize(input, {
+  maxRows: () => props.maxRows,
+  rows: () => props.rows,
+  noAutoShrink: () => props.noAutoShrink,
+})
 
 const computedStyles = computed<CSSProperties>(() => ({
   resize: props.noResize ? 'none' : undefined,
