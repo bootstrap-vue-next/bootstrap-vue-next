@@ -331,6 +331,38 @@ type Position =
 
 </BCard>
 
+## PopoverPlacement
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type PopoverPlacement = Placement | 'auto' | 'auto-start' | 'auto-end'
+```
+
+</BCard>
+
+Where `Placement` is defined in [@floating-ui/vue](https://floating-ui.com/) as
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type Placement =
+  | 'top'
+  | 'bottom'
+  | 'top-start'
+  | 'top-end'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'left'
+  | 'right'
+  | 'left-start'
+  | 'left-end'
+  | 'right-start'
+  | 'right-end'
+```
+
+</BCard>
+
 ## RadioOption
 
 <BCard class="bg-body-tertiary">
