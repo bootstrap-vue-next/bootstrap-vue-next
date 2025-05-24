@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.29.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.29.3...bootstrapvuenext-v0.29.4) (2025-05-24)
+
+
+### Features
+
+* **BFormTags:** added feedbackAriaLive prop  ([#2696](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2696)) ([b65c1e4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b65c1e4496e636e889b97e42c27e28dfb4231e45))
+* **BPopover:** add titleClass and bodyClass, remove unneeded customClass prop since class is inherited to the same place ([08c89fd](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/08c89fdbb4a1782f33fe651f71229d46d9d35de6))
+* **BToast:** add noProgress prop, make progress show as default if modelValue is number. fix(useToastController): if using the deprecated show method the countdown didn't start. ([90b578d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/90b578d54392fdd699e583f07cfe437fdd8d8979))
+
+
+### Bug Fixes
+
+* **BModal:** ensure clicking inside and releasing outside does not close modal ([85e987c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/85e987c407984ae70d37a82f4844694a52af13aa))
+* **BModal:** ensure clicking inside and releasing outside does not close modal ([#2703](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2703)) ([#2704](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2704)) ([85e987c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/85e987c407984ae70d37a82f4844694a52af13aa))
+* **BToast:** race condition if using setInterval to update countdown ([1e383ce](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e383ce5088a5ab2c93e15005ffcce211ab8e966))
+* **scss:** moved all scss styles out of components ([43ef54d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/43ef54d7f28b78d7546cee9577f8f6c01d98b0f3))
+
 ## [0.29.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.29.2...bootstrapvuenext-v0.29.3) (2025-05-11)
 
 
