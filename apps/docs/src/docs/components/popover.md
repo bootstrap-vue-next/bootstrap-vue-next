@@ -15,7 +15,7 @@ directive. Popovers can also be created and programmatically controlled via the 
 Things to know when using the popover component:
 
 - Popovers rely on the 3rd party library [floating-ui](https://floating-ui.com/docs) for positioning.
-- Use `teleportTo` and `teleportDisabled` to control where in the DOM the popover is rendered. See the [Vue.js Docs](https://vuejs.org/guide/built-ins/teleport.html) for details.
+- Use `teleportTo` and `teleportDisabled` to control where in the DOM the popover is rendered. See the [Vue.js Docs](https://vuejs.org/guide/built-ins/teleport.html) for details. When using Nuxt, `teleportTo` defaults to `#teleport`, set `teleportDisabled` to disable this behavior. For non-nuxt environments, `teleportTo` defaults to `undefined`.
 - Triggering popovers on hidden elements will not work.
 - Popovers for `disabled` elements must be triggered on a wrapper element.
 - When triggered from hyperlinks that span multiple lines, popovers will be centered. Set the `inline` prop to improve the positioning see the [Floating UI docs](https://floating-ui.com/docs/inline) for details.
