@@ -81,6 +81,8 @@ import type {BTabsProps} from '../../types/ComponentProps'
 import {tabsInjectionKey} from '../../utils/keys'
 import {useDefaults} from '../../composables/useDefaults'
 import {sortSlotElementsByPosition} from '../../utils/dom'
+import {flattenFragments} from '../../utils/flattenFragments'
+import BTab from './BTab.vue'
 
 const _props = withDefaults(defineProps<Omit<BTabsProps, 'modelValue' | 'activeId'>>(), {
   activeNavItemClass: undefined,
@@ -115,7 +117,7 @@ const emit = defineEmits<{
   'click': [] // TODO click event is never used
 }>()
 
-defineSlots<{
+const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'default'?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -137,8 +139,44 @@ const ReusableEmptyTab = createReusableTemplate()
 
 const tabsInternal = ref<Ref<TabType>[]>([])
 
-const tabs = computed(() =>
-  tabsInternal.value.map((_tab) => {
+const tabs = computed(() => {
+  const tabElements = flattenFragments(slots.default?.({}) ?? [])
+  const tabElementsArray = (Array.isArray(tabElements) ? tabElements : [tabElements]).filter(
+    (tab) => tab.type === BTab
+  )
+  if (tabsInternal.value.length === 0) {
+    // fail back on the slot elements, the children haven't been registered yet
+    const activeIndex = tabElementsArray.findIndex(
+      (tab) =>
+        (tab.props?.active !== undefined &&
+          (tab.props.disabled === false || tab.props.disabled === undefined)) ||
+        (activeId.value && tab.props?.id === activeId.value)
+    )
+    return tabElementsArray.map((tab, index) => {
+      const active = activeIndex !== -1 ? index === activeIndex : index === 0
+      return {
+        id: tab.props?.id,
+        buttonId: tab.props?.buttonId,
+        disabled: tab.props?.disabled,
+        title: tab.props?.title,
+        titleComponent: (tab.children as {title: unknown})?.title,
+        titleItemClass: () => tab.props?.titleItemClass,
+        titleLinkAttrs: () => tab.props?.titleLinkAttrs,
+        titleLinkClass: () => tab.props?.titleLinkClass,
+        onClick: tab.props?.onClick,
+        active,
+        navItemClasses: [
+          {
+            active,
+            disabled: !(tab.props?.disabled === false || tab.props?.disabled === undefined),
+          },
+          active ? props.activeNavItemClass : props.inactiveNavItemClass,
+          props.navItemClass,
+        ],
+      }
+    })
+  }
+  return tabsInternal.value.map((_tab) => {
     const tab = unref(_tab)
     const active = tab.id === activeId.value
 
@@ -155,7 +193,7 @@ const tabs = computed(() =>
       ],
     }
   })
-)
+})
 
 const showEmpty = computed(() => !(tabs?.value && tabs.value.length > 0))
 
@@ -204,9 +242,10 @@ const handleClick = (event: Readonly<MouseEvent>, index: number) => {
     index >= 0 &&
     !tabs.value[index].disabled &&
     tabs.value[index]?.onClick &&
-    typeof tabs.value[index].onClick === 'function'
+    typeof tabs.value[index].onClick === 'function' &&
+    typeof tabs.value[index].onClick() === 'function'
   ) {
-    tabs.value[index].onClick?.(event)
+    tabs.value[index].onClick?.()(event)
   }
 }
 
@@ -272,7 +311,14 @@ const registerTab = (tab: Ref<TabType>) => {
     tabsInternal.value[tabsInternal.value.findIndex((t) => t.value.id === tab.value.id)] = tab
   }
   tabsInternal.value.sort((a, b) => sortSlotElementsByPosition(a.value.el, b.value.el))
+  findActive()
 }
+
+const sortTabs = () => {
+  tabsInternal.value.sort((a, b) => sortSlotElementsByPosition(a.value.el, b.value.el))
+  findActive()
+}
+
 const unregisterTab = (id: string) => {
   tabsInternal.value = tabsInternal.value.filter((t) => t.value.id !== id)
 }
@@ -319,5 +365,6 @@ provide(tabsInjectionKey, {
     }
     activateTab(idx)
   },
+  sortTabs,
 })
 </script>
