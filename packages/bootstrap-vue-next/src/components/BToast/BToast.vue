@@ -11,6 +11,7 @@
       class="toast"
       :class="[props.toastClass, computedClasses]"
       tabindex="0"
+      style="display: block"
       :role="!isToastVisible ? undefined : props.isStatus ? 'status' : 'alert'"
       :aria-live="!isToastVisible ? undefined : props.isStatus ? 'polite' : 'assertive'"
       :aria-atomic="!isToastVisible ? undefined : true"
@@ -21,35 +22,77 @@
         class="toast-header"
         :class="props.headerClass"
       >
-        <slot name="title" :hide="hide">
-          <strong class="me-auto">
+        <slot name="title" v-bind="sharedSlots">
+          <strong>
             {{ props.title }}
           </strong>
         </slot>
-        <BCloseButton v-if="!props.noCloseButton" @click="hide('close')" />
+        <template v-if="!props.noCloseButton">
+          <BButton
+            v-if="slots.close || props.closeContent"
+            :class="[props.closeClass]"
+            class="ms-auto"
+            :variant="props.closeVariant"
+            @click.stop.prevent="hide('close')"
+          >
+            <slot name="close" v-bind="sharedSlots">
+              {{ props.closeContent }}
+            </slot>
+          </BButton>
+          <BCloseButton
+            v-else
+            :aria-label="props.closeLabel"
+            class="ms-auto"
+            :class="[props.closeClass]"
+            @click.stop.prevent="hide('close')"
+          />
+        </template>
+        <!-- <BCloseButton  class="ms-auto" @click="hide('close')" /> -->
       </component>
       <template v-if="contentShowing && (slots.default || props.body)">
-        <component
-          :is="computedTag"
-          class="toast-body"
-          style="display: block"
-          :class="props.bodyClass"
-          v-bind="computedLinkProps"
-          @click="computedLink ? hide() : () => {}"
-        >
-          <slot :hide="hide">
-            {{ props.body }}
-          </slot>
-        </component>
+        <div class="d-flex">
+          <component
+            :is="computedTag"
+            class="toast-body"
+            :class="props.bodyClass"
+            v-bind="computedLinkProps"
+            @click="computedLink ? hide() : () => {}"
+          >
+            <slot v-bind="sharedSlots">
+              {{ props.body }}
+            </slot>
+          </component>
+
+          <template v-if="!props.noCloseButton && !(slots.title || props.title)">
+            <BButton
+              v-if="slots.close || props.closeContent"
+              :class="[props.closeClass]"
+              class="ms-auto btn-close-custom"
+              :variant="props.closeVariant"
+              @click.stop.prevent="hide('close')"
+            >
+              <slot name="close" v-bind="sharedSlots">
+                {{ props.closeContent }}
+              </slot>
+            </BButton>
+            <BCloseButton
+              v-else
+              :aria-label="props.closeLabel"
+              class="ms-auto btn-close-custom"
+              :class="[props.closeClass]"
+              @click.stop.prevent="hide('close')"
+            />
+          </template>
+        </div>
       </template>
       <BProgress
-        v-if="typeof modelValue === 'number' && props.progressProps !== undefined"
-        :animated="props.progressProps.animated"
-        :precision="props.progressProps.precision"
-        :show-progress="props.progressProps.showProgress"
-        :show-value="props.progressProps.showValue"
-        :striped="props.progressProps.striped"
-        :variant="props.progressProps.variant"
+        v-if="typeof modelValue === 'number' && !props.noProgress"
+        :animated="props.progressProps?.animated"
+        :precision="props.progressProps?.precision"
+        :show-progress="props.progressProps?.showProgress"
+        :show-value="props.progressProps?.showValue"
+        :striped="props.progressProps?.striped"
+        :variant="props.progressProps?.variant"
         :max="modelValue"
         :value="remainingMs"
         height="4px"
@@ -62,21 +105,26 @@
 import {computed, type EmitFn, useTemplateRef, watch, watchEffect} from 'vue'
 import {useBLinkHelper} from '../../composables/useBLinkHelper'
 import type {BToastProps} from '../../types/ComponentProps'
+import type {BToastEmits} from '../../types/ComponentEmits'
+import type {BToastSlots, ShowHideSlotsData} from '../../types/ComponentSlots'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BLink from '../BLink/BLink.vue'
 import BProgress from '../BProgress/BProgress.vue'
-import {BvTriggerableEvent} from '../../utils'
 import {useCountdown} from '../../composables/useCountdown'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useDefaults} from '../../composables/useDefaults'
 import {useCountdownHover} from '../../composables/useCountdownHover'
 import {useId} from '../../composables/useId'
-import {type showHideEmits, useShowHide} from '../../composables/useShowHide'
+import {useShowHide} from '../../composables/useShowHide'
 
 const _props = withDefaults(defineProps<Omit<BToastProps, 'modelValue'>>(), {
   bgVariant: null,
   body: undefined,
   bodyClass: undefined,
+  closeClass: undefined,
+  closeContent: undefined,
+  closeLabel: 'Close',
+  closeVariant: 'secondary',
   headerClass: undefined,
   headerTag: 'div',
   id: undefined,
@@ -87,6 +135,7 @@ const _props = withDefaults(defineProps<Omit<BToastProps, 'modelValue'>>(), {
   noCloseButton: false,
   noFade: false,
   noHoverPause: false,
+  noProgress: false,
   noResumeOnHoverLeave: false,
   progressProps: undefined,
   unmountLazy: false,
@@ -125,19 +174,9 @@ const _props = withDefaults(defineProps<Omit<BToastProps, 'modelValue'>>(), {
 })
 const props = useDefaults(_props, 'BToast')
 
-const emit = defineEmits<
-  {
-    'close': [value: BvTriggerableEvent]
-    'close-countdown': [value: number]
-  } & showHideEmits
->()
+const emit = defineEmits<BToastEmits>()
 
-const slots = defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  title?: (props: {hide: (trigger?: string) => void}) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: {hide: (trigger?: string) => void}) => any
-}>()
+const slots = defineSlots<BToastSlots>()
 
 const element = useTemplateRef<HTMLElement>('_element')
 
@@ -205,7 +244,7 @@ const computedClasses = computed(() => [
 ])
 
 watch(modelValue, (newValue) => {
-  if (typeof newValue === 'number') {
+  if (typeof newValue === 'number' && newValue > 0) {
     const event = buildTriggerableEvent('show', {cancelable: true, trigger: 'model'})
     emit('show', event)
     if (event.defaultPrevented) {
@@ -224,6 +263,14 @@ watch(isActive, (newValue) => {
     stop()
   }
 })
+const sharedSlots = computed<ShowHideSlotsData>(() => ({
+  toggle,
+  show,
+  hide,
+  id: computedId.value,
+  visible: showRef.value,
+  active: isActive.value,
+}))
 
 defineExpose({
   show,
@@ -235,16 +282,3 @@ defineExpose({
   stop,
 })
 </script>
-
-<style lang="scss" scoped>
-.toast :deep(.progress .progress-bar) {
-  --bs-progress-bar-transition: none;
-}
-.toast:not(.show) {
-  display: block;
-  opacity: unset;
-}
-.toast.fade:not(.show) {
-  opacity: 0;
-}
-</style>

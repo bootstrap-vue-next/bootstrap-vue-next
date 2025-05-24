@@ -1,5 +1,82 @@
 # Changelog
 
+## [0.29.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.29.2...bootstrapvuenext-v0.29.3) (2025-05-11)
+
+
+### Bug Fixes
+
+* **BTableSimple:** fixed and nobordercollapse to work fixes [#2685](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2685) ([c61f532](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c61f532ce9c6ac232611084f25235e0926c7b836))
+
+## [0.29.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.29.1...bootstrapvuenext-v0.29.2) (2025-05-07)
+
+
+### Features
+
+* **BTable:** implement 'fixed' and 'noBorderCollapse' props ([#2681](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2681)) ([9486276](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9486276fe43ddc5085681a6fa8dc32a9cfacd242))
+
+## [0.29.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.29.0...bootstrapvuenext-v0.29.1) (2025-05-05)
+
+
+### Bug Fixes
+
+* **BFormSelect:** prevent options with label from being treated as groups ([#2666](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2666)) ([c1645a9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c1645a92d3ede914ef0fc939bed65066e13020ff))
+* patch regression issue in [#2665](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2665) ([#2670](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2670)) ([59ddc39](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/59ddc3971cb58e88a8e460f2a9f21b47aa7b8d90))
+
+## [0.29.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.28.6...bootstrapvuenext-v0.29.0) (2025-04-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BPopover:** change prop content to body to align with other components
+* **BTooltip:** change prop content to body to align with other components
+* **useModalController:** move props to main level, add slots
+* **useToastController:** remove props obj, the parameters are flat now. Add slots, rename pos -> position
+* controller composables functions return promise, with id and chainable functions
+* **useModalController:** change of api, check the docs
+* **BAlert:** make act like toast, useShowHide.
+* **BOffcanvas:** remove nofocus prop and add more versitile focus prop
+* **BModal:** remove autofocus and autofocusButton props and add more versitile focus prop
+
+### Features
+
+* **BAlert:** make act like toast, useShowHide. ([99718eb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/99718eba96d9f32ebac7931cee91bf28c29870dd))
+* **BModal:** add okClass and cancelClass to add classes to the buttons. ([99718eb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/99718eba96d9f32ebac7931cee91bf28c29870dd))
+* **BModal:** remove autofocus and autofocusButton props and add more versitile focus prop ([e6a89ef](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6a89efb6af359c19d93f70b257a0fb29e906bca))
+* **BModal:** return focus to previous element on close ([e6a89ef](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6a89efb6af359c19d93f70b257a0fb29e906bca))
+* **BOffcanvas:** remove nofocus prop and add more versitile focus prop ([e6a89ef](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6a89efb6af359c19d93f70b257a0fb29e906bca))
+* **BOffcanvas:** return focus to previous element on close ([e6a89ef](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6a89efb6af359c19d93f70b257a0fb29e906bca))
+* controller composables functions return promise, with id and chainable functions ([99718eb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/99718eba96d9f32ebac7931cee91bf28c29870dd))
+* **useModalController:** add support for using syntax in ts ([99718eb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/99718eba96d9f32ebac7931cee91bf28c29870dd))
+* **useModalController:** change of api, check the docs ([99718eb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/99718eba96d9f32ebac7931cee91bf28c29870dd))
+* **usePopoverController:** add slots ([99718eb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/99718eba96d9f32ebac7931cee91bf28c29870dd))
+* **usePopoverController:** allow more options ([99718eb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/99718eba96d9f32ebac7931cee91bf28c29870dd))
+* **useShowHide:** create triggerRegistry for adding external triggers (like in vBToggle) ([99718eb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/99718eba96d9f32ebac7931cee91bf28c29870dd))
+* **useShowHide:** show returns a promise, resolve on show or hide. ([99718eb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/99718eba96d9f32ebac7931cee91bf28c29870dd))
+* **useToastController:** remove props obj, the parameters are flat now. Add slots, rename pos -&gt; position ([99718eb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/99718eba96d9f32ebac7931cee91bf28c29870dd))
+* **useToggle:** add trigger to promise resolve on hide. ([99718eb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/99718eba96d9f32ebac7931cee91bf28c29870dd))
+* **useToggle:** toggle any show/hide component ([99718eb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/99718eba96d9f32ebac7931cee91bf28c29870dd))
+
+
+### Bug Fixes
+
+* **BAccordionItem:** fix initial modelValue ([b72b8da](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b72b8da7e503c3395d0f2f4139d392268c0cc5bc))
+* **BCarousel:** fix v-for updates ([99718eb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/99718eba96d9f32ebac7931cee91bf28c29870dd))
+* **BDropdown:** don't calulcate the position when dropdown is not shown. ([4dd6c89](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4dd6c89146b9d5a4a089c4af4c2162d577cd7fb4))
+* **BModal:** set focus only once ([e6a89ef](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e6a89efb6af359c19d93f70b257a0fb29e906bca))
+* **BPagination:** right/left/up/down arrow keys now operating better after new page chosen ([#2665](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2665)) ([2f05c84](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2f05c8494f6414d071b7e7bb76a75d97d6e2d34c))
+* **BPopover:** change prop content to body to align with other components ([99718eb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/99718eba96d9f32ebac7931cee91bf28c29870dd))
+* **BTabs:** corrent classes on ssr ([2b37c18](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2b37c18dbe64ac430943361e0a67d86206a7e21e))
+* **BTabs:** corrent classes on ssr ([#2664](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2664)) ([2b37c18](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2b37c18dbe64ac430943361e0a67d86206a7e21e))
+* **BTabs:** fix another recursion error ([2b37c18](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2b37c18dbe64ac430943361e0a67d86206a7e21e))
+* **BTooltip:** change prop content to body to align with other components ([99718eb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/99718eba96d9f32ebac7931cee91bf28c29870dd))
+* inline functional style to show toast,modal and dropdown ([99718eb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/99718eba96d9f32ebac7931cee91bf28c29870dd))
+* type popoverController ([99718eb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/99718eba96d9f32ebac7931cee91bf28c29870dd))
+* **useModalController:** move props to main level, add slots ([99718eb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/99718eba96d9f32ebac7931cee91bf28c29870dd))
+* **useShowHide:** don't run show if component already unmounted (ie. BPopover) ([269e8c1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/269e8c17ba2c262aa734acd2aac231f5ea433575))
+* **useShowHide:** focustrap off at the begining of leave, pass down the trigger to other hide emits. ([99718eb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/99718eba96d9f32ebac7931cee91bf28c29870dd))
+* **vBToggle:** find late components, ie. inside ClientOnly ([99718eb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/99718eba96d9f32ebac7931cee91bf28c29870dd))
+* **vBToggle:** keep track of targets ([99718eb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/99718eba96d9f32ebac7931cee91bf28c29870dd))
+
 ## [0.28.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.28.5...bootstrapvuenext-v0.28.6) (2025-04-10)
 
 

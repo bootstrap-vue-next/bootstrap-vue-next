@@ -38,7 +38,9 @@ export const useCountdown = (
     resume()
   }
   watch(resolvedLength, () => {
-    restart()
+    if (resolvedLength.value > 0) {
+      restart()
+    }
   })
 
   const myPause = () => {

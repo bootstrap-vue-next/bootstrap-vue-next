@@ -1,41 +1,185 @@
-import {isRef, onScopeDispose, type Plugin, ref, toRef, toValue, watch} from 'vue'
+import {
+  isReadonly,
+  isRef,
+  markRaw,
+  nextTick,
+  onScopeDispose,
+  type Plugin,
+  ref,
+  type Ref,
+  toRef,
+  toValue,
+  watch,
+  type WatchHandle,
+} from 'vue'
 import {popoverPluginKey} from '../../utils/keys'
 import type {
   ControllerKey,
+  PopoverOrchestratorCreateParam,
+  PopoverOrchestratorMapValue,
   PopoverOrchestratorParam,
-  PopoverOrchestratorShowParam,
+  PromiseWithPopover,
+  PromiseWithPopoverInternal,
+  TooltipOrchestratorCreateParam,
+  TooltipOrchestratorMapValue,
   TooltipOrchestratorParam,
-  TooltipOrchestratorShowParam,
 } from '../../types/ComponentOrchestratorTypes'
+import type {BvTriggerableEvent} from '../../utils'
 
 export const popoverPlugin: Plugin = {
   install(app) {
-    const popovers = ref(new Map<ControllerKey, PopoverOrchestratorParam>())
+    const _isOrchestratorInstalled = ref(false)
+    const popovers = ref(
+      new Map<ControllerKey, PopoverOrchestratorMapValue | TooltipOrchestratorMapValue>()
+    )
+
+    const buildPromise = (
+      _id: ControllerKey,
+      store: Ref<Map<ControllerKey, PopoverOrchestratorMapValue | TooltipOrchestratorMapValue>>
+    ): {
+      value: PromiseWithPopover
+      resolve: (value: BvTriggerableEvent) => void
+      stop?: WatchHandle
+    } => {
+      let resolveFunc: (value: BvTriggerableEvent) => void = () => {}
+
+      const promise = new Promise<BvTriggerableEvent>((resolve) => {
+        resolveFunc = resolve
+      }) as PromiseWithPopover
+      Object.assign(promise, {
+        id: _id,
+        ref: null,
+        show() {
+          if (!this.ref) return this.set({modelValue: true})
+          this.ref.show()
+          return promise
+        },
+        hide(trigger?: string) {
+          if (!this.ref) return this.set({modelValue: false})
+          this.ref.hide(trigger, true)
+          return promise
+        },
+        toggle() {
+          if (!this.ref) return this.set({modelValue: !this.get()?.modelValue})
+          this.ref.toggle()
+          return promise
+        },
+        get() {
+          return store.value.get(_id)
+        },
+        set(val: Partial<PopoverOrchestratorParam | TooltipOrchestratorParam>) {
+          const item = store.value.get(_id)
+          if (item) {
+            const v = {...toValue(item), ...toValue(val)}
+            // add modal to v
+            if (item.modelValue !== v.modelValue) {
+              item['onUpdate:modelValue']?.(v.modelValue as boolean)
+            }
+            store.value.set(_id, {
+              ...v,
+              title: toValue(v.title),
+              body: toValue(v.body),
+              modelValue: toValue(v.modelValue),
+            })
+          }
+          return promise
+        },
+        async destroy() {
+          const item = store.value.get(_id)
+          if (!item) return
+          item.promise.stop?.()
+          if (item.modelValue) {
+            await new Promise((resolve) => {
+              item.modelValue = false
+              const prev = item['onHidden']
+              item['onHidden'] = (e) => {
+                prev?.(e)
+                resolve(e)
+              }
+              nextTick(() => {
+                item['onUpdate:modelValue']?.(false)
+              })
+            })
+          }
+          store.value.delete(_id)
+        },
+
+        async [Symbol.asyncDispose]() {
+          await this.destroy()
+        },
+      } as PromiseWithPopoverInternal)
+
+      return {
+        value: promise,
+        resolve: resolveFunc,
+      }
+    }
+
     /**
-     * @returns {ControllerKey} If `id` is passed to props, it will use that id, otherwise,
-     * a symbol will be created that corresponds to its unique id.
+     * Create a popover or tooltip
+     * @param obj The popover or tooltip props
+     * @param tooltip If true, create a tooltip, otherwise create a popover
+     * @returns {PromiseWithPopover} A promise object with methods to control the popover (show, hide, toggle, get, set, destroy)
      */
-    const popover = (obj: PopoverOrchestratorShowParam): ControllerKey => {
+    const create = (obj: PopoverOrchestratorCreateParam, tooltip?: boolean): PromiseWithPopover => {
+      if (!_isOrchestratorInstalled.value) {
+        throw new Error(
+          'The BPopoverOrchestrator component must be mounted to use the popover controller'
+        )
+      }
+      const {component, slots} = toValue(obj)
+      if (component) {
+        if (isRef(obj)) obj.value.component = markRaw(component)
+        else if (typeof obj === 'object') obj.component = markRaw(component)
+      }
+      if (slots) {
+        if (isRef(obj)) obj.value.slots = markRaw(slots)
+        else if (typeof obj === 'object') obj.slots = markRaw(slots)
+      }
       const resolvedProps = toRef(obj)
       const _self = resolvedProps.value?.id || Symbol('Popover controller')
 
-      watch(
+      const promise = buildPromise(_self, popovers)
+
+      promise.stop = watch(
         resolvedProps,
-        (newValue) => {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore: How to add refs for title & content?
+        (_newValue) => {
+          const newValue = {...toValue(_newValue)}
+          const previous = popovers.value.get(_self)
+          // if (!previous) return
+          const v: Partial<PopoverOrchestratorMapValue> = {
+            ...(previous || {}),
+          }
+
+          for (const key in newValue) {
+            if (key.startsWith('on')) {
+              v[key as keyof PopoverOrchestratorCreateParam] =
+                newValue[key as keyof PopoverOrchestratorCreateParam]
+            } else {
+              v[key as keyof PopoverOrchestratorCreateParam] = toValue(
+                newValue[key as keyof PopoverOrchestratorCreateParam]
+              )
+            }
+          }
           popovers.value.set(_self, {
-            ...newValue,
-            ...(typeof newValue['modelValue'] !== 'undefined' && isRef(obj)
-              ? {
-                  'onUpdate:modelValue': (val: boolean) => {
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-ignore: How to add emit types?
-                    newValue['onUpdate:modelValue']?.(val)
-                    obj.value.modelValue = val
-                  },
+            ...v,
+            ...(v.modelValue === undefined && {modelValue: false}),
+            'onUpdate:modelValue': (val: boolean) => {
+              newValue['onUpdate:modelValue']?.(val)
+              const {modelValue} = toValue(obj)
+              if (isRef(obj) && !isRef(modelValue)) obj.value.modelValue = val
+              if (isRef(modelValue) && !isReadonly(modelValue)) {
+                ;(modelValue as Ref<PopoverOrchestratorParam['modelValue']>).value = val
+              }
+              if (v.modelValue !== val) {
+                const popover = popovers.value.get(_self)
+                if (popover) {
+                  popover.modelValue = val
                 }
-              : {}),
+              }
+            },
+            tooltip,
+            promise,
           })
         },
         {
@@ -43,92 +187,26 @@ export const popoverPlugin: Plugin = {
           deep: true,
         }
       )
-      onScopeDispose(() => popovers.value.delete(_self), true)
 
-      return _self
-    }
-    /**
-     * @param {ControllerKey} self You can get the symbol param from the return value from the show method, or use props.id
-     */
-    const setPopover = (self: ControllerKey, val: Partial<PopoverOrchestratorParam>) => {
-      const popover = popovers.value.get(self)
-      if (!popover) return
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore: How to add refs for title & content?
-      popovers.value.set(self, {
-        ...popover,
-        ...toValue(val),
-      })
-    }
-    /**
-     * @param {ControllerKey} self You can get the symbol param from the return value from the show method, or use props.id
-     */
-    const removePopover = (self: ControllerKey) => popovers.value.delete(self)
-
-    const tooltips = ref(new Map<ControllerKey, TooltipOrchestratorParam>())
-    /**
-     * @returns {ControllerKey} If `id` is passed to props, it will use that id, otherwise,
-     * a symbol will be created that corresponds to its unique id.
-     */
-    const tooltip = (obj: TooltipOrchestratorShowParam): ControllerKey => {
-      const resolvedProps = toRef(obj)
-      const _self = resolvedProps.value?.id || Symbol('Tooltip controller')
-
-      watch(
-        resolvedProps,
-        (newValue) => {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore: How to add refs for title & content?
-          popovers.value.set(_self, {
-            ...newValue,
-            ...(typeof newValue['modelValue'] !== 'undefined' && isRef(obj)
-              ? {
-                  'onUpdate:modelValue': (val: boolean) => {
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-ignore: How to add emit types?
-                    newValue['onUpdate:modelValue']?.(val)
-                    obj.value.modelValue = val
-                  },
-                }
-              : {}),
-          })
-        },
-        {
-          immediate: true,
-          deep: true,
+      onScopeDispose(() => {
+        const popover = popovers.value.get(_self)
+        if (popover) {
+          popover.promise.value.destroy?.()
         }
-      )
-      onScopeDispose(() => tooltips.value.delete(_self), true)
+      }, true)
 
-      return _self
+      return promise.value
     }
-    /**
-     * @param {ControllerKey} self You can get the symbol param from the return value from the show method, or use props.id
-     */
-    const setTooltip = (self: ControllerKey, val: Partial<TooltipOrchestratorParam>) => {
-      const tooltip = tooltips.value.get(self)
-      if (!tooltip) return
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore: How to add refs for title & content?
-      tooltips.value.set(self, {
-        ...tooltip,
-        ...toValue(val),
-      })
-    }
-    /**
-     * @param {ControllerKey} self You can get the symbol param from the return value from the show method, or use props.id
-     */
-    const removeTooltip = (self: ControllerKey) => tooltips.value.delete(self)
+
+    const tooltip = (obj: TooltipOrchestratorCreateParam): PromiseWithPopover => create(obj, true)
+
+    const popover = (obj: PopoverOrchestratorCreateParam): PromiseWithPopover => create(obj, false)
 
     app.provide(popoverPluginKey, {
+      _isOrchestratorInstalled,
       popovers,
-      tooltips,
       tooltip,
       popover,
-      setPopover,
-      setTooltip,
-      removePopover,
-      removeTooltip,
     })
   },
 }

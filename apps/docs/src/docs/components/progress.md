@@ -2,244 +2,81 @@
 
 <PageHeader>
 
-Documentation and examples for using Bootstrap custom progress bars featuring support for stacked bars, animated backgrounds, and text labels.
+Use our custom progress component for displaying simple or complex progress bars, featuring
+support for horizontally stacked bars, animated backgrounds, and text labels.
 
 </PageHeader>
 
 ## Basic Usage
 
-<HighlightCard>
-  <BCard>
-    <BProgress :value="0" />
-    <BProgress class="mt-3" :value="25" />
-    <BProgress class="mt-3" :value="50" />
-    <BProgress class="mt-3" :value="75" />
-    <BProgress class="mt-3" :value="100" />
-  </BCard>
-  <template #html>
-
-```vue-html
-<BProgress :value="0" />
-<BProgress :value="25" />
-<BProgress :value="50" />
-<BProgress :value="75" />
-<BProgress :value="100" />
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/ProgressBasic.vue
 
 ## Value
 
 Set the maximum value with the `max` prop (default is `100`), and the current value via the `value` prop (default `0`).
 
-When creating multiple bars in a single process, place the value prop on the individual `BProgressBar` sub-components (see the Multiple Bars section below for more details)
+When creating multiple bars in a single process, place the value prop on the individual `BProgressBar` sub-components (see the [Multiple Bars](#multiple-bars) section below for more details)
 
 ## Labels
 
 Add labels to your progress bars by either enabling `show-progress` (percentage of max) or `show-value` for the current absolute value. You may also set the precision (number of digits after the decimal) via the `precision` prop (default is `0` digits after the decimal).
 
-<HighlightCard>
-  <BCard>
-    <h5>No label</h5>
-    <BProgress :value="33.3333" :max="50" class="mb-3" />
-    <h5>Value label</h5>
-    <BProgress :value="33.3333" :max="50" show-value class="mb-3" />
-    <h5>Progress label</h5>
-    <BProgress :value="33.3333" :max="50" show-progress class="mb-3" />
-    <h5>Value label with precision</h5>
-    <BProgress :value="33.3333" :max="50" :precision="2" show-value class="mb-3" />
-    <h5>Progress label with precision</h5>
-    <BProgress :value="33.3333" :max="50" :precision="2" show-progress class="mb-3" />
-  </BCard>
-  <template #html>
-
-```vue-html
-<h5>No label</h5>
-<BProgress :value="33.3333" :max="50" />
-<h5>Value label</h5>
-<BProgress :value="33.3333" :max="50" show-value />
-<h5>Progress label</h5>
-<BProgress :value="33.3333" :max="50" show-progress />
-<h5>Value label with precision</h5>
-<BProgress :value="33.3333" :max="50" :precision="2" show-value />
-<h5>Progress label with precision</h5>
-<BProgress :value="33.3333" :max="50" :precision="2" show-progress />
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/ProgressLabels.vue
 
 ### Custom progress label
 
-Need more control over the label? Provide your own label by using the default slot within a `BProgressBar` sub-component, or by using the `label` or `label-html` property on `BProgressBar`:
+Need more control over the label? Provide your own label by using the default slot within a `BProgressBar` sub-component, or by using the `label` property on `BProgressBar`:
 
-<HighlightCard>
-  <BCard>
-    <h5>Custom label via default slot</h5>
-    <BProgress :max="50" height="2rem">
-      <BProgressBar :value="33.333333">
-        <span>Progress: <strong>{{ (33.333333).toFixed(2) }} / {{ 50 }}</strong></span>
-      </BProgressBar>
-    </BProgress>
-    <h5 class="mt-3">Custom label via property</h5>
-    <BProgress :max="50">
-      <BProgressBar :value="33.333333" :label="`${((33.333333 / 50) * 100).toFixed(2)}%`" />
-    </BProgress>
-    <h5 class="mt-3">Custom label via property (HTML support)</h5>
-    <BProgress :max="50">
-      <BProgressBar :value="33.333333">
-        <del>{{33.333333}}</del>
-      </BProgressBar>
-    </BProgress>
-  </BCard>
-  <template #html>
+<<< DEMO ./demo/ProgressCustomLabels.vue
 
-```vue-html
-<h5>Custom label via default slot</h5>
-<BProgress :max="50" height="2rem">
-  <BProgressBar :value="33.333333">
-    <span>Progress: <strong>{{ (33.333333).toFixed(2) }} / {{ 50 }}</strong></span>
-  </BProgressBar>
-</BProgress>
+## Width
 
-<h5 class="mt-3">Custom label via property</h5>
-<BProgress :max="50">
-  <BProgressBar
-    :value="33.333333"
-    :label="`${((33.333333 / 50) * 100).toFixed(2)}%`"
-  />
-</BProgress>
+`<BProgress>` will always expand to the maximum with of its parent container. To change the width,
+place `<BProgress>` in a standard Bootstrap column or apply one of the standard Bootstrap width
+classes.
 
-<h5 class="mt-3">Custom label via property (HTML support)</h5>
-<BProgress :max="50">
-  <BProgressBar :value="33.333333">
-    <del>{{33.333333}}</del>
-  </BProgressBar>
-</BProgress>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/ProgressWidth.vue
 
 ## Height
 
 The height of the progress bar can be controlled with the height prop. The height value should be a standard CSS dimension (px, rem, em, etc.). The default height is 1rem.
 
-<HighlightCard>
-  <BCard>
-    <BProgress :value="25" height="1px" />
-    <BProgress class="mt-3" :value="25" height="20px" />
-  </BCard>
-  <template #html>
-
-```vue-html
-<BProgress :value="25" height="1px" />
-<BProgress :value="25" height="20px" />
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/ProgressHeight.vue
 
 ## Backgrounds
 
 Use background variants to change the appearance of individual progress bars. The default variant is `primary`.
 
-<HighlightCard>
-  <BCard>
-    <BProgress variant="success" :value="25" />
-    <BProgress class="mt-3" variant="info" :value="50" />
-    <BProgress class="mt-3" variant="warning" :value="75" />
-    <BProgress class="mt-3" variant="danger" :value="100" />
-  </BCard>
-  <template #html>
+<<< DEMO ./demo/ProgressBackgrounds.vue
 
-```vue-html
-<BProgress variant="success" :value="25" />
-<BProgress variant="info" :value="50" />
-<BProgress variant="warning" :value="75" />
-<BProgress variant="danger" :value="100" />
-```
+## Striped Background
 
-  </template>
-</HighlightCard>
+Set `striped` to apply a stripe via CSS gradient over the progress bar's background variant.
+
+<<< DEMO ./demo/ProgressStriped.vue
+
+## Animated Background
+
+The striped gradient can also be animated by setting the `animated` prop.
+
+<<< DEMO ./demo/ProgressAnimated.vue
+
+::: info NOTE
+If `animated` is true, `striped` will automatically be enabled.
+:::
 
 ## Multiple bars
 
 Include multiple `BProgressBar` sub-components in a `BProgress` component to build a horizontally stacked set of progress bars.
 
-<HighlightCard>
-  <BCard>
-    <BProgress>
-      <BProgressBar :value="15" />
-      <BProgressBar :value="30" variant="success" />
-      <BProgressBar :value="20" variant="info" />
-    </BProgress>
-  </BCard>
-  <template #html>
+<<< DEMO ./demo/ProgressMultipleBars.vue
 
-```vue-html
-<BProgress>
-  <BProgressBar :value="15" />
-  <BProgressBar :value="30" variant="success" />
-  <BProgressBar :value="20" variant="info" />
-</BProgress>
-```
+::: info NOTE
 
-  </template>
-</HighlightCard>
+- height, if specified, should always set on the `<BProgress>` component.
+- `<BProgressBar>` will not inherit value from `<BProgress>`.
 
-## Striped
-
-Set `striped` to apply a stripe via CSS gradient over the progress bar's background variant.
-
-<HighlightCard>
-  <BCard>
-    <BProgress striped :value="10" />
-    <BProgress striped class="mt-3" variant="success" :value="25" />
-    <BProgress striped class="mt-3" variant="info" :value="50" />
-    <BProgress striped class="mt-3" variant="warning" :value="75" />
-    <BProgress striped class="mt-3" variant="danger" :value="100" />
-  </BCard>
-  <template #html>
-
-```vue-html
-<BProgress striped :value="10" />
-<BProgress striped :value="25" variant="success" />
-<BProgress striped :value="50" variant="info" />
-<BProgress striped :value="75" variant="warning" />
-<BProgress striped :value="100" variant="danger" />
-```
-
-  </template>
-</HighlightCard>
-
-## Animated stripes
-
-The striped gradient can also be animated by setting the `animated` prop.
-
-<HighlightCard>
-  <BCard>
-    <BProgress :value="75" striped :animated="animate" />
-    <BButton class="mt-3" @click="animate = !animate">Toggle animation</BButton>
-  </BCard>
-  <template #html>
-
-```vue
-<template>
-  <BProgress :value="75" striped :animated="animate" />
-  <BButton class="mt-3" @click="animate = !animate">Toggle animation</BButton>
-</template>
-
-<script setup lang="ts">
-import {ref} from 'vue'
-
-const animate = ref(false)
-</script>
-```
-
-  </template>
-</HighlightCard>
+:::
 
 <ComponentReference :data="data" />
 
