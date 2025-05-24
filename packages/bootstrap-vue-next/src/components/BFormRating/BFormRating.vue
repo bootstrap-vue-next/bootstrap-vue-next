@@ -16,7 +16,10 @@
       @mousemove="onMouseMove($event, starIndex)"
       @click="selectRating(starIndex)"
     >
-      <i :style="{color: iconColors[starIndex - 1], fontSize: size}">
+      <i
+        :class="props.color ? '' : props.variant ? `text-${props.variant}` : ''"
+        :style="{fontSize: size, color: props.color ? props.color : iconColors[starIndex - 1]}"
+      >
         {{ iconClasses[starIndex - 1] }}
       </i>
     </span>
@@ -38,13 +41,13 @@ import type {BFormRatingProps} from '../../types/ComponentProps'
 const _props = withDefaults(defineProps<BFormRatingProps>(), {
   modelValue: 0,
   readonly: false,
+  variant: '',
+  color: '',
   stars: 5,
   precision: 1,
   iconFull: 'x',
   iconHalf: '',
   iconEmpty: 'o',
-  colorFull: '#f3a000',
-  colorEmpty: '#c8c8c8',
   showValue: false,
   ShowValueMax: false,
   size: '5rem',
@@ -84,19 +87,18 @@ const iconClasses = computed(() =>
 // Set the minimum amount of star can be render to 3
 const clampedStars = computed(() => Math.max(3, props.stars))
 
+// Compute the numeric rating text to display.
+// - If showValueMax is true, render "value/max"
+// - Else if showValue is true, render just "value"
+// - Otherwise render nothing
 const displayValueText = computed(() => {
   if (props.ShowValueMax) {
     return `${displayValue.value}/${clampedStars.value}`
   }
   return props.showValue ? `${displayValue.value}` : ''
 })
-// since arrays are zero based, -1 to match, adds the styling that connects to the above function
-const iconColors = computed(() =>
-  Array.from({length: clampedStars.value}, (_, i) => {
-    const difference = displayValue.value - i
-    return difference >= props.precision ? props.colorFull : props.colorEmpty
-  })
-)
+// optimize code for 1 colors as customization
+const iconColors = computed(() => Array.from({length: clampedStars.value}, () => props.color))
 
 // hover
 function onMouseMove(event: MouseEvent, index: number) {

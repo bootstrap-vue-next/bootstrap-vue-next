@@ -360,11 +360,11 @@ export interface BFormRatingProps {
   iconFull?: string
   iconHalf?: string
   iconEmpty?: string
-  colorFull?: string
-  colorEmpty?: string
+  color?: string
   showValue?: boolean
   ShowValueMax?: boolean
   size?: string
+  variant?: string
 }
 
 export interface BFormSelectProps {
