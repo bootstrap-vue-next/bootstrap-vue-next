@@ -591,7 +591,7 @@ See [Show and Hide](#show-and-hide) shared properties.
 
 <NotYetDocumented type="component"/>
 
-prop `blur` does not work when prop `bgColor` is defined. It also will not work if prop `variant` is anything other than `white` or `transparent`. This overcomes a browser change.
+prop `blur` does not work when the prop `bgColor` is defined. It also will not work if the prop `variant` is anything other than `white` or `transparent`. This overcomes a browser change.
 
 ### BPagination
 
