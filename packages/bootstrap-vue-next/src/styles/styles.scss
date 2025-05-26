@@ -10,6 +10,9 @@
 @import "../components/BFormInput/form-input";
 @import "../components/BFormFile/form-file";
 @import "../components/BFormSpinbutton/spinbutton";
+@import "../components/BAlert/alert";
+@import "../components/BPopover/popover";
+@import "../components/BToast/toast";
 
 .container,
 .container-fluid {
@@ -60,4 +63,13 @@
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.no-transition {
+  transition: none !important;
+}
+
+:root {
+  --bs-modal-zindex: #{$zindex-modal};
+  --bs-toast-max-width: #{$toast-max-width};
 }

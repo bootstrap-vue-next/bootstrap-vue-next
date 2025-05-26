@@ -6,7 +6,7 @@ import type {
   RootBoundary,
   Strategy,
 } from '@floating-ui/vue'
-import type {ComponentPublicInstance, TransitionProps} from 'vue'
+import type {AriaAttributes, ComponentPublicInstance, TransitionProps} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {LinkTarget} from './LinkTarget'
 import type {
@@ -435,6 +435,7 @@ export interface BFormTagsProps {
   autofocus?: boolean
   disabled?: boolean
   duplicateTagText?: string
+  feedbackAriaLive?: AriaAttributes['aria-live']
   form?: string
   inputAttrs?: Readonly<AttrsValue>
   inputClass?: ClassValue
@@ -1249,6 +1250,7 @@ export interface BToastProps
   modelValue?: boolean | number
   noCloseButton?: boolean
   noHoverPause?: boolean
+  noProgress?: boolean
   noResumeOnHoverLeave?: boolean
   progressProps?: Omit<BProgressBarProps, 'label' | 'max' | 'value'>
   showOnPause?: boolean
@@ -1263,7 +1265,7 @@ export interface BPopoverProps extends TeleporterProps, ShowHideProps {
   click?: boolean
   closeOnHide?: boolean
   body?: string
-  customClass?: ClassValue
+  bodyClass?: ClassValue
   delay?:
     | number
     | Readonly<{
@@ -1289,6 +1291,7 @@ export interface BPopoverProps extends TeleporterProps, ShowHideProps {
   strategy?: Strategy
   target?: string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | null
   title?: string
+  titleClass?: ClassValue
   tooltip?: boolean
   variant?: ColorVariant | null
 }

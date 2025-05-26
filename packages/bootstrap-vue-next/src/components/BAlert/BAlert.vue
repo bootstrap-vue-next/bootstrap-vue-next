@@ -278,14 +278,3 @@ defineExpose({
   stop,
 })
 </script>
-
-<style lang="scss" scoped>
-.alert :deep(.progress .progress-bar) {
-  --bs-progress-bar-transition: none;
-}
-
-.btn-close-custom {
-  margin-bottom: auto;
-  position: relative;
-}
-</style>
