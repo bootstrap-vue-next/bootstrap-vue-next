@@ -30,7 +30,7 @@
         <slot name="tabs-start" />
         <li
           v-for="(tab, idx) in tabs"
-          :key="tab.id"
+          :key="tab.id ?? tab.internalId"
           class="nav-item"
           :class="tab.titleItemClass"
           role="presentation"
@@ -342,7 +342,7 @@ watch(activeIndex, (newValue, oldValue) => {
     return
   }
   const tabEvent = new BvEvent('activate-tab', {cancelable: true})
-  emit('activate-tab', index, activeIndex.value, tabEvent)
+  emit('activate-tab', index, previousIndex ?? oldValue, tabEvent)
   if (tabEvent.defaultPrevented) {
     activeIndex.value = previousIndex ?? nextIndex(0, 1)
     previousIndex = undefined

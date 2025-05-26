@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject, nextTick, onUnmounted, ref, useAttrs, useTemplateRef, watch} from 'vue'
+import {computed, inject, onUnmounted, ref, useAttrs, useTemplateRef, watch} from 'vue'
 import {useId} from '../../composables/useId'
 import {useDefaults} from '../../composables/useDefaults'
 import type {TabType} from '../../types/Tab'
@@ -137,9 +137,8 @@ watch(isActive, (active) => {
 
 watch(activeModel, (active) => {
   if (props.disabled) {
-    nextTick(() => {
-      activeModel.value = false
-    })
+    console.log('disabled', active)
+    activeModel.value = false
     return
   }
   if (!parentData) return
