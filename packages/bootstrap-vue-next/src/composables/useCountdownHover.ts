@@ -13,7 +13,7 @@ export const useCountdownHover = (
     /**
      * Countdown/hover rules don't apply to static model-values (boolean)
      */
-    modelValueIgnoresHover: MaybeRefOrGetter<boolean>
+    modelValueIgnoresHover?: MaybeRefOrGetter<boolean>
   },
   actions: {
     pause: () => void
