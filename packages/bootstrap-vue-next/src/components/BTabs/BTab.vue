@@ -14,17 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  computed,
-  inject,
-  nextTick,
-  onUnmounted,
-  ref,
-  toRef,
-  useAttrs,
-  useTemplateRef,
-  watch,
-} from 'vue'
+import {computed, inject, nextTick, onUnmounted, ref, useAttrs, useTemplateRef, watch} from 'vue'
 import {useId} from '../../composables/useId'
 import {useDefaults} from '../../composables/useDefaults'
 import type {TabType} from '../../types/Tab'
@@ -79,7 +69,7 @@ const processedAttrs = computed(() => {
 function updateTab() {
   if (!parentData) return
   parentData.registerTab(
-    toRef(
+    computed(
       () =>
         ({
           internalId: internalId.value,
