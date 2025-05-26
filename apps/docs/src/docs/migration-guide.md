@@ -587,6 +587,12 @@ The `type` prop is deprecated. Use the the `v-b-color-mode` directive or `useCol
 
 See [Show and Hide](#show-and-hide) shared properties.
 
+### BOverlay
+
+<NotYetDocumented type="component"/>
+
+prop `blur` does not work when the prop `bgColor` is defined. It also will not work if the prop `variant` is anything other than `white` or `transparent`. This overcomes a browser change.
+
 ### BPagination
 
 See [Show and Hide](#show-and-hide) shared properties.
