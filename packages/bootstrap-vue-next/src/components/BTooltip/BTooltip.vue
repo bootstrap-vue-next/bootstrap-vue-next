@@ -41,8 +41,7 @@ const _props = withDefaults(defineProps<Omit<BTooltipProps, 'modelValue'>>(), {
   click: undefined,
   teleportDisabled: undefined,
   teleportTo: undefined,
-  content: undefined,
-  customClass: undefined,
+  bodyClass: undefined,
   delay: 0,
   floatingMiddleware: undefined,
   hideMargin: 0,
@@ -67,6 +66,7 @@ const _props = withDefaults(defineProps<Omit<BTooltipProps, 'modelValue'>>(), {
   target: undefined,
   unmountLazy: undefined,
   title: undefined,
+  titleClass: undefined,
   variant: undefined,
   visible: undefined,
 })

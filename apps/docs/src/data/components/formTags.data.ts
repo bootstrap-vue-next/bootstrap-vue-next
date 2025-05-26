@@ -90,6 +90,11 @@ export default {
             description:
               'The message when duplicate tags are detected. Set to an empty string to disable the message',
           },
+          feedbackAriaLive: {
+            type: 'string',
+            default: "'assertive'",
+            description: 'Value to use for the `aria-live` attribute on the feedback text',
+          },
           inputAttrs: {
             type: 'Readonly<AttrsValue>',
             default: undefined,

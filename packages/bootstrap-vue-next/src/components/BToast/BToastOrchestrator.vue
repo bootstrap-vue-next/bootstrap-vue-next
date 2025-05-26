@@ -28,8 +28,7 @@
               :teleport-disabled="true"
               @hide="
                 (e: BvTriggerableEvent) => {
-                  // we resolve close button to false, true otherwise for example link
-                  e.ok = e.trigger !== 'close'
+                  e.ok = e.trigger === 'ok' ? true : e.trigger === 'cancel' ? false : null
 
                   val.onHide?.(e)
                   if (e.defaultPrevented) {
@@ -43,7 +42,7 @@
               "
               @hidden="
                 (e: BvTriggerableEvent) => {
-                  e.ok = e.trigger !== 'close'
+                  e.ok = e.trigger === 'ok' ? true : e.trigger === 'cancel' ? false : null
                   val.onHidden?.(e)
                   if (e.defaultPrevented) {
                     return
@@ -105,18 +104,3 @@ defineExpose({
   ...tools,
 })
 </script>
-
-<style lang="scss">
-.b-list-move,
-.b-list-enter-active,
-.b-list-leave-active {
-  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
-}
-.b-list-enter-from,
-.b-list-leave-to {
-  opacity: 0; // TODO this should be the responsibility of the child
-}
-.b-list-leave-active {
-  position: fixed;
-}
-</style>

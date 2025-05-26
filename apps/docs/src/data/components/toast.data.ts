@@ -82,6 +82,11 @@ export default {
             default: false,
             description: 'When set, hides the close button in the toast header',
           },
+          noProgress: {
+            type: 'boolean',
+            default: false,
+            description: 'When set, hides the progress bar in the toast',
+          },
           progressProps: {
             type: "Omit<BProgressBarProps, 'label' | 'max' | 'value'>",
             default: undefined,

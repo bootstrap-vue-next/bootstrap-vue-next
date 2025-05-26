@@ -3,14 +3,18 @@ import {type MaybeRefOrGetter, type Ref, toValue, watch} from 'vue'
 
 export const useCountdownHover = (
   element: Ref<HTMLElement | null>,
-  props: MaybeRefOrGetter<{
-    noHoverPause?: boolean
-    noResumeOnHoverLeave?: boolean
+  {
+    modelValueIgnoresHover,
+    noHoverPause,
+    noResumeOnHoverLeave,
+  }: {
+    noHoverPause?: MaybeRefOrGetter<boolean>
+    noResumeOnHoverLeave?: MaybeRefOrGetter<boolean>
     /**
      * Countdown/hover rules don't apply to static model-values (boolean)
      */
-    modelValueIgnoresHover: boolean
-  }>,
+    modelValueIgnoresHover?: MaybeRefOrGetter<boolean>
+  },
   actions: {
     pause: () => void
     resume: () => void
@@ -19,16 +23,16 @@ export const useCountdownHover = (
   const isHovering = useElementHover(element)
 
   const onMouseEnter = () => {
-    if (toValue(props).noHoverPause) return
+    if (toValue(noHoverPause)) return
     actions.pause()
   }
   const onMouseLeave = () => {
-    if (toValue(props).noResumeOnHoverLeave) return
+    if (toValue(noResumeOnHoverLeave)) return
     actions.resume()
   }
 
   watch(isHovering, (newValue) => {
-    if (toValue(props).modelValueIgnoresHover) return
+    if (toValue(modelValueIgnoresHover)) return
     if (newValue) {
       onMouseEnter()
       return

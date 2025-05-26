@@ -219,7 +219,7 @@ export const toastPlugin: Plugin = {
       console.warn(
         '[BootstrapVueNext] useToastController: The `show` method is deprecated. Use the `create` method instead.'
       )
-      return create(obj).show()
+      return create(obj)
     }
 
     app.provide(toastPluginKey, {

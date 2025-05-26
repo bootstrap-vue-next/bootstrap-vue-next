@@ -210,11 +210,11 @@ const {
 })
 useCountdownHover(
   element,
-  computed(() => ({
-    noHoverPause: props.noHoverPause || typeof modelValue.value !== 'number',
-    noResumeOnHoverLeave: props.noResumeOnHoverLeave || typeof modelValue.value !== 'number',
-    modelValueIgnoresHover: typeof modelValue.value === 'boolean',
-  })),
+  {
+    noHoverPause: () => props.noHoverPause || typeof modelValue.value !== 'number',
+    noResumeOnHoverLeave: () => props.noResumeOnHoverLeave || typeof modelValue.value !== 'number',
+    modelValueIgnoresHover: () => typeof modelValue.value === 'boolean',
+  },
   {pause, resume}
 )
 
@@ -278,14 +278,3 @@ defineExpose({
   stop,
 })
 </script>
-
-<style lang="scss" scoped>
-.alert :deep(.progress .progress-bar) {
-  --bs-progress-bar-transition: none;
-}
-
-.btn-close-custom {
-  margin-bottom: auto;
-  position: relative;
-}
-</style>
