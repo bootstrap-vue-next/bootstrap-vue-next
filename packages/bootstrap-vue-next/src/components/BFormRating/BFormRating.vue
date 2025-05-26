@@ -10,23 +10,23 @@
     @mouseleave="onMouseLeave"
   >
     <span
-      v-for="starIndex in clampedStars"
+      v-for="(starIndex, index) in clampedStars"
       :key="starIndex"
       class="star"
       @mousemove="onMouseMove($event, starIndex)"
       @click="selectRating(starIndex)"
     >
       <i
-        :class="props.color ? '' : props.variant ? `text-${props.variant}` : ''"
-        :style="{fontSize: size, color: props.color ? props.color : iconColors[starIndex - 1]}"
+        :class="iconColors[index].class"
+        :style="{...iconColors[index].style, fontSize: computedSize}"
       >
-        {{ iconClasses[starIndex - 1] }}
+        {{ iconClasses[index] }}
       </i>
     </span>
     <span
-      v-if="props.showValue || props.ShowValueMax"
+      v-if="props.showValue || props.showValueMax"
       class="rating-value"
-      :style="{fontSize: size, color: '#333', marginLeft: '1rem'}"
+      :style="{fontSize: computedSize, color: '#495057', marginLeft: '1rem'}"
     >
       {{ displayValueText }}
     </span>
@@ -44,16 +44,15 @@ const _props = withDefaults(defineProps<BFormRatingProps>(), {
   variant: '',
   color: '',
   stars: 5,
-  precision: 1,
+  precision: 0,
   iconFull: 'x',
   iconHalf: '',
   iconEmpty: 'o',
   showValue: false,
-  ShowValueMax: false,
-  size: '5rem',
+  showValueMax: false,
+  size: '2rem',
 })
 const props = useDefaults(_props, 'BFormRating')
-
 const modelValue = defineModel<number>({default: 0})
 
 // reflect the event of stars changed to the parent component to display
@@ -62,7 +61,7 @@ const emit = defineEmits<{
 }>()
 const hoverValue = ref<number | null>(null)
 
-// retrieves the current model value, sets it and updates it when clicked????
+// retrieves the current model value, sets it and updates it when clicked
 const localValue = computed({
   get: () => modelValue.value,
   set: (value: number) => {
@@ -72,11 +71,13 @@ const localValue = computed({
 })
 
 // hover over value - changes the state and shows it. otherwise, it shows it's default state (whether it's been selected)
+// Change to only hover the hover star when star is implement
 const displayValue = computed(() =>
   hoverValue.value !== null ? hoverValue.value : localValue.value
 )
 
-// creates an array matching the length of the stars, where each element represents the class for a single star. Returns the full icon if the star is fully filled, or the empty icon if it is not.
+// creates an array matching the length of the stars, where each element represents the class for a single star.
+// Returns the full icon if the star is fully filled, or the empty icon if it is not.
 const iconClasses = computed(() =>
   Array.from({length: clampedStars.value}, (_, i) => {
     const difference = displayValue.value - i
@@ -87,18 +88,48 @@ const iconClasses = computed(() =>
 // Set the minimum amount of star can be render to 3
 const clampedStars = computed(() => Math.max(3, props.stars))
 
+// Set sizing
+const computedSize = computed(() => {
+  if (props.size === 'sm') return '1rem'
+  if (props.size === 'lg') return '3rem'
+  return props.size
+})
+
 // Compute the numeric rating text to display.
-// - If showValueMax is true, render "value/max"
-// - Else if showValue is true, render just "value"
+// Check whether precision is more than 0
+// If so it will rounded to the nearest number of precision 1 = .0, 2 = .00 etc.
+// - If showValueMax is true, render "value/max || rounded value/max"
+// - Else if showValue is true, render just "value || rounded value"
 // - Otherwise render nothing
 const displayValueText = computed(() => {
-  if (props.ShowValueMax) {
-    return `${displayValue.value}/${clampedStars.value}`
+  const decimalValue = props.precision > 0 ? roundedValue.value : displayValue.value
+  if (props.showValueMax) {
+    return `${decimalValue}/${clampedStars.value}`
   }
-  return props.showValue ? `${displayValue.value}` : ''
+  if (props.showValue) {
+    return `${decimalValue}`
+  }
+  return ''
 })
-// optimize code for 1 colors as customization
-const iconColors = computed(() => Array.from({length: clampedStars.value}, () => props.color))
+
+const roundedValue = computed(() => {
+  const val = displayValue.value
+  const factor = 10 ** props.precision
+  return Math.round((val + Number.EPSILON) * factor) / factor
+})
+
+// Determine star class & style: variant → color → default
+const iconColors = computed(() =>
+  Array.from({length: clampedStars.value}, () => {
+    if (props.variant) {
+      return {class: `text-${props.variant}`, style: {}}
+    }
+    if (props.color) {
+      return {class: '', style: {color: props.color}}
+    }
+    return {class: '', style: {}}
+  })
+)
 
 // hover
 function onMouseMove(event: MouseEvent, index: number) {
