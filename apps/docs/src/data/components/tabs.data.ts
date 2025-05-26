@@ -16,11 +16,11 @@ export default {
             description:
               "Use a specific ID for this tab's tab control button. If not provided, one will automatically be generated",
           },
-          lazyOnce: {
+          unmountLazy: {
             type: 'boolean',
             default: undefined,
             description:
-              'When set and lazy is also set, the content will only be rendered once and then cached. Note: This will likely be deprecated in favor of unmount-lazy',
+              'When set and lazy is also set, the content will be unmounted when the tab is not active',
           },
           noBody: {
             type: 'boolean',
@@ -65,10 +65,10 @@ export default {
       sourcePath: '/BTabs/BTabs.vue',
       props: {
         '': {
-          activeId: {
-            type: 'string',
-            default: undefined,
-            description: 'The id of the currently active tab',
+          index: {
+            type: 'number',
+            default: -1,
+            description: 'The index (zero-based) of the currently active tab',
           },
           activeNavItemClass: {
             type: 'ClassValue',
@@ -131,9 +131,9 @@ export default {
             description: 'Lazily render the tab contents when shown',
           },
           modelValue: {
-            type: 'number',
-            default: -1,
-            description: 'Currently visible tab index (zero-based)',
+            type: 'string',
+            default: undefined,
+            description: 'The id of the currently active tab',
           },
           navClass: {
             type: 'ClassValue',

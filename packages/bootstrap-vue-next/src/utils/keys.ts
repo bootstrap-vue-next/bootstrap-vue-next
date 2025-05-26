@@ -62,7 +62,6 @@ export const tabsInjectionKey: InjectionKey<{
   inactiveTabClass: Readonly<Ref<ClassValue>>
   tabClass: Readonly<Ref<ClassValue>>
   activeId: Readonly<Ref<string | undefined>>
-  sortTabs: () => void
 }> = createBvnInjectionKey('tabs')
 
 // BProgress
