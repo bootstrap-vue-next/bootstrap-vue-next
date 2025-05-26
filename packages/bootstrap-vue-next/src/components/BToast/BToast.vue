@@ -216,11 +216,11 @@ const {
 })
 useCountdownHover(
   element,
-  computed(() => ({
-    noHoverPause: props.noHoverPause || typeof modelValue.value !== 'number',
-    noResumeOnHoverLeave: props.noResumeOnHoverLeave || typeof modelValue.value !== 'number',
-    modelValueIgnoresHover: typeof modelValue.value === 'boolean',
-  })),
+  {
+    noHoverPause: () => props.noHoverPause || typeof modelValue.value !== 'number',
+    noResumeOnHoverLeave: () => props.noResumeOnHoverLeave || typeof modelValue.value !== 'number',
+    modelValueIgnoresHover: () => typeof modelValue.value === 'boolean',
+  },
   {pause, resume}
 )
 
