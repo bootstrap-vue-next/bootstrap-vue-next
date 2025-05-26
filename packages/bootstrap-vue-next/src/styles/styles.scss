@@ -68,3 +68,8 @@
 .no-transition {
   transition: none !important;
 }
+
+:root {
+  --bs-modal-zindex: #{$zindex-modal};
+  --bs-toast-max-width: #{$toast-max-width};
+}
