@@ -137,7 +137,6 @@ watch(isActive, (active) => {
 
 watch(activeModel, (active) => {
   if (props.disabled) {
-    console.log('disabled', active)
     activeModel.value = false
     return
   }

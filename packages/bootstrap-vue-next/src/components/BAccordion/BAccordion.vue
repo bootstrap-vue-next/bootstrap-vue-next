@@ -82,9 +82,14 @@ const sortAccordionItems = () => {
   )
   if (modelValue.value) {
     if (Array.isArray(modelValue.value)) {
-      index.value = modelValue.value
+      const next = modelValue.value
         .map((id) => accordionItems.value.findIndex((item) => item.id === id))
-        .filter((index) => index !== -1)
+        .filter((i) => i !== -1)
+
+      if (next.length !== modelValue.value.length) {
+        console.warn('[BAccordion] Unknown item id in v-model:', modelValue.value)
+      }
+      index.value = next
     } else {
       const idx = accordionItems.value.findIndex((item) => item.id === modelValue.value)
       if (idx !== -1) index.value = idx
@@ -246,7 +251,8 @@ provide(accordionInjectionKey, {
       return
     }
     if (Array.isArray(modelValue.value)) {
-      modelValue.value = modelValue.value.filter((item) => item !== id) ?? []
+      const next = modelValue.value.filter((item) => item !== id)
+      modelValue.value = next.length ? next : undefined
     } else {
       if (modelValue.value === id) {
         modelValue.value = undefined
@@ -254,7 +260,7 @@ provide(accordionInjectionKey, {
     }
   },
   registerAccordionItem: (id: string, el: Readonly<ShallowRef<HTMLElement | null>>) => {
-    accordionItems.value.push({id, el})
+    accordionItems.value = [...accordionItems.value, {id, el}]
     if (accordionItems.value.length === itemElementsArray.value.length) {
       sortAccordionItems()
     }

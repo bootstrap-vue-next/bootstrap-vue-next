@@ -68,7 +68,8 @@ export default {
           index: {
             type: 'number',
             default: -1,
-            description: 'The index (zero-based) of the currently active tab',
+            description:
+              'The index (zero-based) of the currently active tab. Id (modelValue) takes priority over index.',
           },
           activeNavItemClass: {
             type: 'ClassValue',

@@ -333,10 +333,18 @@ const nextIndex = (start: number, direction: number) => {
 }
 
 let previousIndex: number | undefined
+let isReverting = false
 watch(activeIndex, (newValue, oldValue) => {
-  if (tabs.value.length <= 0) {
+  if (tabs.value.length <= 0 || tabs.value.filter((t) => !t.disabled).length <= 0) {
     return
   }
+
+  // If we're reverting due to a prevented event, don't process further
+  if (isReverting) {
+    isReverting = false
+    return
+  }
+
   const index = nextIndex(newValue, newValue > oldValue ? 1 : -1)
   if (index !== newValue) {
     previousIndex = oldValue
@@ -353,21 +361,28 @@ watch(activeIndex, (newValue, oldValue) => {
     tabEvent
   )
   if (tabEvent.defaultPrevented) {
-    activeIndex.value = previousIndex ?? oldValue ?? nextIndex(0, 1)
+    isReverting = true
+    const prev = previousIndex ?? oldValue ?? nextIndex(0, 1)
     previousIndex = undefined
-    if (activeId.value !== tabs.value[activeIndex.value]?.id) {
-      activeId.value = tabs.value[activeIndex.value]?.id
+    if (activeId.value !== tabs.value[prev]?.id) {
+      activeId.value = tabs.value[prev]?.id
     }
+    nextTick(() => {
+      if (prev >= 0) {
+        document.getElementById(tabs.value[prev]?.buttonId)?.focus()
+      }
+    })
     return
   }
 
   if (activeId.value !== tabs.value[index]?.id) {
     activeId.value = tabs.value[index]?.id
   }
+  previousIndex = undefined
 })
 
 watch(activeId, (newValue, oldValue) => {
-  if (tabs.value.length <= 0) {
+  if (tabs.value.length <= 0 || tabs.value.filter((t) => !t.disabled).length <= 0) {
     return
   }
   const index = tabs.value.findIndex((t) => t.id === newValue)
