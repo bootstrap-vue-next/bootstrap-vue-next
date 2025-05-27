@@ -618,6 +618,12 @@ The `variant` prop has been deprecated. Use Bootstrap’s color and background u
 popovers instead. See [Popover custom classes and variants](/docs/components/popover#custom-classes-and-variants)
 for details.
 
+The `disabled` prop and
+[Programmatically Disabling](https://bootstrap-vue.org/docs/components/popover#programmatically-disabling-popover) have
+been deprecated along with the `disabled` and `enabled` events. Use `manual=true` to disable BootstraVueNext's setting of
+triggers and disable other ways that your popover can be shown in your code. If you believe that implementing
+full parity with the BootstrapVue feature is useful, please open an issue or propose a pull request.
+
 [Bootstrap's Color and background utilities](https://getbootstrap.com/docs/5.3/helpers/color-background/) instead
 see [our documentation](/docs/components/popover#custom-classes-and-variants) for details.
 
@@ -626,9 +632,6 @@ see [our documentation](/docs/components/popover#custom-classes-and-variants) fo
 The default for `placement` is now `top` rather than `right`
 
 `$root` events are deprecated. See [usePopoverController](/docs/composables/usePopoverController) as an alternative.
-
-<NotYetImplemented/>The `disabled` prop and
-[Programmatically Disabling](https://bootstrap-vue.org/docs/components/popover#programmatically-disabling-popover)
 
 ### BProgressBar
 
