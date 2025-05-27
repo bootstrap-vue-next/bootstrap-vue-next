@@ -117,9 +117,10 @@ export interface BAccordionProps {
   flush?: boolean
   free?: boolean
   id?: string
+  index?: number | number[]
   initialAnimation?: boolean
   lazy?: boolean
-  modelValue?: string
+  modelValue?: string | string[]
   unmountLazy?: boolean
 }
 
