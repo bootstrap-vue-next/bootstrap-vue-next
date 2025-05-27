@@ -217,17 +217,27 @@ export default {
           args: [
             {
               arg: 'v1',
+              type: 'string',
+              description: 'Tab being activated (id)',
+            },
+            {
+              arg: 'v2',
+              type: 'string',
+              description: 'Current active tab (id)',
+            },
+            {
+              arg: 'v3',
               type: 'number',
               description: 'Tab being activated (0-based index)',
             },
             {
-              arg: 'v2',
+              arg: 'v4',
               type: 'number',
               description:
                 'Tab that is currently active (0-based index). Will be -1 if no current active tab',
             },
             {
-              arg: 'v3',
+              arg: 'v5',
               type: 'BvEvent',
               description: 'BvEvent object. Call bvEvent.preventDefault() to cancel',
             },

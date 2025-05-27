@@ -113,7 +113,7 @@ const _props = withDefaults(defineProps<Omit<BTabsProps, 'modelValue' | 'activeI
 const props = useDefaults(_props, 'BTabs')
 
 const emit = defineEmits<{
-  'activate-tab': [v1: number, v2: number, v3: BvEvent]
+  'activate-tab': [v1: string, v2: string, v3: number, v4: number, v5: BvEvent]
   'click': [] // TODO click event is never used
 }>()
 
@@ -304,7 +304,9 @@ const keynav = (e: Event, direction: number) => {
   e.stopPropagation()
   activeIndex.value = nextIndex(activeIndex.value + direction, direction)
   nextTick(() => {
-    document.getElementById(tabs.value[activeIndex.value]?.buttonId)?.focus()
+    if (activeIndex.value >= 0) {
+      document.getElementById(tabs.value[activeIndex.value]?.buttonId)?.focus()
+    }
   })
 }
 
@@ -342,12 +344,23 @@ watch(activeIndex, (newValue, oldValue) => {
     return
   }
   const tabEvent = new BvEvent('activate-tab', {cancelable: true})
-  emit('activate-tab', index, previousIndex ?? oldValue, tabEvent)
+  emit(
+    'activate-tab',
+    tabs.value[index]?.id,
+    tabs.value[previousIndex ?? oldValue]?.id,
+    index,
+    previousIndex ?? oldValue,
+    tabEvent
+  )
   if (tabEvent.defaultPrevented) {
-    activeIndex.value = previousIndex ?? nextIndex(0, 1)
+    activeIndex.value = previousIndex ?? oldValue ?? nextIndex(0, 1)
     previousIndex = undefined
+    if (activeId.value !== tabs.value[activeIndex.value]?.id) {
+      activeId.value = tabs.value[activeIndex.value]?.id
+    }
     return
   }
+
   if (activeId.value !== tabs.value[index]?.id) {
     activeId.value = tabs.value[index]?.id
   }

@@ -86,7 +86,8 @@ const sortAccordionItems = () => {
         .map((id) => accordionItems.value.findIndex((item) => item.id === id))
         .filter((index) => index !== -1)
     } else {
-      index.value = accordionItems.value.findIndex((item) => item.id === modelValue.value)
+      const idx = accordionItems.value.findIndex((item) => item.id === modelValue.value)
+      if (idx !== -1) index.value = idx
     }
   } else if (index.value !== undefined) {
     modelValue.value = Array.isArray(index.value)
@@ -232,10 +233,11 @@ provide(accordionInjectionKey, {
       return
     }
     if (Array.isArray(modelValue.value)) {
-      modelValue.value = [...modelValue.value, id]
+      if (!modelValue.value.includes(id)) {
+        modelValue.value = [...modelValue.value, id]
+      }
     } else {
       modelValue.value = id
-      // index.value = accordionItems.value.findIndex((item) => item.id === id)
     }
   },
   setCloseItem: (id: string) => {
