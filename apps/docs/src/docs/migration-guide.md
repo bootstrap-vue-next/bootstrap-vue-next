@@ -621,8 +621,8 @@ for details.
 
 The `disabled` prop and
 [Programmatically Disabling](https://bootstrap-vue.org/docs/components/popover#programmatically-disabling-popover) have
-been deprecated along with the `disabled` and `enabled` events. Use `manual=true` to disable BootstraVueNext's setting of
-triggers and disable other ways that your popover can be shown in your code. If you believe that implementing
+been deprecated along with the `disabled` and `enabled` events. Use `manual=true` to disable BootstrapVueNext’s automatic
+trigger handling and if your own code shows the popover disable those mechanisms as well. If you believe that implementing
 full parity with the BootstrapVue feature is useful, please open an issue or propose a pull request.
 
 [Bootstrap's Color and background utilities](https://getbootstrap.com/docs/5.3/helpers/color-background/) instead
