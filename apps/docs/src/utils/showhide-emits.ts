@@ -66,4 +66,27 @@ export const showHideEmits: Exclude<ComponentReference['emits'], undefined> = [
     ],
     description: 'Always emits just after component is shown.',
   },
+  {
+    event: 'toggle',
+    description:
+      "Always emits just before the component is toggled via the exposed 'toggle()' function or useToggle composable . Cancelable (as long as component wasn't forcibly hidden)",
+    args: [
+      {
+        arg: 'value',
+        type: 'BvTriggerableEvent',
+        description: 'Call value.preventDefault() to cancel hide',
+      },
+    ],
+  },
+  {
+    event: 'toggle-prevented',
+    args: [
+      {
+        arg: 'value',
+        type: 'BvTriggerableEvent',
+      },
+    ],
+    description:
+      'Emitted when the component tried to toggle, but was prevented from doing so.  This occurs when preventDefault() is called on the event, the user clicks escape and no-close-onbackdrop is set to true, or the user clicks on the backdrop and no-close-onbackdrop is set to true.',
+  },
 ]

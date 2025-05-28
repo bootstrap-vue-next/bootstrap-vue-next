@@ -162,8 +162,7 @@ export default {
           args: [
             {
               arg: 'value',
-              type: 'FocusEvent',
-              description: 'Native focuse event',
+              type: 'BvTriggerableEvent',
             },
           ],
         },
@@ -194,8 +193,7 @@ export default {
           args: [
             {
               arg: 'value',
-              type: 'PointerEvent',
-              description: 'Native pointer event',
+              type: 'BvTriggerableEvent',
             },
           ],
         },
