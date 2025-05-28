@@ -5,7 +5,7 @@
     <BPopover
       target="popover-variant"
       title-class="text-bg-danger"
-      body-class="text-bg-danger"
+      class="text-bg-danger"
       title="Danger!"
       body="Danger variant popover"
     />
