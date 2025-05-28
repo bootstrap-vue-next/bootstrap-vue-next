@@ -83,7 +83,7 @@ utitlities to change the variant of the popover.
 
 <<< DEMO ./demo/PopoverVariant.vue#template{vue-html}
 
-`body-class` and `title-class` is reactive and can be changed while the popover is open.
+`body-class` and `title-class` are reactive and can be changed while the popover is open.
 
 Refer to the [popover directive](/docs/directives/popover) docs on applying custom
 classes to the directive version.

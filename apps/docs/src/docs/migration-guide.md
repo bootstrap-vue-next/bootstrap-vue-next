@@ -66,13 +66,14 @@ We have made an effort to standardize the names and behaviors of props that are 
 and hiding of components and sub-components.
 
 The primary reactive way to control the visibility of a component is generally by use of the `v-model` rather
-than a `visible` as in `BCollapse`, `BModal`, `BToast`.
+than `visible` as in `BCollapse`, `BModal`, `BToast`. Note that `show` and `visible` are still supported for
+specifying the intial visibility of these components.
 
 Rather than using `hide` as a prefix to specify that you don't want a sub-component to be rendered, we've moved to using `no`
 as the prefix. For instant in `BPlaceholder`, `hideHeader` becomes `noHeader`. Similarly we use the 'no' prefix in place
 of 'skip' in places like `BCollapse` where `skipAnimation` becomes `noAnimation`.
 
-The properties and components that are affected by this change are show in the following table:
+The properties and components that are affected by this change are shown in the following table:
 
 <ShowHideProps/>
 
