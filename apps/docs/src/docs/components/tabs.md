@@ -239,10 +239,10 @@ Alternatively, you can listen for the `activate-tab` event, which provides an op
 tab from activating. The `activate-tab` event is emitted with five arguments:
 
 - `newTabId`: The id of the tab that is going to be activated
-- `preTabId`: The id of the currently active tab
+- `prevTabId`: The id of the currently active tab
 - `newTabIndex`: The index of the tab that is going to be activated
 - `prevTabIndex`: The index of the currently active tab
-- `bvEvent`: The `BvEvent` object. Call `bvEvent.preventDefault()` to prevent `newTabIndex` from
+- `event`: The `BvEvent` object. Call `bvEvent.preventDefault()` to prevent `newTabIndex` from
   being activated
 
 For accessibility reasons, when using the `activate-tab` event to prevent a tab from activating, you

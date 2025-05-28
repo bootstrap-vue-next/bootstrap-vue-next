@@ -87,7 +87,9 @@ const sortAccordionItems = () => {
         .filter((i) => i !== -1)
 
       if (next.length !== modelValue.value.length) {
-        console.warn('[BAccordion] Unknown item id in v-model:', modelValue.value)
+        if (import.meta.env.DEV) {
+          console.warn('[BAccordion] Unknown item id in v-model:', modelValue.value)
+        }
       }
       index.value = next
     } else {
@@ -134,7 +136,8 @@ watch(
           index.value = undefined
         })
       }
-    } else if (props.free) {
+    } else {
+      // free mode
       if (Array.isArray(index.value)) {
         const newValue = index.value.map((item) => accordionItems.value[item]?.id)
         if (!areEqual(newValue, modelValue.value)) {
@@ -152,8 +155,6 @@ watch(
           modelValue.value = newValue
         }
       }
-    } else {
-      console.error('index.value is not a valid index', index.value)
     }
   }
 )

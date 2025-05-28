@@ -96,11 +96,6 @@ if (parentData) {
   }
 }
 
-// watch(() => props, () => {
-//   if (!parentData) return
-//   updateTab()
-// })
-
 onUnmounted(() => {
   if (!parentData) return
   parentData.unregisterTab(internalId.value)

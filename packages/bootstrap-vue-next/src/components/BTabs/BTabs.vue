@@ -113,8 +113,13 @@ const _props = withDefaults(defineProps<Omit<BTabsProps, 'modelValue' | 'activeI
 const props = useDefaults(_props, 'BTabs')
 
 const emit = defineEmits<{
-  'activate-tab': [v1: string, v2: string, v3: number, v4: number, v5: BvEvent]
-  'click': [] // TODO click event is never used
+  'activate-tab': [
+    newTabId: string,
+    preTabId: string,
+    newTabIndex: number,
+    prevTabIndex: number,
+    event: BvEvent,
+  ]
 }>()
 
 const slots = defineSlots<{
@@ -148,26 +153,6 @@ const updateTabElementsArray = () => {
   )
 }
 updateTabElementsArray()
-
-let initialized = false
-let updateInitialActiveIndex = false
-let updateInitialActiveId = false
-if (activeIndex.value === -1 && activeId.value) {
-  if (tabsInternal.value.findIndex((t) => t.value.id === activeId.value) !== -1) {
-    activeIndex.value = tabsInternal.value.findIndex((t) => t.value.id === activeId.value)
-  } else {
-    updateInitialActiveIndex = true
-  }
-} else if (activeIndex.value > -1 && !activeId.value) {
-  if (tabsInternal.value[activeIndex.value]?.value?.id) {
-    activeId.value = tabsInternal.value[activeIndex.value]?.value?.id
-  } else {
-    updateInitialActiveId = true
-  }
-} else if (activeIndex.value === -1 && !activeId.value) {
-  activeIndex.value = 0
-  updateInitialActiveId = true
-}
 
 watch(
   () => slots.default?.({}),
@@ -236,6 +221,26 @@ const tabs = computed(() => {
     }
   })
 })
+
+let initialized = false
+let updateInitialActiveIndex = false
+let updateInitialActiveId = false
+if (activeIndex.value === -1 && activeId.value) {
+  if (tabs.value.findIndex((t) => t.id === activeId.value) !== -1) {
+    activeIndex.value = tabs.value.findIndex((t) => t.id === activeId.value)
+  } else {
+    updateInitialActiveIndex = true
+  }
+} else if (activeIndex.value > -1 && !activeId.value) {
+  if (tabs.value[activeIndex.value]?.id) {
+    activeId.value = tabs.value[activeIndex.value]?.id
+  } else {
+    updateInitialActiveId = true
+  }
+} else if (activeIndex.value === -1 && !activeId.value) {
+  activeIndex.value = 0
+  updateInitialActiveId = true
+}
 
 function updateInitialIndexAndId() {
   // we get the computedIds after registering the tabs
@@ -335,6 +340,7 @@ const nextIndex = (start: number, direction: number) => {
 let previousIndex: number | undefined
 let isReverting = false
 watch(activeIndex, (newValue, oldValue) => {
+  // Early exit if there are no tabs or all tabs are disabled
   if (tabs.value.length <= 0 || tabs.value.filter((t) => !t.disabled).length <= 0) {
     return
   }
@@ -344,13 +350,16 @@ watch(activeIndex, (newValue, oldValue) => {
     isReverting = false
     return
   }
-
+  // Calculate the next valid index
   const index = nextIndex(newValue, newValue > oldValue ? 1 : -1)
   if (index !== newValue) {
+    // If the index is not the same as the new value, set the previous index to the old value
+    // this is to prevent the event from being emitted twice
     previousIndex = oldValue
     activeIndex.value = index
     return
   }
+  // Emit the activate-tab event
   const tabEvent = new BvEvent('activate-tab', {cancelable: true})
   emit(
     'activate-tab',
@@ -360,10 +369,13 @@ watch(activeIndex, (newValue, oldValue) => {
     previousIndex ?? oldValue,
     tabEvent
   )
+  // If the event is prevented, revert to the previous index
   if (tabEvent.defaultPrevented) {
     isReverting = true
     const prev = previousIndex ?? oldValue ?? nextIndex(0, 1)
     previousIndex = undefined
+    // Update the active id this will also trigger the activeId watch which will update the activeIndex
+    // this is to make sure we handle case that starts with id change.
     if (activeId.value !== tabs.value[prev]?.id) {
       activeId.value = tabs.value[prev]?.id
     }
@@ -375,6 +387,7 @@ watch(activeIndex, (newValue, oldValue) => {
     return
   }
 
+  // Update the active id
   if (activeId.value !== tabs.value[index]?.id) {
     activeId.value = tabs.value[index]?.id
   }
@@ -386,21 +399,26 @@ watch(activeId, (newValue, oldValue) => {
     return
   }
   const index = tabs.value.findIndex((t) => t.id === newValue)
+  // If the new tab is the same as the current tab, do nothing
+  if (index === activeIndex.value) return
   const oldIndex = tabs.value.findIndex((t) => t.id === oldValue)
+  // If the new tab is disabled, find the next enabled tab
   if (tabs.value[index]?.disabled) {
+    // activeIndex watcher will update the activeId to the next enabled tab
     activeIndex.value = nextIndex(index, index > oldIndex ? 1 : -1)
     return
   }
+  // If the new tab is not found, find the first enabled tab
   if (index === -1) {
+    // activeIndex watcher will update the activeId to the first enabled tab
     activeIndex.value = nextIndex(0, 1)
     nextTick(() => {
       activeId.value = tabs.value[activeIndex.value]?.id
     })
     return
   }
-  const realIndex = nextIndex(index, 1)
-  if (realIndex === activeIndex.value) return
-  activeIndex.value = nextIndex(index, 1)
+  // change to the next tab
+  activeIndex.value = index
 })
 
 const registerTab = (tab: Ref<TabType>) => {

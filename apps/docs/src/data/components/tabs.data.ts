@@ -200,45 +200,51 @@ export default {
           args: [
             {
               arg: 'value',
-              type: 'number',
-              description: 'Tab being activated (0-based index)',
-            },
-            {
-              arg: 'v2',
-              type: 'number',
-              description:
-                'Tab that is currently active (0-based index). Will be -1 if no current active tab',
+              type: 'string',
+              description: 'The id of the currently active tab',
             },
           ],
-          description: 'The active tab has changed',
+          description: 'The active tab has changed. The id of the currently active tab',
+        },
+        {
+          event: 'update:index',
+          args: [
+            {
+              arg: 'value',
+              type: 'number',
+              description: 'The index (zero-based) of the currently active tab',
+            },
+          ],
+          description:
+            'The active tab has changed. The index (zero-based) of the currently active tab',
         },
         {
           description: 'Emitted just before a tab is shown/activated. Cancelable',
           event: 'activate-tab',
           args: [
             {
-              arg: 'v1',
+              arg: 'newTabId',
               type: 'string',
               description: 'Tab being activated (id)',
             },
             {
-              arg: 'v2',
+              arg: 'prevTabId',
               type: 'string',
               description: 'Current active tab (id)',
             },
             {
-              arg: 'v3',
+              arg: 'newTabIndex',
               type: 'number',
               description: 'Tab being activated (0-based index)',
             },
             {
-              arg: 'v4',
+              arg: 'prevTabIndex',
               type: 'number',
               description:
                 'Tab that is currently active (0-based index). Will be -1 if no current active tab',
             },
             {
-              arg: 'v5',
+              arg: 'event',
               type: 'BvEvent',
               description: 'BvEvent object. Call bvEvent.preventDefault() to cancel',
             },
