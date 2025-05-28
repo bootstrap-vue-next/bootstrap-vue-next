@@ -28,6 +28,7 @@ specified via the `target` slot or prop, and can be any of the following:
 The `target` prop may be any of the following:
 
 - A string identifying the ID of the trigger element (or ID of the root element of a component)
+- A string with querySelector. (ie. '#toolbar > div:first-child')
 - A reference (ref) to an `HTMLElement` or an `SVGElement` via a [Template Ref](https://vuejs.org/guide/essentials/template-refs.html)
 - A reference (ref) to a component that has either an `HTMLElement` or `SVGElement` as its root
   element via [Template Ref](https://vuejs.org/guide/essentials/template-refs.html)
@@ -98,7 +99,7 @@ while setting it to false will hide the popover.
 
 <<< DEMO ./demo/PopoverModel.vue
 
-To make the popover shown on initial render, simply set `model-value` on `<BPopover>` to true:
+To make the popover shown on initial render, simply add prop `show` to `<BPopover>`:
 
 <<< DEMO ./demo/PopoverStartOpen.vue#template{vue-html}
 

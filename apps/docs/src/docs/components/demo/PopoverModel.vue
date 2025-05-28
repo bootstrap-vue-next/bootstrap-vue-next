@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-column text-md-center">
     <div class="p-2">
-      <BButton id="popover-button-sync" variant="primary">I have a popover</BButton>
+      <p>Popover is {{ model ? 'visible' : 'hidden' }}</p>
     </div>
 
     <div class="p-2">

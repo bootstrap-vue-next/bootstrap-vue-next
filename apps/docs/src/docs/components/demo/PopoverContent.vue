@@ -5,13 +5,13 @@
     <BPopover
       target="popover-props"
       title="Prop Examples"
-      content="Embedding content using properties is easy"
+      body="Embedding content using properties is easy"
     />
     <BButton id="popover-slots" variant="primary">Using slots</BButton>
     <BPopover target="popover-slots">
       <template #title>Content via Slots</template>
       Embedding content <span class="text-danger">using slots</span> affords you
-      <em>greater <strong>control.</strong></em> and basic HTML support.
+      <em>greater <strong>control.</strong></em> and HTML support.
     </BPopover>
   </div>
   <!-- #endregion template -->

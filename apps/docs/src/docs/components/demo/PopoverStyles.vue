@@ -4,7 +4,7 @@
     <BButton id="popover-style">Button</BButton>
 
     <BPopover
-      :model-value="true"
+      show
       target="popover-style"
       title="Danger!"
       style="

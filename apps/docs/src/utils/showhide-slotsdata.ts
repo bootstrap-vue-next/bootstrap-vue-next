@@ -25,7 +25,7 @@ export const showHideSlotsData: SlotScopeReference[] = [
   {
     prop: 'active',
     type: 'boolean',
-    description: 'Indicates if the component is active (shown)',
+    description: 'Indicates if the component is active (starting show, before/after animations)',
   },
   {
     prop: 'visible',

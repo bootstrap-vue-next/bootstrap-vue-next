@@ -5,8 +5,8 @@
       Hover Me
     </BButton>
 
-    <BButton id="popover-target-1"> Hover Me </BButton>
-    <BPopover target="popover-target-1" placement="top">
+    <BPopover>
+      <template #target> <BButton> Hover Me </BButton></template>
       <template #title>Popover Title</template>
       I am popover <b>component</b> content!
     </BPopover>

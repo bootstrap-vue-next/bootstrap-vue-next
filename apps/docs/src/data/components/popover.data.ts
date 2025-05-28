@@ -54,7 +54,7 @@ export default {
             type: 'boolean',
             default: false,
             description:
-              'Improves positioning for inline reference elements that span over multiple lines (from float-ui).',
+              'Improves positioning for inline reference elements that span over multiple lines (from floating-ui).',
           },
           manual: {
             type: 'boolean',
@@ -91,18 +91,18 @@ export default {
           noninteractive: {
             type: 'boolean',
             default: false,
-            description: 'Changing the hiding behavior of the popover to non-interactive.',
+            description: 'Make popover noninteractive. Interactive popover can be hovered/focused without it closing.',
           },
           offset: {
             type: 'Numberish | null',
             default: null,
-            description: 'Translates the floating element along the specified axes.',
+            description: 'Offset of the popover, how many pixels away from the target the popover is. If null it's translated to the size of the arrow in bootstrap css.',
           },
           realtime: {
             type: 'boolean',
             default: false,
             description:
-              'Whether to update the position of the floating element on every animation frame if required.',
+              'Whether to update the position of the floating element on every animation frame if required. Very cpu intensive, the default is to listen to browser events.',
           },
           reference: {
             type: 'string | ComponentPublicInstance | HTMLElement | null',
