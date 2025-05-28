@@ -91,12 +91,13 @@ export default {
           noninteractive: {
             type: 'boolean',
             default: false,
-            description: 'Make popover noninteractive. Interactive popover can be hovered/focused without it closing.',
+            description:
+              'Make popover noninteractive. Interactive popover can be hovered/focused without it closing.',
           },
           offset: {
             type: 'Numberish | null',
             default: null,
-            description: 'Offset of the popover, how many pixels away from the target the popover is. If null it's translated to the size of the arrow in bootstrap css.',
+            description: `Offset of the popover, how many pixels away from the target the popover is. If null it's translated to the size of the arrow in bootstrap css.`,
           },
           realtime: {
             type: 'boolean',

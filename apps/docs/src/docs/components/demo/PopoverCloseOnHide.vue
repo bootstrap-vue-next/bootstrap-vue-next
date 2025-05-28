@@ -11,7 +11,7 @@
       :close-on-hide="true"
       :delay="{show: 0, hide: 0}"
       :boundary-padding="{top: navHeight}"
-    <BPopover :click="true" :delay="{show: 0, hide: 0}" :boundary-padding="{top: navHeight}">
+    >
       <template #title>Scroll me out of view</template>
       <template #target>
         <BButton>This popover gets hidden by the top nav</BButton>
