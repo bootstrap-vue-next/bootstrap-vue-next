@@ -240,11 +240,43 @@
         </div>
       </BCol>
     </BRow>
+    <BRow class="my-5">
+      <BCol>
+        <div class="d-flex gap-2">
+          <BPopover
+            ref="my-popover"
+            title="Event Examples"
+            body="Show events in the console"
+            @blur="consoleLog('popover', $event)"
+            @pointerleave="consoleLog('popover', $event)"
+            @toggle="consoleLog('popover', $event)"
+          >
+            <template #target>
+              <BButton variant="primary">Popover</BButton>
+            </template>
+          </BPopover>
+          <BTooltip
+            ref="my-tooltip"
+            title="Event Examples"
+            body="Show events in the console"
+            @blur="consoleLog('tooltip', $event)"
+            @pointerleave="consoleLog('tooltip', $event)"
+            @toggle="consoleLog('tooltip', $event)"
+          >
+            <template #target>
+              <BButton variant="primary">Tooltip</BButton>
+            </template>
+          </BTooltip>
+          <BButton variant="secondary" @click="popover?.toggle()">Toggle Popover</BButton>
+          <BButton variant="secondary" @click="tooltip?.toggle()">Toggle Tootlip</BButton>
+        </div>
+      </BCol>
+    </BRow>
   </BContainer>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
+import {ref, useTemplateRef} from 'vue'
 import type {PopoverPlacement} from 'bootstrap-vue-next'
 
 const popoverInput = ref('foo')
@@ -256,6 +288,9 @@ const popoverManualButtonRef = ref(null)
 
 const textValue = ref('test <b onmouseover="alert(\'XSS testing!\')">with html</b>')
 const popoverPlacement = ref<PopoverPlacement>('left')
+
+const popover = useTemplateRef('my-popover')
+const tooltip = useTemplateRef('my-tooltip')
 
 const vari = ref({
   title: 'foo',
