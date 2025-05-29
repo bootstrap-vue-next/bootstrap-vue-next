@@ -149,4 +149,8 @@ function selectRating(starIndex: number) {
   const selectedRating = hoverValue.value ?? starIndex
   localValue.value = selectedRating
 }
+
+defineExpose({
+  hoverValue,
+})
 </script>
