@@ -125,7 +125,10 @@ const blurStyles = computed(() => ({
   ...positionStyles,
   opacity: props.opacity,
   backgroundColor: props.bgColor || undefined,
-  backdropFilter: props.blur ? `blur(${props.blur})` : undefined,
+  backdropFilter:
+    props.blur && !props.bgColor && (props.variant === 'white' || props.variant === 'transparent')
+      ? `blur(${props.blur})`
+      : undefined,
 }))
 
 const spinWrapperStyles = computed(() =>
