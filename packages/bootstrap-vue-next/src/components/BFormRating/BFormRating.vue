@@ -18,7 +18,7 @@
     >
       <i
         :class="iconColors[index].class"
-        :style="{...iconColors[index].style, fontSize: computedSize}"
+        :style="{...iconColors[index].style, fontSize: computedSize, margin: '0 0.75rem'}"
       >
         {{ iconClasses[index] }}
       </i>
@@ -39,7 +39,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import type {BFormRatingProps} from '../../types/ComponentProps'
 
 const _props = withDefaults(defineProps<BFormRatingProps>(), {
-  modelValue: 0,
+  modelValue: undefined,
   readonly: false,
   variant: '',
   color: '',
@@ -50,7 +50,7 @@ const _props = withDefaults(defineProps<BFormRatingProps>(), {
   iconEmpty: 'o',
   showValue: false,
   showValueMax: false,
-  size: '2rem',
+  size: '1.25rem',
 })
 const props = useDefaults(_props, 'BFormRating')
 const modelValue = defineModel<number>({default: 0})
@@ -91,7 +91,7 @@ const clampedStars = computed(() => Math.max(3, props.stars))
 // Set sizing
 const computedSize = computed(() => {
   if (props.size === 'sm') return '1rem'
-  if (props.size === 'lg') return '3rem'
+  if (props.size === 'lg') return '1.75rem'
   return props.size
 })
 
@@ -112,6 +112,9 @@ const displayValueText = computed(() => {
   return ''
 })
 
+// Computes the displayed value rounded to the specified precision.
+// Example: If precision = 1, rounds to 1 decimal place (e.g., 3.1).
+// Uses Number.EPSILON to avoid floating-point rounding errors.
 const roundedValue = computed(() => {
   const val = displayValue.value
   const factor = 10 ** props.precision
@@ -149,8 +152,4 @@ function selectRating(starIndex: number) {
   const selectedRating = hoverValue.value ?? starIndex
   localValue.value = selectedRating
 }
-
-defineExpose({
-  hoverValue,
-})
 </script>
