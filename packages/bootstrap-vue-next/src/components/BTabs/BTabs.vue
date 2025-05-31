@@ -433,16 +433,23 @@ const registerTab = (tab: Ref<TabType>) => {
   } else {
     tabsInternal.value[idx] = tab
   }
-  if (tabsInternal.value.length === tabElementsArray.value.length && !initialized) {
+  if (initialized) {
     sortTabs()
-    updateInitialIndexAndId()
-    initialized = true
   }
 }
 
+nextTick(() => {
+  updateInitialIndexAndId()
+  sortTabs()
+  initialized = true
+})
+
 const sortTabs = () => {
   tabsInternal.value.sort((a, b) => sortSlotElementsByPosition(a.value.el.value, b.value.el.value))
-  if (activeIndex.value !== tabs.value.findIndex((t) => t.id === activeId.value)) {
+  if (
+    activeId.value &&
+    activeIndex.value !== tabs.value.findIndex((t) => t.id === activeId.value)
+  ) {
     activeIndex.value = tabs.value.findIndex((t) => t.id === activeId.value)
   }
 }

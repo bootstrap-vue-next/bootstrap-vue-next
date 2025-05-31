@@ -499,7 +499,7 @@ describe('tabs', () => {
 
   const ChildComp = {
     template: ` 
-    <BTab :title="title">
+    <BTab :title="title" :id="id">
       {{ content }}
     </BTab>`,
     props: {
@@ -508,6 +508,10 @@ describe('tabs', () => {
         default: '',
       },
       content: {
+        type: String,
+        default: '',
+      },
+      id: {
         type: String,
         default: '',
       },
@@ -532,7 +536,7 @@ describe('tabs', () => {
       <ChildComp v-for="tab in tabs" :id="tab.id" :key="tab.title" :title="tab.title" :content="tab.content" />
       <BTab id="i3" :title="'t3'" >c3</BTab>
     </ParentComp>
-    <a href="#" id="add" @click="tabs.unshift({title: 't0', content: 'c0'})">add</a>
+    <a href="#" id="add" @click="tabs.unshift({title: 't0', content: 'c0', id: 'i0'})">add</a>
     <a href="#" id="change" @click="id = 'i3'">change</a>
     <a href="#" id="change2" @click="index = 1">change2</a>
     `,
@@ -543,7 +547,7 @@ describe('tabs', () => {
           {id: 'i2', title: 't2', content: 'c2'},
         ],
         index: 0,
-        id: undefined,
+        id: 'i1',
       }
     },
     components: {
@@ -567,7 +571,6 @@ describe('tabs', () => {
     expect($buttons[2].text()).toBe('t3')
     expect($buttons[2].classes()).not.toContain('active')
   })
-
   it('reactive in v-for and active to stay the same tab', async () => {
     const wrapper = await mount(ComplexComponent, {})
     expect(wrapper.findComponent({name: 'b-tab'}).text()).toBe('c1')
@@ -579,7 +582,6 @@ describe('tabs', () => {
     expect($buttons[1].classes()).toContain('active')
     expect(wrapper.vm.index).toBe(1)
   })
-
   it('active tab follow v-models', async () => {
     const wrapper = await mount(ComplexComponent, {})
     expect(wrapper.findComponent({name: 'b-tab'}).text()).toBe('c1')
