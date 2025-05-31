@@ -4,15 +4,31 @@
       <BTabs card>
         <!-- Render Tabs, supply a unique `key` to each tab -->
         <BTab v-for="i in tabs" :key="'dyn-tab-' + i" :title="'Tab ' + i">
+          <template #title>
+            {{ 'Tab ' + i }}
+            <BButton
+              style="margin-right: -1rem"
+              variant="link"
+              class="link-secondary link-underline link-underline-opacity-0"
+              size="sm"
+              @click.prevent="closeTab(i)"
+              >&times;</BButton
+            >
+          </template>
           Tab contents {{ i }}
-          <BButton size="sm" variant="danger" class="float-right" @click="closeTab(i)">
-            Close tab
-          </BButton>
         </BTab>
 
         <!-- New Tab Button (Using tabs-end slot) -->
         <template #tabs-end>
-          <BNavItem role="presentation" @click.prevent="newTab"><b>+</b></BNavItem>
+          <li class="nav-item ms-auto mt-0 mb-2">
+            <BButton
+              variant="outline-secondary"
+              class="no-underline"
+              role="presentation"
+              @click.prevent="newTab"
+              ><b>+</b></BButton
+            >
+          </li>
         </template>
 
         <!-- Render this if no tabs -->

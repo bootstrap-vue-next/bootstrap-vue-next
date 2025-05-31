@@ -528,7 +528,7 @@ describe('tabs', () => {
 
   const ComplexComponent = {
     template: `
-    <ParentComp v-model="index" v-model:active-id="id">
+    <ParentComp v-model:index="index" v-model="id">
       <ChildComp v-for="tab in tabs" :id="tab.id" :key="tab.title" :title="tab.title" :content="tab.content" />
       <BTab id="i3" :title="'t3'" >c3</BTab>
     </ParentComp>

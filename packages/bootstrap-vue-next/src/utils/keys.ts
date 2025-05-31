@@ -1,4 +1,4 @@
-import type {ComponentInternalInstance, ComputedRef, InjectionKey, Ref} from 'vue'
+import type {ComponentInternalInstance, ComputedRef, InjectionKey, Ref, ShallowRef} from 'vue'
 import type {TabType} from '../types/Tab'
 import type {ClassValue} from '../types/AnyValuedAttributes'
 import type {Numberish, ValidationState} from '../types/CommonTypes'
@@ -55,14 +55,13 @@ export const tabsInjectionKey: InjectionKey<{
   lazy: Readonly<Ref<boolean>>
   card: Readonly<Ref<boolean>>
   noFade: Readonly<Ref<boolean>>
-  registerTab: (tab: Readonly<Ref<TabType>>) => void
+  registerTab: (tab: ComputedRef<TabType>) => void
   unregisterTab: (id: string) => void
   activateTab: (id: string | undefined) => void
   activeTabClass: Readonly<Ref<ClassValue>>
   inactiveTabClass: Readonly<Ref<ClassValue>>
   tabClass: Readonly<Ref<ClassValue>>
   activeId: Readonly<Ref<string | undefined>>
-  sortTabs: () => void
 }> = createBvnInjectionKey('tabs')
 
 // BProgress
@@ -96,12 +95,15 @@ export const avatarGroupInjectionKey: InjectionKey<{
 
 // BAccordion
 export const accordionInjectionKey: InjectionKey<{
-  openItem: Readonly<Ref<string | undefined>>
+  openItem: Readonly<Ref<string | string[] | undefined>>
   free: Readonly<Ref<boolean>>
   initialAnimation: Readonly<Ref<boolean>>
   lazy: Readonly<Ref<boolean>>
   unmountLazy: Readonly<Ref<boolean>>
   setOpenItem: (id: string) => void
+  setCloseItem: (id: string) => void
+  registerAccordionItem: (id: string, el: Readonly<ShallowRef<HTMLElement | null>>) => void
+  unregisterAccordionItem: (id: string) => void
 }> = createBvnInjectionKey('accordion')
 
 // BFormCheckboxGroup
