@@ -556,6 +556,7 @@ describe('tabs', () => {
       BTab,
     },
   }
+
   it('renders in complex structure', async () => {
     const wrapper = await mount(ComplexComponent, {})
     expect(wrapper.findComponent({name: 'b-tab'}).text()).toBe('c1')
@@ -571,6 +572,7 @@ describe('tabs', () => {
     expect($buttons[2].text()).toBe('t3')
     expect($buttons[2].classes()).not.toContain('active')
   })
+
   it('reactive in v-for and active to stay the same tab', async () => {
     const wrapper = await mount(ComplexComponent, {})
     expect(wrapper.findComponent({name: 'b-tab'}).text()).toBe('c1')
@@ -582,6 +584,7 @@ describe('tabs', () => {
     expect($buttons[1].classes()).toContain('active')
     expect(wrapper.vm.index).toBe(1)
   })
+
   it('active tab follow v-models', async () => {
     const wrapper = await mount(ComplexComponent, {})
     expect(wrapper.findComponent({name: 'b-tab'}).text()).toBe('c1')
