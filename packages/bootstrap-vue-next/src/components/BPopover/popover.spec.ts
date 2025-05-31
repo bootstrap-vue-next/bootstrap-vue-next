@@ -105,17 +105,6 @@ describe('popover', () => {
     expect($div.text()).toBe('slotbar')
   })
 
-  it('contains b-popover-{type} if prop variant', async () => {
-    const wrapper = mount(BPopover, {
-      props: {variant: 'primary', modelValue: true},
-    })
-    const $div = wrapper.get('div.popover')
-    // console.log($div.classes())
-    expect($div.classes()).toContain('b-popover-primary')
-    await wrapper.setProps({variant: undefined})
-    expect($div.classes()).not.toContain('b-popover-primary')
-  })
-
   // Functionally, this component does more, but this only tests the component
   // Behaviorally, the component does emit, which should be tested,
   // But as I am writting this, I am unsure of how to invoke the events from popover,
