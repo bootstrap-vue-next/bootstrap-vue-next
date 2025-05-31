@@ -1,5 +1,31 @@
 # Changelog
 
+## [0.30.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.29.4...bootstrapvuenext-v0.30.0) (2025-05-31)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BTabs:** change modelValue to have id, and add v-model:index for the old value
+
+### Features
+
+* **BAccordion:** add model index to control the index of open item/items. If free is true it is an array of open items ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
+* **BAccordion:** modelValue is array id prop free is true ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
+* **BTab:** expose activate and deactivate ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
+* **BTabs:** change modelValue to have id, and add v-model:index for the old value ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
+
+
+### Bug Fixes
+
+* **BAccordion:** modelValue is now undefined if no items open. ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
+* **BAccordion:** reactivity working in v-for ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
+* **BAccordion:** ssr fixes. ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
+* **BTab:** click event is now preventable. ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
+* **BTabs:** fix focus on keyboard navigation ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
+* **BTabs:** fix initial value and some ssr errors ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
+* **BTabs:** posible loop if activate-tab event is prevented. ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
+* **BTabs:** reactivity in v-for fixed ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
+
 ## [0.29.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.29.3...bootstrapvuenext-v0.29.4) (2025-05-31)
 
 
