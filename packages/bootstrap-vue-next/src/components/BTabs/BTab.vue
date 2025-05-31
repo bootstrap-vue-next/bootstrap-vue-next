@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject, onMounted, onUnmounted, ref, useAttrs, useTemplateRef, watch} from 'vue'
+import {computed, inject, onUnmounted, ref, useAttrs, useTemplateRef, watch} from 'vue'
 import {useId} from '../../composables/useId'
 import {useDefaults} from '../../composables/useDefaults'
 import type {TabType} from '../../types/Tab'
@@ -26,7 +26,7 @@ const _props = withDefaults(defineProps<Omit<BTabProps, 'active'>>(), {
   disabled: false,
   id: undefined,
   lazy: undefined,
-  lazyOnce: undefined,
+  unmountLazy: undefined,
   noBody: false,
   tag: 'div',
   title: undefined,
@@ -54,6 +54,7 @@ const activeModel = defineModel<Exclude<BTabProps['active'], undefined>>('active
 const parentData = inject(tabsInjectionKey, null)
 const computedId = useId(() => props.id, 'tabpane')
 const computedButtonId = useId(() => props.buttonId, 'tab')
+const internalId = useId('', 'tab-internal')
 
 const lazyRenderCompleted = ref(false)
 const el = useTemplateRef<HTMLElement>('_el')
@@ -65,52 +66,57 @@ const processedAttrs = computed(() => {
   return tabAttrs
 })
 
-const tab = computed(
-  () =>
-    ({
-      id: computedId.value,
-      buttonId: computedButtonId.value,
-      disabled: props.disabled,
-      title: props.title,
-      titleComponent: slots.title,
-      titleItemClass: () => props.titleItemClass,
-      titleLinkAttrs: () => props.titleLinkAttrs,
-      titleLinkClass: () => props.titleLinkClass,
-      onClick: () => attrs.onClick,
-      el: el.value,
-    }) as TabType
-)
+function updateTab() {
+  if (!parentData) return
+  parentData.registerTab(
+    computed(
+      () =>
+        ({
+          internalId: internalId.value,
+          id: computedId.value,
+          active: activeModel.value,
+          buttonId: computedButtonId.value,
+          disabled: props.disabled,
+          title: props.title,
+          titleComponent: slots.title,
+          titleItemClass: props.titleItemClass,
+          titleLinkAttrs: props.titleLinkAttrs,
+          titleLinkClass: props.titleLinkClass,
+          onClick: attrs.onClick,
+          el,
+        }) as TabType
+    )
+  )
+}
 
 if (parentData) {
-  parentData.registerTab(tab)
+  updateTab()
   if (activeModel.value) {
-    parentData.activateTab(computedId.value)
+    parentData.activateTab(internalId.value)
   }
 }
 
-onMounted(() => {
-  if (!parentData) return
-  parentData.sortTabs()
-})
-
 onUnmounted(() => {
   if (!parentData) return
-  parentData.unregisterTab(computedId.value)
+  parentData.unregisterTab(internalId.value)
 })
 
 const isActive = computed(() => parentData?.activeId.value === computedId.value)
 const show = ref(isActive.value)
 
-const computedLazy = computed(() => !!(parentData?.lazy.value || (props.lazyOnce ?? props.lazy)))
-const computedLazyOnce = computed(() => props.lazyOnce !== undefined)
+const computedLazy = computed(() => !!(parentData?.lazy.value || props.lazy))
 
 const computedActive = computed(() => isActive.value && !props.disabled)
 const showSlot = computed(
   () =>
     computedActive.value ||
     !computedLazy.value ||
-    (computedLazy.value && computedLazyOnce.value && lazyRenderCompleted.value)
+    (computedLazy.value && !props.unmountLazy && lazyRenderCompleted.value)
 )
+
+watch(showSlot, (shown) => {
+  if (shown && !lazyRenderCompleted.value) lazyRenderCompleted.value = true
+})
 
 watch(isActive, (active) => {
   if (active) {
@@ -123,7 +129,12 @@ watch(isActive, (active) => {
   show.value = false
   activeModel.value = false
 })
+
 watch(activeModel, (active) => {
+  if (props.disabled) {
+    activeModel.value = false
+    return
+  }
   if (!parentData) return
   if (!active) {
     if (isActive.value) {
@@ -131,7 +142,9 @@ watch(activeModel, (active) => {
     }
     return
   }
-  parentData.activateTab(computedId.value)
+  if (!isActive.value) {
+    parentData.activateTab(internalId.value)
+  }
 })
 
 const computedClasses = computed(() => [
@@ -145,7 +158,12 @@ const computedClasses = computed(() => [
   parentData?.tabClass.value,
 ])
 
-watch(showSlot, (shown) => {
-  if (shown && !lazyRenderCompleted.value) lazyRenderCompleted.value = true
+defineExpose({
+  activate: () => {
+    activeModel.value = true
+  },
+  deactivate: () => {
+    activeModel.value = false
+  },
 })
 </script>

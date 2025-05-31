@@ -2,7 +2,7 @@
   <div>
     <!-- Tabs with card integration -->
     <BCard no-body>
-      <BTabs v-model="tabIndex" small card>
+      <BTabs v-model:index="tabIndex" small card>
         <BTab title="General">I'm the first fading tab</BTab>
         <BTab title="Edit profile">
           I'm the second tab

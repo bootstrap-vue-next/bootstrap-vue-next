@@ -1,6 +1,6 @@
 <template>
   <BCard no-body>
-    <BTabs v-model="tabIndex" card>
+    <BTabs v-model:index="tabIndex" card>
       <BTab title="Tab 1" :title-link-class="linkClass[0]">Tab contents 1</BTab>
       <BTab title="Tab 2" :title-link-class="linkClass[1]">Tab contents 2</BTab>
       <BTab title="Tab 3" :title-link-class="linkClass[2]">Tab contents 3</BTab>
