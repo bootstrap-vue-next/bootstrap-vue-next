@@ -528,4 +528,29 @@ describe('btablelite', () => {
       expect(wrapper.text()).not.toContain('foobar!')
     })
   })
+  describe('isRowHeader field property', () => {
+    it('sets td/th appropriately based on isRowHeader is true, false, or undefined', async () => {
+      const items = [{isActive: true, age: 40, name: {first: 'Dickerson', last: 'Macdonald'}}]
+      const fields = [
+        {key: 'name.first', label: 'Actions', isRowHeader: true, class: 'first-name'},
+        {key: 'age', label: 'Age', isRowHeader: false, class: 'age'},
+        {key: 'isActive', label: 'Active', isRowHeader: false, class: 'active'},
+      ]
+      const wrapper = mount(BTableLite, {
+        props: {
+          items,
+          fields,
+        },
+      })
+      const $tbody = wrapper.get('tbody')
+      const $tr = $tbody.findAll('tr')
+      const $th = $tr[0].findAll('th')
+      expect($th.length).toBe(1)
+      expect($th[0].text()).toContain('Dickerson')
+      const $td = $tr[0].findAll('td')
+      expect($td.length).toBe(2)
+      expect($td[0].text()).toBe('40')
+      expect($td[1].text()).toBe('true')
+    })
+  })
 })
