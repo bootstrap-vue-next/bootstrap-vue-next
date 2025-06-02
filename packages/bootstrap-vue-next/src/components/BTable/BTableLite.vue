@@ -85,7 +85,7 @@
             @mouseleave="!filterEvent($event) && emit('row-unhovered', item, itemIndex, $event)"
             @mousedown="handleMiddleClick(item, itemIndex, $event)"
           >
-            <Component
+            <component
               :is="getCellComponent(field)"
               v-for="field in computedFields"
               :key="field.key"
@@ -119,7 +119,7 @@
                   {{ formatItem(item, String(field.key), field.formatter) }}
                 </template>
               </slot>
-            </Component>
+            </component>
           </BTr>
 
           <template
