@@ -203,12 +203,6 @@ For more details see:
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/nav.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>

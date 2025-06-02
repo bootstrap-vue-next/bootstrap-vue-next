@@ -281,12 +281,6 @@ e.g. With the same setup as above, call `foo?.value?.element?.focus` to set the 
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/formInput.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>

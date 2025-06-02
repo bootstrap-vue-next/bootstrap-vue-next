@@ -162,12 +162,6 @@ pattern.
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/pagination.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>

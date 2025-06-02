@@ -1043,12 +1043,6 @@ your app handles the various inconsistencies with events.
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/table.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>

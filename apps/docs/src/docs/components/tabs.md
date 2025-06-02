@@ -262,12 +262,6 @@ It is recommended to use the `disabled` attribute on the `<BTab>` component inst
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/tabs.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>
