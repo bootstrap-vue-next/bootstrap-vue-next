@@ -167,8 +167,9 @@ const updateTabElementsArray = () => {
   tabElementsArray.value = (Array.isArray(tabElements) ? tabElements : [tabElements]).filter(
     (tab) => tab.type === BTab
   )
+  // only get the ids once in setup context
   if (initialIds.value.length === 0) {
-    // we need to get the ids of the tabs before they are registered
+    // we need to get the ids of the tabs before they are registered. After that we use the internalId for the tabpane
     initialIds.value = tabElementsArray.value.map((tab) =>
       unref(useId(() => tab.props?.id, 'tabpane'))
     )
