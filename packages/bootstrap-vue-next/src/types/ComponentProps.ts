@@ -117,9 +117,10 @@ export interface BAccordionProps {
   flush?: boolean
   free?: boolean
   id?: string
+  index?: number | number[]
   initialAnimation?: boolean
   lazy?: boolean
-  modelValue?: string
+  modelValue?: string | string[]
   unmountLazy?: boolean
 }
 
@@ -731,7 +732,7 @@ export interface BTabProps {
   disabled?: boolean
   id?: string
   lazy?: boolean
-  lazyOnce?: boolean
+  unmountLazy?: boolean
   noBody?: boolean
   tag?: string
   title?: string
@@ -741,7 +742,6 @@ export interface BTabProps {
 }
 
 export interface BTabsProps {
-  activeId?: string
   activeNavItemClass?: ClassValue
   activeTabClass?: ClassValue
   align?: AlignmentJustifyContent
@@ -750,11 +750,12 @@ export interface BTabsProps {
   end?: boolean
   fill?: boolean
   id?: string
+  index?: number
   inactiveNavItemClass?: ClassValue
   inactiveTabClass?: ClassValue
   justified?: boolean
   lazy?: boolean
-  modelValue?: number
+  modelValue?: string
   navClass?: ClassValue
   navItemClass?: ClassValue
   navWrapperClass?: ClassValue
