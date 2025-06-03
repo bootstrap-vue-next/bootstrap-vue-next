@@ -16,11 +16,11 @@ export default {
             description:
               "Use a specific ID for this tab's tab control button. If not provided, one will automatically be generated",
           },
-          lazyOnce: {
+          unmountLazy: {
             type: 'boolean',
             default: undefined,
             description:
-              'When set and lazy is also set, the content will only be rendered once and then cached. Note: This will likely be deprecated in favor of unmount-lazy',
+              'When set and lazy is also set, the content will be unmounted when the tab is not active',
           },
           noBody: {
             type: 'boolean',
@@ -65,10 +65,11 @@ export default {
       sourcePath: '/BTabs/BTabs.vue',
       props: {
         '': {
-          activeId: {
-            type: 'string',
-            default: undefined,
-            description: 'The id of the currently active tab',
+          index: {
+            type: 'number',
+            default: -1,
+            description:
+              'The index (zero-based) of the currently active tab. Id (modelValue) takes priority over index.',
           },
           activeNavItemClass: {
             type: 'ClassValue',
@@ -131,9 +132,9 @@ export default {
             description: 'Lazily render the tab contents when shown',
           },
           modelValue: {
-            type: 'number',
-            default: -1,
-            description: 'Currently visible tab index (zero-based)',
+            type: 'string',
+            default: undefined,
+            description: 'The id of the currently active tab',
           },
           navClass: {
             type: 'ClassValue',
@@ -199,35 +200,51 @@ export default {
           args: [
             {
               arg: 'value',
-              type: 'number',
-              description: 'Tab being activated (0-based index)',
-            },
-            {
-              arg: 'v2',
-              type: 'number',
-              description:
-                'Tab that is currently active (0-based index). Will be -1 if no current active tab',
+              type: 'string',
+              description: 'The id of the currently active tab',
             },
           ],
-          description: 'The active tab has changed',
+          description: 'The active tab has changed. The id of the currently active tab',
+        },
+        {
+          event: 'update:index',
+          args: [
+            {
+              arg: 'value',
+              type: 'number',
+              description: 'The index (zero-based) of the currently active tab',
+            },
+          ],
+          description:
+            'The active tab has changed. The index (zero-based) of the currently active tab',
         },
         {
           description: 'Emitted just before a tab is shown/activated. Cancelable',
           event: 'activate-tab',
           args: [
             {
-              arg: 'v1',
+              arg: 'newTabId',
+              type: 'string',
+              description: 'Tab being activated (id)',
+            },
+            {
+              arg: 'prevTabId',
+              type: 'string',
+              description: 'Current active tab (id)',
+            },
+            {
+              arg: 'newTabIndex',
               type: 'number',
               description: 'Tab being activated (0-based index)',
             },
             {
-              arg: 'v2',
+              arg: 'prevTabIndex',
               type: 'number',
               description:
                 'Tab that is currently active (0-based index). Will be -1 if no current active tab',
             },
             {
-              arg: 'v3',
+              arg: 'event',
               type: 'BvEvent',
               description: 'BvEvent object. Call bvEvent.preventDefault() to cancel',
             },
