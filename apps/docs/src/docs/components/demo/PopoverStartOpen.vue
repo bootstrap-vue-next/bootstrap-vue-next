@@ -1,8 +1,9 @@
 <template>
   <div class="text-center">
-    <BButton id="popover-button-open" variant="primary">Button</BButton>
-
-    <BPopover show target="popover-button-open" title="Popover">
+    <BPopover show title="Popover">
+      <template #target>
+        <BButton variant="primary">Button</BButton>
+      </template>
       I start <strong>open</strong>
     </BPopover>
   </div>

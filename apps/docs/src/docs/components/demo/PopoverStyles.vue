@@ -1,11 +1,8 @@
 <template>
   <!-- #region template -->
   <div class="d-flex gap-2">
-    <BButton id="popover-style">Button</BButton>
-
     <BPopover
       show
-      target="popover-style"
       title="Danger!"
       style="
         --bs-popover-header-bg: var(--bs-danger);
@@ -13,6 +10,9 @@
         --bs-popover-border-color: var(--bs-emphasis-color);
       "
     >
+      <template #target>
+        <BButton>Button</BButton>
+      </template>
       This is <strong>important</strong>
     </BPopover>
   </div>

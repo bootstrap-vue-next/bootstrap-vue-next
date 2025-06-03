@@ -8,7 +8,13 @@
     <BPopover>
       <template #target> <BButton> Hover Me </BButton></template>
       <template #title>Popover Title</template>
-      I am popover <b>component</b> content!
+      I am popover <b>component</b> content using the <b>#target</b> slot!
+    </BPopover>
+
+    <BButton id="overview-popover"> Hover Me </BButton>
+    <BPopover target="overview-popover">
+      <template #title>Popover Title</template>
+      I am popover <b>component</b> content using the <b>target</b> prop!
     </BPopover>
   </div>
   <!-- #endregion template -->
