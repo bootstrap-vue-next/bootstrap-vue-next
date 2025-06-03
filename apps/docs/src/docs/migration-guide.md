@@ -625,9 +625,6 @@ been deprecated along with the `disabled` and `enabled` events. Use `manual=true
 trigger handling and if your own code shows the popover disable those mechanisms as well. If you believe that implementing
 full parity with the BootstrapVue feature is useful, please open an issue or propose a pull request.
 
-The `variant` prop is deprecated [Bootstrap's Color and background utilities](https://getbootstrap.com/docs/5.3/helpers/color-background/) instead
-see [our documentation](/docs/components/popover#custom-classes-and-variants) for details.
-
 `delay` now defaults to 100ms for show and 300ms for hide rather than 50ms for both
 
 The default for `placement` is now `top` rather than `right`
