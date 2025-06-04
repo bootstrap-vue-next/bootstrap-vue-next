@@ -60,6 +60,7 @@ import {isEmptySlot} from '../../utils/dom'
 import {useNumberishToStyle} from '../../composables/useNumberishToStyle'
 import {useRadiusElementClasses} from '../../composables/useRadiusElementClasses'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import {useRtl} from '../../composables/useRtl'
 import type {Size} from '../../types'
 
 const props = withDefaults(defineProps<BAvatarProps>(), {
@@ -136,6 +137,7 @@ const slots = defineSlots<{
 const {computedLink, computedLinkProps} = useBLinkHelper(props)
 
 const parentData = inject(avatarGroupInjectionKey, null)
+const {isRtl} = useRtl()
 
 const SIZES = Object.freeze([
   null,
@@ -221,6 +223,7 @@ const textFontStyle = computed<StyleValue>(() => {
 const badgeOffsetStyle = computed<StyleValue>(() => {
   const offset = props.badgeOffset
   const placement = props.badgePlacement
+  const rtlEnabled = isRtl?.value ?? false
 
   let x = `-50%`
   let y = `-50%`
@@ -232,9 +235,13 @@ const badgeOffsetStyle = computed<StyleValue>(() => {
   }
 
   if (placement.includes('end')) {
-    x = `calc(-50% - ${offset})`
+    // In LTR: “end” = push left  (calc(-50% - offset))
+    // In RTL: “end” = push right (calc(-50% + offset))
+    x = rtlEnabled ? `calc(-50% + ${offset})` : `calc(-50% - ${offset})`
   } else if (placement.includes('start')) {
-    x = `calc(-50% + ${offset})`
+    // In LTR: “start” = push right (calc(-50% + offset))
+    // In RTL: “start” = push left  (calc(-50% - offset))
+    x = rtlEnabled ? `calc(-50% - ${offset})` : `calc(-50% + ${offset})`
   }
 
   return {
