@@ -38,9 +38,9 @@ const mappedComponents: ComponentMap = {
 const migrationMap: MigrationMap = {
   initialAnimation: {
     oldProp: 'appear',
-    components: ['BAccordian', 'BAccordianItem', 'showHideProps'],
+    components: ['BAccordion', 'BAccordionItem', 'showHideProps'],
   },
-  lazy: {oldProp: 'lazy', components: ['BAccordian', 'BAccordianItem', 'showHideProps']},
+  lazy: {oldProp: 'lazy', components: ['BAccordion', 'BAccordionItem', 'showHideProps']},
   modelValue: {oldProp: 'visible', components: ['showHideProps']},
   noAnimation: {oldProp: 'skip-animation', components: ['showHideProps']},
   noFade: {oldProp: 'skip-animation', components: ['showHideProps']},
@@ -58,7 +58,7 @@ const migrationMap: MigrationMap = {
   transProps: {oldProp: '', components: ['showHideProps']},
   unmountLazy: {
     oldProp: 'lazy',
-    components: ['BAccordian', 'BAccordianItem', 'showHideProps'],
+    components: ['BAccordion', 'BAccordionItem', 'showHideProps'],
   },
   visible: {oldProp: 'visible', components: ['showHideProps']},
 }

@@ -86,13 +86,13 @@
         </div>
       </template>
       <BProgress
-        v-if="typeof modelValue === 'number' && props.progressProps !== undefined"
-        :animated="props.progressProps.animated"
-        :precision="props.progressProps.precision"
-        :show-progress="props.progressProps.showProgress"
-        :show-value="props.progressProps.showValue"
-        :striped="props.progressProps.striped"
-        :variant="props.progressProps.variant"
+        v-if="typeof modelValue === 'number' && !props.noProgress"
+        :animated="props.progressProps?.animated"
+        :precision="props.progressProps?.precision"
+        :show-progress="props.progressProps?.showProgress"
+        :show-value="props.progressProps?.showValue"
+        :striped="props.progressProps?.striped"
+        :variant="props.progressProps?.variant"
         :max="modelValue"
         :value="remainingMs"
         height="4px"
@@ -135,6 +135,7 @@ const _props = withDefaults(defineProps<Omit<BToastProps, 'modelValue'>>(), {
   noCloseButton: false,
   noFade: false,
   noHoverPause: false,
+  noProgress: false,
   noResumeOnHoverLeave: false,
   progressProps: undefined,
   unmountLazy: false,
@@ -215,11 +216,11 @@ const {
 })
 useCountdownHover(
   element,
-  computed(() => ({
-    noHoverPause: props.noHoverPause || typeof modelValue.value !== 'number',
-    noResumeOnHoverLeave: props.noResumeOnHoverLeave || typeof modelValue.value !== 'number',
-    modelValueIgnoresHover: typeof modelValue.value === 'boolean',
-  })),
+  {
+    noHoverPause: () => props.noHoverPause || typeof modelValue.value !== 'number',
+    noResumeOnHoverLeave: () => props.noResumeOnHoverLeave || typeof modelValue.value !== 'number',
+    modelValueIgnoresHover: () => typeof modelValue.value === 'boolean',
+  },
   {pause, resume}
 )
 
@@ -243,7 +244,7 @@ const computedClasses = computed(() => [
 ])
 
 watch(modelValue, (newValue) => {
-  if (typeof newValue === 'number') {
+  if (typeof newValue === 'number' && newValue > 0) {
     const event = buildTriggerableEvent('show', {cancelable: true, trigger: 'model'})
     emit('show', event)
     if (event.defaultPrevented) {
@@ -281,18 +282,3 @@ defineExpose({
   stop,
 })
 </script>
-
-<style lang="scss" scoped>
-.toast :deep(.progress .progress-bar) {
-  --bs-progress-bar-transition: none;
-}
-.toast:not(.show) {
-  opacity: unset;
-}
-.toast.fade:not(.show) {
-  opacity: 0;
-}
-.btn-close-custom {
-  margin: var(--bs-toast-padding-x) var(--bs-toast-padding-x) auto;
-}
-</style>

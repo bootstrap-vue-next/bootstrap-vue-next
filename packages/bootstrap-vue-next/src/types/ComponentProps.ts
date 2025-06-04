@@ -6,7 +6,7 @@ import type {
   RootBoundary,
   Strategy,
 } from '@floating-ui/vue'
-import type {ComponentPublicInstance, TransitionProps} from 'vue'
+import type {AriaAttributes, ComponentPublicInstance, TransitionProps} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {LinkTarget} from './LinkTarget'
 import type {
@@ -117,9 +117,10 @@ export interface BAccordionProps {
   flush?: boolean
   free?: boolean
   id?: string
+  index?: number | number[]
   initialAnimation?: boolean
   lazy?: boolean
-  modelValue?: string
+  modelValue?: string | string[]
   unmountLazy?: boolean
 }
 
@@ -435,6 +436,7 @@ export interface BFormTagsProps {
   autofocus?: boolean
   disabled?: boolean
   duplicateTagText?: string
+  feedbackAriaLive?: AriaAttributes['aria-live']
   form?: string
   inputAttrs?: Readonly<AttrsValue>
   inputClass?: ClassValue
@@ -716,7 +718,7 @@ export interface BTabProps {
   disabled?: boolean
   id?: string
   lazy?: boolean
-  lazyOnce?: boolean
+  unmountLazy?: boolean
   noBody?: boolean
   tag?: string
   title?: string
@@ -726,7 +728,6 @@ export interface BTabProps {
 }
 
 export interface BTabsProps {
-  activeId?: string
   activeNavItemClass?: ClassValue
   activeTabClass?: ClassValue
   align?: AlignmentJustifyContent
@@ -735,11 +736,12 @@ export interface BTabsProps {
   end?: boolean
   fill?: boolean
   id?: string
+  index?: number
   inactiveNavItemClass?: ClassValue
   inactiveTabClass?: ClassValue
   justified?: boolean
   lazy?: boolean
-  modelValue?: number
+  modelValue?: string
   navClass?: ClassValue
   navItemClass?: ClassValue
   navWrapperClass?: ClassValue
@@ -1250,6 +1252,7 @@ export interface BToastProps
   modelValue?: boolean | number
   noCloseButton?: boolean
   noHoverPause?: boolean
+  noProgress?: boolean
   noResumeOnHoverLeave?: boolean
   progressProps?: Omit<BProgressBarProps, 'label' | 'max' | 'value'>
   showOnPause?: boolean
@@ -1264,7 +1267,7 @@ export interface BPopoverProps extends TeleporterProps, ShowHideProps {
   click?: boolean
   closeOnHide?: boolean
   body?: string
-  customClass?: ClassValue
+  bodyClass?: ClassValue
   delay?:
     | number
     | Readonly<{
@@ -1290,6 +1293,7 @@ export interface BPopoverProps extends TeleporterProps, ShowHideProps {
   strategy?: Strategy
   target?: string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | null
   title?: string
+  titleClass?: ClassValue
   tooltip?: boolean
   variant?: ColorVariant | null
 }

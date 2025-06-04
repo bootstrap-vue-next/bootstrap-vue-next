@@ -95,7 +95,7 @@ Control the opacity of the backdrop via the `opacity` prop (opacity values can r
       </div>
       {{ opacity.toFixed(2) }}
       <div>
-        <label for="bg-blur">Blur</label>
+        <label for="bg-blur">Blur (does not work if variant is anything other than 'transparent' or 'white' or if bgColor is defined)</label>
         <BFormSelect id="bg-blur" v-model="blur" :options="blurs" />
       </div>
     </div>
@@ -144,7 +144,10 @@ Control the opacity of the backdrop via the `opacity` prop (opacity values can r
       {{ opacity.toFixed(2) }}
 
       <div>
-        <label for="bg-blur">Blur</label>
+        <label for="bg-blur"
+          >Blur (does not work if variant is anything other than 'transparent' or 'white' or if
+          bgColor is defined)</label
+        >
         <BFormSelect id="bg-blur" v-model="blur" :options="blurs" />
       </div>
     </div>
@@ -183,10 +186,10 @@ const variants = [
   'danger',
   'warning',
   'info',
-]
+] as const
 const blurs = [{text: 'None', value: ''}, '1px', '2px', '5px', '0.5em', '1rem']
 
-const variant = ref('light')
+const variant = ref<(typeof variants)[number]>('light')
 const opacity = ref(0.85)
 const blur = ref('2px')
 </script>
@@ -934,7 +937,6 @@ import {ref, nextTick} from 'vue';
 const showOverlayEx1 = ref(false)
 const showRoundedEx = ref(false)
 
-const variant = ref('light')
 const opacity = ref(0.85)
 const blur = ref('2px')
 const variants = [
@@ -948,7 +950,8 @@ const variants = [
   'danger',
   'warning',
   'info',
-]
+] as const
+const variant = ref('light')
 const blurs = [
   { text: 'None', value: '' },
   '1px',

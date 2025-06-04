@@ -174,6 +174,10 @@ Feel free to mix vertically `centered` with `scrollable`.
   </BModal>
   <BModal v-model="nestedModal3" size="sm" title="Third Modal" ok-only>
     <p class="my-1">Third Modal</p>
+    <BButton @click="nestedModal4 = !nestedModal4" size="sm">Open Fouth Modal</BButton>
+  </BModal>
+  <BModal v-model="nestedModal4" size="sm" title="Fourth Modal" ok-only>
+    <p class="my-1">Fourth Modal</p>
   </BModal>
   <template #html>
 
@@ -193,6 +197,10 @@ Feel free to mix vertically `centered` with `scrollable`.
 
   <BModal v-model="nestedModal3" size="sm" title="Third Modal" ok-only>
     <p class="my-1">Third Modal</p>
+    <BButton @click="nestedModal4 = !nestedModal4" size="sm">Open Fouth Modal</BButton>
+  </BModal>
+  <BModal v-model="nestedModal4" size="sm" title="Fourth Modal" ok-only>
+    <p class="my-1">Fourth Modal</p>
   </BModal>
 </template>
 
@@ -200,7 +208,27 @@ Feel free to mix vertically `centered` with `scrollable`.
 const nestedModal1 = ref(false)
 const nestedModal2 = ref(false)
 const nestedModal3 = ref(false)
+const nestedModal4 = ref(false)
 </script>
+<style>
+/* just a little example of the variables and classes for stack */
+.modal {
+  --bs-modal-zindex: 1900;
+  transform: translate(
+    calc((var(--b-count, 0) - var(--b-position, 0)) * 20px),
+    calc((var(--b-count, 0) - var(--b-position, 0)) * 20px)
+  );
+  transition:
+    transform 0.5s,
+    opacity 0.15s linear !important;
+}
+.modal:not(.stack-inverse-position-0) {
+  opacity: calc(1 - ((var(--b-count, 0) - var(--b-position, 0)) * 0.1));
+}
+.modal-backdrop:not(.stack-inverse-position-0) {
+  opacity: 0 !important;
+}
+</style>
 ```
 
   </template>
@@ -240,4 +268,22 @@ const preventFn = (e: Event) => {
 const nestedModal1 = ref(false)
 const nestedModal2 = ref(false)
 const nestedModal3 = ref(false)
+const nestedModal4 = ref(false)
 </script>
+
+<style>
+.modal {
+  --bs-modal-zindex: 1900;
+  transform: translate(
+    calc((var(--b-count, 0) - var(--b-position, 0)) * 20px),
+    calc((var(--b-count, 0) - var(--b-position, 0)) * 20px)
+  );
+  transition: transform 0.5s, opacity 0.15s linear !important;
+}
+.modal:not(.stack-inverse-position-0) {
+  opacity: calc(1 - ((var(--b-count, 0) - var(--b-position, 0)) * 0.1));
+}
+.modal-backdrop:not(.stack-inverse-position-0) {
+  opacity: 0 !important;
+}
+</style>

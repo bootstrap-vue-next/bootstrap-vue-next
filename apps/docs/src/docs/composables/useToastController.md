@@ -36,16 +36,16 @@ In addition, it contains a few exposed methods. These exposed methods on the `te
 Showing a toast is done through the show method
 
 <HighlightCard>
-  <BButton @click="show({  title: 'Hello', body: 'World'  })">Show</BButton>
+  <BButton @click="create({ title: 'Hello', body: 'World'  })">Show</BButton>
   <template #html>
 
 ```vue
 <template>
-  <BButton @click="show({title: 'Hello', body: 'World'})">Show</BButton>
+  <BButton @click="create({title: 'Hello', body: 'World'})">Show</BButton>
 </template>
 
 <script setup lang="ts">
-const {show} = useToastController()
+const {create} = useToastController()
 </script>
 ```
 
@@ -74,7 +74,7 @@ The props property corresponds to mostly that of the `BToast` components props. 
 </template>
 
 <script setup lang="ts">
-const {show} = useToastController()
+const {create} = useToastController()
 
 const firstRef = ref<OrchestratedToast>({
   body: `${Math.random()}`,
@@ -86,7 +86,7 @@ onMounted(() => {
 })
 
 const showMe = () => {
-  show(
+  create(
     computed(() => ({
       ...firstRef.value,
       variant: (Number.parseInt(firstRef.value.body?.charAt(2) ?? '0') % 2 === 0
@@ -117,7 +117,7 @@ Using props can work for most situations, but it leaves some finer control to be
 <script setup lang="ts">
 import {BToast} from 'bootstrap-vue-next'
 
-const {show} = useToastController()
+const {create} = useToastController()
 
 const firstRef = ref<OrchestratedToast>({
   body: `${Math.random()}`,
@@ -130,13 +130,13 @@ onMounted(() => {
 })
 
 const showMe = () => {
-  show({
+  create({
     body: firstRef.value.body,
     slots: {default: () => h('div', null, {default: () => `custom! ${firstRef.value.body}`})},
   })
   // Demonstration psuedocode, you can also import a component and use it
   // const importedComponent () => {
-  //   show({
+  //   create({
   //     component: import('./MyToastComponent.vue'),
   //   })
   // }
@@ -149,7 +149,7 @@ const showMe = () => {
 
 ## Programmatically Hiding a Toast
 
-Hiding a `Toast` programmatically is very simple. Simply use the return value from the show method, and pass it into the `remove` function
+Hiding a `Toast` programmatically is very simple. `create` return an object that has functions to control the toast, including `destroy`
 
 <HighlightCard>
   <BButtonGroup>
@@ -171,27 +171,74 @@ Hiding a `Toast` programmatically is very simple. Simply use the return value fr
 </template>
 
 <script setup lang="ts">
-const {show, remove} = useToastController()
+const {create} = useToastController()
 
-let showValue: undefined | string
+let toast: undefined | ReturnType<typeof create>
 
 const showMe = () => {
-  if (showValue !== undefined) return
-  // `show` returns a symbol
-  showValue = 'toast1'
-  show({
+  if (toast !== undefined) return
+  // `create` returns a symbol
+  toast = create({
     title: 'Showing',
     value: true,
     variant: 'success',
     position: 'bottom-center',
-    id: showValue,
   })
 }
 
 const hideMe = () => {
-  if (showValue === undefined) return
-  remove?.(showValue)
-  showValue = undefined
+  if (toast === undefined) return
+  toast.destroy()
+}
+</script>
+```
+
+  </template>
+
+</HighlightCard>
+
+## Using promises
+
+Hiding a `Toast` with promise
+
+<HighlightCard>
+  <BButtonGroup>
+    <BButton @click="promiseToast" variant="success">
+      Show the Toast
+    </BButton>
+  </BButtonGroup>
+  <template #html>
+
+```vue
+<template>
+  <BButtonGroup>
+    <BButton @click="promiseToast" variant="success"> Show the Toast </BButton>
+  </BButtonGroup>
+</template>
+
+<script setup lang="ts">
+const {create} = useToastController()
+const promiseToast = () => {
+  create(
+    {
+      variant: 'primary',
+      position: 'middle-center',
+      bodyClass: 'w-100',
+      modelValue: true,
+      slots: {
+        default: ({hide}) => [
+          h('h2', {class: 'text-center mb-3'}, 'Ready?'),
+          h('div', {class: 'd-flex justify-content-center gap-2'}, [
+            h(BButton, {onClick: () => hide('ok'), size: 'lg'}, () => 'Yes'),
+            h(BButton, {onClick: () => hide('cancel'), size: 'lg'}, () => 'No'),
+          ]),
+        ],
+      },
+    },
+    {resolveOnHide: true}
+  ).then((r) => {
+    create({title: 'you pressed: ' + (r.ok ? 'yes' : 'no')})
+  })
 }
 </script>
 ```
@@ -209,20 +256,19 @@ import UsePluginAlert from '../../components/UsePluginAlert.vue'
 import {ref, computed, h, onMounted} from 'vue'
 import ComposableHeader from './ComposableHeader.vue'
 
-const {show, remove, toasts} = useToastController()
+const {create, remove, toasts} = useToastController()
 
-let showValue: undefined | string
+let toast: undefined | ReturnType<typeof create>
 
 const showMe = () => {
-  if (showValue !== undefined) return
-  showValue = 'toast-1'
-  show({ title: 'Showing',  variant: 'success', position: 'bottom-center', id: showValue } )
+  if (toast !== undefined) return
+  toast = create({ title: 'Showing',  variant: 'success', position: 'bottom-center' } )
 }
 
 const hideMe = () => {
-  if (showValue === undefined) return
-  remove(showValue)
-  showValue = undefined
+  if (toast === undefined) return
+  toast.destroy()
+  toast = undefined
 }
 
 const firstRef = ref<OrchestratedToast>({
@@ -236,7 +282,7 @@ onMounted(() => {
 })
 
 const showReactiveExample = () => {
-  show(
+  create(
     computed(() => ({
       ...firstRef.value,
       variant: (Number.parseInt(firstRef.value.body?.charAt(2) ?? '0') % 2 === 0
@@ -247,11 +293,35 @@ const showReactiveExample = () => {
 }
 
 const showMeAdvancedExample = () => {
-  show({
+  create({
     body: firstRef.value.body,
     position: 'bottom-center',
     slots: {default: () => h('div', null, {default: () => `custom! ${firstRef.value.body}`})},
   })
 }
 
+
+const promiseToast = () => {
+  create(
+    {
+      variant: 'primary',
+      position: 'middle-center',
+      bodyClass: 'w-100',
+      modelValue: true,
+      slots: {
+        default: ({hide}) =>
+          [ 
+            h('h2', {class: 'text-center mb-3'}, 'Ready?'), 
+            h('div', {class: 'd-flex justify-content-center gap-2'}, [
+              h(BButton, {onClick: () => hide('ok'), size: 'lg'}, () => 'Yes'), 
+              h(BButton, {onClick: () => hide('cancel'), size: 'lg'}, () => 'No')
+            ])
+          ],
+      },
+    },
+    {resolveOnHide: true}
+  ).then((r) => {
+    create({title: 'you pressed: ' + (r.ok ? 'yes' : 'no')})
+  })
+}
 </script>

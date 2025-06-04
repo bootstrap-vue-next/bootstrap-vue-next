@@ -20,6 +20,16 @@ export default {
             default: false,
             description: 'Accordion items will stay open when another item is opened',
           },
+          index: {
+            type: 'number | number[]',
+            default: undefined,
+            description: 'Index of the accordion item that is open',
+          },
+          modelValue: {
+            type: 'string | string[]',
+            default: undefined,
+            description: 'Id of the accordion item that is open',
+          },
           // transProps: {
           //   type: 'TransitionProps',
           //   default: undefined,
@@ -35,7 +45,7 @@ export default {
           //   default: false,
           //   description: 'Alias for `noAnimation`',
           // },
-          ...pick(showHideProps, ['initialAnimation', 'modelValue', 'lazy', 'unmountLazy']),
+          ...pick(showHideProps, ['initialAnimation', 'lazy', 'unmountLazy']),
           ...pick(
             buildCommonProps({
               id: {
@@ -55,7 +65,18 @@ export default {
             {
               arg: 'value',
               description: 'Id of the accordion item that is open',
-              type: 'string',
+              type: 'string | string[]',
+            },
+          ],
+        },
+        {
+          event: 'update:index',
+          description: 'Update the index of the accordion item that is open',
+          args: [
+            {
+              arg: 'value',
+              description: 'Index of the accordion item that is open',
+              type: 'number | number[]',
             },
           ],
         },

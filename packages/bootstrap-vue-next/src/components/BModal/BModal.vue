@@ -15,6 +15,7 @@
           {
             fade: !computedNoAnimation,
             show: isVisible,
+            ...sharedClasses,
           },
         ]"
         role="dialog"
@@ -24,7 +25,7 @@
         v-bind="$attrs"
         :style="computedZIndex"
         style="display: block"
-        @click.self="hide('backdrop')"
+        @mousedown.left.self="hide('backdrop')"
       >
         <div class="modal-dialog" :class="modalDialogClasses">
           <div v-if="contentShowing" class="modal-content" :class="props.contentClass">
@@ -116,6 +117,7 @@
           :class="{
             fade: !computedNoAnimation,
             show: backdropVisible || computedNoAnimation,
+            ...sharedClasses,
           }"
           @click="hide('backdrop')"
         />
@@ -127,7 +129,16 @@
 <script setup lang="ts">
 import {onKeyStroke, unrefElement} from '@vueuse/core'
 import {useActivatedFocusTrap} from '../../composables/useActivatedFocusTrap'
-import {computed, type CSSProperties, type EmitFn, useTemplateRef, watch} from 'vue'
+import {
+  computed,
+  type CSSProperties,
+  type EmitFn,
+  nextTick,
+  onMounted,
+  ref,
+  useTemplateRef,
+  watch,
+} from 'vue'
 import type {BModalProps} from '../../types/ComponentProps'
 import type {BModalEmits} from '../../types/ComponentEmits'
 import type {BModalSlots, BModalSlotsData} from '../../types/ComponentSlots'
@@ -137,7 +148,7 @@ import BCloseButton from '../BButton/BCloseButton.vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import {useSafeScrollLock} from '../../composables/useSafeScrollLock'
-import {isEmptySlot} from '../../utils/dom'
+import {getModalZIndex, isEmptySlot} from '../../utils/dom'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useModalManager} from '../../composables/useModalManager'
 import {useShowHide} from '../../composables/useShowHide'
@@ -362,6 +373,7 @@ const titleClasses = computed(() => [
     ['visually-hidden']: props.titleVisuallyHidden,
   },
 ])
+
 const disableCancel = computed(() => props.cancelDisabled || props.busy)
 const disableOk = computed(() => props.okDisabled || props.busy)
 
@@ -370,12 +382,33 @@ const {activePosition, activeModalCount, stackWithoutSelf} = useModalManager(
   modelValue.value
 )
 
+const sharedClasses = computed(() => ({
+  [`stack-position-${activePosition?.value ?? 0}`]: true,
+  [`stack-inverse-position-${(activeModalCount?.value ?? 1) - 1 - (activePosition?.value ?? 0)}`]:
+    true,
+}))
+
 watch(stackWithoutSelf, (newValue, oldValue) => {
   if (newValue.length > oldValue.length && showRef.value === true && props.noStacking === true)
     hide()
 })
 
-const defaultModalDialogZIndex = 1056
+const defaultModalDialogZIndex = ref(getModalZIndex(element.value ?? document.body))
+
+onMounted(() => {
+  watch(
+    renderRef,
+    (v) => {
+      if (!v) return
+      nextTick(() => {
+        if (!element.value) return
+        defaultModalDialogZIndex.value = getModalZIndex(element.value)
+      })
+    },
+    {immediate: true}
+  )
+})
+
 const computedZIndexNumber = computed<number>(() =>
   // Make sure that newly opened modals have a higher z-index than currently active ones.
   // All active modals have a z-index of ('defaultZIndex' - 'stackSize' - 'positionInStack').
@@ -384,15 +417,21 @@ const computedZIndexNumber = computed<number>(() =>
 
   showRef.value || isLeaving.value
     ? // Just for reference there is a single frame in which the modal is not active but still has a higher z-index than the active ones due to _when_ it calculates its position. It's a small visual effect
-      defaultModalDialogZIndex -
+      defaultModalDialogZIndex.value -
       ((activeModalCount?.value ?? 0) * 2 - (activePosition?.value ?? 0) * 2)
-    : defaultModalDialogZIndex
+    : defaultModalDialogZIndex.value
 )
 const computedZIndex = computed<CSSProperties>(() => ({
   'z-index': computedZIndexNumber.value,
+  '--b-position': activePosition?.value ?? 0,
+  '--b-inverse-position': (activeModalCount?.value ?? 1) - 1 - (activePosition?.value ?? 0),
+  '--b-count': activeModalCount?.value ?? 0,
 }))
 const computedZIndexBackdrop = computed<CSSProperties>(() => ({
   'z-index': computedZIndexNumber.value - 1,
+  '--b-position': activePosition?.value ?? 0,
+  '--b-inverse-position': (activeModalCount?.value ?? 1) - 1 - (activePosition?.value ?? 0),
+  '--b-count': activeModalCount?.value ?? 0,
 }))
 
 const sharedSlots = computed<BModalSlotsData>(() => ({

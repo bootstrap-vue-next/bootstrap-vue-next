@@ -27,7 +27,10 @@ Bootstrap-vue-next will commit to breaking changes whenever Bootstrap marks some
 ### Status
 
 This migration guide is a work in progress. We're adding to this guide as we complete the documentation and parity pass and doing
-our best to note each component or directive that hasn't been through the full process. <NotYetDocumented :help-only="true" />
+our best to note each component or directive that hasn't been through the full process.
+
+<NotYetDocumented :help-only="true" />
+
 For section of this guide that are not marked as in progress, we're still interested in examples of migrations that you
 have found tricky or clarifcation if the details in the guide weren't sufficent.
 
@@ -584,6 +587,12 @@ The `type` prop is deprecated. Use the the `v-b-color-mode` directive or `useCol
 
 See [Show and Hide](#show-and-hide) shared properties.
 
+### BOverlay
+
+<NotYetDocumented type="component"/>
+
+prop `blur` does not work when the prop `bgColor` is defined. It also will not work if the prop `variant` is anything other than `white` or `transparent`. This overcomes a browser change.
+
 ### BPagination
 
 See [Show and Hide](#show-and-hide) shared properties.
@@ -626,7 +635,6 @@ The following are <NotYetImplemented/> -
 
 - The `filter-debounce`, `fixed`, `no-border-collapse`, `selected-variant`, and `table-footer-sorting` props
 - The `filter` prop does not yet support a RegEx object, only a string.
-- The `table-colgroup` slot
 - The `context-changed` and `refreshed` events
 
 `filter-included-fields` have been replaced by a single `filterable` prop. `filter-ignored-fields`
@@ -641,6 +649,8 @@ is deprecated.
 Similarly, the `sort-changed` event is replaced by the `update:sortBy` event
 
 `table-variant` is replaced with `variant` for consistency.
+
+The slot scope for `table-colgroup` slot now only contains the `fields` prop, with the `columns` prop removed.
 
 BootstrapVue used the main v-model binding to expose a readonly version of the displayed items. This is deprecated. Instead,
 used the exposed function `displayedItems` as demonstrated in [the documentation](/docs/components/table#complete-example).
@@ -688,6 +698,8 @@ of a method in the component is deprecated.
 <NotYetDocumented type="component"/>
 
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
+
+The slot scope for `table-colgroup` slot now only contains the `fields` prop, with the `columns` prop removed.
 
 ### BTableSimple
 
@@ -737,7 +749,6 @@ See [Show and Hide](#show-and-hide) shared properties.
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
 `content` prop has been renamed to `body` for consistency with other components.
-
 
 ## Directives
 
