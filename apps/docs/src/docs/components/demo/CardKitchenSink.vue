@@ -24,11 +24,23 @@
       <BListGroupItem>Vestibulum at eros</BListGroupItem>
     </BListGroup>
     <BCardBody>
-      <a href="#" class="card-link">Card link</a>
-      <a href="#" class="card-link">Another link</a>
+      <a
+        href="#"
+        class="card-link"
+        >Card link</a
+      >
+      <a
+        href="#"
+        class="card-link"
+        >Another link</a
+      >
     </BCardBody>
     <BCardFooter>This is a footer</BCardFooter>
-    <BCardImg src="https://picsum.photos/480/210" alt="Image" bottom />
+    <BCardImg
+      src="https://picsum.photos/480/210"
+      alt="Image"
+      bottom
+    />
   </BCard>
   <!-- #endregion template -->
 </template>

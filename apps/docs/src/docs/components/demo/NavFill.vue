@@ -1,6 +1,9 @@
 <template>
   <!-- #region template -->
-  <BNav tabs fill>
+  <BNav
+    tabs
+    fill
+  >
     <BNavItem active>Active</BNavItem>
     <BNavItem>Link</BNavItem>
     <BNavItem>Link with a long name </BNavItem>

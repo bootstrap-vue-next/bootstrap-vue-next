@@ -1,8 +1,16 @@
 <template>
-  <BFormSelect v-model="selected" :options="exFirstSlotOptions" class="mb-3">
+  <BFormSelect
+    v-model="selected"
+    :options="exFirstSlotOptions"
+    class="mb-3"
+  >
     <!-- This slot appears above the options from 'options' prop -->
     <template #first>
-      <BFormSelectOption :value="null" disabled>-- Please select an option --</BFormSelectOption>
+      <BFormSelectOption
+        :value="null"
+        disabled
+        >-- Please select an option --</BFormSelectOption
+      >
     </template>
 
     <!-- These options will appear after the ones from 'options' prop -->

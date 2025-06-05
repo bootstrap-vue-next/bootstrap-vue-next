@@ -3,13 +3,22 @@
     <label>Form-checkbox-group inline checkboxes (default)</label>
   </div>
 
-  <BFormCheckboxGroup v-model="selected" :options="options" name="flavour-1a" />
+  <BFormCheckboxGroup
+    v-model="selected"
+    :options="options"
+    name="flavour-1a"
+  />
 
   <div class="my-2">
     <label>Form-checkbox-group stacked checkboxes</label>
   </div>
 
-  <BFormCheckboxGroup v-model="selected" :options="options" name="flavour-2a" stacked />
+  <BFormCheckboxGroup
+    v-model="selected"
+    :options="options"
+    name="flavour-2a"
+    stacked
+  />
 
   <div class="my-2">
     <label>Individual stacked checkboxes (default)</label>

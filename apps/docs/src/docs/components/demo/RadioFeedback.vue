@@ -6,8 +6,18 @@
     name="radio-validation"
   />
 
-  <div v-if="!state" class="text-danger">Please select one</div>
-  <div v-if="state" class="text-success">Thank you</div>
+  <div
+    v-if="!state"
+    class="text-danger"
+  >
+    Please select one
+  </div>
+  <div
+    v-if="state"
+    class="text-success"
+  >
+    Thank you
+  </div>
 </template>
 
 <script setup lang="ts">

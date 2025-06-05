@@ -89,7 +89,10 @@
         </BPopover>
       </BCol>
       <BCol class="d-grid gap-2">
-        <BPopover target="popover-target-autoend" placement="auto-end">
+        <BPopover
+          target="popover-target-autoend"
+          placement="auto-end"
+        >
           <template #target><BButton>Auto End</BButton></template>
           <template #title>Popover Auto End</template>
           I am popover <b>component</b> content!

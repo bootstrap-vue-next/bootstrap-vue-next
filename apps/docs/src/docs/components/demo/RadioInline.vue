@@ -4,7 +4,11 @@
   </div>
 
   <div>
-    <BFormRadioGroup v-model="selected" :options="options" name="radio-inline" />
+    <BFormRadioGroup
+      v-model="selected"
+      :options="options"
+      name="radio-inline"
+    />
   </div>
 
   <div class="my-2">
@@ -12,7 +16,12 @@
   </div>
 
   <div>
-    <BFormRadioGroup v-model="selected" :options="options" name="radio-stacked" stacked />
+    <BFormRadioGroup
+      v-model="selected"
+      :options="options"
+      name="radio-stacked"
+      stacked
+    />
   </div>
 
   <div class="mt-3">

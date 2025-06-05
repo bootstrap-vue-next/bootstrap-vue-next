@@ -1,6 +1,9 @@
 <template>
   <!-- #region template -->
-  <BCard title="Card Title" no-body>
+  <BCard
+    title="Card Title"
+    no-body
+  >
     <BCardHeader header-tag="nav">
       <BNav>
         <BNavItem active>Active</BNavItem>

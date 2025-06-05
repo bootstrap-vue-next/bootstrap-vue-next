@@ -1,6 +1,11 @@
 <template>
   <div>
-    <BFormCheckbox v-model="disabled" switch size="lg">Disable</BFormCheckbox>
+    <BFormCheckbox
+      v-model="disabled"
+      switch
+      size="lg"
+      >Disable</BFormCheckbox
+    >
     <BFormTags
       v-model="tags"
       tag-variant="success"
@@ -42,8 +47,16 @@
         <BFormInvalidFeedback :state="state">
           Duplicate tag value cannot be added again!
         </BFormInvalidFeedback>
-        <ul v-if="innerTags.length > 0" class="mb-0">
-          <li v-for="tag in innerTags" :key="tag" :title="`Tag: ${tag}`" class="mt-2">
+        <ul
+          v-if="innerTags.length > 0"
+          class="mb-0"
+        >
+          <li
+            v-for="tag in innerTags"
+            :key="tag"
+            :title="`Tag: ${tag}`"
+            class="mt-2"
+          >
             <span class="d-flex align-items-center">
               <span class="me-2">{{ tag }}</span>
               <BButton
