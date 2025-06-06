@@ -38,7 +38,7 @@ const _props = withDefaults(defineProps<BLinkProps>(), {
   active: undefined,
   activeClass: 'router-link-active',
   disabled: false,
-  exactActiveClass: 'router-link-exact-active',
+  exactActiveClass: 'router-link-exact-active active',
   href: undefined,
   icon: false,
   opacity: undefined,

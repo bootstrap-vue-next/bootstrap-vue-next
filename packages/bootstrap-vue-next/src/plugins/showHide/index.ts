@@ -34,6 +34,13 @@ export const showHidePlugin: Plugin = {
           // delete values.value[id]
           values.value.delete(id)
         },
+        updateId(newId: string, oldId: string) {
+          const existingValue = values.value.get(oldId)
+          if (existingValue) {
+            values.value.set(newId, {...existingValue, id: newId})
+            values.value.delete(oldId)
+          }
+        },
       }
     }
 
