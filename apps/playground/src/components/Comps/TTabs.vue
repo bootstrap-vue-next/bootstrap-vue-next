@@ -2,7 +2,7 @@
   <BContainer fluid>
     <BRow>
       <BCol>
-        <BTabs v-model="tabIndex" small>
+        <BTabs v-model:index="tabIndex" small>
           <BTab title="First" disabled>
             <p>I'm the first tab</p>
           </BTab>
@@ -89,7 +89,7 @@
     </BRow>
     <BRow>
       <BCol>
-        <BTabs v-model:active-id="activeId" v-model="tabIndex2">
+        <BTabs v-model:active-id="activeId" v-model:index="tabIndex2">
           <BTab id="a1" title="a1">a1</BTab>
           <BTab id="a2" title="a2">a2</BTab>
           <BTab id="a3" title="a3">a3</BTab>
@@ -123,7 +123,7 @@
         </BTabs>
       </BCol>
       <BCol>
-        <BTabs v-model:active-id="tab3Id" v-model="tab3Index">
+        <BTabs v-model:active-id="tab3Id" v-model:index="tab3Index">
           <BTab v-for="t in tab3" :key="t.title" :title="t.title">{{ t.content }}</BTab>
         </BTabs>
         <BButton
