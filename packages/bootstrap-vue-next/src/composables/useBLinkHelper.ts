@@ -31,6 +31,7 @@ export const useBLinkHelper = <
             'active',
             'activeClass',
             'append',
+            'exactActiveClass',
             'href',
             'rel',
             'replace',

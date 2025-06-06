@@ -467,6 +467,7 @@ const registerTab = (tab: Ref<TabType>) => {
   } else {
     tabsInternal.value[idx] = tab
     if (initialized) {
+      // sort just in case the tab was moved
       sortTabs()
     }
   }

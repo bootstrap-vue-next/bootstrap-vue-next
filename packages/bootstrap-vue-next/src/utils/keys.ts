@@ -173,6 +173,7 @@ export interface RegisterShowHideMapValue {
 export interface RegisterShowHideValue {
   register: (input: RegisterShowHideFnInput) => {
     unregister: () => void
+    updateId: (newId: string, oldId: string) => void
   }
   values: Ref<Map<string, RegisterShowHideMapValue>>
 }
