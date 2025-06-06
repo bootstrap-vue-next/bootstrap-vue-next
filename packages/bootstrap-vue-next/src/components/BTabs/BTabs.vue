@@ -42,6 +42,7 @@
             role="tab"
             :aria-controls="tab.id"
             :aria-selected="tab.active"
+            :disabled="tab.disabled"
             :tabindex="props.noKeyNav ? undefined : tab.active ? undefined : -1"
             v-bind="tab.titleLinkAttrs"
             @keydown.left.exact="!props.vertical && keynav($event, -1)"
@@ -72,9 +73,21 @@
 </template>
 
 <script setup lang="ts">
-import {computed, nextTick, provide, ref, type Ref, toRef, unref, type VNode, watch} from 'vue'
+import {
+  computed,
+  nextTick,
+  onMounted,
+  provide,
+  type Ref,
+  ref,
+  toRef,
+  unref,
+  type VNode,
+  watch,
+} from 'vue'
 import {BvEvent} from '../../utils/classes'
 import {useAlignment} from '../../composables/useAlignment'
+import {useId} from '../../composables/useId'
 import {createReusableTemplate} from '@vueuse/core'
 import type {TabType} from '../../types/Tab'
 import type {BTabsProps} from '../../types/ComponentProps'
@@ -146,10 +159,23 @@ const tabsInternal = ref<Ref<TabType>[]>([])
 
 const tabElementsArray = ref<VNode[]>([])
 
+const isChildActive = ref(false)
+const initialIds = ref<string[]>([])
+
 const updateTabElementsArray = () => {
   const tabElements = flattenFragments(slots.default?.({}) ?? [])
   tabElementsArray.value = (Array.isArray(tabElements) ? tabElements : [tabElements]).filter(
     (tab) => tab.type === BTab
+  )
+  // only get the ids once in setup context
+  if (initialIds.value.length === 0) {
+    // we need to get the ids of the tabs before they are registered. After that we use the internalId for the tabpane
+    initialIds.value = tabElementsArray.value.map((tab) =>
+      unref(useId(() => tab.props?.id, 'tabpane'))
+    )
+  }
+  isChildActive.value = tabElementsArray.value.some(
+    (tab) => tab.props?.active !== undefined && tab.props?.active !== false
   )
 }
 updateTabElementsArray()
@@ -181,7 +207,7 @@ const tabs = computed(() => {
             ? index === activeIndex.value
             : index === 0
       return {
-        id: tab.props?.id,
+        id: tab.props?.id ?? initialIds.value[index],
         internalId: `premount-${index}`, // temporary id for the tab
         buttonId: tab.props?.buttonId,
         disabled: tab.props?.disabled,
@@ -237,9 +263,17 @@ if (activeIndex.value === -1 && activeId.value) {
   } else {
     updateInitialActiveId = true
   }
-} else if (activeIndex.value === -1 && !activeId.value) {
-  activeIndex.value = 0
-  updateInitialActiveId = true
+} else if (activeIndex.value === -1 && !activeId.value && !isChildActive.value) {
+  activeIndex.value = tabs.value.findIndex((t) => t.disabled === undefined || t.disabled === false)
+  activeId.value = tabs.value[activeIndex.value]?.id
+} else if (activeIndex.value === -1 && !activeId.value && isChildActive.value) {
+  activeIndex.value = tabs.value.findIndex(
+    (t) =>
+      t.active !== undefined &&
+      t.active !== false &&
+      (t.disabled === undefined || t.disabled === false)
+  )
+  activeId.value = tabs.value[activeIndex.value]?.id
 }
 
 function updateInitialIndexAndId() {
@@ -432,13 +466,16 @@ const registerTab = (tab: Ref<TabType>) => {
     }
   } else {
     tabsInternal.value[idx] = tab
+    if (initialized) {
+      // sort just in case the tab was moved
+      sortTabs()
+    }
   }
-  if (initialized) {
-    sortTabs()
-  }
+  const idx2 = tabsInternal.value.findIndex((t) => t.value.internalId === tab.value.internalId)
+  return tab.value.id ?? (!initialized ? initialIds.value[idx2] : tab.value.internalId)
 }
 
-nextTick(() => {
+onMounted(() => {
   updateInitialIndexAndId()
   sortTabs()
   initialized = true

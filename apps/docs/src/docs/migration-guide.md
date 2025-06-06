@@ -69,13 +69,14 @@ We have made an effort to standardize the names and behaviors of props that are 
 and hiding of components and sub-components.
 
 The primary reactive way to control the visibility of a component is generally by use of the `v-model` rather
-than a `visible` as in `BCollapse`, `BModal`, `BToast`.
+than `visible` as in `BCollapse`, `BModal`, `BToast`. Note that `show` and `visible` are still supported for
+specifying the initial visibility of these components.
 
 Rather than using `hide` as a prefix to specify that you don't want a sub-component to be rendered, we've moved to using `no`
 as the prefix. For instant in `BPlaceholder`, `hideHeader` becomes `noHeader`. Similarly we use the 'no' prefix in place
 of 'skip' in places like `BCollapse` where `skipAnimation` becomes `noAnimation`.
 
-The properties and components that are affected by this change are show in the following table:
+The properties and components that are affected by this change are shown in the following table:
 
 <ShowHideProps/>
 
@@ -603,13 +604,41 @@ See [Show and Hide](#show-and-hide) shared properties.
 
 ### BPopover
 
-<NotYetDocumented type="component"/>
-
 See [Show and Hide](#show-and-hide) shared properties.
 
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
-`content` prop has been renamed to `body` for consistency with other components.
+The `content` prop has been renamed to `body` for consistency with other components.
+
+The `container` prop has been deprecated. Use the `teleportTo` prop instead to specify where the popover
+should be mounted. See [Vue Teleport documentation](https://vuejs.org/guide/built-ins/teleport.html).
+
+`custom-class` has been changed to `body-class` and a `title-class` has been added for completeness.
+
+`fallback-placement` has been deprecated. Use the various options provided by [floating-ui](https://floating-ui.com/)
+to handle placement.
+
+The ability for the `target` prop to take a function has been deprecated.
+
+Triggers work differently as the underlying library we use to manage popovers has changed. See
+[our documentation](/docs/components/popover#triggers) and [floating-ui](https://floating-ui.com/)
+for details.
+
+The `variant` prop has been deprecated. Use Bootstrap’s color and background utility classes to style
+popovers instead. See [Popover custom classes and variants](/docs/components/popover#custom-classes-and-variants)
+for details.
+
+The `disabled` prop and
+[Programmatically Disabling](https://bootstrap-vue.org/docs/components/popover#programmatically-disabling-popover) have
+been deprecated along with the `disabled` and `enabled` events. Use `manual=true` to disable BootstrapVueNext’s automatic
+trigger handling and if your own code shows the popover disable those mechanisms as well. If you believe that implementing
+full parity with the BootstrapVue feature is useful, please open an issue or propose a pull request.
+
+`delay` now defaults to 100ms for show and 300ms for hide rather than 50ms for both
+
+The default for `placement` is now `top` rather than `right`
+
+`$root` events are deprecated. See [usePopoverController](/docs/composables/usePopoverController) as an alternative.
 
 ### BProgressBar
 
