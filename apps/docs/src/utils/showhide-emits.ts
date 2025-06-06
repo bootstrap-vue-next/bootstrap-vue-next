@@ -43,7 +43,7 @@ export const showHideEmits: Exclude<ComponentReference['emits'], undefined> = [
         description: 'Call value.preventDefault() to cancel show',
       },
     ],
-    description: 'Always emits after the component is shown. Cancelable',
+    description: 'Always emits just before the component is shown. Cancelable',
   },
   {
     event: 'show-prevented',
