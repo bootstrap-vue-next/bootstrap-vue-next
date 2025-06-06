@@ -1,5 +1,6 @@
 export * from './BAccordion'
 export * from './BAlert'
+export * from './BApp'
 export * from './BAvatar'
 export * from './BBadge'
 export * from './BBreadcrumb'

@@ -6,7 +6,7 @@ import type {
   RootBoundary,
   Strategy,
 } from '@floating-ui/vue'
-import type {AriaAttributes, ComponentPublicInstance, TransitionProps} from 'vue'
+import type {AriaAttributes, ComponentPublicInstance, TeleportProps, TransitionProps} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {LinkTarget} from './LinkTarget'
 import type {
@@ -68,6 +68,32 @@ import type {
 } from './TableTypes'
 import type {PopoverPlacement} from './PopoverPlacement'
 import type {InputType} from './InputType'
+import type {BvnComponentProps} from './BootstrapVueOptions'
+
+export interface BAppProps {
+  defaults?: Partial<BvnComponentProps>
+  mergeDefaults?: boolean
+  deepMerge?: boolean
+  teleportTo?: TeleportProps['to']
+  noModals?: boolean
+  noToasts?: boolean
+  noPopovers?: boolean
+  noOrchestrator?: boolean
+  appendToast?: boolean
+  inhert?: boolean
+  rtl?:
+    | boolean
+    | {
+        /**
+         * @default false
+         */
+        rtlInitial: boolean
+        /**
+         * @default undefined
+         */
+        localeInitial: string | undefined
+      }
+}
 
 export interface BLinkProps {
   active?: boolean

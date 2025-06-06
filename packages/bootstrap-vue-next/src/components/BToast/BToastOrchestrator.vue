@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-unused-vars -->
 <template>
   <ConditionalTeleport :to="props.teleportTo" :disabled="props.teleportDisabled">
     <div id="__BVID__toaster-container" v-bind="$attrs">
@@ -12,6 +13,8 @@
           <span
             v-for="{
               _self,
+              type,
+              position,
               slots,
               promise,
               options,
@@ -21,7 +24,7 @@
             :key="_self"
           >
             <component
-              :is="_component ?? BToast"
+              :is="_component"
               v-bind="val"
               :ref="(ref: ComponentPublicInstance) => (promise.value.ref = ref)"
               initial-animation
@@ -74,7 +77,6 @@ import {type ComponentPublicInstance, watch} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {positionClasses} from '../../utils/positionClasses'
 import type {BToastOrchestratorProps} from '../../types/ComponentProps'
-import BToast from './BToast.vue'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
 import {useToastController} from '../../composables/useToastController'
 
@@ -90,8 +92,13 @@ const _props = withDefaults(defineProps<BToastOrchestratorProps>(), {
 const props = useDefaults(_props, 'BToastOrchestrator')
 
 const tools = useToastController()
-tools._isOrchestratorInstalled.value = true
-
+if (!tools._isOrchestratorInstalled.value) {
+  tools._isOrchestratorInstalled.value = true
+} else {
+  console.warn(
+    'BToastOrchestrator Or BApp is already installed, only one can be installed at a time'
+  )
+}
 watch(
   () => props.appendToast,
   (value) => {
