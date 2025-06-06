@@ -358,9 +358,6 @@ export interface BFormRatingProps {
   readonly?: boolean
   stars?: number
   precision?: number
-  iconFull?: string
-  iconHalf?: string
-  iconEmpty?: string
   color?: string
   showValue?: boolean
   showValueMax?: boolean

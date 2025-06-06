@@ -1,4 +1,3 @@
-<!-- packages/bootstrap-vue-next/src/App.vue -->
 <template>
   <BContainer class="rating-demo p-4">
     <h2>1. Default</h2>
@@ -63,6 +62,33 @@
     <BFormRating v-model="valRO" readonly :show-value="true" show-value-max />
     <p>valRO: {{ valRO }} (cannot change)</p>
   </BContainer>
+
+  <h2>14. SVG stars</h2>
+  <BFormRating v-model="valSvg1" :show-value="true" show-value-max>
+    <template #default="{isFilled, isHalf}">
+      <svg v-if="isFilled" width="20" height="20" viewBox="0 0 24 24" fill="gold">
+        <path
+          d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.871 1.496 8.304L12 18.896l-7.432 4.585 1.496-8.304-6.064-5.871 8.332-1.151z"
+        />
+      </svg>
+      <svg v-else-if="isHalf" width="20" height="20" viewBox="0 0 24 24" fill="gold">
+        <defs>
+          <linearGradient id="half-grad">
+            <stop offset="50%" stop-color="gold" />
+            <stop offset="50%" stop-color="lightgray" />
+          </linearGradient>
+        </defs>
+        <path
+          fill="url(#half-grad)"
+          d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.871 1.496 8.304L12 18.896l-7.432 4.585 1.496-8.304-6.064-5.871 8.332-1.151z"
+        />
+      </svg>
+      <svg v-else width="20" height="20" viewBox="0 0 24 24" fill="lightgray">
+        <circle cx="12" cy="12" r="10" />
+      </svg>
+    </template>
+  </BFormRating>
+  <p>valSvg1: {{ valSvg1 }}</p>
 </template>
 
 <script setup lang="ts">
@@ -85,6 +111,7 @@ const valSizeSm = ref(1)
 const valSizeDefault = ref(3)
 const valSizeLg = ref(4)
 const valRO = ref(3.5)
+const valSvg1 = ref(1.0)
 </script>
 
 <style scoped>
