@@ -83,4 +83,31 @@ describe('rating', () => {
     const starIcon = wrapper.find('i')
     expect(starIcon.attributes('style')).toContain('color: pink')
   })
+
+  it('has default border', () => {
+    const wrapper = mount(BFormRating)
+    expect(wrapper.classes()).toContain('b-form-rating')
+    expect(wrapper.classes()).not.toContain('no-border')
+  })
+
+  it('has no border when noBorder prop is true', () => {
+    const wrapper = mount(BFormRating, {props: {noBorder: true}})
+    expect(wrapper.classes()).toContain('b-form-rating')
+    expect(wrapper.classes()).toContain('no-border')
+  })
+
+  it('maintains border with different sizes', () => {
+    const sizes = ['sm', 'lg']
+    sizes.forEach((size) => {
+      const wrapper = mount(BFormRating, {props: {size}})
+      expect(wrapper.classes()).toContain('b-form-rating')
+      expect(wrapper.classes()).not.toContain('no-border')
+    })
+  })
+
+  it('maintains border in readonly state', () => {
+    const wrapper = mount(BFormRating, {props: {readonly: true}})
+    expect(wrapper.classes()).toContain('b-form-rating')
+    expect(wrapper.classes()).not.toContain('no-border')
+  })
 })
