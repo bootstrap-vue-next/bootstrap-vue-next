@@ -7,13 +7,13 @@
     :aria-valuemax="clampedStars"
     :aria-valuenow="displayValue"
     :aria-valuetext="`${displayValue} of ${clampedStars}`"
-    @mouseleave="onMouseLeave"
+    tabindex="0"
+    @keydown="onKeydown"
   >
     <span
       v-for="(starIndex, index) in clampedStars"
       :key="starIndex"
       class="star"
-      @mousemove="onMouseMove($event, starIndex)"
       @click="selectRating(starIndex)"
     >
       <slot :star-index="starIndex" :is-filled="isIconFull(index)" :is-half="isIconHalf(index)">
@@ -55,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, defineSlots, ref} from 'vue'
+import {computed, defineSlots} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BFormRatingProps} from '../../types/ComponentProps'
 
@@ -82,6 +82,8 @@ defineSlots<{
   }) => any
 }>()
 
+const displayValue = computed(() => localValue.value)
+
 function isIconFull(index: number): boolean {
   return displayValue.value - index >= 1
 }
@@ -95,7 +97,6 @@ function isIconHalf(index: number): boolean {
 const emit = defineEmits<{
   (e: 'update:modelValue', value: number): void
 }>()
-const hoverValue = ref<number | null>(null)
 
 // retrieves the current model value, sets it and updates it when clicked
 const localValue = computed({
@@ -105,12 +106,6 @@ const localValue = computed({
     emit('update:modelValue', value)
   },
 })
-
-// hover over value - changes the state and shows it. otherwise, it shows it's default state (whether it's been selected)
-// Change to only hover the hover star when star is implement
-const displayValue = computed(() =>
-  hoverValue.value !== null ? hoverValue.value : localValue.value
-)
 
 // Set the minimum amount of star can be render to 3
 const clampedStars = computed(() => Math.max(3, props.stars))
@@ -161,28 +156,41 @@ const iconColors = computed(() =>
   })
 )
 
-// hover
-function onMouseMove(event: MouseEvent, index: number) {
-  if (props.readonly) return
-  const target = event.currentTarget as HTMLElement
-  const {left, width} = target.getBoundingClientRect()
-  const relativeX = event.clientX - left
-
-  // If cursor in left half, hoverValue = index - 0.5, else full star index
-  hoverValue.value = relativeX < width / 2 ? index - 0.5 : index
-}
-
-// return to original state
-function onMouseLeave() {
-  if (props.readonly) return
-  hoverValue.value = null
-}
-
-// selects rating
 function selectRating(starIndex: number) {
   if (props.readonly) return
-  // Use hoverValue if exists, otherwise full star index
-  const selectedRating = hoverValue.value !== null ? hoverValue.value : starIndex
-  localValue.value = selectedRating
+  localValue.value = starIndex
+}
+
+//add keyboard support
+function onKeydown(e: KeyboardEvent) {
+  if (props.readonly) return
+
+  let newValue = localValue.value
+
+  switch (e.key) {
+    case 'ArrowRight':
+    case 'ArrowUp':
+      newValue = Math.min(newValue + 1, clampedStars.value)
+      break
+    case 'ArrowLeft':
+    case 'ArrowDown':
+      newValue = Math.max(newValue - 1, 0)
+      break
+    default:
+      return
+  }
+
+  e.preventDefault()
+  localValue.value = newValue
 }
 </script>
+
+<style scoped>
+.b-form-rating-star svg {
+  transition: transform 0.2s ease;
+}
+
+.b-form-rating:not(.is-readonly) .star:hover .b-form-rating-star svg {
+  transform: scale(1.25);
+}
+</style>
