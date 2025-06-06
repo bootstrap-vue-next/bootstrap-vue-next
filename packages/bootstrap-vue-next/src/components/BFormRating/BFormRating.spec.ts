@@ -83,4 +83,19 @@ describe('rating', () => {
     const starIcon = wrapper.find('i')
     expect(starIcon.attributes('style')).toContain('color: pink')
   })
+
+  it('has clear button to reset rating to 0', async () => {
+    const wrapper = mount(BFormRating, {
+      props: {
+        modelValue: 3,
+        showClear: true,
+      },
+    })
+    const clearBtn = wrapper.find('.clear-button')
+    expect(clearBtn.exists()).toBe(true)
+
+    await clearBtn.trigger('click')
+    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+    expect(wrapper.emitted('update:modelValue')![0]).toEqual([0])
+  })
 })

@@ -10,6 +10,26 @@
     @mouseleave="onMouseLeave"
   >
     <span
+      v-if="props.showClear && !props.readonly"
+      class="clear-button"
+      style="cursor: pointer; margin-left: 0.5rem"
+      @click="clearRating"
+    >
+      <svg
+        viewBox="0 0 16 16"
+        role="img"
+        aria-label="x"
+        xmlns="http://www.w3.org/2000/svg"
+        class="clear-icon"
+      >
+        <g>
+          <path
+            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"
+          />
+        </g>
+      </svg>
+    </span>
+    <span
       v-for="(starIndex, index) in clampedStars"
       :key="starIndex"
       class="star"
@@ -34,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from 'vue'
+import {computed, readonly, ref} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BFormRatingProps} from '../../types/ComponentProps'
 
@@ -48,6 +68,7 @@ const _props = withDefaults(defineProps<BFormRatingProps>(), {
   iconFull: 'x',
   iconHalf: '',
   iconEmpty: 'o',
+  showClear: false,
   showValue: false,
   showValueMax: false,
   size: '1.25rem',
@@ -152,4 +173,14 @@ function selectRating(starIndex: number) {
   const selectedRating = hoverValue.value ?? starIndex
   localValue.value = selectedRating
 }
+
+// clear
+function clearRating() {
+  hoverValue.value = null
+  localValue.value = 0
+}
+
+defineExpose({
+  hoverValue,
+})
 </script>
