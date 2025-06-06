@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.30.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.30.0...bootstrapvuenext-v0.30.1) (2025-06-06)
+
+
+### Bug Fixes
+
+* **BLink:** add active to default exactActiveClass fixes [#2693](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2693) ([45bb9c5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/45bb9c5f75a6dede49e20b8fa68af0da9f2d5d27))
+* **BTabs:** correct id/index on ssr ([f68d393](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f68d39315eae220b9e772d584d5e2d2195269ff5))
+* **BTabs:** correct id/index on ssr ([#2726](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2726)) ([f68d393](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f68d39315eae220b9e772d584d5e2d2195269ff5))
+* **BToast:** stop countdown if modelValue is set to 0 fixes [#2730](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2730) ([45bb9c5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/45bb9c5f75a6dede49e20b8fa68af0da9f2d5d27))
+* **useBLinkHelper:** add exactActiveClass to the props that are used for BLink. ([45bb9c5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/45bb9c5f75a6dede49e20b8fa68af0da9f2d5d27))
+* **useShowHide:** update the registry id when it changes in the component. fixes [#2729](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2729) ([45bb9c5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/45bb9c5f75a6dede49e20b8fa68af0da9f2d5d27))
+
 ## [0.30.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.29.4...bootstrapvuenext-v0.30.0) (2025-05-31)
 
 
