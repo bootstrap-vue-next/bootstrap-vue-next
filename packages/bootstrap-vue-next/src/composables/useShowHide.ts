@@ -378,6 +378,10 @@ export const useShowHide = (
     })
   })
 
+  watch(computedId, (newId, oldId) => {
+    appRegistry?.updateId(newId, oldId)
+  })
+
   onBeforeUnmount(() => {
     appRegistry?.unregister()
     triggerRegistry.forEach((t) => {
