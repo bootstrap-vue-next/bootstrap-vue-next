@@ -57,6 +57,7 @@ const localId = ref(props.id)
 const internalId = useId('', 'tabpane')
 const computedId = computed(() => props.id ?? localId.value ?? internalId.value)
 const computedButtonId = useId(() => props.buttonId, 'tab')
+const internalId = useId('', 'tab-internal')
 
 const lazyRenderCompleted = ref(false)
 const el = useTemplateRef<HTMLElement>('_el')
