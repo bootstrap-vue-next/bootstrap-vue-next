@@ -168,7 +168,7 @@ export default {
         },
         {
           event: 'click-outside',
-          description: 'Emitted when the mouse is clicked outside of the popopver.',
+          description: 'Emitted when the mouse is clicked outside of the popover.',
           args: [
             {
               arg: 'value',

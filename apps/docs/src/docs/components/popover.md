@@ -79,7 +79,7 @@ the popover's body `<div>` by using the `body-class` prop:
 <<< FRAGMENT ./demo/PopoverCustomClass.vue#template{vue-html}
 
 Similarly, use [Bootstrap's Color and background](https://getbootstrap.com/docs/5.3/helpers/color-background/)
-utitlities to change the variant of the popover.
+utilities to change the variant of the popover.
 
 <<< DEMO ./demo/PopoverVariant.vue#template{vue-html}
 
