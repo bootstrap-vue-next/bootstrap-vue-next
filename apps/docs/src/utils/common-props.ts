@@ -407,6 +407,11 @@ export const commonProps = () =>
       default: undefined,
       description: 'Text content to place in the title',
     },
+    titleClass: {
+      type: 'ClassValue',
+      default: undefined,
+      description: 'CSS class (or classes) to apply to the title',
+    },
     titleTag: {
       type: 'string',
       default: 'h4',

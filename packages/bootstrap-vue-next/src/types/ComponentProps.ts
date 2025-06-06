@@ -358,9 +358,6 @@ export interface BFormRatingProps {
   readonly?: boolean
   stars?: number
   precision?: number
-  iconFull?: string
-  iconHalf?: string
-  iconEmpty?: string
   color?: string
   showClear?: boolean
   showValue?: boolean
@@ -1276,12 +1273,12 @@ export interface BToastProps
 }
 
 export interface BPopoverProps extends TeleporterProps, ShowHideProps {
+  body?: string
+  bodyClass?: ClassValue
   boundary?: Boundary | RootBoundary
   boundaryPadding?: Padding
   click?: boolean
   closeOnHide?: boolean
-  body?: string
-  bodyClass?: ClassValue
   delay?:
     | number
     | Readonly<{
@@ -1309,7 +1306,6 @@ export interface BPopoverProps extends TeleporterProps, ShowHideProps {
   title?: string
   titleClass?: ClassValue
   tooltip?: boolean
-  variant?: ColorVariant | null
 }
 
 export interface BTooltipProps extends Omit<BPopoverProps, 'tooltip'> {

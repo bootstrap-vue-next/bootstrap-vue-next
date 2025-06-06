@@ -4,7 +4,6 @@ import {
   getCurrentInstance,
   inject,
   type MaybeRefOrGetter,
-  ref,
   toValue,
 } from 'vue'
 
@@ -12,16 +11,14 @@ import {globalShowHideStorageInjectionKey} from '../../utils/keys'
 
 export const useToggle = (id: MaybeRefOrGetter<string | undefined> = undefined) => {
   const instance = getCurrentInstance()
-  const {values: registry} = inject(globalShowHideStorageInjectionKey, {
-    register: () => ({unregister: () => {}}),
-    values: ref(new Map()),
-  })
+  const storage = inject(globalShowHideStorageInjectionKey, null)
 
-  if (!registry) {
+  if (!storage) {
     throw new Error(
-      'useToggle() was called outside of the setup() function or the plugin is not provided.'
+      'useToggle() was called outside of the setup() function or the showHide plugin is not provided.'
     )
   }
+  const registry = storage.values
   // const registry = toRef(() => appRegistry.value)
   const findComponent = (
     component: ComponentInternalInstance
