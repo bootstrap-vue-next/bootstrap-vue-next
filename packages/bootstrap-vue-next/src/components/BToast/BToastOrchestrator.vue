@@ -13,8 +13,8 @@
           <span
             v-for="{
               _self,
-              type,
-              position,
+              type: _type,
+              position: _position,
               slots,
               promise,
               options,

@@ -53,7 +53,7 @@ const props = withDefaults(defineProps<BAppProps>(), {
   noModals: false,
   noToasts: false,
   noPopovers: false,
-  inhert: false,
+  inherit: false,
   appendToast: false,
   teleportTo: undefined,
   defaults: undefined,
@@ -71,7 +71,12 @@ function deepMerge(
   source: Record<string, unknown>
 ): Record<string, unknown> {
   for (const key in source) {
-    if (source[key] instanceof Object && target[key] instanceof Object) {
+    if (
+      source[key] instanceof Object &&
+      target[key] instanceof Object &&
+      !Array.isArray(source[key]) &&
+      !Array.isArray(target[key])
+    ) {
       deepMerge(target[key] as Record<string, unknown>, source[key] as Record<string, unknown>)
     } else {
       target[key] = source[key]
@@ -109,35 +114,38 @@ const toastController = inject(toastPluginKey, undefined)
 const modalController = inject(modalControllerPluginKey, undefined)
 
 if (!props.noPopovers) {
-  if (popoverController && props.inhert) {
+  if (popoverController && props.inherit) {
     provide(popoverPluginKey, popoverController)
+  } else {
+    provide(popoverPluginKey, {
+      popovers: ref<PopoverOrchestratorArrayValue[]>([]),
+      _isOrchestratorInstalled: ref(false),
+    })
   }
-  provide(popoverPluginKey, {
-    popovers: ref<PopoverOrchestratorArrayValue[]>([]),
-    _isOrchestratorInstalled: ref(false),
-  })
 }
 
 if (!props.noToasts) {
-  if (toastController && props.inhert) {
+  if (toastController && props.inherit) {
     toastController._isOrchestratorInstalled.value = true
     provide(toastPluginKey, toastController)
+  } else {
+    provide(toastPluginKey, {
+      toasts: ref<ToastOrchestratorArrayValue[]>([]),
+      _isAppend: ref(false),
+      _isOrchestratorInstalled: ref(false),
+    })
   }
-  provide(toastPluginKey, {
-    toasts: ref<ToastOrchestratorArrayValue[]>([]),
-    _isAppend: ref(false),
-    _isOrchestratorInstalled: ref(false),
-  })
 }
 if (!props.noModals) {
-  if (modalController && props.inhert) {
+  if (modalController && props.inherit) {
     modalController._isOrchestratorInstalled.value = true
     provide(modalControllerPluginKey, modalController)
+  } else {
+    provide(modalControllerPluginKey, {
+      modals: ref<ModalOrchestratorArrayValue[]>([]),
+      _isOrchestratorInstalled: ref(false),
+    })
   }
-  provide(modalControllerPluginKey, {
-    modals: ref<ModalOrchestratorArrayValue[]>([]),
-    _isOrchestratorInstalled: ref(false),
-  })
 }
 
 const showHideStorage = inject(globalShowHideStorageInjectionKey, undefined)

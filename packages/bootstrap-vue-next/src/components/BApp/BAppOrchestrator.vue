@@ -3,7 +3,7 @@
   <div id="__BVID__toaster-container" v-bind="$attrs">
     <div
       v-for="(value, key) in ComputedPositionClasses"
-      :key
+      :key="key"
       :class="value.class"
       :style="value.style"
     >

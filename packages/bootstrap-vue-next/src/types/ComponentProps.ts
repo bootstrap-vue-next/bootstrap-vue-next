@@ -80,7 +80,7 @@ export interface BAppProps {
   noPopovers?: boolean
   noOrchestrator?: boolean
   appendToast?: boolean
-  inhert?: boolean
+  inherit?: boolean
   rtl?:
     | boolean
     | {
