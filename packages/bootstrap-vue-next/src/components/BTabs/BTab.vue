@@ -52,9 +52,11 @@ const activeModel = defineModel<Exclude<BTabProps['active'], undefined>>('active
 })
 
 const parentData = inject(tabsInjectionKey, null)
-const computedId = useId(() => props.id, 'tabpane')
+
+const localId = ref(props.id)
+const internalId = useId('', 'tabpane')
+const computedId = computed(() => props.id ?? localId.value ?? internalId.value)
 const computedButtonId = useId(() => props.buttonId, 'tab')
-const internalId = useId('', 'tab-internal')
 
 const lazyRenderCompleted = ref(false)
 const el = useTemplateRef<HTMLElement>('_el')
@@ -68,7 +70,7 @@ const processedAttrs = computed(() => {
 
 function updateTab() {
   if (!parentData) return
-  parentData.registerTab(
+  const newId = parentData.registerTab(
     computed(
       () =>
         ({
@@ -87,6 +89,9 @@ function updateTab() {
         }) as TabType
     )
   )
+  if (newId !== localId.value) {
+    localId.value = newId
+  }
 }
 
 if (parentData) {
