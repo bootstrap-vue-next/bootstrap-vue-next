@@ -1,66 +1,43 @@
 <template>
   <BContainer class="rating-demo p-4">
-    <h2>1. Default</h2>
-    <BFormRating v-model="valDefault" />
+    <h2>1. Default with Border</h2>
+    <BFormRating v-model="valDefault" :no-border="false" />
     <p>Value: {{ valDefault }}</p>
 
-    <h2>2. show-value</h2>
-    <BFormRating v-model="valShow" :show-value="true" />
-    <p>valShow: {{ valShow }}</p>
+    <h2>2. Default without Border</h2>
+    <BFormRating v-model="valNoBorder" no-border />
+    <p>Value: {{ valNoBorder }}</p>
 
-    <h2>3. show-value-max</h2>
-    <BFormRating v-model="valShowMax" show-value-max />
-    <p>valShowMax: {{ valShowMax }}</p>
-
-    <h2>4. show-value & show-value-max</h2>
-    <BFormRating v-model="valShowBoth" :show-value="true" show-value-max />
-    <p>valShowBoth: {{ valShowBoth }}</p>
-
-    <h2>5. precision (2 decimals)</h2>
-    <BFormRating v-model="valPrecise" :precision="2" :show-value="true" />
-    <p>valPrecise: {{ valPrecise }}</p>
-
-    <h2>6. stars (8 total)</h2>
-    <BFormRating v-model="valStars" :stars="8" :show-value="true" />
-    <p>valStars: {{ valStars }}</p>
-
-    <h2>7. Bootstrap variants</h2>
-    <div class="d-flex gap-3">
-      <BFormRating v-model="valVar1" variant="primary" />
-      <BFormRating v-model="valVar2" variant="success" />
-      <BFormRating v-model="valVar3" variant="warning" />
-      <BFormRating v-model="valVar4" variant="danger" />
-    </div>
-    <p>primary={{ valVar1 }}, success={{ valVar2 }}, warning={{ valVar3 }}, danger={{ valVar4 }}</p>
-
-    <h2>8. custom color</h2>
-    <BFormRating v-model="valColor" color="rgba(64, 192, 128, 0.75)" :show-value="true" />
-    <p>valColor: {{ valColor }}</p>
-
-    <h2>9. custom color + value/max</h2>
-    <BFormRating v-model="valColorMax" color="#ff66cc" :show-value="true" :show-value-max="true" />
-    <p>valColorMax: {{ valColorMax }}</p>
-
-    <h2>10. sizes (sm / default / lg)</h2>
-    <div class="d-flex align-items-center gap-4">
+    <h2>3. Sizes with Border</h2>
+    <div class="d-flex flex-column gap-3">
       <div>
         <label class="form-label d-block">Small</label>
-        <BFormRating v-model="valSizeSm" size="sm" />
+        <BFormRating v-model="valSizeSm" size="sm" :no-border="false" />
+        <p>valSizeSm: {{ valSizeSm }}</p>
       </div>
       <div>
         <label class="form-label d-block">Default</label>
-        <BFormRating v-model="valSizeDefault" />
+        <BFormRating v-model="valSizeDefault" :no-border="false" />
+        <p>valSizeDefault: {{ valSizeDefault }}</p>
       </div>
       <div>
         <label class="form-label d-block">Large</label>
-        <BFormRating v-model="valSizeLg" size="lg" />
+        <BFormRating v-model="valSizeLg" size="lg" :no-border="false" />
+        <p>valSizeLg: {{ valSizeLg }}</p>
       </div>
     </div>
-    <p>sizes: small={{ valSizeSm }}, default={{ valSizeDefault }}, large={{ valSizeLg }}</p>
 
-    <h2>11. readonly mode</h2>
-    <BFormRating v-model="valRO" readonly :show-value="true" show-value-max />
+    <h2>4. Readonly with Border</h2>
+    <BFormRating v-model="valRO" readonly :show-value="true" :no-border="false" />
     <p>valRO: {{ valRO }} (cannot change)</p>
+
+    <h2>5. Variant with Border</h2>
+    <BFormRating v-model="valVariant" variant="primary" :no-border="false" />
+    <p>valVariant: {{ valVariant }}</p>
+
+    <h2>6. Custom Color without Border</h2>
+    <BFormRating v-model="valColor" color="#ff66cc" no-border :show-value="true" />
+    <p>valColor: {{ valColor }}</p>
   </BContainer>
 
   <h2>14. SVG stars</h2>
@@ -96,21 +73,13 @@ import {ref} from 'vue'
 import {BContainer, BFormRating} from './components'
 
 const valDefault = ref(2)
-const valShow = ref(3)
-const valShowMax = ref(4)
-const valShowBoth = ref(2)
-const valPrecise = ref(3.1464343)
-const valStars = ref(5)
-const valVar1 = ref(2)
-const valVar2 = ref(3)
-const valVar3 = ref(1)
-const valVar4 = ref(4)
-const valColor = ref(2.5)
-const valColorMax = ref(3)
+const valNoBorder = ref(3)
 const valSizeSm = ref(1)
 const valSizeDefault = ref(3)
 const valSizeLg = ref(4)
 const valRO = ref(3.5)
+const valVariant = ref(2)
+const valColor = ref(2.5)
 const valSvg1 = ref(1.0)
 </script>
 

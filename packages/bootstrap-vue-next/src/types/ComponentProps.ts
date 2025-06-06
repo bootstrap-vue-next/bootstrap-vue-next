@@ -354,15 +354,16 @@ export interface BFormRadioGroupProps {
   valueField?: string
 }
 export interface BFormRatingProps {
-  modelValue?: number
-  readonly?: boolean
-  stars?: number
-  precision?: number
   color?: string
+  modelValue?: number
+  noBorder?: boolean
+  precision?: number
+  readonly?: boolean
   showClear?: boolean
   showValue?: boolean
   showValueMax?: boolean
   size?: string
+  stars?: number
   variant?: string
 }
 

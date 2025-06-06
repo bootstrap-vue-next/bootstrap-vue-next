@@ -1,7 +1,10 @@
 <template>
   <div
-    :class="{'is-readonly': readonly}"
-    class="b-form-rating"
+    :class="{
+      'is-readonly': readonly,
+      'no-border': props.noBorder,
+      'b-form-rating': true,
+    }"
     role="slider"
     :aria-valuemin="0"
     :aria-valuemax="clampedStars"
@@ -79,7 +82,7 @@ import {computed, defineSlots} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BFormRatingProps} from '../../types/ComponentProps'
 
-const _props = withDefaults(defineProps<BFormRatingProps>(), {
+const _props = withDefaults(defineProps<BFormRatingProps & {noBorder?: boolean}>(), {
   modelValue: undefined,
   readonly: false,
   variant: '',
@@ -89,6 +92,7 @@ const _props = withDefaults(defineProps<BFormRatingProps>(), {
   showValue: false,
   showValueMax: false,
   size: '1.25rem',
+  noBorder: false,
 })
 const props = useDefaults(_props, 'BFormRating')
 const modelValue = defineModel<number>({default: 0})
@@ -113,12 +117,10 @@ function isIconHalf(index: number): boolean {
   return diff >= 0.5 && diff < 1
 }
 
-// reflect the event of stars changed to the parent component to display
 const emit = defineEmits<{
   (e: 'update:modelValue', value: number): void
 }>()
 
-// retrieves the current model value, sets it and updates it when clicked
 const localValue = computed({
   get: () => modelValue.value,
   set: (value: number) => {
@@ -127,22 +129,28 @@ const localValue = computed({
   },
 })
 
+const displayValue = computed(() =>
+  hoverValue.value !== null ? hoverValue.value : localValue.value
+)
+
+const iconClasses = computed(() =>
+  Array.from({length: clampedStars.value}, (_, i) => {
+    const difference = displayValue.value - i
+    if (difference >= 1) return props.iconFull
+    if (difference >= 0.5) return props.iconHalf
+    return props.iconEmpty
+  })
+)
+
 // Set the minimum amount of star can be render to 3
 const clampedStars = computed(() => Math.max(3, props.stars))
 
-// Set sizing
 const computedSize = computed(() => {
   if (props.size === 'sm') return '1rem'
   if (props.size === 'lg') return '1.75rem'
   return props.size
 })
 
-// Compute the numeric rating text to display.
-// Check whether precision is more than 0
-// If so it will rounded to the nearest number of precision 1 = .0, 2 = .00 etc.
-// - If showValueMax is true, render "value/max || rounded value/max"
-// - Else if showValue is true, render just "value || rounded value"
-// - Otherwise render nothing
 const displayValueText = computed(() => {
   const decimalValue = props.precision > 0 ? roundedValue.value : displayValue.value
   if (props.showValueMax) {
@@ -154,16 +162,12 @@ const displayValueText = computed(() => {
   return ''
 })
 
-// Computes the displayed value rounded to the specified precision.
-// Example: If precision = 1, rounds to 1 decimal place (e.g., 3.1).
-// Uses Number.EPSILON to avoid floating-point rounding errors.
 const roundedValue = computed(() => {
   const val = displayValue.value
   const factor = 10 ** props.precision
   return Math.round((val + Number.EPSILON) * factor) / factor
 })
 
-// Determine star class & style: variant → color → default
 const iconColors = computed(() =>
   Array.from({length: clampedStars.value}, () => {
     if (props.variant) {
@@ -176,9 +180,12 @@ const iconColors = computed(() =>
   })
 )
 
-function selectRating(starIndex: number) {
+function onMouseMove(event: MouseEvent, index: number) {
   if (props.readonly) return
-  localValue.value = starIndex
+  const target = event.currentTarget as HTMLElement
+  const {left, width} = target.getBoundingClientRect()
+  const relativeX = event.clientX - left
+  hoverValue.value = relativeX < width / 2 ? index - 0.5 : index
 }
 
 //add keyboard support
@@ -203,6 +210,11 @@ function onKeydown(e: KeyboardEvent) {
   e.preventDefault()
   localValue.value = newValue
 }
+
+function selectRating(starIndex: number) {
+  if (props.readonly) return
+  const selectedRating = hoverValue.value !== null ? hoverValue.value : starIndex
+  localValue.value = selectedRating
 
 // clear
 function clearRating() {
