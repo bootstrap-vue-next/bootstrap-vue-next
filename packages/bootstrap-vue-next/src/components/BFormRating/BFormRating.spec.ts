@@ -47,12 +47,6 @@ describe('rating', () => {
     expect(wrapper.vm.hoverValue).toBe(null)
   })
 
-  it('has sm custom size', () => {
-    const wrapper = mount(BFormRating, {props: {size: 'sm'}})
-    const starIcon = wrapper.find('i')
-    expect(starIcon.attributes('style')).toContain('font-size: 1rem')
-  })
-
   it('shows current value', () => {
     const wrapper = mount(BFormRating, {
       props: {
@@ -78,9 +72,30 @@ describe('rating', () => {
     expect(valueText.text()).toBe('3/8')
   })
 
+  it('applies sm custom size to star icons', () => {
+    const wrapper = mount(BFormRating, {props: {size: 'sm'}})
+    const starSvg = wrapper.find('.b-form-rating-star svg')
+    expect(starSvg.attributes('width')).toBe('1rem')
+    expect(starSvg.attributes('height')).toBe('1rem')
+  })
+
   it('has custom color', () => {
     const wrapper = mount(BFormRating, {props: {color: 'pink'}})
-    const starIcon = wrapper.find('i')
+    const starIcon = wrapper.find('.b-form-rating-star svg')
     expect(starIcon.attributes('style')).toContain('color: pink')
+  })
+
+  it('renders fallback icons for full, half, and empty stars', () => {
+    const wrapper = mount(BFormRating, {
+      props: {
+        modelValue: 1.5,
+        stars: 3,
+        precision: 1,
+      },
+    })
+    const svgs = wrapper.findAll('.b-form-rating-star svg path')
+    expect(svgs[0].attributes('d')).toContain('M3.612 15.443') // Full star SVG path
+    expect(svgs[1].attributes('d')).toContain('M5.354 5.119') // Half star SVG path
+    expect(svgs[2].attributes('d')).toContain('M2.866 14.85') // Empty star SVG path
   })
 })
