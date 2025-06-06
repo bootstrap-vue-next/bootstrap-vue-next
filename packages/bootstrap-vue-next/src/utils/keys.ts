@@ -55,7 +55,7 @@ export const tabsInjectionKey: InjectionKey<{
   lazy: Readonly<Ref<boolean>>
   card: Readonly<Ref<boolean>>
   noFade: Readonly<Ref<boolean>>
-  registerTab: (tab: ComputedRef<TabType>) => void
+  registerTab: (tab: ComputedRef<TabType>) => string
   unregisterTab: (id: string) => void
   activateTab: (id: string | undefined) => void
   activeTabClass: Readonly<Ref<ClassValue>>
@@ -173,6 +173,7 @@ export interface RegisterShowHideMapValue {
 export interface RegisterShowHideValue {
   register: (input: RegisterShowHideFnInput) => {
     unregister: () => void
+    updateId: (newId: string, oldId: string) => void
   }
   values: Ref<Map<string, RegisterShowHideMapValue>>
 }

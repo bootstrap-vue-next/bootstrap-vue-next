@@ -253,6 +253,9 @@ watch(modelValue, (newValue) => {
       restart()
     }
   }
+  if (typeof newValue === 'number' && newValue === 0) {
+    stop()
+  }
 })
 
 // isActive in the composable will cause the toast to hide when the countdown is done
