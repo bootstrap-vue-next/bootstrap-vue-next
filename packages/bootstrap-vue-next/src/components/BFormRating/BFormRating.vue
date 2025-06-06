@@ -37,6 +37,7 @@
       v-for="(starIndex, index) in clampedStars"
       :key="starIndex"
       class="star"
+      @mousemove="onMouseMove($event, starIndex)"
       @click="selectRating(starIndex)"
     >
       <slot :star-index="starIndex" :is-filled="isIconFull(index)" :is-half="isIconHalf(index)">
@@ -78,7 +79,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, defineSlots} from 'vue'
+import {computed, defineSlots, ref} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BFormRatingProps} from '../../types/ComponentProps'
 
@@ -89,6 +90,7 @@ const _props = withDefaults(defineProps<BFormRatingProps & {noBorder?: boolean}>
   color: '',
   stars: 5,
   precision: 0,
+  showClear: false,
   showValue: false,
   showValueMax: false,
   size: '1.25rem',
@@ -106,8 +108,6 @@ defineSlots<{
   }) => any
 }>()
 
-const displayValue = computed(() => localValue.value)
-
 function isIconFull(index: number): boolean {
   return displayValue.value - index >= 1
 }
@@ -120,6 +120,7 @@ function isIconHalf(index: number): boolean {
 const emit = defineEmits<{
   (e: 'update:modelValue', value: number): void
 }>()
+const hoverValue = ref<number | null>(null)
 
 const localValue = computed({
   get: () => modelValue.value,
@@ -131,15 +132,6 @@ const localValue = computed({
 
 const displayValue = computed(() =>
   hoverValue.value !== null ? hoverValue.value : localValue.value
-)
-
-const iconClasses = computed(() =>
-  Array.from({length: clampedStars.value}, (_, i) => {
-    const difference = displayValue.value - i
-    if (difference >= 1) return props.iconFull
-    if (difference >= 0.5) return props.iconHalf
-    return props.iconEmpty
-  })
 )
 
 // Set the minimum amount of star can be render to 3
@@ -215,6 +207,7 @@ function selectRating(starIndex: number) {
   if (props.readonly) return
   const selectedRating = hoverValue.value !== null ? hoverValue.value : starIndex
   localValue.value = selectedRating
+}
 
 // clear
 function clearRating() {

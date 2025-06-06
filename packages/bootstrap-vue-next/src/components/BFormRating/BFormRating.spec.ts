@@ -110,7 +110,8 @@ describe('rating', () => {
     const wrapper = mount(BFormRating, {props: {readonly: true}})
     expect(wrapper.classes()).toContain('b-form-rating')
     expect(wrapper.classes()).not.toContain('no-border')
-    
+  })
+
   it('has clear button to reset rating to 0', async () => {
     const wrapper = mount(BFormRating, {
       props: {
@@ -124,6 +125,7 @@ describe('rating', () => {
     await clearBtn.trigger('click')
     expect(wrapper.emitted('update:modelValue')).toBeTruthy()
     expect(wrapper.emitted('update:modelValue')![0]).toEqual([0])
+  })
 
   it('renders fallback icons for full, half, and empty stars', () => {
     const wrapper = mount(BFormRating, {
