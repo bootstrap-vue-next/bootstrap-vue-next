@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.30.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.30.1...bootstrapvuenext-v0.30.2) (2025-06-07)
+
+
+### Bug Fixes
+
+* **bforminput:** abort debouncing if blur occurs ([6cab846](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6cab8464d4eb537807d6843c7db69ef007b8358c))
+
 ## [0.30.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.30.0...bootstrapvuenext-v0.30.1) (2025-06-06)
 
 
