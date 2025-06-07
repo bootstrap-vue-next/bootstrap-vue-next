@@ -36,12 +36,6 @@ Add `free` property to make accordion items stay open when another item is opene
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/accordion.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>

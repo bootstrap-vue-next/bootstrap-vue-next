@@ -115,12 +115,6 @@ input groups. However, the inputs inside the input group do support contextual s
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/inputGroup.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>

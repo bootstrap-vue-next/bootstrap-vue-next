@@ -225,12 +225,6 @@ scoped `default` slot.
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/formGroup.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>

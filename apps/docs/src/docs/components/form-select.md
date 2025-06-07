@@ -157,12 +157,6 @@ prop set to a value greater than 1.
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/formSelect.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>

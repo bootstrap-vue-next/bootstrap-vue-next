@@ -104,12 +104,6 @@ As well, when no label is provided, the spinner will automatically have the attr
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/spinner.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>

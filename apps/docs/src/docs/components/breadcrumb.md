@@ -42,12 +42,6 @@ Use slot `prepend` to put content before the breadcrumb. Use slot `append` to pu
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/breadcrumb.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>
