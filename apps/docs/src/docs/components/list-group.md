@@ -123,12 +123,6 @@ help of [flexbox utility classes](/docs/reference/utility-classes).
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/listGroup.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>

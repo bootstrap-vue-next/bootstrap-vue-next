@@ -149,12 +149,6 @@ added, nor will the keyboard event listeners be enabled.
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/button.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>

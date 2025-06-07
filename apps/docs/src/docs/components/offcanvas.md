@@ -34,12 +34,6 @@ Below is a simple example showing how to set up such a site.
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/offcanvas.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>

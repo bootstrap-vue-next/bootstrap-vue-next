@@ -249,12 +249,6 @@ Avatars are based upon `BBadge` and `BButton` components, and as such, rely upon
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/avatar.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>

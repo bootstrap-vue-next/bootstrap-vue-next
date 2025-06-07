@@ -199,12 +199,6 @@ these methods and properties. Support will vary based on input type.
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/formTextarea.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>

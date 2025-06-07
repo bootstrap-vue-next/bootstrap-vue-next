@@ -35,12 +35,6 @@ input groups and dropdowns, by setting the prop `justify`.
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/buttonToolbar.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>

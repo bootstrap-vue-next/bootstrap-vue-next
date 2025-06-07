@@ -322,12 +322,6 @@ The dropdown menu is rendered with semantic `<ul>` and `<li>` elements for acces
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/dropdown.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>

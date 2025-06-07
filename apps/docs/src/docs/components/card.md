@@ -209,12 +209,6 @@ set them to display: inline-block as column-break-inside: avoid is not a bulletp
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/card.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>
