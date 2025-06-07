@@ -44,6 +44,7 @@
             :aria-selected="tab.active"
             :disabled="tab.disabled"
             :tabindex="props.noKeyNav ? undefined : tab.active ? undefined : -1"
+            type="button"
             v-bind="tab.titleLinkAttrs"
             @keydown.left.exact="!props.vertical && keynav($event, -1)"
             @keydown.left.shift="!props.vertical && keynav($event, -999)"
