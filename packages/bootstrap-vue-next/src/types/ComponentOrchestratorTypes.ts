@@ -10,6 +10,21 @@ import type BPopover from '../components/BPopover/BPopover.vue'
 import type BTooltip from '../components/BTooltip/BTooltip.vue'
 
 export type ControllerKey = symbol | string
+
+export interface PromiseWithComponent<T, P>
+  extends Promise<BvTriggerableEvent | boolean | null>,
+    PromiseWithComponentInternal<T, P> {}
+export interface PromiseWithComponentInternal<T, P> extends AsyncDisposable {
+  id: ControllerKey
+  ref: ComponentPublicInstance<T> | null
+  show: () => PromiseWithComponent<T, P>
+  hide: (trigger?: string, noTriggerEmit?: boolean) => PromiseWithComponent<T, P>
+  toggle: () => PromiseWithComponent<T, P>
+  set: (val: Partial<P>) => PromiseWithComponent<T, P>
+  get: () => P | undefined
+  destroy: () => void
+}
+
 export interface PromiseWithModalInternal extends AsyncDisposable {
   id: ControllerKey
   ref: ComponentPublicInstance<typeof BModal> | null
@@ -38,12 +53,13 @@ export interface PromiseWithToastInternal extends AsyncDisposable {
   id: ControllerKey
   ref: ComponentPublicInstance<typeof BToast> | null
   show: () => PromiseWithToast
-  hide: (trigger?: string) => void
-  toggle: () => void
-  set: (val: Partial<ToastOrchestratorParam>) => void
+  hide: (trigger?: string) => PromiseWithToast
+  toggle: () => PromiseWithToast
+  set: (val: Partial<ToastOrchestratorParam>) => PromiseWithToast
   get: () => ToastOrchestratorParam | undefined
   destroy: () => void
 }
+
 export interface PromiseWithPopover
   extends Promise<BvTriggerableEvent>,
     PromiseWithPopoverInternal {}
@@ -86,12 +102,13 @@ export type ToastOrchestratorArrayValue = Omit<BToastProps, 'modelValue'> & {
   '_self': ControllerKey
   'onUpdate:modelValue'?: (val: boolean) => void
   'component'?: Readonly<Component>
-  'options': ToastOrchestratorCreateOptions
+  'options': OrchestratorCreateOptions
   'promise': {
-    value: PromiseWithToast
-    resolve: (value: BvTriggerableEvent) => void
+    value: PromiseWithComponent<typeof BToast, ToastOrchestratorParam>
+    resolve: (value: BvTriggerableEvent | boolean | null) => void
     stop?: WatchHandle
   }
+  'type': 'toast'
 } & {
   [K in keyof BToastEmits as CamelCase<Prefix<'on-', K>>]?: (e: BToastEmits[K][0]) => void
 } & {
@@ -143,6 +160,25 @@ export type ToastOrchestratorParam = Omit<BToastProps, 'modelValue'> & {
 
 export type ToastOrchestratorCreateParam = MaybeRef<ToastOrchestratorParam>
 
+export type TooltipOrchestratorArrayValue = BTooltipProps & {
+  'type': 'tooltip'
+  '_self': ControllerKey
+  'position': 'popover'
+  'options': OrchestratorCreateOptions
+  'onUpdate:modelValue'?: (val: boolean) => void
+  'component'?: Readonly<Component>
+  'promise': {
+    value: PromiseWithPopover
+    resolve: (value: BvTriggerableEvent) => void
+    stop?: WatchHandle
+  }
+  'slots'?: {
+    [K in keyof Omit<BPopoverSlots, 'target'>]?: BPopoverSlots[K] | Readonly<Component>
+  }
+} & {
+  [K in keyof BPopoverEmits as CamelCase<Prefix<'on-', K>>]?: (e: BPopoverEmits[K][0]) => void
+}
+
 export type TooltipOrchestratorMapValue = BTooltipProps & {
   'onUpdate:modelValue'?: (val: boolean) => void
   'component'?: Readonly<Component>
@@ -174,6 +210,26 @@ export type TooltipOrchestratorParam = Omit<BTooltipProps, 'body' | 'title' | 'm
 }
 
 export type TooltipOrchestratorCreateParam = MaybeRef<TooltipOrchestratorParam>
+
+export type PopoverOrchestratorArrayValue = BPopoverProps &
+  BTooltipProps & {
+    'type': 'popover'
+    '_self': ControllerKey
+    'position': 'popover'
+    'options': OrchestratorCreateOptions
+    'onUpdate:modelValue'?: (val: boolean) => void
+    'component'?: Readonly<Component>
+    'promise': {
+      value: PromiseWithComponent<typeof BPopover | typeof BTooltip, PopoverOrchestratorParam>
+      resolve: (value: BvTriggerableEvent | boolean | null) => void
+      stop?: WatchHandle
+    }
+    'slots'?: {
+      [K in keyof Omit<BPopoverSlots, 'target'>]?: BPopoverSlots[K] | Readonly<Component>
+    }
+  } & {
+    [K in keyof BPopoverEmits as CamelCase<Prefix<'on-', K>>]?: (e: BPopoverEmits[K][0]) => void
+  }
 
 export type PopoverOrchestratorMapValue = BPopoverProps &
   BTooltipProps & {
@@ -207,6 +263,25 @@ export type PopoverOrchestratorParam = Omit<BPopoverProps, 'body' | 'title' | 'm
 }
 
 export type PopoverOrchestratorCreateParam = MaybeRef<PopoverOrchestratorParam>
+
+export type ModalOrchestratorArrayValue = BModalProps & {
+  'type': 'modal'
+  '_self': ControllerKey
+  'position': 'modal'
+  'onUpdate:modelValue'?: (val: boolean) => void
+  'options': ModalOrchestratorCreateOptions
+  'promise': {
+    value: PromiseWithModal | PromiseWithModalBoolean
+    resolve: (value: BvTriggerableEvent | boolean | null) => void
+    stop?: WatchHandle
+  }
+  'component'?: Readonly<Component>
+  'slots'?: {
+    [K in keyof BModalSlots]?: BModalSlots[K] | Readonly<Component>
+  }
+} & {
+  [K in keyof BModalEmits as CamelCase<Prefix<'on-', K>>]?: (e: BModalEmits[K][0]) => void
+}
 
 export type ModalOrchestratorMapValue = BModalProps & {
   'onUpdate:modelValue'?: (val: boolean) => void
@@ -252,7 +327,11 @@ export type ModalOrchestratorCreateOptions = {
    */
   returnBoolean?: boolean
 }
-export type ToastOrchestratorCreateOptions = {
+export type OrchestratorCreateOptions = {
   keep?: boolean
   resolveOnHide?: boolean
+  /*
+   * @deprecated
+   */
+  returnBoolean?: boolean
 }
