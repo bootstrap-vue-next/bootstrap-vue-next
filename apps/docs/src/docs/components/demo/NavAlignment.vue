@@ -1,6 +1,9 @@
 <template>
   <!-- #region template -->
-  <BNav tabs align="center">
+  <BNav
+    tabs
+    align="center"
+  >
     <BNavItem active>Active</BNavItem>
     <BNavItem>Link</BNavItem>
     <BNavItem>Link with a long name </BNavItem>

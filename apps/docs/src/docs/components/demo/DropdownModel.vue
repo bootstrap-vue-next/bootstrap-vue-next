@@ -6,7 +6,11 @@
     <BButton @click="model = false">Close Dropdown</BButton>
   </div>
 
-  <BDropdown v-model="model" text="Dropdown Button" class="me-2">
+  <BDropdown
+    v-model="model"
+    text="Dropdown Button"
+    class="me-2"
+  >
     <BDropdownItem>First Action</BDropdownItem>
     <BDropdownItem>Second Action</BDropdownItem>
     <BDropdownItem>Third Action</BDropdownItem>

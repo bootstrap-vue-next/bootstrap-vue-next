@@ -1,12 +1,24 @@
 <template>
   <div role="group">
-    <BFormInput ref="inputRef" v-model="value" placeholder="Enter your name" />
+    <BFormInput
+      ref="inputRef"
+      v-model="value"
+      placeholder="Enter your name"
+    />
   </div>
   <div class="mt-2">
-    <BButton primary @click="selectAllText">Select all text</BButton>
+    <BButton
+      primary
+      @click="selectAllText"
+      >Select all text</BButton
+    >
   </div>
   <div class="mt-2">
-    <BButton primary @click="inputRef?.focus">Set Focus</BButton>
+    <BButton
+      primary
+      @click="inputRef?.focus"
+      >Set Focus</BButton
+    >
   </div>
 </template>
 

@@ -19,17 +19,29 @@
       >
         <BCardText>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</BCardText>
       </BCard>
-      <BCard border-variant="success" header="Success" align="center">
+      <BCard
+        border-variant="success"
+        header="Success"
+        align="center"
+      >
         <BCardText>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</BCardText>
       </BCard>
     </BCardGroup>
   </div>
   <div class="mt-3">
     <BCardGroup deck>
-      <BCard border-variant="info" header="Info" align="center">
+      <BCard
+        border-variant="info"
+        header="Info"
+        align="center"
+      >
         <BCardText>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</BCardText>
       </BCard>
-      <BCard border-variant="warning" header="Warning" align="center">
+      <BCard
+        border-variant="warning"
+        header="Warning"
+        align="center"
+      >
         <BCardText>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</BCardText>
       </BCard>
       <BCard
@@ -44,11 +56,22 @@
     </BCardGroup>
   </div>
   <div class="mt-3">
-    <BCardGroup deck class="mb-3">
-      <BCard border-variant="light" header="Light" class="text-center">
+    <BCardGroup
+      deck
+      class="mb-3"
+    >
+      <BCard
+        border-variant="light"
+        header="Light"
+        class="text-center"
+      >
         <BCardText>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</BCardText>
       </BCard>
-      <BCard border-variant="dark" header="Dark" align="center">
+      <BCard
+        border-variant="dark"
+        header="Dark"
+        align="center"
+      >
         <BCardText>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</BCardText>
       </BCard>
     </BCardGroup>

@@ -1,9 +1,17 @@
 <template>
   <!-- #region template -->
-  <BCard no-body class="overflow-hidden" style="max-width: 540px">
+  <BCard
+    no-body
+    class="overflow-hidden"
+    style="max-width: 540px"
+  >
     <BRow class="g-0">
       <BCol md="6">
-        <BCardImg src="https://picsum.photos/400/400/?image=20" alt="Image" class="rounded-0" />
+        <BCardImg
+          src="https://picsum.photos/400/400/?image=20"
+          alt="Image"
+          class="rounded-0"
+        />
       </BCol>
       <BCol md="6">
         <BCardBody title="Horizontal Card">

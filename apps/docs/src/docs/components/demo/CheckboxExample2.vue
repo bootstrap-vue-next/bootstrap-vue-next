@@ -1,6 +1,9 @@
 <template>
   <div>
-    <b-form-group v-slot="{ariaDescribedby}" label="Using options array:">
+    <b-form-group
+      v-slot="{ariaDescribedby}"
+      label="Using options array:"
+    >
       <b-form-checkbox-group
         id="checkbox-group-1"
         v-model="selected"
@@ -10,7 +13,10 @@
       />
     </b-form-group>
 
-    <b-form-group v-slot="{ariaDescribedby}" label="Using sub-components:">
+    <b-form-group
+      v-slot="{ariaDescribedby}"
+      label="Using sub-components:"
+    >
       <b-form-checkbox-group
         id="checkbox-group-2"
         v-model="selected"

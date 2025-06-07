@@ -1,5 +1,8 @@
 <template>
-  <p v-for="color in variants" :key="color">
+  <p
+    v-for="color in variants"
+    :key="color"
+  >
     <BLink :underline-variant="color"> {{ color }} link </BLink>
   </p>
 </template>

@@ -1,6 +1,9 @@
 <template>
   <!-- #region template -->
-  <BButton variant="primary" class="position-relative">
+  <BButton
+    variant="primary"
+    class="position-relative"
+  >
     Inbox
     <BBadge
       dot-indicator

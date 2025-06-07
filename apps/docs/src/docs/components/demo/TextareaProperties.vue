@@ -7,7 +7,12 @@
     rows="3"
   />
 
-  <button class="btn btn-primary mt-1" @click="selectText">Select text</button>
+  <button
+    class="btn btn-primary mt-1"
+    @click="selectText"
+  >
+    Select text
+  </button>
 </template>
 
 <script setup lang="ts">

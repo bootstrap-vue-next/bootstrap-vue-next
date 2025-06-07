@@ -2,7 +2,10 @@
   <BContainer class="py-5">
     <!-- User Interface controls -->
     <BRow>
-      <BCol lg="6" class="my-1">
+      <BCol
+        lg="6"
+        class="my-1"
+      >
         <BFormGroup
           label="Filter"
           label-for="filter-input"
@@ -19,12 +22,19 @@
               placeholder="Type to Search"
             />
             <BInputGroupText>
-              <BButton :disabled="!filter" @click="filter = ''">Clear</BButton>
+              <BButton
+                :disabled="!filter"
+                @click="filter = ''"
+                >Clear</BButton
+              >
             </BInputGroupText>
           </BInputGroup>
         </BFormGroup>
       </BCol>
-      <BCol lg="6" class="my-1">
+      <BCol
+        lg="6"
+        class="my-1"
+      >
         <BFormGroup
           label="Per page"
           label-for="per-page-select"
@@ -35,10 +45,18 @@
           label-size="sm"
           class="mb-0"
         >
-          <BFormSelect id="per-page-select" v-model="perPage" :options="pageOptions" size="sm" />
+          <BFormSelect
+            id="per-page-select"
+            v-model="perPage"
+            :options="pageOptions"
+            size="sm"
+          />
         </BFormGroup>
       </BCol>
-      <BCol lg="6" class="my-1">
+      <BCol
+        lg="6"
+        class="my-1"
+      >
         <BPagination
           v-model="currentPage"
           :total-rows="totalRows"

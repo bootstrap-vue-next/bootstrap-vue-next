@@ -1,6 +1,9 @@
 <template>
   <div>
-    <BTable hover :items="items" />
+    <BTable
+      hover
+      :items="items"
+    />
   </div>
 </template>
 

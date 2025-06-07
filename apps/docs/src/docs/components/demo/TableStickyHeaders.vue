@@ -1,6 +1,10 @@
 <template>
   <div>
-    <BTable sticky-header :items="items" head-variant="light" />
+    <BTable
+      sticky-header
+      :items="items"
+      head-variant="light"
+    />
   </div>
 </template>
 

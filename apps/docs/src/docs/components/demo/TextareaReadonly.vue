@@ -1,5 +1,9 @@
 <template>
-  <BFormTextarea id="textarea-plaintext" plaintext :model-value="textReadOnly" />
+  <BFormTextarea
+    id="textarea-plaintext"
+    plaintext
+    :model-value="textReadOnly"
+  />
 </template>
 
 <script setup lang="ts">

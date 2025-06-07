@@ -18,7 +18,10 @@
   </BInputGroup>
   <BInputGroup>
     <BInputGroupText>
-      <BFormCheckbox switch class="me-n2">
+      <BFormCheckbox
+        switch
+        class="me-n2"
+      >
         <span class="visually-hidden">Switch for following text input</span>
       </BFormCheckbox>
     </BInputGroupText>

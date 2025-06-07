@@ -1,6 +1,10 @@
 <template>
   <div>
-    <BFormGroup label="Selection mode:" label-for="table-select-mode-select" label-cols-md="4">
+    <BFormGroup
+      label="Selection mode:"
+      label-for="table-select-mode-select"
+      label-cols-md="4"
+    >
       <BFormSelect
         id="table-select-mode-select"
         v-model="selectMode"
@@ -31,10 +35,29 @@
       </template>
     </BTable>
     <p>
-      <BButton size="sm" class="me-2" @click="selectAllRows">Select all</BButton>
-      <BButton size="sm" class="me-2" @click="clearSelected">Clear selected</BButton>
-      <BButton size="sm" class="me-2" @click="selectThirdRow">Select 3rd row</BButton>
-      <BButton size="sm" @click="unselectThirdRow">Unselect 3rd row</BButton>
+      <BButton
+        size="sm"
+        class="me-2"
+        @click="selectAllRows"
+        >Select all</BButton
+      >
+      <BButton
+        size="sm"
+        class="me-2"
+        @click="clearSelected"
+        >Clear selected</BButton
+      >
+      <BButton
+        size="sm"
+        class="me-2"
+        @click="selectThirdRow"
+        >Select 3rd row</BButton
+      >
+      <BButton
+        size="sm"
+        @click="unselectThirdRow"
+        >Unselect 3rd row</BButton
+      >
     </p>
     <p>
       Selected Rows:<br />

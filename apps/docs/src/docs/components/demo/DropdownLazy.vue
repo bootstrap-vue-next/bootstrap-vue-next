@@ -1,6 +1,9 @@
 <template>
   <!-- #region template -->
-  <BDropdown lazy text="Dropdown">
+  <BDropdown
+    lazy
+    text="Dropdown"
+  >
     <BDropdownItem>First Action</BDropdownItem>
     <BDropdownItem>Second Action</BDropdownItem>
     <BDropdownItem>Third Action</BDropdownItem>

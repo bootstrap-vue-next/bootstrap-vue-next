@@ -1,6 +1,9 @@
 <template>
   <!-- #region template -->
-  <BCarousel controls indicators>
+  <BCarousel
+    controls
+    indicators
+  >
     <BCarouselSlide img-src="https://picsum.photos/1024/480/?image=40">
       <h1>First slide</h1>
       <p>Some more detailed description or whatever content.</p>

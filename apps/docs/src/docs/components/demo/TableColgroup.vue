@@ -1,6 +1,9 @@
 <template>
   <div>
-    <BTable :items="items" :fields="fields">
+    <BTable
+      :items="items"
+      :fields="fields"
+    >
       <template #table-colgroup>
         <col style="width: 30%" />
         <col style="width: 45%" />

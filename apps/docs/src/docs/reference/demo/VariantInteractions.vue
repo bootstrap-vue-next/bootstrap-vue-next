@@ -15,13 +15,24 @@
   <BRow
     ><BCol
       >Set 'text-variant' and 'bg-variant':
-      <BBadge text-variant="primary" bg-variant="danger"> testing </BBadge></BCol
+      <BBadge
+        text-variant="primary"
+        bg-variant="danger"
+      >
+        testing
+      </BBadge></BCol
     ></BRow
   >
   <BRow
     ><BCol
       >Set all three - 'variant' is overridden by 'bg-variant' and 'text-variant':
-      <BBadge text-variant="primary" bg-variant="danger" variant="success"> testing </BBadge></BCol
+      <BBadge
+        text-variant="primary"
+        bg-variant="danger"
+        variant="success"
+      >
+        testing
+      </BBadge></BCol
     ></BRow
   >
   <!-- #endregion template -->

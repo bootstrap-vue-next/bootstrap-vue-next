@@ -1,6 +1,11 @@
 <template>
   <div>
-    <BTable small :fields="fields" :items="items" responsive="sm">
+    <BTable
+      small
+      :fields="fields"
+      :items="items"
+      responsive="sm"
+    >
       <!-- A virtual column -->
       <template #cell(index)="data">
         {{ data.index + 1 }}

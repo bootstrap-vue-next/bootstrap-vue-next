@@ -1,5 +1,10 @@
 <template>
-  <BTable v-model:sort-by="multiSortBy" :items="sortItems" :fields="sortFields" :multisort="true" />
+  <BTable
+    v-model:sort-by="multiSortBy"
+    :items="sortItems"
+    :fields="sortFields"
+    :multisort="true"
+  />
   <div>sortBy = {{ JSON.stringify(multiSortBy) }}</div>
 </template>
 

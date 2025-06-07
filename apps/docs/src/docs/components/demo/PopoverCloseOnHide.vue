@@ -1,6 +1,10 @@
 <template>
   <div class="d-flex gap-2">
-    <BPopover :click="true" :close-on-hide="true" :delay="{show: 0, hide: 0}">
+    <BPopover
+      :click="true"
+      :close-on-hide="true"
+      :delay="{show: 0, hide: 0}"
+    >
       <template #target>
         <BButton>Click me. Popover closes when clipped</BButton>
       </template>

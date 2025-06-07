@@ -1,8 +1,14 @@
 <template>
   <!-- #region template -->
-  <BCard title="Card Title" no-body>
+  <BCard
+    title="Card Title"
+    no-body
+  >
     <BCardHeader header-tag="nav">
-      <BNav card-header tabs>
+      <BNav
+        card-header
+        tabs
+      >
         <BNavItem active>Active</BNavItem>
         <BNavItem>Inactive</BNavItem>
         <BNavItem disabled>Disabled</BNavItem>

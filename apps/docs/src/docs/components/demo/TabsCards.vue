@@ -2,7 +2,10 @@
   <!-- #region template -->
   <BCard no-body>
     <BTabs card>
-      <BTab title="Tab 1" active>
+      <BTab
+        title="Tab 1"
+        active
+      >
         <BCardText>Tab contents 1</BCardText>
       </BTab>
       <BTab title="Tab 2">

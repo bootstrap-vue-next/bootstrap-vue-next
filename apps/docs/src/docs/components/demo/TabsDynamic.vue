@@ -3,7 +3,11 @@
     <BCard no-body>
       <BTabs card>
         <!-- Render Tabs, supply a unique `key` to each tab -->
-        <BTab v-for="i in tabs" :key="'dyn-tab-' + i" :title="'Tab ' + i">
+        <BTab
+          v-for="i in tabs"
+          :key="'dyn-tab-' + i"
+          :title="'Tab ' + i"
+        >
           <template #title>
             {{ 'Tab ' + i }}
             <BButton

@@ -1,8 +1,13 @@
 <template>
-  <BFormCheckbox v-model="checked" v-model:indeterminate="indeterminate"
+  <BFormCheckbox
+    v-model="checked"
+    v-model:indeterminate="indeterminate"
     >Click me to see what happens</BFormCheckbox
   >
-  <BButton class="mt-2" :disabled="indeterminate" @click="indeterminate = true"
+  <BButton
+    class="mt-2"
+    :disabled="indeterminate"
+    @click="indeterminate = true"
     >Reset Indeterminate</BButton
   >
   <div class="mt-2">

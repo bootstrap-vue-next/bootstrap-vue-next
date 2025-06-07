@@ -6,7 +6,11 @@
       <BButton>Edit</BButton>
       <BButton>Undo</BButton>
     </BButtonGroup>
-    <BDropdown class="mx-1" placement="right" text="menu">
+    <BDropdown
+      class="mx-1"
+      placement="right"
+      text="menu"
+    >
       <BDropdownItem>Item 1</BDropdownItem>
       <BDropdownItem>Item 2</BDropdownItem>
       <BDropdownItem>Item 3</BDropdownItem>

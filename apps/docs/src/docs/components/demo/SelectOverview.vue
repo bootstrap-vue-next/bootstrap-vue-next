@@ -1,8 +1,16 @@
 ```vue
 <template>
-  <BFormSelect v-model="selected" :options="ex1Options" />
+  <BFormSelect
+    v-model="selected"
+    :options="ex1Options"
+  />
 
-  <BFormSelect v-model="selected" :options="ex1Options" size="sm" class="mt-3" />
+  <BFormSelect
+    v-model="selected"
+    :options="ex1Options"
+    size="sm"
+    class="mt-3"
+  />
 
   <div class="mt-3">
     Selected: <strong>{{ selected }}</strong>

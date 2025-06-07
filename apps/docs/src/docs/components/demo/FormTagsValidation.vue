@@ -1,6 +1,10 @@
 <template>
   <div>
-    <BFormGroup label="Tags validation example" label-for="tags-validation" :state="state">
+    <BFormGroup
+      label="Tags validation example"
+      label-for="tags-validation"
+      :state="state"
+    >
       <BFormTags
         v-model="tags"
         input-id="tags-validation"

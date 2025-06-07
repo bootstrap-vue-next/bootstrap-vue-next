@@ -1,10 +1,29 @@
 <template>
-  <BButton class="m-2" @click="click('start')">Show start</BButton>
-  <BButton class="m-2" @click="click('end')">Show end</BButton>
-  <BButton class="m-2" @click="click('bottom')">Show bottom</BButton>
-  <BButton class="m-2" @click="click('top')">Show top</BButton>
+  <BButton
+    class="m-2"
+    @click="click('start')"
+    >Show start</BButton
+  >
+  <BButton
+    class="m-2"
+    @click="click('end')"
+    >Show end</BButton
+  >
+  <BButton
+    class="m-2"
+    @click="click('bottom')"
+    >Show bottom</BButton
+  >
+  <BButton
+    class="m-2"
+    @click="click('top')"
+    >Show top</BButton
+  >
 
-  <BOffcanvas v-model="show" :placement="placement" />
+  <BOffcanvas
+    v-model="show"
+    :placement="placement"
+  />
 </template>
 
 <script setup lang="ts">

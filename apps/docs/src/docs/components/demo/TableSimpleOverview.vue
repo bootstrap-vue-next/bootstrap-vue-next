@@ -1,6 +1,11 @@
 <template>
   <!-- #region template -->
-  <BTableSimple hover small caption-top responsive>
+  <BTableSimple
+    hover
+    small
+    caption-top
+    responsive
+  >
     <caption>
       Items sold in August, grouped by Country and City:
     </caption>
@@ -79,7 +84,13 @@
     </BTbody>
     <BTfoot>
       <BTr>
-        <BTd colspan="7" variant="secondary" class="text-end"> Total Rows: <b>5</b> </BTd>
+        <BTd
+          colspan="7"
+          variant="secondary"
+          class="text-end"
+        >
+          Total Rows: <b>5</b>
+        </BTd>
       </BTr>
     </BTfoot>
   </BTableSimple>

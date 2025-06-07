@@ -1,6 +1,9 @@
 <template>
   <div>
-    <BTable :items="items" :fields="fields">
+    <BTable
+      :items="items"
+      :fields="fields"
+    >
       <template #table-caption>This is a table caption.</template>
     </BTable>
   </div>

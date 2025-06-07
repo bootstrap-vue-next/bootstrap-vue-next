@@ -1,12 +1,26 @@
 <template>
   <h6>Small Pills</h6>
-  <BPagination v-model="currentPage" pills :total-rows="rows" size="sm" />
+  <BPagination
+    v-model="currentPage"
+    pills
+    :total-rows="rows"
+    size="sm"
+  />
 
   <h6>Default Pills</h6>
-  <BPagination v-model="currentPage" pills :total-rows="rows" />
+  <BPagination
+    v-model="currentPage"
+    pills
+    :total-rows="rows"
+  />
 
   <h6>Large Pills</h6>
-  <BPagination v-model="currentPage" pills :total-rows="rows" size="lg" />
+  <BPagination
+    v-model="currentPage"
+    pills
+    :total-rows="rows"
+    size="lg"
+  />
 </template>
 
 <script setup lang="ts">

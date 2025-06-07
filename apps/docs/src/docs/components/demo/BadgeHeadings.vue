@@ -1,5 +1,8 @@
 <template>
-  <div class="d-flex mb-4" style="column-gap: 1%">
+  <div
+    class="d-flex mb-4"
+    style="column-gap: 1%"
+  >
     <!-- #region template -->
     <h1>
       Example heading

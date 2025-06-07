@@ -9,7 +9,12 @@
     :state="state"
     label-class="mb-1"
   >
-    <BFormInput id="input-1" v-model="name" :state="state" trim />
+    <BFormInput
+      id="input-1"
+      v-model="name"
+      :state="state"
+      trim
+    />
   </BFormGroup>
   <div>
     Name: <strong>{{ name }}</strong>

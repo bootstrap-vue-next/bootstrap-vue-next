@@ -5,9 +5,17 @@
     </div>
 
     <div class="p-2">
-      <BPopover v-model="model" placement="right" title="Popover">
+      <BPopover
+        v-model="model"
+        placement="right"
+        title="Popover"
+      >
         <template #target>
-          <BButton class="mx-2" @click="model = !model">Toggle Popover</BButton>
+          <BButton
+            class="mx-2"
+            @click="model = !model"
+            >Toggle Popover</BButton
+          >
         </template>
         Hello <strong>World!</strong>
       </BPopover>

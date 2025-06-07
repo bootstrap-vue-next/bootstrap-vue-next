@@ -1,6 +1,10 @@
 <template>
   <div>
-    <BTable :items="items" :fields="fields" :tbody-tr-class="rowClass" />
+    <BTable
+      :items="items"
+      :fields="fields"
+      :tbody-tr-class="rowClass"
+    />
   </div>
 </template>
 

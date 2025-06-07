@@ -1,19 +1,34 @@
 <template>
   <div>
     <h6>Left alignment (default)</h6>
-    <BPagination v-model="currentPage" :total-rows="rows" />
+    <BPagination
+      v-model="currentPage"
+      :total-rows="rows"
+    />
   </div>
   <div class="mt-3">
     <h6 class="text-center">Center alignment</h6>
-    <BPagination v-model="currentPage" :total-rows="rows" align="center" />
+    <BPagination
+      v-model="currentPage"
+      :total-rows="rows"
+      align="center"
+    />
   </div>
   <div class="mt-3">
     <h6 class="text-end">Right (end) alignment</h6>
-    <BPagination v-model="currentPage" :total-rows="rows" align="end" />
+    <BPagination
+      v-model="currentPage"
+      :total-rows="rows"
+      align="end"
+    />
   </div>
   <div class="mt-3">
     <h6 class="text-center">Fill alignment</h6>
-    <BPagination v-model="currentPage" :total-rows="rows" align="fill" />
+    <BPagination
+      v-model="currentPage"
+      :total-rows="rows"
+      align="fill"
+    />
   </div>
 </template>
 <script setup lang="ts">

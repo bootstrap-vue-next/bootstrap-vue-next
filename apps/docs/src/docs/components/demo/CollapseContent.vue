@@ -2,7 +2,12 @@
   <!-- #region template -->
   <BCollapse id="my-collapse">
     <template #header="{visible, toggle, id}">
-      <BButton variant="primary" :aria-expanded="visible" :aria-controls="id" @click="toggle">
+      <BButton
+        variant="primary"
+        :aria-expanded="visible"
+        :aria-controls="id"
+        @click="toggle"
+      >
         <span>{{ visible ? 'Close' : 'Open' }}</span> My Collapse
       </BButton>
     </template>

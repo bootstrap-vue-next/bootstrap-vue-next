@@ -6,8 +6,16 @@
   </BCarousel>
 
   <BButtonGroup class="mt-3">
-    <BButton variant="danger" @click="prev">Previous Slide</BButton>
-    <BButton variant="success" @click="next">Next Slide</BButton>
+    <BButton
+      variant="danger"
+      @click="prev"
+      >Previous Slide</BButton
+    >
+    <BButton
+      variant="success"
+      @click="next"
+      >Next Slide</BButton
+    >
   </BButtonGroup>
 </template>
 

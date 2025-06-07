@@ -13,7 +13,10 @@
         mollit voluptate est in duis laboris ad sit ipsum anim Lorem.
       </p>
     </BCard>
-    <BCard no-body header="Card with flush list group">
+    <BCard
+      no-body
+      header="Card with flush list group"
+    >
       <BListGroup flush>
         <BListGroupItem href="#">Cras justo odio</BListGroupItem>
         <BListGroupItem href="#">Dapibus ac facilisis in</BListGroupItem>

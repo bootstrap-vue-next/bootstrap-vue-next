@@ -4,7 +4,12 @@
   </div>
 
   <div>
-    <BFormRadioGroup v-model="selected" :options="plainOptions" name="plain-inline" plain />
+    <BFormRadioGroup
+      v-model="selected"
+      :options="plainOptions"
+      name="plain-inline"
+      plain
+    />
   </div>
 
   <div class="my-2">
@@ -12,7 +17,12 @@
   </div>
 
   <div>
-    <BFormRadioGroup v-model="selected" :options="plainOptions" name="plain-stacked" plain />
+    <BFormRadioGroup
+      v-model="selected"
+      :options="plainOptions"
+      name="plain-stacked"
+      plain
+    />
   </div>
 
   <div class="mt-3">

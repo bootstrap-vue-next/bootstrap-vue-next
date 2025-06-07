@@ -1,6 +1,9 @@
 <template>
   <div class="text-center">
-    <BPopover show title="Popover">
+    <BPopover
+      show
+      title="Popover"
+    >
       <template #target>
         <BButton variant="primary">Button</BButton>
       </template>

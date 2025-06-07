@@ -4,7 +4,10 @@
     <BButton @click="hide">hide</BButton>
     <BButton @click="toggle">toggle</BButton>
   </BButtonGroup>
-  <BCollapse ref="myCollapse" class="mt-2">
+  <BCollapse
+    ref="myCollapse"
+    class="mt-2"
+  >
     <BCard>I am controlled by exposed functions!</BCard>
   </BCollapse>
   <pre class="mt-2">

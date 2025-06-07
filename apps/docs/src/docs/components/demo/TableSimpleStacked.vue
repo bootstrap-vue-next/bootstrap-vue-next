@@ -1,6 +1,11 @@
 <template>
   <!-- #region template -->
-  <BTableSimple hover small caption-top stacked>
+  <BTableSimple
+    hover
+    small
+    caption-top
+    stacked
+  >
     <caption>
       Items sold in August, grouped by Country and City:
     </caption>
@@ -35,21 +40,41 @@
     </BThead>
     <BTbody>
       <BTr>
-        <BTh rowspan="3" class="text-center">Belgium (3 Cities)</BTh>
-        <BTh stacked-heading="City" class="text-start">Antwerp</BTh>
+        <BTh
+          rowspan="3"
+          class="text-center"
+          >Belgium (3 Cities)</BTh
+        >
+        <BTh
+          stacked-heading="City"
+          class="text-start"
+          >Antwerp</BTh
+        >
         <BTd stacked-heading="Clothes: Trousers">56</BTd>
         <BTd stacked-heading="Clothes: Skirts">22</BTd>
         <BTd stacked-heading="Clothes: Dresses">43</BTd>
-        <BTd stacked-heading="Accessories: Bracelets" variant="success">72</BTd>
+        <BTd
+          stacked-heading="Accessories: Bracelets"
+          variant="success"
+          >72</BTd
+        >
         <BTd stacked-heading="Accessories: Rings">23</BTd>
       </BTr>
       <BTr>
         <BTh stacked-heading="City">Gent</BTh>
         <BTd stacked-heading="Clothes: Trousers">46</BTd>
-        <BTd stacked-heading="Clothes: Skirts" variant="warning">18</BTd>
+        <BTd
+          stacked-heading="Clothes: Skirts"
+          variant="warning"
+          >18</BTd
+        >
         <BTd stacked-heading="Clothes: Dresses">50</BTd>
         <BTd stacked-heading="Accessories: Bracelets">61</BTd>
-        <BTd stacked-heading="Accessories: Rings" variant="danger">15</BTd>
+        <BTd
+          stacked-heading="Accessories: Rings"
+          variant="danger"
+          >15</BTd
+        >
       </BTr>
       <BTr>
         <BTh stacked-heading="City">Brussels</BTh>
@@ -60,9 +85,17 @@
         <BTd stacked-heading="Accessories: Rings">28</BTd>
       </BTr>
       <BTr>
-        <BTh rowspan="2" class="text-center">The Netherlands (2 Cities)</BTh>
+        <BTh
+          rowspan="2"
+          class="text-center"
+          >The Netherlands (2 Cities)</BTh
+        >
         <BTh stacked-heading="City">Amsterdam</BTh>
-        <BTd stacked-heading="Clothes: Trousers" variant="success">89</BTd>
+        <BTd
+          stacked-heading="Clothes: Trousers"
+          variant="success"
+          >89</BTd
+        >
         <BTd stacked-heading="Clothes: Skirts">34</BTd>
         <BTd stacked-heading="Clothes: Dresses">69</BTd>
         <BTd stacked-heading="Accessories: Bracelets">85</BTd>
@@ -71,15 +104,29 @@
       <BTr>
         <BTh stacked-heading="City">Utrecht</BTh>
         <BTd stacked-heading="Clothes: Trousers">80</BTd>
-        <BTd stacked-heading="Clothes: Skirts" variant="danger">12</BTd>
+        <BTd
+          stacked-heading="Clothes: Skirts"
+          variant="danger"
+          >12</BTd
+        >
         <BTd stacked-heading="Clothes: Dresses">43</BTd>
         <BTd stacked-heading="Accessories: Bracelets">36</BTd>
-        <BTd stacked-heading="Accessories: Rings" variant="warning">19</BTd>
+        <BTd
+          stacked-heading="Accessories: Rings"
+          variant="warning"
+          >19</BTd
+        >
       </BTr>
     </BTbody>
     <BTfoot>
       <BTr>
-        <BTd colspan="7" variant="secondary" class="text-end"> Total Rows: <b>5</b> </BTd>
+        <BTd
+          colspan="7"
+          variant="secondary"
+          class="text-end"
+        >
+          Total Rows: <b>5</b>
+        </BTd>
       </BTr>
     </BTfoot>
   </BTableSimple>

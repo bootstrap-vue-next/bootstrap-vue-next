@@ -1,7 +1,11 @@
 <template>
   <BForm @submit.stop.prevent>
     <label for="feedback-user">User Id</label>
-    <BFormInput id="feedback-user" v-model="userId" :state="validation" />
+    <BFormInput
+      id="feedback-user"
+      v-model="userId"
+      :state="validation"
+    />
     <BFormInvalidFeedback :state="validation">
       Your user Id must be 5-12 characters long.
     </BFormInvalidFeedback>

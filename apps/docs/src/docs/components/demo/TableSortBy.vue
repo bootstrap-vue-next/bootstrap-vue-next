@@ -1,5 +1,9 @@
 <template>
-  <BTable v-model:sort-by="sortBy" :items="items" :fields="fields" />
+  <BTable
+    v-model:sort-by="sortBy"
+    :items="items"
+    :fields="fields"
+  />
   <div>sortBy = {{ JSON.stringify(sortBy) }}</div>
   <div>singleSortBy = {{ JSON.stringify(singleSortBy) }}</div>
 </template>

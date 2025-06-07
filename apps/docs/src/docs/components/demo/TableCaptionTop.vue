@@ -1,6 +1,10 @@
 <template>
   <div>
-    <BTable :items="items" :fields="fields" caption-top>
+    <BTable
+      :items="items"
+      :fields="fields"
+      caption-top
+    >
       <template #table-caption>This is a table caption at the top.</template>
     </BTable>
   </div>

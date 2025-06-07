@@ -2,7 +2,12 @@
   <div>
     <BButton @click="toggleBusy">Toggle Busy State</BButton>
 
-    <BTable :items="items" :busy="isBusy" class="mt-3" outlined>
+    <BTable
+      :items="items"
+      :busy="isBusy"
+      class="mt-3"
+      outlined
+    >
       <!-- <template #table-busy>
         <div class="text-center text-danger my-2">
           <BSpinner class="align-middle" />
