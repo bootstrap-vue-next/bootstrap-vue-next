@@ -11,9 +11,10 @@ import {
 } from 'vue'
 import {useAriaInvalid} from './useAriaInvalid'
 import {useId} from './useId'
-import {useDebounceFn, useFocus, useToNumber} from '@vueuse/core'
+import {useFocus, useToNumber} from '@vueuse/core'
 import type {CommonInputProps} from '../types/FormCommonInputProps'
 import {formGroupPluginKey} from '../utils/keys'
+import {useDebounceFn} from '../utils/debounce'
 import {useStateClass} from './useStateClass'
 
 export const useFormInput = (
@@ -27,7 +28,7 @@ export const useFormInput = (
   const forceUpdateKey = ref(0)
 
   const computedId = useId(() => props.id, 'input')
-  const debounceNumber = useToNumber(() => props.debounce ?? 0)
+  const debounceNumber = useToNumber(() => props.debounce ?? 0, {nanToZero: true})
   const debounceMaxWaitNumber = useToNumber(() => props.debounceMaxWait ?? NaN)
 
   // This automatically adds the appropriate "for" attribute to a BFormGroup label
@@ -46,9 +47,13 @@ export const useFormInput = (
     {maxWait: () => (modelModifiers.lazy === true ? NaN : debounceMaxWaitNumber.value)}
   )
 
-  const updateModelValue = (value: Numberish, force = false) => {
+  const updateModelValue = (value: Numberish, force = false, immediate = false) => {
     if (modelModifiers.lazy === true && force === false) return
-    internalUpdateModelValue(value)
+    if (immediate) {
+      modelValue.value = value
+    } else {
+      internalUpdateModelValue(value)
+    }
   }
 
   const {focused} = useFocus(input, {
@@ -103,15 +108,23 @@ export const useFormInput = (
   }
 
   const onBlur = (evt: Readonly<FocusEvent>) => {
-    if (!modelModifiers.lazy && !props.lazyFormatter && !modelModifiers.trim) return
+    if (
+      !modelModifiers.lazy &&
+      !props.lazyFormatter &&
+      !modelModifiers.trim &&
+      debounceNumber.value <= 0
+    )
+      return
 
     const {value} = evt.target as HTMLInputElement
     const formattedValue = _formatValue(value, evt, true)
 
     const nextModel = modelModifiers.trim ? formattedValue.trim() : formattedValue
     const needsForceUpdate = nextModel.length !== formattedValue.length
+    // Cancel before modelValue.value comparison and update
+    internalUpdateModelValue.cancel()
     if (modelValue.value !== nextModel) {
-      updateModelValue(formattedValue, true)
+      updateModelValue(formattedValue, true, true)
     }
     if (modelModifiers.trim && needsForceUpdate) {
       // The value is trimmed but there would still exist some white space
