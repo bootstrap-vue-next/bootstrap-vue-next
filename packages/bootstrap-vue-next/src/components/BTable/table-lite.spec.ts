@@ -547,6 +547,16 @@ describe('btablelite', () => {
       expect($tr.find('th.first-name').exists()).toBe(true)
       expect($tr.find('td.age').exists()).toBe(true)
       expect($tr.find('td.active').exists()).toBe(true)
+      await wrapper.setProps({
+        fields: [
+          {key: 'name.first', label: 'Actions', isRowHeader: false, class: 'first-name'},
+          {key: 'age', label: 'Age', isRowHeader: false, class: 'age'},
+          {key: 'isActive', label: 'Active', isRowHeader: false, class: 'active'},
+        ],
+      })
+      expect($tr.find('th.first-name').exists()).toBe(false)
+      expect($tr.find('td.age').exists()).toBe(true)
+      expect($tr.find('td.active').exists()).toBe(true)
     })
   })
 })
