@@ -217,7 +217,6 @@ import {
   isTableItem,
   type TableField,
   type TableItem,
-  type TableRowEvent,
   type TableRowThead,
   type TableRowType,
 } from '../../types/TableTypes'
@@ -236,6 +235,7 @@ import {filterEvent} from '../../utils/filterEvent'
 import {startCase} from '../../utils/stringUtils'
 import type {LiteralUnion} from '../../types/LiteralUnion'
 import {useId} from '../../composables/useId'
+import type {BTableLiteEmits} from '../../types/ComponentEmits'
 
 const _props = withDefaults(defineProps<BTableLiteProps<Items>>(), {
   caption: undefined,
@@ -282,20 +282,7 @@ const _props = withDefaults(defineProps<BTableLiteProps<Items>>(), {
 })
 const props = useDefaults(_props, 'BTableLite')
 
-const emit = defineEmits<{
-  'head-clicked': [
-    key: string,
-    field: (typeof computedFields.value)[0],
-    event: MouseEvent,
-    isFooter: boolean,
-  ]
-  'row-clicked': TableRowEvent<Items>
-  'row-dblclicked': TableRowEvent<Items>
-  'row-contextmenu': TableRowEvent<Items>
-  'row-hovered': TableRowEvent<Items>
-  'row-unhovered': TableRowEvent<Items>
-  'row-middle-clicked': TableRowEvent<Items>
-}>()
+const emit = defineEmits<BTableLiteEmits<Items, (typeof computedFields.value)[0]>>()
 
 const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
