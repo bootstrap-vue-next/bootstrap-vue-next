@@ -203,7 +203,7 @@ const content = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_content')
 const target = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_target')
 
 const {current: activeId, list: items} = useScrollspy(content, target, {
-  contentQuery: ':scope > div > [id], #component-reference, .component-reference h3',
+  contentQuery: ':scope h1, :scope > div > [id], #component-reference, .component-reference h3',
   targetQuery: ':scope [href]',
   rootMargin: '0px 0px -25%',
   manual: true,
