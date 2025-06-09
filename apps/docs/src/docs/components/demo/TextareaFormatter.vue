@@ -30,7 +30,12 @@
     />
   </BFormGroup>
 
-  <p class="mb-0" style="white-space: pre-line"><b>Value:</b> {{ textFormatter2 }}</p>
+  <p
+    class="mb-0"
+    style="white-space: pre-line"
+  >
+    <b>Value:</b> {{ textFormatter2 }}
+  </p>
 </template>
 
 <script setup lang="ts">

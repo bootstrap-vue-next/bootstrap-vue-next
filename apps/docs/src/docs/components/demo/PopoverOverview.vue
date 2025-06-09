@@ -1,7 +1,10 @@
 <template>
   <!-- #region template -->
   <div class="d-flex gap-2">
-    <BButton v-b-popover.focus.top="'I am popover directive content!'" title="Popover Title">
+    <BButton
+      v-b-popover.focus.top="'I am popover directive content!'"
+      title="Popover Title"
+    >
       Hover Me
     </BButton>
 

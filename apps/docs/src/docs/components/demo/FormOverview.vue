@@ -1,5 +1,9 @@
 <template>
-  <BForm v-if="show" @submit="onSubmit" @reset="onReset">
+  <BForm
+    v-if="show"
+    @submit="onSubmit"
+    @reset="onReset"
+  >
     <BFormGroup
       id="input-group-1"
       label="Email address:"
@@ -15,24 +19,56 @@
       />
     </BFormGroup>
 
-    <BFormGroup id="input-group-2" label="Your Name:" label-for="input-2">
-      <BFormInput id="input-2" v-model="form.name" placeholder="Enter name" required />
+    <BFormGroup
+      id="input-group-2"
+      label="Your Name:"
+      label-for="input-2"
+    >
+      <BFormInput
+        id="input-2"
+        v-model="form.name"
+        placeholder="Enter name"
+        required
+      />
     </BFormGroup>
-    <BFormGroup id="input-group-3" label="Food:" label-for="input-3">
-      <BFormSelect id="input-3" v-model="form.food" :options="foods" required />
+    <BFormGroup
+      id="input-group-3"
+      label="Food:"
+      label-for="input-3"
+    >
+      <BFormSelect
+        id="input-3"
+        v-model="form.food"
+        :options="foods"
+        required
+      />
     </BFormGroup>
 
     <BFormGroup id="input-group-4">
-      <BFormCheckboxGroup id="checkboxes-4" v-model="form.checked">
+      <BFormCheckboxGroup
+        id="checkboxes-4"
+        v-model="form.checked"
+      >
         <BFormCheckbox value="me">Check me out</BFormCheckbox>
         <BFormCheckbox value="that">Check that out</BFormCheckbox>
       </BFormCheckboxGroup>
     </BFormGroup>
-    <BButton type="submit" variant="primary">Submit</BButton>
-    <BButton type="reset" variant="danger">Reset</BButton>
+    <BButton
+      type="submit"
+      variant="primary"
+      >Submit</BButton
+    >
+    <BButton
+      type="reset"
+      variant="danger"
+      >Reset</BButton
+    >
   </BForm>
 
-  <BCard class="mt-3" header="Form Data Result">
+  <BCard
+    class="mt-3"
+    header="Form Data Result"
+  >
     <pre class="m-0">{{ form }}</pre>
   </BCard>
 </template>

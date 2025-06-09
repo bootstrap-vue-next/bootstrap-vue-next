@@ -1,11 +1,19 @@
 <template>
   <div>
-    <BTable :items="items" :fields="fields" responsive="sm">
+    <BTable
+      :items="items"
+      :fields="fields"
+      responsive="sm"
+    >
       <template #thead-top>
         <BTr>
           <BTh colspan="2"><span class="visually-hidden">Name and ID</span></BTh>
           <BTh variant="secondary">Type 1</BTh>
-          <BTh variant="primary" colspan="3">Type 2</BTh>
+          <BTh
+            variant="primary"
+            colspan="3"
+            >Type 2</BTh
+          >
           <BTh variant="danger">Type 3</BTh>
         </BTr>
       </template>

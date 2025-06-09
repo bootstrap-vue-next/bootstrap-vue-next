@@ -4,8 +4,18 @@
   </div>
 
   <div>
-    <BFormRadio v-model="selected" name="some-radios" value="A">Option A </BFormRadio>
-    <BFormRadio v-model="selected" name="some-radios" value="B">Option B </BFormRadio>
+    <BFormRadio
+      v-model="selected"
+      name="some-radios"
+      value="A"
+      >Option A
+    </BFormRadio>
+    <BFormRadio
+      v-model="selected"
+      name="some-radios"
+      value="B"
+      >Option B
+    </BFormRadio>
   </div>
 
   <div class="mt-3">

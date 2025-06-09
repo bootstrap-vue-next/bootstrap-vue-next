@@ -3,7 +3,12 @@
   <BNav pills>
     <BNavItem active>Active</BNavItem>
     <BNavItem>Link</BNavItem>
-    <BNavItemDropdown id="my-nav-dropdown" text="Dropdown" toggle-class="nav-link-custom" right>
+    <BNavItemDropdown
+      id="my-nav-dropdown"
+      text="Dropdown"
+      toggle-class="nav-link-custom"
+      right
+    >
       <BDropdownItem>One</BDropdownItem>
       <BDropdownItem>Two</BDropdownItem>
       <BDropdownDivider />

@@ -1,5 +1,8 @@
 <template>
-  <p v-for="opacity in opacities" :key="opacity">
+  <p
+    v-for="opacity in opacities"
+    :key="opacity"
+  >
     <BLink :opacity="opacity"> {{ opacity }} link </BLink>
   </p>
 </template>

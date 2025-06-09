@@ -4,7 +4,12 @@
     <BFormRadio value="lower">Lowercase First</BFormRadio>
     <BFormRadio value="upper">Uppercase First</BFormRadio>
   </BFormRadioGroup>
-  <BTable ref="my-table" v-model:sort-by="sortBy" :items="items" :fields="fields" />
+  <BTable
+    ref="my-table"
+    v-model:sort-by="sortBy"
+    :items="items"
+    :fields="fields"
+  />
   <div>sortBy = {{ JSON.stringify(sortBy) }}</div>
   <div>singleSortBy = {{ JSON.stringify(singleSortBy) }}</div>
 </template>

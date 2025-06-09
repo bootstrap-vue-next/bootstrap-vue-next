@@ -20,13 +20,21 @@
         </footer>
       </blockquote>
     </BCard>
-    <BCard title="Title" img-src="https://picsum.photos/500/350" img-alt="Image" img-top>
+    <BCard
+      title="Title"
+      img-src="https://picsum.photos/500/350"
+      img-alt="Image"
+      img-top
+    >
       <BCardText>
         This card has supporting text below as a natural lead-in to additional content.
       </BCardText>
       <BCardText class="small text-body-secondary">Last updated 3 mins ago</BCardText>
     </BCard>
-    <BCard bg-variant="primary" text-variant="white">
+    <BCard
+      bg-variant="primary"
+      text-variant="white"
+    >
       <blockquote class="card-blockquote">
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
         <footer>
@@ -41,8 +49,16 @@
       </BCardText>
       <BCardText class="small text-body-secondary">Last updated 3 mins ago</BCardText>
     </BCard>
-    <BCard img-src="https://picsum.photos/400/400/?image=41" img-alt="Image" overlay />
-    <BCard img-src="https://picsum.photos/400/200/?image=41" img-alt="Image" img-top>
+    <BCard
+      img-src="https://picsum.photos/400/400/?image=41"
+      img-alt="Image"
+      overlay
+    />
+    <BCard
+      img-src="https://picsum.photos/400/200/?image=41"
+      img-alt="Image"
+      img-top
+    >
       <BCardText>
         This is a wider card with supporting text below as a natural lead-in to additional content.
         This card has even longer content than the first.

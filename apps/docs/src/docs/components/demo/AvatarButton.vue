@@ -2,11 +2,21 @@
 <template>
   <BListGroup>
     <BListGroupItem>
-      <BAvatar button variant="primary" text="FF" class="align-baseline" @click="alertEvent" />
+      <BAvatar
+        button
+        variant="primary"
+        text="FF"
+        class="align-baseline"
+        @click="alertEvent"
+      />
       Button Text Avatar
     </BListGroupItem>
     <BListGroupItem>
-      <BAvatar button src="https://picsum.photos/30/30/?image=40" @click="alertEvent" />
+      <BAvatar
+        button
+        src="https://picsum.photos/30/30/?image=40"
+        @click="alertEvent"
+      />
       Button Image Avatar
     </BListGroupItem>
   </BListGroup>

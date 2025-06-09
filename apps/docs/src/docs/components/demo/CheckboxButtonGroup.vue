@@ -3,7 +3,12 @@
     <label>Form-checkbox-group inline checkboxes (default)</label>
   </div>
 
-  <BFormCheckboxGroup v-model="selected" :options="options" name="buttons-1" buttons />
+  <BFormCheckboxGroup
+    v-model="selected"
+    :options="options"
+    name="buttons-1"
+    buttons
+  />
 
   <div class="my-2">
     <label>Button-group style checkboxes with variant primary and large buttons</label>
@@ -22,7 +27,12 @@
     <label>Stacked (vertical) button-group style checkboxes</label>
   </div>
 
-  <BFormCheckboxGroup v-model="selected" :options="options" stacked buttons />
+  <BFormCheckboxGroup
+    v-model="selected"
+    :options="options"
+    stacked
+    buttons
+  />
 </template>
 
 <script setup lang="ts">
