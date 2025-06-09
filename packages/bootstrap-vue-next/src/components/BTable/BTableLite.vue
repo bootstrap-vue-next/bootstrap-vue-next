@@ -88,7 +88,8 @@
             @mouseleave="!filterEvent($event) && emit('row-unhovered', item, itemIndex, $event)"
             @mousedown="handleMiddleClick(item, itemIndex, $event)"
           >
-            <BTd
+            <component
+              :is="getCellComponent(field)"
               v-for="field in computedFields"
               :key="field.key"
               :variant="
@@ -121,7 +122,7 @@
                   {{ formatItem(item, String(field.key), field.formatter) }}
                 </template>
               </slot>
-            </BTd>
+            </component>
           </BTr>
 
           <template
@@ -517,6 +518,13 @@ const getRowClasses = (item: Items | null, type: TableRowType) =>
 
 const generateTableRowId = (primaryKeyValue: string) =>
   `${computedId.value}__row_${primaryKeyValue}`
+
+const getCellComponent = (field: Readonly<TableField>) => {
+  if (field?.isRowHeader) {
+    return BTh
+  }
+  return BTd
+}
 
 const computedSimpleProps = computed(() => ({
   ...pick(props, btableSimpleProps),
