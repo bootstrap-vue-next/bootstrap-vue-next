@@ -95,7 +95,7 @@ export const toastPlugin: Plugin = {
                 resolve(e)
               }
               nextTick(() => {
-                this.hide()
+                this.hide('destroy')
               })
             })
           }

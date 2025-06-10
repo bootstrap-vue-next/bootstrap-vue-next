@@ -256,12 +256,8 @@ watch(modelValue, (newValue, oldValue) => {
   if (typeof newValue === 'number' && newValue === 0) {
     stop()
   }
-  if (
-    typeof newValue === 'boolean' &&
-    newValue === false &&
-    typeof oldValue === 'number' &&
-    oldValue > 0
-  ) {
+  if (newValue === false && typeof oldValue === 'number' && oldValue > 0) {
+    console.log('stop', newValue, oldValue)
     stop()
   }
 })
