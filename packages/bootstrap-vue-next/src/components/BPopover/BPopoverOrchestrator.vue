@@ -2,12 +2,10 @@
   <ConditionalTeleport :to="props.teleportTo" :disabled="props.teleportDisabled">
     <div id="__BVID__popover-container" v-bind="$attrs">
       <component
-        :is="_component ?? (val.tooltip ? BTooltip : BPopover)"
-        v-for="[
-          key,
-          {component: _component, promise, slots, ...val},
-        ] in tools.popovers?.value.entries() ?? []"
-        :key="key"
+        :is="_component"
+        v-for="{_self, component: _component, promise, slots, ...val} in tools.popovers?.value ??
+        []"
+        :key="_self"
         v-bind="val"
         initial-animation
         :teleport-disabled="true"
@@ -35,11 +33,15 @@ import {useDefaults} from '../../composables/useDefaults'
 import type {BPopoverOrchestratorProps} from '../../types/ComponentProps'
 
 import {usePopoverController} from '../../composables/usePopoverController'
-import BPopover from './BPopover.vue'
-import BTooltip from '../BTooltip/BTooltip.vue'
 
 const tools = usePopoverController()
-tools._isOrchestratorInstalled.value = true
+if (!tools._isOrchestratorInstalled.value) {
+  tools._isOrchestratorInstalled.value = true
+} else {
+  console.warn(
+    'BPopoverOrchestrator Or BApp is already installed, only one can be installed at a time'
+  )
+}
 
 const _props = withDefaults(defineProps<BPopoverOrchestratorProps>(), {
   teleportDisabled: false,

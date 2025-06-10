@@ -17,6 +17,7 @@ export const componentsWithExternalPath = {
   BAccordion: '/components/BAccordion',
   BAccordionItem: '/components/BAccordion',
   BAlert: '/components/BAlert',
+  BApp: '/components/BApp',
   BAvatar: '/components/BAvatar',
   BAvatarGroup: '/components/BAvatar',
   BBadge: '/components/BBadge',
@@ -196,6 +197,7 @@ export interface BootstrapVueOptions {
 type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = any> = {
   BLink: ComponentProps.BLinkProps
   BAccordion: ComponentProps.BAccordionProps
+  BApp: ComponentProps.BAppProps
   BDropdownDivider: ComponentProps.BDropdownDividerProps
   BDropdownGroup: ComponentProps.BDropdownGroupProps
   BDropdownItem: ComponentProps.BDropdownItemProps
