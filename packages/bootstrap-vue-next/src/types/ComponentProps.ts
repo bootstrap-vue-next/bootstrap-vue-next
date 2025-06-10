@@ -365,6 +365,9 @@ export interface BFormRatingProps {
   size?: string
   stars?: number
   variant?: string
+  iconFull?: string
+  iconHalf?: string
+  iconEmpty?: string
 }
 
 export interface BFormSelectProps {

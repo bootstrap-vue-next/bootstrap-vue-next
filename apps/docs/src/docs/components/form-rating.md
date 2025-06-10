@@ -12,7 +12,7 @@ Rating values range from 1 to the number of stars allowed (default stars is `
 
 There are two main modes for `BFormRating`: interactive and readonly.
 
-Interactive mode allows the user to chose a rating from 1 to the number of stars (default 5) in whole number increments.
+Interactive mode allows the user to choose a rating from 1 to the number of stars (default 5) in whole number increments.
 
 **Interactive rating (input mode):**
 
@@ -78,10 +78,8 @@ respectively.
 ### Inline mode
 
 By default, `<BFormRating>` occupies 100% width of the parent container. In some situations you
-may prefer the custom input to occupy on the space required for it's contents. Simply set the
+may prefer the custom input to occupy only the space required for its contents. Simply set the
 `inline` prop to `true` to render the component in inline mode:
-
-<!--RatingInline.vue-->
 
 ### Readonly
 

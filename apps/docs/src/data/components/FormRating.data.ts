@@ -6,7 +6,7 @@ export default {
   load: (): ComponentReference[] => [
     {
       component: 'BFormRating',
-      sourcePath: '/BFormRadio/BFormRadio.vue',
+      sourcePath: '/BFormRating/BFormRating.vue',
       props: {
         '': {
           color: {
@@ -44,7 +44,7 @@ export default {
               'When set to `true` and prop `show-value` is `true`, includes the maximum star rating possible in the formatted value',
           },
           stars: {
-            type: 'Number or String',
+            type: 'number | string',
             default: '5',
             description: 'The number of stars to show. Minimum value is `3`, default is `5`',
           },
@@ -63,17 +63,17 @@ export default {
           iconFull: {
             type: 'String',
             default: '',
-            description: '',
+            description: 'Icon name to render for a full star',
           },
           iconHalf: {
             type: 'String',
             default: '',
-            description: '',
+            description: 'Icon name to render for a half-filled star',
           },
           iconEmpty: {
             type: 'String',
             default: '',
-            description: '',
+            description: 'Icon name to render for an empty star',
           },
           ...pick(buildCommonProps(), ['form', 'id', 'name']),
         } satisfies Record<keyof BvnComponentProps['BFormRating'], PropertyReference>,
@@ -84,8 +84,8 @@ export default {
           args: [
             {
               arg: 'value',
-              description: 'Currently selected value of the select control.',
-              type: 'SelectValue',
+              description: 'Currently selected rating value.',
+              type: 'number',
             },
           ],
           description:
@@ -94,13 +94,9 @@ export default {
       ],
       slots: [
         {
-          description: 'Content to place in the form select',
           name: 'default',
-        },
-        {
           description:
-            "Slot to place options or option groups above options provided via the 'options' prop",
-          name: 'first',
+            'Custom renderer for each star. Receives `starIndex`, `isFilled`, and `isHalf` as slot-scope props.',
         },
       ],
     },

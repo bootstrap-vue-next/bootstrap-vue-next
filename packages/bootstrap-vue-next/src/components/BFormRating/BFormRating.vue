@@ -15,8 +15,7 @@
   >
     <span
       v-if="props.showClear && !props.readonly"
-      class="clear-button"
-      style="cursor: pointer; margin-left: 0.5rem"
+      class="clear-button-spacing"
       @click="clearRating"
     >
       <svg
@@ -48,7 +47,8 @@
             :height="computedSize"
             fill="currentColor"
             :class="[iconColors[index].class]"
-            :style="{...iconColors[index].style, margin: '0 0.75rem'}"
+            :style="iconColors[index].style"
+            class="star-spacing"
             viewBox="0 0 16 16"
           >
             <path
@@ -70,8 +70,8 @@
 
     <span
       v-if="props.showValue || props.showValueMax"
-      class="rating-value"
-      :style="{fontSize: computedSize, color: '#495057', marginLeft: '1rem'}"
+      :style="{fontSize: computedSize}"
+      class="rating-value-text"
     >
       {{ displayValueText }}
     </span>
@@ -178,6 +178,9 @@ function onMouseMove(event: MouseEvent, index: number) {
   const {left, width} = target.getBoundingClientRect()
   const relativeX = event.clientX - left
   hoverValue.value = relativeX < width / 2 ? index - 0.5 : index
+  const isRtl = window.getComputedStyle(target).direction === 'rtl'
+  const position = isRtl ? width - relativeX : relativeX
+  hoverValue.value = position < width / 2 ? index - 0.5 : index
 }
 
 //add keyboard support

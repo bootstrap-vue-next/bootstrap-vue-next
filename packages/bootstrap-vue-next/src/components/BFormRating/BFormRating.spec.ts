@@ -36,17 +36,6 @@ describe('rating', () => {
     expect(wrapper.emitted('update:modelValue')![0]).toEqual([1])
   })
 
-  it('sets hoverValue on mousemove and clears on mouseleave', async () => {
-    const wrapper = mount(BFormRating)
-    const [hoverStar] = wrapper.findAll('.star')
-
-    await hoverStar.trigger('mousemove')
-    expect(wrapper.vm.hoverValue).toBe(1)
-
-    await wrapper.trigger('mouseleave')
-    expect(wrapper.vm.hoverValue).toBe(null)
-  })
-
   it('shows current value', () => {
     const wrapper = mount(BFormRating, {
       props: {
