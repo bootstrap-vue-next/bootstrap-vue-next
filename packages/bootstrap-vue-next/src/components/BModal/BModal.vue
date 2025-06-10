@@ -393,7 +393,7 @@ watch(stackWithoutSelf, (newValue, oldValue) => {
     hide()
 })
 
-const defaultModalDialogZIndex = ref(getModalZIndex(element.value ?? document.body))
+const defaultModalDialogZIndex = ref(getModalZIndex(element.value ?? document?.body ?? undefined))
 
 onMounted(() => {
   watch(
