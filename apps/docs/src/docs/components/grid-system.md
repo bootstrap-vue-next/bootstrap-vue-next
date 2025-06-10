@@ -444,14 +444,8 @@ Invisible elements will still affect the layout of the page, but are visually hi
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/gridSystem.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>
 
 <style lang="scss">

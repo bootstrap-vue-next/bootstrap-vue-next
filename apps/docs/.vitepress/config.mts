@@ -31,7 +31,7 @@ export default defineConfig({
       Components({
         globs: ['components/*.vue', 'docs/**/demo/*.vue'],
         dts: true,
-        include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+        include: [/\.vue$/, /\.vue\?vue/, /\.md$/, /\.ts$/],
         resolvers: [BootstrapVueNextResolver()],
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       }) as any,

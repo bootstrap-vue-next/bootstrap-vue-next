@@ -208,12 +208,6 @@ The _indeterminate_ state is **visual only**. The checkbox is still either check
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/formCheckbox.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>
