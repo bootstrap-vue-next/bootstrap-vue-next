@@ -36,7 +36,6 @@
       v-for="(starIndex, index) in clampedStars"
       :key="starIndex"
       class="star"
-      @mousemove="onMouseMove($event, starIndex)"
       @click="selectRating(starIndex)"
     >
       <slot :star-index="starIndex" :is-filled="isIconFull(index)" :is-half="isIconHalf(index)">
@@ -172,17 +171,6 @@ const iconColors = computed(() =>
   })
 )
 
-function onMouseMove(event: MouseEvent, index: number) {
-  if (props.readonly) return
-  const target = event.currentTarget as HTMLElement
-  const {left, width} = target.getBoundingClientRect()
-  const relativeX = event.clientX - left
-  hoverValue.value = relativeX < width / 2 ? index - 0.5 : index
-  const isRtl = window.getComputedStyle(target).direction === 'rtl'
-  const position = isRtl ? width - relativeX : relativeX
-  hoverValue.value = position < width / 2 ? index - 0.5 : index
-}
-
 //add keyboard support
 function onKeydown(e: KeyboardEvent) {
   if (props.readonly) return
@@ -224,11 +212,5 @@ defineExpose({
 </script>
 
 <style scoped>
-.b-form-rating-star svg {
-  transition: transform 0.2s ease;
-}
-
-.b-form-rating:not(.is-readonly) .star:hover .b-form-rating-star svg {
-  transform: scale(1.25);
-}
+@import './_form-rating.scss';
 </style>

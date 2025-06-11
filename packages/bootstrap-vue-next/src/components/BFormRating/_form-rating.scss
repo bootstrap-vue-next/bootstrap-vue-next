@@ -28,7 +28,7 @@
 }
 
 .clear-icon:hover {
-  transform: scale(2);
+  transform: scale(1.2);
 }
 
 .clear-button-spacing {
@@ -43,4 +43,12 @@
 .rating-value-text {
   color: #495057;
   margin-left: 1rem;
+}
+
+.b-form-rating-star svg {
+  transition: transform 0.2s ease;
+}
+
+.b-form-rating:not(.is-readonly) .star:hover .b-form-rating-star svg {
+  transform: scale(1.25);
 }

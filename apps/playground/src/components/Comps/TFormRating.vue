@@ -1,4 +1,3 @@
-<!-- packages/bootstrap-vue-next/src/App.vue -->
 <template>
   <BContainer class="rating-demo p-4">
     <h2>1. Default</h2>

@@ -362,9 +362,18 @@ export interface BFormRatingProps {
   showClear?: boolean
   showValue?: boolean
   showValueMax?: boolean
-  size?: string
+  size?: 'sm' | 'lg' | string
   stars?: number
-  variant?: string
+  variant?:
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'danger'
+    | 'warning'
+    | 'info'
+    | 'light'
+    | 'dark'
+    | string
   iconFull?: string
   iconHalf?: string
   iconEmpty?: string
