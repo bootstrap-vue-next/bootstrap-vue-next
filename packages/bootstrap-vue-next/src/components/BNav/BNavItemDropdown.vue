@@ -45,6 +45,7 @@ const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   teleportDisabled: false,
   disabled: false,
   floatingMiddleware: undefined,
+  icon: false,
   id: undefined,
   initialAnimation: false,
   isNav: true,
