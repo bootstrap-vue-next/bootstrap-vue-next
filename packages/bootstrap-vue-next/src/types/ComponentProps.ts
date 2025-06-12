@@ -377,6 +377,7 @@ export interface BFormRatingProps {
   iconFull?: string
   iconHalf?: string
   iconEmpty?: string
+  inline?: boolean
 }
 
 export interface BFormSelectProps {

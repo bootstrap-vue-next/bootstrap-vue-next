@@ -4,6 +4,8 @@
       'is-readonly': readonly,
       'no-border': props.noBorder,
       'b-form-rating': true,
+      'd-inline-block': props.inline,
+      'w-100': !props.inline,
     }"
     role="slider"
     :aria-valuemin="0"
@@ -82,19 +84,23 @@ import {computed, defineSlots, ref} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BFormRatingProps} from '../../types/ComponentProps'
 
-const _props = withDefaults(defineProps<BFormRatingProps & {noBorder?: boolean}>(), {
-  modelValue: undefined,
-  readonly: false,
-  variant: '',
-  color: '',
-  stars: 5,
-  precision: 0,
-  showClear: false,
-  showValue: false,
-  showValueMax: false,
-  size: '1.25rem',
-  noBorder: false,
-})
+const _props = withDefaults(
+  defineProps<BFormRatingProps & {noBorder?: boolean; inline?: boolean}>(),
+  {
+    modelValue: undefined,
+    readonly: false,
+    variant: '',
+    color: '',
+    stars: 5,
+    precision: 0,
+    showClear: false,
+    showValue: false,
+    showValueMax: false,
+    size: '1rem',
+    noBorder: false,
+    inline: false,
+  }
+)
 const props = useDefaults(_props, 'BFormRating')
 const modelValue = defineModel<number>({default: 0})
 
@@ -137,8 +143,8 @@ const displayValue = computed(() =>
 const clampedStars = computed(() => Math.max(3, props.stars))
 
 const computedSize = computed(() => {
-  if (props.size === 'sm') return '1rem'
-  if (props.size === 'lg') return '1.75rem'
+  if (props.size === 'sm') return '.875rem'
+  if (props.size === 'lg') return '1.25rem'
   return props.size
 })
 
