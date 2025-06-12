@@ -403,7 +403,29 @@ See [BForm Components](bform-components)
 
 ### BFormRating
 
-<NotYetImplemented><BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2051">See issue #2051</BLink></NotYetImplemented>
+The `BFormRating` component has been implemented in BootstrapVueNext with most functionality from BootstrapVue maintained. However, there are some differences and features not yet implemented.
+
+Like other form components in BootstrapVueNext, `BFormRating` follows Vue 3's v-model conventions:
+
+See the [Vue 3 migration guide](https://v3-migration.vuejs.org/breaking-changes/v-model.html) for more info.
+
+#### Icon System Changes
+
+The icon system has been significantly updated. BootstrapVue's icon props are deprecated in favor of:
+
+1. **Default built-in SVG icons** (recommended): Uses built-in star SVG icons that work with `variant`, `color`, and `size` props
+2. **Custom icons via scoped slots**: For complete customization where you handle all styling yourself
+
+**Custom icons using scoped slots:**
+
+**Important:** When using custom icons via scoped slots, the `variant`, `color`, and `size` props do not apply. You must handle all styling in your custom CSS.
+
+The following features from BootstrapVue are <NotYetImplemented/>:
+
+- **`disabled` prop**: Interactive disabling of the rating component
+- **Form submission**: The `name` prop for generating hidden inputs for form submission
+- **Input groups**: Using `BFormRating` within `BInputGroup` components
+- **Internationalization**: The `locale` prop for localized display and RTL support
 
 ### BFormSelect
 
