@@ -1,6 +1,9 @@
 <template>
   <div>
-    <BFormCheckboxGroup v-model="model" :options="options">
+    <BFormCheckboxGroup
+      v-model="model"
+      :options="options"
+    >
       <template #option="{value}">
         {{ (value as Name).first }} <b>{{ (value as Name).last }}</b>
       </template>

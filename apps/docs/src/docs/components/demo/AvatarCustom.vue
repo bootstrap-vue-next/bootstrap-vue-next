@@ -1,6 +1,9 @@
 <template>
   <!-- #region template -->
-  <div class="d-flex" style="column-gap: 1%">
+  <div
+    class="d-flex"
+    style="column-gap: 1%"
+  >
     <BAvatar size="4em">Hello<br />World</BAvatar>
     <BAvatar size="4em">你好<br />世界</BAvatar>
     <BAvatar size="4em"

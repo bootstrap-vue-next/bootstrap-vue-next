@@ -528,4 +528,35 @@ describe('btablelite', () => {
       expect(wrapper.text()).not.toContain('foobar!')
     })
   })
+  describe('isRowHeader field property', () => {
+    it('sets td/th appropriately based on isRowHeader is true, false, or undefined', async () => {
+      const items = [{isActive: true, age: 40, name: {first: 'Dickerson', last: 'Macdonald'}}]
+      const fields = [
+        {key: 'name.first', label: 'Actions', isRowHeader: true, class: 'first-name'},
+        {key: 'age', label: 'Age', isRowHeader: false, class: 'age'},
+        {key: 'isActive', label: 'Active', isRowHeader: false, class: 'active'},
+      ]
+      const wrapper = mount(BTableLite, {
+        props: {
+          items,
+          fields,
+        },
+      })
+      const $tbody = wrapper.get('tbody')
+      const $tr = $tbody.find('tr')
+      expect($tr.find('th.first-name').exists()).toBe(true)
+      expect($tr.find('td.age').exists()).toBe(true)
+      expect($tr.find('td.active').exists()).toBe(true)
+      await wrapper.setProps({
+        fields: [
+          {key: 'name.first', label: 'Actions', isRowHeader: false, class: 'first-name'},
+          {key: 'age', label: 'Age', isRowHeader: false, class: 'age'},
+          {key: 'isActive', label: 'Active', isRowHeader: false, class: 'active'},
+        ],
+      })
+      expect($tr.find('th.first-name').exists()).toBe(false)
+      expect($tr.find('td.age').exists()).toBe(true)
+      expect($tr.find('td.active').exists()).toBe(true)
+    })
+  })
 })

@@ -1,7 +1,9 @@
 <template>
   <BForm>
     <div class="row">
-      <label class="col-form-label col-lg-2 me-sm-2" for="inline-form-custom-select-pref"
+      <label
+        class="col-form-label col-lg-2 me-sm-2"
+        for="inline-form-custom-select-pref"
         >Preference</label
       >
       <div class="col-lg-2">

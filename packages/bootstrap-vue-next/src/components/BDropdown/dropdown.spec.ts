@@ -254,6 +254,20 @@ describe('dropdown', () => {
     expect($bbutton.props('href')).toBe('/abc')
   })
 
+  it('first child BButton prop icon is false by default', () => {
+    const wrapper = mount(BDropdown)
+    const $bbutton = wrapper.getComponent(BButton)
+    expect($bbutton.props('icon')).toBe(false)
+  })
+
+  it('first child BButton prop icon is true when prop icon is true', () => {
+    const wrapper = mount(BDropdown, {
+      props: {icon: true},
+    })
+    const $bbutton = wrapper.getComponent(BButton)
+    expect($bbutton.props('icon')).toBe(true)
+  })
+
   it('first child BButton renders button-content slot', () => {
     const wrapper = mount(BDropdown, {
       slots: {'button-content': 'foobar'},

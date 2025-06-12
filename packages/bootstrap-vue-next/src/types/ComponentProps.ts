@@ -1228,6 +1228,7 @@ export interface BDropdownProps extends TeleporterProps, ShowHideProps {
   boundaryPadding?: Padding
   disabled?: boolean
   floatingMiddleware?: Middleware[]
+  icon?: boolean
   id?: string
   isNav?: boolean
   menuClass?: ClassValue

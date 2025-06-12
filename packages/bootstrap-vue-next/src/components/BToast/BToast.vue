@@ -243,7 +243,7 @@ const computedClasses = computed(() => [
   },
 ])
 
-watch(modelValue, (newValue) => {
+watch(modelValue, (newValue, oldValue) => {
   if (typeof newValue === 'number' && newValue > 0) {
     const event = buildTriggerableEvent('show', {cancelable: true, trigger: 'model'})
     emit('show', event)
@@ -254,6 +254,9 @@ watch(modelValue, (newValue) => {
     }
   }
   if (typeof newValue === 'number' && newValue === 0) {
+    stop()
+  }
+  if (newValue === false && typeof oldValue === 'number' && oldValue > 0) {
     stop()
   }
 })

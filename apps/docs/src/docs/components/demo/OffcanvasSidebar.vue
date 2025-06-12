@@ -2,21 +2,41 @@
   <BContainer fluid="xxl">
     <BRow class="d-md-none"
       ><BCol>
-        <BButton variant="link" underline-opacity="0" @click="showToc"
+        <BButton
+          variant="link"
+          underline-opacity="0"
+          @click="showToc"
           >&lt; Table of Contents</BButton
         > </BCol
       ><BCol
         ><div class="text-end">
-          <BButton variant="link" underline-opacity="0" @click="showOtp">On this page &gt;</BButton>
+          <BButton
+            variant="link"
+            underline-opacity="0"
+            @click="showOtp"
+            >On this page &gt;</BButton
+          >
         </div></BCol
       ></BRow
     >
     <BRow>
-      <BCol md="2" class="scrollable-column">
-        <BOffcanvas v-model="tocVisible" placement="start" responsive="md">
+      <BCol
+        md="2"
+        class="scrollable-column"
+      >
+        <BOffcanvas
+          v-model="tocVisible"
+          placement="start"
+          responsive="md"
+        >
           <ul>
             <ul>
-              <li v-for="item in toc" :key="item">{{ item }}</li>
+              <li
+                v-for="item in toc"
+                :key="item"
+              >
+                {{ item }}
+              </li>
               <li>A very large entry in table of contents</li>
             </ul>
           </ul>
@@ -57,10 +77,22 @@
         luctus id viverra porta. Habitasse lorem bibendum semper maecenas volutpat porta. Eros
         praesent duis odio sagittis metus montes interdum.
       </BCol>
-      <BCol md="2" class="scrollable-column">
-        <BOffcanvas v-model="otpVisible" placement="end" responsive="md">
+      <BCol
+        md="2"
+        class="scrollable-column"
+      >
+        <BOffcanvas
+          v-model="otpVisible"
+          placement="end"
+          responsive="md"
+        >
           <ul>
-            <li v-for="item in otp" :key="item">{{ item }}</li>
+            <li
+              v-for="item in otp"
+              :key="item"
+            >
+              {{ item }}
+            </li>
             <li>A very large entry in on this page</li>
           </ul>
         </BOffcanvas>

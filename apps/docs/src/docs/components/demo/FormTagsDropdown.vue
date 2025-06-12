@@ -1,17 +1,42 @@
 <template>
   <div>
-    <BFormGroup label="Tagged input using dropdown" label-for="tags-with-dropdown">
-      <BFormTags id="tags-with-dropdown" v-model="value" no-outer-focus class="mb-2">
+    <BFormGroup
+      label="Tagged input using dropdown"
+      label-for="tags-with-dropdown"
+    >
+      <BFormTags
+        id="tags-with-dropdown"
+        v-model="value"
+        no-outer-focus
+        class="mb-2"
+      >
         <template #default="{tags, disabled, addTag, removeTag}">
-          <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
-            <li v-for="tag in tags" :key="tag" class="list-inline-item">
-              <BFormTag :title="tag" :disabled="disabled" variant="info" @remove="removeTag(tag)">{{
-                tag
-              }}</BFormTag>
+          <ul
+            v-if="tags.length > 0"
+            class="list-inline d-inline-block mb-2"
+          >
+            <li
+              v-for="tag in tags"
+              :key="tag"
+              class="list-inline-item"
+            >
+              <BFormTag
+                :title="tag"
+                :disabled="disabled"
+                variant="info"
+                @remove="removeTag(tag)"
+                >{{ tag }}</BFormTag
+              >
             </li>
           </ul>
 
-          <BDropdown size="sm" variant="outline-secondary" block menu-class="w-100" no-caret>
+          <BDropdown
+            size="sm"
+            variant="outline-secondary"
+            block
+            menu-class="w-100"
+            no-caret
+          >
             <template #button-content> &#x1f50d; <span>Choose tags</span> </template>
             <BDropdownForm @submit.stop.prevent="() => {}">
               <BFormGroup

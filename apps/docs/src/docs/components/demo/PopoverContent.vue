@@ -1,7 +1,10 @@
 <template>
   <!-- #region template -->
   <div class="d-flex gap-2">
-    <BPopover title="Prop Examples" body="Embedding content using properties is easy">
+    <BPopover
+      title="Prop Examples"
+      body="Embedding content using properties is easy"
+    >
       <template #target>
         <BButton variant="primary">Using properties</BButton>
       </template>

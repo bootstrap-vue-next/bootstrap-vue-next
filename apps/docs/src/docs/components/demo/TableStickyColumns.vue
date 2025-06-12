@@ -1,8 +1,16 @@
 <template>
   <div>
     <div class="mb-2">
-      <b-form-checkbox v-model="stickyHeader" inline>Sticky header</b-form-checkbox>
-      <b-form-checkbox v-model="noCollapse" inline>No border collapse</b-form-checkbox>
+      <b-form-checkbox
+        v-model="stickyHeader"
+        inline
+        >Sticky header</b-form-checkbox
+      >
+      <b-form-checkbox
+        v-model="noCollapse"
+        inline
+        >No border collapse</b-form-checkbox
+      >
     </div>
     <b-table
       :sticky-header="stickyHeader"

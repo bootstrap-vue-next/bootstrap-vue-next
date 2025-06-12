@@ -1,6 +1,9 @@
 <template>
   <!-- #region template -->
-  <BDropdown text="Dropdown ARIA" variant="primary">
+  <BDropdown
+    text="Dropdown ARIA"
+    variant="primary"
+  >
     <BDropdownHeader id="dropdown-header-1">Groups</BDropdownHeader>
     <BDropdownItemButton aria-describedby="dropdown-header-1">Add</BDropdownItemButton>
     <BDropdownItemButton aria-describedby="dropdown-header-1">Delete</BDropdownItemButton>

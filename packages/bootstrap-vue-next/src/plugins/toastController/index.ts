@@ -89,14 +89,13 @@ export const toastPlugin: Plugin = {
           toast.promise.stop?.()
           if (toast.modelValue) {
             await new Promise((resolve) => {
-              toast.modelValue = false
               const prev = toast['onHidden']
               toast['onHidden'] = (e) => {
                 prev?.(e)
                 resolve(e)
               }
               nextTick(() => {
-                toast['onUpdate:modelValue']?.(false)
+                this.hide('destroy')
               })
             })
           }
