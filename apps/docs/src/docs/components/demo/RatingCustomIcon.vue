@@ -1,11 +1,17 @@
 <!-- DemoCustomIcon.vue -->
 <template>
   <div>
-    <BFormRating v-model="rating" :stars="5" show-value show-clear>
+    <BFormRating
+      v-model="rating"
+      :stars="5"
+      show-value
+      show-clear
+    >
       <template #default="{starIndex, isFilled}">
         <!-- Full heart -->
         <svg
           v-if="isFilled"
+          aria-hidden="true"
           class="custom-icon"
           width="1.5em"
           height="1.5em"
@@ -22,6 +28,7 @@
         <!-- Empty heart -->
         <svg
           v-else
+          aria-hidden="true"
           class="custom-icon"
           width="1.5em"
           height="1.5em"

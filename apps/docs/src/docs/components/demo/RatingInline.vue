@@ -1,6 +1,10 @@
 <template>
   <label for="rating-inline">Inline rating:</label>
-  <BFormRating v-model="rating" inline />
+  <BFormRating
+    id="rating-inline"
+    v-model="rating"
+    inline
+  />
 </template>
 
 <script setup lang="ts">
