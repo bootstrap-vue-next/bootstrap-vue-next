@@ -33,7 +33,7 @@ const _props = withDefaults(defineProps<BNavItemProps>(), {
   active: undefined,
   activeClass: undefined,
   disabled: undefined,
-  exactActiveClass: undefined,
+  exactActiveClass: 'router-link-exact-active active',
   href: undefined,
   icon: undefined,
   linkAttrs: undefined,
