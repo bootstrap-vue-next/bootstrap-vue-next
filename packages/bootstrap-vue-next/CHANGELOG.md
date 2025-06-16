@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.30.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.30.1...bootstrapvuenext-v0.30.2) (2025-06-16)
+
+
+### Features
+
+* **BDropdown:** allow setting icon prop on nested BButton ([018daa5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/018daa52bb85373f48092ed8a4a46901692645ff))
+* **BDropdown:** allow setting icon prop on nested BButton ([#2746](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2746)) ([018daa5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/018daa52bb85373f48092ed8a4a46901692645ff))
+
+
+### Bug Fixes
+
+* **bforminput:** abort debouncing if blur occurs ([6cab846](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6cab8464d4eb537807d6843c7db69ef007b8358c))
+* **BLink:** move active class to BNavItem ([#2747](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2747)) ([1e9b644](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e9b6440d6c08b2c158740e2c9bfc6ac25a9c048))
+* **BModal:** fix ssr. ([df4a90d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/df4a90dacbcc99ee86b03499eb53501e240eb0ba))
+* **BTableLite:** field attribute isRowHeader now being respected ([#2713](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2713)) ([9a4b648](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9a4b648a31678ab1ea99f8c81b556ed166ae3fb3))
+* **BTabs:** Add type=button to buttons to prevent form submission ([#2740](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2740)) ([1a72f1b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1a72f1b50494512b692b53f968a40222e66edd40))
+* **BToast:** close BToast correctly if modelValue is changed from number to false ([df4a90d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/df4a90dacbcc99ee86b03499eb53501e240eb0ba))
+* **BToast:** close BToast correctly if modelValue is changed from number to false ([#2745](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2745)) ([df4a90d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/df4a90dacbcc99ee86b03499eb53501e240eb0ba))
+
 ## [0.30.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.30.0...bootstrapvuenext-v0.30.1) (2025-06-06)
 
 
