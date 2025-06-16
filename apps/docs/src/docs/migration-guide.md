@@ -403,22 +403,8 @@ See [BForm Components](bform-components)
 
 ### BFormRating
 
-The `BFormRating` component has been implemented in BootstrapVueNext with most functionality from BootstrapVue maintained. However, there are some differences and features not yet implemented.
-
-Like other form components in BootstrapVueNext, `BFormRating` follows Vue 3's v-model conventions:
-
-See the [Vue 3 migration guide](https://v3-migration.vuejs.org/breaking-changes/v-model.html) for more info.
-
-#### Icon System Changes
-
-The icon system has been significantly updated. BootstrapVue's icon props are deprecated in favor of:
-
-1. **Default built-in SVG icons** (recommended): Uses built-in star SVG icons that work with `variant`, `color`, and `size` props
-2. **Custom icons via scoped slots**: For complete customization where you handle all styling yourself
-
-**Custom icons using scoped slots:**
-
-**Important:** When using custom icons via scoped slots, the `variant`, `color`, and `size` props do not apply. You must handle all styling in your custom CSS.
+`BFormRating` is now available in BootstrapVueNext, preserving most of the original BootstrapVue functionality under Vue 3's v-model conventions.  
+See the [Vue 3 migration guide](https://v3-migration.vuejs.org/breaking-changes/v-model.html) for details on the new `v-model` syntax.
 
 The following features from BootstrapVue are <NotYetImplemented/>:
 
@@ -426,6 +412,22 @@ The following features from BootstrapVue are <NotYetImplemented/>:
 - **Form submission**: The `name` prop for generating hidden inputs for form submission
 - **Input groups**: Using `BFormRating` within `BInputGroup` components
 - **Internationalization**: The `locale` prop for localized display and RTL support
+
+#### Icon System Changes
+
+The following icon-related props from BootstrapVue have been deprecated:
+
+- `icon-empty`: For specifying empty star icon
+- `icon-half`: For specifying half-filled star icon
+- `icon-full`: For specifying filled star icon
+- `icon-clear`: For specifying clear button icon
+
+Instead, BootstrapVueNext provides two approaches for customizing icons:
+
+1. **Default built-in SVG icons** (recommended): Uses built-in star SVG icons that work with `variant`, `color`, and `size` props
+2. **Custom icons via scoped slots**: For complete customization where you handle all styling yourself
+
+**Important:** When using custom icons via scoped slots, the `variant`, `color`, and `size` props do not apply. You must handle all styling in your custom CSS.
 
 ### BFormSelect
 
@@ -646,13 +648,13 @@ Triggers work differently as the underlying library we use to manage popovers ha
 [our documentation](/docs/components/popover#triggers) and [floating-ui](https://floating-ui.com/)
 for details.
 
-The `variant` prop has been deprecated. Use Bootstrap’s color and background utility classes to style
+The `variant` prop has been deprecated. Use Bootstrap's color and background utility classes to style
 popovers instead. See [Popover custom classes and variants](/docs/components/popover#custom-classes-and-variants)
 for details.
 
 The `disabled` prop and
 [Programmatically Disabling](https://bootstrap-vue.org/docs/components/popover#programmatically-disabling-popover) have
-been deprecated along with the `disabled` and `enabled` events. Use `manual=true` to disable BootstrapVueNext’s automatic
+been deprecated along with the `disabled` and `enabled` events. Use `manual=true` to disable BootstrapVueNext's automatic
 trigger handling and if your own code shows the popover disable those mechanisms as well. If you believe that implementing
 full parity with the BootstrapVue feature is useful, please open an issue or propose a pull request.
 
