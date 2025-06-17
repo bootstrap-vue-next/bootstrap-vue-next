@@ -67,7 +67,7 @@ export default {
           },
           stars: {
             type: 'number',
-            default: '5',
+            default: 5,
             description: 'The number of stars to show. Minimum value is `3`, default is `5`',
           },
           ...pick(buildCommonProps(), ['id', 'variant']),
@@ -90,8 +90,7 @@ export default {
       slots: [
         {
           name: 'default',
-          description:
-            'Custom renderer for each star. Receives `starIndex`, `isFilled`, `isHalf`, `iconFull`, `iconHalf`, and `iconEmpty` as slot-scope props.',
+          description: 'Custom renderer for each star.',
           scope: [
             {
               prop: 'starIndex',

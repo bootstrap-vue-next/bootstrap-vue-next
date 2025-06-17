@@ -96,7 +96,7 @@ const _props = withDefaults(defineProps<Omit<BFormRatingProps, 'modelValue'>>(),
 })
 const props = useDefaults(_props, 'BFormRating')
 
-const computedId = useId(() => props.id, 'input')
+const computedId = useId(() => props.id, 'form-rating')
 
 const computedClasses = computed(() => ({
   'is-readonly': props.readonly,
