@@ -169,10 +169,10 @@ optional displayed value and the left-to-right or right-to-left orientation of t
 
 ## Implementation notes
 
-The ratings control uses the Bootstrap v4 `form-control*`, `d-*` (display), `border-*` and
+The ratings control uses the Bootstrap v5 `form-control*`, `d-*` (display), and
 `text-{variant}` classes, as well as BootstrapVue's custom CSS for proper styling.
 
-The root element of the control is an `<output>` element, which allows a `<label>` element to be
+<NotYetImplemented/>The root element of the control is an `<output>` element, which allows a `<label>` element to be
 associated with it.
 
 ## Accessibility

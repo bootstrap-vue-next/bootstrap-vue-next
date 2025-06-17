@@ -15,10 +15,21 @@ export default {
             description:
               'CSS color to use instead of variant. Accepts either a HEX or RGB/RGBA string',
           },
+          inline: {
+            type: 'boolean',
+            default: 'false',
+            description:
+              'When `true` renders as an inline element rather than a block (100% width) element',
+          },
           modelValue: {
             type: 'number',
             default: 0,
             description: 'The current rating value (supports v-model two-way binding).',
+          },
+          noBorder: {
+            type: 'boolean',
+            default: 'false',
+            description: 'When `true`, removes the border around the rating component',
           },
           precision: {
             type: 'number',
@@ -31,7 +42,12 @@ export default {
             default: 'false',
             description:
               'When `true` makes the rating readonly. When `true`, fractional ratings values are allowed (half icons will be shown)',
-          }, //
+          },
+          showClear: {
+            type: 'boolean',
+            default: 'false',
+            description: 'When `true`, shows a clear button to reset the rating',
+          },
           showValue: {
             type: 'boolean',
             default: 'false',
@@ -43,57 +59,18 @@ export default {
             description:
               'When set to `true` and prop `show-value` is `true`, includes the maximum star rating possible in the formatted value',
           },
+          size: {
+            type: "'sm' | 'lg' | string",
+            default: '1rem',
+            description:
+              "Icon size: accepts CSS units (e.g. '1.5rem', '24px') or the presets 'sm' (.875rem) and 'lg' (1.25rem); defaults to 1rem.",
+          },
           stars: {
             type: 'number',
             default: '5',
             description: 'The number of stars to show. Minimum value is `3`, default is `5`',
           },
-          variant: {
-            type: 'string',
-            default: undefined,
-            description: 'Applies one of the Bootstrap theme color variants to the component',
-          },
-          size: {
-            type: 'string',
-            default: '1rem',
-            description:
-              "Icon size: accepts CSS units (e.g. '1.5rem', '24px') or the presets 'sm' (.875rem) and 'lg' (1.25rem); defaults to 1rem.",
-          },
-          noBorder: {
-            type: 'boolean',
-            default: 'false',
-            description: 'When `true`, removes the border around the rating component',
-          },
-          showClear: {
-            type: 'boolean',
-            default: 'false',
-            description: 'When `true`, shows a clear button to reset the rating',
-          },
-          iconFull: {
-            type: 'string',
-            default: undefined,
-            description:
-              'Icon name or component to use for filled stars when using custom slot rendering',
-          },
-          iconHalf: {
-            type: 'string',
-            default: undefined,
-            description:
-              'Icon name or component to use for half-filled stars when using custom slot rendering',
-          },
-          iconEmpty: {
-            type: 'string',
-            default: undefined,
-            description:
-              'Icon name or component to use for empty stars when using custom slot rendering',
-          },
-          inline: {
-            type: 'boolean',
-            default: 'false',
-            description:
-              'When `true` renders as an inline element rather than a block (100% width) element',
-          },
-          ...pick(buildCommonProps(), ['form', 'id', 'name']),
+          ...pick(buildCommonProps(), ['id', 'variant']),
         } satisfies Record<keyof BvnComponentProps['BFormRating'], PropertyReference>,
       },
       emits: [
@@ -115,6 +92,23 @@ export default {
           name: 'default',
           description:
             'Custom renderer for each star. Receives `starIndex`, `isFilled`, `isHalf`, `iconFull`, `iconHalf`, and `iconEmpty` as slot-scope props.',
+          scope: [
+            {
+              prop: 'starIndex',
+              type: 'number',
+              description: 'The index of the star being rendered (0-based index)',
+            },
+            {
+              prop: 'isFilled',
+              type: 'boolean',
+              description: 'When `true`, the star is filled (selected)',
+            },
+            {
+              prop: 'isHalf',
+              type: 'boolean',
+              description: 'When `true`, the star is half-filled (partially selected)',
+            },
+          ],
         },
       ],
     },
