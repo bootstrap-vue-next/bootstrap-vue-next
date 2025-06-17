@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.30.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.30.2...bootstrapvuenext-v0.30.3) (2025-06-17)
+
+
+### Features
+
+* implement BFormRating component ([#2744](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2744)) ([860671e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/860671e173d73a80676ad4280e187269dbeaf4b9))
+
 ## [0.30.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.30.1...bootstrapvuenext-v0.30.2) (2025-06-16)
 
 
