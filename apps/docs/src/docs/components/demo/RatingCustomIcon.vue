@@ -1,4 +1,3 @@
-<!-- DemoCustomIcon.vue -->
 <template>
   <div>
     <BFormRating
@@ -50,7 +49,7 @@
 
 <script setup lang="ts">
 import {ref} from 'vue'
-import {BFormRating} from 'bootstrap-vue-next'
+import {BFormRating} from 'bootstrap-vue-next/components/BFormRating'
 
 const rating = ref(0)
 </script>

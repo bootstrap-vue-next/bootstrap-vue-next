@@ -1,12 +1,6 @@
 <template>
   <div
-    :class="{
-      'is-readonly': readonly,
-      'no-border': props.noBorder,
-      'b-form-rating': true,
-      'd-inline-block': props.inline,
-      'w-100': !props.inline,
-    }"
+    :class="computedClasses"
     role="slider"
     :aria-valuemin="0"
     :aria-valuemax="clampedStars"
@@ -84,25 +78,28 @@ import {computed, defineSlots, ref} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BFormRatingProps} from '../../types/ComponentProps'
 
-const _props = withDefaults(
-  defineProps<BFormRatingProps & {noBorder?: boolean; inline?: boolean}>(),
-  {
-    modelValue: undefined,
-    readonly: false,
-    variant: '',
-    color: '',
-    stars: 5,
-    precision: 0,
-    showClear: false,
-    showValue: false,
-    showValueMax: false,
-    size: '1rem',
-    noBorder: false,
-    inline: false,
-  }
-)
+const _props = withDefaults(defineProps<Omit<BFormRatingProps, 'modelValue'>>(), {
+  readonly: false,
+  variant: '',
+  color: '',
+  stars: 5,
+  precision: 0,
+  showClear: false,
+  showValue: false,
+  showValueMax: false,
+  size: '1rem',
+  noBorder: false,
+  inline: false,
+})
 const props = useDefaults(_props, 'BFormRating')
-const modelValue = defineModel<number>({default: 0})
+
+const computedClasses = computed(() => ({
+  'is-readonly': props.readonly,
+  'no-border': props.noBorder,
+  'b-form-rating': true,
+  'd-inline-block': props.inline,
+  'w-100': !props.inline,
+}))
 
 defineSlots<{
   default?: (props: {
@@ -113,6 +110,8 @@ defineSlots<{
   }) => any
 }>()
 
+const modelValue = defineModel<Exclude<BFormRatingProps['modelValue'], undefined>>({default: 0})
+
 function isIconFull(index: number): boolean {
   return displayValue.value - index >= 1
 }
@@ -122,16 +121,12 @@ function isIconHalf(index: number): boolean {
   return diff >= 0.5 && diff < 1
 }
 
-const emit = defineEmits<{
-  (e: 'update:modelValue', value: number): void
-}>()
 const hoverValue = ref<number | null>(null)
 
 const localValue = computed({
   get: () => modelValue.value,
   set: (value: number) => {
     modelValue.value = value
-    emit('update:modelValue', value)
   },
 })
 
@@ -216,7 +211,3 @@ defineExpose({
   hoverValue,
 })
 </script>
-
-<style scoped>
-@import './_form-rating.scss';
-</style>
