@@ -1,0 +1,60 @@
+$clear-icon-size: 1em !default;
+
+.b-form-rating {
+  display: flex;
+  //align-items: center;
+  justify-content: space-between;
+  padding: 0.375rem 0.75rem;
+  margin: 0.5rem;
+  border-radius: 0.375rem;
+  border: 1px solid var(--bs-secondary-border-subtle, #dee2e6);
+  background-color: var(--bs-body-bg);
+  gap: 0.25rem;
+  &.no-border {
+    border: none;
+  }
+
+  .clear-icon {
+    width: $clear-icon-size;
+    height: $clear-icon-size;
+    transition: transform var(--bs-transition-duration) ease;
+    color: var(--bs-body-color);
+    fill: currentColor;
+  }
+
+  &:not(.is-readonly) .clear-icon:hover {
+    transform: scale(1.5);
+  }
+}
+
+.star {
+  cursor: pointer;
+  user-select: none;
+  padding: 0 0.25em;
+}
+
+.is-readonly .star {
+  cursor: default;
+}
+
+.clear-button-spacing {
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.star-spacing {
+  margin: 0 0.5rem;
+}
+
+.rating-value-text {
+  color: var(--bs-body-color);
+  margin: 0 0.6;
+}
+
+.b-form-rating-star svg {
+  transition: transform 0.2s ease;
+}
+
+.b-form-rating:not(.is-readonly) .star:hover .b-form-rating-star svg {
+  transform: scale(1.5);
+}
