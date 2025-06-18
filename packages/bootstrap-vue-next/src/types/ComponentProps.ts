@@ -379,6 +379,32 @@ export interface BFormRadioGroupProps {
   validated?: boolean
   valueField?: string
 }
+export interface BFormRatingProps {
+  color?: string
+  modelValue?: number
+  noBorder?: boolean
+  precision?: number
+  readonly?: boolean
+  showClear?: boolean
+  showValue?: boolean
+  showValueMax?: boolean
+  size?: 'sm' | 'lg' | string
+  stars?: number
+  variant?:
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'danger'
+    | 'warning'
+    | 'info'
+    | 'light'
+    | 'dark'
+    | string
+  iconFull?: string
+  iconHalf?: string
+  iconEmpty?: string
+  inline?: boolean
+}
 
 export interface BFormSelectProps {
   ariaInvalid?: AriaInvalid
@@ -1228,6 +1254,7 @@ export interface BDropdownProps extends TeleporterProps, ShowHideProps {
   boundaryPadding?: Padding
   disabled?: boolean
   floatingMiddleware?: Middleware[]
+  icon?: boolean
   id?: string
   isNav?: boolean
   menuClass?: ClassValue
@@ -1287,12 +1314,12 @@ export interface BToastProps
 }
 
 export interface BPopoverProps extends TeleporterProps, ShowHideProps {
+  body?: string
+  bodyClass?: ClassValue
   boundary?: Boundary | RootBoundary
   boundaryPadding?: Padding
   click?: boolean
   closeOnHide?: boolean
-  body?: string
-  bodyClass?: ClassValue
   delay?:
     | number
     | Readonly<{
@@ -1320,7 +1347,6 @@ export interface BPopoverProps extends TeleporterProps, ShowHideProps {
   title?: string
   titleClass?: ClassValue
   tooltip?: boolean
-  variant?: ColorVariant | null
 }
 
 export interface BTooltipProps extends Omit<BPopoverProps, 'tooltip'> {

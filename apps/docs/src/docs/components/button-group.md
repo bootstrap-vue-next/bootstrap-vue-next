@@ -44,12 +44,6 @@ toolbars containing button groups and input groups.
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/buttonGroup.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>

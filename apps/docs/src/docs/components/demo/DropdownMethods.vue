@@ -1,11 +1,24 @@
 <template>
   <div class="d-flex gap-2 mb-2">
-    <BButton variant="danger" @click="show">Show</BButton>
-    <BButton variant="success" @click="hide">Hide</BButton>
+    <BButton
+      variant="danger"
+      @click="show"
+      >Show</BButton
+    >
+    <BButton
+      variant="success"
+      @click="hide"
+      >Hide</BButton
+    >
     <BButton @click="toggle">Toggle</BButton>
   </div>
 
-  <BDropdown ref="myDropdown" text="Dropdown Button" :auto-close="false" class="me-2">
+  <BDropdown
+    ref="myDropdown"
+    text="Dropdown Button"
+    :auto-close="false"
+    class="me-2"
+  >
     <BDropdownItem>First Action</BDropdownItem>
     <BDropdownItem>Second Action</BDropdownItem>
     <BDropdownItem>Third Action</BDropdownItem>

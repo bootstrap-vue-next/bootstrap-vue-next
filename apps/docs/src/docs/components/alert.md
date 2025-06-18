@@ -79,12 +79,6 @@ The BAlert exposes four functions to manipulate the state of an active timer: `p
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/alert.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>

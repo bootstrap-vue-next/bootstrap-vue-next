@@ -1,6 +1,10 @@
 <template>
   <div>
-    <BFormTags v-model="value" no-outer-focus class="mb-2">
+    <BFormTags
+      v-model="value"
+      no-outer-focus
+      class="mb-2"
+    >
       <template #default="{tags, inputAttrs, inputHandlers, tagVariant, addTag, removeTag}">
         <BInputGroup class="mb-2">
           <BFormInput
@@ -10,10 +14,17 @@
             v-on="inputHandlers"
           />
           <BInputGroupText>
-            <BButton variant="primary" @click="addTag()">Add</BButton>
+            <BButton
+              variant="primary"
+              @click="addTag()"
+              >Add</BButton
+            >
           </BInputGroupText>
         </BInputGroup>
-        <div class="d-inline-block" style="font-size: 1.5rem">
+        <div
+          class="d-inline-block"
+          style="font-size: 1.5rem"
+        >
           <BFormTag
             v-for="tag in tags"
             :key="tag"

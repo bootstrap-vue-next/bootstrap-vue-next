@@ -1,6 +1,9 @@
 <template>
   <!-- #region template -->
-  <div class="d-flex" style="column-gap: 1%">
+  <div
+    class="d-flex"
+    style="column-gap: 1%"
+  >
     <BAvatar variant="secondary" />
     <BAvatar variant="primary" />
     <BAvatar variant="dark" />

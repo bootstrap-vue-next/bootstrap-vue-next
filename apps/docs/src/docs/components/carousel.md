@@ -133,12 +133,6 @@ You are also able to use the built in methods for going to the next, or previous
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/carousel.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>

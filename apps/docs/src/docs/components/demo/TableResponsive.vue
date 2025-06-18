@@ -1,6 +1,9 @@
 <template>
   <div>
-    <BTable responsive :items="items" />
+    <BTable
+      responsive
+      :items="items"
+    />
   </div>
 </template>
 

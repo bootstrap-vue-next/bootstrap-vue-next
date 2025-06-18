@@ -1,6 +1,10 @@
 <template>
   <div>
-    <BFormTags v-model="value" no-outer-focus class="mb-2">
+    <BFormTags
+      v-model="value"
+      no-outer-focus
+      class="mb-2"
+    >
       <template #default="{tags, inputAttrs, inputHandlers, addTag, removeTag}">
         <BInputGroup aria-controls="my-custom-tags-list">
           <input
@@ -10,7 +14,11 @@
             v-on="inputHandlers"
           />
           <BInputGroupText>
-            <BButton variant="primary" @click="addTag()">Add</BButton>
+            <BButton
+              variant="primary"
+              @click="addTag()"
+              >Add</BButton
+            >
           </BInputGroupText>
         </BInputGroup>
         <ul

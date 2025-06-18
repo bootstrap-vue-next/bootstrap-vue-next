@@ -1,6 +1,12 @@
 <template>
   <label for="range-1">Example range with min and max</label>
-  <BFormInput id="range-1" v-model="value" type="range" min="0" max="5" />
+  <BFormInput
+    id="range-1"
+    v-model="value"
+    type="range"
+    min="0"
+    max="5"
+  />
   <div class="mt-2">Value: {{ value }}</div>
 </template>
 

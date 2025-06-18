@@ -1,5 +1,43 @@
 # Changelog
 
+## [0.30.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.30.2...bootstrapvuenext-v0.30.3) (2025-06-17)
+
+
+### Features
+
+* implement BFormRating component ([#2744](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2744)) ([860671e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/860671e173d73a80676ad4280e187269dbeaf4b9))
+
+## [0.30.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.30.1...bootstrapvuenext-v0.30.2) (2025-06-16)
+
+
+### Features
+
+* **BDropdown:** allow setting icon prop on nested BButton ([018daa5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/018daa52bb85373f48092ed8a4a46901692645ff))
+* **BDropdown:** allow setting icon prop on nested BButton ([#2746](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2746)) ([018daa5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/018daa52bb85373f48092ed8a4a46901692645ff))
+
+
+### Bug Fixes
+
+* **bforminput:** abort debouncing if blur occurs ([6cab846](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6cab8464d4eb537807d6843c7db69ef007b8358c))
+* **BLink:** move active class to BNavItem ([#2747](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2747)) ([1e9b644](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e9b6440d6c08b2c158740e2c9bfc6ac25a9c048))
+* **BModal:** fix ssr. ([df4a90d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/df4a90dacbcc99ee86b03499eb53501e240eb0ba))
+* **BTableLite:** field attribute isRowHeader now being respected ([#2713](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2713)) ([9a4b648](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9a4b648a31678ab1ea99f8c81b556ed166ae3fb3))
+* **BTabs:** Add type=button to buttons to prevent form submission ([#2740](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2740)) ([1a72f1b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1a72f1b50494512b692b53f968a40222e66edd40))
+* **BToast:** close BToast correctly if modelValue is changed from number to false ([df4a90d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/df4a90dacbcc99ee86b03499eb53501e240eb0ba))
+* **BToast:** close BToast correctly if modelValue is changed from number to false ([#2745](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2745)) ([df4a90d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/df4a90dacbcc99ee86b03499eb53501e240eb0ba))
+
+## [0.30.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.30.0...bootstrapvuenext-v0.30.1) (2025-06-06)
+
+
+### Bug Fixes
+
+* **BLink:** add active to default exactActiveClass fixes [#2693](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2693) ([45bb9c5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/45bb9c5f75a6dede49e20b8fa68af0da9f2d5d27))
+* **BTabs:** correct id/index on ssr ([f68d393](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f68d39315eae220b9e772d584d5e2d2195269ff5))
+* **BTabs:** correct id/index on ssr ([#2726](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2726)) ([f68d393](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f68d39315eae220b9e772d584d5e2d2195269ff5))
+* **BToast:** stop countdown if modelValue is set to 0 fixes [#2730](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2730) ([45bb9c5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/45bb9c5f75a6dede49e20b8fa68af0da9f2d5d27))
+* **useBLinkHelper:** add exactActiveClass to the props that are used for BLink. ([45bb9c5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/45bb9c5f75a6dede49e20b8fa68af0da9f2d5d27))
+* **useShowHide:** update the registry id when it changes in the component. fixes [#2729](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2729) ([45bb9c5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/45bb9c5f75a6dede49e20b8fa68af0da9f2d5d27))
+
 ## [0.30.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.29.4...bootstrapvuenext-v0.30.0) (2025-05-31)
 
 

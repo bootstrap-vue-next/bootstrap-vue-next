@@ -3,13 +3,22 @@
     <label>Inline switch style checkboxes</label>
   </div>
 
-  <BFormCheckboxGroup v-model="selected" :options="options" switches />
+  <BFormCheckboxGroup
+    v-model="selected"
+    :options="options"
+    switches
+  />
 
   <div class="my-2">
     <label>Stacked (vertical) switch style checkboxes</label>
   </div>
 
-  <BFormCheckboxGroup v-model="selected" :options="options" switches stacked />
+  <BFormCheckboxGroup
+    v-model="selected"
+    :options="options"
+    switches
+    stacked
+  />
 </template>
 
 <script setup lang="ts">

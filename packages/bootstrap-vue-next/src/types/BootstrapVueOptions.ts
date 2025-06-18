@@ -60,6 +60,7 @@ export const componentsWithExternalPath = {
   BFormInvalidFeedback: '/components/BForm',
   BFormRadio: '/components/BFormRadio',
   BFormRadioGroup: '/components/BFormRadio',
+  BFormRating: '/components/BFormRating',
   BFormRow: '/components/BForm',
   BFormSelect: '/components/BFormSelect',
   BFormSelectOption: '/components/BFormSelect',
@@ -213,6 +214,7 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
   BFormInput: ComponentProps.BFormInputProps
   BFormRadio: ComponentProps.BFormRadioProps
   BFormRadioGroup: ComponentProps.BFormRadioGroupProps
+  BFormRating: ComponentProps.BFormRatingProps
   BFormSelect: ComponentProps.BFormSelectProps
   BFormSelectOption: ComponentProps.BFormSelectOptionProps<BFormSelectOption>
   BFormSelectOptionGroup: ComponentProps.BFormSelectOptionGroupProps

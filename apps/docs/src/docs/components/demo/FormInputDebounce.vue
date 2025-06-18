@@ -1,6 +1,10 @@
 <template>
   <div>
-    <b-form-input v-model="value" type="text" debounce="500" />
+    <b-form-input
+      v-model="value"
+      type="text"
+      debounce="500"
+    />
     <div class="mt-2">Value: "{{ value }}"</div>
   </div>
 </template>

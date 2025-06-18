@@ -17,10 +17,18 @@
   </div>
 
   <div>
-    <BFormRadioGroup id="radio-group-2" v-model="selected" name="radio-sub-component">
+    <BFormRadioGroup
+      id="radio-group-2"
+      v-model="selected"
+      name="radio-sub-component"
+    >
       <BFormRadio value="first">Toggle this custom radio</BFormRadio>
       <BFormRadio value="second">Or toggle this other custom radio</BFormRadio>
-      <BFormRadio value="third" disabled>This one is Disabled</BFormRadio>
+      <BFormRadio
+        value="third"
+        disabled
+        >This one is Disabled</BFormRadio
+      >
       <BFormRadio :value="{fourth: 4}">This is the 4th radio</BFormRadio>
     </BFormRadioGroup>
   </div>

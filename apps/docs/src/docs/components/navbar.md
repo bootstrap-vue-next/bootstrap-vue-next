@@ -171,12 +171,6 @@ Navbars are hidden by default when printing. Force them to be printed by setting
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/navbar.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>

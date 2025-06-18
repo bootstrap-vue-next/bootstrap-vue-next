@@ -68,12 +68,6 @@ Quickly provide actionable badges by specifying either the `href` prop (links) o
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/badge.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>

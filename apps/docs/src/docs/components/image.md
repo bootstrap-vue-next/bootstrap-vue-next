@@ -130,12 +130,6 @@ We implement this `lazy` prop using the native `loading` attribute. See the [MDN
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/image.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>

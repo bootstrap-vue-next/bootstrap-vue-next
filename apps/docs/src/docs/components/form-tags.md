@@ -214,12 +214,6 @@ Note `<BFormTag>` requires BootstrapVueNext's custom CSS/SCSS for proper styling
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/formTags.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>

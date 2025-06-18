@@ -126,12 +126,6 @@ Note the the `repeat-delay`, `repeat-threshold` and `repeat-interval` only appli
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/formSpinbutton.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>

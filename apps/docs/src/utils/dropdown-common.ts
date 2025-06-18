@@ -28,6 +28,11 @@ export const dropdownProps = {
     default: undefined,
     description: 'Directly set the floating-ui middleware behavior. See above for details.',
   },
+  icon: {
+    type: 'boolean',
+    default: false,
+    description: 'When set, styles an icon at the beginning or end of the button text',
+  },
   isNav: {
     type: 'boolean',
     default: false,

@@ -1,13 +1,25 @@
 <template>
   <div>
-    <BTable :items="items" :fields="fields" striped responsive="sm">
+    <BTable
+      :items="items"
+      :fields="fields"
+      striped
+      responsive="sm"
+    >
       <template #cell(show_details)="row">
-        <BButton size="sm" class="mr-2" @click="row.toggleDetails">
+        <BButton
+          size="sm"
+          class="mr-2"
+          @click="row.toggleDetails"
+        >
           {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
         </BButton>
 
         <!-- As `row.showDetails` is one-way, we call the toggleDetails function on @change -->
-        <BFormCheckbox v-model="row.detailsShowing" @change="row.toggleDetails">
+        <BFormCheckbox
+          v-model="row.detailsShowing"
+          @change="row.toggleDetails"
+        >
           Details via check
         </BFormCheckbox>
       </template>
@@ -15,16 +27,28 @@
       <template #row-details="row">
         <BCard>
           <BRow class="mb-2">
-            <BCol sm="3" class="text-sm-right"><b>Age:</b></BCol>
+            <BCol
+              sm="3"
+              class="text-sm-right"
+              ><b>Age:</b></BCol
+            >
             <BCol>{{ row.item.age }}</BCol>
           </BRow>
 
           <BRow class="mb-2">
-            <BCol sm="3" class="text-sm-right"><b>Is Active:</b></BCol>
+            <BCol
+              sm="3"
+              class="text-sm-right"
+              ><b>Is Active:</b></BCol
+            >
             <BCol>{{ row.item.isActive }}</BCol>
           </BRow>
 
-          <BButton size="sm" @click="row.toggleDetails">Hide Details</BButton>
+          <BButton
+            size="sm"
+            @click="row.toggleDetails"
+            >Hide Details</BButton
+          >
         </BCard>
       </template>
     </BTable>

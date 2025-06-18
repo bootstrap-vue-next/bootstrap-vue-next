@@ -1,7 +1,10 @@
 <template>
   <!-- #region template -->
   <BCard>
-    <BFormGroup :state="false" class="mb-2">
+    <BFormGroup
+      :state="false"
+      class="mb-2"
+    >
       <BFormInput />
     </BFormGroup>
     <BFormGroup :state="false">
