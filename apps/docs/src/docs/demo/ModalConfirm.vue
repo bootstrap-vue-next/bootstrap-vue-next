@@ -6,11 +6,11 @@
 </template>
 
 <script setup lang="ts">
-import {useModalController} from 'bootstrap-vue-next'
+import {type BvTriggerableEvent, useModalController} from 'bootstrap-vue-next'
 import {ref} from 'vue'
 
 const {confirm} = useModalController()
-const confirmResult = ref<boolean | null | undefined>(null)
+const confirmResult = ref<boolean | null | BvTriggerableEvent>(null)
 
 const confirmBox = async () => {
   confirmResult.value = await confirm?.({
