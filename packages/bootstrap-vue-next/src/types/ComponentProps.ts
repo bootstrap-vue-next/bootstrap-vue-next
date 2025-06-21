@@ -842,6 +842,7 @@ export interface BAvatarProps
   alt?: string
   badge?: boolean | string
   badgeBgVariant?: BgColorVariant | null
+  badgeOffset?: string | null
   badgePlacement?: CombinedPlacement
   badgeTextVariant?: TextColorVariant | null
   badgeVariant?: ColorVariant | null
