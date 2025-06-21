@@ -355,6 +355,8 @@ export interface BFormRadioGroupProps {
 }
 export interface BFormRatingProps {
   color?: string
+  id?: string
+  inline?: boolean
   modelValue?: number
   noBorder?: boolean
   precision?: number
@@ -374,10 +376,6 @@ export interface BFormRatingProps {
     | 'light'
     | 'dark'
     | string
-  iconFull?: string
-  iconHalf?: string
-  iconEmpty?: string
-  inline?: boolean
 }
 
 export interface BFormSelectProps {

@@ -1,5 +1,6 @@
 <template>
   <div
+    :id="computedId"
     :class="computedClasses"
     role="slider"
     :aria-valuemin="0"
@@ -77,21 +78,25 @@
 import {computed, defineSlots, ref} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BFormRatingProps} from '../../types/ComponentProps'
+import {useId} from '../../composables/useId'
 
 const _props = withDefaults(defineProps<Omit<BFormRatingProps, 'modelValue'>>(), {
-  readonly: false,
-  variant: '',
   color: '',
-  stars: 5,
+  id: undefined,
+  inline: false,
+  noBorder: false,
   precision: 0,
+  readonly: false,
   showClear: false,
   showValue: false,
   showValueMax: false,
   size: '1rem',
-  noBorder: false,
-  inline: false,
+  stars: 5,
+  variant: undefined,
 })
 const props = useDefaults(_props, 'BFormRating')
+
+const computedId = useId(() => props.id, 'form-rating')
 
 const computedClasses = computed(() => ({
   'is-readonly': props.readonly,
