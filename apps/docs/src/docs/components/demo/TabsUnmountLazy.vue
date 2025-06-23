@@ -9,6 +9,7 @@
     <BTab
       title="Lazy tab"
       lazy
+      unmount-lazy
       ><BAlert show>I'm lazy mounted and will unmount when deactivated!</BAlert></BTab
     >
   </BTabs>

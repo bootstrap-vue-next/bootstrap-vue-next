@@ -82,7 +82,7 @@ Visually move the tab controls to the bottom by setting the prop `end`.
 ::: warning
 
 - Bottom placement visually works best with the `pills` variant. When using the default `tabs`
-  variant, you may want to provided your own custom styling classes, as Bootstrap CSS assumes the
+  variant, you may want to provide your own custom styling classes, as Bootstrap CSS assumes the
   tabs will always be placed on the top of the tabs content.
 - To provide a better user experience with bottom placed controls, ensure that the content of each
   tab pane is the same height and fits completely within the visible viewport, otherwise the user

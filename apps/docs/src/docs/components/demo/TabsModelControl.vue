@@ -48,8 +48,7 @@
 
 <script setup lang="ts">
 import {ref} from 'vue'
-import {type BTab} from 'bootstrap-vue-next'
 
 const tabIndex = ref(0)
-const tabId = ref(undefined)
+const tabId = ref<string | undefined>(undefined)
 </script>
