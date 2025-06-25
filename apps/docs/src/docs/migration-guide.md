@@ -38,10 +38,10 @@ have found tricky or clarifcation if the details in the guide weren't sufficent.
 
 We will mark features of BootstrapVue as deprecated for one of several reasons.
 
-- If there is a more streamlined or consistent way of providing the functionality in BootstrapVueNexst
+- If there is a more streamlined or consistent way of providing the functionality in BootstrapVueNext
 - If the feature is deprecated in Bootstrap 5
 - If we believe that this functionality can as easily (or more easily) be consumed using native bootstrap classes
-- If we haven't seen demand for the feature, especially if it is something we believe we can implement later without a breaking change
+- If we haven't seen demand for the feature, especially if it is something we believe can be implemented later without a breaking change
 
 For any deprecated feature, especially the last case listed above, please feel free to open an
 [issue](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues) or submit a pull request.

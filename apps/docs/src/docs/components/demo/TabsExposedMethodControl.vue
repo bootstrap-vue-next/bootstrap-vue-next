@@ -57,7 +57,9 @@
 
 <script setup lang="ts">
 import {ref, useTemplateRef} from 'vue'
-import {type BTab} from 'bootstrap-vue-next'
+// Import BTab explicitly path to get the correct type for exposed methods
+//  and use the full path to improve tree shaking
+import {BTab} from 'bootstrap-vue-next/components/BTabs'
 
 const tabIndex = ref(0)
 const tabId = ref(undefined)

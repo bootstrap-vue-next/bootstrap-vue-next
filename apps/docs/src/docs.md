@@ -395,7 +395,13 @@ Alternatively the ESM package is available as well
 
 </HighlightCard>
 
-## Tree-shake CSS
+## Tree-shaking
+
+If you are concerned about the size of your application, you should utilize
+[tree-shaking](https://vuejs.org/guide/best-practices/performance#bundle-size-and-tree-shaking).
+Below are some pointers on optimizing tree-shaking in the context of BootstrapVueNext.
+
+### Tree-shake CSS
 
 If you are using one of the preferred installation methods, JS will be tree-shaken by default. The one thing we are not able to do automatically is optimize CSS. Methods like PurgeCSS are not ideal because of a limitation with the dynamic nature of class renderings and Vue (Problematic code like: `[btn-${props.variant}]: props.variant !== undefined`). With that being said, BootstrapVueNext does not handle CSS imports from Bootstrap, we only add some additional CSS ourselves. So, using a method such as [Lean Sass Imports](https://getbootstrap.com/docs/5.3/customize/optimize/#lean-sass-imports) from the Bootstrap documentation is likely the best way to achieve the tiniest possible application size. Though it is not automatic, it should prove the safest bet for minifying your application.
 
@@ -406,6 +412,21 @@ One could individually import each needed plugin, they are all appended with `Pl
 Practically the `createBootstrap` plugin is ~20kb gzipped with `toast` and `modalController` accounting for the majority. Use this if you really want the tiniest possible size.
 
 <BootstrapPluginWarning />
+
+### Exposed methods and tree-shaking
+
+In order to correctly type exposed methods, you need to explicitly import them from BootstrapVueNext. When doeing this,
+import the component (not just the type) and use the full path to improve tree-shaking.
+
+<HighlightCard>
+
+```vue
+<script setup lang="ts">
+import {BTab} from 'bootstrap-vue-next/components/BTabs'
+</script>
+```
+
+</HighlightCard>
 
 ## Comparison with BootstrapVue
 
