@@ -799,7 +799,7 @@ See [Show and Hide](#show-and-hide) shared properties.
 
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
-`BTooltip` is noninteractive by default unlike in BootstrapVue. This provides for a smoother user
+`BTooltip` is noninteractive by default, unlike in BootstrapVue. This provides for a smoother user
 experience. The `interactive` property is provided to change back to the default BootstrapVue behavior.
 
 The `container` prop has been deprecated. Use the `teleportTo` prop instead to specify where the popover

@@ -79,8 +79,8 @@
           <template #target><BButton>Auto End</BButton></template>
           I am tooltip <b>component</b> content!
         </BTooltip>
-      </BCol></BRow
-    ></BContainer
-  >
+      </BCol>
+    </BRow>
+  </BContainer>
   <!-- #endregion template -->
 </template>

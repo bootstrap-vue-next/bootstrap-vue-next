@@ -5,7 +5,7 @@ import {buildCommonProps, pick, showHideProps} from '.'
 export const popoverSharedProps = (
   type: string
 ): Record<keyof BTooltipProps, PropertyReference> => {
-  const clone = JSON.parse(JSON.stringify(sharedProps))
+  const clone = structuredClone(sharedProps) as Record<string, PropertyReference>
   for (const key in clone) {
     if (clone[key]?.description && typeof clone[key].description === 'string') {
       clone[key].description = clone[key].description.replace(/\{component\}/g, type)
@@ -70,7 +70,7 @@ const sharedProps = {
     type: 'boolean',
     default: false,
     description:
-      'Disables automatic closing on click outside or scrool out of view. Overrides `close-on-hide`',
+      'Disables automatic closing on click outside or scroll out of view. Overrides `close-on-hide`',
   },
   noFlip: {
     type: 'boolean',
@@ -161,7 +161,7 @@ const sharedProps = {
 
 export const popoverSharedEmits = (type: string) =>
   sharedEmits.map((emit) => {
-    const clone = JSON.parse(JSON.stringify(emit))
+    const clone = structuredClone(emit)
     if (clone.description && typeof clone.description === 'string') {
       clone.description = clone.description.replace(/\{component\}/g, type)
     }

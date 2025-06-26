@@ -3,7 +3,7 @@
 <PageHeader>
 
 Easily add tooltips to an interactive element or components via the `<BTooltip>` component
-or [`v-b-tootlip`](/docs/directives/btooltip) directive. Popovers can also be created and programmatically controlled via the composable
+or [`v-b-tooltip`](/docs/directives/btooltip) directive. Popovers can also be created and programmatically controlled via the composable
 [`usePopoverController`](<(/docs/composables/useTooltipController)>)
 
 </PageHeader>
@@ -18,8 +18,8 @@ Things to know when using the popover component:
   - The delay is zero
   - HideMargin is 0
   - Tooltips are noninteractive by default.
-- Tootlips rely on the 3rd party library [floating-ui](https://floating-ui.com/) for positioning.
-- Use `teleportTo` and `teleportDisabled` to control where in the DOM the tootlip is rendered. See the [Vue.js Docs](https://vuejs.org/guide/built-ins/teleport.html) for details. When using Nuxt, `teleportTo` defaults to `#teleport`, set `teleportDisabled` to disable this behavior. For non-nuxt environments, `teleportTo` defaults to `undefined`.
+- Tooltips rely on the 3rd party library [floating-ui](https://floating-ui.com/) for positioning.
+- Use `teleportTo` and `teleportDisabled` to control where in the DOM the tooltip is rendered. See the [Vue.js Docs](https://vuejs.org/guide/built-ins/teleport.html) for details. When using Nuxt, `teleportTo` defaults to `#teleport`, set `teleportDisabled` to disable this behavior. For non-nuxt environments, `teleportTo` defaults to `undefined`.
 - Triggering tooltips on hidden elements will not work.
 - Tooltips for `disabled` elements must be triggered on a wrapper element.
 - When triggered from hyperlinks that span multiple lines, tooltips will be centered. Set the `inline` prop to improve the positioning see the [Floating UI docs](https://floating-ui.com/docs/inline) for details.
@@ -32,7 +32,7 @@ specified via the `target` slot or prop, and can be any of the following:
 The `target` prop may be any of the following:
 
 - A string identifying the ID of the trigger element (or ID of the root element of a component)
-- A string with querySelector. (ie. '#toolbar > div:first-child')
+- A string with querySelector. (i.e. '#toolbar > div:first-child')
 - A reference (ref) to an `HTMLElement` or an `SVGElement` via a [Template Ref](https://vuejs.org/guide/essentials/template-refs.html)
 - A reference (ref) to a component that has either an `HTMLElement` or `SVGElement` as its root
   element via [Template Ref](https://vuejs.org/guide/essentials/template-refs.html)
@@ -64,7 +64,7 @@ override the `pointer-events` on the disabled element.
 
 ## Positioning
 
-Twelve static options are available for the `placement` prop: `top`, `top-left`, `top-right`,
+Twelve static options are available for the `placement` prop: `top`, `top-start`, `top-end`,
 `bottom`, `bottom-start`, `bottom-end`, `left`, `left-start`, `left-end`, `right`, `right-start`, `right-end` from
 [@floating-ui/vue](https://floating-ui.com/) as well as three [auto placement](https://floating-ui.com/docs/autoplacement)
 options `auto`, `auto-start` and `auto-end`.
@@ -75,7 +75,7 @@ Positioning is relative to the trigger element.
 
 ## Interactive
 
-`BTooltip` has an interactive prop, which allows you to set the tooltip to be interactive. This means that the tooltip will remain open when the mouse is over it or focus is in it, allowing users to interact with its content.
+`BTooltip` has an interactive prop, which allows you to set the tooltip to be interactive. This means that the tooltip will remain open when the mouse is over it or focus is within it, allowing users to interact with its content.
 
 <<< DEMO ./demo/TooltipInteractive.vue
 
@@ -107,7 +107,7 @@ slots and the slots (as always) take precedence over the props.
 
 ## Custom Classes and Variants
 
-Custom classes can be applied to the tootlip using the `title-class` prop and to or `body-class` prop
+Custom classes can be applied to the tooltip using the `title-class` prop or `body-class` prop
 (depending on which prop or slot you use to populate the tooltip):
 
 <<< FRAGMENT ./demo/TooltipCustomClass.vue#template{vue-html}

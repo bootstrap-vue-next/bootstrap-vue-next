@@ -29,7 +29,7 @@ specified via the `target` slot or prop, and can be any of the following:
 The `target` prop may be any of the following:
 
 - A string identifying the ID of the trigger element (or ID of the root element of a component)
-- A string with querySelector. (ie. '#toolbar > div:first-child')
+- A string with querySelector. (i.e. '#toolbar > div:first-child')
 - A reference (ref) to an `HTMLElement` or an `SVGElement` via a [Template Ref](https://vuejs.org/guide/essentials/template-refs.html)
 - A reference (ref) to a component that has either an `HTMLElement` or `SVGElement` as its root
   element via [Template Ref](https://vuejs.org/guide/essentials/template-refs.html)
@@ -43,7 +43,7 @@ refers to `<svg>` or supported child elements of SVGs.
 
 ## Positioning
 
-Twelve static options are available for the `placement` prop: `top`, `top-left`, `top-right`,
+Twelve static options are available for the `placement` prop: `top`, `top-start`, `top-end`,
 `bottom`, `bottom-start`, `bottom-end`, `left`, `left-start`, `left-end`, `right`, `right-start`, `right-end` from
 [@floating-ui/vue](https://floating-ui.com/) as well as three [auto placement](https://floating-ui.com/docs/autoplacement)
 options `auto`, `auto-start` and `auto-end`.

@@ -1,7 +1,7 @@
 <template>
   <!-- #region template -->
   <div class="d-flex gap-2">
-    <BTooltip title="Tootip Title via Property">
+    <BTooltip title="Tooltip Title via Property">
       <template #target>
         <BButton variant="primary">Using property</BButton>
       </template>
