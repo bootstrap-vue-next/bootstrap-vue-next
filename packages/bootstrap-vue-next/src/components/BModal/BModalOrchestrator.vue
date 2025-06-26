@@ -3,9 +3,9 @@
     <div id="__BVID__modal-container" v-bind="$attrs">
       <component
         :is="_component ?? BModal"
-        v-for="[key, {component: _component, promise, options, slots, ...val}] in tools.modals
-          ?.value"
-        :key="key"
+        v-for="{_self, component: _component, promise, options, slots, ...val} in tools.modals
+          ?.value ?? []"
+        :key="_self"
         :ref="(ref: ComponentPublicInstance) => (promise.value.ref = ref)"
         v-bind="val"
         initial-animation
@@ -67,7 +67,13 @@ const _props = withDefaults(defineProps<BModalOrchestratorProps>(), {
 const props = useDefaults(_props, 'BModalOrchestrator')
 
 const tools = useModalController()
-tools._isOrchestratorInstalled.value = true
+if (!tools._isOrchestratorInstalled.value) {
+  tools._isOrchestratorInstalled.value = true
+} else {
+  console.warn(
+    'BModalOrchestrator Or BApp is already installed, only one can be installed at a time'
+  )
+}
 
 defineExpose({
   ...tools,
