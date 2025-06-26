@@ -1,35 +1,6 @@
 <template>
   <!-- eslint-disable prettier/prettier -->
-  <BTableLite
-    v-bind="computedLiteProps"
-    @head-clicked="onFieldHeadClick"
-    @row-clicked="onRowClick"
-    @row-dblclicked="
-      (row: Items, index: number, e: MouseEvent) => {
-        emit('row-dblclicked', row, index, e)
-      }
-    "
-    @row-contextmenu="
-      (row: Items, index: number, e: MouseEvent) => {
-        emit('row-contextmenu', row, index, e)
-      }
-    "
-    @row-hovered="
-      (row: Items, index: number, e: MouseEvent) => {
-        emit('row-hovered', row, index, e)
-      }
-    "
-    @row-unhovered="
-      (row: Items, index: number, e: MouseEvent) => {
-        emit('row-unhovered', row, index, e)
-      }
-    "
-    @row-middle-clicked="
-      (row: Items, index: number, e: MouseEvent) => {
-        emit('row-middle-clicked', row, index, e)
-      }
-    "
-  >
+  <BTableLite v-bind="computedLiteProps">
     <template v-if="slots['table-colgroup']" #table-colgroup="scope">
       <slot name="table-colgroup" v-bind="scope" />
     </template>
@@ -228,12 +199,12 @@ import {
   type TableFieldFormatter,
   type TableFieldRaw,
   type TableItem,
-  type TableRowEvent,
   type TableRowType,
   type TableStrictClassValue,
 } from '../../types/TableTypes'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BTableProps} from '../../types/ComponentProps'
+import type {BTableEmits, BTableLiteEmits} from '../../types/ComponentEmits'
 import {deepEqual, get, pick, set} from '../../utils/object'
 import {startCase} from '../../utils/stringUtils'
 import type {LiteralUnion} from '../../types/LiteralUnion'
@@ -244,6 +215,7 @@ import {
   getTableFieldHeadLabel,
 } from '../../utils/tableUtils'
 import {useId} from '../../composables/useId'
+import type {CamelCase} from '../../types'
 
 const _props = withDefaults(
   defineProps<Omit<BTableProps<Items>, 'sortBy' | 'busy' | 'selectedItems'>>(),
@@ -318,25 +290,8 @@ const _props = withDefaults(
 )
 const props = useDefaults(_props, 'BTable')
 
-const emit = defineEmits<{
-  'filtered': [value: Items[]]
-  'head-clicked': [
-    key: string,
-    field: (typeof computedFields.value)[0],
-    event: MouseEvent,
-    isFooter: boolean,
-  ]
-  'row-clicked': TableRowEvent<Items>
-  'row-dblclicked': TableRowEvent<Items>
-  'row-contextmenu': TableRowEvent<Items>
-  'row-hovered': TableRowEvent<Items>
-  'row-unhovered': TableRowEvent<Items>
-  'row-middle-clicked': TableRowEvent<Items>
-  'row-selected': [value: Items]
-  'row-unselected': [value: Items]
-  'sorted': [value: BTableSortBy<Items>]
-  'change': [value: Items[]]
-}>()
+type FieldsType = (typeof computedFields.value)[0]
+const emit = defineEmits<BTableEmits<Items, FieldsType>>()
 
 type SortSlotScope = {
   label: string | undefined
@@ -799,13 +754,6 @@ const handleRowSelection = (
   }
 }
 
-const onRowClick = (row: Items, index: number, e: MouseEvent) => {
-  if (props.noSelectOnClick === false) {
-    handleRowSelection(row, index, e.shiftKey, e.ctrlKey, e.metaKey)
-  }
-  emit('row-clicked', row, index, e)
-}
-
 const handleFieldSorting = (field: TableField<Items>) => {
   if (!isSortable.value) return
 
@@ -871,16 +819,6 @@ const handleFieldSorting = (field: TableField<Items>) => {
 
   // Then emit the returned updated value
   emit('sorted', props.multisort === true ? handleMultiSort() : handleSingleSort())
-}
-
-const onFieldHeadClick = (
-  fieldKey: string,
-  field: TableField<Items>,
-  event: Readonly<MouseEvent>,
-  isFooter = false
-) => {
-  emit('head-clicked', fieldKey, field, event, isFooter)
-  handleFieldSorting(field)
 }
 
 const callItemsProvider = async () => {
@@ -1002,6 +940,27 @@ const exposedSelectableUtilities = {
   },
 } as const
 
+const boundBTableLiteEmits = {
+  onHeadClicked: (fieldKey, field, event, isFooter = false) => {
+    emit('head-clicked', fieldKey, field, event, isFooter)
+    handleFieldSorting(field)
+  },
+  onRowClicked: (row, index, e) => {
+    if (props.noSelectOnClick === false) {
+      handleRowSelection(row, index, e.shiftKey, e.ctrlKey, e.metaKey)
+    }
+    emit('row-clicked', row, index, e)
+  },
+  onRowDblclicked: (...args) => emit('row-dblclicked', ...args),
+  onRowContextmenu: (...args) => emit('row-contextmenu', ...args),
+  onRowHovered: (...args) => emit('row-hovered', ...args),
+  onRowUnhovered: (...args) => emit('row-unhovered', ...args),
+  onRowMiddleClicked: (...args) => emit('row-middle-clicked', ...args),
+} as const satisfies {
+  [K in keyof BTableLiteEmits<Items, FieldsType> as CamelCase<`on-${K & string}`>]: (
+    ...args: BTableLiteEmits<Items, FieldsType>[K]
+  ) => void
+}
 const computedLiteProps = computed(() => ({
   ...pick(props, [...btableLiteProps, ...btableSimpleProps]),
   tableAttrs: {
@@ -1013,6 +972,7 @@ const computedLiteProps = computed(() => ({
   tbodyTrClass: getRowClasses,
   fieldColumnClass: getFieldColumnClasses,
   id: computedId.value,
+  ...boundBTableLiteEmits,
 }))
 
 defineExpose({
