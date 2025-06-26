@@ -12,17 +12,17 @@ or [`v-b-tooltip`](/docs/directives/btooltip) directive. Popovers can also be cr
 
 ## Overview
 
-Things to know when using the popover component:
+Things to know when using the tooltip component:
 
 - Tooltip is a wrapper for Popover, providing a simple way to create tooltips in your application. It uses the same API as Popover, but with some default properties set for tooltips.
   - The delay is zero
-  - HideMargin is 0
-  - Tooltips are noninteractive by default.
+  - kideMargin is 0
+  - Tooltips are non-interactive by default.
 - Tooltips rely on the 3rd party library [floating-ui](https://floating-ui.com/) for positioning.
 - Use `teleportTo` and `teleportDisabled` to control where in the DOM the tooltip is rendered. See the [Vue.js Docs](https://vuejs.org/guide/built-ins/teleport.html) for details. When using Nuxt, `teleportTo` defaults to `#teleport`, set `teleportDisabled` to disable this behavior. For non-nuxt environments, `teleportTo` defaults to `undefined`.
 - Triggering tooltips on hidden elements will not work.
 - Tooltips for `disabled` elements must be triggered on a wrapper element.
-- When triggered from hyperlinks that span multiple lines, tooltips will be centered. Set the `inline` prop to improve the positioning see the [Floating UI docs](https://floating-ui.com/docs/inline) for details.
+- When triggered from hyperlinks that span multiple lines, tooltips will be centered. Set the `inline` prop to improve the positioning. See the [Floating UI docs](https://floating-ui.com/docs/inline) for details.
 
 ## Target
 
@@ -87,23 +87,23 @@ on `click` events, set the `click` prop to `true`.
 
 <<< DEMO ./demo/TooltipTriggers.vue#template{vue-html}
 
-To take finer control of popover visibility, you can use the [useToggle](/docs/composables/useToggle) or
+To take finer control of tooltip visibility, you can use the [useToggle](/docs/composables/useToggle) or
 [usePopoverController](/docs/composables/usePopoverController). Alternately, you can set the `manual` prop
 and use the [`v-model`](#programmatic-control-via-v-model) or
 [exposed functions](#exposed-functions) to control visibility.
 
 ## Content
 
-The title and body content of a popover can be set via the `title` or `body` props or the `title`
-and `default` slots.
-
-<<< DEMO ./demo/TooltipContent.vue#template{vue-html}
+The content of a tooltip can be set via the `title` or `body` props or the `title`
+or `default` slots.
 
 ::: info NOTE
 Unlike [popover content](/docs/components/popover#content) which has a separate title and body, tooltips only
 have one place to place content. The `title` prop and slot take precedence over the `body` and `default`
 slots and the slots (as always) take precedence over the props.
 :::
+
+<<< DEMO ./demo/TooltipContent.vue#template{vue-html}
 
 ## Custom Classes and Variants
 
@@ -117,7 +117,7 @@ utilities to change the variant of the tooltip.
 
 <<< DEMO ./demo/TooltipVariant.vue#template{vue-html}
 
-`body-class` and `title-class` are reactive and can be changed while the popover is open.
+`body-class` and `title-class` are reactive and can be changed while the tooltip is open.
 
 Refer to the [tooltip directive](/docs/directives/btooltip) docs on applying custom
 classes to the directive version.
