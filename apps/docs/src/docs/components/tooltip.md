@@ -3,7 +3,7 @@
 <PageHeader>
 
 Easily add tooltips to an interactive element or components via the `<BTooltip>` component
-or [`v-b-tootlip`](/docs/directives/b-tooltip) directive. Popovers can also be created and programmatically controlled via the composable
+or [`v-b-tootlip`](/docs/directives/btooltip) directive. Popovers can also be created and programmatically controlled via the composable
 [`usePopoverController`](<(/docs/composables/useTooltipController)>)
 
 </PageHeader>
@@ -153,3 +153,15 @@ props can be used to control what's considered clipping.
 These are accessed through the [template ref](https://vuejs.org/guide/essentials/template-refs.html#template-refs)
 
 <<< DEMO ./demo/TooltipExposed.vue
+
+<ComponentReference :data="data" />
+
+<script lang="ts">
+import {data} from '../../data/components/tooltip.data'
+
+export default {
+  setup() {
+    return {data}
+  }
+}
+</script>
