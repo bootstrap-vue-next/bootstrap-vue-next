@@ -34,6 +34,18 @@ our best to note each component or directive that hasn't been through the full p
 For section of this guide that are not marked as in progress, we're still interested in examples of migrations that you
 have found tricky or clarifcation if the details in the guide weren't sufficent.
 
+### Deprecation
+
+We will mark features of BootstrapVue as deprecated for one of several reasons.
+
+- If there is a more streamlined or consistent way of providing the functionality in BootstrapVueNext
+- If the feature is deprecated in Bootstrap 5
+- If we believe that this functionality can as easily (or more easily) be consumed using native bootstrap classes
+- If we haven't seen demand for the feature, especially if it is something we believe can be implemented later without a breaking change
+
+For any deprecated feature, especially the last case listed above, please feel free to open an
+[issue](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues) or submit a pull request.
+
 ## Sync modifier
 
 A number of components in `bootstrap-vue` use `v-bind`'s `.sync` modifier. This modifier has been replaced by properties
@@ -50,6 +62,12 @@ becomes
 
 See the [Vue 3 migration guide](https://v3-migration.vuejs.org/breaking-changes/v-model.html)
 for more info.
+
+## Native Events
+
+BootstrapVue sometimes listed the native events such as `click` that were bubbled from the underlying
+HTML element. We're not currently doing that, as we would like to keep the list of events
+consistent between the documentation and the code.
 
 ## Shared Properties
 
@@ -403,7 +421,7 @@ See [BForm Components](bform-components)
 
 ### BFormRating
 
-`BFormRating` is now available in BootstrapVueNext, preserving most of the original BootstrapVue functionality under Vue 3's v-model conventions.  
+`BFormRating` is now available in BootstrapVueNext, preserving most of the original BootstrapVue functionality under Vue 3's v-model conventions.
 See the [Vue 3 migration guide](https://v3-migration.vuejs.org/breaking-changes/v-model.html) for details on the new `v-model` syntax.
 
 The following features from BootstrapVue are <NotYetImplemented/>:
@@ -748,15 +766,11 @@ of a method in the component is deprecated.
 
 ### BTableLight
 
-<NotYetDocumented type="component"/>
-
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
 The slot scope for `table-colgroup` slot now only contains the `fields` prop, with the `columns` prop removed.
 
 ### BTableSimple
-
-<NotYetDocumented type="component"/>
 
 Use `table-attrs` to apply additional attributes to the `<table>` element in reponsive mode.
 
@@ -776,12 +790,12 @@ See the [v-html](#v-html) section for information on deprecation of the `caption
 
 ### BTabs
 
-`align` prop now takes values from [`AlignmentJustifyContent`](/docs/types/alignment): `start`, `center`, `end`, `between`, `around`, and `evenly`
+`align` prop now takes values from [`AlignmentJustifyContent`](/docs/types#alignment): `start`, `center`, `end`, `between`, `around`, and `evenly`
 
-<NotYetImplemented/>
+The primary `v-model` now reflects the `id` of the currently selected tag. Use `v-model:index` to syncronize to
+the current tab index. See [programmatically activating and deactivating tabs](/docs/components/tabs#programmatically-activating-and-deactivating-tabs) for details.
 
-- `click` event is not implemented on `BTab`
-- `changed` event is not implemented on `BTabs`
+The `changed` event on `BTabs` is deprecated.
 
 ### BTime
 
