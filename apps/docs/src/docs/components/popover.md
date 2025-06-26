@@ -4,7 +4,8 @@
 
 The Popover feature, which provides a tooltip-like behavior, can be easily applied to any
 interactive element via the `<BPopover>` component or [`v-b-popover`](/docs/directives/b-popover)
-directive. Popovers can also be created and programmatically controlled via the `usePopoverController`
+directive. Popovers can also be created and programmatically controlled via the composable
+[`usePopoverController`](<(/docs/composables/usePopoverController)>)
 
 </PageHeader>
 
@@ -14,7 +15,7 @@ directive. Popovers can also be created and programmatically controlled via the 
 
 Things to know when using the popover component:
 
-- Popovers rely on the 3rd party library [floating-ui](https://floating-ui.com/docs) for positioning.
+- Popovers rely on the 3rd party library [floating-ui](https://floating-ui.com/) for positioning.
 - Use `teleportTo` and `teleportDisabled` to control where in the DOM the popover is rendered. See the [Vue.js Docs](https://vuejs.org/guide/built-ins/teleport.html) for details. When using Nuxt, `teleportTo` defaults to `#teleport`, set `teleportDisabled` to disable this behavior. For non-nuxt environments, `teleportTo` defaults to `undefined`.
 - Triggering popovers on hidden elements will not work.
 - Popovers for `disabled` elements must be triggered on a wrapper element.
@@ -54,7 +55,7 @@ Positioning is relative to the trigger element.
 ## Triggers
 
 By default, popovers are shown by `pointerenter` and `focus` events and closed by `pointerleave` and `blur` events
-on the `target` element by default. To override this behavior and make the popover show and hide based
+on the `target` element. To override this behavior and make the popover show and hide based
 on `click` events, set the `click` prop to `true`.
 
 <<< DEMO ./demo/PopoverTriggers.vue#template{vue-html}
@@ -85,7 +86,7 @@ utilities to change the variant of the popover.
 
 `body-class` and `title-class` are reactive and can be changed while the popover is open.
 
-Refer to the [popover directive](/docs/directives/popover) docs on applying custom
+Refer to the [popover directive](/docs/directives/bpopover) docs on applying custom
 classes to the directive version.
 
 For finer control, use the bootstrap 5 css variables to apply styles directly.

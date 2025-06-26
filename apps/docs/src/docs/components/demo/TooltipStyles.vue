@@ -1,19 +1,14 @@
 <template>
   <!-- #region template -->
   <div class="d-flex gap-2">
-    <BPopover
-      title="Danger!"
-      style="
-        --bs-popover-header-bg: var(--bs-danger);
-        --bs-popover-bg: var(--bs-danger-bg-subtle);
-        --bs-popover-border-color: var(--bs-emphasis-color);
-      "
+    <BTooltip
+      style="--bs-tooltip-color: var(--bs-body-color); --bs-tooltip-bg: var(--bs-danger-bg-subtle)"
     >
       <template #target>
         <BButton>Button</BButton>
       </template>
       This is <strong>important</strong>
-    </BPopover>
+    </BTooltip>
   </div>
   <!-- #endregion template -->
 </template>
