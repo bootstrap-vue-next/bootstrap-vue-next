@@ -3,7 +3,7 @@
 <PageHeader>
 
 Easily add tooltips to an interactive element or components via the `<BTooltip>` component
-or [`v-b-tooltip`](/docs/directives/btooltip) directive. Popovers can also be created and programmatically controlled via the composable
+or [`v-b-tooltip`](/docs/directives/btooltip) directive. Tooltips can also be created and programmatically controlled via the composable
 [`usePopoverController`](<(/docs/composables/useTooltipController)>)
 
 </PageHeader>
