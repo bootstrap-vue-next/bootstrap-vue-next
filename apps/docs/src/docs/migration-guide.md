@@ -799,12 +799,14 @@ See [Show and Hide](#show-and-hide) shared properties.
 
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
-`content` prop has been renamed to `body` for consistency with other components.
+`BTooltip` is noninteractive by default unlike in BootstrapVue. This provides for a smoother user
+experience. The `interactive` property is provided to change back to the default BootstrapVue behavior.
 
 The `container` prop has been deprecated. Use the `teleportTo` prop instead to specify where the popover
 should be mounted. See [Vue Teleport documentation](https://vuejs.org/guide/built-ins/teleport.html).
 
-`custom-class` has been changed to `body-class` and a `title-class` has been added for completeness.
+`custom-class` has been changed to `body-class` and a `title-class` has been added for completeness -
+see [custom classes documentation](/docs/components/tooltip#custom-classes-and-variants) for details.
 
 `fallback-placement` has been deprecated. Use the various options provided by [floating-ui](https://floating-ui.com/)
 to handle placement.
