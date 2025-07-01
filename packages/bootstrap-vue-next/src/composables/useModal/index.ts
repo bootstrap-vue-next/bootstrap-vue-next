@@ -36,7 +36,7 @@ export const useModal = () => {
   const {store, _isOrchestratorInstalled} = controller
 
   /**
-   * @returns {PromiseWithModal}  Returns a promise object with methods to control the modal (show, hide, toggle, get, set, destroy)
+   * @returns {PromiseWithComponent}  Returns a promise object with methods to control the modal (show, hide, toggle, get, set, destroy)
    */
   const create = (
     obj: ModalOrchestratorCreateParam = {},
@@ -228,7 +228,7 @@ export const useModal = () => {
       if (!component.parent) {
         return null
       }
-      if (component.parent.type.__name === 'BModal') {
+      if (component.parent.type === BModal) {
         return component.parent
       }
       return findBModal(component.parent)

@@ -31,26 +31,34 @@ export function buildPromise<TComponent, TParam, TArrayValue extends Orchestrato
     resolveFunc = resolve
   }) as PromiseWithComponent<TComponent, TParam>
 
+  type RefWithMethods = ComponentPublicInstance<TComponent> & {
+    show?: () => void
+    hide?: (trigger?: string, noEmit?: boolean) => void
+    toggle?: () => void
+  }
   Object.assign(promise, {
     id: _id,
     ref: null as ComponentPublicInstance<TComponent> | null,
     show() {
-      const fn = (this.ref as Record<string, (...args: unknown[]) => unknown>)?.show
-      if (typeof fn === 'function') fn()
-      else return this.set({modelValue: true} as unknown as Partial<TParam>)
+      const refWithMethods = this.ref as RefWithMethods | null
+      if (refWithMethods?.show) {
+        refWithMethods.show()
+      } else return this.set({modelValue: true} as unknown as Partial<TParam>)
       return promise
     },
     hide(trigger?: string) {
-      const fn = (this.ref as Record<string, (...args: unknown[]) => unknown>)?.hide
-      if (typeof fn === 'function') fn(trigger, true)
-      else return this.set({modelValue: false} as unknown as Partial<TParam>)
+      const refWithMethods = this.ref as RefWithMethods | null
+      if (refWithMethods?.hide) {
+        refWithMethods.hide(trigger, true)
+      } else return this.set({modelValue: false} as unknown as Partial<TParam>)
       return promise
     },
     toggle() {
       const currentItem = this.get() as TParam & {modelValue?: unknown}
-      const fn = (this.ref as Record<string, (...args: unknown[]) => unknown>)?.toggle
-      if (typeof fn === 'function') fn()
-      else return this.set({modelValue: !currentItem?.modelValue} as unknown as Partial<TParam>)
+      const refWithMethods = this.ref as RefWithMethods | null
+      if (refWithMethods?.toggle) {
+        refWithMethods.toggle()
+      } else return this.set({modelValue: !currentItem?.modelValue} as unknown as Partial<TParam>)
       return promise
     },
     get(): TParam | undefined {

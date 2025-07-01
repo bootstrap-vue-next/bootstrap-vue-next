@@ -18,59 +18,10 @@ export interface PromiseWithComponentInternal<T, P> extends AsyncDisposable {
   id: ControllerKey
   ref: ComponentPublicInstance<T> | null
   show: () => PromiseWithComponent<T, P>
-  hide: (trigger?: string, noTriggerEmit?: boolean) => PromiseWithComponent<T, P>
+  hide: (trigger?: string) => PromiseWithComponent<T, P>
   toggle: () => PromiseWithComponent<T, P>
   set: (val: Partial<P>) => PromiseWithComponent<T, P>
   get: () => P | undefined
-  destroy: () => void
-}
-
-export interface PromiseWithModalInternal extends AsyncDisposable {
-  id: ControllerKey
-  ref: ComponentPublicInstance<typeof BModal> | null
-  show: () => PromiseWithModal
-  hide: (trigger?: string) => PromiseWithModal
-  toggle: () => PromiseWithModal
-  set: (val: Partial<ModalOrchestratorParam>) => PromiseWithModal
-  get: () => ModalOrchestratorParam | undefined
-  destroy: () => void
-}
-export interface PromiseWithModal
-  extends Promise<BvTriggerableEvent | boolean | null>,
-    PromiseWithModalInternal {}
-
-/**
- * Promise that resolves to a boolean or null
- * @deprecated
- */
-export interface PromiseWithModalBoolean
-  extends Promise<boolean | null>,
-    AsyncDisposable,
-    PromiseWithModalInternal {}
-
-export interface PromiseWithToast extends Promise<BvTriggerableEvent>, PromiseWithToastInternal {}
-export interface PromiseWithToastInternal extends AsyncDisposable {
-  id: ControllerKey
-  ref: ComponentPublicInstance<typeof BToast> | null
-  show: () => PromiseWithToast
-  hide: (trigger?: string) => PromiseWithToast
-  toggle: () => PromiseWithToast
-  set: (val: Partial<ToastOrchestratorParam>) => PromiseWithToast
-  get: () => ToastOrchestratorParam | undefined
-  destroy: () => void
-}
-
-export interface PromiseWithPopover
-  extends Promise<BvTriggerableEvent>,
-    PromiseWithPopoverInternal {}
-export interface PromiseWithPopoverInternal extends AsyncDisposable {
-  id: ControllerKey
-  ref: ComponentPublicInstance<typeof BPopover | typeof BTooltip> | null
-  show: () => PromiseWithPopover
-  hide: (trigger?: string) => void
-  toggle: () => void
-  set: (val: Partial<PopoverOrchestratorParam | TooltipOrchestratorParam>) => void
-  get: () => PopoverOrchestratorParam | undefined
   destroy: () => void
 }
 
@@ -168,22 +119,7 @@ export type TooltipOrchestratorArrayValue = BTooltipProps & {
   'onUpdate:modelValue'?: (val: boolean) => void
   '_component'?: Readonly<Component>
   'promise': {
-    value: PromiseWithPopover
-    resolve: (value: BvTriggerableEvent) => void
-    stop?: WatchHandle
-  }
-  'slots'?: {
-    [K in keyof Omit<BPopoverSlots, 'target'>]?: BPopoverSlots[K] | Readonly<Component>
-  }
-} & {
-  [K in keyof BPopoverEmits as CamelCase<Prefix<'on-', K>>]?: (e: BPopoverEmits[K][0]) => void
-}
-
-export type TooltipOrchestratorMapValue = BTooltipProps & {
-  'onUpdate:modelValue'?: (val: boolean) => void
-  '_component'?: Readonly<Component>
-  'promise': {
-    value: PromiseWithPopover
+    value: PromiseWithComponent<typeof BPopover | typeof BTooltip, PopoverOrchestratorParam>
     resolve: (value: BvTriggerableEvent) => void
     stop?: WatchHandle
   }
@@ -255,7 +191,7 @@ export type ModalOrchestratorArrayValue = BModalProps & {
   'onUpdate:modelValue'?: (val: boolean) => void
   'options': ModalOrchestratorCreateOptions
   'promise': {
-    value: PromiseWithModal | PromiseWithModalBoolean
+    value: PromiseWithComponent<typeof BModal, ModalOrchestratorParam>
     resolve: (value: BvTriggerableEvent | boolean | null) => void
     stop?: WatchHandle
   }

@@ -310,7 +310,7 @@ const showReactiveExample = () => {
   }).show()
 }
 
-const firstRef = ref<OrchestratedToast>({
+const firstRef = ref({
   body: `${Math.random()}`,
 })
 onMounted(() => {

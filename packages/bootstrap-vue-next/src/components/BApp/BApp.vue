@@ -11,6 +11,7 @@ import BOrchestrator from './BOrchestrator.vue'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
 import {useProvideDefaults} from '../../composables/useProvideDefaults'
 import {useRoot} from '../../composables/useRoot'
+import {useOrchestratorRegistry} from '../../composables/orchestratorShared'
 
 defineOptions({
   inheritAttrs: false,
@@ -27,5 +28,8 @@ const props = withDefaults(defineProps<BAppProps>(), {
 })
 
 useProvideDefaults(props.defaults, props.mergeDefaults)
-useRoot(props.noOrchestrator, props.inherit, props.rtl)
+useRoot(props.rtl)
+if (!props.noOrchestrator) {
+  useOrchestratorRegistry(props.inherit)
+}
 </script>

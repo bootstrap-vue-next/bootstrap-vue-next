@@ -236,7 +236,7 @@ const nestedModal4 = ref(false)
 
 ## Programmatically Control
 
-To programmatically control your modals with global state, refer to our documentation at [useModal](/docs/composables/useModal) and [useModal](/docs/composables/useModal)
+To programmatically control your modals with global state, refer to our documentation at [useModal](/docs/composables/useModal)
 
 ### Programmatically Create Modals
 

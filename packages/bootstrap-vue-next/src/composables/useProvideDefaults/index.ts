@@ -9,12 +9,12 @@ export const useProvideDefaults = (
 ) => {
   // Inject existing defaults from parent (could be from plugins)
   const injectedDefaults = inject(defaultsKey, undefined)
-  if (!injectedDefaults) {
-    return defaults
-  }
 
   // Merge injected defaults with prop defaults (prop takes priority)
   const mergedDefaults = computed<Partial<BvnComponentProps>>(() => {
+    if (!injectedDefaults) {
+      return defaults ?? {}
+    }
     const merged = {...injectedDefaults.value} as Partial<BvnComponentProps>
 
     if (defaults) {

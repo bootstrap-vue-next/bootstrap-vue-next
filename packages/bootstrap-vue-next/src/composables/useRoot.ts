@@ -18,17 +18,8 @@ import {
 } from '../utils/keys'
 import type {BAppProps} from '../types/ComponentProps'
 import type {BreadcrumbItemRaw} from '../types/BreadcrumbTypes'
-import {useOrchestratorRegistry} from './orchestratorShared'
 
-export const useRoot = (
-  noOrchestrator: BAppProps['noOrchestrator'] = false,
-  inherit: BAppProps['inherit'] = true,
-  rtl: BAppProps['rtl'] = false
-) => {
-  if (!noOrchestrator) {
-    useOrchestratorRegistry(inherit)
-  }
-
+export const useRoot = (rtl: BAppProps['rtl'] = false) => {
   const showHideStorage = inject(globalShowHideStorageInjectionKey, undefined)
   if (!showHideStorage) {
     const {register, values} = _newShowHideRegistry()
@@ -67,9 +58,7 @@ export const useRoot = (
     provide(modalManagerPluginKey, {
       countStack,
       lastStack,
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      registry: readonly(registry) as Readonly<Ref<Map<number, ComponentInternalInstance>>>,
+      registry: computed(() => registry.value),
       stack: valuesStack,
       pushStack,
       removeStack,

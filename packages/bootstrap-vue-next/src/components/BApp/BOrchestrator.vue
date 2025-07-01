@@ -100,6 +100,10 @@ if (orchestratorRegistry) {
   if (!orchestratorRegistry._isOrchestratorInstalled.value) {
     orchestratorRegistry._isOrchestratorInstalled.value = true
   }
+} else {
+  console.warn(
+    '[BOrchestrator] The orchestrator registry not found. Please use BApp, useOrchestratorRegistry or provide the plugin.'
+  )
 }
 
 watch(
