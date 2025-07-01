@@ -19,7 +19,7 @@ describe('BApp', () => {
   it('includes orchestrator by default', () => {
     const wrapper = mount(BApp)
 
-    expect(wrapper.findComponent({name: 'BAppOrchestrator'}).exists()).toBe(true)
+    expect(wrapper.findComponent({name: 'BOrchestrator'}).exists()).toBe(true)
   })
 
   it('can disable orchestrator', () => {
@@ -30,33 +30,7 @@ describe('BApp', () => {
     })
     // console.log(wrapper.html())
 
-    expect(wrapper.findComponent({name: 'BAppOrchestrator'}).exists()).toBe(false)
-  })
-
-  it('can disable individual orchestrators', () => {
-    const wrapper = mount(BApp, {
-      props: {
-        noModals: true,
-        noToasts: true,
-        noPopovers: true,
-      },
-    })
-
-    // When all orchestrators are disabled, BAppOrchestrator should not exist
-    expect(wrapper.findComponent({name: 'BAppOrchestrator'}).exists()).toBe(false)
-  })
-
-  it('renders orchestrator when only some orchestrators are disabled', () => {
-    const wrapper = mount(BApp, {
-      props: {
-        noModals: true,
-        noToasts: false, // Keep toasts enabled
-        noPopovers: true,
-      },
-    })
-
-    // When at least one orchestrator is enabled, BAppOrchestrator should exist
-    expect(wrapper.findComponent({name: 'BAppOrchestrator'}).exists()).toBe(true)
+    expect(wrapper.findComponent({name: 'BOrchestrator'}).exists()).toBe(false)
   })
 
   it('provides defaults to child components', () => {
@@ -139,7 +113,7 @@ describe('BApp', () => {
       },
     })
 
-    const orchestrator = wrapper.findComponent({name: 'BAppOrchestrator'})
+    const orchestrator = wrapper.findComponent({name: 'BOrchestrator'})
     expect(orchestrator.exists()).toBe(true)
     expect(orchestrator.props('appendToast')).toBe(true)
   })
