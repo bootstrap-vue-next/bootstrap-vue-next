@@ -116,7 +116,7 @@ You can also use component slots to render what you want. This is done through t
 <script setup lang="ts">
 const {create} = useModal()
 
-const firstRef = ref<OrchestratedToast>({
+const firstRef = ref({
   body: `${Math.random()}`,
 })
 onMounted(() => {

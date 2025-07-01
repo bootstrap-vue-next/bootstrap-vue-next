@@ -24,10 +24,9 @@ export const useProvideDefaults = (
         } else if (mergeDefaults === true) {
           return deepMerge(merged, defaults)
         }
-        Object.assign(merged, defaults)
-      } else {
-        return defaults
+        return Object.assign(merged, defaults)
       }
+      return defaults
     }
 
     return merged

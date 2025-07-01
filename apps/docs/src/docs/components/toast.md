@@ -10,7 +10,7 @@ Toasts are lightweight notifications designed to mimic the push notifications th
 
 ## Overview
 
-This section only refers to using the raw component variation. Often times, `Toasts` are generated in a global context programatically, like showing a success message after saving a form. That functionality is covered under the composable docs [here](/docs/composables/useToastController)
+This section only refers to using the raw component variation. Often times, `Toasts` are generated in a global context programatically, like showing a success message after saving a form. That functionality is covered under the composable docs [here](/docs/composables/useToast)
 
 The component variation is shown by using the `v-model` like so
 
@@ -221,7 +221,7 @@ const {create} = useToast()
 
 ## Programmatically Control
 
-To programmatically control your modals with global state, refer to our documentation at [useToastController](/docs/composables/useToastController)
+To programmatically control your modals with global state, refer to our documentation at [useToast](/docs/composables/useToast)
 
 ## Accessibility
 

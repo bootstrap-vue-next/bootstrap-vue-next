@@ -34,7 +34,7 @@ const composablesList: {name: string; description: string}[] = [
   },
   {
     name: 'useToast',
-    description: 'Conveniently orchestrate a push notification system by showing or hiding Toasts with our useToastController composable system',
+    description: 'Conveniently orchestrate a push notification system by showing or hiding Toasts with our useToast composable system',
   },
   {
     name: 'useToggle',

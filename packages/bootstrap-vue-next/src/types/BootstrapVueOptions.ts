@@ -141,7 +141,7 @@ export const composablesWithExternalPath = {
   useModalController: '/composables/useModal',
   useScrollspy: '/composables/useScrollspy',
   useToast: '/composables/useToast',
-  useToastController: '/composables/useToast',
+  useToast: '/composables/useToast',
   useToggle: '/composables/useToggle',
   usePopover: '/composables/usePopover',
   usePopoverController: '/composables/usePopover',

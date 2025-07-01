@@ -27,7 +27,7 @@ export const useToast = () => {
   const controller = inject(orchestratorPluginKey)
   if (!controller) {
     throw new Error(
-      'useToastController() was called outside of the setup() function! or the plugin is not provided.'
+      'useToast() was called outside of the setup() function! or the plugin is not provided.'
     )
   }
 
@@ -145,7 +145,7 @@ export const useToast = () => {
   ): PromiseWithComponent<typeof BToast, ToastOrchestratorParam> => {
     // eslint-disable-next-line no-console
     console.warn(
-      '[BootstrapVueNext] useToastController: The `show` method is deprecated. Use the `create` method instead.'
+      '[BootstrapVueNext] useToast: The `show` method is deprecated. Use the `create` method instead.'
     )
     return create(obj)
   }

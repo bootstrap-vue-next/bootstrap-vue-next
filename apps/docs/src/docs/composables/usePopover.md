@@ -22,7 +22,7 @@ You must initialize the `BPopoverOrchestrator` component once and only once (mul
 </template>
 </HighlightCard>
 
-The only props it access are `teleportDisabled` and `teleportTo` to modify the location that it is placed
+The only props it accepts are `teleportDisabled` and `teleportTo` to modify the location that it is placed
 
 Additionally, it exposes several methods on the `template ref` that correspond to those in the `usePopover` composable:
 

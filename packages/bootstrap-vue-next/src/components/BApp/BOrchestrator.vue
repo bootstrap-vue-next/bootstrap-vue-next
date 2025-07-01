@@ -1,5 +1,5 @@
 <template>
-  <div id="__BVID__toaster-container" v-bind="$attrs">
+  <div class="orchestrator-container" v-bind="$attrs">
     <div
       v-for="(value, key) in ComputedPositionClasses"
       :key="key"
@@ -99,10 +99,6 @@ const orchestratorRegistry = inject(orchestratorPluginKey)
 if (orchestratorRegistry) {
   if (!orchestratorRegistry._isOrchestratorInstalled.value) {
     orchestratorRegistry._isOrchestratorInstalled.value = true
-  } else {
-    console.warn(
-      'BPopoverOrchestrator Or BApp is already installed, only one can be installed at a time'
-    )
   }
 }
 

@@ -17,7 +17,7 @@ describe('toast-orchestator', () => {
     expect(wrapper.vm).toBeDefined()
 
     const $div = wrapper.find('div')
-    expect($div.attributes('id')).toBe('__BVID__toaster-container')
+    expect($div.attributes('class')).toContain('orchestrator-container')
     expect($div.attributes('aria-live')).toBeUndefined()
     expect($div.attributes('aria-atomic')).toBeUndefined()
     expect($div.attributes('role')).toBeUndefined()

@@ -128,7 +128,7 @@ export const useModal = () => {
    */
   const show = (id?: ControllerKey) => {
     if (id === undefined) {
-      if (id === undefined && lastStack?.value) {
+      if (lastStack?.value) {
         lastStack?.value.exposed?.show()
       }
     } else {
@@ -158,7 +158,7 @@ export const useModal = () => {
    */
   const hide = (trigger?: string, id?: ControllerKey) => {
     if (id === undefined) {
-      if (id === undefined && lastStack?.value) {
+      if (lastStack?.value) {
         lastStack?.value.exposed?.hide(trigger)
       }
     } else {
