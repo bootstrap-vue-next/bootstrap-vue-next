@@ -9,7 +9,7 @@ import {
   toValue,
   watch,
 } from 'vue'
-import {popoverPluginKey} from '../../utils/keys'
+import {orchestratorPluginKey} from '../../utils/keys'
 import type {
   OrchestratorCreateOptions,
   PopoverOrchestratorArrayValue,
@@ -21,17 +21,17 @@ import type {
   TooltipOrchestratorParam,
 } from '../../types/ComponentOrchestratorTypes'
 import {BPopover, BTooltip} from '../../components'
-import {buildPromise} from '../shared'
+import {buildPromise} from '../orchestratorShared'
 
-export const usePopoverController = () => {
-  const controller = inject(popoverPluginKey)
+export const usePopover = () => {
+  const controller = inject(orchestratorPluginKey)
   if (!controller) {
     throw new Error(
-      'usePopoverController() was called outside of the setup() function! or the plugin is not provided.'
+      'usePopover() was called outside of the setup() function! or the plugin is not provided.'
     )
   }
 
-  const {popovers, _isOrchestratorInstalled} = controller
+  const {store, _isOrchestratorInstalled} = controller
 
   /**
    * Create a popover or tooltip
@@ -42,7 +42,7 @@ export const usePopoverController = () => {
   const create = (
     obj: PopoverOrchestratorCreateParam | TooltipOrchestratorCreateParam,
     tooltip?: boolean,
-    options: OrchestratorCreateOptions = {}
+    options: OrchestratorCreateOptions = {keep: true}
   ): PromiseWithComponent<
     typeof BPopover | typeof BTooltip,
     PopoverOrchestratorParam | TooltipOrchestratorParam
@@ -52,23 +52,7 @@ export const usePopoverController = () => {
         'The BPopoverOrchestrator component must be mounted to use the popover controller'
       )
     }
-    const {component, slots} = toValue(obj)
-    if (component) {
-      if (isRef(obj)) obj.value.component = markRaw(component)
-      else if (typeof obj === 'object') obj.component = markRaw(component)
-    } else {
-      if (tooltip) {
-        if (isRef(obj)) obj.value.component = markRaw(BTooltip)
-        else if (typeof obj === 'object') obj.component = markRaw(BTooltip)
-      } else {
-        if (isRef(obj)) obj.value.component = markRaw(BPopover)
-        else if (typeof obj === 'object') obj.component = markRaw(BPopover)
-      }
-    }
-    if (slots) {
-      if (isRef(obj)) obj.value.slots = markRaw(slots)
-      else if (typeof obj === 'object') obj.slots = markRaw(slots)
-    }
+
     const resolvedProps = toRef(obj)
     const _self = resolvedProps.value?.id || Symbol('Popover controller')
 
@@ -76,29 +60,44 @@ export const usePopoverController = () => {
       typeof BPopover | typeof BTooltip,
       PopoverOrchestratorParam | TooltipOrchestratorParam,
       PopoverOrchestratorArrayValue | TooltipOrchestratorArrayValue
-    >(_self, popovers)
+    >(_self, store as Ref<PopoverOrchestratorArrayValue[] | TooltipOrchestratorArrayValue[]>)
 
     promise.stop = watch(
       resolvedProps,
       (_newValue) => {
         const newValue = {...toValue(_newValue)}
-        const previousIndex = popovers.value.findIndex((el) => el._self === _self)
-        const previous = previousIndex === -1 ? {} : popovers.value[previousIndex] || {}
+        const previousIndex = store.value.findIndex((el) => el._self === _self)
+        const previous =
+          previousIndex === -1
+            ? {_component: tooltip ? markRaw(BTooltip) : markRaw(BPopover)}
+            : store.value[previousIndex]
         // if (!previous) return
-        const v: PopoverOrchestratorArrayValue | TooltipOrchestratorArrayValue = {
-          type: 'popover',
-          _self,
-          position: 'popover',
-          ...previous,
-          tooltip,
-          promise,
-          options,
-        }
+        const v: PopoverOrchestratorArrayValue | TooltipOrchestratorArrayValue = tooltip
+          ? ({
+              ...previous,
+              type: 'tooltip',
+              _self,
+              position: 'popover',
+              promise,
+              options,
+            } as TooltipOrchestratorArrayValue)
+          : ({
+              ...previous,
+              type: 'popover',
+              _self,
+              position: 'popover',
+              promise,
+              options,
+            } as PopoverOrchestratorArrayValue)
 
         for (const key in newValue) {
           if (key.startsWith('on')) {
             v[key as keyof PopoverOrchestratorCreateParam] =
               newValue[key as keyof PopoverOrchestratorCreateParam]
+          } else if (key === 'component' && newValue.component) {
+            v._component = markRaw(newValue.component)
+          } else if (key === 'slots' && newValue.slots) {
+            v.slots = markRaw(newValue.slots)
           } else {
             v[key as keyof PopoverOrchestratorCreateParam] = toValue(
               newValue[key as keyof PopoverOrchestratorCreateParam]
@@ -115,16 +114,16 @@ export const usePopoverController = () => {
             ;(modelValue as Ref<PopoverOrchestratorParam['modelValue']>).value = val
           }
           if (v.modelValue !== val) {
-            const popover = popovers.value.find((el) => el._self === _self)
+            const popover = store.value.find((el) => el._self === _self)
             if (popover) {
               popover.modelValue = val
             }
           }
         }
         if (previousIndex === -1) {
-          popovers.value.push(v)
+          store.value.push(v)
         } else {
-          popovers.value.splice(previousIndex, 1, v)
+          store.value.splice(previousIndex, 1, v)
         }
       },
       {
@@ -134,7 +133,7 @@ export const usePopoverController = () => {
     )
 
     onScopeDispose(() => {
-      const popover = popovers.value.find((el) => el._self === _self)
+      const popover = store.value.find((el) => el._self === _self)
       if (popover) {
         popover.promise.value.destroy?.()
       }
@@ -143,14 +142,27 @@ export const usePopoverController = () => {
     return promise.value
   }
 
-  const tooltip = (obj: TooltipOrchestratorCreateParam) => create(obj, true)
+  const tooltip = (
+    obj: TooltipOrchestratorCreateParam,
+    options: OrchestratorCreateOptions = {keep: true}
+  ) => create(obj, true, options)
 
-  const popover = (obj: PopoverOrchestratorCreateParam) => create(obj, false)
+  const popover = (
+    obj: PopoverOrchestratorCreateParam,
+    options: OrchestratorCreateOptions = {keep: true}
+  ) => create(obj, false, options)
 
   return {
     _isOrchestratorInstalled,
+    create,
     popover,
     tooltip,
-    popovers,
+    store,
   }
 }
+
+/**
+ * @deprecated use usePopover() instead.
+ * @returns {ReturnType<typeof usePopover>} The popover controller
+ */
+export const usePopoverController = usePopover

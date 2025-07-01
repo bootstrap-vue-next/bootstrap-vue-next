@@ -555,17 +555,17 @@ See the [v-html](#v-html) section for information on deprecation of the `cancel-
 #### Replacement for Modal Message boxes
 
 [BootstrapVue](https://bootstrap-vue.github.io/bootstrap-vue/docs/components/modal#modal-message-boxes) provided two methods on the `this.$bvModal` object called `msgBoxOk` and `msgBoxConfirm`.
-In holding with the Vue3 first philosophy, BootstrapVueNext provides a composable called [`useModalController`](/docs/composables/useModalController) that
+In holding with the Vue3 first philosophy, BootstrapVueNext provides a composable called [`useModal`](/docs/composables/useModal) that
 fills the same needs (and more).
 
-Please read the [`useModalController`](/docs/composables/useModalController) documentation and then come back here for examples of replacements
+Please read the [`useModal`](/docs/composables/useModal) documentation and then come back here for examples of replacements
 for `msgBoxOk` and `msgBoxConfirm`.
 
-Example using `useModalController.show` to replace `msgBoxOk` (Remember to include `<BModalOrchestrator />` in your App Root):
+Example using `useModal.show` to replace `msgBoxOk` (Remember to include `<BModalOrchestrator />` in your App Root):
 
 <<< DEMO ./demo/ModalMessageBox.vue
 
-Example using `useModalController.confirm` to replace `msgBoxConfirm` (Remember to include `<BModalOrchestrator />` in your App Root):
+Example using `useModal.confirm` to replace `msgBoxConfirm` (Remember to include `<BModalOrchestrator />` in your App Root):
 
 <<< DEMO ./demo/ModalConfirm.vue
 
@@ -662,7 +662,7 @@ full parity with the BootstrapVue feature is useful, please open an issue or pro
 
 The default for `placement` is now `top` rather than `right`
 
-`$root` events are deprecated. See [usePopoverController](/docs/composables/usePopoverController) as an alternative.
+`$root` events are deprecated. See [usePopover](/docs/composables/usePopover) as an alternative.
 
 ### BProgressBar
 

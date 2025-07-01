@@ -72,12 +72,13 @@ import type {BvnComponentProps} from './BootstrapVueOptions'
 
 export interface BAppProps {
   defaults?: Partial<BvnComponentProps>
-  mergeDefaults?: boolean
-  deepMerge?: boolean
+  mergeDefaults?:
+    | boolean
+    | ((
+        oldDefaults: Partial<BvnComponentProps>,
+        newDefaults: Partial<BvnComponentProps>
+      ) => Partial<BvnComponentProps>)
   teleportTo?: TeleportProps['to']
-  noModals?: boolean
-  noToasts?: boolean
-  noPopovers?: boolean
   noOrchestrator?: boolean
   appendToast?: boolean
   inherit?: boolean
@@ -87,11 +88,11 @@ export interface BAppProps {
         /**
          * @default false
          */
-        rtlInitial: boolean
+        rtlInitial?: boolean
         /**
          * @default undefined
          */
-        localeInitial: string | undefined
+        localeInitial?: string
       }
 }
 

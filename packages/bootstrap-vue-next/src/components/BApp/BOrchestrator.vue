@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/no-unused-vars -->
 <template>
   <div id="__BVID__toaster-container" v-bind="$attrs">
     <div
@@ -8,6 +7,7 @@
       :style="value.style"
     >
       <TransitionGroup name="b-list">
+        <!-- eslint-disable vue/no-unused-vars -->
         <span
           v-for="{
             _self,
@@ -16,7 +16,7 @@
             slots,
             promise,
             options,
-            component: _component,
+            _component,
             ...val
           } in items?.filter((el) => el.position === key) || []"
           :key="_self"
@@ -29,8 +29,7 @@
             :teleport-disabled="true"
             @hide="
               (e: BvTriggerableEvent) => {
-                e.ok = e.trigger === 'ok' ? true : e.trigger === 'cancel' ? false : null
-
+                setEventOk(e)
                 val.onHide?.(e)
                 if (e.defaultPrevented) {
                   return
@@ -43,7 +42,7 @@
             "
             @hidden="
               (e: BvTriggerableEvent) => {
-                e.ok = e.trigger === 'ok' ? true : e.trigger === 'cancel' ? false : null
+                setEventOk(e)
                 val.onHidden?.(e)
                 if (e.defaultPrevented) {
                   return
@@ -69,24 +68,37 @@
 
 <script setup lang="ts">
 import {type ComponentPublicInstance, computed, inject, watch} from 'vue'
-import {modalControllerPluginKey, popoverPluginKey, toastPluginKey} from '../../utils/keys'
+import {orchestratorPluginKey} from '../../utils/keys'
 import {positionClasses} from '../../utils/positionClasses'
 import type {BvTriggerableEvent} from '../../utils'
+import type {OrchestratorArrayValue} from '../../types/ComponentOrchestratorTypes'
 
-const props = defineProps<{
-  noPopovers?: boolean
-  noToasts?: boolean
-  noModals?: boolean
-  appendToast?: boolean
-}>()
+function setEventOk(event: BvTriggerableEvent): void {
+  event.ok = event.trigger === 'ok' ? true : event.trigger === 'cancel' ? false : null
+}
 
-const popoverController = inject(popoverPluginKey)
-const toastController = inject(toastPluginKey)
-const modalController = inject(modalControllerPluginKey)
+const props = withDefaults(
+  defineProps<{
+    noPopovers?: boolean
+    noToasts?: boolean
+    noModals?: boolean
+    appendToast?: boolean
+    filter?: (item: OrchestratorArrayValue) => boolean
+  }>(),
+  {
+    noPopovers: false,
+    noToasts: false,
+    noModals: false,
+    appendToast: false,
+    filter: () => true,
+  }
+)
 
-if (popoverController) {
-  if (!popoverController._isOrchestratorInstalled.value) {
-    popoverController._isOrchestratorInstalled.value = true
+const orchestratorRegistry = inject(orchestratorPluginKey)
+
+if (orchestratorRegistry) {
+  if (!orchestratorRegistry._isOrchestratorInstalled.value) {
+    orchestratorRegistry._isOrchestratorInstalled.value = true
   } else {
     console.warn(
       'BPopoverOrchestrator Or BApp is already installed, only one can be installed at a time'
@@ -94,31 +106,11 @@ if (popoverController) {
   }
 }
 
-if (toastController) {
-  if (!toastController._isOrchestratorInstalled.value) {
-    toastController._isOrchestratorInstalled.value = true
-  } else {
-    console.warn(
-      'BToastOrchestrator Or BApp is already installed, only one can be installed at a time'
-    )
-  }
-}
-
-if (modalController) {
-  if (!modalController._isOrchestratorInstalled.value) {
-    modalController._isOrchestratorInstalled.value = true
-  } else {
-    console.warn(
-      'BModalOrchestrator Or BApp is already installed, only one can be installed at a time'
-    )
-  }
-}
-
 watch(
   () => props.appendToast,
   (value) => {
-    if (toastController) {
-      toastController._isAppend.value = value
+    if (orchestratorRegistry && value !== undefined) {
+      orchestratorRegistry._isToastAppend.value = value
     }
   },
   {immediate: true}
@@ -146,9 +138,11 @@ const ComputedPositionClasses = computed(() => {
   return classes
 })
 
-const items = computed(() => [
-  ...(!props.noPopovers ? popoverController?.popovers?.value || [] : []),
-  ...(!props.noToasts ? toastController?.toasts?.value || [] : []),
-  ...(!props.noModals ? modalController?.modals?.value || [] : []),
-])
+const items = computed(() =>
+  orchestratorRegistry?.store.value
+    .filter((el) => !props.noPopovers || el.type !== 'popover')
+    .filter((el) => !props.noToasts || el.type !== 'toast')
+    .filter((el) => !props.noModals || el.type !== 'modal')
+    .filter(props.filter)
+)
 </script>

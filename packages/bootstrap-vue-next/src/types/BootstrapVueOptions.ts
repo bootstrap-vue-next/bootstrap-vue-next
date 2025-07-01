@@ -138,11 +138,15 @@ export const composablesWithExternalPath = {
   useBreadcrumb: '/composables/useBreadcrumb',
   useColorMode: '/composables/useColorMode',
   useModal: '/composables/useModal',
-  useModalController: '/composables/useModalController',
+  useModalController: '/composables/useModal',
   useScrollspy: '/composables/useScrollspy',
-  useToastController: '/composables/useToastController',
+  useToast: '/composables/useToast',
+  useToastController: '/composables/useToast',
   useToggle: '/composables/useToggle',
-  usePopoverController: '/composables/usePopoverController',
+  usePopover: '/composables/usePopover',
+  usePopoverController: '/composables/usePopover',
+  useRoot: '/composables/useRoot',
+  useProvideDefaults: '/composables/useProvideDefaults',
 } as const satisfies Record<ComposableType, string>
 export const composableNames = Object.freeze(
   Object.keys(composablesWithExternalPath) as ComposableType[]
@@ -157,7 +161,7 @@ export interface BootstrapVueOptions {
   /**
    * @default true
    */
-  modalController?: boolean
+  orchestrator?: boolean
   /**
    * @default true
    */
@@ -180,7 +184,10 @@ export interface BootstrapVueOptions {
   /**
    * @default true
    */
-  toast?: boolean
+  showHide?: boolean
+  /**
+   * @default true
+   */
   components?: Partial<
     BvnComponentProps & {
       /**
@@ -190,8 +197,6 @@ export interface BootstrapVueOptions {
       global: Record<string, any>
     }
   >
-  tooltip?: boolean
-  popover?: boolean
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -1,8 +1,8 @@
-<ComposableHeader path="usePopoverController/index.ts" title="usePopoverController" />
+<ComposableHeader path="usePopover/index.ts" title="usePopover" />
 
 <div class="lead mb-5">
 
-`usePopoverController` can create and control popovers and tooltips dynamically.
+`usePopover` can create and control popovers and tooltips dynamically.
 
 </div>
 
@@ -24,7 +24,7 @@ You must initialize the `BPopoverOrchestrator` component once and only once (mul
 
 The only props it access are `teleportDisabled` and `teleportTo` to modify the location that it is placed
 
-Additionally, it exposes several methods on the `template ref` that correspond to those in the `usePopoverController` composable:
+Additionally, it exposes several methods on the `template ref` that correspond to those in the `usePopover` composable:
 
 - `popover`
 - `tooltip`
@@ -45,7 +45,7 @@ Popovers and tooltips can be created using the `popover` or `tooltip` methods.
 </template>
 
 <script setup lang="ts">
-const {popover} = usePopoverController()
+const {popover} = usePopover()
 const popoverButton = useTemplateRef('popoverButton')
 
 const pop = popover({title: 'Hello World!', body: 'This is a popover.', target: popoverButton})
@@ -70,7 +70,7 @@ The methods accepts reactive properties using `MaybeRef`, allowing dynamic updat
 </template>
 
 <script setup lang="ts">
-const {tooltip} = usePopoverController()
+const {tooltip} = usePopover()
 
 const title = ref('Hello')
 onMounted(() => {
@@ -102,7 +102,7 @@ For more control, you can use the `component` property to render a custom compon
 </template>
 
 <script setup lang="ts">
-const {popover} = usePopoverController()
+const {popover} = usePopover()
 
 pop({
   slots: {
@@ -144,13 +144,13 @@ await using popover = popover({title: 'Hello World!'})
 ```
 
 <script setup lang="ts">
-import { BButton, BPopover, usePopoverController, BButtonGroup } from 'bootstrap-vue-next'
+import { BButton, BPopover, usePopover, BButtonGroup } from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
 import UsePluginAlert from '../../components/UsePluginAlert.vue'
 import { ref, h, onMounted } from 'vue'
 import ComposableHeader from './ComposableHeader.vue'
 
-const { popover, tooltip } = usePopoverController()
+const { popover, tooltip } = usePopover()
 
 
 const title = ref('Hello')

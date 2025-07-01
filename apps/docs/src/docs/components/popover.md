@@ -4,7 +4,7 @@
 
 The Popover feature, which provides a tooltip-like behavior, can be easily applied to any
 interactive element via the `<BPopover>` component or [`v-b-popover`](/docs/directives/b-popover)
-directive. Popovers can also be created and programmatically controlled via the `usePopoverController`
+directive. Popovers can also be created and programmatically controlled via the `usePopover`
 
 </PageHeader>
 
@@ -60,7 +60,7 @@ on `click` events, set the `click` prop to `true`.
 <<< DEMO ./demo/PopoverTriggers.vue#template{vue-html}
 
 To take finer control of popover visibility, you can use the [useToggle](/docs/composables/useToggle) or
-[usePopoverController](/docs/composables/usePopoverController). Alternately, you can set the `manual` prop
+[usePopover](/docs/composables/usePopover). Alternately, you can set the `manual` prop
 and use the [`v-model`](#programmatic-control-via-v-model) or
 [exposed functions](#exposed-functions) to control visibility.
 

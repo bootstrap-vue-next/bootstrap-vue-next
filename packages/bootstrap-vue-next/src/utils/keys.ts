@@ -14,11 +14,7 @@ import type {
 import type {CheckboxValue} from '../types/CheckboxTypes'
 import type {RadioValue} from '../types/RadioTypes'
 import type {BreadcrumbItemRaw} from '../types/BreadcrumbTypes'
-import type {
-  ModalOrchestratorArrayValue,
-  PopoverOrchestratorArrayValue,
-  ToastOrchestratorArrayValue,
-} from '../types/ComponentOrchestratorTypes'
+import type {OrchestratorArrayValue} from '../types/ComponentOrchestratorTypes'
 import type {BvnComponentProps} from '../types/BootstrapVueOptions'
 
 export const genericBvnPrefix = 'BootstrapVueNext__'
@@ -211,21 +207,11 @@ export const defaultsKey: InjectionKey<Ref<Partial<BvnComponentProps>>> =
 export const inputGroupKey: InjectionKey<boolean> = createBvnInjectionKey('inputGroup')
 export const buttonGroupKey: InjectionKey<boolean> = createBvnInjectionKey('buttonGroup')
 
-export const toastPluginKey: InjectionKey<{
-  toasts: Ref<ToastOrchestratorArrayValue[]>
-  _isAppend: Ref<boolean>
+export const orchestratorPluginKey: InjectionKey<{
+  store: Ref<OrchestratorArrayValue[]>
+  _isToastAppend: Ref<boolean>
   _isOrchestratorInstalled: Ref<boolean>
-}> = createBvnPluginInjectionKey('toast')
-
-export const modalControllerPluginKey: InjectionKey<{
-  modals: Ref<ModalOrchestratorArrayValue[]>
-  _isOrchestratorInstalled: Ref<boolean>
-}> = createBvnPluginInjectionKey('modalController')
-
-export const popoverPluginKey: InjectionKey<{
-  popovers: Ref<PopoverOrchestratorArrayValue[]>
-  _isOrchestratorInstalled: Ref<boolean>
-}> = createBvnPluginInjectionKey('popover')
+}> = createBvnPluginInjectionKey('orchestrator')
 
 export const formGroupPluginKey: InjectionKey<
   (id: Ref<string>) => {

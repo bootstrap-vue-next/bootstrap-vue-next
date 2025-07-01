@@ -56,7 +56,7 @@
     </BRow>
     <BRow>
       <BCol>
-        {{ modals }}
+        {{ store.filter((el) => el.type === 'modal') }}
       </BCol>
     </BRow>
   </BContainer>
@@ -64,12 +64,7 @@
 
 <script setup lang="ts">
 import {computed, h, onMounted, ref, toValue} from 'vue'
-import {
-  BModal,
-  type ColorVariant,
-  type OrchestratedModal,
-  useModalController,
-} from 'bootstrap-vue-next'
+import {BModal, type ColorVariant, type OrchestratedModal, useModal} from 'bootstrap-vue-next'
 
 const showModal = ref(false)
 const showModal2 = ref(false)
@@ -89,27 +84,27 @@ onMounted(() => {
   }, 1000)
 })
 
-const {show, modals} = useModalController()
+const {create, store} = useModal()
 
 const showFns = {
   basicNoReactive: () => {
-    show({
+    create({
       title: 'foobar',
       okVariant: 'danger',
     })
   },
   basicCustomComponent: () => {
-    show({
+    create({
       slots: {default: h('div', null, {default: () => 'foobar!'})},
 
       okVariant: 'info',
     })
   },
   simpleRefProps: () => {
-    show(firstRef)
+    create(firstRef)
   },
   dynamicRefProps: () => {
-    show(
+    create(
       computed(() => ({
         ...firstRef.value,
         okVariant: (Number.parseInt((toValue(firstRef.value.body) ?? '').charAt(2) ?? '0') % 2 === 0

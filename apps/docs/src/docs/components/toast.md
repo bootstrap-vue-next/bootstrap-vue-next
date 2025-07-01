@@ -137,24 +137,22 @@ You can place toasts in static placements, and with more control by using them d
 
 ## Auto-dismissing Toasts
 
-To create a `BToast` that dismisses automatically after a specified duration, set the `value` prop to the number of **milliseconds** you want the `BToast` to remain visible. By default, the timer updates using `requestAnimationFrame`, which triggers an update approximately every second. Timed Toasts automatically pause when hovered over with a mouse, but you can disable this behavior using the `noHoverPause` prop. Ensure that the `value` is an integer representing milliseconds. Any change to the `value` will reset the timer.
+To create a `BToast` that dismisses automatically after a specified duration, set the `modelValue` prop to the number of **milliseconds** you want the `BToast` to remain visible. By default, the timer updates using `requestAnimationFrame`, which triggers an update approximately every second. Timed Toasts automatically pause when hovered over with a mouse, but you can disable this behavior using the `noHoverPause` prop. Ensure that the `modelValue` is an integer representing milliseconds. Any change to the `modelValue` will reset the timer.
 
-The **interval** prop determines how frequently the timer updates. While the default is `requestAnimationFrame`, you can set a custom interval. Negative values for either `value` or `interval` will stop the timer. If the `value` does not divide evenly by the interval, the timer will continue to the nearest interval. For example, a `value` of 5400 ms with an interval of 1000 ms will run for 6000 ms. To avoid this, choose an interval that divides evenly into the `value`, such as 540 ms or 1080 ms.
+The **interval** prop determines how frequently the timer updates. While the default is `requestAnimationFrame`, you can set a custom interval. Negative values for either `modelValue` or `interval` will stop the timer. If the `modelValue` does not divide evenly by the interval, the timer will continue to the nearest interval. For example, a `modelValue` of 5400 ms with an interval of 1000 ms will run for 6000 ms. To avoid this, choose an interval that divides evenly into the `modelValue`, such as 540 ms or 1080 ms.
 
 <HighlightCard>
   <BButton
     @click="
-      show?.({
-        props: {
-          title: 'Counting down!',
-          variant: 'info',
-          pos: 'middle-center',
-          value: 10000,
-          progressProps: {
-            variant: 'danger',
-          },
-          body: 'Watch me!'
-        }
+      create({
+        title: 'Counting down!',
+        variant: 'info',
+        pos: 'middle-center',
+        modelValue: 10000,
+        progressProps: {
+          variant: 'danger',
+        },
+        body: 'Watch me!'
       })
     "
   >
@@ -167,17 +165,15 @@ The **interval** prop determines how frequently the timer updates. While the def
 <template>
   <BButton
     @click="
-      show?.({
-        props: {
-          title: 'Counting down!',
-          variant: 'info',
-          pos: 'middle-center',
-          value: 10000,
-          progressProps: {
-            variant: 'danger',
-          },
-          body: 'Watch me!',
+      create({
+        title: 'Counting down!',
+        variant: 'info',
+        pos: 'middle-center',
+        modelValue: 10000,
+        progressProps: {
+          variant: 'danger',
         },
+        body: 'Watch me!',
       })
     "
   >
@@ -199,7 +195,7 @@ As you may have noticed in that example, there was a built-in progress bar. This
 `Toast` can accept `BLink` props which will modify its behavior
 
 <HighlightCard>
-  <BButton @click="show?.({ props: {href: 'https://getbootstrap.com/', target: '_blank', body: 'I am a BLink'}})">
+  <BButton @click="create({href: 'https://getbootstrap.com/', modelValue: true, target: '_blank', body: 'I am a BLink'})">
     Show
   </BButton>
 
@@ -208,16 +204,14 @@ As you may have noticed in that example, there was a built-in progress bar. This
 ```vue
 <template>
   <BButton
-    @click="
-      show?.({props: {href: 'https://getbootstrap.com/', target: '_blank', body: 'I am a BLink'}})
-    "
+    @click="create({href: 'https://getbootstrap.com/', target: '_blank', body: 'I am a BLink'})"
   >
     Show
   </BButton>
 </template>
 
 <script setup lang="ts">
-const {show} = useToastController()
+const {create} = useToast()
 </script>
 ```
 
@@ -240,11 +234,11 @@ If you just need a single simple message to appear along the bottom or top of th
 <script setup lang="ts">
 import {data} from '../../data/components/toast.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import {BButtonGroup, BButton, BToast, useToastController} from 'bootstrap-vue-next'
+import {BButtonGroup, BButton, BToast, useToast} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {ref, h, onMounted} from 'vue'
 
-const {show, hide, toasts} = useToastController()
+const {create, toasts} = useToast()
 
 const active = ref(true)
 
@@ -262,53 +256,4 @@ const locations = [
 
 const values = ref(Array.from({length: locations.length}, () => false))
 
-let showValue: undefined | symbol
-
-const showMe = () => {
-  if (typeof showValue === 'symbol') return
-  showValue = show?.({
-    props: {
-      value: true, variant: 'success', pos: 'bottom-center', body: 'Showing'
-    }
-  })
-}
-
-const hideMe = () => {
-  if (showValue === undefined) return
-  hide?.(showValue)
-  showValue = undefined
-}
-
-const toastShowStr = ref('foo')
-
-onMounted(() => {
-  setInterval(() => {
-    toastShowStr.value = toastShowStr.value === 'foo' ? 'bar' : 'foo'
-  }, 1000)
-})
-
-const showReactive = () => {
-  show?.(toastShowStr, () => ({
-    variant: toastShowStr.value === 'bar' ? 'danger' : 'info',
-  }))
-}
-
-const toastVariant = ref('danger')
-
-onMounted(() => {
-  setInterval(() => {
-    toastVariant.value = toastVariant.value === 'danger' ? 'info' : 'danger'
-  }, 1000)
-})
-
-const showAdvanced = () => {
-  show?.(
-    h(BToast, null, {
-      default: () => 'title?',
-    }),
-    () => ({
-      variant: toastVariant.value,
-    })
-  )
-}
 </script>

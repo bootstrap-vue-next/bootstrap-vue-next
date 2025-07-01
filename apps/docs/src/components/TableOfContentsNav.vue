@@ -148,10 +148,9 @@ const composablesList: {name: string}[] = [
   {name: 'useBreadcrumb'},
   {name: 'useColorMode'},
   {name: 'useModal'},
-  {name: 'useModalController'},
-  {name: 'useToastController'},
+  {name: 'usePopover'},
+  {name: 'useToast'},
   {name: 'useToggle'},
-  {name: 'usePopoverController'},
 ]
 
 const directivesList: {name: string}[] = [

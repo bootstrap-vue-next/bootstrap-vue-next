@@ -1,24 +1,23 @@
-import {type ComponentPublicInstance, nextTick, type Ref, toValue, type WatchHandle} from 'vue'
+import {
+  type ComponentPublicInstance,
+  inject,
+  nextTick,
+  provide,
+  type Ref,
+  ref,
+  toValue,
+  type WatchHandle,
+} from 'vue'
 import type {
   ControllerKey,
-  ModalOrchestratorArrayValue,
-  PopoverOrchestratorArrayValue,
+  OrchestratorArrayValue,
   PromiseWithComponent,
   PromiseWithComponentInternal,
-  ToastOrchestratorArrayValue,
-  TooltipOrchestratorArrayValue,
 } from '../types/ComponentOrchestratorTypes'
 import type {BvTriggerableEvent} from '../utils'
+import {orchestratorPluginKey} from '../utils/keys'
 
-export function buildPromise<
-  TComponent,
-  TParam,
-  TArrayValue extends
-    | ToastOrchestratorArrayValue
-    | ModalOrchestratorArrayValue
-    | PopoverOrchestratorArrayValue
-    | TooltipOrchestratorArrayValue,
->(
+export function buildPromise<TComponent, TParam, TArrayValue extends OrchestratorArrayValue>(
   _id: ControllerKey,
   store: Ref<TArrayValue[]>
 ): {
@@ -36,20 +35,22 @@ export function buildPromise<
     id: _id,
     ref: null as ComponentPublicInstance<TComponent> | null,
     show() {
-      if (!this.ref) return this.set({modelValue: true} as unknown as Partial<TParam>)
-      ;(this.ref as Record<string, (...args: unknown[]) => unknown>).show()
+      const fn = (this.ref as Record<string, (...args: unknown[]) => unknown>)?.show
+      if (typeof fn === 'function') fn()
+      else return this.set({modelValue: true} as unknown as Partial<TParam>)
       return promise
     },
     hide(trigger?: string) {
-      if (!this.ref) return this.set({modelValue: false} as unknown as Partial<TParam>)
-      ;(this.ref as Record<string, (...args: unknown[]) => unknown>).hide(trigger, true)
+      const fn = (this.ref as Record<string, (...args: unknown[]) => unknown>)?.hide
+      if (typeof fn === 'function') fn(trigger, true)
+      else return this.set({modelValue: false} as unknown as Partial<TParam>)
       return promise
     },
     toggle() {
       const currentItem = this.get() as TParam & {modelValue?: unknown}
-      if (!this.ref)
-        return this.set({modelValue: !currentItem?.modelValue} as unknown as Partial<TParam>)
-      ;(this.ref as Record<string, (...args: unknown[]) => unknown>).toggle()
+      const fn = (this.ref as Record<string, (...args: unknown[]) => unknown>)?.toggle
+      if (typeof fn === 'function') fn()
+      else return this.set({modelValue: !currentItem?.modelValue} as unknown as Partial<TParam>)
       return promise
     },
     get(): TParam | undefined {
@@ -78,14 +79,13 @@ export function buildPromise<
       item.promise.stop?.()
       if (item.modelValue) {
         await new Promise((resolve) => {
-          item.modelValue = false
           const prev = item['onHidden']
           item['onHidden'] = (e) => {
             prev?.(e)
             resolve(e)
           }
           nextTick(() => {
-            item['onUpdate:modelValue']?.(false)
+            this.hide('destroy')
           })
         })
       }
@@ -104,4 +104,25 @@ export function buildPromise<
     resolve: resolveFunc,
     stop: undefined as WatchHandle | undefined,
   }
+}
+
+export const _newOrchestratorRegistry = (): {
+  store: Ref<OrchestratorArrayValue[]>
+  _isOrchestratorInstalled: Ref<boolean>
+  _isToastAppend: Ref<boolean>
+} => ({
+  store: ref<OrchestratorArrayValue[]>([]),
+  _isOrchestratorInstalled: ref(false),
+  _isToastAppend: ref(false),
+})
+
+export const useOrchestratorRegistry = (inherit: boolean) => {
+  const orchestratorRegistry = inject(orchestratorPluginKey, undefined)
+
+  if (orchestratorRegistry && inherit) {
+    return orchestratorRegistry
+  }
+  const newOrchestratorRegistry = _newOrchestratorRegistry()
+  provide(orchestratorPluginKey, newOrchestratorRegistry)
+  return newOrchestratorRegistry
 }
