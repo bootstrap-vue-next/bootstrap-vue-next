@@ -3,7 +3,6 @@ import {createApp, h} from 'vue'
 import {createRouter, createWebHistory, useRoute} from 'vue-router'
 import App from './App.vue'
 import {Directives} from './index'
-import {createBootstrap} from './plugins/createBootstrap'
 import './styles/styles.scss'
 const router = createRouter({
   history: createWebHistory(),
@@ -45,7 +44,6 @@ const router = createRouter({
 })
 
 const app = createApp(App)
-app.use(createBootstrap())
 app.use(router)
 for (const name in Directives) {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
