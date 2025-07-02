@@ -16,7 +16,7 @@ Things to know when using the tooltip component:
 
 - Tooltip is a wrapper for Popover, providing a simple way to create tooltips in your application. It uses the same API as Popover, but with some default properties set for tooltips.
   - The delay is zero
-  - kideMargin is 0
+  - sideMargin is 0
   - Tooltips are non-interactive by default.
 - Tooltips rely on the 3rd party library [floating-ui](https://floating-ui.com/) for positioning.
 - Use `teleportTo` and `teleportDisabled` to control where in the DOM the tooltip is rendered. See the [Vue.js Docs](https://vuejs.org/guide/built-ins/teleport.html) for details. `teleportTo` defaults to `undefined`.
