@@ -34,7 +34,7 @@ const clearTimer = () => {
     timeout = null
   }
 }
-const setTimer = (callback: {(): void; (): void}) => {
+const setTimer = (callback: () => void) => {
   clearTimer()
   timeout = setTimeout(() => {
     clearTimer()

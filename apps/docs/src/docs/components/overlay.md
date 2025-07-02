@@ -131,7 +131,7 @@ relative positioning (either via the utility class `'position-relative'`, or CSS
 
 <<< DEMO ./demo/OverlayNonwrapping.vue
 
-Note that some of Bootstrap v5's component styles have relative positioning defined (e.g. cards,
+Note that some of Bootstrap v5 component styles have relative positioning defined (e.g. cards,
 cols, etc.). You may need to adjust the placement of `BOverlay` in your markup.
 
 For example, `BCard` has relative positioning, so you can place the `<BOverlay no-wrap>` as a
