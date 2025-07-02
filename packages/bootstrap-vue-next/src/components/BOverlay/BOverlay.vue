@@ -45,8 +45,8 @@ import type {BgColorVariant} from '../../types/ColorTypes'
 import {useFadeTransition} from '../../composables/useTransitions'
 
 const _props = withDefaults(defineProps<BOverlayProps>(), {
-  blur: '2px',
   bgColor: undefined,
+  blur: '2px',
   fixed: false,
   noCenter: false,
   noFade: false,
