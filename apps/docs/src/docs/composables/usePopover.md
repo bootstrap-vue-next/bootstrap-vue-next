@@ -8,27 +8,25 @@
 
 <UsePluginAlert />
 
-## BPopoverOrchestrator
+## BOrchestrator
 
-You must initialize the `BPopoverOrchestrator` component once and only once (multiple instances may display duplicate popovers). This is typically best placed at the App root.
+You must have initialized `BOrchestrator` component once and only once (doing multiple may display multiple `Popovers`). Also you need to provide the Orchestrator registy. use `BApp` component wrapping your app to initializes both of these for you.
 
 <HighlightCard>
 <template #html>
 
-```vue-html
-<BPopoverOrchestrator />
+```vue
+<template>
+  <BApp>
+    <router-view />
+  </BApp>
+</template>
 ```
 
 </template>
 </HighlightCard>
 
-The only props it accepts are `teleportDisabled` and `teleportTo` to modify the location that it is placed
-
-Additionally, it exposes several methods on the `template ref` that correspond to those in the `usePopover` composable:
-
-- `popover`
-- `tooltip`
-- `popovers`
+Use the props `teleportTo` to modify the dom location that the popovers are placed.
 
 ## Creating Popovers
 

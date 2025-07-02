@@ -8,28 +8,25 @@
 
 <UsePluginAlert />
 
-## BModalOrchestrator
+## BOrchestrator
 
-You must have initialized `BModalOrchestrator` component once and only once (doing multiple may display multiple `Modals`). This is usually best placed at the App root.
+You must have initialized `BOrchestrator` component once and only once (doing multiple may display multiple `Modals`). Also you need to provide the Orchestrator registy. use `BApp` component wrapping your app to initializes both of these for you.
 
 <HighlightCard>
 <template #html>
 
-```vue-html
-<BModalOrchestrator />
+```vue
+<template>
+  <BApp>
+    <router-view />
+  </BApp>
+</template>
 ```
 
 </template>
 </HighlightCard>
 
-The only props it access are `teleportDisabled` and `teleportTo` to modify the location that it is placed
-
-In addition, it contains a few exposed methods. These exposed methods on the `template ref` correspond to those in the `useModal` function, described below
-
-- create
-- hide
-- hideAll
-- store
+Use the props `teleportTo` to modify the dom location that the modals are placed.
 
 ## Creating Modals
 
@@ -210,29 +207,7 @@ In addition to being able to create modals in a global context, you are also abl
 
 <HighlightCard>
   <BButton @click="nestedModal1 = !nestedModal1">Open First Modal</BButton>
-  <BModal v-model="nestedModal1" title="First Modal" ok-only>
-    <p class="my-2">First Modal</p>
-    <BButtonGroup>
-      <BButton @click="nestedModal2 = !nestedModal2">Open Second Modal</BButton>
-      <BButton @click="hide">Hide Last</BButton>
-      <BButton @click="hideAll">Hide All</BButton>
-    </BButtonGroup>
-  </BModal>
-  <BModal v-model="nestedModal2" title="Second Modal" ok-only>
-    <p class="my-2">Second Modal</p>
-    <BButtonGroup>
-      <BButton @click="nestedModal3 = !nestedModal3" size="sm">Open Third Modal</BButton>
-      <BButton @click="hide">Hide Last</BButton>
-      <BButton @click="hideAll">Hide All</BButton>
-    </BButtonGroup>
-  </BModal>
-  <BModal v-model="nestedModal3" title="Third Modal" ok-only>
-    <p class="my-1">Third Modal</p>
-    <BButtonGroup>
-      <BButton @click="hide">Hide Last</BButton>
-      <BButton @click="hideAll">Hide All</BButton>
-    </BButtonGroup>
-  </BModal>
+ 
   <template #html>
 
 ```vue
@@ -280,7 +255,7 @@ import {BButton, BModal, useModal, BButtonGroup} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
 
 import UsePluginAlert from '../../components/UsePluginAlert.vue'
-import {ref, computed, h, onMounted} from 'vue'
+import {ref, computed, h, onMounted, nextTick} from 'vue'
 import ComposableHeader from './ComposableHeader.vue'
 
 const nestedModal1 = ref(false)
@@ -298,9 +273,8 @@ onMounted(() => {
 })
 
 const showExample = async () => {
-  console.log('example', create)
   const value = await create({ body: 'Hello World!' }).show()
-
+  await nextTick()
   create({ body: `Promise resolved to object with {ok: ${value.ok}, trigger: ${value.trigger}}`, variant: 'info' }).show()
 }
 

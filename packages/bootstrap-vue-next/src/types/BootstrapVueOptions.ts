@@ -90,6 +90,7 @@ export const componentsWithExternalPath = {
   BNavbarToggle: '/components/BNavbar',
   BOffcanvas: '/components/BOffcanvas',
   BOverlay: '/components/BOverlay',
+  BOrchestrator: '/components/BApp',
   BPagination: '/components/BPagination',
   BPlaceholder: '/components/BPlaceholder',
   BPlaceholderButton: '/components/BPlaceholder',
@@ -147,6 +148,7 @@ export const composablesWithExternalPath = {
   usePopoverController: '/composables/usePopover',
   useRoot: '/composables/useRoot',
   useProvideDefaults: '/composables/useProvideDefaults',
+  useOrchestratorRegistry: '/composables/orchestratorShared',
 } as const satisfies Record<ComposableType, string>
 export const composableNames = Object.freeze(
   Object.keys(composablesWithExternalPath) as ComposableType[]
@@ -241,6 +243,7 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
   BNavbarNav: ComponentProps.BNavbarNavProps
   BNavbarToggle: ComponentProps.BNavbarToggleProps
   BOffcanvas: ComponentProps.BOffcanvasProps
+  BOrchestrator: ComponentProps.BAppProps
   BOverlay: ComponentProps.BOverlayProps
   BPagination: ComponentProps.BPaginationProps
   BPlaceholder: ComponentProps.BPlaceholderProps

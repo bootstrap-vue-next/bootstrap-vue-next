@@ -561,16 +561,16 @@ fills the same needs (and more).
 Please read the [`useModal`](/docs/composables/useModal) documentation and then come back here for examples of replacements
 for `msgBoxOk` and `msgBoxConfirm`.
 
-Example using `useModal.show` to replace `msgBoxOk` (Remember to include `<BModalOrchestrator />` in your App Root):
+Example using `useModal.create` to replace `msgBoxOk` (Remember to include `<BModalOrchestrator />` in your App Root):
 
 <<< DEMO ./demo/ModalMessageBox.vue
 
-Example using `useModal.confirm` to replace `msgBoxConfirm` (Remember to include `<BModalOrchestrator />` in your App Root):
+Example using `useModal.create` to replace `msgBoxConfirm` (Remember to include `<BModalOrchestrator />` in your App Root):
 
 <<< DEMO ./demo/ModalConfirm.vue
 
-The `show` and `confirm` `props` object accepts all of the properties that are defined on
-[BModal](/docs/components/modal#component-reference) except for `modelValue`.
+The `create` accepts all of the properties that are defined on
+[BModal](/docs/components/modal#component-reference).
 
 See [Show and Hide](#show-and-hide) shared properties.
 

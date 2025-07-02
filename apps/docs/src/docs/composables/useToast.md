@@ -8,28 +8,25 @@ Often times one may want to open a `Toast` in a global context, without the need
 
 <UsePluginAlert />
 
-## BToastOrchestrator
+## BOrchestrator
 
-You must have initialized `BToastOrchestrator` component once and only once (doing multiple may display multiple `Toasts`). This is usually best placed at the App root.
+You must have initialized `BOrchestrator` component once and only once (doing multiple may display multiple `Toasts`). Also you need to provide the Orchestrator registy. use `BApp` component wrapping your app to initializes both of these for you.
 
 <HighlightCard>
-
 <template #html>
 
-```vue-html
-<BToastOrchestrator />
+```vue
+<template>
+  <BApp>
+    <router-view />
+  </BApp>
+</template>
 ```
 
-  </template>
+</template>
 </HighlightCard>
 
-The only props it access are `teleportDisabled` and `teleportTo` to modify the location that it is placed
-
-In addition, it contains a few exposed methods. These exposed methods on the `template ref` correspond to those in the `useToast` function, described below
-
-- remove
-- show
-- toasts
+Use the props `teleportTo` to modify the dom location that the toasts are placed.
 
 ## Showing a Toast
 
