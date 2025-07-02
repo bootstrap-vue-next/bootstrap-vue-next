@@ -21,7 +21,7 @@ The overlay visibility is controlled via the `show` prop. By default, the overla
 
 ::: info NOTE
 This component only <em>visually obscures</em> its content (or the page). Refer to the
-<a href="#accessibility" class="alert-link">Accessibility section</a> below for additional
+<a href="#accessibility">Accessibility section</a> below for additional
 accessibility details and concerns.
 :::
 
@@ -188,7 +188,7 @@ When using the wrapping mode (prop `no-wrap` is not set), the wrapper will have 
 or loading state. When prop `no-wrap` is set, the attribute will _not_ be applied.
 
 When using the `no-wrap` prop, and potentially the `fixed` prop, to obscure the entire application
-or page, you must ensure that all internative page elements (other than the content of the overlay)
+or page, you must ensure that all interactive page elements (other than the content of the overlay)
 have been disabled and are _not_ in the document tab sequence.
 
 ## Use case examples
@@ -222,12 +222,6 @@ also set the `rounded` prop on `BOverlay`.
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/overlay.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>

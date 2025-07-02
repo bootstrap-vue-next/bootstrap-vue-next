@@ -19,7 +19,7 @@
     <div class="row mt-2">
       <label
         class="col-lg-2"
-        label-for="form-mail"
+        label-for="form-email"
         >Email</label
       >
       <BFormInput
