@@ -19,7 +19,7 @@ Things to know when using the tooltip component:
   - kideMargin is 0
   - Tooltips are non-interactive by default.
 - Tooltips rely on the 3rd party library [floating-ui](https://floating-ui.com/) for positioning.
-- Use `teleportTo` and `teleportDisabled` to control where in the DOM the tooltip is rendered. See the [Vue.js Docs](https://vuejs.org/guide/built-ins/teleport.html) for details. When using Nuxt, `teleportTo` defaults to `#teleport`, set `teleportDisabled` to disable this behavior. For non-nuxt environments, `teleportTo` defaults to `undefined`.
+- Use `teleportTo` and `teleportDisabled` to control where in the DOM the tooltip is rendered. See the [Vue.js Docs](https://vuejs.org/guide/built-ins/teleport.html) for details. `teleportTo` defaults to `undefined`.
 - Triggering tooltips on hidden elements will not work.
 - Tooltips for `disabled` elements must be triggered on a wrapper element.
 - When triggered from hyperlinks that span multiple lines, tooltips will be centered. Set the `inline` prop to improve the positioning. See the [Floating UI docs](https://floating-ui.com/docs/inline) for details.
