@@ -4,7 +4,7 @@
 
 Easily add tooltips to an interactive element or components via the `<BTooltip>` component
 or [`v-b-tooltip`](/docs/directives/btooltip) directive. Tooltips can also be created and programmatically controlled via the composable
-[`usePopoverController`](<(/docs/composables/useTooltipController)>)
+[`usePopoverController`](/docs/composables/usePopoverController)
 
 </PageHeader>
 
@@ -65,8 +65,8 @@ override the `pointer-events` on the disabled element.
 ## Positioning
 
 Twelve static options are available for the `placement` prop: `top`, `top-start`, `top-end`,
-`bottom`, `bottom-start`, `bottom-end`, `left`, `left-start`, `left-end`, `right`, `right-start`, `right-end` from
-[@floating-ui/vue](https://floating-ui.com/) as well as three [auto placement](https://floating-ui.com/docs/autoplacement)
+`bottom`, `bottom-start`, `bottom-end`, `left`, `left-start`, `left-end`, `right`, `right-start`, and `right-end` from
+[@floating-ui/vue](https://floating-ui.com/) plus three [auto placement](https://floating-ui.com/docs/autoplacement)
 options `auto`, `auto-start` and `auto-end`.
 
 Positioning is relative to the trigger element.
@@ -94,13 +94,13 @@ and use the [`v-model`](#programmatic-control-via-v-model) or
 
 ## Content
 
-The content of a tooltip can be set via the `title` or `body` props or the `title`
+The content of a tooltip can be set via the `title` or `body` props, or the `title`
 or `default` slots.
 
 ::: info NOTE
 Unlike [popover content](/docs/components/popover#content) which has a separate title and body, tooltips only
-have one place to place content. The `title` prop and slot take precedence over the `body` and `default`
-slots and the slots (as always) take precedence over the props.
+have one location to place the content. The `title` prop and slot take precedence over the `body` and `default`
+slot, and the slots (as always) take precedence over the props.
 :::
 
 <<< DEMO ./demo/TooltipContent.vue#template{vue-html}
