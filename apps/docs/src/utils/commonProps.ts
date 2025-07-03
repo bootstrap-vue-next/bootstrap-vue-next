@@ -1,6 +1,6 @@
 import {type PropertyReference} from '../types'
 
-export const commonProps = () =>
+const commonProps = () =>
   ({
     active: {
       type: 'boolean',
@@ -454,4 +454,26 @@ export const commonProps = () =>
       default: 'bottom-start',
       description: 'Placement of a floating element',
     },
-  }) satisfies Record<string, PropertyReference>
+  }) as const
+
+const singletonProps = Object.freeze(commonProps())
+
+export const buildCommonProps = (
+  obj?: Partial<Record<keyof typeof singletonProps, Partial<PropertyReference>>>
+): Readonly<typeof singletonProps> => {
+  if (!obj) return singletonProps
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const myObject = commonProps() as Record<string, any>
+
+  // Merge the provided object into the common props
+  Object.entries(obj).forEach(([key, value]) => {
+    myObject[key] = {
+      ...myObject[key],
+      ...value,
+    }
+  })
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return Object.freeze(myObject as any)
+}

@@ -1,48 +1,45 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
-import {linkProps, linkTo} from '../../utils/link-props'
+import {
+  type ComponentReference,
+  defaultPropSectionSymbol,
+  type PropertyReference,
+} from '../../types'
+import {linkedBLinkSection, linkProps} from '../../utils/linkProps'
 
 export default {
-  load: (): ComponentReference[] => [
-    {
-      component: 'BBreadcrumb',
+  load: (): ComponentReference => ({
+    BBreadcrumb: {
       sourcePath: '/BBreadcrumb/BBreadcrumb.vue',
       props: {
-        '': {
-          items: {
-            type: 'BreadcrumbItemRaw[]',
-            default: undefined,
-            description: 'Array of `BreadCrumbItem`s or strings to render. See above for details.',
-          },
-          id: {
-            type: 'string',
-            default: undefined,
-            description:
-              'ID of the breadcrumb component. When combined with the `useBreadcrumb` composable, it will use this id as a breadcrumb trail instead of the global trail.',
-          },
-        } satisfies Record<keyof BvnComponentProps['BBreadcrumb'], PropertyReference>,
-      },
-      emits: [],
-      slots: [
-        {
-          name: 'default',
+        items: {
+          type: 'BreadcrumbItemRaw[]',
+          default: undefined,
+          description: 'Array of `BreadCrumbItem`s or strings to render. See above for details.',
+        },
+        id: {
+          type: 'string',
+          default: undefined,
+          description:
+            'ID of the breadcrumb component. When combined with the `useBreadcrumb` composable, it will use this id as a breadcrumb trail instead of the global trail.',
+        },
+      } satisfies Record<keyof BvnComponentProps['BBreadcrumb'], PropertyReference>,
+      emits: {},
+      slots: {
+        default: {
           description: 'Content (breadcrumb items) to place in the breadcrumb',
         },
-        {
-          name: 'append',
+        append: {
           description: 'Content to append to the breadcrumb',
         },
-        {
-          name: 'prepend',
+        prepend: {
           description: 'Content to prepend to the breadcrumb',
         },
-      ],
+      },
     },
-    {
-      component: 'BBreadcrumbItem',
+    BBreadcrumbItem: {
       sourcePath: '/BBreadcrumb/BBreadcrumbItem.vue',
       props: {
-        '': {
+        [defaultPropSectionSymbol]: {
           ariaCurrent: {
             type: 'string',
             default: 'location',
@@ -58,32 +55,24 @@ export default {
           Exclude<keyof BvnComponentProps['BBreadcrumbItem'], keyof typeof linkProps>,
           PropertyReference
         >,
-        'BLink props': {
-          _linkTo: {
-            type: linkTo,
-          },
-          ...linkProps,
-        },
+        'BLink props': linkedBLinkSection,
       },
-      emits: [
-        {
-          event: 'click',
+      emits: {
+        click: {
           description: 'Emitted when the breadcrumb item is clicked',
-          args: [
-            {
+          args: {
+            click: {
               type: 'MouseEvent',
-              arg: 'click',
               description: 'Native click event object',
             },
-          ],
+          },
         },
-      ],
-      slots: [
-        {
-          name: 'default',
+      },
+      slots: {
+        default: {
           description: 'Content to place in the breadcrumb item',
         },
-      ],
+      },
     },
-  ],
+  }),
 }

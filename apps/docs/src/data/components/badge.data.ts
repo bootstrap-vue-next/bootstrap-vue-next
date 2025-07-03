@@ -1,23 +1,35 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
-import {linkProps, linkTo} from '../../utils/link-props'
-import {buildCommonProps, pick} from '../../utils'
+import {
+  type ComponentReference,
+  defaultPropSectionSymbol,
+  type PropertyReference,
+} from '../../types'
+import {linkedBLinkSection, linkProps} from '../../utils/linkProps'
+import {pick} from '../../utils/objectUtils'
+import {buildCommonProps} from '../../utils/commonProps'
 
 export default {
-  load: (): ComponentReference[] => [
-    {
-      component: 'BBadge',
+  load: (): ComponentReference => ({
+    BBadge: {
       sourcePath: '/BBadge/BBadge.vue',
       props: {
-        '': {
+        [defaultPropSectionSymbol]: {
+          ...pick(
+            buildCommonProps({
+              variant: {
+                default: 'secondary',
+              },
+            }),
+            ['bgVariant', 'variant', 'textVariant']
+          ),
           dotIndicator: {
             type: 'boolean',
-            default: false,
+            default: 'false', // TODO item not in string format
             description: 'Indication position and dot styling applied',
           },
           pill: {
             type: 'boolean',
-            default: false,
+            default: 'false', // TODO item not in string format
             description: "When set to 'true', renders the badge in pill style",
           },
           tag: {
@@ -29,35 +41,21 @@ export default {
             type: 'CombinedPlacement',
             default: undefined,
             description:
-              'Placement of the badge relative to the its parent. One of the values of `CombinedPlacement`',
+              'Placement of the badge relative to the its parent. One of the values of `CombinedPlacement`', // TODO grammar check (remove "the" before "its parent")
           },
-          ...pick(
-            buildCommonProps({
-              variant: {
-                default: 'secondary',
-              },
-            }),
-            ['bgVariant', 'variant', 'textVariant']
-          ),
         } satisfies Record<
           Exclude<keyof BvnComponentProps['BBadge'], keyof typeof linkProps>,
           PropertyReference
         >,
-        'BLink props': {
-          _linkTo: {
-            type: linkTo,
-          },
-          ...linkProps,
+        'BLink props': linkedBLinkSection,
+      },
+      emits: {},
+      slots: {
+        default: {
+          description: '', // TODO missing description
+          scope: {},
         },
       },
-      emits: [],
-      slots: [
-        {
-          name: 'default',
-          description: '',
-          scope: [],
-        },
-      ],
     },
-  ],
+  }),
 }

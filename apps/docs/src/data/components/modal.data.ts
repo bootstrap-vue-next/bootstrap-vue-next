@@ -1,484 +1,449 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {ComponentReference, PropertyReference, SlotScopeReference} from '../../types'
-import {buildCommonProps, pick, showHideProps} from '../../utils'
+import {pick} from '../../utils/objectUtils'
+import {buildCommonProps} from '../../utils/commonProps'
+import {showHideProps} from '../../utils/showHideData'
 
-const sharedSlots: SlotScopeReference[] = [
-  {
-    prop: 'cancel',
+const sharedSlots: SlotScopeReference = {
+  cancel: {
     type: 'Function',
     description:
       "Closes the modal and fires the 'cancel' and 'hide' events, with `bvModalEvent.trigger = 'cancel'`",
   },
-  {
-    prop: 'close',
+  close: {
     type: 'Function',
     description:
-      "Closes the modal and fires the close and hide events, with `bvModalEvent.trigger = 'headerclose'`",
+      "Closes the modal and fires the 'close' and 'hide' events, with `bvModalEvent.trigger = 'headerclose'`", // TODO grammar check (should say "fires the 'close' and 'hide' events" for consistency with others)
   },
-  {
-    prop: 'hide',
+  hide: {
     type: 'Function',
     description:
-      "Accepts one argument 'trigger'. Closes the modal and fires the 'hide' event, with the `bvModalEvent.trigger = trigger` (`trigger` is optional)",
+      "Accepts one argument 'trigger'. Closes the modal and fires the 'hide' event, with `bvModalEvent.trigger = trigger` (`trigger` is optional)",
   },
-  {
-    prop: 'ok',
+  ok: {
     type: 'Function',
     description:
       "Closes the modal and fires the 'ok' and 'hide' events, with `bvModalEvent.trigger = 'ok'`",
   },
-  {
-    prop: 'visible',
+  visible: {
     type: 'boolean',
     description:
       "The visibility state of the modal. 'true' if the modal is visible and 'false' if not visible",
   },
-]
+} as const
 
 export default {
-  load: (): ComponentReference[] => [
-    {
-      component: 'BModal',
+  load: (): ComponentReference => ({
+    BModal: {
       sourcePath: '/BModal/BModal.vue',
       props: {
-        '': {
-          focus: {
-            type: "'ok' | 'cancel' | 'close' | string | ComponentPublicInstance | HTMLElement | null",
-            default: undefined,
-            description:
-              "Specify where to focus once modal opens. Can be built-in button: 'ok', 'cancel', or 'close'. Can be ref, HTMLElement, id or selector string. If set to 'false', no focus will be set (if noTrap isn't set the focus trap will focus the modal element or failback element). If set to a string, the element with that id will be focused. If set to a ComponentPublicInstance, the $el property of the instance will be focused.",
-          },
-          backdropFirst: {
-            type: 'boolean',
-            default: false,
-            description:
-              'Animate the backdrop before the modal, and on leave animate the modal before the backdrop',
-          },
-          body: {
-            type: 'string',
-            default: undefined,
-          },
-          bodyAttrs: {
-            type: 'Readonly<AttrsValue>',
-            default: undefined,
-          },
-          bodyBgVariant: {
-            type: 'ColorVariant | null',
-            default: null,
-            description: 'Applies one of the Bootstrap theme color variants to the body background',
-          },
-          bodyClass: {
-            type: 'ClassValue',
-            default: null,
-            description: "CSS class (or classes) to apply to the '.modal-body' wrapper element",
-          },
-          bodyScrolling: {
-            type: 'boolean',
-            default: false,
-            description: 'Enables/disables scrolling the body while modal is open',
-          },
-          bodyTextVariant: {
-            type: 'TextColorVariant | null',
-            default: null,
-            description: 'Applies one of the Bootstrap theme color variants to the body text',
-          },
-          bodyVariant: {
-            type: 'ColorVariant | null',
-            default: null,
-            description:
-              'Applies one of the Bootstrap theme color variants to the body (this takes priority over bodyBgVariant and bodyTextVariant)',
-          },
-          busy: {
-            type: 'boolean',
-            default: false,
-            description:
-              'Places the built in default footer OK and Cancel buttons in the disabled state',
-          },
-          buttonSize: {
-            type: 'Size',
-            default: 'md',
-          },
-          cancelClass: {
-            type: 'ClassValue',
-            default: undefined,
-            description: "CSS class (or classes) to apply to the '.modal-cancel' button",
-          },
-          cancelDisabled: {
-            type: 'boolean',
-            default: false,
-            description: 'Places the built in default footer Cancel button in the disabled state',
-          },
-          cancelTitle: {
-            type: 'string',
-            default: 'Cancel',
-            description: 'Text string to place in the default footer Cancel button',
-          },
-          cancelVariant: {
-            type: 'ButtonVariant | null',
-            default: 'secondary',
-            description: 'Variant to use for the default footer Cancel button',
-          },
-          centered: {
-            type: 'boolean',
-            default: false,
-            description: 'Vertically centers the modal in the viewport',
-          },
-          contentClass: {
-            type: 'ClassValue',
-            default: undefined,
-            description: "CSS class (or classes) to apply to the '.modal-content' wrapper element",
-          },
-          dialogClass: {
-            type: 'ClassValue',
-            default: undefined,
-            description: "CSS class (or classes) to apply to the '.modal-dialog' wrapper element",
-          },
-          footerBgVariant: {
-            type: 'ColorVariant | null',
-            default: null,
-            description:
-              'Applies one of the Bootstrap theme color variants to the footer background',
-          },
-          footerBorderVariant: {
-            type: 'ColorVariant | null',
-            default: null,
-            description: 'Applies one of the Bootstrap theme color variants to the footer border',
-          },
-          footerClass: {
-            type: 'ClassValue',
-            default: undefined,
-            description: "CSS class (or classes) to apply to the '.modal-footer' wrapper element",
-          },
-          footerTextVariant: {
-            type: 'ColorVariant | null',
-            default: null,
-            description: 'Applies one of the Bootstrap theme color variants to the footer text',
-          },
-          footerVariant: {
-            type: 'ColorVariant | null',
-            default: null,
-            description:
-              'Applies one of the Bootstrap theme color variants to the footer (this takes priority over footerBgVariant and footerTextVariant)',
-          },
-          fullscreen: {
-            type: 'boolean | Breakpoint',
-            default: false,
-            description:
-              "A boolean value will enable/disable full screen mode. A Breakpoint value will set the breakpoint to enable full screen mode below the value of the breakpoint. Breakpoint values are: 'sm', 'md', 'lg', 'xl', 'xxl'",
-          },
-          headerBgVariant: {
-            type: 'ColorVariant | null',
-            default: null,
-            description:
-              'Applies one of the Bootstrap theme color variants to the header background',
-          },
-          headerBorderVariant: {
-            type: 'ColorVariant | null',
-            default: null,
-            description: 'Applies one of the Bootstrap theme color variants to the header border',
-          },
-          headerClass: {
-            type: 'ClassValue',
-            default: undefined,
-            description: "CSS class (or classes) to apply to the '.modal-header' wrapper element",
-          },
-          headerCloseClass: {
-            type: 'ClassValue',
-            default: undefined,
-            description: 'CSS class (or classes) to apply to the header close button',
-          },
-          headerCloseLabel: {
-            type: 'string',
-            default: 'Close',
-            description: 'Accessibility label for the header close button',
-          },
-          headerCloseVariant: {
-            type: 'ButtonVariant | null',
-            default: 'secondary',
-            description:
-              'Applies a variant to the header close button when the header close button uses the header-close slot',
-          },
-          headerTextVariant: {
-            type: 'TextColorVariant | null',
-            default: null,
-            description: 'Applies one of the Bootstrap theme color variants to the header text',
-          },
-          headerVariant: {
-            type: 'ColorVariant | null',
-            default: null,
-            description:
-              'Applies one of the Bootstrap theme color variants to the header (this takes priority over headerBgVariant and headerTextVariant)',
-          },
-          noFooter: {
-            type: 'boolean',
-            default: false,
-            description: 'Disables rendering of the modal footer',
-          },
-          modalClass: {
-            type: 'ClassValue',
-            default: undefined,
-            description: "CSS class (or classes) to apply to the '.modal' wrapper element",
-          },
-          noCloseOnBackdrop: {
-            type: 'boolean',
-            default: false,
-            description:
-              'Disables closing the modal when clicking on the modal backdrop (outside the modal window)',
-          },
-          noCloseOnEsc: {
-            type: 'boolean',
-            default: false,
-            description: 'Disables the ability to close the modal by pressing the ESC key',
-          },
-          noStacking: {
-            type: 'boolean',
-            default: false,
-          },
-          noTrap: {
-            type: 'boolean',
-            default: false,
-            description: 'Disables the focus trap feature',
-          },
-          okClass: {
-            type: 'ClassValue',
-            default: undefined,
-            description: "CSS class (or classes) to apply to the '.modal-ok' button",
-          },
-          okDisabled: {
-            type: 'boolean',
-            default: false,
-            description: 'Places the built in default footer OK button in the disabled state',
-          },
-          okOnly: {
-            type: 'boolean',
-            default: false,
-            description: 'Disables rendering of the default footer Cancel button',
-          },
-          okTitle: {
-            type: 'string',
-            default: 'OK',
-            description: 'Text string to place in the default footer OK button',
-          },
-          okVariant: {
-            type: 'ButtonVariant | null',
-            default: 'primary',
-            description: 'Button color theme variant to apply to the default footer OK button',
-          },
-          scrollable: {
-            type: 'boolean',
-            default: false,
-            description: 'Enables scrolling of the modal body',
-          },
-          size: {
-            type: "Size | 'xl'",
-            default: 'md',
-            description: "Set the size of the modal's width. 'sm', 'md' (default), 'lg', or 'xl'",
-          },
-          teleportDisabled: {
-            type: 'boolean',
-            default: false,
-            description: 'Renders the modal in the exact place it was defined',
-          },
-          teleportTo: {
-            type: 'string | RendererElement | null | undefined',
-            default: 'body',
-            description: 'Overrides the default teleport location',
-          },
-          title: {
-            type: 'string',
-            default: undefined,
-            description: 'Text content to place in the title',
-          },
-          titleClass: {
-            type: 'ClassValue',
-            default: undefined,
-            description: 'CSS class (or classes) to apply to the title',
-          },
-          titleVisuallyHidden: {
-            type: 'boolean',
-            default: false,
-            description: "Wraps the title in an '.visually-hidden' wrapper",
-          },
-          titleTag: {
-            type: 'string',
-            default: 'h5',
-            description: 'Specify the HTML tag to render instead of the default tag for the title',
-          },
-          ...showHideProps,
-          ...pick(buildCommonProps(), ['id', 'noBackdrop', 'noHeader', 'noHeaderClose']),
-        } satisfies Record<keyof BvnComponentProps['BModal'], PropertyReference>,
-      },
-      emits: [
-        {
-          event: 'update:model-value',
-          args: [
-            {
-              arg: 'value',
-              description: "The new value of the modal's visible state",
+        ...showHideProps,
+        ...pick(buildCommonProps(), ['id', 'noBackdrop', 'noHeader', 'noHeaderClose']),
+        focus: {
+          type: "'ok' | 'cancel' | 'close' | string | ComponentPublicInstance | HTMLElement | null",
+          default: undefined,
+          description:
+            "Specify where to focus once modal opens. Can be built-in button: 'ok', 'cancel', or 'close'. Can be ref, HTMLElement, ID, or selector string. If set to 'false', no focus will be set (if noTrap isn't set, the focus trap will focus the modal element or fallback element). If set to a string, the element with that ID will be focused. If set to a ComponentPublicInstance, the $el property of the instance will be focused.", // TODO grammar check (should say "ID" instead of "id" for consistency; corrected "failback" to "fallback")
+        },
+        backdropFirst: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+          description:
+            'Animates the backdrop before the modal and, on leave, animates the modal before the backdrop', // TODO grammar check (rephrased for clarity and parallel structure)
+        },
+        body: {
+          type: 'string',
+          default: undefined,
+          // TODO missing description
+        },
+        bodyAttrs: {
+          type: 'Readonly<AttrsValue>',
+          default: undefined,
+          // TODO missing description
+        },
+        bodyBgVariant: {
+          type: 'ColorVariant | null',
+          default: null, // TODO item not in string format
+          description: 'Applies one of the Bootstrap theme color variants to the body background',
+        },
+        bodyClass: {
+          type: 'ClassValue',
+          default: null, // TODO item not in string format
+          description: "CSS class (or classes) to apply to the '.modal-body' wrapper element",
+        },
+        bodyScrolling: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+          description: 'Enables or disables scrolling the body while the modal is open', // TODO grammar check (rephrased for consistency with other props)
+        },
+        bodyTextVariant: {
+          type: 'ColorVariant | null',
+          default: null, // TODO item not in string format
+          description: 'Applies one of the Bootstrap theme color variants to the body text',
+        },
+        bodyVariant: {
+          type: 'ColorVariant | null',
+          default: null, // TODO item not in string format
+          description:
+            'Applies one of the Bootstrap theme color variants to the body (takes priority over bodyBgVariant and bodyTextVariant)', // TODO grammar check (simplified for brevity)
+        },
+        busy: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+          description:
+            'Places the built-in default footer OK and Cancel buttons in a disabled state', // TODO grammar check (should say "built-in" instead of "built in")
+        },
+        buttonSize: {
+          type: 'Size',
+          default: 'md',
+          // TODO missing description
+        },
+        cancelClass: {
+          type: 'ClassValue',
+          default: undefined,
+          description: "CSS class (or classes) to apply to the '.modal-cancel' button",
+        },
+        cancelDisabled: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+          description: 'Places the built-in default footer Cancel button in a disabled state', // TODO grammar check (should say "built-in" instead of "built in")
+        },
+        cancelTitle: {
+          type: 'string',
+          default: 'Cancel',
+          description: 'Text to place in the default footer Cancel button', // TODO grammar check (simplified "Text string" to "Text")
+        },
+        cancelVariant: {
+          type: 'ButtonVariant | null',
+          default: 'secondary',
+          description: 'Variant for the default footer Cancel button', // TODO grammar check (simplified for brevity)
+        },
+        centered: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+          description: 'Vertically centers the modal in the viewport',
+        },
+        contentClass: {
+          type: 'ClassValue',
+          default: undefined,
+          description: "CSS class (or classes) to apply to the '.modal-content' wrapper element",
+        },
+        dialogClass: {
+          type: 'ClassValue',
+          default: undefined,
+          description: "CSS class (or classes) to apply to the '.modal-dialog' wrapper element",
+        },
+        footerBgVariant: {
+          type: 'ColorVariant | null',
+          default: null, // TODO item not in string format
+          description: 'Applies one of the Bootstrap theme color variants to the footer background',
+        },
+        footerBorderVariant: {
+          type: 'ColorVariant | null',
+          default: null, // TODO item not in string format
+          description: 'Applies one of the Bootstrap theme color variants to the footer border',
+        },
+        footerClass: {
+          type: 'ClassValue',
+          default: undefined,
+          description: "CSS class (or classes) to apply to the '.modal-footer' wrapper element",
+        },
+        footerTextVariant: {
+          type: 'ColorVariant | null',
+          default: null, // TODO item not in string format
+          description: 'Applies one of the Bootstrap theme color variants to the footer text',
+        },
+        footerVariant: {
+          type: 'ColorVariant | null',
+          default: null, // TODO item not in string format
+          description:
+            'Applies one of the Bootstrap theme color variants to the footer (takes priority over footerBgVariant and footerTextVariant)', // TODO grammar check (simplified for brevity)
+        },
+        fullscreen: {
+          type: 'boolean | Breakpoint',
+          default: false, // TODO item not in string format
+          description:
+            "Enables full-screen mode with a boolean value or sets the breakpoint for full-screen mode below the specified breakpoint value ('sm', 'md', 'lg', 'xl', 'xxl')", // TODO grammar check (rephrased for clarity)
+        },
+        headerBgVariant: {
+          type: 'ColorVariant | null',
+          default: null, // TODO item not in string format
+          description: 'Applies one of the Bootstrap theme color variants to the header background',
+        },
+        headerBorderVariant: {
+          type: 'ColorVariant | null',
+          default: null, // TODO item not in string format
+          description: 'Applies one of the Bootstrap theme color variants to the header border',
+        },
+        headerClass: {
+          type: 'ClassValue',
+          default: undefined,
+          description: "CSS class (or classes) to apply to the '.modal-header' wrapper element",
+        },
+        headerCloseClass: {
+          type: 'ClassValue',
+          default: undefined,
+          description: 'CSS class (or classes) to apply to the header close button',
+        },
+        headerCloseLabel: {
+          type: 'string',
+          default: 'Close',
+          description: 'Accessibility label for the header close button',
+        },
+        headerCloseVariant: {
+          type: 'ButtonVariant | null',
+          default: 'secondary',
+          description: 'Variant for the header close button when using the header-close slot', // TODO grammar check (simplified for brevity)
+        },
+        headerTextVariant: {
+          type: 'ColorVariant | null',
+          default: null, // TODO item not in string format
+          description: 'Applies one of the Bootstrap theme color variants to the header text',
+        },
+        headerVariant: {
+          type: 'ColorVariant | null',
+          default: null, // TODO item not in string format
+          description:
+            'Applies one of the Bootstrap theme color variants to the header (takes priority over headerBgVariant and headerTextVariant)', // TODO grammar check (simplified for brevity)
+        },
+        noFooter: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+          description: 'Disables rendering of the modal footer',
+        },
+        modalClass: {
+          type: 'ClassValue',
+          default: undefined,
+          description: "CSS class (or classes) to apply to the '.modal' wrapper element",
+        },
+        noCloseOnBackdrop: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+          description:
+            'Prevents closing the modal when clicking the backdrop outside the modal window', // TODO grammar check (rephrased for clarity)
+        },
+        noCloseOnEsc: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+          description: 'Prevents closing the modal by pressing the Esc key', // TODO grammar check (rephrased for clarity; "ESC" changed to "Esc" for consistency)
+        },
+        noStacking: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+          // TODO missing description
+        },
+        noTrap: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+          description: 'Disables the focus trap feature',
+        },
+        okClass: {
+          type: 'ClassValue',
+          default: undefined,
+          description: "CSS class (or classes) to apply to the '.modal-ok' button",
+        },
+        okDisabled: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+          description: 'Places the built-in default footer OK button in a disabled state', // TODO grammar check (should say "built-in" instead of "built in")
+        },
+        okOnly: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+          description: 'Disables rendering of the default footer Cancel button',
+        },
+        okTitle: {
+          type: 'string',
+          default: 'OK',
+          description: 'Text to place in the default footer OK button', // TODO grammar check (simplified "Text string" to "Text")
+        },
+        okVariant: {
+          type: 'ButtonVariant | null',
+          default: 'primary',
+          description: 'Button color theme variant for the default footer OK button', // TODO grammar check (simplified for brevity)
+        },
+        scrollable: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+          description: 'Enables scrolling of the modal body',
+        },
+        size: {
+          type: "Size | 'xl'",
+          default: 'md',
+          description: "Sets the modal's width. Options: 'sm', 'md' (default), 'lg', or 'xl'", // TODO grammar check (rephrased for clarity)
+        },
+        teleportDisabled: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+          description: 'Renders the modal where it is defined, disabling teleport', // TODO grammar check (rephrased for clarity)
+        },
+        teleportTo: {
+          type: 'string | RendererElement | null | undefined',
+          default: 'body',
+          description: 'Overrides the default teleport location',
+        },
+        title: {
+          type: 'string',
+          default: undefined,
+          description: 'Text content for the modal title', // TODO grammar check (rephrased for clarity)
+        },
+        titleClass: {
+          type: 'ClassValue',
+          default: undefined,
+          description: 'CSS class (or classes) to apply to the modal title', // TODO grammar check (rephrased for clarity)
+        },
+        titleVisuallyHidden: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+          description: "Wraps the title in a '.visually-hidden' wrapper",
+        },
+        titleTag: {
+          type: 'string',
+          default: 'h5',
+          description: 'HTML tag to render for the title instead of the default', // TODO grammar check (rephrased for clarity)
+        },
+      } satisfies Record<keyof BvnComponentProps['BModal'], PropertyReference>,
+      emits: {
+        'update:model-value': {
+          description: 'Emitted when the modal visibility changes', // TODO grammar check (should say "modal's visibility" for clarity)
+          args: {
+            value: {
               type: 'boolean',
+              description: "The new value of the modal's visibility state", // TODO grammar check (should say "visibility state" instead of "visible state")
             },
-          ],
-          description: 'Emitted when modal visibility changes',
+          },
         },
-        {
-          event: 'show',
-          args: [
-            {
-              arg: 'value',
-              description: '',
+        'show': {
+          description: 'Emitted just before the modal is shown. Cancelable', // TODO grammar check (rephrased for brevity)
+          args: {
+            value: {
               type: 'BvTriggerableEvent',
+              description: 'The show event details', // TODO added description for clarity
             },
-          ],
-          description: 'Always emits just before modal is shown. Cancelable',
+          },
         },
-        {
-          event: 'shown',
-          args: [
-            {
-              arg: 'value',
-              description: '',
+        'shown': {
+          description: 'Emitted just after the modal is shown. Cancelable', // TODO grammar check (rephrased for brevity)
+          args: {
+            value: {
               type: 'BvTriggerableEvent',
+              description: 'The shown event details', // TODO added description for clarity
             },
-          ],
-          description: 'Always emits just after modal is shown. Cancelable',
+          },
         },
-        {
-          event: 'hide',
-          args: [
-            {
-              arg: 'value',
-              description: '',
-              type: 'BvTriggerableEvent',
-            },
-          ],
+        'hide': {
           description:
-            "Always emits just before modal has hidden. Cancelable (as long as modal wasn't forcibly hidden)",
-        },
-        {
-          event: 'hidden',
-          args: [
-            {
-              arg: 'value',
-              description: '',
+            'Emitted just before the modal is hidden. Cancelable (unless forcibly hidden)', // TODO grammar check (rephrased for clarity and tense consistency)
+          args: {
+            value: {
               type: 'BvTriggerableEvent',
+              description: 'The hide event details', // TODO added description for clarity
             },
-          ],
-          description: 'Always emits after modal is hidden',
+          },
         },
-        {
-          event: 'hide-prevented',
-          args: [],
+        'hidden': {
+          description: 'Emitted after the modal is hidden', // TODO grammar check (rephrased for brevity)
+          args: {
+            value: {
+              type: 'BvTriggerableEvent',
+              description: 'The hidden event details', // TODO added description for clarity
+            },
+          },
+        },
+        'hide-prevented': {
           description:
-            'Emitted when the modal tried to close, but was prevented from closing.  This occurs when preventDefault() is called on the event, the user clicks escape and no-close-onbackdrop is set to true, or the user clicks on the backdrop and no-close-onbackdrop is set to true.',
+            'Emitted when the modal attempted to close but was prevented. Occurs when preventDefault() is called, or when the user presses Esc or clicks the backdrop with no-close-on-backdrop set to true.', // TODO grammar check (rephrased for clarity; corrected "escape" to "Esc" and "no-close-onbackdrop" to "no-close-on-backdrop")
+          args: {},
         },
-        {
-          event: 'show-prevented',
-          args: [],
+        'show-prevented': {
           description:
-            'Emitted when the modal tried to open, but was prevented from opening. This occurs when preventDefault() is called on the event',
+            'Emitted when the modal attempted to open but was prevented. Occurs when preventDefault() is called.', // TODO grammar check (rephrased for clarity)
+          args: {},
         },
-        {
-          event: 'ok',
-          args: [
-            {
-              arg: 'value',
-              description: '',
+        'ok': {
+          description: 'Emitted when the default footer OK button is clicked. Cancelable', // TODO grammar check (rephrased for consistency)
+          args: {
+            value: {
               type: 'BvTriggerableEvent',
+              description: 'The OK button click event details', // TODO added description for clarity
             },
-          ],
-          description: 'Emitted when the default footer ok button is clicked. Cancelable',
+          },
         },
-        {
-          event: 'cancel',
-          args: [
-            {
-              arg: 'value',
-              description: '',
+        'cancel': {
+          description: 'Emitted when the default footer Cancel button is clicked. Cancelable', // TODO grammar check (rephrased for consistency)
+          args: {
+            value: {
               type: 'BvTriggerableEvent',
+              description: 'The Cancel button click event details', // TODO added description for clarity
             },
-          ],
-          description: 'Emitted when the default footer cancel button is clicked. Cancelable',
+          },
         },
-        {
-          event: 'close',
-          args: [
-            {
-              arg: 'value',
-              description: '',
+        'close': {
+          description: 'Emitted when the default header close button is clicked. Cancelable', // TODO grammar check (rephrased for consistency)
+          args: {
+            value: {
               type: 'BvTriggerableEvent',
+              description: 'The close button click event details', // TODO added description for clarity
             },
-          ],
-          description: 'Emitted when the default header close button is clicked. Cancelable',
+          },
         },
-        {
-          event: 'backdrop',
-          args: [
-            {
-              arg: 'value',
-              description: '',
-              type: 'BvTriggerableEvent',
-            },
-          ],
+        'backdrop': {
           description: 'Emitted when the backdrop is clicked. Cancelable',
-        },
-        {
-          event: 'esc',
-          args: [
-            {
-              arg: 'value',
-              description: '',
+          args: {
+            value: {
               type: 'BvTriggerableEvent',
+              description: 'The backdrop click event details', // TODO added description for clarity
             },
-          ],
-          description: 'Emitted when the esc keyboard button is clicked. Cancelable',
+          },
         },
-      ],
-      slots: [
-        {
-          name: 'backdrop',
-          description: 'Modal Backdrop content',
-          scope: [],
+        'esc': {
+          description: 'Emitted when the Esc key is pressed. Cancelable', // TODO grammar check (corrected "esc keyboard button is clicked" to "Esc key is pressed")
+          args: {
+            value: {
+              type: 'BvTriggerableEvent',
+              description: 'The Esc key press event details', // TODO added description for clarity
+            },
+          },
         },
-        {
-          name: 'cancel',
-          description: 'Modal CANCEL button content. Optionally scoped',
+      },
+      slots: {
+        'backdrop': {
+          description: 'Content for the modal backdrop',
+          scope: {},
+        },
+        'cancel': {
+          description: 'Content for the modal Cancel button. Optionally scoped',
           scope: sharedSlots,
         },
-        {
-          name: 'default',
-          description: 'Content of modal body. Optionally scoped',
+        'default': {
+          description: 'Content for the modal body. Optionally scoped',
           scope: sharedSlots,
         },
-        {
-          name: 'footer',
+        'footer': {
           description:
-            'Modal footer content. Also removes default OK and Cancel buttons. Optionally scoped',
+            'Content for the modal footer. Removes default OK and Cancel buttons. Optionally scoped', // TODO grammar check (rephrased for clarity)
           scope: sharedSlots,
         },
-        {
-          name: 'header',
+        'header': {
           description:
-            'Entire modal header container contents. Also removes the top right X close button. Optionally scoped',
+            'Content for the modal header. Removes the top-right close button. Optionally scoped', // TODO grammar check (rephrased for clarity)
           scope: sharedSlots,
         },
-        {
-          name: 'header-close',
+        'header-close': {
           description:
-            "Content of Modal header close button. If 'header' slot is used, this slot will not be shown",
-          scope: [],
+            "Content for the modal header close button. Not shown if the 'header' slot is used", // TODO grammar check (rephrased for clarity)
+          scope: {},
         },
-        {
-          name: 'ok',
-          description: 'Modal OK button content. Optionally scoped',
+        'ok': {
+          description: 'Content for the modal OK button. Optionally scoped',
           scope: sharedSlots,
         },
-        {
-          name: 'title',
+        'title': {
           description:
-            "Modal title. If 'header' slot is used, this slot will not be shown. Optionally scoped",
+            "Content for the modal title. Not shown if the 'header' slot is used. Optionally scoped", // TODO grammar check (rephrased for clarity)
           scope: sharedSlots,
         },
-      ],
+      },
     },
-  ],
+  }),
 }

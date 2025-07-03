@@ -13,5 +13,5 @@
 </template>
 
 <script setup lang="ts">
-import {BCard, BCardBody} from 'bootstrap-vue-next'
+import {BCard, BCardBody} from 'bootstrap-vue-next/components/BCard'
 </script>

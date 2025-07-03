@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import {BLink} from 'bootstrap-vue-next'
+import {BLink} from 'bootstrap-vue-next/components/BLink'
 import NoteAlert from './NoteAlert.vue'
 import {withBase} from 'vitepress'
 </script>
