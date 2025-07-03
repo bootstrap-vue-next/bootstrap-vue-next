@@ -1,7 +1,7 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {PropertyReference} from '../types'
-import {buildCommonProps} from './build-common-props'
-import {pick} from './object-utils'
+import {buildCommonProps} from './commonProps'
+import {pick} from './objectUtils'
 
 export const linkTo = '/docs/components/image'
 

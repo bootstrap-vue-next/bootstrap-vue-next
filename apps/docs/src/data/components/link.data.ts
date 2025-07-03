@@ -1,33 +1,28 @@
+import {linkProps} from '../../utils/linkProps'
 import {type ComponentReference, StyleKind} from '../../types'
-import {linkProps} from '../../utils'
+
 export default {
-  load: (): ComponentReference[] => [
-    {
-      component: 'BLink',
+  load: (): ComponentReference => ({
+    BLink: {
       styleSpec: {kind: StyleKind.Tag, value: 'a, router-link'},
       sourcePath: '/BLink/BLink.vue',
-      props: {
-        '': linkProps,
-      },
-      emits: [
-        {
-          event: 'click',
-          description: 'Emitted when link was clicked',
-          args: [
-            {
-              arg: 'value',
+      props: linkProps,
+      emits: {
+        click: {
+          description: 'Emitted when link was clicked', // TODO grammar check (should say "the link is clicked" instead of "link was clicked" for consistency)
+          args: {
+            value: {
               type: 'MouseEvent',
               description: 'Native click event',
             },
-          ],
+          },
         },
-      ],
-      slots: [
-        {
-          name: 'default',
+      },
+      slots: {
+        default: {
           description: 'Content to place in the link',
         },
-      ],
+      },
     },
-  ],
+  }),
 }

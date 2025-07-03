@@ -231,13 +231,13 @@
 </template>
 
 <script setup lang="ts">
-import {
-  BTable,
-  type BTableSortBy,
-  type ColorVariant,
-  type LiteralUnion,
-  type TableFieldRaw,
-  type TableItem,
+import {BTable} from 'bootstrap-vue-next/components/BTable'
+import type {
+  BTableSortBy,
+  ColorVariant,
+  LiteralUnion,
+  TableFieldRaw,
+  TableItem,
 } from 'bootstrap-vue-next'
 import {computed, reactive, ref, useTemplateRef} from 'vue'
 import {type ComponentExposed} from 'vue-component-type-helpers'

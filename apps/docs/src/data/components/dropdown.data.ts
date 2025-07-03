@@ -1,229 +1,203 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
 import {
-  buildCommonProps,
-  dropdownEmits,
-  dropdownProps,
-  dropdownSlots,
-  omit,
-  pick,
-} from '../../utils'
-import {linkProps, linkTo} from '../../utils/link-props'
+  type ComponentReference,
+  defaultPropSectionSymbol,
+  type PropertyReference,
+} from '../../types'
+import {linkProps, linkTo} from '../../utils/linkProps'
+import {dropdownEmits, dropdownProps, dropdownSlots} from '../../utils/dropdownCommon'
+import {omit, pick} from '../../utils/objectUtils'
+import {buildCommonProps} from '../../utils/commonProps'
 
 export default {
-  load: (): ComponentReference[] => [
-    {
-      component: 'BDropdown',
+  load: (): ComponentReference => ({
+    BDropdown: {
       sourcePath: '/BDropdown/BDropdown.vue',
-      props: {
-        '': dropdownProps,
-      },
+      props: dropdownProps,
       emits: dropdownEmits,
       slots: dropdownSlots,
     },
-    {
-      component: 'BDropdownDivider',
+    BDropdownDivider: {
       sourcePath: '/BDropdown/BDropdownDivider.vue',
       props: {
-        '': {
-          dividerClass: {
-            default: undefined,
-            type: 'ClassValue',
-            description: 'CSS class (or classes) to add to the divider component',
-          },
-          ...pick(
-            buildCommonProps({
-              tag: {
-                default: 'hr',
-              },
-            }),
-            ['tag', 'variant', 'wrapperAttrs']
-          ),
-        } satisfies Record<keyof BvnComponentProps['BDropdownDivider'], PropertyReference>,
-      },
+        ...pick(
+          buildCommonProps({
+            tag: {
+              default: 'hr',
+            },
+          }),
+          ['tag', 'variant', 'wrapperAttrs']
+        ),
+        dividerClass: {
+          type: 'ClassValue',
+          default: undefined,
+          description: 'CSS class (or classes) to add to the divider component',
+        },
+      } satisfies Record<keyof BvnComponentProps['BDropdownDivider'], PropertyReference>,
     },
-    {
-      component: 'BDropdownForm',
+    BDropdownForm: {
       sourcePath: '/BDropdown/BDropdownForm.vue',
       props: {
-        '': {
-          formClass: {
-            default: undefined,
-            type: 'ClassValue',
-            description: 'CSS class (or classes) to add to the form component',
-          },
-          novalidate: {notYetImplemented: true},
-          validated: {notYetImplemented: true},
-          ...pick(buildCommonProps({}), ['wrapperAttrs']),
-        } satisfies Record<keyof BvnComponentProps['BDropdownForm'], PropertyReference>,
-      },
-      slots: [
-        {
-          name: 'default',
+        ...pick(buildCommonProps(), ['wrapperAttrs']),
+        formClass: {
+          type: 'ClassValue',
+          default: undefined,
+          description: 'CSS class (or classes) to add to the form component',
+        },
+        novalidate: {
+          notYetImplemented: true,
+          // description: 'Disables HTML5 form validation' // TODO missing description
+        },
+        validated: {
+          notYetImplemented: true,
+          // description: 'Marks the form as validated' // TODO missing description
+        },
+      } satisfies Record<keyof BvnComponentProps['BDropdownForm'], PropertyReference>,
+      slots: {
+        default: {
           description: 'Content to place in the dropdown form',
         },
-      ],
-    },
-    {
-      component: 'BDropdownGroup',
-      sourcePath: '/BDropdown/BDropdownGroup.vue',
-      emits: [],
-      props: {
-        '': {
-          header: {
-            type: 'string',
-            default: undefined,
-          },
-          ...pick(
-            buildCommonProps({
-              headerTag: {
-                default: 'header',
-              },
-            }),
-            ['ariaDescribedby', 'headerClass', 'headerTag', 'headerVariant', 'id']
-          ),
-        } satisfies Record<keyof BvnComponentProps['BDropdownGroup'], PropertyReference>,
       },
-      slots: [
-        {
-          name: 'default',
+    },
+    BDropdownGroup: {
+      sourcePath: '/BDropdown/BDropdownGroup.vue',
+      props: {
+        ...pick(
+          buildCommonProps({
+            headerTag: {
+              default: 'header',
+            },
+          }),
+          ['ariaDescribedby', 'headerClass', 'headerTag', 'headerVariant', 'id']
+        ),
+        header: {
+          type: 'string',
+          default: undefined,
+          // description: 'Text content for the dropdown group header' // TODO missing description
+        },
+      } satisfies Record<keyof BvnComponentProps['BDropdownGroup'], PropertyReference>,
+      emits: {},
+      slots: {
+        default: {
           description: 'Content (items) to place in the dropdown group',
         },
-        {
-          name: 'header',
+        header: {
           description: 'Optional header content for the dropdown group',
         },
-      ],
-    },
-    {
-      component: 'BDropdownHeader',
-      sourcePath: '/BDropdown/BDropdownHeader.vue',
-      emits: [],
-      props: {
-        '': {
-          text: {
-            default: undefined,
-            description: 'Content to place in the dropdown text. Default slot takes precedence',
-            type: 'string',
-          },
-          ...pick(buildCommonProps({}), ['headerClass', 'tag', 'variant', 'wrapperAttrs']),
-        } satisfies Record<keyof BvnComponentProps['BDropdownHeader'], PropertyReference>,
       },
-      slots: [
-        {
-          name: 'default',
+    },
+    BDropdownHeader: {
+      sourcePath: '/BDropdown/BDropdownHeader.vue',
+      props: {
+        ...pick(buildCommonProps(), ['headerClass', 'tag', 'variant', 'wrapperAttrs']),
+        text: {
+          type: 'string',
+          default: undefined,
+          description: 'Content to place in the dropdown text. Default slot takes precedence', // TODO grammar check (should say "dropdown header" instead of "dropdown text") // TODO similar content to BDropdownText/text (similar description structure)
+        },
+      } satisfies Record<keyof BvnComponentProps['BDropdownHeader'], PropertyReference>,
+      emits: {},
+      slots: {
+        default: {
           description: 'Content to place in the dropdown header',
         },
-      ],
+      },
     },
-    {
-      component: 'BDropdownItem',
+    BDropdownItem: {
       sourcePath: '/BDropdown/BDropdownItem.vue',
       props: {
-        '': {
-          ...pick(buildCommonProps({}), ['linkClass', 'wrapperAttrs']),
-        } satisfies Record<
+        [defaultPropSectionSymbol]: pick(buildCommonProps(), [
+          'linkClass',
+          'wrapperAttrs',
+        ]) satisfies Record<
           Exclude<keyof BvnComponentProps['BDropdownItem'], keyof typeof linkProps>,
           PropertyReference
         >,
         'BLink props': {
-          _linkTo: {
-            type: linkTo,
+          _opts: {
+            linkTo,
           },
-          ...omit(linkProps, ['routerTag']),
+          _data: omit(linkProps, ['routerTag']),
         },
       },
-      emits: [
-        {
-          event: 'click',
+      emits: {
+        click: {
           description: 'Emitted when item is clicked',
-          args: [
-            {
-              arg: 'value',
+          args: {
+            value: {
               type: 'MouseEvent',
               description: 'Native click event object',
             },
-          ],
+          },
         },
-      ],
-      slots: [
-        {
-          name: 'default',
+      },
+      slots: {
+        default: {
           description: 'Content to place in the dropdown item',
         },
-      ],
+      },
     },
-    {
-      component: 'BDropdownItemButton',
+    BDropdownItemButton: {
       sourcePath: '/BDropdown/BDropdownItemButton.vue',
       props: {
-        '': {
-          buttonClass: {
-            type: 'ClassValue',
-            default: undefined,
-            description: 'Class or classes to apply to the inner button element',
-          },
-          ...pick(buildCommonProps({}), [
-            'active',
-            'activeClass',
-            'disabled',
-            'variant',
-            'wrapperAttrs',
-          ]),
-        } satisfies Record<keyof BvnComponentProps['BDropdownItemButton'], PropertyReference>,
-      },
-      emits: [
-        {
-          event: 'click',
+        ...pick(buildCommonProps(), [
+          'active',
+          'activeClass',
+          'disabled',
+          'variant',
+          'wrapperAttrs',
+        ]),
+        buttonClass: {
+          type: 'ClassValue',
+          default: undefined,
+          description: 'Class or classes to apply to the inner button element',
+        },
+      } satisfies Record<keyof BvnComponentProps['BDropdownItemButton'], PropertyReference>,
+      emits: {
+        click: {
           description: 'Emitted when item is clicked',
-          args: [
-            {
-              arg: 'value',
+          args: {
+            value: {
               type: 'MouseEvent',
               description: 'Native click event object',
             },
-          ],
+          },
         },
-      ],
-      slots: [
-        {
-          name: 'default',
+      },
+      slots: {
+        default: {
           description: 'Content to place in the dropdown item button',
         },
-      ],
-    },
-    {
-      component: 'BDropdownText',
-      sourcePath: '/BDropdown/BDropdownText.vue',
-      emits: [],
-      props: {
-        '': {
-          text: {
-            default: undefined,
-            description: 'Content to place in the dropdown text. Default slot takes precedence',
-            type: 'string',
-          },
-          textClass: {
-            default: undefined,
-            type: 'ClassValue',
-            description: 'CSS class (or classes) to add to the text component',
-          },
-          ...pick(
-            buildCommonProps({
-              tag: {
-                default: 'span',
-              },
-            }),
-            ['tag', 'variant', 'wrapperAttrs']
-          ),
-        } satisfies Record<keyof BvnComponentProps['BDropdownText'], PropertyReference>,
       },
-      slots: [
-        {
-          name: 'default',
+    },
+    BDropdownText: {
+      sourcePath: '/BDropdown/BDropdownText.vue',
+      props: {
+        ...pick(
+          buildCommonProps({
+            tag: {
+              default: 'span',
+            },
+          }),
+          ['tag', 'variant', 'wrapperAttrs']
+        ),
+        text: {
+          type: 'string',
+          default: undefined,
+          description: 'Content to place in the dropdown text. Default slot takes precedence', // TODO similar content to BDropdownHeader/text (similar description structure)
+        },
+        textClass: {
+          type: 'ClassValue',
+          default: undefined,
+          description: 'CSS class (or classes) to add to the text component',
+        },
+      } satisfies Record<keyof BvnComponentProps['BDropdownText'], PropertyReference>,
+      emits: {},
+      slots: {
+        default: {
           description: 'Content to place in the dropdown text',
         },
-      ],
+      },
     },
-  ],
+  }),
 }

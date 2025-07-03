@@ -1,15 +1,22 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
-import {buildCommonProps, omit, pick, showHideProps} from '../../utils'
-import {linkProps, linkTo} from '../../utils/link-props'
+import {
+  type ComponentReference,
+  defaultPropSectionSymbol,
+  type PropertyReference,
+} from '../../types'
+import {linkedBLinkSection, type linkProps} from '../../utils/linkProps'
+import {showHideProps} from '../../utils/showHideData'
+import {buildCommonProps} from '../../utils/commonProps'
+import {omit, pick} from '../../utils/objectUtils'
 
 export default {
-  load: (): ComponentReference[] => [
-    {
-      component: 'BAlert',
+  load: (): ComponentReference => ({
+    BAlert: {
       sourcePath: '/BAlert/BAlert.vue',
       props: {
-        '': {
+        [defaultPropSectionSymbol]: {
+          ...omit(showHideProps, ['modelValue']),
+          ...pick(buildCommonProps(), ['variant', 'noHoverPause', 'noResumeOnHoverLeave']),
           alertClass: {
             type: 'ClassValue',
             default: undefined,
@@ -18,7 +25,8 @@ export default {
           bgVariant: {
             type: 'ColorVariant | null',
             default: null,
-          },
+            // description: 'Background color variant for the alert' // TODO missing description
+          }, // TODO prop inconsistency ColorVariant | null (matches ColorExtendables, not directly in BAlertProps, but valid via inheritance)
           body: {
             type: 'string',
             default: undefined,
@@ -47,7 +55,7 @@ export default {
           closeVariant: {
             type: 'string | null',
             default: null,
-            description: 'Color variant for the close button',
+            description: 'Color variant for the close button', // TODO prop inconsistency string | null (BAlertProps expects ButtonVariant | null)
           },
           dismissible: {
             type: 'boolean',
@@ -62,7 +70,7 @@ export default {
           headerTag: {
             type: 'string',
             default: 'div',
-            description: 'Specify the HTML tag to render instead of the default tag for the footer',
+            description: 'Specify the HTML tag to render instead of the default tag for the footer', // TODO grammar check (should refer to "header" instead of "footer")
           },
           id: {
             type: 'string',
@@ -102,67 +110,53 @@ export default {
           textVariant: {
             type: 'TextColorVariant | null',
             default: null,
-          },
+            // description: 'Text color variant for the alert' // TODO missing description
+          }, // TODO prop inconsistency TextColorVariant | null (matches ColorExtendables, not directly in BAlertProps, but valid via inheritance)
           title: {
             type: 'string',
             default: undefined,
             description: "The alert's title text",
           },
-          ...omit(showHideProps, ['modelValue']),
-          ...pick(buildCommonProps(), ['variant', 'noHoverPause', 'noResumeOnHoverLeave']),
         } satisfies Record<
           Exclude<keyof BvnComponentProps['BAlert'], keyof typeof linkProps>,
           PropertyReference
         >,
-        'BLink props': {
-          _linkTo: {
-            type: linkTo,
-          },
-          ...linkProps,
-        },
+        'BLink props': linkedBLinkSection,
       },
-      slots: [
-        {
-          name: 'default',
+      slots: {
+        default: {
           description: 'Content to place in the Alert',
         },
-        {
-          name: 'close',
+        close: {
           description: 'Content to place in the close button',
         },
-      ],
-      emits: [
-        {
-          event: 'close',
+      },
+      emits: {
+        'close': {
           description: 'Emitted when the alert begins its transition to close',
         },
-        {
-          event: 'closed',
+        'closed': {
           description: 'Emitted after the alert ends its transition to close',
         },
-        {
-          event: 'close-countdown',
-          description: 'Content to place in the alert',
-          args: [
-            {
-              arg: 'closeCountdown',
+        'close-countdown': {
+          description: 'Content to place in the alert', // TODO grammar check (description is vague and possibly incorrect; should describe the countdown event)
+          args: {
+            closeCountdown: {
               description: 'Time remaining on the timer',
               type: 'number',
             },
-          ],
+          },
         },
-        {
-          event: 'update:model-value',
-          description: 'Standard event to update the v-model',
-          args: [
-            {
-              arg: 'update:model-value',
+        'update:model-value': {
+          description: 'Standard event to update the v-model', // TODO similar content to BAccordion/update:model-value (similar description phrasing)
+          args: {
+            'update:model-value': {
               description: 'modelValue',
               type: 'boolean | number',
             },
-          ],
+          },
         },
-      ],
+      },
     },
-  ],
+  }),
 }

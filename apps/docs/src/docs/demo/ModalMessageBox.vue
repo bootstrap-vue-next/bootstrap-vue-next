@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import {useModalController} from 'bootstrap-vue-next'
+import {useModalController} from 'bootstrap-vue-next/composables/useModalController'
 import {ref} from 'vue'
 
 const {show} = useModalController()

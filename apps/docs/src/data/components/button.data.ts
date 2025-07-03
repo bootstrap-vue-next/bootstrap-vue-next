@@ -1,24 +1,37 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
-import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
-import {buildCommonProps, pick} from '../../utils'
-import {linkProps, linkTo} from '../../utils/link-props'
+import {
+  type ComponentReference,
+  defaultPropSectionSymbol,
+  type PropertyReference,
+  StyleKind,
+} from '../../types'
+import {pick} from '../../utils/objectUtils'
+import {linkProps, linkTo} from '../../utils/linkProps'
+import {buildCommonProps} from '../../utils/commonProps'
 
 export default {
-  load: (): ComponentReference[] => [
-    {
-      component: 'BButton',
+  load: (): ComponentReference => ({
+    BButton: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.btn'},
       sourcePath: '/BButton/BButton.vue',
       props: {
-        '': {
+        [defaultPropSectionSymbol]: {
+          ...pick(
+            buildCommonProps({
+              variant: {
+                default: 'secondary',
+              },
+            }),
+            ['size', 'tag', 'variant']
+          ),
           loading: {
             type: 'boolean',
-            default: false,
+            default: false, // TODO item not in string format
             description: 'When set to `true`, renders the button in loading state',
           },
           loadingFill: {
             type: 'boolean',
-            default: false,
+            default: false, // TODO item not in string format
             description:
               'When set to `true`, fills the button with the loading spinner and ignores `loading-text`',
           },
@@ -29,8 +42,8 @@ export default {
           },
           pill: {
             type: 'boolean',
-            default: false,
-            description: "Renders the button with the pill style appearance when set to 'true'",
+            default: false, // TODO item not in string format
+            description: "Renders the button with the pill style appearance when set to 'true'", // TODO similar content to BBadge/pill (similar description for pill styling)
           },
           pressed: {
             type: 'boolean',
@@ -40,32 +53,24 @@ export default {
           },
           squared: {
             type: 'boolean',
-            default: false,
+            default: false, // TODO item not in string format
             description: "Renders the button with non-rounded corners when set to 'true'",
           },
           type: {
             type: 'ButtonType',
             default: 'button',
             description:
-              "The value to set the button's 'type' attribute to. Can be one of 'button', 'submit', or 'reset'",
+              "The value to set the button's 'type' attribute to. Can be one of 'button', 'submit', or 'reset'", // TODO similar content to BCloseButton/type (identical description)
           },
-          ...pick(
-            buildCommonProps({
-              variant: {
-                default: 'secondary',
-              },
-            }),
-            ['size', 'tag', 'variant']
-          ),
         } satisfies Record<
           Exclude<keyof BvnComponentProps['BButton'], keyof typeof linkProps>,
           PropertyReference
         >,
         'BLink props': {
-          _linkTo: {
-            type: linkTo,
+          _opts: {
+            linkTo,
           },
-          ...pick(linkProps, [
+          _data: pick(linkProps, [
             'activeClass',
             'exactActiveClass',
             'replace',
@@ -74,80 +79,68 @@ export default {
           ]),
         },
       },
-      emits: [
-        {
-          args: [
-            {
-              arg: 'click',
-              description: '',
+      emits: {
+        'click': {
+          description: 'On click event',
+          args: {
+            click: {
+              description: '', // TODO missing description
               type: 'MouseEvent',
             },
-          ],
-          description: 'On click event',
-          event: 'click',
+          },
         },
-        {
-          event: 'update:pressed',
+        'update:pressed': {
           description: 'Emitted when the `pressed` prop is changed',
-          args: [
-            {
-              arg: 'value',
+          args: {
+            value: {
               type: 'boolean',
               description: 'The new value of the `pressed` prop',
             },
-          ],
+          },
         },
-      ],
-      slots: [
-        {
-          name: 'default',
+      },
+      slots: {
+        'default': {
           description: 'Content to place in the button',
         },
-        {
-          name: 'loading',
+        'loading': {
           description: 'The content to replace the default loader',
         },
-        {
-          name: 'loading-spinner',
+        'loading-spinner': {
           description: 'The content to replace the default loading spinner',
         },
-      ],
+      },
     },
-    {
-      component: 'BCloseButton',
+    BCloseButton: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.btn-close'},
       sourcePath: '/BButton/BCloseButton.vue',
       props: {
-        '': {
-          type: {
-            type: 'ButtonType',
-            default: 'button',
-            description:
-              "The value to set the button's 'type' attribute to. Can be one of 'button', 'submit', or 'reset'",
-          },
-          ...pick(
-            buildCommonProps({
-              ariaLabel: {
-                default: 'Close',
-              },
-            }),
-            ['ariaLabel', 'disabled']
-          ),
-        } satisfies Record<keyof BvnComponentProps['BCloseButton'], PropertyReference>,
-      },
-      emits: [
-        {
-          event: 'click',
+        ...pick(
+          buildCommonProps({
+            ariaLabel: {
+              default: 'Close',
+            },
+          }),
+          ['ariaLabel', 'disabled']
+        ),
+        type: {
+          type: 'ButtonType',
+          default: 'button',
+          description:
+            "The value to set the button's 'type' attribute to. Can be one of 'button', 'submit', or 'reset'", // TODO similar content to BButton/type (identical description)
+        },
+      } satisfies Record<keyof BvnComponentProps['BCloseButton'], PropertyReference>,
+      emits: {
+        click: {
           description: 'Emitted when non-disabled button clicked',
-          args: [
-            {
-              arg: 'click',
+          args: {
+            click: {
               type: 'MouseEvent',
               description: 'Native click event object',
             },
-          ],
+          },
         },
-      ],
+      },
     },
-  ],
+  }),
 }

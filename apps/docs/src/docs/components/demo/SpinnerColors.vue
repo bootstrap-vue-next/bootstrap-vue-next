@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import {type ColorVariant} from 'bootstrap-vue-next'
+import type {ColorVariant} from 'bootstrap-vue-next'
 
 const variants = [
   'primary',

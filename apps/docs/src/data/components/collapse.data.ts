@@ -1,165 +1,141 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
 import type {ComponentReference, PropertyReference, SlotScopeReference} from '../../types'
-import {buildCommonProps, pick, showHideProps} from '../../utils'
+import {pick} from '../../utils/objectUtils'
+import {showHideProps} from '../../utils/showHideData'
+import {buildCommonProps} from '../../utils/commonProps'
 
-const sharedSlots: SlotScopeReference[] = [
-  {
-    prop: 'hide',
+const sharedSlotsScope: SlotScopeReference = {
+  hide: {
     type: '() => void',
     description: "Hides the collapse and fires the 'hide' event",
   },
-  {
-    prop: 'id',
+  id: {
     type: 'string',
     description: 'The id of the collapse element',
   },
-  {
-    prop: 'show',
+  show: {
     type: '() => void',
     description: "Shows the collapse and fires the 'show' event",
   },
-  {
-    prop: 'toggle',
+  toggle: {
     type: '() => void',
     description: "Toggles the collapse and fires the 'hide' or 'show' event, as appropriate",
   },
-  {
-    prop: 'visible',
+  visible: {
     type: '() => void',
     description: 'Visible state of the collapse. `true` if the collapse is visible',
   },
-]
+} as const
 
 export default {
-  load: (): ComponentReference[] => [
-    {
-      component: 'BCollapse',
+  load: (): ComponentReference => ({
+    BCollapse: {
       sourcePath: '/BCollapse/BCollapse.vue',
       props: {
-        '': {
-          horizontal: {
-            type: 'boolean',
-            default: false,
-          },
-          isNav: {
-            type: 'boolean',
-            default: false,
-            description:
-              'When set, signifies that the collapse is part of a navbar, enabling certain features for navbar support',
-          },
-          ...showHideProps,
-          ...pick(buildCommonProps(), ['id', 'tag']),
-        } satisfies Record<keyof BvnComponentProps['BCollapse'], PropertyReference>,
-      },
-      emits: [
-        {
-          event: 'update:model-value',
-          description: 'Used to update the v-model',
-          args: [
-            {
-              arg: 'value',
+        ...showHideProps,
+        ...pick(buildCommonProps(), ['id', 'tag']),
+        horizontal: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+          // description: 'When set, collapses horizontally instead of vertically' // TODO missing description
+        },
+        isNav: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+          description:
+            'When set, signifies that the collapse is part of a navbar, enabling certain features for navbar support',
+        },
+      } satisfies Record<keyof BvnComponentProps['BCollapse'], PropertyReference>,
+      emits: {
+        'update:model-value': {
+          description: 'Used to update the v-model', // TODO similar content to BAlert/update:model-value (similar description)
+          args: {
+            value: {
               type: 'boolean',
               description: 'Will be true if the collapse is visible',
             },
-          ],
+          },
         },
-        {
-          event: 'hide',
+        'hide': {
           description: 'Emitted when collapse has started to close',
-          args: [
-            {
-              arg: 'value',
+          args: {
+            value: {
               type: 'BvTriggerableEvent',
               description: 'The event object',
             },
-          ],
+          },
         },
-        {
-          event: 'hidden',
+        'hidden': {
           description: 'Emitted when collapse has finished closing',
-          args: [
-            {
-              arg: 'value',
+          args: {
+            value: {
               type: 'BvTriggerableEvent',
               description: 'The event object',
             },
-          ],
+          },
         },
-        {
-          event: 'hide-prevented',
-          description: 'Emitted when the Collapse tried to close, but was prevented from doing so.',
-          args: [
-            {
-              arg: 'value',
+        'hide-prevented': {
+          description: 'Emitted when the Collapse tried to close, but was prevented from doing so.', // TODO grammar check (remove capital "Collapse")
+          args: {
+            value: {
               type: 'BvTriggerableEvent',
               description: 'The event object',
             },
-          ],
+          },
         },
-        {
-          event: 'show',
+        'show': {
           description: 'Emitted when collapse has started to open',
-          args: [
-            {
-              arg: 'value',
+          args: {
+            value: {
               type: 'BvTriggerableEvent',
               description: 'The event object',
             },
-          ],
+          },
         },
-        {
-          event: 'shown',
+        'shown': {
           description: 'Emitted when collapse has finished opening',
-          args: [
-            {
-              arg: 'value',
+          args: {
+            value: {
               type: 'BvTriggerableEvent',
               description: 'The event object',
             },
-          ],
+          },
         },
-        {
-          event: 'show-prevented',
-          description: 'Emitted when the Collapse tried to open, but was prevented from doing so.',
-          args: [
-            {
-              arg: 'value',
+        'show-prevented': {
+          description: 'Emitted when the Collapse tried to open, but was prevented from doing so.', // TODO grammar check (remove capital "Collapse")
+          args: {
+            value: {
               type: 'BvTriggerableEvent',
               description: 'The event object',
             },
-          ],
+          },
         },
-        {
-          event: 'toggle',
+        'toggle': {
           description: 'Emitted when collapse has started to toggle',
-          args: [
-            {
-              arg: 'value',
+          args: {
+            value: {
               type: 'BvTriggerableEvent',
               description: 'The event object',
             },
-          ],
+          },
         },
-      ],
-      slots: [
-        {
-          name: 'default',
+      },
+      slots: {
+        default: {
           description: 'The content shown and hidden by the collapse',
-          scope: sharedSlots,
+          scope: sharedSlotsScope,
         },
-        {
-          name: 'footer',
+        footer: {
           description:
             'Used to create custom toggles for your collapsible content. Placed directly below the content',
-          scope: sharedSlots,
+          scope: sharedSlotsScope,
         },
-        {
-          name: 'header',
+        header: {
           description:
             'Used to create custom toggles for your collapsible content. Placed directly above the content',
-          scope: sharedSlots,
+          scope: sharedSlotsScope,
         },
-      ],
+      },
     },
-  ],
+  }),
 }

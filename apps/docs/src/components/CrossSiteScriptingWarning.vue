@@ -23,5 +23,6 @@
 </template>
 
 <script setup lang="ts">
-import {BAlert, BLink} from 'bootstrap-vue-next'
+import {BAlert} from 'bootstrap-vue-next/components/BAlert'
+import {BLink} from 'bootstrap-vue-next/components/BLink'
 </script>

@@ -17,9 +17,10 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-import type {BCollapse} from 'bootstrap-vue-next'
-const myCollapse = ref<InstanceType<typeof BCollapse> | null>(null)
+import {useTemplateRef} from 'vue'
+import {BCollapse} from 'bootstrap-vue-next/components/BCollapse'
+
+const myCollapse = useTemplateRef('myCollapse')
 const show = () => myCollapse.value?.show()
 const hide = () => myCollapse.value?.hide()
 const toggle = () => myCollapse.value?.toggle()

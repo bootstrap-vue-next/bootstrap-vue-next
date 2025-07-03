@@ -29,10 +29,10 @@
 </template>
 
 <script setup lang="ts">
-import type {BDropdown} from 'bootstrap-vue-next'
-import {ref} from 'vue'
+import {BDropdown} from 'bootstrap-vue-next/components/BDropdown'
+import {useTemplateRef} from 'vue'
 
-const myDropdown = ref<null | InstanceType<typeof BDropdown>>(null)
+const myDropdown = useTemplateRef('myDropdown')
 
 const show = () => myDropdown.value?.show()
 const hide = () => myDropdown.value?.hide()

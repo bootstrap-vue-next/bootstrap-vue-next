@@ -26,10 +26,10 @@
 </template>
 
 <script setup lang="ts">
-import type {BCarousel} from 'bootstrap-vue-next'
-import {ref} from 'vue'
+import {BCarousel} from 'bootstrap-vue-next/components/BCarousel'
+import {useTemplateRef} from 'vue'
 
-const myCarousel = ref<null | InstanceType<typeof BCarousel>>(null)
+const myCarousel = useTemplateRef('myCarousel')
 const pause = () => myCarousel.value?.pause()
 const resume = () => myCarousel.value?.resume()
 </script>
