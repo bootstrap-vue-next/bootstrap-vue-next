@@ -54,12 +54,11 @@
           v-show="showRef"
           :id="computedId + '-menu'"
           ref="_floating"
-          :style="[floatingStyles, sizeStyles]"
+          :style="[floatingStyles, sizeStyles, {display: showRef ? 'block' : 'none'}]"
           class="dropdown-menu overflow-auto"
           :class="[props.menuClass, computedMenuClasses]"
           :aria-labelledby="computedId"
           :role="props.role"
-          style="display: block"
           @click="onClickInside"
         >
           <slot v-if="contentShowing" :hide="hide" :show="show" :visible="showRef" />
