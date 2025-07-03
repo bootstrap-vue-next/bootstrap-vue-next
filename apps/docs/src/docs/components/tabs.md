@@ -82,7 +82,7 @@ Visually move the tab controls to the bottom by setting the prop `end`.
 ::: warning
 
 - Bottom placement visually works best with the `pills` variant. When using the default `tabs`
-  variant, you may want to provided your own custom styling classes, as Bootstrap v4 CSS assumes the
+  variant, you may want to provide your own custom styling classes, as Bootstrap CSS assumes the
   tabs will always be placed on the top of the tabs content.
 - To provide a better user experience with bottom placed controls, ensure that the content of each
   tab pane is the same height and fits completely within the visible viewport, otherwise the user
@@ -176,14 +176,14 @@ Sometimes it's preferred to load components & data only when activating a tab, i
 all tabs (and associated data) when rendering the `<BTabs>` set.
 
 Individual `<BTab>` components can be lazy loaded via the `lazy` prop, which when set doesn't mount
-the content of the `<BTab>` until it is activated (shown), and will be un-mounted when the tab is
-deactivated (hidden):
-
-::: danger
-There is currently a bug in `lazy` that causes an infinite recursion
-:::
+the content of the `<BTab>` until it is activated (shown):
 
 <<< DEMO ./demo/TabsLazy.vue#template{vue-html}
+
+By default, once the tab is activated, the content will remain mounted. To un-mounted the content
+when the tab is deactivated (hidden) use the `unmount-lazy` prop.
+
+<<< DEMO ./demo/TabsUnmountLazy.vue#template{vue-html}
 
 One can also make all tab's lazy by setting the `lazy` prop on the parent `<BTabs>` component:
 
@@ -193,8 +193,6 @@ One can also make all tab's lazy by setting the `lazy` prop on the parent `<BTab
 
 Keyboard navigation is enabled by default for ARIA compliance with tablists when a tab button has
 focus.
-
-<NotYetImplemented>no-key-nave prop and keyboard navigations as described below is not fully implemented</NotYetImplemented>
 
 | Keypress                                                              | Action                                         |
 | --------------------------------------------------------------------- | ---------------------------------------------- |
@@ -221,11 +219,10 @@ browser navigation with TAB key.
 Use the `<BTabs>` `v-model` to control which tab is active by setting the `v-model` to the index
 (zero-based) of the tab to be shown (see example below).
 
-Alternatively, you can use the `active` prop on each `<BTab>` with the `.sync` modifier to activate
+Alternatively, you can use the boolean model named `active` on each `<BTab>` to activate
 the tab, or to detect if a particular tab is active.
 
-<NotYetImplemented>.activate() and .deactivate()</NotYetImplemented>
-Each `<BTab>`instance also provides two public methods to activate or deactivate the tab. The
+Each `<BTab>`instance also exposes to activate or deactivate the tab. The
 methods are`.activate()`and`.deactivate()`, respectively. If activation or deactivation fails
 (i.e. a tab is disabled or no tab is available to move activation to), then the currently active tab
 will remain active and the method will return `false`. You will need a reference to the `<BTab>` in
@@ -254,7 +251,15 @@ It is recommended to use the `disabled` attribute on the `<BTab>` component inst
 
 ### External controls using `v-model`
 
-<<< DEMO ./demo/TabsExternalControls.vue
+<<< DEMO ./demo/TabsModelControl.vue
+
+### External controls using `active` model
+
+<<< DEMO ./demo/TabsActiveModelControl.vue
+
+### External controls using exposed methods
+
+<<< DEMO ./demo/TabsExposedMethodControl.vue
 
 ### Dynamic tabs + tabs-end slot
 

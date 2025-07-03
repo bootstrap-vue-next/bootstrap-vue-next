@@ -10,49 +10,38 @@ export default {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.tab-pane'},
       sourcePath: '/BTabs/BTab.vue',
       props: {
-        ...pick(showHideProps, ['lazy']),
-        ...pick(buildCommonProps(), ['active', 'disabled', 'id', 'tag', 'title']),
-        buttonId: {
-          type: 'string',
-          default: undefined,
-          description:
-            'Specifies a custom ID for the tab control button. If not provided, an ID is automatically generated.',
-        },
-        unmountLazy: {
-          type: 'boolean',
-          default: undefined,
-          description: 'When set with `lazy`, unmounts the tab content when the tab is inactive.',
-        },
-        noBody: {
-          type: 'boolean',
-          default: false, // TODO item not in string format
-          description:
-            'Prevents rendering a card-body wrapper when the parent `BTabs` has the `card` prop set.',
-        },
-        titleItemClass: {
-          type: 'ClassValue',
-          default: undefined,
-          description: "Sets the CSS class(es) for the tab control button's `li` element.",
-        },
-        titleLinkAttrs: {
-          type: 'AttrsValue',
-          default: undefined,
-          description: "Sets attributes for the tab control button's inner link element.",
-        },
-        titleLinkClass: {
-          type: 'ClassValue',
-          default: undefined,
-          description: "Sets the CSS class(es) for the tab control button's inner link element.",
-        },
-      } satisfies Record<keyof BvnComponentProps['BTab'], PropertyReference>,
-      emits: {},
-      slots: {
-        default: {
-          description: 'Content for the tab.',
-        },
-        title: {
-          description: 'Custom title for the tab.',
-        },
+        '': {
+          buttonId: {
+            type: 'string',
+            default: undefined,
+            description:
+              "Use a specific ID for this tab's tab control button. If not provided, one will automatically be generated",
+          },
+          noBody: {
+            type: 'boolean',
+            default: false,
+            description:
+              "When the parent b-tabs has the 'card' prop set, do not render a card-body wrapper",
+          },
+          titleItemClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: "CSS class (or classes) to apply to the tab's control button 'li' element",
+          },
+          titleLinkAttrs: {
+            type: 'AttrsValue',
+            default: undefined,
+            description: "Attributes to apply to the tab's control button inner link element",
+          },
+          titleLinkClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description:
+              "CSS class (or classes) to apply to the tab's control button inner link element",
+          },
+          ...pick(showHideProps, ['lazy', 'unmountLazy']),
+          ...pick(buildCommonProps(), ['active', 'disabled', 'id', 'tag', 'title']),
+        } satisfies Record<keyof BvnComponentProps['BTab'], PropertyReference>,
       },
     },
     BTabs: {

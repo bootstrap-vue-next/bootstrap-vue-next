@@ -34,6 +34,18 @@ our best to note each component or directive that hasn't been through the full p
 For section of this guide that are not marked as in progress, we're still interested in examples of migrations that you
 have found tricky or clarifcation if the details in the guide weren't sufficent.
 
+### Deprecation
+
+We will mark features of BootstrapVue as deprecated for one of several reasons.
+
+- If there is a more streamlined or consistent way of providing the functionality in BootstrapVueNext
+- If the feature is deprecated in Bootstrap 5
+- If we believe that this functionality can as easily (or more easily) be consumed using native bootstrap classes
+- If we haven't seen demand for the feature, especially if it is something we believe can be implemented later without a breaking change
+
+For any deprecated feature, especially the last case listed above, please feel free to open an
+[issue](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues) or submit a pull request.
+
 ## Sync modifier
 
 A number of components in `bootstrap-vue` use `v-bind`'s `.sync` modifier. This modifier has been replaced by properties
@@ -50,6 +62,12 @@ becomes
 
 See the [Vue 3 migration guide](https://v3-migration.vuejs.org/breaking-changes/v-model.html)
 for more info.
+
+## Native Events
+
+BootstrapVue sometimes listed the native events such as `click` that were bubbled from the underlying
+HTML element. We're not currently doing that, as we would like to keep the list of events
+consistent between the documentation and the code.
 
 ## Shared Properties
 
@@ -403,7 +421,31 @@ See [BForm Components](bform-components)
 
 ### BFormRating
 
-<NotYetImplemented><BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2051">See issue #2051</BLink></NotYetImplemented>
+`BFormRating` is now available in BootstrapVueNext, preserving most of the original BootstrapVue functionality under Vue 3's v-model conventions.
+See the [Vue 3 migration guide](https://v3-migration.vuejs.org/breaking-changes/v-model.html) for details on the new `v-model` syntax.
+
+The following features from BootstrapVue are <NotYetImplemented/>:
+
+- **`disabled` prop**: Interactive disabling of the rating component
+- **Form submission**: The `name` prop for generating hidden inputs for form submission
+- **Input groups**: Using `BFormRating` within `BInputGroup` components
+- **Internationalization**: The `locale` prop for localized display and RTL support
+
+#### Icon System Changes
+
+The following icon-related props from BootstrapVue have been deprecated:
+
+- `icon-empty`: For specifying empty star icon
+- `icon-half`: For specifying half-filled star icon
+- `icon-full`: For specifying filled star icon
+- `icon-clear`: For specifying clear button icon
+
+Instead, BootstrapVueNext provides two approaches for customizing icons:
+
+1. **Default built-in SVG icons** (recommended): Uses built-in star SVG icons that work with `variant`, `color`, and `size` props
+2. **Custom icons via scoped slots**: For complete customization where you handle all styling yourself
+
+**Important:** When using custom icons via scoped slots, the `variant`, `color`, and `size` props do not apply. You must handle all styling in your custom CSS.
 
 ### BFormSelect
 
@@ -624,13 +666,13 @@ Triggers work differently as the underlying library we use to manage popovers ha
 [our documentation](/docs/components/popover#triggers) and [floating-ui](https://floating-ui.com/)
 for details.
 
-The `variant` prop has been deprecated. Use Bootstrap’s color and background utility classes to style
+The `variant` prop has been deprecated. Use Bootstrap's color and background utility classes to style
 popovers instead. See [Popover custom classes and variants](/docs/components/popover#custom-classes-and-variants)
 for details.
 
 The `disabled` prop and
 [Programmatically Disabling](https://bootstrap-vue.org/docs/components/popover#programmatically-disabling-popover) have
-been deprecated along with the `disabled` and `enabled` events. Use `manual=true` to disable BootstrapVueNext’s automatic
+been deprecated along with the `disabled` and `enabled` events. Use `manual=true` to disable BootstrapVueNext's automatic
 trigger handling and if your own code shows the popover disable those mechanisms as well. If you believe that implementing
 full parity with the BootstrapVue feature is useful, please open an issue or propose a pull request.
 
@@ -724,15 +766,11 @@ of a method in the component is deprecated.
 
 ### BTableLight
 
-<NotYetDocumented type="component"/>
-
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
 The slot scope for `table-colgroup` slot now only contains the `fields` prop, with the `columns` prop removed.
 
 ### BTableSimple
-
-<NotYetDocumented type="component"/>
 
 Use `table-attrs` to apply additional attributes to the `<table>` element in reponsive mode.
 
@@ -752,12 +790,12 @@ See the [v-html](#v-html) section for information on deprecation of the `caption
 
 ### BTabs
 
-`align` prop now takes values from [`AlignmentJustifyContent`](/docs/types/alignment): `start`, `center`, `end`, `between`, `around`, and `evenly`
+`align` prop now takes values from [`AlignmentJustifyContent`](/docs/types#alignment): `start`, `center`, `end`, `between`, `around`, and `evenly`
 
-<NotYetImplemented/>
+The primary `v-model` now reflects the `id` of the currently selected tag. Use `v-model:index` to syncronize to
+the current tab index. See [programmatically activating and deactivating tabs](/docs/components/tabs#programmatically-activating-and-deactivating-tabs) for details.
 
-- `click` event is not implemented on `BTab`
-- `changed` event is not implemented on `BTabs`
+The `changed` event on `BTabs` is deprecated.
 
 ### BTime
 

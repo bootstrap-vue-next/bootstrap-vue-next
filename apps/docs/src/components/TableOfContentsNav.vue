@@ -119,6 +119,7 @@ const componentsList: {name: string}[] = [
   {name: 'Form Group'},
   {name: 'Form Input'},
   {name: 'Form Radio'},
+  {name: 'Form Rating'},
   {name: 'Form Select'},
   {name: 'Form Tags'},
   {name: 'Form Spinbutton'},
