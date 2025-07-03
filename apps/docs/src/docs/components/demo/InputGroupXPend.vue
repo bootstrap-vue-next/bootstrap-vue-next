@@ -15,6 +15,7 @@
       type="range"
       min="0"
       max="100"
+      class="form-control"
     />
   </BInputGroup>
   <!-- #endregion template -->

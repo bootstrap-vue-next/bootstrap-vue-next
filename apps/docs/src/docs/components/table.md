@@ -2,7 +2,7 @@
 
 <PageHeader>
 
-For displaying tabular data, `BTable` supports pagination, filtering, sorting, custom rendering, various style options, events, and asynchronous data. For simple display of tabular data without all the fancy features, BootstrapVueNext provides two lightweight alternative components [`BTableLite`](light-weight-tables) and [`BTableSimple`](simple-tables).
+For displaying tabular data, `BTable` supports pagination, filtering, sorting, custom rendering, various style options, events, and asynchronous data. For simple display of tabular data without all the fancy features, BootstrapVueNext provides two lightweight alternative components [`BTableLite`](#light-weight-tables) and [`BTableSimple`](#simple-tables).
 
 </PageHeader>
 
@@ -494,12 +494,13 @@ Slot `custom-foot` can be optionally scoped, receiving an object with the follow
 - Sorting and sorting icons are not available for cells in the `custom-foot` slot.
 - The custom footer will not be shown when the table is in visually stacked mode.
 
-## Custom empty and empty-filtered rendering via slots
+## Custom empty and empty-filtered rendering
 
-Aside from using `empty-text`, `empty-filtered-text`, it is also possible to provide custom rendering
-for tables that have no data to display using named slots.
+The content to show when the table is empty can be specified by setting the `show-empty` prop and then specifying:
+- Either the `empty-text` prop or the `empty` named slot, for the case where unfiltered items are an empty or falsy array
+- Either the `empty-filtered-text` prop or the `empty-filtered` named slot, for the case where filtered items are an empty or falsy array
 
-In order for these slots to be shown, the `show-empty` attribute must be set and `items` must be
+In order for these props or slots to be shown, the `show-empty` attribute must be set and `items` must be
 either falsy or an array of length 0.
 
 <<< FRAGMENT ./demo/TableEmpty.vue#template{vue-html}
@@ -515,7 +516,7 @@ following properties:
 | `items`             | `Items[]`             | The `items` prop. Exposed here to check null vs [] |
 
 ::: info NOTE
-If you prefiously used the `emptyHtml` or `emtpyFilteredHtml` scoped slots or the `empty-html` or
+If you previously used the `emptyHtml` or `emtpyFilteredHtml` scoped slots or the `empty-html` or
 `empty-filtered-html` props, please convert to using the `empty-text` or `empty-filtered-text` slots
 instead. See our [migration guide](/docs/migration-guide#v-html) for details.
 :::
