@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.30.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.30.3...bootstrapvuenext-v0.30.4) (2025-07-07)
+
+
+### Bug Fixes
+
+* **BDropdown:** prevent hydration warning in nuxt production mode ([#2768](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2768)) ([62e0632](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/62e0632751e6f1d2af8642c75e94e7f1a4e30ad1))
+
 ## [0.30.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.30.2...bootstrapvuenext-v0.30.3) (2025-06-17)
 
 
