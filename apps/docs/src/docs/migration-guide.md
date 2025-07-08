@@ -49,9 +49,9 @@ For any deprecated feature, especially the last case listed above, please feel f
 ## Sync modifier
 
 A number of components in `bootstrap-vue` use `v-bind`'s `.sync` modifier. This modifier has been replaced by properties
-on the the model (generally named models).
+on the model (generally named models).
 
-For instance, in order to two-way bind to the `indeterminate` property in `BFormCheckBox` you `v-bind` to the the model
+For instance, in order to two-way bind to the `indeterminate` property in `BFormCheckBox` you `v-bind` to the model
 named `indeterminate` rather than adding the sync modifier to the `indeterminate` property:
 
 <<< FRAGMENT ./demo/SyncBefore.vue#template{vue-html}
@@ -146,6 +146,47 @@ If you're passing user data, this still opens your code uop to <a class="alert-l
 user supplied string, but the BootstrapVueNext library isn't adding an extra layer of abstraction to this vulnerability.
 
 <<< DEMO ./demo/RadioGroupMigration.vue
+
+## Component aliases
+
+BootstrapVue had a number of component aliases — for instance, `<b-btn>` was an alias for `<b-button>`.
+BootstrapVueNext does not support these aliases by default, so you must use the canonical component names.
+
+To define aliases, you can use the [`BootstrapVueNextResolver`'s `aliases` option](/docs#aliasing).
+
+The table below lists each BootstrapVue alias and its BootstrapVueNext replacement:
+
+| BootstrapVue                                               | BootstrapVueNext      |
+| ---------------------------------------------------------- | --------------------- |
+| `b-btn`                                                    | `BButton`             |
+| `b-btn-group`                                              | `BButtonGroup`        |
+| `b-btn-toolbar`                                            | `BButtonToolbar`      |
+| `b-dd`                                                     | `BDropdown`           |
+| `b-dd-item`                                                | `BDropdownItem`       |
+| `b-dropdown-item-btn`, `b-dd-item-button`, `b-dd-item-btn` | `BDropdownItemButton` |
+| `b-dd-divider`                                             | `BDropdownDivider`    |
+| `b-dd-text`                                                | `BDropdownText`       |
+| `b-dd-form`                                                | `BDropdownForm`       |
+| `b-dd-group`                                               | `BDropdownGroup`      |
+| `b-dd-header`                                              | `BDropdownHeader`     |
+| `b-datalist`                                               | `BFormDatalist`       |
+| `b-checkbox`, `b-check`                                    | `BFormCheckbox`       |
+| `b-datepicker`                                             | `BFormDatepicker`     |
+| `b-file`                                                   | `BFormFile`           |
+| `b-input`                                                  | `BFormInput`          |
+| `b-radio-group`                                            | `BFormRadioGroup`     |
+| `b-rating`                                                 | `BFormRating`         |
+| `b-select`                                                 | `BFormSelect`         |
+| `b-select-option`                                          | `BFormSelectOption`   |
+| `b-option-group`                                           | `BFormOptionGroup`    |
+| `b-tags`                                                   | `BFormTags`           |
+| `b-tag`                                                    | `BFormTag`            |
+| `b-textarea`                                               | `BFormTextarea`       |
+| `b-timepicker`                                             | `BFormTimepicker`     |
+| `b-nav-item-dd`, `b-nav-dropdown`, `b-nav-dd`              | `BNavItemDropdown`    |
+| `b-nav-toggle`                                             | `BNavbarToggle`       |
+
+Note: While BootstrapVueNext recommends using Vue 3 naming convention `BButton` it is still possible to use `b-button`.
 
 ## Components
 
@@ -308,7 +349,7 @@ The `html` prop has been deprecated, use the `button-content`.
 
 `$root` instance events `bv::dropdown::hide` and `bv::dropdown::show` are deprecated.
 
-The the boolean argument to control returning focus to the toggle button on the `hide` scoped property of the default slot is deprecated.
+The boolean argument to control returning focus to the toggle button on the `hide` scoped property of the default slot is deprecated.
 It is less important in BootstrapVueNext since bootstrap v5 by default doesn't have the focus ring that v4 has.
 
 See [Show and Hide](#show-and-hide) shared properties.
@@ -374,7 +415,7 @@ documentation for more info.
 
 #### BForm Components
 
-`Vue 3` changed the the way that `v-model` binding works and in the process changed the guidance
+`Vue 3` changed the way that `v-model` binding works and in the process changed the guidance
 when naming the main model property and events for the primary model. `bootstrap-vue-next` follows
 this guidance, which affects all of the wrappers for form input. If you're looking for the `value`
 property or the `change` and `input` events, you'll find that functionality in the `modelValue`
@@ -618,7 +659,7 @@ See the [v-html](#v-html) section for information on deprecation of the `html` p
 
 ### BNavbar
 
-The `type` prop is deprecated. Use the the `v-b-color-mode` directive or `useColorMode` composable instead. Details in our [docs](/components/navbar#color-scheme)
+The `type` prop is deprecated. Use the `v-b-color-mode` directive or `useColorMode` composable instead. Details in our [docs](/components/navbar#color-scheme)
 
 #### BNavbarNav
 
@@ -690,7 +731,7 @@ See the [v-html](#v-html) section for information on deprecation of the `label-h
 
 `<BSkeleton*>` components have been replaced by the more appropriately named `<BPlaceholder*>` components.
 
-`<BSkeletonIcon>` is deprecated along with the rest of the the BootstrapVue icon support. See our
+`<BSkeletonIcon>` is deprecated along with the rest of the BootstrapVue icon support. See our
 [icon documentation](/docs/icons) for details. This functionality can be replicated by using
 `<BPlaceholderWrapper>` with your choice of icon replacement in the `loading` slot.
 

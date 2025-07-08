@@ -85,7 +85,7 @@ export default {
             type: 'boolean',
             default: false,
             description:
-              "When set to true, renders the tabs the the appropriate styles to be placed into a 'b-card'",
+              "When set to true, renders the tabs with the appropriate styles to be placed into a 'b-card'",
           },
           contentClass: {
             type: 'ClassValue',
