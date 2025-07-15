@@ -334,7 +334,7 @@ const emit = defineEmits<{
   'row-middle-clicked': TableRowEvent<Items>
   'row-selected': [value: Items]
   'row-unselected': [value: Items]
-  'sorted': [value: BTableSortBy<Items>]
+  'sorted': [value: BTableSortBy]
   'change': [value: Items[]]
 }>()
 
@@ -715,7 +715,9 @@ const computedItems = computed<Items[]>(() => {
     // Multi-sort
     return mappedItems.sort((a, b) => {
       for (let i = 0; i < sortByItems.length; i++) {
-        const {key, comparer, order} = sortByItems[i]
+        const {key, order} = sortByItems[i]
+        const field = computedFields.value.find((f) => f.key === key)
+        const comparer = field?.comparer
         const comparison = comparer
           ? comparer(a, b, key)
           : getStringValue(a, key).localeCompare(getStringValue(b, key), undefined, {numeric: true})
@@ -827,7 +829,7 @@ const handleFieldSorting = (field: TableField<Items>) => {
 
   const index = sortByModel.value?.findIndex((el) => el.key === fieldKey) ?? -1
   const originalValue = sortByModel.value?.[index]
-  const updatedValue: BTableSortBy<Items> =
+  const updatedValue: BTableSortBy =
     // If value is new, we default to ascending
     // Otherwise we make a temp copy of the value
     index === -1 || !originalValue ? {key: fieldKey as string, order: 'asc'} : {...originalValue}
@@ -835,7 +837,7 @@ const handleFieldSorting = (field: TableField<Items>) => {
   /**
    * @returns the updated value to emit for sorted
    */
-  const handleMultiSort = (): BTableSortBy<Items> => {
+  const handleMultiSort = (): BTableSortBy => {
     const tmp = [...(sortByModel.value ?? [])]
     const val = updatedValue
     if (index === -1) {
@@ -851,12 +853,12 @@ const handleFieldSorting = (field: TableField<Items>) => {
   /**
    * @returns the updated value to emit for sorted
    */
-  const handleSingleSort = (): BTableSortBy<Items> => {
+  const handleSingleSort = (): BTableSortBy => {
     const val = {
       ...updatedValue,
       order: index === -1 ? updatedValue.order : resolveOrder(updatedValue.order),
     }
-    const tmp = (sortByModel.value || []).map<BTableSortBy<Items>>((e) => ({
+    const tmp = (sortByModel.value || []).map<BTableSortBy>((e) => ({
       ...e,
       order: undefined,
     }))

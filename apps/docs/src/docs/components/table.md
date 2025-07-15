@@ -107,6 +107,7 @@ The following field properties (defined as [TableField](/docs/types#tableitem)) 
 | `sortDirection`     | `string`                                                                                           | Set the initial sort direction on this column when it becomes sorted. Refer to the [Change initial sort direction](#change-initial-sort-direction) Section for more details.<NotYetImplemented/>                                                                                                                                                                                               |
 | `sortByFormatted`   | `boolean \| TableFieldFormatter<T>`                                                                | Sort the column by the result of the field's `formatter` callback function when set to `true`. Default is `false`. Boolean has no effect if the field does not have a `formatter`. Optionally accepts a formatter function _reference_ to format the value for sorting purposes only. Refer to the [Sorting](#sorting) Section for more details.                                               |
 | `filterByFormatted` | `boolean \| TableFieldFormatter<T>`                                                                | Filter the column by the result of the field's `formatter` callback function when set to `true`. Default is `false`. Boolean has no effect if the field does not have a `formatter`. Optionally accepts a formatter function _reference_ to format the value for filtering purposes only. Refer to the [Filtering](#filtering) section for more details.                                       |
+| `comparer`          | `BTableSortByComparerFunction`                                                                     | A custom comparison function for sorting this field. The function signature is `(a: T, b: T, key: string) => number`. If not provided, uses default string comparison. See [Custom Sort Comparer(s)](#custom-sort-comparer-s) for more details.                                                                                                                                                |
 | `tdClass`           | `TableStrictClassValue \| ((value: unknown, key: string, item: T) => TableStrictClassValue)`       | Class name (or array of class names) to add to `<tbody>` data `<td>` cells in the column. If custom classes per cell are required, a callback function can be specified instead. See the typescript definition for accepted parameters and return types.                                                                                                                                       |
 | `thClass`           | `ClassValue`                                                                                       | Class name (or array of class names) to add to this field's `<thead>`/`<tfoot>` heading `<th>` cell.                                                                                                                                                                                                                                                                                           |
 | `thStyle`           | `StyleValue`                                                                                       | CSS styles you would like to apply to the table `<thead>`/`<tfoot>` field `<th>` cell.                                                                                                                                                                                                                                                                                                         |
@@ -497,6 +498,7 @@ Slot `custom-foot` can be optionally scoped, receiving an object with the follow
 ## Custom empty and empty-filtered rendering
 
 The content to show when the table is empty can be specified by setting the `show-empty` prop and then specifying:
+
 - Either the `empty-text` prop or the `empty` named slot, for the case where unfiltered items are an empty or falsy array
 - Either the `empty-filtered-text` prop or the `empty-filtered` named slot, for the case where filtered items are an empty or falsy array
 
@@ -717,10 +719,7 @@ pre-specify the column to be sorted use the `sortBy` model. For single column so
 - **Descending**: Items are sorted highest to lowest (i.e. `Z` to `A`) and will be displayed with
   the highest value in the first row with progressively lower values in the following rows.
 
-By default the comparer function does a `numeric localeCompare`. If one wishes to change this, use a custom comparer function with that `BTableSortBy` element.
-
-To prevent the table from wiping out the comparer function, internally it will set the `order` key to `undefined`, instead of just removing the element from the `sortBy` array. i.e. `:sort-by="[]"` & `:sort-by="[key: 'someKey', order: undefined]"` behave identically. Naturally if this value is given to a server, orders of undefined should be handled. See the computed `singleSortBy` function below as a simple means of retrieving the single sortded column reference from a table
-that is in single sort mode.
+By default the comparer function does a `numeric localeCompare`. If one wishes to change this, use a custom comparer function in the field definition.
 
 <<< DEMO ./demo/TableSort.vue
 
@@ -741,14 +740,13 @@ to the `sortBy` array. From the user inteface, multi-sort works as follows:
 
 ### Custom Sort Comparer(s)
 
-Each item in the `BSortBy` model may include a `comparer` field of the type `BTableSortByComparerFunction<T = any> = (a: T, b: T, key: string) => number`. This function takes the items to be compared and the key to compare on. Since the key is passed in, you may use the same function for multiple fields or you can craft a different comparer function for each fied. Leaving the `comparer` field undefined (or not defining a field in the `sortBy` array at all) will fall back to using the default comparer, which looks like this:
+Each field definition may include a `comparer` field of the type `BTableSortByComparerFunction<T = any> = (a: T, b: T, key: string) => number`. This function takes the items to be compared and the key to compare on. Since the key is passed in, you may use the same function for multiple fields or you can craft a different comparer function for each field. Leaving the `comparer` field undefined will fall back to using the default comparer, which looks like this:
 
 <<< FRAGMENT ./demo/TableSortCompareDefault.ts#snippet{ts}
 
 where `getStringValue` retrieves the field value as a string.
 
-If you have a particular field that you want to sort by, you can set up a record of the `sortBy` model
-with a custom comparer:
+If you have a particular field that you want to sort by with custom logic, you can set the `comparer` property in the field definition:
 
 <<< FRAGMENT ./demo/TableSortCompareCustom.ts#snippet{ts}
 

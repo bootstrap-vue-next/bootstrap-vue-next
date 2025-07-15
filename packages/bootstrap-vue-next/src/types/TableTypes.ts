@@ -23,22 +23,21 @@ export type BTableSortByOrder = 'desc' | 'asc' | undefined
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type BTableSortByComparerFunction<T = any> = (a: T, b: T, key: string) => number
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type BTableSortBy<T = any> = {
+
+export type BTableSortBy = {
   order: BTableSortByOrder
   key: string
-  comparer?: BTableSortByComparerFunction<T>
 }
 
-export type BTableProviderContext<T = unknown> = {
-  sortBy: BTableSortBy<T>[] | undefined
+export type BTableProviderContext = {
+  sortBy: BTableSortBy[] | undefined
   filter: string | undefined
   currentPage: number
   perPage: number
 }
 
 export type BTableProvider<T> = (
-  context: Readonly<BTableProviderContext<T>>
+  context: Readonly<BTableProviderContext>
 ) => MaybePromise<T[] | undefined>
 
 export type TableFieldFormatter<T> = (value: unknown, key: string, item: T) => string
@@ -60,6 +59,7 @@ export type TableField<T = any> = {
   sortDirection?: string
   sortByFormatted?: boolean | TableFieldFormatter<T>
   filterByFormatted?: boolean | TableFieldFormatter<T>
+  comparer?: BTableSortByComparerFunction<T>
   tdClass?:
     | TableStrictClassValue
     | ((value: unknown, key: string, item: T) => TableStrictClassValue)

@@ -4,11 +4,10 @@ type T = {
 }
 /* #region snippet */
 const removeArticles = (str: string) => str.replace(/^(a |the )/i, '')
-const sortBy = [
-  {
-    key: 'titleField',
-    comparer: (a: T, b: T, key: string) =>
-      removeArticles(a.titleField).localeCompare(removeArticles(b.titleField)),
-  },
-]
+const titleFieldDefinition = {
+  key: 'titleField',
+  sortable: true,
+  comparer: (a: T, b: T, key: string) =>
+    removeArticles(a.titleField).localeCompare(removeArticles(b.titleField)),
+}
 /* #endregion snippet */

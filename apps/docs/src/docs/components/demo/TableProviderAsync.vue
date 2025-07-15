@@ -104,7 +104,7 @@ interface Person {
 
 const table = useTemplateRef<ComponentExposed<typeof BTable<Person>>>('provider-table')
 
-const provider = (context: Readonly<BTableProviderContext<Person>>) =>
+const provider = (context: Readonly<BTableProviderContext>) =>
   new Promise<Person[]>(async (resolve) => {
     const sortedAndPaginatedItems = sortItems(filteredItems.value, context.sortBy).slice(
       (context.currentPage - 1) * context.perPage,

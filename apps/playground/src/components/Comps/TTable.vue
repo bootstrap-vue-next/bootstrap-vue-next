@@ -549,12 +549,12 @@ function onRowClicked(row: TableItem<Person>, index: number) {
   console.log(`clicked on row ${index}: ${row.name.first} ${row.name.last}`)
 }
 
-function onSorted(sortby: BTableSortBy<TableItem<Person>>) {
+function onSorted(sortby: BTableSortBy) {
   // eslint-disable-next-line no-console
   console.log(`sorted: ${JSON.stringify(sortby)}`)
 }
 
-function onSortUpdate(sortby: BTableSortBy<TableItem<Person>>[] | undefined) {
+function onSortUpdate(sortby: BTableSortBy[] | undefined) {
   // eslint-disable-next-line no-console
   console.log(`sort-by:update: ${JSON.stringify(sortby)}`)
 }
