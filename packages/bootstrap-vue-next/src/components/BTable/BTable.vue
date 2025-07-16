@@ -1,4 +1,20 @@
 <template>
+  <!-- Define the reusable SVG template -->
+  <DefineSortIcon v-slot="{iconData}">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="currentColor"
+      :class="iconData.class"
+      :style="{opacity: iconData.opacity}"
+      viewBox="0 0 16 16"
+      aria-hidden
+    >
+      <path fill-rule="evenodd" :d="iconData.path" />
+    </svg>
+  </DefineSortIcon>
+
   <!-- eslint-disable prettier/prettier -->
   <BTableLite
     v-bind="computedLiteProps"
@@ -113,20 +129,7 @@
               : 'sortAsc()'
           "
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="currentColor"
-            class="bi bi-arrow-up-short"
-            viewBox="0 0 16 16"
-            aria-hidden
-          >
-            <path
-              fill-rule="evenodd"
-              d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"
-            />
-          </svg>
+          <SortIcon :icon-data="getSortIcon(scope.field)" />
         </slot>
         <slot
           v-else-if="sortByModel?.find((el) => el.key === scope.field.key)?.order === 'desc'"
@@ -137,20 +140,7 @@
               : 'sortDesc()'
           "
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="currentColor"
-            class="bi bi-arrow-down-short"
-            viewBox="0 0 16 16"
-            aria-hidden
-          >
-            <path
-              fill-rule="evenodd"
-              d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"
-            />
-          </svg>
+          <SortIcon :icon-data="getSortIcon(scope.field)" />
         </slot>
         <slot
           v-else
@@ -161,21 +151,7 @@
               : 'sortDefault()'
           "
         >
-          <svg
-            :style="{opacity: 0.4}"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="currentColor"
-            class="bi bi-arrow-up-short"
-            viewBox="0 0 16 16"
-            aria-hidden
-          >
-            <path
-              fill-rule="evenodd"
-              d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"
-            />
-          </svg>
+          <SortIcon :icon-data="getSortIcon(scope.field)" />
         </slot>
       </template>
     </template>
@@ -212,13 +188,14 @@
 </template>
 
 <script setup lang="ts" generic="Items">
-import {useToNumber} from '@vueuse/core'
+import {createReusableTemplate, useToNumber} from '@vueuse/core'
 import {computed, onMounted, type Ref, ref, watch} from 'vue'
 import {formatItem} from '../../utils/formatItem'
 import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
 import BTr from './BTr.vue'
 import {
+  type BTableInitialSortDirection,
   type BTableSortBy,
   type BTableSortByOrder,
   isTableField,
@@ -602,7 +579,7 @@ const getFieldColumnClasses = (field: TableField) => [
   },
 ]
 // TODO this class has issues if the table has a variant already applied
-// Also the row should technically have aria-selected . Both things could probably just use a function with tbodyTrAttrs
+// Also the row should technically have aria-selected . Both things could probably just use a function withtbodyTrAttrs
 // But functional tbodyTrAttrs are not supported yet
 // Also the stuff for resolving functions could probably be made a util
 const getRowClasses = (item: Items | null, type: TableRowType): TableStrictClassValue => [
@@ -1045,6 +1022,48 @@ const computedLiteProps = computed(() => ({
   fieldColumnClass: getFieldColumnClasses,
   id: computedId.value,
 }))
+
+const [DefineSortIcon, SortIcon] = createReusableTemplate<{
+  iconData: ReturnType<typeof getSortIcon>
+}>()
+
+const getSortIcon = (field: TableField<Items>) => {
+  const currentSort = sortByModel.value?.find((el) => el.key === field.key)
+
+  const ascPath =
+    'M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z'
+  const descPath =
+    'M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z'
+
+  if (currentSort?.order === 'asc') {
+    return {type: 'asc', opacity: 1, path: ascPath, class: 'bi bi-arrow-up-short'}
+  }
+
+  if (currentSort?.order === 'desc') {
+    return {type: 'desc', opacity: 1, path: descPath, class: 'bi bi-arrow-down-short'}
+  }
+
+  // Default (unsorted) state - determine the direction for the greyed out arrow
+  // Get the field's initial sort direction, falling back to table's initial sort direction
+  const fieldInitialDirection = field.initialSortDirection || props.initialSortDirection
+
+  let defaultDirection: Exclude<BTableInitialSortDirection, 'last'> = 'asc'
+
+  if (fieldInitialDirection === 'last') {
+    // Find the most recently sorted column's direction
+    const lastSorted = sortByModel.value?.find((sort) => sort.order !== undefined)
+    defaultDirection = lastSorted?.order || 'asc'
+  } else if (fieldInitialDirection === 'desc') {
+    defaultDirection = 'desc'
+  }
+  // else defaultDirection remains 'asc'
+
+  if (defaultDirection === 'desc') {
+    return {type: 'desc', opacity: 0.4, path: descPath, class: 'bi bi-arrow-down-short'}
+  }
+
+  return {type: 'asc', opacity: 0.4, path: ascPath, class: 'bi bi-arrow-up-short'}
+}
 
 defineExpose({
   // The row selection methods are really for compat. Users should probably use the v-model though

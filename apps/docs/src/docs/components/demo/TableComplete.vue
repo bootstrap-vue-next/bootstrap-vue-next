@@ -49,33 +49,28 @@
           </BInputGroup>
         </BFormGroup>
       </BCol>
+
       <BCol
-        lg="6"
+        sm="5"
+        md="6"
         class="my-1"
       >
         <BFormGroup
-          label="Filter"
-          label-for="filter-input"
-          label-cols-sm="3"
+          label="Initial Direction"
+          label-for="initial-sort-direction"
+          label-cols-sm="6"
+          label-cols-md="4"
+          label-cols-lg="3"
           label-align-sm="right"
           label-size="sm"
           class="mb-0"
         >
-          <BInputGroup size="sm">
-            <BFormInput
-              id="filter-input"
-              v-model="filter"
-              type="search"
-              placeholder="Type to Search"
-            />
-            <BInputGroupText>
-              <BButton
-                :disabled="!filter"
-                @click="filter = ''"
-                >Clear</BButton
-              >
-            </BInputGroupText>
-          </BInputGroup>
+          <BFormSelect
+            id="initial-sort-direction"
+            v-model="initialSortDirection"
+            :options="sortDirectionOptions"
+            size="sm"
+          />
         </BFormGroup>
       </BCol>
       <BCol
@@ -114,28 +109,35 @@
         </BFormGroup>
       </BCol>
       <BCol
-        sm="5"
-        md="6"
+        lg="6"
         class="my-1"
       >
         <BFormGroup
-          label="Per page"
-          label-for="per-page-select"
-          label-cols-sm="6"
-          label-cols-md="4"
-          label-cols-lg="3"
+          label="Filter"
+          label-for="filter-input"
+          label-cols-sm="3"
           label-align-sm="right"
           label-size="sm"
           class="mb-0"
         >
-          <BFormSelect
-            id="per-page-select"
-            v-model="perPage"
-            :options="pageOptions"
-            size="sm"
-          />
+          <BInputGroup size="sm">
+            <BFormInput
+              id="filter-input"
+              v-model="filter"
+              type="search"
+              placeholder="Type to Search"
+            />
+            <BInputGroupText>
+              <BButton
+                :disabled="!filter"
+                @click="filter = ''"
+                >Clear</BButton
+              >
+            </BInputGroupText>
+          </BInputGroup>
         </BFormGroup>
       </BCol>
+
       <BCol
         sm="7"
         md="6"
@@ -156,8 +158,8 @@
         class="my-1"
       >
         <BFormGroup
-          label="Initial Direction"
-          label-for="initial-sort-direction"
+          label="Per page"
+          label-for="per-page-select"
           label-cols-sm="6"
           label-cols-md="4"
           label-cols-lg="3"
@@ -166,9 +168,9 @@
           class="mb-0"
         >
           <BFormSelect
-            id="initial-sort-direction"
-            v-model="initialSortDirection"
-            :options="sortDirectionOptions"
+            id="per-page-select"
+            v-model="perPage"
+            :options="pageOptions"
             size="sm"
           />
         </BFormGroup>
@@ -311,13 +313,11 @@ const fields: Exclude<TableFieldRaw<Person>, string>[] = [
     key: 'name',
     label: 'Person full name',
     sortable: true,
-    sortDirection: 'desc',
   },
   {
     key: 'sortableName',
     label: 'Person sortable name',
     sortable: true,
-    sortDirection: 'desc',
     formatter: (_value: unknown, _key?: LiteralUnion<keyof Person>, item?: Person) =>
       item ? `${item.name.last}, ${item.name.first}` : 'Something went wrong',
     sortByFormatted: true,
