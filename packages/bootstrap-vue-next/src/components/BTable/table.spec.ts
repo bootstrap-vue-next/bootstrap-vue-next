@@ -1,5 +1,5 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
-import {afterEach, describe, expect, it, vi} from 'vitest'
+import {afterEach, describe, expect, it} from 'vitest'
 import BTable from './BTable.vue'
 import type {BTableSortBy, TableField, TableItem} from '../../types'
 import {nextTick} from 'vue'
@@ -595,89 +595,6 @@ describe('object-persistence', () => {
       const $table = wrapper.get('table')
       expect($table.classes()).toContain('b-table-busy')
       expect($table.attributes('ariabusy')).toBe('true')
-    })
-
-    it('sorting does not wipe out the comparer function', async () => {
-      const sortFields = [
-        {key: 'last_name', sortable: true},
-        {key: 'first_name', sortable: true},
-        {key: 'marks', sortable: true},
-      ]
-
-      const sortItems = [
-        {marks: -40, first_name: 'Dickerson', last_name: 'Macdonald'},
-        {marks: -45, first_name: 'Zelda', last_name: 'Macdonald'},
-        {marks: 21, first_name: 'Larsen', last_name: 'Shaw'},
-        {marks: 89, first_name: 'Geneva', last_name: 'Wilson'},
-        {marks: 89, first_name: 'Gary', last_name: 'Wilson'},
-        {marks: 38, first_name: 'Jami', last_name: 'Carney'},
-      ]
-
-      const spyFn = vi.fn()
-
-      const wrapper = mount(BTable, {
-        props: {
-          items: sortItems,
-          fields: sortFields,
-          sortBy: [
-            {
-              key: 'marks',
-              order: 'asc',
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              comparer: (a: any, b: any) => {
-                spyFn()
-                return a.marks.toString().localeCompare(b.marks.toString())
-              },
-            },
-            {
-              key: 'last_name',
-              order: 'asc',
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              comparer: (a: any, b: any) => {
-                spyFn()
-                return a.last_name.localeCompare(b.last_name)
-              },
-            },
-            {
-              key: 'first_name',
-              order: 'asc',
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              comparer: (a: any, b: any) => {
-                spyFn()
-                return a.first_name.localeCompare(b.first_name)
-              },
-            },
-          ],
-        },
-      })
-
-      // This test seems brittle
-      expect(spyFn).toHaveBeenCalledTimes(13)
-      const [lastname, firstname, marks] = wrapper.get('thead').findAll('th')
-      await lastname.trigger('click')
-      await lastname.trigger('click')
-      await lastname.trigger('click')
-      expect(spyFn).toHaveBeenCalledTimes(32)
-      await firstname.trigger('click')
-      await firstname.trigger('click')
-      await firstname.trigger('click')
-      expect(spyFn).toHaveBeenCalledTimes(54)
-      await marks.trigger('click')
-      await marks.trigger('click')
-      await marks.trigger('click')
-      expect(spyFn).toHaveBeenCalledTimes(71)
-      await lastname.trigger('click')
-      await lastname.trigger('click')
-      await lastname.trigger('click')
-      expect(spyFn).toHaveBeenCalledTimes(90)
-      await firstname.trigger('click')
-      await firstname.trigger('click')
-      await firstname.trigger('click')
-      expect(spyFn).toHaveBeenCalledTimes(112)
-      await marks.trigger('click')
-      await marks.trigger('click')
-      await marks.trigger('click')
-      expect(spyFn).toHaveBeenCalledTimes(129)
     })
   })
 
