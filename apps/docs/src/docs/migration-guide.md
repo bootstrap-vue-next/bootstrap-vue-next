@@ -715,9 +715,11 @@ is deprecated.
 
 `selected-variant` has been renamed to `selection-variant` for internal consistency.
 
-`sort-compare` and `sort-direction` are deprecated, use the `sortBy` prop (or model) as documented [here](/docs/components/table#sorting) instead.
+`sort-compare` is deprecated, use the `sortBy` prop (or model) as documented [here](/docs/components/table#sorting) instead.
 
 Similarly, the `sort-changed` event is replaced by the `update:sortBy` event
+
+Finally, `sort-direction` has been renamed `initial-sort-direction` for clarity.
 
 `table-variant` is replaced with `variant` for consistency.
 

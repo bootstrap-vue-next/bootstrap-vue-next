@@ -816,23 +816,43 @@ const handleFieldSorting = (field: TableField<Items>) => {
 
   if (!(isSortable.value === true && fieldSortable === true)) return
 
+  // Get the last sorted direction from any currently sorted field
+  const getLastSortDirection = (): BTableSortByOrder => {
+    const lastSorted = sortByModel.value?.find((sort) => sort.order !== undefined)
+    return lastSorted?.order || 'asc'
+  }
+
+  // Determine initial sort direction for new sorts
+  const getInitialSortDirection = (): BTableSortByOrder => {
+    if (typeof field === 'object' && field !== null && field.initialSortDirection) {
+      if (field.initialSortDirection === 'last') {
+        return getLastSortDirection()
+      }
+      return field.initialSortDirection
+    }
+    return 'asc'
+  }
+
   const resolveOrder = (val: BTableSortByOrder): BTableSortByOrder | undefined => {
     if (val === 'asc') return 'desc'
-    if (val === undefined) return 'asc'
+    if (val === undefined) getInitialSortDirection()
     if (
       props.mustSort === true ||
       (Array.isArray(props.mustSort) && props.mustSort.includes(fieldKey as string))
-    )
+    ) {
       return 'asc'
+    }
     return undefined
   }
 
   const index = sortByModel.value?.findIndex((el) => el.key === fieldKey) ?? -1
   const originalValue = sortByModel.value?.[index]
   const updatedValue: BTableSortBy =
-    // If value is new, we default to ascending
+    // If value is new, we use the field's initialSortDirection or default to ascending
     // Otherwise we make a temp copy of the value
-    index === -1 || !originalValue ? {key: fieldKey as string, order: 'asc'} : {...originalValue}
+    index === -1 || !originalValue
+      ? {key: fieldKey as string, order: getInitialSortDirection()}
+      : {...originalValue}
 
   /**
    * @returns the updated value to emit for sorted
