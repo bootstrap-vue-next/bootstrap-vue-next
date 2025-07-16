@@ -741,13 +741,15 @@ to the `sortBy` array. From the user inteface, multi-sort works as follows:
 
 ### Change initial sort direction
 
-Control the order in which ascending and descending sorting is applied when a sortable column header is clicked, by using the `initial-sort-direction` prop. The default value 'asc' applies ascending sort first (when a column is not currently sorted). To reverse the behavior and sort in descending direction first, set it to `desc`.
+Control the order in which ascending and descending sorting is applied when a sortable column header is clicked, by using the `initial-sort-direction` prop on the table or the `initialSortDirection` property in field definitions. The default value `asc` applies ascending sort first (when a column is not currently sorted). To reverse the behavior and sort in descending direction first, set it to `desc`.
 
-If you don't want the current sorting direction to change when clicking another sortable column header, set sort-direction to `last`. This will maintain the sorting direction of the previously sorted column.
+If you don't want the current sorting direction to change when clicking another sortable column header, set the value to `last`. This will maintain the sorting direction of the previously sorted column.
 
-For individual column initial sort direction (which applies when the column transitions from unsorted to sorted), specify the property sortDirection in fields.
+The table-level `initial-sort-direction` prop sets the default for all sortable columns, while the field-level `initialSortDirection` property allows you to override this on a per-column basis. The field-level prop takes precendence.
 
 <<< DEMO ./demo/TableInitialSortDirection.vue
+
+See the [complete example](#complete-example) for a demonstration or the table-level `initial-sort-direction`.
 
 ### Custom Sort Comparer(s)
 

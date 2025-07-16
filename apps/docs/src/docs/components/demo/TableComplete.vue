@@ -84,7 +84,6 @@
       >
         <BFormGroup
           v-slot="{ariaDescribedby}"
-          v-model="sortDirection"
           label="Filter On"
           description="Leave all unchecked to filter on all data"
           label-cols-sm="3"
@@ -151,6 +150,29 @@
           class="my-0"
         />
       </BCol>
+      <BCol
+        sm="5"
+        md="6"
+        class="my-1"
+      >
+        <BFormGroup
+          label="Initial Direction"
+          label-for="initial-sort-direction"
+          label-cols-sm="6"
+          label-cols-md="4"
+          label-cols-lg="3"
+          label-align-sm="right"
+          label-size="sm"
+          class="mb-0"
+        >
+          <BFormSelect
+            id="initial-sort-direction"
+            v-model="initialSortDirection"
+            :options="sortDirectionOptions"
+            size="sm"
+          />
+        </BFormGroup>
+      </BCol>
     </BRow>
     <!-- Main table element for typed table-->
     <BTable
@@ -166,6 +188,7 @@
       :filterable="filterOn"
       :small="true"
       :multisort="true"
+      :initial-sort-direction="initialSortDirection"
       @filtered="onFiltered"
     >
       <template #cell(name)="row">
@@ -224,7 +247,8 @@
             const person = item as Person
             return `${person.name.first} ${person.name.last}`
           })
-        }}</BCol
+        }}
+        Filter On: {{ filterOn.join(', ') }}</BCol
       ></BRow
     >
   </BContainer>
@@ -233,6 +257,7 @@
 <script setup lang="ts">
 import {
   BTable,
+  type BTableInitialSortDirection,
   type BTableSortBy,
   type ColorVariant,
   type LiteralUnion,
@@ -317,11 +342,17 @@ const pageOptions = [
   {value: 100, text: 'Show a lot'},
 ]
 
+const sortDirectionOptions = [
+  {value: 'asc', text: 'Ascending'},
+  {value: 'desc', text: 'Descending'},
+  {value: 'last', text: 'Last clicked column'},
+]
+
 const totalRows = ref(items.length)
 const currentPage = ref(1)
 const perPage = ref(5)
 const sortBy = ref<BTableSortBy[]>([])
-const sortDirection = ref('asc')
+const initialSortDirection = ref<BTableInitialSortDirection>('asc')
 const filter = ref('')
 const filterOn = ref([])
 const infoModal = reactive({

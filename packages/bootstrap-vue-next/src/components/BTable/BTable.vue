@@ -253,6 +253,7 @@ const _props = withDefaults(
     filter: undefined,
     filterFunction: undefined,
     mustSort: false,
+    initialSortDirection: 'asc',
     filterable: undefined,
     provider: undefined,
     noProvider: undefined,
@@ -824,23 +825,31 @@ const handleFieldSorting = (field: TableField<Items>) => {
 
   // Determine initial sort direction for new sorts
   const getInitialSortDirection = (): BTableSortByOrder => {
+    // Handle field-level prop
     if (typeof field === 'object' && field !== null && field.initialSortDirection) {
       if (field.initialSortDirection === 'last') {
         return getLastSortDirection()
       }
       return field.initialSortDirection
     }
+    // Handle table-level prop
+    if (props.initialSortDirection) {
+      if (props.initialSortDirection === 'last') {
+        return getLastSortDirection()
+      }
+      return props.initialSortDirection
+    }
     return 'asc'
   }
 
   const resolveOrder = (val: BTableSortByOrder): BTableSortByOrder | undefined => {
     if (val === 'asc') return 'desc'
-    if (val === undefined) getInitialSortDirection()
+    if (val === undefined) return getInitialSortDirection()
     if (
       props.mustSort === true ||
       (Array.isArray(props.mustSort) && props.mustSort.includes(fieldKey as string))
     ) {
-      return 'asc'
+      return getInitialSortDirection()
     }
     return undefined
   }

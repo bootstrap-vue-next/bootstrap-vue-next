@@ -585,6 +585,12 @@ export default {
               default: 'There are no records to show',
               description: 'Text to display when no items are present in the `items` array',
             },
+            initialSortDirection: {
+              type: 'BTableInitialSortDirection',
+              default: 'asc',
+              description:
+                "Default initial sort direction for all sortable columns that don't specify their own initialSortDirection. Can be 'asc' for ascending, 'desc' for descending, or 'last' to maintain the direction of the previously sorted column.",
+            },
             showEmpty: {
               type: 'boolean',
               default: false,
