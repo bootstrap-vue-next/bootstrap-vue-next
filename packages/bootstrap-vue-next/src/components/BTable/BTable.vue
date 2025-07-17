@@ -579,7 +579,7 @@ const getFieldColumnClasses = (field: TableField) => [
   },
 ]
 // TODO this class has issues if the table has a variant already applied
-// Also the row should technically have aria-selected . Both things could probably just use a function withtbodyTrAttrs
+// Also the row should technically have aria-selected. Both things could probably just use a function with tbodyTrAttrs
 // But functional tbodyTrAttrs are not supported yet
 // Also the stuff for resolving functions could probably be made a util
 const getRowClasses = (item: Items | null, type: TableRowType): TableStrictClassValue => [
@@ -865,7 +865,7 @@ const handleFieldSorting = (field: TableField<Items>) => {
    * @returns the updated value to emit for sorted
    */
   const handleSingleSort = (): BTableSortBy => {
-    const order = resolveOrder(updatedValue.order)
+    const order = index === -1 ? updatedValue.order : resolveOrder(updatedValue.order)
     const val = {
       ...updatedValue,
       order,
