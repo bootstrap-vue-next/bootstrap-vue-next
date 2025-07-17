@@ -564,7 +564,6 @@ type BTableSortByComparerFunction<T = any> = (a: T, b: T, key: string) => number
 type BTableSortBy<T = any> = {
   order: BTableSortByOrder
   key: string
-  comparer?: BTableSortByComparerFunction<T>
 }
 ```
 

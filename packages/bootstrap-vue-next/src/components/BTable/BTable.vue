@@ -616,7 +616,6 @@ const getStringValue = (ob: Items, key: string): string => {
 }
 
 const computedItems = computed<Items[]>(() => {
-  // "undefined" values are set by us, we do this so we dont wipe out the comparer
   const sortByItems = sortByModel.value?.filter((el) => !!el.order)
 
   const mapItem = (item: Items): Items => {

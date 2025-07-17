@@ -108,7 +108,7 @@ The following field properties (defined as [TableField](/docs/types#tableitem)) 
 |                        |
 | `sortByFormatted`      | `boolean \| TableFieldFormatter<T>`                                                                | Sort the column by the result of the field's `formatter` callback function when set to `true`. Default is `false`. Boolean has no effect if the field does not have a `formatter`. Optionally accepts a formatter function _reference_ to format the value for sorting purposes only. Refer to the [Sorting](#sorting) Section for more details.                                               |
 | `filterByFormatted`    | `boolean \| TableFieldFormatter<T>`                                                                | Filter the column by the result of the field's `formatter` callback function when set to `true`. Default is `false`. Boolean has no effect if the field does not have a `formatter`. Optionally accepts a formatter function _reference_ to format the value for filtering purposes only. Refer to the [Filtering](#filtering) section for more details.                                       |
-| `comparer`             | `BTableSortByComparerFunction`                                                                     | A custom comparison function for sorting this field. The function signature is `(a: T, b: T, key: string) => number`. If not provided, uses default string comparison. See [Custom Sort Comparer(s)](#custom-sort-comparer-s) for more details.                                                                                                                                                |
+| `comparer`             | `BTableSortByComparerFunction`                                                                     | A custom comparison function for sorting this field. The function signature is `(a: T, b: T, key: string) => number`. If not provided, uses default string comparison. See [Custom Sort Comparers](#custom-sort-comparers) for more details.                                                                                                                                                   |
 | `tdClass`              | `TableStrictClassValue \| ((value: unknown, key: string, item: T) => TableStrictClassValue)`       | Class name (or array of class names) to add to `<tbody>` data `<td>` cells in the column. If custom classes per cell are required, a callback function can be specified instead. See the typescript definition for accepted parameters and return types.                                                                                                                                       |
 | `thClass`              | `ClassValue`                                                                                       | Class name (or array of class names) to add to this field's `<thead>`/`<tfoot>` heading `<th>` cell.                                                                                                                                                                                                                                                                                           |
 | `thStyle`              | `StyleValue`                                                                                       | CSS styles you would like to apply to the table `<thead>`/`<tfoot>` field `<th>` cell.                                                                                                                                                                                                                                                                                                         |
@@ -693,12 +693,12 @@ selected, such as a virtual column as shown in the example below.
 
 See [Row select support](#row-select-support) for selection related exposed functions
 
-| Method                                           | Description                                                                                                                                |
-| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `items(): Items[]`                               | Returns the complete set of items used to build the table.                                                                                 |
-| `displayItems(): Items[]`                        | Returns the set of items currently displayed in the tabe. See [Complete Example](#complete-example) for usage                              |
-| `getStringValue(ob: Items, key: string): string` | Returns the formatted string value of the field `key` of the object `ob`. See [Custom Sort Comparer(s)](#custom-sort-comparer-s) for usage |
-| `refresh()`                                      | Calls the async provider to refresh the table items                                                                                        |
+| Method                                           | Description                                                                                                                             |
+| ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `items(): Items[]`                               | Returns the complete set of items used to build the table.                                                                              |
+| `displayItems(): Items[]`                        | Returns the set of items currently displayed in the tabe. See [Complete Example](#complete-example) for usage                           |
+| `getStringValue(ob: Items, key: string): string` | Returns the formatted string value of the field `key` of the object `ob`. See [Custom Sort Comparers](#custom-sort-comparers) for usage |
+| `refresh()`                                      | Calls the async provider to refresh the table items                                                                                     |
 
 ## Sorting
 
@@ -745,13 +745,13 @@ Control the order in which ascending and descending sorting is applied when a so
 
 If you don't want the current sorting direction to change when clicking another sortable column header, set the value to `last`. This will maintain the sorting direction of the previously sorted column.
 
-The table-level `initial-sort-direction` prop sets the default for all sortable columns, while the field-level `initialSortDirection` property allows you to override this on a per-column basis. The field-level prop takes precendence.
+The table-level `initial-sort-direction` prop sets the default for all sortable columns, while the field-level `initialSortDirection` property allows you to override this on a per-column basis. The field-level prop takes precedence.
 
 <<< DEMO ./demo/TableInitialSortDirection.vue
 
 See the [complete example](#complete-example) for a demonstration or the table-level `initial-sort-direction`.
 
-### Custom Sort Comparer(s)
+### Custom Sort Comparers
 
 Each field definition may include a `comparer` field of the type `BTableSortByComparerFunction<T = any> = (a: T, b: T, key: string) => number`. This function takes the items to be compared and the key to compare on. Since the key is passed in, you may use the same function for multiple fields or you can craft a different comparer function for each field. Leaving the `comparer` field undefined will fall back to using the default comparer, which looks like this:
 
