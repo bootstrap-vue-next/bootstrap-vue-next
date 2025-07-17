@@ -55,10 +55,7 @@ const fields: TableField<SortPerson>[] = [
   {key: 'isActive', sortable: false},
 ]
 
-const sortBy = ref<BTableSortBy[]>([
-  {key: 'last_name', order: undefined},
-  {key: 'first_name', order: undefined},
-])
+const sortBy = ref<BTableSortBy[]>([{key: 'last_name', order: 'asc'}])
 
-const singleSortBy = computed(() => sortBy.value.find((sb) => sb.order !== undefined))
+const singleSortBy = computed(() => (sortBy.value.length ? sortBy.value[0].key : undefined))
 </script>

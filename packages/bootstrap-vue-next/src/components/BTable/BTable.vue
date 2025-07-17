@@ -848,8 +848,14 @@ const handleFieldSorting = (field: TableField<Items>) => {
     if (index === -1) {
       tmp.push(val)
     } else {
-      val.order = resolveOrder(val.order)
-      tmp.splice(index, 1, val)
+      const order = resolveOrder(val.order)
+      if (order) {
+        val.order = order
+        tmp.splice(index, 1, val)
+      } else {
+        // Remove the value from the array
+        tmp.splice(index, 1)
+      }
     }
     sortByModel.value = tmp
     return val
@@ -859,20 +865,12 @@ const handleFieldSorting = (field: TableField<Items>) => {
    * @returns the updated value to emit for sorted
    */
   const handleSingleSort = (): BTableSortBy => {
+    const order = resolveOrder(updatedValue.order)
     const val = {
       ...updatedValue,
-      order: index === -1 ? updatedValue.order : resolveOrder(updatedValue.order),
+      order,
     }
-    const tmp = (sortByModel.value || []).map<BTableSortBy>((e) => ({
-      ...e,
-      order: undefined,
-    }))
-    if (index === -1) {
-      tmp.push(val)
-    } else {
-      tmp[index] = val
-    }
-    sortByModel.value = tmp
+    sortByModel.value = order ? [val] : []
     return val
   }
 
