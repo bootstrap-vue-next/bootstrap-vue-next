@@ -60,6 +60,7 @@ import type {
   BTableInitialSortDirection,
   BTableProvider,
   BTableSortBy,
+  BTableSortByComparerFunction,
   NoProviderTypes,
   TableField,
   TableFieldRaw,
@@ -1126,6 +1127,7 @@ export interface BTableProps<Items> extends Omit<BTableLiteProps<Items>, 'tableC
   noProviderSorting?: boolean
   noProviderFiltering?: boolean
   sortBy?: BTableSortBy[]
+  sortCompare?: BTableSortByComparerFunction<Items>
   mustSort?: boolean | string[] // TODO this is a string of fields, possibly generic
   initialSortDirection?: BTableInitialSortDirection
   selectable?: boolean

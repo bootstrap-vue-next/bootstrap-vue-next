@@ -71,7 +71,6 @@
     <BTable
       ref="provider-table"
       v-model:sort-by="sortBy"
-      :sort-internal="true"
       :provider="provider"
       :fields="fields"
       :current-page="currentPage"

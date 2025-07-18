@@ -752,13 +752,17 @@ See the [complete example](#complete-example) for a demonstration or the table-l
 
 ### Custom Sort Comparers
 
-Each field definition may include a `comparer` field of the type `BTableSortByComparerFunction<T = any> = (a: T, b: T, key: string) => number`. This function takes the items to be compared and the key to compare on. Since the key is passed in, you may use the same function for multiple fields or you can craft a different comparer function for each field. Leaving the `comparer` field undefined will fall back to using the default comparer, which looks like this:
+Each field definition may include a `sortCompare` field of the type `BTableSortByComparerFunction<T = any> = (a: T, b: T, key: string) => number`. This function takes the items to be compared and the key to compare on. Since the key is passed in, you may use the same function for multiple fields or you can craft a different comparer function for each field.
+
+You can also set a table-level `sort-compare` prop that will be used as the default comparer for all sortable fields. Field-level `sortCompare` takes precedence over the table-level setting.
+
+Leaving both the field-level `sortCompare` and table-level `sort-compare` undefined will fall back to using the default comparer, which looks like this:
 
 <<< FRAGMENT ./demo/TableSortCompareDefault.ts#snippet{ts}
 
 where `getStringValue` retrieves the field value as a string.
 
-If you have a particular field that you want to sort by with custom logic, you can set the `comparer` property in the field definition:
+If you have a particular field that you want to sort by with custom logic, you can set the `sortCompare` property in the field definition:
 
 <<< FRAGMENT ./demo/TableSortCompareCustom.ts#snippet{ts}
 

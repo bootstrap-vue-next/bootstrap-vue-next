@@ -247,6 +247,7 @@ const _props = withDefaults(
     selectionVariant: 'primary',
     busyLoadingText: 'Loading...',
     currentPage: 1,
+    sortCompare: undefined,
     // BTableLite props
     items: () => [],
     fields: () => [],
@@ -694,7 +695,7 @@ const computedItems = computed<Items[]>(() => {
       for (let i = 0; i < sortByItems.length; i++) {
         const {key, order} = sortByItems[i]
         const field = computedFields.value.find((f) => f.key === key)
-        const comparer = field?.comparer
+        const comparer = field?.sortCompare || props.sortCompare
         const comparison = comparer
           ? comparer(a, b, key)
           : getStringValue(a, key).localeCompare(getStringValue(b, key), undefined, {numeric: true})

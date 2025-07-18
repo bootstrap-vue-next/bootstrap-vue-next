@@ -49,8 +49,8 @@ const items: TableItem<SortPerson>[] = [
 ]
 
 const fields: TableField<SortPerson>[] = [
-  {key: 'last_name', sortable: true, comparer},
-  {key: 'first_name', sortable: true, comparer},
+  {key: 'last_name', sortable: true, sortCompare: comparer},
+  {key: 'first_name', sortable: true, sortCompare: comparer},
   {key: 'age', sortable: true},
   {key: 'isActive', sortable: false},
 ]

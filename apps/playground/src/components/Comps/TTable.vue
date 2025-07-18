@@ -297,7 +297,6 @@
         <!-- Main table element for typed table-->
         <BTable
           v-model:sort-by="sortBy"
-          :sort-internal="true"
           :items="itemsTyped"
           :fields="fieldsTyped"
           :current-page="currentPage"

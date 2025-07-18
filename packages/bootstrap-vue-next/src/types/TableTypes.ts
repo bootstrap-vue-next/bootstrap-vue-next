@@ -54,7 +54,6 @@ export type TableStrictClassValue = string | unknown[] | Record<string, boolean>
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TableField<T = any> = {
-  comparer?: BTableSortByComparerFunction<T>
   class?: ClassValue
   filterByFormatted?: boolean | TableFieldFormatter<T>
   formatter?: TableFieldFormatter<T>
@@ -66,6 +65,7 @@ export type TableField<T = any> = {
   sortable?: boolean
   sortDirection?: string
   sortByFormatted?: boolean | TableFieldFormatter<T>
+  sortCompare?: BTableSortByComparerFunction<T>
   stickyColumn?: boolean
   scope?: TableThScope
   initialSortDirection?: BTableInitialSortDirection

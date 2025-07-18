@@ -180,7 +180,6 @@
     <BTable
       ref="complete-table"
       v-model:sort-by="sortBy"
-      :sort-internal="true"
       :items="items"
       :fields="fields"
       :current-page="currentPage"

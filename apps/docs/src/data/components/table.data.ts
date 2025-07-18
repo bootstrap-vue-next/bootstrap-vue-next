@@ -678,6 +678,12 @@ export default {
               default: undefined,
               description: 'Model representing the current sort state',
             },
+            sortCompare: {
+              type: 'BTableSortByComparerFunction',
+              default: undefined,
+              description:
+                'A global comparison function for sorting table fields. Field-level sortCompare takes precedence over this table-level setting. The function signature is (a: T, b: T, key: string) => number.',
+            },
             stickySelect: {
               type: 'boolean',
               default: false,

@@ -512,6 +512,7 @@ interface TableField<T = Record<string, unknown>> {
   label?: string
   sortable?: boolean
   sortByFormatted?: boolean | TableFieldFormatter<T>
+  sortCompare?: BTableSortByComparerFunction<T>
   stickyColumn?: boolean
   tdAttr?: TableFieldAttribute<T>
   tdClass?: ClassValue
