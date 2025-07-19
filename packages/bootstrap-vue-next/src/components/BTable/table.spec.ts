@@ -751,3 +751,341 @@ describe('object-persistence', () => {
     })
   })
 })
+
+describe('custom sort comparers', () => {
+  const customSortItems: TableItem<SimplePerson>[] = [
+    {age: 27, first_name: 'Alice'},
+    {age: 9, first_name: 'Bob'},
+    {age: 42, first_name: 'Charlie'},
+    {age: 35, first_name: 'David'},
+  ]
+
+  it('uses table-level sortCompare prop (reverse alphabetical override)', () => {
+    const reverseCompare = (a: unknown, b: unknown, key: string) => {
+      // Simple reverse alphabetical comparison
+      const aVal =
+        typeof a === 'object' && a !== null
+          ? String((a as SimplePerson)[key as keyof SimplePerson] ?? '')
+          : ''
+      const bVal =
+        typeof b === 'object' && b !== null
+          ? String((b as SimplePerson)[key as keyof SimplePerson] ?? '')
+          : ''
+
+      // Just reverse the normal comparison
+      return bVal.localeCompare(aVal, undefined, {numeric: true})
+    }
+
+    const wrapper = mount(BTable, {
+      props: {
+        items: customSortItems,
+        fields: simpleFields,
+        sortBy: [{order: 'asc', key: 'first_name'}],
+        sortCompare: reverseCompare,
+      },
+    })
+
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    // Reverse alphabetical sort: should be opposite of default
+    expect(text).toStrictEqual(['David', 'Charlie', 'Bob', 'Alice'])
+  })
+
+  it('uses field-level sortCompare over table-level', () => {
+    const tableLevelCompare = () => 0 // Should never be called
+    const fieldLevelCompare = (a: SimplePerson, b: SimplePerson, key: string) => {
+      // Reverse comparison for first_name field
+      if (key === 'first_name') {
+        return b.first_name.localeCompare(a.first_name)
+      }
+      if (key === 'age') {
+        return b.age - a.age
+      }
+      // Fallback for unknown keys
+      const aVal = String(a[key as keyof SimplePerson] ?? '')
+      const bVal = String(b[key as keyof SimplePerson] ?? '')
+      return bVal.localeCompare(aVal)
+    }
+
+    const fieldsWithCustomSort: Exclude<TableField<SimplePerson>, string>[] = [
+      {
+        key: 'first_name',
+        label: 'First Name',
+        sortable: true,
+        sortCompare: fieldLevelCompare,
+      },
+      {key: 'age', label: 'Age', sortable: true},
+    ]
+
+    const wrapper = mount(BTable, {
+      props: {
+        items: customSortItems,
+        fields: fieldsWithCustomSort,
+        sortBy: [{order: 'asc', key: 'first_name'}],
+        sortCompare: tableLevelCompare,
+      },
+    })
+
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['David', 'Charlie', 'Bob', 'Alice'])
+  })
+
+  it('falls back to default comparison when no custom comparer provided', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: customSortItems,
+        fields: simpleFields,
+        sortBy: [{order: 'asc', key: 'first_name'}],
+      },
+    })
+
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    // Default comparison uses localeCompare with numeric: true, which is case-insensitive
+    expect(text).toStrictEqual(['Alice', 'Bob', 'Charlie', 'David'])
+  })
+})
+
+describe('combined sorting features', () => {
+  it('uses custom comparer with custom initial sort direction', async () => {
+    const reverseCompare = (a: SimplePerson, b: SimplePerson, key: string) => {
+      const aVal = a[key as keyof SimplePerson] ?? ''
+      const bVal = b[key as keyof SimplePerson] ?? ''
+      return bVal.toString().localeCompare(aVal.toString())
+    }
+
+    const fieldsWithBoth: Exclude<TableField<SimplePerson>, string>[] = [
+      {
+        key: 'first_name',
+        label: 'First Name',
+        sortable: true,
+        sortCompare: reverseCompare,
+        initialSortDirection: 'desc',
+      },
+      {key: 'age', label: 'Age', sortable: true},
+    ]
+
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: fieldsWithBoth,
+      },
+    })
+
+    const [nameHeader] = wrapper.get('table').findAll('th')
+    await nameHeader.trigger('click')
+
+    // Should start with desc (field-level override) and use reverse comparer
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Cyndi', 'Havij', 'Robert'])
+  })
+
+  it('works correctly in multi-sort mode with mixed comparers', () => {
+    const ageCompare = (a: SimplePerson, b: SimplePerson, key: string) => {
+      if (key === 'age') {
+        return b.age - a.age // Type-safe access for known field
+      }
+      // Generic fallback for unknown keys
+      const aVal = a[key as keyof SimplePerson]
+      const bVal = b[key as keyof SimplePerson]
+      return typeof bVal === 'number' && typeof aVal === 'number'
+        ? bVal - aVal
+        : String(bVal ?? '').localeCompare(String(aVal ?? ''))
+    }
+
+    const fieldsWithMixedComparers: Exclude<TableField<SimplePerson>, string>[] = [
+      {key: 'first_name', label: 'First Name', sortable: true}, // Uses default comparer
+      {
+        key: 'age',
+        label: 'Age',
+        sortable: true,
+        sortCompare: ageCompare,
+      },
+    ]
+
+    const wrapper = mount(BTable, {
+      props: {
+        multisort: true,
+        items: multiSort,
+        fields: fieldsWithMixedComparers,
+        sortBy: [
+          {key: 'first_name', order: 'asc'}, // Default comparer
+          {key: 'age', order: 'asc'}, // Custom comparer (reversed)
+        ],
+      },
+    })
+
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.findAll('td')[1].text())
+    // With custom age comparer (reversed), "asc" order should show highest ages first within each name group
+    expect(text).toStrictEqual(['101', '9', '27', '42', '35'])
+  })
+})
+
+describe('initial sort direction', () => {
+  it('uses table-level initialSortDirection prop (desc)', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        initialSortDirection: 'desc' as const,
+      },
+    })
+
+    const [nameHeader] = wrapper.get('table').findAll('th')
+    await nameHeader.trigger('click')
+
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Robert', 'Havij', 'Cyndi'])
+  })
+
+  it('uses field-level initialSortDirection over table-level', async () => {
+    const fieldsWithCustomInitialSort: Exclude<TableField<SimplePerson>, string>[] = [
+      {
+        key: 'first_name',
+        label: 'First Name',
+        sortable: true,
+        initialSortDirection: 'desc',
+      },
+      {
+        key: 'age',
+        label: 'Age',
+        sortable: true,
+        initialSortDirection: 'asc',
+      },
+    ]
+
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: fieldsWithCustomInitialSort,
+        initialSortDirection: 'asc' as const, // Table default should be overridden
+      },
+    })
+
+    // Test first field (desc override)
+    const [nameHeader, ageHeader] = wrapper.get('table').findAll('th')
+    await nameHeader.trigger('click')
+
+    let text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Robert', 'Havij', 'Cyndi'])
+
+    // Test second field (asc override)
+    await ageHeader.trigger('click')
+    text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.findAll('td')[1].text())
+    expect(text).toStrictEqual(['9', '27', '42'])
+  })
+
+  it('handles initialSortDirection "last" at table level', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        initialSortDirection: 'last' as const,
+        sortBy: [{order: 'desc', key: 'age'}], // Start with age desc
+      },
+    })
+
+    // Click on name field - should use the last sorted direction (desc)
+    const [nameHeader] = wrapper.get('table').findAll('th')
+    await nameHeader.trigger('click')
+
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Robert', 'Havij', 'Cyndi'])
+  })
+
+  it('handles initialSortDirection "last" at field level', async () => {
+    const fieldsWithLastSort: Exclude<TableField<SimplePerson>, string>[] = [
+      {
+        key: 'first_name',
+        label: 'First Name',
+        sortable: true,
+        initialSortDirection: 'last',
+      },
+      {key: 'age', label: 'Age', sortable: true},
+    ]
+
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: fieldsWithLastSort,
+        sortBy: [{order: 'desc', key: 'age'}], // Start with age desc
+      },
+    })
+
+    // Click on name field - should use the last sorted direction (desc)
+    const [nameHeader] = wrapper.get('table').findAll('th')
+    await nameHeader.trigger('click')
+
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Robert', 'Havij', 'Cyndi'])
+  })
+
+  it('defaults to "asc" when "last" is used but no previous sort exists', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        initialSortDirection: 'last' as const,
+      },
+    })
+
+    const [nameHeader] = wrapper.get('table').findAll('th')
+    await nameHeader.trigger('click')
+
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Cyndi', 'Havij', 'Robert'])
+  })
+
+  it('shows correct sort icon opacity for unsorted columns based on initialSortDirection', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        initialSortDirection: 'desc' as const,
+      },
+    })
+
+    // Check that unsorted columns show the descending arrow with reduced opacity
+    const sortIcons = wrapper.findAll('svg')
+    expect(sortIcons.length).toBeGreaterThan(0)
+
+    // The icons should have opacity 0.4 for unsorted columns
+    sortIcons.forEach((icon) => {
+      const style = icon.attributes('style')
+      if (style?.includes('opacity')) {
+        expect(style).toContain('opacity: 0.4')
+      }
+    })
+  })
+})
