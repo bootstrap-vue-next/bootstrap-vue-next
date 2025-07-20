@@ -1,5 +1,9 @@
 <template>
-  <BFormRating v-model="rating" show-value :precision="2" />
+  <BFormRating
+    v-model="rating"
+    show-value
+    :precision="2"
+  />
 
   <p>Current rating: {{ rating }}</p>
 </template>

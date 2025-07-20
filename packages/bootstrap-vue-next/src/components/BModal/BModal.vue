@@ -384,8 +384,7 @@ const {activePosition, activeModalCount, stackWithoutSelf} = useModalManager(
 
 const sharedClasses = computed(() => ({
   [`stack-position-${activePosition?.value ?? 0}`]: true,
-  [`stack-inverse-position-${(activeModalCount?.value ?? 1) - 1 - (activePosition?.value ?? 0)}`]:
-    true,
+  [`stack-inverse-position-${(activeModalCount?.value ?? 1) - 1 - (activePosition?.value ?? 0)}`]: true,
 }))
 
 watch(stackWithoutSelf, (newValue, oldValue) => {

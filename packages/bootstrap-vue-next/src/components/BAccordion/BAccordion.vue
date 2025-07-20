@@ -88,6 +88,7 @@ const sortAccordionItems = () => {
 
       if (next.length !== modelValue.value.length) {
         if (import.meta.env.DEV) {
+          // eslint-disable-next-line no-console
           console.warn('[BAccordion] Unknown item id in v-model:', modelValue.value)
         }
       }
@@ -211,6 +212,7 @@ watch(
   (free) => {
     if (modelValue.value) {
       if (!free && Array.isArray(modelValue.value)) {
+        // eslint-disable-next-line prefer-destructuring
         modelValue.value = modelValue.value[0]
       } else if (free && !Array.isArray(modelValue.value)) {
         modelValue.value = [modelValue.value]
