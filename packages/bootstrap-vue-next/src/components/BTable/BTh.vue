@@ -17,6 +17,7 @@
 import {useDefaults} from '../../composables/useDefaults'
 import type {BThProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
+import {BThSlots} from '../../types/ComponentSlots'
 
 const _props = withDefaults(defineProps<BThProps>(), {
   colspan: undefined,
@@ -27,11 +28,7 @@ const _props = withDefaults(defineProps<BThProps>(), {
   scope: undefined,
 })
 const props = useDefaults(_props, 'BTh')
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
+defineSlots<BThSlots>()
 
 const computedClasses = computed(() => ({
   [`table-${props.variant}`]: props.variant !== null,

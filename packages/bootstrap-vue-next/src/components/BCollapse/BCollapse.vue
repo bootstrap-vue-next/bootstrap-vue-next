@@ -49,11 +49,8 @@ const _props = withDefaults(defineProps<Omit<BCollapseProps, 'modelValue'>>(), {
   show: false,
   visible: false,
 })
-
 const props = useDefaults(_props, 'BCollapse')
-
 const emit = defineEmits<BCollapseEmits>()
-
 defineSlots<BCollapseSlots>()
 
 const modelValue = defineModel<Exclude<BCollapseProps['modelValue'], undefined>>({
@@ -62,7 +59,7 @@ const modelValue = defineModel<Exclude<BCollapseProps['modelValue'], undefined>>
 
 const computedId = useId(() => props.id, 'collapse')
 
-const element = useTemplateRef<HTMLElement>('_element')
+const element = useTemplateRef('_element')
 
 let inCollapse = false
 const onEnter = (el: Element) => {

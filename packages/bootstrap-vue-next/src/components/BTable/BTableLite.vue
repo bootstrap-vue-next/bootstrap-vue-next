@@ -236,6 +236,7 @@ import {startCase} from '../../utils/stringUtils'
 import type {LiteralUnion} from '../../types/LiteralUnion'
 import {useId} from '../../composables/useId'
 import type {BTableLiteEmits} from '../../types/ComponentEmits'
+import type {BTableLiteSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BTableLiteProps<Items>>(), {
   caption: undefined,
@@ -281,73 +282,8 @@ const _props = withDefaults(defineProps<BTableLiteProps<Items>>(), {
   // End BTableSimpleProps props
 })
 const props = useDefaults(_props, 'BTableLite')
-
 const emit = defineEmits<BTableLiteEmits<Items, (typeof computedFields.value)[0]>>()
-
-const slots = defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'table-colgroup'?: (props: {fields: typeof computedFields.value}) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'thead-top'?: (props: {columns: number; fields: typeof computedFields.value}) => any
-  [key: `head(${string})`]: (props: {
-    label: string | undefined
-    column: LiteralUnion<keyof Items>
-    field: (typeof computedFields.value)[0]
-    isFoot: false
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  'thead-sub'?: (
-    props: {
-      items: readonly Items[]
-      fields: typeof computedFields.value
-      field: (typeof computedFields.value)[0]
-    }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ) => any
-  'custom-body'?: (props: {
-    fields: typeof computedFields.value
-    items: readonly Items[]
-    columns: number
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'top-row'?: (props: {columns: number; fields: typeof computedFields.value}) => any
-  [key: `cell(${string})`]: (props: {
-    value: unknown
-    unformatted: unknown
-    index: number
-    item: Items
-    field: (typeof computedFields.value)[0]
-    items: readonly Items[]
-    toggleDetails: () => void
-    detailsShowing: boolean
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  'row-details'?: (props: {
-    item: Items
-    toggleDetails: () => void
-    fields: typeof computedFields.value
-    index: number
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'bottom-row'?: (props: {columns: number; fields: typeof computedFields.value}) => any
-  [key: `foot(${string})`]: (props: {
-    label: string | undefined
-    column: LiteralUnion<keyof Items>
-    field: (typeof computedFields.value)[0]
-    isFoot: true
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  'custom-foot'?: (props: {
-    fields: typeof computedFields.value
-    items: readonly Items[]
-    columns: number
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'table-caption'?: (props: Record<string, never>) => any
-}>()
+const slots = defineSlots<BTableLiteSlots>()
 
 const computedId = useId(() => props.id)
 

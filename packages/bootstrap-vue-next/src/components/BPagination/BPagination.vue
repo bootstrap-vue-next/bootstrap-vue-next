@@ -49,6 +49,7 @@ import type {ClassValue} from '../../types/AnyValuedAttributes'
 import {CODE_DOWN, CODE_LEFT, CODE_RIGHT, CODE_UP} from '../../utils/constants'
 import {stopEvent} from '../../utils/event'
 import {getActiveElement} from '../../utils/dom'
+import {type BPaginationEmits, type BPaginationSlots} from '../../types'
 
 // Threshold of limit size when we start/stop showing ellipsis
 const ELLIPSIS_THRESHOLD = 3
@@ -101,16 +102,14 @@ const _props = withDefaults(defineProps<Omit<BPaginationProps, 'modelValue'>>(),
   totalRows: DEFAULT_TOTAL_ROWS,
 })
 const props = useDefaults(_props, 'BPagination')
-
-const emit = defineEmits<{
-  'page-click': [event: BvEvent, pageNumber: number]
-}>()
+const emit = defineEmits<BPaginationEmits>()
+defineSlots<BPaginationSlots>()
 
 const modelValue = defineModel<Exclude<BPaginationProps['modelValue'], undefined>>({
   default: 1,
 })
 
-const pageElements = useTemplateRef<HTMLLIElement[]>('_pageElements')
+const pageElements = useTemplateRef('_pageElements')
 
 const limitNumber = useToNumber(() => props.limit, {nanToZero: true, method: 'parseInt'})
 const perPageNumber = useToNumber(() => props.perPage, {nanToZero: true, method: 'parseInt'})
@@ -159,7 +158,7 @@ const getBaseButtonProps = ({
   page: number
   disabled: boolean
   classVal: ClassValue
-  slotName: string
+  slotName: 'first-text' | 'prev-text' | 'next-text' | 'last-text' | 'page'
   textValue?: string
   tabIndex?: string
   label?: string
@@ -202,7 +201,7 @@ const getBaseButtonProps = ({
     page,
     disabled,
     index: page - 1,
-    content: textValue ? undefined : page,
+    content: textValue ? undefined : page.toString(),
   },
   clickHandler: (e: Readonly<MouseEvent>) => pageClick(e, page),
 })
@@ -218,7 +217,7 @@ const getButtonProps = ({
   page: number
   disabled: boolean
   classVal: ClassValue
-  slotName: string
+  slotName: 'first-text' | 'prev-text' | 'next-text' | 'last-text' | 'page'
   textValue?: string
   label: string
 }) => getBaseButtonProps({page, classVal, disabled, slotName, textValue, label, tabIndex: '-1'})

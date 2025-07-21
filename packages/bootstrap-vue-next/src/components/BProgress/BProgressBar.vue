@@ -13,6 +13,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import {computed, inject} from 'vue'
 import {progressInjectionKey} from '../../utils/keys'
 import {useToNumber} from '@vueuse/core'
+import type {BProgressBarSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BProgressBarProps>(), {
   animated: false,
@@ -28,11 +29,7 @@ const _props = withDefaults(defineProps<BProgressBarProps>(), {
   variant: null,
 })
 const props = useDefaults(_props, 'BProgressBar')
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
+defineSlots<BProgressBarSlots>()
 
 const parentData = inject(progressInjectionKey, null)
 

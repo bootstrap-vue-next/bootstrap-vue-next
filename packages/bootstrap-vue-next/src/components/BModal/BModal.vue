@@ -223,9 +223,7 @@ const _props = withDefaults(defineProps<Omit<BModalProps, 'modelValue'>>(), {
   visible: false,
 })
 const props = useDefaults(_props, 'BModal')
-
 const emit = defineEmits<BModalEmits>()
-
 const slots = defineSlots<BModalSlots>()
 
 const computedId = useId(() => props.id, 'modal')
@@ -233,11 +231,11 @@ const computedId = useId(() => props.id, 'modal')
 // Since the modelValue that's passed from that composable is not reactive, this internal ref _is_ and thus it will trigger closing the modal
 const modelValue = defineModel<Exclude<BModalProps['modelValue'], undefined>>({default: false})
 
-const element = useTemplateRef<HTMLElement>('_element')
-const fallbackFocusElement = useTemplateRef<HTMLElement>('_fallbackFocusElement')
-const okButton = useTemplateRef<HTMLElement>('_okButton')
-const cancelButton = useTemplateRef<HTMLElement>('_cancelButton')
-const closeButton = useTemplateRef<HTMLElement>('_closeButton')
+const element = useTemplateRef('_element')
+const fallbackFocusElement = useTemplateRef('_fallbackFocusElement')
+const okButton = useTemplateRef('_okButton')
+const cancelButton = useTemplateRef('_cancelButton')
+const closeButton = useTemplateRef('_closeButton')
 
 const pickFocusItem = () => {
   if (props.focus && typeof props.focus !== 'boolean') {

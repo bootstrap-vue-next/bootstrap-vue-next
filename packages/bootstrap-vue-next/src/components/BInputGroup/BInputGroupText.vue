@@ -7,6 +7,7 @@
 </template>
 
 <script setup lang="ts">
+import type {BInputGroupTextSlots} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BInputGroupTextProps} from '../../types/ComponentProps'
 
@@ -15,9 +16,5 @@ const _props = withDefaults(defineProps<BInputGroupTextProps>(), {
   text: undefined,
 })
 const props = useDefaults(_props, 'BInputGroupText')
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
+defineSlots<BInputGroupTextSlots>()
 </script>

@@ -128,10 +128,9 @@ import {useDefaults} from '../../composables/useDefaults'
 import type {BFormTagsProps} from '../../types/ComponentProps'
 import {escapeRegExpChars} from '../../utils/stringUtils'
 import BFormTag from './BFormTag.vue'
-import type {ClassValue} from '../../types/AnyValuedAttributes'
-import type {ColorVariant} from '../../types/ColorTypes'
 import {useId} from '../../composables/useId'
 import {useStateClass} from '../../composables/useStateClass'
+import type {BFormTagsEmits, BFormTagsSlots} from '../../types'
 
 const _props = withDefaults(defineProps<Omit<BFormTagsProps, 'modelValue'>>(), {
   addButtonText: 'Add',
@@ -167,29 +166,8 @@ const _props = withDefaults(defineProps<Omit<BFormTagsProps, 'modelValue'>>(), {
   tagVariant: 'secondary',
 })
 const props = useDefaults(_props, 'BFormTags')
-
-const emit = defineEmits<{
-  'blur': [value: FocusEvent]
-  'focus': [value: FocusEvent]
-  'focusin': [value: FocusEvent]
-  'focusout': [value: FocusEvent]
-  'tag-state': [...args: string[][]]
-}>()
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'add-button-text'?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'default'?: (props: typeof slotAttrs.value) => any
-  'tag'?: (props: {
-    tag: string
-    tagClass: ClassValue
-    tagVariant: ColorVariant | null
-    tagPills: boolean
-    removeTag: (tag?: string) => void
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-}>()
+const emit = defineEmits<BFormTagsEmits>()
+defineSlots<BFormTagsSlots>()
 
 const modelValue = defineModel<Exclude<BFormTagsProps['modelValue'], undefined>>({
   default: () => [],
@@ -201,7 +179,7 @@ const limitNumber = useToNumber(() => props.limit ?? NaN)
 
 const stateClass = useStateClass(() => props.state)
 
-const input = useTemplateRef<HTMLInputElement>('_input')
+const input = useTemplateRef('_input')
 
 const {focused} = useFocus(input, {
   initialValue: props.autofocus,

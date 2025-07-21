@@ -9,6 +9,7 @@ import {computed} from 'vue'
 import type {BColProps} from '../../types/ComponentProps'
 import {getClasses} from '../../utils/getClasses'
 import {useDefaults} from '../../composables/useDefaults'
+import {BColSlots} from '../../types/ComponentSlots'
 
 const _props = withDefaults(defineProps<BColProps>(), {
   alignSelf: undefined,
@@ -33,13 +34,8 @@ const _props = withDefaults(defineProps<BColProps>(), {
   orderXl: undefined,
   orderXxl: undefined,
 })
-
 const props = useDefaults(_props, 'BCol')
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
+defineSlots<BColSlots>()
 
 const classList = computed(() => [
   ...getClasses(

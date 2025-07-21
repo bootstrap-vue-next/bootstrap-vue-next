@@ -97,15 +97,6 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const attrs = useAttrs()
-
-// TODO: deprication remove warning in 2025-06
-if (attrs.content)
-  // eslint-disable-next-line no-console
-  console.warn(
-    'BPopover/BTooltip: `content` prop is deprecated. Use prop body or default slot instead.'
-  )
-
 const _props = withDefaults(defineProps<Omit<BPopoverProps, 'modelValue'>>(), {
   boundary: 'clippingAncestors',
   boundaryPadding: undefined,
@@ -143,12 +134,10 @@ const _props = withDefaults(defineProps<Omit<BPopoverProps, 'modelValue'>>(), {
   tooltip: false,
   visible: false,
 })
-
 const props = useDefaults(_props, 'BPopover')
-
 const emit = defineEmits<BPopoverEmits>()
-
 const slots = defineSlots<BPopoverSlots>()
+const attrs = useAttrs()
 
 const modelValue = defineModel<Exclude<BPopoverProps['modelValue'], undefined>>({
   default: false,
@@ -158,10 +147,10 @@ const computedId = useId(() => props.id, 'popover')
 
 const hidden = ref(false)
 
-const floatingElement = useTemplateRef<HTMLElement>('_element')
-const content = useTemplateRef<HTMLElement>('_content')
-const arrow = useTemplateRef<HTMLElement>('_arrow')
-const placeholder = useTemplateRef<HTMLElement>('_placeholder')
+const floatingElement = useTemplateRef('_element')
+const content = useTemplateRef('_content')
+const arrow = useTemplateRef('_arrow')
+const placeholder = useTemplateRef('_placeholder')
 
 const referenceElement = ref<HTMLElement | null>(null)
 const triggerElement = ref<HTMLElement | null>(null)

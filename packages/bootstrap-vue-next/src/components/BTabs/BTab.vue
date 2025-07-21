@@ -20,6 +20,11 @@ import {useDefaults} from '../../composables/useDefaults'
 import type {TabType} from '../../types/Tab'
 import type {BTabProps} from '../../types/ComponentProps'
 import {tabsInjectionKey} from '../../utils/keys'
+import {BTabSlots} from '../../types/ComponentSlots'
+
+defineOptions({
+  inheritAttrs: false,
+})
 
 const _props = withDefaults(defineProps<Omit<BTabProps, 'active'>>(), {
   buttonId: undefined,
@@ -35,17 +40,8 @@ const _props = withDefaults(defineProps<Omit<BTabProps, 'active'>>(), {
   titleLinkClass: undefined,
 })
 const props = useDefaults(_props, 'BTab')
-
-const slots = defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  title?: (props: Record<string, never>) => any
-}>()
-
-defineOptions({
-  inheritAttrs: false,
-})
+const slots = defineSlots<BTabSlots>()
+const attrs = useAttrs()
 
 const activeModel = defineModel<Exclude<BTabProps['active'], undefined>>('active', {
   default: false,
@@ -59,9 +55,8 @@ const computedId = computed(() => props.id ?? localId.value ?? internalId.value)
 const computedButtonId = useId(() => props.buttonId, 'tab')
 
 const lazyRenderCompleted = ref(false)
-const el = useTemplateRef<HTMLElement>('_el')
+const el = useTemplateRef('_el')
 
-const attrs = useAttrs()
 const processedAttrs = computed(() => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const {onClick: _, ...tabAttrs} = attrs

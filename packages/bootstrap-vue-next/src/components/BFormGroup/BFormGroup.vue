@@ -110,7 +110,7 @@ import {suffixPropName} from '../../utils/props'
 import {useStateClass} from '../../composables/useStateClass'
 import {useId} from '../../composables/useId'
 import {createReusableTemplate} from '@vueuse/core'
-import type {BFormGroupProps} from '../../types'
+import type {BFormGroupProps, BFormGroupSlots} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
 import {formGroupPluginKey} from '../../utils/keys'
 
@@ -150,24 +150,7 @@ const _props = withDefaults(defineProps<BFormGroupProps>(), {
   validated: false,
 })
 const props = useDefaults(_props, 'BFormGroup')
-
-const slots = defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'invalid-feedback'?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'valid-feedback'?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'description'?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'label'?: (props: Record<string, never>) => any
-  'default'?: (props: {
-    id: string
-    ariaDescribedby: string | null
-    descriptionId: string | undefined
-    labelId: string | null
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-}>()
+const slots = defineSlots<BFormGroupSlots>()
 
 const LabelContentTemplate = createReusableTemplate()
 const ContentTemplate = createReusableTemplate()
@@ -213,7 +196,7 @@ const getColProps = (props: any, prefix: string) =>
     return result
   }, {})
 
-const content = useTemplateRef<HTMLElement>('_content')
+const content = useTemplateRef('_content')
 
 const contentColProps = computed(() => getColProps(props, 'content'))
 const labelAlignClasses = computed(() =>
