@@ -1,20 +1,4 @@
 <template>
-  <!-- Define the reusable SVG template -->
-  <DefineSortIcon v-slot="{iconData}">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      fill="currentColor"
-      :class="iconData.class"
-      :style="{opacity: iconData.opacity}"
-      viewBox="0 0 16 16"
-      aria-hidden
-    >
-      <path fill-rule="evenodd" :d="iconData.path" />
-    </svg>
-  </DefineSortIcon>
-
   <!-- eslint-disable prettier/prettier -->
   <BTableLite
     v-bind="computedLiteProps"
@@ -129,7 +113,11 @@
               : 'sortAsc()'
           "
         >
-          <SortIcon :icon-data="getSortIcon(scope.field)" />
+          <SortIcon
+            :field="scope.field"
+            :sort-by="sortByModel"
+            :initial-sort-direction="props.initialSortDirection"
+          />
         </slot>
         <slot
           v-else-if="sortByModel?.find((el) => el.key === scope.field.key)?.order === 'desc'"
@@ -140,7 +128,11 @@
               : 'sortDesc()'
           "
         >
-          <SortIcon :icon-data="getSortIcon(scope.field)" />
+          <SortIcon
+            :field="scope.field"
+            :sort-by="sortByModel"
+            :initial-sort-direction="props.initialSortDirection"
+          />
         </slot>
         <slot
           v-else
@@ -151,7 +143,11 @@
               : 'sortDefault()'
           "
         >
-          <SortIcon :icon-data="getSortIcon(scope.field)" />
+          <SortIcon
+            :field="scope.field"
+            :sort-by="sortByModel"
+            :initial-sort-direction="props.initialSortDirection"
+          />
         </slot>
       </template>
     </template>
@@ -188,8 +184,8 @@
 </template>
 
 <script setup lang="ts" generic="Items">
-import {createReusableTemplate, useToNumber} from '@vueuse/core'
-import {computed, onMounted, type Ref, ref, watch} from 'vue'
+import {useToNumber} from '@vueuse/core'
+import {computed, defineComponent, h, onMounted, type PropType, type Ref, ref, watch} from 'vue'
 import {formatItem} from '../../utils/formatItem'
 import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
@@ -1021,47 +1017,91 @@ const computedLiteProps = computed(() => ({
   id: computedId.value,
 }))
 
-const [DefineSortIcon, SortIcon] = createReusableTemplate<{
-  iconData: ReturnType<typeof getSortIcon>
-}>()
+// Simple component for sort icons
+const SortIcon = defineComponent({
+  props: {
+    field: {
+      type: Object as PropType<TableField<Items>>,
+      required: true,
+    },
+    sortBy: {
+      type: Array as PropType<BTableSortBy[] | undefined>,
+      default: undefined,
+    },
+    initialSortDirection: {
+      type: String as PropType<BTableInitialSortDirection>,
+      default: 'asc',
+    },
+  },
+  setup(props) {
+    const currentSort = computed(() => props.sortBy?.find((el) => el.key === props.field.key))
 
-const getSortIcon = (field: TableField<Items>) => {
-  const currentSort = sortByModel.value?.find((el) => el.key === field.key)
+    const ascPath =
+      'M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z'
+    const descPath =
+      'M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z'
 
-  const ascPath =
-    'M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z'
-  const descPath =
-    'M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z'
+    const iconPath = computed(() => {
+      if (currentSort.value?.order === 'asc') return ascPath
+      if (currentSort.value?.order === 'desc') return descPath
 
-  if (currentSort?.order === 'asc') {
-    return {type: 'asc', opacity: 1, path: ascPath, class: 'bi bi-arrow-up-short'}
-  }
+      // Default (unsorted) state - determine the direction for the greyed out arrow
+      const fieldInitialDirection = props.field.initialSortDirection || props.initialSortDirection
 
-  if (currentSort?.order === 'desc') {
-    return {type: 'desc', opacity: 1, path: descPath, class: 'bi bi-arrow-down-short'}
-  }
+      let defaultDirection: Exclude<BTableInitialSortDirection, 'last'> = 'asc'
 
-  // Default (unsorted) state - determine the direction for the greyed out arrow
-  // Get the field's initial sort direction, falling back to table's initial sort direction
-  const fieldInitialDirection = field.initialSortDirection || props.initialSortDirection
+      if (fieldInitialDirection === 'last') {
+        const lastSorted = props.sortBy?.find((sort) => sort.order !== undefined)
+        defaultDirection = lastSorted?.order || 'asc'
+      } else if (fieldInitialDirection === 'desc') {
+        defaultDirection = 'desc'
+      }
 
-  let defaultDirection: Exclude<BTableInitialSortDirection, 'last'> = 'asc'
+      return defaultDirection === 'desc' ? descPath : ascPath
+    })
 
-  if (fieldInitialDirection === 'last') {
-    // Find the most recently sorted column's direction
-    const lastSorted = sortByModel.value?.find((sort) => sort.order !== undefined)
-    defaultDirection = lastSorted?.order || 'asc'
-  } else if (fieldInitialDirection === 'desc') {
-    defaultDirection = 'desc'
-  }
-  // else defaultDirection remains 'asc'
+    const iconClass = computed(() => {
+      if (currentSort.value?.order === 'asc') return 'bi bi-arrow-up-short'
+      if (currentSort.value?.order === 'desc') return 'bi bi-arrow-down-short'
 
-  if (defaultDirection === 'desc') {
-    return {type: 'desc', opacity: 0.4, path: descPath, class: 'bi bi-arrow-down-short'}
-  }
+      const fieldInitialDirection = props.field.initialSortDirection || props.initialSortDirection
 
-  return {type: 'asc', opacity: 0.4, path: ascPath, class: 'bi bi-arrow-up-short'}
-}
+      let defaultDirection: Exclude<BTableInitialSortDirection, 'last'> = 'asc'
+
+      if (fieldInitialDirection === 'last') {
+        const lastSorted = props.sortBy?.find((sort) => sort.order !== undefined)
+        defaultDirection = lastSorted?.order || 'asc'
+      } else if (fieldInitialDirection === 'desc') {
+        defaultDirection = 'desc'
+      }
+
+      return defaultDirection === 'desc' ? 'bi bi-arrow-down-short' : 'bi bi-arrow-up-short'
+    })
+
+    const iconOpacity = computed(() => (currentSort.value?.order ? 1 : 0.4))
+
+    return () =>
+      h(
+        'svg',
+        {
+          'xmlns': 'http://www.w3.org/2000/svg',
+          'width': 24,
+          'height': 24,
+          'fill': 'currentColor',
+          'class': iconClass.value,
+          'style': {opacity: iconOpacity.value},
+          'viewBox': '0 0 16 16',
+          'aria-hidden': true,
+        },
+        [
+          h('path', {
+            'fill-rule': 'evenodd',
+            'd': iconPath.value,
+          }),
+        ]
+      )
+  },
+})
 
 defineExpose({
   // The row selection methods are really for compat. Users should probably use the v-model though
