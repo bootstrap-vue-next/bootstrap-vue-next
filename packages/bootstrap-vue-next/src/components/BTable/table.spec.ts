@@ -1076,7 +1076,6 @@ describe('initial sort direction', () => {
       },
     })
 
-    // Check that unsorted columns show the descending arrow with reduced opacity
     const sortIcons = wrapper.findAll('svg')
     expect(sortIcons.length).toBeGreaterThan(0)
 
