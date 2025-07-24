@@ -1,8 +1,15 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {
+  BBreadcrumbItemEmits,
+  BBreadcrumbItemSlots,
+  BBreadcrumbSlots,
+  BvnComponentProps,
+} from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   defaultPropSectionSymbol,
+  type EmitReference,
   type PropertyReference,
+  type SlotsReference,
 } from '../../types'
 import {linkedBLinkSection, linkProps} from '../../utils/linkProps'
 
@@ -34,7 +41,7 @@ export default {
         prepend: {
           description: 'Content to prepend to the breadcrumb',
         },
-      },
+      } satisfies Record<keyof BBreadcrumbSlots, SlotsReference>,
     },
     BBreadcrumbItem: {
       sourcePath: '/BBreadcrumb/BBreadcrumbItem.vue',
@@ -67,12 +74,12 @@ export default {
             },
           },
         },
-      },
+      } satisfies Record<keyof BBreadcrumbItemEmits, EmitReference>,
       slots: {
         default: {
           description: 'Content to place in the breadcrumb item',
         },
-      },
+      } satisfies Record<keyof BBreadcrumbItemSlots, SlotsReference>,
     },
   }),
 }

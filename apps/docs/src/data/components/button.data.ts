@@ -1,8 +1,15 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {
+  BButtonEmits,
+  BButtonSlots,
+  BCloseButtonEmits,
+  BvnComponentProps,
+} from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   defaultPropSectionSymbol,
+  type EmitReference,
   type PropertyReference,
+  type SlotsReference,
   StyleKind,
 } from '../../types'
 import {pick} from '../../utils/objectUtils'
@@ -98,7 +105,7 @@ export default {
             },
           },
         },
-      },
+      } satisfies Record<keyof BButtonEmits | 'update:pressed', EmitReference>,
       slots: {
         'default': {
           description: 'Content to place in the button',
@@ -109,7 +116,7 @@ export default {
         'loading-spinner': {
           description: 'The content to replace the default loading spinner',
         },
-      },
+      } satisfies Record<keyof BButtonSlots, SlotsReference>,
     },
     BCloseButton: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.btn-close'},
@@ -140,7 +147,7 @@ export default {
             },
           },
         },
-      },
+      } satisfies Record<keyof BCloseButtonEmits, EmitReference>,
     },
   }),
 }

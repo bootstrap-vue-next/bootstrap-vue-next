@@ -1,5 +1,11 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference, SlotScopeReference} from '../../types'
+import type {BCollapseEmits, BCollapseSlots, BvnComponentProps} from 'bootstrap-vue-next'
+import type {
+  ComponentReference,
+  EmitReference,
+  PropertyReference,
+  SlotScopeReference,
+  SlotsReference,
+} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {showHideProps} from '../../utils/showHideData'
 import {buildCommonProps} from '../../utils/commonProps'
@@ -119,7 +125,7 @@ export default {
             },
           },
         },
-      },
+      } satisfies Record<keyof BCollapseEmits | 'update:model-value', EmitReference>,
       slots: {
         default: {
           description: 'The content shown and hidden by the collapse',
@@ -135,7 +141,7 @@ export default {
             'Used to create custom toggles for your collapsible content. Placed directly above the content',
           scope: sharedSlotsScope,
         },
-      },
+      } satisfies Record<keyof BCollapseSlots, SlotsReference>,
     },
   }),
 }

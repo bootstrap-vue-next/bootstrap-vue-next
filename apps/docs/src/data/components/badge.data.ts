@@ -1,8 +1,9 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {BBadgeSlots, BvnComponentProps} from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   defaultPropSectionSymbol,
   type PropertyReference,
+  type SlotsReference,
 } from '../../types'
 import {linkedBLinkSection, linkProps} from '../../utils/linkProps'
 import {pick} from '../../utils/objectUtils'
@@ -55,7 +56,7 @@ export default {
           description: '', // TODO missing description
           scope: {},
         },
-      },
+      } satisfies Record<keyof BBadgeSlots, SlotsReference>,
     },
   }),
 }

@@ -1,5 +1,11 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from 'src/types'
+import type {
+  BAccordionItemEmits,
+  BAccordionItemProps,
+  BAccordionItemSlots,
+  BAccordionProps,
+  BAccordionSlots,
+} from 'bootstrap-vue-next'
+import type {ComponentReference, EmitReference, PropertyReference, SlotsReference} from 'src/types'
 import {buildCommonProps} from '../../utils/commonProps'
 import {pick} from '../../utils/objectUtils'
 import {showHideProps} from '../../utils/showHideData'
@@ -40,7 +46,7 @@ export default {
           default: undefined,
           description: 'Id of the accordion item that is open',
         },
-      } satisfies Record<keyof BvnComponentProps['BAccordion'], PropertyReference>,
+      } satisfies Record<keyof BAccordionProps, PropertyReference>,
       emits: {
         'update:model-value': {
           description: 'Update the currently opened accordion item',
@@ -65,7 +71,7 @@ export default {
         default: {
           description: 'Content to place in the Accordion',
         },
-      },
+      } satisfies Record<keyof BAccordionSlots, SlotsReference>,
     },
     BAccordionItem: {
       sourcePath: '/BAccordion/BAccordionItem.vue',
@@ -138,7 +144,7 @@ export default {
           description:
             'Text to place in the header of the AccordionItem (title slot takes precedence)',
         },
-      } satisfies Record<keyof BvnComponentProps['BAccordionItem'], PropertyReference>,
+      } satisfies Record<keyof BAccordionItemProps, PropertyReference>,
       emits: {
         'hidden': {
           description: 'Emitted when AccordionItem has finished closing',
@@ -181,7 +187,7 @@ export default {
             },
           },
         },
-      },
+      } satisfies Record<keyof BAccordionItemEmits | 'update:model-value', EmitReference>,
       slots: {
         default: {
           description: 'Content to place in the AccordionItem',
@@ -189,7 +195,7 @@ export default {
         title: {
           description: 'Content to place in the header of the AccordionItem',
         },
-      },
+      } satisfies Record<keyof BAccordionItemSlots, SlotsReference>,
     },
   }),
 }

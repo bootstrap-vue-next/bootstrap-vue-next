@@ -1,12 +1,14 @@
-import {type BvnComponentProps} from 'bootstrap-vue-next'
+import {type BTableEmits, type BTableLiteEmits, type BTableLiteSlots, type BTableSimpleSlots, type BTableSlots, type BTbodySlots, type BTdSlots, type BTfootSlots, type BTheadSlots, type BThSlots, type BTrSlots, type BvnComponentProps} from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   defaultPropSectionSymbol,
   type EmitArgReference,
+  type EmitReference,
   type EmitsRecord,
   type PropertyReference,
   type PropsRecord,
   type SlotScopeReference,
+  type SlotsReference,
   StyleKind,
 } from '../../types'
 import {pick} from '../../utils/objectUtils'
@@ -59,7 +61,7 @@ export default {
         default: {
           description: 'Content to place in the table',
         },
-      },
+      }satisfies Record<keyof BTableSimpleSlots, SlotsReference>,
       props: {
         ...pick(buildCommonProps(buildCommonProps()), ['id', 'variant']),
         bordered: {
@@ -447,7 +449,7 @@ export default {
           description: 'Fixed top row slot for user supplied B-TD cells. Optionally scoped',
           scope: endRowScope,
         },
-      },
+      }satisfies Record<keyof BTableLiteSlots, SlotsReference>,
       emits: {
         'head-clicked': {
           description:
@@ -491,7 +493,7 @@ export default {
           description: 'Emitted when a row is unhovered',
           args: tableRowEventArgs('being unhovered'),
         },
-      } satisfies EmitsRecord,
+      } satisfies Record<keyof BTableLiteEmits<unknown, unknown>, EmitReference>,
     } as const
 
     const BTable = {
@@ -553,7 +555,7 @@ export default {
             },
           },
         },
-      },
+      } satisfies Record<keyof BTableEmits<unknown, unknown>, EmitReference>,
       props: {
         busy: {
           type: 'boolean',
@@ -749,7 +751,7 @@ export default {
         'table-busy': {
           description: 'Optional slot to place loading message when table is in the busy state',
         },
-      },
+      }satisfies Record<keyof BTableSlots, SlotsReference>,
     } as const
 
     return {
@@ -788,7 +790,7 @@ export default {
           default: {
             description: 'Content to place in the tbody',
           },
-        },
+        }satisfies Record<keyof BTbodySlots, SlotsReference>,
       },
       BTd: {
         styleSpec: {kind: StyleKind.Tag, value: 'td'},
@@ -822,7 +824,7 @@ export default {
           default: {
             description: 'Content to place in the td',
           },
-        },
+        }satisfies Record<keyof BTdSlots, SlotsReference>,
       },
       BTfoot: {
         styleSpec: {kind: StyleKind.Tag, value: 'tfoot'},
@@ -835,7 +837,7 @@ export default {
           default: {
             description: 'Content to place in the tfoot',
           },
-        },
+        }satisfies Record<keyof BTfootSlots, SlotsReference>,
       },
       BTh: {
         styleSpec: {kind: StyleKind.Tag, value: 'th'},
@@ -872,7 +874,7 @@ export default {
           default: {
             description: 'Content to place in the th',
           },
-        },
+        }satisfies Record<keyof BThSlots, SlotsReference>,
       },
       BThead: {
         styleSpec: {kind: StyleKind.Tag, value: 'thead'},
@@ -889,7 +891,7 @@ export default {
             description: '',
             scope: {},
           },
-        },
+        }satisfies Record<keyof BTheadSlots, SlotsReference>,
       },
       BTr: {
         styleSpec: {kind: StyleKind.Tag, value: 'tr'},
@@ -906,7 +908,7 @@ export default {
             description: '',
             scope: {},
           },
-        },
+        }satisfies Record<keyof BTrSlots, SlotsReference>,
       },
     }
   },

@@ -1,8 +1,21 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {
+  BAccordionSlots,
+  BDropdownFormSlots,
+  BDropdownGroupSlots,
+  BDropdownHeaderSlots,
+  BDropdownItemButtonEmits,
+  BDropdownItemButtonSlots,
+  BDropdownItemEmits,
+  BDropdownItemSlots,
+  BDropdownTextSlots,
+  BvnComponentProps,
+} from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   defaultPropSectionSymbol,
+  type EmitReference,
   type PropertyReference,
+  type SlotsReference,
 } from '../../types'
 import {linkProps, linkTo} from '../../utils/linkProps'
 import {dropdownEmits, dropdownProps, dropdownSlots} from '../../utils/dropdownCommon'
@@ -57,7 +70,7 @@ export default {
         default: {
           description: 'Content to place in the dropdown form',
         },
-      },
+      } satisfies Record<keyof BDropdownFormSlots, SlotsReference>,
     },
     BDropdownGroup: {
       sourcePath: '/BDropdown/BDropdownGroup.vue',
@@ -84,7 +97,7 @@ export default {
         header: {
           description: 'Optional header content for the dropdown group',
         },
-      },
+      } satisfies Record<keyof BDropdownGroupSlots, SlotsReference>,
     },
     BDropdownHeader: {
       sourcePath: '/BDropdown/BDropdownHeader.vue',
@@ -101,7 +114,7 @@ export default {
         default: {
           description: 'Content to place in the dropdown header',
         },
-      },
+      } satisfies Record<keyof BDropdownHeaderSlots, SlotsReference>,
     },
     BDropdownItem: {
       sourcePath: '/BDropdown/BDropdownItem.vue',
@@ -130,12 +143,12 @@ export default {
             },
           },
         },
-      },
+      } satisfies Record<keyof BDropdownItemEmits, EmitReference>,
       slots: {
         default: {
           description: 'Content to place in the dropdown item',
         },
-      },
+      } satisfies Record<keyof BDropdownItemSlots, SlotsReference>,
     },
     BDropdownItemButton: {
       sourcePath: '/BDropdown/BDropdownItemButton.vue',
@@ -163,12 +176,12 @@ export default {
             },
           },
         },
-      },
+      } satisfies Record<keyof BDropdownItemButtonEmits, EmitReference>,
       slots: {
         default: {
           description: 'Content to place in the dropdown item button',
         },
-      },
+      } satisfies Record<keyof BDropdownItemButtonSlots, SlotsReference>,
     },
     BDropdownText: {
       sourcePath: '/BDropdown/BDropdownText.vue',
@@ -197,7 +210,7 @@ export default {
         default: {
           description: 'Content to place in the dropdown text',
         },
-      },
+      } satisfies Record<keyof BDropdownTextSlots, SlotsReference>,
     },
   }),
 }

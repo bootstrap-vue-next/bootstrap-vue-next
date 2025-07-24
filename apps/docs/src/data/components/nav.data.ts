@@ -1,8 +1,18 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {
+  BNavFormEmits,
+  BNavFormSlots,
+  BNavItemEmits,
+  BNavItemSlots,
+  BNavSlots,
+  BNavTextSlots,
+  BvnComponentProps,
+} from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   defaultPropSectionSymbol,
+  type EmitReference,
   type PropertyReference,
+  type SlotsReference,
   StyleKind,
 } from '../../types'
 import {linkProps, linkTo} from '../../utils/linkProps'
@@ -76,7 +86,7 @@ export default {
           description: 'Content for the nav',
           scope: {},
         },
-      },
+      } satisfies Record<keyof BNavSlots, SlotsReference>,
     },
     BNavForm: {
       styleSpec: {kind: StyleKind.Tag, value: 'li > form'},
@@ -106,13 +116,13 @@ export default {
             },
           },
         },
-      },
+      } satisfies Record<keyof BNavFormEmits, EmitReference>,
       slots: {
         default: {
           description: 'Content for the nav form',
           scope: {},
         },
-      },
+      } satisfies Record<keyof BNavFormSlots, SlotsReference>,
     },
     BNavItem: {
       sourcePath: '/BNav/BNavItem.vue',
@@ -149,7 +159,7 @@ export default {
             },
           },
         },
-      },
+      } satisfies Record<keyof BNavItemEmits, EmitReference>,
       slots: {
         after: {
           description: 'Content placed after the nav item link (useful for nested navs)', // TODO grammar check (rephrased for clarity)
@@ -159,7 +169,7 @@ export default {
           description: 'Content for the nav item',
           scope: {},
         },
-      },
+      } satisfies Record<keyof BNavItemSlots, SlotsReference>,
     },
     BNavItemDropdown: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.nav-item.dropdown'},
@@ -184,7 +194,7 @@ export default {
           description: 'Content to display in the nav', // TODO grammar check (rephrased for consistency)
           scope: {},
         },
-      },
+      } satisfies Record<keyof BNavTextSlots, SlotsReference>,
     },
   }),
 }

@@ -1,5 +1,11 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference, SlotScopeReference} from '../../types'
+import type {BModalEmits, BModalSlots, BvnComponentProps} from 'bootstrap-vue-next'
+import type {
+  ComponentReference,
+  EmitReference,
+  PropertyReference,
+  SlotScopeReference,
+  SlotsReference,
+} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 import {showHideProps} from '../../utils/showHideData'
@@ -405,7 +411,7 @@ export default {
             },
           },
         },
-      },
+      } satisfies Record<keyof BModalEmits | 'update:model-value', EmitReference>,
       slots: {
         'backdrop': {
           description: 'Content for the modal backdrop',
@@ -443,7 +449,7 @@ export default {
             "Content for the modal title. Not shown if the 'header' slot is used. Optionally scoped", // TODO grammar check (rephrased for clarity)
           scope: sharedSlots,
         },
-      },
+      } satisfies Record<keyof BModalSlots, SlotsReference>,
     },
   }),
 }

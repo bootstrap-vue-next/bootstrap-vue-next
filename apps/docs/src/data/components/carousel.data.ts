@@ -1,5 +1,11 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
+import type {BCarouselEmits, BCarouselSlideProps, BCarouselSlideSlots, BCarouselSlots, BvnComponentProps} from 'bootstrap-vue-next'
+import {
+  type ComponentReference,
+  type EmitReference,
+  type PropertyReference,
+  type SlotsReference,
+  StyleKind,
+} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 
@@ -160,12 +166,12 @@ export default {
             },
           },
         },
-      },
+      } satisfies Record<keyof BCarouselEmits | 'update:model-value', EmitReference>,
       slots: {
         default: {
           description: 'Content (slides) to place in the carousel',
         },
-      },
+      } satisfies Record<keyof BCarouselSlots, SlotsReference>,
     },
     BCarouselSlide: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.carousel-item'},
@@ -266,7 +272,7 @@ export default {
         text: {
           description: 'Content to place in text area of the slide',
         },
-      },
+      } satisfies Record<keyof BCarouselSlideSlots, SlotsReference>,
     },
   }),
 }

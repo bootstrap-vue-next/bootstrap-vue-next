@@ -1,8 +1,9 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {BAccordionSlots,BCardFooterSlots,  BCardBodySlots, BCardSlots, BvnComponentProps, BCardGroupSlots, BCardHeaderSlots, BCardSubtitleSlots, BCardTextSlots, BCardTitleSlots} from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   defaultPropSectionSymbol,
   type PropertyReference,
+  type SlotsReference,
   StyleKind,
 } from '../../types'
 import {omit, pick} from '../../utils/objectUtils'
@@ -109,7 +110,7 @@ export default {
         img: {
           description: 'For custom rendering of image content',
         },
-      },
+      } satisfies Record<keyof BCardSlots, SlotsReference>,
     },
     BCardBody: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.card-body, .card-img-overlay'},
@@ -148,7 +149,7 @@ export default {
         subtitle: {
           description: 'Content to place in the card subtitle',
         },
-      },
+      } satisfies Record<keyof BCardBodySlots, SlotsReference>,
     },
     BCardFooter: {
       sourcePath: '/BCard/BCardFooter.vue',
@@ -171,7 +172,7 @@ export default {
         default: {
           description: 'Content to place in the card footer',
         },
-      },
+      } satisfies Record<keyof BCardFooterSlots, SlotsReference>,
     },
     BCardGroup: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.card-deck, .card-group, .card-columns'},
@@ -194,7 +195,7 @@ export default {
         default: {
           description: 'Content (cards) to place in the card group',
         },
-      },
+      } satisfies Record<keyof BCardGroupSlots, SlotsReference>,
     },
     BCardHeader: {
       sourcePath: '/BCard/BCardHeader.vue',
@@ -217,7 +218,7 @@ export default {
         default: {
           description: 'Content to place in the card header',
         },
-      },
+      } satisfies Record<keyof BCardHeaderSlots, SlotsReference>,
     },
     BCardImg: {
       sourcePath: '/BCard/BCardImg.vue',
@@ -267,7 +268,7 @@ export default {
         default: {
           description: 'Content to place in the card subtitle',
         },
-      },
+      } satisfies Record<keyof BCardSubtitleSlots, SlotsReference>,
     },
     BCardText: {
       sourcePath: '/BCard/BCardText.vue',
@@ -291,7 +292,7 @@ export default {
         default: {
           description: 'Content to place in the card text',
         },
-      },
+      } satisfies Record<keyof BCardTextSlots, SlotsReference>,
     },
     BCardTitle: {
       sourcePath: '/BCard/BCardTitle.vue',
@@ -315,7 +316,7 @@ export default {
         default: {
           description: 'Content to place in the card title',
         },
-      },
+      } satisfies Record<keyof BCardTitleSlots, SlotsReference>,
     },
   }),
 }

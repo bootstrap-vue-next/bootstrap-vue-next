@@ -1,8 +1,10 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {BNavbarBrandSlots, BNavbarNavSlots, BNavbarSlots, BNavbarToggleEmits, BNavbarToggleSlots, BvnComponentProps} from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   defaultPropSectionSymbol,
+  type EmitReference,
   type PropertyReference,
+  type SlotsReference,
 } from '../../types'
 import {omit, pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
@@ -56,7 +58,7 @@ export default {
         default: {
           description: 'Content to place in the navbar',
         },
-      },
+      }satisfies Record<keyof BNavbarSlots, SlotsReference>,
     },
     BNavbarBrand: {
       sourcePath: '/BNavbar/BNavbarBrand.vue',
@@ -83,7 +85,7 @@ export default {
         default: {
           description: 'Content to place in the navbar brand',
         },
-      },
+      }satisfies Record<keyof BNavbarBrandSlots, SlotsReference>,
     },
     BNavbarNav: {
       sourcePath: '/BNavbar/BNavbarNav.vue',
@@ -124,7 +126,7 @@ export default {
         default: {
           description: 'Content to place in the navbar nav',
         },
-      },
+      }satisfies Record<keyof BNavbarNavSlots, SlotsReference>,
     },
     BNavbarToggle: {
       sourcePath: '/BNavbar/BNavbarToggle.vue',
@@ -159,7 +161,7 @@ export default {
             },
           },
         },
-      },
+      } satisfies Record<keyof BNavbarToggleEmits, EmitReference>,
       slots: {
         default: {
           description: 'Alternate content to replace the default Bootstrap hamburger',
@@ -171,7 +173,7 @@ export default {
             },
           },
         },
-      },
+      }satisfies Record<keyof BNavbarToggleSlots, SlotsReference>,
     },
   }),
 }

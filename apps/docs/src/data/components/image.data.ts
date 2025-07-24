@@ -7,17 +7,7 @@ export default {
       styleSpec: {kind: StyleKind.BsvnClass},
       sourcePath: '/BImg/BImg.vue',
       props: imageProps,
-      emits: {
-        load: {
-          description: 'Fired when the image has finished loading',
-          args: {
-            load: {
-              type: 'Event',
-              description: 'The native load event',
-            },
-          },
-        },
-      },
+      emits: {},
       slots: {},
     },
   }),

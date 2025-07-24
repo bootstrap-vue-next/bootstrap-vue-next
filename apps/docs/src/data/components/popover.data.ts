@@ -1,5 +1,11 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
+import type {BPopoverEmits, BPopoverSlots, BvnComponentProps} from 'bootstrap-vue-next'
+import {
+  type ComponentReference,
+  type EmitReference,
+  type PropertyReference,
+  type SlotsReference,
+  StyleKind,
+} from '../../types'
 import {showHideEmits, showHideProps, showHideSlotsData} from '../../utils/showHideData'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
@@ -202,7 +208,7 @@ export default {
             },
           },
         },
-      },
+      } satisfies Record<keyof BPopoverEmits | 'update:model-value', EmitReference>,
       slots: {
         title: {
           description: 'Content for the popover title.',
@@ -216,7 +222,7 @@ export default {
           description: 'Content for the target or trigger element.',
           scope: showHideSlotsData,
         },
-      },
+      }satisfies Record<keyof BPopoverSlots, SlotsReference>,
     },
   }),
 }

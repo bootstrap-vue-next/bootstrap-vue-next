@@ -1,8 +1,15 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {
+  BAvatarEmits,
+  BAvatarGroupSlots,
+  BAvatarSlots,
+  BvnComponentProps,
+} from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   defaultPropSectionSymbol,
+  type EmitReference,
   type PropertyReference,
+  type SlotsReference,
   StyleKind,
 } from '../../types'
 import {pick} from '../../utils/objectUtils'
@@ -137,7 +144,7 @@ export default {
             },
           },
         },
-      },
+      } satisfies Record<keyof BAvatarEmits, EmitReference>,
       slots: {
         default: {
           description: 'Content to place in the avatars optional badge. Overrides the `badge` prop',
@@ -146,7 +153,7 @@ export default {
           description:
             'Content to place in the avatar. Overrides props `text`, `src`, and `icon-name`', // TODO prop inconsistency (mentions `icon-name`, which is not in BAvatarProps)
         },
-      },
+      } satisfies Record<keyof BAvatarSlots, SlotsReference>,
     },
     BAvatarGroup: {
       styleSpec: {kind: StyleKind.BsvnClass},
@@ -197,7 +204,7 @@ export default {
         default: {
           description: 'Content (avatars) to place in the avatar group',
         },
-      },
+      } satisfies Record<keyof BAvatarGroupSlots, SlotsReference>,
     },
   }),
 }

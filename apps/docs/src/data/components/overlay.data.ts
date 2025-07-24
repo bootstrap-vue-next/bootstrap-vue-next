@@ -1,5 +1,11 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
+import type {BOverlayEmits, BOverlaySlots, BvnComponentProps} from 'bootstrap-vue-next'
+import {
+  type ComponentReference,
+  type EmitReference,
+  type PropertyReference,
+  type SlotsReference,
+  StyleKind,
+} from '../../types'
 
 export default {
   load: (): ComponentReference => ({
@@ -110,7 +116,7 @@ export default {
           description: '', // TODO missing description
           args: {},
         },
-      },
+      } satisfies Record<keyof BOverlayEmits, EmitReference>,
       slots: {
         default: {
           description: '', // TODO missing description
@@ -130,7 +136,7 @@ export default {
             },
           },
         },
-      },
+      }satisfies Record<keyof BOverlaySlots, SlotsReference>,
     },
   }),
 }

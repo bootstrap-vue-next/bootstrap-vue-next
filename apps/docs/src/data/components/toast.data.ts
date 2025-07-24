@@ -1,7 +1,8 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {BToastEmits, BvnComponentProps} from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   defaultPropSectionSymbol,
+  type EmitReference,
   type PropertyReference,
 } from '../../types'
 import {omit, pick} from '../../utils/objectUtils'
@@ -213,7 +214,7 @@ export default {
             },
           },
         },
-      },
+      } satisfies Record<keyof BToastEmits | 'update:model-value', EmitReference>,
       slots: {},
     },
     BToastOrchestrator: {

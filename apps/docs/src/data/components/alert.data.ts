@@ -1,8 +1,10 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {BAlertEmits, BAlertSlots, BvnComponentProps} from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   defaultPropSectionSymbol,
+  type EmitReference,
   type PropertyReference,
+  type SlotsReference,
 } from '../../types'
 import {linkedBLinkSection, type linkProps} from '../../utils/linkProps'
 import {showHideProps} from '../../utils/showHideData'
@@ -130,13 +132,14 @@ export default {
         close: {
           description: 'Content to place in the close button',
         },
-      },
+        title: {
+          description: '',
+          scope: {}, // TODO
+        },
+      } satisfies Record<keyof BAlertSlots, SlotsReference>,
       emits: {
         'close': {
           description: 'Emitted when the alert begins its transition to close',
-        },
-        'closed': {
-          description: 'Emitted after the alert ends its transition to close',
         },
         'close-countdown': {
           description: 'Content to place in the alert', // TODO grammar check (description is vague and possibly incorrect; should describe the countdown event)
@@ -156,7 +159,7 @@ export default {
             },
           },
         },
-      },
+      } satisfies Record<keyof BAlertEmits | 'update:model-value', EmitReference>,
     },
   }),
 }

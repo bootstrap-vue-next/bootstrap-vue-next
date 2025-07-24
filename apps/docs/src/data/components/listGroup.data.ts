@@ -1,5 +1,5 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
+import type {BListGroupItemSlots, BListGroupSlots, BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference, SlotsReference} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 import type {linkProps} from 'src/utils/linkProps'
@@ -31,7 +31,7 @@ export default {
         default: {
           description: 'Content (items) to place in the list group',
         },
-      },
+      } satisfies Record<keyof BListGroupSlots, SlotsReference>,
     },
     BListGroupItem: {
       sourcePath: '/BListGroup/BListGroupItem.vue',
@@ -55,7 +55,7 @@ export default {
         default: {
           description: 'Content to place in the list group item',
         },
-      },
+      } satisfies Record<keyof BListGroupItemSlots, SlotsReference>,
     },
   }),
 }

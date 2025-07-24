@@ -1,5 +1,5 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
+import type {BFormFileSlots, BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference, SlotsReference} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 
@@ -93,22 +93,13 @@ export default {
             },
           },
         },
-        'change': {
-          description: 'Original change event of the input',
-          args: {
-            value: {
-              type: 'Event',
-              description: 'The browsers default change event', // TODO grammar check (should say "browser's" instead of "browsers")
-            },
-          },
-        },
       },
       slots: {
         label: {
           description: '', // TODO missing description
           scope: {},
         },
-      },
+      }satisfies Record<keyof BFormFileSlots, SlotsReference>,
     },
   }),
 }

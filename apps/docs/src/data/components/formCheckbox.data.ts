@@ -1,6 +1,10 @@
 import {pick} from '../../utils/objectUtils'
-import type {ComponentReference, PropertyReference} from '../../types'
-import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference, SlotsReference} from '../../types'
+import type {
+  BFormCheckboxGroupSlots,
+  BFormCheckboxSlots,
+  BvnComponentProps,
+} from 'bootstrap-vue-next'
 import {buildCommonProps} from '../../utils/commonProps'
 
 export default {
@@ -109,7 +113,7 @@ export default {
         default: {
           description: 'Content to place in the label of the form checkbox',
         },
-      },
+      } satisfies Record<keyof BFormCheckboxSlots, SlotsReference>,
     },
     BFormCheckboxGroup: {
       sourcePath: '/BFormCheckbox/BFormCheckboxGroup.vue',
@@ -210,7 +214,7 @@ export default {
             },
           },
         },
-      },
+      } satisfies Record<keyof BFormCheckboxGroupSlots, SlotsReference>,
     },
   }),
 }

@@ -1,8 +1,14 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {
+  BFormSelectOptionGroupSlots,
+  BFormSelectOptionSlots,
+  BFormSelectSlots,
+  BvnComponentProps,
+} from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   type PropertyReference,
   type SlotsRecord,
+  type SlotsReference,
   StyleKind,
 } from '../../types'
 import {pick} from '../../utils/objectUtils'
@@ -104,7 +110,7 @@ export default {
           description:
             "Slot to place options or option groups above options provided via the 'options' prop",
         },
-      },
+      } satisfies Record<keyof BFormSelectSlots, SlotsReference>,
     },
     BFormSelectOption: {
       styleSpec: {kind: StyleKind.Tag, value: 'option'},
@@ -125,7 +131,7 @@ export default {
         default: {
           description: 'Content to place in the form select option',
         },
-      },
+      } satisfies Record<keyof BFormSelectOptionSlots, SlotsReference>,
     },
     BFormSelectOptionGroup: {
       styleSpec: {kind: StyleKind.Tag, value: 'optgroup'},
@@ -151,7 +157,7 @@ export default {
         default: {
           description: "Slot to place options above options provided via the 'options' prop",
         },
-      },
+      } satisfies Record<keyof BFormSelectOptionGroupSlots, SlotsReference>,
     },
   }),
 }

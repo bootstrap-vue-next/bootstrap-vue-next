@@ -1,5 +1,5 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
+import type {BPlaceholderCardSlots, BPlaceholderTableSlots, BPlaceholderWrapperSlots, BvnComponentProps} from 'bootstrap-vue-next'
+import {type ComponentReference, type PropertyReference, type SlotsReference, StyleKind} from '../../types'
 
 export default {
   load: (): ComponentReference => ({
@@ -137,7 +137,7 @@ export default {
           description: 'Overrides the default footer placeholder',
           scope: {},
         },
-      },
+      } satisfies Record<keyof BPlaceholderCardSlots, SlotsReference>,
     },
     BPlaceholderWrapper: {
       styleSpec: {kind: StyleKind.None},
@@ -159,7 +159,7 @@ export default {
           description: 'Content to show when the `loading` prop is `true`',
           scope: {},
         },
-      },
+      }satisfies Record<keyof BPlaceholderWrapperSlots, SlotsReference>,
     },
     BPlaceholderTable: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.table'},
@@ -252,7 +252,7 @@ export default {
           description: 'Overrides the table body (tbody) placeholder',
           scope: {},
         },
-      },
+      }satisfies Record<keyof BPlaceholderTableSlots, SlotsReference>,
     },
     BPlaceholderButton: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.placeholder.btn'},

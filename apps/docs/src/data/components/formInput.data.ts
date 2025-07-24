@@ -32,14 +32,12 @@ export default {
         max: {
           type: 'Numberish',
           default: 'undefined',
-          description:
-            "Value to set in the 'max' attribute on the input. Used by number-like inputs",
+          description: "Sets the 'max' attribute on the input; used by number-like input types",
         },
         min: {
           type: 'Numberish',
           default: 'undefined',
-          description:
-            "Value to set in the 'min' attribute on the input. Used by number-like inputs",
+          description: "Sets the 'min' attribute on the input; used by number-like input types",
         },
         modelValue: {
           type: 'Numberish | null',
@@ -49,24 +47,23 @@ export default {
         step: {
           type: 'Numberish',
           default: 'undefined',
-          description:
-            "Value to set in the 'step' attribute on the input. Used by number-like inputs",
+          description: "Sets the 'step' attribute on the input; used by number-like input types",
         },
         type: {
           type: 'InputType',
           default: 'text',
-          description: 'The type of input to render. See the docs for supported types',
+          description: 'The type of input to render; refer to documentation for supported types',
         },
       } satisfies Record<keyof BvnComponentProps['BFormInput'], PropertyReference>,
       emits: {
         'update:model-value': {
           description:
-            'Emitted when the selected value(s) are changed. Looking for the `input` or `change` event - use `update:model-value` instead.', // TODO similar content to BFormCheckboxGroup/update:model-value (similar description)
+            'Emitted when the input value changes; use `update:model-value` instead of `input` or `change` events',
           args: {
             value: {
               type: 'string',
               description:
-                'Value of input, after any formatting. Not emitted if the value does not change',
+                'The new value of the input after any formatting; not emitted if the value remains unchanged',
             },
           },
         },

@@ -37,13 +37,11 @@ export type SlotScopeReference = Record<
     notYetImplemented?: boolean
   }
 >
-export type SlotsRecord = Record<
-  string,
-  {
-    scope?: SlotScopeReference
-    description?: string
-  }
->
+export type SlotsReference = {
+  scope?: SlotScopeReference
+  description?: string
+}
+export type SlotsRecord = Record<string, SlotsReference>
 
 export const enum StyleKind {
   BootstrapClass = 'BOOTSTRAP-CLASS',

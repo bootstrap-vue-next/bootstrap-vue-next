@@ -1,5 +1,5 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
+import type {BButtonGroupSlots, BvnComponentProps} from 'bootstrap-vue-next'
+import {type ComponentReference, type PropertyReference, type SlotsReference, StyleKind} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 
@@ -21,7 +21,7 @@ export default {
         default: {
           description: 'Content to place in the button toolbar',
         },
-      },
+      } satisfies Record<keyof BButtonGroupSlots, SlotsReference>,
     },
   }),
 }

@@ -1,5 +1,5 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
+import type {BProgressBarSlots, BProgressSlots, BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference, SlotsReference} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 
@@ -55,7 +55,7 @@ export default {
         default: {
           description: 'Content (progress bars) to place in the progress element.',
         },
-      },
+      }satisfies Record<keyof BProgressSlots, SlotsReference>,
     },
     BProgressBar: {
       sourcePath: '/BProgress/BProgressBar.vue',
@@ -108,7 +108,7 @@ export default {
           description:
             'Content to place in the progress bar, overriding the `label`, `showProgress`, and `showValue` props.',
         },
-      },
+      }satisfies Record<keyof BProgressBarSlots, SlotsReference>,
     },
   }),
 }

@@ -1,5 +1,11 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
+import type {BOffcanvasEmits, BOffcanvasSlots, BvnComponentProps} from 'bootstrap-vue-next'
+import {
+  type ComponentReference,
+  type EmitReference,
+  type PropertyReference,
+  type SlotsReference,
+  StyleKind,
+} from '../../types'
 import {showHideProps} from '../../utils/showHideData'
 
 export default {
@@ -195,7 +201,7 @@ export default {
             },
           },
         },
-      },
+      } satisfies Record<keyof BOffcanvasEmits | 'update:model-value', EmitReference>,
       slots: {
         'title': {
           description: '', // TODO missing description
@@ -261,7 +267,7 @@ export default {
           description: '', // TODO missing description
           scope: {},
         },
-      },
+      } satisfies Record<keyof BOffcanvasSlots, SlotsReference>,
     },
   }),
 }

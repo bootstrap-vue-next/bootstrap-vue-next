@@ -1,5 +1,11 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
+import type {BTabsEmits, BTabsSlots, BvnComponentProps} from 'bootstrap-vue-next'
+import {
+  type ComponentReference,
+  type EmitReference,
+  type PropertyReference,
+  type SlotsReference,
+  StyleKind,
+} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 import {showHideProps} from '../../utils/showHideData'
@@ -10,39 +16,37 @@ export default {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.tab-pane'},
       sourcePath: '/BTabs/BTab.vue',
       props: {
-        '': {
-          buttonId: {
-            type: 'string',
-            default: undefined,
-            description:
-              "Use a specific ID for this tab's tab control button. If not provided, one will automatically be generated",
-          },
-          noBody: {
-            type: 'boolean',
-            default: false,
-            description:
-              "When the parent b-tabs has the 'card' prop set, do not render a card-body wrapper",
-          },
-          titleItemClass: {
-            type: 'ClassValue',
-            default: undefined,
-            description: "CSS class (or classes) to apply to the tab's control button 'li' element",
-          },
-          titleLinkAttrs: {
-            type: 'AttrsValue',
-            default: undefined,
-            description: "Attributes to apply to the tab's control button inner link element",
-          },
-          titleLinkClass: {
-            type: 'ClassValue',
-            default: undefined,
-            description:
-              "CSS class (or classes) to apply to the tab's control button inner link element",
-          },
-          ...pick(showHideProps, ['lazy', 'unmountLazy']),
-          ...pick(buildCommonProps(), ['active', 'disabled', 'id', 'tag', 'title']),
-        } satisfies Record<keyof BvnComponentProps['BTab'], PropertyReference>,
-      },
+        ...pick(showHideProps, ['lazy', 'unmountLazy']),
+        ...pick(buildCommonProps(), ['active', 'disabled', 'id', 'tag', 'title']),
+        buttonId: {
+          type: 'string',
+          default: undefined,
+          description:
+            "Use a specific ID for this tab's tab control button. If not provided, one will automatically be generated",
+        },
+        noBody: {
+          type: 'boolean',
+          default: false,
+          description:
+            "When the parent b-tabs has the 'card' prop set, do not render a card-body wrapper",
+        },
+        titleItemClass: {
+          type: 'ClassValue',
+          default: undefined,
+          description: "CSS class (or classes) to apply to the tab's control button 'li' element",
+        },
+        titleLinkAttrs: {
+          type: 'AttrsValue',
+          default: undefined,
+          description: "Attributes to apply to the tab's control button inner link element",
+        },
+        titleLinkClass: {
+          type: 'ClassValue',
+          default: undefined,
+          description:
+            "CSS class (or classes) to apply to the tab's control button inner link element",
+        },
+      } satisfies Record<keyof BvnComponentProps['BTab'], PropertyReference>,
     },
     BTabs: {
       sourcePath: '/BTabs/BTabs.vue',
@@ -219,7 +223,7 @@ export default {
             },
           },
         },
-      },
+      } satisfies Record<keyof BTabsEmits | 'update:index' | 'update:model-value', EmitReference>,
       slots: {
         'default': {
           description: 'Content (tabs) for the tabs element.',
@@ -233,7 +237,7 @@ export default {
         'tabs-start': {
           description: 'Additional tab buttons without content, placed before content tab buttons.',
         },
-      },
+      }satisfies Record<keyof BTabsSlots, SlotsReference>,
     },
   }),
 }

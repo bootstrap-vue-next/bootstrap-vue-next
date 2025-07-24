@@ -1,5 +1,10 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
+import type {BFormRadioGroupSlots, BFormRadioSlots, BvnComponentProps} from 'bootstrap-vue-next'
+import {
+  type ComponentReference,
+  type PropertyReference,
+  type SlotsReference,
+  StyleKind,
+} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 
@@ -76,7 +81,7 @@ export default {
         default: {
           description: 'Content to place in the label of the radio button',
         },
-      },
+      } satisfies Record<keyof BFormRadioSlots, SlotsReference>,
     },
     BFormRadioGroup: {
       styleSpec: {kind: StyleKind.Tag, value: 'dev[role="radiogroup"]'}, // TODO grammar check (typo: "dev" should likely be "div")
@@ -169,7 +174,7 @@ export default {
             },
           },
         },
-      },
+      } satisfies Record<keyof BFormRadioGroupSlots, SlotsReference>,
     },
   }),
 }

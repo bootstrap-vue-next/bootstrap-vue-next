@@ -1,5 +1,15 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
+import type {
+  BFormSpinbuttonEmits,
+  BFormSpinbuttonSlots,
+  BvnComponentProps,
+} from 'bootstrap-vue-next'
+import {
+  type ComponentReference,
+  type EmitReference,
+  type PropertyReference,
+  type SlotsReference,
+  StyleKind,
+} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 
@@ -128,7 +138,7 @@ export default {
             },
           },
         },
-      },
+      } satisfies Record<keyof BFormSpinbuttonEmits | 'update:model-value', EmitReference>,
       slots: {
         decrement: {
           description: 'Custom content to place in the decrement button',
@@ -148,7 +158,7 @@ export default {
             },
           },
         },
-      },
+      } satisfies Record<keyof BFormSpinbuttonSlots, SlotsReference>,
     },
   }),
 }

@@ -1,7 +1,13 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
+import type {BColSlots, BRowSlots, BvnComponentProps} from 'bootstrap-vue-next'
+import {
+  type ComponentReference,
+  type PropertyReference,
+  type SlotsReference,
+  StyleKind,
+} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
+import type {BContainerSlots} from 'node_modules/bootstrap-vue-next/dist/src'
 
 export default {
   load: (): ComponentReference => ({
@@ -31,7 +37,7 @@ export default {
         default: {
           description: 'Content to place in the container',
         },
-      },
+      } satisfies Record<keyof BContainerSlots, SlotsReference>,
     },
     BRow: {
       sourcePath: '/BContainer/BRow.vue',
@@ -106,7 +112,7 @@ export default {
         default: {
           description: 'Content to place in the row',
         },
-      },
+      } satisfies Record<keyof BRowSlots, SlotsReference>,
     },
     BCol: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.col[-*]'},
@@ -228,7 +234,7 @@ export default {
         default: {
           description: 'Content to place in the col',
         },
-      },
+      } satisfies Record<keyof BColSlots, SlotsReference>,
     },
   }),
 }

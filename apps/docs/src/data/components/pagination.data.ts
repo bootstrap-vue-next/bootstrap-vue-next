@@ -1,5 +1,11 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference, SlotScopeReference} from '../../types'
+import type {BPaginationEmits, BPaginationSlots, BvnComponentProps} from 'bootstrap-vue-next'
+import type {
+  ComponentReference,
+  EmitReference,
+  PropertyReference,
+  SlotScopeReference,
+  SlotsReference,
+} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 
@@ -183,7 +189,7 @@ export default {
             },
           },
         },
-      },
+      } satisfies Record<keyof BPaginationEmits | 'update:model-value', EmitReference>,
       slots: {
         'ellipsis-text': {
           scope: {},
@@ -219,7 +225,7 @@ export default {
           description: 'The go-to-previous-page button content',
           scope: sharedScope,
         },
-      },
+      }satisfies Record<keyof BPaginationSlots, SlotsReference>,
     },
   }),
 }
