@@ -41,7 +41,7 @@ import BImg from '../BImg/BImg.vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {isEmptySlot} from '../../utils/dom'
 import {useId} from '../../composables/useId'
-import {BCarouselSlideSlots} from '../../types/ComponentSlots'
+import type {BCarouselSlideSlots} from '../../types/ComponentSlots'
 
 const _props = withDefaults(defineProps<BCarouselSlideProps>(), {
   background: undefined,

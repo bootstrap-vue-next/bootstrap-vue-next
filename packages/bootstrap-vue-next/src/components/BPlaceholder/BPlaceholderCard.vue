@@ -52,7 +52,7 @@ import BPlaceholderButton from './BPlaceholderButton.vue'
 import type {BPlaceholderCardProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
-import {BPlaceholderCardSlots} from '../../types/ComponentSlots'
+import type {BPlaceholderCardSlots} from '../../types/ComponentSlots'
 
 const _props = withDefaults(defineProps<BPlaceholderCardProps>(), {
   animation: undefined,

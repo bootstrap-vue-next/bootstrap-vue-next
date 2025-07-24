@@ -44,6 +44,7 @@
                 <template v-if="!props.noHeaderClose">
                   <BButton
                     v-if="hasHeaderCloseSlot"
+                    ref="_closeButton"
                     v-bind="headerCloseAttrs"
                     @click="hide('close')"
                   >
@@ -51,6 +52,7 @@
                   </BButton>
                   <BCloseButton
                     v-else
+                    ref="_closeButton"
                     :aria-label="props.headerCloseLabel"
                     v-bind="headerCloseAttrs"
                     @click="hide('close')"
@@ -231,11 +233,11 @@ const computedId = useId(() => props.id, 'modal')
 // Since the modelValue that's passed from that composable is not reactive, this internal ref _is_ and thus it will trigger closing the modal
 const modelValue = defineModel<Exclude<BModalProps['modelValue'], undefined>>({default: false})
 
-const element = useTemplateRef('_element')
-const fallbackFocusElement = useTemplateRef('_fallbackFocusElement')
-const okButton = useTemplateRef('_okButton')
-const cancelButton = useTemplateRef('_cancelButton')
-const closeButton = useTemplateRef('_closeButton')
+const element = useTemplateRef<HTMLElement | null>('_element')
+const fallbackFocusElement = useTemplateRef<HTMLElement | null>('_fallbackFocusElement')
+const okButton = useTemplateRef<HTMLElement | null>('_okButton')
+const cancelButton = useTemplateRef<HTMLElement | null>('_cancelButton')
+const closeButton = useTemplateRef<HTMLElement | null>('_closeButton')
 
 const pickFocusItem = () => {
   if (props.focus && typeof props.focus !== 'boolean') {

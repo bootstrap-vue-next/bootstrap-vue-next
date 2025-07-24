@@ -33,7 +33,7 @@ const _props = withDefaults(defineProps<BFormDatalistProps>(), {
   valueField: 'value',
 })
 const props = useDefaults(_props, 'BFormDatalist')
-defineSlots<BFormDatalistSlots>()
+defineSlots<BFormDatalistSlots<T>>()
 
 const computedId = useId(() => props.id, 'datalist')
 

@@ -59,7 +59,7 @@ const modelValue = defineModel<Exclude<BCollapseProps['modelValue'], undefined>>
 
 const computedId = useId(() => props.id, 'collapse')
 
-const element = useTemplateRef('_element')
+const element = useTemplateRef<HTMLElement | null>('_element')
 
 let inCollapse = false
 const onEnter = (el: Element) => {

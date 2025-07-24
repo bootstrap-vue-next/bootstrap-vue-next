@@ -27,7 +27,7 @@ import {getGroupAttr, getGroupClasses} from '../../composables/useFormCheck'
 import {useFocus} from '@vueuse/core'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
-import {BFormRadioGroupSlots} from '../../types/ComponentSlots'
+import type {BFormRadioGroupSlots} from '../../types/ComponentSlots'
 
 const _props = withDefaults(defineProps<Omit<BFormRadioGroupProps, 'modelValue'>>(), {
   ariaInvalid: undefined,

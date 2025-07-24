@@ -1,8 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type {Placement} from './Alignment'
 import type {ClassValue} from './AnyValuedAttributes'
-import type {ColorVariant} from './ColorTypes'
+import type {ButtonVariant, ColorVariant} from './ColorTypes'
+import type {ValidationState} from './CommonTypes'
+import type {LiteralUnion} from './LiteralUnion'
 import type {SelectOption} from './SelectTypes'
+import type {SpinnerType} from './SpinnerType'
+import type {InputType} from './InputType'
+import type {TableField} from './TableTypes'
 
 export interface ShowHideSlotsData {
   id: string
@@ -197,7 +202,7 @@ export type BDropdownItemButtonSlots = {
 export type BFormSlots = {
   default?: (props: Record<string, never>) => any
 }
-export type BFormDatalistSlots = {
+export type BFormDatalistSlots<T> = {
   default?: (props: Record<string, never>) => any
 
   first?: (props: Record<string, never>) => any
@@ -229,7 +234,13 @@ export type BFormCheckboxGroupSlots = {
 
   first?: (props: Record<string, never>) => any
 
-  option: (props: (typeof normalizeOptions.value)[number]) => any
+  option: (props: {
+    text: string | undefined
+
+    value: any
+    disabled: boolean | undefined
+    [key: string]: unknown
+  }) => any
 }
 
 export type BFormFileSlots = {
@@ -260,14 +271,20 @@ export type BFormRadioGroupSlots = {
 
   first?: (props: Record<string, never>) => any
 
-  option: (props: (typeof normalizeOptions.value)[number]) => any
+  option: (props: {
+    text: string | undefined
+
+    value: any
+    disabled?: boolean | undefined
+    [key: string]: unknown
+  }) => any
 }
 
 export type BFormRatingSlots = {
   default?: (props: {starIndex: number; isFilled: boolean; isHalf: boolean}) => any
 }
 
-export type BFormSelectSlots = {
+export type BFormSelectSlots<T> = {
   default?: (props: Record<string, never>) => any
 
   first?: (props: Record<string, never>) => any
@@ -278,7 +295,7 @@ export type BFormSelectSlots = {
 export type BFormSelectOptionSlots = {
   default?: (props: Record<string, never>) => any
 }
-export type BFormSelectOptionGroupSlots = {
+export type BFormSelectOptionGroupSlots<T> = {
   default?: (props: Record<string, never>) => any
 
   first?: (props: Record<string, never>) => any
@@ -406,7 +423,44 @@ export type BFormTagSlots = {
 export type BFormTagsSlots = {
   'add-button-text'?: (props: Record<string, never>) => any
 
-  'default'?: (props: typeof slotAttrs.value) => any
+  'default'?: (props: {
+    addButtonText: string
+    addButtonVariant: ButtonVariant | null
+    addTag: (tag?: string) => void
+    disableAddButton: boolean
+    disabled: boolean
+    duplicateTagText: string
+    duplicateTags: string[]
+    form: string | undefined
+    inputAttrs: Record<string, unknown> | undefined
+    inputClass: ClassValue
+    inputHandlers: {
+      input: (e: Event | string) => void
+      keydown: (e: KeyboardEvent) => void
+      change: (e: Event) => void
+    }
+    inputId: string
+    inputType: InputType
+    invalidTagText: string
+    invalidTags: string[]
+    isDuplicate: boolean
+    isInvalid: boolean
+    isLimitReached: boolean
+    limitTagsText: string
+    limit: number
+    noTagRemove: boolean
+    placeholder: string
+    removeTag: (tag?: string) => void
+    required: boolean
+    separator: string | readonly string[] | undefined
+    size: string
+    state: ValidationState
+    tagClass: ClassValue
+    tagPills: boolean
+    tagRemoveLabel: string | undefined
+    tagVariant: ColorVariant | null
+    tags: string[]
+  }) => any
   'tag'?: (props: {
     tag: string
     tagClass: ClassValue
@@ -445,40 +499,56 @@ export type BNavbarToggleSlots = {
 export type BOverlaySlots = {
   default?: (props: Record<string, never>) => any
 
-  overlay?: (props: typeof spinnerAttrs.value) => any
+  overlay?: (props: {
+    type: SpinnerType
+    variant: ColorVariant | null | undefined
+    small: boolean
+  }) => any
 }
 
-export type BTableSlots = {
+type EmptySlotScope<Items> = {
+  emptyFilteredText: string
+  emptyText: string
+  fields: TableField<Items>[]
+  items: readonly Items[]
+}
+type SortSlotScope<Items> = {
+  label: string | undefined
+  column: LiteralUnion<keyof Items>
+  field: TableField<Items>
+  isFoot: false
+}
+export type BTableSlots<Items> = {
   // BTableLite
 
-  'table-colgroup'?: (props: {fields: typeof computedFields.value}) => any
+  'table-colgroup'?: (props: {fields: TableField<Items>[]}) => any
   'thead-top'?: (props: {
     columns: number
-    fields: typeof computedFields.value
+    fields: TableField<Items>[]
     selectAllRows: () => void
     clearSelected: () => void
   }) => any
   [key: `head(${string})`]: (props: {
     label: string | undefined
     column: LiteralUnion<keyof Items>
-    field: (typeof computedFields.value)[0]
+    field: TableField<Items>
     isFoot: false
     selectAllRows: () => void
     clearSelected: () => void
   }) => any
   'thead-sub'?: (props: {
     items: readonly Items[]
-    fields: typeof computedFields.value
-    field: (typeof computedFields.value)[0]
+    fields: TableField<Items>[]
+    field: TableField<Items>
   }) => any
 
-  'top-row'?: (props: {columns: number; fields: typeof computedFields.value}) => any
+  'top-row'?: (props: {columns: number; fields: TableField<Items>[]}) => any
   [key: `cell(${string})`]: (props: {
     value: unknown
     unformatted: unknown
     index: number
     item: Items
-    field: (typeof computedFields.value)[0]
+    field: TableField<Items>
     items: readonly Items[]
     toggleDetails: () => void
     detailsShowing: boolean
@@ -489,25 +559,25 @@ export type BTableSlots = {
   'row-details'?: (props: {
     item: Items
     toggleDetails: () => void
-    fields: typeof computedFields.value
+    fields: TableField<Items>[]
     index: number
     rowSelected: boolean
     selectRow: (index?: number) => void
     unselectRow: (index?: number) => void
   }) => any
 
-  'bottom-row'?: (props: {columns: number; fields: typeof computedFields.value}) => any
+  'bottom-row'?: (props: {columns: number; fields: TableField<Items>[]}) => any
 
   [key: `foot(${string})`]: (props: {
     label: string | undefined
     column: LiteralUnion<keyof Items>
-    field: (typeof computedFields.value)[0]
+    field: TableField<Items>
     isFoot: true
     selectAllRows: () => void
     clearSelected: () => void
   }) => any
   'custom-foot'?: (props: {
-    fields: typeof computedFields.value
+    fields: TableField<Items>[]
     items: readonly Items[]
     columns: number
   }) => any
@@ -516,17 +586,17 @@ export type BTableSlots = {
 
   // end btable slots
 
-  [key: `sortAsc(${string})`]: (props: SortSlotScope) => any
+  [key: `sortAsc(${string})`]: (props: SortSlotScope<Items>) => any
 
-  [key: `sortDesc(${string})`]: (props: SortSlotScope) => any
+  [key: `sortDesc(${string})`]: (props: SortSlotScope<Items>) => any
 
-  [key: `sortDefault(${string})`]: (props: SortSlotScope) => any
+  [key: `sortDefault(${string})`]: (props: SortSlotScope<Items>) => any
 
   'table-busy'?: (props: Record<string, never>) => any
 
-  'empty-filtered'?: (props: typeof emptySlotScope.value) => any
+  'empty-filtered'?: (props: EmptySlotScope<Items>) => any
 
-  'empty'?: (props: typeof emptySlotScope.value) => any
+  'empty'?: (props: EmptySlotScope<Items>) => any
 }
 export type BColSlots = {
   default?: (props: Record<string, never>) => any
@@ -538,34 +608,34 @@ export type BContainerSlots = {
   default?: (props: Record<string, never>) => any
 }
 
-export type BTableLiteSlots = {
-  'table-colgroup'?: (props: {fields: typeof computedFields.value}) => any
+export type BTableLiteSlots<Items> = {
+  'table-colgroup'?: (props: {fields: TableField<Items>[]}) => any
 
-  'thead-top'?: (props: {columns: number; fields: typeof computedFields.value}) => any
+  'thead-top'?: (props: {columns: number; fields: TableField<Items>[]}) => any
   [key: `head(${string})`]: (props: {
     label: string | undefined
     column: LiteralUnion<keyof Items>
-    field: (typeof computedFields.value)[0]
+    field: TableField<Items>
     isFoot: false
   }) => any
   'thead-sub'?: (props: {
     items: readonly Items[]
-    fields: typeof computedFields.value
-    field: (typeof computedFields.value)[0]
+    fields: TableField<Items>[]
+    field: TableField<Items>
   }) => any
   'custom-body'?: (props: {
-    fields: typeof computedFields.value
+    fields: TableField<Items>[]
     items: readonly Items[]
     columns: number
   }) => any
 
-  'top-row'?: (props: {columns: number; fields: typeof computedFields.value}) => any
+  'top-row'?: (props: {columns: number; fields: TableField<Items>[]}) => any
   [key: `cell(${string})`]: (props: {
     value: unknown
     unformatted: unknown
     index: number
     item: Items
-    field: (typeof computedFields.value)[0]
+    field: TableField<Items>
     items: readonly Items[]
     toggleDetails: () => void
     detailsShowing: boolean
@@ -573,19 +643,19 @@ export type BTableLiteSlots = {
   'row-details'?: (props: {
     item: Items
     toggleDetails: () => void
-    fields: typeof computedFields.value
+    fields: TableField<Items>[]
     index: number
   }) => any
 
-  'bottom-row'?: (props: {columns: number; fields: typeof computedFields.value}) => any
+  'bottom-row'?: (props: {columns: number; fields: TableField<Items>[]}) => any
   [key: `foot(${string})`]: (props: {
     label: string | undefined
     column: LiteralUnion<keyof Items>
-    field: (typeof computedFields.value)[0]
+    field: TableField<Items>
     isFoot: true
   }) => any
   'custom-foot'?: (props: {
-    fields: typeof computedFields.value
+    fields: TableField<Items>[]
     items: readonly Items[]
     columns: number
   }) => any
@@ -617,7 +687,7 @@ type BPaginatonSharedScope = {
   page: number
   index: number
   active: boolean
-  content: string | undefined
+  content: string | number
 }
 export type BPaginationSlots = {
   'page'?: (props: BPaginatonSharedScope) => any

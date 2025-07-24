@@ -9,7 +9,7 @@ import {computed} from 'vue'
 import type {BColProps} from '../../types/ComponentProps'
 import {getClasses} from '../../utils/getClasses'
 import {useDefaults} from '../../composables/useDefaults'
-import {BColSlots} from '../../types/ComponentSlots'
+import type {BColSlots} from '../../types/ComponentSlots'
 
 const _props = withDefaults(defineProps<BColProps>(), {
   alignSelf: undefined,

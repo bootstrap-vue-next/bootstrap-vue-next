@@ -17,7 +17,7 @@
 import {useDefaults} from '../../composables/useDefaults'
 import type {BThProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
-import {BThSlots} from '../../types/ComponentSlots'
+import type {BThSlots} from '../../types/ComponentSlots'
 
 const _props = withDefaults(defineProps<BThProps>(), {
   colspan: undefined,

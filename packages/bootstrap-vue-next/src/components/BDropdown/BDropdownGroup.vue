@@ -28,7 +28,7 @@ import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BDropdownGroupProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
-import {BDropdownGroupSlots} from '../../types/ComponentSlots'
+import type {BDropdownGroupSlots} from '../../types/ComponentSlots'
 
 defineOptions({
   inheritAttrs: false,

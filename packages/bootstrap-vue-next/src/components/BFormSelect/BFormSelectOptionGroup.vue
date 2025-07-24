@@ -33,7 +33,7 @@ const _props = withDefaults(defineProps<BFormSelectOptionGroupProps>(), {
   valueField: 'value',
 })
 const props = useDefaults(_props, 'BFormSelectOptionGroup')
-defineSlots<BFormSelectOptionGroupSlots>()
+defineSlots<BFormSelectOptionGroupSlots<T>>()
 
 const {normalizedOptions} = useFormSelect(() => props.options, props) as {
   normalizedOptions: ComputedRef<SelectOption<T>[]>

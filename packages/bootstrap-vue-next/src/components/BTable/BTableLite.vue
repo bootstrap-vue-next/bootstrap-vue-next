@@ -282,8 +282,8 @@ const _props = withDefaults(defineProps<BTableLiteProps<Items>>(), {
   // End BTableSimpleProps props
 })
 const props = useDefaults(_props, 'BTableLite')
-const emit = defineEmits<BTableLiteEmits<Items, (typeof computedFields.value)[0]>>()
-const slots = defineSlots<BTableLiteSlots>()
+const emit = defineEmits<BTableLiteEmits<Items>>()
+const slots = defineSlots<BTableLiteSlots<Items>>()
 
 const computedId = useId(() => props.id)
 

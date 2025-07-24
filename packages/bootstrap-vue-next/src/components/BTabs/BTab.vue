@@ -20,7 +20,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import type {TabType} from '../../types/Tab'
 import type {BTabProps} from '../../types/ComponentProps'
 import {tabsInjectionKey} from '../../utils/keys'
-import {BTabSlots} from '../../types/ComponentSlots'
+import type {BTabSlots} from '../../types/ComponentSlots'
 
 defineOptions({
   inheritAttrs: false,

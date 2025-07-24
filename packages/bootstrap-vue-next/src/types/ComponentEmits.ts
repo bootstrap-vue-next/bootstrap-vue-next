@@ -1,5 +1,5 @@
 import {BvCarouselEvent, BvEvent, BvTriggerableEvent} from '../utils'
-import type {BTableSortBy, TableRowEvent} from './TableTypes'
+import type {BTableSortBy, TableField, TableRowEvent} from './TableTypes'
 
 export interface showHideEmits {
   'hide': [value: BvTriggerableEvent]
@@ -44,7 +44,7 @@ export interface BToastEmits extends showHideEmits {
   'close-countdown': [value: number]
 }
 
-export interface BTableEmits<Items, Fields> extends BTableLiteEmits<Items, Fields> {
+export interface BTableEmits<Items> extends BTableLiteEmits<Items> {
   'filtered': [value: Items[]]
   'row-selected': [value: Items]
   'row-unselected': [value: Items]
@@ -52,8 +52,8 @@ export interface BTableEmits<Items, Fields> extends BTableLiteEmits<Items, Field
   'change': [value: Items[]]
 }
 
-export interface BTableLiteEmits<Items, Fields> {
-  'head-clicked': [key: string, field: Fields, event: MouseEvent, isFooter: boolean]
+export interface BTableLiteEmits<Items> {
+  'head-clicked': [key: string, field: TableField<Items>, event: MouseEvent, isFooter: boolean]
   'row-clicked': TableRowEvent<Items>
   'row-dblclicked': TableRowEvent<Items>
   'row-contextmenu': TableRowEvent<Items>

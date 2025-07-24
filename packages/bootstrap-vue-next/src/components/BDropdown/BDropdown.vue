@@ -61,7 +61,16 @@
           :role="props.role"
           @click="onClickInside"
         >
-          <slot v-if="contentShowing" :hide="hide" :show="show" :visible="showRef" />
+          <slot
+            v-if="contentShowing"
+            :id="computedId"
+            :hide="hide"
+            :show="show"
+            :visible="showRef"
+            :click="onClickInside"
+            :toggle="onButtonClick"
+            :active="showRef"
+          />
         </ul>
       </Transition>
     </ConditionalTeleport>
@@ -166,9 +175,9 @@ const computedOffset = computed(() =>
 )
 const offsetToNumber = useToNumber(computedOffset)
 
-const floatingElement = useTemplateRef('_floating')
-const button = useTemplateRef('_button')
-const splitButton = useTemplateRef('_splitButton')
+const floatingElement = useTemplateRef<HTMLUListElement | null>('_floating')
+const button = useTemplateRef<HTMLElement | null>('_button')
+const splitButton = useTemplateRef<HTMLElement | null>('_splitButton')
 
 const boundary = computed<Boundary | undefined>(() =>
   isBoundary(props.boundary) ? props.boundary : undefined

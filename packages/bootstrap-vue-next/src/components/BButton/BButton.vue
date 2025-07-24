@@ -82,7 +82,7 @@ const props = useDefaults(_props, 'BButton')
 const emit = defineEmits<BButtonEmits>()
 defineSlots<BButtonSlots>()
 
-const element = useTemplateRef('_element')
+const element = useTemplateRef<HTMLButtonElement | null>('_element')
 
 const pressedValue = defineModel<BButtonProps['pressed']>('pressed', {default: undefined})
 

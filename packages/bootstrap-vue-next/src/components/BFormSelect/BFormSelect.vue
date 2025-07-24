@@ -68,7 +68,7 @@ const _props = withDefaults(defineProps<Omit<BFormSelectProps, 'modelValue'>>(),
   valueField: 'value',
 })
 const props = useDefaults(_props, 'BFormSelect')
-defineSlots<BFormSelectSlots>()
+defineSlots<BFormSelectSlots<T>>()
 
 const modelValue = defineModel<T>({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

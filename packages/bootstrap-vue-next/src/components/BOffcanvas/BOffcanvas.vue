@@ -153,9 +153,9 @@ const modelValue = defineModel<Exclude<BOffcanvasProps['modelValue'], undefined>
 
 const computedId = useId(() => props.id, 'offcanvas')
 
-const element = useTemplateRef('_element')
-const fallbackFocusElement = useTemplateRef('_fallbackFocusElement')
-const closeButton = useTemplateRef('_close')
+const element = useTemplateRef<HTMLElement | null>('_element')
+const fallbackFocusElement = useTemplateRef<HTMLElement | null>('_fallbackFocusElement')
+const closeButton = useTemplateRef<HTMLElement | null>('_close')
 
 const pickFocusItem = () => {
   if (props.focus && typeof props.focus !== 'boolean') {

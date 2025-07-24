@@ -207,7 +207,6 @@ import type {BTableProps} from '../../types/ComponentProps'
 import type {BTableEmits, BTableLiteEmits} from '../../types/ComponentEmits'
 import {deepEqual, get, pick, set} from '../../utils/object'
 import {startCase} from '../../utils/stringUtils'
-import type {LiteralUnion} from '../../types/LiteralUnion'
 import {
   btableLiteProps,
   btableSimpleProps,
@@ -289,17 +288,8 @@ const _props = withDefaults(
   }
 )
 const props = useDefaults(_props, 'BTable')
-const emit = defineEmits<BTableEmits<Items, FieldsType>>()
-const slots = defineSlots<BTableSlots>()
-
-type FieldsType = (typeof computedFields.value)[0]
-
-type SortSlotScope = {
-  label: string | undefined
-  column: LiteralUnion<keyof Items>
-  field: (typeof computedFields.value)[0]
-  isFoot: false
-}
+const emit = defineEmits<BTableEmits<Items>>()
+const slots = defineSlots<BTableSlots<Items>>()
 
 const dynamicCellSlots = computed(
   () => Object.keys(slots).filter((key) => key.startsWith('cell(')) as 'cell()'[]
@@ -867,8 +857,8 @@ const boundBTableLiteEmits = {
   onRowUnhovered: (...args) => emit('row-unhovered', ...args),
   onRowMiddleClicked: (...args) => emit('row-middle-clicked', ...args),
 } as const satisfies {
-  [K in keyof BTableLiteEmits<Items, FieldsType> as CamelCase<`on-${K & string}`>]: (
-    ...args: BTableLiteEmits<Items, FieldsType>[K]
+  [K in keyof BTableLiteEmits<Items> as CamelCase<`on-${K & string}`>]: (
+    ...args: BTableLiteEmits<Items>[K]
   ) => void
 }
 const computedLiteProps = computed(() => ({
