@@ -1,5 +1,8 @@
 <template>
-  <BFormRating v-model="rating" :readonly="true" />
+  <BFormRating
+    v-model="rating"
+    :readonly="true"
+  />
 
   <p>Current rating: {{ rating }}</p>
 </template>
