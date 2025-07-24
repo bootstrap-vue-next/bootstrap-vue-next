@@ -64,8 +64,8 @@ import {BTab} from 'bootstrap-vue-next/components/BTabs'
 const tabIndex = ref(0)
 const tabId = ref(undefined)
 
-const tabGeneral = useTemplateRef<typeof BTab>('tabGeneral')
-const tabEditProfile = useTemplateRef<typeof BTab>('tabEditProfile')
-const tabPremium = useTemplateRef<typeof BTab>('tabPremium')
-const tabInfo = useTemplateRef<typeof BTab>('tabInfo')
+const tabGeneral = useTemplateRef('tabGeneral')
+const tabEditProfile = useTemplateRef('tabEditProfile')
+const tabPremium = useTemplateRef('tabPremium')
+const tabInfo = useTemplateRef('tabInfo')
 </script>

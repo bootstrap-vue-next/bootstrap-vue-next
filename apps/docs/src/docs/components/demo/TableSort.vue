@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import {type TableFieldRaw, type TableItem} from 'bootstrap-vue-next'
+import type {TableFieldRaw, TableItem} from 'bootstrap-vue-next'
 
 interface SortPerson {
   first_name: string

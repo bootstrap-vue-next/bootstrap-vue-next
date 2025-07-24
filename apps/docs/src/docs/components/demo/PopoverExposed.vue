@@ -38,9 +38,10 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-import type {BPopover} from 'bootstrap-vue-next'
-const myPopover = ref<InstanceType<typeof BPopover> | null>(null)
+import {ref, useTemplateRef} from 'vue'
+import {BPopover} from 'bootstrap-vue-next/components/BPopover'
+
+const myPopover = useTemplateRef('myPopover')
 const show = () => myPopover.value?.show()
 const hide = () => myPopover.value?.hide()
 const toggle = () => myPopover.value?.toggle()

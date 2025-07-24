@@ -1,5 +1,5 @@
 import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {PropertyReference} from '../types'
+import type {PropertyReference, PropsRecordWithOptions} from '../types'
 
 export const linkTo = '/docs/components/link'
 
@@ -144,3 +144,10 @@ export const linkProps = {
   keyof BvnComponentProps['BLink'] | 'noPrefetch' | 'prefetch' | 'prefetchedClass',
   PropertyReference
 >
+
+export const linkedBLinkSection = {
+  _opts: {
+    linkTo,
+  },
+  _data: linkProps,
+} as const satisfies PropsRecordWithOptions

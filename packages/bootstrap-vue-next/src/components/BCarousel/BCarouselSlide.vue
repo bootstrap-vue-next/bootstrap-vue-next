@@ -41,6 +41,7 @@ import BImg from '../BImg/BImg.vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {isEmptySlot} from '../../utils/dom'
 import {useId} from '../../composables/useId'
+import type {BCarouselSlideSlots} from '../../types/ComponentSlots'
 
 const _props = withDefaults(defineProps<BCarouselSlideProps>(), {
   background: undefined,
@@ -61,17 +62,7 @@ const _props = withDefaults(defineProps<BCarouselSlideProps>(), {
   textTag: 'p',
 })
 const props = useDefaults(_props, 'BCarouselSlide')
-
-const slots = defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  caption?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  img?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  text?: (props: Record<string, never>) => any
-}>()
+const slots = defineSlots<BCarouselSlideSlots>()
 
 const computedId = useId(() => props.id, 'carousel-slide')
 const parentData = inject(carouselInjectionKey, null)

@@ -25,6 +25,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import type {BInputGroupProps} from '../../types/ComponentProps'
 import {computed, provide} from 'vue'
 import {inputGroupKey} from '../../utils/keys'
+import type {BInputGroupSlots} from '../../types'
 
 provide(inputGroupKey, true)
 
@@ -36,15 +37,7 @@ const _props = withDefaults(defineProps<BInputGroupProps>(), {
   tag: 'div',
 })
 const props = useDefaults(_props, 'BInputGroup')
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  append?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  prepend?: (props: Record<string, never>) => any
-}>()
+defineSlots<BInputGroupSlots>()
 
 const computedClasses = computed(() => ({
   [`input-group-${props.size}`]: props.size !== 'md',

@@ -30,6 +30,7 @@ import BCardSubtitle from './BCardSubtitle.vue'
 import type {BCardBodyProps} from '../../types/ComponentProps'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useDefaults} from '../../composables/useDefaults'
+import type {BCardBodySlots} from '../../types'
 
 const _props = withDefaults(defineProps<BCardBodyProps>(), {
   overlay: false,
@@ -47,15 +48,7 @@ const _props = withDefaults(defineProps<BCardBodyProps>(), {
   // End ColorExtendables props
 })
 const props = useDefaults(_props, 'BCardBody')
-
-const slots = defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  subtitle?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  title?: (props: Record<string, never>) => any
-}>()
+const slots = defineSlots<BCardBodySlots>()
 
 const hasTitleSlot = computed(() => !isEmptySlot(slots.title))
 const hasSubtitleSlot = computed(() => !isEmptySlot(slots.subtitle))

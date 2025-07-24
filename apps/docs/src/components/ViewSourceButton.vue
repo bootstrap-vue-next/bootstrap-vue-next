@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import {BButton} from 'bootstrap-vue-next'
+import {BButton} from 'bootstrap-vue-next/components/BButton'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

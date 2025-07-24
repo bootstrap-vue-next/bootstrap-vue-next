@@ -52,6 +52,7 @@ import BPlaceholderButton from './BPlaceholderButton.vue'
 import type {BPlaceholderCardProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
+import type {BPlaceholderCardSlots} from '../../types/ComponentSlots'
 
 const _props = withDefaults(defineProps<BPlaceholderCardProps>(), {
   animation: undefined,
@@ -75,17 +76,7 @@ const _props = withDefaults(defineProps<BPlaceholderCardProps>(), {
   variant: undefined,
 })
 const props = useDefaults(_props, 'BPlaceholderCard')
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  footer?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  header?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  img?: (props: Record<string, never>) => any
-}>()
+defineSlots<BPlaceholderCardSlots>()
 
 const defaultAttrs = computed(() => ({
   animation: props.animation,

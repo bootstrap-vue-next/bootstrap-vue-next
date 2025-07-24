@@ -24,6 +24,7 @@ import type {BAccordionProps} from '../../types/ComponentProps'
 import {flattenFragments} from '../../utils/flattenFragments'
 import BAccordionItem from './BAccordionItem.vue'
 import {sortSlotElementsByPosition} from '../../utils/dom'
+import type {BAccordionSlots} from '../../types'
 
 const _props = withDefaults(defineProps<Omit<BAccordionProps, 'modelValue' | 'index'>>(), {
   flush: false,
@@ -33,13 +34,8 @@ const _props = withDefaults(defineProps<Omit<BAccordionProps, 'modelValue' | 'in
   lazy: false,
   unmountLazy: false,
 })
-
-const slots = defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
-
 const props = useDefaults(_props, 'BAccordion')
+const slots = defineSlots<BAccordionSlots>()
 
 const modelValue = defineModel<BAccordionProps['modelValue']>({
   default: undefined,

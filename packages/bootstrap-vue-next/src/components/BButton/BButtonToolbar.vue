@@ -10,6 +10,7 @@
 </template>
 
 <script setup lang="ts">
+import type {BButtonToolbarSlots} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BButtonToolbarProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
@@ -20,11 +21,7 @@ const _props = withDefaults(defineProps<BButtonToolbarProps>(), {
   role: 'toolbar',
 })
 const props = useDefaults(_props, 'BButtonToolbar')
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
+defineSlots<BButtonToolbarSlots>()
 
 const computedClasses = computed(() => ({
   'justify-content-between': props.justify,

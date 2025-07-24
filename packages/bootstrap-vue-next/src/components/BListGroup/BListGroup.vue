@@ -9,6 +9,7 @@ import {computed, provide, toRef} from 'vue'
 import {listGroupInjectionKey} from '../../utils/keys'
 import type {BListGroupProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
+import type {BListGroupSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BListGroupProps>(), {
   flush: false,
@@ -17,11 +18,7 @@ const _props = withDefaults(defineProps<BListGroupProps>(), {
   tag: 'div',
 })
 const props = useDefaults(_props, 'BListGroup')
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
+defineSlots<BListGroupSlots>()
 
 const computedClasses = computed(() => {
   const horizontal = props.flush ? false : props.horizontal
