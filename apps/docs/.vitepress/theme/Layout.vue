@@ -208,8 +208,17 @@ const {current: activeId, list: items} = useScrollspy(content, target, {
   // - div elements with IDs (for component reference sections)
   // - #component-reference and .component-reference h3 elements
   // This creates the hierarchical structure for the "On this page" navigation
-  contentQuery:
-    ':scope h1:not([class*="demo"] h1):not(.card-body h1), :scope > div > [id], #component-reference, .component-reference h3, :scope h2:not([class*="demo"] h2):not(.card-body h2), :scope h3:not([class*="demo"] h3):not(.card-body h3), :scope h4:not([class*="demo"] h4):not(.card-body h4), :scope h5:not([class*="demo"] h5):not(.card-body h5), :scope h6:not([class*="demo"] h6):not(.card-body h6)',
+  contentQuery: [
+    ':scope h1:not([class*="demo"] *):not(.card-body *)',
+    ':scope h2:not([class*="demo"] *):not(.card-body *)',
+    ':scope h3:not([class*="demo"] *):not(.card-body *)',
+    ':scope h4:not([class*="demo"] *):not(.card-body *)',
+    ':scope h5:not([class*="demo"] *):not(.card-body *)',
+    ':scope h6:not([class*="demo"] *):not(.card-body *)',
+    ':scope > div > [id]',
+    '#component-reference',
+    '.component-reference h3',
+  ].join(', '),
   targetQuery: ':scope [href]',
   rootMargin: '0px 0px -25%',
   manual: true,
