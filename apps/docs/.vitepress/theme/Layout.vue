@@ -203,7 +203,13 @@ const content = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_content')
 const target = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_target')
 
 const {current: activeId, list: items} = useScrollspy(content, target, {
-  contentQuery: ':scope h1, :scope > div > [id], #component-reference, .component-reference h3',
+  // Select headings and elements for the table of contents:
+  // - h1-h6 headings (excluding those inside demo examples or card bodies)
+  // - div elements with IDs (for component reference sections)
+  // - #component-reference and .component-reference h3 elements
+  // This creates the hierarchical structure for the "On this page" navigation
+  contentQuery:
+    ':scope h1:not([class*="demo"] h1):not(.card-body h1), :scope > div > [id], #component-reference, .component-reference h3, :scope h2:not([class*="demo"] h2):not(.card-body h2), :scope h3:not([class*="demo"] h3):not(.card-body h3), :scope h4:not([class*="demo"] h4):not(.card-body h4), :scope h5:not([class*="demo"] h5):not(.card-body h5), :scope h6:not([class*="demo"] h6):not(.card-body h6)',
   targetQuery: ':scope [href]',
   rootMargin: '0px 0px -25%',
   manual: true,
