@@ -43,7 +43,7 @@ If the `type` prop is set to an input type that is not supported (see above), a 
 - When using predictive text auto-suggested words, the `v-model` will not update until the
   auto-suggested word is selected (or a space is typed). If an auto suggested word is not selected,
   the v-model will update with the current _displayed text_ of the input when the input is blurred
-- When using IME composition (ie. Chinese, Japanese, etc.), the `v-model` will not update until the
+- When using IME composition (i.e. Chinese, Japanese, etc.), the `v-model` will not update until the
   IME composition is completed
   :::
 

@@ -2,9 +2,9 @@
   <div class="d-flex flex-column text-md-center">
     <div class="p-2">
       <BButton
-        id="popover-expose"
+        id="tooltip-expose"
         variant="primary"
-        >I have a popover</BButton
+        >I have a tooltip</BButton
       >
     </div>
 
@@ -25,24 +25,24 @@
         >Toggle</BButton
       >
 
-      <BPopover
-        ref="myPopover"
+      <BTooltip
+        ref="myTooltip"
         v-model="model"
-        target="popover-expose"
-        title="Popover"
+        target="tooltip-expose"
+        title="Tooltip"
       >
         Hello <strong>World!</strong>
-      </BPopover>
+      </BTooltip>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
-import {BPopover} from 'bootstrap-vue-next/components/BPopover'
-const myPopover = ref<InstanceType<typeof BPopover> | null>(null)
-const show = () => myPopover.value?.show()
-const hide = () => myPopover.value?.hide()
-const toggle = () => myPopover.value?.toggle()
+import {BTooltip} from 'bootstrap-vue-next/components/BTooltip'
+const myTooltip = ref<InstanceType<typeof BTooltip> | null>(null)
+const show = () => myTooltip.value?.show()
+const hide = () => myTooltip.value?.hide()
+const toggle = () => myTooltip.value?.toggle()
 const model = ref(false)
 </script>
