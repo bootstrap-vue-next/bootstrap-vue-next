@@ -15,11 +15,11 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import type {BFormFeedbackSharedProps} from '../../types/ComponentProps'
+import type {BFormInvalidFeedbackProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BFormInvalidFeedbackSlots} from '../../types'
 
-const _props = withDefaults(defineProps<BFormFeedbackSharedProps>(), {
+const _props = withDefaults(defineProps<BFormInvalidFeedbackProps>(), {
   ariaLive: undefined,
   forceShow: false,
   id: undefined,

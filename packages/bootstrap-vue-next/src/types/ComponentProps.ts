@@ -1218,6 +1218,8 @@ export interface BFormFeedbackSharedProps {
   text?: string
   tooltip?: boolean
 }
+export type BFormInvalidFeedbackProps = BFormFeedbackSharedProps
+export type BFormValidFeedbackProps = BFormFeedbackSharedProps
 
 export interface BDropdownProps extends TeleporterProps, ShowHideProps {
   ariaLabel?: string
@@ -1330,6 +1332,8 @@ export interface BCardHeadFootProps extends ColorExtendables {
   tag?: string
   text?: string
 }
+export type BCardFooterProps = BCardHeadFootProps
+export type BCardHeaderProps = BCardHeadFootProps
 
 export interface BModalProps extends TeleporterProps, ShowHideProps {
   focus?:

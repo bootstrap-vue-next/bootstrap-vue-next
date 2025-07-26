@@ -1,9 +1,9 @@
-import type {BTabsEmits, BTabsSlots, BvnComponentProps} from 'bootstrap-vue-next'
+import type {BTabProps, BTabsEmits, BTabsProps, BTabsSlots} from 'bootstrap-vue-next'
 import {
   type ComponentReference,
-  type EmitReference,
-  type PropertyReference,
-  type SlotsReference,
+  type EmitRecord,
+  type PropRecord,
+  type SlotRecord,
   StyleKind,
 } from '../../types'
 import {pick} from '../../utils/objectUtils'
@@ -46,7 +46,7 @@ export default {
           description:
             "CSS class (or classes) to apply to the tab's control button inner link element",
         },
-      } satisfies Record<keyof BvnComponentProps['BTab'], PropertyReference>,
+      } satisfies PropRecord<keyof BTabProps>,
     },
     BTabs: {
       sourcePath: '/BTabs/BTabs.vue',
@@ -176,7 +176,7 @@ export default {
           default: false, // TODO item not in string format
           description: 'Renders the tab controls vertically.',
         },
-      } satisfies Record<keyof BvnComponentProps['BTabs'], PropertyReference>,
+      } satisfies PropRecord<keyof BTabsProps>,
       emits: {
         'update:model-value': {
           description: 'Emitted when the active tab changes, providing the ID of the active tab.', // TODO similar content to BAlert/update:model-value (similar purpose)
@@ -223,7 +223,7 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BTabsEmits | 'update:index' | 'update:model-value', EmitReference>,
+      } satisfies EmitRecord<keyof BTabsEmits | 'update:index' | 'update:model-value'>,
       slots: {
         'default': {
           description: 'Content (tabs) for the tabs element.',
@@ -237,7 +237,7 @@ export default {
         'tabs-start': {
           description: 'Additional tab buttons without content, placed before content tab buttons.',
         },
-      }satisfies Record<keyof BTabsSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BTabsSlots>,
     },
   }),
 }

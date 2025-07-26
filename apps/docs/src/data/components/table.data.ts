@@ -1,14 +1,33 @@
-import {type BTableEmits, type BTableLiteEmits, type BTableLiteSlots, type BTableSimpleSlots, type BTableSlots, type BTbodySlots, type BTdSlots, type BTfootSlots, type BTheadSlots, type BThSlots, type BTrSlots, type BvnComponentProps} from 'bootstrap-vue-next'
+import {
+  type BTableEmits,
+  type BTableLiteEmits,
+  type BTableLiteProps,
+  type BTableLiteSlots,
+  type BTableProps,
+  type BTableSimpleProps,
+  type BTableSimpleSlots,
+  type BTableSlots,
+  type BTbodyProps,
+  type BTbodySlots,
+  type BTdProps,
+  type BTdSlots,
+  type BTfootProps,
+  type BTfootSlots,
+  type BTheadProps,
+  type BTheadSlots,
+  type BThProps,
+  type BThSlots,
+  type BTrProps,
+  type BTrSlots,
+} from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   defaultPropSectionSymbol,
   type EmitArgReference,
-  type EmitReference,
-  type EmitsRecord,
-  type PropertyReference,
-  type PropsRecord,
+  type EmitRecord,
+  type PropRecord,
+  type SlotRecord,
   type SlotScopeReference,
-  type SlotsReference,
   StyleKind,
 } from '../../types'
 import {pick} from '../../utils/objectUtils'
@@ -61,7 +80,7 @@ export default {
         default: {
           description: 'Content to place in the table',
         },
-      }satisfies Record<keyof BTableSimpleSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BTableSimpleSlots>,
       props: {
         ...pick(buildCommonProps(buildCommonProps()), ['id', 'variant']),
         bordered: {
@@ -154,7 +173,7 @@ export default {
           default: undefined,
           description: 'Classes to apply to the table element',
         },
-      } satisfies Record<keyof BvnComponentProps['BTableSimple'], PropertyReference>,
+      } satisfies PropRecord<keyof BTableSimpleProps>,
     } as const
 
     const BTableLite = {
@@ -258,7 +277,7 @@ export default {
           type: 'ClassValue',
           default: undefined,
         },
-      } satisfies PropsRecord,
+      } satisfies PropRecord,
       slots: {
         'bottom-row': {
           description: 'Fixed bottom row slot for user supplied B-TD cells. Optionally Scoped',
@@ -449,7 +468,15 @@ export default {
           description: 'Fixed top row slot for user supplied B-TD cells. Optionally scoped',
           scope: endRowScope,
         },
-      }satisfies Record<keyof BTableLiteSlots, SlotsReference>,
+        'thead-sub': {
+          scope: undefined,
+          description: undefined,
+        },
+        'custom-body': {
+          scope: undefined,
+          description: undefined,
+        },
+      } satisfies SlotRecord<keyof BTableLiteSlots<unknown>>,
       emits: {
         'head-clicked': {
           description:
@@ -493,21 +520,16 @@ export default {
           description: 'Emitted when a row is unhovered',
           args: tableRowEventArgs('being unhovered'),
         },
-      } satisfies Record<keyof BTableLiteEmits<unknown, unknown>, EmitReference>,
+        'row-middle-clicked': {
+          args: undefined,
+          description: undefined,
+        },
+      } satisfies EmitRecord<keyof BTableLiteEmits<unknown>>,
     } as const
 
     const BTable = {
       emits: {
         ...BTableLite.emits,
-        'changed': {
-          description: 'Emitted when the displayed items change',
-          args: {
-            value: {
-              type: 'Items[]',
-              description: 'Array of items displayed in the table',
-            },
-          },
-        },
         'filtered': {
           description: 'Emitted when local filtering causes a change in the number of items',
           args: {
@@ -535,7 +557,7 @@ export default {
             },
           },
         },
-        'update:sortBy': {
+        'update:sort-by': {
           description:
             'Emitted when the `sortBy` model is changed and represents the current sort state',
           args: {
@@ -555,7 +577,21 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BTableEmits<unknown, unknown>, EmitReference>,
+        'change': {
+          args: undefined,
+          description: undefined,
+        },
+        'update:busy': {
+          args: undefined,
+          description: undefined,
+        },
+        'update:selected-items': {
+          args: undefined,
+          description: undefined,
+        },
+      } satisfies EmitRecord<
+        keyof BTableEmits<unknown> | 'update:sort-by' | 'update:busy' | 'update:selected-items'
+      >,
       props: {
         busy: {
           type: 'boolean',
@@ -693,15 +729,21 @@ export default {
           type: 'boolean',
           default: false,
         },
-      } satisfies Record<
+      } satisfies PropRecord<
         Exclude<
-          keyof BvnComponentProps['BTable'],
-          keyof BvnComponentProps['BTableSimple'] | keyof BvnComponentProps['BTableLite']
-        >,
-        PropertyReference
+          keyof BTableProps<unknown>,
+          keyof BTableSimpleProps | keyof BTableLiteProps<unknown>
+        >
       >,
       slots: {
         ...BTableLite.slots,
+        // Overwriting the following from BTableLite slots. They have different scopes
+        'thead-top': {},
+        'row-details': {},
+        'head({key})': {},
+        'foot({key})': {},
+        'cell({key})': {},
+        //
         'empty': {
           description:
             'Content to display when no items are present in the `items` array. Optionally scoped',
@@ -751,7 +793,7 @@ export default {
         'table-busy': {
           description: 'Optional slot to place loading message when table is in the busy state',
         },
-      }satisfies Record<keyof BTableSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BTableSlots<unknown>>,
     } as const
 
     return {
@@ -782,15 +824,12 @@ export default {
       BTbody: {
         styleSpec: {kind: StyleKind.Tag, value: 'tbody'},
         sourcePath: '/BTable/BTbody.vue',
-        props: pick(buildCommonProps(), ['variant']) satisfies Record<
-          keyof BvnComponentProps['BTbody'],
-          PropertyReference
-        >,
+        props: pick(buildCommonProps(), ['variant']) satisfies PropRecord<keyof BTbodyProps>,
         slots: {
           default: {
             description: 'Content to place in the tbody',
           },
-        }satisfies Record<keyof BTbodySlots, SlotsReference>,
+        } satisfies SlotRecord<keyof BTbodySlots>,
       },
       BTd: {
         styleSpec: {kind: StyleKind.Tag, value: 'td'},
@@ -819,25 +858,22 @@ export default {
             description:
               'If this will be a sticky column. Must be set on all cells in this column. Table must be in sticky-header or responsive mode to work',
           },
-        } satisfies Record<keyof BvnComponentProps['BTd'], PropertyReference>,
+        } satisfies PropRecord<keyof BTdProps>,
         slots: {
           default: {
             description: 'Content to place in the td',
           },
-        }satisfies Record<keyof BTdSlots, SlotsReference>,
+        } satisfies SlotRecord<keyof BTdSlots>,
       },
       BTfoot: {
         styleSpec: {kind: StyleKind.Tag, value: 'tfoot'},
         sourcePath: '/BTable/BTfoot.vue',
-        props: pick(buildCommonProps(), ['variant']) satisfies Record<
-          keyof BvnComponentProps['BTfoot'],
-          PropertyReference
-        >,
+        props: pick(buildCommonProps(), ['variant']) satisfies PropRecord<keyof BTfootProps>,
         slots: {
           default: {
             description: 'Content to place in the tfoot',
           },
-        }satisfies Record<keyof BTfootSlots, SlotsReference>,
+        } satisfies SlotRecord<keyof BTfootSlots>,
       },
       BTh: {
         styleSpec: {kind: StyleKind.Tag, value: 'th'},
@@ -869,12 +905,12 @@ export default {
             default: undefined,
             description: 'Scope of the header cell. Can be one of: col, row, colgroup, rowgroup',
           },
-        } satisfies Record<keyof BvnComponentProps['BTh'], PropertyReference>,
+        } satisfies PropRecord<keyof BThProps>,
         slots: {
           default: {
             description: 'Content to place in the th',
           },
-        }satisfies Record<keyof BThSlots, SlotsReference>,
+        } satisfies SlotRecord<keyof BThSlots>,
       },
       BThead: {
         styleSpec: {kind: StyleKind.Tag, value: 'thead'},
@@ -884,14 +920,14 @@ export default {
             type: 'ColorVariant',
             default: null,
           },
-        } satisfies Record<keyof BvnComponentProps['BThead'], PropertyReference>,
+        } satisfies PropRecord<keyof BTheadProps>,
         emits: {},
         slots: {
           default: {
             description: '',
             scope: {},
           },
-        }satisfies Record<keyof BTheadSlots, SlotsReference>,
+        } satisfies SlotRecord<keyof BTheadSlots>,
       },
       BTr: {
         styleSpec: {kind: StyleKind.Tag, value: 'tr'},
@@ -901,14 +937,14 @@ export default {
             type: 'ColorVariant',
             default: null,
           },
-        } satisfies Record<keyof BvnComponentProps['BTr'], PropertyReference>,
+        } satisfies PropRecord<keyof BTrProps>,
         emits: {},
         slots: {
           default: {
             description: '',
             scope: {},
           },
-        }satisfies Record<keyof BTrSlots, SlotsReference>,
+        } satisfies SlotRecord<keyof BTrSlots>,
       },
     }
   },

@@ -36,7 +36,7 @@ export type {
   TextColorVariant,
 } from './ColorTypes'
 export type {BaseSize, Size} from './Size'
-export type {BootstrapVueOptions, BvnComponentProps, showHide} from './BootstrapVueOptions'
+export type {BootstrapVueOptions, showHide} from './BootstrapVueOptions'
 export type * from './ComponentEmits'
 export type {BreadcrumbItem, BreadcrumbItemRaw} from './BreadcrumbTypes'
 export type * from './BreakpointProps'

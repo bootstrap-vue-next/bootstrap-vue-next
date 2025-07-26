@@ -1,14 +1,16 @@
 import type {
   BFormTagEmits,
+  BFormTagProps,
   BFormTagsEmits,
   BFormTagSlots,
-  BvnComponentProps,
+  BFormTagsProps,
+  BFormTagsSlots,
 } from 'bootstrap-vue-next'
 import {
   type ComponentReference,
-  type EmitReference,
-  type PropertyReference,
-  type SlotsReference,
+  type EmitRecord,
+  type PropRecord,
+  type SlotRecord,
   StyleKind,
 } from '../../types'
 import {pick} from '../../utils/objectUtils'
@@ -50,7 +52,7 @@ export default {
           default: 'Remove tag',
           description: "The value of the 'aria-label' attribute on the remove button in the tag",
         },
-      } satisfies Record<keyof BvnComponentProps['BFormTag'], PropertyReference>,
+      } satisfies PropRecord<keyof BFormTagProps>,
       emits: {
         remove: {
           description: 'Emitted when the remove button is clicked',
@@ -61,12 +63,12 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BFormTagEmits, EmitReference>,
+      } satisfies EmitRecord<keyof BFormTagEmits>,
       slots: {
         default: {
           description: 'Content to place in the tag. Overrides the `title` prop',
         },
-      } satisfies Record<keyof BFormTagSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BFormTagSlots>,
     },
     BFormTags: {
       styleSpec: {kind: StyleKind.BsvnClass},
@@ -213,7 +215,7 @@ export default {
           default: 'secondary',
           description: 'Applies one of the Bootstrap theme color variants to the tags',
         },
-      } satisfies Record<keyof BvnComponentProps['BFormTags'], PropertyReference>,
+      } satisfies PropRecord<keyof BFormTagsProps>,
       emits: {
         'blur': {
           description: 'Emitted when component loses focus',
@@ -280,13 +282,13 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BFormTagsEmits | 'update:model-value', EmitReference>,
+      } satisfies EmitRecord<keyof BFormTagsEmits | 'update:model-value'>,
       slots: {
-        addButtonText: {
+        'add-button-text': {
           description:
             "Content to place in the built in 'Add' button. Takes precedence over the 'add-button-text' prop. Not used when the default scoped slot is provided", // TODO grammar check (should say "built-in" instead of "built in")
         },
-        default: {
+        'default': {
           description: 'Slot to override the default rendering of the tags component',
           scope: {
             addButtonText: {
@@ -439,7 +441,7 @@ export default {
             },
           },
         },
-        tag: {
+        'tag': {
           description: 'Slot to override the default rendering an individual tag', // TODO grammar check (should say "rendering of an" instead of "rendering an")
           scope: {
             tag: {
@@ -465,7 +467,7 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BFormTagSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BFormTagsSlots>,
     },
   }),
 }

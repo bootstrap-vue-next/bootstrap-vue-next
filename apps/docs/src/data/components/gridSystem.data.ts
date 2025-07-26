@@ -1,13 +1,13 @@
-import type {BColSlots, BRowSlots, BvnComponentProps} from 'bootstrap-vue-next'
-import {
-  type ComponentReference,
-  type PropertyReference,
-  type SlotsReference,
-  StyleKind,
-} from '../../types'
+import type {BColSlots, BRowSlots} from 'bootstrap-vue-next'
+import {type ComponentReference, type PropRecord, type SlotRecord, StyleKind} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
-import type {BContainerSlots} from 'node_modules/bootstrap-vue-next/dist/src'
+import type {
+  BColProps,
+  BContainerProps,
+  BContainerSlots,
+  BRowProps,
+} from 'node_modules/bootstrap-vue-next/dist/src'
 
 export default {
   load: (): ComponentReference => ({
@@ -32,12 +32,12 @@ export default {
           default: undefined,
           description: 'Vertical gutter',
         },
-      } satisfies Record<keyof BvnComponentProps['BContainer'], PropertyReference>,
+      } satisfies PropRecord<keyof BContainerProps>,
       slots: {
         default: {
           description: 'Content to place in the container',
         },
-      } satisfies Record<keyof BContainerSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BContainerSlots>,
     },
     BRow: {
       sourcePath: '/BContainer/BRow.vue',
@@ -107,12 +107,12 @@ export default {
           description:
             'When set, removes the margin from the row and removes the padding from the child columns',
         },
-      } satisfies Record<keyof BvnComponentProps['BRow'], PropertyReference>,
+      } satisfies PropRecord<keyof BRowProps>,
       slots: {
         default: {
           description: 'Content to place in the row',
         },
-      } satisfies Record<keyof BRowSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BRowSlots>,
     },
     BCol: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.col[-*]'},
@@ -228,13 +228,13 @@ export default {
           description:
             "Flex order of the grid cell for xxl and up breakpoints (1-5, 'first', or 'last')",
         },
-      } satisfies Record<keyof BvnComponentProps['BCol'], PropertyReference>,
+      } satisfies PropRecord<keyof BColProps>,
       emits: {},
       slots: {
         default: {
           description: 'Content to place in the col',
         },
-      } satisfies Record<keyof BColSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BColSlots>,
     },
   }),
 }

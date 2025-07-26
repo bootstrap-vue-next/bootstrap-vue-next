@@ -1,14 +1,14 @@
-import type {BToastEmits, BvnComponentProps} from 'bootstrap-vue-next'
+import type {BToastEmits, BToastOrchestratorProps, BToastProps} from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   defaultPropSectionSymbol,
-  type EmitReference,
-  type PropertyReference,
+  type EmitRecord,
+  type PropRecord,
 } from '../../types'
 import {omit, pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 import {linkedBLinkSection, type linkProps} from '../../utils/linkProps'
-import {showHideProps} from '../../utils/showHideData'
+import {showHideEmits, showHideProps} from '../../utils/showHideData'
 
 export default {
   load: (): ComponentReference => ({
@@ -127,28 +127,17 @@ export default {
             default: undefined,
             description: 'Sets the CSS class(es) for the toast wrapper element.',
           },
-        } satisfies Record<
-          Exclude<keyof BvnComponentProps['BToast'], keyof typeof linkProps>,
-          PropertyReference
-        >,
+        } satisfies PropRecord<Exclude<keyof BToastProps, keyof typeof linkProps>>,
         'BLink props': linkedBLinkSection,
       },
       emits: {
+        ...showHideEmits,
         'update:model-value': {
           description: 'Emitted when the toast visibility changes.', // TODO similar content to BAlert/update:model-value (similar purpose)
           args: {
             value: {
               type: 'Boolean',
               description: 'The new visibility state of the toast.',
-            },
-          },
-        },
-        'destroyed': {
-          description: 'Emitted when the toast is destroyed.', // TODO missing description in original
-          args: {
-            destroyed: {
-              type: 'string',
-              description: '', // TODO missing description
             },
           },
         },
@@ -170,51 +159,15 @@ export default {
             },
           },
         },
-        'hide': {
-          description: 'Emitted when the toast begins to hide.', // TODO missing description in original
-          args: {
-            value: {
-              type: 'BvTriggerableEvent',
-              description: '', // TODO missing description
-            },
-          },
+        'cancel': {
+          args: undefined,
+          description: undefined,
         },
-        'hide-prevented': {
-          description: 'Emitted when the hide action is prevented.', // TODO missing description in original
-          args: {},
+        'ok': {
+          args: undefined,
+          description: undefined,
         },
-        'hidden': {
-          description: 'Emitted when the toast is fully hidden.', // TODO missing description in original
-          args: {
-            value: {
-              type: 'BvTriggerableEvent',
-              description: '', // TODO missing description
-            },
-          },
-        },
-        'show': {
-          description: 'Emitted when the toast begins to show.', // TODO missing description in original
-          args: {
-            value: {
-              type: 'BvTriggerableEvent',
-              description: '', // TODO missing description
-            },
-          },
-        },
-        'show-prevented': {
-          description: 'Emitted when the show action is prevented.', // TODO missing description in original
-          args: {},
-        },
-        'shown': {
-          description: 'Emitted when the toast is fully shown.', // TODO missing description in original
-          args: {
-            value: {
-              type: 'BvTriggerableEvent',
-              description: '', // TODO missing description
-            },
-          },
-        },
-      } satisfies Record<keyof BToastEmits | 'update:model-value', EmitReference>,
+      } satisfies EmitRecord<keyof BToastEmits | 'update:model-value'>,
       slots: {},
     },
     BToastOrchestrator: {
@@ -235,7 +188,7 @@ export default {
           default: undefined,
           description: '', // TODO missing description
         },
-      } satisfies Record<keyof BvnComponentProps['BToastOrchestrator'], PropertyReference>,
+      } satisfies PropRecord<keyof BToastOrchestratorProps>,
       emits: {},
       slots: {},
     },

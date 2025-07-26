@@ -1,19 +1,20 @@
 import type {
+  BFormDatalistProps,
   BFormDatalistSlots,
+  BFormFloatingLabelProps,
   BFormFloatingLabelSlots,
+  BFormInvalidFeedbackProps,
   BFormInvalidFeedbackSlots,
+  BFormProps,
+  BFormRowProps,
   BFormRowSlots,
   BFormSlots,
+  BFormTextProps,
   BFormTextSlots,
+  BFormValidFeedbackProps,
   BFormValidFeedbackSlots,
-  BvnComponentProps,
 } from 'bootstrap-vue-next'
-import {
-  type ComponentReference,
-  type PropertyReference,
-  type SlotsReference,
-  StyleKind,
-} from '../../types'
+import {type ComponentReference, type PropRecord, type SlotRecord, StyleKind} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 
@@ -27,13 +28,13 @@ export default {
         'id',
         'novalidate',
         'validated',
-      ]) satisfies Record<keyof BvnComponentProps['BForm'], PropertyReference>,
+      ]) satisfies PropRecord<keyof BFormProps>,
       emits: {},
       slots: {
         default: {
           description: 'Contet to place in the form', // TODO grammar check (typo: "Contet" should be "Content")
         },
-      } satisfies Record<keyof BFormSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BFormSlots>,
     },
     BFormDatalist: {
       styleSpec: {kind: StyleKind.Tag, value: 'datalist'},
@@ -47,7 +48,7 @@ export default {
           },
         }),
         ['disabledField', 'id', 'options', 'textField', 'valueField']
-      ) satisfies Record<keyof BvnComponentProps['BFormDatalist'], PropertyReference>,
+      ) satisfies PropRecord<keyof BFormDatalistProps>,
       emits: {},
       slots: {
         default: {
@@ -74,7 +75,7 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BFormDatalistSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BFormDatalistSlots<unknown>>,
     },
     BFormFloatingLabel: {
       styleSpec: {kind: StyleKind.OverrideClass, value: 'floating-label'},
@@ -90,7 +91,7 @@ export default {
           default: undefined,
           description: 'The id of the input control that the floating label is for',
         },
-      } satisfies Record<keyof BvnComponentProps['BFormFloatingLabel'], PropertyReference>,
+      } satisfies PropRecord<keyof BFormFloatingLabelProps>,
       emits: {},
       slots: {
         default: {
@@ -99,7 +100,7 @@ export default {
         label: {
           description: 'The content to display in the floating label',
         },
-      } satisfies Record<keyof BFormFloatingLabelSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BFormFloatingLabelSlots>,
     },
     BFormInvalidFeedback: {
       styleSpec: {kind: StyleKind.OverrideClass, value: 'invalid-feedback, invalid-tooltip'},
@@ -116,27 +117,24 @@ export default {
           default: undefined,
           description: 'The feedback text to display',
         },
-      } satisfies Record<keyof BvnComponentProps['BFormInvalidFeedback'], PropertyReference>,
+      } satisfies PropRecord<keyof BFormInvalidFeedbackProps>,
       emits: {},
       slots: {
         default: {
           description: 'Content to place in the form invalid feedback',
         },
-      } satisfies Record<keyof BFormInvalidFeedbackSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BFormInvalidFeedbackSlots>,
     },
     BFormRow: {
       styleSpec: {kind: StyleKind.OverrideClass, value: 'row'},
       sourcePath: '/BForm/BFormRow.vue',
-      props: pick(buildCommonProps(), ['tag']) satisfies Record<
-        keyof BvnComponentProps['BFormRow'],
-        PropertyReference
-      >,
+      props: pick(buildCommonProps(), ['tag']) satisfies PropRecord<keyof BFormRowProps>,
       emits: {},
       slots: {
         default: {
           description: 'Content to place in the form row',
         },
-      } satisfies Record<keyof BFormRowSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BFormRowSlots>,
     },
     BFormText: {
       sourcePath: '/BForm/BFormText.vue',
@@ -153,13 +151,13 @@ export default {
           default: undefined,
           description: 'The text to display',
         },
-      } satisfies Record<keyof BvnComponentProps['BFormText'], PropertyReference>,
+      } satisfies PropRecord<keyof BFormTextProps>,
       emits: {},
       slots: {
         default: {
           description: 'Content to place in the form text',
         },
-      } satisfies Record<keyof BFormTextSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BFormTextSlots>,
     },
     BFormValidFeedback: {
       styleSpec: {kind: StyleKind.OverrideClass, value: 'valid-feedback, valid-tooltip'},
@@ -176,13 +174,13 @@ export default {
           default: undefined,
           description: 'The feedback text to display',
         },
-      } satisfies Record<keyof BvnComponentProps['BFormValidFeedback'], PropertyReference>,
+      } satisfies PropRecord<keyof BFormValidFeedbackProps>,
       emits: {},
       slots: {
         default: {
-          description: 'Content to place in the form invalid feedback', // TODO grammar check (should say "form valid feedback" instead of "form invalid feedback")
+          description: 'Content to place in the form valid feedback', // TODO grammar check (should say "form valid feedback" instead of "form invalid feedback")
         },
-      } satisfies Record<keyof BFormValidFeedbackSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BFormValidFeedbackSlots>,
     },
   }),
 }

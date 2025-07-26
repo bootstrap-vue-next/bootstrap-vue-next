@@ -1,9 +1,15 @@
-import type {BCarouselEmits, BCarouselSlideProps, BCarouselSlideSlots, BCarouselSlots, BvnComponentProps} from 'bootstrap-vue-next'
+import type {
+  BCarouselEmits,
+  BCarouselProps,
+  BCarouselSlideProps,
+  BCarouselSlideSlots,
+  BCarouselSlots,
+} from 'bootstrap-vue-next'
 import {
   type ComponentReference,
-  type EmitReference,
-  type PropertyReference,
-  type SlotsReference,
+  type EmitRecord,
+  type PropRecord,
+  type SlotRecord,
   StyleKind,
 } from '../../types'
 import {pick} from '../../utils/objectUtils'
@@ -119,7 +125,7 @@ export default {
           description:
             'The minimum distance the touch swipe must move to prevent the slide show from being paused',
         },
-      } satisfies Record<keyof BvnComponentProps['BCarousel'], PropertyReference>,
+      } satisfies PropRecord<keyof BCarouselProps>,
       emits: {
         'update:model-value': {
           description: 'Standard event to update the v-model', // TODO similar content to BAlert/update:model-value (identical description)
@@ -166,12 +172,12 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BCarouselEmits | 'update:model-value', EmitReference>,
+      } satisfies EmitRecord<keyof BCarouselEmits | 'update:model-value'>,
       slots: {
         default: {
           description: 'Content (slides) to place in the carousel',
         },
-      } satisfies Record<keyof BCarouselSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BCarouselSlots>,
     },
     BCarouselSlide: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.carousel-item'},
@@ -257,7 +263,7 @@ export default {
           description:
             'Specify the HTML tag to render instead of the default tag for the text wrapper',
         },
-      } satisfies Record<keyof BvnComponentProps['BCarouselSlide'], PropertyReference>,
+      } satisfies PropRecord<keyof BCarouselSlideProps>,
       emits: {},
       slots: {
         caption: {
@@ -272,7 +278,7 @@ export default {
         text: {
           description: 'Content to place in text area of the slide',
         },
-      } satisfies Record<keyof BCarouselSlideSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BCarouselSlideSlots>,
     },
   }),
 }

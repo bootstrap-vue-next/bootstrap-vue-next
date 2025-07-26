@@ -1,18 +1,21 @@
 import type {
   BNavFormEmits,
+  BNavFormProps,
   BNavFormSlots,
   BNavItemEmits,
+  BNavItemProps,
   BNavItemSlots,
+  BNavProps,
   BNavSlots,
+  BNavTextProps,
   BNavTextSlots,
-  BvnComponentProps,
 } from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   defaultPropSectionSymbol,
-  type EmitReference,
-  type PropertyReference,
-  type SlotsReference,
+  type EmitRecord,
+  type PropRecord,
+  type SlotRecord,
   StyleKind,
 } from '../../types'
 import {linkProps, linkTo} from '../../utils/linkProps'
@@ -79,14 +82,14 @@ export default {
           default: false, // TODO item not in string format
           description: 'Stacks nav items vertically', // TODO grammar check (rephrased for brevity)
         },
-      } satisfies Record<keyof BvnComponentProps['BNav'], PropertyReference>,
+      } satisfies PropRecord<keyof BNavProps>,
       emits: {},
       slots: {
         default: {
           description: 'Content for the nav',
           scope: {},
         },
-      } satisfies Record<keyof BNavSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BNavSlots>,
     },
     BNavForm: {
       styleSpec: {kind: StyleKind.Tag, value: 'li > form'},
@@ -105,7 +108,7 @@ export default {
           default: undefined,
           description: 'CSS class (or classes) to apply to the form element', // TODO grammar check (rephrased for clarity)
         },
-      } satisfies Record<keyof BvnComponentProps['BNavForm'], PropertyReference>,
+      } satisfies PropRecord<keyof BNavFormProps>,
       emits: {
         submit: {
           description: 'Emitted when the form is submitted',
@@ -116,13 +119,13 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BNavFormEmits, EmitReference>,
+      } satisfies EmitRecord<keyof BNavFormEmits>,
       slots: {
         default: {
           description: 'Content for the nav form',
           scope: {},
         },
-      } satisfies Record<keyof BNavFormSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BNavFormSlots>,
     },
     BNavItem: {
       sourcePath: '/BNav/BNavItem.vue',
@@ -138,10 +141,7 @@ export default {
             default: undefined,
             description: 'CSS class (or classes) for the nested link element', // TODO grammar check (rephrased for clarity)
           },
-        } satisfies Record<
-          Exclude<keyof BvnComponentProps['BNavItem'], keyof typeof linkProps>,
-          PropertyReference
-        >,
+        } satisfies PropRecord<Exclude<keyof BNavItemProps, keyof typeof linkProps>>,
         'BLink props': {
           _opts: {
             linkTo,
@@ -159,7 +159,7 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BNavItemEmits, EmitReference>,
+      } satisfies EmitRecord<keyof BNavItemEmits>,
       slots: {
         after: {
           description: 'Content placed after the nav item link (useful for nested navs)', // TODO grammar check (rephrased for clarity)
@@ -169,7 +169,7 @@ export default {
           description: 'Content for the nav item',
           scope: {},
         },
-      } satisfies Record<keyof BNavItemSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BNavItemSlots>,
     },
     BNavItemDropdown: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.nav-item.dropdown'},
@@ -187,14 +187,14 @@ export default {
           default: undefined,
           description: 'Plain text to display in the nav', // TODO grammar check (rephrased for consistency)
         },
-      } satisfies Record<keyof BvnComponentProps['BNavText'], PropertyReference>,
+      } satisfies PropRecord<keyof BNavTextProps>,
       emits: {},
       slots: {
         default: {
           description: 'Content to display in the nav', // TODO grammar check (rephrased for consistency)
           scope: {},
         },
-      } satisfies Record<keyof BNavTextSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BNavTextSlots>,
     },
   }),
 }

@@ -1,20 +1,16 @@
 import type {
+  BFormSelectOptionGroupProps,
   BFormSelectOptionGroupSlots,
+  BFormSelectOptionProps,
   BFormSelectOptionSlots,
+  BFormSelectProps,
   BFormSelectSlots,
-  BvnComponentProps,
 } from 'bootstrap-vue-next'
-import {
-  type ComponentReference,
-  type PropertyReference,
-  type SlotsRecord,
-  type SlotsReference,
-  StyleKind,
-} from '../../types'
+import {type ComponentReference, type PropRecord, type SlotRecord, StyleKind} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 
-const optionSlot: SlotsRecord = {
+const optionSlot: SlotRecord = {
   option: {
     description:
       'Use this slot to have finer control over the content render inside each select item', // TODO grammar check (should say "rendered" instead of "render")
@@ -88,7 +84,7 @@ export default {
           description:
             'When set to a number larger than 0, will set the number of display option rows. Note not all browser will respect this setting', // TODO grammar check (should say "browsers" instead of "browser")
         },
-      } satisfies Record<keyof BvnComponentProps['BFormSelect'], PropertyReference>,
+      } satisfies PropRecord<keyof BFormSelectProps>,
       emits: {
         'update:model-value': {
           description:
@@ -110,7 +106,11 @@ export default {
           description:
             "Slot to place options or option groups above options provided via the 'options' prop",
         },
-      } satisfies Record<keyof BFormSelectSlots, SlotsReference>,
+        option: {
+          scope: undefined,
+          description: undefined,
+        },
+      } satisfies SlotRecord<keyof BFormSelectSlots<unknown>>,
     },
     BFormSelectOption: {
       styleSpec: {kind: StyleKind.Tag, value: 'option'},
@@ -126,12 +126,12 @@ export default {
           default: false, // TODO item not in string format
           description: 'The disabled state of the option',
         },
-      } satisfies Record<keyof BvnComponentProps['BFormSelectOption'], PropertyReference>,
+      } satisfies PropRecord<keyof BFormSelectOptionProps<unknown>>,
       slots: {
         default: {
           description: 'Content to place in the form select option',
         },
-      } satisfies Record<keyof BFormSelectOptionSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BFormSelectOptionSlots>,
     },
     BFormSelectOptionGroup: {
       styleSpec: {kind: StyleKind.Tag, value: 'optgroup'},
@@ -148,7 +148,7 @@ export default {
           default: undefined,
           description: 'The label for the option group',
         },
-      } satisfies Record<keyof BvnComponentProps['BFormSelectOptionGroup'], PropertyReference>,
+      } satisfies PropRecord<keyof BFormSelectOptionGroupProps>,
       slots: {
         ...optionSlot,
         first: {
@@ -157,7 +157,11 @@ export default {
         default: {
           description: "Slot to place options above options provided via the 'options' prop",
         },
-      } satisfies Record<keyof BFormSelectOptionGroupSlots, SlotsReference>,
+        option: {
+          scope: undefined,
+          description: undefined,
+        },
+      } satisfies SlotRecord<keyof BFormSelectOptionGroupSlots<unknown>>,
     },
   }),
 }

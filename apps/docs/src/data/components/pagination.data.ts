@@ -1,10 +1,10 @@
-import type {BPaginationEmits, BPaginationSlots, BvnComponentProps} from 'bootstrap-vue-next'
+import type {BPaginationEmits, BPaginationProps, BPaginationSlots} from 'bootstrap-vue-next'
 import type {
   ComponentReference,
-  EmitReference,
-  PropertyReference,
+  EmitRecord,
+  PropRecord,
+  SlotRecord,
   SlotScopeReference,
-  SlotsReference,
 } from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
@@ -164,7 +164,7 @@ export default {
           default: 0, // TODO item not in string format
           description: 'Total number of rows in the dataset',
         },
-      } satisfies Record<keyof BvnComponentProps['BPagination'], PropertyReference>,
+      } satisfies PropRecord<keyof BPaginationProps>,
       emits: {
         'update:model-value': {
           description: 'Emitted when page changes via user interaction', // TODO similar content to BAlert/update:model-value (similar purpose)
@@ -189,7 +189,7 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BPaginationEmits | 'update:model-value', EmitReference>,
+      } satisfies EmitRecord<keyof BPaginationEmits | 'update:model-value'>,
       slots: {
         'ellipsis-text': {
           scope: {},
@@ -225,7 +225,7 @@ export default {
           description: 'The go-to-previous-page button content',
           scope: sharedScope,
         },
-      }satisfies Record<keyof BPaginationSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BPaginationSlots>,
     },
   }),
 }

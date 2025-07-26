@@ -1,10 +1,20 @@
-import type {BNavbarBrandSlots, BNavbarNavSlots, BNavbarSlots, BNavbarToggleEmits, BNavbarToggleSlots, BvnComponentProps} from 'bootstrap-vue-next'
+import type {
+  BNavbarBrandProps,
+  BNavbarBrandSlots,
+  BNavbarNavProps,
+  BNavbarNavSlots,
+  BNavbarProps,
+  BNavbarSlots,
+  BNavbarToggleEmits,
+  BNavbarToggleProps,
+  BNavbarToggleSlots,
+} from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   defaultPropSectionSymbol,
-  type EmitReference,
-  type PropertyReference,
-  type SlotsReference,
+  type EmitRecord,
+  type PropRecord,
+  type SlotRecord,
 } from '../../types'
 import {omit, pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
@@ -53,12 +63,12 @@ export default {
           description:
             "Set to 'true' for an always collapsed navbar, or to a specific breakpoint at which point the navbar will be expanded: 'sm', 'md', 'lg', 'xl', or 'xxl'",
         },
-      } satisfies Record<keyof BvnComponentProps['BNavbar'], PropertyReference>,
+      } satisfies PropRecord<keyof BNavbarProps>,
       slots: {
         default: {
           description: 'Content to place in the navbar',
         },
-      }satisfies Record<keyof BNavbarSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BNavbarSlots>,
     },
     BNavbarBrand: {
       sourcePath: '/BNavbar/BNavbarBrand.vue',
@@ -70,10 +80,7 @@ export default {
             },
           }),
           ['tag']
-        ) satisfies Record<
-          Exclude<keyof BvnComponentProps['BNavbarBrand'], keyof typeof linkProps>,
-          PropertyReference
-        >,
+        ) satisfies PropRecord<Exclude<keyof BNavbarBrandProps, keyof typeof linkProps>>,
         'BLink props': {
           _opts: {
             linkTo,
@@ -85,7 +92,7 @@ export default {
         default: {
           description: 'Content to place in the navbar brand',
         },
-      }satisfies Record<keyof BNavbarBrandSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BNavbarBrandSlots>,
     },
     BNavbarNav: {
       sourcePath: '/BNavbar/BNavbarNav.vue',
@@ -121,12 +128,12 @@ export default {
           default: false, // TODO item not in string format
           description: 'Makes the nav smaller',
         },
-      } satisfies Record<keyof BvnComponentProps['BNavbarNav'], PropertyReference>,
+      } satisfies PropRecord<keyof BNavbarNavProps>,
       slots: {
         default: {
           description: 'Content to place in the navbar nav',
         },
-      }satisfies Record<keyof BNavbarNavSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BNavbarNavSlots>,
     },
     BNavbarToggle: {
       sourcePath: '/BNavbar/BNavbarToggle.vue',
@@ -150,7 +157,7 @@ export default {
           description:
             'ID (or array of IDs) of the collapse/sidebar components that should be toggled',
         },
-      } satisfies Record<keyof BvnComponentProps['BNavbarToggle'], PropertyReference>,
+      } satisfies PropRecord<keyof BNavbarToggleProps>,
       emits: {
         click: {
           description: 'Emitted when the toggle is clicked',
@@ -161,7 +168,7 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BNavbarToggleEmits, EmitReference>,
+      } satisfies EmitRecord<keyof BNavbarToggleEmits>,
       slots: {
         default: {
           description: 'Alternate content to replace the default Bootstrap hamburger',
@@ -173,7 +180,7 @@ export default {
             },
           },
         },
-      }satisfies Record<keyof BNavbarToggleSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BNavbarToggleSlots>,
     },
   }),
 }

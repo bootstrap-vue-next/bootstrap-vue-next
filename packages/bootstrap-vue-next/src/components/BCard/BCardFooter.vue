@@ -9,10 +9,10 @@
 <script setup lang="ts">
 import type {BCardFooterSlots} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BCardHeadFootProps} from '../../types/ComponentProps'
+import type {BCardHeaderProps} from '../../types/ComponentProps'
 import BCardHeadFoot from '../BCardHeadFoot.vue'
 
-const _props = withDefaults(defineProps<BCardHeadFootProps>(), {
+const _props = withDefaults(defineProps<BCardHeaderProps>(), {
   borderVariant: undefined,
   tag: 'div',
   text: undefined,

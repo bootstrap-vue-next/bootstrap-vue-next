@@ -1,5 +1,14 @@
-import type {BPlaceholderCardSlots, BPlaceholderTableSlots, BPlaceholderWrapperSlots, BvnComponentProps} from 'bootstrap-vue-next'
-import {type ComponentReference, type PropertyReference, type SlotsReference, StyleKind} from '../../types'
+import type {
+  BPlaceholderButtonProps,
+  BPlaceholderCardProps,
+  BPlaceholderCardSlots,
+  BPlaceholderProps,
+  BPlaceholderTableProps,
+  BPlaceholderTableSlots,
+  BPlaceholderWrapperProps,
+  BPlaceholderWrapperSlots,
+} from 'bootstrap-vue-next'
+import {type ComponentReference, type PropRecord, type SlotRecord, StyleKind} from '../../types'
 
 export default {
   load: (): ComponentReference => ({
@@ -34,7 +43,7 @@ export default {
           type: 'string',
           default: 'span',
         },
-      } satisfies Record<keyof BvnComponentProps['BPlaceholder'], PropertyReference>,
+      } satisfies PropRecord<keyof BPlaceholderProps>,
       emits: {},
       slots: {},
     },
@@ -118,7 +127,7 @@ export default {
           type: 'ColorVariant | null',
           default: undefined,
         },
-      } satisfies Record<keyof BvnComponentProps['BPlaceholderCard'], PropertyReference>,
+      } satisfies PropRecord<keyof BPlaceholderCardProps>,
       emits: {},
       slots: {
         img: {
@@ -137,7 +146,7 @@ export default {
           description: 'Overrides the default footer placeholder',
           scope: {},
         },
-      } satisfies Record<keyof BPlaceholderCardSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BPlaceholderCardSlots>,
     },
     BPlaceholderWrapper: {
       styleSpec: {kind: StyleKind.None},
@@ -148,7 +157,7 @@ export default {
           type: 'boolean',
           default: false, // TODO item not in string format
         },
-      } satisfies Record<keyof BvnComponentProps['BPlaceholderWrapper'], PropertyReference>,
+      } satisfies PropRecord<keyof BPlaceholderWrapperProps>,
       emits: {},
       slots: {
         default: {
@@ -159,7 +168,7 @@ export default {
           description: 'Content to show when the `loading` prop is `true`',
           scope: {},
         },
-      }satisfies Record<keyof BPlaceholderWrapperSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BPlaceholderWrapperSlots>,
     },
     BPlaceholderTable: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.table'},
@@ -237,7 +246,7 @@ export default {
           type: 'ColorVariant | null',
           default: undefined,
         },
-      } satisfies Record<keyof BvnComponentProps['BPlaceholderTable'], PropertyReference>,
+      } satisfies PropRecord<keyof BPlaceholderTableProps>,
       emits: {},
       slots: {
         thead: {
@@ -252,7 +261,7 @@ export default {
           description: 'Overrides the table body (tbody) placeholder',
           scope: {},
         },
-      }satisfies Record<keyof BPlaceholderTableSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BPlaceholderTableSlots>,
     },
     BPlaceholderButton: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.placeholder.btn'},
@@ -278,7 +287,7 @@ export default {
           type: 'Numberish',
           default: undefined,
         },
-      } satisfies Record<keyof BvnComponentProps['BPlaceholderButton'], PropertyReference>,
+      } satisfies PropRecord<keyof BPlaceholderButtonProps>,
       emits: {},
       slots: {},
     },

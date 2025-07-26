@@ -1,9 +1,10 @@
 import {pick} from '../../utils/objectUtils'
-import type {ComponentReference, PropertyReference, SlotsReference} from '../../types'
+import type {ComponentReference, PropRecord, SlotRecord} from '../../types'
 import type {
+  BFormCheckboxGroupProps,
   BFormCheckboxGroupSlots,
+  BFormCheckboxProps,
   BFormCheckboxSlots,
-  BvnComponentProps,
 } from 'bootstrap-vue-next'
 import {buildCommonProps} from '../../utils/commonProps'
 
@@ -86,7 +87,7 @@ export default {
           default: true, // TODO item not in string format
           description: 'Value returned when this checkbox is checked',
         },
-      } satisfies Record<keyof BvnComponentProps['BFormCheckbox'], PropertyReference>,
+      } satisfies PropRecord<keyof BFormCheckboxProps>,
       emits: {
         'update:model-value': {
           description: 'Emitted when the checked value is changed', // TODO similar content to BAlert/update:model-value (similar purpose)
@@ -113,7 +114,7 @@ export default {
         default: {
           description: 'Content to place in the label of the form checkbox',
         },
-      } satisfies Record<keyof BFormCheckboxSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BFormCheckboxSlots>,
     },
     BFormCheckboxGroup: {
       sourcePath: '/BFormCheckbox/BFormCheckboxGroup.vue',
@@ -175,7 +176,7 @@ export default {
           default: false, // TODO item not in string format
           description: 'When set, adds the Bootstrap class `was-validated` to the group wrapper',
         },
-      } satisfies Record<keyof BvnComponentProps['BFormCheckboxGroup'], PropertyReference>,
+      } satisfies PropRecord<keyof BFormCheckboxGroupProps>,
       emits: {
         'update:model-value': {
           description:
@@ -214,7 +215,7 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BFormCheckboxGroupSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BFormCheckboxGroupSlots>,
     },
   }),
 }

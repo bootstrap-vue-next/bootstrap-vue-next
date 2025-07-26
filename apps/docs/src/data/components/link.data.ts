@@ -1,10 +1,5 @@
 import {linkProps} from '../../utils/linkProps'
-import {
-  type ComponentReference,
-  type EmitReference,
-  type SlotsReference,
-  StyleKind,
-} from '../../types'
+import {type ComponentReference, type EmitRecord, type SlotRecord, StyleKind} from '../../types'
 import type {BLinkEmits, BLinkSlots} from 'bootstrap-vue-next'
 
 export default {
@@ -23,12 +18,12 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BLinkEmits, EmitReference>,
+      } satisfies EmitRecord<keyof BLinkEmits>,
       slots: {
         default: {
           description: 'Content to place in the link',
         },
-      } satisfies Record<keyof BLinkSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BLinkSlots>,
     },
   }),
 }

@@ -1,9 +1,9 @@
-import type {BPopoverEmits, BPopoverSlots, BvnComponentProps} from 'bootstrap-vue-next'
+import type {BPopoverEmits, BPopoverProps, BPopoverSlots} from 'bootstrap-vue-next'
 import {
   type ComponentReference,
-  type EmitReference,
-  type PropertyReference,
-  type SlotsReference,
+  type EmitRecord,
+  type PropRecord,
+  type SlotRecord,
   StyleKind,
 } from '../../types'
 import {showHideEmits, showHideProps, showHideSlotsData} from '../../utils/showHideData'
@@ -159,7 +159,7 @@ export default {
           default: false, // TODO item not in string format
           description: 'Closes the popover when the target is hidden, if `noAutoClose` is set.',
         },
-      } satisfies Record<keyof BvnComponentProps['BPopover'], PropertyReference>,
+      } satisfies PropRecord<keyof BPopoverProps>,
       emits: {
         ...showHideEmits,
         'blur': {
@@ -208,7 +208,15 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BPopoverEmits | 'update:model-value', EmitReference>,
+        'cancel': {
+          args: undefined,
+          description: undefined,
+        },
+        'ok': {
+          args: undefined,
+          description: undefined,
+        },
+      } satisfies EmitRecord<keyof BPopoverEmits | 'update:model-value'>,
       slots: {
         title: {
           description: 'Content for the popover title.',
@@ -222,7 +230,7 @@ export default {
           description: 'Content for the target or trigger element.',
           scope: showHideSlotsData,
         },
-      }satisfies Record<keyof BPopoverSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BPopoverSlots>,
     },
   }),
 }

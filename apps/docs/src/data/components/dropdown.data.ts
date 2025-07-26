@@ -1,21 +1,26 @@
 import type {
-  BAccordionSlots,
+  BDropdownDividerProps,
+  BDropdownFormProps,
   BDropdownFormSlots,
+  BDropdownGroupProps,
   BDropdownGroupSlots,
+  BDropdownHeaderProps,
   BDropdownHeaderSlots,
   BDropdownItemButtonEmits,
+  BDropdownItemButtonProps,
   BDropdownItemButtonSlots,
   BDropdownItemEmits,
+  BDropdownItemProps,
   BDropdownItemSlots,
+  BDropdownTextProps,
   BDropdownTextSlots,
-  BvnComponentProps,
 } from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   defaultPropSectionSymbol,
-  type EmitReference,
-  type PropertyReference,
-  type SlotsReference,
+  type EmitRecord,
+  type PropRecord,
+  type SlotRecord,
 } from '../../types'
 import {linkProps, linkTo} from '../../utils/linkProps'
 import {dropdownEmits, dropdownProps, dropdownSlots} from '../../utils/dropdownCommon'
@@ -46,7 +51,7 @@ export default {
           default: undefined,
           description: 'CSS class (or classes) to add to the divider component',
         },
-      } satisfies Record<keyof BvnComponentProps['BDropdownDivider'], PropertyReference>,
+      } satisfies PropRecord<keyof BDropdownDividerProps>,
     },
     BDropdownForm: {
       sourcePath: '/BDropdown/BDropdownForm.vue',
@@ -65,12 +70,12 @@ export default {
           notYetImplemented: true,
           // description: 'Marks the form as validated' // TODO missing description
         },
-      } satisfies Record<keyof BvnComponentProps['BDropdownForm'], PropertyReference>,
+      } satisfies PropRecord<keyof BDropdownFormProps>,
       slots: {
         default: {
           description: 'Content to place in the dropdown form',
         },
-      } satisfies Record<keyof BDropdownFormSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BDropdownFormSlots>,
     },
     BDropdownGroup: {
       sourcePath: '/BDropdown/BDropdownGroup.vue',
@@ -88,7 +93,7 @@ export default {
           default: undefined,
           // description: 'Text content for the dropdown group header' // TODO missing description
         },
-      } satisfies Record<keyof BvnComponentProps['BDropdownGroup'], PropertyReference>,
+      } satisfies PropRecord<keyof BDropdownGroupProps>,
       emits: {},
       slots: {
         default: {
@@ -97,7 +102,7 @@ export default {
         header: {
           description: 'Optional header content for the dropdown group',
         },
-      } satisfies Record<keyof BDropdownGroupSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BDropdownGroupSlots>,
     },
     BDropdownHeader: {
       sourcePath: '/BDropdown/BDropdownHeader.vue',
@@ -108,13 +113,13 @@ export default {
           default: undefined,
           description: 'Content to place in the dropdown text. Default slot takes precedence', // TODO grammar check (should say "dropdown header" instead of "dropdown text") // TODO similar content to BDropdownText/text (similar description structure)
         },
-      } satisfies Record<keyof BvnComponentProps['BDropdownHeader'], PropertyReference>,
+      } satisfies PropRecord<keyof BDropdownHeaderProps>,
       emits: {},
       slots: {
         default: {
           description: 'Content to place in the dropdown header',
         },
-      } satisfies Record<keyof BDropdownHeaderSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BDropdownHeaderSlots>,
     },
     BDropdownItem: {
       sourcePath: '/BDropdown/BDropdownItem.vue',
@@ -122,10 +127,7 @@ export default {
         [defaultPropSectionSymbol]: pick(buildCommonProps(), [
           'linkClass',
           'wrapperAttrs',
-        ]) satisfies Record<
-          Exclude<keyof BvnComponentProps['BDropdownItem'], keyof typeof linkProps>,
-          PropertyReference
-        >,
+        ]) satisfies PropRecord<Exclude<keyof BDropdownItemProps, keyof typeof linkProps>>,
         'BLink props': {
           _opts: {
             linkTo,
@@ -143,12 +145,12 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BDropdownItemEmits, EmitReference>,
+      } satisfies EmitRecord<keyof BDropdownItemEmits>,
       slots: {
         default: {
           description: 'Content to place in the dropdown item',
         },
-      } satisfies Record<keyof BDropdownItemSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BDropdownItemSlots>,
     },
     BDropdownItemButton: {
       sourcePath: '/BDropdown/BDropdownItemButton.vue',
@@ -165,7 +167,7 @@ export default {
           default: undefined,
           description: 'Class or classes to apply to the inner button element',
         },
-      } satisfies Record<keyof BvnComponentProps['BDropdownItemButton'], PropertyReference>,
+      } satisfies PropRecord<keyof BDropdownItemButtonProps>,
       emits: {
         click: {
           description: 'Emitted when item is clicked',
@@ -176,12 +178,12 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BDropdownItemButtonEmits, EmitReference>,
+      } satisfies EmitRecord<keyof BDropdownItemButtonEmits>,
       slots: {
         default: {
           description: 'Content to place in the dropdown item button',
         },
-      } satisfies Record<keyof BDropdownItemButtonSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BDropdownItemButtonSlots>,
     },
     BDropdownText: {
       sourcePath: '/BDropdown/BDropdownText.vue',
@@ -204,13 +206,13 @@ export default {
           default: undefined,
           description: 'CSS class (or classes) to add to the text component',
         },
-      } satisfies Record<keyof BvnComponentProps['BDropdownText'], PropertyReference>,
+      } satisfies PropRecord<keyof BDropdownTextProps>,
       emits: {},
       slots: {
         default: {
           description: 'Content to place in the dropdown text',
         },
-      } satisfies Record<keyof BDropdownTextSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BDropdownTextSlots>,
     },
   }),
 }

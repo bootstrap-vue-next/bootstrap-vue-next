@@ -1,8 +1,8 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {EmitsRecord, PropertyReference, SlotsRecord} from '../types'
+import type {BDropdownEmits, BDropdownProps} from 'bootstrap-vue-next'
+import type {EmitRecord, PropRecord, SlotRecord} from '../types'
 import {buildCommonProps} from './commonProps'
 import {pick} from './objectUtils'
-import {showHideProps} from './showHideData'
+import {showHideEmits, showHideProps} from './showHideData'
 
 export const dropdownProps = {
   autoClose: {
@@ -153,39 +153,10 @@ export const dropdownProps = {
     }),
     ['ariaLabel', 'disabled', 'id', 'placement', 'role', 'size', 'variant', 'wrapperClass']
   ),
-} as const satisfies Record<keyof BvnComponentProps['BDropdown'], PropertyReference>
+} as const satisfies PropRecord<keyof BDropdownProps>
 
 export const dropdownEmits = {
-  'hide': {
-    description: 'Emitted just before dropdown is hidden. Cancelable',
-    args: {
-      value: {
-        type: 'BvTriggerableEvent',
-        description: 'Call value.preventDefault() to cancel hide',
-      },
-    },
-  },
-  'hidden': {
-    description: 'Called after dropdown is hidden',
-  },
-  'hide-prevented': {
-    description: 'Emitted when the dropdown tried to close, but was prevented from doing so.',
-  },
-  'show': {
-    description: 'Emitted just before dropdown is shown. Cancelable',
-    args: {
-      value: {
-        type: 'BvTriggerableEvent',
-        description: 'Call value.preventDefault() to cancel show',
-      },
-    },
-  },
-  'shown': {
-    description: 'Called after dropdown is shown',
-  },
-  'show-prevented': {
-    description: 'Emitted when the dropdown tried to open, but was prevented from doing so.',
-  },
+  ...showHideEmits,
   'split-click': {
     description: 'Emitted when split button is clicked in split mode',
     args: {
@@ -198,7 +169,15 @@ export const dropdownEmits = {
   'toggle': {
     description: 'Emitted when toggle button is clicked',
   },
-} as const satisfies EmitsRecord
+  'cancel': {
+    args: undefined,
+    description: undefined,
+  },
+  'ok': {
+    args: undefined,
+    description: undefined,
+  },
+} as const satisfies EmitRecord<keyof BDropdownEmits>
 
 export const dropdownSlots = {
   'default': {
@@ -221,4 +200,4 @@ export const dropdownSlots = {
     description:
       'ARIA label (visually-hidden) to set on the toggle when in split mode. Overrides the toggle-text prop',
   },
-} as const satisfies SlotsRecord
+} as const satisfies SlotRecord

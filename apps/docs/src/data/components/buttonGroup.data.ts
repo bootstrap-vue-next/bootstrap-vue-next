@@ -1,5 +1,5 @@
-import type {BButtonGroupSlots, BvnComponentProps} from 'bootstrap-vue-next'
-import {type ComponentReference, type PropertyReference, type SlotsReference, StyleKind} from '../../types'
+import type {BButtonGroupProps, BButtonGroupSlots} from 'bootstrap-vue-next'
+import {type ComponentReference, type PropRecord, type SlotRecord, StyleKind} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 
@@ -15,12 +15,12 @@ export default {
           default: false, // TODO item not in string format
           description: 'When set, renders the button group in vertical mode',
         },
-      } satisfies Record<keyof BvnComponentProps['BButtonGroup'], PropertyReference>,
+      } satisfies PropRecord<keyof BButtonGroupProps>,
       slots: {
         default: {
           description: 'Content (buttons) to place in the button group',
         },
-      } satisfies Record<keyof BButtonGroupSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BButtonGroupSlots>,
     },
   }),
 }

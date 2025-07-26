@@ -1,5 +1,10 @@
-import type {BListGroupItemSlots, BListGroupSlots, BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference, SlotsReference} from '../../types'
+import type {
+  BListGroupItemProps,
+  BListGroupItemSlots,
+  BListGroupProps,
+  BListGroupSlots,
+} from 'bootstrap-vue-next'
+import type {ComponentReference, PropRecord, SlotRecord} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 import type {linkProps} from 'src/utils/linkProps'
@@ -26,12 +31,12 @@ export default {
           default: false, // TODO item not in string format
           description: 'When set, renders the list group items with a number on the left side',
         },
-      } satisfies Record<keyof BvnComponentProps['BListGroup'], PropertyReference>,
+      } satisfies PropRecord<keyof BListGroupProps>,
       slots: {
         default: {
           description: 'Content (items) to place in the list group',
         },
-      } satisfies Record<keyof BListGroupSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BListGroupSlots>,
     },
     BListGroupItem: {
       sourcePath: '/BListGroup/BListGroupItem.vue',
@@ -47,15 +52,12 @@ export default {
           default: false, // TODO item not in string format
           // TODO missing description
         },
-      } satisfies Record<
-        Exclude<keyof BvnComponentProps['BListGroupItem'], keyof typeof linkProps>,
-        PropertyReference
-      >,
+      } satisfies PropRecord<Exclude<keyof BListGroupItemProps, keyof typeof linkProps>>,
       slots: {
         default: {
           description: 'Content to place in the list group item',
         },
-      } satisfies Record<keyof BListGroupItemSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BListGroupItemSlots>,
     },
   }),
 }

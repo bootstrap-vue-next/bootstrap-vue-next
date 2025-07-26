@@ -1,5 +1,5 @@
-import type {BFormGroupSlots, BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference, SlotsReference} from '../../types'
+import type {BFormGroupProps, BFormGroupSlots} from 'bootstrap-vue-next'
+import type {ComponentReference, PropRecord, SlotRecord} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 
@@ -151,7 +151,7 @@ export default {
           description:
             "When set, adds the Bootstrap validation trigger class 'was-validated' on the component",
         },
-      } satisfies Record<keyof BvnComponentProps['BFormGroup'], PropertyReference>,
+      } satisfies PropRecord<keyof BFormGroupProps>,
       emits: {},
       slots: {
         'default': {
@@ -192,7 +192,7 @@ export default {
           description:
             'Content to place in the valid feedback area. Overrides the `valid-feedback` prop',
         },
-      } satisfies Record<keyof BFormGroupSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BFormGroupSlots>,
     },
   }),
 }

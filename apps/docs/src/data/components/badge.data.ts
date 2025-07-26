@@ -1,9 +1,9 @@
-import type {BBadgeSlots, BvnComponentProps} from 'bootstrap-vue-next'
+import type {BBadgeProps, BBadgeSlots} from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   defaultPropSectionSymbol,
-  type PropertyReference,
-  type SlotsReference,
+  type PropRecord,
+  type SlotRecord,
 } from '../../types'
 import {linkedBLinkSection, linkProps} from '../../utils/linkProps'
 import {pick} from '../../utils/objectUtils'
@@ -44,10 +44,7 @@ export default {
             description:
               'Placement of the badge relative to the its parent. One of the values of `CombinedPlacement`', // TODO grammar check (remove "the" before "its parent")
           },
-        } satisfies Record<
-          Exclude<keyof BvnComponentProps['BBadge'], keyof typeof linkProps>,
-          PropertyReference
-        >,
+        } satisfies PropRecord<Exclude<keyof BBadgeProps, keyof typeof linkProps>>,
         'BLink props': linkedBLinkSection,
       },
       emits: {},
@@ -56,7 +53,7 @@ export default {
           description: '', // TODO missing description
           scope: {},
         },
-      } satisfies Record<keyof BBadgeSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BBadgeSlots>,
     },
   }),
 }

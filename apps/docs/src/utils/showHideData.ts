@@ -1,5 +1,5 @@
 import type {showHide} from 'bootstrap-vue-next'
-import type {EmitsRecord, PropertyReference, SlotScopeReference} from '../types'
+import type {EmitRecord, PropRecord, SlotScopeReference} from '../types'
 
 export const showHideEmits = {
   'hide': {
@@ -74,7 +74,7 @@ export const showHideEmits = {
     description:
       'Emitted when the component tried to toggle, but was prevented from doing so.  This occurs when preventDefault() is called on the event, the user clicks escape and no-close-onbackdrop is set to true, or the user clicks on the backdrop and no-close-onbackdrop is set to true.',
   },
-} as const satisfies EmitsRecord
+} as const satisfies EmitRecord
 
 export const showHideProps = {
   initialAnimation: {
@@ -123,7 +123,7 @@ export const showHideProps = {
     default: false,
     description: "When 'true', open without animation",
   },
-} as const satisfies Record<keyof showHide | 'modelValue', PropertyReference>
+} as const satisfies PropRecord<keyof showHide | 'modelValue'>
 
 export const showHideSlotsData = {
   id: {

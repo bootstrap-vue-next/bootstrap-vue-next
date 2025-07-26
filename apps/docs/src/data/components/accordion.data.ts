@@ -5,10 +5,10 @@ import type {
   BAccordionProps,
   BAccordionSlots,
 } from 'bootstrap-vue-next'
-import type {ComponentReference, EmitReference, PropertyReference, SlotsReference} from 'src/types'
+import type {ComponentReference, EmitRecord, PropRecord, SlotRecord} from 'src/types'
 import {buildCommonProps} from '../../utils/commonProps'
 import {pick} from '../../utils/objectUtils'
-import {showHideProps} from '../../utils/showHideData'
+import {showHideEmits, showHideProps} from '../../utils/showHideData'
 
 export default {
   load: (): ComponentReference => ({
@@ -46,7 +46,7 @@ export default {
           default: undefined,
           description: 'Id of the accordion item that is open',
         },
-      } satisfies Record<keyof BAccordionProps, PropertyReference>,
+      } satisfies PropRecord<keyof BAccordionProps>,
       emits: {
         'update:model-value': {
           description: 'Update the currently opened accordion item',
@@ -71,7 +71,7 @@ export default {
         default: {
           description: 'Content to place in the Accordion',
         },
-      } satisfies Record<keyof BAccordionSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BAccordionSlots>,
     },
     BAccordionItem: {
       sourcePath: '/BAccordion/BAccordionItem.vue',
@@ -144,40 +144,9 @@ export default {
           description:
             'Text to place in the header of the AccordionItem (title slot takes precedence)',
         },
-      } satisfies Record<keyof BAccordionItemProps, PropertyReference>,
+      } satisfies PropRecord<keyof BAccordionItemProps>,
       emits: {
-        'hidden': {
-          description: 'Emitted when AccordionItem has finished closing',
-        },
-        'hide': {
-          description: 'Emitted when AccordionItem has started to close',
-          args: {
-            value: {
-              type: 'BvTriggerableEvent',
-              description: 'Native triggerable event',
-            },
-          },
-        },
-        'hide-prevented': {
-          description:
-            'Emitted when the AccordionItem tried to close, but was prevented from doing so', // TODO grammar check (remove trailing period)
-        },
-        'show': {
-          description: 'Emitted when AccordionItem has started to show',
-          args: {
-            value: {
-              type: 'BvTriggerableEvent',
-              description: 'Native triggerable event',
-            },
-          },
-        },
-        'shown': {
-          description: 'Emitted when AccordionItem has finished showing',
-        },
-        'show-prevented': {
-          description:
-            'Emitted when the AccordionItem tried to open, but was prevented from doing so', // TODO grammar check (remove trailing period)
-        },
+        ...showHideEmits,
         'update:model-value': {
           description: 'Emitted when the visibility of the AccordionItem is changed',
           args: {
@@ -187,7 +156,15 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BAccordionItemEmits | 'update:model-value', EmitReference>,
+        'cancel': {
+          args: undefined,
+          description: undefined,
+        },
+        'ok': {
+          args: undefined,
+          description: undefined,
+        },
+      } satisfies EmitRecord<keyof BAccordionItemEmits | 'update:model-value'>,
       slots: {
         default: {
           description: 'Content to place in the AccordionItem',
@@ -195,7 +172,7 @@ export default {
         title: {
           description: 'Content to place in the header of the AccordionItem',
         },
-      } satisfies Record<keyof BAccordionItemSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BAccordionItemSlots>,
     },
   }),
 }

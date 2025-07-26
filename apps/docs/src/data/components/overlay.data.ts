@@ -1,9 +1,9 @@
-import type {BOverlayEmits, BOverlaySlots, BvnComponentProps} from 'bootstrap-vue-next'
+import type {BOverlayEmits, BOverlayProps, BOverlaySlots} from 'bootstrap-vue-next'
 import {
   type ComponentReference,
-  type EmitReference,
-  type PropertyReference,
-  type SlotsReference,
+  type EmitRecord,
+  type PropRecord,
+  type SlotRecord,
   StyleKind,
 } from '../../types'
 
@@ -97,7 +97,7 @@ export default {
           type: 'Numberish',
           default: 10, // TODO item not in string format
         },
-      } satisfies Record<keyof BvnComponentProps['BOverlay'], PropertyReference>,
+      } satisfies PropRecord<keyof BOverlayProps>,
       emits: {
         click: {
           args: {
@@ -116,7 +116,7 @@ export default {
           description: '', // TODO missing description
           args: {},
         },
-      } satisfies Record<keyof BOverlayEmits, EmitReference>,
+      } satisfies EmitRecord<keyof BOverlayEmits>,
       slots: {
         default: {
           description: '', // TODO missing description
@@ -136,7 +136,7 @@ export default {
             },
           },
         },
-      }satisfies Record<keyof BOverlaySlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BOverlaySlots>,
     },
   }),
 }

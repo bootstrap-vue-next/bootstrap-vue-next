@@ -1,15 +1,16 @@
 import type {
   BAvatarEmits,
+  BAvatarGroupProps,
   BAvatarGroupSlots,
+  BAvatarProps,
   BAvatarSlots,
-  BvnComponentProps,
 } from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   defaultPropSectionSymbol,
-  type EmitReference,
-  type PropertyReference,
-  type SlotsReference,
+  type EmitRecord,
+  type PropRecord,
+  type SlotRecord,
   StyleKind,
 } from '../../types'
 import {pick} from '../../utils/objectUtils'
@@ -119,10 +120,7 @@ export default {
             default: undefined,
             description: 'Text to place in the avatar',
           },
-        } satisfies Record<
-          Exclude<keyof BvnComponentProps['BAvatar'], keyof typeof linkProps>,
-          PropertyReference
-        >,
+        } satisfies PropRecord<Exclude<keyof BAvatarProps, keyof typeof linkProps>>,
         'BLink props': linkedBLinkSection,
       },
       emits: {
@@ -144,7 +142,7 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BAvatarEmits, EmitReference>,
+      } satisfies EmitRecord<keyof BAvatarEmits>,
       slots: {
         default: {
           description: 'Content to place in the avatars optional badge. Overrides the `badge` prop',
@@ -153,7 +151,7 @@ export default {
           description:
             'Content to place in the avatar. Overrides props `text`, `src`, and `icon-name`', // TODO prop inconsistency (mentions `icon-name`, which is not in BAvatarProps)
         },
-      } satisfies Record<keyof BAvatarSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BAvatarSlots>,
     },
     BAvatarGroup: {
       styleSpec: {kind: StyleKind.BsvnClass},
@@ -199,12 +197,12 @@ export default {
           description:
             'Disables rounding of the child avatars, rending the avatar with square corners', // TODO grammar check (typo: "rending" should be "rendering")
         },
-      } satisfies Record<keyof BvnComponentProps['BAvatarGroup'], PropertyReference>,
+      } satisfies PropRecord<keyof BAvatarGroupProps>,
       slots: {
         default: {
           description: 'Content (avatars) to place in the avatar group',
         },
-      } satisfies Record<keyof BAvatarGroupSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BAvatarGroupSlots>,
     },
   }),
 }

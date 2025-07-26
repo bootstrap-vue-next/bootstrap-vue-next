@@ -1,5 +1,10 @@
-import type {BInputGroupSlots, BInputGroupTextSlots, BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference, SlotsReference} from '../../types'
+import type {
+  BInputGroupProps,
+  BInputGroupSlots,
+  BInputGroupTextProps,
+  BInputGroupTextSlots,
+} from 'bootstrap-vue-next'
+import type {ComponentReference, PropRecord, SlotRecord} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 
@@ -19,7 +24,7 @@ export default {
           default: undefined,
           description: 'Text to prepend to the input group',
         },
-      } satisfies Record<keyof BvnComponentProps['BInputGroup'], PropertyReference>,
+      } satisfies PropRecord<keyof BInputGroupProps>,
       emits: {},
       slots: {
         append: {
@@ -31,7 +36,7 @@ export default {
         prepend: {
           description: 'Content to prepend to the input group',
         },
-      }satisfies Record<keyof BInputGroupSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BInputGroupSlots>,
     },
     BInputGroupText: {
       sourcePath: '/BInputGroup/BInputGroupText.vue',
@@ -42,13 +47,13 @@ export default {
           default: undefined,
           description: 'Content to place in the input group text',
         },
-      } satisfies Record<keyof BvnComponentProps['BInputGroupText'], PropertyReference>,
+      } satisfies PropRecord<keyof BInputGroupTextProps>,
       emits: {},
       slots: {
         default: {
           description: 'Content to place in the input group text',
         },
-      }satisfies Record<keyof BInputGroupTextSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BInputGroupTextSlots>,
     },
   }),
 }

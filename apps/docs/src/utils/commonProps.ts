@@ -1,4 +1,4 @@
-import {type PropertyReference} from '../types'
+import type {PropReference} from '../types'
 
 const commonProps = () =>
   ({
@@ -459,7 +459,7 @@ const commonProps = () =>
 const singletonProps = Object.freeze(commonProps())
 
 export const buildCommonProps = (
-  obj?: Partial<Record<keyof typeof singletonProps, Partial<PropertyReference>>>
+  obj?: Partial<Record<keyof typeof singletonProps, Partial<PropReference>>>
 ): Readonly<typeof singletonProps> => {
   if (!obj) return singletonProps
 
@@ -476,4 +476,9 @@ export const buildCommonProps = (
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return Object.freeze(myObject as any)
+}
+
+export const commonEmits = {
+  cancel: {},
+  ok: {},
 }

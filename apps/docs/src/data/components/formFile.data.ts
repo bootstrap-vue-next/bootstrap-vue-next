@@ -1,5 +1,5 @@
-import type {BFormFileSlots, BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference, SlotsReference} from '../../types'
+import type {BFormFileProps, BFormFileSlots} from 'bootstrap-vue-next'
+import type {ComponentReference, PropRecord, SlotRecord} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 
@@ -81,7 +81,7 @@ export default {
           default: false, // TODO item not in string format
           description: 'Wether to returns files as a flat array when in `directory` mode', // TODO grammar check (typo: "Wether" should be "Whether"; "returns" should be "return")
         },
-      } satisfies Record<keyof BvnComponentProps['BFormFile'], PropertyReference>,
+      } satisfies PropRecord<keyof BFormFileProps>,
       emits: {
         'update:model-value': {
           description: 'Updates the `v-model` value (see docs for more details)', // TODO similar content to BAlert/update:model-value (similar purpose)
@@ -99,7 +99,7 @@ export default {
           description: '', // TODO missing description
           scope: {},
         },
-      }satisfies Record<keyof BFormFileSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BFormFileSlots>,
     },
   }),
 }

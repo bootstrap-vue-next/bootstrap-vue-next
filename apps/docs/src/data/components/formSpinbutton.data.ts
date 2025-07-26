@@ -1,13 +1,13 @@
 import type {
   BFormSpinbuttonEmits,
+  BFormSpinbuttonProps,
   BFormSpinbuttonSlots,
-  BvnComponentProps,
 } from 'bootstrap-vue-next'
 import {
   type ComponentReference,
-  type EmitReference,
-  type PropertyReference,
-  type SlotsReference,
+  type EmitRecord,
+  type PropRecord,
+  type SlotRecord,
   StyleKind,
 } from '../../types'
 import {pick} from '../../utils/objectUtils'
@@ -118,7 +118,7 @@ export default {
           // TODO missing type
           // TODO missing default
         },
-      } satisfies Record<keyof BvnComponentProps['BFormSpinbutton'], PropertyReference>,
+      } satisfies PropRecord<keyof BFormSpinbuttonProps>,
       emits: {
         'change': {
           description: 'Emitted when the user releases the mouse button or key',
@@ -138,7 +138,7 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BFormSpinbuttonEmits | 'update:model-value', EmitReference>,
+      } satisfies EmitRecord<keyof BFormSpinbuttonEmits | 'update:model-value'>,
       slots: {
         decrement: {
           description: 'Custom content to place in the decrement button',
@@ -158,7 +158,7 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BFormSpinbuttonSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BFormSpinbuttonSlots>,
     },
   }),
 }

@@ -1,10 +1,10 @@
-import type {BFormRadioGroupSlots, BFormRadioSlots, BvnComponentProps} from 'bootstrap-vue-next'
-import {
-  type ComponentReference,
-  type PropertyReference,
-  type SlotsReference,
-  StyleKind,
-} from '../../types'
+import type {
+  BFormRadioGroupProps,
+  BFormRadioGroupSlots,
+  BFormRadioProps,
+  BFormRadioSlots,
+} from 'bootstrap-vue-next'
+import {type ComponentReference, type PropRecord, type SlotRecord, StyleKind} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 
@@ -65,7 +65,7 @@ export default {
           default: true, // TODO item not in string format
           description: 'Value returned when this radio button is selected',
         },
-      } satisfies Record<keyof BvnComponentProps['BFormRadio'], PropertyReference>,
+      } satisfies PropRecord<keyof BFormRadioProps>,
       emits: {
         'update:model-value': {
           description: 'Emitted when the radio button value is changed', // TODO similar content to BFormCheckbox/update:model-value (similar purpose)
@@ -81,7 +81,7 @@ export default {
         default: {
           description: 'Content to place in the label of the radio button',
         },
-      } satisfies Record<keyof BFormRadioSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BFormRadioSlots>,
     },
     BFormRadioGroup: {
       styleSpec: {kind: StyleKind.Tag, value: 'dev[role="radiogroup"]'}, // TODO grammar check (typo: "dev" should likely be "div")
@@ -135,7 +135,7 @@ export default {
           default: false, // TODO item not in string format
           description: 'When set, adds the Bootstrap class `was-validated` to the group wrapper',
         },
-      } satisfies Record<keyof BvnComponentProps['BFormRadioGroup'], PropertyReference>,
+      } satisfies PropRecord<keyof BFormRadioGroupProps>,
       emits: {
         'update:model-value': {
           description:
@@ -174,7 +174,7 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BFormRadioGroupSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BFormRadioGroupSlots>,
     },
   }),
 }

@@ -1,15 +1,16 @@
 import type {
   BButtonEmits,
+  BButtonProps,
   BButtonSlots,
   BCloseButtonEmits,
-  BvnComponentProps,
+  BCloseButtonProps,
 } from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   defaultPropSectionSymbol,
-  type EmitReference,
-  type PropertyReference,
-  type SlotsReference,
+  type EmitRecord,
+  type PropRecord,
+  type SlotRecord,
   StyleKind,
 } from '../../types'
 import {pick} from '../../utils/objectUtils'
@@ -69,10 +70,7 @@ export default {
             description:
               "The value to set the button's 'type' attribute to. Can be one of 'button', 'submit', or 'reset'", // TODO similar content to BCloseButton/type (identical description)
           },
-        } satisfies Record<
-          Exclude<keyof BvnComponentProps['BButton'], keyof typeof linkProps>,
-          PropertyReference
-        >,
+        } satisfies PropRecord<Exclude<keyof BButtonProps, keyof typeof linkProps>>,
         'BLink props': {
           _opts: {
             linkTo,
@@ -105,7 +103,7 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BButtonEmits | 'update:pressed', EmitReference>,
+      } satisfies EmitRecord<keyof BButtonEmits | 'update:pressed'>,
       slots: {
         'default': {
           description: 'Content to place in the button',
@@ -116,7 +114,7 @@ export default {
         'loading-spinner': {
           description: 'The content to replace the default loading spinner',
         },
-      } satisfies Record<keyof BButtonSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BButtonSlots>,
     },
     BCloseButton: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.btn-close'},
@@ -136,7 +134,7 @@ export default {
           description:
             "The value to set the button's 'type' attribute to. Can be one of 'button', 'submit', or 'reset'", // TODO similar content to BButton/type (identical description)
         },
-      } satisfies Record<keyof BvnComponentProps['BCloseButton'], PropertyReference>,
+      } satisfies PropRecord<keyof BCloseButtonProps>,
       emits: {
         click: {
           description: 'Emitted when non-disabled button clicked',
@@ -147,7 +145,7 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BCloseButtonEmits, EmitReference>,
+      } satisfies EmitRecord<keyof BCloseButtonEmits>,
     },
   }),
 }

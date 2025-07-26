@@ -1,9 +1,27 @@
-import type {BAccordionSlots,BCardFooterSlots,  BCardBodySlots, BCardSlots, BvnComponentProps, BCardGroupSlots, BCardHeaderSlots, BCardSubtitleSlots, BCardTextSlots, BCardTitleSlots} from 'bootstrap-vue-next'
+import type {
+  BCardBodyProps,
+  BCardBodySlots,
+  BCardFooterProps,
+  BCardFooterSlots,
+  BCardGroupProps,
+  BCardGroupSlots,
+  BCardHeaderProps,
+  BCardHeaderSlots,
+  BCardImgProps,
+  BCardProps,
+  BCardSlots,
+  BCardSubtitleProps,
+  BCardSubtitleSlots,
+  BCardTextProps,
+  BCardTextSlots,
+  BCardTitleProps,
+  BCardTitleSlots,
+} from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   defaultPropSectionSymbol,
-  type PropertyReference,
-  type SlotsReference,
+  type PropRecord,
+  type SlotRecord,
   StyleKind,
 } from '../../types'
 import {omit, pick} from '../../utils/objectUtils'
@@ -95,7 +113,7 @@ export default {
           default: false, // TODO item not in string format
           description: 'Disable rendering of the default inner card-body element',
         },
-      } satisfies Record<keyof BvnComponentProps['BCard'], PropertyReference>,
+      } satisfies PropRecord<keyof BCardProps>,
       emits: {},
       slots: {
         default: {
@@ -110,7 +128,7 @@ export default {
         img: {
           description: 'For custom rendering of image content',
         },
-      } satisfies Record<keyof BCardSlots, SlotsReference>,
+      } satisfies PropRecord<keyof BCardSlots>,
     },
     BCardBody: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.card-body, .card-img-overlay'},
@@ -137,7 +155,7 @@ export default {
           default: undefined,
           description: 'Text content to place in the card body, default slot takes precedence', // TODO similar content to BCard/bodyText (similar description)
         },
-      } satisfies Record<keyof BvnComponentProps['BCardBody'], PropertyReference>,
+      } satisfies PropRecord<keyof BCardBodyProps>,
       emits: {},
       slots: {
         default: {
@@ -149,7 +167,7 @@ export default {
         subtitle: {
           description: 'Content to place in the card subtitle',
         },
-      } satisfies Record<keyof BCardBodySlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BCardBodySlots>,
     },
     BCardFooter: {
       sourcePath: '/BCard/BCardFooter.vue',
@@ -166,13 +184,13 @@ export default {
           default: undefined,
           description: 'Text content to place in the card footer, default slot takes precedence', // TODO similar content to BCard/bodyText (similar description structure)
         },
-      } satisfies Record<keyof BvnComponentProps['BCardFooter'], PropertyReference>,
+      } satisfies PropRecord<keyof BCardFooterProps>,
       emits: {},
       slots: {
         default: {
           description: 'Content to place in the card footer',
         },
-      } satisfies Record<keyof BCardFooterSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BCardFooterSlots>,
     },
     BCardGroup: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.card-deck, .card-group, .card-columns'},
@@ -189,13 +207,13 @@ export default {
           default: false, // TODO item not in string format
           description: 'When set renders the card group with gutters between cards', // TODO grammar check (add comma after "When set")
         },
-      } satisfies Record<keyof BvnComponentProps['BCardGroup'], PropertyReference>,
+      } satisfies PropRecord<keyof BCardGroupProps>,
       emits: {},
       slots: {
         default: {
           description: 'Content (cards) to place in the card group',
         },
-      } satisfies Record<keyof BCardGroupSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BCardGroupSlots>,
     },
     BCardHeader: {
       sourcePath: '/BCard/BCardHeader.vue',
@@ -212,13 +230,13 @@ export default {
           default: undefined,
           description: 'Text content to place in the card header, default slot takes precedence', // TODO similar content to BCard/bodyText (similar description structure)
         },
-      } satisfies Record<keyof BvnComponentProps['BCardHeader'], PropertyReference>,
+      } satisfies PropRecord<keyof BCardHeaderProps>,
       emits: {},
       slots: {
         default: {
           description: 'Content to place in the card header',
         },
-      } satisfies Record<keyof BCardHeaderSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BCardHeaderSlots>,
     },
     BCardImg: {
       sourcePath: '/BCard/BCardImg.vue',
@@ -229,10 +247,7 @@ export default {
             default: 'top',
             // description: 'Placement for the image ("top", "bottom", "start", "end", or "overlay")' // TODO missing description // TODO similar content to BCard/imgPlacement (similar type)
           },
-        } satisfies Record<
-          Exclude<keyof BvnComponentProps['BCardImg'], keyof typeof imageProps>,
-          PropertyReference
-        >,
+        } satisfies PropRecord<Exclude<keyof BCardImgProps, keyof typeof imageProps>>,
         'BImg props': {
           _opts: {
             linkTo,
@@ -262,13 +277,13 @@ export default {
           default: undefined,
           description: 'Text content to place in the card body, default slot takes precedence', // TODO grammar check (should say "card subtitle" instead of "card body") // TODO similar content to BCard/bodyText (similar description structure)
         },
-      } satisfies Record<keyof BvnComponentProps['BCardSubtitle'], PropertyReference>,
+      } satisfies PropRecord<keyof BCardSubtitleProps>,
       emits: {},
       slots: {
         default: {
           description: 'Content to place in the card subtitle',
         },
-      } satisfies Record<keyof BCardSubtitleSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BCardSubtitleSlots>,
     },
     BCardText: {
       sourcePath: '/BCard/BCardText.vue',
@@ -286,13 +301,13 @@ export default {
           default: undefined,
           description: 'Text content to place in the card text, default slot takes precedence', // TODO similar content to BCard/bodyText (similar description structure)
         },
-      } satisfies Record<keyof BvnComponentProps['BCardText'], PropertyReference>,
+      } satisfies PropRecord<keyof BCardTextProps>,
       emits: {},
       slots: {
         default: {
           description: 'Content to place in the card text',
         },
-      } satisfies Record<keyof BCardTextSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BCardTextSlots>,
     },
     BCardTitle: {
       sourcePath: '/BCard/BCardTitle.vue',
@@ -310,13 +325,13 @@ export default {
           default: undefined,
           description: 'Text content to place in the card title, default slot takes precedence', // TODO similar content to BCard/bodyText (similar description structure)
         },
-      } satisfies Record<keyof BvnComponentProps['BCardTitle'], PropertyReference>,
+      } satisfies PropRecord<keyof BCardTitleProps>,
       emits: {},
       slots: {
         default: {
           description: 'Content to place in the card title',
         },
-      } satisfies Record<keyof BCardTitleSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BCardTitleSlots>,
     },
   }),
 }

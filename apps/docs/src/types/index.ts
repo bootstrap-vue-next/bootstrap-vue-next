@@ -2,23 +2,23 @@ import type {useScrollspy} from 'bootstrap-vue-next'
 
 export type ComponentItem = Exclude<keyof ComponentReference, 'component' | 'sections'>
 
-export interface PropertyReference {
+export interface PropReference {
   type?: string
   description?: string
   default?: unknown
   notYetImplemented?: boolean
 }
 
-export type PropsRecordWithOptions = {
-  _data: PropsRecord // Allows for a single section or multiple sections
+export type PropRecordWithOptions = {
+  _data: PropRecord // Allows for a single section or multiple sections
   _opts?: {linkTo?: string}
 }
 // Flat variant
-export type PropsRecord = Record<string, PropertyReference>
+export type PropRecord<T extends string = string> = Record<T, PropReference>
 // Multiple sections variant
-export type PropsRecordWithMultipleSections = {
-  [defaultPropSectionSymbol]: PropsRecord | PropsRecordWithOptions
-} & {[key: string]: PropsRecord | PropsRecordWithOptions}
+export type PropRecordWithMultipleSections = {
+  [defaultPropSectionSymbol]: PropRecord | PropRecordWithOptions
+} & {[key: string]: PropRecord | PropRecordWithOptions}
 // Options variant
 export const defaultPropSectionSymbol = '_defaultPropSection'
 
@@ -27,7 +27,7 @@ export type EmitReference = {
   args?: EmitArgReference
   description?: string
 }
-export type EmitsRecord = Record<string, EmitReference>
+export type EmitRecord<T extends string = string> = Record<T, EmitReference>
 
 export type SlotScopeReference = Record<
   string,
@@ -37,11 +37,11 @@ export type SlotScopeReference = Record<
     notYetImplemented?: boolean
   }
 >
-export type SlotsReference = {
+export type SlotReference = {
   scope?: SlotScopeReference
   description?: string
 }
-export type SlotsRecord = Record<string, SlotsReference>
+export type SlotRecord<T extends string = string> = Record<T, SlotReference>
 
 export const enum StyleKind {
   BootstrapClass = 'BOOTSTRAP-CLASS',
@@ -66,9 +66,9 @@ export type ComponentReference = Record<
      * If path is empty string, it defaults to the package directory. If null, it does not render the button
      */
     sourcePath: string | null
-    props: PropsRecordWithOptions | PropsRecord | PropsRecordWithMultipleSections
-    emits?: EmitsRecord
-    slots?: SlotsRecord
+    props: PropRecordWithOptions | PropRecord | PropRecordWithMultipleSections
+    emits?: EmitRecord
+    slots?: SlotRecord
     sections?: ComponentSection[]
   }
 >

@@ -181,7 +181,10 @@
                     >
                       <template #cell(args)="d">
                         <!-- eslint-disable-next-line prettier/prettier -->
-                        <div v-for="[argName, arg] in Object.entries(d.item.args ?? {})" :key="argName">
+                        <div
+                          v-for="[argName, arg] in Object.entries(d.item.args ?? {})"
+                          :key="argName"
+                        >
                           <code>{{ kebabCase(argName) }}</code>
                           <code>: {{ arg.type }}</code>
                           <span v-if="!!arg.description"> - {{ arg.description }}</span>
@@ -257,10 +260,10 @@ import {
   type ComponentReference,
   type ComponentSection,
   defaultPropSectionSymbol,
-  type PropertyReference,
-  type PropsRecord,
-  type PropsRecordWithMultipleSections,
-  type PropsRecordWithOptions,
+  type PropRecord,
+  type PropRecordWithMultipleSections,
+  type PropRecordWithOptions,
+  type PropReference,
 } from '../types'
 import {kebabCase} from '../utils/objectUtils'
 import {useRouter, withBase} from 'vitepress'
@@ -281,17 +284,17 @@ const sortData = computed(() =>
   Object.entries(props.data).map(
     ([component, {props: localProps, sourcePath, emits, slots, styleSpec}]) => {
       const mapProps = () => {
-        const isMultiplePropsRecord = (
-          val: PropsRecordWithOptions | PropsRecord | PropsRecordWithMultipleSections
-        ): val is PropsRecordWithMultipleSections => '_data' in val // This is wrong
-        const isPropsRecordWithOptions = (
-          val: PropsRecord | PropsRecordWithOptions
-        ): val is PropsRecordWithOptions => '_data' in val
+        const isMultiplePropRecord = (
+          val: PropRecordWithOptions | PropRecord | PropRecordWithMultipleSections
+        ): val is PropRecordWithMultipleSections => '_data' in val // This is wrong
+        const isPropRecordWithOptions = (
+          val: PropRecord | PropRecordWithOptions
+        ): val is PropRecordWithOptions => '_data' in val
 
         // Convert it to a multiple section record for simplicity
-        const convertPropsRecordToMultiple = (
-          val: PropsRecord | PropsRecordWithOptions
-        ): PropsRecordWithMultipleSections => ({
+        const convertPropRecordToMultiple = (
+          val: PropRecord | PropRecordWithOptions
+        ): PropRecordWithMultipleSections => ({
           [defaultPropSectionSymbol]: val,
         })
         /**
@@ -301,14 +304,14 @@ const sortData = computed(() =>
          *
          * It also converts `defaultPropSectionSymbol` to an empty string for appearance above
          */
-        const simplifyMultiple = (val: PropsRecordWithMultipleSections) =>
+        const simplifyMultiple = (val: PropRecordWithMultipleSections) =>
           Object.entries(val).reduce(
             (acc, [key, value]) => {
-              const current = isPropsRecordWithOptions(value)
+              const current = isPropRecordWithOptions(value)
                 ? value
-                : ({_data: value} as PropsRecordWithOptions)
+                : ({_data: value} as PropRecordWithOptions)
               const arrayedAndSorted = Object.entries(current._data)
-                .map(([key, value]) => [kebabCase(key), value] as [string, PropertyReference])
+                .map(([key, value]) => [kebabCase(key), value] as [string, PropReference])
                 .sort(([a], [b]) => a.localeCompare(b))
 
               acc[key] = {
@@ -320,14 +323,14 @@ const sortData = computed(() =>
             },
             {} as Record<
               string,
-              Omit<PropsRecordWithOptions, '_data'> & {
-                _data: [propName: string, propReference: PropertyReference][]
+              Omit<PropRecordWithOptions, '_data'> & {
+                _data: [propName: string, propReference: PropReference][]
               }
             >
           )
 
         return simplifyMultiple(
-          isMultiplePropsRecord(localProps) ? localProps : convertPropsRecordToMultiple(localProps)
+          isMultiplePropRecord(localProps) ? localProps : convertPropRecordToMultiple(localProps)
         )
       }
 

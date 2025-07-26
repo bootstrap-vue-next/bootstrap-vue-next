@@ -1,15 +1,16 @@
 import type {
   BBreadcrumbItemEmits,
+  BBreadcrumbItemProps,
   BBreadcrumbItemSlots,
+  BBreadcrumbProps,
   BBreadcrumbSlots,
-  BvnComponentProps,
 } from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   defaultPropSectionSymbol,
-  type EmitReference,
-  type PropertyReference,
-  type SlotsReference,
+  type EmitRecord,
+  type PropRecord,
+  type SlotRecord,
 } from '../../types'
 import {linkedBLinkSection, linkProps} from '../../utils/linkProps'
 
@@ -29,7 +30,7 @@ export default {
           description:
             'ID of the breadcrumb component. When combined with the `useBreadcrumb` composable, it will use this id as a breadcrumb trail instead of the global trail.',
         },
-      } satisfies Record<keyof BvnComponentProps['BBreadcrumb'], PropertyReference>,
+      } satisfies PropRecord<keyof BBreadcrumbProps>,
       emits: {},
       slots: {
         default: {
@@ -41,7 +42,7 @@ export default {
         prepend: {
           description: 'Content to prepend to the breadcrumb',
         },
-      } satisfies Record<keyof BBreadcrumbSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BBreadcrumbSlots>,
     },
     BBreadcrumbItem: {
       sourcePath: '/BBreadcrumb/BBreadcrumbItem.vue',
@@ -58,10 +59,7 @@ export default {
             default: undefined,
             description: 'Text to render in the breadcrumb item',
           },
-        } satisfies Record<
-          Exclude<keyof BvnComponentProps['BBreadcrumbItem'], keyof typeof linkProps>,
-          PropertyReference
-        >,
+        } satisfies PropRecord<Exclude<keyof BBreadcrumbItemProps, keyof typeof linkProps>>,
         'BLink props': linkedBLinkSection,
       },
       emits: {
@@ -74,12 +72,12 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BBreadcrumbItemEmits, EmitReference>,
+      } satisfies EmitRecord<keyof BBreadcrumbItemEmits>,
       slots: {
         default: {
           description: 'Content to place in the breadcrumb item',
         },
-      } satisfies Record<keyof BBreadcrumbItemSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BBreadcrumbItemSlots>,
     },
   }),
 }

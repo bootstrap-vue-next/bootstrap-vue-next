@@ -1,14 +1,14 @@
-import type {BModalEmits, BModalSlots, BvnComponentProps} from 'bootstrap-vue-next'
+import type {BModalEmits, BModalProps, BModalSlots} from 'bootstrap-vue-next'
 import type {
   ComponentReference,
-  EmitReference,
-  PropertyReference,
+  EmitRecord,
+  PropRecord,
+  SlotRecord,
   SlotScopeReference,
-  SlotsReference,
 } from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
-import {showHideProps} from '../../utils/showHideData'
+import {showHideEmits, showHideProps} from '../../utils/showHideData'
 
 const sharedSlots: SlotScopeReference = {
   cancel: {
@@ -308,8 +308,9 @@ export default {
           default: 'h5',
           description: 'HTML tag to render for the title instead of the default', // TODO grammar check (rephrased for clarity)
         },
-      } satisfies Record<keyof BvnComponentProps['BModal'], PropertyReference>,
+      } satisfies PropRecord<keyof BModalProps>,
       emits: {
+        ...showHideEmits,
         'update:model-value': {
           description: 'Emitted when the modal visibility changes', // TODO grammar check (should say "modal's visibility" for clarity)
           args: {
@@ -318,53 +319,6 @@ export default {
               description: "The new value of the modal's visibility state", // TODO grammar check (should say "visibility state" instead of "visible state")
             },
           },
-        },
-        'show': {
-          description: 'Emitted just before the modal is shown. Cancelable', // TODO grammar check (rephrased for brevity)
-          args: {
-            value: {
-              type: 'BvTriggerableEvent',
-              description: 'The show event details', // TODO added description for clarity
-            },
-          },
-        },
-        'shown': {
-          description: 'Emitted just after the modal is shown. Cancelable', // TODO grammar check (rephrased for brevity)
-          args: {
-            value: {
-              type: 'BvTriggerableEvent',
-              description: 'The shown event details', // TODO added description for clarity
-            },
-          },
-        },
-        'hide': {
-          description:
-            'Emitted just before the modal is hidden. Cancelable (unless forcibly hidden)', // TODO grammar check (rephrased for clarity and tense consistency)
-          args: {
-            value: {
-              type: 'BvTriggerableEvent',
-              description: 'The hide event details', // TODO added description for clarity
-            },
-          },
-        },
-        'hidden': {
-          description: 'Emitted after the modal is hidden', // TODO grammar check (rephrased for brevity)
-          args: {
-            value: {
-              type: 'BvTriggerableEvent',
-              description: 'The hidden event details', // TODO added description for clarity
-            },
-          },
-        },
-        'hide-prevented': {
-          description:
-            'Emitted when the modal attempted to close but was prevented. Occurs when preventDefault() is called, or when the user presses Esc or clicks the backdrop with no-close-on-backdrop set to true.', // TODO grammar check (rephrased for clarity; corrected "escape" to "Esc" and "no-close-onbackdrop" to "no-close-on-backdrop")
-          args: {},
-        },
-        'show-prevented': {
-          description:
-            'Emitted when the modal attempted to open but was prevented. Occurs when preventDefault() is called.', // TODO grammar check (rephrased for clarity)
-          args: {},
         },
         'ok': {
           description: 'Emitted when the default footer OK button is clicked. Cancelable', // TODO grammar check (rephrased for consistency)
@@ -411,7 +365,7 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BModalEmits | 'update:model-value', EmitReference>,
+      } satisfies EmitRecord<keyof BModalEmits | 'update:model-value'>,
       slots: {
         'backdrop': {
           description: 'Content for the modal backdrop',
@@ -449,7 +403,7 @@ export default {
             "Content for the modal title. Not shown if the 'header' slot is used. Optionally scoped", // TODO grammar check (rephrased for clarity)
           scope: sharedSlots,
         },
-      } satisfies Record<keyof BModalSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BModalSlots>,
     },
   }),
 }

@@ -1,7 +1,7 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
+import type {ComponentReference, PropRecord} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
+import type {BFormInputProps} from 'bootstrap-vue-next'
 
 export default {
   load: (): ComponentReference => ({
@@ -54,7 +54,7 @@ export default {
           default: 'text',
           description: 'The type of input to render; refer to documentation for supported types',
         },
-      } satisfies Record<keyof BvnComponentProps['BFormInput'], PropertyReference>,
+      } satisfies PropRecord<keyof BFormInputProps>,
       emits: {
         'update:model-value': {
           description:

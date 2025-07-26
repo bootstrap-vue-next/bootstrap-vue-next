@@ -1,13 +1,13 @@
-import type {BAlertEmits, BAlertSlots, BvnComponentProps} from 'bootstrap-vue-next'
+import type {BAlertEmits, BAlertProps, BAlertSlots} from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   defaultPropSectionSymbol,
-  type EmitReference,
-  type PropertyReference,
-  type SlotsReference,
+  type EmitRecord,
+  type PropRecord,
+  type SlotRecord,
 } from '../../types'
 import {linkedBLinkSection, type linkProps} from '../../utils/linkProps'
-import {showHideProps} from '../../utils/showHideData'
+import {showHideEmits, showHideProps} from '../../utils/showHideData'
 import {buildCommonProps} from '../../utils/commonProps'
 import {omit, pick} from '../../utils/objectUtils'
 
@@ -119,10 +119,7 @@ export default {
             default: undefined,
             description: "The alert's title text",
           },
-        } satisfies Record<
-          Exclude<keyof BvnComponentProps['BAlert'], keyof typeof linkProps>,
-          PropertyReference
-        >,
+        } satisfies PropRecord<Exclude<keyof BAlertProps, keyof typeof linkProps>>,
         'BLink props': linkedBLinkSection,
       },
       slots: {
@@ -136,8 +133,9 @@ export default {
           description: '',
           scope: {}, // TODO
         },
-      } satisfies Record<keyof BAlertSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BAlertSlots>,
       emits: {
+        ...showHideEmits,
         'close': {
           description: 'Emitted when the alert begins its transition to close',
         },
@@ -159,7 +157,15 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BAlertEmits | 'update:model-value', EmitReference>,
+        'cancel': {
+          args: undefined,
+          description: undefined,
+        },
+        'ok': {
+          args: undefined,
+          description: undefined,
+        },
+      } satisfies EmitRecord<keyof BAlertEmits | 'update:model-value'>,
     },
   }),
 }

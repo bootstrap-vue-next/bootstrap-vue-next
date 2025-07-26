@@ -1,7 +1,7 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
+import {type ComponentReference, type PropRecord, StyleKind} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
+import type {BFormTextareaProps} from 'bootstrap-vue-next'
 
 export default {
   load: (): ComponentReference => ({
@@ -62,7 +62,7 @@ export default {
           description:
             'When set, disables the auto-shrink feature when the textarea is in auto-height mode',
         },
-      } satisfies Record<keyof BvnComponentProps['BFormTextarea'], PropertyReference>,
+      } satisfies PropRecord<keyof BFormTextareaProps>,
       emits: {
         'update:model-value': {
           description:

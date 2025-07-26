@@ -432,7 +432,7 @@ export type BFormTagsSlots = {
     duplicateTagText: string
     duplicateTags: string[]
     form: string | undefined
-    inputAttrs: Record<string, unknown> | undefined
+    inputAttrs: Record<string, unknown>
     inputClass: ClassValue
     inputHandlers: {
       input: (e: Event | string) => void
@@ -518,16 +518,19 @@ type SortSlotScope<Items> = {
   field: TableField<Items>
   isFoot: false
 }
-export type BTableSlots<Items> = {
+export interface BTableSlots<Items>
+  extends Omit<
+    BTableLiteSlots<Items>,
+    'thead-top' | 'row-details' | `head(${string})` | `foot(${string})` | `cell(${string})`
+  > {
   // BTableLite
-
-  'table-colgroup'?: (props: {fields: TableField<Items>[]}) => any
   'thead-top'?: (props: {
     columns: number
     fields: TableField<Items>[]
     selectAllRows: () => void
     clearSelected: () => void
   }) => any
+
   [key: `head(${string})`]: (props: {
     label: string | undefined
     column: LiteralUnion<keyof Items>
@@ -536,13 +539,7 @@ export type BTableSlots<Items> = {
     selectAllRows: () => void
     clearSelected: () => void
   }) => any
-  'thead-sub'?: (props: {
-    items: readonly Items[]
-    fields: TableField<Items>[]
-    field: TableField<Items>
-  }) => any
 
-  'top-row'?: (props: {columns: number; fields: TableField<Items>[]}) => any
   [key: `cell(${string})`]: (props: {
     value: unknown
     unformatted: unknown
@@ -556,6 +553,7 @@ export type BTableSlots<Items> = {
     selectRow: (index?: number) => void
     unselectRow: (index?: number) => void
   }) => any
+
   'row-details'?: (props: {
     item: Items
     toggleDetails: () => void
@@ -566,8 +564,6 @@ export type BTableSlots<Items> = {
     unselectRow: (index?: number) => void
   }) => any
 
-  'bottom-row'?: (props: {columns: number; fields: TableField<Items>[]}) => any
-
   [key: `foot(${string})`]: (props: {
     label: string | undefined
     column: LiteralUnion<keyof Items>
@@ -576,13 +572,6 @@ export type BTableSlots<Items> = {
     selectAllRows: () => void
     clearSelected: () => void
   }) => any
-  'custom-foot'?: (props: {
-    fields: TableField<Items>[]
-    items: readonly Items[]
-    columns: number
-  }) => any
-
-  'table-caption'?: (props: Record<string, never>) => any
 
   // end btable slots
 
@@ -648,12 +637,14 @@ export type BTableLiteSlots<Items> = {
   }) => any
 
   'bottom-row'?: (props: {columns: number; fields: TableField<Items>[]}) => any
+
   [key: `foot(${string})`]: (props: {
     label: string | undefined
     column: LiteralUnion<keyof Items>
     field: TableField<Items>
     isFoot: true
   }) => any
+
   'custom-foot'?: (props: {
     fields: TableField<Items>[]
     items: readonly Items[]

@@ -1,12 +1,12 @@
-import type {BOffcanvasEmits, BOffcanvasSlots, BvnComponentProps} from 'bootstrap-vue-next'
+import type {BOffcanvasEmits, BOffcanvasProps, BOffcanvasSlots} from 'bootstrap-vue-next'
 import {
   type ComponentReference,
-  type EmitReference,
-  type PropertyReference,
-  type SlotsReference,
+  type EmitRecord,
+  type PropRecord,
+  type SlotRecord,
   StyleKind,
 } from '../../types'
-import {showHideProps} from '../../utils/showHideData'
+import {showHideEmits, showHideProps} from '../../utils/showHideData'
 
 export default {
   load: (): ComponentReference => ({
@@ -115,8 +115,9 @@ export default {
           type: 'string',
           default: undefined,
         },
-      } satisfies Record<keyof BvnComponentProps['BOffcanvas'], PropertyReference>,
+      } satisfies PropRecord<keyof BOffcanvasProps>,
       emits: {
+        ...showHideEmits,
         'update:model-value': {
           args: {
             'update:model-value': {
@@ -139,50 +140,6 @@ export default {
           },
           description: "Emitted when the offcanvas' breakpoint state changes", // TODO grammar check (should say "offcanvas's" instead of "offcanvas'")
         },
-        'show': {
-          args: {
-            value: {
-              description: '', // TODO missing description
-              type: 'BvTriggerableEvent',
-            },
-          },
-          description: '', // TODO missing description
-        },
-        'show-prevented': {
-          description: '', // TODO missing description
-          args: {},
-        },
-        'shown': {
-          args: {
-            value: {
-              description: '', // TODO missing description
-              type: 'BvTriggerableEvent',
-            },
-          },
-          description: '', // TODO missing description
-        },
-        'hide': {
-          args: {
-            value: {
-              description: '', // TODO missing description
-              type: 'BvTriggerableEvent',
-            },
-          },
-          description: '', // TODO missing description
-        },
-        'hide-prevented': {
-          description: '', // TODO missing description
-          args: {},
-        },
-        'hidden': {
-          args: {
-            value: {
-              description: '', // TODO missing description
-              type: 'BvTriggerableEvent',
-            },
-          },
-          description: '', // TODO missing description
-        },
         'close': {
           description: '', // TODO missing description
           args: {
@@ -201,7 +158,19 @@ export default {
             },
           },
         },
-      } satisfies Record<keyof BOffcanvasEmits | 'update:model-value', EmitReference>,
+        'backdrop': {
+          args: undefined,
+          description: undefined,
+        },
+        'cancel': {
+          args: undefined,
+          description: undefined,
+        },
+        'ok': {
+          args: undefined,
+          description: undefined,
+        },
+      } satisfies EmitRecord<keyof BOffcanvasEmits | 'update:model-value'>,
       slots: {
         'title': {
           description: '', // TODO missing description
@@ -267,7 +236,7 @@ export default {
           description: '', // TODO missing description
           scope: {},
         },
-      } satisfies Record<keyof BOffcanvasSlots, SlotsReference>,
+      } satisfies SlotRecord<keyof BOffcanvasSlots>,
     },
   }),
 }
