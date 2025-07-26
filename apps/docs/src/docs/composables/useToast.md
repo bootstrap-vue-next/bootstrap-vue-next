@@ -1,35 +1,32 @@
-<ComposableHeader path="useToastController/index.ts" title="useToastController" />
+<ComposableHeader path="useToast/index.ts" title="useToast" />
 
 <div class="lead mb-5">
 
-Often times one may want to open a `Toast` in a global context, without the need for declaring a component, perhaps to display an error after a function threw an error. `useToastController` is used to create `Toasts` on demand. You must have initialized the `BToastOrchestrator` component once in your application. The following functionality requires the existance of that component
+Often times one may want to open a `Toast` in a global context, without the need for declaring a component, perhaps to display an error after a function threw an error. `useToast` is used to create `Toasts` on demand. You must have initialized the `BToastOrchestrator` component once in your application. The following functionality requires the existance of that component
 
 </div>
 
 <UsePluginAlert />
 
-## BToastOrchestrator
+## BOrchestrator
 
-You must have initialized `BToastOrchestrator` component once and only once (doing multiple may display multiple `Toasts`). This is usually best placed at the App root.
+You must have initialized `BOrchestrator` component once and only once (doing multiple may display multiple `Toasts`). Also you need to provide the Orchestrator registy. use `BApp` component wrapping your app to initializes both of these for you.
 
 <HighlightCard>
-
 <template #html>
 
-```vue-html
-<BToastOrchestrator />
+```vue
+<template>
+  <BApp>
+    <router-view />
+  </BApp>
+</template>
 ```
 
-  </template>
+</template>
 </HighlightCard>
 
-The only props it access are `teleportDisabled` and `teleportTo` to modify the location that it is placed
-
-In addition, it contains a few exposed methods. These exposed methods on the `template ref` correspond to those in the `useToastController` function, described below
-
-- remove
-- show
-- toasts
+Use the props `teleportTo` to modify the dom location that the toasts are placed.
 
 ## Showing a Toast
 
@@ -45,7 +42,7 @@ Showing a toast is done through the show method
 </template>
 
 <script setup lang="ts">
-const {create} = useToastController()
+const {create} = useToast()
 </script>
 ```
 
@@ -74,7 +71,7 @@ The props property corresponds to mostly that of the `BToast` components props. 
 </template>
 
 <script setup lang="ts">
-const {create} = useToastController()
+const {create} = useToast()
 
 const firstRef = ref<OrchestratedToast>({
   body: `${Math.random()}`,
@@ -117,7 +114,7 @@ Using props can work for most situations, but it leaves some finer control to be
 <script setup lang="ts">
 import {BToast} from 'bootstrap-vue-next'
 
-const {create} = useToastController()
+const {create} = useToast()
 
 const firstRef = ref<OrchestratedToast>({
   body: `${Math.random()}`,
@@ -171,7 +168,7 @@ Hiding a `Toast` programmatically is very simple. `create` return an object that
 </template>
 
 <script setup lang="ts">
-const {create} = useToastController()
+const {create} = useToast()
 
 let toast: undefined | ReturnType<typeof create>
 
@@ -217,7 +214,7 @@ Hiding a `Toast` with promise
 </template>
 
 <script setup lang="ts">
-const {create} = useToastController()
+const {create} = useToast()
 const promiseToast = () => {
   create(
     {
@@ -249,14 +246,14 @@ const promiseToast = () => {
 
 <script setup lang="ts">
 import {data} from '../../data/components/toast.data'
-import {BButton, useToastController, BButtonGroup, BToast} from 'bootstrap-vue-next'
+import {BButton, useToast, BButtonGroup, BToast} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
 
 import UsePluginAlert from '../../components/UsePluginAlert.vue'
 import {ref, computed, h, onMounted} from 'vue'
 import ComposableHeader from './ComposableHeader.vue'
 
-const {create, remove, toasts} = useToastController()
+const {create, remove, toasts} = useToast()
 
 let toast: undefined | ReturnType<typeof create>
 

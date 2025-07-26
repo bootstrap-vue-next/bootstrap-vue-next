@@ -17,6 +17,7 @@ export const componentsWithExternalPath = {
   BAccordion: '/components/BAccordion',
   BAccordionItem: '/components/BAccordion',
   BAlert: '/components/BAlert',
+  BApp: '/components/BApp',
   BAvatar: '/components/BAvatar',
   BAvatarGroup: '/components/BAvatar',
   BBadge: '/components/BBadge',
@@ -89,6 +90,7 @@ export const componentsWithExternalPath = {
   BNavbarToggle: '/components/BNavbar',
   BOffcanvas: '/components/BOffcanvas',
   BOverlay: '/components/BOverlay',
+  BOrchestrator: '/components/BApp',
   BPagination: '/components/BPagination',
   BPlaceholder: '/components/BPlaceholder',
   BPlaceholderButton: '/components/BPlaceholder',
@@ -137,11 +139,16 @@ export const composablesWithExternalPath = {
   useBreadcrumb: '/composables/useBreadcrumb',
   useColorMode: '/composables/useColorMode',
   useModal: '/composables/useModal',
-  useModalController: '/composables/useModalController',
+  useModalController: '/composables/useModal',
   useScrollspy: '/composables/useScrollspy',
-  useToastController: '/composables/useToastController',
+  useToast: '/composables/useToast',
+  useToastController: '/composables/useToast',
   useToggle: '/composables/useToggle',
-  usePopoverController: '/composables/usePopoverController',
+  usePopover: '/composables/usePopover',
+  usePopoverController: '/composables/usePopover',
+  useRoot: '/composables/useRoot',
+  useProvideDefaults: '/composables/useProvideDefaults',
+  useOrchestratorRegistry: '/composables/orchestratorShared',
 } as const satisfies Record<ComposableType, string>
 export const composableNames = Object.freeze(
   Object.keys(composablesWithExternalPath) as ComposableType[]
@@ -156,7 +163,7 @@ export interface BootstrapVueOptions {
   /**
    * @default true
    */
-  modalController?: boolean
+  orchestrator?: boolean
   /**
    * @default true
    */
@@ -179,7 +186,10 @@ export interface BootstrapVueOptions {
   /**
    * @default true
    */
-  toast?: boolean
+  showHide?: boolean
+  /**
+   * @default true
+   */
   components?: Partial<
     BvnComponentProps & {
       /**
@@ -189,14 +199,13 @@ export interface BootstrapVueOptions {
       global: Record<string, any>
     }
   >
-  tooltip?: boolean
-  popover?: boolean
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = any> = {
   BLink: ComponentProps.BLinkProps
   BAccordion: ComponentProps.BAccordionProps
+  BApp: ComponentProps.BAppProps
   BDropdownDivider: ComponentProps.BDropdownDividerProps
   BDropdownGroup: ComponentProps.BDropdownGroupProps
   BDropdownItem: ComponentProps.BDropdownItemProps
@@ -234,6 +243,7 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
   BNavbarNav: ComponentProps.BNavbarNavProps
   BNavbarToggle: ComponentProps.BNavbarToggleProps
   BOffcanvas: ComponentProps.BOffcanvasProps
+  BOrchestrator: ComponentProps.BAppProps
   BOverlay: ComponentProps.BOverlayProps
   BPagination: ComponentProps.BPaginationProps
   BPlaceholder: ComponentProps.BPlaceholderProps
