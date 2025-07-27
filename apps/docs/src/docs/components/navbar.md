@@ -157,6 +157,8 @@ The `auto-close`property has 4 options.
 - `inside` : the collapsible component will be closed (only) by clicking inside the collapsible component menu
 - `outside` : the collapsible component will be closed (only) by clicking outside the dropdown menu
 
+<<< DEMO ./demo/NavbarAutoClose.vue#template{vue-html}
+
 ## Printing
 
 Navbars are hidden by default when printing. Force them to be printed by setting the print prop.
