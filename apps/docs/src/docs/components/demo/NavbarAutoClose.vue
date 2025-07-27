@@ -17,11 +17,11 @@
     <BNavbar
       v-b-color-mode="'dark'"
       variant="primary"
+      auto-close="inside"
     >
       <BNavbarNav>
         <BNavItemDropdown
           text="Clickable outside (auto-close=inside)"
-          auto-close="inside"
           class="me-2"
         >
           <BDropdownItemButton>Action</BDropdownItemButton>
@@ -33,11 +33,11 @@
     <BNavbar
       v-b-color-mode="'dark'"
       variant="primary"
+      auto-close="outside"
     >
       <BNavbarNav>
         <BNavItemDropdown
           text="Clickable inside (auto-close=outside)"
-          auto-close="outside"
           class="me-2"
         >
           <BDropdownItemButton>Action</BDropdownItemButton>
@@ -48,12 +48,12 @@
     </BNavbar>
     <BNavbar
       v-b-color-mode="'dark'"
+      :auto-close="false"
       variant="primary"
     >
       <BNavbarNav>
         <BNavItemDropdown
           text="Manual close (auto-close=false)"
-          :auto-close="false"
           class="me-2"
         >
           <BDropdownItemButton>Action</BDropdownItemButton>

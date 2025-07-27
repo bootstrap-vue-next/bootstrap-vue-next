@@ -159,6 +159,15 @@ The `auto-close`property has 4 options.
 
 <<< DEMO ./demo/NavbarAutoClose.vue#template{vue-html}
 
+::: info NOTE
+
+Setting the `auto-close` prop on the `BNavBar` will change the close behavior for all of the `BNavItemDropdown`
+components that it contains. You can instead set the `auto-close` prop on an individual `BNavItemDropdown`
+to change the close behavior of only that dropdown. The prop on `BNavItemDropdown` takes precedence over the
+one on `BNavBar`.
+
+:::
+
 ## Printing
 
 Navbars are hidden by default when printing. Force them to be printed by setting the print prop.

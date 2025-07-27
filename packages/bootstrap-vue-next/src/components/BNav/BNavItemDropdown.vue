@@ -29,15 +29,16 @@
 </template>
 
 <script setup lang="ts">
-import {useTemplateRef} from 'vue'
+import {inject, useTemplateRef} from 'vue'
 import BDropdown from '../BDropdown/BDropdown.vue'
 import type {BDropdownProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BDropdownEmits} from '../../types/ComponentEmits'
+import {navbarInjectionKey} from '../../utils/keys'
 
 const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   ariaLabel: undefined,
-  autoClose: true,
+  autoClose: undefined,
   block: false,
   boundary: 'clippingAncestors',
   boundaryPadding: undefined,
@@ -74,7 +75,14 @@ const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   toggleText: 'Toggle dropdown',
   variant: 'link',
 })
-const props = useDefaults(_props, 'BNavItemDropdown')
+
+const navbarData = inject(navbarInjectionKey, null)
+const mergedProps = {
+  ..._props,
+  autoClose: _props.autoClose ?? navbarData?.autoClose?.value,
+}
+
+const props = useDefaults(mergedProps, 'BNavItemDropdown')
 
 const emit = defineEmits<BDropdownEmits>()
 
