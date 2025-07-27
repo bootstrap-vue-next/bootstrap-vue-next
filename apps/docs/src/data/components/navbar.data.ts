@@ -45,6 +45,9 @@ export default {
               tag: {
                 default: 'nav',
               },
+              autoClose: {
+                default: 'undefined',
+              },
             }),
             ['autoClose', 'tag', 'variant']
           ),
