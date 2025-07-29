@@ -16,6 +16,11 @@ describe('rating', () => {
     expect(wrapper.classes()).toContain('is-readonly')
   })
 
+  it('is disabled', () => {
+    const wrapper = mount(BFormRating, {props: {disabled: true}})
+    expect(wrapper.classes()).toContain('is-disabled')
+  })
+
   it('renders default 5 stars', () => {
     const wrapper = mount(BFormRating)
     const stars = wrapper.findAll('.star')

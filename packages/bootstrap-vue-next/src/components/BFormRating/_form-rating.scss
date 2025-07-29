@@ -14,6 +14,11 @@ $clear-icon-size: 1em !default;
     border: none;
   }
 
+  &.is-disabled {
+    color: var(--bs-secondary);
+    background-color: var(--bs-secondary-bg);
+  }
+
   .clear-icon {
     width: $clear-icon-size;
     height: $clear-icon-size;
@@ -22,7 +27,7 @@ $clear-icon-size: 1em !default;
     fill: currentColor;
   }
 
-  &:not(.is-readonly) .clear-icon:hover {
+  &:not(.is-readonly):not(.is-disabled) .clear-icon:hover {
     transform: scale(1.5);
   }
 }
@@ -33,7 +38,8 @@ $clear-icon-size: 1em !default;
   padding: 0 0.25em;
 }
 
-.is-readonly .star {
+.is-readonly .star,
+.is-disabled .star {
   cursor: default;
 }
 
@@ -55,6 +61,6 @@ $clear-icon-size: 1em !default;
   transition: transform 0.2s ease;
 }
 
-.b-form-rating:not(.is-readonly) .star:hover .b-form-rating-star svg {
+.b-form-rating:not(.is-readonly):not(.is-disabled) .star:hover .b-form-rating-star svg {
   transform: scale(1.5);
 }
