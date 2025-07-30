@@ -118,7 +118,7 @@ on the effects and usage of these props.
 
 ### Dropdown auto close behavior
 
-By default, dropdowns contained in the `Navr` are closed when clicking inside or outside the dropdown menu. You can use the `auto-close-dropdowns` property to change this behavior of the dropdowns.
+By default, dropdowns contained in the `Nav` are closed when clicking inside or outside the dropdown menu. You can use the `auto-close-dropdowns` property to change this behavior of the dropdowns.
 
 The `auto-close-dropdowns`property has 4 options.
 
@@ -131,7 +131,7 @@ The `auto-close-dropdowns`property has 4 options.
 
 ::: info NOTE
 
-Setting the `auto-close-dropdown` prop on the `BNavBar` will change the close behavior for all of the `BNavItemDropdown`
+Setting the `auto-close-dropdown` prop on the `BNav` will change the close behavior for all `BNavItemDropdown`
 components that it contains. You can instead set the `auto-close` prop on an individual `BNavItemDropdown`
 to change the close behavior of only that dropdown. The prop on `BNavItemDropdown` takes precedence over the
 one on `BNavBar`.
