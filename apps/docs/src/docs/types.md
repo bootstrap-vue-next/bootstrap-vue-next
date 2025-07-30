@@ -43,6 +43,14 @@ type AriaInvalid = boolean | 'grammar' | 'spelling'
 type AttrsValue = Record<string, any>
 ```
 
+## AutoCloseOptions
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type AutoCloseOptions = boolean | 'inside' | 'outside'
+```
+
 </BCard>
 
 ## BodyProp
