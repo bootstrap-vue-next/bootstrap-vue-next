@@ -45,11 +45,8 @@ export default {
               tag: {
                 default: 'nav',
               },
-              autoClose: {
-                default: 'undefined',
-              },
             }),
-            ['autoClose', 'tag', 'variant']
+            ['autoCloseDropdowns', 'tag', 'variant']
           ),
         } satisfies Record<keyof BvnComponentProps['BNavbar'], PropertyReference>,
       },

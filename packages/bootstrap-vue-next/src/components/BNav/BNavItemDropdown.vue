@@ -34,7 +34,7 @@ import BDropdown from '../BDropdown/BDropdown.vue'
 import type {BDropdownProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BDropdownEmits} from '../../types/ComponentEmits'
-import {navbarInjectionKey} from '../../utils/keys'
+import {navInjectionKey} from '../../utils/keys'
 
 const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   ariaLabel: undefined,
@@ -76,7 +76,7 @@ const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   variant: 'link',
 })
 
-const navbarData = inject(navbarInjectionKey, null)
+const navbarData = inject(navInjectionKey, null)
 const mergedProps = {
   ..._props,
   autoClose: _props.autoClose ?? navbarData?.autoClose?.value,

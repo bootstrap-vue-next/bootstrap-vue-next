@@ -25,7 +25,7 @@ import BLink from '../BLink/BLink.vue'
 import {computed, inject, useAttrs} from 'vue'
 import type {BDropdownItemProps} from '../../types/ComponentProps'
 import {useBLinkHelper} from '../../composables/useBLinkHelper'
-import {collapseInjectionKey, dropdownInjectionKey, navbarInjectionKey} from '../../utils/keys'
+import {collapseInjectionKey, dropdownInjectionKey, navInjectionKey} from '../../utils/keys'
 import {useDefaults} from '../../composables/useDefaults'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 
@@ -97,7 +97,7 @@ const computedTag = computed(() => (computedLink.value ? BLink : props.href ? 'a
 
 const collapseData = inject(collapseInjectionKey, null)
 const dropdownData = inject(dropdownInjectionKey, null)
-const navbarData = inject(navbarInjectionKey, null)
+const navbarData = inject(navInjectionKey, null)
 
 // Pretty sure this emits if computedTag is not button and is disabled
 const clicked = (e: Readonly<MouseEvent>): void => {

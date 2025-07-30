@@ -70,7 +70,7 @@ export default {
                 default: 'ul',
               },
             }),
-            ['tag']
+            ['autoCloseDropdowns', 'tag']
           ),
         } satisfies Record<keyof BvnComponentProps['BNav'], PropertyReference>,
       },

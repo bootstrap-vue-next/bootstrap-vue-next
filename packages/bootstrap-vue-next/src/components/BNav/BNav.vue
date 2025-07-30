@@ -6,11 +6,13 @@
 
 <script setup lang="ts">
 import type {BNavProps} from '../../types/ComponentProps'
+import {navInjectionKey} from '../../utils/keys'
 import {useAlignment} from '../../composables/useAlignment'
 import {useDefaults} from '../../composables/useDefaults'
-import {computed} from 'vue'
+import {computed, provide, toRef} from 'vue'
 
 const _props = withDefaults(defineProps<BNavProps>(), {
+  autoCloseDropdowns: true,
   align: undefined,
   cardHeader: false,
   fill: false,
@@ -43,4 +45,8 @@ const computedClasses = computed(() => ({
   'small': props.small,
   'nav-underline': props.underline,
 }))
+
+provide(navInjectionKey, {
+  autoClose: toRef(() => props.autoCloseDropdowns),
+})
 </script>

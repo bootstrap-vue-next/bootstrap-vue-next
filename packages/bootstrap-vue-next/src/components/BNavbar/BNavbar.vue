@@ -12,11 +12,11 @@ import {computed, provide, toRef} from 'vue'
 import type {BNavbarProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import {useContainerClasses} from '../../composables/useContainerClasses'
-import {navbarInjectionKey} from '../../utils/keys'
+import {navInjectionKey} from '../../utils/keys'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 
 const _props = withDefaults(defineProps<BNavbarProps>(), {
-  autoClose: true,
+  autoCloseDropdowns: true,
   container: 'fluid',
   fixed: undefined,
   print: false,
@@ -52,8 +52,7 @@ const computedClasses = computed(() => [
   },
 ])
 
-provide(navbarInjectionKey, {
-  tag: toRef(() => props.tag),
-  autoClose: toRef(() => props.autoClose),
+provide(navInjectionKey, {
+  autoClose: toRef(() => props.autoCloseDropdowns),
 })
 </script>

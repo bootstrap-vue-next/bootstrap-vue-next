@@ -116,6 +116,28 @@ Use the `start`, `end`, `center`, `placement`, `no-flip`, and `offset` to contro
 Refer to the [`<BDropdown>` positioning section](/docs/components/dropdown#positioning) for details
 on the effects and usage of these props.
 
+### Dropdown auto close behavior
+
+By default, dropdowns contained in the `Navr` are closed when clicking inside or outside the dropdown menu. You can use the `auto-close-dropdowns` property to change this behavior of the dropdowns.
+
+The `auto-close-dropdowns`property has 4 options.
+
+- `true` : the collapsible component will be closed by clicking outside or inside the collapsible component
+- `false` : the collapsible component will be closed by clicking the toggle button and manually calling the hide method. (Also will not be closed by pressing <kbd>esc</kbd> key)
+- `inside` : the collapsible component will be closed (only) by clicking inside the collapsible component menu
+- `outside` : the collapsible component will be closed (only) by clicking outside the dropdown menu
+
+<<< DEMO ./demo/NavAutoClose.vue#template{vue-html}
+
+::: info NOTE
+
+Setting the `auto-close-dropdown` prop on the `BNavBar` will change the close behavior for all of the `BNavItemDropdown`
+components that it contains. You can instead set the `auto-close` prop on an individual `BNavItemDropdown`
+to change the close behavior of only that dropdown. The prop on `BNavItemDropdown` takes precedence over the
+one on `BNavBar`.
+
+:::
+
 ### Dropdown implementation note
 
 Note that the toggle button is actually rendered as a link `<a>` tag with `role="button"` for

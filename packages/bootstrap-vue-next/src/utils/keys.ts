@@ -31,6 +31,7 @@ import type {
   TooltipOrchestratorCreateParam,
 } from '../types/ComponentOrchestratorTypes'
 import type {BvnComponentProps} from '../types/BootstrapVueOptions'
+import type {AutoCloseOptions} from 'src/types'
 
 export const genericBvnPrefix = 'BootstrapVueNext__'
 
@@ -189,9 +190,8 @@ export const dropdownInjectionKey: InjectionKey<{
   isNav?: Readonly<Ref<boolean>>
 }> = createBvnInjectionKey('dropdown')
 
-export const navbarInjectionKey: InjectionKey<{
-  tag?: Readonly<Ref<string>>
-  autoClose?: Readonly<Ref<boolean | 'inside' | 'outside'>>
+export const navInjectionKey: InjectionKey<{
+  autoClose?: Readonly<Ref<AutoCloseOptions>>
 }> = createBvnInjectionKey('navbar')
 
 export const rtlPluginKey: InjectionKey<{

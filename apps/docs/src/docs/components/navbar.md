@@ -146,11 +146,11 @@ contents of a collapsed navbar. By default, scrolling kicks in at 75vh (or 75% o
 
 <<< DEMO ./demo/NavbarScroll.vue
 
-### Auto close behavior
+### Dropdown auto close behavior
 
-By default, the collapsible component is closed when clicking inside or outside the dropdown menu. You can use the `auto-close` property to change this behavior of the collapsible component.
+By default, dropdowns contained in the `NavBar` are closed when clicking inside or outside the dropdown menu. You can use the `auto-close-dropdowns` property to change this behavior of the dropdowns.
 
-The `auto-close`property has 4 options.
+The `auto-close-dropdowns`property has 4 options.
 
 - `true` : the collapsible component will be closed by clicking outside or inside the collapsible component
 - `false` : the collapsible component will be closed by clicking the toggle button and manually calling the hide method. (Also will not be closed by pressing <kbd>esc</kbd> key)
@@ -161,7 +161,7 @@ The `auto-close`property has 4 options.
 
 ::: info NOTE
 
-Setting the `auto-close` prop on the `BNavBar` will change the close behavior for all of the `BNavItemDropdown`
+Setting the `auto-close-dropdown` prop on the `BNavBar` will change the close behavior for all of the `BNavItemDropdown`
 components that it contains. You can instead set the `auto-close` prop on an individual `BNavItemDropdown`
 to change the close behavior of only that dropdown. The prop on `BNavItemDropdown` takes precedence over the
 one on `BNavBar`.

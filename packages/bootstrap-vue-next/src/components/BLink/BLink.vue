@@ -23,7 +23,7 @@
 import {useDefaults} from '../../composables/useDefaults'
 import {useLinkClasses} from '../../composables/useLinkClasses'
 import type {BLinkProps} from '../../types/ComponentProps'
-import {collapseInjectionKey, navbarInjectionKey} from '../../utils/keys'
+import {collapseInjectionKey, navInjectionKey} from '../../utils/keys'
 import {computed, inject, useAttrs} from 'vue'
 import {useBLinkTagResolver} from '../../composables/useBLinkHelper'
 
@@ -79,7 +79,7 @@ const {computedHref, tag, link, isNuxtLink, isRouterLink, linkProps, isNonStanda
   })
 
 const collapseData = inject(collapseInjectionKey, null)
-const navbarData = inject(navbarInjectionKey, null)
+const navbarData = inject(navInjectionKey, null)
 
 /**
  * Not to be confused with computedLinkClasses

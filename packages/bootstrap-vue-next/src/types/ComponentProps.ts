@@ -68,6 +68,7 @@ import type {
 } from './TableTypes'
 import type {PopoverPlacement} from './PopoverPlacement'
 import type {InputType} from './InputType'
+import type {AutoCloseOptions} from './AutoCloseOptions'
 
 export interface BLinkProps {
   active?: boolean
@@ -528,6 +529,7 @@ export type BPopoverOrchestratorProps = TeleporterProps
 
 export interface BNavProps {
   align?: AlignmentJustifyContent
+  autoCloseDropdowns?: AutoCloseOptions
   cardHeader?: boolean
   fill?: boolean
   justified?: boolean
@@ -555,7 +557,7 @@ export interface BNavTextProps {
 }
 
 export interface BNavbarProps {
-  autoClose?: boolean | 'inside' | 'outside'
+  autoCloseDropdowns?: AutoCloseOptions
   container?: boolean | 'fluid' | Breakpoint
   fixed?: Extract<Placement, 'top' | 'bottom'>
   print?: boolean
@@ -1221,7 +1223,7 @@ export interface BFormFeedbackSharedProps {
 
 export interface BDropdownProps extends TeleporterProps, ShowHideProps {
   ariaLabel?: string
-  autoClose?: boolean | 'inside' | 'outside'
+  autoClose?: AutoCloseOptions
   boundary?: Boundary | RootBoundary
   boundaryPadding?: Padding
   disabled?: boolean

@@ -14,6 +14,7 @@ export type {
 } from './Alignment'
 export type {Animation} from './Animation'
 export type {AriaInvalid} from './AriaInvalid'
+export type {AutoCloseOptions} from './AutoCloseOptions'
 export type {
   BTableProvider,
   BTableProviderContext,
