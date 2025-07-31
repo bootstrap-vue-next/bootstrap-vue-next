@@ -43,6 +43,8 @@ type AriaInvalid = boolean | 'grammar' | 'spelling'
 type AttrsValue = Record<string, any>
 ```
 
+</BCard>
+
 ## AutoCloseOptions
 
 <BCard class="bg-body-tertiary">
