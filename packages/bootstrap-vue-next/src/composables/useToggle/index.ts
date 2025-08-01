@@ -7,11 +7,11 @@ import {
   toValue,
 } from 'vue'
 
-import {globalShowHideStorageInjectionKey} from '../../utils/keys'
+import {showHideRegistryKey} from '../../utils/keys'
 
 export const useToggle = (id: MaybeRefOrGetter<string | undefined> = undefined) => {
   const instance = getCurrentInstance()
-  const storage = inject(globalShowHideStorageInjectionKey, null)
+  const storage = inject(showHideRegistryKey, null)
 
   if (!storage) {
     throw new Error(

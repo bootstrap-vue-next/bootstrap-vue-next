@@ -68,7 +68,7 @@
 
 <script setup lang="ts">
 import {type ComponentPublicInstance, computed, inject, watch} from 'vue'
-import {orchestratorPluginKey} from '../../utils/keys'
+import {orchestratorRegistryKey} from '../../utils/keys'
 import {positionClasses} from '../../utils/positionClasses'
 import type {BvTriggerableEvent} from '../../utils'
 import type {OrchestratorArrayValue} from '../../types/ComponentOrchestratorTypes'
@@ -94,7 +94,7 @@ const props = withDefaults(
   }
 )
 
-const orchestratorRegistry = inject(orchestratorPluginKey)
+const orchestratorRegistry = inject(orchestratorRegistryKey)
 
 if (orchestratorRegistry) {
   if (!orchestratorRegistry._isOrchestratorInstalled.value) {

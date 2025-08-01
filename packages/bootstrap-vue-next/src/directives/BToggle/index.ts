@@ -1,7 +1,7 @@
 import {RX_HASH, RX_HASH_ID, RX_SPACE_SPLIT} from '../../utils/constants'
 import {type Directive, type DirectiveBinding, toValue, type VNode} from 'vue'
 import {findProvides} from '../utils'
-import {globalShowHideStorageInjectionKey, type RegisterShowHideValue} from '../../utils/keys'
+import {type RegisterShowHideValue, showHideRegistryKey} from '../../utils/keys'
 
 const getTargets = (
   binding: DirectiveBinding<string | readonly string[] | undefined>,
@@ -43,9 +43,8 @@ const handleUpdate = (
   if (targets.length === 0) return
 
   const provides = findProvides(binding, vnode)
-  const showHideMap = (provides as Record<symbol, RegisterShowHideValue>)[
-    globalShowHideStorageInjectionKey
-  ]?.values
+  const showHideMap = (provides as Record<symbol, RegisterShowHideValue>)[showHideRegistryKey]
+    ?.values
   if ((el as HTMLElement).dataset.bvtoggle) {
     const oldTargets = ((el as HTMLElement).dataset.bvtoggle || '').split(' ')
     if (oldTargets.length === 0) return
@@ -92,9 +91,8 @@ const handleUnmount = (
   const targets = getTargets(binding, el)
   if (targets.length === 0) return
   const provides = findProvides(binding, vnode)
-  const showHideMap = (provides as Record<symbol, RegisterShowHideValue>)[
-    globalShowHideStorageInjectionKey
-  ]?.values
+  const showHideMap = (provides as Record<symbol, RegisterShowHideValue>)[showHideRegistryKey]
+    ?.values
 
   targets.forEach((targetId) => {
     const showHide = showHideMap?.value.get(targetId)

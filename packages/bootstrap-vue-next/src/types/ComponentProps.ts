@@ -81,7 +81,6 @@ export interface BAppProps {
   teleportTo?: TeleportProps['to']
   noOrchestrator?: boolean
   appendToast?: boolean
-  inherit?: boolean
   rtl?:
     | boolean
     | {

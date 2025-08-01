@@ -9,7 +9,7 @@ import {
   toValue,
   watch,
 } from 'vue'
-import {orchestratorPluginKey} from '../../utils/keys'
+import {orchestratorRegistryKey} from '../../utils/keys'
 import type {
   OrchestratorCreateOptions,
   PopoverOrchestratorArrayValue,
@@ -24,7 +24,7 @@ import {BPopover, BTooltip} from '../../components'
 import {buildPromise} from '../orchestratorShared'
 
 export const usePopover = () => {
-  const controller = inject(orchestratorPluginKey)
+  const controller = inject(orchestratorRegistryKey)
   if (!controller) {
     throw new Error(
       'usePopover() was called outside of the setup() function! or the plugin is not provided.'

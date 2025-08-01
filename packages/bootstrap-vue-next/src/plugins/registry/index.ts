@@ -1,8 +1,28 @@
+import {
+  breadcrumbGlobalIndexKey,
+  breadcrumbRegistryKey,
+  modalManagerKey,
+  showHideRegistryKey,
+} from '../../utils/keys'
+import {_newShowHideRegistry} from '../../composables/useRegistry'
+import type {BreadcrumbItemRaw} from '../../types/BreadcrumbTypes'
 import {type ComponentInternalInstance, computed, type Plugin, readonly, type Ref, ref} from 'vue'
-import {modalManagerPluginKey} from '../../utils/keys'
 
-export const modalManagerPlugin: Plugin = {
+export const registryPlugin: Plugin = {
   install(app) {
+    // Provide global showHide registry
+    const {register, values} = _newShowHideRegistry()
+    app.provide(showHideRegistryKey, {register, values})
+
+    // Provide global breadcrumb registry
+    const items = ref<Record<string, BreadcrumbItemRaw[]>>({
+      [breadcrumbGlobalIndexKey]: [],
+    })
+    const reset = (key: string = breadcrumbGlobalIndexKey) => {
+      items.value[key] = []
+    }
+    app.provide(breadcrumbRegistryKey, {items, reset})
+
     /**
      * A collection of all currently active modals
      *
@@ -37,7 +57,7 @@ export const modalManagerPlugin: Plugin = {
       registry.value.delete(modal.uid)
     }
 
-    app.provide(modalManagerPluginKey, {
+    app.provide(modalManagerKey, {
       countStack,
       lastStack,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment

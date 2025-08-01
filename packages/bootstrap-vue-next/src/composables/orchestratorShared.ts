@@ -15,7 +15,7 @@ import type {
   PromiseWithComponentInternal,
 } from '../types/ComponentOrchestratorTypes'
 import type {BvTriggerableEvent} from '../utils'
-import {orchestratorPluginKey} from '../utils/keys'
+import {orchestratorRegistryKey} from '../utils/keys'
 
 export function buildPromise<TComponent, TParam, TArrayValue extends OrchestratorArrayValue>(
   _id: ControllerKey,
@@ -124,13 +124,13 @@ export const _newOrchestratorRegistry = (): {
   _isToastAppend: ref(false),
 })
 
-export const useOrchestratorRegistry = (inherit: boolean) => {
-  const orchestratorRegistry = inject(orchestratorPluginKey, undefined)
+export const useOrchestratorRegistry = () => {
+  const orchestratorRegistry = inject(orchestratorRegistryKey, undefined)
 
-  if (orchestratorRegistry && inherit) {
+  if (orchestratorRegistry) {
     return orchestratorRegistry
   }
   const newOrchestratorRegistry = _newOrchestratorRegistry()
-  provide(orchestratorPluginKey, newOrchestratorRegistry)
+  provide(orchestratorRegistryKey, newOrchestratorRegistry)
   return newOrchestratorRegistry
 }

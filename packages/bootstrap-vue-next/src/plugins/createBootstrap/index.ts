@@ -1,23 +1,22 @@
-import type {Plugin} from 'vue'
-import type {BootstrapVueOptions, BvnComponents} from '../../types/BootstrapVueOptions'
+import {type Plugin, ref, type Ref} from 'vue'
+import type {
+  BootstrapVueOptions,
+  BvnComponentProps,
+  BvnComponents,
+} from '../../types/BootstrapVueOptions'
 
 import '../../styles/styles.scss'
 
-import {breadcrumbPlugin} from '../breadcrumb'
-import {bootstrapPlugin} from '../bootstrap'
-import {modalManagerPlugin} from '../modalManager'
 import {rtlPlugin} from '../rtl'
-import {showHidePlugin} from '../showHide'
+import {registryPlugin} from '../registry'
 import {orchestratorPlugin} from '../orchestrator'
+import {defaultsKey} from '../../utils/keys'
 
 // Main app plugin
 export const createBootstrap = (pluginData: Readonly<BootstrapVueOptions> = {}): Plugin => ({
   install(app) {
-    if (pluginData.breadcrumb ?? true === true) {
-      app.use(breadcrumbPlugin)
-    }
-    if (pluginData.modalManager ?? true === true) {
-      app.use(modalManagerPlugin)
+    if (pluginData.registries ?? true === true) {
+      app.use(registryPlugin, pluginData)
     }
     if ((pluginData.rtl ?? true === true) || typeof pluginData.rtl === 'object') {
       app.use(rtlPlugin, pluginData)
@@ -25,10 +24,9 @@ export const createBootstrap = (pluginData: Readonly<BootstrapVueOptions> = {}):
     if (pluginData.orchestrator ?? true === true) {
       app.use(orchestratorPlugin)
     }
-    if (pluginData.showHide ?? true === true) {
-      app.use(showHidePlugin)
-    }
-    app.use(bootstrapPlugin, pluginData)
+    // Provide global defaults for components
+    const val = pluginData?.components ?? {}
+    app.provide(defaultsKey, ref(val) as Ref<Partial<BvnComponentProps>>)
   },
 })
 

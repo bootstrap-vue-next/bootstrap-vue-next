@@ -9,7 +9,7 @@ import {
   toValue,
   watch,
 } from 'vue'
-import {orchestratorPluginKey} from '../../utils/keys'
+import {orchestratorRegistryKey} from '../../utils/keys'
 import type {ContainerPosition} from '../../types/Alignment'
 import type {
   OrchestratorCreateOptions,
@@ -24,7 +24,7 @@ import {BToast} from '../../components'
 const posDefault: ContainerPosition = 'top-end'
 
 export const useToast = () => {
-  const controller = inject(orchestratorPluginKey)
+  const controller = inject(orchestratorRegistryKey)
   if (!controller) {
     throw new Error(
       'useToast() was called outside of the setup() function! or the plugin is not provided.'

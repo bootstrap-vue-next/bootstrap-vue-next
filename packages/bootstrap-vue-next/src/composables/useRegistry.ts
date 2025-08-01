@@ -9,24 +9,24 @@ import {
 } from 'vue'
 import {
   breadcrumbGlobalIndexKey,
-  breadcrumbPluginKey,
-  globalShowHideStorageInjectionKey,
-  modalManagerPluginKey,
+  breadcrumbRegistryKey,
+  modalManagerKey,
   type RegisterShowHideFnInput,
   type RegisterShowHideMapValue,
-  rtlPluginKey,
+  rtlRegistryKey,
+  showHideRegistryKey,
 } from '../utils/keys'
 import type {BAppProps} from '../types/ComponentProps'
 import type {BreadcrumbItemRaw} from '../types/BreadcrumbTypes'
 
-export const useRoot = (rtl: BAppProps['rtl'] = false) => {
-  const showHideStorage = inject(globalShowHideStorageInjectionKey, undefined)
+export const useRegistry = (rtl: BAppProps['rtl'] = false) => {
+  const showHideStorage = inject(showHideRegistryKey, undefined)
   if (!showHideStorage) {
     const {register, values} = _newShowHideRegistry()
-    provide(globalShowHideStorageInjectionKey, {register, values})
+    provide(showHideRegistryKey, {register, values})
   }
 
-  const modalManager = inject(modalManagerPluginKey, undefined)
+  const modalManager = inject(modalManagerKey, undefined)
   if (!modalManager) {
     const stack: Ref<Map<number, ComponentInternalInstance>> = ref(new Map())
 
@@ -55,7 +55,7 @@ export const useRoot = (rtl: BAppProps['rtl'] = false) => {
       registry.value.delete(modal.uid)
     }
 
-    provide(modalManagerPluginKey, {
+    provide(modalManagerKey, {
       countStack,
       lastStack,
       registry: computed(() => registry.value),
@@ -67,7 +67,7 @@ export const useRoot = (rtl: BAppProps['rtl'] = false) => {
     })
   }
 
-  const breadcrumb = inject(breadcrumbPluginKey, undefined)
+  const breadcrumb = inject(breadcrumbRegistryKey, undefined)
   if (!breadcrumb) {
     const items = ref<Record<string, BreadcrumbItemRaw[]>>({
       [breadcrumbGlobalIndexKey]: [],
@@ -76,10 +76,10 @@ export const useRoot = (rtl: BAppProps['rtl'] = false) => {
       items.value[key] = []
     }
 
-    provide(breadcrumbPluginKey, {items, reset})
+    provide(breadcrumbRegistryKey, {items, reset})
   }
 
-  const rtlRegistry = inject(rtlPluginKey, undefined)
+  const rtlRegistry = inject(rtlRegistryKey, undefined)
   if (!rtlRegistry) {
     const rtlDefault = false
     const localeDefault = undefined
@@ -92,7 +92,7 @@ export const useRoot = (rtl: BAppProps['rtl'] = false) => {
     const isRtl = ref(rtlInitial)
     const locale = ref(localeInitial)
 
-    provide(rtlPluginKey, {isRtl, locale})
+    provide(rtlRegistryKey, {isRtl, locale})
   }
 }
 

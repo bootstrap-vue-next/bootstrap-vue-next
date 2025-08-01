@@ -14,7 +14,7 @@ import {
 } from 'vue'
 import {useSharedModalStack} from '../useModalManager'
 
-import {orchestratorPluginKey} from '../../utils/keys'
+import {orchestratorRegistryKey} from '../../utils/keys'
 import type {
   ControllerKey,
   ModalOrchestratorArrayValue,
@@ -27,7 +27,7 @@ import {buildPromise} from '../orchestratorShared'
 import {BModal} from '../../components'
 
 export const useModal = () => {
-  const controller = inject(orchestratorPluginKey)
+  const controller = inject(orchestratorRegistryKey)
   if (!controller) {
     throw Error(
       'useModal() was called outside of the setup() function! or the plugin is not provided.'

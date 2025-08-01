@@ -1,5 +1,5 @@
 import {computed, inject, type MaybeRefOrGetter, toValue, watch} from 'vue'
-import {breadcrumbGlobalIndexKey, breadcrumbPluginKey} from '../../utils/keys'
+import {breadcrumbGlobalIndexKey, breadcrumbRegistryKey} from '../../utils/keys'
 
 export const useBreadcrumb = (
   /**
@@ -7,7 +7,7 @@ export const useBreadcrumb = (
    */
   id: MaybeRefOrGetter<string | null> = breadcrumbGlobalIndexKey
 ) => {
-  const parentData = inject(breadcrumbPluginKey)
+  const parentData = inject(breadcrumbRegistryKey)
 
   const resolvedId = computed(() => {
     const v = toValue(id)

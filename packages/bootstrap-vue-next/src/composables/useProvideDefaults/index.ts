@@ -1,10 +1,10 @@
-import {computed, inject, provide} from 'vue'
+import {computed, inject, provide, type Ref, unref} from 'vue'
 import {defaultsKey} from '../../utils/keys'
 import type {BvnComponentProps} from '../../types/BootstrapVueOptions'
 import type {BAppProps} from '../../types/ComponentProps'
 
 export const useProvideDefaults = (
-  defaults: BAppProps['defaults'],
+  defaults: BAppProps['defaults'] | Ref<BAppProps['defaults']>,
   mergeDefaults: BAppProps['mergeDefaults']
 ) => {
   // Inject existing defaults from parent (could be from plugins)
@@ -12,21 +12,23 @@ export const useProvideDefaults = (
 
   // Merge injected defaults with prop defaults (prop takes priority)
   const mergedDefaults = computed<Partial<BvnComponentProps>>(() => {
+    const _defaults = unref(defaults)
     if (!injectedDefaults) {
-      return defaults ?? {}
+      return _defaults ?? {}
     }
     const merged = {...injectedDefaults.value} as Partial<BvnComponentProps>
 
-    if (defaults) {
+    if (_defaults) {
+      // If mergeDefaults is a function, call it with
       if (mergeDefaults) {
         if (typeof mergeDefaults === 'function') {
-          return mergeDefaults(merged, defaults) as Partial<BvnComponentProps>
+          return mergeDefaults(merged, _defaults) as Partial<BvnComponentProps>
         } else if (mergeDefaults === true) {
-          return deepMerge(merged, defaults)
+          return deepMerge(merged, _defaults)
         }
-        return Object.assign(merged, defaults)
+        return Object.assign(merged, _defaults)
       }
-      return defaults
+      return _defaults
     }
 
     return merged

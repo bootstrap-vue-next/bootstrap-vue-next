@@ -25,8 +25,8 @@ export const withBvnPrefix = (value: string, suffix: string = '') => {
 }
 
 const createBvnInjectionKey = (name: string) => withBvnPrefix(name) as unknown as symbol // Type cast to symbol, these should be static
-const createBvnPluginInjectionKey = (name: string) =>
-  withBvnPrefix(`${name}__plugin`) as unknown as symbol
+const createBvnRegistryInjectionKey = (name: string) =>
+  withBvnPrefix(`${name}__registry`) as unknown as symbol
 
 // BCarousel
 export const carouselInjectionKey: InjectionKey<{
@@ -162,8 +162,8 @@ export interface RegisterShowHideValue {
   }
   values: Ref<Map<string, RegisterShowHideMapValue>>
 }
-export const globalShowHideStorageInjectionKey: InjectionKey<RegisterShowHideValue> =
-  createBvnPluginInjectionKey('globalShowHideStorage')
+export const showHideRegistryKey: InjectionKey<RegisterShowHideValue> =
+  createBvnRegistryInjectionKey('showHide')
 
 export const dropdownInjectionKey: InjectionKey<{
   id?: Readonly<Ref<string>>
@@ -179,18 +179,18 @@ export const navbarInjectionKey: InjectionKey<{
   autoClose?: Readonly<Ref<boolean>>
 }> = createBvnInjectionKey('navbar')
 
-export const rtlPluginKey: InjectionKey<{
+export const rtlRegistryKey: InjectionKey<{
   isRtl: Ref<boolean>
   locale: Ref<string | undefined>
-}> = createBvnPluginInjectionKey('rtl')
+}> = createBvnRegistryInjectionKey('rtl')
 
 export const breadcrumbGlobalIndexKey = `${genericBvnPrefix}global_breadcrumb`
-export const breadcrumbPluginKey: InjectionKey<{
+export const breadcrumbRegistryKey: InjectionKey<{
   items: Ref<Record<string, BreadcrumbItemRaw[]>>
   reset: (key?: string) => void
-}> = createBvnPluginInjectionKey('breadcrumbPlugin')
+}> = createBvnRegistryInjectionKey('breadcrumb')
 
-export const modalManagerPluginKey: InjectionKey<{
+export const modalManagerKey: InjectionKey<{
   stack: ComputedRef<ComponentInternalInstance[]>
   countStack: ComputedRef<number>
   lastStack: ComputedRef<ComponentInternalInstance | undefined>
@@ -199,21 +199,21 @@ export const modalManagerPluginKey: InjectionKey<{
   registry: Readonly<Ref<Map<number, ComponentInternalInstance>>>
   pushRegistry: (modal: Readonly<ComponentInternalInstance>) => void
   removeRegistry: (modal: Readonly<ComponentInternalInstance>) => void
-}> = createBvnPluginInjectionKey('modalManager')
+}> = createBvnRegistryInjectionKey('modalManager')
 
 export const defaultsKey: InjectionKey<Ref<Partial<BvnComponentProps>>> =
-  createBvnPluginInjectionKey('defaults')
+  createBvnRegistryInjectionKey('defaults')
 
 export const inputGroupKey: InjectionKey<boolean> = createBvnInjectionKey('inputGroup')
 export const buttonGroupKey: InjectionKey<boolean> = createBvnInjectionKey('buttonGroup')
 
-export const orchestratorPluginKey: InjectionKey<{
+export const orchestratorRegistryKey: InjectionKey<{
   store: Ref<OrchestratorArrayValue[]>
   _isToastAppend: Ref<boolean>
   _isOrchestratorInstalled: Ref<boolean>
-}> = createBvnPluginInjectionKey('orchestrator')
+}> = createBvnRegistryInjectionKey('orchestrator')
 
-export const formGroupPluginKey: InjectionKey<
+export const formGroupKey: InjectionKey<
   (id: Ref<string>) => {
     state: Readonly<Ref<ValidationState | undefined>>
   }

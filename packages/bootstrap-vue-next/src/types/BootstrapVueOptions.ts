@@ -146,7 +146,7 @@ export const composablesWithExternalPath = {
   useToggle: '/composables/useToggle',
   usePopover: '/composables/usePopover',
   usePopoverController: '/composables/usePopover',
-  useRoot: '/composables/useRoot',
+  useRegistry: '/composables/useRegistry',
   useProvideDefaults: '/composables/useProvideDefaults',
   useOrchestratorRegistry: '/composables/orchestratorShared',
 } as const satisfies Record<ComposableType, string>
@@ -159,17 +159,13 @@ export interface BootstrapVueOptions {
   /**
    * @default true
    */
-  breadcrumb?: boolean
-  /**
-   * @default true
-   */
   orchestrator?: boolean
   /**
    * @default true
    */
-  modalManager?: boolean
+  registries?: boolean
   /**
-   * @default true
+   * @default false
    */
   rtl?:
     | boolean
@@ -183,10 +179,6 @@ export interface BootstrapVueOptions {
          */
         localeInitial: string | undefined
       }
-  /**
-   * @default true
-   */
-  showHide?: boolean
   /**
    * @default true
    */
