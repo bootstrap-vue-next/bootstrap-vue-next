@@ -53,11 +53,29 @@ Positioning is relative to the trigger element.
 
 ## Triggers
 
-By default, popovers are shown by `pointerenter` and `focus` events and closed by `pointerleave` and `blur` events
-on the `target` element by default. To override this behavior and make the popover show and hide based
-on `click` events, set the `click` prop to `true`.
+By default, popovers are triggered by `pointerenter` (hover) and `focus` events and hidden by `pointerleave` and `blur` events on the target element. You can customize which triggers are active using the `hover`, `focus`, and `click` props.
+
+### Basic Trigger Configuration
+
+- **Default behavior**: Both hover and focus triggers are active
+- **Click only**: Set `click="true"`
+- **Hover only**: Set `hover="true"`
+- **Focus only**: Set `focus="true"`
+- **Multiple triggers**: Combine triggers like `click="true"` `hover="true"` `focus="true"`
+- **Manual control**: Set `manual="true"` to disable all automatic triggers
 
 <<< DEMO ./demo/PopoverTriggers.vue#template{vue-html}
+
+### Trigger Logic
+
+The trigger system uses the following priority order:
+
+1. **Manual mode**: If `manual="true"`, all automatic triggers are disabled
+2. **Explicit configuration**: If `hover` or `focus` props are explicitly set, those values are used
+3. **Click compatibility**: If `click="true"` (without explicit hover/focus), only click trigger is active
+4. **Default behavior**: Both hover and focus triggers are active
+
+This ensures backward compatibility while providing fine-grained control over trigger behavior.
 
 To take finer control of popover visibility, you can use the [useToggle](/docs/composables/useToggle) or
 [usePopoverController](/docs/composables/usePopoverController). Alternately, you can set the `manual` prop
