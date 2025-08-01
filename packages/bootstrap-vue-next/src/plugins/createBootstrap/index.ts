@@ -15,13 +15,13 @@ import {defaultsKey} from '../../utils/keys'
 // Main app plugin
 export const createBootstrap = (pluginData: Readonly<BootstrapVueOptions> = {}): Plugin => ({
   install(app) {
-    if (pluginData.registries ?? true === true) {
+    if ((pluginData.registries ?? true) === true) {
       app.use(registryPlugin, pluginData)
     }
-    if ((pluginData.rtl ?? true === true) || typeof pluginData.rtl === 'object') {
+    if ((pluginData.rtl ?? true) === true || typeof pluginData.rtl === 'object') {
       app.use(rtlPlugin, pluginData)
     }
-    if (pluginData.orchestrator ?? true === true) {
+    if ((pluginData.orchestrator ?? true) === true) {
       app.use(orchestratorPlugin)
     }
     // Provide global defaults for components

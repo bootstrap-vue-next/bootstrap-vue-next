@@ -2,15 +2,17 @@
 
 <div class="lead mb-5">
 
-Often times one may want to open a `Toast` in a global context, without the need for declaring a component, perhaps to display an error after a function threw an error. `useToast` is used to create `Toasts` on demand. You must have initialized the `BToastOrchestrator` component once in your application. The following functionality requires the existance of that component
+The `useToast` composable allows you to create and manage toasts programmatically from anywhere in your application. It provides a simple API to show toast messages without needing to declare toast components in your templates.
 
 </div>
 
-<UsePluginAlert />
+## Setup
 
-## BOrchestrator
+To use `useToast`, you need one of the following setup approaches:
 
-You must have initialized `BOrchestrator` component once and only once (doing multiple may display multiple `Toasts`). Also you need to provide the Orchestrator registy. use `BApp` component wrapping your app to initializes both of these for you.
+### BApp Component (Recommended)
+
+The easiest way is to wrap your application with the `BApp` component, which automatically sets up the orchestrator and registry:
 
 <HighlightCard>
 <template #html>
@@ -26,11 +28,15 @@ You must have initialized `BOrchestrator` component once and only once (doing mu
 </template>
 </HighlightCard>
 
-Use the props `teleportTo` to modify the dom location that the toasts are placed.
+### Plugin Setup (Legacy)
 
-## Showing a Toast
+Alternatively, you can use the traditional plugin approach.
 
-Showing a toast is done through the show method
+<UsePluginAlert />
+
+## Basic Usage
+
+Creating and showing a toast is simple:
 
 <HighlightCard>
   <BButton @click="create({ title: 'Hello', body: 'World'  })">Show</BButton>
@@ -42,6 +48,8 @@ Showing a toast is done through the show method
 </template>
 
 <script setup lang="ts">
+import {useToast} from 'bootstrap-vue-next'
+
 const {create} = useToast()
 </script>
 ```

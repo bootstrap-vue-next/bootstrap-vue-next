@@ -2,15 +2,17 @@
 
 <div class="lead mb-5">
 
-`useModal` can hide modals everywhere in the app, as well as creating modals on the fly
+The `useModal` composable provides a powerful API to create, manage, and control modals programmatically from anywhere in your application. It allows you to create modals on-demand, manage existing modals, and handle modal interactions through promises.
 
 </div>
 
-<UsePluginAlert />
+## Setup
 
-## BOrchestrator
+To use `useModal`, you need one of the following setup approaches:
 
-You must have initialized `BOrchestrator` component once and only once (doing multiple may display multiple `Modals`). Also you need to provide the Orchestrator registy. use `BApp` component wrapping your app to initializes both of these for you.
+### BApp Component (Recommended)
+
+The easiest way is to wrap your application with the `BApp` component, which automatically sets up the orchestrator and registry:
 
 <HighlightCard>
 <template #html>
@@ -26,11 +28,15 @@ You must have initialized `BOrchestrator` component once and only once (doing mu
 </template>
 </HighlightCard>
 
-Use the props `teleportTo` to modify the dom location that the modals are placed.
+### Plugin Setup (Legacy)
+
+Alternatively, you can use the traditional plugin approach.
+
+<UsePluginAlert />
 
 ## Creating Modals
 
-Showing a modal is done through the `create` method
+Creating a modal is done through the `create` method:
 
 <HighlightCard>
   <BButton @click="showExample">Click me</BButton>

@@ -78,6 +78,49 @@ npm i bootstrap bootstrap-vue-next
 </BTabs>
 </ClientOnly>
 
+## Setup
+
+Bootstrap-vue-next offers two ways to configure your application. The new **BApp component approach** is recommended for new projects, while the plugin approach is still supported for backward compatibility.
+
+### BApp Component (Recommended)
+
+The modern way to setup bootstrap-vue-next using the `BApp` component:
+
+<HighlightCard>
+
+```vue
+<!-- App.vue -->
+<template>
+  <BApp>
+    <!-- Your application content -->
+    <router-view />
+  </BApp>
+</template>
+
+<script setup lang="ts">
+import {BApp} from 'bootstrap-vue-next'
+</script>
+```
+
+```typescript
+// main.ts
+import {createApp} from 'vue'
+import App from './App.vue'
+
+// Add the necessary CSS
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
+
+const app = createApp(App)
+app.mount('#app')
+```
+
+</HighlightCard>
+
+### Plugin Approach (Legacy)
+
+The traditional plugin-based setup is still supported:
+
 <HighlightCard>
 
 ```typescript
@@ -95,6 +138,34 @@ app.mount('#app')
 ```
 
 </HighlightCard>
+
+And you must put BOrchestrator in your app:
+<HighlightCard>
+
+```vue
+<!-- App.vue -->
+<template>
+  <BOrchestrator />
+  <router-view />
+</template>
+<script setup lang="ts">
+import {BOrchestrator} from 'bootstrap-vue-next'
+</script>
+```
+
+</HighlightCard>
+
+### Why BApp is Recommended
+
+The `BApp` component offers several advantages:
+
+- **Better Type Safety**: Full TypeScript support with proper type inference
+- **Easier Configuration**: Set defaults and options through component props
+- **Automatic Orchestrators**: Built-in support for modals, toasts, and popovers
+- **Modern Vue 3 Patterns**: Uses composition API and provide/inject
+- **Better Tree Shaking**: Only includes what you actually use
+
+See the [BApp component documentation](/docs/components/bapp) for complete configuration options and the [migration guide](/docs/migration-guide#bapp-vs-plugin-setup-recommended) for migration instructions.
 
 Now, you can begin importing and using components
 
@@ -399,11 +470,13 @@ Alternatively the ESM package is available as well
 
 If you are using one of the preferred installation methods, JS will be tree-shaken by default. The one thing we are not able to do automatically is optimize CSS. Methods like PurgeCSS are not ideal because of a limitation with the dynamic nature of class renderings and Vue (Problematic code like: `[btn-${props.variant}]: props.variant !== undefined`). With that being said, BootstrapVueNext does not handle CSS imports from Bootstrap, we only add some additional CSS ourselves. So, using a method such as [Lean Sass Imports](https://getbootstrap.com/docs/5.3/customize/optimize/#lean-sass-imports) from the Bootstrap documentation is likely the best way to achieve the tiniest possible application size. Though it is not automatic, it should prove the safest bet for minifying your application.
 
-### Tree-shake JS plugins
+### Tree-shaking
 
-`createBootstrap` is a simple utility that provides everything that is required for the library to work. However, some plugins may not be needed.
-One could individually import each needed plugin, they are all appended with `Plugin` (`toastPlugin`, `breadcrumbPlugin`, etc). So, one could pick and choose what is needed
-Practically the `createBootstrap` plugin is ~20kb gzipped with `toast` and `modalController` accounting for the majority. Use this if you really want the tiniest possible size.
+When using the **BApp component approach**, you automatically get optimal tree-shaking as only the components and composables you actually use are included in your bundle.
+
+When using the **plugin approach**, `createBootstrap` is a utility that provides everything required for the library to work. However, some plugins may not be needed and can be individually imported. All plugins are appended with `Plugin` (`registryPlugin`, `orchestratorPlugin`, etc.), so you can pick and choose what is needed.
+
+The `createBootstrap` plugin is approximately ~20kb gzipped, with orchestrator functionality accounting for the majority. Use individual plugin imports if you want the tiniest possible bundle size.
 
 <BootstrapPluginWarning />
 

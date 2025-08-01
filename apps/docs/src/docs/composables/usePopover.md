@@ -2,15 +2,17 @@
 
 <div class="lead mb-5">
 
-`usePopover` can create and control popovers and tooltips dynamically.
+The `usePopover` composable allows you to create and control popovers and tooltips dynamically from anywhere in your application. It provides methods to create, show, hide, and manage both popovers and tooltips programmatically.
 
 </div>
 
-<UsePluginAlert />
+## Setup
 
-## BOrchestrator
+To use `usePopover`, you need one of the following setup approaches:
 
-You must have initialized `BOrchestrator` component once and only once (doing multiple may display multiple `Popovers`). Also you need to provide the Orchestrator registy. use `BApp` component wrapping your app to initializes both of these for you.
+### BApp Component (Recommended)
+
+The easiest way is to wrap your application with the `BApp` component, which automatically sets up the orchestrator and registry:
 
 <HighlightCard>
 <template #html>
@@ -26,11 +28,15 @@ You must have initialized `BOrchestrator` component once and only once (doing mu
 </template>
 </HighlightCard>
 
-Use the props `teleportTo` to modify the dom location that the popovers are placed.
+### Plugin Setup (Legacy)
+
+Alternatively, you can use the traditional plugin approach.
+
+<UsePluginAlert />
 
 ## Creating Popovers
 
-Popovers and tooltips can be created using the `popover` or `tooltip` methods.
+Popovers and tooltips can be created using the `popover` or `tooltip` methods:
 
 <HighlightCard>
   <BButton ref="popoverButton">Hover me</BButton>

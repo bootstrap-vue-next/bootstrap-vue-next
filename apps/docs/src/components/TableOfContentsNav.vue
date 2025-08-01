@@ -100,6 +100,7 @@ const headerLinks = [
 ]
 
 const componentsList: {name: string}[] = [
+  {name: 'App'},
   {name: 'Accordion'},
   {name: 'Alert'},
   {name: 'Avatar'},
