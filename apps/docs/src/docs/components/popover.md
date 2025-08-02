@@ -75,7 +75,6 @@ The trigger system uses the following priority order:
 3. **Click compatibility**: If `click="true"` (without explicit hover/focus), only click trigger is active
 4. **Default behavior**: Both hover and focus triggers are active
 
-This ensures backward compatibility while providing fine-grained control over trigger behavior.
 
 To take finer control of popover visibility, you can use the [useToggle](/docs/composables/useToggle) or
 [usePopoverController](/docs/composables/usePopoverController). Alternately, you can set the `manual` prop
