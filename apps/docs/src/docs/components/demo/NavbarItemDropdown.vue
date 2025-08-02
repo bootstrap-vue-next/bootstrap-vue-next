@@ -5,22 +5,22 @@
     variant="dark"
   >
     <BNavbarNav>
-      <BNavItem href="#">Home</BNavItem>
+      <BNavItem href="#bnavitemdropdown">Home</BNavItem>
       <BNavItemDropdown
         text="Lang"
         right
       >
-        <BDropdownItem href="#">EN</BDropdownItem>
-        <BDropdownItem href="#">ES</BDropdownItem>
-        <BDropdownItem href="#">RU</BDropdownItem>
-        <BDropdownItem href="#">FA</BDropdownItem>
+        <BDropdownItem href="#bnavitemdropdown">EN</BDropdownItem>
+        <BDropdownItem href="#bnavitemdropdown">ES</BDropdownItem>
+        <BDropdownItem href="#bnavitemdropdown">RU</BDropdownItem>
+        <BDropdownItem href="#bnavitemdropdown">FA</BDropdownItem>
       </BNavItemDropdown>
       <BNavItemDropdown
         text="User"
         right
       >
-        <BDropdownItem href="#">Account</BDropdownItem>
-        <BDropdownItem href="#">Settings</BDropdownItem>
+        <BDropdownItem href="#bnavitemdropdown">Account</BDropdownItem>
+        <BDropdownItem href="#bnavitemdropdown">Settings</BDropdownItem>
       </BNavItemDropdown>
     </BNavbarNav>
   </BNavbar>

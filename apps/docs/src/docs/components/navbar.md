@@ -168,6 +168,14 @@ one on `BNavBar`.
 
 :::
 
+### Collapse no-auto-close
+
+When the Navbar is configured with a [toggle and collapse](bnavbartoggle-and-bcollapse-is-nav) to provide responsive
+behavior, the default is for the collapse to close when an item is clicked. To prevent this behavior
+set `no-auto-close='true'`:
+
+<<< DEMO ./demo/NavbarNoAutoClose.vue#template{vue-html}
+
 ## Printing
 
 Navbars are hidden by default when printing. Force them to be printed by setting the print prop.

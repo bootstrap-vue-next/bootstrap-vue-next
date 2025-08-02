@@ -560,6 +560,7 @@ export interface BNavbarProps {
   autoCloseDropdowns?: AutoCloseOptions
   container?: boolean | 'fluid' | Breakpoint
   fixed?: Extract<Placement, 'top' | 'bottom'>
+  noAutoClose?: boolean
   print?: boolean
   sticky?: Extract<Placement, 'top' | 'bottom'>
   tag?: string

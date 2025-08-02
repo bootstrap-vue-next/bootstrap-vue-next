@@ -79,7 +79,7 @@ const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
 const navbarData = inject(navInjectionKey, null)
 const mergedProps = {
   ..._props,
-  autoClose: _props.autoClose ?? navbarData?.autoClose?.value,
+  autoClose: _props.autoClose ?? navbarData?.autoCloseDropdowns?.value,
 }
 
 const props = useDefaults(mergedProps, 'BNavItemDropdown')

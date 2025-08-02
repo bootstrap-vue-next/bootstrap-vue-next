@@ -19,10 +19,10 @@
       is-nav
     >
       <BNavbarNav class="ms-auto">
-        <BNavItem href="#">Link 1</BNavItem>
-        <BNavItem href="#">Link 2</BNavItem>
+        <BNavItem href="#custom-navbar-toggle">Link 1</BNavItem>
+        <BNavItem href="#custom-navbar-toggle">Link 2</BNavItem>
         <BNavItem
-          href="#"
+          href="#custom-navbar-toggle"
           disabled
           >Disabled</BNavItem
         >

@@ -22,6 +22,12 @@ export default {
             description:
               "Set to 'top' for fixed to the top of the viewport, or 'bottom' for fixed to the bottom of the viewport",
           },
+          noAutoClose: {
+            type: 'boolean',
+            default: 'false',
+            description:
+              'Set to true to prevent the dropdown from closing automatically when an item is clicked',
+          },
           print: {
             type: 'boolean',
             default: false,

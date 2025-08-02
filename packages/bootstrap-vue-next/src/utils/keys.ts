@@ -191,7 +191,8 @@ export const dropdownInjectionKey: InjectionKey<{
 }> = createBvnInjectionKey('dropdown')
 
 export const navInjectionKey: InjectionKey<{
-  autoClose?: Readonly<Ref<AutoCloseOptions>>
+  noAutoClose?: Readonly<Ref<boolean>> // Disable auto-close of the BCollapse when clicking on a nav item
+  autoCloseDropdowns?: Readonly<Ref<AutoCloseOptions>>
 }> = createBvnInjectionKey('navbar')
 
 export const rtlPluginKey: InjectionKey<{

@@ -19,6 +19,7 @@ const _props = withDefaults(defineProps<BNavbarProps>(), {
   autoCloseDropdowns: true,
   container: 'fluid',
   fixed: undefined,
+  noAutoClose: false,
   print: false,
   sticky: undefined,
   tag: 'nav',
@@ -53,6 +54,7 @@ const computedClasses = computed(() => [
 ])
 
 provide(navInjectionKey, {
-  autoClose: toRef(() => props.autoCloseDropdowns),
+  noAutoClose: toRef(() => props.noAutoClose),
+  autoCloseDropdowns: toRef(() => props.autoCloseDropdowns),
 })
 </script>

@@ -47,6 +47,6 @@ const computedClasses = computed(() => ({
 }))
 
 provide(navInjectionKey, {
-  autoClose: toRef(() => props.autoCloseDropdowns),
+  autoCloseDropdowns: toRef(() => props.autoCloseDropdowns),
 })
 </script>
