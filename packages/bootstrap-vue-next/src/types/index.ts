@@ -15,6 +15,7 @@ export type {
 export type {Animation} from './Animation'
 export type {AriaInvalid} from './AriaInvalid'
 export type {
+  BTableInitialSortDirection,
   BTableProvider,
   BTableProviderContext,
   BTableSortBy,
