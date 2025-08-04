@@ -71,11 +71,8 @@ By default, popovers are triggered by `pointerenter` (hover) and `focus` events 
 The trigger system uses the following priority order:
 
 1. **Manual mode**: If `manual="true"`, all automatic triggers are disabled
-2. **Explicit configuration**: If `hover` or `focus` props are explicitly set, those values are used
-3. **Click compatibility**: If `click="true"` (without explicit hover/focus), only click trigger is active
-4. **Default behavior**: Both hover and focus triggers are active
-
-Props that are explicitly set (true or false) override their respective defaults, while those left undefined fall through to the next rule.
+2. **Explicit configuration**: If `click`,`hover` or `focus` props are explicitly set (true or false), those values are used
+3. **Default behavior**: Both hover and focus triggers are active
 
 To take finer control of popover visibility, you can use the [useToggle](/docs/composables/useToggle) or
 [usePopoverController](/docs/composables/usePopoverController). Alternately, you can set the `manual` prop
