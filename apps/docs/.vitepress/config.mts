@@ -30,11 +30,14 @@ export default defineConfig({
       Icons(),
       Components({
         globs: ['components/*.vue', 'docs/**/demo/*.vue'],
-        dts: true,
-        include: [/\.vue$/, /\.vue\?vue/, /\.md$/, /\.ts$/],
         resolvers: [BootstrapVueNextResolver()],
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      }) as any,
+        include: [/\.vue$/, /\.vue\?vue/],
+      }),
+      // separating this prevents unused "resolveDirectives" import warning on build
+      Components({
+        resolvers: [BootstrapVueNextResolver({directives: false})],
+        include: [/\.md$/],
+      }),
     ],
   },
   locales: {
