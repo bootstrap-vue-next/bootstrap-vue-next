@@ -22,6 +22,11 @@ export default {
             description:
               "Set to 'top' for fixed to the top of the viewport, or 'bottom' for fixed to the bottom of the viewport",
           },
+          noAutoClose: {
+            type: 'boolean',
+            default: false,
+            description: 'Disable auto-closing of the navbar when a child component is clicked',
+          },
           print: {
             type: 'boolean',
             default: false,
@@ -46,7 +51,7 @@ export default {
                 default: 'nav',
               },
             }),
-            ['autoClose', 'tag', 'variant']
+            ['tag', 'variant']
           ),
         } satisfies Record<keyof BvnComponentProps['BNavbar'], PropertyReference>,
       },
