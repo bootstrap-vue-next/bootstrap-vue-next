@@ -58,11 +58,11 @@ By default, popovers are triggered by `pointerenter` (hover) and `focus` events 
 ### Basic Trigger Configuration
 
 - **Default behavior**: Both hover and focus triggers are active
-- **Click only**: Set `click="true"`
-- **Hover only**: Set `hover="true"`
-- **Focus only**: Set `focus="true"`
-- **Multiple triggers**: Combine triggers like `click="true"` `hover="true"` `focus="true"`
-- **Manual control**: Set `manual="true"` to disable all automatic triggers
+- **Click only**: Add the `click` prop (`<BPopover click>`)
+- **Hover only**: Add the `hover` prop (`<BPopover hover>`)
+- **Focus only**: Add the `focus` prop (`<BPopover focus>`)
+- **Multiple triggers**: Combine props, e.g. `<BPopover click hover focus>`
+- **Manual control**: Set `<BPopover manual>` to disable all automatic triggers
 
 <<< DEMO ./demo/PopoverTriggers.vue#template{vue-html}
 
@@ -75,6 +75,7 @@ The trigger system uses the following priority order:
 3. **Click compatibility**: If `click="true"` (without explicit hover/focus), only click trigger is active
 4. **Default behavior**: Both hover and focus triggers are active
 
+Props that are explicitly set (true or false) override their respective defaults, while those left undefined fall through to the next rule.
 
 To take finer control of popover visibility, you can use the [useToggle](/docs/composables/useToggle) or
 [usePopoverController](/docs/composables/usePopoverController). Alternately, you can set the `manual` prop
