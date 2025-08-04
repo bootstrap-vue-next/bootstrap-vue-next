@@ -850,13 +850,43 @@ See [Show and Hide](#show-and-hide) shared properties.
 
 ### BTooltip
 
-<NotYetDocumented type="component"/>
-
 See [Show and Hide](#show-and-hide) shared properties.
 
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
-`content` prop has been renamed to `body` for consistency with other components.
+`BTooltip` is noninteractive by default, unlike in BootstrapVue. This provides for a smoother user
+experience. The `interactive` property is provided to change back to the default BootstrapVue behavior.
+
+The `container` prop has been deprecated. Use the `teleportTo` prop instead to specify where the popover
+should be mounted. See [Vue Teleport documentation](https://vuejs.org/guide/built-ins/teleport.html).
+
+`custom-class` has been changed to `body-class` and a `title-class` has been added for completeness -
+see [custom classes documentation](/docs/components/tooltip#custom-classes-and-variants) for details.
+
+`fallback-placement` has been deprecated. Use the various options provided by [floating-ui](https://floating-ui.com/)
+to handle placement.
+
+The ability for the `target` prop to take a function has been deprecated.
+
+Triggers work differently as the underlying library we use to manage popovers has changed. See
+[our documentation](/docs/components/popover#triggers) and [floating-ui](https://floating-ui.com/)
+for details.
+
+The `variant` prop has been deprecated. Use Bootstrap's color and background utility classes to style
+popovers instead. See [Tooltip custom classes and variants](/docs/components/tooltip#custom-classes-and-variants)
+for details.
+
+The `disabled` prop and
+[Programmatically Disabling](https://bootstrap-vue.org/docs/components/tooltip#programmatically-disabling-tooltip) have
+been deprecated along with the `disabled` and `enabled` events. Use `manual=true` to disable BootstrapVueNext's automatic
+trigger handling and if your own code shows the tooltip disable those mechanisms as well. If you believe that implementing
+full parity with the BootstrapVue feature is useful, please open an issue or propose a pull request.
+
+`delay` now defaults to 0 rather than 50ms
+
+The default for `placement` is now `top` rather than `right`
+
+`$root` events are deprecated. See [usePopoverController](/docs/composables/usePopoverController) as an alternative.
 
 ## Directives
 
