@@ -110,8 +110,10 @@ const _props = withDefaults(defineProps<Omit<BPopoverProps, 'modelValue'>>(), {
   boundary: 'clippingAncestors',
   boundaryPadding: undefined,
   bodyClass: undefined,
-  click: false,
+  click: undefined,
   closeOnHide: false,
+  focus: undefined,
+  hover: undefined,
   teleportTo: undefined,
   teleportDisabled: false,
   body: undefined,
@@ -406,6 +408,26 @@ const localShow = () => {
   show()
 }
 
+// Compute final trigger configuration
+const computedTriggers = computed(() => {
+  // Manual mode disables all automatic triggers
+  if (props.manual) {
+    return {hover: false, focus: false, click: false}
+  }
+
+  // If explicit boolean props are set, use them
+  if (props.hover !== undefined || props.focus !== undefined || props.click !== undefined) {
+    return {
+      hover: props.hover ?? false,
+      focus: props.focus ?? false,
+      click: props.click ?? false,
+    }
+  }
+
+  // If no explicit props, use default behavior: hover + focus
+  return {hover: true, focus: true, click: false}
+})
+
 const bind = () => {
   // TODO: is this the best way to bind the events?
   // we place a span and get the next element sibling for the listeners
@@ -434,14 +456,22 @@ const bind = () => {
   if (!triggerElement.value || props.manual) {
     return
   }
-  if (props.click) {
+
+  const triggers = computedTriggers.value
+
+  if (triggers.click) {
     triggerElement.value.addEventListener('click', localToggle)
-    return
   }
-  triggerElement.value.addEventListener('pointerenter', localShow)
-  triggerElement.value.addEventListener('pointerleave', tryHide)
-  triggerElement.value.addEventListener('focus', localShow)
-  triggerElement.value.addEventListener('blur', tryHide)
+
+  if (triggers.hover) {
+    triggerElement.value.addEventListener('pointerenter', localShow)
+    triggerElement.value.addEventListener('pointerleave', tryHide)
+  }
+
+  if (triggers.focus) {
+    triggerElement.value.addEventListener('focus', localShow)
+    triggerElement.value.addEventListener('blur', tryHide)
+  }
 }
 
 const unbind = () => {
@@ -457,16 +487,27 @@ const unbind = () => {
 onClickOutside(
   floatingElement,
   () => {
-    if (showRef.value && props.click && !props.noAutoClose && !props.manual) hide('click-outside')
+    if (showRef.value && computedTriggers.value.click && !props.noAutoClose && !props.manual)
+      hide('click-outside')
   },
   {ignore: [triggerElement]}
 )
 
-watch([() => props.click, () => props.manual, () => props.target, () => props.reference], () => {
-  unbind()
-  bind()
-  // update()
-})
+watch(
+  [
+    () => props.click,
+    () => props.hover,
+    () => props.focus,
+    () => props.manual,
+    () => props.target,
+    () => props.reference,
+  ],
+  () => {
+    unbind()
+    bind()
+    // update()
+  }
+)
 
 const sharedSlots = computed<ShowHideSlotsData>(() => ({
   toggle,

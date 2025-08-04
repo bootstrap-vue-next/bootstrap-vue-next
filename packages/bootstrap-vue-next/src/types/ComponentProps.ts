@@ -1292,6 +1292,8 @@ export interface BPopoverProps extends TeleporterProps, ShowHideProps {
   boundaryPadding?: Padding
   click?: boolean
   closeOnHide?: boolean
+  focus?: boolean
+  hover?: boolean
   delay?:
     | number
     | Readonly<{

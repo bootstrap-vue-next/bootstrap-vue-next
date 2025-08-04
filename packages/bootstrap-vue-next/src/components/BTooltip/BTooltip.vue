@@ -39,6 +39,8 @@ import {useDefaults} from '../../composables/useDefaults'
 
 const _props = withDefaults(defineProps<Omit<BTooltipProps, 'modelValue'>>(), {
   click: undefined,
+  focus: undefined,
+  hover: undefined,
   teleportDisabled: undefined,
   teleportTo: undefined,
   bodyClass: undefined,

@@ -29,9 +29,18 @@ export default {
           },
           click: {
             type: 'boolean',
-            default: false,
-            description:
-              'show/hide the popover on click of the target element (default is hover/focus)',
+            default: undefined,
+            description: 'Enable/disable click trigger. See [Triggers](#triggers) for details.',
+          },
+          focus: {
+            type: 'boolean',
+            default: undefined,
+            description: 'Enable/disable focus trigger. See [Triggers](#triggers) for details.',
+          },
+          hover: {
+            type: 'boolean',
+            default: undefined,
+            description: 'Enable/disable hover trigger. See [Triggers](#triggers) for details.',
           },
           delay: {
             type: 'number | { show: number; hide: number }',
