@@ -121,7 +121,6 @@ export const _newShowHideRegistry = () => {
     })
     return {
       unregister() {
-        // delete values.value[id]
         values.value.delete(id)
       },
       updateId(newId: string, oldId: string) {

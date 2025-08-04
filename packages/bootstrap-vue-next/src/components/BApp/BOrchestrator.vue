@@ -117,7 +117,7 @@ watch(
 )
 
 const ComputedPositionClasses = computed(() => {
-  const postisionsActive = items.value?.reduce(
+  const positionsActive = items.value?.reduce(
     (acc, item) => {
       if (item.position) {
         acc[item.position] = true
@@ -128,22 +128,23 @@ const ComputedPositionClasses = computed(() => {
   )
   const classes: Record<string, {class: string; style: string}> = {}
   for (const position in positionClasses) {
-    if (postisionsActive?.[position]) {
+    if (positionsActive?.[position]) {
       classes[position] = {
         class: `${
           positionClasses[position as keyof typeof positionClasses]
         } toast-container position-fixed p-3`,
-        style: 'width: calc(var(--bs-toast-max-width, 350px) + 2 * 1rem)',
+        style:
+          'width: calc(var(--bs-toast-max-width, 350px) + var(--bs-toast-padding-x, 1rem) * 2)',
       }
     }
   }
-  if (postisionsActive?.['modal']) {
+  if (positionsActive?.['modal']) {
     classes['modal'] = {
       class: '',
       style: '',
     }
   }
-  if (postisionsActive?.['popover']) {
+  if (positionsActive?.['popover']) {
     classes['popover'] = {
       class: '',
       style: '',

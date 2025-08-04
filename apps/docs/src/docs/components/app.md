@@ -379,5 +379,4 @@ The `BApp` component automatically provides several internal services:
 
 <script setup lang="ts">
 import {data} from '../../data/components/app.data'
-console.log('BApp data', data)
 </script>

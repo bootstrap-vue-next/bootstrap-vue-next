@@ -6,7 +6,7 @@ import {
 } from '../../utils/keys'
 import {_newShowHideRegistry} from '../../composables/useRegistry'
 import type {BreadcrumbItemRaw} from '../../types/BreadcrumbTypes'
-import {type ComponentInternalInstance, computed, type Plugin, readonly, type Ref, ref} from 'vue'
+import {type ComponentInternalInstance, computed, type Plugin, type Ref, ref} from 'vue'
 
 export const registryPlugin: Plugin = {
   install(app) {
@@ -60,9 +60,7 @@ export const registryPlugin: Plugin = {
     app.provide(modalManagerKey, {
       countStack,
       lastStack,
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      registry: readonly(registry) as Readonly<Ref<Map<number, ComponentInternalInstance>>>,
+      registry: computed(() => registry.value),
       stack: valuesStack,
       pushStack,
       removeStack,
