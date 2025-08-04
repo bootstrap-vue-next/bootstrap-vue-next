@@ -8,7 +8,7 @@
     </BRow>
     <BRow>
       <BCol>
-        {{ toasts }}
+        {{ store.filter((el) => el.type === 'toast') }}
       </BCol>
     </BRow>
   </BContainer>
@@ -22,10 +22,10 @@ import {
   // BToast,
   type ColorVariant,
   // type OrchestratedToast,
-  useToastController,
+  useToast,
 } from 'bootstrap-vue-next'
 
-const {show, toasts} = useToastController()
+const {create, store} = useToast()
 
 // const firstRef = ref<OrchestratedToast>({
 const firstRef = ref({
@@ -40,14 +40,14 @@ onMounted(() => {
 
 const showFns = {
   basicNoReactive: () => {
-    show({
+    create({
       modelValue: true,
       active: true,
       title: 'foobar',
     })
   },
   basicCustomComponent: () => {
-    show({
+    create({
       slots: {default: h('div', null, {default: () => 'foobar!'})},
       modelValue: true,
       active: true,
@@ -55,10 +55,10 @@ const showFns = {
     })
   },
   simpleRefProps: () => {
-    show(firstRef)
+    create(firstRef)
   },
   dynamicRefProps: () => {
-    show(
+    create(
       computed(() => ({
         ...firstRef.value,
         variant: (Number.parseInt(firstRef.value.body?.charAt(2) ?? '0') % 2 === 0

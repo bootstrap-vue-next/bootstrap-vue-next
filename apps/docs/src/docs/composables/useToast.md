@@ -1,39 +1,42 @@
-<ComposableHeader path="useToastController/index.ts" title="useToastController" />
+<ComposableHeader path="useToast/index.ts" title="useToast" />
 
 <div class="lead mb-5">
 
-Often times one may want to open a `Toast` in a global context, without the need for declaring a component, perhaps to display an error after a function threw an error. `useToastController` is used to create `Toasts` on demand. You must have initialized the `BToastOrchestrator` component once in your application. The following functionality requires the existance of that component
+The `useToast` composable allows you to create and manage toasts programmatically from anywhere in your application. It provides a simple API to show toast messages without needing to declare toast components in your templates.
 
 </div>
 
-<UsePluginAlert />
+## Setup
 
-## BToastOrchestrator
+To use `useToast`, you need one of the following setup approaches:
 
-You must have initialized `BToastOrchestrator` component once and only once (doing multiple may display multiple `Toasts`). This is usually best placed at the App root.
+### BApp Component (Recommended)
+
+The easiest way is to wrap your application with the `BApp` component, which automatically sets up the orchestrator and registry:
 
 <HighlightCard>
-
 <template #html>
 
-```vue-html
-<BToastOrchestrator />
+```vue
+<template>
+  <BApp>
+    <router-view />
+  </BApp>
+</template>
 ```
 
-  </template>
+</template>
 </HighlightCard>
 
-The only props it access are `teleportDisabled` and `teleportTo` to modify the location that it is placed
+### Plugin Setup (Legacy)
 
-In addition, it contains a few exposed methods. These exposed methods on the `template ref` correspond to those in the `useToastController` function, described below
+Alternatively, you can use the traditional plugin approach.
 
-- remove
-- show
-- toasts
+<UsePluginAlert />
 
-## Showing a Toast
+## Basic Usage
 
-Showing a toast is done through the show method
+Creating and showing a toast is simple:
 
 <HighlightCard>
   <BButton @click="create({ title: 'Hello', body: 'World'  })">Show</BButton>
@@ -45,7 +48,9 @@ Showing a toast is done through the show method
 </template>
 
 <script setup lang="ts">
-const {create} = useToastController()
+import {useToast} from 'bootstrap-vue-next'
+
+const {create} = useToast()
 </script>
 ```
 
@@ -74,7 +79,7 @@ The props property corresponds to mostly that of the `BToast` components props. 
 </template>
 
 <script setup lang="ts">
-const {create} = useToastController()
+const {create} = useToast()
 
 const firstRef = ref<OrchestratedToast>({
   body: `${Math.random()}`,
@@ -117,7 +122,7 @@ Using props can work for most situations, but it leaves some finer control to be
 <script setup lang="ts">
 import {BToast} from 'bootstrap-vue-next'
 
-const {create} = useToastController()
+const {create} = useToast()
 
 const firstRef = ref<OrchestratedToast>({
   body: `${Math.random()}`,
@@ -171,7 +176,7 @@ Hiding a `Toast` programmatically is very simple. `create` return an object that
 </template>
 
 <script setup lang="ts">
-const {create} = useToastController()
+const {create} = useToast()
 
 let toast: undefined | ReturnType<typeof create>
 
@@ -217,7 +222,7 @@ Hiding a `Toast` with promise
 </template>
 
 <script setup lang="ts">
-const {create} = useToastController()
+const {create} = useToast()
 const promiseToast = () => {
   create(
     {
@@ -249,14 +254,14 @@ const promiseToast = () => {
 
 <script setup lang="ts">
 import {data} from '../../data/components/toast.data'
-import {BButton, useToastController, BButtonGroup, BToast} from 'bootstrap-vue-next'
+import {BButton, useToast, BButtonGroup, BToast} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
 
 import UsePluginAlert from '../../components/UsePluginAlert.vue'
 import {ref, computed, h, onMounted} from 'vue'
 import ComposableHeader from './ComposableHeader.vue'
 
-const {create, remove, toasts} = useToastController()
+const {create, remove, toasts} = useToast()
 
 let toast: undefined | ReturnType<typeof create>
 

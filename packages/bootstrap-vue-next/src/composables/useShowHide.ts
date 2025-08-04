@@ -13,7 +13,7 @@ import {
   type Ref,
   watch,
 } from 'vue'
-import {globalShowHideStorageInjectionKey} from '../utils/keys'
+import {showHideRegistryKey} from '../utils/keys'
 import {BvTriggerableEvent} from '../utils'
 import {useEventListener, useThrottleFn} from '@vueuse/core'
 
@@ -356,7 +356,7 @@ export const useShowHide = (
     }
   }
 
-  const appRegistry = inject(globalShowHideStorageInjectionKey, undefined)?.register({
+  const appRegistry = inject(showHideRegistryKey, undefined)?.register({
     id: computedId.value,
     toggle,
     show,

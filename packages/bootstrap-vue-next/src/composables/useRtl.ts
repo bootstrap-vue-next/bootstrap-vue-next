@@ -1,8 +1,8 @@
 import {inject, onMounted, watch} from 'vue'
-import {rtlPluginKey} from '../utils/keys'
+import {rtlRegistryKey} from '../utils/keys'
 
 export const useRtl = () => {
-  const rtlPlugin = inject(rtlPluginKey)
+  const rtlPlugin = inject(rtlRegistryKey)
 
   onMounted(() => {
     // I can't think of a reason why one might want to destroy these if unmounted...
