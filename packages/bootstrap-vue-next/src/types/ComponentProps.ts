@@ -555,9 +555,9 @@ export interface BNavTextProps {
 }
 
 export interface BNavbarProps {
-  autoClose?: boolean
   container?: boolean | 'fluid' | Breakpoint
   fixed?: Extract<Placement, 'top' | 'bottom'>
+  noAutoClose?: boolean
   print?: boolean
   sticky?: Extract<Placement, 'top' | 'bottom'>
   tag?: string
