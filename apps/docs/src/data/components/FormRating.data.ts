@@ -43,6 +43,11 @@ export default {
             description:
               'When `true` makes the rating readonly. When `true`, fractional ratings values are allowed (half icons will be shown)',
           },
+          disabled: {
+            type: 'boolean',
+            default: 'false',
+            description: 'When `true` makes the rating disabled',
+          },
           showClear: {
             type: 'boolean',
             default: 'false',
