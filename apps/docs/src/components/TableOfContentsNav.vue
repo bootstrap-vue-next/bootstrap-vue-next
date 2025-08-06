@@ -2,7 +2,7 @@
   <nav class="bd-links-nav">
     <BListGroup v-if="!isLargeScreen">
       <strong :class="headerClasses">
-        <span :class="headerInsideClasses"> <GearIcon aria-hidden /> General</span>
+        <span :class="headerInsideClasses"><GearIcon aria-hidden class="me-2" />General </span>
       </strong>
       <BListGroupItem v-for="link in headerLinks" :key="link.label" :class="listGroupItemClasses">
         <BLink :to="link.route" :class="linkClasses">
@@ -13,7 +13,7 @@
     <BListGroup v-for="group in groupComputedList" :key="group.label">
       <strong :class="headerClasses">
         <BLink :to="withBase(group.uri)" :class="headerInsideClasses">
-          <component :is="group.icon()" /> {{ group.label }}
+          <component :is="group.icon()" class="me-2" /> {{ group.label }}
         </BLink>
       </strong>
       <BListGroupItem
@@ -74,7 +74,13 @@ const routeLocationDirectives = (name: string): string =>
 const headerClasses = ['py-2', 'text-primary-emphasis'] as const
 const linkClasses = ['px-2', 'ms-2', 'text-decoration-none', 'text-body', 'fs-7'] as const
 const listGroupItemClasses = ['border-0', 'px-0', 'py-0-5', 'ms-2'] as const
-const headerInsideClasses = ['px-2', 'ms-2', 'text-decoration-none'] as const
+const headerInsideClasses = [
+  'd-inline-flex',
+  'align-items-center',
+  'px-2',
+  'ms-2',
+  'text-decoration-none',
+] as const
 
 const headerLinks = [
   {
