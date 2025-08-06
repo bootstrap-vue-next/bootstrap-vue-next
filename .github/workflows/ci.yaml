@@ -29,20 +29,6 @@ jobs:
         uses: pnpm/action-setup@v4
         id: pnpm-install
 
-      - name: Get PNPM Store Directory
-        id: pnpm-cache
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - name: Setup PNPM Cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
       - name: Install Dependencies
         run: pnpm install --ignore-scripts --frozen-lockfile
 
@@ -67,20 +53,6 @@ jobs:
         uses: pnpm/action-setup@v4
         id: pnpm-install
 
-      - name: Get PNPM Store Directory
-        id: pnpm-cache
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - name: Setup PNPM Cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
       - name: Install Dependencies
         run: pnpm install --ignore-scripts --frozen-lockfile
 
@@ -102,20 +74,6 @@ jobs:
       - name: Install PNPM
         uses: pnpm/action-setup@v4
         id: pnpm-install
-
-      - name: Get PNPM Store Directory
-        id: pnpm-cache
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - name: Setup PNPM Cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
 
       - name: Install Dependencies
         run: pnpm install --ignore-scripts --frozen-lockfile
