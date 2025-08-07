@@ -828,4 +828,21 @@ watch(
     display: none !important;
   }
 }
+
+.vp-code-group {
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.vp-code-group .blocks {
+  padding: 0px 24px 16px 24px;
+  background-color: white;
+}
+
+.vp-code-group .tabs {
+  margin-top: 6px !important;
+  margin-bottom: 12px !important;
+  background-color: white;
+}
 </style>
