@@ -49,9 +49,7 @@ npm i bootstrap bootstrap-vue-next
 
 :::
 
-<p></p>
-
-<HighlightCard>
+<HighlightCard class="mt-3">
 
 ```typescript
 // main.js/ts
