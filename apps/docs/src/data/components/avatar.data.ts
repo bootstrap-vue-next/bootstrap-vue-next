@@ -113,7 +113,8 @@ export default {
           square: {
             type: 'boolean',
             default: false,
-            description: 'Disables rounding of the avatar, rending the avatar with square corners', // TODO grammar check (typo: "rending" should be "rendering")
+            description:
+              'Disables rounding of the avatar, rendering the avatar with square corners',
           },
           text: {
             type: 'string',
