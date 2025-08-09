@@ -26,7 +26,7 @@ export const imageProps = {
     type: 'boolean',
     default: false,
     description:
-      "Makes the image responsive. The image will shrink as needed or grow up the the image's native width",
+      "Makes the image responsive. The image will shrink as needed or grow up to the image's native width",
   },
   fluidGrow: {
     type: 'boolean',

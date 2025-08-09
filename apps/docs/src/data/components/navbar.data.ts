@@ -31,7 +31,7 @@ export default {
               default: 'nav',
             },
           }),
-          ['autoClose', 'tag', 'variant']
+          ['tag', 'variant']
         ),
         container: {
           type: "boolean | 'fluid' | Breakpoint",
@@ -50,6 +50,11 @@ export default {
           default: false, // TODO item not in string format
           description:
             'Navbars are hidden by default when printing. When this prop is set it will be printed',
+        },
+        noAutoClose: {
+          type: 'boolean',
+          default: false,
+          description: 'Disable auto-closing of the navbar when a child component is clicked',
         },
         sticky: {
           type: "'top' | 'bottom'",

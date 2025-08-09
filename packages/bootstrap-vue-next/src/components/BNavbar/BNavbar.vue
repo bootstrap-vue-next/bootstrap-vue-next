@@ -17,9 +17,9 @@ import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import type {BNavbarSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BNavbarProps>(), {
-  autoClose: true,
   container: 'fluid',
   fixed: undefined,
+  noAutoClose: false,
   print: false,
   sticky: undefined,
   tag: 'nav',
@@ -51,6 +51,6 @@ const computedClasses = computed(() => [
 
 provide(navbarInjectionKey, {
   tag: toRef(() => props.tag),
-  autoClose: toRef(() => props.autoClose),
+  noAutoClose: toRef(() => props.noAutoClose),
 })
 </script>
