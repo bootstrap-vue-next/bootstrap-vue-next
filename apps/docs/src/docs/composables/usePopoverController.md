@@ -104,7 +104,7 @@ For more control, you can use the `component` property to render a custom compon
 <script setup lang="ts">
 const {popover} = usePopoverController()
 
-pop({
+popover({
   slots: {
     default: (scope) =>
       h('div', null, {default: () => `Custom content - Visible: ${scope.visible}`}),
@@ -151,7 +151,6 @@ import { ref, h, onMounted } from 'vue'
 import ComposableHeader from './ComposableHeader.vue'
 
 const { popover, tooltip } = usePopoverController()
-
 
 const title = ref('Hello')
 const popoverButton = ref()

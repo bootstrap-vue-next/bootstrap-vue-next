@@ -59,9 +59,10 @@ import {isEmptySlot} from '../../utils/dom'
 import {useNumberishToStyle} from '../../composables/useNumberishToStyle'
 import {useRadiusElementClasses} from '../../composables/useRadiusElementClasses'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
-import type {Size} from '../../types'
+import type {BAvatarEmits, BAvatarSlots, Size} from '../../types'
+import {useDefaults} from '../../composables/useDefaults'
 
-const props = withDefaults(defineProps<BAvatarProps>(), {
+const _props = withDefaults(defineProps<BAvatarProps>(), {
   alt: 'avatar',
   badge: false,
   badgeBgVariant: null,
@@ -110,6 +111,9 @@ const props = withDefaults(defineProps<BAvatarProps>(), {
   roundedTop: undefined,
   // End RadiusElementExtendables props
 })
+const props = useDefaults(_props, 'BAvatar')
+const emit = defineEmits<BAvatarEmits>()
+const slots = defineSlots<BAvatarSlots>()
 
 const localSrc = ref(props.src)
 watch(
@@ -118,18 +122,6 @@ watch(
     localSrc.value = value
   }
 )
-
-const emit = defineEmits<{
-  'click': [value: MouseEvent]
-  'img-error': [value: Event]
-}>()
-
-const slots = defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  badge?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props)
 

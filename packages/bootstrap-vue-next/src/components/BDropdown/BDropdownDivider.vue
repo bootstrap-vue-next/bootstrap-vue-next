@@ -20,16 +20,16 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const attrs = useAttrs()
-const processedAttrs = computed(() => {
-  const {class: wrapperClass, ...dividerAttrs} = attrs
-  return {wrapperClass, dividerAttrs}
-})
-
 const _props = withDefaults(defineProps<BDropdownDividerProps>(), {
   dividerClass: undefined,
   tag: 'hr',
   wrapperAttrs: undefined,
 })
 const props = useDefaults(_props, 'BDropdownDivider')
+const attrs = useAttrs()
+
+const processedAttrs = computed(() => {
+  const {class: wrapperClass, ...dividerAttrs} = attrs
+  return {wrapperClass, dividerAttrs}
+})
 </script>

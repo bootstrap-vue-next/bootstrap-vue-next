@@ -33,8 +33,8 @@
 import {computed, useTemplateRef} from 'vue'
 import BPopover from '../BPopover/BPopover.vue'
 import type {BPopoverProps, BTooltipProps} from '../../types/ComponentProps'
-import type {BPopoverSlots} from '../../types/ComponentSlots'
-import type {BPopoverEmits} from '../../types/ComponentEmits'
+import type {BTooltipSlots} from '../../types/ComponentSlots'
+import type {BTooltipEmits} from '../../types/ComponentEmits'
 import {useDefaults} from '../../composables/useDefaults'
 
 const _props = withDefaults(defineProps<Omit<BTooltipProps, 'modelValue'>>(), {
@@ -72,23 +72,20 @@ const _props = withDefaults(defineProps<Omit<BTooltipProps, 'modelValue'>>(), {
   variant: undefined,
   visible: undefined,
 })
-
 const props = useDefaults(_props, 'BTooltip')
-
-const slots = defineSlots<BPopoverSlots>()
+const emit = defineEmits<BTooltipEmits>()
+const slots = defineSlots<BTooltipSlots>()
 
 const modelValue = defineModel<Exclude<BTooltipProps['modelValue'], undefined>>({
   default: false,
 })
-
-const emit = defineEmits<BPopoverEmits>()
 
 const computedProps = computed<BPopoverProps>(() => {
   const {interactive, noninteractive, ...rest} = props
   return {noninteractive: noninteractive !== undefined ? noninteractive : !interactive, ...rest}
 })
 
-const popover = useTemplateRef<InstanceType<typeof BPopover>>('_popover')
+const popover = useTemplateRef('_popover')
 
 defineExpose({
   hide: () => {

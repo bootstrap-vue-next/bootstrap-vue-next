@@ -1,310 +1,295 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
+import type {
+  BPlaceholderButtonProps,
+  BPlaceholderCardProps,
+  BPlaceholderCardSlots,
+  BPlaceholderProps,
+  BPlaceholderTableProps,
+  BPlaceholderTableSlots,
+  BPlaceholderWrapperProps,
+  BPlaceholderWrapperSlots,
+} from 'bootstrap-vue-next'
+import {type ComponentReference, type PropRecord, type SlotRecord, StyleKind} from '../../types'
 
 export default {
-  load: (): ComponentReference[] => [
-    {
-      component: 'BPlaceholder',
+  load: (): ComponentReference => ({
+    BPlaceholder: {
       sourcePath: '/BPlaceholder/BPlaceholder.vue',
       props: {
-        '': {
-          animation: {
-            type: 'PlaceholderAnimation',
-            default: undefined,
-          },
-          cols: {
-            type: 'Numberish',
-            default: 12,
-          },
-          size: {
-            type: 'PlaceholderSize',
-            default: 'md',
-          },
-          tag: {
-            type: 'string',
-            default: 'span',
-          },
-          variant: {
-            type: 'ColorVariant | null',
-            default: null,
-          },
-          width: {
-            type: 'Numberish',
-            default: undefined,
-          },
-          wrapperTag: {
-            type: 'string',
-            default: 'span',
-          },
-        } satisfies Record<keyof BvnComponentProps['BPlaceholder'], PropertyReference>,
-      },
-      emits: [],
-      slots: [],
+        animation: {
+          type: 'PlaceholderAnimation',
+          default: undefined,
+        },
+        cols: {
+          type: 'Numberish',
+          default: 12, // TODO item not in string format
+        },
+        size: {
+          type: 'PlaceholderSize',
+          default: 'md',
+        },
+        tag: {
+          type: 'string',
+          default: 'span',
+        },
+        variant: {
+          type: 'ColorVariant | null',
+          default: null, // TODO item not in string format
+        },
+        width: {
+          type: 'Numberish',
+          default: undefined,
+        },
+        wrapperTag: {
+          type: 'string',
+          default: 'span',
+        },
+      } satisfies PropRecord<keyof BPlaceholderProps>,
+      emits: {},
+      slots: {},
     },
-    {
-      component: 'BPlaceholderCard',
+    BPlaceholderCard: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.card'},
       sourcePath: '/BPlaceholder/BPlaceholderCard.vue',
-      emits: [],
       props: {
-        '': {
-          animation: {
-            type: 'PlaceholderAnimation',
-            default: undefined,
-          },
-          footerAnimation: {
-            type: 'PlaceholderAnimation',
-            default: undefined,
-          },
-          footerSize: {
-            type: 'PlaceholderSize',
-            default: 'md',
-          },
-          footerVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-          footerWidth: {
-            type: 'Numberish',
-            default: 100,
-          },
-          headerAnimation: {
-            type: 'PlaceholderAnimation',
-            default: undefined,
-          },
-          headerSize: {
-            type: 'PlaceholderSize',
-            default: 'md',
-          },
-          headerVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-          headerWidth: {
-            type: 'Numberish',
-            default: 100,
-          },
-          imgBlankColor: {
-            type: 'string',
-            default: '#868e96',
-          },
-          imgPlacement: {
-            type: "'top' | 'bottom'",
-            default: 'top',
-          },
-          imgHeight: {
-            type: 'Numberish',
-            default: 100,
-          },
-          imgSrc: {
-            type: 'string',
-            default: undefined,
-          },
-          noButton: {
-            type: 'boolean',
-            default: false,
-          },
-          noFooter: {
-            type: 'boolean',
-            default: false,
-          },
-          noHeader: {
-            type: 'boolean',
-            default: false,
-          },
-          noImg: {
-            type: 'boolean',
-            default: false,
-          },
-          size: {
-            type: 'PlaceholderSize',
-            default: 'md',
-          },
-          variant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-        } satisfies Record<keyof BvnComponentProps['BPlaceholderCard'], PropertyReference>,
-      },
-      slots: [
-        {
-          description: 'Overrides the img default',
-          name: 'img',
-          scope: [],
+        animation: {
+          type: 'PlaceholderAnimation',
+          default: undefined,
         },
-        {
-          description: 'Overrides the header default',
-          name: 'header',
-          scope: [],
+        footerAnimation: {
+          type: 'PlaceholderAnimation',
+          default: undefined,
         },
-        {
+        footerSize: {
+          type: 'PlaceholderSize',
+          default: 'md',
+        },
+        footerVariant: {
+          type: 'ColorVariant | null',
+          default: undefined,
+        },
+        footerWidth: {
+          type: 'Numberish',
+          default: 100, // TODO item not in string format
+        },
+        headerAnimation: {
+          type: 'PlaceholderAnimation',
+          default: undefined,
+        },
+        headerSize: {
+          type: 'PlaceholderSize',
+          default: 'md',
+        },
+        headerVariant: {
+          type: 'ColorVariant | null',
+          default: undefined,
+        },
+        headerWidth: {
+          type: 'Numberish',
+          default: 100, // TODO item not in string format
+        },
+        imgBlankColor: {
+          type: 'string',
+          default: '#868e96',
+        },
+        imgPlacement: {
+          type: "'top' | 'bottom'",
+          default: 'top',
+        },
+        imgHeight: {
+          type: 'Numberish',
+          default: 100, // TODO item not in string format
+        },
+        imgSrc: {
+          type: 'string',
+          default: undefined,
+        },
+        noButton: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+        },
+        noFooter: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+        },
+        noHeader: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+        },
+        noImg: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+        },
+        size: {
+          type: 'PlaceholderSize',
+          default: 'md',
+        },
+        variant: {
+          type: 'ColorVariant | null',
+          default: undefined,
+        },
+      } satisfies PropRecord<keyof BPlaceholderCardProps>,
+      emits: {},
+      slots: {
+        img: {
+          description: 'Overrides the default image placeholder',
+          scope: {},
+        },
+        header: {
+          description: 'Overrides the default header placeholder',
+          scope: {},
+        },
+        default: {
           description: 'Overrides the default placeholders',
-          name: 'default',
-          scope: [],
+          scope: {},
         },
-        {
-          description: 'Overrides the footer default',
-          name: 'footer',
-          scope: [],
+        footer: {
+          description: 'Overrides the default footer placeholder',
+          scope: {},
         },
-      ],
+      } satisfies SlotRecord<keyof BPlaceholderCardSlots>,
     },
-    {
-      component: 'BPlaceholderWrapper',
+    BPlaceholderWrapper: {
       styleSpec: {kind: StyleKind.None},
       sourcePath: '/BPlaceholder/BPlaceholderWrapper.vue',
-      emits: [],
       props: {
-        '': {
-          loading: {
-            description: 'Determines whether the loading slot should be displayed',
-            type: 'boolean',
-            default: false,
-          },
-        } satisfies Record<keyof BvnComponentProps['BPlaceholderWrapper'], PropertyReference>,
-      },
-      slots: [
-        {
+        loading: {
+          description: 'Determines whether the loading slot is displayed',
+          type: 'boolean',
+          default: false, // TODO item not in string format
+        },
+      } satisfies PropRecord<keyof BPlaceholderWrapperProps>,
+      emits: {},
+      slots: {
+        default: {
           description: 'Content to show when the `loading` prop is `false`',
-          name: 'default',
-          scope: [],
+          scope: {},
         },
-        {
+        loading: {
           description: 'Content to show when the `loading` prop is `true`',
-          name: 'loading',
-          scope: [],
+          scope: {},
         },
-      ],
+      } satisfies SlotRecord<keyof BPlaceholderWrapperSlots>,
     },
-    {
-      component: 'BPlaceholderTable',
+    BPlaceholderTable: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.table'},
       sourcePath: '/BPlaceholder/BPlaceholderTable.vue',
-      emits: [],
       props: {
-        '': {
-          animation: {
-            type: 'PlaceholderAnimation',
-            default: undefined,
-          },
-          cellWidth: {
-            type: 'Numberish',
-            default: 100,
-          },
-          columns: {
-            type: 'Numberish',
-            default: 5,
-          },
-          footerAnimation: {
-            type: 'PlaceholderAnimation',
-            default: undefined,
-          },
-          footerCellWidth: {
-            type: 'Numberish',
-            default: 100,
-          },
-          footerColumns: {
-            type: 'Numberish',
-            default: undefined,
-          },
-          footerSize: {
-            type: 'PlaceholderSize',
-            default: 'md',
-          },
-          footerVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-          headerAnimation: {
-            type: 'PlaceholderAnimation',
-            default: undefined,
-          },
-          headerCellWidth: {
-            type: 'Numberish',
-            default: 100,
-          },
-          headerColumns: {
-            type: 'Numberish',
-            default: undefined,
-          },
-          headerSize: {
-            type: 'PlaceholderSize',
-            default: 'md',
-          },
-          headerVariant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-          noHeader: {
-            type: 'boolean',
-            default: false,
-          },
-          rows: {
-            type: 'Numberish',
-            default: 3,
-          },
-          showFooter: {
-            type: 'boolean',
-            default: false,
-          },
-          size: {
-            type: 'PlaceholderSize',
-            default: 'md',
-          },
-          variant: {
-            type: 'ColorVariant | null',
-            default: undefined,
-          },
-        } satisfies Record<keyof BvnComponentProps['BPlaceholderTable'], PropertyReference>,
-      },
-      slots: [
-        {
-          description: 'Overwrites the thead of the table',
-          name: 'thead',
-          scope: [],
+        animation: {
+          type: 'PlaceholderAnimation',
+          default: undefined,
         },
-        {
-          description: 'Overwrites the tfoot of the table',
-          name: 'tfoot',
-          scope: [],
+        cellWidth: {
+          type: 'Numberish',
+          default: 100, // TODO item not in string format
         },
-        {
-          description: 'Overwrites the tbody of the table',
-          name: 'default',
-          scope: [],
+        columns: {
+          type: 'Numberish',
+          default: 5, // TODO item not in string format
         },
-      ],
+        footerAnimation: {
+          type: 'PlaceholderAnimation',
+          default: undefined,
+        },
+        footerCellWidth: {
+          type: 'Numberish',
+          default: 100, // TODO item not in string format
+        },
+        footerColumns: {
+          type: 'Numberish',
+          default: undefined,
+        },
+        footerSize: {
+          type: 'PlaceholderSize',
+          default: 'md',
+        },
+        footerVariant: {
+          type: 'ColorVariant | null',
+          default: undefined,
+        },
+        headerAnimation: {
+          type: 'PlaceholderAnimation',
+          default: undefined,
+        },
+        headerCellWidth: {
+          type: 'Numberish',
+          default: 100, // TODO item not in string format
+        },
+        headerColumns: {
+          type: 'Numberish',
+          default: undefined,
+        },
+        headerSize: {
+          type: 'PlaceholderSize',
+          default: 'md',
+        },
+        headerVariant: {
+          type: 'ColorVariant | null',
+          default: undefined,
+        },
+        noHeader: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+        },
+        rows: {
+          type: 'Numberish',
+          default: 3, // TODO item not in string format
+        },
+        showFooter: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+        },
+        size: {
+          type: 'PlaceholderSize',
+          default: 'md',
+        },
+        variant: {
+          type: 'ColorVariant | null',
+          default: undefined,
+        },
+      } satisfies PropRecord<keyof BPlaceholderTableProps>,
+      emits: {},
+      slots: {
+        thead: {
+          description: 'Overrides the table header (thead) placeholder',
+          scope: {},
+        },
+        tfoot: {
+          description: 'Overrides the table footer (tfoot) placeholder',
+          scope: {},
+        },
+        default: {
+          description: 'Overrides the table body (tbody) placeholder',
+          scope: {},
+        },
+      } satisfies SlotRecord<keyof BPlaceholderTableSlots>,
     },
-    {
-      component: 'BPlaceholderButton',
+    BPlaceholderButton: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.placeholder.btn'},
       sourcePath: '/BPlaceholder/BPlaceholderButton.vue',
-      emits: [],
-      slots: [],
       props: {
-        '': {
-          animation: {
-            type: 'PlaceholderAnimation',
-            default: undefined,
-          },
-          cols: {
-            type: 'Numberish',
-            default: undefined,
-          },
-          tag: {
-            type: 'string',
-            default: 'div',
-          },
-          variant: {
-            type: 'ColorVariant | null',
-            default: 'primary',
-          },
-          width: {
-            type: 'Numberish',
-            default: undefined,
-          },
-        } satisfies Record<keyof BvnComponentProps['BPlaceholderButton'], PropertyReference>,
-      },
+        animation: {
+          type: 'PlaceholderAnimation',
+          default: undefined,
+        },
+        cols: {
+          type: 'Numberish',
+          default: undefined,
+        },
+        tag: {
+          type: 'string',
+          default: 'div',
+        },
+        variant: {
+          type: 'ColorVariant | null',
+          default: 'primary',
+        },
+        width: {
+          type: 'Numberish',
+          default: undefined,
+        },
+      } satisfies PropRecord<keyof BPlaceholderButtonProps>,
+      emits: {},
+      slots: {},
     },
-  ],
+  }),
 }

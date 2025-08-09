@@ -1,5 +1,5 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {PropertyReference} from '../types'
+import type {BLinkProps} from 'bootstrap-vue-next'
+import type {PropRecord, PropRecordWithOptions} from '../types'
 
 export const linkTo = '/docs/components/link'
 
@@ -140,7 +140,11 @@ export const linkProps = {
     description: 'Set the color variant for the link',
   },
   // TODO: remove the hard-coded NYI props below when they are implemented
-} as const satisfies Record<
-  keyof BvnComponentProps['BLink'] | 'noPrefetch' | 'prefetch' | 'prefetchedClass',
-  PropertyReference
->
+} as const satisfies PropRecord<keyof BLinkProps | 'noPrefetch' | 'prefetch' | 'prefetchedClass'>
+
+export const linkedBLinkSection = {
+  _opts: {
+    linkTo,
+  },
+  _data: linkProps,
+} as const satisfies PropRecordWithOptions

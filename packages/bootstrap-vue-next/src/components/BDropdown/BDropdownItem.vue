@@ -28,6 +28,7 @@ import {useBLinkHelper} from '../../composables/useBLinkHelper'
 import {collapseInjectionKey, dropdownInjectionKey, navbarInjectionKey} from '../../utils/keys'
 import {useDefaults} from '../../composables/useDefaults'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import type {BDropdownItemEmits, BDropdownItemSlots} from '../../types'
 
 defineOptions({
   inheritAttrs: false,
@@ -61,21 +62,14 @@ const _props = withDefaults(defineProps<BDropdownItemProps>(), {
   // End link props
 })
 const props = useDefaults(_props, 'BDropdownItem')
-
-const emit = defineEmits<{
-  click: [value: MouseEvent]
-}>()
-
+const emit = defineEmits<BDropdownItemEmits>()
+defineSlots<BDropdownItemSlots>()
 const attrs = useAttrs()
+
 const processedAttrs = computed(() => {
   const {class: wrapperClass, ...dropdownItemAttrs} = attrs
   return {wrapperClass, dropdownItemAttrs}
 })
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props)
 

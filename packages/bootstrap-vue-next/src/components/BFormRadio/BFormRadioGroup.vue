@@ -27,6 +27,7 @@ import {getGroupAttr, getGroupClasses} from '../../composables/useFormCheck'
 import {useFocus} from '@vueuse/core'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
+import type {BFormRadioGroupSlots} from '../../types/ComponentSlots'
 
 const _props = withDefaults(defineProps<Omit<BFormRadioGroupProps, 'modelValue'>>(), {
   ariaInvalid: undefined,
@@ -50,15 +51,7 @@ const _props = withDefaults(defineProps<Omit<BFormRadioGroupProps, 'modelValue'>
   valueField: 'value',
 })
 const props = useDefaults(_props, 'BFormRadioGroup')
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  first?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  option: (props: (typeof normalizeOptions.value)[number]) => any
-}>()
+defineSlots<BFormRadioGroupSlots>()
 
 const modelValue = defineModel<Exclude<BFormRadioGroupProps['modelValue'], undefined>>({
   default: null,
@@ -67,7 +60,7 @@ const modelValue = defineModel<Exclude<BFormRadioGroupProps['modelValue'], undef
 const computedId = useId(() => props.id, 'radio')
 const computedName = useId(() => props.name, 'checkbox')
 
-const element = useTemplateRef<HTMLElement>('_element')
+const element = useTemplateRef('_element')
 
 const {focused} = useFocus(element, {
   initialValue: props.autofocus,

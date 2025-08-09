@@ -15,6 +15,7 @@
 </template>
 
 <script setup lang="ts">
+import type {BDropdownItemButtonEmits, BDropdownItemButtonSlots} from '../../types'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BDropdownItemButtonProps} from '../../types/ComponentProps'
@@ -33,21 +34,14 @@ const _props = withDefaults(defineProps<BDropdownItemButtonProps>(), {
   wrapperAttrs: undefined,
 })
 const props = useDefaults(_props, 'BDropdownItemButton')
-
-const emit = defineEmits<{
-  click: [value: MouseEvent]
-}>()
-
+const emit = defineEmits<BDropdownItemButtonEmits>()
+defineSlots<BDropdownItemButtonSlots>()
 const attrs = useAttrs()
+
 const processedAttrs = computed(() => {
   const {class: wrapperClass, ...buttonAttrs} = attrs
   return {wrapperClass, buttonAttrs}
 })
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
 
 const colorClasses = useColorVariantClasses(
   computed(() => ({

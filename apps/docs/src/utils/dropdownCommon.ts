@@ -1,9 +1,8 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../types'
-export {showHideProps} from './showhide-props'
-import {buildCommonProps} from './build-common-props'
-import {pick} from './object-utils'
-import {showHideProps} from './showhide-props'
+import type {BDropdownEmits, BDropdownProps} from 'bootstrap-vue-next'
+import type {EmitRecord, PropRecord, SlotRecord} from '../types'
+import {buildCommonProps} from './commonProps'
+import {pick} from './objectUtils'
+import {showHideEmits, showHideProps} from './showHideData'
 
 export const dropdownProps = {
   autoClose: {
@@ -154,88 +153,51 @@ export const dropdownProps = {
     }),
     ['ariaLabel', 'disabled', 'id', 'placement', 'role', 'size', 'variant', 'wrapperClass']
   ),
-} satisfies Record<keyof BvnComponentProps['BDropdown'], PropertyReference>
+} as const satisfies PropRecord<keyof BDropdownProps>
 
-export const dropdownEmits: ComponentReference['emits'] = [
-  {
-    event: 'hide',
-    description: 'Emitted just before dropdown is hidden. Cancelable',
-    args: [
-      {
-        arg: 'value',
-        type: 'BvTriggerableEvent',
-        description: 'Call value.preventDefault() to cancel hide',
-      },
-    ],
-  },
-  {
-    event: 'hidden',
-    description: 'Called after dropdown is hidden',
-  },
-  {
-    event: 'hide-prevented',
-    description: 'Emitted when the dropdown tried to close, but was prevented from doing so.',
-  },
-  {
-    event: 'show',
-    description: 'Emitted just before dropdown is shown. Cancelable',
-    args: [
-      {
-        arg: 'value',
-        type: 'BvTriggerableEvent',
-        description: 'Call value.preventDefault() to cancel show',
-      },
-    ],
-  },
-  {
-    event: 'shown',
-    description: 'Called after dropdown is shown',
-  },
-  {
-    event: 'show-prevented',
-    description: 'Emitted when the dropdown tried to open, but was prevented from doing so.',
-  },
-  {
-    event: 'split-click',
+export const dropdownEmits = {
+  ...showHideEmits,
+  'split-click': {
     description: 'Emitted when split button is clicked in split mode',
-    args: [
-      {
-        arg: 'event',
+    args: {
+      event: {
         type: 'MouseEvent',
         description: 'Native click event object',
       },
-    ],
+    },
   },
-  {
-    event: 'toggle',
+  'toggle': {
     description: 'Emitted when toggle button is clicked',
   },
-]
+  'cancel': {
+    args: undefined,
+    description: undefined,
+  },
+  'ok': {
+    args: undefined,
+    description: undefined,
+  },
+} as const satisfies EmitRecord<keyof BDropdownEmits>
 
-export const dropdownSlots: ComponentReference['slots'] = [
-  {
-    name: 'default',
+export const dropdownSlots = {
+  'default': {
     description: 'Optionally scoped default slot for dropdown menu content',
-    scope: [
-      {
-        prop: 'hide',
+    scope: {
+      hide: {
         type: '() => void',
         description: 'Can be used to close the dropdown',
       },
-      {
-        prop: 'show',
+      show: {
         type: '() => void',
         description: 'Can be used to open the dropdown',
       },
-    ],
+    },
   },
-  {
-    name: 'button-content',
+  'button-content': {
     description: 'Can be used to implement custom text with icons and more styling',
   },
-  {
-    name: 'toggle-text',
+  'toggle-text': {
     description:
       'ARIA label (visually-hidden) to set on the toggle when in split mode. Overrides the toggle-text prop',
   },
-]
+} as const satisfies SlotRecord

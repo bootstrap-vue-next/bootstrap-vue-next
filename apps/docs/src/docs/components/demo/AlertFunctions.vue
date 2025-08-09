@@ -16,12 +16,12 @@
 </template>
 
 <script setup lang="ts">
-import type {BAlert} from 'bootstrap-vue-next'
-import {ref} from 'vue'
+import {BAlert} from 'bootstrap-vue-next/components/BAlert'
+import {ref, useTemplateRef} from 'vue'
 
 const secondAutoDismissingAlert = ref(10000)
 const secondAutoDismissingAlertCountdown = ref(0)
-const myAlert = ref<null | InstanceType<typeof BAlert>>(null)
+const myAlert = useTemplateRef('myAlert')
 
 // Where 'myAlert' is the **ref** of the BAlert
 const pause = () => myAlert.value?.pause()

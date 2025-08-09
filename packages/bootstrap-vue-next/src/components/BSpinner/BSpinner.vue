@@ -17,6 +17,7 @@ import type {BSpinnerProps} from '../../types/ComponentProps'
 import {isEmptySlot} from '../../utils/dom'
 import {useDefaults} from '../../composables/useDefaults'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import type {BSpinnerSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BSpinnerProps>(), {
   label: undefined,
@@ -26,13 +27,8 @@ const _props = withDefaults(defineProps<BSpinnerProps>(), {
   type: 'border',
   variant: null,
 })
-
 const props = useDefaults(_props, 'BSpinner')
-
-const slots = defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  label?: (props: Record<string, never>) => any
-}>()
+const slots = defineSlots<BSpinnerSlots>()
 
 const colorClasses = useColorVariantClasses(
   computed(() => ({

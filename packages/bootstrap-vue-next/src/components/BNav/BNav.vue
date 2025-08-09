@@ -9,6 +9,7 @@ import type {BNavProps} from '../../types/ComponentProps'
 import {useAlignment} from '../../composables/useAlignment'
 import {useDefaults} from '../../composables/useDefaults'
 import {computed} from 'vue'
+import type {BNavSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BNavProps>(), {
   align: undefined,
@@ -23,11 +24,7 @@ const _props = withDefaults(defineProps<BNavProps>(), {
   vertical: false,
 })
 const props = useDefaults(_props, 'BNav')
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
+defineSlots<BNavSlots>()
 
 const alignment = useAlignment(() => props.align)
 

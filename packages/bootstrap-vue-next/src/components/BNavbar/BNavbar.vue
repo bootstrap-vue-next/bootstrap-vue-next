@@ -14,6 +14,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import {useContainerClasses} from '../../composables/useContainerClasses'
 import {navbarInjectionKey} from '../../utils/keys'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import type {BNavbarSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BNavbarProps>(), {
   container: 'fluid',
@@ -26,11 +27,7 @@ const _props = withDefaults(defineProps<BNavbarProps>(), {
   variant: null,
 })
 const props = useDefaults(_props, 'BNavbar')
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
+defineSlots<BNavbarSlots>()
 
 const computedRole = computed(() => (props.tag === 'nav' ? undefined : 'navigation'))
 

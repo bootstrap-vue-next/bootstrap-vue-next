@@ -144,9 +144,7 @@ const _props = withDefaults(defineProps<Omit<BOffcanvasProps, 'modelValue'>>(), 
   visible: false,
 })
 const props = useDefaults(_props, 'BOffcanvas')
-
 const emit = defineEmits<BOffcanvasEmits>()
-
 const slots = defineSlots<BOffcanvasSlots>()
 
 const modelValue = defineModel<Exclude<BOffcanvasProps['modelValue'], undefined>>({
@@ -155,9 +153,9 @@ const modelValue = defineModel<Exclude<BOffcanvasProps['modelValue'], undefined>
 
 const computedId = useId(() => props.id, 'offcanvas')
 
-const element = useTemplateRef<HTMLElement>('_element')
-const fallbackFocusElement = useTemplateRef<HTMLElement>('_fallbackFocusElement')
-const closeButton = useTemplateRef<HTMLElement>('_close')
+const element = useTemplateRef<HTMLElement | null>('_element')
+const fallbackFocusElement = useTemplateRef<HTMLElement | null>('_fallbackFocusElement')
+const closeButton = useTemplateRef<HTMLElement | null>('_close')
 
 const pickFocusItem = () => {
   if (props.focus && typeof props.focus !== 'boolean') {

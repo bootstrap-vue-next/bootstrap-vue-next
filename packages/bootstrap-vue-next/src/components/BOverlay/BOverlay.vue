@@ -43,6 +43,7 @@ import {useRadiusElementClasses} from '../../composables/useRadiusElementClasses
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import type {BgColorVariant} from '../../types/ColorTypes'
 import {useFadeTransition} from '../../composables/useTransitions'
+import type {BOverlayEmits, BOverlaySlots} from '../../types'
 
 const _props = withDefaults(defineProps<BOverlayProps>(), {
   blur: '2px',
@@ -70,19 +71,8 @@ const _props = withDefaults(defineProps<BOverlayProps>(), {
   // End RadiusElementExtendables props
 })
 const props = useDefaults(_props, 'BOverlay')
-
-const emit = defineEmits<{
-  click: [value: MouseEvent]
-  hidden: []
-  shown: []
-}>()
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  overlay?: (props: typeof spinnerAttrs.value) => any
-}>()
+const emit = defineEmits<BOverlayEmits>()
+defineSlots<BOverlaySlots>()
 
 const positionStyles = {top: 0, left: 0, bottom: 0, right: 0} as const
 

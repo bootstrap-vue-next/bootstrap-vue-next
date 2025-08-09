@@ -75,6 +75,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import type {Numberish} from '../../types/CommonTypes'
 import {getSlotElements} from '../../utils/getSlotElements'
 import {carouselInjectionKey} from '../../utils/keys'
+import type {BCarouselEmits, BCarouselSlots} from '../../types'
 
 const _props = withDefaults(defineProps<Omit<BCarouselProps, 'modelValue'>>(), {
   background: undefined,
@@ -99,18 +100,8 @@ const _props = withDefaults(defineProps<Omit<BCarouselProps, 'modelValue'>>(), {
   touchThreshold: 50,
 })
 const props = useDefaults(_props, 'BCarousel')
-
-const emit = defineEmits<{
-  'slide': [value: BvCarouselEvent]
-  'slid': [value: BvCarouselEvent]
-  'prev-click': [value: MouseEvent]
-  'next-click': [value: MouseEvent]
-}>()
-
-const slots = defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
+const emit = defineEmits<BCarouselEmits>()
+const slots = defineSlots<BCarouselSlots>()
 
 const computedId = useId(() => props.id, 'carousel')
 const buttonOwnership = useId(undefined, 'carousel-button-ownership')
@@ -130,8 +121,8 @@ const intervalNumber = useToNumber(() => slideInterval.value ?? props.interval)
 const isTransitioning = ref(false)
 const rideStarted = ref(false)
 const direction = ref(true)
-const relatedTarget = useTemplateRef<HTMLElement>('_relatedTarget')
-const element = useTemplateRef<HTMLElement>('_element')
+const relatedTarget = useTemplateRef('_relatedTarget')
+const element = useTemplateRef('_element')
 const previousModelValue = ref(modelValue.value)
 
 const isHovering = useElementHover(element)

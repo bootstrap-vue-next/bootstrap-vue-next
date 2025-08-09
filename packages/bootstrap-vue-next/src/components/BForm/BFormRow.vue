@@ -5,6 +5,7 @@
 </template>
 
 <script setup lang="ts">
+import type {BFormRowSlots} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BFormRowProps} from '../../types/ComponentProps'
 
@@ -12,9 +13,5 @@ const _props = withDefaults(defineProps<BFormRowProps>(), {
   tag: 'div',
 })
 const props = useDefaults(_props, 'BFormRow')
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default: (props: Record<string, never>) => any
-}>()
+defineSlots<BFormRowSlots>()
 </script>

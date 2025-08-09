@@ -101,8 +101,8 @@
 import {computed, type EmitFn, useTemplateRef, watch, watchEffect} from 'vue'
 import {useBLinkHelper} from '../../composables/useBLinkHelper'
 import type {BAlertProps} from '../../types/ComponentProps'
-import type {BToastEmits} from '../../types/ComponentEmits'
-import type {BToastSlots, ShowHideSlotsData} from '../../types/ComponentSlots'
+import type {BAlertEmits} from '../../types/ComponentEmits'
+import type {BAlertSlots, ShowHideSlotsData} from '../../types/ComponentSlots'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BLink from '../BLink/BLink.vue'
 import BProgress from '../BProgress/BProgress.vue'
@@ -167,12 +167,10 @@ const _props = withDefaults(defineProps<Omit<BAlertProps, 'modelValue'>>(), {
   variant: 'info',
 })
 const props = useDefaults(_props, 'BAlert')
+const emit = defineEmits<BAlertEmits>()
+const slots = defineSlots<BAlertSlots>()
 
-const emit = defineEmits<BToastEmits>()
-
-const slots = defineSlots<BToastSlots>()
-
-const element = useTemplateRef<HTMLElement>('_element')
+const element = useTemplateRef('_element')
 
 const modelValue = defineModel<Exclude<BAlertProps['modelValue'], undefined>>({default: false})
 const {computedLink, computedLinkProps} = useBLinkHelper(props)

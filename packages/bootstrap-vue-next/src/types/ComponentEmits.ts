@@ -1,4 +1,5 @@
-import {BvTriggerableEvent} from '../utils'
+import {BvCarouselEvent, BvEvent, BvTriggerableEvent} from '../utils'
+import type {BTableSortBy, TableField, TableRowEvent} from './TableTypes'
 
 export interface showHideEmits {
   'hide': [value: BvTriggerableEvent]
@@ -42,3 +43,111 @@ export interface BToastEmits extends showHideEmits {
   'close': [value: BvTriggerableEvent]
   'close-countdown': [value: number]
 }
+
+export interface BTableEmits<Items> extends BTableLiteEmits<Items> {
+  'filtered': [value: Items[]]
+  'row-selected': [value: Items]
+  'row-unselected': [value: Items]
+  'sorted': [value: BTableSortBy<Items>]
+  'change': [value: Items[]]
+}
+
+export interface BTableLiteEmits<Items> {
+  'head-clicked': [key: string, field: TableField<Items>, event: MouseEvent, isFooter: boolean]
+  'row-clicked': TableRowEvent<Items>
+  'row-dblclicked': TableRowEvent<Items>
+  'row-contextmenu': TableRowEvent<Items>
+  'row-hovered': TableRowEvent<Items>
+  'row-unhovered': TableRowEvent<Items>
+  'row-middle-clicked': TableRowEvent<Items>
+}
+
+export type BAlertEmits = BToastEmits
+
+export type BAccordionItemEmits = BCollapseEmits
+
+export type BAvatarEmits = {
+  'click': [value: MouseEvent]
+  'img-error': [value: Event]
+}
+
+export type BBreadcrumbItemEmits = {
+  click: [value: MouseEvent]
+}
+
+export type BButtonEmits = {
+  click: [value: MouseEvent]
+}
+
+export type BCloseButtonEmits = {
+  click: [value: MouseEvent]
+}
+
+export type BCarouselEmits = {
+  'slide': [value: BvCarouselEvent]
+  'slid': [value: BvCarouselEvent]
+  'prev-click': [value: MouseEvent]
+  'next-click': [value: MouseEvent]
+}
+
+export type BDropdownItemEmits = {
+  click: [value: MouseEvent]
+}
+
+export type BDropdownItemButtonEmits = {
+  click: [value: MouseEvent]
+}
+
+export type BFormSpinbuttonEmits = {
+  change: [value: number | null]
+}
+
+export type BFormTagEmits = {
+  remove: [value: string]
+}
+
+export type BFormTagsEmits = {
+  'blur': [value: FocusEvent]
+  'focus': [value: FocusEvent]
+  'focusin': [value: FocusEvent]
+  'focusout': [value: FocusEvent]
+  'tag-state': [...args: string[][]]
+}
+
+export type BLinkEmits = {
+  click: [value: MouseEvent]
+}
+
+export type BNavFormEmits = {
+  submit: [value: Event]
+}
+
+export type BNavItemEmits = {
+  click: [value: MouseEvent]
+}
+
+export type BNavbarToggleEmits = {
+  click: [value: MouseEvent]
+}
+
+export type BOverlayEmits = {
+  click: [value: MouseEvent]
+  hidden: []
+  shown: []
+}
+
+export type BPaginationEmits = {
+  'page-click': [event: BvEvent, pageNumber: number]
+}
+
+export type BTabsEmits = {
+  'activate-tab': [
+    newTabId: string,
+    preTabId: string,
+    newTabIndex: number,
+    prevTabIndex: number,
+    event: BvEvent,
+  ]
+}
+
+export type BTooltipEmits = BPopoverEmits
