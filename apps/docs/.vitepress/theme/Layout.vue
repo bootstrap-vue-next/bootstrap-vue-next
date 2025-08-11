@@ -830,19 +830,16 @@ watch(
 }
 
 .vp-code-group {
-  border: 1px solid lightgray;
-  border-radius: 4px;
-  margin-bottom: 8px;
+  border: 1px solid var(--bs-border-color);
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
 }
-
-.vp-code-group .blocks {
-  padding: 0px 24px 16px 24px;
-  background-color: white;
-}
-
+.vp-code-group .blocks,
 .vp-code-group .tabs {
-  margin-top: 6px !important;
-  margin-bottom: 12px !important;
-  background-color: white;
+  padding: 0 1.5rem 1rem;
+  background-color: var(--bs-body-bg);
+}
+.vp-code-group .tabs {
+  margin: 0.375rem 0 0.75rem !important;
 }
 </style>
