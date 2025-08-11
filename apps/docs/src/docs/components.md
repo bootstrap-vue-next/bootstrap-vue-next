@@ -17,6 +17,10 @@ const routeLocation = (name: string): string => withBase(`/docs/components/${nam
 
 const componentList: {name: string; description: string}[] = [
   {
+    name: 'App',
+    description: 'The root component for your bootstrap-vue-next application',
+  },
+  {
     name: 'Accordion',
     description:
       'Easily toggle content visibility on your pages. Includes support for making accordions',

@@ -112,7 +112,7 @@ import {useId} from '../../composables/useId'
 import {createReusableTemplate} from '@vueuse/core'
 import type {BFormGroupProps} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
-import {formGroupPluginKey} from '../../utils/keys'
+import {formGroupKey} from '../../utils/keys'
 
 const INPUTS = ['input', 'select', 'textarea']
 
@@ -174,7 +174,7 @@ const ContentTemplate = createReusableTemplate()
 
 const computedState = toRef(() => props.state)
 const childId = ref<Ref<string>[]>([])
-provide(formGroupPluginKey, (id) => {
+provide(formGroupKey, (id) => {
   childId.value = [id]
 
   return {

@@ -1,38 +1,42 @@
-<ComposableHeader path="usePopoverController/index.ts" title="usePopoverController" />
+<ComposableHeader path="usePopover/index.ts" title="usePopover" />
 
 <div class="lead mb-5">
 
-`usePopoverController` can create and control popovers and tooltips dynamically.
+The `usePopover` composable allows you to create and control popovers and tooltips dynamically from anywhere in your application. It provides methods to create, show, hide, and manage both popovers and tooltips programmatically.
 
 </div>
 
-<UsePluginAlert />
+## Setup
 
-## BPopoverOrchestrator
+To use `usePopover`, you need one of the following setup approaches:
 
-You must initialize the `BPopoverOrchestrator` component once and only once (multiple instances may display duplicate popovers). This is typically best placed at the App root.
+### BApp Component (Recommended)
+
+The easiest way is to wrap your application with the `BApp` component, which automatically sets up the orchestrator and registry:
 
 <HighlightCard>
 <template #html>
 
-```vue-html
-<BPopoverOrchestrator />
+```vue
+<template>
+  <BApp>
+    <router-view />
+  </BApp>
+</template>
 ```
 
 </template>
 </HighlightCard>
 
-The only props it access are `teleportDisabled` and `teleportTo` to modify the location that it is placed
+### Plugin Setup (Legacy)
 
-Additionally, it exposes several methods on the `template ref` that correspond to those in the `usePopoverController` composable:
+Alternatively, you can use the traditional plugin approach.
 
-- `popover`
-- `tooltip`
-- `popovers`
+<UsePluginAlert />
 
 ## Creating Popovers
 
-Popovers and tooltips can be created using the `popover` or `tooltip` methods.
+Popovers and tooltips can be created using the `popover` or `tooltip` methods:
 
 <HighlightCard>
   <BButton ref="popoverButton">Hover me</BButton>
@@ -45,7 +49,7 @@ Popovers and tooltips can be created using the `popover` or `tooltip` methods.
 </template>
 
 <script setup lang="ts">
-const {popover} = usePopoverController()
+const {popover} = usePopover()
 const popoverButton = useTemplateRef('popoverButton')
 
 const pop = popover({title: 'Hello World!', body: 'This is a popover.', target: popoverButton})
@@ -70,7 +74,7 @@ The methods accepts reactive properties using `MaybeRef`, allowing dynamic updat
 </template>
 
 <script setup lang="ts">
-const {tooltip} = usePopoverController()
+const {tooltip} = usePopover()
 
 const title = ref('Hello')
 onMounted(() => {
@@ -102,7 +106,7 @@ For more control, you can use the `component` property to render a custom compon
 </template>
 
 <script setup lang="ts">
-const {popover} = usePopoverController()
+const {popover} = usePopover()
 
 pop({
   slots: {
@@ -144,13 +148,13 @@ await using popover = popover({title: 'Hello World!'})
 ```
 
 <script setup lang="ts">
-import { BButton, BPopover, usePopoverController, BButtonGroup } from 'bootstrap-vue-next'
+import { BButton, BPopover, usePopover, BButtonGroup } from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
 import UsePluginAlert from '../../components/UsePluginAlert.vue'
 import { ref, h, onMounted } from 'vue'
 import ComposableHeader from './ComposableHeader.vue'
 
-const { popover, tooltip } = usePopoverController()
+const { popover, tooltip } = usePopover()
 
 
 const title = ref('Hello')

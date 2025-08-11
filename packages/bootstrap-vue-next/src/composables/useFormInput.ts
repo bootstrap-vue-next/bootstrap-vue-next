@@ -13,7 +13,7 @@ import {useAriaInvalid} from './useAriaInvalid'
 import {useId} from './useId'
 import {useFocus, useToNumber} from '@vueuse/core'
 import type {CommonInputProps} from '../types/FormCommonInputProps'
-import {formGroupPluginKey} from '../utils/keys'
+import {formGroupKey} from '../utils/keys'
 import {useDebounceFn} from '../utils/debounce'
 import {useStateClass} from './useStateClass'
 
@@ -32,7 +32,7 @@ export const useFormInput = (
   const debounceMaxWaitNumber = useToNumber(() => props.debounceMaxWait ?? NaN)
 
   // This automatically adds the appropriate "for" attribute to a BFormGroup label
-  const formGroupData = inject(formGroupPluginKey, null)?.(computedId)
+  const formGroupData = inject(formGroupKey, null)?.(computedId)
   const computedState = computed(() =>
     props.state !== undefined ? props.state : (formGroupData?.state.value ?? null)
   )
