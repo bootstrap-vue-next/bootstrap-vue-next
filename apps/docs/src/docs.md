@@ -86,6 +86,8 @@ Bootstrap-vue-next offers two ways to configure your application. The new **BApp
 
 The modern way to setup bootstrap-vue-next using the `BApp` component:
 
+See the [BApp component documentation](/docs/components/bapp) for complete configuration options.
+
 <HighlightCard>
 
 ```vue
@@ -154,18 +156,6 @@ import {BOrchestrator} from 'bootstrap-vue-next'
 ```
 
 </HighlightCard>
-
-### Why BApp is Recommended
-
-The `BApp` component offers several advantages:
-
-- **Better Type Safety**: Full TypeScript support with proper type inference
-- **Easier Configuration**: Set defaults and options through component props
-- **Automatic Orchestrators**: Built-in support for modals, toasts, and popovers
-- **Modern Vue 3 Patterns**: Uses composition API and provide/inject
-- **Better Tree Shaking**: Only includes what you actually use
-
-See the [BApp component documentation](/docs/components/bapp) for complete configuration options and the [migration guide](/docs/migration-guide#bapp-vs-plugin-setup-recommended) for migration instructions.
 
 Now, you can begin importing and using components
 
