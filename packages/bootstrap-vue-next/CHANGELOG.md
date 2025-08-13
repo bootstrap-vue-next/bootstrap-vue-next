@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.30.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.30.4...bootstrapvuenext-v0.30.5) (2025-08-13)
+
+
+### Features
+
+* **BPopover:** add explicit props for focus and hover triggers ([#2795](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2795)) ([c50e0ef](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c50e0efe54bd8ca2aa636e7f63177547a40429c5))
+
+
+### Bug Fixes
+
+* **BNavbar:** changed autoClose to noAutoClose and fix the documention mistake about it. ([b2d0c22](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b2d0c22e8f42eca6d9c2337226477643da0e00fe))
+* ssr in scrollspy ([975ee0a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/975ee0a67f9ea14cd8d6c603ba44dd006bcf5f42))
+
 ## [0.30.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.30.3...bootstrapvuenext-v0.30.4) (2025-07-07)
 
 
