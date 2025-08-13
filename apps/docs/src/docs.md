@@ -54,7 +54,7 @@ npm i bootstrap bootstrap-vue-next
 ```typescript
 // main.js/ts
 import {createApp} from 'vue'
-import {createBootstrap} from 'bootstrap-vue-next'
+import {createBootstrap} from 'bootstrap-vue-next/plugins/createBootstrap'
 
 // Add the necessary CSS
 import 'bootstrap/dist/css/bootstrap.css'
@@ -102,7 +102,7 @@ The following is an example of a basic `vite.config.js/ts`. All you need to do i
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
-import {BootstrapVueNextResolver} from 'bootstrap-vue-next'
+import {BootstrapVueNextResolver} from 'bootstrap-vue-next/resolvers'
 
 export default defineConfig({
   plugins: [
@@ -126,7 +126,7 @@ With the `BootstrapVueNextResolver` we also have an option for aliasing componen
 
 ```ts
 import {Components} from 'unplugin-vue-components'
-import {BootstrapVueNextResolver} from 'bootstrap-vue-next'
+import {BootstrapVueNextResolver} from 'bootstrap-vue-next/resolvers'
 
 Components({
   resolvers: [

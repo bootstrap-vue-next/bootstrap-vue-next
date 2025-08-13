@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import {ref} from 'vue'
-import {type BTableSortBy, type TableFieldRaw, type TableItem} from 'bootstrap-vue-next'
+import type {BTableSortBy, TableFieldRaw, TableItem} from 'bootstrap-vue-next'
 
 interface SortPerson {
   first_name: string

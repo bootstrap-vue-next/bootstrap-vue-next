@@ -40,15 +40,10 @@ import {isEmptySlot} from '../../utils/dom'
 import {useDefaults} from '../../composables/useDefaults'
 import type {CheckboxValue} from '../../types/CheckboxTypes'
 import {useId} from '../../composables/useId'
+import type {BFormCheckboxSlots} from '../../types'
 
 defineOptions({
   inheritAttrs: false,
-})
-
-const attrs = useAttrs()
-const processedAttrs = computed(() => {
-  const {class: wrapperClass, ...inputAttrs} = attrs
-  return {wrapperClass, inputAttrs}
 })
 
 const _props = withDefaults(
@@ -78,11 +73,8 @@ const _props = withDefaults(
   }
 )
 const props = useDefaults(_props, 'BFormCheckbox')
-
-const slots = defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
+const slots = defineSlots<BFormCheckboxSlots>()
+const attrs = useAttrs()
 
 const modelValue = defineModel<BFormCheckboxProps['modelValue']>({
   default: undefined,
@@ -94,11 +86,16 @@ const indeterminate = defineModel<Exclude<BFormCheckboxProps['indeterminate'], u
   }
 )
 
+const processedAttrs = computed(() => {
+  const {class: wrapperClass, ...inputAttrs} = attrs
+  return {wrapperClass, inputAttrs}
+})
+
 const computedId = useId(() => props.id, 'form-check')
 
 const parentData = inject(checkboxGroupKey, null)
 
-const input = useTemplateRef<HTMLElement>('_input')
+const input = useTemplateRef('_input')
 
 const {focused} = useFocus(input, {
   initialValue: props.autofocus,

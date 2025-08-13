@@ -21,6 +21,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import BLink from '../BLink/BLink.vue'
 import {listGroupInjectionKey} from '../../utils/keys'
 import {useBLinkHelper} from '../../composables/useBLinkHelper'
+import type {BListGroupItemSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BListGroupItemProps>(), {
   action: false,
@@ -51,12 +52,7 @@ const _props = withDefaults(defineProps<BListGroupItemProps>(), {
   // End link props
 })
 const props = useDefaults(_props, 'BListGroupItem')
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
-
+defineSlots<BListGroupItemSlots>()
 const attrs = useAttrs()
 
 const parentData = inject(listGroupInjectionKey, null)

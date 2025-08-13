@@ -75,10 +75,11 @@
 </template>
 
 <script setup lang="ts">
-import {computed, defineSlots, ref} from 'vue'
+import {computed, ref} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BFormRatingProps} from '../../types/ComponentProps'
 import {useId} from '../../composables/useId'
+import type {BFormRatingSlots} from '../../types'
 
 const _props = withDefaults(defineProps<Omit<BFormRatingProps, 'modelValue'>>(), {
   color: '',
@@ -95,6 +96,9 @@ const _props = withDefaults(defineProps<Omit<BFormRatingProps, 'modelValue'>>(),
   variant: undefined,
 })
 const props = useDefaults(_props, 'BFormRating')
+defineSlots<BFormRatingSlots>()
+
+const modelValue = defineModel<Exclude<BFormRatingProps['modelValue'], undefined>>({default: 0})
 
 const computedId = useId(() => props.id, 'form-rating')
 
@@ -105,17 +109,6 @@ const computedClasses = computed(() => ({
   'd-inline-block': props.inline,
   'w-100': !props.inline,
 }))
-
-defineSlots<{
-  default?: (props: {
-    starIndex: number
-    isFilled: boolean
-    isHalf: boolean
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-}>()
-
-const modelValue = defineModel<Exclude<BFormRatingProps['modelValue'], undefined>>({default: 0})
 
 function isIconFull(index: number): boolean {
   return displayValue.value - index >= 1

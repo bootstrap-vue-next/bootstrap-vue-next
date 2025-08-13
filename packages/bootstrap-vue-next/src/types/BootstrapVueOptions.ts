@@ -285,14 +285,14 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
   BPopover: ComponentProps.BPopoverProps
   BTooltip: ComponentProps.BTooltipProps
   BModal: ComponentProps.BModalProps
-  BCardFooter: ComponentProps.BCardHeadFootProps
-  BCardHeader: ComponentProps.BCardHeadFootProps
+  BCardFooter: ComponentProps.BCardFooterProps
+  BCardHeader: ComponentProps.BCardHeaderProps
   BCardImg: ComponentProps.BCardImgProps
   BCol: ComponentProps.BColProps
   BDropdownForm: never
   BDropdownHeader: never
-  BFormInvalidFeedback: ComponentProps.BFormFeedbackSharedProps
-  BFormValidFeedback: ComponentProps.BFormFeedbackSharedProps
+  BFormInvalidFeedback: ComponentProps.BFormInvalidFeedbackProps
+  BFormValidFeedback: ComponentProps.BFormValidFeedbackProps
   BFormGroup: ComponentProps.BFormGroupProps
   BNavItemDropdown: ComponentProps.BDropdownProps
   BRow: ComponentProps.BRowProps

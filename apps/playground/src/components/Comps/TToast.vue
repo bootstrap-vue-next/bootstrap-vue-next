@@ -18,12 +18,8 @@
 // You can use this file as a development spot to test your changes
 // Please do not commit this file
 import {computed, h, onMounted, ref} from 'vue'
-import {
-  // BToast,
-  type ColorVariant,
-  // type OrchestratedToast,
-  useToastController,
-} from 'bootstrap-vue-next'
+import type {ColorVariant} from 'bootstrap-vue-next'
+import {useToastController} from 'bootstrap-vue-next/composables/useToastController'
 
 const {show, toasts} = useToastController()
 

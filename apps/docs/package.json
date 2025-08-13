@@ -23,7 +23,7 @@
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.6.0",
     "@vue/tsconfig": "^0.7.0",
-    "@vueuse/core": "^13.5.0",
+    "@vueuse/core": "^13.6.0",
     "bootstrap": "^5.3.7",
     "bootstrap-vue-next": "workspace:^",
     "cross-env": "^7.0.3",

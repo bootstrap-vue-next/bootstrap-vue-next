@@ -1,7 +1,7 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {PropertyReference} from '../types'
-import {buildCommonProps} from './build-common-props'
-import {pick} from './object-utils'
+import type {BImgProps} from 'bootstrap-vue-next'
+import type {PropRecord} from '../types'
+import {buildCommonProps} from './commonProps'
+import {pick} from './objectUtils'
 
 export const linkTo = '/docs/components/image'
 
@@ -81,4 +81,4 @@ export const imageProps = {
     }),
     ['alt', 'rounded', 'roundedBottom', 'roundedEnd', 'roundedStart', 'roundedTop', 'src', 'tag']
   ),
-} as const satisfies Record<keyof BvnComponentProps['BImg'], PropertyReference>
+} as const satisfies PropRecord<keyof BImgProps>
