@@ -144,7 +144,7 @@ await using popover = popover({title: 'Hello World!'})
 ```
 
 <script setup lang="ts">
-import { BButton, BPopover, usePopoverController, BButtonGroup } from 'bootstrap-vue-next'
+import {usePopoverController} from 'bootstrap-vue-next/composables/usePopoverController'
 import HighlightCard from '../../components/HighlightCard.vue'
 import UsePluginAlert from '../../components/UsePluginAlert.vue'
 import { ref, h, onMounted } from 'vue'

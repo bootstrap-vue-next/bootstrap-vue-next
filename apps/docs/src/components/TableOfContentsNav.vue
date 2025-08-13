@@ -35,8 +35,6 @@
 
 <script setup lang="ts">
 import {computed, onMounted, ref, watch} from 'vue'
-import {BLink} from 'bootstrap-vue-next/components/BLink'
-import {BListGroup, BListGroupItem} from 'bootstrap-vue-next/components/BListGroup'
 import {useRoute, withBase} from 'vitepress'
 import {breakpointsBootstrapV5, useBreakpoints} from '@vueuse/core'
 import IntersectIcon from '~icons/bi/intersect'

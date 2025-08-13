@@ -180,7 +180,5 @@ In that case, the directive is detecting the title value, and it is going to be 
 We should use the value type when the component is not setting to the root component a title. Notice that we should use ts/js code, a variable and so on.
 
 <script setup lang="ts">
-import {BCard, BCardBody} from 'bootstrap-vue-next'
-
 import DirectiveHeader from './DirectiveHeader.vue'
 </script>

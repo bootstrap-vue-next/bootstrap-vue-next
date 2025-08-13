@@ -21,8 +21,3 @@
     the user supplied string.
   </BAlert>
 </template>
-
-<script setup lang="ts">
-import {BAlert} from 'bootstrap-vue-next/components/BAlert'
-import {BLink} from 'bootstrap-vue-next/components/BLink'
-</script>

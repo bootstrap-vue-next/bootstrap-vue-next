@@ -98,7 +98,7 @@ async function testToggle() {
 </HighlightCard>
 
 <script setup lang="ts">
-import {BButton, BModal, useToggle} from 'bootstrap-vue-next'
+import {useToggle} from 'bootstrap-vue-next/composables/useToggle'
 import HighlightCard from '../../components/HighlightCard.vue'
 
 import {ref, onMounted} from 'vue'

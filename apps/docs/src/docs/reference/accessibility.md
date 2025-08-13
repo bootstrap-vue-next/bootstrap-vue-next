@@ -86,8 +86,3 @@ Steps you should do for testing:
 - [Microsoft Accessibility Insights](https://accessibilityinsights.io)
 - [Deque Axe testing tools](https://www.deque.com/axe/)
 - [Introduction to Web Accessibility](https://www.w3.org/WAI/fundamentals/accessibility-intro/)
-
-<script setup lang="ts">
-import {BCard} from 'bootstrap-vue-next'
-
-</script>

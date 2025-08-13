@@ -54,15 +54,6 @@ Easily integrate BootstrapVueNext into your Nuxt.js projects using our included 
 <OpenCollectiveMemberDisplay />
 
 <script setup lang="ts">
-import {
-  BButton,
-  BCol,
-  BCard,
-  BCardText,
-  BLink,
-  BBadge,
-  BRow,
-} from 'bootstrap-vue-next'
 import {inject} from 'vue'
 import {withBase} from 'vitepress'
 import BootstrapIcon from '~icons/logos/bootstrap'

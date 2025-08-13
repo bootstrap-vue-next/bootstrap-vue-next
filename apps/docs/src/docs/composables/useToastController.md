@@ -115,8 +115,6 @@ Using props can work for most situations, but it leaves some finer control to be
 </template>
 
 <script setup lang="ts">
-import {BToast} from 'bootstrap-vue-next'
-
 const {create} = useToastController()
 
 const firstRef = ref<OrchestratedToast>({
@@ -249,7 +247,7 @@ const promiseToast = () => {
 
 <script setup lang="ts">
 import {data} from '../../data/components/toast.data'
-import {BButton, useToastController, BButtonGroup, BToast} from 'bootstrap-vue-next'
+import {useToastController} from 'bootstrap-vue-next/composables/useToastController'
 import HighlightCard from '../../components/HighlightCard.vue'
 
 import UsePluginAlert from '../../components/UsePluginAlert.vue'
@@ -300,7 +298,6 @@ const showMeAdvancedExample = () => {
   })
 }
 
-
 const promiseToast = () => {
   create(
     {
@@ -310,10 +307,10 @@ const promiseToast = () => {
       modelValue: true,
       slots: {
         default: ({hide}) =>
-          [ 
-            h('h2', {class: 'text-center mb-3'}, 'Ready?'), 
+          [
+            h('h2', {class: 'text-center mb-3'}, 'Ready?'),
             h('div', {class: 'd-flex justify-content-center gap-2'}, [
-              h(BButton, {onClick: () => hide('ok'), size: 'lg'}, () => 'Yes'), 
+              h(BButton, {onClick: () => hide('ok'), size: 'lg'}, () => 'Yes'),
               h(BButton, {onClick: () => hide('cancel'), size: 'lg'}, () => 'No')
             ])
           ],

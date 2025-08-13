@@ -249,11 +249,6 @@
 
 <script setup lang="ts">
 import {computed, inject} from 'vue'
-import {BCol, BContainer, BRow} from 'bootstrap-vue-next/components/BContainer'
-import {BAccordion, BAccordionItem} from 'bootstrap-vue-next/components/BAccordion'
-import {BLink} from 'bootstrap-vue-next/components/BLink'
-import {BTable} from 'bootstrap-vue-next/components/BTable'
-import {BTooltip} from 'bootstrap-vue-next/components/BTooltip'
 import type {TableFieldRaw} from 'bootstrap-vue-next'
 import {
   type ComponentItem,
@@ -286,7 +281,7 @@ const sortData = computed(() =>
       const mapProps = () => {
         const isMultiplePropRecord = (
           val: PropRecordWithOptions | PropRecord | PropRecordWithMultipleSections
-        ): val is PropRecordWithMultipleSections => '_data' in val // This is wrong
+        ): val is PropRecordWithMultipleSections => defaultPropSectionSymbol in val
         const isPropRecordWithOptions = (
           val: PropRecord | PropRecordWithOptions
         ): val is PropRecordWithOptions => '_data' in val
@@ -328,6 +323,7 @@ const sortData = computed(() =>
               }
             >
           )
+        console.log(isMultiplePropRecord(localProps))
 
         return simplifyMultiple(
           isMultiplePropRecord(localProps) ? localProps : convertPropRecordToMultiple(localProps)

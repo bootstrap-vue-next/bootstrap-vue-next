@@ -231,7 +231,6 @@ import IBiActivity from '~icons/bi/activity'
 </BCard>
 
 <script setup lang="ts">
-import {BCard, BCardBody, BTab, BTabs, BAlert} from 'bootstrap-vue-next'
 import {useLocalStorage} from '@vueuse/core'
 
 const codePreference = useLocalStorage('code-group-preference', 0)
