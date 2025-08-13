@@ -197,7 +197,7 @@ const getBaseButtonProps = ({
     page,
     disabled,
     index: page - 1,
-    content: textValue ? undefined : page.toString(),
+    content: textValue ? undefined : String(page),
   },
   clickHandler: (e: Readonly<MouseEvent>) => pageClick(e, page),
 })
