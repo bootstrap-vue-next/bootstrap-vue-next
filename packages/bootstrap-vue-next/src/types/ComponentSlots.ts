@@ -184,7 +184,7 @@ export type BCarouselSlideSlots = {
 }
 
 export type BDropdownSlots = {
-  'button-content'?: (pSrops: Record<string, never>) => any
+  'button-content'?: (props: Record<string, never>) => any
 
   'default'?: (props: BDropdownSlotsData) => any
 
