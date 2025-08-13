@@ -276,7 +276,8 @@ const {hide, hideAll} = useModalController()
 </HighlightCard>
 
 <script setup lang="ts">
-import {BButton, BModal, useModalController, BButtonGroup, useModal} from 'bootstrap-vue-next'
+import {useModal} from 'bootstrap-vue-next/composables/useModal'
+import {useModalController} from 'bootstrap-vue-next/composables/useModalController'
 import HighlightCard from '../../components/HighlightCard.vue'
 
 import UsePluginAlert from '../../components/UsePluginAlert.vue'

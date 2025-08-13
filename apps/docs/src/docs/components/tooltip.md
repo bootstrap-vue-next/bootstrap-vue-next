@@ -76,7 +76,6 @@ Make sure to check the Popover documentation for more details on customization o
 see [Popover](/docs/components/popover)
 
 <script setup lang="ts">
-import {BButton, BTooltip} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {ref, onMounted} from 'vue'
 

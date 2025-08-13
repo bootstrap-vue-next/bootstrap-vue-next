@@ -10,8 +10,11 @@
 </template>
 
 <script setup lang="ts">
+import {buildCommonProps} from '../utils/commonProps'
+import {dropdownProps} from '../utils/dropdownCommon'
+import {kebabCase, pick} from '../utils/objectUtils'
+import {showHideProps} from '../utils/showHideData'
 import {computed} from 'vue'
-import {buildCommonProps, dropdownProps, kebabCase, pick, showHideProps} from '../utils'
 
 interface MigrationMap {
   [key: string]: {oldProp: string; components: string[]}

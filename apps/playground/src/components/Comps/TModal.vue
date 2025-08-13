@@ -64,12 +64,9 @@
 
 <script setup lang="ts">
 import {computed, h, onMounted, ref, toValue} from 'vue'
-import {
-  BModal,
-  type ColorVariant,
-  type OrchestratedModal,
-  useModalController,
-} from 'bootstrap-vue-next'
+import type {ColorVariant, OrchestratedModal} from 'bootstrap-vue-next'
+import {BModal} from 'bootstrap-vue-next/components/BModal'
+import {useModalController} from 'bootstrap-vue-next/composables/useModalController'
 
 const showModal = ref(false)
 const showModal2 = ref(false)

@@ -240,7 +240,7 @@ If you just need a single simple message to appear along the bottom or top of th
 <script setup lang="ts">
 import {data} from '../../data/components/toast.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import {BButtonGroup, BButton, BToast, useToastController} from 'bootstrap-vue-next'
+import {useToastController} from 'bootstrap-vue-next/composables/useToastController'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {ref, h, onMounted} from 'vue'
 

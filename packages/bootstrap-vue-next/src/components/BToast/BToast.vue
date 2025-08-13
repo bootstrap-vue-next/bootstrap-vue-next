@@ -173,12 +173,10 @@ const _props = withDefaults(defineProps<Omit<BToastProps, 'modelValue'>>(), {
   // End link props
 })
 const props = useDefaults(_props, 'BToast')
-
 const emit = defineEmits<BToastEmits>()
-
 const slots = defineSlots<BToastSlots>()
 
-const element = useTemplateRef<HTMLElement>('_element')
+const element = useTemplateRef('_element')
 
 const modelValue = defineModel<Exclude<BToastProps['modelValue'], undefined>>({default: false})
 const {computedLink, computedLinkProps} = useBLinkHelper(props)

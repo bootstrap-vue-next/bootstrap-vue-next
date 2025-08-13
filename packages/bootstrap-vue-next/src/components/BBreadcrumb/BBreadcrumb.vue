@@ -18,18 +18,11 @@ import {useDefaults} from '../../composables/useDefaults'
 import type {BBreadcrumbProps} from '../../types/ComponentProps'
 import BBreadcrumbItem from './BBreadcrumbItem.vue'
 import type {BreadcrumbItem} from '../../types/BreadcrumbTypes'
+import type {BBreadcrumbSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BBreadcrumbProps>(), {items: undefined, id: undefined})
 const props = useDefaults(_props, 'BBreadcrumb')
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  append?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  prepend?: (props: Record<string, never>) => any
-}>()
+defineSlots<BBreadcrumbSlots>()
 
 const breadcrumb = useBreadcrumb(() => props.id || null)
 

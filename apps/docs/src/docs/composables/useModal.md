@@ -60,7 +60,7 @@ const {show, hide, modal} = useModal('my-modal')
 </HighlightCard>
 
 <script setup lang="ts">
-import {BButton, BModal, useModal} from 'bootstrap-vue-next'
+import {useModal} from 'bootstrap-vue-next/composables/useModal'
 import HighlightCard from '../../components/HighlightCard.vue'
 
 import {ref, onMounted} from 'vue'

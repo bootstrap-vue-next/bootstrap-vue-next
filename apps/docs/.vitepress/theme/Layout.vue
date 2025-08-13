@@ -150,28 +150,10 @@
 </template>
 
 <script setup lang="ts">
-import {
-  BCol,
-  BCollapse,
-  BContainer,
-  BDropdownItem,
-  BModalOrchestrator,
-  BNav,
-  BNavbar,
-  BNavbarBrand,
-  BNavbarNav,
-  BNavbarToggle,
-  BNavItem,
-  BNavItemDropdown,
-  BOffcanvas,
-  BPopoverOrchestrator,
-  BRow,
-  BToastOrchestrator,
-  useColorMode,
-  useScrollspy,
-  vBColorMode,
-  vBToggle,
-} from 'bootstrap-vue-next'
+import {useColorMode} from 'bootstrap-vue-next/composables/useColorMode'
+import {useScrollspy} from 'bootstrap-vue-next/composables/useScrollspy'
+import {vBColorMode} from 'bootstrap-vue-next/directives/BColorMode'
+import {vBToggle} from 'bootstrap-vue-next/directives/BToggle'
 import {
   type ComponentPublicInstance,
   computed,

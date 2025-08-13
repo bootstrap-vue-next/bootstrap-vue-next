@@ -13,6 +13,7 @@
 </template>
 
 <script setup lang="ts">
+import type {BTdSlots} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BTdProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
@@ -25,11 +26,7 @@ const _props = withDefaults(defineProps<BTdProps>(), {
   variant: null,
 })
 const props = useDefaults(_props, 'BTd')
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
+defineSlots<BTdSlots>()
 
 const computedClasses = computed(() => ({
   [`table-${props.variant}`]: props.variant !== null,
