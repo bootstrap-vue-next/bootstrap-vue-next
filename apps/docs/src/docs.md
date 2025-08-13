@@ -2,7 +2,7 @@
 
 <div class="lead">
 
-Get started with BootstrapVueNext and Bootstrap `v5`, the world’s most popular framework for building responsive, mobile-first sites.
+Get started with BootstrapVueNext and Bootstrap `v5`, the world's most popular framework for building responsive, mobile-first sites.
 
 </div>
 
@@ -29,56 +29,27 @@ Read our [Contribution Guide](https://github.com/bootstrap-vue-next/bootstrap-vu
 
 - First install the package
 
-<ClientOnly>
-<BTabs v-model="codePreference">
-  <BTab title="PNPM">
+::: code-group
 
-  <HighlightCard>
-
-```bash
+```bash [PNPM]
 pnpm add bootstrap bootstrap-vue-next
 ```
 
-  </HighlightCard>
-
-  </BTab>
-  <BTab title="BUN">
-
-  <HighlightCard>
-
-```bash
+```bash [BUN]
 bun add bootstrap bootstrap-vue-next
 ```
 
-  </HighlightCard>
-
-  </BTab>
-  <BTab title="YARN">
-
-  <HighlightCard>
-
-```bash
+```bash [YARN]
 yarn add bootstrap bootstrap-vue-next
 ```
 
-  </HighlightCard>
-
-  </BTab>
-  <BTab title="NPM">
-
-  <HighlightCard>
-
-```bash
+```bash [NPM]
 npm i bootstrap bootstrap-vue-next
 ```
 
-  </HighlightCard>
+:::
 
-  </BTab>
-</BTabs>
-</ClientOnly>
-
-<HighlightCard>
+<HighlightCard class="mt-3">
 
 ```typescript
 // main.js/ts
@@ -102,54 +73,25 @@ Now, you can begin importing and using components
 
 To have components automatically registered **and** tree-shaken, we recommend [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components). Read their docs for additional details. This is in addition to the above installation steps. We supply a resolver
 
-<ClientOnly>
-<BTabs v-model="codePreference">
-  <BTab title="PNPM">
+::: code-group
 
-  <HighlightCard>
-
-```bash
+```bash [PNPM]
 pnpm add unplugin-vue-components -D
 ```
 
-  </HighlightCard>
-
-  </BTab>
-  <BTab title="BUN">
-
-  <HighlightCard>
-
-```bash
+```bash [BUN]
 bun add unplugin-vue-components -D
 ```
 
-  </HighlightCard>
-
-  </BTab>
-  <BTab title="YARN">
-
-  <HighlightCard>
-
-```bash
+```bash [YARN]
 yarn add unplugin-vue-components -D
 ```
 
-  </HighlightCard>
-
-  </BTab>
-  <BTab title="NPM">
-
-  <HighlightCard>
-
-```bash
+```bash [NPM]
 npm i unplugin-vue-components -D
 ```
 
-  </HighlightCard>
-
-  </BTab>
-</BTabs>
-</ClientOnly>
+:::
 
 The following is an example of a basic `vite.config.js/ts`. All you need to do is add **Components** to the Vite **plugins** option, with the additional imports:
 
@@ -201,54 +143,25 @@ Components({
 
 In your Nuxt3 application, install the necessary packages for `bootstrap-vue-next`.
 
-<ClientOnly>
-<BTabs v-model="codePreference">
-  <BTab title="PNPM">
+::: code-group
 
-  <HighlightCard>
-
-```bash
+```bash [PNPM]
 pnpm add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
 ```
 
-  </HighlightCard>
-
-  </BTab>
-  <BTab title="BUN">
-
-  <HighlightCard>
-
-```bash
+```bash [BUN]
 bun add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
 ```
 
-  </HighlightCard>
-
-  </BTab>
-  <BTab title="YARN">
-
-  <HighlightCard>
-
-```bash
+```bash [YARN]
 yarn add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
 ```
 
-  </HighlightCard>
-
-  </BTab>
-  <BTab title="NPM">
-
-  <HighlightCard>
-
-```bash
+```bash [NPM]
 npm i bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
 ```
 
-  </HighlightCard>
-
-  </BTab>
-</BTabs>
-</ClientOnly>
+:::
 
 Open your `nuxt.config.js/ts` file and configure your application to use `bootstrap-vue-next`. The components will be imported automatically as needed.
 
@@ -310,56 +223,27 @@ This is mainly for the purpose of naming conflicts with other imports. It should
 
 ### Installation - TypeScript
 
-This package uses optional peer dependencies to generate type definitions for enhanced functionality. These dependencies are not installed by default to avoid unnecessary bloat in projects that don’t require these features. However, if you want full type support, you need to manually install the required packages.
+This package uses optional peer dependencies to generate type definitions for enhanced functionality. These dependencies are not installed by default to avoid unnecessary bloat in projects that don't require these features. However, if you want full type support, you need to manually install the required packages.
 
-<ClientOnly>
-<BTabs v-model="codePreference">
-  <BTab title="PNPM">
+::: code-group
 
-  <HighlightCard>
-
-```bash
+```bash [PNPM]
 pnpm add -D @floating-ui/vue @vueuse/core vue-router
 ```
 
-  </HighlightCard>
-
-  </BTab>
-  <BTab title="BUN">
-
-  <HighlightCard>
-
-```bash
+```bash [BUN]
 bun add -D @floating-ui/vue @vueuse/core vue-router
 ```
 
-  </HighlightCard>
-
-  </BTab>
-  <BTab title="YARN">
-
-  <HighlightCard>
-
-```bash
+```bash [YARN]
 yarn add -D @floating-ui/vue @vueuse/core vue-router
 ```
 
-  </HighlightCard>
-
-  </BTab>
-  <BTab title="NPM">
-
-  <HighlightCard>
-
-```bash
+```bash [NPM]
 npm i -D @floating-ui/vue @vueuse/core vue-router
 ```
 
-  </HighlightCard>
-
-  </BTab>
-</BTabs>
-</ClientOnly>
+:::
 
 ### Installation - CDN
 
@@ -433,15 +317,3 @@ import {BTab} from 'bootstrap-vue-next/components/BTabs'
 BootstrapVue is the parent project for which this is based on. We consider BootstrapVue as the best implementation of Bootstrap `v4`. We strive for a full compatibility list for BootstrapVue. However, due to the nature of the rewrite, some features may be missing or changed. If anyone has spotted a missing compatibility feature, we request that you submit a GitHub issue or contribute to the [parity report](https://github.com/bootstrap-vue-next/bootstrap-vue-next/blob/main/CONTRIBUTING.md#help-verify-bootstrapvue-and-bootstrap-v5-parity).
 
 If you are migrating from BootstrapVue, please refer to our [migration guide](/docs/migration-guide)
-
-<script lang="ts">
-import {useLocalStorage} from '@vueuse/core'
-
-const codePreference = useLocalStorage('code-group-preference', 0)
-
-export default {
-  setup() {
-    return {codePreference}
-  }
-}
-</script>
