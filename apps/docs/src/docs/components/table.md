@@ -497,6 +497,7 @@ Slot `custom-foot` can be optionally scoped, receiving an object with the follow
 ## Custom empty and empty-filtered rendering
 
 The content to show when the table is empty can be specified by setting the `show-empty` prop and then specifying:
+
 - Either the `empty-text` prop or the `empty` named slot, for the case where unfiltered items are an empty or falsy array
 - Either the `empty-filtered-text` prop or the `empty-filtered` named slot, for the case where filtered items are an empty or falsy array
 
@@ -954,7 +955,7 @@ helper components. Note that there are no helper components for `<caption>`, `<c
 
 - Table helper components `<BThead>`, `<BTfoot>`, `<BTr>`, `<BTd>` and `<BTh>` all accept a `variant`
   prop, which will apply one of the Bootstrap theme colors (custom theme colors are supported via
-  [theming](/docs/reference/theming).) and will automatically adjust to use the correct variant
+  [theming](/docs/types#colorvariant).) and will automatically adjust to use the correct variant
   class based on the table's `dark` mode.
 - <NotYetImplemented/> Accessibility attributes `role` and `scope` are automatically set on `<BTh>` and `<BTd>`
   components based on their location (thead, tbody, or tfoot) and their `rowspan` or `colspan`

@@ -323,7 +323,6 @@ const sortData = computed(() =>
               }
             >
           )
-        console.log(isMultiplePropRecord(localProps))
 
         return simplifyMultiple(
           isMultiplePropRecord(localProps) ? localProps : convertPropRecordToMultiple(localProps)
