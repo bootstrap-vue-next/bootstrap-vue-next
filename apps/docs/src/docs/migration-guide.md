@@ -234,7 +234,7 @@ either [unplug icons](/docs/icons) or by embedding an `.svg`.
 #### Badge Positioning
 
 Badge positioning has changed to using a single property `badge-placement` and our
-[`CombinedPlacement` utility](/docs/types/combined-placement) rather than individual properties.
+[`CombinedPlacement` utility](/docs/types#combinedplacement) rather than individual properties.
 
 For instance, use `badge-placement='top'` in place of `badge-top` or `badge-placement='end'` in place of
 `badge-right`. For combined props, rather than using `badge-top` and `badge-right`, use
@@ -430,7 +430,7 @@ See the [v-html](#v-html) section for information on deprecation of the `html` p
 
 ### BFormCheckbox
 
-See [BForm Components](bform-components)
+See [BForm Components](/docs/components/form-checkbox)
 
 ### BFormDatePicker
 
@@ -458,7 +458,7 @@ They work as documented in vue.js, so there is no longer a need for the properti
 
 ### BFormRadio
 
-See [BForm Components](bform-components)
+See [BForm Components](/docs/components/form-radio)
 
 ### BFormRating
 
@@ -494,7 +494,7 @@ Instead, BootstrapVueNext provides two approaches for customizing icons:
 
 ### BFormSpinButton
 
-See [BForm Components](bform-components)
+See [BForm Components](/docs/components/form-spinbutton)
 
 ### BFormTags
 
@@ -635,7 +635,7 @@ See [Show and Hide](#show-and-hide) shared properties.
 
 #### Replacement for Modal slots
 
-[BootstrapVue](https://bootstrap-vue.github.io/bootstrap-vue/docs/components/modal#custom-rendering-with-slots) provides different slots to configure some pieces of the modal component. These slots are slightly different in [BootstrapVueNext](http://localhost:8000/bootstrap-vue-next/docs/components/modal.html#comp-reference-bmodal-slots):
+[BootstrapVue](https://bootstrap-vue.github.io/bootstrap-vue/docs/components/modal#custom-rendering-with-slots) provides different slots to configure some pieces of the modal component. These slots are slightly different in [BootstrapVueNext](/docs/components/modal.html#comp-reference-bmodal-slots):
 
 | BootstrapVue       | BootstrapVueNext |
 | ------------------ | ---------------- |
@@ -649,7 +649,7 @@ See [Show and Hide](#show-and-hide) shared properties.
 
 ### BNav
 
-`align` prop now takes values from [`AlignmentJustifyContent`](/docs/types/alignment): `start`, `center`, `end`, `between`, `around`, and `evenly`
+`align` prop now takes values from [`AlignmentJustifyContent`](/docs/types#alignment): `start`, `center`, `end`, `between`, `around`, and `evenly`
 
 #### BNavItemDropdown
 
@@ -659,11 +659,11 @@ See the [v-html](#v-html) section for information on deprecation of the `html` p
 
 ### BNavbar
 
-The `type` prop is deprecated. Use the `v-b-color-mode` directive or `useColorMode` composable instead. Details in our [docs](/components/navbar#color-scheme)
+The `type` prop is deprecated. Use the `v-b-color-mode` directive or `useColorMode` composable instead. Details in our [docs](/docs/components/navbar#color-schemes)
 
 #### BNavbarNav
 
-`align` prop now takes values from [`AlignmentJustifyContent`](/docs/types/alignment): `start`, `center`, `end`, `between`, `around`, and `evenly`
+`align` prop now takes values from [`AlignmentJustifyContent`](/docs/types#alignment): `start`, `center`, `end`, `between`, `around`, and `evenly`
 
 ### BOffcanvas
 

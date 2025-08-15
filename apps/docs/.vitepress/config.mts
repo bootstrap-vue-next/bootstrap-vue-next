@@ -15,8 +15,6 @@ export default defineConfig({
   description,
   base: baseUrl,
   srcDir: 'src',
-  // TODO fix & remove this
-  ignoreDeadLinks: true,
   head: [
     ['link', {rel: 'icon', type: 'image/x-icon', href: `${baseUrl}favicon.ico`}],
     ['meta', {property: 'og:title', name: 'og:title', content: title}],

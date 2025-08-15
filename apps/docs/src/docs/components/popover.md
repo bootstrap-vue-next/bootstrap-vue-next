@@ -3,7 +3,7 @@
 <PageHeader>
 
 The Popover feature, which provides a tooltip-like behavior, can be easily applied to any
-interactive element via the `<BPopover>` component or [`v-b-popover`](/docs/directives/b-popover)
+interactive element via the `<BPopover>` component or [`v-b-popover`](/docs/directives/BPopover)
 directive. Popovers can also be created and programmatically controlled via the `usePopoverController`
 
 </PageHeader>
@@ -100,7 +100,7 @@ utilities to change the variant of the popover.
 
 `body-class` and `title-class` are reactive and can be changed while the popover is open.
 
-Refer to the [popover directive](/docs/directives/popover) docs on applying custom
+Refer to the [popover directive](/docs/directives/BPopover) docs on applying custom
 classes to the directive version.
 
 For finer control, use the bootstrap 5 css variables to apply styles directly.
