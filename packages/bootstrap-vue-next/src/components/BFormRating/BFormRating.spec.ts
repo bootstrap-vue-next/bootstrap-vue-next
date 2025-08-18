@@ -219,3 +219,40 @@ describe('rating', () => {
   expect(blockWrapper.classes()).not.toContain('d-inline-block')
   expect(blockWrapper.classes()).toContain('w-100')
 })
+
+it('renders fallback clear icon when showClear is true (no slot provided)', async () => {
+  const wrapper = mount(BFormRating, {
+    props: {modelValue: 3, showClear: true, readonly: false},
+  })
+  const clearArea = wrapper.find('.clear-button-spacing')
+  expect(clearArea.exists()).toBe(true)
+
+  await clearArea.trigger('click')
+  expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+  expect(wrapper.emitted('update:modelValue')![0]).toEqual([0])
+})
+
+it('uses #icon-clear slot content when provided', async () => {
+  const wrapper = mount(BFormRating, {
+    props: {modelValue: 4, showClear: true},
+    slots: {
+      'icon-clear': '<button id="custom-clear" type="button">Clear</button>',
+    },
+  })
+  const clearArea = wrapper.find('.clear-button-spacing')
+  expect(clearArea.exists()).toBe(true)
+  expect(wrapper.find('#custom-clear').exists()).toBe(true)
+
+  await clearArea.trigger('click')
+  expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+  expect(wrapper.emitted('update:modelValue')![0]).toEqual([0])
+})
+
+it('does not render clear when readonly is true', () => {
+  const wrapper = mount(BFormRating, {
+    props: {showClear: true, readonly: true},
+    slots: {'icon-clear': '<span id="slot-should-not-render">X</span>'},
+  })
+  expect(wrapper.find('.clear-button-spacing').exists()).toBe(false)
+  expect(wrapper.find('#slot-should-not-render').exists()).toBe(false)
+})
