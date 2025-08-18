@@ -84,7 +84,7 @@ export default {
         },
       },
       slots: {
-        default: {
+        'default': {
           description: 'Custom renderer for each star.',
           scope: {
             starIndex: {
@@ -100,6 +100,9 @@ export default {
               description: 'When `true`, the star is half-filled (partially selected)',
             },
           },
+        },
+        'icon-clear': {
+          description: 'Content for the optional clear button',
         },
       } satisfies SlotRecord<keyof BFormRatingSlots>,
     },
