@@ -35,6 +35,7 @@ To use the tooltip, simply wrap your target element with the `<BTooltip>` compon
 ## Differences with Popover
 
 The delay is zero, hideMargin is 0, and it is noninteractive by default. You can override these properties if needed.
+
 `BTooltip` has an interactive prop, which allows you to set the tooltip to be interactive. This means that the tooltip will remain open when the mouse is over it or focus is in it, allowing users to interact with its content.
 
 <HighlightCard>
@@ -75,7 +76,6 @@ Make sure to check the Popover documentation for more details on customization o
 see [Popover](/docs/components/popover)
 
 <script setup lang="ts">
-import {BButton, BTooltip} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {ref, onMounted} from 'vue'
 

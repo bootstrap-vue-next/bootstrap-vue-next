@@ -114,6 +114,13 @@ Optionally show a clear icon via the `show-clear` prop. The value will be set to
 
 - The clear icon will not be shown when the props `readonly` or `disabled` are set.
 
+#### Custom clear icon
+
+You can replace the default clear icon using the `#icon-clear` slot.  
+This slot is **not scoped** — you can insert any content you like.
+
+<<< DEMO ./demo/RatingCustomClear.vue
+
 ### Icons
 
 By default, `BFormRating` uses built-in star SVG icons:

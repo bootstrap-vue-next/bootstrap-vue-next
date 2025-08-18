@@ -1,100 +1,101 @@
 # Changelog
 
-## [0.30.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.30.3...bootstrapvuenext-v0.30.4) (2025-07-07)
+## [0.30.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.30.4...bootstrapvuenext-v0.30.5) (2025-08-13)
 
+### Features
+
+- **BPopover:** add explicit props for focus and hover triggers ([#2795](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2795)) ([c50e0ef](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c50e0efe54bd8ca2aa636e7f63177547a40429c5))
 
 ### Bug Fixes
 
-* **BDropdown:** prevent hydration warning in nuxt production mode ([#2768](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2768)) ([62e0632](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/62e0632751e6f1d2af8642c75e94e7f1a4e30ad1))
+- **BNavbar:** changed autoClose to noAutoClose and fix the documention mistake about it. ([b2d0c22](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b2d0c22e8f42eca6d9c2337226477643da0e00fe))
+- ssr in scrollspy ([975ee0a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/975ee0a67f9ea14cd8d6c603ba44dd006bcf5f42))
+
+## [0.30.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.30.3...bootstrapvuenext-v0.30.4) (2025-07-07)
+
+### Bug Fixes
+
+- **BDropdown:** prevent hydration warning in nuxt production mode ([#2768](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2768)) ([62e0632](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/62e0632751e6f1d2af8642c75e94e7f1a4e30ad1))
 
 ## [0.30.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.30.2...bootstrapvuenext-v0.30.3) (2025-06-17)
 
-
 ### Features
 
-* implement BFormRating component ([#2744](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2744)) ([860671e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/860671e173d73a80676ad4280e187269dbeaf4b9))
+- implement BFormRating component ([#2744](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2744)) ([860671e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/860671e173d73a80676ad4280e187269dbeaf4b9))
 
 ## [0.30.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.30.1...bootstrapvuenext-v0.30.2) (2025-06-16)
 
-
 ### Features
 
-* **BDropdown:** allow setting icon prop on nested BButton ([018daa5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/018daa52bb85373f48092ed8a4a46901692645ff))
-* **BDropdown:** allow setting icon prop on nested BButton ([#2746](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2746)) ([018daa5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/018daa52bb85373f48092ed8a4a46901692645ff))
-
+- **BDropdown:** allow setting icon prop on nested BButton ([018daa5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/018daa52bb85373f48092ed8a4a46901692645ff))
+- **BDropdown:** allow setting icon prop on nested BButton ([#2746](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2746)) ([018daa5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/018daa52bb85373f48092ed8a4a46901692645ff))
 
 ### Bug Fixes
 
-* **bforminput:** abort debouncing if blur occurs ([6cab846](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6cab8464d4eb537807d6843c7db69ef007b8358c))
-* **BLink:** move active class to BNavItem ([#2747](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2747)) ([1e9b644](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e9b6440d6c08b2c158740e2c9bfc6ac25a9c048))
-* **BModal:** fix ssr. ([df4a90d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/df4a90dacbcc99ee86b03499eb53501e240eb0ba))
-* **BTableLite:** field attribute isRowHeader now being respected ([#2713](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2713)) ([9a4b648](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9a4b648a31678ab1ea99f8c81b556ed166ae3fb3))
-* **BTabs:** Add type=button to buttons to prevent form submission ([#2740](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2740)) ([1a72f1b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1a72f1b50494512b692b53f968a40222e66edd40))
-* **BToast:** close BToast correctly if modelValue is changed from number to false ([df4a90d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/df4a90dacbcc99ee86b03499eb53501e240eb0ba))
-* **BToast:** close BToast correctly if modelValue is changed from number to false ([#2745](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2745)) ([df4a90d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/df4a90dacbcc99ee86b03499eb53501e240eb0ba))
+- **bforminput:** abort debouncing if blur occurs ([6cab846](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6cab8464d4eb537807d6843c7db69ef007b8358c))
+- **BLink:** move active class to BNavItem ([#2747](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2747)) ([1e9b644](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e9b6440d6c08b2c158740e2c9bfc6ac25a9c048))
+- **BModal:** fix ssr. ([df4a90d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/df4a90dacbcc99ee86b03499eb53501e240eb0ba))
+- **BTableLite:** field attribute isRowHeader now being respected ([#2713](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2713)) ([9a4b648](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9a4b648a31678ab1ea99f8c81b556ed166ae3fb3))
+- **BTabs:** Add type=button to buttons to prevent form submission ([#2740](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2740)) ([1a72f1b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1a72f1b50494512b692b53f968a40222e66edd40))
+- **BToast:** close BToast correctly if modelValue is changed from number to false ([df4a90d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/df4a90dacbcc99ee86b03499eb53501e240eb0ba))
+- **BToast:** close BToast correctly if modelValue is changed from number to false ([#2745](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2745)) ([df4a90d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/df4a90dacbcc99ee86b03499eb53501e240eb0ba))
 
 ## [0.30.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.30.0...bootstrapvuenext-v0.30.1) (2025-06-06)
 
-
 ### Bug Fixes
 
-* **BLink:** add active to default exactActiveClass fixes [#2693](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2693) ([45bb9c5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/45bb9c5f75a6dede49e20b8fa68af0da9f2d5d27))
-* **BTabs:** correct id/index on ssr ([f68d393](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f68d39315eae220b9e772d584d5e2d2195269ff5))
-* **BTabs:** correct id/index on ssr ([#2726](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2726)) ([f68d393](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f68d39315eae220b9e772d584d5e2d2195269ff5))
-* **BToast:** stop countdown if modelValue is set to 0 fixes [#2730](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2730) ([45bb9c5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/45bb9c5f75a6dede49e20b8fa68af0da9f2d5d27))
-* **useBLinkHelper:** add exactActiveClass to the props that are used for BLink. ([45bb9c5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/45bb9c5f75a6dede49e20b8fa68af0da9f2d5d27))
-* **useShowHide:** update the registry id when it changes in the component. fixes [#2729](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2729) ([45bb9c5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/45bb9c5f75a6dede49e20b8fa68af0da9f2d5d27))
+- **BLink:** add active to default exactActiveClass fixes [#2693](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2693) ([45bb9c5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/45bb9c5f75a6dede49e20b8fa68af0da9f2d5d27))
+- **BTabs:** correct id/index on ssr ([f68d393](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f68d39315eae220b9e772d584d5e2d2195269ff5))
+- **BTabs:** correct id/index on ssr ([#2726](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2726)) ([f68d393](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f68d39315eae220b9e772d584d5e2d2195269ff5))
+- **BToast:** stop countdown if modelValue is set to 0 fixes [#2730](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2730) ([45bb9c5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/45bb9c5f75a6dede49e20b8fa68af0da9f2d5d27))
+- **useBLinkHelper:** add exactActiveClass to the props that are used for BLink. ([45bb9c5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/45bb9c5f75a6dede49e20b8fa68af0da9f2d5d27))
+- **useShowHide:** update the registry id when it changes in the component. fixes [#2729](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2729) ([45bb9c5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/45bb9c5f75a6dede49e20b8fa68af0da9f2d5d27))
 
 ## [0.30.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.29.4...bootstrapvuenext-v0.30.0) (2025-05-31)
 
-
 ### ⚠ BREAKING CHANGES
 
-* **BTabs:** change modelValue to have id, and add v-model:index for the old value
+- **BTabs:** change modelValue to have id, and add v-model:index for the old value
 
 ### Features
 
-* **BAccordion:** add model index to control the index of open item/items. If free is true it is an array of open items ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
-* **BAccordion:** modelValue is array id prop free is true ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
-* **BTab:** expose activate and deactivate ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
-* **BTabs:** change modelValue to have id, and add v-model:index for the old value ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
-
+- **BAccordion:** add model index to control the index of open item/items. If free is true it is an array of open items ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
+- **BAccordion:** modelValue is array id prop free is true ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
+- **BTab:** expose activate and deactivate ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
+- **BTabs:** change modelValue to have id, and add v-model:index for the old value ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
 
 ### Bug Fixes
 
-* **BAccordion:** modelValue is now undefined if no items open. ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
-* **BAccordion:** reactivity working in v-for ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
-* **BAccordion:** ssr fixes. ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
-* **BTab:** click event is now preventable. ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
-* **BTabs:** fix focus on keyboard navigation ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
-* **BTabs:** fix initial value and some ssr errors ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
-* **BTabs:** posible loop if activate-tab event is prevented. ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
-* **BTabs:** reactivity in v-for fixed ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
+- **BAccordion:** modelValue is now undefined if no items open. ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
+- **BAccordion:** reactivity working in v-for ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
+- **BAccordion:** ssr fixes. ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
+- **BTab:** click event is now preventable. ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
+- **BTabs:** fix focus on keyboard navigation ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
+- **BTabs:** fix initial value and some ssr errors ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
+- **BTabs:** posible loop if activate-tab event is prevented. ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
+- **BTabs:** reactivity in v-for fixed ([1fa8e5e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1fa8e5e8e762ea7e946c1bcd8ae2e75adffa9a9e))
 
 ## [0.29.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.29.3...bootstrapvuenext-v0.29.4) (2025-05-31)
 
-
 ### Features
 
-* **BFormTags:** added feedbackAriaLive prop  ([#2696](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2696)) ([b65c1e4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b65c1e4496e636e889b97e42c27e28dfb4231e45))
-* **BModal:** use css var for zindex, add helper vars and ontop class ([#2556](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2556)) ([98eecae](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/98eecae6bc49b0b5339f08a31b23b8cbc63e1170))
-* **BModal:** use css var for zindex, add helper vars and stack position classess ([98eecae](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/98eecae6bc49b0b5339f08a31b23b8cbc63e1170))
-* **BPopover:** add titleClass and bodyClass, remove unneeded customClass prop since class is inherited to the same place ([08c89fd](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/08c89fdbb4a1782f33fe651f71229d46d9d35de6))
-* **BTableLite:** add `table-colgroup` slot ([#2680](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2680)) ([16ebcce](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/16ebcce078993751b57a75baa5b36f21da134889))
-* **BToast:** add noProgress prop, make progress show as default if modelValue is number. fix(useToastController): if using the deprecated show method the countdown didn't start. ([90b578d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/90b578d54392fdd699e583f07cfe437fdd8d8979))
-
+- **BFormTags:** added feedbackAriaLive prop ([#2696](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2696)) ([b65c1e4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b65c1e4496e636e889b97e42c27e28dfb4231e45))
+- **BModal:** use css var for zindex, add helper vars and ontop class ([#2556](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2556)) ([98eecae](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/98eecae6bc49b0b5339f08a31b23b8cbc63e1170))
+- **BModal:** use css var for zindex, add helper vars and stack position classess ([98eecae](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/98eecae6bc49b0b5339f08a31b23b8cbc63e1170))
+- **BPopover:** add titleClass and bodyClass, remove unneeded customClass prop since class is inherited to the same place ([08c89fd](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/08c89fdbb4a1782f33fe651f71229d46d9d35de6))
+- **BTableLite:** add `table-colgroup` slot ([#2680](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2680)) ([16ebcce](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/16ebcce078993751b57a75baa5b36f21da134889))
+- **BToast:** add noProgress prop, make progress show as default if modelValue is number. fix(useToastController): if using the deprecated show method the countdown didn't start. ([90b578d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/90b578d54392fdd699e583f07cfe437fdd8d8979))
 
 ### Bug Fixes
 
-* **BModal:** ensure clicking inside and releasing outside does not close modal ([85e987c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/85e987c407984ae70d37a82f4844694a52af13aa))
-* **BModal:** ensure clicking inside and releasing outside does not close modal ([#2703](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2703)) ([#2704](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2704)) ([85e987c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/85e987c407984ae70d37a82f4844694a52af13aa))
-* **BToast:** race condition if using setInterval to update countdown ([1e383ce](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e383ce5088a5ab2c93e15005ffcce211ab8e966))
-* **scss:** moved all scss styles out of components ([43ef54d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/43ef54d7f28b78d7546cee9577f8f6c01d98b0f3))
-
+- **BModal:** ensure clicking inside and releasing outside does not close modal ([85e987c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/85e987c407984ae70d37a82f4844694a52af13aa))
+- **BModal:** ensure clicking inside and releasing outside does not close modal ([#2703](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2703)) ([#2704](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2704)) ([85e987c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/85e987c407984ae70d37a82f4844694a52af13aa))
+- **BToast:** race condition if using setInterval to update countdown ([1e383ce](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1e383ce5088a5ab2c93e15005ffcce211ab8e966))
+- **scss:** moved all scss styles out of components ([43ef54d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/43ef54d7f28b78d7546cee9577f8f6c01d98b0f3))
 
 ### Performance Improvements
 
-* use getter functions over computed in some cases ([34d2a8f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/34d2a8f850dd965100ccbbcd8c00f05baceb6caa))
+- use getter functions over computed in some cases ([34d2a8f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/34d2a8f850dd965100ccbbcd8c00f05baceb6caa))
 
 ## [0.29.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.29.2...bootstrapvuenext-v0.29.3) (2025-05-11)
 

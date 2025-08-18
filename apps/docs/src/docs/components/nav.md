@@ -67,7 +67,7 @@ nav links, but unlike `fill` above, every `<BNavItem>` will be the same width.
 ## Alignment
 
 To align your `<BNavItem>` components, use the `align` prop. Available values are those from
-[`AlignmentJustifyContent`](/docs/types/alignment): `start`, `center`, `end`, `between`, `around`, and `evenly`.
+[`AlignmentJustifyContent`](/docs/types#alignment): `start`, `center`, `end`, `between`, `around`, and `evenly`.
 
 <<< DEMO ./demo/NavAlignment.vue#template{vue-html}
 

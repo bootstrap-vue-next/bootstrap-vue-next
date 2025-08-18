@@ -1,250 +1,196 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
-import {buildCommonProps, omit, pick, showHideProps} from '../../utils'
-import {linkProps, linkTo} from '../../utils/link-props'
+import type {BToastEmits, BToastOrchestratorProps, BToastProps} from 'bootstrap-vue-next'
+import {
+  type ComponentReference,
+  defaultPropSectionSymbol,
+  type EmitRecord,
+  type PropRecord,
+} from '../../types'
+import {omit, pick} from '../../utils/objectUtils'
+import {buildCommonProps} from '../../utils/commonProps'
+import {linkedBLinkSection, type linkProps} from '../../utils/linkProps'
+import {showHideEmits, showHideProps} from '../../utils/showHideData'
 
 export default {
-  load: (): ComponentReference[] => [
-    {
-      component: 'BToast',
+  load: (): ComponentReference => ({
+    BToast: {
       sourcePath: '/BToast/BToast.vue',
       props: {
-        '': {
+        [defaultPropSectionSymbol]: {
+          ...omit(showHideProps, ['modelValue']),
+          ...pick(buildCommonProps(), ['variant', 'noHoverPause', 'noResumeOnHoverLeave']),
           bgVariant: {
             type: 'ColorVariant | null',
-            default: null,
+            default: null, // TODO item not in string format
+            description: 'Sets the background color variant for the toast.',
           },
           body: {
             type: 'string',
             default: undefined,
-            description: 'The text content of the body',
+            description: 'Sets the text content of the toast body.',
           },
           bodyClass: {
             type: 'ClassValue',
             default: undefined,
-            description: 'CSS class (or classes) to add to the toast body element',
+            description: 'Sets the CSS class(es) for the toast body element.',
           },
           closeClass: {
             type: 'ClassValue',
             default: undefined,
-            description: 'Applies one or more custom classes to the close button',
+            description: 'Sets the CSS class(es) for the close button.',
           },
           closeContent: {
             type: 'string',
             default: undefined,
-            description: 'Sets the text of the close button. The `close` slot takes precedence',
+            description: 'Sets the text for the close button. The `close` slot takes precedence.',
           },
           closeLabel: {
             type: 'string',
             default: 'Close',
-            description: 'Sets the aria-label attribute on the close button',
+            description: 'Sets the `aria-label` attribute for the close button.',
           },
           closeVariant: {
             type: 'string | null',
-            default: null,
-            description: 'Color variant for the close button',
+            default: null, // TODO item not in string format
+            description: 'Sets the color variant for the close button.',
           },
           headerClass: {
             type: 'ClassValue',
             default: undefined,
-            description: 'CSS class (or classes) to add to the toast header element',
+            description: 'Sets the CSS class(es) for the toast header element.',
           },
           headerTag: {
             type: 'string',
             default: 'div',
-            description: 'Specify the HTML tag to render instead of the default tag for the footer',
+            description: 'Specifies the HTML tag for the toast header, replacing the default tag.',
           },
           id: {
             type: 'string',
             default: undefined,
             description:
-              'Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed',
+              'Sets the `id` attribute for the toast and generates additional element IDs as needed.',
           },
           interval: {
             type: 'number | requestAnimationFrame',
-            default: 'requestAnimationFrame',
-            description: 'The interval of which the countdown timer will refresh itself',
+            default: 'requestAnimationFrame', // TODO item not in string format
+            description: 'Sets the interval for refreshing the countdown timer.',
           },
           isStatus: {
             type: 'boolean',
-            default: false,
+            default: false, // TODO item not in string format
             description:
-              "When set to 'true', makes the toast have attributes aria-live=polite and role=status. When 'false' aria-live will be 'assertive' and role will be 'alert'",
+              'Sets `aria-live="polite"` and `role="status"` when `true`; otherwise, `aria-live="assertive"` and `role="alert"`.',
           },
           modelValue: {
             type: 'boolean | number',
-            default: false,
+            default: false, // TODO item not in string format
             description:
-              'Sets if the toast is visible or the number of milliseconds that the toast will be dismissed',
+              'Controls toast visibility (`boolean`) or sets the auto-dismiss duration in milliseconds (`number`).',
           },
           noCloseButton: {
             type: 'boolean',
-            default: false,
-            description: 'When set, hides the close button in the toast header',
+            default: false, // TODO item not in string format
+            description: 'Hides the close button in the toast header.',
           },
           noProgress: {
             type: 'boolean',
-            default: false,
-            description: 'When set, hides the progress bar in the toast',
+            default: false, // TODO item not in string format
+            description: 'Hides the progress bar in the toast.',
           },
           progressProps: {
             type: "Omit<BProgressBarProps, 'label' | 'max' | 'value'>",
             default: undefined,
             description:
-              'The properties to define the progress bar in the toast. No progress will be shown if left undefined',
+              'Configures the progress bar in the toast. No progress bar is shown if undefined.',
           },
           showOnPause: {
             type: 'boolean',
-            default: true,
-            description: "When set, keeps the toast visible when it's paused",
+            default: true, // TODO item not in string format
+            description: 'Keeps the toast visible when paused.',
           },
           solid: {
             type: 'boolean',
-            default: false,
-            description:
-              'When set, renders the toast with a solid background rather than translucent',
+            default: false, // TODO item not in string format
+            description: 'Renders the toast with a solid background instead of a translucent one.',
           },
           textVariant: {
             type: 'TextColorVariant | null',
-            default: null,
+            default: null, // TODO item not in string format
+            description: 'Sets the text color variant for the toast.',
           },
           title: {
             type: 'string',
             default: undefined,
-            description: "The toast's title text",
+            description: 'Sets the title text for the toast.',
           },
           toastClass: {
             type: 'ClassValue',
             default: undefined,
-            description: 'CSS class (or classes) to add to the toast wrapper element',
+            description: 'Sets the CSS class(es) for the toast wrapper element.',
           },
-          ...omit(showHideProps, ['modelValue']),
-          ...pick(buildCommonProps(), ['variant', 'noHoverPause', 'noResumeOnHoverLeave']),
-        } satisfies Record<
-          Exclude<keyof BvnComponentProps['BToast'], keyof typeof linkProps>,
-          PropertyReference
-        >,
-        'BLink props': {
-          _linkTo: {
-            type: linkTo,
-          },
-          ...linkProps,
-        },
+        } satisfies PropRecord<Exclude<keyof BToastProps, keyof typeof linkProps>>,
+        'BLink props': linkedBLinkSection,
       },
-      slots: [],
-      emits: [
-        {
-          event: 'update:model-value',
-          description: 'Emitted when toast visibility changes',
-          args: [
-            {
-              arg: 'value',
+      emits: {
+        ...showHideEmits,
+        'update:model-value': {
+          description: 'Emitted when the toast visibility changes.', // TODO similar content to BAlert/update:model-value (similar purpose)
+          args: {
+            value: {
               type: 'Boolean',
-              description: 'The resulting value that was changed',
+              description: 'The new visibility state of the toast.',
             },
-          ],
+          },
         },
-        {
-          args: [
-            {
-              arg: 'destroyed',
-              description: '',
-              type: 'string',
-            },
-          ],
-          description: '',
-          event: 'destroyed',
-        },
-        {
-          event: 'close',
-          args: [
-            {
-              arg: 'value',
-              description: '',
+        'close': {
+          description: 'Emitted when the close button is clicked.', // TODO missing description in original
+          args: {
+            value: {
               type: 'BvTriggerableEvent',
+              description: '', // TODO missing description
             },
-          ],
+          },
         },
-        {
-          event: 'close-countdown',
-          args: [
-            {
-              arg: 'value',
-              description: '',
+        'close-countdown': {
+          description: 'Emitted during the countdown to auto-dismiss.', // TODO missing description in original
+          args: {
+            value: {
               type: 'number',
+              description: '', // TODO missing description
             },
-          ],
+          },
         },
-        {
-          event: 'hide',
-          args: [
-            {
-              arg: 'value',
-              description: '',
-              type: 'BvTriggerableEvent',
-            },
-          ],
+        'cancel': {
+          args: undefined,
+          description: undefined,
         },
-        {
-          event: 'hide-prevented',
-          args: [],
+        'ok': {
+          args: undefined,
+          description: undefined,
         },
-        {
-          event: 'hidden',
-          args: [
-            {
-              arg: 'value',
-              description: '',
-              type: 'BvTriggerableEvent',
-            },
-          ],
-        },
-        {
-          event: 'show',
-          args: [
-            {
-              arg: 'value',
-              description: '',
-              type: 'BvTriggerableEvent',
-            },
-          ],
-        },
-        {
-          event: 'show-prevented',
-          args: [],
-        },
-        {
-          event: 'shown',
-          args: [
-            {
-              arg: 'value',
-              description: '',
-              type: 'BvTriggerableEvent',
-            },
-          ],
-        },
-      ],
+      } satisfies EmitRecord<keyof BToastEmits | 'update:model-value'>,
+      slots: {},
     },
-    {
-      component: 'BToastOrchestrator',
+    BToastOrchestrator: {
       sourcePath: '/BToast/BToastOrchestrator.vue',
-      emits: [],
-      slots: [],
       props: {
-        '': {
-          teleportTo: {
-            description: 'Overrides the default teleport location',
-            type: 'string | RendererElement | null | undefined',
-            default: 'body',
-          },
-          teleportDisabled: {
-            description: 'Renders the Toaster in the exact place it was defined',
-            type: 'boolean',
-            default: false,
-          },
-          appendToast: {},
-        } satisfies Record<keyof BvnComponentProps['BToastOrchestrator'], PropertyReference>,
-      },
+        teleportTo: {
+          type: 'string | RendererElement | null | undefined',
+          default: 'body',
+          description: 'Overrides the default teleport location for toasts.',
+        },
+        teleportDisabled: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+          description: 'Renders the toaster in its defined location, disabling teleporting.',
+        },
+        appendToast: {
+          type: '', // TODO missing type
+          default: undefined,
+          description: '', // TODO missing description
+        },
+      } satisfies PropRecord<keyof BToastOrchestratorProps>,
+      emits: {},
+      slots: {},
     },
-  ],
+  }),
 }

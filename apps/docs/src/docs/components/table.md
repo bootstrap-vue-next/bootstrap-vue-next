@@ -968,7 +968,7 @@ helper components. Note that there are no helper components for `<caption>`, `<c
 
 - Table helper components `<BThead>`, `<BTfoot>`, `<BTr>`, `<BTd>` and `<BTh>` all accept a `variant`
   prop, which will apply one of the Bootstrap theme colors (custom theme colors are supported via
-  [theming](/docs/reference/theming).) and will automatically adjust to use the correct variant
+  [theming](/docs/types#colorvariant).) and will automatically adjust to use the correct variant
   class based on the table's `dark` mode.
 - <NotYetImplemented/> Accessibility attributes `role` and `scope` are automatically set on `<BTh>` and `<BTd>`
   components based on their location (thead, tbody, or tfoot) and their `rowspan` or `colspan`

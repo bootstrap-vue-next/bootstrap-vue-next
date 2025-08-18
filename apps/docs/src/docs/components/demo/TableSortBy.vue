@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import {type BTableSortBy, type TableFieldRaw, type TableItem} from 'bootstrap-vue-next'
+import type {BTableSortBy, TableFieldRaw, TableItem} from 'bootstrap-vue-next'
 import {computed, ref} from 'vue'
 
 interface SortPerson {

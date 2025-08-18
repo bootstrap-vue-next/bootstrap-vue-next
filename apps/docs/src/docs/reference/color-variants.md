@@ -246,7 +246,6 @@ $dark: $gray-900;
 </HighlightCard>
 
 <script setup lang="ts">
-import {BCard} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
 
 </script>

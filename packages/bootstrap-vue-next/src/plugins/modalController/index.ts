@@ -23,7 +23,7 @@ import type {
   PromiseWithModalBoolean,
   PromiseWithModalInternal,
 } from '../../types/ComponentOrchestratorTypes'
-import type {BvTriggerableEvent} from 'src/utils'
+import type {BvTriggerableEvent} from '../../utils'
 
 export const modalControllerPlugin: Plugin = {
   install(app) {

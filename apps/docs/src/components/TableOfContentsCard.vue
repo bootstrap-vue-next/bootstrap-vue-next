@@ -11,8 +11,6 @@
 </template>
 
 <script setup lang="ts">
-import {BCard, BLink} from 'bootstrap-vue-next'
-
 defineProps<{
   name: string
   description: string

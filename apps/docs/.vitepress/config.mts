@@ -3,7 +3,7 @@ import Icons from 'unplugin-icons/vite'
 import markdownItClass from '@toycode/markdown-it-class'
 import {demoContainer} from './plugins/demo-container'
 import Components from 'unplugin-vue-components/vite'
-import {BootstrapVueNextResolver} from 'bootstrap-vue-next'
+import {BootstrapVueNextResolver} from 'bootstrap-vue-next/resolvers'
 
 const title = 'BootstrapVueNext'
 const description = 'Quickly and Easily Integrate Bootstrap V5 Components With Vue 3'
@@ -15,8 +15,6 @@ export default defineConfig({
   description,
   base: baseUrl,
   srcDir: 'src',
-  // TODO fix & remove this
-  ignoreDeadLinks: true,
   head: [
     ['link', {rel: 'icon', type: 'image/x-icon', href: `${baseUrl}favicon.ico`}],
     ['meta', {property: 'og:title', name: 'og:title', content: title}],

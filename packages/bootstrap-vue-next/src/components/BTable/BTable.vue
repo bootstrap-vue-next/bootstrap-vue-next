@@ -1,35 +1,6 @@
 <template>
   <!-- eslint-disable prettier/prettier -->
-  <BTableLite
-    v-bind="computedLiteProps"
-    @head-clicked="onFieldHeadClick"
-    @row-clicked="onRowClick"
-    @row-dblclicked="
-      (row: Items, index: number, e: MouseEvent) => {
-        emit('row-dblclicked', row, index, e)
-      }
-    "
-    @row-contextmenu="
-      (row: Items, index: number, e: MouseEvent) => {
-        emit('row-contextmenu', row, index, e)
-      }
-    "
-    @row-hovered="
-      (row: Items, index: number, e: MouseEvent) => {
-        emit('row-hovered', row, index, e)
-      }
-    "
-    @row-unhovered="
-      (row: Items, index: number, e: MouseEvent) => {
-        emit('row-unhovered', row, index, e)
-      }
-    "
-    @row-middle-clicked="
-      (row: Items, index: number, e: MouseEvent) => {
-        emit('row-middle-clicked', row, index, e)
-      }
-    "
-  >
+  <BTableLite v-bind="computedLiteProps">
     <template v-if="slots['table-colgroup']" #table-colgroup="scope">
       <slot name="table-colgroup" v-bind="scope" />
     </template>
@@ -201,15 +172,14 @@ import {
   type TableFieldFormatter,
   type TableFieldRaw,
   type TableItem,
-  type TableRowEvent,
   type TableRowType,
   type TableStrictClassValue,
 } from '../../types/TableTypes'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BTableProps} from '../../types/ComponentProps'
+import type {BTableEmits, BTableLiteEmits} from '../../types/ComponentEmits'
 import {deepEqual, get, pick, set} from '../../utils/object'
 import {startCase} from '../../utils/stringUtils'
-import type {LiteralUnion} from '../../types/LiteralUnion'
 import {
   btableLiteProps,
   btableSimpleProps,
@@ -217,6 +187,7 @@ import {
   getTableFieldHeadLabel,
 } from '../../utils/tableUtils'
 import {useId} from '../../composables/useId'
+import type {BTableSlots, CamelCase} from '../../types'
 
 const _props = withDefaults(
   defineProps<Omit<BTableProps<Items>, 'sortBy' | 'busy' | 'selectedItems'>>(),
@@ -292,124 +263,8 @@ const _props = withDefaults(
   }
 )
 const props = useDefaults(_props, 'BTable')
-
-const emit = defineEmits<{
-  'filtered': [value: Items[]]
-  'head-clicked': [
-    key: string,
-    field: (typeof computedFields.value)[0],
-    event: MouseEvent,
-    isFooter: boolean,
-  ]
-  'row-clicked': TableRowEvent<Items>
-  'row-dblclicked': TableRowEvent<Items>
-  'row-contextmenu': TableRowEvent<Items>
-  'row-hovered': TableRowEvent<Items>
-  'row-unhovered': TableRowEvent<Items>
-  'row-middle-clicked': TableRowEvent<Items>
-  'row-selected': [value: Items]
-  'row-unselected': [value: Items]
-  'sorted': [value: BTableSortBy]
-  'change': [value: Items[]]
-}>()
-
-type SortSlotScope = {
-  label: string | undefined
-  column: LiteralUnion<keyof Items>
-  field: (typeof computedFields.value)[0]
-  isFoot: false
-}
-
-const slots = defineSlots<{
-  // BTableLite
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'table-colgroup'?: (props: {fields: typeof computedFields.value}) => any
-  'thead-top'?: (props: {
-    columns: number
-    fields: typeof computedFields.value
-    selectAllRows: () => void
-    clearSelected: () => void
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  [key: `head(${string})`]: (props: {
-    label: string | undefined
-    column: LiteralUnion<keyof Items>
-    field: (typeof computedFields.value)[0]
-    isFoot: false
-    selectAllRows: () => void
-    clearSelected: () => void
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  'thead-sub'?: (
-    props: {
-      items: readonly Items[]
-      fields: typeof computedFields.value
-      field: (typeof computedFields.value)[0]
-    }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'top-row'?: (props: {columns: number; fields: typeof computedFields.value}) => any
-  [key: `cell(${string})`]: (props: {
-    value: unknown
-    unformatted: unknown
-    index: number
-    item: Items
-    field: (typeof computedFields.value)[0]
-    items: readonly Items[]
-    toggleDetails: () => void
-    detailsShowing: boolean
-    rowSelected: boolean
-    selectRow: (index?: number) => void
-    unselectRow: (index?: number) => void
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  'row-details'?: (props: {
-    item: Items
-    toggleDetails: () => void
-    fields: typeof computedFields.value
-    index: number
-    rowSelected: boolean
-    selectRow: (index?: number) => void
-    unselectRow: (index?: number) => void
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'bottom-row'?: (props: {columns: number; fields: typeof computedFields.value}) => any
-
-  [key: `foot(${string})`]: (props: {
-    label: string | undefined
-    column: LiteralUnion<keyof Items>
-    field: (typeof computedFields.value)[0]
-    isFoot: true
-    selectAllRows: () => void
-    clearSelected: () => void
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  'custom-foot'?: (props: {
-    fields: typeof computedFields.value
-    items: readonly Items[]
-    columns: number
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'table-caption'?: (props: Record<string, never>) => any
-
-  // end btable slots
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: `sortAsc(${string})`]: (props: SortSlotScope) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: `sortDesc(${string})`]: (props: SortSlotScope) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: `sortDefault(${string})`]: (props: SortSlotScope) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'table-busy'?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'empty-filtered'?: (props: typeof emptySlotScope.value) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'empty'?: (props: typeof emptySlotScope.value) => any
-}>()
+const emit = defineEmits<BTableEmits<Items>>()
+const slots = defineSlots<BTableSlots<Items>>()
 
 const dynamicCellSlots = computed(
   () => Object.keys(slots).filter((key) => key.startsWith('cell(')) as 'cell()'[]
@@ -775,13 +630,6 @@ const handleRowSelection = (
   }
 }
 
-const onRowClick = (row: Items, index: number, e: MouseEvent) => {
-  if (props.noSelectOnClick === false) {
-    handleRowSelection(row, index, e.shiftKey, e.ctrlKey, e.metaKey)
-  }
-  emit('row-clicked', row, index, e)
-}
-
 const handleFieldSorting = (field: TableField<Items>) => {
   if (!isSortable.value) return
 
@@ -873,16 +721,6 @@ const handleFieldSorting = (field: TableField<Items>) => {
 
   // Then emit the returned updated value
   emit('sorted', props.multisort === true ? handleMultiSort() : handleSingleSort())
-}
-
-const onFieldHeadClick = (
-  fieldKey: string,
-  field: TableField<Items>,
-  event: Readonly<MouseEvent>,
-  isFooter = false
-) => {
-  emit('head-clicked', fieldKey, field, event, isFooter)
-  handleFieldSorting(field)
 }
 
 const callItemsProvider = async () => {
@@ -1004,6 +842,27 @@ const exposedSelectableUtilities = {
   },
 } as const
 
+const boundBTableLiteEmits = {
+  onHeadClicked: (fieldKey, field, event, isFooter = false) => {
+    emit('head-clicked', fieldKey, field, event, isFooter)
+    handleFieldSorting(field)
+  },
+  onRowClicked: (row, index, e) => {
+    if (props.noSelectOnClick === false) {
+      handleRowSelection(row, index, e.shiftKey, e.ctrlKey, e.metaKey)
+    }
+    emit('row-clicked', row, index, e)
+  },
+  onRowDblclicked: (...args) => emit('row-dblclicked', ...args),
+  onRowContextmenu: (...args) => emit('row-contextmenu', ...args),
+  onRowHovered: (...args) => emit('row-hovered', ...args),
+  onRowUnhovered: (...args) => emit('row-unhovered', ...args),
+  onRowMiddleClicked: (...args) => emit('row-middle-clicked', ...args),
+} as const satisfies {
+  [K in keyof BTableLiteEmits<Items> as CamelCase<`on-${K & string}`>]: (
+    ...args: BTableLiteEmits<Items>[K]
+  ) => void
+}
 const computedLiteProps = computed(() => ({
   ...pick(props, [...btableLiteProps, ...btableSimpleProps]),
   tableAttrs: {
@@ -1015,6 +874,7 @@ const computedLiteProps = computed(() => ({
   tbodyTrClass: getRowClasses,
   fieldColumnClass: getFieldColumnClasses,
   id: computedId.value,
+  ...boundBTableLiteEmits,
 }))
 
 // Simple component for sort icons

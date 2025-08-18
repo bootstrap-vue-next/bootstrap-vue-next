@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import {type BTableSortBy, type TableField, type TableItem} from 'bootstrap-vue-next'
+import type {BTableSortBy, TableField, TableItem} from 'bootstrap-vue-next'
 import {computed, ref, useTemplateRef} from 'vue'
 
 const table = useTemplateRef('my-table')

@@ -41,14 +41,11 @@ import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import {useStateClass} from '../../composables/useStateClass'
 import {isEmptySlot} from '../../utils/dom'
+import type {BFormFileSlots} from '../../types'
+
 defineOptions({
   inheritAttrs: false,
 })
-
-const slots = defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  label?: (props: Record<string, never>) => any
-}>()
 
 const _props = withDefaults(defineProps<Omit<BFormFileProps, 'modelValue'>>(), {
   ariaLabel: undefined,
@@ -73,6 +70,7 @@ const _props = withDefaults(defineProps<Omit<BFormFileProps, 'modelValue'>>(), {
   state: null,
 })
 const props = useDefaults(_props, 'BFormFile')
+const slots = defineSlots<BFormFileSlots>()
 
 const modelValue = defineModel<Exclude<BFormFileProps['modelValue'], undefined>>({
   default: null,
@@ -84,7 +82,7 @@ const computedId = useId(() => props.id)
 
 const stateClass = useStateClass(() => props.state)
 
-const input = useTemplateRef<HTMLInputElement>('_input')
+const input = useTemplateRef('_input')
 
 const {focused} = useFocus(input, {initialValue: props.autofocus})
 
