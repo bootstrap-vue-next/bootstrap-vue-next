@@ -1,221 +1,180 @@
-<ComposableHeader path="useToastController/index.ts" title="useToastController" />
+# useToastController
 
-<div class="lead mb-5">
-
-Often times one may want to open a `Toast` in a global context, without the need for declaring a component, perhaps to display an error after a function threw an error. `useToastController` is used to create `Toasts` on demand. You must have initialized the `BToastOrchestrator` component once in your application. The following functionality requires the existance of that component
-
-</div>
-
-<UsePluginAlert />
+Often one may want to open a Toast in a global context (for example, to display an error after a function throws). useToastController is used to create Toasts on demand. You must initialize the BToastOrchestrator component once in your application. The following functionality requires the existence of that component.
 
 ## BToastOrchestrator
 
-You must have initialized `BToastOrchestrator` component once and only once (doing multiple may display multiple `Toasts`). This is usually best placed at the App root.
+Initialize the BToastOrchestrator component once (and only once). This is usually best placed at the app root.
 
-<HighlightCard>
-
-<template #html>
-
-```vue-html
-<BToastOrchestrator />
+```vue
+<!-- App.vue -->
+<template>
+  <RouterView />
+  <BToastOrchestrator />
+</template>
 ```
 
-  </template>
-</HighlightCard>
+It accepts the props teleportDisabled and teleportTo if you need to change where the orchestrator is teleported.
 
-The only props it access are `teleportDisabled` and `teleportTo` to modify the location that it is placed
-
-In addition, it contains a few exposed methods. These exposed methods on the `template ref` correspond to those in the `useToastController` function, described below
-
+BToastOrchestrator also exposes a few methods (via a template ref) that correspond to those available through useToastController:
+- create
 - remove
-- show
 - toasts
 
-## Showing a Toast
+## Showing a toast
 
-Showing a toast is done through the show method
-
-<HighlightCard>
-  <BButton @click="create({ title: 'Hello', body: 'World'  })">Show</BButton>
-  <template #html>
+Use the create method to show a toast.
 
 ```vue
 <template>
-  <BButton @click="create({title: 'Hello', body: 'World'})">Show</BButton>
+  <BButton @click="show">Show</BButton>
 </template>
 
 <script setup lang="ts">
+import {useToastController} from 'bootstrap-vue-next/composables/useToastController'
+
 const {create} = useToastController()
+
+const show = () => {
+  create({title: 'Hello', body: 'World'})
+}
 </script>
 ```
 
-  </template>
-</HighlightCard>
+The create method returns a handle that can control the toast (e.g., destroy). If you pass the option {resolveOnHide: true}, create instead returns a Promise that resolves when the toast is hidden.
 
-The `show` method returns a `promise` that is resolved then the toast closes. You can give toast a unique id. Since `Toasts` are fluid and can move around a lot, returning the index at a given point in time is not ideal for as its position may be changed in the array. So, for use with the `remove` method, you need to give a unique identifier
+### Show options
 
-### Show Options
+create accepts an object with properties that mostly mirror BToast props. In addition to BToast props, it supports position to control where the toast appears.
 
-The `show` method accepts an object with the following values `props` and `component`
+### Reactivity within create
 
-The props property corresponds to mostly that of the `BToast` components props. The props object, in addition to the props declared on `BToast`, includes `position`. The `position` value effects its position, its type is [Container Position](/docs/types#containerposition)
-
-### Reactivity Within Show
-
-`show` props property can accept a `MaybeRefOrGetter`, meaning that you can make properties reactive
-
-<HighlightCard>
-  <BButton @click="showReactiveExample">Show</BButton>
-  <template #html>
+The props parameter of create can be a MaybeRefOrGetter, so you can pass reactive values (e.g., a computed getter).
 
 ```vue
 <template>
-  <BButton @click="showMe">Show</BButton>
+  <BButton @click="showReactive">Show</BButton>
 </template>
 
 <script setup lang="ts">
+import {ref, computed, onMounted} from 'vue'
+import {useToastController} from 'bootstrap-vue-next/composables/useToastController'
+
 const {create} = useToastController()
 
-const firstRef = ref<OrchestratedToast>({
-  body: `${Math.random()}`,
-})
+const data = ref({body: String(Math.random())})
+
 onMounted(() => {
   setInterval(() => {
-    firstRef.value.body = `${Math.random()}`
+    data.value.body = String(Math.random())
   }, 1000)
 })
 
-const showMe = () => {
+const showReactive = () => {
   create(
     computed(() => ({
-      ...firstRef.value,
-      variant: (Number.parseInt(firstRef.value.body?.charAt(2) ?? '0') % 2 === 0
-        ? 'danger'
-        : 'info') as ColorVariant,
+      ...data.value,
+      // Example of computed variant based on body contents
+      variant: (parseInt(data.value.body?.charAt(2) ?? '0', 10) % 2 === 0) ? 'danger' : 'info',
     }))
   )
 }
 </script>
 ```
 
-  </template>
-</HighlightCard>
+### Advanced usage (custom content via slots or component)
 
-### Advanced usage
-
-Using props can work for most situations, but it leaves some finer control to be desired. For instance, you can add HTML to any `slot` value. This can either be an imported SFC or an inline render function. For reactvity, you must use a getter function.
-
-<HighlightCard>
-  <BButton @click="showMeAdvancedExample">Show</BButton>
-  <template #html>
+For finer control, you can provide slots (including render functions) or even a custom component. For reactive content in slots, use a function that reads current reactive values.
 
 ```vue
 <template>
-  <BButton @click="showMe">Show</BButton>
+  <BButton @click="showAdvanced">Show</BButton>
 </template>
 
 <script setup lang="ts">
+import {h, ref, onMounted, defineAsyncComponent} from 'vue'
+import {useToastController} from 'bootstrap-vue-next/composables/useToastController'
+
 const {create} = useToastController()
 
-const firstRef = ref<OrchestratedToast>({
-  body: `${Math.random()}`,
-})
+const data = ref({body: String(Math.random())})
 
 onMounted(() => {
   setInterval(() => {
-    firstRef.value.body = `${Math.random()}`
+    data.value.body = String(Math.random())
   }, 1000)
 })
 
-const showMe = () => {
+const showAdvanced = () => {
+  // Example using slots
   create({
-    body: firstRef.value.body,
-    slots: {default: () => h('div', null, {default: () => `custom! ${firstRef.value.body}`})},
+    position: 'bottom-center',
+    slots: {
+      default: () => h('div', null, `custom! ${data.value.body}`),
+    },
   })
-  // Demonstration psuedocode, you can also import a component and use it
-  // const importedComponent () => {
-  //   create({
-  //     component: import('./MyToastComponent.vue'),
-  //   })
-  // }
+
+  // Example using a custom component (async)
+  // const MyToast = defineAsyncComponent(() => import('./MyToastComponent.vue'))
+  // create({ component: MyToast })
 }
 </script>
 ```
 
-  </template>
-</HighlightCard>
+## Programmatically hiding a toast
 
-## Programmatically Hiding a Toast
-
-Hiding a `Toast` programmatically is very simple. `create` return an object that has functions to control the toast, including `destroy`
-
-<HighlightCard>
-  <BButtonGroup>
-    <BButton @click="showMe" variant="success">
-      Show the Toast
-    </BButton>
-    <BButton @click="hideMe" variant="danger">
-      Hide the Toast
-    </BButton>
-  </BButtonGroup>
-  <template #html>
+create returns a handle with helper methods, including destroy to hide the toast programmatically.
 
 ```vue
 <template>
   <BButtonGroup>
-    <BButton @click="showMe" variant="success"> Show the Toast </BButton>
-    <BButton @click="hideMe" variant="danger"> Hide the Toast </BButton>
+    <BButton @click="showMe" variant="success">Show the Toast</BButton>
+    <BButton @click="hideMe" variant="danger">Hide the Toast</BButton>
   </BButtonGroup>
 </template>
 
 <script setup lang="ts">
+import {useToastController} from 'bootstrap-vue-next/composables/useToastController'
+
 const {create} = useToastController()
 
-let toast: undefined | ReturnType<typeof create>
+let toastHandle: ReturnType<typeof create> | undefined
 
 const showMe = () => {
-  if (toast !== undefined) return
-  // `create` returns a symbol
-  toast = create({
+  if (toastHandle) return
+  toastHandle = create({
     title: 'Showing',
-    value: true,
+    modelValue: true,
     variant: 'success',
     position: 'bottom-center',
   })
 }
 
 const hideMe = () => {
-  if (toast === undefined) return
-  toast.destroy()
+  if (!toastHandle) return
+  toastHandle.destroy()
+  toastHandle = undefined
 }
 </script>
 ```
 
-  </template>
-
-</HighlightCard>
-
 ## Using promises
 
-Hiding a `Toast` with promise
-
-<HighlightCard>
-  <BButtonGroup>
-    <BButton @click="promiseToast" variant="success">
-      Show the Toast
-    </BButton>
-  </BButtonGroup>
-  <template #html>
+If you pass {resolveOnHide: true} as the second argument, create returns a Promise that resolves when the toast is hidden. You can pass a value to hide(...) inside a slot to control the resolved result.
 
 ```vue
 <template>
   <BButtonGroup>
-    <BButton @click="promiseToast" variant="success"> Show the Toast </BButton>
+    <BButton @click="promiseToast" variant="success">Show the Toast</BButton>
   </BButtonGroup>
 </template>
 
 <script setup lang="ts">
+import {h} from 'vue'
+import {useToastController} from 'bootstrap-vue-next/composables/useToastController'
+
 const {create} = useToastController()
+
 const promiseToast = () => {
   create(
     {
@@ -227,98 +186,24 @@ const promiseToast = () => {
         default: ({hide}) => [
           h('h2', {class: 'text-center mb-3'}, 'Ready?'),
           h('div', {class: 'd-flex justify-content-center gap-2'}, [
-            h(BButton, {onClick: () => hide('ok'), size: 'lg'}, () => 'Yes'),
-            h(BButton, {onClick: () => hide('cancel'), size: 'lg'}, () => 'No'),
+            h('button', {class: 'btn btn-primary btn-lg', onClick: () => hide('ok')}, 'Yes'),
+            h('button', {class: 'btn btn-secondary btn-lg', onClick: () => hide('cancel')}, 'No'),
           ]),
         ],
       },
     },
     {resolveOnHide: true}
-  ).then((r) => {
-    create({title: 'you pressed: ' + (r.ok ? 'yes' : 'no')})
+  ).then((result: any) => {
+    // Depending on your setup, result may include fields like `ok`
+    // Adjust this line if your resolved shape differs
+    create({title: 'you pressed: ' + (result?.ok ? 'yes' : 'no')})
   })
 }
 </script>
 ```
 
-  </template>
-
-</HighlightCard>
-
-<script setup lang="ts">
-import {data} from '../../data/components/toast.data'
-import {useToastController} from 'bootstrap-vue-next/composables/useToastController'
-import HighlightCard from '../../components/HighlightCard.vue'
-
-import UsePluginAlert from '../../components/UsePluginAlert.vue'
-import {ref, computed, h, onMounted} from 'vue'
-import ComposableHeader from './ComposableHeader.vue'
-
-const {create, remove, toasts} = useToastController()
-
-let toast: undefined | ReturnType<typeof create>
-
-const showMe = () => {
-  if (toast !== undefined) return
-  toast = create({ title: 'Showing',  variant: 'success', position: 'bottom-center' } )
-}
-
-const hideMe = () => {
-  if (toast === undefined) return
-  toast.destroy()
-  toast = undefined
-}
-
-const firstRef = ref<OrchestratedToast>({
-  body: `${Math.random()}`,
-})
-
-onMounted(() => {
-  setInterval(() => {
-    firstRef.value.body = `${Math.random()}`
-  }, 1000)
-})
-
-const showReactiveExample = () => {
-  create(
-    computed(() => ({
-      ...firstRef.value,
-      variant: (Number.parseInt(firstRef.value.body?.charAt(2) ?? '0') % 2 === 0
-        ? 'danger'
-        : 'info') as ColorVariant,
-    })),
-  )
-}
-
-const showMeAdvancedExample = () => {
-  create({
-    body: firstRef.value.body,
-    position: 'bottom-center',
-    slots: {default: () => h('div', null, {default: () => `custom! ${firstRef.value.body}`})},
-  })
-}
-
-const promiseToast = () => {
-  create(
-    {
-      variant: 'primary',
-      position: 'middle-center',
-      bodyClass: 'w-100',
-      modelValue: true,
-      slots: {
-        default: ({hide}) =>
-          [
-            h('h2', {class: 'text-center mb-3'}, 'Ready?'),
-            h('div', {class: 'd-flex justify-content-center gap-2'}, [
-              h(BButton, {onClick: () => hide('ok'), size: 'lg'}, () => 'Yes'),
-              h(BButton, {onClick: () => hide('cancel'), size: 'lg'}, () => 'No')
-            ])
-          ],
-      },
-    },
-    {resolveOnHide: true}
-  ).then((r) => {
-    create({title: 'you pressed: ' + (r.ok ? 'yes' : 'no')})
-  })
-}
-</script>
+Notes
+- Use BToastOrchestrator exactly once in your app.
+- create returns a handle when called normally, or a Promise when called with {resolveOnHide: true}.
+- The position prop controls which toast container is used (e.g., 'bottom-center', 'middle-center').
+- Slot render functions can use plain HTML elements (as shown) or your own components. If using components inside h(), import them or define them before use.
