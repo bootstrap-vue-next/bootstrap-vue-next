@@ -467,6 +467,12 @@ const getStringValue = (ob: Items, key: string): string => {
   return typeof val === 'object' && val !== null ? JSON.stringify(val) : (val?.toString() ?? '')
 }
 
+const fieldByKey = computed(() => {
+  const map = new Map<string | number | symbol, TableField<Items>>()
+  for (const f of computedFields.value) if (isTableField<Items>(f)) map.set(f.key, f)
+  return map
+})
+
 const computedItems = computed<Items[]>(() => {
   const sortByItems = sortByModel.value?.filter((el) => !!el.order)
 
@@ -545,7 +551,7 @@ const computedItems = computed<Items[]>(() => {
     return mappedItems.sort((a, b) => {
       for (let i = 0; i < sortByItems.length; i++) {
         const {key, order} = sortByItems[i]
-        const field = computedFields.value.find((f) => f.key === key)
+        const field = fieldByKey.value.get(key)
         const comparer = field?.sortCompare || props.sortCompare
         const comparison = comparer
           ? comparer(a, b, key)
@@ -665,14 +671,17 @@ const handleFieldSorting = (field: TableField<Items>) => {
     return 'asc'
   }
 
-  const resolveOrder = (val: BTableSortByOrder): BTableSortByOrder | undefined => {
-    if (val === 'asc') return 'desc'
+  const resolveOrder = (val: BTableSortByOrder | undefined): BTableSortByOrder | undefined => {
+    // New sort: honor the configured initial direction
     if (val === undefined) return getInitialSortDirection()
-    if (
-      props.mustSort === true ||
-      (Array.isArray(props.mustSort) && props.mustSort.includes(fieldKey as string))
-    ) {
-      return getInitialSortDirection()
+    // Toggle behavior
+    if (val === 'asc') return 'desc'
+    if (val === 'desc') {
+      const must =
+        props.mustSort === true ||
+        (Array.isArray(props.mustSort) && props.mustSort.includes(fieldKey as string))
+      // When mustSort applies, flip to 'asc'; otherwise clear sorting
+      return must ? 'asc' : undefined
     }
     return undefined
   }
@@ -911,7 +920,9 @@ const SortIcon = defineComponent({
         props.fieldInfo.initialSortDirection || props.initialSortDirection
 
       if (fieldInitialDirection === 'last') {
-        const lastSorted = props.sortBy?.find((sort) => sort.order !== undefined)
+        const lastSorted = [...(props.sortBy ?? [])]
+          .reverse()
+          .find((sort) => sort.order !== undefined)
         return lastSorted?.order || 'asc'
       }
 
