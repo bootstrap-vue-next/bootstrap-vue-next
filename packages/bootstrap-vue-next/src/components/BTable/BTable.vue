@@ -638,10 +638,12 @@ const handleFieldSorting = (field: TableField<Items>) => {
 
   if (!(isSortable.value === true && fieldSortable === true)) return
 
-  // Get the last sorted direction from any currently sorted field
+  // Get the last sorted direction from the current sort model (last entry with a defined order)
   const getLastSortDirection = (): BTableSortByOrder => {
-    const lastSorted = sortByModel.value?.find((sort) => sort.order !== undefined)
-    return lastSorted?.order || 'asc'
+    const lastSorted = [...(sortByModel.value ?? [])]
+      .reverse()
+      .find((sort) => sort.order !== undefined)
+    return lastSorted?.order ?? 'asc'
   }
 
   // Determine initial sort direction for new sorts
@@ -698,7 +700,8 @@ const handleFieldSorting = (field: TableField<Items>) => {
         val.order = order
         tmp.splice(index, 1, val)
       } else {
-        // Remove the value from the array
+        // Remove the value from the array and emit cleared sort for this key
+        val.order = undefined
         tmp.splice(index, 1)
       }
     }
