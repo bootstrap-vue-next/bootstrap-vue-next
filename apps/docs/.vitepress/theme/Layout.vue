@@ -8,9 +8,6 @@
       toggleable="lg"
       :container="isLargeScreen ? true : 'fluid'"
     >
-      <BToastOrchestrator />
-      <BModalOrchestrator />
-      <BPopoverOrchestrator />
       <BNavbarBrand :to="withBase('/')" class="p-0 me-0 me-lg-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"

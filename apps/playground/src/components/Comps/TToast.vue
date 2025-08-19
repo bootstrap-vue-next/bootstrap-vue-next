@@ -44,7 +44,7 @@ const showFns = {
   },
   basicCustomComponent: () => {
     create({
-      slots: {default: h('div', null, {default: () => 'foobar!'})},
+      slots: {default: () => h('div', null, 'foobar!')},
       modelValue: true,
       active: true,
       variant: 'primary',

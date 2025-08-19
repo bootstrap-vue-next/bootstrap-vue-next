@@ -7,21 +7,21 @@ export default {
       sourcePath: '/BApp/BApp.vue',
       props: {
         defaults: {
-          type: 'object |  Partial<BvnComponentProps> | Ref<Partial<BvnComponentProps>>',
+          type: 'Partial<BvnComponentProps> | Ref<Partial<BvnComponentProps>>',
           default: undefined,
-          description: 'Default props for components. Can be an object or a ref.',
+          description: 'Default props for components. Can be a plain object or a ref.',
         },
         mergeDefaults: {
-          type: 'boolean | ((defaults: Partial<BvnComponentProps>, newDefaults: Partial<BvnComponentProps>) => Partial<BvnComponentProps>)',
+          type: 'boolean | ((oldDefaults: Partial<BvnComponentProps>, newDefaults: Partial<BvnComponentProps>) => Partial<BvnComponentProps>)',
           default: true,
           description:
-            'If `true`, merges defaults with existing defaults. If a function, it will be called with the current defaults and the new defaults',
+            'If `true`, performs a shallow merge with existing defaults (if `false`, replaces them). If a function, it receives (oldDefaults, newDefaults) and must return the merged defaults.',
         },
         noOrchestrator: {
           type: 'boolean',
           default: false,
           description:
-            'If `true`, disables the orchestrator plugin. This is useful if you want to use the app without the orchestrator functionality',
+            'If `true`, disables the orchestration layer (Modal/Toast/Popover controllers) inside BApp.',
         },
         appendToast: {
           type: 'boolean',
@@ -29,7 +29,7 @@ export default {
           description: 'Appends toast notifications to the end of the list instead of beginning.',
         },
         teleportTo: {
-          type: 'string | HTMLElement | null',
+          type: 'string | Element | null | undefined',
           default: null,
           description:
             'Specifies the element to which the toasts, modals and popovers should be teleported. This is useful if you want to move them to a different part of the DOM.',
@@ -38,13 +38,13 @@ export default {
           type: 'boolean | { rtlInitial?: boolean; localeInitial?: string }',
           default: false,
           description:
-            'If an object, it can specify initial RTL state and locale. If `false`, disables RTL mode.',
+            'If `true`, enables RTL. If an object, you can set initial RTL state and locale. If `false`, disables RTL.',
         },
       } satisfies PropRecord<keyof BAppProps>,
       emits: {},
       slots: {
         default: {
-          description: '',
+          description: 'App content. Attributes on <BApp> are forwarded to this slot.',
         },
       },
     },

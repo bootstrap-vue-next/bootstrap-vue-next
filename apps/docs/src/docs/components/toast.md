@@ -10,7 +10,7 @@ Toasts are lightweight notifications designed to mimic the push notifications th
 
 ## Overview
 
-This section only refers to using the raw component variation. Often times, `Toasts` are generated in a global context programatically, like showing a success message after saving a form. That functionality is covered under the composable docs [here](/docs/composables/useToast)
+This section only refers to using the raw component variation. Oftentimes, `Toasts` are generated in a global context programmatically, like showing a success message after saving a form. That functionality is covered under the composable docs [here](/docs/composables/useToast)
 
 The component variation is shown by using the `v-model` like so
 
@@ -137,7 +137,7 @@ You can place toasts in static placements, and with more control by using them d
 
 ## Auto-dismissing Toasts
 
-To create a `BToast` that dismisses automatically after a specified duration, set the `modelValue` prop to the number of **milliseconds** you want the `BToast` to remain visible. By default, the timer updates using `requestAnimationFrame`, which triggers an update approximately every second. Timed Toasts automatically pause when hovered over with a mouse, but you can disable this behavior using the `noHoverPause` prop. Ensure that the `modelValue` is an integer representing milliseconds. Any change to the `modelValue` will reset the timer.
+To create a `BToast` that dismisses automatically after a specified duration, set the `modelValue` prop to the number of **milliseconds** you want the `BToast` to remain visible. By default, the timer updates on every browser frame via `requestAnimationFrame` (roughly every 16 ms). To throttle updates for example to once per second—set the `interval` prop to `1000` (or any millisecond value). Timed Toasts automatically pause when hovered over with a mouse, but you can disable this behavior using the `noHoverPause` prop. Ensure that the `modelValue` is an integer representing milliseconds. Any change to the `modelValue` will reset the timer.
 
 The **interval** prop determines how frequently the timer updates. While the default is `requestAnimationFrame`, you can set a custom interval. Negative values for either `modelValue` or `interval` will stop the timer. If the `modelValue` does not divide evenly by the interval, the timer will continue to the nearest interval. For example, a `modelValue` of 5400 ms with an interval of 1000 ms will run for 6000 ms. To avoid this, choose an interval that divides evenly into the `modelValue`, such as 540 ms or 1080 ms.
 
@@ -204,7 +204,14 @@ As you may have noticed in that example, there was a built-in progress bar. This
 ```vue
 <template>
   <BButton
-    @click="create({href: 'https://getbootstrap.com/', target: '_blank', body: 'I am a BLink'})"
+    @click="
+      create({
+        href: 'https://getbootstrap.com/',
+        modelValue: true,
+        target: '_blank',
+        body: 'I am a BLink',
+      })
+    "
   >
     Show
   </BButton>
@@ -221,7 +228,7 @@ const {create} = useToast()
 
 ## Programmatically Control
 
-To programmatically control your modals with global state, refer to our documentation at [useToast](/docs/composables/useToast)
+To programmatically control your toasts with global state, refer to our documentation at [useToast](/docs/composables/useToast)
 
 ## Accessibility
 

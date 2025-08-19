@@ -620,11 +620,13 @@ fills the same needs (and more).
 Please read the [`useModal`](/docs/composables/useModal) documentation and then come back here for examples of replacements
 for `msgBoxOk` and `msgBoxConfirm`.
 
-Example using `useModal.create` to replace `msgBoxOk` (Remember to include `<BModalOrchestrator />` in your App Root):
+Example using `useModal.create` to replace `msgBoxOk`:
+Note: If you use `<BApp>`, the modal orchestrator is included by default. If you’re not using `BApp`, include `<BOrchestrator />` at your app root.
 
 <<< DEMO ./demo/ModalMessageBox.vue
 
-Example using `useModal.create` to replace `msgBoxConfirm` (Remember to include `<BModalOrchestrator />` in your App Root):
+Example using `useModal.create` to replace `msgBoxConfirm`:
+Note: If you use `<BApp>`, the modal orchestrator is included by default. If you’re not using `BApp`, include `<BOrchestrator />` at your app root.
 
 <<< DEMO ./demo/ModalConfirm.vue
 

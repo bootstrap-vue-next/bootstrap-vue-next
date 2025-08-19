@@ -150,8 +150,8 @@ const showMeAdvancedExample = () => {
 
 ### Return Value
 
-The `create` method will return a promise that resolves after the modal has been hidden to a `BvTriggableEvent` object.
-using the option 'resolveOnHide' the second argument of the `create` method will resolve the promise at time of hiding the modal, rather than waiting for the modal to be fully hidden.
+The `create` method returns a promise that resolves after the modal has been hidden to a `BvTriggerableEvent` object.  
+Using the `resolveOnHide` option (in the second argument), the promise resolves at the time the modal begins hiding, rather than after it is fully hidden.
 
 ```js
 const value = await create({title: 'Hello World!'}, {resolveOnHide: true})
