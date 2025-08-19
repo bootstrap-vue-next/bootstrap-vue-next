@@ -2,7 +2,7 @@
   <BContainer>
     <BRow>
       <BCol>
-        <BToastOrchestrator />
+        <BOrchestrator />
         <BButton v-for="(fn, name) in showFns" :key="name" @click="fn">{{ name }}</BButton>
       </BCol>
     </BRow>

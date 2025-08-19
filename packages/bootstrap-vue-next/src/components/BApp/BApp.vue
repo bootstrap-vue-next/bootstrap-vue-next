@@ -1,14 +1,11 @@
 <template>
-  <ConditionalTeleport :to="teleportTo" :disabled="!teleportTo">
-    <BOrchestrator v-if="!noOrchestrator" :append-toast="appendToast" />
-  </ConditionalTeleport>
+  <BOrchestrator v-if="!noOrchestrator" :append-toast="appendToast" :teleport-to="teleportTo" />
   <slot v-bind="$attrs" />
 </template>
 
 <script setup lang="ts">
 import type {BAppProps} from '../../types/ComponentProps'
 import BOrchestrator from './BOrchestrator.vue'
-import ConditionalTeleport from '../ConditionalTeleport.vue'
 import {useProvideDefaults} from '../../composables/useProvideDefaults'
 import {useRegistry} from '../../composables/useRegistry'
 import {useOrchestratorRegistry} from '../../composables/orchestratorShared'

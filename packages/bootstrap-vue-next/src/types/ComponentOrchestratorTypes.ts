@@ -39,7 +39,7 @@ export type ToastOrchestratorArrayValue = Omit<BToastProps, 'modelValue'> & {
   'position'?: ContainerPosition
   /**
    * Sets whether or not the toast should be appended to the container
-   * @default undefined Implicitly defaults to the BToastOrchestrator's appendToast value
+   * @default undefined Implicitly defaults to the BOrchestrator's appendToast value
    */
   'appendToast'?: boolean
   /**
@@ -83,7 +83,7 @@ export type ToastOrchestratorParam = Omit<BToastProps, 'modelValue'> & {
   'position'?: ContainerPosition
   /**
    * Sets whether or not the toast should be appended to the container
-   * @default undefined Implicitly defaults to the BToastOrchestrator's appendToast value
+   * @default undefined Implicitly defaults to the BOrchestrator's appendToast value
    */
   'appendToast'?: boolean
   /**
@@ -94,7 +94,6 @@ export type ToastOrchestratorParam = Omit<BToastProps, 'modelValue'> & {
    * @default 5000
    */
   'modelValue'?: MaybeRefOrGetter<BToastProps['modelValue']>
-  '_self'?: ControllerKey
   'onUpdate:modelValue'?: (val: boolean) => void
   'component'?: Readonly<Component>
   /**

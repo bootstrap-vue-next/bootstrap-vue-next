@@ -24,14 +24,14 @@ import {BToast} from '../../components'
 const posDefault: ContainerPosition = 'top-end'
 
 export const useToast = () => {
-  const controller = inject(orchestratorRegistryKey)
-  if (!controller) {
+  const orchestratorRegistry = inject(orchestratorRegistryKey)
+  if (!orchestratorRegistry) {
     throw new Error(
-      'useToast() was called outside of the setup() function! or the plugin is not provided.'
+      'useToast() must be called within setup(), and BApp, useRegistry or plugin must be installed/provided.'
     )
   }
 
-  const {store, _isToastAppend, _isOrchestratorInstalled} = controller
+  const {store, _isToastAppend, _isOrchestratorInstalled} = orchestratorRegistry
 
   /**
    * @returns {PromiseWithComponent<typeof BToast, ToastOrchestratorParam>} Returns a promise object with methods to control the toast (show, hide, toggle, get, set, destroy)
@@ -42,7 +42,7 @@ export const useToast = () => {
   ): PromiseWithComponent<typeof BToast, ToastOrchestratorParam> => {
     if (!_isOrchestratorInstalled.value) {
       throw new Error(
-        'The BApp or BToastOrchestrator component must be mounted to use the toast composable'
+        'The BApp or BOrchestrator component must be mounted to use the toast composable'
       )
     }
 

@@ -69,6 +69,7 @@ import type {
 import type {PopoverPlacement} from './PopoverPlacement'
 import type {InputType} from './InputType'
 import type {BvnComponentProps} from './BootstrapVueOptions'
+import type {OrchestratorArrayValue} from './ComponentOrchestratorTypes'
 
 export interface BAppProps {
   defaults?: Partial<BvnComponentProps>
@@ -93,6 +94,15 @@ export interface BAppProps {
          */
         localeInitial?: string
       }
+}
+
+export interface BOrchestratorProps {
+  noPopovers?: boolean
+  noToasts?: boolean
+  noModals?: boolean
+  appendToast?: boolean
+  teleportTo?: TeleportProps['to']
+  filter?: (item: OrchestratorArrayValue) => boolean
 }
 
 export interface BLinkProps {

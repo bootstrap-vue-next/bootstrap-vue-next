@@ -61,7 +61,7 @@ const pop = popover({title: 'Hello World!', body: 'This is a popover.', target: 
 
 ### Reactivity Within `popover` and `tooltip`
 
-The methods accepts reactive properties using `MaybeRef`, allowing dynamic updates to the popover content.
+The methods accept reactive properties using `MaybeRef`, allowing dynamic updates to the popover content.
 
 <HighlightCard>
   <BButton ref="reactiveExample">Hover me</BButton>

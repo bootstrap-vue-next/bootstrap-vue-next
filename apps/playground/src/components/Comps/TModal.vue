@@ -1,6 +1,6 @@
 <template>
   <BContainer fluid>
-    <BModalOrchestrator />
+    <BOrchestrator />
     <BRow>
       <BCol>
         <BButton @click="showModal = !showModal">Toggle modal v-model</BButton>

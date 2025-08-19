@@ -27,13 +27,13 @@ import {buildPromise} from '../orchestratorShared'
 import {BModal} from '../../components'
 
 export const useModal = () => {
-  const controller = inject(orchestratorRegistryKey)
-  if (!controller) {
+  const orchestratorRegistry = inject(orchestratorRegistryKey)
+  if (!orchestratorRegistry) {
     throw Error(
-      'useModal() was called outside of the setup() function! or the plugin is not provided.'
+      'useModal() must be called within setup(), and BApp, useRegistry or plugin must be installed/provided.'
     )
   }
-  const {store, _isOrchestratorInstalled} = controller
+  const {store, _isOrchestratorInstalled} = orchestratorRegistry
 
   /**
    * @returns {PromiseWithComponent}  Returns a promise object with methods to control the modal (show, hide, toggle, get, set, destroy)
@@ -43,9 +43,7 @@ export const useModal = () => {
     options: OrchestratorCreateOptions = {}
   ): PromiseWithComponent<typeof BModal, ModalOrchestratorParam> => {
     if (!_isOrchestratorInstalled.value) {
-      throw new Error(
-        'The BModalOrchestrator component must be mounted to use the modal controller'
-      )
+      throw new Error('BApp or BOrchestrator component must be mounted to use the modal controller')
     }
 
     const resolvedProps = toRef(obj)

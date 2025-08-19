@@ -1,69 +1,71 @@
 <template>
-  <div class="orchestrator-container" v-bind="$attrs">
-    <div
-      v-for="(value, key) in ComputedPositionClasses"
-      :key="key"
-      :class="value.class"
-      :style="value.style"
-    >
-      <TransitionGroup name="b-list">
-        <!-- eslint-disable vue/no-unused-vars -->
-        <span
-          v-for="{
-            _self,
-            type,
-            position,
-            slots,
-            promise,
-            options,
-            _component,
-            ...val
-          } in items?.filter((el) => el.position === key) || []"
-          :key="_self"
-        >
-          <component
-            :is="_component"
-            v-bind="val"
-            :ref="(ref: ComponentPublicInstance) => (promise.value.ref = ref)"
-            initial-animation
-            :teleport-disabled="true"
-            @hide="
-              (e: BvTriggerableEvent) => {
-                setEventOk(e)
-                val.onHide?.(e)
-                if (e.defaultPrevented) {
-                  return
-                }
-                promise.stop?.()
-                if (options?.resolveOnHide) {
-                  promise.resolve(e)
-                }
-              }
-            "
-            @hidden="
-              (e: BvTriggerableEvent) => {
-                setEventOk(e)
-                val.onHidden?.(e)
-                if (e.defaultPrevented) {
-                  return
-                }
-                if (!options?.resolveOnHide) {
-                  promise.resolve(e)
-                }
-                if (!options?.keep) {
-                  promise.value.destroy?.()
-                }
-              }
-            "
+  <ConditionalTeleport :to="teleportTo" :disabled="!teleportTo">
+    <div class="orchestrator-container" v-bind="$attrs">
+      <div
+        v-for="(value, key) in ComputedPositionClasses"
+        :key="key"
+        :class="value.class"
+        :style="value.style"
+      >
+        <TransitionGroup name="b-list">
+          <!-- eslint-disable vue/no-unused-vars -->
+          <span
+            v-for="{
+              _self,
+              type,
+              position,
+              slots,
+              promise,
+              options,
+              _component,
+              ...val
+            } in items?.filter((el) => el.position === key) || []"
+            :key="_self"
           >
-            <template v-for="(comp, slot) in slots" #[slot]="scope" :key="slot">
-              <component :is="comp" v-bind="scope" />
-            </template>
-          </component>
-        </span>
-      </TransitionGroup>
+            <component
+              :is="_component"
+              v-bind="val"
+              :ref="(ref: ComponentPublicInstance) => (promise.value.ref = ref)"
+              initial-animation
+              :teleport-disabled="true"
+              @hide="
+                (e: BvTriggerableEvent) => {
+                  setEventOk(e)
+                  val.onHide?.(e)
+                  if (e.defaultPrevented) {
+                    return
+                  }
+                  promise.stop?.()
+                  if (options?.resolveOnHide) {
+                    promise.resolve(e)
+                  }
+                }
+              "
+              @hidden="
+                (e: BvTriggerableEvent) => {
+                  setEventOk(e)
+                  val.onHidden?.(e)
+                  if (e.defaultPrevented) {
+                    return
+                  }
+                  if (!options?.resolveOnHide) {
+                    promise.resolve(e)
+                  }
+                  if (!options?.keep) {
+                    promise.value.destroy?.()
+                  }
+                }
+              "
+            >
+              <template v-for="(comp, slot) in slots" #[slot]="scope" :key="slot">
+                <component :is="comp" v-bind="scope" />
+              </template>
+            </component>
+          </span>
+        </TransitionGroup>
+      </div>
     </div>
-  </div>
+  </ConditionalTeleport>
 </template>
 
 <script setup lang="ts">
@@ -71,28 +73,20 @@ import {type ComponentPublicInstance, computed, inject, watch} from 'vue'
 import {orchestratorRegistryKey} from '../../utils/keys'
 import {positionClasses} from '../../utils/positionClasses'
 import type {BvTriggerableEvent} from '../../utils'
-import type {OrchestratorArrayValue} from '../../types/ComponentOrchestratorTypes'
+import type {BOrchestratorProps} from '../../types/ComponentProps'
+import ConditionalTeleport from '../ConditionalTeleport.vue'
 
 function setEventOk(event: BvTriggerableEvent): void {
   event.ok = event.trigger === 'ok' ? true : event.trigger === 'cancel' ? false : null
 }
 
-const props = withDefaults(
-  defineProps<{
-    noPopovers?: boolean
-    noToasts?: boolean
-    noModals?: boolean
-    appendToast?: boolean
-    filter?: (item: OrchestratorArrayValue) => boolean
-  }>(),
-  {
-    noPopovers: false,
-    noToasts: false,
-    noModals: false,
-    appendToast: false,
-    filter: () => true,
-  }
-)
+const props = withDefaults(defineProps<BOrchestratorProps>(), {
+  noPopovers: false,
+  noToasts: false,
+  noModals: false,
+  appendToast: false,
+  filter: () => true,
+})
 
 const orchestratorRegistry = inject(orchestratorRegistryKey)
 
@@ -102,7 +96,7 @@ if (orchestratorRegistry) {
   }
 } else {
   console.warn(
-    '[BOrchestrator] The orchestrator registry not found. Please use BApp, useOrchestratorRegistry or provide the plugin.'
+    '[BOrchestrator] The orchestrator registry not found. Please use BApp, useRegistry or provide the plugin.'
   )
 }
 

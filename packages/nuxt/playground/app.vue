@@ -1,10 +1,9 @@
 <template>
   <div style="min-height: 1000vh">
+    <BOrchestrator />
     <BAlert :model-value="true">
       Hello World
     </BAlert>
-    <BToastOrchestrator />
-    <BModalOrchestrator />
     <BModal v-model="show">
       Nuxt module playground!
     </BModal>

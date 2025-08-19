@@ -2,7 +2,7 @@
 
 <PageHeader>
 
-Push notifications to your visitors with `BToast` and `BToastOrchestrator`. These are components that are easily customizable for generating alert messages
+Push notifications to your visitors with `BToast`, `useToast` and `BOrchestrator`. These are easily customizable for generating alert messages.
 
 </PageHeader>
 
