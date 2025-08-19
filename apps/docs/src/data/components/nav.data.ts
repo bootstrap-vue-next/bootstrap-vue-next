@@ -39,48 +39,48 @@ export default {
         align: {
           type: 'AlignmentJustifyContent',
           default: undefined,
-          description: 'Aligns the nav items to any value of AlignmentJustifyContent', // TODO grammar check (rephrased for clarity and consistency)
+          description: 'Aligns the nav items to any value of AlignmentJustifyContent',
         },
         cardHeader: {
           type: 'boolean',
           default: false, // TODO item not in string format
-          description: 'Indicates the nav is placed inside a card header', // TODO grammar check (rephrased for clarity)
+          description: 'Indicates the nav is placed inside a card header',
         },
         fill: {
           type: 'boolean',
           default: false, // TODO item not in string format
           description:
-            'Fills all horizontal space with nav items proportionally, with varying widths', // TODO grammar check (rephrased for clarity and brevity)
+            'Fills all horizontal space with nav items proportionally, with varying widths',
         },
         justified: {
           type: 'boolean',
           default: false, // TODO item not in string format
-          description: 'Fills all horizontal space with nav items, each having equal width', // TODO grammar check (rephrased for clarity and brevity)
+          description: 'Fills all horizontal space with nav items, each having equal width',
         },
         pills: {
           type: 'boolean',
           default: false, // TODO item not in string format
-          description: 'Styles nav items as pill buttons', // TODO grammar check (rephrased for brevity)
+          description: 'Styles nav items as pill buttons',
         },
         small: {
           type: 'boolean',
           default: false, // TODO item not in string format
-          description: 'Reduces the nav size', // TODO grammar check (rephrased for brevity)
+          description: 'Reduces the nav size',
         },
         tabs: {
           type: 'boolean',
           default: false, // TODO item not in string format
-          description: 'Styles nav items as tabs', // TODO grammar check (rephrased for brevity)
+          description: 'Styles nav items as tabs',
         },
         underline: {
           type: 'boolean',
           default: false, // TODO item not in string format
-          description: 'Underlines the active nav item', // TODO grammar check (rephrased for brevity)
+          description: 'Underlines the active nav item',
         },
         vertical: {
           type: 'boolean',
           default: false, // TODO item not in string format
-          description: 'Stacks nav items vertically', // TODO grammar check (rephrased for brevity)
+          description: 'Stacks nav items vertically',
         },
       } satisfies PropRecord<keyof BNavProps>,
       emits: {},
@@ -106,7 +106,7 @@ export default {
         formClass: {
           type: 'ClassValue',
           default: undefined,
-          description: 'CSS class (or classes) to apply to the form element', // TODO grammar check (rephrased for clarity)
+          description: 'CSS class (or classes) to apply to the form element',
         },
       } satisfies PropRecord<keyof BNavFormProps>,
       emits: {
@@ -134,12 +134,12 @@ export default {
           linkAttrs: {
             type: 'Readonly<AttrsValue>',
             default: undefined,
-            description: 'Additional attributes for the nested link element', // TODO grammar check (rephrased for clarity)
+            description: 'Additional attributes for the nested link element',
           },
           linkClass: {
             type: 'ClassValue',
             default: undefined,
-            description: 'CSS class (or classes) for the nested link element', // TODO grammar check (rephrased for clarity)
+            description: 'CSS class (or classes) for the nested link element',
           },
         } satisfies PropRecord<Exclude<keyof BNavItemProps, keyof typeof linkProps>>,
         'BLink props': {
@@ -151,18 +151,18 @@ export default {
       },
       emits: {
         click: {
-          description: 'Emitted when a non-disabled nav item is clicked', // TODO grammar check (rephrased for clarity)
+          description: 'Emitted when a non-disabled nav item is clicked',
           args: {
             click: {
               type: 'MouseEvent',
-              description: 'Click event details', // TODO grammar check (rephrased for clarity)
+              description: 'Click event details',
             },
           },
         },
       } satisfies EmitRecord<keyof BNavItemEmits>,
       slots: {
         after: {
-          description: 'Content placed after the nav item link (useful for nested navs)', // TODO grammar check (rephrased for clarity)
+          description: 'Content placed after the nav item link (useful for nested navs)',
           scope: {},
         },
         default: {
@@ -185,13 +185,13 @@ export default {
         text: {
           type: 'string',
           default: undefined,
-          description: 'Plain text to display in the nav', // TODO grammar check (rephrased for consistency)
+          description: 'Plain text to display in the nav',
         },
       } satisfies PropRecord<keyof BNavTextProps>,
       emits: {},
       slots: {
         default: {
-          description: 'Content to display in the nav', // TODO grammar check (rephrased for consistency)
+          description: 'Content to display in the nav',
           scope: {},
         },
       } satisfies SlotRecord<keyof BNavTextSlots>,

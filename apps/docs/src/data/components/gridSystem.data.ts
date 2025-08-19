@@ -20,7 +20,7 @@ export default {
           type: 'boolean | Breakpoint',
           default: false, // TODO item not in string format
           description:
-            'When set to true, makes the row 100% wide all the time, or set to one of the Bootstrap breakpoint names for 100% width up to the breakpoint', // TODO grammar check (should say "container" instead of "row" to match component context)
+            'When set to true, makes the container 100% wide all the time, or set to one of the Bootstrap breakpoint names for 100% width up to the breakpoint',
         },
         gutterX: {
           type: 'GutterNumbers',
@@ -47,7 +47,7 @@ export default {
           type: 'AlignmentContent',
           default: undefined,
           description:
-            "Align columns items together on the cross axis: 'start', 'center', 'end', 'around', 'between', 'fill' or 'stretch'. Has no effect on single rows of items", // TODO grammar check (should say "Aligns column items" instead of "Align columns items" for clarity)
+            "Aligns column items together on the cross axis: 'start', 'center', 'end', 'around', 'between', 'fill' or 'stretch'. Has no effect on single rows of items",
         },
         alignH: {
           type: 'AlignmentJustifyContent',
@@ -64,32 +64,32 @@ export default {
         cols: {
           type: 'ColsNumbers',
           default: undefined,
-          description: "The number row columns to create at the 'xs' breakpoint.", // TODO grammar check (should say "number of row columns" instead of "number row columns")
+          description: "The number of row columns to create at the 'xs' breakpoint.",
         },
         colsLg: {
           type: 'ColsNumbers',
           default: undefined,
-          description: "The number row columns to create at the 'ls' breakpoint.", // TODO grammar check (should say "number of row columns" and "'lg' breakpoint" instead of "'ls' breakpoint")
+          description: "The number of row columns to create at the 'lg' breakpoint.",
         },
         colsMd: {
           type: 'ColsNumbers',
           default: undefined,
-          description: "The number row columns to create at the 'md' breakpoint.", // TODO grammar check (should say "number of row columns")
+          description: "The number of row columns to create at the 'md' breakpoint.",
         },
         colsSm: {
           type: 'ColsNumbers',
           default: undefined,
-          description: "The number row columns to create at the 'sm' breakpoint.", // TODO grammar check (should say "number of row columns")
+          description: "The number of row columns to create at the 'sm' breakpoint.",
         },
         colsXl: {
           type: 'ColsNumbers',
           default: undefined,
-          description: "The number row columns to create at the 'xl' breakpoint.", // TODO grammar check (should say "number of row columns")
+          description: "The number of row columns to create at the 'xl' breakpoint.",
         },
         colsXxl: {
           type: 'ColsNumbers',
           default: undefined,
-          description: "The number row columns to create at the 'xxl' breakpoint.", // TODO grammar check (should say "number of row columns")
+          description: "The number of row columns to create at the 'xxl' breakpoint.",
         },
         gutterX: {
           type: 'GutterNumbers',
@@ -129,7 +129,7 @@ export default {
           type: 'boolean',
           default: false, // TODO item not in string format
           description:
-            'When true makes an equal width column grid cell spans for xs and up breakpoints', // TODO grammar check (should say "When true, makes the column grid cell span equal width" for clarity)
+            'When true, makes the column grid cell span equal width for xs and up breakpoints',
         },
         cols: {
           type: "ColsNumbers | 'auto'",

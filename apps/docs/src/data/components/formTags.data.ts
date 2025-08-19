@@ -59,7 +59,7 @@ export default {
           args: {
             remove: {
               type: 'string',
-              description: 'text of the tag to remove', // TODO grammar check (should capitalize "Text" for consistency)
+              description: 'Text of the tag to remove',
             },
           },
         },
@@ -90,7 +90,7 @@ export default {
           type: 'string',
           default: 'Add',
           description:
-            "Text for the built in 'Add' button. Slot `add-button-text` takes precedence", // TODO grammar check (should say "built-in" instead of "built in")
+            "Text for the built-in 'Add' button. Slot `add-button-text` takes precedence",
         },
         addButtonVariant: {
           type: 'ButtonVariant | null',
@@ -127,7 +127,7 @@ export default {
           type: 'string',
           default: undefined,
           description:
-            'Id to apply to the new tag input element. If not provided, a unique Id will be auto generated', // TODO grammar check (should say "ID" consistently instead of "Id")
+            'ID to apply to the new tag input element. If not provided, a unique ID will be auto generated',
         },
         inputType: {
           type: 'InputType',
@@ -145,7 +145,7 @@ export default {
           type: 'Numberish',
           default: undefined,
           description:
-            'The maximum amount of tags that can be added. The limit can still be exceeded if manipulated outside of the component', // TODO grammar check (should say "number" instead of "amount" for countable items)
+            'The maximum number of tags that can be added. The limit can still be exceeded if manipulated outside of the component',
         },
         limitTagsText: {
           type: 'string',
@@ -192,7 +192,7 @@ export default {
         tagPills: {
           type: 'boolean',
           default: false, // TODO item not in string format
-          description: 'Makes the built in tags have a pill appearance', // TODO grammar check (should say "built-in" instead of "built in")
+          description: 'Makes the built-in tags have a pill appearance',
         },
         tagRemoveLabel: {
           type: 'string',
@@ -236,7 +236,7 @@ export default {
           },
         },
         'focusin': {
-          description: 'Emitted when internal elements of component gain focus.', // TODO grammar check (should remove trailing period for consistency)
+          description: 'Emitted when internal elements of component gain focus',
           args: {
             event: {
               type: 'FocusEvent',
@@ -245,7 +245,7 @@ export default {
           },
         },
         'focusout': {
-          description: 'Emitted when internal elements of component lose focus.', // TODO grammar check (should remove trailing period for consistency)
+          description: 'Emitted when internal elements of component lose focus',
           args: {
             event: {
               type: 'FocusEvent',
@@ -274,7 +274,7 @@ export default {
           },
         },
         'update:model-value': {
-          description: 'Emitted when the tags changes. Updates the v-model', // TODO grammar check (should say "change" instead of "changes") // TODO similar content to BFormSelect/update:model-value (similar purpose)
+          description: 'Emitted when the tags change. Updates the v-model',
           args: {
             value: {
               type: 'Array',
@@ -286,7 +286,7 @@ export default {
       slots: {
         'add-button-text': {
           description:
-            "Content to place in the built in 'Add' button. Takes precedence over the 'add-button-text' prop. Not used when the default scoped slot is provided", // TODO grammar check (should say "built-in" instead of "built in")
+            "Content to place in the built-in 'Add' button. Takes precedence over the 'add-button-text' prop. Not used when the default scoped slot is provided",
         },
         'default': {
           description: 'Slot to override the default rendering of the tags component',
@@ -344,12 +344,12 @@ export default {
             inputId: {
               type: 'string',
               description:
-                "Id to add to the new tag input element. Defaults to prop 'input-id'. If not provided a unique Id is auto-generated. Also available via 'inputAttrs.id'", // TODO grammar check (should say "ID" consistently instead of "Id")
+                "ID to add to the new tag input element. Defaults to prop 'input-id'. If not provided a unique ID is auto-generated. Also available via 'inputAttrs.id'",
             },
             inputType: {
               type: 'InputType',
               description:
-                "The type of input to use: 'type', 'email', 'tel', 'url', or 'number'. Default is 'text'. Normalized value of the 'input-type' prop", // TODO grammar check (should say "'text'" instead of "'type'" in the list)
+                "The type of input to use: 'text', 'email', 'tel', 'url', or 'number'. Default is 'text'. Normalized value of the 'input-type' prop",
             },
             invalidTagText: {
               type: 'string',
@@ -372,7 +372,7 @@ export default {
             isLimitReached: {
               type: 'boolean',
               description:
-                "Will be `true` if the input has reached the maximum amount of tags defined by the 'limit' prop", // TODO grammar check (should say "number" instead of "amount" for countable items)
+                "Will be `true` if the input has reached the maximum number of tags defined by the 'limit' prop",
             },
             limitTagsText: {
               type: 'string',
@@ -442,7 +442,7 @@ export default {
           },
         },
         'tag': {
-          description: 'Slot to override the default rendering an individual tag', // TODO grammar check (should say "rendering of an" instead of "rendering an")
+          description: 'Slot to override the default rendering of an individual tag',
           scope: {
             tag: {
               type: 'string',
