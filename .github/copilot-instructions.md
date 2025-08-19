@@ -6,7 +6,7 @@ Always reference these instructions first and fallback to search or bash command
 
 ### Required Setup
 - Install Node.js 20.x or 22.x (engine requires >=22.0.0 but 20.x works with warnings)
-- Install pnpm globally: `npm install -g pnpm@10.13.1` (ONLY pnpm is allowed as package manager)
+- Install pnpm globally: `npm install -g pnpm@10.13.1` (ONLY pnpm is allowed as package manager) Use the version specified in the packageManager field of the package.json file
 - Clone repository and open the **root** directory (not subdirectories like packages/bootstrap-vue-next)
 
 ### Bootstrap, Build, and Test the Repository
