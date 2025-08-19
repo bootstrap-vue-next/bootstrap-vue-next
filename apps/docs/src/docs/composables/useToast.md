@@ -57,17 +57,19 @@ const {create} = useToast()
   </template>
 </HighlightCard>
 
-The `show` method returns a `promise` that is resolved then the toast closes. You can give toast a unique id. Since `Toasts` are fluid and can move around a lot, returning the index at a given point in time is not ideal for as its position may be changed in the array. So, for use with the `remove` method, you need to give a unique identifier
+The `create` method returns a `promise` that is resolved then the toast closes. You can give toast a unique id. Since `Toasts` are fluid and can move around a lot, returning the index at a given point in time is not ideal for as its position may be changed in the array. So, for use with the `remove` method, you need to give a unique identifier
 
-### Show Options
+### Create Options
 
-The `show` method accepts an object with the following values `props` and `component`
+The `create` method accepts an object with `BToast`’s props, `position`, `appendToast`, `component` and `slots`.
 
-The props property corresponds to mostly that of the `BToast` components props. The props object, in addition to the props declared on `BToast`, includes `position`. The `position` value effects its position, its type is [Container Position](/docs/types#containerposition)
+The `position` value affects placement; its type is [ContainerPosition](/docs/types#containerposition).
 
-### Reactivity Within Show
+Optional second argument can be passed to `create` to some options: `keep` and `resolveOnHide`. The `keep` option will keep the toast in the registry after it is hidden, allowing you to show it again without creating a new instance. The `resolveOnHide` option will resolve the promise returned by `create` when the toast is hidden, not after the hide has finished.
 
-`show` props property can accept a `MaybeRefOrGetter`, meaning that you can make properties reactive
+### Reactivity Within create
+
+`create` props property can accept a `MaybeRefOrGetter`, meaning that you can make properties reactive
 
 <HighlightCard>
   <BButton @click="showReactiveExample">Show</BButton>

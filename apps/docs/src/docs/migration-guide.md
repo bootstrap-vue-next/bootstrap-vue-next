@@ -614,10 +614,10 @@ See the [v-html](#v-html) section for information on deprecation of the `cancel-
 #### Replacement for Modal Message boxes
 
 [BootstrapVue](https://bootstrap-vue.github.io/bootstrap-vue/docs/components/modal#modal-message-boxes) provided two methods on the `this.$bvModal` object called `msgBoxOk` and `msgBoxConfirm`.
-In holding with the Vue3 first philosophy, BootstrapVueNext provides a composable called [`useModal`](/docs/composables/useModal) that
-fills the same needs (and more).
+In keeping with the Vue3 first philosophy, BootstrapVueNext provides a composable called [`useModal`](/docs/composables/useModal) that
+fills the same use cases (and more).
 
-Please read the [`useModal`](/docs/composables/useModal) documentation and then come back here for examples of replacements
+Please read the [`useModal`](/docs/composables/useModal) documentation and then return here for examples of replacements
 for `msgBoxOk` and `msgBoxConfirm`.
 
 Example using `useModal.create` to replace `msgBoxOk`:
@@ -630,7 +630,7 @@ Note: If you use `<BApp>`, the modal orchestrator is included by default. If you
 
 <<< DEMO ./demo/ModalConfirm.vue
 
-The `create` accepts all of the properties that are defined on
+The `create` method accepts all properties defined on
 [BModal](/docs/components/modal#component-reference).
 
 See [Show and Hide](#show-and-hide) shared properties.
