@@ -1,17 +1,17 @@
-import type {BTooltipProps, BvnComponentProps} from 'bootstrap-vue-next'
-import {type EmitArgReference, type PropertyReference} from '../types'
-import {buildCommonProps, pick, showHideProps} from '.'
+import type {BPopoverEmits, BPopoverProps} from 'bootstrap-vue-next'
+import {type EmitRecord, type EmitReference, type PropRecord, type PropReference} from '../types'
+import {buildCommonProps} from './commonProps'
+import {pick} from './objectUtils'
+import {showHideEmits, showHideProps} from './showHideData'
 
-export const popoverSharedProps = (
-  type: string
-): Record<keyof BTooltipProps, PropertyReference> => {
-  const clone = structuredClone(sharedProps) as Record<string, PropertyReference>
+export const popoverSharedProps = (type: string): PropRecord<keyof BPopoverProps> => {
+  const clone = structuredClone(sharedProps) as Record<string, PropReference>
   for (const key in clone) {
     if (clone[key]?.description && typeof clone[key].description === 'string') {
       clone[key].description = clone[key].description.replace(/\{component\}/g, type)
     }
   }
-  return clone
+  return clone as PropRecord<keyof BPopoverProps>
 }
 
 const sharedProps = {
@@ -49,11 +49,21 @@ const sharedProps = {
     default: undefined,
     description: 'Directly set the floating-ui middleware behavior. See above for details.',
   },
+  focus: {
+    type: 'boolean',
+    default: undefined,
+    description: 'Enable/disable focus trigger. See [Triggers](#triggers) for details.',
+  },
   hideMargin: {
     type: 'number',
     default: 0,
     description:
       'The margin to apply when hiding the {component} on pointer leave (how far the pointer can move off the target before hiding the {component})',
+  },
+  hover: {
+    type: 'boolean',
+    default: undefined,
+    description: 'Enable/disable hover trigger. See [Triggers](#triggers) for details.',
   },
   inline: {
     type: 'boolean',
@@ -157,76 +167,87 @@ const sharedProps = {
     }),
     ['bodyClass', 'id', 'placement', 'title', 'titleClass']
   ),
-} satisfies Record<keyof BvnComponentProps['BPopover'], PropertyReference>
+} satisfies PropRecord<keyof BPopoverProps>
 
-export const popoverSharedEmits = (type: string) =>
-  sharedEmits.map((emit) => {
-    const clone = structuredClone(emit)
-    if (clone.description && typeof clone.description === 'string') {
-      clone.description = clone.description.replace(/\{component\}/g, type)
+export const popoverSharedEmits = (
+  type: string
+): EmitRecord<keyof BPopoverEmits | 'update:model-value'> => {
+  const clone = structuredClone(sharedEmits) as Record<string, EmitReference>
+  for (const key in clone) {
+    if (clone[key]?.description && typeof clone[key].description === 'string') {
+      clone[key].description = clone[key].description.replace(/\{component\}/g, type)
     }
-    if (Array.isArray(clone.args)) {
-      clone.args = clone.args.map((arg: EmitArgReference) => {
-        if (arg.description && typeof arg.description === 'string') {
-          arg.description = arg.description.replace(/\{component\}/g, type)
+    if (clone[key]?.args && typeof clone[key].args === 'object') {
+      for (const argKey in clone[key].args) {
+        if (
+          clone[key].args[argKey]?.description &&
+          typeof clone[key].args[argKey].description === 'string'
+        ) {
+          clone[key].args[argKey].description = clone[key].args[argKey].description.replace(
+            /\{component\}/g,
+            type
+          )
         }
-        return arg
-      })
+      }
     }
-    return clone
-  })
+  }
+  return clone as EmitRecord<keyof BPopoverEmits | 'update:model-value'>
+}
 
-const sharedEmits = [
-  {
-    event: 'blur',
+const sharedEmits = {
+  ...showHideEmits,
+  'blur': {
     description: 'Emitted when the target element loses focus.',
-    args: [
-      {
-        arg: 'value',
+    args: {
+      value: {
         type: 'BvTriggerableEvent',
+        description: '', // TODO missing description
       },
-    ],
+    },
   },
-  {
-    event: 'click-outside',
-    description: 'Emitted when the mouse is clicked outside of the {component}.',
-    args: [
-      {
-        arg: 'value',
+  'click-outside': {
+    description: 'Emitted when the mouse is clicked outside the {component}.',
+    args: {
+      value: {
         type: 'BvTriggerableEvent',
+        description: '', // TODO missing description
       },
-    ],
+    },
   },
-  {
-    event: 'close-on-hide',
+  'close-on-hide': {
     description: 'Emitted when the {component} is closed due to being clipped.',
-    args: [
-      {
-        arg: 'value',
+    args: {
+      value: {
         type: 'BvTriggerableEvent',
+        description: '', // TODO missing description
       },
-    ],
+    },
   },
-  {
-    event: 'pointerleave',
+  'pointerleave': {
     description:
-      'Emitted when the pointer leaves the target element. This event is not emitted when the pointer leaves the {component} element.',
-    args: [
-      {
-        arg: 'value',
+      'Emitted when the pointer leaves the target element, but not when leaving the popover element.',
+    args: {
+      value: {
         type: 'BvTriggerableEvent',
+        description: '', // TODO missing description
       },
-    ],
+    },
   },
-  {
-    event: 'update:model-value',
-    description: 'Change the visibility of the {component}',
-    args: [
-      {
-        arg: 'value',
+  'update:model-value': {
+    description: 'Emitted when the visibility of the {component} changes.', // TODO similar content to BAlert/update:model-value (similar purpose)
+    args: {
+      value: {
         type: 'boolean',
-        description: 'New visibility state of the {component}',
+        description: 'New visibility state of the {component}.',
       },
-    ],
+    },
   },
-]
+  'cancel': {
+    args: undefined,
+    description: undefined,
+  },
+  'ok': {
+    args: undefined,
+    description: undefined,
+  },
+} satisfies EmitRecord<keyof BPopoverEmits | 'update:model-value'>

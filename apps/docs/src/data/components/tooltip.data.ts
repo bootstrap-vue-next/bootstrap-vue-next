@@ -1,41 +1,45 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
-import {popoverSharedEmits, popoverSharedProps, showHideEmits, showHideSlotsData} from '../../utils'
+import type {BTooltipEmits, BTooltipProps, BTooltipSlots} from 'bootstrap-vue-next'
+import {
+  type ComponentReference,
+  type EmitRecord,
+  type PropRecord,
+  type SlotRecord,
+  StyleKind,
+} from '../../types'
+import {showHideSlotsData} from '../../utils/showHideData'
+import {popoverSharedEmits, popoverSharedProps} from '../../utils/popover-shared'
 
 export default {
-  load: (): ComponentReference[] => [
-    {
-      component: 'BTooltip',
+  load: (): ComponentReference => ({
+    BPopover: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.tooltip, .popover'},
-      sourcePath: '/BTooltip/BTooltip.vue',
+      sourcePath: '/BTooltip.vue',
       props: {
-        '': {
-          ...popoverSharedProps('tooltip'),
-          interactive: {
-            type: 'boolean',
-            default: false,
-            description: 'Allow user interaction with the tooltip content.',
-          },
-        } satisfies Record<keyof BvnComponentProps['BTooltip'], PropertyReference>,
-      },
-      emits: [...showHideEmits, ...popoverSharedEmits('tooltip')],
-      slots: [
-        {
-          name: 'title',
-          description: 'Slot for tooltip content',
+        ...popoverSharedProps('popover'),
+        interactive: {
+          type: 'boolean',
+          default: false,
+          description:
+            'Whether the tooltip is interactive (can be hovered/focused without closing).',
+        },
+      } satisfies PropRecord<keyof BTooltipProps>,
+      emits: popoverSharedEmits('popover') satisfies EmitRecord<
+        keyof BTooltipEmits | 'update:model-value'
+      >,
+      slots: {
+        title: {
+          description: 'Content for the popover title.',
           scope: showHideSlotsData,
         },
-        {
-          name: 'default',
-          description: 'Slot for tooltip content (title slot takes precedence)',
+        default: {
+          description: 'Content for the popover body.',
           scope: showHideSlotsData,
         },
-        {
-          name: 'target',
-          description: 'Slot for target/trigger element',
+        target: {
+          description: 'Content for the target or trigger element.',
           scope: showHideSlotsData,
         },
-      ],
+      } satisfies SlotRecord<keyof BTooltipSlots>,
     },
-  ],
+  }),
 }
