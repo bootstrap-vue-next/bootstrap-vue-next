@@ -120,7 +120,7 @@ export type TooltipOrchestratorArrayValue = BTooltipProps & {
   '_component'?: Readonly<Component>
   'promise': {
     value: PromiseWithComponent<typeof BPopover | typeof BTooltip, PopoverOrchestratorParam>
-    resolve: (value: BvTriggerableEvent) => void
+    resolve: (value: BvTriggerableEvent | boolean | null) => void
     stop?: WatchHandle
   }
   'slots'?: {
@@ -189,7 +189,7 @@ export type ModalOrchestratorArrayValue = BModalProps & {
   '_self': ControllerKey
   'position': 'modal'
   'onUpdate:modelValue'?: (val: boolean) => void
-  'options': ModalOrchestratorCreateOptions
+  'options': OrchestratorCreateOptions
   'promise': {
     value: PromiseWithComponent<typeof BModal, ModalOrchestratorParam>
     resolve: (value: BvTriggerableEvent | boolean | null) => void
@@ -208,7 +208,7 @@ export type ModalOrchestratorParam = Omit<BModalProps, 'body' | 'title' | 'model
   'title'?: MaybeRefOrGetter<BModalProps['title']>
   'body'?: MaybeRefOrGetter<BModalProps['body']>
   'modelValue'?: MaybeRefOrGetter<BModalProps['modelValue']>
-  'options'?: ModalOrchestratorCreateOptions
+  'options'?: OrchestratorCreateOptions
   'component'?: Readonly<Component>
   /**
    * @deprecated
@@ -223,14 +223,6 @@ export type ModalOrchestratorParam = Omit<BModalProps, 'body' | 'title' | 'model
 
 export type ModalOrchestratorCreateParam = MaybeRef<ModalOrchestratorParam>
 
-export type ModalOrchestratorCreateOptions = {
-  keep?: boolean
-  resolveOnHide?: boolean
-  /*
-   * @deprecated
-   */
-  returnBoolean?: boolean
-}
 export type OrchestratorCreateOptions = {
   keep?: boolean
   resolveOnHide?: boolean

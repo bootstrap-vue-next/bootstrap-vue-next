@@ -18,9 +18,9 @@ import {orchestratorRegistryKey} from '../../utils/keys'
 import type {
   ControllerKey,
   ModalOrchestratorArrayValue,
-  ModalOrchestratorCreateOptions,
   ModalOrchestratorCreateParam,
   ModalOrchestratorParam,
+  OrchestratorCreateOptions,
   PromiseWithComponent,
 } from '../../types/ComponentOrchestratorTypes'
 import {buildPromise} from '../orchestratorShared'
@@ -40,7 +40,7 @@ export const useModal = () => {
    */
   const create = (
     obj: ModalOrchestratorCreateParam = {},
-    options: ModalOrchestratorCreateOptions = {}
+    options: OrchestratorCreateOptions = {}
   ): PromiseWithComponent<typeof BModal, ModalOrchestratorParam> => {
     if (!_isOrchestratorInstalled.value) {
       throw new Error(

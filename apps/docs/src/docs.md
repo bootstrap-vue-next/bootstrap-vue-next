@@ -280,7 +280,7 @@ export default defineNuxtConfig({
 
 </HighlightCard>
 
-This is mainly for the purpose of naming conflicts with other imports. It should not effect tree-shaking
+This is mainly for the purpose of naming conflicts with other imports. It should not affect tree-shaking
 
 ### Installation - TypeScript
 
@@ -354,7 +354,7 @@ If you are using one of the preferred installation methods, JS will be tree-shak
 
 When using the **BApp component approach**, you automatically get optimal tree-shaking as only the components and composables you actually use are included in your bundle.
 
-When using the **plugin approach**, `createBootstrap` is a utility that provides everything required for the library to work. However, some plugins may not be needed and can be individually imported. All plugins are appended with `Plugin` (`registryPlugin`, `orchestratorPlugin`, etc.), so you can pick and choose what is needed.
+When using the **plugin approach**, `createBootstrap` is a utility that provides everything required for the library to work. However, some plugins may not be needed and can be individually imported. All plugins are appended with `Plugin` (`registryPlugin`, `orchestratorPlugin`, etc.), so you can select only what is needed.
 
 The `createBootstrap` plugin is approximately ~20kb gzipped, with orchestrator functionality accounting for the majority. Use individual plugin imports if you want the tiniest possible bundle size.
 
@@ -362,7 +362,7 @@ The `createBootstrap` plugin is approximately ~20kb gzipped, with orchestrator f
 
 ### Exposed methods and tree-shaking
 
-In order to correctly type exposed methods, you need to explicitly import them from BootstrapVueNext. When doeing this,
+In order to correctly type exposed methods, you need to explicitly import them from BootstrapVueNext. When doing this,
 import the component (not just the type) and use the full path to improve tree-shaking.
 
 <HighlightCard>

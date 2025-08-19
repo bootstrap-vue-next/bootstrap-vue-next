@@ -137,7 +137,7 @@ const showMe = () => {
     body: firstRef.value.body,
     slots: {default: () => h('div', null, {default: () => `custom! ${firstRef.value.body}`})},
   })
-  // Demonstration psuedocode, you can also import a component and use it
+  // Demonstration pseudocode, you can also import a component and use it
   // const importedComponent () => {
   //   create({
   //     component: import('./MyToastComponent.vue'),

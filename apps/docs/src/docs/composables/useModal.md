@@ -102,7 +102,7 @@ const showReactiveExample = () => {
 
 ### Advanced Creation
 
-Using props can work for most situations, but it leaves some finer control to be desired. For instance, you can not add HTML to any slot value. This is where the `component` property comes into play. Using the `component` property, you can input the component to render. This can either be an imported SFC or an inline render function
+Using props can work for most situations, but it leaves some finer control to be desired. For instance, you cannot add HTML to any slot value using props alone. This is where the `component` property comes into play. Using the `component` property, you can input the component to render. This can either be an imported SFC or an inline render function.
 
 You can also use component slots to render what you want. This is done through the `slots` property. The `slots` property is an object that contains the slot name as the key and a render function or component as the value. The render function is passed a `scope` object that contains the slots scope.
 
@@ -135,7 +135,7 @@ const showMeAdvancedExample = () => {
     },
   }).show()
 
-  // Demonstration psuedocode, you can import a component and use it
+  // Demonstration pseudocode, you can import a component and use it
   // const importedComponent = () => {
   //   create({
   //     component: (await import('./TestModal.vue')).default,
@@ -191,8 +191,8 @@ The promise also contains functions to control the modal:
 
 ### Lifecycle
 
-By default the modal is destroyed once it's closed. If you want to keep the modal use the option 'keep' in the second argument of the `create` method.
-Modal is destoyed when the current scope is exited. Or you can destroy it manually by calling the `destroy` method.
+By default, the modal is destroyed once it's closed. If you want to keep the modal, use the `keep` option in the second argument of the `create` method.
+The modal is destroyed when the current scope is exited. You can also destroy it manually by calling the `destroy` method.
 
 ```js
 const modal = create({title: 'Hello World!'}, {keep: true})
@@ -209,7 +209,7 @@ await using modal = create({title: 'Hello World!'})
 
 ## Globally Hiding Modals
 
-In addition to being able to create modals in a global context, you are also able to hide modals from anywhere in the app. This specific feature does not require that `BModalOrchestrator` exists
+In addition to creating modals in a global context, you can also hide modals from anywhere in the app. This feature does not require an orchestrator component to be present.
 
 <HighlightCard>
   <BButton @click="nestedModal1 = !nestedModal1">Open First Modal</BButton>

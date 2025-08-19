@@ -135,16 +135,16 @@ The `popover` and `tooltip` methods return a promise that resolves to a `BvTrigg
 By default, the popover is destroyed when the current scope is exited. You can manually destroy it using the `destroy` method.
 
 ```js
-const popover = popover({title: 'Hello World!'})
-popover.show()
+const pop = popover({title: 'Hello World!'})
+pop.show()
 // do something
-popover.destroy()
+pop.destroy()
 ```
 
 Alternatively, use `await using` in TypeScript to automatically destroy the popover when the scope is exited.
 
 ```js
-await using popover = popover({title: 'Hello World!'})
+await using pop = popover({title: 'Hello World!'})
 ```
 
 <script setup lang="ts">
