@@ -52,7 +52,7 @@ Creating a modal is done through the `create` method:
 const {create} = useModal()
 
 const showExample = async () => {
-  const value = await create({title: 'Hello World!'})
+  const value = await create({title: 'Hello World!'}).show()
 
   create({
     body: `Promise resolved to object with {ok: ${value.ok}, trigger: ${value.trigger}}`,
