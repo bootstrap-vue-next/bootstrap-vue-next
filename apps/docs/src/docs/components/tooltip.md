@@ -2,8 +2,8 @@
 
 <PageHeader>
 
-Easily add tooltips to an interactive element or components via the `<BTooltip>` component
-or [`v-b-tooltip`](/docs/directives/BTooltip) directive. Tooltips can also be created and programmatically controlled via the composable
+Easily add tooltips to an interactive element or component via the `<BTooltip>` component
+or [`v-b-tooltip`](/docs/directives/btooltip) directive. Tooltips can also be created and programmatically controlled via the composable
 [`usePopoverController`](/docs/composables/usePopoverController)
 
 </PageHeader>
@@ -119,7 +119,7 @@ utilities to change the variant of the tooltip.
 
 `body-class` and `title-class` are reactive and can be changed while the tooltip is open.
 
-Refer to the [tooltip directive](/docs/directives/BTooltip) docs on applying custom
+Refer to the [tooltip directive](/docs/directives/btooltip) docs on applying custom
 classes to the directive version.
 
 For finer control, use the bootstrap 5 css variables to apply styles directly.
