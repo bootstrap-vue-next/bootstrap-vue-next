@@ -166,7 +166,6 @@ const show = ref(false)
 const f = useBreadcrumb()
 useColorMode()
 useModal()
-useModalController()
-const toast = useToastController()
+const toast = useToast()
 const formSelectMultipleSelected = ref([])
 </script>
