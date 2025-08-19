@@ -43,6 +43,10 @@ const composablesList: {name: string; description: string}[] = [
   {
     name: 'usePopoverController',
     description: 'Control popovers and tooltips in your application, enabling the display popover elements with ease',
+  },
+  {
+    name: 'useScrollspy',
+    description: 'Automatically update navigation highlighting based on scroll position, perfect for creating table of contents and section navigation',
   }
 ]
 
