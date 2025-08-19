@@ -86,7 +86,7 @@ Bootstrap-vue-next offers two ways to configure your application. The new **BApp
 
 The modern way to setup bootstrap-vue-next using the `BApp` component:
 
-See the [BApp component documentation](/docs/components/bapp) for complete configuration options.
+See the [BApp component documentation](/docs/components/app) for complete configuration options.
 
 <HighlightCard>
 
