@@ -24,6 +24,7 @@ import type {BAccordionProps} from '../../types/ComponentProps'
 import {flattenFragments} from '../../utils/flattenFragments'
 import BAccordionItem from './BAccordionItem.vue'
 import {sortSlotElementsByPosition} from '../../utils/dom'
+import type {BAccordionSlots} from '../../types'
 
 const _props = withDefaults(defineProps<Omit<BAccordionProps, 'modelValue' | 'index'>>(), {
   flush: false,
@@ -33,13 +34,8 @@ const _props = withDefaults(defineProps<Omit<BAccordionProps, 'modelValue' | 'in
   lazy: false,
   unmountLazy: false,
 })
-
-const slots = defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
-
 const props = useDefaults(_props, 'BAccordion')
+const slots = defineSlots<BAccordionSlots>()
 
 const modelValue = defineModel<BAccordionProps['modelValue']>({
   default: undefined,
@@ -88,6 +84,7 @@ const sortAccordionItems = () => {
 
       if (next.length !== modelValue.value.length) {
         if (import.meta.env.DEV) {
+          // eslint-disable-next-line no-console
           console.warn('[BAccordion] Unknown item id in v-model:', modelValue.value)
         }
       }
@@ -211,6 +208,7 @@ watch(
   (free) => {
     if (modelValue.value) {
       if (!free && Array.isArray(modelValue.value)) {
+        // eslint-disable-next-line prefer-destructuring
         modelValue.value = modelValue.value[0]
       } else if (free && !Array.isArray(modelValue.value)) {
         modelValue.value = [modelValue.value]

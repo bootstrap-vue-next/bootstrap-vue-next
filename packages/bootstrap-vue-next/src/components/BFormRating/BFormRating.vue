@@ -1,5 +1,6 @@
 <template>
   <div
+    :id="computedId"
     :class="computedClasses"
     role="slider"
     :aria-valuemin="0"
@@ -14,19 +15,21 @@
       class="clear-button-spacing"
       @click="clearRating"
     >
-      <svg
-        viewBox="0 0 16 16"
-        role="img"
-        aria-label="x"
-        xmlns="http://www.w3.org/2000/svg"
-        class="clear-icon"
-      >
-        <g>
-          <path
-            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"
-          />
-        </g>
-      </svg>
+      <slot name="icon-clear">
+        <svg
+          viewBox="0 0 16 16"
+          role="img"
+          aria-label="x"
+          xmlns="http://www.w3.org/2000/svg"
+          class="clear-icon"
+        >
+          <g>
+            <path
+              d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"
+            />
+          </g>
+        </svg>
+      </slot>
     </span>
     <span
       v-for="(starIndex, index) in clampedStars"
@@ -74,24 +77,32 @@
 </template>
 
 <script setup lang="ts">
-import {computed, defineSlots, ref} from 'vue'
+import {computed, ref} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BFormRatingProps} from '../../types/ComponentProps'
+import {useId} from '../../composables/useId'
+import type {BFormRatingSlots} from '../../types'
 
 const _props = withDefaults(defineProps<Omit<BFormRatingProps, 'modelValue'>>(), {
-  readonly: false,
-  variant: '',
   color: '',
-  stars: 5,
+  id: undefined,
+  inline: false,
+  noBorder: false,
   precision: 0,
+  readonly: false,
   showClear: false,
   showValue: false,
   showValueMax: false,
   size: '1rem',
-  noBorder: false,
-  inline: false,
+  stars: 5,
+  variant: undefined,
 })
 const props = useDefaults(_props, 'BFormRating')
+defineSlots<BFormRatingSlots>()
+
+const modelValue = defineModel<Exclude<BFormRatingProps['modelValue'], undefined>>({default: 0})
+
+const computedId = useId(() => props.id, 'form-rating')
 
 const computedClasses = computed(() => ({
   'is-readonly': props.readonly,
@@ -100,17 +111,6 @@ const computedClasses = computed(() => ({
   'd-inline-block': props.inline,
   'w-100': !props.inline,
 }))
-
-defineSlots<{
-  default?: (props: {
-    starIndex: number
-    isFilled: boolean
-    isHalf: boolean
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-}>()
-
-const modelValue = defineModel<Exclude<BFormRatingProps['modelValue'], undefined>>({default: 0})
 
 function isIconFull(index: number): boolean {
   return displayValue.value - index >= 1

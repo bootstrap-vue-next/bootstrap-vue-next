@@ -6,7 +6,9 @@
 </template>
 
 <script setup lang="ts">
-import {type BvTriggerableEvent, useModal} from 'bootstrap-vue-next'
+import type {BvTriggerableEvent} from 'bootstrap-vue-next'
+import {useModal} from 'bootstrap-vue-next/composables/useModal'
+
 import {ref} from 'vue'
 
 const {create} = useModal()

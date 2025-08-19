@@ -30,6 +30,7 @@ import type {BProgressProps} from '../../types/ComponentProps'
 import {provide, toRef} from 'vue'
 import {progressInjectionKey} from '../../utils/keys'
 import {useDefaults} from '../../composables/useDefaults'
+import type {BProgressSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BProgressProps>(), {
   height: undefined,
@@ -47,11 +48,7 @@ const _props = withDefaults(defineProps<BProgressProps>(), {
   // End BProgressBar props
 })
 const props = useDefaults(_props, 'BProgress')
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
+defineSlots<BProgressSlots>()
 
 provide(progressInjectionKey, {
   animated: toRef(() => props.animated),

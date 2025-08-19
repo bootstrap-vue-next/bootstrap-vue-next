@@ -27,7 +27,7 @@ export interface PromiseWithComponentInternal<T, P> extends AsyncDisposable {
 
 type Prefix<P extends string, S extends string> = `${P}${S}`
 
-type CamelCase<S extends string> = S extends `${infer P1}-${infer P2}${infer P3}`
+export type CamelCase<S extends string> = S extends `${infer P1}-${infer P2}${infer P3}`
   ? `${Lowercase<P1>}${Uppercase<P2>}${CamelCase<P3>}`
   : Lowercase<S>
 

@@ -3,7 +3,7 @@
 <PageHeader>
 
 The Popover feature, which provides a tooltip-like behavior, can be easily applied to any
-interactive element via the `<BPopover>` component or [`v-b-popover`](/docs/directives/b-popover)
+interactive element via the `<BPopover>` component or [`v-b-popover`](/docs/directives/BPopover)
 directive. Popovers can also be created and programmatically controlled via the `usePopover`
 
 </PageHeader>
@@ -53,11 +53,26 @@ Positioning is relative to the trigger element.
 
 ## Triggers
 
-By default, popovers are shown by `pointerenter` and `focus` events and closed by `pointerleave` and `blur` events
-on the `target` element by default. To override this behavior and make the popover show and hide based
-on `click` events, set the `click` prop to `true`.
+By default, popovers are triggered by `pointerenter` (hover) and `focus` events and hidden by `pointerleave` and `blur` events on the target element. You can customize which triggers are active using the `hover`, `focus`, and `click` props.
+
+### Basic Trigger Configuration
+
+- **Default behavior**: Both hover and focus triggers are active
+- **Click only**: Add the `click` prop (`<BPopover click>`)
+- **Hover only**: Add the `hover` prop (`<BPopover hover>`)
+- **Focus only**: Add the `focus` prop (`<BPopover focus>`)
+- **Multiple triggers**: Combine props, e.g. `<BPopover click hover focus>`
+- **Manual control**: Set `<BPopover manual>` to disable all automatic triggers
 
 <<< DEMO ./demo/PopoverTriggers.vue#template{vue-html}
+
+### Trigger Logic
+
+The trigger system uses the following priority order:
+
+1. **Manual mode**: If `manual="true"`, all automatic triggers are disabled
+2. **Explicit configuration**: If `click`,`hover` or `focus` props are explicitly set (true or false), those values are used
+3. **Default behavior**: Both hover and focus triggers are active
 
 To take finer control of popover visibility, you can use the [useToggle](/docs/composables/useToggle) or
 [usePopover](/docs/composables/usePopover). Alternately, you can set the `manual` prop
@@ -85,7 +100,7 @@ utilities to change the variant of the popover.
 
 `body-class` and `title-class` are reactive and can be changed while the popover is open.
 
-Refer to the [popover directive](/docs/directives/popover) docs on applying custom
+Refer to the [popover directive](/docs/directives/BPopover) docs on applying custom
 classes to the directive version.
 
 For finer control, use the bootstrap 5 css variables to apply styles directly.

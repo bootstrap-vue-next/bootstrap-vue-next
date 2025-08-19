@@ -660,7 +660,3 @@ New values can be used now and the type check will be successful:
 ```
 
 </BCard>
-
-<script setup lang="ts">
-import {BCard, BCardBody} from 'bootstrap-vue-next'
-</script>

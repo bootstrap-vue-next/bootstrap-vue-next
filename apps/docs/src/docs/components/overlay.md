@@ -931,7 +931,6 @@ also set the `rounded` prop on `BOverlay`.
 import {data} from '../../data/components/overlay.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
-import {BForm, BProgress, BRow, BImg, BFormInput, BFormSelect, BOverlay, BCol, BButton, BCard, BCardBody, BCardText, BAlert} from 'bootstrap-vue-next'
 import {ref, nextTick} from 'vue';
 
 const showOverlayEx1 = ref(false)

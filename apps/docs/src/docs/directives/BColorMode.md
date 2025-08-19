@@ -24,7 +24,7 @@ The `BColorMode` directive is similar to [useColorMode](../composables/useColorM
 </template>
 
 <script setup lang="ts">
-import {vBColorMode} from 'bootstrap-vue-next'
+import {vBColorMode} from 'bootstrap-vue-next/directives/BColorMode'
 
 // Unlike the composable variant, this is not strongly typed by default!
 const currentColor = ref<'light' | 'dark'>('dark')
@@ -41,7 +41,7 @@ const changeColor = () => {
 
 <script setup lang="ts">
 import {ref} from 'vue'
-import {vBColorMode, BButton, BCard} from 'bootstrap-vue-next'
+import {vBColorMode} from 'bootstrap-vue-next/directives/BColorMode'
 import HighlightCard from '../../components/HighlightCard.vue'
 
 import DirectiveHeader from './DirectiveHeader.vue'

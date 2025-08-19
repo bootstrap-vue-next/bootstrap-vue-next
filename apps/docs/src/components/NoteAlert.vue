@@ -5,8 +5,6 @@
 </template>
 
 <script setup lang="ts">
-import {BAlert} from 'bootstrap-vue-next'
-
 withDefaults(
   defineProps<{
     withNoteTextPrepend?: boolean

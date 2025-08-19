@@ -253,7 +253,7 @@ If you're looking for replacements for `$bvModal.msgBoxOk` and `$bvModal.msgBoxC
 import {data} from '../../data/components/modal.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
-import {BCard, BCardBody, BModal, BButton, vBModal} from 'bootstrap-vue-next'
+import {vBModal} from 'bootstrap-vue-next/directives/BModal'
 import {ref, nextTick} from 'vue'
 
 const modal = ref(false)

@@ -381,6 +381,8 @@ export interface BFormRadioGroupProps {
 }
 export interface BFormRatingProps {
   color?: string
+  id?: string
+  inline?: boolean
   modelValue?: number
   noBorder?: boolean
   precision?: number
@@ -400,10 +402,6 @@ export interface BFormRatingProps {
     | 'light'
     | 'dark'
     | string
-  iconFull?: string
-  iconHalf?: string
-  iconEmpty?: string
-  inline?: boolean
 }
 
 export interface BFormSelectProps {
@@ -583,9 +581,9 @@ export interface BNavTextProps {
 }
 
 export interface BNavbarProps {
-  autoClose?: boolean
   container?: boolean | 'fluid' | Breakpoint
   fixed?: Extract<Placement, 'top' | 'bottom'>
+  noAutoClose?: boolean
   print?: boolean
   sticky?: Extract<Placement, 'top' | 'bottom'>
   tag?: string
@@ -1246,6 +1244,8 @@ export interface BFormFeedbackSharedProps {
   text?: string
   tooltip?: boolean
 }
+export type BFormInvalidFeedbackProps = BFormFeedbackSharedProps
+export type BFormValidFeedbackProps = BFormFeedbackSharedProps
 
 export interface BDropdownProps extends TeleporterProps, ShowHideProps {
   ariaLabel?: string
@@ -1320,6 +1320,8 @@ export interface BPopoverProps extends TeleporterProps, ShowHideProps {
   boundaryPadding?: Padding
   click?: boolean
   closeOnHide?: boolean
+  focus?: boolean
+  hover?: boolean
   delay?:
     | number
     | Readonly<{
@@ -1358,6 +1360,8 @@ export interface BCardHeadFootProps extends ColorExtendables {
   tag?: string
   text?: string
 }
+export type BCardFooterProps = BCardHeadFootProps
+export type BCardHeaderProps = BCardHeadFootProps
 
 export interface BModalProps extends TeleporterProps, ShowHideProps {
   focus?:

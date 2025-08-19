@@ -143,7 +143,7 @@
 
 <script setup lang="ts">
 import {defineComponent, h, ref} from 'vue'
-import {BTab, BTabs} from 'bootstrap-vue-next'
+import {BTab, BTabs} from 'bootstrap-vue-next/components/BTabs'
 // import {BTab, BTabs} from './BootstrapVue.ts'
 
 // eslint-disable-next-line vue/one-component-per-file

@@ -108,7 +108,7 @@ For more control, you can use the `component` property to render a custom compon
 <script setup lang="ts">
 const {popover} = usePopover()
 
-pop({
+popover({
   slots: {
     default: (scope) =>
       h('div', null, {default: () => `Custom content - Visible: ${scope.visible}`}),
@@ -148,7 +148,7 @@ await using popover = popover({title: 'Hello World!'})
 ```
 
 <script setup lang="ts">
-import { BButton, BPopover, usePopover, BButtonGroup } from 'bootstrap-vue-next'
+import {usePopover} from 'bootstrap-vue-next/composables/usePopover'
 import HighlightCard from '../../components/HighlightCard.vue'
 import UsePluginAlert from '../../components/UsePluginAlert.vue'
 import { ref, h, onMounted } from 'vue'

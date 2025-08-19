@@ -2,7 +2,7 @@
 
 <PageHeader>
 
-For displaying tabular data, `BTable` supports pagination, filtering, sorting, custom rendering, various style options, events, and asynchronous data. For simple display of tabular data without all the fancy features, BootstrapVueNext provides two lightweight alternative components [`BTableLite`](light-weight-tables) and [`BTableSimple`](simple-tables).
+For displaying tabular data, `BTable` supports pagination, filtering, sorting, custom rendering, various style options, events, and asynchronous data. For simple display of tabular data without all the fancy features, BootstrapVueNext provides two lightweight alternative components [`BTableLite`](#light-weight-tables) and [`BTableSimple`](#simple-tables).
 
 </PageHeader>
 
@@ -494,12 +494,14 @@ Slot `custom-foot` can be optionally scoped, receiving an object with the follow
 - Sorting and sorting icons are not available for cells in the `custom-foot` slot.
 - The custom footer will not be shown when the table is in visually stacked mode.
 
-## Custom empty and empty-filtered rendering via slots
+## Custom empty and empty-filtered rendering
 
-Aside from using `empty-text`, `empty-filtered-text`, it is also possible to provide custom rendering
-for tables that have no data to display using named slots.
+The content to show when the table is empty can be specified by setting the `show-empty` prop and then specifying:
 
-In order for these slots to be shown, the `show-empty` attribute must be set and `items` must be
+- Either the `empty-text` prop or the `empty` named slot, for the case where unfiltered items are an empty or falsy array
+- Either the `empty-filtered-text` prop or the `empty-filtered` named slot, for the case where filtered items are an empty or falsy array
+
+In order for these props or slots to be shown, the `show-empty` attribute must be set and `items` must be
 either falsy or an array of length 0.
 
 <<< FRAGMENT ./demo/TableEmpty.vue#template{vue-html}
@@ -515,7 +517,7 @@ following properties:
 | `items`             | `Items[]`             | The `items` prop. Exposed here to check null vs [] |
 
 ::: info NOTE
-If you prefiously used the `emptyHtml` or `emtpyFilteredHtml` scoped slots or the `empty-html` or
+If you previously used the `emptyHtml` or `emtpyFilteredHtml` scoped slots or the `empty-html` or
 `empty-filtered-html` props, please convert to using the `empty-text` or `empty-filtered-text` slots
 instead. See our [migration guide](/docs/migration-guide#v-html) for details.
 :::
@@ -953,7 +955,7 @@ helper components. Note that there are no helper components for `<caption>`, `<c
 
 - Table helper components `<BThead>`, `<BTfoot>`, `<BTr>`, `<BTd>` and `<BTh>` all accept a `variant`
   prop, which will apply one of the Bootstrap theme colors (custom theme colors are supported via
-  [theming](/docs/reference/theming).) and will automatically adjust to use the correct variant
+  [theming](/docs/types#colorvariant).) and will automatically adjust to use the correct variant
   class based on the table's `dark` mode.
 - <NotYetImplemented/> Accessibility attributes `role` and `scope` are automatically set on `<BTh>` and `<BTd>`
   components based on their location (thead, tbody, or tfoot) and their `rowspan` or `colspan`
