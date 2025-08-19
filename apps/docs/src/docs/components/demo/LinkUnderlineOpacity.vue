@@ -8,6 +8,6 @@
 </template>
 
 <script setup lang="ts">
-import {type UnderlineOpacity} from 'bootstrap-vue-next'
+import type {UnderlineOpacity} from 'bootstrap-vue-next'
 const opacities: UnderlineOpacity[] = [10, 25, 50, 75, 100]
 </script>

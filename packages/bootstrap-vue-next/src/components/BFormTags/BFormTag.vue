@@ -29,6 +29,7 @@ import {useId} from '../../composables/useId'
 import type {BFormTagProps} from '../../types/ComponentProps'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import type {BFormTagEmits, BFormTagSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BFormTagProps>(), {
   disabled: false,
@@ -41,15 +42,8 @@ const _props = withDefaults(defineProps<BFormTagProps>(), {
   variant: 'secondary',
 })
 const props = useDefaults(_props, 'BFormTag')
-
-const emit = defineEmits<{
-  remove: [value: string]
-}>()
-
-const slots = defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
+const emit = defineEmits<BFormTagEmits>()
+const slots = defineSlots<BFormTagSlots>()
 
 const computedId = useId(() => props.id)
 

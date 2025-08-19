@@ -189,7 +189,7 @@ chosen, or new values to be entered.
 <<< DEMO ./demo/FormInputDatalist.vue
 
 The above is a 'native' implementation of `datalist`. BootstrapVueNext provides the form helper component
-[`<BFormDatalist>`](/docs/components/form/#datalist-helper) for quickly creating a `<datalist>`
+[`<BFormDatalist>`](/docs/components/form#datalist-helper) for quickly creating a `<datalist>`
 from an array of options using the same options object as [`<BFormSelect>`](/docs/components/form-select#options-property).
 
 **Notes:**

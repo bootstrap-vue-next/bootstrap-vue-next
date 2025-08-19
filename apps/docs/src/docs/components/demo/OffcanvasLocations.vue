@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
 import {ref} from 'vue'
-import {type Placement} from 'bootstrap-vue-next'
+import type {Placement} from 'bootstrap-vue-next'
 
 const show = ref(false)
 const placement = ref<Placement>('start')

@@ -8,6 +8,6 @@
 </template>
 
 <script setup lang="ts">
-import {type LinkOpacity} from 'bootstrap-vue-next'
+import type {LinkOpacity} from 'bootstrap-vue-next'
 const opacities: LinkOpacity[] = [10, 25, 50, 75, 100]
 </script>
