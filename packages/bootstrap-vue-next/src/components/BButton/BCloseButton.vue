@@ -9,6 +9,7 @@
 </template>
 
 <script setup lang="ts">
+import type {BCloseButtonEmits} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BCloseButtonProps} from '../../types/ComponentProps'
 
@@ -18,8 +19,5 @@ const _props = withDefaults(defineProps<BCloseButtonProps>(), {
   type: 'button',
 })
 const props = useDefaults(_props, 'BCloseButton')
-
-const emit = defineEmits<{
-  click: [value: MouseEvent]
-}>()
+const emit = defineEmits<BCloseButtonEmits>()
 </script>

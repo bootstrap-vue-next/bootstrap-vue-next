@@ -38,7 +38,7 @@
 
 <script setup lang="ts">
 import {ref, watch} from 'vue'
-import {type CheckboxValue} from 'bootstrap-vue-next'
+import type {CheckboxValue} from 'bootstrap-vue-next'
 
 const flavors = ['Orange', 'Grape', 'Apple', 'Lime', 'Very Berry']
 const flavorSelected = ref<string[]>([])

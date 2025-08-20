@@ -122,7 +122,7 @@ The following keyboard controls are available when the spin button is focused:
 - <kbd>PageUp</kbd> Increases the value by the step amount times the `repeat-step-multiplier` amount
 - <kbd>PageDown</kbd> Decreases the value by the step amount times the `repeat-step-multiplier` amount
 
-Note the the `repeat-delay`, `repeat-threshold` and `repeat-interval` only applies to the <kbd>ArrowUp</kbd> or <kbd>ArrowDown</kbd> keys
+Note that the `repeat-delay`, `repeat-threshold` and `repeat-interval` only apply to the <kbd>ArrowUp</kbd> or <kbd>ArrowDown</kbd> keys
 
 <ComponentReference :data="data" />
 

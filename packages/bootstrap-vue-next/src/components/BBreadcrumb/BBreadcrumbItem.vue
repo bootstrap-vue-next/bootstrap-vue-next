@@ -19,11 +19,7 @@ import {computed} from 'vue'
 import BLink from '../BLink/BLink.vue'
 import type {BBreadcrumbItemProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
+import type {BBreadcrumbItemEmits, BBreadcrumbItemSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BBreadcrumbItemProps>(), {
   ariaCurrent: 'location',
@@ -54,10 +50,8 @@ const _props = withDefaults(defineProps<BBreadcrumbItemProps>(), {
   // End link props
 })
 const props = useDefaults(_props, 'BBreadcrumbItem')
-
-const emit = defineEmits<{
-  click: [value: MouseEvent]
-}>()
+const emit = defineEmits<BBreadcrumbItemEmits>()
+defineSlots<BBreadcrumbItemSlots>()
 
 const computedClasses = computed(() => ({
   active: props.active,

@@ -68,7 +68,7 @@
 
 <script setup lang="ts">
 import {ref, useTemplateRef} from 'vue'
-import {BTable} from 'bootstrap-vue-next'
+import {BTable} from 'bootstrap-vue-next/components/BTable'
 import type {ComponentExposed} from 'vue-component-type-helpers'
 
 interface Person {

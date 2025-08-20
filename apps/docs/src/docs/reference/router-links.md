@@ -182,7 +182,5 @@ router: { prefetchLinks: false }
 
 <script setup lang="ts">
 import HighlightCard from '../../components/HighlightCard.vue'
-
 import NotYetImplemented from '../../components/NotYetImplemented.vue'
-import {BAlert} from 'bootstrap-vue-next'
 </script>
