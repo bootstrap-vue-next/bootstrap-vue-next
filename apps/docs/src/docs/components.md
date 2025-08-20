@@ -149,6 +149,10 @@ const componentList: {name: string; description: string}[] = [
       'The Navbar is typically the central location for branding, navigation, and other elements on the header',
   },
   {
+    name: 'Orchestrator',
+    description: 'The Orchestrator component manages the rendering and positioning of dynamic components like modals, toasts, and popovers. Only for advanced use cases.',
+  },
+  {
     name: 'Offcanvas',
     description:
       'Offcanvas components are hidden sidebars for your app, usually opened by some event',

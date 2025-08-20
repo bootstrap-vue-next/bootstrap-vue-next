@@ -2,7 +2,7 @@
 
 <PageHeader>
 
-The `BOrchestrator` component is an internal component that manages the rendering and positioning of dynamic components like modals, toasts, and popovers. It works in conjunction with `BApp` to provide a centralized orchestration layer.
+The `BOrchestrator` component manages the rendering and positioning of dynamic components like modals, toasts, and popovers. It works with `BApp` to provide a centralized orchestration layer.
 
 </PageHeader>
 
@@ -38,38 +38,6 @@ import {BOrchestrator} from 'bootstrap-vue-next'
 
 </template>
 </HighlightCard>
-
-## Props
-
-### `noPopovers`
-
-- **Type:** `boolean`
-- **Default:** `false`
-- **Description:** If `true`, prevents popover components from being rendered
-
-### `noToasts`
-
-- **Type:** `boolean`
-- **Default:** `false`
-- **Description:** If `true`, prevents toast components from being rendered
-
-### `noModals`
-
-- **Type:** `boolean`
-- **Default:** `false`
-- **Description:** If `true`, prevents modal components from being rendered
-
-### `appendToast`
-
-- **Type:** `boolean`
-- **Default:** `false`
-- **Description:** If `true`, new toasts are appended to the end of the list instead of the beginning
-
-### `filter`
-
-- **Type:** `(item: OrchestratorArrayValue) => boolean`
-- **Default:** `() => true`
-- **Description:** Custom filter function to control which orchestrator items are rendered
 
 ## Advanced Usage
 

@@ -32,6 +32,8 @@ The easiest way is to wrap your application with the `BApp` component, which aut
 
 Alternatively, you can use the traditional plugin approach.
 
+Note: As of v0.40, there are no separate toast/modal/popover controller plugins. If you stick with plugins, use the single `orchestratorPlugin` (or prefer `BApp`).
+
 <UsePluginAlert />
 
 ## Creating Popovers
@@ -96,7 +98,7 @@ tooltip({
 For more control, you can use the `component` property to render a custom component or the `slots` property to define slot content dynamically.
 
 <HighlightCard>
-  <BButton ref="advancedExample">Click me</BButton>
+  <BButton ref="advancedExample">Hover me</BButton>
 
 <template #html>
 
@@ -110,8 +112,7 @@ const {popover} = usePopover()
 
 popover({
   slots: {
-    default: (scope) =>
-      h('div', null, {default: () => `Custom content - Visible: ${scope.visible}`}),
+    default: (scope) => h('div', null, `Custom content - Visible: ${scope.visible}`),
   },
 })
 </script>
@@ -122,12 +123,13 @@ popover({
 
 ### Return Value
 
-The `popover` and `tooltip` methods return a promise that resolves to a `BvTriggerableEvent` object when the popover is hidden. The promise includes methods to control the popover:
+The `popover` and `tooltip` methods return an awaitable controller `PromiseWithComponent`. You can call its methods immediately to control the instance, and you can also `await` it to resolve when the popover/tooltip is hidden. The controller exposes:
 
-- `show: () => void` - Shows the popover.
-- `hide: (trigger?: string) => void` - Hides the popover, optionally passing a trigger.
-- `toggle: () => void` - Toggles the visibility of the popover.
-- `set: (props: Partial<PopoverOrchestratorParam>) => void` - Updates the popover's properties.
+- `show: () => PromiseWithComponent` - Shows the popover.
+- `hide: (trigger?: string) => PromiseWithComponent` - Hides the popover, optionally passing a trigger.
+- `toggle: () => PromiseWithComponent` - Toggles the visibility of the popover.
+- `get: () => PopoverOrchestratorParam` - Returns the current properties of the popover.
+- `set: (props: Partial<PopoverOrchestratorParam>) => PromiseWithComponent` - Updates the popover's properties.
 - `destroy: () => Promise<void>` - Destroys the popover and cleans up resources.
 
 ### Lifecycle
@@ -141,7 +143,7 @@ pop.show()
 pop.destroy()
 ```
 
-Alternatively, use `await using` in TypeScript to automatically destroy the popover when the scope is exited.
+Alternatively, use `await using` in TypeScript 5.2+ to automatically destroy the popover when the scope is exited.
 
 ```js
 await using pop = popover({title: 'Hello World!'})
@@ -173,7 +175,7 @@ const pop2 = tooltip({ title: title, target: reactiveExample })
 const pop3 = popover({
   slots: {
     default: (scope) =>
-      h('div', null, { default: () => `Custom content - Visible: ${scope.visible}` }),
+      h('div', null,  `Custom content - Visible: ${scope.visible}`),
   },
   target: advancedExample,
   title: 'Advanced Popover',

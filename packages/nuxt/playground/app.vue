@@ -22,7 +22,7 @@
     />
     {{ f }}
     {{ toast }}
-    <BButton @click="toast.show({ props: { title: 'Hello World!' } })">
+    <BButton @click="toast.create({ title: 'Hello World!' })">
       Show Global Toast
     </BButton>
     <BFormSelect

@@ -32,7 +32,7 @@ The component variation is shown by using the `v-model` like so
 </template>
 
 <script setup lang="ts">
-const isActive = ref(false)
+const active = ref(false)
 </script>
 ```
 

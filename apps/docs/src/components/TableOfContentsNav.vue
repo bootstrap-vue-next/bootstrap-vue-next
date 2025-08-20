@@ -137,6 +137,7 @@ const componentsList: {name: string}[] = [
   {name: 'Modal'},
   {name: 'Nav'},
   {name: 'Navbar'},
+  {name: 'Orchestrator'},
   {name: 'Offcanvas'},
   {name: 'Overlay'},
   {name: 'Pagination'},

@@ -95,9 +95,12 @@ if (orchestratorRegistry) {
     orchestratorRegistry._isOrchestratorInstalled.value = true
   }
 } else {
-  console.warn(
-    '[BOrchestrator] The orchestrator registry not found. Please use BApp, useRegistry or provide the plugin.'
-  )
+  if (import.meta?.env?.DEV) {
+    // eslint-disable-next-line no-console
+    console.warn(
+      '[BOrchestrator] The orchestrator registry not found. Please use BApp, useRegistry or provide the plugin.'
+    )
+  }
 }
 
 watch(
@@ -147,11 +150,12 @@ const ComputedPositionClasses = computed(() => {
   return classes
 })
 
-const items = computed(() =>
-  orchestratorRegistry?.store.value
+const items = computed(() => {
+  const store = orchestratorRegistry?.store.value ?? []
+  return store
     .filter((el) => !props.noPopovers || el.type !== 'popover')
     .filter((el) => !props.noToasts || el.type !== 'toast')
     .filter((el) => !props.noModals || el.type !== 'modal')
     .filter(props.filter)
-)
+})
 </script>
