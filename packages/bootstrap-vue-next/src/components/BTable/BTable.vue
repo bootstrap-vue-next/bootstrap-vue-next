@@ -680,7 +680,6 @@ const handleFieldSorting = (field: TableField<Items>) => {
     const must =
       props.mustSort === true ||
       (Array.isArray(props.mustSort) && props.mustSort.includes(fieldKey as string))
-    console.log('val', val, 'initial', initial, 'must', must)
     if (val === 'asc') {
       if (initial === 'desc') {
         // If mustSort, cycle asc -> desc, else asc -> undefined
