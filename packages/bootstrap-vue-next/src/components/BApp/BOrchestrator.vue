@@ -95,7 +95,7 @@ if (orchestratorRegistry) {
     orchestratorRegistry._isOrchestratorInstalled.value = true
   }
 } else {
-  if (import.meta?.env?.DEV) {
+  if (process.env.NODE_ENV === 'development') {
     // eslint-disable-next-line no-console
     console.warn(
       '[BOrchestrator] The orchestrator registry not found. Please use BApp, useRegistry or provide the plugin.'

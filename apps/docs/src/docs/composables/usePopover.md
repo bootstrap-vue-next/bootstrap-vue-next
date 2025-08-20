@@ -109,11 +109,13 @@ For more control, you can use the `component` property to render a custom compon
 
 <script setup lang="ts">
 const {popover} = usePopover()
+const advancedExample = ref()
 
 popover({
   slots: {
     default: (scope) => h('div', null, `Custom content - Visible: ${scope.visible}`),
   },
+  target: advancedExample,
 })
 </script>
 ```
@@ -128,9 +130,9 @@ The `popover` and `tooltip` methods return an awaitable controller `PromiseWithC
 - `show: () => PromiseWithComponent` - Shows the popover.
 - `hide: (trigger?: string) => PromiseWithComponent` - Hides the popover, optionally passing a trigger.
 - `toggle: () => PromiseWithComponent` - Toggles the visibility of the popover.
-- `get: () => PopoverOrchestratorParam` - Returns the current properties of the popover.
+- `get: () => PopoverOrchestratorParam | undefined` - Returns the current properties of the popover, or undefined if none.
 - `set: (props: Partial<PopoverOrchestratorParam>) => PromiseWithComponent` - Updates the popover's properties.
-- `destroy: () => Promise<void>` - Destroys the popover and cleans up resources.
+- `destroy: () => void` - Destroys the popover and cleans up resources.
 
 ### Lifecycle
 

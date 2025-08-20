@@ -15,9 +15,9 @@ import {
   type RegisterShowHideMapValue,
   rtlRegistryKey,
   showHideRegistryKey,
-} from '../utils/keys'
-import type {BAppProps} from '../types/ComponentProps'
-import type {BreadcrumbItemRaw} from '../types/BreadcrumbTypes'
+} from '../../utils/keys'
+import type {BAppProps} from '../../types/ComponentProps'
+import type {BreadcrumbItemRaw} from '../../types/BreadcrumbTypes'
 
 export const useRegistry = (rtl: BAppProps['rtl'] = false) => {
   const showHideStorage = inject(showHideRegistryKey, undefined)
