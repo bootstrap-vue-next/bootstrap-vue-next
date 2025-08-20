@@ -645,10 +645,11 @@ const handleFieldSorting = (field: TableField<Items>) => {
   if (!(isSortable.value === true && fieldSortable === true)) return
 
   // Get the last sorted direction from the current sort model (last entry with a defined order)
+  //   Exclude the current column if it's already in the sortBy array
   const getLastSortDirection = (): BTableSortByOrder => {
     const lastSorted = [...(sortByModel.value ?? [])]
       .reverse()
-      .find((sort) => sort.order !== undefined)
+      .find((sort) => sort.order !== undefined && sort.key !== fieldKey)
     return lastSorted?.order ?? 'asc'
   }
 
@@ -674,13 +675,25 @@ const handleFieldSorting = (field: TableField<Items>) => {
   const resolveOrder = (val: BTableSortByOrder | undefined): BTableSortByOrder | undefined => {
     // New sort: honor the configured initial direction
     if (val === undefined) return getInitialSortDirection()
-    // Toggle behavior
-    if (val === 'asc') return 'desc'
+    // Determine initial direction for this field
+    const initial = getInitialSortDirection()
+    const must =
+      props.mustSort === true ||
+      (Array.isArray(props.mustSort) && props.mustSort.includes(fieldKey as string))
+    console.log('val', val, 'initial', initial, 'must', must)
+    if (val === 'asc') {
+      if (initial === 'desc') {
+        // If mustSort, cycle asc -> desc, else asc -> undefined
+        return must ? 'desc' : undefined
+      }
+      // If initial is asc, cycle asc -> desc -> undefined (or asc if mustSort)
+      return 'desc'
+    }
     if (val === 'desc') {
-      const must =
-        props.mustSort === true ||
-        (Array.isArray(props.mustSort) && props.mustSort.includes(fieldKey as string))
-      // When mustSort applies, flip to 'asc'; otherwise clear sorting
+      if (initial === 'desc') {
+        return 'asc'
+      }
+      // If mustSort, cycle desc -> asc, else desc -> undefined
       return must ? 'asc' : undefined
     }
     return undefined

@@ -1007,7 +1007,7 @@ describe('initial sort direction', () => {
       },
     })
 
-    // Click on name field - should use the last sorted direction (desc)
+    // Click on name field - should use the last sort direction from 'age' (asc), not itself (desc)
     const [nameHeader] = wrapper.get('table').findAll('th')
     await nameHeader.trigger('click')
 
@@ -1037,7 +1037,7 @@ describe('initial sort direction', () => {
       },
     })
 
-    // Click on name field - should use the last sorted direction (desc)
+    // Click on name field - should use the last sort direction from 'age' (asc), not itself (desc)
     const [nameHeader] = wrapper.get('table').findAll('th')
     await nameHeader.trigger('click')
 
@@ -1086,5 +1086,134 @@ describe('initial sort direction', () => {
         expect(style).toContain('opacity: 0.4')
       }
     })
+  })
+
+  it('excludes current column from getLastSortDirection when using initialSortDirection "last"', async () => {
+    // Start with two columns sorted: first_name (desc), age (asc)
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: [
+          {key: 'first_name', label: 'First Name', sortable: true, initialSortDirection: 'last'},
+          {key: 'age', label: 'Age', sortable: true, initialSortDirection: 'last'},
+        ],
+        sortBy: [
+          {key: 'first_name', order: 'desc'},
+          {key: 'age', order: 'asc'},
+        ],
+        multisort: true,
+      },
+    })
+
+    const [nameHeader, ageHeader] = wrapper.get('table').findAll('th')
+
+    // Click on 'first_name' header: should use the last sort direction from 'age' (asc), not itself (desc)
+    await nameHeader.trigger('click')
+    let text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    // Should sort by first_name asc (since last sort direction excluding itself is 'asc')
+    expect(text).toStrictEqual(['Cyndi', 'Havij', 'Robert'])
+
+    // Click on 'age' header: should use the last sort direction from 'first_name' (desc), not itself (asc)
+    await ageHeader.trigger('click')
+    text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.findAll('td')[1].text())
+    // Should sort by age desc (since last sort direction excluding itself is 'desc')
+    expect(text).toStrictEqual(['42', '27', '9'])
+  })
+
+  it('cycles desc <-> asc when initialSortDirection is desc and mustSort is true', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: [
+          {key: 'first_name', label: 'First Name', sortable: true},
+          {key: 'age', label: 'Age', sortable: true},
+        ],
+        initialSortDirection: 'desc',
+        mustSort: true,
+      },
+    })
+
+    const [nameHeader] = wrapper.get('table').findAll('th')
+
+    // First click: should be desc
+    await nameHeader.trigger('click')
+    let text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Robert', 'Havij', 'Cyndi'])
+    expect(nameHeader.attributes('aria-sort')).toBe('descending')
+
+    // Second click: should be asc
+    await nameHeader.trigger('click')
+    text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Cyndi', 'Havij', 'Robert'])
+    expect(nameHeader.attributes('aria-sort')).toBe('ascending')
+
+    // Third click: should cycle back to desc (never undefined)
+    await nameHeader.trigger('click')
+    text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Robert', 'Havij', 'Cyndi'])
+    expect(nameHeader.attributes('aria-sort')).toBe('descending')
+  })
+
+  it('cycles desc -> asc -> undefined when initialSortDirection is desc and mustSort is not set', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: [
+          {key: 'first_name', label: 'First Name', sortable: true},
+          {key: 'age', label: 'Age', sortable: true},
+        ],
+        initialSortDirection: 'desc',
+        // mustSort is not set
+      },
+    })
+
+    const [nameHeader] = wrapper.get('table').findAll('th')
+
+    // First click: should be desc
+    await nameHeader.trigger('click')
+    let text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Robert', 'Havij', 'Cyndi'])
+    expect(nameHeader.attributes('aria-sort')).toBe('descending')
+
+    // Second click: should be asc
+    await nameHeader.trigger('click')
+    text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Cyndi', 'Havij', 'Robert'])
+    expect(nameHeader.attributes('aria-sort')).toBe('ascending')
+
+    // Third click: should be undefined (no aria-sort)
+    await nameHeader.trigger('click')
+    // The header should not have aria-sort attribute or should be 'none'
+    expect(
+      nameHeader.attributes('aria-sort') === undefined ||
+        nameHeader.attributes('aria-sort') === 'none'
+    ).toBe(true)
+    // The table should revert to original order (unsorted)
+    text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Havij', 'Cyndi', 'Robert'])
   })
 })
