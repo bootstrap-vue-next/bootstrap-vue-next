@@ -60,7 +60,7 @@ export default {
           type: "'top' | 'bottom'",
           default: undefined,
           description:
-            "Set to true to make the navbar stick to the top of the viewport (or parent container that has 'position: relative' set) when scrolled", // TODO grammar check (should say "Set to 'true'" instead of "Set to true" for consistency with prop type)
+            "Set to 'true' to make the navbar stick to the top of the viewport (or parent container that has 'position: relative' set) when scrolled",
         },
         toggleable: {
           type: 'boolean | Breakpoint',

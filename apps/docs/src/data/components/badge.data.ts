@@ -42,7 +42,7 @@ export default {
             type: 'CombinedPlacement',
             default: undefined,
             description:
-              'Placement of the badge relative to the its parent. One of the values of `CombinedPlacement`', // TODO grammar check (remove "the" before "its parent")
+              'Placement of the badge relative to its parent. One of the values of `CombinedPlacement`',
           },
         } satisfies PropRecord<Exclude<keyof BBadgeProps, keyof typeof linkProps>>,
         'BLink props': linkedBLinkSection,

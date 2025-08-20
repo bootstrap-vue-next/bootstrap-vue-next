@@ -14,7 +14,7 @@ export default {
           type: 'boolean',
           default: false, // TODO item not in string format
           description:
-            'Make the toolbar span the maximum available width, by increasing spacing between the button groups, input groups and dropdowns', // TODO grammar check (add comma after "input groups")
+            'Make the toolbar span the maximum available width, by increasing spacing between the button groups, input groups, and dropdowns',
         },
       } satisfies PropRecord<keyof BButtonToolbarProps>,
       slots: {

@@ -10,7 +10,7 @@ export default {
       props: linkProps,
       emits: {
         click: {
-          description: 'Emitted when link was clicked', // TODO grammar check (should say "the link is clicked" instead of "link was clicked" for consistency)
+          description: 'Emitted when the link is clicked',
           args: {
             value: {
               type: 'MouseEvent',

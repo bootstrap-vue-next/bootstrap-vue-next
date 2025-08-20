@@ -20,7 +20,7 @@ export default {
           buildCommonProps({
             id: {
               description:
-                'The Id to be injected to accordion items and used in BCollapse for state managment', // TODO grammar check (typo: "managment" should be "management")
+                'The Id to be injected to accordion items and used in BCollapse for state management',
             },
           }),
           ['id']
@@ -29,7 +29,7 @@ export default {
           type: 'boolean',
           default: false,
           description:
-            'Remove the default background-color, some borders, and some rounded corners to render accordions edge-to-edge with their parent container', // TODO grammar check (consider rephrasing for clarity, e.g., "Removes the default background color, certain borders, and rounded corners to render accordions edge-to-edge with their parent container")
+            'Removes the default background color, certain borders, and rounded corners to render accordions edge-to-edge with their parent container',
         },
         free: {
           type: 'boolean',
@@ -81,7 +81,7 @@ export default {
           buildCommonProps({
             id: {
               description:
-                'The Id to be injected to accordion items and used to in BCollapse for state managment', // TODO grammar check (typo: "managment" should be "management"; remove "to" before "in BCollapse")
+                'The Id to be injected to accordion items and used in BCollapse for state management',
             },
           }),
           ['id', 'tag', 'wrapperAttrs']

@@ -111,7 +111,7 @@ export default {
         text: {
           type: 'string',
           default: undefined,
-          description: 'Content to place in the dropdown text. Default slot takes precedence', // TODO grammar check (should say "dropdown header" instead of "dropdown text") // TODO similar content to BDropdownText/text (similar description structure)
+          description: 'Content to place in the dropdown header. Default slot takes precedence',
         },
       } satisfies PropRecord<keyof BDropdownHeaderProps>,
       emits: {},

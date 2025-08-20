@@ -50,12 +50,12 @@ export default {
         imgHeight: {
           type: 'string',
           default: undefined,
-          description: "Set the default image 'height' attribute for all b-tab children", // TODO grammar check (should say "b-carousel-slide children" instead of "b-tab children")
+          description: "Set the default image 'height' attribute for all b-carousel-slide children",
         },
         imgWidth: {
           type: 'string',
           default: undefined,
-          description: "Set the default image 'width' attribute for all b-tab children", // TODO grammar check (should say "b-carousel-slide children" instead of "b-tab children")
+          description: "Set the default image 'width' attribute for all b-carousel-slide children",
         },
         indicators: {
           type: 'boolean',
@@ -106,7 +106,7 @@ export default {
         noWrap: {
           type: 'boolean',
           default: false, // TODO item not in string format
-          description: 'Do not restart the slide show when then end is reached', // TODO grammar check (typo: "then" should be "the")
+          description: 'Do not restart the slide show when the end is reached',
         },
         ride: {
           type: "boolean | 'carousel'",
@@ -230,7 +230,7 @@ export default {
         imgHeight: {
           type: 'Numberish',
           default: undefined,
-          description: "Set the default image 'height' attribute for all b-tab children", // TODO grammar check (should say "b-carousel-slide" instead of "b-tab children")
+          description: "Set the default image 'height' attribute for all b-carousel-slide children",
         },
         imgSrc: {
           type: 'string',
@@ -245,7 +245,7 @@ export default {
         imgWidth: {
           type: 'Numberish',
           default: undefined,
-          description: "Set the default image 'width' attribute for all b-tab children", // TODO grammar check (should say "b-carousel-slide" instead of "b-tab children")
+          description: "Set the default image 'width' attribute for all b-carousel-slide children",
         },
         interval: {
           type: 'number',

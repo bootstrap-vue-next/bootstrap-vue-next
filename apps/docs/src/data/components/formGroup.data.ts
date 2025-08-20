@@ -55,7 +55,7 @@ export default {
         floating: {
           type: 'boolean',
           default: 'undefined',
-          description: 'When set renders the lablel in the floating style', // TODO grammar check (typo: "lablel" should be "label")
+          description: 'When set, renders the label in the floating style',
         },
         invalidFeedback: {
           type: 'string',
@@ -155,7 +155,7 @@ export default {
       emits: {},
       slots: {
         'default': {
-          description: 'Content (form checkboxes) to place in the form checkbox group', // TODO grammar check (description seems incorrect, likely copied from BFormCheckboxGroup; should describe general form controls)
+          description: 'Content to place in the form group',
           scope: {
             ariaDescribedby: {
               type: 'string',

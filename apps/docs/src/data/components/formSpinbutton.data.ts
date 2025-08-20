@@ -55,7 +55,7 @@ export default {
           type: 'string',
           default: 'undefined',
           description:
-            'Specify the local to use for formatting the number. Defaults to the browser locale. Only applicable when using the internal formatter', // TODO grammar check (should say "locale" instead of "local")
+            'Specify the locale to use for formatting the number. Defaults to the browser locale. Only applicable when using the internal formatter',
         },
         max: {
           type: 'Numberish',
@@ -77,7 +77,7 @@ export default {
           type: 'Numberish',
           default: '500',
           description:
-            'Delay in milliseconds after before auto repeat increment or decrement happens. Must be a positive integer. Requires the user to click/keydown and hold', // TODO grammar check (awkward phrasing: "after before" should be "before")
+            'Delay in milliseconds before auto repeat increment or decrement happens. Must be a positive integer. Requires the user to click/keydown and hold',
         },
         repeatInterval: {
           type: 'Numberish',
@@ -111,7 +111,7 @@ export default {
         wrap: {
           type: 'boolean',
           default: 'false',
-          description: 'When set, renders the component with a vertical layout', // TODO grammar check (description identical to `vertical`, likely incorrect; should describe wrapping behavior)
+          description: 'When set, allows the value to wrap around when reaching min/max bounds',
         },
         modelValue: {
           // TODO missing description

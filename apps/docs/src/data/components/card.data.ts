@@ -85,7 +85,7 @@ export default {
         imgAlt: {
           type: 'string',
           default: undefined,
-          description: 'URL for the optional image', // TODO grammar check (description incorrect; should describe alt text, not URL)
+          description: 'Alt text for the optional image',
         },
         imgHeight: {
           type: 'Numberish',
@@ -205,7 +205,7 @@ export default {
         deck: {
           type: 'boolean',
           default: false, // TODO item not in string format
-          description: 'When set renders the card group with gutters between cards', // TODO grammar check (add comma after "When set")
+          description: 'When set, renders the card group with gutters between cards',
         },
       } satisfies PropRecord<keyof BCardGroupProps>,
       emits: {},
@@ -275,7 +275,7 @@ export default {
         text: {
           type: 'string',
           default: undefined,
-          description: 'Text content to place in the card body, default slot takes precedence', // TODO grammar check (should say "card subtitle" instead of "card body") // TODO similar content to BCard/bodyText (similar description structure)
+          description: 'Text content to place in the card subtitle, default slot takes precedence',
         },
       } satisfies PropRecord<keyof BCardSubtitleProps>,
       emits: {},
