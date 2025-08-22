@@ -105,6 +105,7 @@ const headerLinks = [
 ]
 
 const componentsList: {name: string}[] = [
+  {name: 'App'},
   {name: 'Accordion'},
   {name: 'Alert'},
   {name: 'Avatar'},
@@ -136,6 +137,7 @@ const componentsList: {name: string}[] = [
   {name: 'Modal'},
   {name: 'Nav'},
   {name: 'Navbar'},
+  {name: 'Orchestrator'},
   {name: 'Offcanvas'},
   {name: 'Overlay'},
   {name: 'Pagination'},
@@ -153,10 +155,9 @@ const composablesList: {name: string}[] = [
   {name: 'useBreadcrumb'},
   {name: 'useColorMode'},
   {name: 'useModal'},
-  {name: 'useModalController'},
-  {name: 'useToastController'},
+  {name: 'usePopover'},
+  {name: 'useToast'},
   {name: 'useToggle'},
-  {name: 'usePopoverController'},
 ]
 
 const directivesList: {name: string}[] = [

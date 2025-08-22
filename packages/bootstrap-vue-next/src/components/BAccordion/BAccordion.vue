@@ -83,7 +83,7 @@ const sortAccordionItems = () => {
         .filter((i) => i !== -1)
 
       if (next.length !== modelValue.value.length) {
-        if (import.meta.env.DEV) {
+        if (process.env.NODE_ENV === 'development') {
           // eslint-disable-next-line no-console
           console.warn('[BAccordion] Unknown item id in v-model:', modelValue.value)
         }

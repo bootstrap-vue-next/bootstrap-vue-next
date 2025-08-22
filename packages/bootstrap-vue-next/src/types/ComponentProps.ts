@@ -6,7 +6,7 @@ import type {
   RootBoundary,
   Strategy,
 } from '@floating-ui/vue'
-import type {AriaAttributes, ComponentPublicInstance, TransitionProps} from 'vue'
+import type {AriaAttributes, ComponentPublicInstance, TeleportProps, TransitionProps} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {LinkTarget} from './LinkTarget'
 import type {
@@ -68,6 +68,42 @@ import type {
 } from './TableTypes'
 import type {PopoverPlacement} from './PopoverPlacement'
 import type {InputType} from './InputType'
+import type {BvnComponentProps} from './BootstrapVueOptions'
+import type {OrchestratorArrayValue} from './ComponentOrchestratorTypes'
+
+export interface BAppProps {
+  defaults?: Partial<BvnComponentProps>
+  mergeDefaults?:
+    | boolean
+    | ((
+        oldDefaults: Partial<BvnComponentProps>,
+        newDefaults: Partial<BvnComponentProps>
+      ) => Partial<BvnComponentProps>)
+  teleportTo?: TeleportProps['to']
+  noOrchestrator?: boolean
+  appendToast?: boolean
+  rtl?:
+    | boolean
+    | {
+        /**
+         * @default false
+         */
+        rtlInitial?: boolean
+        /**
+         * @default undefined
+         */
+        localeInitial?: string
+      }
+}
+
+export interface BOrchestratorProps {
+  noPopovers?: boolean
+  noToasts?: boolean
+  noModals?: boolean
+  appendToast?: boolean
+  teleportTo?: TeleportProps['to']
+  filter?: (item: OrchestratorArrayValue) => boolean
+}
 
 export interface BLinkProps {
   active?: boolean
