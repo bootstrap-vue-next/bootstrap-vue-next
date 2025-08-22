@@ -17,7 +17,7 @@
 import type {BNavbarToggleProps} from '../../types/ComponentProps'
 import {computed, inject, toValue} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
-import {globalShowHideStorageInjectionKey} from '../../utils/keys'
+import {showHideRegistryKey} from '../../utils/keys'
 import type {BNavbarToggleEmits, BNavbarToggleSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BNavbarToggleProps>(), {
@@ -33,7 +33,7 @@ const computedClasses = computed(() => ({
   disabled: props.disabled,
 }))
 
-const showHideData = inject(globalShowHideStorageInjectionKey, undefined)
+const showHideData = inject(showHideRegistryKey, undefined)
 
 const collapseExpanded = computed(() => {
   if (!props.target || !showHideData) return false

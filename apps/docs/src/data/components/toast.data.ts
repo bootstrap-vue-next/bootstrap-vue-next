@@ -1,4 +1,4 @@
-import type {BToastEmits, BToastOrchestratorProps, BToastProps} from 'bootstrap-vue-next'
+import type {BToastEmits, BToastProps} from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   defaultPropSectionSymbol,
@@ -168,28 +168,6 @@ export default {
           description: undefined,
         },
       } satisfies EmitRecord<keyof BToastEmits | 'update:model-value'>,
-      slots: {},
-    },
-    BToastOrchestrator: {
-      sourcePath: '/BToast/BToastOrchestrator.vue',
-      props: {
-        teleportTo: {
-          type: 'string | RendererElement | null | undefined',
-          default: 'body',
-          description: 'Overrides the default teleport location for toasts.',
-        },
-        teleportDisabled: {
-          type: 'boolean',
-          default: false, // TODO item not in string format
-          description: 'Renders the toaster in its defined location, disabling teleporting.',
-        },
-        appendToast: {
-          type: '', // TODO missing type
-          default: undefined,
-          description: '', // TODO missing description
-        },
-      } satisfies PropRecord<keyof BToastOrchestratorProps>,
-      emits: {},
       slots: {},
     },
   }),
