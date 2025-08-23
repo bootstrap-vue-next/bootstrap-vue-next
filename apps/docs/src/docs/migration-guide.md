@@ -888,7 +888,8 @@ If you believe full parity with the BootstrapVue feature is useful, please open 
 
 The default for `placement` is now `top` rather than `right`
 
-`$root` events are deprecated. See [usePopoverController](/docs/composables/usePopoverController) as an alternative.
+`$root` events are deprecated. See [usePopover](/docs/composables/usePopover) as an alternative.
+
 ## Directives
 
 ### Hover

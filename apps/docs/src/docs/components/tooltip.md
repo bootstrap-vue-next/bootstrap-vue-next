@@ -4,7 +4,7 @@
 
 Easily add tooltips to an interactive element or component via the `<BTooltip>` component
 or [`v-b-tooltip`](/docs/directives/BTooltip) directive. Tooltips can also be created and programmatically controlled via the composable
-[`usePopoverController`](/docs/composables/usePopoverController)
+[`usePopover`](/docs/composables/usePopover)
 
 </PageHeader>
 
@@ -88,7 +88,7 @@ on `click` events, set the `click` prop to `true`.
 <<< DEMO ./demo/TooltipTriggers.vue#template{vue-html}
 
 To take finer control of tooltip visibility, you can use the [useToggle](/docs/composables/useToggle) or
-[usePopoverController](/docs/composables/usePopoverController). Alternately, you can set the `manual` prop
+[usePopover](/docs/composables/usePopover). Alternately, you can set the `manual` prop
 and use the [`v-model`](#programmatic-control-via-v-model) or
 [exposed functions](#exposed-functions) to control visibility.
 

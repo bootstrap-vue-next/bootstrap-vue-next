@@ -5,7 +5,7 @@
 The Popover feature, which provides a tooltip-like behavior, can be easily applied to any
 interactive element via the `<BPopover>` component or [`v-b-popover`](/docs/directives/BPopover)
 directive. Popovers can also be created and programmatically controlled via the composable
-[`usePopoverController`](/docs/composables/usePopoverController)
+[`usePopover`](/docs/composables/usePopover)
 
 </PageHeader>
 
