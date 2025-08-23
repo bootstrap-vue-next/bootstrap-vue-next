@@ -36,8 +36,14 @@
       <BCol>
         <BPopover>
           <template #target>
-            <h3 id="inactive-financial-backers">
-              <div class="text-center">Inactive Financial Backers</div>
+            <h3 id="inactive-financial-backers" class="text-center m-0">
+              <BButton
+                variant="link"
+                class="p-0 text-reset"
+                aria-label="More information about inactive financial backers"
+              >
+                Inactive Financial Backers
+              </BButton>
             </h3>
           </template>
           <div class="mb-2">

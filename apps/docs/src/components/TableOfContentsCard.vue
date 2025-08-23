@@ -2,7 +2,7 @@
   <BCard :body-text="description">
     <template #header>
       <BLink :to="route">
-        <h3 :id="toKebabCase(name)" class="m-0">
+        <h3 :id="route" class="m-0">
           {{ name }}
         </h3>
       </BLink>
@@ -16,10 +16,4 @@ defineProps<{
   description: string
   route: string
 }>()
-
-const toKebabCase = (str = '') =>
-  str
-    .replace(/[^a-z]/gi, '-')
-    .replace(/\B([A-Z])/g, '-$1')
-    .toLowerCase()
 </script>
