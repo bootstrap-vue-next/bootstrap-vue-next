@@ -353,10 +353,15 @@ The `BApp` component is fully backward compatible with existing plugin-based set
 
 ::: warning Migration Note
 
-The plugins will show deprecation warnings but continue to work until removed in a future version.
+Plugins will show deprecation warnings but continue to work until removed in a future version, with
+the following exceptions:
 
-However, the individual plugins `modalControllerPlugin`, `toastControllerPlugin`, and `popoverControllerPlugin`
-are deprecated. Please replace references to these with a reference to `orchestratorPlugin`.
+- `modalControllerPlugin`
+- `toastControllerPlugin`
+- `popoverControllerPlugin`
+
+These plugins have been removed as of **version 0.40.0**.
+Please replace references to these with a reference to `orchestratorPlugin`.
 
 :::
 
