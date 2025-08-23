@@ -130,7 +130,13 @@ import {BOrchestrator} from 'bootstrap-vue-next'
 
 Now, you can begin importing and using components
 
-#### Automatic Registering of Components
+::: warning
+
+If you are using individual plugins, please see the [`BApp` documentation](/docs/components/app#backward-compatibility) for additional details.
+
+:::
+
+### Automatic Registering of Components
 
 To have components automatically registered **and** tree-shaken, we recommend [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components). Read their docs for additional details. This is in addition to the above installation steps. We supply a resolver
 
