@@ -37,7 +37,7 @@ export default {
           type: "'ok' | 'cancel' | 'close' | string | ComponentPublicInstance | HTMLElement | null",
           default: undefined,
           description:
-            "Specify where to focus once offcanvas opens. Can be built-in button 'close'. Can be ref, HTMLElement, id or selector string. If set to 'false', no focus will be set (if noTrap isn't set the focus trap will focus the modal element or failback element). If set to a string, the element with that id will be focused. If set to a ComponentPublicInstance, the $el property of the instance will be focused.", // TODO grammar check (should say "fallback" instead of "failback")
+            "Specify where to focus once offcanvas opens. Can be built-in button 'close'. Can be ref, HTMLElement, id or selector string. If set to 'false', no focus will be set (if noTrap isn't set the focus trap will focus the modal element or fallback element). If set to a string, the element with that id will be focused. If set to a ComponentPublicInstance, the $el property of the instance will be focused.",
         },
         footerClass: {
           type: 'string',
@@ -138,7 +138,7 @@ export default {
               description: 'Whether or not the offcanvas is above the breakpoint and is open by it',
             },
           },
-          description: "Emitted when the offcanvas' breakpoint state changes", // TODO grammar check (should say "offcanvas's" instead of "offcanvas'")
+          description: "Emitted when the offcanvas's breakpoint state changes",
         },
         'close': {
           description: '', // TODO missing description

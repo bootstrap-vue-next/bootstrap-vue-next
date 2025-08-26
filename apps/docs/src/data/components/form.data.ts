@@ -32,7 +32,7 @@ export default {
       emits: {},
       slots: {
         default: {
-          description: 'Contet to place in the form', // TODO grammar check (typo: "Contet" should be "Content")
+          description: 'Content to place in the form',
         },
       } satisfies SlotRecord<keyof BFormSlots>,
     },
@@ -52,14 +52,14 @@ export default {
       emits: {},
       slots: {
         default: {
-          description: 'Content to place in the from datalist', // TODO grammar check (typo: "from" should be "form")
+          description: 'Content to place in the form datalist',
         },
         first: {
           description: "Slot to place options above options provided via the 'options' prop",
         },
         option: {
           description:
-            'Use this slot to have finer control over the content render inside each data item', // TODO grammar check (should say "rendered" instead of "render")
+            'Use this slot to have finer control over the content rendered inside each data item',
           scope: {
             value: {
               type: 'any (T)',
@@ -178,7 +178,7 @@ export default {
       emits: {},
       slots: {
         default: {
-          description: 'Content to place in the form valid feedback', // TODO grammar check (should say "form valid feedback" instead of "form invalid feedback")
+          description: 'Content to place in the form valid feedback',
         },
       } satisfies SlotRecord<keyof BFormValidFeedbackSlots>,
     },

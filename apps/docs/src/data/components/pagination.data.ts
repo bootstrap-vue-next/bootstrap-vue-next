@@ -106,7 +106,7 @@ export default {
         lastNumber: {
           type: 'boolean',
           default: false, // TODO item not in string format
-          description: 'Display last page number instead of go-to-last-page button', // TODO grammar check (corrected: capitalized "Last" to "last-page" for consistency)
+          description: 'Display last page number instead of go-to-last-page button',
         },
         lastText: {
           type: 'string',

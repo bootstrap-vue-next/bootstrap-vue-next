@@ -13,7 +13,7 @@ import {buildCommonProps} from '../../utils/commonProps'
 const optionSlot: SlotRecord = {
   option: {
     description:
-      'Use this slot to have finer control over the content render inside each select item', // TODO grammar check (should say "rendered" instead of "render")
+      'Use this slot to have finer control over the content rendered inside each select item',
     scope: {
       value: {
         type: 'any (T)',
@@ -25,7 +25,7 @@ const optionSlot: SlotRecord = {
       },
       disabled: {
         type: 'boolean',
-        description: 'Is the option disabled', // TODO grammar check (should end with a period for consistency with other descriptions)
+        description: 'Is the option disabled'
       },
     },
   },
@@ -82,7 +82,7 @@ export default {
           type: 'Numberish',
           default: 0, // TODO item not in string format
           description:
-            'When set to a number larger than 0, will set the number of display option rows. Note not all browser will respect this setting', // TODO grammar check (should say "browsers" instead of "browser")
+            'When set to a number larger than 0, will set the number of display option rows. Note not all browser will respect this setting'
         },
       } satisfies PropRecord<keyof BFormSelectProps>,
       emits: {

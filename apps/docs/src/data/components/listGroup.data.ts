@@ -24,7 +24,7 @@ export default {
           type: 'boolean | Breakpoint',
           default: false, // TODO item not in string format
           description:
-            'When set, renders the list group horizontally rather than the default vertical', // TODO grammar check (should say "default of vertical" instead of "default of vertical" for clarity)
+            'When set, renders the list group horizontally rather than vertically',
         },
         numbered: {
           type: 'boolean',

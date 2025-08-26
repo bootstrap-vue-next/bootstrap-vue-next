@@ -72,7 +72,7 @@ export default {
           headerTag: {
             type: 'string',
             default: 'div',
-            description: 'Specify the HTML tag to render instead of the default tag for the footer', // TODO grammar check (should refer to "header" instead of "footer")
+            description: 'Specify the HTML tag to render instead of the default tag for the header',
           },
           id: {
             type: 'string',
@@ -140,7 +140,7 @@ export default {
           description: 'Emitted when the alert begins its transition to close',
         },
         'close-countdown': {
-          description: 'Content to place in the alert', // TODO grammar check (description is vague and possibly incorrect; should describe the countdown event)
+          description: 'Emitted during the countdown with the time remaining',
           args: {
             closeCountdown: {
               description: 'Time remaining on the timer',
