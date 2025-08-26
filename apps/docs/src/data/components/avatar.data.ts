@@ -185,7 +185,7 @@ export default {
           type: 'Numberish',
           default: 0.3,
           description:
-            'Content to place in the avatar. Overrides props `text`, `src`, and `icon-name`', // TODO grammar check (description is incorrect; should describe overlap behavior, not avatar content)
+            'Specifies the amount of overlap between child avatars as a number between 0 and 1',
         },
         size: {
           type: 'Size | string',
@@ -196,7 +196,7 @@ export default {
           type: 'boolean',
           default: false,
           description:
-            'Disables rounding of the child avatars, rending the avatar with square corners', // TODO grammar check (typo: "rending" should be "rendering")
+            'Disables rounding of the child avatars, rendering the avatar with square corners',
         },
       } satisfies PropRecord<keyof BAvatarGroupProps>,
       slots: {

@@ -38,7 +38,7 @@ export default {
           type: 'boolean',
           default: false, // TODO item not in string format
           description:
-            "When set, disabled the browser's resize handle which prevents the user from changing the height of the textarea. Automatically set when in auto height mode", // TODO grammar check (should say "disables" instead of "disabled")
+            "When set, disables the browser's resize handle which prevents the user from changing the height of the textarea. Automatically set when in auto height mode",
         },
         rows: {
           type: 'Numberish',
@@ -49,7 +49,7 @@ export default {
           type: 'string',
           default: 'soft',
           description:
-            "The value to place on the textarea's 'wrap' attribute. Controls how line break are returned", // TODO grammar check (should say "line breaks are" instead of "line break are")
+            "The value to place on the textarea's 'wrap' attribute. Controls how line breaks are returned",
         },
         maxRows: {
           type: 'Numberish',

@@ -15,6 +15,11 @@ export default {
           description:
             'CSS color to use instead of variant. Accepts either a HEX or RGB/RGBA string',
         },
+        disabled: {
+          type: 'boolean',
+          default: 'false',
+          description: 'When `true` makes the rating disabled',
+        },
         inline: {
           type: 'boolean',
           default: 'false',

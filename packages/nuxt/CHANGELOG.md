@@ -2,115 +2,101 @@
 
 ## [0.30.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.30.4...nuxt-v0.30.5) (2025-08-13)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.30.5
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.30.5
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.30.5
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.30.5
 
 ## [0.30.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.30.3...nuxt-v0.30.4) (2025-07-07)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.30.4
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.30.4
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.30.4
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.30.4
 
 ## [0.30.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.30.2...nuxt-v0.30.3) (2025-06-17)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.30.3
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.30.3
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.30.3
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.30.3
 
 ## [0.30.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.30.1...nuxt-v0.30.2) (2025-06-16)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.30.2
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.30.2
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.30.2
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.30.2
 
 ## [0.30.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.30.0...nuxt-v0.30.1) (2025-06-06)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.30.1
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.30.1
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.30.1
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.30.1
 
 ## [0.30.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.29.4...nuxt-v0.30.0) (2025-05-31)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.30.0
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.30.0
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.30.0
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.30.0
 
 ## [0.29.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.29.3...nuxt-v0.29.4) (2025-05-31)
 
-
 ### Performance Improvements
 
-* use getter functions over computed in some cases ([34d2a8f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/34d2a8f850dd965100ccbbcd8c00f05baceb6caa))
-
+- use getter functions over computed in some cases ([34d2a8f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/34d2a8f850dd965100ccbbcd8c00f05baceb6caa))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.29.4
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.29.4
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.29.4
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.29.4
 
 ## [0.29.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.29.2...nuxt-v0.29.3) (2025-05-11)
 

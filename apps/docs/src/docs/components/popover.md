@@ -4,7 +4,8 @@
 
 The Popover feature, which provides a tooltip-like behavior, can be easily applied to any
 interactive element via the `<BPopover>` component or [`v-b-popover`](/docs/directives/BPopover)
-directive. Popovers can also be created and programmatically controlled via the `usePopoverController`
+directive. Popovers can also be created and programmatically controlled via the composable
+[`usePopover`](/docs/composables/usePopover)
 
 </PageHeader>
 
@@ -14,8 +15,8 @@ directive. Popovers can also be created and programmatically controlled via the 
 
 Things to know when using the popover component:
 
-- Popovers rely on the 3rd party library [floating-ui](https://floating-ui.com/docs) for positioning.
-- Use `teleportTo` and `teleportDisabled` to control where in the DOM the popover is rendered. See the [Vue.js Docs](https://vuejs.org/guide/built-ins/teleport.html) for details. When using Nuxt, `teleportTo` defaults to `#teleport`, set `teleportDisabled` to disable this behavior. For non-nuxt environments, `teleportTo` defaults to `undefined`.
+- Popovers rely on the 3rd party library [floating-ui](https://floating-ui.com/) for positioning.
+- Use `teleportTo` and `teleportDisabled` to control where in the DOM the popover is rendered. See the [Vue.js Docs](https://vuejs.org/guide/built-ins/teleport.html) for details. `teleportTo` defaults to `undefined`.
 - Triggering popovers on hidden elements will not work.
 - Popovers for `disabled` elements must be triggered on a wrapper element.
 - When triggered from hyperlinks that span multiple lines, popovers will be centered. Set the `inline` prop to improve the positioning see the [Floating UI docs](https://floating-ui.com/docs/inline) for details.
@@ -28,7 +29,7 @@ specified via the `target` slot or prop, and can be any of the following:
 The `target` prop may be any of the following:
 
 - A string identifying the ID of the trigger element (or ID of the root element of a component)
-- A string with querySelector. (ie. '#toolbar > div:first-child')
+- A string with querySelector. (i.e. '#toolbar > div:first-child')
 - A reference (ref) to an `HTMLElement` or an `SVGElement` via a [Template Ref](https://vuejs.org/guide/essentials/template-refs.html)
 - A reference (ref) to a component that has either an `HTMLElement` or `SVGElement` as its root
   element via [Template Ref](https://vuejs.org/guide/essentials/template-refs.html)
@@ -42,7 +43,7 @@ refers to `<svg>` or supported child elements of SVGs.
 
 ## Positioning
 
-Twelve static options are available for the `placement` prop: `top`, `top-left`, `top-right`,
+Twelve static options are available for the `placement` prop: `top`, `top-start`, `top-end`,
 `bottom`, `bottom-start`, `bottom-end`, `left`, `left-start`, `left-end`, `right`, `right-start`, `right-end` from
 [@floating-ui/vue](https://floating-ui.com/) as well as three [auto placement](https://floating-ui.com/docs/autoplacement)
 options `auto`, `auto-start` and `auto-end`.
@@ -75,7 +76,7 @@ The trigger system uses the following priority order:
 3. **Default behavior**: Both hover and focus triggers are active
 
 To take finer control of popover visibility, you can use the [useToggle](/docs/composables/useToggle) or
-[usePopoverController](/docs/composables/usePopoverController). Alternately, you can set the `manual` prop
+[usePopover](/docs/composables/usePopover). Alternatively, you can set the `manual` prop
 and use the [`v-model`](#programmatic-control-via-v-model) or
 [exposed functions](#exposed-functions) to control visibility.
 
@@ -137,12 +138,6 @@ These are accessed through the [template ref](https://vuejs.org/guide/essentials
 
 <ComponentReference :data="data" />
 
-<script lang="ts">
+<script setup lang="ts">
 import {data} from '../../data/components/popover.data'
-
-export default {
-  setup() {
-    return {data}
-  }
-}
 </script>

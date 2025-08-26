@@ -94,7 +94,7 @@ By default, `BFormRating` has standard Bootstrap form-control styling. To disabl
 
 If you require additional information before a user can chose a ratings value, simply set the `disabled` prop to `true` to disable any user interactivity on the component:
 
-<NotYetImplemented />
+<<< DEMO ./demo/RatingDisabled.vue
 
 ### Readonly
 

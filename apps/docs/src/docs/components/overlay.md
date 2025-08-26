@@ -2,7 +2,7 @@
 
 <PageHeader>
 
-BootstrapVueNext's custom `BOverlay` component is used to _visually obscure_ a particular element or component and its content. It signals to the user of a state change within the element or component and can be used for creating loaders, warnings/alerts, prompts, and more.
+BootstrapVueNext's custom `BOverlay` component is used to _visually obscure_ a particular element or component and its content. It signals a state change within the element or component to the user and can be used for creating loaders, warnings/alerts, prompts, and more.
 
 </PageHeader>
 
@@ -19,49 +19,15 @@ be placed as a descendant of a `position: relative` element
 
 The overlay visibility is controlled via the `show` prop. By default, the overlay is _not_ shown.
 
-<BAlert variant="danger" :model-value="true">
-  Note that this component only <em>visually obscures</em> its content (or the page). Refer to the
-  <a href="#accessibility" class="alert-link">Accessibility section</a> below for additional
-  accessibility details and concerns.
-</BAlert>
+::: info NOTE
+This component only <em>visually obscures</em> its content (or the page). Refer to the
+<a href="#accessibility">Accessibility section</a> below for additional
+accessibility details and concerns.
+:::
 
 **Default wrapping mode example:**
 
-<HighlightCard>
-  <BOverlay :show="showOverlayEx1" rounded="sm">
-    <BCard title="Card with overlay" :aria-hidden="showOverlayEx1 ? 'true' : null">
-      <BCardText>Laborum consequat non elit enim exercitation cillum.</BCardText>
-      <BCardText>Click the button to toggle the overlay:</BCardText>
-      <BButton :disabled="showOverlayEx1" variant="primary" @click="showOverlayEx1 = true">
-        Show overlay
-      </BButton>
-    </BCard>
-  </BOverlay>
-  <BButton class="mt-3" @click="showOverlayEx1 = !showOverlayEx1">Toggle overlay</BButton>
-  <template #html>
-
-```vue
-<template>
-  <BOverlay :show="showOverlayEx1" rounded="sm">
-    <BCard title="Card with overlay" :aria-hidden="showOverlayEx1 ? 'true' : null">
-      <BCardText>Laborum consequat non elit enim exercitation cillum.</BCardText>
-      <BCardText>Click the button to toggle the overlay:</BCardText>
-      <BButton :disabled="showOverlayEx1" variant="primary" @click="showOverlayEx1 = true">
-        Show overlay
-      </BButton>
-    </BCard>
-  </BOverlay>
-
-  <BButton @click="showOverlayEx1 = !showOverlayEx1">Toggle overlay</BButton>
-</template>
-
-<script setup lang="ts">
-const showOverlayEx1 = ref(false)
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/OverlayOverview.vue
 
 ## Options
 
@@ -76,127 +42,7 @@ one of Bootstrap's
 Control the opacity of the backdrop via the `opacity` prop (opacity values can range from `0` to
 `1`). And background blurring can be controlled via the `blur` prop.
 
-<HighlightCard>
-  <div class="row">
-    <div class="col-lg-6" aria-controls="overlay-background">
-      <label for="bg-variant">Variant</label>
-      <BFormSelect id="bg-variant" v-model="variant" :options="variants" />
-      <label for="bg-opacity">Opacity</label>
-      <div class="d-inline">
-        <BFormInput
-          id="bg-opacity"
-          v-model.number="opacity"
-          type="range"
-          min="0"
-          max="1"
-          step="0.01"
-          class="d-inline"
-        />
-      </div>
-      {{ opacity.toFixed(2) }}
-      <div>
-        <label for="bg-blur">Blur (does not work if variant is anything other than 'transparent' or 'white' or if bgColor is defined)</label>
-        <BFormSelect id="bg-blur" v-model="blur" :options="blurs" />
-      </div>
-    </div>
-    <BCol lg="6">
-      <BOverlay
-        id="overlay-background"
-        show
-        :variant="variant"
-        :opacity="opacity"
-        :blur="blur"
-        rounded="sm"
-        >
-        <BCard title="Card with overlay" aria-hidden="true">
-          <BCardText>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          </BCardText>
-          <BButton disabled variant="primary">Button</BButton>
-        </BCard>
-      </BOverlay>
-    </BCol>
-  </div>
-  <template #html>
-
-```vue
-<template>
-  <div class="row">
-    <div class="col-lg-6" aria-controls="overlay-background">
-      <label for="bg-variant">Variant</label>
-      <BFormSelect id="bg-variant" v-model="variant" :options="variants" />
-
-      <label for="bg-opacity">Opacity</label>
-      <div class="d-inline">
-        <BFormInput
-          id="bg-opacity"
-          v-model.number="opacity"
-          type="range"
-          min="0"
-          max="1"
-          step="0.01"
-          class="d-inline"
-        />
-      </div>
-
-      {{ opacity.toFixed(2) }}
-
-      <div>
-        <label for="bg-blur"
-          >Blur (does not work if variant is anything other than 'transparent' or 'white' or if
-          bgColor is defined)</label
-        >
-        <BFormSelect id="bg-blur" v-model="blur" :options="blurs" />
-      </div>
-    </div>
-
-    <BCol lg="6">
-      <BOverlay
-        id="overlay-background"
-        show
-        :variant="variant"
-        :opacity="opacity"
-        :blur="blur"
-        rounded="sm"
-      >
-        <BCard title="Card with overlay" aria-hidden="true">
-          <BCardText>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          </BCardText>
-          <BButton disabled variant="primary">Button</BButton>
-        </BCard>
-      </BOverlay>
-    </BCol>
-  </div>
-</template>
-
-<script setup lang="ts">
-const variants = [
-  'transparent',
-  'white',
-  'light',
-  'dark',
-  'primary',
-  'secondary',
-  'success',
-  'danger',
-  'warning',
-  'info',
-] as const
-const blurs = [{text: 'None', value: ''}, '1px', '2px', '5px', '0.5em', '1rem']
-
-const variant = ref<(typeof variants)[number]>('light')
-const opacity = ref(0.85)
-const blur = ref('2px')
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/OverlayBackdropColor.vue
 
 As an alternative to the `variant` prop, you can specify a CSS color string value via the `bg-color`
 prop. When a value is provided for `bg-color`, the `variant` prop value is ignored.
@@ -211,43 +57,7 @@ prop. When a value is provided for `bg-color`, the `variant` prop value is ignor
 By default, the overlay uses Bootstrap's fade transition when showing or hiding. You can disable the
 fade transition via adding the `no-fade` prop to `BOverlay`.
 
-<!-- @dwgray this is the same as the first example, but it uses no-fade prop -->
-
-<HighlightCard>
-  <BOverlay no-fade :show="showOverlayEx1" rounded="sm">
-    <BCard title="Card with overlay" :aria-hidden="showOverlayEx1 ? 'true' : null">
-      <BCardText>Laborum consequat non elit enim exercitation cillum.</BCardText>
-      <BCardText>Click the button to toggle the overlay:</BCardText>
-      <BButton :disabled="showOverlayEx1" variant="primary" @click="showOverlayEx1 = true">
-        Show overlay
-      </BButton>
-    </BCard>
-  </BOverlay>
-  <BButton class="mt-3" @click="showOverlayEx1 = !showOverlayEx1">Toggle overlay</BButton>
-  <template #html>
-
-```vue
-<template>
-  <BOverlay no-fade :show="showOverlayEx1" rounded="sm">
-    <BCard title="Card with overlay" :aria-hidden="showOverlayEx1 ? 'true' : null">
-      <BCardText>Laborum consequat non elit enim exercitation cillum.</BCardText>
-      <BCardText>Click the button to toggle the overlay:</BCardText>
-      <BButton :disabled="showOverlayEx1" variant="primary" @click="showOverlayEx1 = true">
-        Show overlay
-      </BButton>
-    </BCard>
-  </BOverlay>
-
-  <BButton @click="showOverlayEx1 = !showOverlayEx1">Toggle overlay</BButton>
-</template>
-
-<script setup lang="ts">
-const showOverlayEx1 = ref(false)
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/OverlayNoFade.vue
 
 ### Default spinner styling
 
@@ -259,197 +69,26 @@ can control the appearance of the spinner via the following props:
   current font color
 - `spinner-small`: Set to `true` to render a small size spinner
 
-<HighlightCard>
-  <BOverlay
-    show
-    spinner-variant="primary"
-    spinner-type="grow"
-    spinner-small
-    rounded="sm"
-    style="max-width: 320px;"
-  >
-    <BCard title="Card with spinner style" aria-hidden="true">
-      <BCardText>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-      </BCardText>
-      <BButton disabled variant="primary">Button</BButton>
-    </BCard>
-  </BOverlay>
-  <template #html>
-
-```vue-html
-<BOverlay
-  show
-  spinner-variant="primary"
-  spinner-type="grow"
-  spinner-small
-  rounded="sm"
-  style="max-width: 320px;"
->
-  <BCard title="Card with spinner style" aria-hidden="true">
-    <BCardText>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-      laboris nisi ut aliquip ex ea commodo consequat.
-    </BCardText>
-    <BButton disabled variant="primary">Button</BButton>
-  </BCard>
-</BOverlay>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/OverlayDefaultStyling.vue#template{vue-html}
 
 ### Overlay corner rounding
 
 By default, the overlay backdrop has square corners. If the content you are wrapping has rounded
-corners, you can use the `rounded` prop to apply rounding to the overlay's corners to match the
-obscured content's rounded corners.
+corners, you can use the [RadiusElementExtendables](/docs/types#radiuselementextendables) props
+`rounded`, `rounded-top`, `rounded-bottom`, `rounded-start` and `rounded-end` to apply rounding to
+the overlay's corners to match the obscured content's rounded corners. Possible values for these
+props are the values of [RadiusElementExtendables](/docs/types#radiuselement).
+See the [BAvatar documentation](/docs/components/avatar#rounding) for a detailed explanation of how these
+props work.
 
-Possible values are:
-
-- `true` (or the empty string `''`) to apply default (medium) rounding
-- `false` (the default) applies no rounding to the backdrop overlay
-- `'sm'` for small rounded corners
-- `'lg'` for large rounded corners
-- `'pill'` for pill style rounded corners
-- `'circle'` for circular (or oval) rounding
-- `'top'` for rounding only the top two corners
-- `'bottom'` for rounding only the bottom two corners
-- `'left'` for rounding only the two left corners
-- `'right'` for rounding only the two right corners
-
-<HighlightCard>
-  <BButton @click="showRoundedEx = !showRoundedEx">Toggle overlay</BButton>
-  <BRow class="text-center mt-3">
-    <BCol md="6">
-      <p>With rounding</p>
-      <BOverlay :show="showRoundedEx" class="d-inline-block" rounded="circle">
-        <BImg thumbnail rounded="circle" fluid src="https://picsum.photos/200/200/?image=54" alt="Image 1" />
-      </BOverlay>
-    </BCol>
-    <BCol md="6">
-      <p>Without rounding</p>
-      <BOverlay :show="showRoundedEx" class="d-inline-block">
-        <BImg thumbnail rounded="circle" fluid src="https://picsum.photos/200/200/?image=54" alt="Image 1" />
-      </BOverlay>
-    </BCol>
-  </BRow>
-  <template #html>
-
-```vue
-<template>
-  <BButton @click="showRoundedEx = !showRoundedEx">Toggle overlay</BButton>
-
-  <BRow class="text-center mt-3">
-    <BCol md="6">
-      <p>With rounding</p>
-      <BOverlay :show="showRoundedEx" class="d-inline-block" rounded="circle">
-        <BImg
-          thumbnail
-          rounded="circle"
-          fluid
-          src="https://picsum.photos/200/200/?image=54"
-          alt="Image 1"
-        />
-      </BOverlay>
-    </BCol>
-
-    <BCol md="6">
-      <p>Without rounding</p>
-      <BOverlay :show="showRoundedEx" class="d-inline-block">
-        <BImg
-          thumbnail
-          rounded="circle"
-          fluid
-          src="https://picsum.photos/200/200/?image=54"
-          alt="Image 1"
-        />
-      </BOverlay>
-    </BCol>
-  </BRow>
-</template>
-
-<script setup lang="ts">
-const showRoundedEx = ref(false)
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/OverlayRounding.vue
 
 ### Custom overlay content
 
 Place custom content in the overlay (replacing the default spinner) via the optionally scoped slot
 `overlay`.
 
-<HighlightCard>
-  <BOverlay :show="showCustomEx" rounded="sm" @shown="onShown" @hidden="onHidden">
-    <BCard title="Card with custom overlay content" :aria-hidden="showCustomEx ? 'true' : null">
-      <BCardText>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</BCardText>
-      <BCardText>Click the button to toggle the overlay:</BCardText>
-      <BButton :disabled="showCustomEx" variant="primary" @click="showCustomEx = true">
-        Show overlay
-      </BButton>
-    </BCard>
-    <template #overlay>
-      <div class="text-center">
-        <p id="cancel-label">Please wait...</p>
-        <BButton
-          variant="outline-danger"
-          size="sm"
-          aria-describedby="cancel-label"
-          @click="showCustomEx = false"
-        >
-          Cancel
-        </BButton>
-      </div>
-    </template>
-  </BOverlay>
-  <template #html>
-
-```vue
-<template>
-  <BOverlay :show="showCustomEx" rounded="sm" @shown="onShown" @hidden="onHidden">
-    <BCard title="Card with custom overlay content" :aria-hidden="showCustomEx ? 'true' : null">
-      <BCardText>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</BCardText>
-      <BCardText>Click the button to toggle the overlay:</BCardText>
-      <BButton :disabled="showCustomEx" variant="primary" @click="showCustomEx = true">
-        Show overlay
-      </BButton>
-    </BCard>
-    <template #overlay>
-      <div class="text-center">
-        <p id="cancel-label">Please wait...</p>
-        <BButton
-          variant="outline-danger"
-          size="sm"
-          aria-describedby="cancel-label"
-          @click="showCustomEx = false"
-        >
-          Cancel
-        </BButton>
-      </div>
-    </template>
-  </BOverlay>
-</template>
-
-<script setup lang="ts">
-const showCustomEx = ref(false)
-
-const onShown = () => {
-  console.log('shown')
-}
-const onHidden = () => {
-  console.log('hidden')
-}
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/OverlayCustomContent.vue
 
 The following scope properties are available to the `overlay` slot:
 
@@ -472,38 +111,7 @@ region. To disable centering, set the `no-center` prop to `true`.
 In the following example, we have set the `no-center` prop, and absolutely positioned the custom
 overlay slot content at the top right.
 
-<HighlightCard>
-  <BOverlay no-center show rounded="sm">
-    <template #overlay>
-      foo
-    </template>
-    <BCard title="Card with no-center overlay" aria-hidden="true">
-      <BCardText>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-        incididunt ut labore et dolore magna aliqua.
-      </BCardText>
-      <BButton disabled variant="primary">Button</BButton>
-    </BCard>
-  </BOverlay>
-  <template #html>
-
-```vue-html
-<BOverlay no-center show rounded="sm">
-  <template #overlay>
-    foo
-  </template>
-  <BCard title="Card with no-center overlay" aria-hidden="true">
-    <BCardText>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-      incididunt ut labore et dolore magna aliqua.
-    </BCardText>
-    <BButton disabled variant="primary">Button</BButton>
-  </BCard>
-</BOverlay>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/OverlayNoCenter.vue#template{vue-html}
 
 ### Width
 
@@ -521,104 +129,15 @@ the default slot). Note that this requires that the ancestor element that is to 
 relative positioning (either via the utility class `'position-relative'`, or CSS style
 `'position: relative;'`).
 
-<HighlightCard>
-  <div class="position-relative p-4 bg-info">
-    <p class="text-light fw-bold">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    </p>
-    <BCard title="Card with parent overlay">
-      <BCardText>Laborum consequat non elit enim exercitation cillum.</BCardText>
-      <BCardText>Click the button to toggle the overlay:</BCardText>
-      <BButton :disabled="showNoWrapEx" variant="primary" @click="showNoWrapEx = true">
-        Show overlay
-      </BButton>
-    </BCard>
-    <p class="text-light fw-bold mb-0">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    </p>
-    <BOverlay :show="showNoWrapEx" no-wrap>
-    </BOverlay>
-  </div>
-  <BButton class="mt-3" @click="showNoWrapEx = !showNoWrapEx">Toggle overlay</BButton>
-  <template #html>
+<<< DEMO ./demo/OverlayNonwrapping.vue
 
-```vue
-<template>
-  <div class="position-relative p-4 bg-info">
-    <p class="text-light fw-bold">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-    <BCard title="Card with parent overlay">
-      <BCardText>Laborum consequat non elit enim exercitation cillum.</BCardText>
-      <BCardText>Click the button to toggle the overlay:</BCardText>
-      <BButton :disabled="showNoWrapEx" variant="primary" @click="showNoWrapEx = true">
-        Show overlay
-      </BButton>
-    </BCard>
-    <p class="text-light fw-bold mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-    <BOverlay :show="showNoWrapEx" no-wrap> </BOverlay>
-  </div>
-  <BButton class="mt-3" @click="showNoWrapEx = !showNoWrapEx">Toggle overlay</BButton>
-</template>
-
-<script setup lang="ts">
-const showNoWrapEx = ref(false)
-</script>
-```
-
-  </template>
-</HighlightCard>
-
-Note that some of Bootstrap v5's component styles have relative positioning defined (e.g. cards,
+Note that some of Bootstrap v5 component styles have relative positioning defined (e.g. cards,
 cols, etc.). You may need to adjust the placement of `BOverlay` in your markup.
 
 For example, `BCard` has relative positioning, so you can place the `<BOverlay no-wrap>` as a
 descendant of `BCard`:
 
-<HighlightCard>
-  <BCard header="Card header" footer="Card footer">
-    <BImg
-      thumbnail
-      rounded="circle"
-      src="https://picsum.photos/72/72/?image=58"
-      alt="Image"
-      class="d-inline"
-    />
-    <p class=" d-inline align-top mb-0">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
-    <BOverlay :show="showNoWrapEx2" no-wrap />
-  </BCard>
-  <BButton @click="showNoWrapEx2 = !showNoWrapEx2" class="mt-3">Toggle overlay</BButton>
-  <template #html>
-
-```vue
-<template>
-  <BCard header="Card header" footer="Card footer">
-    <BImg
-      thumbnail
-      rounded="circle"
-      src="https://picsum.photos/72/72/?image=58"
-      alt="Image"
-      class="d-inline"
-    />
-    <p class=" d-inline align-top mb-0">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-      laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
-    <BOverlay :show="showNoWrapEx2" no-wrap />
-  </BCard>
-  <BButton @click="showNoWrapEx2 = !showNoWrapEx2" class="mt-3">Toggle overlay</BButton>
-</template>
-
-<script setup lang="ts">
-const showNoWrapEx2 = ref(false)
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/OverlayNonwrappingCard.vue
 
 When in `no-wrap` mode, `BOverlay` will not set the `aria-busy` attribute on the obscured
 element. You may also want to use an `aria-live` region in your app that announces to screen reader
@@ -669,7 +188,7 @@ When using the wrapping mode (prop `no-wrap` is not set), the wrapper will have 
 or loading state. When prop `no-wrap` is set, the attribute will _not_ be applied.
 
 When using the `no-wrap` prop, and potentially the `fixed` prop, to obscure the entire application
-or page, you must ensure that all internative page elements (other than the content of the overlay)
+or page, you must ensure that all interactive page elements (other than the content of the overlay)
 have been disabled and are _not_ in the document tab sequence.
 
 ## Use case examples
@@ -684,80 +203,7 @@ Please refer to the [Accessibility section](#accessibility) for additional detai
 
 Easily create a loading button:
 
-<HighlightCard>
-  <BOverlay
-    :show="loadingBuzy"
-    rounded
-    opacity="0.6"
-    spinner-small
-    spinner-variant="primary"
-    class="d-inline-block"
-    @hidden="onBuzyHidden"
-  >
-    <BButton
-      ref="buzyButton"
-      :disabled="loadingBuzy"
-      variant="primary"
-      @click="setBuzyClick"
-    >
-      Do something
-    </BButton>
-  </BOverlay>
-  <template #html>
-
-```vue
-<template>
-  <BOverlay
-    :show="loadingBuzy"
-    rounded
-    opacity="0.6"
-    spinner-small
-    spinner-variant="primary"
-    class="d-inline-block"
-    @hidden="onBuzyHidden"
-  >
-    <BButton ref="buzyButton" :disabled="loadingBuzy" variant="primary" @click="setBuzyClick">
-      Do something
-    </BButton>
-  </BOverlay>
-</template>
-
-<script setup lang="ts">
-let timeout = null
-
-const loadingBuzy = ref(false)
-const buzyButton = ref<HTMLElement | null>(null)
-
-const clearTimer = () => {
-  if (timeout) {
-    clearTimeout(timeout)
-    timeout = null
-  }
-}
-const setTimer = (callback) => {
-  clearTimer()
-  timeout = setTimeout(() => {
-    clearTimer()
-    callback()
-  }, 5000)
-}
-const setBuzyClick = () => {
-  loadingBuzy.value = true
-  // Simulate an async request
-  setTimer(() => {
-    loadingBuzy.value = false
-  })
-}
-
-const onBuzyHidden = () => {
-  // Return focus to the button once hidden
-  //buzyButton.focus()
-}
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/OverlayLoadingButton.vue
 
 ### Form confirmation prompt and upload status
 
@@ -765,158 +211,7 @@ This example is a bit more complex, but shows the use of `no-wrap`, and using th
 present the user with a prompt dialog, and once confirmed it shows an uploading status indicator.
 This example also demonstrates additional accessibility markup.
 
-<HighlightCard>
-  <BForm class="position-relative p-3" @submit.prevent="onFormSubmit">
-    <div class="row">
-      <label class="col-lg-2" label-for="form-name">Name</label>
-      <BFormInput id="form-name" class="col" :disabled="formbusy" />
-    </div>
-    <div class="row mt-2">
-      <label class="col-lg-2" label-for="form-mail">Email</label>
-      <BFormInput id="form-email" class="col" type="email" :disabled="formbusy" />
-    </div>
-    <div class="d-flex justify-content-center mt-2">
-        <BButton ref="formsubmit" type="submit" :disabled="formbusy">Submit</BButton>
-    </div>
-    <BOverlay :show="formbusy" no-wrap @shown="onFormOverlayShown" @hidden="onFormOverlayHidden">
-      <template #overlay>
-        <div v-if="processing" class="text-center p-4 bg-primary text-light rounded">
-          <div class="mb-3">Processing...</div>
-          <BProgress
-            min="1"
-            max="20"
-            :value="processingcounter"
-            variant="success"
-            height="3px"
-            class="mx-n4 rounded-0"
-          />
-        </div>
-        <div
-          v-else
-          ref="formdialog"
-          tabindex="-1"
-          role="dialog"
-          aria-modal="false"
-          aria-labelledby="form-confirm-label"
-          class="text-center p-3"
-        >
-          <p><strong id="form-confirm-label">Are you sure?</strong></p>
-          <div class="d-flex"  style="column-gap: 5%;">
-            <BButton variant="outline-danger" class="me-3" @click="onFormCancel">
-              Cancel
-            </BButton>
-            <BButton variant="outline-success" @click="onFormOK">OK</BButton>
-          </div>
-        </div>
-      </template>
-    </BOverlay>
-  </BForm>
-  <template #html>
-
-```vue
-<template>
-  <BForm class="position-relative p-3" @submit.prevent="onFormSubmit">
-    <div class="row">
-      <label class="col-lg-2" label-for="form-name">Name</label>
-      <BFormInput id="form-name" class="col" :disabled="formbusy" />
-    </div>
-
-    <div class="row mt-2">
-      <label class="col-lg-2" label-for="form-mail">Email</label>
-      <BFormInput id="form-email" class="col" type="email" :disabled="formbusy" />
-    </div>
-
-    <div class="d-flex justify-content-center mt-2">
-      <BButton ref="formsubmit" type="submit" :disabled="formbusy">Submit</BButton>
-    </div>
-
-    <BOverlay :show="formbusy" no-wrap @shown="onFormOverlayShown" @hidden="onFormOverlayHidden">
-      <template #overlay>
-        <div v-if="processing" class="text-center p-4 bg-primary text-light rounded">
-          <div class="mb-3">Processing...</div>
-          <BProgress
-            min="1"
-            max="20"
-            :value="processingcounter"
-            variant="success"
-            height="3px"
-            class="mx-n4 rounded-0"
-          />
-        </div>
-        <div
-          v-else
-          ref="formdialog"
-          tabindex="-1"
-          role="dialog"
-          aria-modal="false"
-          aria-labelledby="form-confirm-label"
-          class="text-center p-3"
-        >
-          <p><strong id="form-confirm-label">Are you sure?</strong></p>
-          <div class="d-flex" style="column-gap: 5%;">
-            <BButton variant="outline-danger" class="me-3" @click="onFormCancel"> Cancel </BButton>
-            <BButton variant="outline-success" @click="onFormOK">OK</BButton>
-          </div>
-        </div>
-      </template>
-    </BOverlay>
-  </BForm>
-</template>
-
-<script setup lang="ts">
-const formbusy = ref(false)
-const processing = ref(false)
-const processingcounter = ref(1)
-const formdialog = ref<HTMLElement | null>(null)
-let processingInterval = null
-
-const clearProcessingInterval = () => {
-  if (processingInterval) {
-    clearInterval(processingInterval)
-    processingInterval = null
-  }
-}
-
-const onBuzyHidden = () => {
-  // Focus the dialog prompt
-  //formdialog.focus()
-}
-
-const onFormOverlayHidden = () => {
-  // In this case, we return focus to the submit button
-  // You may need to alter this based on your application requirements
-}
-
-const onFormSubmit = () => {
-  processing.value = false
-  formbusy.value = true
-}
-
-const onFormCancel = () => {
-  formbusy.value = false
-}
-
-const onFormOK = () => {
-  processingcounter.value = 1
-  processing.value = true
-  clearProcessingInterval()
-  processingInterval = setInterval(() => {
-    if (processingcounter.value < 20) {
-      processingcounter.value++
-    } else {
-      clearProcessingInterval()
-      nextTick(() => {
-        formbusy.value = false
-        processing.value = false
-      })
-    }
-  }, 350)
-}
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/OverlayFormConfirmation.vue
 
 ### Using in `BModal`
 
@@ -929,125 +224,4 @@ also set the `rounded` prop on `BOverlay`.
 
 <script setup lang="ts">
 import {data} from '../../data/components/overlay.data'
-import ComponentReference from '../../components/ComponentReference.vue'
-import HighlightCard from '../../components/HighlightCard.vue'
-import {ref, nextTick} from 'vue';
-
-const showOverlayEx1 = ref(false)
-const showRoundedEx = ref(false)
-
-const opacity = ref(0.85)
-const blur = ref('2px')
-const variants = [
-  'transparent',
-  'white',
-  'light',
-  'dark',
-  'primary',
-  'secondary',
-  'success',
-  'danger',
-  'warning',
-  'info',
-] as const
-const variant = ref('light')
-const blurs = [
-  { text: 'None', value: '' },
-  '1px',
-  '2px',
-  '5px',
-  '0.5em',
-  '1rem'
-]
-
-const showCustomEx = ref(false)
-
-const onShown = () => {
-  console.log('shown')
-}
-const onHidden = () => {
-  console.log('hidden')
-}
-
-const showNoWrapEx = ref(false)
-const showNoWrapEx2 = ref(false)
-
-const loadingBuzy = ref(false)
-const buzyButton = ref<HTMLElement | null>(null)
-let timeout = null;
-
-const clearTimer = () => {
-  if (timeout) {
-    clearTimeout(timeout)
-    timeout = null
-  }
-}
-const setTimer = (callback) => {
-  clearTimer()
-  timeout = setTimeout(() => {
-    clearTimer()
-    callback()
-  }, 5000)
-}
-const setBuzyClick = () => {
-  loadingBuzy.value = true
-  // Simulate an async request
-  setTimer(() => {
-    loadingBuzy.value = false
-  })
-}
-
-const onFormOverlayShown = () => {
-  // Return focus to the button once hidden
-  //buzyButton.focus()
-}
-
-const formbusy = ref(false)
-const processing = ref(false)
-const processingcounter = ref(1)
-const formdialog = ref<HTMLElement | null>(null)
-let processingInterval = null;
-
-const clearProcessingInterval = () => {
-  if (processingInterval) {
-    clearInterval(processingInterval)
-    processingInterval = null
-  }
-}
-
-const onBuzyHidden = () => {
-  // Focus the dialog prompt
-  //formdialog.focus()
-}
-
-const onFormOverlayHidden = () => {
-// In this case, we return focus to the submit button
-// You may need to alter this based on your application requirements
-}
-
-const onFormSubmit = () => {
-  processing.value = false
-  formbusy.value = true
-}
-
-const onFormCancel = () => {
-  formbusy.value = false
-}
-
-const onFormOK = () => {
-  processingcounter.value = 1
-  processing.value = true
-  clearProcessingInterval()
-  processingInterval = setInterval(() => {
-    if(processingcounter.value < 20) {
-      processingcounter.value++
-    } else {
-      clearProcessingInterval()
-      nextTick(() => {
-        formbusy.value = false
-        processing.value = false
-      })
-    }
-  }, 350)
-}
 </script>

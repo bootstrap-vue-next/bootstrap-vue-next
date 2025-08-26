@@ -100,11 +100,11 @@ export default {
           },
         },
         'update:indeterminate': {
-          description: 'Emitted when the indeterminaate state of the checkbox is changed', // TODO grammar check (typo: "indeterminaate" should be "indeterminate")
+          description: 'Emitted when the indeterminate state of the checkbox is changed',
           args: {
             value: {
               description:
-                'Value of the indeterminate state - true for indeterminate, false for determinstic state.', // TODO grammar check (typo: "determinstic" should be "deterministic")
+                'Value of the indeterminate state - true for indeterminate, false for deterministic state.',
               type: 'boolean',
             },
           },
@@ -143,13 +143,13 @@ export default {
         buttons: {
           type: 'boolean',
           default: false, // TODO item not in string format
-          description: 'When set, renderes the checkboxes in this group with button styling', // TODO grammar check (typo: "renderes" should be "renders")
+          description: 'When set, renders the checkboxes in this group with button styling',
         },
         modelValue: {
           type: 'readonly CheckboxValue[]',
           default: '() => []',
           description:
-            'The current value of the checked checkboxes in the group. Must be an array when there are multiple checkboxes. . Looking for `value` - use `modelValue` instead.', // TODO grammar check (extra period before "Looking")
+            'The current value of the checked checkboxes in the group. Must be an array when there are multiple checkboxes. Looking for `value` - use `modelValue` instead.',
         },
         options: {
           type: 'readonly CheckboxOptionRaw[]',
@@ -199,7 +199,7 @@ export default {
         },
         option: {
           description:
-            'Use this slot to have finer control over the content render inside each checkbox button.', // TODO grammar check (should say "rendered" instead of "render")
+            'Use this slot to have finer control over the content rendered inside each checkbox button.',
           scope: {
             value: {
               type: 'string | number | undefined',

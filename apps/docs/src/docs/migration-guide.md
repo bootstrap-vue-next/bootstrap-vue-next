@@ -614,22 +614,24 @@ See the [v-html](#v-html) section for information on deprecation of the `cancel-
 #### Replacement for Modal Message boxes
 
 [BootstrapVue](https://bootstrap-vue.github.io/bootstrap-vue/docs/components/modal#modal-message-boxes) provided two methods on the `this.$bvModal` object called `msgBoxOk` and `msgBoxConfirm`.
-In holding with the Vue3 first philosophy, BootstrapVueNext provides a composable called [`useModalController`](/docs/composables/useModalController) that
-fills the same needs (and more).
+In keeping with the Vue3 first philosophy, BootstrapVueNext provides a composable called [`useModal`](/docs/composables/useModal) that
+fills the same use cases (and more).
 
-Please read the [`useModalController`](/docs/composables/useModalController) documentation and then come back here for examples of replacements
+Please read the [`useModal`](/docs/composables/useModal) documentation and then return here for examples of replacements
 for `msgBoxOk` and `msgBoxConfirm`.
 
-Example using `useModalController.show` to replace `msgBoxOk` (Remember to include `<BModalOrchestrator />` in your App Root):
+Example using `useModal.create` to replace `msgBoxOk`:
+Note: If you use `<BApp>`, the modal orchestrator is included by default. If you’re not using `BApp`, include `<BOrchestrator />` at your app root.
 
 <<< DEMO ./demo/ModalMessageBox.vue
 
-Example using `useModalController.confirm` to replace `msgBoxConfirm` (Remember to include `<BModalOrchestrator />` in your App Root):
+Example using `useModal.create` to replace `msgBoxConfirm`:
+Note: If you use `<BApp>`, the modal orchestrator is included by default. If you’re not using `BApp`, include `<BOrchestrator />` at your app root.
 
 <<< DEMO ./demo/ModalConfirm.vue
 
-The `show` and `confirm` `props` object accepts all of the properties that are defined on
-[BModal](/docs/components/modal#component-reference) except for `modelValue`.
+The `create` method accepts all properties defined on
+[BModal](/docs/components/modal#component-reference).
 
 See [Show and Hide](#show-and-hide) shared properties.
 
@@ -673,7 +675,7 @@ See [Show and Hide](#show-and-hide) shared properties.
 
 ### BOverlay
 
-<NotYetDocumented type="component"/>
+See the [Rounding](#rounding) section.
 
 prop `blur` does not work when the prop `bgColor` is defined. It also will not work if the prop `variant` is anything other than `white` or `transparent`. This overcomes a browser change.
 
@@ -721,7 +723,7 @@ full parity with the BootstrapVue feature is useful, please open an issue or pro
 
 The default for `placement` is now `top` rather than `right`
 
-`$root` events are deprecated. See [usePopoverController](/docs/composables/usePopoverController) as an alternative.
+`$root` events are deprecated. See [usePopover](/docs/composables/usePopover) as an alternative.
 
 ### BProgressBar
 
@@ -850,13 +852,43 @@ See [Show and Hide](#show-and-hide) shared properties.
 
 ### BTooltip
 
-<NotYetDocumented type="component"/>
-
 See [Show and Hide](#show-and-hide) shared properties.
 
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
-`content` prop has been renamed to `body` for consistency with other components.
+`BTooltip` is noninteractive by default, unlike in BootstrapVue. This provides for a smoother user
+experience. The `interactive` prop is provided to restore the BootstrapVue behavior.
+
+The `container` prop has been deprecated. Use the `teleportTo` prop instead to specify where the tooltip
+should be mounted. See [Vue Teleport documentation](https://vuejs.org/guide/built-ins/teleport.html).
+
+`custom-class` has been changed to `body-class` and a `title-class` has been added for completeness -
+see [custom classes documentation](/docs/components/tooltip#custom-classes-and-variants) for details.
+
+`fallback-placement` has been deprecated. Use the various options provided by [Floating UI](https://floating-ui.com/)
+to handle placement.
+
+The ability for the `target` prop to take a function has been deprecated.
+
+Trigger behavior differs because the underlying library used to manage tooltips and popovers has changed. See
+[our documentation](/docs/components/tooltip#triggers) and [Floating UI](https://floating-ui.com/)
+for details.
+
+The `variant` prop has been deprecated. Use Bootstrap’s color and background utility classes to style
+tooltips instead. See [Tooltip custom classes and variants](/docs/components/tooltip#custom-classes-and-variants)
+for details.
+
+The `disabled` prop and
+[Programmatically Disabling](https://bootstrap-vue.org/docs/components/tooltip#programmatically-disabling-tooltip) have
+been deprecated along with the `disabled` and `enabled` events. Use `manual=true` to disable BootstrapVueNext’s automatic
+trigger handling. If your application shows the tooltip programmatically, disable those automatic triggers as well.
+If you believe full parity with the BootstrapVue feature is useful, please open an issue or propose a pull request.
+
+`delay` now defaults to 0 rather than 50ms
+
+The default for `placement` is now `top` rather than `right`
+
+`$root` events are deprecated. See [usePopover](/docs/composables/usePopover) as an alternative.
 
 ## Directives
 

@@ -11,7 +11,7 @@
     @keydown="onKeydown"
   >
     <span
-      v-if="props.showClear && !props.readonly"
+      v-if="props.showClear && !props.readonly && !props.disabled"
       class="clear-button-spacing"
       @click="clearRating"
     >
@@ -90,6 +90,7 @@ const _props = withDefaults(defineProps<Omit<BFormRatingProps, 'modelValue'>>(),
   noBorder: false,
   precision: 0,
   readonly: false,
+  disabled: false,
   showClear: false,
   showValue: false,
   showValueMax: false,
@@ -106,6 +107,7 @@ const computedId = useId(() => props.id, 'form-rating')
 
 const computedClasses = computed(() => ({
   'is-readonly': props.readonly,
+  'is-disabled': props.disabled,
   'no-border': props.noBorder,
   'b-form-rating': true,
   'd-inline-block': props.inline,
@@ -162,6 +164,9 @@ const roundedValue = computed(() => {
 
 const iconColors = computed(() =>
   Array.from({length: clampedStars.value}, () => {
+    if (props.disabled) {
+      return {class: 'is-disabled', style: {}}
+    }
     if (props.variant) {
       return {class: `text-${props.variant}`, style: {}}
     }
@@ -174,7 +179,7 @@ const iconColors = computed(() =>
 
 //add keyboard support
 function onKeydown(e: KeyboardEvent) {
-  if (props.readonly) return
+  if (props.readonly || props.disabled) return
 
   let newValue = localValue.value
 
@@ -196,7 +201,7 @@ function onKeydown(e: KeyboardEvent) {
 }
 
 function selectRating(starIndex: number) {
-  if (props.readonly) return
+  if (props.readonly || props.disabled) return
   const selectedRating = hoverValue.value !== null ? hoverValue.value : starIndex
   localValue.value = selectedRating
 }

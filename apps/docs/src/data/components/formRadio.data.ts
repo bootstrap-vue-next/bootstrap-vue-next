@@ -84,7 +84,7 @@ export default {
       } satisfies SlotRecord<keyof BFormRadioSlots>,
     },
     BFormRadioGroup: {
-      styleSpec: {kind: StyleKind.Tag, value: 'dev[role="radiogroup"]'}, // TODO grammar check (typo: "dev" should likely be "div")
+      styleSpec: {kind: StyleKind.Tag, value: 'div[role="radiogroup"]'},
       sourcePath: '/BFormRadio/BFormRadioGroup.vue',
       props: {
         ...pick(buildCommonProps(), [
@@ -112,7 +112,7 @@ export default {
         buttons: {
           type: 'boolean',
           default: false, // TODO item not in string format
-          description: 'When set, renderes the radio buttons in this group with button styling', // TODO grammar check (typo: "renderes" should be "renders")
+          description: 'When set, renders the radio buttons in this group with button styling'
         },
         modelValue: {
           type: 'RadioValue | undefined',
@@ -158,7 +158,7 @@ export default {
         },
         option: {
           description:
-            'Use this slot to have finer control over the content render inside each radio button', // TODO grammar check (should say "rendered" instead of "render")
+            'Use this slot to have finer control over the content rendered inside each radio button',
           scope: {
             value: {
               type: 'string | number | undefined',

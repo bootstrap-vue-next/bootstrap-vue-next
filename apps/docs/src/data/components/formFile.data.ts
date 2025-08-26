@@ -37,7 +37,7 @@ export default {
           type: "'boolean' | 'user' | 'environment'",
           default: false, // TODO item not in string format
           description:
-            'When set, will instruction the browser to use the devices camera (if supported)', // TODO grammar check (should say "instruct" instead of "instruction"; "devices" should be "device's")
+            'When set, will instruct the browser to use the device\'s camera (if supported)',
         },
         directory: {
           type: 'boolean',
@@ -69,7 +69,7 @@ export default {
         noButton: {
           type: 'boolean | null',
           default: undefined,
-          description: 'hide the file input button', // TODO grammar check (should capitalize "Hide" for consistency)
+          description: 'Hide the file input button',
         },
         noDrop: {
           type: 'boolean',
@@ -79,7 +79,7 @@ export default {
         noTraverse: {
           type: 'boolean',
           default: false, // TODO item not in string format
-          description: 'Wether to returns files as a flat array when in `directory` mode', // TODO grammar check (typo: "Wether" should be "Whether"; "returns" should be "return")
+          description: 'Whether to return files as a flat array when in `directory` mode',
         },
       } satisfies PropRecord<keyof BFormFileProps>,
       emits: {
