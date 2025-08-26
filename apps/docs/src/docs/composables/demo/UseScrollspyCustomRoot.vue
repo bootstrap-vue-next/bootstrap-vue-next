@@ -1,6 +1,8 @@
 <template>
-  <!-- This is a placeholder template - the important part is the script setup -->
-  <div></div>
+  <!-- Placeholder template with actual refs for TypeScript compatibility -->
+  <div ref="content">
+    <div ref="target"></div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -12,7 +14,7 @@ const content = useTemplateRef('content')
 const target = useTemplateRef('target')
 
 const {current} = useScrollspy(content, target, {
-  root: document.querySelector('#custom-viewport'),
+  root: document.querySelector('#custom-viewport') as HTMLElement,
   rootMargin: '0px 0px -50%', // Element must be 50% visible
   threshold: [0.25, 0.5, 0.75], // Multiple thresholds for smooth transitions
 })

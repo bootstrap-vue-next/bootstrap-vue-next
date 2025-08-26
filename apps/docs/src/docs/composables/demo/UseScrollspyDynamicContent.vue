@@ -1,6 +1,8 @@
 <template>
-  <!-- This is a placeholder template - the important part is the script setup -->
-  <div></div>
+  <!-- Placeholder template with actual refs for TypeScript compatibility -->
+  <div ref="content">
+    <div ref="target"></div>
+  </div>
 </template>
 
 <script setup lang="ts">
