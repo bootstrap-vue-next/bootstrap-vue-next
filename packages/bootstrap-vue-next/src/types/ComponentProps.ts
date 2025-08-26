@@ -397,6 +397,7 @@ export interface BFormRatingProps {
   noBorder?: boolean
   precision?: number
   readonly?: boolean
+  disabled?: boolean
   showClear?: boolean
   showValue?: boolean
   showValueMax?: boolean
