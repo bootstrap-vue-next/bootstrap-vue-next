@@ -2,7 +2,7 @@
   <BContainer>
     <BRow>
       <BCol>
-        <h2 class="text-center">Administrators</h2>
+        <h3 id="administrators" class="text-center">Administrators</h3>
       </BCol>
     </BRow>
     <BRow>
@@ -12,7 +12,7 @@
     </BRow>
     <BRow>
       <BCol>
-        <h2 class="text-center">Contributors</h2>
+        <h3 id="contributors" class="text-center">Contributors</h3>
       </BCol>
     </BRow>
     <BRow>
@@ -22,38 +22,43 @@
     </BRow>
     <BRow>
       <BCol>
-        <h2 class="text-center">Financial Backers</h2>
+        <h3 id="financial-backers" class="text-center">Financial Backers</h3>
       </BCol>
     </BRow>
     <BRow>
       <BCol>
         <div v-for="tier in sortTiers" :key="tier">
-          <h3 class="text-center">{{ tier }}</h3>
           <OpenCollectiveMemberDisplayAvatarCard :members="groupedActiveFinancialBackers[tier]" />
         </div>
       </BCol>
     </BRow>
     <BRow>
       <BCol>
-        <h2>
-          <BPopover>
-            <template #target>
-              <div class="text-center">Inactive Financial Backers</div>
-            </template>
-            <div class="mb-2">
-              An inactive financial backer is someone who has not made a financial contribution in
-              the last year.
-            </div>
-            <div class="mb-2">
-              We thank them for their past contributions and hope they will consider contributing
-              again in the future.
-            </div>
-            <div>
-              Those that have not contributed in the last two years are removed from the financial
-              backers list.
-            </div>
-          </BPopover>
-        </h2>
+        <BPopover>
+          <template #target>
+            <h3 id="inactive-financial-backers" class="text-center m-0">
+              <BButton
+                variant="link"
+                class="p-0 text-reset"
+                aria-label="More information about inactive financial backers"
+              >
+                Inactive Financial Backers
+              </BButton>
+            </h3>
+          </template>
+          <div class="mb-2">
+            An inactive financial backer is someone who has not made a financial contribution in the
+            last year.
+          </div>
+          <div class="mb-2">
+            We thank them for their past contributions and hope they will consider contributing
+            again in the future.
+          </div>
+          <div>
+            Those that have not contributed in the last two years are removed from the financial
+            backers list.
+          </div>
+        </BPopover>
       </BCol>
     </BRow>
     <BRow>
