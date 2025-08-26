@@ -13,7 +13,7 @@ import {buildCommonProps} from '../../utils/commonProps'
 const optionSlot: SlotRecord = {
   option: {
     description:
-      'Use this slot to have finer control over the content rendered inside each select item'
+      'Use this slot to have finer control over the content rendered inside each select item',
     scope: {
       value: {
         type: 'any (T)',

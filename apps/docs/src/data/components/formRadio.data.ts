@@ -158,7 +158,7 @@ export default {
         },
         option: {
           description:
-            'Use this slot to have finer control over the content rendered inside each radio button'
+            'Use this slot to have finer control over the content rendered inside each radio button',
           scope: {
             value: {
               type: 'string | number | undefined',

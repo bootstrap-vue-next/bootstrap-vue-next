@@ -321,7 +321,7 @@ export default {
           },
         },
         'ok': {
-          description: 'Emitted when the default footer OK button is clicked. Cancelable'
+          description: 'Emitted when the default footer OK button is clicked. Cancelable',
           args: {
             value: {
               type: 'BvTriggerableEvent',
@@ -330,7 +330,7 @@ export default {
           },
         },
         'cancel': {
-          description: 'Emitted when the default footer Cancel button is clicked. Cancelable'
+          description: 'Emitted when the default footer Cancel button is clicked. Cancelable',
           args: {
             value: {
               type: 'BvTriggerableEvent',
@@ -339,7 +339,7 @@ export default {
           },
         },
         'close': {
-          description: 'Emitted when the default header close button is clicked. Cancelable'
+          description: 'Emitted when the default header close button is clicked. Cancelable',
           args: {
             value: {
               type: 'BvTriggerableEvent',
@@ -381,17 +381,17 @@ export default {
         },
         'footer': {
           description:
-            'Content for the modal footer. Removes default OK and Cancel buttons. Optionally scoped'
+            'Content for the modal footer. Removes default OK and Cancel buttons. Optionally scoped',
           scope: sharedSlots,
         },
         'header': {
           description:
-            'Content for the modal header. Removes the top-right close button. Optionally scoped'
+            'Content for the modal header. Removes the top-right close button. Optionally scoped',
           scope: sharedSlots,
         },
         'header-close': {
           description:
-            "Content for the modal header close button. Not shown if the 'header' slot is used"
+            "Content for the modal header close button. Not shown if the 'header' slot is used",
           scope: {},
         },
         'ok': {
@@ -400,7 +400,7 @@ export default {
         },
         'title': {
           description:
-            "Content for the modal title. Not shown if the 'header' slot is used. Optionally scoped"
+            "Content for the modal title. Not shown if the 'header' slot is used. Optionally scoped",
           scope: sharedSlots,
         },
       } satisfies SlotRecord<keyof BModalSlots>,
