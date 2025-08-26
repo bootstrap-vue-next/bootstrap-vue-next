@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import {useColorMode} from 'bootstrap-vue-next'
+import {useColorMode} from 'bootstrap-vue-next/composables/useColorMode'
 
 const target = ref<HTMLElement | null>(null)
 
@@ -46,7 +46,7 @@ const changeColor = () => {
 <script setup lang="ts">
 import ComposableHeader from './ComposableHeader.vue'
 import {ref} from 'vue'
-import {useColorMode, BCard, BCardBody, BButton} from 'bootstrap-vue-next'
+import {useColorMode} from 'bootstrap-vue-next/composables/useColorMode'
 import HighlightCard from '../../components/HighlightCard.vue'
 
 const target = ref<HTMLElement | null>(null)

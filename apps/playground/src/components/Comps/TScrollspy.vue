@@ -189,7 +189,7 @@
 
 <script setup lang="ts">
 import {type ComponentPublicInstance, ref} from 'vue'
-import {useScrollspy} from 'bootstrap-vue-next'
+import {useScrollspy} from 'bootstrap-vue-next/composables/useScrollspy'
 // import {useScrollspy} from './BootstrapVue'
 const content = ref<HTMLElement | ComponentPublicInstance<HTMLElement> | null>(null)
 const target = ref<HTMLElement | ComponentPublicInstance<HTMLElement> | null>(null)

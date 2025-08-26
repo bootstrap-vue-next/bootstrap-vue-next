@@ -17,7 +17,8 @@
 import type {BNavbarToggleProps} from '../../types/ComponentProps'
 import {computed, inject, toValue} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
-import {globalShowHideStorageInjectionKey} from '../../utils/keys'
+import {showHideRegistryKey} from '../../utils/keys'
+import type {BNavbarToggleEmits, BNavbarToggleSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BNavbarToggleProps>(), {
   label: 'Toggle navigation',
@@ -25,23 +26,14 @@ const _props = withDefaults(defineProps<BNavbarToggleProps>(), {
   target: undefined,
 })
 const props = useDefaults(_props, 'BNavbarToggle')
-
-const emit = defineEmits<{
-  click: [value: MouseEvent]
-}>()
-
-defineSlots<{
-  default?: (props: {
-    expanded: boolean
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-}>()
+const emit = defineEmits<BNavbarToggleEmits>()
+defineSlots<BNavbarToggleSlots>()
 
 const computedClasses = computed(() => ({
   disabled: props.disabled,
 }))
 
-const showHideData = inject(globalShowHideStorageInjectionKey, undefined)
+const showHideData = inject(showHideRegistryKey, undefined)
 
 const collapseExpanded = computed(() => {
   if (!props.target || !showHideData) return false

@@ -236,11 +236,11 @@ const nestedModal4 = ref(false)
 
 ## Programmatically Control
 
-To programmatically control your modals with global state, refer to our documentation at [useModal](/docs/composables/useModal) and [useModalController](/docs/composables/useModalController)
+To programmatically control your modals with global state, refer to our documentation at [useModal](/docs/composables/useModal)
 
 ### Programmatically Create Modals
 
-To programmatically create modals, refer to the documentation at [useModalController](/docs/composables/useModalController)
+To programmatically create modals, refer to the documentation at [useModal](/docs/composables/useModal)
 
 ### Modal message boxes
 
@@ -253,7 +253,7 @@ If you're looking for replacements for `$bvModal.msgBoxOk` and `$bvModal.msgBoxC
 import {data} from '../../data/components/modal.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
-import {BCard, BCardBody, BModal, BButton, vBModal} from 'bootstrap-vue-next'
+import {vBModal} from 'bootstrap-vue-next/directives/BModal'
 import {ref, nextTick} from 'vue'
 
 const modal = ref(false)

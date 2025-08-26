@@ -17,7 +17,7 @@ For navigation based tabs (i.e. tabs that would change the URL), use the
 ::: info
 You should supply each child `<BTab>` component a unique `key` value if dynamically adding
 or removing `<BTab>` components (i.e. `v-if` or for loops). The `key` attribute is a special Vue
-attribute, see the [Vue doce](https://vuejs.org/api/built-in-special-attributes.html#key) for details.
+attribute, see the [Vue docs](https://vuejs.org/api/built-in-special-attributes.html#key) for details.
 :::
 
 ## Cards integration

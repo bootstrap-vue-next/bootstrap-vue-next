@@ -226,7 +226,6 @@ The BFormFile exposes functions to control the component: `focus(), blur(), rese
 import {data} from '../../data/components/formFile.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
-import {BFormFile, BAlert, BLink} from 'bootstrap-vue-next'
 import {ref} from 'vue'
 
 const first = ref(null)

@@ -335,17 +335,6 @@ Optionally, you can manually adjust any scope of the table using slots. The foll
 import {data} from '../../data/components/placeholder.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
-import {
-  BPlaceholderButton,
-  BPlaceholderTable,
-  BPlaceholderWrapper,
-  BPlaceholderCard,
-  BCard,
-  BCardBody,
-  BButton,
-  BPlaceholder,
-  BCardText
-} from 'bootstrap-vue-next'
 import {ref, onMounted, watchEffect} from 'vue'
 
 const loading = ref(false)

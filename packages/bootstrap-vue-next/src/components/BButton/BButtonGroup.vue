@@ -9,6 +9,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import type {BButtonGroupProps} from '../../types/ComponentProps'
 import {computed, provide} from 'vue'
 import {buttonGroupKey} from '../../utils/keys'
+import type {BButtonGroupSlots} from '../../types'
 
 provide(buttonGroupKey, true)
 
@@ -19,11 +20,7 @@ const _props = withDefaults(defineProps<BButtonGroupProps>(), {
   vertical: false,
 })
 const props = useDefaults(_props, 'BButtonGroup')
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
+defineSlots<BButtonGroupSlots>()
 
 const computedClasses = computed(() => ({
   'btn-group': !props.vertical,

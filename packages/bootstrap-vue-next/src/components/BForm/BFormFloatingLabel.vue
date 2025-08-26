@@ -10,6 +10,7 @@
 </template>
 
 <script setup lang="ts">
+import type {BFormFloatingLabelSlots} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BFormFloatingLabelProps} from '../../types/ComponentProps'
 
@@ -19,11 +20,5 @@ const _props = withDefaults(defineProps<BFormFloatingLabelProps>(), {
   text: undefined,
 })
 const props = useDefaults(_props, 'BFormFloatingLabel')
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  label?: (props: Record<string, never>) => any
-}>()
+defineSlots<BFormFloatingLabelSlots>()
 </script>

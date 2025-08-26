@@ -13,7 +13,7 @@ Includes support for making accordions. Visibility can be easily toggled with ou
 ## Usage
 
 Other elements can easily toggle `BCollapse` components using the
-[`v-b-toggle` directive](/docs/directives/toggle).
+[`v-b-toggle` directive](/docs/directives/BToggle).
 
 <<< DEMO ./demo/CollapseUsage.vue#template{vue-html}
 

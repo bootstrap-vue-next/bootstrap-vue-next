@@ -46,7 +46,8 @@
 </template>
 
 <script setup lang="ts">
-import {BFormDatalist, BFormInput} from 'bootstrap-vue-next'
+import {BFormDatalist} from 'bootstrap-vue-next/components/BForm'
+import {BFormInput} from 'bootstrap-vue-next/components/BFormInput'
 // You can use this file as a development spot to test your changes
 // Please do not commit this file
 const options = ['Apple', 'Banana', 'Grape', 'Kiwi', 'Orange']

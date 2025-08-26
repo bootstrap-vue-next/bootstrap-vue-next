@@ -61,7 +61,16 @@
           :role="props.role"
           @click="onClickInside"
         >
-          <slot v-if="contentShowing" :hide="hide" :show="show" :visible="showRef" />
+          <slot
+            v-if="contentShowing"
+            :id="computedId"
+            :hide="hide"
+            :show="show"
+            :visible="showRef"
+            :click="onClickInside"
+            :toggle="onButtonClick"
+            :active="showRef"
+          />
         </ul>
       </Transition>
     </ConditionalTeleport>
@@ -105,6 +114,7 @@ import {isBoundary, isRootBoundary, resolveBootstrapCaret} from '../../utils/flo
 import {getElement} from '../../utils/getElement'
 import {buttonGroupKey, dropdownInjectionKey, inputGroupKey} from '../../utils/keys'
 import {useShowHide} from '../../composables/useShowHide'
+import type {BDropdownSlots} from '../../types'
 
 const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   ariaLabel: undefined,
@@ -150,17 +160,8 @@ const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   wrapperClass: undefined,
 })
 const props = useDefaults(_props, 'BDropdown')
-
 const emit = defineEmits<BDropdownEmits>()
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'button-content'?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'default'?: (props: {hide: () => void; show: () => void; visible: boolean}) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'toggle-text'?: (props: Record<string, never>) => any
-}>()
+defineSlots<BDropdownSlots>()
 
 const computedId = useId(() => props.id, 'dropdown')
 
@@ -174,9 +175,9 @@ const computedOffset = computed(() =>
 )
 const offsetToNumber = useToNumber(computedOffset)
 
-const floatingElement = useTemplateRef<HTMLElement>('_floating')
-const button = useTemplateRef<HTMLElement>('_button')
-const splitButton = useTemplateRef<HTMLElement>('_splitButton')
+const floatingElement = useTemplateRef<HTMLUListElement | null>('_floating')
+const button = useTemplateRef<HTMLElement | null>('_button')
+const splitButton = useTemplateRef<HTMLElement | null>('_splitButton')
 
 const boundary = computed<Boundary | undefined>(() =>
   isBoundary(props.boundary) ? props.boundary : undefined

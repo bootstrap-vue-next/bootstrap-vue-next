@@ -97,6 +97,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import {sortSlotElementsByPosition} from '../../utils/dom'
 import {flattenFragments} from '../../utils/flattenFragments'
 import BTab from './BTab.vue'
+import type {BTabsEmits, BTabsSlots} from '../../types'
 
 const _props = withDefaults(defineProps<Omit<BTabsProps, 'modelValue' | 'activeIndex'>>(), {
   activeNavItemClass: undefined,
@@ -125,27 +126,8 @@ const _props = withDefaults(defineProps<Omit<BTabsProps, 'modelValue' | 'activeI
   vertical: false,
 })
 const props = useDefaults(_props, 'BTabs')
-
-const emit = defineEmits<{
-  'activate-tab': [
-    newTabId: string,
-    preTabId: string,
-    newTabIndex: number,
-    prevTabIndex: number,
-    event: BvEvent,
-  ]
-}>()
-
-const slots = defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'default'?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'empty'?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'tabs-end'?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'tabs-start'?: (props: Record<string, never>) => any
-}>()
+const emit = defineEmits<BTabsEmits>()
+const slots = defineSlots<BTabsSlots>()
 
 const activeIndex = defineModel<Exclude<BTabsProps['index'], undefined>>('index', {
   default: -1,
