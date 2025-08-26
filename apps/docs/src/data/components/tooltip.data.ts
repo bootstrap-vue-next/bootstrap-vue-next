@@ -1,4 +1,4 @@
-import type {BPopoverEmits, BPopoverProps, BPopoverSlots} from 'bootstrap-vue-next'
+import type {BTooltipEmits, BTooltipProps, BTooltipSlots} from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   type EmitRecord,
@@ -13,10 +13,18 @@ export default {
   load: (): ComponentReference => ({
     BPopover: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.tooltip, .popover'},
-      sourcePath: '/BPopover/BPopover.vue',
-      props: popoverSharedProps('popover') satisfies PropRecord<keyof BPopoverProps>,
+      sourcePath: '/BTooltip.vue',
+      props: {
+        ...popoverSharedProps('popover'),
+        interactive: {
+          type: 'boolean',
+          default: false,
+          description:
+            'Whether the tooltip is interactive (can be hovered/focused without closing).',
+        },
+      } satisfies PropRecord<keyof BTooltipProps>,
       emits: popoverSharedEmits('popover') satisfies EmitRecord<
-        keyof BPopoverEmits | 'update:model-value'
+        keyof BTooltipEmits | 'update:model-value'
       >,
       slots: {
         title: {
@@ -31,7 +39,7 @@ export default {
           description: 'Content for the target or trigger element.',
           scope: showHideSlotsData,
         },
-      } satisfies SlotRecord<keyof BPopoverSlots>,
+      } satisfies SlotRecord<keyof BTooltipSlots>,
     },
   }),
 }
