@@ -1,9 +1,0 @@
-<script setup lang="ts">
-import {onBeforeUnmount} from 'vue'
-
-const {cleanup} = useScrollspy(content, target)
-
-onBeforeUnmount(() => {
-  cleanup()
-})
-</script>

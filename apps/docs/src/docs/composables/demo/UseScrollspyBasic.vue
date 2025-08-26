@@ -26,13 +26,13 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
+import {useTemplateRef} from 'vue'
 import {useScrollspy} from 'bootstrap-vue-next'
 
 const loremText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
 
-const scrollContent = ref<HTMLElement>()
-const navTarget = ref<HTMLElement>()
+const scrollContent = useTemplateRef('scrollContent')
+const navTarget = useTemplateRef('navTarget')
 
 const {current, scrollIntoView} = useScrollspy(scrollContent, navTarget)
 </script>

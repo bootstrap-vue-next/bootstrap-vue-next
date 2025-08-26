@@ -54,16 +54,7 @@ The composable returns an object with the following properties:
 
 ### ScrollspyList Type
 
-Each item in the `list` array has the following structure:
-
-```typescript
-type ScrollspyListItem = {
-  id: string | null // Element ID
-  el: HTMLElement | null // DOM element reference
-  visible: boolean // Whether element is currently visible
-  text: string | null // Text content of the element
-}
-```
+Each item in the `list` array has the `ScrollspyListItem` structure as defined in the [Types documentation](/docs/types#scrollspylist).
 
 ## Advanced Usage
 
@@ -71,18 +62,18 @@ type ScrollspyListItem = {
 
 For more precise control over when elements are considered "active":
 
-<<< FRAGMENT ./demo/UseScrollspyCustomRoot.fragment{vue}
+<<< DEMO ./demo/UseScrollspyCustomRoot.vue#script{vue}
 
 ### Working with Dynamic Content
 
 When content changes dynamically, you can use `updateList()` to refresh the tracked elements:
 
-<<< FRAGMENT ./demo/UseScrollspyDynamicContent.fragment{vue}
+<<< DEMO ./demo/UseScrollspyDynamicContent.vue#script{vue}
 
 ### Cleanup
 
 Always call `cleanup()` when the component is unmounted to prevent memory leaks:
 
-<<< FRAGMENT ./demo/UseScrollspyCleanup.fragment{vue}
+<<< DEMO ./demo/UseScrollspyCleanup.vue#script{vue}
 
 
