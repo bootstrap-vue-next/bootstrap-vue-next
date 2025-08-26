@@ -1,0 +1,11 @@
+<script setup lang="ts">
+const {updateList} = useScrollspy(content, target)
+
+// Call when content changes
+const addNewSection = () => {
+  // Add new content...
+  nextTick(() => {
+    updateList()
+  })
+}
+</script>

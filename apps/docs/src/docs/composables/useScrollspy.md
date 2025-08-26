@@ -10,19 +10,19 @@ The `useScrollspy` composable provides automatic navigation highlighting based o
 
 The most common use case is to track scroll position within a scrollable container and highlight corresponding navigation items:
 
-<<< DEMO ./demo/UseScrollspyBasic.vue#template{vue-html}
+<<< DEMO ./demo/UseScrollspyBasic.vue
 
 ## Manual Mode
 
 When you need more control over the active states, you can use manual mode and work with the `list` of tracked elements:
 
-<<< DEMO ./demo/UseScrollspyManual.vue#template{vue-html}
+<<< DEMO ./demo/UseScrollspyManual.vue
 
 ## Custom Content Query
 
 You can customize which elements are tracked using the `contentQuery` option:
 
-<<< DEMO ./demo/UseScrollspyCustomQuery.vue#template{vue-html}
+<<< DEMO ./demo/UseScrollspyCustomQuery.vue
 
 ## Configuration Options
 
@@ -71,48 +71,18 @@ type ScrollspyListItem = {
 
 For more precise control over when elements are considered "active":
 
-```vue
-<script setup lang="ts">
-const {current} = useScrollspy(content, target, {
-  root: document.querySelector('#custom-viewport'),
-  rootMargin: '0px 0px -50%', // Element must be 50% visible
-  threshold: [0.25, 0.5, 0.75], // Multiple thresholds for smooth transitions
-})
-</script>
-```
+<<< FRAGMENT ./demo/UseScrollspyCustomRoot.fragment{vue}
 
 ### Working with Dynamic Content
 
 When content changes dynamically, you can use `updateList()` to refresh the tracked elements:
 
-```vue
-<script setup lang="ts">
-const {updateList} = useScrollspy(content, target)
-
-// Call when content changes
-const addNewSection = () => {
-  // Add new content...
-  nextTick(() => {
-    updateList()
-  })
-}
-</script>
-```
+<<< FRAGMENT ./demo/UseScrollspyDynamicContent.fragment{vue}
 
 ### Cleanup
 
 Always call `cleanup()` when the component is unmounted to prevent memory leaks:
 
-```vue
-<script setup lang="ts">
-import {onBeforeUnmount} from 'vue'
-
-const {cleanup} = useScrollspy(content, target)
-
-onBeforeUnmount(() => {
-  cleanup()
-})
-</script>
-```
+<<< FRAGMENT ./demo/UseScrollspyCleanup.fragment{vue}
 
 

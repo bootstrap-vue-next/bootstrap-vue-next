@@ -1,5 +1,4 @@
 <template>
-  <!-- #region template -->
   <BContainer>
     <BRow>
       <BCol cols="4">
@@ -33,7 +32,6 @@
       </BCol>
     </BRow>
   </BContainer>
-  <!-- #endregion template -->
 </template>
 
 <script setup lang="ts">
