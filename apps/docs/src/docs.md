@@ -130,7 +130,14 @@ import {BOrchestrator} from 'bootstrap-vue-next'
 
 Now, you can begin importing and using components
 
-#### Automatic Registering of Components
+::: warning
+
+If you are using individual plugins such as `modalControllerPlugin`, `toastControllerPlugin`, or
+`popoverControllerPlugin`, please see the [`BApp` documentation](/docs/components/app#backward-compatibility) for additional details.
+
+:::
+
+### Automatic Registering of Components
 
 To have components automatically registered **and** tree-shaken, we recommend [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components). Read their docs for additional details. This is in addition to the above installation steps. We supply a resolver
 
@@ -350,7 +357,7 @@ Below are some pointers on optimizing tree-shaking in the context of BootstrapVu
 
 If you are using one of the preferred installation methods, JS will be tree-shaken by default. The one thing we are not able to do automatically is optimize CSS. Methods like PurgeCSS are not ideal because of a limitation with the dynamic nature of class renderings and Vue (Problematic code like: `[btn-${props.variant}]: props.variant !== undefined`). With that being said, BootstrapVueNext does not handle CSS imports from Bootstrap, we only add some additional CSS ourselves. So, using a method such as [Lean Sass Imports](https://getbootstrap.com/docs/5.3/customize/optimize/#lean-sass-imports) from the Bootstrap documentation is likely the best way to achieve the tiniest possible application size. Though it is not automatic, it should prove the safest bet for minifying your application.
 
-### Tree-shaking
+### Tree-shaking with BApp
 
 When using the **BApp component approach**, you automatically get optimal tree-shaking as only the components and composables you actually use are included in your bundle.
 

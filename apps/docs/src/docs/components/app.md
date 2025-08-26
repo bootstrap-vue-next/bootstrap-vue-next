@@ -12,7 +12,7 @@ The `BApp` component is the new recommended way to configure bootstrap-vue-next.
 
 - **Global defaults management** - Set and merge component defaults throughout your application
 - **Automatic orchestrator integration** - Built-in Modal, Toast, and Popover orchestrators
-- **Plugin compatibility** - Works alongside existing plugins for backward compatibility
+- **Plugin compatibility** - Works alongside existing plugins for backward compatibility (see the [Backward Compatibility](#backward-compatibility) section for details)
 - **Type safety** - Full TypeScript support with proper type inference
 - **RTL support** - Built-in right-to-left language support
 - **Flexible teleporting** - Control where orchestrators are rendered in the DOM
@@ -351,11 +351,19 @@ The `BApp` component is fully backward compatible with existing plugin-based set
 2. Moving defaults from plugin configuration to `BApp` props
 3. Removing plugin installations once migration is complete
 
-<HighlightCard type="warning">
+::: warning Migration Note
 
-**Migration Note:** The plugins will show deprecation warnings but continue to work until removed in a future version.
+Plugins will show deprecation warnings but continue to work until removed in a future version, with
+the following exceptions:
 
-</HighlightCard>
+- `modalControllerPlugin`
+- `toastControllerPlugin`
+- `popoverControllerPlugin`
+
+These plugins have been removed as of **version 0.40.0**.
+Please replace references to these with a reference to `orchestratorPlugin`.
+
+:::
 
 ## Internal Features
 
@@ -372,8 +380,6 @@ The `BApp` component automatically provides several internal services:
 - The component uses Vue's provide/inject system for dependency injection
 - All orchestrators are automatically teleported when `teleportTo` is specified
 - The component inherits all attributes and passes them to the default slot
-
-## Component Reference
 
 <ComponentReference :data="data" />
 
