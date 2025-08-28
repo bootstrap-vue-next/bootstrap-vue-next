@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import type {BTableSortBy, TableFieldRaw, TableItem} from 'bootstrap-vue-next'
+import type {BTableSortBy, TableField, TableItem} from 'bootstrap-vue-next'
 import {computed, ref, useTemplateRef} from 'vue'
 
 const table = useTemplateRef('my-table')
@@ -48,17 +48,14 @@ const items: TableItem<SortPerson>[] = [
   {isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney'},
 ]
 
-const fields: TableFieldRaw<SortPerson>[] = [
-  {key: 'last_name', sortable: true},
-  {key: 'first_name', sortable: true},
+const fields: TableField<SortPerson>[] = [
+  {key: 'last_name', sortable: true, sortCompare: comparer},
+  {key: 'first_name', sortable: true, sortCompare: comparer},
   {key: 'age', sortable: true},
   {key: 'isActive', sortable: false},
 ]
 
-const sortBy = ref<BTableSortBy[]>([
-  {key: 'last_name', order: undefined, comparer},
-  {key: 'first_name', order: undefined, comparer},
-])
+const sortBy = ref<BTableSortBy[]>([{key: 'last_name', order: 'asc'}])
 
-const singleSortBy = computed(() => sortBy.value.find((sb) => sb.order !== undefined))
+const singleSortBy = computed(() => (sortBy.value.length ? sortBy.value[0].key : undefined))
 </script>

@@ -758,9 +758,13 @@ is deprecated.
 
 `selected-variant` has been renamed to `selection-variant` for internal consistency.
 
-`sort-compare` and `sort-direction` are deprecated, use the `sortBy` prop (or model) as documented [here](/docs/components/table#sorting) instead.
+Sorting has been significantly reworked. Read the [sorting section](/docs/components/table#sorting) of our documentation. Some specific changes include the following:
 
-Similarly, the `sort-changed` event is replaced by the `update:sortBy` event
+- `sort-changed` event is replaced by the `update:sort-by` event.
+- `sort-direction` has been renamed `initial-sort-direction` for clarity.
+- The sort icons have been changed.
+- The internal `sort-compare` routine has been simplified, if you need to customize sorting for localization, the documentation on [custom sort comparers](/docs/components/table#custom-sort-comparers) for details.
+- `multi-sort` functionality has been implemented.
 
 `table-variant` is replaced with `variant` for consistency.
 

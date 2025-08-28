@@ -1,16 +1,13 @@
 <template>
   <BTable
-    v-model:sort-by="sortBy"
+    :sort-by="[{key: 'first_name', order: 'desc'}]"
     :items="items"
     :fields="fields"
   />
-  <div>sortBy = {{ JSON.stringify(sortBy) }}</div>
-  <div>singleSortBy = {{ JSON.stringify(singleSortBy) }}</div>
 </template>
 
 <script setup lang="ts">
-import type {BTableSortBy, TableFieldRaw, TableItem} from 'bootstrap-vue-next'
-import {computed, ref} from 'vue'
+import {type TableFieldRaw, type TableItem} from 'bootstrap-vue-next'
 
 interface SortPerson {
   first_name: string
@@ -28,14 +25,10 @@ const items: TableItem<SortPerson>[] = [
   {isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney'},
 ]
 
-const fields: TableFieldRaw<SortPerson>[] = [
+const fields: Exclude<TableFieldRaw<SortPerson>, string>[] = [
   {key: 'last_name', sortable: true},
   {key: 'first_name', sortable: true},
-  {key: 'age', sortable: true},
+  {key: 'age', sortable: true, initialSortDirection: 'desc'},
   {key: 'isActive', sortable: false},
 ]
-
-const sortBy = ref<BTableSortBy[]>([{key: 'first_name', order: 'desc'}])
-
-const singleSortBy = computed(() => (sortBy.value.length ? sortBy.value[0].key : undefined))
 </script>

@@ -638,6 +638,12 @@ export default {
           default: 'There are no records to show',
           description: 'Text to display when no items are present in the `items` array',
         },
+        initialSortDirection: {
+          type: 'BTableInitialSortDirection',
+          default: 'asc',
+          description:
+            "Default initial sort direction for all sortable columns that don't specify their own initialSortDirection. Can be 'asc' for ascending, 'desc' for descending, or 'last' to maintain the direction of the previously sorted column.",
+        },
         showEmpty: {
           type: 'boolean',
           default: false,
@@ -719,6 +725,12 @@ export default {
           default: 'multi',
           description:
             "The selectable mode for the table when 'selectable' is set. Possible values: 'single', 'multi' or 'range'",
+        },
+        sortCompare: {
+          type: 'BTableSortByComparerFunction',
+          default: undefined,
+          description:
+            'A global comparison function for sorting table fields. Field-level sortCompare takes precedence over this table-level setting. The function signature is (a: T, b: T, key: string) => number.',
         },
         sortBy: {
           type: 'BTableSortBy[]',

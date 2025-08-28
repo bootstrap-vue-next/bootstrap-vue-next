@@ -48,7 +48,7 @@ export interface BTableEmits<Items> extends BTableLiteEmits<Items> {
   'filtered': [value: Items[]]
   'row-selected': [value: Items]
   'row-unselected': [value: Items]
-  'sorted': [value: BTableSortBy<Items>]
+  'sorted': [value: BTableSortBy]
   'change': [value: Items[]]
 }
 

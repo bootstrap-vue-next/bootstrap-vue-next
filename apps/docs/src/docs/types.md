@@ -498,25 +498,28 @@ type TableFieldAttribute<T = any> =
 
 type TableRowType = 'row' | 'row-details' | 'row-top' | 'row-bottom' | 'table-busy'
 type TableRowThead = 'top' | 'bottom'
+type BTableInitialSortDirection = 'desc' | 'asc' | 'last'
 
 interface TableField<T = Record<string, unknown>> {
+  class?: ClassValue
+  filterByFormatted?: boolean | TableFieldFormatter<T>
+  formatter?: TableFieldFormatter<T>
+  headerAbbr?: string
+  headerTitle?: string
+  initialSortDirection?: BTableInitialSortDirection
+  isRowHeader?: boolean
   key: LiteralUnion<keyof T>
   label?: string
-  headerTitle?: string
-  headerAbbr?: string
-  class?: ClassValue
-  formatter?: TableFieldFormatter<T>
   sortable?: boolean
   sortByFormatted?: boolean | TableFieldFormatter<T>
-  filterByFormatted?: boolean | TableFieldFormatter<T>
+  sortCompare?: BTableSortByComparerFunction<T>
+  stickyColumn?: boolean
+  tdAttr?: TableFieldAttribute<T>
   tdClass?: ClassValue
+  thAttr?: TableFieldAttribute<T>
   thClass?: ClassValue
   thStyle?: StyleValue
   variant?: ColorVariant | null
-  tdAttr?: TableFieldAttribute<T>
-  thAttr?: TableFieldAttribute<T>
-  isRowHeader?: boolean
-  stickyColumn?: boolean
 }
 type TableFieldRaw<T = Record<string, unknown>> = string | TableField<T>
 ```
@@ -562,7 +565,6 @@ type BTableSortByComparerFunction<T = any> = (a: T, b: T, key: string) => number
 type BTableSortBy<T = any> = {
   order: BTableSortByOrder
   key: string
-  comparer?: BTableSortByComparerFunction<T>
 }
 ```
 

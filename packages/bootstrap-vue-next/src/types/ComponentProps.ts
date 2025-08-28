@@ -57,8 +57,10 @@ import type {LiteralUnion} from './LiteralUnion'
 import type {BreadcrumbItemRaw} from './BreadcrumbTypes'
 import type {TransitionMode} from './TransitionMode'
 import type {
+  BTableInitialSortDirection,
   BTableProvider,
   BTableSortBy,
+  BTableSortByComparerFunction,
   NoProviderTypes,
   TableField,
   TableFieldRaw,
@@ -1161,8 +1163,10 @@ export interface BTableProps<Items> extends Omit<BTableLiteProps<Items>, 'tableC
   noProviderPaging?: boolean
   noProviderSorting?: boolean
   noProviderFiltering?: boolean
-  sortBy?: BTableSortBy<Items>[]
+  sortBy?: BTableSortBy[]
+  sortCompare?: BTableSortByComparerFunction<Items>
   mustSort?: boolean | string[] // TODO this is a string of fields, possibly generic
+  initialSortDirection?: BTableInitialSortDirection
   selectable?: boolean
   multisort?: boolean
   stickySelect?: boolean

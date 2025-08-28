@@ -84,20 +84,11 @@
               : 'sortAsc()'
           "
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="currentColor"
-            class="bi bi-arrow-up-short"
-            viewBox="0 0 16 16"
-            aria-hidden
-          >
-            <path
-              fill-rule="evenodd"
-              d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"
-            />
-          </svg>
+          <SortIcon
+            :field-info="scope.field"
+            :sort-by="sortByModel"
+            :initial-sort-direction="props.initialSortDirection"
+          />
         </slot>
         <slot
           v-else-if="sortByModel?.find((el) => el.key === scope.field.key)?.order === 'desc'"
@@ -108,20 +99,11 @@
               : 'sortDesc()'
           "
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="currentColor"
-            class="bi bi-arrow-down-short"
-            viewBox="0 0 16 16"
-            aria-hidden
-          >
-            <path
-              fill-rule="evenodd"
-              d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"
-            />
-          </svg>
+          <SortIcon
+            :field-info="scope.field"
+            :sort-by="sortByModel"
+            :initial-sort-direction="props.initialSortDirection"
+          />
         </slot>
         <slot
           v-else
@@ -132,21 +114,11 @@
               : 'sortDefault()'
           "
         >
-          <svg
-            :style="{opacity: 0.4}"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="currentColor"
-            class="bi bi-arrow-up-short"
-            viewBox="0 0 16 16"
-            aria-hidden
-          >
-            <path
-              fill-rule="evenodd"
-              d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"
-            />
-          </svg>
+          <SortIcon
+            :field-info="scope.field"
+            :sort-by="sortByModel"
+            :initial-sort-direction="props.initialSortDirection"
+          />
         </slot>
       </template>
     </template>
@@ -189,6 +161,7 @@ import {formatItem} from '../../utils/formatItem'
 import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
 import BTr from './BTr.vue'
+import SortIcon from '../SortIcon.vue'
 import {
   type BTableSortBy,
   type BTableSortByOrder,
@@ -224,6 +197,7 @@ const _props = withDefaults(
     filter: undefined,
     filterFunction: undefined,
     mustSort: false,
+    initialSortDirection: 'asc',
     filterable: undefined,
     provider: undefined,
     noProvider: undefined,
@@ -240,6 +214,7 @@ const _props = withDefaults(
     selectionVariant: 'primary',
     busyLoadingText: 'Loading...',
     currentPage: 1,
+    sortCompare: undefined,
     // BTableLite props
     items: () => [],
     fields: () => [],
@@ -456,7 +431,7 @@ const getFieldColumnClasses = (field: TableField) => [
   },
 ]
 // TODO this class has issues if the table has a variant already applied
-// Also the row should technically have aria-selected . Both things could probably just use a function with tbodyTrAttrs
+// Also the row should technically have aria-selected. Both things could probably just use a function with tbodyTrAttrs
 // But functional tbodyTrAttrs are not supported yet
 // Also the stuff for resolving functions could probably be made a util
 const getRowClasses = (item: Items | null, type: TableRowType): TableStrictClassValue => [
@@ -492,8 +467,13 @@ const getStringValue = (ob: Items, key: string): string => {
   return typeof val === 'object' && val !== null ? JSON.stringify(val) : (val?.toString() ?? '')
 }
 
+const fieldByKey = computed(() => {
+  const map = new Map<string | number | symbol, TableField<Items>>()
+  for (const f of computedFields.value) if (isTableField<Items>(f)) map.set(f.key, f)
+  return map
+})
+
 const computedItems = computed<Items[]>(() => {
-  // "undefined" values are set by us, we do this so we dont wipe out the comparer
   const sortByItems = sortByModel.value?.filter((el) => !!el.order)
 
   const mapItem = (item: Items): Items => {
@@ -570,7 +550,9 @@ const computedItems = computed<Items[]>(() => {
     // Multi-sort
     return mappedItems.sort((a, b) => {
       for (let i = 0; i < sortByItems.length; i++) {
-        const {key, comparer, order} = sortByItems[i]
+        const {key, order} = sortByItems[i]
+        const field = fieldByKey.value.get(key)
+        const comparer = field?.sortCompare || props.sortCompare
         const comparison = comparer
           ? comparer(a, b, key)
           : getStringValue(a, key).localeCompare(getStringValue(b, key), undefined, {numeric: true})
@@ -662,35 +644,87 @@ const handleFieldSorting = (field: TableField<Items>) => {
 
   if (!(isSortable.value === true && fieldSortable === true)) return
 
-  const resolveOrder = (val: BTableSortByOrder): BTableSortByOrder | undefined => {
-    if (val === 'asc') return 'desc'
-    if (val === undefined) return 'asc'
-    if (
+  // Get the last sorted direction from the current sort model (last entry with a defined order)
+  //   Exclude the current column if it's already in the sortBy array
+  const getLastSortDirection = (): BTableSortByOrder => {
+    const lastSorted = [...(sortByModel.value ?? [])]
+      .reverse()
+      .find((sort) => sort.order !== undefined && sort.key !== fieldKey)
+    return lastSorted?.order ?? 'asc'
+  }
+
+  // Determine initial sort direction for new sorts
+  const getInitialSortDirection = (): BTableSortByOrder => {
+    // Handle field-level prop
+    if (typeof field === 'object' && field !== null && field.initialSortDirection) {
+      if (field.initialSortDirection === 'last') {
+        return getLastSortDirection()
+      }
+      return field.initialSortDirection
+    }
+    // Handle table-level prop
+    if (props.initialSortDirection) {
+      if (props.initialSortDirection === 'last') {
+        return getLastSortDirection()
+      }
+      return props.initialSortDirection
+    }
+    return 'asc'
+  }
+
+  const resolveOrder = (val: BTableSortByOrder | undefined): BTableSortByOrder | undefined => {
+    // New sort: honor the configured initial direction
+    if (val === undefined) return getInitialSortDirection()
+    // Determine initial direction for this field
+    const initial = getInitialSortDirection()
+    const must =
       props.mustSort === true ||
       (Array.isArray(props.mustSort) && props.mustSort.includes(fieldKey as string))
-    )
-      return 'asc'
+    if (val === 'asc') {
+      if (initial === 'desc') {
+        // If mustSort, cycle asc -> desc, else asc -> undefined
+        return must ? 'desc' : undefined
+      }
+      // If initial is asc, cycle asc -> desc -> undefined (or asc if mustSort)
+      return 'desc'
+    }
+    if (val === 'desc') {
+      if (initial === 'desc') {
+        return 'asc'
+      }
+      // If mustSort, cycle desc -> asc, else desc -> undefined
+      return must ? 'asc' : undefined
+    }
     return undefined
   }
 
   const index = sortByModel.value?.findIndex((el) => el.key === fieldKey) ?? -1
   const originalValue = sortByModel.value?.[index]
-  const updatedValue: BTableSortBy<Items> =
-    // If value is new, we default to ascending
+  const updatedValue: BTableSortBy =
+    // If value is new, we use the field's initialSortDirection or default to ascending
     // Otherwise we make a temp copy of the value
-    index === -1 || !originalValue ? {key: fieldKey as string, order: 'asc'} : {...originalValue}
+    index === -1 || !originalValue
+      ? {key: fieldKey as string, order: getInitialSortDirection()}
+      : {...originalValue}
 
   /**
    * @returns the updated value to emit for sorted
    */
-  const handleMultiSort = (): BTableSortBy<Items> => {
+  const handleMultiSort = (): BTableSortBy => {
     const tmp = [...(sortByModel.value ?? [])]
     const val = updatedValue
     if (index === -1) {
       tmp.push(val)
     } else {
-      val.order = resolveOrder(val.order)
-      tmp.splice(index, 1, val)
+      const order = resolveOrder(val.order)
+      if (order) {
+        val.order = order
+        tmp.splice(index, 1, val)
+      } else {
+        // Remove the value from the array and emit cleared sort for this key
+        val.order = undefined
+        tmp.splice(index, 1)
+      }
     }
     sortByModel.value = tmp
     return val
@@ -699,21 +733,13 @@ const handleFieldSorting = (field: TableField<Items>) => {
   /**
    * @returns the updated value to emit for sorted
    */
-  const handleSingleSort = (): BTableSortBy<Items> => {
+  const handleSingleSort = (): BTableSortBy => {
+    const order = index === -1 ? updatedValue.order : resolveOrder(updatedValue.order)
     const val = {
       ...updatedValue,
-      order: index === -1 ? updatedValue.order : resolveOrder(updatedValue.order),
+      order,
     }
-    const tmp = (sortByModel.value || []).map<BTableSortBy<Items>>((e) => ({
-      ...e,
-      order: undefined,
-    }))
-    if (index === -1) {
-      tmp.push(val)
-    } else {
-      tmp[index] = val
-    }
-    sortByModel.value = tmp
+    sortByModel.value = order ? [val] : []
     return val
   }
 
