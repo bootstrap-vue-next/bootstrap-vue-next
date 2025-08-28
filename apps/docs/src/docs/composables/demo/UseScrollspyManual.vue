@@ -4,10 +4,10 @@
       <BCol cols="4">
         <BListGroup>
           <BListGroupItem
-            v-for="item in list"
+            v-for="item in filteredList"
             :key="item.id"
             :href="`#${item.id}`"
-            :active="current.value === item.id"
+            :active="current === item.id"
             @click="scrollIntoView"
           >
             {{ item.text }}
@@ -35,6 +35,7 @@
 </template>
 
 <script setup lang="ts">
+import {computed} from 'vue'
 import {useTemplateRef} from 'vue'
 import {useScrollspy} from 'bootstrap-vue-next'
 
@@ -45,4 +46,6 @@ const content = useTemplateRef('content')
 const {current, list, scrollIntoView} = useScrollspy(content, null, {
   manual: true,
 })
+
+const filteredList = computed(() => list.value.filter(item => item.id))
 </script>
