@@ -451,7 +451,7 @@ scoped slots (even when disabled)
 **Notes:**
 
 - Slot names **cannot** contain spaces, and when using in-browser DOM templates the slot names will _always_
-- be lower cased. To get around this, you can pass the slot name using Vue's
+  be lower cased. To get around this, you can pass the slot name using Vue's
   [dynamic slot names](https://vuejs.org/guide/components/slots.html#dynamic-slot-names)
 
 ### Adding additional rows to the header
