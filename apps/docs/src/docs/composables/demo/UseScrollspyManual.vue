@@ -5,7 +5,7 @@
         <BListGroup>
           <BListGroupItem
             v-for="item in filteredList"
-            :key="item.id"
+            :key="item.id as PropertyKey"
             :href="`#${item.id}`"
             :active="current === item.id"
             @click="scrollIntoView"
