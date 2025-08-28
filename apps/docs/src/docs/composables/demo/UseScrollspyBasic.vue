@@ -34,5 +34,5 @@ const loremText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed 
 const scrollContent = useTemplateRef('scrollContent')
 const navTarget = useTemplateRef('navTarget')
 
-const {current, scrollIntoView} = useScrollspy(scrollContent, navTarget)
+const {scrollIntoView} = useScrollspy(scrollContent, navTarget)
 </script>

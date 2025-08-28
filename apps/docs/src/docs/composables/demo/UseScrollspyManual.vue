@@ -7,7 +7,7 @@
             v-for="item in list"
             :key="item.id"
             :href="`#${item.id}`"
-            :active="current === item.id"
+            :active="current.value === item.id"
             @click="scrollIntoView"
           >
             {{ item.text }}
