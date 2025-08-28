@@ -156,6 +156,7 @@ const composablesList: {name: string}[] = [
   {name: 'useColorMode'},
   {name: 'useModal'},
   {name: 'usePopover'},
+  {name: 'useScrollspy'},
   {name: 'useToast'},
   {name: 'useToggle'},
 ]
