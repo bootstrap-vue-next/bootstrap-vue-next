@@ -31,8 +31,6 @@ If the `type` prop is set to an input type that is not supported (see above), a 
 - For date and time style inputs, where supported, the displayed value in the GUI may be different
   from what is returned by its value (i.e. ordering of year-month-date)
 - Regardless of input type, the value is **always** returned as a string representation
-- `v-model.lazy` is not supported by `BFormInput` (nor any custom Vue component). Use the `lazy`
-  prop instead
 - Older version of Firefox may not support `readonly` for `range` type inputs
 - Input types that do not support `min`, `max` and `step` (i.e. `text`, `password`, `tel`, `email`,
   `url`, etc.) will silently ignore these values (although they will still be rendered on the input
