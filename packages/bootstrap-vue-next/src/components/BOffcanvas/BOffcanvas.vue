@@ -25,7 +25,12 @@
         v-bind="$attrs"
       >
         <template v-if="contentShowing || isOpenByBreakpoint">
-          <div v-if="!props.noHeader" class="offcanvas-header" :class="props.headerClass">
+          <div
+            v-if="!props.noHeader"
+            class="offcanvas-header"
+            :class="props.headerClass"
+            v-bind="props.headerAttrs"
+          >
             <slot name="header" v-bind="sharedSlots">
               <h5 :id="`${computedId}-offcanvas-label`" class="offcanvas-title">
                 <slot name="title" v-bind="sharedSlots">
@@ -119,6 +124,7 @@ const _props = withDefaults(defineProps<Omit<BOffcanvasProps, 'modelValue'>>(), 
   bodyScrolling: false,
   focus: undefined,
   footerClass: undefined,
+  headerAttrs: undefined,
   headerClass: undefined,
   headerCloseClass: undefined,
   headerCloseLabel: 'Close',
