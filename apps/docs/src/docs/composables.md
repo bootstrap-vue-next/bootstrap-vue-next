@@ -37,9 +37,13 @@ const composablesList: {name: string; description: string}[] = [
     description: 'Conveniently orchestrate a push notification system by showing or hiding Toasts with our useToast composable system',
   },
   {
+    name: 'useScrollspy',
+    description: 'Automatically update navigation highlighting based on scroll position, perfect for creating table of contents and section navigation',
+  },
+  {
     name: 'useToggle',
     description: 'Conveniently show, hide or toggle components programmatically from anywhere in the app',
-  },
+  }
 ]
 
 const computedComposablesList = computed(() =>

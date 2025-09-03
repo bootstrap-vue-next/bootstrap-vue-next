@@ -447,6 +447,25 @@ type RadiusElementExtendables = {
 
 </BCard>
 
+## ScrollspyList
+
+This type is used by the `useScrollspy` composable to represent tracked elements.
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type ScrollspyListItem = {
+  id: string | null // Element ID
+  el: HTMLElement | null // DOM element reference
+  visible: boolean // Whether element is currently visible
+  text: string | null // Text content of the element
+}
+
+type ScrollspyList = ScrollspyListItem[]
+```
+
+</BCard>
+
 ## SelectValue
 
 <BCard class="bg-body-tertiary">
