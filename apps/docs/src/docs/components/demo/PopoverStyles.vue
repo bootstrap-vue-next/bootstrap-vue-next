@@ -2,7 +2,6 @@
   <!-- #region template -->
   <div class="d-flex gap-2">
     <BPopover
-      show
       title="Danger!"
       style="
         --bs-popover-header-bg: var(--bs-danger);

@@ -19,7 +19,7 @@ centered beside any adjoining plain text. They also can be used as children of o
 ## Avatar types
 
 The avatar content can be either an image or short text string. Avatar content defaults
-to the [`'person-fill'` icon](<[/docs/icons](https://icons.getbootstrap.com/icons/person-fill/)>)
+to the [`'person-fill'` icon](https://icons.getbootstrap.com/icons/person-fill/)
 when no other content is specified.
 
 You can also supply custom content via the default slot, although you may need to apply additional

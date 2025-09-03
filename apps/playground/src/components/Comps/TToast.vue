@@ -2,13 +2,13 @@
   <BContainer>
     <BRow>
       <BCol>
-        <BToastOrchestrator />
+        <BOrchestrator />
         <BButton v-for="(fn, name) in showFns" :key="name" @click="fn">{{ name }}</BButton>
       </BCol>
     </BRow>
     <BRow>
       <BCol>
-        {{ toasts }}
+        {{ store.filter((el) => el.type === 'toast') }}
       </BCol>
     </BRow>
   </BContainer>
@@ -18,14 +18,10 @@
 // You can use this file as a development spot to test your changes
 // Please do not commit this file
 import {computed, h, onMounted, ref} from 'vue'
-import {
-  // BToast,
-  type ColorVariant,
-  // type OrchestratedToast,
-  useToastController,
-} from 'bootstrap-vue-next'
+import type {ColorVariant} from 'bootstrap-vue-next'
+import {useToast} from 'bootstrap-vue-next/composables/useToast'
 
-const {show, toasts} = useToastController()
+const {create, store} = useToast()
 
 // const firstRef = ref<OrchestratedToast>({
 const firstRef = ref({
@@ -40,25 +36,25 @@ onMounted(() => {
 
 const showFns = {
   basicNoReactive: () => {
-    show({
+    create({
       modelValue: true,
       active: true,
       title: 'foobar',
     })
   },
   basicCustomComponent: () => {
-    show({
-      slots: {default: h('div', null, {default: () => 'foobar!'})},
+    create({
+      slots: {default: () => h('div', null, 'foobar!')},
       modelValue: true,
       active: true,
       variant: 'primary',
     })
   },
   simpleRefProps: () => {
-    show(firstRef)
+    create(firstRef)
   },
   dynamicRefProps: () => {
-    show(
+    create(
       computed(() => ({
         ...firstRef.value,
         variant: (Number.parseInt(firstRef.value.body?.charAt(2) ?? '0') % 2 === 0

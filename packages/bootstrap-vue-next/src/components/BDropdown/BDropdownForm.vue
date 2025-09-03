@@ -15,14 +15,10 @@
 import {computed, useAttrs} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BDropdownFormProps} from '../../types/ComponentProps'
+import type {BDropdownFormSlots} from '../../types'
 
 defineOptions({
   inheritAttrs: false,
-})
-const attrs = useAttrs()
-const processedAttrs = computed(() => {
-  const {class: wrapperClass, ...formAttrs} = attrs
-  return {wrapperClass, formAttrs}
 })
 
 const _props = withDefaults(defineProps<BDropdownFormProps>(), {
@@ -32,11 +28,13 @@ const _props = withDefaults(defineProps<BDropdownFormProps>(), {
   wrapperAttrs: undefined,
 })
 const props = useDefaults(_props, 'BDropdownForm')
+defineSlots<BDropdownFormSlots>()
+const attrs = useAttrs()
 
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
+const processedAttrs = computed(() => {
+  const {class: wrapperClass, ...formAttrs} = attrs
+  return {wrapperClass, formAttrs}
+})
 
 const computedClasses = computed(() => [
   props.formClass,

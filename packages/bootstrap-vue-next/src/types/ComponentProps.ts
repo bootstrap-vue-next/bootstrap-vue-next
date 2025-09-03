@@ -6,7 +6,7 @@ import type {
   RootBoundary,
   Strategy,
 } from '@floating-ui/vue'
-import type {AriaAttributes, ComponentPublicInstance, TransitionProps} from 'vue'
+import type {AriaAttributes, ComponentPublicInstance, TeleportProps, TransitionProps} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {LinkTarget} from './LinkTarget'
 import type {
@@ -57,8 +57,10 @@ import type {LiteralUnion} from './LiteralUnion'
 import type {BreadcrumbItemRaw} from './BreadcrumbTypes'
 import type {TransitionMode} from './TransitionMode'
 import type {
+  BTableInitialSortDirection,
   BTableProvider,
   BTableSortBy,
+  BTableSortByComparerFunction,
   NoProviderTypes,
   TableField,
   TableFieldRaw,
@@ -68,6 +70,42 @@ import type {
 } from './TableTypes'
 import type {PopoverPlacement} from './PopoverPlacement'
 import type {InputType} from './InputType'
+import type {BvnComponentProps} from './BootstrapVueOptions'
+import type {OrchestratorArrayValue} from './ComponentOrchestratorTypes'
+
+export interface BAppProps {
+  defaults?: Partial<BvnComponentProps>
+  mergeDefaults?:
+    | boolean
+    | ((
+        oldDefaults: Partial<BvnComponentProps>,
+        newDefaults: Partial<BvnComponentProps>
+      ) => Partial<BvnComponentProps>)
+  teleportTo?: TeleportProps['to']
+  noOrchestrator?: boolean
+  appendToast?: boolean
+  rtl?:
+    | boolean
+    | {
+        /**
+         * @default false
+         */
+        rtlInitial?: boolean
+        /**
+         * @default undefined
+         */
+        localeInitial?: string
+      }
+}
+
+export interface BOrchestratorProps {
+  noPopovers?: boolean
+  noToasts?: boolean
+  noModals?: boolean
+  appendToast?: boolean
+  teleportTo?: TeleportProps['to']
+  filter?: (item: OrchestratorArrayValue) => boolean
+}
 
 export interface BLinkProps {
   active?: boolean
@@ -361,6 +399,7 @@ export interface BFormRatingProps {
   noBorder?: boolean
   precision?: number
   readonly?: boolean
+  disabled?: boolean
   showClear?: boolean
   showValue?: boolean
   showValueMax?: boolean
@@ -555,9 +594,9 @@ export interface BNavTextProps {
 }
 
 export interface BNavbarProps {
-  autoClose?: boolean
   container?: boolean | 'fluid' | Breakpoint
   fixed?: Extract<Placement, 'top' | 'bottom'>
+  noAutoClose?: boolean
   print?: boolean
   sticky?: Extract<Placement, 'top' | 'bottom'>
   tag?: string
@@ -597,6 +636,7 @@ export interface BOffcanvasProps extends TeleporterProps, ShowHideProps {
     | Readonly<HTMLElement>
     | null
   footerClass?: string
+  headerAttrs?: Readonly<AttrsValue>
   headerClass?: string
   headerCloseClass?: ClassValue
   headerCloseLabel?: string
@@ -1124,8 +1164,10 @@ export interface BTableProps<Items> extends Omit<BTableLiteProps<Items>, 'tableC
   noProviderPaging?: boolean
   noProviderSorting?: boolean
   noProviderFiltering?: boolean
-  sortBy?: BTableSortBy<Items>[]
+  sortBy?: BTableSortBy[]
+  sortCompare?: BTableSortByComparerFunction<Items>
   mustSort?: boolean | string[] // TODO this is a string of fields, possibly generic
+  initialSortDirection?: BTableInitialSortDirection
   selectable?: boolean
   multisort?: boolean
   stickySelect?: boolean
@@ -1218,6 +1260,8 @@ export interface BFormFeedbackSharedProps {
   text?: string
   tooltip?: boolean
 }
+export type BFormInvalidFeedbackProps = BFormFeedbackSharedProps
+export type BFormValidFeedbackProps = BFormFeedbackSharedProps
 
 export interface BDropdownProps extends TeleporterProps, ShowHideProps {
   ariaLabel?: string
@@ -1292,6 +1336,8 @@ export interface BPopoverProps extends TeleporterProps, ShowHideProps {
   boundaryPadding?: Padding
   click?: boolean
   closeOnHide?: boolean
+  focus?: boolean
+  hover?: boolean
   delay?:
     | number
     | Readonly<{
@@ -1330,6 +1376,8 @@ export interface BCardHeadFootProps extends ColorExtendables {
   tag?: string
   text?: string
 }
+export type BCardFooterProps = BCardHeadFootProps
+export type BCardHeaderProps = BCardHeadFootProps
 
 export interface BModalProps extends TeleporterProps, ShowHideProps {
   focus?:
@@ -1364,6 +1412,7 @@ export interface BModalProps extends TeleporterProps, ShowHideProps {
   footerTextVariant?: TextColorVariant | null
   footerVariant?: ColorVariant | null
   fullscreen?: boolean | Breakpoint
+  headerAttrs?: Readonly<AttrsValue>
   headerBgVariant?: BgColorVariant | null
   headerBorderVariant?: BorderColorVariant | null
   headerClass?: ClassValue

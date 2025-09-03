@@ -71,7 +71,6 @@
     <BTable
       ref="provider-table"
       v-model:sort-by="sortBy"
-      :sort-internal="true"
       :provider="provider"
       :fields="fields"
       :current-page="currentPage"
@@ -84,14 +83,14 @@
 </template>
 
 <script setup lang="ts">
-import {
-  BTable,
-  type BTableProviderContext,
-  type BTableSortBy,
-  type ColorVariant,
-  type TableFieldRaw,
-  type TableItem,
+import type {
+  BTableProviderContext,
+  BTableSortBy,
+  ColorVariant,
+  TableFieldRaw,
+  TableItem,
 } from 'bootstrap-vue-next'
+import {BTable} from 'bootstrap-vue-next/components/BTable'
 import {computed, ref, useTemplateRef, watch} from 'vue'
 import {type ComponentExposed} from 'vue-component-type-helpers'
 
@@ -104,7 +103,7 @@ interface Person {
 
 const table = useTemplateRef<ComponentExposed<typeof BTable<Person>>>('provider-table')
 
-const provider = (context: Readonly<BTableProviderContext<Person>>) =>
+const provider = (context: Readonly<BTableProviderContext>) =>
   sortItems(filteredItems.value, context.sortBy).slice(
     (context.currentPage - 1) * context.perPage,
     context.currentPage * context.perPage

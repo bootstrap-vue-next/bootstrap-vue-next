@@ -69,7 +69,7 @@ const [modelValue, modelModifiers] = defineModel<
   set: (v) => normalizeInput(v, modelModifiers),
 })
 
-const input = useTemplateRef<HTMLInputElement>('_input')
+const input = useTemplateRef('_input')
 
 const {
   computedId,

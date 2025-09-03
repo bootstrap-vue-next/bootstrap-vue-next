@@ -5,6 +5,7 @@
 </template>
 
 <script setup lang="ts" generic="T">
+import type {BFormSelectOptionSlots} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BFormSelectOptionProps} from '../../types/ComponentProps'
 
@@ -13,9 +14,5 @@ const _props = withDefaults(defineProps<BFormSelectOptionProps<T>>(), {
   value: undefined,
 })
 const props = useDefaults<BFormSelectOptionProps<T>>(_props, 'BFormSelectOption')
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
+defineSlots<BFormSelectOptionSlots>()
 </script>

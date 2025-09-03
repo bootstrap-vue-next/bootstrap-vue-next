@@ -1,306 +1,247 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
-import {showHideProps} from '../../utils'
+import type {BOffcanvasEmits, BOffcanvasProps, BOffcanvasSlots} from 'bootstrap-vue-next'
+import {
+  type ComponentReference,
+  type EmitRecord,
+  type PropRecord,
+  type SlotRecord,
+  StyleKind,
+} from '../../types'
+import {showHideEmits, showHideProps} from '../../utils/showHideData'
 
 export default {
-  load: (): ComponentReference[] => [
-    {
-      component: 'BOffcanvas',
+  load: (): ComponentReference => ({
+    BOffcanvas: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.offcanvas[-*]'},
       sourcePath: '/BOffcanvas/BOffcanvas.vue',
       props: {
-        '': {
-          backdropFirst: {
-            type: 'boolean',
-            default: false,
-            description:
-              'Animate the backdrop before the offcanvas, and on leave animate the offcanvas before the backdrop',
-          },
-          bodyAttrs: {
-            type: 'Readonly<AttrsValue>',
-            default: undefined,
-          },
-          bodyClass: {
-            type: 'ClassValue',
-            default: undefined,
-          },
-          bodyScrolling: {
-            type: 'boolean',
-            default: false,
-          },
-          focus: {
-            type: "'ok' | 'cancel' | 'close' | string | ComponentPublicInstance | HTMLElement | null",
-            default: undefined,
-            description:
-              "Specify where to focus once offcanvas opens. Can be built-in button 'close'. Can be ref, HTMLElement, id or selector string. If set to 'false', no focus will be set (if noTrap isn't set the focus trap will focus the modal element or failback element). If set to a string, the element with that id will be focused. If set to a ComponentPublicInstance, the $el property of the instance will be focused.",
-          },
-          footerClass: {
-            type: 'string',
-            default: undefined,
-          },
-          headerClass: {
-            type: 'string',
-            default: undefined,
-          },
-          headerCloseClass: {
-            type: 'ClassValue',
-            default: undefined,
-          },
-          headerCloseLabel: {
-            type: 'string',
-            default: 'Close',
-          },
-          headerCloseVariant: {
-            type: 'ButtonVariant | null',
-            default: 'secondary',
-          },
-          noBackdrop: {
-            type: 'boolean',
-            default: false,
-          },
-          id: {
-            type: 'string',
-            default: undefined,
-          },
-          noCloseOnBackdrop: {
-            type: 'boolean',
-            default: false,
-          },
-          noCloseOnEsc: {
-            type: 'boolean',
-            default: false,
-          },
-          noHeader: {
-            type: 'boolean',
-            default: false,
-          },
-          noHeaderClose: {
-            type: 'boolean',
-            default: false,
-          },
-          noTrap: {
-            type: 'boolean',
-            default: false,
-            description: 'Disables the focus trap feature',
-          },
-          placement: {
-            type: 'Placement',
-            default: 'start',
-          },
-          responsive: {
-            type: 'Breakpoint',
-          },
-          shadow: {
-            type: 'Size | boolean',
-            default: false,
-          },
-          teleportDisabled: {
-            type: 'boolean',
-            default: false,
-          },
-          teleportTo: {
-            type: 'string | RendererElement | null | undefined',
-            default: 'body',
-          },
-          title: {
-            type: 'string',
-            default: undefined,
-          },
-          width: {
-            type: 'string',
-            default: undefined,
-          },
-          ...showHideProps,
-        } satisfies Record<keyof BvnComponentProps['BOffcanvas'], PropertyReference>,
-      },
-      emits: [
-        {
-          event: 'update:model-value',
-          args: [
-            {
-              arg: 'update:model-value',
-              description: '',
+        ...showHideProps,
+        backdropFirst: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+          description:
+            'Animate the backdrop before the offcanvas, and on leave animate the offcanvas before the backdrop',
+        },
+        bodyAttrs: {
+          type: 'Readonly<AttrsValue>',
+          default: undefined,
+        },
+        bodyClass: {
+          type: 'ClassValue',
+          default: undefined,
+        },
+        bodyScrolling: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+        },
+        focus: {
+          type: "'ok' | 'cancel' | 'close' | string | ComponentPublicInstance | HTMLElement | null",
+          default: undefined,
+          description:
+            "Specify where to focus once offcanvas opens. Can be built-in button 'close'. Can be ref, HTMLElement, id or selector string. If set to 'false', no focus will be set (if noTrap isn't set the focus trap will focus the modal element or fallback element). If set to a string, the element with that id will be focused. If set to a ComponentPublicInstance, the $el property of the instance will be focused.",
+        },
+        footerClass: {
+          type: 'string',
+          default: undefined,
+        },
+        headerAttrs: {
+          type: 'Readonly<AttrsValue>',
+          default: undefined,
+          description: 'Attributes to be applied to the offcanvas header element'
+        },
+        headerClass: {
+          type: 'string',
+          default: undefined,
+        },
+        headerCloseClass: {
+          type: 'ClassValue',
+          default: undefined,
+        },
+        headerCloseLabel: {
+          type: 'string',
+          default: 'Close',
+        },
+        headerCloseVariant: {
+          type: 'ButtonVariant | null',
+          default: 'secondary',
+        },
+        noBackdrop: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+        },
+        id: {
+          type: 'string',
+          default: undefined,
+        },
+        noCloseOnBackdrop: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+        },
+        noCloseOnEsc: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+        },
+        noHeader: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+        },
+        noHeaderClose: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+        },
+        noTrap: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+          description: 'Disables the focus trap feature',
+        },
+        placement: {
+          type: 'Placement',
+          default: 'start',
+        },
+        responsive: {
+          type: 'Breakpoint',
+        },
+        shadow: {
+          type: 'Size | boolean',
+          default: false, // TODO item not in string format
+        },
+        teleportDisabled: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+        },
+        teleportTo: {
+          type: 'string | RendererElement | null | undefined',
+          default: 'body',
+        },
+        title: {
+          type: 'string',
+          default: undefined,
+        },
+        width: {
+          type: 'string',
+          default: undefined,
+        },
+      } satisfies PropRecord<keyof BOffcanvasProps>,
+      emits: {
+        ...showHideEmits,
+        'update:model-value': {
+          args: {
+            'update:model-value': {
+              description: '', // TODO missing description
               type: 'boolean',
             },
-          ],
+          },
+          description: '', // TODO missing description
         },
-        {
-          event: 'breakpoint',
-          args: [
-            {
-              arg: 'value',
+        'breakpoint': {
+          args: {
+            value: {
               type: 'BvTriggerableEvent',
               description: 'The event',
             },
-            {
-              arg: 'opened',
+            opened: {
               type: 'boolean',
               description: 'Whether or not the offcanvas is above the breakpoint and is open by it',
             },
-          ],
-          description: "Emitted when the offcanvas' breakpoint state changes",
+          },
+          description: "Emitted when the offcanvas's breakpoint state changes",
         },
-        {
-          args: [
-            {
-              arg: 'value',
-              description: '',
+        'close': {
+          description: '', // TODO missing description
+          args: {
+            value: {
+              description: '', // TODO missing description
               type: 'BvTriggerableEvent',
             },
-          ],
-          description: '',
-          event: 'show',
+          },
         },
-        {
-          event: 'show-prevented',
-          description: '',
-          args: [],
-        },
-        {
-          args: [
-            {
-              arg: 'value',
-              description: '',
+        'esc': {
+          description: '', // TODO missing description
+          args: {
+            value: {
+              description: '', // TODO missing description
               type: 'BvTriggerableEvent',
             },
-          ],
-          description: '',
-          event: 'shown',
+          },
         },
-        {
-          args: [
-            {
-              arg: 'value',
-              description: '',
-              type: 'BvTriggerableEvent',
-            },
-          ],
-          description: '',
-          event: 'hide',
+        'backdrop': {
+          args: undefined,
+          description: undefined,
         },
-        {
-          event: 'hide-prevented',
-          description: '',
-          args: [],
+        'cancel': {
+          args: undefined,
+          description: undefined,
         },
-        {
-          args: [
-            {
-              arg: 'value',
-              description: '',
-              type: 'BvTriggerableEvent',
-            },
-          ],
-          description: '',
-          event: 'hidden',
+        'ok': {
+          args: undefined,
+          description: undefined,
         },
-        {
-          event: 'close',
-          description: '',
-          args: [
-            {
-              arg: 'value',
-              description: '',
-              type: 'BvTriggerableEvent',
-            },
-          ],
-        },
-        {
-          event: 'esc',
-          description: '',
-          args: [
-            {
-              arg: 'value',
-              description: '',
-              type: 'BvTriggerableEvent',
-            },
-          ],
-        },
-      ],
-      slots: [
-        {
-          description: '',
-          name: 'title',
-          scope: [
-            {
-              prop: 'visible',
+      } satisfies EmitRecord<keyof BOffcanvasEmits | 'update:model-value'>,
+      slots: {
+        'title': {
+          description: '', // TODO missing description
+          scope: {
+            visible: {
               type: 'boolean',
             },
-            {
-              prop: 'placement',
+            placement: {
               type: "'top' | 'bottom' | 'start' | 'end'",
             },
-            {
-              prop: 'hide',
+            hide: {
               type: '(trigger?: string) => void',
             },
-          ],
+          },
         },
-        {
-          description: '',
-          name: 'default',
-          scope: [
-            {
-              prop: 'visible',
+        'default': {
+          description: '', // TODO missing description
+          scope: {
+            visible: {
               type: 'boolean',
             },
-            {
-              prop: 'placement',
+            placement: {
               type: "'top' | 'bottom' | 'start' | 'end'",
             },
-            {
-              prop: 'hide',
+            hide: {
               type: '(trigger?: string) => void',
             },
-          ],
+          },
         },
-        {
-          name: 'backdrop',
-          description: '',
-          scope: [],
+        'backdrop': {
+          description: '', // TODO missing description
+          scope: {},
         },
-        {
-          name: 'footer',
-          description: '',
-          scope: [
-            {
-              prop: 'visible',
+        'footer': {
+          description: '', // TODO missing description
+          scope: {
+            visible: {
               type: 'boolean',
             },
-            {
-              prop: 'placement',
+            placement: {
               type: "'top' | 'bottom' | 'start' | 'end'",
             },
-            {
-              prop: 'hide',
+            hide: {
               type: '(trigger?: string) => void',
             },
-          ],
+          },
         },
-        {
-          name: 'header',
-          description: '',
-          scope: [
-            {
-              prop: 'visible',
+        'header': {
+          description: '', // TODO missing description
+          scope: {
+            visible: {
               type: 'boolean',
             },
-            {
-              prop: 'placement',
+            placement: {
               type: "'top' | 'bottom' | 'start' | 'end'",
             },
-            {
-              prop: 'hide',
+            hide: {
               type: '(trigger?: string) => void',
             },
-          ],
+          },
         },
-        {
-          name: 'header-close',
-          description: '',
-          scope: [],
+        'header-close': {
+          description: '', // TODO missing description
+          scope: {},
         },
-      ],
+      } satisfies SlotRecord<keyof BOffcanvasSlots>,
     },
-  ],
+  }),
 }

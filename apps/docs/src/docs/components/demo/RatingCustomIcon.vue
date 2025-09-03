@@ -61,7 +61,13 @@ const rating = ref(0)
   transition: transform 0.2s ease;
   color: #a01918;
 }
-.b-form-rating:not(.is-readonly) .custom-icon:hover {
+
+.b-form-rating.is-disabled .custom-icon {
+  color: var(--bs-secondary);
+  cursor: default;
+}
+
+.b-form-rating:not(.is-readonly):not(.is-disabled) .custom-icon:hover {
   transform: scale(1.25);
 }
 </style>

@@ -25,7 +25,12 @@
         v-bind="$attrs"
       >
         <template v-if="contentShowing || isOpenByBreakpoint">
-          <div v-if="!props.noHeader" class="offcanvas-header" :class="props.headerClass">
+          <div
+            v-if="!props.noHeader"
+            class="offcanvas-header"
+            :class="props.headerClass"
+            v-bind="props.headerAttrs"
+          >
             <slot name="header" v-bind="sharedSlots">
               <h5 :id="`${computedId}-offcanvas-label`" class="offcanvas-title">
                 <slot name="title" v-bind="sharedSlots">
@@ -119,6 +124,7 @@ const _props = withDefaults(defineProps<Omit<BOffcanvasProps, 'modelValue'>>(), 
   bodyScrolling: false,
   focus: undefined,
   footerClass: undefined,
+  headerAttrs: undefined,
   headerClass: undefined,
   headerCloseClass: undefined,
   headerCloseLabel: 'Close',
@@ -144,9 +150,7 @@ const _props = withDefaults(defineProps<Omit<BOffcanvasProps, 'modelValue'>>(), 
   visible: false,
 })
 const props = useDefaults(_props, 'BOffcanvas')
-
 const emit = defineEmits<BOffcanvasEmits>()
-
 const slots = defineSlots<BOffcanvasSlots>()
 
 const modelValue = defineModel<Exclude<BOffcanvasProps['modelValue'], undefined>>({
@@ -155,9 +159,9 @@ const modelValue = defineModel<Exclude<BOffcanvasProps['modelValue'], undefined>
 
 const computedId = useId(() => props.id, 'offcanvas')
 
-const element = useTemplateRef<HTMLElement>('_element')
-const fallbackFocusElement = useTemplateRef<HTMLElement>('_fallbackFocusElement')
-const closeButton = useTemplateRef<HTMLElement>('_close')
+const element = useTemplateRef<HTMLElement | null>('_element')
+const fallbackFocusElement = useTemplateRef<HTMLElement | null>('_fallbackFocusElement')
+const closeButton = useTemplateRef<HTMLElement | null>('_close')
 
 const pickFocusItem = () => {
   if (props.focus && typeof props.focus !== 'boolean') {

@@ -94,7 +94,7 @@ By default, `BFormRating` has standard Bootstrap form-control styling. To disabl
 
 If you require additional information before a user can chose a ratings value, simply set the `disabled` prop to `true` to disable any user interactivity on the component:
 
-<NotYetImplemented />
+<<< DEMO ./demo/RatingDisabled.vue
 
 ### Readonly
 
@@ -113,6 +113,13 @@ Optionally show a clear icon via the `show-clear` prop. The value will be set to
 **Notes:**
 
 - The clear icon will not be shown when the props `readonly` or `disabled` are set.
+
+#### Custom clear icon
+
+You can replace the default clear icon using the `#icon-clear` slot.  
+This slot is **not scoped** — you can insert any content you like.
+
+<<< DEMO ./demo/RatingCustomClear.vue
 
 ### Icons
 

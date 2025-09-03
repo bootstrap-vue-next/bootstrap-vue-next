@@ -18,14 +18,10 @@ import {computed, useAttrs} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BDropdownHeaderProps} from '../../types/ComponentProps'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
+import type {BDropdownHeaderSlots} from '../../types'
 
 defineOptions({
   inheritAttrs: false,
-})
-const attrs = useAttrs()
-const processedAttrs = computed(() => {
-  const {class: wrapperClass, ...headerAttrs} = attrs
-  return {wrapperClass, headerAttrs}
 })
 
 const _props = withDefaults(defineProps<BDropdownHeaderProps>(), {
@@ -36,15 +32,17 @@ const _props = withDefaults(defineProps<BDropdownHeaderProps>(), {
   wrapperAttrs: undefined,
 })
 const props = useDefaults(_props, 'BDropdownHeader')
+defineSlots<BDropdownHeaderSlots>()
+const attrs = useAttrs()
+
+const processedAttrs = computed(() => {
+  const {class: wrapperClass, ...headerAttrs} = attrs
+  return {wrapperClass, headerAttrs}
+})
 
 const colorClasses = useColorVariantClasses(
   computed(() => ({
     textVariant: props.variant,
   }))
 )
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
 </script>

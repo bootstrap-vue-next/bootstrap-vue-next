@@ -15,6 +15,7 @@ export type {
 export type {Animation} from './Animation'
 export type {AriaInvalid} from './AriaInvalid'
 export type {
+  BTableInitialSortDirection,
   BTableProvider,
   BTableProviderContext,
   BTableSortBy,
@@ -36,7 +37,8 @@ export type {
   TextColorVariant,
 } from './ColorTypes'
 export type {BaseSize, Size} from './Size'
-export type {BootstrapVueOptions, BvnComponentProps, showHide} from './BootstrapVueOptions'
+export type {BootstrapVueOptions, showHide} from './BootstrapVueOptions'
+export type * from './ComponentEmits'
 export type {BreadcrumbItem, BreadcrumbItemRaw} from './BreadcrumbTypes'
 export type * from './BreakpointProps'
 export type {ButtonType} from './ButtonType'
@@ -62,6 +64,7 @@ export type {SpinnerType} from './SpinnerType'
 export type {TabType} from './Tab'
 export type {TransitionMode} from './TransitionMode'
 export type * from './ComponentProps'
+export type * from './ComponentSlots'
 export type {
   TooltipOrchestratorCreateParam as OrchestratedTooltip,
   ToastOrchestratorCreateParam as OrchestratedToast,

@@ -1,11 +1,13 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <BNavbar v-b-color-mode="'dark'" variant="primary" sticky="top" toggleable="lg" :container="true">
-    <BToastOrchestrator />
-    <BModalOrchestrator />
-    <BPopoverOrchestrator />
-    <div class="d-flex gap-2 align-items-center">
-      <BNavbarToggle v-b-toggle.sidebar-menu />
+  <BApp>
+    <BNavbar
+      v-b-color-mode="'dark'"
+      variant="primary"
+      sticky="top"
+      toggleable="lg"
+      :container="isLargeScreen ? true : 'fluid'"
+    >
       <BNavbarBrand :to="withBase('/')" class="p-0 me-0 me-lg-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -27,151 +29,153 @@
           />
         </svg>
       </BNavbarBrand>
-    </div>
-    <BCollapse is-nav>
-      <BNavbarNav>
-        <BNav>
+      <BNavbarToggle target="nav-collapse" />
+      <BCollapse id="nav-collapse" is-nav>
+        <BNavbarNav>
           <BNavItem
             v-for="link in headerLinks"
             :key="link.route"
             :to="link.route"
             :active="route.path === `${link.route}.html`"
-            class="py-2"
             active-class="active fw-bold"
             >{{ link.label }}</BNavItem
           >
-        </BNav>
-      </BNavbarNav>
-    </BCollapse>
-    <div class="d-flex align-items-center gap-2">
-      <VPNavBarSearch :class="{dark: colorMode === 'dark'}" />
-      <div class="d-flex gap-2 flex-wrap socials">
-        <BNav class="d-flex">
-          <BNavItem
-            v-for="link in headerExternalLinks"
-            :key="link.url"
-            :href="link.url"
-            :link-attrs="{'aria-label': link.label}"
-            target="_blank"
-            rel="noopener"
-            link-classes="py-1 px-0"
+        </BNavbarNav>
+        <BNavbarNav class="ms-auto">
+          <div class="d-flex align-items-center gap-2">
+            <VPNavBarSearch :class="{dark: colorMode === 'dark'}" />
+            <div class="d-flex gap-2 flex-wrap socials">
+              <BNav class="d-flex">
+                <BNavItem
+                  v-for="link in headerExternalLinks"
+                  :key="link.url"
+                  :href="link.url"
+                  :link-attrs="{'aria-label': link.label}"
+                  target="_blank"
+                  rel="noopener"
+                  link-classes="py-1 px-0"
+                >
+                  <component :is="link.icon()" height="1.1em" aria-hidden />
+                </BNavItem>
+                <div class="border border-secondary ms-2 me-3" />
+                <ClientOnly>
+                  <BNavItemDropdown toggle-class="px-0">
+                    <!-- TODO there is no way to adjust these options, say if you wanted to remove the padding -->
+                    <template #button-content>
+                      <component
+                        :is="currentIcon"
+                        height="1.1em"
+                        :aria-label="`Toggle theme (${colorMode})`"
+                        class="d-inline-block"
+                      />
+                    </template>
+                    <BDropdownItem
+                      v-for="el in options"
+                      :key="el"
+                      :active="colorMode === el"
+                      @click="set(el)"
+                    >
+                      <component :is="map[el]" /> {{ el }}
+                    </BDropdownItem>
+                  </BNavItemDropdown>
+                </ClientOnly>
+              </BNav>
+            </div>
+          </div>
+        </BNavbarNav>
+      </BCollapse>
+    </BNavbar>
+    <ClientOnly>
+      <div v-if="!isLargeScreen && !page.isNotFound" class="d-flex border-bottom">
+        <div class="px-3">
+          <BButton
+            v-b-toggle.sidebar-menu
+            class="otp-menu-toggle"
+            variant="link"
+            size="sm"
+            underline-opacity="0"
           >
-            <component :is="link.icon()" height="1.1em" aria-hidden />
-          </BNavItem>
-          <div class="border border-secondary ms-2 me-3" />
-          <ClientOnly>
-            <BNavItemDropdown toggle-class="px-0">
-              <!-- TODO there is no way to adjust these options, say if you wanted to remove the padding -->
-              <template #button-content>
-                <component
-                  :is="currentIcon"
-                  height="1.1em"
-                  :aria-label="`Toggle theme (${colorMode})`"
-                  class="d-inline-block"
-                />
-              </template>
-              <BDropdownItem
-                v-for="el in options"
-                :key="el"
-                :active="colorMode === el"
-                @click="set(el)"
-              >
-                <component :is="map[el]" /> {{ el }}
-              </BDropdownItem>
-            </BNavItemDropdown>
-          </ClientOnly>
-        </BNav>
-      </div>
-    </div>
-  </BNavbar>
-  <ClientOnly>
-    <div v-if="!isLargeScreen" class="py-4 px-3 text-end">
-      <BNavbarToggle v-b-toggle.otp-menu class="otp-menu-toggle">
-        On this page
-        <ChevronRight aria-hidden />
-      </BNavbarToggle>
-    </div>
-  </ClientOnly>
-  <BContainer fluid class="container-lg mt-3 my-md-4 bd-layout">
-    <aside class="bd-sidebar">
-      <ClientOnly>
-        <BOffcanvas
-          id="sidebar-menu"
-          v-model="sidebar"
-          responsive="lg"
-          title="Browse docs"
-          header-class="d-flex offcanvas-hidden-width"
-          class="h-100 border-0"
-        >
-          <TableOfContentsNav />
-        </BOffcanvas>
-      </ClientOnly>
-    </aside>
-    <main class="bd-main">
-      <BRow v-if="page.isNotFound">
-        <BCol>
-          <BContainer class="text-center my-auto p-5">
-            <BRow>
-              <BCol>
-                <h1>Oh No!</h1>
-              </BCol>
-            </BRow>
-            <BRow>
-              <BCol>
-                <h2>File Not Found</h2>
-              </BCol>
-            </BRow>
-          </BContainer>
-        </BCol>
-      </BRow>
-      <BRow v-else>
-        <div class="bd-content">
-          <aside ref="_target" class="otp-sidebar">
-            <ClientOnly>
-              <BOffcanvas
-                id="otp-menu"
-                v-model="onThisPage"
-                responsive="lg"
-                placement="end"
-                title="On this page"
-                class="h-100 border-0"
-                header-class="pb-0 d-flex offcanvas-hidden-width"
-                body-class="py-2"
-              >
-                <PageContents :contents="contents" :active-id="activeId" />
-              </BOffcanvas>
-            </ClientOnly>
-          </aside>
-          <Content ref="_content" style="height: 100%" class="doc-content" />
+            <List aria-hidden />
+            Browse docs
+          </BButton>
         </div>
-      </BRow>
-    </main>
-  </BContainer>
+        <div class="px-3 ms-auto">
+          <BButton
+            v-b-toggle.otp-menu
+            class="otp-menu-toggle"
+            variant="link"
+            size="sm"
+            underline-opacity="0"
+          >
+            On this page
+            <ChevronRight aria-hidden />
+          </BButton>
+        </div>
+      </div>
+    </ClientOnly>
+    <BContainer fluid class="container-lg mt-3 my-md-4 bd-layout">
+      <aside class="bd-sidebar">
+        <ClientOnly>
+          <BOffcanvas
+            id="sidebar-menu"
+            v-model="sidebar"
+            responsive="lg"
+            title="Browse docs"
+            header-class="d-flex offcanvas-hidden-width"
+            class="h-100 border-0"
+          >
+            <TableOfContentsNav />
+          </BOffcanvas>
+        </ClientOnly>
+      </aside>
+      <main class="bd-main">
+        <BRow v-if="page.isNotFound">
+          <BCol>
+            <BContainer class="text-center my-auto p-5">
+              <BRow>
+                <BCol>
+                  <h1>Oh No!</h1>
+                </BCol>
+              </BRow>
+              <BRow>
+                <BCol>
+                  <h2>File Not Found</h2>
+                </BCol>
+              </BRow>
+            </BContainer>
+          </BCol>
+        </BRow>
+        <BRow v-else>
+          <div class="bd-content">
+            <aside ref="_target" class="otp-sidebar">
+              <ClientOnly>
+                <BOffcanvas
+                  id="otp-menu"
+                  v-model="onThisPage"
+                  responsive="lg"
+                  placement="end"
+                  title="On this page"
+                  class="h-100 border-0"
+                  header-class="pb-0 d-flex offcanvas-hidden-width"
+                  body-class="py-2"
+                >
+                  <PageContents :contents="contents" :active-id="activeId" />
+                </BOffcanvas>
+              </ClientOnly>
+            </aside>
+            <Content ref="_content" style="height: 100%" class="doc-content" />
+          </div>
+        </BRow>
+      </main>
+    </BContainer>
+  </BApp>
 </template>
 
 <script setup lang="ts">
-import {
-  BCol,
-  BCollapse,
-  BContainer,
-  BDropdownItem,
-  BModalOrchestrator,
-  BNav,
-  BNavbar,
-  BNavbarBrand,
-  BNavbarNav,
-  BNavbarToggle,
-  BNavItem,
-  BNavItemDropdown,
-  BOffcanvas,
-  BPopoverOrchestrator,
-  BRow,
-  BToastOrchestrator,
-  useColorMode,
-  useScrollspy,
-  vBColorMode,
-  vBToggle,
-} from 'bootstrap-vue-next'
+import {useColorMode} from 'bootstrap-vue-next/composables/useColorMode'
+import {useScrollspy} from 'bootstrap-vue-next/composables/useScrollspy'
+import {vBColorMode} from 'bootstrap-vue-next/directives/BColorMode'
+import {vBToggle} from 'bootstrap-vue-next/directives/BToggle'
 import {
   type ComponentPublicInstance,
   computed,
@@ -188,6 +192,7 @@ import MoonStarsFill from '~icons/bi/moon-stars-fill'
 import SunFill from '~icons/bi/sun-fill'
 import ChevronRight from '~icons/bi/chevron-right'
 import CircleHalf from '~icons/bi/circle-half'
+import List from '~icons/bi/list'
 import {useData, useRoute, withBase} from 'vitepress'
 import {VPNavBarSearch} from 'vitepress/theme'
 import {appInfoKey} from './keys'
@@ -203,7 +208,22 @@ const content = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_content')
 const target = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_target')
 
 const {current: activeId, list: items} = useScrollspy(content, target, {
-  contentQuery: ':scope h1, :scope > div > [id], #component-reference, .component-reference h3',
+  // Select headings and elements for the table of contents:
+  // - h1-h6 headings (excluding those inside demo examples or card bodies)
+  // - div elements with IDs (for component reference sections)
+  // - #component-reference and .component-reference h3 elements
+  // This creates the hierarchical structure for the "On this page" navigation
+  contentQuery: [
+    ':scope h1:not([class*="demo"] *):not(.card-body *)',
+    ':scope h2:not([class*="demo"] *):not(.card-body *)',
+    ':scope h3:not([class*="demo"] *):not(.card-body *)',
+    ':scope h4:not([class*="demo"] *):not(.card-body *)',
+    ':scope h5:not([class*="demo"] *):not(.card-body *)',
+    ':scope h6:not([class*="demo"] *):not(.card-body *)',
+    ':scope > div > [id]',
+    '#component-reference',
+    '.component-reference h3',
+  ].join(', '),
   targetQuery: ':scope [href]',
   rootMargin: '0px 0px -25%',
   manual: true,
@@ -221,7 +241,7 @@ const globalData = inject(appInfoKey, {
   githubDocsDirectory: '',
 })
 
-const isLargeScreen = useMediaQuery('(min-width: 992px)')
+const isLargeScreen = useMediaQuery('(min-width: 992px)', {ssrWidth: 1024})
 const sidebar = ref(false)
 const onThisPage = ref(false)
 
@@ -812,5 +832,19 @@ watch(
   .offcanvas-header.offcanvas-hidden-width .btn-close {
     display: none !important;
   }
+}
+
+.vp-code-group {
+  border: 1px solid var(--bs-border-color);
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+.vp-code-group .blocks,
+.vp-code-group .tabs {
+  padding: 0 1.5rem 1rem;
+  background-color: var(--bs-body-bg);
+}
+.vp-code-group .tabs {
+  margin: 0.375rem 0 0.75rem !important;
 }
 </style>

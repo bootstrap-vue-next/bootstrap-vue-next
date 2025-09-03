@@ -447,6 +447,25 @@ type RadiusElementExtendables = {
 
 </BCard>
 
+## ScrollspyList
+
+This type is used by the `useScrollspy` composable to represent tracked elements.
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type ScrollspyListItem = {
+  id: string | null // Element ID
+  el: HTMLElement | null // DOM element reference
+  visible: boolean // Whether element is currently visible
+  text: string | null // Text content of the element
+}
+
+type ScrollspyList = ScrollspyListItem[]
+```
+
+</BCard>
+
 ## SelectValue
 
 <BCard class="bg-body-tertiary">
@@ -498,25 +517,28 @@ type TableFieldAttribute<T = any> =
 
 type TableRowType = 'row' | 'row-details' | 'row-top' | 'row-bottom' | 'table-busy'
 type TableRowThead = 'top' | 'bottom'
+type BTableInitialSortDirection = 'desc' | 'asc' | 'last'
 
 interface TableField<T = Record<string, unknown>> {
+  class?: ClassValue
+  filterByFormatted?: boolean | TableFieldFormatter<T>
+  formatter?: TableFieldFormatter<T>
+  headerAbbr?: string
+  headerTitle?: string
+  initialSortDirection?: BTableInitialSortDirection
+  isRowHeader?: boolean
   key: LiteralUnion<keyof T>
   label?: string
-  headerTitle?: string
-  headerAbbr?: string
-  class?: ClassValue
-  formatter?: TableFieldFormatter<T>
   sortable?: boolean
   sortByFormatted?: boolean | TableFieldFormatter<T>
-  filterByFormatted?: boolean | TableFieldFormatter<T>
+  sortCompare?: BTableSortByComparerFunction<T>
+  stickyColumn?: boolean
+  tdAttr?: TableFieldAttribute<T>
   tdClass?: ClassValue
+  thAttr?: TableFieldAttribute<T>
   thClass?: ClassValue
   thStyle?: StyleValue
   variant?: ColorVariant | null
-  tdAttr?: TableFieldAttribute<T>
-  thAttr?: TableFieldAttribute<T>
-  isRowHeader?: boolean
-  stickyColumn?: boolean
 }
 type TableFieldRaw<T = Record<string, unknown>> = string | TableField<T>
 ```
@@ -562,7 +584,6 @@ type BTableSortByComparerFunction<T = any> = (a: T, b: T, key: string) => number
 type BTableSortBy<T = any> = {
   order: BTableSortByOrder
   key: string
-  comparer?: BTableSortByComparerFunction<T>
 }
 ```
 
@@ -660,7 +681,3 @@ New values can be used now and the type check will be successful:
 ```
 
 </BCard>
-
-<script setup lang="ts">
-import {BCard, BCardBody} from 'bootstrap-vue-next'
-</script>

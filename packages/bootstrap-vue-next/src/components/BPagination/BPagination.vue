@@ -22,13 +22,18 @@
           {{ props.ellipsisText || '...' }}
         </slot>
       </span>
-      <component v-bind="page.button" :is="page.button.is" v-else @click="page.clickHandler">
+      <component
+        v-bind="page.button"
+        :is="page.button.is"
+        v-else-if="'button' in page"
+        @click="page.clickHandler"
+      >
         <slot
           :name="page.text.name"
           :disabled="page.text.disabled"
           :page="page.text.page"
           :index="page.text.index"
-          :active="page.text.active"
+          :active="page.text.active ?? false"
           :content="page.text.value"
         >
           {{ page.text.value }}
@@ -49,6 +54,7 @@ import type {ClassValue} from '../../types/AnyValuedAttributes'
 import {CODE_DOWN, CODE_LEFT, CODE_RIGHT, CODE_UP} from '../../utils/constants'
 import {stopEvent} from '../../utils/event'
 import {getActiveElement} from '../../utils/dom'
+import {type BPaginationEmits, type BPaginationSlots} from '../../types'
 
 // Threshold of limit size when we start/stop showing ellipsis
 const ELLIPSIS_THRESHOLD = 3
@@ -59,15 +65,6 @@ const NEXT_BUTTON = -3
 const LAST_BUTTON = -4
 const FIRST_ELLIPSIS = -5
 const LAST_ELLIPSIS = -6
-
-// This is necessary because type inference isn't succeeding for the pages computed
-interface PageButton {
-  id: number
-  li: Record<string, unknown>
-  button: Record<string, unknown>
-  text: Record<string, unknown>
-  clickHandler: (e: Readonly<MouseEvent>) => void
-}
 
 const _props = withDefaults(defineProps<Omit<BPaginationProps, 'modelValue'>>(), {
   align: 'start',
@@ -101,16 +98,14 @@ const _props = withDefaults(defineProps<Omit<BPaginationProps, 'modelValue'>>(),
   totalRows: DEFAULT_TOTAL_ROWS,
 })
 const props = useDefaults(_props, 'BPagination')
-
-const emit = defineEmits<{
-  'page-click': [event: BvEvent, pageNumber: number]
-}>()
+const emit = defineEmits<BPaginationEmits>()
+defineSlots<BPaginationSlots>()
 
 const modelValue = defineModel<Exclude<BPaginationProps['modelValue'], undefined>>({
   default: 1,
 })
 
-const pageElements = useTemplateRef<HTMLLIElement[]>('_pageElements')
+const pageElements = useTemplateRef('_pageElements')
 
 const limitNumber = useToNumber(() => props.limit, {nanToZero: true, method: 'parseInt'})
 const perPageNumber = useToNumber(() => props.perPage, {nanToZero: true, method: 'parseInt'})
@@ -159,7 +154,7 @@ const getBaseButtonProps = ({
   page: number
   disabled: boolean
   classVal: ClassValue
-  slotName: string
+  slotName: 'first-text' | 'prev-text' | 'next-text' | 'last-text' | 'page'
   textValue?: string
   tabIndex?: string
   label?: string
@@ -202,7 +197,7 @@ const getBaseButtonProps = ({
     page,
     disabled,
     index: page - 1,
-    content: textValue ? undefined : page,
+    content: textValue ? undefined : String(page),
   },
   clickHandler: (e: Readonly<MouseEvent>) => pageClick(e, page),
 })
@@ -218,7 +213,7 @@ const getButtonProps = ({
   page: number
   disabled: boolean
   classVal: ClassValue
-  slotName: string
+  slotName: 'first-text' | 'prev-text' | 'next-text' | 'last-text' | 'page'
   textValue?: string
   label: string
 }) => getBaseButtonProps({page, classVal, disabled, slotName, textValue, label, tabIndex: '-1'})
@@ -346,13 +341,13 @@ const isDisabled = (el: HTMLButtonElement) => {
 
 const getButtons = (): HTMLButtonElement[] =>
   [...(pageElements.value ?? [])]
-    ?.sort(
+    .sort(
       (a, b) =>
         parseInt(a.getAttribute('displayIndex') || '0') -
         parseInt(b.getAttribute('displayIndex') || '0')
     )
-    ?.map((page) => page.children[0])
-    ?.filter((el) => {
+    .map((page) => page.children[0])
+    .filter((el) => {
       if (el.getAttribute('display') === 'none' || el.tagName.toUpperCase() !== 'BUTTON') {
         return false
       }
@@ -361,7 +356,7 @@ const getButtons = (): HTMLButtonElement[] =>
 
       return !!(bcr && bcr.height > 0 && bcr.width > 0)
     })
-    ?.map((el) => el as HTMLButtonElement)
+    .map((el) => el as HTMLButtonElement)
 
 const focusFirst = () => {
   nextTick(() => {
@@ -472,7 +467,7 @@ const pages = computed(() => {
     }
   }
 
-  return els as PageButton[]
+  return els
 })
 
 const elements = computed(() => {

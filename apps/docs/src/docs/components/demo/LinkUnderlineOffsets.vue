@@ -8,6 +8,6 @@
 </template>
 
 <script setup lang="ts">
-import {type UnderlineOffset} from 'bootstrap-vue-next'
+import type {UnderlineOffset} from 'bootstrap-vue-next'
 const offsets: UnderlineOffset[] = [1, 2, 3]
 </script>

@@ -2,7 +2,7 @@
   <nav class="bd-links-nav">
     <BListGroup v-if="!isLargeScreen">
       <strong :class="headerClasses">
-        <span :class="headerInsideClasses"> <GearIcon aria-hidden /> General</span>
+        <span :class="headerInsideClasses"><GearIcon aria-hidden class="me-2" />General </span>
       </strong>
       <BListGroupItem v-for="link in headerLinks" :key="link.label" :class="listGroupItemClasses">
         <BLink :to="link.route" :class="linkClasses">
@@ -13,7 +13,7 @@
     <BListGroup v-for="group in groupComputedList" :key="group.label">
       <strong :class="headerClasses">
         <BLink :to="withBase(group.uri)" :class="headerInsideClasses">
-          <component :is="group.icon()" /> {{ group.label }}
+          <component :is="group.icon()" class="me-2" /> {{ group.label }}
         </BLink>
       </strong>
       <BListGroupItem
@@ -35,7 +35,6 @@
 
 <script setup lang="ts">
 import {computed, onMounted, ref, watch} from 'vue'
-import {BLink, BListGroup, BListGroupItem} from 'bootstrap-vue-next'
 import {useRoute, withBase} from 'vitepress'
 import {breakpointsBootstrapV5, useBreakpoints} from '@vueuse/core'
 import IntersectIcon from '~icons/bi/intersect'
@@ -74,7 +73,13 @@ const routeLocationDirectives = (name: string): string =>
 const headerClasses = ['py-2', 'text-primary-emphasis'] as const
 const linkClasses = ['px-2', 'ms-2', 'text-decoration-none', 'text-body', 'fs-7'] as const
 const listGroupItemClasses = ['border-0', 'px-0', 'py-0-5', 'ms-2'] as const
-const headerInsideClasses = ['px-2', 'ms-2', 'text-decoration-none'] as const
+const headerInsideClasses = [
+  'd-inline-flex',
+  'align-items-center',
+  'px-2',
+  'ms-2',
+  'text-decoration-none',
+] as const
 
 const headerLinks = [
   {
@@ -100,6 +105,7 @@ const headerLinks = [
 ]
 
 const componentsList: {name: string}[] = [
+  {name: 'App'},
   {name: 'Accordion'},
   {name: 'Alert'},
   {name: 'Avatar'},
@@ -131,6 +137,7 @@ const componentsList: {name: string}[] = [
   {name: 'Modal'},
   {name: 'Nav'},
   {name: 'Navbar'},
+  {name: 'Orchestrator'},
   {name: 'Offcanvas'},
   {name: 'Overlay'},
   {name: 'Pagination'},
@@ -148,10 +155,10 @@ const composablesList: {name: string}[] = [
   {name: 'useBreadcrumb'},
   {name: 'useColorMode'},
   {name: 'useModal'},
-  {name: 'useModalController'},
-  {name: 'useToastController'},
+  {name: 'usePopover'},
+  {name: 'useScrollspy'},
+  {name: 'useToast'},
   {name: 'useToggle'},
-  {name: 'usePopoverController'},
 ]
 
 const directivesList: {name: string}[] = [

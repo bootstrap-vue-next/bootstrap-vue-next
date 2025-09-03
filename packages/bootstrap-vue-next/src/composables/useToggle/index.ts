@@ -7,15 +7,15 @@ import {
   toValue,
 } from 'vue'
 
-import {globalShowHideStorageInjectionKey} from '../../utils/keys'
+import {showHideRegistryKey} from '../../utils/keys'
 
 export const useToggle = (id: MaybeRefOrGetter<string | undefined> = undefined) => {
   const instance = getCurrentInstance()
-  const storage = inject(globalShowHideStorageInjectionKey, null)
+  const storage = inject(showHideRegistryKey, null)
 
   if (!storage) {
     throw new Error(
-      'useToggle() was called outside of the setup() function or the showHide plugin is not provided.'
+      'useToggle() must be called within setup(), and BApp, useRegistry or plugin must be installed/provided.'
     )
   }
   const registry = storage.values

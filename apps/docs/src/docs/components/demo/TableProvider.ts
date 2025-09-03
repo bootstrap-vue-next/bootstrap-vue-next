@@ -2,7 +2,7 @@
 import type {BTableSortBy, MaybePromise} from 'bootstrap-vue-next'
 // #region snippet
 type BTableProviderContext<T = unknown> = {
-  sortBy: BTableSortBy<T>[] | undefined
+  sortBy: BTableSortBy[] | undefined
   filter: string | undefined
   currentPage: number
   perPage: number
