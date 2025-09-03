@@ -171,6 +171,11 @@ export default {
           description:
             "Enables full-screen mode with a boolean value or sets the breakpoint for full-screen mode below the specified breakpoint value ('sm', 'md', 'lg', 'xl', 'xxl')"
         },
+        headerAttrs: {
+          type: 'Readonly<AttrsValue>',
+          default: undefined,
+          description: 'Attributes to be applied to the modal header element'
+        },
         headerBgVariant: {
           type: 'ColorVariant | null',
           default: null, // TODO item not in string format

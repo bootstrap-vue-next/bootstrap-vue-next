@@ -29,7 +29,12 @@
       >
         <div class="modal-dialog" :class="modalDialogClasses">
           <div v-if="contentShowing" class="modal-content" :class="props.contentClass">
-            <div v-if="!props.noHeader" class="modal-header" :class="headerClasses" v-bind="props.headerAttrs">
+            <div
+              v-if="!props.noHeader"
+              class="modal-header"
+              :class="headerClasses"
+              v-bind="props.headerAttrs"
+            >
               <slot name="header" v-bind="sharedSlots">
                 <component
                   :is="props.titleTag"
