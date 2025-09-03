@@ -29,7 +29,12 @@
       >
         <div class="modal-dialog" :class="modalDialogClasses">
           <div v-if="contentShowing" class="modal-content" :class="props.contentClass">
-            <div v-if="!props.noHeader" class="modal-header" :class="headerClasses">
+            <div
+              v-if="!props.noHeader"
+              class="modal-header"
+              :class="headerClasses"
+              v-bind="props.headerAttrs"
+            >
               <slot name="header" v-bind="sharedSlots">
                 <component
                   :is="props.titleTag"
@@ -186,6 +191,7 @@ const _props = withDefaults(defineProps<Omit<BModalProps, 'modelValue'>>(), {
   footerTextVariant: null,
   footerVariant: null,
   fullscreen: false,
+  headerAttrs: undefined,
   headerBgVariant: null,
   headerBorderVariant: null,
   headerClass: undefined,
@@ -384,8 +390,7 @@ const {activePosition, activeModalCount, stackWithoutSelf} = useModalManager(
 
 const sharedClasses = computed(() => ({
   [`stack-position-${activePosition?.value ?? 0}`]: true,
-  [`stack-inverse-position-${(activeModalCount?.value ?? 1) - 1 - (activePosition?.value ?? 0)}`]:
-    true,
+  [`stack-inverse-position-${(activeModalCount?.value ?? 1) - 1 - (activePosition?.value ?? 0)}`]: true,
 }))
 
 watch(stackWithoutSelf, (newValue, oldValue) => {

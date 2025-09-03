@@ -636,6 +636,7 @@ export interface BOffcanvasProps extends TeleporterProps, ShowHideProps {
     | Readonly<HTMLElement>
     | null
   footerClass?: string
+  headerAttrs?: Readonly<AttrsValue>
   headerClass?: string
   headerCloseClass?: ClassValue
   headerCloseLabel?: string
@@ -1411,6 +1412,7 @@ export interface BModalProps extends TeleporterProps, ShowHideProps {
   footerTextVariant?: TextColorVariant | null
   footerVariant?: ColorVariant | null
   fullscreen?: boolean | Breakpoint
+  headerAttrs?: Readonly<AttrsValue>
   headerBgVariant?: BgColorVariant | null
   headerBorderVariant?: BorderColorVariant | null
   headerClass?: ClassValue

@@ -43,6 +43,11 @@ export default {
           type: 'string',
           default: undefined,
         },
+        headerAttrs: {
+          type: 'Readonly<AttrsValue>',
+          default: undefined,
+          description: 'Attributes to be applied to the offcanvas header element'
+        },
         headerClass: {
           type: 'string',
           default: undefined,
