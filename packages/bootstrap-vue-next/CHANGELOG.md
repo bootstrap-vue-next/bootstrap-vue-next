@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.40.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.30.5...bootstrapvuenext-v0.40.0) (2025-09-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BSort:** Implement initial-sort-direction and move compare from sort-by to fields ([#2777](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2777))
+* Merged the Orchestrator components into one.
+* renamed the controller composables to `useToast`, `useModal`, and `usePopover`
+* combined the old plugins to match the new BApp and composables.
+* the old `useModal` was removed since `useToggle` does all what it did.
+* new `BApp` component as the recommended way to configure bootstrap-vue-next applications, replacing the plugin-based approach.
+
+### Features
+
+* Add headerAttrs prop to BOffcanvas and BModal components ([59d1e80](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/59d1e809f57b7443faa7d53dcb6db7b6f0c8ea97))
+* **b-form-rating:** add `icon-clear` slot ([#2809](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2809)) ([4120f3d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4120f3d30e77d36e113bf1dd93581f073117c5b3))
+* **BSort:** Implement initial-sort-direction and move compare from sort-by to fields ([#2777](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2777)) ([b3eec6e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b3eec6eaabf654bb21124b9601d9c3809e5eb0cc))
+* combined the old plugins to match the new BApp and composables. ([ba90f59](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba90f596ad3376ebddda535bf8b88232c60befff))
+* implement BFormRating disabled state ([#2753](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2753)) ([#2793](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2793)) ([d837222](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d8372223530e2038246e237732391c71a802dd23))
+* Merged the Orchestrator components into one. ([ba90f59](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba90f596ad3376ebddda535bf8b88232c60befff))
+* new `BApp` component as the recommended way to configure bootstrap-vue-next applications, replacing the plugin-based approach.  ([ba90f59](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba90f596ad3376ebddda535bf8b88232c60befff))
+* renamed the controller composables to `useToast`, `useModal`, and `usePopover` ([ba90f59](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba90f596ad3376ebddda535bf8b88232c60befff))
+* the old `useModal` was removed since `useToggle` does all what it did. ([ba90f59](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba90f596ad3376ebddda535bf8b88232c60befff))
+
 ## [0.30.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.30.4...bootstrapvuenext-v0.30.5) (2025-08-13)
 
 ### Features
