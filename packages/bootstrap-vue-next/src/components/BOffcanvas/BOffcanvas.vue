@@ -214,10 +214,16 @@ const {
 
 const breakpoints = useBreakpoints(breakpointsBootstrapV5)
 const smallerOrEqualToBreakpoint = breakpoints.smallerOrEqual(() => props.responsive ?? 'xs')
-const isOpenByBreakpoint = ref(props.responsive !== undefined && !smallerOrEqualToBreakpoint.value)
+// Initialize with SSR-safe default value to prevent hydration mismatches
+// The actual breakpoint evaluation is deferred to onMounted (client-side only)
+const isOpenByBreakpoint = ref(false)
+
 onMounted(() => {
-  if (props.responsive !== undefined)
+  if (props.responsive !== undefined) {
+    // Update the breakpoint state after mounting (client-side only)
+    isOpenByBreakpoint.value = !smallerOrEqualToBreakpoint.value
     emit('breakpoint', buildTriggerableEvent('breakpoint'), isOpenByBreakpoint.value)
+  }
 })
 
 useSafeScrollLock(showRef, () => props.bodyScrolling || isOpenByBreakpoint.value)
