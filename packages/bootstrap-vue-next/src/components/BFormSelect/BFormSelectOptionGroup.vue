@@ -6,6 +6,7 @@
       :key="index"
       :disabled="option.disabled"
       :value="option.value"
+      :selected="option.value === props.selectedValue"
       v-bind="$attrs"
     >
       <slot name="option" v-bind="option">
@@ -29,6 +30,7 @@ const _props = withDefaults(defineProps<BFormSelectOptionGroupProps>(), {
   disabledField: 'disabled',
   label: undefined,
   options: () => [],
+  selectedValue: undefined,
   textField: 'text',
   valueField: 'value',
 })

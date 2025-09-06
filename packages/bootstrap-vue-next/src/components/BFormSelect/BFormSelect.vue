@@ -22,8 +22,14 @@
         :value-field="props.valueField"
         :text-field="props.textField"
         :disabled-field="props.disabledField"
+        :selected-value="localValue"
       />
-      <BFormSelectOption v-else :value="option.value" :disabled="option.disabled">
+      <BFormSelectOption
+        v-else
+        :value="option.value"
+        :disabled="option.disabled"
+        :selected="option.value === localValue"
+      >
         <slot name="option" v-bind="option">
           {{ option.text }}
         </slot>
