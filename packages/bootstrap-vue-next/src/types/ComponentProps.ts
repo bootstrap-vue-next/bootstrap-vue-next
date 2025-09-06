@@ -943,7 +943,7 @@ export interface BButtonGroupProps {
 
 export interface BButtonToolbarProps {
   ariaLabel?: string
-  // keyNav?: boolean
+  keyNav?: boolean
   justify?: boolean
   role?: string
 }
