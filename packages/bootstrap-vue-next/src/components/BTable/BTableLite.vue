@@ -49,7 +49,11 @@
         </BTd>
       </BTr>
     </BThead>
-    <BTbody :class="props.tbodyClass">
+    <BTbody
+      :class="props.tbodyClass"
+      :tbody-transition-handlers="props.tbodyTransitionHandlers"
+      :tbody-transition-props="props.tbodyTransitionProps"
+    >
       <slot
         name="custom-body"
         :fields="computedFields"
@@ -256,6 +260,8 @@ const _props = withDefaults(defineProps<BTableLiteProps<Items>>(), {
   primaryKey: undefined,
   tbodyClass: undefined,
   tbodyTrAttrs: undefined,
+  tbodyTransitionHandlers: undefined,
+  tbodyTransitionProps: undefined,
   tfootClass: undefined,
   tfootTrClass: undefined,
   theadClass: undefined,
