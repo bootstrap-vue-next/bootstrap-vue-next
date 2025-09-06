@@ -11,7 +11,7 @@ export interface ColorModeOptions extends UseColorModeOptions {
 export const useColorMode = (opts: Readonly<ColorModeOptions> = {}) => {
   const persist = opts.persist ?? false
   const attribute = 'data-bs-theme'
-  const selector = 'body'
+  const selector = 'html'
   return useVueuseColorMode({
     attribute,
     selector,
