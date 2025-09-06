@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.40.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.0...bootstrapvuenext-v0.40.1) (2025-09-06)
+
+
+### Features
+
+* change useColorMode selector from 'body' to 'html' ([#2830](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2830)) ([688f826](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/688f826cb9c51c552069adaa31cd2b4857c886cf))
+
+
+### Bug Fixes
+
+* **BDropdown:** transition broken by inline display styles ([#2832](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2832)) ([0363c2f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0363c2f87c84e5703c43874f0d7baf3cd6a81a55))
+
 ## [0.40.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.30.5...bootstrapvuenext-v0.40.0) (2025-09-03)
 
 
