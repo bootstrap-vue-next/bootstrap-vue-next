@@ -898,6 +898,9 @@ const computedLiteProps = computed(() => ({
   tbodyTrClass: getRowClasses,
   fieldColumnClass: getFieldColumnClasses,
   id: computedId.value,
+  // Enable keyboard navigation based on table features
+  _keyboardRowNavigation: !!(props.selectable && !props.noSelectOnClick),
+  _keyboardHeaderNavigation: !!isSortable.value,
   ...boundBTableLiteEmits,
 }))
 
