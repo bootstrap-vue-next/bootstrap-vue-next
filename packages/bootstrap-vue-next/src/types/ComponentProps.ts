@@ -441,7 +441,6 @@ export interface BFormSelectProps {
 
 export interface BFormSelectOptionProps<T> {
   disabled?: boolean
-  selected?: boolean
   value?: T
 }
 
@@ -449,7 +448,6 @@ export interface BFormSelectOptionGroupProps {
   disabledField?: string
   label?: string
   options?: readonly (unknown | Record<string, unknown>)[]
-  selectedValue?: unknown
   textField?: string
   valueField?: string
 }

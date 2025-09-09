@@ -6,7 +6,6 @@
       :key="index"
       :disabled="option.disabled"
       :value="option.value"
-      :selected="option.value === props.selectedValue"
       v-bind="$attrs"
     >
       <slot name="option" v-bind="option">
@@ -30,12 +29,15 @@ const _props = withDefaults(defineProps<BFormSelectOptionGroupProps>(), {
   disabledField: 'disabled',
   label: undefined,
   options: () => [],
-  selectedValue: undefined,
   textField: 'text',
   valueField: 'value',
 })
 const props = useDefaults(_props, 'BFormSelectOptionGroup')
 defineSlots<BFormSelectOptionGroupSlots<T>>()
+
+// The form select context is injected by BFormSelectOption components automatically
+// We don't need to handle the selected value here since each BFormSelectOption
+// will inject the context directly
 
 const {normalizedOptions} = useFormSelect(() => props.options, props) as {
   normalizedOptions: ComputedRef<SelectOption<T>[]>
