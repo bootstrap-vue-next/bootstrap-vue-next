@@ -295,10 +295,7 @@ const emit = defineEmits<BTableLiteEmits<Items>>()
 const slots = defineSlots<BTableLiteSlots<Items>>()
 
 // Inject keyboard navigation state from parent BTable
-const keyboardNavigation = inject(tableKeyboardNavigationKey, {
-  rowNavigation: ref(false),
-  headerNavigation: ref(false),
-})
+const keyboardNavigation = inject(tableKeyboardNavigationKey, null)
 
 const computedId = useId(() => props.id)
 
@@ -466,10 +463,10 @@ const getCellComponent = (field: Readonly<TableField>) => {
 
 // Keyboard navigation support
 const shouldHeaderBeFocusable = (field: TableField<Items>) =>
-  !!(keyboardNavigation.headerNavigation.value && field.sortable === true)
+  !!(keyboardNavigation?.headerNavigation.value && field.sortable === true)
 
 const shouldRowBeFocusable = computed(
-  () => !!(keyboardNavigation.rowNavigation.value && props.items.length > 0)
+  () => !!(keyboardNavigation?.rowNavigation.value && props.items.length > 0)
 )
 
 const handleHeaderKeydown = (field: TableField<Items>, event: KeyboardEvent, isFooter = false) => {
