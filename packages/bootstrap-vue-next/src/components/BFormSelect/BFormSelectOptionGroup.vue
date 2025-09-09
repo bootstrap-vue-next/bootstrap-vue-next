@@ -35,6 +35,10 @@ const _props = withDefaults(defineProps<BFormSelectOptionGroupProps>(), {
 const props = useDefaults(_props, 'BFormSelectOptionGroup')
 defineSlots<BFormSelectOptionGroupSlots<T>>()
 
+// The form select context is injected by BFormSelectOption components automatically
+// We don't need to handle the selected value here since each BFormSelectOption
+// will inject the context directly
+
 const {normalizedOptions} = useFormSelect(() => props.options, props) as {
   normalizedOptions: ComputedRef<SelectOption<T>[]>
 }
