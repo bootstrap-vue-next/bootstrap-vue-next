@@ -126,11 +126,6 @@ export default {
           default: false, // TODO item not in string format
           description: 'The disabled state of the option',
         },
-        selected: {
-          type: 'boolean',
-          default: false,
-          description: 'When true, the option will be selected. Used internally for SSR support',
-        },
       } satisfies PropRecord<keyof BFormSelectOptionProps<unknown>>,
       slots: {
         default: {
