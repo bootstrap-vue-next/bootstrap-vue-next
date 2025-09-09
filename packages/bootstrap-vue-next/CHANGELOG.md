@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.40.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.1...bootstrapvuenext-v0.40.2) (2025-09-09)
+
+
+### Features
+
+* **BButtonToolbar:** Add keyboard navigation support ([#2837](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2837)) ([81bd846](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/81bd8466f62b4445f1a68303c53416a2a5653d9c))
+* **BTable:** Implement keyboard navigation ([#2834](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2834)) ([b4b5f6f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b4b5f6fc74be26dc85443e3bb808015439b4b0e8))
+
+
+### Bug Fixes
+
+* **BFormSelect:** modelValue not being applied during SSR ([#2835](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2835)) ([44a4ccd](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/44a4ccd8088511b47b2ac951b36dcbbc163cf30a))
+* BOffcanvas responsive SSR compatibility - defer breakpoint evaluation to client-side ([#2833](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2833)) ([ab99819](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ab99819077d8abf05b9beadf6eea31ece3e12b6c))
+
 ## [0.40.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.0...bootstrapvuenext-v0.40.1) (2025-09-06)
 
 
