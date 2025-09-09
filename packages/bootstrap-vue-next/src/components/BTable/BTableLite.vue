@@ -15,8 +15,10 @@
           :variant="field.variant"
           :abbr="field.headerAbbr"
           :style="field.thStyle"
+          :tabindex="shouldHeaderBeFocusable(field) ? '0' : undefined"
           v-bind="callThAttr(null, field, 'top')"
           @click="headerClicked(field, $event)"
+          @keydown="handleHeaderKeydown(field, $event)"
         >
           <!-- eslint-disable prettier/prettier -->
           <slot
@@ -80,6 +82,7 @@
             "
             :class="getRowClasses(item, 'row')"
             :variant="isTableItem(item) ? item._rowVariant : undefined"
+            :tabindex="shouldRowBeFocusable ? '0' : undefined"
             v-bind="callTbodyTrAttrs(item, 'row')"
             @click="!filterEvent($event) && emit('row-clicked', item, itemIndex, $event)"
             @dblclick="!filterEvent($event) && emit('row-dblclicked', item, itemIndex, $event)"
@@ -87,6 +90,7 @@
             @mouseenter="!filterEvent($event) && emit('row-hovered', item, itemIndex, $event)"
             @mouseleave="!filterEvent($event) && emit('row-unhovered', item, itemIndex, $event)"
             @mousedown="handleMiddleClick(item, itemIndex, $event)"
+            @keydown="handleRowKeydown(item, itemIndex, $event)"
           >
             <component
               :is="getCellComponent(field)"
@@ -171,8 +175,10 @@
           :abbr="field.headerAbbr"
           :style="field.thStyle"
           :variant="field.variant"
+          :tabindex="shouldHeaderBeFocusable(field) ? '0' : undefined"
           v-bind="callThAttr(null, field, 'bottom')"
           @click="headerClicked(field, $event, true)"
+          @keydown="handleHeaderKeydown(field, $event, true)"
         >
           <div class="d-inline-flex flex-nowrap align-items-center gap-1">
             <div>
@@ -210,7 +216,7 @@
 </template>
 
 <script setup lang="ts" generic="Items">
-import {computed, ref, watch} from 'vue'
+import {computed, inject, ref, watch} from 'vue'
 import type {BTableLiteProps} from '../../types/ComponentProps'
 import {
   isTableField,
@@ -237,6 +243,9 @@ import type {LiteralUnion} from '../../types/LiteralUnion'
 import {useId} from '../../composables/useId'
 import type {BTableLiteEmits} from '../../types/ComponentEmits'
 import type {BTableLiteSlots} from '../../types'
+import {CODE_DOWN, CODE_END, CODE_HOME, CODE_UP} from '../../utils/constants'
+import {stopEvent} from '../../utils/event'
+import {tableKeyboardNavigationKey} from '../../utils/keys'
 
 const _props = withDefaults(defineProps<BTableLiteProps<Items>>(), {
   caption: undefined,
@@ -284,6 +293,9 @@ const _props = withDefaults(defineProps<BTableLiteProps<Items>>(), {
 const props = useDefaults(_props, 'BTableLite')
 const emit = defineEmits<BTableLiteEmits<Items>>()
 const slots = defineSlots<BTableLiteSlots<Items>>()
+
+// Inject keyboard navigation state from parent BTable
+const keyboardNavigation = inject(tableKeyboardNavigationKey, null)
 
 const computedId = useId(() => props.id)
 
@@ -447,6 +459,70 @@ const getCellComponent = (field: Readonly<TableField>) => {
     return BTh
   }
   return BTd
+}
+
+// Keyboard navigation support
+const shouldHeaderBeFocusable = (field: TableField<Items>) =>
+  !!(keyboardNavigation?.headerNavigation.value && field.sortable === true)
+
+const shouldRowBeFocusable = computed(
+  () => !!(keyboardNavigation?.rowNavigation.value && props.items.length > 0)
+)
+
+const handleHeaderKeydown = (field: TableField<Items>, event: KeyboardEvent, isFooter = false) => {
+  const {code} = event
+
+  if (code === 'Enter' || code === 'Space') {
+    stopEvent(event)
+    headerClicked(field, event as unknown as MouseEvent, isFooter)
+  }
+}
+
+const handleRowKeydown = (item: Items, itemIndex: number, event: KeyboardEvent) => {
+  const {code, shiftKey} = event
+
+  if (code === 'Enter' || code === 'Space') {
+    stopEvent(event)
+    emit('row-clicked', item, itemIndex, event as unknown as MouseEvent)
+    return
+  }
+
+  if (code === CODE_DOWN || code === CODE_UP || code === CODE_HOME || code === CODE_END) {
+    stopEvent(event)
+    handleRowNavigation(code, shiftKey, itemIndex)
+  }
+}
+
+const handleRowNavigation = (code: string, shiftKey: boolean, currentIndex: number) => {
+  const rows = Array.from(
+    document.querySelectorAll(`#${computedId.value} tbody tr[tabindex]`)
+  ) as HTMLTableRowElement[]
+
+  if (rows.length === 0) return
+
+  let targetIndex = currentIndex
+
+  if (code === CODE_DOWN) {
+    if (shiftKey) {
+      targetIndex = rows.length - 1 // Go to last row
+    } else {
+      targetIndex = Math.min(currentIndex + 1, rows.length - 1) // Go to next row
+    }
+  } else if (code === CODE_UP) {
+    if (shiftKey) {
+      targetIndex = 0 // Go to first row
+    } else {
+      targetIndex = Math.max(currentIndex - 1, 0) // Go to previous row
+    }
+  } else if (code === CODE_END) {
+    targetIndex = rows.length - 1 // Go to last row
+  } else if (code === CODE_HOME) {
+    targetIndex = 0 // Go to first row
+  }
+
+  if (targetIndex !== currentIndex && rows[targetIndex]) {
+    rows[targetIndex].focus()
+  }
 }
 
 const computedSimpleProps = computed(() => ({
