@@ -77,6 +77,18 @@ templates/
 - `vitest.workspace.mjs` - Test workspace setup
 - `.github/workflows/ci.yaml` - CI pipeline
 
+## Documentation Requirements
+
+### Component Documentation (.data.ts files)
+- **CRITICAL**: When adding/modifying component props, events, or slots, ALWAYS update the corresponding `.data.ts` file in `apps/docs/src/data/components/`
+- Each component has a `.data.ts` file that defines:
+  - `props`: All component properties with types, defaults, and descriptions
+  - `emits`: All events with descriptions and argument types
+  - `slots`: All slots with descriptions and scope definitions
+- Documentation format must match TypeScript interfaces exactly
+- Use clear, concise descriptions that help users understand the purpose and usage
+- Example: `formSelect.data.ts` for BFormSelect, BFormSelectOption, BFormSelectOptionGroup
+
 ## Common Tasks
 
 ### Making Component Changes
@@ -85,6 +97,7 @@ templates/
 3. Run `pnpm --filter bootstrap-vue-next run dev` for hot-reload testing
 4. Run `pnpm --filter bootstrap-vue-next run test:unit:ci` to validate
 5. Run `pnpm --filter bootstrap-vue-next run test:lint` before committing
+6. **ALWAYS update documentation** in `apps/docs/src/data/components/*.data.ts` when adding/modifying props, events, or slots
 
 ### Testing Changes End-to-End
 1. Make changes in `packages/bootstrap-vue-next/`
@@ -97,6 +110,10 @@ templates/
 2. Add to `packages/bootstrap-vue-next/src/components/index.ts`
 3. Write tests following existing patterns (see `*.spec.ts` files)
 4. Update type definitions if needed
+5. **ALWAYS update documentation** in `apps/docs/src/data/components/*.data.ts` when:
+   - Adding new props, events, or slots to existing components
+   - Creating new components
+   - Modifying component interfaces
 
 ### Working with Styles
 - Main styles: `packages/bootstrap-vue-next/src/styles/styles.scss`
