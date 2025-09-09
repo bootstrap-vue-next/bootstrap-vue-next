@@ -16,7 +16,7 @@ import type {BButtonToolbarSlots} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BButtonToolbarProps} from '../../types/ComponentProps'
 import {computed, nextTick, useTemplateRef} from 'vue'
-import {CODE_DOWN, CODE_LEFT, CODE_RIGHT, CODE_UP} from '../../utils/constants'
+import {CODE_DOWN, CODE_END, CODE_HOME, CODE_LEFT, CODE_RIGHT, CODE_UP} from '../../utils/constants'
 import {stopEvent} from '../../utils/event'
 import {getActiveElement} from '../../utils/dom'
 
@@ -124,6 +124,12 @@ const handleKeyNav = (event: KeyboardEvent) => {
     } else {
       focusNext()
     }
+  } else if (code === CODE_HOME) {
+    stopEvent(event)
+    focusFirst()
+  } else if (code === CODE_END) {
+    stopEvent(event)
+    focusLast()
   }
 }
 </script>
