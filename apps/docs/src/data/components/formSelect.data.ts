@@ -148,11 +148,6 @@ export default {
           default: undefined,
           description: 'The label for the option group',
         },
-        selectedValue: {
-          type: 'unknown',
-          default: undefined,
-          description: 'The currently selected value to compare against option values. Used internally for SSR support',
-        },
       } satisfies PropRecord<keyof BFormSelectOptionGroupProps>,
       slots: {
         ...optionSlot,
