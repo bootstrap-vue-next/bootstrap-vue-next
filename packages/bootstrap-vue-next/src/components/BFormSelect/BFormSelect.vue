@@ -122,7 +122,7 @@ const localValue = computed({
 
 // Provide the current model value for child components to inject
 provide(formSelectKey, {
-  modelValue: computed(() => localValue.value),
+  modelValue: readonly(localValue),
 })
 
 defineExpose({
