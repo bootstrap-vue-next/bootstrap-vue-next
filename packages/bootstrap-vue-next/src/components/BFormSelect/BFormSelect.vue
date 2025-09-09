@@ -35,7 +35,7 @@
 
 <script setup lang="ts" generic="T">
 import type {BFormSelectProps} from '../../types/ComponentProps'
-import {computed, provide, useTemplateRef} from 'vue'
+import {computed, provide, readonly, useTemplateRef} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
 import {useAriaInvalid} from '../../composables/useAriaInvalid'
