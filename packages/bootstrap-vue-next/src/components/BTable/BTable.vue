@@ -156,7 +156,7 @@
 
 <script setup lang="ts" generic="Items">
 import {useToNumber} from '@vueuse/core'
-import {computed, onMounted, type Ref, ref, watch} from 'vue'
+import {computed, onMounted, provide, type Ref, ref, watch} from 'vue'
 import {formatItem} from '../../utils/formatItem'
 import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
@@ -188,6 +188,7 @@ import {
 } from '../../utils/tableUtils'
 import {useId} from '../../composables/useId'
 import type {BTableSlots, CamelCase} from '../../types'
+import {tableKeyboardNavigationKey} from '../../utils/keys'
 
 const _props = withDefaults(
   defineProps<Omit<BTableProps<Items>, 'sortBy' | 'busy' | 'selectedItems'>>(),
@@ -376,6 +377,15 @@ const isSortable = computed(
       (field) => typeof field === 'object' && field !== null && field.sortable === true
     )
 )
+
+// Provide keyboard navigation state to child components
+const keyboardRowNavigation = computed(() => !!(props.selectable && !props.noSelectOnClick))
+const keyboardHeaderNavigation = computed(() => !!isSortable.value)
+
+provide(tableKeyboardNavigationKey, {
+  rowNavigation: keyboardRowNavigation,
+  headerNavigation: keyboardHeaderNavigation,
+})
 
 const computedFields = computed<TableField<Items>[]>(() =>
   props.fields.map((el) => {
@@ -898,9 +908,6 @@ const computedLiteProps = computed(() => ({
   tbodyTrClass: getRowClasses,
   fieldColumnClass: getFieldColumnClasses,
   id: computedId.value,
-  // Enable keyboard navigation based on table features
-  _keyboardRowNavigation: !!(props.selectable && !props.noSelectOnClick),
-  _keyboardHeaderNavigation: !!isSortable.value,
   ...boundBTableLiteEmits,
 }))
 

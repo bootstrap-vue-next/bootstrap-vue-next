@@ -1156,9 +1156,6 @@ export interface BTableLiteProps<Items> extends BTableSimpleProps {
   tfootTrClass?: ClassValue
   theadClass?: ClassValue
   theadTrClass?: ClassValue
-  // Internal props for keyboard navigation
-  _keyboardRowNavigation?: boolean
-  _keyboardHeaderNavigation?: boolean
 }
 
 export interface BTableProps<Items> extends Omit<BTableLiteProps<Items>, 'tableClass'> {

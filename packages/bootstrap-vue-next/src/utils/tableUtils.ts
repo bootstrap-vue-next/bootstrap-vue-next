@@ -58,8 +58,6 @@ export const btableLiteProps = Object.freeze(
     tfootTrClass: 0,
     theadClass: 0,
     theadTrClass: 0,
-    _keyboardRowNavigation: 0,
-    _keyboardHeaderNavigation: 0,
   } satisfies Record<keyof Omit<BTableLiteProps<unknown>, keyof BTableSimpleProps>, 0>)
 ) as readonly (keyof Omit<BTableLiteProps<unknown>, keyof BTableSimpleProps>)[]
 

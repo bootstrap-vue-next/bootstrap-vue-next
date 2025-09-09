@@ -216,7 +216,7 @@
 </template>
 
 <script setup lang="ts" generic="Items">
-import {computed, ref, watch} from 'vue'
+import {computed, inject, ref, watch} from 'vue'
 import type {BTableLiteProps} from '../../types/ComponentProps'
 import {
   isTableField,
@@ -245,6 +245,7 @@ import type {BTableLiteEmits} from '../../types/ComponentEmits'
 import type {BTableLiteSlots} from '../../types'
 import {CODE_DOWN, CODE_END, CODE_HOME, CODE_UP} from '../../utils/constants'
 import {stopEvent} from '../../utils/event'
+import {tableKeyboardNavigationKey} from '../../utils/keys'
 
 const _props = withDefaults(defineProps<BTableLiteProps<Items>>(), {
   caption: undefined,
@@ -268,8 +269,6 @@ const _props = withDefaults(defineProps<BTableLiteProps<Items>>(), {
   tfootTrClass: undefined,
   theadClass: undefined,
   theadTrClass: undefined,
-  _keyboardRowNavigation: false,
-  _keyboardHeaderNavigation: false,
   // BTableSimpleProps props
   borderVariant: undefined,
   tableClass: undefined,
@@ -294,6 +293,12 @@ const _props = withDefaults(defineProps<BTableLiteProps<Items>>(), {
 const props = useDefaults(_props, 'BTableLite')
 const emit = defineEmits<BTableLiteEmits<Items>>()
 const slots = defineSlots<BTableLiteSlots<Items>>()
+
+// Inject keyboard navigation state from parent BTable
+const keyboardNavigation = inject(tableKeyboardNavigationKey, {
+  rowNavigation: ref(false),
+  headerNavigation: ref(false),
+})
 
 const computedId = useId(() => props.id)
 
@@ -461,10 +466,10 @@ const getCellComponent = (field: Readonly<TableField>) => {
 
 // Keyboard navigation support
 const shouldHeaderBeFocusable = (field: TableField<Items>) =>
-  !!(props._keyboardHeaderNavigation && field.sortable === true)
+  !!(keyboardNavigation.headerNavigation.value && field.sortable === true)
 
 const shouldRowBeFocusable = computed(
-  () => !!(props._keyboardRowNavigation && props.items.length > 0)
+  () => !!(keyboardNavigation.rowNavigation.value && props.items.length > 0)
 )
 
 const handleHeaderKeydown = (field: TableField<Items>, event: KeyboardEvent, isFooter = false) => {
