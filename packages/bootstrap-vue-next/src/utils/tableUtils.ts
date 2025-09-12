@@ -53,6 +53,8 @@ export const btableLiteProps = Object.freeze(
     primaryKey: 0,
     tbodyClass: 0,
     tbodyTrAttrs: 0,
+    tbodyTransitionHandlers: 0,
+    tbodyTransitionProps: 0,
     tbodyTrClass: 0,
     tfootClass: 0,
     tfootTrClass: 0,
