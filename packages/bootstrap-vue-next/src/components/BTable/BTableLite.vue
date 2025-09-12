@@ -470,7 +470,9 @@ const shouldRowBeFocusable = computed(
 )
 
 const handleHeaderKeydown = (field: TableField<Items>, event: KeyboardEvent, isFooter = false) => {
-  const {code} = event
+  const {target, code} = event
+
+  if (target && (target as Element).tagName !== 'TH' && document.activeElement === target) return
 
   if (code === 'Enter' || code === 'Space') {
     stopEvent(event)
@@ -479,7 +481,9 @@ const handleHeaderKeydown = (field: TableField<Items>, event: KeyboardEvent, isF
 }
 
 const handleRowKeydown = (item: Items, itemIndex: number, event: KeyboardEvent) => {
-  const {code, shiftKey} = event
+  const {target, code, shiftKey} = event
+
+  if (target && (target as Element).tagName !== 'TR' && document.activeElement === target) return
 
   if (code === 'Enter' || code === 'Space') {
     stopEvent(event)
