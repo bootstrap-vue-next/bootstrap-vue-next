@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.40.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.2...bootstrapvuenext-v0.40.3) (2025-09-12)
+
+
+### Bug Fixes
+
+* **BTable:** events being wrongly stopped when sent from elements inside TRs ([#2841](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2841)) ([ee8b0f7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ee8b0f71c8594de058bba2ef5d6ed2d2b034abf9))
+
 ## [0.40.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.1...bootstrapvuenext-v0.40.2) (2025-09-09)
 
 
