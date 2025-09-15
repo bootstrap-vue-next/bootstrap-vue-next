@@ -359,7 +359,17 @@ watch(activeIndex, (newValue, oldValue) => {
     isReverting = false
     return
   }
-  // Calculate the next valid index
+  
+  // If the new value is valid (within bounds and not disabled), don't correct it
+  if (newValue >= 0 && newValue < tabs.value.length && !tabs.value[newValue]?.disabled) {
+    // The index is valid, let it be
+    if (activeId.value !== tabs.value[newValue]?.id) {
+      activeId.value = tabs.value[newValue]?.id
+    }
+    return
+  }
+  
+  // Calculate the next valid index only if the current value is invalid
   const index = nextIndex(newValue, newValue > oldValue ? 1 : -1)
   if (index !== newValue) {
     // If the index is not the same as the new value, set the previous index to the old value
@@ -419,11 +429,14 @@ watch(activeId, (newValue, oldValue) => {
   }
   // If the new tab is not found, find the first enabled tab
   if (index === -1) {
-    // activeIndex watcher will update the activeId to the first enabled tab
-    activeIndex.value = nextIndex(0, 1)
-    nextTick(() => {
-      activeId.value = tabs.value[activeIndex.value]?.id
-    })
+    // Only reset to first enabled tab if we don't have a valid activeIndex already
+    if (activeIndex.value < 0 || activeIndex.value >= tabs.value.length || tabs.value[activeIndex.value]?.disabled) {
+      // activeIndex watcher will update the activeId to the first enabled tab
+      activeIndex.value = nextIndex(0, 1)
+      nextTick(() => {
+        activeId.value = tabs.value[activeIndex.value]?.id
+      })
+    }
     return
   }
   // change to the next tab

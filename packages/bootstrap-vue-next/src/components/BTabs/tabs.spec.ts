@@ -608,7 +608,7 @@ describe('tabs', () => {
   it('respects initial index when tabs do not have id props', async () => {
     const TestComponent = {
       template: `
-        <BTabs v-model:index="currentIndex" @update:index="onIndexUpdate">
+        <BTabs v-model:index="currentIndex">
           <BTab title="First Tab">First content</BTab>
           <BTab title="Second Tab">Second content</BTab>
           <BTab title="Third Tab">Third content</BTab>
@@ -619,12 +619,6 @@ describe('tabs', () => {
           currentIndex: 2 // Should start with the third tab active
         }
       },
-      methods: {
-        onIndexUpdate(newIndex) {
-          console.log('Index updated from', this.currentIndex, 'to', newIndex)
-          this.currentIndex = newIndex
-        }
-      },
       components: {
         BTabs,
         BTab
@@ -633,11 +627,8 @@ describe('tabs', () => {
 
     const wrapper = mount(TestComponent)
     
-    console.log('Test Debug - currentIndex:', wrapper.vm.currentIndex)
-    
     // Wait for the component to be fully initialized
     await wrapper.vm.$nextTick()
-    console.log('Test Debug - after nextTick - currentIndex:', wrapper.vm.currentIndex)
     
     // The model should maintain the initial value of 2
     expect(wrapper.vm.currentIndex).toBe(2)
