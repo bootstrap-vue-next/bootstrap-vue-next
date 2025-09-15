@@ -604,4 +604,36 @@ describe('tabs', () => {
     expect(wrapper.vm.index).toBe(1)
     expect(wrapper.vm.id).toBe('i2')
   })
+
+  it('respects initial index when tabs do not have id props', async () => {
+    const TestComponent = {
+      template: `
+        <BTabs v-model:index="currentIndex">
+          <BTab title="First Tab">First content</BTab>
+          <BTab title="Second Tab">Second content</BTab>
+          <BTab title="Third Tab">Third content</BTab>
+        </BTabs>
+      `,
+      data() {
+        return {
+          currentIndex: 2 // Should start with the third tab active
+        }
+      },
+      components: {
+        BTabs,
+        BTab
+      }
+    }
+
+    const wrapper = mount(TestComponent)
+    
+    // The model should maintain the initial value of 2
+    expect(wrapper.vm.currentIndex).toBe(2)
+    
+    // The third tab button (index 2) should be active
+    const buttons = wrapper.findAll('button')
+    expect(buttons[0].classes()).not.toContain('active')
+    expect(buttons[1].classes()).not.toContain('active') 
+    expect(buttons[2].classes()).toContain('active')
+  })
 })
