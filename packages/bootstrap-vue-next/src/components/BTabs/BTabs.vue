@@ -136,6 +136,9 @@ const activeId = defineModel<BTabsProps['modelValue']>({
   default: undefined,
 })
 
+// Track if an initial index was provided by checking if the model has a non-default value
+const hasInitialIndex = computed(() => activeIndex.value !== -1)
+
 const ReusableEmptyTab = createReusableTemplate()
 
 const tabsInternal = ref<Ref<TabType>[]>([])
@@ -186,7 +189,7 @@ const tabs = computed(() => {
       const active =
         _activeIndex !== -1
           ? index === _activeIndex
-          : activeIndex.value > -1
+          : hasInitialIndex.value
             ? index === activeIndex.value
             : index === 0
       return {
@@ -246,17 +249,6 @@ if (activeIndex.value === -1 && activeId.value) {
   } else {
     updateInitialActiveId = true
   }
-} else if (activeIndex.value === -1 && !activeId.value && !isChildActive.value) {
-  activeIndex.value = tabs.value.findIndex((t) => t.disabled === undefined || t.disabled === false)
-  activeId.value = tabs.value[activeIndex.value]?.id
-} else if (activeIndex.value === -1 && !activeId.value && isChildActive.value) {
-  activeIndex.value = tabs.value.findIndex(
-    (t) =>
-      t.active !== undefined &&
-      t.active !== false &&
-      (t.disabled === undefined || t.disabled === false)
-  )
-  activeId.value = tabs.value[activeIndex.value]?.id
 }
 
 function updateInitialIndexAndId() {
@@ -461,6 +453,30 @@ const registerTab = (tab: Ref<TabType>) => {
 onMounted(() => {
   updateInitialIndexAndId()
   sortTabs()
+  
+  // Defer initialization to next tick to allow v-model to settle
+  nextTick(() => {
+    // Only initialize defaults if both index and id are unset/invalid
+    if (activeIndex.value < 0 && !activeId.value && !isChildActive.value && tabs.value.length > 0) {
+      const firstEnabledIndex = tabs.value.findIndex((t) => t.disabled === undefined || t.disabled === false)
+      if (firstEnabledIndex >= 0) {
+        activeIndex.value = firstEnabledIndex
+        activeId.value = tabs.value[firstEnabledIndex]?.id
+      }
+    } else if (activeIndex.value < 0 && !activeId.value && isChildActive.value) {
+      const activeChildIndex = tabs.value.findIndex(
+        (t) =>
+          t.active !== undefined &&
+          t.active !== false &&
+          (t.disabled === undefined || t.disabled === false)
+      )
+      if (activeChildIndex >= 0) {
+        activeIndex.value = activeChildIndex
+        activeId.value = tabs.value[activeChildIndex]?.id
+      }
+    }
+  })
+  
   initialized = true
 })
 
