@@ -136,9 +136,6 @@ const activeId = defineModel<BTabsProps['modelValue']>({
   default: undefined,
 })
 
-// Track if an initial index was provided by checking if the model has a non-default value
-const hasInitialIndex = computed(() => activeIndex.value !== -1)
-
 const ReusableEmptyTab = createReusableTemplate()
 
 const tabsInternal = ref<Ref<TabType>[]>([])
@@ -430,9 +427,9 @@ watch(activeId, (newValue, oldValue) => {
   }
   // If the new tab is not found, find the first enabled tab
   if (index === -1) {
-    // Only reset to first enabled tab if we don't have a valid activeIndex already
-    // Don't reset if user provided an initial index that should be respected
-    if (!hasInitialIndex.value && (activeIndex.value < 0 || activeIndex.value >= tabs.value.length || tabs.value[activeIndex.value]?.disabled)) {
+    // Only reset if we don't already have a positive activeIndex
+    // This preserves user-provided initial indices
+    if (activeIndex.value < 0 || activeIndex.value === undefined) {
       // activeIndex watcher will update the activeId to the first enabled tab
       activeIndex.value = nextIndex(0, 1)
       nextTick(() => {
