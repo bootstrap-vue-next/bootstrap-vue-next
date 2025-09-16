@@ -189,7 +189,7 @@ const tabs = computed(() => {
       const active =
         _activeIndex !== -1
           ? index === _activeIndex
-          : hasInitialIndex.value
+          : activeIndex.value > -1
             ? index === activeIndex.value
             : index === 0
       return {
@@ -249,6 +249,17 @@ if (activeIndex.value === -1 && activeId.value) {
   } else {
     updateInitialActiveId = true
   }
+} else if (activeIndex.value === -1 && !activeId.value && !isChildActive.value) {
+  activeIndex.value = tabs.value.findIndex((t) => t.disabled === undefined || t.disabled === false)
+  activeId.value = tabs.value[activeIndex.value]?.id
+} else if (activeIndex.value === -1 && !activeId.value && isChildActive.value) {
+  activeIndex.value = tabs.value.findIndex(
+    (t) =>
+      t.active !== undefined &&
+      t.active !== false &&
+      (t.disabled === undefined || t.disabled === false)
+  )
+  activeId.value = tabs.value[activeIndex.value]?.id
 }
 
 function updateInitialIndexAndId() {
@@ -359,17 +370,7 @@ watch(activeIndex, (newValue, oldValue) => {
     isReverting = false
     return
   }
-  
-  // If the new value is valid (within bounds and not disabled), don't correct it
-  if (newValue >= 0 && newValue < tabs.value.length && !tabs.value[newValue]?.disabled) {
-    // The index is valid, let it be
-    if (activeId.value !== tabs.value[newValue]?.id) {
-      activeId.value = tabs.value[newValue]?.id
-    }
-    return
-  }
-  
-  // Calculate the next valid index only if the current value is invalid
+  // Calculate the next valid index
   const index = nextIndex(newValue, newValue > oldValue ? 1 : -1)
   if (index !== newValue) {
     // If the index is not the same as the new value, set the previous index to the old value
@@ -430,7 +431,8 @@ watch(activeId, (newValue, oldValue) => {
   // If the new tab is not found, find the first enabled tab
   if (index === -1) {
     // Only reset to first enabled tab if we don't have a valid activeIndex already
-    if (activeIndex.value < 0 || activeIndex.value >= tabs.value.length || tabs.value[activeIndex.value]?.disabled) {
+    // Don't reset if user provided an initial index that should be respected
+    if (!hasInitialIndex.value && (activeIndex.value < 0 || activeIndex.value >= tabs.value.length || tabs.value[activeIndex.value]?.disabled)) {
       // activeIndex watcher will update the activeId to the first enabled tab
       activeIndex.value = nextIndex(0, 1)
       nextTick(() => {
@@ -466,30 +468,6 @@ const registerTab = (tab: Ref<TabType>) => {
 onMounted(() => {
   updateInitialIndexAndId()
   sortTabs()
-  
-  // Defer initialization to next tick to allow v-model to settle
-  nextTick(() => {
-    // Only initialize defaults if both index and id are unset/invalid
-    if (activeIndex.value < 0 && !activeId.value && !isChildActive.value && tabs.value.length > 0) {
-      const firstEnabledIndex = tabs.value.findIndex((t) => t.disabled === undefined || t.disabled === false)
-      if (firstEnabledIndex >= 0) {
-        activeIndex.value = firstEnabledIndex
-        activeId.value = tabs.value[firstEnabledIndex]?.id
-      }
-    } else if (activeIndex.value < 0 && !activeId.value && isChildActive.value) {
-      const activeChildIndex = tabs.value.findIndex(
-        (t) =>
-          t.active !== undefined &&
-          t.active !== false &&
-          (t.disabled === undefined || t.disabled === false)
-      )
-      if (activeChildIndex >= 0) {
-        activeIndex.value = activeChildIndex
-        activeId.value = tabs.value[activeChildIndex]?.id
-      }
-    }
-  })
-  
   initialized = true
 })
 
