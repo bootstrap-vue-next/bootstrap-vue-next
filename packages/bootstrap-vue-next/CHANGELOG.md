@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.40.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.3...bootstrapvuenext-v0.40.4) (2025-09-16)
+
+
+### Bug Fixes
+
+* **BOrchestrator:** fix transition delay. ([af49d33](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/af49d333a6cb881aa7126e9e2a8741017fad630e))
+
 ## [0.40.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.2...bootstrapvuenext-v0.40.3) (2025-09-12)
 
 
