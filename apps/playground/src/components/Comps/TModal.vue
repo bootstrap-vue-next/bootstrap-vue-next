@@ -121,5 +121,17 @@ const showFns = {
   //     component: import('./MyModalComponent.vue'),
   //   })
   // },
+  customComponentTest: () => {
+    // Test that custom components no longer produce reactive warnings
+    const TestComponent = {
+      name: 'InlineTestComponent',
+      template: '<div class="p-3">This is a test custom component that should not produce reactive warnings!</div>'
+    }
+    create({
+      component: TestComponent,
+      title: 'Custom Component Test (No Warning)',
+      size: 'lg'
+    }).show()
+  },
 }
 </script>
