@@ -41,6 +41,13 @@ describe('rating', () => {
     expect(wrapper.emitted('update:modelValue')![0]).toEqual([1])
   })
 
+  it('does not emit update:modelValue when disabled and star is clicked', async () => {
+    const wrapper = mount(BFormRating, {props: {disabled: true}})
+    const [firstStar] = wrapper.findAll('.star')
+    await firstStar.trigger('click')
+    expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+  })
+
   it('shows current value', () => {
     const wrapper = mount(BFormRating, {
       props: {
@@ -163,6 +170,12 @@ describe('rating', () => {
     expect(wrapper.emitted('update:modelValue')).toBeFalsy()
   })
 
+  it('keyboard navigation does not work in disabled mode', async () => {
+    const wrapper = mount(BFormRating, {props: {modelValue: 2, disabled: true}})
+    await wrapper.trigger('keydown', {key: 'ArrowRight'})
+    expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+  })
+
   // Precision Tests
   it('shows value with precision', () => {
     const wrapper = mount(BFormRating, {
@@ -197,6 +210,22 @@ describe('rating', () => {
     expect(wrapper.attributes('aria-valuemin')).toBe('0')
     expect(wrapper.attributes('aria-valuemax')).toBe('5')
     expect(wrapper.attributes('aria-valuenow')).toBe('3')
+  })
+
+  it('has proper ARIA attributes when disabled', () => {
+    const wrapper = mount(BFormRating, {props: {modelValue: 3, stars: 5, disabled: true}})
+    expect(wrapper.attributes('role')).toBe('slider')
+    expect(wrapper.attributes('aria-valuemin')).toBe('0')
+    expect(wrapper.attributes('aria-valuemax')).toBe('5')
+    expect(wrapper.attributes('aria-valuenow')).toBe('3')
+    expect(wrapper.attributes('aria-disabled')).toBe('true')
+    expect(wrapper.attributes('tabindex')).toBe('-1')
+  })
+
+  it('does not have aria-disabled when not disabled', () => {
+    const wrapper = mount(BFormRating, {props: {modelValue: 3, stars: 5, disabled: false}})
+    expect(wrapper.attributes('aria-disabled')).toBeUndefined()
+    expect(wrapper.attributes('tabindex')).toBe('0')
   })
 
   it('applies correct classes when inline prop is used', () => {
@@ -256,6 +285,15 @@ it('uses #icon-clear slot content when provided', async () => {
 it('does not render clear when readonly is true', () => {
   const wrapper = mount(BFormRating, {
     props: {showClear: true, readonly: true},
+    slots: {'icon-clear': '<span id="slot-should-not-render">X</span>'},
+  })
+  expect(wrapper.find('.clear-button-spacing').exists()).toBe(false)
+  expect(wrapper.find('#slot-should-not-render').exists()).toBe(false)
+})
+
+it('does not render clear when disabled is true', () => {
+  const wrapper = mount(BFormRating, {
+    props: {showClear: true, disabled: true},
     slots: {'icon-clear': '<span id="slot-should-not-render">X</span>'},
   })
   expect(wrapper.find('.clear-button-spacing').exists()).toBe(false)

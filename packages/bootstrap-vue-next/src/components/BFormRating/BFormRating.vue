@@ -7,7 +7,8 @@
     :aria-valuemax="clampedStars"
     :aria-valuenow="displayValue"
     :aria-valuetext="`${displayValue} of ${clampedStars}`"
-    tabindex="0"
+    :aria-disabled="props.disabled || undefined"
+    :tabindex="props.disabled ? -1 : 0"
     @keydown="onKeydown"
   >
     <span
