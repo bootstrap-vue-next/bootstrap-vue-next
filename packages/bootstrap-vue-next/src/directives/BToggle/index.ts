@@ -62,7 +62,8 @@ const handleUpdate = (
 
   targets.forEach(async (targetId) => {
     let count = 0
-    while (count < 5) {
+    // Keep looking until showHide is found, giving up after 400ms or directive is unmounted
+    while (count < 5 && (el as HTMLElement).dataset.bvtoggle) {
       const showHide = showHideMap?.value.get(targetId)
       if (!showHide) {
         count++
