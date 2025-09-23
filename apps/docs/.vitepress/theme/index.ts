@@ -3,6 +3,7 @@ import Layout from './Layout.vue'
 import type {EnhanceAppContext, Theme} from 'vitepress'
 import DefaultTheme from 'vitepress/theme-without-fonts'
 import {appInfoKey} from './keys'
+import {nextTick} from 'vue'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
@@ -30,5 +31,38 @@ export default {
       discordUrl: 'https://discord.gg/j2Mtcny',
       opencollectiveUrl: 'https://opencollective.com/bootstrap-vue-next',
     })
+
+    // Prevent href="#" links from scrolling to top in documentation examples
+    if (typeof window !== 'undefined') {
+      // Replace href="#" with href="javascript:void(0)" to prevent scrolling
+      const replaceHashHrefs = () => {
+        document.querySelectorAll('a[href="#"]').forEach((link) => {
+          link.setAttribute('href', 'javascript:void(0)')
+        })
+      }
+
+      // Replace immediately after DOM is ready
+      nextTick(() => {
+        replaceHashHrefs()
+
+        // Watch for Vue updates that might add new links
+        const observer = new MutationObserver((mutations) => {
+          let shouldReplace = false
+          mutations.forEach((mutation) => {
+            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+              shouldReplace = true
+            }
+          })
+          if (shouldReplace) {
+            replaceHashHrefs()
+          }
+        })
+
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true,
+        })
+      })
+    }
   },
 } satisfies Theme

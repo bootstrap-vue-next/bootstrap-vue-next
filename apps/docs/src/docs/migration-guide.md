@@ -575,6 +575,14 @@ Bootstrap Vue used `Vue Router 3`, BootstrapVueNext uses [`Vue Router 4`](https:
 
 `BLink` no longer supresses the scroll to top default behavior when `href='#'`.
 
+::: tip Documentation Site Workaround
+This documentation site implements a workaround to prevent `href="#"` links from scrolling to the top for a better user experience when viewing component examples. The workaround replaces `href="#"` with `href="javascript:void(0)"` automatically. In your own applications, you may want to:
+
+- Add your own click event handlers with `preventDefault()` if needed
+- Use `href="javascript:void(0)"` instead of `href="#"` for non-navigating links
+- Consider using `role="button"` with `tabindex="0"` for non-link interactive elements
+  :::
+
 #### append
 
 Vue router deprecated the `append` prop in `<router-link>`, BootstrapVueNext has followed suit and deprecated the `append`
