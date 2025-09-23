@@ -47,12 +47,9 @@ export default {
 
         // Watch for Vue updates that might add new links
         const observer = new MutationObserver((mutations) => {
-          let shouldReplace = false
-          mutations.forEach((mutation) => {
-            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-              shouldReplace = true
-            }
-          })
+          const shouldReplace = mutations.some(
+            (mutation) => mutation.type === 'childList' && mutation.addedNodes.length > 0
+          )
           if (shouldReplace) {
             replaceHashHrefs()
           }
