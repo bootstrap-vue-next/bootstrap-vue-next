@@ -578,9 +578,10 @@ Bootstrap Vue used `Vue Router 3`, BootstrapVueNext uses [`Vue Router 4`](https:
 ::: tip Documentation Site Workaround
 This documentation site implements a workaround to prevent `href="#"` links from scrolling to the top for a better user experience when viewing component examples. The workaround replaces `href="#"` with `href="javascript:void(0)"` automatically. In your own applications, you may want to:
 
-- Add your own click event handlers with `preventDefault()` if needed
-- Use `href="javascript:void(0)"` instead of `href="#"` for non-navigating links
+- Add your own click event handlers with `.prevent` or `preventDefault()` if needed
+- Prefer a `<button type="button">` for non‑navigation actions.
 - Consider using `role="button"` with `tabindex="0"` for non-link interactive elements
+- Use `href="javascript:void(0)"` instead of `href="#"` for non-navigating links
   :::
 
 #### append
