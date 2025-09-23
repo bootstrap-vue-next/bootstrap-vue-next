@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.40.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.4...bootstrapvuenext-v0.40.5) (2025-09-23)
+
+
+### Bug Fixes
+
+* **BToggle:** stop looking for missing targets after directive is unmounted ([#2857](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2857)) ([b358449](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b3584492cad4c9ebeb37836cfd45aef878755249))
+
 ## [0.40.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.3...bootstrapvuenext-v0.40.4) (2025-09-16)
 
 
