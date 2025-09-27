@@ -5,7 +5,7 @@
     variant="dark"
   >
     <BNavbarNav>
-      <BNavItem href="#">Home</BNavItem>
+      <BNavItem href="#navbar-item-dropdown">Home</BNavItem>
       <BNavItemDropdown
         text="Lang"
         right

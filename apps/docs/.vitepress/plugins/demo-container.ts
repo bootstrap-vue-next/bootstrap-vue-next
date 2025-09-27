@@ -41,10 +41,14 @@ export const demoContainer = (md: MarkdownRenderer, srcDir: string) => {
     const {filepath, extension, region, lines, lang, title} = rawPathToToken(rawPath)
     const component = isDemo ? `<${title.substring(0, title.indexOf('.'))}/>` : ''
 
+    // Generate kebab-case ID from filename (without extension)
+    const filename = title.substring(0, title.lastIndexOf('.') || title.length)
+    const kebabCaseId = filename.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
+
     state.line += 1
 
     const prefixToken = state.push('html_block', '', 0)
-    prefixToken.content = `<HighlightCard>${component}<template #html>`
+    prefixToken.content = `<HighlightCard id="${kebabCaseId}">${component}<template #html>`
 
     const codeToken = state.push('fence', 'code', 0)
     codeToken.info = `${lang || extension}${lines ? `{${lines}}` : ''}${title ? `[${title}]` : ''}`
@@ -52,7 +56,7 @@ export const demoContainer = (md: MarkdownRenderer, srcDir: string) => {
     const {realPath, path: _path} = state.env as MarkdownEnv
     const resolvedPath = path.resolve(path.dirname(realPath ?? _path), filepath)
 
-    // @ts-ignore
+    // @ts-expect-error - property 'src' does not exist on type 'Token'
     codeToken.src = [resolvedPath, region.slice(1)]
     codeToken.markup = '```'
     codeToken.map = [startLine, startLine + 1]

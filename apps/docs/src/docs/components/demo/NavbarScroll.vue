@@ -6,16 +6,16 @@
     variant="primary"
     class="navbar-nav-scroll"
   >
-    <BNavbarBrand href="#">NavBar</BNavbarBrand>
+    <BNavbarBrand href="#navbar-scroll">NavBar</BNavbarBrand>
     <BNavbarToggle target="nav-scroll" />
     <BCollapse
       id="nav-scroll"
       is-nav
     >
       <BNavbarNav>
-        <BNavItem href="#">Link</BNavItem>
+        <BNavItem href="#navbar-scroll">Link</BNavItem>
         <BNavItem
-          href="#"
+          href="#navbar-scroll"
           disabled
           >Disabled</BNavItem
         >

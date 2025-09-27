@@ -5,7 +5,7 @@
     :toggleable="true"
     variant="primary"
   >
-    <BNavbarBrand href="#">NavBar</BNavbarBrand>
+    <BNavbarBrand href="#navbar-offcanvas">NavBar</BNavbarBrand>
     <BNavbarToggle target="nav-offcanvas" />
     <BOffcanvas
       id="nav-offcanvas"
@@ -14,9 +14,9 @@
       is-nav
     >
       <BNavbarNav>
-        <BNavItem href="#">Link</BNavItem>
+        <BNavItem href="#navbar-offcanvas">Link</BNavItem>
         <BNavItem
-          href="#"
+          href="#navbar-offcanvas"
           disabled
           >Disabled</BNavItem
         >

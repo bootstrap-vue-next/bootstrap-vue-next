@@ -5,16 +5,16 @@
     toggleable="lg"
     variant="primary"
   >
-    <BNavbarBrand href="#">NavBar</BNavbarBrand>
+    <BNavbarBrand href="#navbar-overview">NavBar</BNavbarBrand>
     <BNavbarToggle target="nav-collapse" />
     <BCollapse
       id="nav-collapse"
       is-nav
     >
       <BNavbarNav>
-        <BNavItem href="#">Link</BNavItem>
+        <BNavItem href="#navbar-overview">Link</BNavItem>
         <BNavItem
-          href="#"
+          href="#navbar-overview"
           disabled
           >Disabled</BNavItem
         >
