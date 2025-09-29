@@ -1,6 +1,7 @@
 export {useBreadcrumb} from './useBreadcrumb'
 export {useColorMode} from './useColorMode'
 export {useModal, useModalController} from './useModal'
+export {useScrollLock} from './useScrollLock'
 export {useScrollspy} from './useScrollspy'
 export {useToast, useToastController} from './useToast'
 export {useToggle} from './useToggle'
