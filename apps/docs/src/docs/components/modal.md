@@ -256,77 +256,33 @@ The scope available to the slots that support optional scoping are:
 
 ## Multiple Modal Support
 
-<HighlightCard>
-  <BButton @click="nestedModal1 = !nestedModal1">Open First Modal</BButton>
-  <BModal v-model="nestedModal1" size="lg" title="First Modal" ok-only no-stacking>
-    <p class="my-2">First Modal</p>
-    <BButton @click="nestedModal2 = !nestedModal2">Open Second Modal</BButton>
-  </BModal>
-  <BModal v-model="nestedModal2" title="Second Modal" ok-only>
-    <p class="my-2">Second Modal</p>
-    <BButton @click="nestedModal3 = !nestedModal3" size="sm">Open Third Modal</BButton>
-  </BModal>
-  <BModal v-model="nestedModal3" size="sm" title="Third Modal" ok-only>
-    <p class="my-1">Third Modal</p>
-    <BButton @click="nestedModal4 = !nestedModal4" size="sm">Open Fouth Modal</BButton>
-  </BModal>
-  <BModal v-model="nestedModal4" size="sm" title="Fourth Modal" ok-only>
-    <p class="my-1">Fourth Modal</p>
-  </BModal>
-  <template #html>
+BootstrapVueNext supports multiple modals opened at the same time with automatic stacking management.
 
-```vue
-<template>
-  <BButton @click="nestedModal1 = !nestedModal1">Open First Modal</BButton>
+To disable stacking for a specific modal, set the `no-stacking` prop on the `<BModal>`
+component. This will hide the modal before another modal is shown.
 
-  <BModal v-model="nestedModal1" size="lg" title="First Modal" ok-only no-stacking>
-    <p class="my-2">First Modal</p>
-    <BButton @click="nestedModal2 = !nestedModal2">Open Second Modal</BButton>
-  </BModal>
+<<< DEMO ./demo/ModalMultipleSupport.vue
 
-  <BModal v-model="nestedModal2" title="Second Modal" ok-only>
-    <p class="my-2">Second Modal</p>
-    <BButton @click="nestedModal3 = !nestedModal3" size="sm">Open Third Modal</BButton>
-  </BModal>
+### Modal Stacking Behavior
 
-  <BModal v-model="nestedModal3" size="sm" title="Third Modal" ok-only>
-    <p class="my-1">Third Modal</p>
-    <BButton @click="nestedModal4 = !nestedModal4" size="sm">Open Fouth Modal</BButton>
-  </BModal>
-  <BModal v-model="nestedModal4" size="sm" title="Fourth Modal" ok-only>
-    <p class="my-1">Fourth Modal</p>
-  </BModal>
-</template>
+- **Automatic Z-Index Management**: BootstrapVueNext automatically manages z-index values for stacked modals
+- **CSS Variables**: The system uses CSS variables (`--b-count`, `--b-position`) for positioning and styling
+- **Visual Offset**: Each modal is slightly offset from the previous one for visual clarity
+- **Backdrop Management**: Only the topmost modal's backdrop is fully opaque
 
-<script setup lang="ts">
-const nestedModal1 = ref(false)
-const nestedModal2 = ref(false)
-const nestedModal3 = ref(false)
-const nestedModal4 = ref(false)
-</script>
-<style>
-/* just a little example of the variables and classes for stack */
-.modal {
-  --bs-modal-zindex: 1900;
-  transform: translate(
-    calc((var(--b-count, 0) - var(--b-position, 0)) * 20px),
-    calc((var(--b-count, 0) - var(--b-position, 0)) * 20px)
-  );
-  transition:
-    transform 0.5s,
-    opacity 0.15s linear !important;
-}
-.modal:not(.stack-inverse-position-0) {
-  opacity: calc(1 - ((var(--b-count, 0) - var(--b-position, 0)) * 0.1));
-}
-.modal-backdrop:not(.stack-inverse-position-0) {
-  opacity: 0 !important;
-}
-</style>
-```
+### Stacking CSS Variables
 
-  </template>
-</HighlightCard>
+BootstrapVueNext provides CSS variables that you can use to customize stacked modal appearance:
+
+- `--b-count`: Total number of active modals
+- `--b-position`: Position of the current modal in the stack (0-based)
+- `--b-inverse-position`: Inverse position for reverse calculations
+
+**Notes:**
+
+- Avoid nesting a `<BModal>` _inside_ another `<BModal>`, as it may be constrained to the boundaries of the parent modal dialog
+- The backdrop opacity is automatically adjusted for better visual hierarchy
+- Use `no-stacking` prop to prevent a modal from participating in the stacking system
 
 ## Programmatically Control
 
@@ -359,25 +315,7 @@ const preventFn = (e: Event) => {
     e.preventDefault()
 }
 
-const nestedModal1 = ref(false)
-const nestedModal2 = ref(false)
-const nestedModal3 = ref(false)
-const nestedModal4 = ref(false)
 </script>
 
 <style>
-.modal {
-  --bs-modal-zindex: 1900;
-  transform: translate(
-    calc((var(--b-count, 0) - var(--b-position, 0)) * 20px),
-    calc((var(--b-count, 0) - var(--b-position, 0)) * 20px)
-  );
-  transition: transform 0.5s, opacity 0.15s linear !important;
-}
-.modal:not(.stack-inverse-position-0) {
-  opacity: calc(1 - ((var(--b-count, 0) - var(--b-position, 0)) * 0.1));
-}
-.modal-backdrop:not(.stack-inverse-position-0) {
-  opacity: 0 !important;
-}
 </style>
