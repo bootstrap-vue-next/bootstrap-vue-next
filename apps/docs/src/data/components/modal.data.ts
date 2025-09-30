@@ -50,6 +50,9 @@ export default {
               type: "Size | 'xl'",
               description: "Sets the modal's width. Options: 'sm', 'md' (default), 'lg', or 'xl'",
             },
+            titleTag: {
+              default: 'h5',
+            },
           }),
           [
             'body',
@@ -78,12 +81,6 @@ export default {
             'titleTag',
           ]
         ),
-        focus: {
-          type: "'ok' | 'cancel' | 'close' | string | ComponentPublicInstance | HTMLElement | null",
-          default: undefined,
-          description:
-            "Specify where to focus once modal opens. Can be built-in button: 'ok', 'cancel', or 'close'. Can be ref, HTMLElement, ID, or selector string. If set to 'false', no focus will be set (if noTrap isn't set, the focus trap will focus the modal element or fallback element). If set to a string, the element with that ID will be focused. If set to a ComponentPublicInstance, the $el property of the instance will be focused.",
-        },
         backdropFirst: {
           type: 'boolean',
           default: false, // TODO item not in string format
@@ -104,7 +101,7 @@ export default {
         buttonSize: {
           type: 'Size',
           default: 'md',
-          // TODO missing description
+          description: "Size of the built in footer buttons: 'sm', 'md' (default), or 'lg'",
         },
         cancelClass: {
           type: 'ClassValue',
@@ -141,7 +138,12 @@ export default {
           default: undefined,
           description: "CSS class (or classes) to apply to the '.modal-dialog' wrapper element",
         },
-
+        focus: {
+          type: "'ok' | 'cancel' | 'close' | string | ComponentPublicInstance | HTMLElement | null",
+          default: undefined,
+          description:
+            "Specify where to focus once modal opens. Can be built-in button: 'ok', 'cancel', or 'close'. Can be ref, HTMLElement, ID, or selector string. If set to 'false', no focus will be set (if noTrap isn't set, the focus trap will focus the modal element or fallback element). If set to a string, the element with that ID will be focused. If set to a ComponentPublicInstance, the $el property of the instance will be focused.",
+        },
         fullscreen: {
           type: 'boolean | Breakpoint',
           default: false, // TODO item not in string format
@@ -153,7 +155,6 @@ export default {
           default: undefined,
           description: 'Attributes to be applied to the modal header element',
         },
-
         headerCloseClass: {
           type: 'ClassValue',
           default: undefined,
@@ -169,16 +170,15 @@ export default {
           default: 'secondary',
           description: 'Variant for the header close button when using the header-close slot',
         },
-
-        noFooter: {
-          type: 'boolean',
-          default: false, // TODO item not in string format
-          description: 'Disables rendering of the modal footer',
-        },
         modalClass: {
           type: 'ClassValue',
           default: undefined,
           description: "CSS class (or classes) to apply to the '.modal' wrapper element",
+        },
+        noFooter: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+          description: 'Disables rendering of the modal footer',
         },
         noCloseOnBackdrop: {
           type: 'boolean',
