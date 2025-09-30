@@ -298,7 +298,7 @@ If you're looking for replacements for `$bvModal.msgBoxOk` and `$bvModal.msgBoxC
 
 ## Accessibility
 
-`<b-modal>` provides several accessibility features, including auto focus, return focus, keyboard
+`<BModal>` provides several accessibility features, including auto focus, return focus, keyboard
 (tab) _focus containment_, and automated `aria-*` attributes.
 
 **Note:** The animation effect of this component is dependent on the `prefers-reduced-motion` media

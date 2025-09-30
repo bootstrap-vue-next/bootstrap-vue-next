@@ -17,22 +17,20 @@ export default {
       props: {
         [defaultPropSectionSymbol]: {
           ...omit(showHideProps, ['modelValue']),
-          ...pick(buildCommonProps(), ['variant', 'noHoverPause', 'noResumeOnHoverLeave']),
-          bgVariant: {
-            type: 'ColorVariant | null',
-            default: null, // TODO item not in string format
-            description: 'Sets the background color variant for the toast.',
-          },
-          body: {
-            type: 'string',
-            default: undefined,
-            description: 'Sets the text content of the toast body.',
-          },
-          bodyClass: {
-            type: 'ClassValue',
-            default: undefined,
-            description: 'Sets the CSS class(es) for the toast body element.',
-          },
+          ...pick(buildCommonProps(), [
+            'bgVariant',
+            'body',
+            'bodyClass',
+            'headerClass',
+            'headerTag',
+            'id',
+            'noHoverPause',
+            'noResumeOnHoverLeave',
+            'textVariant',
+            'title',
+            'variant',
+          ]),
+
           closeClass: {
             type: 'ClassValue',
             default: undefined,
@@ -53,22 +51,7 @@ export default {
             default: null, // TODO item not in string format
             description: 'Sets the color variant for the close button.',
           },
-          headerClass: {
-            type: 'ClassValue',
-            default: undefined,
-            description: 'Sets the CSS class(es) for the toast header element.',
-          },
-          headerTag: {
-            type: 'string',
-            default: 'div',
-            description: 'Specifies the HTML tag for the toast header, replacing the default tag.',
-          },
-          id: {
-            type: 'string',
-            default: undefined,
-            description:
-              'Sets the `id` attribute for the toast and generates additional element IDs as needed.',
-          },
+
           interval: {
             type: 'number | requestAnimationFrame',
             default: 'requestAnimationFrame', // TODO item not in string format
@@ -112,16 +95,7 @@ export default {
             default: false, // TODO item not in string format
             description: 'Renders the toast with a solid background instead of a translucent one.',
           },
-          textVariant: {
-            type: 'TextColorVariant | null',
-            default: null, // TODO item not in string format
-            description: 'Sets the text color variant for the toast.',
-          },
-          title: {
-            type: 'string',
-            default: undefined,
-            description: 'Sets the title text for the toast.',
-          },
+
           toastClass: {
             type: 'ClassValue',
             default: undefined,

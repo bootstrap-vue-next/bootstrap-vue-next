@@ -6,6 +6,8 @@ import {
   type SlotRecord,
   StyleKind,
 } from '../../types'
+import {buildCommonProps} from '../../utils/commonProps'
+import {pick} from '../../utils/objectUtils'
 import {showHideEmits, showHideProps} from '../../utils/showHideData'
 
 export default {
@@ -15,19 +17,20 @@ export default {
       sourcePath: '/BOffcanvas/BOffcanvas.vue',
       props: {
         ...showHideProps,
+        ...pick(
+          buildCommonProps({
+            id: {
+              description:
+                'The Id to be injected to accordion items and used in BCollapse for state management',
+            },
+          }),
+          ['bodyAttrs', 'bodyClass', 'id']
+        ),
         backdropFirst: {
           type: 'boolean',
           default: false, // TODO item not in string format
           description:
             'Animate the backdrop before the offcanvas, and on leave animate the offcanvas before the backdrop',
-        },
-        bodyAttrs: {
-          type: 'Readonly<AttrsValue>',
-          default: undefined,
-        },
-        bodyClass: {
-          type: 'ClassValue',
-          default: undefined,
         },
         bodyScrolling: {
           type: 'boolean',
@@ -46,7 +49,7 @@ export default {
         headerAttrs: {
           type: 'Readonly<AttrsValue>',
           default: undefined,
-          description: 'Attributes to be applied to the offcanvas header element'
+          description: 'Attributes to be applied to the offcanvas header element',
         },
         headerClass: {
           type: 'string',
@@ -67,10 +70,6 @@ export default {
         noBackdrop: {
           type: 'boolean',
           default: false, // TODO item not in string format
-        },
-        id: {
-          type: 'string',
-          default: undefined,
         },
         noCloseOnBackdrop: {
           type: 'boolean',
