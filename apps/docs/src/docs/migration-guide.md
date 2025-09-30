@@ -607,9 +607,43 @@ flex utility classes. See their [documentation](https://getbootstrap.com/docs/5.
 
 ### BModal
 
-<NotYetDocumented type="component"/>
+`this.$bvModal` is deprecated and emitting events on root (`bv::show::modal`, `bv::hide::modal`, and `bv:toggle::modal`) are deprecated.
+Please see [useModal](/docs/composables/useModal) and [useToggle](/docs/composables/useToggle) for alternative methods of
+accessing modals globally.
 
 See the [v-html](#v-html) section for information on deprecation of the `cancel-title-html`, `ok-title-html`, and `title-html` props.
+
+#### Event System Changes
+
+The event system has been significantly updated in BootstrapVueNext:
+
+**New Events**: BootstrapVueNext adds several new events not present in BootstrapVue:
+
+- `backdrop` - Emitted when the backdrop is clicked
+- `esc` - Emitted when the Esc key is pressed
+- `show-prevented`, `hide-prevented`, `toggle-prevented` - Emitted when actions are prevented
+
+**Event Object Changes**: The event object structure has changed:
+
+- `BvModalEvent` is now `BvTriggerableEvent`
+- `vueTarget` property is **no longer available** - use template refs or the `target` property instead
+- Event properties are now more consistent across all BootstrapVueNext components
+
+**Trigger Values**: The `trigger` property values have been simplified:
+
+- BootstrapVue: `'headerclose'` → BootstrapVueNext: `'close'`
+- All other trigger values remain the same: `'ok'`, `'cancel'`, `'esc'`, `'backdrop'`
+
+#### Props Changes
+
+Several props have been renamed or have different behavior:
+
+- `hide-header-close` → `no-header-close`
+- `hide-footer` → `no-footer`
+- `hide-header` → `no-header`
+- `hide-backdrop` → `no-backdrop`
+- `static` prop is **not implemented** - all modals are rendered via teleport by default
+- `lazy` prop behavior may differ - use `teleport-disabled` for local rendering
 
 #### Replacement for Modal Message boxes
 
