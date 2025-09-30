@@ -617,6 +617,8 @@ See the [v-html](#v-html) section for information on deprecation of the `cancel-
 
 The event system has been significantly updated in BootstrapVueNext:
 
+There is no concept of listing to modal changes via `$root` events.
+
 **New Events**: BootstrapVueNext adds several new events not present in BootstrapVue:
 
 - `backdrop` - Emitted when the backdrop is clicked
@@ -668,6 +670,30 @@ The `create` method accepts all properties defined on
 [BModal](/docs/components/modal#component-reference).
 
 See [Show and Hide](#show-and-hide) shared properties.
+
+#### Accessibility Changes
+
+Several accessibility-related props and features have changed:
+
+**Props that don't exist in BootstrapVueNext:**
+
+- `return-focus` - Focus return is handled automatically by the focus trap system
+- `auto-focus-button` - Use the `focus` prop instead with values `'ok'`, `'cancel'`, or `'close'`
+- `title-sr-only` - Use `title-visually-hidden` instead
+- `aria-label` - Use standard HTML attributes directly on the component
+- `ignore-enforce-focus-selector` - Not available; use `no-trap` to disable focus trapping entirely
+- `no-enforce-focus` - Use `no-trap` instead
+
+**Props that have changed:**
+
+- `focus` prop now accepts `'ok'`, `'cancel'`, `'close'`, element references, or selectors
+- `title-visually-hidden` replaces `title-sr-only` functionality
+
+**Focus Management:**
+
+- Focus trap is implemented using `@vueuse/integrations/useFocusTrap`
+- Focus return is automatic when using the focus trap (default behavior)
+- Set `no-trap` to `true` to disable focus trapping (not recommended)
 
 #### Replacement for Modal slots
 

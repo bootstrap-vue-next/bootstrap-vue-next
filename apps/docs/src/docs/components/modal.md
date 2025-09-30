@@ -32,10 +32,9 @@ present. Also, if you use the `header` slot, the default header `X` close button
 present, nor can you use the `title` slot.
 
 Modals will not render their content in the document until they are shown (lazily rendered). Modals,
-when visible, are rendered **appended to the `<body>` element**. The placement of the `<BModal>`
+when visible, are rendered **appended to the `<body>` element** via Vue's `<Teleport>` component. The placement of the `<BModal>`
 component will not affect layout, as it always renders as a placeholder comment node (`<!---->`).
-You can revert to the behaviour of older BootstrapVue versions via the use of the
-[`static` prop](#lazy-loading-and-static-modals).
+You can render modals in-place by setting the `teleportDisabled` prop to `true`.
 
 ## Toggle modal visibility
 
@@ -297,25 +296,85 @@ To programmatically create modals, refer to the documentation at [useModal](/doc
 If you're looking for replacements for `$bvModal.msgBoxOk` and `$bvModal.msgBoxConfirm` please see the
 [migration guide](/docs/migration-guide#replacement-for-modal-message-boxes)
 
+## Accessibility
+
+`<b-modal>` provides several accessibility features, including auto focus, return focus, keyboard
+(tab) _focus containment_, and automated `aria-*` attributes.
+
+**Note:** The animation effect of this component is dependent on the `prefers-reduced-motion` media
+query. See the
+[reduced motion section of our accessibility documentation](/docs/reference/accessibility) for
+additional details.
+
+### Modal ARIA attributes
+
+The `aria-labelledby` and `aria-describedby` attributes will appear on the modal automatically in
+most cases.
+
+- The `aria-labelledby` attribute will **not** be present if you have the header hidden, or supplied
+  your own header, or have not supplied a modal title. It is recommended to supply a title for your
+  modals (when using the built in header). You can visually hide the header title, but still make it
+  available to screen readers by setting the `titleVisuallyHidden` prop.
+- The `aria-describedby` attribute will always point to the modal's body content.
+- For accessibility, you can provide additional ARIA attributes directly on the modal component using standard HTML attributes.
+
+### Auto focus on open
+
+`<BModal>` will autofocus the modal _container_ when opened.
+
+You can pre-focus an element within the `<BModal>` by listening to the `<BModal>` `shown` event,
+and call the element's `focus()` method. `<BModal>` will not attempt to autofocus if an element
+already has focus within the `<BModal>`.
+
+<<< DEMO ./demo/ModalAccessibilityFocus.vue
+
+Alternatively, if using `BForm*` form controls, you can use the `autofocus` prop to automatically
+focus a form control when the modal opens.
+
+If you want to auto focus one of the _built-in_ modal buttons (`ok`, `cancel` or the header `close`
+button, you can set the prop `focus` to one of the values `'ok'`, `'cancel'` or
+`'close'` and `<BModal>` will focus the specified button if it exists.
+
+<p class="alert alert-warning">
+  <strong>Note:</strong> it is <strong>not recommended</strong> to autofocus an input or control
+  inside of a modal for accessibility reasons, as screen reader users will not know the context of
+  where the input is (the announcement of the modal may not be spoken). It is best to let
+  <code>&lt;b-modal&gt;</code> focus the modal's container, allowing the modal information to be
+  spoken to the user, and then allow the user to tab into the input.
+</p>
+
+### Returning focus to the triggering element
+
+For accessibility reasons, it is desirable to return focus to the element that triggered the opening
+of the modal, when the modal closes.
+
+`<BModal>` will automatically determine which element had focus before the modal was
+opened, and will return the focus to that element when the modal has hidden. This is handled automatically by the focus trap system when `noTrap` is set to `true`.
+
+### Keyboard navigation
+
+When tabbing through elements within a `<BModal>`, if focus attempts to leave the modal into the
+document, it will be brought back into the modal by the focus trap system.
+
+Avoid setting `tabindex` on elements within the modal to any value other than `0` or `-1`. Doing so
+will make it difficult for people who rely on assistive technology to navigate and operate page
+content and can make some of your elements unreachable via keyboard navigation.
+
+You can disable the focus trap feature completely by setting the `noTrap` prop to `true`, although this is _highly discouraged_ for accessibility reasons. When `noTrap` is enabled, focus management becomes manual and you'll need to handle focus return yourself.
+
+### Focus Management
+
+BootstrapVueNext uses the `focus` prop to control initial focus behavior when the modal opens. You can:
+
+- Set `focus` to `'ok'`, `'cancel'`, or `'close'` to focus the respective built-in button
+- Set `focus` to an element reference, ID string, or CSS selector to focus a specific element
+- Set `focus` to `false` to prevent automatic focusing (not recommended for accessibility)
+- Leave `focus` undefined to use the default focus behavior (focuses the modal container)
+
+<!-- Component reference added automatically from component package.json -->
+
 <ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/modal.data'
-import ComponentReference from '../../components/ComponentReference.vue'
-import HighlightCard from '../../components/HighlightCard.vue'
-import {vBModal} from 'bootstrap-vue-next/directives/BModal'
-import {ref, nextTick} from 'vue'
-
-const modal = ref(false)
-
-const preventableModal = ref(false)
-const preventModal = ref(true)
-const preventFn = (e: Event) => {
-  if (preventModal.value)
-    e.preventDefault()
-}
-
 </script>
-
-<style>
-</style>
