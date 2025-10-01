@@ -4,7 +4,7 @@
     toggleable
     variant="dark"
   >
-    <BNavbarBrand href="#">NavBar</BNavbarBrand>
+    <BNavbarBrand href="#navbar-toggle">NavBar</BNavbarBrand>
     <BNavbarToggle target="navbar-toggle-collapse">
       <template #default="{expanded}">
         <ChevronBarUpIcon v-if="expanded" />
@@ -19,10 +19,10 @@
       is-nav
     >
       <BNavbarNav class="ms-auto">
-        <BNavItem href="#">Link 1</BNavItem>
-        <BNavItem href="#">Link 2</BNavItem>
+        <BNavItem href="#navbar-toggle">Link 1</BNavItem>
+        <BNavItem href="#navbar-toggle">Link 2</BNavItem>
         <BNavItem
-          href="#"
+          href="#navbar-toggle"
           disabled
           >Disabled</BNavItem
         >

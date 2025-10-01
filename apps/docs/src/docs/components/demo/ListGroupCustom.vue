@@ -2,7 +2,7 @@
   <!-- #region template -->
   <BListGroup>
     <BListGroupItem
-      href="#"
+      href="#list-group-custom"
       active
       class="flex-column align-items-start"
     >
@@ -17,7 +17,7 @@
       <small>Donec id elit non mi porta.</small>
     </BListGroupItem>
     <BListGroupItem
-      href="#"
+      href="#list-group-custom"
       class="flex-column align-items-start"
     >
       <div class="d-flex w-100 justify-content-between">
@@ -31,7 +31,7 @@
       <small class="text-body-secondary">Donec id elit non mi porta.</small>
     </BListGroupItem>
     <BListGroupItem
-      href="#"
+      href="#list-group-custom"
       disabled
       class="flex-column align-items-start"
     >

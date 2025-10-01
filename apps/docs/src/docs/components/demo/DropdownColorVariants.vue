@@ -6,27 +6,27 @@
       variant="primary"
       class="me-2"
     >
-      <BDropdownItem href="#">Action</BDropdownItem>
-      <BDropdownItem href="#">Another action</BDropdownItem>
-      <BDropdownItem href="#">Something else here</BDropdownItem>
+      <BDropdownItem>Action</BDropdownItem>
+      <BDropdownItem>Another action</BDropdownItem>
+      <BDropdownItem>Something else here</BDropdownItem>
     </BDropdown>
     <BDropdown
       text="Success"
       variant="success"
       class="me-2"
     >
-      <BDropdownItem href="#">Action</BDropdownItem>
-      <BDropdownItem href="#">Another action</BDropdownItem>
-      <BDropdownItem href="#">Something else here</BDropdownItem>
+      <BDropdownItem>Action</BDropdownItem>
+      <BDropdownItem>Another action</BDropdownItem>
+      <BDropdownItem>Something else here</BDropdownItem>
     </BDropdown>
     <BDropdown
       text="Outline Danger"
       variant="outline-danger"
       class="me-2"
     >
-      <BDropdownItem href="#">Action</BDropdownItem>
-      <BDropdownItem href="#">Another action</BDropdownItem>
-      <BDropdownItem href="#">Something else here</BDropdownItem>
+      <BDropdownItem>Action</BDropdownItem>
+      <BDropdownItem>Another action</BDropdownItem>
+      <BDropdownItem>Something else here</BDropdownItem>
     </BDropdown>
     <!-- #endregion template -->
   </div>

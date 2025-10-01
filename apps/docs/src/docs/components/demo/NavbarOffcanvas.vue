@@ -5,7 +5,7 @@
     :toggleable="true"
     variant="primary"
   >
-    <BNavbarBrand href="#">NavBar</BNavbarBrand>
+    <BNavbarBrand href="#navbar-offcanvas">NavBar</BNavbarBrand>
     <BNavbarToggle target="nav-offcanvas" />
     <BOffcanvas
       id="nav-offcanvas"
@@ -14,9 +14,9 @@
       is-nav
     >
       <BNavbarNav>
-        <BNavItem href="#">Link</BNavItem>
+        <BNavItem href="#navbar-offcanvas">Link</BNavItem>
         <BNavItem
-          href="#"
+          href="#navbar-offcanvas"
           disabled
           >Disabled</BNavItem
         >
@@ -27,18 +27,18 @@
           text="Lang"
           right
         >
-          <BDropdownItem href="#">EN</BDropdownItem>
-          <BDropdownItem href="#">ES</BDropdownItem>
-          <BDropdownItem href="#">RU</BDropdownItem>
-          <BDropdownItem href="#">FA</BDropdownItem>
+          <BDropdownItem>EN</BDropdownItem>
+          <BDropdownItem>ES</BDropdownItem>
+          <BDropdownItem>RU</BDropdownItem>
+          <BDropdownItem>FA</BDropdownItem>
         </BNavItemDropdown>
         <BNavItemDropdown right>
           <!-- Using 'button-content' slot -->
           <template #button-content>
             <em>User</em>
           </template>
-          <BDropdownItem href="#">Profile</BDropdownItem>
-          <BDropdownItem href="#">Sign Out</BDropdownItem>
+          <BDropdownItem>Profile</BDropdownItem>
+          <BDropdownItem>Sign Out</BDropdownItem>
         </BNavItemDropdown>
       </BNavbarNav>
       <BNavForm class="d-flex">

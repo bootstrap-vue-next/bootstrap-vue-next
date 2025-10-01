@@ -220,7 +220,7 @@ const {current: activeId, list: items} = useScrollspy(content, target, {
     ':scope h4:not([class*="demo"] *):not(.card-body *)',
     ':scope h5:not([class*="demo"] *):not(.card-body *)',
     ':scope h6:not([class*="demo"] *):not(.card-body *)',
-    ':scope > div > [id]',
+    ':scope > div > [id]:not(.card)',
     '#component-reference',
     '.component-reference h3',
   ].join(', '),

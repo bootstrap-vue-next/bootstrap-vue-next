@@ -5,7 +5,7 @@
     v-b-color-mode="'dark'"
     variant="secondary"
   >
-    <BNavbarBrand href="#">BootstrapVueNext</BNavbarBrand>
+    <BNavbarBrand href="#navbar-brand-link">BootstrapVueNext</BNavbarBrand>
   </BNavbar>
   <!-- #endregion template -->
 </template>

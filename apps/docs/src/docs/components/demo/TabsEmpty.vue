@@ -4,7 +4,7 @@
     <!-- Add your b-tab components here -->
     <template #tabs-end>
       <BNavItem
-        href="#"
+        href="#tabs-empty"
         role="presentation"
         @click="() => {}"
         >Another tab</BNavItem

@@ -6,9 +6,9 @@
       variant="primary"
       class="me-2"
     >
-      <BDropdownItem href="#">Action</BDropdownItem>
-      <BDropdownItem href="#">Another action</BDropdownItem>
-      <BDropdownItem href="#">Something else here</BDropdownItem>
+      <BDropdownItem>Action</BDropdownItem>
+      <BDropdownItem>Another action</BDropdownItem>
+      <BDropdownItem>Something else here</BDropdownItem>
     </BDropdown>
     <BDropdown
       start
@@ -16,9 +16,9 @@
       variant="primary"
       class="me-2"
     >
-      <BDropdownItem href="#">Action</BDropdownItem>
-      <BDropdownItem href="#">Another action</BDropdownItem>
-      <BDropdownItem href="#">Something else here</BDropdownItem>
+      <BDropdownItem>Action</BDropdownItem>
+      <BDropdownItem>Another action</BDropdownItem>
+      <BDropdownItem>Something else here</BDropdownItem>
     </BDropdown>
     <BDropdown
       end
@@ -26,9 +26,9 @@
       variant="primary"
       class="me-2"
     >
-      <BDropdownItem href="#">Action</BDropdownItem>
-      <BDropdownItem href="#">Another action</BDropdownItem>
-      <BDropdownItem href="#">Something else here</BDropdownItem>
+      <BDropdownItem>Action</BDropdownItem>
+      <BDropdownItem>Another action</BDropdownItem>
+      <BDropdownItem>Something else here</BDropdownItem>
     </BDropdown>
     <BDropdown
       center
@@ -36,9 +36,9 @@
       variant="primary"
       class="me-2"
     >
-      <BDropdownItem href="#">Action</BDropdownItem>
-      <BDropdownItem href="#">Another action</BDropdownItem>
-      <BDropdownItem href="#">Something else here</BDropdownItem>
+      <BDropdownItem>Action</BDropdownItem>
+      <BDropdownItem>Another action</BDropdownItem>
+      <BDropdownItem>Something else here</BDropdownItem>
     </BDropdown>
     <!-- #endregion template -->
   </div>
