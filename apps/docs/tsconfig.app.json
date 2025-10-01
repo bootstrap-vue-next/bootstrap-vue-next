@@ -1,7 +1,6 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": [".vitepress/**/*", "**/*.vue", "**/*.ts"],
-  "exclude": ["src/components/stackblitz-templates/**/*"],
+  "include": [".vitepress/**/*", "**/*.vue", "**/*.ts", "src/template-types.d.ts"],
   "compilerOptions": {
     "composite": true,
     "baseUrl": ".",
