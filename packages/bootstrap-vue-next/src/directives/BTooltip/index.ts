@@ -7,12 +7,15 @@ import {
   resolveDirectiveProps,
   unbind,
 } from '../../utils/floatingUi'
-import {defaultsKey} from '../../utils/keys'
+import {buttonGroupKey, defaultsKey} from '../../utils/keys'
 import {findProvides} from '../utils'
 
 export const vBTooltip: Directive<ElementWithPopper> = {
   mounted(el, binding, vnode) {
-    const defaults = (findProvides(binding, vnode) as Record<symbol, Ref>)[defaultsKey]?.value
+    const provides = findProvides(binding, vnode) as Record<symbol, Ref>
+    const defaults = provides[defaultsKey]?.value
+    const isInButtonGroup = provides[buttonGroupKey]?.value
+
     const isActive = resolveActiveStatus(binding.value)
     if (!isActive) return
 
@@ -20,7 +23,16 @@ export const vBTooltip: Directive<ElementWithPopper> = {
 
     if (!text.body && !text.title) return
     el.$__binding = JSON.stringify([binding.modifiers, binding.value])
-    bind(el, binding, {
+
+    // Create a modified binding that uses body placement if in button group
+    const modifiedBinding = isInButtonGroup
+      ? {
+          ...binding,
+          modifiers: {...binding.modifiers, body: true},
+        }
+      : binding
+
+    bind(el, modifiedBinding, {
       noninteractive: true,
       ...(defaults['BTooltip'] || undefined),
       ...resolveDirectiveProps(binding, el),
@@ -29,7 +41,9 @@ export const vBTooltip: Directive<ElementWithPopper> = {
     })
   },
   updated(el, binding, vnode) {
-    const defaults = (findProvides(binding, vnode) as Record<symbol, Ref>)[defaultsKey]?.value
+    const provides = findProvides(binding, vnode) as Record<symbol, Ref>
+    const defaults = provides[defaultsKey]?.value
+    const isInButtonGroup = provides[buttonGroupKey]?.value
 
     const isActive = resolveActiveStatus(binding.value)
     if (!isActive) return
@@ -40,7 +54,16 @@ export const vBTooltip: Directive<ElementWithPopper> = {
     delete binding.oldValue
     if (el.$__binding === JSON.stringify([binding.modifiers, binding.value])) return
     unbind(el)
-    bind(el, binding, {
+
+    // Create a modified binding that uses body placement if in button group
+    const modifiedBinding = isInButtonGroup
+      ? {
+          ...binding,
+          modifiers: {...binding.modifiers, body: true},
+        }
+      : binding
+
+    bind(el, modifiedBinding, {
       noninteractive: true,
       ...(defaults['BTooltip'] || undefined),
       ...resolveDirectiveProps(binding, el),
