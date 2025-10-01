@@ -607,7 +607,7 @@ flex utility classes. See their [documentation](https://getbootstrap.com/docs/5.
 
 ### BModal
 
-<NotYetImplemented/> `header-tag`, `title-tag`
+<NotYetImplemented/> `footer-tag` and `header-tag`
 
 #### Removed Global Modal Management
 
@@ -615,8 +615,8 @@ flex utility classes. See their [documentation](https://getbootstrap.com/docs/5.
 
 - `this.$bvModal.show(id)` → Use `useModal` composable or template refs with `.show()`
 - `this.$bvModal.hide(id)` → Use `useModal` composable or template refs with `.hide()`
-- `this.$bvModal.msgBoxOk()` → Use `useModal().create()` with `ok-only` prop - see [below]()
-- `this.$bvModal.msgBoxConfirm()` → Use `useModal().create()`
+- `this.$bvModal.msgBoxOk()` → Use `useModal().create()` with `ok-only` prop - see [below](#replacement-for-modal-message-boxes)
+- `this.$bvModal.msgBoxConfirm()` → Use `useModal().create()`- see [below](#replacement-for-modal-message-boxes)
 
 **$root event system is deprecated:**
 
@@ -633,7 +633,7 @@ accessing modals globally.
 
 The event system has been significantly updated in BootstrapVueNext:
 
-There is no concept of listing to modal changes via `$root` events.
+There is no concept of listening to modal changes via `$root` events.
 
 **New Events**: BootstrapVueNext adds several new events not present in BootstrapVue:
 
@@ -665,7 +665,7 @@ There is no concept of listing to modal changes via `$root` events.
 
 **Removed props (not implemented in BootstrapVueNext):**
 
-- `aria-label` - Use standard HTML attributes directly on the component. **Note**: Unlike BootstrapVue, BootstrapVueNext does not automatically remove `aria-labelledby` when `aria-label` is present. If using `aria-label`, set - `no-header="true"` to prevent conflicts, or ensure your `aria-label` is descriptive enough to work alongside `aria-labelledby`
+- `aria-label` - Use standard HTML attributes directly on the component. **Note**: Unlike BootstrapVue, BootstrapVueNext does not automatically remove `aria-labelledby` when `aria-label` is present. If using `aria-label`, set `no-header="true"` to prevent conflicts, or ensure your `aria-label` is descriptive enough to work alongside `aria-labelledby`
 - `auto-focus-button` - Use the `focus` prop with values `'ok'`, `'cancel'`, or `'close'`
 - `ignore-enforce-focus-selector` - Use `no-trap` to disable focus trapping entirely
 - `return-focus` - Focus return is handled automatically by the focus trap system

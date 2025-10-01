@@ -349,7 +349,7 @@ For accessibility reasons, it is desirable to return focus to the element that t
 of the modal, when the modal closes.
 
 `<BModal>` will automatically determine which element had focus before the modal was
-opened, and will return the focus to that element when the modal has hidden. This is handled automatically by the focus trap system when `noTrap` is set to `true`.
+opened, and will return the focus to that element when the modal has hidden. This is handled automatically by the focus trap system unless `noTrap` is set to `true`.
 
 ### Keyboard navigation
 

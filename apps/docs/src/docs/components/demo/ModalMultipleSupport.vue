@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="stack-demo">
     <BButton @click="nestedModal1 = !nestedModal1">Open First Modal</BButton>
 
     <BModal
@@ -64,7 +64,7 @@ const nestedModal4 = ref(false)
 
 <style>
 /* Modal stacking example styles */
-.modal {
+.stack-demo .modal {
   --bs-modal-zindex: 1900;
   transform: translate(
     calc((var(--b-count, 0) - var(--b-position, 0)) * 20px),
@@ -74,10 +74,10 @@ const nestedModal4 = ref(false)
     transform 0.5s,
     opacity 0.15s linear !important;
 }
-.modal:not(.stack-inverse-position-0) {
+.stack-demo .modal:not(.stack-inverse-position-0) {
   opacity: calc(1 - ((var(--b-count, 0) - var(--b-position, 0)) * 0.1));
 }
-.modal-backdrop:not(.stack-inverse-position-0) {
+.stack-demo .modal-backdrop:not(.stack-inverse-position-0) {
   opacity: 0 !important;
 }
 </style>

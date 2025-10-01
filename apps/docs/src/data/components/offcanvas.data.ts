@@ -21,7 +21,7 @@ export default {
           buildCommonProps({
             id: {
               description:
-                'The Id to be injected to accordion items and used in BCollapse for state management',
+                'The Id to be injected to accordion items and used in BOffcanvas for state management',
             },
           }),
           ['bodyAttrs', 'bodyClass', 'id']
