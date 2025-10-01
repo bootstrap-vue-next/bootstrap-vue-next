@@ -41,8 +41,9 @@
 <script setup lang="ts">
 import {useTemplateRef} from 'vue'
 import {BModal} from 'bootstrap-vue-next/components/BModal'
+import {type ComponentExposed} from 'vue-component-type-helpers'
 
-const myModal = useTemplateRef('my-modal')
+const myModal = useTemplateRef<ComponentExposed<typeof BModal>>('my-modal')
 const show = () => myModal.value?.show()
 const hide = () => myModal.value?.hide()
 const toggle = () => myModal.value?.toggle()

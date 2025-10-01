@@ -46,7 +46,7 @@ There are several methods that you can employ to toggle the visibility of `<BMod
 
 ### Using the `vBModal` directive
 
-<<< DEMO ./demo/ModalDirective.vue#template{vue-html}
+<<< DEMO ./demo/ModalDirective.vue
 
 ### Using the `show()`, `hide()` and `toggle()` methods
 

@@ -74,11 +74,11 @@
 
       <template #footer>
         <div class="w-100">
-          <p class="float-left">Modal Footer Content</p>
+          <p class="float-start">Modal Footer Content</p>
           <BButton
             variant="primary"
             size="sm"
-            class="float-right"
+            class="float-end"
             @click="show = false"
           >
             Close
