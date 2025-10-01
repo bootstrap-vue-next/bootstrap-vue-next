@@ -118,13 +118,13 @@ export default {
         },
         horizontal: {
           type: 'boolean',
-          default: undefined, // TODO item not in string format
+          default: undefined,
           description:
             'Transition the `width` instead of `height` and set a `width` on the immediate child element',
         },
         isNav: {
           type: 'boolean',
-          default: undefined, // TODO item not in string format
+          default: undefined,
           description:
             'When set, signifies that the accordion is part of a navbar, enabling certain features for navbar support',
         },

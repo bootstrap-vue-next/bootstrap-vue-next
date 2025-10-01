@@ -28,13 +28,13 @@ export default {
         ),
         backdropFirst: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description:
             'Animate the backdrop before the offcanvas, and on leave animate the offcanvas before the backdrop',
         },
         bodyScrolling: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
         },
         focus: {
           type: "'ok' | 'cancel' | 'close' | string | ComponentPublicInstance | HTMLElement | null",
@@ -69,27 +69,27 @@ export default {
         },
         noBackdrop: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
         },
         noCloseOnBackdrop: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
         },
         noCloseOnEsc: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
         },
         noHeader: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
         },
         noHeaderClose: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
         },
         noTrap: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description: 'Disables the focus trap feature',
         },
         placement: {
@@ -101,11 +101,11 @@ export default {
         },
         shadow: {
           type: 'Size | boolean',
-          default: false, // TODO item not in string format
+          default: false,
         },
         teleportDisabled: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
         },
         teleportTo: {
           type: 'string | RendererElement | null | undefined',

@@ -48,35 +48,35 @@ export default {
           },
           closeVariant: {
             type: 'string | null',
-            default: null, // TODO item not in string format
+            default: null,
             description: 'Sets the color variant for the close button.',
           },
 
           interval: {
             type: 'number | requestAnimationFrame',
-            default: 'requestAnimationFrame', // TODO item not in string format
+            default: 'requestAnimationFrame',
             description: 'Sets the interval for refreshing the countdown timer.',
           },
           isStatus: {
             type: 'boolean',
-            default: false, // TODO item not in string format
+            default: false,
             description:
               'Sets `aria-live="polite"` and `role="status"` when `true`; otherwise, `aria-live="assertive"` and `role="alert"`.',
           },
           modelValue: {
             type: 'boolean | number',
-            default: false, // TODO item not in string format
+            default: false,
             description:
               'Controls toast visibility (`boolean`) or sets the auto-dismiss duration in milliseconds (`number`).',
           },
           noCloseButton: {
             type: 'boolean',
-            default: false, // TODO item not in string format
+            default: false,
             description: 'Hides the close button in the toast header.',
           },
           noProgress: {
             type: 'boolean',
-            default: false, // TODO item not in string format
+            default: false,
             description: 'Hides the progress bar in the toast.',
           },
           progressProps: {
@@ -87,12 +87,12 @@ export default {
           },
           showOnPause: {
             type: 'boolean',
-            default: true, // TODO item not in string format
+            default: true,
             description: 'Keeps the toast visible when paused.',
           },
           solid: {
             type: 'boolean',
-            default: false, // TODO item not in string format
+            default: false,
             description: 'Renders the toast with a solid background instead of a translucent one.',
           },
 

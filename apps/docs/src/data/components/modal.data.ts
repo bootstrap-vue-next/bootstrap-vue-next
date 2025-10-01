@@ -83,18 +83,18 @@ export default {
         ),
         backdropFirst: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description:
             'Animates the backdrop before the modal and, on leave, animates the modal before the backdrop',
         },
         bodyScrolling: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description: 'Enables or disables scrolling the body while the modal is open',
         },
         busy: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description:
             'Places the built-in default footer OK and Cancel buttons in a disabled state',
         },
@@ -110,7 +110,7 @@ export default {
         },
         cancelDisabled: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description: 'Places the built-in default footer Cancel button in a disabled state',
         },
         cancelTitle: {
@@ -125,7 +125,7 @@ export default {
         },
         centered: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description: 'Vertically centers the modal in the viewport',
         },
         contentClass: {
@@ -146,7 +146,7 @@ export default {
         },
         fullscreen: {
           type: 'boolean | Breakpoint',
-          default: false, // TODO item not in string format
+          default: false,
           description:
             "Enables full-screen mode with a boolean value or sets the breakpoint for full-screen mode below the specified breakpoint value ('sm', 'md', 'lg', 'xl', 'xxl')",
         },
@@ -177,28 +177,28 @@ export default {
         },
         noFooter: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description: 'Disables rendering of the modal footer',
         },
         noCloseOnBackdrop: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description:
             'Prevents closing the modal when clicking the backdrop outside the modal window',
         },
         noCloseOnEsc: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description: 'Prevents closing the modal by pressing the Esc key',
         },
         noStacking: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description: 'Prevents other modals from stacking over this one',
         },
         noTrap: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description: 'Disables the focus trap feature',
         },
         okClass: {
@@ -208,12 +208,12 @@ export default {
         },
         okDisabled: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description: 'Places the built-in default footer OK button in a disabled state',
         },
         okOnly: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description: 'Disables rendering of the default footer Cancel button',
         },
         okTitle: {
@@ -228,12 +228,12 @@ export default {
         },
         scrollable: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description: 'Enables scrolling of the modal body',
         },
         teleportDisabled: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description: 'Renders the modal where it is defined, disabling teleport',
         },
         teleportTo: {
@@ -243,7 +243,7 @@ export default {
         },
         titleVisuallyHidden: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description: "Wraps the title in a '.visually-hidden' wrapper",
         },
       } satisfies PropRecord<keyof BModalProps>,
@@ -263,7 +263,7 @@ export default {
           args: {
             value: {
               type: 'BvTriggerableEvent',
-              description: 'The OK button click event details', // TODO added description for clarity
+              description: 'The OK button click event details',
             },
           },
         },
@@ -272,7 +272,7 @@ export default {
           args: {
             value: {
               type: 'BvTriggerableEvent',
-              description: 'The Cancel button click event details', // TODO added description for clarity
+              description: 'The Cancel button click event details',
             },
           },
         },
@@ -281,7 +281,7 @@ export default {
           args: {
             value: {
               type: 'BvTriggerableEvent',
-              description: 'The close button click event details', // TODO added description for clarity
+              description: 'The close button click event details',
             },
           },
         },
@@ -290,7 +290,7 @@ export default {
           args: {
             value: {
               type: 'BvTriggerableEvent',
-              description: 'The backdrop click event details', // TODO added description for clarity
+              description: 'The backdrop click event details',
             },
           },
         },
@@ -299,7 +299,7 @@ export default {
           args: {
             value: {
               type: 'BvTriggerableEvent',
-              description: 'The Esc key press event details', // TODO added description for clarity
+              description: 'The Esc key press event details',
             },
           },
         },
