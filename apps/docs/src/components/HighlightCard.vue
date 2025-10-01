@@ -29,13 +29,14 @@
 <script setup lang="ts">
 import {computed} from 'vue'
 
-// Import template files as raw text
-import indexHtml from './stackblitz-templates/index.html?raw'
-import mainTs from './stackblitz-templates/main.ts?raw'
-import appVue from './stackblitz-templates/App.vue?raw'
-import packageJson from './stackblitz-templates/package.json?raw'
-import viteConfig from './stackblitz-templates/vite.config.ts?raw'
-import tsConfig from './stackblitz-templates/tsconfig.json?raw'
+// Import template files as raw text from the original Vite template
+import indexHtml from '../../../../templates/vite/index.html?raw'
+import mainTs from '../../../../templates/vite/src/main.ts?raw'
+import appVue from '../../../../templates/vite/src/App.vue?raw'
+import packageJson from '../../../../templates/vite/package.json?raw'
+import viteConfig from '../../../../templates/vite/vite.config.mts?raw'
+import tsConfig from '../../../../templates/vite/tsconfig.json?raw'
+import tsConfigNode from '../../../../templates/vite/tsconfig.node.json?raw'
 
 interface Props {
   fullFile?: string
@@ -70,6 +71,7 @@ const createProjectFiles = () => ({
   'package.json': packageJson,
   'vite.config.ts': viteConfig,
   'tsconfig.json': tsConfig,
+  'tsconfig.node.json': tsConfigNode,
 })
 
 const openInStackBlitz = async () => {
