@@ -1147,8 +1147,8 @@ export interface BTableLiteProps<Items> extends BTableSimpleProps {
   primaryKey?: string
   tbodyClass?: ClassValue
   tbodyTrAttrs?: ((item: Items | null, type: TableRowType) => AttrsValue) | AttrsValue
-  // tbodyTransitionHandlers
-  // tbodyTransitionProps
+  tbodyTransitionHandlers?: Record<string, (...args: unknown[]) => unknown>
+  tbodyTransitionProps?: Readonly<TransitionProps>
   tbodyTrClass?:
     | ((item: Items | null, type: TableRowType) => TableStrictClassValue)
     | TableStrictClassValue
@@ -1224,6 +1224,8 @@ export interface BTdProps {
 
 export interface BTbodyProps {
   variant?: ColorVariant | null
+  tbodyTransitionHandlers?: Record<string, (...args: unknown[]) => unknown>
+  tbodyTransitionProps?: Readonly<TransitionProps>
 }
 
 export interface BThProps {
