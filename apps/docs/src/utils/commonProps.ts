@@ -77,6 +77,16 @@ const commonProps = () =>
       description:
         'Applies one of the Bootstrap theme color variants to background of the component',
     },
+    body: {
+      type: 'string',
+      default: undefined,
+      description: 'The text content of the body',
+    },
+    bodyAttrs: {
+      type: 'Readonly<AttrsValue>',
+      default: undefined,
+      description: 'Attributes to be applied to the body of the component',
+    },
     bodyBgVariant: {
       type: 'ColorVariant | null',
       default: undefined,
@@ -140,7 +150,6 @@ const commonProps = () =>
       description:
         'When set, renders a single control form with a floating label. This only works for forms where the immediate children are a label and one of the supported controls. See above for details.',
     },
-
     footer: {
       type: 'string',
       default: undefined,

@@ -6,6 +6,8 @@ import {
   type SlotRecord,
   StyleKind,
 } from '../../types'
+import {buildCommonProps} from '../../utils/commonProps'
+import {pick} from '../../utils/objectUtils'
 import {showHideEmits, showHideProps} from '../../utils/showHideData'
 
 export default {
@@ -15,23 +17,24 @@ export default {
       sourcePath: '/BOffcanvas/BOffcanvas.vue',
       props: {
         ...showHideProps,
+        ...pick(
+          buildCommonProps({
+            id: {
+              description:
+                'The Id to be injected to accordion items and used in BOffcanvas for state management',
+            },
+          }),
+          ['bodyAttrs', 'bodyClass', 'id']
+        ),
         backdropFirst: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description:
             'Animate the backdrop before the offcanvas, and on leave animate the offcanvas before the backdrop',
         },
-        bodyAttrs: {
-          type: 'Readonly<AttrsValue>',
-          default: undefined,
-        },
-        bodyClass: {
-          type: 'ClassValue',
-          default: undefined,
-        },
         bodyScrolling: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
         },
         focus: {
           type: "'ok' | 'cancel' | 'close' | string | ComponentPublicInstance | HTMLElement | null",
@@ -46,7 +49,7 @@ export default {
         headerAttrs: {
           type: 'Readonly<AttrsValue>',
           default: undefined,
-          description: 'Attributes to be applied to the offcanvas header element'
+          description: 'Attributes to be applied to the offcanvas header element',
         },
         headerClass: {
           type: 'string',
@@ -66,31 +69,27 @@ export default {
         },
         noBackdrop: {
           type: 'boolean',
-          default: false, // TODO item not in string format
-        },
-        id: {
-          type: 'string',
-          default: undefined,
+          default: false,
         },
         noCloseOnBackdrop: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
         },
         noCloseOnEsc: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
         },
         noHeader: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
         },
         noHeaderClose: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
         },
         noTrap: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description: 'Disables the focus trap feature',
         },
         placement: {
@@ -102,11 +101,11 @@ export default {
         },
         shadow: {
           type: 'Size | boolean',
-          default: false, // TODO item not in string format
+          default: false,
         },
         teleportDisabled: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
         },
         teleportTo: {
           type: 'string | RendererElement | null | undefined',

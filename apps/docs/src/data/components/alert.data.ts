@@ -18,7 +18,17 @@ export default {
       props: {
         [defaultPropSectionSymbol]: {
           ...omit(showHideProps, ['modelValue']),
-          ...pick(buildCommonProps(), ['variant', 'noHoverPause', 'noResumeOnHoverLeave']),
+          ...pick(buildCommonProps(), [
+            'body',
+            'bodyClass',
+            'headerClass',
+            'headerTag',
+            'id',
+            'title',
+            'variant',
+            'noHoverPause',
+            'noResumeOnHoverLeave',
+          ]),
           alertClass: {
             type: 'ClassValue',
             default: undefined,
@@ -29,16 +39,6 @@ export default {
             default: null,
             // description: 'Background color variant for the alert' // TODO missing description
           }, // TODO prop inconsistency ColorVariant | null (matches ColorExtendables, not directly in BAlertProps, but valid via inheritance)
-          body: {
-            type: 'string',
-            default: undefined,
-            description: 'The text content of the body',
-          },
-          bodyClass: {
-            type: 'ClassValue',
-            default: undefined,
-            description: 'CSS class (or classes) to add to the alert body element',
-          },
           closeClass: {
             type: 'ClassValue',
             default: undefined,
@@ -63,22 +63,6 @@ export default {
             type: 'boolean',
             default: false,
             description: 'When set, enables the close button',
-          },
-          headerClass: {
-            type: 'ClassValue',
-            default: undefined,
-            description: 'CSS class (or classes) to add to the alert header element',
-          },
-          headerTag: {
-            type: 'string',
-            default: 'div',
-            description: 'Specify the HTML tag to render instead of the default tag for the header',
-          },
-          id: {
-            type: 'string',
-            default: undefined,
-            description:
-              'Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed',
           },
           interval: {
             type: 'number | requestAnimationFrame',
@@ -114,11 +98,6 @@ export default {
             default: null,
             // description: 'Text color variant for the alert' // TODO missing description
           }, // TODO prop inconsistency TextColorVariant | null (matches ColorExtendables, not directly in BAlertProps, but valid via inheritance)
-          title: {
-            type: 'string',
-            default: undefined,
-            description: "The alert's title text",
-          },
         } satisfies PropRecord<Exclude<keyof BAlertProps, keyof typeof linkProps>>,
         'BLink props': linkedBLinkSection,
       },
