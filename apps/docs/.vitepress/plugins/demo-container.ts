@@ -58,7 +58,8 @@ export const demoContainer = (md: MarkdownRenderer, srcDir: string) => {
     }
 
     // Base64 encode the full file content for StackBlitz (always complete Vue file)
-    const encodedFullFile = Buffer.from(fullFileContent).toString('base64')
+    // Use explicit UTF-8 encoding to preserve Unicode characters like "é", "–", etc.
+    const encodedFullFile = Buffer.from(fullFileContent, 'utf8').toString('base64')
 
     state.line += 1
 

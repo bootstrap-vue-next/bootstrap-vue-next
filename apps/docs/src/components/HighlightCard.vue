@@ -7,7 +7,7 @@
       <div v-if="$slots.default" class="html d-flex justify-content-between align-items-center">
         <span>HTML</span>
         <BButton
-          v-if="fullFileContent"
+          v-if="hasFileContent"
           size="sm"
           variant="outline-primary"
           title="Open in StackBlitz"
@@ -48,20 +48,39 @@ const props = withDefaults(defineProps<Props>(), {
   title: 'BootstrapVueNext Example',
 })
 
-// Decode the full file content for StackBlitz
-const fullFileContent = computed(() => {
-  if (!props.fullFile) return ''
+// Decode base64 content with proper UTF-8 handling and cross-environment compatibility
+const decodeFullFile = (encoded: string) => {
+  if (!encoded) return ''
 
-  let decodedContent = ''
-  try {
-    decodedContent = atob(props.fullFile)
-  } catch {
-    decodedContent = props.fullFile
+  if (typeof globalThis.atob === 'function') {
+    try {
+      const binary = globalThis.atob(encoded)
+      const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0))
+      return new TextDecoder().decode(bytes)
+    } catch {
+      // fall through to the Node-friendly path
+    }
   }
 
-  // Keep TypeScript syntax intact - no cleaning needed
-  return decodedContent
-})
+  const nodeBuffer = (
+    globalThis as typeof globalThis & {Buffer?: typeof import('node:buffer').Buffer}
+  ).Buffer
+  if (nodeBuffer) {
+    try {
+      return nodeBuffer.from(encoded, 'base64').toString('utf-8')
+    } catch {
+      // ignore and return original payload
+    }
+  }
+
+  return encoded
+}
+
+// Check if we have content to show the StackBlitz button
+const hasFileContent = computed(() => Boolean(props.fullFile))
+
+// Decoded file content for StackBlitz (reactive)
+const fullFileContent = computed(() => decodeFullFile(props.fullFile))
 
 const createProjectFiles = () => ({
   'index.html': indexHtml,
@@ -75,7 +94,7 @@ const createProjectFiles = () => ({
 })
 
 const openInStackBlitz = async () => {
-  if (!fullFileContent.value) return
+  if (!props.fullFile) return
 
   try {
     // Dynamically import StackBlitz SDK
