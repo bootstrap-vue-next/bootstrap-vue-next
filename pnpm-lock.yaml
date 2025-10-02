@@ -19,10 +19,6 @@ importers:
         version: 2.5.5
 
   apps/docs:
-    dependencies:
-      '@stackblitz/sdk':
-        specifier: ^1.11.0
-        version: 1.11.0
     devDependencies:
       '@iconify-json/bi':
         specifier: ^1.2.4
@@ -33,6 +29,9 @@ importers:
       '@rushstack/eslint-patch':
         specifier: ^1.12.0
         version: 1.12.0
+      '@stackblitz/sdk':
+        specifier: ^1.11.0
+        version: 1.11.0
       '@toycode/markdown-it-class':
         specifier: ^1.2.4
         version: 1.2.4
