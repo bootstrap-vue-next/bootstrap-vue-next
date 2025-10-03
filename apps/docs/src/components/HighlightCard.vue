@@ -10,10 +10,13 @@
           v-if="hasFileContent"
           size="sm"
           variant="outline-primary"
+          :loading="isLoading"
+          :loading-text="'Opening...'"
           title="Open in StackBlitz"
+          aria-label="Open example in StackBlitz"
           @click="openInStackBlitz"
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="me-1">
             <path d="M10.797 14.182H3.635L16.728 0l-3.525 9.818h7.162L7.272 24l3.525-9.818z" />
           </svg>
           StackBlitz
@@ -27,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue'
+import {computed, ref} from 'vue'
 
 // Import template files as raw text from the original Vite template
 import indexHtml from '../../../../templates/vite/index.html?raw'
@@ -47,6 +50,9 @@ const props = withDefaults(defineProps<Props>(), {
   fullFile: '',
   title: 'BootstrapVueNext Example',
 })
+
+// Loading state for StackBlitz button
+const isLoading = ref(false)
 
 // Decode base64 content with proper UTF-8 handling and cross-environment compatibility
 const decodeFullFile = (encoded: string) => {
@@ -94,7 +100,9 @@ const createProjectFiles = () => ({
 })
 
 const openInStackBlitz = async () => {
-  if (!props.fullFile) return
+  if (!props.fullFile || isLoading.value) return
+
+  isLoading.value = true
 
   try {
     // Dynamically import StackBlitz SDK
@@ -119,6 +127,11 @@ const openInStackBlitz = async () => {
     console.error('Failed to open StackBlitz project:', error)
     // Fallback to basic StackBlitz
     window.open('https://stackblitz.com/fork/vue-ts', '_blank')
+  } finally {
+    // Reset loading state after a short delay to show completion
+    setTimeout(() => {
+      isLoading.value = false
+    }, 500)
   }
 }
 </script>
