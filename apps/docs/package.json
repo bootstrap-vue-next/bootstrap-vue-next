@@ -17,6 +17,7 @@
     "@iconify-json/bi": "^1.2.4",
     "@iconify-json/logos": "^1.2.4",
     "@rushstack/eslint-patch": "^1.12.0",
+    "@stackblitz/sdk": "^1.11.0",
     "@toycode/markdown-it-class": "^1.2.4",
     "@tsconfig/node22": "^22.0.2",
     "@types/node": "^22.16.5",
