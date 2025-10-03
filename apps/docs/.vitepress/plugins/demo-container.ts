@@ -49,9 +49,7 @@ export const demoContainer = (md: MarkdownRenderer, srcDir: string) => {
     // Read the source code file during build time
     let fullFileContent = ''
     try {
-      if (fs.existsSync(resolvedPath)) {
-        fullFileContent = fs.readFileSync(resolvedPath, 'utf-8')
-      }
+      fullFileContent = fs.readFileSync(resolvedPath, 'utf-8')
     } catch (error) {
       // eslint-disable-next-line no-console
       console.warn(`Failed to read source code from ${resolvedPath}:`, error)
