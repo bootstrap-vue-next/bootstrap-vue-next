@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.40.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.5...bootstrapvuenext-v0.40.6) (2025-10-07)
+
+
+### Bug Fixes
+
+* **BApp:** wrap our test app in BApp in main.ts to enable easy verification of useModal, etc. ([#2865](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2865)) ([d7d3476](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d7d347665f92ad910fc45fc079f304c19d91c99f))
+* **useModalOrchestrator:** circular dependency ([#2874](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2874)) ([c0bf12f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c0bf12fe34f0671ae1b8392e6b4f9aeb605726d8))
+
 ## [0.40.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.4...bootstrapvuenext-v0.40.5) (2025-09-23)
 
 
