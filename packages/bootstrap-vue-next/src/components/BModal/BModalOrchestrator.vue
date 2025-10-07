@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import {useDefaults} from '../../composables/useDefaults'
 import type {BModalOrchestratorProps} from '../../types/ComponentProps'
-import {useModal} from '../../composables'
+import {useModal} from '../../composables/useModal'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
 import BOrchestrator from '../BApp/BOrchestrator.vue'
 
