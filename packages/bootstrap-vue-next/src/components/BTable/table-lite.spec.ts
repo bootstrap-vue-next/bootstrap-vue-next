@@ -527,6 +527,83 @@ describe('btablelite', () => {
       })
       expect(wrapper.text()).not.toContain('foobar!')
     })
+
+    it('persists details when items are replaced with new object references but same primary key', async () => {
+      const fields = [{key: 'actions', label: 'Actions', sortable: false}]
+      const wrapper = mount(BTableLite, {
+        props: {
+          primaryKey: 'id',
+          items: [
+            {id: 1, isActive: true, age: 40, name: 'John'},
+            {id: 2, isActive: false, age: 30, name: 'Jane'},
+          ],
+          fields,
+        },
+        slots: {
+          'cell(actions)':
+            '<template #cell(actions)="row"><button class="toggle-btn" @click="row.toggleDetails"></button></template>',
+          'row-details': '<template #row-details="row">Details for {{ row.item.name }}</template>',
+        },
+      })
+
+      // Open details for the first row
+      const buttons = wrapper.findAll('.toggle-btn')
+      await buttons[0].trigger('click')
+      expect(wrapper.text()).toContain('Details for John')
+      expect(wrapper.text()).not.toContain('Details for Jane')
+
+      // Replace items with new object references but same IDs
+      // This simulates the "Load more" scenario from the issue
+      await wrapper.setProps({
+        items: [
+          {id: 1, isActive: true, age: 40, name: 'John'},
+          {id: 2, isActive: false, age: 30, name: 'Jane'},
+          {id: 3, isActive: true, age: 25, name: 'Bob'},
+        ],
+      })
+
+      // Details for first row should still be visible
+      expect(wrapper.text()).toContain('Details for John')
+      expect(wrapper.text()).not.toContain('Details for Jane')
+      expect(wrapper.text()).not.toContain('Details for Bob')
+    })
+
+    it('falls back to object reference when primaryKey is not provided', async () => {
+      const fields = [{key: 'actions', label: 'Actions', sortable: false}]
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [
+            {isActive: true, age: 40, name: 'John'},
+            {isActive: false, age: 30, name: 'Jane'},
+          ],
+          fields,
+        },
+        slots: {
+          'cell(actions)':
+            '<template #cell(actions)="row"><button class="toggle-btn" @click="row.toggleDetails"></button></template>',
+          'row-details': '<template #row-details="row">Details for {{ row.item.name }}</template>',
+        },
+      })
+
+      // Open details for the first row
+      const buttons = wrapper.findAll('.toggle-btn')
+      await buttons[0].trigger('click')
+      expect(wrapper.text()).toContain('Details for John')
+
+      // Replace items with new object references
+      await wrapper.setProps({
+        items: [
+          {isActive: true, age: 40, name: 'John'},
+          {isActive: false, age: 30, name: 'Jane'},
+          {isActive: true, age: 25, name: 'Bob'},
+        ],
+      })
+
+      // Details should be closed since object references changed
+      expect(wrapper.text()).not.toContain('Details for John')
+      expect(wrapper.text()).not.toContain('Details for Jane')
+      expect(wrapper.text()).not.toContain('Details for Bob')
+    })
   })
   describe('isRowHeader field property', () => {
     it('sets td/th appropriately based on isRowHeader is true, false, or undefined', async () => {
