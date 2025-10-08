@@ -29,7 +29,7 @@ export const useActivatedFocusTrap = (
   },
   focusTrapOpts: UseFocusTrapOptions = {
     allowOutsideClick: true,
-    fallbackFocus: fallbackFocus.ref.value ?? undefined,
+    fallbackFocus: () => fallbackFocus.ref.value || document.body,
     escapeDeactivates: false,
     clickOutsideDeactivates: false,
     initialFocus: focus,
