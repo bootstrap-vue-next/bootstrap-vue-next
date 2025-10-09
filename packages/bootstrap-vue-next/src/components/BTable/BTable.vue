@@ -25,8 +25,8 @@
         name="row-details"
         v-bind="scope"
         :fields="computedFields"
-        :select-row="(index = scope.index) => exposedSelectableUtilities.selectRow(index)"
-        :unselect-row="(index = scope.index) => exposedSelectableUtilities.unselectRow(index)"
+        :select-row="() => exposedSelectableUtilities.selectRow(scope.index)"
+        :unselect-row="() => exposedSelectableUtilities.unselectRow(scope.index)"
         :row-selected="exposedSelectableUtilities.isRowSelected(scope.index)"
       />
     </template>
@@ -43,8 +43,8 @@
       <slot
         :name
         v-bind="scope"
-        :select-row="(index = scope.index) => exposedSelectableUtilities.selectRow(index)"
-        :unselect-row="(index = scope.index) => exposedSelectableUtilities.unselectRow(index)"
+        :select-row="() => exposedSelectableUtilities.selectRow(scope.index)"
+        :unselect-row="() => exposedSelectableUtilities.unselectRow(scope.index)"
         :row-selected="exposedSelectableUtilities.isRowSelected(scope.index)"
       />
     </template>
