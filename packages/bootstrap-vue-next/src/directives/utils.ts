@@ -1,70 +1,35 @@
-import type {ComponentInternalInstance, DirectiveBinding, VNode} from 'vue'
+import type {ComponentInternalInstance, DirectiveBinding, InjectionKey} from 'vue'
 
 interface _ComponentInternalInstance extends ComponentInternalInstance {
-  provides?: Record<string, unknown>
+  /**
+   * Object containing values this component provides for its descendants
+   * @internal Vue internal property
+   */
+  provides: Record<string, unknown>
+}
+
+/**
+ * Utility to inject a value within a directive's lifecycle hooks.
+ *
+ * If/when https://github.com/vuejs/core/issues/5002 is resolved we can switch to `inject` and remove this.
+ *
+ * @param binding Directive binding
+ * @param key Injection key
+ */
+export function injectWithinDirective<T>(
+  binding: DirectiveBinding,
+  key: InjectionKey<T> | string
+): T | undefined
+export function injectWithinDirective(
+  binding: DirectiveBinding,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setupState?: any
-}
+  key: InjectionKey<any> | string
+) {
+  const {provides} = binding.instance!.$ as _ComponentInternalInstance
 
-interface _VNode extends VNode {
-  ctx?: _ComponentInternalInstance | null
-  ssContent?: VNode | null
-}
-
-// taken from vuetify https://github.com/vuetifyjs/vuetify/blob/master/packages/vuetify/src/composables/directiveComponent.ts
-
-export function findProvides(binding: DirectiveBinding, vnode: _VNode): Record<string, unknown> {
-  const provides =
-    (vnode.ctx === binding.instance!.$
-      ? findComponentParent(vnode, binding.instance!.$)?.provides
-      : vnode.ctx?.provides) ?? binding.instance!.$.provides
-
-  return provides
-}
-
-export function findComponentParent(
-  vnode: VNode,
-  root: ComponentInternalInstance
-): _ComponentInternalInstance | null {
-  // Walk the tree from root until we find the child vnode
-  const stack = new Set<VNode>()
-  const walk = (children: _VNode[]): boolean => {
-    for (const child of children) {
-      if (!child) continue
-
-      if (child === vnode || (child.el && vnode.el && child.el === vnode.el)) {
-        return true
-      }
-
-      stack.add(child)
-      let result
-      if (child.suspense) {
-        result = walk([child.ssContent!])
-      } else if (Array.isArray(child.children)) {
-        result = walk(child.children as VNode[])
-      } else if (child.component?.vnode) {
-        result = walk([child.component?.subTree])
-      }
-      if (result) {
-        return result
-      }
-      stack.delete(child)
-    }
-
-    return false
-  }
-  if (!walk([root.subTree])) {
-    // eslint-disable-next-line no-console
-    console.error('Could not find original vnode,  will not inherit provides')
-    return root
+  if (provides && (key as string | symbol) in provides) {
+    return provides[key as string]
   }
 
-  // Return the first component parent
-  const result = Array.from(stack).reverse()
-  for (const child of result) {
-    if (child.component) {
-      return child.component
-    }
-  }
-  return root
+  return undefined
 }

@@ -1,7 +1,7 @@
 import {RX_HASH, RX_HASH_ID, RX_SPACE_SPLIT} from '../../utils/constants'
-import {type Directive, type DirectiveBinding, toValue, type VNode} from 'vue'
-import {findProvides} from '../utils'
-import {type RegisterShowHideValue, showHideRegistryKey} from '../../utils/keys'
+import {type Directive, type DirectiveBinding, toValue} from 'vue'
+import {injectWithinDirective} from '../utils'
+import {showHideRegistryKey} from '../../utils/keys'
 
 const getTargets = (
   binding: DirectiveBinding<string | readonly string[] | undefined>,
@@ -35,16 +35,13 @@ const getTargets = (
 
 const handleUpdate = (
   el: Element,
-  binding: DirectiveBinding<string | readonly string[] | undefined>,
-  vnode: VNode
+  binding: DirectiveBinding<string | readonly string[] | undefined>
 ) => {
   // Determine targets
   const targets = getTargets(binding, el)
   if (targets.length === 0) return
 
-  const provides = findProvides(binding, vnode)
-  const showHideMap = (provides as Record<symbol, RegisterShowHideValue>)[showHideRegistryKey]
-    ?.values
+  const showHideMap = injectWithinDirective(binding, showHideRegistryKey)?.values
   if ((el as HTMLElement).dataset.bvtoggle) {
     const oldTargets = ((el as HTMLElement).dataset.bvtoggle || '').split(' ')
     if (oldTargets.length === 0) return
@@ -85,15 +82,12 @@ const handleUpdate = (
 }
 const handleUnmount = (
   el: Element,
-  binding: DirectiveBinding<string | readonly string[] | undefined>,
-  vnode: VNode
+  binding: DirectiveBinding<string | readonly string[] | undefined>
 ) => {
   // Determine targets
   const targets = getTargets(binding, el)
   if (targets.length === 0) return
-  const provides = findProvides(binding, vnode)
-  const showHideMap = (provides as Record<symbol, RegisterShowHideValue>)[showHideRegistryKey]
-    ?.values
+  const showHideMap = injectWithinDirective(binding, showHideRegistryKey)?.values
 
   targets.forEach((targetId) => {
     const showHide = showHideMap?.value.get(targetId)
