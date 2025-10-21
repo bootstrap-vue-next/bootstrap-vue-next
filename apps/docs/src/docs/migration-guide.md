@@ -607,7 +607,8 @@ flex utility classes. See their [documentation](https://getbootstrap.com/docs/5.
 
 ### BModal
 
-<NotYetImplemented/> `footer-tag` and `header-tag`
+`footer-tag` and `header-tag` are deprecated, use the `footer` and `title` slots instead. See the
+[modal documentation](/docs/components/modal/#custom-rendering-with-slots) for details.
 
 #### Removed Global Modal Management
 
