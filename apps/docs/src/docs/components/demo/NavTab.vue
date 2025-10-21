@@ -3,14 +3,14 @@
   <BNav tabs>
     <BNavItem
       active
-      href="#nav-tabs"
+      href="#nav-tab"
       >Active</BNavItem
     >
-    <BNavItem href="#nav-tabs">Link</BNavItem>
-    <BNavItem href="#nav-tabs">Another Link</BNavItem>
+    <BNavItem href="#nav-tab">Link</BNavItem>
+    <BNavItem href="#nav-tab">Another Link</BNavItem>
     <BNavItem
       disabled
-      href="#nav-tabs"
+      href="#nav-tab"
       >Disabled</BNavItem
     >
   </BNav>

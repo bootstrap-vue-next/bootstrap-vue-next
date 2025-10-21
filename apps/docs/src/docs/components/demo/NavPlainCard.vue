@@ -8,13 +8,13 @@
       <BNav>
         <BNavItem
           active
-          href="#nav-plain"
+          href="#nav-plain-card"
           >Active</BNavItem
         >
-        <BNavItem href="#nav-plain">Inactive</BNavItem>
+        <BNavItem href="#nav-plain-card">Inactive</BNavItem>
         <BNavItem
           disabled
-          href="#nav-plain"
+          href="#nav-plain-card"
           >Disabled</BNavItem
         >
       </BNav>

@@ -3,14 +3,14 @@
   <BNav pills>
     <BNavItem
       active
-      href="#nav-pills"
+      href="#nav-pill"
       >Active</BNavItem
     >
-    <BNavItem href="#nav-pills">Link</BNavItem>
-    <BNavItem href="#nav-pills">Another Link</BNavItem>
+    <BNavItem href="#nav-pill">Link</BNavItem>
+    <BNavItem href="#nav-pill">Another Link</BNavItem>
     <BNavItem
       disabled
-      href="#nav-pills"
+      href="#nav-pill"
       >Disabled</BNavItem
     >
   </BNav>

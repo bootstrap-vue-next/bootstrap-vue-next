@@ -11,13 +11,13 @@
       >
         <BNavItem
           active
-          href="#nav-pills"
+          href="#nav-pill-card"
           >Active</BNavItem
         >
-        <BNavItem href="#nav-pills">Inactive</BNavItem>
+        <BNavItem href="#nav-pill-card">Inactive</BNavItem>
         <BNavItem
           disabled
-          href="#nav-pills"
+          href="#nav-pill-card"
           >Disabled</BNavItem
         >
       </BNav>
