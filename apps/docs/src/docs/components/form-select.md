@@ -47,7 +47,7 @@ _unselected_ state. On iOS this will cause the user not being able to select the
 iOS does not fire a change event in this case. It is therefore recommended providing a disabled
 option with an empty value as your first option.
 
-<<< FRAGMENT ./demo/OptionNotes.vue#template{vue-html}
+<<< FRAGMENT ./demo/FormSelectOptionNotes.vue#template{vue-html}
 
 See the [Vue select](https://v3.vuejs.org/guide/forms.html#select) documentation for more details.
 
