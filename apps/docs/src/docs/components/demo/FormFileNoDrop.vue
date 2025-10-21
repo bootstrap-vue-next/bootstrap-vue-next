@@ -4,7 +4,7 @@
     no-drop
   />
   <div class="mt-3">
-    Files: <strong>{{ file }}</strong>
+    Files: <strong>{{ file?.name || 'No file selected' }}</strong>
   </div>
 </template>
 

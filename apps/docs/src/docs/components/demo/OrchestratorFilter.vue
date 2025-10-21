@@ -6,6 +6,6 @@
 import {BOrchestrator, type OrchestratorArrayValue} from 'bootstrap-vue-next'
 
 const customFilter = (item: OrchestratorArrayValue) =>
-  // Only show items that should be kept (example filter logic)
+  // Only show high priority items
   item.options?.keep !== false
 </script>

@@ -1,7 +1,7 @@
 <template>
   <BPlaceholder
     width="30"
-    cols="12"
+    :cols="12"
   />
   <BPlaceholder
     width="75%"
@@ -16,7 +16,7 @@
     variant="info"
   />
   <BPlaceholder
-    cols="8"
+    :cols="8"
     variant="info"
   />
 </template>

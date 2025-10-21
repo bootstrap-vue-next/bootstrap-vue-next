@@ -4,7 +4,7 @@
     multiple
   />
   <div class="mt-3">
-    Files: <strong>{{ files }}</strong>
+    Files: <strong>{{ files?.map((file) => file.name).join(', ') || 'No files selected' }}</strong>
   </div>
 </template>
 
