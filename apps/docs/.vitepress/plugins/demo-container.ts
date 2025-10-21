@@ -41,9 +41,14 @@ export const demoContainer = (md: MarkdownRenderer, srcDir: string) => {
 
     const {filepath, extension, region, lines, lang, title} = rawPathToToken(rawPath)
     const component = isDemo ? `<${title.substring(0, title.indexOf('.'))}/>` : ''
+
     // Generate kebab-case ID from filename (without extension)
-    const filename = title.substring(0, title.lastIndexOf('.') || title.length)
-    const kebabCaseId = filename.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
+    const dotIndex = title.lastIndexOf('.')
+    const filename = (dotIndex === -1 ? title : title.substring(0, dotIndex)).trim()
+    const kebabCaseId = filename
+      .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+      .replace(/[\s_]+/g, '-')
+      .toLowerCase()
 
     // Resolve path early so it can be used in the prefix token
     const {realPath, path: _path} = state.env as MarkdownEnv

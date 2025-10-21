@@ -1,10 +1,18 @@
 <template>
   <!-- #region template -->
   <BNav pills>
-    <BNavItem active>Active</BNavItem>
-    <BNavItem>Link</BNavItem>
-    <BNavItem>Another Link</BNavItem>
-    <BNavItem disabled>Disabled</BNavItem>
+    <BNavItem
+      active
+      href="#nav-pills"
+      >Active</BNavItem
+    >
+    <BNavItem href="#nav-pills">Link</BNavItem>
+    <BNavItem href="#nav-pills">Another Link</BNavItem>
+    <BNavItem
+      disabled
+      href="#nav-pills"
+      >Disabled</BNavItem
+    >
   </BNav>
   <!-- #endregion template -->
 </template>

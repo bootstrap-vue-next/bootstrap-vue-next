@@ -6,9 +6,17 @@
   >
     <BCardHeader header-tag="nav">
       <BNav>
-        <BNavItem active>Active</BNavItem>
-        <BNavItem>Inactive</BNavItem>
-        <BNavItem disabled>Disabled</BNavItem>
+        <BNavItem
+          active
+          href="#nav-plain"
+          >Active</BNavItem
+        >
+        <BNavItem href="#nav-plain">Inactive</BNavItem>
+        <BNavItem
+          disabled
+          href="#nav-plain"
+          >Disabled</BNavItem
+        >
       </BNav>
     </BCardHeader>
 
