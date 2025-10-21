@@ -34,13 +34,28 @@ import {onMounted, ref, watchEffect} from 'vue'
 
 const loading = ref(false)
 
+<script setup lang="ts">
+import {onMounted, onUnmounted, ref, watchEffect} from 'vue'
+
+const loading = ref(false)
+let timeoutId: ReturnType<typeof setTimeout> | null = null
+
 watchEffect(() => {
   if (loading.value === true) {
-    setTimeout(() => {
+    timeoutId = setTimeout(() => {
       loading.value = false
+      timeoutId = null
     }, 5000)
   }
 })
+
+onUnmounted(() => {
+  if (timeoutId !== null) {
+    clearTimeout(timeoutId)
+  }
+})
+
+const startLoading = () => {
 
 const startLoading = () => {
   if (loading.value === true) return
