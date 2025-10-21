@@ -84,18 +84,8 @@ export default {
                 'The Id to be injected to accordion items and used in BCollapse for state management',
             },
           }),
-          ['id', 'tag', 'wrapperAttrs']
+          ['bodyAttrs', 'bodyClass', 'id', 'tag', 'wrapperAttrs']
         ),
-        bodyAttrs: {
-          type: 'Readonly<AttrsValue>',
-          default: undefined,
-          description: 'Attributes to be applied to the body of the accordion item',
-        },
-        bodyClass: {
-          type: 'ClassValue',
-          default: undefined,
-          description: 'Class to be applied to the body of the accordion item',
-        },
         buttonAttrs: {
           type: 'Readonly<AttrsValue>',
           default: undefined,
@@ -128,13 +118,13 @@ export default {
         },
         horizontal: {
           type: 'boolean',
-          default: undefined, // TODO item not in string format
+          default: undefined,
           description:
             'Transition the `width` instead of `height` and set a `width` on the immediate child element',
         },
         isNav: {
           type: 'boolean',
-          default: undefined, // TODO item not in string format
+          default: undefined,
           description:
             'When set, signifies that the accordion is part of a navbar, enabling certain features for navbar support',
         },
