@@ -30,11 +30,6 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, ref, watchEffect} from 'vue'
-
-const loading = ref(false)
-
-<script setup lang="ts">
 import {onMounted, onUnmounted, ref, watchEffect} from 'vue'
 
 const loading = ref(false)
@@ -54,8 +49,6 @@ onUnmounted(() => {
     clearTimeout(timeoutId)
   }
 })
-
-const startLoading = () => {
 
 const startLoading = () => {
   if (loading.value === true) return
