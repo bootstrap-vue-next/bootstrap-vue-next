@@ -24,15 +24,14 @@ const toggle = useToggle('toggleTest')
 const reason = ref('')
 
 async function testToggle() {
-  toggle.show(true).then((e) => {
-    if (e === 'ok') {
-      // eslint-disable-next-line no-console
-      console.log('ok pressed')
-    } else {
-      // eslint-disable-next-line no-console
-      console.log('closed with', e)
-    }
-    reason.value = e as string
-  })
+  const e = await toggle.show(true)
+  if (e === 'ok') {
+    // eslint-disable-next-line no-console
+    console.log('ok pressed')
+  } else {
+    // eslint-disable-next-line no-console
+    console.log('closed with', e)
+  }
+  reason.value = e as string
 }
 </script>

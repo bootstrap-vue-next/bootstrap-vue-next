@@ -12,7 +12,7 @@ const firstRef = ref<OrchestratedToast>({
   body: `${Math.random()}`,
 })
 
-let intervalId: number | undefined
+let intervalId: ReturnType<typeof setInterval> | undefined
 
 onMounted(() => {
   intervalId = setInterval(() => {

@@ -8,9 +8,10 @@
 
 <script setup lang="ts">
 import {ref} from 'vue'
-import {BButton, BCard, useColorMode} from 'bootstrap-vue-next'
+import {useColorMode} from 'bootstrap-vue-next'
+import {type BCard} from 'bootstrap-vue-next/components/BCard'
 
-const target = ref<HTMLElement | null>(null)
+const target = ref<InstanceType<typeof BCard> | null>(null)
 
 const mode = useColorMode({
   selector: target,

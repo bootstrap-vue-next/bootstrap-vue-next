@@ -12,7 +12,7 @@ const firstRef = ref<OrchestratedToast>({
   body: `${Math.random()}`,
 })
 
-let intervalId: number | undefined
+let intervalId: ReturnType<typeof setInterval> | undefined
 
 onMounted(() => {
   intervalId = setInterval(() => {
@@ -32,7 +32,7 @@ const showMe = () => {
     slots: {default: () => h('div', null, `custom! ${firstRef.value.body}`)},
   })
   // Demonstration pseudocode, you can also import a component and use it
-  // const importedComponent () => {
+  // const importedComponent = () => {
   //   create({
   //     component: import('./MyToastComponent.vue'),
   //   })

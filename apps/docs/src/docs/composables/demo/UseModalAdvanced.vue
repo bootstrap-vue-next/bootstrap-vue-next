@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import {h, onMounted, ref} from 'vue'
+import {h, onMounted, onUnmounted, ref} from 'vue'
 import {BButton, useModal} from 'bootstrap-vue-next'
 
 const {create} = useModal()
@@ -11,16 +11,24 @@ const {create} = useModal()
 const firstRef = ref({
   body: `${Math.random()}`,
 })
+let intervalId: ReturnType<typeof setInterval> | undefined
+
 onMounted(() => {
-  setInterval(() => {
+  intervalId = setInterval(() => {
     firstRef.value.body = `${Math.random()}`
   }, 1000)
 })
+
+onUnmounted(() => {
+  if (intervalId) {
+    clearInterval(intervalId)
+  }
+})
+
 const showMeAdvancedExample = () => {
   create({
     slots: {
-      default: (scope) =>
-        h('div', null, `custom ${firstRef.value.body} - ${scope.visible}`),
+      default: (scope) => h('div', null, `custom ${firstRef.value.body} - ${scope.visible}`),
     },
   }).show()
 
