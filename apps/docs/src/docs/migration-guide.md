@@ -607,7 +607,8 @@ flex utility classes. See their [documentation](https://getbootstrap.com/docs/5.
 
 ### BModal
 
-<NotYetImplemented/> `footer-tag` and `header-tag`
+`footer-tag` and `header-tag` are deprecated, use the `footer` and `title` slots instead. See the
+[modal documentation](/docs/components/modal#custom-rendering-with-slots) for details.
 
 #### Removed Global Modal Management
 
@@ -700,7 +701,7 @@ See the [v-html](#v-html) section for information on deprecation of the `cancel-
 
 #### Modal Slot changes
 
-[BootstrapVue](https://bootstrap-vue.github.io/bootstrap-vue/docs/components/modal#custom-rendering-with-slots) provides different slots to configure some pieces of the modal component. These slots are slightly different in [BootstrapVueNext](/docs/components/modal.html#comp-reference-bmodal-slots):
+[BootstrapVue](https://bootstrap-vue.github.io/bootstrap-vue/docs/components/modal#custom-rendering-with-slots) provides different slots to configure some pieces of the modal component. These slots are slightly different in [BootstrapVueNext](/docs/components/modal#comp-reference-bmodal-slots):
 
 | BootstrapVue       | BootstrapVueNext |
 | ------------------ | ---------------- |
