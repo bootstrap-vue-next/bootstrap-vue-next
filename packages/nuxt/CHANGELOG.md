@@ -2,129 +2,115 @@
 
 ## [0.40.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.40.5...nuxt-v0.40.6) (2025-10-07)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.40.6
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.40.6
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.40.6
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.40.6
 
 ## [0.40.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.40.4...nuxt-v0.40.5) (2025-09-23)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.40.5
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.40.5
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.40.5
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.40.5
 
 ## [0.40.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.40.3...nuxt-v0.40.4) (2025-09-16)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.40.4
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.40.4
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.40.4
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.40.4
 
 ## [0.40.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.40.2...nuxt-v0.40.3) (2025-09-12)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.40.3
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.40.3
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.40.3
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.40.3
 
 ## [0.40.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.40.1...nuxt-v0.40.2) (2025-09-09)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.40.2
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.40.2
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.40.2
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.40.2
 
 ## [0.40.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.40.0...nuxt-v0.40.1) (2025-09-06)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.40.1
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.40.1
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.40.1
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.40.1
 
 ## [0.40.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.30.5...nuxt-v0.40.0) (2025-09-03)
 
-
 ### ⚠ BREAKING CHANGES
 
-* **BSort:** Implement initial-sort-direction and move compare from sort-by to fields ([#2777](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2777))
-* Merged the Orchestrator components into one.
-* renamed the controller composables to `useToast`, `useModal`, and `usePopover`
-* combined the old plugins to match the new BApp and composables.
-* the old `useModal` was removed since `useToggle` does all what it did.
-* new `BApp` component as the recommended way to configure bootstrap-vue-next applications, replacing the plugin-based approach.
+- **BSort:** Implement initial-sort-direction and move compare from sort-by to fields ([#2777](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2777))
+- Merged the Orchestrator components into one.
+- renamed the controller composables to `useToast`, `useModal`, and `usePopover`
+- combined the old plugins to match the new BApp and composables.
+- the old `useModal` was removed since `useToggle` does all what it did.
+- new `BApp` component as the recommended way to configure bootstrap-vue-next applications, replacing the plugin-based approach.
 
 ### Features
 
-* **BSort:** Implement initial-sort-direction and move compare from sort-by to fields ([#2777](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2777)) ([b3eec6e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b3eec6eaabf654bb21124b9601d9c3809e5eb0cc))
-* combined the old plugins to match the new BApp and composables. ([ba90f59](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba90f596ad3376ebddda535bf8b88232c60befff))
-* Merged the Orchestrator components into one. ([ba90f59](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba90f596ad3376ebddda535bf8b88232c60befff))
-* new `BApp` component as the recommended way to configure bootstrap-vue-next applications, replacing the plugin-based approach.  ([ba90f59](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba90f596ad3376ebddda535bf8b88232c60befff))
-* renamed the controller composables to `useToast`, `useModal`, and `usePopover` ([ba90f59](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba90f596ad3376ebddda535bf8b88232c60befff))
-* the old `useModal` was removed since `useToggle` does all what it did. ([ba90f59](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba90f596ad3376ebddda535bf8b88232c60befff))
-
+- **BSort:** Implement initial-sort-direction and move compare from sort-by to fields ([#2777](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2777)) ([b3eec6e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b3eec6eaabf654bb21124b9601d9c3809e5eb0cc))
+- combined the old plugins to match the new BApp and composables. ([ba90f59](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba90f596ad3376ebddda535bf8b88232c60befff))
+- Merged the Orchestrator components into one. ([ba90f59](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba90f596ad3376ebddda535bf8b88232c60befff))
+- new `BApp` component as the recommended way to configure bootstrap-vue-next applications, replacing the plugin-based approach. ([ba90f59](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba90f596ad3376ebddda535bf8b88232c60befff))
+- renamed the controller composables to `useToast`, `useModal`, and `usePopover` ([ba90f59](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba90f596ad3376ebddda535bf8b88232c60befff))
+- the old `useModal` was removed since `useToggle` does all what it did. ([ba90f59](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba90f596ad3376ebddda535bf8b88232c60befff))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.40.0
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.40.0
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.40.0
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.40.0
 
 ## [0.30.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.30.4...nuxt-v0.30.5) (2025-08-13)
 

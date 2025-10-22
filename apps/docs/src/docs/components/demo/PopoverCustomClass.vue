@@ -7,7 +7,7 @@
     >
       <template #target>
         <BButton
-          href="#"
+          href="#popover-custom-class"
           tabindex="0"
           >Button</BButton
         >

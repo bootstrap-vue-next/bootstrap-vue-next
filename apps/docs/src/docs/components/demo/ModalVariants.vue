@@ -94,38 +94,38 @@ import {ref} from 'vue'
 const show = ref(false)
 
 const bgVariants = [
-  { value: null, text: 'None' },
-  { value: 'primary', text: 'Primary' },
-  { value: 'secondary', text: 'Secondary' },
-  { value: 'success', text: 'Success' },
-  { value: 'warning', text: 'Warning' },
-  { value: 'danger', text: 'Danger' },
-  { value: 'info', text: 'Info' },
-  { value: 'light', text: 'Light' },
-  { value: 'dark', text: 'Dark' },
+  {value: null, text: 'None'},
+  {value: 'primary', text: 'Primary'},
+  {value: 'secondary', text: 'Secondary'},
+  {value: 'success', text: 'Success'},
+  {value: 'warning', text: 'Warning'},
+  {value: 'danger', text: 'Danger'},
+  {value: 'info', text: 'Info'},
+  {value: 'light', text: 'Light'},
+  {value: 'dark', text: 'Dark'},
 ] as const
 
 const textVariants = [
-  { value: null, text: 'None' },
-  { value: 'primary', text: 'Primary' },
-  { value: 'secondary', text: 'Secondary' },
-  { value: 'success', text: 'Success' },
-  { value: 'warning', text: 'Warning' },
-  { value: 'danger', text: 'Danger' },
-  { value: 'info', text: 'Info' },
-  { value: 'light', text: 'Light' },
-  { value: 'dark', text: 'Dark' },
-  { value: 'white', text: 'White' },
-  { value: 'body', text: 'Body' },
+  {value: null, text: 'None'},
+  {value: 'primary', text: 'Primary'},
+  {value: 'secondary', text: 'Secondary'},
+  {value: 'success', text: 'Success'},
+  {value: 'warning', text: 'Warning'},
+  {value: 'danger', text: 'Danger'},
+  {value: 'info', text: 'Info'},
+  {value: 'light', text: 'Light'},
+  {value: 'dark', text: 'Dark'},
+  {value: 'white', text: 'White'},
+  {value: 'body', text: 'Body'},
 ] as const
 
 type BgVariant = (typeof bgVariants)[number]['value']
 type TextVariant = (typeof textVariants)[number]['value']
 
-const headerBgVariant  = ref<BgVariant>('dark')
+const headerBgVariant = ref<BgVariant>('dark')
 const headerTextVariant = ref<TextVariant>('white')
-const bodyBgVariant    = ref<BgVariant>('light')
-const bodyTextVariant  = ref<TextVariant>('dark')
-const footerBgVariant  = ref<BgVariant>('warning')
+const bodyBgVariant = ref<BgVariant>('light')
+const bodyTextVariant = ref<TextVariant>('dark')
+const footerBgVariant = ref<BgVariant>('warning')
 const footerTextVariant = ref<TextVariant>('dark')
 </script>

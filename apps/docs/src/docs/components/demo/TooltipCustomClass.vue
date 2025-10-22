@@ -4,7 +4,7 @@
     <BTooltip body-class="my-tooltip-body-class">
       <template #target>
         <BButton
-          href="#"
+          href="#tooltip-custom-class"
           tabindex="0"
           >Button</BButton
         >
@@ -17,7 +17,7 @@
     >
       <template #target>
         <BButton
-          href="#"
+          href="#tooltip-custom-class"
           tabindex="1"
           >Button</BButton
         >

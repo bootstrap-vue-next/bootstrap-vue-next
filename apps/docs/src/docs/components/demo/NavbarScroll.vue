@@ -6,16 +6,16 @@
     variant="primary"
     class="navbar-nav-scroll"
   >
-    <BNavbarBrand href="#">NavBar</BNavbarBrand>
+    <BNavbarBrand href="#navbar-scroll">NavBar</BNavbarBrand>
     <BNavbarToggle target="nav-scroll" />
     <BCollapse
       id="nav-scroll"
       is-nav
     >
       <BNavbarNav>
-        <BNavItem href="#">Link</BNavItem>
+        <BNavItem href="#navbar-scroll">Link</BNavItem>
         <BNavItem
-          href="#"
+          href="#navbar-scroll"
           disabled
           >Disabled</BNavItem
         >
@@ -26,18 +26,18 @@
           text="Lang"
           right
         >
-          <BDropdownItem href="#">EN</BDropdownItem>
-          <BDropdownItem href="#">ES</BDropdownItem>
-          <BDropdownItem href="#">RU</BDropdownItem>
-          <BDropdownItem href="#">FA</BDropdownItem>
+          <BDropdownItem>EN</BDropdownItem>
+          <BDropdownItem>ES</BDropdownItem>
+          <BDropdownItem>RU</BDropdownItem>
+          <BDropdownItem>FA</BDropdownItem>
         </BNavItemDropdown>
         <BNavItemDropdown right>
           <!-- Using 'button-content' slot -->
           <template #button-content>
             <em>User</em>
           </template>
-          <BDropdownItem href="#">Profile</BDropdownItem>
-          <BDropdownItem href="#">Sign Out</BDropdownItem>
+          <BDropdownItem>Profile</BDropdownItem>
+          <BDropdownItem>Sign Out</BDropdownItem>
         </BNavItemDropdown>
       </BNavbarNav>
       <BNavForm class="d-flex">

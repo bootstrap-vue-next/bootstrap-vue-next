@@ -4,10 +4,18 @@
     tabs
     fill
   >
-    <BNavItem active>Active</BNavItem>
-    <BNavItem>Link</BNavItem>
-    <BNavItem>Link with a long name </BNavItem>
-    <BNavItem disabled>Disabled</BNavItem>
+    <BNavItem
+      active
+      href="#nav-fill"
+      >Active</BNavItem
+    >
+    <BNavItem href="#nav-fill">Link</BNavItem>
+    <BNavItem href="#nav-fill">Link with a long name </BNavItem>
+    <BNavItem
+      disabled
+      href="#nav-fill"
+      >Disabled</BNavItem
+    >
   </BNav>
   <!-- #endregion template -->
 </template>

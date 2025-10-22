@@ -9,9 +9,17 @@
         card-header
         tabs
       >
-        <BNavItem active>Active</BNavItem>
-        <BNavItem>Inactive</BNavItem>
-        <BNavItem disabled>Disabled</BNavItem>
+        <BNavItem
+          active
+          href="#nav-tab-card"
+          >Active</BNavItem
+        >
+        <BNavItem href="#nav-tab-card">Inactive</BNavItem>
+        <BNavItem
+          disabled
+          href="#nav-tab-card"
+          >Disabled</BNavItem
+        >
       </BNav>
     </BCardHeader>
 

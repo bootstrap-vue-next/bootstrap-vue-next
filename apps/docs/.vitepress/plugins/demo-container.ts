@@ -42,6 +42,14 @@ export const demoContainer = (md: MarkdownRenderer, srcDir: string) => {
     const {filepath, extension, region, lines, lang, title} = rawPathToToken(rawPath)
     const component = isDemo ? `<${title.substring(0, title.indexOf('.'))}/>` : ''
 
+    // Generate kebab-case ID from filename (without extension)
+    const dotIndex = title.lastIndexOf('.')
+    const filename = (dotIndex === -1 ? title : title.substring(0, dotIndex)).trim()
+    const kebabCaseId = filename
+      .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+      .replace(/[\s_]+/g, '-')
+      .toLowerCase()
+
     // Resolve path early so it can be used in the prefix token
     const {realPath, path: _path} = state.env as MarkdownEnv
     const resolvedPath = path.resolve(path.dirname(realPath ?? _path), filepath)
@@ -62,12 +70,12 @@ export const demoContainer = (md: MarkdownRenderer, srcDir: string) => {
     state.line += 1
 
     const prefixToken = state.push('html_block', '', 0)
-    prefixToken.content = `<HighlightCard full-file="${encodedFullFile}" title="${title}">${component}<template #html>`
+    prefixToken.content = `<HighlightCard id="${kebabCaseId}" full-file="${encodedFullFile}" title="${title}">${component}<template #html>`
 
     const codeToken = state.push('fence', 'code', 0)
     codeToken.info = `${lang || extension}${lines ? `{${lines}}` : ''}${title ? `[${title}]` : ''}`
 
-    // @ts-expect-error - VitePress fence token type doesn't include src property
+    // @ts-expect-error - property 'src' does not exist on type 'Token'
     codeToken.src = [resolvedPath, region.slice(1)]
     codeToken.markup = '```'
     codeToken.map = [startLine, startLine + 1]

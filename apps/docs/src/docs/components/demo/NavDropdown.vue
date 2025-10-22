@@ -1,8 +1,12 @@
 <template>
   <!-- #region template -->
   <BNav pills>
-    <BNavItem active>Active</BNavItem>
-    <BNavItem>Link</BNavItem>
+    <BNavItem
+      active
+      href="#nav-dropdown"
+      >Active</BNavItem
+    >
+    <BNavItem href="#nav-dropdown">Link</BNavItem>
     <BNavItemDropdown
       id="my-nav-dropdown"
       text="Dropdown"
