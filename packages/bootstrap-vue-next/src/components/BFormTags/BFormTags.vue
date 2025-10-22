@@ -321,7 +321,7 @@ const onChange = (e: Readonly<Event>): void => {
 }
 
 const onKeydown = (e: Readonly<KeyboardEvent>): void => {
-  if (e.key === 'Enter' && !props.noAddOnEnter) {
+  if ((e.key === 'Enter' || e.code === 'NumpadEnter') && !props.noAddOnEnter) {
     addTag(inputValue.value)
     return
   }

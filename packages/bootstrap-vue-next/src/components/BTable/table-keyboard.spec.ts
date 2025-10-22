@@ -72,6 +72,24 @@ describe('BTable keyboard navigation', () => {
       expect(nameHeader.attributes('aria-sort')).toBe('ascending')
     })
 
+    it('should trigger sort when NumpadEnter key is pressed on header', async () => {
+      const wrapper = mount(BTable, {
+        props: {
+          items: testItems,
+          fields: testFields,
+        },
+      })
+
+      const nameHeader = wrapper.find('th[tabindex="0"]')
+
+      // Simulate NumpadEnter key press
+      await nameHeader.trigger('keydown', {code: 'NumpadEnter'})
+
+      // Check that sort was applied (aria-sort should change)
+      await nextTick()
+      expect(nameHeader.attributes('aria-sort')).toBe('ascending')
+    })
+
     it('should trigger sort when Space key is pressed on header', async () => {
       const wrapper = mount(BTable, {
         props: {
@@ -135,6 +153,25 @@ describe('BTable keyboard navigation', () => {
 
       // Simulate Enter key press
       await firstRow.trigger('keydown', {code: 'Enter'})
+
+      // Check that row-clicked event was emitted
+      expect(wrapper.emitted('row-clicked')).toBeTruthy()
+      expect(wrapper.emitted('row-clicked')![0][0]).toEqual(testItems[0])
+    })
+
+    it('should trigger row click when NumpadEnter key is pressed', async () => {
+      const wrapper = mount(BTable, {
+        props: {
+          items: testItems,
+          fields: testFields,
+          selectable: true,
+        },
+      })
+
+      const firstRow = wrapper.find('tbody tr[tabindex="0"]')
+
+      // Simulate NumpadEnter key press
+      await firstRow.trigger('keydown', {code: 'NumpadEnter'})
 
       // Check that row-clicked event was emitted
       expect(wrapper.emitted('row-clicked')).toBeTruthy()
@@ -207,6 +244,27 @@ describe('BTable keyboard navigation', () => {
       expect(firstRow.classes()).toContain('selected')
     })
 
+    it('should work with selection mode using NumpadEnter', async () => {
+      const wrapper = mount(BTable, {
+        props: {
+          'items': testItems,
+          'fields': testFields,
+          'selectable': true,
+          'selectedItems': [],
+          'onUpdate:selectedItems': (value) => wrapper.setProps({selectedItems: value}),
+        },
+      })
+
+      const firstRow = wrapper.find('tbody tr[tabindex="0"]')
+
+      // Simulate NumpadEnter key press to select row
+      await firstRow.trigger('keydown', {code: 'NumpadEnter'})
+      await nextTick()
+
+      // Row should be selected (have the selected class)
+      expect(firstRow.classes()).toContain('selected')
+    })
+
     it('should work with sorting', async () => {
       const wrapper = mount(BTable, {
         props: {
@@ -219,6 +277,28 @@ describe('BTable keyboard navigation', () => {
 
       // Sort using keyboard
       await nameHeader.trigger('keydown', {code: 'Enter'})
+      await nextTick()
+
+      // Check that table data is sorted
+      const rows = wrapper.findAll('tbody tr')
+      const firstRowData = rows[0].findAll('td')
+
+      // After sorting by name ascending, Bob Johnson should be first
+      expect(firstRowData[0].text()).toBe('Bob Johnson')
+    })
+
+    it('should work with sorting using NumpadEnter', async () => {
+      const wrapper = mount(BTable, {
+        props: {
+          items: testItems,
+          fields: testFields,
+        },
+      })
+
+      const nameHeader = wrapper.find('th[tabindex="0"]')
+
+      // Sort using keyboard with NumpadEnter
+      await nameHeader.trigger('keydown', {code: 'NumpadEnter'})
       await nextTick()
 
       // Check that table data is sorted
