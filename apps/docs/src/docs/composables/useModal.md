@@ -14,19 +14,7 @@ To use `useModal`, you need one of the following setup approaches:
 
 The easiest way is to wrap your application with the `BApp` component, which automatically sets up the orchestrator and registry:
 
-<HighlightCard>
-<template #html>
-
-```vue
-<template>
-  <BApp>
-    <router-view />
-  </BApp>
-</template>
-```
-
-</template>
-</HighlightCard>
+<<< FRAGMENT ./demo/UseModalSetup.vue
 
 ### Plugin Setup (Legacy)
 
@@ -38,67 +26,13 @@ Alternatively, you can use the traditional plugin approach.
 
 Creating a modal is done through the `create` method:
 
-<HighlightCard>
-  <BButton @click="showExample">Click me</BButton>
-
-<template #html>
-
-```vue
-<template>
-  <BButton @click="showExample">Click me</BButton>
-</template>
-
-<script setup lang="ts">
-const {create} = useModal()
-
-const showExample = async () => {
-  const value = await create({title: 'Hello World!'}).show()
-
-  create({
-    body: `Promise resolved to object with {ok: ${value.ok}, trigger: ${value.trigger}}`,
-    variant: 'info',
-  }).show()
-}
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/UseModalBasic.vue
 
 ### Reactivity Within `create`
 
 `create` props property can accept a `MaybeRef`, meaning that you can make properties reactive
 
-<HighlightCard>
-  <BButton @click="showReactiveExample">Click me</BButton>
-
-<template #html>
-
-```vue
-<template>
-  <BButton @click="showReactiveExample">Click me</BButton>
-</template>
-
-<script setup lang="ts">
-const {create} = useModal()
-
-const title = ref('Hello')
-onMounted(() => {
-  setInterval(() => {
-    title.value = title.value === 'Hello' ? 'World' : 'Hello'
-  }, 2500)
-})
-
-const showReactiveExample = () => {
-  create({
-    title: title,
-  }).show()
-}
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/UseModalReactive.vue
 
 ### Advanced Creation
 
@@ -106,51 +40,11 @@ Using props can work for most situations, but it leaves some finer control to be
 
 You can also use component slots to render what you want. This is done through the `slots` property. The `slots` property is an object that contains the slot name as the key and a render function or component as the value. The render function is passed a `scope` object that contains the slots scope.
 
-<HighlightCard>
-  <BButton @click="showMeAdvancedExample">Click me</BButton>
-
-<template #html>
-
-```vue
-<template>
-  <BButton @click="showMeAdvancedExample">Click me</BButton>
-</template>
-
-<script setup lang="ts">
-const {create} = useModal()
-
-const firstRef = ref({
-  body: `${Math.random()}`,
-})
-onMounted(() => {
-  setInterval(() => {
-    firstRef.value.body = `${Math.random()}`
-  }, 1000)
-})
-const showMeAdvancedExample = () => {
-  create({
-    slots: {
-      default: (scope) =>
-        h('div', null, {default: () => `custom ${firstRef.value.body} - ${scope.visible}`}),
-    },
-  }).show()
-
-  // Demonstration pseudocode, you can import a component and use it
-  // const importedComponent = () => {
-  //   create({
-  //     component: (await import('./TestModal.vue')).default,
-  //   })
-  // }
-}
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/UseModalAdvanced.vue
 
 ### Return Value
 
-The `create` method returns a promise that resolves after the modal has been hidden to a `BvTriggerableEvent` object.  
+The `create` method returns a promise that resolves after the modal has been hidden to a `BvTriggerableEvent` object.
 Using the `resolveOnHide` option (in the second argument), the promise resolves at the time the modal begins hiding, rather than after it is fully hidden.
 
 ```js
@@ -211,99 +105,9 @@ await using modal = create({title: 'Hello World!'})
 
 In addition to creating modals in a global context, you can also hide modals from anywhere in the app. This feature does not require an orchestrator component to be present.
 
-<HighlightCard>
-  <BButton @click="nestedModal1 = !nestedModal1">Open First Modal</BButton>
- 
-  <template #html>
-
-```vue
-<template>
-  <BButton @click="nestedModal1 = !nestedModal1">Open First Modal</BButton>
-  <BModal v-model="nestedModal1" title="First Modal" ok-only>
-    <p class="my-2">First Modal</p>
-    <BButtonGroup>
-      <BButton @click="nestedModal2 = !nestedModal2">Open Second Modal</BButton>
-      <BButton @click="hide">Hide Last</BButton>
-      <BButton @click="hideAll">Hide All</BButton>
-    </BButtonGroup>
-  </BModal>
-  <BModal v-model="nestedModal2" title="Second Modal" ok-only>
-    <p class="my-2">Second Modal</p>
-    <BButtonGroup>
-      <BButton @click="nestedModal3 = !nestedModal3" size="sm">Open Third Modal</BButton>
-      <BButton @click="hide">Hide Last</BButton>
-      <BButton @click="hideAll">Hide All</BButton>
-    </BButtonGroup>
-  </BModal>
-  <BModal v-model="nestedModal3" title="Third Modal" ok-only>
-    <p class="my-1">Third Modal</p>
-    <BButtonGroup>
-      <BButton @click="hide">Hide Last</BButton>
-      <BButton @click="hideAll">Hide All</BButton>
-    </BButtonGroup>
-  </BModal>
-</template>
+<<< DEMO ./demo/UseModalNested.vue
 
 <script setup lang="ts">
-const nestedModal1 = ref(false)
-const nestedModal2 = ref(false)
-const nestedModal3 = ref(false)
-
-const {hide, hideAll} = useModal()
-</script>
-```
-
-  </template>
-</HighlightCard>
-
-<script setup lang="ts">
-import {useModal} from 'bootstrap-vue-next/composables/useModal'
-import HighlightCard from '../../components/HighlightCard.vue'
-
 import UsePluginAlert from '../../components/UsePluginAlert.vue'
-import {ref, computed, h, onMounted, nextTick} from 'vue'
 import ComposableHeader from './ComposableHeader.vue'
-
-const nestedModal1 = ref(false)
-const nestedModal2 = ref(false)
-const nestedModal3 = ref(false)
-
-const {hide, hideAll, create} = useModal()
-
-const title = ref('Hello')
-
-onMounted(() => {
-  setInterval(() => {
-    title.value = title.value === 'Hello' ? 'World' : 'Hello'
-  }, 1000)
-})
-
-const showExample = async () => {
-  const value = await create({ body: 'Hello World!' }).show()
-  await nextTick()
-  create({ body: `Promise resolved to object with {ok: ${value.ok}, trigger: ${value.trigger}}`, variant: 'info' }).show()
-}
-
-const showReactiveExample = () => {
-  create({
-      title: title,
-  }).show()
-}
-
-const firstRef = ref({
-  body: `${Math.random()}`,
-})
-onMounted(() => {
-  setInterval(() => {
-    firstRef.value.body = `${Math.random()}`
-  }, 1000)
-})
-
-const showMeAdvancedExample = () => {
-  create({
-    slots: {
-      default: (scope) => h('div', null, {default: () => `custom ${firstRef.value.body} - ${scope.visible}`}),
-    },
-  }).show()
-}
 </script>
