@@ -474,7 +474,7 @@ const handleHeaderKeydown = (field: TableField<Items>, event: KeyboardEvent, isF
 
   if (target && (target as Element).tagName !== 'TH' && document.activeElement === target) return
 
-  if (code === 'Enter' || code === 'Space') {
+  if (code === 'Enter' || code === 'NumpadEnter' || code === 'Space') {
     stopEvent(event)
     headerClicked(field, event as unknown as MouseEvent, isFooter)
   }
@@ -485,7 +485,7 @@ const handleRowKeydown = (item: Items, itemIndex: number, event: KeyboardEvent) 
 
   if (target && (target as Element).tagName !== 'TR' && document.activeElement === target) return
 
-  if (code === 'Enter' || code === 'Space') {
+  if (code === 'Enter' || code === 'NumpadEnter' || code === 'Space') {
     stopEvent(event)
     emit('row-clicked', item, itemIndex, event as unknown as MouseEvent)
     return
