@@ -46,13 +46,13 @@ Optional second argument can be passed to `create` to some options: `keep` and `
 
 ### Advanced usage
 
-Using props can work for most situations, but it leaves some finer control to be desired. For instance, you can add HTML to any `slot` value. This can either be an imported SFC or an inline render function. For reactvity, you must use a getter function.
+Using props can work for most situations, but it leaves some finer control to be desired. For instance, you can add HTML to any `slot` value. This can either be an imported SFC or an inline render function. For reactivity, you must use a getter function.
 
 <<< DEMO ./demo/UseToastAdvanced.vue
 
 ## Programmatically Hiding a Toast
 
-Hiding a `Toast` programmatically is very simple. `create` return an object that has functions to control the toast, including `destroy`
+Hiding a `Toast` programmatically is very simple. `create` returns an object that has functions to control the toast, including `destroy`
 
 <<< DEMO ./demo/UseToastProgrammatic.vue
 

@@ -27,7 +27,9 @@ const breadcrumb = useBreadcrumb()
 const inputValue = ref('')
 
 const addItem = () => {
-  breadcrumb.items?.value.push(inputValue.value)
+  if (breadcrumb.items?.value) {
+    breadcrumb.items.value.push(inputValue.value)
+  }
   inputValue.value = ''
 }
 </script>

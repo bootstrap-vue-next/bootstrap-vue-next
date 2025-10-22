@@ -29,7 +29,7 @@ onUnmounted(() => {
 const showMe = () => {
   create({
     body: firstRef.value.body,
-    slots: {default: () => h('div', null, {default: () => `custom! ${firstRef.value.body}`})},
+    slots: {default: () => h('div', null, `custom! ${firstRef.value.body}`)},
   })
   // Demonstration pseudocode, you can also import a component and use it
   // const importedComponent () => {

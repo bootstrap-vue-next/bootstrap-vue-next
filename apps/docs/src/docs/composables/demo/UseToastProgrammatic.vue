@@ -29,7 +29,7 @@ const showMe = () => {
     title: 'Showing',
     body: 'Toast is now showing',
     variant: 'success',
-    pos: 'bottom-center',
+    position: 'bottom-center',
   })
 }
 

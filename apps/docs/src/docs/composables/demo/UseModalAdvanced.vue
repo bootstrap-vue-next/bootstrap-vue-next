@@ -20,7 +20,7 @@ const showMeAdvancedExample = () => {
   create({
     slots: {
       default: (scope) =>
-        h('div', null, {default: () => `custom ${firstRef.value.body} - ${scope.visible}`}),
+        h('div', null, `custom ${firstRef.value.body} - ${scope.visible}`),
     },
   }).show()
 
