@@ -7,12 +7,6 @@
       class="mx-3"
       >Close reason: {{ reason }}</span
     >
-    <BModal
-      id="promise-modal"
-      title="Promise Modal"
-    >
-      <p>This modal will close after 2 seconds</p>
-    </BModal>
   </div>
 </template>
 
@@ -32,6 +26,6 @@ async function testToggle() {
     // eslint-disable-next-line no-console
     console.log('closed with', e)
   }
-  reason.value = e as string
+  reason.value = String(e)
 }
 </script>
