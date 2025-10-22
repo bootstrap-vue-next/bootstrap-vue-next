@@ -1,0 +1,10 @@
+<template>
+  <BFormFile
+    class="mt-3"
+    :state="false"
+  />
+  <BFormFile
+    class="mt-3"
+    :state="true"
+  />
+</template>

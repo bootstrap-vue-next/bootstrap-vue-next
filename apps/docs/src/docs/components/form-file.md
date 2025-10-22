@@ -14,155 +14,37 @@ The current variation is subject to change pre v1.0. The implementation may chan
 
 The default behavior is single file mode. While using single file mode the `modelValue` will be a single `File` object
 
-<HighlightCard>
-  <BFormFile v-model="first" label="Hello!" />
-  <div class="mt-3">
-    File: <strong>{{ first }}</strong>
-  </div>
-  <template #html>
-
-```vue
-<template>
-  <BFormFile v-model="file" label="Hello!" />
-  <div class="mt-3">
-    Files: <strong>{{ file }}</strong>
-  </div>
-</template>
-
-<script setup lang="ts">
-const file = ref<null | File>(null)
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormFileSingle.vue
 
 ## Multiple File Mode
 
 To toggle multiple file mode, simply set the `multiple` prop to `true`. While in multiple file mode, the `modelValue` will be a `File[]`, even if only one file is selected
 
-<HighlightCard>
-  <BFormFile v-model="second" multiple />
-  <div class="mt-3">
-    Files: <strong>{{ second }}</strong>
-  </div>
-  <template #html>
-
-```vue
-<template>
-  <BFormFile v-model="files" multiple />
-  <div class="mt-3">
-    Files: <strong>{{ files }}</strong>
-  </div>
-</template>
-
-<script setup lang="ts">
-const files = ref<null | File[]>(null)
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormFileMultiple.vue
 
 ## Limiting to certain file types
 
 You can limit the file types by setting the `accept` prop. The `accept` attribute is a csv list of acceptable types. This can be a `string` or `string[]`. If a `string[]` is inputted, it simply gets joined as a csv list
 
-<HighlightCard>
-  <BFormFile v-model="third" accept="image/*" />
-  <div class="mt-3">
-    File: <strong>{{ third }}</strong>
-  </div>
-  <template #html>
-
-```vue
-<template>
-  <BFormFile v-model="file" accept="image/*" />
-  <div class="mt-3">
-    Files: <strong>{{ file }}</strong>
-  </div>
-</template>
-
-<script setup lang="ts">
-const file = ref<null | File>(null)
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormFileAccept.vue
 
 ## Drag and Drop Support
 
 Drag and drop support uses the browsers default behavior. You can explicitly disable drag and drop by using the `noDrop` prop
 
-<HighlightCard>
-  <BFormFile v-model="fourth" no-drop />
-  <div class="mt-3">
-    File: <strong>{{ fourth }}</strong>
-  </div>
-  <template #html>
-
-```vue
-<template>
-  <BFormFile v-model="file" no-drop />
-  <div class="mt-3">
-    Files: <strong>{{ file }}</strong>
-  </div>
-</template>
-
-<script setup lang="ts">
-const file = ref<null | File>(null)
-</script>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormFileNoDrop.vue
 
 ## Sizing
 
 You can modify the size of the form control by using the `size` prop
 
-<HighlightCard>
-  <BFormFile class="mt-3" size="sm" />
-  <BFormFile class="mt-3" />
-  <BFormFile class="mt-3" size="lg" />
-
-<template #html>
-
-```vue-html
-<BFormFile class="mt-3" size="sm" />
-<BFormFile class="mt-3" />
-<BFormFile class="mt-3" size="lg" />
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormFileSizing.vue#template{vue-html}
 
 ## Label
 
 You can add a label above the input by using the `label` prop or the `label` slot
 
-<HighlightCard>
-  <BFormFile label="I am first!" />
-  <BFormFile>
-    <template #label>
-      I am second!
-    </template>
-  </BFormFile>
-
-<template #html>
-
-```vue-html
-<BFormFile class="mt-3" label="I am first!" />
-<BFormFile class="mt-3">
-  <template #label>
-    I am second!
-  </template>
-</BFormFile>
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormFileLabel.vue#template{vue-html}
 
 ## Directory Mode
 
@@ -178,35 +60,13 @@ By adding the `directory` prop, a user can select directories instead of files
 
 If you set the `autofocus` prop to true, the input will be focused when the component is inserted
 
-<HighlightCard>
-  <BFormFile class="mt-3" autofocus />
-
-<template #html>
-
-```vue-html
-<BFormFile class="mt-3" autofocus />
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormFileAutofocus.vue#template{vue-html}
 
 ## Contextual State
 
 You can use the `state` prop to provide visual feedback on the state of the input
 
-<HighlightCard>
-  <BFormFile class="mt-3" :state="false" />
-  <BFormFile class="mt-3" :state="true" />
-
-<template #html>
-
-```vue-html
-<BFormFile class="mt-3" :state="false" />
-<BFormFile class="mt-3" :state="true" />
-```
-
-  </template>
-</HighlightCard>
+<<< DEMO ./demo/FormFileState.vue#template{vue-html}
 
 ## Modifying the file selection
 
@@ -224,12 +84,4 @@ The BFormFile exposes functions to control the component: `focus(), blur(), rese
 
 <script setup lang="ts">
 import {data} from '../../data/components/formFile.data'
-import ComponentReference from '../../components/ComponentReference.vue'
-import HighlightCard from '../../components/HighlightCard.vue'
-import {ref} from 'vue'
-
-const first = ref(null)
-const second = ref(null)
-const third = ref(null)
-const fourth = ref(null)
 </script>

@@ -1,4 +1,3 @@
-```vue
 <template>
   <BFormSelect
     v-model="selected"

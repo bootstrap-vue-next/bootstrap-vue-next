@@ -1,0 +1,46 @@
+<template>
+  <BPlaceholderTable
+    columns="3"
+    rows="2"
+    show-footer
+    footer-variant="info"
+    header-size="lg"
+    footer-size="xs"
+    footer-columns="1"
+    header-columns="4"
+  >
+    <template #default>
+      <tbody>
+        <tr>
+          <td>
+            <BPlaceholder
+              size="lg"
+              variant="secondary"
+            />
+            <BPlaceholder
+              size="sm"
+              variant="secondary"
+            />
+            <BPlaceholder
+              size="xs"
+              variant="secondary"
+            />
+          </td>
+          <td>
+            <BPlaceholder variant="warning" />
+            <BPlaceholder
+              animation="wave"
+              variant="warning"
+            />
+          </td>
+          <td>
+            <BPlaceholder
+              animation="glow"
+              variant="danger"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </template>
+  </BPlaceholderTable>
+</template>

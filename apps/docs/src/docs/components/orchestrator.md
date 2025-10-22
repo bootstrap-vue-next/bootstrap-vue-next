@@ -23,62 +23,17 @@ The `BOrchestrator` component manages the rendering and positioning of dynamic c
 
 </HighlightCard>
 
-<HighlightCard>
-<template #html>
-
-```vue
-<template>
-  <BOrchestrator append-toast />
-</template>
-
-<script setup lang="ts">
-import {BOrchestrator} from 'bootstrap-vue-next'
-</script>
-```
-
-</template>
-</HighlightCard>
+<<< DEMO ./demo/OrchestratorInternal.vue
 
 ## Advanced Usage
 
 ### Custom Filtering
 
-<HighlightCard>
-<template #html>
-
-```vue
-<template>
-  <BOrchestrator :filter="customFilter" />
-</template>
-
-<script setup lang="ts">
-import {BOrchestrator} from 'bootstrap-vue-next'
-import type {OrchestratorArrayValue} from 'bootstrap-vue-next'
-
-const customFilter = (item: OrchestratorArrayValue) => {
-  // Only show high-priority items
-  return item.options?.priority === 'high'
-}
-</script>
-```
-
-</template>
-</HighlightCard>
+<<< DEMO ./demo/OrchestratorFilter.vue
 
 ### Selective Component Types
 
-<HighlightCard>
-<template #html>
-
-```vue
-<template>
-  <!-- Only render toasts, no modals or popovers -->
-  <BOrchestrator no-modals no-popovers />
-</template>
-```
-
-</template>
-</HighlightCard>
+<<< FRAGMENT ./demo/OrchestratorSelective.vue#template{vue-html}
 
 ## Related Components
 
