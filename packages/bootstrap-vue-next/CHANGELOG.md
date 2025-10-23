@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.40.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.6...bootstrapvuenext-v0.40.7) (2025-10-22)
+
+
+### Features
+
+* add NumpadEnter support for BTable and BFormTags keyboard navigation (accessibility) ([#2884](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2884)) ([bdf6fee](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bdf6fee56eaf708d1b14e89f0179c4d44b7bf063))
+
 ## [0.40.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.5...bootstrapvuenext-v0.40.6) (2025-10-07)
 
 ### Bug Fixes
