@@ -2,7 +2,8 @@
 
 <PageHeader>
 
-Placeholders are components that indicate that something may still be loading.
+Placeholders are components that allows you to display a loading state for
+several component types while your data is being fetched or computed.
 
 </PageHeader>
 
@@ -22,7 +23,9 @@ You can adjust the width using props `width` and `cols`. Cols is a number value 
 
 Bootstrap supports two types of animations, `wave` and `glow`.
 
-- Note: when using `BPlaceholderCard`, the image does not inherit an animation
+::: info NOTE
+When using `BPlaceholderCard`, the image does not inherit an animation
+:::
 
 <<< DEMO ./demo/PlaceholderAnimation.vue#template{vue-html}
 
@@ -83,6 +86,12 @@ You can adjust the number of columns and rows using props `columns` and `rows` r
 Optionally, you can manually adjust any scope of the table using slots. The following slots are available: `thead`, `default`, and `tfoot`. Do note that the slots wrap the **entire** table scope, slot `thead` is the entire thead, and slot `default` is the entire tbody, so you will likely need to manually wrap your slot usages in these elements if you plan on using them.
 
 <<< DEMO ./demo/PlaceholderTableAdvanced.vue#template{vue-html}
+
+## Styling and customization
+
+The `<BPlaceholder>` component and helper components utilize Bootstrap SCSS variables, as much as
+possible to best match the styling and sizing of the native components. This means if you've
+customized Bootstrap SCSS, the skeleton components should adapt to fit your custom theming.
 
 <ComponentReference :data="data" />
 
