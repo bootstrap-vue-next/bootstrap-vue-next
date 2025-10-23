@@ -920,7 +920,7 @@ See the [v-html](#v-html) section for information on deprecation of the `label-h
 `animation` values have changed from `Wave`, `Fade`, `Throb` and `None` to `wave`, `glow`,
 and `undefined` to reflect the [Bootstrap 5 animations](https://getbootstrap.com/docs/5.3/components/placeholders/#animation)
 
-`type` has been deprecated. [`BPlaceHolderButton`](/docs/components/placeholder#placeholder-buttons) is a replacement for the button type.
+`type` has been deprecated. [`BPlaceholderButton`](/docs/components/placeholder#placeholder-buttons) is a replacement for the button type.
 If you find a need for the other types (Avatar or Input), please open an issue or propose a pull request.
 
 ### BTable

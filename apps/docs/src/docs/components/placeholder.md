@@ -89,7 +89,7 @@ Optionally, you can manually adjust any scope of the table using slots. The foll
 
 ## Styling and customization
 
-The `<BSkeleton>` component and helper components utilizes Bootstrap SCSS variables, as much as
+The `<BPlaceholder>` component and helper components utilize Bootstrap SCSS variables, as much as
 possible to best match the styling and sizing of the native components. This means if you've
 customized Bootstrap SCSS, the skeleton components should adapt to fit your custom theming.
 
