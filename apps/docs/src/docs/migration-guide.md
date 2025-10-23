@@ -915,6 +915,14 @@ See the [v-html](#v-html) section for information on deprecation of the `label-h
 [icon documentation](/docs/icons) for details. This functionality can be replicated by using
 `<BPlaceholderWrapper>` with your choice of icon replacement in the `loading` slot.
 
+`<BSkeletonImg>` is deprecated, using `<BPlaceholderWrapper>` should be a workable replacement.
+
+`animation` values have changed from `Wave`, `Fade`, `Throb` and `None` to `wave`, `glow`,
+and `undefined` to reflect the [Bootstrap 5 animations](https://getbootstrap.com/docs/5.3/components/placeholders/#animation)
+
+`type` has been deprecated. [`BPlaceHolderButton`](/docs/components/placeholder#placeholder-buttons) is a replacement for the button type.
+If you find a need for the other types (Avatar or Input), please open an issue or propose a pull request.
+
 ### BTable
 
 <NotYetDocumented type="component"/>
