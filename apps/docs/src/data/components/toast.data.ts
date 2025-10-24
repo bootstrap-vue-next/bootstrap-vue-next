@@ -8,7 +8,7 @@ import {
 import {omit, pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 import {linkedBLinkSection, type linkProps} from '../../utils/linkProps'
-import {showHideEmits, showHideProps} from '../../utils/showHideData'
+import {buildDismissibleEmits, showHideProps} from '../../utils/showHideData'
 
 export default {
   load: (): ComponentReference => ({
@@ -69,43 +69,7 @@ export default {
         'BLink props': linkedBLinkSection,
       },
       emits: {
-        ...showHideEmits,
-        'update:model-value': {
-          description: 'Emitted when the toast visibility changes.',
-          args: {
-            value: {
-              type: 'Boolean',
-              description: 'The new visibility state of the toast.',
-            },
-          },
-        },
-        'close': {
-          description: 'Emitted when the close button is clicked.',
-          args: {
-            value: {
-              type: 'BvTriggerableEvent',
-              description: 'The event object for the close button click.',
-            },
-          },
-        },
-        'close-countdown': {
-          description: 'Emitted during the countdown to auto-dismiss.',
-          args: {
-            value: {
-              type: 'number',
-              description: 'The remaining time in milliseconds before the toast is auto-dismissed.',
-            },
-          },
-        },
-        // Stubs to satisfy TS, real definitions are in showHideEmits
-        'cancel': {
-          args: undefined,
-          description: undefined,
-        },
-        'ok': {
-          args: undefined,
-          description: undefined,
-        },
+        ...buildDismissibleEmits(),
       } satisfies EmitRecord<keyof BToastEmits | 'update:model-value'>,
       slots: {
         default: {

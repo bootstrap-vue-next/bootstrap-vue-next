@@ -7,7 +7,7 @@ import {
   type SlotRecord,
 } from '../../types'
 import {linkedBLinkSection, type linkProps} from '../../utils/linkProps'
-import {showHideEmits, showHideProps} from '../../utils/showHideData'
+import {buildDismissibleEmits, showHideProps} from '../../utils/showHideData'
 import {buildCommonProps} from '../../utils/commonProps'
 import {omit, pick} from '../../utils/objectUtils'
 
@@ -71,10 +71,7 @@ export default {
         },
       } satisfies SlotRecord<keyof BAlertSlots>,
       emits: {
-        ...showHideEmits,
-        'close': {
-          description: 'Emitted when the alert begins its transition to close',
-        },
+        ...buildDismissibleEmits(),
         'close-countdown': {
           description: 'Emitted during the countdown with the time remaining',
           args: {
@@ -92,15 +89,6 @@ export default {
               type: 'boolean | number',
             },
           },
-        },
-        // Stubs to satisfy TS, real definitions are in showHideEmits
-        'cancel': {
-          args: undefined,
-          description: undefined,
-        },
-        'ok': {
-          args: undefined,
-          description: undefined,
         },
       } satisfies EmitRecord<keyof BAlertEmits | 'update:model-value'>,
     },

@@ -152,3 +152,48 @@ export const showHideSlotsData = {
     description: 'Indicates if the component is visible (shown)',
   },
 } as const satisfies SlotScopeReference
+
+/**
+ * Builds common emits for dismissible components with close and countdown functionality
+ * (currently used by BAlert and BToast)
+ */
+export const buildDismissibleEmits = () =>
+  ({
+    ...showHideEmits,
+    'update:model-value': {
+      description: 'Emitted when the component visibility changes.',
+      args: {
+        value: {
+          type: 'Boolean',
+          description: 'The new visibility state of the component.',
+        },
+      },
+    },
+    'close': {
+      description: 'Emitted when the close button is clicked.',
+      args: {
+        value: {
+          type: 'BvTriggerableEvent',
+          description: 'The event object for the close button click.',
+        },
+      },
+    },
+    'close-countdown': {
+      description: 'Emitted during the countdown to auto-dismiss.',
+      args: {
+        value: {
+          type: 'number',
+          description: 'The remaining time in milliseconds before auto-dismissal.',
+        },
+      },
+    },
+    // Stubs to satisfy TS, real definitions are in showHideEmits
+    'cancel': {
+      args: undefined,
+      description: undefined,
+    },
+    'ok': {
+      args: undefined,
+      description: undefined,
+    },
+  }) as const
