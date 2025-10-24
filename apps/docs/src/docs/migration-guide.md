@@ -730,34 +730,11 @@ The scoped variables available to modal slots have changed between BootstrapVue 
 
 **BootstrapVue slot scope:**
 
-```typescript
-{
-  ok: () => void,       // Closes modal with trigger 'ok'
-  cancel: () => void,   // Closes modal with trigger 'cancel'
-  close: () => void,    // Closes modal with trigger 'headerclose'
-  hide: (trigger?: string) => void, // Closes modal with custom trigger
-  visible: boolean      // Boolean visibility state
-}
-```
+<<< FRAGMENT ./demo/ModalSlotScopeBootstrapVue.ts#snippet{typescript}
 
 **BootstrapVueNext slot scope (BModalSlotsData):**
 
-```typescript
-interface BModalSlotsData extends ShowHideSlotsData {
-  cancel: () => void // Closes modal with trigger 'cancel'
-  close: () => void // Closes modal with trigger 'close' (note: 'close' not 'headerclose')
-  ok: () => void // Closes modal with trigger 'ok'
-}
-
-interface ShowHideSlotsData {
-  id: string // Modal ID string
-  show: () => void // Show the modal
-  hide: (trigger?: string, noTriggerEmit?: boolean) => void // Enhanced hide method
-  toggle: () => void // Toggle modal visibility
-  active: boolean // Boolean - true when modal is active/visible
-  visible: boolean // Boolean - same as active, for compatibility
-}
-```
+<<< FRAGMENT ./demo/ModalSlotScopeBootstrapVueNext.ts#snippet{typescript}
 
 **Key changes:**
 
@@ -1036,9 +1013,82 @@ The `changed` event on `BTabs` is deprecated.
 
 ### BToast
 
-<NotYetDocumented type="component"/>
+#### Global Toast Management System Changes
+
+**`$bvToast` instance methods are deprecated:**
+
+- `this.$bvToast.show(options)` → Use `useToast` composable with `create()` method
+- `this.$bvToast.hide(target)` → Use `useToast` composable or template refs with `.hide()`
+- `this.$bvToast.hideAll()` → Use `useToast` composable
+
+**Named toaster system is deprecated:**
+
+- `<b-toaster>` targets → Use Vue's `Teleport` component or `useToast` positioning
+- Toaster positioning CSS → Use CSS positioning on individual toasts or toast containers
+
+**Alternative approaches:**
+
+Please see [useToast](/docs/composables/useToast) for the modern method of programmatically creating and managing toasts.
+
+#### Props Changes
+
+**Renamed props:**
+
+- `no-auto-hide` → Set `model-value` to `false` or `true` (boolean) instead of using auto-hide duration
+- `auto-hide-delay` → Set `model-value` to number of milliseconds for auto-dismiss duration
+
+**Removed props (not implemented in BootstrapVueNext):**
+
+- `toaster` - Use `Teleport` or `useToast` positioning instead
+- `append-toast` - Available on `BOrchestrator` and `useToast` instead
+- `b-toaster-*` related props - Use modern positioning with `Teleport`
+
+**New props in BootstrapVueNext:**
+
+- `progress-props` - Configure built-in progress bar for timed toasts
+- `no-progress` - Hide progress bar on timed toasts
+- `show-on-pause` - Control visibility when countdown is paused
+- `interval` - Control countdown timer update frequency (default: `'requestAnimationFrame'`)
+- `solid` - Disable toast transparency (same as BootstrapVue)
+
+#### Auto-dismiss Behavior Changes
+
+**BootstrapVue:** Used separate props for auto-hide configuration:
+
+<<< FRAGMENT ./demo/ToastBootstrapVue.vue#snippet{vue-html}
+
+**BootstrapVueNext:** Uses `model-value` for both visibility and auto-dismiss:
+
+<<< FRAGMENT ./demo/ToastBootstrapVueNext.vue#snippet{vue-html}
+
+#### Event System Changes
+
+**Event naming changes:**
+
+- No `$root` event system - toasts are managed through composables or direct component references
+
+**New events:** BootstrapVueNext adds several events:
+
+- `close-countdown` - Emitted during countdown with remaining milliseconds
+- Standard `show-prevented`, `hide-prevented` events from shared show/hide system
+
+#### Accessibility Improvements
+
+**Enhanced ARIA support:**
+
+- `isStatus` prop correctly toggles between `role="alert"` (default) and `role="status"`
+- Corresponding `aria-live` values: `"assertive"` (default) and `"polite"`
+- `aria-atomic="true"` automatically applied for better screen reader announcements
+- `tabindex="0"` for keyboard accessibility
 
 See [Show and Hide](#show-and-hide) shared properties.
+
+### BToaster
+
+The `BToaster` component has been deprecated. Its functionality has been replaced by the
+[`useToast`](/docs/composables/useToast) composable working in concert with the
+[`BOrchestrator`](/docs/components/orchestrator) component. See the documentation for
+details.
 
 ### BTooltip
 
