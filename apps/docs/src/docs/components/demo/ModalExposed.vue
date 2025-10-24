@@ -14,7 +14,7 @@
     </div>
     <BModal
       ref="my-modal"
-      hide-footer
+      no-footer
       title="Using Component Methods"
     >
       <div class="d-block text-center">
