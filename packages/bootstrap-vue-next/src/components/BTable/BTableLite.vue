@@ -120,7 +120,9 @@
                 :field="field"
                 :items="items"
                 :toggle-details="() => toggleRowDetails(item)"
-                :details-showing="isTableItem(item) ? (detailsMap.get(item) ?? false) : false"
+                :details-showing="
+                  isTableItem(item) ? (detailsMap.get(getDetailsMapKey(item)) ?? false) : false
+                "
               >
                 <template v-if="!slots[`cell(${String(field.key)})`] && !slots['cell()']">
                   {{ formatItem(item, String(field.key), field.formatter) }}
@@ -130,7 +132,11 @@
           </BTr>
 
           <template
-            v-if="isTableItem(item) && detailsMap.get(item) === true && slots['row-details']"
+            v-if="
+              isTableItem(item) &&
+              detailsMap.get(getDetailsMapKey(item)) === true &&
+              slots['row-details']
+            "
           >
             <BTr aria-hidden="true" role="presentation" class="d-none" />
             <BTr
@@ -299,17 +305,26 @@ const keyboardNavigation = inject(tableKeyboardNavigationKey, null)
 
 const computedId = useId(() => props.id)
 
-const generateDetailsItem = (item: TableItem): [object, boolean | undefined] => [
-  item,
-  item._showDetails,
-]
-const detailsMap = ref(new WeakMap<object, boolean | undefined>())
+const generateDetailsItem = (item: TableItem): [object | string, boolean | undefined] => {
+  // Use primary key as the map key if available and the item has that key
+  if (props.primaryKey && get(item, props.primaryKey) !== undefined) {
+    return [String(get(item, props.primaryKey)), item._showDetails]
+  }
+  // Fall back to object reference
+  return [item, item._showDetails]
+}
+const detailsMap = ref(new Map<object | string, boolean | undefined>())
 watch(
   () => props.items,
   (items) => {
     items.forEach((item) => {
       if (!isTableItem(item)) return
-      detailsMap.value.set(...generateDetailsItem(item))
+      const [key, showDetails] = generateDetailsItem(item)
+      // Only set if not already in map, or if _showDetails is explicitly set
+      // This preserves toggled state when items are replaced with same primary key
+      if (!detailsMap.value.has(key) || showDetails !== undefined) {
+        detailsMap.value.set(key, showDetails)
+      }
     })
   },
   {deep: true, immediate: true}
@@ -397,10 +412,18 @@ const headerClicked = (field: TableField<Items>, event: Readonly<MouseEvent>, is
   emit('head-clicked', field.key as string, field, event, isFooter)
 }
 
+const getDetailsMapKey = (item: Items): object | string => {
+  if (isTableItem(item) && props.primaryKey && get(item, props.primaryKey) !== undefined) {
+    return String(get(item, props.primaryKey))
+  }
+  return item as object
+}
+
 const toggleRowDetails = (tr: Items) => {
   if (isTableItem(tr)) {
-    const prevValue = detailsMap.value.get(tr)
-    detailsMap.value.set(tr, !prevValue)
+    const mapKey = getDetailsMapKey(tr)
+    const prevValue = detailsMap.value.get(mapKey)
+    detailsMap.value.set(mapKey, !prevValue)
     tr._showDetails = !prevValue
   }
 }
