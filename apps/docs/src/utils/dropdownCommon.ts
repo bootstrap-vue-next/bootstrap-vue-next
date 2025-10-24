@@ -169,14 +169,6 @@ export const dropdownEmits = {
   'toggle': {
     description: 'Emitted when toggle button is clicked',
   },
-  'cancel': {
-    args: undefined,
-    description: undefined,
-  },
-  'ok': {
-    args: undefined,
-    description: undefined,
-  },
 } as const satisfies EmitRecord<keyof BDropdownEmits>
 
 export const dropdownSlots = {

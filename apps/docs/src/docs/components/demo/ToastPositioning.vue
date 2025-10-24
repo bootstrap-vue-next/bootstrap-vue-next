@@ -3,7 +3,10 @@
     v-for="(pos, index) in values"
     :key="index"
   >
-    <BButton @click="values[index] = !values[index]">
+    <BButton
+      class="m-2"
+      @click="values[index] = !values[index]"
+    >
       {{ locations[index] }}
     </BButton>
     <Teleport to="body">
