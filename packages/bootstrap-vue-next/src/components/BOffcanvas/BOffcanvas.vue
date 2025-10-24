@@ -59,7 +59,7 @@
           <div class="offcanvas-body" :class="props.bodyClass" v-bind="props.bodyAttrs">
             <slot v-bind="sharedSlots" />
           </div>
-          <div v-if="hasFooterSlot" :class="props.footerClass">
+          <div v-if="hasFooterSlot" class="offcanvas-footer" :class="props.footerClass">
             <slot name="footer" v-bind="sharedSlots" />
           </div>
         </template>
