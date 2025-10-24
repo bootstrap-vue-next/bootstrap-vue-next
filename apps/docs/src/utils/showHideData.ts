@@ -1,7 +1,15 @@
 import type {showHide} from 'bootstrap-vue-next'
-import type {EmitRecord, PropRecord, SlotScopeReference} from '../types'
+import type {PropRecord, SlotScopeReference} from '../types'
 
 export const showHideEmits = {
+  'cancel': {
+    args: {
+      value: {
+        type: 'BvTriggerableEvent',
+      },
+    },
+    description: 'Emitted when a cancel action is triggered.',
+  },
   'hide': {
     description:
       "Always emits just before the component has hidden. Cancelable (as long as component wasn't forcibly hidden)",
@@ -28,6 +36,14 @@ export const showHideEmits = {
       },
     },
     description: 'Always emits after the component is hidden',
+  },
+  'ok': {
+    args: {
+      value: {
+        type: 'BvTriggerableEvent',
+      },
+    },
+    description: 'Emitted when an ok action is triggered.',
   },
   'show': {
     args: {
@@ -74,7 +90,7 @@ export const showHideEmits = {
     description:
       'Emitted when the component tried to toggle, but was prevented from doing so.  This occurs when preventDefault() is called on the event, the user clicks escape and no-close-onbackdrop is set to true, or the user clicks on the backdrop and no-close-onbackdrop is set to true.',
   },
-} as const satisfies EmitRecord
+} as const
 
 export const showHideProps = {
   initialAnimation: {
@@ -187,13 +203,4 @@ export const buildDismissibleEmits = () =>
         },
       },
     },
-    // Stubs to satisfy TS, real definitions are in showHideEmits
-    'cancel': {
-      args: undefined,
-      description: undefined,
-    },
-    'ok': {
-      args: undefined,
-      description: undefined,
-    },
-  }) as const satisfies Partial<EmitRecord>
+  }) as const

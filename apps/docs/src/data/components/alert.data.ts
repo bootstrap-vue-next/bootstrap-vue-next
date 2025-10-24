@@ -82,7 +82,7 @@ export default {
           },
         },
         'update:model-value': {
-          description: 'Standard event to update the v-model', // TODO similar content to BAccordion/update:model-value (similar description phrasing)
+          description: 'Standard event to update the v-model',
           args: {
             'update:model-value': {
               description: 'modelValue',
