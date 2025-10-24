@@ -1040,8 +1040,7 @@ Please see [useToast](/docs/composables/useToast) for the modern method of progr
 
 **Removed props (not implemented in BootstrapVueNext):**
 
-- `href` - Use `useToast` with BLink props or see [BLink Integration](/docs/components/toast#blink-integration) in the toast documentation
-- `to` - Use `useToast` with BLink props or see [BLink Integration](/docs/components/toast#blink-integration) in the toast documentation
+- `href` and `to` - Use `useToast` with BLink props or see [BLink Integration](/docs/components/toast#blink-integration) in the toast documentation
 - `toaster` - Use `Teleport` or `useToast` positioning instead
 - `append-toast` - Available on `BOrchestrator` and `useToast` instead
 - `b-toaster-*` related props - Use modern positioning with `Teleport`

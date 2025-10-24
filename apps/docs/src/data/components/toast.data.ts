@@ -70,6 +70,16 @@ export default {
       },
       emits: {
         ...buildDismissibleEmits(),
+        'update:model-value': {
+          description: 'Emitted when the toast visibility or countdown duration changes.',
+          args: {
+            value: {
+              type: 'boolean | number',
+              description:
+                'The new visibility state (boolean) or countdown duration in milliseconds (number). When boolean: true = visible, false = hidden. When number: > 0 = countdown duration, 0 = countdown finished.',
+            },
+          },
+        },
       } satisfies EmitRecord<keyof BToastEmits | 'update:model-value'>,
       slots: {
         default: {

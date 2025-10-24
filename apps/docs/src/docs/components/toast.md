@@ -65,7 +65,7 @@ For more information, please see the [Accessibility](#accessibility) section bel
 
 ### ProgressBar Integration
 
-As you may have noticed in that example, there was a built-in progress bar. This is triggered when using a value that is a `number` and when `progress-props` is not `undefined`. This was implemented because it can be difficult to modify the behavior of `BToast` when using a pure method, and the appearance of a ticking down progress bar is a "nice to have". Although it is not out of the box behavior by Bootstrap, its behavior is opt-in. This functions similarly to examples in `BAlert`
+As you may have noticed in that example, there was a built-in progress bar. This is triggered when using a value that is a `number` and when `progress-props` is not `undefined`. This was implemented because it can be difficult to modify the behavior of `BToast` when using a pure method, and the appearance of a ticking down progress bar is a "nice-to-have". Although it is not out of the box behavior by Bootstrap, its behavior is opt-in. This functions similarly to examples in `BAlert`
 
 ## BLink Integration
 
@@ -100,10 +100,10 @@ provides general guidelines when using toasts.
   confusing to screen reader users. If a toast is needed on page load or route change, delay showing
   the toast by several seconds so that the screen reader will finish announcing information about
   the current page without interruption by the toast.
-- When setting `model-value` to a boolean `true` (non-auto-dismissing), you must have a close button to allow users to dismiss
-  the toast. If you have also set prop `no-close-button` to `true`, you must provide your own close
+- When the toast is persistently visible (i.e., when `model-value` is set to `true` and the toast does not auto-dismiss), you must have a close button to allow users to dismiss
+  the toast. If you have also set the prop `no-close-button` to `true`, you must provide your own close
   button or dismiss the toast by some other means. Toasts have a tab index of `0` so that they can
-  be reached by keyboard-only users.
+  be reached by keyboard-only users. If `model-value` is set to `false`, the toast is not visible and no close button is required.
 - Avoid initiating many toasts in quick succession, as screen readers may interrupt reading the
   current toast and announce the new toast, causing the context of the previous toast to be missed.
 - For toasts with long textual content, set `model-value` to a larger timeout value, to allow

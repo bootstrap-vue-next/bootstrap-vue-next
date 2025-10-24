@@ -474,12 +474,12 @@ const commonProps = () =>
       description: 'Sets the `aria-label` attribute for the close button',
     },
     closeVariant: {
-      type: 'string | null',
+      type: 'ButtonVariant | null',
       default: null,
       description: 'Sets the color variant for the close button',
     },
     interval: {
-      type: 'number | requestAnimationFrame',
+      type: 'number | "requestAnimationFrame"',
       default: 'requestAnimationFrame',
       description: 'Sets the interval for refreshing the countdown timer',
     },

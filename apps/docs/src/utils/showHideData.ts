@@ -196,4 +196,4 @@ export const buildDismissibleEmits = () =>
       args: undefined,
       description: undefined,
     },
-  }) as const
+  }) as const satisfies Partial<EmitRecord>
