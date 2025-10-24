@@ -458,10 +458,51 @@ const commonProps = () =>
       default: undefined,
       description: 'CSS class (or classes) to add to the wrapper element',
     },
+    closeClass: {
+      type: 'ClassValue',
+      default: undefined,
+      description: 'CSS class (or classes) to apply to the close button',
+    },
+    closeContent: {
+      type: 'string',
+      default: undefined,
+      description: 'Sets the text for the close button. The `close` slot takes precedence',
+    },
+    closeLabel: {
+      type: 'string',
+      default: 'Close',
+      description: 'Sets the `aria-label` attribute for the close button',
+    },
+    closeVariant: {
+      type: 'string | null',
+      default: null,
+      description: 'Sets the color variant for the close button',
+    },
+    interval: {
+      type: 'number | requestAnimationFrame',
+      default: 'requestAnimationFrame',
+      description: 'Sets the interval for refreshing the countdown timer',
+    },
+    isStatus: {
+      type: 'boolean',
+      default: false,
+      description:
+        'When set to `true`, sets `aria-live="polite"` and `role="status"`; otherwise, `aria-live="assertive"` and `role="alert"`',
+    },
     placement: {
       type: 'Placement',
       default: 'bottom-start',
       description: 'Placement of a floating element',
+    },
+    progressProps: {
+      type: "Omit<BProgressBarProps, 'label' | 'max' | 'value'>",
+      default: undefined,
+      description: 'Configures the progress bar. No progress bar is shown if undefined',
+    },
+    showOnPause: {
+      type: 'boolean',
+      default: true,
+      description: 'Keeps the component visible when paused',
     },
   }) as const
 

@@ -19,61 +19,35 @@ export default {
         [defaultPropSectionSymbol]: {
           ...omit(showHideProps, ['modelValue']),
           ...pick(buildCommonProps(), [
+            'bgVariant',
             'body',
             'bodyClass',
+            'closeClass',
+            'closeContent',
+            'closeLabel',
+            'closeVariant',
             'headerClass',
             'headerTag',
             'id',
-            'title',
-            'variant',
+            'interval',
+            'isStatus',
             'noHoverPause',
             'noResumeOnHoverLeave',
+            'progressProps',
+            'showOnPause',
+            'textVariant',
+            'title',
+            'variant',
           ]),
           alertClass: {
             type: 'ClassValue',
             default: undefined,
             description: 'CSS class (or classes) to add to the alert wrapper element',
           },
-          bgVariant: {
-            type: 'ColorVariant | null',
-            default: null,
-            // description: 'Background color variant for the alert' // TODO missing description
-          }, // TODO prop inconsistency ColorVariant | null (matches ColorExtendables, not directly in BAlertProps, but valid via inheritance)
-          closeClass: {
-            type: 'ClassValue',
-            default: undefined,
-            description: 'Applies one or more custom classes to the close button',
-          },
-          closeContent: {
-            type: 'string',
-            default: undefined,
-            description: 'Sets the text of the close button. The `close` slot takes precedence',
-          },
-          closeLabel: {
-            type: 'string',
-            default: 'Close',
-            description: 'Sets the aria-label attribute on the close button',
-          },
-          closeVariant: {
-            type: 'string | null',
-            default: null,
-            description: 'Color variant for the close button', // TODO prop inconsistency string | null (BAlertProps expects ButtonVariant | null)
-          },
           dismissible: {
             type: 'boolean',
             default: false,
             description: 'When set, enables the close button',
-          },
-          interval: {
-            type: 'number | requestAnimationFrame',
-            default: 'requestAnimationFrame',
-            description: 'The interval in milliseconds to update the countdown timer',
-          },
-          isStatus: {
-            type: 'boolean',
-            default: false,
-            description:
-              "When set to 'true', makes the alert have attributes aria-live=polite and role=status. When 'false' aria-live will be 'assertive' and role will be 'alert'",
           },
           modelValue: {
             type: 'boolean | number',
@@ -81,23 +55,6 @@ export default {
             description:
               'Controls the visibility of the alert. A `boolean` value directly controls the visibility. A number starts the countdown timer',
           },
-          progressProps: {
-            type: "Omit<BProgressBarProps, 'label' | 'max' | 'value'>",
-            default: undefined,
-            description:
-              'The properties to define the progress bar in the alert. No progress will be shown if left undefined',
-          },
-          showOnPause: {
-            type: 'boolean',
-            default: true,
-            description:
-              'Setting this property to `false` will override the behavior of showing the Alert when the timer is paused',
-          },
-          textVariant: {
-            type: 'TextColorVariant | null',
-            default: null,
-            // description: 'Text color variant for the alert' // TODO missing description
-          }, // TODO prop inconsistency TextColorVariant | null (matches ColorExtendables, not directly in BAlertProps, but valid via inheritance)
         } satisfies PropRecord<Exclude<keyof BAlertProps, keyof typeof linkProps>>,
         'BLink props': linkedBLinkSection,
       },
@@ -136,6 +93,7 @@ export default {
             },
           },
         },
+        // Stubs to satisfy TS, real definitions are in showHideEmits
         'cancel': {
           args: undefined,
           description: undefined,

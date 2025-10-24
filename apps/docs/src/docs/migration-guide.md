@@ -1034,14 +1034,18 @@ Please see [useToast](/docs/composables/useToast) for the modern method of progr
 
 **Renamed props:**
 
+- `visible` → `model-value` - Controls both visibility and auto-dismiss timing (replaces separate `visible` model)
 - `no-auto-hide` → Set `model-value` to `false` or `true` (boolean) instead of using auto-hide duration
 - `auto-hide-delay` → Set `model-value` to number of milliseconds for auto-dismiss duration
 
 **Removed props (not implemented in BootstrapVueNext):**
 
+- `href` - Use `useToast` with BLink props or see [BLink Integration](/docs/components/toast#blink-integration) in the toast documentation
+- `to` - Use `useToast` with BLink props or see [BLink Integration](/docs/components/toast#blink-integration) in the toast documentation
 - `toaster` - Use `Teleport` or `useToast` positioning instead
 - `append-toast` - Available on `BOrchestrator` and `useToast` instead
 - `b-toaster-*` related props - Use modern positioning with `Teleport`
+- `static` - BToast renders in place by default (no teleporting behavior)
 
 **New props in BootstrapVueNext:**
 
@@ -1066,11 +1070,34 @@ Please see [useToast](/docs/composables/useToast) for the modern method of progr
 **Event naming changes:**
 
 - No `$root` event system - toasts are managed through composables or direct component references
+- All events now use the standardized show/hide event lifecycle
 
 **New events:** BootstrapVueNext adds several events:
 
 - `close-countdown` - Emitted during countdown with remaining milliseconds
-- Standard `show-prevented`, `hide-prevented` events from shared show/hide system
+- `update:model-value` - Standard v-model event for visibility/duration changes
+- Standard show/hide lifecycle events: `show`, `shown`, `hide`, `hidden`, `show-prevented`, `hide-prevented`, `toggle`, `toggle-prevented`
+
+#### Slots Changes
+
+**Renamed slots:**
+
+- `toast-title` → `title` - Toast header title content
+
+**Available slots:**
+
+- `default` - Toast body content (enhanced with slot scope data)
+- `title` - Toast header title content (was `toast-title` in BootstrapVue)
+- `close` - Custom close button content (new in BootstrapVueNext)
+
+**Enhanced slot scope:** All slots now receive scope data with control functions:
+
+- `id` - Toast component ID
+- `show()` - Function to show the toast
+- `hide()` - Function to hide the toast
+- `toggle()` - Function to toggle visibility
+- `visible` - Current visibility state
+- `active` - Whether countdown timer is active
 
 #### Accessibility Improvements
 
