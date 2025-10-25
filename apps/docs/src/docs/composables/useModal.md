@@ -1,6 +1,5 @@
 ---
 description: 'The `useModal` composable provides a powerful API to create, manage, and control modals programmatically from anywhere in your application. It allows you to create modals on-demand, manage existing modals, and handle modal interactions through promises.'
-path: 'useModal/index.ts'
 ---
 
 # useModal

@@ -1,6 +1,5 @@
 ---
 description: 'Add custom tooltips to any element. Tooltips can be triggered by hovering, focusing, or clicking an element'
-path: 'BTooltip/index.ts'
 ---
 
 # BTooltip

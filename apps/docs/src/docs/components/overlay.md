@@ -4,7 +4,7 @@ description: "BootstrapVueNext's custom `BOverlay` component is used to _visuall
 
 # Overlay
 
-<PageHeader />
+<PageHeader base="githubComponentsDirectory" />
 
 ## Overview
 

@@ -4,7 +4,7 @@ description: 'List Groups are a flexible and powerful component for displaying a
 
 # List Group
 
-<PageHeader />
+<PageHeader base="githubComponentsDirectory" />
 
 <<< DEMO ./demo/ListGroupOverview.vue#template{vue-html}
 

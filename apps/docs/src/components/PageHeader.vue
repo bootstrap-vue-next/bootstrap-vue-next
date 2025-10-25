@@ -32,7 +32,7 @@ const globalData = inject(appInfoKey)
 
 type Base = Extract<
   keyof Exclude<typeof globalData, undefined>,
-  'githubComposablesDirectory' | 'githubDirectivesDirectory'
+  'githubComponentsDirectory' | 'githubComposablesDirectory' | 'githubDirectivesDirectory'
 >
 
 defineSlots<{
@@ -52,12 +52,39 @@ const props = withDefaults(
   }
 )
 
-const {frontmatter} = useData()
+const {frontmatter, page} = useData()
 const description = computed(() => (frontmatter.value?.description as string) || '')
 const renderedDescription = useMarkdownRenderer(description)
 
-// Read path from frontmatter
-const path = computed(() => (frontmatter.value?.path as string | null) ?? null)
+// Derive the source path from the current page URL and base
+const derivedPath = computed(() => {
+  if (!props.base || !page.value?.relativePath) return null
+
+  const segments = page.value.relativePath.split('/')
+  const filename = segments[segments.length - 1]?.replace('.md', '')
+
+  if (!filename) return null
+
+  if (props.base === 'githubComponentsDirectory') {
+    // Convert filename (e.g., 'button', 'form-input') to component name (e.g., 'BButton', 'BFormInput')
+    const componentName = `B${filename
+      .split('-')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join('')}`
+    return `${componentName}/${componentName}.vue`
+  } else if (props.base === 'githubComposablesDirectory') {
+    // Composables: filename is the composable name (e.g., 'useToast')
+    return `${filename}/index.ts`
+  } else if (props.base === 'githubDirectivesDirectory') {
+    // Directives: filename is the directive name (e.g., 'BColorMode')
+    return `${filename}/index.ts`
+  }
+
+  return null
+})
+
+// Allow frontmatter path to override if present (for special cases)
+const path = computed(() => (frontmatter.value?.path as string | null) ?? derivedPath.value)
 
 const editHref = useEditThisPageOnGithub()
 const sourceHref = computed(() =>

@@ -6,7 +6,7 @@ five default responsive tiers, CSS Sass variables and mixins, and dozens of pred
 
 # Grid System
 
-<PageHeader />
+<PageHeader base="githubComponentsDirectory" />
 
 ## Overview
 

@@ -4,7 +4,7 @@ description: 'Documentation and examples for opting images (via `BImg` component
 
 # Image
 
-<PageHeader />
+<PageHeader base="githubComponentsDirectory" />
 
 BootstrapVueNext's image components support rounded images, thumbnail styling, alignment, and even the
 ability to create blank images with an optional solid background color. Support for lazy loaded

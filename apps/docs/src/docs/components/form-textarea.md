@@ -4,7 +4,7 @@ description: 'Create multi-line text inputs with support for auto height sizing,
 
 # Form Textarea
 
-<PageHeader />
+<PageHeader base="githubComponentsDirectory" />
 
 <<< DEMO ./demo/TextareaOverview.vue
 

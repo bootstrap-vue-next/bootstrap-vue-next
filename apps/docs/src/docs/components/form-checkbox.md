@@ -4,7 +4,7 @@ description: "For cross browser consistency, `BFormCheckboxGroup` and `BFormChec
 
 # Form Checkbox
 
-<PageHeader />
+<PageHeader base="githubComponentsDirectory" />
 
 ## Single checkbox
 

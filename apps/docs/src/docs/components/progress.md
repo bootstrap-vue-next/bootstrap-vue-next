@@ -5,7 +5,7 @@ support for horizontally stacked bars, animated backgrounds, and text labels."
 
 # Progress
 
-<PageHeader />
+<PageHeader base="githubComponentsDirectory" />
 
 ## Basic Usage
 

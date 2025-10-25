@@ -4,7 +4,7 @@ description: 'Indicate the current page’s location within a navigational hiera
 
 # Breadcrumb
 
-<PageHeader />
+<PageHeader base="githubComponentsDirectory" />
 
 ## Overview
 

@@ -7,7 +7,7 @@ or a [router link](/docs/reference/router-links)."
 
 # Avatar
 
-<PageHeader />
+<PageHeader base="githubComponentsDirectory" />
 
 ## Overview
 

@@ -6,7 +6,7 @@ or [`v-b-tooltip`](/docs/directives/BTooltip) directive. Tooltips can also be cr
 
 # Tooltip
 
-<PageHeader />
+<PageHeader base="githubComponentsDirectory" />
 
 <<< DEMO ./demo/TooltipOverview.vue#template{vue-html}
 

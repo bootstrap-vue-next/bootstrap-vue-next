@@ -1,6 +1,5 @@
 ---
 description: 'The BColorMode directive has a similar result to the useColorMode utility, but provides more low level access than the composable'
-path: 'BColorMode/index.ts'
 ---
 
 # BColorMode

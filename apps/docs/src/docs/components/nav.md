@@ -5,7 +5,7 @@ to the `active` and `disabled` states. Swap modifier props to switch between eac
 
 # Nav
 
-<PageHeader />
+<PageHeader base="githubComponentsDirectory" />
 
 <<< DEMO ./demo/NavOverview.vue#template{vue-html}
 

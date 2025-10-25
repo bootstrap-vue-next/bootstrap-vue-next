@@ -5,7 +5,7 @@ cards internally, and provides full keyboard navigation control of the tabs."
 
 # Tabs
 
-<PageHeader />
+<PageHeader base="githubComponentsDirectory" />
 
 For navigation based tabs (i.e. tabs that would change the URL), use the
 [`<BNav>`](/docs/components/nav) component instead.

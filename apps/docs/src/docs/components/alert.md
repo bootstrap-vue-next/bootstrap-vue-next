@@ -4,7 +4,7 @@ description: 'Provide contextual feedback messages for typical user actions with
 
 # Alert
 
-<PageHeader />
+<PageHeader base="githubComponentsDirectory" />
 
 ## Overview
 

@@ -5,7 +5,7 @@ several component types while your data is being fetched or computed."
 
 # Placeholder
 
-<PageHeader />
+<PageHeader base="githubComponentsDirectory" />
 
 ## Basic Usage
 

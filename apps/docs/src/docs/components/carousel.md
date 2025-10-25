@@ -8,7 +8,7 @@ usability and accessibility challenges."
 
 # Carousel
 
-<PageHeader />
+<PageHeader base="githubComponentsDirectory" />
 
 ## Basic usage
 

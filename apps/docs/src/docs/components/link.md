@@ -4,7 +4,7 @@ description: "Use BootstrapVue's custom b-link component for generating a standa
 
 # Link
 
-<PageHeader />
+<PageHeader base="githubComponentsDirectory" />
 
 ## Links without Router
 

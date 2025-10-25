@@ -4,7 +4,7 @@ description: 'Easily extend form controls by adding text, buttons, or button gro
 
 # Input Group
 
-<PageHeader />
+<PageHeader base="githubComponentsDirectory" />
 
 <<< DEMO ./demo/InputGroupOverview.vue#template{vue-html}
 

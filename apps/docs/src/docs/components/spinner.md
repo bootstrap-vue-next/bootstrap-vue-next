@@ -7,7 +7,7 @@ utility classes."
 
 # Spinners
 
-<PageHeader />
+<PageHeader base="githubComponentsDirectory" />
 
 Spinners can be placed just about anywhere, including inside buttons, alerts, and even `<BTable>`'s
 busy slot.
