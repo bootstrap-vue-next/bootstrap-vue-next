@@ -8,7 +8,7 @@ import {
   markRaw,
   onScopeDispose,
   type Ref,
-  toRef,
+  shallowRef,
   toValue,
   watch,
 } from 'vue'
@@ -46,7 +46,14 @@ export const useModal = () => {
       throw new Error('BApp or BOrchestrator component must be mounted to use the modal controller')
     }
 
-    const resolvedProps = toRef(obj)
+    // Handle reactivity carefully - preserve components as raw
+    const resolvedProps = isRef(obj)
+      ? obj
+      : shallowRef({
+          ...toValue(obj),
+          ...(toValue(obj).component && {component: markRaw(toValue(obj).component!)}),
+          ...(toValue(obj).slots && {slots: markRaw(toValue(obj).slots!)}),
+        })
     const _self = resolvedProps.value?.id || Symbol('Modals controller')
 
     const promise = buildPromise<
@@ -78,7 +85,7 @@ export const useModal = () => {
           } else if (key === 'component' && newValue.component) {
             v._component = markRaw(newValue.component)
           } else if (key === 'slots' && newValue.slots) {
-            v.slots = markRaw(newValue.slots)
+            v.slots = markRaw(newValue.slots) as typeof v.slots
           } else {
             v[key as keyof ModalOrchestratorCreateParam] = toValue(
               newValue[key as keyof ModalOrchestratorCreateParam]
