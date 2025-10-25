@@ -41,6 +41,9 @@ import IntersectIcon from '~icons/bi/intersect'
 import CodeSlashIcon from '~icons/bi/code-slash'
 import PieChartIcon from '~icons/bi/pie-chart'
 import GearIcon from '~icons/bi/gear'
+import {data as componentsData} from '../data/components.data'
+import {data as composablesData} from '../data/composables.data'
+import {data as directivesData} from '../data/directives.data'
 
 defineProps<{
   name?: string
@@ -62,13 +65,6 @@ onMounted(() => {
     {immediate: true}
   )
 })
-
-const routeLocationComponents = (name: string): string =>
-  withBase(`/docs/components/${name.toLowerCase()}`).trim().replaceAll(/\s+/g, '-')
-const routeLocationComposables = (name: string): string =>
-  withBase(`/docs/composables/${name}`).trim()
-const routeLocationDirectives = (name: string): string =>
-  withBase(`/docs/directives/${name}`).trim()
 
 const headerClasses = ['py-2', 'text-primary-emphasis'] as const
 const linkClasses = ['px-2', 'ms-2', 'text-decoration-none', 'text-body', 'fs-7'] as const
@@ -104,96 +100,25 @@ const headerLinks = [
   },
 ]
 
-const componentsList: {name: string}[] = [
-  {name: 'App'},
-  {name: 'Accordion'},
-  {name: 'Alert'},
-  {name: 'Avatar'},
-  {name: 'Badge'},
-  {name: 'Breadcrumb'},
-  {name: 'Button'},
-  {name: 'Button Group'},
-  {name: 'Button Toolbar'},
-  {name: 'Card'},
-  {name: 'Carousel'},
-  {name: 'Collapse'},
-  {name: 'Dropdown'},
-  {name: 'Form'},
-  {name: 'Form Checkbox'},
-  {name: 'Form File'},
-  {name: 'Form Group'},
-  {name: 'Form Input'},
-  {name: 'Form Radio'},
-  {name: 'Form Rating'},
-  {name: 'Form Select'},
-  {name: 'Form Tags'},
-  {name: 'Form Spinbutton'},
-  {name: 'Form Textarea'},
-  {name: 'Grid System'},
-  {name: 'Image'},
-  {name: 'Input Group'},
-  {name: 'Link'},
-  {name: 'List Group'},
-  {name: 'Modal'},
-  {name: 'Nav'},
-  {name: 'Navbar'},
-  {name: 'Orchestrator'},
-  {name: 'Offcanvas'},
-  {name: 'Overlay'},
-  {name: 'Pagination'},
-  {name: 'Placeholder'},
-  {name: 'Popover'},
-  {name: 'Progress'},
-  {name: 'Spinner'},
-  {name: 'Table'},
-  {name: 'Tabs'},
-  {name: 'Toast'},
-  {name: 'Tooltip'},
-]
-
-const composablesList: {name: string}[] = [
-  {name: 'useBreadcrumb'},
-  {name: 'useColorMode'},
-  {name: 'useModal'},
-  {name: 'usePopover'},
-  {name: 'useScrollspy'},
-  {name: 'useToast'},
-  {name: 'useToggle'},
-]
-
-const directivesList: {name: string}[] = [
-  {name: 'BColorMode'},
-  {name: 'BModal'},
-  {name: 'BPopover'},
-  {name: 'BToggle'},
-  {name: 'BTooltip'},
-]
-
 const componentsComputedList = computed(() =>
-  componentsList
-    .map((el) => ({
-      name: el.name,
-      route: routeLocationComponents(el.name),
-    }))
-    .sort((a, b) => a.name.localeCompare(b.name))
+  componentsData.map((component) => ({
+    name: component.name,
+    route: component.url,
+  }))
 )
 
 const composablesComputedList = computed(() =>
-  composablesList
-    .map((el) => ({
-      name: el.name,
-      route: routeLocationComposables(el.name),
-    }))
-    .sort((a, b) => a.name.localeCompare(b.name))
+  composablesData.map((composable) => ({
+    name: composable.name,
+    route: composable.url,
+  }))
 )
 
 const directivesComputedList = computed(() =>
-  directivesList
-    .map((el) => ({
-      name: el.name,
-      route: routeLocationDirectives(el.name),
-    }))
-    .sort((a, b) => a.name.localeCompare(b.name))
+  directivesData.map((directive) => ({
+    name: directive.name,
+    route: directive.url,
+  }))
 )
 
 const groupComputedList = computed(() => [

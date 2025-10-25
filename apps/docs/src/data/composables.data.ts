@@ -6,6 +6,9 @@ export interface ComposableData {
   url: string
 }
 
+declare const data: ComposableData[]
+export {data}
+
 export default createContentLoader('docs/composables/*.md', {
   transform(rawData): ComposableData[] {
     return rawData
