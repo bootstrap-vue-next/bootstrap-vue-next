@@ -378,8 +378,6 @@ within an existing `<BCol>` component. Nested rows should include a set of colum
 
 ## Row columns
 
-<span class="badge badge-info small">Requires Bootstrap v4.4+ CSS</span>
-
 Use the responsive `cols-*` props in `<BRow>` to quickly set the number of columns that best render
 your content and layout. Whereas normal column widths are apply to the individual `<BCol>` columns
 (e.g., `<BCol md="4">`), the row columns `col-*` props are set on the parent `<BRow>` as a

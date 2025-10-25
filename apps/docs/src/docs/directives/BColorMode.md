@@ -1,10 +1,13 @@
-<DirectiveHeader path="BColorMode/index.ts" title="BColorMode" />
+---
+description: 'The BColorMode directive has a similar result to the useColorMode utility, but provides more low level access than the composable'
+path: 'BColorMode/index.ts'
+---
 
-<div class="lead mb-5">
+# BColorMode
+
+<PageHeader base="githubDirectivesDirectory" />
 
 The `BColorMode` directive is similar to [useColorMode](../composables/useColorMode.md) but provides a more low level directive for placement on individual components. It is useful when you want to make an element have one color mode, but do not want the overhead of the composable variant.
-
-</div>
 
 ## Demo
 
@@ -43,8 +46,6 @@ const changeColor = () => {
 import {ref} from 'vue'
 import {vBColorMode} from 'bootstrap-vue-next/directives/BColorMode'
 import HighlightCard from '../../components/HighlightCard.vue'
-
-import DirectiveHeader from './DirectiveHeader.vue'
 
 const currentColor = ref<'light' | 'dark'>('dark')
 

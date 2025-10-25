@@ -1,5 +1,8 @@
-<DirectiveHeader path="BPopover/index.ts" title="Docs to be made" />
+---
+description: 'Add popovers to any element on your site, using Bootstrap v5 CSS for styling and animations'
+path: 'BPopover/index.ts'
+---
 
-<script setup lang="ts">
-import DirectiveHeader from './DirectiveHeader.vue'
-</script>
+# BPopover
+
+<PageHeader base="githubDirectivesDirectory" />
