@@ -24,7 +24,7 @@ Because BootstrapVue's components are purposely designed to be fairly generic, a
 
 ## Color contrast
 
-Most colors that currently make up Bootstrap V4's default palette — used throughout the framework for things such as button variations, alert variations, form validation indicators — lead to insufficient color contrast (below the recommended [WCAG 2.0 color contrast ratio of 4.5:1)](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html) when used against a light background. Authors will need to manually modify/extend these default colors to ensure adequate color contrast ratios.
+Most colors that currently make up Bootstrap V5's default palette — used throughout the framework for things such as button variations, alert variations, form validation indicators — lead to insufficient color contrast (below the recommended [WCAG 2.0 color contrast ratio of 4.5:1)](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html) when used against a light background. Authors will need to manually modify/extend these default colors to ensure adequate color contrast ratios.
 
 Refer to the Theming section for customizing Bootstrap's SCSS.
 

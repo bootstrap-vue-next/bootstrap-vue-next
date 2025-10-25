@@ -109,7 +109,7 @@ column classes such as `col-2`, `col-3`, etc.
 <<< DEMO ./demo/TabsVerticalWidth.vue#template{vue-html}
 
 Vertical placement visually works best with the `pills` variant. When using the default `tabs`
-variant, you may want to provided your own custom styling classes, as Bootstrap v4 CSS assumes the
+variant, you may want to provided your own custom styling classes, as Bootstrap v5 CSS assumes the
 tab controls will always be placed on the top of the tabs content.
 
 ::: info

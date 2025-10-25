@@ -298,7 +298,7 @@ BootstrapVueNext's custom CSS is required in order to support stacked tables.
 ### Table caption
 
 Add an optional caption to your table via the prop `caption` or the named slot `table-caption` (the
-slot takes precedence over the prop). The default Bootstrap v4 styling places the caption at the
+slot takes precedence over the prop). The default Bootstrap v5 styling places the caption at the
 bottom of the table:
 
 <<< DEMO ./demo/TableCaption.vue

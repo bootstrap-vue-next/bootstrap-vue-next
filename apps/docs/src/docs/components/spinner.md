@@ -35,7 +35,7 @@ Spinners use `currentColor` for their color, meaning it inherits the current fon
 customize the color using the standard text color variants using the `variant` prop, or place
 classes or styles on the component to change its color.
 
-The `variant` prop translates the variant name to the Bootstrap v4 class `.text-{variant}`, so if
+The `variant` prop translates the variant name to the Bootstrap v5 class `.text-{variant}`, so if
 you have custom defined text color variants, feel free to use them via the `variant` prop.
 
 <<< DEMO ./demo/SpinnerColors.vue#template{vue-html}
