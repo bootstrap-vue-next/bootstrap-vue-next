@@ -4,7 +4,7 @@ description: 'Build vertically collapsing accordions in combination with `BColla
 
 # Accordion
 
-<PageHeader base="githubComponentsDirectory" />
+<PageHeader />
 
 ## How it works
 

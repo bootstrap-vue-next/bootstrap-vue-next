@@ -4,7 +4,7 @@ description: 'The `BOrchestrator` component manages the rendering and positionin
 
 # BOrchestrator
 
-<PageHeader base="githubComponentsDirectory" />
+<PageHeader />
 
 ## Overview
 

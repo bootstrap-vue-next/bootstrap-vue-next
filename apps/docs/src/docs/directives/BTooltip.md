@@ -4,7 +4,7 @@ description: 'Add custom tooltips to any element. Tooltips can be triggered by h
 
 # BTooltip
 
-<PageHeader base="githubDirectivesDirectory" />
+<PageHeader />
 
 <BCard class="bg-body-tertiary">
 

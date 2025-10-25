@@ -4,7 +4,7 @@ description: 'Create various type inputs such as: `text`, `password`, `number`, 
 
 # Form Input
 
-<PageHeader base="githubComponentsDirectory" />
+<PageHeader />
 
 <<< DEMO ./demo/FormInputOverview.vue
 

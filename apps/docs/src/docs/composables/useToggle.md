@@ -4,7 +4,7 @@ description: 'You can use `useToggle` to get the closest toggleable component in
 
 # useToggle
 
-<PageHeader base="githubComposablesDirectory" />
+<PageHeader />
 
 <HighlightCard>
   <template #html>

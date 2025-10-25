@@ -4,7 +4,7 @@ description: '`useBreadcrumb` is a helper utility for the `BBreadcrumb` componen
 
 # useBreadcrumb
 
-<PageHeader base="githubComposablesDirectory" />
+<PageHeader />
 
 <UsePluginAlert />
 

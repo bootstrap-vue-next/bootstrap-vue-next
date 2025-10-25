@@ -4,7 +4,7 @@ description: 'Group a series of buttons together on a single line or stack them 
 
 # Button Group
 
-<PageHeader base="githubComponentsDirectory" />
+<PageHeader />
 
 ## Overview
 

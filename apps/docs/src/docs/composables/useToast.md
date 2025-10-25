@@ -4,7 +4,7 @@ description: 'The `useToast` composable allows you to create and manage toasts p
 
 # useToast
 
-<PageHeader base="githubComposablesDirectory" />
+<PageHeader />
 
 ## Setup
 

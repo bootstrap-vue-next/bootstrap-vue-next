@@ -4,7 +4,7 @@ description: 'Bootstrap custom `<select>` using custom styles. Optionally specif
 
 # Form Select
 
-<PageHeader base="githubComponentsDirectory" />
+<PageHeader />
 
 ## Overview
 

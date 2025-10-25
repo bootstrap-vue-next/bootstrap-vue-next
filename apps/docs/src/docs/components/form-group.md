@@ -4,7 +4,7 @@ description: 'The `BFormGroup` component is the easiest way to add some structur
 
 # Form Group
 
-<PageHeader base="githubComponentsDirectory" />
+<PageHeader />
 
 <<< DEMO ./demo/FormGroupOverview.vue
 

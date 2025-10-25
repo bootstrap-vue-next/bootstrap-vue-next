@@ -4,7 +4,7 @@ description: "Use Bootstrap's custom `BButton` component for actions in forms, d
 
 # Button
 
-<PageHeader base="githubComponentsDirectory" />
+<PageHeader />
 
 ## Overview
 

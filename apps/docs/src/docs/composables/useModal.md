@@ -4,7 +4,7 @@ description: 'The `useModal` composable provides a powerful API to create, manag
 
 # useModal
 
-<PageHeader base="githubComposablesDirectory" />
+<PageHeader />
 
 ## Setup
 

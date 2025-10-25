@@ -5,7 +5,7 @@ description: "Quick first, previous, next, last, and page buttons for pagination
 
 # Pagination
 
-<PageHeader base="githubComponentsDirectory" />
+<PageHeader />
 
 ## Overview
 

@@ -4,7 +4,7 @@ description: 'Modals are streamlined, but flexible dialog prompts. They support 
 
 # Modal
 
-<PageHeader base="githubComponentsDirectory" />
+<PageHeader />
 
 ## Usage
 

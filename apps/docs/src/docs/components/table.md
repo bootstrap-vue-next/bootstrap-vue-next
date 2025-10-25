@@ -4,7 +4,7 @@ description: 'For displaying tabular data, `BTable` supports pagination, filteri
 
 # Tables
 
-<PageHeader base="githubComponentsDirectory" />
+<PageHeader />
 
 ## Basic Usage
 

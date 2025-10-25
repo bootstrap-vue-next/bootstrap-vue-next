@@ -4,7 +4,7 @@ description: 'The `BApp` component is the new recommended way to configure boots
 
 # BApp
 
-<PageHeader base="githubComponentsDirectory" />
+<PageHeader />
 
 ## Overview
 

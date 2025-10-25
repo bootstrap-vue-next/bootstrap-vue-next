@@ -7,7 +7,7 @@ directive. Popovers can also be created and programmatically controlled via the 
 
 # Popover
 
-<PageHeader base="githubComponentsDirectory" />
+<PageHeader />
 
 <<< DEMO ./demo/PopoverOverview.vue#template{vue-html}
 

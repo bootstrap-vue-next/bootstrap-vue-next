@@ -4,7 +4,7 @@ description: 'Build hidden sidebars into your project. Sidebars can aid in enhan
 
 # Offcanvas
 
-<PageHeader base="githubComponentsDirectory" />
+<PageHeader />
 
 <<< DEMO ./demo/OffcanvasOverview.vue#template{vue-html}
 

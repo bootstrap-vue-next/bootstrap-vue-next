@@ -6,7 +6,7 @@ customized, and responsive, layout with a consistent look and feel."
 
 # Form
 
-<PageHeader base="githubComponentsDirectory" />
+<PageHeader />
 
 ## Introduction to forms and controls
 

@@ -4,7 +4,7 @@ description: "`useColorMode` provides a convenient utility to adjust the global 
 
 # useColorMode
 
-<PageHeader base="githubComposablesDirectory" />
+<PageHeader />
 
 ## Demo
 

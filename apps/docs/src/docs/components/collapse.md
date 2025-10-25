@@ -6,7 +6,7 @@ Includes support for making accordions. Visibility can be easily toggled with ou
 
 # Collapse
 
-<PageHeader base="githubComponentsDirectory" />
+<PageHeader />
 
 <<< DEMO ./demo/CollapseOverview.vue#template{vue-html}
 

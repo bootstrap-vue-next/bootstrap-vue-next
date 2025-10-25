@@ -4,7 +4,7 @@ description: 'Lightweight custom tagged input form control, with options for cus
 
 # Form Tags
 
-<PageHeader base="githubComponentsDirectory" />
+<PageHeader />
 
 Tags are arrays of short strings, used in various ways such as assigning categories. Use the default user interface, or create your own custom interface via the use of the default scoped slot.
 

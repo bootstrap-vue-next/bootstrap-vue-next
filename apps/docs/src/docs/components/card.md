@@ -4,7 +4,7 @@ description: 'A card is a flexible and extensible content container. It includes
 
 # Card
 
-<PageHeader base="githubComponentsDirectory" />
+<PageHeader />
 
 ## Overview
 

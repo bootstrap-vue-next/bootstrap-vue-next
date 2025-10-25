@@ -4,7 +4,7 @@ description: "For cross browser consistency, `BFormRadioGroup` and `BFormRadio` 
 
 # Form Radio
 
-<PageHeader base="githubComponentsDirectory" />
+<PageHeader />
 
 ## Individual radios
 

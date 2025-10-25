@@ -4,7 +4,7 @@ description: 'The Form SpinButton allows the user to adjusting a numeric range w
 
 # Form Spinbutton
 
-<PageHeader base="githubComponentsDirectory" />
+<PageHeader />
 
 ## Overview
 

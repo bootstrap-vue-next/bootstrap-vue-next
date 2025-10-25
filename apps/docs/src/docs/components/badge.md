@@ -4,7 +4,7 @@ description: 'Documentation and examples for badges, our small count and labelin
 
 # Badge
 
-<PageHeader base="githubComponentsDirectory" />
+<PageHeader />
 
 ## Examples
 

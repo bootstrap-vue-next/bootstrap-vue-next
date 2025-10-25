@@ -43,12 +43,9 @@ defineSlots<{
 const props = withDefaults(
   defineProps<{
     withPageHeader?: boolean
-    // Optional prop to specify which base directory to use for source links
-    base?: Base
   }>(),
   {
     withPageHeader: true,
-    base: undefined,
   }
 )
 
@@ -56,26 +53,39 @@ const {frontmatter, page} = useData()
 const description = computed(() => (frontmatter.value?.description as string) || '')
 const renderedDescription = useMarkdownRenderer(description)
 
-// Derive the source path from the current page URL and base
+// Infer the base directory from the current page path
+const inferredBase = computed((): Base | null => {
+  if (!page.value?.relativePath) return null
+
+  const path = page.value.relativePath
+  if (path.includes('/components/')) return 'githubComponentsDirectory'
+  if (path.includes('/composables/')) return 'githubComposablesDirectory'
+  if (path.includes('/directives/')) return 'githubDirectivesDirectory'
+
+  return null
+})
+
+// Derive the source path from the current page URL and inferred base
 const derivedPath = computed(() => {
-  if (!props.base || !page.value?.relativePath) return null
+  const base = inferredBase.value
+  if (!base || !page.value?.relativePath) return null
 
   const segments = page.value.relativePath.split('/')
   const filename = segments[segments.length - 1]?.replace('.md', '')
 
   if (!filename) return null
 
-  if (props.base === 'githubComponentsDirectory') {
+  if (base === 'githubComponentsDirectory') {
     // Convert filename (e.g., 'button', 'form-input') to component name (e.g., 'BButton', 'BFormInput')
     const componentName = `B${filename
       .split('-')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join('')}`
     return `${componentName}/${componentName}.vue`
-  } else if (props.base === 'githubComposablesDirectory') {
+  } else if (base === 'githubComposablesDirectory') {
     // Composables: filename is the composable name (e.g., 'useToast')
     return `${filename}/index.ts`
-  } else if (props.base === 'githubDirectivesDirectory') {
+  } else if (base === 'githubDirectivesDirectory') {
     // Directives: filename is the directive name (e.g., 'BColorMode')
     return `${filename}/index.ts`
   }
@@ -88,7 +98,9 @@ const path = computed(() => (frontmatter.value?.path as string | null) ?? derive
 
 const editHref = useEditThisPageOnGithub()
 const sourceHref = computed(() =>
-  path.value && props.base && globalData ? `${globalData[props.base]}/${path.value}` : null
+  path.value && inferredBase.value && globalData
+    ? `${globalData[inferredBase.value]}/${path.value}`
+    : null
 )
 
 const showButtons = computed(() => props.withPageHeader && (editHref.value || sourceHref.value))

@@ -4,7 +4,7 @@ description: 'The component `BNavbar` is a wrapper that positions branding, navi
 
 # Navbar
 
-<PageHeader base="githubComponentsDirectory" />
+<PageHeader />
 
 <<< DEMO ./demo/NavbarOverview.vue#template{vue-html}
 

@@ -4,4 +4,4 @@ description: 'A light-weight directive for toggling visibility state for collaps
 
 # BToggle
 
-<PageHeader base="githubDirectivesDirectory" />
+<PageHeader />

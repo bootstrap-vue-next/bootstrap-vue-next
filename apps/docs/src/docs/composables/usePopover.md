@@ -4,7 +4,7 @@ description: 'The `usePopover` composable allows you to create and control popov
 
 # usePopover
 
-<PageHeader base="githubComposablesDirectory" />
+<PageHeader />
 
 ## Setup
 

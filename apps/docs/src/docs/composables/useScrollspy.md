@@ -4,7 +4,7 @@ description: 'The `useScrollspy` composable provides automatic navigation highli
 
 # useScrollspy
 
-<PageHeader base="githubComposablesDirectory" />
+<PageHeader />
 
 ## Basic Usage
 

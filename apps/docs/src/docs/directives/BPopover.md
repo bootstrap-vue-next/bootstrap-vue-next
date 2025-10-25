@@ -4,4 +4,4 @@ description: 'Add popovers to any element on your site, using Bootstrap v5 CSS f
 
 # BPopover
 
-<PageHeader base="githubDirectivesDirectory" />
+<PageHeader />

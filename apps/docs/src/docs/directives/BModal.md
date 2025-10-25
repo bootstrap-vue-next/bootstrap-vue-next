@@ -4,4 +4,4 @@ description: 'Similar to the BToggle directive, the BModal directive is used to 
 
 # BModal
 
-<PageHeader base="githubDirectivesDirectory" />
+<PageHeader />
