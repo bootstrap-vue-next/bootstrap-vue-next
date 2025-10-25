@@ -1,10 +1,10 @@
+---
+description: 'Lightweight custom tagged input form control, with options for customized interface rendering, duplicate tag detection and optional tag validation.'
+---
+
 # Form Tags
 
-<PageHeader>
-
-Lightweight custom tagged input form control, with options for customized interface rendering, duplicate tag detection and optional tag validation.
-
-</PageHeader>
+<PageHeader />
 
 Tags are arrays of short strings, used in various ways such as assigning categories. Use the default user interface, or create your own custom interface via the use of the default scoped slot.
 

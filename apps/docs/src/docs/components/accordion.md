@@ -1,10 +1,10 @@
+---
+description: 'Build vertically collapsing accordions in combination with `BCollapse` component.'
+---
+
 # Accordion
 
-<PageHeader>
-
-Build vertically collapsing accordions in combination with `BCollapse` component.
-
-</PageHeader>
+<PageHeader />
 
 ## How it works
 

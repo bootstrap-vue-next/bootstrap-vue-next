@@ -1,11 +1,11 @@
+---
+description: "Quick first, previous, next, last, and page buttons for pagination control of another component
+(such as `BTable` or lists)."
+---
+
 # Pagination
 
-<PageHeader>
-
-Quick first, previous, next, last, and page buttons for pagination control of another component
-(such as `BTable` or lists).
-
-</PageHeader>
+<PageHeader />
 
 ## Overview
 

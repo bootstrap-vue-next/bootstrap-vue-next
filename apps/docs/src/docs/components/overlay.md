@@ -1,10 +1,10 @@
+---
+description: "BootstrapVueNext's custom `BOverlay` component is used to _visually obscure_ a particular element or component and its content. It signals a state change within the element or component to the user and can be used for creating loaders, warnings/alerts, prompts, and more."
+---
+
 # Overlay
 
-<PageHeader>
-
-BootstrapVueNext's custom `BOverlay` component is used to _visually obscure_ a particular element or component and its content. It signals a state change within the element or component to the user and can be used for creating loaders, warnings/alerts, prompts, and more.
-
-</PageHeader>
+<PageHeader />
 
 ## Overview
 

@@ -1,8 +1,10 @@
 <template>
   <BContainer class="lead mb-5">
     <BRow>
-      <BCol> <slot /> </BCol
-    ></BRow>
+      <BCol>
+        <slot><p v-html="renderedDescription" /></slot>
+      </BCol>
+    </BRow>
     <BRow v-if="withPageHeader">
       <BCol>
         <ViewSourceButton :href> Edit this page on GitHub </ViewSourceButton>
@@ -12,7 +14,10 @@
 </template>
 
 <script setup lang="ts">
+import {computed} from 'vue'
+import {useData} from 'vitepress'
 import {useEditThisPageOnGithub} from '../composables/useEditLink'
+import {useMarkdownRenderer} from '../composables/useMarkdownRenderer'
 import ViewSourceButton from './ViewSourceButton.vue'
 
 defineSlots<{
@@ -28,6 +33,10 @@ withDefaults(
     withPageHeader: true,
   }
 )
+
+const {frontmatter} = useData()
+const description = computed(() => frontmatter.value.description || '')
+const renderedDescription = useMarkdownRenderer(description)
 
 const href = useEditThisPageOnGithub()
 </script>

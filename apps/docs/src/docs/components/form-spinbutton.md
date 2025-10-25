@@ -1,10 +1,10 @@
+---
+description: 'The Form SpinButton allows the user to adjusting a numeric range with finite control'
+---
+
 # Form Spinbutton
 
-<PageHeader>
-
-The Form SpinButton allows the user to adjusting a numeric range with finite control
-
-</PageHeader>
+<PageHeader />
 
 ## Overview
 

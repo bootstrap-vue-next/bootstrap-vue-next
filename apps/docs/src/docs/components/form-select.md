@@ -1,10 +1,10 @@
+---
+description: 'Bootstrap custom `<select>` using custom styles. Optionally specify options based on an array, array of objects, or an object.'
+---
+
 # Form Select
 
-<PageHeader>
-
-Bootstrap custom `<select>` using custom styles. Optionally specify options based on an array, array of objects, or an object.
-
-</PageHeader>
+<PageHeader />
 
 ## Overview
 

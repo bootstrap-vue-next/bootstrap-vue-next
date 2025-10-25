@@ -1,10 +1,10 @@
+---
+description: 'Dropdowns are toggleable, contextual overlays for displaying lists of links and actions in a dropdown menu format.'
+---
+
 # Dropdown
 
-<PageHeader>
-
-Dropdowns are toggleable, contextual overlays for displaying lists of links and actions in a dropdown menu format.
-
-</PageHeader>
+<PageHeader />
 
 `BDropdown` components are toggleable, contextual overlays for displaying lists of links, and more. They're toggled by clicking (or pressing space or enter when focused), not by hovering; this is an [intentional design decision](https://markdotto.com/2012/02/27/bootstrap-explained-dropdowns/).
 

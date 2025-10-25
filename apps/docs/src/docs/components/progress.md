@@ -1,11 +1,11 @@
+---
+description: "Use our custom progress component for displaying simple or complex progress bars, featuring
+support for horizontally stacked bars, animated backgrounds, and text labels."
+---
+
 # Progress
 
-<PageHeader>
-
-Use our custom progress component for displaying simple or complex progress bars, featuring
-support for horizontally stacked bars, animated backgrounds, and text labels.
-
-</PageHeader>
+<PageHeader />
 
 ## Basic Usage
 

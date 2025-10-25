@@ -1,11 +1,11 @@
+---
+description: "Placeholders are components that allows you to display a loading state for
+several component types while your data is being fetched or computed."
+---
+
 # Placeholder
 
-<PageHeader>
-
-Placeholders are components that allows you to display a loading state for
-several component types while your data is being fetched or computed.
-
-</PageHeader>
+<PageHeader />
 
 ## Basic Usage
 

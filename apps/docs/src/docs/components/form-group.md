@@ -1,10 +1,10 @@
+---
+description: 'The `BFormGroup` component is the easiest way to add some structure to forms. Its purpose is to pair form controls with a legend or label, and to provide help text and invalid/valid feedback text, as well as visual (color) contextual state feedback.'
+---
+
 # Form Group
 
-<PageHeader>
-
-The `BFormGroup` component is the easiest way to add some structure to forms. Its purpose is to pair form controls with a legend or label, and to provide help text and invalid/valid feedback text, as well as visual (color) contextual state feedback.
-
-</PageHeader>
+<PageHeader />
 
 <<< DEMO ./demo/FormGroupOverview.vue
 

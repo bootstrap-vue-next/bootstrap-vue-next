@@ -1,10 +1,10 @@
+---
+description: 'Build hidden sidebars into your project. Sidebars can aid in enhancing user interaction or preventing further interaction.'
+---
+
 # Offcanvas
 
-<PageHeader>
-
-Build hidden sidebars into your project. Sidebars can aid in enhancing user interaction or preventing further interaction.
-
-</PageHeader>
+<PageHeader />
 
 <<< DEMO ./demo/OffcanvasOverview.vue#template{vue-html}
 

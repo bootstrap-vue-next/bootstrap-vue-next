@@ -1,14 +1,14 @@
-# Carousel
-
-<PageHeader>
-
-The carousel is a slideshow for cycling through a series of content. It works with a series of images, text,
+---
+description: "The carousel is a slideshow for cycling through a series of content. It works with a series of images, text,
 or custom markup. It also includes support for previous/next controls and indicators.
 
 Nested carousels are not supported. You should also be aware that carousels in general can often cause
-usability and accessibility challenges.
+usability and accessibility challenges."
+---
 
-</PageHeader>
+# Carousel
+
+<PageHeader />
 
 ## Basic usage
 

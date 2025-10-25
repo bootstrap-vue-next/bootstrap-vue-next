@@ -1,13 +1,13 @@
-# Popover
-
-<PageHeader>
-
-The Popover feature, which provides a tooltip-like behavior, can be easily applied to any
+---
+description: "The Popover feature, which provides a tooltip-like behavior, can be easily applied to any
 interactive element via the `<BPopover>` component or [`v-b-popover`](/docs/directives/BPopover)
 directive. Popovers can also be created and programmatically controlled via the composable
-[`usePopover`](/docs/composables/usePopover)
+[`usePopover`](/docs/composables/usePopover)"
+---
 
-</PageHeader>
+# Popover
+
+<PageHeader />
 
 <<< DEMO ./demo/PopoverOverview.vue#template{vue-html}
 

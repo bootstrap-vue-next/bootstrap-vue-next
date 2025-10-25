@@ -1,10 +1,10 @@
+---
+description: 'Documentation and examples for badges, our small count and labeling component.'
+---
+
 # Badge
 
-<PageHeader>
-
-Documentation and examples for badges, our small count and labeling component.
-
-</PageHeader>
+<PageHeader />
 
 ## Examples
 

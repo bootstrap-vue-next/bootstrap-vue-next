@@ -1,12 +1,12 @@
+---
+description: "Easily toggle visibility of almost any content on your pages in a vertically collapsing container.
+Includes support for making accordions. Visibility can be easily toggled with our
+[`v-b-toggle` directive](/docs/directives/BToggle), or via [`v-model`](#v-model-support)."
+---
+
 # Collapse
 
-<PageHeader>
-
-Easily toggle visibility of almost any content on your pages in a vertically collapsing container.
-Includes support for making accordions. Visibility can be easily toggled with our
-[`v-b-toggle` directive](/docs/directives/BToggle), or via [`v-model`](#v-model-support).
-
-</PageHeader>
+<PageHeader />
 
 <<< DEMO ./demo/CollapseOverview.vue#template{vue-html}
 

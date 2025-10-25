@@ -1,10 +1,10 @@
+---
+description: "Use BootstrapVue's custom b-link component for generating a standard `<a>` link or `RouterLink`. `BLink` supports the `disabled` state and `click` event propagation."
+---
+
 # Link
 
-<PageHeader>
-
-Use BootstrapVue's custom b-link component for generating a standard `<a>` link or `RouterLink`. `BLink` supports the `disabled` state and `click` event propagation.
-
-</PageHeader>
+<PageHeader />
 
 ## Links without Router
 
