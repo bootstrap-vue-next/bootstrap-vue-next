@@ -1,10 +1,11 @@
-<ComposableHeader path="useToggle/index.ts" title="useToggle" />
+---
+description: 'You can use `useToggle` to get the closest toggleable component in **child component** and show,hide or toggle it. It can also be supplied a target id to show, hide or toggle a specific component'
+path: 'useToggle/index.ts'
+---
 
-<div class="lead mb-5">
+# useToggle
 
-You can use `useToggle` to get the closest toggleable component in **child component** and show,hide or toggle it. It can also be supplied a target id to show, hide or toggle a specific component
-
-</div>
+<PageHeader base="githubComposablesDirectory" />
 
 <HighlightCard>
   <template #html>
@@ -41,7 +42,3 @@ find modal since the component in lazy mode may not render at page initial. If t
 The `show` and `toggle` methods take a boolean argument to control wether to resolve the promise on show (`false`) or on hide (`true`). On `show` the promise resolves to `true` when shown and to `'show-prevented'` if show is prevented. On `hide` the promise resolves to the trigger that caused the hide event. The promise can be awaited to get the result.
 
 <<< DEMO ./demo/UseTogglePromise.vue
-
-<script setup lang="ts">
-import ComposableHeader from './ComposableHeader.vue'
-</script>
