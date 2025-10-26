@@ -4,10 +4,6 @@ Includes support for making accordions. Visibility can be easily toggled with ou
 [`v-b-toggle` directive](/docs/directives/BToggle), or via [`v-model`](#v-model-support)."
 ---
 
-# Collapse
-
-<PageHeader />
-
 <<< DEMO ./demo/CollapseOverview.vue#template{vue-html}
 
 ## Usage

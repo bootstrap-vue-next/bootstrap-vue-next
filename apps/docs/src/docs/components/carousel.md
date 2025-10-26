@@ -6,10 +6,6 @@ Nested carousels are not supported. You should also be aware that carousels in g
 usability and accessibility challenges."
 ---
 
-# Carousel
-
-<PageHeader />
-
 ## Basic usage
 
 <<< DEMO ./demo/CarouselBasic.vue#template{vue-html}

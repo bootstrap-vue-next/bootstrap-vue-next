@@ -23,7 +23,7 @@ export default createContentLoader('docs/components/*.md', {
 })
 
 function extractTitleFromUrl(url: string): string {
-  const match = url.match(/\/components\/([^/]+)$/)
+  const match = url.match(/\/components\/([^/]+)\.html$/)
   if (!match) return ''
 
   // Convert kebab-case to Title Case

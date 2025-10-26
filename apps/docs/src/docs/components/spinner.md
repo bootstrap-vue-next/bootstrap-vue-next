@@ -5,10 +5,6 @@ alignment, and sizing can be easily customized with a few built-in props and/or 
 utility classes."
 ---
 
-# Spinners
-
-<PageHeader />
-
 Spinners can be placed just about anywhere, including inside buttons, alerts, and even `<BTable>`'s
 busy slot.
 

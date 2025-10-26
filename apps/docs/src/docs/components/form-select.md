@@ -2,10 +2,6 @@
 description: 'Bootstrap custom `<select>` using custom styles. Optionally specify options based on an array, array of objects, or an object.'
 ---
 
-# Form Select
-
-<PageHeader />
-
 ## Overview
 
 Generate your select options by passing an array or object to the `options` props:

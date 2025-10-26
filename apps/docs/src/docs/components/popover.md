@@ -5,10 +5,6 @@ directive. Popovers can also be created and programmatically controlled via the 
 [`usePopover`](/docs/composables/usePopover)"
 ---
 
-# Popover
-
-<PageHeader />
-
 <<< DEMO ./demo/PopoverOverview.vue#template{vue-html}
 
 ## Overview

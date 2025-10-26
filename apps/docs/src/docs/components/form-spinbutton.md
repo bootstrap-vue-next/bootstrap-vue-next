@@ -2,10 +2,6 @@
 description: 'The Form SpinButton allows the user to adjusting a numeric range with finite control'
 ---
 
-# Form Spinbutton
-
-<PageHeader />
-
 ## Overview
 
 The component `BFormSpinbutton` is

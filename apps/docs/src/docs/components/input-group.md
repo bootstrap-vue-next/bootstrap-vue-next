@@ -2,10 +2,6 @@
 description: 'Easily extend form controls by adding text, buttons, or button groups on either side of textual inputs.'
 ---
 
-# Input Group
-
-<PageHeader />
-
 <<< DEMO ./demo/InputGroupOverview.vue#template{vue-html}
 
 ## Usage

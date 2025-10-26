@@ -4,10 +4,6 @@ validation states. Pair them up with other BootstrapVueNext form control compone
 customized, and responsive, layout with a consistent look and feel."
 ---
 
-# Form
-
-<PageHeader />
-
 ## Introduction to forms and controls
 
 Be sure to use an appropriate `type` on all inputs (e.g., `email` for email address or `number` for

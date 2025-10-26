@@ -2,10 +2,6 @@
 description: "Use Bootstrap's custom `BButton` component for actions in forms, dialogs, and more. Includes support for a handful of contextual variations, sizes, states, and more."
 ---
 
-# Button
-
-<PageHeader />
-
 ## Overview
 
 BootstrapVueNext's `BButton` component generates either a `<button>` element, `<a>` element, or `RouterLink` component with the styling of a button.

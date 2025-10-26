@@ -3,10 +3,6 @@ description: "Quick first, previous, next, last, and page buttons for pagination
 (such as `BTable` or lists)."
 ---
 
-# Pagination
-
-<PageHeader />
-
 ## Overview
 
 `<BPagination>` is a custom input component that provides a current page number input control. The

@@ -3,10 +3,6 @@ description: "Placeholders are components that allows you to display a loading s
 several component types while your data is being fetched or computed."
 ---
 
-# Placeholder
-
-<PageHeader />
-
 ## Basic Usage
 
 At the placeholder core, you have the `BPlaceholder` component:

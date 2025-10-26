@@ -3,10 +3,6 @@ description: "Create a widget of tabbable panes of _local content_. The tabs com
 cards internally, and provides full keyboard navigation control of the tabs."
 ---
 
-# Tabs
-
-<PageHeader />
-
 For navigation based tabs (i.e. tabs that would change the URL), use the
 [`<BNav>`](/docs/components/nav) component instead.
 

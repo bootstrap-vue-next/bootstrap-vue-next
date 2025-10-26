@@ -2,10 +2,6 @@
 description: 'Group a series of buttons together on a single line or stack them in a vertical column with `BButtonGroup`.'
 ---
 
-# Button Group
-
-<PageHeader />
-
 ## Overview
 
 Button Groups are an easy way to group a series of buttons together.

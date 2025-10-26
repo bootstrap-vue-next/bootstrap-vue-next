@@ -2,10 +2,6 @@
 description: '`useBreadcrumb` is a helper utility for the `BBreadcrumb` component. It provides a **globally** changable context so you can modify a breadcrumb. It should be noted that the breadcrumb component will automatically use the global context by default. `useBreadcrumb` is shared globally, one modification to the state will be recognized throughout the app. As noted in the BBreadcrumb documentation, the items prop for the component takes precedence over `useBreadcrumb`'
 ---
 
-# useBreadcrumb
-
-<PageHeader />
-
 <UsePluginAlert />
 
 ## Demo

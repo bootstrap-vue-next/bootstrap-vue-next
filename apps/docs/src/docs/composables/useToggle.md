@@ -2,10 +2,6 @@
 description: 'You can use `useToggle` to get the closest toggleable component in **child component** and show,hide or toggle it. It can also be supplied a target id to show, hide or toggle a specific component'
 ---
 
-# useToggle
-
-<PageHeader />
-
 <HighlightCard>
   <template #html>
 

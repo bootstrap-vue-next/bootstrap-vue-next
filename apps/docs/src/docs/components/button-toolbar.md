@@ -1,6 +1,6 @@
-# Button Toolbar
-
-Group a series of button-groups and/or input-groups together on a single line.
+---
+description: 'Group a series of button-groups and/or input-groups together on a single line, with support for sizing, justification, and mixing different control types.'
+---
 
 **Example 1:** with button groups
 

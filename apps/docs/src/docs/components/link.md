@@ -2,10 +2,6 @@
 description: "Use BootstrapVue's custom b-link component for generating a standard `<a>` link or `RouterLink`. `BLink` supports the `disabled` state and `click` event propagation."
 ---
 
-# Link
-
-<PageHeader />
-
 ## Links without Router
 
 By defaut links with no options will default to # location.

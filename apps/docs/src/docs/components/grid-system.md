@@ -4,10 +4,6 @@ description: "Use the powerful mobile-first flexbox grid (via the `<BContainer>`
 five default responsive tiers, CSS Sass variables and mixins, and dozens of predefined classes."
 ---
 
-# Grid System
-
-<PageHeader />
-
 ## Overview
 
 Bootstrap's grid system uses a series of containers, rows, and columns to layout and align content. It's built with [flexbox](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox) and is fully responsive. Below is an example and an in-depth look at how the grid comes together.

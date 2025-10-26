@@ -2,10 +2,6 @@
 description: 'The `useScrollspy` composable provides automatic navigation highlighting based on scroll position. It tracks the visibility of content elements and automatically updates the active state of corresponding navigation items, making it perfect for table of contents, documentation navigation, and section-based layouts.'
 ---
 
-# useScrollspy
-
-<PageHeader />
-
 ## Basic Usage
 
 The most common use case is to track scroll position within a scrollable container and highlight corresponding navigation items:

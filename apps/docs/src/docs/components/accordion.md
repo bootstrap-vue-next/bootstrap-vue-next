@@ -2,10 +2,6 @@
 description: 'Build vertically collapsing accordions in combination with `BCollapse` component.'
 ---
 
-# Accordion
-
-<PageHeader />
-
 ## How it works
 
 The `BAccordionItem` uses the `BCollapse` component internally to make it collapsible. To render an accordion that’s expanded, add the `visible` property on the `BAccordionItem` component.

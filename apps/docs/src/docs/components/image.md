@@ -2,10 +2,6 @@
 description: 'Documentation and examples for opting images (via `BImg` component) into responsive behavior (so they never become larger than their parent elements), optionally adding lightweight styles to them — all via props.'
 ---
 
-# Image
-
-<PageHeader />
-
 BootstrapVueNext's image components support rounded images, thumbnail styling, alignment, and even the
 ability to create blank images with an optional solid background color. Support for lazy loaded
 images is available via the `lazy` prop.

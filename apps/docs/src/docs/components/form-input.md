@@ -2,10 +2,6 @@
 description: 'Create various type inputs such as: `text`, `password`, `number`, `url`, `email`, `search`, `range`, `date` and more.'
 ---
 
-# Form Input
-
-<PageHeader />
-
 <<< DEMO ./demo/FormInputOverview.vue
 
 ## Input type

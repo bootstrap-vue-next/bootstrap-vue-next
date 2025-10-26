@@ -4,10 +4,6 @@ or [`v-b-tooltip`](/docs/directives/BTooltip) directive. Tooltips can also be cr
 [`usePopover`](/docs/composables/usePopover)"
 ---
 
-# Tooltip
-
-<PageHeader />
-
 <<< DEMO ./demo/TooltipOverview.vue#template{vue-html}
 
 ## Overview

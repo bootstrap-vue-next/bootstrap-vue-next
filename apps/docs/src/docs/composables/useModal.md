@@ -2,10 +2,6 @@
 description: 'The `useModal` composable provides a powerful API to create, manage, and control modals programmatically from anywhere in your application. It allows you to create modals on-demand, manage existing modals, and handle modal interactions through promises.'
 ---
 
-# useModal
-
-<PageHeader />
-
 ## Setup
 
 To use `useModal`, you need one of the following setup approaches:

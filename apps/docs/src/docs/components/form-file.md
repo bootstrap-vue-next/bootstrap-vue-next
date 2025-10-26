@@ -1,10 +1,6 @@
-# Form File
-
-<PageHeader>
-
-File input control that supports single and multiple file modes
-
-</PageHeader>
+---
+description: 'File input control that supports single and multiple file modes, drag and drop, file type restrictions, and directory selection with contextual state feedback.'
+---
 
 <BAlert :model-value="true" variant="danger">
 The current variation is subject to change pre v1.0. The implementation may change to become closer to the Bootstrap-vue implementation based on feedback <BLink target="_blank" href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/discussions/1213" rel="noopener">vote here</BLink>

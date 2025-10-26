@@ -3,10 +3,6 @@ description: "Use our custom progress component for displaying simple or complex
 support for horizontally stacked bars, animated backgrounds, and text labels."
 ---
 
-# Progress
-
-<PageHeader />
-
 ## Basic Usage
 
 <<< DEMO ./demo/ProgressBasic.vue

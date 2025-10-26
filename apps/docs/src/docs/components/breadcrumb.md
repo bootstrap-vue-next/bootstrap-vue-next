@@ -2,10 +2,6 @@
 description: 'Indicate the current page’s location within a navigational hierarchy that automatically adds separators via CSS.'
 ---
 
-# Breadcrumb
-
-<PageHeader />
-
 ## Overview
 
 <<< DEMO ./demo/BreadcrumbOverview.vue

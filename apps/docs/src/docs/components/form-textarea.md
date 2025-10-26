@@ -2,10 +2,6 @@
 description: 'Create multi-line text inputs with support for auto height sizing, minimum and maximum number of rows, and contextual states.'
 ---
 
-# Form Textarea
-
-<PageHeader />
-
 <<< DEMO ./demo/TextareaOverview.vue
 
 ## Control sizing

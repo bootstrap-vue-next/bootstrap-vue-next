@@ -22,8 +22,8 @@
         :class="listGroupItemClasses"
       >
         <BLink
-          :to="component.route"
-          :active="routerRoute.path === `${component.route}.html`"
+          :to="withBase(component.route)"
+          :active="routerRoute.path === component.route"
           :class="linkClasses"
         >
           {{ component.name }}

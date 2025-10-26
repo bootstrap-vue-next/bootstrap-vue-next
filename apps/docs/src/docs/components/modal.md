@@ -2,10 +2,6 @@
 description: 'Modals are streamlined, but flexible dialog prompts. They support a number of use cases from user notification to completely custom content and feature a handful of helpful sub-components, sizes, variants, accessibility, and more.'
 ---
 
-# Modal
-
-<PageHeader />
-
 ## Usage
 
 <<< DEMO ./demo/ModalUsage.vue

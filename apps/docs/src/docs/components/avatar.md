@@ -5,10 +5,6 @@ appearance such as color variant and roundness, and optionally supports acting a
 or a [router link](/docs/reference/router-links)."
 ---
 
-# Avatar
-
-<PageHeader />
-
 ## Overview
 
 Avatars are lightweight components, which render inline by default, so that they are vertically

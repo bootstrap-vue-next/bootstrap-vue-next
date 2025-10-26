@@ -2,10 +2,6 @@
 description: 'The `useToast` composable allows you to create and manage toasts programmatically from anywhere in your application. It provides a simple API to show toast messages without needing to declare toast components in your templates.'
 ---
 
-# useToast
-
-<PageHeader />
-
 ## Setup
 
 To use `useToast`, you need one of the following setup approaches:
