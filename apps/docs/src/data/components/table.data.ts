@@ -253,6 +253,16 @@ export default {
           type: 'ClassValue',
           default: undefined,
         },
+        tbodyTransitionHandlers: {
+          type: 'Record<string, (...args: unknown[]) => unknown>',
+          default: undefined,
+          description: 'Object containing transition event handlers (enter, leave, etc.) for tbody rows',
+        },
+        tbodyTransitionProps: {
+          type: 'Readonly<TransitionProps>',
+          default: undefined,
+          description: 'Vue TransitionGroup props (name, mode, duration, etc.) for tbody rows',
+        },
         tbodyTrAttrs: {
           type: '((item: Items | null, type: TableRowType) => AttrsValue) | AttrsValue',
           default: undefined,
@@ -836,7 +846,19 @@ export default {
       BTbody: {
         styleSpec: {kind: StyleKind.Tag, value: 'tbody'},
         sourcePath: '/BTable/BTbody.vue',
-        props: pick(buildCommonProps(), ['variant']) satisfies PropRecord<keyof BTbodyProps>,
+        props: {
+          ...pick(buildCommonProps(), ['variant']),
+          tbodyTransitionHandlers: {
+            type: 'Record<string, (...args: unknown[]) => unknown>',
+            default: undefined,
+            description: 'Object containing transition event handlers (enter, leave, etc.) for tbody rows',
+          },
+          tbodyTransitionProps: {
+            type: 'Readonly<TransitionProps>',
+            default: undefined,
+            description: 'Vue TransitionGroup props (name, mode, duration, etc.) for tbody rows',
+          },
+        } satisfies PropRecord<keyof BTbodyProps>,
         slots: {
           default: {
             description: 'Content to place in the tbody',
