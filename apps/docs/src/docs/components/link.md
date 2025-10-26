@@ -89,9 +89,3 @@ changes).
 :::
 
 <<< FRAGMENT ./demo/LinkDisabled.css
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/link.data'
-</script>

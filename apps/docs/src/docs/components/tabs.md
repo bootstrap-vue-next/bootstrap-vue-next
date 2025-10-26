@@ -1,6 +1,7 @@
 ---
-description: "Create a widget of tabbable panes of _local content_. The tabs component is built upon navs and
-cards internally, and provides full keyboard navigation control of the tabs."
+description: >
+  Create a widget of tabbable panes of _local content_. The tabs component is built upon navs and
+  cards internally, and provides full keyboard navigation control of the tabs.
 ---
 
 For navigation based tabs (i.e. tabs that would change the URL), use the
@@ -260,9 +261,3 @@ It is recommended to use the `disabled` attribute on the `<BTab>` component inst
 ### Dynamic tabs + tabs-end slot
 
 <<< DEMO ./demo/TabsDynamic.vue
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/tabs.data'
-</script>

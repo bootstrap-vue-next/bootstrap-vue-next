@@ -1051,9 +1051,3 @@ your app handles the various inconsistencies with events.
 ## Complete Example
 
 <<< DEMO ./demo/TableComplete.vue
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/table.data'
-</script>

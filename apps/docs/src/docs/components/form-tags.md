@@ -207,9 +207,3 @@ The remove event is emitted when the `<BFormTag>` remove button is clicked.
 Tags that are too wide for their parent container will automatically have their text content truncated with an ellipsis. For this reason, it is always good practice to supply a title via the title prop when using the default slot of `<BFormTag>` for the tag content.
 
 Note `<BFormTag>` requires BootstrapVueNext's custom CSS/SCSS for proper styling.
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/formTags.data'
-</script>

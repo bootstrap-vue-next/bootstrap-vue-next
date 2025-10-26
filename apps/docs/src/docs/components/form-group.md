@@ -218,9 +218,3 @@ When the `BFormGroup` has a `label-for` prop set, the `aria-describedby` attribu
 auto-assigned to the input. When the form group has multiple form controls, make sure to set the
 attribute to each control yourself by using the `ariaDescribedby` prop value from the optionally
 scoped `default` slot.
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/formGroup.data'
-</script>

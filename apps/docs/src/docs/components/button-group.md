@@ -37,9 +37,3 @@ that split dropdown menus are not supported when prop `vertical` is set.
 
 Also check out the [`BButtonToolbar`](/docs/components/button-toolbar) component for generating
 toolbars containing button groups and input groups.
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/buttonGroup.data'
-</script>

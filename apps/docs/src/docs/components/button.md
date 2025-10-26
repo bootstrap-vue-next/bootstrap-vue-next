@@ -142,9 +142,3 @@ When the `href` is set to any other value (~~or the `to` prop is used~~), `role=
 added, nor will the keyboard event listeners be enabled.
 
 <NotYetImplemented>The `role="button"` behavior is partially implemented, but the keyboard listen are not</NotYetImplemented>
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/button.data'
-</script>

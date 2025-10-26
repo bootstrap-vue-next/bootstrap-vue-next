@@ -122,9 +122,3 @@ The `BApp` component automatically provides several internal services:
 - The component uses Vue's provide/inject system for dependency injection
 - All orchestrators are automatically teleported when `teleportTo` is specified
 - The component inherits all attributes and passes them to the default slot
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/app.data'
-</script>

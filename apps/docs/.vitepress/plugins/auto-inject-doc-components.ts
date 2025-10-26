@@ -38,12 +38,12 @@ function filenameToCamelCase(filename: string): string {
  * This plugin automatically adds:
  * 1. An h1 heading with the filename converted to proper case (for proper document structure)
  * 2. A <PageHeader /> component (for description and source links)
- * 3. For components only: A <ComponentReference /> component with data import (at the end)
+ * 3. For components only: A <ComponentReference /> component with data import (before any <style> section)
  *
  * Only applies to files in /components/, /composables/, or /directives/ directories
  * that have a `description` in their frontmatter.
  */
-export function autoInjectHeader(md: MarkdownIt) {
+export function autoInjectDocComponents(md: MarkdownIt) {
   const defaultRender = md.render.bind(md)
 
   md.render = function (
@@ -105,7 +105,20 @@ export function autoInjectHeader(md: MarkdownIt) {
       ) {
         const dataFilename = filenameToCamelCase(filename)
         const footer = `\n\n<ComponentReference :data="data" />\n\n<script setup lang="ts">\nimport {data} from '../../data/components/${dataFilename}.data'\n</script>`
-        afterFrontmatter = afterFrontmatter + footer
+
+        // Check if there's a <style> section at the end
+        const styleMatch = afterFrontmatter.match(/\n*<style[^>]*>[\s\S]*<\/style>\s*$/)
+
+        if (styleMatch) {
+          // Insert footer before the <style> section
+          const styleIndex = afterFrontmatter.lastIndexOf(styleMatch[0])
+          afterFrontmatter = `${
+            afterFrontmatter.slice(0, styleIndex) + footer
+          }\n${afterFrontmatter.slice(styleIndex)}`
+        } else {
+          // No <style> section, append footer at the end
+          afterFrontmatter = afterFrontmatter + footer
+        }
       }
     }
 

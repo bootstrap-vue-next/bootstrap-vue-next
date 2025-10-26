@@ -39,9 +39,3 @@ description: 'The `BOrchestrator` component manages the rendering and positionin
 - [`BPopover`](/docs/components/popover) - Can be orchestrated
 
 ## Component Reference
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/orchestrator.data'
-</script>

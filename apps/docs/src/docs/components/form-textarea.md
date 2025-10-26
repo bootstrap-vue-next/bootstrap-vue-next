@@ -192,9 +192,3 @@ e.g. `<BFormInput ref="foo" ... />`, `const foo = ref<InstanceType<typeof BFormI
 
 Refer to [https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement] for more information on
 these methods and properties. Support will vary based on input type.
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/formTextarea.data'
-</script>

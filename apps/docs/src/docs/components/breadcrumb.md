@@ -35,9 +35,3 @@ Two slots are provided to put additional content before and after the breadcrumb
 Use slot `prepend` to put content before the breadcrumb. Use slot `append` to put content after the breadcrumb.
 
 <<< DEMO ./demo/BreadcrumbSlots.vue#template{vue-html}
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/breadcrumb.data'
-</script>

@@ -2,7 +2,7 @@ import {defineConfig} from 'vitepress'
 import Icons from 'unplugin-icons/vite'
 import markdownItClass from '@toycode/markdown-it-class'
 import {demoContainer} from './plugins/demo-container'
-import {autoInjectHeader} from './plugins/auto-inject-header'
+import {autoInjectDocComponents} from './plugins/auto-inject-doc-components'
 import Components from 'unplugin-vue-components/vite'
 import {BootstrapVueNextResolver} from 'bootstrap-vue-next/resolvers'
 
@@ -55,7 +55,7 @@ export default defineConfig({
     config: (md) => {
       md.use(markdownItClass, {table: ['table', 'table-striped']})
       md.use(demoContainer, 'src')
-      md.use(autoInjectHeader)
+      md.use(autoInjectDocComponents)
     },
     headers: true,
   },

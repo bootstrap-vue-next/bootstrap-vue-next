@@ -201,9 +201,3 @@ The _indeterminate_ state is **visual only**. The checkbox is still either check
 **Indeterminate checkbox use-case example:**
 
 <<< DEMO ./demo/CheckboxIndeterminate.vue
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/formCheckbox.data'
-</script>

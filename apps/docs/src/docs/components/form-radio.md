@@ -169,9 +169,3 @@ Supported `aria-invalid` values are:
 - `true` The value has failed validation
 
 `aria-invalid` is automatically set to `true` if the `state` prop is `false`.
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/formRadio.data'
-</script>

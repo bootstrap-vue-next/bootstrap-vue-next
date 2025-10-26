@@ -1,6 +1,7 @@
 ---
-description: "Placeholders are components that allows you to display a loading state for
-several component types while your data is being fetched or computed."
+description: >
+  Placeholders are components that allows you to display a loading state for
+  several component types while your data is being fetched or computed.
 ---
 
 ## Basic Usage
@@ -88,9 +89,3 @@ Optionally, you can manually adjust any scope of the table using slots. The foll
 The `<BPlaceholder>` component and helper components utilize Bootstrap SCSS variables, as much as
 possible to best match the styling and sizing of the native components. This means if you've
 customized Bootstrap SCSS, the skeleton components should adapt to fit your custom theming.
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/placeholder.data'
-</script>

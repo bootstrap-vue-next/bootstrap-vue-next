@@ -315,9 +315,3 @@ The dropdown menu is rendered with semantic `<ul>` and `<li>` elements for acces
 
 - [`BNavItemDropdown`](/docs/components/nav#dropdown) for dropdown support inside `BNav` and `BNavbar`
 - [Router Link Support](/docs/reference/router-links) reference for information about router-link specific props available on `BDropdownItem`
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/dropdown.data'
-</script>

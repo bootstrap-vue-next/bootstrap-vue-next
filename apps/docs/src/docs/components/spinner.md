@@ -1,8 +1,9 @@
 ---
-description: "The `<BSpinner>` component can be used to show the loading state in your projects. They're
-rendered only with basic HTML and CSS as a lightweight Vue component. Their appearance,
-alignment, and sizing can be easily customized with a few built-in props and/or Bootstrap v5
-utility classes."
+description: >
+  The `<BSpinner>` component can be used to show the loading state in your projects. They're
+  rendered only with basic HTML and CSS as a lightweight Vue component. Their appearance,
+  alignment, and sizing can be easily customized with a few built-in props and/or Bootstrap v5
+  utility classes.
 ---
 
 Spinners can be placed just about anywhere, including inside buttons, alerts, and even `<BTable>`'s
@@ -97,9 +98,3 @@ Place a hidden label text inside the spinner for screen reader users, via the `l
 For accessibility purposes, each spinner will automatically have a `role="status"` attribute when a label is provided. You can easily customize the role if required via prop `role`. The specified `role` will not be applied when no label is provided.
 
 As well, when no label is provided, the spinner will automatically have the attribute `aria-hidden="true"` to hide the spinner from screen reader users.
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/spinner.data'
-</script>

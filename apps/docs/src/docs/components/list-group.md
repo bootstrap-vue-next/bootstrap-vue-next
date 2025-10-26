@@ -116,9 +116,3 @@ Add nearly any HTML or component within, even for linked list groups like the on
 help of [flexbox utility classes](/docs/reference/utility-classes).
 
 <<< DEMO ./demo/ListGroupCustom.vue#template{vue-html}
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/listGroup.data'
-</script>

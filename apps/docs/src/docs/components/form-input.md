@@ -272,9 +272,3 @@ these methods and properties. Support will vary based on input type.
 e.g. With the same setup as above, call `foo?.value?.element?.focus` to set the foccus on the input element.
 
 <<< DEMO ./demo/FormInputMethods.vue
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/formInput.data'
-</script>
