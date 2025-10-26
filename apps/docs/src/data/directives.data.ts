@@ -1,26 +1,16 @@
 import {createContentLoader} from 'vitepress'
+import {type DocItem, transformDocData} from '../utils/dataLoaderUtils'
 
-interface Directive {
-  name: string
-  description: string
-  url: string
-}
+export type Directive = DocItem
 
 declare const data: Directive[]
 export {data}
 
 export default createContentLoader('docs/directives/*.md', {
   transform(rawData): Directive[] {
-    return rawData
-      .map((page) => {
-        const name = page.url.split('/').pop()?.replace('.html', '') || ''
-        const description = (page.frontmatter.description as string) || ''
-        return {
-          name,
-          description,
-          url: page.url,
-        }
-      })
-      .sort((a, b) => a.name.localeCompare(b.name))
+    return transformDocData(rawData, 'directives', {
+      filterByDescription: false, // Directives don't filter by description
+      useTitleCase: false, // Keep original casing for directives (e.g., BTooltip)
+    })
   },
 })

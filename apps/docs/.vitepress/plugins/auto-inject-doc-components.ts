@@ -52,7 +52,7 @@ export function autoInjectDocComponents(md: MarkdownIt) {
   ) {
     // Check if this is a documentation file that should get auto-injection
     const path = env?.relativePath || env?.path || ''
-    const match = path.match(/\/(components|composables|directives)\/([^/]+)\.md$/)
+    const match = path.match(/\/(components|composables|directives|configurations)\/([^/]+)\.md$/)
 
     if (!match) {
       return defaultRender(src, env)

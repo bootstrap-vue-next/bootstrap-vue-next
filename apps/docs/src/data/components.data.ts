@@ -1,34 +1,16 @@
 import {createContentLoader} from 'vitepress'
+import {type DocItem, transformDocData} from '../utils/dataLoaderUtils'
 
-export interface ComponentData {
-  name: string
-  description: string
-  url: string
-}
+export type ComponentData = DocItem
 
 declare const data: ComponentData[]
 export {data}
 
 export default createContentLoader('docs/components/*.md', {
   transform(rawData): ComponentData[] {
-    return rawData
-      .map((page) => ({
-        name: page.frontmatter.title || extractTitleFromUrl(page.url),
-        description: page.frontmatter.description || '',
-        url: page.url,
-      }))
-      .filter((component) => component.description) // Only include components with descriptions
-      .sort((a, b) => a.name.localeCompare(b.name))
+    return transformDocData(rawData, 'components', {
+      filterByDescription: true,
+      useTitleCase: true,
+    })
   },
 })
-
-function extractTitleFromUrl(url: string): string {
-  const match = url.match(/\/components\/([^/]+)\.html$/)
-  if (!match) return ''
-
-  // Convert kebab-case to Title Case
-  return match[1]
-    .split('-')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ')
-}

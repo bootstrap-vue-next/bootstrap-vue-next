@@ -44,6 +44,7 @@ import GearIcon from '~icons/bi/gear'
 import {data as componentsData} from '../data/components.data'
 import {data as composablesData} from '../data/composables.data'
 import {data as directivesData} from '../data/directives.data'
+import {data as configurationsData} from '../data/configurations.data'
 
 defineProps<{
   name?: string
@@ -121,6 +122,13 @@ const directivesComputedList = computed(() =>
   }))
 )
 
+const configurationsComputedList = computed(() =>
+  configurationsData.map((configuration) => ({
+    name: configuration.name,
+    route: configuration.url,
+  }))
+)
+
 const groupComputedList = computed(() => [
   {
     label: 'Components',
@@ -144,16 +152,7 @@ const groupComputedList = computed(() => [
     label: 'Configurations',
     uri: '/docs/configurations',
     icon: () => GearIcon,
-    children: [
-      {
-        name: 'Global Options',
-        route: withBase('/docs/configurations/global-options'),
-      },
-      {
-        name: 'Customizing Styles',
-        route: withBase('/docs/configurations/customizing-styles'),
-      },
-    ],
+    children: configurationsComputedList.value,
   },
 ])
 </script>
