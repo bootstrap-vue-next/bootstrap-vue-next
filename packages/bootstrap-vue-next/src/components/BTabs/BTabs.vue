@@ -427,11 +427,15 @@ watch(activeId, (newValue, oldValue) => {
   }
   // If the new tab is not found, find the first enabled tab
   if (index === -1) {
-    // activeIndex watcher will update the activeId to the first enabled tab
-    activeIndex.value = nextIndex(0, 1)
-    nextTick(() => {
-      activeId.value = tabs.value[activeIndex.value]?.id
-    })
+    // Only reset if we don't already have a positive activeIndex
+    // This preserves user-provided initial indices
+    if (activeIndex.value < 0 || activeIndex.value === undefined) {
+      // activeIndex watcher will update the activeId to the first enabled tab
+      activeIndex.value = nextIndex(0, 1)
+      nextTick(() => {
+        activeId.value = tabs.value[activeIndex.value]?.id
+      })
+    }
     return
   }
   // change to the next tab
