@@ -13,7 +13,6 @@ import {showHideEmits, showHideProps} from '../../utils/showHideData'
 export default {
   load: (): ComponentReference => ({
     BToast: {
-      sourcePath: '/BToast/BToast.vue',
       props: {
         [defaultPropSectionSymbol]: {
           ...omit(showHideProps, ['modelValue']),

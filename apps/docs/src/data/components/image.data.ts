@@ -5,7 +5,7 @@ export default {
   load: (): ComponentReference => ({
     BImg: {
       styleSpec: {kind: StyleKind.BsvnClass},
-      sourcePath: '/BImg/BImg.vue',
+
       props: imageProps,
       emits: {},
       slots: {},

@@ -31,7 +31,6 @@ import {buildCommonProps} from '../../utils/commonProps'
 export default {
   load: (): ComponentReference => ({
     BCard: {
-      sourcePath: '/BCard/BCard.vue',
       props: {
         ...pick(
           buildCommonProps({
@@ -132,7 +131,7 @@ export default {
     },
     BCardBody: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.card-body, .card-img-overlay'},
-      sourcePath: '/BCard/BCardBody.vue',
+
       props: {
         ...pick(buildCommonProps(), [
           'bgVariant',
@@ -170,7 +169,6 @@ export default {
       } satisfies SlotRecord<keyof BCardBodySlots>,
     },
     BCardFooter: {
-      sourcePath: '/BCard/BCardFooter.vue',
       props: {
         ...pick(buildCommonProps(), [
           'bgVariant',
@@ -194,7 +192,7 @@ export default {
     },
     BCardGroup: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.card-deck, .card-group, .card-columns'},
-      sourcePath: '/BCard/BCardGroup.vue',
+
       props: {
         ...pick(buildCommonProps(), ['tag']),
         columns: {
@@ -216,7 +214,6 @@ export default {
       } satisfies SlotRecord<keyof BCardGroupSlots>,
     },
     BCardHeader: {
-      sourcePath: '/BCard/BCardHeader.vue',
       props: {
         ...pick(buildCommonProps(), [
           'bgVariant',
@@ -239,7 +236,6 @@ export default {
       } satisfies SlotRecord<keyof BCardHeaderSlots>,
     },
     BCardImg: {
-      sourcePath: '/BCard/BCardImg.vue',
       props: {
         [defaultPropSectionSymbol]: {
           placement: {
@@ -259,7 +255,6 @@ export default {
       slots: {},
     },
     BCardSubtitle: {
-      sourcePath: '/BCard/BCardSubtitle.vue',
       props: {
         ...pick(
           buildCommonProps({
@@ -286,7 +281,6 @@ export default {
       } satisfies SlotRecord<keyof BCardSubtitleSlots>,
     },
     BCardText: {
-      sourcePath: '/BCard/BCardText.vue',
       props: {
         ...pick(
           buildCommonProps({
@@ -310,7 +304,6 @@ export default {
       } satisfies SlotRecord<keyof BCardTextSlots>,
     },
     BCardTitle: {
-      sourcePath: '/BCard/BCardTitle.vue',
       props: {
         ...pick(
           buildCommonProps({

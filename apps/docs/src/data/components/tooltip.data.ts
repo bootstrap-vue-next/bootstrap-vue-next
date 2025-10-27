@@ -11,11 +11,11 @@ import {popoverSharedEmits, popoverSharedProps} from '../../utils/popover-shared
 
 export default {
   load: (): ComponentReference => ({
-    BPopover: {
+    BTooltip: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.tooltip, .popover'},
-      sourcePath: '/BTooltip.vue',
+
       props: {
-        ...popoverSharedProps('popover'),
+        ...popoverSharedProps('tooltip'),
         interactive: {
           type: 'boolean',
           default: false,
@@ -23,16 +23,16 @@ export default {
             'Whether the tooltip is interactive (can be hovered/focused without closing).',
         },
       } satisfies PropRecord<keyof BTooltipProps>,
-      emits: popoverSharedEmits('popover') satisfies EmitRecord<
+      emits: popoverSharedEmits('tooltip') satisfies EmitRecord<
         keyof BTooltipEmits | 'update:model-value'
       >,
       slots: {
         title: {
-          description: 'Content for the popover title.',
+          description: 'Content for the tooltip title.',
           scope: showHideSlotsData,
         },
         default: {
-          description: 'Content for the popover body.',
+          description: 'Content for the tooltip body.',
           scope: showHideSlotsData,
         },
         target: {

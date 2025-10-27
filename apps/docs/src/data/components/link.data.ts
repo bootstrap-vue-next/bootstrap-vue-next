@@ -6,7 +6,7 @@ export default {
   load: (): ComponentReference => ({
     BLink: {
       styleSpec: {kind: StyleKind.Tag, value: 'a, router-link'},
-      sourcePath: '/BLink/BLink.vue',
+
       props: linkProps,
       emits: {
         click: {

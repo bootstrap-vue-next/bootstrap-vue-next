@@ -14,7 +14,7 @@ export default {
   load: (): ComponentReference => ({
     BOverlay: {
       styleSpec: {kind: StyleKind.BsvnClass},
-      sourcePath: '/BOverlay/BOverlay.vue',
+
       props: {
         bgColor: {
           type: 'string',

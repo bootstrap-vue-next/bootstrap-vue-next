@@ -41,7 +41,6 @@ const sharedSlots: SlotScopeReference = {
 export default {
   load: (): ComponentReference => ({
     BModal: {
-      sourcePath: '/BModal/BModal.vue',
       props: {
         ...showHideProps,
         ...pick(

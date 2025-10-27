@@ -13,7 +13,7 @@ export default {
   load: (): ComponentReference => ({
     BContainer: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.container[-*]'},
-      sourcePath: '/BContainer/BContainer.vue',
+
       props: {
         ...pick(buildCommonProps(), ['tag']),
         fluid: {
@@ -40,7 +40,6 @@ export default {
       } satisfies SlotRecord<keyof BContainerSlots>,
     },
     BRow: {
-      sourcePath: '/BContainer/BRow.vue',
       props: {
         ...pick(buildCommonProps(), ['tag']),
         alignContent: {
@@ -116,7 +115,7 @@ export default {
     },
     BCol: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.col[-*]'},
-      sourcePath: '/BContainer/BCol.vue',
+
       props: {
         ...pick(buildCommonProps(), ['tag']),
         alignSelf: {

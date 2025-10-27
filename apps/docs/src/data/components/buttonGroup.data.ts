@@ -6,8 +6,9 @@ import {buildCommonProps} from '../../utils/commonProps'
 export default {
   load: (): ComponentReference => ({
     BButtonGroup: {
-      styleSpec: {kind: StyleKind.OverrideClass, value: '.btn-group'},
       sourcePath: '/BButton/BButtonGroup.vue',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.btn-group'},
+
       props: {
         ...pick(buildCommonProps(), ['ariaLabel', 'size', 'tag']),
         vertical: {

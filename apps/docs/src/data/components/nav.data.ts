@@ -26,7 +26,6 @@ import {dropdownEmits, dropdownProps, dropdownSlots} from '../../utils/dropdownC
 export default {
   load: (): ComponentReference => ({
     BNav: {
-      sourcePath: '/BNav/BNav.vue',
       props: {
         ...pick(
           buildCommonProps({
@@ -93,7 +92,7 @@ export default {
     },
     BNavForm: {
       styleSpec: {kind: StyleKind.Tag, value: 'li > form'},
-      sourcePath: '/BNav/BNavForm.vue',
+
       props: {
         ...pick(buildCommonProps(), [
           'floating',
@@ -128,7 +127,6 @@ export default {
       } satisfies SlotRecord<keyof BNavFormSlots>,
     },
     BNavItem: {
-      sourcePath: '/BNav/BNavItem.vue',
       props: {
         [defaultPropSectionSymbol]: {
           linkAttrs: {
@@ -173,14 +171,14 @@ export default {
     },
     BNavItemDropdown: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.nav-item.dropdown'},
-      sourcePath: '/BNav/BNavItemDropdown.vue',
+
       props: dropdownProps,
       emits: dropdownEmits,
       slots: dropdownSlots,
     },
     BNavText: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.navbar-text'},
-      sourcePath: '/BNav/BNavText.vue',
+
       props: {
         text: {
           type: 'string',

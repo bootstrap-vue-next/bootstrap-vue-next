@@ -17,7 +17,7 @@ export default {
   load: (): ComponentReference => ({
     BFormSpinbutton: {
       styleSpec: {kind: StyleKind.BsvnClass},
-      sourcePath: '/BFormSpinbutton/BFormSpinbutton.vue',
+
       props: {
         ...pick(buildCommonProps(), [
           'ariaControls',

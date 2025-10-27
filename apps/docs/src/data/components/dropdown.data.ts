@@ -30,13 +30,11 @@ import {buildCommonProps} from '../../utils/commonProps'
 export default {
   load: (): ComponentReference => ({
     BDropdown: {
-      sourcePath: '/BDropdown/BDropdown.vue',
       props: dropdownProps,
       emits: dropdownEmits,
       slots: dropdownSlots,
     },
     BDropdownDivider: {
-      sourcePath: '/BDropdown/BDropdownDivider.vue',
       props: {
         ...pick(
           buildCommonProps({
@@ -54,7 +52,6 @@ export default {
       } satisfies PropRecord<keyof BDropdownDividerProps>,
     },
     BDropdownForm: {
-      sourcePath: '/BDropdown/BDropdownForm.vue',
       props: {
         ...pick(buildCommonProps(), ['wrapperAttrs']),
         formClass: {
@@ -78,7 +75,6 @@ export default {
       } satisfies SlotRecord<keyof BDropdownFormSlots>,
     },
     BDropdownGroup: {
-      sourcePath: '/BDropdown/BDropdownGroup.vue',
       props: {
         ...pick(
           buildCommonProps({
@@ -105,7 +101,6 @@ export default {
       } satisfies SlotRecord<keyof BDropdownGroupSlots>,
     },
     BDropdownHeader: {
-      sourcePath: '/BDropdown/BDropdownHeader.vue',
       props: {
         ...pick(buildCommonProps(), ['headerClass', 'tag', 'variant', 'wrapperAttrs']),
         text: {
@@ -122,7 +117,6 @@ export default {
       } satisfies SlotRecord<keyof BDropdownHeaderSlots>,
     },
     BDropdownItem: {
-      sourcePath: '/BDropdown/BDropdownItem.vue',
       props: {
         [defaultPropSectionSymbol]: pick(buildCommonProps(), [
           'linkClass',
@@ -153,7 +147,6 @@ export default {
       } satisfies SlotRecord<keyof BDropdownItemSlots>,
     },
     BDropdownItemButton: {
-      sourcePath: '/BDropdown/BDropdownItemButton.vue',
       props: {
         ...pick(buildCommonProps(), [
           'active',
@@ -186,7 +179,6 @@ export default {
       } satisfies SlotRecord<keyof BDropdownItemButtonSlots>,
     },
     BDropdownText: {
-      sourcePath: '/BDropdown/BDropdownText.vue',
       props: {
         ...pick(
           buildCommonProps({

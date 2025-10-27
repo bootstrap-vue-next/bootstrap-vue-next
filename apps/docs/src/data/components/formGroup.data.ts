@@ -6,7 +6,6 @@ import {buildCommonProps} from '../../utils/commonProps'
 export default {
   load: (): ComponentReference => ({
     BFormGroup: {
-      sourcePath: '/BFormGroup/BFormGroup.vue',
       props: {
         ...pick(
           buildCommonProps({

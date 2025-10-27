@@ -25,7 +25,7 @@ const optionSlot: SlotRecord = {
       },
       disabled: {
         type: 'boolean',
-        description: 'Is the option disabled'
+        description: 'Is the option disabled',
       },
     },
   },
@@ -35,7 +35,7 @@ export default {
   load: (): ComponentReference => ({
     BFormSelect: {
       styleSpec: {kind: StyleKind.Tag, value: 'select'},
-      sourcePath: '/BFormSelect/BFormSelect.vue',
+
       props: {
         ...pick(
           buildCommonProps({
@@ -82,7 +82,7 @@ export default {
           type: 'Numberish',
           default: 0, // TODO item not in string format
           description:
-            'When set to a number larger than 0, will set the number of display option rows. Note not all browser will respect this setting'
+            'When set to a number larger than 0, will set the number of display option rows. Note not all browser will respect this setting',
         },
       } satisfies PropRecord<keyof BFormSelectProps>,
       emits: {
@@ -114,7 +114,7 @@ export default {
     },
     BFormSelectOption: {
       styleSpec: {kind: StyleKind.Tag, value: 'option'},
-      sourcePath: '/BFormSelect/BFormSelectOption.vue',
+
       props: {
         value: {
           type: 'any',
@@ -135,7 +135,7 @@ export default {
     },
     BFormSelectOptionGroup: {
       styleSpec: {kind: StyleKind.Tag, value: 'optgroup'},
-      sourcePath: '/BFormSelect/BFormSelectOptionGroup.vue',
+
       props: {
         ...pick(
           buildCommonProps({

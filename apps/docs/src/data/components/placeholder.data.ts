@@ -13,7 +13,6 @@ import {type ComponentReference, type PropRecord, type SlotRecord, StyleKind} fr
 export default {
   load: (): ComponentReference => ({
     BPlaceholder: {
-      sourcePath: '/BPlaceholder/BPlaceholder.vue',
       props: {
         animation: {
           type: 'PlaceholderAnimation',
@@ -49,7 +48,7 @@ export default {
     },
     BPlaceholderCard: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.card'},
-      sourcePath: '/BPlaceholder/BPlaceholderCard.vue',
+
       props: {
         animation: {
           type: 'PlaceholderAnimation',
@@ -150,7 +149,7 @@ export default {
     },
     BPlaceholderWrapper: {
       styleSpec: {kind: StyleKind.None},
-      sourcePath: '/BPlaceholder/BPlaceholderWrapper.vue',
+
       props: {
         loading: {
           description: 'Determines whether the loading slot is displayed',
@@ -172,7 +171,7 @@ export default {
     },
     BPlaceholderTable: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.table'},
-      sourcePath: '/BPlaceholder/BPlaceholderTable.vue',
+
       props: {
         animation: {
           type: 'PlaceholderAnimation',
@@ -265,7 +264,7 @@ export default {
     },
     BPlaceholderButton: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.placeholder.btn'},
-      sourcePath: '/BPlaceholder/BPlaceholderButton.vue',
+
       props: {
         animation: {
           type: 'PlaceholderAnimation',

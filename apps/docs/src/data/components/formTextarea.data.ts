@@ -7,7 +7,7 @@ export default {
   load: (): ComponentReference => ({
     BFormTextarea: {
       styleSpec: {kind: StyleKind.Tag, value: 'textarea'},
-      sourcePath: '/BFormTextarea/BFormTextarea.vue',
+
       props: {
         ...pick(buildCommonProps(), [
           'ariaInvalid',
