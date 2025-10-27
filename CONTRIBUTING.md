@@ -61,7 +61,141 @@ You can also use `pnpm dev --filter bootstrap-vue-next` to only open the main ho
 
 Improving the documentation is a great way to contribute to this project, especially if you're not quite ready to dive into the code.
 
-We use [vitepress](https://vitepress.dev/) to build our documentation in the `./apps/docs` directory. In order to test the docs, first make sure that you follow the steps in [Setting up your workspace](#setting-up-your-workspace). Then you can run `pnpm dev` from the root and then open the **docs:dev** host. This will hot-reload the documentation to let you easily see your edits. The `*.md` files under `./apps/docs/src/docs` contains the core documentation and the `*.data.ts` files under `./apps/docs/src/data/components` contains JSON files that contain the data to build the component definitions in the documentation.
+We use [vitepress](https://vitepress.dev/) to build our documentation in the `./apps/docs` directory. In order to test the docs, first make sure that you follow the steps in [Setting up your workspace](#setting-up-your-workspace). Then you can run `pnpm dev` from the root and then open the **docs:dev** host. This will hot-reload the documentation to let you easily see your edits.
+
+### Documentation File Structure
+
+- **Markdown files** (`./apps/docs/src/docs/**/*.md`): Contains the main documentation content
+- **Data files** (`./apps/docs/src/data/**/*.data.ts`): Contains component/composable/directive/configuration metadata used to auto-generate API reference tables
+
+### Critical Documentation Conventions
+
+Our documentation system relies on several conventions to automatically generate headers, footers, and API references. **You must follow these conventions** to ensure the documentation builds correctly:
+
+#### 1. Frontmatter Requirements
+
+**All documentation markdown files must include frontmatter** with a `description` field. This description is used in multiple places:
+
+```
+---
+description: A brief, clear description of what this component/composable/directive does
+---
+```
+
+- The description should be concise (1-2 sentences)
+- Use YAML folding syntax (`>`) for multi-line descriptions to avoid parsing issues:
+
+```
+---
+description: >
+  This is a longer description that spans multiple lines.
+  Use the > character to enable YAML folding syntax.
+---
+```
+
+- **Never use multi-line quoted strings** in YAML frontmatter as they cause parsing issues
+
+#### 2. Auto-Generated Headers and Footers
+
+The documentation system **automatically injects** page headers and component reference footers.
+
+The build system will:
+
+- Auto-generate an `<h1>` title from the filename (e.g., `button-group.md` → "Button Group")
+- Auto-inject a `<PageHeader />` component with description from frontmatter
+- Auto-inject a `<ComponentReference />` footer for component docs (if a corresponding `.data.ts` file exists)
+
+If you need to add a `<style>` section to a markdown file, place it at the end. The system will correctly insert the `<ComponentReference>` footer before any `<style>` sections.
+
+#### 3. Component Data File Conventions
+
+When creating or modifying `.data.ts` files in `./apps/docs/src/data/components/`, follow these conventions:
+
+**Component Ordering:** The **first component** in the exported object determines the base directory for sourcePath inference:
+
+```typescript
+export default {
+  load: (): ComponentReference => ({
+    // ✅ CORRECT: Primary component listed first
+    BTabs: {
+      // This will use /BTabs/BTabs.vue as the source
+      props: {
+        /* ... */
+      },
+    },
+    BTab: {
+      // This will use /BTabs/BTab.vue as the source
+      props: {
+        /* ... */
+      },
+    },
+  }),
+}
+```
+
+```typescript
+export default {
+  load: (): ComponentReference => ({
+    // ❌ INCORRECT: Secondary component listed first
+    BTab: {
+      props: {
+        /* ... */
+      },
+    },
+    BTabs: {
+      props: {
+        /* ... */
+      },
+    },
+  }),
+}
+```
+
+The first component name (e.g., `BTabs`) must match the directory name in `./packages/bootstrap-vue-next/src/components/`.
+
+**Special Cases:** If a component lives in a parent directory (e.g., `BButtonGroup` in `/BButton/`), add an explicit `sourcePath`:
+
+```typescript
+BButtonGroup: {
+  sourcePath: '/BButton/BButtonGroup.vue',
+  props: { /* ... */ },
+}
+```
+
+**TypeScript Slot Types:** Ensure you use the correct TypeScript slot type for each component:
+
+```typescript
+BTabs: {
+  slots: {
+    default: { description: '...' },
+  } satisfies SlotRecord<keyof BTabsSlots>,  // ✅ Use BTabsSlots for BTabs
+},
+BTab: {
+  slots: {
+    default: { description: '...' },
+  } satisfies SlotRecord<keyof BTabSlots>,   // ✅ Use BTabSlots for BTab
+}
+```
+
+#### 4. Data Loaders
+
+Data loaders in `./apps/docs/src/data/` automatically extract frontmatter and transform data for the build system. When adding new documentation types, ensure a corresponding data loader exists that:
+
+1. Uses `createContentLoader()` to read markdown files
+2. Extracts frontmatter using the `yaml` package
+3. Transforms data using shared utilities from `./apps/docs/src/utils/dataLoaderUtils.ts`
+
+#### 5. Testing Your Documentation Changes
+
+Before submitting a PR with documentation changes:
+
+1. Run `pnpm --filter docs run build` to ensure the build succeeds
+2. Run `pnpm --filter docs run dev` to verify the output visually
+3. Check that all auto-generated elements appear correctly:
+   - Page titles match the filename
+   - PageHeader shows the correct description
+   - ComponentReference footer appears with correct GitHub links
+4. Verify no duplicate headers or footers appear
 
 ## Help Verify BootstrapVue and Bootstrap v5 Parity
 
@@ -99,12 +233,132 @@ For adding a new component, there are some notes...
 - If the component is custom, or taken from [Bootstrap-vue](https://bootstrap-vue.github.io/bootstrap-vue/) you will need to read the component documentation, then attempt to recreate that component using `<template>` and `<script setup lang="ts">` syntax. If a Bootstrap-vue component is based on a native Bootstrap component, then you should read Bootstrap's implementation first, and ensure any changes are made to correct for the v5 release of Bootstrap
 - All Props and Emits should be fully written as TypeScript interfaces, the more strongly typed, the better
 
+### Registering the Component for Export
+
 After the implementation of the component, based on Bootstrap's details, you can finally begin introducing the component to be exported by the main package, and usable by users of the library. To do that you will need to:
 
 1. Add the component to the import/export list, located in `./packages/bootstrap-vue-next/src/components/index.ts`
 2. Next, it must be imported into `./packages/bootstrap-vue-next/BootstrapVue.ts` _please ensure that your import is made directly to the component, and not to the previous index.ts file_
 3. After that, export it in the `export {}` list that contains the other components to be exported
 4. Finally, it must be included in the exported interface of **GlobalComponents**, following the pattern of `BComponent: typeof BComponent`
+
+### Creating Component Documentation
+
+After registering the component, you must create documentation for it. This involves two files:
+
+#### 1. Create the Data File (`./apps/docs/src/data/components/[name].data.ts`)
+
+This file defines the component's props, emits, and slots for the API reference. **Follow these critical conventions:**
+
+**Component Ordering:** List the **primary component first**. The first component name determines the source directory:
+
+```typescript
+import type {BMyComponentProps, BMyComponentEmits, BMyComponentSlots} from 'bootstrap-vue-next'
+import {
+  type ComponentReference,
+  type PropRecord,
+  type EmitRecord,
+  type SlotRecord,
+} from '../../types'
+
+export default {
+  load: (): ComponentReference => ({
+    // ✅ Primary component first - determines base directory
+    BMyComponent: {
+      props: {
+        // Define all props with type, default, and description
+        variant: {
+          type: 'ColorVariant',
+          default: 'primary',
+          description: 'The color variant to apply',
+        },
+      } satisfies PropRecord<keyof BMyComponentProps>,
+      emits: {
+        // Define all emits with description and args
+        click: {
+          description: 'Emitted when the component is clicked',
+          args: {
+            event: {
+              type: 'MouseEvent',
+              description: 'The native click event',
+            },
+          },
+        },
+      } satisfies EmitRecord<keyof BMyComponentEmits>,
+      slots: {
+        // Define all slots with description
+        default: {
+          description: 'The default slot content',
+        },
+      } satisfies SlotRecord<keyof BMyComponentSlots>,
+    },
+  }),
+}
+```
+
+**Important Notes:**
+
+- The filename should match the primary component in kebab-case (e.g., `my-component.data.ts` for `BMyComponent`)
+- If you have multiple related components (e.g., `BTabs` and `BTab`), list the primary one first
+- The first component name must match a directory in `./packages/bootstrap-vue-next/src/components/`
+- If a secondary component is in a different directory, add `sourcePath: '/BParentDir/BSecondaryComponent.vue'`
+- Use TypeScript `satisfies` to ensure type safety for props, emits, and slots
+
+#### 2. Create the Markdown File (`./apps/docs/src/docs/components/[name].md`)
+
+This file contains the human-readable documentation. **Follow these critical conventions:**
+
+```markdown
+---
+description: A clear, concise description of what the component does
+---
+
+<!-- DO NOT add <PageHeader /> or <ComponentReference /> - they are auto-injected -->
+<!-- DO NOT add # Title header - it's auto-generated from filename -->
+
+## Overview
+
+Describe the component's purpose and basic usage.
+
+<< Include an Example >>>
+
+## Feature 1
+
+## Feature 2
+
+## Complete example
+
+af appropriate
+
+<!-- ComponentReference is auto-injected here -->
+```
+
+**Important Notes:**
+
+- **Always include frontmatter** with a `description` field
+- Use YAML folding syntax (`description: >`) for multi-line descriptions
+- **Never manually add** `<PageHeader />`, `<ComponentReference />`, or `# Title` headers
+- The filename determines the page title (e.g., `my-component.md` → "My Component")
+- The ComponentReference footer is auto-injected and will show the API reference from the `.data.ts` file
+
+#### 3. Verify Your Documentation
+
+Before submitting:
+
+```bash
+# Build the docs to check for errors
+pnpm --filter docs run build
+
+# View the docs locally
+pnpm --filter docs run dev
+```
+
+Verify:
+
+- The page title appears correctly
+- The description shows in the PageHeader
+- The ComponentReference footer appears with correct GitHub source links
+- No duplicate headers or footers are present
 
 That is it!
 
