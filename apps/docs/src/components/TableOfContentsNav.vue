@@ -23,7 +23,7 @@
       >
         <BLink
           :to="withBase(component.route)"
-          :active="routerRoute.path === component.route"
+          :active="isRouteActive(component.route)"
           :class="linkClasses"
         >
           {{ component.name }}
@@ -56,6 +56,13 @@ const routerRoute = useRoute()
 const {greaterOrEqual} = useBreakpoints(breakpointsBootstrapV5)
 
 const isLargeScreen = ref(true)
+
+// Helper to check if a route is active (handles base path and .html suffix)
+const isRouteActive = (route: string) => {
+  const normalizedRoute = withBase(route)
+  const currentPath = routerRoute.path
+  return currentPath === normalizedRoute || currentPath === `${normalizedRoute}.html`
+}
 
 onMounted(() => {
   watch(

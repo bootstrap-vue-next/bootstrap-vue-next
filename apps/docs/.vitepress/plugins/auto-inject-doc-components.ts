@@ -1,5 +1,6 @@
 import type MarkdownIt from 'markdown-it'
 import {parse} from 'yaml'
+import {kebabToTitleCase} from '../../src/utils/dataLoaderUtils'
 
 /**
  * Convert kebab-case filename to Title Case.
@@ -14,11 +15,8 @@ function filenameToTitle(filename: string, directory: string): string {
     return filename
   }
 
-  // For components, convert kebab-case to Title Case
-  return filename
-    .split('-')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ')
+  // For components and configurations, convert kebab-case to Title Case using shared utility
+  return kebabToTitleCase(filename)
 }
 
 /**
@@ -51,7 +49,9 @@ export function autoInjectDocComponents(md: MarkdownIt) {
     env: {relativePath?: string; path?: string; frontmatter?: {description?: string}}
   ) {
     // Check if this is a documentation file that should get auto-injection
-    const path = env?.relativePath || env?.path || ''
+    const rawPath = env?.relativePath || env?.path || ''
+    // Normalize path separators for cross-platform compatibility
+    const path = rawPath.replace(/\\/g, '/')
     const match = path.match(/\/(components|composables|directives|configurations)\/([^/]+)\.md$/)
 
     if (!match) {
@@ -106,15 +106,12 @@ export function autoInjectDocComponents(md: MarkdownIt) {
         const dataFilename = filenameToCamelCase(filename)
         const footer = `\n\n<ComponentReference :data="data" />\n\n<script setup lang="ts">\nimport {data} from '../../data/components/${dataFilename}.data'\n</script>`
 
-        // Check if there's a <style> section at the end
-        const styleMatch = afterFrontmatter.match(/\n*<style[^>]*>[\s\S]*<\/style>\s*$/)
+        // Check if there's a <style> section anywhere in the content
+        const firstStyleOpen = afterFrontmatter.search(/<style[^>]*>/)
 
-        if (styleMatch) {
-          // Insert footer before the <style> section
-          const styleIndex = afterFrontmatter.lastIndexOf(styleMatch[0])
-          afterFrontmatter = `${
-            afterFrontmatter.slice(0, styleIndex) + footer
-          }\n${afterFrontmatter.slice(styleIndex)}`
+        if (firstStyleOpen !== -1) {
+          // Insert footer before the first <style> section
+          afterFrontmatter = `${afterFrontmatter.slice(0, firstStyleOpen)}${footer}\n${afterFrontmatter.slice(firstStyleOpen)}`
         } else {
           // No <style> section, append footer at the end
           afterFrontmatter = afterFrontmatter + footer

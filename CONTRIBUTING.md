@@ -76,7 +76,7 @@ Our documentation system relies on several conventions to automatically generate
 
 **All documentation markdown files must include frontmatter** with a `description` field. This description is used in multiple places:
 
-```
+```yaml
 ---
 description: A brief, clear description of what this component/composable/directive does
 ---
@@ -85,7 +85,7 @@ description: A brief, clear description of what this component/composable/direct
 - The description should be concise (1-2 sentences)
 - Use YAML folding syntax (`>`) for multi-line descriptions to avoid parsing issues:
 
-```
+```yaml
 ---
 description: >
   This is a longer description that spans multiple lines.
@@ -328,7 +328,7 @@ Describe the component's purpose and basic usage.
 
 ## Complete example
 
-af appropriate
+if appropriate
 
 <!-- ComponentReference is auto-injected here -->
 ```

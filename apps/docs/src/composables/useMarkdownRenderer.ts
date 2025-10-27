@@ -20,11 +20,11 @@ md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
   const token = tokens[idx]
   const hrefIndex = token.attrIndex('href')
 
-  if (hrefIndex >= 0) {
-    const href = token.attrs![hrefIndex][1]
+  if (hrefIndex >= 0 && token.attrs) {
+    const [, href] = token.attrs[hrefIndex]
     // Only add base to internal links (starting with /)
     if (href.startsWith('/') && !href.startsWith('//')) {
-      token.attrs![hrefIndex][1] = withBase(href)
+      token.attrs[hrefIndex][1] = withBase(href)
     }
   }
 
