@@ -38,7 +38,7 @@ function filenameToCamelCase(filename: string): string {
  * 2. A <PageHeader /> component (for description and source links)
  * 3. For components only: A <ComponentReference /> component with data import (before any <style> section)
  *
- * Only applies to files in /components/, /composables/, or /directives/ directories
+ * Only applies to files in /components/, /composables/, /directives/, or /configurations/ directories
  * that have a `description` in their frontmatter.
  */
 export function autoInjectDocComponents(md: MarkdownIt) {
