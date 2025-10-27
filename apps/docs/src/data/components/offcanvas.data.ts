@@ -166,14 +166,6 @@ export default {
           args: undefined,
           description: undefined,
         },
-        'cancel': {
-          args: undefined,
-          description: undefined,
-        },
-        'ok': {
-          args: undefined,
-          description: undefined,
-        },
       } satisfies EmitRecord<keyof BOffcanvasEmits | 'update:model-value'>,
       slots: {
         'title': {

@@ -71,14 +71,6 @@ export default {
             },
           },
         },
-        'cancel': {
-          args: undefined,
-          description: undefined,
-        },
-        'ok': {
-          args: undefined,
-          description: undefined,
-        },
       } satisfies EmitRecord<keyof BCollapseEmits | 'update:model-value'>,
       slots: {
         default: {

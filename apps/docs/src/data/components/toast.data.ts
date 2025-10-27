@@ -8,7 +8,7 @@ import {
 import {omit, pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 import {linkedBLinkSection, type linkProps} from '../../utils/linkProps'
-import {showHideEmits, showHideProps} from '../../utils/showHideData'
+import {buildDismissibleEmits, showHideProps} from '../../utils/showHideData'
 
 export default {
   load: (): ComponentReference => ({
@@ -20,48 +20,24 @@ export default {
             'bgVariant',
             'body',
             'bodyClass',
+            'closeClass',
+            'closeContent',
+            'closeLabel',
+            'closeVariant',
             'headerClass',
             'headerTag',
             'id',
+            'interval',
+            'isStatus',
             'noHoverPause',
             'noResumeOnHoverLeave',
+            'progressProps',
+            'showOnPause',
             'textVariant',
             'title',
             'variant',
           ]),
 
-          closeClass: {
-            type: 'ClassValue',
-            default: undefined,
-            description: 'Sets the CSS class(es) for the close button.',
-          },
-          closeContent: {
-            type: 'string',
-            default: undefined,
-            description: 'Sets the text for the close button. The `close` slot takes precedence.',
-          },
-          closeLabel: {
-            type: 'string',
-            default: 'Close',
-            description: 'Sets the `aria-label` attribute for the close button.',
-          },
-          closeVariant: {
-            type: 'string | null',
-            default: null,
-            description: 'Sets the color variant for the close button.',
-          },
-
-          interval: {
-            type: 'number | requestAnimationFrame',
-            default: 'requestAnimationFrame',
-            description: 'Sets the interval for refreshing the countdown timer.',
-          },
-          isStatus: {
-            type: 'boolean',
-            default: false,
-            description:
-              'Sets `aria-live="polite"` and `role="status"` when `true`; otherwise, `aria-live="assertive"` and `role="alert"`.',
-          },
           modelValue: {
             type: 'boolean | number',
             default: false,
@@ -78,23 +54,11 @@ export default {
             default: false,
             description: 'Hides the progress bar in the toast.',
           },
-          progressProps: {
-            type: "Omit<BProgressBarProps, 'label' | 'max' | 'value'>",
-            default: undefined,
-            description:
-              'Configures the progress bar in the toast. No progress bar is shown if undefined.',
-          },
-          showOnPause: {
-            type: 'boolean',
-            default: true,
-            description: 'Keeps the toast visible when paused.',
-          },
           solid: {
             type: 'boolean',
             default: false,
             description: 'Renders the toast with a solid background instead of a translucent one.',
           },
-
           toastClass: {
             type: 'ClassValue',
             default: undefined,
@@ -104,44 +68,107 @@ export default {
         'BLink props': linkedBLinkSection,
       },
       emits: {
-        ...showHideEmits,
+        ...buildDismissibleEmits(),
         'update:model-value': {
-          description: 'Emitted when the toast visibility changes.', // TODO similar content to BAlert/update:model-value (similar purpose)
+          description: 'Emitted when the toast visibility or countdown duration changes.',
           args: {
             value: {
-              type: 'Boolean',
-              description: 'The new visibility state of the toast.',
+              type: 'boolean | number',
+              description:
+                'The new visibility state (boolean) or countdown duration in milliseconds (number). When boolean: true = visible, false = hidden. When number: > 0 = countdown duration, 0 = countdown finished.',
             },
           },
-        },
-        'close': {
-          description: 'Emitted when the close button is clicked.', // TODO missing description in original
-          args: {
-            value: {
-              type: 'BvTriggerableEvent',
-              description: '', // TODO missing description
-            },
-          },
-        },
-        'close-countdown': {
-          description: 'Emitted during the countdown to auto-dismiss.', // TODO missing description in original
-          args: {
-            value: {
-              type: 'number',
-              description: '', // TODO missing description
-            },
-          },
-        },
-        'cancel': {
-          args: undefined,
-          description: undefined,
-        },
-        'ok': {
-          args: undefined,
-          description: undefined,
         },
       } satisfies EmitRecord<keyof BToastEmits | 'update:model-value'>,
-      slots: {},
+      slots: {
+        default: {
+          description: 'Content to place in the toast body',
+          scope: {
+            id: {
+              type: 'string',
+              description: 'The toast component ID',
+            },
+            show: {
+              type: '() => void',
+              description: 'Function to show the toast',
+            },
+            hide: {
+              type: '(trigger?: string, noTriggerEmit?: boolean) => void',
+              description: 'Function to hide the toast',
+            },
+            toggle: {
+              type: '() => void',
+              description: 'Function to toggle toast visibility',
+            },
+            active: {
+              type: 'boolean',
+              description: 'Whether the countdown timer is active',
+            },
+            visible: {
+              type: 'boolean',
+              description: 'Current visibility state of the toast',
+            },
+          },
+        },
+        title: {
+          description: 'Content to place in the toast header as title',
+          scope: {
+            id: {
+              type: 'string',
+              description: 'The toast component ID',
+            },
+            show: {
+              type: '() => void',
+              description: 'Function to show the toast',
+            },
+            hide: {
+              type: '(trigger?: string, noTriggerEmit?: boolean) => void',
+              description: 'Function to hide the toast',
+            },
+            toggle: {
+              type: '() => void',
+              description: 'Function to toggle toast visibility',
+            },
+            active: {
+              type: 'boolean',
+              description: 'Whether the countdown timer is active',
+            },
+            visible: {
+              type: 'boolean',
+              description: 'Current visibility state of the toast',
+            },
+          },
+        },
+        close: {
+          description: 'Content to place in the close button',
+          scope: {
+            id: {
+              type: 'string',
+              description: 'The toast component ID',
+            },
+            show: {
+              type: '() => void',
+              description: 'Function to show the toast',
+            },
+            hide: {
+              type: '(trigger?: string, noTriggerEmit?: boolean) => void',
+              description: 'Function to hide the toast',
+            },
+            toggle: {
+              type: '() => void',
+              description: 'Function to toggle toast visibility',
+            },
+            active: {
+              type: 'boolean',
+              description: 'Whether the countdown timer is active',
+            },
+            visible: {
+              type: 'boolean',
+              description: 'Current visibility state of the toast',
+            },
+          },
+        },
+      },
     },
   }),
 }
