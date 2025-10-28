@@ -22,7 +22,6 @@ export default {
   load: (): ComponentReference => ({
     BForm: {
       styleSpec: {kind: StyleKind.Tag, value: 'form'},
-
       props: pick(buildCommonProps(), [
         'floating',
         'id',
@@ -38,7 +37,6 @@ export default {
     },
     BFormDatalist: {
       styleSpec: {kind: StyleKind.Tag, value: 'datalist'},
-
       props: pick(
         buildCommonProps({
           options: {
@@ -79,7 +77,6 @@ export default {
     },
     BFormFloatingLabel: {
       styleSpec: {kind: StyleKind.OverrideClass, value: 'floating-label'},
-
       props: {
         label: {
           type: 'string',
@@ -104,7 +101,6 @@ export default {
     },
     BFormInvalidFeedback: {
       styleSpec: {kind: StyleKind.OverrideClass, value: 'invalid-feedback, invalid-tooltip'},
-
       props: {
         ...pick(buildCommonProps(), ['ariaLive', 'id', 'role', 'state', 'tag', 'tooltip']),
         forceShow: {
@@ -127,7 +123,6 @@ export default {
     },
     BFormRow: {
       styleSpec: {kind: StyleKind.OverrideClass, value: 'row'},
-
       props: pick(buildCommonProps(), ['tag']) satisfies PropRecord<keyof BFormRowProps>,
       emits: {},
       slots: {
@@ -160,7 +155,6 @@ export default {
     },
     BFormValidFeedback: {
       styleSpec: {kind: StyleKind.OverrideClass, value: 'valid-feedback, valid-tooltip'},
-
       props: {
         ...pick(buildCommonProps(), ['ariaLive', 'id', 'role', 'state', 'tag', 'tooltip']),
         forceShow: {

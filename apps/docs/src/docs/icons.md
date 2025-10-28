@@ -1,13 +1,7 @@
 ---
 description: >
-  While migrating to BootstrapVueNext the icon components will not be supported as there are better, more modern solutions to incorporating icon packages into your application. Continue reading BootstrapVueNext's suggestion on how to incorporate Bootstrap-icons into your application!
+  The icon components from BootstrapVue are deprecated. While migrating to BootstrapVueNext the icon components will not be supported as there are better, more modern solutions to incorporating icon packages into your application. Continue reading BootstrapVueNext's suggestion on how to incorporate Bootstrap-icons into your application!
 ---
-
-::: danger The icon components from BootstrapVue are deprecated
-
-While migrating to BootstrapVueNext the icon components will not be supported as there are better, more modern solutions to incorporating icon packages into your application. Continue reading BootstrapVueNext's suggestion on how to incorporate Bootstrap-icons into your application! This documentation only serves as a reference, BootstrapVueNext has no part in the mentioned libraries and some content may be out of date.
-
-:::
 
 ## [Unplugin Icons](https://github.com/antfu/unplugin-icons)
 

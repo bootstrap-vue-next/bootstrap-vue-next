@@ -7,7 +7,6 @@ export default {
   load: (): ComponentReference => ({
     BFormTextarea: {
       styleSpec: {kind: StyleKind.Tag, value: 'textarea'},
-
       props: {
         ...pick(buildCommonProps(), [
           'ariaInvalid',

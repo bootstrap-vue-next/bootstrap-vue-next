@@ -6,7 +6,6 @@ export default {
   load: (): ComponentReference => ({
     BLink: {
       styleSpec: {kind: StyleKind.Tag, value: 'a, router-link'},
-
       props: linkProps,
       emits: {
         click: {

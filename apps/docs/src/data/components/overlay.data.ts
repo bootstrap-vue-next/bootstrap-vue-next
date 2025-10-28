@@ -14,7 +14,6 @@ export default {
   load: (): ComponentReference => ({
     BOverlay: {
       styleSpec: {kind: StyleKind.BsvnClass},
-
       props: {
         bgColor: {
           type: 'string',

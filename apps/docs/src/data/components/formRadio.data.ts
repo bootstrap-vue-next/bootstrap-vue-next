@@ -12,7 +12,6 @@ export default {
   load: (): ComponentReference => ({
     BFormRadio: {
       styleSpec: {kind: StyleKind.Tag, value: 'input[type="radio"]'},
-
       props: {
         ...pick(buildCommonProps(), [
           'ariaLabel',
@@ -85,7 +84,6 @@ export default {
     },
     BFormRadioGroup: {
       styleSpec: {kind: StyleKind.Tag, value: 'div[role="radiogroup"]'},
-
       props: {
         ...pick(buildCommonProps(), [
           'ariaInvalid',

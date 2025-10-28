@@ -17,7 +17,6 @@ export default {
   load: (): ComponentReference => ({
     BFormSpinbutton: {
       styleSpec: {kind: StyleKind.BsvnClass},
-
       props: {
         ...pick(buildCommonProps(), [
           'ariaControls',

@@ -131,7 +131,6 @@ export default {
     },
     BCardBody: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.card-body, .card-img-overlay'},
-
       props: {
         ...pick(buildCommonProps(), [
           'bgVariant',
@@ -192,7 +191,6 @@ export default {
     },
     BCardGroup: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.card-deck, .card-group, .card-columns'},
-
       props: {
         ...pick(buildCommonProps(), ['tag']),
         columns: {

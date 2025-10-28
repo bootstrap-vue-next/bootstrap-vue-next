@@ -832,7 +832,6 @@ export default {
       },
       BTbody: {
         styleSpec: {kind: StyleKind.Tag, value: 'tbody'},
-
         props: pick(buildCommonProps(), ['variant']) satisfies PropRecord<keyof BTbodyProps>,
         slots: {
           default: {
@@ -842,7 +841,6 @@ export default {
       },
       BTd: {
         styleSpec: {kind: StyleKind.Tag, value: 'td'},
-
         props: {
           ...pick(buildCommonProps(), ['variant']),
           colspan: {
@@ -876,7 +874,6 @@ export default {
       },
       BTfoot: {
         styleSpec: {kind: StyleKind.Tag, value: 'tfoot'},
-
         props: pick(buildCommonProps(), ['variant']) satisfies PropRecord<keyof BTfootProps>,
         slots: {
           default: {
@@ -886,7 +883,6 @@ export default {
       },
       BTh: {
         styleSpec: {kind: StyleKind.Tag, value: 'th'},
-
         props: {
           ...pick(buildCommonProps(), ['variant']),
           colspan: {
@@ -923,7 +919,6 @@ export default {
       },
       BThead: {
         styleSpec: {kind: StyleKind.Tag, value: 'thead'},
-
         props: {
           variant: {
             type: 'ColorVariant',
@@ -940,7 +935,6 @@ export default {
       },
       BTr: {
         styleSpec: {kind: StyleKind.Tag, value: 'tr'},
-
         props: {
           variant: {
             type: 'ColorVariant',

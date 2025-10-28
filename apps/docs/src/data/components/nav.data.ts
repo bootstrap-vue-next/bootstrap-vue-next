@@ -92,7 +92,6 @@ export default {
     },
     BNavForm: {
       styleSpec: {kind: StyleKind.Tag, value: 'li > form'},
-
       props: {
         ...pick(buildCommonProps(), [
           'floating',
@@ -171,14 +170,12 @@ export default {
     },
     BNavItemDropdown: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.nav-item.dropdown'},
-
       props: dropdownProps,
       emits: dropdownEmits,
       slots: dropdownSlots,
     },
     BNavText: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.navbar-text'},
-
       props: {
         text: {
           type: 'string',

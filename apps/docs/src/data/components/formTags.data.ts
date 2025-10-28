@@ -20,7 +20,6 @@ export default {
   load: (): ComponentReference => ({
     BFormTags: {
       styleSpec: {kind: StyleKind.BsvnClass},
-
       props: {
         ...pick(
           buildCommonProps({
@@ -72,7 +71,6 @@ export default {
     },
     BFormTag: {
       styleSpec: {kind: StyleKind.BsvnClass},
-
       props: {
         ...pick(
           buildCommonProps({

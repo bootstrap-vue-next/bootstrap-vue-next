@@ -180,7 +180,6 @@ export default {
     },
     BCarouselSlide: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.carousel-item'},
-
       props: {
         ...pick(buildCommonProps(), ['id']),
         background: {

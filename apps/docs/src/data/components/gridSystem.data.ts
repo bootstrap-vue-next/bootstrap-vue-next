@@ -13,7 +13,6 @@ export default {
   load: (): ComponentReference => ({
     BContainer: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.container[-*]'},
-
       props: {
         ...pick(buildCommonProps(), ['tag']),
         fluid: {
@@ -115,7 +114,6 @@ export default {
     },
     BCol: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.col[-*]'},
-
       props: {
         ...pick(buildCommonProps(), ['tag']),
         alignSelf: {

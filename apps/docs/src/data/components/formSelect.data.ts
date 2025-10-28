@@ -35,7 +35,6 @@ export default {
   load: (): ComponentReference => ({
     BFormSelect: {
       styleSpec: {kind: StyleKind.Tag, value: 'select'},
-
       props: {
         ...pick(
           buildCommonProps({
@@ -114,7 +113,6 @@ export default {
     },
     BFormSelectOption: {
       styleSpec: {kind: StyleKind.Tag, value: 'option'},
-
       props: {
         value: {
           type: 'any',
@@ -135,7 +133,6 @@ export default {
     },
     BFormSelectOptionGroup: {
       styleSpec: {kind: StyleKind.Tag, value: 'optgroup'},
-
       props: {
         ...pick(
           buildCommonProps({

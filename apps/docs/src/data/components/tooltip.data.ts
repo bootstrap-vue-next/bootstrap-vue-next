@@ -13,7 +13,6 @@ export default {
   load: (): ComponentReference => ({
     BTooltip: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.tooltip, .popover'},
-
       props: {
         ...popoverSharedProps('tooltip'),
         interactive: {

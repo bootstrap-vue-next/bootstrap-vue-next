@@ -8,7 +8,6 @@ export default {
     BButtonToolbar: {
       sourcePath: '/BButton/BButtonToolbar.vue',
       styleSpec: {kind: StyleKind.OverrideClass, value: '.btn-toolbar'},
-
       props: {
         ...pick(buildCommonProps(), ['ariaLabel', 'role']),
         justify: {

@@ -48,7 +48,6 @@ export default {
     },
     BPlaceholderCard: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.card'},
-
       props: {
         animation: {
           type: 'PlaceholderAnimation',
@@ -149,7 +148,6 @@ export default {
     },
     BPlaceholderWrapper: {
       styleSpec: {kind: StyleKind.None},
-
       props: {
         loading: {
           description: 'Determines whether the loading slot is displayed',
@@ -171,7 +169,6 @@ export default {
     },
     BPlaceholderTable: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.table'},
-
       props: {
         animation: {
           type: 'PlaceholderAnimation',
@@ -264,7 +261,6 @@ export default {
     },
     BPlaceholderButton: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.placeholder.btn'},
-
       props: {
         animation: {
           type: 'PlaceholderAnimation',

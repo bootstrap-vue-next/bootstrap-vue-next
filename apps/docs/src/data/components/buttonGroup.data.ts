@@ -8,7 +8,6 @@ export default {
     BButtonGroup: {
       sourcePath: '/BButton/BButtonGroup.vue',
       styleSpec: {kind: StyleKind.OverrideClass, value: '.btn-group'},
-
       props: {
         ...pick(buildCommonProps(), ['ariaLabel', 'size', 'tag']),
         vertical: {

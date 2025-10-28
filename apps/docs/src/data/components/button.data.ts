@@ -21,7 +21,6 @@ export default {
   load: (): ComponentReference => ({
     BButton: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.btn'},
-
       props: {
         [defaultPropSectionSymbol]: {
           ...pick(
@@ -118,7 +117,6 @@ export default {
     },
     BCloseButton: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.btn-close'},
-
       props: {
         ...pick(
           buildCommonProps({
