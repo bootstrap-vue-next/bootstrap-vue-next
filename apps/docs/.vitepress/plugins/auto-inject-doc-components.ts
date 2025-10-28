@@ -105,10 +105,9 @@ export function autoInjectDocComponents(md: MarkdownIt) {
 
     // For components, inject ComponentReference footer if it doesn't already exist
     if (directory === 'components') {
-      const componentReferencePattern = /<ComponentReference :data="data" \/>/
+      const componentReferencePattern = /<ComponentReference\s+:data=["']data["']\s*\/?>/
       const scriptPattern =
-        /<script setup lang="ts">\s*import\s*\{\s*data\s*\}\s*from\s*'\.\.\/\.\.\/data\/components\//
-
+        /<script setup lang=["']ts["']>\s*import\s*\{\s*data\s*\}\s*from\s*["']\.\.\/\.\.\/data\/components\//
       // Only inject if both ComponentReference and script are missing
       if (
         !componentReferencePattern.test(afterFrontmatter) &&
