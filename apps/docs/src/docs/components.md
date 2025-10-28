@@ -1,10 +1,6 @@
-# Components - Table of Contents
-
-<div class="lead mb-5">
-
-BootstrapVueNext components list.
-
-</div>
+---
+description: BootstrapVueNext components list.
+---
 
 <TableOfContentsCard v-for="component in data" :key="component.name" class="my-3" :name="component.name" :description="component.description" :route="component.url" />
 

@@ -10,12 +10,17 @@ import {kebabToTitleCase} from '../../src/utils/dataLoaderUtils'
  *   BTooltip → BTooltip (directives keep PascalCase)
  */
 function filenameToTitle(filename: string, directory: string): string {
-  // For composables and directives, keep the original casing
-  if (directory === 'composables' || directory === 'directives') {
+  // For composables and directives (both in subdirectories and root level), keep the original casing
+  if (
+    directory === 'composables' ||
+    directory === 'directives' ||
+    directory.endsWith('/composables') ||
+    directory.endsWith('/directives')
+  ) {
     return filename
   }
 
-  // For components and configurations, convert kebab-case to Title Case using shared utility
+  // For components and configurations (and other files), convert kebab-case to Title Case using shared utility
   return kebabToTitleCase(filename)
 }
 
@@ -52,13 +57,18 @@ export function autoInjectDocComponents(md: MarkdownIt) {
     const rawPath = env?.relativePath || env?.path || ''
     // Normalize path separators for cross-platform compatibility
     const path = rawPath.replace(/\\/g, '/')
-    const match = path.match(
-      /\/(components|composables|directives|reference|configurations)\/([^/]+)\.md$/
-    )
+    // Match docs/*.md files (with or without src/ prefix, with or without leading slash)
+    const match = path.match(/(?:src\/)?docs\/(.+)\.md$/)
 
     if (!match) {
       return defaultRender(src, env)
     }
+
+    // Extract the filename and directory from the path
+    const fullPath = match[1]
+    const lastSlashIndex = fullPath.lastIndexOf('/')
+    const directory = lastSlashIndex >= 0 ? fullPath.substring(0, lastSlashIndex) : ''
+    const filename = lastSlashIndex >= 0 ? fullPath.substring(lastSlashIndex + 1) : fullPath
 
     // Extract frontmatter using simple regex and parse with YAML
     const trimmedSrc = src.trim()
@@ -80,7 +90,6 @@ export function autoInjectDocComponents(md: MarkdownIt) {
       return defaultRender(src, env)
     }
 
-    const [, directory, filename] = match
     const title = filenameToTitle(filename, directory)
 
     // Build the expected header pattern

@@ -1,10 +1,6 @@
-# Reference - Table of Contents
-
-<div class="lead mb-5">
-
-BootstrapVueNext and Bootstrap reference, and additional resources documentation.
-
-</div>
+---
+description: BootstrapVueNext and Bootstrap reference, and additional resources documentation.
+---
 
 <TableOfContentsCard v-for="item in data" :key="item.name" class="my-3" :name="item.name" :description="item.description" :route="item.url" />
 

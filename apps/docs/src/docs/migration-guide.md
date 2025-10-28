@@ -1,4 +1,7 @@
-# Migration Guide
+---
+description: >
+  Guide for migrating from BootstrapVue to BootstrapVueNext. Learn about breaking changes, deprecated features, and how to update your components, directives, and configuration for Vue 3 and Bootstrap 5.
+---
 
 ## Overview
 

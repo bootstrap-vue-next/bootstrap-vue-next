@@ -97,11 +97,17 @@ description: >
 
 #### 2. Auto-Generated Headers and Footers
 
-The documentation system **automatically injects** page headers and component reference footers.
+The documentation system **automatically injects** page headers and component reference footers for **all documentation files** in `./apps/docs/src/docs/`.
+
+**DO NOT manually add:**
+
+- `# Page Title` headers (auto-generated from filename)
+- `<PageHeader />` components (auto-injected from frontmatter)
+- `<div class="lead">` sections (replaced by PageHeader)
 
 The build system will:
 
-- Auto-generate an `<h1>` title from the filename (e.g., `button-group.md` → "Button Group")
+- Auto-generate an `<h1>` title from the filename (e.g., `button-group.md` → "Button Group", `icons.md` → "Icons")
 - Auto-inject a `<PageHeader />` component with description from frontmatter
 - Auto-inject a `<ComponentReference />` footer for component docs (if a corresponding `.data.ts` file exists)
 
