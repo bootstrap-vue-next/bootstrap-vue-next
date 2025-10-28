@@ -5,6 +5,7 @@ export default {
   load: (): ComponentReference => ({
     BOrchestrator: {
       sourcePath: '/BApp/BOrchestrator.vue',
+
       props: {
         noPopovers: {
           type: 'boolean',

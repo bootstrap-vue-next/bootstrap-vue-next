@@ -1,4 +1,6 @@
-<DirectiveHeader path="BTooltip/index.ts" title="BTooltip" />
+---
+description: 'Add custom tooltips to any element. Tooltips can be triggered by hovering, focusing, or clicking an element'
+---
 
 <BCard class="bg-body-tertiary">
 
@@ -180,5 +182,5 @@ In that case, the directive is detecting the title value, and it is going to be 
 We should use the value type when the component is not setting to the root component a title. Notice that we should use ts/js code, a variable and so on.
 
 <script setup lang="ts">
-import DirectiveHeader from './DirectiveHeader.vue'
+import {ref} from 'vue'
 </script>

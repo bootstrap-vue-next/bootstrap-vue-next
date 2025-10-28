@@ -6,8 +6,8 @@ import {buildCommonProps} from '../../utils/commonProps'
 export default {
   load: (): ComponentReference => ({
     BButtonToolbar: {
-      styleSpec: {kind: StyleKind.OverrideClass, value: '.btn-toolbar'},
       sourcePath: '/BButton/BButtonToolbar.vue',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.btn-toolbar'},
       props: {
         ...pick(buildCommonProps(), ['ariaLabel', 'role']),
         justify: {

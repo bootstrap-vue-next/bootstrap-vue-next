@@ -27,7 +27,6 @@ const sharedScope: SlotScopeReference = {
 export default {
   load: (): ComponentReference => ({
     BPagination: {
-      sourcePath: '/BPagination/BPagination.vue',
       props: {
         ...pick(
           buildCommonProps({

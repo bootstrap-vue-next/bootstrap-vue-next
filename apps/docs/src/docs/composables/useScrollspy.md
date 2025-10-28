@@ -1,10 +1,6 @@
-<ComposableHeader path="useScrollspy/index.ts" title="useScrollspy" />
-
-<div class="lead mb-5">
-
-The `useScrollspy` composable provides automatic navigation highlighting based on scroll position. It tracks the visibility of content elements and automatically updates the active state of corresponding navigation items, making it perfect for table of contents, documentation navigation, and section-based layouts.
-
-</div>
+---
+description: 'The `useScrollspy` composable provides automatic navigation highlighting based on scroll position. It tracks the visibility of content elements and automatically updates the active state of corresponding navigation items, making it perfect for table of contents, documentation navigation, and section-based layouts.'
+---
 
 ## Basic Usage
 
@@ -75,5 +71,3 @@ When content changes dynamically, you can use `updateList()` to refresh the trac
 Always call `cleanup()` when the component is unmounted to prevent memory leaks:
 
 <<< DEMO ./demo/UseScrollspyCleanup.vue#script{vue}
-
-

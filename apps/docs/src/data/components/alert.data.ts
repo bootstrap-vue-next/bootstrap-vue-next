@@ -14,7 +14,6 @@ import {omit, pick} from '../../utils/objectUtils'
 export default {
   load: (): ComponentReference => ({
     BAlert: {
-      sourcePath: '/BAlert/BAlert.vue',
       props: {
         [defaultPropSectionSymbol]: {
           ...omit(showHideProps, ['modelValue']),

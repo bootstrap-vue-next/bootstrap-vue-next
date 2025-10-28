@@ -6,7 +6,6 @@ import {buildCommonProps} from '../../utils/commonProps'
 export default {
   load: (): ComponentReference => ({
     BFormFile: {
-      sourcePath: '/BForm/BFormFile.vue',
       props: {
         ...pick(
           buildCommonProps({
@@ -37,7 +36,7 @@ export default {
           type: "'boolean' | 'user' | 'environment'",
           default: false, // TODO item not in string format
           description:
-            'When set, will instruct the browser to use the device\'s camera (if supported)',
+            "When set, will instruct the browser to use the device's camera (if supported)",
         },
         directory: {
           type: 'boolean',

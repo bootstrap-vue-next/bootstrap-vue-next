@@ -1,10 +1,6 @@
-<ComposableHeader path="useModal/index.ts" title="useModal" />
-
-<div class="lead mb-5">
-
-The `useModal` composable provides a powerful API to create, manage, and control modals programmatically from anywhere in your application. It allows you to create modals on-demand, manage existing modals, and handle modal interactions through promises.
-
-</div>
+---
+description: 'The `useModal` composable provides a powerful API to create, manage, and control modals programmatically from anywhere in your application. It allows you to create modals on-demand, manage existing modals, and handle modal interactions through promises.'
+---
 
 ## Setup
 
@@ -109,5 +105,6 @@ In addition to creating modals in a global context, you can also hide modals fro
 
 <script setup lang="ts">
 import UsePluginAlert from '../../components/UsePluginAlert.vue'
-import ComposableHeader from './ComposableHeader.vue'
+import PageHeader from '../../components/PageHeader.vue'
+
 </script>

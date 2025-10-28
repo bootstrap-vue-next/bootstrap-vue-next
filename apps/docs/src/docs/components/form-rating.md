@@ -1,10 +1,6 @@
-# Form Rating
-
-<PageHeader>
-
-BootstrapVue's custom star rating component, `BFormRating`, is for entering or displaying a rating value. The component is fully WAI-ARIA accessible and supports keyboard control.
-
-</PageHeader>
+---
+description: 'Custom star rating component for entering or displaying rating values. Fully WAI-ARIA accessible with keyboard control, supporting both interactive and readonly modes with customizable styling and icons.'
+---
 
 ## Overview
 
@@ -116,7 +112,7 @@ Optionally show a clear icon via the `show-clear` prop. The value will be set to
 
 #### Custom clear icon
 
-You can replace the default clear icon using the `#icon-clear` slot.  
+You can replace the default clear icon using the `#icon-clear` slot.
 This slot is **not scoped** — you can insert any content you like.
 
 <<< DEMO ./demo/RatingCustomClear.vue
@@ -193,15 +189,3 @@ Keyboard navigation is employed to select the rating value, and mimics the keybo
 - <kbd>Right</kbd> or <kbd>Up</kbd> will increment the rating value by `1`
 - When the [`locale`](#internationalization) resolves to a right-to-left language, the
   <kbd>Left</kbd> and <kbd>Right</kbd> behaviour is reversed.
-
-<ComponentReference :data="data" />
-
-<script lang="ts">
-import {data} from '../../data/components/FormRating.data'
-
-export default {
-setup() {
-return {data}
-}
-}
-</script>

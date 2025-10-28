@@ -1,10 +1,6 @@
-# Form Group
-
-<PageHeader>
-
-The `BFormGroup` component is the easiest way to add some structure to forms. Its purpose is to pair form controls with a legend or label, and to provide help text and invalid/valid feedback text, as well as visual (color) contextual state feedback.
-
-</PageHeader>
+---
+description: 'The `BFormGroup` component is the easiest way to add some structure to forms. Its purpose is to pair form controls with a legend or label, and to provide help text and invalid/valid feedback text, as well as visual (color) contextual state feedback.'
+---
 
 <<< DEMO ./demo/FormGroupOverview.vue
 
@@ -222,9 +218,3 @@ When the `BFormGroup` has a `label-for` prop set, the `aria-describedby` attribu
 auto-assigned to the input. When the form group has multiple form controls, make sure to set the
 attribute to each control yourself by using the `ariaDescribedby` prop value from the optionally
 scoped `default` slot.
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/formGroup.data'
-</script>

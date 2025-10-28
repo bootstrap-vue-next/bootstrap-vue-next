@@ -1,10 +1,6 @@
-# Navbar
-
-<PageHeader>
-
-The component `BNavbar` is a wrapper that positions branding, navigation, and other elements into a concise header. It is easily extensible and thanks to the `BCollapse` component, it can easily integrate responsive behaviors.
-
-</PageHeader>
+---
+description: 'The component `BNavbar` is a wrapper that positions branding, navigation, and other elements into a concise header. It is easily extensible and thanks to the `BCollapse` component, it can easily integrate responsive behaviors.'
+---
 
 <<< DEMO ./demo/NavbarOverview.vue#template{vue-html}
 
@@ -168,9 +164,3 @@ Navbars are hidden by default when printing. Force them to be printed by setting
 - v-b-toggle directive
 - `BNav` documentation for additional components and sub-component aliases
   Refer to the Router support reference page for router-link specific props.
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/navbar.data'
-</script>

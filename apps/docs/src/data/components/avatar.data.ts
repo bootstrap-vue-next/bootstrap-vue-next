@@ -21,7 +21,6 @@ export default {
   load: (): ComponentReference => ({
     BAvatar: {
       styleSpec: {kind: StyleKind.BsvnClass},
-      sourcePath: '/BAvatar/BAvatar.vue',
       props: {
         [defaultPropSectionSymbol]: {
           ...pick(
@@ -156,7 +155,6 @@ export default {
     },
     BAvatarGroup: {
       styleSpec: {kind: StyleKind.BsvnClass},
-      sourcePath: '/BAvatar/BAvatarGroup.vue',
       props: {
         ...pick(
           buildCommonProps({

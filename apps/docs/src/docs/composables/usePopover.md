@@ -1,10 +1,6 @@
-<ComposableHeader path="usePopover/index.ts" title="usePopover" />
-
-<div class="lead mb-5">
-
-The `usePopover` composable allows you to create and control popovers and tooltips dynamically from anywhere in your application. It provides methods to create, show, hide, and manage both popovers and tooltips programmatically.
-
-</div>
+---
+description: 'The `usePopover` composable allows you to create and control popovers and tooltips dynamically from anywhere in your application. It provides methods to create, show, hide, and manage both popovers and tooltips programmatically.'
+---
 
 ## Setup
 
@@ -65,5 +61,6 @@ Alternatively, use `await using` in TypeScript 5.2+ to automatically destroy the
 
 <script setup lang="ts">
 import UsePluginAlert from '../../components/UsePluginAlert.vue'
-import ComposableHeader from './ComposableHeader.vue'
+import PageHeader from '../../components/PageHeader.vue'
+
 </script>

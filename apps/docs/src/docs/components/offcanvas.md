@@ -1,10 +1,6 @@
-# Offcanvas
-
-<PageHeader>
-
-Build hidden sidebars into your project. Sidebars can aid in enhancing user interaction or preventing further interaction.
-
-</PageHeader>
+---
+description: 'Build hidden sidebars into your project. Sidebars can aid in enhancing user interaction or preventing further interaction.'
+---
 
 <<< DEMO ./demo/OffcanvasOverview.vue#template{vue-html}
 
@@ -31,9 +27,3 @@ One common use of offcanvas is to create a table of contents sider that is visib
 Below is a simple example showing how to set up such a site.
 
 <<< FRAGMENT ./demo/OffcanvasSidebar.vue
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/offcanvas.data'
-</script>

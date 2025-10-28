@@ -11,7 +11,6 @@ import {buildCommonProps} from '../../utils/commonProps'
 export default {
   load: (): ComponentReference => ({
     BInputGroup: {
-      sourcePath: '/BInputGroup/BInputGroup.vue',
       props: {
         ...pick(buildCommonProps(buildCommonProps()), ['id', 'size', 'tag']),
         append: {
@@ -39,7 +38,6 @@ export default {
       } satisfies SlotRecord<keyof BInputGroupSlots>,
     },
     BInputGroupText: {
-      sourcePath: '/BInputGroup/BInputGroupText.vue',
       props: {
         ...pick(buildCommonProps(buildCommonProps()), ['tag']),
         text: {

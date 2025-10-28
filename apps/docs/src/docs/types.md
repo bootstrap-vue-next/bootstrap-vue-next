@@ -1,10 +1,7 @@
-# Types
-
-<div class="lead mb-5">
-
-`BootstrapVueNext` is a complete rewrite that strives for full TypeScript compatibility. This is a list of types we use in this library and that you can use too.
-
-</div>
+---
+description: >
+  BootstrapVueNext is a complete rewrite that strives for full TypeScript compatibility. This is a list of types we use in this library and that you can use too.
+---
 
 ## Alignment
 

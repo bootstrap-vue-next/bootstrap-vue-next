@@ -1,14 +1,11 @@
-# Carousel
+---
+description: >
+  The carousel is a slideshow for cycling through a series of content. It works with a series of images, text,
+  or custom markup. It also includes support for previous/next controls and indicators.
 
-<PageHeader>
-
-The carousel is a slideshow for cycling through a series of content. It works with a series of images, text,
-or custom markup. It also includes support for previous/next controls and indicators.
-
-Nested carousels are not supported. You should also be aware that carousels in general can often cause
-usability and accessibility challenges.
-
-</PageHeader>
+  Nested carousels are not supported. You should also be aware that carousels in general can often cause
+  usability and accessibility challenges.
+---
 
 ## Basic usage
 
@@ -130,9 +127,3 @@ You are also able to use the built in methods for going to the next, or previous
 ## Full Example
 
 <<< DEMO ./demo/CarouselFull.vue#template{vue-html}
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/carousel.data'
-</script>

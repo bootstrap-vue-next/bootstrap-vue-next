@@ -1,10 +1,6 @@
-# Form Select
-
-<PageHeader>
-
-Bootstrap custom `<select>` using custom styles. Optionally specify options based on an array, array of objects, or an object.
-
-</PageHeader>
+---
+description: 'Bootstrap custom `<select>` using custom styles. Optionally specify options based on an array, array of objects, or an object.'
+---
 
 ## Overview
 
@@ -148,9 +144,3 @@ Set the prop `plain` to have a native browser `<select>` rendered (although the 
 
 A `plain` select will always be rendered for non `multiple` selects which have the `select-size`
 prop set to a value greater than 1.
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/formSelect.data'
-</script>

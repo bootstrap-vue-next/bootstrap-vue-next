@@ -1,10 +1,6 @@
-<ComposableHeader path="useToast/index.ts" title="useToast" />
-
-<div class="lead mb-5">
-
-The `useToast` composable allows you to create and manage toasts programmatically from anywhere in your application. It provides a simple API to show toast messages without needing to declare toast components in your templates.
-
-</div>
+---
+description: 'The `useToast` composable allows you to create and manage toasts programmatically from anywhere in your application. It provides a simple API to show toast messages without needing to declare toast components in your templates.'
+---
 
 ## Setup
 
@@ -61,7 +57,3 @@ Hiding a `Toast` programmatically is very simple. `create` returns an object tha
 Hiding a `Toast` with promise
 
 <<< DEMO ./demo/UseToastPromise.vue
-
-<script setup lang="ts">
-import ComposableHeader from './ComposableHeader.vue'
-</script>

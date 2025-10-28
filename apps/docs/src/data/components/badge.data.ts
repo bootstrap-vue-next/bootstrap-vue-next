@@ -12,7 +12,6 @@ import {buildCommonProps} from '../../utils/commonProps'
 export default {
   load: (): ComponentReference => ({
     BBadge: {
-      sourcePath: '/BBadge/BBadge.vue',
       props: {
         [defaultPropSectionSymbol]: {
           ...pick(

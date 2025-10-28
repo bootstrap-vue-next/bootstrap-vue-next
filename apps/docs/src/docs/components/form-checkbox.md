@@ -1,10 +1,6 @@
-# Form Checkbox
-
-<PageHeader>
-
-For cross browser consistency, `BFormCheckboxGroup` and `BFormCheckbox` use Bootstrap's custom checkbox input to replace the browser default checkbox input. It is built on top of semantic and accessible markup, so it is a solid replacement for the default checkbox input.
-
-</PageHeader>
+---
+description: "For cross browser consistency, `BFormCheckboxGroup` and `BFormCheckbox` use Bootstrap's custom checkbox input to replace the browser default checkbox input. It is built on top of semantic and accessible markup, so it is a solid replacement for the default checkbox input."
+---
 
 ## Single checkbox
 
@@ -205,9 +201,3 @@ The _indeterminate_ state is **visual only**. The checkbox is still either check
 **Indeterminate checkbox use-case example:**
 
 <<< DEMO ./demo/CheckboxIndeterminate.vue
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/formCheckbox.data'
-</script>

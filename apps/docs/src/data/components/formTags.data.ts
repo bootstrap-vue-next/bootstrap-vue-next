@@ -18,9 +18,8 @@ import {buildCommonProps} from '../../utils/commonProps'
 
 export default {
   load: (): ComponentReference => ({
-    BFormTag: {
+    BFormTags: {
       styleSpec: {kind: StyleKind.BsvnClass},
-      sourcePath: '/BFormTag/BFormTag.vue',
       props: {
         ...pick(
           buildCommonProps({
@@ -70,9 +69,8 @@ export default {
         },
       } satisfies SlotRecord<keyof BFormTagSlots>,
     },
-    BFormTags: {
+    BFormTag: {
       styleSpec: {kind: StyleKind.BsvnClass},
-      sourcePath: '/BFormTags/BFormTags.vue',
       props: {
         ...pick(
           buildCommonProps({

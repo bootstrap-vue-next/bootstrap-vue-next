@@ -1,10 +1,6 @@
-# BOrchestrator
-
-<PageHeader>
-
-The `BOrchestrator` component manages the rendering and positioning of dynamic components like modals, toasts, and popovers. It works with `BApp` to provide a centralized orchestration layer.
-
-</PageHeader>
+---
+description: 'The `BOrchestrator` component manages the rendering and positioning of dynamic components like modals, toasts, and popovers. It works with `BApp` to provide a centralized orchestration layer.'
+---
 
 ## Overview
 
@@ -43,9 +39,3 @@ The `BOrchestrator` component manages the rendering and positioning of dynamic c
 - [`BPopover`](/docs/components/popover) - Can be orchestrated
 
 ## Component Reference
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/orchestrator.data'
-</script>

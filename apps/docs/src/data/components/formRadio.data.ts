@@ -12,7 +12,6 @@ export default {
   load: (): ComponentReference => ({
     BFormRadio: {
       styleSpec: {kind: StyleKind.Tag, value: 'input[type="radio"]'},
-      sourcePath: '/BFormRadio/BFormRadio.vue',
       props: {
         ...pick(buildCommonProps(), [
           'ariaLabel',
@@ -85,7 +84,6 @@ export default {
     },
     BFormRadioGroup: {
       styleSpec: {kind: StyleKind.Tag, value: 'div[role="radiogroup"]'},
-      sourcePath: '/BFormRadio/BFormRadioGroup.vue',
       props: {
         ...pick(buildCommonProps(), [
           'ariaInvalid',
@@ -112,7 +110,7 @@ export default {
         buttons: {
           type: 'boolean',
           default: false, // TODO item not in string format
-          description: 'When set, renders the radio buttons in this group with button styling'
+          description: 'When set, renders the radio buttons in this group with button styling',
         },
         modelValue: {
           type: 'RadioValue | undefined',

@@ -1,10 +1,6 @@
-# Modal
-
-<PageHeader>
-
-Modals are streamlined, but flexible dialog prompts. They support a number of use cases from user notification to completely custom content and feature a handful of helpful sub-components, sizes, variants, accessibility, and more.
-
-</PageHeader>
+---
+description: 'Modals are streamlined, but flexible dialog prompts. They support a number of use cases from user notification to completely custom content and feature a handful of helpful sub-components, sizes, variants, accessibility, and more.'
+---
 
 ## Usage
 
@@ -372,9 +368,3 @@ BootstrapVueNext uses the `focus` prop to control initial focus behavior when th
 - Leave `focus` undefined to use the default focus behavior (focuses the modal container)
 
 <!-- Component reference added automatically from component package.json -->
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/modal.data'
-</script>

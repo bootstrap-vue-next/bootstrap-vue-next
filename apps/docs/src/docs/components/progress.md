@@ -1,11 +1,8 @@
-# Progress
-
-<PageHeader>
-
-Use our custom progress component for displaying simple or complex progress bars, featuring
-support for horizontally stacked bars, animated backgrounds, and text labels.
-
-</PageHeader>
+---
+description: >
+  Use our custom progress component for displaying simple or complex progress bars, featuring
+  support for horizontally stacked bars, animated backgrounds, and text labels.
+---
 
 ## Basic Usage
 
@@ -77,9 +74,3 @@ Include multiple `BProgressBar` sub-components in a `BProgress` component to bui
 - `<BProgressBar>` will not inherit value from `<BProgress>`.
 
 :::
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/progress.data'
-</script>

@@ -6,7 +6,6 @@ import {pick} from '../../utils/objectUtils'
 export default {
   load: (): ComponentReference => ({
     BFormRating: {
-      sourcePath: '/BFormRating/BFormRating.vue',
       props: {
         ...pick(buildCommonProps(), ['id', 'variant']),
         color: {

@@ -11,7 +11,6 @@ import {buildCommonProps} from '../../utils/commonProps'
 export default {
   load: (): ComponentReference => ({
     BFormCheckbox: {
-      sourcePath: '/BFormCheckbox/BFormCheckbox.vue',
       props: {
         ...pick(buildCommonProps(), [
           'ariaLabel',
@@ -117,7 +116,6 @@ export default {
       } satisfies SlotRecord<keyof BFormCheckboxSlots>,
     },
     BFormCheckboxGroup: {
-      sourcePath: '/BFormCheckbox/BFormCheckboxGroup.vue',
       props: {
         ...pick(buildCommonProps(), [
           'ariaInvalid',

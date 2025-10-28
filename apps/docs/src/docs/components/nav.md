@@ -1,11 +1,8 @@
-# Nav
-
-<PageHeader>
-
-Navigation available in Bootstrap share general markup and styles, from the base `<BNav>` class
-to the `active` and `disabled` states. Swap modifier props to switch between each style.
-
-</PageHeader>
+---
+description: >
+  Navigation available in Bootstrap share general markup and styles, from the base `<BNav>` class
+  to the `active` and `disabled` states. Swap modifier props to switch between each style.
+---
 
 <<< DEMO ./demo/NavOverview.vue#template{vue-html}
 
@@ -200,9 +197,3 @@ For more details see:
 
 - [Vue Router `<router-view>`](https://router.vuejs.org/api/#router-view)
 - [Nuxt.JS `<nuxt-child>`](https://nuxtjs.org/api/components-nuxt-child)
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/nav.data'
-</script>

@@ -17,7 +17,6 @@ import {linkedBLinkSection, linkProps} from '../../utils/linkProps'
 export default {
   load: (): ComponentReference => ({
     BBreadcrumb: {
-      sourcePath: '/BBreadcrumb/BBreadcrumb.vue',
       props: {
         items: {
           type: 'BreadcrumbItemRaw[]',
@@ -45,7 +44,6 @@ export default {
       } satisfies SlotRecord<keyof BBreadcrumbSlots>,
     },
     BBreadcrumbItem: {
-      sourcePath: '/BBreadcrumb/BBreadcrumbItem.vue',
       props: {
         [defaultPropSectionSymbol]: {
           ariaCurrent: {

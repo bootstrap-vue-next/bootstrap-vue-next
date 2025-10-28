@@ -6,7 +6,6 @@ import type {BFormInputProps} from 'bootstrap-vue-next'
 export default {
   load: (): ComponentReference => ({
     BFormInput: {
-      sourcePath: '/BFormInput/BFormInput.vue',
       props: {
         ...pick(buildCommonProps(), [
           'ariaInvalid',

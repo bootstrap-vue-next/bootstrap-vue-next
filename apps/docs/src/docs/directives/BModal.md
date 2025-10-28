@@ -1,5 +1,3 @@
-<DirectiveHeader path="BModal/index.ts" title="Docs to be made" />
-
-<script setup lang="ts">
-import DirectiveHeader from './DirectiveHeader.vue'
-</script>
+---
+description: 'Similar to the BToggle directive, the BModal directive is used to trigger the state of a modal through directive'
+---
