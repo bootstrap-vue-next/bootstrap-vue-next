@@ -1,14 +1,10 @@
-# Accessibility
-
-<div class="lead mb-5">
-
-A brief overview of BootstrapVueNext's features and limitations for the creation of accessible content.
-
-</div>
+---
+description: A brief overview of BootstrapVueNext's features and limitations for the creation of accessible content.
+---
 
 ## Overview and Limitations
 
-BootstrapVue will automatically add in the appropriate accessibility markup for most interactive components. But the overall accessibility of any project built with Bootstrap and BootstrapVue depends in large part on the author's markup, additional styling, and scripting they've included. However, provided that these have been implemented correctly, it should be perfectly possible to create websites and applications with BootstrapVue that fulfill [WCAG 2.0](https://www.w3.org/TR/WCAG20/) (A/AA/AAA), [Section 508](https://www.section508.gov) and similar accessibility standards and requirements.
+BootstrapVueNext will automatically add in the appropriate accessibility markup for most interactive components. But the overall accessibility of any project built with Bootstrap and BootstrapVueNext depends in large part on the author's markup, additional styling, and scripting they've included. However, provided that these have been implemented correctly, it should be perfectly possible to create websites and applications with BootstrapVueNext that fulfill [WCAG 2.0](https://www.w3.org/TR/WCAG20/) (A/AA/AAA), [Section 508](https://www.section508.gov) and similar accessibility standards and requirements.
 
 ## Structural markup
 
@@ -65,7 +61,7 @@ It is highly recommended to test your app for accessibility before deployment. N
 
 There are just two main things to think about when making your web app accessible:
 
-- Defining the right keyboard behavior. BootstrapVue provides keyboard control for most of our components, but you should make sure your custom components are also keyboard accessible.
+- Defining the right keyboard behavior. BootstrapVueNext provides keyboard control for most of our components, but you should make sure your custom components are also keyboard accessible.
 - Making it possible for screen readers to understand your app. Bootstrap, in most situations, will automatically set the correct `role` and `aria-*` attributes on our components. You should also make sure that all of your custom components provide the correct roles and attributes (use semantic HTML elements and markup where possible).
 
 Steps you should do for testing:

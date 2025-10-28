@@ -52,7 +52,9 @@ export function autoInjectDocComponents(md: MarkdownIt) {
     const rawPath = env?.relativePath || env?.path || ''
     // Normalize path separators for cross-platform compatibility
     const path = rawPath.replace(/\\/g, '/')
-    const match = path.match(/\/(components|composables|directives|configurations)\/([^/]+)\.md$/)
+    const match = path.match(
+      /\/(components|composables|directives|reference|configurations)\/([^/]+)\.md$/
+    )
 
     if (!match) {
       return defaultRender(src, env)

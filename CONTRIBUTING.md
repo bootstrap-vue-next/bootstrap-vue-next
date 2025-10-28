@@ -66,7 +66,7 @@ We use [vitepress](https://vitepress.dev/) to build our documentation in the `./
 ### Documentation File Structure
 
 - **Markdown files** (`./apps/docs/src/docs/**/*.md`): Contains the main documentation content
-- **Data files** (`./apps/docs/src/data/**/*.data.ts`): Contains component/composable/directive/configuration metadata used to auto-generate API reference tables
+- **Data files** (`./apps/docs/src/data/**/*.data.ts`): Contains component/composable/directive/reference/configuration metadata used to auto-generate API reference tables
 
 ### Critical Documentation Conventions
 
@@ -78,7 +78,7 @@ Our documentation system relies on several conventions to automatically generate
 
 ```yaml
 ---
-description: A brief, clear description of what this component/composable/directive does
+description: A brief, clear description of what this component/composable/directive/reference topic does
 ---
 ```
 
@@ -184,6 +184,14 @@ Data loaders in `./apps/docs/src/data/` automatically extract frontmatter and tr
 1. Uses `createContentLoader()` to read markdown files
 2. Extracts frontmatter using the `yaml` package
 3. Transforms data using shared utilities from `./apps/docs/src/utils/dataLoaderUtils.ts`
+
+Example data loaders include:
+
+- `components.data.ts` - Component documentation
+- `composables.data.ts` - Composable documentation
+- `directives.data.ts` - Directive documentation
+- `reference.data.ts` - Reference documentation
+- `configurations.data.ts` - Configuration documentation
 
 #### 5. Testing Your Documentation Changes
 

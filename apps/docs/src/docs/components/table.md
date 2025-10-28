@@ -261,7 +261,7 @@ values: `sm`, `md`, `lg`, or `xl`.
 
 ### Stacked tables
 
-An alternative to responsive tables, BootstrapVue includes the stacked table option (using custom
+An alternative to responsive tables, BootstrapVueNext includes the stacked table option (using custom
 SCSS/CSS), which allow tables to be rendered in a visually stacked format. Make any table stacked
 across _all viewports_ by setting the prop `stacked` to `true`. Or, alternatively, set a breakpoint
 at which the table will return to normal table format by setting the prop `stacked` to one of the
@@ -455,7 +455,7 @@ scoped slots (even when disabled)
 
 If you wish to add additional rows to the header you may do so via the `thead-top` slot. This slot
 is inserted before the header cells row, and is not automatically encapsulated by `<tr>..</tr>`
-tags. It is recommended to use the BootstrapVue [table helper components](#table-helper-components),
+tags. It is recommended to use the BootstrapVueNext [table helper components](#table-helper-components),
 rather than native browser table child elements.
 
 <<< DEMO ./demo/TableHeaderRows.vue
@@ -958,7 +958,7 @@ markup. Components `<BTable>` and `<BTableLite>` use these helper components int
 In the [Simple tables](#simple-tables) example, we are using the helper components `<BThead>`,
 `<BTbody>`, `<BTr>`, `<BTh>`, `<BTd>` and `<BTfoot>`. While you can use regular table child
 elements (i.e. `<tbody>`, `<tr>`, `<td>`, etc.) within `<BTableSimple>`, and the named slots
-`top-row`, `bottom-row`, and `thead-top`, it is recommended to use these BootstrapVue table `<BT*>`
+`top-row`, `bottom-row`, and `thead-top`, it is recommended to use these BootstrapVueNext table `<BT*>`
 helper components. Note that there are no helper components for `<caption>`, `<colgroup>` or
 `<col>`, so you may use these three HTML5 elements directly in `<BTableSimple>`.
 
