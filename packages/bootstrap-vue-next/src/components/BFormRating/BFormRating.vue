@@ -10,6 +10,14 @@
     tabindex="0"
     @keydown="onKeydown"
   >
+    <input
+      v-if="props.name && !props.disabled"
+      key="hidden"
+      type="hidden"
+      :name="props.name"
+      :form="props.form"
+      :value="localValue"
+    />
     <span
       v-if="props.showClear && !props.readonly && !props.disabled"
       class="clear-button-spacing"
@@ -91,6 +99,8 @@ const _props = withDefaults(defineProps<Omit<BFormRatingProps, 'modelValue'>>(),
   precision: 0,
   readonly: false,
   disabled: false,
+  form: undefined,
+  name: undefined,
   showClear: false,
   showValue: false,
   showValueMax: false,
