@@ -36,7 +36,6 @@ const sharedSlotsScope: SlotScopeReference = {
 export default {
   load: (): ComponentReference => ({
     BCollapse: {
-      sourcePath: '/BCollapse/BCollapse.vue',
       props: {
         ...showHideProps,
         ...pick(buildCommonProps(), ['id', 'tag']),

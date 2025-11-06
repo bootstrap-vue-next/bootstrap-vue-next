@@ -1,10 +1,6 @@
-# Input Group
-
-<PageHeader>
-
-Easily extend form controls by adding text, buttons, or button groups on either side of textual inputs.
-
-</PageHeader>
+---
+description: 'Easily extend form controls by adding text, buttons, or button groups on either side of textual inputs.'
+---
 
 <<< DEMO ./demo/InputGroupOverview.vue#template{vue-html}
 
@@ -112,9 +108,3 @@ margin, via the use of the `.mb-n1` [utility class](/docs/reference/utility-clas
 
 Bootstrap v5 currently **does not** support contextual state styling (i.e. valid or invalid) of
 input groups. However, the inputs inside the input group do support contextual state.
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/inputGroup.data'
-</script>

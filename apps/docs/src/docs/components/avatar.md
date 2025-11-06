@@ -1,13 +1,10 @@
-# Avatar
-
-<PageHeader>
-
-Avatars are a custom component, and are typically used to display a user profile as a
-picture or short text. `BAvatar` provides several props for customizing its
-appearance such as color variant and roundness, and optionally supports acting as a button, link,
-or a [router link](/docs/reference/router-links).
-
-</PageHeader>
+---
+description: >
+  Avatars are a custom component, and are typically used to display a user profile as a
+  picture or short text. `BAvatar` provides several props for customizing its
+  appearance such as color variant and roundness, and optionally supports acting as a button, link,
+  or a [router link](/docs/reference/router-links).
+---
 
 ## Overview
 
@@ -246,9 +243,3 @@ the `to` or `href` props when changing routes or changing URLs) for accessibilit
 Avatars are based upon `BBadge` and `BButton` components, and as such, rely upon Bootstrap's
 `badge-*` and `btn-*` variant classes, as well as the `rounded-*`
 [utility classes](/docs/reference/utility-classes).
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/avatar.data'
-</script>

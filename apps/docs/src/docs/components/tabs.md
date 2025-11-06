@@ -1,11 +1,8 @@
-# Tabs
-
-<PageHeader>
-
-Create a widget of tabbable panes of _local content_. The tabs component is built upon navs and
-cards internally, and provides full keyboard navigation control of the tabs.
-
-</PageHeader>
+---
+description: >
+  Create a widget of tabbable panes of _local content_. The tabs component is built upon navs and
+  cards internally, and provides full keyboard navigation control of the tabs.
+---
 
 For navigation based tabs (i.e. tabs that would change the URL), use the
 [`<BNav>`](/docs/components/nav) component instead.
@@ -109,7 +106,7 @@ column classes such as `col-2`, `col-3`, etc.
 <<< DEMO ./demo/TabsVerticalWidth.vue#template{vue-html}
 
 Vertical placement visually works best with the `pills` variant. When using the default `tabs`
-variant, you may want to provided your own custom styling classes, as Bootstrap v4 CSS assumes the
+variant, you may want to provided your own custom styling classes, as Bootstrap v5 CSS assumes the
 tab controls will always be placed on the top of the tabs content.
 
 ::: info
@@ -264,9 +261,3 @@ It is recommended to use the `disabled` attribute on the `<BTab>` component inst
 ### Dynamic tabs + tabs-end slot
 
 <<< DEMO ./demo/TabsDynamic.vue
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/tabs.data'
-</script>

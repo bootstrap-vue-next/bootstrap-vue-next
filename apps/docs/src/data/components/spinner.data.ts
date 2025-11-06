@@ -7,7 +7,6 @@ export default {
   load: (): ComponentReference => ({
     BSpinner: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.spinner-*'},
-      sourcePath: '/BSpinner/BSpinner.vue',
       props: {
         ...pick(
           buildCommonProps({

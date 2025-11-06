@@ -1,10 +1,7 @@
-# Introduction
-
-<div class="lead mb-5">
-
-With BootstrapVueNext you can build fast, responsive, and ARIA accessible projects on the web using Vue.js and Bootstrap v5.
-
-</div>
+---
+title: Introduction
+description: With BootstrapVueNext you can build fast, responsive, and ARIA accessible projects on the web using Vue.js and Bootstrap v5.
+---
 
 <BRow>
   <BCol class="text-center" cols="12" sm="6">

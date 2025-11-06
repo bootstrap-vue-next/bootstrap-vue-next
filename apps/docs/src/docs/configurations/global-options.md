@@ -1,4 +1,6 @@
-# Global options
+---
+description: Set default prop values for all Vue components.
+---
 
 ## Overview
 

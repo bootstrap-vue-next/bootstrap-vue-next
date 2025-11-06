@@ -1,10 +1,6 @@
-# Toast
-
-<PageHeader>
-
-Push notifications to your visitors with `BToast`, `useToast` and `BOrchestrator`. These are easily customizable for generating alert messages.
-
-</PageHeader>
+---
+description: 'Push notifications to your visitors with `BToast`, `useToast` and `BOrchestrator`. These are easily customizable for generating alert messages.'
+---
 
 Toasts are lightweight notifications designed to mimic the push notifications that have been popularized by mobile and desktop operating systems.
 
@@ -119,9 +115,3 @@ provides general guidelines when using toasts.
   best practice would be to implement a location where users can refer to a list of past toast
   messages which have been shown. Preferably this list should be sortable, with the default being
   chronological.
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/toast.data'
-</script>

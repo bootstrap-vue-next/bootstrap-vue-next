@@ -1,10 +1,6 @@
-# Form File
-
-<PageHeader>
-
-File input control that supports single and multiple file modes
-
-</PageHeader>
+---
+description: 'File input control that supports single and multiple file modes, drag and drop, file type restrictions, and directory selection with contextual state feedback.'
+---
 
 <BAlert :model-value="true" variant="danger">
 The current variation is subject to change pre v1.0. The implementation may change to become closer to the Bootstrap-vue implementation based on feedback <BLink target="_blank" href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/discussions/1213" rel="noopener">vote here</BLink>
@@ -79,9 +75,3 @@ The BFormFile exposes functions to control the component: `focus(), blur(), rese
 1. Focus: focuses the file input
 2. Blur: blurs the file input focus
 3. Reset: Resets the file selection so that no file is selected
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/formFile.data'
-</script>

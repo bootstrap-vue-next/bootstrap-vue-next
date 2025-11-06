@@ -14,7 +14,6 @@ export default {
   load: (): ComponentReference => ({
     BOffcanvas: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.offcanvas[-*]'},
-      sourcePath: '/BOffcanvas/BOffcanvas.vue',
       props: {
         ...showHideProps,
         ...pick(

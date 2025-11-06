@@ -1,10 +1,6 @@
-# Card
-
-<PageHeader>
-
-A card is a flexible and extensible content container. It includes options for headers and footers, a wide variety of content, contextual background colors, and powerful display options.
-
-</PageHeader>
+---
+description: 'A card is a flexible and extensible content container. It includes options for headers and footers, a wide variety of content, contextual background colors, and powerful display options.'
+---
 
 ## Overview
 
@@ -206,9 +202,3 @@ Heads up! Your mileage with card columns may vary. To prevent cards breaking acr
 set them to display: inline-block as column-break-inside: avoid is not a bulletproof solution yet.
 
 <<< DEMO ./demo/CardColumn.vue#template{vue-html}
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/card.data'
-</script>

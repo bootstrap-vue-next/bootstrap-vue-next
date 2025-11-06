@@ -13,7 +13,6 @@ import {showHideEmits, showHideProps} from '../../utils/showHideData'
 export default {
   load: (): ComponentReference => ({
     BAccordion: {
-      sourcePath: '/BAccordion/BAccordion.vue',
       props: {
         ...pick(showHideProps, ['initialAnimation', 'lazy', 'unmountLazy']), // Restored spread
         ...pick(
@@ -74,7 +73,6 @@ export default {
       } satisfies SlotRecord<keyof BAccordionSlots>,
     },
     BAccordionItem: {
-      sourcePath: '/BAccordion/BAccordionItem.vue',
       props: {
         ...pick(showHideProps, ['modelValue', 'lazy', 'show', 'unmountLazy', 'visible']), // Restored spread
         ...pick(

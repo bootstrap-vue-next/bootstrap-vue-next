@@ -1,10 +1,6 @@
-# Form Tags
-
-<PageHeader>
-
-Lightweight custom tagged input form control, with options for customized interface rendering, duplicate tag detection and optional tag validation.
-
-</PageHeader>
+---
+description: 'Lightweight custom tagged input form control, with options for customized interface rendering, duplicate tag detection and optional tag validation.'
+---
 
 Tags are arrays of short strings, used in various ways such as assigning categories. Use the default user interface, or create your own custom interface via the use of the default scoped slot.
 
@@ -211,9 +207,3 @@ The remove event is emitted when the `<BFormTag>` remove button is clicked.
 Tags that are too wide for their parent container will automatically have their text content truncated with an ellipsis. For this reason, it is always good practice to supply a title via the title prop when using the default slot of `<BFormTag>` for the tag content.
 
 Note `<BFormTag>` requires BootstrapVueNext's custom CSS/SCSS for proper styling.
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/formTags.data'
-</script>

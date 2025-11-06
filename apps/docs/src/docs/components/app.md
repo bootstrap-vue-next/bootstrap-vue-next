@@ -1,10 +1,6 @@
-# BApp
-
-<PageHeader>
-
-The `BApp` component is the new recommended way to configure bootstrap-vue-next. It replaces the plugin-based approach and provides better defaults management, orchestrator integration, and improved type safety.
-
-</PageHeader>
+---
+description: 'The `BApp` component is the new recommended way to configure bootstrap-vue-next. It replaces the plugin-based approach and provides better defaults management, orchestrator integration, and improved type safety.'
+---
 
 ## Overview
 
@@ -126,9 +122,3 @@ The `BApp` component automatically provides several internal services:
 - The component uses Vue's provide/inject system for dependency injection
 - All orchestrators are automatically teleported when `teleportTo` is specified
 - The component inherits all attributes and passes them to the default slot
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/app.data'
-</script>
