@@ -90,18 +90,29 @@ const normalizeOptions = computed<
     [key: string]: unknown
   }[]
 >(() =>
-  props.options.map((el) =>
+  props.options.map((el, index) =>
     typeof el === 'string' || typeof el === 'number'
       ? {
+          id: `${computedId.value}__${index}`,
           value: el,
           disabled: props.disabled,
           text: el.toString(),
         }
       : {
-          ...el,
-          value: el[props.valueField],
-          disabled: el[props.disabledField] as boolean | undefined,
-          text: el[props.textField] as string | undefined,
+          // Only include a small set of well-known properties on the
+          // normalized option object. We deliberately DO NOT spread the
+          // original `el` object because arbitrary keys (for example a key
+          // named `Id`) would be forwarded as attributes ($attrs) to the
+          // child `BFormRadio` and then bound onto the native <input>, which
+          // can inadvertently override the input `id` (case-insensitive in
+          // HTML) and break the label `for` association. By building a
+          // clean object we avoid such accidental attribute collisions.
+          id: (el as Record<string, unknown>).id ?? `${computedId.value}__${index}`,
+          value: (el as Record<string, unknown>)[props.valueField] as unknown,
+          disabled: (el as Record<string, unknown>)[props.disabledField] as
+            | boolean
+            | undefined,
+          text: (el as Record<string, unknown>)[props.textField] as string | undefined,
         }
   )
 )
