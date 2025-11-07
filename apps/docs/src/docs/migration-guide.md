@@ -825,10 +825,6 @@ The `type` prop is deprecated. Use the `v-b-color-mode` directive or `useColorMo
 
 `align` prop now takes values from [`AlignmentJustifyContent`](/docs/types#alignment): `start`, `center`, `end`, `between`, `around`, and `evenly`
 
-### BOffcanvas
-
-<NotYetDocumented type="component"/>
-
 See [Show and Hide](#show-and-hide) shared properties.
 
 ### BOverlay
@@ -886,6 +882,66 @@ The default for `placement` is now `top` rather than `right`
 ### BProgressBar
 
 See the [v-html](#v-html) section for information on deprecation of the `label-html` prop.
+
+### BSideBar
+
+`BSidebar` has been renamed to `BOffcanvas` to align with the name chosen by the
+[Bootstrap 5](https://getbootstrap.com/docs/5.3/components/offcanvas) team for this functionality.
+
+#### Renamed Component
+
+- `<Bsidebar>` → `<BOffcanvas>`
+
+#### Placement Changes
+
+The `right` prop has been replaced with a more flexible `placement` prop:
+
+- `right` prop is **deprecated**
+- Use `placement="end"` instead of `:right="true"`
+- Use `placement="start"` instead of `:right="false"` (or omit, as `start` is the default)
+- New placements available: `placement="top"` and `placement="bottom"`
+
+#### Variant Props Deprecated
+
+The `bg-variant` and `text-variant` props have been **deprecated**. Bootstrap 5 offcanvas components don't support these props directly.
+
+Instead, use utility classes:
+
+- Apply background classes via `body-class` prop: `body-class="bg-dark text-light"`
+- Apply classes to content wrapper elements within the default slot
+- Use the `header-class` prop for header styling
+
+#### Animation Props
+
+The `no-slide` prop has been renamed to `no-animation` for consistency with other components.
+
+- `no-slide` → `no-animation`
+
+#### Focus Management
+
+The `no-enforce-focus` prop has been renamed to `no-trap` for consistency with modal and other components.
+
+- `no-enforce-focus` → `no-trap`
+
+#### Route Change Behavior
+
+The `no-close-on-route-change` prop has been **removed**. Offcanvas components no longer automatically close on route changes by default. If you need this behavior, you'll need to implement it manually by watching the route and calling the `hide()` method.
+
+#### Z-Index Prop Removed
+
+The `z-index` prop has been **removed**. Use CSS to customize z-index if needed.
+
+#### Backdrop Variant
+
+The `backdrop-variant` prop has been **removed**. Bootstrap 5 offcanvas backdrops use a standard dark backdrop.
+
+#### Class Props
+
+The `sidebar-class` prop has been **removed**. Use the standard `class` prop instead to apply classes directly to the offcanvas element.
+
+#### Events
+
+The `change` event is no longer emitted. Use `update:model-value` instead for v-model compatibility, or use the `show`/`hide`/`shown`/`hidden` events to track state changes.
 
 ### BSkeleton
 
