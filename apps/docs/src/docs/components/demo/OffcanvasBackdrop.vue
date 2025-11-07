@@ -5,7 +5,7 @@
     <BOffcanvas
       id="offcanvas-backdrop"
       title="Offcanvas with backdrop"
-      backdrop
+      no-backdrop
       shadow
     >
       <div class="px-3 py-2">

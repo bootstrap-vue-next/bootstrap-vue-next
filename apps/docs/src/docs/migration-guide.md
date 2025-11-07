@@ -901,6 +901,11 @@ The `right` prop has been replaced with a more flexible `placement` prop:
 - Use `placement="start"` instead of `:right="false"` (or omit, as `start` is the default)
 - New placements available: `placement="top"` and `placement="bottom"`
 
+#### aria-\* support
+
+`aria-label` and `aria-labelby` aren't explicitly definided as props, but setting them
+on `<BOffcanvas>` will bind correctly to the main `<div>`.
+
 #### Variant Props Deprecated
 
 The `bg-variant` and `text-variant` props have been **deprecated**. Bootstrap 5 offcanvas components don't support these props directly.
@@ -931,13 +936,25 @@ The `no-close-on-route-change` prop has been **removed**. Offcanvas components n
 
 The `z-index` prop has been **removed**. Use CSS to customize z-index if needed.
 
-#### Backdrop Variant
+#### Backdrop
+
+The `backdrop` prop has been deprecated. Backdrop is enabled by default. Use the new `no-backdrop` prop to turn it off.
 
 The `backdrop-variant` prop has been **removed**. Bootstrap 5 offcanvas backdrops use a standard dark backdrop.
 
 #### Class Props
 
 The `sidebar-class` prop has been **removed**. Use the standard `class` prop instead to apply classes directly to the offcanvas element.
+
+#### Tag
+
+The `tag` prop has been deprecated.
+
+#### Header and Footer
+
+The `header-tag` and `footer-tag` props have been deprecated. Use the `header` and `footer` slots to override header and footer behavior.
+
+The `close-label` prop been renamed to `header-close-label` for consistency
 
 #### Events
 

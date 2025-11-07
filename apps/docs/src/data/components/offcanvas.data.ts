@@ -21,8 +21,22 @@ export default {
             id: {
               description: 'The Id to be injected to offcanvas and used for state management',
             },
+            placement: {
+              description: "Position of the offcanvas: 'start', 'end', 'top', or 'bottom'",
+            },
           }),
-          ['bodyAttrs', 'bodyClass', 'id']
+          [
+            'bodyAttrs',
+            'bodyClass',
+            'footerClass',
+            'headerClass',
+            'id',
+            'noBackdrop',
+            'noHeader',
+            'noHeaderClose',
+            'placement',
+            'title',
+          ]
         ),
         backdropFirst: {
           type: 'boolean',
@@ -42,20 +56,10 @@ export default {
           description:
             "Specify where to focus once offcanvas opens. Can be built-in button 'close'. Can be ref, HTMLElement, id or selector string. If set to 'false', no focus will be set (if noTrap isn't set the focus trap will focus the modal element or fallback element). If set to a string, the element with that id will be focused. If set to a ComponentPublicInstance, the $el property of the instance will be focused.",
         },
-        footerClass: {
-          type: 'string',
-          default: undefined,
-          description: 'CSS class (or classes) to apply to the footer',
-        },
         headerAttrs: {
           type: 'Readonly<AttrsValue>',
           default: undefined,
           description: 'Attributes to be applied to the offcanvas header element',
-        },
-        headerClass: {
-          type: 'string',
-          default: undefined,
-          description: 'CSS class (or classes) to apply to the header',
         },
         headerCloseClass: {
           type: 'ClassValue',
@@ -73,11 +77,6 @@ export default {
           description:
             'Button variant to use for the header close button when using a custom close slot',
         },
-        noBackdrop: {
-          type: 'boolean',
-          default: false,
-          description: 'Disable rendering of the backdrop',
-        },
         noCloseOnBackdrop: {
           type: 'boolean',
           default: false,
@@ -88,25 +87,10 @@ export default {
           default: false,
           description: 'Disable closing the offcanvas when the Escape key is pressed',
         },
-        noHeader: {
-          type: 'boolean',
-          default: false,
-          description: 'Disable rendering of the header (including the close button)',
-        },
-        noHeaderClose: {
-          type: 'boolean',
-          default: false,
-          description: 'Disable rendering of the close button in the header',
-        },
         noTrap: {
           type: 'boolean',
           default: false,
           description: 'Disables the focus trap feature',
-        },
-        placement: {
-          type: 'Placement',
-          default: 'start',
-          description: "Position of the offcanvas: 'start', 'end', 'top', or 'bottom'",
         },
         responsive: {
           type: 'Breakpoint',
@@ -128,11 +112,6 @@ export default {
           type: 'string | RendererElement | null | undefined',
           default: 'body',
           description: 'Teleport the offcanvas to a specific element',
-        },
-        title: {
-          type: 'string',
-          default: undefined,
-          description: 'Title text to display in the header',
         },
         width: {
           type: 'string',
