@@ -890,7 +890,7 @@ See the [v-html](#v-html) section for information on deprecation of the `label-h
 
 #### Renamed Component
 
-- `<Bsidebar>` → `<BOffcanvas>`
+- `<BSidebar>` → `<BOffcanvas>`
 
 #### Placement Changes
 

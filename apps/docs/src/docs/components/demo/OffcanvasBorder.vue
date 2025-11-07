@@ -3,6 +3,7 @@
     <BButton v-b-toggle.offcanvas-border>Toggle Offcanvas</BButton>
     <BOffcanvas
       id="offcanvas-border"
+      title="Offcanvas with Border"
       class="border-end border-danger"
     >
       <div class="px-3 py-2">

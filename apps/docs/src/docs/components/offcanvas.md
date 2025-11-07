@@ -9,9 +9,9 @@ You can place almost any content inside the `<BOffcanvas>`
 [optionally scoped default slot](#scoped-default-slot), such as text, buttons, forms, images, or
 [vertical navs](/docs/components/nav#vertical-variation).
 
-The component supports a header and built in close button, of which you can optionally disable and
+The component supports a header and built-in close button, of which you can optionally disable and
 provide your own header (if needed), and can be easily toggled with our
-[`v-b-toggle` directive](/docs/directives/toggle).
+[`v-b-toggle` directive](/docs/directives/BToggle).
 
 The component has minimal default styling, which provides you with great flexibility in laying out
 the content of the offcanvas.
@@ -149,7 +149,7 @@ elements outside of the offcanvas.
 
 ### `v-b-toggle` directive
 
-Using the [`v-b-toggle` directive](/docs/directives/toggle) is the preferred method for _opening_
+Using the [`v-b-toggle` directive](/docs/directives/BToggle) is the preferred method for _opening_
 the offcanvas, as it automatically handles applying the `aria-controls` and `aria-expanded`
 accessibility attributes on the trigger element.
 
@@ -184,7 +184,7 @@ In SSR environments, the BOffcanvas component must be rendered client-side due t
 
 ## Sidebar
 
-One common use of offcanvas is to create a table of contents sider that is visible on a large screen, but becomes an offcanvas component below a certain breakpoint. This is common for documentation sites like the one you're reading now which includes two such sidebars - a "table of contents" on the left and a "on this page" on the right.
+One common use of offcanvas is to create a table of contents sidebar that is visible on a large screen, but becomes an offcanvas component below a certain breakpoint. This is common for documentation sites like the one you're reading now which includes two such sidebars - a "table of contents" on the left and a "on this page" on the right.
 
 Below is a simple example showing how to set up such a site.
 
@@ -223,6 +223,6 @@ controlling the background and font color via the `body-class` and `header-class
 
 ## See also
 
-- [`v-b-toggle` directive](/docs/directives/toggle)
+- [`v-b-toggle` directive](/docs/directives/BToggle)
 - [`<BCollapse>` component](/docs/components/collapse)
 - [`<BCloseButton>` component](/docs/components/button#comp-ref-b-close-button)
