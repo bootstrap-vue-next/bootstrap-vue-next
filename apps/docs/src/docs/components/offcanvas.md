@@ -160,10 +160,12 @@ The majority of examples on this page use the `v-b-toggle` directive.
 The `v-model` reflects the current visibility state of the offcanvas. While it can be used to control
 the visibility state of the offcanvas, it is recommended to use the
 [`v-b-toggle` directive](#v-b-toggle-directive) to _show_ the offcanvas for accessibility reasons. If
-you do use the `v-model` to show the offcanvas, you should place the `aria-controls="id"` attribute
-(where `id` is the ID of the offcanvas) on the trigger element, and also set the `aria-expanded`
-attribute (also on the trigger element) to either the string `'true'` (if the offcanvas is open) or
-`'false'` (if the offcanvas is closed).
+you do use the `v-model` to show the offcanvas, you should:
+
+- Provide an `id` prop on the `<BOffcanvas>` component
+- Place the `aria-controls="id"` attribute (where `id` is the ID of the offcanvas) on the trigger element
+- Set the `aria-expanded` attribute (also on the trigger element) to either the string `'true'` (if the offcanvas is open) or `'false'` (if the offcanvas is closed)
+- Provide either a `title` prop or `aria-label` attribute on the `<BOffcanvas>` component for screen readers
 
 ## Events
 
