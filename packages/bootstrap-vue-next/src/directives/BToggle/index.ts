@@ -1,5 +1,5 @@
 import {RX_HASH, RX_HASH_ID, RX_SPACE_SPLIT} from '../../utils/constants'
-import {type Directive, type DirectiveBinding, toValue, type VNode} from 'vue'
+import {type Directive, type DirectiveBinding, type VNode} from 'vue'
 import {findProvides} from '../utils'
 import {type RegisterShowHideValue, showHideRegistryKey} from '../../utils/keys'
 
@@ -49,12 +49,13 @@ const handleUpdate = (
     const oldTargets = ((el as HTMLElement).dataset.bvtoggle || '').split(' ')
     if (oldTargets.length === 0) return
     for (const targetId of oldTargets) {
-      const showHide = showHideMap?.value.get(targetId)
+      const showHideHolder = showHideMap?.value.get(targetId)
+      const showHide = showHideHolder?.getActive()
       if (!showHide) {
         continue
       }
       if (!targets.includes(targetId)) {
-        toValue(showHide).unregisterTrigger('click', el, false)
+        showHide.unregisterTrigger('click', el, false)
       }
     }
   }
@@ -73,7 +74,8 @@ const handleUpdate = (
         return
       }
 
-      const showHide = showHideMap?.value.get(targetId)
+      const showHideHolder = showHideMap?.value.get(targetId)
+      const showHide = showHideHolder?.getActive()
       if (!showHide) {
         count++
         if (count < maxAttempts) {
@@ -94,8 +96,8 @@ const handleUpdate = (
       if (!(el as HTMLElement).dataset.bvtoggle) return
 
       // Register the trigger element
-      toValue(showHide).unregisterTrigger('click', el, false)
-      toValue(showHide).registerTrigger('click', el)
+      showHide.unregisterTrigger('click', el, false)
+      showHide.registerTrigger('click', el)
       break
     }
   })
@@ -115,11 +117,12 @@ const handleUnmount = (
     ?.values
 
   targets.forEach((targetId) => {
-    const showHide = showHideMap?.value.get(targetId)
+    const showHideHolder = showHideMap?.value.get(targetId)
+    const showHide = showHideHolder?.getActive()
     if (!showHide) {
       return
     }
-    toValue(showHide).unregisterTrigger('click', el, false)
+    showHide.unregisterTrigger('click', el, false)
   })
 
   el.removeAttribute('aria-controls')

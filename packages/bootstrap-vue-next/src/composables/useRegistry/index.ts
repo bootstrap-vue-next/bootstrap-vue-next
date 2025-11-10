@@ -12,6 +12,7 @@ import {
   breadcrumbRegistryKey,
   modalManagerKey,
   type RegisterShowHideFnInput,
+  type RegisterShowHideInstances,
   type RegisterShowHideMapValue,
   rtlRegistryKey,
   showHideRegistryKey,
@@ -97,7 +98,7 @@ export const useRegistry = (rtl: BAppProps['rtl'] = false) => {
 }
 
 export const _newShowHideRegistry = () => {
-  const values: Ref<Map<string, RegisterShowHideMapValue>> = ref(new Map())
+  const values: Ref<Map<string, RegisterShowHideInstances>> = ref(new Map())
 
   const register = ({
     id,
@@ -109,7 +110,7 @@ export const _newShowHideRegistry = () => {
     registerTrigger,
     unregisterTrigger,
   }: RegisterShowHideFnInput) => {
-    values.value.set(id, {
+    const instanceValue: RegisterShowHideMapValue = {
       id,
       component,
       value: readonly(value),
@@ -118,15 +119,82 @@ export const _newShowHideRegistry = () => {
       hide,
       registerTrigger,
       unregisterTrigger,
-    })
+    }
+
+    // Get or create the instances array for this ID
+    let instancesHolder = values.value.get(id)
+    if (!instancesHolder) {
+      instancesHolder = {
+        instances: [],
+        // Returns the last mounted instance (most recent)
+        getActive() {
+          return this.instances.length > 0 ? this.instances[this.instances.length - 1] : undefined
+        },
+      }
+      values.value.set(id, instancesHolder)
+    }
+
+    // Append this instance to the array
+    instancesHolder.instances.push(instanceValue)
+
+    const componentUid = component.uid
+
     return {
       unregister() {
-        values.value.delete(id)
+        const holder = values.value.get(id)
+        if (!holder) return
+
+        // Remove only this component's instance by UID
+        const index = holder.instances.findIndex(
+          (inst: RegisterShowHideMapValue) => inst.component.uid === componentUid
+        )
+        if (index !== -1) {
+          holder.instances.splice(index, 1)
+        }
+
+        // Clean up the map entry if no instances remain
+        if (holder.instances.length === 0) {
+          values.value.delete(id)
+        }
       },
       updateId(newId: string, oldId: string) {
-        const existingValue = values.value.get(oldId)
-        if (existingValue) {
-          values.value.set(newId, {...existingValue, id: newId})
+        const holder = values.value.get(oldId)
+        if (!holder) return
+
+        // Find this component's instance in the array
+        const instance = holder.instances.find(
+          (inst: RegisterShowHideMapValue) => inst.component.uid === componentUid
+        )
+        if (!instance) return
+
+        // Update the ID in the instance
+        instance.id = newId
+
+        // Get or create holder for new ID
+        let newHolder = values.value.get(newId)
+        if (!newHolder) {
+          newHolder = {
+            instances: [],
+            getActive() {
+              return this.instances.length > 0
+                ? this.instances[this.instances.length - 1]
+                : undefined
+            },
+          }
+          values.value.set(newId, newHolder)
+        }
+
+        // Move this instance to the new ID's array
+        const index = holder.instances.findIndex(
+          (inst: RegisterShowHideMapValue) => inst.component.uid === componentUid
+        )
+        if (index !== -1) {
+          holder.instances.splice(index, 1)
+          newHolder.instances.push(instance)
+        }
+
+        // Clean up old ID if no instances remain
+        if (holder.instances.length === 0) {
           values.value.delete(oldId)
         }
       },

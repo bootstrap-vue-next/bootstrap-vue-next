@@ -37,17 +37,24 @@ const showHideData = inject(showHideRegistryKey, undefined)
 
 const collapseExpanded = computed(() => {
   if (!props.target || !showHideData) return false
-  if (typeof props.target === 'string')
-    return toValue(toValue(showHideData.values.value.get(props.target))?.value) || false
-  return props.target.some((target) => toValue(showHideData.values.value.get(target)?.value))
+  if (typeof props.target === 'string') {
+    const activeInstance = showHideData.values.value.get(props.target)?.getActive()
+    return toValue(activeInstance?.value) || false
+  }
+  return props.target.some((target) => {
+    const activeInstance = showHideData.values.value.get(target)?.getActive()
+    return toValue(activeInstance?.value)
+  })
 })
 const toggleExpand = () => {
   if (!props.target || !showHideData) return
   if (typeof props.target === 'string') {
-    toValue(showHideData.values.value.get(props.target))?.toggle()
+    showHideData.values.value.get(props.target)?.getActive()?.toggle()
     return
   }
-  props.target.forEach((target) => toValue(showHideData.values.value.get(target))?.toggle())
+  props.target.forEach((target) => {
+    showHideData.values.value.get(target)?.getActive()?.toggle()
+  })
 }
 
 const onClick = (e: Readonly<MouseEvent>): void => {

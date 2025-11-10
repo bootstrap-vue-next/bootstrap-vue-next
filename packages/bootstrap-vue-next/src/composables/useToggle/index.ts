@@ -42,8 +42,8 @@ export const useToggle = (id: MaybeRefOrGetter<string | undefined> = undefined) 
 
     if (!registry) return null
     if (resolvedId) {
-      const value = registry.value.get(resolvedId)
-      return toValue(value) || null
+      const holder = toValue(registry.value.get(resolvedId))
+      return holder?.getActive() || null
     }
 
     if (!instance) {
@@ -51,7 +51,8 @@ export const useToggle = (id: MaybeRefOrGetter<string | undefined> = undefined) 
     }
 
     const component = findComponent(instance)
-    return toValue(registry.value.get(toValue(component?.exposed?.id))) || null
+    const holder = toValue(registry.value.get(toValue(component?.exposed?.id)))
+    return holder?.getActive() || null
   })
 
   return {
