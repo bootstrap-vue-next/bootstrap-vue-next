@@ -155,7 +155,7 @@
 </template>
 
 <script setup lang="ts" generic="Items">
-import {useToNumber} from '@vueuse/core'
+import {useDebounceFn, useToNumber} from '@vueuse/core'
 import {computed, onMounted, provide, type Ref, ref, watch} from 'vue'
 import {formatItem} from '../../utils/formatItem'
 import BTableLite from './BTableLite.vue'
@@ -779,6 +779,9 @@ const callItemsProvider = async () => {
   }
 }
 
+// Debounced version of callItemsProvider for filter changes to prevent rapid successive calls
+const debouncedCallItemsProvider = useDebounceFn(callItemsProvider, 300)
+
 const providerPropsWatch = async (prop: string, val: unknown, oldVal: unknown) => {
   if (deepEqual(val, oldVal)) return
 
@@ -796,7 +799,12 @@ const providerPropsWatch = async (prop: string, val: unknown, oldVal: unknown) =
   if (noProvideWhenPaging || noProvideWhenFiltering || noProvideWhenSorting) return
 
   if (usesProvider.value === true) {
-    await callItemsProvider()
+    // Use debounced version for filter changes to avoid rapid successive calls
+    if (prop === 'filter') {
+      await debouncedCallItemsProvider()
+    } else {
+      await callItemsProvider()
+    }
   }
 
   if (!(prop === 'currentPage' || prop === 'perPage')) {

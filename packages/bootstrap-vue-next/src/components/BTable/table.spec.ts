@@ -1,5 +1,5 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
-import {afterEach, describe, expect, it} from 'vitest'
+import {afterEach, describe, expect, it, vi} from 'vitest'
 import BTable from './BTable.vue'
 import type {BTableSortBy, TableField, TableItem} from '../../types'
 import {nextTick} from 'vue'
@@ -1215,5 +1215,99 @@ describe('initial sort direction', () => {
       .findAll('tr')
       .map((row) => row.find('td').text())
     expect(text).toStrictEqual(['Havij', 'Cyndi', 'Robert'])
+  })
+})
+
+describe('provider debouncing', () => {
+  it('debounces provider calls when filter changes rapidly', async () => {
+    const providerCallCounts: number[] = []
+    let callCount = 0
+
+    const provider = vi.fn(async () => {
+      callCount++
+      providerCallCounts.push(callCount)
+      return simpleItems
+    })
+
+    const wrapper = mount(BTable, {
+      props: {
+        provider,
+        fields: simpleFields,
+      },
+    })
+
+    // Wait for initial mount call
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    const initialCalls = callCount
+
+    // Rapidly change filter multiple times
+    await wrapper.setProps({filter: 'a'})
+    await wrapper.setProps({filter: 'ab'})
+    await wrapper.setProps({filter: 'abc'})
+
+    // Wait for debounce delay (300ms) + buffer
+    await new Promise((resolve) => setTimeout(resolve, 400))
+
+    // After debounce, only one additional call should have been made for all the rapid filter changes
+    const finalCalls = callCount
+    expect(finalCalls - initialCalls).toBeLessThanOrEqual(2) // At most one debounced call plus potentially one immediate
+    expect(finalCalls).toBeGreaterThan(initialCalls) // But at least one call was made
+  })
+
+  it('does not debounce provider calls when pagination changes', async () => {
+    let callCount = 0
+
+    const provider = vi.fn(async () => {
+      callCount++
+      return simpleItems
+    })
+
+    const wrapper = mount(BTable, {
+      props: {
+        provider,
+        fields: simpleFields,
+        perPage: 2,
+      },
+    })
+
+    // Wait for initial mount call
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    const initialCalls = callCount
+
+    // Change page - this should NOT be debounced
+    await wrapper.setProps({currentPage: 2})
+    await nextTick()
+
+    // Should be called immediately without debounce
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    expect(callCount).toBe(initialCalls + 1)
+  })
+
+  it('does not debounce provider calls when sortBy changes', async () => {
+    let callCount = 0
+
+    const provider = vi.fn(async () => {
+      callCount++
+      return simpleItems
+    })
+
+    const wrapper = mount(BTable, {
+      props: {
+        provider,
+        fields: simpleFields,
+      },
+    })
+
+    // Wait for initial mount call
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    const initialCalls = callCount
+
+    // Change sort - this should NOT be debounced
+    await wrapper.setProps({sortBy: [{key: 'first_name', order: 'asc'}] as BTableSortBy[]})
+    await nextTick()
+
+    // Should be called immediately without debounce
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    expect(callCount).toBe(initialCalls + 1)
   })
 })
