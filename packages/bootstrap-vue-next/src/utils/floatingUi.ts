@@ -45,18 +45,26 @@ export const resolveContent = (
   const missingBindingValue =
     typeof values === 'undefined' ||
     (typeof values === 'object' && !values.title && !values.content && !values.body)
-  const title = el.getAttribute('title') || el.getAttribute('data-original-title')
-  if (missingBindingValue) {
-    if (title) {
-      el.removeAttribute('title')
-      el.setAttribute('data-original-title', title)
 
-      return {
-        body: title,
+  // SSR guard: skip DOM attribute access on server
+  if (typeof document !== 'undefined') {
+    const title = el.getAttribute('title') || el.getAttribute('data-original-title')
+    if (missingBindingValue) {
+      if (title) {
+        el.removeAttribute('title')
+        el.setAttribute('data-original-title', title)
+
+        return {
+          body: title,
+        }
       }
+      return {}
     }
-    return {}
+  } else {
+    // SSR: if no binding value provided, return empty
+    if (missingBindingValue) return {}
   }
+
   if (typeof values === 'string') {
     return {
       body: values,
@@ -123,6 +131,9 @@ export const bind = (
   binding: Readonly<DirectiveBinding>,
   props: BPopoverProps
 ) => {
+  // SSR guard: skip DOM manipulation on server
+  if (typeof document === 'undefined') return
+
   const div = document.createElement('span')
   if (binding.modifiers.body) document.body.appendChild(div)
   else if (binding.modifiers.child) el.appendChild(div)
@@ -137,6 +148,12 @@ export const unbind = (el: ElementWithPopper) => {
 
   // Unmount Vue component immediately
   render(null, div)
+
+  // SSR guard: skip DOM cleanup on server
+  if (typeof document === 'undefined') {
+    delete el.$__element
+    return
+  }
 
   // Use microtask instead of setTimeout(0) for more predictable cleanup
   // and better performance

@@ -8,6 +8,9 @@ export interface ElementWithScrollspy extends HTMLElement {
 }
 
 const bind = (el: ElementWithScrollspy, binding: Readonly<DirectiveBinding>) => {
+  // SSR guard: skip on server
+  if (typeof document === 'undefined') return
+
   const uid = getDirectiveUid(binding)
 
   // Initialize UID namespace for this directive
