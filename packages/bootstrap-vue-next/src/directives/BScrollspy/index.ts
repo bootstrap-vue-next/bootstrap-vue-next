@@ -1,20 +1,23 @@
 import {type Directive, type DirectiveBinding} from 'vue'
 import {useScrollspy} from '../../composables/useScrollspy'
 import {omit} from '../../utils/object'
+import {getDirectiveUid} from '../utils'
 
 export interface ElementWithScrollspy extends HTMLElement {
   $__scrollspy?: Record<number, ReturnType<typeof useScrollspy>>
 }
 
 const bind = (el: ElementWithScrollspy, binding: Readonly<DirectiveBinding>) => {
-  const {uid} = binding.instance!.$
+  const uid = getDirectiveUid(binding)
 
   // Initialize UID namespace for this directive
-  el.$__scrollspy = el.$__scrollspy ?? Object.create(null)
+  const elWithScrollspy = el as ElementWithScrollspy & Record<string, unknown>
+  elWithScrollspy.$__scrollspy = elWithScrollspy.$__scrollspy ?? Object.create(null)
 
   // Clean up existing instance if present
-  if (el.$__scrollspy![uid]) {
-    el.$__scrollspy![uid].cleanup()
+  const existingInstance = elWithScrollspy.$__scrollspy![uid]
+  if (existingInstance) {
+    existingInstance.cleanup()
   }
 
   const {arg, value} = binding
@@ -28,7 +31,7 @@ const bind = (el: ElementWithScrollspy, binding: Readonly<DirectiveBinding>) => 
         : null
 
   // Store scrollspy instance for this component instance
-  el.$__scrollspy![uid] = useScrollspy(
+  elWithScrollspy.$__scrollspy![uid] = useScrollspy(
     content,
     el,
     isObject ? omit(value, ['content', 'element']) : {}
@@ -39,12 +42,13 @@ export const vBScrollspy: Directive<ElementWithScrollspy> = {
   mounted: bind,
   updated: bind,
   beforeUnmount(el, binding) {
-    const {uid} = binding.instance!.$
-    const instance = el.$__scrollspy?.[uid]
+    const uid = getDirectiveUid(binding)
+    const elWithScrollspy = el as ElementWithScrollspy & Record<string, unknown>
+    const instance = elWithScrollspy.$__scrollspy?.[uid]
 
     if (!instance) return
 
     instance.cleanup()
-    delete el.$__scrollspy![uid]
+    delete elWithScrollspy.$__scrollspy![uid]
   },
 }

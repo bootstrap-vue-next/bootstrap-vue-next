@@ -100,6 +100,7 @@ export const resolveDirectiveProps = (
 })
 
 export interface ElementWithPopper extends HTMLElement {
+  [key: string]: unknown
   $__element?: HTMLElement
   $__tooltip?: Record<
     number,
