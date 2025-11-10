@@ -19,6 +19,10 @@ export const vBPopover: Directive<ElementWithPopper> = {
     const text = resolveContent(binding.value, el)
 
     if (!text.body && !text.title) return
+
+    // Clear any destroying flag from previous instance
+    delete el.$__destroying
+
     el.$__binding = JSON.stringify([binding.modifiers, binding.value])
     bind(el, binding, {
       ...(defaults['BPopover'] || undefined),
@@ -30,20 +34,39 @@ export const vBPopover: Directive<ElementWithPopper> = {
     const defaults = (findProvides(binding, vnode) as Record<symbol, Ref>)[defaultsKey]?.value
 
     const isActive = resolveActiveStatus(binding.value)
-    if (!isActive) return
+
+    // If inactive, clean up existing popover
+    if (!isActive) {
+      if (el.$__element) {
+        unbind(el)
+      }
+      return
+    }
 
     const text = resolveContent(binding.value, el)
 
-    if (!text.body && !text.title) return
+    if (!text.body && !text.title) {
+      // Clean up if no content
+      if (el.$__element) {
+        unbind(el)
+      }
+      return
+    }
+
     delete binding.oldValue
-    if (el.$__binding === JSON.stringify([binding.modifiers, binding.value])) return
+    const newBinding = JSON.stringify([binding.modifiers, binding.value])
+    if (el.$__binding === newBinding) return
+
+    // Prevent race conditions during update
+    if (el.$__destroying) return
+
     unbind(el)
     bind(el, binding, {
       ...(defaults['BPopover'] || undefined),
       ...resolveDirectiveProps(binding, el),
       ...text,
     })
-    el.$__binding = JSON.stringify([binding.modifiers, binding.value])
+    el.$__binding = newBinding
   },
   beforeUnmount(el) {
     unbind(el)

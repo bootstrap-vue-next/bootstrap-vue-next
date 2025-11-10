@@ -102,6 +102,7 @@ export const resolveDirectiveProps = (
 export interface ElementWithPopper extends HTMLElement {
   $__element?: HTMLElement
   $__binding?: string
+  $__destroying?: boolean
 }
 
 export const bind = (
@@ -119,11 +120,25 @@ export const bind = (
 
 export const unbind = (el: ElementWithPopper) => {
   const div = el.$__element
-  if (div) render(null, div)
-  setTimeout(() => {
-    div?.remove()
-  }, 0)
-  delete el.$__element
+  if (!div) return
+
+  // Mark as being destroyed to prevent race conditions
+  el.$__destroying = true
+
+  // Unmount Vue component immediately
+  render(null, div)
+
+  // Use microtask instead of setTimeout(0) for more predictable cleanup
+  // and better performance
+  queueMicrotask(() => {
+    // Only remove if still marked for destruction (not recreated)
+    if (el.$__destroying) {
+      div.remove()
+      delete el.$__element
+      delete el.$__binding
+      delete el.$__destroying
+    }
+  })
 }
 
 export const isBoundary = (input: unknown): input is Boundary =>
