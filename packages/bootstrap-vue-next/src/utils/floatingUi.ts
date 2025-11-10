@@ -101,8 +101,20 @@ export const resolveDirectiveProps = (
 
 export interface ElementWithPopper extends HTMLElement {
   $__element?: HTMLElement
-  $__binding?: string
-  $__destroying?: boolean
+  $__tooltip?: Record<
+    number,
+    {
+      binding: string
+      destroying: boolean
+    }
+  >
+  $__popover?: Record<
+    number,
+    {
+      binding: string
+      destroying: boolean
+    }
+  >
 }
 
 export const bind = (
@@ -122,22 +134,16 @@ export const unbind = (el: ElementWithPopper) => {
   const div = el.$__element
   if (!div) return
 
-  // Mark as being destroyed to prevent race conditions
-  el.$__destroying = true
-
   // Unmount Vue component immediately
   render(null, div)
 
   // Use microtask instead of setTimeout(0) for more predictable cleanup
   // and better performance
   queueMicrotask(() => {
-    // Only remove if still marked for destruction (not recreated)
-    if (el.$__destroying) {
-      div.remove()
-      delete el.$__element
-      delete el.$__binding
-      delete el.$__destroying
-    }
+    // Remove the element in next microtask
+    // The directive's beforeUnmount will have already cleaned up UID-specific state
+    div.remove()
+    delete el.$__element
   })
 }
 

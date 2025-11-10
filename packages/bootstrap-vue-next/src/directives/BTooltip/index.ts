@@ -12,6 +12,7 @@ import {findProvides} from '../utils'
 
 export const vBTooltip: Directive<ElementWithPopper> = {
   mounted(el, binding, vnode) {
+    const {uid} = binding.instance!.$
     const defaults = (findProvides(binding, vnode) as Record<symbol, Ref>)[defaultsKey]?.value
     const isActive = resolveActiveStatus(binding.value)
     if (!isActive) return
@@ -20,10 +21,15 @@ export const vBTooltip: Directive<ElementWithPopper> = {
 
     if (!text.body && !text.title) return
 
-    // Clear any destroying flag from previous instance
-    delete el.$__destroying
+    // Initialize UID namespace for this directive
+    el.$__tooltip = el.$__tooltip ?? Object.create(null)
 
-    el.$__binding = JSON.stringify([binding.modifiers, binding.value])
+    // Store per-instance state with JSON cache for change detection
+    el.$__tooltip![uid] = {
+      binding: JSON.stringify([binding.modifiers, binding.value]),
+      destroying: false,
+    }
+
     bind(el, binding, {
       noninteractive: true,
       ...(defaults['BTooltip'] || undefined),
@@ -33,6 +39,12 @@ export const vBTooltip: Directive<ElementWithPopper> = {
     })
   },
   updated(el, binding, vnode) {
+    const {uid} = binding.instance!.$
+    const instance = el.$__tooltip?.[uid]
+
+    // Instance was never mounted or already cleaned up
+    if (!instance) return
+
     const defaults = (findProvides(binding, vnode) as Record<symbol, Ref>)[defaultsKey]?.value
 
     const isActive = resolveActiveStatus(binding.value)
@@ -56,11 +68,12 @@ export const vBTooltip: Directive<ElementWithPopper> = {
     }
 
     delete binding.oldValue
+    // Check if binding changed for THIS instance
     const newBinding = JSON.stringify([binding.modifiers, binding.value])
-    if (el.$__binding === newBinding) return
+    if (instance.binding === newBinding) return
 
     // Prevent race conditions during update
-    if (el.$__destroying) return
+    if (instance.destroying) return
 
     unbind(el)
     bind(el, binding, {
@@ -70,9 +83,18 @@ export const vBTooltip: Directive<ElementWithPopper> = {
       title: text.title ?? text.body ?? '',
       tooltip: isActive,
     })
-    el.$__binding = newBinding
+
+    // Update THIS instance's cache
+    instance.binding = newBinding
   },
-  beforeUnmount(el) {
+  beforeUnmount(el, binding) {
+    const {uid} = binding.instance!.$
+    const instance = el.$__tooltip?.[uid]
+
+    if (!instance) return
+
+    instance.destroying = true
     unbind(el)
+    delete el.$__tooltip![uid]
   },
 }

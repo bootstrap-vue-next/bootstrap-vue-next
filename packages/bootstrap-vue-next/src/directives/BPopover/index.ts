@@ -12,6 +12,7 @@ import {findProvides} from '../utils'
 
 export const vBPopover: Directive<ElementWithPopper> = {
   mounted(el, binding, vnode) {
+    const {uid} = binding.instance!.$
     const defaults = (findProvides(binding, vnode) as Record<symbol, Ref>)[defaultsKey]?.value
     const isActive = resolveActiveStatus(binding.value)
     if (!isActive) return
@@ -20,10 +21,15 @@ export const vBPopover: Directive<ElementWithPopper> = {
 
     if (!text.body && !text.title) return
 
-    // Clear any destroying flag from previous instance
-    delete el.$__destroying
+    // Initialize UID namespace for this directive
+    el.$__popover = el.$__popover ?? Object.create(null)
 
-    el.$__binding = JSON.stringify([binding.modifiers, binding.value])
+    // Store per-instance state with JSON cache for change detection
+    el.$__popover![uid] = {
+      binding: JSON.stringify([binding.modifiers, binding.value]),
+      destroying: false,
+    }
+
     bind(el, binding, {
       ...(defaults['BPopover'] || undefined),
       ...resolveDirectiveProps(binding, el),
@@ -31,6 +37,12 @@ export const vBPopover: Directive<ElementWithPopper> = {
     })
   },
   updated(el, binding, vnode) {
+    const {uid} = binding.instance!.$
+    const instance = el.$__popover?.[uid]
+
+    // Instance was never mounted or already cleaned up
+    if (!instance) return
+
     const defaults = (findProvides(binding, vnode) as Record<symbol, Ref>)[defaultsKey]?.value
 
     const isActive = resolveActiveStatus(binding.value)
@@ -54,11 +66,12 @@ export const vBPopover: Directive<ElementWithPopper> = {
     }
 
     delete binding.oldValue
+    // Check if binding changed for THIS instance
     const newBinding = JSON.stringify([binding.modifiers, binding.value])
-    if (el.$__binding === newBinding) return
+    if (instance.binding === newBinding) return
 
     // Prevent race conditions during update
-    if (el.$__destroying) return
+    if (instance.destroying) return
 
     unbind(el)
     bind(el, binding, {
@@ -66,9 +79,18 @@ export const vBPopover: Directive<ElementWithPopper> = {
       ...resolveDirectiveProps(binding, el),
       ...text,
     })
-    el.$__binding = newBinding
+
+    // Update THIS instance's cache
+    instance.binding = newBinding
   },
-  beforeUnmount(el) {
+  beforeUnmount(el, binding) {
+    const {uid} = binding.instance!.$
+    const instance = el.$__popover?.[uid]
+
+    if (!instance) return
+
+    instance.destroying = true
     unbind(el)
+    delete el.$__popover![uid]
   },
 }
