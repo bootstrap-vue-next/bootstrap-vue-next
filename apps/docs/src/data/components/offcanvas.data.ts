@@ -162,8 +162,13 @@ export default {
           },
         },
         'backdrop': {
-          args: undefined,
           description: 'Emitted when the backdrop is clicked',
+          args: {
+            value: {
+              description: 'BvTriggerableEvent object',
+              type: 'BvTriggerableEvent',
+            },
+          },
         },
       } satisfies EmitRecord<keyof BOffcanvasEmits | 'update:model-value'>,
       slots: {
