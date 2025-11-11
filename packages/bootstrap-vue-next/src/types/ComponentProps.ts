@@ -343,7 +343,6 @@ export interface BFormFileProps {
 export interface BFormInputProps extends CommonInputProps {
   max?: Numberish
   min?: Numberish
-  // noWheel: {type: Boolean, default: false}, TODO: not implemented yet
   step?: Numberish
   type?: InputType
 }

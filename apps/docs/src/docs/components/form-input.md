@@ -169,7 +169,13 @@ The `plaintext` option is not supported by input types `color` or `range`.
 
 ## Disabling mousewheel events on numeric-like inputs
 
-<NotYetImplemented/>
+By default, when a numeric input has focus, the browser will increment or decrement the input's value when the user scrolls the mousewheel. To disable this behavior, you can use Vue's event modifier `.prevent` on the `wheel` event:
+
+```vue
+<BFormInput type="number" @wheel.prevent />
+```
+
+This approach uses native Vue functionality and doesn't require additional props.
 
 ## Datalist support
 
