@@ -232,20 +232,18 @@ export function createFloatingDirective(
 
     updated(el, binding, vnode) {
       const uid = getDirectiveUid(binding)
-      const instance = getDirectiveInstance(el, propertyName, uid)
-
-      // Instance was never mounted or already cleaned up
-      if (!instance) return
+      let instance = getDirectiveInstance(el, propertyName, uid)
 
       const defaultsMap = (findProvides(binding, vnode) as Record<symbol, Ref>)[defaultsKey]
         ?.value as Record<string, unknown> | undefined
 
       const isActive = resolveActiveStatus(binding.value)
 
-      // If inactive, clean up existing instance
+      // If inactive, clean up existing instance if present
       if (!isActive) {
-        if (el.$__element) {
+        if (instance && el.$__element) {
           unbind(el)
+          cleanupDirectiveInstance(el, propertyName, uid)
         }
         return
       }
@@ -254,9 +252,27 @@ export function createFloatingDirective(
 
       if (!text.body && !text.title) {
         // Clean up if no content
-        if (el.$__element) {
+        if (instance && el.$__element) {
           unbind(el)
+          cleanupDirectiveInstance(el, propertyName, uid)
         }
+        return
+      }
+
+      // If instance doesn't exist, this is a transition from inactive/no-content to active
+      // Initialize the instance now (similar to mounted)
+      if (!instance) {
+        instance = initDirectiveInstance(el, propertyName, uid, binding)
+
+        const props = buildProps
+          ? buildProps(text, defaultsMap?.[componentDefaultsKey], binding, el)
+          : {
+              ...(defaultsMap?.[componentDefaultsKey] || undefined),
+              ...resolveDirectiveProps(binding, el),
+              ...text,
+            }
+
+        bind(el, binding, props)
         return
       }
 
