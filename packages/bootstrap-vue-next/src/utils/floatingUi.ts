@@ -161,7 +161,11 @@ export const unbind = (el: ElementWithPopper) => {
     // Remove the element in next microtask
     // The directive's beforeUnmount will have already cleaned up UID-specific state
     div.remove()
-    delete el.$__element
+    // Only delete the reference if it still points to the div we just unmounted
+    // This prevents deleting a fresh reference if bind() was called again immediately
+    if (el.$__element === div) {
+      delete el.$__element
+    }
   })
 }
 
