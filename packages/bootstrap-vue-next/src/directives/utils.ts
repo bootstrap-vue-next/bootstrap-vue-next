@@ -31,9 +31,13 @@ export interface DirectiveInstanceState {
 
 /**
  * Gets the component instance UID from a directive binding
+ * @throws Error if binding.instance is not available
  */
 export function getDirectiveUid(binding: DirectiveBinding): number {
-  return binding.instance!.$.uid
+  if (!binding.instance) {
+    throw new Error('[Bootstrap-Vue-Next] Directive binding.instance is not available')
+  }
+  return binding.instance.$.uid
 }
 
 /**
@@ -276,7 +280,6 @@ export function createFloatingDirective(
         return
       }
 
-      delete binding.oldValue
       // Check if binding changed for THIS instance
       if (!hasBindingChanged(instance, binding)) return
 
