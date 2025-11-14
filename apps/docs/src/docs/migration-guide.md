@@ -453,7 +453,7 @@ Use `label-visually-hidden` instead of `label-sronly` per
 Access to the native `input` element is implemented differently due to changes in how Vue 3
 handles references. See the [BFormInput documentation](/docs/components/form-input#exposed-input-element) for more details.
 
-<NotYetImplemented>Disabling mousewheel events.</NotYetImplemented>
+Disabling mousewheel events on numeric inputs can be achieved using Vue's native event modifier: `@wheel.prevent`. See the [BFormInput documentation](/docs/components/form-input#disabling-mousewheel-events-on-numeric-like-inputs) for usage examples.
 
 `trim`, `lazy`, or `number` properties have been deprecated. We support the native modifiers
 [`trim`, `lazy`, and `number`](https://vuejs.org/guide/essentials/forms.html#modifiers).
