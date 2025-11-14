@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.40.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.7...bootstrapvuenext-v0.40.8) (2025-11-14)
+
+
+### Features
+
+* add name and form props to BFormRating for form submission ([#2895](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2895)) ([f14f049](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f14f0495a03678a4f6c0d0ee87d3eabfc6def136))
+
+
+### Bug Fixes
+
+* **directives:** Robustness fixes for directives ([#2906](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2906)) ([7b39759](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7b397599f76f50d10773cd8fb63fb6d2e72dc4c7))
+* **typings:** Fix paths to `*.d.mts` files ([#2907](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2907)) ([4b0d55a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4b0d55a957f029131c89f740adc65ca7d9e79d58))
+
 ## [0.40.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.6...bootstrapvuenext-v0.40.7) (2025-10-22)
 
 
