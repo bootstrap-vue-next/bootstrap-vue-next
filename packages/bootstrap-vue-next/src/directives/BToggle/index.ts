@@ -62,19 +62,38 @@ const handleUpdate = (
 
   targets.forEach(async (targetId) => {
     let count = 0
-    // Keep looking until showHide is found, giving up after 400ms or directive is unmounted
-    while (count < 5 && (el as HTMLElement).dataset.bvtoggle) {
+    const maxAttempts = 5
+    const delayMs = 100
+
+    // Keep looking until showHide is found, giving up after 500ms or directive is unmounted
+    while (count < maxAttempts) {
+      // Check if element is still mounted before each iteration
+      if (!(el as HTMLElement).dataset.bvtoggle) {
+        // Element was unmounted, stop trying
+        return
+      }
+
       const showHide = showHideMap?.value.get(targetId)
       if (!showHide) {
         count++
-        await new Promise((resolve) => setTimeout(resolve, 100))
-        if (count < 4) continue
-        // eslint-disable-next-line no-console
-        console.warn(`[v-b-toggle] Target with ID ${targetId} not found`)
+        if (count < maxAttempts) {
+          await new Promise((resolve) => setTimeout(resolve, delayMs))
+          continue
+        }
+        // Only warn if element is still mounted after all attempts
+        if ((el as HTMLElement).dataset.bvtoggle) {
+          // eslint-disable-next-line no-console
+          console.warn(
+            `[v-b-toggle] Target with ID ${targetId} not found after ${maxAttempts * delayMs}ms`
+          )
+        }
         break
       }
-      // Register the trigger element
 
+      // Final check before registration
+      if (!(el as HTMLElement).dataset.bvtoggle) return
+
+      // Register the trigger element
       toValue(showHide).unregisterTrigger('click', el, false)
       toValue(showHide).registerTrigger('click', el)
       break
