@@ -200,5 +200,38 @@ describe('form-radio-group', () => {
       expect(radios[1].text()).toBe('foo')
       expect(radios[2].text()).toBe('foo')
     })
+
+    it('clicking label toggles selection when using custom valueField Id and buttons', async () => {
+      const options = [
+        { Id: 1, Label: 'Radio 1' },
+        { Id: 2, Label: 'Radio 2' },
+        { Id: 3, Label: 'Radio 3' },
+      ]
+
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          options,
+          // use capitalized keys to reproduce the reported issue
+          valueField: 'Id',
+          textField: 'Label',
+          buttons: true,
+          modelValue: null,
+          name: 'test-radios',
+        },
+      })
+
+  // Ensure label `for` matches input `id` (this is the key fix)
+  const labels = wrapper.findAll('label')
+  const inputs = wrapper.findAll('input')
+  expect(labels.length).toBeGreaterThan(0)
+  expect(inputs.length).toBeGreaterThan(0)
+  const labelFor = labels[0].attributes('for')
+  const inputId = inputs[0].attributes('id')
+  expect(labelFor).toBe(inputId)
+
+  // Clicking the input should toggle selection (input becomes checked)
+  await inputs[0].trigger('click')
+  expect((inputs[0].element as HTMLInputElement).checked).toBe(true)
+    })
   })
 })
