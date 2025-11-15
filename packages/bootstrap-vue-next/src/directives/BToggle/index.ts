@@ -2,6 +2,7 @@ import {RX_HASH, RX_HASH_ID, RX_SPACE_SPLIT} from '../../utils/constants'
 import {type Directive, type DirectiveBinding, type VNode} from 'vue'
 import {findProvides} from '../utils'
 import {type RegisterShowHideValue, showHideRegistryKey} from '../../utils/keys'
+import {getActiveShowHide} from '../../utils/registryAccess'
 
 const getTargets = (
   binding: DirectiveBinding<string | readonly string[] | undefined>,
@@ -49,8 +50,7 @@ const handleUpdate = (
     const oldTargets = ((el as HTMLElement).dataset.bvtoggle || '').split(' ')
     if (oldTargets.length === 0) return
     for (const targetId of oldTargets) {
-      const showHideHolder = showHideMap?.value.get(targetId)
-      const showHide = showHideHolder?.getActive()
+      const showHide = getActiveShowHide(showHideMap, targetId)
       if (!showHide) {
         continue
       }
@@ -74,8 +74,7 @@ const handleUpdate = (
         return
       }
 
-      const showHideHolder = showHideMap?.value.get(targetId)
-      const showHide = showHideHolder?.getActive()
+      const showHide = getActiveShowHide(showHideMap, targetId)
       if (!showHide) {
         count++
         if (count < maxAttempts) {
@@ -117,8 +116,7 @@ const handleUnmount = (
     ?.values
 
   targets.forEach((targetId) => {
-    const showHideHolder = showHideMap?.value.get(targetId)
-    const showHide = showHideHolder?.getActive()
+    const showHide = getActiveShowHide(showHideMap, targetId)
     if (!showHide) {
       return
     }

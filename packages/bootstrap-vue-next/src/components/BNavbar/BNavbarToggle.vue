@@ -15,9 +15,10 @@
 
 <script setup lang="ts">
 import type {BNavbarToggleProps} from '../../types/ComponentProps'
-import {computed, inject, toValue} from 'vue'
+import {computed, inject} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {showHideRegistryKey} from '../../utils/keys'
+import {getActiveShowHide, getShowHideValue} from '../../utils/registryAccess'
 import type {BNavbarToggleEmits, BNavbarToggleSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BNavbarToggleProps>(), {
@@ -38,22 +39,18 @@ const showHideData = inject(showHideRegistryKey, undefined)
 const collapseExpanded = computed(() => {
   if (!props.target || !showHideData) return false
   if (typeof props.target === 'string') {
-    const activeInstance = showHideData.values.value.get(props.target)?.getActive()
-    return toValue(activeInstance?.value) || false
+    return getShowHideValue(showHideData.values, props.target)
   }
-  return props.target.some((target) => {
-    const activeInstance = showHideData.values.value.get(target)?.getActive()
-    return toValue(activeInstance?.value)
-  })
+  return props.target.some((target) => getShowHideValue(showHideData.values, target))
 })
 const toggleExpand = () => {
   if (!props.target || !showHideData) return
   if (typeof props.target === 'string') {
-    showHideData.values.value.get(props.target)?.getActive()?.toggle()
+    getActiveShowHide(showHideData.values, props.target)?.toggle()
     return
   }
   props.target.forEach((target) => {
-    showHideData.values.value.get(target)?.getActive()?.toggle()
+    getActiveShowHide(showHideData.values, target)?.toggle()
   })
 }
 
