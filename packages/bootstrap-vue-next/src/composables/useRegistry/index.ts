@@ -97,6 +97,10 @@ export const useRegistry = (rtl: BAppProps['rtl'] = false) => {
   }
 }
 
+// Helper function to create getActive method for instance holders
+const createGetActive = (instances: RegisterShowHideMapValue[]) => () =>
+  instances.length > 0 ? instances[instances.length - 1] : undefined
+
 export const _newShowHideRegistry = () => {
   const values: Ref<Map<string, RegisterShowHideInstances>> = ref(new Map())
 
@@ -124,12 +128,11 @@ export const _newShowHideRegistry = () => {
     // Get or create the instances array for this ID
     let instancesHolder = values.value.get(id)
     if (!instancesHolder) {
+      const instances: RegisterShowHideMapValue[] = []
       instancesHolder = {
-        instances: [],
+        instances,
         // Returns the last mounted instance (most recent)
-        getActive() {
-          return this.instances.length > 0 ? this.instances[this.instances.length - 1] : undefined
-        },
+        getActive: createGetActive(instances),
       }
       values.value.set(id, instancesHolder)
     }
@@ -173,13 +176,10 @@ export const _newShowHideRegistry = () => {
         // Get or create holder for new ID
         let newHolder = values.value.get(newId)
         if (!newHolder) {
+          const instances: RegisterShowHideMapValue[] = []
           newHolder = {
-            instances: [],
-            getActive() {
-              return this.instances.length > 0
-                ? this.instances[this.instances.length - 1]
-                : undefined
-            },
+            instances,
+            getActive: createGetActive(instances),
           }
           values.value.set(newId, newHolder)
         }
