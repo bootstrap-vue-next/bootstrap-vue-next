@@ -44,8 +44,8 @@ const handleUpdate = (
   if (targets.length === 0) return
 
   const provides = findProvides(binding, vnode)
-  const showHideMap = (provides as Record<symbol, RegisterShowHideValue>)[showHideRegistryKey]
-    ?.values
+  const showHideMap =
+    (provides as Record<symbol, RegisterShowHideValue>)[showHideRegistryKey]?.values ?? null
   if ((el as HTMLElement).dataset.bvtoggle) {
     const oldTargets = ((el as HTMLElement).dataset.bvtoggle || '').split(' ')
     if (oldTargets.length === 0) return
@@ -112,8 +112,8 @@ const handleUnmount = (
   const targets = getTargets(binding, el)
   if (targets.length === 0) return
   const provides = findProvides(binding, vnode)
-  const showHideMap = (provides as Record<symbol, RegisterShowHideValue>)[showHideRegistryKey]
-    ?.values
+  const showHideMap =
+    (provides as Record<symbol, RegisterShowHideValue>)[showHideRegistryKey]?.values ?? null
 
   targets.forEach((targetId) => {
     const showHide = getActiveShowHide(showHideMap, targetId)
