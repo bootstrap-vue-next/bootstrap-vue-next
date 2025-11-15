@@ -305,6 +305,27 @@ describe('useRegistry - _newShowHideRegistry', () => {
       // Should not throw
       expect(() => updateId('new-id', 'old-id')).not.toThrow()
     })
+
+    it('unregister works correctly after updateId', () => {
+      const registry = _newShowHideRegistry()
+      const input = createMockInput(1, 'old-id')
+
+      const {updateId, unregister} = registry.register(input)
+
+      // Change the ID
+      updateId('new-id', 'old-id')
+
+      // Verify instance is at new ID
+      expect(registry.values.value.has('new-id')).toBe(true)
+      expect(registry.values.value.has('old-id')).toBe(false)
+
+      // Unregister should remove from new ID, not old ID
+      unregister()
+
+      // New ID should be cleaned up
+      expect(registry.values.value.has('new-id')).toBe(false)
+      expect(registry.values.value.has('old-id')).toBe(false)
+    })
   })
 
   describe('race condition scenarios', () => {

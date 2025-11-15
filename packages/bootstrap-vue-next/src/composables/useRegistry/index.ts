@@ -114,6 +114,7 @@ export const _newShowHideRegistry = () => {
     registerTrigger,
     unregisterTrigger,
   }: RegisterShowHideFnInput) => {
+    let currentId = id
     const instanceValue: RegisterShowHideMapValue = {
       id,
       component,
@@ -126,7 +127,7 @@ export const _newShowHideRegistry = () => {
     }
 
     // Get or create the instances array for this ID
-    let instancesHolder = values.value.get(id)
+    let instancesHolder = values.value.get(currentId)
     if (!instancesHolder) {
       const instances: RegisterShowHideMapValue[] = []
       instancesHolder = {
@@ -134,7 +135,7 @@ export const _newShowHideRegistry = () => {
         // Returns the last mounted instance (most recent)
         getActive: createGetActive(instances),
       }
-      values.value.set(id, instancesHolder)
+      values.value.set(currentId, instancesHolder)
     }
 
     // Append this instance to the array
@@ -144,7 +145,7 @@ export const _newShowHideRegistry = () => {
 
     return {
       unregister() {
-        const holder = values.value.get(id)
+        const holder = values.value.get(currentId)
         if (!holder) return
 
         // Remove only this component's instance by UID
@@ -157,7 +158,7 @@ export const _newShowHideRegistry = () => {
 
         // Clean up the map entry if no instances remain
         if (holder.instances.length === 0) {
-          values.value.delete(id)
+          values.value.delete(currentId)
         }
       },
       updateId(newId: string, oldId: string) {
@@ -197,6 +198,8 @@ export const _newShowHideRegistry = () => {
         if (holder.instances.length === 0) {
           values.value.delete(oldId)
         }
+        // Keep local id in sync so unregister() uses the latest key
+        currentId = newId
       },
     }
   }
