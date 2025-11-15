@@ -420,6 +420,40 @@ describe('modal', () => {
     wrapper.unmount()
   })
 
+  it('focus trap deactivation does not throw error when no tabbable elements exist', async () => {
+    // This test simulates the issue where a modal with disabled buttons
+    // would throw an error on focus trap deactivation
+    const wrapper = mount(BModal, {
+      attachTo: document.body,
+      global: {
+        stubs: {teleport: true, transition: false},
+      },
+      props: {
+        modelValue: true,
+        noHeader: true,
+        noFooter: true,
+        // Create a modal with no focusable elements
+      },
+      slots: {
+        default: '<p>No focusable elements here</p>',
+      },
+    })
+    await nextTick()
+
+    // Verify the modal is shown
+    expect(wrapper.find('div.modal').exists()).toBe(true)
+    expect(wrapper.find('div.modal-fallback-focus').exists()).toBe(true)
+
+    // Simulate closing the modal - this should not throw an error
+    await wrapper.setProps({modelValue: false})
+    await nextTick()
+
+    // The test passes if no error is thrown during deactivation
+    expect(true).toBe(true)
+
+    wrapper.unmount()
+  })
+
   describe('button and event functionality', () => {
     it('header close button triggers modal close and is preventable', async () => {
       let cancelHide = true
