@@ -280,6 +280,33 @@ function updateInitialIndexAndId() {
   }
 }
 
+function handleAsyncTabAddition() {
+  // Handle the case where tabs are added asynchronously after initialization
+  // and we need to set the activeId based on the current activeIndex
+  if (!activeId.value && tabs.value.length > 0) {
+    // Find the first enabled tab if activeIndex is out of bounds or the tab at activeIndex is disabled
+    let targetIndex = activeIndex.value
+
+    // If activeIndex is out of bounds, default to first enabled tab
+    if (targetIndex >= tabs.value.length || targetIndex < 0) {
+      targetIndex = tabs.value.findIndex((t) => !t.disabled)
+    }
+
+    // If the tab at targetIndex is disabled, find the first enabled tab
+    if (targetIndex >= 0 && tabs.value[targetIndex]?.disabled) {
+      targetIndex = tabs.value.findIndex((t) => !t.disabled)
+    }
+
+    // Set the activeId if we found a valid enabled tab
+    if (targetIndex >= 0 && tabs.value[targetIndex]?.id) {
+      activeId.value = tabs.value[targetIndex].id
+      if (activeIndex.value !== targetIndex) {
+        activeIndex.value = targetIndex
+      }
+    }
+  }
+}
+
 updateInitialIndexAndId()
 
 const showEmpty = computed(() => !(tabs?.value && tabs.value.length > 0))
@@ -440,11 +467,14 @@ watch(activeId, (newValue, oldValue) => {
 
 const registerTab = (tab: Ref<TabType>) => {
   const idx = tabsInternal.value.findIndex((t) => t.value.internalId === tab.value.internalId)
-  if (idx === -1) {
+  const isNewTab = idx === -1
+  if (isNewTab) {
     tabsInternal.value.push(tab)
     if (initialized) {
       nextTick(() => {
         sortTabs()
+        // Handle the case where tabs are added after initialization and we need to set activeId
+        handleAsyncTabAddition()
       })
     }
   } else {
@@ -463,6 +493,19 @@ onMounted(() => {
   sortTabs()
   initialized = true
 })
+
+// Watch for async tab additions and handle activeId setting
+watch(
+  () => tabsInternal.value.length,
+  (newLength, oldLength) => {
+    if (initialized && newLength > oldLength) {
+      // Tabs were added after initialization
+      nextTick(() => {
+        handleAsyncTabAddition()
+      })
+    }
+  }
+)
 
 const sortTabs = () => {
   tabsInternal.value.sort((a, b) => sortSlotElementsByPosition(a.value.el.value, b.value.el.value))
