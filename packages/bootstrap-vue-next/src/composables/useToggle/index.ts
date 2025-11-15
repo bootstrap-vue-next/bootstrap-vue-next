@@ -8,6 +8,7 @@ import {
 } from 'vue'
 
 import {showHideRegistryKey} from '../../utils/keys'
+import {getActiveShowHide} from '../../utils/registryAccess'
 
 export const useToggle = (id: MaybeRefOrGetter<string | undefined> = undefined) => {
   const instance = getCurrentInstance()
@@ -40,10 +41,8 @@ export const useToggle = (id: MaybeRefOrGetter<string | undefined> = undefined) 
   const myComponent = computed(() => {
     const resolvedId = toValue(id)
 
-    if (!registry) return null
     if (resolvedId) {
-      const value = registry.value.get(resolvedId)
-      return toValue(value) || null
+      return getActiveShowHide(registry, resolvedId)
     }
 
     if (!instance) {
@@ -51,7 +50,8 @@ export const useToggle = (id: MaybeRefOrGetter<string | undefined> = undefined) 
     }
 
     const component = findComponent(instance)
-    return toValue(registry.value.get(toValue(component?.exposed?.id))) || null
+    const componentId = toValue(component?.exposed?.id)
+    return getActiveShowHide(registry, componentId)
   })
 
   return {
