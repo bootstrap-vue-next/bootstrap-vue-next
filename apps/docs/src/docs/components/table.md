@@ -596,45 +596,9 @@ for proper reactive detection of changes to its value. Read more about
 [how reactivity works in Vue](https://vuejs.org/guide/extras/reactivity-in-depth.html#Change-Detection-Caveats).
 :::
 
-#### Primary Key and Row Details Persistence
-
-When using row details with the `primary-key` prop, the visibility state of row details will persist across item array updates, even when items are replaced with new object references. This is particularly useful in "Load more" or pagination scenarios where the items array is recreated.
-
-**Behavior:**
-
-- **With `primary-key` prop**: Row details remain open when items are replaced with new objects that have the same primary key value. This uses a `Map` internally to track state by primary key string.
-- **Without `primary-key` prop**: Row details will close when items are replaced with new object references. This uses a `WeakMap` internally for memory efficiency.
-
-**Example with primary key:**
-
-```vue
-<BTable :items="items" :fields="fields" primary-key="id">
-  <template #cell(actions)="row">
-    <BButton @click="row.toggleDetails">
-      {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
-    </BButton>
-  </template>
-  <template #row-details="row">
-    <BCard>Details for {{ row.item.name }}</BCard>
-  </template>
-</BTable>
-```
-
-```javascript
-// When items are updated with new object references but same IDs
-items.value = [
-  { id: 1, name: 'Alice', age: 30 },  // New object, but id: 1 remains
-  { id: 2, name: 'Bob', age: 25 },    // New object, but id: 2 remains
-  { id: 3, name: 'Charlie', age: 35 } // New item added
-]
-// Row details for items with id 1 and 2 will persist if they were open
-```
-
-**Important notes:**
-
-- If the `primary-key` prop changes, all row details will be closed and the state will be reset
-- The primary key must be unique for each item
-- When no `primary-key` is provided, items must maintain the same object reference for row details to persist
+::: info NOTE
+When using the `primary-key` prop, row details will persist even when items are replaced with new object references, as long as the primary key value remains the same. This allows row details to stay open in scenarios like "Load more" or pagination. Without a `primary-key`, the component uses a `WeakMap` for memory efficiency, and row details will close when items are garbage collected or replaced with new object references.
+:::
 
 **Available `row-details` scoped variable properties:**
 
