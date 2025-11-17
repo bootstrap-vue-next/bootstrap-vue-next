@@ -806,7 +806,7 @@ const callItemsProvider = async () => {
 }
 
 // Debounced version of callItemsProvider for filter changes to prevent rapid successive calls
-const debouncedCallItemsProvider = useDebounceFn(callItemsProvider, () => debounceNumber.value, {
+const debouncedCallItemsProvider = useDebounceFn(callItemsProvider, debounceNumber, {
   maxWait: () => debounceMaxWaitNumber.value,
 })
 
