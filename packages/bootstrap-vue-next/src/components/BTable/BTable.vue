@@ -766,7 +766,7 @@ const handleFieldSorting = (field: TableField<Items>) => {
 let abortController: AbortController | null = null
 
 const callItemsProvider = async () => {
-  if (!usesProvider.value || props.provider === undefined || busyModel.value) return
+  if (!usesProvider.value || props.provider === undefined) return
 
   // Cancel any previous request
   if (abortController) {
@@ -798,10 +798,10 @@ const callItemsProvider = async () => {
     if (error instanceof Error && error.name === 'AbortError') return
     throw error
   } finally {
-    // Potential race condition could occur if the user explicitly sets the busy value to a different value while the response promise is executing
-    // which would have been the users choice.
-    // eslint-disable-next-line require-atomic-updates
-    busyModel.value = false
+    // Only set busy to false if this request wasn't aborted (to avoid race condition)
+    if (!signal.aborted) {
+      busyModel.value = false
+    }
   }
 }
 

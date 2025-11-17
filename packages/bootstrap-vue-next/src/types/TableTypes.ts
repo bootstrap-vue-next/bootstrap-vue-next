@@ -39,7 +39,7 @@ export type BTableProviderContext = {
   filter: string | undefined
   currentPage: number
   perPage: number
-  signal?: AbortSignal
+  signal: AbortSignal
 }
 
 export type BTableProvider<T> = (

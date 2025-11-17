@@ -1313,7 +1313,7 @@ describe('provider debouncing', () => {
       async (context: Readonly<BTableProviderContext>) =>
         new Promise<typeof simpleItems>((resolve, reject) => {
           const timeout = setTimeout(() => resolve(simpleItems), 100)
-          context.signal?.addEventListener('abort', () => {
+          context.signal.addEventListener('abort', () => {
             clearTimeout(timeout)
             abortedCount++
             reject(new Error('AbortError'))
