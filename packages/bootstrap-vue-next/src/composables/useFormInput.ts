@@ -29,7 +29,7 @@ export const useFormInput = (
 
   const computedId = useId(() => props.id, 'input')
   const debounceNumber = useToNumber(() => props.debounce ?? 0, {nanToZero: true})
-  const debounceMaxWaitNumber = useToNumber(() => props.debounceMaxWait ?? NaN)
+  const debounceMaxWaitNumber = useToNumber(() => props.debounceMaxWait ?? Number.NaN)
 
   // This automatically adds the appropriate "for" attribute to a BFormGroup label
   const formGroupData = inject(formGroupKey, null)?.(computedId)
@@ -44,7 +44,7 @@ export const useFormInput = (
       modelValue.value = value
     },
     () => (modelModifiers.lazy === true ? 0 : debounceNumber.value),
-    {maxWait: () => (modelModifiers.lazy === true ? NaN : debounceMaxWaitNumber.value)}
+    {maxWait: () => (modelModifiers.lazy === true ? Number.NaN : debounceMaxWaitNumber.value)}
   )
 
   const updateModelValue = (value: Numberish, force = false, immediate = false) => {

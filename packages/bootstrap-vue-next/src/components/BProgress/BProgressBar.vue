@@ -45,8 +45,8 @@ const computedClasses = computed(() => [
 
 const numberPrecision = useToNumber(() => props.precision)
 const numberValue = useToNumber(() => props.value)
-const numberMax = useToNumber(() => props.max ?? NaN)
-const parentMaxNumber = useToNumber(() => parentData?.max.value ?? NaN)
+const numberMax = useToNumber(() => props.max ?? Number.NaN)
+const parentMaxNumber = useToNumber(() => parentData?.max.value ?? Number.NaN)
 
 const computedLabel = computed(() =>
   props.showValue || parentData?.showValue.value

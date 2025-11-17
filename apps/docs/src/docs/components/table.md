@@ -874,6 +874,59 @@ properties:
 | `perPage`     | `number`                         | The maximum number of rows per page to display (the value of the `per-page` prop) |
 | `filter`      | `string \| undefined`            | The value of the `filter` prop                                                    |
 | `sortBy`      | `BTableSortBy<T>[] \| undefined` | The current column key being sorted, or an empty string if not sorting            |
+| `signal`      | `AbortSignal`                    | An AbortSignal that can be used to cancel the request when a new provider call is triggered |
+
+### Debouncing Provider Calls
+
+To avoid excessive provider calls (e.g., when typing rapidly in a filter), you can use the `debounce` and `debounce-max-wait` props:
+
+- `debounce`: Delay in milliseconds before calling the provider after changes (default: `0` for immediate execution)
+- `debounce-max-wait`: Maximum time in milliseconds to wait before forcing a provider call, even if changes are still occurring
+
+Example with debouncing:
+
+```vue
+<BTable
+  :provider="myProvider"
+  :fields="fields"
+  :debounce="300"
+  :debounce-max-wait="1000"
+/>
+```
+
+### Handling Request Cancellation
+
+The provider context includes an `AbortSignal` that is automatically aborted when a new provider call is triggered. This allows you to cancel in-flight requests to prevent stale data and race conditions.
+
+Example using the signal with fetch:
+
+```typescript
+const myProvider = async (ctx: BTableProviderContext) => {
+  const response = await fetch('/api/data', {
+    signal: ctx.signal, // Pass the signal to fetch
+  })
+  return response.json()
+}
+```
+
+For custom async operations, listen to the abort event:
+
+```typescript
+const myProvider = async (ctx: BTableProviderContext) => {
+  return new Promise((resolve, reject) => {
+    const timeout = setTimeout(() => {
+      // Perform your async operation
+      resolve(items)
+    }, 1000)
+    
+    // Clean up when aborted
+    ctx.signal.addEventListener('abort', () => {
+      clearTimeout(timeout)
+      reject(new Error('AbortError'))
+    })
+  })
+}
+```
 
 Below are trimmed down versions of the [complete example](#complete-example) as a starting place for using provider functions. They use local provider functions that implement sorting and filtering. Note that sorting is done in cooperation with `<BTable>` by having the
 provider function react to the `context.sortBy` array that it is passed, while filtering is done

@@ -158,7 +158,7 @@ const referenceElement = ref<HTMLElement | null>(null)
 const triggerElement = ref<HTMLElement | null>(null)
 
 const isAutoPlacement = computed(() => props.placement.startsWith('auto'))
-const offsetNumber = useToNumber(() => props.offset ?? NaN)
+const offsetNumber = useToNumber(() => props.offset ?? Number.NaN)
 
 const boundary = computed<Boundary | undefined>(() =>
   isBoundary(props.boundary) ? props.boundary : undefined

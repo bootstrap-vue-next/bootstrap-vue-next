@@ -610,6 +610,18 @@ export default {
           description:
             'The current page number to display when the table is paginated. Starting from 1 and up',
         },
+        debounce: {
+          type: 'Numberish',
+          default: 0,
+          description:
+            'Delay in milliseconds before calling the provider after prop changes. Set to 0 for immediate execution (default). Useful for debouncing rapid filter changes.',
+        },
+        debounceMaxWait: {
+          type: 'Numberish',
+          default: Number.NaN,
+          description:
+            'Maximum time in milliseconds to wait before forcing a provider call, even if changes are still occurring. Use with debounce to ensure provider is eventually called.',
+        },
         filter: {
           type: 'string',
           default: undefined,

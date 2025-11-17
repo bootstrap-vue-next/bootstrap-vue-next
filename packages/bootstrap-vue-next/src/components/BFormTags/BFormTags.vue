@@ -218,7 +218,7 @@ const modelValue = defineModel<Exclude<BFormTagsProps['modelValue'], undefined>>
 
 const computedId = useId()
 
-const limitNumber = useToNumber(() => props.limit ?? NaN)
+const limitNumber = useToNumber(() => props.limit ?? Number.NaN)
 
 const stateClass = useStateClass(() => props.state)
 
