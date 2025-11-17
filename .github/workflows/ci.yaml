@@ -49,16 +49,11 @@ jobs:
       - name: Build Library
         run: pnpm run build
 
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-artifacts
-          path: |
-            packages/bootstrap-vue-next/dist/
-            packages/bootstrap-vue-next/package.json
-            packages/nuxt/dist/
-            packages/nuxt/package.json
-          retention-days: 1
+      - name: Run publint
+        run: pnpm --filter bootstrap-vue-next run publint
+
+      - name: Run publint on Nuxt package
+        run: pnpm --filter @bootstrap-vue-next/nuxt run publint
 
       - run: pnpx pkg-pr-new publish './packages/bootstrap-vue-next' './packages/nuxt' --template './templates/vite'
 
@@ -133,34 +128,3 @@ jobs:
 
       - name: Test Unit
         run: pnpm run test:unit:ci
-
-  publint:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Clone Repository
-        uses: actions/checkout@v4
-
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22.x.x
-
-      - name: Install PNPM
-        uses: pnpm/action-setup@v4
-        id: pnpm-install
-
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build-artifacts
-
-      - name: Install publint
-        run: pnpm add -g publint
-
-      - name: Run publint on bootstrap-vue-next
-        run: cd packages/bootstrap-vue-next && publint
-
-      - name: Run publint on Nuxt package
-        run: cd packages/nuxt && publint
