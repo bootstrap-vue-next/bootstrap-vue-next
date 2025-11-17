@@ -6,8 +6,8 @@ import {buildCommonProps} from '../../utils/commonProps'
 export default {
   load: (): ComponentReference => ({
     BButtonToolbar: {
-      styleSpec: {kind: StyleKind.OverrideClass, value: '.btn-toolbar'},
       sourcePath: '/BButton/BButtonToolbar.vue',
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.btn-toolbar'},
       props: {
         ...pick(buildCommonProps(), ['ariaLabel', 'role']),
         justify: {
@@ -15,6 +15,12 @@ export default {
           default: false, // TODO item not in string format
           description:
             'Make the toolbar span the maximum available width, by increasing spacing between the button groups, input groups, and dropdowns',
+        },
+        keyNav: {
+          type: 'boolean',
+          default: false,
+          description:
+            'Enable keyboard navigation between focusable elements using arrow keys, Home/End keys, and Shift+arrow keys',
         },
       } satisfies PropRecord<keyof BButtonToolbarProps>,
       slots: {

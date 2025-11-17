@@ -35,7 +35,7 @@
 
 <script setup lang="ts" generic="T">
 import type {BFormSelectProps} from '../../types/ComponentProps'
-import {computed, useTemplateRef} from 'vue'
+import {computed, provide, readonly, useTemplateRef} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
 import {useAriaInvalid} from '../../composables/useAriaInvalid'
@@ -46,6 +46,7 @@ import {useStateClass} from '../../composables/useStateClass'
 import {useFormSelect} from '../../composables/useFormSelect'
 import type {ComplexSelectOptionRaw, SelectOption} from '../../types/SelectTypes'
 import type {BFormSelectSlots} from '../../types'
+import {formSelectKey} from '../../utils/keys'
 
 const _props = withDefaults(defineProps<Omit<BFormSelectProps, 'modelValue'>>(), {
   ariaInvalid: undefined,
@@ -117,6 +118,11 @@ const localValue = computed({
   set: (newValue) => {
     modelValue.value = newValue
   },
+})
+
+// Provide the current model value for child components to inject
+provide(formSelectKey, {
+  modelValue: readonly(localValue),
 })
 
 defineExpose({

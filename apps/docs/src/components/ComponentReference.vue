@@ -269,14 +269,39 @@ const router = useRouter()
 
 const props = defineProps<{data: ComponentReference}>()
 
+/**
+ * Derives the base directory name from all components in the data.
+ * Uses the first component in the object as the base directory name.
+ * This relies on the data files having the primary component listed first.
+ *
+ * Examples:
+ *   {BButton: {...}, BCloseButton: {...}} → BButton
+ *   {BFormTags: {...}, BFormTag: {...}} → BFormTags
+ *   {BTabs: {...}, BTab: {...}} → BTabs
+ */
+const deriveBaseDirectory = (): string => {
+  const componentNames = Object.keys(props.data)
+  return componentNames[0] // First component is the base directory
+}
+
+/**
+ * Derives the source path for a component.
+ *
+ * Pattern: /<BaseDirectory>/<ComponentName>.vue
+ */
+const deriveSourcePath = (componentName: string, baseDirectory: string): string =>
+  `/${baseDirectory}/${componentName}.vue`
+
 const goToLink = (link: string) => router.go(withBase(link))
 const globalData = inject(appInfoKey)
 
 /**
  * Sorts the items inside so they're uniform structure
  */
-const sortData = computed(() =>
-  Object.entries(props.data).map(
+const sortData = computed(() => {
+  const baseDirectory = deriveBaseDirectory()
+
+  return Object.entries(props.data).map(
     ([component, {props: localProps, sourcePath, emits, slots, styleSpec}]) => {
       const mapProps = () => {
         const isMultiplePropRecord = (
@@ -332,7 +357,8 @@ const sortData = computed(() =>
       const data = {
         component,
         styleSpec,
-        sourcePath,
+        // Use provided sourcePath or derive it from component name and base directory
+        sourcePath: sourcePath ?? deriveSourcePath(component, baseDirectory),
         props: Object.entries(mapProps()).map(([name, value]) => ({
           name,
           ...value,
@@ -363,7 +389,7 @@ const sortData = computed(() =>
       return data
     }
   )
-)
+})
 
 type ComponentItemFree = Exclude<ComponentItem, 'sourcePath' | 'styleSpec'>
 

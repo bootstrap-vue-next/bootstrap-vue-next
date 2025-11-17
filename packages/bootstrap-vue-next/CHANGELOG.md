@@ -1,40 +1,96 @@
 # Changelog
 
-## [0.40.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.0...bootstrapvuenext-v0.40.1) (2025-09-06)
+## [0.40.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.7...bootstrapvuenext-v0.40.8) (2025-11-17)
 
 
 ### Features
 
-* change useColorMode selector from 'body' to 'html' ([#2830](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2830)) ([688f826](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/688f826cb9c51c552069adaa31cd2b4857c886cf))
+* add name and form props to BFormRating for form submission ([#2895](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2895)) ([f14f049](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f14f0495a03678a4f6c0d0ee87d3eabfc6def136))
+* **BTable:** add an AbortSignal to the provider object parameter for cancelling in progress requests ([2a12859](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a12859404a4ee498e6ccc4aa5490dab9997d7c7))
+* **BTable:** add configurable debouncing ([2a12859](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a12859404a4ee498e6ccc4aa5490dab9997d7c7))
 
 
 ### Bug Fixes
 
-* **BDropdown:** transition broken by inline display styles ([#2832](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2832)) ([0363c2f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0363c2f87c84e5703c43874f0d7baf3cd6a81a55))
+* **directives:** Robustness fixes for directives ([#2906](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2906)) ([7b39759](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7b397599f76f50d10773cd8fb63fb6d2e72dc4c7))
+* **typings:** Fix paths to `*.d.mts` files ([#2907](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2907)) ([4b0d55a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4b0d55a957f029131c89f740adc65ca7d9e79d58))
 
-## [0.40.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.30.5...bootstrapvuenext-v0.40.0) (2025-09-03)
+## [0.40.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.6...bootstrapvuenext-v0.40.7) (2025-10-22)
 
-
-### ⚠ BREAKING CHANGES
-
-* **BSort:** Implement initial-sort-direction and move compare from sort-by to fields ([#2777](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2777))
-* Merged the Orchestrator components into one.
-* renamed the controller composables to `useToast`, `useModal`, and `usePopover`
-* combined the old plugins to match the new BApp and composables.
-* the old `useModal` was removed since `useToggle` does all what it did.
-* new `BApp` component as the recommended way to configure bootstrap-vue-next applications, replacing the plugin-based approach.
 
 ### Features
 
-* Add headerAttrs prop to BOffcanvas and BModal components ([59d1e80](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/59d1e809f57b7443faa7d53dcb6db7b6f0c8ea97))
-* **b-form-rating:** add `icon-clear` slot ([#2809](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2809)) ([4120f3d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4120f3d30e77d36e113bf1dd93581f073117c5b3))
-* **BSort:** Implement initial-sort-direction and move compare from sort-by to fields ([#2777](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2777)) ([b3eec6e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b3eec6eaabf654bb21124b9601d9c3809e5eb0cc))
-* combined the old plugins to match the new BApp and composables. ([ba90f59](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba90f596ad3376ebddda535bf8b88232c60befff))
-* implement BFormRating disabled state ([#2753](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2753)) ([#2793](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2793)) ([d837222](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d8372223530e2038246e237732391c71a802dd23))
-* Merged the Orchestrator components into one. ([ba90f59](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba90f596ad3376ebddda535bf8b88232c60befff))
-* new `BApp` component as the recommended way to configure bootstrap-vue-next applications, replacing the plugin-based approach.  ([ba90f59](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba90f596ad3376ebddda535bf8b88232c60befff))
-* renamed the controller composables to `useToast`, `useModal`, and `usePopover` ([ba90f59](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba90f596ad3376ebddda535bf8b88232c60befff))
-* the old `useModal` was removed since `useToggle` does all what it did. ([ba90f59](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba90f596ad3376ebddda535bf8b88232c60befff))
+* add NumpadEnter support for BTable and BFormTags keyboard navigation (accessibility) ([#2884](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2884)) ([bdf6fee](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bdf6fee56eaf708d1b14e89f0179c4d44b7bf063))
+
+## [0.40.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.5...bootstrapvuenext-v0.40.6) (2025-10-07)
+
+### Bug Fixes
+
+- **BApp:** wrap our test app in BApp in main.ts to enable easy verification of useModal, etc. ([#2865](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2865)) ([d7d3476](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d7d347665f92ad910fc45fc079f304c19d91c99f))
+- **useModalOrchestrator:** circular dependency ([#2874](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2874)) ([c0bf12f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c0bf12fe34f0671ae1b8392e6b4f9aeb605726d8))
+
+## [0.40.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.4...bootstrapvuenext-v0.40.5) (2025-09-23)
+
+### Bug Fixes
+
+- **BToggle:** stop looking for missing targets after directive is unmounted ([#2857](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2857)) ([b358449](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b3584492cad4c9ebeb37836cfd45aef878755249))
+
+## [0.40.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.3...bootstrapvuenext-v0.40.4) (2025-09-16)
+
+### Bug Fixes
+
+- **BOrchestrator:** fix transition delay. ([af49d33](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/af49d333a6cb881aa7126e9e2a8741017fad630e))
+
+## [0.40.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.2...bootstrapvuenext-v0.40.3) (2025-09-12)
+
+### Bug Fixes
+
+- **BTable:** events being wrongly stopped when sent from elements inside TRs ([#2841](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2841)) ([ee8b0f7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ee8b0f71c8594de058bba2ef5d6ed2d2b034abf9))
+
+## [0.40.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.1...bootstrapvuenext-v0.40.2) (2025-09-09)
+
+### Features
+
+- **BButtonToolbar:** Add keyboard navigation support ([#2837](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2837)) ([81bd846](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/81bd8466f62b4445f1a68303c53416a2a5653d9c))
+- **BTable:** Implement keyboard navigation ([#2834](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2834)) ([b4b5f6f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b4b5f6fc74be26dc85443e3bb808015439b4b0e8))
+
+### Bug Fixes
+
+- **BFormSelect:** modelValue not being applied during SSR ([#2835](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2835)) ([44a4ccd](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/44a4ccd8088511b47b2ac951b36dcbbc163cf30a))
+- BOffcanvas responsive SSR compatibility - defer breakpoint evaluation to client-side ([#2833](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2833)) ([ab99819](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ab99819077d8abf05b9beadf6eea31ece3e12b6c))
+
+## [0.40.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.0...bootstrapvuenext-v0.40.1) (2025-09-06)
+
+### Features
+
+- change useColorMode selector from 'body' to 'html' ([#2830](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2830)) ([688f826](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/688f826cb9c51c552069adaa31cd2b4857c886cf))
+
+### Bug Fixes
+
+- **BDropdown:** transition broken by inline display styles ([#2832](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2832)) ([0363c2f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0363c2f87c84e5703c43874f0d7baf3cd6a81a55))
+
+## [0.40.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.30.5...bootstrapvuenext-v0.40.0) (2025-09-03)
+
+### ⚠ BREAKING CHANGES
+
+- **BSort:** Implement initial-sort-direction and move compare from sort-by to fields ([#2777](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2777))
+- Merged the Orchestrator components into one.
+- renamed the controller composables to `useToast`, `useModal`, and `usePopover`
+- combined the old plugins to match the new BApp and composables.
+- the old `useModal` was removed since `useToggle` does all what it did.
+- new `BApp` component as the recommended way to configure bootstrap-vue-next applications, replacing the plugin-based approach.
+
+### Features
+
+- Add headerAttrs prop to BOffcanvas and BModal components ([59d1e80](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/59d1e809f57b7443faa7d53dcb6db7b6f0c8ea97))
+- **b-form-rating:** add `icon-clear` slot ([#2809](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2809)) ([4120f3d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4120f3d30e77d36e113bf1dd93581f073117c5b3))
+- **BSort:** Implement initial-sort-direction and move compare from sort-by to fields ([#2777](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2777)) ([b3eec6e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b3eec6eaabf654bb21124b9601d9c3809e5eb0cc))
+- combined the old plugins to match the new BApp and composables. ([ba90f59](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba90f596ad3376ebddda535bf8b88232c60befff))
+- implement BFormRating disabled state ([#2753](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2753)) ([#2793](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2793)) ([d837222](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d8372223530e2038246e237732391c71a802dd23))
+- Merged the Orchestrator components into one. ([ba90f59](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba90f596ad3376ebddda535bf8b88232c60befff))
+- new `BApp` component as the recommended way to configure bootstrap-vue-next applications, replacing the plugin-based approach. ([ba90f59](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba90f596ad3376ebddda535bf8b88232c60befff))
+- renamed the controller composables to `useToast`, `useModal`, and `usePopover` ([ba90f59](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba90f596ad3376ebddda535bf8b88232c60befff))
+- the old `useModal` was removed since `useToggle` does all what it did. ([ba90f59](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba90f596ad3376ebddda535bf8b88232c60befff))
 
 ## [0.30.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.30.4...bootstrapvuenext-v0.30.5) (2025-08-13)
 

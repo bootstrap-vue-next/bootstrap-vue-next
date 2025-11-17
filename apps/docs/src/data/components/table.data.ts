@@ -610,6 +610,18 @@ export default {
           description:
             'The current page number to display when the table is paginated. Starting from 1 and up',
         },
+        debounce: {
+          type: 'Numberish',
+          default: 0,
+          description:
+            'Delay in milliseconds before calling the provider after prop changes. Set to 0 for immediate execution (default). Useful for debouncing rapid filter changes.',
+        },
+        debounceMaxWait: {
+          type: 'Numberish',
+          default: Number.NaN,
+          description:
+            'Maximum time in milliseconds to wait before forcing a provider call, even if changes are still occurring. Use with debounce to ensure provider is eventually called.',
+        },
         filter: {
           type: 'string',
           default: undefined,
@@ -810,7 +822,6 @@ export default {
 
     return {
       BTable: {
-        sourcePath: '/BTable/BTable.vue',
         props: {
           [defaultPropSectionSymbol]: BTable.props,
           'BTableLite Props': BTableLite.props,
@@ -820,7 +831,6 @@ export default {
         slots: BTable.slots,
       },
       BTableLite: {
-        sourcePath: '/BTable/BTableLite.vue',
         props: {
           [defaultPropSectionSymbol]: BTableLite.props,
           'BTableSimple Props': BTableSimple.props,
@@ -829,13 +839,11 @@ export default {
         slots: BTableLite.slots,
       },
       BTableSimple: {
-        sourcePath: '/BTable/BTableSimple.vue',
         props: BTableSimple.props,
         slots: BTableSimple.slots,
       },
       BTbody: {
         styleSpec: {kind: StyleKind.Tag, value: 'tbody'},
-        sourcePath: '/BTable/BTbody.vue',
         props: pick(buildCommonProps(), ['variant']) satisfies PropRecord<keyof BTbodyProps>,
         slots: {
           default: {
@@ -845,7 +853,6 @@ export default {
       },
       BTd: {
         styleSpec: {kind: StyleKind.Tag, value: 'td'},
-        sourcePath: '/BTable/BTd.vue',
         props: {
           ...pick(buildCommonProps(), ['variant']),
           colspan: {
@@ -879,7 +886,6 @@ export default {
       },
       BTfoot: {
         styleSpec: {kind: StyleKind.Tag, value: 'tfoot'},
-        sourcePath: '/BTable/BTfoot.vue',
         props: pick(buildCommonProps(), ['variant']) satisfies PropRecord<keyof BTfootProps>,
         slots: {
           default: {
@@ -889,7 +895,6 @@ export default {
       },
       BTh: {
         styleSpec: {kind: StyleKind.Tag, value: 'th'},
-        sourcePath: '/BTable/BTh.vue',
         props: {
           ...pick(buildCommonProps(), ['variant']),
           colspan: {
@@ -926,7 +931,6 @@ export default {
       },
       BThead: {
         styleSpec: {kind: StyleKind.Tag, value: 'thead'},
-        sourcePath: '/BTable/BThead.vue',
         props: {
           variant: {
             type: 'ColorVariant',
@@ -943,7 +947,6 @@ export default {
       },
       BTr: {
         styleSpec: {kind: StyleKind.Tag, value: 'tr'},
-        sourcePath: '/BTable/BTr.vue',
         props: {
           variant: {
             type: 'ColorVariant',

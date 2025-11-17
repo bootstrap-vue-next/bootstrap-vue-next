@@ -11,7 +11,6 @@ import {buildCommonProps} from '../../utils/commonProps'
 export default {
   load: (): ComponentReference => ({
     BProgress: {
-      sourcePath: '/BProgress/BProgress.vue',
       props: {
         ...pick(buildCommonProps(), ['bgVariant', 'textVariant', 'variant']),
         animated: {
@@ -63,7 +62,6 @@ export default {
       } satisfies SlotRecord<keyof BProgressSlots>,
     },
     BProgressBar: {
-      sourcePath: '/BProgress/BProgressBar.vue',
       props: {
         ...pick(buildCommonProps(), ['bgVariant', 'textVariant', 'variant']),
         animated: {

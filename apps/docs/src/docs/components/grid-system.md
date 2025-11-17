@@ -1,12 +1,9 @@
-# Grid System
-
-<PageHeader>
-
-Use the powerful mobile-first flexbox grid (via the `<BContainer>`, `<BRow>` and
-`<BCol>` components) to build layouts of all shapes and sizes thanks to a twelve column system,
-five default responsive tiers, CSS Sass variables and mixins, and dozens of predefined classes.
-
-</PageHeader>
+---
+description: >
+  Use the powerful mobile-first flexbox grid (via the `<BContainer>`, `<BRow>` and
+  `<BCol>` components) to build layouts of all shapes and sizes thanks to a twelve column system,
+  five default responsive tiers, CSS Sass variables and mixins, and dozens of predefined classes.
+---
 
 ## Overview
 
@@ -377,8 +374,6 @@ within an existing `<BCol>` component. Nested rows should include a set of colum
 <<< DEMO ./demo/ColNesting.vue#template{vue-html}
 
 ## Row columns
-
-<span class="badge badge-info small">Requires Bootstrap v4.4+ CSS</span>
 
 Use the responsive `cols-*` props in `<BRow>` to quickly set the number of columns that best render
 your content and layout. Whereas normal column widths are apply to the individual `<BCol>` columns

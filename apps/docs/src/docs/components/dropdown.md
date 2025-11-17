@@ -1,10 +1,6 @@
-# Dropdown
-
-<PageHeader>
-
-Dropdowns are toggleable, contextual overlays for displaying lists of links and actions in a dropdown menu format.
-
-</PageHeader>
+---
+description: 'Dropdowns are toggleable, contextual overlays for displaying lists of links and actions in a dropdown menu format.'
+---
 
 `BDropdown` components are toggleable, contextual overlays for displaying lists of links, and more. They're toggled by clicking (or pressing space or enter when focused), not by hovering; this is an [intentional design decision](https://markdotto.com/2012/02/27/bootstrap-explained-dropdowns/).
 
@@ -319,9 +315,3 @@ The dropdown menu is rendered with semantic `<ul>` and `<li>` elements for acces
 
 - [`BNavItemDropdown`](/docs/components/nav#dropdown) for dropdown support inside `BNav` and `BNavbar`
 - [Router Link Support](/docs/reference/router-links) reference for information about router-link specific props available on `BDropdownItem`
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/dropdown.data'
-</script>

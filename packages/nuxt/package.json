@@ -1,7 +1,7 @@
 {
   "name": "@bootstrap-vue-next/nuxt",
   "description": "Nuxt Module for BootstrapVueNext",
-  "version": "0.40.1",
+  "version": "0.40.8",
   "license": "MIT",
   "author": {
     "name": "Issayah",
@@ -24,6 +24,7 @@
     "build": "pnpm run dev:prepare && pnpm run dev:build && pnpm run prepack",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
+    "publint": "publint",
     "lint": "eslint --fix",
     "test:lint": "eslint",
     "test": "pnpm run test:lint",
@@ -50,6 +51,7 @@
     "eslint-define-config": "^2.1.0",
     "nuxt": "^3.17.7",
     "prettier": "^3.6.2",
+    "publint": "^0.3.15",
     "typescript": "~5.8.3",
     "unimport": "^5.1.0",
     "vue": "^3.5.17"

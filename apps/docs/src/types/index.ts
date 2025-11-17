@@ -63,9 +63,10 @@ export type ComponentReference = Record<
     /**
      * Use package directory relative links. ex: BAccordion.vue => /BAccordion/BAccordion.vue (slash required)
      *
-     * If path is empty string, it defaults to the package directory. If null, it does not render the button
+     * If not provided, the source path will be automatically derived from the component name.
+     * If null, the "View Source" button is not rendered.
      */
-    sourcePath: string | null
+    sourcePath?: string | null
     props: PropRecordWithOptions | PropRecord | PropRecordWithMultipleSections
     emits?: EmitRecord
     slots?: SlotRecord

@@ -261,3 +261,86 @@ it('does not render clear when readonly is true', () => {
   expect(wrapper.find('.clear-button-spacing').exists()).toBe(false)
   expect(wrapper.find('#slot-should-not-render').exists()).toBe(false)
 })
+
+// Form submission tests
+it('renders hidden input when name prop is provided', () => {
+  const wrapper = mount(BFormRating, {
+    props: {
+      name: 'rating',
+      modelValue: 3,
+    },
+  })
+  const hiddenInput = wrapper.find('input[type="hidden"]')
+  expect(hiddenInput.exists()).toBe(true)
+  expect(hiddenInput.attributes('name')).toBe('rating')
+  expect(hiddenInput.attributes('value')).toBe('3')
+})
+
+it('does not render hidden input when name prop is not provided', () => {
+  const wrapper = mount(BFormRating, {
+    props: {
+      modelValue: 3,
+    },
+  })
+  const hiddenInput = wrapper.find('input[type="hidden"]')
+  expect(hiddenInput.exists()).toBe(false)
+})
+
+it('does not render hidden input when disabled is true', () => {
+  const wrapper = mount(BFormRating, {
+    props: {
+      name: 'rating',
+      modelValue: 3,
+      disabled: true,
+    },
+  })
+  const hiddenInput = wrapper.find('input[type="hidden"]')
+  expect(hiddenInput.exists()).toBe(false)
+})
+
+it('hidden input updates when rating value changes', async () => {
+  const wrapper = mount(BFormRating, {
+    props: {
+      name: 'rating',
+      modelValue: 3,
+    },
+  })
+  const hiddenInput = wrapper.find('input[type="hidden"]')
+  expect(hiddenInput.attributes('value')).toBe('3')
+
+  // Click on a star to change the value
+  const [firstStar] = wrapper.findAll('.star')
+  await firstStar.trigger('click')
+  expect(hiddenInput.attributes('value')).toBe('1')
+})
+
+it('renders hidden input with form attribute when provided', () => {
+  const wrapper = mount(BFormRating, {
+    props: {
+      name: 'rating',
+      form: 'my-form',
+      modelValue: 4,
+    },
+  })
+  const hiddenInput = wrapper.find('input[type="hidden"]')
+  expect(hiddenInput.exists()).toBe(true)
+  expect(hiddenInput.attributes('name')).toBe('rating')
+  expect(hiddenInput.attributes('form')).toBe('my-form')
+  expect(hiddenInput.attributes('value')).toBe('4')
+})
+
+it('hidden input value is 0 when rating is cleared', async () => {
+  const wrapper = mount(BFormRating, {
+    props: {
+      name: 'rating',
+      modelValue: 3,
+      showClear: true,
+    },
+  })
+  const hiddenInput = wrapper.find('input[type="hidden"]')
+  expect(hiddenInput.attributes('value')).toBe('3')
+
+  const clearBtn = wrapper.find('.clear-button-spacing')
+  await clearBtn.trigger('click')
+  expect(hiddenInput.attributes('value')).toBe('0')
+})

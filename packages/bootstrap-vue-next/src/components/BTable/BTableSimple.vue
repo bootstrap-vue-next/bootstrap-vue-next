@@ -82,7 +82,8 @@ const computedTableAttrs = computed(() => ({
 
 const computedSticky = useNumberishToStyle(
   computed(
-    () => (props.stickyHeader === true ? defaultStickyHeaderHeight : props.stickyHeader) || NaN
+    () =>
+      (props.stickyHeader === true ? defaultStickyHeaderHeight : props.stickyHeader) || Number.NaN
   )
 )
 const stickyIsValid = computed(() => props.stickyHeader !== false)

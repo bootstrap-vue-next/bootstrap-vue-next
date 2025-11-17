@@ -1,7 +1,7 @@
 <template>
   <!-- Placeholder template with actual refs for TypeScript compatibility -->
   <div ref="content">
-    <div ref="target"></div>
+    <div ref="target" />
   </div>
 </template>
 

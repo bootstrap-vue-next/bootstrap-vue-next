@@ -242,12 +242,4 @@ const sharedEmits = {
       },
     },
   },
-  'cancel': {
-    args: undefined,
-    description: undefined,
-  },
-  'ok': {
-    args: undefined,
-    description: undefined,
-  },
 } satisfies EmitRecord<keyof BPopoverEmits | 'update:model-value'>

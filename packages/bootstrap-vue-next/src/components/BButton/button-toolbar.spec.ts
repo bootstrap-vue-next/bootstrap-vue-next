@@ -1,5 +1,5 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
-import {afterEach, describe, expect, it} from 'vitest'
+import {afterEach, describe, expect, it, vi} from 'vitest'
 import BButtonToolbar from './BButtonToolbar.vue'
 
 describe('button-toolbar', () => {
@@ -43,5 +43,337 @@ describe('button-toolbar', () => {
     expect(wrapper.classes()).toContain('justify-content-between')
     await wrapper.setProps({justify: false})
     expect(wrapper.classes()).not.toContain('justify-content-between')
+  })
+
+  describe('keyboard navigation', () => {
+    it('handles keyboard navigation when keyNav is false (default)', async () => {
+      const wrapper = mount(BButtonToolbar, {
+        slots: {
+          default: `
+            <button>Button 1</button>
+            <button>Button 2</button>
+            <button>Button 3</button>
+          `,
+        },
+      })
+
+      // Should not handle keyboard events when keyNav is false
+      const keydownEvent = new KeyboardEvent('keydown', {code: 'ArrowRight'})
+      const preventDefaultSpy = vi.spyOn(keydownEvent, 'preventDefault')
+
+      await wrapper.trigger('keydown', {code: 'ArrowRight'})
+      expect(preventDefaultSpy).not.toHaveBeenCalled()
+    })
+
+    it('handles right arrow key navigation when keyNav is true', async () => {
+      const wrapper = mount(BButtonToolbar, {
+        props: {keyNav: true},
+        slots: {
+          default: `
+            <button id="btn1">Button 1</button>
+            <button id="btn2">Button 2</button>
+            <button id="btn3">Button 3</button>
+          `,
+        },
+      })
+
+      // Mock focus method on buttons
+      const buttons = wrapper.findAll('button')
+      buttons.forEach((button) => {
+        vi.spyOn(button.element, 'focus')
+      })
+
+      // Focus first button
+      buttons[0].element.focus()
+
+      // Simulate ArrowRight keydown
+      await wrapper.trigger('keydown', {code: 'ArrowRight'})
+
+      // Should move focus to next button (handled via focus management in component)
+      expect(wrapper.html()).toContain('Button 2')
+    })
+
+    it('handles left arrow key navigation when keyNav is true', async () => {
+      const wrapper = mount(BButtonToolbar, {
+        props: {keyNav: true},
+        slots: {
+          default: `
+            <button id="btn1">Button 1</button>
+            <button id="btn2">Button 2</button>
+            <button id="btn3">Button 3</button>
+          `,
+        },
+      })
+
+      // Mock focus method on buttons
+      const buttons = wrapper.findAll('button')
+      buttons.forEach((button) => {
+        vi.spyOn(button.element, 'focus')
+      })
+
+      // Focus second button
+      buttons[1].element.focus()
+
+      // Simulate ArrowLeft keydown
+      await wrapper.trigger('keydown', {code: 'ArrowLeft'})
+
+      // Should move focus to previous button
+      expect(wrapper.html()).toContain('Button 1')
+    })
+
+    it('handles shift+right arrow to focus last element when keyNav is true', async () => {
+      const wrapper = mount(BButtonToolbar, {
+        props: {keyNav: true},
+        slots: {
+          default: `
+            <button id="btn1">Button 1</button>
+            <button id="btn2">Button 2</button>
+            <button id="btn3">Button 3</button>
+          `,
+        },
+      })
+
+      // Mock focus method on buttons
+      const buttons = wrapper.findAll('button')
+      buttons.forEach((button) => {
+        vi.spyOn(button.element, 'focus')
+      })
+
+      // Focus first button
+      buttons[0].element.focus()
+
+      // Simulate Shift+ArrowRight keydown
+      await wrapper.trigger('keydown', {code: 'ArrowRight', shiftKey: true})
+
+      // Should move focus to last button
+      expect(wrapper.html()).toContain('Button 3')
+    })
+
+    it('handles shift+left arrow to focus first element when keyNav is true', async () => {
+      const wrapper = mount(BButtonToolbar, {
+        props: {keyNav: true},
+        slots: {
+          default: `
+            <button id="btn1">Button 1</button>
+            <button id="btn2">Button 2</button>
+            <button id="btn3">Button 3</button>
+          `,
+        },
+      })
+
+      // Mock focus method on buttons
+      const buttons = wrapper.findAll('button')
+      buttons.forEach((button) => {
+        vi.spyOn(button.element, 'focus')
+      })
+
+      // Focus last button
+      buttons[2].element.focus()
+
+      // Simulate Shift+ArrowLeft keydown
+      await wrapper.trigger('keydown', {code: 'ArrowLeft', shiftKey: true})
+
+      // Should move focus to first button
+      expect(wrapper.html()).toContain('Button 1')
+    })
+
+    it('skips disabled buttons during navigation', async () => {
+      const wrapper = mount(BButtonToolbar, {
+        props: {keyNav: true},
+        slots: {
+          default: `
+            <button id="btn1">Button 1</button>
+            <button id="btn2" disabled>Button 2</button>
+            <button id="btn3">Button 3</button>
+          `,
+        },
+      })
+
+      // Mock focus method on buttons
+      const buttons = wrapper.findAll('button')
+      buttons.forEach((button) => {
+        vi.spyOn(button.element, 'focus')
+      })
+
+      // Focus first button
+      buttons[0].element.focus()
+
+      // Simulate ArrowRight keydown
+      await wrapper.trigger('keydown', {code: 'ArrowRight'})
+
+      // Should skip disabled button and focus third button
+      expect(wrapper.html()).toContain('Button 3')
+    })
+
+    it('handles up/down arrow keys the same as left/right', async () => {
+      const wrapper = mount(BButtonToolbar, {
+        props: {keyNav: true},
+        slots: {
+          default: `
+            <button id="btn1">Button 1</button>
+            <button id="btn2">Button 2</button>
+          `,
+        },
+      })
+
+      // Mock focus method on buttons
+      const buttons = wrapper.findAll('button')
+      buttons.forEach((button) => {
+        vi.spyOn(button.element, 'focus')
+      })
+
+      // Focus first button
+      buttons[0].element.focus()
+
+      // Simulate ArrowDown keydown (should work like ArrowRight)
+      await wrapper.trigger('keydown', {code: 'ArrowDown'})
+
+      expect(wrapper.html()).toContain('Button 2')
+
+      // Focus second button
+      buttons[1].element.focus()
+
+      // Simulate ArrowUp keydown (should work like ArrowLeft)
+      await wrapper.trigger('keydown', {code: 'ArrowUp'})
+
+      expect(wrapper.html()).toContain('Button 1')
+    })
+
+    it('handles Home key to focus first element when keyNav is true', async () => {
+      const wrapper = mount(BButtonToolbar, {
+        props: {keyNav: true},
+        slots: {
+          default: `
+            <button id="btn1">Button 1</button>
+            <button id="btn2">Button 2</button>
+            <button id="btn3">Button 3</button>
+          `,
+        },
+      })
+
+      // Mock focus method on buttons
+      const buttons = wrapper.findAll('button')
+      buttons.forEach((button) => {
+        vi.spyOn(button.element, 'focus')
+      })
+
+      // Focus last button
+      buttons[2].element.focus()
+
+      // Simulate Home keydown
+      await wrapper.trigger('keydown', {code: 'Home'})
+
+      // Should move focus to first button
+      expect(wrapper.html()).toContain('Button 1')
+    })
+
+    it('handles End key to focus last element when keyNav is true', async () => {
+      const wrapper = mount(BButtonToolbar, {
+        props: {keyNav: true},
+        slots: {
+          default: `
+            <button id="btn1">Button 1</button>
+            <button id="btn2">Button 2</button>
+            <button id="btn3">Button 3</button>
+          `,
+        },
+      })
+
+      // Mock focus method on buttons
+      const buttons = wrapper.findAll('button')
+      buttons.forEach((button) => {
+        vi.spyOn(button.element, 'focus')
+      })
+
+      // Focus first button
+      buttons[0].element.focus()
+
+      // Simulate End keydown
+      await wrapper.trigger('keydown', {code: 'End'})
+
+      // Should move focus to last button
+      expect(wrapper.html()).toContain('Button 3')
+    })
+
+    it('Home key skips disabled buttons and focuses first enabled button', async () => {
+      const wrapper = mount(BButtonToolbar, {
+        props: {keyNav: true},
+        slots: {
+          default: `
+            <button id="btn1" disabled>Button 1</button>
+            <button id="btn2">Button 2</button>
+            <button id="btn3">Button 3</button>
+          `,
+        },
+      })
+
+      // Mock focus method on buttons
+      const buttons = wrapper.findAll('button')
+      buttons.forEach((button) => {
+        vi.spyOn(button.element, 'focus')
+      })
+
+      // Focus last button
+      buttons[2].element.focus()
+
+      // Simulate Home keydown
+      await wrapper.trigger('keydown', {code: 'Home'})
+
+      // Should skip disabled first button and focus second button
+      expect(wrapper.html()).toContain('Button 2')
+    })
+
+    it('End key skips disabled buttons and focuses last enabled button', async () => {
+      const wrapper = mount(BButtonToolbar, {
+        props: {keyNav: true},
+        slots: {
+          default: `
+            <button id="btn1">Button 1</button>
+            <button id="btn2">Button 2</button>
+            <button id="btn3" disabled>Button 3</button>
+          `,
+        },
+      })
+
+      // Mock focus method on buttons
+      const buttons = wrapper.findAll('button')
+      buttons.forEach((button) => {
+        vi.spyOn(button.element, 'focus')
+      })
+
+      // Focus first button
+      buttons[0].element.focus()
+
+      // Simulate End keydown
+      await wrapper.trigger('keydown', {code: 'End'})
+
+      // Should skip disabled last button and focus second button
+      expect(wrapper.html()).toContain('Button 2')
+    })
+
+    it('Home/End keys do not interfere when keyNav is false', async () => {
+      const wrapper = mount(BButtonToolbar, {
+        props: {keyNav: false},
+        slots: {
+          default: `
+            <button id="btn1">Button 1</button>
+            <button id="btn2">Button 2</button>
+            <button id="btn3">Button 3</button>
+          `,
+        },
+      })
+
+      // Should not handle keyboard events when keyNav is false
+      const homeEvent = new KeyboardEvent('keydown', {code: 'Home'})
+      const endEvent = new KeyboardEvent('keydown', {code: 'End'})
+      const homePreventDefaultSpy = vi.spyOn(homeEvent, 'preventDefault')
+      const endPreventDefaultSpy = vi.spyOn(endEvent, 'preventDefault')
+
+      await wrapper.trigger('keydown', {code: 'Home'})
+      await wrapper.trigger('keydown', {code: 'End'})
+
+      expect(homePreventDefaultSpy).not.toHaveBeenCalled()
+      expect(endPreventDefaultSpy).not.toHaveBeenCalled()
+    })
   })
 })

@@ -36,7 +36,6 @@ const sharedSlotsScope: SlotScopeReference = {
 export default {
   load: (): ComponentReference => ({
     BCollapse: {
-      sourcePath: '/BCollapse/BCollapse.vue',
       props: {
         ...showHideProps,
         ...pick(buildCommonProps(), ['id', 'tag']),
@@ -71,14 +70,6 @@ export default {
               description: 'The event object',
             },
           },
-        },
-        'cancel': {
-          args: undefined,
-          description: undefined,
-        },
-        'ok': {
-          args: undefined,
-          description: undefined,
         },
       } satisfies EmitRecord<keyof BCollapseEmits | 'update:model-value'>,
       slots: {

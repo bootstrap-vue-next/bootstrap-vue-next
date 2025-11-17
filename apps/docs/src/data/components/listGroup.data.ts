@@ -12,7 +12,6 @@ import type {linkProps} from 'src/utils/linkProps'
 export default {
   load: (): ComponentReference => ({
     BListGroup: {
-      sourcePath: '/BListGroup/BListGroup.vue',
       props: {
         ...pick(buildCommonProps(), ['tag']),
         flush: {
@@ -23,8 +22,7 @@ export default {
         horizontal: {
           type: 'boolean | Breakpoint',
           default: false, // TODO item not in string format
-          description:
-            'When set, renders the list group horizontally rather than vertically',
+          description: 'When set, renders the list group horizontally rather than vertically',
         },
         numbered: {
           type: 'boolean',
@@ -39,7 +37,6 @@ export default {
       } satisfies SlotRecord<keyof BListGroupSlots>,
     },
     BListGroupItem: {
-      sourcePath: '/BListGroup/BListGroupItem.vue',
       props: {
         ...pick(buildCommonProps(), ['tag']),
         action: {

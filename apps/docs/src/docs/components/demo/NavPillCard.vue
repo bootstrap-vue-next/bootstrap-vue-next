@@ -9,9 +9,17 @@
         card-header
         pills
       >
-        <BNavItem active>Active</BNavItem>
-        <BNavItem>Inactive</BNavItem>
-        <BNavItem disabled>Disabled</BNavItem>
+        <BNavItem
+          active
+          href="#nav-pill-card"
+          >Active</BNavItem
+        >
+        <BNavItem href="#nav-pill-card">Inactive</BNavItem>
+        <BNavItem
+          disabled
+          href="#nav-pill-card"
+          >Disabled</BNavItem
+        >
       </BNav>
     </BCardHeader>
 

@@ -218,3 +218,12 @@ export const formGroupKey: InjectionKey<
     state: Readonly<Ref<ValidationState | undefined>>
   }
 > = createBvnInjectionKey('formGroupPlugin')
+
+export const formSelectKey: InjectionKey<{
+  modelValue: Readonly<Ref<unknown>>
+}> = createBvnInjectionKey('formSelect')
+// BTable keyboard navigation
+export const tableKeyboardNavigationKey: InjectionKey<{
+  rowNavigation: Readonly<Ref<boolean>>
+  headerNavigation: Readonly<Ref<boolean>>
+}> = createBvnInjectionKey('tableKeyboardNavigation')

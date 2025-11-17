@@ -72,12 +72,19 @@ export function buildPromise<TComponent, TParam, TArrayValue extends Orchestrato
         if (item.modelValue !== v.modelValue) {
           item['onUpdate:modelValue']?.(v.modelValue as boolean)
         }
-        store.value.splice(itemIndex, 1, {
+        const updatedItem = {
           ...v,
-          title: toValue((v as Record<string, unknown>).title),
-          body: toValue((v as Record<string, unknown>).body),
           modelValue: toValue(v.modelValue),
-        } as TArrayValue)
+        } as TArrayValue
+        // Only set title and body if they are defined in v
+        const vRecord = v as Record<string, unknown>
+        if ('title' in vRecord && vRecord.title !== undefined) {
+          ;(updatedItem as Record<string, unknown>).title = toValue(vRecord.title)
+        }
+        if ('body' in vRecord && vRecord.body !== undefined) {
+          ;(updatedItem as Record<string, unknown>).body = toValue(vRecord.body)
+        }
+        store.value.splice(itemIndex, 1, updatedItem)
       }
       return promise
     },

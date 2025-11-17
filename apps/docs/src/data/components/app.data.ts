@@ -4,7 +4,6 @@ import type {ComponentReference, PropRecord} from 'src/types'
 export default {
   load: (): ComponentReference => ({
     BApp: {
-      sourcePath: '/BApp/BApp.vue',
       props: {
         defaults: {
           type: 'Partial<BvnComponentProps> | Ref<Partial<BvnComponentProps>>',

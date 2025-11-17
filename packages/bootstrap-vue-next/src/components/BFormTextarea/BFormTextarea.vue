@@ -42,7 +42,7 @@ const _props = withDefaults(defineProps<Omit<BFormTextareaProps, 'modelValue'>>(
   autocomplete: undefined,
   autofocus: false,
   debounce: 0,
-  debounceMaxWait: NaN,
+  debounceMaxWait: Number.NaN,
   disabled: false,
   form: undefined,
   formatter: undefined,

@@ -10,7 +10,7 @@
     >
       <BCardText>Header and footers using props.</BCardText>
       <BButton
-        href="#"
+        href="#card-header-footer"
         variant="primary"
         >Go somewhere</BButton
       >
@@ -25,7 +25,7 @@
       </template>
       <BCardText>Header and footers using slots.</BCardText>
       <BButton
-        href="#"
+        href="#card-header-footer"
         variant="primary"
         >Go somewhere</BButton
       >

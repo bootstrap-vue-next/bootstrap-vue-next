@@ -171,7 +171,7 @@ const inInputGroup = inject(inputGroupKey, false)
 const inButtonGroup = inject(buttonGroupKey, false)
 
 const computedOffset = computed(() =>
-  typeof props.offset === 'string' || typeof props.offset === 'number' ? props.offset : NaN
+  typeof props.offset === 'string' || typeof props.offset === 'number' ? props.offset : Number.NaN
 )
 const offsetToNumber = useToNumber(computedOffset)
 

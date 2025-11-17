@@ -7,7 +7,13 @@
         :class="value.class"
         :style="value.style"
       >
-        <TransitionGroup name="b-list">
+        <TransitionGroup
+          :name="
+            items?.filter((el) => el.position === key)?.some((el) => el.type === 'toast')
+              ? 'b-list'
+              : undefined
+          "
+        >
           <!-- eslint-disable vue/no-unused-vars -->
           <span
             v-for="{

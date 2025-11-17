@@ -13,7 +13,6 @@ import {type ComponentReference, type PropRecord, type SlotRecord, StyleKind} fr
 export default {
   load: (): ComponentReference => ({
     BPlaceholder: {
-      sourcePath: '/BPlaceholder/BPlaceholder.vue',
       props: {
         animation: {
           type: 'PlaceholderAnimation',
@@ -21,7 +20,7 @@ export default {
         },
         cols: {
           type: 'Numberish',
-          default: 12, // TODO item not in string format
+          default: 12,
         },
         size: {
           type: 'PlaceholderSize',
@@ -32,8 +31,8 @@ export default {
           default: 'span',
         },
         variant: {
-          type: 'ColorVariant | null',
-          default: null, // TODO item not in string format
+          type: 'BgColorVariant | null',
+          default: null,
         },
         width: {
           type: 'Numberish',
@@ -49,7 +48,6 @@ export default {
     },
     BPlaceholderCard: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.card'},
-      sourcePath: '/BPlaceholder/BPlaceholderCard.vue',
       props: {
         animation: {
           type: 'PlaceholderAnimation',
@@ -69,7 +67,7 @@ export default {
         },
         footerWidth: {
           type: 'Numberish',
-          default: 100, // TODO item not in string format
+          default: 100,
         },
         headerAnimation: {
           type: 'PlaceholderAnimation',
@@ -85,7 +83,7 @@ export default {
         },
         headerWidth: {
           type: 'Numberish',
-          default: 100, // TODO item not in string format
+          default: 100,
         },
         imgBlankColor: {
           type: 'string',
@@ -97,7 +95,7 @@ export default {
         },
         imgHeight: {
           type: 'Numberish',
-          default: 100, // TODO item not in string format
+          default: 100,
         },
         imgSrc: {
           type: 'string',
@@ -105,19 +103,19 @@ export default {
         },
         noButton: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
         },
         noFooter: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
         },
         noHeader: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
         },
         noImg: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
         },
         size: {
           type: 'PlaceholderSize',
@@ -150,12 +148,11 @@ export default {
     },
     BPlaceholderWrapper: {
       styleSpec: {kind: StyleKind.None},
-      sourcePath: '/BPlaceholder/BPlaceholderWrapper.vue',
       props: {
         loading: {
           description: 'Determines whether the loading slot is displayed',
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
         },
       } satisfies PropRecord<keyof BPlaceholderWrapperProps>,
       emits: {},
@@ -172,7 +169,6 @@ export default {
     },
     BPlaceholderTable: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.table'},
-      sourcePath: '/BPlaceholder/BPlaceholderTable.vue',
       props: {
         animation: {
           type: 'PlaceholderAnimation',
@@ -180,11 +176,11 @@ export default {
         },
         cellWidth: {
           type: 'Numberish',
-          default: 100, // TODO item not in string format
+          default: 100,
         },
         columns: {
           type: 'Numberish',
-          default: 5, // TODO item not in string format
+          default: 5,
         },
         footerAnimation: {
           type: 'PlaceholderAnimation',
@@ -192,7 +188,7 @@ export default {
         },
         footerCellWidth: {
           type: 'Numberish',
-          default: 100, // TODO item not in string format
+          default: 100,
         },
         footerColumns: {
           type: 'Numberish',
@@ -212,7 +208,7 @@ export default {
         },
         headerCellWidth: {
           type: 'Numberish',
-          default: 100, // TODO item not in string format
+          default: 100,
         },
         headerColumns: {
           type: 'Numberish',
@@ -228,15 +224,15 @@ export default {
         },
         noHeader: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
         },
         rows: {
           type: 'Numberish',
-          default: 3, // TODO item not in string format
+          default: 3,
         },
         showFooter: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
         },
         size: {
           type: 'PlaceholderSize',
@@ -265,7 +261,6 @@ export default {
     },
     BPlaceholderButton: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.placeholder.btn'},
-      sourcePath: '/BPlaceholder/BPlaceholderButton.vue',
       props: {
         animation: {
           type: 'PlaceholderAnimation',
