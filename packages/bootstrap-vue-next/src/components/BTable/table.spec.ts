@@ -1345,4 +1345,79 @@ describe('provider debouncing', () => {
     // Previous calls should have been aborted
     expect(abortedCount).toBeGreaterThan(0)
   })
+
+  it('does not set busy to false when first provider finishes while second is still running', async () => {
+    let callCount = 0
+
+    const provider = vi.fn(async (context: Readonly<BTableProviderContext>) => {
+      callCount++
+      const currentCall = callCount
+
+      if (currentCall === 2) {
+        // First call after mount: delay and get aborted
+        return new Promise<typeof simpleItems>((resolve, reject) => {
+          const timeout = setTimeout(() => {
+            resolve(simpleItems)
+          }, 150)
+
+          context.signal.addEventListener('abort', () => {
+            clearTimeout(timeout)
+            reject(new Error('AbortError'))
+          })
+        }).catch((error) => {
+          // Silently handle AbortError in test
+          if (error.message === 'AbortError') {
+            return simpleItems
+          }
+          throw error
+        })
+      } else if (currentCall === 3) {
+        // Second call: longer delay
+        return new Promise<typeof simpleItems>((resolve) => {
+          setTimeout(() => {
+            resolve(simpleItems)
+          }, 300)
+        })
+      }
+
+      // Initial mount call
+      return simpleItems
+    })
+
+    const wrapper = mount(BTable, {
+      props: {
+        provider,
+        fields: simpleFields,
+        debounce: 0, // No debounce for this test
+      },
+    })
+
+    const $table = wrapper.find('table')
+
+    // Wait for initial mount call
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    expect($table.classes()).not.toContain('b-table-busy') // Should not be busy after initial call
+
+    // Trigger first provider call
+    await wrapper.setProps({filter: 'first'})
+    await new Promise((resolve) => setTimeout(resolve, 20))
+    expect($table.classes()).toContain('b-table-busy') // Should be busy while first call is running
+
+    // Trigger second provider call while first is still running
+    await wrapper.setProps({filter: 'second'})
+    await new Promise((resolve) => setTimeout(resolve, 20))
+    expect($table.classes()).toContain('b-table-busy') // Should still be busy
+
+    // Wait for first provider to finish being aborted
+    await new Promise((resolve) => setTimeout(resolve, 200))
+
+    // The busy state should still be true because the second provider is still running
+    expect($table.classes()).toContain('b-table-busy')
+
+    // Wait for second provider to complete
+    await new Promise((resolve) => setTimeout(resolve, 200))
+
+    // Now busy should be false
+    expect($table.classes()).not.toContain('b-table-busy')
+  })
 })
