@@ -52,6 +52,9 @@ jobs:
       - name: Run publint
         run: pnpm --filter bootstrap-vue-next run publint
 
+      - name: Run publint on Nuxt package
+        run: pnpm --filter @bootstrap-vue-next/nuxt run publint
+
       - run: pnpx pkg-pr-new publish './packages/bootstrap-vue-next' './packages/nuxt' --template './templates/vite'
 
   test-lint:
