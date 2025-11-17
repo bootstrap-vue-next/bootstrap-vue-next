@@ -592,6 +592,10 @@ for proper reactive detection of changes to its value. Read more about
 [how reactivity works in Vue](https://vuejs.org/guide/extras/reactivity-in-depth.html#Change-Detection-Caveats).
 :::
 
+::: info NOTE
+When using the `primary-key` prop, row details will persist even when items are replaced with new object references, as long as the primary key value remains the same. This allows row details to stay open in scenarios like "Load more" or pagination. Without a `primary-key`, the component uses a `WeakMap` for memory efficiency, and row details will close when items are garbage collected or replaced with new object references.
+:::
+
 **Available `row-details` scoped variable properties:**
 
 | Property        | Type                       | Description                                                                                                                   |
