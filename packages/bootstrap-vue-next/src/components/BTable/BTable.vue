@@ -155,7 +155,7 @@
 </template>
 
 <script setup lang="ts" generic="Items">
-import {useDebounceFn, useToNumber} from '@vueuse/core'
+import {useToNumber} from '@vueuse/core'
 import {computed, onMounted, provide, type Ref, ref, watch} from 'vue'
 import {formatItem} from '../../utils/formatItem'
 import BTableLite from './BTableLite.vue'
@@ -189,6 +189,7 @@ import {
 import {useId} from '../../composables/useId'
 import type {BTableSlots, CamelCase} from '../../types'
 import {tableKeyboardNavigationKey} from '../../utils/keys'
+import {useDebounceFn} from '../../utils/debounce'
 
 const _props = withDefaults(
   defineProps<Omit<BTableProps<Items>, 'sortBy' | 'busy' | 'selectedItems'>>(),
@@ -216,6 +217,8 @@ const _props = withDefaults(
     busyLoadingText: 'Loading...',
     currentPage: 1,
     sortCompare: undefined,
+    debounce: 0,
+    debounceMaxWait: Number.NaN,
     // BTableLite props
     items: () => [],
     fields: () => [],
@@ -365,6 +368,8 @@ const internalItems: Ref<Items[]> = ref([])
 
 const perPageNumber = useToNumber(() => props.perPage, {method: 'parseInt'})
 const currentPageNumber = useToNumber(() => props.currentPage, {method: 'parseInt'})
+const debounceNumber = useToNumber(() => props.debounce ?? 0, {nanToZero: true})
+const debounceMaxWaitNumber = useToNumber(() => props.debounceMaxWait ?? Number.NaN)
 
 const isFilterableTable = computed(() => !!props.filter)
 const usesProvider = computed(() => props.provider !== undefined)
@@ -757,20 +762,41 @@ const handleFieldSorting = (field: TableField<Items>) => {
   emit('sorted', props.multisort === true ? handleMultiSort() : handleSingleSort())
 }
 
+// AbortController for canceling previous provider requests
+let abortController: AbortController | null = null
+
 const callItemsProvider = async () => {
   if (!usesProvider.value || props.provider === undefined || busyModel.value) return
+
+  // Cancel any previous request
+  if (abortController) {
+    abortController.abort()
+  }
+
+  // Create a new AbortController for this request
+  abortController = new AbortController()
+  const {signal} = abortController
+
   busyModel.value = true
   const response = props.provider({
     currentPage: currentPageNumber.value,
     filter: props.filter,
     sortBy: sortByModel.value,
     perPage: perPageNumber.value,
+    signal,
   })
   try {
     const items = response instanceof Promise ? await response : response
 
+    // Check if this request was aborted
+    if (signal.aborted) return
+
     if (items === undefined) return
     internalItems.value = items
+  } catch (error) {
+    // Ignore AbortError, re-throw others
+    if (error instanceof Error && error.name === 'AbortError') return
+    throw error
   } finally {
     // Potential race condition could occur if the user explicitly sets the busy value to a different value while the response promise is executing
     // which would have been the users choice.
@@ -780,7 +806,9 @@ const callItemsProvider = async () => {
 }
 
 // Debounced version of callItemsProvider for filter changes to prevent rapid successive calls
-const debouncedCallItemsProvider = useDebounceFn(callItemsProvider, 300)
+const debouncedCallItemsProvider = useDebounceFn(callItemsProvider, () => debounceNumber.value, {
+  maxWait: () => debounceMaxWaitNumber.value,
+})
 
 const providerPropsWatch = async (prop: string, val: unknown, oldVal: unknown) => {
   if (deepEqual(val, oldVal)) return
@@ -799,12 +827,8 @@ const providerPropsWatch = async (prop: string, val: unknown, oldVal: unknown) =
   if (noProvideWhenPaging || noProvideWhenFiltering || noProvideWhenSorting) return
 
   if (usesProvider.value === true) {
-    // Use debounced version for filter changes to avoid rapid successive calls
-    if (prop === 'filter') {
-      await debouncedCallItemsProvider()
-    } else {
-      await callItemsProvider()
-    }
+    // Always use debounced version (when debounce is 0, it's immediate)
+    await debouncedCallItemsProvider()
   }
 
   if (!(prop === 'currentPage' || prop === 'perPage')) {

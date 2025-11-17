@@ -1,7 +1,7 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it, vi} from 'vitest'
 import BTable from './BTable.vue'
-import type {BTableSortBy, TableField, TableItem} from '../../types'
+import type {BTableProviderContext, BTableSortBy, TableField, TableItem} from '../../types'
 import {nextTick} from 'vue'
 
 interface SimplePerson {
@@ -1219,7 +1219,7 @@ describe('initial sort direction', () => {
 })
 
 describe('provider debouncing', () => {
-  it('debounces provider calls when filter changes rapidly', async () => {
+  it('debounces provider calls when debounce prop is set', async () => {
     const providerCallCounts: number[] = []
     let callCount = 0
 
@@ -1233,6 +1233,7 @@ describe('provider debouncing', () => {
       props: {
         provider,
         fields: simpleFields,
+        debounce: 300, // Set 300ms debounce
       },
     })
 
@@ -1254,7 +1255,7 @@ describe('provider debouncing', () => {
     expect(finalCalls).toBeGreaterThan(initialCalls) // But at least one call was made
   })
 
-  it('does not debounce provider calls when pagination changes', async () => {
+  it('does not debounce provider calls when debounce is 0 (default)', async () => {
     let callCount = 0
 
     const provider = vi.fn(async () => {
@@ -1266,7 +1267,7 @@ describe('provider debouncing', () => {
       props: {
         provider,
         fields: simpleFields,
-        perPage: 2,
+        // debounce defaults to 0 (immediate)
       },
     })
 
@@ -1274,24 +1275,24 @@ describe('provider debouncing', () => {
     await new Promise((resolve) => setTimeout(resolve, 50))
     const initialCalls = callCount
 
-    // Change page - this should NOT be debounced
-    await wrapper.setProps({currentPage: 2})
+    // Change filter - with debounce=0, this should be immediate
+    await wrapper.setProps({filter: 'a'})
     await nextTick()
 
-    // Should be called immediately without debounce
+    // Should be called immediately
     await new Promise((resolve) => setTimeout(resolve, 50))
     expect(callCount).toBe(initialCalls + 1)
   })
 
-  it('does not debounce provider calls when sortBy changes', async () => {
-    let callCount = 0
+  it('supports AbortSignal in provider context', async () => {
+    let receivedSignal: AbortSignal | undefined
 
-    const provider = vi.fn(async () => {
-      callCount++
+    const provider = vi.fn(async (context: Readonly<BTableProviderContext>) => {
+      receivedSignal = context.signal
       return simpleItems
     })
 
-    const wrapper = mount(BTable, {
+    mount(BTable, {
       props: {
         provider,
         fields: simpleFields,
@@ -1300,14 +1301,48 @@ describe('provider debouncing', () => {
 
     // Wait for initial mount call
     await new Promise((resolve) => setTimeout(resolve, 50))
-    const initialCalls = callCount
 
-    // Change sort - this should NOT be debounced
-    await wrapper.setProps({sortBy: [{key: 'first_name', order: 'asc'}] as BTableSortBy[]})
-    await nextTick()
+    // Signal should be present
+    expect(receivedSignal).toBeDefined()
+    expect(receivedSignal).toBeInstanceOf(AbortSignal)
+  })
 
-    // Should be called immediately without debounce
+  it('cancels previous provider call when new one is triggered', async () => {
+    let abortedCount = 0
+    const provider = vi.fn(
+      async (context: Readonly<BTableProviderContext>) =>
+        new Promise<typeof simpleItems>((resolve, reject) => {
+          const timeout = setTimeout(() => resolve(simpleItems), 100)
+          context.signal?.addEventListener('abort', () => {
+            clearTimeout(timeout)
+            abortedCount++
+            reject(new Error('AbortError'))
+          })
+        })
+    )
+
+    const wrapper = mount(BTable, {
+      props: {
+        provider,
+        fields: simpleFields,
+        debounce: 300,
+      },
+    })
+
+    // Wait for initial mount call
     await new Promise((resolve) => setTimeout(resolve, 50))
-    expect(callCount).toBe(initialCalls + 1)
+
+    // Rapidly change filter - this should abort previous calls
+    await wrapper.setProps({filter: 'a'})
+    await new Promise((resolve) => setTimeout(resolve, 10))
+    await wrapper.setProps({filter: 'ab'})
+    await new Promise((resolve) => setTimeout(resolve, 10))
+    await wrapper.setProps({filter: 'abc'})
+
+    // Wait for final debounced call to complete
+    await new Promise((resolve) => setTimeout(resolve, 500))
+
+    // Previous calls should have been aborted
+    expect(abortedCount).toBeGreaterThan(0)
   })
 })
