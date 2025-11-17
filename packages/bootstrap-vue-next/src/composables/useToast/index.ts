@@ -24,7 +24,7 @@ import {BToast} from '../../components'
 const posDefault: ContainerPosition = 'top-end'
 
 export const useToast = () => {
-  const orchestratorRegistry = inject(orchestratorRegistryKey)
+  const orchestratorRegistry = inject(orchestratorRegistryKey, null)
   if (!orchestratorRegistry) {
     throw new Error(
       'useToast() must be called within setup(), and BApp, useRegistry or plugin must be installed/provided.'

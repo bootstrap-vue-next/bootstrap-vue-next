@@ -33,7 +33,7 @@ const computedClasses = computed(() => ({
   disabled: props.disabled,
 }))
 
-const showHideData = inject(showHideRegistryKey, undefined)
+const showHideData = inject(showHideRegistryKey, null)
 
 const collapseExpanded = computed(() => {
   if (!props.target || !showHideData) return false

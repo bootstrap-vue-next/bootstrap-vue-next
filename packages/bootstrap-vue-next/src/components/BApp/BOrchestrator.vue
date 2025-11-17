@@ -88,7 +88,7 @@ const props = withDefaults(defineProps<BOrchestratorProps>(), {
   filter: () => true,
 })
 
-const orchestratorRegistry = inject(orchestratorRegistryKey)
+const orchestratorRegistry = inject(orchestratorRegistryKey, null)
 
 if (orchestratorRegistry) {
   if (!orchestratorRegistry._isOrchestratorInstalled.value) {

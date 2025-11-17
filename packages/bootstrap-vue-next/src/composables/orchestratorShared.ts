@@ -125,7 +125,7 @@ export const _newOrchestratorRegistry = (): {
 })
 
 export const useOrchestratorRegistry = () => {
-  const orchestratorRegistry = inject(orchestratorRegistryKey, undefined)
+  const orchestratorRegistry = inject(orchestratorRegistryKey, null)
 
   if (orchestratorRegistry) {
     return orchestratorRegistry

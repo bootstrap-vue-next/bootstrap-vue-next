@@ -197,9 +197,9 @@ const {
   backdropVisible,
   isVisible,
   buildTriggerableEvent,
-  localNoAnimation,
   isLeaving,
   trapActive,
+  setLocalNoAnimation,
 } = useShowHide(modelValue, props, emit as EmitFn, element, computedId, {
   transitionProps: {
     onAfterEnter,
@@ -293,7 +293,7 @@ watch(smallerOrEqualToBreakpoint, (newValue) => {
   if (props.responsive === undefined) return
   if (newValue === true) {
     const opened = false
-    localNoAnimation.value = true
+    setLocalNoAnimation(true)
     requestAnimationFrame(() => {
       isOpenByBreakpoint.value = opened
     })
@@ -301,7 +301,7 @@ watch(smallerOrEqualToBreakpoint, (newValue) => {
     emit('hide', buildTriggerableEvent('hide'))
   } else {
     const opened = true
-    localNoAnimation.value = true
+    setLocalNoAnimation(true)
     requestAnimationFrame(() => {
       isOpenByBreakpoint.value = opened
     })

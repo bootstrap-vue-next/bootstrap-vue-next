@@ -24,7 +24,7 @@ import {BPopover, BTooltip} from '../../components'
 import {buildPromise} from '../orchestratorShared'
 
 export const usePopover = () => {
-  const orchestratorRegistry = inject(orchestratorRegistryKey)
+  const orchestratorRegistry = inject(orchestratorRegistryKey, null)
   if (!orchestratorRegistry) {
     throw new Error(
       'usePopover() must be called within setup(), and BApp, useRegistry or plugin must be installed/provided.'

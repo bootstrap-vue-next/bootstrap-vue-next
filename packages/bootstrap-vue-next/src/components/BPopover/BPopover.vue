@@ -259,30 +259,6 @@ const {floatingStyles, middlewareData, placement, update} = useFloating(
 
 const arrowStyle = ref<CSSProperties>({position: 'absolute'})
 
-watch(middlewareData, (newValue) => {
-  if (props.noHide === false) {
-    if (newValue.hide?.referenceHidden && !hidden.value && showRef.value) {
-      if (props.closeOnHide && !props.noAutoClose && !props.manual) {
-        throttleHide('close-on-hide')
-      } else {
-        localTemporaryHide.value = true
-        hidden.value = true
-      }
-    } else if (localTemporaryHide.value && !newValue.hide?.referenceHidden) {
-      localTemporaryHide.value = false
-      hidden.value = false
-    }
-  }
-  if (newValue.arrow) {
-    const {x, y} = newValue.arrow
-    arrowStyle.value = {
-      position: 'absolute',
-      top: y ? `${y}px` : '',
-      left: x ? `${x}px` : '',
-    }
-  }
-})
-
 let cleanup: ReturnType<typeof autoUpdate> | undefined
 const {
   showRef,
@@ -297,6 +273,7 @@ const {
   isActive,
   renderRef,
   localTemporaryHide,
+  setLocalTemporaryHide,
 } = useShowHide(modelValue, props, emit as EmitFn, floatingElement, computedId, {
   showFn: () => {
     update()
@@ -315,6 +292,30 @@ const {
       cleanup = undefined
     }
   },
+})
+
+watch(middlewareData, (newValue) => {
+  if (props.noHide === false) {
+    if (newValue.hide?.referenceHidden && !hidden.value && showRef.value) {
+      if (props.closeOnHide && !props.noAutoClose && !props.manual) {
+        throttleHide('close-on-hide')
+      } else {
+        setLocalTemporaryHide(true)
+        hidden.value = true
+      }
+    } else if (localTemporaryHide.value && !newValue.hide?.referenceHidden) {
+      setLocalTemporaryHide(false)
+      hidden.value = false
+    }
+  }
+  if (newValue.arrow) {
+    const {x, y} = newValue.arrow
+    arrowStyle.value = {
+      position: 'absolute',
+      top: y ? `${y}px` : '',
+      left: x ? `${x}px` : '',
+    }
+  }
 })
 
 const computedClasses = computed(() => {
