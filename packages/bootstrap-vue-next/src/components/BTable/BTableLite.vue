@@ -120,9 +120,7 @@
                 :field="field"
                 :items="items"
                 :toggle-details="() => toggleRowDetails(item)"
-                :details-showing="
-                  isTableItem(item) ? (detailsMap.get(getDetailsMapKey(item)) ?? false) : false
-                "
+                :details-showing="isTableItem(item) ? (getDetailsValue(item) ?? false) : false"
               >
                 <template v-if="!slots[`cell(${String(field.key)})`] && !slots['cell()']">
                   {{ formatItem(item, String(field.key), field.formatter) }}
@@ -132,11 +130,7 @@
           </BTr>
 
           <template
-            v-if="
-              isTableItem(item) &&
-              detailsMap.get(getDetailsMapKey(item)) === true &&
-              slots['row-details']
-            "
+            v-if="isTableItem(item) && getDetailsValue(item) === true && slots['row-details']"
           >
             <BTr aria-hidden="true" role="presentation" class="d-none" />
             <BTr
@@ -313,7 +307,43 @@ const generateDetailsItem = (item: TableItem): [object | string, boolean | undef
   // Fall back to object reference
   return [item, item._showDetails]
 }
-const detailsMap = ref(new Map<object | string, boolean | undefined>())
+
+// Use WeakMap when no primaryKey (for memory efficiency), Map when primaryKey is defined (to support strings)
+const detailsMap = ref<
+  Map<object | string, boolean | undefined> | WeakMap<object, boolean | undefined>
+>(props.primaryKey ? new Map() : new WeakMap())
+
+// Helper functions for type-safe map operations
+const hasDetailsValue = (key: object | string): boolean => {
+  if (typeof key === 'string') {
+    // When using string keys, we must be using a Map
+    return (detailsMap.value as Map<object | string, boolean | undefined>).has(key)
+  }
+  // When using object keys, could be either Map or WeakMap
+  return detailsMap.value.has(key)
+}
+
+const setDetailsValueByKey = (key: object | string, value: boolean | undefined): void => {
+  if (typeof key === 'string') {
+    // When using string keys, we must be using a Map
+    ;(detailsMap.value as Map<object | string, boolean | undefined>).set(key, value)
+  } else {
+    // When using object keys, could be either Map or WeakMap
+    detailsMap.value.set(key, value)
+  }
+}
+
+// Watch for primaryKey changes and recreate the map
+watch(
+  () => props.primaryKey,
+  (newKey, oldKey) => {
+    // If primaryKey changes, clear and recreate the map with the appropriate type
+    if (newKey !== oldKey) {
+      detailsMap.value = newKey ? new Map() : new WeakMap()
+    }
+  }
+)
+
 watch(
   () => props.items,
   (items) => {
@@ -322,8 +352,8 @@ watch(
       const [key, showDetails] = generateDetailsItem(item)
       // Only set if not already in map, or if _showDetails is explicitly set
       // This preserves toggled state when items are replaced with same primary key
-      if (!detailsMap.value.has(key) || showDetails !== undefined) {
-        detailsMap.value.set(key, showDetails)
+      if (!hasDetailsValue(key) || showDetails !== undefined) {
+        setDetailsValueByKey(key, showDetails)
       }
     })
   },
@@ -419,11 +449,25 @@ const getDetailsMapKey = (item: Items): object | string => {
   return item as object
 }
 
+const getDetailsValue = (item: Items): boolean | undefined => {
+  const key = getDetailsMapKey(item)
+  if (typeof key === 'string') {
+    // When using string keys, we must be using a Map
+    return (detailsMap.value as Map<object | string, boolean | undefined>).get(key)
+  }
+  // When using object keys, could be either Map or WeakMap
+  return detailsMap.value.get(key)
+}
+
+const setDetailsValue = (item: Items, value: boolean | undefined): void => {
+  const key = getDetailsMapKey(item)
+  setDetailsValueByKey(key, value)
+}
+
 const toggleRowDetails = (tr: Items) => {
   if (isTableItem(tr)) {
-    const mapKey = getDetailsMapKey(tr)
-    const prevValue = detailsMap.value.get(mapKey)
-    detailsMap.value.set(mapKey, !prevValue)
+    const prevValue = getDetailsValue(tr)
+    setDetailsValue(tr, !prevValue)
     tr._showDetails = !prevValue
   }
 }

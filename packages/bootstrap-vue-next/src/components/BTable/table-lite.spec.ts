@@ -604,6 +604,113 @@ describe('btablelite', () => {
       expect(wrapper.text()).not.toContain('Details for Jane')
       expect(wrapper.text()).not.toContain('Details for Bob')
     })
+
+    it('clears details when primaryKey prop changes', async () => {
+      const fields = [{key: 'actions', label: 'Actions', sortable: false}]
+      const wrapper = mount(BTableLite, {
+        props: {
+          primaryKey: 'id',
+          items: [
+            {id: 1, altId: 'a', name: 'John'},
+            {id: 2, altId: 'b', name: 'Jane'},
+          ],
+          fields,
+        },
+        slots: {
+          'cell(actions)':
+            '<template #cell(actions)="row"><button class="toggle-btn" @click="row.toggleDetails"></button></template>',
+          'row-details': '<template #row-details="row">Details for {{ row.item.name }}</template>',
+        },
+      })
+
+      // Open details for the first row
+      const buttons = wrapper.findAll('.toggle-btn')
+      await buttons[0].trigger('click')
+      expect(wrapper.text()).toContain('Details for John')
+
+      // Change primaryKey to a different field
+      await wrapper.setProps({
+        primaryKey: 'altId',
+      })
+
+      // Details should be closed after primaryKey changes
+      expect(wrapper.text()).not.toContain('Details for John')
+      expect(wrapper.text()).not.toContain('Details for Jane')
+    })
+
+    it('clears details when primaryKey is removed', async () => {
+      const fields = [{key: 'actions', label: 'Actions', sortable: false}]
+      const wrapper = mount(BTableLite, {
+        props: {
+          primaryKey: 'id',
+          items: [
+            {id: 1, name: 'John'},
+            {id: 2, name: 'Jane'},
+          ],
+          fields,
+        },
+        slots: {
+          'cell(actions)':
+            '<template #cell(actions)="row"><button class="toggle-btn" @click="row.toggleDetails"></button></template>',
+          'row-details': '<template #row-details="row">Details for {{ row.item.name }}</template>',
+        },
+      })
+
+      // Open details for the first row
+      const buttons = wrapper.findAll('.toggle-btn')
+      await buttons[0].trigger('click')
+      expect(wrapper.text()).toContain('Details for John')
+
+      // Remove primaryKey
+      await wrapper.setProps({
+        primaryKey: undefined,
+      })
+
+      // Details should be closed after primaryKey is removed
+      expect(wrapper.text()).not.toContain('Details for John')
+      expect(wrapper.text()).not.toContain('Details for Jane')
+    })
+
+    it('clears details when primaryKey is changed and then changed back', async () => {
+      const fields = [{key: 'actions', label: 'Actions', sortable: false}]
+      const wrapper = mount(BTableLite, {
+        props: {
+          primaryKey: 'id',
+          items: [
+            {id: 1, altId: 'a', name: 'John'},
+            {id: 2, altId: 'b', name: 'Jane'},
+          ],
+          fields,
+        },
+        slots: {
+          'cell(actions)':
+            '<template #cell(actions)="row"><button class="toggle-btn" @click="row.toggleDetails"></button></template>',
+          'row-details': '<template #row-details="row">Details for {{ row.item.name }}</template>',
+        },
+      })
+
+      // Open details for the first row
+      const buttons = wrapper.findAll('.toggle-btn')
+      await buttons[0].trigger('click')
+      expect(wrapper.text()).toContain('Details for John')
+
+      // Change primaryKey to a different field
+      await wrapper.setProps({
+        primaryKey: 'altId',
+      })
+
+      // Details should be closed after primaryKey changes
+      expect(wrapper.text()).not.toContain('Details for John')
+
+      // Change primaryKey back to original
+      await wrapper.setProps({
+        primaryKey: 'id',
+      })
+
+      // Details should still be closed (map was cleared)
+      expect(wrapper.text()).not.toContain('Details for John')
+      expect(wrapper.text()).not.toContain('Details for Jane')
+    })
   })
   describe('isRowHeader field property', () => {
     it('sets td/th appropriately based on isRowHeader is true, false, or undefined', async () => {
