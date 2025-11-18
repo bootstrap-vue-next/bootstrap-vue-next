@@ -6,7 +6,7 @@
 
 <h1 align="center">BootstrapVueNext</h1>
 
-<p align="center">Early (but lovely) implementation of Vue 3, Bootstrap 5 and Typescript</p>
+<p align="center">Seamless integration of Vue 3, Bootstrap 5, and TypeScript for modern, type-safe UI development</p>
 
 <br>
 
