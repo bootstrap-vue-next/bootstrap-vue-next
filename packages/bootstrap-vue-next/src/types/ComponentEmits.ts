@@ -45,11 +45,11 @@ export interface BToastEmits extends showHideEmits {
 }
 
 export interface BTableEmits<Items> extends BTableLiteEmits<Items> {
-  'filtered': [value: Items[]]
+  'filtered': [value: readonly Items[]]
   'row-selected': [value: Items]
   'row-unselected': [value: Items]
   'sorted': [value: BTableSortBy]
-  'change': [value: Items[]]
+  'change': [value: readonly Items[]]
 }
 
 export interface BTableLiteEmits<Items> {
@@ -111,7 +111,7 @@ export type BFormTagsEmits = {
   'focus': [value: FocusEvent]
   'focusin': [value: FocusEvent]
   'focusout': [value: FocusEvent]
-  'tag-state': [...args: string[][]]
+  'tag-state': [...args: readonly string[][]]
 }
 
 export type BLinkEmits = {

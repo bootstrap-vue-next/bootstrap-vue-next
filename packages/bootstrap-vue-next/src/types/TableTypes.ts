@@ -21,13 +21,16 @@ export const isTableItem = (value: unknown): value is TableItem =>
  */
 export type BTableSortByOrder = 'desc' | 'asc' | undefined
 
+export type BTableSelectMode = 'single' | 'multi' | 'range'
+
 /**
  * Initial sort direction for table fields. Includes 'last' option to maintain the direction of the previously sorted column.
  */
 export type BTableInitialSortDirection = 'desc' | 'asc' | 'last'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type BTableSortByComparerFunction<T = any> = (a: T, b: T, key: string) => number
+export type BTableSortByComparerFunction<T> = (a: T, b: T, key: string) => number
+
+export type BTableFilterFunction<T> = (item: Readonly<T>, filter: string | undefined) => boolean
 
 export type BTableSortBy = {
   order: BTableSortByOrder
@@ -35,7 +38,7 @@ export type BTableSortBy = {
 }
 
 export type BTableProviderContext = {
-  sortBy: BTableSortBy[] | undefined
+  sortBy: readonly BTableSortBy[] | undefined
   filter: string | undefined
   currentPage: number
   perPage: number
@@ -44,14 +47,14 @@ export type BTableProviderContext = {
 
 export type BTableProvider<T> = (
   context: Readonly<BTableProviderContext>
-) => MaybePromise<T[] | undefined>
+) => MaybePromise<readonly T[] | undefined>
 
 export type TableFieldFormatter<T> = (value: unknown, key: string, item: T) => string
 
 export type TableRowType = 'row' | 'row-details' | 'row-top' | 'row-bottom' | 'table-busy'
 export type TableRowThead = 'top' | 'bottom'
 
-export type TableStrictClassValue = string | unknown[] | Record<string, boolean>
+export type TableStrictClassValue = string | readonly unknown[] | Record<string, boolean>
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TableField<T = any> = {
@@ -86,10 +89,10 @@ export type TableFieldRaw<T = unknown> = T extends object
   ? LiteralUnion<keyof T> | TableField<T>
   : string | TableField
 
-export const isTableField = <T>(value: unknown): value is TableField<T> =>
+export const isTableField = (value: unknown): value is TableField =>
   typeof value === 'object' && value !== null && 'key' in value
 
-export const isTableFieldRaw = <T>(value: unknown): value is TableFieldRaw<T> =>
+export const isTableFieldRaw = (value: unknown): value is TableFieldRaw =>
   typeof value === 'string' || isTableField(value)
 
 export type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
