@@ -34,7 +34,7 @@
     "eslint-plugin-vue": "^10.3.0",
     "markdown-it": "^14.1.0",
     "prettier": "^3.6.2",
-    "typescript": "^5.8.3",
+    "typescript": "^5.9.3",
     "unplugin-icons": "^22.1.0",
     "unplugin-vue-components": "^28.8.0",
     "vitepress": "1.6.3",

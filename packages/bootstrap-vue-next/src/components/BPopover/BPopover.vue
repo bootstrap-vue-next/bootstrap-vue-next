@@ -70,6 +70,7 @@ import {
 import {onClickOutside, useToNumber} from '@vueuse/core'
 import {
   computed,
+  type ComputedRef,
   type CSSProperties,
   type EmitFn,
   nextTick,
@@ -168,7 +169,7 @@ const rootBoundary = computed<RootBoundary | undefined>(() =>
 )
 
 const sizeStyles = ref<CSSProperties>({})
-const floatingMiddleware = computed<Middleware[]>(() => {
+const floatingMiddleware = computed<readonly Middleware[]>(() => {
   if (props.floatingMiddleware !== undefined) {
     return props.floatingMiddleware
   }
@@ -252,7 +253,7 @@ const {floatingStyles, middlewareData, placement, update} = useFloating(
   floatingElement,
   {
     placement: placementRef,
-    middleware: floatingMiddleware,
+    middleware: floatingMiddleware as ComputedRef<Middleware[]>,
     strategy: toRef(() => props.strategy),
   }
 )

@@ -39,9 +39,9 @@ export default defineNuxtModule<ModuleOptions>({
     addPlugin(resolve('./runtime/createBootstrap'))
 
     // Set transformAssetUrls
-    const transformAssetUrls = Object.freeze({
+    const transformAssetUrls = {
       BImg: ['src'],
-    })
+    }
 
     nuxt.options.vite.vue = nuxt.options.vite.vue || {}
     nuxt.options.vite.vue.template = nuxt.options.vite.vue.template || {}
