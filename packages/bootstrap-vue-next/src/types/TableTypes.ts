@@ -47,7 +47,7 @@ export type BTableProviderContext = {
 
 export type BTableProvider<T> = (
   context: Readonly<BTableProviderContext>
-) => MaybePromise<readonly T[] | undefined>
+) => MaybePromise<T[] | undefined>
 
 export type TableFieldFormatter<T> = (value: unknown, key: string, item: T) => string
 
