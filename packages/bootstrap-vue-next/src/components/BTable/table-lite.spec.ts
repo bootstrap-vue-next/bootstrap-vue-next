@@ -743,4 +743,128 @@ describe('btablelite', () => {
       expect($tr.find('td.active').exists()).toBe(true)
     })
   })
+
+  describe('event emissions', () => {
+    const items = [
+      {id: 1, name: 'John', age: 30},
+      {id: 2, name: 'Jane', age: 25},
+      {id: 3, name: 'Bob', age: 35},
+    ]
+    const fields = [
+      {key: 'name', label: 'Name', sortable: true},
+      {key: 'age', label: 'Age', sortable: true},
+    ]
+
+    it('emits row-clicked event when row is clicked', async () => {
+      const wrapper = mount(BTableLite, {
+        props: {items, fields},
+      })
+      const rows = wrapper.findAll('tbody tr')
+      await rows[0].trigger('click')
+
+      expect(wrapper.emitted('row-clicked')).toBeTruthy()
+      expect(wrapper.emitted('row-clicked')?.[0]).toEqual([items[0], 0, expect.any(Object)])
+    })
+
+    it('emits row-dblclicked event when row is double clicked', async () => {
+      const wrapper = mount(BTableLite, {
+        props: {items, fields},
+      })
+      const rows = wrapper.findAll('tbody tr')
+      await rows[1].trigger('dblclick')
+
+      expect(wrapper.emitted('row-dblclicked')).toBeTruthy()
+      expect(wrapper.emitted('row-dblclicked')?.[0]).toEqual([items[1], 1, expect.any(Object)])
+    })
+
+    it('emits row-contextmenu event when row is right-clicked', async () => {
+      const wrapper = mount(BTableLite, {
+        props: {items, fields},
+      })
+      const rows = wrapper.findAll('tbody tr')
+      await rows[2].trigger('contextmenu')
+
+      expect(wrapper.emitted('row-contextmenu')).toBeTruthy()
+      expect(wrapper.emitted('row-contextmenu')?.[0]).toEqual([items[2], 2, expect.any(Object)])
+    })
+
+    it('emits row-hovered event when mouse enters row', async () => {
+      const wrapper = mount(BTableLite, {
+        props: {items, fields},
+      })
+      const rows = wrapper.findAll('tbody tr')
+      await rows[0].trigger('mouseenter')
+
+      expect(wrapper.emitted('row-hovered')).toBeTruthy()
+      expect(wrapper.emitted('row-hovered')?.[0]).toEqual([items[0], 0, expect.any(Object)])
+    })
+
+    it('emits row-unhovered event when mouse leaves row', async () => {
+      const wrapper = mount(BTableLite, {
+        props: {items, fields},
+      })
+      const rows = wrapper.findAll('tbody tr')
+      await rows[1].trigger('mouseleave')
+
+      expect(wrapper.emitted('row-unhovered')).toBeTruthy()
+      expect(wrapper.emitted('row-unhovered')?.[0]).toEqual([items[1], 1, expect.any(Object)])
+    })
+
+    it('emits row-middle-clicked event when middle mouse button is clicked', async () => {
+      const wrapper = mount(BTableLite, {
+        props: {items, fields},
+      })
+      const rows = wrapper.findAll('tbody tr')
+      await rows[0].trigger('mousedown', {button: 1})
+
+      expect(wrapper.emitted('row-middle-clicked')).toBeTruthy()
+      expect(wrapper.emitted('row-middle-clicked')?.[0]).toEqual([items[0], 0, expect.any(Object)])
+    })
+
+    it('emits head-clicked event when header is clicked', async () => {
+      const wrapper = mount(BTableLite, {
+        props: {items, fields},
+      })
+      const headers = wrapper.findAll('thead th')
+      await headers[0].trigger('click')
+
+      expect(wrapper.emitted('head-clicked')).toBeTruthy()
+      const emittedEvent = wrapper.emitted('head-clicked')?.[0]
+      expect(emittedEvent?.[0]).toBe('name')
+      expect(emittedEvent?.[1]).toMatchObject({key: 'name', label: 'Name', sortable: true})
+      expect(emittedEvent?.[3]).toBe(false) // isFooter
+    })
+
+    it('does not emit row events when event originates from a button or link', async () => {
+      const wrapper = mount(BTableLite, {
+        props: {items, fields},
+        slots: {
+          'cell(name)': '<button class="test-button">Click me</button>',
+        },
+      })
+      const button = wrapper.find('.test-button')
+      await button.trigger('click')
+
+      // Should not emit row-clicked because the event originated from a button
+      expect(wrapper.emitted('row-clicked')).toBeFalsy()
+    })
+
+    it('emits multiple row events for the same row', async () => {
+      const wrapper = mount(BTableLite, {
+        props: {items, fields},
+      })
+      const rows = wrapper.findAll('tbody tr')
+      const [row] = rows
+
+      await row.trigger('mouseenter')
+      await row.trigger('click')
+      await row.trigger('dblclick')
+      await row.trigger('mouseleave')
+
+      expect(wrapper.emitted('row-hovered')).toBeTruthy()
+      expect(wrapper.emitted('row-clicked')).toBeTruthy()
+      expect(wrapper.emitted('row-dblclicked')).toBeTruthy()
+      expect(wrapper.emitted('row-unhovered')).toBeTruthy()
+    })
+  })
 })
