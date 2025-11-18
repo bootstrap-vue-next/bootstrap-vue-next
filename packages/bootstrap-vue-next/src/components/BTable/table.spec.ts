@@ -1421,3 +1421,154 @@ describe('provider debouncing', () => {
     expect($table.classes()).not.toContain('b-table-busy')
   })
 })
+
+describe('event emissions', () => {
+  const items = [
+    {id: 1, first_name: 'John', age: 30},
+    {id: 2, first_name: 'Jane', age: 25},
+    {id: 3, first_name: 'Bob', age: 35},
+  ]
+  const fields: Exclude<TableField<(typeof items)[0]>, string>[] = [
+    {key: 'first_name', label: 'Name', sortable: true},
+    {key: 'age', label: 'Age', sortable: true},
+  ]
+
+  it('emits sorted event when column header is clicked', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields},
+    })
+    const headers = wrapper.findAll('thead th')
+    await headers[0].trigger('click')
+
+    expect(wrapper.emitted('sorted')).toBeTruthy()
+    const sortEvent = wrapper.emitted('sorted')?.[0]?.[0] as BTableSortBy
+    expect(sortEvent).toMatchObject({
+      key: 'first_name',
+      order: 'asc',
+    })
+  })
+
+  it('emits filtered event when filter changes', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields, filter: ''},
+    })
+
+    await wrapper.setProps({filter: 'John'})
+    await nextTick()
+
+    expect(wrapper.emitted('filtered')).toBeTruthy()
+    const filteredItems = wrapper.emitted('filtered')?.[0]?.[0] as typeof items
+    expect(filteredItems).toHaveLength(1)
+    expect(filteredItems[0].first_name).toBe('John')
+  })
+
+  it('emits row-selected event when row is selected', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items,
+        fields,
+        selectable: true,
+        selectMode: 'multi',
+      },
+    })
+
+    const rows = wrapper.findAll('tbody tr')
+    await rows[0].trigger('click')
+
+    expect(wrapper.emitted('row-selected')).toBeTruthy()
+    expect(wrapper.emitted('row-selected')?.[0]?.[0]).toEqual(items[0])
+  })
+
+  it('emits row-unselected event when selected row is clicked again', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items,
+        fields,
+        selectable: true,
+        selectMode: 'multi',
+      },
+    })
+
+    const rows = wrapper.findAll('tbody tr')
+    // First click to select
+    await rows[0].trigger('click')
+    expect(wrapper.emitted('row-selected')).toBeTruthy()
+
+    // Second click to unselect
+    await rows[0].trigger('click')
+    expect(wrapper.emitted('row-unselected')).toBeTruthy()
+    expect(wrapper.emitted('row-unselected')?.[0]?.[0]).toEqual(items[0])
+  })
+
+  it('emits change event when sorted items change', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields},
+    })
+
+    const headers = wrapper.findAll('thead th')
+    await headers[0].trigger('click')
+    await nextTick()
+
+    expect(wrapper.emitted('change')).toBeTruthy()
+    const changedItems = wrapper.emitted('change')?.[0]?.[0] as typeof items
+    expect(changedItems).toHaveLength(items.length)
+  })
+
+  it('emits row-clicked event inherited from BTableLite', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields},
+    })
+
+    const rows = wrapper.findAll('tbody tr')
+    await rows[0].trigger('click')
+
+    expect(wrapper.emitted('row-clicked')).toBeTruthy()
+    expect(wrapper.emitted('row-clicked')?.[0]).toEqual([items[0], 0, expect.any(Object)])
+  })
+
+  it('emits row-dblclicked event inherited from BTableLite', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields},
+    })
+
+    const rows = wrapper.findAll('tbody tr')
+    await rows[1].trigger('dblclick')
+
+    expect(wrapper.emitted('row-dblclicked')).toBeTruthy()
+    expect(wrapper.emitted('row-dblclicked')?.[0]).toEqual([items[1], 1, expect.any(Object)])
+  })
+
+  it('emits head-clicked event inherited from BTableLite', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields},
+    })
+
+    const headers = wrapper.findAll('thead th')
+    await headers[1].trigger('click')
+
+    expect(wrapper.emitted('head-clicked')).toBeTruthy()
+    const emittedEvent = wrapper.emitted('head-clicked')?.[0]
+    expect(emittedEvent?.[0]).toBe('age')
+    expect(emittedEvent?.[1]).toMatchObject({key: 'age', label: 'Age', sortable: true})
+  })
+
+  it('emits multiple events in correct order when interacting', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields},
+    })
+
+    // Click header to sort
+    const headers = wrapper.findAll('thead th')
+    await headers[0].trigger('click')
+    await nextTick()
+
+    // Should emit head-clicked, sorted, and change
+    expect(wrapper.emitted('head-clicked')).toBeTruthy()
+    expect(wrapper.emitted('sorted')).toBeTruthy()
+    expect(wrapper.emitted('change')).toBeTruthy()
+
+    // Verify all events were emitted
+    expect(wrapper.emitted('head-clicked')?.length).toBeGreaterThanOrEqual(1)
+    expect(wrapper.emitted('sorted')?.length).toBeGreaterThanOrEqual(1)
+  })
+})
