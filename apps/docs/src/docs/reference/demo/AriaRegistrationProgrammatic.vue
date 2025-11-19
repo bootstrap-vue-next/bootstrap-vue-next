@@ -20,7 +20,7 @@
             <BButton
               variant="danger"
               size="sm"
-              @click="hide"
+              @click="() => hide()"
             >
               Close (slot function)
             </BButton>
