@@ -46,13 +46,11 @@ export const useModal = () => {
       throw new Error('BApp or BOrchestrator component must be mounted to use the modal controller')
     }
 
-    // Handle reactivity carefully - preserve components as raw
+    // Handle reactivity with shallowRef - components in shallowRef don't need markRaw
     const resolvedProps = isRef(obj)
       ? obj
       : shallowRef({
           ...toValue(obj),
-          ...(toValue(obj).component && {component: markRaw(toValue(obj).component!)}),
-          ...(toValue(obj).slots && {slots: markRaw(toValue(obj).slots!)}),
         })
     const _self = resolvedProps.value?.id || Symbol('Modals controller')
 
