@@ -150,8 +150,9 @@ elements outside of the offcanvas.
 ### `v-b-toggle` directive
 
 Using the [`v-b-toggle` directive](/docs/directives/BToggle) is the preferred method for _opening_
-the offcanvas, as it automatically handles applying the `aria-controls` and `aria-expanded`
-accessibility attributes on the trigger element.
+the offcanvas, as it automatically handles applying the `aria-controls` attribute and registering
+the trigger with the offcanvas. The offcanvas will then manage the `aria-expanded` attribute and
+visual state classes on the trigger element to reflect its open/closed state.
 
 The majority of examples on this page use the `v-b-toggle` directive.
 
@@ -159,13 +160,9 @@ The majority of examples on this page use the `v-b-toggle` directive.
 
 The `v-model` reflects the current visibility state of the offcanvas. While it can be used to control
 the visibility state of the offcanvas, it is recommended to use the
-[`v-b-toggle` directive](#v-b-toggle-directive) to _show_ the offcanvas for accessibility reasons. If
-you do use the `v-model` to show the offcanvas, you should:
+[`v-b-toggle` directive](#v-b-toggle-directive) to _show_ the offcanvas for accessibility reasons.
 
-- Provide an `id` prop on the `<BOffcanvas>` component
-- Place the `aria-controls="id"` attribute (where `id` is the ID of the offcanvas) on the trigger element
-- Set the `aria-expanded` attribute (also on the trigger element) to either the string `'true'` (if the offcanvas is open) or `'false'` (if the offcanvas is closed)
-- Provide either a `title` prop or `aria-label` attribute on the `<BOffcanvas>` component for screen readers
+For detailed information on managing ARIA attributes when using `v-model`, including examples of programmatic trigger registration and manual ARIA management, see the [ARIA Trigger Registration for Component Visibility](/docs/reference/accessibility#aria-trigger-registration-for-component-visibility) section in the Accessibility reference.
 
 ## Events
 
