@@ -9,8 +9,8 @@
       <slot
         name="thead-top"
         v-bind="scope"
-        :clear-selected="exposedSelectableUtilities.clearSelected"
-        :select-all-rows="exposedSelectableUtilities.selectAllRows"
+        :clear-selected="selectedItemsUtilities.exposed.clearSelected"
+        :select-all-rows="selectedItemsUtilities.exposed.selectAllRows"
         :fields="computedFields"
       />
     </template>
@@ -25,9 +25,9 @@
         name="row-details"
         v-bind="scope"
         :fields="computedFields"
-        :select-row="() => exposedSelectableUtilities.selectRow(scope.index)"
-        :unselect-row="() => exposedSelectableUtilities.unselectRow(scope.index)"
-        :row-selected="exposedSelectableUtilities.isRowSelected(scope.index)"
+        :select-row="() => selectedItemsUtilities.exposed.selectRow(scope.index)"
+        :unselect-row="() => selectedItemsUtilities.exposed.unselectRow(scope.index)"
+        :row-selected="selectedItemsUtilities.exposed.isRowSelected(scope.index)"
       />
     </template>
     <template v-if="slots['bottom-row']" #bottom-row="scope">
@@ -43,17 +43,17 @@
       <slot
         :name
         v-bind="scope"
-        :select-row="() => exposedSelectableUtilities.selectRow(scope.index)"
-        :unselect-row="() => exposedSelectableUtilities.unselectRow(scope.index)"
-        :row-selected="exposedSelectableUtilities.isRowSelected(scope.index)"
+        :select-row="() => selectedItemsUtilities.exposed.selectRow(scope.index)"
+        :unselect-row="() => selectedItemsUtilities.exposed.unselectRow(scope.index)"
+        :row-selected="selectedItemsUtilities.exposed.isRowSelected(scope.index)"
       />
     </template>
     <template v-for="name in dynamicFootSlots" #[name]="scope">
       <slot
         :name
         v-bind="scope"
-        :select-all-rows="exposedSelectableUtilities.selectAllRows"
-        :clear-selected="exposedSelectableUtilities.clearSelected"
+        :select-all-rows="selectedItemsUtilities.exposed.selectAllRows"
+        :clear-selected="selectedItemsUtilities.exposed.clearSelected"
       />
     </template>
 
@@ -69,8 +69,8 @@
             : 'head()'
         "
         v-bind="scope"
-        :select-all-rows="exposedSelectableUtilities.selectAllRows"
-        :clear-selected="exposedSelectableUtilities.clearSelected"
+        :select-all-rows="selectedItemsUtilities.exposed.selectAllRows"
+        :clear-selected="selectedItemsUtilities.exposed.clearSelected"
       >
         {{ getTableFieldHeadLabel(field) }}
       </slot>
@@ -156,40 +156,31 @@
 
 <script setup lang="ts" generic="Items">
 import {useToNumber} from '@vueuse/core'
-import {computed, onMounted, provide, type Ref, ref, watch} from 'vue'
-import {formatItem} from '../../utils/formatItem'
+import {computed, type Ref, toRef} from 'vue'
 import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
 import BTr from './BTr.vue'
 import SortIcon from '../SortIcon.vue'
 import {
-  type BTableSortBy,
-  type BTableSortByOrder,
-  isTableField,
-  isTableItem,
-  type NoProviderTypes,
   type TableField,
-  type TableFieldFormatter,
   type TableFieldRaw,
-  type TableItem,
   type TableRowType,
   type TableStrictClassValue,
 } from '../../types/TableTypes'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BTableProps} from '../../types/ComponentProps'
 import type {BTableEmits, BTableLiteEmits} from '../../types/ComponentEmits'
-import {deepEqual, get, pick, set} from '../../utils/object'
-import {startCase} from '../../utils/stringUtils'
-import {
-  btableLiteProps,
-  btableSimpleProps,
-  getDataLabelAttr,
-  getTableFieldHeadLabel,
-} from '../../utils/tableUtils'
+import {pick} from '../../utils/object'
+import {btableLiteProps, btableSimpleProps, getTableFieldHeadLabel} from '../../utils/tableUtils'
 import {useId} from '../../composables/useId'
 import type {BTableSlots, CamelCase} from '../../types'
-import {tableKeyboardNavigationKey} from '../../utils/keys'
-import {useDebounceFn} from '../../utils/debounce'
+import {
+  useTableKeyboardNavigationInjector,
+  useTableMapper,
+  useTableProvider,
+  useTableSelectedItems,
+  useTableSort,
+} from '../../composables/useTableHelpers'
 
 const _props = withDefaults(
   defineProps<Omit<BTableProps<Items>, 'sortBy' | 'busy' | 'selectedItems'>>(),
@@ -291,139 +282,113 @@ const selectedItemsModel = defineModel<Exclude<BTableProps<Items>['selectedItems
 )
 
 const computedId = useId(() => props.id)
-
-const selectedItemsToSet = computed({
-  get: () => new Set(selectedItemsModel.value),
-  set: (val) => {
-    selectedItemsModel.value = [...val]
-  },
-})
-
-watch(selectedItemsToSet, (newValue, oldValue) => {
-  Array.from(oldValue)
-    .filter((item) => !newValue.has(item))
-    .forEach((item) => {
-      emit('row-unselected', item)
-    })
-  Array.from(newValue)
-    .filter((item) => !oldValue.has(item))
-    .forEach((item) => {
-      emit('row-selected', item)
-    })
-})
-/**
- * This is to avoid the issue of directly mutating the array structure and to properly trigger the computed setter.
- * The utils also conveniently emit the proper events after
- */
-const selectedItemsSetUtilities = {
-  add: (item: Items) => {
-    const value = new Set(selectedItemsToSet.value)
-    value.add(item)
-    selectedItemsToSet.value = value
-  },
-  clear: () => {
-    selectedItemsToSet.value.forEach((item) => {
-      selectedItemsSetUtilities.delete(item)
-    })
-  },
-  delete: (item: Items) => {
-    const value = new Set(selectedItemsToSet.value)
-    if (props.primaryKey) {
-      const pkey: string = props.primaryKey
-      selectedItemsModel.value.forEach((v, i) => {
-        const selectedKey = get(v, pkey)
-        const itemKey = get(item, pkey)
-
-        if (!!selectedKey && !!itemKey && selectedKey === itemKey) {
-          value.delete(selectedItemsModel.value[i])
-        }
-      })
-    } else {
-      value.delete(item)
-    }
-    selectedItemsToSet.value = value
-  },
-  set: (items: Items[]) => {
-    selectedItemsToSet.value = new Set(items)
-  },
-  has: (item: Items) => {
-    if (!props.primaryKey) return selectedItemsToSet.value.has(item)
-
-    // Resolver for when we are using primary keys
-    const pkey: string = props.primaryKey
-    for (const selected of selectedItemsToSet.value) {
-      const selectedKey = get(selected, pkey)
-      const itemKey = get(item, pkey)
-
-      if (!!selectedKey && !!itemKey && selectedKey === itemKey) return true
-    }
-    return false
-  },
-} as const
-
-/**
- * Only stores data that is fetched when using the provider
- */
-const internalItems: Ref<Items[]> = ref([])
-
 const perPageNumber = useToNumber(() => props.perPage, {method: 'parseInt'})
 const currentPageNumber = useToNumber(() => props.currentPage, {method: 'parseInt'})
 const debounceNumber = useToNumber(() => props.debounce ?? 0, {nanToZero: true})
 const debounceMaxWaitNumber = useToNumber(() => props.debounceMaxWait ?? Number.NaN)
 
-const isFilterableTable = computed(() => !!props.filter)
-const usesProvider = computed(() => props.provider !== undefined)
-const isSelecting = computed(() => selectedItemsToSet.value.size > 0)
-
-const isSortable = computed(
-  () =>
-    sortByModel.value !== undefined ||
-    props.fields.some(
-      (field) => typeof field === 'object' && field !== null && field.sortable === true
-    )
-)
-
-// Provide keyboard navigation state to child components
-const keyboardRowNavigation = computed(() => !!(props.selectable && !props.noSelectOnClick))
-const keyboardHeaderNavigation = computed(() => !!isSortable.value)
-
-provide(tableKeyboardNavigationKey, {
-  rowNavigation: keyboardRowNavigation,
-  headerNavigation: keyboardHeaderNavigation,
+const {isSortable, handleFieldSorting} = useTableSort({
+  fields: () => props.fields,
+  sortBy: sortByModel,
+  events: {
+    onSorted: (v) => {
+      emit('sorted', v)
+    },
+  },
+  initialSortDirection: () => props.initialSortDirection,
+  mustSort: () => props.mustSort,
+  multisort: () => props.multisort,
 })
-
-const computedFields = computed<TableField<Items>[]>(() =>
-  props.fields.map((el) => {
-    if (!isTableField<Items>(el)) {
-      const label = startCase(el as string)
-      return {
-        key: el as string,
-        label,
-        tdAttr: getDataLabelAttr(props, label),
-      }
-    }
-
-    const value = sortByModel.value?.find((sb) => el.key === sb.key)
-    const sortValue =
-      isSortable.value === false
-        ? undefined
-        : value === undefined
-          ? 'none'
-          : value.order === 'desc'
-            ? 'descending'
-            : value.order === 'asc'
-              ? 'ascending'
-              : 'none'
-
-    return {
-      ...(el as TableField<Items>),
-      thAttr: {
-        'aria-sort': sortValue,
-        ...el.thAttr,
-      },
-    }
-  })
-)
+const {
+  items: providerItems,
+  usesProvider,
+  callItemsProvider,
+} = useTableProvider({
+  events: {
+    onFiltered: () => {
+      emit('filtered', computedItems.value)
+    },
+  },
+  busy: busyModel,
+  provider: () => props.provider,
+  debounce: {
+    maxWait: debounceMaxWaitNumber,
+    wait: debounceNumber,
+  },
+  currentPage: currentPageNumber,
+  perPage: perPageNumber,
+  filter: () => props.filter,
+  noProvider: () => props.noProvider,
+  noProviderFiltering: () => props.noProviderFiltering,
+  noProviderPaging: () => props.noProviderPaging,
+  noProviderSorting: () => props.noProviderSorting,
+  sortBy: sortByModel,
+})
+const {
+  items: computedItems,
+  displayItems: computedDisplayItems,
+  getStringValue,
+  fields: computedFields,
+  isFilterableTable,
+} = useTableMapper({
+  fields: () => props.fields,
+  provider: {
+    items: providerItems as Ref<Items[]>,
+    noProviderFiltering: () => props.noProviderFiltering,
+    noProviderPaging: () => props.noProviderPaging,
+    noProviderSorting: () => props.noProviderSorting,
+    usesProvider,
+  },
+  events: {
+    onChange: (v) => {
+      emit('change', v)
+    },
+  },
+  items: () => props.items,
+  pagination: {
+    perPage: perPageNumber,
+    currentPage: currentPageNumber,
+    filter: {
+      filter: () => props.filter,
+      filterFunction: toRef(() => props.filterFunction),
+      filterable: () => props.filterable,
+    },
+    sort: {
+      isSortable,
+      noLocalSorting: () => props.noLocalSorting,
+      by: sortByModel,
+      sortCompare: toRef(() => props.sortCompare),
+    },
+  },
+  stackedProps: {
+    stacked: () => props.stacked,
+    labelStacked: () => props.labelStacked,
+  },
+})
+const {
+  isSelecting,
+  handleRowSelection,
+  utilities: selectedItemsUtilities,
+} = useTableSelectedItems({
+  selectable: () => props.selectable,
+  primaryKey: () => props.primaryKey,
+  selectedItems: selectedItemsModel,
+  allItems: computedItems,
+  selectMode: () => props.selectMode,
+  events: {
+    onRowSelected: (item) => {
+      emit('row-selected', item)
+    },
+    onRowUnselected: (item) => {
+      emit('row-unselected', item)
+    },
+  },
+})
+useTableKeyboardNavigationInjector({
+  isSortable,
+  selectable: () => props.selectable,
+  noSelectOnClick: () => props.noSelectOnClick,
+})
 
 const tableClasses = computed(() => ({
   'b-table-busy': busyModel.value,
@@ -432,7 +397,6 @@ const tableClasses = computed(() => ({
   'b-table-fixed': props.fixed,
   'b-table-no-border-collapse': props.noBorderCollapse,
 }))
-
 const getBusyRowClasses = computed(() => [
   props.tbodyTrClass
     ? typeof props.tbodyTrClass === 'function'
@@ -452,7 +416,7 @@ const getFieldColumnClasses = (field: TableField) => [
 const getRowClasses = (item: Items | null, type: TableRowType): TableStrictClassValue => [
   {
     [`selected table-${props.selectionVariant}`]:
-      props.selectable && !!item && selectedItemsSetUtilities.has(item),
+      props.selectable && !!item && selectedItemsUtilities.has(item),
   },
   props.tbodyTrClass
     ? typeof props.tbodyTrClass === 'function'
@@ -460,453 +424,6 @@ const getRowClasses = (item: Items | null, type: TableRowType): TableStrictClass
       : props.tbodyTrClass
     : null,
 ]
-
-const getFormatter = (value: TableField<Items>): TableFieldFormatter<Items> | undefined =>
-  typeof value.sortByFormatted === 'function' ? value.sortByFormatted : value.formatter
-
-const getStringValue = (ob: Items, key: string): string => {
-  if (!isTableItem(ob)) return String(ob)
-
-  const sortField = computedFields.value.find((el) => {
-    if (isTableField<Items>(el)) return el.key === key
-
-    return false
-  })
-  const val = get(ob, key as keyof TableItem)
-  if (isTableField<Items>(sortField) && !!sortField.sortByFormatted) {
-    const formatter = getFormatter(sortField)
-    if (formatter) {
-      return String(formatItem(ob, String(sortField.key), formatter))
-    }
-  }
-  return typeof val === 'object' && val !== null ? JSON.stringify(val) : (val?.toString() ?? '')
-}
-
-const fieldByKey = computed(() => {
-  const map = new Map<string | number | symbol, TableField<Items>>()
-  for (const f of computedFields.value) if (isTableField<Items>(f)) map.set(f.key, f)
-  return map
-})
-
-const computedItems = computed<Items[]>(() => {
-  const sortByItems = sortByModel.value?.filter((el) => !!el.order)
-
-  const mapItem = (item: Items): Items => {
-    if (
-      typeof item === 'object' &&
-      item !== null &&
-      Object.keys(item).some((key) => key.includes('.'))
-    ) {
-      let newItem: Partial<Items> = {}
-      for (const key in item) {
-        if (key.includes('.')) {
-          newItem = set(newItem, key, item[key])
-        } else {
-          newItem[key] = item[key]
-        }
-      }
-      return newItem as Items // This should be an items at this point
-    }
-    return item
-  }
-
-  const filterItem = (item: Items): boolean => {
-    if (!isTableItem(item)) return true
-
-    return Object.entries(item).some(([key, val]) => {
-      if (
-        val === null ||
-        val === undefined ||
-        key[0] === '_' ||
-        (!props.filterable?.includes(key) && !!props.filterable?.length)
-      )
-        return false
-
-      if (props.filterFunction && typeof props.filterFunction === 'function') {
-        return props.filterFunction(item, props.filter)
-      }
-
-      const realVal = (): string => {
-        const filterField = computedFields.value.find((el) => {
-          if (isTableField<Items>(el)) return el.key === key
-          return false
-        })
-        if (isTableField<Items>(filterField) && !!filterField.filterByFormatted) {
-          const formatter = getFormatter(filterField)
-          if (formatter) {
-            return String(formatter(val, String(filterField.key), item))
-          }
-        }
-        return typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
-      }
-      const itemValue: string = realVal()
-      return itemValue.toLowerCase().includes(props.filter?.toLowerCase() ?? '')
-    })
-  }
-
-  const mappedItems = (usesProvider.value ? internalItems.value : props.items).reduce(
-    (acc, val) => {
-      const item = mapItem(val)
-      const shouldFilter =
-        isFilterableTable.value && (!usesProvider.value || props.noProviderFiltering)
-
-      if (!shouldFilter || filterItem(item)) acc.push(item)
-
-      return acc
-    },
-    [] as Items[]
-  )
-
-  if (
-    sortByItems?.length &&
-    ((isSortable.value === true && !usesProvider.value && !props.noLocalSorting) ||
-      (isSortable.value === true && usesProvider.value && props.noProviderSorting))
-  ) {
-    // Multi-sort
-    return mappedItems.sort((a, b) => {
-      for (let i = 0; i < sortByItems.length; i++) {
-        const {key, order} = sortByItems[i]
-        const field = fieldByKey.value.get(key)
-        const comparer = field?.sortCompare || props.sortCompare
-        const comparison = comparer
-          ? comparer(a, b, key)
-          : getStringValue(a, key).localeCompare(getStringValue(b, key), undefined, {numeric: true})
-
-        if (comparison !== 0) {
-          return order === 'asc' ? comparison : -comparison
-        }
-      }
-      return 0 // items are equal
-    })
-  }
-
-  return mappedItems
-})
-
-const emptySlotScope = computed(() => ({
-  emptyFilteredText: props.emptyFilteredText,
-  emptyText: props.emptyText,
-  fields: computedFields.value,
-  items: computedItems.value,
-}))
-
-const computedDisplayItems = computed<Items[]>(() => {
-  if (Number.isNaN(perPageNumber.value) || (usesProvider.value && !props.noProviderPaging)) {
-    return computedItems.value
-  }
-
-  return computedItems.value.slice(
-    (currentPageNumber.value - 1) * (perPageNumber.value || Number.POSITIVE_INFINITY),
-    currentPageNumber.value * (perPageNumber.value || Number.POSITIVE_INFINITY)
-  )
-})
-
-watch(computedDisplayItems, (v) => {
-  emit('change', v)
-})
-
-const handleRowSelection = (
-  row: Items,
-  index: number,
-  shiftClicked = false,
-  ctrlClicked = false,
-  metaClicked = false
-) => {
-  if (!props.selectable) return
-
-  if (props.selectMode === 'single' || props.selectMode === 'multi') {
-    // Do nothing when these items are held
-    if (shiftClicked || ctrlClicked) return
-    // Delete if item is in
-    if (selectedItemsSetUtilities.has(row)) {
-      selectedItemsSetUtilities.delete(row)
-    } else {
-      if (props.selectMode === 'single') {
-        selectedItemsSetUtilities.set([row])
-      } else {
-        selectedItemsSetUtilities.add(row)
-      }
-    }
-  } else {
-    if (ctrlClicked || metaClicked) {
-      // Delete if in the object
-      if (selectedItemsSetUtilities.has(row)) {
-        selectedItemsSetUtilities.delete(row)
-        // Otherwise add. Functions similarly to 'multi' at this point
-      } else {
-        selectedItemsSetUtilities.add(row)
-      }
-      // This is where range is different, due to the difference in shift
-    } else if (shiftClicked) {
-      const lastSelectedItem = [...selectedItemsToSet.value].pop()
-      const lastSelectedIndex = computedItems.value.findIndex((i) => i === lastSelectedItem)
-      const selectStartIndex = Math.min(lastSelectedIndex, index)
-      const selectEndIndex = Math.max(lastSelectedIndex, index)
-      const items = computedItems.value.slice(selectStartIndex, selectEndIndex + 1)
-      selectedItemsSetUtilities.set(items)
-      // If nothing is being held, then we just behave like it's single mode
-    } else {
-      selectedItemsSetUtilities.set([row])
-    }
-  }
-}
-
-const handleFieldSorting = (field: TableField<Items>) => {
-  if (!isSortable.value) return
-
-  const fieldKey = typeof field === 'object' && field !== null ? field.key : field
-  const fieldSortable = typeof field === 'object' && field !== null ? field.sortable : false
-
-  if (!(isSortable.value === true && fieldSortable === true)) return
-
-  // Get the last sorted direction from the current sort model (last entry with a defined order)
-  //   Exclude the current column if it's already in the sortBy array
-  const getLastSortDirection = (): BTableSortByOrder => {
-    const lastSorted = [...(sortByModel.value ?? [])]
-      .reverse()
-      .find((sort) => sort.order !== undefined && sort.key !== fieldKey)
-    return lastSorted?.order ?? 'asc'
-  }
-
-  // Determine initial sort direction for new sorts
-  const getInitialSortDirection = (): BTableSortByOrder => {
-    // Handle field-level prop
-    if (typeof field === 'object' && field !== null && field.initialSortDirection) {
-      if (field.initialSortDirection === 'last') {
-        return getLastSortDirection()
-      }
-      return field.initialSortDirection
-    }
-    // Handle table-level prop
-    if (props.initialSortDirection) {
-      if (props.initialSortDirection === 'last') {
-        return getLastSortDirection()
-      }
-      return props.initialSortDirection
-    }
-    return 'asc'
-  }
-
-  const resolveOrder = (val: BTableSortByOrder | undefined): BTableSortByOrder | undefined => {
-    // New sort: honor the configured initial direction
-    if (val === undefined) return getInitialSortDirection()
-    // Determine initial direction for this field
-    const initial = getInitialSortDirection()
-    const must =
-      props.mustSort === true ||
-      (Array.isArray(props.mustSort) && props.mustSort.includes(fieldKey as string))
-    if (val === 'asc') {
-      if (initial === 'desc') {
-        // If mustSort, cycle asc -> desc, else asc -> undefined
-        return must ? 'desc' : undefined
-      }
-      // If initial is asc, cycle asc -> desc -> undefined (or asc if mustSort)
-      return 'desc'
-    }
-    if (val === 'desc') {
-      if (initial === 'desc') {
-        return 'asc'
-      }
-      // If mustSort, cycle desc -> asc, else desc -> undefined
-      return must ? 'asc' : undefined
-    }
-    return undefined
-  }
-
-  const index = sortByModel.value?.findIndex((el) => el.key === fieldKey) ?? -1
-  const originalValue = sortByModel.value?.[index]
-  const updatedValue: BTableSortBy =
-    // If value is new, we use the field's initialSortDirection or default to ascending
-    // Otherwise we make a temp copy of the value
-    index === -1 || !originalValue
-      ? {key: fieldKey as string, order: getInitialSortDirection()}
-      : {...originalValue}
-
-  /**
-   * @returns the updated value to emit for sorted
-   */
-  const handleMultiSort = (): BTableSortBy => {
-    const tmp = [...(sortByModel.value ?? [])]
-    const val = updatedValue
-    if (index === -1) {
-      tmp.push(val)
-    } else {
-      const order = resolveOrder(val.order)
-      if (order) {
-        val.order = order
-        tmp.splice(index, 1, val)
-      } else {
-        // Remove the value from the array and emit cleared sort for this key
-        val.order = undefined
-        tmp.splice(index, 1)
-      }
-    }
-    sortByModel.value = tmp
-    return val
-  }
-
-  /**
-   * @returns the updated value to emit for sorted
-   */
-  const handleSingleSort = (): BTableSortBy => {
-    const order = index === -1 ? updatedValue.order : resolveOrder(updatedValue.order)
-    const val = {
-      ...updatedValue,
-      order,
-    }
-    sortByModel.value = order ? [val] : []
-    return val
-  }
-
-  // Then emit the returned updated value
-  emit('sorted', props.multisort === true ? handleMultiSort() : handleSingleSort())
-}
-
-// AbortController for canceling previous provider requests
-let abortController: AbortController | null = null
-
-const callItemsProvider = async () => {
-  if (!usesProvider.value || props.provider === undefined) return
-
-  // Cancel any previous request
-  if (abortController) {
-    abortController.abort()
-  }
-
-  // Create a new AbortController for this request
-  abortController = new AbortController()
-  const {signal} = abortController
-
-  busyModel.value = true
-  const response = props.provider({
-    currentPage: currentPageNumber.value,
-    filter: props.filter,
-    sortBy: sortByModel.value,
-    perPage: perPageNumber.value,
-    signal,
-  })
-  try {
-    const items = response instanceof Promise ? await response : response
-
-    // Check if this request was aborted
-    if (signal.aborted) return
-
-    if (items === undefined) return
-    internalItems.value = items
-  } catch (error) {
-    // Ignore AbortError, re-throw others
-    if (error instanceof Error && error.name === 'AbortError') return
-    throw error
-  } finally {
-    // Only set busy to false if this request wasn't aborted (to avoid race condition)
-    if (!signal.aborted) {
-      busyModel.value = false
-    }
-  }
-}
-
-// Debounced version of callItemsProvider for filter changes to prevent rapid successive calls
-const debouncedCallItemsProvider = useDebounceFn(callItemsProvider, debounceNumber, {
-  maxWait: debounceMaxWaitNumber,
-})
-
-const providerPropsWatch = async (prop: string, val: unknown, oldVal: unknown) => {
-  if (deepEqual(val, oldVal)) return
-
-  //stop provide when paging
-  const inNoProvider = (key: NoProviderTypes) => props.noProvider?.includes(key) === true
-  const noProvideWhenPaging =
-    (prop === 'currentPage' || prop === 'perPage') &&
-    (inNoProvider('paging') || props.noProviderPaging === true)
-  const noProvideWhenFiltering =
-    prop === 'filter' && (inNoProvider('filtering') || props.noProviderFiltering === true)
-  const noProvideWhenSorting =
-    (prop === 'sortBy' || prop === 'sortDesc') &&
-    (inNoProvider('sorting') || props.noProviderSorting === true)
-
-  if (noProvideWhenPaging || noProvideWhenFiltering || noProvideWhenSorting) return
-
-  if (usesProvider.value === true) {
-    // Always use debounced version (when debounce is 0, it's immediate)
-    await debouncedCallItemsProvider()
-  }
-
-  if (!(prop === 'currentPage' || prop === 'perPage')) {
-    emit('filtered', [...computedItems.value])
-  }
-}
-
-watch(
-  () => props.filter,
-  (filter, oldFilter) => {
-    providerPropsWatch('filter', filter, oldFilter)
-
-    if (filter === oldFilter || usesProvider.value) return
-    if (!filter) {
-      emit('filtered', [...computedItems.value])
-    }
-  }
-)
-watch(currentPageNumber, (val, oldVal) => {
-  providerPropsWatch('currentPage', val, oldVal)
-})
-watch(perPageNumber, (val, oldVal) => {
-  providerPropsWatch('perPage', val, oldVal)
-})
-watch(
-  sortByModel,
-  (val, oldVal) => {
-    providerPropsWatch('sortBy', val, oldVal)
-  },
-  {deep: true}
-)
-
-watch(
-  () => props.provider,
-  (newValue) => {
-    // Reset the internal values if the provider stops getting used
-    if (newValue === undefined) {
-      internalItems.value = []
-      return
-    }
-    // Otherwise we should refresh the table on such a change
-    callItemsProvider()
-  }
-)
-
-onMounted(callItemsProvider)
-
-const exposedSelectableUtilities = {
-  clearSelected: () => {
-    if (!props.selectable) return
-    selectedItemsSetUtilities.clear()
-  },
-  selectAllRows: () => {
-    if (!props.selectable || props.selectMode === 'single') return
-    selectedItemsToSet.value = new Set(computedItems.value)
-  },
-  selectRow: (index: number) => {
-    if (!props.selectable) return
-    const item = computedItems.value[index]
-    if (!item || selectedItemsSetUtilities.has(item)) return
-    if (props.selectMode === 'single') {
-      selectedItemsSetUtilities.set([item])
-    } else {
-      selectedItemsSetUtilities.add(item)
-    }
-  },
-  unselectRow: (index: number) => {
-    if (!props.selectable) return
-    const item = computedItems.value[index]
-    if (!item || !selectedItemsSetUtilities.has(item)) return
-    selectedItemsSetUtilities.delete(item)
-  },
-  isRowSelected: (index: number) => {
-    if (!props.selectable) return false
-    const item = computedItems.value[index]
-    return selectedItemsSetUtilities.has(item)
-  },
-} as const
 
 const boundBTableLiteEmits = {
   onHeadClicked: (fieldKey, field, event, isFooter = false) => {
@@ -943,9 +460,16 @@ const computedLiteProps = computed(() => ({
   ...boundBTableLiteEmits,
 }))
 
+const emptySlotScope = computed(() => ({
+  emptyFilteredText: props.emptyFilteredText,
+  emptyText: props.emptyText,
+  fields: computedFields.value,
+  items: computedItems.value,
+}))
+
 defineExpose({
   // The row selection methods are really for compat. Users should probably use the v-model though
-  ...exposedSelectableUtilities,
+  ...selectedItemsUtilities.exposed,
   items: computedItems,
   displayItems: computedDisplayItems,
   getStringValue,

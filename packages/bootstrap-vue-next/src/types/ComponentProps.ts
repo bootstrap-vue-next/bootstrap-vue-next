@@ -57,8 +57,10 @@ import type {LiteralUnion} from './LiteralUnion'
 import type {BreadcrumbItemRaw} from './BreadcrumbTypes'
 import type {TransitionMode} from './TransitionMode'
 import type {
+  BTableFilterFunction,
   BTableInitialSortDirection,
   BTableProvider,
+  BTableSelectMode,
   BTableSortBy,
   BTableSortByComparerFunction,
   NoProviderTypes,
@@ -155,10 +157,10 @@ export interface BAccordionProps {
   flush?: boolean
   free?: boolean
   id?: string
-  index?: number | number[]
+  index?: number | readonly number[]
   initialAnimation?: boolean
   lazy?: boolean
-  modelValue?: string | string[]
+  modelValue?: string | readonly string[]
   unmountLazy?: boolean
 }
 
@@ -1135,7 +1137,7 @@ export interface BTableLiteProps<Items> extends BTableSimpleProps {
     | Readonly<Record<PropertyKey, any>>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     | readonly any[]
-  fields?: TableFieldRaw<Items>[]
+  fields?: readonly TableFieldRaw<Items>[]
   footClone?: boolean
   footRowVariant?: ColorVariant | null
   footVariant?: ColorVariant | null
@@ -1167,22 +1169,22 @@ export interface BTableProps<Items>
   noProviderPaging?: boolean
   noProviderSorting?: boolean
   noProviderFiltering?: boolean
-  sortBy?: BTableSortBy[]
+  sortBy?: readonly BTableSortBy[]
   sortCompare?: BTableSortByComparerFunction<Items>
-  mustSort?: boolean | string[] // TODO this is a string of fields, possibly generic
+  mustSort?: boolean | readonly string[] // TODO this is a string of fields, possibly generic
   initialSortDirection?: BTableInitialSortDirection
   selectable?: boolean
   multisort?: boolean
   stickySelect?: boolean
   selectHead?: boolean | string
-  selectMode?: 'multi' | 'single' | 'range'
+  selectMode?: BTableSelectMode
   selectionVariant?: ColorVariant | null
   busy?: boolean
   busyLoadingText?: string
   perPage?: Numberish
   currentPage?: Numberish
   filter?: string
-  filterFunction?: (item: Readonly<Items>, filter: string | undefined) => boolean
+  filterFunction?: BTableFilterFunction<Items>
   filterable?: readonly string[]
   // TODO
   // apiUrl?: string
@@ -1272,7 +1274,7 @@ export interface BDropdownProps extends TeleporterProps, ShowHideProps {
   boundary?: Boundary | RootBoundary
   boundaryPadding?: Padding
   disabled?: boolean
-  floatingMiddleware?: Middleware[]
+  floatingMiddleware?: readonly Middleware[]
   icon?: boolean
   id?: string
   isNav?: boolean
@@ -1347,7 +1349,7 @@ export interface BPopoverProps extends TeleporterProps, ShowHideProps {
         show: number
         hide: number
       }>
-  floatingMiddleware?: Middleware[]
+  floatingMiddleware?: readonly Middleware[]
   hideMargin?: number
   id?: string
   inline?: boolean

@@ -27,7 +27,7 @@ import {buildPromise} from '../orchestratorShared'
 import {BModal} from '../../components'
 
 export const useModal = () => {
-  const orchestratorRegistry = inject(orchestratorRegistryKey)
+  const orchestratorRegistry = inject(orchestratorRegistryKey, null)
   if (!orchestratorRegistry) {
     throw Error(
       'useModal() must be called within setup(), and BApp, useRegistry or plugin must be installed/provided.'

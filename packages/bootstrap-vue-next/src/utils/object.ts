@@ -1,4 +1,10 @@
 /**
+ * You need this because fundamentally isArray can't make the assumption that a readonly array is of type array
+ * Only that `readonly T[]` has array like properties. So it breaks a bit when making things "readonly"
+ */
+export const isReadOnlyArray = <T>(arr: unknown): arr is readonly T[] => Array.isArray(arr)
+
+/**
  * Removes properties from an object, based on the values in an array, and returns the new object.
  * Equivalent to an object version of TS Omit<>
  */

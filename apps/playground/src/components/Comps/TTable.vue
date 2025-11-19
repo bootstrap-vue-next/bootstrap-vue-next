@@ -527,7 +527,7 @@ function resetInfoModal() {
   infoModal.content = ''
 }
 
-function onFiltered(filteredItems: TableItem<Person>[]) {
+function onFiltered(filteredItems: readonly TableItem<Person>[]) {
   // Trigger pagination to update the number of buttons/pages due to filtering
   totalRows.value = filteredItems.length
   currentPage.value = 1
@@ -553,7 +553,7 @@ function onSorted(sortby: BTableSortBy) {
   console.log(`sorted: ${JSON.stringify(sortby)}`)
 }
 
-function onSortUpdate(sortby: BTableSortBy[] | undefined) {
+function onSortUpdate(sortby: readonly BTableSortBy[] | undefined) {
   // eslint-disable-next-line no-console
   console.log(`sort-by:update: ${JSON.stringify(sortby)}`)
 }
