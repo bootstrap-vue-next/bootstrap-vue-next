@@ -245,7 +245,7 @@ const toggle = () => {
 Use the `<<< DEMO` syntax to reference demo files:
 
 - **Show full file**: `<<< DEMO ./demo/MyComponent.vue{vue}`
-- **Show specific section**: Use `#region` markers and reference with `#template`
+- **Show specific section**: Use `#region name` markers in the demo file and reference with `#name` in the markdown (e.g., `#region template` is referenced as `#template`)
 
 ### Demo File Guidelines
 
