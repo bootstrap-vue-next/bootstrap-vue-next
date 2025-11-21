@@ -297,6 +297,8 @@ If you're looking for replacements for `$bvModal.msgBoxOk` and `$bvModal.msgBoxC
 `<BModal>` provides several accessibility features, including auto focus, return focus, keyboard
 (tab) _focus containment_, and automated `aria-*` attributes.
 
+For information on managing ARIA attributes for modal triggers, see the [ARIA Trigger Registration for Component Visibility](/docs/reference/accessibility#aria-trigger-registration-for-component-visibility) section in the Accessibility reference.
+
 **Note:** The animation effect of this component is dependent on the `prefers-reduced-motion` media
 query. See the
 [reduced motion section of our accessibility documentation](/docs/reference/accessibility) for

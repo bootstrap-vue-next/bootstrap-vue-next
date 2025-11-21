@@ -132,3 +132,7 @@ props can be used to control what's considered clipping.
 These are accessed through the [template ref](https://vuejs.org/guide/essentials/template-refs.html#template-refs)
 
 <<< DEMO ./demo/PopoverExposed.vue
+
+## Accessibility
+
+For information on managing ARIA attributes for popover triggers, see the [ARIA Trigger Registration for Component Visibility](/docs/reference/accessibility#aria-trigger-registration-for-component-visibility) section in the Accessibility reference.
