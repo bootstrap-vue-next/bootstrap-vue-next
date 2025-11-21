@@ -26,9 +26,9 @@ Always reference these instructions first and fallback to search or bash command
 
 ### Development Servers
 
-- Core package dev server: `pnpm --filter bootstrap-vue-next run dev` (runs on http://localhost:5174)
-- Playground app dev server: `pnpm --filter playground run dev` (runs on http://localhost:5173)
-- Docs dev server: `pnpm --filter docs run dev` (runs on http://localhost:8000)
+- Core package dev server: `pnpm --filter bootstrap-vue-next run dev` (runs on <http://localhost:5174>)
+- Playground app dev server: `pnpm --filter playground run dev` (runs on <http://localhost:5173>)
+- Docs dev server: `pnpm --filter docs run dev` (runs on <http://localhost:8000>)
 - All dev servers: `pnpm dev` (starts all development environments in parallel)
 
 ## Validation
@@ -42,9 +42,9 @@ Always reference these instructions first and fallback to search or bash command
 
 ### Manual Testing Scenarios
 
-- Test component changes using the core package dev server at http://localhost:5174
+- Test component changes using the core package dev server at <http://localhost:5174>
 - Use `./packages/bootstrap-vue-next/src/App.vue` as a test area for changes
-- Test real-world usage with the playground app at http://localhost:5173
+- Test real-world usage with the playground app at <http://localhost:5173>
 - The playground mimics user library usage but requires `pnpm build` for changes (no hot-reload)
 
 ### CI Validation
@@ -57,7 +57,7 @@ Always reference these instructions first and fallback to search or bash command
 
 ### Monorepo Layout
 
-```
+```plaintext
 packages/
 ├── bootstrap-vue-next/     # Main Vue 3 component library
 └── nuxt/                   # Nuxt 3 module
