@@ -50,7 +50,7 @@ This split responsibility ensures that `aria-controls` (which depends on target 
 
 ### Method 1: Using v-b-toggle (Automatic Registration)
 
-The simplest approach is to use the [`v-b-toggle` directive](/docs/directives/b-toggle), which automatically handles both `aria-controls` and trigger registration:
+The simplest approach is to use the [`v-b-toggle` directive](/docs/directives/BToggle), which automatically handles both `aria-controls` and trigger registration:
 
 <<< DEMO ./demo/AriaRegistrationDirective.vue#template{vue-html}
 
