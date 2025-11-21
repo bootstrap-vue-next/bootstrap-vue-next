@@ -16,7 +16,7 @@ Most component documentation pages include an accessibility section (or sections
 
 BootstrapVue's interactive components — such as modal dialogs, dropdown menus and custom tooltips — are designed to work for touch, mouse and keyboard users. Through the use of relevant [WAI-ARIA](https://www.w3.org/WAI/standards-guidelines/aria/) roles and attributes, these components should also be understandable and operable using assistive technologies (such as screen readers).
 
-Because BootstrapVue's components are purposely designed to be fairly generic, authors may need to include further ARIA roles and attributes, as well as TypeScript behavior, to more accurately convey the precise nature and functionality of their component. This is usually noted in the documentation.
+Because BootstrapVue's components are purposely designed to be fairly generic, authors may need to include further ARIA roles and attributes, as well as JavaScript behavior, to more accurately convey the precise nature and functionality of their component. This is usually noted in the documentation.
 
 ## ARIA Trigger Registration for component visibility
 
