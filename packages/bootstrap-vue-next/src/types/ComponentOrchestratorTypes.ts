@@ -200,7 +200,7 @@ export type ModalOrchestratorArrayValue = BModalProps & {
   }
 } & {
   [K in keyof BModalEmits as CamelCase<Prefix<'on-', K>>]?: (e: BModalEmits[K][0]) => void
-}
+} & Record<string, unknown>
 
 export type ModalOrchestratorParam = Omit<BModalProps, 'body' | 'title' | 'modelValue'> & {
   'onUpdate:modelValue'?: (val: boolean) => void
@@ -218,7 +218,7 @@ export type ModalOrchestratorParam = Omit<BModalProps, 'body' | 'title' | 'model
   }
 } & {
   [K in keyof BModalEmits as CamelCase<Prefix<'on-', K>>]?: (e: BModalEmits[K][0]) => void
-}
+} & Record<string, unknown>
 
 export type ModalOrchestratorCreateParam = MaybeRef<ModalOrchestratorParam>
 
