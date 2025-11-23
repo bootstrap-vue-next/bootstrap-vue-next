@@ -1,6 +1,6 @@
 /**
  * TypeScript type checking verification for useModal custom component props
- * This file is not meant to be executed, just type-checked
+ * This file demonstrates both approaches: with and without explicit type parameters
  */
 
 import {defineComponent} from 'vue'
@@ -22,26 +22,41 @@ const MyCustomModal = defineComponent({
   template: '<div>{{ myProp }} - {{ anotherProp }}</div>',
 })
 
+// Extract prop types from the component
+type MyCustomModalProps = {
+  myProp: string
+  anotherProp?: number
+}
+
 // Type checking test - this should not produce TypeScript errors
 export function typeCheckTest() {
   const {create} = useModal()
 
-  // Custom component with custom props - should work without ts-expect-error
-  const modal1 = create({
+  // Approach 1: Explicit type parameter (RECOMMENDED for type safety)
+  const modal1 = create<MyCustomModalProps>({
     component: MyCustomModal,
-    myProp: 'My Value',
+    myProp: 'My Value', // ✅ Type-checked
+    anotherProp: 42, // ✅ Type-checked
+    // @ts-expect-error - invalidProp should cause an error
+    invalidProp: 'error', // ❌ Would cause type error if uncommented
+  })
+
+  // Approach 2: Implicit (still works, allows any props but less safe)
+  const modal2 = create({
+    component: MyCustomModal,
+    myProp: 'My Value', // Works but not strictly type-checked
     anotherProp: 42,
   })
 
-  // Standard BModal props - should still work
-  const modal2 = create({
+  // Standard BModal props - still work as before
+  const modal3 = create({
     title: 'Test Modal',
     body: 'Test body',
     size: 'lg',
   })
 
-  // Mix of standard and custom props - should work
-  const modal3 = create({
+  // Mix of standard and custom props with explicit typing
+  const modal4 = create<MyCustomModalProps>({
     component: MyCustomModal,
     title: 'Test Title',
     myProp: 'Custom Value',
@@ -52,4 +67,5 @@ export function typeCheckTest() {
   modal1.show()
   modal2.hide()
   modal3.toggle()
+  modal4.show()
 }
