@@ -66,7 +66,7 @@ export type ToastOrchestratorArrayValue = Omit<BToastProps, 'modelValue'> & {
   slots?: {
     [K in keyof BToastSlots]?: BToastSlots[K] | Readonly<Component>
   }
-}
+} & Record<string, unknown>
 export type ToastOrchestratorParam = Omit<BToastProps, 'modelValue'> & {
   'title'?: MaybeRefOrGetter<BToastProps['title']>
   'body'?: MaybeRefOrGetter<BToastProps['body']>
@@ -106,7 +106,7 @@ export type ToastOrchestratorParam = Omit<BToastProps, 'modelValue'> & {
   slots?: {
     [K in keyof BToastSlots]?: MaybeRefOrGetter<BToastSlots[K] | Readonly<Component>>
   }
-}
+} & Record<string, unknown>
 
 export type ToastOrchestratorCreateParam = MaybeRef<ToastOrchestratorParam>
 
@@ -127,7 +127,7 @@ export type TooltipOrchestratorArrayValue = BTooltipProps & {
   }
 } & {
   [K in keyof BPopoverEmits as CamelCase<Prefix<'on-', K>>]?: (e: BPopoverEmits[K][0]) => void
-}
+} & Record<string, unknown>
 
 export type TooltipOrchestratorParam = Omit<BTooltipProps, 'body' | 'title' | 'modelValue'> & {
   'onUpdate:modelValue'?: (val: boolean) => void
@@ -142,7 +142,7 @@ export type TooltipOrchestratorParam = Omit<BTooltipProps, 'body' | 'title' | 'm
   }
 } & {
   [K in keyof BPopoverEmits as CamelCase<Prefix<'on-', K>>]?: (e: BPopoverEmits[K][0]) => void
-}
+} & Record<string, unknown>
 
 export type TooltipOrchestratorCreateParam = MaybeRef<TooltipOrchestratorParam>
 
@@ -164,7 +164,7 @@ export type PopoverOrchestratorArrayValue = BPopoverProps &
     }
   } & {
     [K in keyof BPopoverEmits as CamelCase<Prefix<'on-', K>>]?: (e: BPopoverEmits[K][0]) => void
-  }
+  } & Record<string, unknown>
 
 export type PopoverOrchestratorParam = Omit<BPopoverProps, 'body' | 'title' | 'modelValue'> & {
   'onUpdate:modelValue'?: (val: boolean) => void
@@ -179,7 +179,7 @@ export type PopoverOrchestratorParam = Omit<BPopoverProps, 'body' | 'title' | 'm
   }
 } & {
   [K in keyof BPopoverEmits as CamelCase<Prefix<'on-', K>>]?: (e: BPopoverEmits[K][0]) => void
-}
+} & Record<string, unknown>
 
 export type PopoverOrchestratorCreateParam = MaybeRef<PopoverOrchestratorParam>
 

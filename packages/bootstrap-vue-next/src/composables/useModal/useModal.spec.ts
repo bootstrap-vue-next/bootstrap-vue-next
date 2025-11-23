@@ -20,17 +20,18 @@ describe('useModal', () => {
         },
       },
       setup(props) {
-        return () => h('div', {class: 'custom-modal'}, [
-          h('p', `Custom Prop: ${props.customProp}`),
-          h('p', `Another Prop: ${props.anotherProp}`),
-        ])
+        return () =>
+          h('div', {class: 'custom-modal'}, [
+            h('p', `Custom Prop: ${props.customProp}`),
+            h('p', `Another Prop: ${props.anotherProp}`),
+          ])
       },
     })
 
     const TestComponent = defineComponent({
       setup() {
         const {create} = useModal()
-        
+
         // This should not cause TypeScript errors
         const modal = create({
           component: CustomModal,
@@ -38,11 +39,16 @@ describe('useModal', () => {
           anotherProp: 100,
         })
 
-        return () => h('div', [
-          h('button', {
-            onClick: () => modal.show(),
-          }, 'Show Modal'),
-        ])
+        return () =>
+          h('div', [
+            h(
+              'button',
+              {
+                onClick: () => modal.show(),
+              },
+              'Show Modal'
+            ),
+          ])
       },
     })
 
@@ -59,7 +65,7 @@ describe('useModal', () => {
     const TestComponent = defineComponent({
       setup() {
         const {create} = useModal()
-        
+
         // Standard BModal props should still work
         const modal = create({
           title: 'Test Modal',
@@ -67,11 +73,16 @@ describe('useModal', () => {
           size: 'lg',
         })
 
-        return () => h('div', [
-          h('button', {
-            onClick: () => modal.show(),
-          }, 'Show Modal'),
-        ])
+        return () =>
+          h('div', [
+            h(
+              'button',
+              {
+                onClick: () => modal.show(),
+              },
+              'Show Modal'
+            ),
+          ])
       },
     })
 
@@ -101,7 +112,7 @@ describe('useModal', () => {
     const TestComponent = defineComponent({
       setup() {
         const {create} = useModal()
-        
+
         // Mix of standard and custom props
         const modal = create({
           component: CustomModal,
@@ -110,11 +121,16 @@ describe('useModal', () => {
           size: 'md',
         })
 
-        return () => h('div', [
-          h('button', {
-            onClick: () => modal.show(),
-          }, 'Show Modal'),
-        ])
+        return () =>
+          h('div', [
+            h(
+              'button',
+              {
+                onClick: () => modal.show(),
+              },
+              'Show Modal'
+            ),
+          ])
       },
     })
 
