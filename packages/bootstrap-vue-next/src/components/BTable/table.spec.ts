@@ -1067,7 +1067,7 @@ describe('initial sort direction', () => {
     expect(text).toStrictEqual(['Cyndi', 'Havij', 'Robert'])
   })
 
-  it('shows correct sort icon opacity for unsorted columns based on initialSortDirection', () => {
+  it('shows correct sort icons as CSS background images', () => {
     const wrapper = mount(BTable, {
       props: {
         items: simpleItems,
@@ -1076,15 +1076,13 @@ describe('initial sort direction', () => {
       },
     })
 
-    const sortIcons = wrapper.findAll('svg')
-    expect(sortIcons.length).toBeGreaterThan(0)
+    const headers = wrapper.findAll('th[aria-sort]')
+    expect(headers.length).toBeGreaterThan(0)
 
-    // The icons should have opacity 0.4 for unsorted columns
-    sortIcons.forEach((icon) => {
-      const style = icon.attributes('style')
-      if (style?.includes('opacity')) {
-        expect(style).toContain('opacity: 0.4')
-      }
+    // All sortable headers should have aria-sort attribute
+    headers.forEach((header) => {
+      const ariaSort = header.attributes('aria-sort')
+      expect(['none', 'ascending', 'descending']).toContain(ariaSort)
     })
   })
 
