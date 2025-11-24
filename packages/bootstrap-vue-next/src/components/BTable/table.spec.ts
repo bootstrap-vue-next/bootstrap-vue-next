@@ -1121,6 +1121,59 @@ describe('initial sort direction', () => {
     })
   })
 
+  it('only applies b-table-sort-icon-left class to sortable fields', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: [
+          {key: 'first_name', label: 'First Name', sortable: true},
+          {key: 'age', label: 'Age', sortable: false},
+          {key: 'last_name', label: 'Last Name', sortable: true},
+        ],
+        sortIconLeft: true,
+      },
+    })
+
+    const headers = wrapper.findAll('th')
+    const sortableHeaders = wrapper.findAll('th[aria-sort]')
+
+    // Only sortable fields should have the class
+    expect(sortableHeaders.length).toBe(2)
+    sortableHeaders.forEach((header) => {
+      expect(header.classes()).toContain('b-table-sort-icon-left')
+    })
+
+    // Non-sortable field should not have the class
+    const ageHeader = headers.find((h) => h.text() === 'Age')
+    expect(ageHeader?.classes()).not.toContain('b-table-sort-icon-left')
+  })
+
+  it('applies b-table-no-sort-icon class to table when noSortableIcon prop is true', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        noSortableIcon: true,
+      },
+    })
+
+    const table = wrapper.find('table')
+    expect(table.classes()).toContain('b-table-no-sort-icon')
+  })
+
+  it('does not apply b-table-no-sort-icon class to table when noSortableIcon prop is false', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        noSortableIcon: false,
+      },
+    })
+
+    const table = wrapper.find('table')
+    expect(table.classes()).not.toContain('b-table-no-sort-icon')
+  })
+
   it('excludes current column from getLastSortDirection when using initialSortDirection "last"', async () => {
     // Start with two columns sorted: first_name (desc), age (asc)
     const wrapper = mount(BTable, {

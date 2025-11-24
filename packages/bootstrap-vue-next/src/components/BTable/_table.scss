@@ -178,7 +178,7 @@ $b-table-sort-icon-bg-descending: url("data:image/svg+xml,<svg xmlns='http://www
   }
 }
 
-.table.b-table {
+.table.b-table:not(.b-table-no-sort-icon) {
   > thead,
   > tfoot {
     > tr {
@@ -216,7 +216,7 @@ $b-table-sort-icon-bg-descending: url("data:image/svg+xml,<svg xmlns='http://www
   }
 
   // Padding adjustment for small tables
-  &.table-sm {
+  &.table-sm:not(.b-table-no-sort-icon) {
     > thead,
     > tfoot {
       > tr > [aria-sort] {

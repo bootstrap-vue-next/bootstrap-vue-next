@@ -358,7 +358,7 @@ const computedFields = computed<TableField<Items>[]>(() =>
 
     const value = sortByModel.value?.find((sb) => el.key === sb.key)
     const sortValue =
-      isSortable.value === false
+      el.sortable === false || isSortable.value === false
         ? undefined
         : value === undefined
           ? 'none'
@@ -377,7 +377,7 @@ const computedFields = computed<TableField<Items>[]>(() =>
       thClass: [
         el.thClass,
         {
-          'b-table-sort-icon-left': props.sortIconLeft,
+          'b-table-sort-icon-left': props.sortIconLeft && sortValue !== undefined,
         },
       ],
     }
@@ -390,6 +390,7 @@ const tableClasses = computed(() => ({
   'user-select-none': props.selectable && isSelecting.value,
   'b-table-fixed': props.fixed,
   'b-table-no-border-collapse': props.noBorderCollapse,
+  'b-table-no-sort-icon': props.noSortableIcon,
 }))
 
 const getBusyRowClasses = computed(() => [
