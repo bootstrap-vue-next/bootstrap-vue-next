@@ -882,13 +882,13 @@ The provider function is called with the following signature:
 The `ctx` is the context object associated with the table state, and contains the following
 properties:
 
-| Property      | Type                             | Description                                                                                 |
-| ------------- | -------------------------------- | ------------------------------------------------------------------------------------------- |
-| `currentPage` | `number`                         | The current page number (starting from 1, the value of the `current-page` prop)             |
-| `perPage`     | `number`                         | The maximum number of rows per page to display (the value of the `per-page` prop)           |
-| `filter`      | `string \| undefined`            | The value of the `filter` prop                                                              |
-| `sortBy`      | `BTableSortBy<T>[] \| undefined` | The current column key being sorted, or an empty string if not sorting                      |
-| `signal`      | `AbortSignal`                    | An AbortSignal that can be used to cancel the request when a new provider call is triggered |
+| Property      | Type                             | Description                                                                                                    |
+| ------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `currentPage` | `number`                         | The current page number (starting from 1, the value of the `current-page` prop)                                |
+| `perPage`     | `number`                         | The maximum number of rows per page to display (the value of the `per-page` prop)                              |
+| `filter`      | `string \| undefined`            | The value of the `filter` prop                                                                                 |
+| `sortBy`      | `BTableSortBy<T>[] \| undefined` | The current sort state as a `BTableSortBy[]` (array of `{ key, order }` entries), or `undefined` when unsorted |
+| `signal`      | `AbortSignal`                    | An AbortSignal that can be used to cancel the request when a new provider call is triggered                    |
 
 ### Debouncing Provider Calls
 
