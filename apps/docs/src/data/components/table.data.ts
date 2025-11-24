@@ -712,12 +712,6 @@ export default {
           description:
             'Position the sort icon on the left side of the table header cell instead of the right',
         },
-        sortIconInline: {
-          type: 'boolean',
-          default: false,
-          description:
-            'Position the sort icon immediately after the header text instead of at the far right of the cell',
-        },
         perPage: {
           type: 'Numberish',
           default: Number.POSITIVE_INFINITY,

@@ -188,7 +188,7 @@ $b-table-sort-icon-bg-descending: url("data:image/svg+xml,<svg xmlns='http://www
         background-repeat: no-repeat;
         background-size: $b-table-sort-icon-bg-width $b-table-sort-icon-bg-height;
 
-        &:not(.b-table-sort-icon-left):not(.b-table-sort-icon-inline) {
+        &:not(.b-table-sort-icon-left) {
           // Default is icon on the right edge of the cell
           background-position: right calc(#{$table-cell-padding-x} / 2) center;
           padding-right: calc(#{$table-cell-padding-x} + #{$b-table-sort-icon-bg-width});
@@ -198,12 +198,6 @@ $b-table-sort-icon-bg-descending: url("data:image/svg+xml,<svg xmlns='http://www
           // Left aligned sort icon (at left edge of cell)
           background-position: left calc(#{$table-cell-padding-x} / 2) center;
           padding-left: calc(#{$table-cell-padding-x} + #{$b-table-sort-icon-bg-width});
-        }
-
-        &.b-table-sort-icon-inline {
-          // Inline icon (right after the text content)
-          background-position: right center;
-          padding-right: calc(#{$b-table-sort-icon-bg-width} + 0.25rem);
         }
       }
 
@@ -226,7 +220,7 @@ $b-table-sort-icon-bg-descending: url("data:image/svg+xml,<svg xmlns='http://www
     > thead,
     > tfoot {
       > tr > [aria-sort] {
-        &:not(.b-table-sort-icon-left):not(.b-table-sort-icon-inline) {
+        &:not(.b-table-sort-icon-left) {
           // Default is icon on the right edge of the cell
           background-position: right calc(#{$table-cell-padding-x-sm} / 2) center;
           padding-right: calc(#{$table-cell-padding-x-sm} + #{$b-table-sort-icon-bg-width});
@@ -236,12 +230,6 @@ $b-table-sort-icon-bg-descending: url("data:image/svg+xml,<svg xmlns='http://www
           // Left aligned sort icon (at left edge of cell)
           background-position: left calc(#{$table-cell-padding-x-sm} / 2) center;
           padding-left: calc(#{$table-cell-padding-x-sm} + #{$b-table-sort-icon-bg-width});
-        }
-
-        &.b-table-sort-icon-inline {
-          // Inline icon (right after the text content)
-          background-position: right center;
-          padding-right: calc(#{$b-table-sort-icon-bg-width} + 0.25rem);
         }
       }
     }

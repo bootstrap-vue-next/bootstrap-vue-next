@@ -148,7 +148,6 @@ const _props = withDefaults(
   {
     noSortableIcon: false,
     sortIconLeft: false,
-    sortIconInline: false,
     perPage: Number.POSITIVE_INFINITY,
     filter: undefined,
     filterFunction: undefined,
@@ -379,7 +378,6 @@ const computedFields = computed<TableField<Items>[]>(() =>
         el.thClass,
         {
           'b-table-sort-icon-left': props.sortIconLeft,
-          'b-table-sort-icon-inline': props.sortIconInline,
         },
       ],
     }

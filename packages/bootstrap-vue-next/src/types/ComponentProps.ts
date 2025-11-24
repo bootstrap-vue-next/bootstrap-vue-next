@@ -1200,7 +1200,6 @@ export interface BTableProps<Items>
   selectedItems?: readonly Items[]
   noSortableIcon?: boolean
   sortIconLeft?: boolean
-  sortIconInline?: boolean
   emptyFilteredText?: string
   emptyText?: string
   showEmpty?: boolean
