@@ -1086,6 +1086,61 @@ describe('initial sort direction', () => {
     })
   })
 
+  it('applies b-table-sort-icon-left class when sortIconLeft prop is true', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        sortIconLeft: true,
+      },
+    })
+
+    const headers = wrapper.findAll('th[aria-sort]')
+    expect(headers.length).toBeGreaterThan(0)
+
+    headers.forEach((header) => {
+      expect(header.classes()).toContain('b-table-sort-icon-left')
+      expect(header.classes()).not.toContain('b-table-sort-icon-inline')
+    })
+  })
+
+  it('applies b-table-sort-icon-inline class when sortIconInline prop is true', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        sortIconInline: true,
+      },
+    })
+
+    const headers = wrapper.findAll('th[aria-sort]')
+    expect(headers.length).toBeGreaterThan(0)
+
+    headers.forEach((header) => {
+      expect(header.classes()).toContain('b-table-sort-icon-inline')
+      expect(header.classes()).not.toContain('b-table-sort-icon-left')
+    })
+  })
+
+  it('does not apply positioning classes when both props are false', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        sortIconLeft: false,
+        sortIconInline: false,
+      },
+    })
+
+    const headers = wrapper.findAll('th[aria-sort]')
+    expect(headers.length).toBeGreaterThan(0)
+
+    headers.forEach((header) => {
+      expect(header.classes()).not.toContain('b-table-sort-icon-left')
+      expect(header.classes()).not.toContain('b-table-sort-icon-inline')
+    })
+  })
+
   it('excludes current column from getLastSortDirection when using initialSortDirection "last"', async () => {
     // Start with two columns sorted: first_name (desc), age (asc)
     const wrapper = mount(BTable, {

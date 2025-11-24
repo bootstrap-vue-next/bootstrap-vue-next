@@ -147,6 +147,8 @@ const _props = withDefaults(
   defineProps<Omit<BTableProps<Items>, 'sortBy' | 'busy' | 'selectedItems'>>(),
   {
     noSortableIcon: false,
+    sortIconLeft: false,
+    sortIconInline: false,
     perPage: Number.POSITIVE_INFINITY,
     filter: undefined,
     filterFunction: undefined,
@@ -373,6 +375,13 @@ const computedFields = computed<TableField<Items>[]>(() =>
         'aria-sort': sortValue,
         ...el.thAttr,
       },
+      thClass: [
+        el.thClass,
+        {
+          'b-table-sort-icon-left': props.sortIconLeft,
+          'b-table-sort-icon-inline': props.sortIconInline,
+        },
+      ],
     }
   })
 )
