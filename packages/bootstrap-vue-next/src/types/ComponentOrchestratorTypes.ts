@@ -67,7 +67,7 @@ export type ToastOrchestratorArrayValue = Omit<BToastProps, 'modelValue'> & {
     [K in keyof BToastSlots]?: BToastSlots[K] | Readonly<Component>
   }
 } & Record<string, unknown>
-export type ToastOrchestratorParam<ComponentProps = Record<string, never>> = Omit<
+export type ToastOrchestratorParam<ComponentProps = Record<string, unknown>> = Omit<
   BToastProps,
   'modelValue'
 > & {
@@ -111,7 +111,7 @@ export type ToastOrchestratorParam<ComponentProps = Record<string, never>> = Omi
   }
 } & ComponentProps
 
-export type ToastOrchestratorCreateParam<ComponentProps = Record<string, never>> = MaybeRef<
+export type ToastOrchestratorCreateParam<ComponentProps = Record<string, unknown>> = MaybeRef<
   ToastOrchestratorParam<ComponentProps>
 >
 
@@ -134,7 +134,7 @@ export type TooltipOrchestratorArrayValue = BTooltipProps & {
   [K in keyof BPopoverEmits as CamelCase<Prefix<'on-', K>>]?: (e: BPopoverEmits[K][0]) => void
 } & Record<string, unknown>
 
-export type TooltipOrchestratorParam<ComponentProps = Record<string, never>> = Omit<
+export type TooltipOrchestratorParam<ComponentProps = Record<string, unknown>> = Omit<
   BTooltipProps,
   'body' | 'title' | 'modelValue'
 > & {
@@ -152,7 +152,7 @@ export type TooltipOrchestratorParam<ComponentProps = Record<string, never>> = O
   [K in keyof BPopoverEmits as CamelCase<Prefix<'on-', K>>]?: (e: BPopoverEmits[K][0]) => void
 } & ComponentProps
 
-export type TooltipOrchestratorCreateParam<ComponentProps = Record<string, never>> = MaybeRef<
+export type TooltipOrchestratorCreateParam<ComponentProps = Record<string, unknown>> = MaybeRef<
   TooltipOrchestratorParam<ComponentProps>
 >
 
@@ -176,7 +176,7 @@ export type PopoverOrchestratorArrayValue = BPopoverProps &
     [K in keyof BPopoverEmits as CamelCase<Prefix<'on-', K>>]?: (e: BPopoverEmits[K][0]) => void
   } & Record<string, unknown>
 
-export type PopoverOrchestratorParam<ComponentProps = Record<string, never>> = Omit<
+export type PopoverOrchestratorParam<ComponentProps = Record<string, unknown>> = Omit<
   BPopoverProps,
   'body' | 'title' | 'modelValue'
 > & {
@@ -194,7 +194,7 @@ export type PopoverOrchestratorParam<ComponentProps = Record<string, never>> = O
   [K in keyof BPopoverEmits as CamelCase<Prefix<'on-', K>>]?: (e: BPopoverEmits[K][0]) => void
 } & ComponentProps
 
-export type PopoverOrchestratorCreateParam<ComponentProps = Record<string, never>> = MaybeRef<
+export type PopoverOrchestratorCreateParam<ComponentProps = Record<string, unknown>> = MaybeRef<
   PopoverOrchestratorParam<ComponentProps>
 >
 
@@ -217,7 +217,7 @@ export type ModalOrchestratorArrayValue = BModalProps & {
   [K in keyof BModalEmits as CamelCase<Prefix<'on-', K>>]?: (e: BModalEmits[K][0]) => void
 } & Record<string, unknown>
 
-export type ModalOrchestratorParam<ComponentProps = Record<string, never>> = Omit<
+export type ModalOrchestratorParam<ComponentProps = Record<string, unknown>> = Omit<
   BModalProps,
   'body' | 'title' | 'modelValue'
 > & {
@@ -238,7 +238,7 @@ export type ModalOrchestratorParam<ComponentProps = Record<string, never>> = Omi
   [K in keyof BModalEmits as CamelCase<Prefix<'on-', K>>]?: (e: BModalEmits[K][0]) => void
 } & ComponentProps
 
-export type ModalOrchestratorCreateParam<ComponentProps = Record<string, never>> = MaybeRef<
+export type ModalOrchestratorCreateParam<ComponentProps = Record<string, unknown>> = MaybeRef<
   ModalOrchestratorParam<ComponentProps>
 >
 

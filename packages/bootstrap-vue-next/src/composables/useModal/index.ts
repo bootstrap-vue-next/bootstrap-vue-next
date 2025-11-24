@@ -39,7 +39,7 @@ export const useModal = () => {
   /**
    * @returns {PromiseWithComponent}  Returns a promise object with methods to control the modal (show, hide, toggle, get, set, destroy)
    */
-  const create = <ComponentProps = Record<string, never>>(
+  const create = <ComponentProps = Record<string, unknown>>(
     obj: ModalOrchestratorCreateParam<ComponentProps> = {} as ModalOrchestratorCreateParam<ComponentProps>,
     options: OrchestratorCreateOptions = {}
   ): PromiseWithComponent<typeof BModal, ModalOrchestratorParam<ComponentProps>> => {
