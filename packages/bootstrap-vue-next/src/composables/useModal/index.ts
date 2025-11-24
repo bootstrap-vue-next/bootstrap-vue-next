@@ -47,7 +47,9 @@ export const useModal = () => {
       throw new Error('BApp or BOrchestrator component must be mounted to use the modal controller')
     }
 
-    const resolvedProps = toRef(obj as unknown as ModalOrchestratorParam<ComponentProps>) as Ref<ModalOrchestratorParam<ComponentProps>>
+    const resolvedProps = toRef(obj as unknown as ModalOrchestratorParam<ComponentProps>) as Ref<
+      ModalOrchestratorParam<ComponentProps>
+    >
     const _self = resolvedProps.value?.id || Symbol('Modals controller')
 
     const promise = buildPromise<
@@ -85,7 +87,9 @@ export const useModal = () => {
         }
         v.modelValue = v.modelValue ?? false
         v['onUpdate:modelValue'] = (val: boolean) => {
-          const onUpdateModelValue = newValue['onUpdate:modelValue'] as ((val: boolean) => void) | undefined
+          const onUpdateModelValue = newValue['onUpdate:modelValue'] as
+            | ((val: boolean) => void)
+            | undefined
           onUpdateModelValue?.(val)
           const {modelValue} = toValue(obj)
           if (isRef(obj) && !isRef(modelValue)) obj.value.modelValue = val
