@@ -87,6 +87,12 @@ templates/
 - `vitest.workspace.mjs` - Test workspace setup
 - `.github/workflows/ci.yaml` - CI pipeline
 
+### Architecture Documentation
+
+- `architecture/` - Technical architecture documentation
+- `ARIA_VISIBILITY.md` - ARIA accessibility system for show/hide components
+- `BFORMFILE_ENHANCEMENT_PLAN.md`
+
 ## Documentation Requirements
 
 ### Component Documentation (.data.ts files)
@@ -207,3 +213,61 @@ templates/
 - 1567+ tests across components
 - Coverage reports available via `pnpm --filter bootstrap-vue-next run test:coverage`
 - Tests use Happy DOM environment for performance
+
+## Documentation Examples
+
+### Demo File Format
+
+All demo files in `apps/docs/src/docs/*/demo/` must follow this structure:
+
+1. **Order**: Template first, then script, then style (if applicable)
+2. **Template-Only Examples**: For simple template-only examples wrap example code in `<!-- #region template -->` and `<!-- #endregion template -->` comments
+3. **Complex Examples**: Include script setup after template, using TypeScript
+
+**Template-only example:**
+
+```vue
+<template>
+  <!-- #region template -->
+  <BButton v-b-toggle.my-collapse>Toggle</BButton>
+  <BCollapse id="my-collapse">
+    <BCard>Content</BCard>
+  </BCollapse>
+  <!-- #endregion template -->
+</template>
+```
+
+**Example with script:**
+
+```vue
+<template>
+  <BButton @click="toggle">Toggle</BButton>
+  <BCollapse v-model="visible">
+    <BCard>Content</BCard>
+  </BCollapse>
+</template>
+
+<script setup lang="ts">
+import {ref} from 'vue'
+
+const visible = ref(false)
+const toggle = () => {
+  visible.value = !visible.value
+}
+</script>
+```
+
+### Demo References in Markdown
+
+Use the `<<< DEMO` syntax to reference demo files:
+
+- **Show full file**: `<<< DEMO ./demo/MyComponent.vue{vue}`
+- **Show specific section**: Use `#region name` markers in the demo file and reference with `#name` in the markdown (e.g., `#region template` is referenced as `#template`)
+
+### Demo File Guidelines
+
+- Place demo files in `apps/docs/src/docs/[category]/demo/` directory
+- Name files descriptively: `ComponentFeature.vue` (e.g., `AccordionOverview.vue`, `AlertDismissible.vue`)
+- Use unique IDs for all components to avoid conflicts when multiple demos render on same page
+- Keep examples focused on demonstrating one feature or pattern
+- Include comments for clarity when showing complex patterns
