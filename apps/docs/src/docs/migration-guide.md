@@ -492,47 +492,25 @@ These limitations are intentional to maintain the native-first philosophy. If th
 
 **Basic file selection with BootstrapVue:**
 
-```vue
-<b-form-file v-model="file" placeholder="Choose a file or drop it here..." browse-text="Browse" />
-```
+<<< FRAGMENT ./demo/FormFileBasicBSV.vue#template{vue-html}
 
 **Equivalent in BootstrapVueNext (native approach):**
 
-```vue
-<BFormFile v-model="file" show-file-names placeholder="Choose a file or drop it here..." />
-<!-- Note: browse-text not available (uses browser's native button) -->
-```
+<<< FRAGMENT ./demo/FormFileBasicBSVN.vue#template{vue-html}
 
 **Custom file name formatting:**
 
-```vue
-<!-- BootstrapVue -->
-<b-form-file v-model="files" :file-name-formatter="formatNames" multiple />
+BootstrapVue:
 
-<!-- BootstrapVueNext (same API!) -->
-<BFormFile v-model="files" :file-name-formatter="formatNames" multiple show-file-names />
-```
+<<< FRAGMENT ./demo/FormFileFormatterBSV.vue#template{vue-html}
+
+BootstrapVueNext (same API!):
+
+<<< FRAGMENT ./demo/FormFileFormatterBSVN.vue#template{vue-html}
 
 **Using scoped slots for full customization:**
 
-```vue
-<BFormFile v-model="files" multiple>
-  <template #file-name="{ files, names }">
-    <div class="mt-2">
-      <strong>{{ files.length }}</strong> file(s) selected:
-      <ul class="mb-0">
-        <li v-for="name in names" :key="name">{{ name }}</li>
-      </ul>
-    </div>
-  </template>
-
-  <template #drop-placeholder="{ dropAllowed }">
-    <div :class="dropAllowed ? 'text-success' : 'text-danger'">
-      {{ dropAllowed ? '✓ Drop your files here!' : '✗ These files are not allowed' }}
-    </div>
-  </template>
-</BFormFile>
-```
+<<< DEMO ./demo/FormFileSlotsBSVN.vue#template{vue-html}
 
 #### Technical Details
 
