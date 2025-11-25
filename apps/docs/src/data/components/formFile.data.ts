@@ -34,14 +34,26 @@ export default {
         },
         capture: {
           type: "'boolean' | 'user' | 'environment'",
-          default: false, // TODO item not in string format
+          default: false,
           description:
             "When set, will instruct the browser to use the device's camera (if supported)",
         },
         directory: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description: 'Enable `directory` mode (on browsers that support it)',
+        },
+        dropPlaceholder: {
+          type: 'string',
+          default: 'Drop files here...',
+          description:
+            'Text to display in the drag overlay when files are being dragged over the input',
+        },
+        fileNameFormatter: {
+          type: '(files: readonly File[]) => string',
+          default: undefined,
+          description:
+            'Function to format the displayed file names. Receives an array of File objects and should return a string',
         },
         label: {
           type: 'string',
@@ -61,29 +73,48 @@ export default {
         },
         multiple: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description:
             'When set, will allow multiple files to be selected. `v-model` will be an array',
         },
         noButton: {
-          type: 'boolean | null',
-          default: undefined,
+          type: 'boolean',
+          default: false,
           description: 'Hide the file input button',
         },
         noDrop: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description: 'Disable drag and drop mode',
+        },
+        noDropPlaceholder: {
+          type: 'string',
+          default: 'Drop not allowed',
+          description:
+            'Text to display in the drag overlay when dropping files is not allowed (e.g., wrong file type)',
         },
         noTraverse: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description: 'Whether to return files as a flat array when in `directory` mode',
+        },
+        placeholder: {
+          type: 'string',
+          default: undefined,
+          description:
+            'Placeholder text to show in the file name display area when no files are selected',
+        },
+        showFileNames: {
+          type: 'boolean',
+          default: false,
+          description:
+            'When true, displays selected file names below the input. Also shown automatically when files are selected or placeholder is set',
         },
       } satisfies PropRecord<keyof BFormFileProps>,
       emits: {
         'update:model-value': {
-          description: 'Updates the `v-model` value (see docs for more details)', // TODO similar content to BAlert/update:model-value (similar purpose)
+          description:
+            'Emitted when the file selection changes. Value will be a File, File[], or null',
           args: {
             value: {
               type: 'File | File[] | null',
@@ -94,9 +125,43 @@ export default {
         },
       },
       slots: {
-        label: {
-          description: '', // TODO missing description
+        'label': {
+          description: 'Content to place in the label element above the file input',
           scope: {},
+        },
+        'file-name': {
+          description:
+            'Scoped slot for custom file name display. Overrides the default file name formatting',
+          scope: {
+            files: {
+              type: 'readonly File[]',
+              description: 'Array of selected File objects',
+            },
+            names: {
+              type: 'readonly string[]',
+              description: 'Array of file names extracted from the files',
+            },
+            filesTraversed: {
+              type: 'readonly File[]',
+              description:
+                'Flattened array of files when directory mode is enabled (currently same as files)',
+            },
+          },
+        },
+        'placeholder': {
+          description:
+            'Custom content to display when no files are selected. Overrides the placeholder prop',
+          scope: {},
+        },
+        'drop-placeholder': {
+          description:
+            'Custom content to display in the drag overlay when files are being dragged over the input',
+          scope: {
+            dropAllowed: {
+              type: 'boolean',
+              description: 'Whether dropping is currently allowed based on file type validation',
+            },
+          },
         },
       } satisfies SlotRecord<keyof BFormFileSlots>,
     },

@@ -441,7 +441,136 @@ See [BForm Components](/docs/components/form-checkbox)
 
 ### BFormFile
 
-<NotYetDocumented type="component"/>
+BootstrapVueNext's `BFormFile` takes a **native-first approach**, keeping the browser's native file input visible and functional while adding enhancement features around it. This differs from BootstrapVue's approach of hiding the native input behind a custom overlay.
+
+#### Philosophy
+
+**Why Native-First?**
+
+- Better accessibility (browser handles native keyboard and screen reader support)
+- Smaller bundle size (~60% smaller than BSV's custom implementation)
+- Lower maintenance complexity
+- Progressive enhancement (works even if enhancements fail)
+- Leverages Bootstrap 5's improved file input styling
+
+#### New Features in BootstrapVueNext
+
+BootstrapVueNext adds several enhancement features that work **with** the native input:
+
+**New Props:**
+
+- `showFileNames` - Display selected file names in an external element below the input
+- `placeholder` - Text shown when no files are selected (displayed externally)
+- `fileNameFormatter` - Custom function to format displayed file names
+- `dropPlaceholder` - Text shown in drag overlay when dragging files
+- `noDropPlaceholder` - Text shown when drop is not allowed (e.g., wrong file type)
+
+**New Slots:**
+
+- `file-name` - Scoped slot for custom file name display with `files`, `names`, and `filesTraversed` scope
+- `placeholder` - Custom content when no files selected
+- `drop-placeholder` - Custom drag feedback with `dropAllowed` scope
+
+**Enhanced Features:**
+
+- Visual drag-and-drop feedback with overlay
+- File type validation during drag operations
+- Automatic file name display with customizable formatting
+
+#### Features NOT Implemented (Require Custom Mode)
+
+The following BootstrapVue features are **not available** in the native-first approach as they require hiding the native input:
+
+- `browse-text` - Cannot customize the browser's "Browse" button text
+- Placeholder text **within** the input area (our `placeholder` shows externally)
+- Custom file name display **within** the input area (our display is external)
+- Drop placeholder text **within** the input area
+
+These limitations are intentional to maintain the native-first philosophy. If there's significant demand for these features, a custom mode may be added in a future release.
+
+#### Migration Examples
+
+**Basic file selection with BootstrapVue:**
+
+```vue
+<b-form-file v-model="file" placeholder="Choose a file or drop it here..." browse-text="Browse" />
+```
+
+**Equivalent in BootstrapVueNext (native approach):**
+
+```vue
+<BFormFile v-model="file" show-file-names placeholder="Choose a file or drop it here..." />
+<!-- Note: browse-text not available (uses browser's native button) -->
+```
+
+**Custom file name formatting:**
+
+```vue
+<!-- BootstrapVue -->
+<b-form-file v-model="files" :file-name-formatter="formatNames" multiple />
+
+<!-- BootstrapVueNext (same API!) -->
+<BFormFile v-model="files" :file-name-formatter="formatNames" multiple show-file-names />
+```
+
+**Using scoped slots for full customization:**
+
+```vue
+<BFormFile v-model="files" multiple>
+  <template #file-name="{ files, names }">
+    <div class="mt-2">
+      <strong>{{ files.length }}</strong> file(s) selected:
+      <ul class="mb-0">
+        <li v-for="name in names" :key="name">{{ name }}</li>
+      </ul>
+    </div>
+  </template>
+
+  <template #drop-placeholder="{ dropAllowed }">
+    <div :class="dropAllowed ? 'text-success' : 'text-danger'">
+      {{ dropAllowed ? '✓ Drop your files here!' : '✗ These files are not allowed' }}
+    </div>
+  </template>
+</BFormFile>
+```
+
+#### Technical Details
+
+**Drag and Drop:**
+
+- BootstrapVueNext provides visual feedback during drag operations
+- File type validation happens during `dragover` to show appropriate feedback
+- The drag overlay is positioned absolutely over the input without interfering with native behavior
+
+**File Name Display:**
+
+- Displayed in a separate element (`.b-form-file-display`) below/above the native input
+- Default formatting: single file shows name, multiple files show "X files selected"
+- Fully customizable via `fileNameFormatter` prop or `file-name` slot
+
+**Accessibility:**
+
+- Native input remains keyboard navigable and screen-reader accessible
+- All ARIA attributes work as expected on the native input
+- External displays are supplementary and don't replace native accessibility
+
+#### When to Use Each Approach
+
+**Use BootstrapVueNext's Native Approach When:**
+
+- You want the smallest bundle size and best performance
+- Accessibility is a priority
+- You're okay with browser-native "Browse" button appearance
+- You want file information displayed **outside** the input
+
+**Consider Requesting Custom Mode If:**
+
+- You absolutely need to customize the "Browse" button text
+- You must have placeholder/file names **inside** the input area
+- You need exact visual parity with BootstrapVue
+- Bundle size increase (~40%) is acceptable
+
+For feedback or feature requests, please see [Discussion #1213](https://github.com/bootstrap-vue-next/bootstrap-vue-next/discussions/1213).
 
 ### BFormGroup
 
