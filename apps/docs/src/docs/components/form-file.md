@@ -42,6 +42,34 @@ You can add a label above the input by using the `label` prop or the `label` slo
 
 <<< DEMO ./demo/FormFileLabel.vue#template{vue-html}
 
+## File Name Display
+
+By default, the file input doesn't show the selected file names externally. While the native browser control displays the file name for single file selection, it only shows a count (e.g., "3 files") in multiple file mode. You can enable external file name display using the `showFileNames` prop to show all selected file names, which is particularly useful in multiple file mode. You can also customize the placeholder text shown when no files are selected.
+
+<<< DEMO ./demo/FormFileShowNames.vue
+
+## Custom File Name Formatting
+
+Use the `fileNameFormatter` prop to customize how file names are displayed. The formatter receives an array of File objects and should return a string.
+
+<<< DEMO ./demo/FormFileFormatter.vue
+
+## Drag and Drop Feedback
+
+When dragging files over the input, visual feedback is automatically shown. You can customize the messages displayed during drag operations using the `dropPlaceholder` and `noDropPlaceholder` props.
+
+<<< DEMO ./demo/FormFileDragFeedback.vue
+
+## Scoped Slots
+
+For complete customization, use the scoped slots to control exactly how file information and drag feedback are displayed.
+
+- **`file-name`** - Customize the file name display with access to files, names, and filesTraversed
+- **`placeholder`** - Custom content when no files are selected
+- **`drop-placeholder`** - Custom drag overlay content with dropAllowed state
+
+<<< DEMO ./demo/FormFileSlots.vue
+
 ## Directory Mode
 
 By adding the `directory` prop, a user can select directories instead of files
