@@ -3,7 +3,7 @@ import {ref} from 'vue'
 
 const files = ref()
 
-const formatNames = (files: File[]) =>
+const formatNames = (files: readonly File[]) =>
   files.length > 1 ? `${files.length} files` : (files[0]?.name ?? '')
 </script>
 
