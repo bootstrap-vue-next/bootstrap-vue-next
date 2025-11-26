@@ -154,10 +154,8 @@ const dragCounter = ref(0)
 
 const onDragEnter = (e: DragEvent) => {
   dragCounter.value++
-  if (dragCounter.value === 1) {
-    isDragging.value = true
-    dropAllowed.value = e.dataTransfer?.types?.includes('Files') ?? false
-  }
+  isDragging.value = true
+  dropAllowed.value = e.dataTransfer?.types?.includes('Files') ?? false
 }
 
 const onDragLeave = () => {

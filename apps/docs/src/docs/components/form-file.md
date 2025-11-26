@@ -3,9 +3,9 @@ description: 'File input control that supports single and multiple file modes, d
 ---
 
 ::: info NOTE
-BootstrapVueNext's implemenation of `BFile` is build on the browser native control with Bootstrap5 styling. This is a significant
-departure from BootstrapVue. Please check the [migration documentation] for details and [contribute to the disction](https://github.com/bootstrap-vue-next/bootstrap-vue-next/discussions/1213)
-if you would like to see addtional features.
+BootstrapVueNext's implementation of `BFormFile` is built on the browser native control with Bootstrap 5 styling. This is a significant
+departure from BootstrapVue. Please check the [migration documentation] for details and [contribute to the discussion](https://github.com/bootstrap-vue-next/bootstrap-vue-next/discussions/1213)
+if you would like to see additional features.
 :::
 
 ## Single File Mode
@@ -104,8 +104,8 @@ By default, files are returned in a nested array structure reflecting the direct
 
 Each file object includes a `$path` property:
 
-- For nested structures: BootstrapVueNext uses its own routine to determine the relative path
-- For flat structures: Relies on the browser's native `File.webkitRelativePath` property
+- Uses the browser's native `File.webkitRelativePath` property when available
+- Falls back to just the file name if `webkitRelativePath` is not set
 
 Directory mode works in both custom and plain mode on most modern browsers.
 

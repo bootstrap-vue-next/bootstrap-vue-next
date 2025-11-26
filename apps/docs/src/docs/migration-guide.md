@@ -496,7 +496,7 @@ BootstrapVueNext (same API!):
 
 **Using scoped slots for full customization:**
 
-<<< DEMO ./demo/FormFileSlotsBSVN.vue#template{vue-html}
+<<< DEMO ./demo/FormFileSlotsBSVN.vue
 
 #### Technical Details
 

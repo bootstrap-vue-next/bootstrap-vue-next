@@ -172,9 +172,7 @@ const formattedFileNames = computed(() => {
   return `${names.length} files selected`
 })
 
-const showDisplay = computed(
-  () => props.showFileNames || hasFiles.value || (props.placeholder && !hasFiles.value)
-)
+const showDisplay = computed(() => props.showFileNames || hasFiles.value || props.placeholder)
 
 const effectiveDropPlaceholder = computed(() => props.dropPlaceholder ?? 'Drop files here...')
 

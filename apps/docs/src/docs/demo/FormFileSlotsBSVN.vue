@@ -1,9 +1,3 @@
-<script setup lang="ts">
-import {ref} from 'vue'
-
-const files = ref()
-</script>
-
 <template>
   <BFormFile
     v-model="files"
@@ -30,3 +24,9 @@ const files = ref()
     </template>
   </BFormFile>
 </template>
+
+<script setup lang="ts">
+import {ref} from 'vue'
+
+const files = ref()
+</script>
