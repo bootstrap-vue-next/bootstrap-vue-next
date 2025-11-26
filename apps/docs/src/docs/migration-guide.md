@@ -457,20 +457,6 @@ BootstrapVueNext's `BFormFile` takes a **native-first approach**, keeping the br
 
 BootstrapVueNext adds several enhancement features that work **with** the native input:
 
-**New Props:**
-
-- `showFileNames` - Display selected file names in an external element below the input
-- `placeholder` - Text shown when no files are selected (displayed externally)
-- `fileNameFormatter` - Custom function to format displayed file names
-- `dropPlaceholder` - Text shown in drag overlay when dragging files
-- `noDropPlaceholder` - Text shown when drop is not allowed (e.g., wrong file type)
-
-**New Slots:**
-
-- `file-name` - Scoped slot for custom file name display with `files`, `names`, and `filesTraversed` scope
-- `placeholder` - Custom content when no files selected
-- `drop-placeholder` - Custom drag feedback with `dropAllowed` scope
-
 **Enhanced Features:**
 
 - Visual drag-and-drop feedback with overlay

@@ -216,6 +216,30 @@ templates/
 
 ## Documentation Examples
 
+### Callouts and Alerts
+
+Use VitePress-native callout syntax instead of BAlert components for documentation notes, warnings, and tips:
+
+```markdown
+::: info NOTE
+Information or helpful context
+:::
+
+::: tip TIP
+Helpful suggestions or best practices
+:::
+
+::: warning CAUTION
+Important warnings or non-standard features
+:::
+
+::: danger DANGER
+Critical warnings about breaking changes or deprecated features
+:::
+```
+
+Avoid using `<BAlert>` components in documentation markdown - prefer the native `:::` syntax for better VitePress integration and consistency.
+
 ### Demo File Format
 
 All demo files in `apps/docs/src/docs/*/demo/` must follow this structure:
@@ -271,3 +295,4 @@ Use the `<<< DEMO` syntax to reference demo files:
 - Use unique IDs for all components to avoid conflicts when multiple demos render on same page
 - Keep examples focused on demonstrating one feature or pattern
 - Include comments for clarity when showing complex patterns
+- **Use kebab-case for prop names** in documentation and examples (e.g., `file-name-formatter`, `show-file-names`) - this is Vue's preferred convention, even though camelCase works at runtime

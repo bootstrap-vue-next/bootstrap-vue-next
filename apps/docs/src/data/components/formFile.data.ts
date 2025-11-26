@@ -33,7 +33,7 @@ export default {
           description: "Value to set on the file input's `accept` attribute",
         },
         capture: {
-          type: "'boolean' | 'user' | 'environment'",
+          type: "boolean | 'user' | 'environment'",
           default: false,
           description:
             "When set, will instruct the browser to use the device's camera (if supported)",

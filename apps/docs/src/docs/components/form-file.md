@@ -2,9 +2,11 @@
 description: 'File input control that supports single and multiple file modes, drag and drop, file type restrictions, and directory selection with contextual state feedback.'
 ---
 
-<BAlert :model-value="true" variant="danger">
-The current variation is subject to change pre v1.0. The implementation may change to become closer to the Bootstrap-vue implementation based on feedback <BLink target="_blank" href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/discussions/1213" rel="noopener">vote here</BLink>
-</BAlert>
+::: info NOTE
+BootstrapVueNext's implemenation of `BFile` is build on the browser native control with Bootstrap5 styling. This is a significant
+departure from BootstrapVue. Please check the [migration documentation] for details and [contribute to the disction](https://github.com/bootstrap-vue-next/bootstrap-vue-next/discussions/1213)
+if you would like to see addtional features.
+:::
 
 ## Single File Mode
 
@@ -74,9 +76,9 @@ For complete customization, use the scoped slots to control exactly how file inf
 
 By adding the `directory` prop, a user can select directories instead of files.
 
-<BAlert variant="warning" :model-value="true">
-  <strong>CAUTION:</strong> Directory mode is a <em>non-standard</em> feature. While being supported by all modern browsers, it should not be relied upon for production environments without thorough testing. Read more on <BLink href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitdirectory" target="_blank" rel="noopener">MDN</BLink> and <BLink href="https://caniuse.com/input-file-directory" target="_blank" rel="noopener">Can I use</BLink>.
-</BAlert>
+::: warning CAUTION
+Directory mode is a <em>non-standard</em> feature. While being supported by all modern browsers, it should not be relied upon for production environments without thorough testing. Read more on <BLink href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitdirectory" target="_blank" rel="noopener">MDN</BLink> and <BLink href="https://caniuse.com/input-file-directory" target="_blank" rel="noopener">Can I use</BLink>.
+:::
 
 ### Directory Selection
 
