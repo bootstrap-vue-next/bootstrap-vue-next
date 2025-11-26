@@ -181,9 +181,27 @@ const effectiveDropPlaceholder = computed(() => props.dropPlaceholder ?? 'Drop f
 const effectiveNoDropPlaceholder = computed(() => props.noDropPlaceholder ?? 'Drop not allowed')
 
 const onChange = () => {
-  const value =
+  const files =
     input.value?.files === null || input.value?.files === undefined ? null : [...input.value.files]
-  modelValue.value = value === null ? null : props.multiple === true ? value : value[0]
+
+  // Add $path property for directory mode
+  if (files && props.directory) {
+    files.forEach((file: File & {$path?: string}) => {
+      // Use webkitRelativePath if available (set by browser for directory selection)
+      if (
+        'webkitRelativePath' in file &&
+        (file as File & {webkitRelativePath?: string}).webkitRelativePath
+      ) {
+        file.$path = (file as File & {webkitRelativePath: string}).webkitRelativePath
+      } else {
+        // Fallback to just the file name
+        file.$path = file.name
+      }
+    })
+  }
+
+  // Directory mode always returns array, regular mode respects multiple prop
+  modelValue.value = files === null ? null : props.directory || props.multiple ? files : files[0]
 }
 
 const onDrop = (e: Readonly<DragEvent>) => {

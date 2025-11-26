@@ -72,13 +72,40 @@ For complete customization, use the scoped slots to control exactly how file inf
 
 ## Directory Mode
 
-By adding the `directory` prop, a user can select directories instead of files
+By adding the `directory` prop, a user can select directories instead of files.
 
-<BAlert variant="danger" :model-value="true">
-  Directory mode is a non-standard attribute in the HTML spec. All major browsers have chosen too support it, but it may not function correctly for browsers that have chosen not to implement it. Use with caution
+<BAlert variant="warning" :model-value="true">
+  <strong>CAUTION:</strong> Directory mode is a <em>non-standard</em> feature. While being supported by all modern browsers, it should not be relied upon for production environments without thorough testing. Read more on <BLink href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitdirectory" target="_blank" rel="noopener">MDN</BLink> and <BLink href="https://caniuse.com/input-file-directory" target="_blank" rel="noopener">Can I use</BLink>.
 </BAlert>
 
-### Example to be Written
+### Directory Selection
+
+When a directory is selected, the directory and its entire hierarchy of contents are included in the set of selected items. Each file entry includes a special `$path` property containing the relative path of the file.
+
+### Nested vs Flat Structure
+
+By default, files are returned in a nested array structure reflecting the directory hierarchy. You can flatten this structure using the `no-traverse` prop, which returns all files in a single flat array.
+
+<<< DEMO ./demo/FormFileDirectory.vue
+
+### Browser Support and Limitations
+
+**Important considerations for directory mode:**
+
+- **Non-standard feature**: The `webkitdirectory` attribute is not part of the HTML standard, though it's widely supported
+- **Modern browser requirement**: Requires browsers with `Promise` support. If targeting older browsers (IE 11), include a Promise polyfill
+- **Chromium limitation**: Nested directory structures are currently only fully supported when directories are **dropped** on the file input. When using the "Browse" dialog in Chromium-based browsers, files may be returned in a flattened structure due to a [known Chromium issue](https://bugs.chromium.org/p/chromium/issues/detail?id=138987)
+- **Mozilla behavior**: Firefox implements directory selection [the same way as Chromium](https://bugzilla.mozilla.org/show_bug.cgi?id=1326031)
+- **Drag and drop recommended**: For best cross-browser support with nested structures, use drag and drop instead of the file browser dialog
+
+### Path Information
+
+Each file object includes a `$path` property:
+
+- For nested structures: BootstrapVueNext uses its own routine to determine the relative path
+- For flat structures: Relies on the browser's native `File.webkitRelativePath` property
+
+Directory mode works in both custom and plain mode on most modern browsers.
 
 ## Autofocus
 
