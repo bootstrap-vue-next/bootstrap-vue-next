@@ -2,7 +2,7 @@
   "name": "bootstrap-vue-next",
   "displayName": "BootstrapVueNext",
   "description": "Seamless integration of Vue 3, Bootstrap 5, and TypeScript for modern, type-safe UI development",
-  "version": "0.40.8",
+  "version": "0.40.9",
   "license": "MIT",
   "main": "./dist/bootstrap-vue-next.umd.js",
   "module": "./dist/bootstrap-vue-next.mjs",
