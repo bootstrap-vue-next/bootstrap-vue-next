@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.40.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.8...bootstrapvuenext-v0.40.9) (2025-11-28)
+
+
+### Bug Fixes
+
+* allow custom component props in orchestrator create methods with type safety ([#2922](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2922)) ([fdf2359](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/fdf2359c1cc4f154a40de8ae4252dbb0eb0235c9))
+* **BModal:** prevent focus trap error when no tabbable elements exist ([#2864](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2864)) ([d5d85f2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d5d85f2c741c789a3ca94e442ff371af73b49cbe))
+* **BTableLite:** Use primary key to persist row-details state when items change ([#2871](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2871)) ([a933f96](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a933f96d1cf4bd1bc82645f18e1c9410e050ad76))
+
 ## [0.40.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.7...bootstrapvuenext-v0.40.8) (2025-11-17)
 
 
