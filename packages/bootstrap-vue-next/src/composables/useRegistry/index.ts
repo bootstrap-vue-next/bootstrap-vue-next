@@ -20,13 +20,13 @@ import type {BAppProps} from '../../types/ComponentProps'
 import type {BreadcrumbItemRaw} from '../../types/BreadcrumbTypes'
 
 export const useRegistry = (rtl: BAppProps['rtl'] = false) => {
-  const showHideStorage = inject(showHideRegistryKey, undefined)
+  const showHideStorage = inject(showHideRegistryKey, null)
   if (!showHideStorage) {
     const {register, values} = _newShowHideRegistry()
     provide(showHideRegistryKey, {register, values})
   }
 
-  const modalManager = inject(modalManagerKey, undefined)
+  const modalManager = inject(modalManagerKey, null)
   if (!modalManager) {
     const stack: Ref<Map<number, ComponentInternalInstance>> = ref(new Map())
 
@@ -67,7 +67,7 @@ export const useRegistry = (rtl: BAppProps['rtl'] = false) => {
     })
   }
 
-  const breadcrumb = inject(breadcrumbRegistryKey, undefined)
+  const breadcrumb = inject(breadcrumbRegistryKey, null)
   if (!breadcrumb) {
     const items = ref<Record<string, BreadcrumbItemRaw[]>>({
       [breadcrumbGlobalIndexKey]: [],
@@ -79,7 +79,7 @@ export const useRegistry = (rtl: BAppProps['rtl'] = false) => {
     provide(breadcrumbRegistryKey, {items, reset})
   }
 
-  const rtlRegistry = inject(rtlRegistryKey, undefined)
+  const rtlRegistry = inject(rtlRegistryKey, null)
   if (!rtlRegistry) {
     const rtlDefault = false
     const localeDefault = undefined

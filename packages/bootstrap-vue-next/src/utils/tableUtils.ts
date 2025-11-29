@@ -61,7 +61,10 @@ export const btableLiteProps = Object.freeze(
   } satisfies Record<keyof Omit<BTableLiteProps<unknown>, keyof BTableSimpleProps>, 0>)
 ) as readonly (keyof Omit<BTableLiteProps<unknown>, keyof BTableSimpleProps>)[]
 
-export const getDataLabelAttr = (
-  props: {stacked: boolean | Breakpoint | undefined; labelStacked: boolean | undefined},
-  label: string
-) => (props.stacked && props.labelStacked !== true ? {'data-label': label} : undefined)
+export type StackedProps = {
+  stacked: boolean | Breakpoint | undefined
+  labelStacked: boolean | undefined
+}
+
+export const getDataLabelAttr = (props: StackedProps, label: string) =>
+  props.stacked && props.labelStacked !== true ? {'data-label': label} : undefined
