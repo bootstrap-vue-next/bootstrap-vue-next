@@ -872,12 +872,12 @@ The provider function is called with the following signature:
 The `ctx` is the context object associated with the table state, and contains the following
 properties:
 
-| Property      | Type                             | Description                                                                       |
-| ------------- | -------------------------------- | --------------------------------------------------------------------------------- |
-| `currentPage` | `number`                         | The current page number (starting from 1, the value of the `current-page` prop)   |
-| `perPage`     | `number`                         | The maximum number of rows per page to display (the value of the `per-page` prop) |
-| `filter`      | `string \| undefined`            | The value of the `filter` prop                                                    |
-| `sortBy`      | `BTableSortBy<T>[] \| undefined` | The current column key being sorted, or an empty string if not sorting            |
+| Property      | Type                             | Description                                                                                 |
+| ------------- | -------------------------------- | ------------------------------------------------------------------------------------------- |
+| `currentPage` | `number`                         | The current page number (starting from 1, the value of the `current-page` prop)             |
+| `perPage`     | `number`                         | The maximum number of rows per page to display (the value of the `per-page` prop)           |
+| `filter`      | `string \| undefined`            | The value of the `filter` prop                                                              |
+| `sortBy`      | `BTableSortBy<T>[] \| undefined` | The current column key being sorted, or an empty string if not sorting                      |
 | `signal`      | `AbortSignal`                    | An AbortSignal that can be used to cancel the request when a new provider call is triggered |
 
 ### Debouncing Provider Calls
@@ -890,12 +890,7 @@ To avoid excessive provider calls (e.g., when typing rapidly in a filter), you c
 Example with debouncing:
 
 ```vue
-<BTable
-  :provider="myProvider"
-  :fields="fields"
-  :debounce="300"
-  :debounce-max-wait="1000"
-/>
+<BTable :provider="myProvider" :fields="fields" :debounce="300" :debounce-max-wait="1000" />
 ```
 
 ### Handling Request Cancellation
@@ -922,7 +917,7 @@ const myProvider = async (ctx: BTableProviderContext) => {
       // Perform your async operation
       resolve(items)
     }, 1000)
-    
+
     // Clean up when aborted
     ctx.signal.addEventListener('abort', () => {
       clearTimeout(timeout)
