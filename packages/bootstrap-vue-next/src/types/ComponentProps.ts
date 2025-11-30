@@ -342,6 +342,7 @@ export interface BFormSelectProps {
   multiple?: boolean
   name?: string
   options?: readonly (unknown | Record<string, unknown>)[]
+  optionsAttrs?: Readonly<AttrsValue>
   optionsField?: string
   plain?: boolean
   required?: boolean
@@ -354,6 +355,7 @@ export interface BFormSelectProps {
 
 export interface BFormSelectOptionProps<T> {
   disabled?: boolean
+  optionsAttrs?: Readonly<AttrsValue>
   value?: T
 }
 

@@ -48,6 +48,11 @@ export default {
             default: false,
             description: 'When set, allows multiple options to be selected (multi-select)',
           },
+          optionsAttrs: {
+            type: 'Readonly<AttrsValue>',
+            default: undefined,
+            description: 'Attributes to be applied to the option item',
+          },
           optionsField: {
             type: 'string',
             default: 'options',
@@ -124,6 +129,11 @@ export default {
             type: 'boolean',
             default: false,
             description: 'The disabled state of the option',
+          },
+          optionsAttrs: {
+            type: 'Readonly<AttrsValue>',
+            default: undefined,
+            description: 'Attributes to be applied to the option item',
           },
         } satisfies Record<keyof BvnComponentProps['BFormSelectOption'], PropertyReference>,
       },

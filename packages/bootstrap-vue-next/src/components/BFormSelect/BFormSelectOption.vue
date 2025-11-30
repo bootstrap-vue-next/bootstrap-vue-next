@@ -1,5 +1,5 @@
 <template>
-  <option :value="props.value" :disabled="props.disabled">
+  <option :value="props.value" :disabled="props.disabled" v-bind="props.optionsAttrs">
     <slot />
   </option>
 </template>
@@ -10,6 +10,7 @@ import type {BFormSelectOptionProps} from '../../types/ComponentProps'
 
 const _props = withDefaults(defineProps<BFormSelectOptionProps<T>>(), {
   disabled: false,
+  optionsAttrs: undefined,
   value: undefined,
 })
 const props = useDefaults<BFormSelectOptionProps<T>>(_props, 'BFormSelectOption')
