@@ -978,8 +978,6 @@ If you find a need for the other types (Avatar or Input), please open an issue o
 
 ### BTable
 
-<NotYetDocumented type="component"/>
-
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
 The slot `emptyfiltered` has been renamed to `empty-filtered` for consistency.

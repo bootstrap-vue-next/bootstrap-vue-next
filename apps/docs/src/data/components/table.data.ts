@@ -706,6 +706,12 @@ export default {
           type: 'boolean',
           default: false,
         },
+        sortIconLeft: {
+          type: 'boolean',
+          default: false,
+          description:
+            'Position the sort icon on the left side of the table header cell instead of the right',
+        },
         perPage: {
           type: 'Numberish',
           default: Number.POSITIVE_INFINITY,
