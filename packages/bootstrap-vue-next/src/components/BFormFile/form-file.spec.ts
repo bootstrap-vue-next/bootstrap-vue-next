@@ -1,5 +1,5 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
-import {afterEach, describe, expect, it} from 'vitest'
+import {afterEach, describe, expect, it, vi} from 'vitest'
 import BFormFile from './BFormFile.vue'
 
 describe('form-file', () => {
@@ -413,6 +413,235 @@ describe('form-file', () => {
       expect(emittedValue && (emittedValue[0][0] as File[])[0]).toStrictEqual(file1)
       const em = wrapper.emitted('update:modelValue')
       expect(em && (em[0][0] as File[])[1]).toStrictEqual(file2)
+    })
+  })
+
+  describe('file name display', () => {
+    it('does not show file display by default', () => {
+      const wrapper = mount(BFormFile)
+      const $display = wrapper.find('.b-form-file-display')
+      expect($display.exists()).toBe(false)
+    })
+
+    it('shows file display when showFileNames is true', () => {
+      const wrapper = mount(BFormFile, {props: {showFileNames: true}})
+      const $display = wrapper.find('.b-form-file-display')
+      expect($display.exists()).toBe(true)
+    })
+
+    it('shows placeholder when no files and placeholder prop', () => {
+      const wrapper = mount(BFormFile, {props: {placeholder: 'Choose a file...'}})
+      const $display = wrapper.find('.b-form-file-display')
+      expect($display.exists()).toBe(true)
+      expect($display.text()).toBe('Choose a file...')
+    })
+
+    it('shows placeholder via slot when no files', () => {
+      const wrapper = mount(BFormFile, {
+        props: {showFileNames: true},
+        slots: {placeholder: 'Custom placeholder'},
+      })
+      const $display = wrapper.find('.b-form-file-display')
+      expect($display.exists()).toBe(true)
+      expect($display.text()).toBe('Custom placeholder')
+    })
+
+    it('displays single file name', async () => {
+      const file = new File(['foo'], 'test-file.txt', {
+        type: 'text/plain',
+        lastModified: Date.now(),
+      })
+
+      const dataTransfer = new ClipboardEvent('').clipboardData ?? new DataTransfer()
+      dataTransfer.items.add(file)
+
+      const wrapper = mount(BFormFile, {props: {showFileNames: true}})
+      const $input = wrapper.get('input')
+      $input.element.files = dataTransfer.files
+      await $input.trigger('change')
+
+      await wrapper.vm.$nextTick()
+
+      const $display = wrapper.find('.b-form-file-display')
+      expect($display.exists()).toBe(true)
+      expect($display.text()).toBe('test-file.txt')
+    })
+
+    it('displays "X files selected" for multiple files', async () => {
+      const file1 = new File(['foo'], 'file1.txt', {type: 'text/plain', lastModified: Date.now()})
+      const file2 = new File(['bar'], 'file2.txt', {type: 'text/plain', lastModified: Date.now()})
+
+      const dataTransfer = new ClipboardEvent('').clipboardData ?? new DataTransfer()
+      dataTransfer.items.add(file1)
+      dataTransfer.items.add(file2)
+
+      const wrapper = mount(BFormFile, {props: {showFileNames: true, multiple: true}})
+      const $input = wrapper.get('input')
+      $input.element.files = dataTransfer.files
+      await $input.trigger('change')
+
+      await wrapper.vm.$nextTick()
+
+      const $display = wrapper.find('.b-form-file-display')
+      expect($display.exists()).toBe(true)
+      expect($display.text()).toBe('2 files selected')
+    })
+
+    it('uses fileNameFormatter when provided', async () => {
+      const file1 = new File(['foo'], 'file1.txt', {type: 'text/plain', lastModified: Date.now()})
+      const file2 = new File(['bar'], 'file2.txt', {type: 'text/plain', lastModified: Date.now()})
+
+      const dataTransfer = new ClipboardEvent('').clipboardData ?? new DataTransfer()
+      dataTransfer.items.add(file1)
+      dataTransfer.items.add(file2)
+
+      const formatter = vi.fn((files: readonly File[]) =>
+        files.map((f) => f.name.toUpperCase()).join(' | ')
+      )
+
+      const wrapper = mount(BFormFile, {
+        props: {showFileNames: true, multiple: true, fileNameFormatter: formatter},
+      })
+      const $input = wrapper.get('input')
+      $input.element.files = dataTransfer.files
+      await $input.trigger('change')
+
+      await wrapper.vm.$nextTick()
+
+      expect(formatter).toHaveBeenCalled()
+      const $display = wrapper.find('.b-form-file-display')
+      expect($display.text()).toBe('FILE1.TXT | FILE2.TXT')
+    })
+
+    it('file-name slot receives correct scope', async () => {
+      const file = new File(['foo'], 'test.txt', {type: 'text/plain', lastModified: Date.now()})
+
+      const dataTransfer = new ClipboardEvent('').clipboardData ?? new DataTransfer()
+      dataTransfer.items.add(file)
+
+      const wrapper = mount(BFormFile, {
+        props: {showFileNames: true},
+        slots: {
+          'file-name': `
+            <template #file-name="{ files, names }">
+              <div class="custom">{{ files.length }} - {{ names.join(', ') }}</div>
+            </template>
+          `,
+        },
+      })
+
+      const $input = wrapper.get('input')
+      $input.element.files = dataTransfer.files
+      await $input.trigger('change')
+
+      await wrapper.vm.$nextTick()
+
+      const $custom = wrapper.find('.custom')
+      expect($custom.exists()).toBe(true)
+      expect($custom.text()).toBe('1 - test.txt')
+    })
+  })
+
+  describe('drag and drop feedback', () => {
+    it('shows drag overlay on dragenter when not noDrop', async () => {
+      const wrapper = mount(BFormFile, {props: {showFileNames: true}})
+      const $input = wrapper.get('input')
+
+      await $input.trigger('dragenter')
+      await wrapper.vm.$nextTick()
+
+      const $overlay = wrapper.find('.b-form-file-drag-overlay')
+      expect($overlay.exists()).toBe(true)
+    })
+
+    it('does not show drag overlay when noDrop is true', async () => {
+      const wrapper = mount(BFormFile, {props: {noDrop: true, showFileNames: true}})
+      const $input = wrapper.get('input')
+
+      await $input.trigger('dragenter')
+      await wrapper.vm.$nextTick()
+
+      const $wrapper = wrapper.find('.b-form-file-wrapper')
+      expect($wrapper.classes()).not.toContain('b-form-file-dragging')
+    })
+
+    it('hides drag overlay on dragleave', async () => {
+      const wrapper = mount(BFormFile, {props: {showFileNames: true}})
+      const $input = wrapper.get('input')
+
+      await $input.trigger('dragenter')
+      await wrapper.vm.$nextTick()
+
+      let $wrapper = wrapper.find('.b-form-file-wrapper')
+      expect($wrapper.classes()).toContain('b-form-file-dragging')
+
+      await $input.trigger('dragleave')
+      await wrapper.vm.$nextTick()
+
+      $wrapper = wrapper.find('.b-form-file-wrapper')
+      expect($wrapper.classes()).not.toContain('b-form-file-dragging')
+    })
+
+    it('shows default drop placeholder text', async () => {
+      const wrapper = mount(BFormFile, {props: {showFileNames: true}})
+      const $input = wrapper.get('input')
+
+      await $input.trigger('dragenter')
+      await wrapper.vm.$nextTick()
+
+      const $text = wrapper.find('.b-form-file-drag-text')
+      expect($text.exists()).toBe(true)
+      expect($text.text()).toBe('Drop files here...')
+    })
+
+    it('shows custom dropPlaceholder text', async () => {
+      const wrapper = mount(BFormFile, {
+        props: {showFileNames: true, dropPlaceholder: 'Drop your files!'},
+      })
+      const $input = wrapper.get('input')
+
+      await $input.trigger('dragenter')
+      await wrapper.vm.$nextTick()
+
+      const $text = wrapper.find('.b-form-file-drag-text')
+      expect($text.text()).toBe('Drop your files!')
+    })
+
+    it('uses drop-placeholder slot when provided', async () => {
+      const wrapper = mount(BFormFile, {
+        props: {showFileNames: true},
+        slots: {
+          'drop-placeholder': `
+            <template #drop-placeholder="{ dropAllowed }">
+              <div class="custom-drop">{{ dropAllowed ? 'Drop it!' : 'Nope!' }}</div>
+            </template>
+          `,
+        },
+      })
+      const $input = wrapper.get('input')
+
+      await $input.trigger('dragenter')
+      await wrapper.vm.$nextTick()
+
+      const $custom = wrapper.find('.custom-drop')
+      expect($custom.exists()).toBe(true)
+    })
+
+    it('clears drag state on drop', async () => {
+      const wrapper = mount(BFormFile, {props: {showFileNames: true}})
+      const $input = wrapper.get('input')
+
+      await $input.trigger('dragenter')
+      await wrapper.vm.$nextTick()
+
+      let $wrapper = wrapper.find('.b-form-file-wrapper')
+      expect($wrapper.classes()).toContain('b-form-file-dragging')
+
+      await $input.trigger('drop')
+      await wrapper.vm.$nextTick()
+
+      $wrapper = wrapper.find('.b-form-file-wrapper')
+      expect($wrapper.classes()).not.toContain('b-form-file-dragging')
     })
   })
 })
