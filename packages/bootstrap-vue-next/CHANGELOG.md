@@ -1,26 +1,31 @@
 # Changelog
 
-## [0.40.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.7...bootstrapvuenext-v0.40.8) (2025-11-17)
-
-
-### Features
-
-* add name and form props to BFormRating for form submission ([#2895](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2895)) ([f14f049](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f14f0495a03678a4f6c0d0ee87d3eabfc6def136))
-* **BTable:** add an AbortSignal to the provider object parameter for cancelling in progress requests ([2a12859](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a12859404a4ee498e6ccc4aa5490dab9997d7c7))
-* **BTable:** add configurable debouncing ([2a12859](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a12859404a4ee498e6ccc4aa5490dab9997d7c7))
-
+## [0.40.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.8...bootstrapvuenext-v0.40.9) (2025-11-28)
 
 ### Bug Fixes
 
-* **directives:** Robustness fixes for directives ([#2906](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2906)) ([7b39759](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7b397599f76f50d10773cd8fb63fb6d2e72dc4c7))
-* **typings:** Fix paths to `*.d.mts` files ([#2907](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2907)) ([4b0d55a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4b0d55a957f029131c89f740adc65ca7d9e79d58))
+- allow custom component props in orchestrator create methods with type safety ([#2922](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2922)) ([fdf2359](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/fdf2359c1cc4f154a40de8ae4252dbb0eb0235c9))
+- **BModal:** prevent focus trap error when no tabbable elements exist ([#2864](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2864)) ([d5d85f2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d5d85f2c741c789a3ca94e442ff371af73b49cbe))
+- **BTableLite:** Use primary key to persist row-details state when items change ([#2871](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2871)) ([a933f96](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a933f96d1cf4bd1bc82645f18e1c9410e050ad76))
 
-## [0.40.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.6...bootstrapvuenext-v0.40.7) (2025-10-22)
-
+## [0.40.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.7...bootstrapvuenext-v0.40.8) (2025-11-17)
 
 ### Features
 
-* add NumpadEnter support for BTable and BFormTags keyboard navigation (accessibility) ([#2884](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2884)) ([bdf6fee](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bdf6fee56eaf708d1b14e89f0179c4d44b7bf063))
+- add name and form props to BFormRating for form submission ([#2895](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2895)) ([f14f049](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f14f0495a03678a4f6c0d0ee87d3eabfc6def136))
+- **BTable:** add an AbortSignal to the provider object parameter for cancelling in progress requests ([2a12859](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a12859404a4ee498e6ccc4aa5490dab9997d7c7))
+- **BTable:** add configurable debouncing ([2a12859](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a12859404a4ee498e6ccc4aa5490dab9997d7c7))
+
+### Bug Fixes
+
+- **directives:** Robustness fixes for directives ([#2906](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2906)) ([7b39759](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7b397599f76f50d10773cd8fb63fb6d2e72dc4c7))
+- **typings:** Fix paths to `*.d.mts` files ([#2907](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2907)) ([4b0d55a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4b0d55a957f029131c89f740adc65ca7d9e79d58))
+
+## [0.40.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.6...bootstrapvuenext-v0.40.7) (2025-10-22)
+
+### Features
+
+- add NumpadEnter support for BTable and BFormTags keyboard navigation (accessibility) ([#2884](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2884)) ([bdf6fee](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bdf6fee56eaf708d1b14e89f0179c4d44b7bf063))
 
 ## [0.40.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.5...bootstrapvuenext-v0.40.6) (2025-10-07)
 

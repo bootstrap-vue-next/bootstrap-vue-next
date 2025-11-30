@@ -42,9 +42,9 @@ Always reference these instructions first and fallback to search or bash command
 
 ### Manual Testing Scenarios
 
-- Test component changes using the core package dev server at http://localhost:5174
+- Test component changes using the core package dev server at <http://localhost:5174>
 - Use `./packages/bootstrap-vue-next/src/App.vue` as a test area for changes
-- Test real-world usage with the playground app at http://localhost:5173
+- Test real-world usage with the playground app at <http://localhost:5173>
 - The playground mimics user library usage but requires `pnpm build` for changes (no hot-reload)
 
 ### CI Validation
@@ -57,7 +57,7 @@ Always reference these instructions first and fallback to search or bash command
 
 ### Monorepo Layout
 
-```
+```plaintext
 packages/
 ├── bootstrap-vue-next/     # Main Vue 3 component library
 └── nuxt/                   # Nuxt 3 module
@@ -90,8 +90,8 @@ templates/
 ### Architecture Documentation
 
 - `architecture/` - Technical architecture documentation
-- `ARIA_VISIBILITY.md` - ARIA accessibility system for show/hide components
-- `BFORMFILE_ENHANCEMENT_PLAN.md`
+  - `ARIA_VISIBILITY.md` - ARIA accessibility system for show/hide components
+  - `BFORMFILE_ENHANCEMENT_PLAN.md`
 
 ## Documentation Requirements
 
@@ -213,86 +213,3 @@ templates/
 - 1567+ tests across components
 - Coverage reports available via `pnpm --filter bootstrap-vue-next run test:coverage`
 - Tests use Happy DOM environment for performance
-
-## Documentation Examples
-
-### Callouts and Alerts
-
-Use VitePress-native callout syntax instead of BAlert components for documentation notes, warnings, and tips:
-
-```markdown
-::: info NOTE
-Information or helpful context
-:::
-
-::: tip TIP
-Helpful suggestions or best practices
-:::
-
-::: warning CAUTION
-Important warnings or non-standard features
-:::
-
-::: danger DANGER
-Critical warnings about breaking changes or deprecated features
-:::
-```
-
-Avoid using `<BAlert>` components in documentation markdown - prefer the native `:::` syntax for better VitePress integration and consistency.
-
-### Demo File Format
-
-All demo files in `apps/docs/src/docs/*/demo/` must follow this structure:
-
-1. **Order**: Template first, then script, then style (if applicable)
-2. **Template-Only Examples**: For simple template-only examples wrap example code in `<!-- #region template -->` and `<!-- #endregion template -->` comments
-3. **Complex Examples**: Include script setup after template, using TypeScript
-
-**Template-only example:**
-
-```vue
-<template>
-  <!-- #region template -->
-  <BButton v-b-toggle.my-collapse>Toggle</BButton>
-  <BCollapse id="my-collapse">
-    <BCard>Content</BCard>
-  </BCollapse>
-  <!-- #endregion template -->
-</template>
-```
-
-**Example with script:**
-
-```vue
-<template>
-  <BButton @click="toggle">Toggle</BButton>
-  <BCollapse v-model="visible">
-    <BCard>Content</BCard>
-  </BCollapse>
-</template>
-
-<script setup lang="ts">
-import {ref} from 'vue'
-
-const visible = ref(false)
-const toggle = () => {
-  visible.value = !visible.value
-}
-</script>
-```
-
-### Demo References in Markdown
-
-Use the `<<< DEMO` syntax to reference demo files:
-
-- **Show full file**: `<<< DEMO ./demo/MyComponent.vue{vue}`
-- **Show specific section**: Use `#region name` markers in the demo file and reference with `#name` in the markdown (e.g., `#region template` is referenced as `#template`)
-
-### Demo File Guidelines
-
-- Place demo files in `apps/docs/src/docs/[category]/demo/` directory
-- Name files descriptively: `ComponentFeature.vue` (e.g., `AccordionOverview.vue`, `AlertDismissible.vue`)
-- Use unique IDs for all components to avoid conflicts when multiple demos render on same page
-- Keep examples focused on demonstrating one feature or pattern
-- Include comments for clarity when showing complex patterns
-- **Use kebab-case for prop names** in documentation and examples (e.g., `file-name-formatter`, `show-file-names`) - this is Vue's preferred convention, even though camelCase works at runtime
