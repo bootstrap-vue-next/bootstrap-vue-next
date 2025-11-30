@@ -11,7 +11,6 @@ import {computed} from 'vue'
 import type {BFormTextProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
-import type {BFormTextSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BFormTextProps>(), {
   id: undefined,
@@ -21,7 +20,11 @@ const _props = withDefaults(defineProps<BFormTextProps>(), {
   textVariant: 'body-secondary',
 })
 const props = useDefaults(_props, 'BFormText')
-defineSlots<BFormTextSlots>()
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 
 const colorClasses = useColorVariantClasses(props)
 const computedClasses = computed(() => [

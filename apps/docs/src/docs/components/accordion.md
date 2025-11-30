@@ -1,6 +1,10 @@
----
-description: 'Build vertically collapsing accordions in combination with `BCollapse` component.'
----
+# Accordion
+
+<PageHeader>
+
+Build vertically collapsing accordions in combination with `BCollapse` component.
+
+</PageHeader>
 
 ## How it works
 
@@ -29,3 +33,15 @@ Add `flush` property to remove the default background-color, some borders, and s
 Add `free` property to make accordion items stay open when another item is opened.
 
 <<< DEMO ./demo/AccordionFree.vue#template{vue-html}
+
+<ComponentReference :data="data" />
+
+<script lang="ts">
+import {data} from '../../data/components/accordion.data'
+
+export default {
+  setup() {
+    return {data}
+  }
+}
+</script>

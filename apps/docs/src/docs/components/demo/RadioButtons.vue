@@ -4,12 +4,7 @@
   </div>
 
   <div>
-    <BFormRadioGroup
-      v-model="selected"
-      :options="options"
-      name="radios-btn-default"
-      buttons
-    />
+    <BFormRadioGroup v-model="selected" :options="options" name="radios-btn-default" buttons />
   </div>
 
   <div class="my-2">

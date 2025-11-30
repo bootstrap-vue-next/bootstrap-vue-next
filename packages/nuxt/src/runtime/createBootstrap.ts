@@ -13,17 +13,17 @@ export default defineNuxtPlugin((nuxtApp) => {
           teleportTo: '#teleports',
           ...opts?.components?.BModal,
         },
+        BModalOrchestrator: {
+          teleportTo: '#teleports',
+          ...opts?.components?.BModalOrchestrator,
+        },
         BOffcanvas: {
           teleportTo: '#teleports',
           ...opts?.components?.BOffcanvas,
         },
-        BOrchestrator: {
+        BToastOrchestrator: {
           teleportTo: '#teleports',
-          ...opts?.components?.BOrchestrator,
-        },
-        BApp: {
-          teleportTo: '#teleports',
-          ...opts?.components?.BApp,
+          ...opts?.components?.BToastOrchestrator,
         },
         BLink: {
           routerComponentName: 'RouterLink',

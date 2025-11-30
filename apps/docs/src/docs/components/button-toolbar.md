@@ -1,6 +1,6 @@
----
-description: 'Group a series of button-groups and/or input-groups together on a single line, with support for sizing, justification, and mixing different control types.'
----
+# Button Toolbar
+
+Group a series of button-groups and/or input-groups together on a single line.
 
 **Example 1:** with button groups
 
@@ -32,3 +32,15 @@ Make the toolbar span the maximum available width, by increasing spacing between
 input groups and dropdowns, by setting the prop `justify`.
 
 <<< DEMO ./demo/ButtonToolbarJustify.vue#template{vue-html}
+
+<ComponentReference :data="data" />
+
+<script lang="ts">
+import {data} from '../../data/components/buttonToolbar.data'
+
+export default {
+  setup() {
+    return {data}
+  }
+}
+</script>

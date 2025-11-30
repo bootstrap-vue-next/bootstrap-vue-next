@@ -7,7 +7,6 @@
 </template>
 
 <script setup lang="ts">
-import type {BCardTextSlots} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BCardTextProps} from '../../types/ComponentProps'
 
@@ -16,5 +15,9 @@ const _props = withDefaults(defineProps<BCardTextProps>(), {
   text: undefined,
 })
 const props = useDefaults(_props, 'BCardText')
-defineSlots<BCardTextSlots>()
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 </script>

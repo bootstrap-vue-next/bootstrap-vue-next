@@ -1,7 +1,10 @@
----
-description: >
-  BootstrapVueNext is a complete rewrite that strives for full TypeScript compatibility. This is a list of types we use in this library and that you can use too.
----
+# Types
+
+<div class="lead mb-5">
+
+`BootstrapVueNext` is a complete rewrite that strives for full TypeScript compatibility. This is a list of types we use in this library and that you can use too.
+
+</div>
 
 ## Alignment
 
@@ -293,16 +296,6 @@ type LinkTarget = '_self' | '_blank' | '_parent' | '_top'
 
 </BCard>
 
-## MaybePromise
-
-<BCard class="bg-body-tertiary">
-
-```ts
-type MaybePromise<T> = Promise<T> | T
-```
-
-</BCard>
-
 ## Placement
 
 <BCard class="bg-body-tertiary">
@@ -324,38 +317,6 @@ type Position =
   | 'position-absolute'
   | 'position-fixed'
   | 'position-sticky'
-```
-
-</BCard>
-
-## PopoverPlacement
-
-<BCard class="bg-body-tertiary">
-
-```ts
-type PopoverPlacement = Placement | 'auto' | 'auto-start' | 'auto-end'
-```
-
-</BCard>
-
-Where `Placement` is defined in [@floating-ui/vue](https://floating-ui.com/) as
-
-<BCard class="bg-body-tertiary">
-
-```ts
-type Placement =
-  | 'top'
-  | 'bottom'
-  | 'top-start'
-  | 'top-end'
-  | 'bottom-start'
-  | 'bottom-end'
-  | 'left'
-  | 'right'
-  | 'left-start'
-  | 'left-end'
-  | 'right-start'
-  | 'right-end'
 ```
 
 </BCard>
@@ -444,25 +405,6 @@ type RadiusElementExtendables = {
 
 </BCard>
 
-## ScrollspyList
-
-This type is used by the `useScrollspy` composable to represent tracked elements.
-
-<BCard class="bg-body-tertiary">
-
-```ts
-type ScrollspyListItem = {
-  id: string | null // Element ID
-  el: HTMLElement | null // DOM element reference
-  visible: boolean // Whether element is currently visible
-  text: string | null // Text content of the element
-}
-
-type ScrollspyList = ScrollspyListItem[]
-```
-
-</BCard>
-
 ## SelectValue
 
 <BCard class="bg-body-tertiary">
@@ -514,28 +456,25 @@ type TableFieldAttribute<T = any> =
 
 type TableRowType = 'row' | 'row-details' | 'row-top' | 'row-bottom' | 'table-busy'
 type TableRowThead = 'top' | 'bottom'
-type BTableInitialSortDirection = 'desc' | 'asc' | 'last'
 
 interface TableField<T = Record<string, unknown>> {
-  class?: ClassValue
-  filterByFormatted?: boolean | TableFieldFormatter<T>
-  formatter?: TableFieldFormatter<T>
-  headerAbbr?: string
-  headerTitle?: string
-  initialSortDirection?: BTableInitialSortDirection
-  isRowHeader?: boolean
   key: LiteralUnion<keyof T>
   label?: string
+  headerTitle?: string
+  headerAbbr?: string
+  class?: ClassValue
+  formatter?: TableFieldFormatter<T>
   sortable?: boolean
   sortByFormatted?: boolean | TableFieldFormatter<T>
-  sortCompare?: BTableSortByComparerFunction<T>
-  stickyColumn?: boolean
-  tdAttr?: TableFieldAttribute<T>
+  filterByFormatted?: boolean | TableFieldFormatter<T>
   tdClass?: ClassValue
-  thAttr?: TableFieldAttribute<T>
   thClass?: ClassValue
   thStyle?: StyleValue
   variant?: ColorVariant | null
+  tdAttr?: TableFieldAttribute<T>
+  thAttr?: TableFieldAttribute<T>
+  isRowHeader?: boolean
+  stickyColumn?: boolean
 }
 type TableFieldRaw<T = Record<string, unknown>> = string | TableField<T>
 ```
@@ -551,36 +490,6 @@ type TableItem<T = Record<string, unknown>> = T & {
   _rowVariant?: ColorVariant
   _cellVariants?: Partial<Record<keyof T, ColorVariant>>
   _showDetails?: boolean
-}
-```
-
-</BCard>
-
-## TableProvider
-
-```ts
-type BTableProviderContext<T = unknown> = {
-  sortBy: BTableSortBy<T>[] | undefined
-  filter: string | undefined
-  currentPage: number
-  perPage: number
-}
-
-type BTableProvider<T> = (
-  context: Readonly<BTableProviderContext<T>>
-) => MaybePromise<T[] | undefined>
-```
-
-## TableSortBy
-
-<BCard class="bg-body-tertiary">
-
-```ts
-type BTableSortByOrder = 'desc' | 'asc' | undefined
-type BTableSortByComparerFunction<T = any> = (a: T, b: T, key: string) => number
-type BTableSortBy<T = any> = {
-  order: BTableSortByOrder
-  key: string
 }
 ```
 
@@ -678,3 +587,7 @@ New values can be used now and the type check will be successful:
 ```
 
 </BCard>
+
+<script setup lang="ts">
+import {BCard, BCardBody} from 'bootstrap-vue-next'
+</script>

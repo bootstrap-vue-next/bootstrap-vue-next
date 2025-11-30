@@ -1,9 +1,5 @@
 <template>
-  <BFormSelect
-    v-model="selected"
-    :options="ex1Options"
-    :select-size="4"
-  />
+  <BFormSelect v-model="selected" :options="ex1Options" :select-size="4" />
 
   <div class="mt-3">
     Selected: <strong>{{ selected }}</strong>

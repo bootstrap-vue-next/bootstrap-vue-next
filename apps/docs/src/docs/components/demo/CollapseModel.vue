@@ -8,11 +8,7 @@
     >
       Toggle Collapse
     </BButton>
-    <BCollapse
-      id="collapse-4"
-      v-model="visible"
-      class="mt-2"
-    >
+    <BCollapse id="collapse-4" v-model="visible" class="mt-2">
       <BCard>I should start open!</BCard>
     </BCollapse>
   </BCard>

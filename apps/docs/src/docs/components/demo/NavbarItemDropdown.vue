@@ -1,26 +1,17 @@
 <template>
   <!-- #region template -->
-  <BNavbar
-    v-b-color-mode="'dark'"
-    variant="dark"
-  >
+  <BNavbar v-b-color-mode="'dark'" variant="dark">
     <BNavbarNav>
-      <BNavItem href="#navbar-item-dropdown">Home</BNavItem>
-      <BNavItemDropdown
-        text="Lang"
-        right
-      >
-        <BDropdownItem>EN</BDropdownItem>
-        <BDropdownItem>ES</BDropdownItem>
-        <BDropdownItem>RU</BDropdownItem>
-        <BDropdownItem>FA</BDropdownItem>
+      <BNavItem href="#">Home</BNavItem>
+      <BNavItemDropdown text="Lang" right>
+        <BDropdownItem href="#">EN</BDropdownItem>
+        <BDropdownItem href="#">ES</BDropdownItem>
+        <BDropdownItem href="#">RU</BDropdownItem>
+        <BDropdownItem href="#">FA</BDropdownItem>
       </BNavItemDropdown>
-      <BNavItemDropdown
-        text="User"
-        right
-      >
-        <BDropdownItem>Account</BDropdownItem>
-        <BDropdownItem>Settings</BDropdownItem>
+      <BNavItemDropdown text="User" right>
+        <BDropdownItem href="#">Account</BDropdownItem>
+        <BDropdownItem href="#">Settings</BDropdownItem>
       </BNavItemDropdown>
     </BNavbarNav>
   </BNavbar>

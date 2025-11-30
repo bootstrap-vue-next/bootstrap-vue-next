@@ -29,9 +29,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import {collapseInjectionKey} from '../../utils/keys'
 import type {BCollapseProps} from '../../types/ComponentProps'
-import type {BCollapseEmits} from '../../types/ComponentEmits'
-import type {BCollapseSlots, ShowHideSlotsData} from '../../types/ComponentSlots'
-import {useShowHide} from '../../composables/useShowHide'
+import {type showHideEmits, useShowHide} from '../../composables/useShowHide'
 
 defineOptions({
   inheritAttrs: false,
@@ -49,9 +47,27 @@ const _props = withDefaults(defineProps<Omit<BCollapseProps, 'modelValue'>>(), {
   show: false,
   visible: false,
 })
+
 const props = useDefaults(_props, 'BCollapse')
-const emit = defineEmits<BCollapseEmits>()
-defineSlots<BCollapseSlots>()
+
+const emit = defineEmits<showHideEmits>()
+
+type SharedSlotsData = {
+  hide: () => void
+  id: string
+  show: () => void
+  toggle: () => void
+  visible: boolean
+}
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: SharedSlotsData) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  footer?: (props: SharedSlotsData) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  header?: (props: SharedSlotsData) => any
+}>()
 
 const modelValue = defineModel<Exclude<BCollapseProps['modelValue'], undefined>>({
   default: false,
@@ -59,7 +75,7 @@ const modelValue = defineModel<Exclude<BCollapseProps['modelValue'], undefined>>
 
 const computedId = useId(() => props.id, 'collapse')
 
-const element = useTemplateRef<HTMLElement | null>('_element')
+const element = useTemplateRef<HTMLElement>('_element')
 
 let inCollapse = false
 const onEnter = (el: Element) => {
@@ -139,13 +155,12 @@ const computedClasses = computed(() => ({
   'collapse-horizontal': props.horizontal,
 }))
 
-const sharedSlots = computed<ShowHideSlotsData>(() => ({
+const sharedSlots = computed<SharedSlotsData>(() => ({
   toggle,
   show,
   hide,
   id: computedId.value,
   visible: showRef.value,
-  active: isActive.value,
 }))
 
 defineExpose({

@@ -2,9 +2,8 @@ import {defineConfig} from 'vitepress'
 import Icons from 'unplugin-icons/vite'
 import markdownItClass from '@toycode/markdown-it-class'
 import {demoContainer} from './plugins/demo-container'
-import {autoInjectDocComponents} from './plugins/auto-inject-doc-components'
 import Components from 'unplugin-vue-components/vite'
-import {BootstrapVueNextResolver} from 'bootstrap-vue-next/resolvers'
+import {BootstrapVueNextResolver} from 'bootstrap-vue-next'
 
 const title = 'BootstrapVueNext'
 const description = 'Quickly and Easily Integrate Bootstrap V5 Components With Vue 3'
@@ -16,6 +15,8 @@ export default defineConfig({
   description,
   base: baseUrl,
   srcDir: 'src',
+  // TODO fix & remove this
+  ignoreDeadLinks: true,
   head: [
     ['link', {rel: 'icon', type: 'image/x-icon', href: `${baseUrl}favicon.ico`}],
     ['meta', {property: 'og:title', name: 'og:title', content: title}],
@@ -30,10 +31,9 @@ export default defineConfig({
       Components({
         globs: ['components/*.vue', 'docs/**/demo/*.vue'],
         dts: true,
-        include: [/\.vue$/, /\.vue\?vue/, /\.md$/, /\.ts$/],
+        include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
         resolvers: [BootstrapVueNextResolver()],
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      }) as any,
+      }),
     ],
   },
   locales: {
@@ -55,7 +55,6 @@ export default defineConfig({
     config: (md) => {
       md.use(markdownItClass, {table: ['table', 'table-striped']})
       md.use(demoContainer, 'src')
-      md.use(autoInjectDocComponents)
     },
     headers: true,
   },

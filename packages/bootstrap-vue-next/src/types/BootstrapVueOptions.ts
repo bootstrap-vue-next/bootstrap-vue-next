@@ -3,21 +3,14 @@ import type * as ExportedDirectives from '../directives'
 import type * as ExportedComposables from '../composables'
 import type * as ComponentProps from './ComponentProps'
 
-type AllComponentsTyped = typeof ExportedComponents
-
-export type ComponentType = keyof AllComponentsTyped
+export type ComponentType = keyof typeof ExportedComponents
 export type DirectiveType = keyof typeof ExportedDirectives
 export type ComposableType = keyof typeof ExportedComposables
-
-export type BvnComponents = {
-  [K in ComponentType]: AllComponentsTyped[K]
-}
 
 export const componentsWithExternalPath = {
   BAccordion: '/components/BAccordion',
   BAccordionItem: '/components/BAccordion',
   BAlert: '/components/BAlert',
-  BApp: '/components/BApp',
   BAvatar: '/components/BAvatar',
   BAvatarGroup: '/components/BAvatar',
   BBadge: '/components/BBadge',
@@ -60,7 +53,6 @@ export const componentsWithExternalPath = {
   BFormInvalidFeedback: '/components/BForm',
   BFormRadio: '/components/BFormRadio',
   BFormRadioGroup: '/components/BFormRadio',
-  BFormRating: '/components/BFormRating',
   BFormRow: '/components/BForm',
   BFormSelect: '/components/BFormSelect',
   BFormSelectOption: '/components/BFormSelect',
@@ -90,7 +82,6 @@ export const componentsWithExternalPath = {
   BNavbarToggle: '/components/BNavbar',
   BOffcanvas: '/components/BOffcanvas',
   BOverlay: '/components/BOverlay',
-  BOrchestrator: '/components/BApp',
   BPagination: '/components/BPagination',
   BPlaceholder: '/components/BPlaceholder',
   BPlaceholderButton: '/components/BPlaceholder',
@@ -139,17 +130,10 @@ export const composablesWithExternalPath = {
   useBreadcrumb: '/composables/useBreadcrumb',
   useColorMode: '/composables/useColorMode',
   useModal: '/composables/useModal',
-  useModalController: '/composables/useModal',
-  useScrollLock: '/composables/useScrollLock',
+  useModalController: '/composables/useModalController',
   useScrollspy: '/composables/useScrollspy',
-  useToast: '/composables/useToast',
-  useToastController: '/composables/useToast',
-  useToggle: '/composables/useToggle',
-  usePopover: '/composables/usePopover',
-  usePopoverController: '/composables/usePopover',
-  useRegistry: '/composables/useRegistry',
-  useProvideDefaults: '/composables/useProvideDefaults',
-  useOrchestratorRegistry: '/composables/orchestratorShared',
+  useToastController: '/composables/useToastController',
+  usePopoverController: '/composables/usePopoverController',
 } as const satisfies Record<ComposableType, string>
 export const composableNames = Object.freeze(
   Object.keys(composablesWithExternalPath) as ComposableType[]
@@ -160,13 +144,17 @@ export interface BootstrapVueOptions {
   /**
    * @default true
    */
-  orchestrator?: boolean
+  breadcrumb?: boolean
   /**
    * @default true
    */
-  registries?: boolean
+  modalController?: boolean
   /**
-   * @default false
+   * @default true
+   */
+  modalManager?: boolean
+  /**
+   * @default true
    */
   rtl?:
     | boolean
@@ -183,6 +171,7 @@ export interface BootstrapVueOptions {
   /**
    * @default true
    */
+  toast?: boolean
   components?: Partial<
     BvnComponentProps & {
       /**
@@ -192,13 +181,14 @@ export interface BootstrapVueOptions {
       global: Record<string, any>
     }
   >
+  tooltip?: boolean
+  popover?: boolean
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = any> = {
   BLink: ComponentProps.BLinkProps
   BAccordion: ComponentProps.BAccordionProps
-  BApp: ComponentProps.BAppProps
   BDropdownDivider: ComponentProps.BDropdownDividerProps
   BDropdownGroup: ComponentProps.BDropdownGroupProps
   BDropdownItem: ComponentProps.BDropdownItemProps
@@ -214,7 +204,6 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
   BFormInput: ComponentProps.BFormInputProps
   BFormRadio: ComponentProps.BFormRadioProps
   BFormRadioGroup: ComponentProps.BFormRadioGroupProps
-  BFormRating: ComponentProps.BFormRatingProps
   BFormSelect: ComponentProps.BFormSelectProps
   BFormSelectOption: ComponentProps.BFormSelectOptionProps<BFormSelectOption>
   BFormSelectOptionGroup: ComponentProps.BFormSelectOptionGroupProps
@@ -236,7 +225,6 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
   BNavbarNav: ComponentProps.BNavbarNavProps
   BNavbarToggle: ComponentProps.BNavbarToggleProps
   BOffcanvas: ComponentProps.BOffcanvasProps
-  BOrchestrator: ComponentProps.BAppProps
   BOverlay: ComponentProps.BOverlayProps
   BPagination: ComponentProps.BPaginationProps
   BPlaceholder: ComponentProps.BPlaceholderProps
@@ -288,14 +276,14 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
   BPopover: ComponentProps.BPopoverProps
   BTooltip: ComponentProps.BTooltipProps
   BModal: ComponentProps.BModalProps
-  BCardFooter: ComponentProps.BCardFooterProps
-  BCardHeader: ComponentProps.BCardHeaderProps
+  BCardFooter: ComponentProps.BCardHeadFootProps
+  BCardHeader: ComponentProps.BCardHeadFootProps
   BCardImg: ComponentProps.BCardImgProps
   BCol: ComponentProps.BColProps
   BDropdownForm: never
   BDropdownHeader: never
-  BFormInvalidFeedback: ComponentProps.BFormInvalidFeedbackProps
-  BFormValidFeedback: ComponentProps.BFormValidFeedbackProps
+  BFormInvalidFeedback: ComponentProps.BFormFeedbackSharedProps
+  BFormValidFeedback: ComponentProps.BFormFeedbackSharedProps
   BFormGroup: ComponentProps.BFormGroupProps
   BNavItemDropdown: ComponentProps.BDropdownProps
   BRow: ComponentProps.BRowProps

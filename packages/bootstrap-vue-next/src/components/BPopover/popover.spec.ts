@@ -90,7 +90,7 @@ describe('popover', () => {
 
   it('second child contains prop content', () => {
     const wrapper = mount(BPopover, {
-      props: {body: 'foobar', modelValue: true},
+      props: {content: 'foobar', modelValue: true},
     })
     const $div = wrapper.get('div.popover-body')
     expect($div.text()).toBe('foobar')
@@ -98,135 +98,22 @@ describe('popover', () => {
 
   it('contains slot default if both slot and prop exists', () => {
     const wrapper = mount(BPopover, {
-      props: {body: 'propbar', modelValue: true},
+      props: {content: 'propbar', modelValue: true},
       slots: {default: '<div class="trigger">slotbar</div>'},
     })
     const $div = wrapper.get('div.trigger')
     expect($div.text()).toBe('slotbar')
   })
 
-  // Test new trigger props
-  it('defaults to hover and focus triggers', async () => {
+  it('contains b-popover-{type} if prop variant', async () => {
     const wrapper = mount(BPopover, {
-      props: {body: 'test'},
-      slots: {target: '<button>Test</button>'},
-      attachTo: document.body,
+      props: {variant: 'primary', modelValue: true},
     })
-
-    const button = wrapper.find('button')
-    expect(button.exists()).toBe(true)
-
-    // Test hover trigger
-    await button.trigger('pointerenter')
-    expect(wrapper.emitted('show')).toBeTruthy()
-
-    // Test focus trigger
-    await button.trigger('focus')
-    expect((wrapper.emitted('show')?.length || 0) >= 2).toBeTruthy()
-
-    wrapper.unmount()
-  })
-
-  it('respects click prop for backward compatibility', async () => {
-    const wrapper = mount(BPopover, {
-      props: {click: true, body: 'test'},
-      slots: {target: '<button>Test</button>'},
-      attachTo: document.body,
-    })
-
-    const button = wrapper.find('button')
-
-    // Click should trigger show
-    await button.trigger('click')
-    expect(wrapper.emitted('show')).toBeTruthy()
-
-    // Hover should not trigger (since click=true overrides defaults)
-    const showEvents = wrapper.emitted('show')?.length || 0
-    await button.trigger('pointerenter')
-    expect((wrapper.emitted('show')?.length || 0) - showEvents).toBe(0)
-
-    wrapper.unmount()
-  })
-
-  it('respects hover=false to disable hover trigger', async () => {
-    const wrapper = mount(BPopover, {
-      props: {hover: false, focus: true, body: 'test'},
-      slots: {target: '<button>Test</button>'},
-      attachTo: document.body,
-    })
-
-    const button = wrapper.find('button')
-
-    // Hover should not trigger
-    await button.trigger('pointerenter')
-    expect(wrapper.emitted('show')).toBeFalsy()
-
-    // Focus should trigger
-    await button.trigger('focus')
-    expect(wrapper.emitted('show')).toBeTruthy()
-
-    wrapper.unmount()
-  })
-
-  it('respects focus=false to disable focus trigger', async () => {
-    const wrapper = mount(BPopover, {
-      props: {focus: false, hover: true, body: 'test'},
-      slots: {target: '<button>Test</button>'},
-      attachTo: document.body,
-    })
-
-    const button = wrapper.find('button')
-
-    // Focus should not trigger
-    await button.trigger('focus')
-    expect(wrapper.emitted('show')).toBeFalsy()
-
-    // Hover should trigger
-    await button.trigger('pointerenter')
-    expect(wrapper.emitted('show')).toBeTruthy()
-
-    wrapper.unmount()
-  })
-
-  it('allows combining click with hover/focus', async () => {
-    const wrapper = mount(BPopover, {
-      props: {click: true, hover: true, focus: true, body: 'test'},
-      slots: {target: '<button>Test</button>'},
-      attachTo: document.body,
-    })
-
-    const button = wrapper.find('button')
-
-    // All triggers should work
-    await button.trigger('click')
-    expect(wrapper.emitted('show')).toBeTruthy()
-
-    await button.trigger('pointerenter')
-    expect((wrapper.emitted('show')?.length || 0) >= 2).toBeTruthy()
-
-    await button.trigger('focus')
-    expect((wrapper.emitted('show')?.length || 0) >= 3).toBeTruthy()
-
-    wrapper.unmount()
-  })
-
-  it('respects manual prop to disable all automatic triggers', async () => {
-    const wrapper = mount(BPopover, {
-      props: {manual: true, body: 'test'},
-      slots: {target: '<button>Test</button>'},
-      attachTo: document.body,
-    })
-
-    const button = wrapper.find('button')
-
-    // No triggers should work
-    await button.trigger('click')
-    await button.trigger('pointerenter')
-    await button.trigger('focus')
-
-    expect(wrapper.emitted('show')).toBeFalsy()
-
-    wrapper.unmount()
+    const $div = wrapper.get('div.popover')
+    // console.log($div.classes())
+    expect($div.classes()).toContain('b-popover-primary')
+    await wrapper.setProps({variant: undefined})
+    expect($div.classes()).not.toContain('b-popover-primary')
   })
 
   // Functionally, this component does more, but this only tests the component

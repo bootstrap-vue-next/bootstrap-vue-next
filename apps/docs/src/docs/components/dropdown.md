@@ -1,6 +1,10 @@
----
-description: 'Dropdowns are toggleable, contextual overlays for displaying lists of links and actions in a dropdown menu format.'
----
+# Dropdown
+
+<PageHeader>
+
+Dropdowns are toggleable, contextual overlays for displaying lists of links and actions in a dropdown menu format.
+
+</PageHeader>
 
 `BDropdown` components are toggleable, contextual overlays for displaying lists of links, and more. They're toggled by clicking (or pressing space or enter when focused), not by hovering; this is an [intentional design decision](https://markdotto.com/2012/02/27/bootstrap-explained-dropdowns/).
 
@@ -93,7 +97,7 @@ You can view the [Floating-ui docs](https://floating-ui.com/docs/middleware) to 
 
 ## Split button support
 
-Create a split dropdown button, where the left button provides a `split-click` event and link support, while the right-hand side is the dropdown menu toggle button.
+Create a split dropdown button, where the left button provides standard `click` event and link support, while the right-hand side is the dropdown menu toggle button.
 
 <<< DEMO ./demo/DropdownSplitButton.vue#template{vue-html}
 
@@ -315,3 +319,15 @@ The dropdown menu is rendered with semantic `<ul>` and `<li>` elements for acces
 
 - [`BNavItemDropdown`](/docs/components/nav#dropdown) for dropdown support inside `BNav` and `BNavbar`
 - [Router Link Support](/docs/reference/router-links) reference for information about router-link specific props available on `BDropdownItem`
+
+<ComponentReference :data="data" />
+
+<script lang="ts">
+import {data} from '../../data/components/dropdown.data'
+
+export default {
+  setup() {
+    return {data}
+  }
+}
+</script>

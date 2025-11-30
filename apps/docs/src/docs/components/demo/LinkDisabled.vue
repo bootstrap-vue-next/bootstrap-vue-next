@@ -1,9 +1,5 @@
 <template>
   <!-- #region template -->
-  <BLink
-    href="#foo"
-    disabled
-    >Disabled Link</BLink
-  >
+  <BLink href="#foo" disabled>Disabled Link</BLink>
   <!-- #endregion template -->
 </template>

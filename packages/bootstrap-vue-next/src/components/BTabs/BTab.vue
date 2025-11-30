@@ -7,31 +7,26 @@
     :class="computedClasses"
     role="tabpanel"
     :aria-labelledby="computedButtonId"
-    v-bind="processedAttrs"
+    v-bind="processedAttrs.tabAttrs"
   >
     <slot v-if="showSlot" />
   </component>
 </template>
 
 <script setup lang="ts">
-import {computed, inject, onUnmounted, ref, useAttrs, useTemplateRef, watch} from 'vue'
+import {computed, inject, onMounted, onUnmounted, ref, useAttrs, useTemplateRef, watch} from 'vue'
 import {useId} from '../../composables/useId'
 import {useDefaults} from '../../composables/useDefaults'
 import type {TabType} from '../../types/Tab'
 import type {BTabProps} from '../../types/ComponentProps'
 import {tabsInjectionKey} from '../../utils/keys'
-import type {BTabSlots} from '../../types/ComponentSlots'
-
-defineOptions({
-  inheritAttrs: false,
-})
 
 const _props = withDefaults(defineProps<Omit<BTabProps, 'active'>>(), {
   buttonId: undefined,
   disabled: false,
   id: undefined,
   lazy: undefined,
-  unmountLazy: undefined,
+  lazyOnce: undefined,
   noBody: false,
   tag: 'div',
   title: undefined,
@@ -40,83 +35,77 @@ const _props = withDefaults(defineProps<Omit<BTabProps, 'active'>>(), {
   titleLinkClass: undefined,
 })
 const props = useDefaults(_props, 'BTab')
-const slots = defineSlots<BTabSlots>()
-const attrs = useAttrs()
+
+const slots = defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  title?: (props: Record<string, never>) => any
+}>()
+
+defineOptions({
+  inheritAttrs: false,
+})
 
 const activeModel = defineModel<Exclude<BTabProps['active'], undefined>>('active', {
   default: false,
 })
 
 const parentData = inject(tabsInjectionKey, null)
-
-const localId = ref(props.id)
-const internalId = useId('', 'tabpane')
-const computedId = computed(() => props.id ?? localId.value ?? internalId.value)
+const computedId = useId(() => props.id, 'tabpane')
 const computedButtonId = useId(() => props.buttonId, 'tab')
 
 const lazyRenderCompleted = ref(false)
-const el = useTemplateRef('_el')
+const el = useTemplateRef<HTMLElement>('_el')
 
+const attrs = useAttrs()
 const processedAttrs = computed(() => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const {onClick: _, ...tabAttrs} = attrs
-  return tabAttrs
+  const {onClick, ...tabAttrs} = attrs
+  return {onClick, tabAttrs}
 })
 
-function updateTab() {
-  if (!parentData) return
-  const newId = parentData.registerTab(
-    computed(
-      () =>
-        ({
-          internalId: internalId.value,
-          id: computedId.value,
-          active: activeModel.value,
-          buttonId: computedButtonId.value,
-          disabled: props.disabled,
-          title: props.title,
-          titleComponent: slots.title,
-          titleItemClass: props.titleItemClass,
-          titleLinkAttrs: props.titleLinkAttrs,
-          titleLinkClass: props.titleLinkClass,
-          onClick: attrs.onClick,
-          el,
-        }) as TabType
-    )
-  )
-  if (newId !== localId.value) {
-    localId.value = newId
-  }
-}
+const tab = computed(
+  () =>
+    ({
+      id: computedId.value,
+      buttonId: computedButtonId.value,
+      disabled: props.disabled,
+      title: props.title,
+      titleComponent: slots.title,
+      titleItemClass: () => props.titleItemClass,
+      titleLinkAttrs: () => props.titleLinkAttrs,
+      titleLinkClass: () => props.titleLinkClass,
+      onClick: processedAttrs.value.onClick,
+      el: el.value,
+    }) as TabType
+)
 
-if (parentData) {
-  updateTab()
+onMounted(() => {
+  if (!parentData) return
+  parentData.registerTab(tab)
   if (activeModel.value) {
-    parentData.activateTab(internalId.value)
+    parentData.activateTab(computedId.value)
   }
-}
+})
 
 onUnmounted(() => {
   if (!parentData) return
-  parentData.unregisterTab(internalId.value)
+  parentData.unregisterTab(computedId.value)
 })
 
 const isActive = computed(() => parentData?.activeId.value === computedId.value)
 const show = ref(isActive.value)
 
-const computedLazy = computed(() => !!(parentData?.lazy.value || props.lazy))
+const computedLazy = computed(() => !!(parentData?.lazy.value || (props.lazyOnce ?? props.lazy)))
+const computedLazyOnce = computed(() => props.lazyOnce !== undefined)
 
 const computedActive = computed(() => isActive.value && !props.disabled)
 const showSlot = computed(
   () =>
     computedActive.value ||
     !computedLazy.value ||
-    (computedLazy.value && !props.unmountLazy && lazyRenderCompleted.value)
+    (computedLazy.value && computedLazyOnce.value && lazyRenderCompleted.value)
 )
-
-watch(showSlot, (shown) => {
-  if (shown && !lazyRenderCompleted.value) lazyRenderCompleted.value = true
-})
 
 watch(isActive, (active) => {
   if (active) {
@@ -129,12 +118,7 @@ watch(isActive, (active) => {
   show.value = false
   activeModel.value = false
 })
-
 watch(activeModel, (active) => {
-  if (props.disabled) {
-    activeModel.value = false
-    return
-  }
   if (!parentData) return
   if (!active) {
     if (isActive.value) {
@@ -142,9 +126,7 @@ watch(activeModel, (active) => {
     }
     return
   }
-  if (!isActive.value) {
-    parentData.activateTab(internalId.value)
-  }
+  parentData.activateTab(computedId.value)
 })
 
 const computedClasses = computed(() => [
@@ -158,12 +140,7 @@ const computedClasses = computed(() => [
   parentData?.tabClass.value,
 ])
 
-defineExpose({
-  activate: () => {
-    activeModel.value = true
-  },
-  deactivate: () => {
-    activeModel.value = false
-  },
+watch(showSlot, (shown) => {
+  if (shown && !lazyRenderCompleted.value) lazyRenderCompleted.value = true
 })
 </script>

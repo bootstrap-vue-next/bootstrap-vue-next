@@ -1,5 +1,5 @@
 <template>
-  <nav :id="props.id" aria-label="breadcrumb">
+  <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <slot name="prepend" />
       <BBreadcrumbItem v-for="(item, i) in breadcrumbItemObjects" :key="i" v-bind="item">
@@ -18,13 +18,20 @@ import {useDefaults} from '../../composables/useDefaults'
 import type {BBreadcrumbProps} from '../../types/ComponentProps'
 import BBreadcrumbItem from './BBreadcrumbItem.vue'
 import type {BreadcrumbItem} from '../../types/BreadcrumbTypes'
-import type {BBreadcrumbSlots} from '../../types'
 
-const _props = withDefaults(defineProps<BBreadcrumbProps>(), {items: undefined, id: undefined})
+const _props = withDefaults(defineProps<BBreadcrumbProps>(), {items: undefined})
 const props = useDefaults(_props, 'BBreadcrumb')
-defineSlots<BBreadcrumbSlots>()
 
-const breadcrumb = useBreadcrumb(() => props.id || null)
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  append?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  prepend?: (props: Record<string, never>) => any
+}>()
+
+const breadcrumb = useBreadcrumb()
 
 const breadcrumbItemObjects = computed<BreadcrumbItem[]>(() => {
   const localItems = props.items || breadcrumb.items?.value || []

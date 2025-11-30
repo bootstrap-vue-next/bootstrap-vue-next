@@ -1,4 +1,13 @@
-import {type MaybeRefOrGetter, onMounted, readonly, ref, type Ref, toRef, watch} from 'vue'
+import {
+  type MaybeRefOrGetter,
+  nextTick,
+  onMounted,
+  readonly,
+  ref,
+  type Ref,
+  toRef,
+  watch,
+} from 'vue'
 import {useFocusTrap, type UseFocusTrapOptions} from '@vueuse/integrations/useFocusTrap'
 import {useMutationObserver} from '@vueuse/core'
 
@@ -8,7 +17,6 @@ export const useActivatedFocusTrap = (
     isActive,
     noTrap,
     fallbackFocus,
-    focus,
   }: {
     element: Ref<HTMLElement | null>
     isActive: MaybeRefOrGetter<boolean>
@@ -25,33 +33,28 @@ export const useActivatedFocusTrap = (
        */
       classSelector: string
     }
-    focus: () => HTMLElement | boolean | undefined
   },
   focusTrapOpts: UseFocusTrapOptions = {
     allowOutsideClick: true,
-    fallbackFocus: () =>
-      fallbackFocus.ref.value || (typeof document !== 'undefined' ? document.body : 'body'),
+    fallbackFocus: fallbackFocus.ref.value ?? undefined,
     escapeDeactivates: false,
-    clickOutsideDeactivates: false,
-    initialFocus: focus,
   }
 ) => {
   const resolvedIsActive = readonly(toRef(isActive))
   const resolvedNoTrap = readonly(toRef(noTrap))
 
-  const checkNeedsFallback = () => {
+  const checkNeedsFocus = () => {
     const tabbableElements = element.value?.querySelectorAll(
       `a, button, input, select, textarea, [tabindex]:not([tabindex="-1"]):not(.${fallbackFocus.classSelector})`
     )
-    return !tabbableElements?.length
+    return !tabbableElements || tabbableElements.length === 0
   }
-  const needsFallback = ref(false)
+  const needsFallback = ref(checkNeedsFocus())
   onMounted(() => {
-    needsFallback.value = checkNeedsFallback()
     useMutationObserver(
       element,
       () => {
-        needsFallback.value = checkNeedsFallback()
+        needsFallback.value = checkNeedsFocus()
       },
       {childList: true, subtree: true}
     )
@@ -59,6 +62,7 @@ export const useActivatedFocusTrap = (
 
   const trap = useFocusTrap(element, focusTrapOpts)
   watch(resolvedIsActive, async (newValue) => {
+    await nextTick()
     if (newValue && resolvedNoTrap.value === false) {
       trap.activate()
     } else {

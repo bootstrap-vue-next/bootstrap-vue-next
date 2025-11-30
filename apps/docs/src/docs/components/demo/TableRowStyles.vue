@@ -1,10 +1,6 @@
 <template>
   <div>
-    <BTable
-      :items="items"
-      :fields="fields"
-      :tbody-tr-class="rowClass"
-    />
+    <BTable :items="items" :fields="fields" :tbody-tr-class="rowClass" />
   </div>
 </template>
 
@@ -25,6 +21,6 @@ const items = [
   {age: 89, first_name: 'Geneva', last_name: 'Wilson'},
 ]
 
-const rowClass = (item: Person | null, type: TableRowType): TableStrictClassValue =>
-  type === 'row' && item?.status === 'awesome' ? 'table-success' : ''
+const rowClass = (item: Person, type: TableRowType): TableStrictClassValue =>
+  type === 'row' && item.status === 'awesome' ? 'table-success' : ''
 </script>

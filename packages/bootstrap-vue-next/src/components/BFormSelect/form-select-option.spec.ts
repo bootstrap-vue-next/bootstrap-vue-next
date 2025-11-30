@@ -62,4 +62,15 @@ describe('form-select-option', () => {
     expect(wrapper.attributes('disabled')).toBeDefined()
     expect(wrapper.text()).toEqual('')
   })
+
+  it('has options attributes', () => {
+    const wrapper = mount(BFormSelectOption, {
+      props: {
+        optionsAttrs: {role: 'foo'},
+      },
+    })
+
+    expect(wrapper.element.tagName).toBe('OPTION')
+    expect(wrapper.attributes('role')).toEqual('foo')
+  })
 })

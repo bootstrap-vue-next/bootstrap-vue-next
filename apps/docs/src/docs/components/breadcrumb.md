@@ -1,6 +1,10 @@
----
-description: 'Indicate the current page’s location within a navigational hierarchy that automatically adds separators via CSS.'
----
+# Breadcrumb
+
+<PageHeader>
+
+Indicate the current page’s location within a navigational hierarchy that automatically adds separators via CSS.
+
+</PageHeader>
 
 ## Overview
 
@@ -35,3 +39,15 @@ Two slots are provided to put additional content before and after the breadcrumb
 Use slot `prepend` to put content before the breadcrumb. Use slot `append` to put content after the breadcrumb.
 
 <<< DEMO ./demo/BreadcrumbSlots.vue#template{vue-html}
+
+<ComponentReference :data="data" />
+
+<script lang="ts">
+import {data} from '../../data/components/breadcrumb.data'
+
+export default {
+  setup() {
+    return {data}
+  }
+}
+</script>

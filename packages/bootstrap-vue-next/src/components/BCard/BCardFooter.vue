@@ -7,12 +7,11 @@
 </template>
 
 <script setup lang="ts">
-import type {BCardFooterSlots} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BCardHeaderProps} from '../../types/ComponentProps'
+import type {BCardHeadFootProps} from '../../types/ComponentProps'
 import BCardHeadFoot from '../BCardHeadFoot.vue'
 
-const _props = withDefaults(defineProps<BCardHeaderProps>(), {
+const _props = withDefaults(defineProps<BCardHeadFootProps>(), {
   borderVariant: undefined,
   tag: 'div',
   text: undefined,
@@ -23,5 +22,9 @@ const _props = withDefaults(defineProps<BCardHeaderProps>(), {
   // End ColorExtendables props
 })
 const props = useDefaults(_props, 'BCardFooter')
-defineSlots<BCardFooterSlots>()
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 </script>

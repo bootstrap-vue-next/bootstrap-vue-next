@@ -1,9 +1,7 @@
 <!-- eslint-disable vue/no-deprecated-v-bind-sync -->
 <template>
   <!-- #region template -->
-  <BFormCheckbox
-    v-model="checked"
-    :indeterminate.sync="indeterminate"
+  <BFormCheckbox v-model="checked" :indeterminate.sync="indeterminate"
     >Click me to see what happens</BFormCheckbox
   >
   <!-- #endregion template -->

@@ -1,6 +1,6 @@
 <template>
   <BContainer fluid>
-    <BOrchestrator />
+    <BModalOrchestrator />
     <BRow>
       <BCol>
         <BButton @click="showModal = !showModal">Toggle modal v-model</BButton>
@@ -56,17 +56,20 @@
     </BRow>
     <BRow>
       <BCol>
-        {{ store.filter((el) => el.type === 'modal') }}
+        {{ modals }}
       </BCol>
     </BRow>
   </BContainer>
 </template>
 
 <script setup lang="ts">
-import {computed, h, onMounted, ref, toValue} from 'vue'
-import type {ColorVariant, OrchestratedModal} from 'bootstrap-vue-next'
-import {BModal} from 'bootstrap-vue-next/components/BModal'
-import {useModal} from 'bootstrap-vue-next/composables/useModal'
+import {computed, h, onMounted, ref} from 'vue'
+import {
+  BModal,
+  type ColorVariant,
+  type OrchestratedModal,
+  useModalController,
+} from 'bootstrap-vue-next'
 
 const showModal = ref(false)
 const showModal2 = ref(false)
@@ -77,7 +80,6 @@ const isModalVisible = ref(false)
 
 const firstRef = ref<OrchestratedModal>({
   body: `${Math.random()}`,
-  title: 'foobar',
 })
 
 onMounted(() => {
@@ -86,34 +88,46 @@ onMounted(() => {
   }, 1000)
 })
 
-const {create, store} = useModal()
+const {show, modals} = useModalController()
 
 const showFns = {
   basicNoReactive: () => {
-    create({
-      title: 'foobar',
-      okVariant: 'danger',
+    show?.({
+      props: {
+        title: 'foobar',
+        okVariant: 'danger',
+      },
     })
   },
   basicCustomComponent: () => {
-    create({
-      slots: {default: h('div', null, {default: () => 'foobar!'})},
-
-      okVariant: 'info',
+    show?.({
+      component: h(BModal, null, {default: () => 'foobar!'}),
+      props: {
+        okVariant: 'info',
+      },
     })
   },
   simpleRefProps: () => {
-    create(firstRef)
+    show?.({
+      props: firstRef,
+    })
   },
   dynamicRefProps: () => {
-    create(
-      computed(() => ({
+    show?.({
+      props: computed(() => ({
         ...firstRef.value,
-        okVariant: (Number.parseInt((toValue(firstRef.value.body) ?? '').charAt(2) ?? '0') % 2 === 0
+        okVariant: (Number.parseInt(firstRef.value.body?.charAt(2) ?? '0') % 2 === 0
           ? 'danger'
           : 'info') as ColorVariant,
-      }))
-    )
+      })),
+    })
+  },
+  getterFunction: () => {
+    show?.({
+      props: () => ({
+        title: firstRef.value.body,
+      }),
+    })
   },
   // Demonstration psuedocode, you can import a component and use it
   // importedComponent: () => {

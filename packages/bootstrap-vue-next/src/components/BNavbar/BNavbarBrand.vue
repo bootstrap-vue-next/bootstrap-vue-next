@@ -10,7 +10,11 @@ import type {BNavbarBrandProps} from '../../types/ComponentProps'
 import {useBLinkHelper} from '../../composables/useBLinkHelper'
 import {useDefaults} from '../../composables/useDefaults'
 import {computed} from 'vue'
-import type {BNavbarBrandSlots} from '../../types'
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 
 const _props = withDefaults(defineProps<BNavbarBrandProps>(), {
   tag: 'div',
@@ -38,7 +42,6 @@ const _props = withDefaults(defineProps<BNavbarBrandProps>(), {
   // End link props
 })
 const props = useDefaults(_props, 'BNavbarBrand')
-defineSlots<BNavbarBrandSlots>()
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'active',

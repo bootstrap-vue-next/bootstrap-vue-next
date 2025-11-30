@@ -1,8 +1,5 @@
 <template>
-  <BFormInput
-    v-model="text"
-    placeholder="Enter your name"
-  />
+  <BFormInput v-model="text" placeholder="Enter your name" />
   <div class="mt-2">Value: {{ text }}</div>
 </template>
 

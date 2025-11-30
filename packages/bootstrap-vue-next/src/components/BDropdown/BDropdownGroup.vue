@@ -28,7 +28,6 @@ import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BDropdownGroupProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
-import type {BDropdownGroupSlots} from '../../types/ComponentSlots'
 
 defineOptions({
   inheritAttrs: false,
@@ -43,7 +42,13 @@ const _props = withDefaults(defineProps<BDropdownGroupProps>(), {
   id: undefined,
 })
 const props = useDefaults(_props, 'BDropdownGroup')
-defineSlots<BDropdownGroupSlots>()
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  header?: (props: Record<string, never>) => any
+}>()
 
 const headerId = computed(() => (props.id ? `${props.id}_group_dd_header` : undefined))
 const headerRole = computed(() => (props.headerTag === 'header' ? undefined : 'heading'))

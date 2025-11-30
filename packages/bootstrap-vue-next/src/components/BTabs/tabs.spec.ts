@@ -499,7 +499,7 @@ describe('tabs', () => {
 
   const ChildComp = {
     template: ` 
-    <BTab :title="title" :id="id">
+    <BTab :title="title">
       {{ content }}
     </BTab>`,
     props: {
@@ -508,10 +508,6 @@ describe('tabs', () => {
         default: '',
       },
       content: {
-        type: String,
-        default: '',
-      },
-      id: {
         type: String,
         default: '',
       },
@@ -532,11 +528,11 @@ describe('tabs', () => {
 
   const ComplexComponent = {
     template: `
-    <ParentComp v-model:index="index" v-model="id">
+    <ParentComp v-model="index" v-model:active-id="id">
       <ChildComp v-for="tab in tabs" :id="tab.id" :key="tab.title" :title="tab.title" :content="tab.content" />
       <BTab id="i3" :title="'t3'" >c3</BTab>
     </ParentComp>
-    <a href="#" id="add" @click="tabs.unshift({title: 't0', content: 'c0', id: 'i0'})">add</a>
+    <a href="#" id="add" @click="tabs.unshift({title: 't0', content: 'c0'})">add</a>
     <a href="#" id="change" @click="id = 'i3'">change</a>
     <a href="#" id="change2" @click="index = 1">change2</a>
     `,
@@ -547,7 +543,7 @@ describe('tabs', () => {
           {id: 'i2', title: 't2', content: 'c2'},
         ],
         index: 0,
-        id: 'i1',
+        id: undefined,
       }
     },
     components: {
@@ -556,7 +552,6 @@ describe('tabs', () => {
       BTab,
     },
   }
-
   it('renders in complex structure', async () => {
     const wrapper = await mount(ComplexComponent, {})
     expect(wrapper.findComponent({name: 'b-tab'}).text()).toBe('c1')

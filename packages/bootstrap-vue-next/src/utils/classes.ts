@@ -67,7 +67,6 @@ export class BvEvent {
 
 export class BvTriggerableEvent extends BvEvent {
   readonly trigger: string | null = null
-  ok: boolean | null | undefined = undefined
 
   constructor(
     eventType: string,
@@ -84,7 +83,6 @@ export class BvTriggerableEvent extends BvEvent {
     return {
       ...super.Defaults,
       trigger: null,
-      ok: undefined,
     }
   }
 }

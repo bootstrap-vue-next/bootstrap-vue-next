@@ -95,6 +95,5 @@ TODO.md
 packages/bootstrap-vue-next/src/App.vue
 
 vite.config.mts.timestamp*
-*.timestamp-*
 
 components.d.ts

@@ -1,174 +1,225 @@
-import type {BToastEmits, BToastProps} from 'bootstrap-vue-next'
-import {
-  type ComponentReference,
-  defaultPropSectionSymbol,
-  type EmitRecord,
-  type PropRecord,
-} from '../../types'
-import {omit, pick} from '../../utils/objectUtils'
-import {buildCommonProps} from '../../utils/commonProps'
-import {linkedBLinkSection, type linkProps} from '../../utils/linkProps'
-import {buildDismissibleEmits, showHideProps} from '../../utils/showHideData'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import type {ComponentReference, PropertyReference} from '../../types'
+import {buildCommonProps, omit, pick, showHideProps} from '../../utils'
+import {linkProps, linkTo} from '../../utils/link-props'
 
 export default {
-  load: (): ComponentReference => ({
-    BToast: {
+  load: (): ComponentReference[] => [
+    {
+      component: 'BToast',
+      sourcePath: '/BToast/BToast.vue',
       props: {
-        [defaultPropSectionSymbol]: {
-          ...omit(showHideProps, ['modelValue']),
-          ...pick(buildCommonProps(), [
-            'bgVariant',
-            'body',
-            'bodyClass',
-            'closeClass',
-            'closeContent',
-            'closeLabel',
-            'closeVariant',
-            'headerClass',
-            'headerTag',
-            'id',
-            'interval',
-            'isStatus',
-            'noHoverPause',
-            'noResumeOnHoverLeave',
-            'progressProps',
-            'showOnPause',
-            'textVariant',
-            'title',
-            'variant',
-          ]),
-
+        '': {
+          bgVariant: {
+            type: 'ColorVariant | null',
+            default: null,
+          },
+          body: {
+            type: 'string',
+            default: undefined,
+            description: 'The text content of the body',
+          },
+          bodyClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: 'CSS class (or classes) to add to the toast body element',
+          },
+          headerClass: {
+            type: 'ClassValue',
+            default: undefined,
+            description: 'CSS class (or classes) to add to the toast header element',
+          },
+          headerTag: {
+            type: 'string',
+            default: 'div',
+            description: 'Specify the HTML tag to render instead of the default tag for the footer',
+          },
+          id: {
+            type: 'string',
+            default: undefined,
+            description:
+              'Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed',
+          },
+          interval: {
+            type: 'number | requestAnimationFrame',
+            default: 'requestAnimationFrame',
+            description: 'The interval of which the countdown timer will refresh itself',
+          },
+          isStatus: {
+            type: 'boolean',
+            default: false,
+            description:
+              "When set to 'true', makes the toast have attributes aria-live=polite and role=status. When 'false' aria-live will be 'assertive' and role will be 'alert'",
+          },
           modelValue: {
             type: 'boolean | number',
             default: false,
             description:
-              'Controls toast visibility (`boolean`) or sets the auto-dismiss duration in milliseconds (`number`).',
+              'Sets if the toast is visible or the number of milliseconds that the toast will be dismissed',
           },
           noCloseButton: {
             type: 'boolean',
             default: false,
-            description: 'Hides the close button in the toast header.',
+            description: 'When set, hides the close button in the toast header',
           },
-          noProgress: {
+          progressProps: {
+            type: "Omit<BProgressBarProps, 'label' | 'max' | 'value'>",
+            default: undefined,
+            description:
+              'The properties to define the progress bar in the toast. No progress will be shown if left undefined',
+          },
+          showOnPause: {
             type: 'boolean',
-            default: false,
-            description: 'Hides the progress bar in the toast.',
+            default: true,
+            description: "When set, keeps the toast visible when it's paused",
           },
           solid: {
             type: 'boolean',
             default: false,
-            description: 'Renders the toast with a solid background instead of a translucent one.',
+            description:
+              'When set, renders the toast with a solid background rather than translucent',
+          },
+          textVariant: {
+            type: 'TextColorVariant | null',
+            default: null,
+          },
+          title: {
+            type: 'string',
+            default: undefined,
+            description: "The toast's title text",
           },
           toastClass: {
             type: 'ClassValue',
             default: undefined,
-            description: 'Sets the CSS class(es) for the toast wrapper element.',
+            description: 'CSS class (or classes) to add to the toast wrapper element',
           },
-        } satisfies PropRecord<Exclude<keyof BToastProps, keyof typeof linkProps>>,
-        'BLink props': linkedBLinkSection,
+          ...omit(showHideProps, ['modelValue']),
+          ...pick(buildCommonProps(), ['noHoverPause', 'noResumeOnHoverLeave']),
+        } satisfies Record<
+          Exclude<keyof BvnComponentProps['BToast'], keyof typeof linkProps>,
+          PropertyReference
+        >,
+        'BLink props': {
+          _linkTo: {
+            type: linkTo,
+          },
+          ...linkProps,
+        },
       },
-      emits: {
-        ...buildDismissibleEmits(),
-        'update:model-value': {
-          description: 'Emitted when the toast visibility or countdown duration changes.',
-          args: {
-            value: {
-              type: 'boolean | number',
-              description:
-                'The new visibility state (boolean) or countdown duration in milliseconds (number). When boolean: true = visible, false = hidden. When number: > 0 = countdown duration, 0 = countdown finished.',
+      slots: [],
+      emits: [
+        {
+          event: 'update:model-value',
+          description: 'Emitted when toast visibility changes',
+          args: [
+            {
+              arg: 'value',
+              type: 'Boolean',
+              description: 'The resulting value that was changed',
             },
-          },
+          ],
         },
-      } satisfies EmitRecord<keyof BToastEmits | 'update:model-value'>,
-      slots: {
-        default: {
-          description: 'Content to place in the toast body',
-          scope: {
-            id: {
+        {
+          args: [
+            {
+              arg: 'destroyed',
+              description: '',
               type: 'string',
-              description: 'The toast component ID',
             },
-            show: {
-              type: '() => void',
-              description: 'Function to show the toast',
-            },
-            hide: {
-              type: '(trigger?: string, noTriggerEmit?: boolean) => void',
-              description: 'Function to hide the toast',
-            },
-            toggle: {
-              type: '() => void',
-              description: 'Function to toggle toast visibility',
-            },
-            active: {
-              type: 'boolean',
-              description: 'Whether the countdown timer is active',
-            },
-            visible: {
-              type: 'boolean',
-              description: 'Current visibility state of the toast',
-            },
-          },
+          ],
+          description: '',
+          event: 'destroyed',
         },
-        title: {
-          description: 'Content to place in the toast header as title',
-          scope: {
-            id: {
-              type: 'string',
-              description: 'The toast component ID',
+        {
+          event: 'close',
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
             },
-            show: {
-              type: '() => void',
-              description: 'Function to show the toast',
-            },
-            hide: {
-              type: '(trigger?: string, noTriggerEmit?: boolean) => void',
-              description: 'Function to hide the toast',
-            },
-            toggle: {
-              type: '() => void',
-              description: 'Function to toggle toast visibility',
-            },
-            active: {
-              type: 'boolean',
-              description: 'Whether the countdown timer is active',
-            },
-            visible: {
-              type: 'boolean',
-              description: 'Current visibility state of the toast',
-            },
-          },
+          ],
         },
-        close: {
-          description: 'Content to place in the close button',
-          scope: {
-            id: {
-              type: 'string',
-              description: 'The toast component ID',
+        {
+          event: 'close-countdown',
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'number',
             },
-            show: {
-              type: '() => void',
-              description: 'Function to show the toast',
-            },
-            hide: {
-              type: '(trigger?: string, noTriggerEmit?: boolean) => void',
-              description: 'Function to hide the toast',
-            },
-            toggle: {
-              type: '() => void',
-              description: 'Function to toggle toast visibility',
-            },
-            active: {
-              type: 'boolean',
-              description: 'Whether the countdown timer is active',
-            },
-            visible: {
-              type: 'boolean',
-              description: 'Current visibility state of the toast',
-            },
-          },
+          ],
         },
+        {
+          event: 'hide',
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
+        },
+        {
+          event: 'hide-prevented',
+          args: [],
+        },
+        {
+          event: 'hidden',
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
+        },
+        {
+          event: 'show',
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
+        },
+        {
+          event: 'show-prevented',
+          args: [],
+        },
+        {
+          event: 'shown',
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      component: 'BToastOrchestrator',
+      sourcePath: '/BToast/BToastOrchestrator.vue',
+      emits: [],
+      slots: [],
+      props: {
+        '': {
+          teleportTo: {
+            description: 'Overrides the default teleport location',
+            type: 'string | RendererElement | null | undefined',
+            default: 'body',
+          },
+          teleportDisabled: {
+            description: 'Renders the Toaster in the exact place it was defined',
+            type: 'boolean',
+            default: false,
+          },
+          appendToast: {},
+        } satisfies Record<keyof BvnComponentProps['BToastOrchestrator'], PropertyReference>,
       },
     },
-  }),
+  ],
 }

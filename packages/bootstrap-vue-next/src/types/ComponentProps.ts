@@ -6,7 +6,7 @@ import type {
   RootBoundary,
   Strategy,
 } from '@floating-ui/vue'
-import type {AriaAttributes, ComponentPublicInstance, TeleportProps, TransitionProps} from 'vue'
+import type {ComponentPublicInstance, TransitionProps} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {LinkTarget} from './LinkTarget'
 import type {
@@ -22,7 +22,7 @@ import type {CheckboxOptionRaw, CheckboxValue} from './CheckboxTypes'
 import type {Size} from './Size'
 import type {AriaInvalid} from './AriaInvalid'
 import type {Numberish, TeleporterProps, ValidationState} from './CommonTypes'
-import type {CommonInputProps, FormDebounceOptions} from './FormCommonInputProps'
+import type {CommonInputProps} from './FormCommonInputProps'
 import type {RadioOptionRaw, RadioValue} from './RadioTypes'
 import type {SelectValue} from './SelectTypes'
 import type {
@@ -57,55 +57,16 @@ import type {LiteralUnion} from './LiteralUnion'
 import type {BreadcrumbItemRaw} from './BreadcrumbTypes'
 import type {TransitionMode} from './TransitionMode'
 import type {
-  BTableInitialSortDirection,
   BTableProvider,
   BTableSortBy,
-  BTableSortByComparerFunction,
   NoProviderTypes,
   TableField,
   TableFieldRaw,
   TableRowType,
   TableStrictClassValue,
-  TableThScope,
 } from './TableTypes'
 import type {PopoverPlacement} from './PopoverPlacement'
 import type {InputType} from './InputType'
-import type {BvnComponentProps} from './BootstrapVueOptions'
-import type {OrchestratorArrayValue} from './ComponentOrchestratorTypes'
-
-export interface BAppProps {
-  defaults?: Partial<BvnComponentProps>
-  mergeDefaults?:
-    | boolean
-    | ((
-        oldDefaults: Partial<BvnComponentProps>,
-        newDefaults: Partial<BvnComponentProps>
-      ) => Partial<BvnComponentProps>)
-  teleportTo?: TeleportProps['to']
-  noOrchestrator?: boolean
-  appendToast?: boolean
-  rtl?:
-    | boolean
-    | {
-        /**
-         * @default false
-         */
-        rtlInitial?: boolean
-        /**
-         * @default undefined
-         */
-        localeInitial?: string
-      }
-}
-
-export interface BOrchestratorProps {
-  noPopovers?: boolean
-  noToasts?: boolean
-  noModals?: boolean
-  appendToast?: boolean
-  teleportTo?: TeleportProps['to']
-  filter?: (item: OrchestratorArrayValue) => boolean
-}
 
 export interface BLinkProps {
   active?: boolean
@@ -155,33 +116,10 @@ export interface BAccordionProps {
   flush?: boolean
   free?: boolean
   id?: string
-  index?: number | number[]
   initialAnimation?: boolean
   lazy?: boolean
-  modelValue?: string | string[]
+  modelValue?: string
   unmountLazy?: boolean
-}
-
-export interface BAccordionItemProps {
-  bodyAttrs?: Readonly<AttrsValue>
-  bodyClass?: ClassValue
-  buttonAttrs?: Readonly<AttrsValue>
-  buttonClass?: ClassValue
-  collapseClass?: ClassValue
-  headerAttrs?: Readonly<AttrsValue>
-  headerClass?: ClassValue
-  headerTag?: string
-  horizontal?: boolean
-  id?: string
-  isNav?: boolean
-  modelValue?: boolean
-  lazy?: boolean
-  unmountLazy?: boolean
-  tag?: string
-  title?: string
-  show?: boolean
-  visible?: boolean
-  wrapperAttrs?: Readonly<AttrsValue>
 }
 
 export interface BDropdownDividerProps {
@@ -343,6 +281,7 @@ export interface BFormFileProps {
 export interface BFormInputProps extends CommonInputProps {
   max?: Numberish
   min?: Numberish
+  // noWheel: {type: Boolean, default: false}, TODO: not implemented yet
   step?: Numberish
   type?: InputType
 }
@@ -390,33 +329,6 @@ export interface BFormRadioGroupProps {
   validated?: boolean
   valueField?: string
 }
-export interface BFormRatingProps {
-  color?: string
-  id?: string
-  inline?: boolean
-  modelValue?: number
-  noBorder?: boolean
-  precision?: number
-  readonly?: boolean
-  disabled?: boolean
-  form?: string
-  name?: string
-  showClear?: boolean
-  showValue?: boolean
-  showValueMax?: boolean
-  size?: 'sm' | 'lg' | string
-  stars?: number
-  variant?:
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'danger'
-    | 'warning'
-    | 'info'
-    | 'light'
-    | 'dark'
-    | string
-}
 
 export interface BFormSelectProps {
   ariaInvalid?: AriaInvalid
@@ -430,6 +342,7 @@ export interface BFormSelectProps {
   multiple?: boolean
   name?: string
   options?: readonly (unknown | Record<string, unknown>)[]
+  optionsAttrs?: Readonly<AttrsValue>
   optionsField?: string
   plain?: boolean
   required?: boolean
@@ -442,6 +355,7 @@ export interface BFormSelectProps {
 
 export interface BFormSelectOptionProps<T> {
   disabled?: boolean
+  optionsAttrs?: Readonly<AttrsValue>
   value?: T
 }
 
@@ -500,7 +414,6 @@ export interface BFormTagsProps {
   autofocus?: boolean
   disabled?: boolean
   duplicateTagText?: string
-  feedbackAriaLive?: AriaAttributes['aria-live']
   form?: string
   inputAttrs?: Readonly<AttrsValue>
   inputClass?: ClassValue
@@ -564,7 +477,6 @@ export interface BListGroupItemProps extends Omit<BLinkProps, 'routerTag'> {
 
 // export interface BModalOrchestratorProps extends TeleporterProps {}
 export type BModalOrchestratorProps = TeleporterProps
-export type BPopoverOrchestratorProps = TeleporterProps
 
 export interface BNavProps {
   align?: AlignmentJustifyContent
@@ -595,9 +507,9 @@ export interface BNavTextProps {
 }
 
 export interface BNavbarProps {
+  autoClose?: boolean
   container?: boolean | 'fluid' | Breakpoint
   fixed?: Extract<Placement, 'top' | 'bottom'>
-  noAutoClose?: boolean
   print?: boolean
   sticky?: Extract<Placement, 'top' | 'bottom'>
   tag?: string
@@ -629,15 +541,7 @@ export interface BOffcanvasProps extends TeleporterProps, ShowHideProps {
   bodyAttrs?: Readonly<AttrsValue>
   bodyClass?: ClassValue
   bodyScrolling?: boolean
-  focus?:
-    | 'close'
-    | boolean
-    | string
-    | Readonly<ComponentPublicInstance>
-    | Readonly<HTMLElement>
-    | null
   footerClass?: string
-  headerAttrs?: Readonly<AttrsValue>
   headerClass?: string
   headerCloseClass?: ClassValue
   headerCloseLabel?: string
@@ -646,6 +550,7 @@ export interface BOffcanvasProps extends TeleporterProps, ShowHideProps {
   modelValue?: boolean
   noCloseOnBackdrop?: boolean
   noCloseOnEsc?: boolean
+  noFocus?: boolean
   noHeader?: boolean
   noTrap?: boolean
   noHeaderClose?: boolean
@@ -783,7 +688,7 @@ export interface BTabProps {
   disabled?: boolean
   id?: string
   lazy?: boolean
-  unmountLazy?: boolean
+  lazyOnce?: boolean
   noBody?: boolean
   tag?: string
   title?: string
@@ -793,6 +698,7 @@ export interface BTabProps {
 }
 
 export interface BTabsProps {
+  activeId?: string
   activeNavItemClass?: ClassValue
   activeTabClass?: ClassValue
   align?: AlignmentJustifyContent
@@ -801,12 +707,11 @@ export interface BTabsProps {
   end?: boolean
   fill?: boolean
   id?: string
-  index?: number
   inactiveNavItemClass?: ClassValue
   inactiveTabClass?: ClassValue
   justified?: boolean
   lazy?: boolean
-  modelValue?: string
+  modelValue?: number
   navClass?: ClassValue
   navItemClass?: ClassValue
   navWrapperClass?: ClassValue
@@ -849,29 +754,42 @@ export interface BSpinnerProps {
   variant?: ColorVariant | null
 }
 
-export interface BAlertProps
-  extends ColorExtendables,
-    Omit<BLinkProps, 'routerTag'>,
-    ShowHideProps {
-  alertClass?: ClassValue
-  body?: string
+export interface BAccordionItemProps {
+  bodyAttrs?: Readonly<AttrsValue>
   bodyClass?: ClassValue
+  buttonAttrs?: Readonly<AttrsValue>
+  buttonClass?: ClassValue
+  collapseClass?: ClassValue
+  headerAttrs?: Readonly<AttrsValue>
+  headerClass?: ClassValue
+  headerTag?: string
+  horizontal?: boolean
+  id?: string
+  isNav?: boolean
+  modelValue?: boolean
+  lazy?: boolean
+  unmountLazy?: boolean
+  tag?: string
+  title?: string
+  show?: boolean
+  visible?: boolean
+  wrapperAttrs?: Readonly<AttrsValue>
+}
+
+export interface BAlertProps {
   closeClass?: ClassValue
   closeContent?: string
   closeLabel?: string
   closeVariant?: ButtonVariant | null
   dismissible?: boolean
-  headerClass?: ClassValue
-  headerTag?: string
-  id?: string
+  fade?: boolean
+  immediate?: boolean
   interval?: number | 'requestAnimationFrame'
-  isStatus?: boolean
   modelValue?: boolean | number
   noHoverPause?: boolean
   noResumeOnHoverLeave?: boolean
-  progressProps?: Omit<BProgressBarProps, 'label' | 'max' | 'value'>
   showOnPause?: boolean
-  title?: string
+  variant?: ColorVariant | null
 }
 
 export interface BAvatarProps
@@ -910,7 +828,6 @@ export interface BBadgeProps extends Omit<BLinkProps, 'routerTag'>, ColorExtenda
 
 export interface BBreadcrumbProps {
   items?: readonly BreadcrumbItemRaw[]
-  id?: string
 }
 
 export interface BBreadcrumbItemProps extends Omit<BLinkProps, 'routerTag'> {
@@ -944,7 +861,7 @@ export interface BButtonGroupProps {
 
 export interface BButtonToolbarProps {
   ariaLabel?: string
-  keyNav?: boolean
+  // keyNav?: boolean
   justify?: boolean
   role?: string
 }
@@ -1159,18 +1076,14 @@ export interface BTableLiteProps<Items> extends BTableSimpleProps {
   theadTrClass?: ClassValue
 }
 
-export interface BTableProps<Items>
-  extends Omit<BTableLiteProps<Items>, 'tableClass'>,
-    FormDebounceOptions {
+export interface BTableProps<Items> extends Omit<BTableLiteProps<Items>, 'tableClass'> {
   provider?: BTableProvider<Items>
   noProvider?: readonly NoProviderTypes[]
   noProviderPaging?: boolean
   noProviderSorting?: boolean
   noProviderFiltering?: boolean
   sortBy?: BTableSortBy[]
-  sortCompare?: BTableSortByComparerFunction<Items>
   mustSort?: boolean | string[] // TODO this is a string of fields, possibly generic
-  initialSortDirection?: BTableInitialSortDirection
   selectable?: boolean
   multisort?: boolean
   stickySelect?: boolean
@@ -1235,7 +1148,6 @@ export interface BThProps {
   stackedHeading?: string
   stickyColumn?: boolean
   variant?: ColorVariant | null
-  scope?: TableThScope
 }
 
 export interface BProgressBarProps extends ColorExtendables {
@@ -1263,8 +1175,6 @@ export interface BFormFeedbackSharedProps {
   text?: string
   tooltip?: boolean
 }
-export type BFormInvalidFeedbackProps = BFormFeedbackSharedProps
-export type BFormValidFeedbackProps = BFormFeedbackSharedProps
 
 export interface BDropdownProps extends TeleporterProps, ShowHideProps {
   ariaLabel?: string
@@ -1273,7 +1183,6 @@ export interface BDropdownProps extends TeleporterProps, ShowHideProps {
   boundaryPadding?: Padding
   disabled?: boolean
   floatingMiddleware?: Middleware[]
-  icon?: boolean
   id?: string
   isNav?: boolean
   menuClass?: ClassValue
@@ -1311,10 +1220,6 @@ export interface BToastProps
     ShowHideProps {
   body?: string
   bodyClass?: ClassValue
-  closeClass?: ClassValue
-  closeContent?: string
-  closeLabel?: string
-  closeVariant?: ButtonVariant | null
   headerClass?: ClassValue
   headerTag?: string
   id?: string
@@ -1323,7 +1228,6 @@ export interface BToastProps
   modelValue?: boolean | number
   noCloseButton?: boolean
   noHoverPause?: boolean
-  noProgress?: boolean
   noResumeOnHoverLeave?: boolean
   progressProps?: Omit<BProgressBarProps, 'label' | 'max' | 'value'>
   showOnPause?: boolean
@@ -1333,14 +1237,12 @@ export interface BToastProps
 }
 
 export interface BPopoverProps extends TeleporterProps, ShowHideProps {
-  body?: string
-  bodyClass?: ClassValue
   boundary?: Boundary | RootBoundary
   boundaryPadding?: Padding
   click?: boolean
   closeOnHide?: boolean
-  focus?: boolean
-  hover?: boolean
+  content?: string
+  customClass?: ClassValue
   delay?:
     | number
     | Readonly<{
@@ -1366,8 +1268,8 @@ export interface BPopoverProps extends TeleporterProps, ShowHideProps {
   strategy?: Strategy
   target?: string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | null
   title?: string
-  titleClass?: ClassValue
   tooltip?: boolean
+  variant?: ColorVariant | null
 }
 
 export interface BTooltipProps extends Omit<BPopoverProps, 'tooltip'> {
@@ -1379,19 +1281,10 @@ export interface BCardHeadFootProps extends ColorExtendables {
   tag?: string
   text?: string
 }
-export type BCardFooterProps = BCardHeadFootProps
-export type BCardHeaderProps = BCardHeadFootProps
 
 export interface BModalProps extends TeleporterProps, ShowHideProps {
-  focus?:
-    | 'ok'
-    | 'cancel'
-    | 'close'
-    | boolean
-    | string
-    | Readonly<ComponentPublicInstance>
-    | Readonly<HTMLElement>
-    | null
+  autofocus?: boolean
+  autofocusButton?: 'ok' | 'cancel' | 'close'
   backdropFirst?: boolean
   body?: string
   bodyAttrs?: Readonly<AttrsValue>
@@ -1402,7 +1295,6 @@ export interface BModalProps extends TeleporterProps, ShowHideProps {
   bodyVariant?: ColorVariant | null
   busy?: boolean
   buttonSize?: Size
-  cancelClass?: ClassValue
   cancelDisabled?: boolean
   cancelTitle?: string
   cancelVariant?: ButtonVariant | null
@@ -1415,7 +1307,6 @@ export interface BModalProps extends TeleporterProps, ShowHideProps {
   footerTextVariant?: TextColorVariant | null
   footerVariant?: ColorVariant | null
   fullscreen?: boolean | Breakpoint
-  headerAttrs?: Readonly<AttrsValue>
   headerBgVariant?: BgColorVariant | null
   headerBorderVariant?: BorderColorVariant | null
   headerClass?: ClassValue
@@ -1435,7 +1326,6 @@ export interface BModalProps extends TeleporterProps, ShowHideProps {
   noCloseOnEsc?: boolean
   noTrap?: boolean
   noStacking?: boolean
-  okClass?: ClassValue
   okDisabled?: boolean
   okOnly?: boolean
   okTitle?: string

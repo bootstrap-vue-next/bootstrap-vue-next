@@ -52,7 +52,6 @@ import BPlaceholder from './BPlaceholder.vue'
 import {useToNumber} from '@vueuse/core'
 import {useDefaults} from '../../composables/useDefaults'
 import {computed} from 'vue'
-import type {BPlaceholderTableSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BPlaceholderTableProps>(), {
   animation: undefined,
@@ -75,12 +74,20 @@ const _props = withDefaults(defineProps<BPlaceholderTableProps>(), {
   variant: undefined,
 })
 const props = useDefaults(_props, 'BPlaceholderTable')
-defineSlots<BPlaceholderTableSlots>()
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  tfoot?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  thead?: (props: Record<string, never>) => any
+}>()
 
 const columnsToNumber = useToNumber(() => props.columns)
 const rowsToNumber = useToNumber(() => props.rows)
-const computedHeaderColumns = computed(() => props.headerColumns ?? Number.NaN)
-const computedFooterColumns = computed(() => props.footerColumns ?? Number.NaN)
+const computedHeaderColumns = computed(() => props.headerColumns ?? NaN)
+const computedFooterColumns = computed(() => props.footerColumns ?? NaN)
 const headerColumnsNumber = useToNumber(computedHeaderColumns)
 const footerColumnsNumber = useToNumber(computedFooterColumns)
 

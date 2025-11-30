@@ -3,11 +3,11 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".vitepress/dist/**"]
+      "outputs": ["dist/**"]
     },
     "build-only": {
       "dependsOn": ["^build-only"],
-      "outputs": ["dist/**", ".vitepress/dist/**"]
+      "outputs": ["dist/**"]
     },
     "test": {
       "outputs": []
@@ -55,10 +55,6 @@
       ]
     },
     "type-check": {
-      "outputs": []
-    },
-    "publint": {
-      "dependsOn": ["build"],
       "outputs": []
     },
     "lint": {

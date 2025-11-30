@@ -1,6 +1,10 @@
----
-description: 'Bootstrap custom `<select>` using custom styles. Optionally specify options based on an array, array of objects, or an object.'
----
+# Form Select
+
+<PageHeader>
+
+Bootstrap custom `<select>` using custom styles. Optionally specify options based on an array, array of objects, or an object.
+
+</PageHeader>
 
 ## Overview
 
@@ -43,7 +47,13 @@ _unselected_ state. On iOS this will cause the user not being able to select the
 iOS does not fire a change event in this case. It is therefore recommended providing a disabled
 option with an empty value as your first option.
 
-<<< FRAGMENT ./demo/FormSelectOptionNotes.vue#template{vue-html}
+```vue-html
+<BFormSelect v-model="selected" :options="options">
+  <template #first>
+    <BFormSelectOption value="" disabled>-- Please select an option --</BFormSelectOption>
+  </template>
+</BFormSelect>
+```
 
 See the [Vue select](https://v3.vuejs.org/guide/forms.html#select) documentation for more details.
 
@@ -144,3 +154,15 @@ Set the prop `plain` to have a native browser `<select>` rendered (although the 
 
 A `plain` select will always be rendered for non `multiple` selects which have the `select-size`
 prop set to a value greater than 1.
+
+<ComponentReference :data="data" />
+
+<script lang="ts">
+import {data} from '../../data/components/formSelect.data'
+
+export default {
+  setup() {
+    return {data}
+  }
+}
+</script>

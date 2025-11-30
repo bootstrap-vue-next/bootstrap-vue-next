@@ -42,7 +42,7 @@ const _props = withDefaults(defineProps<Omit<BFormInputProps, 'modelValue'>>(), 
   autocomplete: undefined,
   autofocus: false,
   debounce: 0,
-  debounceMaxWait: Number.NaN,
+  debounceMaxWait: NaN,
   disabled: false,
   form: undefined,
   formatter: undefined,
@@ -69,7 +69,7 @@ const [modelValue, modelModifiers] = defineModel<
   set: (v) => normalizeInput(v, modelModifiers),
 })
 
-const input = useTemplateRef('_input')
+const input = useTemplateRef<HTMLInputElement>('_input')
 
 const {
   computedId,

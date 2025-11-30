@@ -1,8 +1,5 @@
 <template>
   <!-- #region template -->
-  <BOffcanvas
-    responsive="md"
-    title="Responsive Offcanvas"
-  />
+  <BOffcanvas responsive="md" />
   <!-- #endregion template -->
 </template>

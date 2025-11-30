@@ -59,10 +59,8 @@ import {isEmptySlot} from '../../utils/dom'
 import {useNumberishToStyle} from '../../composables/useNumberishToStyle'
 import {useRadiusElementClasses} from '../../composables/useRadiusElementClasses'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
-import type {BAvatarEmits, BAvatarSlots, Size} from '../../types'
-import {useDefaults} from '../../composables/useDefaults'
 
-const _props = withDefaults(defineProps<BAvatarProps>(), {
+const props = withDefaults(defineProps<BAvatarProps>(), {
   alt: 'avatar',
   badge: false,
   badgeBgVariant: null,
@@ -111,9 +109,6 @@ const _props = withDefaults(defineProps<BAvatarProps>(), {
   roundedTop: undefined,
   // End RadiusElementExtendables props
 })
-const props = useDefaults(_props, 'BAvatar')
-const emit = defineEmits<BAvatarEmits>()
-const slots = defineSlots<BAvatarSlots>()
 
 const localSrc = ref(props.src)
 watch(
@@ -123,18 +118,23 @@ watch(
   }
 )
 
+const emit = defineEmits<{
+  'click': [value: MouseEvent]
+  'img-error': [value: Event]
+}>()
+
+const slots = defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  badge?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
+
 const {computedLink, computedLinkProps} = useBLinkHelper(props)
 
 const parentData = inject(avatarGroupInjectionKey, null)
 
-const SIZES = Object.freeze([
-  null,
-  ...Object.keys({
-    lg: null,
-    md: null,
-    sm: null,
-  } satisfies Record<Size, null>),
-] as (string | null)[])
+const SIZES = ['sm', null, 'lg']
 const FONT_SIZE_SCALE = 0.4
 const BADGE_FONT_SIZE_SCALE = FONT_SIZE_SCALE * 0.7
 
@@ -144,17 +144,9 @@ const hasBadgeSlot = computed(() => !isEmptySlot(slots.badge))
 const showBadge = computed(() => !!props.badge || props.badge === '' || hasBadgeSlot.value)
 const computedSquare = computed(() => parentData?.square.value || props.square)
 
-// const computedPropSize = useNumberishToStyle(() => props.size)
-// const propSizeIsLiteralSize = (val: unknown): val is Size =>
-//   !!val && typeof val === 'string' && SIZES.includes(val)
-// const computedParentSize = useNumberishToStyle(() => parentData?.size.value)
-// const computedSize = computed(() => computedParentSize.value ?? computedPropSize.value)
-// const computedPropSizeIsLiteralSize = computed(() => propSizeIsLiteralSize(computedSize.value))
-
-const computedSize = useNumberishToStyle(() => parentData?.size.value ?? props.size)
-const computedSizeIsLiteralSize = computed(
-  () => !!computedSize.value && SIZES.includes(computedSize.value)
-)
+const computedPropSize = useNumberishToStyle(() => props.size)
+const computedParentSize = useNumberishToStyle(() => parentData?.size.value)
+const computedSize = computed(() => computedParentSize.value ?? computedPropSize.value)
 
 const computedVariant = computed(() => parentData?.variant.value ?? props.variant)
 const computedRounded = computed(() => parentData?.rounded.value ?? props.rounded)
@@ -184,8 +176,8 @@ const computedClasses = computed(() => [
   // Square overwrites all else
   computedSquare.value === true ? undefined : radiusElementClasses.value,
   {
-    [`b-avatar-${computedSize.value}`]:
-      computedSizeIsLiteralSize.value && computedSize.value !== 'md',
+    [`b-avatar-${props.size}`]:
+      !!props.size && SIZES.indexOf(computedPropSize.value as string) !== -1,
     [`btn-${computedVariant.value}`]: props.button ? computedVariant.value !== null : false,
     'badge': !props.button && computedVariant.value !== null && hasDefaultSlot.value,
     'btn': props.button,
@@ -196,15 +188,16 @@ const computedClasses = computed(() => [
 
 const badgeStyle = computed<StyleValue>(() => ({
   fontSize:
-    (!computedSizeIsLiteralSize.value
+    (SIZES.indexOf((computedSize.value as string | undefined) || null) === -1
       ? `calc(${computedSize.value} * ${BADGE_FONT_SIZE_SCALE})`
       : '') || '',
 }))
 
 const textFontStyle = computed<StyleValue>(() => {
-  const fontSize = !computedSizeIsLiteralSize.value
-    ? `calc(${computedSize.value} * ${FONT_SIZE_SCALE})`
-    : null
+  const fontSize =
+    SIZES.indexOf((computedSize.value as string | undefined) || null) === -1
+      ? `calc(${computedSize.value} * ${FONT_SIZE_SCALE})`
+      : null
   return fontSize ? {fontSize} : {}
 })
 
@@ -220,12 +213,8 @@ const computedTag = computed(() => (computedLink.value ? BLink : props.button ? 
 
 const computedStyle = computed<CSSProperties>(() => ({
   ...marginStyle.value,
-  ...(!computedSizeIsLiteralSize.value
-    ? {
-        width: computedSize.value,
-        height: computedSize.value,
-      }
-    : undefined),
+  width: computedSize.value ?? undefined,
+  height: computedSize.value ?? undefined,
 }))
 
 const clicked = (e: Readonly<MouseEvent>): void => {

@@ -2,10 +2,7 @@
   <BContainer class="py-5">
     <!-- User Interface controls -->
     <BRow>
-      <BCol
-        lg="6"
-        class="my-1"
-      >
+      <BCol lg="6" class="my-1">
         <BFormGroup
           v-slot="{ariaDescribedby}"
           label="Sort"
@@ -15,16 +12,8 @@
           label-size="sm"
           class="mb-0"
         >
-          <BButton
-            size="sm"
-            @click="onAddSort"
-            >Add Sort...</BButton
-          >
-          <BInputGroup
-            v-for="sort in sortBy"
-            :key="sort.key"
-            size="sm"
-          >
+          <BButton size="sm" @click="onAddSort">Add Sort...</BButton>
+          <BInputGroup v-for="sort in sortBy" :key="sort.key" size="sm">
             <BFormSelect
               id="sort-by-select"
               v-model="sort.key"
@@ -49,69 +38,7 @@
           </BInputGroup>
         </BFormGroup>
       </BCol>
-
-      <BCol
-        sm="5"
-        md="6"
-        class="my-1"
-      >
-        <BFormGroup
-          label="Initial Direction"
-          label-for="initial-sort-direction"
-          label-cols-sm="6"
-          label-cols-md="4"
-          label-cols-lg="3"
-          label-align-sm="right"
-          label-size="sm"
-          class="mb-0"
-        >
-          <BFormSelect
-            id="initial-sort-direction"
-            v-model="initialSortDirection"
-            :options="sortDirectionOptions"
-            size="sm"
-          />
-        </BFormGroup>
-      </BCol>
-      <BCol
-        lg="6"
-        class="my-1"
-      >
-        <BFormGroup
-          v-slot="{ariaDescribedby}"
-          label="Filter On"
-          description="Leave all unchecked to filter on all data"
-          label-cols-sm="3"
-          label-align-sm="right"
-          label-size="sm"
-          class="mb-0"
-        >
-          <div class="d-flex gap-2">
-            <BFormCheckbox
-              v-model="filterOn"
-              value="name"
-              :aria-describedby="ariaDescribedby"
-              >Name</BFormCheckbox
-            >
-            <BFormCheckbox
-              v-model="filterOn"
-              value="age"
-              :aria-describedby="ariaDescribedby"
-              >Age</BFormCheckbox
-            >
-            <BFormCheckbox
-              v-model="filterOn"
-              value="isActive"
-              :aria-describedby="ariaDescribedby"
-              >Active</BFormCheckbox
-            >
-          </div>
-        </BFormGroup>
-      </BCol>
-      <BCol
-        lg="6"
-        class="my-1"
-      >
+      <BCol lg="6" class="my-1">
         <BFormGroup
           label="Filter"
           label-for="filter-input"
@@ -128,35 +55,36 @@
               placeholder="Type to Search"
             />
             <BInputGroupText>
-              <BButton
-                :disabled="!filter"
-                @click="filter = ''"
-                >Clear</BButton
-              >
+              <BButton :disabled="!filter" @click="filter = ''">Clear</BButton>
             </BInputGroupText>
           </BInputGroup>
         </BFormGroup>
       </BCol>
-
-      <BCol
-        sm="7"
-        md="6"
-        class="my-1"
-      >
-        <BPagination
-          v-model="currentPage"
-          :total-rows="totalRows"
-          :per-page="perPage"
-          :align="'fill'"
-          size="sm"
-          class="my-0"
-        />
+      <BCol lg="6" class="my-1">
+        <BFormGroup
+          v-slot="{ariaDescribedby}"
+          v-model="sortDirection"
+          label="Filter On"
+          description="Leave all unchecked to filter on all data"
+          label-cols-sm="3"
+          label-align-sm="right"
+          label-size="sm"
+          class="mb-0"
+        >
+          <div class="d-flex gap-2">
+            <BFormCheckbox v-model="filterOn" value="name" :aria-describedby="ariaDescribedby"
+              >Name</BFormCheckbox
+            >
+            <BFormCheckbox v-model="filterOn" value="age" :aria-describedby="ariaDescribedby"
+              >Age</BFormCheckbox
+            >
+            <BFormCheckbox v-model="filterOn" value="isActive" :aria-describedby="ariaDescribedby"
+              >Active</BFormCheckbox
+            >
+          </div>
+        </BFormGroup>
       </BCol>
-      <BCol
-        sm="5"
-        md="6"
-        class="my-1"
-      >
+      <BCol sm="5" md="6" class="my-1">
         <BFormGroup
           label="Per page"
           label-for="per-page-select"
@@ -167,19 +95,24 @@
           label-size="sm"
           class="mb-0"
         >
-          <BFormSelect
-            id="per-page-select"
-            v-model="perPage"
-            :options="pageOptions"
-            size="sm"
-          />
+          <BFormSelect id="per-page-select" v-model="perPage" :options="pageOptions" size="sm" />
         </BFormGroup>
+      </BCol>
+      <BCol sm="7" md="6" class="my-1">
+        <BPagination
+          v-model="currentPage"
+          :total-rows="totalRows"
+          :per-page="perPage"
+          :align="'fill'"
+          size="sm"
+          class="my-0"
+        />
       </BCol>
     </BRow>
     <!-- Main table element for typed table-->
     <BTable
-      ref="complete-table"
       v-model:sort-by="sortBy"
+      :sort-internal="true"
       :items="items"
       :fields="fields"
       :current-page="currentPage"
@@ -189,7 +122,6 @@
       :filterable="filterOn"
       :small="true"
       :multisort="true"
-      :initial-sort-direction="initialSortDirection"
       @filtered="onFiltered"
     >
       <template #cell(name)="row">
@@ -197,35 +129,16 @@
         {{ (row.value as PersonName).last }}
       </template>
       <template #cell(actions)="row">
-        <BButton
-          size="sm"
-          class="me-1"
-          @click="info(row.item, row.index)"
-        >
-          Info modal
-        </BButton>
-        <BButton
-          size="sm"
-          @click="row.toggleDetails"
-        >
+        <BButton size="sm" class="me-1" @click="info(row.item, row.index)"> Info modal </BButton>
+        <BButton size="sm" @click="row.toggleDetails">
           {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
         </BButton>
       </template>
       <template #row-details="row">
         <BCard>
           <ul>
-            <li
-              v-for="(value, key) in row.item"
-              :key="key"
-            >
-              {{ key }}: {{ value }}
-            </li>
-            <BButton
-              size="sm"
-              @click="row.toggleDetails"
-            >
-              Toggle Details
-            </BButton>
+            <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
+            <BButton size="sm" @click="row.toggleDetails"> Toggle Details </BButton>
           </ul>
         </BCard>
       </template>
@@ -240,33 +153,18 @@
     >
       <pre>{{ infoModal.content }}</pre>
     </BModal>
-    <BRow
-      ><BCol
-        >Displayed Items ({{ displayItems.length }}):
-        {{
-          displayItems.map((item) => {
-            const person = item as Person
-            return `${person.name.first} ${person.name.last}`
-          })
-        }}
-        Filter On: {{ filterOn.join(', ') }}</BCol
-      ></BRow
-    >
   </BContainer>
 </template>
 
 <script setup lang="ts">
-import {BTable} from 'bootstrap-vue-next/components/BTable'
-import type {
-  BTableInitialSortDirection,
-  BTableSortBy,
-  ColorVariant,
-  LiteralUnion,
-  TableFieldRaw,
-  TableItem,
+import {
+  type BTableSortBy,
+  type ColorVariant,
+  type LiteralUnion,
+  type TableFieldRaw,
+  type TableItem,
 } from 'bootstrap-vue-next'
-import {computed, reactive, ref, useTemplateRef} from 'vue'
-import {type ComponentExposed} from 'vue-component-type-helpers'
+import {computed, reactive, ref} from 'vue'
 
 interface PersonName {
   first: string
@@ -278,9 +176,6 @@ interface Person {
   age: number
   isActive: boolean
 }
-
-const table = useTemplateRef<ComponentExposed<typeof BTable<Person>>>('complete-table')
-const displayItems = computed(() => (table.value?.displayItems ?? []) as TableItem<Person>[])
 
 const items: TableItem<Person>[] = [
   {isActive: true, age: 40, name: {first: 'Dickerson', last: 'Macdonald'}},
@@ -312,11 +207,13 @@ const fields: Exclude<TableFieldRaw<Person>, string>[] = [
     key: 'name',
     label: 'Person full name',
     sortable: true,
+    sortDirection: 'desc',
   },
   {
     key: 'sortableName',
     label: 'Person sortable name',
     sortable: true,
+    sortDirection: 'desc',
     formatter: (_value: unknown, _key?: LiteralUnion<keyof Person>, item?: Person) =>
       item ? `${item.name.last}, ${item.name.first}` : 'Something went wrong',
     sortByFormatted: true,
@@ -341,17 +238,11 @@ const pageOptions = [
   {value: 100, text: 'Show a lot'},
 ]
 
-const sortDirectionOptions = [
-  {value: 'asc', text: 'Ascending'},
-  {value: 'desc', text: 'Descending'},
-  {value: 'last', text: 'Last clicked column'},
-]
-
 const totalRows = ref(items.length)
 const currentPage = ref(1)
 const perPage = ref(5)
 const sortBy = ref<BTableSortBy[]>([])
-const initialSortDirection = ref<BTableInitialSortDirection>('asc')
+const sortDirection = ref('asc')
 const filter = ref('')
 const filterOn = ref([])
 const infoModal = reactive({

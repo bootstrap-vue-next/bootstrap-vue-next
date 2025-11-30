@@ -42,7 +42,7 @@ const _props = withDefaults(defineProps<Omit<BFormTextareaProps, 'modelValue'>>(
   autocomplete: undefined,
   autofocus: false,
   debounce: 0,
-  debounceMaxWait: Number.NaN,
+  debounceMaxWait: NaN,
   disabled: false,
   form: undefined,
   formatter: undefined,
@@ -74,7 +74,7 @@ const [modelValue, modelModifiers] = defineModel<
   set: (v) => normalizeInput(v, modelModifiers),
 })
 
-const input = useTemplateRef('_input')
+const input = useTemplateRef<HTMLTextAreaElement>('_input')
 
 const {
   computedId,
@@ -100,11 +100,14 @@ const {
   computedStyles: resizeStyles,
   onInput: handleHeightChange,
   computedRows,
-} = useTextareaResize(input, {
-  maxRows: () => props.maxRows,
-  rows: () => props.rows,
-  noAutoShrink: () => props.noAutoShrink,
-})
+} = useTextareaResize(
+  input,
+  computed(() => ({
+    maxRows: props.maxRows,
+    rows: props.rows,
+    noAutoShrink: props.noAutoShrink,
+  }))
+)
 
 const computedStyles = computed<CSSProperties>(() => ({
   resize: props.noResize ? 'none' : undefined,

@@ -1,16 +1,11 @@
 <template>
-  <BTable
-    v-model:sort-by="multiSortBy"
-    :items="sortItems"
-    :fields="sortFields"
-    :multisort="true"
-  />
+  <BTable v-model:sort-by="multiSortBy" :items="sortItems" :fields="sortFields" :multisort="true" />
   <div>sortBy = {{ JSON.stringify(multiSortBy) }}</div>
 </template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
-import type {BTableSortBy, TableFieldRaw, TableItem} from 'bootstrap-vue-next'
+import {type BTableSortBy, type TableFieldRaw, type TableItem} from 'bootstrap-vue-next'
 
 interface SortPerson {
   first_name: string

@@ -1,6 +1,10 @@
----
-description: 'Group a series of buttons together on a single line or stack them in a vertical column with `BButtonGroup`.'
----
+# Button Group
+
+<PageHeader>
+
+Group a series of buttons together on a single line or stack them in a vertical column with `BButtonGroup`.
+
+</PageHeader>
 
 ## Overview
 
@@ -37,3 +41,15 @@ that split dropdown menus are not supported when prop `vertical` is set.
 
 Also check out the [`BButtonToolbar`](/docs/components/button-toolbar) component for generating
 toolbars containing button groups and input groups.
+
+<ComponentReference :data="data" />
+
+<script lang="ts">
+import {data} from '../../data/components/buttonGroup.data'
+
+export default {
+  setup() {
+    return {data}
+  }
+}
+</script>

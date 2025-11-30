@@ -1,9 +1,5 @@
 <template>
-  <BRow
-    v-for="type in inputTypes"
-    :key="type"
-    class="my-1"
-  >
+  <BRow v-for="type in inputTypes" :key="type" class="my-1">
     <BCol sm="3">
       <label :for="`type-${type}`"
         >Type <code>{{ type }}</code
@@ -11,10 +7,7 @@
       >
     </BCol>
     <BCol sm="9">
-      <BFormInput
-        :id="`type-${type}`"
-        :type="type"
-      />
+      <BFormInput :id="`type-${type}`" :type="type" />
     </BCol>
   </BRow>
 </template>

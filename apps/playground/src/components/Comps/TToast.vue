@@ -2,13 +2,13 @@
   <BContainer>
     <BRow>
       <BCol>
-        <BOrchestrator />
+        <BToastOrchestrator />
         <BButton v-for="(fn, name) in showFns" :key="name" @click="fn">{{ name }}</BButton>
       </BCol>
     </BRow>
     <BRow>
       <BCol>
-        {{ store.filter((el) => el.type === 'toast') }}
+        {{ toasts }}
       </BCol>
     </BRow>
   </BContainer>
@@ -18,13 +18,16 @@
 // You can use this file as a development spot to test your changes
 // Please do not commit this file
 import {computed, h, onMounted, ref} from 'vue'
-import type {ColorVariant} from 'bootstrap-vue-next'
-import {useToast} from 'bootstrap-vue-next/composables/useToast'
+import {
+  BToast,
+  type ColorVariant,
+  type OrchestratedToast,
+  useToastController,
+} from 'bootstrap-vue-next'
 
-const {create, store} = useToast()
+const {show, toasts} = useToastController()
 
-// const firstRef = ref<OrchestratedToast>({
-const firstRef = ref({
+const firstRef = ref<OrchestratedToast>({
   body: `${Math.random()}`,
 })
 
@@ -36,32 +39,45 @@ onMounted(() => {
 
 const showFns = {
   basicNoReactive: () => {
-    create({
-      modelValue: true,
-      active: true,
-      title: 'foobar',
+    show?.({
+      props: {
+        value: true,
+        active: true,
+        title: 'foobar',
+      },
     })
   },
   basicCustomComponent: () => {
-    create({
-      slots: {default: () => h('div', null, 'foobar!')},
-      modelValue: true,
-      active: true,
-      variant: 'primary',
+    show?.({
+      component: h(BToast, null, {default: () => 'foobar!'}),
+      props: {
+        value: true,
+        active: true,
+        variant: 'primary',
+      },
     })
   },
   simpleRefProps: () => {
-    create(firstRef)
+    show?.({
+      props: firstRef,
+    })
   },
   dynamicRefProps: () => {
-    create(
-      computed(() => ({
+    show?.({
+      props: computed(() => ({
         ...firstRef.value,
         variant: (Number.parseInt(firstRef.value.body?.charAt(2) ?? '0') % 2 === 0
           ? 'danger'
           : 'info') as ColorVariant,
-      }))
-    )
+      })),
+    })
+  },
+  getterFunction: () => {
+    show?.({
+      props: () => ({
+        title: firstRef.value.body,
+      }),
+    })
   },
   // Demonstration psuedocode, you can import a component and use it
   // importedComponent: () => {

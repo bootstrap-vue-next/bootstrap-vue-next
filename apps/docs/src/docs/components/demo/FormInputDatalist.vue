@@ -4,12 +4,7 @@
 
     <datalist id="my-list-id">
       <option>Manual Option</option>
-      <option
-        v-for="size in datalistSizes"
-        :key="size"
-      >
-        {{ size }}
-      </option>
+      <option v-for="size in datalistSizes" :key="size">{{ size }}</option>
     </datalist>
   </div>
 </template>

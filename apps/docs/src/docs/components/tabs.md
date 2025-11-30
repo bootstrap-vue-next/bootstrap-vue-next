@@ -1,8 +1,11 @@
----
-description: >
-  Create a widget of tabbable panes of _local content_. The tabs component is built upon navs and
-  cards internally, and provides full keyboard navigation control of the tabs.
----
+# Tabs
+
+<PageHeader>
+
+Create a widget of tabbable panes of _local content_. The tabs component is built upon navs and
+cards internally, and provides full keyboard navigation control of the tabs.
+
+</PageHeader>
 
 For navigation based tabs (i.e. tabs that would change the URL), use the
 [`<BNav>`](/docs/components/nav) component instead.
@@ -14,7 +17,7 @@ For navigation based tabs (i.e. tabs that would change the URL), use the
 ::: info
 You should supply each child `<BTab>` component a unique `key` value if dynamically adding
 or removing `<BTab>` components (i.e. `v-if` or for loops). The `key` attribute is a special Vue
-attribute, see the [Vue docs](https://vuejs.org/api/built-in-special-attributes.html#key) for details.
+attribute, see the [Vue doce](https://vuejs.org/api/built-in-special-attributes.html#key) for details.
 :::
 
 ## Cards integration
@@ -79,7 +82,7 @@ Visually move the tab controls to the bottom by setting the prop `end`.
 ::: warning
 
 - Bottom placement visually works best with the `pills` variant. When using the default `tabs`
-  variant, you may want to provide your own custom styling classes, as Bootstrap CSS assumes the
+  variant, you may want to provided your own custom styling classes, as Bootstrap v4 CSS assumes the
   tabs will always be placed on the top of the tabs content.
 - To provide a better user experience with bottom placed controls, ensure that the content of each
   tab pane is the same height and fits completely within the visible viewport, otherwise the user
@@ -106,7 +109,7 @@ column classes such as `col-2`, `col-3`, etc.
 <<< DEMO ./demo/TabsVerticalWidth.vue#template{vue-html}
 
 Vertical placement visually works best with the `pills` variant. When using the default `tabs`
-variant, you may want to provided your own custom styling classes, as Bootstrap v5 CSS assumes the
+variant, you may want to provided your own custom styling classes, as Bootstrap v4 CSS assumes the
 tab controls will always be placed on the top of the tabs content.
 
 ::: info
@@ -173,14 +176,14 @@ Sometimes it's preferred to load components & data only when activating a tab, i
 all tabs (and associated data) when rendering the `<BTabs>` set.
 
 Individual `<BTab>` components can be lazy loaded via the `lazy` prop, which when set doesn't mount
-the content of the `<BTab>` until it is activated (shown):
+the content of the `<BTab>` until it is activated (shown), and will be un-mounted when the tab is
+deactivated (hidden):
+
+::: danger
+There is currently a bug in `lazy` that causes an infinite recursion
+:::
 
 <<< DEMO ./demo/TabsLazy.vue#template{vue-html}
-
-By default, once the tab is activated, the content will remain mounted. To un-mounted the content
-when the tab is deactivated (hidden) use the `unmount-lazy` prop.
-
-<<< DEMO ./demo/TabsUnmountLazy.vue#template{vue-html}
 
 One can also make all tab's lazy by setting the `lazy` prop on the parent `<BTabs>` component:
 
@@ -190,6 +193,8 @@ One can also make all tab's lazy by setting the `lazy` prop on the parent `<BTab
 
 Keyboard navigation is enabled by default for ARIA compliance with tablists when a tab button has
 focus.
+
+<NotYetImplemented>no-key-nave prop and keyboard navigations as described below is not fully implemented</NotYetImplemented>
 
 | Keypress                                                              | Action                                         |
 | --------------------------------------------------------------------- | ---------------------------------------------- |
@@ -216,10 +221,11 @@ browser navigation with TAB key.
 Use the `<BTabs>` `v-model` to control which tab is active by setting the `v-model` to the index
 (zero-based) of the tab to be shown (see example below).
 
-Alternatively, you can use the boolean model named `active` on each `<BTab>` to activate
+Alternatively, you can use the `active` prop on each `<BTab>` with the `.sync` modifier to activate
 the tab, or to detect if a particular tab is active.
 
-Each `<BTab>`instance also exposes to activate or deactivate the tab. The
+<NotYetImplemented>.activate() and .deactivate()</NotYetImplemented>
+Each `<BTab>`instance also provides two public methods to activate or deactivate the tab. The
 methods are`.activate()`and`.deactivate()`, respectively. If activation or deactivation fails
 (i.e. a tab is disabled or no tab is available to move activation to), then the currently active tab
 will remain active and the method will return `false`. You will need a reference to the `<BTab>` in
@@ -230,13 +236,11 @@ order to use these methods.
 To prevent a tab from activating, simply set the `disabled` prop on the `<BTab>` component.
 
 Alternatively, you can listen for the `activate-tab` event, which provides an option to prevent the
-tab from activating. The `activate-tab` event is emitted with five arguments:
+tab from activating. The `activate-tab` event is emitted with three arguments:
 
-- `newTabId`: The id of the tab that is going to be activated
-- `prevTabId`: The id of the currently active tab
 - `newTabIndex`: The index of the tab that is going to be activated
 - `prevTabIndex`: The index of the currently active tab
-- `event`: The `BvEvent` object. Call `bvEvent.preventDefault()` to prevent `newTabIndex` from
+- `bvEvent`: The `BvEvent` object. Call `bvEvent.preventDefault()` to prevent `newTabIndex` from
   being activated
 
 For accessibility reasons, when using the `activate-tab` event to prevent a tab from activating, you
@@ -248,16 +252,20 @@ It is recommended to use the `disabled` attribute on the `<BTab>` component inst
 
 ### External controls using `v-model`
 
-<<< DEMO ./demo/TabsModelControl.vue
-
-### External controls using `active` model
-
-<<< DEMO ./demo/TabsActiveModelControl.vue
-
-### External controls using exposed methods
-
-<<< DEMO ./demo/TabsExposedMethodControl.vue
+<<< DEMO ./demo/TabsExternalControls.vue
 
 ### Dynamic tabs + tabs-end slot
 
 <<< DEMO ./demo/TabsDynamic.vue
+
+<ComponentReference :data="data" />
+
+<script lang="ts">
+import {data} from '../../data/components/tabs.data'
+
+export default {
+  setup() {
+    return {data}
+  }
+}
+</script>

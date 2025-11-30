@@ -13,7 +13,7 @@
       @show-prevented="emit('show-prevented', $event)"
       @toggle-prevented="emit('toggle-prevented', $event)"
       @toggle="emit('toggle', $event)"
-      @split-click="emit('split-click', $event)"
+      @click="emit('click', $event)"
     >
       <template #button-content>
         <slot name="button-content" />
@@ -33,8 +33,7 @@ import {useTemplateRef} from 'vue'
 import BDropdown from '../BDropdown/BDropdown.vue'
 import type {BDropdownProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BDropdownEmits} from '../../types/ComponentEmits'
-import type {BNavItemDropdownSlots} from '../../types'
+import type {showHideEmits} from '../../composables/useShowHide'
 
 const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   ariaLabel: undefined,
@@ -46,7 +45,6 @@ const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   teleportDisabled: false,
   disabled: false,
   floatingMiddleware: undefined,
-  icon: false,
   id: undefined,
   initialAnimation: false,
   isNav: true,
@@ -76,12 +74,24 @@ const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   variant: 'link',
 })
 const props = useDefaults(_props, 'BNavItemDropdown')
-const emit = defineEmits<BDropdownEmits>()
-defineSlots<BNavItemDropdownSlots>()
+
+const emit = defineEmits<
+  {
+    click: [event: MouseEvent]
+  } & showHideEmits
+>()
 
 const modelValue = defineModel<Exclude<BDropdownProps['modelValue'], undefined>>({default: false})
 
-const dropdown = useTemplateRef('_dropdown')
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'button-content'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'default'?: (props: {hide: () => void; show: () => void}) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'toggle-text'?: (props: Record<string, never>) => any
+}>()
+const dropdown = useTemplateRef<InstanceType<typeof BDropdown>>('_dropdown')
 
 const hide = () => {
   dropdown.value?.hide()

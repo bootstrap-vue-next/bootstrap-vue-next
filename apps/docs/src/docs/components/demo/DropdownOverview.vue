@@ -1,9 +1,6 @@
 <template>
   <!-- #region template -->
-  <BDropdown
-    text="Dropdown Button"
-    class="me-2"
-  >
+  <BDropdown text="Dropdown Button" class="me-2">
     <BDropdownItem>First Action</BDropdownItem>
     <BDropdownItem>Second Action</BDropdownItem>
     <BDropdownItem>Third Action</BDropdownItem>

@@ -1,9 +1,12 @@
----
-description: >
-  BootstrapVueNext form component and helper components that optionally support inline form styles and
-  validation states. Pair them up with other BootstrapVueNext form control components for an easy
-  customized, and responsive, layout with a consistent look and feel.
----
+# Form
+
+<PageHeader>
+
+BootstrapVueNext form component and helper components that optionally support inline form styles and
+validation states. Pair them up with other BootstrapVueNext form control components for an easy
+customized, and responsive, layout with a consistent look and feel.
+
+</PageHeader>
 
 ## Introduction to forms and controls
 
@@ -180,3 +183,15 @@ of three contextual states:
 Refer to the
 [Bootstrap v5 Form Validation Documentation](https://getbootstrap.com/docs/5.3/forms/validation/)
 for details on the Bootstrap v5 validation states.
+
+<ComponentReference :data="data" />
+
+<script lang="ts">
+import {data} from '../../data/components/form.data'
+
+export default {
+  setup() {
+    return {data}
+  }
+}
+</script>

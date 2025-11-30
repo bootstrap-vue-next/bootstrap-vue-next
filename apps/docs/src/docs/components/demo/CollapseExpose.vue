@@ -4,10 +4,7 @@
     <BButton @click="hide">hide</BButton>
     <BButton @click="toggle">toggle</BButton>
   </BButtonGroup>
-  <BCollapse
-    ref="myCollapse"
-    class="mt-2"
-  >
+  <BCollapse ref="myCollapse" class="mt-2">
     <BCard>I am controlled by exposed functions!</BCard>
   </BCollapse>
   <pre class="mt-2">
@@ -17,10 +14,9 @@
 </template>
 
 <script setup lang="ts">
-import {useTemplateRef} from 'vue'
-import {BCollapse} from 'bootstrap-vue-next/components/BCollapse'
-
-const myCollapse = useTemplateRef('myCollapse')
+import {ref} from 'vue'
+import type {BCollapse} from 'bootstrap-vue-next'
+const myCollapse = ref<InstanceType<typeof BCollapse> | null>(null)
 const show = () => myCollapse.value?.show()
 const hide = () => myCollapse.value?.hide()
 const toggle = () => myCollapse.value?.toggle()

@@ -1,10 +1,5 @@
 <template>
-  <div
-    ref="_el"
-    class="accordion-item"
-    v-bind="props.wrapperAttrs"
-    :class="processedAttrs.wrapperClass"
-  >
+  <div class="accordion-item" v-bind="props.wrapperAttrs" :class="processedAttrs.wrapperClass">
     <BCollapse
       :id="computedId"
       v-model="modelValue"
@@ -57,26 +52,21 @@
 </template>
 
 <script setup lang="ts">
-import {
-  computed,
-  inject,
-  nextTick,
-  onMounted,
-  onUnmounted,
-  useAttrs,
-  useTemplateRef,
-  watch,
-} from 'vue'
+import {computed, inject, nextTick, onMounted, useAttrs, watch} from 'vue'
 import BCollapse from '../BCollapse/BCollapse.vue'
 import {accordionInjectionKey} from '../../utils/keys'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import type {BAccordionItemProps} from '../../types/ComponentProps'
-import type {BAccordionItemEmits} from '../../types/ComponentEmits'
-import type {BAccordionItemSlots} from '../../types'
+import type {showHideEmits} from '../../composables/useShowHide'
 
 defineOptions({
   inheritAttrs: false,
+})
+const attrs = useAttrs()
+const processedAttrs = computed(() => {
+  const {class: wrapperClass, ...collapseAttrs} = attrs
+  return {wrapperClass, collapseAttrs}
 })
 
 const _props = withDefaults(defineProps<Omit<BAccordionItemProps, 'modelValue'>>(), {
@@ -100,14 +90,15 @@ const _props = withDefaults(defineProps<Omit<BAccordionItemProps, 'modelValue'>>
   wrapperAttrs: undefined,
 })
 const props = useDefaults(_props, 'BAccordionItem')
-const emit = defineEmits<BAccordionItemEmits>()
-defineSlots<BAccordionItemSlots>()
-const attrs = useAttrs()
 
-const processedAttrs = computed(() => {
-  const {class: wrapperClass, ...collapseAttrs} = attrs
-  return {wrapperClass, collapseAttrs}
-})
+const emit = defineEmits<showHideEmits>()
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  title?: (props: Record<string, never>) => any
+}>()
 
 const parentData = inject(accordionInjectionKey, null)
 
@@ -117,21 +108,12 @@ const modelValue = defineModel<Exclude<BAccordionItemProps['modelValue'], undefi
   default: false,
 })
 
-if (modelValue.value) {
+modelValue.value =
+  parentData?.openItem.value === computedId.value && !parentData?.initialAnimation.value
+
+if (modelValue.value && !parentData?.free.value) {
   parentData?.setOpenItem(computedId.value)
-} else {
-  modelValue.value =
-    (Array.isArray(parentData?.openItem.value)
-      ? parentData?.openItem.value.includes(computedId.value)
-      : parentData?.openItem.value === computedId.value) && !parentData?.initialAnimation.value
 }
-
-const el = useTemplateRef('_el')
-parentData?.registerAccordionItem(computedId.value, el)
-
-onUnmounted(() => {
-  parentData?.unregisterAccordionItem(computedId.value)
-})
 
 onMounted(() => {
   if (!modelValue.value && parentData?.openItem.value === computedId.value) {
@@ -141,21 +123,12 @@ onMounted(() => {
   }
 })
 
-const openInParent = computed(() =>
-  Array.isArray(parentData?.openItem.value)
-    ? parentData?.openItem.value.includes(computedId.value)
-    : parentData?.openItem.value === computedId.value
-)
-
 watch(
   () => parentData?.openItem.value,
-  () => (modelValue.value = openInParent.value)
+  () =>
+    (modelValue.value = parentData?.openItem.value === computedId.value && !parentData?.free.value)
 )
 watch(modelValue, () => {
-  if (modelValue.value && !openInParent.value) {
-    parentData?.setOpenItem(computedId.value)
-  } else if (!modelValue.value && openInParent.value) {
-    parentData?.setCloseItem(computedId.value)
-  }
+  if (modelValue.value && !parentData?.free.value) parentData?.setOpenItem(computedId.value)
 })
 </script>

@@ -1,6 +1,4 @@
----
-description: Learn how to customize Bootstrap and component styles.
----
+# Customizing Styles
 
 ## Bootstrap Customization
 

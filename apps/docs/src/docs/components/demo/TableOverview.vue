@@ -1,10 +1,6 @@
 <template>
   <div>
-    <BTable
-      striped
-      hover
-      :items="items"
-    />
+    <BTable striped hover :items="items" />
   </div>
 </template>
 

@@ -42,7 +42,15 @@ import {onKeyStroke} from '@vueuse/core'
 import type {BButtonProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import type {ColorVariant} from '../../types/ColorTypes'
-import {type BButtonEmits, type BButtonSlots} from '../../types'
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'default'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'loading'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'loading-spinner'?: (props: Record<string, never>) => any
+}>()
 
 const _props = withDefaults(defineProps<Omit<BButtonProps, 'pressed'>>(), {
   loading: false,
@@ -78,11 +86,14 @@ const _props = withDefaults(defineProps<Omit<BButtonProps, 'pressed'>>(), {
   underlineVariant: null,
   // End link props
 })
-const props = useDefaults(_props, 'BButton')
-const emit = defineEmits<BButtonEmits>()
-defineSlots<BButtonSlots>()
 
-const element = useTemplateRef<HTMLButtonElement | null>('_element')
+const props = useDefaults(_props, 'BButton')
+
+const emit = defineEmits<{
+  click: [value: MouseEvent]
+}>()
+
+const element = useTemplateRef<HTMLElement>('_element')
 
 const pressedValue = defineModel<BButtonProps['pressed']>('pressed', {default: undefined})
 

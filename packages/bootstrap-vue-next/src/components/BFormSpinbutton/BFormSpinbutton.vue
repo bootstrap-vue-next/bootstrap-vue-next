@@ -86,7 +86,6 @@ import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import {useRtl} from '../../composables/useRtl'
 import type {ButtonType} from '../../types/ButtonType'
-import type {BFormSpinbuttonEmits, BFormSpinbuttonSlots} from '../../types'
 
 const KEY_CODES = [CODE_UP, CODE_DOWN, CODE_HOME, CODE_END, CODE_PAGEUP, CODE_PAGEDOWN]
 
@@ -118,14 +117,23 @@ const _props = withDefaults(defineProps<Omit<BFormSpinbuttonProps, 'modelValue'>
   wrap: false,
 })
 const props = useDefaults(_props, 'BFormSpinbutton')
-const emit = defineEmits<BFormSpinbuttonEmits>()
-defineSlots<BFormSpinbuttonSlots>()
+
+const emit = defineEmits<{
+  change: [value: number | null]
+}>()
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  decrement?: (props: {hasFocus: boolean}) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  increment?: (props: {hasFocus: boolean}) => any
+}>()
 
 const modelValue = defineModel<Exclude<BFormSpinbuttonProps['modelValue'], undefined>>({
   default: null,
 })
 
-const element = useTemplateRef('_element')
+const element = useTemplateRef<HTMLElement>('_element')
 
 const {focused} = useFocus(element)
 

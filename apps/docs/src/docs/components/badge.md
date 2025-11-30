@@ -1,6 +1,10 @@
----
-description: 'Documentation and examples for badges, our small count and labeling component.'
----
+# Badge
+
+<PageHeader>
+
+Documentation and examples for badges, our small count and labeling component.
+
+</PageHeader>
 
 ## Examples
 
@@ -61,3 +65,15 @@ Use the `pill` prop to make badges more rounded with a larger border-radius.
 Quickly provide actionable badges by specifying either the `href` prop (links) or `to` prop (router-links):
 
 <<< DEMO ./demo/BadgeActionable.vue#template{vue-html}
+
+<ComponentReference :data="data" />
+
+<script lang="ts">
+import {data} from '../../data/components/badge.data'
+
+export default {
+  setup() {
+    return {data}
+  }
+}
+</script>

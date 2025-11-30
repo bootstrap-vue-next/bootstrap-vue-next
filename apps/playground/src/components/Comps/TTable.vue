@@ -297,6 +297,7 @@
         <!-- Main table element for typed table-->
         <BTable
           v-model:sort-by="sortBy"
+          :sort-internal="true"
           :items="itemsTyped"
           :fields="fieldsTyped"
           :current-page="currentPage"
@@ -553,7 +554,7 @@ function onSorted(sortby: BTableSortBy) {
   console.log(`sorted: ${JSON.stringify(sortby)}`)
 }
 
-function onSortUpdate(sortby: BTableSortBy[] | undefined) {
+function onSortUpdate(sortby: BTableSortBy | BTableSortBy[] | null) {
   // eslint-disable-next-line no-console
   console.log(`sort-by:update: ${JSON.stringify(sortby)}`)
 }

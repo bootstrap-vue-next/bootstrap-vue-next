@@ -7,12 +7,7 @@
     prepend="Label"
   >
     <BFormInput />
-    <BButton
-      size="sm"
-      text="Button"
-      variant="success"
-      >Button</BButton
-    >
+    <BButton size="sm" text="Button" variant="success">Button</BButton>
   </BInputGroup>
 </template>
 

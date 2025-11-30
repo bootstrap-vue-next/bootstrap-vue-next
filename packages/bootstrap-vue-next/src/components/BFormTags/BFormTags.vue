@@ -27,50 +27,7 @@
       ({{ props.tagRemovedLabel }}) {{ lastRemovedTag }}
     </div>
 
-    <slot
-      :add-button-text="props.addButtonText"
-      :add-button-variant="props.addButtonVariant"
-      :add-tag
-      :disable-add-button="disableAddButton"
-      :disabled="props.disabled"
-      :duplicate-tag-text="props.duplicateTagText"
-      :duplicate-tags="duplicateTags"
-      :form="props.form"
-      :input-attrs="{
-        ...props.inputAttrs,
-        disabled: props.disabled,
-        form: props.form,
-        id: _inputId,
-        value: inputValue,
-      }"
-      :input-class="props.inputClass"
-      :input-handlers="{
-        input: onInput,
-        keydown: onKeydown,
-        change: onChange,
-      }"
-      :input-id="_inputId"
-      :input-type="props.inputType"
-      :invalid-tag-text="props.invalidTagText"
-      :invalid-tags
-      :is-duplicate
-      :is-invalid
-      :is-limit-reached="isLimitReached"
-      :limit-tags-text="props.limitTagsText"
-      :limit="limitNumber"
-      :no-tag-remove="props.noTagRemove"
-      :placeholder="props.placeholder"
-      :remove-tag
-      :required="props.required"
-      :separator="props.separator"
-      :size="props.size"
-      :state="props.state"
-      :tag-class="props.tagClass"
-      :tag-pills="props.tagPills"
-      :tag-remove-label="props.tagRemoveLabel"
-      :tag-variant="props.tagVariant"
-      :tags
-    >
+    <slot v-bind="slotAttrs">
       <ul
         :id="`${computedId}tag_list__`"
         class="b-form-tags-list list-unstyled mb-0 d-flex flex-wrap align-items-center"
@@ -140,7 +97,7 @@
           </div>
         </li>
       </ul>
-      <div :aria-live="props.feedbackAriaLive" aria-atomic="true">
+      <div aria-live="polite" aria-atomic="true">
         <div v-if="isInvalid" class="d-block invalid-feedback">
           {{ props.invalidTagText }}: {{ inputValue }}
         </div>
@@ -171,9 +128,10 @@ import {useDefaults} from '../../composables/useDefaults'
 import type {BFormTagsProps} from '../../types/ComponentProps'
 import {escapeRegExpChars} from '../../utils/stringUtils'
 import BFormTag from './BFormTag.vue'
+import type {ClassValue} from '../../types/AnyValuedAttributes'
+import type {ColorVariant} from '../../types/ColorTypes'
 import {useId} from '../../composables/useId'
 import {useStateClass} from '../../composables/useStateClass'
-import type {BFormTagsEmits, BFormTagsSlots} from '../../types'
 
 const _props = withDefaults(defineProps<Omit<BFormTagsProps, 'modelValue'>>(), {
   addButtonText: 'Add',
@@ -182,7 +140,6 @@ const _props = withDefaults(defineProps<Omit<BFormTagsProps, 'modelValue'>>(), {
   autofocus: false,
   disabled: false,
   duplicateTagText: 'Duplicate tag(s)',
-  feedbackAriaLive: 'assertive',
   form: undefined,
   inputAttrs: undefined,
   inputClass: undefined,
@@ -209,8 +166,29 @@ const _props = withDefaults(defineProps<Omit<BFormTagsProps, 'modelValue'>>(), {
   tagVariant: 'secondary',
 })
 const props = useDefaults(_props, 'BFormTags')
-const emit = defineEmits<BFormTagsEmits>()
-defineSlots<BFormTagsSlots>()
+
+const emit = defineEmits<{
+  'blur': [value: FocusEvent]
+  'focus': [value: FocusEvent]
+  'focusin': [value: FocusEvent]
+  'focusout': [value: FocusEvent]
+  'tag-state': [...args: string[][]]
+}>()
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'add-button-text'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'default'?: (props: typeof slotAttrs.value) => any
+  'tag'?: (props: {
+    tag: string
+    tagClass: ClassValue
+    tagVariant: ColorVariant | null
+    tagPills: boolean
+    removeTag: (tag?: string) => void
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+}>()
 
 const modelValue = defineModel<Exclude<BFormTagsProps['modelValue'], undefined>>({
   default: () => [],
@@ -218,11 +196,11 @@ const modelValue = defineModel<Exclude<BFormTagsProps['modelValue'], undefined>>
 
 const computedId = useId()
 
-const limitNumber = useToNumber(() => props.limit ?? Number.NaN)
+const limitNumber = useToNumber(() => props.limit ?? NaN)
 
 const stateClass = useStateClass(() => props.state)
 
-const input = useTemplateRef('_input')
+const input = useTemplateRef<HTMLInputElement>('_input')
 
 const {focused} = useFocus(input, {
   initialValue: props.autofocus,
@@ -259,6 +237,51 @@ const isInvalid = computed(() =>
 )
 const isLimitReached = computed(() => tags.value.length === limitNumber.value)
 const disableAddButton = computed(() => !isInvalid.value && !isDuplicate.value)
+
+const slotAttrs = computed(() => ({
+  addButtonText: props.addButtonText,
+  addButtonVariant: props.addButtonVariant,
+  addTag,
+  disableAddButton: disableAddButton.value,
+  disabled: props.disabled,
+  duplicateTagText: props.duplicateTagText,
+  duplicateTags: duplicateTags.value,
+  form: props.form,
+  inputAttrs: {
+    ...props.inputAttrs,
+    disabled: props.disabled,
+    form: props.form,
+    id: _inputId.value,
+    value: inputValue.value,
+  },
+  inputClass: props.inputClass,
+  inputHandlers: {
+    input: onInput,
+    keydown: onKeydown,
+    change: onChange,
+  },
+  inputId: _inputId.value,
+  inputType: props.inputType,
+  invalidTagText: props.invalidTagText,
+  invalidTags: invalidTags.value,
+  isDuplicate: isDuplicate.value,
+  isInvalid: isInvalid.value,
+  isLimitReached: isLimitReached.value,
+  limitTagsText: props.limitTagsText,
+  limit: limitNumber.value,
+  noTagRemove: props.noTagRemove,
+  placeholder: props.placeholder,
+  removeTag,
+  required: props.required,
+  separator: props.separator,
+  size: props.size,
+  state: props.state,
+  tagClass: props.tagClass,
+  tagPills: props.tagPills,
+  tagRemoveLabel: props.tagRemoveLabel,
+  tagVariant: props.tagVariant,
+  tags: tags.value,
+}))
 
 const onFocusin = (e: Readonly<FocusEvent>): void => {
   if (props.disabled) {
@@ -321,7 +344,7 @@ const onChange = (e: Readonly<Event>): void => {
 }
 
 const onKeydown = (e: Readonly<KeyboardEvent>): void => {
-  if ((e.key === 'Enter' || e.code === 'NumpadEnter') && !props.noAddOnEnter) {
+  if (e.key === 'Enter' && !props.noAddOnEnter) {
     addTag(inputValue.value)
     return
   }

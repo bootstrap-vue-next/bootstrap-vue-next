@@ -1,43 +1,46 @@
-import type {BSpinnerProps, BSpinnerSlots} from 'bootstrap-vue-next'
-import {type ComponentReference, type PropRecord, type SlotRecord, StyleKind} from '../../types'
-import {pick} from '../../utils/objectUtils'
-import {buildCommonProps} from '../../utils/commonProps'
+import type {BvnComponentProps} from 'bootstrap-vue-next'
+import {type ComponentReference, type PropertyReference, StyleKind} from '../../types'
+import {buildCommonProps, pick} from '../../utils'
 
 export default {
-  load: (): ComponentReference => ({
-    BSpinner: {
+  load: (): ComponentReference[] => [
+    {
+      component: 'BSpinner',
       styleSpec: {kind: StyleKind.OverrideClass, value: '.spinner-*'},
+      sourcePath: '/BSpinner/BSpinner.vue',
       props: {
-        ...pick(
-          buildCommonProps({
-            tag: {
-              default: 'span',
-            },
-          }),
-          ['role', 'tag', 'variant']
-        ),
-        label: {
-          type: 'string',
-          default: undefined,
-          description: 'Text content for the visually-hidden label.',
+        '': {
+          label: {
+            type: 'string',
+            default: undefined,
+            description: 'Text content to place in the visually-hidden label',
+          },
+          small: {
+            type: 'boolean',
+            default: false,
+            description: 'When set, rendered a smaller spinner suitable for placing in buttons',
+          },
+          type: {
+            type: 'SpinnerType',
+            default: 'border',
+            description: "Type of spinner to show. Current supported types are 'border' and 'grow'",
+          },
+          ...pick(
+            buildCommonProps({
+              tag: {
+                default: 'span',
+              },
+            }),
+            ['role', 'tag', 'variant']
+          ),
+        } satisfies Record<keyof BvnComponentProps['BSpinner'], PropertyReference>,
+      },
+      slots: [
+        {
+          name: 'label',
+          description: 'Content to place in the visually-hidden label',
         },
-        small: {
-          type: 'boolean',
-          default: false, // TODO item not in string format
-          description: 'Renders a smaller spinner suitable for placement in buttons.',
-        },
-        type: {
-          type: 'SpinnerType',
-          default: 'border',
-          description: "Sets the spinner type. Supported types are 'border' and 'grow'.",
-        },
-      } satisfies PropRecord<keyof BSpinnerProps>,
-      emits: {},
-      slots: {
-        label: {
-          description: 'Content for the visually hidden label.',
-        },
-      } satisfies SlotRecord<keyof BSpinnerSlots>,
+      ],
     },
-  }),
+  ],
 }

@@ -1,33 +1,18 @@
 <template>
-  <BNavItem :href="buildLink(item)" link-class="otp-link" :active="item.id === activeId">
-    <template #default>{{ props.item.text }}</template>
+  <BNavItem :href="item.link" link-class="otp-link">
+    <template #default>{{ item.title }}</template>
     <template #after>
-      <BNav v-show="isVisible" vertical small class="otp-nav">
-        <PageContentsItem
-          v-for="child in item.children"
-          :key="child.id!"
-          :item="child"
-          :active-id="activeId"
-        />
+      <BNav v-if="item.children?.length > 0" vertical small class="otp-nav">
+        <PageContentsItem v-for="child in item.children" :key="child.slug" :item="child" />
       </BNav>
     </template>
   </BNavItem>
 </template>
 
 <script setup lang="ts">
-import type {ContentsItem} from 'src/types'
-import {computed} from 'vue'
+import {type Header} from 'vitepress'
 
-const props = defineProps<{
-  item: ContentsItem
-  activeId: string | null
+defineProps<{
+  item: Header
 }>()
-
-const buildLink = (item: ContentsItem): string => `#${item.id}`
-
-const childrenVisible = (item: ContentsItem): boolean =>
-  !!item.children?.length &&
-  item.children.some((child) => child.id === props.activeId || childrenVisible(child))
-
-const isVisible = computed(() => props.item.id === props.activeId || childrenVisible(props.item))
 </script>

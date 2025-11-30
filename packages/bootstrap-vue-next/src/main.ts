@@ -1,9 +1,10 @@
-import 'bootstrap/dist/css/bootstrap.min.css'
 import {createApp, h} from 'vue'
-import {createRouter, createWebHistory, useRoute} from 'vue-router'
 import App from './App.vue'
-import {BApp, Directives} from './index'
-import './styles/styles.scss'
+import {createBootstrap} from './plugins/createBootstrap'
+import {Directives} from './index'
+
+import {createRouter, createWebHistory, useRoute} from 'vue-router'
+
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -43,14 +44,11 @@ const router = createRouter({
   ],
 })
 
-const Wrapper = {
-  name: 'AppWrapper',
-  render() {
-    return h(BApp, null, {default: () => h(App)})
-  },
-}
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './styles/styles.scss'
 
-const app = createApp(Wrapper)
+const app = createApp(App)
+app.use(createBootstrap())
 app.use(router)
 for (const name in Directives) {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment

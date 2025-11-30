@@ -26,9 +26,13 @@ import type {BLinkProps} from '../../types/ComponentProps'
 import {collapseInjectionKey, navbarInjectionKey} from '../../utils/keys'
 import {computed, inject, useAttrs} from 'vue'
 import {useBLinkTagResolver} from '../../composables/useBLinkHelper'
-import type {BLinkEmits, BLinkSlots} from '../../types'
 
 const defaultActiveClass = 'active'
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 
 const _props = withDefaults(defineProps<BLinkProps>(), {
   active: undefined,
@@ -59,18 +63,22 @@ const _props = withDefaults(defineProps<BLinkProps>(), {
   variant: null,
 })
 const props = useDefaults(_props, 'BLink')
-const emit = defineEmits<BLinkEmits>()
-defineSlots<BLinkSlots>()
-const attrs = useAttrs()
 
+const emit = defineEmits<{
+  click: [value: MouseEvent]
+}>()
+
+const attrs = useAttrs()
 const {computedHref, tag, link, isNuxtLink, isRouterLink, linkProps, isNonStandardTag} =
-  useBLinkTagResolver({
-    routerComponentName: () => props.routerComponentName,
-    disabled: () => props.disabled,
-    to: () => props.to,
-    replace: () => props.replace,
-    href: () => props.href,
-  })
+  useBLinkTagResolver(
+    computed(() => ({
+      routerComponentName: props.routerComponentName,
+      disabled: props.disabled,
+      to: props.to,
+      replace: props.replace,
+      href: props.href,
+    }))
+  )
 
 const collapseData = inject(collapseInjectionKey, null)
 const navbarData = inject(navbarInjectionKey, null)
@@ -104,7 +112,7 @@ const clicked = (e: Readonly<MouseEvent>): void => {
 
   if (
     (collapseData?.isNav?.value === true && navbarData === null) ||
-    (navbarData !== null && navbarData.noAutoClose?.value !== true)
+    (navbarData !== null && navbarData.autoClose?.value === true)
   ) {
     collapseData?.hide?.()
   }

@@ -1,11 +1,14 @@
----
-description: >
-  The icon components from BootstrapVue are deprecated. While migrating to BootstrapVueNext the icon components will not be supported as there are better, more modern solutions to incorporating icon packages into your application. Continue reading BootstrapVueNext's suggestion on how to incorporate Bootstrap-icons into your application!
----
+# Icons
+
+<BAlert variant="danger" :model-value="true" class="my-5">
+
+The icon components from BootstrapVue are deprecated. While migrating to BootstrapVueNext the icon components will not be supported as there are better, more modern solutions to incorporating icon packages into your application. Continue reading BootstrapVueNext's suggestion on how to incorporate Bootstrap-icons into your application! This documentation only serves as a reference, BootstrapVueNext has no part in the mentioned libraries and some content may be out of date.
+
+</BAlert>
 
 ## [Unplugin Icons](https://github.com/antfu/unplugin-icons)
 
-In this section you will learn how to incorporate [unplugin-icons](https://github.com/antfu/unplugin-icons) into your app. unplugin-icons allows you to use icons from multiple icon sets, such as [Bootstrap Icons](https://icon-sets.iconify.design/bi/), [Material Design Icons](https://icon-sets.iconify.design/mdi/), [Font Awesome 4](https://icon-sets.iconify.design/fa/) and many more all with automatic tree-shaking!.
+> In this section you will learn how to incorporate [unplugin-icons](https://github.com/antfu/unplugin-icons) into your app. unplugin-icons allows you to use icons from multiple icon sets, such as [Bootstrap Icons](https://icon-sets.iconify.design/bi/), [Material Design Icons](https://icon-sets.iconify.design/mdi/), [Font Awesome 4](https://icon-sets.iconify.design/fa/) and many more all with automatic tree-shaking!.
 
 ### Installation
 
@@ -17,25 +20,54 @@ The preferred installation makes use of [unplugin-vue-components](https://github
 
 To start, install the necessary packages:
 
-::: code-group
+<ClientOnly>
+<BTabs v-model="codePreference" class="mb-3">
+  <BTab title="PNPM">
 
-```bash [PNPM]
+  <BCard class="bg-body-tertiary">
+
+```bash
 pnpm add unplugin-icons unplugin-vue-components @vue/compiler-sfc -D
 ```
 
-```bash [BUN]
+  </BCard>
+
+  </BTab>
+  <BTab title="BUN">
+
+  <BCard class="bg-body-tertiary">
+
+```bash
 bun add unplugin-icons unplugin-vue-components @vue/compiler-sfc -D
 ```
 
-```bash [YARN]
+  </BCard>
+
+  </BTab>
+  <BTab title="YARN">
+
+  <BCard class="bg-body-tertiary">
+
+```bash
 yarn add unplugin-icons unplugin-vue-components @vue/compiler-sfc -D
 ```
 
-```bash [NPM]
+  </BCard>
+
+  </BTab>
+  <BTab title="NPM">
+
+  <BCard class="bg-body-tertiary">
+
+```bash
 npm i unplugin-icons unplugin-vue-components @vue/compiler-sfc -D
 ```
 
-:::
+  </BCard>
+
+  </BTab>
+</BTabs>
+</ClientOnly>
 
 <BCard class="bg-body-tertiary">
 
@@ -104,25 +136,54 @@ View the [unplugin-vue-components](https://github.com/antfu/unplugin-vue-compone
 
 Of course, there is always the ability to slim down. To slim down the installation, you can manually import only the bootstrap-icons icon set, disable auto importing, and not use unplugin-vue-components read below. Note, the preferred installation automatically treeshakes all components, both installation methods should have the same final dist size.
 
-::: code-group
+<ClientOnly>
+<BTabs v-model="codePreference" class="mb-3">
+  <BTab title="PNPM">
 
-```bash [PNPM]
+  <BCard class="bg-body-tertiary">
+
+```bash
 pnpm add unplugin-icons @vue/compiler-sfc @iconify-json/bi -D
 ```
 
-```bash [BUN]
+  </BCard>
+
+  </BTab>
+  <BTab title="BUN">
+
+  <BCard class="bg-body-tertiary">
+
+```bash
 bun add unplugin-icons @vue/compiler-sfc @iconify-json/bi -D
 ```
 
-```bash [YARN]
+  </BCard>
+
+  </BTab>
+  <BTab title="YARN">
+
+  <BCard class="bg-body-tertiary">
+
+```bash
 yarn add unplugin-icons @vue/compiler-sfc @iconify-json/bi -D
 ```
 
-```bash [NPM]
+  </BCard>
+
+  </BTab>
+  <BTab title="NPM">
+
+  <BCard class="bg-body-tertiary">
+
+```bash
 npm i unplugin-icons @vue/compiler-sfc @iconify-json/bi -D
 ```
 
-:::
+  </BCard>
+
+  </BTab>
+</BTabs>
+</ClientOnly>
 
 <BCard class="bg-body-tertiary">
 
@@ -168,3 +229,10 @@ import IBiActivity from '~icons/bi/activity'
 ```
 
 </BCard>
+
+<script setup lang="ts">
+import {BCard, BCardBody, BTab, BTabs, BAlert} from 'bootstrap-vue-next'
+import {useLocalStorage} from '@vueuse/core'
+
+const codePreference = useLocalStorage('code-group-preference', 0)
+</script>

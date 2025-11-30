@@ -21,7 +21,7 @@
         :aria-current="i === modelValue ? true : undefined"
         :aria-label="`${props.indicatorsButtonLabel} ${i}`"
         :aria-controls="buttonOwnership"
-        :aria-describedby="slideValues?.[i]?._id"
+        :aria-describedby="slideValues?.[i]._id"
         @click="goToValue(i)"
       />
     </div>
@@ -75,7 +75,6 @@ import {useDefaults} from '../../composables/useDefaults'
 import type {Numberish} from '../../types/CommonTypes'
 import {getSlotElements} from '../../utils/getSlotElements'
 import {carouselInjectionKey} from '../../utils/keys'
-import type {BCarouselEmits, BCarouselSlots} from '../../types'
 
 const _props = withDefaults(defineProps<Omit<BCarouselProps, 'modelValue'>>(), {
   background: undefined,
@@ -100,8 +99,18 @@ const _props = withDefaults(defineProps<Omit<BCarouselProps, 'modelValue'>>(), {
   touchThreshold: 50,
 })
 const props = useDefaults(_props, 'BCarousel')
-const emit = defineEmits<BCarouselEmits>()
-const slots = defineSlots<BCarouselSlots>()
+
+const emit = defineEmits<{
+  'slide': [value: BvCarouselEvent]
+  'slid': [value: BvCarouselEvent]
+  'click:prev': [value: MouseEvent]
+  'click:next': [value: MouseEvent]
+}>()
+
+const slots = defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 
 const computedId = useId(() => props.id, 'carousel')
 const buttonOwnership = useId(undefined, 'carousel-button-ownership')
@@ -121,8 +130,8 @@ const intervalNumber = useToNumber(() => slideInterval.value ?? props.interval)
 const isTransitioning = ref(false)
 const rideStarted = ref(false)
 const direction = ref(true)
-const relatedTarget = useTemplateRef('_relatedTarget')
-const element = useTemplateRef('_element')
+const relatedTarget = useTemplateRef<HTMLElement>('_relatedTarget')
+const element = useTemplateRef<HTMLElement>('_element')
 const previousModelValue = ref(modelValue.value)
 
 const isHovering = useElementHover(element)
@@ -291,12 +300,12 @@ watch(isHovering, (newValue) => {
 })
 
 const onClickPrev = (event: MouseEvent) => {
-  emit('prev-click', event)
+  emit('click:prev', event)
   if (event.defaultPrevented) return
   prev()
 }
 const onClickNext = (event: MouseEvent) => {
-  emit('next-click', event)
+  emit('click:next', event)
   if (event.defaultPrevented) return
   next()
 }

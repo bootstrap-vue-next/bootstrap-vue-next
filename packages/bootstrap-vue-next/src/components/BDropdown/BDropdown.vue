@@ -16,7 +16,6 @@
       :aria-expanded="props.split ? undefined : showRef"
       :aria-haspopup="props.split ? undefined : 'menu'"
       :href="props.split ? props.splitHref : undefined"
-      :icon="props.icon"
       :to="props.split && props.splitTo ? props.splitTo : undefined"
       @click="onSplitClick"
     >
@@ -54,23 +53,14 @@
           v-show="showRef"
           :id="computedId + '-menu'"
           ref="_floating"
-          :style="[floatingStyles, sizeStyles, {display: showRef ? 'block' : 'none'}]"
+          :style="[floatingStyles, sizeStyles]"
           class="dropdown-menu overflow-auto"
           :class="[props.menuClass, computedMenuClasses]"
           :aria-labelledby="computedId"
           :role="props.role"
           @click="onClickInside"
         >
-          <slot
-            v-if="contentShowing"
-            :id="computedId"
-            :hide="hide"
-            :show="show"
-            :visible="showRef"
-            :click="onClickInside"
-            :toggle="onButtonClick"
-            :active="showRef"
-          />
+          <slot v-if="contentShowing" :hide="hide" :show="show" :visible="showRef" />
         </ul>
       </Transition>
     </ConditionalTeleport>
@@ -84,7 +74,6 @@ import {
   flip,
   type Middleware,
   offset as offsetMiddleware,
-  type ReferenceElement,
   type RootBoundary,
   shift,
   size as sizeMiddleware,
@@ -106,15 +95,13 @@ import {
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import type {BDropdownProps} from '../../types/ComponentProps'
-import type {BDropdownEmits} from '../../types/ComponentEmits'
 import BButton from '../BButton/BButton.vue'
 import ConditionalWrapper from '../ConditionalWrapper.vue'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
-import {isBoundary, isRootBoundary, resolveBootstrapCaret} from '../../utils/floatingUi'
+import {isBoundary, isRootBoundary} from '../../utils/floatingUi'
 import {getElement} from '../../utils/getElement'
 import {buttonGroupKey, dropdownInjectionKey, inputGroupKey} from '../../utils/keys'
-import {useShowHide} from '../../composables/useShowHide'
-import type {BDropdownSlots} from '../../types'
+import {type showHideEmits, useShowHide} from '../../composables/useShowHide'
 
 const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   ariaLabel: undefined,
@@ -125,7 +112,6 @@ const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   teleportDisabled: false,
   disabled: false,
   floatingMiddleware: undefined,
-  icon: false,
   id: undefined,
   initialAnimation: false,
   isNav: false,
@@ -160,8 +146,21 @@ const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   wrapperClass: undefined,
 })
 const props = useDefaults(_props, 'BDropdown')
-const emit = defineEmits<BDropdownEmits>()
-defineSlots<BDropdownSlots>()
+
+const emit = defineEmits<
+  {
+    click: [event: MouseEvent]
+  } & showHideEmits
+>()
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'button-content'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'default'?: (props: {hide: () => void; show: () => void; visible: boolean}) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'toggle-text'?: (props: Record<string, never>) => any
+}>()
 
 const computedId = useId(() => props.id, 'dropdown')
 
@@ -171,13 +170,13 @@ const inInputGroup = inject(inputGroupKey, false)
 const inButtonGroup = inject(buttonGroupKey, false)
 
 const computedOffset = computed(() =>
-  typeof props.offset === 'string' || typeof props.offset === 'number' ? props.offset : Number.NaN
+  typeof props.offset === 'string' || typeof props.offset === 'number' ? props.offset : NaN
 )
 const offsetToNumber = useToNumber(computedOffset)
 
-const floatingElement = useTemplateRef<HTMLUListElement | null>('_floating')
-const button = useTemplateRef<HTMLElement | null>('_button')
-const splitButton = useTemplateRef<HTMLElement | null>('_splitButton')
+const floating = useTemplateRef<HTMLElement>('_floating')
+const button = useTemplateRef<HTMLElement>('_button')
+const splitButton = useTemplateRef<HTMLElement>('_splitButton')
 
 const boundary = computed<Boundary | undefined>(() =>
   isBoundary(props.boundary) ? props.boundary : undefined
@@ -186,8 +185,7 @@ const rootBoundary = computed<RootBoundary | undefined>(() =>
   isRootBoundary(props.boundary) ? props.boundary : undefined
 )
 
-const referenceElement = computed(() => (!props.split ? splitButton.value : button.value))
-let cleanup: ReturnType<typeof autoUpdate> | undefined
+const referencePlacement = computed(() => (!props.split ? splitButton.value : button.value))
 
 const {
   showRef,
@@ -199,27 +197,7 @@ const {
   transitionProps,
   contentShowing,
   isVisible,
-} = useShowHide(modelValue, props, emit as EmitFn, referenceElement, computedId, {
-  showFn: () => {
-    update()
-    nextTick(() => {
-      cleanup = autoUpdate(
-        referenceElement.value as ReferenceElement,
-        floatingElement.value as HTMLElement,
-        update,
-        {
-          animationFrame: false,
-        }
-      )
-    })
-  },
-  hideFn: () => {
-    if (cleanup) {
-      cleanup()
-      cleanup = undefined
-    }
-  },
-})
+} = useShowHide(modelValue, props, emit as EmitFn, referencePlacement, computedId)
 
 const computedMenuClasses = computed(() => [
   {
@@ -232,21 +210,21 @@ onKeyStroke(
   'Escape',
   () => {
     hide()
-    getElement(referenceElement.value)?.focus()
+    getElement(referencePlacement.value)?.focus()
   },
-  {target: referenceElement}
+  {target: referencePlacement}
 )
 onKeyStroke(
   'Escape',
   () => {
     hide()
-    getElement(referenceElement.value)?.focus()
+    getElement(referencePlacement.value)?.focus()
   },
-  {target: floatingElement}
+  {target: floating}
 )
 
 const keynav = (e: Readonly<Event>, v: number) => {
-  if (floatingElement.value?.contains((e.target as HTMLElement)?.closest('form'))) return
+  if (floating.value?.contains((e.target as HTMLElement)?.closest('form'))) return
   if (/input|select|option|textarea|form/i.test((e.target as HTMLElement)?.tagName)) return
   e.preventDefault()
   if (!showRef.value) {
@@ -259,12 +237,10 @@ const keynav = (e: Readonly<Event>, v: number) => {
     }, 16)
     return
   }
-  const list = floatingElement.value?.querySelectorAll(
-    '.dropdown-item:not(.disabled):not(:disabled)'
-  )
+  const list = floating.value?.querySelectorAll('.dropdown-item:not(.disabled):not(:disabled)')
   if (!list) return
-  if (floatingElement.value?.contains(document.activeElement)) {
-    const active = floatingElement.value.querySelector('.dropdown-item:focus')
+  if (floating.value?.contains(document.activeElement)) {
+    const active = floating.value.querySelector('.dropdown-item:focus')
     const index = Array.prototype.indexOf.call(list, active) + v
     if (index >= 0 && index < list?.length) (list[index] as HTMLElement)?.focus()
   } else {
@@ -272,10 +248,10 @@ const keynav = (e: Readonly<Event>, v: number) => {
   }
 }
 
-onKeyStroke('ArrowUp', (e) => keynav(e, -1), {target: referenceElement})
-onKeyStroke('ArrowDown', (e) => keynav(e, 1), {target: referenceElement})
-onKeyStroke('ArrowUp', (e) => keynav(e, -1), {target: floatingElement})
-onKeyStroke('ArrowDown', (e) => keynav(e, 1), {target: floatingElement})
+onKeyStroke('ArrowUp', (e) => keynav(e, -1), {target: referencePlacement})
+onKeyStroke('ArrowDown', (e) => keynav(e, 1), {target: referencePlacement})
+onKeyStroke('ArrowUp', (e) => keynav(e, -1), {target: floating})
+onKeyStroke('ArrowDown', (e) => keynav(e, 1), {target: floating})
 
 const sizeStyles = ref<CSSProperties>({})
 const floatingMiddleware = computed<Middleware[]>(() => {
@@ -314,13 +290,13 @@ const floatingMiddleware = computed<Middleware[]>(() => {
         apply({availableWidth, availableHeight}) {
           sizeStyles.value = {
             maxHeight:
-              availableHeight >= (floatingElement.value?.scrollHeight ?? 0)
+              availableHeight >= (floating.value?.scrollHeight ?? 0)
                 ? undefined
                 : availableHeight
                   ? `${Math.max(0, availableHeight)}px`
                   : undefined,
             maxWidth:
-              availableWidth >= (floatingElement.value?.scrollWidth ?? 0)
+              availableWidth >= (floating.value?.scrollWidth ?? 0)
                 ? undefined
                 : availableWidth
                   ? `${Math.max(0, availableWidth)}px`
@@ -332,10 +308,11 @@ const floatingMiddleware = computed<Middleware[]>(() => {
   }
   return arr
 })
-const {update, floatingStyles} = useFloating(referenceElement, floatingElement, {
+const {update, floatingStyles} = useFloating(referencePlacement, floating, {
   placement: () => props.placement,
   middleware: floatingMiddleware,
   strategy: toRef(() => props.strategy),
+  whileElementsMounted: autoUpdate,
 })
 
 const inButtonGroupAttributes = inButtonGroup
@@ -350,7 +327,7 @@ const computedClasses = computed(() => [
   props.wrapperClass,
   {
     'btn-group': !props.wrapperClass && props.split,
-    [`drop${resolveBootstrapCaret(props.placement)}`]: !props.wrapperClass,
+    'dropdown': !props.wrapperClass && !props.split,
     'position-static': props.boundary !== 'clippingAncestors' && !props.isNav,
   },
 ])
@@ -371,14 +348,14 @@ const onButtonClick = () => {
 
 const onSplitClick = (event: Readonly<MouseEvent>) => {
   if (props.split) {
-    emit('split-click', event)
+    emit('click', event)
     return
   }
   onButtonClick()
 }
 
 onClickOutside(
-  floatingElement,
+  floating,
   () => {
     if (showRef.value && (props.autoClose === true || props.autoClose === 'outside')) {
       hide()
@@ -411,3 +388,10 @@ provide(dropdownInjectionKey, {
   isNav: toRef(() => props.isNav),
 })
 </script>
+<style lang="scss" scoped>
+.dropdown-menu {
+  &.fade {
+    display: block;
+  }
+}
+</style>

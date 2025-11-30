@@ -55,22 +55,3 @@ export const getTransitionDelay = (element: Readonly<HTMLElement>) => {
   const transitionDurationMs = Number(transitionDuration.slice(0, -1)) * 1000
   return transitionDelayMs + transitionDurationMs
 }
-
-export const sortSlotElementsByPosition = (
-  a: Readonly<HTMLElement> | null,
-  b: Readonly<HTMLElement> | null
-): number => {
-  if (typeof Node === 'undefined' || !Node || !a || !b) return 0
-  const position = a.compareDocumentPosition(b)
-  if (position & Node.DOCUMENT_POSITION_FOLLOWING) return -1
-  if (position & Node.DOCUMENT_POSITION_PRECEDING) return 1
-  return 0
-}
-
-export const getModalZIndex = (element?: Readonly<HTMLElement | null>): number => {
-  if (typeof window === 'undefined') return 1055
-  const target = element ?? document.body
-  const raw = window.getComputedStyle(target).getPropertyValue('--bs-modal-zindex').trim()
-  const parsed = Number.parseInt(raw, 10)
-  return Number.isFinite(parsed) ? parsed : 1055
-}

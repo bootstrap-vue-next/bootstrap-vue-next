@@ -1,6 +1,10 @@
----
-description: 'Create multi-line text inputs with support for auto height sizing, minimum and maximum number of rows, and contextual states.'
----
+# Form Textarea
+
+<PageHeader>
+
+Create multi-line text inputs with support for auto height sizing, minimum and maximum number of rows, and contextual states.
+
+</PageHeader>
 
 <<< DEMO ./demo/TextareaOverview.vue
 
@@ -192,3 +196,15 @@ e.g. `<BFormInput ref="foo" ... />`, `const foo = ref<InstanceType<typeof BFormI
 
 Refer to [https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement] for more information on
 these methods and properties. Support will vary based on input type.
+
+<ComponentReference :data="data" />
+
+<script lang="ts">
+import {data} from '../../data/components/formTextarea.data'
+
+export default {
+  setup() {
+    return {data}
+  }
+}
+</script>

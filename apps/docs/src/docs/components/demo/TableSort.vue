@@ -1,13 +1,9 @@
 <template>
-  <BTable
-    :sort-by="[{key: 'first_name', order: 'desc'}]"
-    :items="items"
-    :fields="fields"
-  />
+  <BTable :sort-by="[{key: 'first_name', order: 'desc'}]" :items="items" :fields="fields" />
 </template>
 
 <script setup lang="ts">
-import type {TableFieldRaw, TableItem} from 'bootstrap-vue-next'
+import {type TableFieldRaw, type TableItem} from 'bootstrap-vue-next'
 
 interface SortPerson {
   first_name: string

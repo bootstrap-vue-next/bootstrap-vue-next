@@ -10,11 +10,8 @@
 </template>
 
 <script setup lang="ts">
-import {buildCommonProps} from '../utils/commonProps'
-import {dropdownProps} from '../utils/dropdownCommon'
-import {kebabCase, pick} from '../utils/objectUtils'
-import {showHideProps} from '../utils/showHideData'
 import {computed} from 'vue'
+import {buildCommonProps, dropdownProps, kebabCase, pick, showHideProps} from '../utils'
 
 interface MigrationMap {
   [key: string]: {oldProp: string; components: string[]}
@@ -41,9 +38,9 @@ const mappedComponents: ComponentMap = {
 const migrationMap: MigrationMap = {
   initialAnimation: {
     oldProp: 'appear',
-    components: ['BAccordion', 'BAccordionItem', 'showHideProps'],
+    components: ['BAccordian', 'BAccordianItem', 'showHideProps'],
   },
-  lazy: {oldProp: 'lazy', components: ['BAccordion', 'BAccordionItem', 'showHideProps']},
+  lazy: {oldProp: 'lazy', components: ['BAccordian', 'BAccordianItem', 'showHideProps']},
   modelValue: {oldProp: 'visible', components: ['showHideProps']},
   noAnimation: {oldProp: 'skip-animation', components: ['showHideProps']},
   noFade: {oldProp: 'skip-animation', components: ['showHideProps']},
@@ -61,7 +58,7 @@ const migrationMap: MigrationMap = {
   transProps: {oldProp: '', components: ['showHideProps']},
   unmountLazy: {
     oldProp: 'lazy',
-    components: ['BAccordion', 'BAccordionItem', 'showHideProps'],
+    components: ['BAccordian', 'BAccordianItem', 'showHideProps'],
   },
   visible: {oldProp: 'visible', components: ['showHideProps']},
 }

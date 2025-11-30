@@ -6,10 +6,7 @@
     </template>
     <BFormInput />
     <template #append>
-      <BDropdown
-        text="Dropdown"
-        variant="success"
-      >
+      <BDropdown text="Dropdown" variant="success">
         <BDropdownItem>Action A</BDropdownItem>
         <BDropdownItem>Action B</BDropdownItem>
       </BDropdown>

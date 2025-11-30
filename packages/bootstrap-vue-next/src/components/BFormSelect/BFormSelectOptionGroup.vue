@@ -2,7 +2,7 @@
   <optgroup :label="props.label">
     <slot name="first" />
     <BFormSelectOption
-      v-for="(option, index) in normalizedOptions"
+      v-for="(option, index) in normalizedOptsWrapper"
       :key="index"
       :disabled="option.disabled"
       :value="option.value"
@@ -20,10 +20,9 @@
 import BFormSelectOption from './BFormSelectOption.vue'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BFormSelectOptionGroupProps} from '../../types/ComponentProps'
-import type {ComputedRef} from 'vue'
+import {computed} from 'vue'
 import {useFormSelect} from '../../composables/useFormSelect'
 import type {SelectOption} from '../../types/SelectTypes'
-import type {BFormSelectOptionGroupSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BFormSelectOptionGroupProps>(), {
   disabledField: 'disabled',
@@ -33,13 +32,17 @@ const _props = withDefaults(defineProps<BFormSelectOptionGroupProps>(), {
   valueField: 'value',
 })
 const props = useDefaults(_props, 'BFormSelectOptionGroup')
-defineSlots<BFormSelectOptionGroupSlots<T>>()
 
-// The form select context is injected by BFormSelectOption components automatically
-// We don't need to handle the selected value here since each BFormSelectOption
-// will inject the context directly
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  first?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  option: (props: SelectOption<T>) => any
+}>()
 
-const {normalizedOptions} = useFormSelect(() => props.options, props) as {
-  normalizedOptions: ComputedRef<SelectOption<T>[]>
-}
+const {normalizedOptions} = useFormSelect(() => props.options, props)
+
+const normalizedOptsWrapper = computed(() => normalizedOptions.value as SelectOption<T>[])
 </script>

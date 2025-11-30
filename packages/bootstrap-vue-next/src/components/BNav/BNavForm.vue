@@ -21,7 +21,6 @@ import {computed, useAttrs} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BNavFormProps} from '../../types/ComponentProps'
 import BForm from '../BForm/BForm.vue'
-import type {BNavFormEmits, BNavFormSlots} from '../../types'
 
 defineOptions({
   inheritAttrs: false,
@@ -39,14 +38,21 @@ const _props = withDefaults(defineProps<BNavFormProps>(), {
   // End BForm props
 })
 const props = useDefaults(_props, 'BNavForm')
-const emit = defineEmits<BNavFormEmits>()
-defineSlots<BNavFormSlots>()
-const attrs = useAttrs()
 
+const emit = defineEmits<{
+  submit: [value: Event]
+}>()
+
+const attrs = useAttrs()
 const processedAttrs = computed(() => {
   const {class: wrapperClass, ...formAttrs} = attrs
   return {wrapperClass, formAttrs}
 })
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 
 const submitted = (e: Readonly<Event>) => {
   emit('submit', e)

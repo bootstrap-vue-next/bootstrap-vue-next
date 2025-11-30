@@ -17,7 +17,6 @@ import {useDefaults} from '../../composables/useDefaults'
 import {useNumberishToStyle} from '../../composables/useNumberishToStyle'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useId} from '../../composables/useId'
-import type {BTableSimpleSlots} from '../../types'
 
 const defaultStickyHeaderHeight = '300px'
 
@@ -43,7 +42,11 @@ const _props = withDefaults(defineProps<BTableSimpleProps>(), {
   tableAttrs: undefined,
 })
 const props = useDefaults(_props, 'BTableSimple')
-defineSlots<BTableSimpleSlots>()
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 
 const computedId = useId(() => props.id)
 
@@ -70,8 +73,6 @@ const computedClasses = computed(() => [
     'table-sm': props.small,
     [`table-${props.variant}`]: props.variant !== null,
     'table-striped-columns': props.stripedColumns,
-    'b-table-fixed': props.fixed,
-    'b-table-no-border-collapse': props.noBorderCollapse,
   },
 ])
 const computedTableAttrs = computed(() => ({
@@ -82,8 +83,7 @@ const computedTableAttrs = computed(() => ({
 
 const computedSticky = useNumberishToStyle(
   computed(
-    () =>
-      (props.stickyHeader === true ? defaultStickyHeaderHeight : props.stickyHeader) || Number.NaN
+    () => (props.stickyHeader === true ? defaultStickyHeaderHeight : props.stickyHeader) || NaN
   )
 )
 const stickyIsValid = computed(() => props.stickyHeader !== false)

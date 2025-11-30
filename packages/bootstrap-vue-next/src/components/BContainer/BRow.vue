@@ -10,7 +10,11 @@ import {getClasses} from '../../utils/getClasses'
 import {useAlignment} from '../../composables/useAlignment'
 import type {BRowProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BRowSlots} from '../../types'
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 
 const _props = withDefaults(defineProps<BRowProps>(), {
   tag: 'div',
@@ -27,8 +31,8 @@ const _props = withDefaults(defineProps<BRowProps>(), {
   colsXl: undefined,
   colsXxl: undefined,
 })
+
 const props = useDefaults(_props, 'BRow')
-defineSlots<BRowSlots>()
 
 const alignment = useAlignment(() => props.alignH)
 

@@ -70,7 +70,6 @@ import TFormGroup from '../components/Comps/TFormGroup.vue'
 import TFormInput from '../components/Comps/TFormInput.vue'
 import TFormRadio from '../components/Comps/TFormRadio.vue'
 import TFormRadioGroup from '../components/Comps/TFormRadioGroup.vue'
-import TFormRating from '../components/Comps/TFormRating.vue'
 import TFormSelect from '../components/Comps/TFormSelect.vue'
 import TFormTags from '../components/Comps/TFormTags.vue'
 import TFormTextarea from '../components/Comps/TFormTextarea.vue'
@@ -113,7 +112,6 @@ const comps: {name: string; is: unknown; disabled?: true}[] = [
   {name: 'FormInput', is: TFormInput},
   {name: 'FormRadio', is: TFormRadio},
   {name: 'FormRadioGroup', is: TFormRadioGroup},
-  {name: 'FormRating', is: TFormRating},
   {name: 'FormSelect', is: TFormSelect},
   {name: 'FormTags', is: TFormTags},
   {name: 'FormTextarea', is: TFormTextarea},
@@ -158,7 +156,6 @@ const switchActive = (name: string): void => {
   if (comp === undefined || comp.disabled === true) return
   const value = comp.name
   const index = active.value.findIndex((el) => el === value)
-  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   index !== -1 ? active.value.splice(index, 1) : active.value.push(value)
 }
 

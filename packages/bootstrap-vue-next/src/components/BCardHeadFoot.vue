@@ -9,7 +9,6 @@
 <script setup lang="ts">
 import type {BCardHeadFootProps} from '../types/ComponentProps'
 import {useColorVariantClasses} from '../composables/useColorVariantClasses'
-import type {BCardHeadFootSlots} from '../types'
 
 const props = withDefaults(defineProps<BCardHeadFootProps>(), {
   borderVariant: null,
@@ -21,7 +20,11 @@ const props = withDefaults(defineProps<BCardHeadFootProps>(), {
   variant: null,
   // End ColorExtendables props
 })
-defineSlots<BCardHeadFootSlots>()
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 
 const computedClasses = useColorVariantClasses(props)
 </script>

@@ -8,12 +8,12 @@ import {
   toValue,
   watch,
 } from 'vue'
-import {modalManagerKey} from '../utils/keys'
+import {modalManagerPluginKey} from '../utils/keys'
 
 const modalOpenClassName = 'modal-open'
 
 export const useSharedModalStack = () => {
-  const modalManagerPlugin = inject(modalManagerKey)
+  const modalManagerPlugin = inject(modalManagerPluginKey)
 
   /**
    * Removes an item from both the stack and registry
@@ -38,9 +38,7 @@ export const useSharedModalStack = () => {
   })
 
   tryOnScopeDispose(() => {
-    if (modalManagerPlugin?.countStack.value === 0) {
-      updateHTMLAttrs('body', 'class', '')
-    }
+    updateHTMLAttrs('body', 'class', '')
   })
 
   watch(
@@ -91,10 +89,7 @@ export const useModalManager = (modalOpen: Readonly<Ref<boolean>>, initialValue:
     ),
     activeModalCount: countStack,
     stackWithoutSelf: computed(
-      () =>
-        stack?.value.filter(
-          (el) => toValue(el.exposed?.id) !== toValue(currentModal.exposed?.id)
-        ) ?? []
+      () => stack?.value.filter((el) => toValue(el.exposed?.id) !== toValue(currentModal.exposed?.id)) ?? []
     ),
   }
 }

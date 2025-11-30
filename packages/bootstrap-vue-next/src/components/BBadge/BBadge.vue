@@ -18,7 +18,11 @@ import {computed} from 'vue'
 import type {BBadgeProps} from '../../types/ComponentProps'
 import BLink from '../BLink/BLink.vue'
 import ConditionalWrapper from '../ConditionalWrapper.vue'
-import type {BBadgeSlots} from '../../types'
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 
 const _props = withDefaults(defineProps<BBadgeProps>(), {
   dotIndicator: false,
@@ -55,7 +59,6 @@ const _props = withDefaults(defineProps<BBadgeProps>(), {
   // End ColorExtendables props
 })
 const props = useDefaults(_props, 'BBadge')
-defineSlots<BBadgeSlots>()
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'active',

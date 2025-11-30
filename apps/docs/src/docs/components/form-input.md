@@ -1,6 +1,10 @@
----
-description: 'Create various type inputs such as: `text`, `password`, `number`, `url`, `email`, `search`, `range`, `date` and more.'
----
+# Form Input
+
+<PageHeader>
+
+Create various type inputs such as: `text`, `password`, `number`, `url`, `email`, `search`, `range`, `date` and more.
+
+</PageHeader>
 
 <<< DEMO ./demo/FormInputOverview.vue
 
@@ -27,6 +31,8 @@ If the `type` prop is set to an input type that is not supported (see above), a 
 - For date and time style inputs, where supported, the displayed value in the GUI may be different
   from what is returned by its value (i.e. ordering of year-month-date)
 - Regardless of input type, the value is **always** returned as a string representation
+- `v-model.lazy` is not supported by `BFormInput` (nor any custom Vue component). Use the `lazy`
+  prop instead
 - Older version of Firefox may not support `readonly` for `range` type inputs
 - Input types that do not support `min`, `max` and `step` (i.e. `text`, `password`, `tel`, `email`,
   `url`, etc.) will silently ignore these values (although they will still be rendered on the input
@@ -37,7 +43,7 @@ If the `type` prop is set to an input type that is not supported (see above), a 
 - When using predictive text auto-suggested words, the `v-model` will not update until the
   auto-suggested word is selected (or a space is typed). If an auto suggested word is not selected,
   the v-model will update with the current _displayed text_ of the input when the input is blurred
-- When using IME composition (i.e. Chinese, Japanese, etc.), the `v-model` will not update until the
+- When using IME composition (ie. Chinese, Japanese, etc.), the `v-model` will not update until the
   IME composition is completed
   :::
 
@@ -169,13 +175,7 @@ The `plaintext` option is not supported by input types `color` or `range`.
 
 ## Disabling mousewheel events on numeric-like inputs
 
-By default, when a numeric input has focus, the browser will increment or decrement the input's value when the user scrolls the mousewheel. To disable this behavior, you can use Vue's event modifier `.prevent` on the `wheel` event:
-
-```vue
-<BFormInput type="number" @wheel.prevent />
-```
-
-This approach uses native Vue functionality and doesn't require additional props.
+<NotYetImplemented/>
 
 ## Datalist support
 
@@ -189,7 +189,7 @@ chosen, or new values to be entered.
 <<< DEMO ./demo/FormInputDatalist.vue
 
 The above is a 'native' implementation of `datalist`. BootstrapVueNext provides the form helper component
-[`<BFormDatalist>`](/docs/components/form#datalist-helper) for quickly creating a `<datalist>`
+[`<BFormDatalist>`](/docs/components/form/#datalist-helper) for quickly creating a `<datalist>`
 from an array of options using the same options object as [`<BFormSelect>`](/docs/components/form-select#options-property).
 
 **Notes:**
@@ -278,3 +278,15 @@ these methods and properties. Support will vary based on input type.
 e.g. With the same setup as above, call `foo?.value?.element?.focus` to set the foccus on the input element.
 
 <<< DEMO ./demo/FormInputMethods.vue
+
+<ComponentReference :data="data" />
+
+<script lang="ts">
+import {data} from '../../data/components/formInput.data'
+
+export default {
+  setup() {
+    return {data}
+  }
+}
+</script>

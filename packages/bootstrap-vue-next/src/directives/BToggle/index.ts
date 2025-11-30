@@ -1,11 +1,11 @@
 import {RX_HASH, RX_HASH_ID, RX_SPACE_SPLIT} from '../../utils/constants'
-import {type Directive, type DirectiveBinding, toValue, type VNode} from 'vue'
+import type {Directive, DirectiveBinding, VNode} from 'vue'
 import {findProvides} from '../utils'
-import {type RegisterShowHideValue, showHideRegistryKey} from '../../utils/keys'
+import {globalShowHideStorageInjectionKey, type RegisterShowHideValue} from '../../utils/keys'
 
 const getTargets = (
   binding: DirectiveBinding<string | readonly string[] | undefined>,
-  el: Readonly<Element>
+  el: Readonly<HTMLElement>
 ) => {
   const {modifiers, arg, value} = binding
   // Any modifiers are considered target Ids
@@ -33,104 +33,84 @@ const getTargets = (
   return targets.filter((t, index, arr) => t && arr.indexOf(t) === index)
 }
 
-const handleUpdate = (
-  el: Element,
-  binding: DirectiveBinding<string | readonly string[] | undefined>,
+const toggle = (
+  targetIds: readonly string[],
+  el: Readonly<HTMLElement>,
+  binding: DirectiveBinding,
   vnode: VNode
 ) => {
-  // Determine targets
-  const targets = getTargets(binding, el)
-  if (targets.length === 0) return
-
   const provides = findProvides(binding, vnode)
-  const showHideMap = (provides as Record<symbol, RegisterShowHideValue>)[showHideRegistryKey]
-    ?.values
-  if ((el as HTMLElement).dataset.bvtoggle) {
-    const oldTargets = ((el as HTMLElement).dataset.bvtoggle || '').split(' ')
-    if (oldTargets.length === 0) return
-    for (const targetId of oldTargets) {
-      const showHide = showHideMap?.value.get(targetId)
-      if (!showHide) {
-        continue
-      }
-      if (!targets.includes(targetId)) {
-        toValue(showHide).unregisterTrigger('click', el, false)
-      }
-    }
-  }
-  ;(el as HTMLElement).dataset.bvtoggle = targets.join(' ')
+  const showHide = (provides as Record<symbol, RegisterShowHideValue>)[
+    globalShowHideStorageInjectionKey
+  ]?.map
 
-  targets.forEach(async (targetId) => {
-    let count = 0
-    const maxAttempts = 5
-    const delayMs = 100
-
-    // Keep looking until showHide is found, giving up after 500ms or directive is unmounted
-    while (count < maxAttempts) {
-      // Check if element is still mounted before each iteration
-      if (!(el as HTMLElement).dataset.bvtoggle) {
-        // Element was unmounted, stop trying
-        return
-      }
-
-      const showHide = showHideMap?.value.get(targetId)
-      if (!showHide) {
-        count++
-        if (count < maxAttempts) {
-          await new Promise((resolve) => setTimeout(resolve, delayMs))
-          continue
-        }
-        // Only warn if element is still mounted after all attempts
-        if ((el as HTMLElement).dataset.bvtoggle) {
-          // eslint-disable-next-line no-console
-          console.warn(
-            `[v-b-toggle] Target with ID ${targetId} not found after ${maxAttempts * delayMs}ms`
-          )
-        }
-        break
-      }
-
-      // Final check before registration
-      if (!(el as HTMLElement).dataset.bvtoggle) return
-
-      // Register the trigger element
-      toValue(showHide).unregisterTrigger('click', el, false)
-      toValue(showHide).registerTrigger('click', el)
-      break
-    }
-  })
-
-  el.setAttribute('aria-controls', targets.join(' '))
-}
-const handleUnmount = (
-  el: Element,
-  binding: DirectiveBinding<string | readonly string[] | undefined>,
-  vnode: VNode
-) => {
-  // Determine targets
-  const targets = getTargets(binding, el)
-  if (targets.length === 0) return
-  const provides = findProvides(binding, vnode)
-  const showHideMap = (provides as Record<symbol, RegisterShowHideValue>)[showHideRegistryKey]
-    ?.values
-
-  targets.forEach((targetId) => {
-    const showHide = showHideMap?.value.get(targetId)
-    if (!showHide) {
+  targetIds.forEach((targetId) => {
+    if (showHide?.[targetId]) {
+      showHide[targetId].toggle()
       return
     }
-    toValue(showHide).unregisterTrigger('click', el, false)
-  })
+    const target = document.getElementById(targetId)
 
-  el.removeAttribute('aria-controls')
-  el.removeAttribute('aria-expanded')
-  el.classList.remove('collapsed')
-  el.classList.remove('not-collapsed')
-  delete (el as HTMLElement).dataset.bvtoggle
+    if (target !== null) {
+      target.dispatchEvent(new Event('bv-toggle'))
+    }
+  })
+  setTimeout(() => checkVisibility(targetIds, el), 50)
 }
 
-export const vBToggle: Directive<Element> = {
+const checkVisibility = (targetIds: readonly string[], el: Readonly<HTMLElement>) => {
+  let visible = false
+  targetIds.forEach((targetId) => {
+    const target = document.getElementById(targetId)
+
+    if (target?.classList.contains('show')) {
+      visible = true
+    }
+    if (target?.classList.contains('closing')) {
+      visible = false
+    }
+  })
+  el.setAttribute('aria-expanded', visible ? 'true' : 'false')
+  el.classList.remove(visible ? 'collapsed' : 'not-collapsed')
+  el.classList.add(visible ? 'not-collapsed' : 'collapsed')
+}
+
+const handleUpdate = (
+  el: WithToggle,
+  binding: DirectiveBinding<string | readonly string[] | undefined>,
+  vnode: VNode
+) => {
+  // Determine targets
+  const targets = getTargets(binding, el)
+  if (targets.length === 0) return
+
+  // Set up click handler
+  if (el.__toggle) {
+    setTimeout(() => {
+      el.removeEventListener('click', el.__toggle)
+      el.__toggle = () => toggle(targets, el, binding, vnode)
+      el.addEventListener('click', el.__toggle)
+    }, 0)
+  } else {
+    el.__toggle = () => toggle(targets, el, binding, vnode)
+    el.addEventListener('click', el.__toggle)
+  }
+
+  // Update attributes
+  el.setAttribute('aria-controls', targets.join(' '))
+  checkVisibility(targets, el)
+}
+
+export interface WithToggle extends HTMLElement {
+  __toggle: () => void
+}
+
+export const vBToggle: Directive<WithToggle> = {
   mounted: handleUpdate,
   updated: handleUpdate,
-  unmounted: handleUnmount,
+  unmounted(el: WithToggle): void {
+    el.removeEventListener('click', el.__toggle)
+    el.removeAttribute('aria-controls')
+    el.removeAttribute('aria-expanded')
+  },
 }

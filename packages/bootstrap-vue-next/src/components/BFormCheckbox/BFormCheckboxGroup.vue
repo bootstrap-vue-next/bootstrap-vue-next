@@ -27,7 +27,6 @@ import type {BFormCheckboxGroupProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import {getGroupAttr, getGroupClasses} from '../../composables/useFormCheck'
-import type {BFormCheckboxGroupSlots} from '../../types'
 
 const _props = withDefaults(defineProps<Omit<BFormCheckboxGroupProps, 'modelValue'>>(), {
   ariaInvalid: undefined,
@@ -52,7 +51,15 @@ const _props = withDefaults(defineProps<Omit<BFormCheckboxGroupProps, 'modelValu
   valueField: 'value',
 })
 const props = useDefaults(_props, 'BFormCheckboxGroup')
-defineSlots<BFormCheckboxGroupSlots>()
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  first?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  option: (props: Record<string, unknown>) => any
+}>()
 
 const modelValue = defineModel<Exclude<BFormCheckboxGroupProps['modelValue'], undefined>>({
   default: () => [],
@@ -61,7 +68,7 @@ const modelValue = defineModel<Exclude<BFormCheckboxGroupProps['modelValue'], un
 const computedId = useId(() => props.id, 'checkbox')
 const computedName = useId(() => props.name, 'checkbox')
 
-const element = useTemplateRef('_element')
+const element = useTemplateRef<HTMLElement>('_element')
 
 const {focused} = useFocus(element, {
   initialValue: props.autofocus,
@@ -83,15 +90,7 @@ provide(checkboxGroupKey, {
   disabled: toRef(() => props.disabled),
 })
 
-const normalizeOptions = computed<
-  {
-    text: string | undefined
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    value: any
-    disabled: boolean | undefined
-    [key: string]: unknown
-  }[]
->(() =>
+const normalizeOptions = computed(() =>
   props.options.map((el) =>
     typeof el === 'string' || typeof el === 'number'
       ? {
@@ -100,9 +99,9 @@ const normalizeOptions = computed<
           text: el.toString(),
         }
       : {
-          ...el,
-          value: el[props.valueField],
+          value: el[props.valueField] as string | number | undefined,
           disabled: el[props.disabledField] as boolean | undefined,
+          ...(el.props ? el.props : undefined),
           text: el[props.textField] as string | undefined,
         }
   )

@@ -8,19 +8,15 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import {StyleKind, type StyleSpec} from '../types'
-import {kebabCase} from '../utils/objectUtils'
+import {type MappedComponentReference, StyleKind} from '../types'
+import {kebabCase} from '../utils'
 
-const props = defineProps<{name: string; styleSpec: StyleSpec | undefined}>()
+const props = defineProps<{component: MappedComponentReference}>()
 
-const computedKind = computed(() => props.styleSpec?.kind ?? StyleKind.BootstrapClass)
-
-const formatClass = (value: string) => `.${repalceDashes(kebabCase(value))}`
-
-const repalceDashes = (value: string) => value.replaceAll('-', '&#8209;')
+const computedKind = computed(() => props.component.styleSpec?.kind ?? StyleKind.BootstrapClass)
 
 const computedValue = computed(() => {
-  const componentName = props.name
+  const componentName = props.component.component
 
   switch (computedKind.value) {
     case StyleKind.BootstrapClass:
@@ -29,9 +25,13 @@ const computedValue = computed(() => {
       return formatClass(componentName.substring(1))
     case StyleKind.OverrideClass:
     case StyleKind.Tag:
-      return repalceDashes(props.styleSpec?.value ?? 'UNDEFINED')
+      return repalceDashes(props.component.styleSpec?.value ?? 'UNDEFINED')
     default:
       return 'UNDEFINED'
   }
 })
+
+const formatClass = (value: string) => `.${repalceDashes(kebabCase(value))}`
+
+const repalceDashes = (value: string) => value.replaceAll('-', '&#8209;')
 </script>

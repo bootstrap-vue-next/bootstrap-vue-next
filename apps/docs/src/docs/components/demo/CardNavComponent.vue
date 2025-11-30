@@ -2,10 +2,7 @@
   <!-- #region template -->
   <BCard no-body>
     <BCardHeader header-tag="nav">
-      <BNav
-        card-header
-        tabs
-      >
+      <BNav card-header tabs>
         <BNavItem active>Active</BNavItem>
         <BNavItem>Inactive</BNavItem>
         <BNavItem disabled>Disabled</BNavItem>

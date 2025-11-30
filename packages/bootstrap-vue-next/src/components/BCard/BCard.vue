@@ -68,7 +68,6 @@ import BCardHeader from './BCardHeader.vue'
 import BCardBody from './BCardBody.vue'
 import BCardFooter from './BCardFooter.vue'
 import {createReusableTemplate} from '@vueuse/core'
-import type {BCardSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BCardProps>(), {
   align: undefined,
@@ -111,7 +110,17 @@ const _props = withDefaults(defineProps<BCardProps>(), {
   // End ColorExtendables props
 })
 const props = useDefaults(_props, 'BCard')
-const slots = defineSlots<BCardSlots>()
+
+const slots = defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  footer?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  header?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  img?: (props: Record<string, never>) => any
+}>()
 
 const hasHeaderSlot = computed(() => !isEmptySlot(slots.header))
 const hasFooterSlot = computed(() => !isEmptySlot(slots.footer))

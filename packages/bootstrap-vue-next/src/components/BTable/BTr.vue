@@ -8,13 +8,16 @@
 import {useDefaults} from '../../composables/useDefaults'
 import type {BTrProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
-import type {BTrSlots} from '../../types/ComponentSlots'
 
 const _props = withDefaults(defineProps<BTrProps>(), {
   variant: null,
 })
 const props = useDefaults(_props, 'BTr')
-defineSlots<BTrSlots>()
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 
 const computedClasses = computed(() => ({
   [`table-${props.variant}`]: props.variant !== null,

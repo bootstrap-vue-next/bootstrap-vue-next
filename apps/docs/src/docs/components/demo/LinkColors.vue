@@ -1,15 +1,11 @@
 <template>
-  <p
-    v-for="color in variants"
-    :key="color"
-  >
+  <p v-for="color in variants" :key="color">
     <BLink :variant="color"> {{ color }} link </BLink>
   </p>
 </template>
 
 <script setup lang="ts">
-import type {BaseColorVariant} from 'bootstrap-vue-next'
-
+import {type BaseColorVariant} from 'bootstrap-vue-next'
 const variants: (keyof BaseColorVariant)[] = [
   'primary',
   'secondary',

@@ -1,9 +1,6 @@
 <template>
   <div>
-    <BTable
-      stacked
-      :items="items"
-    />
+    <BTable stacked :items="items" />
   </div>
 </template>
 

@@ -5,7 +5,6 @@
 </template>
 
 <script setup lang="ts">
-import type {BTbodySlots} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BTbodyProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
@@ -14,7 +13,11 @@ const _props = withDefaults(defineProps<BTbodyProps>(), {
   variant: null,
 })
 const props = useDefaults(_props, 'BTbody')
-defineSlots<BTbodySlots>()
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 
 const computedClasses = computed(() => ({
   [`thead-${props.variant}`]: props.variant !== null,

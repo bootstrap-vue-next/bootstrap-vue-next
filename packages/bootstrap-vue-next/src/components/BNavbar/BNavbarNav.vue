@@ -9,7 +9,6 @@ import type {BNavbarNavProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
 import {useAlignment} from '../../composables/useAlignment'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BNavbarNavSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BNavbarNavProps>(), {
   align: undefined,
@@ -19,7 +18,11 @@ const _props = withDefaults(defineProps<BNavbarNavProps>(), {
   tag: 'ul',
 })
 const props = useDefaults(_props, 'BNavbarNav')
-defineSlots<BNavbarNavSlots>()
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 
 const alignment = useAlignment(() => props.align)
 

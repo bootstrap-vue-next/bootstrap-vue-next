@@ -1,6 +1,6 @@
 <template>
   <th
-    :scope="localScope"
+    :scope="scope"
     :class="computedClasses"
     :colspan="props.colspan"
     :rowspan="props.rowspan"
@@ -17,7 +17,6 @@
 import {useDefaults} from '../../composables/useDefaults'
 import type {BThProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
-import type {BThSlots} from '../../types/ComponentSlots'
 
 const _props = withDefaults(defineProps<BThProps>(), {
   colspan: undefined,
@@ -25,10 +24,13 @@ const _props = withDefaults(defineProps<BThProps>(), {
   stackedHeading: undefined,
   stickyColumn: false,
   variant: null,
-  scope: undefined,
 })
 const props = useDefaults(_props, 'BTh')
-defineSlots<BThSlots>()
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 
 const computedClasses = computed(() => ({
   [`table-${props.variant}`]: props.variant !== null,
@@ -36,7 +38,5 @@ const computedClasses = computed(() => ({
   'table-b-table-default': props.stickyColumn && props.variant === null,
 }))
 
-const localScope = computed(() =>
-  props.scope ? props.scope : props.colspan ? 'colgroup' : props.rowspan ? 'rowgroup' : 'col'
-)
+const scope = computed(() => (props.colspan ? 'colspan' : props.rowspan ? 'rowspan' : 'col'))
 </script>

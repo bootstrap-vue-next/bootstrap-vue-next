@@ -5,7 +5,6 @@ import {BvTriggerableEvent} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BModal from './BModal.vue'
-import {createBootstrap} from '../../plugins'
 
 describe('modal', () => {
   enableAutoUnmount(afterEach)
@@ -27,7 +26,6 @@ describe('modal', () => {
       props: {
         teleportTo: '#body-teleports',
       },
-      global: {plugins: [createBootstrap()]},
     })
     expect(wrapper.exists()).toBe(true)
     expect(document.getElementById('body-teleports')?.querySelector('.modal')).not.toBe(null)
@@ -36,7 +34,7 @@ describe('modal', () => {
   // Having issues getting the 'body' from the VDOM
   it('has body element', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
     })
     const $div = wrapper.find('div')
     expect($div.exists()).toBe(true)
@@ -44,7 +42,7 @@ describe('modal', () => {
 
   it('div has class modal', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
     })
     const $div = wrapper.get('div')
     expect($div.classes()).toContain('modal')
@@ -52,7 +50,7 @@ describe('modal', () => {
 
   it('div has attr id to be prop id', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
       props: {id: 'foo'},
     })
     const $div = wrapper.get('div')
@@ -61,7 +59,7 @@ describe('modal', () => {
 
   it('div has attr id is defined by default', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
     })
     const $div = wrapper.get('div')
     expect($div.attributes('id')).toBeDefined()
@@ -69,7 +67,7 @@ describe('modal', () => {
 
   it('div has attr tabindex to be -1', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
     })
     const $div = wrapper.get('div')
     expect($div.attributes('tabindex')).toBe('-1')
@@ -77,7 +75,7 @@ describe('modal', () => {
 
   it('div has class from prop modalClass', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
       props: {modalClass: ['foo']},
     })
     const $div = wrapper.get('div')
@@ -86,7 +84,7 @@ describe('modal', () => {
 
   it('div has class fade when not prop noFade', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
       props: {noFade: false},
     })
     const $div = wrapper.get('div')
@@ -95,7 +93,7 @@ describe('modal', () => {
 
   it('div has class fade when prop noFade', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
       props: {noFade: true},
     })
     const $div = wrapper.get('div')
@@ -104,7 +102,7 @@ describe('modal', () => {
 
   it('div has attrs from attrs', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
       attrs: {role: 'foo'},
     })
     const $div = wrapper.get('div')
@@ -113,7 +111,7 @@ describe('modal', () => {
 
   it('div has child div', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
     })
     const $div = wrapper.get('div')
     const $div2 = $div.find('div')
@@ -122,7 +120,7 @@ describe('modal', () => {
 
   it('div child div has static class modal-dialog', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
     })
     const $div = wrapper.get('div')
     const $div2 = $div.get('div')
@@ -131,7 +129,7 @@ describe('modal', () => {
 
   it('div child div has class modal-fullscreen when prop fullscreen', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
       props: {fullscreen: true},
     })
     const $div = wrapper.get('div')
@@ -141,7 +139,7 @@ describe('modal', () => {
 
   it('div child div does not have class modal-fullscreen when not prop fullscreen', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
       props: {fullscreen: false},
     })
     const $div = wrapper.get('div')
@@ -151,7 +149,7 @@ describe('modal', () => {
 
   it('div child div has class modal-fullscreen-{type}-down when prop fullscreen is string', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
       props: {fullscreen: 'xl'},
     })
     const $div = wrapper.get('div')
@@ -161,7 +159,7 @@ describe('modal', () => {
 
   it('div child div has class modal-{type} when prop size', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
       props: {size: 'sm'},
     })
     const $div = wrapper.get('div')
@@ -171,7 +169,7 @@ describe('modal', () => {
 
   it('div child div has class modal-dialog-centered when prop centered', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
       props: {centered: true},
     })
     const $div = wrapper.get('div')
@@ -181,7 +179,7 @@ describe('modal', () => {
 
   it('div child div does not have class modal-dialog-centered when not prop centered', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
       props: {centered: false},
     })
     const $div = wrapper.get('div')
@@ -191,7 +189,7 @@ describe('modal', () => {
 
   it('div child div has class modal-dialog-scrollable when prop scrollable', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
       props: {scrollable: true},
     })
     const $div = wrapper.get('div')
@@ -201,7 +199,7 @@ describe('modal', () => {
 
   it('div child div does not have class modal-dialog-scrollable when not prop scrollable', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
       props: {scrollable: false},
     })
     const $div = wrapper.get('div')
@@ -211,7 +209,7 @@ describe('modal', () => {
 
   it('second div has another div by default', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
     })
     const $div = wrapper.get('div')
     const $div2 = $div.get('div')
@@ -221,7 +219,7 @@ describe('modal', () => {
 
   it('third nested div has static class modal-content', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
     })
     const $div = wrapper.get('div')
     const $div2 = $div.get('div')
@@ -231,7 +229,7 @@ describe('modal', () => {
 
   it('third nested div has class from prop contentClass', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
       props: {contentClass: ['foo']},
     })
     const $div = wrapper.get('div')
@@ -242,7 +240,7 @@ describe('modal', () => {
 
   it('second div has nested div when not prop lazy', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
       props: {lazy: false},
     })
     const $div = wrapper.get('div')
@@ -253,7 +251,7 @@ describe('modal', () => {
 
   it('third nested div has another div', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
     })
     const $div = wrapper.get('div')
     const $div2 = $div.get('div')
@@ -263,7 +261,7 @@ describe('modal', () => {
 
   it('nested div BCloseButton has class when prop headerCloseClass', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
       props: {headerCloseClass: 'foobar'},
     })
     const $div = wrapper.get('div')
@@ -273,7 +271,7 @@ describe('modal', () => {
 
   it('nested div BCloseButton has no variant class when headerCloseVariant', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
       props: {headerCloseVariant: 'warning'},
     })
     const $div = wrapper.get('div')
@@ -283,7 +281,7 @@ describe('modal', () => {
 
   it('nested div BCloseButton has aria-label to be Close by default', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
     })
     const $div = wrapper.get('div')
     const $bclosebutton = $div.getComponent(BCloseButton)
@@ -292,7 +290,7 @@ describe('modal', () => {
 
   it('nested div BCloseButton has aria-label to be prop headerCloseLabel', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
       props: {headerCloseLabel: 'foobar'},
     })
     const $div = wrapper.get('div')
@@ -302,7 +300,7 @@ describe('modal', () => {
 
   it('nested div BButton has class when prop headerCloseClass', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
       props: {headerCloseClass: 'foobar'},
       slots: {'header-close': 'foobar'},
     })
@@ -313,7 +311,7 @@ describe('modal', () => {
 
   it('nested div BButton has variant class when headerCloseVariant', () => {
     const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
       props: {headerCloseVariant: 'warning'},
       slots: {'header-close': 'foobar'},
     })
@@ -325,7 +323,7 @@ describe('modal', () => {
   it('setting modelValue to true shows modal', async () => {
     const wrapper = mount(BModal, {
       attachTo: document.body,
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
       props: {
         id: 'test',
       },
@@ -348,7 +346,7 @@ describe('modal', () => {
   it('body scrolling is unlocked after modal is closed', async () => {
     const wrapper = mount(BModal, {
       attachTo: document.body,
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
       props: {
         id: 'test',
       },
@@ -384,82 +382,12 @@ describe('modal', () => {
     wrapper.unmount()
   })
 
-  it('fallback element is added when no focusable elements are present', async () => {
-    const wrapper = mount(BModal, {
-      attachTo: document.body,
-      global: {
-        stubs: {teleport: true, transition: false},
-      },
-      props: {
-        noHeader: true,
-        noFooter: true,
-      },
-    })
-    await nextTick()
-
-    expect(wrapper.find('div.modal div.modal-fallback-focus').exists()).toBe(true)
-
-    wrapper.unmount()
-  })
-
-  it('fallback element is not added when a focusable element is present', async () => {
-    const wrapper = mount(BModal, {
-      attachTo: document.body,
-      global: {
-        stubs: {teleport: true},
-      },
-      props: {
-        noHeader: false,
-        noFooter: false,
-      },
-    })
-    await nextTick()
-
-    expect(wrapper.find('div.modal div.modal-fallback-focus').exists()).toBe(false)
-
-    wrapper.unmount()
-  })
-
-  it('focus trap deactivation does not throw error when no tabbable elements exist', async () => {
-    // This test simulates the issue where a modal with disabled buttons
-    // would throw an error on focus trap deactivation
-    const wrapper = mount(BModal, {
-      attachTo: document.body,
-      global: {
-        stubs: {teleport: true, transition: false},
-      },
-      props: {
-        modelValue: true,
-        noHeader: true,
-        noFooter: true,
-        // Create a modal with no focusable elements
-      },
-      slots: {
-        default: '<p>No focusable elements here</p>',
-      },
-    })
-    await nextTick()
-
-    // Verify the modal is shown
-    expect(wrapper.find('div.modal').exists()).toBe(true)
-    expect(wrapper.find('div.modal-fallback-focus').exists()).toBe(true)
-
-    // Simulate closing the modal - this should not throw an error
-    await wrapper.setProps({modelValue: false})
-    await nextTick()
-
-    // The test passes if no error is thrown during deactivation
-    expect(true).toBe(true)
-
-    wrapper.unmount()
-  })
-
   describe('button and event functionality', () => {
     it('header close button triggers modal close and is preventable', async () => {
       let cancelHide = true
       const wrapper = mount(BModal, {
         attachTo: document.body,
-        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        global: {stubs: {teleport: true}},
         props: {
           id: 'test',
           modelValue: true,
@@ -519,7 +447,7 @@ describe('modal', () => {
       let cancelHide = true
       const wrapper = mount(BModal, {
         attachTo: document.body,
-        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        global: {stubs: {teleport: true}},
         props: {
           id: 'test',
           modelValue: true,
@@ -578,7 +506,7 @@ describe('modal', () => {
   it('modal body div is given prop bodyClass', () => {
     const wrapper = mount(BModal, {
       attachTo: document.body,
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
       props: {
         bodyClass: 'foobar',
       },
@@ -596,7 +524,7 @@ describe('modal', () => {
   it('modal body div is given prop bodyAttrs', () => {
     const wrapper = mount(BModal, {
       attachTo: document.body,
-      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      global: {stubs: {teleport: true}},
       props: {
         bodyAttrs: {
           role: 'foo',

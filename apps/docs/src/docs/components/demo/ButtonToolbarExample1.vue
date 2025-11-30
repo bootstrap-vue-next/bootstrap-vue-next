@@ -1,9 +1,6 @@
 <template>
   <!-- #region template -->
-  <BButtonToolbar
-    key-nav
-    aria-label="Toolbar with button groups"
-  >
+  <BButtonToolbar key-nav aria-label="Toolbar with button groups">
     <BButtonGroup class="mx-1">
       <BButton>&laquo;</BButton>
       <BButton>&lsaquo;</BButton>

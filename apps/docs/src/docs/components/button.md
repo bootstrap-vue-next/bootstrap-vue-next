@@ -1,6 +1,10 @@
----
-description: "Use Bootstrap's custom `BButton` component for actions in forms, dialogs, and more. Includes support for a handful of contextual variations, sizes, states, and more."
----
+# Button
+
+<PageHeader>
+
+Use Bootstrap's custom `BButton` component for actions in forms, dialogs, and more. Includes support for a handful of contextual variations, sizes, states, and more.
+
+</PageHeader>
 
 ## Overview
 
@@ -52,7 +56,22 @@ remove all background images and colors on any `BButton`:
 `outline-primary`, `outline-secondary`, `outline-success`, `outline-danger`, `outline-warning`,
 `outline-info`, `outline-light` and `outline-dark`.
 
-<<< DEMO ./demo/ButtonOutlineVariants.vue#template{vue-html}
+<HighlightCard>
+  <template #html>
+
+```vue-html
+<BButton variant="outline-primary">Primary</BButton>
+<BButton variant="outline-secondary">Secondary</BButton>
+<BButton variant="outline-success">Success</BButton>
+<BButton variant="outline-danger">Danger</BButton>
+<BButton variant="outline-warning">Warning</BButton>
+<BButton variant="outline-info">Info</BButton>
+<BButton variant="outline-light">Light</BButton>
+<BButton variant="outline-dark">Dark</BButton>
+```
+
+  </template>
+</HighlightCard>
 
 ### Link variant
 
@@ -62,6 +81,12 @@ padding and size of a button.
 <<< DEMO ./demo/ButtonLinkVariant.vue#template{vue-html}
 
 **Tip:** remove the hover underline from a link variant button by setting `underline-opacity="0"`.
+
+::: warning Interactions between Variant props
+`BButton` implements `bg-variant` and `text-variant` to provide finer control of colors, they take
+precedence over the `variant` prop. See the
+[Color Variant Reference](/docs/reference/color-variants#variant-interactions) for details.
+:::
 
 ## Block level buttons
 
@@ -142,3 +167,15 @@ When the `href` is set to any other value (~~or the `to` prop is used~~), `role=
 added, nor will the keyboard event listeners be enabled.
 
 <NotYetImplemented>The `role="button"` behavior is partially implemented, but the keyboard listen are not</NotYetImplemented>
+
+<ComponentReference :data="data" />
+
+<script lang="ts">
+import {data} from '../../data/components/button.data'
+
+export default {
+  setup() {
+    return {data}
+  }
+}
+</script>

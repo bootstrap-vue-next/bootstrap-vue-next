@@ -1,8 +1,5 @@
 <template>
-  <BAlert
-    v-model="showDismissibleAlert"
-    dismissible
-  >
+  <BAlert v-model="showDismissibleAlert" dismissible>
     Dismissible Alert! Click the close button over there <b>&rArr;</b>
   </BAlert>
 </template>

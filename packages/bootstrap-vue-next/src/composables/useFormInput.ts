@@ -11,10 +11,9 @@ import {
 } from 'vue'
 import {useAriaInvalid} from './useAriaInvalid'
 import {useId} from './useId'
-import {useFocus, useToNumber} from '@vueuse/core'
+import {useDebounceFn, useFocus, useToNumber} from '@vueuse/core'
 import type {CommonInputProps} from '../types/FormCommonInputProps'
-import {formGroupKey} from '../utils/keys'
-import {useDebounceFn} from '../utils/debounce'
+import {formGroupPluginKey} from '../utils/keys'
 import {useStateClass} from './useStateClass'
 
 export const useFormInput = (
@@ -28,11 +27,11 @@ export const useFormInput = (
   const forceUpdateKey = ref(0)
 
   const computedId = useId(() => props.id, 'input')
-  const debounceNumber = useToNumber(() => props.debounce ?? 0, {nanToZero: true})
-  const debounceMaxWaitNumber = useToNumber(() => props.debounceMaxWait ?? Number.NaN)
+  const debounceNumber = useToNumber(() => props.debounce ?? 0)
+  const debounceMaxWaitNumber = useToNumber(() => props.debounceMaxWait ?? NaN)
 
   // This automatically adds the appropriate "for" attribute to a BFormGroup label
-  const formGroupData = inject(formGroupKey, null)?.(computedId)
+  const formGroupData = inject(formGroupPluginKey, null)?.(computedId)
   const computedState = computed(() =>
     props.state !== undefined ? props.state : (formGroupData?.state.value ?? null)
   )
@@ -44,16 +43,12 @@ export const useFormInput = (
       modelValue.value = value
     },
     () => (modelModifiers.lazy === true ? 0 : debounceNumber.value),
-    {maxWait: () => (modelModifiers.lazy === true ? Number.NaN : debounceMaxWaitNumber.value)}
+    {maxWait: () => (modelModifiers.lazy === true ? NaN : debounceMaxWaitNumber.value)}
   )
 
-  const updateModelValue = (value: Numberish, force = false, immediate = false) => {
+  const updateModelValue = (value: Numberish, force = false) => {
     if (modelModifiers.lazy === true && force === false) return
-    if (immediate) {
-      modelValue.value = value
-    } else {
-      internalUpdateModelValue(value)
-    }
+    internalUpdateModelValue(value)
   }
 
   const {focused} = useFocus(input, {
@@ -108,23 +103,15 @@ export const useFormInput = (
   }
 
   const onBlur = (evt: Readonly<FocusEvent>) => {
-    if (
-      !modelModifiers.lazy &&
-      !props.lazyFormatter &&
-      !modelModifiers.trim &&
-      debounceNumber.value <= 0
-    )
-      return
+    if (!modelModifiers.lazy && !props.lazyFormatter && !modelModifiers.trim) return
 
     const {value} = evt.target as HTMLInputElement
     const formattedValue = _formatValue(value, evt, true)
 
     const nextModel = modelModifiers.trim ? formattedValue.trim() : formattedValue
     const needsForceUpdate = nextModel.length !== formattedValue.length
-    // Cancel before modelValue.value comparison and update
-    internalUpdateModelValue.cancel()
     if (modelValue.value !== nextModel) {
-      updateModelValue(formattedValue, true, true)
+      updateModelValue(formattedValue, true)
     }
     if (modelModifiers.trim && needsForceUpdate) {
       // The value is trimmed but there would still exist some white space

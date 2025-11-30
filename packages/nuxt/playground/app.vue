@@ -1,9 +1,10 @@
 <template>
   <div style="min-height: 1000vh">
-    <BOrchestrator />
     <BAlert :model-value="true">
       Hello World
     </BAlert>
+    <BToastOrchestrator />
+    <BModalOrchestrator />
     <BModal v-model="show">
       Nuxt module playground!
     </BModal>
@@ -22,7 +23,7 @@
     />
     {{ f }}
     {{ toast }}
-    <BButton @click="toast.create({ title: 'Hello World!' })">
+    <BButton @click="toast.show({ props: { title: 'Hello World!' } })">
       Show Global Toast
     </BButton>
     <BFormSelect
@@ -165,6 +166,7 @@ const show = ref(false)
 const f = useBreadcrumb()
 useColorMode()
 useModal()
-const toast = useToast()
+useModalController()
+const toast = useToastController()
 const formSelectMultipleSelected = ref([])
 </script>

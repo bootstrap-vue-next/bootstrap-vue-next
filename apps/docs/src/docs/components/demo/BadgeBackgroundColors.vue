@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="d-flex mb-4"
-    style="column-gap: 1%"
-  >
+  <div class="d-flex mb-4" style="column-gap: 1%">
     <!-- #region template -->
     <BBadge>Primary</BBadge>
     <BBadge variant="secondary">Secondary</BBadge>

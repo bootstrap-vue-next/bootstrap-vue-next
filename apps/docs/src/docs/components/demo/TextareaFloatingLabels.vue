@@ -1,8 +1,5 @@
 <template>
-  <BFormFloatingLabel
-    label="type something"
-    label-for="textarea-floatinglabel"
-  >
+  <BFormFloatingLabel label="type something" label-for="textarea-floatinglabel">
     <BFormTextarea
       id="textarea-floatinglabel"
       v-model="textFloatingLabel"

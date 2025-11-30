@@ -43,11 +43,10 @@ import {useRadiusElementClasses} from '../../composables/useRadiusElementClasses
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import type {BgColorVariant} from '../../types/ColorTypes'
 import {useFadeTransition} from '../../composables/useTransitions'
-import type {BOverlayEmits, BOverlaySlots} from '../../types'
 
 const _props = withDefaults(defineProps<BOverlayProps>(), {
-  bgColor: undefined,
   blur: '2px',
+  bgColor: undefined,
   fixed: false,
   noCenter: false,
   noFade: false,
@@ -71,8 +70,19 @@ const _props = withDefaults(defineProps<BOverlayProps>(), {
   // End RadiusElementExtendables props
 })
 const props = useDefaults(_props, 'BOverlay')
-const emit = defineEmits<BOverlayEmits>()
-defineSlots<BOverlaySlots>()
+
+const emit = defineEmits<{
+  click: [value: MouseEvent]
+  hidden: []
+  shown: []
+}>()
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  overlay?: (props: typeof spinnerAttrs.value) => any
+}>()
 
 const positionStyles = {top: 0, left: 0, bottom: 0, right: 0} as const
 
@@ -115,10 +125,7 @@ const blurStyles = computed(() => ({
   ...positionStyles,
   opacity: props.opacity,
   backgroundColor: props.bgColor || undefined,
-  backdropFilter:
-    props.blur && !props.bgColor && (props.variant === 'white' || props.variant === 'transparent')
-      ? `blur(${props.blur})`
-      : undefined,
+  backdropFilter: props.blur ? `blur(${props.blur})` : undefined,
 }))
 
 const spinWrapperStyles = computed(() =>

@@ -1,10 +1,6 @@
 <template>
   <div>
-    <BTable
-      :fields="fields"
-      :items="items"
-      foot-clone
-    >
+    <BTable :fields="fields" :items="items" foot-clone>
       <!-- A custom formatted data column cell -->
       <template #cell(name)="data">
         {{ (data.value as any as Name).first }} {{ (data.value as any as Name).last }}

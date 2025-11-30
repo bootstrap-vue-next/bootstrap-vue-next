@@ -8,7 +8,6 @@
 import {useDefaults} from '../../composables/useDefaults'
 import type {BFormProps} from '../../types/ComponentProps'
 import {computed, useTemplateRef} from 'vue'
-import type {BFormSlots} from '../../types/ComponentSlots'
 
 const _props = withDefaults(defineProps<BFormProps>(), {
   id: undefined,
@@ -17,9 +16,13 @@ const _props = withDefaults(defineProps<BFormProps>(), {
   validated: false,
 })
 const props = useDefaults(_props, 'BForm')
-defineSlots<BFormSlots>()
 
-const element = useTemplateRef('_element')
+const element = useTemplateRef<HTMLElement>('_element')
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 
 const computedClasses = computed(() => ({
   'form-floating': props.floating,

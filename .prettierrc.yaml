@@ -11,7 +11,3 @@ overrides:
       - '**/*.html'
     options:
       singleQuote: false
-  - files:
-      - '**/demo/*.*'
-    options:
-      singleAttributePerLine: true

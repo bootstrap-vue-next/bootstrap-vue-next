@@ -1,8 +1,5 @@
 <template>
-  <BFormCheckbox
-    v-model="switchChecked"
-    switch
-  >
+  <BFormCheckbox v-model="switchChecked" switch>
     Switch Checkbox <strong>(Checked: {{ switchChecked }})</strong>
   </BFormCheckbox>
 </template>

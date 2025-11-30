@@ -6,7 +6,7 @@
 
 <h1 align="center">BootstrapVueNext</h1>
 
-<p align="center">Seamless integration of Vue 3, Bootstrap 5, and TypeScript for modern, type-safe UI development</p>
+<p align="center">Early (but lovely) implementation of Vue 3, Bootstrap 5 and Typescript</p>
 
 <br>
 
@@ -49,7 +49,7 @@
 
 ## Why BootstrapVueNext?
 
-BootstrapVueNext is an attempt to have the [BootstrapVue](https://bootstrap-vue.github.io/bootstrap-vue/) components in Vue3, Bootstrap 5, and typescript. Another goal is to have the components written in a simple and readable way for a better developer experience
+BootstrapVueNext is an attempt to have the [BootstrapVue](https://bootstrap-vue.org/) components in Vue3, Bootstrap 5, and typescript. Another goal is to have the components written in a simple and readable way for a better developer experience
 
 ## Contribute & support 🙌
 

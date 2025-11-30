@@ -1,5 +1,5 @@
 import {type Plugin, ref} from 'vue'
-import {rtlRegistryKey} from '../../utils/keys'
+import {rtlPluginKey} from '../../utils/keys'
 import type {BootstrapVueOptions} from '../../types/BootstrapVueOptions'
 
 export const rtlPlugin: Plugin = {
@@ -18,6 +18,6 @@ export const rtlPlugin: Plugin = {
     const isRtl = ref(rtlInitial)
     const locale = ref(localeInitial)
 
-    app.provide(rtlRegistryKey, {isRtl, locale})
+    app.provide(rtlPluginKey, {isRtl, locale})
   },
 }

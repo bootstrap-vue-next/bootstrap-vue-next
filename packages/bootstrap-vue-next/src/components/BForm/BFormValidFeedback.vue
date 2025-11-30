@@ -15,11 +15,10 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import type {BFormValidFeedbackProps} from '../../types/ComponentProps'
+import type {BFormFeedbackSharedProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BFormValidFeedbackSlots} from '../../types'
 
-const _props = withDefaults(defineProps<BFormValidFeedbackProps>(), {
+const _props = withDefaults(defineProps<BFormFeedbackSharedProps>(), {
   ariaLive: undefined,
   forceShow: false,
   id: undefined,
@@ -30,7 +29,11 @@ const _props = withDefaults(defineProps<BFormValidFeedbackProps>(), {
   tooltip: false,
 })
 const props = useDefaults(_props, 'BFormInvalidFeedback')
-defineSlots<BFormValidFeedbackSlots>()
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 
 const computedShow = computed(() => props.forceShow === true || props.state === true)
 

@@ -1,6 +1,10 @@
----
-description: 'List Groups are a flexible and powerful component for displaying a series of content. List Group items can be modified to support just about any content within. They can also be used as navigation via various props.'
----
+# List Group
+
+<PageHeader>
+
+List Groups are a flexible and powerful component for displaying a series of content. List Group items can be modified to support just about any content within. They can also be used as navigation via various props.
+
+</PageHeader>
 
 <<< DEMO ./demo/ListGroupOverview.vue#template{vue-html}
 
@@ -116,3 +120,15 @@ Add nearly any HTML or component within, even for linked list groups like the on
 help of [flexbox utility classes](/docs/reference/utility-classes).
 
 <<< DEMO ./demo/ListGroupCustom.vue#template{vue-html}
+
+<ComponentReference :data="data" />
+
+<script lang="ts">
+import {data} from '../../data/components/listGroup.data'
+
+export default {
+  setup() {
+    return {data}
+  }
+}
+</script>

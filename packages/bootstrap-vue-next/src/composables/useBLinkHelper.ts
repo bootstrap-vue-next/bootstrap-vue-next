@@ -5,7 +5,6 @@ import {
   readonly,
   resolveDynamicComponent,
   toRef,
-  toValue,
 } from 'vue'
 import {isLink} from '../utils/isLink'
 import {pick} from '../utils/object'
@@ -31,7 +30,6 @@ export const useBLinkHelper = <
             'active',
             'activeClass',
             'append',
-            'exactActiveClass',
             'href',
             'rel',
             'replace',
@@ -54,40 +52,32 @@ export const useBLinkHelper = <
   return {computedLink, computedLinkProps}
 }
 
-export const useBLinkTagResolver = ({
-  to,
-  disabled,
-  href,
-  replace,
-  routerComponentName,
-}: {
-  routerComponentName: MaybeRefOrGetter<string>
-  disabled: MaybeRefOrGetter<boolean>
-  to: MaybeRefOrGetter<RouteLocationRaw | undefined>
-  href: MaybeRefOrGetter<string | undefined>
-  replace: MaybeRefOrGetter<boolean>
-}) => {
+export const useBLinkTagResolver = (
+  props: MaybeRefOrGetter<{
+    routerComponentName: string
+    disabled: boolean
+    to: RouteLocationRaw | undefined
+    href: string | undefined
+    replace: boolean
+  }>
+) => {
   // Getting instance
   const instance = getCurrentInstance()
-  const router = instance?.appContext?.app?.config?.globalProperties?.$router
-  const route = instance?.appContext?.app?.config?.globalProperties?.$route
+  const router = instance?.appContext.app.config.globalProperties.$router
+  const route = instance?.appContext.app.config.globalProperties.$route
   const RouterLinkComponent = resolveDynamicComponent('RouterLink') as typeof RouterLink | string
-  const useLink =
-    !!RouterLinkComponent &&
-    typeof RouterLinkComponent !== 'string' &&
-    'useLink' in RouterLinkComponent
-      ? RouterLinkComponent.useLink
-      : null
+  const useLink = typeof RouterLinkComponent === 'string' ? null : RouterLinkComponent.useLink
 
   // Resolving props
-  const resolvedTo = computed(() => toValue(to) || '')
-  const resolvedReplace = readonly(toRef(replace))
+  const resolvedProps = toRef(props)
+  const resolvedTo = toRef(() => resolvedProps.value.to || '')
+  const resolvedReplace = toRef(() => resolvedProps.value.replace)
 
-  const routerName = computed(() => toPascalCase(toValue(routerComponentName)))
+  const routerName = computed(() => toPascalCase(resolvedProps.value.routerComponentName))
 
   const tag = computed(() => {
-    const hasRouter = instance?.appContext?.app?.component(routerName.value) !== undefined
-    if (!hasRouter || toValue(disabled) || !resolvedTo.value) {
+    const hasRouter = instance?.appContext.app.component(routerName.value) !== undefined
+    if (!hasRouter || resolvedProps.value.disabled || !resolvedProps.value.to) {
       return 'a'
     }
     return routerName.value
@@ -96,7 +86,7 @@ export const useBLinkTagResolver = ({
   const isRouterLink = computed(() => tag.value === 'RouterLink')
   const isNuxtLink = computed(
     // @ts-expect-error we're doing an explicit check for Nuxt, so we can safely ignore this
-    () => isRouterLink.value && typeof instance?.appContext?.app?.$nuxt !== 'undefined'
+    () => isRouterLink.value && typeof instance?.appContext.app.$nuxt !== 'undefined'
   )
   const isNonStandardTag = computed(
     () => tag.value !== 'a' && !isRouterLink.value && !isNuxtLink.value
@@ -117,13 +107,12 @@ export const useBLinkTagResolver = ({
     if (link.value?.href.value) return link.value.href.value
 
     const toFallback = '#'
-    const resolvedHref = toValue(href)
-    if (resolvedHref) return resolvedHref
+    if (resolvedProps.value.href) return resolvedProps.value.href
 
-    if (typeof resolvedTo.value === 'string') return resolvedTo.value || toFallback
+    if (typeof resolvedProps.value.to === 'string') return resolvedProps.value.to || toFallback
 
     // Stabilize the `to` prop for the callback functions
-    const stableTo = resolvedTo.value
+    const {to: stableTo} = resolvedProps.value
 
     if (stableTo !== undefined && 'path' in stableTo) {
       const path = stableTo.path || ''

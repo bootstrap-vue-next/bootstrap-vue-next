@@ -1,28 +1,21 @@
 <template>
-  <BCard>
+  <BCard :body-text="description">
     <template #header>
-      <BLink :to="routeWithBase">
-        <h3 :id="routeWithBase" class="m-0">
+      <BLink :to="route">
+        <h3 class="m-0">
           {{ name }}
         </h3>
       </BLink>
     </template>
-    <span v-html="renderedDescription" />
   </BCard>
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue'
-import {withBase} from 'vitepress'
-import {useMarkdownRenderer} from '../composables/useMarkdownRenderer'
+import {BCard, BLink} from 'bootstrap-vue-next'
 
-const props = defineProps<{
+defineProps<{
   name: string
   description: string
   route: string
 }>()
-
-const descriptionRef = computed(() => props.description)
-const renderedDescription = useMarkdownRenderer(descriptionRef)
-const routeWithBase = computed(() => withBase(props.route))
 </script>

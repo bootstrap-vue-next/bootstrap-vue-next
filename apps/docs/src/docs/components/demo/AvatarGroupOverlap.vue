@@ -1,9 +1,6 @@
 <template>
   <!-- #region template -->
-  <BAvatarGroup
-    size="3rem"
-    overlap="0.65"
-  >
+  <BAvatarGroup size="3rem" overlap="0.65">
     <BAvatar />
     <BAvatar />
     <BAvatar />

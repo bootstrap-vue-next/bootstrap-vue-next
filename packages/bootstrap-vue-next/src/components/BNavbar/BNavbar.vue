@@ -14,12 +14,11 @@ import {useDefaults} from '../../composables/useDefaults'
 import {useContainerClasses} from '../../composables/useContainerClasses'
 import {navbarInjectionKey} from '../../utils/keys'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
-import type {BNavbarSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BNavbarProps>(), {
+  autoClose: true,
   container: 'fluid',
   fixed: undefined,
-  noAutoClose: false,
   print: false,
   sticky: undefined,
   tag: 'nav',
@@ -27,7 +26,11 @@ const _props = withDefaults(defineProps<BNavbarProps>(), {
   variant: null,
 })
 const props = useDefaults(_props, 'BNavbar')
-defineSlots<BNavbarSlots>()
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 
 const computedRole = computed(() => (props.tag === 'nav' ? undefined : 'navigation'))
 
@@ -51,6 +54,6 @@ const computedClasses = computed(() => [
 
 provide(navbarInjectionKey, {
   tag: toRef(() => props.tag),
-  noAutoClose: toRef(() => props.noAutoClose),
+  autoClose: toRef(() => props.autoClose),
 })
 </script>

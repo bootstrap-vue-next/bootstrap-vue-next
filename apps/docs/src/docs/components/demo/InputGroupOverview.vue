@@ -1,11 +1,7 @@
 <template>
   <!-- #region template -->
   <!-- Using props -->
-  <BInputGroup
-    size="lg"
-    prepend="$"
-    append=".00"
-  >
+  <BInputGroup size="lg" prepend="$" append=".00">
     <BFormInput />
   </BInputGroup>
   <!-- Using slots -->
@@ -16,10 +12,7 @@
     <BFormInput />
   </BInputGroup>
   <!-- Using components -->
-  <BInputGroup
-    prepend="Username"
-    class="mt-3"
-  >
+  <BInputGroup prepend="Username" class="mt-3">
     <BFormInput />
     <BButton variant="outline-success">Button</BButton>
     <BButton variant="info">Button</BButton>

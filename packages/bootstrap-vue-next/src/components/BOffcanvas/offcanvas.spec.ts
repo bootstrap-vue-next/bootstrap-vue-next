@@ -4,8 +4,6 @@ import BButton from '../BButton/BButton.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BOverlay from '../BOverlay/BOverlay.vue'
 import BOffcanvas from './BOffcanvas.vue'
-
-// TODO fix this test. It doesn't work
 describe.skip('offcanvas', () => {
   enableAutoUnmount(afterEach)
 
@@ -86,19 +84,19 @@ describe.skip('offcanvas', () => {
     const wrapper = mount(BOffcanvas, {
       props: {
         modelValue: true,
-        noBackdrop: false,
+        backdrop: false,
       },
     })
 
     const $overlay = wrapper.getComponent(BOverlay)
 
-    let $div = $overlay.find('.offcanvas-backdrop')
+    let $div = $overlay.find('div.b-overlay')
 
     expect($div.exists()).toBe(false)
 
-    await wrapper.setProps({noBackdrop: true})
+    await wrapper.setProps({backdrop: true})
 
-    $div = $overlay.find('.offcanvas-backdrop')
+    $div = $overlay.find('div.b-overlay')
 
     expect($div.exists()).toBe(true)
   })
