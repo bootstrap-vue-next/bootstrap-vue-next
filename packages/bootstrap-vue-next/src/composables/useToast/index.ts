@@ -5,7 +5,7 @@ import {
   markRaw,
   onScopeDispose,
   type Ref,
-  toRef,
+  shallowRef,
   toValue,
   watch,
 } from 'vue'
@@ -46,7 +46,7 @@ export const useToast = () => {
       )
     }
 
-    const resolvedProps = toRef(obj)
+    const resolvedProps = isRef(obj) ? obj : shallowRef(obj)
 
     const _self = resolvedProps.value?.id || Symbol('Toast controller')
     const promise = buildPromise<
