@@ -22,7 +22,7 @@ import type {CheckboxOptionRaw, CheckboxValue} from './CheckboxTypes'
 import type {Size} from './Size'
 import type {AriaInvalid} from './AriaInvalid'
 import type {Numberish, TeleporterProps, ValidationState} from './CommonTypes'
-import type {CommonInputProps} from './FormCommonInputProps'
+import type {CommonInputProps, FormDebounceOptions} from './FormCommonInputProps'
 import type {RadioOptionRaw, RadioValue} from './RadioTypes'
 import type {SelectValue} from './SelectTypes'
 import type {
@@ -1159,7 +1159,9 @@ export interface BTableLiteProps<Items> extends BTableSimpleProps {
   theadTrClass?: ClassValue
 }
 
-export interface BTableProps<Items> extends Omit<BTableLiteProps<Items>, 'tableClass'> {
+export interface BTableProps<Items>
+  extends Omit<BTableLiteProps<Items>, 'tableClass'>,
+    FormDebounceOptions {
   provider?: BTableProvider<Items>
   noProvider?: readonly NoProviderTypes[]
   noProviderPaging?: boolean

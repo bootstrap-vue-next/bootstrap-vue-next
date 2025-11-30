@@ -287,6 +287,8 @@ The default ARIA role is set to `menu`, but you can change this default to anoth
 
 When a menu item does not trigger navigation, it is recommended to use the `BDropdownItemButton` sub-component (which is not announced as a link) instead of `BDropdownItem` (which is presented as a link to the user).
 
+For information on managing ARIA attributes for dropdown triggers, see the [ARIA Trigger Registration for Component Visibility](/docs/reference/accessibility#aria-trigger-registration-for-component-visibility) section in the Accessibility reference.
+
 ### Headers and accessibility
 
 When using `BDropdownHeader` components in the dropdown menu, it is recommended to add an `id` attribute to each of the headers, and then set the `aria-describedby` attribute (set to the `id` value of the associated header) on each following dropdown items under that header. This will provide users of assistive technologies (i.e. sight-impaired users) additional context about the dropdown item:

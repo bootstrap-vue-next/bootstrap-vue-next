@@ -1,7 +1,7 @@
 <template>
   <!-- Placeholder template with actual refs for TypeScript compatibility -->
   <div ref="content">
-    <div ref="target"></div>
+    <div ref="target" />
   </div>
 </template>
 
@@ -16,6 +16,7 @@ const target = useTemplateRef('target')
 const {updateList} = useScrollspy(content, target)
 
 // Call when content changes
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const addNewSection = () => {
   // Add new content...
   nextTick(() => {

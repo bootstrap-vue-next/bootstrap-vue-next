@@ -527,6 +527,190 @@ describe('btablelite', () => {
       })
       expect(wrapper.text()).not.toContain('foobar!')
     })
+
+    it('persists details when items are replaced with new object references but same primary key', async () => {
+      const fields = [{key: 'actions', label: 'Actions', sortable: false}]
+      const wrapper = mount(BTableLite, {
+        props: {
+          primaryKey: 'id',
+          items: [
+            {id: 1, isActive: true, age: 40, name: 'John'},
+            {id: 2, isActive: false, age: 30, name: 'Jane'},
+          ],
+          fields,
+        },
+        slots: {
+          'cell(actions)':
+            '<template #cell(actions)="row"><button class="toggle-btn" @click="row.toggleDetails"></button></template>',
+          'row-details': '<template #row-details="row">Details for {{ row.item.name }}</template>',
+        },
+      })
+
+      // Open details for the first row
+      const buttons = wrapper.findAll('.toggle-btn')
+      await buttons[0].trigger('click')
+      expect(wrapper.text()).toContain('Details for John')
+      expect(wrapper.text()).not.toContain('Details for Jane')
+
+      // Replace items with new object references but same IDs
+      // This simulates the "Load more" scenario from the issue
+      await wrapper.setProps({
+        items: [
+          {id: 1, isActive: true, age: 40, name: 'John'},
+          {id: 2, isActive: false, age: 30, name: 'Jane'},
+          {id: 3, isActive: true, age: 25, name: 'Bob'},
+        ],
+      })
+
+      // Details for first row should still be visible
+      expect(wrapper.text()).toContain('Details for John')
+      expect(wrapper.text()).not.toContain('Details for Jane')
+      expect(wrapper.text()).not.toContain('Details for Bob')
+    })
+
+    it('falls back to object reference when primaryKey is not provided', async () => {
+      const fields = [{key: 'actions', label: 'Actions', sortable: false}]
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [
+            {isActive: true, age: 40, name: 'John'},
+            {isActive: false, age: 30, name: 'Jane'},
+          ],
+          fields,
+        },
+        slots: {
+          'cell(actions)':
+            '<template #cell(actions)="row"><button class="toggle-btn" @click="row.toggleDetails"></button></template>',
+          'row-details': '<template #row-details="row">Details for {{ row.item.name }}</template>',
+        },
+      })
+
+      // Open details for the first row
+      const buttons = wrapper.findAll('.toggle-btn')
+      await buttons[0].trigger('click')
+      expect(wrapper.text()).toContain('Details for John')
+
+      // Replace items with new object references
+      await wrapper.setProps({
+        items: [
+          {isActive: true, age: 40, name: 'John'},
+          {isActive: false, age: 30, name: 'Jane'},
+          {isActive: true, age: 25, name: 'Bob'},
+        ],
+      })
+
+      // Details should be closed since object references changed
+      expect(wrapper.text()).not.toContain('Details for John')
+      expect(wrapper.text()).not.toContain('Details for Jane')
+      expect(wrapper.text()).not.toContain('Details for Bob')
+    })
+
+    it('clears details when primaryKey prop changes', async () => {
+      const fields = [{key: 'actions', label: 'Actions', sortable: false}]
+      const wrapper = mount(BTableLite, {
+        props: {
+          primaryKey: 'id',
+          items: [
+            {id: 1, altId: 'a', name: 'John'},
+            {id: 2, altId: 'b', name: 'Jane'},
+          ],
+          fields,
+        },
+        slots: {
+          'cell(actions)':
+            '<template #cell(actions)="row"><button class="toggle-btn" @click="row.toggleDetails"></button></template>',
+          'row-details': '<template #row-details="row">Details for {{ row.item.name }}</template>',
+        },
+      })
+
+      // Open details for the first row
+      const buttons = wrapper.findAll('.toggle-btn')
+      await buttons[0].trigger('click')
+      expect(wrapper.text()).toContain('Details for John')
+
+      // Change primaryKey to a different field
+      await wrapper.setProps({
+        primaryKey: 'altId',
+      })
+
+      // Details should be closed after primaryKey changes
+      expect(wrapper.text()).not.toContain('Details for John')
+      expect(wrapper.text()).not.toContain('Details for Jane')
+    })
+
+    it('clears details when primaryKey is removed', async () => {
+      const fields = [{key: 'actions', label: 'Actions', sortable: false}]
+      const wrapper = mount(BTableLite, {
+        props: {
+          primaryKey: 'id',
+          items: [
+            {id: 1, name: 'John'},
+            {id: 2, name: 'Jane'},
+          ],
+          fields,
+        },
+        slots: {
+          'cell(actions)':
+            '<template #cell(actions)="row"><button class="toggle-btn" @click="row.toggleDetails"></button></template>',
+          'row-details': '<template #row-details="row">Details for {{ row.item.name }}</template>',
+        },
+      })
+
+      // Open details for the first row
+      const buttons = wrapper.findAll('.toggle-btn')
+      await buttons[0].trigger('click')
+      expect(wrapper.text()).toContain('Details for John')
+
+      // Remove primaryKey
+      await wrapper.setProps({
+        primaryKey: undefined,
+      })
+
+      // Details should be closed after primaryKey is removed
+      expect(wrapper.text()).not.toContain('Details for John')
+      expect(wrapper.text()).not.toContain('Details for Jane')
+    })
+
+    it('clears details when primaryKey is changed and then changed back', async () => {
+      const fields = [{key: 'actions', label: 'Actions', sortable: false}]
+      const wrapper = mount(BTableLite, {
+        props: {
+          primaryKey: 'id',
+          items: [
+            {id: 1, altId: 'a', name: 'John'},
+            {id: 2, altId: 'b', name: 'Jane'},
+          ],
+          fields,
+        },
+        slots: {
+          'cell(actions)':
+            '<template #cell(actions)="row"><button class="toggle-btn" @click="row.toggleDetails"></button></template>',
+          'row-details': '<template #row-details="row">Details for {{ row.item.name }}</template>',
+        },
+      })
+
+      // Open details for the first row
+      const buttons = wrapper.findAll('.toggle-btn')
+      await buttons[0].trigger('click')
+      expect(wrapper.text()).toContain('Details for John')
+
+      // Change primaryKey to a different field
+      await wrapper.setProps({
+        primaryKey: 'altId',
+      })
+
+      // Details should be closed after primaryKey changes
+      expect(wrapper.text()).not.toContain('Details for John')
+
+      // Change primaryKey back to original
+      await wrapper.setProps({
+        primaryKey: 'id',
+      })
+
+      // Details should still be closed (map was cleared)
+      expect(wrapper.text()).not.toContain('Details for John')
+      expect(wrapper.text()).not.toContain('Details for Jane')
+    })
   })
   describe('isRowHeader field property', () => {
     it('sets td/th appropriately based on isRowHeader is true, false, or undefined', async () => {
@@ -557,6 +741,130 @@ describe('btablelite', () => {
       expect($tr.find('th.first-name').exists()).toBe(false)
       expect($tr.find('td.age').exists()).toBe(true)
       expect($tr.find('td.active').exists()).toBe(true)
+    })
+  })
+
+  describe('event emissions', () => {
+    const items = [
+      {id: 1, name: 'John', age: 30},
+      {id: 2, name: 'Jane', age: 25},
+      {id: 3, name: 'Bob', age: 35},
+    ]
+    const fields = [
+      {key: 'name', label: 'Name', sortable: true},
+      {key: 'age', label: 'Age', sortable: true},
+    ]
+
+    it('emits row-clicked event when row is clicked', async () => {
+      const wrapper = mount(BTableLite, {
+        props: {items, fields},
+      })
+      const rows = wrapper.findAll('tbody tr')
+      await rows[0].trigger('click')
+
+      expect(wrapper.emitted('row-clicked')).toBeTruthy()
+      expect(wrapper.emitted('row-clicked')?.[0]).toEqual([items[0], 0, expect.any(Object)])
+    })
+
+    it('emits row-dblclicked event when row is double clicked', async () => {
+      const wrapper = mount(BTableLite, {
+        props: {items, fields},
+      })
+      const rows = wrapper.findAll('tbody tr')
+      await rows[1].trigger('dblclick')
+
+      expect(wrapper.emitted('row-dblclicked')).toBeTruthy()
+      expect(wrapper.emitted('row-dblclicked')?.[0]).toEqual([items[1], 1, expect.any(Object)])
+    })
+
+    it('emits row-contextmenu event when row is right-clicked', async () => {
+      const wrapper = mount(BTableLite, {
+        props: {items, fields},
+      })
+      const rows = wrapper.findAll('tbody tr')
+      await rows[2].trigger('contextmenu')
+
+      expect(wrapper.emitted('row-contextmenu')).toBeTruthy()
+      expect(wrapper.emitted('row-contextmenu')?.[0]).toEqual([items[2], 2, expect.any(Object)])
+    })
+
+    it('emits row-hovered event when mouse enters row', async () => {
+      const wrapper = mount(BTableLite, {
+        props: {items, fields},
+      })
+      const rows = wrapper.findAll('tbody tr')
+      await rows[0].trigger('mouseenter')
+
+      expect(wrapper.emitted('row-hovered')).toBeTruthy()
+      expect(wrapper.emitted('row-hovered')?.[0]).toEqual([items[0], 0, expect.any(Object)])
+    })
+
+    it('emits row-unhovered event when mouse leaves row', async () => {
+      const wrapper = mount(BTableLite, {
+        props: {items, fields},
+      })
+      const rows = wrapper.findAll('tbody tr')
+      await rows[1].trigger('mouseleave')
+
+      expect(wrapper.emitted('row-unhovered')).toBeTruthy()
+      expect(wrapper.emitted('row-unhovered')?.[0]).toEqual([items[1], 1, expect.any(Object)])
+    })
+
+    it('emits row-middle-clicked event when middle mouse button is clicked', async () => {
+      const wrapper = mount(BTableLite, {
+        props: {items, fields},
+      })
+      const rows = wrapper.findAll('tbody tr')
+      await rows[0].trigger('mousedown', {button: 1})
+
+      expect(wrapper.emitted('row-middle-clicked')).toBeTruthy()
+      expect(wrapper.emitted('row-middle-clicked')?.[0]).toEqual([items[0], 0, expect.any(Object)])
+    })
+
+    it('emits head-clicked event when header is clicked', async () => {
+      const wrapper = mount(BTableLite, {
+        props: {items, fields},
+      })
+      const headers = wrapper.findAll('thead th')
+      await headers[0].trigger('click')
+
+      expect(wrapper.emitted('head-clicked')).toBeTruthy()
+      const emittedEvent = wrapper.emitted('head-clicked')?.[0]
+      expect(emittedEvent?.[0]).toBe('name')
+      expect(emittedEvent?.[1]).toMatchObject({key: 'name', label: 'Name', sortable: true})
+      expect(emittedEvent?.[3]).toBe(false) // isFooter
+    })
+
+    it('does not emit row events when event originates from a button or link', async () => {
+      const wrapper = mount(BTableLite, {
+        props: {items, fields},
+        slots: {
+          'cell(name)': '<button class="test-button">Click me</button>',
+        },
+      })
+      const button = wrapper.find('.test-button')
+      await button.trigger('click')
+
+      // Should not emit row-clicked because the event originated from a button
+      expect(wrapper.emitted('row-clicked')).toBeFalsy()
+    })
+
+    it('emits multiple row events for the same row', async () => {
+      const wrapper = mount(BTableLite, {
+        props: {items, fields},
+      })
+      const rows = wrapper.findAll('tbody tr')
+      const [row] = rows
+
+      await row.trigger('mouseenter')
+      await row.trigger('click')
+      await row.trigger('dblclick')
+      await row.trigger('mouseleave')
+
+      expect(wrapper.emitted('row-hovered')).toBeTruthy()
+      expect(wrapper.emitted('row-clicked')).toBeTruthy()
+      expect(wrapper.emitted('row-dblclicked')).toBeTruthy()
+      expect(wrapper.emitted('row-unhovered')).toBeTruthy()
     })
   })
 })

@@ -79,8 +79,8 @@ defineSlots<BPlaceholderTableSlots>()
 
 const columnsToNumber = useToNumber(() => props.columns)
 const rowsToNumber = useToNumber(() => props.rows)
-const computedHeaderColumns = computed(() => props.headerColumns ?? NaN)
-const computedFooterColumns = computed(() => props.footerColumns ?? NaN)
+const computedHeaderColumns = computed(() => props.headerColumns ?? Number.NaN)
+const computedFooterColumns = computed(() => props.footerColumns ?? Number.NaN)
 const headerColumnsNumber = useToNumber(computedHeaderColumns)
 const footerColumnsNumber = useToNumber(computedFooterColumns)
 

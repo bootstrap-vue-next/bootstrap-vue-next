@@ -120,13 +120,13 @@ const handleUnmount = (
     if (!showHide) {
       return
     }
-    showHide.unregisterTrigger('click', el, false)
+    // Pass clean=true to let the composable handle cleanup of aria-expanded and classes
+    showHide.unregisterTrigger('click', el, true)
   })
 
+  // Only remove what the directive manages (aria-controls)
+  // aria-expanded and classes are managed by useShowHide composable
   el.removeAttribute('aria-controls')
-  el.removeAttribute('aria-expanded')
-  el.classList.remove('collapsed')
-  el.classList.remove('not-collapsed')
   delete (el as HTMLElement).dataset.bvtoggle
 }
 

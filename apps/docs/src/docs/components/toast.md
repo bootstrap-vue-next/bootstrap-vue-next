@@ -79,6 +79,8 @@ Toasts are intended to be **small interruptions** to your visitors or users, so 
 
 If you just need a single simple message to appear along the bottom or top of the user's window, use a fixed position `BAlert` instead.
 
+For information on managing ARIA attributes for toast triggers, see the [ARIA Trigger Registration for Component Visibility](/docs/reference/accessibility#aria-trigger-registration-for-component-visibility) section in the Accessibility reference.
+
 ### Accessibility tips
 
 Typically, toast messages should display one or two-line non-critical messages that **do not**
