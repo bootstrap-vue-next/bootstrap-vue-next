@@ -47,11 +47,7 @@ export const useModal = () => {
     }
 
     // Handle reactivity with shallowRef - components in shallowRef don't need markRaw
-    const resolvedProps = isRef(obj)
-      ? obj
-      : shallowRef({
-          ...toValue(obj),
-        })
+    const resolvedProps = isRef(obj) ? obj : shallowRef(obj)
     const _self = resolvedProps.value?.id || Symbol('Modals controller')
 
     const promise = buildPromise<
