@@ -218,7 +218,7 @@ const modelValue = defineModel<Exclude<BFormTagsProps['modelValue'], undefined>>
 
 const computedId = useId()
 
-const limitNumber = useToNumber(() => props.limit ?? NaN)
+const limitNumber = useToNumber(() => props.limit ?? Number.NaN)
 
 const stateClass = useStateClass(() => props.state)
 
@@ -321,7 +321,7 @@ const onChange = (e: Readonly<Event>): void => {
 }
 
 const onKeydown = (e: Readonly<KeyboardEvent>): void => {
-  if (e.key === 'Enter' && !props.noAddOnEnter) {
+  if ((e.key === 'Enter' || e.code === 'NumpadEnter') && !props.noAddOnEnter) {
     addTag(inputValue.value)
     return
   }

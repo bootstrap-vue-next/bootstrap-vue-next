@@ -4,7 +4,7 @@
     :model-value="true"
     variant="primary"
     ><a
-      href="#"
+      href="#alert-link-colors"
       class="alert-link"
       >Primary Alert</a
     ></BAlert
@@ -13,7 +13,7 @@
     :model-value="true"
     variant="secondary"
     ><a
-      href="#"
+      href="#alert-link-colors"
       class="alert-link"
       >Secondary Alert</a
     ></BAlert
@@ -22,7 +22,7 @@
     :model-value="true"
     variant="success"
     ><a
-      href="#"
+      href="#alert-link-colors"
       class="alert-link"
       >Success Alert</a
     ></BAlert
@@ -31,7 +31,7 @@
     :model-value="true"
     variant="danger"
     ><a
-      href="#"
+      href="#alert-link-colors"
       class="alert-link"
       >Danger Alert</a
     ></BAlert
@@ -40,7 +40,7 @@
     :model-value="true"
     variant="warning"
     ><a
-      href="#"
+      href="#alert-link-colors"
       class="alert-link"
       >Warning Alert</a
     ></BAlert
@@ -49,7 +49,7 @@
     :model-value="true"
     variant="info"
     ><a
-      href="#"
+      href="#alert-link-colors"
       class="alert-link"
       >Info Alert</a
     ></BAlert
@@ -58,7 +58,7 @@
     :model-value="true"
     variant="light"
     ><a
-      href="#"
+      href="#alert-link-colors"
       class="alert-link"
       >Light Alert</a
     ></BAlert
@@ -67,7 +67,7 @@
     :model-value="true"
     variant="dark"
     ><a
-      href="#"
+      href="#alert-link-colors"
       class="alert-link"
       >Dark Alert</a
     ></BAlert

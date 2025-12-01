@@ -1,11 +1,8 @@
-# Pagination
-
-<PageHeader>
-
-Quick first, previous, next, last, and page buttons for pagination control of another component
-(such as `BTable` or lists).
-
-</PageHeader>
+---
+description: >
+  Quick first, previous, next, last, and page buttons for pagination control of another component
+  (such as `BTable` or lists).
+---
 
 ## Overview
 
@@ -159,9 +156,3 @@ pattern.
 - <kbd>Enter</kbd> or <kbd>Space</kbd> keys will select (click) the currently focused page button
 - Pressing <kbd>Tab</kbd> will move to the next control or link on the page, while pressing
   <kbd>Shift</kbd>+<kbd>Tab</kbd> will move to the previous control or link on the page.
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/pagination.data'
-</script>

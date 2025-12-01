@@ -42,6 +42,11 @@
   display: none !important;
 }
 
+/* Override inline display styles during transitions to allow proper CSS transitions */
+.dropdown-menu.fade.showing {
+  display: block !important;
+}
+
 // No focus outline helper (use sparingly)
 .bv-no-focus-ring:focus {
   outline: none;

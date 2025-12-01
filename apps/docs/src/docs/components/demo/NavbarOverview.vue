@@ -5,16 +5,16 @@
     toggleable="lg"
     variant="primary"
   >
-    <BNavbarBrand href="#">NavBar</BNavbarBrand>
+    <BNavbarBrand href="#navbar-overview">NavBar</BNavbarBrand>
     <BNavbarToggle target="nav-collapse" />
     <BCollapse
       id="nav-collapse"
       is-nav
     >
       <BNavbarNav>
-        <BNavItem href="#">Link</BNavItem>
+        <BNavItem href="#navbar-overview">Link</BNavItem>
         <BNavItem
-          href="#"
+          href="#navbar-overview"
           disabled
           >Disabled</BNavItem
         >
@@ -25,18 +25,18 @@
           text="Lang"
           right
         >
-          <BDropdownItem href="#">EN</BDropdownItem>
-          <BDropdownItem href="#">ES</BDropdownItem>
-          <BDropdownItem href="#">RU</BDropdownItem>
-          <BDropdownItem href="#">FA</BDropdownItem>
+          <BDropdownItem>EN</BDropdownItem>
+          <BDropdownItem>ES</BDropdownItem>
+          <BDropdownItem>RU</BDropdownItem>
+          <BDropdownItem>FA</BDropdownItem>
         </BNavItemDropdown>
         <BNavItemDropdown right>
           <!-- Using 'button-content' slot -->
           <template #button-content>
             <em>User</em>
           </template>
-          <BDropdownItem href="#">Profile</BDropdownItem>
-          <BDropdownItem href="#">Sign Out</BDropdownItem>
+          <BDropdownItem>Profile</BDropdownItem>
+          <BDropdownItem>Sign Out</BDropdownItem>
         </BNavItemDropdown>
       </BNavbarNav>
       <BNavForm class="d-flex">

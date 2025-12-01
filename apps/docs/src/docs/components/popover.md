@@ -1,13 +1,10 @@
-# Popover
-
-<PageHeader>
-
-The Popover feature, which provides a tooltip-like behavior, can be easily applied to any
-interactive element via the `<BPopover>` component or [`v-b-popover`](/docs/directives/BPopover)
-directive. Popovers can also be created and programmatically controlled via the composable
-[`usePopover`](/docs/composables/usePopover)
-
-</PageHeader>
+---
+description: >
+  The Popover feature, which provides a tooltip-like behavior, can be easily applied to any
+  interactive element via the `<BPopover>` component or [`v-b-popover`](/docs/directives/BPopover)
+  directive. Popovers can also be created and programmatically controlled via the composable
+  [`usePopover`](/docs/composables/usePopover)
+---
 
 <<< DEMO ./demo/PopoverOverview.vue#template{vue-html}
 
@@ -136,8 +133,6 @@ These are accessed through the [template ref](https://vuejs.org/guide/essentials
 
 <<< DEMO ./demo/PopoverExposed.vue
 
-<ComponentReference :data="data" />
+## Accessibility
 
-<script setup lang="ts">
-import {data} from '../../data/components/popover.data'
-</script>
+For information on managing ARIA attributes for popover triggers, see the [ARIA Trigger Registration for Component Visibility](/docs/reference/accessibility#aria-trigger-registration-for-component-visibility) section in the Accessibility reference.

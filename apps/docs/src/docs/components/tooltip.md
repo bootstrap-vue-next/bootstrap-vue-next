@@ -1,12 +1,9 @@
-# Tooltip
-
-<PageHeader>
-
-Easily add tooltips to an interactive element or component via the `<BTooltip>` component
-or [`v-b-tooltip`](/docs/directives/BTooltip) directive. Tooltips can also be created and programmatically controlled via the composable
-[`usePopover`](/docs/composables/usePopover)
-
-</PageHeader>
+---
+description: >
+  Easily add tooltips to an interactive element or component via the `<BTooltip>` component
+  or [`v-b-tooltip`](/docs/directives/BTooltip) directive. Tooltips can also be created and programmatically controlled via the composable
+  [`usePopover`](/docs/composables/usePopover)
+---
 
 <<< DEMO ./demo/TooltipOverview.vue#template{vue-html}
 
@@ -154,8 +151,6 @@ These are accessed through the [template ref](https://vuejs.org/guide/essentials
 
 <<< DEMO ./demo/TooltipExposed.vue
 
-<ComponentReference :data="data" />
+## Accessibility
 
-<script setup lang="ts">
-import {data} from '../../data/components/tooltip.data'
-</script>
+For information on managing ARIA attributes for tooltip triggers, see the [ARIA Trigger Registration for Component Visibility](/docs/reference/accessibility#aria-trigger-registration-for-component-visibility) section in the Accessibility reference.

@@ -140,6 +140,7 @@ export const composablesWithExternalPath = {
   useColorMode: '/composables/useColorMode',
   useModal: '/composables/useModal',
   useModalController: '/composables/useModal',
+  useScrollLock: '/composables/useScrollLock',
   useScrollspy: '/composables/useScrollspy',
   useToast: '/composables/useToast',
   useToastController: '/composables/useToast',

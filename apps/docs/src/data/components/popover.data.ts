@@ -13,7 +13,6 @@ export default {
   load: (): ComponentReference => ({
     BPopover: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.tooltip, .popover'},
-      sourcePath: '/BPopover/BPopover.vue',
       props: popoverSharedProps('popover') satisfies PropRecord<keyof BPopoverProps>,
       emits: popoverSharedEmits('popover') satisfies EmitRecord<
         keyof BPopoverEmits | 'update:model-value'

@@ -1,10 +1,6 @@
-# Form Input
-
-<PageHeader>
-
-Create various type inputs such as: `text`, `password`, `number`, `url`, `email`, `search`, `range`, `date` and more.
-
-</PageHeader>
+---
+description: 'Create various type inputs such as: `text`, `password`, `number`, `url`, `email`, `search`, `range`, `date` and more.'
+---
 
 <<< DEMO ./demo/FormInputOverview.vue
 
@@ -173,7 +169,13 @@ The `plaintext` option is not supported by input types `color` or `range`.
 
 ## Disabling mousewheel events on numeric-like inputs
 
-<NotYetImplemented/>
+By default, when a numeric input has focus, the browser will increment or decrement the input's value when the user scrolls the mousewheel. To disable this behavior, you can use Vue's event modifier `.prevent` on the `wheel` event:
+
+```vue
+<BFormInput type="number" @wheel.prevent />
+```
+
+This approach uses native Vue functionality and doesn't require additional props.
 
 ## Datalist support
 
@@ -276,9 +278,3 @@ these methods and properties. Support will vary based on input type.
 e.g. With the same setup as above, call `foo?.value?.element?.focus` to set the foccus on the input element.
 
 <<< DEMO ./demo/FormInputMethods.vue
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/formInput.data'
-</script>

@@ -1,7 +1,7 @@
 <template>
   <!-- Placeholder template with actual refs for TypeScript compatibility -->
   <div ref="content">
-    <div ref="target"></div>
+    <div ref="target" />
   </div>
 </template>
 
@@ -13,6 +13,7 @@ import {useScrollspy} from 'bootstrap-vue-next'
 const content = useTemplateRef('content')
 const target = useTemplateRef('target')
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const {current} = useScrollspy(content, target, {
   root: document.querySelector('#custom-viewport') as HTMLElement,
   rootMargin: '0px 0px -50%', // Element must be 50% visible

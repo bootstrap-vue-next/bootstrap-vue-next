@@ -26,7 +26,7 @@ export const useTextareaResize = (
 ) => {
   const height = ref<number | null | string>(0)
   const maxRowsNumber = useToNumber(
-    computed(() => toValue(maxRows) || NaN),
+    computed(() => toValue(maxRows) || Number.NaN),
     {
       method: 'parseInt',
       nanToZero: true,

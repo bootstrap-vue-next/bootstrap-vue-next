@@ -1,8 +1,8 @@
 {
   "name": "bootstrap-vue-next",
   "displayName": "BootstrapVueNext",
-  "description": "BootstrapVueNext is an early and lovely component library for Vue 3 & Nuxt 3 based on Bootstrap 5 and Typescript.",
-  "version": "0.40.0",
+  "description": "Seamless integration of Vue 3, Bootstrap 5, and TypeScript for modern, type-safe UI development",
+  "version": "0.40.9",
   "license": "MIT",
   "main": "./dist/bootstrap-vue-next.umd.js",
   "module": "./dist/bootstrap-vue-next.mjs",
@@ -21,7 +21,7 @@
     },
     "./components": {
       "import": {
-        "types": "./dist/src/components/index.mts",
+        "types": "./dist/src/components/index.d.mts",
         "default": "./dist/src/components/index.mjs"
       },
       "require": {
@@ -31,7 +31,7 @@
     },
     "./components/*": {
       "import": {
-        "types": "./dist/src/components/*/index.mts",
+        "types": "./dist/src/components/*/index.d.mts",
         "default": "./dist/src/components/*/index.mjs"
       },
       "require": {
@@ -41,7 +41,7 @@
     },
     "./directives": {
       "import": {
-        "types": "./dist/src/directives/index.mts",
+        "types": "./dist/src/directives/index.d.mts",
         "default": "./dist/src/directives/index.mjs"
       },
       "require": {
@@ -51,7 +51,7 @@
     },
     "./directives/*": {
       "import": {
-        "types": "./dist/src/directives/*/index.mts",
+        "types": "./dist/src/directives/*/index.d.mts",
         "default": "./dist/src/directives/*/index.mjs"
       },
       "require": {
@@ -61,7 +61,7 @@
     },
     "./plugins": {
       "import": {
-        "types": "./dist/src/plugins/index.mts",
+        "types": "./dist/src/plugins/index.d.mts",
         "default": "./dist/src/plugins/index.mjs"
       },
       "require": {
@@ -71,7 +71,7 @@
     },
     "./plugins/*": {
       "import": {
-        "types": "./dist/src/plugins/*/index.mts",
+        "types": "./dist/src/plugins/*/index.d.mts",
         "default": "./dist/src/plugins/*/index.mjs"
       },
       "require": {
@@ -81,7 +81,7 @@
     },
     "./composables": {
       "import": {
-        "types": "./dist/src/composables/index.mts",
+        "types": "./dist/src/composables/index.d.mts",
         "default": "./dist/src/composables/index.mjs"
       },
       "require": {
@@ -91,7 +91,7 @@
     },
     "./composables/*": {
       "import": {
-        "types": "./dist/src/composables/*/index.mts",
+        "types": "./dist/src/composables/*/index.d.mts",
         "default": "./dist/src/composables/*/index.mjs"
       },
       "require": {
@@ -101,7 +101,7 @@
     },
     "./resolvers": {
       "import": {
-        "types": "./dist/src/resolvers/index.mts",
+        "types": "./dist/src/resolvers/index.d.mts",
         "default": "./dist/src/resolvers/index.mjs"
       },
       "require": {
@@ -111,7 +111,7 @@
     },
     "./utils": {
       "import": {
-        "types": "./dist/src/utils/index.mts",
+        "types": "./dist/src/utils/index.d.mts",
         "default": "./dist/src/utils/index.mjs"
       },
       "require": {
@@ -133,6 +133,7 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json",
     "preview": "vite preview",
     "build": "pnpm run type-check && pnpm run build-only",
+    "publint": "publint",
     "lint": "eslint --fix src",
     "test:lint": "eslint src",
     "test:unit": "vitest",
@@ -183,6 +184,7 @@
     "focus-trap": "^7.6.5",
     "happy-dom": "^18.0.1",
     "prettier": "^3.6.2",
+    "publint": "^0.3.15",
     "sass": "^1.89.2",
     "typescript": "^5.8.3",
     "unplugin-vue-components": "^28.8.0",

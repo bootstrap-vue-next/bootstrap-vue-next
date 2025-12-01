@@ -18,7 +18,6 @@ import {buildCommonProps} from '../../utils/commonProps'
 export default {
   load: (): ComponentReference => ({
     BCarousel: {
-      sourcePath: '/BCarousel/BCarousel.vue',
       props: {
         ...pick(buildCommonProps(), ['id']),
         background: {
@@ -181,7 +180,6 @@ export default {
     },
     BCarouselSlide: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.carousel-item'},
-      sourcePath: '/BCarousel/BCarouselSlide.vue',
       props: {
         ...pick(buildCommonProps(), ['id']),
         background: {

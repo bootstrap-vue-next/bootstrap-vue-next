@@ -15,8 +15,10 @@
           :variant="field.variant"
           :abbr="field.headerAbbr"
           :style="field.thStyle"
+          :tabindex="shouldHeaderBeFocusable(field) ? '0' : undefined"
           v-bind="callThAttr(null, field, 'top')"
           @click="headerClicked(field, $event)"
+          @keydown="handleHeaderKeydown(field, $event)"
         >
           <!-- eslint-disable prettier/prettier -->
           <slot
@@ -80,6 +82,7 @@
             "
             :class="getRowClasses(item, 'row')"
             :variant="isTableItem(item) ? item._rowVariant : undefined"
+            :tabindex="shouldRowBeFocusable ? '0' : undefined"
             v-bind="callTbodyTrAttrs(item, 'row')"
             @click="!filterEvent($event) && emit('row-clicked', item, itemIndex, $event)"
             @dblclick="!filterEvent($event) && emit('row-dblclicked', item, itemIndex, $event)"
@@ -87,6 +90,7 @@
             @mouseenter="!filterEvent($event) && emit('row-hovered', item, itemIndex, $event)"
             @mouseleave="!filterEvent($event) && emit('row-unhovered', item, itemIndex, $event)"
             @mousedown="handleMiddleClick(item, itemIndex, $event)"
+            @keydown="handleRowKeydown(item, itemIndex, $event)"
           >
             <component
               :is="getCellComponent(field)"
@@ -116,7 +120,7 @@
                 :field="field"
                 :items="items"
                 :toggle-details="() => toggleRowDetails(item)"
-                :details-showing="isTableItem(item) ? (detailsMap.get(item) ?? false) : false"
+                :details-showing="isTableItem(item) ? (getDetailsValue(item) ?? false) : false"
               >
                 <template v-if="!slots[`cell(${String(field.key)})`] && !slots['cell()']">
                   {{ formatItem(item, String(field.key), field.formatter) }}
@@ -126,7 +130,7 @@
           </BTr>
 
           <template
-            v-if="isTableItem(item) && detailsMap.get(item) === true && slots['row-details']"
+            v-if="isTableItem(item) && getDetailsValue(item) === true && slots['row-details']"
           >
             <BTr aria-hidden="true" role="presentation" class="d-none" />
             <BTr
@@ -171,8 +175,10 @@
           :abbr="field.headerAbbr"
           :style="field.thStyle"
           :variant="field.variant"
+          :tabindex="shouldHeaderBeFocusable(field) ? '0' : undefined"
           v-bind="callThAttr(null, field, 'bottom')"
           @click="headerClicked(field, $event, true)"
+          @keydown="handleHeaderKeydown(field, $event, true)"
         >
           <div class="d-inline-flex flex-nowrap align-items-center gap-1">
             <div>
@@ -210,7 +216,7 @@
 </template>
 
 <script setup lang="ts" generic="Items">
-import {computed, ref, watch} from 'vue'
+import {computed, inject, ref, watch} from 'vue'
 import type {BTableLiteProps} from '../../types/ComponentProps'
 import {
   isTableField,
@@ -237,6 +243,9 @@ import type {LiteralUnion} from '../../types/LiteralUnion'
 import {useId} from '../../composables/useId'
 import type {BTableLiteEmits} from '../../types/ComponentEmits'
 import type {BTableLiteSlots} from '../../types'
+import {CODE_DOWN, CODE_END, CODE_HOME, CODE_UP} from '../../utils/constants'
+import {stopEvent} from '../../utils/event'
+import {tableKeyboardNavigationKey} from '../../utils/keys'
 
 const _props = withDefaults(defineProps<BTableLiteProps<Items>>(), {
   caption: undefined,
@@ -285,19 +294,67 @@ const props = useDefaults(_props, 'BTableLite')
 const emit = defineEmits<BTableLiteEmits<Items>>()
 const slots = defineSlots<BTableLiteSlots<Items>>()
 
+// Inject keyboard navigation state from parent BTable
+const keyboardNavigation = inject(tableKeyboardNavigationKey, null)
+
 const computedId = useId(() => props.id)
 
-const generateDetailsItem = (item: TableItem): [object, boolean | undefined] => [
-  item,
-  item._showDetails,
-]
-const detailsMap = ref(new WeakMap<object, boolean | undefined>())
+const generateDetailsItem = (item: TableItem): [object | string, boolean | undefined] => {
+  // Use primary key as the map key if available and the item has that key
+  if (props.primaryKey && get(item, props.primaryKey) !== undefined) {
+    return [String(get(item, props.primaryKey)), item._showDetails]
+  }
+  // Fall back to object reference
+  return [item, item._showDetails]
+}
+
+// Use WeakMap when no primaryKey (for memory efficiency), Map when primaryKey is defined (to support strings)
+const detailsMap = ref<
+  Map<object | string, boolean | undefined> | WeakMap<object, boolean | undefined>
+>(props.primaryKey ? new Map() : new WeakMap())
+
+// Helper functions for type-safe map operations
+const hasDetailsValue = (key: object | string): boolean => {
+  if (typeof key === 'string') {
+    // When using string keys, we must be using a Map
+    return (detailsMap.value as Map<object | string, boolean | undefined>).has(key)
+  }
+  // When using object keys, could be either Map or WeakMap
+  return detailsMap.value.has(key)
+}
+
+const setDetailsValueByKey = (key: object | string, value: boolean | undefined): void => {
+  if (typeof key === 'string') {
+    // When using string keys, we must be using a Map
+    ;(detailsMap.value as Map<object | string, boolean | undefined>).set(key, value)
+  } else {
+    // When using object keys, could be either Map or WeakMap
+    detailsMap.value.set(key, value)
+  }
+}
+
+// Watch for primaryKey changes and recreate the map
+watch(
+  () => props.primaryKey,
+  (newKey, oldKey) => {
+    // If primaryKey changes, clear and recreate the map with the appropriate type
+    if (newKey !== oldKey) {
+      detailsMap.value = newKey ? new Map() : new WeakMap()
+    }
+  }
+)
+
 watch(
   () => props.items,
   (items) => {
     items.forEach((item) => {
       if (!isTableItem(item)) return
-      detailsMap.value.set(...generateDetailsItem(item))
+      const [key, showDetails] = generateDetailsItem(item)
+      // Only set if not already in map, or if _showDetails is explicitly set
+      // This preserves toggled state when items are replaced with same primary key
+      if (!hasDetailsValue(key) || showDetails !== undefined) {
+        setDetailsValueByKey(key, showDetails)
+      }
     })
   },
   {deep: true, immediate: true}
@@ -385,10 +442,32 @@ const headerClicked = (field: TableField<Items>, event: Readonly<MouseEvent>, is
   emit('head-clicked', field.key as string, field, event, isFooter)
 }
 
+const getDetailsMapKey = (item: Items): object | string => {
+  if (isTableItem(item) && props.primaryKey && get(item, props.primaryKey) !== undefined) {
+    return String(get(item, props.primaryKey))
+  }
+  return item as object
+}
+
+const getDetailsValue = (item: Items): boolean | undefined => {
+  const key = getDetailsMapKey(item)
+  if (typeof key === 'string') {
+    // When using string keys, we must be using a Map
+    return (detailsMap.value as Map<object | string, boolean | undefined>).get(key)
+  }
+  // When using object keys, could be either Map or WeakMap
+  return detailsMap.value.get(key)
+}
+
+const setDetailsValue = (item: Items, value: boolean | undefined): void => {
+  const key = getDetailsMapKey(item)
+  setDetailsValueByKey(key, value)
+}
+
 const toggleRowDetails = (tr: Items) => {
   if (isTableItem(tr)) {
-    const prevValue = detailsMap.value.get(tr)
-    detailsMap.value.set(tr, !prevValue)
+    const prevValue = getDetailsValue(tr)
+    setDetailsValue(tr, !prevValue)
     tr._showDetails = !prevValue
   }
 }
@@ -447,6 +526,74 @@ const getCellComponent = (field: Readonly<TableField>) => {
     return BTh
   }
   return BTd
+}
+
+// Keyboard navigation support
+const shouldHeaderBeFocusable = (field: TableField<Items>) =>
+  !!(keyboardNavigation?.headerNavigation.value && field.sortable === true)
+
+const shouldRowBeFocusable = computed(
+  () => !!(keyboardNavigation?.rowNavigation.value && props.items.length > 0)
+)
+
+const handleHeaderKeydown = (field: TableField<Items>, event: KeyboardEvent, isFooter = false) => {
+  const {target, code} = event
+
+  if (target && (target as Element).tagName !== 'TH' && document.activeElement === target) return
+
+  if (code === 'Enter' || code === 'NumpadEnter' || code === 'Space') {
+    stopEvent(event)
+    headerClicked(field, event as unknown as MouseEvent, isFooter)
+  }
+}
+
+const handleRowKeydown = (item: Items, itemIndex: number, event: KeyboardEvent) => {
+  const {target, code, shiftKey} = event
+
+  if (target && (target as Element).tagName !== 'TR' && document.activeElement === target) return
+
+  if (code === 'Enter' || code === 'NumpadEnter' || code === 'Space') {
+    stopEvent(event)
+    emit('row-clicked', item, itemIndex, event as unknown as MouseEvent)
+    return
+  }
+
+  if (code === CODE_DOWN || code === CODE_UP || code === CODE_HOME || code === CODE_END) {
+    stopEvent(event)
+    handleRowNavigation(code, shiftKey, itemIndex)
+  }
+}
+
+const handleRowNavigation = (code: string, shiftKey: boolean, currentIndex: number) => {
+  const rows = Array.from(
+    document.querySelectorAll(`#${computedId.value} tbody tr[tabindex]`)
+  ) as HTMLTableRowElement[]
+
+  if (rows.length === 0) return
+
+  let targetIndex = currentIndex
+
+  if (code === CODE_DOWN) {
+    if (shiftKey) {
+      targetIndex = rows.length - 1 // Go to last row
+    } else {
+      targetIndex = Math.min(currentIndex + 1, rows.length - 1) // Go to next row
+    }
+  } else if (code === CODE_UP) {
+    if (shiftKey) {
+      targetIndex = 0 // Go to first row
+    } else {
+      targetIndex = Math.max(currentIndex - 1, 0) // Go to previous row
+    }
+  } else if (code === CODE_END) {
+    targetIndex = rows.length - 1 // Go to last row
+  } else if (code === CODE_HOME) {
+    targetIndex = 0 // Go to first row
+  }
+
+  if (targetIndex !== currentIndex && rows[targetIndex]) {
+    rows[targetIndex].focus()
+  }
 }
 
 const computedSimpleProps = computed(() => ({

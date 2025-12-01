@@ -5,6 +5,8 @@
         <BButton
           variant="link"
           underline-opacity="0"
+          aria-controls="offcanvas-toc"
+          :aria-expanded="tocVisible ? 'true' : 'false'"
           @click="showToc"
           >&lt; Table of Contents</BButton
         > </BCol
@@ -13,6 +15,8 @@
           <BButton
             variant="link"
             underline-opacity="0"
+            aria-controls="offcanvas-otp"
+            :aria-expanded="otpVisible ? 'true' : 'false'"
             @click="showOtp"
             >On this page &gt;</BButton
           >
@@ -25,7 +29,9 @@
         class="scrollable-column"
       >
         <BOffcanvas
+          id="offcanvas-toc"
           v-model="tocVisible"
+          title="Table of Contents"
           placement="start"
           responsive="md"
         >
@@ -82,7 +88,9 @@
         class="scrollable-column"
       >
         <BOffcanvas
+          id="offcanvas-otp"
           v-model="otpVisible"
+          title="On this page"
           placement="end"
           responsive="md"
         >

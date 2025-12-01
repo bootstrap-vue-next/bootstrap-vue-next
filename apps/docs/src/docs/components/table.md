@@ -1,10 +1,6 @@
-# Tables
-
-<PageHeader>
-
-For displaying tabular data, `BTable` supports pagination, filtering, sorting, custom rendering, various style options, events, and asynchronous data. For simple display of tabular data without all the fancy features, BootstrapVueNext provides two lightweight alternative components [`BTableLite`](#light-weight-tables) and [`BTableSimple`](#simple-tables).
-
-</PageHeader>
+---
+description: 'For displaying tabular data, `BTable` supports pagination, filtering, sorting, custom rendering, various style options, events, and asynchronous data. For simple display of tabular data without all the fancy features, BootstrapVueNext provides two lightweight alternative components [`BTableLite`](#light-weight-tables) and [`BTableSimple`](#simple-tables).'
+---
 
 ## Basic Usage
 
@@ -265,7 +261,7 @@ values: `sm`, `md`, `lg`, or `xl`.
 
 ### Stacked tables
 
-An alternative to responsive tables, BootstrapVue includes the stacked table option (using custom
+An alternative to responsive tables, BootstrapVueNext includes the stacked table option (using custom
 SCSS/CSS), which allow tables to be rendered in a visually stacked format. Make any table stacked
 across _all viewports_ by setting the prop `stacked` to `true`. Or, alternatively, set a breakpoint
 at which the table will return to normal table format by setting the prop `stacked` to one of the
@@ -298,7 +294,7 @@ BootstrapVueNext's custom CSS is required in order to support stacked tables.
 ### Table caption
 
 Add an optional caption to your table via the prop `caption` or the named slot `table-caption` (the
-slot takes precedence over the prop). The default Bootstrap v4 styling places the caption at the
+slot takes precedence over the prop). The default Bootstrap v5 styling places the caption at the
 bottom of the table:
 
 <<< DEMO ./demo/TableCaption.vue
@@ -459,7 +455,7 @@ scoped slots (even when disabled)
 
 If you wish to add additional rows to the header you may do so via the `thead-top` slot. This slot
 is inserted before the header cells row, and is not automatically encapsulated by `<tr>..</tr>`
-tags. It is recommended to use the BootstrapVue [table helper components](#table-helper-components),
+tags. It is recommended to use the BootstrapVueNext [table helper components](#table-helper-components),
 rather than native browser table child elements.
 
 <<< DEMO ./demo/TableHeaderRows.vue
@@ -594,6 +590,10 @@ If manipulating the `_showDetails` property directly on the item data (i.e. not 
 `toggleDetails` function reference), the `_showDetails` property **must** exist in the items data
 for proper reactive detection of changes to its value. Read more about
 [how reactivity works in Vue](https://vuejs.org/guide/extras/reactivity-in-depth.html#Change-Detection-Caveats).
+:::
+
+::: info NOTE
+When using the `primary-key` prop, row details will persist even when items are replaced with new object references, as long as the primary key value remains the same. This allows row details to stay open in scenarios like "Load more" or pagination. Without a `primary-key`, the component uses a `WeakMap` for memory efficiency, and row details will close when items are garbage collected or replaced with new object references.
 :::
 
 **Available `row-details` scoped variable properties:**
@@ -878,6 +878,59 @@ properties:
 | `perPage`     | `number`                         | The maximum number of rows per page to display (the value of the `per-page` prop) |
 | `filter`      | `string \| undefined`            | The value of the `filter` prop                                                    |
 | `sortBy`      | `BTableSortBy<T>[] \| undefined` | The current column key being sorted, or an empty string if not sorting            |
+| `signal`      | `AbortSignal`                    | An AbortSignal that can be used to cancel the request when a new provider call is triggered |
+
+### Debouncing Provider Calls
+
+To avoid excessive provider calls (e.g., when typing rapidly in a filter), you can use the `debounce` and `debounce-max-wait` props:
+
+- `debounce`: Delay in milliseconds before calling the provider after changes (default: `0` for immediate execution)
+- `debounce-max-wait`: Maximum time in milliseconds to wait before forcing a provider call, even if changes are still occurring
+
+Example with debouncing:
+
+```vue
+<BTable
+  :provider="myProvider"
+  :fields="fields"
+  :debounce="300"
+  :debounce-max-wait="1000"
+/>
+```
+
+### Handling Request Cancellation
+
+The provider context includes an `AbortSignal` that is automatically aborted when a new provider call is triggered. This allows you to cancel in-flight requests to prevent stale data and race conditions.
+
+Example using the signal with fetch:
+
+```typescript
+const myProvider = async (ctx: BTableProviderContext) => {
+  const response = await fetch('/api/data', {
+    signal: ctx.signal, // Pass the signal to fetch
+  })
+  return response.json()
+}
+```
+
+For custom async operations, listen to the abort event:
+
+```typescript
+const myProvider = async (ctx: BTableProviderContext) => {
+  return new Promise((resolve, reject) => {
+    const timeout = setTimeout(() => {
+      // Perform your async operation
+      resolve(items)
+    }, 1000)
+    
+    // Clean up when aborted
+    ctx.signal.addEventListener('abort', () => {
+      clearTimeout(timeout)
+      reject(new Error('AbortError'))
+    })
+  })
+}
+```
 
 Below are trimmed down versions of the [complete example](#complete-example) as a starting place for using provider functions. They use local provider functions that implement sorting and filtering. Note that sorting is done in cooperation with `<BTable>` by having the
 provider function react to the `context.sortBy` array that it is passed, while filtering is done
@@ -962,7 +1015,7 @@ markup. Components `<BTable>` and `<BTableLite>` use these helper components int
 In the [Simple tables](#simple-tables) example, we are using the helper components `<BThead>`,
 `<BTbody>`, `<BTr>`, `<BTh>`, `<BTd>` and `<BTfoot>`. While you can use regular table child
 elements (i.e. `<tbody>`, `<tr>`, `<td>`, etc.) within `<BTableSimple>`, and the named slots
-`top-row`, `bottom-row`, and `thead-top`, it is recommended to use these BootstrapVue table `<BT*>`
+`top-row`, `bottom-row`, and `thead-top`, it is recommended to use these BootstrapVueNext table `<BT*>`
 helper components. Note that there are no helper components for `<caption>`, `<colgroup>` or
 `<col>`, so you may use these three HTML5 elements directly in `<BTableSimple>`.
 
@@ -1055,9 +1108,3 @@ your app handles the various inconsistencies with events.
 ## Complete Example
 
 <<< DEMO ./demo/TableComplete.vue
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/table.data'
-</script>

@@ -7,7 +7,7 @@
   >
     <BCardText> With supporting text below as a natural lead-in to additional content. </BCardText>
     <BButton
-      href="#"
+      href="#card-text-variants"
       variant="primary"
       >Go somewhere</BButton
     >

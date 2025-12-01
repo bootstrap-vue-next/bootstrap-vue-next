@@ -1,6 +1,7 @@
 import type {MarkdownEnv, MarkdownRenderer} from 'vitepress'
 import type {RuleBlock} from 'markdown-it/lib/parser_block.mjs'
 import path from 'path'
+import fs from 'fs'
 
 // This plugin is inspired by vitepress' snippet plugin and must run before it to work
 //  https://vitepress.dev/guide/markdown.html#import-code-snippets
@@ -41,18 +42,40 @@ export const demoContainer = (md: MarkdownRenderer, srcDir: string) => {
     const {filepath, extension, region, lines, lang, title} = rawPathToToken(rawPath)
     const component = isDemo ? `<${title.substring(0, title.indexOf('.'))}/>` : ''
 
+    // Generate kebab-case ID from filename (without extension)
+    const dotIndex = title.lastIndexOf('.')
+    const filename = (dotIndex === -1 ? title : title.substring(0, dotIndex)).trim()
+    const kebabCaseId = filename
+      .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+      .replace(/[\s_]+/g, '-')
+      .toLowerCase()
+
+    // Resolve path early so it can be used in the prefix token
+    const {realPath, path: _path} = state.env as MarkdownEnv
+    const resolvedPath = path.resolve(path.dirname(realPath ?? _path), filepath)
+
+    // Read the source code file during build time
+    let fullFileContent = ''
+    try {
+      fullFileContent = fs.readFileSync(resolvedPath, 'utf-8')
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.warn(`Failed to read source code from ${resolvedPath}:`, error)
+    }
+
+    // Base64 encode the full file content for StackBlitz (always complete Vue file)
+    // Use explicit UTF-8 encoding to preserve Unicode characters like "é", "–", etc.
+    const encodedFullFile = Buffer.from(fullFileContent, 'utf8').toString('base64')
+
     state.line += 1
 
     const prefixToken = state.push('html_block', '', 0)
-    prefixToken.content = `<HighlightCard>${component}<template #html>`
+    prefixToken.content = `<HighlightCard id="${kebabCaseId}" full-file="${encodedFullFile}" title="${title}">${component}<template #html>`
 
     const codeToken = state.push('fence', 'code', 0)
     codeToken.info = `${lang || extension}${lines ? `{${lines}}` : ''}${title ? `[${title}]` : ''}`
 
-    const {realPath, path: _path} = state.env as MarkdownEnv
-    const resolvedPath = path.resolve(path.dirname(realPath ?? _path), filepath)
-
-    // @ts-ignore
+    // @ts-expect-error - property 'src' does not exist on type 'Token'
     codeToken.src = [resolvedPath, region.slice(1)]
     codeToken.markup = '```'
     codeToken.map = [startLine, startLine + 1]

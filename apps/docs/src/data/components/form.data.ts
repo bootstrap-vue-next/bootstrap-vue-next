@@ -22,7 +22,6 @@ export default {
   load: (): ComponentReference => ({
     BForm: {
       styleSpec: {kind: StyleKind.Tag, value: 'form'},
-      sourcePath: '/BForm/BForm.vue',
       props: pick(buildCommonProps(), [
         'floating',
         'id',
@@ -38,7 +37,6 @@ export default {
     },
     BFormDatalist: {
       styleSpec: {kind: StyleKind.Tag, value: 'datalist'},
-      sourcePath: '/BForm/BFormDatalist.vue',
       props: pick(
         buildCommonProps({
           options: {
@@ -79,7 +77,6 @@ export default {
     },
     BFormFloatingLabel: {
       styleSpec: {kind: StyleKind.OverrideClass, value: 'floating-label'},
-      sourcePath: '/BForm/BFormFloatingLabel.vue',
       props: {
         label: {
           type: 'string',
@@ -104,7 +101,6 @@ export default {
     },
     BFormInvalidFeedback: {
       styleSpec: {kind: StyleKind.OverrideClass, value: 'invalid-feedback, invalid-tooltip'},
-      sourcePath: '/BForm/BFormInvalidFeedback.vue',
       props: {
         ...pick(buildCommonProps(), ['ariaLive', 'id', 'role', 'state', 'tag', 'tooltip']),
         forceShow: {
@@ -127,7 +123,6 @@ export default {
     },
     BFormRow: {
       styleSpec: {kind: StyleKind.OverrideClass, value: 'row'},
-      sourcePath: '/BForm/BFormRow.vue',
       props: pick(buildCommonProps(), ['tag']) satisfies PropRecord<keyof BFormRowProps>,
       emits: {},
       slots: {
@@ -137,7 +132,6 @@ export default {
       } satisfies SlotRecord<keyof BFormRowSlots>,
     },
     BFormText: {
-      sourcePath: '/BForm/BFormText.vue',
       props: {
         ...pick(buildCommonProps(), ['id', 'tag', 'textVariant']),
         inline: {
@@ -161,7 +155,6 @@ export default {
     },
     BFormValidFeedback: {
       styleSpec: {kind: StyleKind.OverrideClass, value: 'valid-feedback, valid-tooltip'},
-      sourcePath: '/BForm/BFormValidFeedback.vue',
       props: {
         ...pick(buildCommonProps(), ['ariaLive', 'id', 'role', 'state', 'tag', 'tooltip']),
         forceShow: {

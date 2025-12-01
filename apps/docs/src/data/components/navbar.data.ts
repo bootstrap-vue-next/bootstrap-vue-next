@@ -23,7 +23,6 @@ import {linkProps, linkTo} from '../../utils/linkProps'
 export default {
   load: (): ComponentReference => ({
     BNavbar: {
-      sourcePath: '/BNavbar/BNavbar.vue',
       props: {
         ...pick(
           buildCommonProps({
@@ -76,7 +75,6 @@ export default {
       } satisfies SlotRecord<keyof BNavbarSlots>,
     },
     BNavbarBrand: {
-      sourcePath: '/BNavbar/BNavbarBrand.vue',
       props: {
         [defaultPropSectionSymbol]: pick(
           buildCommonProps({
@@ -100,7 +98,6 @@ export default {
       } satisfies SlotRecord<keyof BNavbarBrandSlots>,
     },
     BNavbarNav: {
-      sourcePath: '/BNavbar/BNavbarNav.vue',
       props: {
         ...pick(
           buildCommonProps({
@@ -141,7 +138,6 @@ export default {
       } satisfies SlotRecord<keyof BNavbarNavSlots>,
     },
     BNavbarToggle: {
-      sourcePath: '/BNavbar/BNavbarToggle.vue',
       props: {
         ...pick(
           buildCommonProps({

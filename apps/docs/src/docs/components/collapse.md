@@ -1,12 +1,9 @@
-# Collapse
-
-<PageHeader>
-
-Easily toggle visibility of almost any content on your pages in a vertically collapsing container.
-Includes support for making accordions. Visibility can be easily toggled with our
-[`v-b-toggle` directive](/docs/directives/BToggle), or via [`v-model`](#v-model-support).
-
-</PageHeader>
+---
+description: >
+  Easily toggle visibility of almost any content on your pages in a vertically collapsing container.
+  Includes support for making accordions. Visibility can be easily toggled with our
+  [`v-b-toggle` directive](/docs/directives/BToggle), or via [`v-model`](#v-model-support).
+---
 
 <<< DEMO ./demo/CollapseOverview.vue#template{vue-html}
 
@@ -52,8 +49,6 @@ You can also pass multiple target Ids via the directive _value_ in BootstrapVueN
 The `header` and `footer` slots can be used to create custom toggles for your collapsible content. The default slot is
 used for the content to be hidden or shown.
 
-Using the `v-b-toggle` directive to toggle the `BCollapse` will still work but the `collapsed` CSS class will no longer be applied to the element with the directive.
-
 The following properties are available for the `header` and `footer` and `default` slots:
 
 | Property  | Type     | Description                           |
@@ -84,14 +79,12 @@ These are accessed through the [template ref](https://vuejs.org/guide/essentials
 
 ## Accessibility
 
-The `v-b-toggle` directive will automatically add the ARIA attributes `aria-controls` and
-`aria-expanded` to the component that the directive appears on (as well as add the class `collapsed`
-when not expanded). `aria-expanded` will reflect the state of the target `BCollapse` component,
-while `aria-controls` will be set to the Id(s) of the target `BCollapse` component(s).
+The `v-b-toggle` directive will automatically add the ARIA attribute `aria-controls` to the trigger
+element and register it with the target `BCollapse` component. The collapse component will then
+automatically manage the `aria-expanded` attribute and `collapsed` class on the trigger element to
+reflect its visibility state.
 
-If using `v-model` to set the visible state instead of the directive `v-b-toggle`, you will be
-required to, on the toggle element, add the `aria-controls` and other appropriate attributes and
-classes yourself.
+For detailed information on managing ARIA attributes for triggers, including examples of using `v-b-toggle` with `v-model` and manual ARIA management, see the [ARIA Trigger Registration for Component Visibility](/docs/reference/accessibility#aria-trigger-registration-for-component-visibility) section in the Accessibility reference.
 
 While the `v-b-toggle` directive can be placed on almost any HTML element or Vue component, it is
 recommended to use a button or link (or similar component) to act as your toggler; otherwise your
@@ -99,9 +92,3 @@ trigger elements may be inaccessible to keyboard or screen reader users. If you 
 something other than a button or link (or similar component), you should add the attributes
 `tabindex="0"` and `role="button"` to allow users of assistive technology to reach your trigger
 element.
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/collapse.data'
-</script>

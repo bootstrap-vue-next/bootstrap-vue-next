@@ -6,7 +6,6 @@ import {pick} from '../../utils/objectUtils'
 export default {
   load: (): ComponentReference => ({
     BFormRating: {
-      sourcePath: '/BFormRating/BFormRating.vue',
       props: {
         ...pick(buildCommonProps(), ['id', 'variant']),
         color: {
@@ -20,6 +19,12 @@ export default {
           default: 'false',
           description: 'When `true` makes the rating disabled',
         },
+        form: {
+          type: 'string',
+          default: undefined,
+          description:
+            'The id of the form that the rating input belongs to. If not set, the rating will be associated with the closest parent form',
+        },
         inline: {
           type: 'boolean',
           default: 'false',
@@ -30,6 +35,12 @@ export default {
           type: 'number',
           default: 0,
           description: 'The current rating value (supports v-model two-way binding).',
+        },
+        name: {
+          type: 'string',
+          default: undefined,
+          description:
+            'Sets the name attribute on the hidden input element. Required for form submission',
         },
         noBorder: {
           type: 'boolean',

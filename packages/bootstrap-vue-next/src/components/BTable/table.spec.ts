@@ -1,7 +1,7 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
-import {afterEach, describe, expect, it} from 'vitest'
+import {afterEach, describe, expect, it, vi} from 'vitest'
 import BTable from './BTable.vue'
-import type {BTableSortBy, TableField, TableItem} from '../../types'
+import type {BTableProviderContext, BTableSortBy, TableField, TableItem} from '../../types'
 import {nextTick} from 'vue'
 
 interface SimplePerson {
@@ -1215,5 +1215,360 @@ describe('initial sort direction', () => {
       .findAll('tr')
       .map((row) => row.find('td').text())
     expect(text).toStrictEqual(['Havij', 'Cyndi', 'Robert'])
+  })
+})
+
+describe('provider debouncing', () => {
+  it('debounces provider calls when debounce prop is set', async () => {
+    const providerCallCounts: number[] = []
+    let callCount = 0
+
+    const provider = vi.fn(async () => {
+      callCount++
+      providerCallCounts.push(callCount)
+      return simpleItems
+    })
+
+    const wrapper = mount(BTable, {
+      props: {
+        provider,
+        fields: simpleFields,
+        debounce: 300, // Set 300ms debounce
+      },
+    })
+
+    // Wait for initial mount call
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    const initialCalls = callCount
+
+    // Rapidly change filter multiple times
+    await wrapper.setProps({filter: 'a'})
+    await wrapper.setProps({filter: 'ab'})
+    await wrapper.setProps({filter: 'abc'})
+
+    // Wait for debounce delay (300ms) + buffer
+    await new Promise((resolve) => setTimeout(resolve, 400))
+
+    // After debounce, only one additional call should have been made for all the rapid filter changes
+    const finalCalls = callCount
+    expect(finalCalls - initialCalls).toBeLessThanOrEqual(2) // At most one debounced call plus potentially one immediate
+    expect(finalCalls).toBeGreaterThan(initialCalls) // But at least one call was made
+  })
+
+  it('does not debounce provider calls when debounce is 0 (default)', async () => {
+    let callCount = 0
+
+    const provider = vi.fn(async () => {
+      callCount++
+      return simpleItems
+    })
+
+    const wrapper = mount(BTable, {
+      props: {
+        provider,
+        fields: simpleFields,
+        // debounce defaults to 0 (immediate)
+      },
+    })
+
+    // Wait for initial mount call
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    const initialCalls = callCount
+
+    // Change filter - with debounce=0, this should be immediate
+    await wrapper.setProps({filter: 'a'})
+    await nextTick()
+
+    // Should be called immediately
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    expect(callCount).toBe(initialCalls + 1)
+  })
+
+  it('supports AbortSignal in provider context', async () => {
+    let receivedSignal: AbortSignal | undefined
+
+    const provider = vi.fn(async (context: Readonly<BTableProviderContext>) => {
+      receivedSignal = context.signal
+      return simpleItems
+    })
+
+    mount(BTable, {
+      props: {
+        provider,
+        fields: simpleFields,
+      },
+    })
+
+    // Wait for initial mount call
+    await new Promise((resolve) => setTimeout(resolve, 50))
+
+    // Signal should be present
+    expect(receivedSignal).toBeDefined()
+    expect(receivedSignal).toBeInstanceOf(AbortSignal)
+  })
+
+  it('cancels previous provider call when new one is triggered', async () => {
+    let abortedCount = 0
+    const provider = vi.fn(
+      async (context: Readonly<BTableProviderContext>) =>
+        new Promise<typeof simpleItems>((resolve, reject) => {
+          const timeout = setTimeout(() => resolve(simpleItems), 100)
+          context.signal.addEventListener('abort', () => {
+            clearTimeout(timeout)
+            abortedCount++
+            reject(new Error('AbortError'))
+          })
+        })
+    )
+
+    const wrapper = mount(BTable, {
+      props: {
+        provider,
+        fields: simpleFields,
+        debounce: 300,
+      },
+    })
+
+    // Wait for initial mount call
+    await new Promise((resolve) => setTimeout(resolve, 50))
+
+    // Rapidly change filter - this should abort previous calls
+    await wrapper.setProps({filter: 'a'})
+    await new Promise((resolve) => setTimeout(resolve, 10))
+    await wrapper.setProps({filter: 'ab'})
+    await new Promise((resolve) => setTimeout(resolve, 10))
+    await wrapper.setProps({filter: 'abc'})
+
+    // Wait for final debounced call to complete
+    await new Promise((resolve) => setTimeout(resolve, 500))
+
+    // Previous calls should have been aborted
+    expect(abortedCount).toBeGreaterThan(0)
+  })
+
+  it('does not set busy to false when first provider finishes while second is still running', async () => {
+    let callCount = 0
+
+    const provider = vi.fn(async (context: Readonly<BTableProviderContext>) => {
+      callCount++
+      const currentCall = callCount
+
+      if (currentCall === 2) {
+        // First call after mount: delay and get aborted
+        return new Promise<typeof simpleItems>((resolve, reject) => {
+          const timeout = setTimeout(() => {
+            resolve(simpleItems)
+          }, 150)
+
+          context.signal.addEventListener('abort', () => {
+            clearTimeout(timeout)
+            reject(new Error('AbortError'))
+          })
+        }).catch((error) => {
+          // Silently handle AbortError in test
+          if (error.message === 'AbortError') {
+            return simpleItems
+          }
+          throw error
+        })
+      } else if (currentCall === 3) {
+        // Second call: longer delay
+        return new Promise<typeof simpleItems>((resolve) => {
+          setTimeout(() => {
+            resolve(simpleItems)
+          }, 300)
+        })
+      }
+
+      // Initial mount call
+      return simpleItems
+    })
+
+    const wrapper = mount(BTable, {
+      props: {
+        provider,
+        fields: simpleFields,
+        debounce: 0, // No debounce for this test
+      },
+    })
+
+    const $table = wrapper.find('table')
+
+    // Wait for initial mount call
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    expect($table.classes()).not.toContain('b-table-busy') // Should not be busy after initial call
+
+    // Trigger first provider call
+    await wrapper.setProps({filter: 'first'})
+    await new Promise((resolve) => setTimeout(resolve, 20))
+    expect($table.classes()).toContain('b-table-busy') // Should be busy while first call is running
+
+    // Trigger second provider call while first is still running
+    await wrapper.setProps({filter: 'second'})
+    await new Promise((resolve) => setTimeout(resolve, 20))
+    expect($table.classes()).toContain('b-table-busy') // Should still be busy
+
+    // Wait for first provider to finish being aborted
+    await new Promise((resolve) => setTimeout(resolve, 200))
+
+    // The busy state should still be true because the second provider is still running
+    expect($table.classes()).toContain('b-table-busy')
+
+    // Wait for second provider to complete
+    await new Promise((resolve) => setTimeout(resolve, 200))
+
+    // Now busy should be false
+    expect($table.classes()).not.toContain('b-table-busy')
+  })
+})
+
+describe('event emissions', () => {
+  const items = [
+    {id: 1, first_name: 'John', age: 30},
+    {id: 2, first_name: 'Jane', age: 25},
+    {id: 3, first_name: 'Bob', age: 35},
+  ]
+  const fields: Exclude<TableField<(typeof items)[0]>, string>[] = [
+    {key: 'first_name', label: 'Name', sortable: true},
+    {key: 'age', label: 'Age', sortable: true},
+  ]
+
+  it('emits sorted event when column header is clicked', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields},
+    })
+    const headers = wrapper.findAll('thead th')
+    await headers[0].trigger('click')
+
+    expect(wrapper.emitted('sorted')).toBeTruthy()
+    const sortEvent = wrapper.emitted('sorted')?.[0]?.[0] as BTableSortBy
+    expect(sortEvent).toMatchObject({
+      key: 'first_name',
+      order: 'asc',
+    })
+  })
+
+  it('emits filtered event when filter changes', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields, filter: ''},
+    })
+
+    await wrapper.setProps({filter: 'John'})
+    await nextTick()
+
+    expect(wrapper.emitted('filtered')).toBeTruthy()
+    const filteredItems = wrapper.emitted('filtered')?.[0]?.[0] as typeof items
+    expect(filteredItems).toHaveLength(1)
+    expect(filteredItems[0].first_name).toBe('John')
+  })
+
+  it('emits row-selected event when row is selected', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items,
+        fields,
+        selectable: true,
+        selectMode: 'multi',
+      },
+    })
+
+    const rows = wrapper.findAll('tbody tr')
+    await rows[0].trigger('click')
+
+    expect(wrapper.emitted('row-selected')).toBeTruthy()
+    expect(wrapper.emitted('row-selected')?.[0]?.[0]).toEqual(items[0])
+  })
+
+  it('emits row-unselected event when selected row is clicked again', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items,
+        fields,
+        selectable: true,
+        selectMode: 'multi',
+      },
+    })
+
+    const rows = wrapper.findAll('tbody tr')
+    // First click to select
+    await rows[0].trigger('click')
+    expect(wrapper.emitted('row-selected')).toBeTruthy()
+
+    // Second click to unselect
+    await rows[0].trigger('click')
+    expect(wrapper.emitted('row-unselected')).toBeTruthy()
+    expect(wrapper.emitted('row-unselected')?.[0]?.[0]).toEqual(items[0])
+  })
+
+  it('emits change event when sorted items change', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields},
+    })
+
+    const headers = wrapper.findAll('thead th')
+    await headers[0].trigger('click')
+    await nextTick()
+
+    expect(wrapper.emitted('change')).toBeTruthy()
+    const changedItems = wrapper.emitted('change')?.[0]?.[0] as typeof items
+    expect(changedItems).toHaveLength(items.length)
+  })
+
+  it('emits row-clicked event inherited from BTableLite', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields},
+    })
+
+    const rows = wrapper.findAll('tbody tr')
+    await rows[0].trigger('click')
+
+    expect(wrapper.emitted('row-clicked')).toBeTruthy()
+    expect(wrapper.emitted('row-clicked')?.[0]).toEqual([items[0], 0, expect.any(Object)])
+  })
+
+  it('emits row-dblclicked event inherited from BTableLite', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields},
+    })
+
+    const rows = wrapper.findAll('tbody tr')
+    await rows[1].trigger('dblclick')
+
+    expect(wrapper.emitted('row-dblclicked')).toBeTruthy()
+    expect(wrapper.emitted('row-dblclicked')?.[0]).toEqual([items[1], 1, expect.any(Object)])
+  })
+
+  it('emits head-clicked event inherited from BTableLite', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields},
+    })
+
+    const headers = wrapper.findAll('thead th')
+    await headers[1].trigger('click')
+
+    expect(wrapper.emitted('head-clicked')).toBeTruthy()
+    const emittedEvent = wrapper.emitted('head-clicked')?.[0]
+    expect(emittedEvent?.[0]).toBe('age')
+    expect(emittedEvent?.[1]).toMatchObject({key: 'age', label: 'Age', sortable: true})
+  })
+
+  it('emits multiple events in correct order when interacting', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields},
+    })
+
+    // Click header to sort
+    const headers = wrapper.findAll('thead th')
+    await headers[0].trigger('click')
+    await nextTick()
+
+    // Should emit head-clicked, sorted, and change
+    expect(wrapper.emitted('head-clicked')).toBeTruthy()
+    expect(wrapper.emitted('sorted')).toBeTruthy()
+    expect(wrapper.emitted('change')).toBeTruthy()
+
+    // Verify all events were emitted
+    expect(wrapper.emitted('head-clicked')?.length).toBeGreaterThanOrEqual(1)
+    expect(wrapper.emitted('sorted')?.length).toBeGreaterThanOrEqual(1)
   })
 })
