@@ -377,7 +377,7 @@ function resetInfoModal() {
   infoModal.content = ''
 }
 
-function onFiltered(filteredItems: TableItem<Person>[]) {
+function onFiltered(filteredItems: readonly TableItem<Person>[]) {
   // Trigger pagination to update the number of buttons/pages due to filtering
   totalRows.value = filteredItems.length
   currentPage.value = 1

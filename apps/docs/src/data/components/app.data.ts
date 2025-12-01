@@ -1,5 +1,5 @@
 import type {BAppProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropRecord} from 'src/types'
+import type {ComponentReference, PropRecord} from '../../types'
 
 export default {
   load: (): ComponentReference => ({
