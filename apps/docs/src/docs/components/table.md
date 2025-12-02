@@ -784,6 +784,38 @@ You can position the sort icon on the left side of the header cell instead by se
 
 **Note:** For more advanced control over header layout and sorting behavior, you can use [scoped slots for header and footer rendering](#header-and-footer-custom-rendering-via-scoped-slots). The scoped slots provide access to `selectAllRows` and `clearSelected` functions for managing row selection, and allow you to create completely custom header layouts while maintaining sorting functionality through the `head-clicked` event.
 
+### Customizing Sort Icons
+
+Bootstrap-Vue-Next provides flexible ways to customize sort icons to match your design system or icon library.
+
+#### CSS Custom Properties
+
+The easiest way to customize sort icons is by overriding CSS custom properties in your stylesheet. This approach doesn't require rebuilding or modifying Vue components.
+
+<<< DEMO ./demo/TableSortCustomCSSIcons.vue
+
+The following CSS variables control the sort icons:
+
+- `--bvn-sort-icon-none` - Icon shown when column is sortable but not currently sorted
+- `--bvn-sort-icon-asc` - Icon shown when column is sorted in ascending order
+- `--bvn-sort-icon-desc` - Icon shown when column is sorted in descending order
+
+The icons use SVG data URIs, which allow you to customize the icon shape and color. You can use tools like [URL-encoder for SVG](https://yoksel.github.io/url-encoder/) to convert your SVG icons to data URIs.
+
+#### Header Scoped Slots
+
+For maximum flexibility, use the `head(fieldkey)` scoped slots to completely customize the header content including sort icons. This approach lets you use any icon library (Bootstrap Icons, Font Awesome, Material Icons, etc.) or custom SVG components.
+
+<<< DEMO ./demo/TableSortCustomSlotIcons.vue
+
+The scoped slot provides access to the `field` object, which includes `thAttr['aria-sort']` indicating the current sort state (`'none'`, `'ascending'`, or `'descending'`).
+
+**Tip:** When using scoped slots, the table's `head-clicked` event is still emitted, allowing you to maintain sorting functionality while having full control over the visual presentation.
+
+#### Disabling Sort Icons
+
+Set the `no-sortable-icon` prop to `true` to hide sort icons entirely while maintaining sorting functionality. This is useful when you want to indicate sorting through other means, such as background colors or custom slot content.
+
 ## Filtering
 
 Filtering, when used, is applied by default to the **original items** array data. `Btable` provides
