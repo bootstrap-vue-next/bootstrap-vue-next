@@ -808,7 +808,7 @@ For maximum flexibility, use the `head(fieldkey)` scoped slots to completely cus
 
 <<< DEMO ./demo/TableSortCustomSlotIcons.vue
 
-The scoped slot provides access to the `field` object, which includes `thAttr['aria-sort']` indicating the current sort state (`'none'`, `'ascending'`, or `'descending'`).
+The scoped slot provides access to the `field` object, which includes `thAttr['aria-sort']` indicating the current sort state (`'none'`, `'ascending'`, or `'descending'`). Note that `thAttr` may be a function or undefined, so type checking is recommended (see demo for example).
 
 **Tip:** When using scoped slots, the table's `head-clicked` event is still emitted, allowing you to maintain sorting functionality while having full control over the visual presentation.
 

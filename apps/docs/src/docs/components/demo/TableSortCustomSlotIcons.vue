@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <div>
     <BTable
@@ -10,7 +11,7 @@
     >
       <!-- Custom header with sort icons for first_name -->
       <template #head(first_name)="data">
-        <div style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer">
+        <div class="sortable-header">
           {{ data.label }}
           <span
             v-if="getSortIcon(data.field)"
@@ -21,7 +22,7 @@
 
       <!-- Custom header with sort icons for last_name -->
       <template #head(last_name)="data">
-        <div style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer">
+        <div class="sortable-header">
           {{ data.label }}
           <span
             v-if="getSortIcon(data.field)"
@@ -32,7 +33,7 @@
 
       <!-- Custom header with sort icons for age -->
       <template #head(age)="data">
-        <div style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer">
+        <div class="sortable-header">
           {{ data.label }}
           <span
             v-if="getSortIcon(data.field)"
@@ -67,6 +68,7 @@ const items: Person[] = [
 ]
 
 // Custom SVG icons (you could also use Bootstrap Icons, Font Awesome, etc.)
+// Note: In production, prefer component-based icons over v-html for better security
 const icons = {
   none: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" style="opacity: 0.3" viewBox="0 0 16 16"><path d="M8 4l3 3H5l3-3zm0 8l-3-3h6l-3 3z"/></svg>',
   ascending:
@@ -89,9 +91,17 @@ function getSortIcon(field: TableField<Person>): string {
   return ''
 }
 
-function onHeadClicked(key: string, field: TableField<Person>, event: MouseEvent, isfoot: boolean) {
+function onHeadClicked() {
   // Sorting is handled automatically by BTable
   // This event is available if you need additional custom logic
-  console.log('Header clicked:', key, field, isfoot)
 }
 </script>
+
+<style scoped>
+.sortable-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+</style>
