@@ -51,24 +51,40 @@ export function autoInjectDocComponents(md: MarkdownIt) {
 
   md.render = function (
     src: string,
-    env: {relativePath?: string; path?: string; frontmatter?: {description?: string}}
+    env: {
+      relativePath?: string
+      path?: string
+      frontmatter?: {description?: string; title?: string}
+    }
   ) {
     // Check if this is a documentation file that should get auto-injection
     const rawPath = env?.relativePath || env?.path || ''
     // Normalize path separators for cross-platform compatibility
     const path = rawPath.replace(/\\/g, '/')
-    // Match docs/*.md files (with or without src/ prefix, with or without leading slash)
-    const match = path.match(/(?:src\/)?docs\/(.+)\.md$/)
+    // Match docs/*.md files OR root-level .md files (with or without src/ prefix, with or without leading slash)
+    const docsMatch = path.match(/(?:src\/)?docs\/(.+)\.md$/)
+    const rootMatch = path.match(/(?:src\/)?([^\/]+)\.md$/)
 
-    if (!match) {
+    if (!docsMatch && !rootMatch) {
       return defaultRender(src, env)
     }
 
     // Extract the filename and directory from the path
-    const fullPath = match[1]
-    const lastSlashIndex = fullPath.lastIndexOf('/')
-    const directory = lastSlashIndex >= 0 ? fullPath.substring(0, lastSlashIndex) : ''
-    const filename = lastSlashIndex >= 0 ? fullPath.substring(lastSlashIndex + 1) : fullPath
+    let fullPath: string
+    let directory: string
+    let filename: string
+
+    if (docsMatch) {
+      fullPath = docsMatch[1]
+      const lastSlashIndex = fullPath.lastIndexOf('/')
+      directory = lastSlashIndex >= 0 ? fullPath.substring(0, lastSlashIndex) : ''
+      filename = lastSlashIndex >= 0 ? fullPath.substring(lastSlashIndex + 1) : fullPath
+    } else {
+      // Root-level file
+      fullPath = rootMatch![1]
+      directory = ''
+      filename = fullPath
+    }
 
     // Extract frontmatter using simple regex and parse with YAML
     const trimmedSrc = src.trim()
@@ -79,7 +95,7 @@ export function autoInjectDocComponents(md: MarkdownIt) {
     }
 
     // Parse frontmatter to check for description
-    let frontmatter: {description?: string}
+    let frontmatter: {description?: string; title?: string}
     try {
       frontmatter = parse(frontmatterMatch[1])
     } catch {
@@ -90,7 +106,8 @@ export function autoInjectDocComponents(md: MarkdownIt) {
       return defaultRender(src, env)
     }
 
-    const title = filenameToTitle(filename, directory)
+    // Use frontmatter title if available, otherwise generate from filename
+    const title = frontmatter.title || filenameToTitle(filename, directory)
 
     // Build the expected header pattern
     const expectedHeader = `# ${title}\n\n<PageHeader />`
