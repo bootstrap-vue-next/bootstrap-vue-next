@@ -51,6 +51,7 @@ jobs:
 
       - name: Build Docs
         run: pnpm --filter docs run build
+
       - name: Validate Docs Page Structure
         run: pnpm --filter docs run test:unit:ci
 
@@ -132,4 +133,4 @@ jobs:
         run: pnpm install --ignore-scripts --frozen-lockfile
 
       - name: Test Unit
-        run: pnpm run test:unit:ci
+        run: pnpm run test:unit:ci --filter=!docs
