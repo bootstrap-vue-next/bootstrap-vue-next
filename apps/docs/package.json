@@ -11,8 +11,9 @@
     "preview": "vitepress preview",
     "lint": "eslint --fix src",
     "test:lint": "eslint src",
-    "test:structure": "node --import tsx scripts/validate-page-structure.mts",
-    "test": "pnpm run test:lint && pnpm run test:structure"
+    "test:unit": "vitest",
+    "test:unit:ci": "vitest run",
+    "test": "pnpm run test:lint && pnpm run test:unit:ci"
   },
   "devDependencies": {
     "@iconify-json/bi": "^1.2.4",
@@ -36,8 +37,9 @@
     "happy-dom": "^18.0.1",
     "markdown-it": "^14.1.0",
     "prettier": "^3.6.2",
-    "tsx": "^4.19.2",
     "typescript": "^5.8.3",
+    "vite": "^6.0.7",
+    "vitest": "^3.1.5",
     "unplugin-icons": "^22.1.0",
     "unplugin-vue-components": "^28.8.0",
     "vitepress": "1.6.3",

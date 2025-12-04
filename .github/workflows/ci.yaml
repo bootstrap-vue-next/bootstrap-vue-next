@@ -50,7 +50,7 @@ jobs:
         run: pnpm run build
 
       - name: Validate Docs Page Structure
-        run: pnpm --filter docs run test:structure
+        run: pnpm --filter docs run test:unit:ci
 
       - name: Run publint
         run: pnpm --filter bootstrap-vue-next run publint

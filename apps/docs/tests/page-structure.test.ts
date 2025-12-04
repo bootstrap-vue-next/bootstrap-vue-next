@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+import {describe, expect, it} from 'vitest'
 import fs from 'fs'
 import path from 'path'
 import {fileURLToPath} from 'url'
@@ -20,10 +20,21 @@ interface HeaderItem {
  * Validate that a page has exactly one root header (typically h1)
  * This matches the runtime validation in Layout.vue
  */
-function validatePageStructure(html: string, filePath: string): {valid: boolean; error?: string} {
-  const window = new Window()
+function validatePageStructure(html: string): {valid: boolean; error?: string} {
+  const window = new Window({
+    url: 'http://localhost/',
+    settings: {
+      disableJavaScriptFileLoading: true,
+      disableJavaScriptEvaluation: true,
+      disableCSSFileLoading: true,
+      disableIframePageLoading: true,
+      disableComputedStyleRendering: true,
+    },
+  })
+
+  // Write HTML without executing scripts
   window.document.write(html)
-  const document = window.document
+  const {document} = window
 
   // Use the same query selector as the runtime Layout.vue
   // Note: We query from .doc-content and then filter out demo content
@@ -93,6 +104,7 @@ function validatePageStructure(html: string, filePath: string): {valid: boolean;
 
   // Validate: should have exactly 1 root item
   if (root.length !== 1) {
+    window.close()
     return {
       valid: false,
       error: `Expected exactly 1 root header, found ${root.length}. Headers: ${JSON.stringify(
@@ -103,6 +115,7 @@ function validatePageStructure(html: string, filePath: string): {valid: boolean;
     }
   }
 
+  window.close()
   return {valid: true}
 }
 
@@ -125,60 +138,52 @@ function findHtmlFiles(dir: string): string[] {
   return files
 }
 
-/**
- * Main validation function
- */
-function main() {
-  if (!fs.existsSync(distDir)) {
-    console.error(`❌ Build directory not found: ${distDir}`)
-    console.error('   Run "pnpm --filter docs run build" first')
-    process.exit(1)
-  }
+describe('Page Structure Validation', () => {
+  it('should have a built docs directory', () => {
+    expect(
+      fs.existsSync(distDir),
+      `Build directory not found: ${distDir}\nRun "pnpm --filter docs run build" first`
+    ).toBe(true)
+  })
 
-  console.log('🔍 Validating page header structure...')
-  console.log(`   Scanning: ${distDir}\n`)
-
-  const htmlFiles = findHtmlFiles(distDir)
-  const errors: {file: string; error: string}[] = []
-  const skipped: string[] = []
-
-  // Files to skip validation (special pages that don't follow normal structure)
-  const skipPatterns = ['404.html', 'index.html']
-
-  for (const file of htmlFiles) {
-    const relativePath = path.relative(distDir, file)
-    const fileName = path.basename(file)
-
-    // Skip special pages
-    if (skipPatterns.includes(fileName)) {
-      skipped.push(relativePath)
-      continue
+  it('should validate all page header structures', {timeout: 30000}, () => {
+    if (!fs.existsSync(distDir)) {
+      // Skip if dist doesn't exist (covered by previous test)
+      return
     }
 
-    const html = fs.readFileSync(file, 'utf-8')
-    const result = validatePageStructure(html, relativePath)
+    const htmlFiles = findHtmlFiles(distDir)
+    const errors: {file: string; error: string}[] = []
 
-    if (!result.valid) {
-      errors.push({file: relativePath, error: result.error || 'Unknown error'})
+    // Files to skip validation (special pages that don't follow normal structure)
+    const skipPatterns = ['404.html', 'index.html']
+
+    for (const file of htmlFiles) {
+      const relativePath = path.relative(distDir, file)
+      const fileName = path.basename(file)
+
+      // Skip special pages
+      if (skipPatterns.includes(fileName)) {
+        continue
+      }
+
+      const html = fs.readFileSync(file, 'utf-8')
+      const result = validatePageStructure(html)
+
+      if (!result.valid) {
+        errors.push({file: relativePath, error: result.error || 'Unknown error'})
+      }
     }
-  }
 
-  console.log(`   Checked ${htmlFiles.length - skipped.length} HTML files`)
-  if (skipped.length > 0) {
-    console.log(`   Skipped ${skipped.length} special page(s)`)
-  }
+    // Build detailed error message if there are failures
+    if (errors.length > 0) {
+      const errorMessage = [
+        `Found ${errors.length} page(s) with invalid header structure:`,
+        '',
+        ...errors.map(({file, error}) => `  ${file}\n  ${error}`),
+      ].join('\n')
 
-  if (errors.length > 0) {
-    console.error(`\n❌ Found ${errors.length} page(s) with invalid header structure:\n`)
-    for (const {file, error} of errors) {
-      console.error(`   ${file}`)
-      console.error(`   ${error}\n`)
+      expect(errors.length, errorMessage).toBe(0)
     }
-    process.exit(1)
-  }
-
-  console.log('\n✅ All pages have valid header structure!')
-  process.exit(0)
-}
-
-main()
+  })
+})
