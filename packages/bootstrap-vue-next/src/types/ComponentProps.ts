@@ -1196,10 +1196,10 @@ export interface BTableProps<Items>
   noSelectOnClick?: boolean
   // selectedVariant?: ColorVariant | null
   // showEmpty?: boolean
-  // sortIconLeft?: boolean
   // sortNullLast?: boolean
   selectedItems?: readonly Items[]
   noSortableIcon?: boolean
+  sortIconLeft?: boolean
   emptyFilteredText?: string
   emptyText?: string
   showEmpty?: boolean
