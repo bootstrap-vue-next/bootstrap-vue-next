@@ -49,6 +49,8 @@ jobs:
       - name: Build Library
         run: pnpm run build
 
+      - name: Build Docs
+        run: pnpm --filter docs run build
       - name: Validate Docs Page Structure
         run: pnpm --filter docs run test:unit:ci
 
