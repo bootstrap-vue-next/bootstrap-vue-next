@@ -1,7 +1,7 @@
 import {describe, expect, it} from 'vitest'
-import fs from 'fs'
-import path from 'path'
-import {fileURLToPath} from 'url'
+import fs from 'node:fs'
+import path from 'node:path'
+import {fileURLToPath} from 'node:url'
 import {Window} from 'happy-dom'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -183,7 +183,10 @@ describe('Page Structure Validation', () => {
         ...errors.map(({file, error}) => `  ${file}\n  ${error}`),
       ].join('\n')
 
-      expect(errors.length, errorMessage).toBe(0)
+      throw new Error(errorMessage)
     }
+
+    // Assert that no errors were found
+    expect(errors).toHaveLength(0)
   })
 })

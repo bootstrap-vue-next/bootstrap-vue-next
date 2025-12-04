@@ -9,8 +9,8 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json",
     "build": "pnpm run type-check && pnpm run build-only",
     "preview": "vitepress preview",
-    "lint": "eslint --fix src",
-    "test:lint": "eslint src",
+    "lint": "eslint --fix src tests",
+    "test:lint": "eslint src tests",
     "test:unit": "vitest",
     "test:unit:ci": "vitest run",
     "test": "pnpm run test:lint && pnpm run test:unit:ci"
