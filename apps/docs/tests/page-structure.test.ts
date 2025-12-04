@@ -32,92 +32,98 @@ function validatePageStructure(html: string): {valid: boolean; error?: string} {
     },
   })
 
-  // Write HTML without executing scripts
-  window.document.write(html)
-  const {document} = window
+  try {
+    // Write HTML without executing scripts
+    window.document.write(html)
+    const {document} = window
 
-  // Use the same query selector as the runtime Layout.vue
-  // Note: We query from .doc-content and then filter out demo content
-  const docContent = document.querySelector('.doc-content')
-  if (!docContent) {
-    window.close()
-    return {valid: true} // No doc content, skip validation
-  }
+    // Use the same query selector as the runtime Layout.vue
+    // Note: We query from .doc-content and then filter out demo content
+    const docContent = document.querySelector('.doc-content')
+    if (!docContent) {
+      return {valid: true} // No doc content, skip validation
+    }
 
-  const contentQuery = [
-    'h1:not([class*="demo"] *):not(.card-body *)',
-    'h2:not([class*="demo"] *):not(.card-body *)',
-    'h3:not([class*="demo"] *):not(.card-body *)',
-    'h4:not([class*="demo"] *):not(.card-body *)',
-    'h5:not([class*="demo"] *):not(.card-body *)',
-    'h6:not([class*="demo"] *):not(.card-body *)',
-    '> div > [id]:not(.card)',
-    '#component-reference',
-    '.component-reference h3',
-  ].join(', ')
+    const contentQuery = [
+      'h1:not([class*="demo"] *):not(.card-body *)',
+      'h2:not([class*="demo"] *):not(.card-body *)',
+      'h3:not([class*="demo"] *):not(.card-body *)',
+      'h4:not([class*="demo"] *):not(.card-body *)',
+      'h5:not([class*="demo"] *):not(.card-body *)',
+      'h6:not([class*="demo"] *):not(.card-body *)',
+      '> div > [id]:not(.card)',
+      '#component-reference',
+      '.component-reference h3',
+    ].join(', ')
 
-  const elements = Array.from(docContent.querySelectorAll(contentQuery)).filter((el) => {
-    // Additional filtering: exclude elements inside demo containers or card bodies
-    let parent = el.parentElement
-    while (parent && parent !== docContent) {
-      const className = parent.className || ''
-      if (className.includes('demo') || className.includes('card-body')) {
-        return false
+    const elements = Array.from(docContent.querySelectorAll(contentQuery)).filter((el) => {
+      // Additional filtering: exclude elements inside demo containers or card bodies
+      let parent = el.parentElement
+      while (parent && parent !== docContent) {
+        const className = parent.className || ''
+        if (className.includes('demo') || className.includes('card-body')) {
+          return false
+        }
+        parent = parent.parentElement
       }
-      parent = parent.parentElement
+      return true
+    })
+
+    // Convert elements to header items (matching runtime logic)
+    const headers: HeaderItem[] = elements.map((el) => {
+      const rawTag = el.tagName.toUpperCase()
+      const isHeading = /^H[1-6]$/.test(rawTag)
+      const tag = isHeading ? rawTag : 'DIV'
+      const level = tag.startsWith('H') ? parseInt(tag.replace('H', '')) : 3
+      return {
+        tag,
+        level,
+        id: el.id || '',
+        text: el.textContent?.trim() || '',
+      }
+    })
+
+    // Build the same tree structure as runtime
+    const root: (HeaderItem & {children: HeaderItem[]})[] = []
+    const stack: (HeaderItem & {children: HeaderItem[]})[] = []
+
+    headers.forEach((header) => {
+      const item = {...header, children: []}
+
+      while (stack.length && stack[stack.length - 1].level >= item.level) {
+        stack.pop()
+      }
+
+      if (stack.length === 0) {
+        root.push(item)
+      } else {
+        stack[stack.length - 1].children.push(item)
+      }
+
+      stack.push(item)
+    })
+
+    // Validate: should have exactly 1 root item
+    if (root.length !== 1) {
+      return {
+        valid: false,
+        error: `Expected exactly 1 root header, found ${root.length}. Headers: ${JSON.stringify(
+          headers.map((h) => ({tag: h.tag, level: h.level, text: h.text.substring(0, 50)})),
+          null,
+          2
+        )}`,
+      }
     }
-    return true
-  })
 
-  // Convert elements to header items (matching runtime logic)
-  const headers: HeaderItem[] = elements.map((el) => {
-    const rawTag = el.tagName.toUpperCase()
-    const isHeading = /^H[1-6]$/.test(rawTag)
-    const tag = isHeading ? rawTag : 'DIV'
-    const level = tag.startsWith('H') ? parseInt(tag.replace('H', '')) : 3
-    return {
-      tag,
-      level,
-      id: el.id || '',
-      text: el.textContent?.trim() || '',
-    }
-  })
-
-  // Build the same tree structure as runtime
-  const root: (HeaderItem & {children: HeaderItem[]})[] = []
-  const stack: (HeaderItem & {children: HeaderItem[]})[] = []
-
-  headers.forEach((header) => {
-    const item = {...header, children: []}
-
-    while (stack.length && stack[stack.length - 1].level >= item.level) {
-      stack.pop()
-    }
-
-    if (stack.length === 0) {
-      root.push(item)
-    } else {
-      stack[stack.length - 1].children.push(item)
-    }
-
-    stack.push(item)
-  })
-
-  // Validate: should have exactly 1 root item
-  if (root.length !== 1) {
-    window.close()
+    return {valid: true}
+  } catch (error) {
     return {
       valid: false,
-      error: `Expected exactly 1 root header, found ${root.length}. Headers: ${JSON.stringify(
-        headers.map((h) => ({tag: h.tag, level: h.level, text: h.text.substring(0, 50)})),
-        null,
-        2
-      )}`,
+      error: error instanceof Error ? error.message : 'Unknown error',
     }
+  } finally {
+    window.close()
   }
-
-  window.close()
-  return {valid: true}
 }
 
 /**
