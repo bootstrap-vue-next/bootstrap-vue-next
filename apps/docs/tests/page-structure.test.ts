@@ -40,6 +40,7 @@ function validatePageStructure(html: string): {valid: boolean; error?: string} {
   // Note: We query from .doc-content and then filter out demo content
   const docContent = document.querySelector('.doc-content')
   if (!docContent) {
+    window.close()
     return {valid: true} // No doc content, skip validation
   }
 
