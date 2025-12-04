@@ -79,11 +79,14 @@ export function autoInjectDocComponents(md: MarkdownIt) {
       const lastSlashIndex = fullPath.lastIndexOf('/')
       directory = lastSlashIndex >= 0 ? fullPath.substring(0, lastSlashIndex) : ''
       filename = lastSlashIndex >= 0 ? fullPath.substring(lastSlashIndex + 1) : fullPath
-    } else {
+    } else if (rootMatch) {
       // Root-level file
-      fullPath = rootMatch![1]
+      fullPath = rootMatch[1]
       directory = ''
       filename = fullPath
+    } else {
+      // This should never happen due to the check on line 68
+      return defaultRender(src, env)
     }
 
     // Extract frontmatter using simple regex and parse with YAML
