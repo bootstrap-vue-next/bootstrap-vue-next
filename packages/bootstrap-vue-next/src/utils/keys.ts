@@ -155,12 +155,22 @@ export interface RegisterShowHideMapValue {
   registerTrigger: (trigger: string, el: Element) => void
   unregisterTrigger: (trigger: string, el: Element, clean: boolean) => void
 }
+
+/**
+ * Represents an array of component instances with the same ID
+ * Used to handle race conditions where multiple instances mount/unmount out of order
+ */
+export interface RegisterShowHideInstances {
+  instances: RegisterShowHideMapValue[]
+  getActive: () => RegisterShowHideMapValue | undefined
+}
+
 export interface RegisterShowHideValue {
   register: (input: RegisterShowHideFnInput) => {
     unregister: () => void
     updateId: (newId: string, oldId: string) => void
   }
-  values: Ref<Map<string, RegisterShowHideMapValue>>
+  values: Ref<Map<string, RegisterShowHideInstances>>
 }
 export const showHideRegistryKey: InjectionKey<RegisterShowHideValue> =
   createBvnRegistryInjectionKey('showHide')
