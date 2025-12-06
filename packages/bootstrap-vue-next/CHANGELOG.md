@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.41.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.9...bootstrapvuenext-v0.41.0) (2025-12-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BTable:** make sort icons background images to avoid wrapping & remove relevant slots
+
+### Bug Fixes
+
+* **BTable:** make background sort icons customizable + docs ([#2933](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2933)) ([9cfe4a0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9cfe4a0391dbc46a2842d356ae11b6229b906851))
+* **BTable:** make sort icons background images to avoid wrapping & remove relevant slots ([bae3932](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bae393217317fe9f2e2b09efb488da152c472aec))
+
 ## [0.40.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.8...bootstrapvuenext-v0.40.9) (2025-11-28)
 
 ### Bug Fixes
