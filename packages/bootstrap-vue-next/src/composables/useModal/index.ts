@@ -9,7 +9,7 @@ import {
   markRaw,
   onScopeDispose,
   type Ref,
-  toRef,
+  shallowRef,
   toValue,
   watch,
 } from 'vue'
@@ -47,7 +47,7 @@ export const useModal = () => {
       throw new Error('BApp or BOrchestrator component must be mounted to use the modal controller')
     }
 
-    const resolvedProps = toRef(obj as unknown as ModalOrchestratorParam<ComponentProps>) as Ref<
+    const resolvedProps = (isRef(obj) ? obj : shallowRef(obj)) as Ref<
       ModalOrchestratorParam<ComponentProps>
     >
     const _self = resolvedProps.value?.id || Symbol('Modals controller')
