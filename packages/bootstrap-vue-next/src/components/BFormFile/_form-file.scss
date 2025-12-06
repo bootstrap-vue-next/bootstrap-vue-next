@@ -7,3 +7,57 @@ input[type="file"].form-control-input-file-hide-button {
     display: none;
   }
 }
+
+.b-form-file-wrapper {
+  position: relative;
+
+  &.b-form-file-dragging {
+    .b-form-file-drag-overlay {
+      display: flex;
+    }
+  }
+}
+
+.b-form-file-display {
+  word-break: break-word;
+}
+
+.b-form-file-drag-overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(var(--bs-primary-rgb), 0.1);
+  border: 2px dashed var(--bs-primary);
+  border-radius: var(--bs-border-radius);
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 1;
+
+  .b-form-file-drop-allowed & {
+    background-color: rgba(var(--bs-success-rgb), 0.1);
+    border-color: var(--bs-success);
+  }
+
+  .b-form-file-wrapper:not(.b-form-file-drop-allowed) & {
+    background-color: rgba(var(--bs-danger-rgb), 0.1);
+    border-color: var(--bs-danger);
+  }
+}
+
+.b-form-file-drag-text {
+  padding: 1rem;
+  font-weight: 500;
+  color: var(--bs-primary);
+
+  .b-form-file-drop-allowed & {
+    color: var(--bs-success);
+  }
+
+  .b-form-file-wrapper:not(.b-form-file-drop-allowed) & {
+    color: var(--bs-danger);
+  }
+}

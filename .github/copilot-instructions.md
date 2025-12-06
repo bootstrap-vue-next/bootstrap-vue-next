@@ -26,9 +26,9 @@ Always reference these instructions first and fallback to search or bash command
 
 ### Development Servers
 
-- Core package dev server: `pnpm --filter bootstrap-vue-next run dev` (runs on <http://localhost:5174>)
-- Playground app dev server: `pnpm --filter playground run dev` (runs on <http://localhost:5173>)
-- Docs dev server: `pnpm --filter docs run dev` (runs on <http://localhost:8000>)
+- Core package dev server: `pnpm --filter bootstrap-vue-next run dev` (runs on http://localhost:5174)
+- Playground app dev server: `pnpm --filter playground run dev` (runs on http://localhost:5173)
+- Docs dev server: `pnpm --filter docs run dev` (runs on http://localhost:8000)
 - All dev servers: `pnpm dev` (starts all development environments in parallel)
 
 ## Validation
@@ -91,6 +91,7 @@ templates/
 
 - `architecture/` - Technical architecture documentation
   - `ARIA_VISIBILITY.md` - ARIA accessibility system for show/hide components
+  - `BFORMFILE_ENHANCEMENT_PLAN.md`
 
 ## Documentation Requirements
 
@@ -104,6 +105,22 @@ templates/
 - Documentation format must match TypeScript interfaces exactly
 - Use clear, concise descriptions that help users understand the purpose and usage
 - Example: `formSelect.data.ts` for BFormSelect, BFormSelectOption, BFormSelectOptionGroup
+
+### Migration Guide Documentation
+
+- **CRITICAL**: When adding examples to the migration guide (`apps/docs/src/docs/migration-guide.md`), ALWAYS create separate demo files in `apps/docs/src/docs/demo/` and reference them using the appropriate syntax
+- **Choose the correct syntax:**
+  - Use `<<< DEMO ./demo/YourDemoFile.vue` when the example is a fully runnable BootstrapVueNext component that users can interact with (preferred when not doing direct BSV comparison)
+  - Use `<<< FRAGMENT ./demo/YourDemoFile.vue#template{vue-html}` when doing side-by-side comparisons with BootstrapVue or when you only want to show code snippets
+- Create demo files with descriptive names that indicate:
+  - The component being demonstrated (e.g., `FormFile`, `Modal`, `Alert`)
+  - Whether it's for BootstrapVue (suffix `BSV`) or BootstrapVueNext (suffix `BSVN`)
+  - The specific feature being shown (e.g., `Basic`, `Formatter`, `Slots`)
+- Example naming: `FormFileBasicBSV.vue`, `FormFileBasicBSVN.vue`, `FormFileSlotsBSVN.vue`
+- For FRAGMENT syntax: Use `#region template` and `#endregion template` comments in demo files to define the fragment
+- For DEMO syntax: Ensure the component is fully self-contained with all necessary imports and setup
+- This keeps the migration guide clean and makes examples reusable and testable
+- See existing examples in `apps/docs/src/docs/demo/` directory for reference patterns
 
 ## Common Tasks
 
@@ -196,61 +213,3 @@ templates/
 - 1567+ tests across components
 - Coverage reports available via `pnpm --filter bootstrap-vue-next run test:coverage`
 - Tests use Happy DOM environment for performance
-
-## Documentation Examples
-
-### Demo File Format
-
-All demo files in `apps/docs/src/docs/*/demo/` must follow this structure:
-
-1. **Order**: Template first, then script, then style (if applicable)
-2. **Template-Only Examples**: For simple template-only examples wrap example code in `<!-- #region template -->` and `<!-- #endregion template -->` comments
-3. **Complex Examples**: Include script setup after template, using TypeScript
-
-**Template-only example:**
-
-```vue
-<template>
-  <!-- #region template -->
-  <BButton v-b-toggle.my-collapse>Toggle</BButton>
-  <BCollapse id="my-collapse">
-    <BCard>Content</BCard>
-  </BCollapse>
-  <!-- #endregion template -->
-</template>
-```
-
-**Example with script:**
-
-```vue
-<template>
-  <BButton @click="toggle">Toggle</BButton>
-  <BCollapse v-model="visible">
-    <BCard>Content</BCard>
-  </BCollapse>
-</template>
-
-<script setup lang="ts">
-import {ref} from 'vue'
-
-const visible = ref(false)
-const toggle = () => {
-  visible.value = !visible.value
-}
-</script>
-```
-
-### Demo References in Markdown
-
-Use the `<<< DEMO` syntax to reference demo files:
-
-- **Show full file**: `<<< DEMO ./demo/MyComponent.vue{vue}`
-- **Show specific section**: Use `#region name` markers in the demo file and reference with `#name` in the markdown (e.g., `#region template` is referenced as `#template`)
-
-### Demo File Guidelines
-
-- Place demo files in `apps/docs/src/docs/[category]/demo/` directory
-- Name files descriptively: `ComponentFeature.vue` (e.g., `AccordionOverview.vue`, `AlertDismissible.vue`)
-- Use unique IDs for all components to avoid conflicts when multiple demos render on same page
-- Keep examples focused on demonstrating one feature or pattern
-- Include comments for clarity when showing complex patterns

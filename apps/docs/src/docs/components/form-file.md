@@ -2,9 +2,11 @@
 description: 'File input control that supports single and multiple file modes, drag and drop, file type restrictions, and directory selection with contextual state feedback.'
 ---
 
-<BAlert :model-value="true" variant="danger">
-The current variation is subject to change pre v1.0. The implementation may change to become closer to the Bootstrap-vue implementation based on feedback <BLink target="_blank" href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/discussions/1213" rel="noopener">vote here</BLink>
-</BAlert>
+::: info NOTE
+BootstrapVueNext's implementation of `BFormFile` is built on the browser native control with Bootstrap 5 styling. This is a significant
+departure from BootstrapVue. Please check the [migration documentation] for details and [contribute to the discussion](https://github.com/bootstrap-vue-next/bootstrap-vue-next/discussions/1213)
+if you would like to see additional features.
+:::
 
 ## Single File Mode
 
@@ -42,15 +44,70 @@ You can add a label above the input by using the `label` prop or the `label` slo
 
 <<< DEMO ./demo/FormFileLabel.vue#template{vue-html}
 
+## File Name Display
+
+By default, the file input doesn't show the selected file names externally. While the native browser control displays the file name for single file selection, it only shows a count (e.g., "3 files") in multiple file mode. You can enable external file name display using the `showFileNames` prop to show all selected file names, which is particularly useful in multiple file mode. You can also customize the placeholder text shown when no files are selected.
+
+<<< DEMO ./demo/FormFileShowNames.vue
+
+## Custom File Name Formatting
+
+Use the `fileNameFormatter` prop to customize how file names are displayed. The formatter receives an array of File objects and should return a string.
+
+<<< DEMO ./demo/FormFileFormatter.vue
+
+## Drag and Drop Feedback
+
+When dragging files over the input, visual feedback is automatically shown. You can customize the messages displayed during drag operations using the `dropPlaceholder` and `noDropPlaceholder` props.
+
+<<< DEMO ./demo/FormFileDragFeedback.vue
+
+## Scoped Slots
+
+For complete customization, use the scoped slots to control exactly how file information and drag feedback are displayed.
+
+- **`file-name`** - Customize the file name display with access to files, names, and filesTraversed
+- **`placeholder`** - Custom content when no files are selected
+- **`drop-placeholder`** - Custom drag overlay content with dropAllowed state
+
+<<< DEMO ./demo/FormFileSlots.vue
+
 ## Directory Mode
 
-By adding the `directory` prop, a user can select directories instead of files
+By adding the `directory` prop, a user can select directories instead of files.
 
-<BAlert variant="danger" :model-value="true">
-  Directory mode is a non-standard attribute in the HTML spec. All major browsers have chosen too support it, but it may not function correctly for browsers that have chosen not to implement it. Use with caution
-</BAlert>
+::: warning CAUTION
+Directory mode is a <em>non-standard</em> feature. While being supported by all modern browsers, it should not be relied upon for production environments without thorough testing. Read more on <BLink href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitdirectory" target="_blank" rel="noopener">MDN</BLink> and <BLink href="https://caniuse.com/input-file-directory" target="_blank" rel="noopener">Can I use</BLink>.
+:::
 
-### Example to be Written
+### Directory Selection
+
+When a directory is selected, the directory and its entire hierarchy of contents are included in the set of selected items. Each file entry includes a special `$path` property containing the relative path of the file.
+
+### Nested vs Flat Structure
+
+By default, files are returned in a nested array structure reflecting the directory hierarchy. You can flatten this structure using the `no-traverse` prop, which returns all files in a single flat array.
+
+<<< DEMO ./demo/FormFileDirectory.vue
+
+### Browser Support and Limitations
+
+**Important considerations for directory mode:**
+
+- **Non-standard feature**: The `webkitdirectory` attribute is not part of the HTML standard, though it's widely supported
+- **Modern browser requirement**: Requires browsers with `Promise` support. If targeting older browsers (IE 11), include a Promise polyfill
+- **Chromium limitation**: Nested directory structures are currently only fully supported when directories are **dropped** on the file input. When using the "Browse" dialog in Chromium-based browsers, files may be returned in a flattened structure due to a [known Chromium issue](https://bugs.chromium.org/p/chromium/issues/detail?id=138987)
+- **Mozilla behavior**: Firefox implements directory selection [the same way as Chromium](https://bugzilla.mozilla.org/show_bug.cgi?id=1326031)
+- **Drag and drop recommended**: For best cross-browser support with nested structures, use drag and drop instead of the file browser dialog
+
+### Path Information
+
+Each file object includes a `$path` property:
+
+- Uses the browser's native `File.webkitRelativePath` property when available
+- Falls back to just the file name if `webkitRelativePath` is not set
+
+Directory mode works in both custom and plain mode on most modern browsers.
 
 ## Autofocus
 
