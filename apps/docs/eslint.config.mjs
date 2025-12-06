@@ -23,7 +23,7 @@ export default [
   }),
   {
     ...pluginVitest.configs.recommended,
-    files: ['src/**/*.spec.*', 'src/**/*.test.*'],
+    files: ['src/**/*.spec.*', 'src/**/*.test.*', 'tests/**/*.test.*'],
   },
   skipFormatting,
   {
