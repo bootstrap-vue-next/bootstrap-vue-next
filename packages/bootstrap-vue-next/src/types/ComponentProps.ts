@@ -24,7 +24,6 @@ import type {AriaInvalid} from './AriaInvalid'
 import type {Numberish, TeleporterProps, ValidationState} from './CommonTypes'
 import type {CommonInputProps, FormDebounceOptions} from './FormCommonInputProps'
 import type {RadioOptionRaw, RadioValue} from './RadioTypes'
-import type {SelectValue} from './SelectTypes'
 import type {
   Breakpoint,
   ColBreakpointProps,
@@ -418,26 +417,29 @@ export interface BFormRatingProps {
     | string
 }
 
-export interface BFormSelectProps {
+export interface BFormSelectProps<
+  Item = Record<string, unknown>,
+  ValueKey extends keyof Item = keyof Item,
+> {
   ariaInvalid?: AriaInvalid
   autofocus?: boolean
   disabled?: boolean
-  disabledField?: string
+  disabledField?: keyof Item & string
   form?: string
   id?: string
-  labelField?: string
-  modelValue?: SelectValue
+  labelField?: keyof Item & string
+  modelValue?: Item[ValueKey] | readonly Item[ValueKey][]
   multiple?: boolean
   name?: string
-  options?: readonly (unknown | Record<string, unknown>)[]
-  optionsField?: string
+  options?: readonly Item[]
+  optionsField?: keyof Item & string
   plain?: boolean
   required?: boolean
   selectSize?: Numberish
   size?: Size
   state?: ValidationState
-  textField?: string
-  valueField?: string
+  textField?: keyof Item & string
+  valueField?: ValueKey & string
 }
 
 export interface BFormSelectOptionProps<T> {
@@ -445,12 +447,12 @@ export interface BFormSelectOptionProps<T> {
   value?: T
 }
 
-export interface BFormSelectOptionGroupProps {
-  disabledField?: string
+export interface BFormSelectOptionGroupProps<Item = Record<string, unknown>> {
+  disabledField?: keyof Item & string
   label?: string
-  options?: readonly (unknown | Record<string, unknown>)[]
-  textField?: string
-  valueField?: string
+  options?: readonly Item[]
+  textField?: keyof Item & string
+  valueField?: keyof Item & string
 }
 
 export interface BFormSpinbuttonProps {
