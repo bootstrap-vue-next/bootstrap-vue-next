@@ -6,8 +6,8 @@
     :role="isFieldset ? null : 'group'"
     :aria-invalid="computedAriaInvalid"
     :aria-labelledby="isFieldset && isHorizontal ? labelId : null"
-    :class="[stateClass, {'was-validated': props.validated}, isHorizontal ? null : attrs.class]"
-    :style="isHorizontal ? null : attrs.style"
+    :class="[stateClass, {'was-validated': props.validated}, rootAttrs.class]"
+    :style="rootAttrs.style"
     class="b-form-group"
   >
     <ContentTemplate.define>
@@ -61,7 +61,7 @@
       </template>
     </LabelContentTemplate.define>
     <!-- End of definitions -->
-    <BFormRow v-if="isHorizontal" :class="attrs.class" :style="attrs.style">
+    <BFormRow v-if="isHorizontal" :class="rowAttrs.class" :style="rowAttrs.style">
       <LabelContentTemplate.reuse />
       <BCol v-bind="contentColProps" ref="_content">
         <slot
@@ -271,4 +271,15 @@ const validFeedbackId = useId(undefined, '_BV_feedback_valid_')
 const descriptionId = useId(undefined, '_BV_description_')
 
 const isFieldset = computed(() => !computedLabelFor.value)
+
+// Computed properties for attribute placement based on layout mode
+const rootAttrs = computed(() => ({
+  class: isHorizontal.value ? null : attrs.class,
+  style: isHorizontal.value ? null : attrs.style,
+}))
+
+const rowAttrs = computed(() => ({
+  class: attrs.class,
+  style: attrs.style,
+}))
 </script>
