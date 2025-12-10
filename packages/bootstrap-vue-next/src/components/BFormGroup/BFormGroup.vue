@@ -278,8 +278,12 @@ const rootAttrs = computed(() => ({
   style: isHorizontal.value ? null : attrs.style,
 }))
 
-const rowAttrs = computed(() => ({
-  class: attrs.class,
-  style: attrs.style,
-}))
+const rowAttrs = computed(() =>
+  isHorizontal.value
+    ? {
+        class: attrs.class,
+        style: attrs.style,
+      }
+    : {}
+)
 </script>
