@@ -26,7 +26,6 @@ import {ref} from 'vue'
 
 const value = ref(0)
 
-const locale = ref('fr-CA')
 const locales = [
   {value: 'en', text: 'English'},
   {value: 'de', text: 'German'},
@@ -34,4 +33,6 @@ const locales = [
   {value: 'fa', text: 'Persian'},
   {value: 'ar-EG', text: 'Arabic (Egyptian)'},
 ] as const
+
+const locale = ref<(typeof locales)[number]['value']>('fr-CA')
 </script>

@@ -79,7 +79,12 @@ import {reactive, ref} from 'vue'
 
 const foods = [{text: 'Select One', value: null}, 'Carrots', 'Beans', 'Tomatoes', 'Corn']
 
-const form = reactive({
+const form = reactive<{
+  email: string
+  name: string
+  food: string | null
+  checked: string[]
+}>({
   email: '',
   name: '',
   food: null,

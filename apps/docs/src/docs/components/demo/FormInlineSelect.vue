@@ -27,5 +27,5 @@
 <script setup lang="ts">
 import {ref} from 'vue'
 
-const customSelect = ref(null)
+const customSelect = ref<string | null>(null)
 </script>

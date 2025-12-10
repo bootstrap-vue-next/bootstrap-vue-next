@@ -87,5 +87,5 @@ const blurs = [{text: 'None', value: ''}, '1px', '2px', '5px', '0.5em', '1rem']
 
 const variant = ref<(typeof variants)[number]>('light')
 const opacity = ref(0.85)
-const blur = ref('2px')
+const blur = ref<string>('2px')
 </script>
