@@ -454,7 +454,9 @@ describe('form-group', () => {
         },
       })
       // Find the BCol component that wraps the label
-      const labelCol = wrapper.findAll('[class*="col-"]').filter((el) => el.html().includes('Login:'))[0]
+      const [labelCol] = wrapper
+        .findAll('[class*="col-"]')
+        .filter((el) => el.html().includes('Login:'))
       expect(labelCol?.classes()).toContain('text-md-end')
     })
 
