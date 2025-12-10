@@ -30,7 +30,13 @@ export default {
         accept: {
           type: 'string | string[]',
           default: '',
-          description: "Value to set on the file input's `accept` attribute",
+          description:
+            "Value to set on the file input's `accept` attribute. Restricts file types that can be selected",
+        },
+        browseText: {
+          type: 'string',
+          default: 'Browse',
+          description: 'Text for the browse button (custom mode only)',
         },
         capture: {
           type: "'boolean' | 'user' | 'environment'",
@@ -42,6 +48,17 @@ export default {
           type: 'boolean',
           default: false, // TODO item not in string format
           description: 'Enable `directory` mode (on browsers that support it)',
+        },
+        dropPlaceholder: {
+          type: 'string',
+          default: undefined,
+          description: 'Text to display when dragging files over the drop zone (custom mode only)',
+        },
+        fileNameFormatter: {
+          type: '(files: File[]) => string',
+          default: undefined,
+          description:
+            'Custom formatter function for displaying selected file names (custom mode only)',
         },
         label: {
           type: 'string',
@@ -75,15 +92,39 @@ export default {
           default: false, // TODO item not in string format
           description: 'Disable drag and drop mode',
         },
+        noDropPlaceholder: {
+          type: 'string',
+          default: undefined,
+          description: 'Text to display when drag and drop is disabled (custom mode only)',
+        },
         noTraverse: {
           type: 'boolean',
           default: false, // TODO item not in string format
           description: 'Whether to return files as a flat array when in `directory` mode',
         },
+        placeholder: {
+          type: 'string',
+          default: 'No file chosen',
+          description: 'Text to display when no file is selected (custom mode only)',
+        },
+        showFileNames: {
+          type: 'boolean',
+          default: false,
+          description: 'Display selected file names in custom mode',
+        },
       } satisfies PropRecord<keyof BFormFileProps>,
       emits: {
+        'change': {
+          description: 'Emitted when the file selection changes',
+          args: {
+            value: {
+              type: 'Event',
+              description: 'Native change event',
+            },
+          },
+        },
         'update:model-value': {
-          description: 'Updates the `v-model` value (see docs for more details)', // TODO similar content to BAlert/update:model-value (similar purpose)
+          description: 'Updates the `v-model` value (see docs for more details)',
           args: {
             value: {
               type: 'File | File[] | null',
@@ -95,7 +136,7 @@ export default {
       },
       slots: {
         label: {
-          description: '', // TODO missing description
+          description: 'Slot to customize the label content',
           scope: {},
         },
       } satisfies SlotRecord<keyof BFormFileSlots>,

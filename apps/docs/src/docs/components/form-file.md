@@ -2,9 +2,16 @@
 description: 'File input control that supports single and multiple file modes, drag and drop, file type restrictions, and directory selection with contextual state feedback.'
 ---
 
-<BAlert :model-value="true" variant="danger">
-The current variation is subject to change pre v1.0. The implementation may change to become closer to the Bootstrap-vue implementation based on feedback <BLink target="_blank" href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/discussions/1213" rel="noopener">vote here</BLink>
-</BAlert>
+## Overview
+
+BFormFile provides a customized, cross-browser consistent file input control with support for:
+
+- Single and multiple file selection
+- Drag and drop file upload
+- Directory selection (browser support required)
+- File type filtering via accept attribute
+- Custom text and placeholders
+- Bootstrap validation states
 
 ## Single File Mode
 
@@ -42,15 +49,45 @@ You can add a label above the input by using the `label` prop or the `label` slo
 
 <<< DEMO ./demo/FormFileLabel.vue#template{vue-html}
 
+## Customizing Text and Placeholders
+
+### Browse Button Text
+
+Customize the browse button text using the `browseText` prop (custom mode only):
+
+<<< DEMO ./demo/FormFileCustomText.vue
+
+### Drop Zone Placeholders
+
+Customize the placeholder text shown in different states (custom mode only):
+
+<<< DEMO ./demo/FormFileDropPlaceholder.vue
+
+## File Name Formatting
+
+Use the `fileNameFormatter` prop to customize how selected file names are displayed (custom mode only):
+
+<<< DEMO ./demo/FormFileFormatter.vue
+
+## Plain Mode
+
+Use the `plain` prop to render a native HTML file input without custom styling. This provides 100% backward compatibility with the original implementation:
+
+<<< DEMO ./demo/FormFilePlain.vue
+
+<BAlert variant="info" :model-value="true">
+  Plain mode uses the native browser file input, which has limited styling options but provides maximum compatibility. Custom mode (default) provides drag-and-drop support and better visual customization.
+</BAlert>
+
 ## Directory Mode
 
 By adding the `directory` prop, a user can select directories instead of files
 
 <BAlert variant="danger" :model-value="true">
-  Directory mode is a non-standard attribute in the HTML spec. All major browsers have chosen too support it, but it may not function correctly for browsers that have chosen not to implement it. Use with caution
+  Directory mode is a non-standard attribute in the HTML spec. All major browsers have chosen to support it, but it may not function correctly for browsers that have chosen not to implement it. Use with caution
 </BAlert>
 
-### Example to be Written
+<<< DEMO ./demo/FormFileDirectory.vue
 
 ## Autofocus
 
@@ -70,8 +107,8 @@ With inputs that are of type `file`, the value is strictly `uni-directional`. Me
 
 ## Exposed functions
 
-The BFormFile exposes functions to control the component: `focus(), blur(), reset()`. These are accessed through the [template ref](https://vuejs.org/guide/essentials/template-refs.html#template-refs).
+The BFormFile exposes functions to control the component: `focus()`, `blur()`, `reset()`. These are accessed through the [template ref](https://vuejs.org/guide/essentials/template-refs.html#template-refs).
 
-1. Focus: focuses the file input
-2. Blur: blurs the file input focus
-3. Reset: Resets the file selection so that no file is selected
+1. `focus()`: Focuses the file input (or browse button in custom mode)
+2. `blur()`: Blurs the file input focus
+3. `reset()`: Resets the file selection so that no file is selected
