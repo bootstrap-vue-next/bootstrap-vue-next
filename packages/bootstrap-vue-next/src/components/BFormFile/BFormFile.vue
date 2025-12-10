@@ -466,34 +466,36 @@ defineExpose({
 }
 
 // Size variants
-.form-control-sm {
+.b-form-file-control.form-control-sm {
+  border-radius: var(--bs-border-radius-sm);
+  padding: 0;
+  min-height: auto;
+
   .b-form-file-text,
   .b-form-file-button {
     padding: 0.25rem 0.5rem;
     font-size: 0.875rem;
   }
 
-  .b-form-file-control {
-    border-radius: var(--bs-border-radius-sm);
-  }
-
   .b-form-file-button {
+    margin: -1px -1px -1px 0;
     border-radius: 0 var(--bs-border-radius-sm) var(--bs-border-radius-sm) 0;
   }
 }
 
-.form-control-lg {
+.b-form-file-control.form-control-lg {
+  border-radius: var(--bs-border-radius-lg);
+  padding: 0;
+  min-height: auto;
+
   .b-form-file-text,
   .b-form-file-button {
     padding: 0.5rem 1rem;
     font-size: 1.25rem;
   }
 
-  .b-form-file-control {
-    border-radius: var(--bs-border-radius-lg);
-  }
-
   .b-form-file-button {
+    margin: -1px -1px -1px 0;
     border-radius: 0 var(--bs-border-radius-lg) var(--bs-border-radius-lg) 0;
   }
 }
