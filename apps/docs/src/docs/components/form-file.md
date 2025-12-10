@@ -81,13 +81,26 @@ Use the `plain` prop to render a native HTML file input without custom styling. 
 
 ## Directory Mode
 
-By adding the `directory` prop, a user can select directories instead of files
+By adding the `directory` prop, a user can select directories instead of files.
 
 <BAlert variant="danger" :model-value="true">
   Directory mode is a non-standard attribute in the HTML spec. All major browsers have chosen to support it, but it may not function correctly for browsers that have chosen not to implement it. Use with caution
 </BAlert>
 
 <<< DEMO ./demo/FormFileDirectory.vue
+
+### Accessing File Paths
+
+When using `directory` mode, each `File` object in the returned array is enhanced with a `$path` property containing the relative path from the selected directory root:
+
+<<< FRAGMENT ./demo/FormFileDirectoryPathExample.ts#example{typescript}
+
+The `$path` property contains the full relative path (e.g., `"project/src/utils/helpers.ts"`), allowing you to:
+
+- Display the full file path to users
+- Reconstruct directory structure in your application
+- Group files by folder
+- Preserve directory hierarchy when processing files
 
 ## Autofocus
 

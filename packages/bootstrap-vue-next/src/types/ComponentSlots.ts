@@ -245,11 +245,7 @@ export type BFormCheckboxGroupSlots = {
 
 export type BFormFileSlots = {
   'label'?: (props: Record<string, never>) => any
-  'file-name'?: (props: {
-    files: readonly File[]
-    names: readonly string[]
-    filesTraversed: readonly File[]
-  }) => any
+  'file-name'?: (props: {files: readonly File[]; names: readonly string[]}) => any
   'placeholder'?: (props: Record<string, never>) => any
   'drop-placeholder'?: (props: {dropAllowed: boolean}) => any
 }

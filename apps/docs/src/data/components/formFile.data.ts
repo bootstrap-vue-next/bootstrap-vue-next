@@ -97,11 +97,6 @@ export default {
           default: undefined,
           description: 'Text to display when drag and drop is disabled (custom mode only)',
         },
-        noTraverse: {
-          type: 'boolean',
-          default: false, // TODO item not in string format
-          description: 'Whether to return files as a flat array when in `directory` mode',
-        },
         placeholder: {
           type: 'string',
           default: 'No file chosen',

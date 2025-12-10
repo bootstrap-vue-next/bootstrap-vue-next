@@ -26,12 +26,7 @@
       <div class="b-form-file-control" :class="computedClasses" :aria-disabled="props.disabled">
         <!-- File name display -->
         <div class="b-form-file-text">
-          <slot
-            name="file-name"
-            :files="selectedFiles"
-            :names="fileNames"
-            :files-traversed="filesTraversed"
-          >
+          <slot name="file-name" :files="selectedFiles" :names="fileNames">
             <span v-if="hasFiles">{{ formattedFileNames }}</span>
             <span v-else-if="hasPlaceholderSlot || props.placeholder" class="text-muted">
               <slot name="placeholder">{{ props.placeholder }}</slot>
@@ -86,12 +81,7 @@
 
     <!-- External file display (when showFileNames is true and not plain) -->
     <div v-if="showExternalDisplay" class="b-form-file-display mt-2">
-      <slot
-        name="file-name"
-        :files="selectedFiles"
-        :names="fileNames"
-        :files-traversed="filesTraversed"
-      >
+      <slot name="file-name" :files="selectedFiles" :names="fileNames">
         <div v-if="hasFiles" class="small text-muted">
           {{ formattedFileNames }}
         </div>
@@ -142,7 +132,6 @@ const _props = withDefaults(defineProps<Omit<BFormFileProps, 'modelValue'>>(), {
   noButton: false,
   noDrop: false,
   noDropPlaceholder: undefined,
-  noTraverse: false,
   plain: false,
   placeholder: undefined,
   required: false,
@@ -249,9 +238,6 @@ const selectedFiles = computed<readonly File[]>(() => enhanceFilesWithPaths(inte
 const hasFiles = computed(() => selectedFiles.value.length > 0)
 
 const fileNames = computed(() => selectedFiles.value.map((file) => file.name))
-
-// TODO: Implement directory traversal when noTraverse is false
-const filesTraversed = computed(() => selectedFiles.value)
 
 const formattedFileNames = computed(() => {
   if (!hasFiles.value) return ''
