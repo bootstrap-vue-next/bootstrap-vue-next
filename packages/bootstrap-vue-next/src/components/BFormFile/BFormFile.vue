@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div ref="rootRef">
     <!-- Optional label -->
     <label
       v-if="hasLabelSlot || props.label"
@@ -110,7 +110,7 @@
 
 <script setup lang="ts">
 import {useDropZone, useFileDialog} from '@vueuse/core'
-import {computed, ref, useTemplateRef, watch} from 'vue'
+import {computed, nextTick, ref, useTemplateRef, watch} from 'vue'
 import type {BFormFileProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
@@ -153,6 +153,10 @@ const _props = withDefaults(defineProps<Omit<BFormFileProps, 'modelValue'>>(), {
 const props = useDefaults(_props, 'BFormFile')
 const slots = defineSlots<BFormFileSlots>()
 
+const emit = defineEmits<{
+  change: [value: Event]
+}>()
+
 const modelValue = defineModel<Exclude<BFormFileProps['modelValue'], undefined>>({
   default: null,
 })
@@ -161,6 +165,7 @@ const computedId = useId(() => props.id)
 const stateClass = useStateClass(() => props.state)
 
 // Refs
+const rootRef = useTemplateRef('rootRef')
 const dropZoneRef = useTemplateRef('dropZoneRef')
 const browseButtonRef = useTemplateRef('browseButtonRef')
 const plainInputRef = ref<HTMLInputElement | null>(null)
@@ -288,6 +293,14 @@ const handleFiles = (files: File[] | FileList) => {
     const [firstFile] = fileArray
     modelValue.value = firstFile
   }
+
+  // Emit change event for consistency with native input behavior
+  // This allows @change listeners to work in both plain and custom modes
+  // Emit asynchronously after DOM updates to ensure proper event propagation
+  nextTick(() => {
+    const changeEvent = new Event('change', {bubbles: true, cancelable: false})
+    emit('change', changeEvent)
+  })
 }
 
 // Open file dialog
