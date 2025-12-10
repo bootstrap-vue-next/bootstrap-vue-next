@@ -449,6 +449,10 @@ The `noTraverse` prop has been **removed**. BootstrapVueNext directory mode alwa
 
 When using `directory` mode, each `File` object in the returned array is enhanced with a `$path` property containing the relative path from the selected directory root. The `$path` property contains the full relative path (e.g., `"project/src/utils/helpers.ts"`), allowing you to reconstruct directory structure or group files by folder as needed.
 
+::: tip TypeScript Support
+To use the `$path` property with TypeScript, you need to augment the global `File` interface. See [Extending the File Interface](/docs/types#extending-the-file-interface-for-bformfile) for details.
+:::
+
 **BootstrapVue code:**
 
 <<< FRAGMENT ./demo/FormFileDirectoryBSV.vue#template{vue-html}

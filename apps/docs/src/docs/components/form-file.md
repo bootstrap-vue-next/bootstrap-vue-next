@@ -95,6 +95,10 @@ When using `directory` mode, each `File` object in the returned array is enhance
 
 <<< FRAGMENT ./demo/FormFileDirectoryPathExample.ts#example{typescript}
 
+::: tip TypeScript Support
+To use the `$path` property with TypeScript, you need to augment the global `File` interface. See [Extending the File Interface](/docs/types#extending-the-file-interface-for-bformfile) for details.
+:::
+
 The `$path` property contains the full relative path (e.g., `"project/src/utils/helpers.ts"`), allowing you to:
 
 - Display the full file path to users

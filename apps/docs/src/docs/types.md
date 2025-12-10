@@ -678,3 +678,48 @@ New values can be used now and the type check will be successful:
 ```
 
 </BCard>
+
+### Extending the File Interface for BFormFile
+
+When using `BFormFile` in [directory mode](/docs/components/form-file#directory-selection), each `File` object is enhanced with a `$path` property containing the relative directory path. To use this property with TypeScript, you need to augment the global `File` interface.
+
+Create a TypeScript declaration file (e.g., `env.d.ts` or similar) in your project:
+
+<BCard class="bg-body-tertiary">
+
+```ts
+// env.d.ts (or vite-env.d.ts for Vite projects)
+
+declare global {
+  interface File {
+    /**
+     * Directory path of the file (derived from webkitRelativePath)
+     * Only available when selecting files in directory mode with BFormFile
+     */
+    $path?: string
+  }
+}
+
+export {}
+```
+
+</BCard>
+
+Once added, TypeScript will recognize the `$path` property on File objects:
+
+<BCard class="bg-body-tertiary">
+
+```ts
+const files: File[] = [] // From BFormFile v-model
+
+files.forEach((file: File) => {
+  console.log(file.name) // "helpers.ts"
+  console.log(file.$path) // "src/utils/helpers.ts" - TypeScript knows this exists!
+})
+```
+
+</BCard>
+
+::: tip
+The `export {}` at the end of the declaration file is required to make it a module and allow the global augmentation to work properly.
+:::
