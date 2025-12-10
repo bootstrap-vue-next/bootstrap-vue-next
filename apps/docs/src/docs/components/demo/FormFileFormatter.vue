@@ -15,7 +15,7 @@ import {computed, ref} from 'vue'
 
 const files = ref<File[] | null>(null)
 
-const formatNames = (files: File[]): string => {
+const formatNames = (files: readonly File[]): string => {
   if (files.length === 1) {
     return files[0].name
   }

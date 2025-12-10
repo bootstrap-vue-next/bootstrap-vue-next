@@ -1,5 +1,5 @@
 <template>
-  <div ref="rootRef">
+  <div ref="rootRef" :class="processedAttrs.wrapperClass">
     <!-- Optional label -->
     <label
       v-if="hasLabelSlot || props.label"
@@ -61,7 +61,7 @@
     <input
       v-else
       :id="computedId"
-      v-bind="$attrs"
+      v-bind="processedAttrs.inputAttrs"
       type="file"
       :class="computedPlainClasses"
       :form="props.form"
@@ -100,7 +100,7 @@
 
 <script setup lang="ts">
 import {useDropZone, useFileDialog} from '@vueuse/core'
-import {computed, nextTick, ref, useTemplateRef, watch} from 'vue'
+import {computed, nextTick, ref, useAttrs, useTemplateRef, watch} from 'vue'
 import type {BFormFileProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
@@ -148,6 +148,14 @@ const emit = defineEmits<{
 
 const modelValue = defineModel<Exclude<BFormFileProps['modelValue'], undefined>>({
   default: null,
+})
+
+const attrs = useAttrs()
+
+// Split attrs: class goes to wrapper, everything else to input elements
+const processedAttrs = computed(() => {
+  const {class: wrapperClass, ...inputAttrs} = attrs
+  return {wrapperClass, inputAttrs}
 })
 
 const computedId = useId(() => props.id)

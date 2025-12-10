@@ -130,9 +130,36 @@ export default {
         },
       },
       slots: {
-        label: {
+        'label': {
           description: 'Slot to customize the label content',
           scope: {},
+        },
+        'file-name': {
+          description: 'Slot to customize how selected file names are displayed',
+          scope: {
+            files: {
+              type: 'readonly File[]',
+              description: 'Array of selected File objects',
+            },
+            names: {
+              type: 'readonly string[]',
+              description: 'Array of file names',
+            },
+          },
+        },
+        'placeholder': {
+          description: 'Slot to customize the placeholder text shown when no files are selected',
+          scope: {},
+        },
+        'drop-placeholder': {
+          description:
+            'Slot to customize the drag-and-drop overlay text (shown during drag operations)',
+          scope: {
+            dropAllowed: {
+              type: 'boolean',
+              description: 'Whether the dragged files meet the accept criteria',
+            },
+          },
         },
       } satisfies SlotRecord<keyof BFormFileSlots>,
     },

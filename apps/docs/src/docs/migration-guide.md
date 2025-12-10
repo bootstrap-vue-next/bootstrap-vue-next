@@ -455,7 +455,7 @@ When using `directory` mode, each `File` object in the returned array is enhance
 
 **BootstrapVueNext equivalent:**
 
-<<< DEMO ./demo/FormFileDirectoryMigration.vue
+<<< DEMO ./components/demo/FormFileDirectoryMigration.vue
 
 ### BFormGroup
 
