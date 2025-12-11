@@ -15,14 +15,14 @@
             v-for="(file, index) in files.slice(0, 10)"
             :key="index"
           >
-            {{ file.$path || file.name }}
+            {{ file.webkitRelativePath || file.name }}
           </li>
           <li v-if="files.length > 10">
             <em>...and {{ files.length - 10 }} more files</em>
           </li>
         </ul>
         <p class="text-muted small mt-2">
-          Each file includes a <code>$path</code> property with its relative path.
+          Each file includes a <code>webkitRelativePath</code> property with its relative path.
         </p>
       </div>
       <div v-else>No directory selected</div>

@@ -447,7 +447,7 @@ BootstrapVueNext has completely rewritten `BFormFile` using [VueUse](https://vue
 
 The `noTraverse` prop has been **removed**. BootstrapVueNext directory mode always returns files as a flat array, which matches the behavior of the browser's native file input with the `webkitdirectory` attribute.
 
-When using `directory` mode, each `File` object includes the standard `webkitRelativePath` property containing the relative path from the selected directory root. This is a native browser property that's automatically available when using directory selection - no custom enhancement required.
+When using `directory` mode, each `File` object includes the standard `webkitRelativePath` property containing the relative path from the selected directory root. This is a native browser property that's automatically available when using directory selection. This has replaced the deprecated `$path` property.
 
 **Example:**
 
