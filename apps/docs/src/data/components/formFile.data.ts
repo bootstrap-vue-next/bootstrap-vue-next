@@ -28,7 +28,7 @@ export default {
           ]
         ),
         accept: {
-          type: 'string | string[]',
+          type: 'string | readonly string[]',
           default: '',
           description:
             "Value to set on the file input's `accept` attribute. Restricts file types that can be selected",
