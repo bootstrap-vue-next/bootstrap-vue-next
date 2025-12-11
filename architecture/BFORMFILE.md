@@ -55,15 +55,16 @@ const {files, open, reset, onChange} = useFileDialog({
   multiple: props.multiple || props.directory,
   reset: true,
 })
+
+// When opening the dialog, pass current values for runtime reactivity
+open({
+  accept: computedAccept.value,
+  multiple: props.multiple || props.directory,
+  directory: props.directory,
+})
 ```
 
-**Important:** The configuration options (`accept`, `multiple`, `directory`) are **not reactive**. These props should be set at component mount time and not changed dynamically. This is a design decision consistent with:
-
-- Native `<input type="file">` behavior (these attributes don't support runtime changes)
-- VueUse composable initialization patterns
-- Other form control components in the library
-
-If these props must change, the component should be remounted with a `key` attribute.
+**Runtime Reactivity:** VueUse's `open()` method accepts optional parameters that override the initial configuration. By passing the current prop values when opening the dialog, the component supports runtime changes to `accept`, `multiple`, and `directory` props without requiring remounting.
 
 #### `useDropZone`
 
@@ -81,10 +82,12 @@ Handles drag-and-drop file operations on the component wrapper.
 ```typescript
 const {isOverDropZone} = useDropZone(dropZoneTarget, {
   onDrop: (files) => onChange(files),
-  dataTypes: props.accept ? [props.accept] : undefined,
+  dataTypes: computedDataTypes, // Reactive computed ref
   disabled: computed(() => props.disabled || props.plain || props.noDrop),
 })
 ```
+
+**Reactivity:** Passing `dataTypes` as a computed ref (rather than unwrapping it with `.value`) ensures the drop zone automatically updates when the `accept` prop changes.
 
 ### File State Management
 

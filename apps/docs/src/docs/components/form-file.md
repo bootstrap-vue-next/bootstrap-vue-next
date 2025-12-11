@@ -120,12 +120,12 @@ You can use the `state` prop to provide visual feedback on the state of the inpu
 
 ## Important Notes
 
-### Prop Reactivity Constraints
+### Prop Reactivity
 
-::: warning Configuration Props
-The `accept`, `multiple`, and `directory` props should be set at component mount time and **not changed dynamically**. These props configure the underlying VueUse composables (`useFileDialog` and `useDropZone`) which do not support reactive updates after initialization.
+The `accept`, `multiple`, and `directory` props support runtime changes. The file dialog and drop zone will automatically reflect updated values when these props change.
 
-This is consistent with native `<input type="file">` behavior and other form control components in the library.
+::: info Drop Zone Multiple Limitation
+The drop zone's `multiple` validation is set at component initialization and will not update if the `multiple` prop changes at runtime. However, the actual file handling logic respects the current `multiple` prop value, so files will be processed correctly. If you need the drop zone validation to update, remount the component with a new `key` attribute when changing the `multiple` prop.
 :::
 
 ### Modifying the file selection

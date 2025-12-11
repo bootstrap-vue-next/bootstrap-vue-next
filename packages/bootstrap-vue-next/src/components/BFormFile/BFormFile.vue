@@ -184,19 +184,12 @@ const modelValue = defineModel<Exclude<BFormFileProps['modelValue'], undefined>>
 
 const attrs = useAttrs()
 
-// Attribute handling:
-// - Custom mode: class/style to wrapper, other attrs to hidden input (for form submission, etc.)
-// - Plain mode: class/style to wrapper, other attrs to input element
 const processedAttrs = computed(() => {
-  // Both modes: split attrs between wrapper and input
   const {class: wrapperClass, style: wrapperStyle, ...inputAttrs} = attrs
-  return {
-    wrapperAttrs: {
-      class: wrapperClass as string | string[] | undefined,
-      style: wrapperStyle as string | Record<string, string> | undefined,
-    },
-    inputAttrs,
-  }
+  const wrapperAttrs: Record<string, unknown> = {}
+  if (wrapperClass !== undefined) wrapperAttrs.class = wrapperClass
+  if (wrapperStyle !== undefined) wrapperAttrs.style = wrapperStyle
+  return {wrapperAttrs, inputAttrs}
 })
 
 const computedId = useId(() => props.id)
@@ -216,7 +209,7 @@ const computedAccept = computed(() =>
 
 // Computed data types for drop zone
 const computedDataTypes = computed(() => {
-  if (!computedAccept.value) return undefined
+  if (!computedAccept.value) return []
   return computedAccept.value.split(',').map((type) => type.trim())
 })
 
@@ -239,7 +232,7 @@ const {isOverDropZone} = useDropZone(dropZoneRef, {
       handleFiles(files)
     }
   },
-  dataTypes: computedDataTypes.value,
+  dataTypes: computedDataTypes,
   multiple: props.multiple || props.directory,
 })
 
@@ -343,7 +336,11 @@ const handleFiles = (files: File[] | FileList, nativeEvent?: Event) => {
 // Open file dialog
 const openFileDialog = () => {
   if (!props.disabled) {
-    open()
+    open({
+      accept: computedAccept.value,
+      multiple: props.multiple || props.directory,
+      directory: props.directory,
+    })
   }
 }
 
