@@ -130,6 +130,45 @@ const handleFiles = (files: File[]) => {
 - No TypeScript interface extension required
 - Simpler implementation without property manipulation
 
+#### Autofocus Implementation
+
+The `autofocus` prop requires careful lifecycle management to ensure the hidden file input is focused after the DOM is mounted:
+
+```typescript
+// Initial focus on mount
+onMounted(() => {
+  if (props.autofocus) {
+    nextTick(() => {
+      focus()
+    })
+  }
+})
+
+// Runtime prop changes
+watch(
+  () => props.autofocus,
+  (autofocus) => {
+    if (autofocus) {
+      focus()
+    }
+  }
+)
+```
+
+**Implementation Details:**
+
+- **Initial Focus**: Uses `onMounted` + `nextTick` to ensure DOM is ready before focusing
+- **Runtime Updates**: Separate watcher handles dynamic `autofocus` prop changes
+- **Timing Critical**: Using `immediate: true` on the watcher would execute during setup before DOM mount, causing focus to silently fail
+- **Two-Part Solution**: Separating mount-time and runtime logic ensures reliable focus in all scenarios
+
+**Rationale:**
+
+- DOM elements must exist before `focus()` can be called
+- Vue's `onMounted` hook guarantees component is mounted, but DOM updates may still be pending
+- `nextTick` ensures all pending DOM updates complete before focus attempt
+- This pattern follows Vue lifecycle best practices for DOM-dependent operations
+
 ### Attribute Routing
 
 Attributes are intelligently routed to appropriate elements:

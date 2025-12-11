@@ -133,7 +133,7 @@
 
 <script setup lang="ts">
 import {useDropZone, useFileDialog} from '@vueuse/core'
-import {computed, nextTick, ref, type Ref, useAttrs, useTemplateRef, watch} from 'vue'
+import {computed, nextTick, onMounted, ref, type Ref, useAttrs, useTemplateRef, watch} from 'vue'
 import type {BFormFileProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
@@ -386,15 +386,23 @@ const blur = () => {
   }
 }
 
-// Autofocus support
+// Autofocus support - initial focus on mount
+onMounted(() => {
+  if (props.autofocus) {
+    nextTick(() => {
+      focus()
+    })
+  }
+})
+
+// Autofocus support - runtime prop changes
 watch(
   () => props.autofocus,
   (autofocus) => {
     if (autofocus) {
       focus()
     }
-  },
-  {immediate: true}
+  }
 )
 
 // Watch modelValue changes from parent
