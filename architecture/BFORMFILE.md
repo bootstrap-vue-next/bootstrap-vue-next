@@ -345,7 +345,6 @@ watch(files, (newFiles) => {
 - [ ] Add drag-and-drop file reordering for multiple files
 - [ ] Add max file size validation prop
 - [ ] Add max file count validation prop
-- [ ] Improve Firefox directory selection support (if/when standard emerges)
 
 ## References
 

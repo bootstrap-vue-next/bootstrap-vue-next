@@ -1,5 +1,5 @@
 <template>
-  <div ref="rootRef" :class="processedAttrs.wrapperClass">
+  <div ref="rootRef" v-bind="processedAttrs.wrapperAttrs">
     <!-- Optional label -->
     <label
       v-if="hasLabelSlot || props.label"
@@ -37,10 +37,13 @@
         <!-- Custom browse button -->
         <button
           v-if="!props.noButton"
+          :id="computedId"
           ref="browseButtonRef"
           type="button"
           class="b-form-file-button"
           :disabled="props.disabled"
+          :aria-label="props.ariaLabel"
+          :aria-labelledby="props.ariaLabelledby"
           @click="openFileDialog"
         >
           {{ effectiveBrowseText }}
@@ -67,7 +70,7 @@
       :class="computedPlainClasses"
       :form="props.form"
       :name="props.name"
-      :multiple="props.multiple"
+      :multiple="props.multiple || props.directory"
       :disabled="props.disabled"
       :capture="props.capture"
       :accept="computedAccept || undefined"
@@ -154,10 +157,17 @@ const modelValue = defineModel<Exclude<BFormFileProps['modelValue'], undefined>>
 
 const attrs = useAttrs()
 
-// Split attrs: class goes to wrapper, everything else to input elements
+// Attribute handling:
+// - Custom mode: all attrs go to wrapper (no input element to receive them)
+// - Plain mode: class/style to wrapper, other attrs to input element
 const processedAttrs = computed(() => {
-  const {class: wrapperClass, ...inputAttrs} = attrs
-  return {wrapperClass, inputAttrs}
+  if (props.plain) {
+    // Plain mode: split attrs between wrapper and input
+    const {class: wrapperClass, style: wrapperStyle, ...inputAttrs} = attrs
+    return {wrapperAttrs: {class: wrapperClass, style: wrapperStyle}, inputAttrs}
+  }
+  // Custom mode: all attrs go to wrapper (VueUse creates hidden input we can't access)
+  return {wrapperAttrs: attrs, inputAttrs: {}}
 })
 
 const computedId = useId(() => props.id)

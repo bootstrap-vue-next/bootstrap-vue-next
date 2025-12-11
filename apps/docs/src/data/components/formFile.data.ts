@@ -71,7 +71,7 @@ export default {
           description: 'Sets the styling for the label',
         },
         modelValue: {
-          type: 'File[] | File | null',
+          type: 'readonlyFile[] | File | null',
           default: undefined,
           description:
             'The current value of the file input. Will be a single `File` object or an array of `File` objects (if `multiple` or `directory` is set). Can be set to `null`, or an empty array to reset the file input',
@@ -105,11 +105,12 @@ export default {
       } satisfies PropRecord<keyof BFormFileProps>,
       emits: {
         'change': {
-          description: 'Emitted when the file selection changes',
+          description:
+            'Emitted when the file selection changes. In plain mode, receives the native Event from the file input. In custom mode, receives a CustomEvent with `detail.files` (File[]), `detail.target.files` (FileList-like), and a `files` property for convenience.',
           args: {
             value: {
-              type: 'Event',
-              description: 'Native change event',
+              type: 'Event | CustomEvent',
+              description: 'Native Event (plain mode) or CustomEvent with file data (custom mode)',
             },
           },
         },
