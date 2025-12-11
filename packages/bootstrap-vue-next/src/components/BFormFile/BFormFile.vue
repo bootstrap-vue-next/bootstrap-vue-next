@@ -256,38 +256,10 @@ const computedPlainClasses = computed(() => [
   },
 ])
 
-// File enhancement for directory mode
-const enhanceFilesWithPaths = (files: readonly File[]): readonly File[] => {
-  if (!props.directory) return files
-
-  return files.map((file) => {
-    // Determine the path value
-    let pathValue: string
-    if (
-      'webkitRelativePath' in file &&
-      (file as File & {webkitRelativePath?: string}).webkitRelativePath
-    ) {
-      pathValue = (file as File & {webkitRelativePath: string}).webkitRelativePath
-    } else {
-      pathValue = file.name
-    }
-
-    // Use Object.defineProperty to properly control property characteristics
-    Object.defineProperty(file, '$path', {
-      value: pathValue,
-      enumerable: false,
-      writable: false,
-      configurable: true,
-    })
-
-    return file
-  })
-}
-
 // Selected files (from dialog or managed state)
 const internalFiles = ref<readonly File[]>([])
 
-const selectedFiles = computed<readonly File[]>(() => enhanceFilesWithPaths(internalFiles.value))
+const selectedFiles = computed<readonly File[]>(() => internalFiles.value)
 
 const hasFiles = computed(() => selectedFiles.value.length > 0)
 

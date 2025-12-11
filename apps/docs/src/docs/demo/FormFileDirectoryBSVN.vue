@@ -13,10 +13,10 @@ import {ref, watch} from 'vue'
 
 const files = ref<File[]>([])
 
-// Access file paths via the $path property
+// Access file paths via the standard webkitRelativePath property
 watch(files, (newFiles) => {
   newFiles.forEach((file) => {
-    console.log(file.$path) // e.g., "src/components/Button.vue"
+    console.log(file.webkitRelativePath) // e.g., "src/components/Button.vue"
   })
 })
 // #endregion script

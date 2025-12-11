@@ -91,20 +91,20 @@ By adding the `directory` prop, a user can select directories instead of files.
 
 ### Accessing File Paths
 
-When using `directory` mode, each `File` object in the returned array is enhanced with a `$path` property containing the relative path from the selected directory root:
+When using `directory` mode, each `File` object includes the standard `webkitRelativePath` property containing the relative path from the selected directory root:
 
-<<< FRAGMENT ./demo/FormFileDirectoryPathExample.ts#example{typescript}
+<<< FRAGMENT ./demo/FormFileDirectoryPathExample.ts
 
-::: tip TypeScript Support
-To use the `$path` property with TypeScript, you need to augment the global `File` interface. See [Extending the File Interface](/docs/types#extending-the-file-interface-for-bformfile) for details.
-:::
-
-The `$path` property contains the full relative path (e.g., `"project/src/utils/helpers.ts"`), allowing you to:
+The `webkitRelativePath` property allows you to:
 
 - Display the full file path to users
 - Reconstruct directory structure in your application
 - Group files by folder
 - Preserve directory hierarchy when processing files
+
+::: tip Browser Compatibility
+The `webkitRelativePath` property is available in all browsers that support directory selection. It's part of the standard File API when using the `webkitdirectory` attribute.
+:::
 
 ## Autofocus
 

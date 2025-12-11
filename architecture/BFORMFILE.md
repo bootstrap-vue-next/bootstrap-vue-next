@@ -105,36 +105,27 @@ watch(files, (value) => {
 })
 ```
 
-#### File Enhancement (Directory Mode)
+#### Directory Mode File Path Access
 
-When `directory` prop is enabled, files are enhanced with a `$path` property:
+When `directory` prop is enabled, files automatically include the standard `webkitRelativePath` property:
 
 ```typescript
-const enhanceFilesWithPath = (fileList: FileList | File[] | null): File[] | null => {
-  if (!fileList || !props.directory) return fileList ? [...fileList] : null
-
-  return Array.from(fileList).map((file) => {
-    if (file.webkitRelativePath) {
-      const pathParts = file.webkitRelativePath.split('/')
-      pathParts.pop() // Remove filename
-      Object.defineProperty(file, '$path', {
-        value: pathParts.join('/'),
-        writable: false,
-        enumerable: false,
-        configurable: true,
-      })
-    }
-    return file
+// Files from directory selection automatically have webkitRelativePath
+const handleFiles = (files: File[]) => {
+  files.forEach((file) => {
+    // Standard File API property - no enhancement needed
+    console.log(file.webkitRelativePath) // e.g., "project/src/utils/helpers.ts"
   })
 }
 ```
 
 **Design Rationale:**
 
-- Non-enumerable to avoid serialization issues
-- Non-writable to prevent accidental modification
-- Configurable to allow redefinition if needed
-- Derived from `webkitRelativePath` (native browser property)
+- Uses native browser property - no custom enhancement needed
+- Available in all browsers supporting `webkitdirectory` attribute
+- Part of standard File API when directory selection is used
+- No TypeScript interface extension required
+- Simpler implementation without property manipulation
 
 ### Attribute Routing
 
@@ -213,41 +204,6 @@ const computedClasses = computed(() => [
 
 For complete documentation of props, slots, and events, see the [BFormFile component documentation](../apps/docs/src/docs/components/form-file.md).
 
-## File Properties Extension
-
-### TypeScript Integration
-
-The `$path` property requires global type augmentation in consuming applications:
-
-```typescript
-// vite-env.d.ts or env.d.ts
-declare global {
-  interface File {
-    /**
-     * Directory path of the file (derived from webkitRelativePath)
-     * Only available when selecting files in directory mode with BFormFile
-     */
-    $path?: string
-  }
-}
-export {}
-```
-
-**Why Global Augmentation?**
-
-- `File` is a DOM API interface, not part of the component library
-- Each application controls its own global type definitions
-- Keeps library types clean and avoids DOM type pollution
-- Follows TypeScript best practices for extending built-in types
-
-**File Naming Convention:**
-
-- **Vite projects**: `vite-env.d.ts` (Vite scaffolding convention)
-- **Non-Vite projects**: `env.d.ts` (generic environment types)
-- Must be included in `tsconfig.json` compilation
-
-For more details on TypeScript integration, see the [Types documentation](../apps/docs/src/docs/types.md#extending-the-file-interface-for-bformfile).
-
 ## Browser Compatibility
 
 ### Directory Selection
@@ -300,13 +256,13 @@ Both **custom mode** and **plain mode** support native form submission:
 
 ### Removed Features
 
-- **`noTraverse`**: Removed in favor of `$path` property on files
+- **`noTraverse`**: Removed - use standard `webkitRelativePath` property on File objects instead
 
 ### Changed Behavior
 
 - Drop zone now uses VueUse `useDropZone` (more reliable)
 - File dialog uses VueUse `useFileDialog` (better cross-browser support)
-- Directory mode files automatically include `$path` property
+- Directory mode files use standard `webkitRelativePath` property (no custom enhancement)
 
 ### Migration Path
 
@@ -317,10 +273,10 @@ Both **custom mode** and **plain mode** support native form submission:
 <!-- BSVN (New) -->
 <BFormFile v-model="files" directory />
 <script setup>
-// Access directory paths via $path property
+// Access directory paths via standard webkitRelativePath property
 watch(files, (newFiles) => {
   newFiles?.forEach((file) => {
-    console.log(file.$path) // Directory path
+    console.log(file.webkitRelativePath) // Full relative path
   })
 })
 </script>
@@ -329,7 +285,7 @@ watch(files, (newFiles) => {
 ## Performance Considerations
 
 1. **Computed Properties**: Minimize reactivity overhead with targeted computeds
-2. **File Processing**: Only enhance files when `directory` mode is enabled
+2. **File Processing**: Files are used directly without enhancement overhead
 3. **Event Handlers**: Use VueUse's built-in debouncing for drag events
 4. **Memory Management**: Reset file state properly to prevent memory leaks
 
