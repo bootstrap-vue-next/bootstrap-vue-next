@@ -296,7 +296,7 @@ const dropAllowed = computed(() => {
 })
 
 // File handling
-const handleFiles = (files: File[] | FileList) => {
+const handleFiles = (files: File[] | FileList, nativeEvent?: Event) => {
   const fileArray = Array.from(files)
   internalFiles.value = fileArray
 
@@ -310,12 +310,30 @@ const handleFiles = (files: File[] | FileList) => {
     modelValue.value = firstFile
   }
 
-  // Emit change event for consistency with native input behavior
-  // This allows @change listeners to work in both plain and custom modes
-  // Emit asynchronously after DOM updates to ensure proper event propagation
+  // Emit change event with files accessible
+  // In plain mode: forward the native event (has target.files)
+  // In custom mode: create CustomEvent with files in detail
   nextTick(() => {
-    const changeEvent = new Event('change', {bubbles: true, cancelable: false})
-    emit('change', changeEvent)
+    if (nativeEvent) {
+      // Plain mode: forward native event
+      emit('change', nativeEvent)
+    } else {
+      // Custom mode: create CustomEvent with files
+      const changeEvent = new CustomEvent('change', {
+        bubbles: true,
+        cancelable: false,
+        detail: {
+          files: fileArray,
+          target: {files: fileArray},
+        },
+      })
+      // Also attach files directly for easier access
+      Object.defineProperty(changeEvent, 'files', {
+        value: fileArray,
+        enumerable: true,
+      })
+      emit('change', changeEvent)
+    }
   })
 }
 
@@ -330,7 +348,7 @@ const openFileDialog = () => {
 const onPlainChange = (e: Event) => {
   const input = e.target as HTMLInputElement
   if (input.files) {
-    handleFiles(input.files)
+    handleFiles(input.files, e) // Pass native event
   }
 }
 
