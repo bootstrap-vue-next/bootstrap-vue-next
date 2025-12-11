@@ -40,13 +40,13 @@ export default {
         },
         capture: {
           type: "'boolean' | 'user' | 'environment'",
-          default: false, // TODO item not in string format
+          default: false,
           description:
             "When set, will instruct the browser to use the device's camera (if supported)",
         },
         directory: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description: 'Enable `directory` mode (on browsers that support it)',
         },
         dropPlaceholder: {
@@ -71,14 +71,14 @@ export default {
           description: 'Sets the styling for the label',
         },
         modelValue: {
-          type: 'readonlyFile[] | File | null',
+          type: 'readonly File[] | File | null',
           default: undefined,
           description:
             'The current value of the file input. Will be a single `File` object or an array of `File` objects (if `multiple` or `directory` is set). Can be set to `null`, or an empty array to reset the file input',
         },
         multiple: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description:
             'When set, will allow multiple files to be selected. `v-model` will be an array',
         },
@@ -89,7 +89,7 @@ export default {
         },
         noDrop: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description: 'Disable drag and drop mode',
         },
         placeholder: {

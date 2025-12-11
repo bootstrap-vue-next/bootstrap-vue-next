@@ -133,7 +133,7 @@
 
 <script setup lang="ts">
 import {useDropZone, useFileDialog} from '@vueuse/core'
-import {computed, nextTick, ref, useAttrs, useTemplateRef, watch} from 'vue'
+import {computed, nextTick, ref, type Ref, useAttrs, useTemplateRef, watch} from 'vue'
 import type {BFormFileProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
@@ -190,7 +190,13 @@ const attrs = useAttrs()
 const processedAttrs = computed(() => {
   // Both modes: split attrs between wrapper and input
   const {class: wrapperClass, style: wrapperStyle, ...inputAttrs} = attrs
-  return {wrapperAttrs: {class: wrapperClass, style: wrapperStyle}, inputAttrs}
+  return {
+    wrapperAttrs: {
+      class: wrapperClass as string | string[] | undefined,
+      style: wrapperStyle as string | Record<string, string> | undefined,
+    },
+    inputAttrs,
+  }
 })
 
 const computedId = useId(() => props.id)
@@ -223,7 +229,7 @@ const {
   accept: computedAccept.value,
   multiple: props.multiple || props.directory,
   directory: props.directory,
-  input: customInputRef,
+  input: customInputRef as unknown as Ref<HTMLInputElement>,
 })
 
 // VueUse drop zone (replaces manual drag/drop)
