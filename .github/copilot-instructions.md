@@ -136,9 +136,11 @@ templates/
 
 ### Working with Styles
 
-- Main styles: `packages/bootstrap-vue-next/src/styles/styles.scss`
-- Component styles are typically in the component `.vue` files
+- **Component styles**: Place in separate `_component-name.scss` files within the component directory (e.g., `packages/bootstrap-vue-next/src/components/BFormFile/_form-file.scss`)
+- **Global styles**: Import component SCSS files in `packages/bootstrap-vue-next/src/styles/styles.scss`
+- **DO NOT** use `<style>` blocks in `.vue` component files - always use separate SCSS files
 - Bootstrap 5.3.x is the base CSS framework
+- Follow Bootstrap variable and mixin conventions
 
 ## Timing and Performance
 
