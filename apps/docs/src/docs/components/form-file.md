@@ -128,24 +128,6 @@ The `accept`, `multiple`, and `directory` props should be set at component mount
 This is consistent with native `<input type="file">` behavior and other form control components in the library.
 :::
 
-### Native Form Submission Limitation
-
-::: warning Custom Mode and Form Submission
-In **custom mode** (default), the component uses VueUse's `useFileDialog` composable which creates an internal hidden `<input type="file">` element. This hidden input **cannot participate in native HTML form submission** because:
-
-1. The hidden input is managed programmatically by VueUse (not part of the form DOM)
-2. File data can only be submitted through the visible `<input type="file">` element
-3. Custom mode provides drag-and-drop and styling features at the cost of native form compatibility
-
-**Solution**: If you need native form submission with file data included in `FormData`, use **`plain` mode** instead:
-
-```vue
-<BFormFile plain name="myFile" />
-```
-
-In plain mode, the native `<input type="file">` element is used directly and supports standard form submission.
-:::
-
 ### Modifying the file selection
 
 With inputs that are of type `file`, the value is strictly `uni-directional`. Meaning that you cannot change the value of the input via JavaScript. You can change the value of the `v-model`, and this will work for an "outside view", however, the actual `input` element will not have its [FileList](https://developer.mozilla.org/en-US/docs/Web/API/FileList) changed. This is for security reasons as a malicious script could attempt to read and steal documents

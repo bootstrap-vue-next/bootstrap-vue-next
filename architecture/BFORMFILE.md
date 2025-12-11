@@ -273,9 +273,11 @@ For more details on TypeScript integration, see the [Types documentation](../app
 
 ### Form Submission
 
-- **Custom Mode:** Files are only available via `v-model` (programmatic access). Native form submission is **not supported**. Use JavaScript to handle file uploads.
-- **Plain Mode:** Uses native `<input type="file">` which supports standard form submission with file data included in `FormData`.
-- **Recommendation:** For native form submission requirements, use `plain` mode.
+Both **custom mode** and **plain mode** support native form submission:
+
+- **Custom Mode:** Uses a hidden `<input type="file">` element positioned behind the UI (z-index: -5). This element is passed to VueUse's `useFileDialog` composable via the `input` option, so VueUse manages the file input directly - no manual syncing required.
+- **Plain Mode:** Uses a visible native `<input type="file">` element which naturally supports form submission.
+- **Implementation:** The hidden input approach matches Bootstrap Vue's implementation, but leverages VueUse's built-in support for custom input elements, resulting in cleaner code without manual file synchronization.
 
 ## Testing Strategy
 

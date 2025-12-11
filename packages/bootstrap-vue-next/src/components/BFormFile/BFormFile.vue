@@ -58,6 +58,33 @@
           </div>
         </slot>
       </div>
+
+      <!-- Hidden input for form submission (positioned behind UI with z-index) -->
+      <input
+        ref="customInputRef"
+        v-bind="processedAttrs.inputAttrs"
+        type="file"
+        :name="props.name"
+        :form="props.form"
+        :multiple="props.multiple || props.directory"
+        :disabled="props.disabled"
+        :required="props.required"
+        :accept="computedAccept || undefined"
+        :capture="props.capture"
+        :directory="props.directory"
+        :webkitdirectory="props.directory"
+        tabindex="-1"
+        aria-hidden="true"
+        style="
+          position: absolute;
+          z-index: -5;
+          width: 0;
+          height: 0;
+          opacity: 0;
+          overflow: hidden;
+          pointer-events: none;
+        "
+      />
     </div>
 
     <!-- Plain mode - simple native input -->
@@ -158,16 +185,12 @@ const modelValue = defineModel<Exclude<BFormFileProps['modelValue'], undefined>>
 const attrs = useAttrs()
 
 // Attribute handling:
-// - Custom mode: all attrs go to wrapper (no input element to receive them)
+// - Custom mode: class/style to wrapper, other attrs to hidden input (for form submission, etc.)
 // - Plain mode: class/style to wrapper, other attrs to input element
 const processedAttrs = computed(() => {
-  if (props.plain) {
-    // Plain mode: split attrs between wrapper and input
-    const {class: wrapperClass, style: wrapperStyle, ...inputAttrs} = attrs
-    return {wrapperAttrs: {class: wrapperClass, style: wrapperStyle}, inputAttrs}
-  }
-  // Custom mode: all attrs go to wrapper (VueUse creates hidden input we can't access)
-  return {wrapperAttrs: attrs, inputAttrs: {}}
+  // Both modes: split attrs between wrapper and input
+  const {class: wrapperClass, style: wrapperStyle, ...inputAttrs} = attrs
+  return {wrapperAttrs: {class: wrapperClass, style: wrapperStyle}, inputAttrs}
 })
 
 const computedId = useId(() => props.id)
@@ -178,6 +201,7 @@ const rootRef = useTemplateRef('rootRef')
 const dropZoneRef = useTemplateRef('dropZoneRef')
 const browseButtonRef = useTemplateRef('browseButtonRef')
 const plainInputRef = useTemplateRef<HTMLInputElement>('plainInputRef')
+const customInputRef = useTemplateRef<HTMLInputElement>('customInputRef')
 
 // Computed accept for file type validation
 const computedAccept = computed(() =>
@@ -190,7 +214,7 @@ const computedDataTypes = computed(() => {
   return computedAccept.value.split(',').map((type) => type.trim())
 })
 
-// VueUse file dialog (replaces native input in custom mode)
+// VueUse file dialog (uses our hidden input element)
 const {
   open,
   reset: resetDialog,
@@ -199,6 +223,7 @@ const {
   accept: computedAccept.value,
   multiple: props.multiple || props.directory,
   directory: props.directory,
+  input: customInputRef,
 })
 
 // VueUse drop zone (replaces manual drag/drop)
@@ -363,7 +388,7 @@ onDialogChange((files) => {
 const reset = () => {
   internalFiles.value = []
   modelValue.value = null
-  resetDialog()
+  resetDialog() // This resets the hidden input in custom mode
   if (plainInputRef.value) {
     plainInputRef.value.value = ''
   }

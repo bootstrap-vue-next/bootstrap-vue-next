@@ -303,10 +303,24 @@ describe('form-file', () => {
   })
 
   describe('custom mode - UI elements', () => {
-    it('does not render input element by default', () => {
-      const wrapper = mount(BFormFile)
+    it('renders hidden input element for form submission in custom mode', () => {
+      const wrapper = mount(BFormFile, {props: {name: 'testFile'}})
       const $input = wrapper.find('input[type="file"]')
-      expect($input.exists()).toBe(false)
+      expect($input.exists()).toBe(true)
+      // Should be hidden with proper styling
+      expect($input.attributes('style')).toContain('position: absolute')
+      expect($input.attributes('style')).toContain('z-index: -5')
+      // Should have form attributes
+      expect($input.attributes('name')).toBe('testFile')
+    })
+
+    it('has custom attributes transferred to hidden input element in custom mode', () => {
+      const wrapper = mount(BFormFile, {attrs: {'foo': 'bar', 'data-test': 'value'}})
+      const $input = wrapper.find('input[type="file"]')
+      expect($input.attributes('foo')).toBeDefined()
+      expect($input.attributes('foo')).toEqual('bar')
+      expect($input.attributes('data-test')).toBeDefined()
+      expect($input.attributes('data-test')).toEqual('value')
     })
 
     it('renders custom file control', () => {
