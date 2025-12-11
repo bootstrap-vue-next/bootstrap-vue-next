@@ -84,7 +84,7 @@ Use the `plain` prop to render a native HTML file input without custom styling. 
 By adding the `directory` prop, a user can select directories instead of files.
 
 <BAlert variant="danger" :model-value="true">
-  Directory mode is a non-standard attribute in the HTML spec. All major browsers have chosen to support it, but it may not function correctly for browsers that have chosen not to implement it. Use with caution
+  Directory mode uses the non-standard `webkitdirectory` attribute. Supported browsers include Chrome, Edge, Safari, Opera, and Firefox (desktop). Mobile browser support varies. The component gracefully degrades to standard file selection if unsupported. Use with caution in production environments requiring broad compatibility.
 </BAlert>
 
 <<< DEMO ./demo/FormFileDirectory.vue
@@ -118,7 +118,35 @@ You can use the `state` prop to provide visual feedback on the state of the inpu
 
 <<< DEMO ./demo/FormFileState.vue#template{vue-html}
 
-## Modifying the file selection
+## Important Notes
+
+### Prop Reactivity Constraints
+
+::: warning Configuration Props
+The `accept`, `multiple`, and `directory` props should be set at component mount time and **not changed dynamically**. These props configure the underlying VueUse composables (`useFileDialog` and `useDropZone`) which do not support reactive updates after initialization.
+
+This is consistent with native `<input type="file">` behavior and other form control components in the library.
+:::
+
+### Native Form Submission Limitation
+
+::: warning Custom Mode and Form Submission
+In **custom mode** (default), the component uses VueUse's `useFileDialog` composable which creates an internal hidden `<input type="file">` element. This hidden input **cannot participate in native HTML form submission** because:
+
+1. The hidden input is managed programmatically by VueUse (not part of the form DOM)
+2. File data can only be submitted through the visible `<input type="file">` element
+3. Custom mode provides drag-and-drop and styling features at the cost of native form compatibility
+
+**Solution**: If you need native form submission with file data included in `FormData`, use **`plain` mode** instead:
+
+```vue
+<BFormFile plain name="myFile" />
+```
+
+In plain mode, the native `<input type="file">` element is used directly and supports standard form submission.
+:::
+
+### Modifying the file selection
 
 With inputs that are of type `file`, the value is strictly `uni-directional`. Meaning that you cannot change the value of the input via JavaScript. You can change the value of the `v-model`, and this will work for an "outside view", however, the actual `input` element will not have its [FileList](https://developer.mozilla.org/en-US/docs/Web/API/FileList) changed. This is for security reasons as a malicious script could attempt to read and steal documents
 

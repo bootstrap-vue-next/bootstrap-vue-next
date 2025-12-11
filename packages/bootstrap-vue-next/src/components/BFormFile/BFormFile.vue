@@ -61,6 +61,7 @@
     <input
       v-else
       :id="computedId"
+      ref="plainInputRef"
       v-bind="processedAttrs.inputAttrs"
       type="file"
       :class="computedPlainClasses"
@@ -93,8 +94,10 @@
       </slot>
     </div>
 
-    <!-- Hidden form input for form submission (when name is provided) -->
-    <input v-if="props.name && !props.plain" type="hidden" :name="props.name" :form="props.form" />
+    <!-- ARIA live region for screen reader announcements -->
+    <div v-if="!props.plain" class="visually-hidden" aria-live="polite" aria-atomic="true">
+      {{ ariaLiveMessage }}
+    </div>
   </div>
 </template>
 
@@ -224,17 +227,26 @@ const enhanceFilesWithPaths = (files: readonly File[]): readonly File[] => {
   if (!props.directory) return files
 
   return files.map((file) => {
-    const enhancedFile = file as File & {$path?: string}
-    // Use webkitRelativePath if available
+    // Determine the path value
+    let pathValue: string
     if (
       'webkitRelativePath' in file &&
       (file as File & {webkitRelativePath?: string}).webkitRelativePath
     ) {
-      enhancedFile.$path = (file as File & {webkitRelativePath: string}).webkitRelativePath
+      pathValue = (file as File & {webkitRelativePath: string}).webkitRelativePath
     } else {
-      enhancedFile.$path = file.name
+      pathValue = file.name
     }
-    return enhancedFile
+
+    // Use Object.defineProperty to properly control property characteristics
+    Object.defineProperty(file, '$path', {
+      value: pathValue,
+      enumerable: false,
+      writable: false,
+      configurable: true,
+    })
+
+    return file
   })
 }
 
@@ -260,6 +272,16 @@ const formattedFileNames = computed(() => {
 const showExternalDisplay = computed(
   () => !props.plain && props.showFileNames && (hasFiles.value || props.placeholder)
 )
+
+// ARIA live region message for accessibility
+const ariaLiveMessage = computed(() => {
+  if (!hasFiles.value) return ''
+  const count = selectedFiles.value.length
+  if (count === 1) {
+    return `File selected: ${selectedFiles.value[0].name}`
+  }
+  return `${count} files selected`
+})
 
 const effectiveBrowseText = computed(() => props.browseText ?? 'Browse')
 const effectiveDropPlaceholder = computed(() => props.dropPlaceholder ?? 'Drop files here...')

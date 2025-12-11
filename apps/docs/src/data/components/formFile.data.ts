@@ -55,7 +55,7 @@ export default {
           description: 'Text to display when dragging files over the drop zone (custom mode only)',
         },
         fileNameFormatter: {
-          type: '(files: File[]) => string',
+          type: '(files: readonly File[]) => string',
           default: undefined,
           description:
             'Custom formatter function for displaying selected file names (custom mode only)',
@@ -99,7 +99,7 @@ export default {
         },
         placeholder: {
           type: 'string',
-          default: 'No file chosen',
+          default: undefined,
           description: 'Text to display when no file is selected (custom mode only)',
         },
         showFileNames: {

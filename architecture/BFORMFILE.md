@@ -44,6 +44,7 @@ Manages programmatic file selection through the native file picker dialog.
 - Handles file selection events
 - Manages `accept`, `multiple`, and `directory` (webkitdirectory) attributes
 - Provides reactive file state
+- **Internally creates a hidden `<input type="file">` element** (no additional hidden input needed)
 
 **Configuration:**
 
@@ -55,6 +56,14 @@ const {files, open, reset, onChange} = useFileDialog({
   reset: true,
 })
 ```
+
+**Important:** The configuration options (`accept`, `multiple`, `directory`) are **not reactive**. These props should be set at component mount time and not changed dynamically. This is a design decision consistent with:
+
+- Native `<input type="file">` behavior (these attributes don't support runtime changes)
+- VueUse composable initialization patterns
+- Other form control components in the library
+
+If these props must change, the component should be remounted with a `key` attribute.
 
 #### `useDropZone`
 
@@ -244,15 +253,29 @@ For more details on TypeScript integration, see the [Types documentation](../app
 ### Directory Selection
 
 - Uses `webkitdirectory` attribute (non-standard but widely supported)
-- Supported: Chrome, Edge, Safari, Opera
-- Not supported: Firefox (as of 2025)
-- Graceful degradation: Falls back to standard file input
+- **Supported Browsers:**
+  - ✅ Chrome (all versions with file input support)
+  - ✅ Edge (Chromium-based)
+  - ✅ Safari (desktop and iOS with limitations)
+  - ✅ Opera
+  - ✅ Firefox 50+ (since November 2016)
+- **Limitations:**
+  - Mobile browsers: Support varies by platform and version
+  - Non-standard: Not part of official HTML specification
+  - Some browsers may require vendor prefix (`webkitdirectory`)
+- **Graceful Degradation:** Falls back to standard file input if unsupported
 
 ### Drag and Drop
 
 - Uses HTML5 Drag and Drop API
 - Supported: All modern browsers
 - Mobile: Limited support, varies by browser
+
+### Form Submission
+
+- **Custom Mode:** Files are only available via `v-model` (programmatic access). Native form submission is **not supported**. Use JavaScript to handle file uploads.
+- **Plain Mode:** Uses native `<input type="file">` which supports standard form submission with file data included in `FormData`.
+- **Recommendation:** For native form submission requirements, use `plain` mode.
 
 ## Testing Strategy
 
