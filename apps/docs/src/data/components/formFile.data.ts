@@ -92,11 +92,6 @@ export default {
           default: false, // TODO item not in string format
           description: 'Disable drag and drop mode',
         },
-        noDropPlaceholder: {
-          type: 'string',
-          default: undefined,
-          description: 'Text to display when drag and drop is disabled (custom mode only)',
-        },
         placeholder: {
           type: 'string',
           default: undefined,
@@ -154,12 +149,7 @@ export default {
         'drop-placeholder': {
           description:
             'Slot to customize the drag-and-drop overlay text (shown during drag operations)',
-          scope: {
-            dropAllowed: {
-              type: 'boolean',
-              description: 'Whether the dragged files meet the accept criteria',
-            },
-          },
+          scope: {},
         },
       } satisfies SlotRecord<keyof BFormFileSlots>,
     },

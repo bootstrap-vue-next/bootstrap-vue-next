@@ -49,9 +49,9 @@
 
       <!-- Drag overlay (only shown when dragging) -->
       <div v-if="isOverDropZone && !props.noDrop" class="b-form-file-drag-overlay">
-        <slot name="drop-placeholder" :drop-allowed="dropAllowed">
+        <slot name="drop-placeholder">
           <div class="b-form-file-drag-text">
-            {{ dropAllowed ? effectiveDropPlaceholder : effectiveNoDropPlaceholder }}
+            {{ effectiveDropPlaceholder }}
           </div>
         </slot>
       </div>
@@ -134,7 +134,6 @@ const _props = withDefaults(defineProps<Omit<BFormFileProps, 'modelValue'>>(), {
   name: undefined,
   noButton: false,
   noDrop: false,
-  noDropPlaceholder: undefined,
   plain: false,
   placeholder: undefined,
   required: false,
@@ -168,7 +167,7 @@ const stateClass = useStateClass(() => props.state)
 const rootRef = useTemplateRef('rootRef')
 const dropZoneRef = useTemplateRef('dropZoneRef')
 const browseButtonRef = useTemplateRef('browseButtonRef')
-const plainInputRef = ref<HTMLInputElement | null>(null)
+const plainInputRef = useTemplateRef<HTMLInputElement>('plainInputRef')
 
 // Computed accept for file type validation
 const computedAccept = computed(() =>
@@ -285,15 +284,6 @@ const ariaLiveMessage = computed(() => {
 
 const effectiveBrowseText = computed(() => props.browseText ?? 'Browse')
 const effectiveDropPlaceholder = computed(() => props.dropPlaceholder ?? 'Drop files here...')
-const effectiveNoDropPlaceholder = computed(() => props.noDropPlaceholder ?? 'Not allowed')
-
-// Drop validation based on accept attribute
-const dropAllowed = computed(() => {
-  // If no accept specified, all drops allowed
-  if (!computedAccept.value) return true
-  // For now, return true - actual validation happens in useDropZone
-  return true
-})
 
 // File handling
 const handleFiles = (files: File[] | FileList, nativeEvent?: Event) => {

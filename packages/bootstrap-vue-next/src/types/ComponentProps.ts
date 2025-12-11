@@ -336,7 +336,6 @@ export interface BFormFileProps {
   name?: string
   noButton?: boolean
   noDrop?: boolean
-  noDropPlaceholder?: string
   plain?: boolean
   placeholder?: string
   required?: boolean

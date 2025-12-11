@@ -461,6 +461,12 @@ To use the `$path` property with TypeScript, you need to augment the global `Fil
 
 <<< DEMO ./components/demo/FormFileDirectoryMigration.vue
 
+#### Drop Placeholder Slot
+
+The `drop-placeholder` slot no longer receives a `dropAllowed` scope property. VueUse's `useDropZone` handles file type validation internally, and we don't have access to its validation state. The slot now simply displays the drop placeholder text.
+
+The `noDropPlaceholder` prop has been removed as it was only used when `dropAllowed` was `false`, which never occurred.
+
 ### BFormGroup
 
 Use `label-visually-hidden` instead of `label-sronly` per
