@@ -291,7 +291,7 @@ Both **custom mode** and **plain mode** support native form submission:
 
 ### Test Files
 
-- `BFormFile.spec.ts` - Component behavior tests
+- `form-file.spec.ts` - Component behavior tests
 - Total: 60 tests covering all functionality
 
 ## Migration from BSV (Bootstrap-Vue)
