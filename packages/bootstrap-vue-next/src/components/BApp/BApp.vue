@@ -42,29 +42,14 @@ const orchestratorRef = ref<InstanceType<typeof BOrchestrator>>()
 
 // Re-expose orchestrator methods
 defineExpose({
-  get show() {
-    return orchestratorRef.value?.show
+  get modal() {
+    return orchestratorRef.value?.modal
   },
-  get hide() {
-    return orchestratorRef.value?.hide
-  },
-  get hideAll() {
-    return orchestratorRef.value?.hideAll
-  },
-  get get() {
-    return orchestratorRef.value?.get
-  },
-  get current() {
-    return orchestratorRef.value?.current
-  },
-  get create() {
-    return orchestratorRef.value?.create
+  get toast() {
+    return orchestratorRef.value?.toast
   },
   get popover() {
     return orchestratorRef.value?.popover
-  },
-  get tooltip() {
-    return orchestratorRef.value?.tooltip
   },
   get _isOrchestratorInstalled() {
     return orchestratorRef.value?._isOrchestratorInstalled

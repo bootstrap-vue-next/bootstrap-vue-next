@@ -123,19 +123,27 @@ describe('BApp', () => {
 
     // Check that BApp exposes the registry methods
     expect(wrapper.vm).toBeDefined()
-    
-    // Modal methods
-    expect(typeof wrapper.vm.show).toBe('function')
-    expect(typeof wrapper.vm.hide).toBe('function')
-    expect(typeof wrapper.vm.hideAll).toBe('function')
-    expect(typeof wrapper.vm.get).toBe('function')
-    expect(typeof wrapper.vm.current).toBe('function')
-    expect(typeof wrapper.vm.create).toBe('function')
-    
-    // Popover methods
-    expect(typeof wrapper.vm.popover).toBe('function')
-    expect(typeof wrapper.vm.tooltip).toBe('function')
-    
+
+    // Modal namespace
+    expect(wrapper.vm.modal).toBeDefined()
+    expect(typeof wrapper.vm.modal?.show).toBe('function')
+    expect(typeof wrapper.vm.modal?.hide).toBe('function')
+    expect(typeof wrapper.vm.modal?.hideAll).toBe('function')
+    expect(typeof wrapper.vm.modal?.get).toBe('function')
+    expect(typeof wrapper.vm.modal?.current).toBe('function')
+    expect(typeof wrapper.vm.modal?.create).toBe('function')
+
+    // Toast namespace
+    expect(wrapper.vm.toast).toBeDefined()
+    expect(typeof wrapper.vm.toast?.create).toBe('function')
+    expect(typeof wrapper.vm.toast?.show).toBe('function')
+
+    // Popover namespace
+    expect(wrapper.vm.popover).toBeDefined()
+    expect(typeof wrapper.vm.popover?.create).toBe('function')
+    expect(typeof wrapper.vm.popover?.popover).toBe('function')
+    expect(typeof wrapper.vm.popover?.tooltip).toBe('function')
+
     // Registry state
     expect(wrapper.vm._isOrchestratorInstalled).toBeDefined()
     expect(wrapper.vm._isToastAppend).toBeDefined()
@@ -149,11 +157,9 @@ describe('BApp', () => {
       },
     })
 
-    // When orchestrator is disabled, methods should be undefined
-    expect(wrapper.vm.show).toBeUndefined()
-    expect(wrapper.vm.hide).toBeUndefined()
-    expect(wrapper.vm.create).toBeUndefined()
+    // When orchestrator is disabled, namespaces should be undefined
+    expect(wrapper.vm.modal).toBeUndefined()
+    expect(wrapper.vm.toast).toBeUndefined()
     expect(wrapper.vm.popover).toBeUndefined()
-    expect(wrapper.vm.tooltip).toBeUndefined()
   })
 })

@@ -181,17 +181,32 @@ if (orchestratorRegistry) {
 
 // Always call defineExpose at the top level, but values may be undefined
 defineExpose({
-  // Modal methods
-  show: modalTools?.show,
-  hide: modalTools?.hide,
-  hideAll: modalTools?.hideAll,
-  get: modalTools?.get,
-  current: modalTools?.current,
-  // Toast and modal create method (both have 'create')
-  create: modalTools?.create || toastTools?.create,
-  // Popover methods
-  popover: popoverTools?.popover,
-  tooltip: popoverTools?.tooltip,
+  // Namespaced modal methods
+  modal: modalTools
+    ? {
+        show: modalTools.show,
+        hide: modalTools.hide,
+        hideAll: modalTools.hideAll,
+        get: modalTools.get,
+        current: modalTools.current,
+        create: modalTools.create,
+      }
+    : undefined,
+  // Namespaced toast methods
+  toast: toastTools
+    ? {
+        create: toastTools.create,
+        show: toastTools.show,
+      }
+    : undefined,
+  // Namespaced popover methods
+  popover: popoverTools
+    ? {
+        create: popoverTools.create,
+        popover: popoverTools.popover,
+        tooltip: popoverTools.tooltip,
+      }
+    : undefined,
   // Registry state
   _isOrchestratorInstalled: modalTools?._isOrchestratorInstalled,
   _isToastAppend: toastTools?._isToastAppend,
