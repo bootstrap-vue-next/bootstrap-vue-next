@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.41.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.9...bootstrapvuenext-v0.41.0) (2025-12-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BTable:** make sort icons background images to avoid wrapping & remove relevant slots
+
+### Bug Fixes
+
+* **BFormGroup:** Apply user classes and label alignment to correct elements in horizontal mode ([#2943](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2943)) ([5eeda60](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5eeda608fca2c173a78711f00f1107091f4dd5e5))
+* **BTable:** always allow user selection when properties "selectable" and "no-select-on-click" are used together ([#2947](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2947)) ([bf17415](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bf17415f297af08499b8fb6da3bc7c78e3b1536b))
+* **BTable:** make background sort icons customizable + docs ([#2933](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2933)) ([9cfe4a0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9cfe4a0391dbc46a2842d356ae11b6229b906851))
+* **BTable:** make sort icons background images to avoid wrapping & remove relevant slots ([bae3932](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bae393217317fe9f2e2b09efb488da152c472aec))
+* **composables:** use shallowRef to prevent reactive component warning ([#2930](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2930)) ([4b1e12b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4b1e12b9df16ba0fb69a28b85bdcf65e76153388))
+
 ## [0.40.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.8...bootstrapvuenext-v0.40.9) (2025-11-28)
 
 ### Bug Fixes
