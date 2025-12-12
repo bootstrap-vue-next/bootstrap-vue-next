@@ -7,3 +7,146 @@ input[type="file"].form-control-input-file-hide-button {
     display: none;
   }
 }
+
+.b-form-file-wrapper {
+  position: relative;
+}
+
+.b-form-file-control {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
+  background-color: var(--bs-body-bg);
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+
+  &:focus-within:not([aria-disabled="true"]) {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+    outline: 0;
+  }
+
+  &.is-invalid {
+    border-color: var(--bs-form-invalid-border-color);
+
+    &:focus-within {
+      box-shadow: 0 0 0 0.25rem rgba(var(--bs-danger-rgb), 0.25);
+    }
+  }
+
+  &.is-valid {
+    border-color: var(--bs-form-valid-border-color);
+
+    &:focus-within {
+      box-shadow: 0 0 0 0.25rem rgba(var(--bs-success-rgb), 0.25);
+    }
+  }
+
+  &[aria-disabled="true"] {
+    background-color: var(--bs-secondary-bg);
+    opacity: 0.65;
+    cursor: not-allowed;
+
+    .b-form-file-text,
+    .b-form-file-button {
+      pointer-events: none;
+    }
+  }
+}
+
+.b-form-file-text {
+  flex: 1;
+  padding: 0.375rem 0.75rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background-color: transparent;
+  line-height: 1.5;
+}
+
+.b-form-file-button {
+  flex-shrink: 0;
+  padding: 0.375rem 0.75rem;
+  margin: -1px -1px -1px 0;
+  color: var(--bs-body-color);
+  background-color: var(--bs-secondary-bg);
+  border: none;
+  border-left: 1px solid var(--bs-border-color);
+  border-radius: 0 var(--bs-border-radius) var(--bs-border-radius) 0;
+  cursor: pointer;
+  line-height: 1.5;
+
+  &:hover:not(:disabled) {
+    background-color: var(--bs-tertiary-bg);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+// Size variants
+.b-form-file-control.form-control-sm {
+  border-radius: var(--bs-border-radius-sm);
+  padding: 0;
+  min-height: auto;
+
+  .b-form-file-text,
+  .b-form-file-button {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .b-form-file-button {
+    margin: -1px -1px -1px 0;
+    border-radius: 0 var(--bs-border-radius-sm) var(--bs-border-radius-sm) 0;
+  }
+}
+
+.b-form-file-control.form-control-lg {
+  border-radius: var(--bs-border-radius-lg);
+  padding: 0;
+  min-height: auto;
+
+  .b-form-file-text,
+  .b-form-file-button {
+    padding: 0.5rem 1rem;
+    font-size: 1.25rem;
+  }
+
+  .b-form-file-button {
+    margin: -1px -1px -1px 0;
+    border-radius: 0 var(--bs-border-radius-lg) var(--bs-border-radius-lg) 0;
+  }
+}
+
+// Drag states
+.b-form-file-dragging {
+  .b-form-file-control {
+    border-color: var(--bs-primary);
+    background-color: rgba(var(--bs-primary-rgb), 0.05);
+  }
+}
+
+.b-form-file-drag-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 2px dashed var(--bs-primary);
+  border-radius: var(--bs-border-radius);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.b-form-file-drag-text {
+  color: var(--bs-primary);
+  font-weight: 500;
+}
