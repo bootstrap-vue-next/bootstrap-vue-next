@@ -2,8 +2,6 @@
 description: 'A light-weight directive for toggling visibility state for collapses and sidebars by ID. It automatically sets the aria-controls attribute and registers the trigger with the target component, which then manages aria-expanded and visual state'
 ---
 
-# v-b-toggle Directive
-
 The `v-b-toggle` directive provides an easy way to toggle visibility of components like `BCollapse`, `BOffcanvas`, and `BModal`.
 
 ## Accessibility

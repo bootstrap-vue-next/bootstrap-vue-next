@@ -182,7 +182,7 @@
     "eslint-define-config": "^2.1.0",
     "eslint-plugin-vue": "^10.3.0",
     "focus-trap": "^7.6.5",
-    "happy-dom": "^18.0.1",
+    "happy-dom": "^20.0.11",
     "prettier": "^3.6.2",
     "publint": "^0.3.15",
     "sass": "^1.89.2",
