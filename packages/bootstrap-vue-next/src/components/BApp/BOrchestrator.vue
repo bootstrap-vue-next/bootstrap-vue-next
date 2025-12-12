@@ -81,6 +81,9 @@ import {positionClasses} from '../../utils/positionClasses'
 import type {BvTriggerableEvent} from '../../utils'
 import type {BOrchestratorProps} from '../../types/ComponentProps'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
+import {useModal} from '../../composables/useModal'
+import {useToast} from '../../composables/useToast'
+import {usePopover} from '../../composables/usePopover'
 
 function setEventOk(event: BvTriggerableEvent): void {
   event.ok = event.trigger === 'ok' ? true : event.trigger === 'cancel' ? false : null
@@ -163,5 +166,35 @@ const items = computed(() => {
     .filter((el) => !props.noToasts || el.type !== 'toast')
     .filter((el) => !props.noModals || el.type !== 'modal')
     .filter(props.filter)
+})
+
+// Initialize registry methods - these will be undefined if orchestratorRegistry is not available
+let modalTools: ReturnType<typeof useModal> | undefined
+let toastTools: ReturnType<typeof useToast> | undefined
+let popoverTools: ReturnType<typeof usePopover> | undefined
+
+if (orchestratorRegistry) {
+  modalTools = useModal()
+  toastTools = useToast()
+  popoverTools = usePopover()
+}
+
+// Always call defineExpose at the top level, but values may be undefined
+defineExpose({
+  // Modal methods
+  show: modalTools?.show,
+  hide: modalTools?.hide,
+  hideAll: modalTools?.hideAll,
+  get: modalTools?.get,
+  current: modalTools?.current,
+  // Toast and modal create method (both have 'create')
+  create: modalTools?.create || toastTools?.create,
+  // Popover methods
+  popover: popoverTools?.popover,
+  tooltip: popoverTools?.tooltip,
+  // Registry state
+  _isOrchestratorInstalled: modalTools?._isOrchestratorInstalled,
+  _isToastAppend: toastTools?._isToastAppend,
+  store: modalTools?.store,
 })
 </script>

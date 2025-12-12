@@ -120,4 +120,40 @@ describe('BOrchestrator TransitionGroup name conditional behavior', () => {
     const modalTransition = transitionGroups.find((tg) => tg.props('name') === undefined)
     expect(modalTransition).toBeDefined()
   })
+
+  it('exposes registry methods', () => {
+    const registry = {
+      store: ref([]),
+      _isOrchestratorInstalled: ref(true),
+      _isToastAppend: ref(false),
+    }
+
+    const wrapper = mount(BOrchestrator, {
+      global: {
+        provide: {
+          [orchestratorRegistryKey]: registry,
+        },
+      },
+    })
+
+    // Check that BOrchestrator exposes the registry methods
+    expect(wrapper.vm).toBeDefined()
+    
+    // Modal methods
+    expect(typeof wrapper.vm.show).toBe('function')
+    expect(typeof wrapper.vm.hide).toBe('function')
+    expect(typeof wrapper.vm.hideAll).toBe('function')
+    expect(typeof wrapper.vm.get).toBe('function')
+    expect(typeof wrapper.vm.current).toBe('function')
+    expect(typeof wrapper.vm.create).toBe('function')
+    
+    // Popover methods
+    expect(typeof wrapper.vm.popover).toBe('function')
+    expect(typeof wrapper.vm.tooltip).toBe('function')
+    
+    // Registry state
+    expect(wrapper.vm._isOrchestratorInstalled).toBeDefined()
+    expect(wrapper.vm._isToastAppend).toBeDefined()
+    expect(wrapper.vm.store).toBeDefined()
+  })
 })

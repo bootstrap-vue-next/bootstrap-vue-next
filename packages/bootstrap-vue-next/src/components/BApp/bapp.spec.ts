@@ -117,4 +117,43 @@ describe('BApp', () => {
     expect(orchestrator.exists()).toBe(true)
     expect(orchestrator.props('appendToast')).toBe(true)
   })
+
+  it('exposes registry methods from orchestrator', () => {
+    const wrapper = mount(BApp)
+
+    // Check that BApp exposes the registry methods
+    expect(wrapper.vm).toBeDefined()
+    
+    // Modal methods
+    expect(typeof wrapper.vm.show).toBe('function')
+    expect(typeof wrapper.vm.hide).toBe('function')
+    expect(typeof wrapper.vm.hideAll).toBe('function')
+    expect(typeof wrapper.vm.get).toBe('function')
+    expect(typeof wrapper.vm.current).toBe('function')
+    expect(typeof wrapper.vm.create).toBe('function')
+    
+    // Popover methods
+    expect(typeof wrapper.vm.popover).toBe('function')
+    expect(typeof wrapper.vm.tooltip).toBe('function')
+    
+    // Registry state
+    expect(wrapper.vm._isOrchestratorInstalled).toBeDefined()
+    expect(wrapper.vm._isToastAppend).toBeDefined()
+    expect(wrapper.vm.store).toBeDefined()
+  })
+
+  it('returns undefined for exposed methods when orchestrator is disabled', () => {
+    const wrapper = mount(BApp, {
+      props: {
+        noOrchestrator: true,
+      },
+    })
+
+    // When orchestrator is disabled, methods should be undefined
+    expect(wrapper.vm.show).toBeUndefined()
+    expect(wrapper.vm.hide).toBeUndefined()
+    expect(wrapper.vm.create).toBeUndefined()
+    expect(wrapper.vm.popover).toBeUndefined()
+    expect(wrapper.vm.tooltip).toBeUndefined()
+  })
 })
