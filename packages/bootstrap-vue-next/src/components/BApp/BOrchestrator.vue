@@ -169,14 +169,21 @@ const items = computed(() => {
 })
 
 // Initialize registry methods - these will be undefined if orchestratorRegistry is not available
+// Conditionally initialize based on props to avoid unnecessary overhead
 let modalTools: ReturnType<typeof useModal> | undefined
 let toastTools: ReturnType<typeof useToast> | undefined
 let popoverTools: ReturnType<typeof usePopover> | undefined
 
 if (orchestratorRegistry) {
-  modalTools = useModal()
-  toastTools = useToast()
-  popoverTools = usePopover()
+  if (!props.noModals) {
+    modalTools = useModal()
+  }
+  if (!props.noToasts) {
+    toastTools = useToast()
+  }
+  if (!props.noPopovers) {
+    popoverTools = usePopover()
+  }
 }
 
 // Always call defineExpose at the top level, but values may be undefined
@@ -207,9 +214,9 @@ defineExpose({
         tooltip: popoverTools.tooltip,
       }
     : undefined,
-  // Registry state
-  _isOrchestratorInstalled: modalTools?._isOrchestratorInstalled,
-  _isToastAppend: toastTools?._isToastAppend,
-  store: modalTools?.store,
+  // Registry state - source directly from orchestratorRegistry for consistency
+  _isOrchestratorInstalled: orchestratorRegistry?._isOrchestratorInstalled,
+  _isToastAppend: orchestratorRegistry?._isToastAppend,
+  store: orchestratorRegistry?.store,
 })
 </script>
