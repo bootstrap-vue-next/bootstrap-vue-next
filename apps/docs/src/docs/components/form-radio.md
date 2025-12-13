@@ -169,3 +169,63 @@ Supported `aria-invalid` values are:
 - `true` The value has failed validation
 
 `aria-invalid` is automatically set to `true` if the `state` prop is `false`.
+
+## TypeScript type safety
+
+`BFormRadioGroup` provides full TypeScript type safety through generic type parameters. When you provide typed options, TypeScript will:
+
+1. **Validate field names** - Ensure `value-field`, `text-field`, and `disabled-field` props reference actual keys of your option type
+2. **Infer v-model type** - Automatically determine the correct type for `v-model` based on your `value-field`
+
+### Basic type-safe usage
+
+<<< DEMO ./demo/RadioTypeSafeBasic.vue
+
+In this example, TypeScript knows that `selectedUserId` is a `number` because the `id` field of `User` is typed as `number`.
+
+### Field validation
+
+TypeScript will catch errors when you use invalid field names:
+
+<<< DEMO ./demo/RadioTypeSafeValidation.vue
+
+### Working with API responses
+
+Type safety is especially valuable when working with API data that uses different naming conventions:
+
+<<< DEMO ./demo/RadioTypeSafeAPI.vue
+
+### Using enums
+
+Type safety works with TypeScript enums for strongly-typed value constraints:
+
+<<< FRAGMENT ./demo/RadioTypeSafeEnumTypes.ts{ts}
+
+<<< DEMO ./demo/RadioTypeSafeEnum.vue
+
+### Benefits
+
+- **IDE autocomplete** - Your editor suggests valid field names as you type
+- **Compile-time validation** - Typos and invalid field names are caught before runtime
+- **Type inference** - The `v-model` type is automatically inferred from your value field
+- **Refactoring safety** - Renaming fields in your interface updates all usages
+
+### Backward compatibility
+
+Type safety is completely opt-in and maintains 100% backward compatibility. Existing code without explicit types continues to work exactly as before:
+
+```vue
+<!-- Works without type annotations -->
+<BFormRadioGroup v-model="selected" :options="items" />
+```
+
+To enable type safety, simply provide explicit types for your data:
+
+```typescript
+interface MyItem {
+  id: number
+  name: string
+}
+
+const items: MyItem[] = [...]
+```

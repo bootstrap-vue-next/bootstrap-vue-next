@@ -98,7 +98,6 @@ const normalizeOptions = computed(() =>
           text: el.toString(),
         }
       : {
-          ...el,
           value: el[props.valueField as keyof typeof el] as Item[ValueKey],
           disabled: el[props.disabledField as keyof typeof el] as boolean | undefined,
           text: el[props.textField as keyof typeof el] as string | undefined,

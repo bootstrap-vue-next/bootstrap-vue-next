@@ -201,4 +201,130 @@ describe('form-radio-group', () => {
       expect(radios[2].text()).toBe('foo')
     })
   })
+
+  describe('type safety with custom fields', () => {
+    it('renders options from typed array with custom value and text fields', () => {
+      interface User {
+        id: number
+        name: string
+        email: string
+      }
+
+      const users: User[] = [
+        {id: 1, name: 'Alice', email: 'alice@example.com'},
+        {id: 2, name: 'Bob', email: 'bob@example.com'},
+        {id: 3, name: 'Charlie', email: 'charlie@example.com'},
+      ]
+
+      const wrapper = mount(BFormRadioGroup<User, 'id'>, {
+        props: {
+          options: users,
+          valueField: 'id',
+          textField: 'name',
+        },
+      })
+
+      const radios = wrapper.findAllComponents(BFormRadio)
+      expect(radios.length).toBe(3)
+      expect(radios[0].find('input').attributes('value')).toBe('1')
+      expect(radios[0].text()).toBe('Alice')
+      expect(radios[1].find('input').attributes('value')).toBe('2')
+      expect(radios[1].text()).toBe('Bob')
+      expect(radios[2].find('input').attributes('value')).toBe('3')
+      expect(radios[2].text()).toBe('Charlie')
+    })
+
+    it('renders options with disabled field', () => {
+      interface User {
+        id: number
+        name: string
+        inactive: boolean
+      }
+
+      const users: User[] = [
+        {id: 1, name: 'Alice', inactive: false},
+        {id: 2, name: 'Bob', inactive: true},
+        {id: 3, name: 'Charlie', inactive: false},
+      ]
+
+      const wrapper = mount(BFormRadioGroup<User, 'id'>, {
+        props: {
+          options: users,
+          valueField: 'id',
+          textField: 'name',
+          disabledField: 'inactive',
+        },
+      })
+
+      const radios = wrapper.findAllComponents(BFormRadio)
+      expect(radios.length).toBe(3)
+      expect(radios[0].find('input').attributes('disabled')).toBeUndefined()
+      expect(radios[1].find('input').attributes('disabled')).toBeDefined()
+      expect(radios[2].find('input').attributes('disabled')).toBeUndefined()
+    })
+
+    it('works with API response format (snake_case fields)', () => {
+      interface ApiUser {
+        user_id: number
+        user_name: string
+        user_email: string
+      }
+
+      const apiUsers: ApiUser[] = [
+        {user_id: 1, user_name: 'Alice', user_email: 'alice@example.com'},
+        {user_id: 2, user_name: 'Bob', user_email: 'bob@example.com'},
+      ]
+
+      const wrapper = mount(BFormRadioGroup<ApiUser, 'user_id'>, {
+        props: {
+          options: apiUsers,
+          valueField: 'user_id',
+          textField: 'user_name',
+        },
+      })
+
+      const radios = wrapper.findAllComponents(BFormRadio)
+      expect(radios.length).toBe(2)
+      expect(radios[0].find('input').attributes('value')).toBe('1')
+      expect(radios[0].text()).toBe('Alice')
+      expect(radios[1].find('input').attributes('value')).toBe('2')
+      expect(radios[1].text()).toBe('Bob')
+    })
+
+    it('works with enum values', () => {
+      enum Priority {
+        Low = 'low',
+        Medium = 'medium',
+        High = 'high',
+      }
+
+      interface PriorityOption {
+        label: string
+        value: Priority
+      }
+
+      const priorities: PriorityOption[] = [
+        {label: 'Low Priority', value: Priority.Low},
+        {label: 'Medium Priority', value: Priority.Medium},
+        {label: 'High Priority', value: Priority.High},
+      ]
+
+      const wrapper = mount(BFormRadioGroup<PriorityOption, 'value'>, {
+        props: {
+          options: priorities,
+          valueField: 'value',
+          textField: 'label',
+        },
+      })
+
+      const radios = wrapper.findAllComponents(BFormRadio)
+      expect(radios.length).toBe(3)
+      expect(radios[0].find('input').attributes('value')).toBe('low')
+      expect(radios[0].text()).toBe('Low Priority')
+      expect(radios[1].find('input').attributes('value')).toBe('medium')
+      expect(radios[1].text()).toBe('Medium Priority')
+      expect(radios[2].find('input').attributes('value')).toBe('high')
+      expect(radios[2].text()).toBe('High Priority')
+    })
+  })
 })
