@@ -269,7 +269,7 @@ export type BFormGroupSlots = {
 export type BFormRadioSlots = {
   default?: (props: Record<string, never>) => any
 }
-export type BFormRadioGroupSlots = {
+export type BFormRadioGroupSlots<T = unknown> = {
   default?: (props: Record<string, never>) => any
 
   first?: (props: Record<string, never>) => any
@@ -277,7 +277,7 @@ export type BFormRadioGroupSlots = {
   option: (props: {
     text: string | undefined
 
-    value: any
+    value: T
     disabled?: boolean | undefined
     [key: string]: unknown
   }) => any

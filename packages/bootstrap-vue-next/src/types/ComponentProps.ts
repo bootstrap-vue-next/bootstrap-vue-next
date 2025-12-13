@@ -23,7 +23,7 @@ import type {Size} from './Size'
 import type {AriaInvalid} from './AriaInvalid'
 import type {Numberish, TeleporterProps, ValidationState} from './CommonTypes'
 import type {CommonInputProps, FormDebounceOptions} from './FormCommonInputProps'
-import type {RadioOptionRaw, RadioValue} from './RadioTypes'
+import type {RadioValue} from './RadioTypes'
 import type {
   Breakpoint,
   ColBreakpointProps,
@@ -371,27 +371,30 @@ export interface BFormRadioProps {
   value?: RadioValue
 }
 
-export interface BFormRadioGroupProps {
+export interface BFormRadioGroupProps<
+  Item = Record<string, unknown>,
+  ValueKey extends keyof Item = keyof Item,
+> {
   ariaInvalid?: AriaInvalid
   autofocus?: boolean
   buttonVariant?: ButtonVariant | null
   buttons?: boolean
   disabled?: boolean
-  disabledField?: string
+  disabledField?: keyof Item & string
   form?: string
   id?: string
-  modelValue?: RadioValue
+  modelValue?: Item[ValueKey]
   name?: string
-  options?: readonly RadioOptionRaw[]
+  options?: readonly Item[]
   plain?: boolean
   required?: boolean
   reverse?: boolean
   size?: Size
   stacked?: boolean
   state?: ValidationState
-  textField?: string
+  textField?: keyof Item & string
   validated?: boolean
-  valueField?: string
+  valueField?: ValueKey & string
 }
 export interface BFormRatingProps {
   color?: string
