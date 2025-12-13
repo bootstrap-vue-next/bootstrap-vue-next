@@ -387,7 +387,7 @@ const computedFields = computed<TableField<Items>[]>(() =>
 const tableClasses = computed(() => ({
   'b-table-busy': busyModel.value,
   'b-table-selectable': props.selectable,
-  'user-select-none': props.selectable && isSelecting.value,
+  'user-select-none': props.selectable && !props.noSelectOnClick && isSelecting.value,
   'b-table-fixed': props.fixed,
   'b-table-no-border-collapse': props.noBorderCollapse,
   'b-table-no-sort-icon': props.noSortableIcon,

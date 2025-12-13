@@ -9,9 +9,11 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json",
     "build": "pnpm run type-check && pnpm run build-only",
     "preview": "vitepress preview",
-    "lint": "eslint --fix src",
-    "test:lint": "eslint src",
-    "test": "pnpm run test:lint"
+    "lint": "eslint --fix src tests",
+    "test:lint": "eslint src tests",
+    "test:unit": "vitest",
+    "test:unit:ci": "vitest run",
+    "test": "pnpm run test:lint && pnpm run test:unit:ci"
   },
   "devDependencies": {
     "@iconify-json/bi": "^1.2.4",
@@ -32,9 +34,12 @@
     "eslint": "^9.31.0",
     "eslint-define-config": "^2.1.0",
     "eslint-plugin-vue": "^10.3.0",
+    "happy-dom": "^20.0.11",
     "markdown-it": "^14.1.0",
     "prettier": "^3.6.2",
     "typescript": "^5.8.3",
+    "vite": "^6.0.7",
+    "vitest": "^3.1.5",
     "unplugin-icons": "^22.1.0",
     "unplugin-vue-components": "^28.8.0",
     "vitepress": "1.6.3",

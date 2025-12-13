@@ -438,4 +438,79 @@ describe('form-group', () => {
       })
     })
   })
+
+  describe('horizontal layout', () => {
+    it('applies labelAlignMd classes to BCol wrapper in horizontal mode', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {
+          label: 'Login:',
+          labelFor: 'loginname',
+          labelAlignMd: 'end',
+          labelColsMd: 5,
+          labelColsLg: 3,
+        },
+        slots: {
+          default: h(BFormInput, {id: 'loginname'}),
+        },
+      })
+      // Find the BCol component that wraps the label
+      const [labelCol] = wrapper
+        .findAll('[class*="col-"]')
+        .filter((el) => el.html().includes('Login:'))
+      expect(labelCol?.classes()).toContain('text-md-end')
+    })
+
+    it('applies user classes to BFormRow in horizontal mode', () => {
+      const wrapper = mount(BFormGroup, {
+        attrs: {
+          class: 'align-items-center custom-class',
+        },
+        props: {
+          label: 'Login:',
+          labelFor: 'loginname',
+          labelColsMd: 5,
+        },
+        slots: {
+          default: h(BFormInput, {id: 'loginname'}),
+        },
+      })
+      // Find the row element (BFormRow)
+      const row = wrapper.find('.row')
+      expect(row.exists()).toBe(true)
+      expect(row.classes()).toContain('align-items-center')
+      expect(row.classes()).toContain('custom-class')
+    })
+
+    it('applies user classes to root element in non-horizontal mode', () => {
+      const wrapper = mount(BFormGroup, {
+        attrs: {
+          class: 'custom-class',
+        },
+        props: {
+          label: 'Login:',
+          labelFor: 'loginname',
+        },
+        slots: {
+          default: h(BFormInput, {id: 'loginname'}),
+        },
+      })
+      // In non-horizontal mode, classes should be on root
+      expect(wrapper.classes()).toContain('custom-class')
+    })
+
+    it('applies labelAlign classes to label in non-horizontal mode', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {
+          label: 'Login:',
+          labelFor: 'loginname',
+          labelAlign: 'center',
+        },
+        slots: {
+          default: h(BFormInput, {id: 'loginname'}),
+        },
+      })
+      const label = wrapper.find('label')
+      expect(label.classes()).toContain('text-center')
+    })
+  })
 })
