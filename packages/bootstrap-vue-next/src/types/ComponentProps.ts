@@ -18,7 +18,7 @@ import type {
   TextColorVariant,
 } from './ColorTypes'
 import type {AttrsValue, ClassValue} from './AnyValuedAttributes'
-import type {CheckboxOptionRaw, CheckboxValue} from './CheckboxTypes'
+import type {CheckboxValue} from './CheckboxTypes'
 import type {Size} from './Size'
 import type {AriaInvalid} from './AriaInvalid'
 import type {Numberish, TeleporterProps, ValidationState} from './CommonTypes'
@@ -283,18 +283,21 @@ export interface BFormCheckboxProps {
   value?: string | boolean | CheckboxValue
 }
 
-export interface BFormCheckboxGroupProps {
+export interface BFormCheckboxGroupProps<
+  Item = Record<string, unknown>,
+  ValueKey extends keyof Item = keyof Item,
+> {
   ariaInvalid?: AriaInvalid
   autofocus?: boolean
   buttonVariant?: ButtonVariant | null
   buttons?: boolean
   disabled?: boolean
-  disabledField?: string
+  disabledField?: keyof Item & string
   form?: string
   id?: string
-  modelValue?: readonly CheckboxValue[]
+  modelValue?: readonly Item[ValueKey][]
   name?: string
-  options?: readonly CheckboxOptionRaw[]
+  options?: readonly Item[]
   plain?: boolean
   required?: boolean
   reverse?: boolean
@@ -302,9 +305,9 @@ export interface BFormCheckboxGroupProps {
   stacked?: boolean
   state?: ValidationState
   switches?: boolean
-  textField?: string
+  textField?: keyof Item & string
   validated?: boolean
-  valueField?: string
+  valueField?: ValueKey & string
 }
 
 export interface BFormDatalistProps {
