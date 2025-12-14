@@ -163,21 +163,29 @@ See also:
 
 #### TypeScript Type Safety
 
-`BFormDatalist` supports full TypeScript type safety for `options` arrays. By specifying `value-field`, `text-field`, and optionally `disabled-field`, you get compile-time validation and excellent IntelliSense support.
+`BFormDatalist` <!--@include: ./_type-safety-intro.md-->
 
 **Basic type-safe usage:**
 
 <<< DEMO ./demo/DatalistTypeSafeBasic.vue{vue}
 
-**API response types:**
+**Type-safe API responses:**
 
 <<< DEMO ./demo/DatalistTypeSafeAPI.vue{vue}
 
-**Enum values:**
+**Type-safe enums:**
 
 <<< DEMO ./demo/DatalistTypeSafeEnum.vue{vue}
 
-To enable type safety, provide the field names as props. The `v-model` on your input will be correctly typed based on your value field. See the [BFormSelect TypeScript documentation](/docs/components/form-select#typescript-type-safety) for comprehensive type safety guidance that also applies to datalists.
+**Benefits:**
+
+<!--@include: ./_type-safety-benefits.md-->
+
+**Backward compatibility:**
+
+<!--@include: ./_type-safety-backward-compat.md-->
+
+See the [BFormSelect TypeScript documentation](/docs/components/form-select#typescript-type-safety) for comprehensive type safety guidance that also applies to datalists.
 
 ::: info Global Defaults Limitation
 Due to technical limitations with TypeScript generic components, `BFormDatalist` cannot participate in the global defaults system provided by `createBootstrap({ defaults: {...} })`. Since BFormDatalist has minimal styling props (only `id`), this limitation has no practical impact. All props must be specified directly on the component or use their hardcoded defaults.

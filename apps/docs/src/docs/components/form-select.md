@@ -99,38 +99,35 @@ inserted (i.e. **mounted**) into the document or re-activated when inside a Vue 
 component. Note that this prop **does not** set the `autofocus` attribute on the select, nor can it
 tell when the select becomes visible.
 
-## TypeScript type safety
+## TypeScript Type Safety
 
-`BFormSelect` provides full TypeScript type safety through generic type parameters. When you provide typed options, TypeScript will:
+`BFormSelect` <!--@include: ./_type-safety-intro.md-->
 
-1. **Validate field names** - Ensure `value-field`, `text-field`, and other field props reference actual keys of your option type
-2. **Infer v-model type** - Automatically determine the correct type for `v-model` based on your `value-field`
-
-### Basic type-safe usage
+### Basic Type-Safe Usage
 
 <<< DEMO ./demo/SelectTypeSafeBasic.vue
 
 In this example, TypeScript knows that `selectedUserId` is a `number` because the `id` field of `User` is typed as `number`.
 
-### Field validation
+### Type-Safe Field Validation
 
 TypeScript will catch errors when you use invalid field names:
 
 <<< DEMO ./demo/SelectTypeSafeValidation.vue
 
-### Multiple select with type safety
+### Multiple Select with Type Safety
 
 Type safety works seamlessly with multiple select mode:
 
 <<< DEMO ./demo/SelectTypeSafeMultiple.vue
 
-### Working with API responses
+### Type-Safe API Responses
 
 Type safety is especially valuable when working with API data that uses different naming conventions:
 
 <<< DEMO ./demo/SelectTypeSafeAPI.vue
 
-### Using enums
+### Type-Safe Enums
 
 Type safety works with TypeScript enums for strongly-typed value constraints:
 
@@ -140,30 +137,17 @@ Type safety works with TypeScript enums for strongly-typed value constraints:
 
 ### Benefits
 
-- **IDE autocomplete** - Your editor suggests valid field names as you type
-- **Compile-time validation** - Typos and invalid field names are caught before runtime
-- **Type inference** - The `v-model` type is automatically inferred from your value field
-- **Refactoring safety** - Renaming fields in your interface updates all usages
+<!--@include: ./_type-safety-benefits.md-->
 
-### Backward compatibility
+### Backward Compatibility
 
-Type safety is completely opt-in and maintains 100% backward compatibility. Existing code without explicit types continues to work exactly as before:
+<!--@include: ./_type-safety-backward-compat.md-->
 
-```vue
-<!-- Works without type annotations -->
-<BFormSelect v-model="selected" :options="items" />
-```
+### Global Defaults Limitation
 
-To enable type safety, simply provide explicit types for your data:
+<!--@include: ./_type-safety-global-defaults.md-->
 
-```typescript
-interface MyItem {
-  id: number
-  name: string
-}
-
-const items: MyItem[] = [...]
-```
+<<< FRAGMENT ./form-select/fragments/GlobalDefaultsExample.ts#snippet{ts}
 
 ## Contextual states
 

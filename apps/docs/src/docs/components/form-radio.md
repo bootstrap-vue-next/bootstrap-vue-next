@@ -170,32 +170,29 @@ Supported `aria-invalid` values are:
 
 `aria-invalid` is automatically set to `true` if the `state` prop is `false`.
 
-## TypeScript type safety
+## TypeScript Type Safety
 
-`BFormRadioGroup` provides full TypeScript type safety through generic type parameters. When you provide typed options, TypeScript will:
+`BFormRadioGroup` <!--@include: ./_type-safety-intro.md-->
 
-1. **Validate field names** - Ensure `value-field`, `text-field`, and `disabled-field` props reference actual keys of your option type
-2. **Infer v-model type** - Automatically determine the correct type for `v-model` based on your `value-field`
-
-### Basic type-safe usage
+### Basic Type-Safe Usage
 
 <<< DEMO ./demo/RadioTypeSafeBasic.vue
 
 In this example, TypeScript knows that `selectedUserId` is a `number` because the `id` field of `User` is typed as `number`.
 
-### Field validation
+### Type-Safe Field Validation
 
 TypeScript will catch errors when you use invalid field names:
 
 <<< DEMO ./demo/RadioTypeSafeValidation.vue
 
-### Working with API responses
+### Type-Safe API Responses
 
 Type safety is especially valuable when working with API data that uses different naming conventions:
 
 <<< DEMO ./demo/RadioTypeSafeAPI.vue
 
-### Using enums
+### Type-Safe Enums
 
 Type safety works with TypeScript enums for strongly-typed value constraints:
 
@@ -205,39 +202,14 @@ Type safety works with TypeScript enums for strongly-typed value constraints:
 
 ### Benefits
 
-- **IDE autocomplete** - Your editor suggests valid field names as you type
-- **Compile-time validation** - Typos and invalid field names are caught before runtime
-- **Type inference** - The `v-model` type is automatically inferred from your value field
-- **Refactoring safety** - Renaming fields in your interface updates all usages
+<!--@include: ./_type-safety-benefits.md-->
 
-### Backward compatibility
+### Backward Compatibility
 
-Type safety is completely opt-in and maintains 100% backward compatibility. Existing code without explicit types continues to work exactly as before:
+<!--@include: ./_type-safety-backward-compat.md-->
 
-```vue
-<!-- Works without type annotations -->
-<BFormRadioGroup v-model="selected" :options="items" />
-```
+### Global Defaults Limitation
 
-To enable type safety, simply provide explicit types for your data:
-
-```typescript
-interface MyItem {
-  id: number
-  name: string
-}
-
-const items: MyItem[] = [...]
-```
-
-### Global defaults limitation
-
-Due to technical limitations with TypeScript generic components, `BFormRadioGroup` cannot fully participate in the global defaults system provided by `createBootstrap({ defaults: {...} })`. However:
-
-- ✅ **Commonly-customized props** like `buttonVariant`, `size`, and `state` **DO** support global defaults
-- ⚠️ **Other props** will use their hardcoded default values only
-- ✅ You can still override any prop on individual component instances
+<!--@include: ./_type-safety-global-defaults.md-->
 
 <<< FRAGMENT ./form-radio/fragments/GlobalDefaultsExample.ts#snippet{ts}
-
-This trade-off enables full type safety with IDE autocomplete and compile-time validation.

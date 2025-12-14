@@ -204,17 +204,7 @@ The _indeterminate_ state is **visual only**. The checkbox is still either check
 
 ## TypeScript Type Safety
 
-`BFormCheckboxGroup` supports full TypeScript type safety for `options` arrays with proper generic typing. This ensures type-safe access to your option values, prevents type errors, and provides excellent IntelliSense support.
-
-### Why Use Type-Safe Options?
-
-Type-safe options in `BFormCheckboxGroup` provide several advantages:
-
-1. **Type Safety**: TypeScript validates that field names exist and value types are compatible with your model
-2. **IntelliSense**: Full autocomplete support for field names and values in your IDE
-3. **Refactoring Safety**: Renaming properties in your interfaces automatically highlights mismatches
-4. **Runtime Safety**: Compile-time validation catches field name typos and type mismatches
-5. **Better Documentation**: Self-documenting code through explicit type relationships
+`BFormCheckboxGroup` <!--@include: ./_type-safety-intro.md-->
 
 ### Basic Type-Safe Usage
 
@@ -222,81 +212,36 @@ When using TypeScript, specify `value-field`, `text-field`, and `disabled-field`
 
 <<< DEMO ./demo/CheckboxTypeSafeBasic.vue{vue}
 
-In this example:
+In this example, TypeScript knows that `selectedIds` is `readonly number[]` because the `id` field of `User` is typed as `number`.
 
-- TypeScript validates that `id`, `name`, and `inactive` exist on the `User` interface
-- The `v-model` is correctly typed as `readonly number[]` (matching the `id` field type)
-- IntelliSense provides autocomplete for field names
+### Type-Safe Field Validation
 
-### Type-Safe Validation
-
-Type safety works seamlessly with form validation:
+TypeScript will catch errors when you use invalid field names:
 
 <<< DEMO ./demo/CheckboxTypeSafeValidation.vue{vue}
 
 ### Type-Safe API Responses
 
-Type-safe checkboxes are particularly useful when working with API responses:
+Type safety is especially valuable when working with API data that uses different naming conventions:
 
 <<< DEMO ./demo/CheckboxTypeSafeAPI.vue{vue}
 
-In this example:
-
-- The `value-field="userId"` ensures the model contains strings (matching the `userId` field type)
-- TypeScript prevents accidentally using the wrong field (e.g., `email` as the value)
-- The API structure is self-documenting through types
-
 ### Type-Safe Enums
 
-Use enums for type-safe checkbox values with restricted value sets:
+Type safety works with TypeScript enums for strongly-typed value constraints:
 
 <<< DEMO ./demo/CheckboxTypeSafeEnum.vue{vue}
 
-With enum types:
+### Benefits
 
-- Only valid enum values can be selected
-- TypeScript prevents invalid role assignments
-- Refactoring enum names automatically updates all usages
+<!--@include: ./_type-safety-benefits.md-->
 
-### Type Safety Requirements
+### Backward Compatibility
 
-To enable type safety:
-
-1. **Provide `value-field`**: Always specify which field contains the checkbox value
-2. **Provide `text-field`**: Always specify which field contains the display text
-3. **Optional `disabled-field`**: Optionally specify which field indicates disabled state
-4. **Type your `v-model`**: Declare your model with the correct array type matching your value field
-
-```typescript
-// ✅ Correct - typed array matching value field
-const selected = ref<readonly number[]>([])
-
-// ❌ Incorrect - generic any array loses type safety
-const selected = ref([])
-```
-
-### Migration Notes
-
-Type-safe options are **fully backward compatible**. Existing code continues to work:
-
-```vue
-<!-- Still works without type safety -->
-<BFormCheckboxGroup v-model="selected" :options="users" />
-
-<!-- Enhanced with type safety -->
-<BFormCheckboxGroup v-model="selected" :options="users" value-field="id" text-field="name" />
-```
-
-The type-safe approach is opt-in through the `value-field` prop. Without it, the component works exactly as before.
+<!--@include: ./_type-safety-backward-compat.md-->
 
 ### Global Defaults Limitation
 
-Due to technical limitations with TypeScript generic components, `BFormCheckboxGroup` cannot fully participate in the global defaults system provided by `createBootstrap({ defaults: {...} })`. However:
-
-- ✅ **Commonly-customized props** like `buttonVariant`, `size`, and `state` **DO** support global defaults
-- ⚠️ **Other props** will use their hardcoded default values only
-- ✅ You can still override any prop on individual component instances
+<!--@include: ./_type-safety-global-defaults.md-->
 
 <<< FRAGMENT ./form-checkbox/fragments/GlobalDefaultsExample.ts#snippet{ts}
-
-This trade-off enables full type safety with IDE autocomplete and compile-time validation.
