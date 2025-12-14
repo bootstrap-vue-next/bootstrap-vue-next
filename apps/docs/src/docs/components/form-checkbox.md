@@ -288,3 +288,15 @@ Type-safe options are **fully backward compatible**. Existing code continues to 
 ```
 
 The type-safe approach is opt-in through the `value-field` prop. Without it, the component works exactly as before.
+
+### Global Defaults Limitation
+
+Due to technical limitations with TypeScript generic components, `BFormCheckboxGroup` cannot fully participate in the global defaults system provided by `createBootstrap({ defaults: {...} })`. However:
+
+- ✅ **Commonly-customized props** like `buttonVariant`, `size`, and `state` **DO** support global defaults
+- ⚠️ **Other props** will use their hardcoded default values only
+- ✅ You can still override any prop on individual component instances
+
+<<< FRAGMENT ./form-checkbox/fragments/GlobalDefaultsExample.ts#snippet{ts}
+
+This trade-off enables full type safety with IDE autocomplete and compile-time validation.

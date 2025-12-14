@@ -576,7 +576,31 @@ The generic `T` preserves the actual value type through normalization.
 
 ### Known Limitations
 
-- `useDefaults` composable is incompatible with generic props (removed from generic components)
+#### 1. useDefaults Composable Incompatibility
+
+**Issue:** The `useDefaults` composable is incompatible with generic props due to runtime Proxy wrapping breaking compile-time type inference.
+
+**Impact:**
+
+- Generic components cannot use the `useDefaults` composable
+- Most props cannot participate in the global defaults system from `createBootstrap({ defaults: {...} })`
+
+**Workaround:** Manual global defaults injection for commonly-customized props:
+
+<<< FRAGMENT ./fragments/ManualDefaultsWorkaround.ts#snippet{ts}
+
+**Affected Components:**
+
+- `BFormSelect` - Manually supports no props (no commonly-customized style props)
+- `BFormRadioGroup` - Manually supports: `buttonVariant`, `size`, `state`
+- `BFormCheckboxGroup` - Manually supports: `buttonVariant`, `size`, `state`
+- `BFormDatalist` - No manual support needed (no style props)
+
+**Trade-off Justification:**
+Type safety benefits (IDE autocomplete, compile-time validation, refactoring safety) outweigh the loss of global defaults for less commonly-customized props. Users can still override any prop per-instance.
+
+#### 2. Other Limitations
+
 - Type casts required when passing props between generic components with different constraints
 - Generic constraints only work at compile-time, no runtime validation
 - Field name validation doesn't enforce field value types (e.g., `textField` could point to a number field)

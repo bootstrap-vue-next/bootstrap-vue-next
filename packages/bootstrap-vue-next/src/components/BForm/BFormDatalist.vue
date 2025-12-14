@@ -26,7 +26,8 @@ import {useId} from '../../composables/useId'
 import type {SelectOption} from '../../types/SelectTypes'
 import type {BFormDatalistSlots} from '../../types'
 
-// Note: Cannot use useDefaults with generic props
+// Note: Cannot use useDefaults composable with generic props due to Proxy/type inference limitations.
+// BFormDatalist has minimal props and no commonly-customized style props, so manual defaults injection is not needed.
 const props = withDefaults(defineProps<BFormDatalistProps<Item, ValueKey>>(), {
   disabledField: 'disabled' as keyof Item & string,
   id: undefined,

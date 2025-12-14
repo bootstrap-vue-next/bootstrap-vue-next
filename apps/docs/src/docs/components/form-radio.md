@@ -229,3 +229,15 @@ interface MyItem {
 
 const items: MyItem[] = [...]
 ```
+
+### Global defaults limitation
+
+Due to technical limitations with TypeScript generic components, `BFormRadioGroup` cannot fully participate in the global defaults system provided by `createBootstrap({ defaults: {...} })`. However:
+
+- ✅ **Commonly-customized props** like `buttonVariant`, `size`, and `state` **DO** support global defaults
+- ⚠️ **Other props** will use their hardcoded default values only
+- ✅ You can still override any prop on individual component instances
+
+<<< FRAGMENT ./form-radio/fragments/GlobalDefaultsExample.ts#snippet{ts}
+
+This trade-off enables full type safety with IDE autocomplete and compile-time validation.

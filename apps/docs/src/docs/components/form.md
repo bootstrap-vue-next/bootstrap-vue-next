@@ -179,6 +179,10 @@ See also:
 
 To enable type safety, provide the field names as props. The `v-model` on your input will be correctly typed based on your value field. See the [BFormSelect TypeScript documentation](/docs/components/form-select#typescript-type-safety) for comprehensive type safety guidance that also applies to datalists.
 
+::: info Global Defaults Limitation
+Due to technical limitations with TypeScript generic components, `BFormDatalist` cannot participate in the global defaults system provided by `createBootstrap({ defaults: {...} })`. Since BFormDatalist has minimal styling props (only `id`), this limitation has no practical impact. All props must be specified directly on the component or use their hardcoded defaults.
+:::
+
 ## Validation
 
 Disable browser native HTML5 validation by setting the `novalidate` prop to true on `BForm`.

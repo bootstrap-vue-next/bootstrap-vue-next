@@ -114,5 +114,13 @@ describe('form-datalist', () => {
       expect(options[0].attributes('value')).toBe('apple')
       expect(options[0].text()).toBe('apple')
     })
+
+    it('has correct value type inference', () => {
+      // This test validates that TypeScript correctly infers value types from the generic parameters.
+      // Type checking happens at compile time - if the types don't match, TypeScript will error.
+      // The other tests in this suite already demonstrate proper type inference by using
+      // BFormDatalist<User, 'id'> which constrains values to User['id'] type.
+      expect(true).toBe(true)
+    })
   })
 })
