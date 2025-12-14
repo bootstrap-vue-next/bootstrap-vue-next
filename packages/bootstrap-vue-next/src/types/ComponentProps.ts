@@ -9,6 +9,7 @@ import type {
 import type {AriaAttributes, ComponentPublicInstance, TeleportProps, TransitionProps} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {LinkTarget} from './LinkTarget'
+import type {OptionsFieldMappingProps} from './OptionsTypes'
 import type {
   BgColorVariant,
   BorderColorVariant,
@@ -286,18 +287,16 @@ export interface BFormCheckboxProps {
 export interface BFormCheckboxGroupProps<
   Item = Record<string, unknown>,
   ValueKey extends keyof Item = keyof Item,
-> {
+> extends OptionsFieldMappingProps<Item, ValueKey> {
   ariaInvalid?: AriaInvalid
   autofocus?: boolean
   buttonVariant?: ButtonVariant | null
   buttons?: boolean
   disabled?: boolean
-  disabledField?: keyof Item & string
   form?: string
   id?: string
   modelValue?: readonly Item[ValueKey][]
   name?: string
-  options?: readonly Item[]
   plain?: boolean
   required?: boolean
   reverse?: boolean
@@ -305,20 +304,14 @@ export interface BFormCheckboxGroupProps<
   stacked?: boolean
   state?: ValidationState
   switches?: boolean
-  textField?: keyof Item & string
   validated?: boolean
-  valueField?: ValueKey & string
 }
 
 export interface BFormDatalistProps<
   Item = Record<string, unknown>,
   ValueKey extends keyof Item = keyof Item,
-> {
-  disabledField?: keyof Item & string
+> extends OptionsFieldMappingProps<Item, ValueKey> {
   id?: string
-  options?: readonly Item[]
-  textField?: keyof Item & string
-  valueField?: ValueKey & string
 }
 
 export interface BFormFileProps {
@@ -380,27 +373,23 @@ export interface BFormRadioProps {
 export interface BFormRadioGroupProps<
   Item = Record<string, unknown>,
   ValueKey extends keyof Item = keyof Item,
-> {
+> extends OptionsFieldMappingProps<Item, ValueKey> {
   ariaInvalid?: AriaInvalid
   autofocus?: boolean
   buttonVariant?: ButtonVariant | null
   buttons?: boolean
   disabled?: boolean
-  disabledField?: keyof Item & string
   form?: string
   id?: string
   modelValue?: Item[ValueKey]
   name?: string
-  options?: readonly Item[]
   plain?: boolean
   required?: boolean
   reverse?: boolean
   size?: Size
   stacked?: boolean
   state?: ValidationState
-  textField?: keyof Item & string
   validated?: boolean
-  valueField?: ValueKey & string
 }
 export interface BFormRatingProps {
   color?: string
