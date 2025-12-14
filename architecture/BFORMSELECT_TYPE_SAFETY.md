@@ -510,7 +510,7 @@ The same type safety pattern is applied to:
 - **BFormSelectOptionGroup** - Nested option groups within select
 - **BFormRadioGroup** - Radio button groups with options
 - **BFormCheckboxGroup** - Checkbox groups with options
-- **BFormDatalist** - Datalist suggestions (future)
+- **BFormDatalist** - Datalist suggestions with options
 
 Each uses the same `Item` generic parameter for consistent type safety across the component library.
 
@@ -587,11 +587,24 @@ The generic `T` preserves the actual value type through normalization.
 
 **Workaround:** Manual global defaults injection for commonly-customized props:
 
-<<< FRAGMENT ./fragments/ManualDefaultsWorkaround.ts#snippet{ts}
+```typescript
+// In component setup:
+const globalDefaults = inject(defaultsKey, ref({}))
+const componentDefaults = computed(() => globalDefaults.value?.BFormRadioGroup ?? {})
+
+// Create computed properties for props that need global defaults support:
+const buttonVariant = computed(
+  () =>
+    props.buttonVariant ??
+    componentDefaults.value.buttonVariant ??
+    globalDefaults.value?.global?.buttonVariant ??
+    'secondary'
+)
+```
 
 **Affected Components:**
 
-- `BFormSelect` - Manually supports no props (no commonly-customized style props)
+- `BFormSelect` - Manually supports: `size`, `state`
 - `BFormRadioGroup` - Manually supports: `buttonVariant`, `size`, `state`
 - `BFormCheckboxGroup` - Manually supports: `buttonVariant`, `size`, `state`
 - `BFormDatalist` - No manual support needed (no style props)
@@ -621,7 +634,8 @@ See user documentation in `/apps/docs/src/docs/components/`:
 
 - `form-select.md` - BFormSelect TypeScript type safety section
 - `form-radio.md` - BFormRadioGroup TypeScript type safety section
-- `form-checkbox.md` - BFormCheckboxGroup TypeScript type safety section (future)
+- `form-checkbox.md` - BFormCheckboxGroup TypeScript type safety section
+- `form.md` - BFormDatalist TypeScript type safety section
 
 Demo files follow naming pattern: `{Component}TypeSafe{Scenario}.vue`
 
@@ -636,6 +650,13 @@ Examples:
 - `RadioTypeSafeValidation.vue` - Radio field validation
 - `RadioTypeSafeAPI.vue` - Radio with API data
 - `RadioTypeSafeEnum.vue` - Radio with enum values
+- `CheckboxTypeSafeBasic.vue` - Checkbox group basic usage
+- `CheckboxTypeSafeValidation.vue` - Checkbox field validation
+- `CheckboxTypeSafeAPI.vue` - Checkbox with API data
+- `CheckboxTypeSafeEnum.vue` - Checkbox with enum values
+- `DatalistTypeSafeBasic.vue` - Datalist basic usage
+- `DatalistTypeSafeAPI.vue` - Datalist with API data
+- `DatalistTypeSafeEnum.vue` - Datalist with enum values
 
 ## Migration Guide
 
@@ -722,6 +743,8 @@ Potential improvements for future versions:
 - `packages/bootstrap-vue-next/src/components/BFormRadio/BFormRadioGroup.vue`
 - `packages/bootstrap-vue-next/src/components/BFormRadio/BFormRadio.vue`
 - `packages/bootstrap-vue-next/src/components/BFormCheckbox/BFormCheckboxGroup.vue`
+- `packages/bootstrap-vue-next/src/components/BFormCheckbox/BFormCheckbox.vue`
+- `packages/bootstrap-vue-next/src/components/BForm/BFormDatalist.vue`
 
 ### Composables
 
@@ -732,13 +755,21 @@ Potential improvements for future versions:
 
 - `apps/docs/src/docs/components/form-select.md` - BFormSelect user docs
 - `apps/docs/src/docs/components/form-radio.md` - BFormRadioGroup user docs
+- `apps/docs/src/docs/components/form-checkbox.md` - BFormCheckboxGroup user docs
+- `apps/docs/src/docs/components/form.md` - BFormDatalist user docs
+- `apps/docs/src/docs/components/_type-safety-*.md` - Shared type safety documentation fragments
 - `apps/docs/src/docs/components/demo/SelectTypeSafe*.vue` - Select demos
 - `apps/docs/src/docs/components/demo/RadioTypeSafe*.vue` - Radio demos
+- `apps/docs/src/docs/components/demo/CheckboxTypeSafe*.vue` - Checkbox demos
+- `apps/docs/src/docs/components/demo/DatalistTypeSafe*.vue` - Datalist demos
 
 ### Tests
 
 - `packages/bootstrap-vue-next/src/components/BFormSelect/form-select.spec.ts`
 - `packages/bootstrap-vue-next/src/components/BFormRadio/form-radio-group.spec.ts`
+- `packages/bootstrap-vue-next/src/components/BFormCheckbox/form-checkbox-group.spec.ts`
+- `packages/bootstrap-vue-next/src/components/BForm/form-datalist.spec.ts`
+- `packages/bootstrap-vue-next/tests/utils/type-safety-helpers.ts` - Shared test utilities
 
 ## Conclusion
 
