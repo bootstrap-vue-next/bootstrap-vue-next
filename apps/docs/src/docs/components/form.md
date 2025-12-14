@@ -161,6 +161,24 @@ See also:
   a flat list of `BFormSelectOptions`, unlike `<BFormSelect>` which support a heirarchy of
   `BFormSelectOption` and `BFormSelectOptionGroup`.
 
+#### TypeScript Type Safety
+
+`BFormDatalist` supports full TypeScript type safety for `options` arrays. By specifying `value-field`, `text-field`, and optionally `disabled-field`, you get compile-time validation and excellent IntelliSense support.
+
+**Basic type-safe usage:**
+
+<<< DEMO ./demo/DatalistTypeSafeBasic.vue{vue}
+
+**API response types:**
+
+<<< DEMO ./demo/DatalistTypeSafeAPI.vue{vue}
+
+**Enum values:**
+
+<<< DEMO ./demo/DatalistTypeSafeEnum.vue{vue}
+
+To enable type safety, provide the field names as props. The `v-model` on your input will be correctly typed based on your value field. See the [BFormSelect TypeScript documentation](/docs/components/form-select#typescript-type-safety) for comprehensive type safety guidance that also applies to datalists.
+
 ## Validation
 
 Disable browser native HTML5 validation by setting the `novalidate` prop to true on `BForm`.

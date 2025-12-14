@@ -310,12 +310,15 @@ export interface BFormCheckboxGroupProps<
   valueField?: ValueKey & string
 }
 
-export interface BFormDatalistProps {
-  disabledField?: string
+export interface BFormDatalistProps<
+  Item = Record<string, unknown>,
+  ValueKey extends keyof Item = keyof Item,
+> {
+  disabledField?: keyof Item & string
   id?: string
-  options?: readonly (unknown | Record<string, unknown>)[]
-  textField?: string
-  valueField?: string
+  options?: readonly Item[]
+  textField?: keyof Item & string
+  valueField?: ValueKey & string
 }
 
 export interface BFormFileProps {
