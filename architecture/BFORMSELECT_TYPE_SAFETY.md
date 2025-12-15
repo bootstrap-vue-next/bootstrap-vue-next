@@ -585,22 +585,70 @@ The generic `T` preserves the actual value type through normalization.
 - Generic components cannot use the `useDefaults` composable
 - Most props cannot participate in the global defaults system from `createBootstrap({ defaults: {...} })`
 
-**Workaround:** Manual global defaults injection for commonly-customized props:
+**Workaround:** Manual global defaults injection for commonly-customized props.
+
+**Implementation Pattern:**
+
+1. **Set defaults to `undefined` in `withDefaults`:**
 
 ```typescript
-// In component setup:
-const globalDefaults = inject(defaultsKey, ref({}))
-const componentDefaults = computed(() => globalDefaults.value?.BFormRadioGroup ?? {})
-
-// Create computed properties for props that need global defaults support:
-const buttonVariant = computed(
-  () =>
-    props.buttonVariant ??
-    componentDefaults.value.buttonVariant ??
-    globalDefaults.value?.global?.buttonVariant ??
-    'secondary'
+const props = withDefaults(
+  defineProps<Omit<BFormCheckboxGroupProps<Item, ValueKey>, 'modelValue'>>(),
+  {
+    // ... other props with concrete defaults
+    buttonVariant: undefined, // Allow injection
+    size: undefined, // Allow injection
+    state: undefined, // Allow injection
+  }
 )
 ```
+
+**Why `undefined`?** Props with concrete default values (e.g., `buttonVariant: 'secondary'`) always have a value, preventing the `??` operator from checking global defaults. By using `undefined`, the prop is truly optional, allowing the computed property to cascade through the precedence chain.
+
+2. **Inject global defaults and create computed properties:**
+
+```typescript
+// Inject the global defaults from plugin or BApp
+const globalDefaults = inject(defaultsKey, ref({}))
+const componentDefaults = computed(() => globalDefaults.value?.BFormCheckboxGroup ?? {})
+
+// Create computed properties that follow precedence order:
+// Explicit prop → Component defaults → Global defaults → Hardcoded default
+const buttonVariant = computed(
+  () =>
+    props.buttonVariant ?? // 1. Explicit prop (highest priority)
+    componentDefaults.value.buttonVariant ?? // 2. Component-level default
+    globalDefaults.value?.global?.buttonVariant ?? // 3. Global default
+    'secondary' // 4. Hardcoded fallback (lowest priority)
+)
+
+const size = computed(
+  () => props.size ?? componentDefaults.value.size ?? globalDefaults.value?.global?.size ?? 'md'
+)
+
+const state = computed(
+  () => props.state ?? componentDefaults.value.state ?? globalDefaults.value?.global?.state ?? null
+)
+```
+
+3. **Use computed properties instead of props:**
+
+```typescript
+// In component template/computed properties, use the computed values:
+const classes = computed(() => ({
+  'btn-group': props.buttons,
+  [`btn-group-${size.value}`]: props.buttons && size.value !== 'md',
+  'is-valid': state.value === true,
+  'is-invalid': state.value === false,
+}))
+```
+
+**Precedence Order (Highest to Lowest):**
+
+1. **Explicit prop** - User provides value directly on component instance
+2. **Component defaults** - Set via `createBootstrap({ components: { BFormCheckboxGroup: {...} } })` or `<BApp :defaults="{ BFormCheckboxGroup: {...} }">`
+3. **Global defaults** - Set via `createBootstrap({ components: { global: {...} } })` (plugin pattern only, not BApp)
+4. **Hardcoded default** - Component's fallback value
 
 **Affected Components:**
 
@@ -608,6 +656,12 @@ const buttonVariant = computed(
 - `BFormRadioGroup` - Manually supports: `buttonVariant`, `size`, `state`
 - `BFormCheckboxGroup` - Manually supports: `buttonVariant`, `size`, `state`
 - `BFormDatalist` - No manual support needed (no style props)
+
+**Testing:** Comprehensive test suites verify the precedence chain:
+
+- `form-checkbox-group-global-defaults.spec.ts` - 15 test cases
+- `form-radio-group-global-defaults.spec.ts` - 15 test cases
+- Demo component: `GlobalDefaultsDemo.vue` - Visual verification using BApp pattern
 
 **Trade-off Justification:**
 Type safety benefits (IDE autocomplete, compile-time validation, refactoring safety) outweigh the loss of global defaults for less commonly-customized props. Users can still override any prop per-instance.
