@@ -150,9 +150,104 @@
   background-color: #fff;
 }
 
+// --- Header sort styling ---
+
+@function str-replace($string, $search, $replace: "") {
+  $index: str-index($string, $search);
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace +
+      str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+  @return $string;
+}
+
+// SVG background image escape function
+@function bv-escape-svg($string) {
+  @if str-index($string, "data:image/svg+xml") {
+    $escaped-characters: (("<", "%3c"), (">", "%3e"), ("#", "%23"));
+    @each $char, $encoded in $escaped-characters {
+      $string: str-replace($string, $char, $encoded);
+    }
+  }
+  @return $string;
+}
+
+// Sort icon variables - increased size for better visibility
+$b-table-sort-icon-bg-width: 1.5em !default;
+$b-table-sort-icon-bg-height: 1.5em !default;
+
+// Sort icon SVGs (arrows matching the current SortIcon component)
+$b-table-sort-icon-bg-not-sorted: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='currentColor' viewBox='0 0 16 16'><path fill-rule='evenodd' opacity='0.4' d='M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z'/></svg>") !default;
+$b-table-sort-icon-bg-ascending: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='currentColor' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z'/></svg>") !default;
+$b-table-sort-icon-bg-descending: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='currentColor' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z'/></svg>") !default;
+
 .table th {
   &.b-table-sortable-column {
     cursor: pointer;
+  }
+}
+
+.table.b-table:not(.b-table-no-sort-icon) {
+  > thead,
+  > tfoot {
+    > tr {
+      > [aria-sort] {
+        cursor: pointer;
+        background-image: none;
+        background-repeat: no-repeat;
+        background-size: $b-table-sort-icon-bg-width $b-table-sort-icon-bg-height;
+
+        &:not(.b-table-sort-icon-left) {
+          // Default is icon on the right edge of the cell
+          background-position: right calc(#{$table-cell-padding-x} / 2) center;
+          padding-right: calc(#{$table-cell-padding-x} + #{$b-table-sort-icon-bg-width});
+        }
+
+        &.b-table-sort-icon-left {
+          // Left aligned sort icon (at left edge of cell)
+          background-position: left calc(#{$table-cell-padding-x} / 2) center;
+          padding-left: calc(#{$table-cell-padding-x} + #{$b-table-sort-icon-bg-width});
+        }
+      }
+
+      > [aria-sort="none"] {
+        background-image: var(
+          --bvn-sort-icon-none,
+          bv-escape-svg($b-table-sort-icon-bg-not-sorted)
+        );
+      }
+
+      > [aria-sort="ascending"] {
+        background-image: var(--bvn-sort-icon-asc, bv-escape-svg($b-table-sort-icon-bg-ascending));
+      }
+
+      > [aria-sort="descending"] {
+        background-image: var(
+          --bvn-sort-icon-desc,
+          bv-escape-svg($b-table-sort-icon-bg-descending)
+        );
+      }
+    }
+  }
+
+  // Padding adjustment for small tables
+  &.table-sm:not(.b-table-no-sort-icon) {
+    > thead,
+    > tfoot {
+      > tr > [aria-sort] {
+        &:not(.b-table-sort-icon-left) {
+          // Default is icon on the right edge of the cell
+          background-position: right calc(#{$table-cell-padding-x-sm} / 2) center;
+          padding-right: calc(#{$table-cell-padding-x-sm} + #{$b-table-sort-icon-bg-width});
+        }
+
+        &.b-table-sort-icon-left {
+          // Left aligned sort icon (at left edge of cell)
+          background-position: left calc(#{$table-cell-padding-x-sm} / 2) center;
+          padding-left: calc(#{$table-cell-padding-x-sm} + #{$b-table-sort-icon-bg-width});
+        }
+      }
+    }
   }
 }
 

@@ -1067,7 +1067,7 @@ describe('initial sort direction', () => {
     expect(text).toStrictEqual(['Cyndi', 'Havij', 'Robert'])
   })
 
-  it('shows correct sort icon opacity for unsorted columns based on initialSortDirection', () => {
+  it('shows correct sort icons as CSS background images', () => {
     const wrapper = mount(BTable, {
       props: {
         items: simpleItems,
@@ -1076,16 +1076,102 @@ describe('initial sort direction', () => {
       },
     })
 
-    const sortIcons = wrapper.findAll('svg')
-    expect(sortIcons.length).toBeGreaterThan(0)
+    const headers = wrapper.findAll('th[aria-sort]')
+    expect(headers.length).toBeGreaterThan(0)
 
-    // The icons should have opacity 0.4 for unsorted columns
-    sortIcons.forEach((icon) => {
-      const style = icon.attributes('style')
-      if (style?.includes('opacity')) {
-        expect(style).toContain('opacity: 0.4')
-      }
+    // All sortable headers should have aria-sort attribute
+    headers.forEach((header) => {
+      const ariaSort = header.attributes('aria-sort')
+      expect(['none', 'ascending', 'descending']).toContain(ariaSort)
     })
+  })
+
+  it('applies b-table-sort-icon-left class when sortIconLeft prop is true', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        sortIconLeft: true,
+      },
+    })
+
+    const headers = wrapper.findAll('th[aria-sort]')
+    expect(headers.length).toBeGreaterThan(0)
+
+    headers.forEach((header) => {
+      expect(header.classes()).toContain('b-table-sort-icon-left')
+      expect(header.classes()).not.toContain('b-table-sort-icon-inline')
+    })
+  })
+
+  it('does not apply b-table-sort-icon-left class when sortIconLeft prop is false', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        sortIconLeft: false,
+      },
+    })
+
+    const headers = wrapper.findAll('th[aria-sort]')
+    expect(headers.length).toBeGreaterThan(0)
+
+    headers.forEach((header) => {
+      expect(header.classes()).not.toContain('b-table-sort-icon-left')
+    })
+  })
+
+  it('only applies b-table-sort-icon-left class to sortable fields', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: [
+          {key: 'first_name', label: 'First Name', sortable: true},
+          {key: 'age', label: 'Age', sortable: false},
+          {key: 'last_name', label: 'Last Name', sortable: true},
+        ],
+        sortIconLeft: true,
+      },
+    })
+
+    const headers = wrapper.findAll('th')
+    const sortableHeaders = wrapper.findAll('th[aria-sort]')
+
+    // Only sortable fields should have the class
+    expect(sortableHeaders.length).toBe(2)
+    sortableHeaders.forEach((header) => {
+      expect(header.classes()).toContain('b-table-sort-icon-left')
+    })
+
+    // Non-sortable field should not have the class
+    const ageHeader = headers.find((h) => h.text() === 'Age')
+    expect(ageHeader?.classes()).not.toContain('b-table-sort-icon-left')
+  })
+
+  it('applies b-table-no-sort-icon class to table when noSortableIcon prop is true', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        noSortableIcon: true,
+      },
+    })
+
+    const table = wrapper.find('table')
+    expect(table.classes()).toContain('b-table-no-sort-icon')
+  })
+
+  it('does not apply b-table-no-sort-icon class to table when noSortableIcon prop is false', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        noSortableIcon: false,
+      },
+    })
+
+    const table = wrapper.find('table')
+    expect(table.classes()).not.toContain('b-table-no-sort-icon')
   })
 
   it('excludes current column from getLastSortDirection when using initialSortDirection "last"', async () => {

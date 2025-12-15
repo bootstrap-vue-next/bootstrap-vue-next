@@ -321,9 +321,12 @@ export interface BFormFileProps {
   ariaLabelledby?: string
   accept?: string | readonly string[]
   autofocus?: boolean
+  browseText?: string
   capture?: boolean | 'user' | 'environment'
   directory?: boolean
   disabled?: boolean
+  dropPlaceholder?: string
+  fileNameFormatter?: (files: readonly File[]) => string
   form?: string
   id?: string
   label?: string
@@ -333,9 +336,10 @@ export interface BFormFileProps {
   name?: string
   noButton?: boolean
   noDrop?: boolean
-  noTraverse?: boolean
   plain?: boolean
+  placeholder?: string
   required?: boolean
+  showFileNames?: boolean
   size?: Size
   state?: ValidationState
 }
@@ -1196,10 +1200,10 @@ export interface BTableProps<Items>
   noSelectOnClick?: boolean
   // selectedVariant?: ColorVariant | null
   // showEmpty?: boolean
-  // sortIconLeft?: boolean
   // sortNullLast?: boolean
   selectedItems?: readonly Items[]
   noSortableIcon?: boolean
+  sortIconLeft?: boolean
   emptyFilteredText?: string
   emptyText?: string
   showEmpty?: boolean

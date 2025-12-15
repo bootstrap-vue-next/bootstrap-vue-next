@@ -74,53 +74,6 @@
       >
         {{ getTableFieldHeadLabel(field) }}
       </slot>
-      <template v-if="isSortable && !!scope.field.sortable && props.noSortableIcon === false">
-        <slot
-          v-if="sortByModel?.find((el) => el.key === scope.field.key)?.order === 'asc'"
-          v-bind="scope"
-          :name="
-            slots[`sortAsc(${String(scope.field.key)})`]
-              ? (`sortAsc(${String(scope.field.key)})` as 'sortAsc()')
-              : 'sortAsc()'
-          "
-        >
-          <SortIcon
-            :field-info="scope.field"
-            :sort-by="sortByModel"
-            :initial-sort-direction="props.initialSortDirection"
-          />
-        </slot>
-        <slot
-          v-else-if="sortByModel?.find((el) => el.key === scope.field.key)?.order === 'desc'"
-          v-bind="scope"
-          :name="
-            slots[`sortDesc(${String(scope.field.key)})`]
-              ? (`sortDesc(${String(scope.field.key)})` as 'sortDesc()')
-              : 'sortDesc()'
-          "
-        >
-          <SortIcon
-            :field-info="scope.field"
-            :sort-by="sortByModel"
-            :initial-sort-direction="props.initialSortDirection"
-          />
-        </slot>
-        <slot
-          v-else
-          v-bind="scope"
-          :name="
-            slots[`sortDefault(${String(scope.field.key)})`]
-              ? (`sortDefault(${String(scope.field.key)})` as 'sortDefault()')
-              : 'sortDefault()'
-          "
-        >
-          <SortIcon
-            :field-info="scope.field"
-            :sort-by="sortByModel"
-            :initial-sort-direction="props.initialSortDirection"
-          />
-        </slot>
-      </template>
     </template>
     <template #custom-body="scope">
       <BTr
@@ -161,7 +114,6 @@ import {formatItem} from '../../utils/formatItem'
 import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
 import BTr from './BTr.vue'
-import SortIcon from '../SortIcon.vue'
 import {
   type BTableSortBy,
   type BTableSortByOrder,
@@ -195,6 +147,7 @@ const _props = withDefaults(
   defineProps<Omit<BTableProps<Items>, 'sortBy' | 'busy' | 'selectedItems'>>(),
   {
     noSortableIcon: false,
+    sortIconLeft: false,
     perPage: Number.POSITIVE_INFINITY,
     filter: undefined,
     filterFunction: undefined,
@@ -405,7 +358,7 @@ const computedFields = computed<TableField<Items>[]>(() =>
 
     const value = sortByModel.value?.find((sb) => el.key === sb.key)
     const sortValue =
-      isSortable.value === false
+      el.sortable === false || isSortable.value === false
         ? undefined
         : value === undefined
           ? 'none'
@@ -421,6 +374,12 @@ const computedFields = computed<TableField<Items>[]>(() =>
         'aria-sort': sortValue,
         ...el.thAttr,
       },
+      thClass: [
+        el.thClass,
+        {
+          'b-table-sort-icon-left': props.sortIconLeft && sortValue !== undefined,
+        },
+      ],
     }
   })
 )
@@ -428,9 +387,10 @@ const computedFields = computed<TableField<Items>[]>(() =>
 const tableClasses = computed(() => ({
   'b-table-busy': busyModel.value,
   'b-table-selectable': props.selectable,
-  'user-select-none': props.selectable && isSelecting.value,
+  'user-select-none': props.selectable && !props.noSelectOnClick && isSelecting.value,
   'b-table-fixed': props.fixed,
   'b-table-no-border-collapse': props.noBorderCollapse,
+  'b-table-no-sort-icon': props.noSortableIcon,
 }))
 
 const getBusyRowClasses = computed(() => [
