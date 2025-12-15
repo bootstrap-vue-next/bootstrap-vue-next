@@ -27,8 +27,8 @@
 import {ref} from 'vue'
 
 const exFirstSlotOptions = [
-  {value: 'A' as 'A' | 'B' | 'C' | 'D' | null, text: 'Option A (from options prop)'},
-  {value: 'B' as 'A' | 'B' | 'C' | 'D' | null, text: 'Option B (from options prop)'},
+  {value: 'A', text: 'Option A (from options prop)'},
+  {value: 'B', text: 'Option B (from options prop)'},
 ]
 
 const selected = ref<'A' | 'B' | 'C' | 'D' | null>(null)

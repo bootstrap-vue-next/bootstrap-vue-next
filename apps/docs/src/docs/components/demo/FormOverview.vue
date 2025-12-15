@@ -74,8 +74,7 @@
 </template>
 
 <script setup lang="ts">
-import {nextTick} from 'process'
-import {reactive, ref} from 'vue'
+import {nextTick, reactive, ref} from 'vue'
 
 const foods = [
   {text: 'Select One', value: null as string | null},

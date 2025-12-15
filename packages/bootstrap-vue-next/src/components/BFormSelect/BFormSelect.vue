@@ -74,8 +74,7 @@ const props = withDefaults(defineProps<Omit<BFormSelectProps<Item, ValueKey>, 'm
 defineSlots<BFormSelectSlots<Item[ValueKey]>>()
 
 const modelValue = defineModel<Item[ValueKey] | readonly Item[ValueKey][]>({
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default: '' as any,
+  default: undefined,
 })
 
 const computedId = useId(() => props.id, 'input')
