@@ -37,5 +37,5 @@ const countryOptions: CountryOption[] = [
 ]
 
 // TypeScript knows selectedCountry is a Country enum value
-const selectedCountry = ref<Country>()
+const selectedCountry = ref<Country>(Country.US)
 </script>

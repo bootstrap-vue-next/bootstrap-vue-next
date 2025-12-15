@@ -30,5 +30,5 @@ const users: ApiUser[] = [
   {user_id: 2, user_name: 'Bob', user_email: 'bob@example.com', is_active: false},
 ]
 
-const selectedUserId = ref<number>()
+const selectedUserId = ref<ApiUser['user_id'] | null>(null)
 </script>

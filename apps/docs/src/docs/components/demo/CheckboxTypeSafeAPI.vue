@@ -2,6 +2,7 @@
   <!-- #region template -->
   <div>
     <BFormCheckboxGroup
+      id="checkbox-type-safe-api"
       v-model="selectedUsers"
       :options="apiUsers"
       value-field="userId"

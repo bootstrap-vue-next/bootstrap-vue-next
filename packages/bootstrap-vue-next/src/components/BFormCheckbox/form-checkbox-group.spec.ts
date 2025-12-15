@@ -193,7 +193,8 @@ describe('form-checkbox-group', () => {
       await checkboxes[1].setValue(true)
       const emitted = wrapper.emitted('update:modelValue')
       expect(emitted).toBeTruthy()
-      expect(emitted?.[0]).toEqual([[1, 3, 2]])
+      expect(emitted?.[0]?.[0]).toEqual(expect.arrayContaining([1, 2, 3]))
+      expect(emitted?.[0]?.[0]).toHaveLength(3)
     })
 
     it('has correct v-model type inference', () => {

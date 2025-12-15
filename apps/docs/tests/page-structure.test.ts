@@ -169,8 +169,8 @@ describe('Page Structure Validation', () => {
       const relativePath = path.relative(distDir, file)
       const fileName = path.basename(file)
 
-      // Skip special pages
-      if (skipPatterns.includes(fileName)) {
+      // Skip special pages and partial files (starting with _)
+      if (skipPatterns.includes(fileName) || fileName.startsWith('_')) {
         continue
       }
 

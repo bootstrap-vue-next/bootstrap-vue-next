@@ -32,6 +32,6 @@ const roleOptions: RoleOption[] = [
   {value: UserRole.Guest, label: 'Guest', disabled: true},
 ]
 
-// TypeScript knows selectedRoles is readonly UserRole[]
-const selectedRoles = ref<readonly UserRole[]>([UserRole.Editor, UserRole.Viewer])
+// TypeScript knows selectedRoles is UserRole[]
+const selectedRoles = ref<UserRole[]>([UserRole.Editor, UserRole.Viewer])
 </script>

@@ -14,14 +14,15 @@
  * @example
  * ```typescript
  * it('has correct v-model type inference', () => {
- *   expectCorrectModelType<number>() // for numeric value fields
- *   expectCorrectModelType<string>() // for string value fields
- *   expectCorrectModelType<TestEnum>() // for enum value fields
+ *   const model = ref<number>(1)
+ *   expectCorrectModelType<number>(model.value) // for numeric value fields
+ *   expectCorrectModelType<string>('test') // for string value fields
+ *   expectCorrectModelType<TestEnum>(TestEnum.Value) // for enum value fields
  * })
  * ```
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const expectCorrectModelType = <T>(): void => {
+export const expectCorrectModelType = <T>(_value: T): void => {
   // This is a type-only test - no runtime behavior needed
   // TypeScript will error if the types don't match
 }

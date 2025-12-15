@@ -5,6 +5,7 @@
     description="Select one or more users"
   >
     <BFormCheckboxGroup
+      id="checkbox-type-safe-validation"
       v-model="selectedIds"
       :options="users"
       :state="validationState"

@@ -2,6 +2,7 @@
   <!-- #region template -->
   <div>
     <BFormCheckboxGroup
+      id="checkbox-type-safe-basic"
       v-model="selectedUsers"
       :options="users"
       value-field="id"

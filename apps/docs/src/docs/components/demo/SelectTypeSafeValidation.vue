@@ -1,6 +1,7 @@
 <template>
   <!-- ✅ VALID: All fields exist on Product -->
   <BFormSelect
+    id="select-type-safe-validation"
     v-model="selectedProduct"
     :options="products"
     value-field="productId"

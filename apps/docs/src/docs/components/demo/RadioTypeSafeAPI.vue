@@ -1,5 +1,6 @@
 <template>
   <BFormRadioGroup
+    id="radio-type-safe-api"
     v-model="selectedUserId"
     :options="users"
     value-field="user_id"
