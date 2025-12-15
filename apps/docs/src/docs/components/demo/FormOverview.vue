@@ -77,7 +77,13 @@
 import {nextTick} from 'process'
 import {reactive, ref} from 'vue'
 
-const foods = [{text: 'Select One', value: null}, 'Carrots', 'Beans', 'Tomatoes', 'Corn']
+const foods = [
+  {text: 'Select One', value: null as string | null},
+  {text: 'Carrots', value: 'Carrots'},
+  {text: 'Beans', value: 'Beans'},
+  {text: 'Tomatoes', value: 'Tomatoes'},
+  {text: 'Corn', value: 'Corn'},
+]
 
 const form = reactive<{
   email: string

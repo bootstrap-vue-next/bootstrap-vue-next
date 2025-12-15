@@ -83,7 +83,15 @@ const variants = [
   'warning',
   'info',
 ] as const
-const blurs = [{text: 'None', value: ''}, '1px', '2px', '5px', '0.5em', '1rem']
+
+const blurs = [
+  {text: 'None', value: '' as string},
+  {text: '1px', value: '1px'},
+  {text: '2px', value: '2px'},
+  {text: '5px', value: '5px'},
+  {text: '0.5em', value: '0.5em'},
+  {text: '1rem', value: '1rem'},
+]
 
 const variant = ref<(typeof variants)[number]>('light')
 const opacity = ref(0.85)
