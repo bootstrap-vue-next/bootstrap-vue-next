@@ -2,6 +2,7 @@
   <!-- #region template -->
   <div>
     <BFormCheckboxGroup
+      id="checkbox-type-safe-enum"
       v-model="selectedRoles"
       :options="roleOptions"
       value-field="value"

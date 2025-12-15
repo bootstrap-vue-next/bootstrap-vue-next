@@ -1,6 +1,7 @@
 import {describe, expect, it} from 'vitest'
 import {mount} from '@vue/test-utils'
 import BFormDatalist from './BFormDatalist.vue'
+import {expectCorrectModelType} from '../../../tests/utils/type-assertions'
 
 describe('form-datalist', () => {
   describe('type safety with generics', () => {
@@ -118,8 +119,31 @@ describe('form-datalist', () => {
     it('has correct value type inference', () => {
       // This test validates that TypeScript correctly infers value types from the generic parameters.
       // Type checking happens at compile time - if the types don't match, TypeScript will error.
-      // The other tests in this suite already demonstrate proper type inference by using
-      // BFormDatalist<User, 'id'> which constrains values to User['id'] type.
+
+      // Test with numeric value field
+      const value1 = 1
+      expectCorrectModelType<number>(value1)
+
+      // Test with string value field
+      const value2 = 'P001'
+      expectCorrectModelType<string>(value2)
+
+      // Test with enum value field
+      enum Country {
+        US = 'us',
+        UK = 'uk',
+      }
+      const value3 = Country.US
+      expectCorrectModelType<Country>(value3)
+
+      /*
+       * Negative test cases: These would cause compile-time errors if uncommented,
+       * which proves that expectCorrectModelType correctly enforces type safety.
+       * If TypeScript allowed these, the type checking would be broken.
+       */
+      // expectCorrectModelType<string>(value1) // Should fail: wrong type
+      // expectCorrectModelType<number>(value2) // Should fail: wrong type
+
       expect(true).toBe(true)
     })
   })

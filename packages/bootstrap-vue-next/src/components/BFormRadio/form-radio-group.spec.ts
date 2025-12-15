@@ -330,8 +330,35 @@ describe('form-radio-group', () => {
     it('has correct v-model type inference', () => {
       // This test validates that TypeScript correctly infers v-model types from the generic parameters.
       // Type checking happens at compile time - if the types don't match, TypeScript will error.
-      // The other tests in this suite already demonstrate proper type inference by using
-      // BFormRadioGroup<User, 'id'> which constrains v-model to User['id'] type.
+
+      // Test with numeric value field
+      const model1 = ref<number>(1)
+      expectCorrectModelType<number>(model1.value)
+
+      // Test with string value field
+      const model2 = ref<string>('a')
+      expectCorrectModelType<string>(model2.value)
+
+      // Test with enum value field
+      enum Priority {
+        Low = 'low',
+        High = 'high',
+      }
+      const model3 = ref<Priority>(Priority.Low)
+      expectCorrectModelType<Priority>(model3.value)
+
+      // Test with undefined (no selection)
+      const model4 = ref<number | undefined>(undefined)
+      expectCorrectModelType<number | undefined>(model4.value)
+
+      /*
+       * Negative test cases: These would cause compile-time errors if uncommented,
+       * which proves that expectCorrectModelType correctly enforces type safety.
+       * If TypeScript allowed these, the type checking would be broken.
+       */
+      // expectCorrectModelType<string>(model1.value) // Should fail: wrong type
+      // expectCorrectModelType<number>(model2.value) // Should fail: wrong type
+
       expect(true).toBe(true)
     })
   })

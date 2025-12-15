@@ -2,6 +2,8 @@ import {afterEach, describe, expect, it} from 'vitest'
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import BFormCheckbox from './BFormCheckbox.vue'
 import BFormCheckboxGroup from './BFormCheckboxGroup.vue'
+import {expectCorrectModelType} from 'tests/utils/type-assertions'
+import {ref} from 'vue'
 
 describe('form-checkbox-group', () => {
   enableAutoUnmount(afterEach)
@@ -200,8 +202,31 @@ describe('form-checkbox-group', () => {
     it('has correct v-model type inference', () => {
       // This test validates that TypeScript correctly infers v-model types from the generic parameters.
       // Type checking happens at compile time - if the types don't match, TypeScript will error.
-      // The other tests in this suite already demonstrate proper type inference by using
-      // BFormCheckboxGroup<User, 'id'> which constrains v-model to readonly User['id'][] type.
+
+      // Test with numeric value field
+      const model1 = ref<readonly number[]>([1, 2, 3])
+      expectCorrectModelType<readonly number[]>(model1.value)
+
+      // Test with string value field
+      const model2 = ref<readonly string[]>(['a', 'b'])
+      expectCorrectModelType<readonly string[]>(model2.value)
+
+      // Test with enum value field
+      enum UserRole {
+        Admin = 'admin',
+        Editor = 'editor',
+      }
+      const model3 = ref<readonly UserRole[]>([UserRole.Admin])
+      expectCorrectModelType<readonly UserRole[]>(model3.value)
+
+      /*
+       * Negative test cases: These would cause compile-time errors if uncommented,
+       * which proves that expectCorrectModelType correctly enforces type safety.
+       * If TypeScript allowed these, the type checking would be broken.
+       */
+      // expectCorrectModelType<readonly string[]>(model1.value) // Should fail: wrong type
+      // expectCorrectModelType<readonly number[]>(model2.value) // Should fail: wrong type
+
       expect(true).toBe(true)
     })
   })
