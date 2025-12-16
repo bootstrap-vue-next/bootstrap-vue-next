@@ -23,18 +23,13 @@
       }"
     >
       <!-- Custom file control (mimics Bootstrap native input) -->
-      <div class="b-form-file-control" :class="computedClasses" :aria-disabled="props.disabled">
-        <!-- File name display -->
-        <div class="b-form-file-text">
-          <slot name="file-name" :files="selectedFiles" :names="fileNames">
-            <span v-if="hasFiles">{{ formattedFileNames }}</span>
-            <span v-else-if="hasPlaceholderSlot || props.placeholder" class="text-muted">
-              <slot name="placeholder">{{ props.placeholder }}</slot>
-            </span>
-          </slot>
-        </div>
-
-        <!-- Custom browse button -->
+      <div
+        class="b-form-file-control"
+        :class="computedClasses"
+        :aria-disabled="props.disabled"
+        @click="handleControlClick"
+      >
+        <!-- Custom browse button (now on LEFT to match Bootstrap v5) -->
         <button
           v-if="!props.noButton"
           :id="computedId"
@@ -44,10 +39,20 @@
           :disabled="props.disabled"
           :aria-label="props.ariaLabel"
           :aria-labelledby="props.ariaLabelledby"
-          @click="openFileDialog"
+          @click.stop="openFileDialog"
         >
           {{ effectiveBrowseText }}
         </button>
+
+        <!-- File name display -->
+        <div class="b-form-file-text">
+          <slot name="file-name" :files="selectedFiles" :names="fileNames">
+            <span v-if="hasFiles">{{ formattedFileNames }}</span>
+            <span v-else-if="hasPlaceholderSlot || props.placeholder" class="text-muted">
+              <slot name="placeholder">{{ props.placeholder }}</slot>
+            </span>
+          </slot>
+        </div>
       </div>
 
       <!-- Drag overlay (only shown when dragging) -->
@@ -165,7 +170,7 @@ const _props = withDefaults(defineProps<Omit<BFormFileProps, 'modelValue'>>(), {
   noButton: false,
   noDrop: false,
   plain: false,
-  placeholder: undefined,
+  placeholder: 'No file selected.',
   required: false,
   showFileNames: false,
   size: undefined,
@@ -248,10 +253,10 @@ const computedClasses = computed(() => [
 ])
 
 const computedPlainClasses = computed(() => [
+  'form-control',
   stateClass.value,
   {
     [`form-control-${props.size}`]: props.size !== undefined,
-    'form-control-file': true,
   },
 ])
 
@@ -341,6 +346,15 @@ const openFileDialog = () => {
       multiple: props.multiple || props.directory,
       directory: props.directory,
     })
+  }
+}
+
+// Handle click on control wrapper (make entire control clickable like Bootstrap v5)
+const handleControlClick = (e: Event) => {
+  // Don't trigger if clicking the button itself (button has its own handler with .stop)
+  // Don't trigger if disabled
+  if (!props.disabled) {
+    openFileDialog()
   }
 }
 
