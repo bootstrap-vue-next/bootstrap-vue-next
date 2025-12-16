@@ -350,7 +350,7 @@ const openFileDialog = () => {
 }
 
 // Handle click on control wrapper (make entire control clickable like Bootstrap v5)
-const handleControlClick = (e: Event) => {
+const handleControlClick = () => {
   // Don't trigger if clicking the button itself (button has its own handler with .stop)
   // Don't trigger if disabled
   if (!props.disabled) {
