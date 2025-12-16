@@ -33,8 +33,10 @@ describe('BFormRadioGroup global defaults', () => {
 
     it('applies global.buttonVariant when set', () => {
       const plugin = createBootstrap({
-        global: {
-          buttonVariant: 'primary',
+        components: {
+          global: {
+            buttonVariant: 'primary',
+          },
         },
       })
 
@@ -55,11 +57,13 @@ describe('BFormRadioGroup global defaults', () => {
 
     it('applies component-level defaults over global defaults', () => {
       const plugin = createBootstrap({
-        global: {
-          buttonVariant: 'primary',
-        },
-        BFormRadioGroup: {
-          buttonVariant: 'danger',
+        components: {
+          global: {
+            buttonVariant: 'primary',
+          },
+          BFormRadioGroup: {
+            buttonVariant: 'danger',
+          },
         },
       })
 
@@ -80,11 +84,13 @@ describe('BFormRadioGroup global defaults', () => {
 
     it('applies explicit prop over all defaults', () => {
       const plugin = createBootstrap({
-        global: {
-          buttonVariant: 'primary',
-        },
-        BFormRadioGroup: {
-          buttonVariant: 'danger',
+        components: {
+          global: {
+            buttonVariant: 'primary',
+          },
+          BFormRadioGroup: {
+            buttonVariant: 'danger',
+          },
         },
       })
 
@@ -123,8 +129,10 @@ describe('BFormRadioGroup global defaults', () => {
 
     it('applies global.size when set', () => {
       const plugin = createBootstrap({
-        global: {
-          size: 'lg',
+        components: {
+          global: {
+            size: 'lg',
+          },
         },
       })
 
@@ -144,11 +152,13 @@ describe('BFormRadioGroup global defaults', () => {
 
     it('applies component-level defaults over global defaults', () => {
       const plugin = createBootstrap({
-        global: {
-          size: 'lg',
-        },
-        BFormRadioGroup: {
-          size: 'sm',
+        components: {
+          global: {
+            size: 'lg',
+          },
+          BFormRadioGroup: {
+            size: 'sm',
+          },
         },
       })
 
@@ -169,11 +179,13 @@ describe('BFormRadioGroup global defaults', () => {
 
     it('applies explicit prop over all defaults', () => {
       const plugin = createBootstrap({
-        global: {
-          size: 'lg',
-        },
-        BFormRadioGroup: {
-          size: 'sm',
+        components: {
+          global: {
+            size: 'lg',
+          },
+          BFormRadioGroup: {
+            size: 'sm',
+          },
         },
       })
 
@@ -211,8 +223,10 @@ describe('BFormRadioGroup global defaults', () => {
 
     it('applies global.state when set to true', () => {
       const plugin = createBootstrap({
-        global: {
-          state: true,
+        components: {
+          global: {
+            state: true,
+          },
         },
       })
 
@@ -232,8 +246,10 @@ describe('BFormRadioGroup global defaults', () => {
 
     it('applies global.state when set to false', () => {
       const plugin = createBootstrap({
-        global: {
-          state: false,
+        components: {
+          global: {
+            state: false,
+          },
         },
       })
 
@@ -253,11 +269,13 @@ describe('BFormRadioGroup global defaults', () => {
 
     it('applies component-level defaults over global defaults', () => {
       const plugin = createBootstrap({
-        global: {
-          state: true,
-        },
-        BFormRadioGroup: {
-          state: false,
+        components: {
+          global: {
+            state: true,
+          },
+          BFormRadioGroup: {
+            state: false,
+          },
         },
       })
 
@@ -277,11 +295,13 @@ describe('BFormRadioGroup global defaults', () => {
 
     it('applies explicit prop over all defaults', () => {
       const plugin = createBootstrap({
-        global: {
-          state: false,
-        },
-        BFormRadioGroup: {
-          state: false,
+        components: {
+          global: {
+            state: false,
+          },
+          BFormRadioGroup: {
+            state: false,
+          },
         },
       })
 
@@ -305,15 +325,17 @@ describe('BFormRadioGroup global defaults', () => {
     it('follows correct precedence: explicit prop > component defaults > global defaults > hardcoded default', () => {
       // Test all three props at once with full precedence chain
       const plugin = createBootstrap({
-        global: {
-          buttonVariant: 'primary',
-          size: 'lg',
-          state: true,
-        },
-        BFormRadioGroup: {
-          buttonVariant: 'danger',
-          size: 'sm',
-          state: false,
+        components: {
+          global: {
+            buttonVariant: 'primary',
+            size: 'lg',
+            state: true,
+          },
+          BFormRadioGroup: {
+            buttonVariant: 'danger',
+            size: 'sm',
+            state: false,
+          },
         },
       })
 

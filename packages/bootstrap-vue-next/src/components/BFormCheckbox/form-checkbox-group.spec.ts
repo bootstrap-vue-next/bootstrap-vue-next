@@ -2,7 +2,7 @@ import {afterEach, describe, expect, it} from 'vitest'
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import BFormCheckbox from './BFormCheckbox.vue'
 import BFormCheckboxGroup from './BFormCheckboxGroup.vue'
-import {expectCorrectModelType} from 'tests/utils/type-assertions'
+import {expectCorrectModelType} from '../../../tests/utils/type-assertions'
 import {ref} from 'vue'
 
 describe('form-checkbox-group', () => {

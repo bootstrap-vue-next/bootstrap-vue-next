@@ -1,7 +1,7 @@
 import {afterEach, describe, expect, it} from 'vitest'
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import BFormSelect from './BFormSelect.vue'
-import {expectCorrectModelType} from '../../../../tests/utils/type-assertions'
+import {expectCorrectModelType} from '../../../tests/utils/type-assertions'
 
 describe('BFormSelect', () => {
   enableAutoUnmount(afterEach)

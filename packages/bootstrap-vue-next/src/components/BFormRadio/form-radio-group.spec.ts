@@ -2,6 +2,8 @@ import {afterEach, describe, expect, it} from 'vitest'
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import BFormRadioGroup from './BFormRadioGroup.vue'
 import BFormRadio from './BFormRadio.vue'
+import {expectCorrectModelType} from '../../../tests/utils/type-assertions'
+import {ref} from 'vue'
 
 describe('form-radio-group', () => {
   enableAutoUnmount(afterEach)

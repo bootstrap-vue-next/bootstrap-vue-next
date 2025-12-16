@@ -178,8 +178,8 @@ const variants = [
   {text: 'Dark', value: 'dark' as ColorVariant},
 ]
 
-const variant = ref<ColorVariant | null>(null)
-const headVariant = ref<ColorVariant | null>(null)
-const footVariant = ref<ColorVariant | null>(null)
+const variant = ref<ColorVariant | null>()
+const headVariant = ref<ColorVariant | null>()
+const footVariant = ref<ColorVariant | null>()
 const noCollapse = ref(false)
 </script>

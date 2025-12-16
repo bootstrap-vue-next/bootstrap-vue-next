@@ -663,6 +663,64 @@ const classes = computed(() => ({
 - `form-radio-group-global-defaults.spec.ts` - 15 test cases
 - Demo component: `GlobalDefaultsDemo.vue` - Visual verification using BApp pattern
 
+**Implementation Detail - Child Component Precedence:**
+
+A critical implementation detail exists for `BFormCheckbox` and `BFormRadio` when used within their respective group components:
+
+**The Challenge:** `BFormCheckbox` and `BFormRadio` use the `useDefaults` composable which automatically injects global defaults directly into component props during setup. This creates a conflict when these components are used within `BFormCheckboxGroup` or `BFormRadioGroup`, which provide component-specific defaults via Vue's provide/inject context.
+
+Without special handling, the precedence would be incorrect:
+
+- ❌ Global defaults (via useDefaults) > Parent context > Hardcoded default
+
+But the correct precedence should be:
+
+- ✅ Parent context (component defaults) > Global defaults > Hardcoded default
+
+**The Solution:** In `BFormCheckbox` and `BFormRadio`, the `classesObject` computed prioritizes parent-provided values **before** checking props for `buttonVariant`, `size`, and `state`:
+
+```typescript
+// BFormCheckbox.vue and BFormRadio.vue
+const classesObject = computed(() => {
+  // When in a group, prioritize parent-provided values to respect
+  // component-level defaults from BFormCheckboxGroup/BFormRadioGroup
+  const bv = parentData?.buttonVariant.value ?? props.buttonVariant ?? 'secondary'
+  const sz = parentData?.size.value ?? props.size ?? 'md'
+  const st =
+    parentData?.state.value !== undefined
+      ? parentData.state.value
+      : props.state === true || props.state === false
+        ? props.state
+        : null
+
+  return {
+    // ...
+    buttonVariant: bv,
+    size: sz,
+    state: st,
+  }
+})
+```
+
+This ensures that when a checkbox/radio is within a group:
+
+1. Parent context values (from BFormCheckboxGroup/BFormRadioGroup) take precedence
+2. If no parent context, fall back to props (which may include global defaults from useDefaults)
+3. Finally fall back to hardcoded defaults
+
+**Why This Matters:** Users expect component-specific defaults to override global defaults. For example:
+
+```typescript
+createBootstrap({
+  components: {
+    global: {buttonVariant: 'primary'},
+    BFormCheckboxGroup: {buttonVariant: 'danger'},
+  },
+})
+```
+
+Without the parent-first precedence, all checkboxes would incorrectly render as 'primary' instead of 'danger' because `useDefaults` would inject 'primary' into the checkbox props before the group context could provide 'danger'.
+
 **Trade-off Justification:**
 Type safety benefits (IDE autocomplete, compile-time validation, refactoring safety) outweigh the loss of global defaults for less commonly-customized props. Users can still override any prop per-instance.
 

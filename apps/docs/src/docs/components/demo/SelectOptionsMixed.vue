@@ -31,5 +31,5 @@ const exFirstSlotOptions = [
   {value: 'B', text: 'Option B (from options prop)'},
 ]
 
-const selected = ref<'A' | 'B' | 'C' | 'D' | null>(null)
+const selected = ref<'A' | 'B' | 'C' | 'D' | null>()
 </script>
