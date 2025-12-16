@@ -94,6 +94,10 @@ input[type="file"].form-control-input-file-hide-button {
     background-color: var(--bs-secondary-bg);
   }
 
+  &:focus {
+    outline: 0;
+  }
+
   &:disabled {
     cursor: not-allowed;
   }
