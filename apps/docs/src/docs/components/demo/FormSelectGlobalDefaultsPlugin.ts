@@ -1,7 +1,7 @@
 import {createBootstrap} from 'bootstrap-vue-next'
 
 // #region snippet
-// This WILL work for buttonVariant, size, and state:
+// This WILL work for size and state:
 createBootstrap({
   components: {
     BFormSelect: {

@@ -147,7 +147,7 @@ Type safety works with TypeScript enums for strongly-typed value constraints:
 
 <!--@include: ./_type-safety-global-defaults.md-->
 
-<<< FRAGMENT ./form-select/fragments/GlobalDefaultsExample.ts#snippet{ts}
+<<< FRAGMENT ./demo/FormSelectGlobalDefaultsPlugin.ts#snippet{ts}
 
 ## Contextual states
 

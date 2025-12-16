@@ -85,7 +85,7 @@
         :options="variants"
       >
         <template #first>
-          <option :value="null">-- None --</option>
+          <option :value="undefined">-- None --</option>
         </template>
       </BFormSelect>
     </BFormGroup>
@@ -102,7 +102,7 @@
         :options="variants"
       >
         <template #first>
-          <option :value="null">-- None --</option>
+          <option :value="undefined">-- None --</option>
         </template>
       </BFormSelect>
     </BFormGroup>
@@ -119,7 +119,7 @@
         :options="variants"
       >
         <template #first>
-          <option :value="null">-- None --</option>
+          <option :value="undefined">-- None --</option>
         </template>
       </BFormSelect>
     </BFormGroup>
@@ -178,8 +178,8 @@ const variants = [
   {text: 'Dark', value: 'dark' as ColorVariant},
 ]
 
-const variant = ref<ColorVariant | null>()
-const headVariant = ref<ColorVariant | null>()
-const footVariant = ref<ColorVariant | null>()
+const variant = ref<ColorVariant | undefined>()
+const headVariant = ref<ColorVariant | undefined>()
+const footVariant = ref<ColorVariant | undefined>()
 const noCollapse = ref(false)
 </script>

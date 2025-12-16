@@ -643,11 +643,23 @@ const classes = computed(() => ({
 }))
 ```
 
+### Global Defaults System
+
+Bootstrap-Vue-Next provides a system for setting default values for component props globally or per-component. This can be configured via:
+
+1. **Plugin Pattern**: `createBootstrap({ components: { global: {...}, ComponentName: {...} } })`
+2. **BApp Component**: `<BApp :defaults="{ global: {...}, ComponentName: {...} }">`
+
+Both patterns support:
+
+- **Global defaults** via the `global` key - applied to all components
+- **Component-specific defaults** via component name keys (e.g., `BFormCheckboxGroup`) - applied only to that component
+
 **Precedence Order (Highest to Lowest):**
 
 1. **Explicit prop** - User provides value directly on component instance
 2. **Component defaults** - Set via `createBootstrap({ components: { BFormCheckboxGroup: {...} } })` or `<BApp :defaults="{ BFormCheckboxGroup: {...} }">`
-3. **Global defaults** - Set via `createBootstrap({ components: { global: {...} } })` (plugin pattern only, not BApp)
+3. **Global defaults** - Set via `createBootstrap({ components: { global: {...} } })` or `<BApp :defaults="{ global: {...} }">`
 4. **Hardcoded default** - Component's fallback value
 
 **Affected Components:**

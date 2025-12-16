@@ -249,6 +249,23 @@ Use the `<<< DEMO` syntax to reference demo files:
 - **Show full file**: `<<< DEMO ./demo/MyComponent.vue{vue}`
 - **Show specific section**: Use `#region name` markers in the demo file and reference with `#name` in the markdown (e.g., `#region template` is referenced as `#template`)
 
+Use the `<<< FRAGMENT` syntax to reference reusable code fragments:
+
+- **Vue fragments**: `<<< FRAGMENT ./demo/MyFragment.vue#region-name{vue-html}`
+- **TypeScript fragments**: `<<< FRAGMENT ./demo/MyFragment.ts#snippet{typescript}`
+- **HTML fragments**: `<<< FRAGMENT ./demo/MyFragment.html#template`
+
+FRAGMENT syntax should be used for:
+
+- Reusable code examples that are included in multiple places
+- Code snippets that need to be styled consistently with other examples
+- Examples that are referenced across different documentation pages
+
+DEMO syntax should be used for:
+
+- Full component demonstrations
+- Interactive examples specific to one component
+
 ### Demo File Guidelines
 
 - Place demo files in `apps/docs/src/docs/[category]/demo/` directory

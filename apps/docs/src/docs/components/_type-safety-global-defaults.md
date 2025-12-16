@@ -20,12 +20,18 @@ When using these components, default values are resolved in this order (highest 
 
 1. **Explicit prop on component instance** - Value you provide directly
 2. **Component-specific defaults** - Set via `<BApp :defaults="{ BFormCheckboxGroup: {...} }">` or `createBootstrap({ components: { BFormCheckboxGroup: {...} } })`
-3. **Global defaults** - Set via `createBootstrap({ components: { global: {...} } })` (plugin pattern only)
+3. **Global defaults** - Set via `<BApp :defaults="{ global: {...} }">` or `createBootstrap({ components: { global: {...} } })`
 4. **Hardcoded default** - Component's built-in fallback value
 
 **Example:**
 
-<!--@include: ./_global-defaults-example.md-->
+**BApp Pattern:**
+
+<<< FRAGMENT ./demo/GlobalDefaultsBAppPattern.vue{vue-html}
+
+**Plugin Pattern:**
+
+<<< FRAGMENT ./demo/GlobalDefaultsPluginPattern.ts#template{vue-html}
 
 ::: tip
 When checkboxes or radios are used within their group component (`BFormCheckboxGroup` or `BFormRadioGroup`), the group's defaults automatically cascade to all child checkboxes/radios. You don't need to set defaults on individual `BFormCheckbox` or `BFormRadio` components.

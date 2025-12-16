@@ -212,4 +212,4 @@ Type safety works with TypeScript enums for strongly-typed value constraints:
 
 <!--@include: ./_type-safety-global-defaults.md-->
 
-<<< FRAGMENT ./form-radio/fragments/GlobalDefaultsExample.ts#snippet{ts}
+<<< FRAGMENT ./demo/RadioGroupGlobalDefaultsPlugin.ts#snippet{ts}

@@ -74,7 +74,15 @@ import type {BvnComponentProps} from './BootstrapVueOptions'
 import type {OrchestratorArrayValue} from './ComponentOrchestratorTypes'
 
 export interface BAppProps {
-  defaults?: Partial<BvnComponentProps>
+  defaults?: Partial<
+    BvnComponentProps & {
+      /**
+       * @hint Globally sets all props with the matching name
+       */
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      global: Record<string, any>
+    }
+  >
   mergeDefaults?:
     | boolean
     | ((
