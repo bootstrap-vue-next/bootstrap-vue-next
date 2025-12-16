@@ -197,7 +197,6 @@ const processedAttrs = computed(() => {
       inputAttrs: attrs,
     }
   }
-
   // In custom mode, split class/style to wrapper, rest to input
   const {class: wrapperClass, style: wrapperStyle, ...inputAttrs} = attrs
   const wrapperAttrs: Record<string, unknown> = {}
