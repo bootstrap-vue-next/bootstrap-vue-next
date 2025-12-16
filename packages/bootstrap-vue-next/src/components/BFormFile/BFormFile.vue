@@ -170,7 +170,7 @@ const _props = withDefaults(defineProps<Omit<BFormFileProps, 'modelValue'>>(), {
   noButton: false,
   noDrop: false,
   plain: false,
-  placeholder: 'No file selected.',
+  placeholder: 'No file chosen',
   required: false,
   showFileNames: false,
   size: undefined,
@@ -190,6 +190,15 @@ const modelValue = defineModel<Exclude<BFormFileProps['modelValue'], undefined>>
 const attrs = useAttrs()
 
 const processedAttrs = computed(() => {
+  // In plain mode, pass all attributes to the input element
+  if (props.plain) {
+    return {
+      wrapperAttrs: {},
+      inputAttrs: attrs,
+    }
+  }
+
+  // In custom mode, split class/style to wrapper, rest to input
   const {class: wrapperClass, style: wrapperStyle, ...inputAttrs} = attrs
   const wrapperAttrs: Record<string, unknown> = {}
   if (wrapperClass !== undefined) wrapperAttrs.class = wrapperClass

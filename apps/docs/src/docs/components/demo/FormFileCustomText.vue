@@ -3,7 +3,7 @@
     <BFormFile
       v-model="file1"
       browse-text="Choose File"
-      placeholder="No file chosen"
+      placeholder="No files selected"
     />
     <div class="mt-3">
       Selected: <strong>{{ file1?.name || 'None' }}</strong>
