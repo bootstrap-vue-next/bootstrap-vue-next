@@ -52,7 +52,8 @@ export default {
         dropPlaceholder: {
           type: 'string',
           default: undefined,
-          description: 'Text to display when dragging files over the drop zone (custom mode only). Defaults to "Drop files here..." when not specified',
+          description:
+            'Text to display when dragging files over the drop zone (custom mode only). Defaults to "Drop files here..." when not specified',
         },
         fileNameFormatter: {
           type: '(files: readonly File[]) => string',
@@ -94,7 +95,7 @@ export default {
         },
         placeholder: {
           type: 'string',
-          default: undefined,
+          default: 'No file chosen',
           description: 'Text to display when no file is selected (custom mode only)',
         },
         showFileNames: {
