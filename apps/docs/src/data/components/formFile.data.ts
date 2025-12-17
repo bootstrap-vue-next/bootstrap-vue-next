@@ -39,10 +39,10 @@ export default {
           description: 'Text for the browse button (custom mode only)',
         },
         capture: {
-          type: "'boolean' | 'user' | 'environment'",
-          default: false,
+          type: "'user' | 'environment'",
+          default: undefined,
           description:
-            "When set, will instruct the browser to use the device's camera (if supported)",
+            "When set, will instruct the browser to use the device's camera (if supported). 'user' requests the user-facing camera, 'environment' requests the outward-facing camera",
         },
         directory: {
           type: 'boolean',
