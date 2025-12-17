@@ -38,7 +38,7 @@ Custom form controls and selects are also supported.
 
 ## Floating Labels
 
-Wrap a `BFormInput`, `BFormTextarea`, or `BFormSelect` in a `BFormFloatingLable` to enable floating labels. A `placeholder`
+Wrap a `BFormInput`, `BFormTextarea`, or `BFormSelect` in a `BFormFloatingLabel` to enable floating labels. A `placeholder`
 is required on each input in order to make the Bootstrap 5 `css` work correctly.
 
 <<< DEMO ./demo/FormFloatingLabels.vue#template{vue-html}
