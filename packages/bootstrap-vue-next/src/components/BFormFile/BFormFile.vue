@@ -220,12 +220,6 @@ const computedAccept = computed(() =>
   typeof props.accept === 'string' ? props.accept : props.accept.join(',')
 )
 
-// Computed data types for drop zone
-const computedDataTypes = computed(() => {
-  if (!computedAccept.value) return []
-  return computedAccept.value.split(',').map((type) => type.trim())
-})
-
 // VueUse file dialog (uses our hidden input element)
 const {
   open,
@@ -239,13 +233,15 @@ const {
 })
 
 // VueUse drop zone (replaces manual drag/drop)
+// Note: We don't pass dataTypes because the accept attribute handles validation
+// and there is no reliable way to get MIME types from in all browsers
+// https://github.com/vueuse/vueuse/issues/4523
 const {isOverDropZone} = useDropZone(dropZoneRef, {
   onDrop: (files) => {
     if (files && !props.noDrop) {
       handleFiles(files)
     }
   },
-  dataTypes: computedDataTypes,
   multiple: props.multiple || props.directory,
 })
 
@@ -304,9 +300,46 @@ const ariaLiveMessage = computed(() => {
 const effectiveBrowseText = computed(() => props.browseText ?? 'Browse')
 const effectiveDropPlaceholder = computed(() => props.dropPlaceholder ?? 'Drop files here...')
 
+// Validate file against accept criteria
+const isFileAccepted = (file: File): boolean => {
+  if (!computedAccept.value) return true
+
+  const acceptTypes = computedAccept.value.split(',').map((type) => type.trim())
+
+  return acceptTypes.some((acceptType) => {
+    // Extension match (e.g., .pdf)
+    if (acceptType.startsWith('.')) {
+      return file.name.toLowerCase().endsWith(acceptType.toLowerCase())
+    }
+    // Exact MIME type match (e.g., image/png)
+    if (!acceptType.includes('*')) {
+      return file.type === acceptType
+    }
+    // Wildcard MIME type match (e.g., image/*)
+    const [category] = acceptType.split('/')
+    return file.type.startsWith(`${category}/`)
+  })
+}
+
 // File handling
 const handleFiles = (files: File[] | FileList, nativeEvent?: Event) => {
-  const fileArray = Array.from(files)
+  let fileArray: File[] = []
+
+  if (nativeEvent) {
+    // Plain mode: read from the event target (browser already filtered via accept)
+    const input = nativeEvent.target as HTMLInputElement
+    fileArray = input.files ? Array.from(input.files) : []
+  } else {
+    // Custom mode (drag & drop or file dialog): manually filter and set on hidden input
+    fileArray = Array.from(files).filter((file) => isFileAccepted(file))
+    if (customInputRef.value) {
+      const dataTransfer = new DataTransfer()
+      fileArray.forEach((file) => dataTransfer.items.add(file))
+      customInputRef.value.files = dataTransfer.files
+    }
+  }
+
+  // Update internal state
   internalFiles.value = fileArray
 
   // Update model value
@@ -319,7 +352,7 @@ const handleFiles = (files: File[] | FileList, nativeEvent?: Event) => {
     modelValue.value = firstFile
   }
 
-  // Emit change event with files accessible
+  // Emit change event in nextTick to ensure DOM updates
   // In plain mode: forward the native event (has target.files)
   // In custom mode: create CustomEvent with files in detail
   nextTick(() => {
