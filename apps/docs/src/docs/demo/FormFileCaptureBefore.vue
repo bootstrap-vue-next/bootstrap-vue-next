@@ -1,3 +1,4 @@
+<!-- @ts-nocheck - Intentionally showing deprecated boolean capture syntax for migration guide -->
 <template>
   <!-- #region template -->
   <BFormFile capture />
