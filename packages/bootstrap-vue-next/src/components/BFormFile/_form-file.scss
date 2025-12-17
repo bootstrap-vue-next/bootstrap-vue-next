@@ -15,6 +15,7 @@ input[type="file"].form-control-input-file-hide-button {
 .b-form-file-control {
   display: flex;
   align-items: stretch;
+  width: 100%;
   border: 1px solid var(--bs-border-color);
   border-radius: var(--bs-border-radius);
   background-color: var(--bs-body-bg);
@@ -69,7 +70,8 @@ input[type="file"].form-control-input-file-hide-button {
 }
 
 .b-form-file-text {
-  flex: 1;
+  flex: 1 1 auto;
+  min-width: 0;
   padding: 0.375rem 0.75rem;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -168,12 +170,19 @@ input[type="file"].form-control-input-file-hide-button {
 }
 
 // Input group support - inherit flex behavior like native .form-control
-.input-group > .b-form-file-wrapper {
+// The component's root wrapper (direct child of .input-group) needs flex properties
+.input-group > div:has(> .b-form-file-wrapper) {
   flex: 1 1 auto;
   width: 1%;
   min-width: 0;
 
-  .b-form-file-control {
+  // The wrapper and control inside need to fill the root wrapper
+  .b-form-file-wrapper {
     width: 100%;
+
+    .b-form-file-control {
+      width: 100%;
+      min-width: 0;
+    }
   }
 }
