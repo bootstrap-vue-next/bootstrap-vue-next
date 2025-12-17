@@ -193,32 +193,37 @@ $b-table-sort-icon-bg-descending-dark: url("data:image/svg+xml,<svg xmlns='http:
   }
 }
 
+// Dark mode icon mixin - inner content (without thead/tfoot wrapper)
+@mixin table-sort-icons-dark-inner {
+  > tr {
+    > [aria-sort="none"] {
+      background-image: var(
+        --bvn-sort-icon-none,
+        bv-escape-svg($b-table-sort-icon-bg-not-sorted-dark)
+      );
+    }
+
+    > [aria-sort="ascending"] {
+      background-image: var(
+        --bvn-sort-icon-asc,
+        bv-escape-svg($b-table-sort-icon-bg-ascending-dark)
+      );
+    }
+
+    > [aria-sort="descending"] {
+      background-image: var(
+        --bvn-sort-icon-desc,
+        bv-escape-svg($b-table-sort-icon-bg-descending-dark)
+      );
+    }
+  }
+}
+
 // Dark mode icon mixin to avoid duplication
 @mixin table-sort-icons-dark {
   > thead,
   > tfoot {
-    > tr {
-      > [aria-sort="none"] {
-        background-image: var(
-          --bvn-sort-icon-none,
-          bv-escape-svg($b-table-sort-icon-bg-not-sorted-dark)
-        );
-      }
-
-      > [aria-sort="ascending"] {
-        background-image: var(
-          --bvn-sort-icon-asc,
-          bv-escape-svg($b-table-sort-icon-bg-ascending-dark)
-        );
-      }
-
-      > [aria-sort="descending"] {
-        background-image: var(
-          --bvn-sort-icon-desc,
-          bv-escape-svg($b-table-sort-icon-bg-descending-dark)
-        );
-      }
-    }
+    @include table-sort-icons-dark-inner;
   }
 }
 
@@ -270,6 +275,19 @@ $b-table-sort-icon-bg-descending-dark: url("data:image/svg+xml,<svg xmlns='http:
     @include table-sort-icons-dark;
   }
 
+  // Apply dark mode icons when thead/tfoot explicitly has table-dark class
+  > thead.table-dark,
+  > tfoot.table-dark {
+    @include table-sort-icons-dark-inner;
+  }
+}
+
+// Apply dark mode icons when entire table has table-dark class
+.table.b-table.table-dark:not(.b-table-no-sort-icon) {
+  @include table-sort-icons-dark;
+}
+
+.table.b-table:not(.b-table-no-sort-icon) {
   // Padding adjustment for small tables
   &.table-sm {
     > thead,
