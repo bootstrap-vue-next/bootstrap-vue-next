@@ -1,5 +1,5 @@
 <template>
-  <div ref="rootRef" v-bind="processedAttrs.wrapperAttrs">
+  <div ref="rootRef" v-bind="processedAttrs.wrapperAttrs" class="b-form-file-root">
     <!-- Optional label -->
     <label
       v-if="hasLabelSlot || props.label"

@@ -442,16 +442,6 @@ describe('form-file', () => {
       expect(children[1].classList.contains('b-form-file-text')).toBe(true)
     })
 
-    it('button has correct border radius for left position', () => {
-      const wrapper = mount(BFormFile)
-      const $button = wrapper.find('.b-form-file-button')
-
-      // Button should exist and have the proper styling class
-      expect($button.exists()).toBe(true)
-      // The SCSS sets border-radius: var(--bs-border-radius) 0 0 var(--bs-border-radius)
-      // This is verified through the component rendering
-    })
-
     it('browse button is disabled when disabled prop true', () => {
       const wrapper = mount(BFormFile, {
         props: {disabled: true},
@@ -523,15 +513,6 @@ describe('form-file', () => {
       expect($wrapper.classes()).not.toContain('b-form-file-dragging')
     })
 
-    it('entire control is clickable (not just button)', async () => {
-      const wrapper = mount(BFormFile)
-      const $control = wrapper.find('.b-form-file-control')
-
-      // Control should be clickable (has click handler)
-      expect($control.exists()).toBe(true)
-      // Note: Actually testing the file dialog would require mocking VueUse
-    })
-
     it('control click does not trigger when disabled', () => {
       const wrapper = mount(BFormFile, {
         props: {disabled: true},
@@ -540,14 +521,6 @@ describe('form-file', () => {
 
       // Control should have aria-disabled
       expect($control.attributes('aria-disabled')).toBe('true')
-    })
-
-    it('control has cursor pointer styling', () => {
-      const wrapper = mount(BFormFile)
-      const $control = wrapper.find('.b-form-file-control')
-
-      // The CSS should set cursor: pointer (verified in SCSS)
-      expect($control.exists()).toBe(true)
     })
   })
 

@@ -171,7 +171,7 @@ input[type="file"].form-control-input-file-hide-button {
 
 // Input group support - inherit flex behavior like native .form-control
 // The component's root wrapper (direct child of .input-group) needs flex properties
-.input-group > div:has(> .b-form-file-wrapper) {
+.input-group > .b-form-file-root {
   flex: 1 1 auto;
   width: 1%;
   min-width: 0;

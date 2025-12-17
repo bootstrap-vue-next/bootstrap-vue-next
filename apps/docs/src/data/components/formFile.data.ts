@@ -51,8 +51,8 @@ export default {
         },
         dropPlaceholder: {
           type: 'string',
-          default: 'No file chosen',
-          description: 'Text to display when dragging files over the drop zone (custom mode only)',
+          default: undefined,
+          description: 'Text to display when dragging files over the drop zone (custom mode only). Defaults to "Drop files here..." when not specified',
         },
         fileNameFormatter: {
           type: '(files: readonly File[]) => string',
