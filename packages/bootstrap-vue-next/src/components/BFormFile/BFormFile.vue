@@ -315,8 +315,17 @@ const isFileAccepted = (file: File): boolean => {
     if (!acceptType.includes('*')) {
       return file.type === acceptType
     }
-    // Wildcard MIME type match (e.g., image/*)
-    const [category] = acceptType.split('/')
+    // Wildcard MIME type match (e.g., image/* or */*)
+    const slashIndex = acceptType.indexOf('/')
+    if (slashIndex === -1) {
+      // Malformed wildcard pattern (no '/'): do not match anything
+      return false
+    }
+    const category = acceptType.slice(0, slashIndex)
+    // */* should match any MIME type
+    if (category === '*') {
+      return true
+    }
     return file.type.startsWith(`${category}/`)
   })
 }
@@ -332,10 +341,14 @@ const handleFiles = (files: File[] | FileList, nativeEvent?: Event) => {
   } else {
     // Custom mode (drag & drop or file dialog): manually filter and set on hidden input
     fileArray = Array.from(files).filter((file) => isFileAccepted(file))
-    if (customInputRef.value) {
-      const dataTransfer = new DataTransfer()
-      fileArray.forEach((file) => dataTransfer.items.add(file))
-      customInputRef.value.files = dataTransfer.files
+    if (customInputRef.value && typeof DataTransfer !== 'undefined') {
+      try {
+        const dataTransfer = new DataTransfer()
+        fileArray.forEach((file) => dataTransfer.items.add(file))
+        customInputRef.value.files = dataTransfer.files
+      } catch {
+        // In environments where DataTransfer is not fully supported, skip syncing files on the input
+      }
     }
   }
 

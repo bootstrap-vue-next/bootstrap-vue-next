@@ -722,4 +722,119 @@ describe('form-file', () => {
       expect($control.exists()).toBe(true)
     })
   })
+
+  describe('file filtering with accept attribute', () => {
+    // Helper to create a mock File object
+    const createMockFile = (name: string, type: string): File => new File(['content'], name, {type})
+
+    it('accepts files matching extension pattern (.pdf)', async () => {
+      const wrapper = mount(BFormFile, {
+        props: {accept: '.pdf'},
+      })
+
+      const pdfFile = createMockFile('document.pdf', 'application/pdf')
+      const txtFile = createMockFile('document.txt', 'text/plain')
+
+      // Access the component's isFileAccepted method through vm
+      const component = wrapper.vm as unknown as {isFileAccepted: (file: File) => boolean}
+      expect(component.isFileAccepted).toBeDefined()
+      expect(component.isFileAccepted(pdfFile)).toBe(true)
+      expect(component.isFileAccepted(txtFile)).toBe(false)
+    })
+
+    it('accepts files matching exact MIME type (image/png)', async () => {
+      const wrapper = mount(BFormFile, {
+        props: {accept: 'image/png'},
+      })
+
+      const pngFile = createMockFile('image.png', 'image/png')
+      const jpgFile = createMockFile('image.jpg', 'image/jpeg')
+
+      const component = wrapper.vm as unknown as {isFileAccepted: (file: File) => boolean}
+      expect(component.isFileAccepted(pngFile)).toBe(true)
+      expect(component.isFileAccepted(jpgFile)).toBe(false)
+    })
+
+    it('accepts files matching wildcard MIME type (image/*)', async () => {
+      const wrapper = mount(BFormFile, {
+        props: {accept: 'image/*'},
+      })
+
+      const pngFile = createMockFile('image.png', 'image/png')
+      const jpgFile = createMockFile('image.jpg', 'image/jpeg')
+      const pdfFile = createMockFile('document.pdf', 'application/pdf')
+
+      const component = wrapper.vm as unknown as {isFileAccepted: (file: File) => boolean}
+      expect(component.isFileAccepted(pngFile)).toBe(true)
+      expect(component.isFileAccepted(jpgFile)).toBe(true)
+      expect(component.isFileAccepted(pdfFile)).toBe(false)
+    })
+
+    it('accepts all files with wildcard pattern (*/*)', async () => {
+      const wrapper = mount(BFormFile, {
+        props: {accept: '*/*'},
+      })
+
+      const pngFile = createMockFile('image.png', 'image/png')
+      const pdfFile = createMockFile('document.pdf', 'application/pdf')
+      const txtFile = createMockFile('document.txt', 'text/plain')
+
+      const component = wrapper.vm as unknown as {isFileAccepted: (file: File) => boolean}
+      expect(component.isFileAccepted(pngFile)).toBe(true)
+      expect(component.isFileAccepted(pdfFile)).toBe(true)
+      expect(component.isFileAccepted(txtFile)).toBe(true)
+    })
+
+    it('accepts files matching multiple accept types', async () => {
+      const wrapper = mount(BFormFile, {
+        props: {accept: ['.pdf', 'image/png', 'text/*']},
+      })
+
+      const pdfFile = createMockFile('document.pdf', 'application/pdf')
+      const pngFile = createMockFile('image.png', 'image/png')
+      const txtFile = createMockFile('document.txt', 'text/plain')
+      const jpgFile = createMockFile('image.jpg', 'image/jpeg')
+
+      const component = wrapper.vm as unknown as {isFileAccepted: (file: File) => boolean}
+      expect(component.isFileAccepted(pdfFile)).toBe(true)
+      expect(component.isFileAccepted(pngFile)).toBe(true)
+      expect(component.isFileAccepted(txtFile)).toBe(true)
+      expect(component.isFileAccepted(jpgFile)).toBe(false)
+    })
+
+    it('handles case-insensitive extension matching', async () => {
+      const wrapper = mount(BFormFile, {
+        props: {accept: '.PDF'},
+      })
+
+      const lowerPdf = createMockFile('document.pdf', 'application/pdf')
+      const upperPdf = createMockFile('document.PDF', 'application/pdf')
+
+      const component = wrapper.vm as unknown as {isFileAccepted: (file: File) => boolean}
+      expect(component.isFileAccepted(lowerPdf)).toBe(true)
+      expect(component.isFileAccepted(upperPdf)).toBe(true)
+    })
+
+    it('rejects files with malformed wildcard pattern (no slash)', async () => {
+      const wrapper = mount(BFormFile, {
+        props: {accept: 'image'},
+      })
+
+      const pngFile = createMockFile('image.png', 'image/png')
+
+      const component = wrapper.vm as unknown as {isFileAccepted: (file: File) => boolean}
+      expect(component.isFileAccepted(pngFile)).toBe(false)
+    })
+
+    it('accepts all files when accept is undefined', async () => {
+      const wrapper = mount(BFormFile)
+
+      const pngFile = createMockFile('image.png', 'image/png')
+      const pdfFile = createMockFile('document.pdf', 'application/pdf')
+
+      const component = wrapper.vm as unknown as {isFileAccepted: (file: File) => boolean}
+      expect(component.isFileAccepted(pngFile)).toBe(true)
+      expect(component.isFileAccepted(pdfFile)).toBe(true)
+    })
+  })
 })
