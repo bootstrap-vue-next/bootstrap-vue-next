@@ -219,7 +219,7 @@ The `capture` prop no longer accepts a boolean value. Modern browser specificati
 
 **Before:**
 
-<<< FRAGMENT ./demo/FormFileCaptureBefore.vue#template{vue-html}
+<<< FRAGMENT ./demo/FormFileCaptureBefore.html#template{vue-html}
 
 **After:**
 
