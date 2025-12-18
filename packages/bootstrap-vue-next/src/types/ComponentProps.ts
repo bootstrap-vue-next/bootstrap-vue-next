@@ -1491,6 +1491,7 @@ export interface BFormGroupProps
   labelCols?: boolean | Numberish
   labelAlign?: string
   ariaInvalid?: AriaInvalid
+  contentWrapperAttrs?: Readonly<AttrsValue>
   description?: string
   disabled?: boolean
   feedbackAriaLive?: string
@@ -1502,6 +1503,7 @@ export interface BFormGroupProps
   labelFor?: string
   labelSize?: string
   labelVisuallyHidden?: boolean
+  labelWrapperAttrs?: Readonly<AttrsValue>
   state?: ValidationState
   tooltip?: boolean
   validFeedback?: string

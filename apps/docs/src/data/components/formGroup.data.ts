@@ -41,6 +41,12 @@ export default {
           default: 'undefined',
           description: "Number of columns for the content width 'xl' screens and up",
         },
+        contentWrapperAttrs: {
+          type: 'Readonly<AttrsValue>',
+          default: 'undefined',
+          description:
+            'Additional attributes to apply to the content column wrapper in horizontal layout mode. Useful for adding custom classes or styles to control the width/layout of the content column. Only applies when using label-cols or content-cols props',
+        },
         description: {
           type: 'string',
           default: 'undefined',
@@ -138,6 +144,12 @@ export default {
           default: 'false',
           description:
             'Visually hides the label content, but makes it available to screen reader users',
+        },
+        labelWrapperAttrs: {
+          type: 'Readonly<AttrsValue>',
+          default: 'undefined',
+          description:
+            'Additional attributes to apply to the label column wrapper in horizontal layout mode. Useful for adding custom classes or styles to override the default column width set by label-cols. Only applies when using label-cols or content-cols props',
         },
         validFeedback: {
           type: 'string',
