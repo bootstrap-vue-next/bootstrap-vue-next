@@ -12,7 +12,7 @@ import type BTooltip from '../components/BTooltip/BTooltip.vue'
 export type ControllerKey = symbol | string
 
 export interface PromiseWithComponent<T, P>
-  extends Promise<BvTriggerableEvent | boolean | null>,
+  extends Promise<BvTriggerableEvent>,
     PromiseWithComponentInternal<T, P> {}
 export interface PromiseWithComponentInternal<T, P> extends AsyncDisposable {
   id: ControllerKey
@@ -56,7 +56,7 @@ export type ToastOrchestratorArrayValue = Omit<BToastProps, 'modelValue'> & {
   'options': OrchestratorCreateOptions
   'promise': {
     value: PromiseWithComponent<typeof BToast, ToastOrchestratorParam>
-    resolve: (value: BvTriggerableEvent | boolean | null) => void
+    resolve: (value: BvTriggerableEvent) => void
     stop?: WatchHandle
   }
   'type': 'toast'
@@ -124,7 +124,7 @@ export type TooltipOrchestratorArrayValue = BTooltipProps & {
   '_component'?: Readonly<Component>
   'promise': {
     value: PromiseWithComponent<typeof BPopover | typeof BTooltip, PopoverOrchestratorParam>
-    resolve: (value: BvTriggerableEvent | boolean | null) => void
+    resolve: (value: BvTriggerableEvent) => void
     stop?: WatchHandle
   }
   'slots'?: {
@@ -166,7 +166,7 @@ export type PopoverOrchestratorArrayValue = BPopoverProps &
     '_component'?: Readonly<Component>
     'promise': {
       value: PromiseWithComponent<typeof BPopover | typeof BTooltip, PopoverOrchestratorParam>
-      resolve: (value: BvTriggerableEvent | boolean | null) => void
+      resolve: (value: BvTriggerableEvent) => void
       stop?: WatchHandle
     }
     'slots'?: {
@@ -206,7 +206,7 @@ export type ModalOrchestratorArrayValue = BModalProps & {
   'options': OrchestratorCreateOptions
   'promise': {
     value: PromiseWithComponent<typeof BModal, ModalOrchestratorParam>
-    resolve: (value: BvTriggerableEvent | boolean | null) => void
+    resolve: (value: BvTriggerableEvent) => void
     stop?: WatchHandle
   }
   '_component'?: Readonly<Component>
@@ -245,10 +245,6 @@ export type ModalOrchestratorCreateParam<ComponentProps = Record<string, unknown
 export type OrchestratorCreateOptions = {
   keep?: boolean
   resolveOnHide?: boolean
-  /*
-   * @deprecated
-   */
-  returnBoolean?: boolean
 }
 
 export type OrchestratorArrayValue =
