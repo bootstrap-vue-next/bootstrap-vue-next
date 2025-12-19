@@ -74,20 +74,34 @@ Handles drag-and-drop file operations on the component wrapper.
 
 - Detects drag enter/leave/over events
 - Provides `isOverDropZone` reactive state
-- Validates dropped files against `accept` attribute
+- Accepts all file drops (no pre-filtering during drag)
 - Prevents default browser file opening behavior
 
 **Configuration:**
 
 ```typescript
-const {isOverDropZone} = useDropZone(dropZoneTarget, {
-  onDrop: (files) => onChange(files),
-  dataTypes: computedDataTypes, // Reactive computed ref
-  disabled: computed(() => props.disabled || props.plain || props.noDrop),
+const {isOverDropZone} = useDropZone(dropZoneRef, {
+  onDrop: (files) => {
+    if (files && !props.noDrop) {
+      handleFiles(files)
+    }
+  },
+  multiple: props.multiple || props.directory,
 })
 ```
 
-**Reactivity:** Passing `dataTypes` as a computed ref (rather than unwrapping it with `.value`) ensures the drop zone automatically updates when the `accept` prop changes.
+**Known Limitation - Drag Feedback:**
+
+The drop zone shows visual feedback for all dragged files, regardless of the `accept` attribute. This is because browsers don't reliably expose MIME type information during drag events, making it impossible to determine which files match the accept criteria before they're dropped ([VueUse issue #4523](https://github.com/vueuse/vueuse/issues/4523)).
+
+**Implementation Details:**
+
+- **Drag Feedback:** Visual overlay appears for all dragged files (good UX - users see immediate feedback)
+- **File Filtering:** After drop, files are validated against the `accept` attribute using custom validation logic
+- **Manual Filtering:** The `isFileAccepted()` function checks files against extension patterns (`.pdf`), MIME types (`image/png`), and wildcards (`image/*`)
+- **Native Input Sync:** Filtered files are set on the hidden input element using `DataTransfer` API for proper form submission support
+
+This approach provides a better user experience than showing no feedback, while still respecting the `accept` constraints after drop.
 
 ### File State Management
 

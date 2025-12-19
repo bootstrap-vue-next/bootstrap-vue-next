@@ -213,6 +213,18 @@ See [Show and Hide](#show-and-hide) shared properties.
 As in `bootstrap-vue`, a simple `BAlert` is not visible by default. However, the means of showing the alert are different.
 The `bootstrap-vue` `show` prop is deprecated, use `model-value` instead.
 
+### BFormFile
+
+The `capture` prop no longer accepts a boolean value. Modern browser specifications require `capture` to be either `'user'` (for front-facing camera) or `'environment'` (for rear-facing camera).
+
+**Before:**
+
+<<< FRAGMENT ./demo/FormFileCaptureBefore.html#template{vue-html}
+
+**After:**
+
+<<< FRAGMENT ./demo/FormFileCaptureAfter.vue#template{vue-html}
+
 <<< FRAGMENT ./demo/AlertBefore.vue#template{vue-html}
 
 becomes

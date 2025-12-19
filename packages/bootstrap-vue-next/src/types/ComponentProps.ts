@@ -322,7 +322,7 @@ export interface BFormFileProps {
   accept?: string | readonly string[]
   autofocus?: boolean
   browseText?: string
-  capture?: boolean | 'user' | 'environment'
+  capture?: 'user' | 'environment'
   directory?: boolean
   disabled?: boolean
   dropPlaceholder?: string
