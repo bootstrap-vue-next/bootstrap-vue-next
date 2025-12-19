@@ -47,6 +47,44 @@
         </BFormGroup>
       </BCol>
     </BRow>
+    <BRow>
+      <BCol>
+        <h4 class="mt-4 mb-3">Using label-wrapper-attrs prop</h4>
+
+        <BFormGroup
+          label="Aktiv:"
+          label-for="test-active-fixed"
+          label-align-md="end"
+          label-cols-md="3"
+          :label-wrapper-attrs="{class: 'custom-label-field'}"
+          class="align-items-center test-form-group"
+        >
+          <BFormCheckbox id="test-active-fixed" placeholder="" switch />
+        </BFormGroup>
+
+        <BFormGroup
+          label="Standard:"
+          label-for="test-default-fixed"
+          label-align-md="end"
+          label-cols-md="3"
+          :label-wrapper-attrs="{class: 'custom-label-field'}"
+          class="align-items-center test-form-group"
+        >
+          <BFormCheckbox id="test-default-fixed" placeholder="" switch />
+        </BFormGroup>
+
+        <BFormGroup
+          label="Name:"
+          label-for="test-name-fixed"
+          label-align-md="end"
+          label-cols-md="3"
+          :label-wrapper-attrs="{class: 'custom-label-field'}"
+          class="align-items-center test-form-group"
+        >
+          <BFormInput id="test-name-fixed" placeholder="Enter name" />
+        </BFormGroup>
+      </BCol>
+    </BRow>
   </BContainer>
 </template>
 
@@ -69,3 +107,21 @@ const onTagState = (valid: string[], invalid: string[], duplicate: string[]) => 
 
 const name = ref('')
 </script>
+
+<style scoped>
+@media (min-width: 768px) {
+  :deep(.custom-label-field) {
+    flex: 0 0 120px !important;
+    max-width: 120px !important;
+    padding-right: 5px !important;
+    background-color: rgba(255, 0, 0, 0.1); /* Visual indicator to see if it's applied */
+  }
+}
+
+:deep(.test-form-group) {
+  border: 1px solid #dee2e6;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.25rem;
+}
+</style>

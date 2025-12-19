@@ -35,7 +35,11 @@
     </ContentTemplate.define>
     <LabelContentTemplate.define>
       <template v-if="slots.label || props.label || isHorizontal">
-        <BCol v-if="isHorizontal" v-bind="labelColProps" :class="labelAlignClasses">
+        <BCol
+          v-if="isHorizontal"
+          v-bind="{...labelColProps, ...props.labelWrapperAttrs}"
+          :class="labelAlignClasses"
+        >
           <component
             :is="labelTag"
             :id="labelId"
@@ -63,7 +67,7 @@
     <!-- End of definitions -->
     <BFormRow v-if="isHorizontal" :class="rowAttrs.class" :style="rowAttrs.style">
       <LabelContentTemplate.reuse />
-      <BCol v-bind="contentColProps" ref="_content">
+      <BCol v-bind="{...contentColProps, ...props.contentWrapperAttrs}" ref="_content">
         <slot
           :id="computedId"
           :aria-describedby="null"
@@ -128,6 +132,7 @@ const _props = withDefaults(defineProps<BFormGroupProps>(), {
   contentColsMd: undefined,
   contentColsSm: undefined,
   contentColsXl: undefined,
+  contentWrapperAttrs: undefined,
   description: undefined,
   disabled: false,
   feedbackAriaLive: 'assertive',
@@ -149,6 +154,7 @@ const _props = withDefaults(defineProps<BFormGroupProps>(), {
   labelFor: undefined,
   labelSize: undefined,
   labelVisuallyHidden: false,
+  labelWrapperAttrs: undefined,
   state: null,
   tooltip: false,
   validFeedback: undefined,

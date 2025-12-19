@@ -91,6 +91,26 @@ value via the prop `label-text-align` and/or `label-align-{breakpoint}`.
 
 Alignment has no effect if the `label-visually-hidden` prop is set.
 
+### Customizing wrapper elements in horizontal layout
+
+When using horizontal layout (with `label-cols` or `content-cols` props), the label and content are wrapped in column elements. You can apply additional attributes, classes, or styles to these wrapper elements using the `label-wrapper-attrs` and `content-wrapper-attrs` props.
+
+This is particularly useful when you need to override the default column widths with custom sizing:
+
+<<< DEMO ./demo/FormGroupWrapperAttrsBasic.vue#template{vue-html}
+
+**Important Notes:**
+
+- These props **only apply in horizontal layout mode** (when `label-cols` or `content-cols` is set)
+- `label-wrapper-attrs` applies to the column wrapper around the label element
+- `content-wrapper-attrs` applies to the column wrapper around the content/input
+- Use `label-class` if you need to style the `<label>` or `<legend>` element itself
+- The `class` property in wrapper attrs will be merged with the Bootstrap column classes
+
+**Common use case:** You need more precise control over column widths than Bootstrap's 12-column grid provides. For example, setting a label to exactly 120px wide using flexbox properties:
+
+<<< DEMO ./demo/FormGroupWrapperAttrsCustom.vue{vue}
+
 ## Nested form groups
 
 Feel free to nest `BFormGroup` components to produce advanced form layouts and semantic grouping

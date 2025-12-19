@@ -512,5 +512,101 @@ describe('form-group', () => {
       const label = wrapper.find('label')
       expect(label.classes()).toContain('text-center')
     })
+
+    it('applies labelWrapperAttrs to label wrapper BCol in horizontal mode', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {
+          label: 'Login:',
+          labelFor: 'loginname',
+          labelColsMd: 3,
+          labelWrapperAttrs: {
+            'class': 'custom-label-wrapper',
+            'data-testid': 'label-wrapper',
+          },
+        },
+        slots: {
+          default: h(BFormInput, {id: 'loginname'}),
+        },
+      })
+      // Find the BCol component that wraps the label
+      const [labelCol] = wrapper
+        .findAll('[class*="col-"]')
+        .filter((el) => el.html().includes('Login:'))
+      expect(labelCol?.classes()).toContain('custom-label-wrapper')
+      expect(labelCol?.attributes('data-testid')).toBe('label-wrapper')
+    })
+
+    it('applies contentWrapperAttrs to content wrapper BCol in horizontal mode', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {
+          label: 'Login:',
+          labelFor: 'loginname',
+          labelColsMd: 3,
+          contentWrapperAttrs: {
+            'class': 'custom-content-wrapper',
+            'data-testid': 'content-wrapper',
+          },
+        },
+        slots: {
+          default: h(BFormInput, {id: 'loginname'}),
+        },
+      })
+      // Find the BCol component that wraps the content (it has data-testid)
+      const contentCol = wrapper.find('[data-testid="content-wrapper"]')
+      expect(contentCol.exists()).toBe(true)
+      expect(contentCol.classes()).toContain('custom-content-wrapper')
+      expect(contentCol.classes()).toContain('col')
+    })
+
+    it('allows labelWrapperAttrs class to override column sizing', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {
+          label: 'Login:',
+          labelFor: 'loginname',
+          labelColsMd: 3,
+          labelWrapperAttrs: {
+            class: 'custom-width-class',
+            style: 'flex: 0 0 120px; max-width: 120px;',
+          },
+        },
+        slots: {
+          default: h(BFormInput, {id: 'loginname'}),
+        },
+      })
+      const [labelCol] = wrapper
+        .findAll('[class*="col-"]')
+        .filter((el) => el.html().includes('Login:'))
+      expect(labelCol?.classes()).toContain('custom-width-class')
+      // Vue normalizes shorthand flex to longhand properties
+      expect(labelCol?.attributes('style')).toContain('flex-basis: 120px')
+      expect(labelCol?.attributes('style')).toContain('max-width: 120px')
+    })
+
+    it('applies both labelWrapperAttrs and contentWrapperAttrs simultaneously', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {
+          label: 'Login:',
+          labelFor: 'loginname',
+          labelColsMd: 3,
+          labelWrapperAttrs: {
+            'class': 'label-custom',
+            'data-testid': 'label-col',
+          },
+          contentWrapperAttrs: {
+            'class': 'content-custom',
+            'data-testid': 'content-col',
+          },
+        },
+        slots: {
+          default: h(BFormInput, {id: 'loginname'}),
+        },
+      })
+      const labelCol = wrapper.find('[data-testid="label-col"]')
+      const contentCol = wrapper.find('[data-testid="content-col"]')
+      expect(labelCol.exists()).toBe(true)
+      expect(contentCol.exists()).toBe(true)
+      expect(labelCol.classes()).toContain('label-custom')
+      expect(contentCol.classes()).toContain('content-custom')
+    })
   })
 })
