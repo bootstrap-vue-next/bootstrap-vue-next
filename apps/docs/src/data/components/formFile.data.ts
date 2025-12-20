@@ -39,10 +39,10 @@ export default {
           description: 'Text for the browse button (custom mode only)',
         },
         capture: {
-          type: "'boolean' | 'user' | 'environment'",
-          default: false,
+          type: "'user' | 'environment'",
+          default: undefined,
           description:
-            "When set, will instruct the browser to use the device's camera (if supported)",
+            "When set, will instruct the browser to use the device's camera (if supported). 'user' requests the user-facing camera, 'environment' requests the outward-facing camera",
         },
         directory: {
           type: 'boolean',
@@ -52,7 +52,8 @@ export default {
         dropPlaceholder: {
           type: 'string',
           default: undefined,
-          description: 'Text to display when dragging files over the drop zone (custom mode only)',
+          description:
+            'Text to display when dragging files over the drop zone (custom mode only). Defaults to "Drop files here..." when not specified',
         },
         fileNameFormatter: {
           type: '(files: readonly File[]) => string',
@@ -94,7 +95,7 @@ export default {
         },
         placeholder: {
           type: 'string',
-          default: undefined,
+          default: 'No file chosen',
           description: 'Text to display when no file is selected (custom mode only)',
         },
         showFileNames: {

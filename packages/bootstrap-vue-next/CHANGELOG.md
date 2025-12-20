@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.42.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.41.0...bootstrapvuenext-v0.42.0) (2025-12-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BFormFile:** align component with Bootstrap 5.3 native file input styling ([#2954](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2954))
+
+### Features
+
+* **BFormGroup:** add props to apply attrs to label and content wrappers in horizontal mode ([#2960](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2960)) ([d583297](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d583297576aaecc47127cc6f34353030df7b99ec))
+
+
+### Bug Fixes
+
+* **BFormFile:** align component with Bootstrap 5.3 native file input styling ([#2954](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2954)) ([562989b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/562989bfbf3dbb5c14ae0f59b4b01b5744d1d371))
+* **BTable:** restore dark mode support for sort icons ([#2952](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2952)) ([bec2087](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bec20879598129c67f6ef02b89e191a9384d9f46))
+* remove boolean and null from modal promise return types ([#2957](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2957)) ([a75332e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a75332efab0c397d2125e23ad634267151e5d0c9))
+
 ## [0.41.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.40.9...bootstrapvuenext-v0.41.0) (2025-12-12)
 
 

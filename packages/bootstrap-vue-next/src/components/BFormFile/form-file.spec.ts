@@ -44,6 +44,37 @@ describe('form-file', () => {
     })
   })
 
+  describe('plain mode - classes', () => {
+    it('has form-control class on input when plain=true', () => {
+      const wrapper = mount(BFormFile, {
+        props: {plain: true},
+      })
+
+      const $input = wrapper.find('input')
+      expect($input.classes()).toContain('form-control')
+    })
+
+    it('does not have form-control-file class on input when plain=true', () => {
+      const wrapper = mount(BFormFile, {
+        props: {plain: true},
+      })
+
+      const $input = wrapper.find('input')
+      expect($input.classes()).not.toContain('form-control-file')
+    })
+
+    it('has custom class on input when plain=true and class attribute provided', () => {
+      const wrapper = mount(BFormFile, {
+        props: {plain: true},
+        attrs: {class: 'my-custom-class'},
+      })
+
+      const $input = wrapper.find('input')
+      expect($input.classes()).toContain('my-custom-class')
+      expect($input.classes()).toContain('form-control')
+    })
+  })
+
   describe('plain mode - input attributes', () => {
     it('has input element when plain=true', () => {
       const wrapper = mount(BFormFile, {props: {plain: true}})
@@ -302,6 +333,64 @@ describe('form-file', () => {
     })
   })
 
+  describe('validation state classes', () => {
+    it('has is-invalid class on control when state=false in custom mode', () => {
+      const wrapper = mount(BFormFile, {
+        props: {state: false},
+      })
+
+      const $control = wrapper.find('.b-form-file-control')
+      expect($control.classes()).toContain('is-invalid')
+    })
+
+    it('has is-valid class on control when state=true in custom mode', () => {
+      const wrapper = mount(BFormFile, {
+        props: {state: true},
+      })
+
+      const $control = wrapper.find('.b-form-file-control')
+      expect($control.classes()).toContain('is-valid')
+    })
+
+    it('does not have validation classes on control when state=undefined in custom mode', () => {
+      const wrapper = mount(BFormFile, {
+        props: {state: undefined},
+      })
+
+      const $control = wrapper.find('.b-form-file-control')
+      expect($control.classes()).not.toContain('is-invalid')
+      expect($control.classes()).not.toContain('is-valid')
+    })
+
+    it('has is-invalid class on input when state=false in plain mode', () => {
+      const wrapper = mount(BFormFile, {
+        props: {state: false, plain: true},
+      })
+
+      const $input = wrapper.find('input')
+      expect($input.classes()).toContain('is-invalid')
+    })
+
+    it('has is-valid class on input when state=true in plain mode', () => {
+      const wrapper = mount(BFormFile, {
+        props: {state: true, plain: true},
+      })
+
+      const $input = wrapper.find('input')
+      expect($input.classes()).toContain('is-valid')
+    })
+
+    it('does not have validation classes on input when state=undefined in plain mode', () => {
+      const wrapper = mount(BFormFile, {
+        props: {state: undefined, plain: true},
+      })
+
+      const $input = wrapper.find('input')
+      expect($input.classes()).not.toContain('is-invalid')
+      expect($input.classes()).not.toContain('is-valid')
+    })
+  })
+
   describe('custom mode - UI elements', () => {
     it('renders hidden input element for form submission in custom mode', () => {
       const wrapper = mount(BFormFile, {props: {name: 'testFile'}})
@@ -341,6 +430,16 @@ describe('form-file', () => {
       })
       const $button = wrapper.find('.b-form-file-button')
       expect($button.text()).toBe('Choose File')
+    })
+
+    it('browse button is positioned on the left (before text element)', () => {
+      const wrapper = mount(BFormFile)
+      const $control = wrapper.find('.b-form-file-control')
+      const {children} = $control.element
+
+      // Button should be first child, text should be second
+      expect(children[0].classList.contains('b-form-file-button')).toBe(true)
+      expect(children[1].classList.contains('b-form-file-text')).toBe(true)
     })
 
     it('browse button is disabled when disabled prop true', () => {
@@ -412,6 +511,16 @@ describe('form-file', () => {
       // This test verifies the class binding exists
       const $wrapper = wrapper.find('.b-form-file-wrapper')
       expect($wrapper.classes()).not.toContain('b-form-file-dragging')
+    })
+
+    it('control click does not trigger when disabled', () => {
+      const wrapper = mount(BFormFile, {
+        props: {disabled: true},
+      })
+      const $control = wrapper.find('.b-form-file-control')
+
+      // Control should have aria-disabled
+      expect($control.attributes('aria-disabled')).toBe('true')
     })
   })
 
@@ -592,6 +701,140 @@ describe('form-file', () => {
 
       await wrapper.setProps({modelValue: null})
       expect(wrapper.vm.modelValue).toBe(null)
+    })
+  })
+
+  describe('input group integration', () => {
+    it('wrapper has proper structure for input group usage', () => {
+      const wrapper = mount(BFormFile)
+      const $wrapper = wrapper.find('.b-form-file-wrapper')
+
+      // Wrapper should exist and contain the control
+      expect($wrapper.exists()).toBe(true)
+      expect($wrapper.find('.b-form-file-control').exists()).toBe(true)
+    })
+
+    it('control maintains full width within wrapper', () => {
+      const wrapper = mount(BFormFile)
+      const $control = wrapper.find('.b-form-file-control')
+
+      // Control should exist (CSS sets width: 100% in input groups)
+      expect($control.exists()).toBe(true)
+    })
+  })
+
+  describe('file filtering with accept attribute', () => {
+    // Helper to create a mock File object
+    const createMockFile = (name: string, type: string): File => new File(['content'], name, {type})
+
+    it('accepts files matching extension pattern (.pdf)', async () => {
+      const wrapper = mount(BFormFile, {
+        props: {accept: '.pdf'},
+      })
+
+      const pdfFile = createMockFile('document.pdf', 'application/pdf')
+      const txtFile = createMockFile('document.txt', 'text/plain')
+
+      // Access the component's isFileAccepted method through vm
+      const component = wrapper.vm as unknown as {isFileAccepted: (file: File) => boolean}
+      expect(component.isFileAccepted).toBeDefined()
+      expect(component.isFileAccepted(pdfFile)).toBe(true)
+      expect(component.isFileAccepted(txtFile)).toBe(false)
+    })
+
+    it('accepts files matching exact MIME type (image/png)', async () => {
+      const wrapper = mount(BFormFile, {
+        props: {accept: 'image/png'},
+      })
+
+      const pngFile = createMockFile('image.png', 'image/png')
+      const jpgFile = createMockFile('image.jpg', 'image/jpeg')
+
+      const component = wrapper.vm as unknown as {isFileAccepted: (file: File) => boolean}
+      expect(component.isFileAccepted(pngFile)).toBe(true)
+      expect(component.isFileAccepted(jpgFile)).toBe(false)
+    })
+
+    it('accepts files matching wildcard MIME type (image/*)', async () => {
+      const wrapper = mount(BFormFile, {
+        props: {accept: 'image/*'},
+      })
+
+      const pngFile = createMockFile('image.png', 'image/png')
+      const jpgFile = createMockFile('image.jpg', 'image/jpeg')
+      const pdfFile = createMockFile('document.pdf', 'application/pdf')
+
+      const component = wrapper.vm as unknown as {isFileAccepted: (file: File) => boolean}
+      expect(component.isFileAccepted(pngFile)).toBe(true)
+      expect(component.isFileAccepted(jpgFile)).toBe(true)
+      expect(component.isFileAccepted(pdfFile)).toBe(false)
+    })
+
+    it('accepts all files with wildcard pattern (*/*)', async () => {
+      const wrapper = mount(BFormFile, {
+        props: {accept: '*/*'},
+      })
+
+      const pngFile = createMockFile('image.png', 'image/png')
+      const pdfFile = createMockFile('document.pdf', 'application/pdf')
+      const txtFile = createMockFile('document.txt', 'text/plain')
+
+      const component = wrapper.vm as unknown as {isFileAccepted: (file: File) => boolean}
+      expect(component.isFileAccepted(pngFile)).toBe(true)
+      expect(component.isFileAccepted(pdfFile)).toBe(true)
+      expect(component.isFileAccepted(txtFile)).toBe(true)
+    })
+
+    it('accepts files matching multiple accept types', async () => {
+      const wrapper = mount(BFormFile, {
+        props: {accept: ['.pdf', 'image/png', 'text/*']},
+      })
+
+      const pdfFile = createMockFile('document.pdf', 'application/pdf')
+      const pngFile = createMockFile('image.png', 'image/png')
+      const txtFile = createMockFile('document.txt', 'text/plain')
+      const jpgFile = createMockFile('image.jpg', 'image/jpeg')
+
+      const component = wrapper.vm as unknown as {isFileAccepted: (file: File) => boolean}
+      expect(component.isFileAccepted(pdfFile)).toBe(true)
+      expect(component.isFileAccepted(pngFile)).toBe(true)
+      expect(component.isFileAccepted(txtFile)).toBe(true)
+      expect(component.isFileAccepted(jpgFile)).toBe(false)
+    })
+
+    it('handles case-insensitive extension matching', async () => {
+      const wrapper = mount(BFormFile, {
+        props: {accept: '.PDF'},
+      })
+
+      const lowerPdf = createMockFile('document.pdf', 'application/pdf')
+      const upperPdf = createMockFile('document.PDF', 'application/pdf')
+
+      const component = wrapper.vm as unknown as {isFileAccepted: (file: File) => boolean}
+      expect(component.isFileAccepted(lowerPdf)).toBe(true)
+      expect(component.isFileAccepted(upperPdf)).toBe(true)
+    })
+
+    it('rejects files with malformed wildcard pattern (no slash)', async () => {
+      const wrapper = mount(BFormFile, {
+        props: {accept: 'image'},
+      })
+
+      const pngFile = createMockFile('image.png', 'image/png')
+
+      const component = wrapper.vm as unknown as {isFileAccepted: (file: File) => boolean}
+      expect(component.isFileAccepted(pngFile)).toBe(false)
+    })
+
+    it('accepts all files when accept is undefined', async () => {
+      const wrapper = mount(BFormFile)
+
+      const pngFile = createMockFile('image.png', 'image/png')
+      const pdfFile = createMockFile('document.pdf', 'application/pdf')
+
+      const component = wrapper.vm as unknown as {isFileAccepted: (file: File) => boolean}
+      expect(component.isFileAccepted(pngFile)).toBe(true)
+      expect(component.isFileAccepted(pdfFile)).toBe(true)
     })
   })
 })

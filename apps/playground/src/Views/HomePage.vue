@@ -65,6 +65,7 @@ import TDropdown from '../components/Comps/TDropdown.vue'
 import TForm from '../components/Comps/TForm.vue'
 import TFormCheckbox from '../components/Comps/TFormCheckbox.vue'
 import TFormCheckboxGroup from '../components/Comps/TFormCheckboxGroup.vue'
+import TFormFile from '../components/Comps/TFormFile.vue'
 import TFormFloatingLabel from '../components/Comps/TFormFloatingLabel.vue'
 import TFormGroup from '../components/Comps/TFormGroup.vue'
 import TFormInput from '../components/Comps/TFormInput.vue'
@@ -108,6 +109,7 @@ const comps: {name: string; is: unknown; disabled?: true}[] = [
   {name: 'Form', is: TForm},
   {name: 'FormCheckbox', is: TFormCheckbox},
   {name: 'FormCheckboxGroup', is: TFormCheckboxGroup},
+  {name: 'FormFile', is: TFormFile},
   {name: 'FormFloatingLabel', is: TFormFloatingLabel},
   {name: 'FormGroup', is: TFormGroup},
   {name: 'FormInput', is: TFormInput},

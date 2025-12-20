@@ -358,7 +358,7 @@ const computedFields = computed<TableField<Items>[]>(() =>
 
     const value = sortByModel.value?.find((sb) => el.key === sb.key)
     const sortValue =
-      el.sortable === false || isSortable.value === false
+      !el.sortable || isSortable.value === false
         ? undefined
         : value === undefined
           ? 'none'

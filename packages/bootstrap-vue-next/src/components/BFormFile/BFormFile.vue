@@ -1,5 +1,5 @@
 <template>
-  <div ref="rootRef" v-bind="processedAttrs.wrapperAttrs">
+  <div ref="rootRef" v-bind="processedAttrs.wrapperAttrs" class="b-form-file-root">
     <!-- Optional label -->
     <label
       v-if="hasLabelSlot || props.label"
@@ -23,18 +23,13 @@
       }"
     >
       <!-- Custom file control (mimics Bootstrap native input) -->
-      <div class="b-form-file-control" :class="computedClasses" :aria-disabled="props.disabled">
-        <!-- File name display -->
-        <div class="b-form-file-text">
-          <slot name="file-name" :files="selectedFiles" :names="fileNames">
-            <span v-if="hasFiles">{{ formattedFileNames }}</span>
-            <span v-else-if="hasPlaceholderSlot || props.placeholder" class="text-muted">
-              <slot name="placeholder">{{ props.placeholder }}</slot>
-            </span>
-          </slot>
-        </div>
-
-        <!-- Custom browse button -->
+      <div
+        class="b-form-file-control"
+        :class="computedClasses"
+        :aria-disabled="props.disabled"
+        @click="handleControlClick"
+      >
+        <!-- Custom browse button (now on LEFT to match Bootstrap v5) -->
         <button
           v-if="!props.noButton"
           :id="computedId"
@@ -44,10 +39,20 @@
           :disabled="props.disabled"
           :aria-label="props.ariaLabel"
           :aria-labelledby="props.ariaLabelledby"
-          @click="openFileDialog"
+          @click.stop="openFileDialog"
         >
           {{ effectiveBrowseText }}
         </button>
+
+        <!-- File name display -->
+        <div class="b-form-file-text">
+          <slot name="file-name" :files="selectedFiles" :names="fileNames">
+            <span v-if="hasFiles">{{ formattedFileNames }}</span>
+            <span v-else-if="hasPlaceholderSlot || props.placeholder" class="text-muted">
+              <slot name="placeholder">{{ props.placeholder }}</slot>
+            </span>
+          </slot>
+        </div>
       </div>
 
       <!-- Drag overlay (only shown when dragging) -->
@@ -165,7 +170,7 @@ const _props = withDefaults(defineProps<Omit<BFormFileProps, 'modelValue'>>(), {
   noButton: false,
   noDrop: false,
   plain: false,
-  placeholder: undefined,
+  placeholder: 'No file chosen',
   required: false,
   showFileNames: false,
   size: undefined,
@@ -185,6 +190,14 @@ const modelValue = defineModel<Exclude<BFormFileProps['modelValue'], undefined>>
 const attrs = useAttrs()
 
 const processedAttrs = computed(() => {
+  // In plain mode, pass all attributes to the input element
+  if (props.plain) {
+    return {
+      wrapperAttrs: {},
+      inputAttrs: attrs,
+    }
+  }
+  // In custom mode, split class/style to wrapper, rest to input
   const {class: wrapperClass, style: wrapperStyle, ...inputAttrs} = attrs
   const wrapperAttrs: Record<string, unknown> = {}
   if (wrapperClass !== undefined) wrapperAttrs.class = wrapperClass
@@ -207,12 +220,6 @@ const computedAccept = computed(() =>
   typeof props.accept === 'string' ? props.accept : props.accept.join(',')
 )
 
-// Computed data types for drop zone
-const computedDataTypes = computed(() => {
-  if (!computedAccept.value) return []
-  return computedAccept.value.split(',').map((type) => type.trim())
-})
-
 // VueUse file dialog (uses our hidden input element)
 const {
   open,
@@ -226,13 +233,15 @@ const {
 })
 
 // VueUse drop zone (replaces manual drag/drop)
+// Note: We don't pass dataTypes because the accept attribute handles validation
+// and there is no reliable way to get MIME types from in all browsers
+// https://github.com/vueuse/vueuse/issues/4523
 const {isOverDropZone} = useDropZone(dropZoneRef, {
   onDrop: (files) => {
     if (files && !props.noDrop) {
       handleFiles(files)
     }
   },
-  dataTypes: computedDataTypes,
   multiple: props.multiple || props.directory,
 })
 
@@ -248,10 +257,10 @@ const computedClasses = computed(() => [
 ])
 
 const computedPlainClasses = computed(() => [
+  'form-control',
   stateClass.value,
   {
     [`form-control-${props.size}`]: props.size !== undefined,
-    'form-control-file': true,
   },
 ])
 
@@ -291,9 +300,59 @@ const ariaLiveMessage = computed(() => {
 const effectiveBrowseText = computed(() => props.browseText ?? 'Browse')
 const effectiveDropPlaceholder = computed(() => props.dropPlaceholder ?? 'Drop files here...')
 
+// Validate file against accept criteria
+const isFileAccepted = (file: File): boolean => {
+  if (!computedAccept.value) return true
+
+  const acceptTypes = computedAccept.value.split(',').map((type) => type.trim())
+
+  return acceptTypes.some((acceptType) => {
+    // Extension match (e.g., .pdf)
+    if (acceptType.startsWith('.')) {
+      return file.name.toLowerCase().endsWith(acceptType.toLowerCase())
+    }
+    // Exact MIME type match (e.g., image/png)
+    if (!acceptType.includes('*')) {
+      return file.type === acceptType
+    }
+    // Wildcard MIME type match (e.g., image/* or */*)
+    const slashIndex = acceptType.indexOf('/')
+    if (slashIndex === -1) {
+      // Malformed wildcard pattern (no '/'): do not match anything
+      return false
+    }
+    const category = acceptType.slice(0, slashIndex)
+    // */* should match any MIME type
+    if (category === '*') {
+      return true
+    }
+    return file.type.startsWith(`${category}/`)
+  })
+}
+
 // File handling
 const handleFiles = (files: File[] | FileList, nativeEvent?: Event) => {
-  const fileArray = Array.from(files)
+  let fileArray: File[] = []
+
+  if (nativeEvent) {
+    // Plain mode: read from the event target (browser already filtered via accept)
+    const input = nativeEvent.target as HTMLInputElement
+    fileArray = input.files ? Array.from(input.files) : []
+  } else {
+    // Custom mode (drag & drop or file dialog): manually filter and set on hidden input
+    fileArray = Array.from(files).filter((file) => isFileAccepted(file))
+    if (customInputRef.value && typeof DataTransfer !== 'undefined') {
+      try {
+        const dataTransfer = new DataTransfer()
+        fileArray.forEach((file) => dataTransfer.items.add(file))
+        customInputRef.value.files = dataTransfer.files
+      } catch {
+        // In environments where DataTransfer is not fully supported, skip syncing files on the input
+      }
+    }
+  }
+
+  // Update internal state
   internalFiles.value = fileArray
 
   // Update model value
@@ -306,7 +365,7 @@ const handleFiles = (files: File[] | FileList, nativeEvent?: Event) => {
     modelValue.value = firstFile
   }
 
-  // Emit change event with files accessible
+  // Emit change event in nextTick to ensure DOM updates
   // In plain mode: forward the native event (has target.files)
   // In custom mode: create CustomEvent with files in detail
   nextTick(() => {
@@ -341,6 +400,15 @@ const openFileDialog = () => {
       multiple: props.multiple || props.directory,
       directory: props.directory,
     })
+  }
+}
+
+// Handle click on control wrapper (make entire control clickable like Bootstrap v5)
+const handleControlClick = () => {
+  // Don't trigger if clicking the button itself (button has its own handler with .stop)
+  // Don't trigger if disabled
+  if (!props.disabled) {
+    openFileDialog()
   }
 }
 
