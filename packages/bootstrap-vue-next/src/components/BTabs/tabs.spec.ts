@@ -616,27 +616,27 @@ describe('tabs', () => {
       `,
       data() {
         return {
-          currentIndex: 2 // Should start with the third tab active
+          currentIndex: 2, // Should start with the third tab active
         }
       },
       components: {
         BTabs,
-        BTab
-      }
+        BTab,
+      },
     }
 
     const wrapper = mount(TestComponent)
-    
+
     // Wait for the component to be fully initialized
     await wrapper.vm.$nextTick()
-    
+
     // The model should maintain the initial value of 2
     expect(wrapper.vm.currentIndex).toBe(2)
-    
+
     // The third tab button (index 2) should be active
     const buttons = wrapper.findAll('button')
     expect(buttons[0].classes()).not.toContain('active')
-    expect(buttons[1].classes()).not.toContain('active') 
+    expect(buttons[1].classes()).not.toContain('active')
     expect(buttons[2].classes()).toContain('active')
   })
 })

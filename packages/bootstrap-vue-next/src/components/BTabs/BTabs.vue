@@ -144,6 +144,9 @@ const tabElementsArray = ref<VNode[]>([])
 
 const isChildActive = ref(false)
 const initialIds = ref<string[]>([])
+// Store the user-provided initial index when no ID is provided
+// This will be used after tabs are registered to set the correct activeId
+const userProvidedInitialIndex = ref<number | undefined>(undefined)
 
 const updateTabElementsArray = () => {
   const tabElements = flattenFragments(slots.default?.({}) ?? [])
@@ -241,11 +244,11 @@ if (activeIndex.value === -1 && activeId.value) {
     updateInitialActiveIndex = true
   }
 } else if (activeIndex.value > -1 && !activeId.value) {
-  if (tabs.value[activeIndex.value]?.id) {
-    activeId.value = tabs.value[activeIndex.value]?.id
-  } else {
-    updateInitialActiveId = true
-  }
+  // User provided an initial index but no ID
+  // Save this index to be processed after tabs are registered
+  // Do NOT try to set activeId here as it will trigger watchers before tabs are ready
+  userProvidedInitialIndex.value = activeIndex.value
+  updateInitialActiveId = true
 } else if (activeIndex.value === -1 && !activeId.value && !isChildActive.value) {
   activeIndex.value = tabs.value.findIndex((t) => t.disabled === undefined || t.disabled === false)
   activeId.value = tabs.value[activeIndex.value]?.id
@@ -427,9 +430,12 @@ watch(activeId, (newValue, oldValue) => {
   }
   // If the new tab is not found, find the first enabled tab
   if (index === -1) {
-    // Only reset if we don't already have a positive activeIndex
+    // Only reset if we don't already have a positive activeIndex or a saved user-provided index
     // This preserves user-provided initial indices
-    if (activeIndex.value < 0 || activeIndex.value === undefined) {
+    if (
+      (activeIndex.value < 0 || activeIndex.value === undefined) &&
+      userProvidedInitialIndex.value === undefined
+    ) {
       // activeIndex watcher will update the activeId to the first enabled tab
       activeIndex.value = nextIndex(0, 1)
       nextTick(() => {
@@ -465,6 +471,34 @@ const registerTab = (tab: Ref<TabType>) => {
 onMounted(() => {
   updateInitialIndexAndId()
   sortTabs()
+
+  // Handle the case where user provided an initial index but no ID
+  // This needs to happen after tabs are registered to get the correct IDs
+  if (userProvidedInitialIndex.value !== undefined && !activeId.value) {
+    nextTick(() => {
+      if (
+        userProvidedInitialIndex.value !== undefined &&
+        userProvidedInitialIndex.value >= 0 &&
+        userProvidedInitialIndex.value < tabs.value.length
+      ) {
+        const targetId = tabs.value[userProvidedInitialIndex.value]?.id
+        if (targetId) {
+          activeId.value = targetId
+          // Clear the saved index after using it
+          userProvidedInitialIndex.value = undefined
+
+          // Log a warning about this behavior
+          if (import.meta.env.DEV) {
+            console.warn(
+              '[BootstrapVueNext] BTabs: Using index without modelValue (id) may cause flickering on client-side render and break SSR. ' +
+                'Consider using v-model or modelValue prop to set the active tab by ID for better performance.'
+            )
+          }
+        }
+      }
+    })
+  }
+
   initialized = true
 })
 
