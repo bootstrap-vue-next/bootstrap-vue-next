@@ -244,20 +244,20 @@ describe('form-file', () => {
       expect($input.attributes('multiple')).toBeUndefined()
     })
 
-    it('input element has set attr capture to true when prop capture is true', () => {
+    it('input element has set attr capture to user when prop capture is user', () => {
       const wrapper = mount(BFormFile, {
-        props: {capture: true, plain: true},
+        props: {capture: 'user', plain: true},
       })
       const $input = wrapper.get('input')
-      expect($input.attributes('capture')).toBe('true')
+      expect($input.attributes('capture')).toBe('user')
     })
 
-    it('input element has set attr capture to false when prop capture is false', () => {
+    it('input element has set attr capture to environment when prop capture is environment', () => {
       const wrapper = mount(BFormFile, {
-        props: {capture: false, plain: true},
+        props: {capture: 'environment', plain: true},
       })
       const $input = wrapper.get('input')
-      expect($input.attributes('capture')).toBe('false')
+      expect($input.attributes('capture')).toBe('environment')
     })
 
     it('input element has set attr capture to undefined when prop capture is undefined', () => {
