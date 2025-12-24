@@ -1,5 +1,5 @@
 <template>
-  <div ref="rootRef" v-bind="processedAttrs.wrapperAttrs" class="b-form-file-root">
+  <div ref="rootRef" v-bind="processedAttrs.rootAttrs" class="b-form-file-root">
     <!-- Optional label -->
     <label
       v-if="hasLabelSlot || props.label"
@@ -16,6 +16,7 @@
     <div
       v-if="!props.plain"
       ref="dropZoneRef"
+      v-bind="processedAttrs.dropZoneAttrs"
       class="b-form-file-wrapper"
       :class="{
         'b-form-file-dragging': isOverDropZone && !props.noDrop,
@@ -193,16 +194,26 @@ const processedAttrs = computed(() => {
   // In plain mode, pass all attributes to the input element
   if (props.plain) {
     return {
-      wrapperAttrs: {},
+      rootAttrs: {},
+      dropZoneAttrs: {},
       inputAttrs: attrs,
     }
   }
-  // In custom mode, split class/style to wrapper, rest to input
-  const {class: wrapperClass, style: wrapperStyle, ...inputAttrs} = attrs
-  const wrapperAttrs: Record<string, unknown> = {}
-  if (wrapperClass !== undefined) wrapperAttrs.class = wrapperClass
-  if (wrapperStyle !== undefined) wrapperAttrs.style = wrapperStyle
-  return {wrapperAttrs, inputAttrs}
+  // In custom mode, split attributes:
+  // - class/style go to root (for layout/positioning)
+  // - title goes to drop zone (for tooltip on interactive element)
+  // - everything else goes to hidden input (for form functionality)
+  const {class: rootClass, style: rootStyle, title: dropZoneTitle, ...inputAttrs} = attrs
+  const rootAttrs: Record<string, unknown> = {}
+  const dropZoneAttrs: Record<string, unknown> = {}
+  if (rootClass !== undefined) rootAttrs.class = rootClass
+  if (rootStyle !== undefined) rootAttrs.style = rootStyle
+  if (dropZoneTitle !== undefined) dropZoneAttrs.title = dropZoneTitle
+  return {
+    rootAttrs,
+    dropZoneAttrs,
+    inputAttrs,
+  }
 })
 
 const computedId = useId(() => props.id)
