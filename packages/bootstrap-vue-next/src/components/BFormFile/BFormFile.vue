@@ -197,12 +197,16 @@ const processedAttrs = computed(() => {
       inputAttrs: attrs,
     }
   }
-  // In custom mode, split class/style to wrapper, rest to input
-  const {class: wrapperClass, style: wrapperStyle, ...inputAttrs} = attrs
+  // In custom mode, split class/style/title to wrapper, rest to input
+  const {class: wrapperClass, style: wrapperStyle, title: wrapperTitle, ...inputAttrs} = attrs
   const wrapperAttrs: Record<string, unknown> = {}
   if (wrapperClass !== undefined) wrapperAttrs.class = wrapperClass
   if (wrapperStyle !== undefined) wrapperAttrs.style = wrapperStyle
-  return {wrapperAttrs, inputAttrs}
+  if (wrapperTitle !== undefined) wrapperAttrs.title = wrapperTitle
+  return {
+    wrapperAttrs,
+    inputAttrs,
+  }
 })
 
 const computedId = useId(() => props.id)
