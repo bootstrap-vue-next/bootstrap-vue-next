@@ -331,6 +331,21 @@ describe('form-file', () => {
       expect($input.attributes('foo')).toBeDefined()
       expect($input.attributes('foo')).toEqual('bar')
     })
+
+    it('has title attribute transferred to input element in plain mode', () => {
+      const wrapper = mount(BFormFile, {
+        props: {
+          plain: true,
+        },
+        attrs: {
+          title: 'Upload a file',
+        },
+      })
+
+      const $input = wrapper.find('input')
+      expect($input.attributes('title')).toBeDefined()
+      expect($input.attributes('title')).toEqual('Upload a file')
+    })
   })
 
   describe('validation state classes', () => {
@@ -410,6 +425,63 @@ describe('form-file', () => {
       expect($input.attributes('foo')).toEqual('bar')
       expect($input.attributes('data-test')).toBeDefined()
       expect($input.attributes('data-test')).toEqual('value')
+    })
+
+    it('has title attribute transferred to wrapper element in custom mode', () => {
+      const wrapper = mount(BFormFile, {
+        attrs: {
+          title: 'Upload a file',
+        },
+      })
+
+      const $wrapper = wrapper.find('.b-form-file-wrapper')
+      expect($wrapper.attributes('title')).toBeDefined()
+      expect($wrapper.attributes('title')).toEqual('Upload a file')
+    })
+
+    it('does not have title attribute on hidden input element in custom mode', () => {
+      const wrapper = mount(BFormFile, {
+        attrs: {
+          title: 'Upload a file',
+        },
+      })
+
+      const $input = wrapper.find('input[type="file"]')
+      expect($input.attributes('title')).toBeUndefined()
+    })
+
+    it('has class attribute transferred to root element in custom mode', () => {
+      const wrapper = mount(BFormFile, {
+        attrs: {
+          class: 'my-custom-class',
+        },
+      })
+
+      const $root = wrapper.find('.b-form-file-root')
+      expect($root.classes()).toContain('my-custom-class')
+    })
+
+    it('has style attribute transferred to root element in custom mode', () => {
+      const wrapper = mount(BFormFile, {
+        attrs: {
+          style: 'width: 100%',
+        },
+      })
+
+      const $root = wrapper.find('.b-form-file-root')
+      expect($root.attributes('style')).toBeDefined()
+      expect($root.attributes('style')).toContain('width: 100%')
+    })
+
+    it('does not have class attribute on drop zone wrapper in custom mode', () => {
+      const wrapper = mount(BFormFile, {
+        attrs: {
+          class: 'my-custom-class',
+        },
+      })
+
+      const $wrapper = wrapper.find('.b-form-file-wrapper')
+      expect($wrapper.classes()).not.toContain('my-custom-class')
     })
 
     it('renders custom file control', () => {
