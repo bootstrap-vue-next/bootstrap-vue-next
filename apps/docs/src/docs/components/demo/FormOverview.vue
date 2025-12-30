@@ -74,12 +74,22 @@
 </template>
 
 <script setup lang="ts">
-import {nextTick} from 'process'
-import {reactive, ref} from 'vue'
+import {nextTick, reactive, ref} from 'vue'
 
-const foods = [{text: 'Select One', value: null}, 'Carrots', 'Beans', 'Tomatoes', 'Corn']
+const foods = [
+  {text: 'Select One', value: null as string | null},
+  {text: 'Carrots', value: 'Carrots'},
+  {text: 'Beans', value: 'Beans'},
+  {text: 'Tomatoes', value: 'Tomatoes'},
+  {text: 'Corn', value: 'Corn'},
+]
 
-const form = reactive({
+const form = reactive<{
+  email: string
+  name: string
+  food: string | null
+  checked: string[]
+}>({
   email: '',
   name: '',
   food: null,

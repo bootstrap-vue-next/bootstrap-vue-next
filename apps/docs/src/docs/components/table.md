@@ -774,6 +774,48 @@ any of the other options of [`localeCompare`](https://developer.mozilla.org/en-U
 
 <<< DEMO ./demo/TableSortByCustom.vue
 
+### Sort Icon Positioning
+
+By default, sort icons are displayed at the far right edge of sortable column headers using CSS background images. This prevents the icons from wrapping to a new line and ensures consistent appearance.
+
+You can position the sort icon on the left side of the header cell instead by setting the `sort-icon-left` prop to `true`.
+
+<<< DEMO ./demo/TableSortIcons.vue
+
+**Note:** For more advanced control over header layout and sorting behavior, you can use [scoped slots for header and footer rendering](#header-and-footer-custom-rendering-via-scoped-slots). The scoped slots provide access to `selectAllRows` and `clearSelected` functions for managing row selection, and allow you to create completely custom header layouts while maintaining sorting functionality through the `head-clicked` event.
+
+### Customizing Sort Icons
+
+Bootstrap-Vue-Next provides flexible ways to customize sort icons to match your design system or icon library.
+
+#### CSS Custom Properties
+
+The easiest way to customize sort icons is by overriding CSS custom properties in your stylesheet. This approach doesn't require rebuilding or modifying Vue components.
+
+<<< DEMO ./demo/TableSortCustomCSSIcons.vue
+
+The following CSS variables control the sort icons:
+
+- `--bvn-sort-icon-none` - Icon shown when column is sortable but not currently sorted
+- `--bvn-sort-icon-asc` - Icon shown when column is sorted in ascending order
+- `--bvn-sort-icon-desc` - Icon shown when column is sorted in descending order
+
+The icons use SVG data URIs, which allow you to customize the icon shape and color. You can use tools like [URL-encoder for SVG](https://yoksel.github.io/url-encoder/) to convert your SVG icons to data URIs.
+
+#### Header Scoped Slots
+
+For maximum flexibility, use the `head(fieldkey)` scoped slots to completely customize the header content including sort icons. This approach lets you use any icon library (Bootstrap Icons, Font Awesome, Material Icons, etc.) or custom SVG components.
+
+<<< DEMO ./demo/TableSortCustomSlotIcons.vue
+
+The scoped slot provides access to the `field` object, which includes `thAttr['aria-sort']` indicating the current sort state (`'none'`, `'ascending'`, or `'descending'`). Note that `thAttr` may be a function or undefined, so type checking is recommended (see demo for example).
+
+**Tip:** When using scoped slots, the table's `head-clicked` event is still emitted, allowing you to maintain sorting functionality while having full control over the visual presentation.
+
+#### Disabling Sort Icons
+
+Set the `no-sortable-icon` prop to `true` to hide sort icons entirely while maintaining sorting functionality. This is useful when you want to indicate sorting through other means, such as background colors or custom slot content.
+
 ## Filtering
 
 Filtering, when used, is applied by default to the **original items** array data. `Btable` provides
@@ -872,13 +914,13 @@ The provider function is called with the following signature:
 The `ctx` is the context object associated with the table state, and contains the following
 properties:
 
-| Property      | Type                             | Description                                                                       |
-| ------------- | -------------------------------- | --------------------------------------------------------------------------------- |
-| `currentPage` | `number`                         | The current page number (starting from 1, the value of the `current-page` prop)   |
-| `perPage`     | `number`                         | The maximum number of rows per page to display (the value of the `per-page` prop) |
-| `filter`      | `string \| undefined`            | The value of the `filter` prop                                                    |
-| `sortBy`      | `BTableSortBy<T>[] \| undefined` | The current column key being sorted, or an empty string if not sorting            |
-| `signal`      | `AbortSignal`                    | An AbortSignal that can be used to cancel the request when a new provider call is triggered |
+| Property      | Type                             | Description                                                                                                    |
+| ------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `currentPage` | `number`                         | The current page number (starting from 1, the value of the `current-page` prop)                                |
+| `perPage`     | `number`                         | The maximum number of rows per page to display (the value of the `per-page` prop)                              |
+| `filter`      | `string \| undefined`            | The value of the `filter` prop                                                                                 |
+| `sortBy`      | `BTableSortBy<T>[] \| undefined` | The current sort state as a `BTableSortBy[]` (array of `{ key, order }` entries), or `undefined` when unsorted |
+| `signal`      | `AbortSignal`                    | An AbortSignal that can be used to cancel the request when a new provider call is triggered                    |
 
 ### Debouncing Provider Calls
 
@@ -890,12 +932,7 @@ To avoid excessive provider calls (e.g., when typing rapidly in a filter), you c
 Example with debouncing:
 
 ```vue
-<BTable
-  :provider="myProvider"
-  :fields="fields"
-  :debounce="300"
-  :debounce-max-wait="1000"
-/>
+<BTable :provider="myProvider" :fields="fields" :debounce="300" :debounce-max-wait="1000" />
 ```
 
 ### Handling Request Cancellation
@@ -922,7 +959,7 @@ const myProvider = async (ctx: BTableProviderContext) => {
       // Perform your async operation
       resolve(items)
     }, 1000)
-    
+
     // Clean up when aborted
     ctx.signal.addEventListener('abort', () => {
       clearTimeout(timeout)

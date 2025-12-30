@@ -38,12 +38,12 @@ Custom form controls and selects are also supported.
 
 ## Floating Labels
 
-Wrap a `BFormInput`, `BFormTextarea`, or `BFormSelect` in a `BFormFloatingLable` to enable floating labesl. A `placeholder`
+Wrap a `BFormInput`, `BFormTextarea`, or `BFormSelect` in a `BFormFloatingLabel` to enable floating labels. A `placeholder`
 is required on each input in order to make the Bootstrap 5 `css` work correctly.
 
 <<< DEMO ./demo/FormFloatingLabels.vue#template{vue-html}
 
-Floating labels work correclty for disable state and readonly states. In addition to styled textual inputs, floating labels
+Floating labels work correctly for disabled state and readonly states. In addition to styled textual inputs, floating labels
 also work for plaintext inputs, textareas, input groups and selects.
 See the [Bootstrap 5 documentation](https://getbootstrap.com/docs/5.3/forms/floating-labels) for more details.
 
@@ -160,6 +160,36 @@ See also:
   on the formats and helper props associated with `options`. Note that `<BFormDatalist>` only support
   a flat list of `BFormSelectOptions`, unlike `<BFormSelect>` which support a heirarchy of
   `BFormSelectOption` and `BFormSelectOptionGroup`.
+
+#### TypeScript Type Safety
+
+`BFormDatalist` <!--@include: ./_type-safety-intro.md-->
+
+**Basic type-safe usage:**
+
+<<< DEMO ./demo/DatalistTypeSafeBasic.vue{vue}
+
+**Type-safe API responses:**
+
+<<< DEMO ./demo/DatalistTypeSafeAPI.vue{vue}
+
+**Type-safe enums:**
+
+<<< DEMO ./demo/DatalistTypeSafeEnum.vue{vue}
+
+**Benefits:**
+
+<!--@include: ./_type-safety-benefits.md-->
+
+**Backward compatibility:**
+
+<!--@include: ./_type-safety-backward-compat.md-->
+
+See the [BFormSelect TypeScript documentation](/docs/components/form-select#typescript-type-safety) for comprehensive type safety guidance that also applies to datalists.
+
+::: info Global Defaults Limitation
+Due to technical limitations with TypeScript generic components, `BFormDatalist` cannot participate in the global defaults system provided by `createBootstrap({ defaults: {...} })`. Since BFormDatalist has minimal styling props (only `id`), this limitation has no practical impact. All props must be specified directly on the component or use their hardcoded defaults.
+:::
 
 ## Validation
 

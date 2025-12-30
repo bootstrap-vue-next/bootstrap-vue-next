@@ -9,6 +9,7 @@ import type {
 import type {AriaAttributes, ComponentPublicInstance, TeleportProps, TransitionProps} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {LinkTarget} from './LinkTarget'
+import type {OptionsFieldMappingProps} from './OptionsTypes'
 import type {
   BgColorVariant,
   BorderColorVariant,
@@ -18,13 +19,12 @@ import type {
   TextColorVariant,
 } from './ColorTypes'
 import type {AttrsValue, ClassValue} from './AnyValuedAttributes'
-import type {CheckboxOptionRaw, CheckboxValue} from './CheckboxTypes'
+import type {CheckboxValue} from './CheckboxTypes'
 import type {Size} from './Size'
 import type {AriaInvalid} from './AriaInvalid'
 import type {Numberish, TeleporterProps, ValidationState} from './CommonTypes'
 import type {CommonInputProps, FormDebounceOptions} from './FormCommonInputProps'
-import type {RadioOptionRaw, RadioValue} from './RadioTypes'
-import type {SelectValue} from './SelectTypes'
+import type {RadioValue} from './RadioTypes'
 import type {
   Breakpoint,
   ColBreakpointProps,
@@ -76,7 +76,15 @@ import type {BvnComponentProps} from './BootstrapVueOptions'
 import type {OrchestratorArrayValue} from './ComponentOrchestratorTypes'
 
 export interface BAppProps {
-  defaults?: Partial<BvnComponentProps>
+  defaults?: Partial<
+    BvnComponentProps & {
+      /**
+       * @hint Globally sets all props with the matching name
+       */
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      global: Record<string, any>
+    }
+  >
   mergeDefaults?:
     | boolean
     | ((
@@ -286,18 +294,19 @@ export interface BFormCheckboxProps {
   value?: string | boolean | CheckboxValue
 }
 
-export interface BFormCheckboxGroupProps {
+export interface BFormCheckboxGroupProps<
+  Item = Record<string, unknown>,
+  ValueKey extends keyof Item = keyof Item,
+> extends OptionsFieldMappingProps<Item, ValueKey> {
   ariaInvalid?: AriaInvalid
   autofocus?: boolean
   buttonVariant?: ButtonVariant | null
   buttons?: boolean
   disabled?: boolean
-  disabledField?: string
   form?: string
   id?: string
-  modelValue?: readonly CheckboxValue[]
+  modelValue?: readonly Item[ValueKey][]
   name?: string
-  options?: readonly CheckboxOptionRaw[]
   plain?: boolean
   required?: boolean
   reverse?: boolean
@@ -305,17 +314,14 @@ export interface BFormCheckboxGroupProps {
   stacked?: boolean
   state?: ValidationState
   switches?: boolean
-  textField?: string
   validated?: boolean
-  valueField?: string
 }
 
-export interface BFormDatalistProps {
-  disabledField?: string
+export interface BFormDatalistProps<
+  Item = Record<string, unknown>,
+  ValueKey extends keyof Item = keyof Item,
+> extends OptionsFieldMappingProps<Item, ValueKey> {
   id?: string
-  options?: readonly (unknown | Record<string, unknown>)[]
-  textField?: string
-  valueField?: string
 }
 
 export interface BFormFileProps {
@@ -323,9 +329,12 @@ export interface BFormFileProps {
   ariaLabelledby?: string
   accept?: string | readonly string[]
   autofocus?: boolean
-  capture?: boolean | 'user' | 'environment'
+  browseText?: string
+  capture?: 'user' | 'environment'
   directory?: boolean
   disabled?: boolean
+  dropPlaceholder?: string
+  fileNameFormatter?: (files: readonly File[]) => string
   form?: string
   id?: string
   label?: string
@@ -335,9 +344,10 @@ export interface BFormFileProps {
   name?: string
   noButton?: boolean
   noDrop?: boolean
-  noTraverse?: boolean
   plain?: boolean
+  placeholder?: string
   required?: boolean
+  showFileNames?: boolean
   size?: Size
   state?: ValidationState
 }
@@ -370,27 +380,26 @@ export interface BFormRadioProps {
   value?: RadioValue
 }
 
-export interface BFormRadioGroupProps {
+export interface BFormRadioGroupProps<
+  Item = Record<string, unknown>,
+  ValueKey extends keyof Item = keyof Item,
+> extends OptionsFieldMappingProps<Item, ValueKey> {
   ariaInvalid?: AriaInvalid
   autofocus?: boolean
   buttonVariant?: ButtonVariant | null
   buttons?: boolean
   disabled?: boolean
-  disabledField?: string
   form?: string
   id?: string
-  modelValue?: RadioValue
+  modelValue?: Item[ValueKey]
   name?: string
-  options?: readonly RadioOptionRaw[]
   plain?: boolean
   required?: boolean
   reverse?: boolean
   size?: Size
   stacked?: boolean
   state?: ValidationState
-  textField?: string
   validated?: boolean
-  valueField?: string
 }
 export interface BFormRatingProps {
   color?: string
@@ -420,26 +429,29 @@ export interface BFormRatingProps {
     | string
 }
 
-export interface BFormSelectProps {
+export interface BFormSelectProps<
+  Item = Record<string, unknown>,
+  ValueKey extends keyof Item = keyof Item,
+> {
   ariaInvalid?: AriaInvalid
   autofocus?: boolean
   disabled?: boolean
-  disabledField?: string
+  disabledField?: keyof Item & string
   form?: string
   id?: string
-  labelField?: string
-  modelValue?: SelectValue
+  labelField?: keyof Item & string
+  modelValue?: Item[ValueKey] | readonly Item[ValueKey][]
   multiple?: boolean
   name?: string
-  options?: readonly (unknown | Record<string, unknown>)[]
-  optionsField?: string
+  options?: readonly Item[]
+  optionsField?: keyof Item & string
   plain?: boolean
   required?: boolean
   selectSize?: Numberish
   size?: Size
   state?: ValidationState
-  textField?: string
-  valueField?: string
+  textField?: keyof Item & string
+  valueField?: ValueKey & string
 }
 
 export interface BFormSelectOptionProps<T> {
@@ -447,12 +459,12 @@ export interface BFormSelectOptionProps<T> {
   value?: T
 }
 
-export interface BFormSelectOptionGroupProps {
-  disabledField?: string
+export interface BFormSelectOptionGroupProps<Item = Record<string, unknown>> {
+  disabledField?: keyof Item & string
   label?: string
-  options?: readonly (unknown | Record<string, unknown>)[]
-  textField?: string
-  valueField?: string
+  options?: readonly Item[]
+  textField?: keyof Item & string
+  valueField?: keyof Item & string
 }
 
 export interface BFormSpinbuttonProps {
@@ -1198,10 +1210,10 @@ export interface BTableProps<Items>
   noSelectOnClick?: boolean
   // selectedVariant?: ColorVariant | null
   // showEmpty?: boolean
-  // sortIconLeft?: boolean
   // sortNullLast?: boolean
   selectedItems?: readonly Items[]
   noSortableIcon?: boolean
+  sortIconLeft?: boolean
   emptyFilteredText?: string
   emptyText?: string
   showEmpty?: boolean
@@ -1489,6 +1501,7 @@ export interface BFormGroupProps
   labelCols?: boolean | Numberish
   labelAlign?: string
   ariaInvalid?: AriaInvalid
+  contentWrapperAttrs?: Readonly<AttrsValue>
   description?: string
   disabled?: boolean
   feedbackAriaLive?: string
@@ -1500,6 +1513,7 @@ export interface BFormGroupProps
   labelFor?: string
   labelSize?: string
   labelVisuallyHidden?: boolean
+  labelWrapperAttrs?: Readonly<AttrsValue>
   state?: ValidationState
   tooltip?: boolean
   validFeedback?: string

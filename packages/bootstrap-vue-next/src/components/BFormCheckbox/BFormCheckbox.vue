@@ -128,18 +128,30 @@ const computedRequired = computed(
 
 const isButtonGroup = computed(() => props.buttonGroup || (parentData?.buttons.value ?? false))
 
-const classesObject = computed(() => ({
-  plain: props.plain || (parentData?.plain.value ?? false),
-  button: props.button || (parentData?.buttons.value ?? false),
-  inline: props.inline || (parentData?.inline.value ?? false),
-  reverse: props.reverse || (parentData?.reverse.value ?? false),
-  switch: props.switch || (parentData?.switch.value ?? false),
-  state:
-    props.state === true || props.state === false ? props.state : (parentData?.state.value ?? null),
-  size: props.size ?? parentData?.size.value ?? 'md', // This is where the true default is made
-  buttonVariant: props.buttonVariant ?? parentData?.buttonVariant.value ?? 'secondary', // This is where the true default is made
-  hasDefaultSlot: hasDefaultSlot.value,
-}))
+const classesObject = computed(() => {
+  // When in a group, prioritize parent-provided values for buttonVariant, size, and state
+  // to respect component-level defaults from BFormCheckboxGroup
+  const bv = parentData?.buttonVariant.value ?? props.buttonVariant ?? 'secondary'
+  const sz = parentData?.size.value ?? props.size ?? 'md'
+  const st =
+    parentData?.state.value !== undefined
+      ? parentData.state.value
+      : props.state === true || props.state === false
+        ? props.state
+        : null
+
+  return {
+    plain: props.plain || (parentData?.plain.value ?? false),
+    button: props.button || (parentData?.buttons.value ?? false),
+    inline: props.inline || (parentData?.inline.value ?? false),
+    reverse: props.reverse || (parentData?.reverse.value ?? false),
+    switch: props.switch || (parentData?.switch.value ?? false),
+    state: st,
+    size: sz,
+    buttonVariant: bv,
+    hasDefaultSlot: hasDefaultSlot.value,
+  }
+})
 const wrapperClasses = getClasses(classesObject)
 const computedWrapperClasses = computed(() => [
   wrapperClasses.value,

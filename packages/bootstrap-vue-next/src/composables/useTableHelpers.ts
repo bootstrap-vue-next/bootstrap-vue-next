@@ -55,6 +55,7 @@ export const useTableMapper = <Items>({
     perPage: MaybeRefOrGetter<number>
     currentPage: MaybeRefOrGetter<number>
     sort: {
+      iconLeft: MaybeRefOrGetter<boolean>
       isSortable: MaybeRefOrGetter<boolean>
       sortCompare: MaybeRef<BTableSortByComparerFunction<Items> | undefined>
       by: MaybeRefOrGetter<readonly BTableSortBy[] | undefined>
@@ -103,7 +104,7 @@ export const useTableMapper = <Items>({
 
       const value = sortByModelResolved.value?.find((sb) => el.key === sb.key)
       const sortValue =
-        isSortableResolved.value === false
+        !el.sortable || isSortableResolved.value === false
           ? undefined
           : value === undefined
             ? 'none'
@@ -119,6 +120,12 @@ export const useTableMapper = <Items>({
           'aria-sort': sortValue,
           ...el.thAttr,
         },
+        thClass: [
+          el.thClass,
+          {
+            'b-table-sort-icon-left': toValue(pagination.sort.iconLeft) && sortValue !== undefined,
+          },
+        ],
       }
     })
   )

@@ -1,7 +1,8 @@
 import {RX_HASH, RX_HASH_ID, RX_SPACE_SPLIT} from '../../utils/constants'
-import {type Directive, type DirectiveBinding, toValue, type VNode} from 'vue'
+import {type Directive, type DirectiveBinding, type VNode} from 'vue'
 import {findProvides} from '../utils'
 import {type RegisterShowHideValue, showHideRegistryKey} from '../../utils/keys'
+import {getActiveShowHide} from '../../utils/registryAccess'
 
 const getTargets = (
   binding: DirectiveBinding<string | readonly string[] | undefined>,
@@ -43,18 +44,18 @@ const handleUpdate = (
   if (targets.length === 0) return
 
   const provides = findProvides(binding, vnode)
-  const showHideMap = (provides as Record<symbol, RegisterShowHideValue>)[showHideRegistryKey]
-    ?.values
+  const showHideMap =
+    (provides as Record<symbol, RegisterShowHideValue>)[showHideRegistryKey]?.values ?? null
   if ((el as HTMLElement).dataset.bvtoggle) {
     const oldTargets = ((el as HTMLElement).dataset.bvtoggle || '').split(' ')
     if (oldTargets.length === 0) return
     for (const targetId of oldTargets) {
-      const showHide = showHideMap?.value.get(targetId)
+      const showHide = getActiveShowHide(showHideMap, targetId)
       if (!showHide) {
         continue
       }
       if (!targets.includes(targetId)) {
-        toValue(showHide).unregisterTrigger('click', el, false)
+        showHide.unregisterTrigger('click', el, false)
       }
     }
   }
@@ -73,7 +74,7 @@ const handleUpdate = (
         return
       }
 
-      const showHide = showHideMap?.value.get(targetId)
+      const showHide = getActiveShowHide(showHideMap, targetId)
       if (!showHide) {
         count++
         if (count < maxAttempts) {
@@ -94,8 +95,8 @@ const handleUpdate = (
       if (!(el as HTMLElement).dataset.bvtoggle) return
 
       // Register the trigger element
-      toValue(showHide).unregisterTrigger('click', el, false)
-      toValue(showHide).registerTrigger('click', el)
+      showHide.unregisterTrigger('click', el, false)
+      showHide.registerTrigger('click', el)
       break
     }
   })
@@ -111,21 +112,21 @@ const handleUnmount = (
   const targets = getTargets(binding, el)
   if (targets.length === 0) return
   const provides = findProvides(binding, vnode)
-  const showHideMap = (provides as Record<symbol, RegisterShowHideValue>)[showHideRegistryKey]
-    ?.values
+  const showHideMap =
+    (provides as Record<symbol, RegisterShowHideValue>)[showHideRegistryKey]?.values ?? null
 
   targets.forEach((targetId) => {
-    const showHide = showHideMap?.value.get(targetId)
+    const showHide = getActiveShowHide(showHideMap, targetId)
     if (!showHide) {
       return
     }
-    toValue(showHide).unregisterTrigger('click', el, false)
+    // Pass clean=true to let the composable handle cleanup of aria-expanded and classes
+    showHide.unregisterTrigger('click', el, true)
   })
 
+  // Only remove what the directive manages (aria-controls)
+  // aria-expanded and classes are managed by useShowHide composable
   el.removeAttribute('aria-controls')
-  el.removeAttribute('aria-expanded')
-  el.classList.remove('collapsed')
-  el.classList.remove('not-collapsed')
   delete (el as HTMLElement).dataset.bvtoggle
 }
 

@@ -1,4 +1,5 @@
 import {
+  type Component,
   type ComponentInternalInstance,
   computed,
   getCurrentInstance,
@@ -8,7 +9,7 @@ import {
   markRaw,
   onScopeDispose,
   type Ref,
-  toRef,
+  shallowRef,
   toValue,
   watch,
 } from 'vue'
@@ -38,27 +39,29 @@ export const useModal = () => {
   /**
    * @returns {PromiseWithComponent}  Returns a promise object with methods to control the modal (show, hide, toggle, get, set, destroy)
    */
-  const create = (
-    obj: ModalOrchestratorCreateParam = {},
+  const create = <ComponentProps = Record<string, unknown>>(
+    obj: ModalOrchestratorCreateParam<ComponentProps> = {} as ModalOrchestratorCreateParam<ComponentProps>,
     options: OrchestratorCreateOptions = {}
-  ): PromiseWithComponent<typeof BModal, ModalOrchestratorParam> => {
+  ): PromiseWithComponent<typeof BModal, ModalOrchestratorParam<ComponentProps>> => {
     if (!_isOrchestratorInstalled.value) {
       throw new Error('BApp or BOrchestrator component must be mounted to use the modal controller')
     }
 
-    const resolvedProps = toRef(obj)
+    const resolvedProps = (isRef(obj) ? obj : shallowRef(obj)) as Ref<
+      ModalOrchestratorParam<ComponentProps>
+    >
     const _self = resolvedProps.value?.id || Symbol('Modals controller')
 
     const promise = buildPromise<
       typeof BModal,
-      ModalOrchestratorParam,
+      ModalOrchestratorParam<ComponentProps>,
       ModalOrchestratorArrayValue
     >(_self, store as Ref<ModalOrchestratorArrayValue[]>)
 
     promise.stop = watch(
       resolvedProps,
       (_newValue) => {
-        const newValue = {...toValue(_newValue)}
+        const newValue = {...toValue(_newValue)} as Record<string, unknown>
         const previousIndex = store.value.findIndex((el) => el._self === _self)
         const previous =
           previousIndex === -1 ? {_component: markRaw(BModal)} : store.value[previousIndex]
@@ -73,21 +76,21 @@ export const useModal = () => {
 
         for (const key in newValue) {
           if (key.startsWith('on')) {
-            v[key as keyof ModalOrchestratorCreateParam] =
-              newValue[key as keyof ModalOrchestratorCreateParam]
+            v[key as keyof ModalOrchestratorArrayValue] = newValue[key] as never
           } else if (key === 'component' && newValue.component) {
-            v._component = markRaw(newValue.component)
+            v._component = markRaw(newValue.component as Component)
           } else if (key === 'slots' && newValue.slots) {
-            v.slots = markRaw(newValue.slots)
+            v.slots = markRaw(newValue.slots) as never
           } else {
-            v[key as keyof ModalOrchestratorCreateParam] = toValue(
-              newValue[key as keyof ModalOrchestratorCreateParam]
-            )
+            v[key as keyof ModalOrchestratorArrayValue] = toValue(newValue[key]) as never
           }
         }
         v.modelValue = v.modelValue ?? false
         v['onUpdate:modelValue'] = (val: boolean) => {
-          newValue['onUpdate:modelValue']?.(val)
+          const onUpdateModelValue = newValue['onUpdate:modelValue'] as
+            | ((val: boolean) => void)
+            | undefined
+          onUpdateModelValue?.(val)
           const {modelValue} = toValue(obj)
           if (isRef(obj) && !isRef(modelValue)) obj.value.modelValue = val
           if (isRef(modelValue) && !isReadonly(modelValue)) {

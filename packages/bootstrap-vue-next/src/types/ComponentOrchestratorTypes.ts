@@ -12,7 +12,7 @@ import type BTooltip from '../components/BTooltip/BTooltip.vue'
 export type ControllerKey = symbol | string
 
 export interface PromiseWithComponent<T, P>
-  extends Promise<BvTriggerableEvent | boolean | null>,
+  extends Promise<BvTriggerableEvent>,
     PromiseWithComponentInternal<T, P> {}
 export interface PromiseWithComponentInternal<T, P> extends AsyncDisposable {
   id: ControllerKey
@@ -56,7 +56,7 @@ export type ToastOrchestratorArrayValue = Omit<BToastProps, 'modelValue'> & {
   'options': OrchestratorCreateOptions
   'promise': {
     value: PromiseWithComponent<typeof BToast, ToastOrchestratorParam>
-    resolve: (value: BvTriggerableEvent | boolean | null) => void
+    resolve: (value: BvTriggerableEvent) => void
     stop?: WatchHandle
   }
   'type': 'toast'
@@ -66,8 +66,11 @@ export type ToastOrchestratorArrayValue = Omit<BToastProps, 'modelValue'> & {
   slots?: {
     [K in keyof BToastSlots]?: BToastSlots[K] | Readonly<Component>
   }
-}
-export type ToastOrchestratorParam = Omit<BToastProps, 'modelValue'> & {
+} & Record<string, unknown>
+export type ToastOrchestratorParam<ComponentProps = Record<string, unknown>> = Omit<
+  BToastProps,
+  'modelValue'
+> & {
   'title'?: MaybeRefOrGetter<BToastProps['title']>
   'body'?: MaybeRefOrGetter<BToastProps['body']>
   /**
@@ -106,9 +109,11 @@ export type ToastOrchestratorParam = Omit<BToastProps, 'modelValue'> & {
   slots?: {
     [K in keyof BToastSlots]?: MaybeRefOrGetter<BToastSlots[K] | Readonly<Component>>
   }
-}
+} & ComponentProps
 
-export type ToastOrchestratorCreateParam = MaybeRef<ToastOrchestratorParam>
+export type ToastOrchestratorCreateParam<ComponentProps = Record<string, unknown>> = MaybeRef<
+  ToastOrchestratorParam<ComponentProps>
+>
 
 export type TooltipOrchestratorArrayValue = BTooltipProps & {
   'type': 'tooltip'
@@ -119,7 +124,7 @@ export type TooltipOrchestratorArrayValue = BTooltipProps & {
   '_component'?: Readonly<Component>
   'promise': {
     value: PromiseWithComponent<typeof BPopover | typeof BTooltip, PopoverOrchestratorParam>
-    resolve: (value: BvTriggerableEvent | boolean | null) => void
+    resolve: (value: BvTriggerableEvent) => void
     stop?: WatchHandle
   }
   'slots'?: {
@@ -127,9 +132,12 @@ export type TooltipOrchestratorArrayValue = BTooltipProps & {
   }
 } & {
   [K in keyof BPopoverEmits as CamelCase<Prefix<'on-', K>>]?: (e: BPopoverEmits[K][0]) => void
-}
+} & Record<string, unknown>
 
-export type TooltipOrchestratorParam = Omit<BTooltipProps, 'body' | 'title' | 'modelValue'> & {
+export type TooltipOrchestratorParam<ComponentProps = Record<string, unknown>> = Omit<
+  BTooltipProps,
+  'body' | 'title' | 'modelValue'
+> & {
   'onUpdate:modelValue'?: (val: boolean) => void
   'title'?: MaybeRefOrGetter<BTooltipProps['title']>
   'body'?: MaybeRefOrGetter<BTooltipProps['body']>
@@ -142,9 +150,11 @@ export type TooltipOrchestratorParam = Omit<BTooltipProps, 'body' | 'title' | 'm
   }
 } & {
   [K in keyof BPopoverEmits as CamelCase<Prefix<'on-', K>>]?: (e: BPopoverEmits[K][0]) => void
-}
+} & ComponentProps
 
-export type TooltipOrchestratorCreateParam = MaybeRef<TooltipOrchestratorParam>
+export type TooltipOrchestratorCreateParam<ComponentProps = Record<string, unknown>> = MaybeRef<
+  TooltipOrchestratorParam<ComponentProps>
+>
 
 export type PopoverOrchestratorArrayValue = BPopoverProps &
   BTooltipProps & {
@@ -156,7 +166,7 @@ export type PopoverOrchestratorArrayValue = BPopoverProps &
     '_component'?: Readonly<Component>
     'promise': {
       value: PromiseWithComponent<typeof BPopover | typeof BTooltip, PopoverOrchestratorParam>
-      resolve: (value: BvTriggerableEvent | boolean | null) => void
+      resolve: (value: BvTriggerableEvent) => void
       stop?: WatchHandle
     }
     'slots'?: {
@@ -164,9 +174,12 @@ export type PopoverOrchestratorArrayValue = BPopoverProps &
     }
   } & {
     [K in keyof BPopoverEmits as CamelCase<Prefix<'on-', K>>]?: (e: BPopoverEmits[K][0]) => void
-  }
+  } & Record<string, unknown>
 
-export type PopoverOrchestratorParam = Omit<BPopoverProps, 'body' | 'title' | 'modelValue'> & {
+export type PopoverOrchestratorParam<ComponentProps = Record<string, unknown>> = Omit<
+  BPopoverProps,
+  'body' | 'title' | 'modelValue'
+> & {
   'onUpdate:modelValue'?: (val: boolean) => void
   'title'?: MaybeRefOrGetter<BPopoverProps['title']>
   'body'?: MaybeRefOrGetter<BPopoverProps['body']>
@@ -179,9 +192,11 @@ export type PopoverOrchestratorParam = Omit<BPopoverProps, 'body' | 'title' | 'm
   }
 } & {
   [K in keyof BPopoverEmits as CamelCase<Prefix<'on-', K>>]?: (e: BPopoverEmits[K][0]) => void
-}
+} & ComponentProps
 
-export type PopoverOrchestratorCreateParam = MaybeRef<PopoverOrchestratorParam>
+export type PopoverOrchestratorCreateParam<ComponentProps = Record<string, unknown>> = MaybeRef<
+  PopoverOrchestratorParam<ComponentProps>
+>
 
 export type ModalOrchestratorArrayValue = BModalProps & {
   'type': 'modal'
@@ -191,7 +206,7 @@ export type ModalOrchestratorArrayValue = BModalProps & {
   'options': OrchestratorCreateOptions
   'promise': {
     value: PromiseWithComponent<typeof BModal, ModalOrchestratorParam>
-    resolve: (value: BvTriggerableEvent | boolean | null) => void
+    resolve: (value: BvTriggerableEvent) => void
     stop?: WatchHandle
   }
   '_component'?: Readonly<Component>
@@ -200,9 +215,12 @@ export type ModalOrchestratorArrayValue = BModalProps & {
   }
 } & {
   [K in keyof BModalEmits as CamelCase<Prefix<'on-', K>>]?: (e: BModalEmits[K][0]) => void
-}
+} & Record<string, unknown>
 
-export type ModalOrchestratorParam = Omit<BModalProps, 'body' | 'title' | 'modelValue'> & {
+export type ModalOrchestratorParam<ComponentProps = Record<string, unknown>> = Omit<
+  BModalProps,
+  'body' | 'title' | 'modelValue'
+> & {
   'onUpdate:modelValue'?: (val: boolean) => void
   'title'?: MaybeRefOrGetter<BModalProps['title']>
   'body'?: MaybeRefOrGetter<BModalProps['body']>
@@ -218,17 +236,15 @@ export type ModalOrchestratorParam = Omit<BModalProps, 'body' | 'title' | 'model
   }
 } & {
   [K in keyof BModalEmits as CamelCase<Prefix<'on-', K>>]?: (e: BModalEmits[K][0]) => void
-}
+} & ComponentProps
 
-export type ModalOrchestratorCreateParam = MaybeRef<ModalOrchestratorParam>
+export type ModalOrchestratorCreateParam<ComponentProps = Record<string, unknown>> = MaybeRef<
+  ModalOrchestratorParam<ComponentProps>
+>
 
 export type OrchestratorCreateOptions = {
   keep?: boolean
   resolveOnHide?: boolean
-  /*
-   * @deprecated
-   */
-  returnBoolean?: boolean
 }
 
 export type OrchestratorArrayValue =

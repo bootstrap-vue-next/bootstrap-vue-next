@@ -22,12 +22,12 @@ export function buildPromise<TComponent, TParam, TArrayValue extends Orchestrato
   store: Ref<TArrayValue[]>
 ): {
   value: PromiseWithComponent<TComponent, TParam>
-  resolve: (value: BvTriggerableEvent | boolean | null) => void
+  resolve: (value: BvTriggerableEvent) => void
   stop: WatchHandle | undefined
 } {
-  let resolveFunc: (value: BvTriggerableEvent | boolean | null) => void = () => {}
+  let resolveFunc: (value: BvTriggerableEvent) => void = () => {}
 
-  const promise = new Promise<BvTriggerableEvent | boolean | null>((resolve) => {
+  const promise = new Promise<BvTriggerableEvent>((resolve) => {
     resolveFunc = resolve
   }) as PromiseWithComponent<TComponent, TParam>
 

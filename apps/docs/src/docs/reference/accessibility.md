@@ -18,6 +18,93 @@ BootstrapVue's interactive components — such as modal dialogs, dropdown menus 
 
 Because BootstrapVue's components are purposely designed to be fairly generic, authors may need to include further ARIA roles and attributes, as well as JavaScript behavior, to more accurately convey the precise nature and functionality of their component. This is usually noted in the documentation.
 
+## ARIA Trigger Registration for component visibility
+
+Several BootstrapVueNext components (`BCollapse`, `BOffcanvas`, `BModal`, `BDropdown`, `BAlert`, `BToast`, `BPopover`) support automatic ARIA attribute management for trigger elements that control their visibility. This system ensures proper accessibility by automatically updating `aria-expanded` attributes and CSS classes (`collapsed`/`not-collapsed`) on trigger elements as the component's visibility changes.
+
+### How Trigger Registration Works
+
+Trigger registration is **opt-in** and happens through one of these methods:
+
+1. **Using the `v-b-toggle` directive** (recommended for most cases)
+2. **Manual ARIA management** for unregistered triggers
+
+#### What the `v-b-toggle` Directive Does
+
+When you use `v-b-toggle`, the directive:
+
+- Sets the `aria-controls` attribute on the trigger element (pointing to the target component's ID)
+- Registers the trigger element with the target component's visibility system
+- Removes only the `aria-controls` attribute when the trigger unmounts
+
+#### What the Component's Visibility System Does
+
+Once a trigger is registered (via `v-b-toggle`), the component automatically:
+
+- Sets and maintains the `aria-expanded` attribute (`"true"` or `"false"`) based on visibility state
+- Adds/removes the `collapsed` and `not-collapsed` CSS classes for visual state
+- Updates these attributes and classes whenever visibility changes, regardless of the method used (`v-b-toggle` click, `v-model` change, slot functions, etc.)
+- Cleans up the `aria-expanded` attribute and classes when the trigger unregisters
+
+This split responsibility ensures that `aria-controls` (which depends on target IDs known by the directive) is managed separately from `aria-expanded` and visual classes (which depend on the component's visibility state).
+
+### Method 1: Using v-b-toggle (Automatic Registration)
+
+The simplest approach is to use the [`v-b-toggle` directive](/docs/directives/BToggle), which automatically handles both `aria-controls` and trigger registration:
+
+<<< DEMO ./demo/AriaRegistrationDirective.vue#template{vue-html}
+
+With this approach, the button automatically receives:
+
+- `aria-controls="aria-demo-directive"`
+- `aria-expanded="true"` or `aria-expanded="false"` (updated automatically)
+- `collapsed` or `not-collapsed` CSS class (updated automatically)
+
+### Method 2: Using v-model with v-b-toggle
+
+You can combine `v-model` for programmatic control with `v-b-toggle` for automatic ARIA management. This is useful when you need to control visibility from code while still having trigger buttons with proper accessibility:
+
+<<< DEMO ./demo/AriaRegistrationProgrammatic.vue{vue}
+
+**Key Points**:
+
+- The `v-b-toggle` directive handles all ARIA attributes automatically
+- You can still use `v-model` to control visibility programmatically
+- Slot functions like `toggle`, `show`, and `hide` work seamlessly with registered triggers
+
+### Method 3: Manual ARIA Management
+
+If you don't register a trigger (via directive or programmatically), you must manually manage all ARIA attributes yourself:
+
+<<< DEMO ./demo/AriaRegistrationManual.vue{vue}
+
+This approach requires you to manually:
+
+- Set `aria-controls` to the component's ID
+- Update `aria-expanded` based on visibility state
+- Toggle `collapsed`/`not-collapsed` CSS classes
+
+### When to Use Each Method
+
+- **Use `v-b-toggle`** when you want automatic ARIA management (recommended for most cases)
+- **Combine `v-b-toggle` with `v-model`** when you need both automatic ARIA management and programmatic control
+- **Use manual ARIA management** only when you have specific requirements that prevent using `v-b-toggle`
+
+### Components Supporting Trigger Registration
+
+The following components support the trigger registration system:
+
+- [`BAlert`](/docs/components/alert)
+- [`BCollapse`](/docs/components/collapse#accessibility)
+- [`BDropdown`](/docs/components/dropdown)
+- [`BModal`](/docs/components/modal)
+- [`BOffcanvas`](/docs/components/offcanvas#accessibility)
+- [`BPopover`](/docs/components/popover)
+- [`BToast`](/docs/components/toast)
+- [`BTooltip`](/docs/components/tooltip)
+
+See each component's accessibility section for specific guidance and examples.
+
 ## Color contrast
 
 Most colors that currently make up Bootstrap V5's default palette — used throughout the framework for things such as button variations, alert variations, form validation indicators — lead to insufficient color contrast (below the recommended [WCAG 2.0 color contrast ratio of 4.5:1)](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html) when used against a light background. Authors will need to manually modify/extend these default colors to ensure adequate color contrast ratios.

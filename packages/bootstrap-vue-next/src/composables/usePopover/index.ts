@@ -5,7 +5,7 @@ import {
   markRaw,
   onScopeDispose,
   type Ref,
-  toRef,
+  shallowRef,
   toValue,
   watch,
 } from 'vue'
@@ -53,7 +53,7 @@ export const usePopover = () => {
       )
     }
 
-    const resolvedProps = toRef(obj)
+    const resolvedProps = isRef(obj) ? obj : shallowRef(obj)
     const _self = resolvedProps.value?.id || Symbol('Popover controller')
 
     const promise = buildPromise<

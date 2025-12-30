@@ -213,6 +213,18 @@ See [Show and Hide](#show-and-hide) shared properties.
 As in `bootstrap-vue`, a simple `BAlert` is not visible by default. However, the means of showing the alert are different.
 The `bootstrap-vue` `show` prop is deprecated, use `model-value` instead.
 
+### BFormFile
+
+The `capture` prop no longer accepts a boolean value. Modern browser specifications require `capture` to be either `'user'` (for front-facing camera) or `'environment'` (for rear-facing camera).
+
+**Before:**
+
+<<< FRAGMENT ./demo/FormFileCaptureBefore.html#template{vue-html}
+
+**After:**
+
+<<< FRAGMENT ./demo/FormFileCaptureAfter.vue#template{vue-html}
+
 <<< FRAGMENT ./demo/AlertBefore.vue#template{vue-html}
 
 becomes
@@ -441,7 +453,33 @@ See [BForm Components](/docs/components/form-checkbox)
 
 ### BFormFile
 
-<NotYetDocumented type="component"/>
+BootstrapVueNext has completely rewritten `BFormFile` using [VueUse](https://vueuse.org/) composables (`useFileDialog` and `useDropZone`), resulting in a more modern, maintainable implementation.
+
+#### Directory Mode
+
+The `noTraverse` prop has been **removed**. BootstrapVueNext directory mode always returns files as a flat array, which matches the behavior of the browser's native file input with the `webkitdirectory` attribute.
+
+When using `directory` mode, each `File` object includes the standard `webkitRelativePath` property containing the relative path from the selected directory root. This is a native browser property that's automatically available when using directory selection. This has replaced the deprecated `$path` property.
+
+**Example:**
+
+<<< FRAGMENT ./components/demo/FormFileDirectoryPathExample.ts
+
+The `webkitRelativePath` property allows you to reconstruct directory structure or group files by folder as needed.
+
+**BootstrapVue code:**
+
+<<< FRAGMENT ./demo/FormFileDirectoryBSV.vue#template{vue-html}
+
+**BootstrapVueNext equivalent:**
+
+<<< DEMO ./components/demo/FormFileDirectoryMigration.vue
+
+#### Drop Placeholder Slot
+
+The `drop-placeholder` slot no longer receives a `dropAllowed` scope property. VueUse's `useDropZone` handles file type validation internally, and we don't have access to its validation state. The slot now simply displays the drop placeholder text.
+
+The `noDropPlaceholder` prop has been removed as it was only used when `dropAllowed` was `false`, which never occurred.
 
 ### BFormGroup
 
@@ -977,8 +1015,6 @@ and `undefined` to reflect the [Bootstrap 5 animations](https://getbootstrap.com
 If you find a need for the other types (Avatar or Input), please open an issue or propose a pull request.
 
 ### BTable
-
-<NotYetDocumented type="component"/>
 
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 

@@ -9,7 +9,7 @@
     tabindex="-1"
   >
     <slot name="first" />
-    <BFormCheckbox v-for="(item, index) in normalizeOptions" :key="index" v-bind="item">
+    <BFormCheckbox v-for="(item, index) in normalizeOptions" :key="index" v-bind="item as any">
       <slot name="option" v-bind="item">
         {{ item.text }}
       </slot>
@@ -18,45 +18,72 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import {computed, provide, toRef, useTemplateRef} from 'vue'
+<script
+  setup
+  lang="ts"
+  generic="Item = Record<string, unknown>, ValueKey extends keyof Item = keyof Item"
+>
+import {computed, inject, provide, ref, toRef, useTemplateRef} from 'vue'
 import BFormCheckbox from './BFormCheckbox.vue'
-import {checkboxGroupKey} from '../../utils/keys'
+import {checkboxGroupKey, defaultsKey} from '../../utils/keys'
 import {useFocus} from '@vueuse/core'
 import type {BFormCheckboxGroupProps} from '../../types/ComponentProps'
-import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import {getGroupAttr, getGroupClasses} from '../../composables/useFormCheck'
 import type {BFormCheckboxGroupSlots} from '../../types'
 
-const _props = withDefaults(defineProps<Omit<BFormCheckboxGroupProps, 'modelValue'>>(), {
-  ariaInvalid: undefined,
-  autofocus: false,
-  buttonVariant: 'secondary',
-  buttons: false,
-  disabled: false,
-  disabledField: 'disabled',
-  form: undefined,
-  id: undefined,
-  name: undefined,
-  options: () => [],
-  plain: false,
-  required: false,
-  reverse: false,
-  size: 'md',
-  stacked: false,
-  state: null,
-  switches: false,
-  textField: 'text',
-  validated: false,
-  valueField: 'value',
-})
-const props = useDefaults(_props, 'BFormCheckboxGroup')
-defineSlots<BFormCheckboxGroupSlots>()
+// Note: Cannot use useDefaults composable with generic props due to Proxy/type inference limitations.
+// We manually inject global defaults for commonly-customized props (buttonVariant, size, state).
+const props = withDefaults(
+  defineProps<Omit<BFormCheckboxGroupProps<Item, ValueKey>, 'modelValue'>>(),
+  {
+    ariaInvalid: undefined,
+    autofocus: false,
+    buttonVariant: undefined,
+    buttons: false,
+    disabled: false,
+    disabledField: 'disabled' as keyof Item & string,
+    form: undefined,
+    id: undefined,
+    name: undefined,
+    options: () => [],
+    plain: false,
+    required: false,
+    reverse: false,
+    size: undefined,
+    stacked: false,
+    state: undefined,
+    switches: false,
+    textField: 'text' as keyof Item & string,
+    validated: false,
+    valueField: 'value' as ValueKey & string,
+  }
+)
+defineSlots<BFormCheckboxGroupSlots<Item[ValueKey]>>()
 
-const modelValue = defineModel<Exclude<BFormCheckboxGroupProps['modelValue'], undefined>>({
-  default: () => [],
+const modelValue = defineModel<readonly Item[ValueKey][]>({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default: () => [] as any,
 })
+
+// Inject global defaults and create computed properties for commonly-customized props
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const globalDefaults = inject(defaultsKey, ref<any>({}))
+const componentDefaults = computed(() => globalDefaults.value?.BFormCheckboxGroup ?? {})
+
+const buttonVariant = computed(
+  () =>
+    props.buttonVariant ??
+    componentDefaults.value.buttonVariant ??
+    globalDefaults.value?.global?.buttonVariant ??
+    'secondary'
+)
+const size = computed(
+  () => props.size ?? componentDefaults.value.size ?? globalDefaults.value?.global?.size ?? 'md'
+)
+const state = computed(
+  () => props.state ?? componentDefaults.value.state ?? globalDefaults.value?.global?.state ?? null
+)
 
 const computedId = useId(() => props.id, 'checkbox')
 const computedName = useId(() => props.name, 'checkbox')
@@ -68,14 +95,15 @@ const {focused} = useFocus(element, {
 })
 
 provide(checkboxGroupKey, {
-  modelValue,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  modelValue: modelValue as any,
   switch: toRef(() => props.switches),
-  buttonVariant: toRef(() => props.buttonVariant),
+  buttonVariant,
   form: toRef(() => props.form),
   name: computedName,
-  state: toRef(() => props.state),
+  state,
   plain: toRef(() => props.plain),
-  size: toRef(() => props.size),
+  size,
   inline: toRef(() => !props.stacked),
   reverse: toRef(() => props.reverse),
   required: toRef(() => props.required),
@@ -83,27 +111,18 @@ provide(checkboxGroupKey, {
   disabled: toRef(() => props.disabled),
 })
 
-const normalizeOptions = computed<
-  {
-    text: string | undefined
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    value: any
-    disabled: boolean | undefined
-    [key: string]: unknown
-  }[]
->(() =>
+const normalizeOptions = computed(() =>
   props.options.map((el) =>
     typeof el === 'string' || typeof el === 'number'
       ? {
-          value: el,
+          value: el as Item[ValueKey],
           disabled: props.disabled,
           text: el.toString(),
         }
       : {
-          ...el,
-          value: el[props.valueField],
-          disabled: el[props.disabledField] as boolean | undefined,
-          text: el[props.textField] as string | undefined,
+          value: el[props.valueField as keyof typeof el] as Item[ValueKey],
+          disabled: el[props.disabledField as keyof typeof el] as boolean | undefined,
+          text: el[props.textField as keyof typeof el] as string | undefined,
         }
   )
 )
@@ -111,11 +130,11 @@ const normalizeOptions = computed<
 const classesObject = computed(() => ({
   required: props.required,
   ariaInvalid: props.ariaInvalid,
-  state: props.state,
+  state: state.value,
   validated: props.validated,
   buttons: props.buttons,
   stacked: props.stacked,
-  size: props.size,
+  size: size.value,
 }))
 const computedAttrs = getGroupAttr(classesObject)
 const computedClasses = getGroupClasses(classesObject)

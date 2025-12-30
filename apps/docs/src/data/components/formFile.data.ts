@@ -28,20 +28,38 @@ export default {
           ]
         ),
         accept: {
-          type: 'string | string[]',
+          type: 'string | readonly string[]',
           default: '',
-          description: "Value to set on the file input's `accept` attribute",
+          description:
+            "Value to set on the file input's `accept` attribute. Restricts file types that can be selected",
+        },
+        browseText: {
+          type: 'string',
+          default: 'Browse',
+          description: 'Text for the browse button (custom mode only)',
         },
         capture: {
-          type: "'boolean' | 'user' | 'environment'",
-          default: false, // TODO item not in string format
+          type: "'user' | 'environment'",
+          default: undefined,
           description:
-            "When set, will instruct the browser to use the device's camera (if supported)",
+            "When set, will instruct the browser to use the device's camera (if supported). 'user' requests the user-facing camera, 'environment' requests the outward-facing camera",
         },
         directory: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description: 'Enable `directory` mode (on browsers that support it)',
+        },
+        dropPlaceholder: {
+          type: 'string',
+          default: undefined,
+          description:
+            'Text to display when dragging files over the drop zone (custom mode only). Defaults to "Drop files here..." when not specified',
+        },
+        fileNameFormatter: {
+          type: '(files: readonly File[]) => string',
+          default: undefined,
+          description:
+            'Custom formatter function for displaying selected file names (custom mode only)',
         },
         label: {
           type: 'string',
@@ -54,14 +72,14 @@ export default {
           description: 'Sets the styling for the label',
         },
         modelValue: {
-          type: 'File[] | File | null',
+          type: 'readonly File[] | File | null',
           default: undefined,
           description:
             'The current value of the file input. Will be a single `File` object or an array of `File` objects (if `multiple` or `directory` is set). Can be set to `null`, or an empty array to reset the file input',
         },
         multiple: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description:
             'When set, will allow multiple files to be selected. `v-model` will be an array',
         },
@@ -72,18 +90,33 @@ export default {
         },
         noDrop: {
           type: 'boolean',
-          default: false, // TODO item not in string format
+          default: false,
           description: 'Disable drag and drop mode',
         },
-        noTraverse: {
+        placeholder: {
+          type: 'string',
+          default: 'No file chosen',
+          description: 'Text to display when no file is selected (custom mode only)',
+        },
+        showFileNames: {
           type: 'boolean',
-          default: false, // TODO item not in string format
-          description: 'Whether to return files as a flat array when in `directory` mode',
+          default: false,
+          description: 'Display selected file names in custom mode',
         },
       } satisfies PropRecord<keyof BFormFileProps>,
       emits: {
+        'change': {
+          description:
+            'Emitted when the file selection changes. In plain mode, receives the native Event from the file input. In custom mode, receives a CustomEvent with `detail.files` (File[]), `detail.target.files` (FileList-like), and a `files` property for convenience.',
+          args: {
+            value: {
+              type: 'Event | CustomEvent',
+              description: 'Native Event (plain mode) or CustomEvent with file data (custom mode)',
+            },
+          },
+        },
         'update:model-value': {
-          description: 'Updates the `v-model` value (see docs for more details)', // TODO similar content to BAlert/update:model-value (similar purpose)
+          description: 'Updates the `v-model` value (see docs for more details)',
           args: {
             value: {
               type: 'File | File[] | null',
@@ -94,8 +127,30 @@ export default {
         },
       },
       slots: {
-        label: {
-          description: '', // TODO missing description
+        'label': {
+          description: 'Slot to customize the label content',
+          scope: {},
+        },
+        'file-name': {
+          description: 'Slot to customize how selected file names are displayed',
+          scope: {
+            files: {
+              type: 'readonly File[]',
+              description: 'Array of selected File objects',
+            },
+            names: {
+              type: 'readonly string[]',
+              description: 'Array of file names',
+            },
+          },
+        },
+        'placeholder': {
+          description: 'Slot to customize the placeholder text shown when no files are selected',
+          scope: {},
+        },
+        'drop-placeholder': {
+          description:
+            'Slot to customize the drag-and-drop overlay text (shown during drag operations)',
           scope: {},
         },
       } satisfies SlotRecord<keyof BFormFileSlots>,
