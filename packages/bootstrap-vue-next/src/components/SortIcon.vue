@@ -19,7 +19,7 @@ import type {BTableInitialSortDirection, BTableSortBy, TableField} from '../type
 
 const props = defineProps<{
   fieldInfo: TableField<Items>
-  sortBy?: BTableSortBy[]
+  sortBy?: readonly BTableSortBy[]
   initialSortDirection?: BTableInitialSortDirection
 }>()
 

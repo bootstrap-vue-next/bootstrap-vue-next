@@ -48,7 +48,7 @@ const toKebabCase = (str = '') =>
     .replace(/[^a-z]/gi, '-')
     .replace(/\B([A-Z])/g, '-$1')
     .toLowerCase()
-const isObject = (obj: any): obj is Record<string, any> =>
+const isObject = (obj: unknown): obj is Record<string, any> =>
   obj !== null && typeof obj === 'object' && !Array.isArray(obj)
 
 function mergeDeep(

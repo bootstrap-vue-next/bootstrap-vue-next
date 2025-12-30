@@ -52,7 +52,7 @@
     "nuxt": "^3.17.7",
     "prettier": "^3.6.2",
     "publint": "^0.3.15",
-    "typescript": "~5.8.3",
+    "typescript": "^5.9.3",
     "unimport": "^5.1.0",
     "vue": "^3.5.17"
   },

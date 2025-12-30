@@ -74,6 +74,7 @@ import {useId} from '../../composables/useId'
 import type {BAccordionItemProps} from '../../types/ComponentProps'
 import type {BAccordionItemEmits} from '../../types/ComponentEmits'
 import type {BAccordionItemSlots} from '../../types'
+import {isReadOnlyArray} from '../../utils/object'
 
 defineOptions({
   inheritAttrs: false,
@@ -121,7 +122,7 @@ if (modelValue.value) {
   parentData?.setOpenItem(computedId.value)
 } else {
   modelValue.value =
-    (Array.isArray(parentData?.openItem.value)
+    (isReadOnlyArray(parentData?.openItem.value)
       ? parentData?.openItem.value.includes(computedId.value)
       : parentData?.openItem.value === computedId.value) && !parentData?.initialAnimation.value
 }
@@ -142,7 +143,7 @@ onMounted(() => {
 })
 
 const openInParent = computed(() =>
-  Array.isArray(parentData?.openItem.value)
+  isReadOnlyArray(parentData?.openItem.value)
     ? parentData?.openItem.value.includes(computedId.value)
     : parentData?.openItem.value === computedId.value
 )
