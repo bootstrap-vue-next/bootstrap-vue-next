@@ -16,30 +16,32 @@
   </optgroup>
 </template>
 
-<script setup lang="ts" generic="T">
+<script
+  setup
+  lang="ts"
+  generic="Item = Record<string, unknown>, ValueKey extends keyof Item = keyof Item"
+>
 import BFormSelectOption from './BFormSelectOption.vue'
-import {useDefaults} from '../../composables/useDefaults'
 import type {BFormSelectOptionGroupProps} from '../../types/ComponentProps'
 import type {ComputedRef} from 'vue'
 import {useFormSelect} from '../../composables/useFormSelect'
 import type {SelectOption} from '../../types/SelectTypes'
 import type {BFormSelectOptionGroupSlots} from '../../types'
 
-const _props = withDefaults(defineProps<BFormSelectOptionGroupProps>(), {
-  disabledField: 'disabled',
+const props = withDefaults(defineProps<BFormSelectOptionGroupProps<Item>>(), {
+  disabledField: 'disabled' as keyof Item & string,
   label: undefined,
   options: () => [],
-  textField: 'text',
-  valueField: 'value',
+  textField: 'text' as keyof Item & string,
+  valueField: 'value' as keyof Item & string,
 })
-const props = useDefaults(_props, 'BFormSelectOptionGroup')
-defineSlots<BFormSelectOptionGroupSlots<T>>()
+defineSlots<BFormSelectOptionGroupSlots<Item[ValueKey]>>()
 
 // The form select context is injected by BFormSelectOption components automatically
 // We don't need to handle the selected value here since each BFormSelectOption
 // will inject the context directly
 
 const {normalizedOptions} = useFormSelect(() => props.options, props) as {
-  normalizedOptions: ComputedRef<SelectOption<T>[]>
+  normalizedOptions: ComputedRef<SelectOption<Item[ValueKey]>[]>
 }
 </script>
