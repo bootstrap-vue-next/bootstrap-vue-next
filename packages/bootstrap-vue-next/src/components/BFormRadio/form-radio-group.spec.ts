@@ -200,5 +200,151 @@ describe('form-radio-group', () => {
       expect(radios[1].text()).toBe('foo')
       expect(radios[2].text()).toBe('foo')
     })
+
+    it('renders custom field names with valueField', async () => {
+      interface CustomOption {
+        id: string
+        label: string
+      }
+      const wrapper = mount<typeof BFormRadioGroup<CustomOption, 'id'>>(BFormRadioGroup, {
+        props: {
+          options: [
+            {id: 'a', label: 'First'},
+            {id: 'b', label: 'Second'},
+            {id: 'c', label: 'Third'},
+          ],
+          valueField: 'id',
+          textField: 'label',
+        },
+      })
+      const radios = wrapper.findAllComponents(BFormRadio)
+      expect(radios).toHaveLength(3)
+      expect(radios[0].text()).toBe('First')
+      expect(radios[1].text()).toBe('Second')
+      expect(radios[2].text()).toBe('Third')
+      expect(radios[0].vm.value).toBe('a')
+      expect(radios[1].vm.value).toBe('b')
+      expect(radios[2].vm.value).toBe('c')
+    })
+
+    it('renders custom field names with disabledField', async () => {
+      interface CustomOption {
+        id: string
+        label: string
+        inactive: boolean
+      }
+      const wrapper = mount<typeof BFormRadioGroup<CustomOption, 'id'>>(BFormRadioGroup, {
+        props: {
+          options: [
+            {id: 'a', label: 'First', inactive: false},
+            {id: 'b', label: 'Second', inactive: true},
+            {id: 'c', label: 'Third', inactive: false},
+          ],
+          valueField: 'id',
+          textField: 'label',
+          disabledField: 'inactive',
+        },
+      })
+      const radios = wrapper.findAllComponents(BFormRadio)
+      expect(radios).toHaveLength(3)
+      expect(radios[0].vm.disabled).toBe(false)
+      expect(radios[1].vm.disabled).toBe(true)
+      expect(radios[2].vm.disabled).toBe(false)
+    })
+
+    it('handles modelValue with custom valueField', async () => {
+      interface CustomOption {
+        id: string
+        label: string
+      }
+      const wrapper = mount<typeof BFormRadioGroup<CustomOption, 'id'>>(BFormRadioGroup, {
+        props: {
+          options: [
+            {id: 'a', label: 'First'},
+            {id: 'b', label: 'Second'},
+            {id: 'c', label: 'Third'},
+          ],
+          valueField: 'id',
+          textField: 'label',
+          modelValue: 'b',
+        },
+      })
+      await wrapper.vm.$nextTick()
+
+      // Verify checked state through DOM
+      const inputs = wrapper.findAll('input[type="radio"]')
+      expect(inputs.length).toBe(3)
+      expect((inputs[1].element as HTMLInputElement).checked).toBe(true)
+      expect((inputs[0].element as HTMLInputElement).checked).toBe(false)
+      expect((inputs[2].element as HTMLInputElement).checked).toBe(false)
+    })
+
+    it('emits update:modelValue with custom valueField value', async () => {
+      interface CustomOption {
+        id: string
+        label: string
+      }
+      const wrapper = mount<typeof BFormRadioGroup<CustomOption, 'id'>>(BFormRadioGroup, {
+        props: {
+          options: [
+            {id: 'a', label: 'First'},
+            {id: 'b', label: 'Second'},
+            {id: 'c', label: 'Third'},
+          ],
+          valueField: 'id',
+          textField: 'label',
+          modelValue: 'a',
+        },
+      })
+      const radios = wrapper.findAllComponents(BFormRadio)
+      await radios[1].find('input').setValue()
+      expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['b'])
+    })
+
+    it('handles complex nested object values', async () => {
+      interface ProductOption {
+        code: {id: number; type: string}
+        display: string
+      }
+      const wrapper = mount<typeof BFormRadioGroup<ProductOption, 'code'>>(BFormRadioGroup, {
+        props: {
+          options: [
+            {code: {id: 1, type: 'A'}, display: 'Option 1'},
+            {code: {id: 2, type: 'B'}, display: 'Option 2'},
+          ],
+          valueField: 'code',
+          textField: 'display',
+        },
+      })
+      const radios = wrapper.findAllComponents(BFormRadio)
+      expect(radios).toHaveLength(2)
+      expect(radios[0].text()).toBe('Option 1')
+      expect(radios[1].text()).toBe('Option 2')
+      expect(radios[0].vm.value).toEqual({id: 1, type: 'A'})
+      expect(radios[1].vm.value).toEqual({id: 2, type: 'B'})
+    })
+
+    it('handles numeric values with custom valueField', async () => {
+      interface NumericOption {
+        num: number
+        name: string
+      }
+      const wrapper = mount<typeof BFormRadioGroup<NumericOption, 'num'>>(BFormRadioGroup, {
+        props: {
+          options: [
+            {num: 10, name: 'Ten'},
+            {num: 20, name: 'Twenty'},
+            {num: 30, name: 'Thirty'},
+          ],
+          valueField: 'num',
+          textField: 'name',
+          modelValue: 20,
+        },
+      })
+      const radios = wrapper.findAllComponents(BFormRadio)
+      const inputs = wrapper.findAll('input[type="radio"]')
+      expect((inputs[1].element as HTMLInputElement).checked).toBe(true)
+      expect(radios[1].vm.value).toBe(20)
+    })
   })
 })
