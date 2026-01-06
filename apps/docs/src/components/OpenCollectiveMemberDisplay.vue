@@ -155,10 +155,7 @@ type TierNames = (typeof tierNames)[number]
 
 type BackerGroups = Partial<Record<TierNames, CollectiveMembersResponse[]>>
 
-const groupedActiveFinancialBackers: BackerGroups = groupBy(
-  activeFinancialBackers,
-  (el) => el.tier
-)
+const groupedActiveFinancialBackers: BackerGroups = groupBy(activeFinancialBackers, (el) => el.tier)
 
 /**
  * The priority of the tiers

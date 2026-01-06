@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import {useTemplateRef, computed} from 'vue'
+import {computed, useTemplateRef} from 'vue'
 import {useScrollspy} from 'bootstrap-vue-next'
 
 // Placeholder refs - these would be actual template refs in a real component
