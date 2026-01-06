@@ -76,6 +76,24 @@ import {data} from '../data/opencollective.data'
 
 const OpenCollectiveData = data as CollectivePartialResponse
 
+// Helper function to group array elements by a key
+function groupBy<T, K extends string | number | symbol>(
+  array: T[],
+  keyFn: (item: T) => K
+): Partial<Record<K, T[]>> {
+  return array.reduce(
+    (result, item) => {
+      const key = keyFn(item)
+      if (!result[key]) {
+        result[key] = []
+      }
+      result[key]!.push(item)
+      return result
+    },
+    {} as Partial<Record<K, T[]>>
+  )
+}
+
 const filteredKeys = ['HOST', 'FOLLOWER']
 const roleNames = ['ADMIN', 'CONTRIBUTOR', 'BACKER'] as const
 type RoleNames = (typeof roleNames)[number]
@@ -84,7 +102,7 @@ type RoleGroups = Record<RoleNames, CollectiveMembersResponse[]>
 const filteredMembers = OpenCollectiveData.members.filter((el) => !filteredKeys.includes(el.role))
 const groupedCollectiveMembers: RoleGroups = {
   ...Object.fromEntries(roleNames.map((role) => [role, []])),
-  ...Object.groupBy(filteredMembers, (el) => el.role),
+  ...groupBy(filteredMembers, (el) => el.role),
 } as RoleGroups
 
 /**
@@ -129,7 +147,7 @@ type TierNames = (typeof tierNames)[number]
 
 type BackerGroups = Partial<Record<TierNames, CollectiveMembersResponse[]>>
 
-const groupedActiveFinancialBackers: BackerGroups = Object.groupBy(
+const groupedActiveFinancialBackers: BackerGroups = groupBy(
   activeFinancialBackers,
   (el) => el.tier
 )

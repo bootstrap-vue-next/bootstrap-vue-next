@@ -7,7 +7,7 @@
       no-header
       shadow
     >
-      <template #footer="{hide}">
+      <template #footer="{hide = () => {}}">
         <div class="d-flex bg-dark text-light align-items-center px-3 py-2">
           <strong class="me-auto">Footer</strong>
           <BButton

@@ -7,7 +7,7 @@
       no-header
       shadow
     >
-      <template #default="{hide}">
+      <template #default="{hide = () => {}}">
         <div class="p-3">
           <h4 id="offcanvas-no-header-title">Custom header offcanvas</h4>
           <p>
