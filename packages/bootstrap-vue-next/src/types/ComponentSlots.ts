@@ -522,11 +522,10 @@ type SortSlotScope<Items> = {
   field: TableField<Items>
   isFoot: false
 }
-export interface BTableSlots<Items>
-  extends Omit<
-    BTableLiteSlots<Items>,
-    'thead-top' | 'row-details' | `head(${string})` | `foot(${string})` | `cell(${string})`
-  > {
+export interface BTableSlots<Items> extends Omit<
+  BTableLiteSlots<Items>,
+  'thead-top' | 'row-expansion' | `head(${string})` | `foot(${string})` | `cell(${string})`
+> {
   // BTableLite
   'thead-top'?: (props: {
     columns: number
@@ -551,16 +550,16 @@ export interface BTableSlots<Items>
     item: Items
     field: TableField<Items>
     items: readonly Items[]
-    toggleDetails: () => void
-    detailsShowing: boolean
+    toggleExpansion: () => void
+    expansionShowing: boolean
     rowSelected: boolean
     selectRow: (index?: number) => void
     unselectRow: (index?: number) => void
   }) => any
 
-  'row-details'?: (props: {
+  'row-expansion'?: (props: {
     item: Items
-    toggleDetails: () => void
+    toggleExpansion: () => void
     fields: TableField<Items>[]
     index: number
     rowSelected: boolean
@@ -630,12 +629,12 @@ export type BTableLiteSlots<Items> = {
     item: Items
     field: TableField<Items>
     items: readonly Items[]
-    toggleDetails: () => void
-    detailsShowing: boolean
+    toggleExpansion: () => void
+    expansionShowing: boolean
   }) => any
-  'row-details'?: (props: {
+  'row-expansion'?: (props: {
     item: Items
-    toggleDetails: () => void
+    toggleExpansion: () => void
     fields: TableField<Items>[]
     index: number
   }) => any

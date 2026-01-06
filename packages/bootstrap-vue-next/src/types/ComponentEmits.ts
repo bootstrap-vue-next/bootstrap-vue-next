@@ -1,5 +1,5 @@
 import {BvCarouselEvent, BvEvent, BvTriggerableEvent} from '../utils'
-import type {BTableSortBy, TableField, TableRowEvent} from './TableTypes'
+import type {BTableSortBy, TableHeadClickedEventObject, TableRowEvent} from './TableTypes'
 
 export interface showHideEmits {
   'hide': [value: BvTriggerableEvent]
@@ -53,7 +53,7 @@ export interface BTableEmits<Items> extends BTableLiteEmits<Items> {
 }
 
 export interface BTableLiteEmits<Items> {
-  'head-clicked': [key: string, field: TableField<Items>, event: MouseEvent, isFooter: boolean]
+  'head-clicked': [object: TableHeadClickedEventObject<Items>]
   'row-clicked': TableRowEvent<Items>
   'row-dblclicked': TableRowEvent<Items>
   'row-contextmenu': TableRowEvent<Items>
@@ -142,11 +142,13 @@ export type BPaginationEmits = {
 
 export type BTabsEmits = {
   'activate-tab': [
-    newTabId: string,
-    preTabId: string,
-    newTabIndex: number,
-    prevTabIndex: number,
-    event: BvEvent,
+    obj: {
+      newTabId: string
+      prevTabId: string
+      newTabIndex: number
+      prevTabIndex: number
+      event: BvEvent
+    },
   ]
 }
 

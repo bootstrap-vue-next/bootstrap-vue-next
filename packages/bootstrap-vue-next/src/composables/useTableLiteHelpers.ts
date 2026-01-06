@@ -1,13 +1,26 @@
-import {computed, inject, type MaybeRefOrGetter, ref, toRef, toValue, watch} from 'vue'
+import {
+  computed,
+  inject,
+  type MaybeRef,
+  type MaybeRefOrGetter,
+  readonly,
+  type Ref,
+  toRef,
+  toValue,
+  watch,
+} from 'vue'
 import {
   isTableField,
   isTableItem,
+  type ItemTrackerReturn,
+  type TableDetailsReturn,
   type TableField,
   type TableFieldRaw,
-  type TableItem,
+  type TableHeadClickedEventObject,
+  type TablePrimaryKey,
+  type TableRowEventObject,
 } from '../types/TableTypes'
-import {get} from '../utils/object'
-import {getDataLabelAttr, type StackedProps} from '../utils/tableUtils'
+import {getDataLabelAttr, getWithGetter, type StackedProps} from '../utils/tableUtils'
 import {startCase} from '../utils/stringUtils'
 import {CODE_DOWN, CODE_END, CODE_HOME, CODE_UP} from '../utils/constants'
 import {stopEvent} from '../utils/event'
@@ -74,121 +87,110 @@ export const useTableFieldsMapper = <Item>({
       }),
     }
   })
-  const fieldsTotal = computed(() => computedFields.value.items.length)
+  const total = computed(() => computedFields.value.items.length)
   const showHeaders = computed(() => {
     // We only hide the header if all fields have _noHeader set to true. Which would be our doing
     // This usually happens under a circumstance of displaying an array of primitives
     // Under any other circumstance, I'm not sure how this would apply
-    if (fieldsTotal.value > 0 && computedFields.value.opts?.noHeader === true) return false
+    if (total.value > 0 && computedFields.value.opts?.noHeader === true) return false
     return true
   })
 
   return {
-    fieldsTotal,
+    total,
     showHeaders,
     fields: computed(() => computedFields.value.items),
   }
 }
 
-export const useTableDetails = ({
-  items,
+export const useItemTracker = <Item>({
+  allItems,
+  selectedItems,
   primaryKey,
 }: {
-  items: MaybeRefOrGetter<readonly unknown[]>
-  primaryKey: MaybeRefOrGetter<string | undefined>
-}) => {
-  const pKey = toRef(primaryKey)
+  allItems: MaybeRefOrGetter<readonly Item[]>
+  selectedItems: Ref<readonly unknown[]>
+  primaryKey?: MaybeRef<TablePrimaryKey<Item> | undefined>
+}): ItemTrackerReturn<Item> => {
+  const isActivated = computed(() => selectedItems.value.length > 0)
+  const pKey = readonly(toRef(primaryKey))
 
-  const generateDetailsItem = (item: TableItem): [object | string, boolean | undefined] => {
-    // Use primary key as the map key if available and the item has that key
-    if (pKey.value && get(item, pKey.value) !== undefined) {
-      return [String(get(item, pKey.value)), item._showDetails]
-    }
-    // Fall back to object reference
-    return [item, item._showDetails]
-  }
-
-  // Use WeakMap when no primaryKey (for memory efficiency), Map when primaryKey is defined (to support strings)
-  const detailsMap = ref<
-    Map<object | string, boolean | undefined> | WeakMap<object, boolean | undefined>
-  >(pKey.value ? new Map() : new WeakMap())
-  // Watch for primaryKey changes and recreate the map
-  watch(pKey, (newKey, oldKey) => {
-    // If primaryKey changes, clear and recreate the map with the appropriate type
-    if (newKey !== oldKey) {
-      detailsMap.value = newKey ? new Map() : new WeakMap()
-    }
-  })
-
-  watch(
-    () => toValue(items),
-    (items) => {
-      items.forEach((item) => {
-        if (!isTableItem(item)) return
-        const [key, showDetails] = generateDetailsItem(item)
-        // Only set if not already in map, or if _showDetails is explicitly set
-        // This preserves toggled state when items are replaced with same primary key
-        if (!hasDetailsValue(key) || showDetails !== undefined) {
-          setDetailsValueByKey(key, showDetails)
-        }
-      })
-    },
-    {deep: true, immediate: true}
-  )
-
-  // Helper functions for type-safe map operations
-  const hasDetailsValue = (key: object | string): boolean => {
-    if (typeof key === 'string') {
-      // When using string keys, we must be using a Map
-      return (detailsMap.value as Map<object | string, boolean | undefined>).has(key)
-    }
-    // When using object keys, could be either Map or WeakMap
-    return detailsMap.value.has(key)
-  }
-
-  const setDetailsValueByKey = (key: object | string, value: boolean | undefined): void => {
-    if (typeof key === 'string') {
-      // When using string keys, we must be using a Map
-      ;(detailsMap.value as Map<object | string, boolean | undefined>).set(key, value)
-    } else {
-      // When using object keys, could be either Map or WeakMap
-      detailsMap.value.set(key, value)
-    }
-  }
-
-  const getDetailsMapKey = (item: object): object | string => {
-    if (isTableItem(item) && pKey.value && get(item, pKey.value) !== undefined) {
-      return String(get(item, pKey.value))
+  const get = (item: Item) => {
+    if (typeof item === 'object' && item !== null && pKey.value) {
+      return getWithGetter(item, pKey.value)
     }
     return item
   }
 
-  const getDetailsValue = (item: object): boolean | undefined => {
-    const key = getDetailsMapKey(item)
-    if (typeof key === 'string') {
-      // When using string keys, we must be using a Map
-      return (detailsMap.value as Map<object | string, boolean | undefined>).get(key)
-    }
-    // When using object keys, could be either Map or WeakMap
-    return detailsMap.value.get(key)
+  const add = (item: Item) => {
+    const value = get(item)
+
+    selectedItems.value = [...selectedItems.value, value]
+  }
+  const set = (items: readonly Item[]) => {
+    const values = pKey.value ? items.map(get) : items
+
+    selectedItems.value = values
+  }
+  const setAll = () => set([...toValue(allItems)])
+  const remove = (item: Item) => {
+    const value = get(item)
+
+    selectedItems.value = selectedItems.value.filter((i) => i !== value)
+  }
+  const clear = () => {
+    selectedItems.value = []
   }
 
-  const setDetailsValue = (item: object, value: boolean | undefined): void => {
-    const key = getDetailsMapKey(item)
-    setDetailsValueByKey(key, value)
+  const has = (item: Item) => {
+    const value = get(item)
+
+    return selectedItems.value.includes(value)
   }
 
-  const toggleRowDetails = (tr: unknown) => {
-    if (isTableItem(tr)) {
-      const prevValue = getDetailsValue(tr)
-      setDetailsValue(tr, !prevValue)
-      tr._showDetails = !prevValue
+  watch(pKey, () => {
+    // Clear selected items if primary key changes
+    clear()
+  })
+
+  return {
+    isActivated,
+    get,
+    add,
+    remove,
+    clear,
+    set,
+    has,
+    setAll,
+  }
+}
+
+export const useItemExpansion = <Item>({
+  allItems,
+  primaryKey,
+  expandedItems,
+}: {
+  allItems: MaybeRefOrGetter<readonly Item[]>
+  primaryKey: MaybeRef<TablePrimaryKey<Item> | undefined>
+  expandedItems: Ref<readonly Item[]>
+}): TableDetailsReturn<Item> => {
+  const utils = useItemTracker({
+    primaryKey,
+    allItems,
+    selectedItems: expandedItems,
+  })
+
+  const toggle = (item: Item) => {
+    if (utils.has(item)) {
+      utils.remove(item)
+    } else {
+      utils.add(item)
     }
   }
 
   return {
-    getDetailsValue,
-    toggleRowDetails,
+    ...utils,
+    toggle,
   }
 }
 
@@ -201,14 +203,9 @@ export const useTableKeyboardNavigation = <Items>(
     id: MaybeRefOrGetter<string>
   },
   events: {
-    onHeadClicked: (
-      fieldKey: string,
-      field: TableField<Items>,
-      event: MouseEvent,
-      isFooter: boolean
-    ) => void
-    onRowClicked: (item: Items, itemIndex: number, event: MouseEvent) => void
-    onRowMiddleClicked: (item: Items, itemIndex: number, event: MouseEvent) => void
+    onHeadClicked: (obj: TableHeadClickedEventObject<Items>) => void
+    onRowClicked: (obj: TableRowEventObject<Items>) => void
+    onRowMiddleClicked: (obj: TableRowEventObject<Items>) => void
   }
 ) => {
   // Inject keyboard navigation state from parent BTable
@@ -222,7 +219,7 @@ export const useTableKeyboardNavigation = <Items>(
   )
 
   const headerClicked = (field: TableField, event: Readonly<MouseEvent>, isFooter = false) => {
-    events.onHeadClicked(field.key as string, field, event, isFooter)
+    events.onHeadClicked({key: field.key as string, field, event, isFooter})
   }
 
   const handleHeaderKeydown = (field: TableField, event: KeyboardEvent, isFooter = false) => {
@@ -243,7 +240,7 @@ export const useTableKeyboardNavigation = <Items>(
 
     if (code === 'Enter' || code === 'NumpadEnter' || code === 'Space') {
       stopEvent(event)
-      events.onRowClicked(item, itemIndex, event as unknown as MouseEvent)
+      events.onRowClicked({item, index: itemIndex, event: event as unknown as MouseEvent})
       return
     }
 
@@ -287,7 +284,7 @@ export const useTableKeyboardNavigation = <Items>(
 
   const handleMiddleClick = (item: Items, itemIndex: number, event: MouseEvent) => {
     if (event.button === 1 && !filterEvent(event)) {
-      events.onRowMiddleClicked(item, itemIndex, event)
+      events.onRowMiddleClicked({item, index: itemIndex, event})
     }
   }
 

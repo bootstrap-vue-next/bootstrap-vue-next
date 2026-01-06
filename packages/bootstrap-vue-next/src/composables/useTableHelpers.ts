@@ -20,7 +20,6 @@ import type {
   TableField,
   TableFieldFormatter,
   TableFieldRaw,
-  TableItem,
 } from '../types'
 import {
   type BTableFilterFunction,
@@ -30,12 +29,15 @@ import {
   isTableField,
   isTableItem,
   type NoProviderTypes,
+  type TablePrimaryKey,
+  type TableSelectedReturn,
 } from '../types/TableTypes'
-import {deepEqual, get, set} from '../utils/object'
+import {deepEqual, set} from '../utils/object'
 import {formatItem} from '../utils/formatItem'
 import {startCase} from '../utils/stringUtils'
-import {getDataLabelAttr, type StackedProps} from '../utils/tableUtils'
+import {getDataLabelAttr, getWithGetter, type StackedProps} from '../utils/tableUtils'
 import {useDebounceFn} from '../utils/debounce'
+import {useItemTracker} from './useTableLiteHelpers'
 
 export const useTableMapper = <Items>({
   fields,
@@ -141,7 +143,7 @@ export const useTableMapper = <Items>({
 
       return false
     })
-    const val = get(ob, key as keyof TableItem)
+    const val = getWithGetter(ob, key)
     if (isTableField(sortField) && !!sortField.sortByFormatted) {
       const formatter = getFormatter(sortField)
       if (formatter) {
@@ -324,170 +326,119 @@ export const useTableSelectedItems = <Item>({
   allItems: MaybeRefOrGetter<readonly Item[]>
   selectable: MaybeRefOrGetter<boolean>
   selectMode: MaybeRefOrGetter<BTableSelectMode>
-  primaryKey: MaybeRefOrGetter<string | undefined>
+  primaryKey: MaybeRef<TablePrimaryKey<Item> | undefined>
   selectedItems: Ref<readonly Item[]>
   events: {
     onRowSelected: (item: Item) => void
     onRowUnselected: (item: Item) => void
   }
-}) => {
+}): TableSelectedReturn<Item> => {
   const selectableResolved = readonly(toRef(selectable))
-  const primaryKeyResolved = readonly(toRef(primaryKey))
   const selectModeResolved = readonly(toRef(selectMode))
   const allItemsResolved = readonly(toRef(allItems)) as Ref<readonly Item[]>
 
-  const selectedItemsToSet = computed({
-    get: () => new Set(selectedItems.value),
-    set: (val) => {
-      selectedItems.value = [...val]
-    },
+  const utils = useItemTracker({
+    allItems,
+    primaryKey,
+    selectedItems,
   })
 
-  const isSelecting = computed(() => selectedItemsToSet.value.size > 0)
-
-  watch(selectedItemsToSet, (newValue, oldValue) => {
+  watch(selectedItems, (newValue, oldValue) => {
     Array.from(oldValue)
-      .filter((item) => !newValue.has(item))
+      .filter((item) => !newValue.includes(item))
       .forEach((item) => {
         events.onRowUnselected(item)
       })
     Array.from(newValue)
-      .filter((item) => !oldValue.has(item))
+      .filter((item) => !oldValue.includes(item))
       .forEach((item) => {
         events.onRowSelected(item)
       })
   })
-  /**
-   * This is to avoid the issue of directly mutating the array structure and to properly trigger the computed setter.
-   * The utils also conveniently emit the proper events after
-   */
 
-  const add = (item: Item) => {
-    const value = new Set(selectedItemsToSet.value)
-    value.add(item)
-    selectedItemsToSet.value = value
-  }
-  const del = (item: Item) => {
-    const value = new Set(selectedItemsToSet.value)
-    if (primaryKeyResolved.value) {
-      const pkey: string = primaryKeyResolved.value
-      selectedItems.value.forEach((v, i) => {
-        const selectedKey = get(v, pkey)
-        const itemKey = get(item, pkey)
-
-        if (!!selectedKey && !!itemKey && selectedKey === itemKey) {
-          value.delete(selectedItems.value[i])
-        }
-      })
-    } else {
-      value.delete(item)
-    }
-    selectedItemsToSet.value = value
-  }
-  const clear = () => {
-    selectedItemsToSet.value.forEach((item) => {
-      del(item)
-    })
-  }
-  const set = (items: readonly Item[]) => {
-    selectedItemsToSet.value = new Set(items)
-  }
-  const has = (item: Item) => {
-    if (!primaryKeyResolved.value) return selectedItemsToSet.value.has(item)
-
-    // Resolver for when we are using primary keys
-    const pkey: string = primaryKeyResolved.value
-    for (const selected of selectedItemsToSet.value) {
-      const selectedKey = get(selected, pkey)
-      const itemKey = get(item, pkey)
-
-      if (!!selectedKey && !!itemKey && selectedKey === itemKey) return true
-    }
-    return false
-  }
-
-  const handleRowSelection = (
-    row: Item,
-    index: number,
+  const handleRowSelection = ({
+    item,
+    index,
     shiftClicked = false,
     ctrlClicked = false,
-    metaClicked = false
-  ) => {
+    metaClicked = false,
+  }: {
+    item: Item
+    index: number
+    shiftClicked?: boolean
+    ctrlClicked?: boolean
+    metaClicked?: boolean
+  }) => {
     if (!selectableResolved.value) return
 
     if (selectModeResolved.value === 'single' || selectModeResolved.value === 'multi') {
       // Do nothing when these items are held
       if (shiftClicked || ctrlClicked) return
       // Delete if item is in
-      if (has(row)) {
-        del(row)
+      if (utils.has(item)) {
+        utils.remove(item)
       } else {
         if (selectModeResolved.value === 'single') {
-          set([row])
+          utils.set([item])
         } else {
-          add(row)
+          utils.add(item)
         }
       }
     } else {
       if (ctrlClicked || metaClicked) {
         // Delete if in the object
-        if (has(row)) {
-          del(row)
+        if (utils.has(item)) {
+          utils.remove(item)
           // Otherwise add. Functions similarly to 'multi' at this point
         } else {
-          add(row)
+          utils.add(item)
         }
         // This is where range is different, due to the difference in shift
       } else if (shiftClicked) {
-        const lastSelectedItem = [...selectedItemsToSet.value].pop()
+        const lastSelectedItem = selectedItems.value.at(-1)
         const lastSelectedIndex = allItemsResolved.value.findIndex((i) => i === lastSelectedItem)
         const selectStartIndex = Math.min(lastSelectedIndex, index)
         const selectEndIndex = Math.max(lastSelectedIndex, index)
         const items = allItemsResolved.value.slice(selectStartIndex, selectEndIndex + 1)
-        set(items)
+        utils.set(items)
         // If nothing is being held, then we just behave like it's single mode
       } else {
-        set([row])
+        utils.set([item])
       }
     }
   }
 
   return {
-    isSelecting,
+    ...utils,
     handleRowSelection,
-    utilities: {
-      has,
-      exposed: {
-        clearSelected: () => {
-          if (!selectableResolved.value) return
-          clear()
-        },
-        selectAllRows: () => {
-          if (!selectableResolved.value || selectModeResolved.value === 'single') return
-          set(allItemsResolved.value)
-        },
-        selectRow: (index: number) => {
-          if (!selectableResolved.value) return
-          const item = allItemsResolved.value[index]
-          if (!item || has(item)) return
-          if (selectModeResolved.value === 'single') {
-            set([item])
-          } else {
-            add(item)
-          }
-        },
-        unselectRow: (index: number) => {
-          if (!selectableResolved.value) return
-          const item = allItemsResolved.value[index]
-          if (!item || !has(item)) return
-          del(item)
-        },
-        isRowSelected: (index: number) => {
-          if (!selectableResolved.value) return false
-          const item = allItemsResolved.value[index]
-          return has(item)
-        },
-      },
+    clear: () => {
+      if (!selectableResolved.value) return
+
+      utils.clear()
+    },
+    setAll: () => {
+      if (!selectableResolved.value || selectModeResolved.value === 'single') return
+
+      utils.setAll()
+    },
+    add: (item: Item) => {
+      if (!selectableResolved.value || utils.has(item)) return
+
+      if (selectModeResolved.value === 'single') {
+        utils.set([item])
+      } else {
+        utils.add(item)
+      }
+    },
+    del: (item: Item) => {
+      if (!selectableResolved.value) return
+
+      utils.remove(item)
+    },
+    has: (item: Item) => {
+      if (!selectableResolved.value) return false
+
+      return utils.has(item)
     },
   }
 }
@@ -511,7 +462,7 @@ export const useTableProvider = <Item>({
   perPage: MaybeRefOrGetter<number>
   filter: MaybeRefOrGetter<string | undefined>
   busy: Ref<boolean>
-  provider: MaybeRefOrGetter<BTableProvider<Item> | undefined>
+  provider: MaybeRef<BTableProvider<Item> | undefined>
   debounce: {
     wait: MaybeRefOrGetter<number>
     maxWait: MaybeRefOrGetter<number>

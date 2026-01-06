@@ -46,6 +46,10 @@ export const pick = <
  *
  * Thanks to
  * @link https://github.com/rayepps/radash/blob/master/src/object.ts#L214
+ *
+ * @deprecated The purpose of this function is to allow one to use "dot notation" to pick nested properties from an object.
+ * Usually for props, it would be better to use a function that picks the property you want instead of relying on weak string paths
+ * Using a function allows for better type safety.
  */
 export const get = <TDefault = unknown>(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

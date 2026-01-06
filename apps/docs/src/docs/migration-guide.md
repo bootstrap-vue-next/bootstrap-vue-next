@@ -1054,6 +1054,11 @@ that is emitted for each row that is unselected. There is also a named model `se
 like the BSV `row-selected` event, emitting an array of all seleted rows. An example of this is available
 in [the documentation](/docs/components/table#row-select-support)
 
+All row-level events (`row-clicked`, `row-dblclicked`, `row-hovered`, `row-unhovered`,
+`row-contextmenu`, `row-middle-clicked`) now emit a single payload object with `{item, index, event}`
+instead of positional arguments. The `head-clicked` event likewise now emits
+`{key, field, event, isFooter}` as one object payload.
+
 BootstrapVue adds utility classes to the `<table>` including `b-table-select-single`,`b-table-select-multi`, and `b-table-select-range`, these have been deprecated, as the functionality should be easily replicated by the developer without adding to the API surface.
 
 <NotYetImplemented/>The `aria-multiselect` attribute is not added to `<table>`
@@ -1062,6 +1067,90 @@ BootstrapVue adds utility classes to the `<table>` including `b-table-select-sin
 The `filtered` event has a single argument `Items[]` rather than two arguments with an array and length. The semantics haven't changed.
 
 <NotYetImplemented/> Heading and data row accessibility
+
+#### Row Expansion (formerly Row Details)
+
+**Terminology changes:** BootstrapVue used "details" terminology for expanding rows, which has been changed to "expansion" for clarity and linguistic correctness. The following changes have been made:
+
+- Scoped slot variable `detailsShowing` is now `expansionShowing`
+- Scoped slot function `toggleDetails` is now `toggleExpansion`
+- The concept of "detailed items" is now "expanded items"
+
+**v-model instead of object property:** The expansion state is no longer tracked using a property on item objects. Instead, use the `v-model:expanded-items` binding (or its alias `v-model:item-details` for compatibility) to manage which rows are expanded.
+
+**Before (BootstrapVue):**
+
+```vue
+<template>
+  <BTable :items="items">
+    <template #cell(show_details)="row">
+      <BButton @click="row.toggleDetails">
+        {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
+      </BButton>
+    </template>
+    <template #row-details="row">
+      <BCard>{{ row.item.fullDetails }}</BCard>
+    </template>
+  </BTable>
+</template>
+
+<script setup>
+const items = [{name: 'Item 1'}, {name: 'Item 2'}]
+// Expansion was controlled via _showDetails property on items
+</script>
+```
+
+**After (BootstrapVueNext):**
+
+```vue
+<template>
+  <BTable :items="items" v-model:expanded-items="expandedItems">
+    <template #cell(show_details)="row">
+      <BButton @click="row.toggleExpansion">
+        {{ row.expansionShowing ? 'Hide' : 'Show' }} Details
+      </BButton>
+    </template>
+    <template #row-expansion="row">
+      <BCard>{{ row.item.fullDetails }}</BCard>
+    </template>
+  </BTable>
+</template>
+
+<script setup>
+import {ref} from 'vue'
+
+const items = [{name: 'Item 1'}, {name: 'Item 2'}]
+
+// Expansion state managed via v-model
+const expandedItems = ref([items[0]]) // Expand first item by default
+</script>
+```
+
+**Using with Primary Key:**
+
+When using a `primary-key`, expansion state persists across item array updates (like pagination or "Load more"). To set default expanded items with a `primary-key`, you must use the table's template ref `.get()` function:
+
+```vue
+<template>
+  <BTable ref="tableRef" :items="items" primary-key="id" v-model:expanded-items="expandedItems">
+    <!-- ... -->
+  </BTable>
+</template>
+
+<script setup>
+import {ref, onMounted} from 'vue'
+
+const tableRef = ref()
+const expandedItems = ref([])
+
+// Set default expanded items after mount
+onMounted(() => {
+  expandedItems.value.push(tableRef.value.get(items[1]))
+})
+</script>
+```
+
+The slot name remains `row-expansion` (changed from `row-details` in earlier versions).
 
 ### Items Provider Functions
 
@@ -1118,6 +1207,9 @@ The primary `v-model` now reflects the `id` of the currently selected tag. Use `
 the current tab index. See [programmatically activating and deactivating tabs](/docs/components/tabs#programmatically-activating-and-deactivating-tabs) for details.
 
 The `changed` event on `BTabs` is deprecated.
+
+`activate-tab` now emits a single payload object (`{newTabId, prevTabId, newTabIndex, prevTabIndex, event}`)
+instead of positional arguments.
 
 ### BTime
 

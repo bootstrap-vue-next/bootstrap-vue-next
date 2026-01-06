@@ -66,6 +66,7 @@ import type {
   NoProviderTypes,
   TableField,
   TableFieldRaw,
+  TablePrimaryKey,
   TableRowType,
   TableStrictClassValue,
   TableThScope,
@@ -864,9 +865,7 @@ export interface BSpinnerProps {
 }
 
 export interface BAlertProps
-  extends ColorExtendables,
-    Omit<BLinkProps, 'routerTag'>,
-    ShowHideProps {
+  extends ColorExtendables, Omit<BLinkProps, 'routerTag'>, ShowHideProps {
   alertClass?: ClassValue
   body?: string
   bodyClass?: ClassValue
@@ -889,9 +888,7 @@ export interface BAlertProps
 }
 
 export interface BAvatarProps
-  extends Omit<BLinkProps, 'routerTag' | 'icon'>,
-    ColorExtendables,
-    RadiusElementExtendables {
+  extends Omit<BLinkProps, 'routerTag' | 'icon'>, ColorExtendables, RadiusElementExtendables {
   alt?: string
   badge?: boolean | string
   badgeBgVariant?: BgColorVariant | null
@@ -1138,34 +1135,36 @@ export interface BTableSimpleProps {
   tableClass?: ClassValue
 }
 
-export interface BTableLiteProps<Items> extends BTableSimpleProps {
+export interface BTableLiteProps<Item> extends BTableSimpleProps {
   align?: VerticalAlign
   caption?: string
   detailsTdClass?: ClassValue
   fieldColumnClass?: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  | ((field: TableField<Items>) => readonly Record<string, any>[])
+    | ((field: TableField<Item>) => readonly Record<string, any>[])
     | string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     | Readonly<Record<PropertyKey, any>>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     | readonly any[]
-  fields?: readonly TableFieldRaw<Items>[]
+  fields?: readonly TableFieldRaw<Item>[]
   footClone?: boolean
   footRowVariant?: ColorVariant | null
   footVariant?: ColorVariant | null
   headRowVariant?: ColorVariant | null
   headVariant?: ColorVariant | null
-  items?: readonly Items[]
+  items?: readonly Item[]
   labelStacked?: boolean
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   modelValue?: any
-  primaryKey?: string
+  expandedItems?: readonly Item[]
+  // primaryKey?: Item extends object ? TablePrimaryKey<Item> : string
+  primaryKey?: TablePrimaryKey<Item>
   tbodyClass?: ClassValue
-  tbodyTrAttrs?: ((item: Items | null, type: TableRowType) => AttrsValue) | AttrsValue
+  tbodyTrAttrs?: ((item: Item | null, type: TableRowType) => AttrsValue) | AttrsValue
   // tbodyTransitionHandlers
   // tbodyTransitionProps
   tbodyTrClass?:
-    | ((item: Items | null, type: TableRowType) => TableStrictClassValue)
+    | ((item: Item | null, type: TableRowType) => TableStrictClassValue)
     | TableStrictClassValue
   tfootClass?: ClassValue
   tfootTrClass?: ClassValue
@@ -1173,16 +1172,15 @@ export interface BTableLiteProps<Items> extends BTableSimpleProps {
   theadTrClass?: ClassValue
 }
 
-export interface BTableProps<Items>
-  extends Omit<BTableLiteProps<Items>, 'tableClass'>,
-    FormDebounceOptions {
-  provider?: BTableProvider<Items>
+export interface BTableProps<Item>
+  extends Omit<BTableLiteProps<Item>, 'tableClass'>, FormDebounceOptions {
+  provider?: BTableProvider<Item>
   noProvider?: readonly NoProviderTypes[]
   noProviderPaging?: boolean
   noProviderSorting?: boolean
   noProviderFiltering?: boolean
   sortBy?: readonly BTableSortBy[]
-  sortCompare?: BTableSortByComparerFunction<Items>
+  sortCompare?: BTableSortByComparerFunction<Item>
   mustSort?: boolean | readonly string[] // TODO this is a string of fields, possibly generic
   initialSortDirection?: BTableInitialSortDirection
   selectable?: boolean
@@ -1196,7 +1194,7 @@ export interface BTableProps<Items>
   perPage?: Numberish
   currentPage?: Numberish
   filter?: string
-  filterFunction?: BTableFilterFunction<Items>
+  filterFunction?: BTableFilterFunction<Item>
   filterable?: readonly string[]
   // TODO
   // apiUrl?: string
@@ -1211,7 +1209,7 @@ export interface BTableProps<Items>
   // selectedVariant?: ColorVariant | null
   // showEmpty?: boolean
   // sortNullLast?: boolean
-  selectedItems?: readonly Items[]
+  selectedItems?: readonly Item[]
   noSortableIcon?: boolean
   sortIconLeft?: boolean
   emptyFilteredText?: string
@@ -1320,9 +1318,7 @@ export interface BDropdownProps extends TeleporterProps, ShowHideProps {
 }
 
 export interface BToastProps
-  extends ColorExtendables,
-    Omit<BLinkProps, 'routerTag'>,
-    ShowHideProps {
+  extends ColorExtendables, Omit<BLinkProps, 'routerTag'>, ShowHideProps {
   body?: string
   bodyClass?: ClassValue
   closeClass?: ClassValue
@@ -1494,9 +1490,7 @@ export interface BColProps extends OffsetBreakpointProps, OrderBreakpointProps, 
 }
 
 export interface BFormGroupProps
-  extends ContentColsBreakpointProps,
-    LabelColsBreakpointProps,
-    LabelAlignBreakpointProps {
+  extends ContentColsBreakpointProps, LabelColsBreakpointProps, LabelAlignBreakpointProps {
   contentCols?: boolean | Numberish
   labelCols?: boolean | Numberish
   labelAlign?: string

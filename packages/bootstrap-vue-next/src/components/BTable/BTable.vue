@@ -1,6 +1,6 @@
 <template>
   <!-- eslint-disable prettier/prettier -->
-  <BTableLite v-bind="computedLiteProps">
+  <BTableLite v-bind="computedLiteProps" v-model:expanded-items="expandedItems">
     <template v-if="slots['table-colgroup']" #table-colgroup="scope">
       <slot name="table-colgroup" v-bind="scope" />
     </template>
@@ -9,8 +9,8 @@
       <slot
         name="thead-top"
         v-bind="scope"
-        :clear-selected="selectedItemsUtilities.exposed.clearSelected"
-        :select-all-rows="selectedItemsUtilities.exposed.selectAllRows"
+        :clear-selected="selectedItemsController.clear"
+        :select-all-rows="selectedItemsController.setAll"
         :fields="computedFields"
       />
     </template>
@@ -20,14 +20,14 @@
     <template v-if="slots['top-row']" #top-row="scope">
       <slot name="top-row" v-bind="scope" :fields="computedFields" />
     </template>
-    <template v-if="slots['row-details']" #row-details="scope">
+    <template v-if="slots['row-expansion']" #row-expansion="scope">
       <slot
-        name="row-details"
+        name="row-expansion"
         v-bind="scope"
         :fields="computedFields"
-        :select-row="() => selectedItemsUtilities.exposed.selectRow(scope.index)"
-        :unselect-row="() => selectedItemsUtilities.exposed.unselectRow(scope.index)"
-        :row-selected="selectedItemsUtilities.exposed.isRowSelected(scope.index)"
+        :select-row="() => selectedItemsController.add(scope.item)"
+        :unselect-row="() => selectedItemsController.remove(scope.item)"
+        :row-selected="selectedItemsController.has(scope.item)"
       />
     </template>
     <template v-if="slots['bottom-row']" #bottom-row="scope">
@@ -43,17 +43,17 @@
       <slot
         :name
         v-bind="scope"
-        :select-row="() => selectedItemsUtilities.exposed.selectRow(scope.index)"
-        :unselect-row="() => selectedItemsUtilities.exposed.unselectRow(scope.index)"
-        :row-selected="selectedItemsUtilities.exposed.isRowSelected(scope.index)"
+        :select-row="() => selectedItemsController.add(scope.item)"
+        :unselect-row="() => selectedItemsController.remove(scope.item)"
+        :row-selected="selectedItemsController.has(scope.item)"
       />
     </template>
     <template v-for="name in dynamicFootSlots" #[name]="scope">
       <slot
         :name
         v-bind="scope"
-        :select-all-rows="selectedItemsUtilities.exposed.selectAllRows"
-        :clear-selected="selectedItemsUtilities.exposed.clearSelected"
+        :select-all-rows="selectedItemsController.setAll"
+        :clear-selected="selectedItemsController.clear"
       />
     </template>
 
@@ -69,8 +69,8 @@
             : 'head()'
         "
         v-bind="scope"
-        :select-all-rows="selectedItemsUtilities.exposed.selectAllRows"
-        :clear-selected="selectedItemsUtilities.exposed.clearSelected"
+        :select-all-rows="selectedItemsController.setAll"
+        :clear-selected="selectedItemsController.clear"
       >
         {{ getTableFieldHeadLabel(field) }}
       </slot>
@@ -107,9 +107,9 @@
   </BTableLite>
 </template>
 
-<script setup lang="ts" generic="Items">
+<script setup lang="ts" generic="Item">
 import {useToNumber} from '@vueuse/core'
-import {computed, type Ref, toRef} from 'vue'
+import {computed, readonly, type Ref, toRef} from 'vue'
 import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
 import BTr from './BTr.vue'
@@ -133,9 +133,10 @@ import {
   useTableSelectedItems,
   useTableSort,
 } from '../../composables/useTableHelpers'
+import {useItemExpansion} from '../../composables/useTableLiteHelpers'
 
 const _props = withDefaults(
-  defineProps<Omit<BTableProps<Items>, 'sortBy' | 'busy' | 'selectedItems'>>(),
+  defineProps<Omit<BTableProps<Item>, 'sortBy' | 'busy' | 'selectedItems'>>(),
   {
     noSortableIcon: false,
     sortIconLeft: false,
@@ -211,8 +212,8 @@ const _props = withDefaults(
   }
 )
 const props = useDefaults(_props, 'BTable')
-const emit = defineEmits<BTableEmits<Items>>()
-const slots = defineSlots<BTableSlots<Items>>()
+const emit = defineEmits<BTableEmits<Item>>()
+const slots = defineSlots<BTableSlots<Item>>()
 
 const dynamicCellSlots = computed(
   () => Object.keys(slots).filter((key) => key.startsWith('cell(')) as 'cell()'[]
@@ -221,14 +222,20 @@ const dynamicFootSlots = computed(
   () => Object.keys(slots).filter((key) => key.startsWith('foot(')) as 'foot()'[]
 )
 
-const sortByModel = defineModel<BTableProps<Items>['sortBy']>('sortBy', {
+const sortByModel = defineModel<BTableProps<Item>['sortBy']>('sortBy', {
   default: undefined,
 })
-const busyModel = defineModel<Exclude<BTableProps<Items>['busy'], undefined>>('busy', {
+const busyModel = defineModel<Exclude<BTableProps<Item>['busy'], undefined>>('busy', {
   default: false,
 })
-const selectedItemsModel = defineModel<Exclude<BTableProps<Items>['selectedItems'], undefined>>(
+const selectedItemsModel = defineModel<Exclude<BTableProps<Item>['selectedItems'], undefined>>(
   'selectedItems',
+  {
+    default: () => [],
+  }
+)
+const expandedItems = defineModel<Exclude<BTableProps<Item>['expandedItems'], undefined>>(
+  'expandedItems',
   {
     default: () => [],
   }
@@ -240,7 +247,12 @@ const currentPageNumber = useToNumber(() => props.currentPage, {method: 'parseIn
 const debounceNumber = useToNumber(() => props.debounce ?? 0, {nanToZero: true})
 const debounceMaxWaitNumber = useToNumber(() => props.debounceMaxWait ?? Number.NaN)
 
-const {isSortable, handleFieldSorting} = useTableSort({
+const expandedItemsController = useItemExpansion({
+  allItems: () => props.items,
+  primaryKey: toRef(() => props.primaryKey),
+  expandedItems,
+})
+const sortController = useTableSort({
   fields: () => props.fields,
   sortBy: sortByModel,
   events: {
@@ -252,18 +264,14 @@ const {isSortable, handleFieldSorting} = useTableSort({
   mustSort: () => props.mustSort,
   multisort: () => props.multisort,
 })
-const {
-  items: providerItems,
-  usesProvider,
-  callItemsProvider,
-} = useTableProvider({
+const providerController = useTableProvider({
   events: {
     onFiltered: () => {
       emit('filtered', computedItems.value)
     },
   },
   busy: busyModel,
-  provider: () => props.provider,
+  provider: toRef(() => props.provider),
   debounce: {
     maxWait: debounceMaxWaitNumber,
     wait: debounceNumber,
@@ -286,11 +294,11 @@ const {
 } = useTableMapper({
   fields: () => props.fields,
   provider: {
-    items: providerItems as Ref<Items[]>,
+    items: providerController.items as Ref<Item[]>,
     noProviderFiltering: () => props.noProviderFiltering,
     noProviderPaging: () => props.noProviderPaging,
     noProviderSorting: () => props.noProviderSorting,
-    usesProvider,
+    usesProvider: providerController.usesProvider,
   },
   events: {
     onChange: (v) => {
@@ -308,7 +316,7 @@ const {
     },
     sort: {
       iconLeft: () => props.sortIconLeft,
-      isSortable,
+      isSortable: sortController.isSortable,
       noLocalSorting: () => props.noLocalSorting,
       by: sortByModel,
       sortCompare: toRef(() => props.sortCompare),
@@ -319,13 +327,9 @@ const {
     labelStacked: () => props.labelStacked,
   },
 })
-const {
-  isSelecting,
-  handleRowSelection,
-  utilities: selectedItemsUtilities,
-} = useTableSelectedItems({
+const selectedItemsController = useTableSelectedItems({
   selectable: () => props.selectable,
-  primaryKey: () => props.primaryKey,
+  primaryKey: toRef(() => props.primaryKey),
   selectedItems: selectedItemsModel,
   allItems: computedItems,
   selectMode: () => props.selectMode,
@@ -339,7 +343,7 @@ const {
   },
 })
 useTableKeyboardNavigationInjector({
-  isSortable,
+  isSortable: sortController.isSortable,
   selectable: () => props.selectable,
   noSelectOnClick: () => props.noSelectOnClick,
 })
@@ -347,7 +351,8 @@ useTableKeyboardNavigationInjector({
 const tableClasses = computed(() => ({
   'b-table-busy': busyModel.value,
   'b-table-selectable': props.selectable,
-  'user-select-none': props.selectable && !props.noSelectOnClick && isSelecting.value,
+  'user-select-none':
+    props.selectable && !props.noSelectOnClick && selectedItemsController.isActivated.value,
   'b-table-fixed': props.fixed,
   'b-table-no-border-collapse': props.noBorderCollapse,
   'b-table-no-sort-icon': props.noSortableIcon,
@@ -361,17 +366,17 @@ const getBusyRowClasses = computed(() => [
 ])
 const getFieldColumnClasses = (field: TableField) => [
   {
-    'b-table-sortable-column': isSortable.value && field.sortable,
+    'b-table-sortable-column': sortController.isSortable && field.sortable,
   },
 ]
 // TODO this class has issues if the table has a variant already applied
 // Also the row should technically have aria-selected. Both things could probably just use a function with tbodyTrAttrs
 // But functional tbodyTrAttrs are not supported yet
 // Also the stuff for resolving functions could probably be made a util
-const getRowClasses = (item: Items | null, type: TableRowType): TableStrictClassValue => [
+const getRowClasses = (item: Item | null, type: TableRowType): TableStrictClassValue => [
   {
     [`selected table-${props.selectionVariant}`]:
-      props.selectable && !!item && selectedItemsUtilities.has(item),
+      props.selectable && !!item && selectedItemsController.has(item),
   },
   props.tbodyTrClass
     ? typeof props.tbodyTrClass === 'function'
@@ -381,15 +386,21 @@ const getRowClasses = (item: Items | null, type: TableRowType): TableStrictClass
 ]
 
 const boundBTableLiteEmits = {
-  onHeadClicked: (fieldKey, field, event, isFooter = false) => {
-    emit('head-clicked', fieldKey, field, event, isFooter)
-    handleFieldSorting(field)
+  onHeadClicked: ({key, field, event, isFooter = false}) => {
+    emit('head-clicked', {key, field, event, isFooter})
+    sortController.handleFieldSorting(field)
   },
-  onRowClicked: (row, index, e) => {
+  onRowClicked: ({item, index, event}) => {
     if (props.noSelectOnClick === false) {
-      handleRowSelection(row, index, e.shiftKey, e.ctrlKey, e.metaKey)
+      selectedItemsController.handleRowSelection({
+        item,
+        index,
+        shiftClicked: event.shiftKey,
+        ctrlClicked: event.ctrlKey,
+        metaClicked: event.metaKey,
+      })
     }
-    emit('row-clicked', row, index, e)
+    emit('row-clicked', {item, index, event})
   },
   onRowDblclicked: (...args) => emit('row-dblclicked', ...args),
   onRowContextmenu: (...args) => emit('row-contextmenu', ...args),
@@ -397,8 +408,8 @@ const boundBTableLiteEmits = {
   onRowUnhovered: (...args) => emit('row-unhovered', ...args),
   onRowMiddleClicked: (...args) => emit('row-middle-clicked', ...args),
 } as const satisfies {
-  [K in keyof BTableLiteEmits<Items> as CamelCase<`on-${K & string}`>]: (
-    ...args: BTableLiteEmits<Items>[K]
+  [K in keyof BTableLiteEmits<Item> as CamelCase<`on-${K & string}`>]: (
+    ...args: BTableLiteEmits<Item>[K]
   ) => void
 }
 const computedLiteProps = computed(() => ({
@@ -407,7 +418,7 @@ const computedLiteProps = computed(() => ({
     ariaBusy: busyModel.value,
   },
   items: computedDisplayItems.value,
-  fields: computedFields.value as TableFieldRaw<Items>[],
+  fields: computedFields.value as TableFieldRaw<Item>[],
   tableClass: tableClasses.value,
   tbodyTrClass: getRowClasses,
   fieldColumnClass: getFieldColumnClasses,
@@ -423,11 +434,18 @@ const emptySlotScope = computed(() => ({
 }))
 
 defineExpose({
+  expansion: {
+    ...expandedItemsController,
+    expandedItems: readonly(expandedItems),
+  },
   // The row selection methods are really for compat. Users should probably use the v-model though
-  ...selectedItemsUtilities.exposed,
+  selection: {
+    ...selectedItemsController,
+    selectedItems: readonly(selectedItemsModel),
+  },
   items: computedItems,
   displayItems: computedDisplayItems,
   getStringValue,
-  refresh: callItemsProvider,
+  refresh: providerController.callItemsProvider,
 })
 </script>

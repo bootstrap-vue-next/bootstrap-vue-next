@@ -322,16 +322,16 @@
             <BButton size="sm" class="me-1" @click="info(row.item, row.index)">
               Info modal
             </BButton>
-            <BButton size="sm" @click="row.toggleDetails">
-              {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
+            <BButton size="sm" @click="row.toggleExpansion">
+              {{ row.expansionShowing ? 'Hide' : 'Show' }} Details
             </BButton>
           </template>
 
-          <template #row-details="row">
+          <template #row-expansion="row">
             <BCard>
               <ul>
                 <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
-                <BButton size="sm" @click="row.toggleDetails"> Toggle Details </BButton>
+                <BButton size="sm" @click="row.toggleExpansion"> Toggle Details </BButton>
               </ul>
             </BCard>
           </template>
@@ -361,6 +361,7 @@ import type {
   TableField,
   TableFieldRaw,
   TableItem,
+  TableRowEventObject,
 } from 'bootstrap-vue-next'
 
 type LiteralUnion<T, U = string> = T | (U & Record<never, never>)
@@ -544,9 +545,9 @@ function onFiltered(filteredItems: readonly TableItem<Person>[]) {
     })
 }
 
-function onRowClicked(row: TableItem<Person>, index: number) {
+function onRowClicked({index, item}: TableRowEventObject<Person>) {
   // eslint-disable-next-line no-console
-  console.log(`clicked on row ${index}: ${row.name.first} ${row.name.last}`)
+  console.log(`clicked on row ${index}: ${item.name.first} ${item.name.last}`)
 }
 
 function onSorted(sortby: BTableSortBy) {

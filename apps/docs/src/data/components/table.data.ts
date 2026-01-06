@@ -37,17 +37,9 @@ export default {
   load: (): ComponentReference => {
     const tableRowEventArgs = <const T extends string>(action: T) =>
       ({
-        item: {
-          type: 'TableItem',
-          description: `Item data of the row ${action}`,
-        },
-        index: {
-          type: 'number',
-          description: `Index of the row ${action}`,
-        },
-        event: {
-          description: '',
-          type: 'MouseEvent|KeyboardEvent',
+        value: {
+          type: 'TableRowEventObject<Items>',
+          description: `Object payload with the row item, index, and event for the row ${action}`,
         },
       }) satisfies EmitArgReference
 
@@ -243,11 +235,17 @@ export default {
           type: 'any',
           default: undefined,
         },
+        expandedItems: {
+          type: 'readonly Items[]',
+          default: undefined,
+          description:
+            'Array of items that are currently expanded (have their row-expansion slot visible). Use v-model:expanded-items to bind this. When a primary-key is provided, expansion state persists across item array updates. Also available via the alias v-model:item-details.',
+        },
         primaryKey: {
           type: 'string',
           default: undefined,
           description:
-            'Name of a table field that contains a guaranteed unique value per row. Needed for tbody transition support, and also speeds up table rendering',
+            'Name of a table field that contains a guaranteed unique value per row. Required for row expansion and selection to persist across item updates. Also speeds up table rendering and enables proper item tracking.',
         },
         tbodyClass: {
           type: 'ClassValue',
@@ -288,9 +286,9 @@ export default {
             'Default scoped slot for custom data rendering of field data. See docs for scoped data',
           scope: {
             ...rowSelectionScope,
-            detailsShowing: {
+            expansionShowing: {
               type: 'boolean',
-              description: "Will be true if the row's row-details scoped slot is visible",
+              description: "Will be true if the row's row-expansion scoped slot is visible",
             },
             field: {
               type: 'TableField<Items>',
@@ -304,10 +302,10 @@ export default {
               type: 'readonly Items[]',
               description: "The row's item data object",
             },
-            toggleDetails: {
+            toggleExpansion: {
               type: '() => void',
               description:
-                'Can be called to toggle the visibility of the rows row-details scoped slot',
+                'Can be called to toggle the visibility of the rows row-expansion scoped slot',
             },
             unformatted: {
               type: 'unknown',
@@ -400,9 +398,9 @@ export default {
             },
           },
         },
-        'row-details': {
+        'row-expansion': {
           description:
-            'Scoped slot for optional rendering additional record details. See docs for Row details support',
+            'Scoped slot for optional rendering additional record expansion. See docs for Row expansion support',
           scope: {
             ...rowSelectionScope,
             fields: {
@@ -418,7 +416,7 @@ export default {
               type: 'Items',
               description: "The entire row's record data object",
             },
-            toggleDetails: {
+            toggleExpansion: {
               type: '() => void',
               description: "Function to toggle visibility of the row's details slot",
             },
@@ -482,21 +480,10 @@ export default {
           description:
             "Emitted when a header or footer cell is clicked. Not applicable for 'custom-foot' slot",
           args: {
-            key: {
-              type: 'TableField<Record<string, unknown>>.key: LiteralUnion<string, string>',
-              description: 'Column key clicked (field name)',
-            },
-            field: {
-              type: 'TableField',
-              description: 'Field definition object',
-            },
-            event: {
-              description: 'Native event object',
-              type: 'MouseEvent|KeyboardEvent',
-            },
-            isFooter: {
-              description: '`true` if this event originated from clicking on the footer cell',
-              type: 'boolean',
+            value: {
+              type: 'TableHeadClickedEventObject<Items>',
+              description:
+                'Object payload containing the key, field definition, native event, and whether the click originated from the footer.',
             },
           },
         },
@@ -521,8 +508,8 @@ export default {
           args: tableRowEventArgs('being unhovered'),
         },
         'row-middle-clicked': {
-          args: undefined,
-          description: undefined,
+          description: 'Emitted when a row is middle clicked',
+          args: tableRowEventArgs('being middle clicked'),
         },
       } satisfies EmitRecord<keyof BTableLiteEmits<unknown>>,
     } as const
@@ -727,6 +714,8 @@ export default {
         },
         selectedItems: {
           type: 'TableItem[]',
+          description:
+            'Array of currently selected items. Use v-model:selected-items to bind this. When a primary-key is provided, selection state persists across item array updates. Without a primary-key, uses a WeakMap for tracking.',
         },
         selectHead: {
           type: 'boolean | string',
@@ -769,7 +758,7 @@ export default {
         ...BTableLite.slots,
         // Overwriting the following from BTableLite slots. They have different scopes
         'thead-top': {},
-        'row-details': {},
+        'row-expansion': {},
         'head({key})': {},
         'foot({key})': {},
         'cell({key})': {},

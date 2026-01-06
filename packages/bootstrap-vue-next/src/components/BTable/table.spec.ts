@@ -1609,7 +1609,13 @@ describe('event emissions', () => {
     await rows[0].trigger('click')
 
     expect(wrapper.emitted('row-clicked')).toBeTruthy()
-    expect(wrapper.emitted('row-clicked')?.[0]).toEqual([items[0], 0, expect.any(Object)])
+    expect(wrapper.emitted('row-clicked')?.[0]).toEqual([
+      {
+        item: items[0],
+        index: 0,
+        event: expect.any(Object),
+      },
+    ])
   })
 
   it('emits row-dblclicked event inherited from BTableLite', async () => {
@@ -1621,7 +1627,13 @@ describe('event emissions', () => {
     await rows[1].trigger('dblclick')
 
     expect(wrapper.emitted('row-dblclicked')).toBeTruthy()
-    expect(wrapper.emitted('row-dblclicked')?.[0]).toEqual([items[1], 1, expect.any(Object)])
+    expect(wrapper.emitted('row-dblclicked')?.[0]).toEqual([
+      {
+        item: items[1],
+        index: 1,
+        event: expect.any(Object),
+      },
+    ])
   })
 
   it('emits head-clicked event inherited from BTableLite', async () => {
@@ -1633,9 +1645,13 @@ describe('event emissions', () => {
     await headers[1].trigger('click')
 
     expect(wrapper.emitted('head-clicked')).toBeTruthy()
-    const emittedEvent = wrapper.emitted('head-clicked')?.[0]
-    expect(emittedEvent?.[0]).toBe('age')
-    expect(emittedEvent?.[1]).toMatchObject({key: 'age', label: 'Age', sortable: true})
+    const emittedEvent = wrapper.emitted('head-clicked')?.[0]?.[0]
+    expect(emittedEvent).toEqual({
+      key: 'age',
+      field: expect.objectContaining({key: 'age', label: 'Age', sortable: true}),
+      event: expect.any(Object),
+      isFooter: false,
+    })
   })
 
   it('emits multiple events in correct order when interacting', async () => {

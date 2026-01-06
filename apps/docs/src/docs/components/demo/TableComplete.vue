@@ -206,12 +206,12 @@
         </BButton>
         <BButton
           size="sm"
-          @click="row.toggleDetails"
+          @click="row.toggleExpansion"
         >
-          {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
+          {{ row.expansionShowing ? 'Hide' : 'Show' }} Details
         </BButton>
       </template>
-      <template #row-details="row">
+      <template #row-expansion="row">
         <BCard>
           <ul>
             <li
@@ -222,7 +222,7 @@
             </li>
             <BButton
               size="sm"
-              @click="row.toggleDetails"
+              @click="row.toggleExpansion"
             >
               Toggle Details
             </BButton>
