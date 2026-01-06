@@ -511,4 +511,166 @@ describe('form-group', () => {
       expect(label.classes()).toContain('text-center')
     })
   })
+
+  describe('legend click focus behavior', () => {
+    it('does not throw error when legend is clicked in vertical fieldset mode', async () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Username'},
+        slots: {
+          default: () => h('input', {type: 'text', class: 'form-control'}),
+        },
+        attachTo: document.body,
+      })
+
+      const legend = wrapper.find('legend')
+      const input = wrapper.find('input')
+
+      expect(legend.exists()).toBe(true)
+      expect(wrapper.element.tagName).toBe('FIELDSET')
+      expect(input.exists()).toBe(true)
+
+      // Should not throw - this tests the fix for querySelectorAll on component ref
+      await expect(legend.trigger('click')).resolves.not.toThrow()
+      wrapper.unmount()
+    })
+
+    it('does not throw error when legend is clicked in horizontal fieldset mode', async () => {
+      const wrapper = mount(BFormGroup, {
+        props: {
+          label: 'Username',
+          labelColsMd: 3,
+        },
+        slots: {
+          default: () => h('input', {type: 'text', class: 'form-control'}),
+        },
+        attachTo: document.body,
+      })
+
+      const legend = wrapper.find('legend')
+      const input = wrapper.find('input')
+
+      expect(legend.exists()).toBe(true)
+      expect(wrapper.element.tagName).toBe('FIELDSET')
+      expect(input.exists()).toBe(true)
+
+      // This test verifies the fix for accessing $el from BCol component ref
+      // Previously would throw: TypeError: content.value.querySelectorAll is not a function
+      await expect(legend.trigger('click')).resolves.not.toThrow()
+      wrapper.unmount()
+    })
+
+    it('does not throw error when legend is clicked with textarea in horizontal fieldset mode', async () => {
+      const wrapper = mount(BFormGroup, {
+        props: {
+          label: 'Comments',
+          labelColsMd: 4,
+        },
+        slots: {
+          default: () => h('textarea', {class: 'form-control', rows: 2}),
+        },
+        attachTo: document.body,
+      })
+
+      const legend = wrapper.find('legend')
+      const textarea = wrapper.find('textarea')
+
+      expect(legend.exists()).toBe(true)
+      expect(wrapper.element.tagName).toBe('FIELDSET')
+      expect(textarea.exists()).toBe(true)
+
+      await expect(legend.trigger('click')).resolves.not.toThrow()
+      wrapper.unmount()
+    })
+
+    it('does not focus when label (not legend) is used with labelFor', async () => {
+      const wrapper = mount(BFormGroup, {
+        props: {
+          label: 'Username',
+          labelFor: 'username-input',
+          labelColsMd: 3,
+        },
+        slots: {
+          default: h(BFormInput, {id: 'username-input'}),
+        },
+        attachTo: document.body,
+      })
+
+      const label = wrapper.find('label')
+
+      // Should be a label, not a legend
+      expect(label.exists()).toBe(true)
+      expect(wrapper.find('legend').exists()).toBe(false)
+
+      // Should be a div with role="group", not a fieldset
+      expect(wrapper.element.tagName).toBe('DIV')
+      expect(wrapper.attributes('role')).toBe('group')
+
+      wrapper.unmount()
+    })
+
+    it('does not throw error when clicking legend with no input', async () => {
+      const wrapper = mount(BFormGroup, {
+        props: {
+          label: 'Empty Group',
+          labelColsMd: 3,
+        },
+        attachTo: document.body,
+      })
+
+      const legend = wrapper.find('legend')
+
+      // Should not throw
+      await expect(legend.trigger('click')).resolves.not.toThrow()
+      wrapper.unmount()
+    })
+
+    it('does not focus disabled input when legend is clicked', async () => {
+      const wrapper = mount(BFormGroup, {
+        props: {
+          label: 'Username',
+          labelColsMd: 3,
+        },
+        slots: {
+          default: h(BFormInput, {disabled: true}),
+        },
+        attachTo: document.body,
+      })
+
+      const legend = wrapper.find('legend')
+
+      await legend.trigger('click')
+      await nextTick()
+
+      // Disabled input should not receive focus
+      expect(document.activeElement).not.toBe(wrapper.find('input').element)
+      wrapper.unmount()
+    })
+
+    it('does not focus when clicking on button inside legend', async () => {
+      const wrapper = mount(BFormGroup, {
+        props: {
+          label: 'Username',
+          labelColsMd: 3,
+        },
+        slots: {
+          label: h('span', ['Username ', h('button', {type: 'button'}, 'Info')]),
+          default: h(BFormInput),
+        },
+        attachTo: document.body,
+      })
+
+      const button = wrapper.find('button')
+      const input = wrapper.find('input')
+
+      // Clear focus
+      document.body.focus()
+
+      await button.trigger('click')
+      await nextTick()
+
+      // Button click should not focus the input
+      expect(document.activeElement).not.toBe(input.element)
+      wrapper.unmount()
+    })
+  })
 })

@@ -201,7 +201,7 @@ const getColProps = (props: any, prefix: string) =>
     return result
   }, {})
 
-const content = useTemplateRef<HTMLDivElement | null>('_content')
+const content = useTemplateRef<HTMLDivElement | InstanceType<typeof BCol> | null>('_content')
 
 const contentColProps = computed(() => getColProps(props, 'content'))
 const labelAlignClasses = computed(() =>
@@ -238,8 +238,16 @@ const onLegendClick = (event: Readonly<MouseEvent>) => {
 
   if ([...INPUTS, 'a', 'button', 'label'].indexOf(tagName) !== -1) return
 
+  // In horizontal mode, content.value is a BCol component instance, not a DOM element
+  // Access the DOM element via $el property
+  const contentElement =
+    isHorizontal.value && content.value && '$el' in content.value
+      ? (content.value.$el as HTMLElement)
+      : (content.value as HTMLDivElement | null)
+  if (!contentElement) return
+
   const inputs = [
-    ...content.value.querySelectorAll(INPUTS.map((v) => `${v}:not([disabled])`).join()),
+    ...contentElement.querySelectorAll(INPUTS.map((v) => `${v}:not([disabled])`).join()),
   ].filter(isVisible)
   const [inp] = inputs
   if (inputs.length === 1 && inp instanceof HTMLElement) {

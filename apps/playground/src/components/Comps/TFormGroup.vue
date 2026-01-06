@@ -49,14 +49,14 @@
     </BRow>
     <BRow>
       <BCol>
-        <h4 class="mt-4 mb-3">Using label-wrapper-attrs prop</h4>
+        <h4 class="mt-4 mb-3">Using label-class prop</h4>
 
         <BFormGroup
           label="Aktiv:"
           label-for="test-active-fixed"
           label-align-md="end"
           label-cols-md="3"
-          :label-wrapper-attrs="{class: 'custom-label-field'}"
+          label-class="custom-label-field"
           class="align-items-center test-form-group"
         >
           <BFormCheckbox id="test-active-fixed" placeholder="" switch />
@@ -67,7 +67,7 @@
           label-for="test-default-fixed"
           label-align-md="end"
           label-cols-md="3"
-          :label-wrapper-attrs="{class: 'custom-label-field'}"
+          label-class="custom-label-field"
           class="align-items-center test-form-group"
         >
           <BFormCheckbox id="test-default-fixed" placeholder="" switch />
@@ -78,11 +78,39 @@
           label-for="test-name-fixed"
           label-align-md="end"
           label-cols-md="3"
-          :label-wrapper-attrs="{class: 'custom-label-field'}"
+          label-class="custom-label-field"
           class="align-items-center test-form-group"
         >
           <BFormInput id="test-name-fixed" placeholder="Enter name" />
         </BFormGroup>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <h4 class="mt-4 mb-3">Legend Click Focus Test (Horizontal Fieldset)</h4>
+        <p class="text-info mb-3">
+          <strong>Test:</strong> Click on the legend text below. The input should receive focus.
+          This tests that legend clicks work correctly in horizontal fieldset mode.
+        </p>
+
+        <BFormGroup
+          label="Click me to focus input"
+          label-cols-md="4"
+          label-align-md="end"
+          class="test-form-group"
+        >
+          <BFormInput
+            id="legend-click-test"
+            v-model="legendTestValue"
+            placeholder="Should focus when legend is clicked"
+          />
+        </BFormGroup>
+
+        <p class="text-muted small">
+          ✓ Clicking the legend should focus the input<br />
+          ✓ No console errors should appear<br />
+          ✓ Works because BFormGroup now accesses $el from BCol component ref
+        </p>
       </BCol>
     </BRow>
   </BContainer>
@@ -106,6 +134,7 @@ const onTagState = (valid: string[], invalid: string[], duplicate: string[]) => 
 }
 
 const name = ref('')
+const legendTestValue = ref('')
 </script>
 
 <style scoped>
