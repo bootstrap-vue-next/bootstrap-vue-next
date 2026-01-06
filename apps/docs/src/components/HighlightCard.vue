@@ -125,8 +125,10 @@ const openInStackBlitz = async () => {
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Failed to open StackBlitz project:', error)
-    // Fallback to basic StackBlitz
-    window.open('https://stackblitz.com/fork/vue-ts', '_blank')
+    // Fallback to basic StackBlitz (only in browser environment)
+    if (typeof window !== 'undefined') {
+      window.open('https://stackblitz.com/fork/vue-ts', '_blank')
+    }
   } finally {
     // Reset loading state after a short delay to show completion
     setTimeout(() => {
