@@ -6,8 +6,8 @@
     :role="isFieldset ? null : 'group'"
     :aria-invalid="computedAriaInvalid"
     :aria-labelledby="isFieldset && isHorizontal ? labelId : null"
-    :class="[stateClass, {'was-validated': props.validated}, rootAttrs.class]"
-    :style="rootAttrs.style"
+    v-bind="$attrs"
+    :class="[stateClass, {'was-validated': props.validated}]"
     class="b-form-group"
   >
     <ContentTemplate.define>
@@ -37,19 +37,15 @@
       <template v-if="slots.label || props.label || isHorizontal">
         <BCol
           v-if="isHorizontal"
-          v-bind="{...labelColProps, ...props.labelWrapperAttrs}"
-          :class="labelAlignClasses"
+          v-bind="labelColProps"
+          :id="labelId"
+          :tag="labelTag"
+          :for="computedLabelFor || null"
+          :tabindex="isFieldset ? '-1' : null"
+          :class="[labelAlignClasses, labelClasses]"
+          @click="isFieldset ? onLegendClick : null"
         >
-          <component
-            :is="labelTag"
-            :id="labelId"
-            :for="computedLabelFor || null"
-            :tabindex="isFieldset ? '-1' : null"
-            :class="labelClasses"
-            @click="isFieldset ? onLegendClick : null"
-          >
-            <slot name="label">{{ props.label }}</slot>
-          </component>
+          <slot name="label">{{ props.label }}</slot>
         </BCol>
         <component
           :is="labelTag"
@@ -65,9 +61,9 @@
       </template>
     </LabelContentTemplate.define>
     <!-- End of definitions -->
-    <BFormRow v-if="isHorizontal" :class="rowAttrs.class" :style="rowAttrs.style">
+    <BFormRow v-if="isHorizontal">
       <LabelContentTemplate.reuse />
-      <BCol v-bind="{...contentColProps, ...props.contentWrapperAttrs}" ref="_content">
+      <BCol v-bind="contentColProps" ref="_content">
         <slot
           :id="computedId"
           :aria-describedby="null"
@@ -103,7 +99,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, provide, type Ref, ref, toRef, useAttrs, useTemplateRef} from 'vue'
+import {computed, provide, type Ref, ref, toRef, useTemplateRef} from 'vue'
 import {useAriaInvalid} from '../../composables/useAriaInvalid'
 import {attemptFocus, isVisible} from '../../utils/dom'
 import BCol from '../BContainer/BCol.vue'
@@ -132,7 +128,6 @@ const _props = withDefaults(defineProps<BFormGroupProps>(), {
   contentColsMd: undefined,
   contentColsSm: undefined,
   contentColsXl: undefined,
-  contentWrapperAttrs: undefined,
   description: undefined,
   disabled: false,
   feedbackAriaLive: 'assertive',
@@ -154,7 +149,6 @@ const _props = withDefaults(defineProps<BFormGroupProps>(), {
   labelFor: undefined,
   labelSize: undefined,
   labelVisuallyHidden: false,
-  labelWrapperAttrs: undefined,
   state: null,
   tooltip: false,
   validFeedback: undefined,
@@ -162,7 +156,6 @@ const _props = withDefaults(defineProps<BFormGroupProps>(), {
 })
 const props = useDefaults(_props, 'BFormGroup')
 const slots = defineSlots<BFormGroupSlots>()
-const attrs = useAttrs()
 
 const LabelContentTemplate = createReusableTemplate()
 const ContentTemplate = createReusableTemplate()
@@ -277,19 +270,4 @@ const validFeedbackId = useId(undefined, '_BV_feedback_valid_')
 const descriptionId = useId(undefined, '_BV_description_')
 
 const isFieldset = computed(() => !computedLabelFor.value)
-
-// Computed properties for attribute placement based on layout mode
-const rootAttrs = computed(() => ({
-  class: isHorizontal.value ? null : attrs.class,
-  style: isHorizontal.value ? null : attrs.style,
-}))
-
-const rowAttrs = computed(() =>
-  isHorizontal.value
-    ? {
-        class: attrs.class,
-        style: attrs.style,
-      }
-    : {}
-)
 </script>
