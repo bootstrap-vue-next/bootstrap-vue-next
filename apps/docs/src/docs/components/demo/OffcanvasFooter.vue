@@ -7,12 +7,12 @@
       no-header
       shadow
     >
-      <template #footer="{hide = () => {}}">
+      <template #footer="slotProps">
         <div class="d-flex bg-dark text-light align-items-center px-3 py-2">
           <strong class="me-auto">Footer</strong>
           <BButton
             size="sm"
-            @click="($event) => hide()"
+            @click="($event) => slotProps?.hide?.()"
             >Close</BButton
           >
         </div>

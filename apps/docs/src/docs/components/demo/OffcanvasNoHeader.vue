@@ -7,7 +7,7 @@
       no-header
       shadow
     >
-      <template #default="{hide = () => {}}">
+      <template #default="slotProps">
         <div class="p-3">
           <h4 id="offcanvas-no-header-title">Custom header offcanvas</h4>
           <p>
@@ -22,7 +22,7 @@
           <BButton
             variant="primary"
             block
-            @click="($event) => hide()"
+            @click="($event) => slotProps?.hide?.()"
             >Close Offcanvas</BButton
           >
         </div>
