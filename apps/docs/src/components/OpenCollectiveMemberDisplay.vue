@@ -76,7 +76,15 @@ import {data} from '../data/opencollective.data'
 
 const OpenCollectiveData = data as CollectivePartialResponse
 
-// Helper function to group array elements by a key
+/**
+ * Polyfill for Object.groupBy which is not available in older Node.js versions.
+ * Groups array elements by a key function into a record.
+ * @template T - The type of array elements
+ * @template K - The type of keys (must be string, number, or symbol)
+ * @param array - The array to group
+ * @param keyFn - Function that returns the key for each element
+ * @returns A record where keys map to arrays of elements
+ */
 function groupBy<T, K extends string | number | symbol>(
   array: T[],
   keyFn: (item: T) => K

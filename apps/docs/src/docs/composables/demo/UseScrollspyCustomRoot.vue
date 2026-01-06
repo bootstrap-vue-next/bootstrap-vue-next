@@ -14,6 +14,8 @@ const content = useTemplateRef('content')
 const target = useTemplateRef('target')
 
 // Use computed to safely access document only in browser context
+// During SSR, rootElement will be undefined, which is acceptable as
+// useScrollspy will use the default viewport in that case
 const rootElement = computed(() => {
   if (typeof document !== 'undefined') {
     return document.querySelector('#custom-viewport') as HTMLElement
