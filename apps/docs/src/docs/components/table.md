@@ -49,7 +49,7 @@ defines the supported optional item record modifier properties
 <<< DEMO ./demo/TableCellVariants.vue
 
 A provider function can be provided instead of setting `items` to return items syncronously or asyncronously.
-See the ["Using Items Provider functions"](#using-items-provider-functions) section below for more details.
+See the ["Using Item Provider functions"](#using-items-provider-functions) section below for more details.
 
 ### Table item notes and warnings
 
@@ -212,10 +212,10 @@ headers, sticky columns and the table sorting feature, all require BootstrapVueN
 
 You can also style every row using the `tbody-tr-class` prop, and optionally supply additional attributes via the `tbody-tr-attr` prop:
 
-| Property         | Type                                                                                            | Description                                         |
-| ---------------- | ----------------------------------------------------------------------------------------------- | --------------------------------------------------- |
-| `tbody-tr-class` | `((item: Items \| null, type: TableRowType) => TableStrictClassValue) \| TableStrictClassValue` | Classes to be applied to every row on the table.    |
-| `tbody-tr-attr`  | `((item: Items \| null, type: TableRowType) => AttrsValue) \| AttrsValue`                       | Attributes to be applied to every row on the table. |
+| Property         | Type                                                                                           | Description                                         |
+| ---------------- | ---------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| `tbody-tr-class` | `((item: Item \| null, type: TableRowType) => TableStrictClassValue) \| TableStrictClassValue` | Classes to be applied to every row on the table.    |
+| `tbody-tr-attr`  | `((item: Item \| null, type: TableRowType) => AttrsValue) \| AttrsValue`                       | Attributes to be applied to every row on the table. |
 
 When passing a function reference to `tbody-tr-class` or `tbody-tr-attr`, the function's arguments
 will be as follows:
@@ -327,7 +327,7 @@ following custom CSS:
 
 <<< DEMO ./demo/TableBusy.vue
 
-Also see the [Using Items Provider Functions](#using-items-provider-functions) below for additional
+Also see the [Using Item Provider Functions](#using-items-provider-functions) below for additional
 information on the `busy` state.
 
 **Notes:**
@@ -360,7 +360,7 @@ The slot's scope variable (`data` in the above sample) will have the following p
 | Property           | Type                               | Description                                                                                                                                                                  |
 | ------------------ | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `index`            | number                             | The row number (indexed from zero) relative to the _displayed_ rows                                                                                                          |
-| `item`             | Items                              | The entire raw record data (i.e. `items[index]`) for this row (before any formatter is applied)                                                                              |
+| `item`             | Item                               | The entire raw record data (i.e. `items[index]`) for this row (before any formatter is applied)                                                                              |
 | `value`            | unknown                            | The value for this key in the record (`null` or `undefined` if a virtual column), or the output of the field's [`formatter` function](#formatter-callback)                   |
 | `unformatted`      | unknown                            | The raw value for this key in the item record (`null` or `undefined` if a virtual column), before being passed to the field's [`formatter` function](#formatter-callback)    |
 | `field`            | `(typeof computedFields.value)[0]` | The field's normalized field definition object                                                                                                                               |
@@ -430,14 +430,14 @@ so the fallback chain will stop with the default `'head(<fieldkey>)'` rather tha
 The slots can be optionally scoped (`data` in the above example), and will have the following
 properties:
 
-| Property        | Type                        | Description                                                                               |
-| --------------- | --------------------------- | ----------------------------------------------------------------------------------------- |
-| `column`        | `LiteralUnion<keyof Items>` | The fields's `key` value                                                                  |
-| `field`         | `TableField<Items>`         | the field's object (from the `fields` prop)                                               |
-| `label`         | `string \| undefined`       | The fields label value (also available as `data.field.label`)                             |
-| `isFoot`        | `boolean`                   | Currently rending the foot if `true`                                                      |
-| `selectAllRows` | `() => void`                | Select all rows (applicable if the table is in [`selectable`](#row-select-support) mode   |
-| `clearSelected` | `() => void`                | Unselect all rows (applicable if the table is in [`selectable`](#row-select-support) mode |
+| Property        | Type                       | Description                                                                               |
+| --------------- | -------------------------- | ----------------------------------------------------------------------------------------- |
+| `column`        | `LiteralUnion<keyof Item>` | The fields's `key` value                                                                  |
+| `field`         | `TableField<Item>`         | the field's object (from the `fields` prop)                                               |
+| `label`         | `string \| undefined`      | The fields label value (also available as `data.field.label`)                             |
+| `isFoot`        | `boolean`                  | Currently rending the foot if `true`                                                      |
+| `selectAllRows` | `() => void`               | Select all rows (applicable if the table is in [`selectable`](#row-select-support) mode   |
+| `clearSelected` | `() => void`               | Unselect all rows (applicable if the table is in [`selectable`](#row-select-support) mode |
 
 When placing inputs, buttons, selects or links within a `head(...)` or `foot(...)` slot, note that
 `head-clicked` event will not be emitted when the input, select, textarea is clicked (unless they
@@ -461,12 +461,12 @@ rather than native browser table child elements.
 
 Slot `thead-top` can be optionally scoped, receiving an object with the following properties:
 
-| Property        | Type                  | Description                                                                               |
-| --------------- | --------------------- | ----------------------------------------------------------------------------------------- |
-| `columns`       | `number`              | The number of columns in the rendered table                                               |
-| `fields`        | `TableField<Items>[]` | Array of field definition objects (normalized to the array of objects format)             |
-| `selectAllRows` | `() => void`          | Select all rows (applicable if the table is in [`selectable`](#row-select-support) mode   |
-| `clearSelected` | `() => void`          | Unselect all rows (applicable if the table is in [`selectable`](#row-select-support) mode |
+| Property        | Type                 | Description                                                                               |
+| --------------- | -------------------- | ----------------------------------------------------------------------------------------- |
+| `columns`       | `number`             | The number of columns in the rendered table                                               |
+| `fields`        | `TableField<Item>[]` | Array of field definition objects (normalized to the array of objects format)             |
+| `selectAllRows` | `() => void`         | Select all rows (applicable if the table is in [`selectable`](#row-select-support) mode   |
+| `clearSelected` | `() => void`         | Unselect all rows (applicable if the table is in [`selectable`](#row-select-support) mode |
 
 ### Creating a custom footer
 
@@ -477,11 +477,11 @@ your custom footer layout.
 
 Slot `custom-foot` can be optionally scoped, receiving an object with the following properties:
 
-| Property  | Type                  | Description                                                                                |
-| --------- | --------------------- | ------------------------------------------------------------------------------------------ |
-| `columns` | `number`              | The number of columns in the rendered table                                                |
-| `fields`  | `TableField<Items>[]` | Array of field definition objects (normalized to the array of objects format)              |
-| `items`   | `readonly Items[]`    | Array of the currently _displayed_ items records - after filtering, sorting and pagination |
+| Property  | Type                 | Description                                                                                |
+| --------- | -------------------- | ------------------------------------------------------------------------------------------ |
+| `columns` | `number`             | The number of columns in the rendered table                                                |
+| `fields`  | `TableField<Item>[]` | Array of field definition objects (normalized to the array of objects format)              |
+| `items`   | `readonly Item[]`    | Array of the currently _displayed_ items records - after filtering, sorting and pagination |
 
 **Notes:**
 
@@ -505,12 +505,12 @@ either falsy or an array of length 0.
 The slot can optionally be scoped. The slot's scope (`scope` in the above example) will have the
 following properties:
 
-| Property            | Type                  | Description                                        |
-| ------------------- | --------------------- | -------------------------------------------------- |
-| `emptyFilteredHtml` | `string`              | The `empty-filtered-html` prop                     |
-| `emptyFilteredText` | `string`              | The `empty-filtered-text` prop                     |
-| `fields`            | `TableField<Items>[]` | The `fields` prop                                  |
-| `items`             | `Items[]`             | The `items` prop. Exposed here to check null vs [] |
+| Property            | Type                 | Description                                        |
+| ------------------- | -------------------- | -------------------------------------------------- |
+| `emptyFilteredHtml` | `string`             | The `empty-filtered-html` prop                     |
+| `emptyFilteredText` | `string`             | The `empty-filtered-text` prop                     |
+| `fields`            | `TableField<Item>[]` | The `fields` prop                                  |
+| `items`             | `Item[]`             | The `items` prop. Exposed here to check null vs [] |
 
 ::: info NOTE
 If you previously used the `emptyHtml` or `emtpyFilteredHtml` scoped slots or the `empty-html` or
@@ -619,9 +619,9 @@ onMounted(() => {
 
 | Property          | Type                       | Description                                                                                                                   |
 | ----------------- | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `item`            | `Items`                    | The entire row record data object                                                                                             |
+| `item`            | `Item`                     | The entire row record data object                                                                                             |
 | `index`           | `number`                   | The current visible row number                                                                                                |
-| `fields`          | `TableField<Items>[]`      | The normalized fields definition array (in the _array of objects_ format)                                                     |
+| `fields`          | `TableField<Item>[]`       | The normalized fields definition array (in the _array of objects_ format)                                                     |
 | `toggleExpansion` | `() => void`               | Function to toggle visibility of the row's expansion slot                                                                     |
 | `rowSelected`     | `boolean`                  | Will be `true` if the row has been selected. See section [Row select support](#row-select-support) for additional information |
 | `selectRow`       | `(index?: number) => void` | When called, selects the current row. See section [Row select support](#row-select-support) for additional information        |
@@ -712,12 +712,12 @@ selected, such as a virtual column as shown in the example below.
 
 See [Row select support](#row-select-support) for selection related exposed functions
 
-| Method                                           | Description                                                                                                                             |
-| ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `items(): Items[]`                               | Returns the complete set of items used to build the table.                                                                              |
-| `displayItems(): Items[]`                        | Returns the set of items currently displayed in the tabe. See [Complete Example](#complete-example) for usage                           |
-| `getStringValue(ob: Items, key: string): string` | Returns the formatted string value of the field `key` of the object `ob`. See [Custom Sort Comparers](#custom-sort-comparers) for usage |
-| `refresh()`                                      | Calls the async provider to refresh the table items                                                                                     |
+| Method                                          | Description                                                                                                                             |
+| ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `items(): Item[]`                               | Returns the complete set of items used to build the table.                                                                              |
+| `displayItems(): Item[]`                        | Returns the set of items currently displayed in the tabe. See [Complete Example](#complete-example) for usage                           |
+| `getStringValue(ob: Item, key: string): string` | Returns the formatted string value of the field `key` of the object `ob`. See [Custom Sort Comparers](#custom-sort-comparers) for usage |
+| `refresh()`                                     | Calls the async provider to refresh the table items                                                                                     |
 
 ## Sorting
 
@@ -885,7 +885,7 @@ or [items provider](#using-items-provider-functions) based filtering.
 ### Custom filter function
 
 You can also use a custom filter function, by setting the prop `filter-function` to a reference of
-custom filter test function. The filter function signature is `(item: Readonly<Items>, filter: string | undefined) => boolean`
+custom filter test function. The filter function signature is `(item: Readonly<Item>, filter: string | undefined) => boolean`
 
 - `item` is the original item row record data object.
 - `filter` value of the `filter` prop
@@ -902,7 +902,7 @@ The display of the `empty-filter-text` relies on the truthiness of the `filter` 
 ### Filter events
 
 When local filtering is applied, and the resultant number of items change, `<BTable>` will emit the
-`filtered` event with a single argument of type `Items[]`: which is the complete list of
+`filtered` event with a single argument of type `Item[]`: which is the complete list of
 items passing the filter routine. **Treat this argument as read-only.**
 
 Setting the prop `filter` to null or an empty string will clear local items filtering.
@@ -919,7 +919,7 @@ You can use the [`<BPagination>`](/docs/components/pagination) component in conj
 
 ## Using items provider functions
 
-As mentioned under the [Items](#items-record-data) prop section, it is possible to use a function to
+As mentioned under the [Item](#items-record-data) prop section, it is possible to use a function to
 provide the row data (items) by specifying a function reference via the `provider` prop and leaving
 the `items` prop undefined.
 
@@ -1010,7 +1010,7 @@ tabular data. The `<BTableLite>` component provides all of the styling and forma
 - Filtering
 - Sorting
 - Pagination
-- Items provider support
+- Item provider support
 - Selectable rows
 - Busy table state and styling
 - Fixed top and bottom rows

@@ -510,34 +510,34 @@ export type BOverlaySlots = {
   }) => any
 }
 
-type EmptySlotScope<Items> = {
+type EmptySlotScope<Item> = {
   emptyFilteredText: string
   emptyText: string
-  fields: TableField<Items>[]
-  items: readonly Items[]
+  fields: TableField<Item>[]
+  items: readonly Item[]
 }
-type SortSlotScope<Items> = {
+type SortSlotScope<Item> = {
   label: string | undefined
-  column: LiteralUnion<keyof Items>
-  field: TableField<Items>
+  column: LiteralUnion<keyof Item>
+  field: TableField<Item>
   isFoot: false
 }
-export interface BTableSlots<Items> extends Omit<
-  BTableLiteSlots<Items>,
+export interface BTableSlots<Item> extends Omit<
+  BTableLiteSlots<Item>,
   'thead-top' | 'row-expansion' | `head(${string})` | `foot(${string})` | `cell(${string})`
 > {
   // BTableLite
   'thead-top'?: (props: {
     columns: number
-    fields: TableField<Items>[]
+    fields: TableField<Item>[]
     selectAllRows: () => void
     clearSelected: () => void
   }) => any
 
   [key: `head(${string})`]: (props: {
     label: string | undefined
-    column: LiteralUnion<keyof Items>
-    field: TableField<Items>
+    column: LiteralUnion<keyof Item>
+    field: TableField<Item>
     isFoot: false
     selectAllRows: () => void
     clearSelected: () => void
@@ -547,9 +547,9 @@ export interface BTableSlots<Items> extends Omit<
     value: unknown
     unformatted: unknown
     index: number
-    item: Items
-    field: TableField<Items>
-    items: readonly Items[]
+    item: Item
+    field: TableField<Item>
+    items: readonly Item[]
     toggleExpansion: () => void
     expansionShowing: boolean
     rowSelected: boolean
@@ -558,9 +558,9 @@ export interface BTableSlots<Items> extends Omit<
   }) => any
 
   'row-expansion'?: (props: {
-    item: Items
+    item: Item
     toggleExpansion: () => void
-    fields: TableField<Items>[]
+    fields: TableField<Item>[]
     index: number
     rowSelected: boolean
     selectRow: (index?: number) => void
@@ -569,8 +569,8 @@ export interface BTableSlots<Items> extends Omit<
 
   [key: `foot(${string})`]: (props: {
     label: string | undefined
-    column: LiteralUnion<keyof Items>
-    field: TableField<Items>
+    column: LiteralUnion<keyof Item>
+    field: TableField<Item>
     isFoot: true
     selectAllRows: () => void
     clearSelected: () => void
@@ -578,17 +578,17 @@ export interface BTableSlots<Items> extends Omit<
 
   // end btable slots
 
-  [key: `sortAsc(${string})`]: (props: SortSlotScope<Items>) => any
+  [key: `sortAsc(${string})`]: (props: SortSlotScope<Item>) => any
 
-  [key: `sortDesc(${string})`]: (props: SortSlotScope<Items>) => any
+  [key: `sortDesc(${string})`]: (props: SortSlotScope<Item>) => any
 
-  [key: `sortDefault(${string})`]: (props: SortSlotScope<Items>) => any
+  [key: `sortDefault(${string})`]: (props: SortSlotScope<Item>) => any
 
   'table-busy'?: (props: Record<string, never>) => any
 
-  'empty-filtered'?: (props: EmptySlotScope<Items>) => any
+  'empty-filtered'?: (props: EmptySlotScope<Item>) => any
 
-  'empty'?: (props: EmptySlotScope<Items>) => any
+  'empty'?: (props: EmptySlotScope<Item>) => any
 }
 export type BColSlots = {
   default?: (props: Record<string, never>) => any
@@ -600,57 +600,57 @@ export type BContainerSlots = {
   default?: (props: Record<string, never>) => any
 }
 
-export type BTableLiteSlots<Items> = {
-  'table-colgroup'?: (props: {fields: TableField<Items>[]}) => any
+export type BTableLiteSlots<Item> = {
+  'table-colgroup'?: (props: {fields: TableField<Item>[]}) => any
 
-  'thead-top'?: (props: {columns: number; fields: TableField<Items>[]}) => any
+  'thead-top'?: (props: {columns: number; fields: TableField<Item>[]}) => any
   [key: `head(${string})`]: (props: {
     label: string | undefined
-    column: LiteralUnion<keyof Items>
-    field: TableField<Items>
+    column: LiteralUnion<keyof Item>
+    field: TableField<Item>
     isFoot: false
   }) => any
   'thead-sub'?: (props: {
-    items: readonly Items[]
-    fields: TableField<Items>[]
-    field: TableField<Items>
+    items: readonly Item[]
+    fields: TableField<Item>[]
+    field: TableField<Item>
   }) => any
   'custom-body'?: (props: {
-    fields: TableField<Items>[]
-    items: readonly Items[]
+    fields: TableField<Item>[]
+    items: readonly Item[]
     columns: number
   }) => any
 
-  'top-row'?: (props: {columns: number; fields: TableField<Items>[]}) => any
+  'top-row'?: (props: {columns: number; fields: TableField<Item>[]}) => any
   [key: `cell(${string})`]: (props: {
     value: unknown
     unformatted: unknown
     index: number
-    item: Items
-    field: TableField<Items>
-    items: readonly Items[]
+    item: Item
+    field: TableField<Item>
+    items: readonly Item[]
     toggleExpansion: () => void
     expansionShowing: boolean
   }) => any
   'row-expansion'?: (props: {
-    item: Items
+    item: Item
     toggleExpansion: () => void
-    fields: TableField<Items>[]
+    fields: TableField<Item>[]
     index: number
   }) => any
 
-  'bottom-row'?: (props: {columns: number; fields: TableField<Items>[]}) => any
+  'bottom-row'?: (props: {columns: number; fields: TableField<Item>[]}) => any
 
   [key: `foot(${string})`]: (props: {
     label: string | undefined
-    column: LiteralUnion<keyof Items>
-    field: TableField<Items>
+    column: LiteralUnion<keyof Item>
+    field: TableField<Item>
     isFoot: true
   }) => any
 
   'custom-foot'?: (props: {
-    fields: TableField<Items>[]
-    items: readonly Items[]
+    fields: TableField<Item>[]
+    items: readonly Item[]
     columns: number
   }) => any
 

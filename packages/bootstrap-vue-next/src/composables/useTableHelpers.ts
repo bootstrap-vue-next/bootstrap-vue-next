@@ -39,7 +39,7 @@ import {getDataLabelAttr, getWithGetter, type StackedProps} from '../utils/table
 import {useDebounceFn} from '../utils/debounce'
 import {useItemTracker} from './useTableLiteHelpers'
 
-export const useTableMapper = <Items>({
+export const useTableMapper = <Item>({
   fields,
   items,
   stackedProps,
@@ -47,8 +47,8 @@ export const useTableMapper = <Items>({
   events,
   pagination,
 }: {
-  items: MaybeRefOrGetter<readonly Items[]>
-  fields: MaybeRefOrGetter<readonly TableFieldRaw<Items>[]>
+  items: MaybeRefOrGetter<readonly Item[]>
+  fields: MaybeRefOrGetter<readonly TableFieldRaw<Item>[]>
   stackedProps: {
     stacked: MaybeRefOrGetter<StackedProps['stacked']>
     labelStacked: MaybeRefOrGetter<StackedProps['labelStacked']>
@@ -59,12 +59,12 @@ export const useTableMapper = <Items>({
     sort: {
       iconLeft: MaybeRefOrGetter<boolean>
       isSortable: MaybeRefOrGetter<boolean>
-      sortCompare: MaybeRef<BTableSortByComparerFunction<Items> | undefined>
+      sortCompare: MaybeRef<BTableSortByComparerFunction<Item> | undefined>
       by: MaybeRefOrGetter<readonly BTableSortBy[] | undefined>
       noLocalSorting: MaybeRefOrGetter<boolean>
     }
     filter: {
-      filterFunction: MaybeRef<BTableFilterFunction<Items> | undefined>
+      filterFunction: MaybeRef<BTableFilterFunction<Item> | undefined>
       filter: MaybeRefOrGetter<string | undefined>
       filterable: MaybeRefOrGetter<readonly string[] | undefined>
     }
@@ -74,10 +74,10 @@ export const useTableMapper = <Items>({
     noProviderPaging: MaybeRefOrGetter<boolean>
     noProviderFiltering: MaybeRefOrGetter<boolean>
     usesProvider: MaybeRefOrGetter<boolean>
-    items: MaybeRefOrGetter<readonly Items[]>
+    items: MaybeRefOrGetter<readonly Item[]>
   }
   events: {
-    onChange: (items: readonly Items[]) => void
+    onChange: (items: readonly Item[]) => void
   }
 }) => {
   const sortByModelResolved = readonly(toRef(pagination.sort.by))
@@ -87,7 +87,7 @@ export const useTableMapper = <Items>({
 
   const isFilterableTable = computed(() => !!filterResolved.value)
 
-  const computedFields = computed<TableField<Items>[]>(() =>
+  const computedFields = computed<TableField<Item>[]>(() =>
     toValue(fields).map((el) => {
       if (!isTableField(el)) {
         const label = startCase(el as string)
@@ -117,7 +117,7 @@ export const useTableMapper = <Items>({
                 : 'none'
 
       return {
-        ...(el as TableField<Items>),
+        ...(el as TableField<Item>),
         thAttr: {
           'aria-sort': sortValue,
           ...el.thAttr,
@@ -132,10 +132,10 @@ export const useTableMapper = <Items>({
     })
   )
 
-  const getFormatter = (value: TableField<Items>): TableFieldFormatter<Items> | undefined =>
+  const getFormatter = (value: TableField<Item>): TableFieldFormatter<Item> | undefined =>
     typeof value.sortByFormatted === 'function' ? value.sortByFormatted : value.formatter
 
-  const getStringValue = (ob: Items, key: string): string => {
+  const getStringValue = (ob: Item, key: string): string => {
     if (!isTableItem(ob)) return String(ob)
 
     const sortField = computedFields.value.find((el) => {
@@ -154,12 +154,12 @@ export const useTableMapper = <Items>({
   }
 
   const fieldByKey = computed(() => {
-    const map = new Map<string | number | symbol, TableField<Items>>()
+    const map = new Map<string | number | symbol, TableField<Item>>()
     for (const f of computedFields.value) if (isTableField(f)) map.set(f.key, f)
     return map
   })
 
-  const computedItems = computed<Items[]>(() => {
+  const computedItems = computed<Item[]>(() => {
     const filterableValue = toValue(pagination.filter.filterable)
     const filterFunctionValue = unref(pagination.filter.filterFunction)
     const providerItems = toValue(provider.items)
@@ -167,13 +167,13 @@ export const useTableMapper = <Items>({
 
     const sortByItems = sortByModelResolved.value?.filter((el) => !!el.order)
 
-    const mapItem = (item: Items): Items => {
+    const mapItem = (item: Item): Item => {
       if (
         typeof item === 'object' &&
         item !== null &&
         Object.keys(item).some((key) => key.includes('.'))
       ) {
-        let newItem: Partial<Items> = {}
+        let newItem: Partial<Item> = {}
         for (const key in item) {
           if (key.includes('.')) {
             newItem = set(newItem, key, item[key])
@@ -181,12 +181,12 @@ export const useTableMapper = <Items>({
             newItem[key] = item[key]
           }
         }
-        return newItem as Items // This should be an items at this point
+        return newItem as Item // This should be an items at this point
       }
       return item
     }
 
-    const filterItem = (item: Items): boolean => {
+    const filterItem = (item: Item): boolean => {
       if (!isTableItem(item)) return true
 
       return Object.entries(item).some(([key, val]) => {
@@ -231,7 +231,7 @@ export const useTableMapper = <Items>({
 
         return acc
       },
-      [] as Items[]
+      [] as Item[]
     )
 
     if (
@@ -267,7 +267,7 @@ export const useTableMapper = <Items>({
     return mappedItems
   })
 
-  const computedDisplayItems = computed<Items[]>(() => {
+  const computedDisplayItems = computed<Item[]>(() => {
     const perPageNumber = toValue(pagination.perPage)
     const currentPageNumber = toValue(pagination.currentPage)
     if (

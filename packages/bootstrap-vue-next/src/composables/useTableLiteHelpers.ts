@@ -194,18 +194,18 @@ export const useItemExpansion = <Item>({
   }
 }
 
-export const useTableKeyboardNavigation = <Items>(
+export const useTableKeyboardNavigation = <Item>(
   {
     items,
     id,
   }: {
-    items: MaybeRefOrGetter<readonly Items[]>
+    items: MaybeRefOrGetter<readonly Item[]>
     id: MaybeRefOrGetter<string>
   },
   events: {
-    onHeadClicked: (obj: TableHeadClickedEventObject<Items>) => void
-    onRowClicked: (obj: TableRowEventObject<Items>) => void
-    onRowMiddleClicked: (obj: TableRowEventObject<Items>) => void
+    onHeadClicked: (obj: TableHeadClickedEventObject<Item>) => void
+    onRowClicked: (obj: TableRowEventObject<Item>) => void
+    onRowMiddleClicked: (obj: TableRowEventObject<Item>) => void
   }
 ) => {
   // Inject keyboard navigation state from parent BTable
@@ -233,7 +233,7 @@ export const useTableKeyboardNavigation = <Items>(
     }
   }
 
-  const handleRowKeydown = (item: Items, itemIndex: number, event: KeyboardEvent) => {
+  const handleRowKeydown = (item: Item, itemIndex: number, event: KeyboardEvent) => {
     const {target, code, shiftKey} = event
 
     if (target && (target as Element).tagName !== 'TR' && document.activeElement === target) return
@@ -282,7 +282,7 @@ export const useTableKeyboardNavigation = <Items>(
     }
   }
 
-  const handleMiddleClick = (item: Items, itemIndex: number, event: MouseEvent) => {
+  const handleMiddleClick = (item: Item, itemIndex: number, event: MouseEvent) => {
     if (event.button === 1 && !filterEvent(event)) {
       events.onRowMiddleClicked({item, index: itemIndex, event})
     }

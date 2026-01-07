@@ -1064,7 +1064,7 @@ BootstrapVue adds utility classes to the `<table>` including `b-table-select-sin
 <NotYetImplemented/>The `aria-multiselect` attribute is not added to `<table>`
 <NotYetImplemented/>Automatically adding accessibility attributes `role` and `scope` to helper components
 
-The `filtered` event has a single argument `Items[]` rather than two arguments with an array and length. The semantics haven't changed.
+The `filtered` event has a single argument `Item[]` rather than two arguments with an array and length. The semantics haven't changed.
 
 <NotYetImplemented/> Heading and data row accessibility
 

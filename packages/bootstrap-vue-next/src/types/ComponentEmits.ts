@@ -44,22 +44,22 @@ export interface BToastEmits extends showHideEmits {
   'close-countdown': [value: number]
 }
 
-export interface BTableEmits<Items> extends BTableLiteEmits<Items> {
-  'filtered': [value: readonly Items[]]
-  'row-selected': [value: Items]
-  'row-unselected': [value: Items]
+export interface BTableEmits<Item> extends BTableLiteEmits<Item> {
+  'filtered': [value: readonly Item[]]
+  'row-selected': [value: Item]
+  'row-unselected': [value: Item]
   'sorted': [value: BTableSortBy]
-  'change': [value: readonly Items[]]
+  'change': [value: readonly Item[]]
 }
 
-export interface BTableLiteEmits<Items> {
-  'head-clicked': [object: TableHeadClickedEventObject<Items>]
-  'row-clicked': TableRowEvent<Items>
-  'row-dblclicked': TableRowEvent<Items>
-  'row-contextmenu': TableRowEvent<Items>
-  'row-hovered': TableRowEvent<Items>
-  'row-unhovered': TableRowEvent<Items>
-  'row-middle-clicked': TableRowEvent<Items>
+export interface BTableLiteEmits<Item> {
+  'head-clicked': [object: TableHeadClickedEventObject<Item>]
+  'row-clicked': TableRowEvent<Item>
+  'row-dblclicked': TableRowEvent<Item>
+  'row-contextmenu': TableRowEvent<Item>
+  'row-hovered': TableRowEvent<Item>
+  'row-unhovered': TableRowEvent<Item>
+  'row-middle-clicked': TableRowEvent<Item>
 }
 
 export type BAlertEmits = BToastEmits

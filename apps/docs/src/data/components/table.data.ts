@@ -38,7 +38,7 @@ export default {
     const tableRowEventArgs = <const T extends string>(action: T) =>
       ({
         value: {
-          type: 'TableRowEventObject<Items>',
+          type: 'TableRowEventObject<Item>',
           description: `Object payload with the row item, index, and event for the row ${action}`,
         },
       }) satisfies EmitArgReference
@@ -62,7 +62,7 @@ export default {
         description: 'The number of columns in the table',
       },
       fields: {
-        type: 'TableField<Items>[]',
+        type: 'TableField<Item>[]',
         description: 'The normalized fields definition array (in the array of objects format)',
       },
     } as const
@@ -222,7 +222,7 @@ export default {
             'Apply a Bootstrap theme color variant to the head. May take precedence over head-row-variant',
         },
         items: {
-          type: 'readonly Items[]',
+          type: 'readonly Item[]',
           default: '() => []',
         },
         labelStacked: {
@@ -236,7 +236,7 @@ export default {
           default: undefined,
         },
         expandedItems: {
-          type: 'readonly Items[]',
+          type: 'readonly Item[]',
           default: undefined,
           description:
             'Array of items that are currently expanded (have their row-expansion slot visible). Use v-model:expanded-items to bind this. When a primary-key is provided, expansion state persists across item array updates. Also available via the alias v-model:item-details.',
@@ -252,7 +252,7 @@ export default {
           default: undefined,
         },
         tbodyTrAttrs: {
-          type: '((item: Items | null, type: TableRowType) => AttrsValue) | AttrsValue',
+          type: '((item: Item | null, type: TableRowType) => AttrsValue) | AttrsValue',
           default: undefined,
         },
         tbodyTrClass: {
@@ -291,7 +291,7 @@ export default {
               description: "Will be true if the row's row-expansion scoped slot is visible",
             },
             field: {
-              type: 'TableField<Items>',
+              type: 'TableField<Item>',
               description: "The field's normalized definition object (from the fields prop)",
             },
             index: {
@@ -299,7 +299,7 @@ export default {
               description: "The row's index (zero-based) with respect to the displayed rows",
             },
             item: {
-              type: 'readonly Items[]',
+              type: 'readonly Item[]',
               description: "The row's item data object",
             },
             toggleExpansion: {
@@ -324,12 +324,12 @@ export default {
             'Custom footer content slot for user supplied B-TR, B-TH, B-TD. Optionally Scoped',
           scope: {
             fields: {
-              type: 'TableField<Items>[]',
+              type: 'TableField<Item>[]',
               description:
                 'The normalized fields definition array (in the array of objects format)',
             },
             items: {
-              type: 'readonly Items[]',
+              type: 'readonly Item[]',
               description: 'Array of items that are currently being displayed',
             },
             columns: {
@@ -347,11 +347,11 @@ export default {
               description: 'Unselect all rows (applicable if the table is in selectable mode)',
             },
             column: {
-              type: 'LiteralUnion<keyof Items>',
+              type: 'LiteralUnion<keyof Item>',
               description: "The field's key value",
             },
             field: {
-              type: 'TableField<Items>',
+              type: 'TableField<Item>',
               description: "The field's normalized definition object (from the fields prop)",
             },
             isFoot: {
@@ -377,11 +377,11 @@ export default {
               description: 'Unselect all rows (applicable if the table is in selectable mode)',
             },
             column: {
-              type: 'LiteralUnion<keyof Items>',
+              type: 'LiteralUnion<keyof Item>',
               description: "The field's key value",
             },
             field: {
-              type: 'TableField<Items>',
+              type: 'TableField<Item>',
               description: "The field's normalized definition object (from the fields prop)",
             },
             isFoot: {
@@ -404,7 +404,7 @@ export default {
           scope: {
             ...rowSelectionScope,
             fields: {
-              type: 'TableField<Items>[]',
+              type: 'TableField<Item>[]',
               description:
                 'The normalized fields definition array (in the array of objects format)',
             },
@@ -413,7 +413,7 @@ export default {
               description: "The item's row index number (with respect to the displayed item rows)",
             },
             item: {
-              type: 'Items',
+              type: 'Item',
               description: "The entire row's record data object",
             },
             toggleExpansion: {
@@ -442,7 +442,7 @@ export default {
               description: "The field's label value",
             },
             fields: {
-              type: 'TableField<Items>[]',
+              type: 'TableField<Item>[]',
               description:
                 'The normalized fields definition array (in the array of objects format)',
             },
@@ -456,7 +456,7 @@ export default {
           description: 'Slot for user supplied `<colgroup>` element',
           scope: {
             fields: {
-              type: 'TableField<Items>[]',
+              type: 'TableField<Item>[]',
               description:
                 'The normalized fields definition array (in the array of objects format)',
             },
@@ -481,7 +481,7 @@ export default {
             "Emitted when a header or footer cell is clicked. Not applicable for 'custom-foot' slot",
           args: {
             value: {
-              type: 'TableHeadClickedEventObject<Items>',
+              type: 'TableHeadClickedEventObject<Item>',
               description:
                 'Object payload containing the key, field definition, native event, and whether the click originated from the footer.',
             },
@@ -521,7 +521,7 @@ export default {
           description: 'Emitted when local filtering causes a change in the number of items',
           args: {
             value: {
-              type: 'Items[]',
+              type: 'Item[]',
               description: 'Array of items after filtering (before local pagination occurs)',
             },
           },
@@ -530,7 +530,7 @@ export default {
           description: 'Emitted when a row or rows have been selected',
           args: {
             value: {
-              type: 'Items[]',
+              type: 'Item[]',
               description: 'Array of the row items that are selected',
             },
           },
@@ -539,7 +539,7 @@ export default {
           description: 'Emitted when a row or rows have been unselected',
           args: {
             value: {
-              type: 'Items[]',
+              type: 'Item[]',
               description: 'Array of the row items that are unselected',
             },
           },
@@ -616,7 +616,7 @@ export default {
             'Criteria for filtering. Internal filtering supports only string or RegExpr criteria (RegExp is not yet implemented)',
         },
         filterFunction: {
-          type: '(item: Readonly<Items>, filter: string | undefined) => boolean',
+          type: '(item: Readonly<Item>, filter: string | undefined) => boolean',
           default: undefined,
           description:
             'Function called during filtering of items, gets passed the current item being filtered. See docs for details.',
@@ -776,12 +776,12 @@ export default {
               description: 'The value of the empty-text prop',
             },
             fields: {
-              type: 'TableField<Items>[]',
+              type: 'TableField<Item>[]',
               description:
                 'The normalized fields definition array (in the array of objects format)',
             },
             items: {
-              type: 'Items[] | null',
+              type: 'Item[] | null',
               description: 'The items array.',
             },
           },
@@ -799,12 +799,12 @@ export default {
               description: 'The value of the empty-text prop',
             },
             fields: {
-              type: 'TableField<Items>[]',
+              type: 'TableField<Item>[]',
               description:
                 'The normalized fields definition array (in the array of objects format)',
             },
             items: {
-              type: 'Items[]',
+              type: 'Item[]',
               description: 'The items array.',
             },
           },
