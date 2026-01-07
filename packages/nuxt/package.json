@@ -38,10 +38,10 @@
     "@nuxt/kit": "^3.20.2"
   },
   "devDependencies": {
-    "@nuxt/devtools": "^2.7.0",
+    "@nuxt/devtools": "^3.1.1",
     "@nuxt/eslint-config": "^1.12.1",
     "@nuxt/module-builder": "^1.0.2",
-    "@nuxt/schema": "^3.20.2",
+    "@nuxt/schema": "^4.2.2",
     "@nuxt/test-utils": "^3.23.0",
     "@rushstack/eslint-patch": "^1.15.0",
     "@types/node": "^22.19.3",
@@ -49,7 +49,7 @@
     "bootstrap-vue-next": "workspace:^",
     "eslint": "^9.39.2",
     "eslint-define-config": "^2.1.0",
-    "nuxt": "^3.20.2",
+    "nuxt": "^4.2.2",
     "prettier": "^3.7.4",
     "publint": "^0.3.16",
     "typescript": "^5.9.3",

@@ -430,7 +430,7 @@ export const useTableSelectedItems = <Item>({
         utils.add(item)
       }
     },
-    del: (item: Item) => {
+    remove: (item: Item) => {
       if (!selectableResolved.value) return
 
       utils.remove(item)
