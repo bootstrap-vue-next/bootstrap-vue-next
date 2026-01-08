@@ -53,19 +53,11 @@ export default {
     },
     BDropdownForm: {
       props: {
-        ...pick(buildCommonProps(), ['wrapperAttrs']),
+        ...pick(buildCommonProps(), ['novalidate', 'validated', 'wrapperAttrs']),
         formClass: {
           type: 'ClassValue',
           default: undefined,
           description: 'CSS class (or classes) to add to the form component',
-        },
-        novalidate: {
-          notYetImplemented: true,
-          // description: 'Disables HTML5 form validation' // TODO missing description
-        },
-        validated: {
-          notYetImplemented: true,
-          // description: 'Marks the form as validated' // TODO missing description
         },
       } satisfies PropRecord<keyof BDropdownFormProps>,
       slots: {

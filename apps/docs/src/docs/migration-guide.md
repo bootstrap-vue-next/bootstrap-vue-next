@@ -41,13 +41,11 @@ have found tricky or clarifcation if the details in the guide weren't sufficent.
 
 We will mark features of BootstrapVue as deprecated for one of several reasons.
 
-- If there is a more streamlined or consistent way of providing the functionality in BootstrapVueNext
-- If the feature is deprecated in Bootstrap 5
-- If we believe that this functionality can as easily (or more easily) be consumed using native bootstrap classes
-- If we haven't seen demand for the feature, especially if it is something we believe can be implemented later without a breaking change
+<DeprecatedReasons/>
 
-For any deprecated feature, especially the last case listed above, please feel free to open an
-[issue](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues) or submit a pull request.
+### Deprecation Test
+
+<DeprecatedFeatureTest/>
 
 ## Sync modifier
 
@@ -212,28 +210,6 @@ See [Show and Hide](#show-and-hide) shared properties.
 
 As in `bootstrap-vue`, a simple `BAlert` is not visible by default. However, the means of showing the alert are different.
 The `bootstrap-vue` `show` prop is deprecated, use `model-value` instead.
-
-### BFormFile
-
-The `capture` prop no longer accepts a boolean value. Modern browser specifications require `capture` to be either `'user'` (for front-facing camera) or `'environment'` (for rear-facing camera).
-
-**Before:**
-
-<<< FRAGMENT ./demo/FormFileCaptureBefore.html#template{vue-html}
-
-**After:**
-
-<<< FRAGMENT ./demo/FormFileCaptureAfter.vue#template{vue-html}
-
-<<< FRAGMENT ./demo/AlertBefore.vue#template{vue-html}
-
-becomes
-
-<<< FRAGMENT ./demo/AlertAfter.vue#template{vue-html}
-
-For consistency with other components properties, slots and events that use the term `dismissible` in `bootstrap-vue`
-now use the term `close`. For example the `dismissed` event is now the `closed` event and the `dismiss` slot is
-now the `close` slot.
 
 ### BAspect
 
@@ -454,6 +430,26 @@ See [BForm Components](/docs/components/form-checkbox)
 ### BFormFile
 
 BootstrapVueNext has completely rewritten `BFormFile` using [VueUse](https://vueuse.org/) composables (`useFileDialog` and `useDropZone`), resulting in a more modern, maintainable implementation.
+
+The `capture` prop no longer accepts a boolean value. Modern browser specifications require `capture` to be either `'user'` (for front-facing camera) or `'environment'` (for rear-facing camera).
+
+**Before:**
+
+<<< FRAGMENT ./demo/FormFileCaptureBefore.html#template{vue-html}
+
+**After:**
+
+<<< FRAGMENT ./demo/FormFileCaptureAfter.vue#template{vue-html}
+
+<<< FRAGMENT ./demo/AlertBefore.vue#template{vue-html}
+
+becomes
+
+<<< FRAGMENT ./demo/AlertAfter.vue#template{vue-html}
+
+For consistency with other components properties, slots and events that use the term `dismissible` in `bootstrap-vue`
+now use the term `close`. For example the `dismissed` event is now the `closed` event and the `dismiss` slot is
+now the `close` slot.
 
 #### Directory Mode
 
