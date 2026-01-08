@@ -199,9 +199,20 @@ enum DeprecationReason {
 
 1. Remove warnings for completed features
 2. Replace `NotYetImplemented` with appropriate `DeprecatedFeature` reason
-3. Add specific context in slots where relevant
-4. Ensure consistent formatting
-5. Verify links work correctly
+3. Replace inline "deprecated" text with `DeprecatedFeature` component where appropriate
+4. Add specific context in slots where relevant
+5. Use the `what` prop to describe what is deprecated when not using a section header
+6. Ensure consistent formatting
+7. Verify links work correctly
+
+**Specific tasks for migration guide**:
+
+- Search for inline uses of "deprecated" throughout the document
+- Identify where `DeprecatedFeature` component should be used instead
+- For properties/features with same deprecation reason, use the `what` prop:
+  - Example: `<DeprecatedFeature what="The \`block\` prop" reason="bootstrap-native" />`
+- For lists of deprecated properties, use the `what` prop to introduce the list:
+  - Example: `<DeprecatedFeature what="The following properties" reason="insufficient-demand" />`
 
 ### Phase 4: Cleanup
 
@@ -261,7 +272,42 @@ enum DeprecationReason {
 </DeprecatedFeature>
 ```
 
-### Example 4: Already Implemented (Remove)
+### Example 4: Inline Deprecation with What Prop
+
+**Before:**
+
+```markdown
+The `block` prop is deprecated. See our documentation for details.
+```
+
+**After:**
+
+```vue
+<DeprecatedFeature what="The `block` prop" reason="bootstrap-native">
+  See our <BLink href="/docs/components/button#block-level-buttons">BButton documentation</BLink> for details.
+</DeprecatedFeature>
+```
+
+### Example 5: Multiple Properties with Same Reason
+
+**Before:**
+
+```markdown
+The `imgBottom`, `imgEnd`, `imgLeft`, `imgRight`, `imgStart`, and `imgTop` props are deprecated.
+```
+
+**After:**
+
+```vue
+<DeprecatedFeature
+  what="The `imgBottom`, `imgEnd`, `imgLeft`, `imgRight`, `imgStart`, and `imgTop` props"
+  reason="modern-alternative"
+>
+  Use the `img-placement` prop instead.
+</DeprecatedFeature>
+```
+
+### Example 6: Already Implemented (Remove)
 
 **Before:**
 
