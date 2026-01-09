@@ -159,12 +159,6 @@ if there is no value).
 
 <<< DEMO ./demo/RatingInputGroup.vue
 
-## Internationalization
-
-<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="the `locale` prop">
-  The `locale` prop for localized display and RTL support will not be implemented for v1 due to insufficient demand.
-</DeprecatedFeature>
-
 ## Implementation notes
 
 The ratings control uses the Bootstrap v5 `form-control*`, `d-*` (display), and

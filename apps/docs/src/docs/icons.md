@@ -174,3 +174,7 @@ import IBiActivity from '~icons/bi/activity'
 ```
 
 </BCard>
+
+<script setup lang="ts">
+import {DeprecationReason} from '../types/deprecation'
+</script>

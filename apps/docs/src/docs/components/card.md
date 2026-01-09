@@ -205,3 +205,7 @@ Heads up! Your mileage with card columns may vary. To prevent cards breaking acr
 set them to display: inline-block as column-break-inside: avoid is not a bulletproof solution yet.
 
 <<< DEMO ./demo/CardColumn.vue#template{vue-html}
+
+<script lang="ts">
+import {DeprecationReason} from '../../types/deprecation'
+</script>
