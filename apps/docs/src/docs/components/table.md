@@ -277,7 +277,7 @@ The `stacked` prop takes precedence over the [`sticky-header`](#sticky-headers) 
 
 **Note: When the table is visually stacked:**
 
-- The table header (and table footer) will be hidden.
+- The table header will be hidden. The table footer will remain visible if `foot-clone` or `custom-foot` slots are used.
 - Custom rendered header slots will not be shown, rather, the fields' `label` will be used.
 - The table **cannot** be sorted by clicking the rendered field labels. You will need to provide an
   external control to select the field to sort by and the sort direction. See the
@@ -286,7 +286,7 @@ The `stacked` prop takes precedence over the [`sticky-header`](#sticky-headers) 
   sorting via the use of form controls.
 - The slots `top-row` and `bottom-row` will be hidden when visually stacked.
 - The table caption, if provided, will always appear at the top of the table when visually stacked.
-- In an always stacked table, the table header and footer, and the fixed top and bottom row slots
+- In an always stacked table, the table header and the fixed top and bottom row slots
   will not be rendered.
 
 BootstrapVueNext's custom CSS is required in order to support stacked tables.
