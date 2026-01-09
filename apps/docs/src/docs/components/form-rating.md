@@ -153,30 +153,22 @@ If you intend to submit the rating value via standard form submission, set the `
 desired form field name. A hidden input will be generated with the current value (or an empty string
 if there is no value).
 
-<NotYetImplemented />
-
 ## Using in input groups
 
-The following is an example of placing `<BFormRating>` in an input group:
+`BFormRating` can be placed inside input groups. Since it uses the Bootstrap `form-control` class, it integrates seamlessly with `BInputGroup` components.
 
-<NotYetImplemented />
+<<< DEMO ./demo/RatingInputGroup.vue
 
 ## Internationalization
 
-When a `locale` is specified, the displayed value (when the `show-value` prop is `true`) will be in
-the browser's default locale. To change the locale, simple set the `locale` prop to the preferred
-locale, or an array of preferred locales (most preferred locale first). This will affect the
-optional displayed value and the left-to-right or right-to-left orientation of the component.
-
-<NotYetImplemented />
+<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="the `locale` prop">
+  The `locale` prop for localized display and RTL support will not be implemented for v1 due to insufficient demand.
+</DeprecatedFeature>
 
 ## Implementation notes
 
 The ratings control uses the Bootstrap v5 `form-control*`, `d-*` (display), and
 `text-{variant}` classes, as well as BootstrapVue's custom CSS for proper styling.
-
-<NotYetImplemented/>The root element of the control is an `<output>` element, which allows a `<label>` element to be
-associated with it.
 
 ## Accessibility
 

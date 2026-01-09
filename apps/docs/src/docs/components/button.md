@@ -140,5 +140,3 @@ disabled, the `aria-disabled="true"` attribute will be set on the `<a>` element.
 
 When the `href` is set to any other value (~~or the `to` prop is used~~), `role="button"` will not be
 added, nor will the keyboard event listeners be enabled.
-
-<NotYetImplemented>The `role="button"` behavior is partially implemented, but the keyboard listen are not</NotYetImplemented>

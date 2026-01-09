@@ -85,7 +85,7 @@ See also:
 - [`BFormFile`](/docs/components/form-file) File Input
 - [`BFormSpinbutton`](/docs/components/form-spinbutton) Numerical range spinbutton input
 - [`BFormTags`](/docs/components/form-tags) Customizable tag input
-- `BFormRating` Star rating custom form input and display (<NotYetImplemented/>)
+- [`BFormRating`](/docs/components/form-rating) Star rating custom form input and display
 - [`BButton`](/docs/components/button) Buttons
 - [`BFormGroup`](/docs/components/form-group) Form Input wrapper to generate form-groups that
   support labels, help text and feedback

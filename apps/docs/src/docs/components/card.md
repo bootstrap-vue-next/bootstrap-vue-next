@@ -173,7 +173,10 @@ For more information on using `BNav` in card headers, refer to the
 In addition to styling the content within cards, BootstrapVueNext includes a `BCardGroup` component
 for laying out series of cards.
 
-<NotYetImplemented>For the time being, these layout options are not responsive.</NotYetImplemented>
+<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="responsive card layout options">
+  For the time being, these layout options are not responsive. This feature will not be
+  implemented for v1 due to insufficient demand.
+</DeprecatedFeature>
 
 ### Default card group
 
