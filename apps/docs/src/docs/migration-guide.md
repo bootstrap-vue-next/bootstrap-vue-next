@@ -304,8 +304,9 @@ Image placement is accomplished by the single `img-placement` prop, which takes 
 `imgEnd`, `imgLeft`, `imgRight`, `imgStart`, and `imgTop` props from `BCard`.
 
 <DeprecatedFeature :reason="DeprecationReason.BOOTSTRAP_DEPRECATED" what="`top`, `bottom`, `left`, and `right` props on `BCardImg`" :plural="true">
-  Use a single `placement` prop that takes the values `top`, `bottom`, `start`, and `end` instead.
-  Note that `end` and `start` are not yet implemented.
+  Use a single `placement` prop that takes the values `top` or `bottom` instead.
+  Note that `end` and `start` placements are not yet fully implemented as Bootstrap 5 does not provide the necessary CSS classes (`card-img-end` and `card-img-start`).
+  If these placements are needed, custom CSS will be required.
 </DeprecatedFeature>
 
 The `sub-title`, `sub-title-tag` and `sub-title-text-variant` props have been renamed to
