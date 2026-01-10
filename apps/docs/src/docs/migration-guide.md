@@ -234,7 +234,7 @@ For instance, use `badge-placement='top'` in place of `badge-top` or `badge-plac
 `badge-placement='top-end'.
 
 <DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`badge-offset`">
-  This property is <BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/pull/2692">significantly more complex</BLink> to implement in BootstrapVueNext (due to Bootstrap 5.0's implemnetation).
+  This property is <BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/pull/2692">significantly more complex</BLink> to implement in BootstrapVueNext (due to Bootstrap 5.0's implementation).
 </DeprecatedFeature>
 
 #### Rounding Sides
