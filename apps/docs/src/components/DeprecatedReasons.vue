@@ -9,7 +9,7 @@
           implement
         </li>
         <li>
-          The functality can be as easily achieved using bootstrap natively (e.g. adding classes)
+          The functionality can be as easily achieved using bootstrap natively (e.g. adding classes)
         </li>
         <li>
           There is a more modern way of solving the same problem - in this case we are trying to
