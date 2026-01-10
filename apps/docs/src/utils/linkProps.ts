@@ -40,7 +40,6 @@ export const linkProps = {
     default: false,
     description:
       'To improve the responsiveness of your Nuxt.js applications, when the link will be displayed within the viewport, Nuxt.js will automatically prefetch the code splitted page. Setting `no-prefetch` will disabled this feature for the specific link',
-    notYetImplemented: true,
   },
   opacity: {
     type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",

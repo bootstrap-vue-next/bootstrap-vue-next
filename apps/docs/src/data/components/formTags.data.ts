@@ -384,11 +384,6 @@ export default {
               type: 'string',
               description: "The value of the 'placeholder' prop",
             },
-            remove: {
-              type: '() => void',
-              description: 'Method to fully reset the tags input',
-              notYetImplemented: true,
-            },
             removeTag: {
               type: '(tag?: string) => void',
               description:

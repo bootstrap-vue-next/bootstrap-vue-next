@@ -221,8 +221,8 @@ describe('rating', () => {
     },
   })
 
-  expect(blockWrapper.classes()).not.toContain('d-inline-block')
-  expect(blockWrapper.classes()).toContain('w-100')
+  expect(blockWrapper.classes()).not.toContain('d-inline-flex')
+  expect(blockWrapper.classes()).toContain('d-flex')
 })
 
 it('renders fallback clear icon when showClear is true (no slot provided)', async () => {
