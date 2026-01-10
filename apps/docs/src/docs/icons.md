@@ -3,6 +3,10 @@ description: >
   The icon components from BootstrapVue are deprecated. While migrating to BootstrapVueNext the icon components will not be supported as there are better, more modern solutions to incorporating icon packages into your application. Continue reading BootstrapVueNext's suggestion on how to incorporate Bootstrap-icons into your application!
 ---
 
+<script setup lang="ts">
+import {DeprecationReason} from '../types/deprecation'
+</script>
+
 <DeprecatedFeature :reason="DeprecationReason.MODERN_ALTERNATIVE" what="Icon components from BootstrapVue" :plural="true">
   While migrating to BootstrapVueNext, the icon components will not be supported as there are better, more modern solutions
   to incorporating icon packages into your application. Continue reading for BootstrapVueNext's suggestion on how to
@@ -174,7 +178,3 @@ import IBiActivity from '~icons/bi/activity'
 ```
 
 </BCard>
-
-<script setup lang="ts">
-import {DeprecationReason} from '../types/deprecation'
-</script>

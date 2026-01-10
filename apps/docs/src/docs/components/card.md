@@ -206,6 +206,6 @@ set them to display: inline-block as column-break-inside: avoid is not a bulletp
 
 <<< DEMO ./demo/CardColumn.vue#template{vue-html}
 
-<script lang="ts">
+<script setup lang="ts">
 import {DeprecationReason} from '../../types/deprecation'
 </script>

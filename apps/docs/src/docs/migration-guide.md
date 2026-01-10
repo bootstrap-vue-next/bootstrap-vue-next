@@ -208,6 +208,24 @@ As in `bootstrap-vue`, a simple `BAlert` is not visible by default. However, the
 
 The primary way to control alert visibility is via `v-model` (or `model-value` in props). The `show` and `visible` props are still available for controlling initial visibility, with `show` enabling the initial animation on mount. See [Show and Hide](#show-and-hide) shared properties for details.
 
+**Before:**
+
+<<< FRAGMENT ./demo/FormFileCaptureBefore.html#template{vue-html}
+
+**After:**
+
+<<< FRAGMENT ./demo/FormFileCaptureAfter.vue#template{vue-html}
+
+<<< FRAGMENT ./demo/AlertBefore.vue#template{vue-html}
+
+becomes
+
+<<< FRAGMENT ./demo/AlertAfter.vue#template{vue-html}
+
+For consistency with other components properties, slots and events that use the term `dismissible` in `bootstrap-vue`
+now use the term `close`. For example the `dismissed` event is now the `closed` event and the `dismiss` slot is
+now the `close` slot.
+
 ### BAspect
 
 <DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`BAspect` component">
@@ -416,10 +434,6 @@ a header id.
   use the `form-class` prop.
 </DeprecatedFeature>
 
-<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`form-class` prop on `BDropdownForm`">
-  This prop will not be implemented for v1 due to insufficient demand.
-</DeprecatedFeature>
-
 <DeprecatedFeature :reason="DeprecationReason.VUE3_BOOTSTRAP5_CHANGES" what="`disabled` prop on `BDropdownForm`">
   Set the disabled prop on individual components as you do with `BForm`.
 </DeprecatedFeature>
@@ -469,24 +483,6 @@ See [BForm Components](/docs/components/form-checkbox)
 BootstrapVueNext has completely rewritten `BFormFile` using [VueUse](https://vueuse.org/) composables (`useFileDialog` and `useDropZone`), resulting in a more modern, maintainable implementation.
 
 The `capture` prop no longer accepts a boolean value. Modern browser specifications require `capture` to be either `'user'` (for front-facing camera) or `'environment'` (for rear-facing camera).
-
-**Before:**
-
-<<< FRAGMENT ./demo/FormFileCaptureBefore.html#template{vue-html}
-
-**After:**
-
-<<< FRAGMENT ./demo/FormFileCaptureAfter.vue#template{vue-html}
-
-<<< FRAGMENT ./demo/AlertBefore.vue#template{vue-html}
-
-becomes
-
-<<< FRAGMENT ./demo/AlertAfter.vue#template{vue-html}
-
-For consistency with other components properties, slots and events that use the term `dismissible` in `bootstrap-vue`
-now use the term `close`. For example the `dismissed` event is now the `closed` event and the `dismiss` slot is
-now the `close` slot.
 
 #### Directory Mode
 
@@ -706,9 +702,6 @@ See [BLink](#blink) for changes to link and router behavior.
   Bootstrap has deprecated their Media object, but it can be replicated using flex utility classes.
   See their <BLink href="https://getbootstrap.com/docs/5.3/utilities/flex/#media-object">documentation</BLink> for details.
 </DeprecatedFeature>
-
-Note that Bootstrap has deprecated their Media object, but it can be replicated using
-flex utility classes. See their [documentation](https://getbootstrap.com/docs/5.3/utilities/flex/#media-object) for details.
 
 ### BModal
 

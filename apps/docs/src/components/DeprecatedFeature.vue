@@ -9,7 +9,6 @@
 <script setup lang="ts">
 import {computed} from 'vue'
 import {withBase} from 'vitepress'
-import {BAlert, BLink} from 'bootstrap-vue-next'
 import {DEPRECATION_REASON_TEXT, DeprecationReason} from '../types/deprecation'
 
 /**

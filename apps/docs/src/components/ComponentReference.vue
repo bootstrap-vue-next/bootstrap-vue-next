@@ -263,7 +263,6 @@ import {
 import {kebabCase} from '../utils/objectUtils'
 import {useRouter, withBase} from 'vitepress'
 import {appInfoKey} from '../../.vitepress/theme/keys'
-import ViewSourceButton from './ViewSourceButton.vue'
 
 const router = useRouter()
 

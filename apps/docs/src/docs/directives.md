@@ -9,5 +9,4 @@ Depending on the installation method, directives may be automatically registered
 
 <script setup lang="ts">
 import {data} from '../data/directives.data'
-import TableOfContentsCard from '../components/TableOfContentsCard.vue'
 </script>
