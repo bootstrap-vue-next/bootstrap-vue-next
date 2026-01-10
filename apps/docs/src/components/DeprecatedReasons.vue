@@ -22,7 +22,7 @@
       add it in a future version without causing a breaking change. If you would like this feature,
       please
       <BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues"
-        >submit and issue</BLink
+        >submit an issue</BLink
       >, upvote an existing issue, or better yet
       <BLink
         href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/blob/main/CONTRIBUTING.md#developing"
