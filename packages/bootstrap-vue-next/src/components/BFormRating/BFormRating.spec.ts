@@ -209,8 +209,8 @@ describe('rating', () => {
       },
     })
 
-    expect(inlineWrapper.classes()).toContain('d-inline-block')
-    expect(inlineWrapper.classes()).not.toContain('w-100')
+    expect(inlineWrapper.classes()).toContain('d-inline-flex')
+    expect(inlineWrapper.classes()).toContain('form-control')
   })
   // Test when inline is false (default)
   const blockWrapper = mount(BFormRating, {
