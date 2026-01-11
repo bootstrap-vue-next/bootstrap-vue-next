@@ -181,7 +181,3 @@ Card groups use display: flex; to achieve their uniform sizing.
 When using card groups with footers, their content will automatically line up.
 
 <<< DEMO ./demo/CardGroup.vue#template{vue-html}
-
-<script setup lang="ts">
-import {DeprecationReason} from '../../types/deprecation'
-</script>
