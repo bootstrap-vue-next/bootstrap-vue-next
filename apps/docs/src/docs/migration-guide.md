@@ -322,11 +322,17 @@ Similarly the `text-tag` and `title-tag` props have been replaced by `tag` on th
 and `BCardTitle` components.
 </DeprecatedFeature>
 
+<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`body-border-variant` and `body-variant`" :plural="true" />
+
 `body-border-variant` and `body-variant` are not implemented on `BCard` and `border-variant` is not
 implemented on `BCardBody`.
 
 See the [v-html](#v-html) section for information on deprecation of the `footer-html` and `header-html` props on
 `BCard` and the `html` props on `BCardFooter` and `BCardHeader`.
+
+### BCardBody
+
+<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`border-variant`" />
 
 ### BCardImgLazy
 
