@@ -1015,8 +1015,6 @@ export interface BCardBodyProps extends ColorExtendables {
 }
 
 export interface BCardGroupProps {
-  columns?: boolean
-  deck?: boolean
   tag?: string
 }
 

@@ -190,19 +190,9 @@ export default {
       } satisfies SlotRecord<keyof BCardFooterSlots>,
     },
     BCardGroup: {
-      styleSpec: {kind: StyleKind.OverrideClass, value: '.card-deck, .card-group, .card-columns'},
+      styleSpec: {kind: StyleKind.OverrideClass, value: '.card-group'},
       props: {
         ...pick(buildCommonProps(), ['tag']),
-        columns: {
-          type: 'boolean',
-          default: false, // TODO item not in string format
-          description: 'When set, renders the card group in a masonry-like columnar style',
-        },
-        deck: {
-          type: 'boolean',
-          default: false, // TODO item not in string format
-          description: 'When set, renders the card group with gutters between cards',
-        },
       } satisfies PropRecord<keyof BCardGroupProps>,
       emits: {},
       slots: {

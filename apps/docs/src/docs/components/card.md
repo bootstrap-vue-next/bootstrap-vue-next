@@ -173,11 +173,6 @@ For more information on using `BNav` in card headers, refer to the
 In addition to styling the content within cards, BootstrapVueNext includes a `BCardGroup` component
 for laying out series of cards.
 
-<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="responsive card layout options">
-  For the time being, these layout options are not responsive. This feature will not be
-  implemented for v1 due to insufficient demand.
-</DeprecatedFeature>
-
 ### Default card group
 
 Use card groups to render cards as a single, attached element with equal width and height columns.
@@ -186,25 +181,6 @@ Card groups use display: flex; to achieve their uniform sizing.
 When using card groups with footers, their content will automatically line up.
 
 <<< DEMO ./demo/CardGroup.vue#template{vue-html}
-
-### Card deck groups
-
-Need a set of equal width and height cards that aren't attached to one another? Use card decks by
-setting the `deck` prop. And just like with regular card groups, card footers in decks will
-automatically line up.
-
-<<< DEMO ./demo/CardDeck.vue#template{vue-html}
-
-### Card column groups
-
-Cards can be organized into Masonry-like columns with by wrapping them in a `BCardGroup` with
-the prop `columns` set. Cards are built with CSS column properties instead of flexbox for easier
-alignment. Cards are ordered from top to bottom and left to right.
-
-Heads up! Your mileage with card columns may vary. To prevent cards breaking across columns, we must
-set them to display: inline-block as column-break-inside: avoid is not a bulletproof solution yet.
-
-<<< DEMO ./demo/CardColumn.vue#template{vue-html}
 
 <script setup lang="ts">
 import {DeprecationReason} from '../../types/deprecation'

@@ -334,6 +334,13 @@ See the [v-html](#v-html) section for information on deprecation of the `footer-
 
 <DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`border-variant`" />
 
+### BCardGroup
+
+<DeprecatedFeature :reason="DeprecationReason.BOOTSTRAP_5_REMOVED" what="card deck and card columns props">
+  The `deck` and `columns` props output CSS classes (`.card-deck` and `.card-columns`) that were removed from Bootstrap 5.
+  Use Bootstrap's grid system with `.row-cols-*` classes for responsive card layouts instead.
+  Only the default card group (without `deck` or `columns` props) works with Bootstrap 5 and is responsive.
+</DeprecatedFeature>
 ### BCardImgLazy
 
 This functionality has been replaced by lazy loading on `<BImg>` see [BImg notes](#bimg) for details.
