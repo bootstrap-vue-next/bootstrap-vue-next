@@ -1,5 +1,5 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
-import {h} from 'vue'
+import {h, nextTick} from 'vue'
 import {afterEach, describe, expect, it} from 'vitest'
 import BTabs from './BTabs.vue'
 import BTab from './BTab.vue'
@@ -603,5 +603,79 @@ describe('tabs', () => {
     expect($buttons[2].classes()).not.toContain('active')
     expect(wrapper.vm.index).toBe(1)
     expect(wrapper.vm.id).toBe('i2')
+  })
+
+  it('selects correct tab with v-model:index and no explicit IDs', async () => {
+    const TestComponent = {
+      template: `
+        <BTabs v-model:index="activeIndex">
+          <BTab title="Tab 1">Content 1</BTab>
+          <BTab title="Tab 2">Content 2</BTab>
+          <BTab title="Tab 3">Content 3</BTab>
+        </BTabs>
+      `,
+      data() {
+        return {
+          activeIndex: 1,
+        }
+      },
+      components: {
+        BTabs,
+        BTab,
+      },
+    }
+
+    const wrapper = mount(TestComponent)
+
+    // Wait for children to register
+    await nextTick()
+    await nextTick()
+
+    const buttons = wrapper.findAll('button')
+    expect(buttons.length).toBe(3)
+
+    // Tab at index 1 (second tab) should be active
+    expect(buttons[0].classes()).not.toContain('active')
+    expect(buttons[1].classes()).toContain('active')
+    expect(buttons[2].classes()).not.toContain('active')
+
+    expect(wrapper.vm.activeIndex).toBe(1)
+  })
+
+  it('selects correct tab with v-model:index=0 and no explicit IDs', async () => {
+    const TestComponent = {
+      template: `
+        <BTabs v-model:index="activeIndex">
+          <BTab title="Tab 1">Content 1</BTab>
+          <BTab title="Tab 2">Content 2</BTab>
+          <BTab title="Tab 3">Content 3</BTab>
+        </BTabs>
+      `,
+      data() {
+        return {
+          activeIndex: 0,
+        }
+      },
+      components: {
+        BTabs,
+        BTab,
+      },
+    }
+
+    const wrapper = mount(TestComponent)
+
+    // Wait for children to register
+    await nextTick()
+    await nextTick()
+
+    const buttons = wrapper.findAll('button')
+    expect(buttons.length).toBe(3)
+
+    // Tab at index 0 (first tab) should be active
+    expect(buttons[0].classes()).toContain('active')
+    expect(buttons[1].classes()).not.toContain('active')
+    expect(buttons[2].classes()).not.toContain('active')
+
+    expect(wrapper.vm.activeIndex).toBe(0)
   })
 })
