@@ -253,7 +253,7 @@ if (needsDelayedSelection) {
   // Delay tab selection until children register with their generated IDs
   delayedTabSelection = true
   updateInitialActiveId = true
-  if (process.env.NODE_ENV === 'development') {
+  if (import.meta.env.DEV) {
     console.warn(
       '[BootstrapVueNext] BTabs: Using v-model:index without explicit tab IDs may cause issues with SSR. ' +
         'Consider adding explicit id props to your BTab components or use v-model for better SSR compatibility.'
