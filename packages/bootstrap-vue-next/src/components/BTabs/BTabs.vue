@@ -253,12 +253,6 @@ if (needsDelayedSelection) {
   // Delay tab selection until children register with their generated IDs
   delayedTabSelection = true
   updateInitialActiveId = true
-  if (import.meta.env.DEV) {
-    console.warn(
-      '[BootstrapVueNext] BTabs: Using v-model:index without explicit tab IDs may cause issues with SSR. ' +
-        'Consider adding explicit id props to your BTab components or use v-model for better SSR compatibility.'
-    )
-  }
 } else if (activeIndex.value === -1 && activeId.value) {
   if (tabs.value.findIndex((t) => t.id === activeId.value) !== -1) {
     activeIndex.value = tabs.value.findIndex((t) => t.id === activeId.value)
