@@ -3,6 +3,16 @@ description: >
   The icon components from BootstrapVue are deprecated. While migrating to BootstrapVueNext the icon components will not be supported as there are better, more modern solutions to incorporating icon packages into your application. Continue reading BootstrapVueNext's suggestion on how to incorporate Bootstrap-icons into your application!
 ---
 
+<script setup lang="ts">
+import {DeprecationReason} from '../types/deprecation'
+</script>
+
+<DeprecatedFeature :reason="DeprecationReason.MODERN_ALTERNATIVE" what="Icon components from BootstrapVue" :plural="true">
+  While migrating to BootstrapVueNext, the icon components will not be supported as there are better, more modern solutions
+  to incorporating icon packages into your application. Continue reading for BootstrapVueNext's suggestion on how to
+  incorporate Bootstrap-icons and other icon sets into your application with automatic tree-shaking!
+</DeprecatedFeature>
+
 ## [Unplugin Icons](https://github.com/antfu/unplugin-icons)
 
 In this section you will learn how to incorporate [unplugin-icons](https://github.com/antfu/unplugin-icons) into your app. unplugin-icons allows you to use icons from multiple icon sets, such as [Bootstrap Icons](https://icon-sets.iconify.design/bi/), [Material Design Icons](https://icon-sets.iconify.design/mdi/), [Font Awesome 4](https://icon-sets.iconify.design/fa/) and many more all with automatic tree-shaking!.

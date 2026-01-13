@@ -1,5 +1,7 @@
 import type {useScrollspy} from 'bootstrap-vue-next'
 
+export * from './deprecation'
+
 export type ComponentItem = Exclude<keyof ComponentReference, 'component' | 'sections'>
 
 export interface PropReference {

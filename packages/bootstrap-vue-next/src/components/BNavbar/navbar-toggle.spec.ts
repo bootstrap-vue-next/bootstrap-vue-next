@@ -80,4 +80,13 @@ describe('navbar-toggle', () => {
     await wrapper.trigger('click')
     expect(wrapper.emitted()).not.toHaveProperty('click')
   })
+
+  it('provides expanded slot prop as false when no target', () => {
+    const wrapper = mount(BNavbarToggle, {
+      slots: {
+        default: `<template #default="{ expanded }">{{ expanded }}</template>`,
+      },
+    })
+    expect(wrapper.text()).toBe('false')
+  })
 })

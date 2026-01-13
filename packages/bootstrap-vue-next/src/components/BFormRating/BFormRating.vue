@@ -116,12 +116,12 @@ const modelValue = defineModel<Exclude<BFormRatingProps['modelValue'], undefined
 const computedId = useId(() => props.id, 'form-rating')
 
 const computedClasses = computed(() => ({
+  'form-control': true,
   'is-readonly': props.readonly,
   'is-disabled': props.disabled,
   'no-border': props.noBorder,
   'b-form-rating': true,
-  'd-inline-block': props.inline,
-  'w-100': !props.inline,
+  'd-inline-flex': props.inline,
 }))
 
 function isIconFull(index: number): boolean {

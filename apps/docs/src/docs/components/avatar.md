@@ -177,14 +177,6 @@ Badge positioning properties have changed from `bootstrap-vue`. See the [migrati
 
 <<< DEMO ./demo/AvatarBadgePositioning.vue#template{vue-html}
 
-Use the `badge-offset` prop to control the offset of the badge. The `badge-offset` must be a valid
-CSS length string (i.e. `'2px'`, `'-2px'`, `'0.5em'`, etc.). Positive values will move the badge
-inward, while negative values will move the badge outward.
-
-<NotYetImplemented />
-
-<!-- <<< DEMO ./demo/AvatarBadgeOffset.vue#template{vue-html} -->
-
 ## Avatar groups
 
 <<< DEMO ./demo/AvatarGroups.vue#template{vue-html}

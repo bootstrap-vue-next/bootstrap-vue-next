@@ -6,5 +6,4 @@ description: BootstrapVueNext components list.
 
 <script setup lang="ts">
 import {data} from '../data/components.data'
-import TableOfContentsCard from '../components/TableOfContentsCard.vue'
 </script>
