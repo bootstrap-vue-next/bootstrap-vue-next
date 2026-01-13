@@ -1,5 +1,30 @@
 # Changelog
 
+## [0.42.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.42.0...bootstrapvuenext-v0.42.1) (2026-01-13)
+
+
+### Features
+
+* **BFormChecboxGroup:** implement type safety for value/text/disable fields ([767f51b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/767f51b93fd282c4aedc72a0416211755088a28f))
+* **BFormDatalist:** Typescript validation + docs & cleanup ([767f51b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/767f51b93fd282c4aedc72a0416211755088a28f))
+* **BFormRadioGroup:** typesafe implementation of configuration fields ([767f51b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/767f51b93fd282c4aedc72a0416211755088a28f))
+* **BFormSelect:** type safety plan and proof of concept ([767f51b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/767f51b93fd282c4aedc72a0416211755088a28f))
+* TypeScript Type Safety for Form Components with Options ([#2941](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2941)) ([767f51b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/767f51b93fd282c4aedc72a0416211755088a28f))
+
+
+### Bug Fixes
+
+* **BFormCheckbox:** respect prop precendence ([767f51b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/767f51b93fd282c4aedc72a0416211755088a28f))
+* **BFormFile:** Correctly pipe title on BFormFile custom mode ([#2963](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2963)) ([29e286d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/29e286dd2cd46bf5eb9387acec46a653e94279d6))
+* **BFormFIle:** put the title on the drop-zone and class & style on wrapper ([29e286d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/29e286dd2cd46bf5eb9387acec46a653e94279d6))
+* **BFormGroup:** Correctly handle clicking on label in horizontal mode ([44d68ac](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/44d68accfe9308178860826b916623d7096287ee))
+* **BFormSelect:** changes based on code review ([767f51b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/767f51b93fd282c4aedc72a0416211755088a28f))
+* **BFormSelect:** Enable select default mechanism ([767f51b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/767f51b93fd282c4aedc72a0416211755088a28f))
+* **BFormSelect:** Fix & test global defaults ([767f51b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/767f51b93fd282c4aedc72a0416211755088a28f))
+* **BFormSelect:** Fix types/documentation about global defaults ([767f51b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/767f51b93fd282c4aedc72a0416211755088a28f))
+* **BFormSelect:** refactor props to reduce redundancy ([767f51b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/767f51b93fd282c4aedc72a0416211755088a28f))
+* **BTable:** remove forced hiding of table footer in stacked mode ([#2969](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2969)) ([668d77e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/668d77ed5e3be510b3dd74465cd394fd37aca66b))
+
 ## [0.42.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.41.0...bootstrapvuenext-v0.42.0) (2025-12-19)
 
 
