@@ -1,10 +1,17 @@
-import type {StyleValue} from 'vue'
+import type {ComputedRef, StyleValue} from 'vue'
 import type {ColorVariant} from './ColorTypes'
 import type {MaybePromise} from './MaybePromise'
 import type {LiteralUnion} from './LiteralUnion'
 import type {AttrsValue, ClassValue} from './AnyValuedAttributes'
 
-export type TableRowEvent<T> = [item: T, index: number, event: MouseEvent]
+export type TableHeadClickedEventObject<Item> = {
+  key: string
+  field: TableField<Item>
+  event: MouseEvent
+  isFooter: boolean
+}
+export type TableRowEventObject<T> = {item: T; index: number; event: MouseEvent}
+export type TableRowEvent<T> = [object: TableRowEventObject<T>]
 
 export type TableItem<T = Record<string, unknown>> = T & {
   _rowVariant?: ColorVariant | null
@@ -21,13 +28,16 @@ export const isTableItem = (value: unknown): value is TableItem =>
  */
 export type BTableSortByOrder = 'desc' | 'asc' | undefined
 
+export type BTableSelectMode = 'single' | 'multi' | 'range'
+
 /**
  * Initial sort direction for table fields. Includes 'last' option to maintain the direction of the previously sorted column.
  */
 export type BTableInitialSortDirection = 'desc' | 'asc' | 'last'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type BTableSortByComparerFunction<T = any> = (a: T, b: T, key: string) => number
+export type BTableSortByComparerFunction<T> = (a: T, b: T, key: string) => number
+
+export type BTableFilterFunction<T> = (item: Readonly<T>, filter: string | undefined) => boolean
 
 export type BTableSortBy = {
   order: BTableSortByOrder
@@ -35,7 +45,7 @@ export type BTableSortBy = {
 }
 
 export type BTableProviderContext = {
-  sortBy: BTableSortBy[] | undefined
+  sortBy: readonly BTableSortBy[] | undefined
   filter: string | undefined
   currentPage: number
   perPage: number
@@ -48,10 +58,10 @@ export type BTableProvider<T> = (
 
 export type TableFieldFormatter<T> = (value: unknown, key: string, item: T) => string
 
-export type TableRowType = 'row' | 'row-details' | 'row-top' | 'row-bottom' | 'table-busy'
+export type TableRowType = 'row' | 'row-expansion' | 'row-top' | 'row-bottom' | 'table-busy'
 export type TableRowThead = 'top' | 'bottom'
 
-export type TableStrictClassValue = string | unknown[] | Record<string, boolean>
+export type TableStrictClassValue = string | readonly unknown[] | Record<string, boolean>
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TableField<T = any> = {
@@ -86,12 +96,97 @@ export type TableFieldRaw<T = unknown> = T extends object
   ? LiteralUnion<keyof T> | TableField<T>
   : string | TableField
 
-export const isTableField = <T>(value: unknown): value is TableField<T> =>
+export const isTableField = (value: unknown): value is TableField =>
   typeof value === 'object' && value !== null && 'key' in value
 
-export const isTableFieldRaw = <T>(value: unknown): value is TableFieldRaw<T> =>
+export const isTableFieldRaw = (value: unknown): value is TableFieldRaw =>
   typeof value === 'string' || isTableField(value)
 
 export type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
 
 export type TableThScope = 'row' | 'col' | 'rowgroup' | 'colgroup'
+
+export type ItemTrackerReturn<Item> = {
+  /**
+   * Gets the item from the items prop, using the primary key if provided
+   *
+   * @param item
+   * @returns
+   */
+  get: (item: Item) => unknown
+  /**
+   * Adds an item to the selected items
+   *
+   * @param item
+   * @returns
+   */
+  add: (item: Item) => void
+  /**
+   * Sets the selected items to the provided items
+   *
+   * @param items
+   * @returns
+   */
+  set: (items: readonly Item[]) => void
+  /**
+   * Sets the selected items to all items
+   *
+   * @returns
+   */
+  setAll: () => void
+  /**
+   * Deletes an item from the selected items
+   *
+   * @param item
+   * @returns
+   */
+  remove: (item: Item) => void
+  /**
+   * Clears all selected items
+   *
+   * @returns
+   */
+  clear: () => void
+  /**
+   * Checks if an item is in the selected items
+   *
+   * @param item
+   * @returns
+   */
+  has: (item: Item) => boolean
+  /**
+   * Whether the tracker is activated (has any selected items)
+   */
+  isActivated: ComputedRef<boolean>
+}
+export type TableDetailsReturn<Item> = ItemTrackerReturn<Item> & {
+  /**
+   * Toggles the details for the given item
+   *
+   * @param item
+   * @returns
+   */
+  toggle: (item: Item) => void
+}
+export type TableSelectedReturn<Item> = ItemTrackerReturn<Item> & {
+  handleRowSelection: (obj: {
+    item: Item
+    index: number
+    shiftClicked?: boolean
+    ctrlClicked?: boolean
+    metaClicked?: boolean
+  }) => void
+}
+
+export type MaybeGetter<Obj extends object, Key extends PropertyKey, Output = unknown> =
+  | Key
+  | ((obj: Obj) => Output)
+
+// export type MaybeGetter<Obj, Key extends PropertyKey, Output = unknown> = Obj extends object
+// ? Key | ((obj: Obj) => Output)
+// : Key
+
+export type TablePrimaryKey<Item> = string | ((item: Item) => string)
+// export type TablePrimaryKey<Item> = Item extends object
+// ? MaybeGetter<Item, keyof Item & string, string>
+// : MaybeGetter<Item, string>

@@ -1,5 +1,5 @@
 import {titleCase} from './stringUtils'
-import type {TableFieldRaw} from '../types/TableTypes'
+import {type TableFieldRaw} from '../types/TableTypes'
 import type {Breakpoint, BTableLiteProps, BTableSimpleProps} from '../types'
 
 export const getTableFieldHeadLabel = (field: Readonly<TableFieldRaw<unknown>>) =>
@@ -10,6 +10,16 @@ export const getTableFieldHeadLabel = (field: Readonly<TableFieldRaw<unknown>>) 
       : typeof field.key === 'string'
         ? titleCase(field.key)
         : field.key
+
+export const getWithGetter = <Obj extends object>(
+  item: Obj,
+  key: string | ((item: Obj) => string)
+): string | undefined => {
+  if (typeof key === 'function') {
+    return key(item)
+  }
+  return item[key as unknown as keyof Obj] as string | undefined
+}
 
 export const btableSimpleProps = Object.freeze(
   Object.keys({
@@ -55,13 +65,17 @@ export const btableLiteProps = Object.freeze(
     tbodyTrAttrs: 0,
     tbodyTrClass: 0,
     tfootClass: 0,
+    expandedItems: 0,
     tfootTrClass: 0,
     theadClass: 0,
     theadTrClass: 0,
   } satisfies Record<keyof Omit<BTableLiteProps<unknown>, keyof BTableSimpleProps>, 0>)
 ) as readonly (keyof Omit<BTableLiteProps<unknown>, keyof BTableSimpleProps>)[]
 
-export const getDataLabelAttr = (
-  props: {stacked: boolean | Breakpoint | undefined; labelStacked: boolean | undefined},
-  label: string
-) => (props.stacked && props.labelStacked !== true ? {'data-label': label} : undefined)
+export type StackedProps = {
+  stacked: boolean | Breakpoint | undefined
+  labelStacked: boolean | undefined
+}
+
+export const getDataLabelAttr = (props: StackedProps, label: string) =>
+  props.stacked && props.labelStacked !== true ? {'data-label': label} : undefined

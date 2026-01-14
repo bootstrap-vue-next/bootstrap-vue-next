@@ -512,7 +512,7 @@ type TableFieldAttribute<T = any> =
   | Record<string, unknown>
   | ((value: unknown, key?: LiteralUnion<keyof T>, item?: T) => Record<string, unknown>)
 
-type TableRowType = 'row' | 'row-details' | 'row-top' | 'row-bottom' | 'table-busy'
+type TableRowType = 'row' | 'row-expansion' | 'row-top' | 'row-bottom' | 'table-busy'
 type TableRowThead = 'top' | 'bottom'
 type BTableInitialSortDirection = 'desc' | 'asc' | 'last'
 
@@ -550,7 +550,6 @@ type TableFieldRaw<T = Record<string, unknown>> = string | TableField<T>
 type TableItem<T = Record<string, unknown>> = T & {
   _rowVariant?: ColorVariant
   _cellVariants?: Partial<Record<keyof T, ColorVariant>>
-  _showDetails?: boolean
 }
 ```
 

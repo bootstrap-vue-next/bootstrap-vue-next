@@ -187,7 +187,7 @@ describe('btablelite', () => {
     })
   })
 
-  it('Will properly display row details when toggleDetails is actived', async () => {
+  it('Will properly display row details when toggleExpansion is actived', async () => {
     const items = [
       [1, 2],
       [1, 2],
@@ -197,8 +197,8 @@ describe('btablelite', () => {
         items,
       },
       slots: {
-        'cell()': `<template #cell()="row"><button id="foobar" size="sm" @click="row.toggleDetails">{{ row.detailsShowing ? 'Hide' : 'Show' }} notes</button></template>`,
-        'row-details': `<template #row-details="row">THE ROW!</template>`,
+        'cell()': `<template #cell()="row"><button id="foobar" size="sm" @click="row.toggleExpansion">{{ row.expansionShowing ? 'Hide' : 'Show' }} notes</button></template>`,
+        'row-expansion': `<template #row-expansion="row">THE ROW!</template>`,
       },
     })
     const [$first, , $third] = wrapper.findAll('#foobar')
@@ -471,8 +471,8 @@ describe('btablelite', () => {
         },
         slots: {
           'cell(actions)':
-            '<template #cell(actions)="row"><button @click="row.toggleDetails"></button></template>',
-          'row-details': 'foobar!',
+            '<template #cell(actions)="row"><button @click="row.toggleExpansion"></button></template>',
+          'row-expansion': 'foobar!',
         },
       })
       await wrapper.get('button').trigger('click')
@@ -481,50 +481,32 @@ describe('btablelite', () => {
       expect(wrapper.text()).not.toContain('foobar!')
     })
 
-    it('works externally', async () => {
+    it('works externally with v-model:expanded-items', async () => {
       const fields = [{key: 'actions', label: 'Actions', sortable: false}]
+      const item = {
+        isActive: true,
+        age: 40,
+        name: {first: 'Dickerson', last: 'Macdonald'},
+      }
       const wrapper = mount(BTableLite, {
         props: {
-          items: [
-            {
-              isActive: true,
-              age: 40,
-              name: {first: 'Dickerson', last: 'Macdonald'},
-              _showDetails: true,
-            },
-          ],
+          'items': [item],
+          'expandedItems': [item],
+          'onUpdate:expandedItems': (e: (typeof item)[]) => wrapper.setProps({expandedItems: e}),
           fields,
         },
         slots: {
           'cell(actions)':
-            '<template #cell(actions)="row"><button @click="row.toggleDetails"></button></template>',
-          'row-details': 'foobar!',
+            '<template #cell(actions)="row"><button @click="row.toggleExpansion"></button></template>',
+          'row-expansion': 'foobar!',
         },
       })
       expect(wrapper.text()).toContain('foobar!')
-      await wrapper.setProps({
-        items: [
-          {
-            isActive: true,
-            age: 40,
-            name: {first: 'Dickerson', last: 'Macdonald'},
-            _showDetails: false,
-          },
-        ],
-      })
+      await wrapper.setProps({expandedItems: []})
       expect(wrapper.text()).not.toContain('foobar!')
       await wrapper.get('button').trigger('click')
       expect(wrapper.text()).toContain('foobar!')
-      await wrapper.setProps({
-        items: [
-          {
-            isActive: true,
-            age: 40,
-            name: {first: 'Dickerson', last: 'Macdonald'},
-            _showDetails: false,
-          },
-        ],
-      })
+      await wrapper.setProps({expandedItems: []})
       expect(wrapper.text()).not.toContain('foobar!')
     })
 
@@ -541,8 +523,9 @@ describe('btablelite', () => {
         },
         slots: {
           'cell(actions)':
-            '<template #cell(actions)="row"><button class="toggle-btn" @click="row.toggleDetails"></button></template>',
-          'row-details': '<template #row-details="row">Details for {{ row.item.name }}</template>',
+            '<template #cell(actions)="row"><button class="toggle-btn" @click="row.toggleExpansion"></button></template>',
+          'row-expansion':
+            '<template #row-expansion="row">Details for {{ row.item.name }}</template>',
         },
       })
 
@@ -580,8 +563,9 @@ describe('btablelite', () => {
         },
         slots: {
           'cell(actions)':
-            '<template #cell(actions)="row"><button class="toggle-btn" @click="row.toggleDetails"></button></template>',
-          'row-details': '<template #row-details="row">Details for {{ row.item.name }}</template>',
+            '<template #cell(actions)="row"><button class="toggle-btn" @click="row.toggleExpansion"></button></template>',
+          'row-expansion':
+            '<template #row-expansion="row">Details for {{ row.item.name }}</template>',
         },
       })
 
@@ -618,8 +602,9 @@ describe('btablelite', () => {
         },
         slots: {
           'cell(actions)':
-            '<template #cell(actions)="row"><button class="toggle-btn" @click="row.toggleDetails"></button></template>',
-          'row-details': '<template #row-details="row">Details for {{ row.item.name }}</template>',
+            '<template #cell(actions)="row"><button class="toggle-btn" @click="row.toggleExpansion"></button></template>',
+          'row-expansion':
+            '<template #row-expansion="row">Details for {{ row.item.name }}</template>',
         },
       })
 
@@ -651,8 +636,9 @@ describe('btablelite', () => {
         },
         slots: {
           'cell(actions)':
-            '<template #cell(actions)="row"><button class="toggle-btn" @click="row.toggleDetails"></button></template>',
-          'row-details': '<template #row-details="row">Details for {{ row.item.name }}</template>',
+            '<template #cell(actions)="row"><button class="toggle-btn" @click="row.toggleExpansion"></button></template>',
+          'row-expansion':
+            '<template #row-expansion="row">Details for {{ row.item.name }}</template>',
         },
       })
 
@@ -684,8 +670,9 @@ describe('btablelite', () => {
         },
         slots: {
           'cell(actions)':
-            '<template #cell(actions)="row"><button class="toggle-btn" @click="row.toggleDetails"></button></template>',
-          'row-details': '<template #row-details="row">Details for {{ row.item.name }}</template>',
+            '<template #cell(actions)="row"><button class="toggle-btn" @click="row.toggleExpansion"></button></template>',
+          'row-expansion':
+            '<template #row-expansion="row">Details for {{ row.item.name }}</template>',
         },
       })
 
@@ -763,7 +750,13 @@ describe('btablelite', () => {
       await rows[0].trigger('click')
 
       expect(wrapper.emitted('row-clicked')).toBeTruthy()
-      expect(wrapper.emitted('row-clicked')?.[0]).toEqual([items[0], 0, expect.any(Object)])
+      expect(wrapper.emitted('row-clicked')?.[0]).toEqual([
+        {
+          item: items[0],
+          index: 0,
+          event: expect.any(Object),
+        },
+      ])
     })
 
     it('emits row-dblclicked event when row is double clicked', async () => {
@@ -829,10 +822,13 @@ describe('btablelite', () => {
       await headers[0].trigger('click')
 
       expect(wrapper.emitted('head-clicked')).toBeTruthy()
-      const emittedEvent = wrapper.emitted('head-clicked')?.[0]
-      expect(emittedEvent?.[0]).toBe('name')
-      expect(emittedEvent?.[1]).toMatchObject({key: 'name', label: 'Name', sortable: true})
-      expect(emittedEvent?.[3]).toBe(false) // isFooter
+      const emittedEvent = wrapper.emitted('head-clicked')?.[0]?.[0]
+      expect(emittedEvent).toEqual({
+        key: 'name',
+        field: expect.objectContaining({key: 'name', label: 'Name', sortable: true}),
+        event: expect.any(Object),
+        isFooter: false,
+      })
     })
 
     it('does not emit row events when event originates from a button or link', async () => {

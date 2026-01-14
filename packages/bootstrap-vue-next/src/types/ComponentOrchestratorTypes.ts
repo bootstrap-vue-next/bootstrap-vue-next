@@ -12,8 +12,7 @@ import type BTooltip from '../components/BTooltip/BTooltip.vue'
 export type ControllerKey = symbol | string
 
 export interface PromiseWithComponent<T, P>
-  extends Promise<BvTriggerableEvent>,
-    PromiseWithComponentInternal<T, P> {}
+  extends Promise<BvTriggerableEvent>, PromiseWithComponentInternal<T, P> {}
 export interface PromiseWithComponentInternal<T, P> extends AsyncDisposable {
   id: ControllerKey
   ref: ComponentPublicInstance<T> | null

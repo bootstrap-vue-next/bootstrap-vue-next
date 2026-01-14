@@ -16,6 +16,18 @@ export type {Animation} from './Animation'
 export type {AriaInvalid} from './AriaInvalid'
 export type {
   BTableInitialSortDirection,
+  TableHeadClickedEventObject,
+  TableRowEventObject,
+  BTableSortByOrder,
+  BTableSelectMode,
+  BTableFilterFunction,
+  isTableField,
+  isTableFieldRaw,
+  NoProviderTypes,
+  TableThScope,
+  TableDetailsReturn,
+  TableSelectedReturn,
+  TablePrimaryKey,
   BTableProvider,
   BTableProviderContext,
   BTableSortBy,

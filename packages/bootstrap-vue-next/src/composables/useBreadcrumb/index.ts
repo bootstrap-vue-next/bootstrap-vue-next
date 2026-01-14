@@ -7,7 +7,7 @@ export const useBreadcrumb = (
    */
   id: MaybeRefOrGetter<string | null> = breadcrumbGlobalIndexKey
 ) => {
-  const parentData = inject(breadcrumbRegistryKey)
+  const parentData = inject(breadcrumbRegistryKey, null)
 
   const resolvedId = computed(() => {
     const v = toValue(id)

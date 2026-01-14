@@ -497,6 +497,29 @@ describe('tabs', () => {
     expect(wrapper.findComponent({name: 'b-tab'}).find('p').text()).toBe('bar')
   })
 
+  it('emits activate-tab with an object payload', async () => {
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [
+          h(BTab, {id: 'first', title: 'First'}, () => 'one'),
+          h(BTab, {id: 'second', title: 'Second'}, () => 'two'),
+        ],
+      },
+    })
+
+    const buttons = wrapper.findAll('button')
+    await buttons[1].trigger('click')
+
+    const payload = wrapper.emitted('activate-tab')?.[0]?.[0]
+    expect(payload).toEqual({
+      newTabId: 'second',
+      prevTabId: 'first',
+      newTabIndex: 1,
+      prevTabIndex: 0,
+      event: expect.any(Object),
+    })
+  })
+
   const ChildComp = {
     template: ` 
     <BTab :title="title" :id="id">
