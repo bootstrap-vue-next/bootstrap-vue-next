@@ -2,7 +2,6 @@
   <input
     :id="computedId"
     ref="_input"
-    :key="forceUpdateKey"
     :value="modelValue"
     :class="computedClasses"
     :name="props.name || undefined"
@@ -71,17 +70,8 @@ const [modelValue, modelModifiers] = defineModel<
 
 const input = useTemplateRef('_input')
 
-const {
-  computedId,
-  computedAriaInvalid,
-  onInput,
-  onChange,
-  onBlur,
-  stateClass,
-  focus,
-  blur,
-  forceUpdateKey,
-} = useFormInput(props, input, modelValue, modelModifiers)
+const {computedId, computedAriaInvalid, onInput, onChange, onBlur, stateClass, focus, blur} =
+  useFormInput(props, input, modelValue, modelModifiers)
 
 const computedClasses = computed(() => {
   const isRange = props.type === 'range'
