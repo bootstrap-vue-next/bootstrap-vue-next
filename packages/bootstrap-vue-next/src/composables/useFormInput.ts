@@ -1,13 +1,5 @@
 import type {Numberish} from '../types/CommonTypes'
-import {
-  computed,
-  inject,
-  nextTick,
-  onActivated,
-  onMounted,
-  type Ref,
-  type ShallowRef,
-} from 'vue'
+import {computed, inject, nextTick, onActivated, onMounted, type Ref, type ShallowRef} from 'vue'
 import {useAriaInvalid} from './useAriaInvalid'
 import {useId} from './useId'
 import {useFocus, useToNumber} from '@vueuse/core'
