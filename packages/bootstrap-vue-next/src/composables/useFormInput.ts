@@ -118,7 +118,7 @@ export const useFormInput = (
     // When trim removes whitespace, directly update the input's visual value
     // to match the trimmed model value without recreating the element
     if (modelModifiers.trim && needsForceUpdate && input.value) {
-      input.value.value = nextModel
+      ;(input.value as HTMLInputElement | HTMLTextAreaElement).value = nextModel
     }
   }
 
