@@ -284,28 +284,55 @@ export interface BFormCheckboxProps {
   value?: string | boolean | CheckboxValue
 }
 
-export interface BFormCheckboxGroupProps {
-  ariaInvalid?: AriaInvalid
-  autofocus?: boolean
+// Base props (non-generic)
+export interface BFormCheckboxGroupBaseProps {
+  id?: string
+  name?: string
+  size?: Size
+  state?: ValidationState
   buttonVariant?: ButtonVariant | null
   buttons?: boolean
-  disabled?: boolean
-  disabledField?: string
-  form?: string
-  id?: string
-  modelValue?: readonly CheckboxValue[]
-  name?: string
-  options?: readonly CheckboxOptionRaw[]
-  plain?: boolean
-  required?: boolean
-  reverse?: boolean
-  size?: Size
   stacked?: boolean
-  state?: ValidationState
-  switches?: boolean
-  textField?: string
+  disabled?: boolean
+  required?: boolean
   validated?: boolean
-  valueField?: string
+  autofocus?: boolean
+  form?: string
+  ariaInvalid?: AriaInvalid
+  plain?: boolean
+  reverse?: boolean
+  switches?: boolean
+  options: CheckboxOptionRaw[] // Already normalized
+}
+
+// Wrapper props (generic)
+export interface BFormCheckboxGroupProps<
+  Item = Record<string, unknown>,
+  ValueKey extends keyof Item = keyof Item,
+> {
+  // Generic-specific props
+  options?: readonly Item[]
+  valueField?: ValueKey & string
+  textField?: keyof Item & string
+  disabledField?: keyof Item & string
+
+  // All base props (inherited)
+  id?: string
+  name?: string
+  size?: Size
+  state?: ValidationState
+  buttonVariant?: ButtonVariant | null
+  buttons?: boolean
+  stacked?: boolean
+  disabled?: boolean
+  required?: boolean
+  validated?: boolean
+  autofocus?: boolean
+  form?: string
+  ariaInvalid?: AriaInvalid
+  plain?: boolean
+  reverse?: boolean
+  switches?: boolean
 }
 
 export interface BFormDatalistProps {
