@@ -19,9 +19,9 @@
         v-if="isComplex(option)"
         :label="option.label"
         :options="option.options"
-        :value-field="props.valueField as any"
-        :text-field="props.textField as any"
-        :disabled-field="props.disabledField as any"
+        :value-field="props.valueField"
+        :text-field="props.textField"
+        :disabled-field="props.disabledField"
       />
       <BFormSelectOption v-else :value="option.value" :disabled="option.disabled">
         <slot name="option" v-bind="option">
@@ -33,17 +33,14 @@
   </select>
 </template>
 
-<script
-  setup
-  lang="ts"
-  generic="Item = Record<string, unknown>, ValueKey extends keyof Item = keyof Item"
->
+<script setup lang="ts" generic="T">
 import type {BFormSelectProps} from '../../types/ComponentProps'
 import {computed, provide, readonly, useTemplateRef} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
 import {useAriaInvalid} from '../../composables/useAriaInvalid'
 import {useFocus, useToNumber} from '@vueuse/core'
+import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import {useStateClass} from '../../composables/useStateClass'
 import {useFormSelect} from '../../composables/useFormSelect'
@@ -51,30 +48,32 @@ import type {ComplexSelectOptionRaw, SelectOption} from '../../types/SelectTypes
 import type {BFormSelectSlots} from '../../types'
 import {formSelectKey} from '../../utils/keys'
 
-const props = withDefaults(defineProps<Omit<BFormSelectProps<Item, ValueKey>, 'modelValue'>>(), {
+const _props = withDefaults(defineProps<Omit<BFormSelectProps, 'modelValue'>>(), {
   ariaInvalid: undefined,
   autofocus: false,
   disabled: false,
-  disabledField: 'disabled' as keyof Item & string,
+  disabledField: 'disabled',
   form: undefined,
   id: undefined,
-  labelField: 'label' as keyof Item & string,
+  labelField: 'label',
   multiple: false,
   name: undefined,
   options: () => [],
-  optionsField: 'options' as keyof Item & string,
+  optionsField: 'options',
   plain: false,
   required: false,
   selectSize: 0,
   size: 'md',
   state: null,
-  textField: 'text' as keyof Item & string,
-  valueField: 'value' as ValueKey & string,
+  textField: 'text',
+  valueField: 'value',
 })
-defineSlots<BFormSelectSlots<Item[ValueKey]>>()
+const props = useDefaults(_props, 'BFormSelect')
+defineSlots<BFormSelectSlots<T>>()
 
-const modelValue = defineModel<Item[ValueKey] | readonly Item[ValueKey][]>({
-  default: undefined,
+const modelValue = defineModel<T>({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default: '' as any,
 })
 
 const computedId = useId(() => props.id, 'input')
@@ -111,11 +110,7 @@ const computedAriaInvalid = useAriaInvalid(
 const {normalizedOptions, isComplex} = useFormSelect(() => props.options, props)
 
 const normalizedOptsWrapper = computed(
-  () =>
-    normalizedOptions.value as readonly (
-      | ComplexSelectOptionRaw<Item[ValueKey]>
-      | SelectOption<Item[ValueKey]>
-    )[]
+  () => normalizedOptions.value as readonly (ComplexSelectOptionRaw<T> | SelectOption<T>)[]
 )
 
 const localValue = computed({

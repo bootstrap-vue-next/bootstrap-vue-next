@@ -229,7 +229,7 @@ export type BFormValidFeedbackSlots = {
 export type BFormCheckboxSlots = {
   default?: (props: Record<string, never>) => any
 }
-export type BFormCheckboxGroupSlots<T = any> = {
+export type BFormCheckboxGroupSlots = {
   default?: (props: Record<string, never>) => any
 
   first?: (props: Record<string, never>) => any
@@ -237,7 +237,7 @@ export type BFormCheckboxGroupSlots<T = any> = {
   option: (props: {
     text: string | undefined
 
-    value: T
+    value: any
     disabled: boolean | undefined
     [key: string]: unknown
   }) => any
@@ -269,7 +269,7 @@ export type BFormGroupSlots = {
 export type BFormRadioSlots = {
   default?: (props: Record<string, never>) => any
 }
-export type BFormRadioGroupSlots<T = unknown> = {
+export type BFormRadioGroupSlots = {
   default?: (props: Record<string, never>) => any
 
   first?: (props: Record<string, never>) => any
@@ -277,7 +277,7 @@ export type BFormRadioGroupSlots<T = unknown> = {
   option: (props: {
     text: string | undefined
 
-    value: T
+    value: any
     disabled?: boolean | undefined
     [key: string]: unknown
   }) => any

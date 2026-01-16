@@ -7,7 +7,7 @@
     <!-- This slot appears above the options from 'options' prop -->
     <template #first>
       <BFormSelectOption
-        :value="undefined"
+        :value="null"
         disabled
         >-- Please select an option --</BFormSelectOption
       >
@@ -31,5 +31,5 @@ const exFirstSlotOptions = [
   {value: 'B', text: 'Option B (from options prop)'},
 ]
 
-const selected = ref<'A' | 'B' | 'C' | 'D' | undefined>()
+const selected = ref(null)
 </script>

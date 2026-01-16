@@ -25,13 +25,6 @@ You can provide global defaults for any bootstrap-vue-next component:
 
 <<< FRAGMENT ./demo/AppDefaults.vue
 
-::: info TypeScript Generic Components
-
-<!--@include: ./_type-safety-global-defaults.md-->
-
-See the type safety documentation for [BFormSelect](/docs/components/form-select#global-defaults-limitation), [BFormRadioGroup](/docs/components/form-radio#global-defaults-limitation), and [BFormCheckboxGroup](/docs/components/form-checkbox#global-defaults-limitation) for component-specific examples.
-:::
-
 ### Merging Defaults
 
 By default, the `defaults` prop completely replaces any existing defaults. Use `mergeDefaults` to merge with parent or plugin defaults:

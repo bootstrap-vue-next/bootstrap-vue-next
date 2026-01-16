@@ -99,56 +99,6 @@ inserted (i.e. **mounted**) into the document or re-activated when inside a Vue 
 component. Note that this prop **does not** set the `autofocus` attribute on the select, nor can it
 tell when the select becomes visible.
 
-## TypeScript Type Safety
-
-`BFormSelect` <!--@include: ./_type-safety-intro.md-->
-
-### Basic Type-Safe Usage
-
-<<< DEMO ./demo/SelectTypeSafeBasic.vue
-
-In this example, TypeScript knows that `selectedUserId` is a `number` because the `id` field of `User` is typed as `number`.
-
-### Type-Safe Field Validation
-
-TypeScript will catch errors when you use invalid field names:
-
-<<< DEMO ./demo/SelectTypeSafeValidation.vue
-
-### Multiple Select with Type Safety
-
-Type safety works seamlessly with multiple select mode:
-
-<<< DEMO ./demo/SelectTypeSafeMultiple.vue
-
-### Type-Safe API Responses
-
-Type safety is especially valuable when working with API data that uses different naming conventions:
-
-<<< DEMO ./demo/SelectTypeSafeAPI.vue
-
-### Type-Safe Enums
-
-Type safety works with TypeScript enums for strongly-typed value constraints:
-
-<<< FRAGMENT ./demo/SelectTypeSafeEnumTypes.ts{ts}
-
-<<< DEMO ./demo/SelectTypeSafeEnum.vue
-
-### Benefits
-
-<!--@include: ./_type-safety-benefits.md-->
-
-### Backward Compatibility
-
-<!--@include: ./_type-safety-backward-compat.md-->
-
-### Global Defaults Limitation
-
-<!--@include: ./_type-safety-global-defaults.md-->
-
-<<< FRAGMENT ./demo/FormSelectGlobalDefaultsPlugin.ts#snippet{ts}
-
 ## Contextual states
 
 Bootstrap includes validation styles for `valid` and `invalid` states on most form controls.
