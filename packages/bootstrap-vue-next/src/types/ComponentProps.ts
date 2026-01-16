@@ -21,7 +21,7 @@ import type {AttrsValue, ClassValue} from './AnyValuedAttributes'
 import type {CheckboxOptionRaw, CheckboxValue} from './CheckboxTypes'
 import type {Size} from './Size'
 import type {AriaInvalid} from './AriaInvalid'
-import type {Numberish, TeleporterProps, ValidationState} from './CommonTypes'
+import type {Numberish, TeleporterProps, ValidationState, ValueOrCallBack} from './CommonTypes'
 import type {CommonInputProps} from './FormCommonInputProps'
 import type {RadioOptionRaw, RadioValue} from './RadioTypes'
 import type {SelectValue} from './SelectTypes'
@@ -1313,9 +1313,13 @@ export interface BPopoverProps extends TeleporterProps, ShowHideProps {
   offset?: Numberish | null
   placement?: PopoverPlacement
   realtime?: boolean
-  reference?: string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | null
+  reference?: ValueOrCallBack<
+    string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | null
+  >
   strategy?: Strategy
-  target?: string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | null
+  target?: ValueOrCallBack<
+    string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | null
+  >
   title?: string
   titleClass?: ClassValue
   tooltip?: boolean
