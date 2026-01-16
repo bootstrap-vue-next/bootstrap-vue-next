@@ -5,7 +5,6 @@ import {
   nextTick,
   onActivated,
   onMounted,
-  ref,
   type Ref,
   type ShallowRef,
 } from 'vue'
@@ -25,8 +24,6 @@ export const useFormInput = (
   modelValue: Ref<Numberish | null>,
   modelModifiers: Record<'number' | 'lazy' | 'trim', true | undefined>
 ) => {
-  const forceUpdateKey = ref(0)
-
   const computedId = useId(() => props.id, 'input')
   const debounceNumber = useToNumber(() => props.debounce ?? 0, {nanToZero: true})
   const debounceMaxWaitNumber = useToNumber(() => props.debounceMaxWait ?? Number.NaN)
@@ -124,12 +121,12 @@ export const useFormInput = (
     // Cancel before modelValue.value comparison and update
     internalUpdateModelValue.cancel()
     if (modelValue.value !== nextModel) {
-      updateModelValue(formattedValue, true, true)
+      updateModelValue(nextModel, true, true)
     }
-    if (modelModifiers.trim && needsForceUpdate) {
-      // The value is trimmed but there would still exist some white space
-      // So, force update the value. You need to bind this to :key on the input element
-      forceUpdateKey.value = forceUpdateKey.value + 1
+    // When trim removes whitespace, directly update the input's visual value
+    // to match the trimmed model value without recreating the element
+    if (modelModifiers.trim && needsForceUpdate && input.value) {
+      input.value.value = nextModel
     }
   }
 
@@ -154,7 +151,6 @@ export const useFormInput = (
     onBlur,
     focus,
     blur,
-    forceUpdateKey,
     stateClass,
   }
 }

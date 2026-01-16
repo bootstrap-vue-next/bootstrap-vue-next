@@ -2,7 +2,6 @@
   <input
     :id="computedId"
     ref="_input"
-    :key="forceUpdateKey"
     :value="modelValue"
     :class="computedClasses"
     :name="props.name || undefined"
@@ -80,7 +79,6 @@ const {
   stateClass,
   focus,
   blur,
-  forceUpdateKey,
 } = useFormInput(props, input, modelValue, modelModifiers)
 
 const computedClasses = computed(() => {

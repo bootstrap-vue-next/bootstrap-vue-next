@@ -2,7 +2,6 @@
   <textarea
     :id="computedId"
     ref="_input"
-    :key="forceUpdateKey"
     :class="computedClasses"
     :name="props.name || undefined"
     :form="props.form || undefined"
@@ -78,7 +77,6 @@ const input = useTemplateRef('_input')
 
 const {
   computedId,
-  forceUpdateKey,
   computedAriaInvalid,
   onInput,
   stateClass,
