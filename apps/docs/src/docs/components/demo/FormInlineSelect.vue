@@ -11,7 +11,7 @@
           id="inline-form-custom-select-pref"
           v-model="customSelect"
           class="mb-2 me-sm-2 mb-sm-0"
-          :options="options"
+          :options="[{text: 'Choose...', value: null}, 'One', 'Two', 'Three']"
         />
       </div>
       <BFormCheckbox class="col-form-label col-lg-3 mb-2 me-sm-2 mb-sm-0"
@@ -27,12 +27,5 @@
 <script setup lang="ts">
 import {ref} from 'vue'
 
-const options = [
-  {text: 'Choose...', value: null as string | null},
-  {text: 'One', value: 'One'},
-  {text: 'Two', value: 'Two'},
-  {text: 'Three', value: 'Three'},
-]
-
-const customSelect = ref<string | null>(null)
+const customSelect = ref(null)
 </script>

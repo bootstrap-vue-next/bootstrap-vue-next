@@ -38,6 +38,6 @@ const apiUsers: ApiUser[] = [
   },
 ]
 
-// TypeScript knows selectedUsers is readonly string[]
-const selectedUsers = ref<readonly string[]>(['usr_001'])
+// TypeScript knows selectedUsers is string[]
+const selectedUsers = ref<string[]>(['usr_001'])
 </script>
