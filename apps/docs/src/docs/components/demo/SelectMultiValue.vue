@@ -1,6 +1,6 @@
 <template>
   <BFormSelect
-    v-model="selected"
+    v-model="selected as any"
     :options="exMultiOptions"
     multiple
     :select-size="4"
@@ -24,5 +24,5 @@ const exMultiOptions = [
   {value: 'g', text: 'This is option g'},
 ]
 
-const selected = ref(['b'])
+const selected = ref<string[]>(['b'])
 </script>

@@ -63,7 +63,7 @@ export default {
           type: 'CheckboxValue | readonly CheckboxValue[]',
           default: undefined,
           description:
-            'The current value of the checkbox(es). Must be an array when there are multiple checkboxes bound to the same v-model. Looking for `value` - use `modelValue` instead.',
+            'The current value of the checkbox(es). Must be an array when there are multiple checkboxes bound to the same v-model.',
         },
         reverse: {
           type: 'boolean',
@@ -144,10 +144,9 @@ export default {
           description: 'When set, renders the checkboxes in this group with button styling',
         },
         modelValue: {
-          type: 'readonly CheckboxValue[]',
+          type: 'CheckboxValue[]',
           default: '() => []',
-          description:
-            'The current value of the checked checkboxes in the group. Must be an array when there are multiple checkboxes. Looking for `value` - use `modelValue` instead.',
+          description: 'The current value of the checkbox group. Must be an array.',
         },
         options: {
           type: 'readonly CheckboxOptionRaw[]',

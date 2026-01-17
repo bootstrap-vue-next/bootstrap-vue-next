@@ -326,6 +326,7 @@ export interface BFormCheckboxGroupProps<
 
   // All base props (inherited)
   id?: string
+  modelValue?: Item[ValueKey][]
   name?: string
   size?: Size
   state?: ValidationState

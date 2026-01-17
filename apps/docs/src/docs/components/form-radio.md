@@ -160,6 +160,44 @@ inserted (i.e. **mounted**) into the document or re-activated when inside a Vue 
 component. Note that this prop **does not** set the `autofocus` attribute on the input, nor can it
 tell when the input becomes visible.
 
+## TypeScript Type Safety
+
+`BFormRadioGroup` <!--@include: ./_type-safety-intro.md-->
+
+### Basic Type-Safe Usage
+
+<<< DEMO ./demo/RadioTypeSafeBasic.vue
+
+In this example, TypeScript knows that `selectedUserId` is a `number` because the `id` field of `User` is typed as `number`.
+
+### Type-Safe Field Validation
+
+TypeScript will catch errors when you use invalid field names:
+
+<<< DEMO ./demo/RadioTypeSafeValidation.vue
+
+### Type-Safe API Responses
+
+Type safety is especially valuable when working with API data that uses different naming conventions:
+
+<<< DEMO ./demo/RadioTypeSafeAPI.vue
+
+### Type-Safe Enums
+
+Type safety works with TypeScript enums for strongly-typed value constraints:
+
+<<< FRAGMENT ./demo/RadioTypeSafeEnumTypes.ts{ts}
+
+<<< DEMO ./demo/RadioTypeSafeEnum.vue
+
+### Benefits
+
+<!--@include: ./_type-safety-benefits.md-->
+
+### Backward Compatibility
+
+<!--@include: ./_type-safety-backward-compat.md-->
+
 ## Contextual states
 
 Bootstrap includes validation styles for `valid` and `invalid` states on most form controls.

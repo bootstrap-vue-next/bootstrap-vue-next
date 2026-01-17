@@ -13,7 +13,6 @@
 </template>
 
 <script setup lang="ts">
-import type {CheckboxOption} from 'bootstrap-vue-next'
 import {ref} from 'vue'
 
 interface Name {
@@ -21,8 +20,14 @@ interface Name {
   last: string
 }
 
-const model = ref<CheckboxOption[]>([])
-const options = [
+interface NameOption {
+  value: Name
+  text?: string
+  disabled?: boolean
+}
+
+const model = ref<Name[]>([])
+const options: NameOption[] = [
   {value: {last: 'Brown', first: 'Christina'}},
   {value: {last: 'Smith', first: 'John'}},
   {value: {last: 'Doe', first: 'Jane'}},

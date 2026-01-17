@@ -166,10 +166,19 @@ const hover = ref(false)
 const dark = ref(false)
 const fixed = ref(false)
 const footClone = ref(false)
-const variant = ref<ColorVariant | null>(null)
-const headVariant = ref<ColorVariant | null>(null)
-const footVariant = ref<ColorVariant | null>(null)
+const variant = ref<ColorVariant | undefined>()
+const headVariant = ref<ColorVariant | undefined>()
+const footVariant = ref<ColorVariant | undefined>()
 const noCollapse = ref(false)
 
-const variants = ['primary', 'secondary', 'info', 'danger', 'warning', 'success', 'light', 'dark']
+const variants = [
+  {text: 'Primary', value: 'primary' as ColorVariant},
+  {text: 'Secondary', value: 'secondary' as ColorVariant},
+  {text: 'Info', value: 'info' as ColorVariant},
+  {text: 'Danger', value: 'danger' as ColorVariant},
+  {text: 'Warning', value: 'warning' as ColorVariant},
+  {text: 'Success', value: 'success' as ColorVariant},
+  {text: 'Light', value: 'light' as ColorVariant},
+  {text: 'Dark', value: 'dark' as ColorVariant},
+]
 </script>

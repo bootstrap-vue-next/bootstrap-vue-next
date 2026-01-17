@@ -1,6 +1,6 @@
 <template>
   <BFormSelect
-    v-model="selected"
+    v-model="selected as any"
     :options="exFirstSlotOptions"
     class="mb-3"
   >
@@ -31,5 +31,5 @@ const exFirstSlotOptions = [
   {value: 'B', text: 'Option B (from options prop)'},
 ]
 
-const selected = ref(null)
+const selected = ref<'A' | 'B' | 'C' | 'D' | null>(null)
 </script>

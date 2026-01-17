@@ -161,6 +161,32 @@ See also:
   a flat list of `BFormSelectOptions`, unlike `<BFormSelect>` which support a heirarchy of
   `BFormSelectOption` and `BFormSelectOptionGroup`.
 
+#### TypeScript Type Safety
+
+`BFormDatalist` <!--@include: ./_type-safety-intro.md-->
+
+**Basic type-safe usage:**
+
+<<< DEMO ./demo/DatalistTypeSafeBasic.vue{vue}
+
+**Type-safe API responses:**
+
+<<< DEMO ./demo/DatalistTypeSafeAPI.vue{vue}
+
+**Type-safe enums:**
+
+<<< DEMO ./demo/DatalistTypeSafeEnum.vue{vue}
+
+**Benefits:**
+
+<!--@include: ./_type-safety-benefits.md-->
+
+**Backward compatibility:**
+
+<!--@include: ./_type-safety-backward-compat.md-->
+
+See the [BFormSelect TypeScript documentation](/docs/components/form-select#typescript-type-safety) for comprehensive type safety guidance that also applies to datalists.
+
 ## Validation
 
 Disable browser native HTML5 validation by setting the `novalidate` prop to true on `BForm`.
