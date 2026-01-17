@@ -86,19 +86,19 @@ const normalizedOptions = computed<Array<{text: string; value: CheckboxValue; di
   () =>
     props.options.map((option) => {
       if (typeof option === 'object' && option !== null) {
-        // Ensure text and disabled are defined
+        // Ensure text and disabled are defined, with group disabled taking precedence
         return {
           ...option,
           text: option.text ?? String(option.value ?? ''),
           value: option.value ?? null,
-          disabled: option.disabled ?? props.disabled,
+          disabled: props.disabled ? true : (option.disabled ?? false),
         }
       }
-      // Primitive value - normalize to {text, value}
+      // Primitive value - normalize to {text, value}, with group disabled taking precedence
       return {
         text: String(option),
         value: option,
-        disabled: props.disabled,
+        disabled: props.disabled ? true : false,
       }
     })
 )

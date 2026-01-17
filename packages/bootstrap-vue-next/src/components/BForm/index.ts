@@ -1,6 +1,5 @@
 export {default as BForm} from './BForm.vue'
 export {default as BFormDatalist} from './BFormDatalist.vue'
-export {default as BFormDatalistBase} from './BFormDatalistBase.vue'
 export {default as BFormFloatingLabel} from './BFormFloatingLabel.vue'
 export {default as BFormInvalidFeedback} from './BFormInvalidFeedback.vue'
 export {default as BFormRow} from './BFormRow.vue'

@@ -73,12 +73,17 @@ const {focused} = useFocus(element, {
 const normalizedOptions = computed(() =>
   props.options.map((option) => {
     if (typeof option === 'object' && option !== null) {
-      return option
+      // Ensure disabled respects group-level disabled taking precedence
+      return {
+        ...option,
+        disabled: props.disabled ? true : (option.disabled ?? false),
+      }
     }
-    // Primitive value - normalize to {text, value}
+    // Primitive value - normalize to {text, value}, with group disabled taking precedence
     return {
       text: String(option),
       value: option,
+      disabled: props.disabled ? true : false,
     }
   })
 )
