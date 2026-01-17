@@ -56,8 +56,11 @@
 <script setup lang="ts">
 import {ref} from 'vue'
 
-const formSelectSelected = ref({foo: 'item 6', baz: false})
-const formSelectMultipleSelected = ref<string[]>([])
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const formSelectSelected = ref({foo: 'item 6', baz: false}) as any
+// For multiple select with mixed types
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const formSelectMultipleSelected = ref([]) as any
 formSelectMultipleSelected.value = ['first', 'second']
 const formSelectOptions = [
   {value: null, text: 'Please select an option'},

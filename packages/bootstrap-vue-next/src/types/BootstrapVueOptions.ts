@@ -52,7 +52,9 @@ export const componentsWithExternalPath = {
   BForm: '/components/BForm',
   BFormCheckbox: '/components/BFormCheckbox',
   BFormCheckboxGroup: '/components/BFormCheckbox',
+  BFormCheckboxGroupBase: '/components/BFormCheckbox',
   BFormDatalist: '/components/BForm',
+  BFormDatalistBase: '/components/BForm',
   BFormFile: '/components/BFormFile',
   BFormFloatingLabel: '/components/BForm',
   BFormGroup: '/components/BFormGroup',
@@ -60,9 +62,11 @@ export const componentsWithExternalPath = {
   BFormInvalidFeedback: '/components/BForm',
   BFormRadio: '/components/BFormRadio',
   BFormRadioGroup: '/components/BFormRadio',
+  BFormRadioGroupBase: '/components/BFormRadio',
   BFormRating: '/components/BFormRating',
   BFormRow: '/components/BForm',
   BFormSelect: '/components/BFormSelect',
+  BFormSelectBase: '/components/BFormSelect',
   BFormSelectOption: '/components/BFormSelect',
   BFormSelectOptionGroup: '/components/BFormSelect',
   BFormSpinbutton: '/components/BFormSpinbutton',
@@ -209,13 +213,17 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
   BFormText: ComponentProps.BFormTextProps
   BFormCheckbox: ComponentProps.BFormCheckboxProps
   BFormCheckboxGroup: ComponentProps.BFormCheckboxGroupProps
+  BFormCheckboxGroupBase: ComponentProps.BFormCheckboxGroupBaseProps
   BFormDatalist: ComponentProps.BFormDatalistProps
+  BFormDatalistBase: ComponentProps.BFormDatalistBaseProps
   BFormFile: ComponentProps.BFormFileProps
   BFormInput: ComponentProps.BFormInputProps
   BFormRadio: ComponentProps.BFormRadioProps
   BFormRadioGroup: ComponentProps.BFormRadioGroupBaseProps
+  BFormRadioGroupBase: ComponentProps.BFormRadioGroupBaseProps
   BFormRating: ComponentProps.BFormRatingProps
   BFormSelect: ComponentProps.BFormSelectProps
+  BFormSelectBase: ComponentProps.BFormSelectBaseProps
   BFormSelectOption: ComponentProps.BFormSelectOptionProps<BFormSelectOption>
   BFormSelectOptionGroup: ComponentProps.BFormSelectOptionGroupProps
   BFormSpinbutton: ComponentProps.BFormSpinbuttonProps

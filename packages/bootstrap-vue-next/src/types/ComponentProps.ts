@@ -24,7 +24,7 @@ import type {AriaInvalid} from './AriaInvalid'
 import type {Numberish, TeleporterProps, ValidationState} from './CommonTypes'
 import type {CommonInputProps, FormDebounceOptions} from './FormCommonInputProps'
 import type {RadioOption, RadioValue} from './RadioTypes'
-import type {SelectValue} from './SelectTypes'
+import type {ComplexSelectOptionRaw, SelectOptionRaw, SelectValue} from './SelectTypes'
 import type {
   Breakpoint,
   ColBreakpointProps,
@@ -335,12 +335,27 @@ export interface BFormCheckboxGroupProps<
   switches?: boolean
 }
 
-export interface BFormDatalistProps {
+// BFormDatalist base props (non-generic, uses raw options)
+export interface BFormDatalistBaseProps {
+  disabled?: boolean
   disabledField?: string
   id?: string
-  options?: readonly (unknown | Record<string, unknown>)[]
+  options?: readonly (string | number | Record<string, unknown>)[] | SelectOptionRaw[]
   textField?: string
   valueField?: string
+}
+
+// BFormDatalist wrapper props (generic, type-safe options)
+export interface BFormDatalistProps<
+  Item = Record<string, unknown>,
+  ValueKey extends keyof Item = keyof Item,
+> {
+  disabled?: boolean
+  disabledField?: keyof Item & string
+  id?: string
+  options?: readonly (Item | string | number)[]
+  textField?: keyof Item & string
+  valueField?: ValueKey & string
 }
 
 export interface BFormFileProps {
@@ -482,7 +497,8 @@ export interface BFormRatingProps {
     | string
 }
 
-export interface BFormSelectProps {
+// BFormSelect base props (non-generic, uses raw options)
+export interface BFormSelectBaseProps {
   ariaInvalid?: AriaInvalid
   autofocus?: boolean
   disabled?: boolean
@@ -493,7 +509,10 @@ export interface BFormSelectProps {
   modelValue?: SelectValue
   multiple?: boolean
   name?: string
-  options?: readonly (unknown | Record<string, unknown>)[]
+  options?:
+    | readonly (string | number | Record<string, unknown>)[]
+    | readonly SelectOptionRaw[]
+    | readonly ComplexSelectOptionRaw[]
   optionsField?: string
   plain?: boolean
   required?: boolean
@@ -502,6 +521,32 @@ export interface BFormSelectProps {
   state?: ValidationState
   textField?: string
   valueField?: string
+}
+
+// BFormSelect wrapper props (generic, type-safe options)
+export interface BFormSelectProps<
+  Item = Record<string, unknown>,
+  ValueKey extends keyof Item = keyof Item,
+> {
+  ariaInvalid?: AriaInvalid
+  autofocus?: boolean
+  disabled?: boolean
+  disabledField?: keyof Item & string
+  form?: string
+  id?: string
+  labelField?: keyof Item & string
+  modelValue?: Item[ValueKey]
+  multiple?: boolean
+  name?: string
+  options?: readonly (Item | string | number)[]
+  optionsField?: keyof Item & string
+  plain?: boolean
+  required?: boolean
+  selectSize?: Numberish
+  size?: Size
+  state?: ValidationState
+  textField?: keyof Item & string
+  valueField?: ValueKey & string
 }
 
 export interface BFormSelectOptionProps<T> {

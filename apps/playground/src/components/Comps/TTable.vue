@@ -131,12 +131,13 @@
               <th variant="danger" />
               <th variant="danger">
                 <BFormSelect
-                  :model-value="(data as unknown as TableField<any>).label"
-                  :options="[
-                    (data as unknown as TableField<any>).label,
-                    (data as unknown as TableField<any>).key,
-                  ]"
-                  label-field="label"
+                  :model-value="(data as unknown as TableField<any>).label ?? ''"
+                  :options="
+                    [
+                      (data as unknown as TableField<any>).label ?? '',
+                      (data as unknown as TableField<any>).key,
+                    ] as string[]
+                  "
                 />
               </th>
             </tr>
