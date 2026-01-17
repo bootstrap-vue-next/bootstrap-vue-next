@@ -1,4 +1,4 @@
-# Base/Wrapper Pattern for Type-Safe Form Components
+\# Base/Wrapper Pattern for Type-Safe Form Components
 
 ## Executive Summary
 
@@ -57,7 +57,7 @@ const classes = computed(() => ({
 
 ### Architecture
 
-```
+```text
 ┌─────────────────────────────────┐
 │   BFormRadioGroup (Generic)     │  ← User-facing, type-safe
 │   - Generic props interface     │
@@ -89,7 +89,7 @@ const classes = computed(() => ({
 
 Create new base components in separate files within each component directory:
 
-```
+```text
 packages/bootstrap-vue-next/src/components/
 ├── BFormRadio/
 │   ├── BFormRadioGroup.vue          (wrapper - create new)
@@ -425,7 +425,7 @@ createBootstrap({
 
 Note: Do not use `BFormRadioGroupBase` - this is an internal component.
 
-```
+```text
 
 ### Phase 8: Testing Strategy
 
@@ -444,7 +444,7 @@ packages/bootstrap-vue-next/src/components/BFormRadio/
 ├── form-radio-group-wrapper.spec.ts (new - test wrapper)
 └── form-radio-group.spec.ts (existing - integration)
 
-````
+````text
 
 ## Migration Path
 

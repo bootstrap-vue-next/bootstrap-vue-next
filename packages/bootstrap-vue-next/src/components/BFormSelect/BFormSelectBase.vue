@@ -100,7 +100,7 @@ const computedClasses = computed(() => [
 ])
 
 const computedSelectSize = computed(() =>
-  selectSizeNumber.value || props.plain ? selectSizeNumber.value : undefined
+  !props.plain && selectSizeNumber.value > 0 ? selectSizeNumber.value : undefined
 )
 
 const computedAriaInvalid = useAriaInvalid(

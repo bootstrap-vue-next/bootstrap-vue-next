@@ -56,12 +56,9 @@ const normalizedOptions = computed(() =>
   })
 )
 
-// Forward all props except options (which we normalize)
+// Forward all props except options (which we normalize) and field mappings (already used)
 const forwardedProps = computed(() => ({
   disabled: props.disabled,
-  disabledField: props.disabledField,
   id: props.id,
-  textField: props.textField,
-  valueField: props.valueField,
 }))
 </script>

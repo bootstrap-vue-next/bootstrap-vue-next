@@ -219,7 +219,7 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
   BFormFile: ComponentProps.BFormFileProps
   BFormInput: ComponentProps.BFormInputProps
   BFormRadio: ComponentProps.BFormRadioProps
-  BFormRadioGroup: ComponentProps.BFormRadioGroupBaseProps
+  BFormRadioGroup: ComponentProps.BFormRadioGroupProps
   BFormRadioGroupBase: ComponentProps.BFormRadioGroupBaseProps
   BFormRating: ComponentProps.BFormRatingProps
   BFormSelect: ComponentProps.BFormSelectProps

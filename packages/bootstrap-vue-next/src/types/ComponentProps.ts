@@ -319,7 +319,7 @@ export interface BFormCheckboxGroupProps<
   ValueKey extends keyof Item = keyof Item,
 > {
   // Generic-specific props
-  options?: readonly Item[]
+  options?: readonly (Item | string | number)[]
   valueField?: ValueKey & string
   textField?: keyof Item & string
   disabledField?: keyof Item & string
@@ -467,7 +467,7 @@ export interface BFormRadioGroupProps<
   id?: string
   modelValue?: Item[ValueKey]
   name?: string
-  options?: readonly Item[]
+  options?: readonly (Item | string | number)[]
   plain?: boolean
   required?: boolean
   reverse?: boolean

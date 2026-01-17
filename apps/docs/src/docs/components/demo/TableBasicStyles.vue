@@ -166,9 +166,9 @@ const hover = ref(false)
 const dark = ref(false)
 const fixed = ref(false)
 const footClone = ref(false)
-const variant = ref<ColorVariant | undefined>()
-const headVariant = ref<ColorVariant | undefined>()
-const footVariant = ref<ColorVariant | undefined>()
+const variant = ref<ColorVariant | null>(null)
+const headVariant = ref<ColorVariant | null>(null)
+const footVariant = ref<ColorVariant | null>(null)
 const noCollapse = ref(false)
 
 const variants = [

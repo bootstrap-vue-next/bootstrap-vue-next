@@ -2,6 +2,7 @@
   <div>
     <h6>User Selection</h6>
     <BFormRadioGroup
+      id="radio-type-safe-users"
       v-model="selectedUser"
       :options="users"
       value-field="userId"
@@ -23,6 +24,7 @@
 
     <h6>Product Selection with Complex Values</h6>
     <BFormRadioGroup
+      id="radio-type-safe-products"
       v-model="selectedProduct"
       :options="products"
       value-field="metadata"
@@ -40,6 +42,7 @@
 
     <h6>Status Selection with Numeric IDs</h6>
     <BFormRadioGroup
+      id="radio-type-safe-statuses"
       v-model="selectedStatus"
       :options="statuses"
       value-field="statusCode"

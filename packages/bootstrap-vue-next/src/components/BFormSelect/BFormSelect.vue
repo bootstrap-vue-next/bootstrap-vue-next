@@ -51,7 +51,7 @@ const props = withDefaults(defineProps<Omit<BFormSelectProps<Item, ValueKey>, 'm
 })
 defineSlots<BFormSelectSlots<Item[ValueKey]>>()
 
-const modelValue = defineModel<Item[ValueKey]>({
+const modelValue = defineModel<Item[ValueKey] | Item[ValueKey][] | null>({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default: '' as any,
 })
@@ -112,24 +112,20 @@ const normalizedOptions = computed(() => {
   })
 })
 
-// Forward all props except options (which we normalize) and modelValue (handled separately)
+// Forward all props except options (which we normalize), modelValue (handled separately),
+// and field mappings (already used for normalization)
 const forwardedProps = computed(() => ({
   ariaInvalid: props.ariaInvalid,
   autofocus: props.autofocus,
   disabled: props.disabled,
-  disabledField: props.disabledField,
   form: props.form,
   id: props.id,
-  labelField: props.labelField,
   multiple: props.multiple,
   name: props.name,
-  optionsField: props.optionsField,
   plain: props.plain,
   required: props.required,
   selectSize: props.selectSize,
   size: props.size,
   state: props.state,
-  textField: props.textField,
-  valueField: props.valueField,
 }))
 </script>
