@@ -11,7 +11,6 @@ export default defineNuxtModule<ModuleOptions>({
     configKey: 'bootstrapVueNext',
     compatibility: {
       nuxt: '>=3.0.0',
-      bridge: false,
     },
   },
   defaults: {

@@ -31,6 +31,18 @@ Always reference these instructions first and fallback to search or bash command
 - Docs dev server: `pnpm --filter docs run dev` (runs on <http://localhost:8000>)
 - All dev servers: `pnpm dev` (starts all development environments in parallel)
 
+### Exporting public files in the main bootstrap-vue-next package
+
+The library uses a custom export structure that must fit a specific pattern to ensure proper tree-shaking and module resolution. For the build process, as shown in the vite.config.ts file, it resolves the directories and files. The purpose of this is to allow for both high level path imports, as well as more specific (and better tree shaken) imports of individual components, composables, directives, and types. Ex: `import {BButton} from 'bootstrap-vue-next/components/button'` and `bootstrap-vue-next/components` are both valid, instead of `import {BButton} from 'bootstrap-vue-next'` which would import the entire package.
+
+The rules of how this functions is that files that are publicly exported must be in their own directory, with an index.ts file that exports the relevant items. The resolution of this build process is in the vite.config.ts file. Then the package.json file uses the "exports" field to map the paths to the built files.
+
+If the file is intended to be public, it must follow this pattern. For example, if you are adding a new composable, it must be in its own directory under `src/composables/` with an index.ts file that exports the composable. Then you must add the relevant entry to the "exports" field in the package.json file. It must also be exported from the main `src/composables/index.ts` file. This ensures that the composable can be imported both from the high level path and the specific path for best tree-shaking.
+
+Private files should exist in the root of the domain they are related to. For example, utility functions for composables should be in the `src/composables/` directory but not exported in an index.ts file. This keeps the public API clean and ensures that only intended files are accessible to users of the library.
+
+The fault of not properly following this structure will lead to build errors or improper module resolution.
+
 ## Validation
 
 ### Always Validate Changes
@@ -273,3 +285,4 @@ DEMO syntax should be used for:
 - Use unique IDs for all components to avoid conflicts when multiple demos render on same page
 - Keep examples focused on demonstrating one feature or pattern
 - Include comments for clarity when showing complex patterns
+

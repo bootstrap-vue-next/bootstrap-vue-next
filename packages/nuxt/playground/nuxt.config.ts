@@ -12,4 +12,12 @@ export default defineNuxtConfig({
       },
     },
   },
+  // This is only required because of the symlinked package setup in the monorepo
+  imports: {
+    transform: {
+      exclude: [
+        /bootstrap-vue.*/,
+      ]
+    }
+  },
 })
