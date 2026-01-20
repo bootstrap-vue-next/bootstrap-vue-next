@@ -90,8 +90,9 @@ export const useToast = () => {
           } else {
             // Don't call toValue on functions as they should be passed as-is (not as getters)
             const val = newValue[key as keyof ToastOrchestratorCreateParam]
-            v[key as keyof ToastOrchestratorCreateParam] =
-              (typeof val === 'function' ? val : toValue(val)) as never
+            v[key as keyof ToastOrchestratorCreateParam] = (
+              typeof val === 'function' ? val : toValue(val)
+            ) as never
           }
         }
         v.position = v.position || posDefault

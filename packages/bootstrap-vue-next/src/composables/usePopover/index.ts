@@ -101,8 +101,9 @@ export const usePopover = () => {
           } else {
             // Don't call toValue on functions as they should be passed as-is (not as getters)
             const val = newValue[key as keyof PopoverOrchestratorCreateParam]
-            v[key as keyof PopoverOrchestratorCreateParam] =
-              (typeof val === 'function' ? val : toValue(val)) as never
+            v[key as keyof PopoverOrchestratorCreateParam] = (
+              typeof val === 'function' ? val : toValue(val)
+            ) as never
           }
         }
 

@@ -84,8 +84,9 @@ export const useModal = () => {
           } else {
             // Don't call toValue on functions as they should be passed as-is (not as getters)
             const val = newValue[key]
-            v[key as keyof ModalOrchestratorArrayValue] =
-              (typeof val === 'function' ? val : toValue(val)) as never
+            v[key as keyof ModalOrchestratorArrayValue] = (
+              typeof val === 'function' ? val : toValue(val)
+            ) as never
           }
         }
         v.modelValue = v.modelValue ?? false
