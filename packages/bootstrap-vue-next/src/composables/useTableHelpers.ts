@@ -335,10 +335,12 @@ export const useTableSelectedItems = <Item>({
 }): TableSelectedReturn<Item> => {
   const selectableResolved = readonly(toRef(selectable))
   const selectModeResolved = readonly(toRef(selectMode))
-  const allItemsResolved = readonly(toRef(allItems)) as Ref<readonly Item[]>
+  // Using readonly(toRef) doesn't work here because of its proxification
+  // It breaks equality checks
+  const allItemsResolved = computed(() => toValue(allItems))
 
   const utils = useItemTracker({
-    allItems,
+    allItems: allItemsResolved,
     primaryKey,
     selectedItems,
   })
@@ -396,7 +398,9 @@ export const useTableSelectedItems = <Item>({
         // This is where range is different, due to the difference in shift
       } else if (shiftClicked) {
         const lastSelectedItem = selectedItems.value.at(-1)
-        const lastSelectedIndex = allItemsResolved.value.findIndex((i) => i === lastSelectedItem)
+        const lastSelectedIndex = allItemsResolved.value.findIndex(
+          (i) => utils.get(i) === lastSelectedItem
+        )
         const selectStartIndex = Math.min(lastSelectedIndex, index)
         const selectEndIndex = Math.max(lastSelectedIndex, index)
         const items = allItemsResolved.value.slice(selectStartIndex, selectEndIndex + 1)

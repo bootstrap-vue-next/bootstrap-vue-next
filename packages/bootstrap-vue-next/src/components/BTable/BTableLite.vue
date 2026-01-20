@@ -82,7 +82,7 @@
             "
             :class="getRowClasses(item, 'row')"
             :variant="isTableItem(item) ? item._rowVariant : undefined"
-            :tabindex="keyboardController.shouldRowBeFocusable ? '0' : undefined"
+            :tabindex="keyboardController.shouldRowBeFocusable.value ? '0' : undefined"
             v-bind="callTbodyTrAttrs(item, 'row')"
             @click="
               !filterEvent($event) && emit('row-clicked', {item, index: itemIndex, event: $event})

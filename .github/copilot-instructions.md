@@ -286,3 +286,8 @@ DEMO syntax should be used for:
 - Keep examples focused on demonstrating one feature or pattern
 - Include comments for clarity when showing complex patterns
 
+## Style Guidelines
+
+Follow the established code style
+
+- Vue component event arguments length is greater than or equal to three, then it should use an object to pass the arguments instead of multiple positional. Ie emit('event-name', {arg1, arg2, arg3}) instead of emit('event-name', arg1, arg2, arg3). Less than three is acceptable as positional.

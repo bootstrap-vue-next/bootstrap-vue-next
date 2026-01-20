@@ -767,7 +767,11 @@ describe('btablelite', () => {
       await rows[1].trigger('dblclick')
 
       expect(wrapper.emitted('row-dblclicked')).toBeTruthy()
-      expect(wrapper.emitted('row-dblclicked')?.[0]).toEqual([items[1], 1, expect.any(Object)])
+      expect(wrapper.emitted('row-dblclicked')?.[0][0]).toEqual({
+        item: items[1],
+        index: 1,
+        event: expect.any(Object),
+      })
     })
 
     it('emits row-contextmenu event when row is right-clicked', async () => {
@@ -778,7 +782,11 @@ describe('btablelite', () => {
       await rows[2].trigger('contextmenu')
 
       expect(wrapper.emitted('row-contextmenu')).toBeTruthy()
-      expect(wrapper.emitted('row-contextmenu')?.[0]).toEqual([items[2], 2, expect.any(Object)])
+      expect(wrapper.emitted('row-contextmenu')?.[0][0]).toEqual({
+        item: items[2],
+        index: 2,
+        event: expect.any(Object),
+      })
     })
 
     it('emits row-hovered event when mouse enters row', async () => {
@@ -789,7 +797,11 @@ describe('btablelite', () => {
       await rows[0].trigger('mouseenter')
 
       expect(wrapper.emitted('row-hovered')).toBeTruthy()
-      expect(wrapper.emitted('row-hovered')?.[0]).toEqual([items[0], 0, expect.any(Object)])
+      expect(wrapper.emitted('row-hovered')?.[0][0]).toEqual({
+        item: items[0],
+        index: 0,
+        event: expect.any(Object),
+      })
     })
 
     it('emits row-unhovered event when mouse leaves row', async () => {
@@ -800,7 +812,11 @@ describe('btablelite', () => {
       await rows[1].trigger('mouseleave')
 
       expect(wrapper.emitted('row-unhovered')).toBeTruthy()
-      expect(wrapper.emitted('row-unhovered')?.[0]).toEqual([items[1], 1, expect.any(Object)])
+      expect(wrapper.emitted('row-unhovered')?.[0][0]).toEqual({
+        item: items[1],
+        index: 1,
+        event: expect.any(Object),
+      })
     })
 
     it('emits row-middle-clicked event when middle mouse button is clicked', async () => {
@@ -811,7 +827,11 @@ describe('btablelite', () => {
       await rows[0].trigger('mousedown', {button: 1})
 
       expect(wrapper.emitted('row-middle-clicked')).toBeTruthy()
-      expect(wrapper.emitted('row-middle-clicked')?.[0]).toEqual([items[0], 0, expect.any(Object)])
+      expect(wrapper.emitted('row-middle-clicked')?.[0][0]).toEqual({
+        item: items[0],
+        index: 0,
+        event: expect.any(Object),
+      })
     })
 
     it('emits head-clicked event when header is clicked', async () => {
