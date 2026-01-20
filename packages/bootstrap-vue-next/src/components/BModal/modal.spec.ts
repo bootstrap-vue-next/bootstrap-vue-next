@@ -614,6 +614,58 @@ describe('modal', () => {
     expect($modalBody?.getAttribute('role')).toBe('foo')
   })
 
+  it('handles quick show/hide sequence without animation', async () => {
+    const wrapper = mount(BModal, {
+      attachTo: document.body,
+      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      props: {
+        id: 'test',
+        noFade: true,
+      },
+    })
+
+    expect(wrapper.vm).toBeDefined()
+
+    // Call show() and hide() immediately
+    wrapper.vm.show()
+    wrapper.vm.hide()
+
+    // Wait for any pending animations
+    await new Promise((resolve) => setTimeout(resolve, 50))
+
+    // Modal should be hidden
+    const $modal = wrapper.find('div.modal')
+    expect($modal.isVisible()).toBe(false)
+
+    wrapper.unmount()
+  })
+
+  it('handles quick show/hide sequence with animation', async () => {
+    const wrapper = mount(BModal, {
+      attachTo: document.body,
+      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      props: {
+        id: 'test',
+        noFade: false,
+      },
+    })
+
+    expect(wrapper.vm).toBeDefined()
+
+    // Call show() and hide() immediately
+    wrapper.vm.show()
+    wrapper.vm.hide()
+
+    // Wait for any pending animations
+    await new Promise((resolve) => setTimeout(resolve, 350))
+
+    // Modal should be hidden
+    const $modal = wrapper.find('div.modal')
+    expect($modal.isVisible()).toBe(false)
+
+    wrapper.unmount()
+  })
+
   // Test isActive states
 
   // Test emit states
