@@ -577,7 +577,7 @@ in the fields definition array), you can use the scoped slot `row-expansion`, in
 
 **Using v-model for expansion state:**
 
-The expanded/collapsed state of rows is controlled via the `v-model:expanded-items` binding, which maintains an array of the currently expanded items. When a `primary-key` is provided, the expansion state persists even when the items array is replaced with new object references (as long as the primary key values remain the same). Without a `primary-key`, expansion state is tracked using a `WeakMap`, which means expansion state will be lost when items are garbage collected or replaced.
+The expanded/collapsed state of rows is controlled via the `v-model:expanded-items` binding, which maintains an array of the currently expanded items. When a `primary-key` is provided, the expansion state persists even when the items array is replaced with new object references (as long as the primary key values remain the same).
 
 When an item is present in the `expanded-items` array **and** a `row-expansion` scoped slot exists, a new row will be shown just below the item, with the rendered contents of the `row-expansion` scoped slot.
 
