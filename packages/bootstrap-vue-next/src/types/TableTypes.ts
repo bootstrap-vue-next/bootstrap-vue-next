@@ -4,14 +4,20 @@ import type {MaybePromise} from './MaybePromise'
 import type {LiteralUnion} from './LiteralUnion'
 import type {AttrsValue, ClassValue} from './AnyValuedAttributes'
 
-export type TableHeadClickedEventObject<Item> = {
+export type TableHeadClickedEventObject<Item, E extends UIEvent = Readonly<MouseEvent>> = {
   key: string
   field: TableField<Item>
-  event: MouseEvent
+  event: E
   isFooter: boolean
 }
-export type TableRowEventObject<T> = {item: T; index: number; event: MouseEvent}
-export type TableRowEvent<T> = [object: TableRowEventObject<T>]
+export type TableRowEventObject<T, E extends UIEvent = Readonly<MouseEvent>> = {
+  item: T
+  index: number
+  event: E
+}
+export type TableRowEvent<T, E extends UIEvent = Readonly<MouseEvent>> = [
+  object: TableRowEventObject<T, E>,
+]
 
 export type TableItem<T = Record<string, unknown>> = T & {
   _rowVariant?: ColorVariant | null

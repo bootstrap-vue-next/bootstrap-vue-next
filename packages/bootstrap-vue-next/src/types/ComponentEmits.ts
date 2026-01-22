@@ -53,8 +53,10 @@ export interface BTableEmits<Item> extends BTableLiteEmits<Item> {
 }
 
 export interface BTableLiteEmits<Item> {
-  'head-clicked': [object: TableHeadClickedEventObject<Item>]
-  'row-clicked': TableRowEvent<Item>
+  'head-clicked': [
+    object: TableHeadClickedEventObject<Item, Readonly<MouseEvent> | Readonly<KeyboardEvent>>,
+  ]
+  'row-clicked': TableRowEvent<Item, Readonly<MouseEvent> | Readonly<KeyboardEvent>>
   'row-dblclicked': TableRowEvent<Item>
   'row-contextmenu': TableRowEvent<Item>
   'row-hovered': TableRowEvent<Item>

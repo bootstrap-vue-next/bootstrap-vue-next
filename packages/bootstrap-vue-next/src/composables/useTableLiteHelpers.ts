@@ -203,8 +203,12 @@ export const useTableKeyboardNavigation = <Item>(
     id: MaybeRefOrGetter<string>
   },
   events: {
-    onHeadClicked: (obj: TableHeadClickedEventObject<Item>) => void
-    onRowClicked: (obj: TableRowEventObject<Item>) => void
+    onHeadClicked: (
+      obj: TableHeadClickedEventObject<Item, Readonly<KeyboardEvent> | Readonly<MouseEvent>>
+    ) => void
+    onRowClicked: (
+      obj: TableRowEventObject<Item, Readonly<KeyboardEvent> | Readonly<MouseEvent>>
+    ) => void
     onRowMiddleClicked: (obj: TableRowEventObject<Item>) => void
   }
 ) => {
@@ -218,7 +222,11 @@ export const useTableKeyboardNavigation = <Item>(
     () => !!(keyboardNavigation?.rowNavigation.value && toValue(items).length > 0)
   )
 
-  const headerClicked = (field: TableField, event: Readonly<MouseEvent>, isFooter = false) => {
+  const headerClicked = (
+    field: TableField,
+    event: Readonly<MouseEvent> | Readonly<KeyboardEvent>,
+    isFooter = false
+  ) => {
     events.onHeadClicked({key: field.key as string, field, event, isFooter})
   }
 
@@ -229,7 +237,7 @@ export const useTableKeyboardNavigation = <Item>(
 
     if (code === 'Enter' || code === 'NumpadEnter' || code === 'Space') {
       stopEvent(event)
-      headerClicked(field, event as unknown as MouseEvent, isFooter)
+      headerClicked(field, event, isFooter)
     }
   }
 
@@ -240,7 +248,7 @@ export const useTableKeyboardNavigation = <Item>(
 
     if (code === 'Enter' || code === 'NumpadEnter' || code === 'Space') {
       stopEvent(event)
-      events.onRowClicked({item, index: itemIndex, event: event as unknown as MouseEvent})
+      events.onRowClicked({item, index: itemIndex, event})
       return
     }
 

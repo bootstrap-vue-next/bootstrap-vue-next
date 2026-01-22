@@ -1152,7 +1152,7 @@ onMounted(() => {
 
 The slot name remains `row-expansion` (changed from `row-details` in earlier versions).
 
-### Items Provider Functions
+### Item Provider Functions
 
 To use an items provider, set the `provider` prop to a provider function and leave the
 `items` prop undefined (unlike in BootstrapVue, where the `items` prop was overloaded). See
