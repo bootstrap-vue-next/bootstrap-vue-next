@@ -545,7 +545,7 @@ function onFiltered(filteredItems: readonly TableItem<Person>[]) {
     })
 }
 
-function onRowClicked({index, item}: TableRowEventObject<Person>) {
+function onRowClicked({index, item}: TableRowEventObject<TableItem<Person>, Readonly<MouseEvent> | Readonly<KeyboardEvent>>) {
   // eslint-disable-next-line no-console
   console.log(`clicked on row ${index}: ${item.name.first} ${item.name.last}`)
 }
