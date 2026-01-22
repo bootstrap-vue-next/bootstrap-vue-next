@@ -366,7 +366,7 @@ const getBusyRowClasses = computed(() => [
 ])
 const getFieldColumnClasses = (field: TableField) => [
   {
-    'b-table-sortable-column': sortController.isSortable && field.sortable,
+    'b-table-sortable-column': sortController.isSortable.value && field.sortable,
   },
 ]
 // TODO this class has issues if the table has a variant already applied
