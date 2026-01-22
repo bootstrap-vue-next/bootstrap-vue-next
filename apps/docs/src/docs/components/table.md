@@ -49,7 +49,7 @@ defines the supported optional item record modifier properties
 <<< DEMO ./demo/TableCellVariants.vue
 
 A provider function can be provided instead of setting `items` to return items syncronously or asyncronously.
-See the ["Using Item Provider functions"](#using-items-provider-functions) section below for more details.
+See the ["Using items Provider functions"](#using-items-provider-functions) section below for more details.
 
 ### Table item notes and warnings
 
