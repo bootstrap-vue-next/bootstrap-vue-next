@@ -1076,7 +1076,7 @@ The `filtered` event has a single argument `Item[]` rather than two arguments wi
 - Scoped slot function `toggleDetails` is now `toggleExpansion`
 - The concept of "detailed items" is now "expanded items"
 
-**v-model instead of object property:** The expansion state is no longer tracked using a property on item objects. Instead, use the `v-model:expanded-items` binding (or its alias `v-model:item-details` for compatibility) to manage which rows are expanded.
+**v-model instead of object property:** The expansion state is no longer tracked using a property on item objects. Instead, use the `v-model:expanded-items` binding to manage which rows are expanded.
 
 **Before (BootstrapVue):**
 
