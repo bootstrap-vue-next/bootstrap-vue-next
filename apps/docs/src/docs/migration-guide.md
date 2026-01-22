@@ -1128,7 +1128,7 @@ const expandedItems = ref([items[0]]) // Expand first item by default
 
 **Using with Primary Key:**
 
-When using a `primary-key`, expansion state persists across item array updates (like pagination or "Load more"). To set default expanded items with a `primary-key`, you must use the table's template ref `.get()` function:
+When using a `primary-key`, expansion state persists across item array updates (like pagination or "Load more"). To set default expanded items with a `primary-key`, you must use the table's template ref `expansion.get()` function:
 
 ```vue
 <template>
@@ -1145,7 +1145,7 @@ const expandedItems = ref([])
 
 // Set default expanded items after mount
 onMounted(() => {
-  expandedItems.value.push(tableRef.value.get(items[1]))
+  expandedItems.value.push(tableRef.value.expansion.get(items[1]))
 })
 </script>
 ```

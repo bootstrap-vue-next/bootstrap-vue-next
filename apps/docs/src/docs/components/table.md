@@ -590,7 +590,7 @@ When using the `primary-key` prop, row expansion state will persist even when it
 :::
 
 ::: warning IMPORTANT: Default Expansion with Primary Key
-When using a `primary-key` and you want to set default expanded rows by including items in the initial `v-model:expanded-items` array, you **must** use the exposed `.get()` function to retrieve the actual item reference from the table's template ref.
+When using a `primary-key` and you want to set default expanded rows by including items in the initial `v-model:expanded-items` array, you **must** use the exposed `expansion.get()` function to retrieve the actual item reference from the table's template ref.
 
 **Example:**
 
@@ -608,7 +608,7 @@ const tableRef = ref()
 const expandedItems = ref([])
 
 onMounted(() => {
-  expandedItems.value.push(tableRef.value.get(items[1]))
+  expandedItems.value.push(tableRef.value.expansion.get(items[1]))
 })
 </script>
 ```
@@ -652,16 +652,19 @@ When a table is `selectable` and the user clicks on a row, `<BTable>` will emit 
 event, passing a single argument which is the complete list of selected items. **This argument
 is read-only.** In addition, `row-selected` or `row-unselected` events are emitted for each row.
 
-Rows can also be programmatically selected and unselected via the following exposed methods on the
+Rows can also be programmatically selected and unselected via the `selection` API on the
 `<BTable>` instance:
 
-| Method                         | Description                                                                                          |
-| ------------------------------ | ---------------------------------------------------------------------------------------------------- |
-| `selectRow(index: number)`     | Selects a row with the given `index` number.                                                         |
-| `unselectRow(index: number)`   | Unselects a row with the given `index` number.                                                       |
-| `selectAllRows()`              | Selects all rows in the table, except in `single` mode in which case only the first row is selected. |
-| `clearSelected()`              | Unselects all rows.                                                                                  |
-| `isRowSelected(index: number)` | Returns `true` if the row with the given `index` is selected, otherwise it returns `false`.          |
+| Member                                     | Description                                                                     |
+| ------------------------------------------ | ------------------------------------------------------------------------------- |
+| `selection.add(item: Item)`                | Selects the given item. In `single` mode, replaces any previous selection.      |
+| `selection.remove(item: Item)`             | Unselects the given item.                                                       |
+| `selection.set(items: readonly Item[])`    | Replaces the selection with the provided items.                                 |
+| `selection.setAll()`                       | Selects all items (no effect in `single` mode).                                 |
+| `selection.clear()`                        | Clears all selections.                                                          |
+| `selection.has(item: Item): boolean`       | Returns whether the given item is currently selected.                           |
+| `selection.selectedItems: readonly Item[]` | The current selected items (same values as bound via `v-model:selected-items`). |
+| `selection.isActivated: boolean`           | Indicates whether selection is active and at least one item is selected.        |
 
 **Programmatic row selection notes:**
 
@@ -708,16 +711,19 @@ selected, such as a virtual column as shown in the example below.
 
 <NotYetImplemented />
 
-### Exposed functions
+### Exposed API
 
-See [Row select support](#row-select-support) for selection related exposed functions
+- `<BTable>` exposes the following top-level members via a template ref. See [Row select support](#row-select-support) for the `selection` API and [Row expansion support](#row-expansion-support) for the `expansion` API.
 
-| Method                                          | Description                                                                                                                             |
-| ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `items(): Item[]`                               | Returns the complete set of items used to build the table.                                                                              |
-| `displayItems(): Item[]`                        | Returns the set of items currently displayed in the tabe. See [Complete Example](#complete-example) for usage                           |
-| `getStringValue(ob: Item, key: string): string` | Returns the formatted string value of the field `key` of the object `ob`. See [Custom Sort Comparers](#custom-sort-comparers) for usage |
-| `refresh()`                                     | Calls the async provider to refresh the table items                                                                                     |
+| Member                                          | Description                                                                                                         |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `items: readonly Item[]`                        | The complete set of items used to build the table.                                                                  |
+| `displayItems: readonly Item[]`                 | The set of items currently displayed in the table. See [Complete Example](#complete-example) for usage              |
+| `getStringValue(ob: Item, key: string): string` | Returns the formatted string value for `key` on `ob`. See [Custom Sort Comparers](#custom-sort-comparers) for usage |
+| `refresh()`                                     | Calls the async provider to refresh table items.                                                                    |
+
+- `<BTable>` and `<BTableLite>` also expose an `expansion` controller with methods like `toggle(item)`, `add(item)`, `remove(item)`, `set(items)`, `setAll()`, `clear()`, `has(item)`, and the `expandedItems` array. See [Row expansion support](#row-expansion-support).
+- `<BTable>` additionally exposes a `selection` controller. See [Row select support](#row-select-support).
 
 ## Sorting
 
