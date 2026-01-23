@@ -20,7 +20,7 @@ Dropdown supports various positioning such as left (start) and right (end) align
 
 ### Menu alignment
 
-The dropdown menu can either be _start_ aligned (default) or _end_ aligned to the button above it. To have the dropdown aligned on the _end_, set the `end` prop.
+The dropdown menu can be aligned to the _start_ (default), _end_, or _center_ of the button using the `placement` prop. The default placement is `bottom-start`. Use `placement="bottom-end"` for end/right alignment, or `placement="bottom"` for center alignment.
 
 <<< DEMO ./demo/DropdownMenuAlignment.vue#template{vue-html}
 

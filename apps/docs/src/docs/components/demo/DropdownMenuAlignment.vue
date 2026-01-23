@@ -2,7 +2,7 @@
   <div class="d-flex flex-wrap gap-2">
     <!-- #region template -->
     <BDropdown
-      text="Default Alignment"
+      text="Start Aligned (Default)"
       variant="primary"
       class="me-2"
     >
@@ -11,8 +11,8 @@
       <BDropdownItem>Something else here</BDropdownItem>
     </BDropdown>
     <BDropdown
-      start
-      text="Start Alignment"
+      placement="bottom-end"
+      text="End Aligned"
       variant="primary"
       class="me-2"
     >
@@ -21,18 +21,8 @@
       <BDropdownItem>Something else here</BDropdownItem>
     </BDropdown>
     <BDropdown
-      end
-      text="End Align"
-      variant="primary"
-      class="me-2"
-    >
-      <BDropdownItem>Action</BDropdownItem>
-      <BDropdownItem>Another action</BDropdownItem>
-      <BDropdownItem>Something else here</BDropdownItem>
-    </BDropdown>
-    <BDropdown
-      center
-      text="Center"
+      placement="bottom"
+      text="Center Aligned"
       variant="primary"
       class="me-2"
     >
