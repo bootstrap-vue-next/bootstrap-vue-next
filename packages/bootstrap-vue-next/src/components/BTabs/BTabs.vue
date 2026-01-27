@@ -148,9 +148,23 @@ const hasExplicitIds = ref(false)
 
 const updateTabElementsArray = () => {
   const tabElements = flattenFragments(slots.default?.({}) ?? [])
-  tabElementsArray.value = (Array.isArray(tabElements) ? tabElements : [tabElements]).filter(
+  const newTabElementsArray = (Array.isArray(tabElements) ? tabElements : [tabElements]).filter(
     (tab) => tab.type === BTab
   )
+
+  // Only update if the array actually changed (length or content)
+  // This prevents unnecessary re-renders and breaks the infinite loop
+  if (
+    tabElementsArray.value.length !== newTabElementsArray.length ||
+    // Note: every() only runs if lengths are equal, so newTabElementsArray[index] is guaranteed to exist
+    !tabElementsArray.value.every(
+      (tab, index) =>
+        tab.type === newTabElementsArray[index].type && tab.key === newTabElementsArray[index].key
+    )
+  ) {
+    tabElementsArray.value = newTabElementsArray
+  }
+
   // only get the ids once in setup context
   if (initialIds.value.length === 0) {
     // we need to get the ids of the tabs before they are registered. After that we use the internalId for the tabpane
@@ -160,9 +174,13 @@ const updateTabElementsArray = () => {
     // Check if any tab has an explicit ID
     hasExplicitIds.value = tabElementsArray.value.some((tab) => tab.props?.id !== undefined)
   }
-  isChildActive.value = tabElementsArray.value.some(
+
+  const newIsChildActive = tabElementsArray.value.some(
     (tab) => tab.props?.active !== undefined && tab.props?.active !== false
   )
+  if (isChildActive.value !== newIsChildActive) {
+    isChildActive.value = newIsChildActive
+  }
 }
 updateTabElementsArray()
 
