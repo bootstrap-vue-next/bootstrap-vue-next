@@ -46,8 +46,8 @@ export interface BToastEmits extends showHideEmits {
 
 export interface BTableEmits<Item> extends BTableLiteEmits<Item> {
   'filtered': [value: readonly Item[]]
-  'row-selected': [value: Item]
-  'row-unselected': [value: Item]
+  'row-selected': [value: unknown]
+  'row-unselected': [value: unknown]
   'sorted': [value: BTableSortBy]
   'change': [value: readonly Item[]]
 }

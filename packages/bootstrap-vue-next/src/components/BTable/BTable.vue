@@ -123,7 +123,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import type {BTableProps} from '../../types/ComponentProps'
 import type {BTableEmits, BTableLiteEmits} from '../../types/ComponentEmits'
 import {pick} from '../../utils/object'
-import {btableLiteProps, btableSimpleProps, getTableFieldHeadLabel} from '../../utils/tableUtils'
+import {bTableLiteProps, bTableSimpleProps, getTableFieldHeadLabel} from '../../utils/tableUtils'
 import {useId} from '../../composables/useId'
 import type {BTableSlots, CamelCase} from '../../types'
 import {
@@ -413,7 +413,7 @@ const boundBTableLiteEmits = {
   ) => void
 }
 const computedLiteProps = computed(() => ({
-  ...pick(props, [...btableLiteProps, ...btableSimpleProps]),
+  ...pick(props, [...bTableLiteProps, ...bTableSimpleProps]),
   tableAttrs: {
     ariaBusy: busyModel.value,
   },

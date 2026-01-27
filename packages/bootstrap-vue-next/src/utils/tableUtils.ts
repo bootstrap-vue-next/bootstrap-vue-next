@@ -1,27 +1,36 @@
 import {titleCase} from './stringUtils'
-import {type TableFieldRaw} from '../types/TableTypes'
-import type {Breakpoint, BTableLiteProps, BTableSimpleProps} from '../types'
+import {type TableFieldFormatter, type TableFieldRaw} from '../types/TableTypes'
+import type {Breakpoint, BTableLiteProps, BTableSimpleProps, TableField} from '../types'
 
 export const getTableFieldHeadLabel = (field: Readonly<TableFieldRaw<unknown>>) =>
   typeof field === 'string'
     ? titleCase(field)
     : field.label !== undefined
       ? field.label
-      : typeof field.key === 'string'
-        ? titleCase(field.key)
-        : field.key
+      : titleCase(field.key)
 
 export const getWithGetter = <Obj extends object>(
   item: Obj,
-  key: string | ((item: Obj) => string)
-): string | undefined => {
+  key: string | ((item: Obj) => unknown)
+): unknown => {
   if (typeof key === 'function') {
     return key(item)
   }
-  return item[key as unknown as keyof Obj] as string | undefined
+  return item[key as unknown as keyof Obj]
 }
 
-export const btableSimpleProps = Object.freeze(
+export const getByFieldKey = <T>(item: T, field: TableField) =>
+  getWithGetter(item, field.accessor ?? field.key)
+
+export const formatItem = <T>(item: T, field: TableField, formatter?: TableFieldFormatter<T>) => {
+  const val = getByFieldKey(item, field)
+
+  return formatter && typeof formatter === 'function'
+    ? formatter({value: val, key: field.key, item})
+    : val
+}
+
+export const bTableSimpleProps = Object.freeze(
   Object.keys({
     bordered: 0,
     borderless: 0,
@@ -45,7 +54,7 @@ export const btableSimpleProps = Object.freeze(
   } satisfies Record<keyof BTableSimpleProps, 0>)
 ) as readonly (keyof BTableSimpleProps)[]
 
-export const btableLiteProps = Object.freeze(
+export const bTableLiteProps = Object.freeze(
   Object.keys({
     align: 0,
     caption: 0,

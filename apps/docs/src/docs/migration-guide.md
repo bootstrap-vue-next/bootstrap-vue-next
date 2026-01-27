@@ -1168,6 +1168,78 @@ The items provider no longer includes an optional callback parameter, use the as
 
 ### Field Definitions
 
+**BREAKING: `field.key` no longer supports nested paths**
+
+In BootstrapVue, the `field.key` property could be set to nested string paths like `name.firstName` to access nested properties. This is no longer supported. The `key` property must now be a simple string identifier used only for column identification and slot names.
+
+**New `accessor` property for data access**
+
+To access nested or computed data, use the new optional `accessor` property:
+
+- For root-level properties: The `accessor` can be a string matching a root property name (e.g., `'email'`)
+- For nested or computed values: The `accessor` should be a function that receives the row item and returns the value
+- If omitted, the `key` property is used by default (for root-level properties only)
+
+**Before (BootstrapVue):**
+
+```ts
+const fields = [
+  {key: 'name.first', label: 'First Name'},
+  {key: 'name.last', label: 'Last Name'},
+  {key: 'age', label: 'Age'},
+]
+```
+
+**After (BootstrapVueNext):**
+
+```ts
+const fields = [
+  {
+    key: 'firstName',
+    label: 'First Name',
+    accessor: (item) => item.name.first,
+  },
+  {
+    key: 'lastName',
+    label: 'Last Name',
+    accessor: (item) => item.name.last,
+  },
+  {key: 'age', label: 'Age'}, // Simple root property works as before
+]
+```
+
+**BREAKING: Function signatures changed to use single parameter objects**
+
+The following TableField properties now accept a single parameter object instead of multiple positional parameters:
+
+- `formatter`: Now receives `{value, key, item}` instead of `(value, key, item)`
+- `tdAttr`: Now receives `{value, key, item}` instead of `(value, key, item)`
+- `thAttr`: Now receives `{value, key, item, type}` instead of `(value, key, item, type)`
+
+**Before (BootstrapVue):**
+
+```ts
+const fields = [
+  {
+    key: 'status',
+    formatter: (value, key, item) => value.toUpperCase(),
+    tdAttr: (value, key, item) => ({class: value === 'active' ? 'text-success' : ''}),
+  },
+]
+```
+
+**After (BootstrapVueNext):**
+
+```ts
+const fields = [
+  {
+    key: 'status',
+    formatter: ({value, key, item}) => value.toUpperCase(),
+    tdAttr: ({value, key, item}) => ({class: value === 'active' ? 'text-success' : ''}),
+  },
+]
+```
+
 `formatter` Only the callback function value for this field is implemented, adding the name
 of a method in the component is deprecated.
 

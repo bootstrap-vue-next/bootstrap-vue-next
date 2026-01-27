@@ -33,9 +33,8 @@ import {
   type TableSelectedReturn,
 } from '../types/TableTypes'
 import {deepEqual, set} from '../utils/object'
-import {formatItem} from '../utils/formatItem'
 import {startCase} from '../utils/stringUtils'
-import {getDataLabelAttr, getWithGetter, type StackedProps} from '../utils/tableUtils'
+import {formatItem, getDataLabelAttr, getWithGetter, type StackedProps} from '../utils/tableUtils'
 import {useDebounceFn} from '../utils/debounce'
 import {useItemTracker} from './useTableLiteHelpers'
 
@@ -147,7 +146,7 @@ export const useTableMapper = <Item>({
     if (isTableField(sortField) && !!sortField.sortByFormatted) {
       const formatter = getFormatter(sortField)
       if (formatter) {
-        return String(formatItem(ob, String(sortField.key), formatter))
+        return String(formatItem(ob, sortField, formatter))
       }
     }
     return typeof val === 'object' && val !== null ? JSON.stringify(val) : (val?.toString() ?? '')
@@ -210,7 +209,7 @@ export const useTableMapper = <Item>({
           if (isTableField(filterField) && !!filterField.filterByFormatted) {
             const formatter = getFormatter(filterField)
             if (formatter) {
-              return String(formatter(val, String(filterField.key), item))
+              return String(formatter({value: val, key: String(filterField.key), item}))
             }
           }
           return typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
@@ -327,10 +326,10 @@ export const useTableSelectedItems = <Item>({
   selectable: MaybeRefOrGetter<boolean>
   selectMode: MaybeRefOrGetter<BTableSelectMode>
   primaryKey: MaybeRef<TablePrimaryKey<Item> | undefined>
-  selectedItems: Ref<readonly Item[]>
+  selectedItems: Ref<readonly unknown[]>
   events: {
-    onRowSelected: (item: Item) => void
-    onRowUnselected: (item: Item) => void
+    onRowSelected: (item: unknown) => void
+    onRowUnselected: (item: unknown) => void
   }
 }): TableSelectedReturn<Item> => {
   const selectableResolved = readonly(toRef(selectable))

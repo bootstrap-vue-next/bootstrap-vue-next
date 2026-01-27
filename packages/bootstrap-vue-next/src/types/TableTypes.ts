@@ -62,7 +62,7 @@ export type BTableProvider<T> = (
   context: Readonly<BTableProviderContext>
 ) => MaybePromise<T[] | undefined>
 
-export type TableFieldFormatter<T> = (value: unknown, key: string, item: T) => string
+export type TableFieldFormatter<T> = (obj: {value: unknown; key: string; item: T}) => string
 
 export type TableRowType = 'row' | 'row-expansion' | 'row-top' | 'row-bottom' | 'table-busy'
 export type TableRowThead = 'top' | 'bottom'
@@ -75,10 +75,35 @@ export type TableField<T = any> = {
   filterByFormatted?: boolean | TableFieldFormatter<T>
   formatter?: TableFieldFormatter<T>
   isRowHeader?: boolean
-  key: LiteralUnion<keyof T>
+  /**
+   * Unique identifier for the column.
+   *
+   * Used for:
+   * - generating slot names (e.g., `head(<key>)`, `cell(<key>)`)
+   * - tracking column state (sorting, visibility, focus, etc.)
+   *
+   * This value must be stable and unique across all columns.
+   * It is **not** used directly to read data from items or as the label.
+   */
+  key: string
+  /**
+   * Text displayed in the table header for this column.
+   *
+   * If omitted, a default label may be generated from the column `key`.
+   * This value is purely presentational and does not affect column identity or data access.
+   * For rich headers, use the `head(<key>)` slot instead.
+   */
+  label?: string
+  /**
+   * How to read the value from each row item.
+   *
+   * - Can be a string representing a root-level property name (e.g., `'email'` for `const users = [{email: 'abc'}]`).
+   * - Can be a function that receives the row item and returns the value (recommended for type safety and nested or computed values).
+   * - If omitted, defaults to using the column `key`.
+   */
+  accessor?: string | ((item: T) => unknown)
   headerTitle?: string
   headerAbbr?: string
-  label?: string
   sortable?: boolean
   sortDirection?: string
   sortByFormatted?: boolean | TableFieldFormatter<T>
@@ -91,10 +116,10 @@ export type TableField<T = any> = {
     | ((value: unknown, key: string, item: T) => TableStrictClassValue)
   thClass?: ClassValue
   thStyle?: StyleValue
-  tdAttr?: AttrsValue | ((value: unknown, key: string, item: T) => AttrsValue)
+  tdAttr?: AttrsValue | ((obj: {value: unknown; key: string; item: T}) => AttrsValue)
   thAttr?:
     | AttrsValue
-    | ((value: unknown, key: string, item: T | null, type: TableRowThead) => AttrsValue)
+    | ((obj: {value: unknown; key: string; item: T | null; type: TableRowThead}) => AttrsValue)
   variant?: ColorVariant | null
 }
 

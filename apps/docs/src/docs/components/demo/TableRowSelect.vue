@@ -104,10 +104,12 @@ const clearSelected = () => {
 }
 const selectThirdRow = () => {
   // Rows are indexed from 0, so the third row is index 2
-  selectableTable?.value?.selection.add(2)
+  // Must be the item object, not the index
+  selectableTable?.value?.selection.add(items[2])
 }
 const unselectThirdRow = () => {
   // Rows are indexed from 0, so the third row is index 2
-  selectableTable?.value?.selection.remove(2)
+  // Must be the item object, not the index
+  selectableTable?.value?.selection.remove(items[2])
 }
 </script>

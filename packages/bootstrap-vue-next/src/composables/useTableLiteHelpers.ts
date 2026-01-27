@@ -172,7 +172,7 @@ export const useItemExpansion = <Item>({
 }: {
   allItems: MaybeRefOrGetter<readonly Item[]>
   primaryKey: MaybeRef<TablePrimaryKey<Item> | undefined>
-  expandedItems: Ref<readonly Item[]>
+  expandedItems: Ref<readonly unknown[]>
 }): TableDetailsReturn<Item> => {
   const utils = useItemTracker({
     primaryKey,

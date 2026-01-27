@@ -261,7 +261,6 @@ import type {
   BTableInitialSortDirection,
   BTableSortBy,
   ColorVariant,
-  LiteralUnion,
   TableFieldRaw,
   TableItem,
 } from 'bootstrap-vue-next'
@@ -317,7 +316,7 @@ const fields: Exclude<TableFieldRaw<Person>, string>[] = [
     key: 'sortableName',
     label: 'Person sortable name',
     sortable: true,
-    formatter: (_value: unknown, _key?: LiteralUnion<keyof Person>, item?: Person) =>
+    formatter: ({item}) =>
       item ? `${item.name.last}, ${item.name.first}` : 'Something went wrong',
     sortByFormatted: true,
     filterByFormatted: true,
@@ -326,7 +325,7 @@ const fields: Exclude<TableFieldRaw<Person>, string>[] = [
   {
     key: 'isActive',
     label: 'Is Active',
-    formatter: (value: unknown) => (value ? 'Yes' : 'No'),
+    formatter: ({value}) => (value ? 'Yes' : 'No'),
     sortable: true,
     sortByFormatted: true,
     filterByFormatted: true,

@@ -504,19 +504,27 @@ type SpinnerType = 'border' | 'grow'
 <BCard class="bg-body-tertiary">
 
 ```ts
-type TableFieldFormatter<T = any> =
-  | string
-  | ((value: unknown, key?: LiteralUnion<keyof T>, item?: T) => string)
-
-type TableFieldAttribute<T = any> =
-  | Record<string, unknown>
-  | ((value: unknown, key?: LiteralUnion<keyof T>, item?: T) => Record<string, unknown>)
+type TableFieldFormatter<T = any> = (obj: {value: unknown; key: string; item: T}) => string
 
 type TableRowType = 'row' | 'row-expansion' | 'row-top' | 'row-bottom' | 'table-busy'
 type TableRowThead = 'top' | 'bottom'
 type BTableInitialSortDirection = 'desc' | 'asc' | 'last'
 
 interface TableField<T = Record<string, unknown>> {
+  /**
+   * Unique identifier for the column.
+   * Must be a simple string (no nested paths like 'name.first').
+   * Used for slot names and column tracking.
+   */
+  key: string
+  /**
+   * Optional accessor for reading values from row items.
+   * - String: root-level property name (e.g., 'email')
+   * - Function: for nested/computed values (e.g., (item) => item.name.first)
+   * - If omitted: defaults to using key
+   */
+  accessor?: string | ((item: T) => unknown)
+  label?: string
   class?: ClassValue
   filterByFormatted?: boolean | TableFieldFormatter<T>
   formatter?: TableFieldFormatter<T>
@@ -524,15 +532,15 @@ interface TableField<T = Record<string, unknown>> {
   headerTitle?: string
   initialSortDirection?: BTableInitialSortDirection
   isRowHeader?: boolean
-  key: LiteralUnion<keyof T>
-  label?: string
   sortable?: boolean
   sortByFormatted?: boolean | TableFieldFormatter<T>
   sortCompare?: BTableSortByComparerFunction<T>
   stickyColumn?: boolean
-  tdAttr?: TableFieldAttribute<T>
+  tdAttr?: AttrsValue | ((obj: {value: unknown; key: string; item: T}) => AttrsValue)
   tdClass?: ClassValue
-  thAttr?: TableFieldAttribute<T>
+  thAttr?:
+    | AttrsValue
+    | ((obj: {value: unknown; key: string; item: T | null; type: TableRowThead}) => AttrsValue)
   thClass?: ClassValue
   thStyle?: StyleValue
   variant?: ColorVariant | null

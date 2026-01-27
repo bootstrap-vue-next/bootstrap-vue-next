@@ -236,16 +236,16 @@ export default {
           default: undefined,
         },
         expandedItems: {
-          type: 'readonly Item[]',
-          default: undefined,
+          type: 'readonly unknown[]',
+          default: '() => []',
           description:
-            'Array of items that are currently expanded (have their row-expansion slot visible). Use v-model:expanded-items to bind this. When a primary-key is provided, expansion state persists across item array updates. Also available via the alias v-model:item-details.',
+            'Array of items that are currently expanded (have their row-expansion slot visible). Use v-model:expanded-items to bind this. When a primary-key is provided, expansion state persists across item array updates',
         },
         primaryKey: {
-          type: 'string',
+          type: 'string | ((item: Item) => string)',
           default: undefined,
           description:
-            'Name of a table field that contains a guaranteed unique value per row. Required for row expansion and selection to persist across item updates. Also speeds up table rendering and enables proper item tracking.',
+            'Name of a table field that contains a guaranteed unique value per row. For row expansion and selection to persist across item updates. Also speeds up table rendering and enables proper item tracking.',
         },
         tbodyClass: {
           type: 'ClassValue',
@@ -299,7 +299,7 @@ export default {
               description: "The row's index (zero-based) with respect to the displayed rows",
             },
             item: {
-              type: 'readonly Item[]',
+              type: 'Item',
               description: "The row's item data object",
             },
             toggleExpansion: {
@@ -713,9 +713,10 @@ export default {
           description: 'When set, places the table body rows in selectable mode',
         },
         selectedItems: {
-          type: 'TableItem[]',
+          type: 'readonly unknown[]',
+          default: '() => []',
           description:
-            'Array of currently selected items. Use v-model:selected-items to bind this. When a primary-key is provided, selection state persists across item array updates. Without a primary-key, uses a WeakMap for tracking.',
+            'Array of currently selected items. Use v-model:selected-items to bind this. When a primary-key is provided, selection state persists across item array updates',
         },
         selectHead: {
           type: 'boolean | string',

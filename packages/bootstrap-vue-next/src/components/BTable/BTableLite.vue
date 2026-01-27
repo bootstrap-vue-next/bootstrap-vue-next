@@ -22,13 +22,9 @@
         >
           <!-- eslint-disable prettier/prettier -->
           <slot
-            :name="
-              slots[`head(${String(field.key)})`]
-                ? (`head(${String(field.key)})` as 'head()')
-                : 'head()'
-            "
+            :name="slots[`head(${field.key})`] ? (`head(${field.key})` as 'head()') : 'head()'"
             :label="field.label"
-            :column="field.key as LiteralUnion<keyof Item>"
+            :column="field.key"
             :field
             :is-foot="false"
           >
@@ -109,33 +105,27 @@
               v-for="field in computedFields"
               :key="field.key"
               :variant="
-                (isTableItem(item) ? item._cellVariants?.[field.key as string] : false)
-                  ? null
-                  : field.variant
+                (isTableItem(item) ? item._cellVariants?.[field.key] : false) ? null : field.variant
               "
               :class="getFieldRowClasses(field, item)"
-              v-bind="itemAttributes(item, String(field.key), field.tdAttr)"
+              v-bind="itemAttributes(item, field)"
             >
               <label v-if="props.stacked && props.labelStacked" class="b-table-stacked-label">
                 {{ getTableFieldHeadLabel(field) }}
               </label>
               <slot
-                :name="
-                  slots[`cell(${String(field.key)})`]
-                    ? (`cell(${String(field.key)})` as 'cell()')
-                    : 'cell()'
-                "
-                :value="formatItem(item, String(field.key), field.formatter)"
-                :unformatted="getByFieldKey(item, String(field.key))"
+                :name="slots[`cell(${field.key})`] ? (`cell(${field.key})` as 'cell()') : 'cell()'"
+                :value="formatItem(item, field)"
+                :unformatted="getByFieldKey(item, field)"
                 :index="itemIndex"
                 :item="item"
                 :field="field"
-                :items="items"
+                :items="props.items"
                 :toggle-expansion="() => expandedItemsController.toggle(item)"
                 :expansion-showing="expandedItemsController.has(item)"
               >
-                <template v-if="!slots[`cell(${String(field.key)})`] && !slots['cell()']">
-                  {{ formatItem(item, String(field.key), field.formatter) }}
+                <template v-if="!slots[`cell(${field.key})`] && !slots['cell()']">
+                  {{ formatItem(item, field) }}
                 </template>
               </slot>
             </component>
@@ -198,7 +188,7 @@
                 :name="calculatedFooterSlot(field.key)"
                 :label="field.label"
                 :column="field.key"
-                :field="field as LiteralUnion<keyof Item>"
+                :field="field"
                 :is-foot="true"
               >
                 <!-- eslint-enable prettier/prettier -->
@@ -243,11 +233,15 @@ import BTh from './BTh.vue'
 import BThead from './BThead.vue'
 import BTr from './BTr.vue'
 import {useDefaults} from '../../composables/useDefaults'
-import {get, pick} from '../../utils/object'
-import {btableSimpleProps, getTableFieldHeadLabel, getWithGetter} from '../../utils/tableUtils'
-import {formatItem} from '../../utils/formatItem'
+import {pick} from '../../utils/object'
+import {
+  bTableSimpleProps,
+  formatItem,
+  getByFieldKey,
+  getTableFieldHeadLabel,
+  getWithGetter,
+} from '../../utils/tableUtils'
 import {filterEvent} from '../../utils/filterEvent'
-import type {LiteralUnion} from '../../types/LiteralUnion'
 import {useId} from '../../composables/useId'
 import type {BTableLiteEmits} from '../../types/ComponentEmits'
 import type {BTableLiteSlots} from '../../types'
@@ -347,27 +341,15 @@ const {
   },
 })
 
-const calculatedFooterSlot = (key: LiteralUnion<keyof Item>): keyof typeof slots =>
-  slots[`foot(${String(key)})`]
-    ? `foot(${String(key)})`
+const calculatedFooterSlot = (key: string): keyof typeof slots =>
+  slots[`foot(${key})`]
+    ? `foot(${key})`
     : slots['foot()']
       ? 'foot()'
-      : slots[`head(${String(key)})`]
-        ? `head(${String(key)})`
+      : slots[`head(${key})`]
+        ? `head(${key})`
         : 'head()'
 
-/**
- * @deprecated I am unsure if the best path forward is to separate the accessor and the key
- * Now the field.key does three things simultaneously: stabilize for v-for, even though that doesn't have an item
- * Be the label for the column, unless label is provided
- * And be the accessor into the item. This means we need to use this legacy get function for complex keys
- * The alternative would be to separate the responsibilities. This was made in a breaking change, but perhaps should be done now?
- * Review this during PR review to see if we should add this into this next breaking change.
- *
- * @param item
- * @param fieldKey
- */
-const getByFieldKey = (item: Item | null, fieldKey: string) => get(item, fieldKey)
 const computedTableClasses = computed(() => [
   props.tableClass,
   {
@@ -386,19 +368,18 @@ const getFieldColumnClasses = (field: TableField) => [
       : props.fieldColumnClass
     : null,
 ]
-const getFieldRowClasses = (field: Readonly<TableField>, tr: Item) => {
-  const val = getByFieldKey(tr, String(field.key))
-  return [
-    field.class,
-    typeof field.tdClass === 'function' ? field.tdClass(val, String(field.key), tr) : field.tdClass,
-    (isTableItem(tr) ? tr._cellVariants?.[field.key as string] : false)
-      ? `table-${(tr as TableItem)._cellVariants?.[field.key as string]}`
-      : null,
-    {
-      'b-table-sticky-column': field.stickyColumn,
-    },
-  ]
-}
+const getFieldRowClasses = (field: Readonly<TableField>, tr: Item) => [
+  field.class,
+  typeof field.tdClass === 'function'
+    ? field.tdClass(getByFieldKey(tr, field), field.key, tr)
+    : field.tdClass,
+  (isTableItem(tr) ? tr._cellVariants?.[field.key] : false)
+    ? `table-${(tr as TableItem)._cellVariants?.[field.key]}`
+    : null,
+  {
+    'b-table-sticky-column': field.stickyColumn,
+  },
+]
 const getRowClasses = (item: Item | null, type: TableRowType) =>
   props.tbodyTrClass
     ? typeof props.tbodyTrClass === 'function'
@@ -406,17 +387,14 @@ const getRowClasses = (item: Item | null, type: TableRowType) =>
       : props.tbodyTrClass
     : null
 
-const itemAttributes = (item: Item, fieldKey: string, attr?: unknown) => {
-  const val = getByFieldKey(item, fieldKey)
-  return attr && typeof attr === 'function' ? attr(val, fieldKey, item) : attr
-}
-const callThAttr = (item: Item | null, field: TableField<Item>, type: TableRowThead) => {
-  const fieldKey = String(field.key)
-  const val = getByFieldKey(item, fieldKey)
-  return field.thAttr && typeof field.thAttr === 'function'
-    ? field.thAttr(val, fieldKey, item, type)
+const itemAttributes = (item: Item, field: TableField) =>
+  field.tdAttr && typeof field.tdAttr === 'function'
+    ? field.tdAttr({value: getByFieldKey(item, field), key: field.key, item})
+    : field.tdAttr
+const callThAttr = (item: Item | null, field: TableField<Item>, type: TableRowThead) =>
+  field.thAttr && typeof field.thAttr === 'function'
+    ? field.thAttr({value: getByFieldKey(item, field), key: field.key, item, type})
     : field.thAttr
-}
 const callTbodyTrAttrs = (item: Item | null, type: TableRowType) =>
   props.tbodyTrAttrs
     ? typeof props.tbodyTrAttrs === 'function'
@@ -440,7 +418,7 @@ const footerProps = computed(() => ({
 }))
 
 const computedSimpleProps = computed(() => ({
-  ...pick(props, btableSimpleProps),
+  ...pick(props, bTableSimpleProps),
   tableClass: computedTableClasses.value,
   id: computedId.value,
 }))
