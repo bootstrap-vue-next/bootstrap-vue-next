@@ -19,12 +19,12 @@ export const getWithGetter = <Obj extends object>(
   return item[key as unknown as keyof Obj]
 }
 
-export const getByFieldKey = <T>(item: T, field: TableField) =>
+export const getByFieldKey = (item: unknown, field: TableField) =>
   typeof item === 'object' && item !== null
     ? getWithGetter(item, field.accessor ?? field.key)
     : item
 
-export const formatItem = <T>(item: T, field: TableField) => {
+export const formatItem = (item: unknown, field: TableField) => {
   const val = getByFieldKey(item, field)
 
   return typeof field.formatter === 'function'
