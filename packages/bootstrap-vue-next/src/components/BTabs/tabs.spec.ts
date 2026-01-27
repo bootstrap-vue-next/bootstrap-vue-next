@@ -707,7 +707,7 @@ describe('tabs', () => {
     expect(wrapper.findAll('button').length).toBe(2)
 
     // Change tab content - this should not cause infinite recursion
-    await wrapper.vm.$data.tabs.push({id: 't3', title: 'Tab 3', content: 'Content 3'})
+    wrapper.vm.$data.tabs.push({id: 't3', title: 'Tab 3', content: 'Content 3'})
     await nextTick()
     await nextTick()
 

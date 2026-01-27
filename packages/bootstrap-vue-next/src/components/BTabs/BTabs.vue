@@ -158,7 +158,7 @@ const updateTabElementsArray = () => {
     tabElementsArray.value.length !== newTabElementsArray.length ||
     !tabElementsArray.value.every(
       (tab, index) =>
-        tab.type === newTabElementsArray[index]?.type && tab.key === newTabElementsArray[index]?.key
+        tab.type === newTabElementsArray[index].type && tab.key === newTabElementsArray[index].key
     )
   ) {
     tabElementsArray.value = newTabElementsArray
