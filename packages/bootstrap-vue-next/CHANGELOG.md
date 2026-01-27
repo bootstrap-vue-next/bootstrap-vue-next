@@ -1,5 +1,36 @@
 # Changelog
 
+## [0.42.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.42.0...bootstrapvuenext-v0.42.1) (2026-01-27)
+
+
+### Features
+
+* **BFormChecboxGroup:** implement type safety for value/text/disable fields ([767f51b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/767f51b93fd282c4aedc72a0416211755088a28f))
+* **BFormDatalist:** Typescript validation + docs & cleanup ([767f51b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/767f51b93fd282c4aedc72a0416211755088a28f))
+* **BFormRadioGroup:** typesafe implementation of configuration fields ([767f51b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/767f51b93fd282c4aedc72a0416211755088a28f))
+* **BFormSelect:** type safety plan and proof of concept ([767f51b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/767f51b93fd282c4aedc72a0416211755088a28f))
+* TypeScript Type Safety for Form Components with Options ([#2941](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2941)) ([767f51b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/767f51b93fd282c4aedc72a0416211755088a28f))
+
+
+### Bug Fixes
+
+* **BFormCheckbox:** respect prop precendence ([767f51b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/767f51b93fd282c4aedc72a0416211755088a28f))
+* **BFormFile:** Correctly pipe title on BFormFile custom mode ([#2963](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2963)) ([29e286d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/29e286dd2cd46bf5eb9387acec46a653e94279d6))
+* **BFormFIle:** put the title on the drop-zone and class & style on wrapper ([29e286d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/29e286dd2cd46bf5eb9387acec46a653e94279d6))
+* **BFormGroup:** Correctly handle clicking on label in horizontal mode ([44d68ac](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/44d68accfe9308178860826b916623d7096287ee))
+* **BFormInput:** remove key attribute to prevent focus loss during typing ([#2981](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2981)) ([552efe9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/552efe91ca293f48787a7e32033e6b27451fa7ea))
+* **BFormSelect:** changes based on code review ([767f51b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/767f51b93fd282c4aedc72a0416211755088a28f))
+* **BFormSelect:** Enable select default mechanism ([767f51b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/767f51b93fd282c4aedc72a0416211755088a28f))
+* **BFormSelect:** Fix & test global defaults ([767f51b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/767f51b93fd282c4aedc72a0416211755088a28f))
+* **BFormSelect:** Fix types/documentation about global defaults ([767f51b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/767f51b93fd282c4aedc72a0416211755088a28f))
+* **BFormSelect:** refactor props to reduce redundancy ([767f51b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/767f51b93fd282c4aedc72a0416211755088a28f))
+* **BModal:** prevent modal remaining open when show/hide called in rapid succession ([#2979](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2979)) ([106ce85](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/106ce8585976a65be623bf6db090b506e85e1270))
+* **BModal:** quick open/close issue by checking renderRef in hide() ([106ce85](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/106ce8585976a65be623bf6db090b506e85e1270))
+* **BTable:** remove forced hiding of table footer in stacked mode ([#2969](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2969)) ([668d77e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/668d77ed5e3be510b3dd74465cd394fd37aca66b))
+* **BTabs:** delay tab selection when using v-model:index without explicit IDs ([#2978](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2978)) ([1315bc2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1315bc24b16c7fabedf95536526b4b2c5b3476da))
+* **BTabs:** selection when using v-model:index without explicit IDs ([1315bc2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1315bc24b16c7fabedf95536526b4b2c5b3476da))
+* **BToast:** countdown timer freezes when tab is inactive ([#2991](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2991)) ([96073d8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/96073d81f5e2dfbe8a306a07ef49b4c346640c73))
+
 ## [0.42.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.41.0...bootstrapvuenext-v0.42.0) (2025-12-19)
 
 
