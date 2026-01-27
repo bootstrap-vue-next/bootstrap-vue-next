@@ -375,18 +375,27 @@ See [Show and Hide](#show-and-hide) shared properties.
 
 BootstrapVueNext uses [floating-ui](https://floating-ui.com/) to implemented dropdowns. This affects values and behaviors
 for properties such as `boundary` as well as the alignment and placement properties. For fine control, use `floating-middleware`
-in place of `popper-opts`. Check out [our documentation](/docs/components/dropdown) and [theirs] for details.
+in place of `popper-opts`. Check out [our documentation](/docs/components/dropdown) and [theirs](https://floating-ui.com/) for details.
 
-BootstrapVueNext replaces `drop-up`, `drop-left` and `drop-right` props with a single `placement` prop.
-Valid values for `placement` are defined in `float-ui`'s docs [here](https://floating-ui.com/docs/computeposition#placement).
+BootstrapVueNext replaces `dropup`, `dropleft`, `dropright`, and `right` props with a single `placement` prop.
+Valid values for `placement` are: `top`, `top-start`, `top-end`, `bottom`, `bottom-start` (default), `bottom-end`, `left`, `left-start`, `left-end`, `right`, `right-start`, `right-end`.
+See [floating-ui's docs](https://floating-ui.com/docs/computeposition#placement) for details.
+
+| BootstrapVue prop | BootstrapVueNext `placement` value |
+| ----------------- | ---------------------------------- |
+| (default)         | `bottom-start`                     |
+| `right`           | `bottom-end`                       |
+| `dropup`          | `top-start`                        |
+| `dropright`       | `right-start`                      |
+| `dropleft`        | `left-start`                       |
+
+Additionally, BootstrapVueNext supports new placement options that were not available in BootstrapVue, such as `bottom` for center alignment, `top-end`, `left-end`, `right-end`, and others.
 
 <DeprecatedFeature :reason="DeprecationReason.BOOTSTRAP_DEPRECATED" what="`block` prop on `BDropdown`">
   See our <BLink href="/docs/components/dropdown#block-level-dropdowns">`BDropdown` documentation</BLink>
   and <BLink href="https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons">Bootstrap's documentation</BLink> for
   details on creating block-level dropdowns.
 </DeprecatedFeature>
-
-The `right` prop is replaced by `end` see the [overview section](#overview) of this page for details.
 
 <DeprecatedFeature :reason="DeprecationReason.VUE3_BOOTSTRAP5_CHANGES" what="`html` prop on `BDropdown`">
   Use the `button-content` slot instead.
