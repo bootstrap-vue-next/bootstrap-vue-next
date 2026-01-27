@@ -146,7 +146,7 @@ export const useTableMapper = <Item>({
     if (isTableField(sortField) && !!sortField.sortByFormatted) {
       const formatter = getFormatter(sortField)
       if (formatter) {
-        return String(formatItem(ob, sortField, formatter))
+        return String(formatItem(ob, {...sortField, formatter}))
       }
     }
     return typeof val === 'object' && val !== null ? JSON.stringify(val) : (val?.toString() ?? '')

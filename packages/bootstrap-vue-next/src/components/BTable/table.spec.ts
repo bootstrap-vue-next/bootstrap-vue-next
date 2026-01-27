@@ -34,8 +34,7 @@ const formattedFields: Exclude<TableField<SimplePerson>, string>[] = [
     label: 'Adult?',
     sortable: true,
     sortByFormatted: true,
-    formatter: (_value: unknown, _key?: unknown, item?: SimplePerson) =>
-      item ? (item.age >= 18 ? 'Yes' : 'No') : 'Something went wrong',
+    formatter: ({item}) => (item ? (item.age >= 18 ? 'Yes' : 'No') : 'Something went wrong'),
   },
   {key: 'first_name', label: 'First Name', sortable: true},
   {key: 'age', label: 'Age', sortable: true},
@@ -313,7 +312,7 @@ describe('single-sort', () => {
         key: 'first_name',
         label: 'First Name',
         sortable: true,
-        sortByFormatted: (value: unknown) => (value as string).slice(1),
+        sortByFormatted: ({value}) => (value as string).slice(1),
       },
       {key: 'age', label: 'Age', sortable: true},
     ]

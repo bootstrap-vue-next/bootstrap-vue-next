@@ -1,5 +1,5 @@
 import {titleCase} from './stringUtils'
-import {type TableFieldFormatter, type TableFieldRaw} from '../types/TableTypes'
+import {type TableFieldRaw} from '../types/TableTypes'
 import type {Breakpoint, BTableLiteProps, BTableSimpleProps, TableField} from '../types'
 
 export const getTableFieldHeadLabel = (field: Readonly<TableFieldRaw<unknown>>) =>
@@ -22,11 +22,11 @@ export const getWithGetter = <Obj extends object>(
 export const getByFieldKey = <T>(item: T, field: TableField) =>
   getWithGetter(item, field.accessor ?? field.key)
 
-export const formatItem = <T>(item: T, field: TableField, formatter?: TableFieldFormatter<T>) => {
-  const val = getByFieldKey(item, field)
+export const formatItem = <T>(item: T, field: TableField) => {
+  const val = typeof item === 'object' && item !== null ? getByFieldKey(item, field) : item
 
-  return formatter && typeof formatter === 'function'
-    ? formatter({value: val, key: field.key, item})
+  return field.formatter && typeof field.formatter === 'function'
+    ? field.formatter({value: val, key: field.key, item})
     : val
 }
 
