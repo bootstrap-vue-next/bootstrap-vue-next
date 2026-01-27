@@ -143,12 +143,6 @@ Type safety works with TypeScript enums for strongly-typed value constraints:
 
 <!--@include: ./_type-safety-backward-compat.md-->
 
-### Global Defaults Limitation
-
-<!--@include: ./_type-safety-global-defaults.md-->
-
-<<< FRAGMENT ./demo/FormSelectGlobalDefaultsPlugin.ts#snippet{ts}
-
 ## Contextual states
 
 Bootstrap includes validation styles for `valid` and `invalid` states on most form controls.

@@ -1,6 +1,6 @@
 <template>
   <BFormSelect
-    v-model="selectedTags"
+    v-model="selectedTags as any"
     :options="tags"
     value-field="tagId"
     text-field="tagName"
@@ -23,6 +23,6 @@ const tags: Tag[] = [
   {tagId: 'bs', tagName: 'Bootstrap'},
 ]
 
-// TypeScript knows this is readonly string[]
-const selectedTags = ref<readonly string[]>([])
+// TypeScript knows this is string[]
+const selectedTags = ref<string[]>([])
 </script>

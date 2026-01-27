@@ -1,5 +1,4 @@
 <template>
-  <!-- #region template -->
   <div>
     <BFormCheckboxGroup
       id="checkbox-type-safe-enum"
@@ -13,7 +12,6 @@
       Selected roles: <strong>{{ selectedRoles }}</strong>
     </div>
   </div>
-  <!-- #endregion template -->
 </template>
 
 <script setup lang="ts">
