@@ -678,4 +678,46 @@ describe('tabs', () => {
 
     expect(wrapper.vm.activeIndex).toBe(0)
   })
+
+  it('does not cause infinite recursion with slot content changes', async () => {
+    // This test verifies the fix for infinite recursion error when slots change
+    const TestComponent = {
+      template: `
+        <BTabs>
+          <BTab v-for="tab in tabs" :key="tab.id" :id="tab.id" :title="tab.title">
+            {{ tab.content }}
+          </BTab>
+        </BTabs>
+      `,
+      data() {
+        return {
+          tabs: [
+            {id: 't1', title: 'Tab 1', content: 'Content 1'},
+            {id: 't2', title: 'Tab 2', content: 'Content 2'},
+          ],
+        }
+      },
+      components: {
+        BTabs,
+        BTab,
+      },
+    }
+
+    const wrapper = mount(TestComponent)
+    expect(wrapper.findAll('button').length).toBe(2)
+
+    // Change tab content - this should not cause infinite recursion
+    await wrapper.vm.$data.tabs.push({id: 't3', title: 'Tab 3', content: 'Content 3'})
+    await nextTick()
+    await nextTick()
+
+    expect(wrapper.findAll('button').length).toBe(3)
+
+    // Remove a tab - should also not cause infinite recursion
+    wrapper.vm.$data.tabs.shift()
+    await nextTick()
+    await nextTick()
+
+    expect(wrapper.findAll('button').length).toBe(2)
+  })
 })
