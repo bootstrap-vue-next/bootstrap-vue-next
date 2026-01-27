@@ -156,6 +156,7 @@ const updateTabElementsArray = () => {
   // This prevents unnecessary re-renders and breaks the infinite loop
   if (
     tabElementsArray.value.length !== newTabElementsArray.length ||
+    // Note: every() only runs if lengths are equal, so newTabElementsArray[index] is guaranteed to exist
     !tabElementsArray.value.every(
       (tab, index) =>
         tab.type === newTabElementsArray[index].type && tab.key === newTabElementsArray[index].key
