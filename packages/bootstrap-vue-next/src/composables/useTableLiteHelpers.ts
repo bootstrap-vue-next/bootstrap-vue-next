@@ -26,6 +26,7 @@ import {CODE_DOWN, CODE_END, CODE_HOME, CODE_UP} from '../utils/constants'
 import {stopEvent} from '../utils/event'
 import {tableKeyboardNavigationKey} from '../utils/keys'
 import {filterEvent} from '../utils/filterEvent'
+import type {AttrsValue} from '../types/AnyValuedAttributes'
 
 export const useTableFieldsMapper = <Item>({
   fields,
@@ -73,9 +74,19 @@ export const useTableFieldsMapper = <Item>({
       items: fieldsValue.map((f) => {
         if (isTableField(f)) {
           const label = f.label ?? startCase(f.key as string)
+          const dataLabelAttr = getDataLabelAttr(stacked, label)
+          const tdAttr =
+            typeof f.tdAttr === 'function'
+              ? (obj: unknown) => ({
+                  ...dataLabelAttr,
+                  ...(f.tdAttr as (obj: unknown) => AttrsValue)(obj),
+                })
+              : dataLabelAttr || f.tdAttr
+                ? {...dataLabelAttr, ...f.tdAttr}
+                : undefined
           return {
             ...(f as TableField),
-            tdAttr: {...getDataLabelAttr(stacked, label), ...f.tdAttr},
+            tdAttr,
           }
         }
         const label = startCase(f as string)

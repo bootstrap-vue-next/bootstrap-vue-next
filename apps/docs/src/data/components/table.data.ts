@@ -418,7 +418,7 @@ export default {
             },
             toggleExpansion: {
               type: '() => void',
-              description: "Function to toggle visibility of the row's details slot",
+              description: "Function to toggle visibility of the row's row-expansion slot",
             },
           },
         },

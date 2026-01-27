@@ -400,6 +400,10 @@ export const useTableSelectedItems = <Item>({
         const lastSelectedIndex = allItemsResolved.value.findIndex(
           (i) => utils.get(i) === lastSelectedItem
         )
+        if (lastSelectedIndex === -1) {
+          utils.set([item])
+          return
+        }
         const selectStartIndex = Math.min(lastSelectedIndex, index)
         const selectEndIndex = Math.max(lastSelectedIndex, index)
         const items = allItemsResolved.value.slice(selectStartIndex, selectEndIndex + 1)
