@@ -510,14 +510,14 @@ export const useTableProvider = <Item>({
     const {signal} = abortController
 
     busy.value = true
-    const response = providerResolved.value({
-      currentPage: currentPageResolved.value,
-      filter: filterResolved.value,
-      sortBy: sortByResolved.value,
-      perPage: perPageResolved.value,
-      signal,
-    })
     try {
+      const response = providerResolved.value({
+        currentPage: currentPageResolved.value,
+        filter: filterResolved.value,
+        sortBy: sortByResolved.value,
+        perPage: perPageResolved.value,
+        signal,
+      })
       const returnValue = response instanceof Promise ? await response : response
 
       // Check if this request was aborted
