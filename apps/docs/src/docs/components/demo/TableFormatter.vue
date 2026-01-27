@@ -54,7 +54,7 @@ const fields: TableFieldRaw<Person>[] = [
     // A virtual column with custom formatter
     key: 'birthYear',
     label: 'Calculated Birth Year',
-    formatter: (value_, key_, item: Person) => (new Date().getFullYear() - item.age).toString(),
+    formatter: ({item}) => (new Date().getFullYear() - item.age).toString(),
   },
 ]
 

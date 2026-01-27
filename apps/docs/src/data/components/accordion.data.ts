@@ -5,7 +5,7 @@ import type {
   BAccordionProps,
   BAccordionSlots,
 } from 'bootstrap-vue-next'
-import type {ComponentReference, EmitRecord, PropRecord, SlotRecord} from 'src/types'
+import type {ComponentReference, EmitRecord, PropRecord, SlotRecord} from '../../types'
 import {buildCommonProps} from '../../utils/commonProps'
 import {pick} from '../../utils/objectUtils'
 import {showHideEmits, showHideProps} from '../../utils/showHideData'

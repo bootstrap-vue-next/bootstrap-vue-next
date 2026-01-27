@@ -206,12 +206,12 @@
         </BButton>
         <BButton
           size="sm"
-          @click="row.toggleDetails"
+          @click="row.toggleExpansion"
         >
-          {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
+          {{ row.expansionShowing ? 'Hide' : 'Show' }} Details
         </BButton>
       </template>
-      <template #row-details="row">
+      <template #row-expansion="row">
         <BCard>
           <ul>
             <li
@@ -222,7 +222,7 @@
             </li>
             <BButton
               size="sm"
-              @click="row.toggleDetails"
+              @click="row.toggleExpansion"
             >
               Toggle Details
             </BButton>
@@ -261,7 +261,6 @@ import type {
   BTableInitialSortDirection,
   BTableSortBy,
   ColorVariant,
-  LiteralUnion,
   TableFieldRaw,
   TableItem,
 } from 'bootstrap-vue-next'
@@ -317,7 +316,7 @@ const fields: Exclude<TableFieldRaw<Person>, string>[] = [
     key: 'sortableName',
     label: 'Person sortable name',
     sortable: true,
-    formatter: (_value: unknown, _key?: LiteralUnion<keyof Person>, item?: Person) =>
+    formatter: ({item}) =>
       item ? `${item.name.last}, ${item.name.first}` : 'Something went wrong',
     sortByFormatted: true,
     filterByFormatted: true,
@@ -326,7 +325,7 @@ const fields: Exclude<TableFieldRaw<Person>, string>[] = [
   {
     key: 'isActive',
     label: 'Is Active',
-    formatter: (value: unknown) => (value ? 'Yes' : 'No'),
+    formatter: ({value}) => (value ? 'Yes' : 'No'),
     sortable: true,
     sortByFormatted: true,
     filterByFormatted: true,
@@ -377,7 +376,7 @@ function resetInfoModal() {
   infoModal.content = ''
 }
 
-function onFiltered(filteredItems: TableItem<Person>[]) {
+function onFiltered(filteredItems: readonly TableItem<Person>[]) {
   // Trigger pagination to update the number of buttons/pages due to filtering
   totalRows.value = filteredItems.length
   currentPage.value = 1

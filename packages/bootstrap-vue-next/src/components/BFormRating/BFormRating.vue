@@ -16,7 +16,7 @@
       type="hidden"
       :name="props.name"
       :form="props.form"
-      :value="localValue"
+      :value="modelValue"
     />
     <span
       v-if="props.showClear && !props.readonly && !props.disabled"
@@ -135,15 +135,8 @@ function isIconHalf(index: number): boolean {
 
 const hoverValue = ref<number | null>(null)
 
-const localValue = computed({
-  get: () => modelValue.value,
-  set: (value: number) => {
-    modelValue.value = value
-  },
-})
-
 const displayValue = computed(() =>
-  hoverValue.value !== null ? hoverValue.value : localValue.value
+  hoverValue.value !== null ? hoverValue.value : modelValue.value
 )
 
 // Set the minimum amount of star can be render to 3
@@ -191,7 +184,7 @@ const iconColors = computed(() =>
 function onKeydown(e: KeyboardEvent) {
   if (props.readonly || props.disabled) return
 
-  let newValue = localValue.value
+  let newValue = modelValue.value
 
   switch (e.key) {
     case 'ArrowRight':
@@ -207,19 +200,19 @@ function onKeydown(e: KeyboardEvent) {
   }
 
   e.preventDefault()
-  localValue.value = newValue
+  modelValue.value = newValue
 }
 
 function selectRating(starIndex: number) {
   if (props.readonly || props.disabled) return
   const selectedRating = hoverValue.value !== null ? hoverValue.value : starIndex
-  localValue.value = selectedRating
+  modelValue.value = selectedRating
 }
 
 // clear
 function clearRating() {
   hoverValue.value = null
-  localValue.value = 0
+  modelValue.value = 0
 }
 
 defineExpose({

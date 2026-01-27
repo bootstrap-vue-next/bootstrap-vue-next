@@ -7,8 +7,7 @@ import type {
   FunctionArgs,
   UseDebounceFnReturn,
 } from '@vueuse/core'
-
-export const noop = () => {}
+import {noop} from './functions'
 
 /**
  * @internal

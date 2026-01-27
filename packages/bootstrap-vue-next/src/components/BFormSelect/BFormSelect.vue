@@ -2,7 +2,7 @@
   <select
     :id="computedId"
     ref="_input"
-    v-model="localValue"
+    v-model="modelValue"
     :class="computedClasses"
     :name="props.name"
     :form="props.form || undefined"
@@ -118,16 +118,9 @@ const normalizedOptsWrapper = computed(
     )[]
 )
 
-const localValue = computed({
-  get: () => modelValue.value,
-  set: (newValue) => {
-    modelValue.value = newValue
-  },
-})
-
 // Provide the current model value for child components to inject
 provide(formSelectKey, {
-  modelValue: readonly(localValue),
+  modelValue: readonly(modelValue),
 })
 
 defineExpose({
