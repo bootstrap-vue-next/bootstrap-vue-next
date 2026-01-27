@@ -20,12 +20,14 @@ export const getWithGetter = <Obj extends object>(
 }
 
 export const getByFieldKey = <T>(item: T, field: TableField) =>
-  getWithGetter(item, field.accessor ?? field.key)
+  typeof item === 'object' && item !== null
+    ? getWithGetter(item, field.accessor ?? field.key)
+    : item
 
 export const formatItem = <T>(item: T, field: TableField) => {
-  const val = typeof item === 'object' && item !== null ? getByFieldKey(item, field) : item
+  const val = getByFieldKey(item, field)
 
-  return field.formatter && typeof field.formatter === 'function'
+  return typeof field.formatter === 'function'
     ? field.formatter({value: val, key: field.key, item})
     : val
 }
