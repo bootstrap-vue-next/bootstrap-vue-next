@@ -29,12 +29,12 @@ To start, install the necessary packages:
 
 ::: code-group
 
-```bash [PNPM]
-pnpm add unplugin-icons unplugin-vue-components @vue/compiler-sfc -D
-```
-
 ```bash [BUN]
 bun add unplugin-icons unplugin-vue-components @vue/compiler-sfc -D
+```
+
+```bash [PNPM]
+pnpm add unplugin-icons unplugin-vue-components @vue/compiler-sfc -D
 ```
 
 ```bash [YARN]
@@ -116,12 +116,12 @@ Of course, there is always the ability to slim down. To slim down the installati
 
 ::: code-group
 
-```bash [PNPM]
-pnpm add unplugin-icons @vue/compiler-sfc @iconify-json/bi -D
-```
-
 ```bash [BUN]
 bun add unplugin-icons @vue/compiler-sfc @iconify-json/bi -D
+```
+
+```bash [PNPM]
+pnpm add unplugin-icons @vue/compiler-sfc @iconify-json/bi -D
 ```
 
 ```bash [YARN]

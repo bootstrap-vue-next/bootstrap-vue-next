@@ -28,8 +28,8 @@ body:
       label: Used Package Manager
       description: Select the used package manager
       options:
-        - pnpm
         - bun
+        - pnpm
         - yarn
         - npm
         - n/a

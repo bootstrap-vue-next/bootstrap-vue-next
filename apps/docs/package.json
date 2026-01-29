@@ -4,16 +4,16 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vitepress dev --port 8000",
-    "build-only": "cross-env NODE_OPTIONS=--max-old-space-size=4096 vitepress build",
-    "type-check": "vue-tsc --noEmit -p tsconfig.app.json",
-    "build": "pnpm run type-check && pnpm run build-only",
-    "preview": "vitepress preview",
-    "lint": "eslint --fix src tests",
-    "test:lint": "eslint src tests",
-    "test:unit": "vitest",
-    "test:unit:ci": "vitest run",
-    "test": "pnpm run test:lint && pnpm run test:unit:ci"
+    "dev": "bunx vitepress dev --port 8000",
+    "build-only": "bunx cross-env NODE_OPTIONS=--max-old-space-size=4096 vitepress build",
+    "type-check": "bunx vue-tsc --noEmit -p tsconfig.app.json",
+    "build": "bun run type-check && bun run build-only",
+    "preview": "bunx vitepress preview",
+    "lint": "bunx eslint --fix src tests",
+    "test:lint": "bunx eslint src tests",
+    "test:unit": "bunx vitest",
+    "test:unit:ci": "bunx vitest run",
+    "test": "bun run test:lint && bun run test:unit:ci"
   },
   "devDependencies": {
     "@iconify-json/bi": "^1.2.7",
@@ -43,7 +43,10 @@
     "vite": "^6.4.1",
     "vitepress": "1.6.3",
     "vitest": "^3.2.4",
-    "vue": "^3.5.27"
+    "vue": "^3.5.27",
+    "vue-component-type-helpers": "^2.1.10",
+    "vue-tsc": "^3.2.2",
+    "yaml": "^2.7.1"
   },
   "lint-staged": {
     "*.{js,ts,vue}": "eslint --cache --fix",
