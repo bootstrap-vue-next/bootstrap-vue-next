@@ -1107,9 +1107,7 @@ The following features are not included in v1:
   RegExp support for the <code>filter</code> prop. Use the <code>filterFunction</code> prop for complex filtering logic.
 </DeprecatedFeature>
 
-<DeprecatedFeature :reason="DeprecationReason.VUE3_BOOTSTRAP5_CHANGES">
-  The <code>context-changed</code> event. Use the <code>change</code> event and exposed <code>displayItems</code> instead.
-</DeprecatedFeature>
+used the exposed function `displayItems` as demonstrated in [the documentation](/docs/components/table#complete-example).
 
 <DeprecatedFeature :reason="DeprecationReason.VUE3_BOOTSTRAP5_CHANGES">
   The <code>refreshed</code> event. Call the exposed <code>refresh()</code> method and watch <code>change</code> or <code>filtered</code> events.
