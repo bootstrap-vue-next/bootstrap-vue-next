@@ -1117,7 +1117,7 @@ The following features are not included in v1:
 
 `filter-included-fields` and `filter-ignored-fields` have been replaced by a single `filterable` prop.
 
-`filter-debouce` has been replaced by `debounce`.
+`filter-debounce` has been replaced by `debounce`.
 
 `no-sort-reset` is deprecated. Use `must-sort`. By default, sortability can be reset by clicking (3) times [asc => desc => undefined => asc...]
 
