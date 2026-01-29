@@ -337,7 +337,7 @@ const {x, y} = useMouse()
 const isElementAndTriggerOutside = () => {
   const triggerRect = triggerElement.value?.getBoundingClientRect()
   const elementRect = floatingElement.value?.getBoundingClientRect()
-  const margin = parseInt(props.hideMargin as unknown as string, 10) || 0
+  const margin = Number.parseInt(props.hideMargin as unknown as string, 10) || 0
   const offsetX = window?.scrollX || 0
   const offsetY = window?.scrollY || 0
   const triggerIsOutside =
