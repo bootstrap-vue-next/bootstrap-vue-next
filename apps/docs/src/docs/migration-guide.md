@@ -1152,6 +1152,116 @@ onMounted(() => {
 
 The slot name remains `row-expansion` (changed from `row-details` in earlier versions).
 
+#### Template Ref API
+
+**BREAKING: Template ref API reorganized into namespaced structure**
+
+The BTable template ref API has been reorganized from a flat structure to a namespaced structure with `expansion` and `selection` properties. This improves organization and makes it clearer which methods and properties relate to which feature.
+
+**Selection API changes:**
+
+Methods and properties related to row selection are now accessed via `ref.selection.*`:
+
+- `clearSelected()` → `selection.clearSelected()`
+- `selectAll()` → `selection.selectAll()`
+- `toggleSelectAll()` → `selection.toggleSelectAll()`
+- `selectedItems` → `selection.selectedItems`
+
+**Expansion API changes:**
+
+Methods and properties related to row expansion are now accessed via `ref.expansion.*`:
+
+- `expandedItems` → `expansion.expandedItems`
+- New methods available: `expansion.expandAll()`, `expansion.collapseAll()`, `expansion.toggleExpandAll()`
+
+**Before (flat structure):**
+
+```vue
+<template>
+  <BTable ref="tableRef" :items="items" selectable>
+    <BButton @click="handleClearSelection">Clear Selection</BButton>
+    <BButton @click="handleSelectAll">Select All</BButton>
+  </BTable>
+</template>
+
+<script setup>
+import {ref} from 'vue'
+
+const tableRef = ref()
+const items = [{name: 'Item 1'}, {name: 'Item 2'}]
+
+const handleClearSelection = () => {
+  tableRef.value.clearSelected()
+}
+
+const handleSelectAll = () => {
+  tableRef.value.selectAll()
+}
+
+// Access selected items
+const getSelectedItems = () => {
+  return tableRef.value.selectedItems
+}
+</script>
+```
+
+**After (namespaced structure):**
+
+```vue
+<template>
+  <BTable ref="tableRef" :items="items" selectable>
+    <BButton @click="handleClearSelection">Clear Selection</BButton>
+    <BButton @click="handleSelectAll">Select All</BButton>
+  </BTable>
+</template>
+
+<script setup>
+import {ref} from 'vue'
+
+const tableRef = ref()
+const items = [{name: 'Item 1'}, {name: 'Item 2'}]
+
+const handleClearSelection = () => {
+  tableRef.value.selection.clearSelected()
+}
+
+const handleSelectAll = () => {
+  tableRef.value.selection.selectAll()
+}
+
+// Access selected items
+const getSelectedItems = () => {
+  return tableRef.value.selection.selectedItems
+}
+</script>
+```
+
+**Expansion API example:**
+
+```vue
+<template>
+  <BTable ref="tableRef" :items="items" v-model:expanded-items="expandedItems">
+    <BButton @click="handleExpandAll">Expand All</BButton>
+    <BButton @click="handleCollapseAll">Collapse All</BButton>
+  </BTable>
+</template>
+
+<script setup>
+import {ref} from 'vue'
+
+const tableRef = ref()
+const expandedItems = ref([])
+
+const handleExpandAll = () => {
+  tableRef.value.expansion.expandAll()
+}
+
+const handleCollapseAll = () => {
+  tableRef.value.expansion.collapseAll()
+}
+</script>
+```
+
 ### Item Provider Functions
 
 To use an items provider, set the `provider` prop to a provider function and leave the
