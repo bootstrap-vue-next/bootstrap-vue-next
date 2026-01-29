@@ -438,7 +438,6 @@ defineExpose({
     ...expandedItemsController,
     expandedItems: readonly(expandedItems),
   },
-  // The row selection methods are really for compat. Users should probably use the v-model though
   selection: {
     ...selectedItemsController,
     selectedItems: readonly(selectedItemsModel),
