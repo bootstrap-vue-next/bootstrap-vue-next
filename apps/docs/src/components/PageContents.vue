@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import type {ContentsItem} from 'src/types'
+import type {ContentsItem} from '../types'
 
 defineProps<{contents?: ContentsItem; activeId: string | null}>()
 </script>

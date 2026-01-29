@@ -1,17 +1,38 @@
 import {titleCase} from './stringUtils'
-import type {TableFieldRaw} from '../types/TableTypes'
-import type {Breakpoint, BTableLiteProps, BTableSimpleProps} from '../types'
+import {type TableFieldRaw} from '../types/TableTypes'
+import type {Breakpoint, BTableLiteProps, BTableSimpleProps, TableField} from '../types'
 
 export const getTableFieldHeadLabel = (field: Readonly<TableFieldRaw<unknown>>) =>
   typeof field === 'string'
     ? titleCase(field)
     : field.label !== undefined
       ? field.label
-      : typeof field.key === 'string'
-        ? titleCase(field.key)
-        : field.key
+      : titleCase(field.key)
 
-export const btableSimpleProps = Object.freeze(
+export const getWithGetter = <Obj extends object>(
+  item: Obj,
+  key: string | ((item: Obj) => unknown)
+): unknown => {
+  if (typeof key === 'function') {
+    return key(item)
+  }
+  return item[key as unknown as keyof Obj]
+}
+
+export const getByFieldKey = (item: unknown, field: TableField) =>
+  typeof item === 'object' && item !== null
+    ? getWithGetter(item, field.accessor ?? field.key)
+    : item
+
+export const formatItem = (item: unknown, field: TableField) => {
+  const val = getByFieldKey(item, field)
+
+  return typeof field.formatter === 'function'
+    ? field.formatter({value: val, key: field.key, item})
+    : val
+}
+
+export const bTableSimpleProps = Object.freeze(
   Object.keys({
     bordered: 0,
     borderless: 0,
@@ -35,7 +56,7 @@ export const btableSimpleProps = Object.freeze(
   } satisfies Record<keyof BTableSimpleProps, 0>)
 ) as readonly (keyof BTableSimpleProps)[]
 
-export const btableLiteProps = Object.freeze(
+export const bTableLiteProps = Object.freeze(
   Object.keys({
     align: 0,
     caption: 0,
@@ -55,13 +76,17 @@ export const btableLiteProps = Object.freeze(
     tbodyTrAttrs: 0,
     tbodyTrClass: 0,
     tfootClass: 0,
+    expandedItems: 0,
     tfootTrClass: 0,
     theadClass: 0,
     theadTrClass: 0,
   } satisfies Record<keyof Omit<BTableLiteProps<unknown>, keyof BTableSimpleProps>, 0>)
 ) as readonly (keyof Omit<BTableLiteProps<unknown>, keyof BTableSimpleProps>)[]
 
-export const getDataLabelAttr = (
-  props: {stacked: boolean | Breakpoint | undefined; labelStacked: boolean | undefined},
-  label: string
-) => (props.stacked && props.labelStacked !== true ? {'data-label': label} : undefined)
+export type StackedProps = {
+  stacked: boolean | Breakpoint | undefined
+  labelStacked: boolean | undefined
+}
+
+export const getDataLabelAttr = (props: StackedProps, label: string) =>
+  props.stacked && props.labelStacked !== true ? {'data-label': label} : undefined

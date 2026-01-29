@@ -131,12 +131,12 @@
               <th variant="danger" />
               <th variant="danger">
                 <BFormSelect
-                  :model-value="(data as unknown as TableField<any>).label as string"
+                  :model-value="(data).field.label || ''"
                   :options="
                     [
-                      (data as unknown as TableField<any>).label,
-                      (data as unknown as TableField<any>).key,
-                    ] as string[]
+                      (data).field.label || '',
+                      (data).field.key,
+                    ]
                   "
                 />
               </th>
@@ -322,16 +322,16 @@
             <BButton size="sm" class="me-1" @click="info(row.item, row.index)">
               Info modal
             </BButton>
-            <BButton size="sm" @click="row.toggleDetails">
-              {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
+            <BButton size="sm" @click="row.toggleExpansion">
+              {{ row.expansionShowing ? 'Hide' : 'Show' }} Details
             </BButton>
           </template>
 
-          <template #row-details="row">
+          <template #row-expansion="row">
             <BCard>
               <ul>
                 <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
-                <BButton size="sm" @click="row.toggleDetails"> Toggle Details </BButton>
+                <BButton size="sm" @click="row.toggleExpansion"> Toggle Details </BButton>
               </ul>
             </BCard>
           </template>
@@ -361,6 +361,7 @@ import type {
   TableField,
   TableFieldRaw,
   TableItem,
+  TableRowEventObject,
 } from 'bootstrap-vue-next'
 
 type LiteralUnion<T, U = string> = T | (U & Record<never, never>)
@@ -528,7 +529,7 @@ function resetInfoModal() {
   infoModal.content = ''
 }
 
-function onFiltered(filteredItems: TableItem<Person>[]) {
+function onFiltered(filteredItems: readonly TableItem<Person>[]) {
   // Trigger pagination to update the number of buttons/pages due to filtering
   totalRows.value = filteredItems.length
   currentPage.value = 1
@@ -544,9 +545,9 @@ function onFiltered(filteredItems: TableItem<Person>[]) {
     })
 }
 
-function onRowClicked(row: TableItem<Person>, index: number) {
+function onRowClicked({index, item}: TableRowEventObject<TableItem<Person>, Readonly<MouseEvent> | Readonly<KeyboardEvent>>) {
   // eslint-disable-next-line no-console
-  console.log(`clicked on row ${index}: ${row.name.first} ${row.name.last}`)
+  console.log(`clicked on row ${index}: ${item.name.first} ${item.name.last}`)
 }
 
 function onSorted(sortby: BTableSortBy) {
@@ -554,7 +555,7 @@ function onSorted(sortby: BTableSortBy) {
   console.log(`sorted: ${JSON.stringify(sortby)}`)
 }
 
-function onSortUpdate(sortby: BTableSortBy[] | undefined) {
+function onSortUpdate(sortby: readonly BTableSortBy[] | undefined) {
   // eslint-disable-next-line no-console
   console.log(`sort-by:update: ${JSON.stringify(sortby)}`)
 }

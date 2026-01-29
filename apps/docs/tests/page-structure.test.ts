@@ -74,7 +74,7 @@ function validatePageStructure(html: string): {valid: boolean; error?: string} {
       const rawTag = el.tagName.toUpperCase()
       const isHeading = /^H[1-6]$/.test(rawTag)
       const tag = isHeading ? rawTag : 'DIV'
-      const level = tag.startsWith('H') ? parseInt(tag.replace('H', '')) : 3
+      const level = tag.startsWith('H') ? Number.parseInt(tag.replace('H', '')) : 3
       return {
         tag,
         level,

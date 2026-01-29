@@ -114,7 +114,7 @@ const provider = (context: Readonly<BTableProviderContext>) =>
     resolve(sortedAndPaginatedItems)
   })
 
-const sortItems = (items: Person[], sortBy?: BTableSortBy[]) => {
+const sortItems = (items: Person[], sortBy?: readonly BTableSortBy[]) => {
   if (!sortBy || sortBy.length === 0) {
     return items
   }

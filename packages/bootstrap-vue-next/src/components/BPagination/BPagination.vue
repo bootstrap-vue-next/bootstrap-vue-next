@@ -343,8 +343,8 @@ const getButtons = (): HTMLButtonElement[] =>
   [...(pageElements.value ?? [])]
     .sort(
       (a, b) =>
-        parseInt(a.getAttribute('displayIndex') || '0') -
-        parseInt(b.getAttribute('displayIndex') || '0')
+        Number.parseInt(a.getAttribute('displayIndex') || '0') -
+        Number.parseInt(b.getAttribute('displayIndex') || '0')
     )
     .map((page) => page.children[0])
     .filter((el) => {

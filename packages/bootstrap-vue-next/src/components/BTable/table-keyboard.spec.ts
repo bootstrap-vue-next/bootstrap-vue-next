@@ -156,7 +156,11 @@ describe('BTable keyboard navigation', () => {
 
       // Check that row-clicked event was emitted
       expect(wrapper.emitted('row-clicked')).toBeTruthy()
-      expect(wrapper.emitted('row-clicked')![0][0]).toEqual(testItems[0])
+      expect(wrapper.emitted('row-clicked')![0][0]).toEqual({
+        item: testItems[0],
+        index: 0,
+        event: expect.any(Object),
+      })
     })
 
     it('should trigger row click when NumpadEnter key is pressed', async () => {
@@ -175,7 +179,11 @@ describe('BTable keyboard navigation', () => {
 
       // Check that row-clicked event was emitted
       expect(wrapper.emitted('row-clicked')).toBeTruthy()
-      expect(wrapper.emitted('row-clicked')![0][0]).toEqual(testItems[0])
+      expect(wrapper.emitted('row-clicked')![0][0]).toEqual({
+        item: testItems[0],
+        index: 0,
+        event: expect.any(Object),
+      })
     })
 
     it('should trigger row click when Space key is pressed', async () => {
@@ -194,7 +202,11 @@ describe('BTable keyboard navigation', () => {
 
       // Check that row-clicked event was emitted
       expect(wrapper.emitted('row-clicked')).toBeTruthy()
-      expect(wrapper.emitted('row-clicked')![0][0]).toEqual(testItems[0])
+      expect(wrapper.emitted('row-clicked')![0][0]).toEqual({
+        item: testItems[0],
+        index: 0,
+        event: expect.any(Object),
+      })
     })
 
     it('should handle arrow key navigation', async () => {

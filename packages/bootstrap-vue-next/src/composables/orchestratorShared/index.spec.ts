@@ -1,7 +1,7 @@
 import {describe, expect, it} from 'vitest'
 import {ref} from 'vue'
-import {buildPromise} from './orchestratorShared'
-import type {ModalOrchestratorArrayValue} from '../types/ComponentOrchestratorTypes'
+import {buildPromise} from '.'
+import type {ModalOrchestratorArrayValue} from '../../types/ComponentOrchestratorTypes'
 
 describe('buildPromise', () => {
   it('set method does not add undefined title and body when they are not in the value', () => {

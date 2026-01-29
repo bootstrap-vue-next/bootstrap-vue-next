@@ -80,7 +80,7 @@ export const avatarGroupInjectionKey: InjectionKey<{
 
 // BAccordion
 export const accordionInjectionKey: InjectionKey<{
-  openItem: Readonly<Ref<string | string[] | undefined>>
+  openItem: Readonly<Ref<string | readonly string[] | undefined>>
   free: Readonly<Ref<boolean>>
   initialAnimation: Readonly<Ref<boolean>>
   lazy: Readonly<Ref<boolean>>
@@ -201,7 +201,7 @@ export const breadcrumbRegistryKey: InjectionKey<{
 }> = createBvnRegistryInjectionKey('breadcrumb')
 
 export const modalManagerKey: InjectionKey<{
-  stack: ComputedRef<ComponentInternalInstance[]>
+  stack: ComputedRef<readonly ComponentInternalInstance[]>
   countStack: ComputedRef<number>
   lastStack: ComputedRef<ComponentInternalInstance | undefined>
   pushStack: (modal: Readonly<ComponentInternalInstance>) => void

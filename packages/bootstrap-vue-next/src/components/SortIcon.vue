@@ -13,13 +13,13 @@
   </svg>
 </template>
 
-<script setup lang="ts" generic="Items">
+<script setup lang="ts" generic="Item">
 import {computed} from 'vue'
 import type {BTableInitialSortDirection, BTableSortBy, TableField} from '../types/TableTypes'
 
 const props = defineProps<{
-  fieldInfo: TableField<Items>
-  sortBy?: BTableSortBy[]
+  fieldInfo: TableField<Item>
+  sortBy?: readonly BTableSortBy[]
   initialSortDirection?: BTableInitialSortDirection
 }>()
 

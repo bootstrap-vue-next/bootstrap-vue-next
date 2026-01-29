@@ -403,14 +403,13 @@ watch(activeIndex, (newValue, oldValue) => {
   }
   // Emit the activate-tab event
   const tabEvent = new BvEvent('activate-tab', {cancelable: true})
-  emit(
-    'activate-tab',
-    tabs.value[index]?.id,
-    tabs.value[previousIndex ?? oldValue]?.id,
-    index,
-    previousIndex ?? oldValue,
-    tabEvent
-  )
+  emit('activate-tab', {
+    newTabId: tabs.value[index]?.id,
+    prevTabId: tabs.value[previousIndex ?? oldValue]?.id,
+    newTabIndex: index,
+    prevTabIndex: previousIndex ?? oldValue,
+    event: tabEvent,
+  })
   // If the event is prevented, revert to the previous index
   if (tabEvent.defaultPrevented) {
     isReverting = true
