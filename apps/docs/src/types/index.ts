@@ -8,7 +8,6 @@ export interface PropReference {
   type?: string
   description?: string
   default?: unknown
-  notYetImplemented?: boolean
 }
 
 export type PropRecordWithOptions = {
@@ -36,7 +35,6 @@ export type SlotScopeReference = Record<
   {
     type: string | string[]
     description?: string
-    notYetImplemented?: boolean
   }
 >
 export type SlotReference = {
