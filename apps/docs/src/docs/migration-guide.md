@@ -1107,7 +1107,9 @@ The following features are not included in v1:
   RegExp support for the <code>filter</code> prop. Use the <code>filterFunction</code> prop for complex filtering logic.
 </DeprecatedFeature>
 
-used the exposed function `displayItems` as demonstrated in [the documentation](/docs/components/table#complete-example).
+<DeprecatedFeature :reason="DeprecationReason.VUE3_BOOTSTRAP5_CHANGES">
+  The <code>context-changed</code> event. Use the <code>change</code> event and the exposed <code>displayItems</code> function as demonstrated in [the documentation](/docs/components/table#complete-example).
+</DeprecatedFeature>
 
 <DeprecatedFeature :reason="DeprecationReason.VUE3_BOOTSTRAP5_CHANGES">
   The <code>refreshed</code> event. Call the exposed <code>refresh()</code> method and watch <code>change</code> or <code>filtered</code> events.
@@ -1134,7 +1136,7 @@ Sorting has been significantly reworked. Read the [sorting section](/docs/compon
 The slot scope for `table-colgroup` slot now only contains the `fields` prop, with the `columns` prop removed.
 
 BootstrapVue used the main v-model binding to expose a readonly version of the displayed items. This is deprecated. Instead,
-used the exposed function `displayedItems` as demonstrated in [the documentation](/docs/components/table#complete-example).
+use the exposed function `displayedItems` as demonstrated in [the documentation](/docs/components/table#complete-example).
 
 The semantics of the `row-selected` event have changed. `row-selected` is now emitted for each selected
 row and sends the single row's item as it's parameter. There is a new matching event called `row-unselected`
