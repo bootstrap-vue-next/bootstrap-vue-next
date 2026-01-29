@@ -1,6 +1,8 @@
 <template>
+  <!-- #region template -->
   <div>
     <BFormCheckbox
+      id="table-no-border-collapse-checkbox"
       v-model="noBorderCollapse"
       class="mb-3"
     >
@@ -12,6 +14,7 @@
       style="max-height: 300px; overflow-y: auto"
     >
       <BTable
+        id="table-no-border-collapse-table"
         :items="items"
         :fields="fields"
         :no-border-collapse="noBorderCollapse"
@@ -22,6 +25,7 @@
     </div>
 
     <BAlert
+      id="table-no-border-collapse-alert"
       variant="info"
       show
       class="mt-3"
@@ -31,6 +35,7 @@
       differently when scrolling with sticky headers.
     </BAlert>
   </div>
+  <!-- #endregion template -->
 </template>
 
 <script setup lang="ts">

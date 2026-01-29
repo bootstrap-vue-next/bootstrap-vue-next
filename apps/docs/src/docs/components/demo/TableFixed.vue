@@ -1,6 +1,8 @@
 <template>
+  <!-- #region template -->
   <div>
     <BFormCheckbox
+      id="table-fixed-checkbox"
       v-model="useFixed"
       class="mb-3"
     >
@@ -8,6 +10,7 @@
     </BFormCheckbox>
 
     <BTable
+      id="table-fixed-table"
       :items="items"
       :fields="fields"
       :fixed="useFixed"
@@ -24,6 +27,7 @@
       expand to fit its content when fixed layout is enabled.
     </p>
   </div>
+  <!-- #endregion template -->
 </template>
 
 <script setup lang="ts">
