@@ -589,7 +589,7 @@ export default {
         busyLoadingText: {
           type: 'string',
           default: 'Loading...',
-          notYetImplemented: true,
+          description: 'Text to display when table is busy and no table-busy slot is provided',
         },
         currentPage: {
           type: 'Numberish',
@@ -613,7 +613,7 @@ export default {
           type: 'string',
           default: undefined,
           description:
-            'Criteria for filtering. Internal filtering supports only string or RegExpr criteria (RegExp is not yet implemented)',
+            'Criteria for filtering. Only string values are supported. Use filterFunction prop for complex filtering including RegExp.',
         },
         filterFunction: {
           type: '(item: Readonly<Item>, filter: string | undefined) => boolean',

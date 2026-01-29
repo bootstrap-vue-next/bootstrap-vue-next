@@ -201,7 +201,7 @@ details.
 | `small`              | boolean               | To make tables more compact by cutting cell padding in half.                                                                                                                                                                                                                                                                                                                     |
 | `hover`              | boolean               | To enable a hover highlighting state on table rows within a `<tbody>`                                                                                                                                                                                                                                                                                                            |
 | `dark`               | boolean               | Invert the colors — with light text on dark backgrounds (equivalent to Bootstrap v5 class `.table-dark`)                                                                                                                                                                                                                                                                         |
-| `fixed`              | boolean               | Generate a table with equal fixed-width columns (`table-layout: fixed;`) <NotYetImplemented/>                                                                                                                                                                                                                                                                                    |
+| `fixed`              | boolean               | Generate a table with equal fixed-width columns (`table-layout: fixed;`)                                                                                                                                                                                                                                                                                                         |
 | `responsive`         | boolean \| Breakpoint | Generate a responsive table to make it scroll horizontally. Set to `true` for an always responsive table, or set it to one of the [breakpoints](/docs/types#breakpoint) `'sm'`, `'md'`, `'lg'`, `'xl'` or `'xxl'` to make the table responsive (horizontally scroll) only on screens smaller than the breakpoint. See [Responsive tables](#responsive-tables) below for details. |
 | `sticky-header`      | boolean \| Numberish  | Generates a vertically scrollable table with sticky headers. Set to `true` to enable sticky headers (default table max-height of `300px`), or set it to a string containing a height (with CSS units) to specify a maximum height other than `300px`. See the [Sticky header](#sticky-headers) section below for details.                                                        |
 | `stacked`            | boolean \| Breakpoint | Generate a responsive stacked table. Set to `true` for an always stacked table, or set it to one of the [breakpoints](/docs/types#breakpoint) `'sm'`, `'md'`, `'lg'`, `'xl'` or `'xxl'` to make the table visually stacked only on screens smaller than the breakpoint. See [Stacked tables](#stacked-tables) below for details.                                                 |
@@ -212,8 +212,7 @@ details.
 | `head-row-variant`   | ColorVariant \| null  | Make the only the `<tr>` part of the `<head>` a specific theme color                                                                                                                                                                                                                                                                                                             |
 | `foot-variant`       | ColorVariant \| null  | Make the only the `<tr>` part of the `<foot>` a specific theme color. If not set, `head-row-variant` will be used. Has no effect if `foot-clone` is not set                                                                                                                                                                                                                      |
 | `foot-clone`         | boolean               | Turns on the table footer, and defaults with the same contents a the table header                                                                                                                                                                                                                                                                                                |
-| `no-footer-sorting`  | boolean               | When `foot-clone` is true and the table is sortable, disables the sorting icons and click behaviour on the footer heading cells. Refer to the [Sorting](#sorting) section below for more details. <NotYetImplemented/>                                                                                                                                                           |
-| `no-border-collapse` | Boolean               | Disables the default of collapsing of the table borders. Mainly for use with [sticky headers](#sticky-headers) and/or [sticky columns](#sticky-columns). Will cause the appearance of double borders in some situations. <NotYetImplemented/>                                                                                                                                    |
+| `no-border-collapse` | Boolean               | Disables the default of collapsing of the table borders. Mainly for use with [sticky headers](#sticky-headers) and/or [sticky columns](#sticky-columns). Will cause the appearance of double borders in some situations.                                                                                                                                                         |
 
 ::: info NOTE
 The table style options `fixed`, `stacked`, `no-border-collapse`, sticky
@@ -221,6 +220,12 @@ headers, sticky columns and the table sorting feature, all require BootstrapVueN
 :::
 
 <<< DEMO ./demo/TableBasicStyles.vue
+
+### Fixed table layout
+
+The `fixed` prop generates a table with equal fixed-width columns using `table-layout: fixed`. This can be useful when you want consistent column widths regardless of content length.
+
+<<< DEMO ./demo/TableFixed.vue
 
 ### Row styling and attributes
 
@@ -340,6 +345,12 @@ following custom CSS:
 #### table-busy slot
 
 <<< DEMO ./demo/TableBusy.vue
+
+#### busy-loading-text
+
+You can also use the `busy-loading-text` prop to display a custom loading message with a spinner when the table is busy, without needing to provide a custom slot:
+
+<<< DEMO ./demo/TableBusyLoadingText.vue
 
 Also see the [Using Item Provider Functions](#using-items-provider-functions) below for additional
 information on the `busy` state.
@@ -556,6 +567,8 @@ available horizontal space.
   the body scrolls. To get around this issue, set the prop `no-border-collapse` on the table (note
   that this may cause double width borders when using features such as `bordered`, etc.).
 
+<<< DEMO ./demo/TableNoBorderCollapse.vue
+
 ### Sticky columns
 
 Columns can be made sticky, where they stick to the left of the table when the table has a
@@ -698,13 +711,9 @@ Rows can also be programmatically selected and unselected via the `selection` AP
 - When the table is in `selectable` mode, all data item `<tr>` elements will be in the document tab
   sequence (`tabindex="0"`) for [accessibility](#accessibility) reasons, and will have the attribute
   `aria-selected` set to either `'true'` or `'false'` depending on the selected state of the row.
-- <NotYetImplemented/>When a table is `selectable`, the table will have the attribute `aria-multiselect` set to either
-  `'false'` for `single` mode, and `'true'` for either `multi` or `range` modes.
 - **Primary Key Usage:** When using a `primary-key`, the selected items state persists across item array updates (like pagination or "Load more") as long as the primary key values remain the same.
 
-<NotYetImplemented/>
-
-Use the prop `selected-variant` to apply a Bootstrap theme color to the selected row(s). Note, due
+Use the prop `selection-variant` to apply a Bootstrap theme color to the selected row(s). Note, due
 to the order that the table variants are defined in Bootstrap's CSS, any row-variant _might_ take
 precedence over the `selected-variant`. You can set `selected-variant` to an empty string if you
 will be using other means to convey that a row is selected (such as a scoped field slot in the below
@@ -720,10 +729,6 @@ it is highly recommended to always provide some other visual means of conveying 
 selected, such as a virtual column as shown in the example below.
 
 <<< DEMO ./demo/TableRowSelect.vue
-
-### Table body transition support
-
-<NotYetImplemented />
 
 ### Exposed API
 
@@ -871,11 +876,9 @@ done) and the filter searches that stringified data (excluding any of the specia
 begin with an underscore `'_'`). The stringification also, by default, includes any data not shown
 in the presented columns.
 
-With the default built-in filter function, the `filter` prop value can either be a string or a
-`RegExp` object (regular expressions should _not_ have the `/g` global flag set). <NotYetImplemented/> Currently the `filter` prop only supports a string, not a `RegExp`.
+With the default built-in filter function, the `filter` prop value can be a string. Use the <code>filterFunction</code> prop for complex filtering.
 
-If the stringified row contains the provided string value or matches the RegExp expression then it
-is included in the displayed results.
+If the stringified row contains the provided string value then it is included in the displayed results.
 
 Set the `filter` prop to `null` or an empty string to clear the current filter.
 
@@ -883,18 +886,12 @@ Set the `filter` prop to `null` or an empty string to clear the current filter.
 
 There are several options for controlling what data the filter is applied against.
 
-- <NotYetImplemented/>The `filter-ignored-fields` prop accepts an array of _top-level_ (immediate properties of the row
-  data) field keys that should be ignored when filtering.
-- <NotYetImplemented/>The `filter-included-fields` prop accepts an array of _top-level_ (immediate properties of the row
-  data) field keys that should used when filtering. All other field keys not included in this array
-  will be ignored. This feature can be handy when you want to filter on specific columns. If the
-  specified array is empty, then _all_ fields are included, except those specified via the prop
-  `filter-ignored-fields`. If a field key is specified in both `filter-ignored-fields` and
-  `filter-included-fields`, then `filter-included-fields` takes precedence.
+- The `filterable` prop (which replaces BootstrapVue's `filter-included-fields`) accepts an array of field keys to include in filtering. When set, only the specified fields will be searchable. If not set or empty, all fields are included.
+- Note: `filter-ignored-fields` from BootstrapVue is not implemented. Use `filterable` to specify which fields to search instead.
 - Normally, `<BTable>` filters based on the stringified record data. If the field has a `formatter`
   function specified, you can optionally filter based on the result of the formatter by setting the
   [field definition property](#field-definition-reference) `filterByFormatted` to `true`. If the
-  field does not have a formatter function, this option is ignored. <NotYetImplemented/>You can optionally pass a
+  field does not have a formatter function, this option is ignored. You can optionally pass a
   formatter function _reference_, to be used for filtering only, to the field definition property
   `filterByFormatted`.
 
@@ -969,11 +966,7 @@ To avoid excessive provider calls (e.g., when typing rapidly in a filter), you c
 - `debounce`: Delay in milliseconds before calling the provider after changes (default: `0` for immediate execution)
 - `debounce-max-wait`: Maximum time in milliseconds to wait before forcing a provider call, even if changes are still occurring
 
-Example with debouncing:
-
-```vue
-<BTable :provider="myProvider" :fields="fields" :debounce="300" :debounce-max-wait="1000" />
-```
+<<< DEMO ./demo/TableDebounce.vue
 
 ### Handling Request Cancellation
 
@@ -1100,24 +1093,11 @@ helper components. Note that there are no helper components for `<caption>`, `<c
   prop, which will apply one of the Bootstrap theme colors (custom theme colors are supported via
   [theming](/docs/types#colorvariant).) and will automatically adjust to use the correct variant
   class based on the table's `dark` mode.
-- <NotYetImplemented/> Accessibility attributes `role` and `scope` are automatically set on `<BTh>` and `<BTd>`
-  components based on their location (thead, tbody, or tfoot) and their `rowspan` or `colspan`
-  props. You can override the automatic `scope` and `role` values by setting the appropriate
-  attribute on the helper component.
-- <NotYetImplemented/> For `<BTbody>`, `<BThead>`, and `<BTfoot>` helper components, the appropriate default `role` of
-  `'rowgroup'` will be applied, unless you override the role by supplying a `role` attribute.
-- <NotYetImplemented/> For the `<BTr>` helper component, the appropriate default `role` of `'row'` will be applied,
-  unless you override the role by supplying a `role` attribute. `<BTr>` does not add a `scope`.
-- <NotYetImplemented/>The `<BTbody>` element supports rendering a Vue `<transition-group>` when either, or both, of the
-  `tbody-transition-props` and `tbody-transition-handlers` props are used. See the
-  [Table body transition support](#table-body-transition-support) section for more details.
+- Accessibility attributes `role` and `scope` are automatically handled. `<BTh>` automatically calculates the `scope` attribute based on `rowspan` and `colspan` props. Helper components (`<BTbody>`, `<BThead>`, `<BTfoot>`, `<BTr>`) use semantic HTML elements that provide implicit ARIA roles.
 
 ## Accessibility
 
-<NotYetImplemented/>
-
-The `<BTable>` and `<BTableLite>` components, when using specific features, will attempt to
-provide the best accessibility markup possible.
+The `<BTable>` and `<BTableLite>` components use semantic HTML and provide keyboard navigation for accessibility.
 
 When using `<BTableSimple>` with the helper table components, elements will have the appropriate
 roles applied by default, of which you can optionally override. When using click handlers on the
@@ -1128,8 +1108,6 @@ trigger your click on cells or rows (required for accessibility for keyboard-onl
 
 ### Heading accessibility
 
-<NotYetImplemented/>
-
 When a column (field) is sortable (`<BTable>` only) or there is a `head-clicked` listener
 registered (`<BTable>` and `<BTableLite>`), the header (and footer) `<th>` cells will be placed
 into the document tab sequence (via `tabindex="0"`) for accessibility by keyboard-only and screen
@@ -1137,8 +1115,6 @@ reader users, so that the user may trigger a click (by pressing <kbd>Enter</kbd>
 cells.
 
 ### Data row accessibility
-
-<NotYetImplemented/>
 
 When the table is in `selectable` mode (`<BTable>` only, and prop `no-select-on-click` is not set),
 or if there is a `row-clicked` event listener registered (`<BTable>` and `<BTableLite>`), all
