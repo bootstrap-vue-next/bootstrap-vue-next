@@ -47,8 +47,8 @@ const fields: TableFieldRaw<Person>[] = [
   {
     // A regular column with custom formatter
     key: 'sex',
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    formatter: (value) => (value as any as string).charAt(0).toUpperCase(),
+    formatter: ({value}) =>
+      typeof value === 'string' ? value.charAt(0).toUpperCase() : `${value}`,
   },
   {
     // A virtual column with custom formatter

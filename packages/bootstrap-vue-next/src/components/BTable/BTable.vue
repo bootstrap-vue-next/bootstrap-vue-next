@@ -109,7 +109,7 @@
 
 <script setup lang="ts" generic="Item">
 import {useToNumber} from '@vueuse/core'
-import {computed, readonly, type Ref, toRef} from 'vue'
+import {computed, type ComputedRef, readonly, type Ref, toRef} from 'vue'
 import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
 import BTr from './BTr.vue'
@@ -247,11 +247,6 @@ const currentPageNumber = useToNumber(() => props.currentPage, {method: 'parseIn
 const debounceNumber = useToNumber(() => props.debounce ?? 0, {nanToZero: true})
 const debounceMaxWaitNumber = useToNumber(() => props.debounceMaxWait ?? Number.NaN)
 
-const expandedItemsController = useItemExpansion({
-  allItems: () => props.items,
-  primaryKey: toRef(() => props.primaryKey),
-  expandedItems,
-})
 const sortController = useTableSort({
   fields: () => props.fields,
   sortBy: sortByModel,
@@ -284,6 +279,11 @@ const providerController = useTableProvider({
   noProviderPaging: () => props.noProviderPaging,
   noProviderSorting: () => props.noProviderSorting,
   sortBy: sortByModel,
+})
+const expandedItemsController = useItemExpansion({
+  allItems: computed(() => providerController.usesProvider.value ? providerController.items.value : props.items) as ComputedRef<Item[]>,
+  primaryKey: toRef(() => props.primaryKey),
+  expandedItems,
 })
 const {
   items: computedItems,
