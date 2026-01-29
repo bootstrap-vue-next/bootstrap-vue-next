@@ -1,13 +1,16 @@
+<!-- `#region` template -->
 <template>
   <div>
     <BButton
+      id="table-busy-toggle"
       class="mb-3"
-      @click="toggleBusy"
+      `@click`="toggleBusy"
     >
       {{ busy ? 'Hide' : 'Show' }} Loading State
     </BButton>
 
     <BTable
+      id="table-busy-table"
       :items="items"
       :fields="fields"
       :busy="busy"
@@ -23,6 +26,7 @@
     </p>
   </div>
 </template>
+<!-- `#endregion` template -->
 
 <script setup lang="ts">
 import {ref} from 'vue'
