@@ -31,12 +31,12 @@ Read our [Contribution Guide](https://github.com/bootstrap-vue-next/bootstrap-vu
 
 ::: code-group
 
-```bash [PNPM]
-pnpm add bootstrap bootstrap-vue-next
-```
-
 ```bash [BUN]
 bun add bootstrap bootstrap-vue-next
+```
+
+```bash [PNPM]
+pnpm add bootstrap bootstrap-vue-next
 ```
 
 ```bash [YARN]
@@ -143,12 +143,12 @@ To have components automatically registered **and** tree-shaken, we recommend [u
 
 ::: code-group
 
-```bash [PNPM]
-pnpm add unplugin-vue-components -D
-```
-
 ```bash [BUN]
 bun add unplugin-vue-components -D
+```
+
+```bash [PNPM]
+pnpm add unplugin-vue-components -D
 ```
 
 ```bash [YARN]
@@ -213,12 +213,12 @@ In your Nuxt3 application, install the necessary packages for `bootstrap-vue-nex
 
 ::: code-group
 
-```bash [PNPM]
-pnpm add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt
-```
-
 ```bash [BUN]
 bun add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt
+```
+
+```bash [PNPM]
+pnpm add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt
 ```
 
 ```bash [YARN]
@@ -295,12 +295,12 @@ This package uses optional peer dependencies to generate type definitions for en
 
 ::: code-group
 
-```bash [PNPM]
-pnpm add @floating-ui/vue @vueuse/core vue-router
-```
-
 ```bash [BUN]
 bun add @floating-ui/vue @vueuse/core vue-router
+```
+
+```bash [PNPM]
+pnpm add @floating-ui/vue @vueuse/core vue-router
 ```
 
 ```bash [YARN]

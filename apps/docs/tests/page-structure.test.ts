@@ -149,7 +149,7 @@ describe('Page Structure Validation', () => {
   it('should have a built docs directory', () => {
     expect(
       fs.existsSync(distDir),
-      `Build directory not found: ${distDir}\nRun "pnpm --filter docs run build" first`
+      `Build directory not found: ${distDir}\nRun "bun --filter docs run build" first`
     ).toBe(true)
   })
 

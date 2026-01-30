@@ -1,13 +1,11 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
-  "exclude": ["**/*.spec.*", "**/*.test.*"],
+  "exclude": ["src/**/__tests__/*", "**/*.spec.*", "**/*.test.*"],
   "compilerOptions": {
-    "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
 
     "baseUrl": ".",
-    "types": ["vitest/globals", "vite/client"],
     "paths": {
       "@floating-ui/core": ["node_modules/@floating-ui/core"],
       "@vue/shared": ["node_modules/@vue/shared"],
