@@ -6,7 +6,7 @@
       :key="index"
       :disabled="option.disabled"
       :value="option.value"
-      v-bind="getOptionAttrs(option)"
+      v-bind="{...$attrs, ...getOptionAttrs(option)}"
     >
       <slot name="option" v-bind="option">
         {{ option.text }}
