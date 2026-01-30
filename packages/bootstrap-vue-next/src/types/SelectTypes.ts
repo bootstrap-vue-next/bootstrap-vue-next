@@ -10,6 +10,7 @@ export interface SelectOption<T = unknown> {
   value: T
   text?: string
   disabled?: boolean
+  [key: string]: unknown
 }
 
 export type SelectOptionRaw<T = unknown> = string | SelectOption<T>

@@ -4,9 +4,7 @@
     <BFormSelectOption
       v-for="(option, index) in normalizedOptions"
       :key="index"
-      :disabled="option.disabled"
-      :value="option.value"
-      v-bind="$attrs"
+      v-bind="{...$attrs, ...option}"
     >
       <slot name="option" v-bind="option">
         {{ option.text }}

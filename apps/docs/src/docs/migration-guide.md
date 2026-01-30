@@ -1097,14 +1097,27 @@ See the [v-html](#v-html) section for information on deprecation of the `html` p
 
 The slot `emptyfiltered` has been renamed to `empty-filtered` for consistency.
 
-The following are <NotYetImplemented/> -
+The following features are not included in v1:
 
-- The `filter-debounce`, `fixed`, `no-border-collapse`, `selected-variant`, and `table-footer-sorting` props
-- The `filter` prop does not yet support a RegEx object, only a string.
-- The `context-changed` and `refreshed` events
+<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND">
+  The <code>no-footer-sorting</code> prop. Footer sorting can be controlled through table structure.
+</DeprecatedFeature>
 
-`filter-included-fields` have been replaced by a single `filterable` prop. `filter-ignored-fields`
-is deprecated.
+<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND">
+  RegExp support for the <code>filter</code> prop. Use the <code>filterFunction</code> prop for complex filtering logic.
+</DeprecatedFeature>
+
+<DeprecatedFeature :reason="DeprecationReason.VUE3_BOOTSTRAP5_CHANGES">
+  The <code>context-changed</code> event. Use the <code>change</code> event and the exposed <code>displayItems</code> function as demonstrated in [the documentation](/docs/components/table#complete-example).
+</DeprecatedFeature>
+
+<DeprecatedFeature :reason="DeprecationReason.VUE3_BOOTSTRAP5_CHANGES">
+  The <code>refreshed</code> event. Call the exposed <code>refresh()</code> method and watch <code>change</code> or <code>filtered</code> events.
+</DeprecatedFeature>
+
+`filter-included-fields` and `filter-ignored-fields` have been replaced by a single `filterable` prop.
+
+`filter-debounce` has been replaced by `debounce`.
 
 `no-sort-reset` is deprecated. Use `must-sort`. By default, sortability can be reset by clicking (3) times [asc => desc => undefined => asc...]
 
@@ -1123,7 +1136,7 @@ Sorting has been significantly reworked. Read the [sorting section](/docs/compon
 The slot scope for `table-colgroup` slot now only contains the `fields` prop, with the `columns` prop removed.
 
 BootstrapVue used the main v-model binding to expose a readonly version of the displayed items. This is deprecated. Instead,
-used the exposed function `displayedItems` as demonstrated in [the documentation](/docs/components/table#complete-example).
+use the exposed function `displayedItems` as demonstrated in [the documentation](/docs/components/table#complete-example).
 
 The semantics of the `row-selected` event have changed. `row-selected` is now emitted for each selected
 row and sends the single row's item as it's parameter. There is a new matching event called `row-unselected`
@@ -1138,12 +1151,19 @@ instead of positional arguments. The `head-clicked` event likewise now emits
 
 BootstrapVue adds utility classes to the `<table>` including `b-table-select-single`,`b-table-select-multi`, and `b-table-select-range`, these have been deprecated, as the functionality should be easily replicated by the developer without adding to the API surface.
 
-<NotYetImplemented/>The `aria-multiselect` attribute is not added to `<table>`
-<NotYetImplemented/>Automatically adding accessibility attributes `role` and `scope` to helper components
+<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND">
+  The <code>aria-multiselect</code> attribute. Modern screen readers handle table selection adequately.
+</DeprecatedFeature>
+
+<DeprecatedFeature :reason="DeprecationReason.MODERN_ALTERNATIVE">
+  The <code>label-sort-clear</code>, <code>label-sort-asc</code>, and <code>label-sort-desc</code> props. These provided hidden text for screen readers to indicate sorting actions. BTable now uses proper ARIA attributes (<code>aria-label</code>, <code>aria-sort</code>) on header elements which provide the same accessibility information in a modern, standards-compliant way.
+</DeprecatedFeature>
+
+Helper components (`BTbody`, `BThead`, `BTfoot`, `BTr`, `BTh`, `BTd`) use semantic HTML elements that provide implicit ARIA roles. `BTh` automatically calculates the `scope` attribute based on `colspan` and `rowspan` props.
 
 The `filtered` event has a single argument `Item[]` rather than two arguments with an array and length. The semantics haven't changed.
 
-<NotYetImplemented/> Heading and data row accessibility
+Heading and data row accessibility is implemented via keyboard navigation (tab and arrow keys for sortable headers and selectable rows) and proper semantic HTML structure.
 
 #### Row Expansion (formerly Row Details)
 
@@ -1339,7 +1359,7 @@ const handleCollapseAll = () => {
 </script>
 ```
 
-### Item Provider Functions
+#### Item Provider Functions
 
 To use an items provider, set the `provider` prop to a provider function and leave the
 `items` prop undefined (unlike in BootstrapVue, where the `items` prop was overloaded). See
@@ -1353,7 +1373,7 @@ as they are easily replaced by direct management of the api call by the user.
 
 The items provider no longer includes an optional callback parameter, use the async method of calling instead.
 
-### Field Definitions
+#### Field Definitions
 
 **BREAKING: `field.key` no longer supports nested paths**
 
@@ -1448,7 +1468,9 @@ See the [v-html](#v-html) section for information on deprecation of the `caption
 
 #### BTBody
 
-<NotYetImplemented>`tbody-transition-props` and `tbody-transition-handlers`</NotYetImplemented>
+<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND">
+  The <code>tbody-transition-props</code> and <code>tbody-transition-handlers</code> props. Wrap the table in a custom transition component if needed.
+</DeprecatedFeature>
 
 #### BTFoot
 

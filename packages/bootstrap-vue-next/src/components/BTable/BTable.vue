@@ -76,13 +76,14 @@
       </slot>
     </template>
     <template #custom-body="scope">
-      <BTr
-        v-if="busyModel && slots['table-busy']"
-        class="b-table-busy-slot"
-        :class="getBusyRowClasses"
-      >
+      <BTr v-if="busyModel" class="b-table-busy-slot" :class="getBusyRowClasses">
         <BTd :colspan="scope.fields.length">
-          <slot name="table-busy" />
+          <slot name="table-busy">
+            <div class="text-center my-2">
+              <BSpinner small class="align-middle me-2" />
+              <strong>{{ props.busyLoadingText }}</strong>
+            </div>
+          </slot>
         </BTd>
       </BTr>
 
@@ -113,6 +114,7 @@ import {computed, type ComputedRef, readonly, type Ref, toRef} from 'vue'
 import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
 import BTr from './BTr.vue'
+import BSpinner from '../BSpinner/BSpinner.vue'
 import {
   type TableField,
   type TableFieldRaw,
@@ -281,7 +283,9 @@ const providerController = useTableProvider({
   sortBy: sortByModel,
 })
 const expandedItemsController = useItemExpansion({
-  allItems: computed(() => providerController.usesProvider.value ? providerController.items.value : props.items) as ComputedRef<Item[]>,
+  allItems: computed(() =>
+    providerController.usesProvider.value ? providerController.items.value : props.items
+  ) as ComputedRef<Item[]>,
   primaryKey: toRef(() => props.primaryKey),
   expandedItems,
 })

@@ -26,7 +26,7 @@ describe('useCountdown', () => {
     const countdown = useCountdown(length, 1000)
 
     const initialValue = countdown.value.value
-    
+
     vi.advanceTimersByTime(1000)
     await nextTick()
 
