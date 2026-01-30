@@ -1,5 +1,11 @@
 <template>
-  <option :value="props.value" :disabled="props.disabled" :selected="isSelected" :class="props.class" v-bind="props.attrs">
+  <option
+    :value="props.value"
+    :disabled="props.disabled"
+    :selected="isSelected"
+    :class="props.class"
+    v-bind="props.attrs"
+  >
     <slot />
   </option>
 </template>
