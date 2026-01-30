@@ -1,5 +1,5 @@
 <template>
-  <option :value="props.value" :disabled="props.disabled" :selected="isSelected">
+  <option :value="props.value" :disabled="props.disabled" :selected="isSelected" :class="props.class" v-bind="props.attrs">
     <slot />
   </option>
 </template>
@@ -14,6 +14,8 @@ import {formSelectKey} from '../../utils/keys'
 const _props = withDefaults(defineProps<BFormSelectOptionProps<T>>(), {
   disabled: false,
   value: undefined,
+  class: undefined,
+  attrs: undefined,
 })
 const props = useDefaults<BFormSelectOptionProps<T>>(_props, 'BFormSelectOption')
 defineSlots<BFormSelectOptionSlots>()

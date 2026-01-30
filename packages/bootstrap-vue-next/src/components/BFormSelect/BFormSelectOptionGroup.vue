@@ -6,6 +6,8 @@
       :key="index"
       :disabled="option.disabled"
       :value="option.value"
+      :class="option.class"
+      :attrs="option.attrs"
       v-bind="$attrs"
     >
       <slot name="option" v-bind="option">

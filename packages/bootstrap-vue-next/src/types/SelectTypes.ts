@@ -1,3 +1,5 @@
+import type {AttrsValue, ClassValue} from './AnyValuedAttributes'
+
 export type SelectValue =
   | boolean
   | string
@@ -10,6 +12,8 @@ export interface SelectOption<T = unknown> {
   value: T
   text?: string
   disabled?: boolean
+  class?: ClassValue
+  attrs?: AttrsValue
 }
 
 export type SelectOptionRaw<T = unknown> = string | SelectOption<T>
