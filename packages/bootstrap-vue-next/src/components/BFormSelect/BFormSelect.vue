@@ -23,12 +23,7 @@
         :text-field="props.textField as any"
         :disabled-field="props.disabledField as any"
       />
-      <BFormSelectOption
-        v-else
-        :value="option.value"
-        :disabled="option.disabled"
-        v-bind="getOptionAttrs(option)"
-      >
+      <BFormSelectOption v-else v-bind="option">
         <slot name="option" v-bind="option">
           {{ option.text }}
         </slot>
@@ -122,13 +117,6 @@ const normalizedOptsWrapper = computed(
       | SelectOption<Item[ValueKey]>
     )[]
 )
-
-// Helper to extract additional attributes from option (excluding known props)
-const getOptionAttrs = (option: SelectOption<Item[ValueKey]>) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const {value, text, disabled, ...attrs} = option
-  return attrs
-}
 
 // Provide the current model value for child components to inject
 provide(formSelectKey, {

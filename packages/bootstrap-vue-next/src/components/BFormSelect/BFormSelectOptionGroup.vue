@@ -4,9 +4,7 @@
     <BFormSelectOption
       v-for="(option, index) in normalizedOptions"
       :key="index"
-      :disabled="option.disabled"
-      :value="option.value"
-      v-bind="{...$attrs, ...getOptionAttrs(option)}"
+      v-bind="{...$attrs, ...option}"
     >
       <slot name="option" v-bind="option">
         {{ option.text }}
@@ -43,12 +41,5 @@ defineSlots<BFormSelectOptionGroupSlots<Item[ValueKey]>>()
 
 const {normalizedOptions} = useFormSelect(() => props.options, props) as {
   normalizedOptions: ComputedRef<SelectOption<Item[ValueKey]>[]>
-}
-
-// Helper to extract additional attributes from option (excluding known props)
-const getOptionAttrs = (option: SelectOption<Item[ValueKey]>) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const {value, text, disabled, ...attrs} = option
-  return attrs
 }
 </script>

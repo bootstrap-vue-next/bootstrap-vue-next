@@ -1,5 +1,3 @@
-import type {ClassValue} from './AnyValuedAttributes'
-
 export type SelectValue =
   | boolean
   | string
@@ -12,7 +10,6 @@ export interface SelectOption<T = unknown> {
   value: T
   text?: string
   disabled?: boolean
-  class?: ClassValue
   [key: string]: unknown
 }
 

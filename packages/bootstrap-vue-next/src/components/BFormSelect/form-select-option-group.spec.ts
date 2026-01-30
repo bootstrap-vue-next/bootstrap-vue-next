@@ -93,4 +93,35 @@ describe('form-select-option-group', () => {
     expect($options[1].attributes('value')).toBe('2')
     expect($options[2].attributes('value')).toBe('3')
   })
+
+  it('inherits $attrs along with option attributes', () => {
+    const wrapper = mount(BFormSelectOptionGroup, {
+      props: {
+        label: 'foo',
+        options: [
+          {text: 'one', value: 1, 'data-option': 'opt1'},
+          {text: 'two', value: 2, class: 'custom-class'},
+        ],
+      },
+      attrs: {
+        'data-group': 'test-group',
+        'data-inherited': 'yes',
+      },
+    })
+
+    expect(wrapper.element.tagName).toBe('OPTGROUP')
+
+    const $options = wrapper.findAll('option')
+    expect($options.length).toBe(2)
+
+    // First option should have both its own data-option and inherited $attrs
+    expect($options[0].attributes('data-option')).toBe('opt1')
+    expect($options[0].attributes('data-group')).toBe('test-group')
+    expect($options[0].attributes('data-inherited')).toBe('yes')
+
+    // Second option should have its class and inherited $attrs
+    expect($options[1].classes()).toContain('custom-class')
+    expect($options[1].attributes('data-group')).toBe('test-group')
+    expect($options[1].attributes('data-inherited')).toBe('yes')
+  })
 })
