@@ -6,10 +6,18 @@ const openCollectiveMembersFetchUrl = `${openCollectiveBaseURL}/${collectiveSlug
 
 export default {
   load: async (): Promise<CollectivePartialResponse> => {
-    const response = await fetch(openCollectiveMembersFetchUrl)
-    const data = await response.json()
-    return {
-      members: data,
+    try {
+      const response = await fetch(openCollectiveMembersFetchUrl)
+      const data = await response.json()
+      return {
+        members: data,
+      }
+    } catch (error) {
+      // Return empty members array if fetch fails (e.g., in sandboxed environments)
+      console.warn('Failed to fetch OpenCollective data:', error)
+      return {
+        members: [],
+      }
     }
   },
 }

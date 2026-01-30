@@ -29,7 +29,9 @@ import {computed, onMounted, ref} from 'vue'
 
 const navRef = ref<Element | null>(null)
 onMounted(() => {
-  navRef.value = document.body.querySelector('#app > nav')
+  if (typeof document !== 'undefined') {
+    navRef.value = document.body.querySelector('#app > nav')
+  }
 })
 const navHeight = computed(() => navRef.value?.clientHeight)
 </script>
