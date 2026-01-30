@@ -117,4 +117,65 @@ describe('BApp', () => {
     expect(orchestrator.exists()).toBe(true)
     expect(orchestrator.props('appendToast')).toBe(true)
   })
+
+  it('exposes toast composable via defineExpose', async () => {
+    const wrapper = mount(BApp)
+    
+    expect(wrapper.vm.toast).toBeDefined()
+    expect(wrapper.vm.toast.create).toBeTypeOf('function')
+  })
+
+  it('exposes modal composable via defineExpose', async () => {
+    const wrapper = mount(BApp)
+    
+    expect(wrapper.vm.modal).toBeDefined()
+    expect(wrapper.vm.modal.create).toBeTypeOf('function')
+    expect(wrapper.vm.modal.show).toBeTypeOf('function')
+    expect(wrapper.vm.modal.hide).toBeTypeOf('function')
+  })
+
+  it('exposes popover composable via defineExpose', async () => {
+    const wrapper = mount(BApp)
+    
+    expect(wrapper.vm.popover).toBeDefined()
+    expect(wrapper.vm.popover.create).toBeTypeOf('function')
+  })
+
+  it('exposes breadcrumb composable via defineExpose', async () => {
+    const wrapper = mount(BApp)
+    
+    expect(wrapper.vm.breadcrumb).toBeDefined()
+    expect(wrapper.vm.breadcrumb.items).toBeDefined()
+    expect(wrapper.vm.breadcrumb.reset).toBeTypeOf('function')
+  })
+
+  it('exposes rtl registry via defineExpose', async () => {
+    const wrapper = mount(BApp, {
+      props: {
+        rtl: {
+          rtlInitial: true,
+          localeInitial: 'ar',
+        },
+      },
+    })
+    
+    expect(wrapper.vm.rtl).toBeDefined()
+    expect(wrapper.vm.rtl?.isRtl).toBeDefined()
+    expect(wrapper.vm.rtl?.locale).toBeDefined()
+  })
+
+  it('does not expose orchestrator composables when noOrchestrator is true', async () => {
+    const wrapper = mount(BApp, {
+      props: {
+        noOrchestrator: true,
+      },
+    })
+    
+    expect(wrapper.vm.toast).toBeUndefined()
+    expect(wrapper.vm.modal).toBeUndefined()
+    expect(wrapper.vm.popover).toBeUndefined()
+    // breadcrumb and rtl should still be available
+    expect(wrapper.vm.breadcrumb).toBeDefined()
+    expect(wrapper.vm.rtl).toBeDefined()
+  })
 })
