@@ -1677,3 +1677,105 @@ describe('event emissions', () => {
     expect(wrapper.emitted('sorted')?.length).toBeGreaterThanOrEqual(1)
   })
 })
+
+describe('BTable styling props', () => {
+  it('applies fixed table layout when fixed prop is true', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        fixed: true,
+      },
+    })
+    expect(wrapper.find('table').classes()).toContain('b-table-fixed')
+  })
+
+  it('does not apply fixed class when fixed prop is false or undefined', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        fixed: false,
+      },
+    })
+    expect(wrapper.find('table').classes()).not.toContain('b-table-fixed')
+  })
+
+  it('disables border collapse when noBorderCollapse prop is true', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        noBorderCollapse: true,
+      },
+    })
+    expect(wrapper.find('table').classes()).toContain('b-table-no-border-collapse')
+  })
+
+  it('does not apply no-border-collapse class when prop is false or undefined', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        noBorderCollapse: false,
+      },
+    })
+    expect(wrapper.find('table').classes()).not.toContain('b-table-no-border-collapse')
+  })
+})
+
+describe('BTable busyLoadingText', () => {
+  it('displays busyLoadingText when busy and no slot provided', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        busy: true,
+        busyLoadingText: 'Custom loading message...',
+      },
+    })
+    await nextTick()
+    expect(wrapper.text()).toContain('Custom loading message...')
+  })
+
+  it('uses default busyLoadingText when busy and none specified', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        busy: true,
+      },
+    })
+    await nextTick()
+    expect(wrapper.text()).toContain('Loading...')
+  })
+
+  it('prefers table-busy slot over busyLoadingText when both provided', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        busy: true,
+        busyLoadingText: 'This should not appear',
+      },
+      slots: {
+        'table-busy': '<div>Custom slot content</div>',
+      },
+    })
+    await nextTick()
+    expect(wrapper.text()).toContain('Custom slot content')
+    expect(wrapper.text()).not.toContain('This should not appear')
+  })
+
+  it('does not display busyLoadingText when not busy', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        busy: false,
+        busyLoadingText: 'Should not appear',
+      },
+    })
+    expect(wrapper.text()).not.toContain('Should not appear')
+  })
+})

@@ -83,7 +83,6 @@
                         </code>
                       </template>
                       <template #cell(description)="d">
-                        <NotYetImplemented v-if="d.item.notYetImplemented" />
                         {{ d.item.description }}
                       </template>
                     </BTable>
@@ -229,7 +228,6 @@
                           v-for="[scopeName, scope] in Object.entries(d.item.scope ?? {})"
                           :key="scopeName"
                         >
-                          <span v-if="scope.notYetImplemented"><NotYetImplemented />: </span>
                           <code>{{ kebabCase(scopeName) }}</code>
                           <code>: {{ scope.type }}</code>
                           <span v-if="!!scope.description"> - {{ scope.description }}</span>
