@@ -197,9 +197,9 @@ describe('BFormSelect', () => {
     const wrapper = mount(BFormSelect, {
       props: {
         options: [
-          {value: 1, text: 'One', attrs: {'data-test': 'test-value'}},
-          {value: 2, text: 'Two', attrs: {'data-id': '123'}},
-          {value: 3, text: 'Three'},
+          {'value': 1, 'text': 'One', 'data-test': 'test-value'},
+          {'value': 2, 'text': 'Two', 'data-id': '123'},
+          {'value': 3, 'text': 'Three'},
         ],
       },
     })
@@ -218,8 +218,8 @@ describe('BFormSelect', () => {
           {
             label: 'Group 1',
             options: [
-              {value: 1, text: 'One', class: 'group-class', attrs: {'data-group': '1'}},
-              {value: 2, text: 'Two', class: 'group-class'},
+              {'value': 1, 'text': 'One', 'class': 'group-class', 'data-group': '1'},
+              {'value': 2, 'text': 'Two', 'class': 'group-class'},
             ],
           },
         ],
