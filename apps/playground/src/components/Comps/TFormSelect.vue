@@ -50,6 +50,22 @@
         <strong>{{ formSelectMultipleSelected }}</strong>
       </BCol>
     </BRow>
+    <BRow>
+      <BCol>
+        <h4 class="mt-2">styled options with class and attrs</h4>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormSelect v-model="styledSelectSelected" :options="styledSelectOptions" />
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        Selected:
+        <strong>{{ styledSelectSelected }}</strong>
+      </BCol>
+    </BRow>
   </BContainer>
 </template>
 
@@ -72,6 +88,40 @@ const formSelectOptions = [
       {value: {C: '3PO'}, text: 'Option with object value'},
       {value: {R: '2D2'}, text: 'Another option with object value'},
     ],
+  },
+]
+
+const styledSelectSelected = ref('pharmacist')
+const styledSelectOptions = [
+  {
+    value: 'physician',
+    text: 'Physician',
+    class: 'bg-light',
+    attrs: {'data-role': 'medical'},
+  },
+  {
+    value: 'pharmacist',
+    text: 'Pharmacist',
+    class: 'bg-primary text-white fw-bold',
+    attrs: {'data-role': 'medical'},
+  },
+  {
+    value: 'patient',
+    text: 'Patient',
+    class: 'text-muted',
+    attrs: {'data-role': 'user'},
+  },
+  {
+    value: 'nurse',
+    text: 'Nurse',
+    class: 'text-success',
+    attrs: {'data-role': 'medical'},
+  },
+  {
+    value: 'carer',
+    text: 'Carer',
+    class: 'text-info',
+    attrs: {'data-role': 'support'},
   },
 ]
 </script>
