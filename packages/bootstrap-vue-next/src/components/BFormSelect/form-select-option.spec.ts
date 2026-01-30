@@ -92,8 +92,8 @@ describe('form-select-option', () => {
     const wrapper = mount(BFormSelectOption, {
       props: {
         value: 'foo',
-        attrs: {'data-test': 'test-value', 'data-id': '123'},
       },
+      attrs: {'data-test': 'test-value', 'data-id': '123'},
     })
 
     expect(wrapper.element.tagName).toBe('OPTION')
@@ -106,8 +106,8 @@ describe('form-select-option', () => {
       props: {
         value: 'foo',
         class: 'custom-class',
-        attrs: {'data-test': 'test-value'},
       },
+      attrs: {'data-test': 'test-value'},
     })
 
     expect(wrapper.element.tagName).toBe('OPTION')

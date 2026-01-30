@@ -28,7 +28,7 @@
         :value="option.value"
         :disabled="option.disabled"
         :class="option.class"
-        :attrs="option.attrs"
+        v-bind="option.attrs"
       >
         <slot name="option" v-bind="option">
           {{ option.text }}

@@ -458,8 +458,6 @@ export interface BFormSelectProps<
 export interface BFormSelectOptionProps<T> {
   disabled?: boolean
   value?: T
-  class?: ClassValue
-  attrs?: AttrsValue
 }
 
 export interface BFormSelectOptionGroupProps<Item = Record<string, unknown>> {
