@@ -226,11 +226,11 @@ describe('placeholder-card', () => {
     })
     const $card = wrapper.getComponent(BCard)
     const [$first, $second, $third, $fourth, $fifth, $sixth] = $card.findAllComponents(BPlaceholder)
-    expect($first.exists()).toBe(true)
-    expect($second.exists()).toBe(true)
-    expect($third.exists()).toBe(true)
-    expect($fourth.exists()).toBe(true)
-    expect($fifth.exists()).toBe(true)
+    expect($first!.exists()).toBe(true)
+    expect($second!.exists()).toBe(true)
+    expect($third!.exists()).toBe(true)
+    expect($fourth!.exists()).toBe(true)
+    expect($fifth!.exists()).toBe(true)
     expect($sixth).toBeUndefined()
   })
 
@@ -240,7 +240,7 @@ describe('placeholder-card', () => {
     })
     const $card = wrapper.getComponent(BCard)
     const [$first] = $card.findAllComponents(BPlaceholder)
-    expect($first.props('cols')).toBe('7')
+    expect($first!.props('cols')).toBe('7')
   })
 
   it('card second placeholder is given prop cols 7', () => {
@@ -249,7 +249,7 @@ describe('placeholder-card', () => {
     })
     const $card = wrapper.getComponent(BCard)
     const [, $second] = $card.findAllComponents(BPlaceholder)
-    expect($second.props('cols')).toBe('4')
+    expect($second!.props('cols')).toBe('4')
   })
 
   it('card third placeholder is given prop cols 7', () => {
@@ -258,7 +258,7 @@ describe('placeholder-card', () => {
     })
     const $card = wrapper.getComponent(BCard)
     const [, , $third] = $card.findAllComponents(BPlaceholder)
-    expect($third.props('cols')).toBe('4')
+    expect($third!.props('cols')).toBe('4')
   })
 
   it('card fourth placeholder is given prop cols 7', () => {
@@ -267,7 +267,7 @@ describe('placeholder-card', () => {
     })
     const $card = wrapper.getComponent(BCard)
     const [, , , $fourth] = $card.findAllComponents(BPlaceholder)
-    expect($fourth.props('cols')).toBe('6')
+    expect($fourth!.props('cols')).toBe('6')
   })
 
   it('card fifth placeholder is given prop cols 7', () => {
@@ -276,7 +276,7 @@ describe('placeholder-card', () => {
     })
     const $card = wrapper.getComponent(BCard)
     const [, , , , $fifth] = $card.findAllComponents(BPlaceholder)
-    expect($fifth.props('cols')).toBe('8')
+    expect($fifth!.props('cols')).toBe('8')
   })
 
   it('does not have any placeholders when slot overridden and props disallow', () => {

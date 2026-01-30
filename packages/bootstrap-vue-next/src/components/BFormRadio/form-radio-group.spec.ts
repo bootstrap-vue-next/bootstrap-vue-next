@@ -198,9 +198,9 @@ describe('form-radio-group', () => {
         },
       })
       const radios = wrapper.findAllComponents(BFormRadio)
-      expect(radios[0].text()).toBe('foo')
-      expect(radios[1].text()).toBe('foo')
-      expect(radios[2].text()).toBe('foo')
+      expect(radios[0]!.text()).toBe('foo')
+      expect(radios[1]!.text()).toBe('foo')
+      expect(radios[2]!.text()).toBe('foo')
     })
   })
 
@@ -228,12 +228,12 @@ describe('form-radio-group', () => {
 
       const radios = wrapper.findAllComponents(BFormRadio)
       expect(radios.length).toBe(3)
-      expect(radios[0].find('input').attributes('value')).toBe('1')
-      expect(radios[0].text()).toBe('Alice')
-      expect(radios[1].find('input').attributes('value')).toBe('2')
-      expect(radios[1].text()).toBe('Bob')
-      expect(radios[2].find('input').attributes('value')).toBe('3')
-      expect(radios[2].text()).toBe('Charlie')
+      expect(radios[0]!.find('input').attributes('value')).toBe('1')
+      expect(radios[0]!.text()).toBe('Alice')
+      expect(radios[1]!.find('input').attributes('value')).toBe('2')
+      expect(radios[1]!.text()).toBe('Bob')
+      expect(radios[2]!.find('input').attributes('value')).toBe('3')
+      expect(radios[2]!.text()).toBe('Charlie')
     })
 
     it('renders options with disabled field', () => {
@@ -260,9 +260,9 @@ describe('form-radio-group', () => {
 
       const radios = wrapper.findAllComponents(BFormRadio)
       expect(radios.length).toBe(3)
-      expect(radios[0].find('input').attributes('disabled')).toBeUndefined()
-      expect(radios[1].find('input').attributes('disabled')).toBeDefined()
-      expect(radios[2].find('input').attributes('disabled')).toBeUndefined()
+      expect(radios[0]!.find('input').attributes('disabled')).toBeUndefined()
+      expect(radios[1]!.find('input').attributes('disabled')).toBeDefined()
+      expect(radios[2]!.find('input').attributes('disabled')).toBeUndefined()
     })
 
     it('works with API response format (snake_case fields)', () => {
@@ -287,10 +287,10 @@ describe('form-radio-group', () => {
 
       const radios = wrapper.findAllComponents(BFormRadio)
       expect(radios.length).toBe(2)
-      expect(radios[0].find('input').attributes('value')).toBe('1')
-      expect(radios[0].text()).toBe('Alice')
-      expect(radios[1].find('input').attributes('value')).toBe('2')
-      expect(radios[1].text()).toBe('Bob')
+      expect(radios[0]!.find('input').attributes('value')).toBe('1')
+      expect(radios[0]!.text()).toBe('Alice')
+      expect(radios[1]!.find('input').attributes('value')).toBe('2')
+      expect(radios[1]!.text()).toBe('Bob')
     })
 
     it('works with enum values', () => {
@@ -321,12 +321,12 @@ describe('form-radio-group', () => {
 
       const radios = wrapper.findAllComponents(BFormRadio)
       expect(radios.length).toBe(3)
-      expect(radios[0].find('input').attributes('value')).toBe('low')
-      expect(radios[0].text()).toBe('Low Priority')
-      expect(radios[1].find('input').attributes('value')).toBe('medium')
-      expect(radios[1].text()).toBe('Medium Priority')
-      expect(radios[2].find('input').attributes('value')).toBe('high')
-      expect(radios[2].text()).toBe('High Priority')
+      expect(radios[0]!.find('input').attributes('value')).toBe('low')
+      expect(radios[0]!.text()).toBe('Low Priority')
+      expect(radios[1]!.find('input').attributes('value')).toBe('medium')
+      expect(radios[1]!.text()).toBe('Medium Priority')
+      expect(radios[2]!.find('input').attributes('value')).toBe('high')
+      expect(radios[2]!.text()).toBe('High Priority')
     })
 
     it('has correct v-model type inference', () => {

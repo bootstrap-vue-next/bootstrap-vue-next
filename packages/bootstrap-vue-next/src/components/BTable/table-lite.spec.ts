@@ -26,7 +26,7 @@ describe('btablelite', () => {
     })
     const $trs = wrapper.get('tbody').findAll('tr')
     $trs.forEach(($tr, i) => {
-      expect($tr.text()).toBe(items[i].toString())
+      expect($tr.text()).toBe(items[i]!.toString())
     })
   })
 
@@ -37,7 +37,7 @@ describe('btablelite', () => {
     })
     const $trs = wrapper.get('tbody').findAll('tr')
     $trs.forEach(($tr, i) => {
-      expect($tr.get('td').text()).toBe(items[i].toString())
+      expect($tr.get('td').text()).toBe(items[i]!.toString())
     })
   })
 
@@ -84,8 +84,8 @@ describe('btablelite', () => {
     const $th = $thead.findAll('th')
     expect($th.length).toBe(2)
     // Capitalizes the first letter of the key
-    expect($th[0].text()).toBe('An idiot admires complexity, a genius admires simplicity')
-    expect($th[1].text()).toBe('B')
+    expect($th[0]!.text()).toBe('An idiot admires complexity, a genius admires simplicity')
+    expect($th[1]!.text()).toBe('B')
   })
 
   it('mismatched object keys will only display the first object in the arrays header', () => {
@@ -97,7 +97,7 @@ describe('btablelite', () => {
     const $thead = wrapper.get('thead')
     const $th = $thead.findAll('th')
     expect($th.length).toBe(1)
-    expect($th[0].text()).toBe('A')
+    expect($th[0]!.text()).toBe('A')
   })
 
   it('mismatched object keys will only display items that are included in the appropriate headers', () => {
@@ -123,10 +123,10 @@ describe('btablelite', () => {
       },
     })
     const [, $second] = wrapper.get('tbody').findAll('tr')
-    const $td = $second.findAll('td')
+    const $td = $second!.findAll('td')
     expect($td.length).toBe(2) // <-- still has the appropriate amount of columns
-    expect($td[0].text()).toBe('') // <-- but doesn't have the data for the missing key
-    expect($td[1].text()).toBe('3')
+    expect($td[0]!.text()).toBe('') // <-- but doesn't have the data for the missing key
+    expect($td[1]!.text()).toBe('3')
   })
 
   it('Array of objects serializes data properly', () => {
@@ -162,8 +162,8 @@ describe('btablelite', () => {
     const $thead = wrapper.get('thead')
     const $th = $thead.findAll('th')
     expect($th.length).toBe(2)
-    expect($th[0].text()).toBe('0')
-    expect($th[1].text()).toBe('1')
+    expect($th[0]!.text()).toBe('0')
+    expect($th[1]!.text()).toBe('1')
   })
 
   it('Array of arrays serializes data properly', () => {
@@ -182,7 +182,7 @@ describe('btablelite', () => {
       const $tds = el.findAll('td')
       expect($tds.length).toBe(2)
       $tds.forEach(($td, j) => {
-        expect($td.text()).toBe(items[i][j].toString())
+        expect($td.text()).toBe(items[i]![j]!.toString())
       })
     })
   })
@@ -203,8 +203,8 @@ describe('btablelite', () => {
     })
     const [$first, , $third] = wrapper.findAll('#foobar')
 
-    await $first.trigger('click')
-    await $third.trigger('click')
+    await $first!.trigger('click')
+    await $third!.trigger('click')
 
     expect((wrapper.html().match(/THE ROW!/g) || []).length).toBe(2)
   })
@@ -313,8 +313,8 @@ describe('btablelite', () => {
     const $thead = wrapper.get('thead')
     const $th = $thead.findAll('th')
     expect($th.length).toBe(2)
-    expect($th[0].text()).toBe('Custom Header')
-    expect($th[1].text()).toBe('Custom Header')
+    expect($th[0]!.text()).toBe('Custom Header')
+    expect($th[1]!.text()).toBe('Custom Header')
   })
 
   it('Renders the #head(x) slot correctly', () => {
@@ -330,8 +330,8 @@ describe('btablelite', () => {
     const $thead = wrapper.get('thead')
     const $th = $thead.findAll('th')
     expect($th.length).toBe(2)
-    expect($th[0].text()).toBe('A')
-    expect($th[1].text()).toBe('Custom Header')
+    expect($th[0]!.text()).toBe('A')
+    expect($th[1]!.text()).toBe('Custom Header')
   })
 
   it('Renders the #foot() slot correctly', () => {
@@ -347,8 +347,8 @@ describe('btablelite', () => {
     const $tfoot = wrapper.get('tfoot')
     const $th = $tfoot.findAll('th')
     expect($th.length).toBe(2)
-    expect($th[0].text()).toBe('Custom Footer')
-    expect($th[1].text()).toBe('Custom Footer')
+    expect($th[0]!.text()).toBe('Custom Footer')
+    expect($th[1]!.text()).toBe('Custom Footer')
   })
 
   it('Renders the #foot(x) slot correctly', () => {
@@ -365,8 +365,8 @@ describe('btablelite', () => {
     const $tfoot = wrapper.get('tfoot')
     const $th = $tfoot.findAll('th')
     expect($th.length).toBe(2)
-    expect($th[0].text()).toBe('A')
-    expect($th[1].text()).toBe('Custom Footer')
+    expect($th[0]!.text()).toBe('A')
+    expect($th[1]!.text()).toBe('Custom Footer')
   })
 
   it('Renders the #foot() slot correctly falling back to #head() slot', () => {
@@ -382,8 +382,8 @@ describe('btablelite', () => {
     const $tfoot = wrapper.get('tfoot')
     const $th = $tfoot.findAll('th')
     expect($th.length).toBe(2)
-    expect($th[0].text()).toBe('Custom Header')
-    expect($th[1].text()).toBe('Custom Header')
+    expect($th[0]!.text()).toBe('Custom Header')
+    expect($th[1]!.text()).toBe('Custom Header')
   })
 
   it('Renders the #foot(x) slot correctly falling back to #head(x) slot', () => {
@@ -400,8 +400,8 @@ describe('btablelite', () => {
     const $tfoot = wrapper.get('tfoot')
     const $th = $tfoot.findAll('th')
     expect($th.length).toBe(2)
-    expect($th[0].text()).toBe('A')
-    expect($th[1].text()).toBe('Custom Header')
+    expect($th[0]!.text()).toBe('A')
+    expect($th[1]!.text()).toBe('Custom Header')
   })
 
   it('Prefers the #foot() slot to the #head(x) slot when falling back from #foot(x)', () => {
@@ -419,8 +419,8 @@ describe('btablelite', () => {
     const $tfoot = wrapper.get('tfoot')
     const $th = $tfoot.findAll('th')
     expect($th.length).toBe(2)
-    expect($th[0].text()).toBe('Custom Footer')
-    expect($th[1].text()).toBe('Custom Footer')
+    expect($th[0]!.text()).toBe('Custom Footer')
+    expect($th[1]!.text()).toBe('Custom Footer')
   })
 
   it('Passes the original objects for scoped cell slot items', () => {
@@ -531,7 +531,7 @@ describe('btablelite', () => {
 
       // Open details for the first row
       const buttons = wrapper.findAll('.toggle-btn')
-      await buttons[0].trigger('click')
+      await buttons[0]!.trigger('click')
       expect(wrapper.text()).toContain('Details for John')
       expect(wrapper.text()).not.toContain('Details for Jane')
 
@@ -571,7 +571,7 @@ describe('btablelite', () => {
 
       // Open details for the first row
       const buttons = wrapper.findAll('.toggle-btn')
-      await buttons[0].trigger('click')
+      await buttons[0]!.trigger('click')
       expect(wrapper.text()).toContain('Details for John')
 
       // Replace items with new object references
@@ -610,7 +610,7 @@ describe('btablelite', () => {
 
       // Open details for the first row
       const buttons = wrapper.findAll('.toggle-btn')
-      await buttons[0].trigger('click')
+      await buttons[0]!.trigger('click')
       expect(wrapper.text()).toContain('Details for John')
 
       // Change primaryKey to a different field
@@ -644,7 +644,7 @@ describe('btablelite', () => {
 
       // Open details for the first row
       const buttons = wrapper.findAll('.toggle-btn')
-      await buttons[0].trigger('click')
+      await buttons[0]!.trigger('click')
       expect(wrapper.text()).toContain('Details for John')
 
       // Remove primaryKey
@@ -678,7 +678,7 @@ describe('btablelite', () => {
 
       // Open details for the first row
       const buttons = wrapper.findAll('.toggle-btn')
-      await buttons[0].trigger('click')
+      await buttons[0]!.trigger('click')
       expect(wrapper.text()).toContain('Details for John')
 
       // Change primaryKey to a different field
@@ -747,7 +747,7 @@ describe('btablelite', () => {
         props: {items, fields},
       })
       const rows = wrapper.findAll('tbody tr')
-      await rows[0].trigger('click')
+      await rows[0]!.trigger('click')
 
       expect(wrapper.emitted('row-clicked')).toBeTruthy()
       expect(wrapper.emitted('row-clicked')?.[0]).toEqual([
@@ -764,10 +764,10 @@ describe('btablelite', () => {
         props: {items, fields},
       })
       const rows = wrapper.findAll('tbody tr')
-      await rows[1].trigger('dblclick')
+      await rows[1]!.trigger('dblclick')
 
       expect(wrapper.emitted('row-dblclicked')).toBeTruthy()
-      expect(wrapper.emitted('row-dblclicked')?.[0][0]).toEqual({
+      expect(wrapper.emitted('row-dblclicked')?.[0]![0]).toEqual({
         item: items[1],
         index: 1,
         event: expect.any(Object),
@@ -779,10 +779,10 @@ describe('btablelite', () => {
         props: {items, fields},
       })
       const rows = wrapper.findAll('tbody tr')
-      await rows[2].trigger('contextmenu')
+      await rows[2]!.trigger('contextmenu')
 
       expect(wrapper.emitted('row-contextmenu')).toBeTruthy()
-      expect(wrapper.emitted('row-contextmenu')?.[0][0]).toEqual({
+      expect(wrapper.emitted('row-contextmenu')?.[0]![0]).toEqual({
         item: items[2],
         index: 2,
         event: expect.any(Object),
@@ -794,10 +794,10 @@ describe('btablelite', () => {
         props: {items, fields},
       })
       const rows = wrapper.findAll('tbody tr')
-      await rows[0].trigger('mouseenter')
+      await rows[0]!.trigger('mouseenter')
 
       expect(wrapper.emitted('row-hovered')).toBeTruthy()
-      expect(wrapper.emitted('row-hovered')?.[0][0]).toEqual({
+      expect(wrapper.emitted('row-hovered')?.[0]![0]).toEqual({
         item: items[0],
         index: 0,
         event: expect.any(Object),
@@ -809,10 +809,10 @@ describe('btablelite', () => {
         props: {items, fields},
       })
       const rows = wrapper.findAll('tbody tr')
-      await rows[1].trigger('mouseleave')
+      await rows[1]!.trigger('mouseleave')
 
       expect(wrapper.emitted('row-unhovered')).toBeTruthy()
-      expect(wrapper.emitted('row-unhovered')?.[0][0]).toEqual({
+      expect(wrapper.emitted('row-unhovered')?.[0]![0]).toEqual({
         item: items[1],
         index: 1,
         event: expect.any(Object),
@@ -824,10 +824,10 @@ describe('btablelite', () => {
         props: {items, fields},
       })
       const rows = wrapper.findAll('tbody tr')
-      await rows[0].trigger('mousedown', {button: 1})
+      await rows[0]!.trigger('mousedown', {button: 1})
 
       expect(wrapper.emitted('row-middle-clicked')).toBeTruthy()
-      expect(wrapper.emitted('row-middle-clicked')?.[0][0]).toEqual({
+      expect(wrapper.emitted('row-middle-clicked')?.[0]![0]).toEqual({
         item: items[0],
         index: 0,
         event: expect.any(Object),
@@ -839,7 +839,7 @@ describe('btablelite', () => {
         props: {items, fields},
       })
       const headers = wrapper.findAll('thead th')
-      await headers[0].trigger('click')
+      await headers[0]!.trigger('click')
 
       expect(wrapper.emitted('head-clicked')).toBeTruthy()
       const emittedEvent = wrapper.emitted('head-clicked')?.[0]?.[0]
@@ -872,10 +872,10 @@ describe('btablelite', () => {
       const rows = wrapper.findAll('tbody tr')
       const [row] = rows
 
-      await row.trigger('mouseenter')
-      await row.trigger('click')
-      await row.trigger('dblclick')
-      await row.trigger('mouseleave')
+      await row!.trigger('mouseenter')
+      await row!.trigger('click')
+      await row!.trigger('dblclick')
+      await row!.trigger('mouseleave')
 
       expect(wrapper.emitted('row-hovered')).toBeTruthy()
       expect(wrapper.emitted('row-clicked')).toBeTruthy()

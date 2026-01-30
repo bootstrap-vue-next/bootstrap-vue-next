@@ -377,7 +377,7 @@ describe.skip('button', () => {
     const wrapper = mount(BButton)
     await wrapper.trigger('click')
     const $emitted = wrapper.emitted('click') ?? []
-    expect($emitted[0][0] instanceof MouseEvent).toBe(true)
+    expect($emitted[0]![0]! instanceof MouseEvent).toBe(true)
   })
 
   it('click does not emit event when disabled', async () => {
@@ -402,7 +402,7 @@ describe.skip('button', () => {
     })
     await wrapper.trigger('click')
     const $emitted = wrapper.emitted('update:pressed') ?? []
-    expect($emitted[0][0]).toBe(false)
+    expect($emitted[0]![0]!).toBe(false)
   })
 
   it('does not emit update:pressed when prop pressed and prop disabled', async () => {
@@ -514,8 +514,8 @@ describe.skip('button', () => {
       props: {loading: true},
     })
     const [$first, $second] = wrapper.findAll('div')
-    expect($first.exists()).toBe(true)
-    expect($second.exists()).toBe(true)
+    expect($first!.exists()).toBe(true)
+    expect($second!.exists()).toBe(true)
   })
 
   it('has a second child div when not prop loading', () => {
@@ -550,7 +550,7 @@ describe.skip('button', () => {
       slots: {default: 'foobar', loading: 'loading'},
     })
     const [$first, $second] = wrapper.findAll('div')
-    expect($first.text()).toBe('loading')
-    expect($second.text()).toBe('foobar')
+    expect($first!.text()).toBe('loading')
+    expect($second!.text()).toBe('foobar')
   })
 })

@@ -36,7 +36,7 @@ describe('rating', () => {
   it('emits update:modelValue when a star is clicked', async () => {
     const wrapper = mount(BFormRating)
     const [firstStar] = wrapper.findAll('.star')
-    await firstStar.trigger('click')
+    await firstStar!.trigger('click')
     expect(wrapper.emitted('update:modelValue')).toBeTruthy()
     expect(wrapper.emitted('update:modelValue')![0]).toEqual([1])
   })
@@ -137,9 +137,9 @@ describe('rating', () => {
       },
     })
     const svgs = wrapper.findAll('.b-form-rating-star svg path')
-    expect(svgs[0].attributes('d')).toContain('M3.612 15.443') // Full star SVG path
-    expect(svgs[1].attributes('d')).toContain('M5.354 5.119') // Half star SVG path
-    expect(svgs[2].attributes('d')).toContain('M2.866 14.85') // Empty star SVG path
+    expect(svgs[0]!.attributes('d')).toContain('M3.612 15.443') // Full star SVG path
+    expect(svgs[1]!.attributes('d')).toContain('M5.354 5.119') // Half star SVG path
+    expect(svgs[2]!.attributes('d')).toContain('M2.866 14.85') // Empty star SVG path
   })
 
   // Keyboard Navigation Tests
@@ -310,7 +310,7 @@ describe('rating', () => {
 
     // Click on a star to change the value
     const [firstStar] = wrapper.findAll('.star')
-    await firstStar.trigger('click')
+    await firstStar!.trigger('click')
     expect(hiddenInput.attributes('value')).toBe('1')
   })
 

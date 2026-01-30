@@ -109,24 +109,24 @@ describe('accordion', () => {
     expect(wrapper.vm.modelValue).toEqual(undefined)
     expect(wrapper.vm.index).toEqual(undefined)
     const buttons = wrapper.findAll('button')
-    await buttons[0].trigger('click')
+    await buttons[0]!.trigger('click')
     await new Promise((resolve) => setTimeout(resolve, 30))
 
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.modelValue).toEqual(['1'])
     expect(wrapper.vm.index).toEqual([0])
 
-    await buttons[1].trigger('click')
+    await buttons[1]!.trigger('click')
     await new Promise((resolve) => setTimeout(resolve, 30))
     expect(wrapper.vm.modelValue).toEqual(['1', '2'])
     expect(wrapper.vm.index).toEqual([0, 1])
 
-    await buttons[0].trigger('click')
+    await buttons[0]!.trigger('click')
     await new Promise((resolve) => setTimeout(resolve, 30))
     expect(wrapper.vm.modelValue).toEqual(['2'])
     expect(wrapper.vm.index).toEqual([1])
 
-    await buttons[1].trigger('click')
+    await buttons[1]!.trigger('click')
     await new Promise((resolve) => setTimeout(resolve, 30))
     expect(wrapper.vm.modelValue).toEqual(undefined)
     expect(wrapper.vm.index).toEqual(undefined)

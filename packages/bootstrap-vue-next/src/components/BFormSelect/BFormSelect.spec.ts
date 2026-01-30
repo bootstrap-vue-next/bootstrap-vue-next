@@ -21,9 +21,9 @@ describe('BFormSelect', () => {
 
     const options = wrapper.findAll('option')
     expect(options.length).toBe(3)
-    expect(options[0].text()).toBe('one')
-    expect(options[1].text()).toBe('two')
-    expect(options[2].text()).toBe('three')
+    expect(options[0]!.text()).toBe('one')
+    expect(options[1]!.text()).toBe('two')
+    expect(options[2]!.text()).toBe('three')
   })
 
   it('renders options from array of objects', () => {
@@ -39,12 +39,12 @@ describe('BFormSelect', () => {
 
     const options = wrapper.findAll('option')
     expect(options.length).toBe(3)
-    expect(options[0].attributes('value')).toBe('1')
-    expect(options[0].text()).toBe('One')
-    expect(options[1].attributes('value')).toBe('2')
-    expect(options[1].text()).toBe('Two')
-    expect(options[2].attributes('value')).toBe('3')
-    expect(options[2].text()).toBe('Three')
+    expect(options[0]!.attributes('value')).toBe('1')
+    expect(options[0]!.text()).toBe('One')
+    expect(options[1]!.attributes('value')).toBe('2')
+    expect(options[1]!.text()).toBe('Two')
+    expect(options[2]!.attributes('value')).toBe('3')
+    expect(options[2]!.text()).toBe('Three')
   })
 
   it('applies modelValue correctly during initial render (SSR simulation)', () => {
@@ -154,9 +154,9 @@ describe('BFormSelect', () => {
 
     const options = wrapper.findAll('option')
     expect(options.length).toBe(3)
-    expect(options[0].classes()).toContain('custom-class')
-    expect(options[1].classes()).toContain('another-class')
-    expect(options[2].classes()).not.toContain('custom-class')
+    expect(options[0]!.classes()).toContain('custom-class')
+    expect(options[1]!.classes()).toContain('another-class')
+    expect(options[2]!.classes()).not.toContain('custom-class')
   })
 
   it('applies class object to options', () => {
@@ -171,9 +171,9 @@ describe('BFormSelect', () => {
 
     const options = wrapper.findAll('option')
     expect(options.length).toBe(2)
-    expect(options[0].classes()).toContain('class-a')
-    expect(options[0].classes()).not.toContain('class-b')
-    expect(options[1].classes()).toContain('class-c')
+    expect(options[0]!.classes()).toContain('class-a')
+    expect(options[0]!.classes()).not.toContain('class-b')
+    expect(options[1]!.classes()).toContain('class-c')
   })
 
   it('applies class array to options', () => {
@@ -188,9 +188,9 @@ describe('BFormSelect', () => {
 
     const options = wrapper.findAll('option')
     expect(options.length).toBe(2)
-    expect(options[0].classes()).toContain('class-a')
-    expect(options[0].classes()).toContain('class-b')
-    expect(options[1].classes()).toContain('class-c')
+    expect(options[0]!.classes()).toContain('class-a')
+    expect(options[0]!.classes()).toContain('class-b')
+    expect(options[1]!.classes()).toContain('class-c')
   })
 
   it('applies attrs to options', () => {
@@ -206,9 +206,9 @@ describe('BFormSelect', () => {
 
     const options = wrapper.findAll('option')
     expect(options.length).toBe(3)
-    expect(options[0].attributes('data-test')).toBe('test-value')
-    expect(options[1].attributes('data-id')).toBe('123')
-    expect(options[2].attributes('data-test')).toBeUndefined()
+    expect(options[0]!.attributes('data-test')).toBe('test-value')
+    expect(options[1]!.attributes('data-id')).toBe('123')
+    expect(options[2]!.attributes('data-test')).toBeUndefined()
   })
 
   it('applies class and attrs to options in option groups', () => {
@@ -228,9 +228,9 @@ describe('BFormSelect', () => {
 
     const options = wrapper.findAll('option')
     expect(options.length).toBe(2)
-    expect(options[0].classes()).toContain('group-class')
-    expect(options[0].attributes('data-group')).toBe('1')
-    expect(options[1].classes()).toContain('group-class')
+    expect(options[0]!.classes()).toContain('group-class')
+    expect(options[0]!.attributes('data-group')).toBe('1')
+    expect(options[1]!.classes()).toContain('group-class')
   })
 
   describe('type safety with generics', () => {

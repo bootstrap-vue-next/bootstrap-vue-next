@@ -56,6 +56,6 @@ describe('form', () => {
     const wrapper = mount(BForm)
     await wrapper.trigger('submit')
     const $emitted = wrapper.emitted('submit') ?? []
-    expect($emitted[0][0] instanceof Event).toBe(true)
+    expect($emitted[0]![0]! instanceof Event).toBe(true)
   })
 })

@@ -106,7 +106,7 @@ describe('dropdown-item-button', () => {
     const $button = wrapper.get('button')
     await $button.trigger('click')
     const $emitted = wrapper.emitted('click') ?? []
-    expect($emitted[0][0] instanceof MouseEvent).toBe(true)
+    expect($emitted[0]![0]! instanceof MouseEvent).toBe(true)
   })
 
   it('button has class to include prop buttonClass', () => {

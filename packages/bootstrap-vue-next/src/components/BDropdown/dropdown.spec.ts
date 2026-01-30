@@ -327,7 +327,7 @@ describe('dropdown', () => {
     const $bbutton = wrapper.getComponent(BButton)
     await $bbutton.trigger('click')
     const $emitted = wrapper.emitted('click') ?? []
-    expect($emitted[0][0] instanceof MouseEvent).toBe(true)
+    expect($emitted[0]![0]! instanceof MouseEvent).toBe(true)
   })
 
   it('second child BButton does not exist when not prop split', () => {
@@ -343,7 +343,7 @@ describe('dropdown', () => {
       props: {split: true},
     })
     const [, $bbutton] = wrapper.findAllComponents(BButton)
-    expect($bbutton.exists()).toBe(true)
+    expect($bbutton!.exists()).toBe(true)
   })
 
   it('second child BButton has static class dropdown-toggle-split', () => {
@@ -351,7 +351,7 @@ describe('dropdown', () => {
       props: {split: true},
     })
     const [, $bbutton] = wrapper.findAllComponents(BButton)
-    expect($bbutton.classes()).toContain('dropdown-toggle-split')
+    expect($bbutton!.classes()).toContain('dropdown-toggle-split')
   })
 
   it('second child BButton has static class dropdown-toggle', () => {
@@ -359,7 +359,7 @@ describe('dropdown', () => {
       props: {split: true},
     })
     const [, $bbutton] = wrapper.findAllComponents(BButton)
-    expect($bbutton.classes()).toContain('dropdown-toggle')
+    expect($bbutton!.classes()).toContain('dropdown-toggle')
   })
 
   it('second child BButton has prop variant to be prop variant', async () => {
@@ -367,9 +367,9 @@ describe('dropdown', () => {
       props: {split: true, variant: 'danger'},
     })
     const [, $bbutton] = wrapper.findAllComponents(BButton)
-    expect($bbutton.props('variant')).toBe('danger')
+    expect($bbutton!.props('variant')).toBe('danger')
     await wrapper.setProps({variant: 'secondary'})
-    expect($bbutton.props('variant')).toBe('secondary')
+    expect($bbutton!.props('variant')).toBe('secondary')
   })
 
   it('second child BButton has prop size to be prop size', async () => {
@@ -377,9 +377,9 @@ describe('dropdown', () => {
       props: {split: true, size: 'sm'},
     })
     const [, $bbutton] = wrapper.findAllComponents(BButton)
-    expect($bbutton.props('size')).toBe('sm')
+    expect($bbutton!.props('size')).toBe('sm')
     await wrapper.setProps({size: 'lg'})
-    expect($bbutton.props('size')).toBe('lg')
+    expect($bbutton!.props('size')).toBe('lg')
   })
 
   it('second child BButton has prop disabled to be prop disabled', async () => {
@@ -387,9 +387,9 @@ describe('dropdown', () => {
       props: {split: true, disabled: true},
     })
     const [, $bbutton] = wrapper.findAllComponents(BButton)
-    expect($bbutton.props('disabled')).toBe(true)
+    expect($bbutton!.props('disabled')).toBe(true)
     await wrapper.setProps({disabled: false})
-    expect($bbutton.props('disabled')).toBe(false)
+    expect($bbutton!.props('disabled')).toBe(false)
   })
 
   it('second child BButton has class to be prop toggleClass', () => {
@@ -397,7 +397,7 @@ describe('dropdown', () => {
       props: {split: true, toggleClass: ['foo']},
     })
     const [, $bbutton] = wrapper.findAllComponents(BButton)
-    expect($bbutton.classes()).toContain('foo')
+    expect($bbutton!.classes()).toContain('foo')
   })
 
   it('second child BButton has static attr aria-expanded to be false', () => {
@@ -405,7 +405,7 @@ describe('dropdown', () => {
       props: {split: true},
     })
     const [, $bbutton] = wrapper.findAllComponents(BButton)
-    expect($bbutton.attributes('aria-expanded')).toBe('false')
+    expect($bbutton!.attributes('aria-expanded')).toBe('false')
   })
 
   it('second child BButton has a span child', () => {
@@ -413,7 +413,7 @@ describe('dropdown', () => {
       props: {split: true},
     })
     const [, $bbutton] = wrapper.findAllComponents(BButton)
-    const $span = $bbutton.find('span')
+    const $span = $bbutton!.find('span')
     expect($span.exists()).toBe(true)
   })
 
@@ -422,7 +422,7 @@ describe('dropdown', () => {
       props: {split: true},
     })
     const [, $bbutton] = wrapper.findAllComponents(BButton)
-    const $span = $bbutton.get('span')
+    const $span = $bbutton!.get('span')
     expect($span.classes()).toContain('visually-hidden')
   })
 
@@ -432,7 +432,7 @@ describe('dropdown', () => {
       slots: {'toggle-text': 'foobar'},
     })
     const [, $bbutton] = wrapper.findAllComponents(BButton)
-    const $span = $bbutton.get('span')
+    const $span = $bbutton!.get('span')
     expect($span.text()).toBe('foobar')
   })
 
@@ -441,7 +441,7 @@ describe('dropdown', () => {
       props: {split: true, toggleText: 'foobar'},
     })
     const [, $bbutton] = wrapper.findAllComponents(BButton)
-    const $span = $bbutton.get('span')
+    const $span = $bbutton!.get('span')
     expect($span.text()).toBe('foobar')
   })
 
@@ -451,7 +451,7 @@ describe('dropdown', () => {
       slots: {'toggle-text': 'slots'},
     })
     const [, $bbutton] = wrapper.findAllComponents(BButton)
-    const $span = $bbutton.get('span')
+    const $span = $bbutton!.get('span')
     expect($span.text()).toBe('slots')
   })
 
@@ -460,7 +460,7 @@ describe('dropdown', () => {
       props: {split: true},
     })
     const [, $bbutton] = wrapper.findAllComponents(BButton)
-    await $bbutton.trigger('click')
+    await $bbutton!.trigger('click')
     expect(wrapper.emitted()).toHaveProperty('toggle')
   })
   it('teleportTo prop to teleport to body', async () => {
