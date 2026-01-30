@@ -75,7 +75,7 @@ describe('breadcrumb-item', () => {
     const $blink = wrapper.getComponent(BLink)
     await $blink.trigger('click')
     const $emitted = $blink.emitted('click') ?? []
-    expect($emitted[0][0] instanceof MouseEvent).toBe(true)
+    expect($emitted[0]![0]! instanceof MouseEvent).toBe(true)
   })
 
   it('renders default slot in child when child is span', () => {

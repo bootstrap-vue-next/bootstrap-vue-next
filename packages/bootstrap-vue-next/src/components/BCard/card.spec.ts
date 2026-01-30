@@ -473,9 +473,9 @@ describe('card', () => {
       props: {header: 'header', headerTag: 'img', imgSrc: '/abc'},
     })
     const [$first, $second] = wrapper.findAll('img')
-    expect($first.exists()).toBe(true)
-    expect($second.exists()).toBe(true)
-    expect($first.attributes('src')).toBe('/abc')
+    expect($first!.exists()).toBe(true)
+    expect($second!.exists()).toBe(true)
+    expect($first!.attributes('src')).toBe('/abc')
   })
 
   it('renders img in correct order when imgPlacement', () => {
@@ -483,8 +483,8 @@ describe('card', () => {
       props: {header: 'header', headerTag: 'img', imgSrc: '/abc', imgPlacement: 'bottom'},
     })
     const [$first, $second] = wrapper.findAll('img')
-    expect($first.exists()).toBe(true)
-    expect($second.exists()).toBe(true)
-    expect($second.attributes('src')).toBe('/abc')
+    expect($first!.exists()).toBe(true)
+    expect($second!.exists()).toBe(true)
+    expect($second!.attributes('src')).toBe('/abc')
   })
 })

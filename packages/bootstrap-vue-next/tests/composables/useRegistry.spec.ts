@@ -35,7 +35,7 @@ describe('useRegistry - _newShowHideRegistry', () => {
       const holder = registry.values.value.get('test-id')
       expect(holder).toBeDefined()
       expect(holder?.instances).toHaveLength(1)
-      expect(holder?.instances[0].component.uid).toBe(1)
+      expect(holder?.instances[0]!.component.uid).toBe(1)
     })
 
     it('appends multiple instances with same ID to array', () => {
@@ -50,9 +50,9 @@ describe('useRegistry - _newShowHideRegistry', () => {
 
       const holder = registry.values.value.get('modal-1')
       expect(holder?.instances).toHaveLength(3)
-      expect(holder?.instances[0].component.uid).toBe(1)
-      expect(holder?.instances[1].component.uid).toBe(2)
-      expect(holder?.instances[2].component.uid).toBe(3)
+      expect(holder?.instances[0]!.component.uid).toBe(1)
+      expect(holder?.instances[1]!.component.uid).toBe(2)
+      expect(holder?.instances[2]!.component.uid).toBe(3)
     })
 
     it('handles multiple IDs independently', () => {
@@ -154,8 +154,8 @@ describe('useRegistry - _newShowHideRegistry', () => {
 
       const holder = registry.values.value.get('modal-1')
       expect(holder?.instances).toHaveLength(2)
-      expect(holder?.instances[0].component.uid).toBe(1)
-      expect(holder?.instances[1].component.uid).toBe(3)
+      expect(holder?.instances[0]!.component.uid).toBe(1)
+      expect(holder?.instances[1]!.component.uid).toBe(3)
     })
 
     it('cleans up map entry when last instance removed', () => {
@@ -209,7 +209,7 @@ describe('useRegistry - _newShowHideRegistry', () => {
 
       const holder = registry.values.value.get('collapse-1')
       expect(holder?.instances).toHaveLength(1)
-      expect(holder?.instances[0].component.uid).toBe(101)
+      expect(holder?.instances[0]!.component.uid).toBe(101)
     })
   })
 
@@ -225,8 +225,8 @@ describe('useRegistry - _newShowHideRegistry', () => {
       expect(registry.values.value.has('new-id')).toBe(true)
 
       const holder = registry.values.value.get('new-id')
-      expect(holder?.instances[0].id).toBe('new-id')
-      expect(holder?.instances[0].component.uid).toBe(1)
+      expect(holder?.instances[0]!.id).toBe('new-id')
+      expect(holder?.instances[0]!.component.uid).toBe(1)
     })
 
     it('updates instance id property', () => {
@@ -237,7 +237,7 @@ describe('useRegistry - _newShowHideRegistry', () => {
       updateId('new-id', 'old-id')
 
       const holder = registry.values.value.get('new-id')
-      expect(holder?.instances[0].id).toBe('new-id')
+      expect(holder?.instances[0]!.id).toBe('new-id')
     })
 
     it('cleans up old ID when last instance moved', () => {
@@ -279,8 +279,8 @@ describe('useRegistry - _newShowHideRegistry', () => {
       expect(registry.values.value.has('modal-1')).toBe(false)
       const holder = registry.values.value.get('modal-2')
       expect(holder?.instances).toHaveLength(2)
-      expect(holder?.instances[0].component.uid).toBe(2)
-      expect(holder?.instances[1].component.uid).toBe(1)
+      expect(holder?.instances[0]!.component.uid).toBe(2)
+      expect(holder?.instances[1]!.component.uid).toBe(1)
     })
 
     it('handles updateId when old ID not in registry', () => {
@@ -416,7 +416,7 @@ describe('useRegistry - _newShowHideRegistry', () => {
         const holder = registry.values.value.get('rapid-component')
         if (holder) {
           // Active should be last element in array
-          const lastUid = holder.instances[holder.instances.length - 1].component.uid
+          const lastUid = holder.instances[holder.instances.length - 1]!.component.uid
           expect(holder.getActive()?.component.uid).toBe(lastUid)
         }
       }

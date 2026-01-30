@@ -32,8 +32,8 @@ describe('BTable keyboard navigation', () => {
 
       const headers = wrapper.findAll('th')
       // Should have tabindex on sortable headers
-      expect(headers[0].attributes('tabindex')).toBe('0') // Name header
-      expect(headers[1].attributes('tabindex')).toBe('0') // Age header
+      expect(headers[0]!.attributes('tabindex')).toBe('0') // Name header
+      expect(headers[1]!.attributes('tabindex')).toBe('0') // Age header
     })
 
     it('should not add tabindex to non-sortable headers', () => {
@@ -50,8 +50,8 @@ describe('BTable keyboard navigation', () => {
       })
 
       const headers = wrapper.findAll('th')
-      expect(headers[0].attributes('tabindex')).toBeUndefined()
-      expect(headers[1].attributes('tabindex')).toBeUndefined()
+      expect(headers[0]!.attributes('tabindex')).toBeUndefined()
+      expect(headers[1]!.attributes('tabindex')).toBeUndefined()
     })
 
     it('should trigger sort when Enter key is pressed on header', async () => {
@@ -120,9 +120,9 @@ describe('BTable keyboard navigation', () => {
       })
 
       const rows = wrapper.findAll('tbody tr')
-      expect(rows[0].attributes('tabindex')).toBe('0')
-      expect(rows[1].attributes('tabindex')).toBe('0')
-      expect(rows[2].attributes('tabindex')).toBe('0')
+      expect(rows[0]!.attributes('tabindex')).toBe('0')
+      expect(rows[1]!.attributes('tabindex')).toBe('0')
+      expect(rows[2]!.attributes('tabindex')).toBe('0')
     })
 
     it('should not add tabindex to rows when not selectable', () => {
@@ -135,9 +135,9 @@ describe('BTable keyboard navigation', () => {
       })
 
       const rows = wrapper.findAll('tbody tr')
-      expect(rows[0].attributes('tabindex')).toBeUndefined()
-      expect(rows[1].attributes('tabindex')).toBeUndefined()
-      expect(rows[2].attributes('tabindex')).toBeUndefined()
+      expect(rows[0]!.attributes('tabindex')).toBeUndefined()
+      expect(rows[1]!.attributes('tabindex')).toBeUndefined()
+      expect(rows[2]!.attributes('tabindex')).toBeUndefined()
     })
 
     it('should trigger row click when Enter key is pressed', async () => {
@@ -156,7 +156,7 @@ describe('BTable keyboard navigation', () => {
 
       // Check that row-clicked event was emitted
       expect(wrapper.emitted('row-clicked')).toBeTruthy()
-      expect(wrapper.emitted('row-clicked')![0][0]).toEqual({
+      expect(wrapper.emitted('row-clicked')![0]![0]).toEqual({
         item: testItems[0],
         index: 0,
         event: expect.any(Object),
@@ -179,7 +179,7 @@ describe('BTable keyboard navigation', () => {
 
       // Check that row-clicked event was emitted
       expect(wrapper.emitted('row-clicked')).toBeTruthy()
-      expect(wrapper.emitted('row-clicked')![0][0]).toEqual({
+      expect(wrapper.emitted('row-clicked')![0]![0]).toEqual({
         item: testItems[0],
         index: 0,
         event: expect.any(Object),
@@ -202,7 +202,7 @@ describe('BTable keyboard navigation', () => {
 
       // Check that row-clicked event was emitted
       expect(wrapper.emitted('row-clicked')).toBeTruthy()
-      expect(wrapper.emitted('row-clicked')![0][0]).toEqual({
+      expect(wrapper.emitted('row-clicked')![0]![0]).toEqual({
         item: testItems[0],
         index: 0,
         event: expect.any(Object),
@@ -293,10 +293,10 @@ describe('BTable keyboard navigation', () => {
 
       // Check that table data is sorted
       const rows = wrapper.findAll('tbody tr')
-      const firstRowData = rows[0].findAll('td')
+      const firstRowData = rows[0]!.findAll('td')
 
       // After sorting by name ascending, Bob Johnson should be first
-      expect(firstRowData[0].text()).toBe('Bob Johnson')
+      expect(firstRowData[0]!.text()).toBe('Bob Johnson')
     })
 
     it('should work with sorting using NumpadEnter', async () => {
@@ -315,10 +315,10 @@ describe('BTable keyboard navigation', () => {
 
       // Check that table data is sorted
       const rows = wrapper.findAll('tbody tr')
-      const firstRowData = rows[0].findAll('td')
+      const firstRowData = rows[0]!.findAll('td')
 
       // After sorting by name ascending, Bob Johnson should be first
-      expect(firstRowData[0].text()).toBe('Bob Johnson')
+      expect(firstRowData[0]!.text()).toBe('Bob Johnson')
     })
   })
 })

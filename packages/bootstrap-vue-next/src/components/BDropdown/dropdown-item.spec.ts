@@ -124,7 +124,7 @@ describe('dropdown-item', () => {
     const $button = wrapper.get('button')
     await $button.trigger('click')
     const $emitted = wrapper.emitted('click') ?? []
-    expect($emitted[0][0] instanceof MouseEvent).toBe(true)
+    expect($emitted[0]![0]! instanceof MouseEvent).toBe(true)
   })
 
   it('does not emit click when disabled', async () => {

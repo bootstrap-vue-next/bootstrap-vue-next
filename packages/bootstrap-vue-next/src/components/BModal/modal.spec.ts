@@ -494,7 +494,7 @@ describe('modal', () => {
       await $close.trigger('click')
       let closeEvent = wrapper.emitted<BvTriggerableEvent[]>('close')
       expect(closeEvent).toHaveLength(1)
-      expect(closeEvent?.[0][0]).toBeInstanceOf(BvTriggerableEvent)
+      expect(closeEvent?.[0]![0]!).toBeInstanceOf(BvTriggerableEvent)
 
       // Modal should still be open
       $modal = wrapper.find('div.modal')
@@ -505,7 +505,7 @@ describe('modal', () => {
       await $close.trigger('click')
       closeEvent = wrapper.emitted<BvTriggerableEvent[]>('close')
       expect(closeEvent).toHaveLength(2)
-      expect(closeEvent?.[1][0]).toBeInstanceOf(BvTriggerableEvent)
+      expect(closeEvent?.[1]![0]!).toBeInstanceOf(BvTriggerableEvent)
 
       await new Promise((resolve) => setTimeout(resolve, 30))
       // Modal should now be closed
@@ -554,7 +554,7 @@ describe('modal', () => {
       await $close.trigger('click')
       let closeEvent = wrapper.emitted<BvTriggerableEvent[]>('close')
       expect(closeEvent).toHaveLength(1)
-      expect(closeEvent?.[0][0]).toBeInstanceOf(BvTriggerableEvent)
+      expect(closeEvent?.[0]![0]!).toBeInstanceOf(BvTriggerableEvent)
 
       // Modal should still be open
       expect($modal.isVisible()).toBe(true)
@@ -564,7 +564,7 @@ describe('modal', () => {
       await $close.trigger('click')
       closeEvent = wrapper.emitted<BvTriggerableEvent[]>('close')
       expect(closeEvent).toHaveLength(2)
-      expect(closeEvent?.[1][0]).toBeInstanceOf(BvTriggerableEvent)
+      expect(closeEvent?.[1]![0]!).toBeInstanceOf(BvTriggerableEvent)
 
       // Modal should now be closed
       await new Promise((resolve) => setTimeout(resolve, 30))

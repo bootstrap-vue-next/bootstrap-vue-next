@@ -178,7 +178,7 @@ describe('breadcrumb', () => {
       },
     })
     const [$bbreadcrumbitem] = wrapper.findAllComponents(BBreadcrumbItem)
-    expect($bbreadcrumbitem.props('href')).toBe('#')
+    expect($bbreadcrumbitem!.props('href')).toBe('#')
   })
 
   it('breadcrumbitem components dont have prop href to be # when their index is items length', () => {
@@ -189,6 +189,6 @@ describe('breadcrumb', () => {
       },
     })
     const [, $bbreadcrumbitem] = wrapper.findAllComponents(BBreadcrumbItem)
-    expect($bbreadcrumbitem.props('href')).toBeUndefined()
+    expect($bbreadcrumbitem!.props('href')).toBeUndefined()
   })
 })
