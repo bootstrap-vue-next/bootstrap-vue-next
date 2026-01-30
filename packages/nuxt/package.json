@@ -1,7 +1,7 @@
 {
   "name": "@bootstrap-vue-next/nuxt",
-  "description": "Nuxt Module for BootstrapVueNext",
   "version": "0.42.0",
+  "description": "Nuxt Module for BootstrapVueNext",
   "license": "MIT",
   "author": {
     "name": "Issayah",
@@ -15,46 +15,56 @@
       "import": "./dist/module.mjs"
     }
   },
+  "typesVersions": {
+    "*": {
+      ".": [
+        "./dist/types.d.mts"
+      ]
+    }
+  },
   "files": [
     "dist"
   ],
+  "workspaces": [
+    "playground"
+  ],
   "scripts": {
-    "prepack": "bunx nuxt-module-build build",
-    "dev": "bunx nuxi dev playground --port 3030",
+    "prepack": "nuxt-module-build build",
+    "dev": "nuxi dev playground --port 3030",
     "build": "bun run dev:prepare && bun run dev:build && bun run prepack",
-    "dev:build": "bunx nuxi build playground",
-    "dev:prepare": "bunx nuxt-module-build build --stub && bunx nuxt-module-build prepare && bunx nuxi prepare playground",
-    "publint": "bunx publint",
-    "lint": "bunx eslint --fix",
-    "test:lint": "bunx eslint",
+    "dev:build": "nuxi build playground",
+    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
+    "publint": "publint",
+    "lint": "eslint --fix",
+    "test:lint": "eslint",
     "test": "bun run test:lint",
-    "test:watch": "bunx vitest watch",
-    "test:types": "bunx vue-tsc --noEmit && cd playground && bunx vue-tsc --noEmit"
+    "test:watch": "vitest watch",
+    "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },
   "peerDependencies": {
     "bootstrap-vue-next": "workspace:^"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.20.2"
+    "@nuxt/kit": "^4.3.0"
   },
   "devDependencies": {
     "@nuxt/devtools": "^3.1.1",
-    "@nuxt/eslint-config": "^1.12.1",
+    "@nuxt/eslint-config": "^1.13.0",
     "@nuxt/module-builder": "^1.0.2",
-    "@nuxt/schema": "^4.2.2",
+    "@nuxt/schema": "^4.3.0",
     "@nuxt/test-utils": "^3.23.0",
-    "@rushstack/eslint-patch": "^1.15.0",
-    "@types/node": "^22.19.7",
+    "@types/node": "^24.10.9",
     "@vue/eslint-config-prettier": "^10.2.0",
     "bootstrap-vue-next": "workspace:^",
     "eslint": "^9.39.2",
     "eslint-define-config": "^2.1.0",
-    "nuxt": "^4.2.2",
-    "prettier": "^3.8.0",
-    "publint": "^0.3.16",
+    "nuxt": "^4.3.0",
+    "prettier": "^3.8.1",
+    "publint": "^0.3.17",
     "typescript": "^5.9.3",
     "unimport": "^5.6.0",
-    "vue": "^3.5.27"
+    "vue": "^3.5.27",
+    "vue-tsc": "^3.2.4"
   },
   "repository": {
     "type": "git",

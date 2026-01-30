@@ -1,5 +1,3 @@
-/// <reference types="vitest" />
-
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import {resolve} from 'path'
@@ -8,7 +6,7 @@ import Components from 'unplugin-vue-components/vite'
 
 import {readdirSync} from 'node:fs'
 import {basename, dirname, extname, join, relative} from 'node:path'
-import {copyFile} from 'fs/promises'
+import {copyFile} from 'node:fs/promises'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
 const readFilesInDirectory = (
@@ -165,13 +163,5 @@ export default defineConfig({
 
   server: {
     host: true,
-  },
-
-  test: {
-    environment: 'happy-dom',
-    coverage: {
-      provider: 'v8',
-      reporter: ['text', 'html'],
-    },
   },
 })

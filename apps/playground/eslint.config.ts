@@ -1,24 +1,19 @@
+import {globalIgnores} from 'eslint/config'
+import {defineConfigWithVueTs, vueTsConfigs} from '@vue/eslint-config-typescript'
 import pluginVue from 'eslint-plugin-vue'
-import vueTsEslintConfig from '@vue/eslint-config-typescript'
-import pluginVitest from '@vitest/eslint-plugin'
-import skipFormatting from '@vue/eslint-config-prettier'
+import pluginOxlint from 'eslint-plugin-oxlint'
+import prettierConfig from 'eslint-config-prettier'
 
-export default [
+export default defineConfigWithVueTs(
   {
     name: 'app/files-to-lint',
-    files: ['**/*.{ts,mts,tsx,vue}'],
+    files: ['**/*.{vue,ts,mts,tsx}'],
   },
-  {
-    name: 'app/files-to-ignore',
-    ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**'],
-  },
-  ...pluginVue.configs['flat/recommended'],
-  ...vueTsEslintConfig(),
-  {
-    ...pluginVitest.configs.recommended,
-    files: ['src/**/*.spec.*', 'src/**/*.test.*'],
-  },
-  skipFormatting,
+  globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**']),
+  ...pluginVue.configs['flat/essential'],
+  vueTsConfigs.recommended,
+  ...pluginOxlint.configs['flat/recommended'],
+  prettierConfig,
   {
     rules: {
       'prettier/prettier': [
@@ -87,5 +82,5 @@ export default [
       ],
       'vue/eqeqeq': 'error',
     },
-  },
-]
+  }
+)

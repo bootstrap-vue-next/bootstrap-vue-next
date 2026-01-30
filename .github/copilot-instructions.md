@@ -94,7 +94,6 @@ templates/
 ### Important Files
 
 - `package.json` - Root workspace configuration (includes bun workspaces)
-- `turbo.json` - Task pipeline configuration
 - `vitest.workspace.mjs` - Test workspace setup
 - `.github/workflows/ci.yaml` - CI pipeline
 

@@ -1,39 +1,31 @@
+import {globalIgnores} from 'eslint/config'
+import {defineConfigWithVueTs, vueTsConfigs} from '@vue/eslint-config-typescript'
 import pluginVue from 'eslint-plugin-vue'
-import vueTsEslintConfig from '@vue/eslint-config-typescript'
 import pluginVitest from '@vitest/eslint-plugin'
-import skipFormatting from '@vue/eslint-config-prettier'
-import {fileURLToPath} from 'url'
+import pluginOxlint from 'eslint-plugin-oxlint'
+import prettierConfig from 'eslint-config-prettier'
 
-const __dirname = fileURLToPath(new URL('.', import.meta.url))
-
-export default [
+export default defineConfigWithVueTs(
   {
     name: 'app/files-to-lint',
-    files: ['**/*.{ts,mts,tsx,vue}'],
+    files: ['**/*.{vue,ts,mts,tsx}'],
   },
-  {
-    name: 'app/files-to-ignore',
-    ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**'],
-  },
-  ...pluginVue.configs['flat/recommended'],
-  ...vueTsEslintConfig({
-    parserOptions: {
-      tsconfigRootDir: __dirname,
-    },
-  }),
+
+  globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**']),
+
+  ...pluginVue.configs['flat/essential'],
+  vueTsConfigs.recommended,
+
   {
     ...pluginVitest.configs.recommended,
-    files: ['src/**/*.spec.*', 'src/**/*.test.*', 'tests/**/*.test.*'],
+    files: ['src/**/__tests__/*'],
   },
-  skipFormatting,
+
+  ...pluginOxlint.configs['flat/recommended'],
+
+  prettierConfig,
   {
     rules: {
-      'prettier/prettier': [
-        'warn',
-        {
-          endOfLine: 'auto',
-        },
-      ],
       'no-alert': 'warn',
       'no-console': 'warn',
       'no-debugger': 'warn',
@@ -94,5 +86,5 @@ export default [
       ],
       'vue/eqeqeq': 'error',
     },
-  },
-]
+  }
+)

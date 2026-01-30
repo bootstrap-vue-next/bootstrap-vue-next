@@ -33,27 +33,26 @@
     }
   ],
   "scripts": {
-    "prepare": "husky && turbo run build",
-    "dev": "turbo run dev --parallel",
-    "build": "turbo run build",
-    "build-only": "turbo run build-only",
-    "lint": "turbo run lint",
-    "type-check": "turbo run type-check",
-    "test:lint": "turbo run test:lint",
-    "test:unit": "turbo run test:unit",
-    "test:coverage": "turbo run test:coverage",
-    "test": "turbo run test",
-    "test:lint:ci": "turbo run test:lint:ci",
-    "test:unit:ci": "turbo run test:unit:ci",
-    "test:ci": "turbo run test:ci"
+    "prepare": "husky && bun run build",
+    "dev": "bun run --filter='*' dev",
+    "build": "bun run --filter='*' build",
+    "build-only": "bun run --filter='*' build-only",
+    "lint": "bun run --filter='*' lint",
+    "type-check": "bun run --filter='*' type-check",
+    "test:lint": "bun run --filter='*' test:lint",
+    "test:unit": "bun run --filter='*' test:unit",
+    "test:coverage": "bun run --filter='*' test:coverage",
+    "test": "bun run --filter='*' test",
+    "test:lint:ci": "bun run --filter='*' test:lint:ci",
+    "test:unit:ci": "bun run --filter='*' test:unit:ci",
+    "test:ci": "bun run --filter='*' test:ci"
   },
   "devDependencies": {
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.7",
-    "turbo": "^2.7.5"
+    "lint-staged": "^16.2.7"
   },
   "engines": {
-    "npm": ">=10.0.0",
-    "node": ">=22.0.0"
+    "npm": ">=11.0.0",
+    "node": ">=24.0.0"
   }
 }
