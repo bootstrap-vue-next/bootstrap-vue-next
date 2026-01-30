@@ -6,7 +6,7 @@ Always reference these instructions first and fallback to search or bash command
 
 ### Required Setup
 
-- Install Node.js 20.x or 22.x (engine requires >=22.0.0 but 20.x works with warnings)
+- Install Node.js 24 (engine requires >=22.0.0 but others work with warnings)
 - Install bun globally: `npm install -g bun@1.3.8` (ONLY bun is allowed as package manager) Use the version specified in the packageManager field of the package.json file
 - Clone repository and open the **root** directory (not subdirectories like packages/bootstrap-vue-next)
 

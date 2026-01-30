@@ -42,10 +42,7 @@
     "test:lint": "bun run --filter='*' test:lint",
     "test:unit": "bun run --filter='*' test:unit",
     "test:coverage": "bun run --filter='*' test:coverage",
-    "test": "bun run --filter='*' test",
-    "test:lint:ci": "bun run --filter='*' test:lint:ci",
-    "test:unit:ci": "bun run --filter='*' test:unit:ci",
-    "test:ci": "bun run --filter='*' test:ci"
+    "test": "bun run --filter='*' test"
   },
   "devDependencies": {
     "husky": "^9.1.7",

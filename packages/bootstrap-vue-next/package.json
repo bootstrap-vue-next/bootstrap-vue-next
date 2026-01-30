@@ -140,18 +140,15 @@
   "scripts": {
     "dev": "vite --port 5174",
     "build-only": "vite build",
-    "type-check": "vue-tsc --noEmit -p tsconfig.app.json",
+    "type-check": "vue-tsc --build",
     "preview": "vite preview",
-    "build": "bun run type-check && bun run build-only",
+    "build": "run-p type-check \"build-only {@}\" --",
     "publint": "publint",
     "lint": "eslint --fix src",
     "test:lint": "eslint src",
     "test:unit": "vitest",
     "test:coverage": "vitest --coverage",
-    "test:lint:ci": "bun run test:lint",
-    "test:unit:ci": "vitest run",
-    "test": "bun run test:lint && bun run test:unit",
-    "test:ci": "bun run test:lint:ci && bun run test:unit:ci"
+    "test": "run-p test:*"
   },
   "peerDependencies": {
     "@floating-ui/vue": "*",

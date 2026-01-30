@@ -5,10 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port 5173",
-    "type-check": "vue-tsc --noEmit -p tsconfig.app.json",
+    "build": "run-p type-check \"build-only {@}\" --",
     "build-only": "vite build",
-    "build": "bun run type-check && bun run build-only",
-    "preview": "vite preview"
+    "type-check": "vue-tsc --build",
+    "preview": "vite preview",
+    "lint": "run-s lint:*",
+    "lint:oxlint": "oxlint . --fix",
+    "lint:eslint": "eslint . --fix --cache",
+    "format": "prettier --write --experimental-cli src/"
   },
   "dependencies": {
     "@vueuse/core": "^14.1.0",

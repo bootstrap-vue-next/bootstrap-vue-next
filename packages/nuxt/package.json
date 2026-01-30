@@ -30,16 +30,15 @@
   ],
   "scripts": {
     "prepack": "nuxt-module-build build",
-    "dev": "nuxi dev playground --port 3030",
-    "build": "bun run dev:prepare && bun run dev:build && bun run prepack",
-    "dev:build": "nuxi build playground",
-    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
+    "dev": "run-s dev:prepare \"nuxt dev playground\"",
+    "build": "run-s dev:prepare dev:build prepack",
+    "dev:build": "nuxt build playground",
+    "dev:prepare": "run-s \"nuxt-module-build build --stub\" \"nuxt-module-build prepare\" \"nuxt prepare playground\"",
     "publint": "publint",
-    "lint": "eslint --fix",
-    "test:lint": "eslint",
-    "test": "bun run test:lint",
+    "lint": "eslint .",
+    "test": "vitest run",
     "test:watch": "vitest watch",
-    "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
+    "test:types": "run-s \"vue-tsc --noEmit\" \"cd playground && vue-tsc --noEmit\""
   },
   "peerDependencies": {
     "bootstrap-vue-next": "workspace:^"
@@ -58,6 +57,7 @@
     "bootstrap-vue-next": "workspace:^",
     "eslint": "^9.39.2",
     "eslint-define-config": "^2.1.0",
+    "npm-run-all2": "^8.0.4",
     "nuxt": "^4.3.0",
     "prettier": "^3.8.1",
     "publint": "^0.3.17",
