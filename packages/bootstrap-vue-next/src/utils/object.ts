@@ -129,7 +129,7 @@ export const set = <T extends object, K>(initial: T, path: string, value: K): T 
       const nextIsNum = toInt(segments[0], null) === null ? false : true
       node[key] = node[key] === undefined ? (nextIsNum ? [] : {}) : node[key]
       _set(node[key])
-    } else {
+    } else if (segments[0]) {
       node[segments[0]] = value
     }
   }

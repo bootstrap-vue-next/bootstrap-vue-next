@@ -55,19 +55,19 @@ describe.skip('container', () => {
 
   it('has class gx-{type} when prop gutterX', async () => {
     const wrapper = mount(BContainer, {
-      props: {gutterX: 'xxl'},
+      props: {gutterX: '3'},
     })
-    expect(wrapper.classes()).toContain('gx-xxl')
+    expect(wrapper.classes()).toContain('gx-3')
     await wrapper.setProps({gutterX: undefined})
-    expect(wrapper.classes()).not.toContain('gx-xxl')
+    expect(wrapper.classes()).not.toContain('gx-3')
   })
 
   it('has class gy-{type} when prop gutterY', async () => {
     const wrapper = mount(BContainer, {
-      props: {gutterY: 'xxl'},
+      props: {gutterY: '2'},
     })
-    expect(wrapper.classes()).toContain('gy-xxl')
+    expect(wrapper.classes()).toContain('gy-2')
     await wrapper.setProps({gutterY: undefined})
-    expect(wrapper.classes()).not.toContain('gy-xxl')
+    expect(wrapper.classes()).not.toContain('gy-2')
   })
 })

@@ -411,7 +411,7 @@ describe('useRegistry - _newShowHideRegistry', () => {
       // Cleanup in random order
       const cleanupOrder = [3, 7, 1, 9, 2, 5, 10, 4, 6, 8]
       for (const index of cleanupOrder) {
-        unregisterFns[index - 1]()
+        unregisterFns[index - 1]!()
 
         const holder = registry.values.value.get('rapid-component')
         if (holder) {

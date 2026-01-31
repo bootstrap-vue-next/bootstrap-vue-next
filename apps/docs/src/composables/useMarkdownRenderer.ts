@@ -18,12 +18,13 @@ const defaultRender =
 
 md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
   const token = tokens[idx]
+  if (token === undefined) throw new Error('Token is undefined at index')
   const hrefIndex = token.attrIndex('href')
 
   if (hrefIndex >= 0 && token.attrs) {
-    const [, href] = token.attrs[hrefIndex]
+    const [, href] = token?.attrs[hrefIndex] ?? []
     // Only add base to internal links (starting with /)
-    if (href.startsWith('/') && !href.startsWith('//')) {
+    if (href?.startsWith('/') && !href.startsWith('//') && token.attrs[hrefIndex]) {
       token.attrs[hrefIndex][1] = withBase(href)
     }
   }

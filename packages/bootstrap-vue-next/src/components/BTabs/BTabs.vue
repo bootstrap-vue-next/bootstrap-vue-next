@@ -332,7 +332,7 @@ const navTabsClasses = computed(() => ({
 const handleClick = (event: Readonly<MouseEvent>, index: number) => {
   if (
     index >= 0 &&
-    !tabs.value[index].disabled &&
+    !tabs.value[index]?.disabled &&
     tabs.value[index]?.onClick &&
     typeof tabs.value[index].onClick === 'function'
   ) {
@@ -363,13 +363,13 @@ const nextIndex = (start: number, direction: number) => {
   let maxIdx = -1
 
   for (let i = 0; i < tabs.value.length; i++) {
-    if (!tabs.value[i].disabled) {
+    if (!tabs.value[i]?.disabled) {
       if (minIdx === -1) minIdx = i
       maxIdx = i
     }
   }
 
-  while (index >= minIdx && index <= maxIdx && tabs.value[index].disabled) {
+  while (index >= minIdx && index <= maxIdx && tabs.value[index]?.disabled) {
     index += direction
   }
 

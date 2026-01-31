@@ -9,6 +9,8 @@
 
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+
+    "lib": ["ESNext", "DOM", "DOM.Iterable"]
   }
 }

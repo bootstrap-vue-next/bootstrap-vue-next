@@ -40,7 +40,7 @@ export function extractTitleFromUrl(url: string, directory: string): string {
   const match = url.match(regex)
   if (!match) return ''
 
-  return kebabToTitleCase(match[1])
+  return kebabToTitleCase(match[1] ?? '')
 }
 
 /**

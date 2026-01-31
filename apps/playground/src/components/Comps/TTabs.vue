@@ -58,7 +58,9 @@
           </BTab>
 
           <BTab>
-            <template #title> <BSpinner type="border" small />Tab 2 </template>
+            <template #title>
+              <BSpinner type="border" small />Tab 2
+            </template>
             <p class="p-3">Tab contents 2</p>
           </BTab>
         </BTabs>
@@ -70,19 +72,13 @@
           {{ activeBool }}
           <BFormCheckbox v-model="activeBool">ac</BFormCheckbox>
           <ParentComp>
-            <ChildComp
-              v-for="tab in tabs"
-              :key="tab.uuid"
-              :title="tab.title"
-              :content="tab.content"
-              v-bind="tab.attrs"
-            />
-            <ChildComp :title="tabs[0].title" :content="tabs[0].content" />
+            <ChildComp v-for="tab in tabs" :key="tab.uuid" :title="tab.title" :content="tab.content"
+              v-bind="tab.attrs" />
+            <ChildComp :title="tabs[0]?.title" :content="tabs[0]?.content" />
             <b-tab :title="test" @click="log"> test </b-tab>
             <b-tab v-model:active="activeBool" title="ac" button-id="ac-button"> ac </b-tab>
             <b-tab title="test1" lazy-once title-link-class="bg-danger" class="bg-danger">
-              <template #title> doo</template> doo <LoggerComp>goo</LoggerComp></b-tab
-            >
+              <template #title> doo</template> doo <LoggerComp>goo</LoggerComp></b-tab>
           </ParentComp>
         </div>
       </BCol>
@@ -126,15 +122,9 @@
         <BTabs v-model:active-id="tab3Id" v-model:index="tab3Index">
           <BTab v-for="t in tab3" :key="t.title" :title="t.title">{{ t.content }}</BTab>
         </BTabs>
-        <BButton
-          @click="tab3.unshift({title: 't' + (tab3.length + 1), content: 't' + (tab3.length + 1)})"
-          >+</BButton
-        >
+        <BButton @click="tab3.unshift({ title: 't' + (tab3.length + 1), content: 't' + (tab3.length + 1) })">+</BButton>
         <BButton @click="tab3.splice(0, 1)">X</BButton> -
-        <BButton
-          @click="tab3.push({title: 't' + (tab3.length + 1), content: 't' + (tab3.length + 1)})"
-          >+</BButton
-        >
+        <BButton @click="tab3.push({ title: 't' + (tab3.length + 1), content: 't' + (tab3.length + 1) })">+</BButton>
         {{ tab3Index }} {{ tab3Id }}
       </BCol>
     </BRow>
@@ -142,8 +132,8 @@
 </template>
 
 <script setup lang="ts">
-import {defineComponent, h, ref} from 'vue'
-import {BTab, BTabs} from 'bootstrap-vue-next/components/BTabs'
+import { defineComponent, h, ref } from 'vue'
+import { BTab, BTabs } from 'bootstrap-vue-next/components/BTabs'
 // import {BTab, BTabs} from './BootstrapVue.ts'
 
 // eslint-disable-next-line vue/one-component-per-file
@@ -161,7 +151,7 @@ const ChildComp = defineComponent({
     },
   },
   render() {
-    return h(BTab, {title: this.title}, () => this.content)
+    return h(BTab, { title: this.title }, () => this.content)
   },
 })
 
@@ -182,7 +172,7 @@ const LoggerComp = defineComponent({
     console.log('logger component mounted')
   },
   render() {
-    return h(BTabs, {class: 'border m-3 p-3'}, () =>
+    return h(BTabs, { class: 'border m-3 p-3' }, () =>
       this.$slots.default ? this.$slots.default() : null
     )
   },
@@ -192,18 +182,18 @@ const tabIndex = ref(1)
 const tabIndex2 = ref(2)
 const activeId = ref('a4')
 const tabs = ref([
-  {uuid: 1, title: '1', content: '1', attrs: {}},
-  {uuid: 2, title: '2', content: '2', attrs: {active: true}},
+  { uuid: 1, title: '1', content: '1', attrs: {} },
+  { uuid: 2, title: '2', content: '2', attrs: { active: true } },
 ])
 const test = ref('test')
 const activeBool = ref(false)
 const tab3Index = ref(0)
 const tab3Id = ref()
 const tab3 = ref([
-  {title: 't1', content: 't1'},
-  {title: 't2', content: 't2'},
-  {title: 't3', content: 't3'},
-  {title: 't4', content: 't4'},
+  { title: 't1', content: 't1' },
+  { title: 't2', content: 't2' },
+  { title: 't3', content: 't3' },
+  { title: 't4', content: 't4' },
 ])
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function log(e: any) {
@@ -213,17 +203,21 @@ function log(e: any) {
 
 setTimeout(() => {
   // console.log('add')
-  tabs.value.push({uuid: 3, title: '3', content: '3', attrs: {}})
-  tabs.value[0].title = '11'
-  test.value = 'test 2'
+  tabs.value.push({ uuid: 3, title: '3', content: '3', attrs: {} })
+  if (tabs.value[0]) {
+    tabs.value[0].title = '11'
+    test.value = 'test 2'
+  }
 }, 2000)
 setTimeout(() => {
-  tabs.value[0].title = '1'
-  // console.log('remove')
-  tabs.value.splice(1, 1)
+  if (tabs.value[0]) {
+    tabs.value[0].title = '1'
+    // console.log('remove')
+    tabs.value.splice(1, 1)
+  }
 }, 4000)
 setTimeout(() => {
   // console.log('add')
-  tabs.value.push({uuid: 4, title: '4', content: '4', attrs: {active: true}})
+  tabs.value.push({ uuid: 4, title: '4', content: '4', attrs: { active: true } })
 }, 6000)
 </script>

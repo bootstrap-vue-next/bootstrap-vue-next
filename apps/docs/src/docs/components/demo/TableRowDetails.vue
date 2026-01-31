@@ -33,7 +33,7 @@
               class="text-sm-right"
               ><b>Age:</b></BCol
             >
-            <BCol>{{ row.item.age }}</BCol>
+            <BCol>{{ row.item?.age }}</BCol>
           </BRow>
 
           <BRow class="mb-2">
@@ -42,7 +42,7 @@
               class="text-sm-right"
               ><b>Is Active:</b></BCol
             >
-            <BCol>{{ row.item.isActive }}</BCol>
+            <BCol>{{ row.item?.isActive }}</BCol>
           </BRow>
 
           <BButton

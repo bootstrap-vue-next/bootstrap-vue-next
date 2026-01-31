@@ -11,5 +11,5 @@ import {ref} from 'vue'
 import {Status, statusOptions} from './SelectTypeSafeEnumTypes'
 
 // TypeScript knows this is of type Status
-const currentStatus = ref<Status>(statusOptions[0].value)
+const currentStatus = ref<Status>(statusOptions[0]?.value || Status.Active)
 </script>

@@ -297,7 +297,7 @@ export const useTableKeyboardNavigation = <Item>(
     }
 
     if (targetIndex !== currentIndex && rows[targetIndex]) {
-      rows[targetIndex].focus()
+      rows[targetIndex]?.focus()
     }
   }
 

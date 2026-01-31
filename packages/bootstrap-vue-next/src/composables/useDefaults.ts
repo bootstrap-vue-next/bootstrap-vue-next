@@ -119,7 +119,7 @@ function internalUseDefaults(props: Record<string, any> = {}, name?: string) {
   watchEffect(() => {
     if (componentDefaults.value) {
       const subComponents = Object.entries(componentDefaults.value).filter(([key]) =>
-        key.startsWith(key[0].toUpperCase())
+        key.startsWith((key[0] ?? '').toUpperCase())
       )
       _subcomponentDefaults.value = subComponents.length
         ? Object.fromEntries(subComponents)

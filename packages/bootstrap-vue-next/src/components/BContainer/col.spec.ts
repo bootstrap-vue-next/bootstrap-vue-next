@@ -37,11 +37,11 @@ describe('col', () => {
 
   it('has class order-{type} when prop order', async () => {
     const wrapper = mount(BCol, {
-      props: {order: '6'},
+      props: {order: '4'},
     })
-    expect(wrapper.classes()).toContain('order-6')
+    expect(wrapper.classes()).toContain('order-4')
     await wrapper.setProps({order: undefined})
-    expect(wrapper.classes()).not.toContain('order-6')
+    expect(wrapper.classes()).not.toContain('order-4')
   })
 
   it('has class align-self-{type} when prop order', async () => {

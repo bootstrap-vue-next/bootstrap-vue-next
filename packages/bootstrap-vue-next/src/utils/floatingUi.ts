@@ -13,7 +13,7 @@ export const resolveBootstrapPlacement = (placement: Placement): string => {
     case 'right':
       return 'end'
     default:
-      return _placement
+      return _placement || 'end'
   }
 }
 export const resolveBootstrapCaret = (placement: Placement): string => {
@@ -28,7 +28,7 @@ export const resolveBootstrapCaret = (placement: Placement): string => {
     case 'bottom':
       return 'down'
     default:
-      return _placement
+      return _placement || 'down'
   }
 }
 

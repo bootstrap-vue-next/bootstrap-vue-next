@@ -87,9 +87,10 @@ export const BootstrapVueNextResolver = Object.assign(
         type: 'component',
         resolve(name) {
           const destination = compImports.get(name)
-          const aliasDestination = compImports.get(aliases[name])
+          const aliasDestination = aliases[name] ? compImports.get(aliases[name]) : undefined
           if (aliasDestination) {
             const val = aliases[name]
+            if (val === undefined) return
             usedComponents.add(val)
             return {
               name: val,

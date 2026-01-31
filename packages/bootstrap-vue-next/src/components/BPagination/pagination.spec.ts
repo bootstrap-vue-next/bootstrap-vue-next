@@ -484,7 +484,8 @@ describe('pagination', () => {
       props: {totalRows: 7, perPage: 1, modelValue: 1},
       attachTo: document.body,
     })
-    await wrapper.find('li.active > button').element?.focus()
+    const ev = wrapper.find('li.active > button')
+    ;(ev.element as HTMLElement | undefined)?.focus?.()
     expect(document.activeElement?.textContent).toBe('1')
     await wrapper.find('ul').trigger('keydown', {code: 'ArrowRight'})
     expect(document.activeElement?.textContent).toBe('2')

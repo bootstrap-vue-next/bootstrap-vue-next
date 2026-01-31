@@ -12,23 +12,11 @@
           <BCarouselSlide :interval="4000" img-src="https://picsum.photos/1024/480/?image=14" />
           <BCarouselSlide img-src="https://picsum.photos/1024/480/?image=15" />
         </BCarousel>
-        <BCarousel
-          id="carousel-1"
-          :interval="4000"
-          controls
-          indicators
-          background="#ababab"
-          img-width="1024"
-          img-height="480"
-          style="text-shadow: 1px 1px 2px #333"
-        >
+        <BCarousel id="carousel-1" :interval="4000" controls indicators background="#ababab" img-width="1024"
+          img-height="480" style="text-shadow: 1px 1px 2px #333">
           <!-- Text slides with image -->
-          <BCarouselSlide
-            active
-            caption="First slide"
-            text="Nulla vitae elit libero, a pharetra augue mollis interdum."
-            img-src="https://picsum.photos/1024/480/?image=52"
-          />
+          <BCarouselSlide active caption="First slide" text="Nulla vitae elit libero, a pharetra augue mollis interdum."
+            img-src="https://picsum.photos/1024/480/?image=52" />
 
           <!-- Slides with custom text -->
           <BCarouselSlide img-src="https://picsum.photos/1024/480/?image=54">
@@ -42,12 +30,7 @@
           <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
           <BCarouselSlide>
             <template #img>
-              <img
-                width="1024"
-                height="480"
-                src="https://picsum.photos/1024/480/?image=55"
-                alt="image slot"
-              />
+              <img width="1024" height="480" src="https://picsum.photos/1024/480/?image=55" alt="image slot" />
             </template>
           </BCarouselSlide>
 
@@ -64,12 +47,7 @@
     <BRow>
       <BCol>
         <BCarousel>
-          <BCarouselSlide
-            v-for="(image, index) in images"
-            :key="index"
-            :img-src="image"
-            img-alt="Image alt text"
-          >
+          <BCarouselSlide v-for="(image, index) in images" :key="index" :img-src="image" img-alt="Image alt text">
             <h1>Image {{ index + 1 }}</h1>
             <p>Some more detailed description or whatever content.</p>
           </BCarouselSlide>
@@ -80,7 +58,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
+import { ref } from 'vue'
 
 const modelValue = ref(0)
 const images = ref(['https://picsum.photos/1024/480/?image=55'])
@@ -103,6 +81,6 @@ const newValue = [
 ]
 
 setTimeout(() => {
-  images.value = [images.value[0], ...newValue]
+  images.value = [images.value[0] ?? '', ...newValue]
 }, 1000)
 </script>

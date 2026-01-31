@@ -483,7 +483,7 @@ describe('modal', () => {
       expect($buttons.length).toBe(1)
 
       // Close button
-      const $close = $buttons.at(0) as DOMWrapper<HTMLButtonElement>
+      const $close = $buttons[0] as DOMWrapper<HTMLButtonElement>
       expect($close.attributes('type')).toBe('button')
       expect($close.attributes('aria-label')).toBe('Close')
       expect($close.classes()).toContain('btn-close')
@@ -543,7 +543,7 @@ describe('modal', () => {
       expect($buttons.length).toBe(1)
 
       // Close button
-      const $close = $buttons.at(0) as DOMWrapper<HTMLButtonElement>
+      const $close = $buttons[0] as DOMWrapper<HTMLButtonElement>
       expect($close.attributes('type')).toBe('button')
       expect($close.attributes('aria-label')).toBe('Close')
       expect($close.classes()).toContain('btn-close')

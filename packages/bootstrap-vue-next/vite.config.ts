@@ -63,7 +63,10 @@ const processDirectory = (dirPath: string, baseDir: string): Record<string, stri
         !file.includes('/node_modules/') &&
         baseName === 'index'
       ) {
-        const key = dirPart ? `${baseDir}/${dirPart}/index` : `${baseDir}/index`
+        let key = dirPart ? `${baseDir}/${dirPart}/index` : `${baseDir}/index`
+        if (key.startsWith('src/')) {
+          key = key.slice(4)
+        }
         acc[key] = resolve(__dirname, relativePath)
       }
 
@@ -74,19 +77,19 @@ const processDirectory = (dirPath: string, baseDir: string): Record<string, stri
 
 const components = {
   ...processDirectory(resolve(__dirname, 'src/components'), 'src/components'),
-  'src/components/index': resolve(__dirname, 'src/components/index.ts'),
+  'components/index': resolve(__dirname, 'src/components/index.ts'),
 }
 const plugins = {
   ...processDirectory(resolve(__dirname, 'src/plugins'), 'src/plugins'),
-  'src/plugins/index': resolve(__dirname, 'src/plugins/index.ts'),
+  'plugins/index': resolve(__dirname, 'src/plugins/index.ts'),
 }
 const directives = {
   ...processDirectory(resolve(__dirname, 'src/directives'), 'src/directives'),
-  'src/directives/index': resolve(__dirname, 'src/directives/index.ts'),
+  'directives/index': resolve(__dirname, 'src/directives/index.ts'),
 }
 const composables = {
   ...processDirectory(resolve(__dirname, 'src/composables'), 'src/composables'),
-  'src/composables/index': resolve(__dirname, 'src/composables/index.ts'),
+  'composables/index': resolve(__dirname, 'src/composables/index.ts'),
 }
 
 export default defineConfig({
@@ -96,13 +99,13 @@ export default defineConfig({
     lib: {
       entry: {
         'bootstrap-vue-next': resolve(__dirname, 'src/index.ts'),
-        'src/resolvers/index': resolve(__dirname, 'src/resolvers/index.ts'),
-        'src/utils/index': resolve(__dirname, 'src/utils/index.ts'),
+        'resolvers/index': resolve(__dirname, 'src/resolvers/index.ts'),
+        'utils/index': resolve(__dirname, 'src/utils/index.ts'),
         ...components,
         ...plugins,
         ...directives,
         ...composables,
-        'src/types/index': resolve(__dirname, 'src/types/index.ts'),
+        'types/index': resolve(__dirname, 'src/types/index.ts'),
       },
       name: 'bootstrap-vue-next',
       fileName: (format, entryName) => {
@@ -133,7 +136,6 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        api: 'modern-compiler',
         charset: false,
         silenceDeprecations: ['mixed-decls', 'color-functions', 'global-builtin', 'import'],
       },
@@ -153,7 +155,7 @@ export default defineConfig({
       outDir: './dist',
       afterBuild: async () => {
         await Promise.all(
-          readFilesInDirectory('./dist/src/')
+          readFilesInDirectory('./dist/')
             .filter((file) => file.endsWith('.d.ts'))
             .map((file) => copyFile(file, file.replace('.d.ts', '.d.mts')))
         )

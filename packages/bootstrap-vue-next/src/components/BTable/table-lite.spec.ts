@@ -146,7 +146,7 @@ describe('btablelite', () => {
       expect($tds.length).toBe(2)
       const text = $tds.map(($td) => $td.text())
       // This doesn't check the structure of the table. Only that it includes the data
-      expect(text.join('')).toBe(Object.values(items[ind]).join('')) // '12' , '34'
+      expect(text.join('')).toBe(Object.values(items[ind] ?? {}).join('')) // '12' , '34'
     })
   })
 
@@ -492,7 +492,7 @@ describe('btablelite', () => {
         props: {
           'items': [item],
           'expandedItems': [item],
-          'onUpdate:expandedItems': (e: (typeof item)[]) => wrapper.setProps({expandedItems: e}),
+          'onUpdate:expandedItems': (e) => wrapper.setProps({expandedItems: e}),
           fields,
         },
         slots: {

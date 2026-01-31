@@ -6,127 +6,127 @@
   "license": "MIT",
   "main": "./dist/bootstrap-vue-next.umd.js",
   "module": "./dist/bootstrap-vue-next.mjs",
-  "types": "./dist/src/index.d.mts",
+  "types": "./dist/index.d.mts",
   "style": "./dist/bootstrap-vue-next.css",
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/src/index.d.mts",
+        "types": "./dist/index.d.mts",
         "default": "./dist/bootstrap-vue-next.mjs"
       },
       "require": {
-        "types": "./dist/src/index.d.ts",
+        "types": "./dist/index.d.ts",
         "default": "./dist/bootstrap-vue-next.umd.js"
       }
     },
     "./components": {
       "import": {
-        "types": "./dist/src/components/index.d.mts",
-        "default": "./dist/src/components/index.mjs"
+        "types": "./dist/components/index.d.mts",
+        "default": "./dist/components/index.mjs"
       },
       "require": {
-        "types": "./dist/src/components/index.d.ts",
-        "default": "./dist/src/components/index.umd.js"
+        "types": "./dist/components/index.d.ts",
+        "default": "./dist/components/index.umd.js"
       }
     },
     "./components/*": {
       "import": {
-        "types": "./dist/src/components/*/index.d.mts",
-        "default": "./dist/src/components/*/index.mjs"
+        "types": "./dist/components/*/index.d.mts",
+        "default": "./dist/components/*/index.mjs"
       },
       "require": {
-        "types": "./dist/src/components/*/index.d.ts",
-        "default": "./dist/src/components/*/index.umd.js"
+        "types": "./dist/components/*/index.d.ts",
+        "default": "./dist/components/*/index.umd.js"
       }
     },
     "./directives": {
       "import": {
-        "types": "./dist/src/directives/index.d.mts",
-        "default": "./dist/src/directives/index.mjs"
+        "types": "./dist/directives/index.d.mts",
+        "default": "./dist/directives/index.mjs"
       },
       "require": {
-        "types": "./dist/src/directives/index.d.ts",
-        "default": "./dist/src/directives/index.umd.js"
+        "types": "./dist/directives/index.d.ts",
+        "default": "./dist/directives/index.umd.js"
       }
     },
     "./directives/*": {
       "import": {
-        "types": "./dist/src/directives/*/index.d.mts",
-        "default": "./dist/src/directives/*/index.mjs"
+        "types": "./dist/directives/*/index.d.mts",
+        "default": "./dist/directives/*/index.mjs"
       },
       "require": {
-        "types": "./dist/src/directives/*/index.d.ts",
-        "default": "./dist/src/directives/*/index.umd.js"
+        "types": "./dist/directives/*/index.d.ts",
+        "default": "./dist/directives/*/index.umd.js"
       }
     },
     "./plugins": {
       "import": {
-        "types": "./dist/src/plugins/index.d.mts",
-        "default": "./dist/src/plugins/index.mjs"
+        "types": "./dist/plugins/index.d.mts",
+        "default": "./dist/plugins/index.mjs"
       },
       "require": {
-        "types": "./dist/src/plugins/index.d.ts",
-        "default": "./dist/src/plugins/index.umd.js"
+        "types": "./dist/plugins/index.d.ts",
+        "default": "./dist/plugins/index.umd.js"
       }
     },
     "./plugins/*": {
       "import": {
-        "types": "./dist/src/plugins/*/index.d.mts",
-        "default": "./dist/src/plugins/*/index.mjs"
+        "types": "./dist/plugins/*/index.d.mts",
+        "default": "./dist/plugins/*/index.mjs"
       },
       "require": {
-        "types": "./dist/src/plugins/*/index.d.ts",
-        "default": "./dist/src/plugins/*/index.umd.js"
+        "types": "./dist/plugins/*/index.d.ts",
+        "default": "./dist/plugins/*/index.umd.js"
       }
     },
     "./composables": {
       "import": {
-        "types": "./dist/src/composables/index.d.mts",
-        "default": "./dist/src/composables/index.mjs"
+        "types": "./dist/composables/index.d.mts",
+        "default": "./dist/composables/index.mjs"
       },
       "require": {
-        "types": "./dist/src/composables/index.d.ts",
-        "default": "./dist/src/composables/index.umd.js"
+        "types": "./dist/composables/index.d.ts",
+        "default": "./dist/composables/index.umd.js"
       }
     },
     "./composables/*": {
       "import": {
-        "types": "./dist/src/composables/*/index.d.mts",
-        "default": "./dist/src/composables/*/index.mjs"
+        "types": "./dist/composables/*/index.d.mts",
+        "default": "./dist/composables/*/index.mjs"
       },
       "require": {
-        "types": "./dist/src/composables/*/index.d.ts",
-        "default": "./dist/src/composables/*/index.umd.js"
+        "types": "./dist/composables/*/index.d.ts",
+        "default": "./dist/composables/*/index.umd.js"
       }
     },
     "./resolvers": {
       "import": {
-        "types": "./dist/src/resolvers/index.d.mts",
-        "default": "./dist/src/resolvers/index.mjs"
+        "types": "./dist/resolvers/index.d.mts",
+        "default": "./dist/resolvers/index.mjs"
       },
       "require": {
-        "types": "./dist/src/resolvers/index.d.ts",
-        "default": "./dist/src/resolvers/index.umd.js"
+        "types": "./dist/resolvers/index.d.ts",
+        "default": "./dist/resolvers/index.umd.js"
       }
     },
     "./utils": {
       "import": {
-        "types": "./dist/src/utils/index.d.mts",
-        "default": "./dist/src/utils/index.mjs"
+        "types": "./dist/utils/index.d.mts",
+        "default": "./dist/utils/index.mjs"
       },
       "require": {
-        "types": "./dist/src/utils/index.d.ts",
-        "default": "./dist/src/utils/index.umd.js"
+        "types": "./dist/utils/index.d.ts",
+        "default": "./dist/utils/index.umd.js"
       }
     },
     "./types": {
       "import": {
-        "types": "./dist/src/types/index.d.mts",
-        "default": "./dist/src/types/index.mjs"
+        "types": "./dist/types/index.d.mts",
+        "default": "./dist/types/index.mjs"
       },
       "require": {
-        "types": "./dist/src/types/index.d.ts",
-        "default": "./dist/src/types/index.umd.js"
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/types/index.umd.js"
       }
     },
     "./dist/bootstrap-vue-next.css": "./dist/bootstrap-vue-next.css",

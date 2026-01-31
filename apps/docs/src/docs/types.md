@@ -656,7 +656,7 @@ We need to create a declaration file in the root of vue project.
 
 import 'bootstrap-vue-next'
 
-declare module 'bootstrap-vue-next/dist/src/types' {
+declare module 'bootstrap-vue-next/dist/types' {
   export interface BaseColorVariant {
     purple: unknown // we use unknown type because it does not matter here
   }

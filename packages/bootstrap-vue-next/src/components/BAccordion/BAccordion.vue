@@ -18,15 +18,15 @@ import {
   type VNode,
   watch,
 } from 'vue'
-import {accordionInjectionKey} from '../../utils/keys'
-import {useId} from '../../composables/useId'
-import {useDefaults} from '../../composables/useDefaults'
-import type {BAccordionProps} from '../../types/ComponentProps'
-import {flattenFragments} from '../../utils/flattenFragments'
+import { accordionInjectionKey } from '../../utils/keys'
+import { useId } from '../../composables/useId'
+import { useDefaults } from '../../composables/useDefaults'
+import type { BAccordionProps } from '../../types/ComponentProps'
+import { flattenFragments } from '../../utils/flattenFragments'
 import BAccordionItem from './BAccordionItem.vue'
-import {sortSlotElementsByPosition} from '../../utils/dom'
-import type {BAccordionSlots} from '../../types'
-import {isReadOnlyArray} from '../../utils/object'
+import { sortSlotElementsByPosition } from '../../utils/dom'
+import type { BAccordionSlots } from '../../types'
+import { isReadOnlyArray } from '../../utils/object'
 
 const _props = withDefaults(defineProps<Omit<BAccordionProps, 'modelValue' | 'index'>>(), {
   flush: false,
@@ -97,7 +97,7 @@ const sortAccordionItems = () => {
     }
   } else if (index.value !== undefined) {
     modelValue.value = isReadOnlyArray(index.value)
-      ? index.value.map((idx) => accordionItems.value[idx]?.id)
+      ? index.value.map((idx) => accordionItems.value[idx]?.id).filter((id): id is string => id !== undefined)
       : accordionItems.value[index.value]?.id
   }
 }
@@ -124,7 +124,7 @@ watch(index, (newValue, oldValue) => {
 
   if (!props.free) {
     const idx = !isReadOnlyArray(index.value) ? index.value : index.value?.[0]
-    if (accordionItems.value[idx]?.id) {
+    if (idx !== undefined && accordionItems.value[idx]?.id) {
       if (modelValue.value !== accordionItems.value[idx]?.id) {
         modelValue.value = accordionItems.value[idx]?.id
       }
@@ -136,7 +136,7 @@ watch(index, (newValue, oldValue) => {
   } else {
     // free mode
     if (isReadOnlyArray(index.value)) {
-      const newValue = index.value.map((item) => accordionItems.value[item]?.id)
+      const newValue = index.value.map((item) => accordionItems.value[item]?.id).filter((id): id is string => id !== undefined)
       if (!areEqual(newValue, modelValue.value)) {
         modelValue.value = newValue
       }
@@ -202,7 +202,7 @@ watch(
       }
     }
   },
-  {deep: true}
+  { deep: true }
 )
 
 watch(
@@ -261,7 +261,7 @@ provide(accordionInjectionKey, {
     }
   },
   registerAccordionItem: (id: string, el: Readonly<ShallowRef<HTMLElement | null>>) => {
-    accordionItems.value = [...accordionItems.value, {id, el}]
+    accordionItems.value = [...accordionItems.value, { id, el }]
     if (accordionItems.value.length === itemElementsArray.value.length) {
       sortAccordionItems()
     }

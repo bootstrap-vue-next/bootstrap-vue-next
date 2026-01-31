@@ -50,7 +50,7 @@ describe('BFormSelect', () => {
   it('applies modelValue correctly during initial render (SSR simulation)', () => {
     const wrapper = mount(BFormSelect, {
       props: {
-        modelValue: 'two',
+        modelValue: 'two' as any,
         options: ['one', 'two', 'three'],
       },
     })
@@ -71,7 +71,7 @@ describe('BFormSelect', () => {
   it('applies modelValue correctly with object options during initial render', () => {
     const wrapper = mount(BFormSelect, {
       props: {
-        modelValue: 2,
+        modelValue: 2 as any,
         options: [
           {value: 1, text: 'One'},
           {value: 2, text: 'Two'},
@@ -94,7 +94,7 @@ describe('BFormSelect', () => {
   it('applies modelValue correctly with option groups during initial render', () => {
     const wrapper = mount(BFormSelect, {
       props: {
-        modelValue: 'two',
+        modelValue: 'two' as any,
         options: [
           {
             label: 'Group 1',
@@ -123,11 +123,11 @@ describe('BFormSelect', () => {
   })
 
   it('updates modelValue when option is selected', async () => {
-    let modelValue = 'one'
+    let modelValue: any = 'one'
     const wrapper = mount(BFormSelect, {
       props: {
         modelValue,
-        'onUpdate:modelValue': (value: string) => {
+        'onUpdate:modelValue': (value: any) => {
           modelValue = value
         },
         'options': ['one', 'two', 'three'],
@@ -199,7 +199,7 @@ describe('BFormSelect', () => {
         options: [
           {'value': 1, 'text': 'One', 'data-test': 'test-value'},
           {'value': 2, 'text': 'Two', 'data-id': '123'},
-          {'value': 3, 'text': 'Three'},
+          {value: 3, text: 'Three'},
         ],
       },
     })
@@ -219,7 +219,7 @@ describe('BFormSelect', () => {
             label: 'Group 1',
             options: [
               {'value': 1, 'text': 'One', 'class': 'group-class', 'data-group': '1'},
-              {'value': 2, 'text': 'Two', 'class': 'group-class'},
+              {value: 2, text: 'Two', class: 'group-class'},
             ],
           },
         ],

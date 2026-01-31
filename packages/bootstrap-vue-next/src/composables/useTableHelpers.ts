@@ -246,7 +246,9 @@ export const useTableMapper = <Item>({
       // Multi-sort
       return mappedItems.sort((a, b) => {
         for (let i = 0; i < sortByItems.length; i++) {
-          const {key, order} = sortByItems[i]
+          const sortByItem = sortByItems[i]
+          if (sortByItem === undefined) continue
+          const {key, order} = sortByItem
           const field = fieldByKey.value.get(key)
           const comparer = field?.sortCompare || sortCompareValue
           const comparison = comparer
@@ -396,7 +398,8 @@ export const useTableSelectedItems = <Item>({
         }
         // This is where range is different, due to the difference in shift
       } else if (shiftClicked) {
-        const lastSelectedItem = selectedItems.value.at(-1)
+        const lastSelectedItem = selectedItems.value[selectedItems.value.length - 1]
+        if (lastSelectedItem === undefined) return
         const lastSelectedIndex = allItemsResolved.value.findIndex(
           (i) => utils.get(i) === lastSelectedItem
         )
