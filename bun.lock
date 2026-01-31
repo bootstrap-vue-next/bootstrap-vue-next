@@ -142,7 +142,6 @@
       "version": "0.42.0",
       "dependencies": {
         "@nuxt/kit": "^4.3.0",
-        "bootstrap-vue-next": "latest",
       },
       "devDependencies": {
         "@nuxt/devtools": "^3.1.1",
@@ -152,6 +151,7 @@
         "@nuxt/test-utils": "^3.23.0",
         "@types/node": "^24.10.9",
         "@vue/eslint-config-prettier": "^10.2.0",
+        "bootstrap-vue-next": "workspace:^",
         "eslint": "^9.39.2",
         "eslint-define-config": "^2.1.0",
         "npm-run-all2": "^8.0.4",
@@ -164,7 +164,7 @@
         "vue-tsc": "^3.2.4",
       },
       "peerDependencies": {
-        "bootstrap-vue-next": "latest",
+        "bootstrap-vue-next": "workspace:^",
       },
     },
   },
@@ -2260,8 +2260,6 @@
     "@babel/helper-compilation-targets/semver": ["semver@6.3.1", "", { "bin": { "semver": "bin/semver.js" } }, "sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA=="],
 
     "@babel/helper-create-class-features-plugin/semver": ["semver@6.3.1", "", { "bin": { "semver": "bin/semver.js" } }, "sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA=="],
-
-    "@bootstrap-vue-next/nuxt/bootstrap-vue-next": ["bootstrap-vue-next@0.42.0", "", { "peerDependencies": { "@floating-ui/vue": "*", "@vueuse/core": "*", "vue": "^3.5.13", "vue-router": "*" }, "optionalPeers": ["@floating-ui/vue", "@vueuse/core", "vue-router"] }, "sha512-CSkk2jL8Y2U9zgdutxjbBx4DRhKFmxTmaTQhhMYXVvczkVksw2mzRu1MU//950z0lvUwSqJo3R7y0opoyEA8zg=="],
 
     "@eslint-community/eslint-utils/eslint-visitor-keys": ["eslint-visitor-keys@3.4.3", "", {}, "sha512-wpc+LXeiyiisxPlEkUzU6svyS1frIO3Mgxj1fdy7Pm8Ygzguax2N3Fa/D/ag1WqbOprdI+uY6wMUl8/a2G+iag=="],
 
