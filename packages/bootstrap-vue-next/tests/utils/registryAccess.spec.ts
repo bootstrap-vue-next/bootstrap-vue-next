@@ -1,5 +1,5 @@
 import {describe, expect, it} from 'vitest'
-import {type ComponentInternalInstance, readonly, ref} from 'vue'
+import {type ComponentInternalInstance, readonly, type Ref, ref} from 'vue'
 import {getActiveShowHide, getShowHideValue} from '../../src/utils/registryAccess'
 import type {RegisterShowHideInstances, RegisterShowHideMapValue} from '../../src/utils/keys'
 
@@ -40,7 +40,9 @@ describe('registryAccess', () => {
 
     it('returns the active instance for an id', () => {
       const instance = createMockInstance(1)
-      const registry = ref(new Map([['test-id', createRegistryHolder([instance])]]))
+      const registry: Ref<Map<string, RegisterShowHideInstances>> = ref(
+        new Map([['test-id', createRegistryHolder([instance])]])
+      ) as unknown as Ref<Map<string, RegisterShowHideInstances>>
 
       const result = getActiveShowHide(registry, 'test-id')
       expect(result).toBeDefined()
@@ -49,7 +51,9 @@ describe('registryAccess', () => {
 
     it('works with simplified BToggle pattern (no ternary needed)', () => {
       const instance = createMockInstance(1)
-      const registry = ref(new Map([['test-id', createRegistryHolder([instance])]]))
+      const registry = ref(
+        new Map([['test-id', createRegistryHolder([instance])]])
+      ) as unknown as Ref<Map<string, RegisterShowHideInstances>>
 
       // Old: showHideMap ? getActiveShowHide(showHideMap.value, id) : undefined
       // New: getActiveShowHide(showHideMap, id)
@@ -59,7 +63,9 @@ describe('registryAccess', () => {
 
     it('works with simplified useToggle pattern (no || null needed)', () => {
       const instance = createMockInstance(1)
-      const registry = ref(new Map([['test-id', createRegistryHolder([instance])]]))
+      const registry = ref(
+        new Map([['test-id', createRegistryHolder([instance])]])
+      ) as unknown as Ref<Map<string, RegisterShowHideInstances>>
 
       // Old: componentId ? getActiveShowHide(registry.value, componentId) || null : null
       // New: getActiveShowHide(registry, componentId)
@@ -80,14 +86,18 @@ describe('registryAccess', () => {
 
     it('returns the shown value when instance exists', () => {
       const instance = createMockInstance(1, true)
-      const registry = ref(new Map([['test-id', createRegistryHolder([instance])]]))
+      const registry = ref(
+        new Map([['test-id', createRegistryHolder([instance])]])
+      ) as unknown as Ref<Map<string, RegisterShowHideInstances>>
 
       expect(getShowHideValue(registry, 'test-id')).toBe(true)
     })
 
     it('works with simplified BNavbarToggle pattern (no .value needed)', () => {
       const instance = createMockInstance(1, true)
-      const registry = ref(new Map([['navbar-collapse', createRegistryHolder([instance])]]))
+      const registry = ref(
+        new Map([['navbar-collapse', createRegistryHolder([instance])]])
+      ) as unknown as Ref<Map<string, RegisterShowHideInstances>>
 
       // Old: getShowHideValue(showHideData.values.value, props.target)
       // New: getShowHideValue(showHideData.values, props.target)

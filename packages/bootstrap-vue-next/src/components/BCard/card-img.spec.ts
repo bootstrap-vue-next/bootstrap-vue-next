@@ -119,6 +119,6 @@ describe('card-img', () => {
     const $img = wrapper.getComponent(BImg)
     await $img.trigger('load')
     const emitted = wrapper.emitted('load') ?? []
-    expect(emitted[0][0] instanceof Event).toBe(true)
+    expect(emitted[0]![0]! instanceof Event).toBe(true)
   })
 })

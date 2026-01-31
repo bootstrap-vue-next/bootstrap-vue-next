@@ -1,41 +1,16 @@
 <template>
-  <ul
-    class="pagination"
-    :class="computedWrapperClasses"
-    role="menubar"
-    :aria-disabled="props.disabled"
-    :aria-label="props.ariaLabel || undefined"
-    @keydown="handleKeyNav"
-  >
-    <li
-      v-for="(page, index) in pages"
-      :key="`page-${page.id}`"
-      v-bind="page.li"
-      ref="_pageElements"
-      :displayIndex="index"
-    >
-      <span
-        v-if="page.id === FIRST_ELLIPSIS || page.id === LAST_ELLIPSIS"
-        v-bind="ellipsisProps.span"
-      >
+  <ul class="pagination" :class="computedWrapperClasses" role="menubar" :aria-disabled="props.disabled"
+    :aria-label="props.ariaLabel || undefined" @keydown="handleKeyNav">
+    <li v-for="(page, index) in pages" :key="`page-${page.id}`" v-bind="page.li" ref="_pageElements"
+      :displayIndex="index">
+      <span v-if="page.id === FIRST_ELLIPSIS || page.id === LAST_ELLIPSIS" v-bind="ellipsisProps.span">
         <slot name="ellipsis-text">
           {{ props.ellipsisText || '...' }}
         </slot>
       </span>
-      <component
-        v-bind="page.button"
-        :is="page.button.is"
-        v-else-if="'button' in page"
-        @click="page.clickHandler"
-      >
-        <slot
-          :name="page.text.name"
-          :disabled="page.text.disabled"
-          :page="page.text.page"
-          :index="page.text.index"
-          :active="page.text.active ?? false"
-          :content="page.text.value"
-        >
+      <component v-bind="page.button" :is="page.button.is" v-else-if="'button' in page" @click="page.clickHandler">
+        <slot :name="page.text.name" :disabled="page.text.disabled" :page="page.text.page" :index="page.text.index"
+          :active="page.text.active ?? false" :content="page.text.value">
           {{ page.text.value }}
         </slot>
       </component>
@@ -44,17 +19,17 @@
 </template>
 
 <script setup lang="ts">
-import {BvEvent} from '../../utils'
-import {computed, nextTick, useTemplateRef, watch} from 'vue'
-import type {BPaginationProps} from '../../types/ComponentProps'
-import {useAlignment} from '../../composables/useAlignment'
-import {useToNumber} from '@vueuse/core'
-import {useDefaults} from '../../composables/useDefaults'
-import type {ClassValue} from '../../types/AnyValuedAttributes'
-import {CODE_DOWN, CODE_LEFT, CODE_RIGHT, CODE_UP} from '../../utils/constants'
-import {stopEvent} from '../../utils/event'
-import {getActiveElement} from '../../utils/dom'
-import {type BPaginationEmits, type BPaginationSlots} from '../../types'
+import { BvEvent } from '../../utils'
+import { computed, nextTick, useTemplateRef, watch } from 'vue'
+import type { BPaginationProps } from '../../types/ComponentProps'
+import { useAlignment } from '../../composables/useAlignment'
+import { useToNumber } from '@vueuse/core'
+import { useDefaults } from '../../composables/useDefaults'
+import type { ClassValue } from '../../types/AnyValuedAttributes'
+import { CODE_DOWN, CODE_LEFT, CODE_RIGHT, CODE_UP } from '../../utils/constants'
+import { stopEvent } from '../../utils/event'
+import { getActiveElement } from '../../utils/dom'
+import { type BPaginationEmits, type BPaginationSlots } from '../../types'
 
 // Threshold of limit size when we start/stop showing ellipsis
 const ELLIPSIS_THRESHOLD = 3
@@ -107,10 +82,10 @@ const modelValue = defineModel<Exclude<BPaginationProps['modelValue'], undefined
 
 const pageElements = useTemplateRef('_pageElements')
 
-const limitNumber = useToNumber(() => props.limit, {nanToZero: true, method: 'parseInt'})
-const perPageNumber = useToNumber(() => props.perPage, {nanToZero: true, method: 'parseInt'})
-const totalRowsNumber = useToNumber(() => props.totalRows, {nanToZero: true, method: 'parseInt'})
-const modelValueNumber = useToNumber(modelValue, {nanToZero: true, method: 'parseInt'})
+const limitNumber = useToNumber(() => props.limit, { nanToZero: true, method: 'parseInt' })
+const perPageNumber = useToNumber(() => props.perPage, { nanToZero: true, method: 'parseInt' })
+const totalRowsNumber = useToNumber(() => props.totalRows, { nanToZero: true, method: 'parseInt' })
+const modelValueNumber = useToNumber(modelValue, { nanToZero: true, method: 'parseInt' })
 
 const perPageSanitized = computed(() => Math.max(perPageNumber.value || DEFAULT_PER_PAGE, 1))
 const totalRowsSanitized = computed(() => Math.max(totalRowsNumber.value || DEFAULT_TOTAL_ROWS, 0))
@@ -180,7 +155,7 @@ const getBaseButtonProps = ({
   },
   button: {
     'is': disabled ? 'span' : 'button',
-    'class': ['page-link', 'text-center', {'flex-grow-1': !disabled && computedFill.value}],
+    'class': ['page-link', 'text-center', { 'flex-grow-1': !disabled && computedFill.value }],
     'aria-label': label,
     'aria-controls': props.ariaControls || undefined,
     'aria-disabled': disabled ? true : undefined,
@@ -216,7 +191,7 @@ const getButtonProps = ({
   slotName: 'first-text' | 'prev-text' | 'next-text' | 'last-text' | 'page'
   textValue?: string
   label: string
-}) => getBaseButtonProps({page, classVal, disabled, slotName, textValue, label, tabIndex: '-1'})
+}) => getBaseButtonProps({ page, classVal, disabled, slotName, textValue, label, tabIndex: '-1' })
 
 const getPageButtonProps = (page: number, isSmHidden?: boolean) =>
   getBaseButtonProps({
@@ -348,11 +323,11 @@ const getButtons = (): HTMLButtonElement[] =>
     )
     .map((page) => page.children[0])
     .filter((el) => {
-      if (el.getAttribute('display') === 'none' || el.tagName.toUpperCase() !== 'BUTTON') {
+      if (el?.getAttribute('display') === 'none' || el?.tagName.toUpperCase() !== 'BUTTON') {
         return false
       }
 
-      const bcr = el.getBoundingClientRect()
+      const bcr = el?.getBoundingClientRect()
 
       return !!(bcr && bcr.height > 0 && bcr.width > 0)
     })
@@ -370,8 +345,9 @@ const focusPrev = () => {
     const buttons = getButtons()
     const index = buttons.indexOf(getActiveElement() as HTMLButtonElement)
 
-    if (index > 0 && !isDisabled(buttons[index - 1])) {
-      buttons[index - 1]?.focus()
+    const button = buttons[index - 1]
+    if (index > 0 && button !== undefined && !isDisabled(button)) {
+      button.focus()
     }
   })
 }
@@ -389,14 +365,15 @@ const focusNext = () => {
   nextTick(() => {
     const buttons = getButtons()
     const index = buttons.indexOf(getActiveElement() as HTMLButtonElement)
-    if (index < buttons.length - 1 && !isDisabled(buttons[index + 1])) {
+    const button = buttons[index + 1]
+    if (index < buttons.length - 1 && button !== undefined && !isDisabled(button)) {
       buttons[index + 1]?.focus()
     }
   })
 }
 
 const handleKeyNav = (event: KeyboardEvent) => {
-  const {code, shiftKey} = event
+  const { code, shiftKey } = event
   if (code === CODE_LEFT || code === CODE_UP) {
     stopEvent(event)
     if (shiftKey) {
@@ -435,35 +412,41 @@ const lastPage = computed(() => (props.lastNumber ? 1 : 0))
 const halfLimit = computed(() => Math.floor(limitNumber.value / 2))
 
 const pages = computed(() => {
-  const {value} = computedModelValue
+  const { value } = computedModelValue
 
   const els = elements.value.map((p) => {
     switch (p) {
       case FIRST_BUTTON:
-        return {id: p, ...firstButtonProps.value}
+        return { id: p, ...firstButtonProps.value }
       case PREV_BUTTON:
-        return {id: p, ...prevButtonProps.value}
+        return { id: p, ...prevButtonProps.value }
       case NEXT_BUTTON:
-        return {id: p, ...nextButtonProps.value}
+        return { id: p, ...nextButtonProps.value }
       case LAST_BUTTON:
-        return {id: p, ...lastButtonProps.value}
+        return { id: p, ...lastButtonProps.value }
       case FIRST_ELLIPSIS:
       case LAST_ELLIPSIS:
-        return {id: p, ...ellipsisProps.value}
+        return { id: p, ...ellipsisProps.value }
       default:
-        return {id: p, ...getPageButtonProps(p)}
+        return { id: p, ...getPageButtonProps(p) }
     }
   })
 
   if (numberOfPages.value > 3) {
     if (value > numberOfPages.value - halfLimit.value - lastPage.value) {
       const idx = 2 + showFirstButton.value
-      els[idx] = {id: els[idx].id, ...getPageButtonProps(els[idx].id, true)}
+      const el = els[idx]
+      if (el !== undefined) {
+        els[idx] = { id: el.id, ...getPageButtonProps(el.id, true) }
+      }
     }
 
     if (value <= halfLimit.value + firstPage.value) {
       const idx = els.length - (3 + showLastButton.value)
-      els[idx] = {id: els[idx].id, ...getPageButtonProps(els[idx].id, true)}
+      const el = els[idx]
+      if (el !== undefined) {
+        els[idx] = { id: el.id, ...getPageButtonProps(el.id, true) }
+      }
     }
   }
 
@@ -476,7 +459,7 @@ const elements = computed(() => {
   // iterates over the array.
 
   const pages = numberOfPages.value
-  const {value} = computedModelValue
+  const { value } = computedModelValue
   const limit = limitNumber.value
   const noEllipsis = props.noEllipsis || limit <= ELLIPSIS_THRESHOLD
 
@@ -488,7 +471,7 @@ const elements = computed(() => {
     return [
       !firstPage.value && !noFirstButton.value ? FIRST_BUTTON : null,
       PREV_BUTTON,
-      ...Array.from({length: pages}, (_, index) => index + 1),
+      ...Array.from({ length: pages }, (_, index) => index + 1),
       NEXT_BUTTON,
       !lastPage.value && !noLastButton.value ? LAST_BUTTON : null,
     ].filter((x) => x !== null) as number[]
@@ -497,7 +480,7 @@ const elements = computed(() => {
   // All of the remaining cases result in an array that is exactly limit + 4 - noEndButtons * 2 in length, so create
   //  the array upfront and set up the beginning and end buttons, then fill the rest for each case
 
-  const buttons = Array.from({length: limit + 4 - (noFirstButton.value + noLastButton.value)})
+  const buttons = Array.from({ length: limit + 4 - (noFirstButton.value + noLastButton.value) })
   if (!noFirstButton.value) {
     if (!firstPage.value) {
       buttons[0] = FIRST_BUTTON

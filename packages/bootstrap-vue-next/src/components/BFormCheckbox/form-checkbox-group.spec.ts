@@ -75,9 +75,9 @@ describe('form-checkbox-group', () => {
         },
       })
       const checkboxes = wrapper.findAllComponents(BFormCheckbox)
-      expect(checkboxes[0].text()).toBe('foo')
-      expect(checkboxes[1].text()).toBe('foo')
-      expect(checkboxes[2].text()).toBe('foo')
+      expect(checkboxes[0]!.text()).toBe('foo')
+      expect(checkboxes[1]!.text()).toBe('foo')
+      expect(checkboxes[2]!.text()).toBe('foo')
     })
   })
 
@@ -106,10 +106,10 @@ describe('form-checkbox-group', () => {
 
       const checkboxes = wrapper.findAll('input[type="checkbox"]')
       expect(checkboxes).toHaveLength(3)
-      expect((checkboxes[0].element as HTMLInputElement).value).toBe('1')
-      expect((checkboxes[1].element as HTMLInputElement).value).toBe('2')
-      expect((checkboxes[1].element as HTMLInputElement).disabled).toBe(true)
-      expect((checkboxes[2].element as HTMLInputElement).value).toBe('3')
+      expect((checkboxes[0]!.element as HTMLInputElement).value).toBe('1')
+      expect((checkboxes[1]!.element as HTMLInputElement).value).toBe('2')
+      expect((checkboxes[1]!.element as HTMLInputElement).disabled).toBe(true)
+      expect((checkboxes[2]!.element as HTMLInputElement).value).toBe('3')
     })
 
     it('works with API response types', async () => {
@@ -134,8 +134,8 @@ describe('form-checkbox-group', () => {
 
       const checkboxes = wrapper.findAll('input[type="checkbox"]')
       expect(checkboxes).toHaveLength(2)
-      expect((checkboxes[0].element as HTMLInputElement).value).toBe('usr_001')
-      expect((checkboxes[1].element as HTMLInputElement).value).toBe('usr_002')
+      expect((checkboxes[0]!.element as HTMLInputElement).value).toBe('usr_001')
+      expect((checkboxes[1]!.element as HTMLInputElement).value).toBe('usr_002')
     })
 
     it('works with enum value types', async () => {
@@ -166,9 +166,9 @@ describe('form-checkbox-group', () => {
 
       const checkboxes = wrapper.findAll('input[type="checkbox"]')
       expect(checkboxes).toHaveLength(3)
-      expect((checkboxes[0].element as HTMLInputElement).value).toBe('admin')
-      expect((checkboxes[1].element as HTMLInputElement).value).toBe('editor')
-      expect((checkboxes[2].element as HTMLInputElement).value).toBe('viewer')
+      expect((checkboxes[0]!.element as HTMLInputElement).value).toBe('admin')
+      expect((checkboxes[1]!.element as HTMLInputElement).value).toBe('editor')
+      expect((checkboxes[2]!.element as HTMLInputElement).value).toBe('viewer')
     })
 
     it('properly handles v-model with typed values', async () => {
@@ -188,11 +188,11 @@ describe('form-checkbox-group', () => {
       })
 
       const checkboxes = wrapper.findAll('input[type="checkbox"]')
-      expect((checkboxes[0].element as HTMLInputElement).checked).toBe(true)
-      expect((checkboxes[1].element as HTMLInputElement).checked).toBe(false)
-      expect((checkboxes[2].element as HTMLInputElement).checked).toBe(true)
+      expect((checkboxes[0]!.element as HTMLInputElement).checked).toBe(true)
+      expect((checkboxes[1]!.element as HTMLInputElement).checked).toBe(false)
+      expect((checkboxes[2]!.element as HTMLInputElement).checked).toBe(true)
 
-      await checkboxes[1].setValue(true)
+      await checkboxes[1]!.setValue(true)
       const emitted = wrapper.emitted('update:modelValue')
       expect(emitted).toBeTruthy()
       expect(emitted?.[0]?.[0]).toEqual(expect.arrayContaining([1, 2, 3]))

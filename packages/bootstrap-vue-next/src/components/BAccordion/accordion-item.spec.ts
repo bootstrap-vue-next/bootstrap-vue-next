@@ -26,21 +26,21 @@ describe('accordion-item', () => {
   it('b-collapse contains static class accordion-collapse', () => {
     const wrapper = mount(BAccordionItem)
     const [, , , $bcollapse] = wrapper.findComponent(BCollapse).findAll('*')
-    expect($bcollapse.classes()).toContain('accordion-collapse')
+    expect($bcollapse!.classes()).toContain('accordion-collapse')
   })
 
   it('b-collapse has child div', () => {
     const wrapper = mount(BAccordionItem)
     const $bcollapse = wrapper.findComponent(BCollapse)
     const [$div] = $bcollapse.findAll('div')
-    expect($div.exists()).toBe(true)
+    expect($div!.exists()).toBe(true)
   })
 
   it('b-collapse child div contains static class accordion-body', () => {
     const wrapper = mount(BAccordionItem)
     const $bcollapse = wrapper.findComponent(BCollapse)
     const [, $div] = $bcollapse.findAll('div')
-    expect($div.classes()).toContain('accordion-body')
+    expect($div!.classes()).toContain('accordion-body')
   })
 
   it('b-collapse child div contains default slot', () => {
@@ -49,13 +49,13 @@ describe('accordion-item', () => {
     })
     const $bcollapse = wrapper.findComponent(BCollapse)
     const [$div] = $bcollapse.findAll('div')
-    expect($div.text()).toBe('foobar')
+    expect($div!.text()).toBe('foobar')
   })
 
   it('b-collapse has id attr has default id', () => {
     const wrapper = mount(BAccordionItem)
     const [$bcollapse] = wrapper.findComponent(BCollapse).findAll('*')
-    expect($bcollapse.attributes('id')).toBeDefined()
+    expect($bcollapse!.attributes('id')).toBeDefined()
   })
 
   it('b-collapse has id attr has prop id', () => {
@@ -63,7 +63,7 @@ describe('accordion-item', () => {
       props: {id: 'spam&eggs'},
     })
     const [, , , $bcollapse] = wrapper.findComponent(BCollapse).findAll('*')
-    expect($bcollapse.attributes('id')).toBe('spam&eggs')
+    expect($bcollapse!.attributes('id')).toBe('spam&eggs')
   })
 
   it('b-collapse has prop visible', async () => {
@@ -81,7 +81,7 @@ describe('accordion-item', () => {
       props: {id: 'foobar'},
     })
     const [, , , $bcollapse] = wrapper.findComponent(BCollapse).findAll('*')
-    expect($bcollapse.attributes('aria-labelledby')).toBe('foobar-heading')
+    expect($bcollapse!.attributes('aria-labelledby')).toBe('foobar-heading')
   })
 
   it('headerTag is h2 by default', () => {

@@ -2,7 +2,7 @@ import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {ref} from 'vue'
 import {afterEach, describe, expect, it} from 'vitest'
 import BTab from './BTab.vue'
-import {tabsInjectionKey} from '../../utils'
+import {tabsInjectionKey} from '../../utils/keys'
 
 describe.skip('tab', () => {
   enableAutoUnmount(afterEach)

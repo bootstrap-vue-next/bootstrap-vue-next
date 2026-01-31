@@ -165,7 +165,7 @@ describe('pagination', () => {
     })
     const buttons = wrapper.findAll('li')
     const ellipses = buttons[buttons.length - 2]
-    expect(ellipses.attributes('role')).toBe('separator')
+    expect(ellipses!.attributes('role')).toBe('separator')
   })
 
   it('has start ellipses in correct place when noGotoEndButtons="true"', () => {
@@ -174,7 +174,7 @@ describe('pagination', () => {
     })
     const buttons = wrapper.findAll('li')
     const [, ellipses] = buttons
-    expect(ellipses.attributes('role')).toBe('separator')
+    expect(ellipses!.attributes('role')).toBe('separator')
   })
 
   it('does not have first button when firstNumber="true"', () => {
@@ -484,7 +484,8 @@ describe('pagination', () => {
       props: {totalRows: 7, perPage: 1, modelValue: 1},
       attachTo: document.body,
     })
-    await wrapper.find('li.active > button').element?.focus()
+    const ev = wrapper.find('li.active > button')
+    ;(ev.element as HTMLElement | undefined)?.focus?.()
     expect(document.activeElement?.textContent).toBe('1')
     await wrapper.find('ul').trigger('keydown', {code: 'ArrowRight'})
     expect(document.activeElement?.textContent).toBe('2')

@@ -30,13 +30,13 @@ describe('avatar-group', () => {
   it('has second child div', () => {
     const wrapper = mount(BAvatarGroup)
     const [, $div] = wrapper.findAll('div')
-    expect($div.exists()).toBe(true)
+    expect($div!.exists()).toBe(true)
   })
 
   it('div child has static class b-avatar-group-inner', () => {
     const wrapper = mount(BAvatarGroup)
     const [, $div] = wrapper.findAll('div')
-    expect($div.classes()).toContain('b-avatar-group-inner')
+    expect($div!.classes()).toContain('b-avatar-group-inner')
   })
 
   it('renders default slot', () => {
@@ -44,6 +44,6 @@ describe('avatar-group', () => {
       slots: {default: 'foobar'},
     })
     const [, $div] = wrapper.findAll('div')
-    expect($div.text()).toBe('foobar')
+    expect($div!.text()).toBe('foobar')
   })
 })

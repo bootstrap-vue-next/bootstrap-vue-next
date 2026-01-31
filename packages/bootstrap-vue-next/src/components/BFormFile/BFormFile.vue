@@ -1,47 +1,24 @@
 <template>
   <div ref="rootRef" v-bind="processedAttrs.rootAttrs" class="b-form-file-root">
     <!-- Optional label -->
-    <label
-      v-if="hasLabelSlot || props.label"
-      class="form-label"
-      :class="props.labelClass"
-      :for="computedId"
-    >
+    <label v-if="hasLabelSlot || props.label" class="form-label" :class="props.labelClass" :for="computedId">
       <slot name="label">
         {{ props.label }}
       </slot>
     </label>
 
     <!-- Drop zone wrapper -->
-    <div
-      v-if="!props.plain"
-      ref="dropZoneRef"
-      v-bind="processedAttrs.dropZoneAttrs"
-      class="b-form-file-wrapper"
-      :class="{
-        'b-form-file-dragging': isOverDropZone && !props.noDrop,
-        'b-form-file-has-files': hasFiles,
-      }"
-    >
+    <div v-if="!props.plain" ref="dropZoneRef" v-bind="processedAttrs.dropZoneAttrs" class="b-form-file-wrapper" :class="{
+      'b-form-file-dragging': isOverDropZone && !props.noDrop,
+      'b-form-file-has-files': hasFiles,
+    }">
       <!-- Custom file control (mimics Bootstrap native input) -->
-      <div
-        class="b-form-file-control"
-        :class="computedClasses"
-        :aria-disabled="props.disabled"
-        @click="handleControlClick"
-      >
+      <div class="b-form-file-control" :class="computedClasses" :aria-disabled="props.disabled"
+        @click="handleControlClick">
         <!-- Custom browse button (now on LEFT to match Bootstrap v5) -->
-        <button
-          v-if="!props.noButton"
-          :id="computedId"
-          ref="browseButtonRef"
-          type="button"
-          class="b-form-file-button"
-          :disabled="props.disabled"
-          :aria-label="props.ariaLabel"
-          :aria-labelledby="props.ariaLabelledby"
-          @click.stop="openFileDialog"
-        >
+        <button v-if="!props.noButton" :id="computedId" ref="browseButtonRef" type="button" class="b-form-file-button"
+          :disabled="props.disabled" :aria-label="props.ariaLabel" :aria-labelledby="props.ariaLabelledby"
+          @click.stop="openFileDialog">
           {{ effectiveBrowseText }}
         </button>
 
@@ -66,22 +43,10 @@
       </div>
 
       <!-- Hidden input for form submission (positioned behind UI with z-index) -->
-      <input
-        ref="customInputRef"
-        v-bind="processedAttrs.inputAttrs"
-        type="file"
-        :name="props.name"
-        :form="props.form"
-        :multiple="props.multiple || props.directory"
-        :disabled="props.disabled"
-        :required="props.required"
-        :accept="computedAccept || undefined"
-        :capture="props.capture"
-        :directory="props.directory"
-        :webkitdirectory="props.directory"
-        tabindex="-1"
-        aria-hidden="true"
-        style="
+      <input ref="customInputRef" v-bind="processedAttrs.inputAttrs" type="file" :name="props.name" :form="props.form"
+        :multiple="props.multiple || props.directory" :disabled="props.disabled" :required="props.required"
+        :accept="computedAccept || undefined" :capture="props.capture" :directory="props.directory"
+        :webkitdirectory="props.directory" tabindex="-1" aria-hidden="true" style="
           position: absolute;
           z-index: -5;
           width: 0;
@@ -89,32 +54,16 @@
           opacity: 0;
           overflow: hidden;
           pointer-events: none;
-        "
-      />
+        " />
     </div>
 
     <!-- Plain mode - simple native input -->
-    <input
-      v-else
-      :id="computedId"
-      ref="plainInputRef"
-      v-bind="processedAttrs.inputAttrs"
-      type="file"
-      :class="computedPlainClasses"
-      :form="props.form"
-      :name="props.name"
-      :multiple="props.multiple || props.directory"
-      :disabled="props.disabled"
-      :capture="props.capture"
-      :accept="computedAccept || undefined"
-      :required="props.required || undefined"
-      :aria-label="props.ariaLabel"
-      :aria-labelledby="props.ariaLabelledby"
-      :aria-required="props.required || undefined"
-      :directory="props.directory"
-      :webkitdirectory="props.directory"
-      @change="onPlainChange"
-    />
+    <input v-else :id="computedId" ref="plainInputRef" v-bind="processedAttrs.inputAttrs" type="file"
+      :class="computedPlainClasses" :form="props.form" :name="props.name" :multiple="props.multiple || props.directory"
+      :disabled="props.disabled" :capture="props.capture" :accept="computedAccept || undefined"
+      :required="props.required || undefined" :aria-label="props.ariaLabel" :aria-labelledby="props.ariaLabelledby"
+      :aria-required="props.required || undefined" :directory="props.directory" :webkitdirectory="props.directory"
+      @change="onPlainChange" />
 
     <!-- External file display (when showFileNames is true and not plain) -->
     <div v-if="showExternalDisplay" class="b-form-file-display mt-2">
@@ -138,14 +87,14 @@
 </template>
 
 <script setup lang="ts">
-import {useDropZone, useFileDialog} from '@vueuse/core'
-import {computed, nextTick, onMounted, ref, type Ref, useAttrs, useTemplateRef, watch} from 'vue'
-import type {BFormFileProps} from '../../types/ComponentProps'
-import {useDefaults} from '../../composables/useDefaults'
-import {useId} from '../../composables/useId'
-import {useStateClass} from '../../composables/useStateClass'
-import {isEmptySlot} from '../../utils/dom'
-import type {BFormFileSlots} from '../../types'
+import { useDropZone, useFileDialog } from '@vueuse/core'
+import { computed, nextTick, onMounted, ref, type Ref, useAttrs, useTemplateRef, watch } from 'vue'
+import type { BFormFileProps } from '../../types/ComponentProps'
+import { useDefaults } from '../../composables/useDefaults'
+import { useId } from '../../composables/useId'
+import { useStateClass } from '../../composables/useStateClass'
+import { isEmptySlot } from '../../utils/dom'
+import type { BFormFileSlots } from '../../types'
 
 defineOptions({
   inheritAttrs: false,
@@ -203,7 +152,7 @@ const processedAttrs = computed(() => {
   // - class/style go to root (for layout/positioning)
   // - title goes to drop zone (for tooltip on interactive element)
   // - everything else goes to hidden input (for form functionality)
-  const {class: rootClass, style: rootStyle, title: dropZoneTitle, ...inputAttrs} = attrs
+  const { class: rootClass, style: rootStyle, title: dropZoneTitle, ...inputAttrs } = attrs
   const rootAttrs: Record<string, unknown> = {}
   const dropZoneAttrs: Record<string, unknown> = {}
   if (rootClass !== undefined) rootAttrs.class = rootClass
@@ -247,7 +196,7 @@ const {
 // Note: We don't pass dataTypes because the accept attribute handles validation
 // and there is no reliable way to get MIME types from in all browsers
 // https://github.com/vueuse/vueuse/issues/4523
-const {isOverDropZone} = useDropZone(dropZoneRef, {
+const { isOverDropZone } = useDropZone(dropZoneRef, {
   onDrop: (files) => {
     if (files && !props.noDrop) {
       handleFiles(files)
@@ -302,7 +251,7 @@ const showExternalDisplay = computed(
 const ariaLiveMessage = computed(() => {
   if (!hasFiles.value) return ''
   const count = selectedFiles.value.length
-  if (count === 1) {
+  if (count === 1 && selectedFiles.value[0] !== undefined) {
     return `File selected: ${selectedFiles.value[0].name}`
   }
   return `${count} files selected`
@@ -373,7 +322,9 @@ const handleFiles = (files: File[] | FileList, nativeEvent?: Event) => {
     modelValue.value = fileArray
   } else {
     const [firstFile] = fileArray
-    modelValue.value = firstFile
+    if (firstFile) {
+      modelValue.value = firstFile
+    }
   }
 
   // Emit change event in nextTick to ensure DOM updates
@@ -390,7 +341,7 @@ const handleFiles = (files: File[] | FileList, nativeEvent?: Event) => {
         cancelable: false,
         detail: {
           files: fileArray,
-          target: {files: fileArray},
+          target: { files: fileArray },
         },
       })
       // Also attach files directly for easier access

@@ -583,7 +583,7 @@ describe('form-checkbox', () => {
 
       expect(wrapper.emitted('update:modelValue')).toBeDefined()
       expect(wrapper.emitted('update:modelValue')?.length).toBe(1)
-      expect(wrapper.emitted('update:modelValue')?.[0][0]).toBe(true)
+      expect(wrapper.emitted('update:modelValue')?.[0]![0]).toBe(true)
     })
 
     it('default checked checkbox emits update:modelValue===false event when clicked', async () => {
@@ -593,7 +593,7 @@ describe('form-checkbox', () => {
 
       expect(wrapper.emitted('update:modelValue')).toBeDefined()
       expect(wrapper.emitted('update:modelValue')?.length).toBe(1)
-      expect(wrapper.emitted('update:modelValue')?.[0][0]).toBe(false)
+      expect(wrapper.emitted('update:modelValue')?.[0]![0]).toBe(false)
     })
 
     it('custom value unchecked checkbox emits update:modelValue==="checked" event when clicked', async () => {
@@ -606,7 +606,7 @@ describe('form-checkbox', () => {
 
       expect(wrapper.emitted('update:modelValue')).toBeDefined()
       expect(wrapper.emitted('update:modelValue')?.length).toBe(1)
-      expect(wrapper.emitted('update:modelValue')?.[0][0]).toBe('checked')
+      expect(wrapper.emitted('update:modelValue')?.[0]![0]).toBe('checked')
     })
 
     it('custom value checked checkbox emits update:modelValue==="unhecked-value" event when clicked', async () => {
@@ -623,7 +623,7 @@ describe('form-checkbox', () => {
 
       expect(wrapper.emitted('update:modelValue')).toBeDefined()
       expect(wrapper.emitted('update:modelValue')?.length).toBe(1)
-      expect(wrapper.emitted('update:modelValue')?.[0][0]).toBe('unchecked')
+      expect(wrapper.emitted('update:modelValue')?.[0]![0]).toBe('unchecked')
     })
   })
 

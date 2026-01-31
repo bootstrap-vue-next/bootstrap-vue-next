@@ -84,7 +84,7 @@ describe('button-toolbar', () => {
       })
 
       // Focus first button
-      buttons[0].element.focus()
+      buttons[0]!.element.focus()
 
       // Simulate ArrowRight keydown
       await wrapper.trigger('keydown', {code: 'ArrowRight'})
@@ -112,7 +112,7 @@ describe('button-toolbar', () => {
       })
 
       // Focus second button
-      buttons[1].element.focus()
+      buttons[1]!.element.focus()
 
       // Simulate ArrowLeft keydown
       await wrapper.trigger('keydown', {code: 'ArrowLeft'})
@@ -140,7 +140,7 @@ describe('button-toolbar', () => {
       })
 
       // Focus first button
-      buttons[0].element.focus()
+      buttons[0]!.element.focus()
 
       // Simulate Shift+ArrowRight keydown
       await wrapper.trigger('keydown', {code: 'ArrowRight', shiftKey: true})
@@ -168,7 +168,7 @@ describe('button-toolbar', () => {
       })
 
       // Focus last button
-      buttons[2].element.focus()
+      buttons[2]!.element.focus()
 
       // Simulate Shift+ArrowLeft keydown
       await wrapper.trigger('keydown', {code: 'ArrowLeft', shiftKey: true})
@@ -196,7 +196,7 @@ describe('button-toolbar', () => {
       })
 
       // Focus first button
-      buttons[0].element.focus()
+      buttons[0]!.element.focus()
 
       // Simulate ArrowRight keydown
       await wrapper.trigger('keydown', {code: 'ArrowRight'})
@@ -223,7 +223,7 @@ describe('button-toolbar', () => {
       })
 
       // Focus first button
-      buttons[0].element.focus()
+      buttons[0]!.element.focus()
 
       // Simulate ArrowDown keydown (should work like ArrowRight)
       await wrapper.trigger('keydown', {code: 'ArrowDown'})
@@ -231,7 +231,7 @@ describe('button-toolbar', () => {
       expect(wrapper.html()).toContain('Button 2')
 
       // Focus second button
-      buttons[1].element.focus()
+      buttons[1]!.element.focus()
 
       // Simulate ArrowUp keydown (should work like ArrowLeft)
       await wrapper.trigger('keydown', {code: 'ArrowUp'})
@@ -258,7 +258,7 @@ describe('button-toolbar', () => {
       })
 
       // Focus last button
-      buttons[2].element.focus()
+      buttons[2]!.element.focus()
 
       // Simulate Home keydown
       await wrapper.trigger('keydown', {code: 'Home'})
@@ -286,7 +286,7 @@ describe('button-toolbar', () => {
       })
 
       // Focus first button
-      buttons[0].element.focus()
+      buttons[0]!.element.focus()
 
       // Simulate End keydown
       await wrapper.trigger('keydown', {code: 'End'})
@@ -314,7 +314,7 @@ describe('button-toolbar', () => {
       })
 
       // Focus last button
-      buttons[2].element.focus()
+      buttons[2]!.element.focus()
 
       // Simulate Home keydown
       await wrapper.trigger('keydown', {code: 'Home'})
@@ -342,7 +342,7 @@ describe('button-toolbar', () => {
       })
 
       // Focus first button
-      buttons[0].element.focus()
+      buttons[0]!.element.focus()
 
       // Simulate End keydown
       await wrapper.trigger('keydown', {code: 'End'})

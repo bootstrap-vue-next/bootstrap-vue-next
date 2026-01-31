@@ -31,9 +31,9 @@ describe('form-select-option-group', () => {
 
     const $options = wrapper.findAll('option')
     expect($options.length).toBe(3)
-    expect($options[0].text()).toBe('one')
-    expect($options[1].text()).toBe('two')
-    expect($options[2].text()).toBe('three')
+    expect($options[0]!.text()).toBe('one')
+    expect($options[1]!.text()).toBe('two')
+    expect($options[2]!.text()).toBe('three')
     $options.forEach(($option) => {
       expect($option.attributes('disabled')).toBeUndefined()
     })
@@ -56,15 +56,15 @@ describe('form-select-option-group', () => {
 
     const $options = wrapper.findAll('option')
     expect($options.length).toBe(3)
-    expect($options[0].text()).toBe('one')
-    expect($options[1].text()).toBe('two')
-    expect($options[2].text()).toBe('three')
-    expect($options[0].attributes('value')).toBe('1')
-    expect($options[1].attributes('value')).toBe('2')
-    expect($options[2].attributes('value')).toBe('3')
-    expect($options[0].attributes('disabled')).toBeUndefined()
-    expect($options[1].attributes('disabled')).toBeDefined()
-    expect($options[2].attributes('disabled')).toBeUndefined()
+    expect($options[0]!.text()).toBe('one')
+    expect($options[1]!.text()).toBe('two')
+    expect($options[2]!.text()).toBe('three')
+    expect($options[0]!.attributes('value')).toBe('1')
+    expect($options[1]!.attributes('value')).toBe('2')
+    expect($options[2]!.attributes('value')).toBe('3')
+    expect($options[0]!.attributes('disabled')).toBeUndefined()
+    expect($options[1]!.attributes('disabled')).toBeDefined()
+    expect($options[2]!.attributes('disabled')).toBeUndefined()
   })
 
   it('has option elements from default slot', () => {
@@ -86,12 +86,12 @@ describe('form-select-option-group', () => {
 
     const $options = wrapper.findAll('option')
     expect($options.length).toBe(3)
-    expect($options[0].text()).toBe('one')
-    expect($options[1].text()).toBe('two')
-    expect($options[2].text()).toBe('three')
-    expect($options[0].attributes('value')).toBe('1')
-    expect($options[1].attributes('value')).toBe('2')
-    expect($options[2].attributes('value')).toBe('3')
+    expect($options[0]!.text()).toBe('one')
+    expect($options[1]!.text()).toBe('two')
+    expect($options[2]!.text()).toBe('three')
+    expect($options[0]!.attributes('value')).toBe('1')
+    expect($options[1]!.attributes('value')).toBe('2')
+    expect($options[2]!.attributes('value')).toBe('3')
   })
 
   it('inherits $attrs along with option attributes', () => {
@@ -115,13 +115,13 @@ describe('form-select-option-group', () => {
     expect($options.length).toBe(2)
 
     // First option should have both its own data-option and inherited $attrs
-    expect($options[0].attributes('data-option')).toBe('opt1')
-    expect($options[0].attributes('data-group')).toBe('test-group')
-    expect($options[0].attributes('data-inherited')).toBe('yes')
+    expect($options[0]!.attributes('data-option')).toBe('opt1')
+    expect($options[0]!.attributes('data-group')).toBe('test-group')
+    expect($options[0]!.attributes('data-inherited')).toBe('yes')
 
     // Second option should have its class and inherited $attrs
-    expect($options[1].classes()).toContain('custom-class')
-    expect($options[1].attributes('data-group')).toBe('test-group')
-    expect($options[1].attributes('data-inherited')).toBe('yes')
+    expect($options[1]!.classes()).toContain('custom-class')
+    expect($options[1]!.attributes('data-group')).toBe('test-group')
+    expect($options[1]!.attributes('data-inherited')).toBe('yes')
   })
 })

@@ -52,8 +52,8 @@
             :width="computedSize"
             :height="computedSize"
             fill="currentColor"
-            :class="[iconColors[index].class]"
-            :style="iconColors[index].style"
+            :class="[iconColors[index]?.class]"
+            :style="iconColors[index]?.style"
             class="star-spacing"
             viewBox="0 0 16 16"
           >

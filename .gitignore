@@ -1,55 +1,46 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# Build outputs
 dist
-.eslintcache
+dist-ssr
 
-# dependencies
+# Dependencies
 node_modules
 .pnp
 .pnp.js
 
-# testing
+# Testing
 coverage
+reports
+*.lcov
+.nyc_output
+__screenshots__/
 
-# misc
-.DS_Store
-*.pem
-
-# Log files
+# Logs
+logs
+*.log
+*.log*
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-stats.html
+lerna-debug.log*
 
-# local env files
+# Environment files
+.env
 .env.local
 .env.*.local
+*.local
 
-# turbo
-.turbo
-
-# Vuepress files
-.temp
+# Temp files
+.tmp
 .cache
-/coverage/
-
-# Editor directories and files
-.idea
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-# Tarballs
+.temp
+stats.html
 *.tgz
 
-# Logs
-*.log*
-
-# Temp directories
-.tmp
+# Turbo
+.turbo
 
 # Nuxt
 .nuxt
@@ -58,16 +49,9 @@ stats.html
 .build-*
 .netlify
 .nitro
-.output
 
-# Env
-.env
-
-# Testing
-reports
-coverage
-*.lcov
-.nyc_output
+# Vuepress
+/coverage/
 
 # VSCode
 .vscode/*
@@ -76,9 +60,14 @@ coverage
 !.vscode/extensions.json
 !.vscode/*.code-snippets
 
-# Intellij idea
-*.iml
+# Intellij IDEA
 .idea
+*.iml
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # OSX
 .DS_Store
@@ -89,12 +78,20 @@ coverage
 Network Trash Folder
 Temporary Items
 .apdisk
+*.pem
 
-TODO.md
+# Cypress
+/cypress/videos/
+/cypress/screenshots/
 
-packages/bootstrap-vue-next/src/App.vue
-
-vite.config.mts.timestamp*
+# Build artifacts
+*.tsbuildinfo
 *.timestamp-*
-
+*.timestamp-*-*.mjs
+vite.config.mts.timestamp*
+.eslintcache
 components.d.ts
+
+# Project specific
+TODO.md
+packages/bootstrap-vue-next/src/App.vue

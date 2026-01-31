@@ -21,9 +21,9 @@ describe('BFormSelect', () => {
 
     const options = wrapper.findAll('option')
     expect(options.length).toBe(3)
-    expect(options[0].text()).toBe('one')
-    expect(options[1].text()).toBe('two')
-    expect(options[2].text()).toBe('three')
+    expect(options[0]!.text()).toBe('one')
+    expect(options[1]!.text()).toBe('two')
+    expect(options[2]!.text()).toBe('three')
   })
 
   it('renders options from array of objects', () => {
@@ -39,18 +39,18 @@ describe('BFormSelect', () => {
 
     const options = wrapper.findAll('option')
     expect(options.length).toBe(3)
-    expect(options[0].attributes('value')).toBe('1')
-    expect(options[0].text()).toBe('One')
-    expect(options[1].attributes('value')).toBe('2')
-    expect(options[1].text()).toBe('Two')
-    expect(options[2].attributes('value')).toBe('3')
-    expect(options[2].text()).toBe('Three')
+    expect(options[0]!.attributes('value')).toBe('1')
+    expect(options[0]!.text()).toBe('One')
+    expect(options[1]!.attributes('value')).toBe('2')
+    expect(options[1]!.text()).toBe('Two')
+    expect(options[2]!.attributes('value')).toBe('3')
+    expect(options[2]!.text()).toBe('Three')
   })
 
   it('applies modelValue correctly during initial render (SSR simulation)', () => {
     const wrapper = mount(BFormSelect, {
       props: {
-        modelValue: 'two',
+        modelValue: 'two' as any,
         options: ['one', 'two', 'three'],
       },
     })
@@ -71,7 +71,7 @@ describe('BFormSelect', () => {
   it('applies modelValue correctly with object options during initial render', () => {
     const wrapper = mount(BFormSelect, {
       props: {
-        modelValue: 2,
+        modelValue: 2 as any,
         options: [
           {value: 1, text: 'One'},
           {value: 2, text: 'Two'},
@@ -94,7 +94,7 @@ describe('BFormSelect', () => {
   it('applies modelValue correctly with option groups during initial render', () => {
     const wrapper = mount(BFormSelect, {
       props: {
-        modelValue: 'two',
+        modelValue: 'two' as any,
         options: [
           {
             label: 'Group 1',
@@ -123,11 +123,11 @@ describe('BFormSelect', () => {
   })
 
   it('updates modelValue when option is selected', async () => {
-    let modelValue = 'one'
+    let modelValue: any = 'one'
     const wrapper = mount(BFormSelect, {
       props: {
         modelValue,
-        'onUpdate:modelValue': (value: string) => {
+        'onUpdate:modelValue': (value: any) => {
           modelValue = value
         },
         'options': ['one', 'two', 'three'],
@@ -154,9 +154,9 @@ describe('BFormSelect', () => {
 
     const options = wrapper.findAll('option')
     expect(options.length).toBe(3)
-    expect(options[0].classes()).toContain('custom-class')
-    expect(options[1].classes()).toContain('another-class')
-    expect(options[2].classes()).not.toContain('custom-class')
+    expect(options[0]!.classes()).toContain('custom-class')
+    expect(options[1]!.classes()).toContain('another-class')
+    expect(options[2]!.classes()).not.toContain('custom-class')
   })
 
   it('applies class object to options', () => {
@@ -171,9 +171,9 @@ describe('BFormSelect', () => {
 
     const options = wrapper.findAll('option')
     expect(options.length).toBe(2)
-    expect(options[0].classes()).toContain('class-a')
-    expect(options[0].classes()).not.toContain('class-b')
-    expect(options[1].classes()).toContain('class-c')
+    expect(options[0]!.classes()).toContain('class-a')
+    expect(options[0]!.classes()).not.toContain('class-b')
+    expect(options[1]!.classes()).toContain('class-c')
   })
 
   it('applies class array to options', () => {
@@ -188,9 +188,9 @@ describe('BFormSelect', () => {
 
     const options = wrapper.findAll('option')
     expect(options.length).toBe(2)
-    expect(options[0].classes()).toContain('class-a')
-    expect(options[0].classes()).toContain('class-b')
-    expect(options[1].classes()).toContain('class-c')
+    expect(options[0]!.classes()).toContain('class-a')
+    expect(options[0]!.classes()).toContain('class-b')
+    expect(options[1]!.classes()).toContain('class-c')
   })
 
   it('applies attrs to options', () => {
@@ -199,16 +199,16 @@ describe('BFormSelect', () => {
         options: [
           {'value': 1, 'text': 'One', 'data-test': 'test-value'},
           {'value': 2, 'text': 'Two', 'data-id': '123'},
-          {'value': 3, 'text': 'Three'},
+          {value: 3, text: 'Three'},
         ],
       },
     })
 
     const options = wrapper.findAll('option')
     expect(options.length).toBe(3)
-    expect(options[0].attributes('data-test')).toBe('test-value')
-    expect(options[1].attributes('data-id')).toBe('123')
-    expect(options[2].attributes('data-test')).toBeUndefined()
+    expect(options[0]!.attributes('data-test')).toBe('test-value')
+    expect(options[1]!.attributes('data-id')).toBe('123')
+    expect(options[2]!.attributes('data-test')).toBeUndefined()
   })
 
   it('applies class and attrs to options in option groups', () => {
@@ -219,7 +219,7 @@ describe('BFormSelect', () => {
             label: 'Group 1',
             options: [
               {'value': 1, 'text': 'One', 'class': 'group-class', 'data-group': '1'},
-              {'value': 2, 'text': 'Two', 'class': 'group-class'},
+              {value: 2, text: 'Two', class: 'group-class'},
             ],
           },
         ],
@@ -228,9 +228,9 @@ describe('BFormSelect', () => {
 
     const options = wrapper.findAll('option')
     expect(options.length).toBe(2)
-    expect(options[0].classes()).toContain('group-class')
-    expect(options[0].attributes('data-group')).toBe('1')
-    expect(options[1].classes()).toContain('group-class')
+    expect(options[0]!.classes()).toContain('group-class')
+    expect(options[0]!.attributes('data-group')).toBe('1')
+    expect(options[1]!.classes()).toContain('group-class')
   })
 
   describe('type safety with generics', () => {

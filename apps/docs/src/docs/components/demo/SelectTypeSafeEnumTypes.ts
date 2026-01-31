@@ -13,4 +13,4 @@ export const statusOptions: StatusOption[] = [
   {value: Status.Active, text: 'Active'},
   {value: Status.Inactive, text: 'Inactive'},
   {value: Status.Pending, text: 'Pending'},
-]
+] as const

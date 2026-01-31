@@ -25,7 +25,7 @@ Conventional commits are required for the automation of changelog and tag releas
 
 Setting up your workspace follows traditional open-source flows, if you are already familiar with the process, you can most likely skip this section:
 
-**Only pnpm is allowed**, attempting to run any other package manager tool will cause a warning error. View pnpm installation at <https://pnpm.io/installation>
+**Only bun is allowed**, attempting to run any other package manager tool will cause a warning error. View bun installation at <https://bun.com/docs/installation>
 
 1. Go to the <https://github.com/bootstrap-vue-next/bootstrap-vue-next>
 2. Click **Fork** at the top
@@ -36,8 +36,8 @@ This repository is where you will make your changes to. You can safely run `git 
 When opening your repository, it is usually best to open the **root** folder, not a subdirectory such as `./packages/bootstrap-vue-next`. Eslint rules can sometimes get lost when opening a subdirectory of a workspace. If you do not have the recommended IDE extensions, it will usually suggest that you install them, but this is technically optional. You can finally run at the root:
 
 ```bash
-pnpm install
-pnpm dev
+bun install
+bun dev
 ```
 
 Finally, after you have made sufficient changes and you are ready to publish your changes to the main repository, you will:
@@ -51,17 +51,17 @@ This will begin the process to merge your changes into the upstream repository's
 
 ## Developing
 
-The project uses a monorepo architecture. The main source files for the package exist in `./packages/bootstrap-vue-next`, this is primarily where developing is done. You can then run `pnpm dev` and it will start all possible development environments. When developing the main package, you will want to open the **bootstrap-vue-next:dev** host. This has hot-reloading to make developing easier. You can use the `./packages/bootstrap-vue-next/src/app.vue` file as a test area for any changes that you make.
+The project uses a monorepo architecture. The main source files for the package exist in `./packages/bootstrap-vue-next`, this is primarily where developing is done. You can then run `bun dev` and it will start all possible development environments. When developing the main package, you will want to open the **bootstrap-vue-next:dev** host. This has hot-reloading to make developing easier. You can use the `./packages/bootstrap-vue-next/src/app.vue` file as a test area for any changes that you make.
 
-You can also make use of the `./apps/playground` directory. The `./apps/playground` directory mimics a user's library and can demonstrate some bugs that may not be visible in the main package. However, it does not contain native hot-reloading and makes for a poor development experience since it requires a built dist copy of the main package (simply run `pnpm build`). The playground is not typically used for development. It is more of a place to view the full behavior of a component.
+You can also make use of the `./apps/playground` directory. The `./apps/playground` directory mimics a user's library and can demonstrate some bugs that may not be visible in the main package. However, it does not contain native hot-reloading and makes for a poor development experience since it requires a built dist copy of the main package (simply run `bun build`). The playground is not typically used for development. It is more of a place to view the full behavior of a component.
 
-You can also use `pnpm dev --filter bootstrap-vue-next` to only open the main host.
+You can also use `bun dev --filter bootstrap-vue-next` to only open the main host.
 
 ## Improving the documentation
 
 Improving the documentation is a great way to contribute to this project, especially if you're not quite ready to dive into the code.
 
-We use [vitepress](https://vitepress.dev/) to build our documentation in the `./apps/docs` directory. In order to test the docs, first make sure that you follow the steps in [Setting up your workspace](#setting-up-your-workspace). Then you can run `pnpm dev` from the root and then open the **docs:dev** host. This will hot-reload the documentation to let you easily see your edits.
+We use [vitepress](https://vitepress.dev/) to build our documentation in the `./apps/docs` directory. In order to test the docs, first make sure that you follow the steps in [Setting up your workspace](#setting-up-your-workspace). Then you can run `bun dev` from the root and then open the **docs:dev** host. This will hot-reload the documentation to let you easily see your edits.
 
 ### Documentation File Structure
 
@@ -203,8 +203,8 @@ Example data loaders include:
 
 Before submitting a PR with documentation changes:
 
-1. Run `pnpm --filter docs run build` to ensure the build succeeds
-2. Run `pnpm --filter docs run dev` to verify the output visually
+1. Run `bun --filter docs run build` to ensure the build succeeds
+2. Run `bun --filter docs run dev` to verify the output visually
 3. Check that all auto-generated elements appear correctly:
    - Page titles match the filename
    - PageHeader shows the correct description
@@ -361,10 +361,10 @@ Before submitting:
 
 ```bash
 # Build the docs to check for errors
-pnpm --filter docs run build
+bun --filter docs run build
 
 # View the docs locally
-pnpm --filter docs run dev
+bun --filter docs run dev
 ```
 
 Verify:

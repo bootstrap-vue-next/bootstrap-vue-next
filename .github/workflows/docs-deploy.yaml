@@ -37,29 +37,16 @@ jobs:
         with:
           node-version: 22.x.x
 
-      - name: Install PNPM
-        uses: pnpm/action-setup@v4
-        id: pnpm-install
-
-      - name: Get PNPM Store Directory
-        id: pnpm-cache
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - name: Setup PNPM Cache
-        uses: actions/cache@v3
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          bun-version: 1.3.8
 
       - name: Install Dependencies
-        run: pnpm install --ignore-scripts --frozen-lockfile
+        run: bun install --ignore-scripts --frozen-lockfile
 
       - name: Build Library
-        run: pnpm run build --filter docs
+        run: bun run build --filter docs
 
       - name: Configure Pages
         uses: actions/configure-pages@v5

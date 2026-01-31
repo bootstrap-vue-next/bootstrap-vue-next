@@ -34,11 +34,11 @@ describe('form-datalist', () => {
 
       const options = wrapper.findAll('option')
       expect(options).toHaveLength(3)
-      expect(options[0].attributes('value')).toBe('1')
-      expect(options[0].text()).toBe('Alice')
-      expect(options[1].attributes('value')).toBe('2')
-      expect(options[1].attributes('disabled')).toBe('')
-      expect(options[2].attributes('value')).toBe('3')
+      expect(options[0]!.attributes('value')).toBe('1')
+      expect(options[0]!.text()).toBe('Alice')
+      expect(options[1]!.attributes('value')).toBe('2')
+      expect(options[1]!.attributes('disabled')).toBe('')
+      expect(options[2]!.attributes('value')).toBe('3')
     })
 
     it('works with API response types', async () => {
@@ -64,9 +64,9 @@ describe('form-datalist', () => {
 
       const options = wrapper.findAll('option')
       expect(options).toHaveLength(2)
-      expect(options[0].attributes('value')).toBe('P001')
-      expect(options[1].attributes('value')).toBe('P002')
-      expect(options[1].attributes('disabled')).toBe('')
+      expect(options[0]!.attributes('value')).toBe('P001')
+      expect(options[1]!.attributes('value')).toBe('P002')
+      expect(options[1]!.attributes('disabled')).toBe('')
     })
 
     it('works with enum value types', async () => {
@@ -97,9 +97,9 @@ describe('form-datalist', () => {
 
       const options = wrapper.findAll('option')
       expect(options).toHaveLength(3)
-      expect(options[0].attributes('value')).toBe('us')
-      expect(options[1].attributes('value')).toBe('uk')
-      expect(options[2].attributes('value')).toBe('ca')
+      expect(options[0]!.attributes('value')).toBe('us')
+      expect(options[1]!.attributes('value')).toBe('uk')
+      expect(options[2]!.attributes('value')).toBe('ca')
     })
 
     it('handles string and number options', async () => {
@@ -112,8 +112,8 @@ describe('form-datalist', () => {
 
       const options = wrapper.findAll('option')
       expect(options).toHaveLength(3)
-      expect(options[0].attributes('value')).toBe('apple')
-      expect(options[0].text()).toBe('apple')
+      expect(options[0]!.attributes('value')).toBe('apple')
+      expect(options[0]!.text()).toBe('apple')
     })
 
     it('has correct value type inference', () => {

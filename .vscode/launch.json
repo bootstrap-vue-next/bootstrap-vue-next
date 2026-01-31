@@ -3,44 +3,26 @@
     {
       "name": "Launch nuxt dev",
       "request": "launch",
-      "runtimeArgs": [
-        "dev",
-        "--filter",
-        "nuxt"
-      ],
-      "runtimeExecutable": "pnpm",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
+      "runtimeArgs": ["dev", "--filter", "nuxt"],
+      "runtimeExecutable": "bun",
+      "skipFiles": ["<node_internals>/**"],
       "type": "node"
     },
     {
       "name": "Launch app dev",
       "request": "launch",
-      "runtimeArgs": [
-        "dev",
-        "--filter",
-        "bootstrap-vue-next"
-      ],
-      "runtimeExecutable": "pnpm",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
+      "runtimeArgs": ["dev", "--filter", "bootstrap-vue-next"],
+      "runtimeExecutable": "bun",
+      "skipFiles": ["<node_internals>/**"],
       "type": "node"
     },
     {
       "name": "Launch app unit test",
       "request": "launch",
-      "runtimeArgs": [
-        "test:unit",
-        "--filter",
-        "bootstrap-vue-next"
-      ],
-      "runtimeExecutable": "pnpm",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
+      "runtimeArgs": ["test:unit", "--filter", "bootstrap-vue-next"],
+      "runtimeExecutable": "bun",
+      "skipFiles": ["<node_internals>/**"],
       "type": "node"
-    },
+    }
   ]
 }

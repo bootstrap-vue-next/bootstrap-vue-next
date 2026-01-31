@@ -254,7 +254,7 @@ describe('alert', () => {
     await new Promise((resolve) => setTimeout(resolve, 30))
 
     const emitted = wrapper.emitted('update:modelValue') ?? []
-    expect(emitted[0][0]).toBe(false)
+    expect(emitted[0]![0]!).toBe(false)
   })
 
   it('nested div BCloseButton emits update:modelValue when clicked when modelValue number > 0', async () => {
@@ -279,7 +279,7 @@ describe('alert', () => {
     await $bclosebutton.trigger('click')
     await new Promise((resolve) => setTimeout(resolve, 30))
     const emitted = wrapper.emitted('update:modelValue') ?? []
-    expect(emitted[0][0]).toBe(0)
+    expect(emitted[0]![0]!).toBe(0)
   })
 
   it('nested div BCloseButton clicked emits close', async () => {
@@ -345,7 +345,7 @@ describe('alert', () => {
     await $bbutton.trigger('click')
     await new Promise((resolve) => setTimeout(resolve, 30))
     const emitted = wrapper.emitted('update:modelValue') ?? []
-    expect(emitted[0][0]).toBe(false)
+    expect(emitted[0]![0]!).toBe(false)
   })
 
   it('nested div BButton emits update:modelValue when clicked when modelValue number > 0', async () => {
@@ -370,7 +370,7 @@ describe('alert', () => {
     await $bbutton.trigger('click')
     await new Promise((resolve) => setTimeout(resolve, 30))
     const emitted = wrapper.emitted('update:modelValue') ?? []
-    expect(emitted[0][0]).toBe(0)
+    expect(emitted[0]![0]!).toBe(0)
   })
 
   it('nested div BButton clicked emits close', async () => {

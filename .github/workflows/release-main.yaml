@@ -22,13 +22,13 @@ jobs:
       - name: Use Release Please
         uses: googleapis/release-please-action@v4
         id: release
-  
+
       # The logic below handles the npm publication:
 
       - name: Clone Repository
         uses: actions/checkout@v4
         if: ${{ steps.release.outputs.releases_created }}
-        
+
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
@@ -36,46 +36,30 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
         if: ${{ steps.release.outputs.releases_created }}
 
-      - name: Install PNPM
-        uses: pnpm/action-setup@v4
-        id: pnpm-install
-        if: ${{ steps.release.outputs.releases_created }}
-
-      - name: Get PNPM Store Directory
-        id: pnpm-cache
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-        if: ${{ steps.release.outputs.releases_created }}
-
-      - name: Setup PNPM Cache
-        uses: actions/cache@v3
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          bun-version: 1.3.8
         if: ${{ steps.release.outputs.releases_created }}
 
       - name: Install Dependencies
-        run: pnpm install --ignore-scripts --frozen-lockfile
+        run: bun install --ignore-scripts --frozen-lockfile
         if: ${{ steps.release.outputs.releases_created }}
 
       - name: Build Library
-        run: pnpm run build --filter bootstrap-vue-next --filter @bootstrap-vue-next/nuxt
+        run: bun run build --filter bootstrap-vue-next --filter @bootstrap-vue-next/nuxt
         if: ${{ steps.release.outputs.releases_created }}
 
       - name: Publish Main
-        run: pnpm publish --tag latest --filter bootstrap-vue-next --access=public
+        run: bun publish --tag latest --filter bootstrap-vue-next --access=public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           NPM_CONFIG_PROVENANCE: true
         if: ${{ steps.release.outputs.releases_created && steps.release.outputs['packages/bootstrap-vue-next--release_created'] }}
 
       - name: Publish Nuxt
-        run: pnpm publish --tag latest --filter @bootstrap-vue-next/nuxt --access=public
+        run: bun publish --tag latest --filter @bootstrap-vue-next/nuxt --access=public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN_NUXT_PACKAGE}}
           NPM_CONFIG_PROVENANCE: true
         if: ${{ steps.release.outputs.releases_created && steps.release.outputs['packages/nuxt--release_created'] }}
-        

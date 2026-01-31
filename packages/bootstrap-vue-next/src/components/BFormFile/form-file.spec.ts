@@ -510,8 +510,8 @@ describe('form-file', () => {
       const {children} = $control.element
 
       // Button should be first child, text should be second
-      expect(children[0].classList.contains('b-form-file-button')).toBe(true)
-      expect(children[1].classList.contains('b-form-file-text')).toBe(true)
+      expect(children[0]!.classList.contains('b-form-file-button')).toBe(true)
+      expect(children[1]!.classList.contains('b-form-file-text')).toBe(true)
     })
 
     it('browse button is disabled when disabled prop true', () => {
@@ -661,7 +661,7 @@ describe('form-file', () => {
 
       expect(wrapper.emitted('change')).toBeDefined()
       expect(wrapper.emitted('change')).toHaveLength(1)
-      expect(wrapper.emitted('change')?.[0][0]).toBeInstanceOf(Event)
+      expect(wrapper.emitted('change')?.[0]![0]).toBeInstanceOf(Event)
     })
 
     it('emits update:modelValue with file when file selected in plain mode', async () => {
@@ -681,7 +681,7 @@ describe('form-file', () => {
 
       expect(wrapper.emitted('update:modelValue')).toBeDefined()
       expect(wrapper.emitted('update:modelValue')).toHaveLength(1)
-      expect(wrapper.emitted('update:modelValue')?.[0][0]).toStrictEqual(file)
+      expect(wrapper.emitted('update:modelValue')?.[0]![0]).toStrictEqual(file)
     })
 
     it('emits update:modelValue with file array in multiple mode (plain)', async () => {
@@ -710,9 +710,9 @@ describe('form-file', () => {
       expect(wrapper.emitted('update:modelValue')).toBeDefined()
       expect(wrapper.emitted('update:modelValue')).toHaveLength(1)
       const emitted = wrapper.emitted('update:modelValue')
-      expect(emitted && (emitted[0][0] as File[])[0]).toStrictEqual(file1)
+      expect(emitted && (emitted[0]![0] as File[])[0]).toStrictEqual(file1)
       const em = wrapper.emitted('update:modelValue')
-      expect(em && (em[0][0] as File[])[1]).toStrictEqual(file2)
+      expect(em && (em[0]![0] as File[])[1]).toStrictEqual(file2)
     })
 
     it('emits update:modelValue with file array in directory mode (plain)', async () => {
@@ -741,9 +741,9 @@ describe('form-file', () => {
       expect(wrapper.emitted('update:modelValue')).toBeDefined()
       expect(wrapper.emitted('update:modelValue')).toHaveLength(1)
       const emittedValue = wrapper.emitted('update:modelValue')
-      expect(emittedValue && (emittedValue[0][0] as File[])[0]).toStrictEqual(file1)
+      expect(emittedValue && (emittedValue[0]![0] as File[])[0]).toStrictEqual(file1)
       const em = wrapper.emitted('update:modelValue')
-      expect(em && (em[0][0] as File[])[1]).toStrictEqual(file2)
+      expect(em && (em[0]![0] as File[])[1]).toStrictEqual(file2)
     })
   })
 

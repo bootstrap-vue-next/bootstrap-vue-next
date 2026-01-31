@@ -15,13 +15,10 @@
               </h3>
             </BCol>
             <BCol v-if="globalData && component.sourcePath !== null" cols="4" class="text-md-right">
-              <ViewSourceButton
-                :href="
-                  component.sourcePath
-                    ? `${globalData.githubComponentsDirectory}${component.sourcePath}`
-                    : globalData.githubPackageDirectory
-                "
-              />
+              <ViewSourceButton :href="component.sourcePath
+                ? `${globalData.githubComponentsDirectory}${component.sourcePath}`
+                : globalData.githubPackageDirectory
+                " />
             </BCol>
           </BRow>
           <BRow>
@@ -34,8 +31,8 @@
                 </li>
               </ul>
             </BCol>
-            <BCol cols="4" class="text-md-right"
-              ><StyleExtension :name="component.component" :style-spec="component.styleSpec" />
+            <BCol cols="4" class="text-md-right">
+              <StyleExtension :name="component.component" :style-spec="component.styleSpec" />
             </BCol>
           </BRow>
           <BRow class="my-3">
@@ -44,11 +41,8 @@
                 <BRow>
                   <BCol>
                     <h5>
-                      <BLink
-                        :id="buildCompReferenceLink(`${component.component}-Properties`).slice(1)"
-                        variant="info"
-                        :to="buildCompReferenceLink(`${component.component}-Properties`)"
-                      >
+                      <BLink :id="buildCompReferenceLink(`${component.component}-Properties`).slice(1)" variant="info"
+                        :to="buildCompReferenceLink(`${component.component}-Properties`)">
                         Properties
                       </BLink>
                     </h5>
@@ -56,22 +50,13 @@
                 </BRow>
                 <BRow>
                   <BCol>
-                    <BTable
-                      :items="
-                        component.props
-                          .find((el) => el.name === defaultPropSectionSymbol)
-                          ?._data.map((el) => ({
-                            prop: el[0],
-                            ...el[1],
-                          }))
-                      "
-                      :fields="tableFieldDefinitions.props"
-                      hover
-                      small
-                      responsive
-                      bordered
-                      striped
-                    >
+                    <BTable :items="component.props
+                      .find((el) => el.name === defaultPropSectionSymbol)
+                      ?._data.map((el) => ({
+                        prop: el[0],
+                        ...el[1],
+                      }))
+                      " :fields="tableFieldDefinitions.props" hover small responsive bordered striped>
                       <template #cell(type)="d">
                         <code>
                           {{ d.item.type }}
@@ -86,52 +71,29 @@
                         {{ d.item.description }}
                       </template>
                     </BTable>
-                    <template
-                      v-if="component.props.some((el) => el.name !== defaultPropSectionSymbol)"
-                    >
-                      <span
-                        id="extension-info"
-                        :style="{cursor: 'help'}"
-                        class="text-decoration-underline text-info cursor-help"
-                      >
+                    <template v-if="component.props.some((el) => el.name !== defaultPropSectionSymbol)">
+                      <span id="extension-info" :style="{ cursor: 'help' }"
+                        class="text-decoration-underline text-info cursor-help">
                         Extensions:
                       </span>
-                      <BTooltip
-                        target="extension-info"
-                        title="Extensions are selected properties from another component, integrated here. It may not include all original properties"
-                      />
+                      <BTooltip target="extension-info"
+                        title="Extensions are selected properties from another component, integrated here. It may not include all original properties" />
                       <BAccordion free>
-                        <BAccordionItem
-                          v-for="(table, index) in component.props.filter(
-                            (el) => el.name !== defaultPropSectionSymbol
-                          )"
-                          :key="index"
-                          header-tag="span"
-                          body-class="p-0 m-0"
-                        >
+                        <BAccordionItem v-for="(table, index) in component.props.filter(
+                          (el) => el.name !== defaultPropSectionSymbol
+                        )" :key="index" header-tag="span" body-class="p-0 m-0">
                           <template #title>
                             <!-- using :to was causing a full page refresh. Don't know why. Super odd -->
-                            <BLink
-                              v-if="table._opts?.linkTo"
-                              @click.stop="goToLink(table._opts.linkTo)"
-                            >
+                            <BLink v-if="table._opts?.linkTo" @click.stop="goToLink(table._opts.linkTo)">
                               {{ table.name }}
                             </BLink>
                             <template v-else>
                               {{ table.name }}
                             </template>
                           </template>
-                          <BTable
-                            :items="table._data.map((el) => ({prop: el[0], ...el[1]}))"
-                            :fields="tableFieldDefinitions.props"
-                            table-class="m-0 p-0"
-                            class="m-0 p-0"
-                            hover
-                            small
-                            responsive
-                            bordered
-                            striped
-                          >
+                          <BTable :items="table._data.map((el) => ({ prop: el[0], ...el[1] }))"
+                            :fields="tableFieldDefinitions.props" table-class="m-0 p-0" class="m-0 p-0" hover small
+                            responsive bordered striped>
                             <template #cell(type)="d">
                               <code>
                                 {{ d.item.type }}
@@ -157,11 +119,8 @@
                 <BRow>
                   <BCol>
                     <h5>
-                      <BLink
-                        :id="buildCompReferenceLink(`${component.component}-Events`).slice(1)"
-                        variant="info"
-                        :to="buildCompReferenceLink(`${component.component}-Events`)"
-                      >
+                      <BLink :id="buildCompReferenceLink(`${component.component}-Events`).slice(1)" variant="info"
+                        :to="buildCompReferenceLink(`${component.component}-Events`)">
                         Events
                       </BLink>
                     </h5>
@@ -169,21 +128,11 @@
                 </BRow>
                 <BRow>
                   <BCol>
-                    <BTable
-                      :items="component.emits"
-                      :fields="tableFieldDefinitions.emits"
-                      hover
-                      small
-                      responsive
-                      bordered
-                      striped
-                    >
+                    <BTable :items="component.emits" :fields="tableFieldDefinitions.emits" hover small responsive
+                      bordered striped>
                       <template #cell(args)="d">
                         <!-- eslint-disable-next-line prettier/prettier -->
-                        <div
-                          v-for="[argName, arg] in Object.entries(d.item.args ?? {})"
-                          :key="argName"
-                        >
+                        <div v-for="[argName, arg] in Object.entries(d.item.args ?? {})" :key="argName">
                           <code>{{ kebabCase(argName) }}</code>
                           <code>: {{ arg.type }}</code>
                           <span v-if="!!arg.description"> - {{ arg.description }}</span>
@@ -201,11 +150,8 @@
                 <BRow>
                   <BCol>
                     <h5>
-                      <BLink
-                        :id="buildCompReferenceLink(`${component.component}-Slots`).slice(1)"
-                        variant="info"
-                        :to="buildCompReferenceLink(`${component.component}-Slots`)"
-                      >
+                      <BLink :id="buildCompReferenceLink(`${component.component}-Slots`).slice(1)" variant="info"
+                        :to="buildCompReferenceLink(`${component.component}-Slots`)">
                         Slots
                       </BLink>
                     </h5>
@@ -213,21 +159,11 @@
                 </BRow>
                 <BRow>
                   <BCol>
-                    <BTable
-                      :items="component.slots"
-                      :fields="tableFieldDefinitions.slots"
-                      hover
-                      small
-                      responsive
-                      bordered
-                      striped
-                    >
+                    <BTable :items="component.slots" :fields="tableFieldDefinitions.slots" hover small responsive
+                      bordered striped>
                       <template #cell(scope)="d">
                         <!-- eslint-disable-next-line prettier/prettier -->
-                        <div
-                          v-for="[scopeName, scope] in Object.entries(d.item.scope ?? {})"
-                          :key="scopeName"
-                        >
+                        <div v-for="[scopeName, scope] in Object.entries(d.item.scope ?? {})" :key="scopeName">
                           <code>{{ kebabCase(scopeName) }}</code>
                           <code>: {{ scope.type }}</code>
                           <span v-if="!!scope.description"> - {{ scope.description }}</span>
@@ -246,8 +182,8 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject} from 'vue'
-import type {TableFieldRaw} from 'bootstrap-vue-next'
+import { computed, inject } from 'vue'
+import type { TableFieldRaw } from 'bootstrap-vue-next'
 import {
   type ComponentItem,
   type ComponentReference,
@@ -258,13 +194,13 @@ import {
   type PropRecordWithOptions,
   type PropReference,
 } from '../types'
-import {kebabCase} from '../utils/objectUtils'
-import {useRouter, withBase} from 'vitepress'
-import {appInfoKey} from '../../.vitepress/theme/keys'
+import { kebabCase } from '../utils/objectUtils'
+import { useRouter, withBase } from 'vitepress'
+import { appInfoKey } from '../../.vitepress/theme/keys'
 
 const router = useRouter()
 
-const props = defineProps<{data: ComponentReference}>()
+const props = defineProps<{ data: ComponentReference }>()
 
 /**
  * Derives the base directory name from all components in the data.
@@ -278,7 +214,9 @@ const props = defineProps<{data: ComponentReference}>()
  */
 const deriveBaseDirectory = (): string => {
   const componentNames = Object.keys(props.data)
-  return componentNames[0] // First component is the base directory
+  const [v] = componentNames
+  if (v === undefined) throw new Error('No components found in data to derive base directory')
+  return v // First component is the base directory
 }
 
 /**
@@ -299,7 +237,7 @@ const sortData = computed(() => {
   const baseDirectory = deriveBaseDirectory()
 
   return Object.entries(props.data).map(
-    ([component, {props: localProps, sourcePath, emits, slots, styleSpec}]) => {
+    ([component, { props: localProps, sourcePath, emits, slots, styleSpec }]) => {
       const mapProps = () => {
         const isMultiplePropRecord = (
           val: PropRecordWithOptions | PropRecord | PropRecordWithMultipleSections
@@ -326,7 +264,7 @@ const sortData = computed(() => {
             (acc, [key, value]) => {
               const current = isPropRecordWithOptions(value)
                 ? value
-                : ({_data: value} as PropRecordWithOptions)
+                : ({ _data: value } as PropRecordWithOptions)
               const arrayedAndSorted = Object.entries(current._data)
                 .map(([key, value]) => [kebabCase(key), value] as [string, PropReference])
                 .sort(([a], [b]) => a.localeCompare(b))
@@ -396,7 +334,7 @@ const tableFieldDefinitions = {
   props: ['prop', 'type', 'default', 'description'],
   emits: ['event', 'args', 'description'],
   slots: ['name', 'scope', 'description'],
-} as const satisfies {[P in ComponentItemFree]: TableFieldRaw[]}
+} as const satisfies { [P in ComponentItemFree]: TableFieldRaw[] }
 
 const normalizeDefault = (val: unknown) =>
   val === undefined || val === null ? `${val}` : typeof val === 'string' ? `'${val}'` : val

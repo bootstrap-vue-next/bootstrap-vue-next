@@ -24,16 +24,16 @@ describe('row', () => {
 
   it('has class gx-{type} when prop gutterX', () => {
     const wrapper = mount(BRow, {
-      props: {gutterX: '120'},
+      props: {gutterX: '1'},
     })
-    expect(wrapper.classes()).toContain('gx-120')
+    expect(wrapper.classes()).toContain('gx-1')
   })
 
   it('has class gx-{type} when prop gutterY', () => {
     const wrapper = mount(BRow, {
-      props: {gutterY: '120'},
+      props: {gutterY: '1'},
     })
-    expect(wrapper.classes()).toContain('gy-120')
+    expect(wrapper.classes()).toContain('gy-1')
   })
 
   it('has class align-items-{type} when prop alignV', async () => {

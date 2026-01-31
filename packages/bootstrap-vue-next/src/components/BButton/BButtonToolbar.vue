@@ -1,24 +1,18 @@
 <template>
-  <div
-    ref="toolbarRef"
-    :class="computedClasses"
-    class="btn-toolbar"
-    :role="props.role"
-    :aria-label="props.ariaLabel"
-    @keydown="handleKeyNav"
-  >
+  <div ref="toolbarRef" :class="computedClasses" class="btn-toolbar" :role="props.role" :aria-label="props.ariaLabel"
+    @keydown="handleKeyNav">
     <slot />
   </div>
 </template>
 
 <script setup lang="ts">
-import type {BButtonToolbarSlots} from '../../types'
-import {useDefaults} from '../../composables/useDefaults'
-import type {BButtonToolbarProps} from '../../types/ComponentProps'
-import {computed, nextTick, useTemplateRef} from 'vue'
-import {CODE_DOWN, CODE_END, CODE_HOME, CODE_LEFT, CODE_RIGHT, CODE_UP} from '../../utils/constants'
-import {stopEvent} from '../../utils/event'
-import {getActiveElement} from '../../utils/dom'
+import type { BButtonToolbarSlots } from '../../types'
+import { useDefaults } from '../../composables/useDefaults'
+import type { BButtonToolbarProps } from '../../types/ComponentProps'
+import { computed, nextTick, useTemplateRef } from 'vue'
+import { CODE_DOWN, CODE_END, CODE_HOME, CODE_LEFT, CODE_RIGHT, CODE_UP } from '../../utils/constants'
+import { stopEvent } from '../../utils/event'
+import { getActiveElement } from '../../utils/dom'
 
 const _props = withDefaults(defineProps<BButtonToolbarProps>(), {
   ariaLabel: 'Group',
@@ -78,8 +72,10 @@ const focusPrev = () => {
     if (currentIndex > 0) {
       // Look backwards for the first non-disabled element
       for (let i = currentIndex - 1; i >= 0; i--) {
-        if (!isDisabled(elements[i])) {
-          elements[i]?.focus()
+        const el = elements[i]
+        if (el === undefined) continue
+        if (!isDisabled(el)) {
+          el.focus()
           break
         }
       }
@@ -96,8 +92,10 @@ const focusNext = () => {
     if (currentIndex < elements.length - 1) {
       // Look forwards for the first non-disabled element
       for (let i = currentIndex + 1; i < elements.length; i++) {
-        if (!isDisabled(elements[i])) {
-          elements[i]?.focus()
+        const el = elements[i]
+        if (el === undefined) continue
+        if (!isDisabled(el)) {
+          el.focus()
           break
         }
       }
@@ -108,7 +106,7 @@ const focusNext = () => {
 const handleKeyNav = (event: KeyboardEvent) => {
   if (!props.keyNav) return
 
-  const {code, shiftKey} = event
+  const { code, shiftKey } = event
 
   if (code === CODE_LEFT || code === CODE_UP) {
     stopEvent(event)

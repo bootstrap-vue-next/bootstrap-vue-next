@@ -346,7 +346,7 @@ describe('tabs', () => {
       props: {tag: 'span'},
     })
     const [, $div] = wrapper.findAll('div')
-    expect($div.exists()).toBe(true)
+    expect($div!.exists()).toBe(true)
   })
 
   it('end div has static class tab-content', () => {
@@ -354,7 +354,7 @@ describe('tabs', () => {
       props: {tag: 'span'},
     })
     const [, $div] = wrapper.findAll('div')
-    expect($div.classes()).toContain('tab-content')
+    expect($div!.classes()).toContain('tab-content')
   })
 
   it('end div has classes from prop contentClass', () => {
@@ -362,7 +362,7 @@ describe('tabs', () => {
       props: {tag: 'span', contentClass: ['foo']},
     })
     const [, $div] = wrapper.findAll('div')
-    expect($div.classes()).toContain('foo')
+    expect($div!.classes()).toContain('foo')
   })
 
   it('end div has another div child when tabs empty', () => {
@@ -370,7 +370,7 @@ describe('tabs', () => {
       props: {tag: 'span'},
     })
     const [, $div] = wrapper.findAll('div')
-    const $div2 = $div.find('div')
+    const $div2 = $div!.find('div')
     expect($div2.exists()).toBe(true)
   })
 
@@ -379,7 +379,7 @@ describe('tabs', () => {
       props: {tag: 'span'},
     })
     const [, $div] = wrapper.findAll('div')
-    const $div2 = $div.get('div')
+    const $div2 = $div!.get('div')
     expect($div2.classes()).toContain('tab-pane')
   })
 
@@ -388,7 +388,7 @@ describe('tabs', () => {
       props: {tag: 'span'},
     })
     const [, $div] = wrapper.findAll('div')
-    const $div2 = $div.get('div')
+    const $div2 = $div!.get('div')
     expect($div2.classes()).toContain('active')
   })
 
@@ -397,7 +397,7 @@ describe('tabs', () => {
       props: {tag: 'span', card: true},
     })
     const [, $div] = wrapper.findAll('div')
-    const $div2 = $div.get('div')
+    const $div2 = $div!.get('div')
     expect($div2.classes()).toContain('card-body')
     await wrapper.setProps({card: false})
     expect($div2.classes()).not.toContain('card-body')
@@ -409,7 +409,7 @@ describe('tabs', () => {
       slots: {empty: 'foobar'},
     })
     const [, $div] = wrapper.findAll('div')
-    const $div2 = $div.get('div')
+    const $div2 = $div!.get('div')
     expect($div2.text()).toBe('foobar')
   })
 
@@ -419,7 +419,7 @@ describe('tabs', () => {
       slots: {default: () => h(BTab, {tag: 'small'}, () => 'foobar')},
     })
     const [, $div] = wrapper.findAll('div')
-    const $small = $div.find('small')
+    const $small = $div!.find('small')
     expect($small.exists()).toBe(true)
   })
 
@@ -429,7 +429,7 @@ describe('tabs', () => {
       slots: {default: () => h(BTab, {tag: 'small'}, () => 'foobar')},
     })
     const [, $div] = wrapper.findAll('div')
-    const $div2 = $div.find('div')
+    const $div2 = $div!.find('div')
     expect($div2.exists()).toBe(false)
   })
   // end div
@@ -508,7 +508,7 @@ describe('tabs', () => {
     })
 
     const buttons = wrapper.findAll('button')
-    await buttons[1].trigger('click')
+    await buttons[1]!.trigger('click')
 
     const payload = wrapper.emitted('activate-tab')?.[0]?.[0]
     expect(payload).toEqual({
@@ -584,16 +584,16 @@ describe('tabs', () => {
     const wrapper = await mount(ComplexComponent, {})
     expect(wrapper.findComponent({name: 'b-tab'}).text()).toBe('c1')
     const $panes = wrapper.findAll('div.tab-pane')
-    expect($panes[0].text()).toBe('c1')
-    expect($panes[1].text()).toBe('c2')
-    expect($panes[2].text()).toBe('c3')
+    expect($panes[0]!.text()).toBe('c1')
+    expect($panes[1]!.text()).toBe('c2')
+    expect($panes[2]!.text()).toBe('c3')
     const $buttons = wrapper.findAll('button')
-    expect($buttons[0].text()).toBe('t1')
-    expect($buttons[0].classes()).toContain('active')
-    expect($buttons[1].text()).toBe('t2')
-    expect($buttons[1].classes()).not.toContain('active')
-    expect($buttons[2].text()).toBe('t3')
-    expect($buttons[2].classes()).not.toContain('active')
+    expect($buttons[0]!.text()).toBe('t1')
+    expect($buttons[0]!.classes()).toContain('active')
+    expect($buttons[1]!.text()).toBe('t2')
+    expect($buttons[1]!.classes()).not.toContain('active')
+    expect($buttons[2]!.text()).toBe('t3')
+    expect($buttons[2]!.classes()).not.toContain('active')
   })
 
   it('reactive in v-for and active to stay the same tab', async () => {
@@ -601,10 +601,10 @@ describe('tabs', () => {
     expect(wrapper.findComponent({name: 'b-tab'}).text()).toBe('c1')
     await wrapper.find('#add').trigger('click')
     const $buttons = wrapper.findAll('button')
-    expect($buttons[0].text()).toBe('t0')
-    expect($buttons[0].classes()).not.toContain('active')
-    expect($buttons[1].text()).toBe('t1')
-    expect($buttons[1].classes()).toContain('active')
+    expect($buttons[0]!.text()).toBe('t0')
+    expect($buttons[0]!.classes()).not.toContain('active')
+    expect($buttons[1]!.text()).toBe('t1')
+    expect($buttons[1]!.classes()).toContain('active')
     expect(wrapper.vm.index).toBe(1)
   })
 
@@ -614,16 +614,16 @@ describe('tabs', () => {
     await wrapper.find('#change').trigger('click')
 
     let $buttons = wrapper.findAll('button')
-    expect($buttons[0].classes()).not.toContain('active')
-    expect($buttons[1].classes()).not.toContain('active')
-    expect($buttons[2].classes()).toContain('active')
+    expect($buttons[0]!.classes()).not.toContain('active')
+    expect($buttons[1]!.classes()).not.toContain('active')
+    expect($buttons[2]!.classes()).toContain('active')
     expect(wrapper.vm.index).toBe(2)
     expect(wrapper.vm.id).toBe('i3')
     await wrapper.find('#change2').trigger('click')
     $buttons = wrapper.findAll('button')
-    expect($buttons[0].classes()).not.toContain('active')
-    expect($buttons[1].classes()).toContain('active')
-    expect($buttons[2].classes()).not.toContain('active')
+    expect($buttons[0]!.classes()).not.toContain('active')
+    expect($buttons[1]!.classes()).toContain('active')
+    expect($buttons[2]!.classes()).not.toContain('active')
     expect(wrapper.vm.index).toBe(1)
     expect(wrapper.vm.id).toBe('i2')
   })
@@ -658,9 +658,9 @@ describe('tabs', () => {
     expect(buttons.length).toBe(3)
 
     // Tab at index 1 (second tab) should be active
-    expect(buttons[0].classes()).not.toContain('active')
-    expect(buttons[1].classes()).toContain('active')
-    expect(buttons[2].classes()).not.toContain('active')
+    expect(buttons[0]!.classes()).not.toContain('active')
+    expect(buttons[1]!.classes()).toContain('active')
+    expect(buttons[2]!.classes()).not.toContain('active')
 
     expect(wrapper.vm.activeIndex).toBe(1)
   })
@@ -695,9 +695,9 @@ describe('tabs', () => {
     expect(buttons.length).toBe(3)
 
     // Tab at index 0 (first tab) should be active
-    expect(buttons[0].classes()).toContain('active')
-    expect(buttons[1].classes()).not.toContain('active')
-    expect(buttons[2].classes()).not.toContain('active')
+    expect(buttons[0]!.classes()).toContain('active')
+    expect(buttons[1]!.classes()).not.toContain('active')
+    expect(buttons[2]!.classes()).not.toContain('active')
 
     expect(wrapper.vm.activeIndex).toBe(0)
   })

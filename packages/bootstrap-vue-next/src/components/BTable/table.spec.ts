@@ -96,8 +96,8 @@ describe('structure', () => {
         props: {items: simpleItems, fields: simpleFields},
       })
       const heads = wrapper.get('table').findAll('th')
-      expect(heads[0].text()).toBe('First Name')
-      expect(heads[1].text()).toBe('Age')
+      expect(heads[0]!.text()).toBe('First Name')
+      expect(heads[1]!.text()).toBe('Age')
     })
 
     it('shows sortable columns when sortable === true', () => {
@@ -105,8 +105,8 @@ describe('structure', () => {
         props: {items: simpleItems, fields: simpleFields},
       })
       const heads = wrapper.get('table').findAll('th')
-      expect(heads[0].classes()).toContain('b-table-sortable-column')
-      expect(heads[1].classes()).toContain('b-table-sortable-column')
+      expect(heads[0]!.classes()).toContain('b-table-sortable-column')
+      expect(heads[1]!.classes()).toContain('b-table-sortable-column')
     })
   })
 
@@ -189,8 +189,8 @@ describe('single-sort', () => {
       props: {items: simpleItems},
     })
     const heads = wrapper.get('table').findAll('th')
-    expect(heads[0].classes()).not.toContain('b-table-sortable-column')
-    expect(heads[1].classes()).not.toContain('b-table-sortable-column')
+    expect(heads[0]!.classes()).not.toContain('b-table-sortable-column')
+    expect(heads[1]!.classes()).not.toContain('b-table-sortable-column')
   })
 
   it('has aria-sort="none" by default', () => {
@@ -198,7 +198,7 @@ describe('single-sort', () => {
       props: {items: simpleItems, fields: simpleFields},
     })
     const heads = wrapper.get('table').findAll('th')
-    expect(heads[0].attributes('aria-sort')).toBe('none')
+    expect(heads[0]!.attributes('aria-sort')).toBe('none')
   })
 
   it('has aria-sort="ascending" on first click', async () => {
@@ -206,8 +206,8 @@ describe('single-sort', () => {
       props: {items: simpleItems, fields: simpleFields},
     })
     const [names] = wrapper.get('table').findAll('th')
-    await names.trigger('click')
-    expect(names.attributes('aria-sort')).toBe('ascending')
+    await names!.trigger('click')
+    expect(names!.attributes('aria-sort')).toBe('ascending')
   })
 
   it('has aria-sort="descending" on second click', async () => {
@@ -215,9 +215,9 @@ describe('single-sort', () => {
       props: {items: simpleItems, fields: simpleFields},
     })
     const [names] = wrapper.get('table').findAll('th')
-    await names.trigger('click')
-    await names.trigger('click')
-    expect(names.attributes('aria-sort')).toBe('descending')
+    await names!.trigger('click')
+    await names!.trigger('click')
+    expect(names!.attributes('aria-sort')).toBe('descending')
   })
 
   it('sorts text ascending', () => {
@@ -257,7 +257,7 @@ describe('single-sort', () => {
     const text = wrapper
       .get('tbody')
       .findAll('tr')
-      .map((row) => row.findAll('td')[1].text())
+      .map((row) => row.findAll('td')[1]!.text())
     expect(text).toStrictEqual(['9', '27', '42'])
   })
 
@@ -272,7 +272,7 @@ describe('single-sort', () => {
     const text = wrapper
       .get('tbody')
       .findAll('tr')
-      .map((row) => row.findAll('td')[1].text())
+      .map((row) => row.findAll('td')[1]!.text())
     expect(text).toStrictEqual(['42', '27', '9'])
   })
 
@@ -346,8 +346,8 @@ describe('multi-sort', () => {
       },
     })
     const heads = wrapper.get('table').findAll('th')
-    expect(heads[0].attributes('aria-sort')).toBe('descending')
-    expect(heads[1].attributes('aria-sort')).toBe('ascending')
+    expect(heads[0]!.attributes('aria-sort')).toBe('descending')
+    expect(heads[1]!.attributes('aria-sort')).toBe('ascending')
   })
 
   it('correctly sorts on two columns', () => {
@@ -365,7 +365,7 @@ describe('multi-sort', () => {
     const text = wrapper
       .get('tbody')
       .findAll('tr')
-      .map((row) => row.findAll('td')[1].text())
+      .map((row) => row.findAll('td')[1]!.text())
     expect(text).toStrictEqual(['35', '42', '27', '9', '101'])
   })
 })
@@ -421,14 +421,14 @@ describe('object-persistence', () => {
         },
       })
       const $trs = wrapper.findAll('tr')
-      await $trs[1].trigger('click')
-      await $trs[2].trigger('click')
-      expect($trs[1].classes()).toContain('selected')
-      expect($trs[2].classes()).toContain('selected')
-      await $trs[1].trigger('click')
-      await $trs[2].trigger('click')
-      expect($trs[1].classes()).not.toContain('selected')
-      expect($trs[2].classes()).not.toContain('selected')
+      await $trs[1]!.trigger('click')
+      await $trs[2]!.trigger('click')
+      expect($trs[1]!.classes()).toContain('selected')
+      expect($trs[2]!.classes()).toContain('selected')
+      await $trs[1]!.trigger('click')
+      await $trs[2]!.trigger('click')
+      expect($trs[1]!.classes()).not.toContain('selected')
+      expect($trs[2]!.classes()).not.toContain('selected')
     })
 
     it('single mode', async () => {
@@ -444,12 +444,12 @@ describe('object-persistence', () => {
         },
       })
       const $trs = wrapper.findAll('tr')
-      await $trs[1].trigger('click')
-      expect($trs[1].classes()).toContain('selected')
+      await $trs[1]!.trigger('click')
+      expect($trs[1]!.classes()).toContain('selected')
       await nextTick()
-      await $trs[2].trigger('click')
-      expect($trs[1].classes()).not.toContain('selected')
-      expect($trs[2].classes()).toContain('selected')
+      await $trs[2]!.trigger('click')
+      expect($trs[1]!.classes()).not.toContain('selected')
+      expect($trs[2]!.classes()).toContain('selected')
     })
 
     it('multi mode', async () => {
@@ -464,10 +464,10 @@ describe('object-persistence', () => {
         },
       })
       const $trs = wrapper.findAll('tr')
-      await $trs[1].trigger('click')
-      await $trs[2].trigger('click')
-      expect($trs[1].classes()).toContain('selected')
-      expect($trs[2].classes()).toContain('selected')
+      await $trs[1]!.trigger('click')
+      await $trs[2]!.trigger('click')
+      expect($trs[1]!.classes()).toContain('selected')
+      expect($trs[2]!.classes()).toContain('selected')
     })
 
     describe('ranged mode', () => {
@@ -489,12 +489,12 @@ describe('object-persistence', () => {
           },
         })
         const $trs = wrapper.findAll('tr')
-        await $trs[1].trigger('click')
-        expect($trs[1].classes()).toContain('selected')
+        await $trs[1]!.trigger('click')
+        expect($trs[1]!.classes()).toContain('selected')
         await nextTick()
-        await $trs[2].trigger('click')
-        expect($trs[1].classes()).not.toContain('selected')
-        expect($trs[2].classes()).toContain('selected')
+        await $trs[2]!.trigger('click')
+        expect($trs[1]!.classes()).not.toContain('selected')
+        expect($trs[2]!.classes()).toContain('selected')
       })
       it('ctrl click', async () => {
         const items = [
@@ -514,13 +514,13 @@ describe('object-persistence', () => {
           },
         })
         const $trs = wrapper.findAll('tr')
-        await $trs[1].trigger('click')
-        expect($trs[1].classes()).toContain('selected')
+        await $trs[1]!.trigger('click')
+        expect($trs[1]!.classes()).toContain('selected')
         const event = new MouseEvent('click', {ctrlKey: true})
-        $trs[3].element.dispatchEvent(event)
+        $trs[3]!.element.dispatchEvent(event)
         await nextTick()
-        expect($trs[1].classes()).toContain('selected')
-        expect($trs[3].classes()).toContain('selected')
+        expect($trs[1]!.classes()).toContain('selected')
+        expect($trs[3]!.classes()).toContain('selected')
       })
       it('shift click', async () => {
         const items = [
@@ -540,14 +540,14 @@ describe('object-persistence', () => {
           },
         })
         const $trs = wrapper.findAll('tr')
-        await $trs[1].trigger('click')
-        expect($trs[1].classes()).toContain('selected')
+        await $trs[1]!.trigger('click')
+        expect($trs[1]!.classes()).toContain('selected')
         const event = new MouseEvent('click', {shiftKey: true})
-        $trs[3].element.dispatchEvent(event)
+        $trs[3]!.element.dispatchEvent(event)
         await nextTick()
-        expect($trs[1].classes()).toContain('selected')
-        expect($trs[2].classes()).toContain('selected')
-        expect($trs[3].classes()).toContain('selected')
+        expect($trs[1]!.classes()).toContain('selected')
+        expect($trs[2]!.classes()).toContain('selected')
+        expect($trs[3]!.classes()).toContain('selected')
       })
       it('shift click correct order', async () => {
         const wrapper = mount(BTable, {
@@ -571,18 +571,18 @@ describe('object-persistence', () => {
           },
         })
         const [first, second, third, fourth] = wrapper.findAll('tr')
-        await fourth.trigger('click')
-        expect(first.classes()).not.toContain('selected')
-        expect(second.classes()).not.toContain('selected')
-        expect(third.classes()).not.toContain('selected')
-        expect(fourth.classes()).toContain('selected')
+        await fourth!.trigger('click')
+        expect(first!.classes()).not.toContain('selected')
+        expect(second!.classes()).not.toContain('selected')
+        expect(third!.classes()).not.toContain('selected')
+        expect(fourth!.classes()).toContain('selected')
         const event = new MouseEvent('click', {shiftKey: true})
-        third.element.dispatchEvent(event)
+        third!.element.dispatchEvent(event)
         await nextTick()
-        expect(first.classes()).not.toContain('selected')
-        expect(second.classes()).not.toContain('selected')
-        expect(third.classes()).toContain('selected')
-        expect(fourth.classes()).toContain('selected')
+        expect(first!.classes()).not.toContain('selected')
+        expect(second!.classes()).not.toContain('selected')
+        expect(third!.classes()).toContain('selected')
+        expect(fourth!.classes()).toContain('selected')
       })
     })
 
@@ -648,7 +648,7 @@ describe('object-persistence', () => {
         const tds = tr.findAll('td')
         tds.forEach((td, colIndex) => {
           const field = fields[colIndex]
-          expect(td.attributes('data-label')).toBe(field.label)
+          expect(td.attributes('data-label')).toBe(field!.label)
         })
       })
     })
@@ -699,7 +699,7 @@ describe('object-persistence', () => {
         const tds = tr.findAll('td')
         tds.forEach((td, colIndex) => {
           const field = fields[colIndex]
-          expect(td.attributes('data-label')).toBe(field.label)
+          expect(td.attributes('data-label')).toBe(field!.label)
         })
       })
     })
@@ -883,7 +883,7 @@ describe('combined sorting features', () => {
     })
 
     const [nameHeader] = wrapper.get('table').findAll('th')
-    await nameHeader.trigger('click')
+    await nameHeader!.trigger('click')
 
     // Should start with desc (field-level override) and use reverse comparer
     const text = wrapper
@@ -931,7 +931,7 @@ describe('combined sorting features', () => {
     const text = wrapper
       .get('tbody')
       .findAll('tr')
-      .map((row) => row.findAll('td')[1].text())
+      .map((row) => row.findAll('td')[1]!.text())
     // With custom age comparer (reversed), "asc" order should show highest ages first within each name group
     expect(text).toStrictEqual(['101', '9', '27', '42', '35'])
   })
@@ -948,7 +948,7 @@ describe('initial sort direction', () => {
     })
 
     const [nameHeader] = wrapper.get('table').findAll('th')
-    await nameHeader.trigger('click')
+    await nameHeader!.trigger('click')
 
     const text = wrapper
       .get('tbody')
@@ -983,7 +983,7 @@ describe('initial sort direction', () => {
 
     // Test first field (desc override)
     const [nameHeader, ageHeader] = wrapper.get('table').findAll('th')
-    await nameHeader.trigger('click')
+    await nameHeader!.trigger('click')
 
     let text = wrapper
       .get('tbody')
@@ -992,11 +992,11 @@ describe('initial sort direction', () => {
     expect(text).toStrictEqual(['Robert', 'Havij', 'Cyndi'])
 
     // Test second field (asc override)
-    await ageHeader.trigger('click')
+    await ageHeader!.trigger('click')
     text = wrapper
       .get('tbody')
       .findAll('tr')
-      .map((row) => row.findAll('td')[1].text())
+      .map((row) => row.findAll('td')[1]!.text())
     expect(text).toStrictEqual(['9', '27', '42'])
   })
 
@@ -1012,7 +1012,7 @@ describe('initial sort direction', () => {
 
     // Click on name field - should use the last sort direction from 'age' (asc), not itself (desc)
     const [nameHeader] = wrapper.get('table').findAll('th')
-    await nameHeader.trigger('click')
+    await nameHeader!.trigger('click')
 
     const text = wrapper
       .get('tbody')
@@ -1042,7 +1042,7 @@ describe('initial sort direction', () => {
 
     // Click on name field - should use the last sort direction from 'age' (asc), not itself (desc)
     const [nameHeader] = wrapper.get('table').findAll('th')
-    await nameHeader.trigger('click')
+    await nameHeader!.trigger('click')
 
     const text = wrapper
       .get('tbody')
@@ -1061,7 +1061,7 @@ describe('initial sort direction', () => {
     })
 
     const [nameHeader] = wrapper.get('table').findAll('th')
-    await nameHeader.trigger('click')
+    await nameHeader!.trigger('click')
 
     const text = wrapper
       .get('tbody')
@@ -1197,7 +1197,7 @@ describe('initial sort direction', () => {
     const [nameHeader, ageHeader] = wrapper.get('table').findAll('th')
 
     // Click on 'first_name' header: should use the last sort direction from 'age' (asc), not itself (desc)
-    await nameHeader.trigger('click')
+    await nameHeader!.trigger('click')
     let text = wrapper
       .get('tbody')
       .findAll('tr')
@@ -1206,11 +1206,11 @@ describe('initial sort direction', () => {
     expect(text).toStrictEqual(['Cyndi', 'Havij', 'Robert'])
 
     // Click on 'age' header: should use the last sort direction from 'first_name' (desc), not itself (asc)
-    await ageHeader.trigger('click')
+    await ageHeader!.trigger('click')
     text = wrapper
       .get('tbody')
       .findAll('tr')
-      .map((row) => row.findAll('td')[1].text())
+      .map((row) => row.findAll('td')[1]!.text())
     // Should sort by age desc (since last sort direction excluding itself is 'desc')
     expect(text).toStrictEqual(['42', '27', '9'])
   })
@@ -1231,31 +1231,31 @@ describe('initial sort direction', () => {
     const [nameHeader] = wrapper.get('table').findAll('th')
 
     // First click: should be desc
-    await nameHeader.trigger('click')
+    await nameHeader!.trigger('click')
     let text = wrapper
       .get('tbody')
       .findAll('tr')
       .map((row) => row.find('td').text())
     expect(text).toStrictEqual(['Robert', 'Havij', 'Cyndi'])
-    expect(nameHeader.attributes('aria-sort')).toBe('descending')
+    expect(nameHeader!.attributes('aria-sort')).toBe('descending')
 
     // Second click: should be asc
-    await nameHeader.trigger('click')
+    await nameHeader!.trigger('click')
     text = wrapper
       .get('tbody')
       .findAll('tr')
       .map((row) => row.find('td').text())
     expect(text).toStrictEqual(['Cyndi', 'Havij', 'Robert'])
-    expect(nameHeader.attributes('aria-sort')).toBe('ascending')
+    expect(nameHeader!.attributes('aria-sort')).toBe('ascending')
 
     // Third click: should cycle back to desc (never undefined)
-    await nameHeader.trigger('click')
+    await nameHeader!.trigger('click')
     text = wrapper
       .get('tbody')
       .findAll('tr')
       .map((row) => row.find('td').text())
     expect(text).toStrictEqual(['Robert', 'Havij', 'Cyndi'])
-    expect(nameHeader.attributes('aria-sort')).toBe('descending')
+    expect(nameHeader!.attributes('aria-sort')).toBe('descending')
   })
 
   it('cycles desc -> asc -> undefined when initialSortDirection is desc and mustSort is not set', async () => {
@@ -1274,29 +1274,29 @@ describe('initial sort direction', () => {
     const [nameHeader] = wrapper.get('table').findAll('th')
 
     // First click: should be desc
-    await nameHeader.trigger('click')
+    await nameHeader!.trigger('click')
     let text = wrapper
       .get('tbody')
       .findAll('tr')
       .map((row) => row.find('td').text())
     expect(text).toStrictEqual(['Robert', 'Havij', 'Cyndi'])
-    expect(nameHeader.attributes('aria-sort')).toBe('descending')
+    expect(nameHeader!.attributes('aria-sort')).toBe('descending')
 
     // Second click: should be asc
-    await nameHeader.trigger('click')
+    await nameHeader!.trigger('click')
     text = wrapper
       .get('tbody')
       .findAll('tr')
       .map((row) => row.find('td').text())
     expect(text).toStrictEqual(['Cyndi', 'Havij', 'Robert'])
-    expect(nameHeader.attributes('aria-sort')).toBe('ascending')
+    expect(nameHeader!.attributes('aria-sort')).toBe('ascending')
 
     // Third click: should be undefined (no aria-sort)
-    await nameHeader.trigger('click')
+    await nameHeader!.trigger('click')
     // The header should not have aria-sort attribute or should be 'none'
     expect(
-      nameHeader.attributes('aria-sort') === undefined ||
-        nameHeader.attributes('aria-sort') === 'none'
+      nameHeader!.attributes('aria-sort') === undefined ||
+        nameHeader!.attributes('aria-sort') === 'none'
     ).toBe(true)
     // The table should revert to original order (unsorted)
     text = wrapper
@@ -1527,7 +1527,7 @@ describe('event emissions', () => {
       props: {items, fields},
     })
     const headers = wrapper.findAll('thead th')
-    await headers[0].trigger('click')
+    await headers[0]!.trigger('click')
 
     expect(wrapper.emitted('sorted')).toBeTruthy()
     const sortEvent = wrapper.emitted('sorted')?.[0]?.[0] as BTableSortBy
@@ -1548,7 +1548,7 @@ describe('event emissions', () => {
     expect(wrapper.emitted('filtered')).toBeTruthy()
     const filteredItems = wrapper.emitted('filtered')?.[0]?.[0] as typeof items
     expect(filteredItems).toHaveLength(1)
-    expect(filteredItems[0].first_name).toBe('John')
+    expect(filteredItems[0]!.first_name).toBe('John')
   })
 
   it('emits row-selected event when row is selected', async () => {
@@ -1562,7 +1562,7 @@ describe('event emissions', () => {
     })
 
     const rows = wrapper.findAll('tbody tr')
-    await rows[0].trigger('click')
+    await rows[0]!.trigger('click')
 
     expect(wrapper.emitted('row-selected')).toBeTruthy()
     expect(wrapper.emitted('row-selected')?.[0]?.[0]).toEqual(items[0])
@@ -1580,11 +1580,11 @@ describe('event emissions', () => {
 
     const rows = wrapper.findAll('tbody tr')
     // First click to select
-    await rows[0].trigger('click')
+    await rows[0]!.trigger('click')
     expect(wrapper.emitted('row-selected')).toBeTruthy()
 
     // Second click to unselect
-    await rows[0].trigger('click')
+    await rows[0]!.trigger('click')
     expect(wrapper.emitted('row-unselected')).toBeTruthy()
     expect(wrapper.emitted('row-unselected')?.[0]?.[0]).toEqual(items[0])
   })
@@ -1595,7 +1595,7 @@ describe('event emissions', () => {
     })
 
     const headers = wrapper.findAll('thead th')
-    await headers[0].trigger('click')
+    await headers[0]!.trigger('click')
     await nextTick()
 
     expect(wrapper.emitted('change')).toBeTruthy()
@@ -1609,7 +1609,7 @@ describe('event emissions', () => {
     })
 
     const rows = wrapper.findAll('tbody tr')
-    await rows[0].trigger('click')
+    await rows[0]!.trigger('click')
 
     expect(wrapper.emitted('row-clicked')).toBeTruthy()
     expect(wrapper.emitted('row-clicked')?.[0]).toEqual([
@@ -1627,7 +1627,7 @@ describe('event emissions', () => {
     })
 
     const rows = wrapper.findAll('tbody tr')
-    await rows[1].trigger('dblclick')
+    await rows[1]!.trigger('dblclick')
 
     expect(wrapper.emitted('row-dblclicked')).toBeTruthy()
     expect(wrapper.emitted('row-dblclicked')?.[0]).toEqual([
@@ -1645,7 +1645,7 @@ describe('event emissions', () => {
     })
 
     const headers = wrapper.findAll('thead th')
-    await headers[1].trigger('click')
+    await headers[1]!.trigger('click')
 
     expect(wrapper.emitted('head-clicked')).toBeTruthy()
     const emittedEvent = wrapper.emitted('head-clicked')?.[0]?.[0]
@@ -1664,7 +1664,7 @@ describe('event emissions', () => {
 
     // Click header to sort
     const headers = wrapper.findAll('thead th')
-    await headers[0].trigger('click')
+    await headers[0]!.trigger('click')
     await nextTick()
 
     // Should emit head-clicked, sorted, and change

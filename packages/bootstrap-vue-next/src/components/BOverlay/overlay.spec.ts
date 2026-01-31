@@ -267,7 +267,7 @@ describe('overlay', () => {
     const $div = $transition.get('div')
     await $div.trigger('click')
     const emitted = wrapper.emitted('click') ?? []
-    expect(emitted[0][0] instanceof MouseEvent).toBe(true)
+    expect(emitted[0]![0]! instanceof MouseEvent).toBe(true)
   })
 
   it('child BTransition child div has further child div', async () => {
@@ -469,7 +469,7 @@ describe('overlay', () => {
     const $transition = wrapper.getComponent(BTransition)
     const $div = $transition.get('div')
     const [, $third] = $div.findAll('div')
-    expect($third.exists()).toBe(true)
+    expect($third!.exists()).toBe(true)
   })
 
   it('child BTransition child div second child div has static class position-absolute', () => {
@@ -479,7 +479,7 @@ describe('overlay', () => {
     const $transition = wrapper.getComponent(BTransition)
     const $div = $transition.get('div')
     const [, $third] = $div.findAll('div')
-    expect($third.classes()).toContain('position-absolute')
+    expect($third!.classes()).toContain('position-absolute')
   })
 
   it('child BTransition child div second child div has position styles when prop noCenter', () => {
@@ -489,10 +489,10 @@ describe('overlay', () => {
     const $transition = wrapper.getComponent(BTransition)
     const $div = $transition.get('div')
     const [, $third] = $div.findAll('div')
-    expect($third.attributes('style')).toContain('top: 0px;')
-    expect($third.attributes('style')).toContain('bottom: 0px;')
-    expect($third.attributes('style')).toContain('left: 0px;')
-    expect($third.attributes('style')).toContain('right: 0px;')
+    expect($third!.attributes('style')).toContain('top: 0px;')
+    expect($third!.attributes('style')).toContain('bottom: 0px;')
+    expect($third!.attributes('style')).toContain('left: 0px;')
+    expect($third!.attributes('style')).toContain('right: 0px;')
   })
 
   it('child BTransition child div second child div has custom position styles when prop noCenter false', () => {
@@ -502,9 +502,9 @@ describe('overlay', () => {
     const $transition = wrapper.getComponent(BTransition)
     const $div = $transition.get('div')
     const [, $third] = $div.findAll('div')
-    expect($third.attributes('style')).toContain('top: 50%;')
-    expect($third.attributes('style')).toContain('left: 50%;')
-    expect($third.attributes('style')).toContain('transform: translateX(-50%) translateY(-50%);')
+    expect($third!.attributes('style')).toContain('top: 50%;')
+    expect($third!.attributes('style')).toContain('left: 50%;')
+    expect($third!.attributes('style')).toContain('transform: translateX(-50%) translateY(-50%);')
   })
 
   it('child BTransition child div second child div renders slot overlay', () => {
@@ -515,7 +515,7 @@ describe('overlay', () => {
     const $transition = wrapper.getComponent(BTransition)
     const $div = $transition.get('div')
     const [, $third] = $div.findAll('div')
-    expect($third.text()).toBe('foobar')
+    expect($third!.text()).toBe('foobar')
   })
 
   it('renders both slot overlay and slot foobar correctly', () => {
@@ -533,7 +533,7 @@ describe('overlay', () => {
     const $transition = wrapper.getComponent(BTransition)
     const $div = $transition.get('div')
     const [, $third] = $div.findAll('div')
-    const $spinner = $third.findComponent(BSpinner)
+    const $spinner = $third!.findComponent(BSpinner)
     expect($spinner.exists()).toBe(true)
   })
 
@@ -544,7 +544,7 @@ describe('overlay', () => {
     const $transition = wrapper.getComponent(BTransition)
     const $div = $transition.get('div')
     const [, $third] = $div.findAll('div')
-    const $spinner = $third.getComponent(BSpinner)
+    const $spinner = $third!.getComponent(BSpinner)
     expect($spinner.props('type')).toBe('grow')
   })
 
@@ -555,7 +555,7 @@ describe('overlay', () => {
     const $transition = wrapper.getComponent(BTransition)
     const $div = $transition.get('div')
     const [, $third] = $div.findAll('div')
-    const $spinner = $third.getComponent(BSpinner)
+    const $spinner = $third!.getComponent(BSpinner)
     expect($spinner.props('variant')).toBe('danger')
   })
 
@@ -566,7 +566,7 @@ describe('overlay', () => {
     const $transition = wrapper.getComponent(BTransition)
     const $div = $transition.get('div')
     const [, $third] = $div.findAll('div')
-    const $spinner = $third.getComponent(BSpinner)
+    const $spinner = $third!.getComponent(BSpinner)
     expect($spinner.props('small')).toBe(true)
   })
 })

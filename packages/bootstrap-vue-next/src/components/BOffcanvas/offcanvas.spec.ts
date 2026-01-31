@@ -113,14 +113,14 @@ describe.skip('offcanvas', () => {
   it('first child div has child h5 with static class offcanvas-title', () => {
     const wrapper = mount(BOffcanvas)
     const [, $div] = wrapper.findAll('div')
-    const $h5 = $div.get('h5')
+    const $h5 = $div!.get('h5')
     expect($h5.classes()).toContain('offcanvas-title')
   })
 
   it('first child div has child h5 has id offcanvasLabel', () => {
     const wrapper = mount(BOffcanvas)
     const [, $div] = wrapper.findAll('div')
-    const $h5 = $div.get('h5')
+    const $h5 = $div!.get('h5')
     expect($h5.attributes('id')).toContain('offcanvasLabel')
   })
 
@@ -129,7 +129,7 @@ describe.skip('offcanvas', () => {
       slots: {title: 'foobar'},
     })
     const [, $div] = wrapper.findAll('div')
-    const $h5 = $div.get('h5')
+    const $h5 = $div!.get('h5')
     expect($h5.text()).toBe('foobar')
   })
 
@@ -138,35 +138,35 @@ describe.skip('offcanvas', () => {
       props: {title: 'foobar'},
     })
     const [, $div] = wrapper.findAll('div')
-    const $h5 = $div.get('h5')
+    const $h5 = $div!.get('h5')
     expect($h5.text()).toBe('foobar')
   })
 
   it('first child div has child BCloseButton', () => {
     const wrapper = mount(BOffcanvas)
     const [, $div] = wrapper.findAll('div')
-    const $closebutton = $div.findComponent(BCloseButton)
+    const $closebutton = $div!.findComponent(BCloseButton)
     expect($closebutton.exists()).toBe(true)
   })
 
   it('first child div child BCloseButton has prop type to be button', () => {
     const wrapper = mount(BOffcanvas)
     const [, $div] = wrapper.findAll('div')
-    const $closebutton = $div.getComponent(BCloseButton)
+    const $closebutton = $div!.getComponent(BCloseButton)
     expect($closebutton.props('type')).toBe('button')
   })
 
   it('first child div child BCloseButton has static class text-reset', () => {
     const wrapper = mount(BOffcanvas)
     const [, $div] = wrapper.findAll('div')
-    const $closebutton = $div.getComponent(BCloseButton)
+    const $closebutton = $div!.getComponent(BCloseButton)
     expect($closebutton.classes()).toContain('text-reset')
   })
 
   it('first child div child BCloseButton has prop ariaLabel to be default close', () => {
     const wrapper = mount(BOffcanvas)
     const [, $div] = wrapper.findAll('div')
-    const $closebutton = $div.getComponent(BCloseButton)
+    const $closebutton = $div!.getComponent(BCloseButton)
     expect($closebutton.props('ariaLabel')).toBe('Close')
   })
 
@@ -175,7 +175,7 @@ describe.skip('offcanvas', () => {
       props: {headerCloseLabel: 'foobar'},
     })
     const [, $div] = wrapper.findAll('div')
-    const $closebutton = $div.getComponent(BCloseButton)
+    const $closebutton = $div!.getComponent(BCloseButton)
     expect($closebutton.props('ariaLabel')).toBe('foobar')
   })
 
@@ -184,7 +184,7 @@ describe.skip('offcanvas', () => {
       props: {headerCloseClass: 'foobar'},
     })
     const [, $div] = wrapper.findAll('div')
-    const $closebutton = $div.getComponent(BCloseButton)
+    const $closebutton = $div!.getComponent(BCloseButton)
     expect($closebutton.classes()).toContain('foobar')
   })
 
@@ -193,7 +193,7 @@ describe.skip('offcanvas', () => {
       props: {headerCloseVariant: 'warning'},
     })
     const [, $div] = wrapper.findAll('div')
-    const $closebutton = $div.getComponent(BCloseButton)
+    const $closebutton = $div!.getComponent(BCloseButton)
     expect($closebutton.classes()).not.toContain('btn-warning')
   })
 
@@ -203,7 +203,7 @@ describe.skip('offcanvas', () => {
       slots: {'header-close': 'foobar'},
     })
     const [, $div] = wrapper.findAll('div')
-    const $bbutton = $div.getComponent(BButton)
+    const $bbutton = $div!.getComponent(BButton)
     expect($bbutton.classes()).toContain('foobar')
   })
 
@@ -213,7 +213,7 @@ describe.skip('offcanvas', () => {
       slots: {'header-close': 'foobar'},
     })
     const [, $div] = wrapper.findAll('div')
-    const $bbutton = $div.getComponent(BButton)
+    const $bbutton = $div!.getComponent(BButton)
     expect($bbutton.classes()).toContain('btn-warning')
   })
 
@@ -221,7 +221,7 @@ describe.skip('offcanvas', () => {
     const wrapper = mount(BOffcanvas)
     const offcanvas = wrapper.find('.offcanvas')
     const [, $body] = offcanvas.findAll('div')
-    expect($body.classes()).toContain('offcanvas-body')
+    expect($body!.classes()).toContain('offcanvas-body')
   })
 
   it('second child div renders default slot', () => {
@@ -230,7 +230,7 @@ describe.skip('offcanvas', () => {
     })
     const offcanvas = wrapper.find('.offcanvas')
     const [, $body] = offcanvas.findAll('div')
-    expect($body.text()).toBe('foobar')
+    expect($body!.text()).toBe('foobar')
   })
 
   it('child body div is given prop bodyClass', () => {
