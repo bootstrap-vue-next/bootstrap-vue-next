@@ -33,7 +33,7 @@
     "dev": "run-s dev:prepare \"nuxt dev playground\"",
     "build": "run-s dev:prepare dev:build prepack",
     "dev:build": "nuxt build playground",
-    "dev:prepare": "run-s \"nuxt-module-build build --stub\" \"nuxt-module-build prepare\" \"nuxt prepare playground\"",
+    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxt prepare playground",
     "publint": "publint",
     "lint": "eslint .",
     "test": "vitest run",
