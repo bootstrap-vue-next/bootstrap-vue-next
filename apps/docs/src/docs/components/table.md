@@ -43,14 +43,13 @@ defines the supported optional item record modifier properties
 | --------------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `_cellVariants` | Partial<Record<keyof T, ColorVariant>> | Bootstrap contextual state applied to individual cells. Keyed by field (See the [Color Variants](/docs/reference/color-variants) for supported values). These variants map to classes `table-${variant}` or `bg-${variant}` (when the `dark` prop is set). |
 | `_rowVariant`   | ColorVariant                           | Bootstrap contextual state applied to the entire row (See the [Color Variants](/docs/reference/color-variants) for supported values). These variants map to classes `table-${variant}` or `bg-${variant}` (when the `dark` prop is set)                    |
-| `_showDetails`  | boolean                                | Used to trigger the display of the `row-details` scoped slot. See section [Row details support](#row-details-support) below for additional information                                                                                                     |
 
 ### Example: Using variants for table cells
 
 <<< DEMO ./demo/TableCellVariants.vue
 
 A provider function can be provided instead of setting `items` to return items syncronously or asyncronously.
-See the ["Using Items Provider functions"](#using-items-provider-functions) section below for more details.
+See the ["Using items Provider functions"](#using-items-provider-functions) section below for more details.
 
 ### Table item notes and warnings
 
@@ -87,32 +86,46 @@ formatting, etc.). Only columns (keys) that appear in the fields array will be s
 
 <<< DEMO ./demo/TableFieldObjects.vue
 
+### Accessing nested and computed data
+
+The `key` property must be a simple string identifier and cannot use nested paths like `name.firstName`.
+To access nested or computed data from your items, use the `accessor` property:
+
+<<< DEMO ./demo/TableAccessor.vue
+
+The `accessor` can be:
+
+- A **string** for root-level properties (e.g., `'email'`)
+- A **function** that receives the item and returns the value (recommended for nested or computed values)
+- If omitted, the `key` is used by default
+
 ### Field Definition Reference
 
 The following field properties (defined as [TableField](/docs/types#tableitem)) are recognized:
 
-| Property               | Type                                                                                               | Description                                                                                                                                                                                                                                                                                                                                                                                    |
-| ---------------------- | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `key`                  | `LiteralUnion<keyof T>`                                                                            | The key for selecting data from the record in the items array. Required when setting the `fields` via an array of objects. The `key` is also used for generating the [custom data rendering](#custom-data-rendering) and [custom header and footer](#header-and-footer-custom-rendering-via-scoped-slots) slot names.                                                                          |
-| `label`                | `string`                                                                                           | Appears in the columns table header (and footer if `foot-clone` is set). Defaults to the field's key (in humanized format) if not provided. It's possible to use empty labels by assigning an empty string `""` but be sure you also set `headerTitle` to provide non-sighted users a hint about the column contents.                                                                          |
-| `headerTitle`          | `string`                                                                                           | Text to place on the fields header `<th>` attribute `title`. Defaults to no `title` attribute.                                                                                                                                                                                                                                                                                                 |
-| `headerAbbr`           | `string`                                                                                           | Text to place on the fields header `<th>` attribute `abbr`. Set this to the unabbreviated version of the label (or title) if label (or title) is an abbreviation. Defaults to no `abbr` attribute.                                                                                                                                                                                             |
-| `class`                | `ClassValue`                                                                                       | Class name (or array of class names) to add to `<th>` **and** `<td>` in the column.                                                                                                                                                                                                                                                                                                            |
-| `formatter`            | `TableFieldFormatter<T>`                                                                           | A formatter callback function can be used instead of (or in conjunction with) scoped field slots. The formatter will be called with the syntax `formatter<T>(value: unknown, key: string, item: T)`. Refer to [Custom Data Rendering](#custom-data-rendering) for more details.                                                                                                                |
-| `sortable`             | `boolean`                                                                                          | Enable sorting on this column. Refer to the [Sorting](#sorting) Section for more details.                                                                                                                                                                                                                                                                                                      |
-| `initialSortDirection` | `BTableInitialSortDirection`                                                                       | Control the sort direction on this column when it becomes sorted. Refer to the [Change initial sort direction](#change-initial-sort-direction) Section for more details.                                                                                                                                                                                                                       |
-| `sortByFormatted`      | `boolean \| TableFieldFormatter<T>`                                                                | Sort the column by the result of the field's `formatter` callback function when set to `true`. Default is `false`. Boolean has no effect if the field does not have a `formatter`. Optionally accepts a formatter function _reference_ to format the value for sorting purposes only. Refer to the [Sorting](#sorting) Section for more details.                                               |
-| `filterByFormatted`    | `boolean \| TableFieldFormatter<T>`                                                                | Filter the column by the result of the field's `formatter` callback function when set to `true`. Default is `false`. Boolean has no effect if the field does not have a `formatter`. Optionally accepts a formatter function _reference_ to format the value for filtering purposes only. Refer to the [Filtering](#filtering) section for more details.                                       |
-| `comparer`             | `BTableSortByComparerFunction`                                                                     | A custom comparison function for sorting this field. The function signature is `(a: T, b: T, key: string) => number`. If not provided, uses default string comparison. See [Custom Sort Comparers](#custom-sort-comparers) for more details.                                                                                                                                                   |
-| `tdClass`              | `TableStrictClassValue \| ((value: unknown, key: string, item: T) => TableStrictClassValue)`       | Class name (or array of class names) to add to `<tbody>` data `<td>` cells in the column. If custom classes per cell are required, a callback function can be specified instead. See the typescript definition for accepted parameters and return types.                                                                                                                                       |
-| `thClass`              | `ClassValue`                                                                                       | Class name (or array of class names) to add to this field's `<thead>`/`<tfoot>` heading `<th>` cell.                                                                                                                                                                                                                                                                                           |
-| `thStyle`              | `StyleValue`                                                                                       | CSS styles you would like to apply to the table `<thead>`/`<tfoot>` field `<th>` cell.                                                                                                                                                                                                                                                                                                         |
-| `variant`              | `ColorVariant \| null`                                                                             | Apply contextual class to all the `<th>` **and** `<td>` in the column.                                                                                                                                                                                                                                                                                                                         |
-| `tdAttr`               | `AttrsValue \| ((value: unknown, key: string, item: T) => AttrsValue)`                             | Object representing additional attributes to apply to the `<tbody>` field `<td>` cell. If custom attributes per cell are required, a callback function can be specified instead. See the typescript definition for accepted parameters and return types.                                                                                                                                       |
-| `thAttr`               | `AttrsValue \| ((value: unknown, key: string, item: T \| null, type: TableRowThead) => AttrsValue` | Object representing additional attributes to apply to the field's `<thead>`/`<tfoot>` heading `<th>` cell. If the field's `isRowHeader` is set to `true`, the attributes will also apply to the `<tbody>` field `<th>` cell. If custom attributes per cell are required, a callback function can be specified instead. See the typescript definition for accepted parameters and return types. |
-| `isRowHeader`          | `boolean`                                                                                          | When set to `true`, the field's item data cell will be rendered with `<th>` rather than the default of `<td>`.                                                                                                                                                                                                                                                                                 |
-| `stickyColumn`         | `boolean`                                                                                          | When set to `true`, and the table in [responsive](#responsive-tables) mode or has [sticky headers](#sticky-headers), will cause the column to become fixed to the left when the table's horizontal scrollbar is scrolled. See [Sticky columns](#sticky-columns) for more details                                                                                                               |
-| `scope`                | `TableThScope`                                                                                     | The scope attribute for the field's `<th>` element. This is used to specify the relationship of the header cell to the data cells. Valid values are `row`, `col`, `rowgroup`, and `colgroup`. Defaults to `colgroup` if `colspan` specified, `rowgroup` if `rowspan` specified, otherwise `col`.                                                                                               |
+| Property               | Type                                                                                         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ---------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `key`                  | `string`                                                                                     | **Required.** Unique identifier for the column. Used for generating slot names (e.g., `head(<key>)`, `cell(<key>)`) and tracking column state. This value must be a simple string and does **not** support nested paths like `name.firstName`. For nested or computed data access, use the `accessor` property. See the [migration guide](/docs/migration-guide#field-definitions) for details on migrating from nested keys.                                                                                |
+| `accessor`             | `string \| ((item: T) => unknown)`                                                           | **Optional.** Specifies how to read the value from each row item. Can be a string representing a root-level property name (e.g., `'email'`), or a function that receives the row item and returns the value (recommended for nested or computed values). If omitted, defaults to using the `key` property. **Note:** String accessors only work for root-level properties; use a function for nested paths (e.g., `(item) => item.name.first`).                                                              |
+| `label`                | `string`                                                                                     | Appears in the columns table header (and footer if `foot-clone` is set). Defaults to the field's key (in humanized format) if not provided. It's possible to use empty labels by assigning an empty string `""` but be sure you also set `headerTitle` to provide non-sighted users a hint about the column contents.                                                                                                                                                                                        |
+| `headerTitle`          | `string`                                                                                     | Text to place on the fields header `<th>` attribute `title`. Defaults to no `title` attribute.                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `headerAbbr`           | `string`                                                                                     | Text to place on the fields header `<th>` attribute `abbr`. Set this to the unabbreviated version of the label (or title) if label (or title) is an abbreviation. Defaults to no `abbr` attribute.                                                                                                                                                                                                                                                                                                           |
+| `class`                | `ClassValue`                                                                                 | Class name (or array of class names) to add to `<th>` **and** `<td>` in the column.                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| `formatter`            | `TableFieldFormatter<T>`                                                                     | A formatter callback function can be used instead of (or in conjunction with) scoped field slots. The formatter receives a single parameter object with the signature `({value, key, item}) => string`. The `value` is determined by the `accessor` (or `key` if no accessor is provided). Refer to [Custom Data Rendering](#custom-data-rendering) for more details.                                                                                                                                        |
+| `sortable`             | `boolean`                                                                                    | Enable sorting on this column. Refer to the [Sorting](#sorting) Section for more details.                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `initialSortDirection` | `BTableInitialSortDirection`                                                                 | Control the sort direction on this column when it becomes sorted. Refer to the [Change initial sort direction](#change-initial-sort-direction) Section for more details.                                                                                                                                                                                                                                                                                                                                     |
+| `sortByFormatted`      | `boolean \| TableFieldFormatter<T>`                                                          | Sort the column by the result of the field's `formatter` callback function when set to `true`. Default is `false`. Boolean has no effect if the field does not have a `formatter`. Optionally accepts a formatter function _reference_ to format the value for sorting purposes only. Refer to the [Sorting](#sorting) Section for more details.                                                                                                                                                             |
+| `filterByFormatted`    | `boolean \| TableFieldFormatter<T>`                                                          | Filter the column by the result of the field's `formatter` callback function when set to `true`. Default is `false`. Boolean has no effect if the field does not have a `formatter`. Optionally accepts a formatter function _reference_ to format the value for filtering purposes only. Refer to the [Filtering](#filtering) section for more details.                                                                                                                                                     |
+| `sortCompare`          | `BTableSortByComparerFunction`                                                               | A custom comparison function for sorting this field. The function signature is `(a: T, b: T, key: string) => number`. If not provided, uses default string comparison. See [Custom Sort Comparers](#custom-sort-comparers) for more details.                                                                                                                                                                                                                                                                 |
+| `tdClass`              | `TableStrictClassValue \| ((value: unknown, key: string, item: T) => TableStrictClassValue)` | Class name (or array of class names) to add to `<tbody>` data `<td>` cells in the column. If custom classes per cell are required, a callback function can be specified instead. See the typescript definition for accepted parameters and return types.                                                                                                                                                                                                                                                     |
+| `thClass`              | `ClassValue`                                                                                 | Class name (or array of class names) to add to this field's `<thead>`/`<tfoot>` heading `<th>` cell.                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `thStyle`              | `StyleValue`                                                                                 | CSS styles you would like to apply to the table `<thead>`/`<tfoot>` field `<th>` cell.                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| `variant`              | `ColorVariant \| null`                                                                       | Apply contextual class to all the `<th>` **and** `<td>` in the column.                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| `tdAttr`               | `AttrsValue \| (({value, key, item}) => AttrsValue)`                                         | Object representing additional attributes to apply to the `<tbody>` field `<td>` cell. If custom attributes per cell are required, a callback function can be specified. The function receives a single parameter object with properties `{value, key, item}` and should return an object of attributes.                                                                                                                                                                                                     |
+| `thAttr`               | `AttrsValue \| (({value, key, item, type}) => AttrsValue)`                                   | Object representing additional attributes to apply to the field's `<thead>`/`<tfoot>` heading `<th>` cell. If the field's `isRowHeader` is set to `true`, the attributes will also apply to the `<tbody>` field `<th>` cell. If custom attributes per cell are required, a callback function can be specified. The function receives a single parameter object with properties `{value, key, item, type}` (where `type` is `'top'` or `'bottom'` for thead/tfoot) and should return an object of attributes. |
+| `isRowHeader`          | `boolean`                                                                                    | When set to `true`, the field's item data cell will be rendered with `<th>` rather than the default of `<td>`.                                                                                                                                                                                                                                                                                                                                                                                               |
+| `stickyColumn`         | `boolean`                                                                                    | When set to `true`, and the table in [responsive](#responsive-tables) mode or has [sticky headers](#sticky-headers), will cause the column to become fixed to the left when the table's horizontal scrollbar is scrolled. See [Sticky columns](#sticky-columns) for more details                                                                                                                                                                                                                             |
+| `scope`                | `TableThScope`                                                                               | The scope attribute for the field's `<th>` element. This is used to specify the relationship of the header cell to the data cells. Valid values are `row`, `col`, `rowgroup`, and `colgroup`. Defaults to `colgroup` if `colspan` specified, `rowgroup` if `rowspan` specified, otherwise `col`.                                                                                                                                                                                                             |
 
 **Notes:**
 
@@ -188,7 +201,7 @@ details.
 | `small`              | boolean               | To make tables more compact by cutting cell padding in half.                                                                                                                                                                                                                                                                                                                     |
 | `hover`              | boolean               | To enable a hover highlighting state on table rows within a `<tbody>`                                                                                                                                                                                                                                                                                                            |
 | `dark`               | boolean               | Invert the colors — with light text on dark backgrounds (equivalent to Bootstrap v5 class `.table-dark`)                                                                                                                                                                                                                                                                         |
-| `fixed`              | boolean               | Generate a table with equal fixed-width columns (`table-layout: fixed;`) <NotYetImplemented/>                                                                                                                                                                                                                                                                                    |
+| `fixed`              | boolean               | Generate a table with equal fixed-width columns (`table-layout: fixed;`)                                                                                                                                                                                                                                                                                                         |
 | `responsive`         | boolean \| Breakpoint | Generate a responsive table to make it scroll horizontally. Set to `true` for an always responsive table, or set it to one of the [breakpoints](/docs/types#breakpoint) `'sm'`, `'md'`, `'lg'`, `'xl'` or `'xxl'` to make the table responsive (horizontally scroll) only on screens smaller than the breakpoint. See [Responsive tables](#responsive-tables) below for details. |
 | `sticky-header`      | boolean \| Numberish  | Generates a vertically scrollable table with sticky headers. Set to `true` to enable sticky headers (default table max-height of `300px`), or set it to a string containing a height (with CSS units) to specify a maximum height other than `300px`. See the [Sticky header](#sticky-headers) section below for details.                                                        |
 | `stacked`            | boolean \| Breakpoint | Generate a responsive stacked table. Set to `true` for an always stacked table, or set it to one of the [breakpoints](/docs/types#breakpoint) `'sm'`, `'md'`, `'lg'`, `'xl'` or `'xxl'` to make the table visually stacked only on screens smaller than the breakpoint. See [Stacked tables](#stacked-tables) below for details.                                                 |
@@ -199,8 +212,7 @@ details.
 | `head-row-variant`   | ColorVariant \| null  | Make the only the `<tr>` part of the `<head>` a specific theme color                                                                                                                                                                                                                                                                                                             |
 | `foot-variant`       | ColorVariant \| null  | Make the only the `<tr>` part of the `<foot>` a specific theme color. If not set, `head-row-variant` will be used. Has no effect if `foot-clone` is not set                                                                                                                                                                                                                      |
 | `foot-clone`         | boolean               | Turns on the table footer, and defaults with the same contents a the table header                                                                                                                                                                                                                                                                                                |
-| `no-footer-sorting`  | boolean               | When `foot-clone` is true and the table is sortable, disables the sorting icons and click behaviour on the footer heading cells. Refer to the [Sorting](#sorting) section below for more details. <NotYetImplemented/>                                                                                                                                                           |
-| `no-border-collapse` | Boolean               | Disables the default of collapsing of the table borders. Mainly for use with [sticky headers](#sticky-headers) and/or [sticky columns](#sticky-columns). Will cause the appearance of double borders in some situations. <NotYetImplemented/>                                                                                                                                    |
+| `no-border-collapse` | Boolean               | Disables the default of collapsing of the table borders. Mainly for use with [sticky headers](#sticky-headers) and/or [sticky columns](#sticky-columns). Will cause the appearance of double borders in some situations.                                                                                                                                                         |
 
 ::: info NOTE
 The table style options `fixed`, `stacked`, `no-border-collapse`, sticky
@@ -209,21 +221,27 @@ headers, sticky columns and the table sorting feature, all require BootstrapVueN
 
 <<< DEMO ./demo/TableBasicStyles.vue
 
+### Fixed table layout
+
+The `fixed` prop generates a table with equal fixed-width columns using `table-layout: fixed`. This can be useful when you want consistent column widths regardless of content length.
+
+<<< DEMO ./demo/TableFixed.vue
+
 ### Row styling and attributes
 
 You can also style every row using the `tbody-tr-class` prop, and optionally supply additional attributes via the `tbody-tr-attr` prop:
 
-| Property         | Type                                                                                            | Description                                         |
-| ---------------- | ----------------------------------------------------------------------------------------------- | --------------------------------------------------- |
-| `tbody-tr-class` | `((item: Items \| null, type: TableRowType) => TableStrictClassValue) \| TableStrictClassValue` | Classes to be applied to every row on the table.    |
-| `tbody-tr-attr`  | `((item: Items \| null, type: TableRowType) => AttrsValue) \| AttrsValue`                       | Attributes to be applied to every row on the table. |
+| Property         | Type                                                                                           | Description                                         |
+| ---------------- | ---------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| `tbody-tr-class` | `((item: Item \| null, type: TableRowType) => TableStrictClassValue) \| TableStrictClassValue` | Classes to be applied to every row on the table.    |
+| `tbody-tr-attr`  | `((item: Item \| null, type: TableRowType) => AttrsValue) \| AttrsValue`                       | Attributes to be applied to every row on the table. |
 
 When passing a function reference to `tbody-tr-class` or `tbody-tr-attr`, the function's arguments
 will be as follows:
 
 - `item` - The item record data associated with the row. For rows that are not associated with an
   item record, this value will be `null` or `undefined`
-- `type` - The type of row being rendered ([TableRowType](/docs/types#tablefield)). `'row'` for an item row, `'row-details'` for an item
+- `type` - The type of row being rendered ([TableRowType](/docs/types#tablefield)). `'row'` for an item row, `'row-expansion'` for an item
   details row, `'row-top'` for the fixed row top slot, `'row-bottom'` for the fixed row bottom slot,
   or `'table-busy'` for the table busy slot.
 
@@ -328,7 +346,13 @@ following custom CSS:
 
 <<< DEMO ./demo/TableBusy.vue
 
-Also see the [Using Items Provider Functions](#using-items-provider-functions) below for additional
+#### busy-loading-text
+
+You can also use the `busy-loading-text` prop to display a custom loading message with a spinner when the table is busy, without needing to provide a custom slot:
+
+<<< DEMO ./demo/TableBusyLoadingText.vue
+
+Also see the [Using Item Provider Functions](#using-items-provider-functions) below for additional
 information on the `busy` state.
 
 **Notes:**
@@ -358,18 +382,18 @@ explicit scoped slot provided.
 
 The slot's scope variable (`data` in the above sample) will have the following properties:
 
-| Property         | Type                               | Description                                                                                                                                                               |
-| ---------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `index`          | number                             | The row number (indexed from zero) relative to the _displayed_ rows                                                                                                       |
-| `item`           | Items                              | The entire raw record data (i.e. `items[index]`) for this row (before any formatter is applied)                                                                           |
-| `value`          | unknown                            | The value for this key in the record (`null` or `undefined` if a virtual column), or the output of the field's [`formatter` function](#formatter-callback)                |
-| `unformatted`    | unknown                            | The raw value for this key in the item record (`null` or `undefined` if a virtual column), before being passed to the field's [`formatter` function](#formatter-callback) |
-| `field`          | `(typeof computedFields.value)[0]` | The field's normalized field definition object                                                                                                                            |
-| `detailsShowing` | boolean                            | Will be `true` if the row's `row-details` scoped slot is visible. See section [Row details support](#row-details-support) below for additional information                |
-| `toggleDetails`  | `() => void`                       | Can be called to toggle the visibility of the rows `row-details` scoped slot. See section [Row details support](#row-details-support) below for additional information    |
-| `rowSelected`    | boolean                            | Will be `true` if the row has been selected. See section [Row select support](#row-select-support) for additional information                                             |
-| `selectRow`      | `(index?: number) => void`         | When called, selects the current row. See section [Row select support](#row-select-support) for additional information                                                    |
-| `unselectRow`    | `(index?: number) => void`         | When called, unselects the current row. See section [Row select support](#row-select-support) for additional information                                                  |
+| Property           | Type                               | Description                                                                                                                                                                  |
+| ------------------ | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `index`            | number                             | The row number (indexed from zero) relative to the _displayed_ rows                                                                                                          |
+| `item`             | Item                               | The entire raw record data (i.e. `items[index]`) for this row (before any formatter is applied)                                                                              |
+| `value`            | unknown                            | The value for this key in the record (`null` or `undefined` if a virtual column), or the output of the field's [`formatter` function](#formatter-callback)                   |
+| `unformatted`      | unknown                            | The raw value for this key in the item record (`null` or `undefined` if a virtual column), before being passed to the field's [`formatter` function](#formatter-callback)    |
+| `field`            | `(typeof computedFields.value)[0]` | The field's normalized field definition object                                                                                                                               |
+| `expansionShowing` | boolean                            | Will be `true` if the row's `row-expansion` scoped slot is visible. See section [Row expansion support](#row-expansion-support) below for additional information             |
+| `toggleExpansion`  | `() => void`                       | Can be called to toggle the visibility of the rows `row-expansion` scoped slot. See section [Row expansion support](#row-expansion-support) below for additional information |
+| `rowSelected`      | boolean                            | Will be `true` if the row has been selected. See section [Row select support](#row-select-support) for additional information                                                |
+| `selectRow`        | `(index?: number) => void`         | When called, selects the current row. See section [Row select support](#row-select-support) for additional information                                                       |
+| `unselectRow`      | `(index?: number) => void`         | When called, unselects the current row. See section [Row select support](#row-select-support) for additional information                                                     |
 
 **Notes:**
 
@@ -406,8 +430,8 @@ reference. In case of a String value, the function must be defined at the parent
 methods. When providing `formatter` as a `Function`, it must be declared at global scope (window or
 as global mixin at Vue, or as an anonymous function), unless it has been bound to a `this` context.
 
-The callback function accepts three arguments - `value`, `key`, and `item`, and should return the
-formatted value as a string (HTML strings are not supported)
+The callback function receives a single parameter object with properties `{value, key, item}` and should return the
+formatted value as a string (HTML strings are not supported). The `value` is extracted from the item using the field's `accessor` property (or `key` if no accessor is provided).
 
 <<< DEMO ./demo/TableFormatter.vue
 
@@ -431,14 +455,14 @@ so the fallback chain will stop with the default `'head(<fieldkey>)'` rather tha
 The slots can be optionally scoped (`data` in the above example), and will have the following
 properties:
 
-| Property        | Type                        | Description                                                                               |
-| --------------- | --------------------------- | ----------------------------------------------------------------------------------------- |
-| `column`        | `LiteralUnion<keyof Items>` | The fields's `key` value                                                                  |
-| `field`         | `TableField<Items>`         | the field's object (from the `fields` prop)                                               |
-| `label`         | `string \| undefined`       | The fields label value (also available as `data.field.label`)                             |
-| `isFoot`        | `boolean`                   | Currently rending the foot if `true`                                                      |
-| `selectAllRows` | `() => void`                | Select all rows (applicable if the table is in [`selectable`](#row-select-support) mode   |
-| `clearSelected` | `() => void`                | Unselect all rows (applicable if the table is in [`selectable`](#row-select-support) mode |
+| Property        | Type                       | Description                                                                               |
+| --------------- | -------------------------- | ----------------------------------------------------------------------------------------- |
+| `column`        | `LiteralUnion<keyof Item>` | The fields's `key` value                                                                  |
+| `field`         | `TableField<Item>`         | the field's object (from the `fields` prop)                                               |
+| `label`         | `string \| undefined`      | The fields label value (also available as `data.field.label`)                             |
+| `isFoot`        | `boolean`                  | Currently rending the foot if `true`                                                      |
+| `selectAllRows` | `() => void`               | Select all rows (applicable if the table is in [`selectable`](#row-select-support) mode   |
+| `clearSelected` | `() => void`               | Unselect all rows (applicable if the table is in [`selectable`](#row-select-support) mode |
 
 When placing inputs, buttons, selects or links within a `head(...)` or `foot(...)` slot, note that
 `head-clicked` event will not be emitted when the input, select, textarea is clicked (unless they
@@ -462,12 +486,12 @@ rather than native browser table child elements.
 
 Slot `thead-top` can be optionally scoped, receiving an object with the following properties:
 
-| Property        | Type                  | Description                                                                               |
-| --------------- | --------------------- | ----------------------------------------------------------------------------------------- |
-| `columns`       | `number`              | The number of columns in the rendered table                                               |
-| `fields`        | `TableField<Items>[]` | Array of field definition objects (normalized to the array of objects format)             |
-| `selectAllRows` | `() => void`          | Select all rows (applicable if the table is in [`selectable`](#row-select-support) mode   |
-| `clearSelected` | `() => void`          | Unselect all rows (applicable if the table is in [`selectable`](#row-select-support) mode |
+| Property        | Type                 | Description                                                                               |
+| --------------- | -------------------- | ----------------------------------------------------------------------------------------- |
+| `columns`       | `number`             | The number of columns in the rendered table                                               |
+| `fields`        | `TableField<Item>[]` | Array of field definition objects (normalized to the array of objects format)             |
+| `selectAllRows` | `() => void`         | Select all rows (applicable if the table is in [`selectable`](#row-select-support) mode   |
+| `clearSelected` | `() => void`         | Unselect all rows (applicable if the table is in [`selectable`](#row-select-support) mode |
 
 ### Creating a custom footer
 
@@ -478,11 +502,11 @@ your custom footer layout.
 
 Slot `custom-foot` can be optionally scoped, receiving an object with the following properties:
 
-| Property  | Type                  | Description                                                                                |
-| --------- | --------------------- | ------------------------------------------------------------------------------------------ |
-| `columns` | `number`              | The number of columns in the rendered table                                                |
-| `fields`  | `TableField<Items>[]` | Array of field definition objects (normalized to the array of objects format)              |
-| `items`   | `readonly Items[]`    | Array of the currently _displayed_ items records - after filtering, sorting and pagination |
+| Property  | Type                 | Description                                                                                |
+| --------- | -------------------- | ------------------------------------------------------------------------------------------ |
+| `columns` | `number`             | The number of columns in the rendered table                                                |
+| `fields`  | `TableField<Item>[]` | Array of field definition objects (normalized to the array of objects format)              |
+| `items`   | `readonly Item[]`    | Array of the currently _displayed_ items records - after filtering, sorting and pagination |
 
 **Notes:**
 
@@ -506,12 +530,12 @@ either falsy or an array of length 0.
 The slot can optionally be scoped. The slot's scope (`scope` in the above example) will have the
 following properties:
 
-| Property            | Type                  | Description                                        |
-| ------------------- | --------------------- | -------------------------------------------------- |
-| `emptyFilteredHtml` | `string`              | The `empty-filtered-html` prop                     |
-| `emptyFilteredText` | `string`              | The `empty-filtered-text` prop                     |
-| `fields`            | `TableField<Items>[]` | The `fields` prop                                  |
-| `items`             | `Items[]`             | The `items` prop. Exposed here to check null vs [] |
+| Property            | Type                 | Description                                        |
+| ------------------- | -------------------- | -------------------------------------------------- |
+| `emptyFilteredHtml` | `string`             | The `empty-filtered-html` prop                     |
+| `emptyFilteredText` | `string`             | The `empty-filtered-text` prop                     |
+| `fields`            | `TableField<Item>[]` | The `fields` prop                                  |
+| `items`             | `Item[]`             | The `items` prop. Exposed here to check null vs [] |
 
 ::: info NOTE
 If you previously used the `emptyHtml` or `emtpyFilteredHtml` scoped slots or the `empty-html` or
@@ -543,6 +567,8 @@ available horizontal space.
   the body scrolls. To get around this issue, set the prop `no-border-collapse` on the table (note
   that this may cause double width borders when using features such as `bordered`, etc.).
 
+<<< DEMO ./demo/TableNoBorderCollapse.vue
+
 ### Sticky columns
 
 Columns can be made sticky, where they stick to the left of the table when the table has a
@@ -571,42 +597,62 @@ set.
   Explorer does not support `position: sticky`, hence for IE 11 the sticky column will scroll with
   the table body.
 
-### Row details support
+### Row expansion support
 
 If you would optionally like to display additional record information (such as columns not specified
-in the fields definition array), you can use the scoped slot `row-details`, in combination with the
-special item record `boolean` property `_showDetails`.
+in the fields definition array), you can use the scoped slot `row-expansion`, in combination with the `v-model:expanded-items` binding (or its alias `v-model:item-details`).
 
-If the record has its `_showDetails` property set to `true`, **and** a `row-details` scoped slot
-exists, a new row will be shown just below the item, with the rendered contents of the `row-details`
-scoped slot.
+**Using v-model for expansion state:**
 
-In the scoped field slot, you can toggle the visibility of the row's `row-details` scoped slot by
-calling the `toggleDetails` function passed to the field's scoped slot variable. You can use the
-scoped fields slot variable `detailsShowing` to determine the visibility of the `row-details` slot.
+The expanded/collapsed state of rows is controlled via the `v-model:expanded-items` binding, which maintains an array of the currently expanded items. When a `primary-key` is provided, the expansion state persists even when the items array is replaced with new object references (as long as the primary key values remain the same).
 
-::: info NOTE
-If manipulating the `_showDetails` property directly on the item data (i.e. not via the
-`toggleDetails` function reference), the `_showDetails` property **must** exist in the items data
-for proper reactive detection of changes to its value. Read more about
-[how reactivity works in Vue](https://vuejs.org/guide/extras/reactivity-in-depth.html#Change-Detection-Caveats).
-:::
+When an item is present in the `expanded-items` array **and** a `row-expansion` scoped slot exists, a new row will be shown just below the item, with the rendered contents of the `row-expansion` scoped slot.
+
+In the scoped field slot, you can toggle the visibility of the row's `row-expansion` scoped slot by
+calling the `toggleExpansion` function passed to the field's scoped slot variable. You can use the
+scoped fields slot variable `expansionShowing` to determine the visibility of the `row-expansion` slot.
 
 ::: info NOTE
-When using the `primary-key` prop, row details will persist even when items are replaced with new object references, as long as the primary key value remains the same. This allows row details to stay open in scenarios like "Load more" or pagination. Without a `primary-key`, the component uses a `WeakMap` for memory efficiency, and row details will close when items are garbage collected or replaced with new object references.
+When using the `primary-key` prop, row expansion state will persist even when items are replaced with new object references, as long as the primary key value remains the same. This allows row expansion to stay open in scenarios like "Load more" or pagination.
 :::
 
-**Available `row-details` scoped variable properties:**
+::: warning IMPORTANT: Default Expansion with Primary Key
+When using a `primary-key` and you want to set default expanded rows by including items in the initial `v-model:expanded-items` array, you **must** use the exposed `expansion.get()` function to retrieve the actual item reference from the table's template ref.
 
-| Property        | Type                       | Description                                                                                                                   |
-| --------------- | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `item`          | `Items`                    | The entire row record data object                                                                                             |
-| `index`         | `number`                   | The current visible row number                                                                                                |
-| `fields`        | `TableField<Items>[]`      | The normalized fields definition array (in the _array of objects_ format)                                                     |
-| `toggleDetails` | `() => void`               | Function to toggle visibility of the row's details slot                                                                       |
-| `rowSelected`   | `boolean`                  | Will be `true` if the row has been selected. See section [Row select support](#row-select-support) for additional information |
-| `selectRow`     | `(index?: number) => void` | When called, selects the current row. See section [Row select support](#row-select-support) for additional information        |
-| `unselectRow`   | `(index?: number) => void` | When called, unselects the current row. See section [Row select support](#row-select-support) for additional information      |
+**Example:**
+
+```vue
+<template>
+  <BTable ref="tableRef" :items="items" primary-key="id" v-model:expanded-items="expandedItems">
+    <!-- ... -->
+  </BTable>
+</template>
+
+<script setup>
+import {ref, onMounted} from 'vue'
+
+const tableRef = ref()
+const expandedItems = ref([])
+
+onMounted(() => {
+  expandedItems.value.push(tableRef.value.expansion.get(items[1]))
+})
+</script>
+```
+
+:::
+
+**Available `row-expansion` scoped variable properties:**
+
+| Property          | Type                       | Description                                                                                                                   |
+| ----------------- | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `item`            | `Item`                     | The entire row record data object                                                                                             |
+| `index`           | `number`                   | The current visible row number                                                                                                |
+| `fields`          | `TableField<Item>[]`       | The normalized fields definition array (in the _array of objects_ format)                                                     |
+| `toggleExpansion` | `() => void`               | Function to toggle visibility of the row's expansion slot                                                                     |
+| `rowSelected`     | `boolean`                  | Will be `true` if the row has been selected. See section [Row select support](#row-select-support) for additional information |
+| `selectRow`       | `(index?: number) => void` | When called, selects the current row. See section [Row select support](#row-select-support) for additional information        |
+| `unselectRow`     | `(index?: number) => void` | When called, unselects the current row. See section [Row select support](#row-select-support) for additional information      |
 
 ::: info NOTE
 the row select related scope properties are only available in `<BTable>`.
@@ -633,16 +679,19 @@ When a table is `selectable` and the user clicks on a row, `<BTable>` will emit 
 event, passing a single argument which is the complete list of selected items. **This argument
 is read-only.** In addition, `row-selected` or `row-unselected` events are emitted for each row.
 
-Rows can also be programmatically selected and unselected via the following exposed methods on the
+Rows can also be programmatically selected and unselected via the `selection` API on the
 `<BTable>` instance:
 
-| Method                         | Description                                                                                          |
-| ------------------------------ | ---------------------------------------------------------------------------------------------------- |
-| `selectRow(index: number)`     | Selects a row with the given `index` number.                                                         |
-| `unselectRow(index: number)`   | Unselects a row with the given `index` number.                                                       |
-| `selectAllRows()`              | Selects all rows in the table, except in `single` mode in which case only the first row is selected. |
-| `clearSelected()`              | Unselects all rows.                                                                                  |
-| `isRowSelected(index: number)` | Returns `true` if the row with the given `index` is selected, otherwise it returns `false`.          |
+| Member                                     | Description                                                                     |
+| ------------------------------------------ | ------------------------------------------------------------------------------- |
+| `selection.add(item: Item)`                | Selects the given item. In `single` mode, replaces any previous selection.      |
+| `selection.remove(item: Item)`             | Unselects the given item.                                                       |
+| `selection.set(items: readonly Item[])`    | Replaces the selection with the provided items.                                 |
+| `selection.setAll()`                       | Selects all items (no effect in `single` mode).                                 |
+| `selection.clear()`                        | Clears all selections.                                                          |
+| `selection.has(item: Item): boolean`       | Returns whether the given item is currently selected.                           |
+| `selection.selectedItems: readonly Item[]` | The current selected items (same values as bound via `v-model:selected-items`). |
+| `selection.isActivated: boolean`           | Indicates whether selection is active and at least one item is selected.        |
 
 **Programmatic row selection notes:**
 
@@ -662,12 +711,9 @@ Rows can also be programmatically selected and unselected via the following expo
 - When the table is in `selectable` mode, all data item `<tr>` elements will be in the document tab
   sequence (`tabindex="0"`) for [accessibility](#accessibility) reasons, and will have the attribute
   `aria-selected` set to either `'true'` or `'false'` depending on the selected state of the row.
-- <NotYetImplemented/>When a table is `selectable`, the table will have the attribute `aria-multiselect` set to either
-  `'false'` for `single` mode, and `'true'` for either `multi` or `range` modes.
+- **Primary Key Usage:** When using a `primary-key`, the selected items state persists across item array updates (like pagination or "Load more") as long as the primary key values remain the same.
 
-<NotYetImplemented/>
-
-Use the prop `selected-variant` to apply a Bootstrap theme color to the selected row(s). Note, due
+Use the prop `selection-variant` to apply a Bootstrap theme color to the selected row(s). Note, due
 to the order that the table variants are defined in Bootstrap's CSS, any row-variant _might_ take
 precedence over the `selected-variant`. You can set `selected-variant` to an empty string if you
 will be using other means to convey that a row is selected (such as a scoped field slot in the below
@@ -684,20 +730,19 @@ selected, such as a virtual column as shown in the example below.
 
 <<< DEMO ./demo/TableRowSelect.vue
 
-### Table body transition support
+### Exposed API
 
-<NotYetImplemented />
+- `<BTable>` exposes the following top-level members via a template ref. See [Row select support](#row-select-support) for the `selection` API and [Row expansion support](#row-expansion-support) for the `expansion` API.
 
-### Exposed functions
+| Member                                          | Description                                                                                                         |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `items: readonly Item[]`                        | The complete set of items used to build the table.                                                                  |
+| `displayItems: readonly Item[]`                 | The set of items currently displayed in the table. See [Complete Example](#complete-example) for usage              |
+| `getStringValue(ob: Item, key: string): string` | Returns the formatted string value for `key` on `ob`. See [Custom Sort Comparers](#custom-sort-comparers) for usage |
+| `refresh()`                                     | Calls the async provider to refresh table items.                                                                    |
 
-See [Row select support](#row-select-support) for selection related exposed functions
-
-| Method                                           | Description                                                                                                                             |
-| ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `items(): Items[]`                               | Returns the complete set of items used to build the table.                                                                              |
-| `displayItems(): Items[]`                        | Returns the set of items currently displayed in the tabe. See [Complete Example](#complete-example) for usage                           |
-| `getStringValue(ob: Items, key: string): string` | Returns the formatted string value of the field `key` of the object `ob`. See [Custom Sort Comparers](#custom-sort-comparers) for usage |
-| `refresh()`                                      | Calls the async provider to refresh the table items                                                                                     |
+- `<BTable>` and `<BTableLite>` also expose an `expansion` controller with methods like `toggle(item)`, `add(item)`, `remove(item)`, `set(items)`, `setAll()`, `clear()`, `has(item)`, and the `expandedItems` array. See [Row expansion support](#row-expansion-support).
+- `<BTable>` additionally exposes a `selection` controller. See [Row select support](#row-select-support).
 
 ## Sorting
 
@@ -831,11 +876,9 @@ done) and the filter searches that stringified data (excluding any of the specia
 begin with an underscore `'_'`). The stringification also, by default, includes any data not shown
 in the presented columns.
 
-With the default built-in filter function, the `filter` prop value can either be a string or a
-`RegExp` object (regular expressions should _not_ have the `/g` global flag set). <NotYetImplemented/> Currently the `filter` prop only supports a string, not a `RegExp`.
+With the default built-in filter function, the `filter` prop value can be a string. Use the <code>filterFunction</code> prop for complex filtering.
 
-If the stringified row contains the provided string value or matches the RegExp expression then it
-is included in the displayed results.
+If the stringified row contains the provided string value then it is included in the displayed results.
 
 Set the `filter` prop to `null` or an empty string to clear the current filter.
 
@@ -843,18 +886,12 @@ Set the `filter` prop to `null` or an empty string to clear the current filter.
 
 There are several options for controlling what data the filter is applied against.
 
-- <NotYetImplemented/>The `filter-ignored-fields` prop accepts an array of _top-level_ (immediate properties of the row
-  data) field keys that should be ignored when filtering.
-- <NotYetImplemented/>The `filter-included-fields` prop accepts an array of _top-level_ (immediate properties of the row
-  data) field keys that should used when filtering. All other field keys not included in this array
-  will be ignored. This feature can be handy when you want to filter on specific columns. If the
-  specified array is empty, then _all_ fields are included, except those specified via the prop
-  `filter-ignored-fields`. If a field key is specified in both `filter-ignored-fields` and
-  `filter-included-fields`, then `filter-included-fields` takes precedence.
+- The `filterable` prop (which replaces BootstrapVue's `filter-included-fields`) accepts an array of field keys to include in filtering. When set, only the specified fields will be searchable. If not set or empty, all fields are included.
+- Note: `filter-ignored-fields` from BootstrapVue is not implemented. Use `filterable` to specify which fields to search instead.
 - Normally, `<BTable>` filters based on the stringified record data. If the field has a `formatter`
   function specified, you can optionally filter based on the result of the formatter by setting the
   [field definition property](#field-definition-reference) `filterByFormatted` to `true`. If the
-  field does not have a formatter function, this option is ignored. <NotYetImplemented/>You can optionally pass a
+  field does not have a formatter function, this option is ignored. You can optionally pass a
   formatter function _reference_, to be used for filtering only, to the field definition property
   `filterByFormatted`.
 
@@ -865,7 +902,7 @@ or [items provider](#using-items-provider-functions) based filtering.
 ### Custom filter function
 
 You can also use a custom filter function, by setting the prop `filter-function` to a reference of
-custom filter test function. The filter function signature is `(item: Readonly<Items>, filter: string | undefined) => boolean`
+custom filter test function. The filter function signature is `(item: Readonly<Item>, filter: string | undefined) => boolean`
 
 - `item` is the original item row record data object.
 - `filter` value of the `filter` prop
@@ -882,7 +919,7 @@ The display of the `empty-filter-text` relies on the truthiness of the `filter` 
 ### Filter events
 
 When local filtering is applied, and the resultant number of items change, `<BTable>` will emit the
-`filtered` event with a single argument of type `Items[]`: which is the complete list of
+`filtered` event with a single argument of type `Item[]`: which is the complete list of
 items passing the filter routine. **Treat this argument as read-only.**
 
 Setting the prop `filter` to null or an empty string will clear local items filtering.
@@ -929,11 +966,7 @@ To avoid excessive provider calls (e.g., when typing rapidly in a filter), you c
 - `debounce`: Delay in milliseconds before calling the provider after changes (default: `0` for immediate execution)
 - `debounce-max-wait`: Maximum time in milliseconds to wait before forcing a provider call, even if changes are still occurring
 
-Example with debouncing:
-
-```vue
-<BTable :provider="myProvider" :fields="fields" :debounce="300" :debounce-max-wait="1000" />
-```
+<<< DEMO ./demo/TableDebounce.vue
 
 ### Handling Request Cancellation
 
@@ -990,7 +1023,7 @@ tabular data. The `<BTableLite>` component provides all of the styling and forma
 - Filtering
 - Sorting
 - Pagination
-- Items provider support
+- Item provider support
 - Selectable rows
 - Busy table state and styling
 - Fixed top and bottom rows
@@ -1060,24 +1093,11 @@ helper components. Note that there are no helper components for `<caption>`, `<c
   prop, which will apply one of the Bootstrap theme colors (custom theme colors are supported via
   [theming](/docs/types#colorvariant).) and will automatically adjust to use the correct variant
   class based on the table's `dark` mode.
-- <NotYetImplemented/> Accessibility attributes `role` and `scope` are automatically set on `<BTh>` and `<BTd>`
-  components based on their location (thead, tbody, or tfoot) and their `rowspan` or `colspan`
-  props. You can override the automatic `scope` and `role` values by setting the appropriate
-  attribute on the helper component.
-- <NotYetImplemented/> For `<BTbody>`, `<BThead>`, and `<BTfoot>` helper components, the appropriate default `role` of
-  `'rowgroup'` will be applied, unless you override the role by supplying a `role` attribute.
-- <NotYetImplemented/> For the `<BTr>` helper component, the appropriate default `role` of `'row'` will be applied,
-  unless you override the role by supplying a `role` attribute. `<BTr>` does not add a `scope`.
-- <NotYetImplemented/>The `<BTbody>` element supports rendering a Vue `<transition-group>` when either, or both, of the
-  `tbody-transition-props` and `tbody-transition-handlers` props are used. See the
-  [Table body transition support](#table-body-transition-support) section for more details.
+- Accessibility attributes `role` and `scope` are automatically handled. `<BTh>` automatically calculates the `scope` attribute based on `rowspan` and `colspan` props. Helper components (`<BTbody>`, `<BThead>`, `<BTfoot>`, `<BTr>`) use semantic HTML elements that provide implicit ARIA roles.
 
 ## Accessibility
 
-<NotYetImplemented/>
-
-The `<BTable>` and `<BTableLite>` components, when using specific features, will attempt to
-provide the best accessibility markup possible.
+The `<BTable>` and `<BTableLite>` components use semantic HTML and provide keyboard navigation for accessibility.
 
 When using `<BTableSimple>` with the helper table components, elements will have the appropriate
 roles applied by default, of which you can optionally override. When using click handlers on the
@@ -1088,8 +1108,6 @@ trigger your click on cells or rows (required for accessibility for keyboard-onl
 
 ### Heading accessibility
 
-<NotYetImplemented/>
-
 When a column (field) is sortable (`<BTable>` only) or there is a `head-clicked` listener
 registered (`<BTable>` and `<BTableLite>`), the header (and footer) `<th>` cells will be placed
 into the document tab sequence (via `tabindex="0"`) for accessibility by keyboard-only and screen
@@ -1097,8 +1115,6 @@ reader users, so that the user may trigger a click (by pressing <kbd>Enter</kbd>
 cells.
 
 ### Data row accessibility
-
-<NotYetImplemented/>
 
 When the table is in `selectable` mode (`<BTable>` only, and prop `no-select-on-click` is not set),
 or if there is a `row-clicked` event listener registered (`<BTable>` and `<BTableLite>`), all

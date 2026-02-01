@@ -109,7 +109,7 @@ const provider = (context: Readonly<BTableProviderContext>) =>
     context.currentPage * context.perPage
   )
 
-const sortItems = (items: Person[], sortBy?: BTableSortBy[]) => {
+const sortItems = (items: Person[], sortBy?: readonly BTableSortBy[]) => {
   if (!sortBy || sortBy.length === 0) {
     return items
   }

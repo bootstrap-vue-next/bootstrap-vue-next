@@ -1,4 +1,4 @@
-import {useTimestamp, type UseTimestampOptions} from '@vueuse/core'
+import {useDocumentVisibility, useTimestamp, type UseTimestampOptions} from '@vueuse/core'
 import {computed, type MaybeRefOrGetter, readonly, ref, toRef, watch} from 'vue'
 
 /**
@@ -29,6 +29,19 @@ export const useCountdown = (
       }
     },
     ...timestampOpts,
+  })
+
+  // Watch for document visibility changes to handle tab switching
+  // When tab becomes visible again, check if countdown has already expired
+  const visibility = useDocumentVisibility()
+  watch(visibility, (newVisibility) => {
+    if (newVisibility === 'visible' && isActive.value && !isPaused.value) {
+      // Check if the countdown has already expired while tab was inactive
+      if (Date.now() >= target.value) {
+        isPaused.value = false
+        pause()
+      }
+    }
   })
 
   const value = computed(() => target.value - timestamp.value)

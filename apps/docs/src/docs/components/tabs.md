@@ -230,7 +230,8 @@ order to use these methods.
 To prevent a tab from activating, simply set the `disabled` prop on the `<BTab>` component.
 
 Alternatively, you can listen for the `activate-tab` event, which provides an option to prevent the
-tab from activating. The `activate-tab` event is emitted with five arguments:
+tab from activating. The `activate-tab` event now emits a single payload object with the following
+properties:
 
 - `newTabId`: The id of the tab that is going to be activated
 - `prevTabId`: The id of the currently active tab

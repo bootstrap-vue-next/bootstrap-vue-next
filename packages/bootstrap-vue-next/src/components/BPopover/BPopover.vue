@@ -70,6 +70,7 @@ import {
 import {onClickOutside, useToNumber} from '@vueuse/core'
 import {
   computed,
+  type ComputedRef,
   type CSSProperties,
   type EmitFn,
   nextTick,
@@ -168,7 +169,7 @@ const rootBoundary = computed<RootBoundary | undefined>(() =>
 )
 
 const sizeStyles = ref<CSSProperties>({})
-const floatingMiddleware = computed<Middleware[]>(() => {
+const floatingMiddleware = computed<readonly Middleware[]>(() => {
   if (props.floatingMiddleware !== undefined) {
     return props.floatingMiddleware
   }
@@ -252,36 +253,12 @@ const {floatingStyles, middlewareData, placement, update} = useFloating(
   floatingElement,
   {
     placement: placementRef,
-    middleware: floatingMiddleware,
+    middleware: floatingMiddleware as ComputedRef<Middleware[]>,
     strategy: toRef(() => props.strategy),
   }
 )
 
 const arrowStyle = ref<CSSProperties>({position: 'absolute'})
-
-watch(middlewareData, (newValue) => {
-  if (props.noHide === false) {
-    if (newValue.hide?.referenceHidden && !hidden.value && showRef.value) {
-      if (props.closeOnHide && !props.noAutoClose && !props.manual) {
-        throttleHide('close-on-hide')
-      } else {
-        localTemporaryHide.value = true
-        hidden.value = true
-      }
-    } else if (localTemporaryHide.value && !newValue.hide?.referenceHidden) {
-      localTemporaryHide.value = false
-      hidden.value = false
-    }
-  }
-  if (newValue.arrow) {
-    const {x, y} = newValue.arrow
-    arrowStyle.value = {
-      position: 'absolute',
-      top: y ? `${y}px` : '',
-      left: x ? `${x}px` : '',
-    }
-  }
-})
 
 let cleanup: ReturnType<typeof autoUpdate> | undefined
 const {
@@ -297,6 +274,7 @@ const {
   isActive,
   renderRef,
   localTemporaryHide,
+  setLocalTemporaryHide,
 } = useShowHide(modelValue, props, emit as EmitFn, floatingElement, computedId, {
   showFn: () => {
     update()
@@ -317,6 +295,30 @@ const {
   },
 })
 
+watch(middlewareData, (newValue) => {
+  if (props.noHide === false) {
+    if (newValue.hide?.referenceHidden && !hidden.value && showRef.value) {
+      if (props.closeOnHide && !props.noAutoClose && !props.manual) {
+        throttleHide('close-on-hide')
+      } else {
+        setLocalTemporaryHide(true)
+        hidden.value = true
+      }
+    } else if (localTemporaryHide.value && !newValue.hide?.referenceHidden) {
+      setLocalTemporaryHide(false)
+      hidden.value = false
+    }
+  }
+  if (newValue.arrow) {
+    const {x, y} = newValue.arrow
+    arrowStyle.value = {
+      position: 'absolute',
+      top: y ? `${y}px` : '',
+      left: x ? `${x}px` : '',
+    }
+  }
+})
+
 const computedClasses = computed(() => {
   const type = props.tooltip ? 'tooltip' : 'popover'
   return [
@@ -335,7 +337,7 @@ const {x, y} = useMouse()
 const isElementAndTriggerOutside = () => {
   const triggerRect = triggerElement.value?.getBoundingClientRect()
   const elementRect = floatingElement.value?.getBoundingClientRect()
-  const margin = parseInt(props.hideMargin as unknown as string, 10) || 0
+  const margin = Number.parseInt(props.hideMargin as unknown as string, 10) || 0
   const offsetX = window?.scrollX || 0
   const offsetY = window?.scrollY || 0
   const triggerIsOutside =

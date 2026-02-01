@@ -13,7 +13,7 @@ import {modalManagerKey} from '../utils/keys'
 const modalOpenClassName = 'modal-open'
 
 export const useSharedModalStack = () => {
-  const modalManagerPlugin = inject(modalManagerKey)
+  const modalManagerPlugin = inject(modalManagerKey, null)
 
   /**
    * Removes an item from both the stack and registry

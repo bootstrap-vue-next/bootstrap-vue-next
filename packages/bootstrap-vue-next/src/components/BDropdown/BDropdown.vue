@@ -93,11 +93,13 @@ import {
 import {onClickOutside, onKeyStroke, useToNumber} from '@vueuse/core'
 import {
   computed,
+  type ComputedRef,
   type CSSProperties,
   type EmitFn,
   inject,
   nextTick,
   provide,
+  readonly,
   ref,
   toRef,
   useTemplateRef,
@@ -278,7 +280,7 @@ onKeyStroke('ArrowUp', (e) => keynav(e, -1), {target: floatingElement})
 onKeyStroke('ArrowDown', (e) => keynav(e, 1), {target: floatingElement})
 
 const sizeStyles = ref<CSSProperties>({})
-const floatingMiddleware = computed<Middleware[]>(() => {
+const floatingMiddleware = computed<readonly Middleware[]>(() => {
   if (props.floatingMiddleware !== undefined) {
     return props.floatingMiddleware
   }
@@ -334,7 +336,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
 })
 const {update, floatingStyles} = useFloating(referenceElement, floatingElement, {
   placement: () => props.placement,
-  middleware: floatingMiddleware,
+  middleware: floatingMiddleware as ComputedRef<Middleware[]>,
   strategy: toRef(() => props.strategy),
 })
 
@@ -407,7 +409,7 @@ provide(dropdownInjectionKey, {
   show,
   hide,
   toggle,
-  visible: toRef(() => showRef.value),
+  visible: readonly(showRef),
   isNav: toRef(() => props.isNav),
 })
 </script>

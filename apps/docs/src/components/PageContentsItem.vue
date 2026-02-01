@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import type {ContentsItem} from 'src/types'
+import type {ContentsItem} from '../types'
 import {computed} from 'vue'
 
 const props = defineProps<{

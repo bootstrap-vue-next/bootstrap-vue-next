@@ -140,4 +140,96 @@ describe('BFormSelect', () => {
     expect(wrapper.emitted('update:modelValue')).toBeTruthy()
     expect(wrapper.emitted('update:modelValue')![0]).toEqual(['two'])
   })
+
+  it('applies class to options', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {
+        options: [
+          {value: 1, text: 'One', class: 'custom-class'},
+          {value: 2, text: 'Two', class: 'another-class'},
+          {value: 3, text: 'Three'},
+        ],
+      },
+    })
+
+    const options = wrapper.findAll('option')
+    expect(options.length).toBe(3)
+    expect(options[0].classes()).toContain('custom-class')
+    expect(options[1].classes()).toContain('another-class')
+    expect(options[2].classes()).not.toContain('custom-class')
+  })
+
+  it('applies class object to options', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {
+        options: [
+          {value: 1, text: 'One', class: {'class-a': true, 'class-b': false}},
+          {value: 2, text: 'Two', class: {'class-c': true}},
+        ],
+      },
+    })
+
+    const options = wrapper.findAll('option')
+    expect(options.length).toBe(2)
+    expect(options[0].classes()).toContain('class-a')
+    expect(options[0].classes()).not.toContain('class-b')
+    expect(options[1].classes()).toContain('class-c')
+  })
+
+  it('applies class array to options', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {
+        options: [
+          {value: 1, text: 'One', class: ['class-a', 'class-b']},
+          {value: 2, text: 'Two', class: ['class-c']},
+        ],
+      },
+    })
+
+    const options = wrapper.findAll('option')
+    expect(options.length).toBe(2)
+    expect(options[0].classes()).toContain('class-a')
+    expect(options[0].classes()).toContain('class-b')
+    expect(options[1].classes()).toContain('class-c')
+  })
+
+  it('applies attrs to options', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {
+        options: [
+          {'value': 1, 'text': 'One', 'data-test': 'test-value'},
+          {'value': 2, 'text': 'Two', 'data-id': '123'},
+          {value: 3, text: 'Three'},
+        ],
+      },
+    })
+
+    const options = wrapper.findAll('option')
+    expect(options.length).toBe(3)
+    expect(options[0].attributes('data-test')).toBe('test-value')
+    expect(options[1].attributes('data-id')).toBe('123')
+    expect(options[2].attributes('data-test')).toBeUndefined()
+  })
+
+  it('applies class and attrs to options in option groups', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {
+        options: [
+          {
+            label: 'Group 1',
+            options: [
+              {'value': 1, 'text': 'One', 'class': 'group-class', 'data-group': '1'},
+              {value: 2, text: 'Two', class: 'group-class'},
+            ],
+          },
+        ],
+      },
+    })
+
+    const options = wrapper.findAll('option')
+    expect(options.length).toBe(2)
+    expect(options[0].classes()).toContain('group-class')
+    expect(options[0].attributes('data-group')).toBe('1')
+    expect(options[1].classes()).toContain('group-class')
+  })
 })
