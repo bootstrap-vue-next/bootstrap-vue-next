@@ -3,7 +3,7 @@
     <slot name="first" />
     <BFormSelectOption
       v-for="(option, index) in normalizedOptions"
-      :key="option.value !== null ? String(option.value) : index"
+      :key="getOptionKey(option, index)"
       v-bind="{...$attrs, ...option}"
     >
       <slot name="option" v-bind="option">
@@ -32,6 +32,29 @@ const _props = withDefaults(defineProps<BFormSelectOptionGroupProps>(), {
 })
 const props = useDefaults(_props, 'BFormSelectOptionGroup')
 defineSlots<BFormSelectOptionGroupSlots<T>>()
+
+// Helper function to determine if a value is a primitive type suitable for use as a key
+const isPrimitive = (value: unknown): value is string | number | boolean | symbol | bigint => {
+  const type = typeof value
+  return (
+    type === 'string' ||
+    type === 'number' ||
+    type === 'boolean' ||
+    type === 'symbol' ||
+    type === 'bigint'
+  )
+}
+
+// Generate appropriate key for v-for: use option.value if it's a primitive, otherwise fall back to index
+const getOptionKey = (option: SelectOption<T>, index: number): string | number => {
+  if (option.value !== null && isPrimitive(option.value)) {
+    // Convert primitives to string or number for key
+    return typeof option.value === 'string' || typeof option.value === 'number'
+      ? option.value
+      : String(option.value)
+  }
+  return index
+}
 
 // The form select context is injected by BFormSelectOption components automatically
 // We don't need to handle the selected value here since each BFormSelectOption
