@@ -3,7 +3,7 @@
     <slot name="first" />
     <BFormSelectOption
       v-for="(option, index) in normalizedOptions"
-      :key="index"
+      :key="option.value !== null ? String(option.value) : index"
       v-bind="{...$attrs, ...option}"
     >
       <slot name="option" v-bind="option">
@@ -37,6 +37,9 @@ defineSlots<BFormSelectOptionGroupSlots<T>>()
 // We don't need to handle the selected value here since each BFormSelectOption
 // will inject the context directly
 
+// Type assertion is needed because useFormSelect is not generic-aware.
+// This is acceptable in the wrapper/base pattern where the wrapper (BFormSelect)
+// handles type-safe normalization before passing to base components.
 const {normalizedOptions} = useFormSelect(() => props.options, props) as {
   normalizedOptions: ComputedRef<SelectOption<T>[]>
 }
