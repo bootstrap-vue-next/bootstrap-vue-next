@@ -99,7 +99,7 @@ describe('form-select-option-group', () => {
       props: {
         label: 'foo',
         options: [
-          {text: 'one', value: 1, 'data-option': 'opt1'},
+          {'text': 'one', 'value': 1, 'data-option': 'opt1'},
           {text: 'two', value: 2, class: 'custom-class'},
         ],
       },

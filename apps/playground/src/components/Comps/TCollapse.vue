@@ -98,7 +98,7 @@
 <script setup lang="ts">
 // You can use this file as a development spot to test your changes
 // Please do not commit this file
-import {useTemplateRef, ref} from 'vue'
+import {ref, useTemplateRef} from 'vue'
 const collapseState = ref(true)
 const collapseRef = useTemplateRef('collapseRef')
 </script>
