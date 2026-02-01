@@ -88,8 +88,9 @@ const normalizedOptions = computed(() => {
         } as ComplexSelectOptionRaw
       }
 
-      // Simple option
+      // Simple option - spread all properties from the original object to preserve class, data-*, etc.
       return {
+        ...el,
         value: el[props.valueField as ValueKey],
         text: (el[props.textField as keyof Item] as string | undefined) ?? '',
         disabled: (el[props.disabledField as keyof Item] as boolean | undefined) ?? false,
@@ -104,7 +105,9 @@ const normalizedOptions = computed(() => {
     if (typeof el === 'number') {
       return String(el)
     }
+    // Spread all properties from the original object to preserve class, data-*, etc.
     return {
+      ...el,
       value: el[props.valueField as ValueKey],
       text: (el[props.textField as keyof Item] as string | undefined) ?? '',
       disabled: (el[props.disabledField as keyof Item] as boolean | undefined) ?? false,
