@@ -31,12 +31,20 @@ The `target` prop may be any of the following:
 - A reference (ref) to a component that has either an `HTMLElement` or `SVGElement` as its root
   element via [Template Ref](https://vuejs.org/guide/essentials/template-refs.html)
 
+<<< DEMO ./demo/PopoverTargetTypes.vue#template{vue-html}
+
 :::info NOTE
 
 `HTMLElement` refers to standard HTML elements such as `<div>`, `<button>`, etc., while `SVGElement`
 refers to `<svg>` or supported child elements of SVGs.
 
 :::
+
+### Target Requirements
+
+The target element **must** exist in the document before `<BPopover>` is mounted. If the target
+element is not found during mount, the popover will never open. Always place your `<BPopover>`
+component lower in the DOM than your target element (or use the `target` slot to wrap the trigger inline).
 
 ## Positioning
 
@@ -80,9 +88,13 @@ and use the [`v-model`](#programmatic-control-via-v-model) or
 ## Content
 
 The title and body content of a popover can be set via the `title` and `body` props or the `title`
-and `default` slots.
+and `default` slots. Slots allow you to include HTML markup and Vue components.
 
 <<< DEMO ./demo/PopoverContent.vue#template{vue-html}
+
+:::tip
+For reactive or complex content, always use slots instead of props. Slots provide greater control and support for HTML markup and interactive components.
+:::
 
 ## Custom Classes and Variants
 
@@ -118,6 +130,24 @@ To make the popover shown on initial render, simply add prop `show` to `<BPopove
 
 Popovers can also be controlled via [Exposed functions](#exposed-functions).
 
+## Delay
+
+You can control the delay for showing and hiding popovers using the `delay` prop. It accepts either a number (in milliseconds) that applies to both show and hide, or an object with separate `show` and `hide` values.
+
+<<< DEMO ./demo/PopoverDelay.vue#template{vue-html}
+
+## Boundary
+
+The `boundary` prop determines the container that constrains the popover visually. The `boundary-padding` prop specifies the minimum distance (in pixels) between the popover and the boundary edges.
+
+<<< DEMO ./demo/PopoverBoundary.vue#template{vue-html}
+
+Valid `boundary` values include:
+
+- `'clippingAncestors'` (default) - constrained by scrollable ancestors
+- `'viewport'` - constrained by the browser viewport
+- An HTML element reference - constrained by a specific element
+
 ## Close on Hide
 
 The `close-on-hide` prop can be used to have the popover automatically close
@@ -126,6 +156,12 @@ props can be used to control what's considered clipping.
 
 <<< DEMO ./demo/PopoverCloseOnHide.vue
 
+## Disabled State
+
+You can programmatically disable a popover using `v-model` combined with the `manual` prop. When disabled (manual mode), the popover will not respond to trigger events, but can still be controlled programmatically.
+
+<<< DEMO ./demo/PopoverDisabled.vue
+
 ## Exposed functions
 
 `BPopover` exposes several functions to allow manipulation of the state of the component.
@@ -133,6 +169,54 @@ These are accessed through the [template ref](https://vuejs.org/guide/essentials
 
 <<< DEMO ./demo/PopoverExposed.vue
 
+## Interactive Content
+
+You can create popovers with interactive content such as forms and buttons. When using interactive content:
+
+- Use the `click` trigger (avoid `hover` or `focus` triggers)
+- Keep interactive content minimal for better mobile experience
+- Manage focus properly - move focus into the popover when shown and return it when hidden
+- Consider using `<BModal>` for complex interactive content with extensive form controls
+
+<<< DEMO ./demo/PopoverInteractive.vue
+
+:::warning Important
+The maximum width of popovers is constrained by Bootstrap's CSS (276px by default). For more complex interactive forms with multiple controls, consider using a modal dialog instead.
+:::
+
 ## Accessibility
 
 For information on managing ARIA attributes for popover triggers, see the [ARIA Trigger Registration for Component Visibility](/docs/reference/accessibility#aria-trigger-registration-for-component-visibility) section in the Accessibility reference.
+
+### Making popovers work for keyboard and assistive technology users
+
+To allow keyboard users to activate your popovers, you should only add them to HTML elements that
+are traditionally keyboard-focusable and interactive (such as links or form controls). Although
+arbitrary HTML elements (such as `<span>`s) can be made focusable by adding the `tabindex="0"`
+attribute, this will add potentially annoying and confusing tab stops on non-interactive elements
+for keyboard users. Most assistive technologies currently do not announce the popover's content
+in this situation.
+
+Additionally, do not rely solely on `hover` as the trigger for your popovers, as
+this will make them impossible to trigger for keyboard users.
+
+### Content Considerations
+
+The content displayed in popovers is tied to the trigger element with the `aria-describedby`
+attribute. As a result, the entirety of the popover's content will be announced to assistive
+technology users as one long, uninterrupted stream. Keep content concise and well-structured.
+
+When including interactive controls (such as form elements or links) in popovers, be aware that:
+
+- Keyboard focus remains on the triggering element when the popover opens
+- The popover may not immediately follow the trigger in the document's tab order
+- Moving forward with <kbd>Tab</kbd> may not move a keyboard user into the popover
+- Interactive controls may be unreachable for keyboard users
+
+**For complex interactive content, use `<BModal>` instead of popovers** to ensure proper keyboard navigation and focus management.
+
+:::info Note
+The animation effect of popovers is dependent on the `prefers-reduced-motion` media
+query. See the [reduced motion section of our accessibility documentation](/docs/reference/accessibility) for
+additional details.
+:::
