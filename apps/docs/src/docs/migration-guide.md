@@ -962,37 +962,166 @@ See [Show and Hide](#show-and-hide) shared properties.
 
 See the [v-html](#v-html) section for information on deprecation of the `html` prop.
 
-The `content` prop has been renamed to `body` for consistency with other components.
+#### Positioning Library
 
-The `container` prop has been deprecated. Use the `teleportTo` prop instead to specify where the popover
-should be mounted. See [Vue Teleport documentation](https://vuejs.org/guide/built-ins/teleport.html).
+BootstrapVueNext uses [floating-ui](https://floating-ui.com/) instead of Popper.js for positioning. This brings better performance and more features, but requires some migration:
 
-`custom-class` has been changed to `body-class` and a `title-class` has been added for completeness.
+#### Placement Values
 
-`fallback-placement` has been deprecated. Use the various options provided by [floating-ui](https://floating-ui.com/)
-to handle placement.
+Placement values have changed to align with floating-ui conventions:
 
-The ability for the `target` prop to take a function has been deprecated.
+| BootstrapVue  | BootstrapVueNext |
+| ------------- | ---------------- |
+| `top`         | `top`            |
+| `topleft`     | `top-start`      |
+| `topright`    | `top-end`        |
+| `bottom`      | `bottom`         |
+| `bottomleft`  | `bottom-start`   |
+| `bottomright` | `bottom-end`     |
+| `left`        | `left`           |
+| `lefttop`     | `left-start`     |
+| `leftbottom`  | `left-end`       |
+| `right`       | `right`          |
+| `righttop`    | `right-start`    |
+| `rightbottom` | `right-end`      |
 
-Triggers work differently as the underlying library we use to manage popovers has changed. See
-[our documentation](/docs/components/popover#triggers) and [floating-ui](https://floating-ui.com/)
-for details.
+#### Default Placement
 
-The `variant` prop has been deprecated. Use Bootstrap's color and background utility classes to style
-popovers instead. See [Popover custom classes and variants](/docs/components/popover#custom-classes-and-variants)
-for details.
+The default placement has changed from `right` to `top`.
 
-The `disabled` prop and
-[Programmatically Disabling](https://bootstrap-vue.org/docs/components/popover#programmatically-disabling-popover) have
-been deprecated along with the `disabled` and `enabled` events. Use `manual=true` to disable BootstrapVueNext's automatic
-trigger handling and if your own code shows the popover disable those mechanisms as well. If you believe that implementing
-full parity with the BootstrapVue feature is useful, please open an issue or propose a pull request.
+#### Triggers
 
-`delay` now defaults to 100ms for show and 300ms for hide rather than 50ms for both
+Triggers work differently in BootstrapVueNext. Instead of space-separated string values, use individual boolean props:
 
-The default for `placement` is now `top` rather than `right`
+| BootstrapVue             | BootstrapVueNext                         |
+| ------------------------ | ---------------------------------------- |
+| `triggers="click"`       | `click` (prop, default is hover + focus) |
+| `triggers="hover"`       | `hover` (prop)                           |
+| `triggers="focus"`       | `focus` (prop)                           |
+| `triggers="hover focus"` | `hover focus` (both props)               |
+| `triggers="click blur"`  | `click` (blur is automatic with click)   |
+| `triggers="manual"`      | `manual` (prop)                          |
 
-`$root` events are deprecated. See [usePopover](/docs/composables/usePopover) as an alternative.
+#### Container → Teleport
+
+The `container` prop has been replaced with Vue 3's teleport system:
+
+```vue
+<!-- BootstrapVue -->
+<BPopover target="btn" container="my-container" />
+
+<!-- BootstrapVueNext -->
+<BPopover target="btn" teleport-to="#my-container" />
+<!-- or disable teleport entirely -->
+<BPopover target="btn" :teleport-disabled="true" />
+```
+
+#### Content Property
+
+The `content` prop has been renamed to `body` for consistency:
+
+```vue
+<!-- BootstrapVue -->
+<BPopover target="btn" content="Body text" />
+
+<!-- BootstrapVueNext -->
+<BPopover target="btn" body="Body text" />
+```
+
+#### Custom Classes
+
+The `custom-class` prop has been split into more specific props:
+
+- `custom-class` → `body-class` (for popover body)
+- New: `title-class` (for popover title)
+
+#### Variant
+
+The `variant` prop has been deprecated. Use Bootstrap's [color and background utility classes](https://getbootstrap.com/docs/5.3/helpers/color-background/) instead:
+
+```vue
+<!-- BootstrapVue -->
+<BPopover variant="danger" />
+
+<!-- BootstrapVueNext -->
+<BPopover body-class="bg-danger text-white" title-class="bg-danger text-white border-danger" />
+```
+
+See [Popover custom classes and variants](/docs/components/popover#custom-classes-and-variants) for more details.
+
+#### Programmatic Control
+
+The `.sync` modifier on the `show` prop has been replaced with `v-model`:
+
+```vue
+<!-- BootstrapVue -->
+<BPopover :show.sync="isVisible" />
+
+<!-- BootstrapVueNext -->
+<BPopover v-model="isVisible" />
+```
+
+#### Disabled State
+
+The `disabled` prop and programmatic disabling features have been deprecated. Use `manual=true` combined with `v-model` for full control:
+
+```vue
+<!-- BootstrapVue -->
+<BPopover :disabled.sync="isDisabled" />
+
+<!-- BootstrapVueNext -->
+<BPopover :manual="isDisabled" v-model="isVisible" />
+```
+
+#### Delay
+
+The `delay` prop now defaults to `{show: 100, hide: 300}` instead of `50` for both.
+
+#### Fallback Placement
+
+`fallback-placement` has been deprecated. Use the `noFlip` prop or configure custom middleware via the `floatingMiddleware` prop. See the [floating-ui documentation](https://floating-ui.com/docs/flip) for advanced placement control.
+
+#### Target as Function
+
+The ability for the `target` prop to accept a function has been deprecated. Use a template ref, element ID string, or querySelector string instead.
+
+#### \$root Events
+
+The `$root` event system (`bv::show::popover`, `bv::hide::popover`, etc.) has been deprecated. Use the [usePopover](/docs/composables/usePopover) composable or template refs with exposed methods instead:
+
+```vue
+<!-- BootstrapVue -->
+<script>
+export default {
+  methods: {
+    showPopover() {
+      this.$root.$emit('bv::show::popover', 'my-popover')
+    },
+  },
+}
+</script>
+
+<!-- BootstrapVueNext -->
+<template>
+  <BPopover ref="popover" />
+</template>
+
+<script setup>
+import {ref} from 'vue'
+
+const popover = ref()
+
+const showPopover = () => {
+  popover.value?.show()
+}
+</script>
+```
+
+#### Events
+
+The `disabled` and `enabled` events have been deprecated along with the `disabled` prop.
+
+See the [Popover documentation](/docs/components/popover) for complete details on all available features.
 
 ### BProgressBar
 
@@ -1660,7 +1789,228 @@ The default for `placement` is now `top` rather than `right`
 
 ### Popover
 
-<NotYetDocumented type="directive"/>
+The `v-b-popover` directive syntax has changed to use modifier-based configuration instead of configuration objects.
+
+#### Trigger Configuration
+
+BSV used string-based triggers while BSVN uses modifiers:
+
+```vue-html
+<!-- BootstrapVue -->
+<button v-b-popover="'Content'" title="Title" v-b-popover.hover.bottom>
+  Hover
+</button>
+
+<!-- BootstrapVueNext -->
+<BButton v-b-popover.hover.bottom="'Content'" title="Title">
+  Hover
+</BButton>
+```
+
+Available trigger modifiers:
+
+- `.click` - Toggle on click (BSV: `'click'`)
+- `.hover` - Show on hover (BSV: `'hover'`)
+- `.focus` - Show on focus (BSV: `'focus'`)
+- `.manual` - Manual control (BSV: `'manual'`)
+
+Default behavior: If no trigger modifier is specified, BSVN defaults to **both hover and focus** triggers (same as BSV).
+
+#### Placement Configuration
+
+BSV used complex placement strings while BSVN uses simple modifiers:
+
+```vue-html
+<!-- BootstrapVue -->
+<button v-b-popover.hover.topleft="'Content'">Top Left</button>
+<button v-b-popover.hover.bottomright="'Content'">Bottom Right</button>
+
+<!-- BootstrapVueNext -->
+<BButton v-b-popover.hover.top="'Content'">Top</BButton>
+<BButton v-b-popover.hover.right="'Content'">Right</BButton>
+```
+
+BSVN uses four simple placement modifiers:
+
+- `.top`
+- `.bottom`
+- `.left`
+- `.right`
+
+BSV's fine-grained placements (`topleft`, `topright`, `bottomleft`, `bottomright`, `lefttop`, `leftbottom`, `righttop`, `rightbottom`) are not available as modifiers. Use the component version `<BPopover>` for precise placement control.
+
+#### Value Configuration
+
+The directive value can be a string or an object:
+
+```vue-html
+<!-- Simple string content (same in both) -->
+<BButton v-b-popover="'Popover content'">Button</BButton>
+
+<!-- Object configuration -->
+<!-- BootstrapVue -->
+<button
+  v-b-popover="{
+    title: 'Title',
+    content: 'Body',
+    delay: { show: 500, hide: 100 }
+  }"
+>
+  Button
+</button>
+
+<!-- BootstrapVueNext -->
+<BButton
+  v-b-popover.hover.top="{
+    title: 'Title',
+    body: 'Body',
+    delay: { show: 500, hide: 100 }
+  }"
+>
+  Button
+</BButton>
+```
+
+Note: BSV used `content` property, BSVN uses `body` property in object configuration.
+
+#### Special Modifiers
+
+BSVN adds new modifiers not available in BSV:
+
+- `.body` - Append to `<body>` (BSV: no equivalent modifier)
+- `.child` - Append as child element
+- `.inline` - Use inline positioning for multi-line text
+- `.lazy` - Defer rendering until first shown
+- `.realtime` - Update position in real-time
+- `.interactive` - Allow interactive content
+
+#### Title Attribute Handling
+
+Both versions support using the element's `title` attribute:
+
+```vue-html
+<!-- Same in both -->
+<button v-b-popover.hover.top="'Content'" title="Title">
+  Button
+</button>
+```
+
+BSVN automatically removes the `title` attribute and stores it as `data-original-title` to prevent browser tooltips.
+
+#### Migration Examples
+
+**Basic hover popover:**
+
+```vue-html
+<!-- BootstrapVue -->
+<button v-b-popover.hover="'Content'" title="Title">Hover</button>
+
+<!-- BootstrapVueNext -->
+<BButton v-b-popover.hover="'Content'" title="Title">Hover</BButton>
+```
+
+**Click popover with placement:**
+
+```vue-html
+<!-- BootstrapVue -->
+<button v-b-popover.click.bottom="'Content'">Click</button>
+
+<!-- BootstrapVueNext -->
+<BButton v-b-popover.click.bottom="'Content'">Click</BButton>
+```
+
+**Manual control:**
+
+```vue-html
+<!-- BootstrapVue -->
+<template>
+  <button v-b-popover.manual="popoverConfig" ref="btn">Manual</button>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      popoverConfig: {
+        title: 'Title',
+        content: 'Content'
+      }
+    }
+  },
+  methods: {
+    showPopover() {
+      this.$root.$emit('bv::show::popover', 'btn')
+    }
+  }
+}
+</script>
+
+<!-- BootstrapVueNext -->
+<template>
+  <BButton v-b-popover.manual.show="isShown && popoverConfig">Manual</BButton>
+</template>
+<script setup lang="ts">
+import {ref} from 'vue'
+
+const isShown = ref(false)
+const popoverConfig = {
+  title: 'Title',
+  body: 'Content'
+}
+</script>
+```
+
+**Complex configuration:**
+
+```vue-html
+<!-- BootstrapVue -->
+<button
+  v-b-popover="{
+    title: 'Title',
+    content: 'Body',
+    placement: 'top',
+    trigger: 'hover',
+    delay: { show: 500, hide: 100 }
+  }"
+>
+  Button
+</button>
+
+<!-- BootstrapVueNext -->
+<BButton
+  v-b-popover.hover.top="{
+    title: 'Title',
+    body: 'Body',
+    delay: { show: 500, hide: 100 }
+  }"
+>
+  Button
+</BButton>
+```
+
+#### When to Use Component Instead
+
+For complex scenarios, migrate to the `<BPopover>` component:
+
+- Fine-grained placement control (`top-start`, `bottom-end`, etc.)
+- Rich HTML content via slots
+- Programmatic control with full API
+- Interactive content (forms, buttons)
+- Custom variants and styling
+
+```vue-html
+<!-- BSV directive -->
+<button v-b-popover.hover.topleft="complexContent">Button</button>
+
+<!-- BSVN component (recommended for complex cases) -->
+<BButton id="btn">Button</BButton>
+<BPopover target="btn" placement="top-start" hover>
+  <template #title>Custom Title</template>
+  <div>
+    <p>Rich content with <strong>HTML</strong></p>
+    <BButton size="sm">Action</BButton>
+  </div>
+</BPopover>
+```
 
 ### ScrollSpy
 
