@@ -47,14 +47,14 @@ const fields: TableFieldRaw<Person>[] = [
   {
     // A regular column with custom formatter
     key: 'sex',
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    formatter: (value) => (value as any as string).charAt(0).toUpperCase(),
+    formatter: ({value}) =>
+      typeof value === 'string' ? value.charAt(0).toUpperCase() : `${value}`,
   },
   {
     // A virtual column with custom formatter
     key: 'birthYear',
     label: 'Calculated Birth Year',
-    formatter: (value_, key_, item: Person) => (new Date().getFullYear() - item.age).toString(),
+    formatter: ({item}) => (new Date().getFullYear() - item.age).toString(),
   },
 ]
 

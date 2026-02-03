@@ -1,10 +1,8 @@
-# Router link support
-
-<div class="lead mb-5">
-
-Several BootstrapVue components support rendering `RouterLink` components compatible with Vue Router and Nuxt.js. For more information, see the official [Vue Router docs](https://router.vuejs.org) and official [Nuxt.js docs](https://nuxt.com/docs/api/components/nuxt-link#props).
-
-</div>
+---
+description: >
+  Several BootstrapVue components support rendering RouterLink components compatible with Vue Router and Nuxt.js.
+  For more information, see the official Vue Router docs and official Nuxt.js docs.
+---
 
 ## Common router link props
 
@@ -150,11 +148,9 @@ Configure the active CSS class applied when the link is active with exact path m
 
 With components that support router links (have a `to` prop), you will want to set this to the class `active` (or a space separated string that includes `active`) to apply Bootstrap's active styling on the component when the current route matches the `to` prop.
 
-## Nuxt.js specific router link props
+## Nuxt.js-specific router link props
 
-<NotYetImplemented/>
-
-When BootstrapVue detects that your app is running under [Nuxt.js](https://nuxt.com), it will render a [`NuxtLink`](https://nuxt.com/docs/api/components/nuxt-link#nuxtlink) sub component instead of a `RouterLink`. `NuxtLink` supports all of the above router link props, plus the following additional Nuxt.js specific props.
+When BootstrapVueNext detects that your app is running under [Nuxt.js](https://nuxt.com), it will render a [`NuxtLink`](https://nuxt.com/docs/api/components/nuxt-link#nuxtlink) sub component instead of a `RouterLink`. `NuxtLink` supports all of the above router link props, plus the following additional Nuxt.js specific props.
 
 ### `prefetch`
 
@@ -179,10 +175,3 @@ router: { prefetchLinks: false }
 ```
 
 </HighlightCard>
-
-<script setup lang="ts">
-import HighlightCard from '../../components/HighlightCard.vue'
-
-import NotYetImplemented from '../../components/NotYetImplemented.vue'
-import {BAlert} from 'bootstrap-vue-next'
-</script>

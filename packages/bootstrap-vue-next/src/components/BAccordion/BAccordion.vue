@@ -9,6 +9,7 @@ import {
   computed,
   nextTick,
   provide,
+  readonly,
   ref,
   type ShallowRef,
   shallowRef,
@@ -24,6 +25,8 @@ import type {BAccordionProps} from '../../types/ComponentProps'
 import {flattenFragments} from '../../utils/flattenFragments'
 import BAccordionItem from './BAccordionItem.vue'
 import {sortSlotElementsByPosition} from '../../utils/dom'
+import type {BAccordionSlots} from '../../types'
+import {isReadOnlyArray} from '../../utils/object'
 
 const _props = withDefaults(defineProps<Omit<BAccordionProps, 'modelValue' | 'index'>>(), {
   flush: false,
@@ -33,13 +36,8 @@ const _props = withDefaults(defineProps<Omit<BAccordionProps, 'modelValue' | 'in
   lazy: false,
   unmountLazy: false,
 })
-
-const slots = defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
-
 const props = useDefaults(_props, 'BAccordion')
+const slots = defineSlots<BAccordionSlots>()
 
 const modelValue = defineModel<BAccordionProps['modelValue']>({
   default: undefined,
@@ -81,13 +79,14 @@ const sortAccordionItems = () => {
     sortSlotElementsByPosition(unref(a.el), unref(b.el))
   )
   if (modelValue.value) {
-    if (Array.isArray(modelValue.value)) {
+    if (isReadOnlyArray(modelValue.value)) {
       const next = modelValue.value
         .map((id) => accordionItems.value.findIndex((item) => item.id === id))
         .filter((i) => i !== -1)
 
       if (next.length !== modelValue.value.length) {
-        if (import.meta.env.DEV) {
+        if (process.env.NODE_ENV === 'development') {
+          // eslint-disable-next-line no-console
           console.warn('[BAccordion] Unknown item id in v-model:', modelValue.value)
         }
       }
@@ -97,7 +96,7 @@ const sortAccordionItems = () => {
       if (idx !== -1) index.value = idx
     }
   } else if (index.value !== undefined) {
-    modelValue.value = Array.isArray(index.value)
+    modelValue.value = isReadOnlyArray(index.value)
       ? index.value.map((idx) => accordionItems.value[idx]?.id)
       : accordionItems.value[index.value]?.id
   }
@@ -116,51 +115,48 @@ const areEqual = (a: unknown, b: unknown) => {
   return a === b
 }
 
-watch(
-  () => index.value,
-  (newValue, oldValue) => {
-    if (areEqual(newValue, oldValue)) return
-    if (index.value === undefined) {
-      modelValue.value = undefined
-      return
-    }
+watch(index, (newValue, oldValue) => {
+  if (areEqual(newValue, oldValue)) return
+  if (index.value === undefined) {
+    modelValue.value = undefined
+    return
+  }
 
-    if (!props.free) {
-      const idx = !Array.isArray(index.value) ? index.value : index.value?.[0]
-      if (accordionItems.value[idx]?.id) {
-        if (modelValue.value !== accordionItems.value[idx]?.id) {
-          modelValue.value = accordionItems.value[idx]?.id
-        }
-      } else {
+  if (!props.free) {
+    const idx = !isReadOnlyArray(index.value) ? index.value : index.value?.[0]
+    if (accordionItems.value[idx]?.id) {
+      if (modelValue.value !== accordionItems.value[idx]?.id) {
+        modelValue.value = accordionItems.value[idx]?.id
+      }
+    } else {
+      nextTick(() => {
+        index.value = undefined
+      })
+    }
+  } else {
+    // free mode
+    if (isReadOnlyArray(index.value)) {
+      const newValue = index.value.map((item) => accordionItems.value[item]?.id)
+      if (!areEqual(newValue, modelValue.value)) {
+        modelValue.value = newValue
+      }
+    } else {
+      const newValue = accordionItems.value[index.value]?.id
+      if (newValue === undefined) {
         nextTick(() => {
           index.value = undefined
         })
+        return
       }
-    } else {
-      // free mode
-      if (Array.isArray(index.value)) {
-        const newValue = index.value.map((item) => accordionItems.value[item]?.id)
-        if (!areEqual(newValue, modelValue.value)) {
-          modelValue.value = newValue
-        }
-      } else {
-        const newValue = accordionItems.value[index.value]?.id
-        if (newValue === undefined) {
-          nextTick(() => {
-            index.value = undefined
-          })
-          return
-        }
-        if (!areEqual(newValue, modelValue.value)) {
-          modelValue.value = newValue
-        }
+      if (!areEqual(newValue, modelValue.value)) {
+        modelValue.value = newValue
       }
     }
   }
-)
+})
 
 watch(
-  () => modelValue.value,
+  modelValue,
   (newValue, oldValue) => {
     if (areEqual(newValue, oldValue)) return
     if (modelValue.value === undefined) {
@@ -169,9 +165,12 @@ watch(
     }
 
     if (!props.free) {
-      const idx = !Array.isArray(modelValue.value)
-        ? accordionItems.value.findIndex((item) => item.id === modelValue.value)
-        : accordionItems.value.findIndex((item) => item.id === modelValue.value?.[0])
+      const idx = accordionItems.value.findIndex(
+        (item) =>
+          item.id ===
+          (!isReadOnlyArray(modelValue.value) ? modelValue.value : modelValue.value?.[0])
+      )
+
       if (idx !== -1) {
         if (index.value !== idx) {
           index.value = idx
@@ -182,7 +181,7 @@ watch(
         })
       }
     } else if (props.free) {
-      if (Array.isArray(modelValue.value)) {
+      if (isReadOnlyArray(modelValue.value)) {
         const idxes = modelValue.value
           .map((value) => accordionItems.value.findIndex((item) => item.id === value))
           .filter((index) => index !== -1)
@@ -210,9 +209,10 @@ watch(
   () => props.free,
   (free) => {
     if (modelValue.value) {
-      if (!free && Array.isArray(modelValue.value)) {
+      if (!free && isReadOnlyArray(modelValue.value)) {
+        // eslint-disable-next-line prefer-destructuring
         modelValue.value = modelValue.value[0]
-      } else if (free && !Array.isArray(modelValue.value)) {
+      } else if (free && !isReadOnlyArray(modelValue.value)) {
         modelValue.value = [modelValue.value]
       }
     }
@@ -220,13 +220,13 @@ watch(
 )
 
 provide(accordionInjectionKey, {
-  openItem: toRef(() => modelValue.value),
+  openItem: readonly(modelValue),
   free: toRef(() => props.free),
   initialAnimation: toRef(() => props.initialAnimation),
   lazy: toRef(() => props.lazy),
   unmountLazy: toRef(() => props.unmountLazy),
   setOpenItem: (id: string) => {
-    if (props.free && !Array.isArray(modelValue.value)) {
+    if (props.free && !isReadOnlyArray(modelValue.value)) {
       if (modelValue.value !== undefined) {
         modelValue.value = [modelValue.value, id]
       } else {
@@ -234,11 +234,11 @@ provide(accordionInjectionKey, {
       }
       return
     }
-    if (!props.free && Array.isArray(modelValue.value)) {
+    if (!props.free && isReadOnlyArray(modelValue.value)) {
       modelValue.value = id
       return
     }
-    if (Array.isArray(modelValue.value)) {
+    if (isReadOnlyArray(modelValue.value)) {
       if (!modelValue.value.includes(id)) {
         modelValue.value = [...modelValue.value, id]
       }
@@ -247,11 +247,11 @@ provide(accordionInjectionKey, {
     }
   },
   setCloseItem: (id: string) => {
-    if (!props.free && Array.isArray(modelValue.value)) {
+    if (!props.free && isReadOnlyArray(modelValue.value)) {
       modelValue.value = undefined
       return
     }
-    if (Array.isArray(modelValue.value)) {
+    if (isReadOnlyArray(modelValue.value)) {
       const next = modelValue.value.filter((item) => item !== id)
       modelValue.value = next.length ? next : undefined
     } else {

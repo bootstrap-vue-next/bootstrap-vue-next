@@ -1,12 +1,9 @@
-# Grid System
-
-<PageHeader>
-
-Use the powerful mobile-first flexbox grid (via the `<BContainer>`, `<BRow>` and
-`<BCol>` components) to build layouts of all shapes and sizes thanks to a twelve column system,
-five default responsive tiers, CSS Sass variables and mixins, and dozens of predefined classes.
-
-</PageHeader>
+---
+description: >
+  Use the powerful mobile-first flexbox grid (via the `<BContainer>`, `<BRow>` and
+  `<BCol>` components) to build layouts of all shapes and sizes thanks to a twelve column system,
+  five default responsive tiers, CSS Sass variables and mixins, and dozens of predefined classes.
+---
 
 ## Overview
 
@@ -53,7 +50,7 @@ Breaking it down, here's how it works:
 - Grid breakpoints are based on minimum width media queries, meaning **they apply to that one
   breakpoint and all those above it** (e.g., `<BCol sm="4">` applies to small, medium, large, and
   extra large devices, but not the first `xs` breakpoint).
-- You can use predefined grid classes or Sass mixins for more semantic markup. See the [Bootstrap 5 docs](https://getbootstrap.com/docs/5.3/layout/grid/#sass-variables) for details
+- You can use predefined grid classes or Sass mixins for more semantic markup. See the [Bootstrap 5 docs](https://getbootstrap.com/docs/5.3/layout/grid#sass-variables) for details
 
 Be aware of the limitations and [bugs around flexbox](https://github.com/philipwalton/flexbugs),
 like the
@@ -217,7 +214,7 @@ See how aspects of the Bootstrap grid system work across multiple devices with a
 
 - There is no `xs` prop. The `cols` prop refers to the `xs` (smallest) breakpoint.
 - The above breakpoint values are Bootstrap defaults. They can be customized via
-  [SCSS variables](<[/docs/reference/theming](https://getbootstrap.com/docs/5.3/layout/grid/#customizing-the-grid)>).
+  [SCSS variables](https://getbootstrap.com/docs/5.3/layout/grid#customizing-the-grid).
 
 ### Container sizes
 
@@ -350,7 +347,7 @@ Ordering is controlled by flexbox's CSS style `order`.
 ### Offsetting columns
 
 You can offset grid columns in two ways: our responsive `offset-*` props or the
-[spacing](<[/docs/reference/spacing-classes](https://getbootstrap.com/docs/5.3/utilities/spacing/)>)
+[spacing](https://getbootstrap.com/docs/5.3/utilities/spacing)
 utility classes. Grid `offset-*` props are sized to match columns while margins utility classes are
 more useful for quick layouts where the width of the offset is variable.
 
@@ -363,7 +360,7 @@ the offset to `0` at a larger breakpoint:
 
 ### Margin utilities on columns
 
-You can use [margin and spacing](https://getbootstrap.com/docs/5.3/utilities/spacing/) utility classes
+You can use [margin and spacing](https://getbootstrap.com/docs/5.3/utilities/spacing) utility classes
 like `.mr-auto` to force sibling columns away from one another.
 
 <<< DEMO ./demo/ColSpacing.vue#template{vue-html}
@@ -377,8 +374,6 @@ within an existing `<BCol>` component. Nested rows should include a set of colum
 <<< DEMO ./demo/ColNesting.vue#template{vue-html}
 
 ## Row columns
-
-<span class="badge badge-info small">Requires Bootstrap v4.4+ CSS</span>
 
 Use the responsive `cols-*` props in `<BRow>` to quickly set the number of columns that best render
 your content and layout. Whereas normal column widths are apply to the individual `<BCol>` columns
@@ -413,7 +408,7 @@ content.
 
 ### Changing `display`
 
-Use Bootstrap's [display utilities](<[/docs/reference/utility-classes](https://getbootstrap.com/docs/5.3/utilities/display/)>)
+Use Bootstrap's [display utilities](https://getbootstrap.com/docs/5.3/utilities/display)
 for responsively toggling common values of the `display` property. Mix it with the grid system,
 content, or components to show or hide them across specific viewports.
 
@@ -425,12 +420,12 @@ behaviors. Most of the components are built with flexbox enabled.
 
 Should you need to add `display: flex` to an element, do so with `.d-flex` or one of the responsive
 variants (e.g., `.d-sm-flex`). You’ll need this class or `display` value to allow the use of the
-extra [flexbox utilities](<[/docs/reference/utility-classes](https://getbootstrap.com/docs/5.3/utilities/flex/)>)
+extra [flexbox utilities](https://getbootstrap.com/docs/5.3/utilities/flex)
 for sizing, alignment, spacing, and more.
 
 ### Margin and padding
 
-Use the `margin` and `padding` [spacing utilities](<[/docs/reference/utility-classes](https://getbootstrap.com/docs/5.3/utilities/spacing/)>)
+Use the `margin` and `padding` [spacing utilities](https://getbootstrap.com/docs/5.3/utilities/spacing)
 o control how elements and components are spaced and sized. Bootstrap 5 includes a six-level scale for spacing
 utilities, based on a `1rem` value default SASS `$spacer` variable. Choose values for all viewports
 (e.g., `.me-3` for `margin-right: 1rem` in LTR), or pick responsive variants to target specific viewports
@@ -439,7 +434,7 @@ utilities, based on a `1rem` value default SASS `$spacer` variable. Choose value
 ### Toggle `visibility`
 
 When toggling `display` isn’t needed, you can toggle the `visibility` of an element with the
-[visibility utility classes](<[/docs/reference/utility-classes](https://getbootstrap.com/docs/5.3/utilities/visibility/)>).
+[visibility utility classes](https://getbootstrap.com/docs/5.3/utilities/visibility).
 Invisible elements will still affect the layout of the page, but are visually hidden from visitors.
 
 <ComponentReference :data="data" />

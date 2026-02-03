@@ -71,7 +71,6 @@
     <BTable
       ref="provider-table"
       v-model:sort-by="sortBy"
-      :sort-internal="true"
       :provider="provider"
       :fields="fields"
       :current-page="currentPage"
@@ -104,7 +103,7 @@ interface Person {
 
 const table = useTemplateRef<ComponentExposed<typeof BTable<Person>>>('provider-table')
 
-const provider = (context: Readonly<BTableProviderContext<Person>>) =>
+const provider = (context: Readonly<BTableProviderContext>) =>
   new Promise<Person[]>(async (resolve) => {
     const sortedAndPaginatedItems = sortItems(filteredItems.value, context.sortBy).slice(
       (context.currentPage - 1) * context.perPage,
@@ -115,7 +114,7 @@ const provider = (context: Readonly<BTableProviderContext<Person>>) =>
     resolve(sortedAndPaginatedItems)
   })
 
-const sortItems = (items: Person[], sortBy?: BTableSortBy[]) => {
+const sortItems = (items: Person[], sortBy?: readonly BTableSortBy[]) => {
   if (!sortBy || sortBy.length === 0) {
     return items
   }

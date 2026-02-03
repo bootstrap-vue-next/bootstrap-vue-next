@@ -1,10 +1,6 @@
-# Alert
-
-<PageHeader>
-
-Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages.
-
-</PageHeader>
+---
+description: 'Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages.'
+---
 
 ## Overview
 
@@ -72,13 +68,11 @@ The BAlert exposes four functions to manipulate the state of an active timer: `p
 
 <<< DEMO ./demo/AlertFunctions.vue
 
+## Accessibility
+
+For information on managing ARIA attributes for alert triggers (when using dismissible alerts), see the [ARIA Trigger Registration for Component Visibility](/docs/reference/accessibility#aria-trigger-registration-for-component-visibility) section in the Accessibility reference.
+
 ## Timer Props
 
 - `Immediate`: Setting this property to `false` will cause a timer to not start immediately upon render. A timer that is not started is not rendered. It must manually be started with `resume()` or `restart()`. Default is `true`.
 - `showOnPause`: Setting this property to `false` will override the behavior of showing the Alert when the timer is paused. Default is `true`.
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/alert.data'
-</script>

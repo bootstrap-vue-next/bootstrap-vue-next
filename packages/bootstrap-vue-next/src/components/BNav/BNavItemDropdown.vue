@@ -34,6 +34,7 @@ import BDropdown from '../BDropdown/BDropdown.vue'
 import type {BDropdownProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BDropdownEmits} from '../../types/ComponentEmits'
+import type {BNavItemDropdownSlots} from '../../types'
 
 const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   ariaLabel: undefined,
@@ -75,20 +76,12 @@ const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   variant: 'link',
 })
 const props = useDefaults(_props, 'BNavItemDropdown')
-
 const emit = defineEmits<BDropdownEmits>()
+defineSlots<BNavItemDropdownSlots>()
 
 const modelValue = defineModel<Exclude<BDropdownProps['modelValue'], undefined>>({default: false})
 
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'button-content'?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'default'?: (props: {hide: () => void; show: () => void}) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'toggle-text'?: (props: Record<string, never>) => any
-}>()
-const dropdown = useTemplateRef<InstanceType<typeof BDropdown>>('_dropdown')
+const dropdown = useTemplateRef('_dropdown')
 
 const hide = () => {
   dropdown.value?.hide()

@@ -13,6 +13,7 @@ import {avatarGroupInjectionKey} from '../../utils/keys'
 import {useDefaults} from '../../composables/useDefaults'
 import {useToNumber} from '@vueuse/core'
 import {useNumberishToStyle} from '../../composables/useNumberishToStyle'
+import type {BAvatarGroupSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BAvatarGroupProps>(), {
   overlap: 0.3,
@@ -33,11 +34,7 @@ const _props = withDefaults(defineProps<BAvatarGroupProps>(), {
   // End ColorExtendables props
 })
 const props = useDefaults(_props, 'BAvatarGroup')
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
+defineSlots<BAvatarGroupSlots>()
 
 const overlapNumber = useToNumber(() => props.overlap)
 

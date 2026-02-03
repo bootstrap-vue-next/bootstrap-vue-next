@@ -25,12 +25,12 @@
     </BListGroup>
     <BCardBody>
       <a
-        href="#"
+        href="#card-kitchen-sink"
         class="card-link"
         >Card link</a
       >
       <a
-        href="#"
+        href="#card-kitchen-sink"
         class="card-link"
         >Another link</a
       >

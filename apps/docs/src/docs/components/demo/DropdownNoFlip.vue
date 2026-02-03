@@ -5,9 +5,9 @@
     no-flip
     class="me-2"
   >
-    <BDropdownItem href="#">An item</BDropdownItem>
-    <BDropdownItem href="#">Another item</BDropdownItem>
-    <BDropdownItem href="#">Yet Another item</BDropdownItem>
+    <BDropdownItem>An item</BDropdownItem>
+    <BDropdownItem>Another item</BDropdownItem>
+    <BDropdownItem>Yet Another item</BDropdownItem>
   </BDropdown>
   <!-- #endregion template -->
 </template>

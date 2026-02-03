@@ -1,10 +1,6 @@
-# Form Rating
-
-<PageHeader>
-
-BootstrapVue's custom star rating component, `BFormRating`, is for entering or displaying a rating value. The component is fully WAI-ARIA accessible and supports keyboard control.
-
-</PageHeader>
+---
+description: 'Custom star rating component for entering or displaying rating values. Fully WAI-ARIA accessible with keyboard control, supporting both interactive and readonly modes with customizable styling and icons.'
+---
 
 ## Overview
 
@@ -94,7 +90,7 @@ By default, `BFormRating` has standard Bootstrap form-control styling. To disabl
 
 If you require additional information before a user can chose a ratings value, simply set the `disabled` prop to `true` to disable any user interactivity on the component:
 
-<NotYetImplemented />
+<<< DEMO ./demo/RatingDisabled.vue
 
 ### Readonly
 
@@ -113,6 +109,13 @@ Optionally show a clear icon via the `show-clear` prop. The value will be set to
 **Notes:**
 
 - The clear icon will not be shown when the props `readonly` or `disabled` are set.
+
+#### Custom clear icon
+
+You can replace the default clear icon using the `#icon-clear` slot.
+This slot is **not scoped** — you can insert any content you like.
+
+<<< DEMO ./demo/RatingCustomClear.vue
 
 ### Icons
 
@@ -150,30 +153,16 @@ If you intend to submit the rating value via standard form submission, set the `
 desired form field name. A hidden input will be generated with the current value (or an empty string
 if there is no value).
 
-<NotYetImplemented />
-
 ## Using in input groups
 
-The following is an example of placing `<BFormRating>` in an input group:
+`BFormRating` can be placed inside input groups. Since it uses the Bootstrap `form-control` class, it integrates seamlessly with `BInputGroup` components.
 
-<NotYetImplemented />
-
-## Internationalization
-
-When a `locale` is specified, the displayed value (when the `show-value` prop is `true`) will be in
-the browser's default locale. To change the locale, simple set the `locale` prop to the preferred
-locale, or an array of preferred locales (most preferred locale first). This will affect the
-optional displayed value and the left-to-right or right-to-left orientation of the component.
-
-<NotYetImplemented />
+<<< DEMO ./demo/RatingInputGroup.vue
 
 ## Implementation notes
 
 The ratings control uses the Bootstrap v5 `form-control*`, `d-*` (display), and
 `text-{variant}` classes, as well as BootstrapVue's custom CSS for proper styling.
-
-<NotYetImplemented/>The root element of the control is an `<output>` element, which allows a `<label>` element to be
-associated with it.
 
 ## Accessibility
 
@@ -186,15 +175,3 @@ Keyboard navigation is employed to select the rating value, and mimics the keybo
 - <kbd>Right</kbd> or <kbd>Up</kbd> will increment the rating value by `1`
 - When the [`locale`](#internationalization) resolves to a right-to-left language, the
   <kbd>Left</kbd> and <kbd>Right</kbd> behaviour is reversed.
-
-<ComponentReference :data="data" />
-
-<script lang="ts">
-import {data} from '../../data/components/FormRating.data'
-
-export default {
-setup() {
-return {data}
-}
-}
-</script>

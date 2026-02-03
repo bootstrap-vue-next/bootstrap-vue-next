@@ -1,10 +1,7 @@
-# Types
-
-<div class="lead mb-5">
-
-`BootstrapVueNext` is a complete rewrite that strives for full TypeScript compatibility. This is a list of types we use in this library and that you can use too.
-
-</div>
+---
+description: >
+  BootstrapVueNext is a complete rewrite that strives for full TypeScript compatibility. This is a list of types we use in this library and that you can use too.
+---
 
 ## Alignment
 
@@ -447,6 +444,25 @@ type RadiusElementExtendables = {
 
 </BCard>
 
+## ScrollspyList
+
+This type is used by the `useScrollspy` composable to represent tracked elements.
+
+<BCard class="bg-body-tertiary">
+
+```ts
+type ScrollspyListItem = {
+  id: string | null // Element ID
+  el: HTMLElement | null // DOM element reference
+  visible: boolean // Whether element is currently visible
+  text: string | null // Text content of the element
+}
+
+type ScrollspyList = ScrollspyListItem[]
+```
+
+</BCard>
+
 ## SelectValue
 
 <BCard class="bg-body-tertiary">
@@ -488,35 +504,46 @@ type SpinnerType = 'border' | 'grow'
 <BCard class="bg-body-tertiary">
 
 ```ts
-type TableFieldFormatter<T = any> =
-  | string
-  | ((value: unknown, key?: LiteralUnion<keyof T>, item?: T) => string)
+type TableFieldFormatter<T = any> = (obj: {value: unknown; key: string; item: T}) => string
 
-type TableFieldAttribute<T = any> =
-  | Record<string, unknown>
-  | ((value: unknown, key?: LiteralUnion<keyof T>, item?: T) => Record<string, unknown>)
-
-type TableRowType = 'row' | 'row-details' | 'row-top' | 'row-bottom' | 'table-busy'
+type TableRowType = 'row' | 'row-expansion' | 'row-top' | 'row-bottom' | 'table-busy'
 type TableRowThead = 'top' | 'bottom'
+type BTableInitialSortDirection = 'desc' | 'asc' | 'last'
 
 interface TableField<T = Record<string, unknown>> {
-  key: LiteralUnion<keyof T>
+  /**
+   * Unique identifier for the column.
+   * Must be a simple string (no nested paths like 'name.first').
+   * Used for slot names and column tracking.
+   */
+  key: string
+  /**
+   * Optional accessor for reading values from row items.
+   * - String: root-level property name (e.g., 'email')
+   * - Function: for nested/computed values (e.g., (item) => item.name.first)
+   * - If omitted: defaults to using key
+   */
+  accessor?: string | ((item: T) => unknown)
   label?: string
-  headerTitle?: string
-  headerAbbr?: string
   class?: ClassValue
+  filterByFormatted?: boolean | TableFieldFormatter<T>
   formatter?: TableFieldFormatter<T>
+  headerAbbr?: string
+  headerTitle?: string
+  initialSortDirection?: BTableInitialSortDirection
+  isRowHeader?: boolean
   sortable?: boolean
   sortByFormatted?: boolean | TableFieldFormatter<T>
-  filterByFormatted?: boolean | TableFieldFormatter<T>
+  sortCompare?: BTableSortByComparerFunction<T>
+  stickyColumn?: boolean
+  tdAttr?: AttrsValue | ((obj: {value: unknown; key: string; item: T}) => AttrsValue)
   tdClass?: ClassValue
+  thAttr?:
+    | AttrsValue
+    | ((obj: {value: unknown; key: string; item: T | null; type: TableRowThead}) => AttrsValue)
   thClass?: ClassValue
   thStyle?: StyleValue
   variant?: ColorVariant | null
-  tdAttr?: TableFieldAttribute<T>
-  thAttr?: TableFieldAttribute<T>
-  isRowHeader?: boolean
-  stickyColumn?: boolean
 }
 type TableFieldRaw<T = Record<string, unknown>> = string | TableField<T>
 ```
@@ -531,7 +558,6 @@ type TableFieldRaw<T = Record<string, unknown>> = string | TableField<T>
 type TableItem<T = Record<string, unknown>> = T & {
   _rowVariant?: ColorVariant
   _cellVariants?: Partial<Record<keyof T, ColorVariant>>
-  _showDetails?: boolean
 }
 ```
 
@@ -562,7 +588,6 @@ type BTableSortByComparerFunction<T = any> = (a: T, b: T, key: string) => number
 type BTableSortBy<T = any> = {
   order: BTableSortByOrder
   key: string
-  comparer?: BTableSortByComparerFunction<T>
 }
 ```
 
@@ -660,7 +685,3 @@ New values can be used now and the type check will be successful:
 ```
 
 </BCard>
-
-<script setup lang="ts">
-import {BCard, BCardBody} from 'bootstrap-vue-next'
-</script>

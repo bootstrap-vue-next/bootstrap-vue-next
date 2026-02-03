@@ -1,10 +1,6 @@
-# Form Checkbox
-
-<PageHeader>
-
-For cross browser consistency, `BFormCheckboxGroup` and `BFormCheckbox` use Bootstrap's custom checkbox input to replace the browser default checkbox input. It is built on top of semantic and accessible markup, so it is a solid replacement for the default checkbox input.
-
-</PageHeader>
+---
+description: "For cross browser consistency, `BFormCheckboxGroup` and `BFormCheckbox` use Bootstrap's custom checkbox input to replace the browser default checkbox input. It is built on top of semantic and accessible markup, so it is a solid replacement for the default checkbox input."
+---
 
 ## Single checkbox
 
@@ -206,8 +202,40 @@ The _indeterminate_ state is **visual only**. The checkbox is still either check
 
 <<< DEMO ./demo/CheckboxIndeterminate.vue
 
-<ComponentReference :data="data" />
+## TypeScript Type Safety
 
-<script setup lang="ts">
-import {data} from '../../data/components/formCheckbox.data'
-</script>
+`BFormCheckboxGroup` <!--@include: ./_type-safety-intro.md-->
+
+### Basic Type-Safe Usage
+
+When using TypeScript, specify `value-field`, `text-field`, and `disabled-field` to leverage type safety:
+
+<<< DEMO ./demo/CheckboxTypeSafeBasic.vue{vue}
+
+In this example, TypeScript knows that `selectedIds` is `readonly number[]` because the `id` field of `User` is typed as `number`.
+
+### Type-Safe Field Validation
+
+TypeScript will catch errors when you use invalid field names:
+
+<<< DEMO ./demo/CheckboxTypeSafeValidation.vue{vue}
+
+### Type-Safe API Responses
+
+Type safety is especially valuable when working with API data that uses different naming conventions:
+
+<<< DEMO ./demo/CheckboxTypeSafeAPI.vue{vue}
+
+### Type-Safe Enums
+
+Type safety works with TypeScript enums for strongly-typed value constraints:
+
+<<< DEMO ./demo/CheckboxTypeSafeEnum.vue{vue}
+
+### Benefits
+
+<!--@include: ./_type-safety-benefits.md-->
+
+### Backward Compatibility
+
+<!--@include: ./_type-safety-backward-compat.md-->

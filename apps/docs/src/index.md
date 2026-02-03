@@ -1,10 +1,7 @@
-# Introduction
-
-<div class="lead mb-5">
-
-With BootstrapVueNext you can build fast, responsive, and ARIA accessible projects on the web using Vue.js and Bootstrap v5.
-
-</div>
+---
+title: Introduction
+description: With BootstrapVueNext you can build fast, responsive, and ARIA accessible projects on the web using Vue.js and Bootstrap v5.
+---
 
 <BRow>
   <BCol class="text-center" cols="12" sm="6">
@@ -54,15 +51,6 @@ Easily integrate BootstrapVueNext into your Nuxt.js projects using our included 
 <OpenCollectiveMemberDisplay />
 
 <script setup lang="ts">
-import {
-  BButton,
-  BCol,
-  BCard,
-  BCardText,
-  BLink,
-  BBadge,
-  BRow,
-} from 'bootstrap-vue-next'
 import {inject} from 'vue'
 import {withBase} from 'vitepress'
 import BootstrapIcon from '~icons/logos/bootstrap'

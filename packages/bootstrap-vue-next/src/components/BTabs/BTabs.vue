@@ -97,6 +97,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import {sortSlotElementsByPosition} from '../../utils/dom'
 import {flattenFragments} from '../../utils/flattenFragments'
 import BTab from './BTab.vue'
+import type {BTabsEmits, BTabsSlots} from '../../types'
 
 const _props = withDefaults(defineProps<Omit<BTabsProps, 'modelValue' | 'activeIndex'>>(), {
   activeNavItemClass: undefined,
@@ -125,27 +126,8 @@ const _props = withDefaults(defineProps<Omit<BTabsProps, 'modelValue' | 'activeI
   vertical: false,
 })
 const props = useDefaults(_props, 'BTabs')
-
-const emit = defineEmits<{
-  'activate-tab': [
-    newTabId: string,
-    preTabId: string,
-    newTabIndex: number,
-    prevTabIndex: number,
-    event: BvEvent,
-  ]
-}>()
-
-const slots = defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'default'?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'empty'?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'tabs-end'?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'tabs-start'?: (props: Record<string, never>) => any
-}>()
+const emit = defineEmits<BTabsEmits>()
+const slots = defineSlots<BTabsSlots>()
 
 const activeIndex = defineModel<Exclude<BTabsProps['index'], undefined>>('index', {
   default: -1,
@@ -162,6 +144,7 @@ const tabElementsArray = ref<VNode[]>([])
 
 const isChildActive = ref(false)
 const initialIds = ref<string[]>([])
+const hasExplicitIds = ref(false)
 
 const updateTabElementsArray = () => {
   const tabElements = flattenFragments(slots.default?.({}) ?? [])
@@ -174,6 +157,8 @@ const updateTabElementsArray = () => {
     initialIds.value = tabElementsArray.value.map((tab) =>
       unref(useId(() => tab.props?.id, 'tabpane'))
     )
+    // Check if any tab has an explicit ID
+    hasExplicitIds.value = tabElementsArray.value.some((tab) => tab.props?.id !== undefined)
   }
   isChildActive.value = tabElementsArray.value.some(
     (tab) => tab.props?.active !== undefined && tab.props?.active !== false
@@ -252,7 +237,23 @@ const tabs = computed(() => {
 let initialized = false
 let updateInitialActiveIndex = false
 let updateInitialActiveId = false
-if (activeIndex.value === -1 && activeId.value) {
+let delayedTabSelection = false
+
+// Check if we need to delay tab selection:
+// - We have v-model:index (activeIndex) but no v-model (activeId)
+// - AND tabs don't have explicit IDs (will use generated IDs)
+// - AND we have tabs to select from
+const needsDelayedSelection =
+  activeIndex.value > -1 &&
+  !activeId.value &&
+  !hasExplicitIds.value &&
+  tabElementsArray.value.length > 0
+
+if (needsDelayedSelection) {
+  // Delay tab selection until children register with their generated IDs
+  delayedTabSelection = true
+  updateInitialActiveId = true
+} else if (activeIndex.value === -1 && activeId.value) {
   if (tabs.value.findIndex((t) => t.id === activeId.value) !== -1) {
     activeIndex.value = tabs.value.findIndex((t) => t.id === activeId.value)
   } else {
@@ -289,10 +290,16 @@ function updateInitialIndexAndId() {
     }
   }
   if (updateInitialActiveId) {
+    // Wait for tabs to be registered if we're doing delayed selection
+    if (delayedTabSelection && tabsInternal.value.length === 0) {
+      // Children haven't registered yet, wait
+      return
+    }
     if (activeIndex.value > -1 && tabs.value[activeIndex.value]?.id) {
       nextTick(() => {
         activeId.value = tabs.value[activeIndex.value]?.id
         updateInitialActiveId = false
+        delayedTabSelection = false
       })
     }
   }
@@ -396,14 +403,13 @@ watch(activeIndex, (newValue, oldValue) => {
   }
   // Emit the activate-tab event
   const tabEvent = new BvEvent('activate-tab', {cancelable: true})
-  emit(
-    'activate-tab',
-    tabs.value[index]?.id,
-    tabs.value[previousIndex ?? oldValue]?.id,
-    index,
-    previousIndex ?? oldValue,
-    tabEvent
-  )
+  emit('activate-tab', {
+    newTabId: tabs.value[index]?.id,
+    prevTabId: tabs.value[previousIndex ?? oldValue]?.id,
+    newTabIndex: index,
+    prevTabIndex: previousIndex ?? oldValue,
+    event: tabEvent,
+  })
   // If the event is prevented, revert to the previous index
   if (tabEvent.defaultPrevented) {
     isReverting = true
@@ -464,6 +470,13 @@ const registerTab = (tab: Ref<TabType>) => {
       nextTick(() => {
         sortTabs()
       })
+    } else {
+      // If we're doing delayed tab selection, try to update now that a tab has registered
+      if (delayedTabSelection) {
+        nextTick(() => {
+          updateInitialIndexAndId()
+        })
+      }
     }
   } else {
     tabsInternal.value[idx] = tab

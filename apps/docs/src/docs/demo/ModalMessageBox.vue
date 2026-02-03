@@ -6,20 +6,19 @@
 </template>
 
 <script setup lang="ts">
-import {useModalController} from 'bootstrap-vue-next'
+import {useModal} from 'bootstrap-vue-next/composables/useModal'
 import {ref} from 'vue'
 
-const {show} = useModalController()
+const {create} = useModal()
 
-const okResult = ref<boolean | null | undefined>(undefined)
+const okResult = ref<boolean | null | undefined>(null)
 
 const okBox = async () => {
-  okResult.value = await show?.({
-    props: {
-      body: 'This is an informational message',
-      title: 'Message',
-      okOnly: true,
-    },
-  })
+  const value = await create({
+    body: 'This is an informational message',
+    title: 'Message',
+    okOnly: true,
+  }).show()
+  okResult.value = typeof value === 'object' && value !== null && 'ok' in value ? value.ok : null
 }
 </script>

@@ -7,15 +7,16 @@ import {
   toValue,
 } from 'vue'
 
-import {globalShowHideStorageInjectionKey} from '../../utils/keys'
+import {showHideRegistryKey} from '../../utils/keys'
+import {getActiveShowHide} from '../../utils/registryAccess'
 
 export const useToggle = (id: MaybeRefOrGetter<string | undefined> = undefined) => {
   const instance = getCurrentInstance()
-  const storage = inject(globalShowHideStorageInjectionKey, null)
+  const storage = inject(showHideRegistryKey, null)
 
   if (!storage) {
     throw new Error(
-      'useToggle() was called outside of the setup() function or the showHide plugin is not provided.'
+      'useToggle() must be called within setup(), and BApp, useRegistry or plugin must be installed/provided.'
     )
   }
   const registry = storage.values
@@ -40,10 +41,8 @@ export const useToggle = (id: MaybeRefOrGetter<string | undefined> = undefined) 
   const myComponent = computed(() => {
     const resolvedId = toValue(id)
 
-    if (!registry) return null
     if (resolvedId) {
-      const value = registry.value.get(resolvedId)
-      return toValue(value) || null
+      return getActiveShowHide(registry, resolvedId)
     }
 
     if (!instance) {
@@ -51,7 +50,8 @@ export const useToggle = (id: MaybeRefOrGetter<string | undefined> = undefined) 
     }
 
     const component = findComponent(instance)
-    return toValue(registry.value.get(toValue(component?.exposed?.id))) || null
+    const componentId = toValue(component?.exposed?.id)
+    return getActiveShowHide(registry, componentId)
   })
 
   return {

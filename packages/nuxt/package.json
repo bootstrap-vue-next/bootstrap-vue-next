@@ -1,7 +1,7 @@
 {
   "name": "@bootstrap-vue-next/nuxt",
   "description": "Nuxt Module for BootstrapVueNext",
-  "version": "0.30.3",
+  "version": "0.42.0",
   "license": "MIT",
   "author": {
     "name": "Issayah",
@@ -24,6 +24,7 @@
     "build": "pnpm run dev:prepare && pnpm run dev:build && pnpm run prepack",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
+    "publint": "publint",
     "lint": "eslint --fix",
     "test:lint": "eslint",
     "test": "pnpm run test:lint",
@@ -34,25 +35,26 @@
     "bootstrap-vue-next": "workspace:^"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.17.1"
+    "@nuxt/kit": "^3.20.2"
   },
   "devDependencies": {
-    "@nuxt/devtools": "^2.4.0",
-    "@nuxt/eslint-config": "^1.2.0",
-    "@nuxt/module-builder": "^1.0.1",
-    "@nuxt/schema": "^3.17.1",
-    "@nuxt/test-utils": "^3.17.2",
-    "@rushstack/eslint-patch": "^1.11.0",
-    "@types/node": "^22.15.3",
+    "@nuxt/devtools": "^3.1.1",
+    "@nuxt/eslint-config": "^1.12.1",
+    "@nuxt/module-builder": "^1.0.2",
+    "@nuxt/schema": "^4.2.2",
+    "@nuxt/test-utils": "^3.23.0",
+    "@rushstack/eslint-patch": "^1.15.0",
+    "@types/node": "^22.19.7",
     "@vue/eslint-config-prettier": "^10.2.0",
     "bootstrap-vue-next": "workspace:^",
-    "eslint": "^9.25.1",
+    "eslint": "^9.39.2",
     "eslint-define-config": "^2.1.0",
-    "nuxt": "^3.17.1",
-    "prettier": "^3.5.3",
-    "typescript": "~5.8.3",
-    "unimport": "^5.0.0",
-    "vue": "^3.5.13"
+    "nuxt": "^4.2.2",
+    "prettier": "^3.8.0",
+    "publint": "^0.3.16",
+    "typescript": "^5.9.3",
+    "unimport": "^5.6.0",
+    "vue": "^3.5.27"
   },
   "repository": {
     "type": "git",

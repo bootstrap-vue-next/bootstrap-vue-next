@@ -1,77 +1,110 @@
-<ComposableHeader path="useModal/index.ts" title="useModal" />
+---
+description: 'The `useModal` composable provides a powerful API to create, manage, and control modals programmatically from anywhere in your application. It allows you to create modals on-demand, manage existing modals, and handle modal interactions through promises.'
+---
 
-<div class="lead mb-5">
+## Setup
 
-You can use `useModal` to get the closest modal in **child component** and hide it. It can also be supplied a target id to show or hide a specific modal
+To use `useModal`, you need one of the following setup approaches:
 
-</div>
+### BApp Component (Recommended)
 
-<HighlightCard>
-  <template #html>
+The easiest way is to wrap your application with the `BApp` component, which automatically sets up the orchestrator and registry:
 
-```vue
-<BModal>
-  <MyComponent />
-</BModal>
+<<< FRAGMENT ./demo/UseModalSetup.vue
 
-<template>
-  <BButton @click="hide">Done</BButton>
-</template>
+### Plugin Setup (Legacy)
 
-<script setup lang="ts">
-const {hide} = useModal()
-</script>
+Alternatively, you can use the traditional plugin approach.
+
+<UsePluginAlert />
+
+## Creating Modals
+
+Creating a modal is done through the `create` method:
+
+<<< DEMO ./demo/UseModalBasic.vue
+
+### Reactivity Within `create`
+
+`create` props property can accept a `MaybeRef`, meaning that you can make properties reactive
+
+<<< DEMO ./demo/UseModalReactive.vue
+
+### Advanced Creation
+
+Using props can work for most situations, but it leaves some finer control to be desired. For instance, you cannot add HTML to any slot value using props alone. This is where the `component` property comes into play. Using the `component` property, you can input the component to render. This can either be an imported SFC or an inline render function.
+
+You can also use component slots to render what you want. This is done through the `slots` property. The `slots` property is an object that contains the slot name as the key and a render function or component as the value. The render function is passed a `scope` object that contains the slots scope.
+
+<<< DEMO ./demo/UseModalAdvanced.vue
+
+### Return Value
+
+The `create` method returns a promise that resolves after the modal has been hidden to a `BvTriggerableEvent` object.
+Using the `resolveOnHide` option (in the second argument), the promise resolves at the time the modal begins hiding, rather than after it is fully hidden.
+
+```js
+const value = await create({title: 'Hello World!'}, {resolveOnHide: true})
 ```
 
-  </template>
-</HighlightCard>
+This object contains the following properties:
 
-You can also provide an id to get particular modal and show/hide it. Currently, we do not support using CSS selector to
-find modal since the `BModal` in lazy mode may not render at page initial. If the modal component does not exist and you attempt to call any of the exposed methods the methods will safely ignore
+- `ok: boolean`
 
-<HighlightCard>
-<BButton @click="show()">Click me</BButton>
-<BModal v-if="someConditions" v-model="programmaticModal" id="my-modal">
-  <BButton @click="hide()">Hide me</BButton>
-</BModal>
-<template #html>
+  Clicking the `ok` button resolve this to `true`, `cancel` to `false` and any other closable action `null` (clicking the backdrop, or some other custom closing action. More accurately, when the `hide` function does not pass in the trigger parameter of `ok` or `cancel`)
 
-```vue
-<template>
-  <BButton @click="show()">Click me</BButton>
-  <BModal v-if="someConditions" v-model="programmaticModal" id="my-modal">
-    <BButton @click="hide()">Hide me</BButton>
-  </BModal>
-</template>
+- `trigger: string | null`
 
-<script setup lang="ts">
-const someConditions = ref(false)
-const programmaticModal = ref(false)
+  This is the trigger that closed the modal. This is useful for determining what action closed the modal.
 
-onMounted(() => {
-  someConditions.value = true
-})
+The promise also contains functions to control the modal:
 
-const {show, hide, modal} = useModal('my-modal')
-</script>
+- `show: () => void`
+
+  This function shows the modal.
+
+- `hide: (trigger?: string) => void`
+
+  This function hides the modal. If a trigger is passed, it will be passed to the `trigger` property of the resolved promise
+
+- `toggle: () => void`
+
+  This function toggles the visibility of the modal.
+
+- `set: (props: Partial<ModalOrchestratorParam>) => void`
+
+  This function sets the props of the modal. This is useful for updating the modal after it has been created.
+
+- `destroy: () => Promise<void>`
+
+  This function destroys the modal and cleans up any resources associated with it.
+
+### Lifecycle
+
+By default, the modal is destroyed once it's closed. If you want to keep the modal, use the `keep` option in the second argument of the `create` method.
+The modal is destroyed when the current scope is exited. You can also destroy it manually by calling the `destroy` method.
+
+```js
+const modal = create({title: 'Hello World!'}, {keep: true})
+modal.show()
+// do something
+modal.destroy()
 ```
 
-  </template>
-</HighlightCard>
+We also support the typescript feature `await using` to automatically destroy the modal when the scope is exited.
+
+```js
+await using modal = create({title: 'Hello World!'})
+```
+
+## Globally Hiding Modals
+
+In addition to creating modals in a global context, you can also hide modals from anywhere in the app. This feature does not require an orchestrator component to be present.
+
+<<< DEMO ./demo/UseModalNested.vue
 
 <script setup lang="ts">
-import {BButton, BModal, useModal} from 'bootstrap-vue-next'
-import HighlightCard from '../../components/HighlightCard.vue'
+import UsePluginAlert from '../../components/UsePluginAlert.vue'
+import PageHeader from '../../components/PageHeader.vue'
 
-import {ref, onMounted} from 'vue'
-import ComposableHeader from './ComposableHeader.vue'
-
-const someConditions = ref(false)
-const programmaticModal = ref(false)
-
-onMounted(() => {
-    someConditions.value = true
-})
-
-const {show, hide} = useModal('my-modal')
 </script>

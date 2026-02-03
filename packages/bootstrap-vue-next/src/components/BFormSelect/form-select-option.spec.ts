@@ -62,4 +62,56 @@ describe('form-select-option', () => {
     expect(wrapper.attributes('disabled')).toBeDefined()
     expect(wrapper.text()).toEqual('')
   })
+
+  it('applies class prop to option element', () => {
+    const wrapper = mount(BFormSelectOption, {
+      props: {
+        value: 'foo',
+        class: 'custom-class',
+      },
+    })
+
+    expect(wrapper.element.tagName).toBe('OPTION')
+    expect(wrapper.classes()).toContain('custom-class')
+  })
+
+  it('applies class object prop to option element', () => {
+    const wrapper = mount(BFormSelectOption, {
+      props: {
+        value: 'foo',
+        class: {'class-a': true, 'class-b': false},
+      },
+    })
+
+    expect(wrapper.element.tagName).toBe('OPTION')
+    expect(wrapper.classes()).toContain('class-a')
+    expect(wrapper.classes()).not.toContain('class-b')
+  })
+
+  it('applies attrs prop to option element', () => {
+    const wrapper = mount(BFormSelectOption, {
+      props: {
+        value: 'foo',
+      },
+      attrs: {'data-test': 'test-value', 'data-id': '123'},
+    })
+
+    expect(wrapper.element.tagName).toBe('OPTION')
+    expect(wrapper.attributes('data-test')).toBe('test-value')
+    expect(wrapper.attributes('data-id')).toBe('123')
+  })
+
+  it('applies both class and attrs props to option element', () => {
+    const wrapper = mount(BFormSelectOption, {
+      props: {
+        value: 'foo',
+        class: 'custom-class',
+      },
+      attrs: {'data-test': 'test-value'},
+    })
+
+    expect(wrapper.element.tagName).toBe('OPTION')
+    expect(wrapper.classes()).toContain('custom-class')
+    expect(wrapper.attributes('data-test')).toBe('test-value')
+  })
 })

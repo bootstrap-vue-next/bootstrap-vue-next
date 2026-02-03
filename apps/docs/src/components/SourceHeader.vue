@@ -14,8 +14,6 @@
 </template>
 
 <script setup lang="ts">
-import {BCol, BContainer, BRow} from 'bootstrap-vue-next'
-import ViewSourceButton from './ViewSourceButton.vue'
 import {computed, inject} from 'vue'
 import {appInfoKey} from '../../.vitepress/theme/keys'
 

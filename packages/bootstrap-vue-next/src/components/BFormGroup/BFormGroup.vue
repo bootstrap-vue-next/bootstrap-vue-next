@@ -6,6 +6,7 @@
     :role="isFieldset ? null : 'group'"
     :aria-invalid="computedAriaInvalid"
     :aria-labelledby="isFieldset && isHorizontal ? labelId : null"
+    v-bind="$attrs"
     :class="[stateClass, {'was-validated': props.validated}]"
     class="b-form-group"
   >
@@ -34,17 +35,17 @@
     </ContentTemplate.define>
     <LabelContentTemplate.define>
       <template v-if="slots.label || props.label || isHorizontal">
-        <BCol v-if="isHorizontal" v-bind="labelColProps">
-          <component
-            :is="labelTag"
-            :id="labelId"
-            :for="computedLabelFor || null"
-            :tabindex="isFieldset ? '-1' : null"
-            :class="labelClasses"
-            @click="isFieldset ? onLegendClick : null"
-          >
-            <slot name="label">{{ props.label }}</slot>
-          </component>
+        <BCol
+          v-if="isHorizontal"
+          v-bind="labelColProps"
+          :id="labelId"
+          :tag="labelTag"
+          :for="computedLabelFor || null"
+          :tabindex="isFieldset ? '-1' : null"
+          :class="[labelAlignClasses, labelClasses]"
+          @click="isFieldset ? onLegendClick : null"
+        >
+          <slot name="label">{{ props.label }}</slot>
         </BCol>
         <component
           :is="labelTag"
@@ -110,9 +111,13 @@ import {suffixPropName} from '../../utils/props'
 import {useStateClass} from '../../composables/useStateClass'
 import {useId} from '../../composables/useId'
 import {createReusableTemplate} from '@vueuse/core'
-import type {BFormGroupProps} from '../../types'
+import type {BFormGroupProps, BFormGroupSlots} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
-import {formGroupPluginKey} from '../../utils/keys'
+import {formGroupKey} from '../../utils/keys'
+
+defineOptions({
+  inheritAttrs: false,
+})
 
 const INPUTS = ['input', 'select', 'textarea']
 
@@ -150,31 +155,14 @@ const _props = withDefaults(defineProps<BFormGroupProps>(), {
   validated: false,
 })
 const props = useDefaults(_props, 'BFormGroup')
-
-const slots = defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'invalid-feedback'?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'valid-feedback'?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'description'?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'label'?: (props: Record<string, never>) => any
-  'default'?: (props: {
-    id: string
-    ariaDescribedby: string | null
-    descriptionId: string | undefined
-    labelId: string | null
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-}>()
+const slots = defineSlots<BFormGroupSlots>()
 
 const LabelContentTemplate = createReusableTemplate()
 const ContentTemplate = createReusableTemplate()
 
 const computedState = toRef(() => props.state)
 const childId = ref<Ref<string>[]>([])
-provide(formGroupPluginKey, (id) => {
+provide(formGroupKey, (id) => {
   childId.value = [id]
 
   return {
@@ -213,7 +201,7 @@ const getColProps = (props: any, prefix: string) =>
     return result
   }, {})
 
-const content = useTemplateRef<HTMLElement>('_content')
+const content = useTemplateRef<HTMLDivElement | InstanceType<typeof BCol> | null>('_content')
 
 const contentColProps = computed(() => getColProps(props, 'content'))
 const labelAlignClasses = computed(() =>
@@ -250,8 +238,16 @@ const onLegendClick = (event: Readonly<MouseEvent>) => {
 
   if ([...INPUTS, 'a', 'button', 'label'].indexOf(tagName) !== -1) return
 
+  // In horizontal mode, content.value is a BCol component instance, not a DOM element
+  // Access the DOM element via $el property
+  const contentElement =
+    isHorizontal.value && content.value && '$el' in content.value
+      ? (content.value.$el as HTMLElement)
+      : (content.value as HTMLDivElement | null)
+  if (!contentElement) return
+
   const inputs = [
-    ...content.value.querySelectorAll(INPUTS.map((v) => `${v}:not([disabled])`).join()),
+    ...contentElement.querySelectorAll(INPUTS.map((v) => `${v}:not([disabled])`).join()),
   ].filter(isVisible)
   const [inp] = inputs
   if (inputs.length === 1 && inp instanceof HTMLElement) {
@@ -272,7 +268,7 @@ const labelClasses = computed(() => [
     [`col-form-label-${props.labelSize}`]: !!props.labelSize,
     'visually-hidden': props.labelVisuallyHidden,
   },
-  labelAlignClasses.value,
+  isHorizontal.value ? null : labelAlignClasses.value,
   props.labelClass,
 ])
 

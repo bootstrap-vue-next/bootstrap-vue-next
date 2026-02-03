@@ -2,6 +2,9 @@ import pluginVue from 'eslint-plugin-vue'
 import vueTsEslintConfig from '@vue/eslint-config-typescript'
 import pluginVitest from '@vitest/eslint-plugin'
 import skipFormatting from '@vue/eslint-config-prettier'
+import {fileURLToPath} from 'url'
+
+const __dirname = fileURLToPath(new URL('.', import.meta.url))
 
 export default [
   {
@@ -13,10 +16,14 @@ export default [
     ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**'],
   },
   ...pluginVue.configs['flat/recommended'],
-  ...vueTsEslintConfig(),
+  ...vueTsEslintConfig({
+    parserOptions: {
+      tsconfigRootDir: __dirname,
+    },
+  }),
   {
     ...pluginVitest.configs.recommended,
-    files: ['src/**/*.spec.*', 'src/**/*.test.*'],
+    files: ['src/**/*.spec.*', 'src/**/*.test.*', 'tests/**/*.test.*'],
   },
   skipFormatting,
   {

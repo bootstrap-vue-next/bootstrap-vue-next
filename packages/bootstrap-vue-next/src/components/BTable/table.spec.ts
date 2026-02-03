@@ -1,7 +1,7 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it, vi} from 'vitest'
 import BTable from './BTable.vue'
-import type {BTableSortBy, TableField, TableItem} from '../../types'
+import type {BTableProviderContext, BTableSortBy, TableField, TableItem} from '../../types'
 import {nextTick} from 'vue'
 
 interface SimplePerson {
@@ -34,8 +34,7 @@ const formattedFields: Exclude<TableField<SimplePerson>, string>[] = [
     label: 'Adult?',
     sortable: true,
     sortByFormatted: true,
-    formatter: (_value: unknown, _key?: unknown, item?: SimplePerson) =>
-      item ? (item.age >= 18 ? 'Yes' : 'No') : 'Something went wrong',
+    formatter: ({item}) => (item ? (item.age >= 18 ? 'Yes' : 'No') : 'Something went wrong'),
   },
   {key: 'first_name', label: 'First Name', sortable: true},
   {key: 'age', label: 'Age', sortable: true},
@@ -313,7 +312,7 @@ describe('single-sort', () => {
         key: 'first_name',
         label: 'First Name',
         sortable: true,
-        sortByFormatted: (value: unknown) => (value as string).slice(1),
+        sortByFormatted: ({value}) => (value as string).slice(1),
       },
       {key: 'age', label: 'Age', sortable: true},
     ]
@@ -573,6 +572,10 @@ describe('object-persistence', () => {
         })
         const [first, second, third, fourth] = wrapper.findAll('tr')
         await fourth.trigger('click')
+        expect(first.classes()).not.toContain('selected')
+        expect(second.classes()).not.toContain('selected')
+        expect(third.classes()).not.toContain('selected')
+        expect(fourth.classes()).toContain('selected')
         const event = new MouseEvent('click', {shiftKey: true})
         third.element.dispatchEvent(event)
         await nextTick()
@@ -595,89 +598,6 @@ describe('object-persistence', () => {
       const $table = wrapper.get('table')
       expect($table.classes()).toContain('b-table-busy')
       expect($table.attributes('ariabusy')).toBe('true')
-    })
-
-    it('sorting does not wipe out the comparer function', async () => {
-      const sortFields = [
-        {key: 'last_name', sortable: true},
-        {key: 'first_name', sortable: true},
-        {key: 'marks', sortable: true},
-      ]
-
-      const sortItems = [
-        {marks: -40, first_name: 'Dickerson', last_name: 'Macdonald'},
-        {marks: -45, first_name: 'Zelda', last_name: 'Macdonald'},
-        {marks: 21, first_name: 'Larsen', last_name: 'Shaw'},
-        {marks: 89, first_name: 'Geneva', last_name: 'Wilson'},
-        {marks: 89, first_name: 'Gary', last_name: 'Wilson'},
-        {marks: 38, first_name: 'Jami', last_name: 'Carney'},
-      ]
-
-      const spyFn = vi.fn()
-
-      const wrapper = mount(BTable, {
-        props: {
-          items: sortItems,
-          fields: sortFields,
-          sortBy: [
-            {
-              key: 'marks',
-              order: 'asc',
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              comparer: (a: any, b: any) => {
-                spyFn()
-                return a.marks.toString().localeCompare(b.marks.toString())
-              },
-            },
-            {
-              key: 'last_name',
-              order: 'asc',
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              comparer: (a: any, b: any) => {
-                spyFn()
-                return a.last_name.localeCompare(b.last_name)
-              },
-            },
-            {
-              key: 'first_name',
-              order: 'asc',
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              comparer: (a: any, b: any) => {
-                spyFn()
-                return a.first_name.localeCompare(b.first_name)
-              },
-            },
-          ],
-        },
-      })
-
-      // This test seems brittle
-      expect(spyFn).toHaveBeenCalledTimes(13)
-      const [lastname, firstname, marks] = wrapper.get('thead').findAll('th')
-      await lastname.trigger('click')
-      await lastname.trigger('click')
-      await lastname.trigger('click')
-      expect(spyFn).toHaveBeenCalledTimes(32)
-      await firstname.trigger('click')
-      await firstname.trigger('click')
-      await firstname.trigger('click')
-      expect(spyFn).toHaveBeenCalledTimes(54)
-      await marks.trigger('click')
-      await marks.trigger('click')
-      await marks.trigger('click')
-      expect(spyFn).toHaveBeenCalledTimes(71)
-      await lastname.trigger('click')
-      await lastname.trigger('click')
-      await lastname.trigger('click')
-      expect(spyFn).toHaveBeenCalledTimes(90)
-      await firstname.trigger('click')
-      await firstname.trigger('click')
-      await firstname.trigger('click')
-      expect(spyFn).toHaveBeenCalledTimes(112)
-      await marks.trigger('click')
-      await marks.trigger('click')
-      await marks.trigger('click')
-      expect(spyFn).toHaveBeenCalledTimes(129)
     })
   })
 
@@ -832,5 +752,1030 @@ describe('object-persistence', () => {
       const dataLabels = wrapper.findAll('[data-label]')
       expect(dataLabels.length).toBe(0)
     })
+  })
+})
+
+describe('custom sort comparers', () => {
+  const customSortItems: TableItem<SimplePerson>[] = [
+    {age: 27, first_name: 'Alice'},
+    {age: 9, first_name: 'Bob'},
+    {age: 42, first_name: 'Charlie'},
+    {age: 35, first_name: 'David'},
+  ]
+
+  it('uses table-level sortCompare prop (reverse alphabetical override)', () => {
+    const reverseCompare = (a: unknown, b: unknown, key: string) => {
+      // Simple reverse alphabetical comparison
+      const aVal =
+        typeof a === 'object' && a !== null
+          ? String((a as SimplePerson)[key as keyof SimplePerson] ?? '')
+          : ''
+      const bVal =
+        typeof b === 'object' && b !== null
+          ? String((b as SimplePerson)[key as keyof SimplePerson] ?? '')
+          : ''
+
+      // Just reverse the normal comparison
+      return bVal.localeCompare(aVal, undefined, {numeric: true})
+    }
+
+    const wrapper = mount(BTable, {
+      props: {
+        items: customSortItems,
+        fields: simpleFields,
+        sortBy: [{order: 'asc', key: 'first_name'}],
+        sortCompare: reverseCompare,
+      },
+    })
+
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    // Reverse alphabetical sort: should be opposite of default
+    expect(text).toStrictEqual(['David', 'Charlie', 'Bob', 'Alice'])
+  })
+
+  it('uses field-level sortCompare over table-level', () => {
+    const tableLevelCompare = () => 0 // Should never be called
+    const fieldLevelCompare = (a: SimplePerson, b: SimplePerson, key: string) => {
+      // Reverse comparison for first_name field
+      if (key === 'first_name') {
+        return b.first_name.localeCompare(a.first_name)
+      }
+      if (key === 'age') {
+        return b.age - a.age
+      }
+      // Fallback for unknown keys
+      const aVal = String(a[key as keyof SimplePerson] ?? '')
+      const bVal = String(b[key as keyof SimplePerson] ?? '')
+      return bVal.localeCompare(aVal)
+    }
+
+    const fieldsWithCustomSort: Exclude<TableField<SimplePerson>, string>[] = [
+      {
+        key: 'first_name',
+        label: 'First Name',
+        sortable: true,
+        sortCompare: fieldLevelCompare,
+      },
+      {key: 'age', label: 'Age', sortable: true},
+    ]
+
+    const wrapper = mount(BTable, {
+      props: {
+        items: customSortItems,
+        fields: fieldsWithCustomSort,
+        sortBy: [{order: 'asc', key: 'first_name'}],
+        sortCompare: tableLevelCompare,
+      },
+    })
+
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['David', 'Charlie', 'Bob', 'Alice'])
+  })
+
+  it('falls back to default comparison when no custom comparer provided', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: customSortItems,
+        fields: simpleFields,
+        sortBy: [{order: 'asc', key: 'first_name'}],
+      },
+    })
+
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    // Default comparison uses localeCompare with numeric: true, which is case-insensitive
+    expect(text).toStrictEqual(['Alice', 'Bob', 'Charlie', 'David'])
+  })
+})
+
+describe('combined sorting features', () => {
+  it('uses custom comparer with custom initial sort direction', async () => {
+    const reverseCompare = (a: SimplePerson, b: SimplePerson, key: string) => {
+      const aVal = a[key as keyof SimplePerson] ?? ''
+      const bVal = b[key as keyof SimplePerson] ?? ''
+      return bVal.toString().localeCompare(aVal.toString())
+    }
+
+    const fieldsWithBoth: Exclude<TableField<SimplePerson>, string>[] = [
+      {
+        key: 'first_name',
+        label: 'First Name',
+        sortable: true,
+        sortCompare: reverseCompare,
+        initialSortDirection: 'desc',
+      },
+      {key: 'age', label: 'Age', sortable: true},
+    ]
+
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: fieldsWithBoth,
+      },
+    })
+
+    const [nameHeader] = wrapper.get('table').findAll('th')
+    await nameHeader.trigger('click')
+
+    // Should start with desc (field-level override) and use reverse comparer
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Cyndi', 'Havij', 'Robert'])
+  })
+
+  it('works correctly in multi-sort mode with mixed comparers', () => {
+    const ageCompare = (a: SimplePerson, b: SimplePerson, key: string) => {
+      if (key === 'age') {
+        return b.age - a.age // Type-safe access for known field
+      }
+      // Generic fallback for unknown keys
+      const aVal = a[key as keyof SimplePerson]
+      const bVal = b[key as keyof SimplePerson]
+      return typeof bVal === 'number' && typeof aVal === 'number'
+        ? bVal - aVal
+        : String(bVal ?? '').localeCompare(String(aVal ?? ''))
+    }
+
+    const fieldsWithMixedComparers: Exclude<TableField<SimplePerson>, string>[] = [
+      {key: 'first_name', label: 'First Name', sortable: true}, // Uses default comparer
+      {
+        key: 'age',
+        label: 'Age',
+        sortable: true,
+        sortCompare: ageCompare,
+      },
+    ]
+
+    const wrapper = mount(BTable, {
+      props: {
+        multisort: true,
+        items: multiSort,
+        fields: fieldsWithMixedComparers,
+        sortBy: [
+          {key: 'first_name', order: 'asc'}, // Default comparer
+          {key: 'age', order: 'asc'}, // Custom comparer (reversed)
+        ],
+      },
+    })
+
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.findAll('td')[1].text())
+    // With custom age comparer (reversed), "asc" order should show highest ages first within each name group
+    expect(text).toStrictEqual(['101', '9', '27', '42', '35'])
+  })
+})
+
+describe('initial sort direction', () => {
+  it('uses table-level initialSortDirection prop (desc)', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        initialSortDirection: 'desc' as const,
+      },
+    })
+
+    const [nameHeader] = wrapper.get('table').findAll('th')
+    await nameHeader.trigger('click')
+
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Robert', 'Havij', 'Cyndi'])
+  })
+
+  it('uses field-level initialSortDirection over table-level', async () => {
+    const fieldsWithCustomInitialSort: Exclude<TableField<SimplePerson>, string>[] = [
+      {
+        key: 'first_name',
+        label: 'First Name',
+        sortable: true,
+        initialSortDirection: 'desc',
+      },
+      {
+        key: 'age',
+        label: 'Age',
+        sortable: true,
+        initialSortDirection: 'asc',
+      },
+    ]
+
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: fieldsWithCustomInitialSort,
+        initialSortDirection: 'asc' as const, // Table default should be overridden
+      },
+    })
+
+    // Test first field (desc override)
+    const [nameHeader, ageHeader] = wrapper.get('table').findAll('th')
+    await nameHeader.trigger('click')
+
+    let text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Robert', 'Havij', 'Cyndi'])
+
+    // Test second field (asc override)
+    await ageHeader.trigger('click')
+    text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.findAll('td')[1].text())
+    expect(text).toStrictEqual(['9', '27', '42'])
+  })
+
+  it('handles initialSortDirection "last" at table level', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        initialSortDirection: 'last' as const,
+        sortBy: [{order: 'desc', key: 'age'}], // Start with age desc
+      },
+    })
+
+    // Click on name field - should use the last sort direction from 'age' (asc), not itself (desc)
+    const [nameHeader] = wrapper.get('table').findAll('th')
+    await nameHeader.trigger('click')
+
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Robert', 'Havij', 'Cyndi'])
+  })
+
+  it('handles initialSortDirection "last" at field level', async () => {
+    const fieldsWithLastSort: Exclude<TableField<SimplePerson>, string>[] = [
+      {
+        key: 'first_name',
+        label: 'First Name',
+        sortable: true,
+        initialSortDirection: 'last',
+      },
+      {key: 'age', label: 'Age', sortable: true},
+    ]
+
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: fieldsWithLastSort,
+        sortBy: [{order: 'desc', key: 'age'}], // Start with age desc
+      },
+    })
+
+    // Click on name field - should use the last sort direction from 'age' (asc), not itself (desc)
+    const [nameHeader] = wrapper.get('table').findAll('th')
+    await nameHeader.trigger('click')
+
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Robert', 'Havij', 'Cyndi'])
+  })
+
+  it('defaults to "asc" when "last" is used but no previous sort exists', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        initialSortDirection: 'last' as const,
+      },
+    })
+
+    const [nameHeader] = wrapper.get('table').findAll('th')
+    await nameHeader.trigger('click')
+
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Cyndi', 'Havij', 'Robert'])
+  })
+
+  it('shows correct sort icons as CSS background images', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        initialSortDirection: 'desc' as const,
+      },
+    })
+
+    const headers = wrapper.findAll('th[aria-sort]')
+    expect(headers.length).toBeGreaterThan(0)
+
+    // All sortable headers should have aria-sort attribute
+    headers.forEach((header) => {
+      const ariaSort = header.attributes('aria-sort')
+      expect(['none', 'ascending', 'descending']).toContain(ariaSort)
+    })
+  })
+
+  it('applies b-table-sort-icon-left class when sortIconLeft prop is true', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        sortIconLeft: true,
+      },
+    })
+
+    const headers = wrapper.findAll('th[aria-sort]')
+    expect(headers.length).toBeGreaterThan(0)
+
+    headers.forEach((header) => {
+      expect(header.classes()).toContain('b-table-sort-icon-left')
+      expect(header.classes()).not.toContain('b-table-sort-icon-inline')
+    })
+  })
+
+  it('does not apply b-table-sort-icon-left class when sortIconLeft prop is false', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        sortIconLeft: false,
+      },
+    })
+
+    const headers = wrapper.findAll('th[aria-sort]')
+    expect(headers.length).toBeGreaterThan(0)
+
+    headers.forEach((header) => {
+      expect(header.classes()).not.toContain('b-table-sort-icon-left')
+    })
+  })
+
+  it('only applies b-table-sort-icon-left class to sortable fields', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: [
+          {key: 'first_name', label: 'First Name', sortable: true},
+          {key: 'age', label: 'Age', sortable: false},
+          {key: 'last_name', label: 'Last Name', sortable: true},
+        ],
+        sortIconLeft: true,
+      },
+    })
+
+    const headers = wrapper.findAll('th')
+    const sortableHeaders = wrapper.findAll('th[aria-sort]')
+
+    // Only sortable fields should have the class
+    expect(sortableHeaders.length).toBe(2)
+    sortableHeaders.forEach((header) => {
+      expect(header.classes()).toContain('b-table-sort-icon-left')
+    })
+
+    // Non-sortable field should not have the class
+    const ageHeader = headers.find((h) => h.text() === 'Age')
+    expect(ageHeader?.classes()).not.toContain('b-table-sort-icon-left')
+  })
+
+  it('applies b-table-no-sort-icon class to table when noSortableIcon prop is true', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        noSortableIcon: true,
+      },
+    })
+
+    const table = wrapper.find('table')
+    expect(table.classes()).toContain('b-table-no-sort-icon')
+  })
+
+  it('does not apply b-table-no-sort-icon class to table when noSortableIcon prop is false', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        noSortableIcon: false,
+      },
+    })
+
+    const table = wrapper.find('table')
+    expect(table.classes()).not.toContain('b-table-no-sort-icon')
+  })
+
+  it('excludes current column from getLastSortDirection when using initialSortDirection "last"', async () => {
+    // Start with two columns sorted: first_name (desc), age (asc)
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: [
+          {key: 'first_name', label: 'First Name', sortable: true, initialSortDirection: 'last'},
+          {key: 'age', label: 'Age', sortable: true, initialSortDirection: 'last'},
+        ],
+        sortBy: [
+          {key: 'first_name', order: 'desc'},
+          {key: 'age', order: 'asc'},
+        ],
+        multisort: true,
+      },
+    })
+
+    const [nameHeader, ageHeader] = wrapper.get('table').findAll('th')
+
+    // Click on 'first_name' header: should use the last sort direction from 'age' (asc), not itself (desc)
+    await nameHeader.trigger('click')
+    let text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    // Should sort by first_name asc (since last sort direction excluding itself is 'asc')
+    expect(text).toStrictEqual(['Cyndi', 'Havij', 'Robert'])
+
+    // Click on 'age' header: should use the last sort direction from 'first_name' (desc), not itself (asc)
+    await ageHeader.trigger('click')
+    text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.findAll('td')[1].text())
+    // Should sort by age desc (since last sort direction excluding itself is 'desc')
+    expect(text).toStrictEqual(['42', '27', '9'])
+  })
+
+  it('cycles desc <-> asc when initialSortDirection is desc and mustSort is true', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: [
+          {key: 'first_name', label: 'First Name', sortable: true},
+          {key: 'age', label: 'Age', sortable: true},
+        ],
+        initialSortDirection: 'desc',
+        mustSort: true,
+      },
+    })
+
+    const [nameHeader] = wrapper.get('table').findAll('th')
+
+    // First click: should be desc
+    await nameHeader.trigger('click')
+    let text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Robert', 'Havij', 'Cyndi'])
+    expect(nameHeader.attributes('aria-sort')).toBe('descending')
+
+    // Second click: should be asc
+    await nameHeader.trigger('click')
+    text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Cyndi', 'Havij', 'Robert'])
+    expect(nameHeader.attributes('aria-sort')).toBe('ascending')
+
+    // Third click: should cycle back to desc (never undefined)
+    await nameHeader.trigger('click')
+    text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Robert', 'Havij', 'Cyndi'])
+    expect(nameHeader.attributes('aria-sort')).toBe('descending')
+  })
+
+  it('cycles desc -> asc -> undefined when initialSortDirection is desc and mustSort is not set', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: [
+          {key: 'first_name', label: 'First Name', sortable: true},
+          {key: 'age', label: 'Age', sortable: true},
+        ],
+        initialSortDirection: 'desc',
+        // mustSort is not set
+      },
+    })
+
+    const [nameHeader] = wrapper.get('table').findAll('th')
+
+    // First click: should be desc
+    await nameHeader.trigger('click')
+    let text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Robert', 'Havij', 'Cyndi'])
+    expect(nameHeader.attributes('aria-sort')).toBe('descending')
+
+    // Second click: should be asc
+    await nameHeader.trigger('click')
+    text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Cyndi', 'Havij', 'Robert'])
+    expect(nameHeader.attributes('aria-sort')).toBe('ascending')
+
+    // Third click: should be undefined (no aria-sort)
+    await nameHeader.trigger('click')
+    // The header should not have aria-sort attribute or should be 'none'
+    expect(
+      nameHeader.attributes('aria-sort') === undefined ||
+        nameHeader.attributes('aria-sort') === 'none'
+    ).toBe(true)
+    // The table should revert to original order (unsorted)
+    text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Havij', 'Cyndi', 'Robert'])
+  })
+})
+
+describe('provider debouncing', () => {
+  it('debounces provider calls when debounce prop is set', async () => {
+    const providerCallCounts: number[] = []
+    let callCount = 0
+
+    const provider = vi.fn(async () => {
+      callCount++
+      providerCallCounts.push(callCount)
+      return simpleItems
+    })
+
+    const wrapper = mount(BTable, {
+      props: {
+        provider,
+        fields: simpleFields,
+        debounce: 300, // Set 300ms debounce
+      },
+    })
+
+    // Wait for initial mount call
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    const initialCalls = callCount
+
+    // Rapidly change filter multiple times
+    await wrapper.setProps({filter: 'a'})
+    await wrapper.setProps({filter: 'ab'})
+    await wrapper.setProps({filter: 'abc'})
+
+    // Wait for debounce delay (300ms) + buffer
+    await new Promise((resolve) => setTimeout(resolve, 400))
+
+    // After debounce, only one additional call should have been made for all the rapid filter changes
+    const finalCalls = callCount
+    expect(finalCalls - initialCalls).toBeLessThanOrEqual(2) // At most one debounced call plus potentially one immediate
+    expect(finalCalls).toBeGreaterThan(initialCalls) // But at least one call was made
+  })
+
+  it('does not debounce provider calls when debounce is 0 (default)', async () => {
+    let callCount = 0
+
+    const provider = vi.fn(async () => {
+      callCount++
+      return simpleItems
+    })
+
+    const wrapper = mount(BTable, {
+      props: {
+        provider,
+        fields: simpleFields,
+        // debounce defaults to 0 (immediate)
+      },
+    })
+
+    // Wait for initial mount call
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    const initialCalls = callCount
+
+    // Change filter - with debounce=0, this should be immediate
+    await wrapper.setProps({filter: 'a'})
+    await nextTick()
+
+    // Should be called immediately
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    expect(callCount).toBe(initialCalls + 1)
+  })
+
+  it('supports AbortSignal in provider context', async () => {
+    let receivedSignal: AbortSignal | undefined
+
+    const provider = vi.fn(async (context: Readonly<BTableProviderContext>) => {
+      receivedSignal = context.signal
+      return simpleItems
+    })
+
+    mount(BTable, {
+      props: {
+        provider,
+        fields: simpleFields,
+      },
+    })
+
+    // Wait for initial mount call
+    await new Promise((resolve) => setTimeout(resolve, 50))
+
+    // Signal should be present
+    expect(receivedSignal).toBeDefined()
+    expect(receivedSignal).toBeInstanceOf(AbortSignal)
+  })
+
+  it('cancels previous provider call when new one is triggered', async () => {
+    let abortedCount = 0
+    const provider = vi.fn(
+      async (context: Readonly<BTableProviderContext>) =>
+        new Promise<typeof simpleItems>((resolve, reject) => {
+          const timeout = setTimeout(() => resolve(simpleItems), 100)
+          context.signal.addEventListener('abort', () => {
+            clearTimeout(timeout)
+            abortedCount++
+            reject(new Error('AbortError'))
+          })
+        })
+    )
+
+    const wrapper = mount(BTable, {
+      props: {
+        provider,
+        fields: simpleFields,
+        debounce: 300,
+      },
+    })
+
+    // Wait for initial mount call
+    await new Promise((resolve) => setTimeout(resolve, 50))
+
+    // Rapidly change filter - this should abort previous calls
+    await wrapper.setProps({filter: 'a'})
+    await new Promise((resolve) => setTimeout(resolve, 10))
+    await wrapper.setProps({filter: 'ab'})
+    await new Promise((resolve) => setTimeout(resolve, 10))
+    await wrapper.setProps({filter: 'abc'})
+
+    // Wait for final debounced call to complete
+    await new Promise((resolve) => setTimeout(resolve, 500))
+
+    // Previous calls should have been aborted
+    expect(abortedCount).toBeGreaterThan(0)
+  })
+
+  it('does not set busy to false when first provider finishes while second is still running', async () => {
+    let callCount = 0
+
+    const provider = vi.fn(async (context: Readonly<BTableProviderContext>) => {
+      callCount++
+      const currentCall = callCount
+
+      if (currentCall === 2) {
+        // First call after mount: delay and get aborted
+        return new Promise<typeof simpleItems>((resolve, reject) => {
+          const timeout = setTimeout(() => {
+            resolve(simpleItems)
+          }, 150)
+
+          context.signal.addEventListener('abort', () => {
+            clearTimeout(timeout)
+            reject(new Error('AbortError'))
+          })
+        }).catch((error) => {
+          // Silently handle AbortError in test
+          if (error.message === 'AbortError') {
+            return simpleItems
+          }
+          throw error
+        })
+      } else if (currentCall === 3) {
+        // Second call: longer delay
+        return new Promise<typeof simpleItems>((resolve) => {
+          setTimeout(() => {
+            resolve(simpleItems)
+          }, 300)
+        })
+      }
+
+      // Initial mount call
+      return simpleItems
+    })
+
+    const wrapper = mount(BTable, {
+      props: {
+        provider,
+        fields: simpleFields,
+        debounce: 0, // No debounce for this test
+      },
+    })
+
+    const $table = wrapper.find('table')
+
+    // Wait for initial mount call
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    expect($table.classes()).not.toContain('b-table-busy') // Should not be busy after initial call
+
+    // Trigger first provider call
+    await wrapper.setProps({filter: 'first'})
+    await new Promise((resolve) => setTimeout(resolve, 20))
+    expect($table.classes()).toContain('b-table-busy') // Should be busy while first call is running
+
+    // Trigger second provider call while first is still running
+    await wrapper.setProps({filter: 'second'})
+    await new Promise((resolve) => setTimeout(resolve, 20))
+    expect($table.classes()).toContain('b-table-busy') // Should still be busy
+
+    // Wait for first provider to finish being aborted
+    await new Promise((resolve) => setTimeout(resolve, 200))
+
+    // The busy state should still be true because the second provider is still running
+    expect($table.classes()).toContain('b-table-busy')
+
+    // Wait for second provider to complete
+    await new Promise((resolve) => setTimeout(resolve, 200))
+
+    // Now busy should be false
+    expect($table.classes()).not.toContain('b-table-busy')
+  })
+})
+
+describe('event emissions', () => {
+  const items = [
+    {id: 1, first_name: 'John', age: 30},
+    {id: 2, first_name: 'Jane', age: 25},
+    {id: 3, first_name: 'Bob', age: 35},
+  ]
+  const fields: Exclude<TableField<(typeof items)[0]>, string>[] = [
+    {key: 'first_name', label: 'Name', sortable: true},
+    {key: 'age', label: 'Age', sortable: true},
+  ]
+
+  it('emits sorted event when column header is clicked', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields},
+    })
+    const headers = wrapper.findAll('thead th')
+    await headers[0].trigger('click')
+
+    expect(wrapper.emitted('sorted')).toBeTruthy()
+    const sortEvent = wrapper.emitted('sorted')?.[0]?.[0] as BTableSortBy
+    expect(sortEvent).toMatchObject({
+      key: 'first_name',
+      order: 'asc',
+    })
+  })
+
+  it('emits filtered event when filter changes', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields, filter: ''},
+    })
+
+    await wrapper.setProps({filter: 'John'})
+    await nextTick()
+
+    expect(wrapper.emitted('filtered')).toBeTruthy()
+    const filteredItems = wrapper.emitted('filtered')?.[0]?.[0] as typeof items
+    expect(filteredItems).toHaveLength(1)
+    expect(filteredItems[0].first_name).toBe('John')
+  })
+
+  it('emits row-selected event when row is selected', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items,
+        fields,
+        selectable: true,
+        selectMode: 'multi',
+      },
+    })
+
+    const rows = wrapper.findAll('tbody tr')
+    await rows[0].trigger('click')
+
+    expect(wrapper.emitted('row-selected')).toBeTruthy()
+    expect(wrapper.emitted('row-selected')?.[0]?.[0]).toEqual(items[0])
+  })
+
+  it('emits row-unselected event when selected row is clicked again', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items,
+        fields,
+        selectable: true,
+        selectMode: 'multi',
+      },
+    })
+
+    const rows = wrapper.findAll('tbody tr')
+    // First click to select
+    await rows[0].trigger('click')
+    expect(wrapper.emitted('row-selected')).toBeTruthy()
+
+    // Second click to unselect
+    await rows[0].trigger('click')
+    expect(wrapper.emitted('row-unselected')).toBeTruthy()
+    expect(wrapper.emitted('row-unselected')?.[0]?.[0]).toEqual(items[0])
+  })
+
+  it('emits change event when sorted items change', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields},
+    })
+
+    const headers = wrapper.findAll('thead th')
+    await headers[0].trigger('click')
+    await nextTick()
+
+    expect(wrapper.emitted('change')).toBeTruthy()
+    const changedItems = wrapper.emitted('change')?.[0]?.[0] as typeof items
+    expect(changedItems).toHaveLength(items.length)
+  })
+
+  it('emits row-clicked event inherited from BTableLite', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields},
+    })
+
+    const rows = wrapper.findAll('tbody tr')
+    await rows[0].trigger('click')
+
+    expect(wrapper.emitted('row-clicked')).toBeTruthy()
+    expect(wrapper.emitted('row-clicked')?.[0]).toEqual([
+      {
+        item: items[0],
+        index: 0,
+        event: expect.any(Object),
+      },
+    ])
+  })
+
+  it('emits row-dblclicked event inherited from BTableLite', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields},
+    })
+
+    const rows = wrapper.findAll('tbody tr')
+    await rows[1].trigger('dblclick')
+
+    expect(wrapper.emitted('row-dblclicked')).toBeTruthy()
+    expect(wrapper.emitted('row-dblclicked')?.[0]).toEqual([
+      {
+        item: items[1],
+        index: 1,
+        event: expect.any(Object),
+      },
+    ])
+  })
+
+  it('emits head-clicked event inherited from BTableLite', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields},
+    })
+
+    const headers = wrapper.findAll('thead th')
+    await headers[1].trigger('click')
+
+    expect(wrapper.emitted('head-clicked')).toBeTruthy()
+    const emittedEvent = wrapper.emitted('head-clicked')?.[0]?.[0]
+    expect(emittedEvent).toEqual({
+      key: 'age',
+      field: expect.objectContaining({key: 'age', label: 'Age', sortable: true}),
+      event: expect.any(Object),
+      isFooter: false,
+    })
+  })
+
+  it('emits multiple events in correct order when interacting', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields},
+    })
+
+    // Click header to sort
+    const headers = wrapper.findAll('thead th')
+    await headers[0].trigger('click')
+    await nextTick()
+
+    // Should emit head-clicked, sorted, and change
+    expect(wrapper.emitted('head-clicked')).toBeTruthy()
+    expect(wrapper.emitted('sorted')).toBeTruthy()
+    expect(wrapper.emitted('change')).toBeTruthy()
+
+    // Verify all events were emitted
+    expect(wrapper.emitted('head-clicked')?.length).toBeGreaterThanOrEqual(1)
+    expect(wrapper.emitted('sorted')?.length).toBeGreaterThanOrEqual(1)
+  })
+})
+
+describe('BTable styling props', () => {
+  it('applies fixed table layout when fixed prop is true', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        fixed: true,
+      },
+    })
+    expect(wrapper.find('table').classes()).toContain('b-table-fixed')
+  })
+
+  it('does not apply fixed class when fixed prop is false or undefined', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        fixed: false,
+      },
+    })
+    expect(wrapper.find('table').classes()).not.toContain('b-table-fixed')
+  })
+
+  it('disables border collapse when noBorderCollapse prop is true', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        noBorderCollapse: true,
+      },
+    })
+    expect(wrapper.find('table').classes()).toContain('b-table-no-border-collapse')
+  })
+
+  it('does not apply no-border-collapse class when prop is false or undefined', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        noBorderCollapse: false,
+      },
+    })
+    expect(wrapper.find('table').classes()).not.toContain('b-table-no-border-collapse')
+  })
+})
+
+describe('BTable busyLoadingText', () => {
+  it('displays busyLoadingText when busy and no slot provided', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        busy: true,
+        busyLoadingText: 'Custom loading message...',
+      },
+    })
+    await nextTick()
+    expect(wrapper.text()).toContain('Custom loading message...')
+  })
+
+  it('uses default busyLoadingText when busy and none specified', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        busy: true,
+      },
+    })
+    await nextTick()
+    expect(wrapper.text()).toContain('Loading...')
+  })
+
+  it('prefers table-busy slot over busyLoadingText when both provided', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        busy: true,
+        busyLoadingText: 'This should not appear',
+      },
+      slots: {
+        'table-busy': '<div>Custom slot content</div>',
+      },
+    })
+    await nextTick()
+    expect(wrapper.text()).toContain('Custom slot content')
+    expect(wrapper.text()).not.toContain('This should not appear')
+  })
+
+  it('does not display busyLoadingText when not busy', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        busy: false,
+        busyLoadingText: 'Should not appear',
+      },
+    })
+    expect(wrapper.text()).not.toContain('Should not appear')
   })
 })

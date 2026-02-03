@@ -420,6 +420,40 @@ describe('modal', () => {
     wrapper.unmount()
   })
 
+  it('focus trap deactivation does not throw error when no tabbable elements exist', async () => {
+    // This test simulates the issue where a modal with disabled buttons
+    // would throw an error on focus trap deactivation
+    const wrapper = mount(BModal, {
+      attachTo: document.body,
+      global: {
+        stubs: {teleport: true, transition: false},
+      },
+      props: {
+        modelValue: true,
+        noHeader: true,
+        noFooter: true,
+        // Create a modal with no focusable elements
+      },
+      slots: {
+        default: '<p>No focusable elements here</p>',
+      },
+    })
+    await nextTick()
+
+    // Verify the modal is shown
+    expect(wrapper.find('div.modal').exists()).toBe(true)
+    expect(wrapper.find('div.modal-fallback-focus').exists()).toBe(true)
+
+    // Simulate closing the modal - this should not throw an error
+    await wrapper.setProps({modelValue: false})
+    await nextTick()
+
+    // The test passes if no error is thrown during deactivation
+    expect(true).toBe(true)
+
+    wrapper.unmount()
+  })
+
   describe('button and event functionality', () => {
     it('header close button triggers modal close and is preventable', async () => {
       let cancelHide = true
@@ -578,6 +612,58 @@ describe('modal', () => {
     const $modalBody = $modal.element.querySelector('.modal-body')
     expect($modalBody?.hasAttribute('role')).toBeTruthy()
     expect($modalBody?.getAttribute('role')).toBe('foo')
+  })
+
+  it('handles quick show/hide sequence without animation', async () => {
+    const wrapper = mount(BModal, {
+      attachTo: document.body,
+      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      props: {
+        id: 'test',
+        noFade: true,
+      },
+    })
+
+    expect(wrapper.vm).toBeDefined()
+
+    // Call show() and hide() immediately
+    wrapper.vm.show()
+    wrapper.vm.hide()
+
+    // Wait for any pending animations
+    await new Promise((resolve) => setTimeout(resolve, 50))
+
+    // Modal should be hidden
+    const $modal = wrapper.find('div.modal')
+    expect($modal.isVisible()).toBe(false)
+
+    wrapper.unmount()
+  })
+
+  it('handles quick show/hide sequence with animation', async () => {
+    const wrapper = mount(BModal, {
+      attachTo: document.body,
+      global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      props: {
+        id: 'test',
+        noFade: false,
+      },
+    })
+
+    expect(wrapper.vm).toBeDefined()
+
+    // Call show() and hide() immediately
+    wrapper.vm.show()
+    wrapper.vm.hide()
+
+    // Wait for any pending animations
+    await new Promise((resolve) => setTimeout(resolve, 350))
+
+    // Modal should be hidden
+    const $modal = wrapper.find('div.modal')
+    expect($modal.isVisible()).toBe(false)
+
+    wrapper.unmount()
   })
 
   // Test isActive states

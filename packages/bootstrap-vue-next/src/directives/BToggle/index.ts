@@ -1,7 +1,8 @@
 import {RX_HASH, RX_HASH_ID, RX_SPACE_SPLIT} from '../../utils/constants'
-import {type Directive, type DirectiveBinding, toValue, type VNode} from 'vue'
+import {type Directive, type DirectiveBinding, type VNode} from 'vue'
 import {findProvides} from '../utils'
-import {globalShowHideStorageInjectionKey, type RegisterShowHideValue} from '../../utils/keys'
+import {type RegisterShowHideValue, showHideRegistryKey} from '../../utils/keys'
+import {getActiveShowHide} from '../../utils/registryAccess'
 
 const getTargets = (
   binding: DirectiveBinding<string | readonly string[] | undefined>,
@@ -43,19 +44,18 @@ const handleUpdate = (
   if (targets.length === 0) return
 
   const provides = findProvides(binding, vnode)
-  const showHideMap = (provides as Record<symbol, RegisterShowHideValue>)[
-    globalShowHideStorageInjectionKey
-  ]?.values
+  const showHideMap =
+    (provides as Record<symbol, RegisterShowHideValue>)[showHideRegistryKey]?.values ?? null
   if ((el as HTMLElement).dataset.bvtoggle) {
     const oldTargets = ((el as HTMLElement).dataset.bvtoggle || '').split(' ')
     if (oldTargets.length === 0) return
     for (const targetId of oldTargets) {
-      const showHide = showHideMap?.value.get(targetId)
+      const showHide = getActiveShowHide(showHideMap, targetId)
       if (!showHide) {
         continue
       }
       if (!targets.includes(targetId)) {
-        toValue(showHide).unregisterTrigger('click', el, false)
+        showHide.unregisterTrigger('click', el, false)
       }
     }
   }
@@ -63,20 +63,40 @@ const handleUpdate = (
 
   targets.forEach(async (targetId) => {
     let count = 0
-    while (count < 5) {
-      const showHide = showHideMap?.value.get(targetId)
+    const maxAttempts = 5
+    const delayMs = 100
+
+    // Keep looking until showHide is found, giving up after 500ms or directive is unmounted
+    while (count < maxAttempts) {
+      // Check if element is still mounted before each iteration
+      if (!(el as HTMLElement).dataset.bvtoggle) {
+        // Element was unmounted, stop trying
+        return
+      }
+
+      const showHide = getActiveShowHide(showHideMap, targetId)
       if (!showHide) {
         count++
-        await new Promise((resolve) => setTimeout(resolve, 100))
-        if (count < 4) continue
-        // eslint-disable-next-line no-console
-        console.warn(`[v-b-toggle] Target with ID ${targetId} not found`)
+        if (count < maxAttempts) {
+          await new Promise((resolve) => setTimeout(resolve, delayMs))
+          continue
+        }
+        // Only warn if element is still mounted after all attempts
+        if ((el as HTMLElement).dataset.bvtoggle) {
+          // eslint-disable-next-line no-console
+          console.warn(
+            `[v-b-toggle] Target with ID ${targetId} not found after ${maxAttempts * delayMs}ms`
+          )
+        }
         break
       }
-      // Register the trigger element
 
-      toValue(showHide).unregisterTrigger('click', el, false)
-      toValue(showHide).registerTrigger('click', el)
+      // Final check before registration
+      if (!(el as HTMLElement).dataset.bvtoggle) return
+
+      // Register the trigger element
+      showHide.unregisterTrigger('click', el, false)
+      showHide.registerTrigger('click', el)
       break
     }
   })
@@ -92,22 +112,21 @@ const handleUnmount = (
   const targets = getTargets(binding, el)
   if (targets.length === 0) return
   const provides = findProvides(binding, vnode)
-  const showHideMap = (provides as Record<symbol, RegisterShowHideValue>)[
-    globalShowHideStorageInjectionKey
-  ]?.values
+  const showHideMap =
+    (provides as Record<symbol, RegisterShowHideValue>)[showHideRegistryKey]?.values ?? null
 
   targets.forEach((targetId) => {
-    const showHide = showHideMap?.value.get(targetId)
+    const showHide = getActiveShowHide(showHideMap, targetId)
     if (!showHide) {
       return
     }
-    toValue(showHide).unregisterTrigger('click', el, false)
+    // Pass clean=true to let the composable handle cleanup of aria-expanded and classes
+    showHide.unregisterTrigger('click', el, true)
   })
 
+  // Only remove what the directive manages (aria-controls)
+  // aria-expanded and classes are managed by useShowHide composable
   el.removeAttribute('aria-controls')
-  el.removeAttribute('aria-expanded')
-  el.classList.remove('collapsed')
-  el.classList.remove('not-collapsed')
   delete (el as HTMLElement).dataset.bvtoggle
 }
 

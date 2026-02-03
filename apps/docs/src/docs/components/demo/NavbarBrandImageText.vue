@@ -5,7 +5,7 @@
     v-b-color-mode="'dark'"
     variant="success"
   >
-    <BNavbarBrand href="#">
+    <BNavbarBrand href="#navbar-brand-image-text">
       <img
         src="https://picsum.photos/30/30/?image=40"
         class="d-inline-block align-top"

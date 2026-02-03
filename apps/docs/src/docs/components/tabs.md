@@ -1,11 +1,8 @@
-# Tabs
-
-<PageHeader>
-
-Create a widget of tabbable panes of _local content_. The tabs component is built upon navs and
-cards internally, and provides full keyboard navigation control of the tabs.
-
-</PageHeader>
+---
+description: >
+  Create a widget of tabbable panes of _local content_. The tabs component is built upon navs and
+  cards internally, and provides full keyboard navigation control of the tabs.
+---
 
 For navigation based tabs (i.e. tabs that would change the URL), use the
 [`<BNav>`](/docs/components/nav) component instead.
@@ -17,7 +14,7 @@ For navigation based tabs (i.e. tabs that would change the URL), use the
 ::: info
 You should supply each child `<BTab>` component a unique `key` value if dynamically adding
 or removing `<BTab>` components (i.e. `v-if` or for loops). The `key` attribute is a special Vue
-attribute, see the [Vue doce](https://vuejs.org/api/built-in-special-attributes.html#key) for details.
+attribute, see the [Vue docs](https://vuejs.org/api/built-in-special-attributes.html#key) for details.
 :::
 
 ## Cards integration
@@ -109,7 +106,7 @@ column classes such as `col-2`, `col-3`, etc.
 <<< DEMO ./demo/TabsVerticalWidth.vue#template{vue-html}
 
 Vertical placement visually works best with the `pills` variant. When using the default `tabs`
-variant, you may want to provided your own custom styling classes, as Bootstrap v4 CSS assumes the
+variant, you may want to provided your own custom styling classes, as Bootstrap v5 CSS assumes the
 tab controls will always be placed on the top of the tabs content.
 
 ::: info
@@ -233,7 +230,8 @@ order to use these methods.
 To prevent a tab from activating, simply set the `disabled` prop on the `<BTab>` component.
 
 Alternatively, you can listen for the `activate-tab` event, which provides an option to prevent the
-tab from activating. The `activate-tab` event is emitted with five arguments:
+tab from activating. The `activate-tab` event now emits a single payload object with the following
+properties:
 
 - `newTabId`: The id of the tab that is going to be activated
 - `prevTabId`: The id of the currently active tab
@@ -264,9 +262,3 @@ It is recommended to use the `disabled` attribute on the `<BTab>` component inst
 ### Dynamic tabs + tabs-end slot
 
 <<< DEMO ./demo/TabsDynamic.vue
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/tabs.data'
-</script>

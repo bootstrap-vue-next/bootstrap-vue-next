@@ -24,42 +24,8 @@ describe('card-group', () => {
     expect(wrapper.text()).toBe('foobar')
   })
 
-  it('has class card-deck when prop deck', async () => {
-    const wrapper = mount(BCardGroup, {
-      props: {deck: true},
-    })
-    expect(wrapper.classes()).toContain('card-deck')
-    await wrapper.setProps({deck: undefined})
-    expect(wrapper.classes()).not.toContain('card-deck')
-  })
-
-  it('has class card-columns when prop columns', async () => {
-    const wrapper = mount(BCardGroup, {
-      props: {columns: true},
-    })
-    expect(wrapper.classes()).toContain('card-columns')
-    await wrapper.setProps({columns: undefined})
-    expect(wrapper.classes()).not.toContain('card-columns')
-  })
-
-  it('has class card-group by default', () => {
+  it('has class card-group', () => {
     const wrapper = mount(BCardGroup)
     expect(wrapper.classes()).toContain('card-group')
-  })
-
-  it('class card-deck takes priority over card-columns', () => {
-    const wrapper = mount(BCardGroup, {
-      props: {columns: true, deck: true},
-    })
-    expect(wrapper.classes()).toContain('card-deck')
-    expect(wrapper.classes()).not.toContain('card-columns')
-  })
-
-  it('class card-columns takes priority over card-group', () => {
-    const wrapper = mount(BCardGroup, {
-      props: {columns: true},
-    })
-    expect(wrapper.classes()).toContain('card-columns')
-    expect(wrapper.classes()).not.toContain('card-group')
   })
 })

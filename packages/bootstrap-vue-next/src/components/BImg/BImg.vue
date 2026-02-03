@@ -18,6 +18,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import {computed} from 'vue'
 import {useToNumber} from '@vueuse/core'
 import {useRadiusElementClasses} from '../../composables/useRadiusElementClasses'
+import {isReadOnlyArray} from '../../utils/object'
 
 const _props = withDefaults(defineProps<BImgProps>(), {
   blank: false,
@@ -44,8 +45,8 @@ const _props = withDefaults(defineProps<BImgProps>(), {
 })
 const props = useDefaults(_props, 'BImg')
 
-const heightNumber = useToNumber(() => props.height ?? NaN)
-const widthNumber = useToNumber(() => props.width ?? NaN)
+const heightNumber = useToNumber(() => props.height ?? Number.NaN)
+const widthNumber = useToNumber(() => props.width ?? Number.NaN)
 
 const radiusElementClasses = useRadiusElementClasses(() => ({
   rounded: props.rounded,
@@ -61,7 +62,7 @@ const computedSrcset = computed(() =>
         .split(',')
         .filter((x) => x)
         .join(',')
-    : Array.isArray(props.srcset)
+    : isReadOnlyArray(props.srcset)
       ? props.srcset.filter((x) => x).join(',')
       : undefined
 )
@@ -72,7 +73,7 @@ const computedSizes = computed(() =>
         .split(',')
         .filter((x) => x)
         .join(',')
-    : Array.isArray(props.sizes)
+    : isReadOnlyArray(props.sizes)
       ? props.sizes.filter((x) => x).join(',')
       : undefined
 )

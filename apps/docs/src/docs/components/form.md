@@ -1,12 +1,9 @@
-# Form
-
-<PageHeader>
-
-BootstrapVueNext form component and helper components that optionally support inline form styles and
-validation states. Pair them up with other BootstrapVueNext form control components for an easy
-customized, and responsive, layout with a consistent look and feel.
-
-</PageHeader>
+---
+description: >
+  BootstrapVueNext form component and helper components that optionally support inline form styles and
+  validation states. Pair them up with other BootstrapVueNext form control components for an easy
+  customized, and responsive, layout with a consistent look and feel.
+---
 
 ## Introduction to forms and controls
 
@@ -41,12 +38,12 @@ Custom form controls and selects are also supported.
 
 ## Floating Labels
 
-Wrap a `BFormInput`, `BFormTextarea`, or `BFormSelect` in a `BFormFloatingLable` to enable floating labesl. A `placeholder`
+Wrap a `BFormInput`, `BFormTextarea`, or `BFormSelect` in a `BFormFloatingLabel` to enable floating labels. A `placeholder`
 is required on each input in order to make the Bootstrap 5 `css` work correctly.
 
 <<< DEMO ./demo/FormFloatingLabels.vue#template{vue-html}
 
-Floating labels work correclty for disable state and readonly states. In addition to styled textual inputs, floating labels
+Floating labels work correctly for disabled state and readonly states. In addition to styled textual inputs, floating labels
 also work for plaintext inputs, textareas, input groups and selects.
 See the [Bootstrap 5 documentation](https://getbootstrap.com/docs/5.3/forms/floating-labels) for more details.
 
@@ -88,7 +85,7 @@ See also:
 - [`BFormFile`](/docs/components/form-file) File Input
 - [`BFormSpinbutton`](/docs/components/form-spinbutton) Numerical range spinbutton input
 - [`BFormTags`](/docs/components/form-tags) Customizable tag input
-- `BFormRating` Star rating custom form input and display (<NotYetImplemented/>)
+- [`BFormRating`](/docs/components/form-rating) Star rating custom form input and display
 - [`BButton`](/docs/components/button) Buttons
 - [`BFormGroup`](/docs/components/form-group) Form Input wrapper to generate form-groups that
   support labels, help text and feedback
@@ -164,6 +161,32 @@ See also:
   a flat list of `BFormSelectOptions`, unlike `<BFormSelect>` which support a heirarchy of
   `BFormSelectOption` and `BFormSelectOptionGroup`.
 
+#### TypeScript Type Safety
+
+`BFormDatalist` <!--@include: ./_type-safety-intro.md-->
+
+**Basic type-safe usage:**
+
+<<< DEMO ./demo/DatalistTypeSafeBasic.vue{vue}
+
+**Type-safe API responses:**
+
+<<< DEMO ./demo/DatalistTypeSafeAPI.vue{vue}
+
+**Type-safe enums:**
+
+<<< DEMO ./demo/DatalistTypeSafeEnum.vue{vue}
+
+**Benefits:**
+
+<!--@include: ./_type-safety-benefits.md-->
+
+**Backward compatibility:**
+
+<!--@include: ./_type-safety-backward-compat.md-->
+
+See the [BFormSelect TypeScript documentation](/docs/components/form-select#typescript-type-safety) for comprehensive type safety guidance that also applies to datalists.
+
 ## Validation
 
 Disable browser native HTML5 validation by setting the `novalidate` prop to true on `BForm`.
@@ -183,9 +206,3 @@ of three contextual states:
 Refer to the
 [Bootstrap v5 Form Validation Documentation](https://getbootstrap.com/docs/5.3/forms/validation/)
 for details on the Bootstrap v5 validation states.
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/form.data'
-</script>

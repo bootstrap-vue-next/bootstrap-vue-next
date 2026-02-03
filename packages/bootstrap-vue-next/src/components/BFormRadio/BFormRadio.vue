@@ -33,6 +33,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import type {RadioValue} from '../../types/RadioTypes'
 import {useId} from '../../composables/useId'
 import {radioGroupKey} from '../../utils/keys'
+import type {BFormRadioSlots} from '../../types'
 
 defineOptions({
   inheritAttrs: false,
@@ -58,11 +59,7 @@ const _props = withDefaults(defineProps<Omit<BFormRadioProps, 'modelValue'>>(), 
   value: true,
 })
 const props = useDefaults(_props, 'BFormRadio')
-
-const slots = defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-}>()
+const slots = defineSlots<BFormRadioSlots>()
 
 const modelValue = defineModel<BFormRadioProps['modelValue']>({
   default: undefined,
@@ -72,7 +69,7 @@ const computedId = useId(() => props.id, 'form-check')
 
 const parentData = inject(radioGroupKey, null)
 
-const input = useTemplateRef<HTMLElement>('_input')
+const input = useTemplateRef('_input')
 
 const {focused} = useFocus(input, {
   initialValue: props.autofocus,
@@ -99,11 +96,24 @@ const computedRequired = computed(
 const isButtonGroup = computed(() => props.buttonGroup || (parentData?.buttons.value ?? false))
 
 const classesObject = computed(() => ({
-  plain: props.plain || (parentData?.plain.value ?? false),
-  button: props.button || (parentData?.buttons.value ?? false),
-  inline: props.inline || (parentData?.inline.value ?? false),
-  state: props.state || parentData?.state.value,
-  reverse: props.reverse || (parentData?.reverse.value ?? false),
+  plain:
+    props.plain === true || props.plain === false
+      ? props.plain
+      : (parentData?.plain.value ?? false),
+  button:
+    props.button === true || props.button === false
+      ? props.button
+      : (parentData?.buttons.value ?? false),
+  inline:
+    props.inline === true || props.inline === false
+      ? props.inline
+      : (parentData?.inline.value ?? false),
+  state:
+    props.state === true || props.state === false ? props.state : (parentData?.state.value ?? null),
+  reverse:
+    props.reverse === true || props.reverse === false
+      ? props.reverse
+      : (parentData?.reverse.value ?? false),
   size: props.size ?? parentData?.size.value ?? 'md', // This is where the true default is made
   buttonVariant: props.buttonVariant ?? parentData?.buttonVariant.value ?? 'secondary', // This is where the true default is made
   hasDefaultSlot: hasDefaultSlot.value,

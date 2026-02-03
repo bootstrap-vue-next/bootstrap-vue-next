@@ -6,7 +6,7 @@ import type {
   RootBoundary,
   Strategy,
 } from '@floating-ui/vue'
-import type {AriaAttributes, ComponentPublicInstance, TransitionProps} from 'vue'
+import type {AriaAttributes, ComponentPublicInstance, TeleportProps, TransitionProps} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {LinkTarget} from './LinkTarget'
 import type {
@@ -22,9 +22,9 @@ import type {CheckboxOptionRaw, CheckboxValue} from './CheckboxTypes'
 import type {Size} from './Size'
 import type {AriaInvalid} from './AriaInvalid'
 import type {Numberish, TeleporterProps, ValidationState, ValueOrCallBack} from './CommonTypes'
-import type {CommonInputProps} from './FormCommonInputProps'
-import type {RadioOptionRaw, RadioValue} from './RadioTypes'
-import type {SelectValue} from './SelectTypes'
+import type {CommonInputProps, FormDebounceOptions} from './FormCommonInputProps'
+import type {RadioOption, RadioValue} from './RadioTypes'
+import type {ComplexSelectOptionRaw, SelectOptionRaw, SelectValue} from './SelectTypes'
 import type {
   Breakpoint,
   ColBreakpointProps,
@@ -57,17 +57,66 @@ import type {LiteralUnion} from './LiteralUnion'
 import type {BreadcrumbItemRaw} from './BreadcrumbTypes'
 import type {TransitionMode} from './TransitionMode'
 import type {
+  BTableFilterFunction,
+  BTableInitialSortDirection,
   BTableProvider,
+  BTableSelectMode,
   BTableSortBy,
+  BTableSortByComparerFunction,
   NoProviderTypes,
   TableField,
   TableFieldRaw,
+  TablePrimaryKey,
   TableRowType,
   TableStrictClassValue,
   TableThScope,
 } from './TableTypes'
 import type {PopoverPlacement} from './PopoverPlacement'
 import type {InputType} from './InputType'
+import type {BvnComponentProps} from './BootstrapVueOptions'
+import type {OrchestratorArrayValue} from './ComponentOrchestratorTypes'
+
+export interface BAppProps {
+  defaults?: Partial<
+    BvnComponentProps & {
+      /**
+       * @hint Globally sets all props with the matching name
+       */
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      global: Record<string, any>
+    }
+  >
+  mergeDefaults?:
+    | boolean
+    | ((
+        oldDefaults: Partial<BvnComponentProps>,
+        newDefaults: Partial<BvnComponentProps>
+      ) => Partial<BvnComponentProps>)
+  teleportTo?: TeleportProps['to']
+  noOrchestrator?: boolean
+  appendToast?: boolean
+  rtl?:
+    | boolean
+    | {
+        /**
+         * @default false
+         */
+        rtlInitial?: boolean
+        /**
+         * @default undefined
+         */
+        localeInitial?: string
+      }
+}
+
+export interface BOrchestratorProps {
+  noPopovers?: boolean
+  noToasts?: boolean
+  noModals?: boolean
+  appendToast?: boolean
+  teleportTo?: TeleportProps['to']
+  filter?: (item: OrchestratorArrayValue) => boolean
+}
 
 export interface BLinkProps {
   active?: boolean
@@ -117,10 +166,10 @@ export interface BAccordionProps {
   flush?: boolean
   free?: boolean
   id?: string
-  index?: number | number[]
+  index?: number | readonly number[]
   initialAnimation?: boolean
   lazy?: boolean
-  modelValue?: string | string[]
+  modelValue?: string | readonly string[]
   unmountLazy?: boolean
 }
 
@@ -246,36 +295,79 @@ export interface BFormCheckboxProps {
   value?: string | boolean | CheckboxValue
 }
 
-export interface BFormCheckboxGroupProps {
-  ariaInvalid?: AriaInvalid
-  autofocus?: boolean
+// Base props (non-generic)
+export interface BFormCheckboxGroupBaseProps {
+  id?: string
+  name?: string
+  size?: Size
+  state?: ValidationState
   buttonVariant?: ButtonVariant | null
   buttons?: boolean
+  stacked?: boolean
+  disabled?: boolean
+  required?: boolean
+  validated?: boolean
+  autofocus?: boolean
+  form?: string
+  ariaInvalid?: AriaInvalid
+  plain?: boolean
+  reverse?: boolean
+  switches?: boolean
+  options: CheckboxOptionRaw[] // Already normalized
+}
+
+// Wrapper props (generic)
+export interface BFormCheckboxGroupProps<
+  Item = Record<string, unknown>,
+  ValueKey extends keyof Item = keyof Item,
+> {
+  // Generic-specific props
+  options?: readonly (Item | string | number)[]
+  valueField?: ValueKey & string
+  textField?: keyof Item & string
+  disabledField?: keyof Item & string
+
+  // All base props (inherited)
+  id?: string
+  modelValue?: Item[ValueKey][]
+  name?: string
+  size?: Size
+  state?: ValidationState
+  buttonVariant?: ButtonVariant | null
+  buttons?: boolean
+  stacked?: boolean
+  disabled?: boolean
+  required?: boolean
+  validated?: boolean
+  autofocus?: boolean
+  form?: string
+  ariaInvalid?: AriaInvalid
+  plain?: boolean
+  reverse?: boolean
+  switches?: boolean
+}
+
+// BFormDatalist base props (non-generic, uses raw options)
+export interface BFormDatalistBaseProps {
   disabled?: boolean
   disabledField?: string
-  form?: string
   id?: string
-  modelValue?: readonly CheckboxValue[]
-  name?: string
-  options?: readonly CheckboxOptionRaw[]
-  plain?: boolean
-  required?: boolean
-  reverse?: boolean
-  size?: Size
-  stacked?: boolean
-  state?: ValidationState
-  switches?: boolean
+  options?: readonly (string | number | Record<string, unknown>)[] | SelectOptionRaw[]
   textField?: string
-  validated?: boolean
   valueField?: string
 }
 
-export interface BFormDatalistProps {
-  disabledField?: string
+// BFormDatalist wrapper props (generic, type-safe options)
+export interface BFormDatalistProps<
+  Item = Record<string, unknown>,
+  ValueKey extends keyof Item = keyof Item,
+> {
+  disabled?: boolean
+  disabledField?: keyof Item & string
   id?: string
-  options?: readonly (unknown | Record<string, unknown>)[]
-  textField?: string
-  valueField?: string
+  options?: readonly (Item | string | number)[]
+  textField?: keyof Item & string
+  valueField?: ValueKey & string
 }
 
 export interface BFormFileProps {
@@ -283,9 +375,12 @@ export interface BFormFileProps {
   ariaLabelledby?: string
   accept?: string | readonly string[]
   autofocus?: boolean
-  capture?: boolean | 'user' | 'environment'
+  browseText?: string
+  capture?: 'user' | 'environment'
   directory?: boolean
   disabled?: boolean
+  dropPlaceholder?: string
+  fileNameFormatter?: (files: readonly File[]) => string
   form?: string
   id?: string
   label?: string
@@ -295,9 +390,10 @@ export interface BFormFileProps {
   name?: string
   noButton?: boolean
   noDrop?: boolean
-  noTraverse?: boolean
   plain?: boolean
+  placeholder?: string
   required?: boolean
+  showFileNames?: boolean
   size?: Size
   state?: ValidationState
 }
@@ -305,7 +401,6 @@ export interface BFormFileProps {
 export interface BFormInputProps extends CommonInputProps {
   max?: Numberish
   min?: Numberish
-  // noWheel: {type: Boolean, default: false}, TODO: not implemented yet
   step?: Numberish
   type?: InputType
 }
@@ -331,27 +426,60 @@ export interface BFormRadioProps {
   value?: RadioValue
 }
 
-export interface BFormRadioGroupProps {
+/**
+ * Props for BFormRadioGroupBase - internal non-generic component.
+ * Accepts normalized RadioOption[] instead of generic options.
+ * Users should use BFormRadioGroup (the type-safe wrapper) instead.
+ * @internal
+ */
+export interface BFormRadioGroupBaseProps {
   ariaInvalid?: AriaInvalid
   autofocus?: boolean
   buttonVariant?: ButtonVariant | null
   buttons?: boolean
   disabled?: boolean
-  disabledField?: string
   form?: string
   id?: string
   modelValue?: RadioValue
   name?: string
-  options?: readonly RadioOptionRaw[]
+  options?: readonly RadioOption[]
   plain?: boolean
   required?: boolean
   reverse?: boolean
   size?: Size
   stacked?: boolean
   state?: ValidationState
-  textField?: string
   validated?: boolean
-  valueField?: string
+}
+
+/**
+ * Props for BFormRadioGroup - type-safe generic wrapper component.
+ * Provides compile-time type safety for options array and field names.
+ */
+export interface BFormRadioGroupProps<
+  Item = Record<string, unknown>,
+  ValueKey extends keyof Item = keyof Item,
+> {
+  ariaInvalid?: AriaInvalid
+  autofocus?: boolean
+  buttonVariant?: ButtonVariant | null
+  buttons?: boolean
+  disabled?: boolean
+  disabledField?: keyof Item & string
+  form?: string
+  id?: string
+  modelValue?: Item[ValueKey]
+  name?: string
+  options?: readonly (Item | string | number)[]
+  plain?: boolean
+  required?: boolean
+  reverse?: boolean
+  size?: Size
+  stacked?: boolean
+  state?: ValidationState
+  textField?: keyof Item & string
+  validated?: boolean
+  valueField?: ValueKey & string
 }
 export interface BFormRatingProps {
   color?: string
@@ -361,6 +489,9 @@ export interface BFormRatingProps {
   noBorder?: boolean
   precision?: number
   readonly?: boolean
+  disabled?: boolean
+  form?: string
+  name?: string
   showClear?: boolean
   showValue?: boolean
   showValueMax?: boolean
@@ -378,7 +509,8 @@ export interface BFormRatingProps {
     | string
 }
 
-export interface BFormSelectProps {
+// BFormSelect base props (non-generic, uses raw options)
+export interface BFormSelectBaseProps {
   ariaInvalid?: AriaInvalid
   autofocus?: boolean
   disabled?: boolean
@@ -389,7 +521,10 @@ export interface BFormSelectProps {
   modelValue?: SelectValue
   multiple?: boolean
   name?: string
-  options?: readonly (unknown | Record<string, unknown>)[]
+  options?:
+    | readonly (string | number | Record<string, unknown>)[]
+    | readonly SelectOptionRaw[]
+    | readonly ComplexSelectOptionRaw[]
   optionsField?: string
   plain?: boolean
   required?: boolean
@@ -398,6 +533,32 @@ export interface BFormSelectProps {
   state?: ValidationState
   textField?: string
   valueField?: string
+}
+
+// BFormSelect wrapper props (generic, type-safe options)
+export interface BFormSelectProps<
+  Item = Record<string, unknown>,
+  ValueKey extends keyof Item = keyof Item,
+> {
+  ariaInvalid?: AriaInvalid
+  autofocus?: boolean
+  disabled?: boolean
+  disabledField?: keyof Item & string
+  form?: string
+  id?: string
+  labelField?: keyof Item & string
+  modelValue?: Item[ValueKey]
+  multiple?: boolean
+  name?: string
+  options?: readonly (Item | string | number)[]
+  optionsField?: keyof Item & string
+  plain?: boolean
+  required?: boolean
+  selectSize?: Numberish
+  size?: Size
+  state?: ValidationState
+  textField?: keyof Item & string
+  valueField?: ValueKey & string
 }
 
 export interface BFormSelectOptionProps<T> {
@@ -555,9 +716,9 @@ export interface BNavTextProps {
 }
 
 export interface BNavbarProps {
-  autoClose?: boolean
   container?: boolean | 'fluid' | Breakpoint
   fixed?: Extract<Placement, 'top' | 'bottom'>
+  noAutoClose?: boolean
   print?: boolean
   sticky?: Extract<Placement, 'top' | 'bottom'>
   tag?: string
@@ -597,6 +758,7 @@ export interface BOffcanvasProps extends TeleporterProps, ShowHideProps {
     | Readonly<HTMLElement>
     | null
   footerClass?: string
+  headerAttrs?: Readonly<AttrsValue>
   headerClass?: string
   headerCloseClass?: ClassValue
   headerCloseLabel?: string
@@ -809,9 +971,7 @@ export interface BSpinnerProps {
 }
 
 export interface BAlertProps
-  extends ColorExtendables,
-    Omit<BLinkProps, 'routerTag'>,
-    ShowHideProps {
+  extends ColorExtendables, Omit<BLinkProps, 'routerTag'>, ShowHideProps {
   alertClass?: ClassValue
   body?: string
   bodyClass?: ClassValue
@@ -834,9 +994,7 @@ export interface BAlertProps
 }
 
 export interface BAvatarProps
-  extends Omit<BLinkProps, 'routerTag' | 'icon'>,
-    ColorExtendables,
-    RadiusElementExtendables {
+  extends Omit<BLinkProps, 'routerTag' | 'icon'>, ColorExtendables, RadiusElementExtendables {
   alt?: string
   badge?: boolean | string
   badgeBgVariant?: BgColorVariant | null
@@ -903,7 +1061,7 @@ export interface BButtonGroupProps {
 
 export interface BButtonToolbarProps {
   ariaLabel?: string
-  // keyNav?: boolean
+  keyNav?: boolean
   justify?: boolean
   role?: string
 }
@@ -962,8 +1120,6 @@ export interface BCardBodyProps extends ColorExtendables {
 }
 
 export interface BCardGroupProps {
-  columns?: boolean
-  deck?: boolean
   tag?: string
 }
 
@@ -1083,34 +1239,36 @@ export interface BTableSimpleProps {
   tableClass?: ClassValue
 }
 
-export interface BTableLiteProps<Items> extends BTableSimpleProps {
+export interface BTableLiteProps<Item> extends BTableSimpleProps {
   align?: VerticalAlign
   caption?: string
   detailsTdClass?: ClassValue
   fieldColumnClass?: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  | ((field: TableField<Items>) => readonly Record<string, any>[])
+    | ((field: TableField<Item>) => readonly Record<string, any>[])
     | string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     | Readonly<Record<PropertyKey, any>>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     | readonly any[]
-  fields?: TableFieldRaw<Items>[]
+  fields?: readonly TableFieldRaw<Item>[]
   footClone?: boolean
   footRowVariant?: ColorVariant | null
   footVariant?: ColorVariant | null
   headRowVariant?: ColorVariant | null
   headVariant?: ColorVariant | null
-  items?: readonly Items[]
+  items?: readonly Item[]
   labelStacked?: boolean
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   modelValue?: any
-  primaryKey?: string
+  expandedItems?: readonly Item[]
+  // primaryKey?: Item extends object ? TablePrimaryKey<Item> : string
+  primaryKey?: TablePrimaryKey<Item>
   tbodyClass?: ClassValue
-  tbodyTrAttrs?: ((item: Items | null, type: TableRowType) => AttrsValue) | AttrsValue
+  tbodyTrAttrs?: ((item: Item | null, type: TableRowType) => AttrsValue) | AttrsValue
   // tbodyTransitionHandlers
   // tbodyTransitionProps
   tbodyTrClass?:
-    | ((item: Items | null, type: TableRowType) => TableStrictClassValue)
+    | ((item: Item | null, type: TableRowType) => TableStrictClassValue)
     | TableStrictClassValue
   tfootClass?: ClassValue
   tfootTrClass?: ClassValue
@@ -1118,26 +1276,29 @@ export interface BTableLiteProps<Items> extends BTableSimpleProps {
   theadTrClass?: ClassValue
 }
 
-export interface BTableProps<Items> extends Omit<BTableLiteProps<Items>, 'tableClass'> {
-  provider?: BTableProvider<Items>
+export interface BTableProps<Item>
+  extends Omit<BTableLiteProps<Item>, 'tableClass'>, FormDebounceOptions {
+  provider?: BTableProvider<Item>
   noProvider?: readonly NoProviderTypes[]
   noProviderPaging?: boolean
   noProviderSorting?: boolean
   noProviderFiltering?: boolean
-  sortBy?: BTableSortBy<Items>[]
-  mustSort?: boolean | string[] // TODO this is a string of fields, possibly generic
+  sortBy?: readonly BTableSortBy[]
+  sortCompare?: BTableSortByComparerFunction<Item>
+  mustSort?: boolean | readonly string[] // TODO this is a string of fields, possibly generic
+  initialSortDirection?: BTableInitialSortDirection
   selectable?: boolean
   multisort?: boolean
   stickySelect?: boolean
   selectHead?: boolean | string
-  selectMode?: 'multi' | 'single' | 'range'
+  selectMode?: BTableSelectMode
   selectionVariant?: ColorVariant | null
   busy?: boolean
   busyLoadingText?: string
   perPage?: Numberish
   currentPage?: Numberish
   filter?: string
-  filterFunction?: (item: Readonly<Items>, filter: string | undefined) => boolean
+  filterFunction?: BTableFilterFunction<Item>
   filterable?: readonly string[]
   // TODO
   // apiUrl?: string
@@ -1151,10 +1312,10 @@ export interface BTableProps<Items> extends Omit<BTableLiteProps<Items>, 'tableC
   noSelectOnClick?: boolean
   // selectedVariant?: ColorVariant | null
   // showEmpty?: boolean
-  // sortIconLeft?: boolean
   // sortNullLast?: boolean
-  selectedItems?: readonly Items[]
+  selectedItems?: readonly Item[]
   noSortableIcon?: boolean
+  sortIconLeft?: boolean
   emptyFilteredText?: string
   emptyText?: string
   showEmpty?: boolean
@@ -1218,6 +1379,8 @@ export interface BFormFeedbackSharedProps {
   text?: string
   tooltip?: boolean
 }
+export type BFormInvalidFeedbackProps = BFormFeedbackSharedProps
+export type BFormValidFeedbackProps = BFormFeedbackSharedProps
 
 export interface BDropdownProps extends TeleporterProps, ShowHideProps {
   ariaLabel?: string
@@ -1225,7 +1388,7 @@ export interface BDropdownProps extends TeleporterProps, ShowHideProps {
   boundary?: Boundary | RootBoundary
   boundaryPadding?: Padding
   disabled?: boolean
-  floatingMiddleware?: Middleware[]
+  floatingMiddleware?: readonly Middleware[]
   icon?: boolean
   id?: string
   isNav?: boolean
@@ -1259,9 +1422,7 @@ export interface BDropdownProps extends TeleporterProps, ShowHideProps {
 }
 
 export interface BToastProps
-  extends ColorExtendables,
-    Omit<BLinkProps, 'routerTag'>,
-    ShowHideProps {
+  extends ColorExtendables, Omit<BLinkProps, 'routerTag'>, ShowHideProps {
   body?: string
   bodyClass?: ClassValue
   closeClass?: ClassValue
@@ -1292,13 +1453,15 @@ export interface BPopoverProps extends TeleporterProps, ShowHideProps {
   boundaryPadding?: Padding
   click?: boolean
   closeOnHide?: boolean
+  focus?: boolean
+  hover?: boolean
   delay?:
     | number
     | Readonly<{
         show: number
         hide: number
       }>
-  floatingMiddleware?: Middleware[]
+  floatingMiddleware?: readonly Middleware[]
   hideMargin?: number
   id?: string
   inline?: boolean
@@ -1334,6 +1497,8 @@ export interface BCardHeadFootProps extends ColorExtendables {
   tag?: string
   text?: string
 }
+export type BCardFooterProps = BCardHeadFootProps
+export type BCardHeaderProps = BCardHeadFootProps
 
 export interface BModalProps extends TeleporterProps, ShowHideProps {
   focus?:
@@ -1368,6 +1533,7 @@ export interface BModalProps extends TeleporterProps, ShowHideProps {
   footerTextVariant?: TextColorVariant | null
   footerVariant?: ColorVariant | null
   fullscreen?: boolean | Breakpoint
+  headerAttrs?: Readonly<AttrsValue>
   headerBgVariant?: BgColorVariant | null
   headerBorderVariant?: BorderColorVariant | null
   headerClass?: ClassValue
@@ -1432,9 +1598,7 @@ export interface BColProps extends OffsetBreakpointProps, OrderBreakpointProps, 
 }
 
 export interface BFormGroupProps
-  extends ContentColsBreakpointProps,
-    LabelColsBreakpointProps,
-    LabelAlignBreakpointProps {
+  extends ContentColsBreakpointProps, LabelColsBreakpointProps, LabelAlignBreakpointProps {
   contentCols?: boolean | Numberish
   labelCols?: boolean | Numberish
   labelAlign?: string

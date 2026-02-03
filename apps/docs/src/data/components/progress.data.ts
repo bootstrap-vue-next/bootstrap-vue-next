@@ -1,122 +1,117 @@
-import type {BvnComponentProps} from 'bootstrap-vue-next'
-import type {ComponentReference, PropertyReference} from '../../types'
-import {buildCommonProps, pick} from '../../utils'
+import type {
+  BProgressBarProps,
+  BProgressBarSlots,
+  BProgressProps,
+  BProgressSlots,
+} from 'bootstrap-vue-next'
+import type {ComponentReference, PropRecord, SlotRecord} from '../../types'
+import {pick} from '../../utils/objectUtils'
+import {buildCommonProps} from '../../utils/commonProps'
 
 export default {
-  load: (): ComponentReference[] => [
-    {
-      component: 'BProgress',
-      sourcePath: '/BProgress/BProgress.vue',
+  load: (): ComponentReference => ({
+    BProgress: {
       props: {
-        '': {
-          animated: {
-            type: 'boolean',
-            default: undefined,
-            description: "Enable the animated background. Also automatically sets 'striped'",
-          },
-          height: {
-            type: 'string',
-            default: undefined,
-            description:
-              'Override the default height by specifying a CSS height value (including units)',
-          },
-          max: {
-            type: 'Numberish',
-            default: 100,
-            description: 'Set the maximum value',
-          },
-          precision: {
-            type: 'Numberish',
-            default: undefined,
-            description: 'The number of digits after the decimal to round the value to',
-          },
-          showProgress: {
-            type: 'boolean',
-            default: undefined,
-            description: 'Displays the current progress value as a percentage',
-          },
-          showValue: {
-            type: 'boolean',
-            default: undefined,
-            description: 'Displays the current progress value',
-          },
-          striped: {
-            type: 'boolean',
-            default: undefined,
-            description: 'Enable the striped background',
-          },
-          value: {
-            type: 'Numberish',
-            default: undefined,
-            description: 'The current value of the progress bar',
-          },
-          ...pick(buildCommonProps(), ['bgVariant', 'textVariant', 'variant']),
-        } satisfies Record<keyof BvnComponentProps['BProgress'], PropertyReference>,
-      },
-      emits: [],
-      slots: [
-        {
-          name: 'default',
-          description: 'Content (progress bars) to place in the progress element',
+        ...pick(buildCommonProps(), ['bgVariant', 'textVariant', 'variant']),
+        animated: {
+          type: 'boolean',
+          default: undefined,
+          description: "Enables the animated background. Automatically sets 'striped'.",
         },
-      ],
+        height: {
+          type: 'string',
+          default: undefined,
+          description: 'Overrides the default height with a CSS height value (including units).',
+        },
+        max: {
+          type: 'Numberish',
+          default: 100, // TODO item not in string format
+          description: 'Sets the maximum value.',
+        },
+        precision: {
+          type: 'Numberish',
+          default: undefined,
+          description: 'Specifies the number of digits after the decimal to round the value to.',
+        },
+        showProgress: {
+          type: 'boolean',
+          default: undefined,
+          description: 'Displays the current progress value as a percentage.',
+        },
+        showValue: {
+          type: 'boolean',
+          default: undefined,
+          description: 'Displays the current progress value.',
+        },
+        striped: {
+          type: 'boolean',
+          default: undefined,
+          description: 'Enables the striped background.',
+        },
+        value: {
+          type: 'Numberish',
+          default: undefined,
+          description: 'Sets the current value of the progress bar.',
+        },
+      } satisfies PropRecord<keyof BProgressProps>,
+      emits: {},
+      slots: {
+        default: {
+          description: 'Content (progress bars) to place in the progress element.',
+        },
+      } satisfies SlotRecord<keyof BProgressSlots>,
     },
-    {
-      component: 'BProgressBar',
-      sourcePath: '/BProgress/BProgressBar.vue',
+    BProgressBar: {
       props: {
-        '': {
-          animated: {
-            type: 'boolean',
-            default: false,
-            description: "Enable the animated background. Also automatically sets 'striped'",
-          },
-          label: {
-            type: 'string',
-            default: undefined,
-            description: 'Text string to explicitly set the label as',
-          },
-          max: {
-            type: 'Numberish',
-            default: undefined,
-            description: 'Set the maximum value',
-          },
-          precision: {
-            type: 'Numberish',
-            default: 0,
-            description: 'The number of digits after the decimal to round the value to',
-          },
-          showProgress: {
-            type: 'boolean',
-            default: false,
-            description: 'Displays the current progress value as a percentage',
-          },
-          showValue: {
-            type: 'boolean',
-            default: false,
-            description: 'Displays the current progress value',
-          },
-          striped: {
-            type: 'boolean',
-            default: false,
-            description: 'Enable the striped background',
-          },
-          value: {
-            type: 'Numberish',
-            default: 0,
-            description: 'The current value of the progress bar',
-          },
-          ...pick(buildCommonProps(), ['bgVariant', 'textVariant', 'variant']),
-        } satisfies Record<keyof BvnComponentProps['BProgressBar'], PropertyReference>,
-      },
-      emits: [],
-      slots: [
-        {
-          name: 'default',
+        ...pick(buildCommonProps(), ['bgVariant', 'textVariant', 'variant']),
+        animated: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+          description: "Enables the animated background. Automatically sets 'striped'.",
+        },
+        label: {
+          type: 'string',
+          default: undefined,
+          description: 'Sets the text string for the label.',
+        },
+        max: {
+          type: 'Numberish',
+          default: undefined,
+          description: 'Sets the maximum value.',
+        },
+        precision: {
+          type: 'Numberish',
+          default: 0, // TODO item not in string format
+          description: 'Specifies the number of digits after the decimal to round the value to.',
+        },
+        showProgress: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+          description: 'Displays the current progress value as a percentage.',
+        },
+        showValue: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+          description: 'Displays the current progress value.',
+        },
+        striped: {
+          type: 'boolean',
+          default: false, // TODO item not in string format
+          description: 'Enables the striped background.',
+        },
+        value: {
+          type: 'Numberish',
+          default: 0, // TODO item not in string format
+          description: 'Sets the current value of the progress bar.',
+        },
+      } satisfies PropRecord<keyof BProgressBarProps>,
+      emits: {},
+      slots: {
+        default: {
           description:
-            'Content to place in the progress bar. Overrides the `label`, `show-progress` and `show-value` props',
+            'Content to place in the progress bar, overriding the `label`, `showProgress`, and `showValue` props.',
         },
-      ],
+      } satisfies SlotRecord<keyof BProgressBarSlots>,
     },
-  ],
+  }),
 }

@@ -1,13 +1,10 @@
-# Avatar
-
-<PageHeader>
-
-Avatars are a custom component, and are typically used to display a user profile as a
-picture or short text. `BAvatar` provides several props for customizing its
-appearance such as color variant and roundness, and optionally supports acting as a button, link,
-or a [router link](/docs/reference/router-links).
-
-</PageHeader>
+---
+description: >
+  Avatars are a custom component, and are typically used to display a user profile as a
+  picture or short text. `BAvatar` provides several props for customizing its
+  appearance such as color variant and roundness, and optionally supports acting as a button, link,
+  or a [router link](/docs/reference/router-links).
+---
 
 ## Overview
 
@@ -19,7 +16,7 @@ centered beside any adjoining plain text. They also can be used as children of o
 ## Avatar types
 
 The avatar content can be either an image or short text string. Avatar content defaults
-to the [`'person-fill'` icon](<[/docs/icons](https://icons.getbootstrap.com/icons/person-fill/)>)
+to the [`'person-fill'` icon](https://icons.getbootstrap.com/icons/person-fill/)
 when no other content is specified.
 
 You can also supply custom content via the default slot, although you may need to apply additional
@@ -180,14 +177,6 @@ Badge positioning properties have changed from `bootstrap-vue`. See the [migrati
 
 <<< DEMO ./demo/AvatarBadgePositioning.vue#template{vue-html}
 
-Use the `badge-offset` prop to control the offset of the badge. The `badge-offset` must be a valid
-CSS length string (i.e. `'2px'`, `'-2px'`, `'0.5em'`, etc.). Positive values will move the badge
-inward, while negative values will move the badge outward.
-
-<NotYetImplemented />
-
-<!-- <<< DEMO ./demo/AvatarBadgeOffset.vue#template{vue-html} -->
-
 ## Avatar groups
 
 <<< DEMO ./demo/AvatarGroups.vue#template{vue-html}
@@ -246,9 +235,3 @@ the `to` or `href` props when changing routes or changing URLs) for accessibilit
 Avatars are based upon `BBadge` and `BButton` components, and as such, rely upon Bootstrap's
 `badge-*` and `btn-*` variant classes, as well as the `rounded-*`
 [utility classes](/docs/reference/utility-classes).
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/avatar.data'
-</script>

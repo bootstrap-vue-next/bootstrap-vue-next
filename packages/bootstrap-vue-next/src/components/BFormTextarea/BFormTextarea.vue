@@ -2,7 +2,6 @@
   <textarea
     :id="computedId"
     ref="_input"
-    :key="forceUpdateKey"
     :class="computedClasses"
     :name="props.name || undefined"
     :form="props.form || undefined"
@@ -42,7 +41,7 @@ const _props = withDefaults(defineProps<Omit<BFormTextareaProps, 'modelValue'>>(
   autocomplete: undefined,
   autofocus: false,
   debounce: 0,
-  debounceMaxWait: NaN,
+  debounceMaxWait: Number.NaN,
   disabled: false,
   form: undefined,
   formatter: undefined,
@@ -74,19 +73,10 @@ const [modelValue, modelModifiers] = defineModel<
   set: (v) => normalizeInput(v, modelModifiers),
 })
 
-const input = useTemplateRef<HTMLTextAreaElement>('_input')
+const input = useTemplateRef('_input')
 
-const {
-  computedId,
-  forceUpdateKey,
-  computedAriaInvalid,
-  onInput,
-  stateClass,
-  onChange,
-  onBlur,
-  focus,
-  blur,
-} = useFormInput(props, input, modelValue, modelModifiers)
+const {computedId, computedAriaInvalid, onInput, stateClass, onChange, onBlur, focus, blur} =
+  useFormInput(props, input, modelValue, modelModifiers)
 
 const computedClasses = computed(() => [
   stateClass.value,

@@ -7,3 +7,182 @@ input[type="file"].form-control-input-file-hide-button {
     display: none;
   }
 }
+
+.b-form-file-wrapper {
+  position: relative;
+}
+
+.b-form-file-control {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  border: 1px solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
+  background-color: var(--bs-body-bg);
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+  position: relative;
+  cursor: pointer;
+
+  &:focus-within:not([aria-disabled="true"]) {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+    outline: 0;
+  }
+
+  &.is-invalid {
+    border-color: var(--bs-form-invalid-border-color);
+    padding-right: calc(1.5em + 0.75rem);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+
+    &:focus-within {
+      box-shadow: 0 0 0 0.25rem rgba(var(--bs-danger-rgb), 0.25);
+    }
+  }
+
+  &.is-valid {
+    border-color: var(--bs-form-valid-border-color);
+    padding-right: calc(1.5em + 0.75rem);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+
+    &:focus-within {
+      box-shadow: 0 0 0 0.25rem rgba(var(--bs-success-rgb), 0.25);
+    }
+  }
+
+  &[aria-disabled="true"] {
+    background-color: var(--bs-secondary-bg);
+    opacity: 0.65;
+    cursor: not-allowed;
+
+    .b-form-file-text,
+    .b-form-file-button {
+      pointer-events: none;
+    }
+  }
+}
+
+.b-form-file-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0.375rem 0.75rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background-color: transparent;
+  line-height: 1.5;
+}
+
+.b-form-file-button {
+  flex-shrink: 0;
+  padding: 0.375rem 0.75rem;
+  margin: 0;
+  color: var(--bs-body-color);
+  background-color: var(--bs-tertiary-bg);
+  border: none;
+  border-right: 1px solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius) 0 0 var(--bs-border-radius);
+  cursor: pointer;
+  line-height: 1.5;
+
+  &:hover:not(:disabled) {
+    background-color: var(--bs-secondary-bg);
+  }
+
+  &:focus {
+    outline: 0;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+// Size variants
+.b-form-file-control.form-control-sm {
+  border-radius: var(--bs-border-radius-sm);
+  padding: 0;
+  min-height: auto;
+
+  .b-form-file-text,
+  .b-form-file-button {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .b-form-file-button {
+    margin: 0;
+    border-radius: var(--bs-border-radius-sm) 0 0 var(--bs-border-radius-sm);
+  }
+}
+
+.b-form-file-control.form-control-lg {
+  border-radius: var(--bs-border-radius-lg);
+  padding: 0;
+  min-height: auto;
+
+  .b-form-file-text,
+  .b-form-file-button {
+    padding: 0.5rem 1rem;
+    font-size: 1.25rem;
+  }
+
+  .b-form-file-button {
+    margin: 0;
+    border-radius: var(--bs-border-radius-lg) 0 0 var(--bs-border-radius-lg);
+  }
+}
+
+// Drag states
+.b-form-file-dragging {
+  .b-form-file-control {
+    border-color: var(--bs-primary);
+    background-color: rgba(var(--bs-primary-rgb), 0.05);
+  }
+}
+
+.b-form-file-drag-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 2px dashed var(--bs-primary);
+  border-radius: var(--bs-border-radius);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.b-form-file-drag-text {
+  color: var(--bs-primary);
+  font-weight: 500;
+}
+
+// Input group support - inherit flex behavior like native .form-control
+// The component's root wrapper (direct child of .input-group) needs flex properties
+.input-group > .b-form-file-root {
+  flex: 1 1 auto;
+  width: 1%;
+  min-width: 0;
+
+  // The wrapper and control inside need to fill the root wrapper
+  .b-form-file-wrapper {
+    width: 100%;
+
+    .b-form-file-control {
+      width: 100%;
+      min-width: 0;
+    }
+  }
+}

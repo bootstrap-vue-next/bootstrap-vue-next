@@ -11,20 +11,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@vueuse/core": "^13.0.0",
+    "@vueuse/core": "^13.9.0",
     "bootstrap-vue-next": "workspace:^",
-    "vue": "^3.5.13",
-    "vue-router": "^4.5.1"
+    "vue": "^3.5.27",
+    "vue-router": "^4.6.4"
   },
   "devDependencies": {
-    "@tsconfig/node22": "^22.0.1",
-    "@types/node": "^22.15.3",
-    "@vitejs/plugin-vue": "^5.2.3",
+    "@tsconfig/node22": "^22.0.5",
+    "@types/node": "^22.19.7",
+    "@vitejs/plugin-vue": "^6.0.3",
     "@vue/tsconfig": "^0.7.0",
-    "bootstrap": "^5.3.5",
-    "typescript": "^5.8.3",
-    "vite": "^6.3.3",
-    "vue-tsc": "^2.2.10"
+    "bootstrap": "^5.3.8",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1",
+    "vue-tsc": "^3.2.2"
   },
   "lint-staged": {
     "*.{js,ts,vue}": "eslint --cache --fix",

@@ -25,7 +25,12 @@
         v-bind="$attrs"
       >
         <template v-if="contentShowing || isOpenByBreakpoint">
-          <div v-if="!props.noHeader" class="offcanvas-header" :class="props.headerClass">
+          <div
+            v-if="!props.noHeader"
+            class="offcanvas-header"
+            :class="props.headerClass"
+            v-bind="props.headerAttrs"
+          >
             <slot name="header" v-bind="sharedSlots">
               <h5 :id="`${computedId}-offcanvas-label`" class="offcanvas-title">
                 <slot name="title" v-bind="sharedSlots">
@@ -119,6 +124,7 @@ const _props = withDefaults(defineProps<Omit<BOffcanvasProps, 'modelValue'>>(), 
   bodyScrolling: false,
   focus: undefined,
   footerClass: undefined,
+  headerAttrs: undefined,
   headerClass: undefined,
   headerCloseClass: undefined,
   headerCloseLabel: 'Close',
@@ -144,9 +150,7 @@ const _props = withDefaults(defineProps<Omit<BOffcanvasProps, 'modelValue'>>(), 
   visible: false,
 })
 const props = useDefaults(_props, 'BOffcanvas')
-
 const emit = defineEmits<BOffcanvasEmits>()
-
 const slots = defineSlots<BOffcanvasSlots>()
 
 const modelValue = defineModel<Exclude<BOffcanvasProps['modelValue'], undefined>>({
@@ -155,9 +159,9 @@ const modelValue = defineModel<Exclude<BOffcanvasProps['modelValue'], undefined>
 
 const computedId = useId(() => props.id, 'offcanvas')
 
-const element = useTemplateRef<HTMLElement>('_element')
-const fallbackFocusElement = useTemplateRef<HTMLElement>('_fallbackFocusElement')
-const closeButton = useTemplateRef<HTMLElement>('_close')
+const element = useTemplateRef<HTMLElement | null>('_element')
+const fallbackFocusElement = useTemplateRef<HTMLElement | null>('_fallbackFocusElement')
+const closeButton = useTemplateRef<HTMLElement | null>('_close')
 
 const pickFocusItem = () => {
   if (props.focus && typeof props.focus !== 'boolean') {
@@ -193,9 +197,9 @@ const {
   backdropVisible,
   isVisible,
   buildTriggerableEvent,
-  localNoAnimation,
   isLeaving,
   trapActive,
+  setLocalNoAnimation,
 } = useShowHide(modelValue, props, emit as EmitFn, element, computedId, {
   transitionProps: {
     onAfterEnter,
@@ -210,10 +214,16 @@ const {
 
 const breakpoints = useBreakpoints(breakpointsBootstrapV5)
 const smallerOrEqualToBreakpoint = breakpoints.smallerOrEqual(() => props.responsive ?? 'xs')
-const isOpenByBreakpoint = ref(props.responsive !== undefined && !smallerOrEqualToBreakpoint.value)
+// Initialize with SSR-safe default value to prevent hydration mismatches
+// The actual breakpoint evaluation is deferred to onMounted (client-side only)
+const isOpenByBreakpoint = ref(false)
+
 onMounted(() => {
-  if (props.responsive !== undefined)
+  if (props.responsive !== undefined) {
+    // Update the breakpoint state after mounting (client-side only)
+    isOpenByBreakpoint.value = !smallerOrEqualToBreakpoint.value
     emit('breakpoint', buildTriggerableEvent('breakpoint'), isOpenByBreakpoint.value)
+  }
 })
 
 useSafeScrollLock(showRef, () => props.bodyScrolling || isOpenByBreakpoint.value)
@@ -289,7 +299,7 @@ watch(smallerOrEqualToBreakpoint, (newValue) => {
   if (props.responsive === undefined) return
   if (newValue === true) {
     const opened = false
-    localNoAnimation.value = true
+    setLocalNoAnimation(true)
     requestAnimationFrame(() => {
       isOpenByBreakpoint.value = opened
     })
@@ -297,7 +307,7 @@ watch(smallerOrEqualToBreakpoint, (newValue) => {
     emit('hide', buildTriggerableEvent('hide'))
   } else {
     const opened = true
-    localNoAnimation.value = true
+    setLocalNoAnimation(true)
     requestAnimationFrame(() => {
       isOpenByBreakpoint.value = opened
     })

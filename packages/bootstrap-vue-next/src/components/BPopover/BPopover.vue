@@ -70,6 +70,7 @@ import {
 import {onClickOutside, useToNumber} from '@vueuse/core'
 import {
   computed,
+  type ComputedRef,
   type CSSProperties,
   type EmitFn,
   nextTick,
@@ -97,21 +98,14 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const attrs = useAttrs()
-
-// TODO: deprication remove warning in 2025-06
-if (attrs.content)
-  // eslint-disable-next-line no-console
-  console.warn(
-    'BPopover/BTooltip: `content` prop is deprecated. Use prop body or default slot instead.'
-  )
-
 const _props = withDefaults(defineProps<Omit<BPopoverProps, 'modelValue'>>(), {
   boundary: 'clippingAncestors',
   boundaryPadding: undefined,
   bodyClass: undefined,
-  click: false,
+  click: undefined,
   closeOnHide: false,
+  focus: undefined,
+  hover: undefined,
   teleportTo: undefined,
   teleportDisabled: false,
   body: undefined,
@@ -143,12 +137,10 @@ const _props = withDefaults(defineProps<Omit<BPopoverProps, 'modelValue'>>(), {
   tooltip: false,
   visible: false,
 })
-
 const props = useDefaults(_props, 'BPopover')
-
 const emit = defineEmits<BPopoverEmits>()
-
 const slots = defineSlots<BPopoverSlots>()
+const attrs = useAttrs()
 
 const modelValue = defineModel<Exclude<BPopoverProps['modelValue'], undefined>>({
   default: false,
@@ -158,16 +150,16 @@ const computedId = useId(() => props.id, 'popover')
 
 const hidden = ref(false)
 
-const floatingElement = useTemplateRef<HTMLElement>('_element')
-const content = useTemplateRef<HTMLElement>('_content')
-const arrow = useTemplateRef<HTMLElement>('_arrow')
-const placeholder = useTemplateRef<HTMLElement>('_placeholder')
+const floatingElement = useTemplateRef('_element')
+const content = useTemplateRef('_content')
+const arrow = useTemplateRef('_arrow')
+const placeholder = useTemplateRef('_placeholder')
 
 const referenceElement = ref<HTMLElement | null>(null)
 const triggerElement = ref<HTMLElement | null>(null)
 
 const isAutoPlacement = computed(() => props.placement.startsWith('auto'))
-const offsetNumber = useToNumber(() => props.offset ?? NaN)
+const offsetNumber = useToNumber(() => props.offset ?? Number.NaN)
 
 const boundary = computed<Boundary | undefined>(() =>
   isBoundary(props.boundary) ? props.boundary : undefined
@@ -177,7 +169,7 @@ const rootBoundary = computed<RootBoundary | undefined>(() =>
 )
 
 const sizeStyles = ref<CSSProperties>({})
-const floatingMiddleware = computed<Middleware[]>(() => {
+const floatingMiddleware = computed<readonly Middleware[]>(() => {
   if (props.floatingMiddleware !== undefined) {
     return props.floatingMiddleware
   }
@@ -261,36 +253,12 @@ const {floatingStyles, middlewareData, placement, update} = useFloating(
   floatingElement,
   {
     placement: placementRef,
-    middleware: floatingMiddleware,
+    middleware: floatingMiddleware as ComputedRef<Middleware[]>,
     strategy: toRef(() => props.strategy),
   }
 )
 
 const arrowStyle = ref<CSSProperties>({position: 'absolute'})
-
-watch(middlewareData, (newValue) => {
-  if (props.noHide === false) {
-    if (newValue.hide?.referenceHidden && !hidden.value && showRef.value) {
-      if (props.closeOnHide && !props.noAutoClose && !props.manual) {
-        throttleHide('close-on-hide')
-      } else {
-        localTemporaryHide.value = true
-        hidden.value = true
-      }
-    } else if (localTemporaryHide.value && !newValue.hide?.referenceHidden) {
-      localTemporaryHide.value = false
-      hidden.value = false
-    }
-  }
-  if (newValue.arrow) {
-    const {x, y} = newValue.arrow
-    arrowStyle.value = {
-      position: 'absolute',
-      top: y ? `${y}px` : '',
-      left: x ? `${x}px` : '',
-    }
-  }
-})
 
 let cleanup: ReturnType<typeof autoUpdate> | undefined
 const {
@@ -306,6 +274,7 @@ const {
   isActive,
   renderRef,
   localTemporaryHide,
+  setLocalTemporaryHide,
 } = useShowHide(modelValue, props, emit as EmitFn, floatingElement, computedId, {
   showFn: () => {
     update()
@@ -326,6 +295,30 @@ const {
   },
 })
 
+watch(middlewareData, (newValue) => {
+  if (props.noHide === false) {
+    if (newValue.hide?.referenceHidden && !hidden.value && showRef.value) {
+      if (props.closeOnHide && !props.noAutoClose && !props.manual) {
+        throttleHide('close-on-hide')
+      } else {
+        setLocalTemporaryHide(true)
+        hidden.value = true
+      }
+    } else if (localTemporaryHide.value && !newValue.hide?.referenceHidden) {
+      setLocalTemporaryHide(false)
+      hidden.value = false
+    }
+  }
+  if (newValue.arrow) {
+    const {x, y} = newValue.arrow
+    arrowStyle.value = {
+      position: 'absolute',
+      top: y ? `${y}px` : '',
+      left: x ? `${x}px` : '',
+    }
+  }
+})
+
 const computedClasses = computed(() => {
   const type = props.tooltip ? 'tooltip' : 'popover'
   return [
@@ -344,7 +337,7 @@ const {x, y} = useMouse()
 const isElementAndTriggerOutside = () => {
   const triggerRect = triggerElement.value?.getBoundingClientRect()
   const elementRect = floatingElement.value?.getBoundingClientRect()
-  const margin = parseInt(props.hideMargin as unknown as string, 10) || 0
+  const margin = Number.parseInt(props.hideMargin as unknown as string, 10) || 0
   const offsetX = window?.scrollX || 0
   const offsetY = window?.scrollY || 0
   const triggerIsOutside =
@@ -406,6 +399,26 @@ const localShow = () => {
   show()
 }
 
+// Compute final trigger configuration
+const computedTriggers = computed(() => {
+  // Manual mode disables all automatic triggers
+  if (props.manual) {
+    return {hover: false, focus: false, click: false}
+  }
+
+  // If explicit boolean props are set, use them
+  if (props.hover !== undefined || props.focus !== undefined || props.click !== undefined) {
+    return {
+      hover: props.hover ?? false,
+      focus: props.focus ?? false,
+      click: props.click ?? false,
+    }
+  }
+
+  // If no explicit props, use default behavior: hover + focus
+  return {hover: true, focus: true, click: false}
+})
+
 const bind = () => {
   // TODO: is this the best way to bind the events?
   // we place a span and get the next element sibling for the listeners
@@ -434,14 +447,22 @@ const bind = () => {
   if (!triggerElement.value || props.manual) {
     return
   }
-  if (props.click) {
+
+  const triggers = computedTriggers.value
+
+  if (triggers.click) {
     triggerElement.value.addEventListener('click', localToggle)
-    return
   }
-  triggerElement.value.addEventListener('pointerenter', localShow)
-  triggerElement.value.addEventListener('pointerleave', tryHide)
-  triggerElement.value.addEventListener('focus', localShow)
-  triggerElement.value.addEventListener('blur', tryHide)
+
+  if (triggers.hover) {
+    triggerElement.value.addEventListener('pointerenter', localShow)
+    triggerElement.value.addEventListener('pointerleave', tryHide)
+  }
+
+  if (triggers.focus) {
+    triggerElement.value.addEventListener('focus', localShow)
+    triggerElement.value.addEventListener('blur', tryHide)
+  }
 }
 
 const unbind = () => {
@@ -457,16 +478,27 @@ const unbind = () => {
 onClickOutside(
   floatingElement,
   () => {
-    if (showRef.value && props.click && !props.noAutoClose && !props.manual) hide('click-outside')
+    if (showRef.value && computedTriggers.value.click && !props.noAutoClose && !props.manual)
+      hide('click-outside')
   },
   {ignore: [triggerElement]}
 )
 
-watch([() => props.click, () => props.manual, () => props.target, () => props.reference], () => {
-  unbind()
-  bind()
-  // update()
-})
+watch(
+  [
+    () => props.click,
+    () => props.hover,
+    () => props.focus,
+    () => props.manual,
+    () => props.target,
+    () => props.reference,
+  ],
+  () => {
+    unbind()
+    bind()
+    // update()
+  }
+)
 
 const sharedSlots = computed<ShowHideSlotsData>(() => ({
   toggle,

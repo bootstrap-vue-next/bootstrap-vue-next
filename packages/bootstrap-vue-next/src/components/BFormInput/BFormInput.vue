@@ -2,7 +2,6 @@
   <input
     :id="computedId"
     ref="_input"
-    :key="forceUpdateKey"
     :value="modelValue"
     :class="computedClasses"
     :name="props.name || undefined"
@@ -42,7 +41,7 @@ const _props = withDefaults(defineProps<Omit<BFormInputProps, 'modelValue'>>(), 
   autocomplete: undefined,
   autofocus: false,
   debounce: 0,
-  debounceMaxWait: NaN,
+  debounceMaxWait: Number.NaN,
   disabled: false,
   form: undefined,
   formatter: undefined,
@@ -69,19 +68,10 @@ const [modelValue, modelModifiers] = defineModel<
   set: (v) => normalizeInput(v, modelModifiers),
 })
 
-const input = useTemplateRef<HTMLInputElement>('_input')
+const input = useTemplateRef('_input')
 
-const {
-  computedId,
-  computedAriaInvalid,
-  onInput,
-  onChange,
-  onBlur,
-  stateClass,
-  focus,
-  blur,
-  forceUpdateKey,
-} = useFormInput(props, input, modelValue, modelModifiers)
+const {computedId, computedAriaInvalid, onInput, onChange, onBlur, stateClass, focus, blur} =
+  useFormInput(props, input, modelValue, modelModifiers)
 
 const computedClasses = computed(() => {
   const isRange = props.type === 'range'

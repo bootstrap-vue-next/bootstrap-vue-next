@@ -15,9 +15,11 @@
 
 <script setup lang="ts">
 import type {BNavbarToggleProps} from '../../types/ComponentProps'
-import {computed, inject, toValue} from 'vue'
+import {computed, inject} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
-import {globalShowHideStorageInjectionKey} from '../../utils/keys'
+import {showHideRegistryKey} from '../../utils/keys'
+import {getActiveShowHide, getShowHideValue} from '../../utils/registryAccess'
+import type {BNavbarToggleEmits, BNavbarToggleSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BNavbarToggleProps>(), {
   label: 'Toggle navigation',
@@ -25,37 +27,31 @@ const _props = withDefaults(defineProps<BNavbarToggleProps>(), {
   target: undefined,
 })
 const props = useDefaults(_props, 'BNavbarToggle')
-
-const emit = defineEmits<{
-  click: [value: MouseEvent]
-}>()
-
-defineSlots<{
-  default?: (props: {
-    expanded: boolean
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-}>()
+const emit = defineEmits<BNavbarToggleEmits>()
+defineSlots<BNavbarToggleSlots>()
 
 const computedClasses = computed(() => ({
   disabled: props.disabled,
 }))
 
-const showHideData = inject(globalShowHideStorageInjectionKey, undefined)
+const showHideData = inject(showHideRegistryKey, null)
 
 const collapseExpanded = computed(() => {
   if (!props.target || !showHideData) return false
-  if (typeof props.target === 'string')
-    return toValue(toValue(showHideData.values.value.get(props.target))?.value) || false
-  return props.target.some((target) => toValue(showHideData.values.value.get(target)?.value))
+  if (typeof props.target === 'string') {
+    return getShowHideValue(showHideData.values, props.target)
+  }
+  return props.target.some((target) => getShowHideValue(showHideData.values, target))
 })
 const toggleExpand = () => {
   if (!props.target || !showHideData) return
   if (typeof props.target === 'string') {
-    toValue(showHideData.values.value.get(props.target))?.toggle()
+    getActiveShowHide(showHideData.values, props.target)?.toggle()
     return
   }
-  props.target.forEach((target) => toValue(showHideData.values.value.get(target))?.toggle())
+  props.target.forEach((target) => {
+    getActiveShowHide(showHideData.values, target)?.toggle()
+  })
 }
 
 const onClick = (e: Readonly<MouseEvent>): void => {

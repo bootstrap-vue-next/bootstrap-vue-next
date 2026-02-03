@@ -1,10 +1,6 @@
-# Form Group
-
-<PageHeader>
-
-The `BFormGroup` component is the easiest way to add some structure to forms. Its purpose is to pair form controls with a legend or label, and to provide help text and invalid/valid feedback text, as well as visual (color) contextual state feedback.
-
-</PageHeader>
+---
+description: 'The `BFormGroup` component is the easiest way to add some structure to forms. Its purpose is to pair form controls with a legend or label, and to provide help text and invalid/valid feedback text, as well as visual (color) contextual state feedback.'
+---
 
 <<< DEMO ./demo/FormGroupOverview.vue
 
@@ -94,6 +90,26 @@ value via the prop `label-text-align` and/or `label-align-{breakpoint}`.
 | `label-align-xl` | Applies to breakpoint `xl` and up |
 
 Alignment has no effect if the `label-visually-hidden` prop is set.
+
+### Customizing wrapper elements in horizontal layout
+
+When using horizontal layout (with `label-cols` or `content-cols` props), the label and content are wrapped in column elements. You can apply additional attributes, classes, or styles to these wrapper elements using the `label-wrapper-attrs` and `content-wrapper-attrs` props.
+
+This is particularly useful when you need to override the default column widths with custom sizing:
+
+<<< DEMO ./demo/FormGroupWrapperAttrsBasic.vue#template{vue-html}
+
+**Important Notes:**
+
+- These props **only apply in horizontal layout mode** (when `label-cols` or `content-cols` is set)
+- `label-wrapper-attrs` applies to the column wrapper around the label element
+- `content-wrapper-attrs` applies to the column wrapper around the content/input
+- Use `label-class` if you need to style the `<label>` or `<legend>` element itself
+- The `class` property in wrapper attrs will be merged with the Bootstrap column classes
+
+**Common use case:** You need more precise control over column widths than Bootstrap's 12-column grid provides. For example, setting a label to exactly 120px wide using flexbox properties:
+
+<<< DEMO ./demo/FormGroupWrapperAttrsCustom.vue{vue}
 
 ## Nested form groups
 
@@ -222,9 +238,3 @@ When the `BFormGroup` has a `label-for` prop set, the `aria-describedby` attribu
 auto-assigned to the input. When the form group has multiple form controls, make sure to set the
 attribute to each control yourself by using the `ariaDescribedby` prop value from the optionally
 scoped `default` slot.
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/formGroup.data'
-</script>

@@ -1,10 +1,6 @@
-# Form Select
-
-<PageHeader>
-
-Bootstrap custom `<select>` using custom styles. Optionally specify options based on an array, array of objects, or an object.
-
-</PageHeader>
+---
+description: 'Bootstrap custom `<select>` using custom styles. Optionally specify options based on an array, array of objects, or an object.'
+---
 
 ## Overview
 
@@ -47,13 +43,7 @@ _unselected_ state. On iOS this will cause the user not being able to select the
 iOS does not fire a change event in this case. It is therefore recommended providing a disabled
 option with an empty value as your first option.
 
-```vue-html
-<BFormSelect v-model="selected" :options="options">
-  <template #first>
-    <BFormSelectOption value="" disabled>-- Please select an option --</BFormSelectOption>
-  </template>
-</BFormSelect>
-```
+<<< FRAGMENT ./demo/FormSelectOptionNotes.vue#template{vue-html}
 
 See the [Vue select](https://v3.vuejs.org/guide/forms.html#select) documentation for more details.
 
@@ -109,6 +99,50 @@ inserted (i.e. **mounted**) into the document or re-activated when inside a Vue 
 component. Note that this prop **does not** set the `autofocus` attribute on the select, nor can it
 tell when the select becomes visible.
 
+## TypeScript Type Safety
+
+`BFormSelect` <!--@include: ./_type-safety-intro.md-->
+
+### Basic Type-Safe Usage
+
+<<< DEMO ./demo/SelectTypeSafeBasic.vue
+
+In this example, TypeScript knows that `selectedUserId` is a `number` because the `id` field of `User` is typed as `number`.
+
+### Type-Safe Field Validation
+
+TypeScript will catch errors when you use invalid field names:
+
+<<< DEMO ./demo/SelectTypeSafeValidation.vue
+
+### Multiple Select with Type Safety
+
+Type safety works seamlessly with multiple select mode:
+
+<<< DEMO ./demo/SelectTypeSafeMultiple.vue
+
+### Type-Safe API Responses
+
+Type safety is especially valuable when working with API data that uses different naming conventions:
+
+<<< DEMO ./demo/SelectTypeSafeAPI.vue
+
+### Type-Safe Enums
+
+Type safety works with TypeScript enums for strongly-typed value constraints:
+
+<<< FRAGMENT ./demo/SelectTypeSafeEnumTypes.ts{ts}
+
+<<< DEMO ./demo/SelectTypeSafeEnum.vue
+
+### Benefits
+
+<!--@include: ./_type-safety-benefits.md-->
+
+### Backward Compatibility
+
+<!--@include: ./_type-safety-backward-compat.md-->
+
 ## Contextual states
 
 Bootstrap includes validation styles for `valid` and `invalid` states on most form controls.
@@ -154,9 +188,3 @@ Set the prop `plain` to have a native browser `<select>` rendered (although the 
 
 A `plain` select will always be rendered for non `multiple` selects which have the `select-size`
 prop set to a value greater than 1.
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/formSelect.data'
-</script>

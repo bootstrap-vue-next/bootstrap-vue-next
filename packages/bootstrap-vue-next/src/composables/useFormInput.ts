@@ -1,19 +1,10 @@
 import type {Numberish} from '../types/CommonTypes'
-import {
-  computed,
-  inject,
-  nextTick,
-  onActivated,
-  onMounted,
-  ref,
-  type Ref,
-  type ShallowRef,
-} from 'vue'
+import {computed, inject, nextTick, onActivated, onMounted, type Ref, type ShallowRef} from 'vue'
 import {useAriaInvalid} from './useAriaInvalid'
 import {useId} from './useId'
 import {useFocus, useToNumber} from '@vueuse/core'
 import type {CommonInputProps} from '../types/FormCommonInputProps'
-import {formGroupPluginKey} from '../utils/keys'
+import {formGroupKey} from '../utils/keys'
 import {useDebounceFn} from '../utils/debounce'
 import {useStateClass} from './useStateClass'
 
@@ -25,14 +16,12 @@ export const useFormInput = (
   modelValue: Ref<Numberish | null>,
   modelModifiers: Record<'number' | 'lazy' | 'trim', true | undefined>
 ) => {
-  const forceUpdateKey = ref(0)
-
   const computedId = useId(() => props.id, 'input')
   const debounceNumber = useToNumber(() => props.debounce ?? 0, {nanToZero: true})
-  const debounceMaxWaitNumber = useToNumber(() => props.debounceMaxWait ?? NaN)
+  const debounceMaxWaitNumber = useToNumber(() => props.debounceMaxWait ?? Number.NaN)
 
   // This automatically adds the appropriate "for" attribute to a BFormGroup label
-  const formGroupData = inject(formGroupPluginKey, null)?.(computedId)
+  const formGroupData = inject(formGroupKey, null)?.(computedId)
   const computedState = computed(() =>
     props.state !== undefined ? props.state : (formGroupData?.state.value ?? null)
   )
@@ -44,7 +33,7 @@ export const useFormInput = (
       modelValue.value = value
     },
     () => (modelModifiers.lazy === true ? 0 : debounceNumber.value),
-    {maxWait: () => (modelModifiers.lazy === true ? NaN : debounceMaxWaitNumber.value)}
+    {maxWait: () => (modelModifiers.lazy === true ? Number.NaN : debounceMaxWaitNumber.value)}
   )
 
   const updateModelValue = (value: Numberish, force = false, immediate = false) => {
@@ -124,12 +113,12 @@ export const useFormInput = (
     // Cancel before modelValue.value comparison and update
     internalUpdateModelValue.cancel()
     if (modelValue.value !== nextModel) {
-      updateModelValue(formattedValue, true, true)
+      updateModelValue(nextModel, true, true)
     }
-    if (modelModifiers.trim && needsForceUpdate) {
-      // The value is trimmed but there would still exist some white space
-      // So, force update the value. You need to bind this to :key on the input element
-      forceUpdateKey.value = forceUpdateKey.value + 1
+    // When trim removes whitespace, directly update the input's visual value
+    // to match the trimmed model value without recreating the element
+    if (modelModifiers.trim && needsForceUpdate && input.value) {
+      ;(input.value as HTMLInputElement | HTMLTextAreaElement).value = nextModel
     }
   }
 
@@ -154,7 +143,6 @@ export const useFormInput = (
     onBlur,
     focus,
     blur,
-    forceUpdateKey,
     stateClass,
   }
 }

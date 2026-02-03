@@ -49,6 +49,18 @@ jobs:
       - name: Build Library
         run: pnpm run build
 
+      - name: Build Docs
+        run: pnpm --filter docs run build
+
+      - name: Validate Docs Page Structure
+        run: pnpm --filter docs run test:unit:ci
+
+      - name: Run publint
+        run: pnpm --filter bootstrap-vue-next run publint
+
+      - name: Run publint on Nuxt package
+        run: pnpm --filter @bootstrap-vue-next/nuxt run publint
+
       - run: pnpx pkg-pr-new publish './packages/bootstrap-vue-next' './packages/nuxt' --template './templates/vite'
 
   test-lint:
@@ -121,4 +133,4 @@ jobs:
         run: pnpm install --ignore-scripts --frozen-lockfile
 
       - name: Test Unit
-        run: pnpm run test:unit:ci
+        run: pnpm run test:unit:ci --filter=!docs

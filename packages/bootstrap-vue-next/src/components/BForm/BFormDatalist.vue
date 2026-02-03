@@ -1,57 +1,64 @@
 <template>
-  <datalist :id="computedId">
-    <slot name="first" />
-    <BFormSelectOption
-      v-for="(option, index) in normalizedOptsWrapper"
-      :key="index"
-      v-bind="option"
-    >
-      <slot name="option" v-bind="option">
-        {{ option.text }}
-      </slot>
-    </BFormSelectOption>
+  <BFormDatalistBase v-bind="forwardedProps" :options="normalizedOptions as any">
+    <!-- Forward all slots -->
+    <template #first>
+      <slot name="first" />
+    </template>
+
+    <template #option="slotProps">
+      <slot name="option" v-bind="slotProps as any" />
+    </template>
+
     <slot />
-  </datalist>
+  </BFormDatalistBase>
 </template>
 
-<script setup lang="ts" generic="T">
+<script
+  setup
+  lang="ts"
+  generic="Item = Record<string, unknown>, ValueKey extends keyof Item = keyof Item"
+>
 import type {BFormDatalistProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
-import BFormSelectOption from '../BFormSelect/BFormSelectOption.vue'
-import {useDefaults} from '../../composables/useDefaults'
-import {useId} from '../../composables/useId'
-import {useFormSelect} from '../../composables/useFormSelect'
+import BFormDatalistBase from './BFormDatalistBase.vue'
 import type {SelectOption} from '../../types/SelectTypes'
+import type {BFormDatalistSlots} from '../../types'
 
-const _props = withDefaults(defineProps<BFormDatalistProps>(), {
+/**
+ * Type-safe wrapper component for BFormDatalist.
+ * Provides generic type safety for options and field names.
+ * Normalizes typed options and forwards to BFormDatalistBase for rendering.
+ */
+const props = withDefaults(defineProps<Omit<BFormDatalistProps<Item, ValueKey>, 'modelValue'>>(), {
   disabled: false,
-  disabledField: 'disabled',
+  disabledField: 'disabled' as keyof Item & string,
   id: undefined,
   options: () => [],
-  textField: 'text',
-  valueField: 'value',
+  textField: 'text' as keyof Item & string,
+  valueField: 'value' as ValueKey & string,
 })
-const props = useDefaults(_props, 'BFormDatalist')
+defineSlots<BFormDatalistSlots<Item[ValueKey]>>()
 
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  first?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  option: (props: SelectOption<T>) => any
-}>()
-
-const computedId = useId(() => props.id, 'datalist')
-
-const {normalizedOptions, isComplex} = useFormSelect(
-  () => props.options,
-  computed(() => ({...props, optionsField: 'options', labelField: 'label'}))
+// Type-safe normalization of options
+const normalizedOptions = computed(() =>
+  props.options.map((el) => {
+    if (typeof el === 'string') {
+      return el
+    }
+    if (typeof el === 'number') {
+      return String(el)
+    }
+    return {
+      value: el[props.valueField as ValueKey],
+      text: (el[props.textField as keyof Item] as string | undefined) ?? '',
+      disabled: (el[props.disabledField as keyof Item] as boolean | undefined) ?? false,
+    } as SelectOption
+  })
 )
 
-const normalizedOptsWrapper = computed(
-  () =>
-    // Datalist doesn't support complex options
-    normalizedOptions.value.filter((opt) => !isComplex(opt)) as readonly SelectOption<T>[]
-)
+// Forward all props except options (which we normalize) and field mappings (already used)
+const forwardedProps = computed(() => ({
+  disabled: props.disabled,
+  id: props.id,
+}))
 </script>

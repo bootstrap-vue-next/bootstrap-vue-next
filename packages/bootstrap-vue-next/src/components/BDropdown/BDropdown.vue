@@ -54,15 +54,23 @@
           v-show="showRef"
           :id="computedId + '-menu'"
           ref="_floating"
-          :style="[floatingStyles, sizeStyles]"
+          :style="[floatingStyles, sizeStyles, {display: showRef ? 'block' : 'none'}]"
           class="dropdown-menu overflow-auto"
           :class="[props.menuClass, computedMenuClasses]"
           :aria-labelledby="computedId"
           :role="props.role"
-          style="display: block"
           @click="onClickInside"
         >
-          <slot v-if="contentShowing" :hide="hide" :show="show" :visible="showRef" />
+          <slot
+            v-if="contentShowing"
+            :id="computedId"
+            :hide="hide"
+            :show="show"
+            :visible="showRef"
+            :click="onClickInside"
+            :toggle="onButtonClick"
+            :active="showRef"
+          />
         </ul>
       </Transition>
     </ConditionalTeleport>
@@ -85,11 +93,13 @@ import {
 import {onClickOutside, onKeyStroke, useToNumber} from '@vueuse/core'
 import {
   computed,
+  type ComputedRef,
   type CSSProperties,
   type EmitFn,
   inject,
   nextTick,
   provide,
+  readonly,
   ref,
   toRef,
   useTemplateRef,
@@ -106,6 +116,7 @@ import {isBoundary, isRootBoundary, resolveBootstrapCaret} from '../../utils/flo
 import {getElement} from '../../utils/getElement'
 import {buttonGroupKey, dropdownInjectionKey, inputGroupKey} from '../../utils/keys'
 import {useShowHide} from '../../composables/useShowHide'
+import type {BDropdownSlots} from '../../types'
 
 const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   ariaLabel: undefined,
@@ -151,17 +162,8 @@ const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   wrapperClass: undefined,
 })
 const props = useDefaults(_props, 'BDropdown')
-
 const emit = defineEmits<BDropdownEmits>()
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'button-content'?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'default'?: (props: {hide: () => void; show: () => void; visible: boolean}) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'toggle-text'?: (props: Record<string, never>) => any
-}>()
+defineSlots<BDropdownSlots>()
 
 const computedId = useId(() => props.id, 'dropdown')
 
@@ -171,13 +173,13 @@ const inInputGroup = inject(inputGroupKey, false)
 const inButtonGroup = inject(buttonGroupKey, false)
 
 const computedOffset = computed(() =>
-  typeof props.offset === 'string' || typeof props.offset === 'number' ? props.offset : NaN
+  typeof props.offset === 'string' || typeof props.offset === 'number' ? props.offset : Number.NaN
 )
 const offsetToNumber = useToNumber(computedOffset)
 
-const floatingElement = useTemplateRef<HTMLElement>('_floating')
-const button = useTemplateRef<HTMLElement>('_button')
-const splitButton = useTemplateRef<HTMLElement>('_splitButton')
+const floatingElement = useTemplateRef<HTMLUListElement | null>('_floating')
+const button = useTemplateRef<HTMLElement | null>('_button')
+const splitButton = useTemplateRef<HTMLElement | null>('_splitButton')
 
 const boundary = computed<Boundary | undefined>(() =>
   isBoundary(props.boundary) ? props.boundary : undefined
@@ -278,7 +280,7 @@ onKeyStroke('ArrowUp', (e) => keynav(e, -1), {target: floatingElement})
 onKeyStroke('ArrowDown', (e) => keynav(e, 1), {target: floatingElement})
 
 const sizeStyles = ref<CSSProperties>({})
-const floatingMiddleware = computed<Middleware[]>(() => {
+const floatingMiddleware = computed<readonly Middleware[]>(() => {
   if (props.floatingMiddleware !== undefined) {
     return props.floatingMiddleware
   }
@@ -334,7 +336,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
 })
 const {update, floatingStyles} = useFloating(referenceElement, floatingElement, {
   placement: () => props.placement,
-  middleware: floatingMiddleware,
+  middleware: floatingMiddleware as ComputedRef<Middleware[]>,
   strategy: toRef(() => props.strategy),
 })
 
@@ -407,7 +409,7 @@ provide(dropdownInjectionKey, {
   show,
   hide,
   toggle,
-  visible: toRef(() => showRef.value),
+  visible: readonly(showRef),
   isNav: toRef(() => props.isNav),
 })
 </script>

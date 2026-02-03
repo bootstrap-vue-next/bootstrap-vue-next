@@ -16,6 +16,11 @@ describe('rating', () => {
     expect(wrapper.classes()).toContain('is-readonly')
   })
 
+  it('is disabled', () => {
+    const wrapper = mount(BFormRating, {props: {disabled: true}})
+    expect(wrapper.classes()).toContain('is-disabled')
+  })
+
   it('renders default 5 stars', () => {
     const wrapper = mount(BFormRating)
     const stars = wrapper.findAll('.star')
@@ -204,18 +209,139 @@ describe('rating', () => {
       },
     })
 
-    expect(inlineWrapper.classes()).toContain('d-inline-block')
-    expect(inlineWrapper.classes()).not.toContain('w-100')
-  })
-  // Test when inline is false (default)
-  const blockWrapper = mount(BFormRating, {
-    props: {
-      modelValue: 3,
-      stars: 5,
-      inline: false,
-    },
+    expect(inlineWrapper.classes()).toContain('d-inline-flex')
+    expect(inlineWrapper.classes()).toContain('form-control')
+
+    // Test when inline is false (default)
+    const blockWrapper = mount(BFormRating, {
+      props: {
+        modelValue: 3,
+        stars: 5,
+        inline: false,
+      },
+    })
+
+    expect(blockWrapper.classes()).not.toContain('d-inline-flex')
+    expect(blockWrapper.classes()).toContain('form-control')
   })
 
-  expect(blockWrapper.classes()).not.toContain('d-inline-block')
-  expect(blockWrapper.classes()).toContain('w-100')
+  it('renders fallback clear icon when showClear is true (no slot provided)', async () => {
+    const wrapper = mount(BFormRating, {
+      props: {modelValue: 3, showClear: true, readonly: false},
+    })
+    const clearArea = wrapper.find('.clear-button-spacing')
+    expect(clearArea.exists()).toBe(true)
+
+    await clearArea.trigger('click')
+    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+    expect(wrapper.emitted('update:modelValue')![0]).toEqual([0])
+  })
+
+  it('uses #icon-clear slot content when provided', async () => {
+    const wrapper = mount(BFormRating, {
+      props: {modelValue: 4, showClear: true},
+      slots: {
+        'icon-clear': '<button id="custom-clear" type="button">Clear</button>',
+      },
+    })
+    const clearArea = wrapper.find('.clear-button-spacing')
+    expect(clearArea.exists()).toBe(true)
+    expect(wrapper.find('#custom-clear').exists()).toBe(true)
+
+    await clearArea.trigger('click')
+    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+    expect(wrapper.emitted('update:modelValue')![0]).toEqual([0])
+  })
+
+  it('does not render clear when readonly is true', () => {
+    const wrapper = mount(BFormRating, {
+      props: {showClear: true, readonly: true},
+      slots: {'icon-clear': '<span id="slot-should-not-render">X</span>'},
+    })
+    expect(wrapper.find('.clear-button-spacing').exists()).toBe(false)
+    expect(wrapper.find('#slot-should-not-render').exists()).toBe(false)
+  })
+
+  // Form submission tests
+  it('renders hidden input when name prop is provided', () => {
+    const wrapper = mount(BFormRating, {
+      props: {
+        name: 'rating',
+        modelValue: 3,
+      },
+    })
+    const hiddenInput = wrapper.find('input[type="hidden"]')
+    expect(hiddenInput.exists()).toBe(true)
+    expect(hiddenInput.attributes('name')).toBe('rating')
+    expect(hiddenInput.attributes('value')).toBe('3')
+  })
+
+  it('does not render hidden input when name prop is not provided', () => {
+    const wrapper = mount(BFormRating, {
+      props: {
+        modelValue: 3,
+      },
+    })
+    const hiddenInput = wrapper.find('input[type="hidden"]')
+    expect(hiddenInput.exists()).toBe(false)
+  })
+
+  it('does not render hidden input when disabled is true', () => {
+    const wrapper = mount(BFormRating, {
+      props: {
+        name: 'rating',
+        modelValue: 3,
+        disabled: true,
+      },
+    })
+    const hiddenInput = wrapper.find('input[type="hidden"]')
+    expect(hiddenInput.exists()).toBe(false)
+  })
+
+  it('hidden input updates when rating value changes', async () => {
+    const wrapper = mount(BFormRating, {
+      props: {
+        name: 'rating',
+        modelValue: 3,
+      },
+    })
+    const hiddenInput = wrapper.find('input[type="hidden"]')
+    expect(hiddenInput.attributes('value')).toBe('3')
+
+    // Click on a star to change the value
+    const [firstStar] = wrapper.findAll('.star')
+    await firstStar.trigger('click')
+    expect(hiddenInput.attributes('value')).toBe('1')
+  })
+
+  it('renders hidden input with form attribute when provided', () => {
+    const wrapper = mount(BFormRating, {
+      props: {
+        name: 'rating',
+        form: 'my-form',
+        modelValue: 4,
+      },
+    })
+    const hiddenInput = wrapper.find('input[type="hidden"]')
+    expect(hiddenInput.exists()).toBe(true)
+    expect(hiddenInput.attributes('name')).toBe('rating')
+    expect(hiddenInput.attributes('form')).toBe('my-form')
+    expect(hiddenInput.attributes('value')).toBe('4')
+  })
+
+  it('hidden input value is 0 when rating is cleared', async () => {
+    const wrapper = mount(BFormRating, {
+      props: {
+        name: 'rating',
+        modelValue: 3,
+        showClear: true,
+      },
+    })
+    const hiddenInput = wrapper.find('input[type="hidden"]')
+    expect(hiddenInput.attributes('value')).toBe('3')
+
+    const clearBtn = wrapper.find('.clear-button-spacing')
+    await clearBtn.trigger('click')
+    expect(hiddenInput.attributes('value')).toBe('0')
+  })
 })

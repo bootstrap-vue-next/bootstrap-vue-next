@@ -5,13 +5,23 @@ $clear-icon-size: 1em !default;
   //align-items: center;
   justify-content: space-between;
   padding: 0.375rem 0.75rem;
-  margin: 0.5rem;
   border-radius: 0.375rem;
   border: 1px solid var(--bs-secondary-border-subtle, #dee2e6);
   background-color: var(--bs-body-bg);
   gap: 0.25rem;
+
+  // Allow it to flex properly in input groups
+  flex: 1 1 auto;
+  width: 1%;
+  min-width: 0;
+
   &.no-border {
     border: none;
+  }
+
+  &.is-disabled {
+    color: var(--bs-secondary);
+    background-color: var(--bs-secondary-bg);
   }
 
   .clear-icon {
@@ -22,7 +32,7 @@ $clear-icon-size: 1em !default;
     fill: currentColor;
   }
 
-  &:not(.is-readonly) .clear-icon:hover {
+  &:not(.is-readonly):not(.is-disabled) .clear-icon:hover {
     transform: scale(1.5);
   }
 }
@@ -33,7 +43,8 @@ $clear-icon-size: 1em !default;
   padding: 0 0.25em;
 }
 
-.is-readonly .star {
+.is-readonly .star,
+.is-disabled .star {
   cursor: default;
 }
 
@@ -55,6 +66,6 @@ $clear-icon-size: 1em !default;
   transition: transform 0.2s ease;
 }
 
-.b-form-rating:not(.is-readonly) .star:hover .b-form-rating-star svg {
+.b-form-rating:not(.is-readonly):not(.is-disabled) .star:hover .b-form-rating-star svg {
   transform: scale(1.5);
 }

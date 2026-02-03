@@ -1,10 +1,6 @@
-# Dropdown
-
-<PageHeader>
-
-Dropdowns are toggleable, contextual overlays for displaying lists of links and actions in a dropdown menu format.
-
-</PageHeader>
+---
+description: 'Dropdowns are toggleable, contextual overlays for displaying lists of links and actions in a dropdown menu format.'
+---
 
 `BDropdown` components are toggleable, contextual overlays for displaying lists of links, and more. They're toggled by clicking (or pressing space or enter when focused), not by hovering; this is an [intentional design decision](https://markdotto.com/2012/02/27/bootstrap-explained-dropdowns/).
 
@@ -20,27 +16,11 @@ If both the prop `text` and slot `button-content` are present, the slot `button-
 
 ## Positioning
 
-Dropdown supports various positioning such as left (start) and right (end) aligned, dropdown and dropup, and supports auto-flipping dropdown to dropup, and vice-versa) when the menu would overflow off of the visible screen area.
+Twelve options are available for the `placement` prop: `top`, `top-start`, `top-end`, `bottom`, `bottom-start`, `bottom-end`, `left`, `left-start`, `left-end`, `right`, `right-start`, `right-end` from [@floating-ui/vue](https://floating-ui.com/). The default placement is `bottom-start`.
 
-### Menu alignment
+Positioning is relative to the toggle button.
 
-The dropdown menu can either be _start_ aligned (default) or _end_ aligned to the button above it. To have the dropdown aligned on the _end_, set the `end` prop.
-
-<<< DEMO ./demo/DropdownMenuAlignment.vue#template{vue-html}
-
-### Dropup
-
-Turn your dropdown menu into a drop-up menu by setting the `placement` prop.
-
-<<< DEMO ./demo/DropdownDropup.vue#template{vue-html}
-
-### Drop placement
-
-Turn your dropdown menu into a drop left, right or other menu by setting the `placement` prop.
-
-Values for `placement` come from [floating-ui's placement definition](https://floating-ui.com/docs/computeposition#placement).
-
-<<< DEMO ./demo/DropdownPlacement.vue#template{vue-html}
+<<< DEMO ./demo/DropdownPositioning.vue#template{vue-html}
 
 ### Auto "flipping"
 
@@ -291,6 +271,8 @@ The default ARIA role is set to `menu`, but you can change this default to anoth
 
 When a menu item does not trigger navigation, it is recommended to use the `BDropdownItemButton` sub-component (which is not announced as a link) instead of `BDropdownItem` (which is presented as a link to the user).
 
+For information on managing ARIA attributes for dropdown triggers, see the [ARIA Trigger Registration for Component Visibility](/docs/reference/accessibility#aria-trigger-registration-for-component-visibility) section in the Accessibility reference.
+
 ### Headers and accessibility
 
 When using `BDropdownHeader` components in the dropdown menu, it is recommended to add an `id` attribute to each of the headers, and then set the `aria-describedby` attribute (set to the `id` value of the associated header) on each following dropdown items under that header. This will provide users of assistive technologies (i.e. sight-impaired users) additional context about the dropdown item:
@@ -319,9 +301,3 @@ The dropdown menu is rendered with semantic `<ul>` and `<li>` elements for acces
 
 - [`BNavItemDropdown`](/docs/components/nav#dropdown) for dropdown support inside `BNav` and `BNavbar`
 - [Router Link Support](/docs/reference/router-links) reference for information about router-link specific props available on `BDropdownItem`
-
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/dropdown.data'
-</script>

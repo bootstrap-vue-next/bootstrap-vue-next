@@ -15,18 +15,16 @@
           :variant="field.variant"
           :abbr="field.headerAbbr"
           :style="field.thStyle"
+          :tabindex="keyboardController.shouldHeaderBeFocusable(field) ? '0' : undefined"
           v-bind="callThAttr(null, field, 'top')"
-          @click="headerClicked(field, $event)"
+          @click="keyboardController.headerClicked(field, $event)"
+          @keydown="keyboardController.handleHeaderKeydown(field, $event)"
         >
           <!-- eslint-disable prettier/prettier -->
           <slot
-            :name="
-              slots[`head(${String(field.key)})`]
-                ? (`head(${String(field.key)})` as 'head()')
-                : 'head()'
-            "
+            :name="slots[`head(${field.key})`] ? (`head(${field.key})` as 'head()') : 'head()'"
             :label="field.label"
-            :column="field.key as LiteralUnion<keyof Items>"
+            :column="field.key"
             :field
             :is-foot="false"
           >
@@ -67,78 +65,84 @@
         <template
           v-for="(item, itemIndex) in props.items"
           :key="
-            props.primaryKey && get(item, props.primaryKey)
-              ? get(item, props.primaryKey)
+            props.primaryKey && isTableItem(item) && getWithGetter(item, props.primaryKey)
+              ? getWithGetter(item, props.primaryKey)
               : itemIndex
           "
         >
           <BTr
             :id="
-              props.primaryKey && get(item, props.primaryKey)
-                ? generateTableRowId(get(item, props.primaryKey))
+              props.primaryKey && isTableItem(item) && getWithGetter(item, props.primaryKey)
+                ? generateTableRowId(getWithGetter(item, props.primaryKey) as string)
                 : undefined
             "
             :class="getRowClasses(item, 'row')"
             :variant="isTableItem(item) ? item._rowVariant : undefined"
+            :tabindex="keyboardController.shouldRowBeFocusable.value ? '0' : undefined"
             v-bind="callTbodyTrAttrs(item, 'row')"
-            @click="!filterEvent($event) && emit('row-clicked', item, itemIndex, $event)"
-            @dblclick="!filterEvent($event) && emit('row-dblclicked', item, itemIndex, $event)"
-            @contextmenu="!filterEvent($event) && emit('row-contextmenu', item, itemIndex, $event)"
-            @mouseenter="!filterEvent($event) && emit('row-hovered', item, itemIndex, $event)"
-            @mouseleave="!filterEvent($event) && emit('row-unhovered', item, itemIndex, $event)"
-            @mousedown="handleMiddleClick(item, itemIndex, $event)"
+            @click="
+              !filterEvent($event) && emit('row-clicked', {item, index: itemIndex, event: $event})
+            "
+            @dblclick="
+              !filterEvent($event) &&
+              emit('row-dblclicked', {item, index: itemIndex, event: $event})
+            "
+            @contextmenu="
+              !filterEvent($event) &&
+              emit('row-contextmenu', {item, index: itemIndex, event: $event})
+            "
+            @mouseenter="
+              !filterEvent($event) && emit('row-hovered', {item, index: itemIndex, event: $event})
+            "
+            @mouseleave="
+              !filterEvent($event) && emit('row-unhovered', {item, index: itemIndex, event: $event})
+            "
+            @mousedown="keyboardController.handleMiddleClick(item, itemIndex, $event)"
+            @keydown="keyboardController.handleRowKeydown(item, itemIndex, $event)"
           >
             <component
               :is="getCellComponent(field)"
               v-for="field in computedFields"
               :key="field.key"
               :variant="
-                (isTableItem(item) ? item._cellVariants?.[field.key as string] : false)
-                  ? null
-                  : field.variant
+                (isTableItem(item) ? item._cellVariants?.[field.key] : false) ? null : field.variant
               "
               :class="getFieldRowClasses(field, item)"
-              v-bind="itemAttributes(item, String(field.key), field.tdAttr)"
+              v-bind="itemAttributes(item, field)"
             >
               <label v-if="props.stacked && props.labelStacked" class="b-table-stacked-label">
                 {{ getTableFieldHeadLabel(field) }}
               </label>
               <slot
-                :name="
-                  slots[`cell(${String(field.key)})`]
-                    ? (`cell(${String(field.key)})` as 'cell()')
-                    : 'cell()'
-                "
-                :value="formatItem(item, String(field.key), field.formatter)"
-                :unformatted="get(item, String(field.key))"
+                :name="slots[`cell(${field.key})`] ? (`cell(${field.key})` as 'cell()') : 'cell()'"
+                :value="formatItem(item, field)"
+                :unformatted="getByFieldKey(item, field)"
                 :index="itemIndex"
                 :item="item"
                 :field="field"
-                :items="items"
-                :toggle-details="() => toggleRowDetails(item)"
-                :details-showing="isTableItem(item) ? (detailsMap.get(item) ?? false) : false"
+                :items="props.items"
+                :toggle-expansion="() => expandedItemsController.toggle(item)"
+                :expansion-showing="expandedItemsController.has(item)"
               >
-                <template v-if="!slots[`cell(${String(field.key)})`] && !slots['cell()']">
-                  {{ formatItem(item, String(field.key), field.formatter) }}
+                <template v-if="!slots[`cell(${field.key})`] && !slots['cell()']">
+                  {{ formatItem(item, field) }}
                 </template>
               </slot>
             </component>
           </BTr>
 
-          <template
-            v-if="isTableItem(item) && detailsMap.get(item) === true && slots['row-details']"
-          >
+          <template v-if="expandedItemsController.has(item) && slots['row-expansion']">
             <BTr aria-hidden="true" role="presentation" class="d-none" />
             <BTr
-              :class="getRowClasses(item, 'row-details')"
-              :variant="item._rowVariant"
-              v-bind="callTbodyTrAttrs(item, 'row-details')"
+              :class="getRowClasses(item, 'row-expansion')"
+              :variant="isTableItem(item) ? item._rowVariant : undefined"
+              v-bind="callTbodyTrAttrs(item, 'row-expansion')"
             >
               <BTd :colspan="computedFieldsTotal" :class="detailsTdClass">
                 <slot
-                  name="row-details"
+                  name="row-expansion"
                   :item="item"
-                  :toggle-details="() => toggleRowDetails(item)"
+                  :toggle-expansion="() => expandedItemsController.toggle(item)"
                   :fields="computedFields"
                   :index="itemIndex"
                 />
@@ -171,8 +175,10 @@
           :abbr="field.headerAbbr"
           :style="field.thStyle"
           :variant="field.variant"
+          :tabindex="keyboardController.shouldHeaderBeFocusable(field) ? '0' : undefined"
           v-bind="callThAttr(null, field, 'bottom')"
-          @click="headerClicked(field, $event, true)"
+          @click="keyboardController.headerClicked(field, $event, true)"
+          @keydown="keyboardController.handleHeaderKeydown(field, $event, true)"
         >
           <div class="d-inline-flex flex-nowrap align-items-center gap-1">
             <div>
@@ -182,7 +188,7 @@
                 :name="calculatedFooterSlot(field.key)"
                 :label="field.label"
                 :column="field.key"
-                :field="field as LiteralUnion<keyof Items>"
+                :field="field"
                 :is-foot="true"
               >
                 <!-- eslint-enable prettier/prettier -->
@@ -209,15 +215,13 @@
   </BTableSimple>
 </template>
 
-<script setup lang="ts" generic="Items">
-import {computed, ref, watch} from 'vue'
+<script setup lang="ts" generic="Item">
+import {computed, readonly, toRef} from 'vue'
 import type {BTableLiteProps} from '../../types/ComponentProps'
 import {
-  isTableField,
   isTableItem,
   type TableField,
   type TableItem,
-  type TableRowEvent,
   type TableRowThead,
   type TableRowType,
 } from '../../types/TableTypes'
@@ -229,15 +233,25 @@ import BTh from './BTh.vue'
 import BThead from './BThead.vue'
 import BTr from './BTr.vue'
 import {useDefaults} from '../../composables/useDefaults'
-import {get, pick} from '../../utils/object'
-import {btableSimpleProps, getDataLabelAttr, getTableFieldHeadLabel} from '../../utils/tableUtils'
-import {formatItem} from '../../utils/formatItem'
+import {pick} from '../../utils/object'
+import {
+  bTableSimpleProps,
+  formatItem,
+  getByFieldKey,
+  getTableFieldHeadLabel,
+  getWithGetter,
+} from '../../utils/tableUtils'
 import {filterEvent} from '../../utils/filterEvent'
-import {startCase} from '../../utils/stringUtils'
-import type {LiteralUnion} from '../../types/LiteralUnion'
 import {useId} from '../../composables/useId'
+import type {BTableLiteEmits} from '../../types/ComponentEmits'
+import type {BTableLiteSlots} from '../../types'
+import {
+  useItemExpansion,
+  useTableFieldsMapper,
+  useTableKeyboardNavigation,
+} from '../../composables/useTableLiteHelpers'
 
-const _props = withDefaults(defineProps<BTableLiteProps<Items>>(), {
+const _props = withDefaults(defineProps<Omit<BTableLiteProps<Item>, 'expandedItems'>>(), {
   caption: undefined,
   align: undefined,
   fields: () => [],
@@ -281,104 +295,60 @@ const _props = withDefaults(defineProps<BTableLiteProps<Items>>(), {
   // End BTableSimpleProps props
 })
 const props = useDefaults(_props, 'BTableLite')
+const emit = defineEmits<BTableLiteEmits<Item>>()
+const slots = defineSlots<BTableLiteSlots<Item>>()
 
-const emit = defineEmits<{
-  'head-clicked': [
-    key: string,
-    field: (typeof computedFields.value)[0],
-    event: MouseEvent,
-    isFooter: boolean,
-  ]
-  'row-clicked': TableRowEvent<Items>
-  'row-dblclicked': TableRowEvent<Items>
-  'row-contextmenu': TableRowEvent<Items>
-  'row-hovered': TableRowEvent<Items>
-  'row-unhovered': TableRowEvent<Items>
-  'row-middle-clicked': TableRowEvent<Items>
-}>()
-
-const slots = defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'table-colgroup'?: (props: {fields: typeof computedFields.value}) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'thead-top'?: (props: {columns: number; fields: typeof computedFields.value}) => any
-  [key: `head(${string})`]: (props: {
-    label: string | undefined
-    column: LiteralUnion<keyof Items>
-    field: (typeof computedFields.value)[0]
-    isFoot: false
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  'thead-sub'?: (
-    props: {
-      items: readonly Items[]
-      fields: typeof computedFields.value
-      field: (typeof computedFields.value)[0]
-    }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ) => any
-  'custom-body'?: (props: {
-    fields: typeof computedFields.value
-    items: readonly Items[]
-    columns: number
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'top-row'?: (props: {columns: number; fields: typeof computedFields.value}) => any
-  [key: `cell(${string})`]: (props: {
-    value: unknown
-    unformatted: unknown
-    index: number
-    item: Items
-    field: (typeof computedFields.value)[0]
-    items: readonly Items[]
-    toggleDetails: () => void
-    detailsShowing: boolean
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  'row-details'?: (props: {
-    item: Items
-    toggleDetails: () => void
-    fields: typeof computedFields.value
-    index: number
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'bottom-row'?: (props: {columns: number; fields: typeof computedFields.value}) => any
-  [key: `foot(${string})`]: (props: {
-    label: string | undefined
-    column: LiteralUnion<keyof Items>
-    field: (typeof computedFields.value)[0]
-    isFoot: true
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  'custom-foot'?: (props: {
-    fields: typeof computedFields.value
-    items: readonly Items[]
-    columns: number
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'table-caption'?: (props: Record<string, never>) => any
-}>()
+const expandedItems = defineModel<Exclude<BTableLiteProps<Item>['expandedItems'], undefined>>(
+  'expandedItems',
+  {
+    default: () => [],
+  }
+)
 
 const computedId = useId(() => props.id)
-
-const generateDetailsItem = (item: TableItem): [object, boolean | undefined] => [
-  item,
-  item._showDetails,
-]
-const detailsMap = ref(new WeakMap<object, boolean | undefined>())
-watch(
-  () => props.items,
-  (items) => {
-    items.forEach((item) => {
-      if (!isTableItem(item)) return
-      detailsMap.value.set(...generateDetailsItem(item))
-    })
+const expandedItemsController = useItemExpansion({
+  allItems: () => props.items,
+  primaryKey: toRef(() => props.primaryKey),
+  expandedItems,
+})
+const keyboardController = useTableKeyboardNavigation(
+  {
+    items: () => props.items,
+    id: computedId,
   },
-  {deep: true, immediate: true}
+  {
+    onHeadClicked: (obj) => {
+      emit('head-clicked', obj)
+    },
+    onRowClicked: (obj) => {
+      emit('row-clicked', obj)
+    },
+    onRowMiddleClicked: (obj) => {
+      emit('row-middle-clicked', obj)
+    },
+  }
 )
+const {
+  fields: computedFields,
+  total: computedFieldsTotal,
+  showHeaders: showComputedHeaders,
+} = useTableFieldsMapper({
+  fields: () => props.fields,
+  items: () => props.items,
+  stackedProps: {
+    labelStacked: () => props.labelStacked,
+    stacked: () => props.stacked,
+  },
+})
+
+const calculatedFooterSlot = (key: string): keyof typeof slots =>
+  slots[`foot(${key})`]
+    ? `foot(${key})`
+    : slots['foot()']
+      ? 'foot()'
+      : slots[`head(${key})`]
+        ? `head(${key})`
+        : 'head()'
 
 const computedTableClasses = computed(() => [
   props.tableClass,
@@ -386,90 +356,6 @@ const computedTableClasses = computed(() => [
     [`align-${props.align}`]: props.align !== undefined,
   },
 ])
-
-const computedFields = computed<(TableField<Items> & {_noHeader?: true})[]>(() => {
-  if (!props.fields.length && props.items.length) {
-    const [firstItem] = props.items
-    if (firstItem && (isTableItem(firstItem) || Array.isArray(firstItem))) {
-      return Object.keys(firstItem).map((k) => {
-        const label = startCase(k)
-        return {
-          key: k,
-          label,
-          tdAttr: getDataLabelAttr(props, label),
-        }
-      })
-    }
-    // The items are primitives, so we just return a single empty field
-    // No header will be shown, as we don't know what to show
-    return [{key: '', _noHeader: true}]
-  }
-
-  return props.fields.map((f) => {
-    if (isTableField(f)) {
-      const label = f.label ?? startCase(f.key as string)
-      return {
-        ...(f as TableField<Items>),
-        tdAttr: {...getDataLabelAttr(props, label), ...f.tdAttr},
-      }
-    }
-    const label = startCase(f as string)
-    return {
-      key: f as string,
-      label,
-      tdAttr: getDataLabelAttr(props, label),
-    }
-  })
-})
-const computedFieldsTotal = computed(() => computedFields.value.length)
-const showComputedHeaders = computed(() => {
-  // We only hide the header if all fields have _noHeader set to true. Which would be our doing
-  // This usually happens under a circumstance of displaying an array of primitives
-  // Under any other circumstance, I'm not sure how this would apply
-  if (computedFieldsTotal.value > 0 && computedFields.value.every((el) => el._noHeader === true))
-    return false
-  return true
-})
-
-const footerProps = computed(() => ({
-  variant: props.footVariant ?? props.headVariant,
-  class: props.tfootClass ?? props.theadClass,
-}))
-
-const calculatedFooterSlot = (key: LiteralUnion<keyof Items>): keyof typeof slots =>
-  slots[`foot(${String(key)})`]
-    ? `foot(${String(key)})`
-    : slots['foot()']
-      ? 'foot()'
-      : slots[`head(${String(key)})`]
-        ? `head(${String(key)})`
-        : 'head()'
-
-const itemAttributes = (item: Items, fieldKey: string, attr?: unknown) => {
-  const val = get(item, fieldKey)
-  return attr && typeof attr === 'function' ? attr(val, fieldKey, item) : attr
-}
-
-const callThAttr = (item: Items | null, field: TableField<Items>, type: TableRowThead) => {
-  const fieldKey = String(field.key)
-  const val = get(item, fieldKey)
-  return field.thAttr && typeof field.thAttr === 'function'
-    ? field.thAttr(val, fieldKey, item, type)
-    : field.thAttr
-}
-
-const headerClicked = (field: TableField<Items>, event: Readonly<MouseEvent>, isFooter = false) => {
-  emit('head-clicked', field.key as string, field, event, isFooter)
-}
-
-const toggleRowDetails = (tr: Items) => {
-  if (isTableItem(tr)) {
-    const prevValue = detailsMap.value.get(tr)
-    detailsMap.value.set(tr, !prevValue)
-    tr._showDetails = !prevValue
-  }
-}
-
 const getFieldColumnClasses = (field: TableField) => [
   field.class,
   field.thClass,
@@ -482,38 +368,38 @@ const getFieldColumnClasses = (field: TableField) => [
       : props.fieldColumnClass
     : null,
 ]
-
-const getFieldRowClasses = (field: Readonly<TableField>, tr: Items) => {
-  const val = get(tr, String(field.key))
-  return [
-    field.class,
-    typeof field.tdClass === 'function' ? field.tdClass(val, String(field.key), tr) : field.tdClass,
-    (isTableItem(tr) ? tr._cellVariants?.[field.key as string] : false)
-      ? `table-${(tr as TableItem)._cellVariants?.[field.key as string]}`
-      : null,
-    {
-      'b-table-sticky-column': field.stickyColumn,
-    },
-  ]
-}
-
-const handleMiddleClick = (item: Items, itemIndex: number, event: MouseEvent) => {
-  if (event.button === 1 && !filterEvent(event)) {
-    emit('row-middle-clicked', item, itemIndex, event)
-  }
-}
-const callTbodyTrAttrs = (item: Items | null, type: TableRowType) =>
-  props.tbodyTrAttrs
-    ? typeof props.tbodyTrAttrs === 'function'
-      ? props.tbodyTrAttrs(item, type)
-      : props.tbodyTrAttrs
-    : null
-
-const getRowClasses = (item: Items | null, type: TableRowType) =>
+const getFieldRowClasses = (field: Readonly<TableField>, tr: Item) => [
+  field.class,
+  typeof field.tdClass === 'function'
+    ? field.tdClass(getByFieldKey(tr, field), field.key, tr)
+    : field.tdClass,
+  (isTableItem(tr) ? tr._cellVariants?.[field.key] : false)
+    ? `table-${(tr as TableItem)._cellVariants?.[field.key]}`
+    : null,
+  {
+    'b-table-sticky-column': field.stickyColumn,
+  },
+]
+const getRowClasses = (item: Item | null, type: TableRowType) =>
   props.tbodyTrClass
     ? typeof props.tbodyTrClass === 'function'
       ? props.tbodyTrClass(item, type)
       : props.tbodyTrClass
+    : null
+
+const itemAttributes = (item: Item, field: TableField) =>
+  field.tdAttr && typeof field.tdAttr === 'function'
+    ? field.tdAttr({value: getByFieldKey(item, field), key: field.key, item})
+    : field.tdAttr
+const callThAttr = (item: Item | null, field: TableField<Item>, type: TableRowThead) =>
+  field.thAttr && typeof field.thAttr === 'function'
+    ? field.thAttr({value: getByFieldKey(item, field), key: field.key, item, type})
+    : field.thAttr
+const callTbodyTrAttrs = (item: Item | null, type: TableRowType) =>
+  props.tbodyTrAttrs
+    ? typeof props.tbodyTrAttrs === 'function'
+      ? props.tbodyTrAttrs(item, type)
+      : props.tbodyTrAttrs
     : null
 
 const generateTableRowId = (primaryKeyValue: string) =>
@@ -526,9 +412,21 @@ const getCellComponent = (field: Readonly<TableField>) => {
   return BTd
 }
 
+const footerProps = computed(() => ({
+  variant: props.footVariant ?? props.headVariant,
+  class: props.tfootClass ?? props.theadClass,
+}))
+
 const computedSimpleProps = computed(() => ({
-  ...pick(props, btableSimpleProps),
+  ...pick(props, bTableSimpleProps),
   tableClass: computedTableClasses.value,
   id: computedId.value,
 }))
+
+defineExpose({
+  expansion: {
+    ...expandedItemsController,
+    expandedItems: readonly(expandedItems),
+  },
+})
 </script>

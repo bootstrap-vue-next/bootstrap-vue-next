@@ -72,15 +72,12 @@ import {accordionInjectionKey} from '../../utils/keys'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import type {BAccordionItemProps} from '../../types/ComponentProps'
-import type {BCollapseEmits} from '../../types/ComponentEmits'
+import type {BAccordionItemEmits} from '../../types/ComponentEmits'
+import type {BAccordionItemSlots} from '../../types'
+import {isReadOnlyArray} from '../../utils/object'
 
 defineOptions({
   inheritAttrs: false,
-})
-const attrs = useAttrs()
-const processedAttrs = computed(() => {
-  const {class: wrapperClass, ...collapseAttrs} = attrs
-  return {wrapperClass, collapseAttrs}
 })
 
 const _props = withDefaults(defineProps<Omit<BAccordionItemProps, 'modelValue'>>(), {
@@ -104,15 +101,14 @@ const _props = withDefaults(defineProps<Omit<BAccordionItemProps, 'modelValue'>>
   wrapperAttrs: undefined,
 })
 const props = useDefaults(_props, 'BAccordionItem')
+const emit = defineEmits<BAccordionItemEmits>()
+defineSlots<BAccordionItemSlots>()
+const attrs = useAttrs()
 
-const emit = defineEmits<BCollapseEmits>()
-
-defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  title?: (props: Record<string, never>) => any
-}>()
+const processedAttrs = computed(() => {
+  const {class: wrapperClass, ...collapseAttrs} = attrs
+  return {wrapperClass, collapseAttrs}
+})
 
 const parentData = inject(accordionInjectionKey, null)
 
@@ -126,12 +122,12 @@ if (modelValue.value) {
   parentData?.setOpenItem(computedId.value)
 } else {
   modelValue.value =
-    (Array.isArray(parentData?.openItem.value)
+    (isReadOnlyArray(parentData?.openItem.value)
       ? parentData?.openItem.value.includes(computedId.value)
       : parentData?.openItem.value === computedId.value) && !parentData?.initialAnimation.value
 }
 
-const el = useTemplateRef<HTMLElement>('_el')
+const el = useTemplateRef('_el')
 parentData?.registerAccordionItem(computedId.value, el)
 
 onUnmounted(() => {
@@ -147,7 +143,7 @@ onMounted(() => {
 })
 
 const openInParent = computed(() =>
-  Array.isArray(parentData?.openItem.value)
+  isReadOnlyArray(parentData?.openItem.value)
     ? parentData?.openItem.value.includes(computedId.value)
     : parentData?.openItem.value === computedId.value
 )
