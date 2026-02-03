@@ -1,6 +1,5 @@
 <template>
   <div class="d-flex gap-2 flex-wrap">
-    <!-- #region template -->
     <BButton
       v-b-popover="'Simple string content'"
       title="String Value"
@@ -13,7 +12,7 @@
     >
       Reactive Value: {{ userName }}
     </BButton>
-    <!-- #endregion template -->
+
     <BFormInput
       v-model="userName"
       placeholder="Change name"

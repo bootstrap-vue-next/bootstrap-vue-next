@@ -41,6 +41,15 @@ If the file is intended to be public, it must follow this pattern. For example, 
 
 Private files should exist in the root of the domain they are related to. For example, utility functions for composables should be in the `src/composables/` directory but not exported in an index.ts file. This keeps the public API clean and ensures that only intended files are accessible to users of the library.
 
+**Consuming imports for tree-shaking**: When importing components, composables, or directives from bootstrap-vue-next in demo files, documentation, or user code, always use the specific paths for optimal tree-shaking:
+
+- Components: `import {BButton} from 'bootstrap-vue-next/components/BButton'`
+- Type-only imports: `import type {BButton} from 'bootstrap-vue-next/components/BButton'`
+- Composables: `import {useToggle} from 'bootstrap-vue-next/composables/useToggle'`
+- Directives: `import {vBToggle} from 'bootstrap-vue-next/directives/BToggle'`
+
+Avoid importing from the root package (`'bootstrap-vue-next'`) as this imports the entire library and defeats tree-shaking.
+
 The fault of not properly following this structure will lead to build errors or improper module resolution.
 
 ## Validation
@@ -272,11 +281,15 @@ FRAGMENT syntax should be used for:
 - Reusable code examples that are included in multiple places
 - Code snippets that need to be styled consistently with other examples
 - Examples that are referenced across different documentation pages
+- **IMPORTANT**: Fragment files should contain ONLY the code snippet without `<template>`, `<script>`, or `<style>` blocks. They are not runnable demos.
 
 DEMO syntax should be used for:
 
 - Full component demonstrations
 - Interactive examples specific to one component
+- **IMPORTANT**: Demo files are complete, runnable Vue components with `<template>` and optionally `<script>`/`<style>` blocks.
+
+**Best Practice**: Do not mix FRAGMENT regions into DEMO files that have `<script>` blocks or complex templates. If you need both a runnable demo and a simple fragment, create separate files. It's acceptable to have multiple regions in the same file only when they serve the same purpose (e.g., multiple related fragments in one fragment file, or multiple demo regions in one demo file).
 
 ### Demo File Guidelines
 

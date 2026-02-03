@@ -1,5 +1,4 @@
 <template>
-  <!-- #region template -->
   <div
     ref="container"
     class="overflow-auto border"
@@ -19,11 +18,10 @@
       </BPopover>
     </div>
   </div>
-  <!-- #endregion template -->
 </template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
 
-const container = ref<HTMLElement | null>(null)
+const container = ref<HTMLElement>()
 </script>

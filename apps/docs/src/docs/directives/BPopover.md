@@ -29,10 +29,7 @@ v-{name}.{modifier1}.{modifier2}.{etc}={value}
 
 For example:
 
-```vue-html
-<BButton v-b-popover.hover.top="'My popover content'" />
-<BButton v-b-popover.click.right="{title: 'Title', body: 'Content'}" />
-```
+<<< FRAGMENT ./demo/PopoverSyntax.vue#syntax{vue-html}
 
 ## Trigger Modifiers
 
@@ -49,27 +46,19 @@ If you do not specify any trigger modifiers, the popover is enabled by default f
 
 ### Default Behavior
 
-```vue-html
-<!-- Default: hover + focus triggers -->
-<BButton v-b-popover="'Content'" title="Title">Button</BButton>
-```
+<<< DEMO ./demo/PopoverDefaultBehavior.vue#template{vue-html}
 
 ### Multiple Triggers
 
 You can combine multiple trigger modifiers:
 
-```vue-html
-<!-- Both click and hover -->
-<BButton v-b-popover.click.hover="'Content'">Button</BButton>
-```
+<<< DEMO ./demo/PopoverMultipleTriggers.vue#template{vue-html}
 
 ### Manual Control
 
 Use `.manual` combined with `.show` to control visibility:
 
-```vue-html
-<BButton v-b-popover.manual.show="'Always visible'">Button</BButton>
-```
+<<< DEMO ./demo/PopoverManualControl.vue#template{vue-html}
 
 ## Placement Modifiers
 
@@ -96,18 +85,12 @@ The popover content and configuration is specified in the directive value. The v
 
 For simple text content, use a string literal (remember to use quotes):
 
-<<< DEMO ./demo/PopoverValueString.vue#template{vue-html}
+<<< DEMO ./demo/PopoverValueString.vue
 
 :::warning Important
 What is inside the quotes (`""`) is interpreted as JavaScript, not as a string literal. To display literal text like "My title", you must use an extra pair of quotes:
 
-```vue-html
-<!-- Correct -->
-<BButton v-b-popover="'My title'">Button</BButton>
-
-<!-- Incorrect - tries to reference variable myTitle -->
-<BButton v-b-popover="myTitle">Button</BButton>
-```
+<<< FRAGMENT ./demo/PopoverValueWarning.vue#warning{vue-html}
 
 :::
 
@@ -173,13 +156,7 @@ The default delay is `{show: 100, hide: 300}` milliseconds.
 
 When using the directive on components that have a `title` prop (like `BCard`), you must provide the popover content via the directive value, not the `title` prop:
 
-```vue-html
-<!-- ❌ Incorrect - title prop goes to BCard, not the popover -->
-<BCard v-b-popover.hover.top title="my title" />
-
-<!-- ✅ Correct - provide title in directive value -->
-<BCard v-b-popover.hover.top="{title: 'Popover', body: 'Content'}" />
-```
+<<< FRAGMENT ./demo/PopoverCommonPitfalls.vue#component{vue-html}
 
 This is because the component's `title` prop is applied to a child element, while the directive is attached to the root element.
 
@@ -187,17 +164,7 @@ This is because the component's `title` prop is applied to a child element, whil
 
 The directive works best with plain HTML elements when using the `title` attribute:
 
-```vue-html
-<!-- ✅ Works well -->
-<button v-b-popover.hover.top title="my title">
-  Click me
-</button>
-
-<!-- ✅ Also works with directive value -->
-<div v-b-popover.hover.top="'Popover content'">
-  Hover me
-</div>
-```
+<<< FRAGMENT ./demo/PopoverCommonPitfalls.vue#html{vue-html}
 
 ## Comparison with Component
 
@@ -219,11 +186,7 @@ For popovers with forms, buttons, or complex layouts, use the component version.
 
 For proper cross-browser behavior when using only the `.focus` trigger, use an element that renders an `<a>` tag with `tabindex="0"`:
 
-```vue-html
-<BButton href="#" tabindex="0" v-b-popover.focus="'Content'">
-  Link Button
-</BButton>
-```
+<<< FRAGMENT ./demo/PopoverAccessibility.vue#focus{vue-html}
 
 ### Keyboard Users
 

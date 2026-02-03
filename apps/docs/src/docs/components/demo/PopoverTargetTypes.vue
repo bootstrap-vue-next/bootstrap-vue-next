@@ -1,5 +1,4 @@
 <template>
-  <!-- #region template -->
   <div class="d-flex flex-column gap-3">
     <BPopover title="String ID Target">
       <template #target>
@@ -40,11 +39,11 @@
       This popover targets an element using a querySelector string
     </BPopover>
   </div>
-  <!-- #endregion template -->
 </template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
+import type {BButton} from 'bootstrap-vue-next/components/BButton'
 
-const buttonRef = ref<HTMLElement | null>(null)
+const buttonRef = ref<InstanceType<typeof BButton>>()
 </script>

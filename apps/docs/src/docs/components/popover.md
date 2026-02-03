@@ -31,7 +31,7 @@ The `target` prop may be any of the following:
 - A reference (ref) to a component that has either an `HTMLElement` or `SVGElement` as its root
   element via [Template Ref](https://vuejs.org/guide/essentials/template-refs.html)
 
-<<< DEMO ./demo/PopoverTargetTypes.vue#template{vue-html}
+<<< DEMO ./demo/PopoverTargetTypes.vue
 
 :::info NOTE
 
@@ -70,7 +70,7 @@ By default, popovers are triggered by `pointerenter` (hover) and `focus` events 
 - **Multiple triggers**: Combine props, e.g. `<BPopover click hover focus>`
 - **Manual control**: Set `<BPopover manual>` to disable all automatic triggers
 
-<<< DEMO ./demo/PopoverTriggers.vue#template{vue-html}
+<<< DEMO ./demo/PopoverTriggers.vue
 
 ### Trigger Logic
 
@@ -140,7 +140,7 @@ You can control the delay for showing and hiding popovers using the `delay` prop
 
 The `boundary` prop determines the container that constrains the popover visually. The `boundary-padding` prop specifies the minimum distance (in pixels) between the popover and the boundary edges.
 
-<<< DEMO ./demo/PopoverBoundary.vue#template{vue-html}
+<<< DEMO ./demo/PopoverBoundary.vue
 
 Valid `boundary` values include:
 
