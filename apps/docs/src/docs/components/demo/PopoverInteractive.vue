@@ -112,9 +112,14 @@
 import {nextTick, ref} from 'vue'
 import type {BButton} from 'bootstrap-vue-next/components/BButton'
 
+interface SelectOption {
+  text: string
+  value: string
+}
+
 const showPopover = ref(false)
 const input1 = ref('')
-const input2 = ref('')
+const input2 = ref<string>('')
 const input1State = ref<boolean | null>(null)
 const input2State = ref<boolean | null>(null)
 const input1Return = ref('')
@@ -123,7 +128,12 @@ const input2Return = ref('')
 const input1Element = ref<HTMLInputElement>()
 const targetButton = ref<InstanceType<typeof BButton>>()
 
-const options = [{text: '- Choose 1 -', value: ''}, 'Red', 'Green', 'Blue']
+const options: SelectOption[] = [
+  {text: '- Choose 1 -', value: ''},
+  {text: 'Red', value: 'Red'},
+  {text: 'Green', value: 'Green'},
+  {text: 'Blue', value: 'Blue'},
+]
 
 const onClose = () => {
   showPopover.value = false

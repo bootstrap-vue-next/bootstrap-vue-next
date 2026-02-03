@@ -1,3 +1,3 @@
 <!-- #region template -->
-<BAlert show>...</BAlert>
+<BPopover :manual="isDisabled" v-model="isVisible" />
 <!-- #endregion template -->

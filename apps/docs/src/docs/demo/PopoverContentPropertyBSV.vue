@@ -1,3 +1,3 @@
 <!-- #region template -->
-<BAlert show>...</BAlert>
+<BPopover target="btn" content="Body text" />
 <!-- #endregion template -->

@@ -1006,27 +1006,17 @@ Triggers work differently in BootstrapVueNext. Instead of space-separated string
 
 The `container` prop has been replaced with Vue 3's teleport system:
 
-```vue
-<!-- BootstrapVue -->
-<BPopover target="btn" container="my-container" />
+<<< FRAGMENT ./demo/PopoverContainerBSV.vue#template{vue-html}
 
-<!-- BootstrapVueNext -->
-<BPopover target="btn" teleport-to="#my-container" />
-<!-- or disable teleport entirely -->
-<BPopover target="btn" :teleport-disabled="true" />
-```
+<<< FRAGMENT ./demo/PopoverContainerBSVN.vue#template{vue-html}
 
 #### Content Property
 
 The `content` prop has been renamed to `body` for consistency:
 
-```vue
-<!-- BootstrapVue -->
-<BPopover target="btn" content="Body text" />
+<<< FRAGMENT ./demo/PopoverContentPropertyBSV.vue#template{vue-html}
 
-<!-- BootstrapVueNext -->
-<BPopover target="btn" body="Body text" />
-```
+<<< FRAGMENT ./demo/PopoverContentPropertyBSVN.vue#template{vue-html}
 
 #### Custom Classes
 
@@ -1039,13 +1029,9 @@ The `custom-class` prop has been split into more specific props:
 
 The `variant` prop has been deprecated. Use Bootstrap's [color and background utility classes](https://getbootstrap.com/docs/5.3/helpers/color-background/) instead:
 
-```vue
-<!-- BootstrapVue -->
-<BPopover variant="danger" />
+<<< FRAGMENT ./demo/PopoverVariantBSV.vue#template{vue-html}
 
-<!-- BootstrapVueNext -->
-<BPopover body-class="bg-danger text-white" title-class="bg-danger text-white border-danger" />
-```
+<<< FRAGMENT ./demo/PopoverVariantBSVN.vue#template{vue-html}
 
 See [Popover custom classes and variants](/docs/components/popover#custom-classes-and-variants) for more details.
 
@@ -1053,25 +1039,17 @@ See [Popover custom classes and variants](/docs/components/popover#custom-classe
 
 The `.sync` modifier on the `show` prop has been replaced with `v-model`:
 
-```vue
-<!-- BootstrapVue -->
-<BPopover :show.sync="isVisible" />
+<<< FRAGMENT ./demo/PopoverSyncBSV.vue#template{vue-html}
 
-<!-- BootstrapVueNext -->
-<BPopover v-model="isVisible" />
-```
+<<< FRAGMENT ./demo/PopoverSyncBSVN.vue#template{vue-html}
 
 #### Disabled State
 
 The `disabled` prop and programmatic disabling features have been deprecated. Use `manual=true` combined with `v-model` for full control:
 
-```vue
-<!-- BootstrapVue -->
-<BPopover :disabled.sync="isDisabled" />
+<<< FRAGMENT ./demo/PopoverDisabledBSV.vue#template{vue-html}
 
-<!-- BootstrapVueNext -->
-<BPopover :manual="isDisabled" v-model="isVisible" />
-```
+<<< FRAGMENT ./demo/PopoverDisabledBSVN.vue#template{vue-html}
 
 #### Delay
 
@@ -1089,33 +1067,9 @@ The ability for the `target` prop to accept a function has been deprecated. Use 
 
 The `$root` event system (`bv::show::popover`, `bv::hide::popover`, etc.) has been deprecated. Use the [usePopover](/docs/composables/usePopover) composable or template refs with exposed methods instead:
 
-```vue
-<!-- BootstrapVue -->
-<script>
-export default {
-  methods: {
-    showPopover() {
-      this.$root.$emit('bv::show::popover', 'my-popover')
-    },
-  },
-}
-</script>
+<<< DEMO ./demo/PopoverEventsBSV.vue
 
-<!-- BootstrapVueNext -->
-<template>
-  <BPopover ref="popover" />
-</template>
-
-<script setup>
-import {ref} from 'vue'
-
-const popover = ref()
-
-const showPopover = () => {
-  popover.value?.show()
-}
-</script>
-```
+<<< DEMO ./demo/PopoverEventsBSVN.vue
 
 #### Events
 
@@ -1306,75 +1260,17 @@ Heading and data row accessibility is implemented via keyboard navigation (tab a
 
 **Before (BootstrapVue):**
 
-```vue
-<template>
-  <BTable :items="items">
-    <template #cell(show_details)="row">
-      <BButton @click="row.toggleDetails">
-        {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
-      </BButton>
-    </template>
-    <template #row-details="row">
-      <BCard>{{ row.item.fullDetails }}</BCard>
-    </template>
-  </BTable>
-</template>
-
-<script setup>
-const items = [{name: 'Item 1'}, {name: 'Item 2'}]
-// Expansion was controlled via _showDetails property on items
-</script>
-```
+<<< DEMO ./demo/TableRowExpansionBefore.vue
 
 **After (BootstrapVueNext):**
 
-```vue
-<template>
-  <BTable :items="items" v-model:expanded-items="expandedItems">
-    <template #cell(show_details)="row">
-      <BButton @click="row.toggleExpansion">
-        {{ row.expansionShowing ? 'Hide' : 'Show' }} Details
-      </BButton>
-    </template>
-    <template #row-expansion="row">
-      <BCard>{{ row.item.fullDetails }}</BCard>
-    </template>
-  </BTable>
-</template>
-
-<script setup>
-import {ref} from 'vue'
-
-const items = [{name: 'Item 1'}, {name: 'Item 2'}]
-
-// Expansion state managed via v-model
-const expandedItems = ref([items[0]]) // Expand first item by default
-</script>
-```
+<<< DEMO ./demo/TableRowExpansionAfter.vue
 
 **Using with Primary Key:**
 
 When using a `primary-key`, expansion state persists across item array updates (like pagination or "Load more"). To set default expanded items with a `primary-key`, you must use the table's template ref `expansion.get()` function:
 
-```vue
-<template>
-  <BTable ref="tableRef" :items="items" primary-key="id" v-model:expanded-items="expandedItems">
-    <!-- ... -->
-  </BTable>
-</template>
-
-<script setup>
-import {ref, onMounted} from 'vue'
-
-const tableRef = ref()
-const expandedItems = ref([])
-
-// Set default expanded items after mount
-onMounted(() => {
-  expandedItems.value.push(tableRef.value.expansion.get(items[1]))
-})
-</script>
-```
+<<< DEMO ./demo/TableRowExpansionPrimaryKey.vue
 
 The slot name remains `row-expansion` (changed from `row-details` in earlier versions).
 
@@ -1402,91 +1298,15 @@ Methods and properties related to row expansion are now accessed via `ref.expans
 
 **Before (flat structure):**
 
-```vue
-<template>
-  <BTable ref="tableRef" :items="items" selectable>
-    <BButton @click="handleClearSelection">Clear Selection</BButton>
-    <BButton @click="handleSelectAll">Select All</BButton>
-  </BTable>
-</template>
-
-<script setup>
-import {ref} from 'vue'
-
-const tableRef = ref()
-const items = [{name: 'Item 1'}, {name: 'Item 2'}]
-
-const handleClearSelection = () => {
-  tableRef.value.clearSelected()
-}
-
-const handleSelectAll = () => {
-  tableRef.value.selectAll()
-}
-
-// Access selected items
-const getSelectedItems = () => {
-  return tableRef.value.selectedItems
-}
-</script>
-```
+<<< DEMO ./demo/TableRefApiBefore.vue
 
 **After (namespaced structure):**
 
-```vue
-<template>
-  <BTable ref="tableRef" :items="items" selectable>
-    <BButton @click="handleClearSelection">Clear Selection</BButton>
-    <BButton @click="handleSelectAll">Select All</BButton>
-  </BTable>
-</template>
-
-<script setup>
-import {ref} from 'vue'
-
-const tableRef = ref()
-const items = [{name: 'Item 1'}, {name: 'Item 2'}]
-
-const handleClearSelection = () => {
-  tableRef.value.selection.clearSelected()
-}
-
-const handleSelectAll = () => {
-  tableRef.value.selection.selectAll()
-}
-
-// Access selected items
-const getSelectedItems = () => {
-  return tableRef.value.selection.selectedItems
-}
-</script>
-```
+<<< DEMO ./demo/TableRefApiAfter.vue
 
 **Expansion API example:**
 
-```vue
-<template>
-  <BTable ref="tableRef" :items="items" v-model:expanded-items="expandedItems">
-    <BButton @click="handleExpandAll">Expand All</BButton>
-    <BButton @click="handleCollapseAll">Collapse All</BButton>
-  </BTable>
-</template>
-
-<script setup>
-import {ref} from 'vue'
-
-const tableRef = ref()
-const expandedItems = ref([])
-
-const handleExpandAll = () => {
-  tableRef.value.expansion.expandAll()
-}
-
-const handleCollapseAll = () => {
-  tableRef.value.expansion.collapseAll()
-}
-</script>
-```
+<<< DEMO ./demo/TableExpansionApi.vue
 
 #### Item Provider Functions
 
@@ -1518,31 +1338,11 @@ To access nested or computed data, use the new optional `accessor` property:
 
 **Before (BootstrapVue):**
 
-```ts
-const fields = [
-  {key: 'name.first', label: 'First Name'},
-  {key: 'name.last', label: 'Last Name'},
-  {key: 'age', label: 'Age'},
-]
-```
+<<< FRAGMENT ./demo/TableFieldDefinitionsBefore.ts#snippet{typescript}
 
 **After (BootstrapVueNext):**
 
-```ts
-const fields = [
-  {
-    key: 'firstName',
-    label: 'First Name',
-    accessor: (item) => item.name.first,
-  },
-  {
-    key: 'lastName',
-    label: 'Last Name',
-    accessor: (item) => item.name.last,
-  },
-  {key: 'age', label: 'Age'}, // Simple root property works as before
-]
-```
+<<< FRAGMENT ./demo/TableFieldDefinitionsAfter.ts#snippet{typescript}
 
 **BREAKING: Function signatures changed to use single parameter objects**
 
@@ -1554,27 +1354,11 @@ The following TableField properties now accept a single parameter object instead
 
 **Before (BootstrapVue):**
 
-```ts
-const fields = [
-  {
-    key: 'status',
-    formatter: (value, key, item) => value.toUpperCase(),
-    tdAttr: (value, key, item) => ({class: value === 'active' ? 'text-success' : ''}),
-  },
-]
-```
+<<< FRAGMENT ./demo/TableFieldFunctionsBefore.ts#snippet{typescript}
 
 **After (BootstrapVueNext):**
 
-```ts
-const fields = [
-  {
-    key: 'status',
-    formatter: ({value, key, item}) => value.toUpperCase(),
-    tdAttr: ({value, key, item}) => ({class: value === 'active' ? 'text-success' : ''}),
-  },
-]
-```
+<<< FRAGMENT ./demo/TableFieldFunctionsAfter.ts#snippet{typescript}
 
 `formatter` Only the callback function value for this field is implemented, adding the name
 of a method in the component is deprecated.
@@ -1685,7 +1469,8 @@ Please see [useToast](/docs/composables/useToast) for the modern method of progr
 
 **Event naming changes:**
 
-- No `$root` event system - toasts are managed through composables or direct component references
+```- No `$root` event system - toasts are managed through composables or direct component references
+
 - All events now use the standardized show/hide event lifecycle
 
 **New events:** BootstrapVueNext adds several events:
@@ -1795,17 +1580,7 @@ The `v-b-popover` directive syntax has changed to use modifier-based configurati
 
 BSV used string-based triggers while BSVN uses modifiers:
 
-```vue-html
-<!-- BootstrapVue -->
-<button v-b-popover="'Content'" title="Title" v-b-popover.hover.bottom>
-  Hover
-</button>
-
-<!-- BootstrapVueNext -->
-<BButton v-b-popover.hover.bottom="'Content'" title="Title">
-  Hover
-</BButton>
-```
+<<< FRAGMENT ./demo/PopoverDirectiveTrigger.html#template{vue-html}
 
 Available trigger modifiers:
 
@@ -1820,15 +1595,7 @@ Default behavior: If no trigger modifier is specified, BSVN defaults to **both h
 
 BSV used complex placement strings while BSVN uses simple modifiers:
 
-```vue-html
-<!-- BootstrapVue -->
-<button v-b-popover.hover.topleft="'Content'">Top Left</button>
-<button v-b-popover.hover.bottomright="'Content'">Bottom Right</button>
-
-<!-- BootstrapVueNext -->
-<BButton v-b-popover.hover.top="'Content'">Top</BButton>
-<BButton v-b-popover.hover.right="'Content'">Right</BButton>
-```
+<<< FRAGMENT ./demo/PopoverDirectivePlacement.html#template{vue-html}
 
 BSVN uses four simple placement modifiers:
 
@@ -1843,33 +1610,11 @@ BSV's fine-grained placements (`topleft`, `topright`, `bottomleft`, `bottomright
 
 The directive value can be a string or an object:
 
-```vue-html
-<!-- Simple string content (same in both) -->
-<BButton v-b-popover="'Popover content'">Button</BButton>
+<<< FRAGMENT ./demo/PopoverDirectiveValueSimple.html#template{vue-html}
 
-<!-- Object configuration -->
-<!-- BootstrapVue -->
-<button
-  v-b-popover="{
-    title: 'Title',
-    content: 'Body',
-    delay: { show: 500, hide: 100 }
-  }"
->
-  Button
-</button>
+<<< FRAGMENT ./demo/PopoverDirectiveValueObject.html#bsv{vue-html}
 
-<!-- BootstrapVueNext -->
-<BButton
-  v-b-popover.hover.top="{
-    title: 'Title',
-    body: 'Body',
-    delay: { show: 500, hide: 100 }
-  }"
->
-  Button
-</BButton>
-```
+<<< FRAGMENT ./demo/PopoverDirectiveValueObject.html#bsvn{vue-html}
 
 Note: BSV used `content` property, BSVN uses `body` property in object configuration.
 
@@ -1901,91 +1646,27 @@ BSVN automatically removes the `title` attribute and stores it as `data-original
 
 **Basic hover popover:**
 
-```vue-html
-<!-- BootstrapVue -->
-<button v-b-popover.hover="'Content'" title="Title">Hover</button>
+<<< FRAGMENT ./demo/PopoverDirectiveHover.html#bsv{vue-html}
 
-<!-- BootstrapVueNext -->
-<BButton v-b-popover.hover="'Content'" title="Title">Hover</BButton>
-```
+<<< FRAGMENT ./demo/PopoverDirectiveHover.html#bsvn{vue-html}
 
 **Click popover with placement:**
 
-```vue-html
-<!-- BootstrapVue -->
-<button v-b-popover.click.bottom="'Content'">Click</button>
+<<< FRAGMENT ./demo/PopoverDirectiveClick.html#bsv{vue-html}
 
-<!-- BootstrapVueNext -->
-<BButton v-b-popover.click.bottom="'Content'">Click</BButton>
-```
+<<< FRAGMENT ./demo/PopoverDirectiveClick.html#bsvn{vue-html}
 
 **Manual control:**
 
-```vue-html
-<!-- BootstrapVue -->
-<template>
-  <button v-b-popover.manual="popoverConfig" ref="btn">Manual</button>
-</template>
-<script>
-export default {
-  data() {
-    return {
-      popoverConfig: {
-        title: 'Title',
-        content: 'Content'
-      }
-    }
-  },
-  methods: {
-    showPopover() {
-      this.$root.$emit('bv::show::popover', 'btn')
-    }
-  }
-}
-</script>
+<<< DEMO ./demo/PopoverDirectiveManualBSV.vue
 
-<!-- BootstrapVueNext -->
-<template>
-  <BButton v-b-popover.manual.show="isShown && popoverConfig">Manual</BButton>
-</template>
-<script setup lang="ts">
-import {ref} from 'vue'
-
-const isShown = ref(false)
-const popoverConfig = {
-  title: 'Title',
-  body: 'Content'
-}
-</script>
-```
+<<< DEMO ./demo/PopoverDirectiveManualBSVN.vue
 
 **Complex configuration:**
 
-```vue-html
-<!-- BootstrapVue -->
-<button
-  v-b-popover="{
-    title: 'Title',
-    content: 'Body',
-    placement: 'top',
-    trigger: 'hover',
-    delay: { show: 500, hide: 100 }
-  }"
->
-  Button
-</button>
+<<< FRAGMENT ./demo/PopoverDirectiveComplex.html#bsv{vue-html}
 
-<!-- BootstrapVueNext -->
-<BButton
-  v-b-popover.hover.top="{
-    title: 'Title',
-    body: 'Body',
-    delay: { show: 500, hide: 100 }
-  }"
->
-  Button
-</BButton>
-```
+<<< FRAGMENT ./demo/PopoverDirectiveComplex.html#bsvn{vue-html}
 
 #### When to Use Component Instead
 
@@ -1997,20 +1678,9 @@ For complex scenarios, migrate to the `<BPopover>` component:
 - Interactive content (forms, buttons)
 - Custom variants and styling
 
-```vue-html
-<!-- BSV directive -->
-<button v-b-popover.hover.topleft="complexContent">Button</button>
+<<< FRAGMENT ./demo/PopoverDirectiveComponentAlternative.html#bsv{vue-html}
 
-<!-- BSVN component (recommended for complex cases) -->
-<BButton id="btn">Button</BButton>
-<BPopover target="btn" placement="top-start" hover>
-  <template #title>Custom Title</template>
-  <div>
-    <p>Rich content with <strong>HTML</strong></p>
-    <BButton size="sm">Action</BButton>
-  </div>
-</BPopover>
-```
+<<< FRAGMENT ./demo/PopoverDirectiveComponentAlternative.html#bsvn{vue-html}
 
 ### ScrollSpy
 

@@ -4,7 +4,7 @@
     <BButton
       id="table-busy-toggle"
       class="mb-3"
-      `@click`="toggleBusy"
+      @click="toggleBusy"
     >
       {{ busy ? 'Hide' : 'Show' }} Loading State
     </BButton>

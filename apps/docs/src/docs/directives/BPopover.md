@@ -2,8 +2,6 @@
 description: 'Add popovers to any element using the v-b-popover directive. Popovers can be triggered by hovering, focusing, or clicking an element'
 ---
 
-# Popover Directive
-
 > The `v-b-popover` directive makes it easy to add popovers to elements. Popovers provide contextual information and can be triggered by various user interactions.
 
 <<< DEMO ./demo/PopoverOverview.vue#template{vue-html}

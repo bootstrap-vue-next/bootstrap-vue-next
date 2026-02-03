@@ -1,3 +1,3 @@
 <!-- #region template -->
-<BAlert show>...</BAlert>
+<BPopover :show.sync="isVisible" />
 <!-- #endregion template -->

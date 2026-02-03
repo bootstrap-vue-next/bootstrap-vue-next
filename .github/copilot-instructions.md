@@ -43,10 +43,14 @@ Private files should exist in the root of the domain they are related to. For ex
 
 **Consuming imports for tree-shaking**: When importing components, composables, or directives from bootstrap-vue-next in demo files, documentation, or user code, always use the specific paths for optimal tree-shaking:
 
-- Components: `import {BButton} from 'bootstrap-vue-next/components/BButton'`
-- Type-only imports: `import type {BButton} from 'bootstrap-vue-next/components/BButton'`
-- Composables: `import {useToggle} from 'bootstrap-vue-next/composables/useToggle'`
-- Directives: `import {vBToggle} from 'bootstrap-vue-next/directives/BToggle'`
+- Components:
+  <<< FRAGMENT ./demo/ImportExamples.ts#components{typescript}
+- Type-only imports:
+  <<< FRAGMENT ./demo/ImportExamples.ts#types{typescript}
+- Composables:
+  <<< FRAGMENT ./demo/ImportExamples.ts#composables{typescript}
+- Directives:
+  <<< FRAGMENT ./demo/ImportExamples.ts#directives{typescript}
 
 Avoid importing from the root package (`'bootstrap-vue-next'`) as this imports the entire library and defeats tree-shaking.
 
@@ -232,36 +236,11 @@ All demo files in `apps/docs/src/docs/*/demo/` must follow this structure:
 
 **Template-only example:**
 
-```vue
-<template>
-  <!-- #region template -->
-  <BButton v-b-toggle.my-collapse>Toggle</BButton>
-  <BCollapse id="my-collapse">
-    <BCard>Content</BCard>
-  </BCollapse>
-  <!-- #endregion template -->
-</template>
-```
+<<< FRAGMENT ./demo/DemoTemplateOnly.vue#template{vue-html}
 
 **Example with script:**
 
-```vue
-<template>
-  <BButton @click="toggle">Toggle</BButton>
-  <BCollapse v-model="visible">
-    <BCard>Content</BCard>
-  </BCollapse>
-</template>
-
-<script setup lang="ts">
-import {ref} from 'vue'
-
-const visible = ref(false)
-const toggle = () => {
-  visible.value = !visible.value
-}
-</script>
-```
+<<< FRAGMENT ./demo/DemoWithScript.vue{vue}
 
 ### Demo References in Markdown
 

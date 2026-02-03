@@ -42,8 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-import type {BButton} from 'bootstrap-vue-next/components/BButton'
+import {type ComponentPublicInstance, ref} from 'vue'
 
-const buttonRef = ref<InstanceType<typeof BButton>>()
+const buttonRef = ref<ComponentPublicInstance>()
 </script>
