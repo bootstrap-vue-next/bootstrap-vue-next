@@ -102,6 +102,9 @@ export const resolveDirectiveProps = (
   modelValue: binding.modifiers.show,
   inline: binding.modifiers.inline,
   click: binding.modifiers.click,
+  hover: binding.modifiers.hover,
+  focus: binding.modifiers.focus,
+  manual: binding.modifiers.manual,
   realtime: binding.modifiers.realtime,
   lazy: binding.modifiers.lazy,
   placement: binding.modifiers.left
