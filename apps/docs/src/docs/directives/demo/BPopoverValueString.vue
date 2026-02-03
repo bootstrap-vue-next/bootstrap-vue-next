@@ -1,4 +1,5 @@
 <template>
+  <!-- #region template -->
   <div class="d-flex gap-2 flex-wrap">
     <BButton
       v-b-popover="'Simple string content'"
@@ -19,6 +20,7 @@
       class="mt-2"
     />
   </div>
+  <!-- #endregion template -->
 </template>
 
 <script setup lang="ts">

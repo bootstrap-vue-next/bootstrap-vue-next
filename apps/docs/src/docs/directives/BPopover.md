@@ -100,18 +100,7 @@ For advanced configuration, pass an object:
 
 The object interface supports these options:
 
-```ts
-interface PopoverValue {
-  title?: string // Popover title
-  body?: string // Popover body content
-  delay?: number | {show: number; hide: number} // Delay in milliseconds
-  placement?: 'auto' | 'top' | 'bottom' | 'left' | 'right' // Popover placement
-  click?: boolean // Enable click trigger
-  hover?: boolean // Enable hover trigger
-  focus?: boolean // Enable focus trigger
-  manual?: boolean // Disable automatic triggers
-}
-```
+<<< FRAGMENT ./demo/PopoverValueInterface.ts#interface{typescript}
 
 ## Title Attribute
 
