@@ -1,5 +1,4 @@
 <template>
-  <!-- #region template -->
   <div>
     <BFormInput
       v-model="selectedCountry"
@@ -17,7 +16,6 @@
       Selected: <strong>{{ selectedCountry }}</strong>
     </div>
   </div>
-  <!-- #endregion template -->
 </template>
 
 <script setup lang="ts">

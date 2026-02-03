@@ -1,5 +1,4 @@
 <template>
-  <!-- #region template -->
   <div>
     <BFormInput
       v-model="selectedUserId"
@@ -18,7 +17,6 @@
       Selected user ID: <strong>{{ selectedUserId }}</strong>
     </div>
   </div>
-  <!-- #endregion template -->
 </template>
 
 <script setup lang="ts">

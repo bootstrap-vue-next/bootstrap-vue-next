@@ -1,3 +1,5 @@
+## Backward Compatibility
+
 Type safety is completely opt-in and maintains 100% backward compatibility. Existing code without explicit types continues to work exactly as before:
 
 ```vue

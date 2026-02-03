@@ -131,12 +131,12 @@
               <th variant="danger" />
               <th variant="danger">
                 <BFormSelect
-                  :model-value="(data).field.label || ''"
+                  :model-value="(data as unknown as TableField<any>).label ?? ''"
                   :options="
                     [
-                      (data).field.label || '',
-                      (data).field.key,
-                    ]
+                      (data as unknown as TableField<any>).label ?? '',
+                      (data as unknown as TableField<any>).key,
+                    ] as string[]
                   "
                 />
               </th>
@@ -545,7 +545,10 @@ function onFiltered(filteredItems: readonly TableItem<Person>[]) {
     })
 }
 
-function onRowClicked({index, item}: TableRowEventObject<TableItem<Person>, Readonly<MouseEvent> | Readonly<KeyboardEvent>>) {
+function onRowClicked({
+  index,
+  item,
+}: TableRowEventObject<TableItem<Person>, Readonly<MouseEvent> | Readonly<KeyboardEvent>>) {
   // eslint-disable-next-line no-console
   console.log(`clicked on row ${index}: ${item.name.first} ${item.name.last}`)
 }

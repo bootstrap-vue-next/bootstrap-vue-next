@@ -1,17 +1,16 @@
 <template>
-  <datalist :id="computedId">
-    <slot name="first" />
-    <BFormSelectOption
-      v-for="(option, index) in normalizedOptsWrapper"
-      :key="index"
-      v-bind="option"
-    >
-      <slot name="option" v-bind="option">
-        {{ option.text }}
-      </slot>
-    </BFormSelectOption>
+  <BFormDatalistBase v-bind="forwardedProps" :options="normalizedOptions as any">
+    <!-- Forward all slots -->
+    <template #first>
+      <slot name="first" />
+    </template>
+
+    <template #option="slotProps">
+      <slot name="option" v-bind="slotProps as any" />
+    </template>
+
     <slot />
-  </datalist>
+  </BFormDatalistBase>
 </template>
 
 <script
@@ -21,14 +20,17 @@
 >
 import type {BFormDatalistProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
-import BFormSelectOption from '../BFormSelect/BFormSelectOption.vue'
-import {useId} from '../../composables/useId'
+import BFormDatalistBase from './BFormDatalistBase.vue'
 import type {SelectOption} from '../../types/SelectTypes'
 import type {BFormDatalistSlots} from '../../types'
 
-// Note: Cannot use useDefaults composable with generic props due to Proxy/type inference limitations.
-// BFormDatalist has minimal props and no commonly-customized style props, so manual defaults injection is not needed.
-const props = withDefaults(defineProps<BFormDatalistProps<Item, ValueKey>>(), {
+/**
+ * Type-safe wrapper component for BFormDatalist.
+ * Provides generic type safety for options and field names.
+ * Normalizes typed options and forwards to BFormDatalistBase for rendering.
+ */
+const props = withDefaults(defineProps<Omit<BFormDatalistProps<Item, ValueKey>, 'modelValue'>>(), {
+  disabled: false,
   disabledField: 'disabled' as keyof Item & string,
   id: undefined,
   options: () => [],
@@ -37,19 +39,26 @@ const props = withDefaults(defineProps<BFormDatalistProps<Item, ValueKey>>(), {
 })
 defineSlots<BFormDatalistSlots<Item[ValueKey]>>()
 
-const computedId = useId(() => props.id, 'datalist')
-
-const normalizedOptsWrapper = computed(() => {
-  const optionsList = props.options || []
-  return optionsList.map((el) => {
-    if (typeof el === 'string' || typeof el === 'number') {
-      return {text: String(el), value: el, disabled: false}
+// Type-safe normalization of options
+const normalizedOptions = computed(() =>
+  props.options.map((el) => {
+    if (typeof el === 'string') {
+      return el
+    }
+    if (typeof el === 'number') {
+      return String(el)
     }
     return {
-      text: String(el[props.textField as keyof typeof el]),
-      value: el[props.valueField as keyof typeof el] as Item[ValueKey],
-      disabled: props.disabledField ? Boolean(el[props.disabledField as keyof typeof el]) : false,
-    }
-  }) as readonly SelectOption<Item[ValueKey]>[]
-})
+      value: el[props.valueField as ValueKey],
+      text: (el[props.textField as keyof Item] as string | undefined) ?? '',
+      disabled: (el[props.disabledField as keyof Item] as boolean | undefined) ?? false,
+    } as SelectOption
+  })
+)
+
+// Forward all props except options (which we normalize) and field mappings (already used)
+const forwardedProps = computed(() => ({
+  disabled: props.disabled,
+  id: props.id,
+}))
 </script>

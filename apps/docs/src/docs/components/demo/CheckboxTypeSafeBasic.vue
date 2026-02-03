@@ -1,5 +1,4 @@
 <template>
-  <!-- #region template -->
   <div>
     <BFormCheckboxGroup
       id="checkbox-type-safe-basic"
@@ -13,7 +12,6 @@
       Selected user IDs: <strong>{{ selectedUsers }}</strong>
     </div>
   </div>
-  <!-- #endregion template -->
 </template>
 
 <script setup lang="ts">
@@ -32,6 +30,6 @@ const users: User[] = [
   {id: 4, name: 'David'},
 ]
 
-// TypeScript knows selectedUsers is readonly number[]
-const selectedUsers = ref<readonly number[]>([1, 4])
+// TypeScript knows selectedUsers is number[]
+const selectedUsers = ref<number[]>([1, 4])
 </script>
