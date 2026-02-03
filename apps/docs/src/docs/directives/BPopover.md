@@ -4,7 +4,7 @@ description: 'Add popovers to any element using the v-b-popover directive. Popov
 
 > The `v-b-popover` directive makes it easy to add popovers to elements. Popovers provide contextual information and can be triggered by various user interactions.
 
-<<< DEMO ./demo/PopoverOverview.vue#template{vue-html}
+<<< DEMO ./demo/BPopoverOverview.vue#template{vue-html}
 
 ## Overview
 
@@ -27,7 +27,7 @@ v-{name}.{modifier1}.{modifier2}.{etc}={value}
 
 For example:
 
-<<< FRAGMENT ./demo/PopoverSyntax.vue#syntax{vue-html}
+<<< FRAGMENT ./demo/BPopoverSyntax.vue#syntax{vue-html}
 
 ## Trigger Modifiers
 
@@ -40,23 +40,23 @@ You can define when to trigger a popover with the following modifiers:
 
 If you do not specify any trigger modifiers, the popover is enabled by default for **both hover and focus** events.
 
-<<< DEMO ./demo/PopoverTriggerModifiers.vue#template{vue-html}
+<<< DEMO ./demo/BPopoverTriggerModifiers.vue#template{vue-html}
 
 ### Default Behavior
 
-<<< DEMO ./demo/PopoverDefaultBehavior.vue#template{vue-html}
+<<< DEMO ./demo/BPopoverDefaultBehavior.vue#template{vue-html}
 
 ### Multiple Triggers
 
 You can combine multiple trigger modifiers:
 
-<<< DEMO ./demo/PopoverMultipleTriggers.vue#template{vue-html}
+<<< DEMO ./demo/BPopoverMultipleTriggers.vue#template{vue-html}
 
 ### Manual Control
 
 Use `.manual` combined with `.show` to control visibility:
 
-<<< DEMO ./demo/PopoverManualControl.vue#template{vue-html}
+<<< DEMO ./demo/BPopoverManualControl.vue#template{vue-html}
 
 ## Placement Modifiers
 
@@ -69,7 +69,7 @@ Specify where to place the popover with the following modifiers:
 
 If you do not define a placement modifier, the default placement is **top**.
 
-<<< DEMO ./demo/PopoverPlacementModifiers.vue#template{vue-html}
+<<< DEMO ./demo/BPopoverPlacementModifiers.vue#template{vue-html}
 
 ## Value
 
@@ -83,12 +83,12 @@ The popover content and configuration is specified in the directive value. The v
 
 For simple text content, use a string literal (remember to use quotes):
 
-<<< DEMO ./demo/PopoverValueString.vue
+<<< DEMO ./demo/BPopoverValueString.vue
 
 :::warning Important
 What is inside the quotes (`""`) is interpreted as JavaScript, not as a string literal. To display literal text like "My title", you must use an extra pair of quotes:
 
-<<< FRAGMENT ./demo/PopoverValueWarning.vue#warning{vue-html}
+<<< FRAGMENT ./demo/BPopoverValueWarning.vue#warning{vue-html}
 
 :::
 
@@ -96,7 +96,7 @@ What is inside the quotes (`""`) is interpreted as JavaScript, not as a string l
 
 For advanced configuration, pass an object:
 
-<<< DEMO ./demo/PopoverValueObject.vue#template{vue-html}
+<<< DEMO ./demo/BPopoverValueObject.vue#template{vue-html}
 
 The object interface supports these options:
 
@@ -117,7 +117,7 @@ interface PopoverValue {
 
 When the directive value doesn't include a `title`, the popover will use the element's `title` attribute if present:
 
-<<< DEMO ./demo/PopoverTitleAttribute.vue#template{vue-html}
+<<< DEMO ./demo/BPopoverTitleAttribute.vue#template{vue-html}
 
 :::tip Note
 When using the `title` attribute, the directive automatically removes it from the element and stores it as `data-original-title` to prevent the browser's native tooltip from showing.
@@ -127,7 +127,7 @@ When using the `title` attribute, the directive automatically removes it from th
 
 Control the delay for showing and hiding popovers using the `delay` option:
 
-<<< DEMO ./demo/PopoverDelay.vue#template{vue-html}
+<<< DEMO ./demo/BPopoverDelay.vue#template{vue-html}
 
 The default delay is `{show: 100, hide: 300}` milliseconds.
 
@@ -146,7 +146,7 @@ The default delay is `{show: 100, hide: 300}` milliseconds.
 
 ### Combined Example
 
-<<< DEMO ./demo/PopoverModifiersCombined.vue#template{vue-html}
+<<< DEMO ./demo/BPopoverModifiersCombined.vue#template{vue-html}
 
 ## Common Pitfalls
 
@@ -154,7 +154,7 @@ The default delay is `{show: 100, hide: 300}` milliseconds.
 
 When using the directive on components that have a `title` prop (like `BCard`), you must provide the popover content via the directive value, not the `title` prop:
 
-<<< FRAGMENT ./demo/PopoverCommonPitfalls.vue#component{vue-html}
+<<< FRAGMENT ./demo/BPopoverCommonPitfalls.vue#component{vue-html}
 
 This is because the component's `title` prop is applied to a child element, while the directive is attached to the root element.
 
@@ -162,7 +162,7 @@ This is because the component's `title` prop is applied to a child element, whil
 
 The directive works best with plain HTML elements when using the `title` attribute:
 
-<<< FRAGMENT ./demo/PopoverCommonPitfalls.vue#html{vue-html}
+<<< FRAGMENT ./demo/BPopoverCommonPitfalls.vue#html{vue-html}
 
 ## Comparison with Component
 
@@ -184,7 +184,7 @@ For popovers with forms, buttons, or complex layouts, use the component version.
 
 For proper cross-browser behavior when using only the `.focus` trigger, use an element that renders an `<a>` tag with `tabindex="0"`:
 
-<<< FRAGMENT ./demo/PopoverAccessibility.vue#focus{vue-html}
+<<< FRAGMENT ./demo/BPopoverAccessibility.vue#focus{vue-html}
 
 ### Keyboard Users
 
